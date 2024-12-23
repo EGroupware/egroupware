@@ -2638,8 +2638,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if (empty($attachmentHTML[$key]['mime_data']))
 				{
 					$attachmentHTML[$key]['mime_url'] = Egw::link('/index.php',$linkData);
-					// always check invoices too and then add mime_data unconditionally
-					if (Link::get_mime_info($attachmentHTML[$key]['type'], 'invoices'))
+
+					// always check invoices (or it's EPL viewer) too and then add mime_data unconditionally
+					if (Link::get_mime_info($attachmentHTML[$key]['type'],
+						!empty($GLOBALS['egw_info']['user']['apps']['invoices']) ? 'invoices' : 'stylite'))
 					{
 						$attachmentHTML[$key]['mime_data'] = Link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount',
 							[$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'] ?? false, true], true);

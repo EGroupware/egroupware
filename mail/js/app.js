@@ -1264,14 +1264,15 @@ app.classes.mail = AppJS.extend(
 						sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [collabora, ...actions];
 					}
 				}
-				// if mime-type is supported by invoices, add it at the end
-				if (egw.get_mime_info(_item.type, 'invoices'))
+				// if mime-type is supported by invoices (or the EPL viewer), add it at the end
+				const invoices_app = this.egw.user('apps')['invoices'] ? 'invoices' : 'stylite';
+				if (egw.get_mime_info(_item.type, invoices_app))
 				{
 					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, {
-						id: 'invoices',
+						id: invoices_app,
 						label: 'invoices',
 						icon: 'invoices/navbar',
-						value: 'invoices'
+						value: invoices_app
 					}];
 				}
 			});
