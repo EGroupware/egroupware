@@ -7204,7 +7204,8 @@ class Mail
 							$header = $mailObject->getHeader(Mailer::$type2header[$type]);
 							if(is_array($header)) $header = implode(', ',$header);
 							$mailObject->clearAddresses($type);
-							$merged = $bo_merge->merge_string($header,$val,$e,'text/plain',array(),self::$displayCharset);
+							$merged = empty($header) || strpos($header, '{{') === false ? $header :
+								$bo_merge->merge_string($header,$val,$e,'text/plain',array(),self::$displayCharset);
 							//error_log($type . ': ' . $mailObject->getHeader(Mailer::$type2header[$type]) . ' -> ' .$merged);
 							$mailObject->addAddress(trim($merged,'"'),'',$type);
 						}
@@ -7231,6 +7232,11 @@ class Mail
 						if(!$_folder !== false)
 						{
 							$_folder = $this->getDraftFolder();
+						}
+						// add attachments from app-specific merge-class
+						foreach($bo_merge->getAttachments($val) as $file)
+						{
+							$mailObject->addAttachment($file);
 						}
 					}
 					if ($sendOK || $openAsDraft)

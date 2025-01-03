@@ -328,7 +328,7 @@ class Mailer extends Horde_Mime_Mail
 	 *
 	 * "text/calendar; method=..." get automatic detected and added as highest priority alternative
 	 *
-	 * @param string|resource $data Path to the attachment or open file-descriptor
+	 * @param string|resource|array $data Path to the attachment or open file-descriptor or array with values for keys "data", "name" and "type"
 	 * @param string $name =null file name to use for the attachment
 	 * @param string $type =null content type of the file, incl. parameters eg. "text/plain; charset=utf-8"
 	 * @param string $old_type =null used to support phpMailer signature (deprecated)
@@ -343,6 +343,12 @@ class Mailer extends Horde_Mime_Mail
 			$type = $old_type;
 		}
 
+		if (is_array($data))
+		{
+			$name = $data['name'] ?? null;
+			$type = $data['type'] ?? null;
+			$data = $data['data'] ?? null;
+		}
 		// pass file as resource to Horde_Mime_Part::setContent()
 		if (is_resource($data))
 		{

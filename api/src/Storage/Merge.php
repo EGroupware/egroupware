@@ -3431,4 +3431,20 @@ abstract class Merge
 	protected function show_replacements_hook(&$template_name, &$content, &$sel_options, &$readonlys)
 	{
 	}
+
+	/**
+	 * Allow to attach files to merged mails
+	 *
+	 * Called from mail.mail_compose.compose
+	 *
+	 * @param int|string $id
+	 * @return array[] array of array with values for keys
+	 * - "data": path or open file resource,
+	 * - "name": filename to be used for attachment
+	 * - "type": mime-type of attachment
+	 */
+	public function getAttachments($id)
+	{
+		return [];
+	}
 }
