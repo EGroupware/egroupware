@@ -751,9 +751,9 @@ class Country
 		{
 			if (!self::$countries_translated) self::_translate_countries();
 
-			return self::$countries_translated[strtoupper($code)];
+			return self::$countries_translated[strtoupper($code)] ?? null;
 		}
-		return self::$country_array[strtoupper($code)];
+		return self::$country_array[strtoupper($code)] ?? null;
 	}
 
 	/**
