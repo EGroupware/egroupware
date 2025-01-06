@@ -215,7 +215,24 @@ export class egwMenu
 		{
 			this.instance = new EgwMenuShoelace(this.children);
 		}
-		this.instance.applyContext(_links);
+		this.instance.applyContext(_links, _selected, _target);
+		let setOnClick = (menuItem) =>
+		{
+			menuItem.set_onClick((elem) =>
+			{
+				// Copy the "checked" state
+				if(typeof elem.data.checked != "undefined")
+				{
+					elem.data.checked = elem.checked;
+				}
+				elem.data.execute(_selected, _target);
+			});
+			menuItem.children.forEach(c => setOnClick(c));
+		};
+		this.children.forEach(menuItem =>
+		{
+			setOnClick(menuItem);
+		});
 	}
 
 	/**

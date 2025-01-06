@@ -151,7 +151,7 @@ export class EgwMenuShoelace extends LitElement
 	 *
 	 * @param _links
 	 */
-	public applyContext(_links)
+	public applyContext(_links, _selected, _target)
 	{
 		Object.keys(_links).forEach((actionId) =>
 		{
@@ -162,6 +162,10 @@ export class EgwMenuShoelace extends LitElement
 			}
 			menuItem.disabled = !_links[actionId].enabled;
 			menuItem.hidden = !_links[actionId].visible;
+			if(menuItem.type == "checkbox")
+			{
+				menuItem.checked = _links[actionId].actionObj.checked ?? false;
+			}
 		});
 	}
 	public hide()
