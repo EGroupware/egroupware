@@ -116,10 +116,24 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 _context = {"posx": x, "posy": y};
             }
 
-            const menu = this._buildMenu(_links, _selected, _target);
-            menu.showAt(_context.posx, _context.posy);
+			let menu = null;
+			// Special handling for nextmatch context menu - reuse the same menu
+			if(!_target && !_context.menu && _selected[0].parent.manager.data.menu)
+			{
+				menu = _selected[0].parent.manager.data.menu
+			}
+			if(!menu)
+			{
+				menu = this._buildMenu(_links, _selected, _target);
+			}
+			else
+			{
+				menu.applyContext(_links, _selected, _target);
+			}
 
-            return true;
+			menu.showAt(_context.posx, _context.posy);
+
+			return true;
         } else {
             const defaultAction = this._getDefaultLink(_links);
             if (defaultAction) {
@@ -303,6 +317,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      */
     private _registerContext = (_node, _callback, _context) => {
 
+		// Special handling for nextmatch: only build the menu once and just re-use it.
+		if(!_context.menu && _context.actionLinks && _context.parent?.manager?.data?.nextmatch && !_context.parent.manager.data.menu)
+		{
+			_context.parent.manager.data.menu = this._buildMenu(_context.actionLinks.filter(l => l.actionObj.type == "popup"), [_context], null);
+			_context.parent.manager.data.menu.showAt(0, 0);
+			_context.parent.manager.data.menu.hide();
+		}
         const contextHandler = (e) => {
             const x = _node
             //use different node and context for callback if event happens on parent
@@ -526,7 +547,8 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         const tree = {"root": []};
 
         // Automatically add in Drag & Drop actions
-        if (this.auto_paste && !window.egwIsMobile()&& !this._context.event.type.match(/touch/)) {
+		if(this.auto_paste && !window.egwIsMobile() && this._context?.event && !this._context.event?.type.match(/touch/))
+		{
             this._addCopyPaste(_links, _selected);
         }
 
@@ -827,6 +849,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         }
     };
     private _context: any;
+	private menu : EgwMenu;
 
 }
 
