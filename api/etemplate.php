@@ -623,6 +623,11 @@ function stringAttrs(array $attrs)
 	{
 		return '';
 	}
+	// replace deprecated et2_dialog with new Et2Dialog
+	if (!empty($attrs['onclick']) && strpos($attrs['onclick'], 'et2_dialog.') !== false)
+	{
+		$attrs['onclick'] = str_replace('et2_dialog.', 'Et2Dialog.', $attrs['onclick']);
+	}
 	return ' '.implode(' ', array_map(static function ($name, $value) {
 		return $name . '="' . $value . '"';
 	}, array_keys($attrs), $attrs));
