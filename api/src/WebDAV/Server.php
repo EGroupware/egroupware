@@ -180,6 +180,8 @@ class HTTP_WebDAV_Server
         // copy $_SERVER variables to local _SERVER array
         // so that derived classes can simply modify these
         $this->_SERVER = $_SERVER;
+		// ignore double slashes in the Request-URI
+		$this->_SERVER['REQUEST_URI'] = str_replace('//', '/', $_SERVER['REQUEST_URI']);
     }
 
     // }}}
