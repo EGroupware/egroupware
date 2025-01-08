@@ -298,6 +298,13 @@ export class EgwMenuShoelace extends LitElement
 		return html`
             <sl-menu
                     @sl-select=${this.handleSelect}
+                    @contextmenu=${(e) =>
+                    {
+                        if(!e.ctrlKey)
+                        {
+                            e.preventDefault();
+                        }
+                    }}
             >
                 ${repeat(this.structure, i => this.itemTemplate(i))}
             </sl-menu>`;
