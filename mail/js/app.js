@@ -3377,8 +3377,7 @@ app.classes.mail = AppJS.extend(
 					});
 				break;
 			case 'invoices':
-			default:
-				egw.open_link(attachments[row_id].mime_data, '_blank', '', action, true, attachments[row_id].type);
+				egw.open_link(attachments[row_id].invoice_data, '_blank', '', action, true, attachments[row_id].type);
 				break;
 		}
 	},

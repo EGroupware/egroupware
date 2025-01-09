@@ -2635,7 +2635,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						break;
 				}
 				// we either use mime_data for server-side supported mime-types or mime_url for client-side or download
-				if (empty($attachmentHTML[$key]['mime_data']))
+				if (empty($attachmentHTML[$key]['mime_data']) || preg_match('#^(application|text)/xml$#i', $attachmentHTML[$key]['type']))
 				{
 					$attachmentHTML[$key]['mime_url'] = Egw::link('/index.php',$linkData);
 
@@ -2643,13 +2643,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					if (Link::get_mime_info($attachmentHTML[$key]['type'],
 						!empty($GLOBALS['egw_info']['user']['apps']['invoices']) ? 'invoices' : 'stylite'))
 					{
-						$attachmentHTML[$key]['mime_data'] = Link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount',
+						$attachmentHTML[$key]['invoice_data'] = Link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount',
 							[$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'] ?? false, true], true);
 					}
-					else
-					{
-						unset($attachmentHTML[$key]['mime_data']);
-					}
+					unset($attachmentHTML[$key]['mime_data']);
 				}
 				$attachmentHTML[$key]['windowName'] = $windowName;
 
