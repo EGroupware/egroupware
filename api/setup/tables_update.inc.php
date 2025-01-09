@@ -1023,3 +1023,13 @@ function api_upgrade23_1_009()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.010';
 }
+
+function api_upgrade23_1_010()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_sqlfs','fs_link',array(
+		'type' => 'varchar',
+		'precision' => '1024'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.011';
+}

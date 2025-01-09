@@ -327,7 +327,7 @@ $phpgw_baseline = array(
 			'fs_modifier' => array('type' => 'int','meta' => 'user','precision' => '4'),
 			'fs_active' => array('type' => 'bool','nullable' => False,'default' => 't'),
 			'fs_content' => array('type' => 'blob'),
-			'fs_link' => array('type' => 'varchar','precision' => '255'),
+			'fs_link' => array('type' => 'varchar','precision' => '1024'),
 			'fs_s3_flags' => array('type' => 'int','precision' => '1','default' => '0'),
 			'fs_aes_key' => array('type' => 'binary','precision' => '32')
 		),
