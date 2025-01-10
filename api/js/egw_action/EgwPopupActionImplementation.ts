@@ -320,9 +320,14 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 		// Special handling for nextmatch: only build the menu once and just re-use it.
 		if(!_context.menu && _context.actionLinks && _context.parent?.manager?.data?.nextmatch && !_context.parent.manager.data.menu)
 		{
-			_context.parent.manager.data.menu = this._buildMenu(_context.actionLinks.filter(l => l.actionObj.type == "popup"), [_context], null);
-			_context.parent.manager.data.menu.showAt(0, 0);
-			_context.parent.manager.data.menu.hide();
+			// Don't block load
+			_context.parent.manager.data.menu = {}; // Set it to something or it will do this for every row
+			window.setTimeout(() =>
+			{
+				_context.parent.manager.data.menu = this._buildMenu(_context.actionLinks.filter(l => l.actionObj.type == "popup"), [_context], null);
+				_context.parent.manager.data.menu.showAt(0, 0);
+				_context.parent.manager.data.menu.hide();
+			}, 0);
 		}
         const contextHandler = (e) => {
             const x = _node
