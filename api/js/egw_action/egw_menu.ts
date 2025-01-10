@@ -195,8 +195,6 @@ export class egwMenu
 			_egw_active_menu = null;
 		});
 		return true;
-
-		return false;
 	}
 
 

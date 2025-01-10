@@ -167,6 +167,13 @@ export class EgwMenuShoelace extends LitElement
 				menuItem.checked = _links[actionId].actionObj.checked ?? false;
 			}
 		});
+
+		// Copy caption changes
+		let osClipboard;
+		if(_links.egw_os_clipboard && (osClipboard = <SlMenuItem>this.shadowRoot.querySelector("[data-action-id='egw_os_clipboard']")))
+		{
+			osClipboard.innerText = _links.egw_os_clipboard.actionObj.caption;
+		}
 	}
 	public hide()
 	{

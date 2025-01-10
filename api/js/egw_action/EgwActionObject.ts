@@ -12,21 +12,22 @@ import {EgwActionLink} from "./EgwActionLink";
 import {EgwActionManager} from "./EgwActionManager";
 import {egwBitIsSet, egwObjectLength, egwQueueCallback, egwSetBit} from "./egw_action_common";
 import {
-    EGW_AO_EXEC_SELECTED, EGW_AO_EXEC_THIS,
-    EGW_AO_FLAG_IS_CONTAINER,
-    EGW_AO_SHIFT_STATE_BLOCK,
-    EGW_AO_SHIFT_STATE_MULTI,
-    EGW_AO_SHIFT_STATE_NONE,
-    EGW_AO_STATE_FOCUSED,
-    EGW_AO_STATE_NORMAL,
-    EGW_AO_STATE_SELECTED,
-    EGW_AO_STATE_VISIBLE,
-    EGW_KEY_A,
-    EGW_KEY_ARROW_DOWN,
-    EGW_KEY_ARROW_UP,
-    EGW_KEY_PAGE_DOWN,
-    EGW_KEY_PAGE_UP,
-    EGW_KEY_SPACE
+	EGW_AO_EXEC_SELECTED,
+	EGW_AO_EXEC_THIS,
+	EGW_AO_FLAG_IS_CONTAINER,
+	EGW_AO_SHIFT_STATE_BLOCK,
+	EGW_AO_SHIFT_STATE_MULTI,
+	EGW_AO_SHIFT_STATE_NONE,
+	EGW_AO_STATE_FOCUSED,
+	EGW_AO_STATE_NORMAL,
+	EGW_AO_STATE_SELECTED,
+	EGW_AO_STATE_VISIBLE,
+	EGW_KEY_A,
+	EGW_KEY_ARROW_DOWN,
+	EGW_KEY_ARROW_UP,
+	EGW_KEY_PAGE_DOWN,
+	EGW_KEY_PAGE_UP,
+	EGW_KEY_SPACE
 } from "./egw_action_constants";
 import type {EgwActionObjectInterface} from "./EgwActionObjectInterface";
 import {egwActionObjectInterface} from "./egw_action";
@@ -973,9 +974,10 @@ export class EgwActionObject {
      *    an array of links/selected objects-
      */
 
-    getSelectedLinks(_actionType) {
+	getSelectedLinks(_actionType, useSelf = false)
+	{
         // Get all objects in this container which are currently selected
-        const selected = this.getContainerRoot().getSelectedObjects();
+		const selected = useSelf ? [this] : this.getContainerRoot().getSelectedObjects();
 
         return this._getLinks(selected, _actionType);
     };
