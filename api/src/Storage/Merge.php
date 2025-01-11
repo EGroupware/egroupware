@@ -944,6 +944,12 @@ abstract class Merge
 	 */
 	public function &merge_string($_content, $ids, &$err, $mimetype, array $fix = null, $charset = null)
 	{
+		// performance optimization: if there's nothing looking like a placeholder, just return it without any processing
+		if (strpos($_content, '$$') === false && strpos($_content, '{{') === false &&
+			($mimetype !== 'application/rtf' || strpos($_content, '\\{\\{') === false))
+		{
+			return $_content;
+		}
 		$ids = empty($ids) ? [] : (array)$ids;
 		$matches = null;
 		if($mimetype == 'application/xml' &&
@@ -956,7 +962,7 @@ abstract class Merge
 			$mso_application_progid = '';
 		}
 		// alternative syntax using double curly brackets (eg. {{cat_id}} instead $$cat_id$$),
-		// agressivly removing all xml-tags eg. Word adds within placeholders
+		// aggressively removing all xml-tags e.g. Word adds within placeholders
 		$content = preg_replace_callback('/{{[^}]+}}/i', function ($matches)
 		{
 			return '$$' . strip_tags(substr($matches[0], 2, -2)) . '$$';
@@ -2203,6 +2209,7 @@ abstract class Merge
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document, $ext) . '-') . $ext;
 				copy($content_url, $archive);
 				$content_url = 'zip://' . $archive . '#' . ($content_file = 'content.xml');
+				$styles_url = 'zip://'.$archive.'#'.($styles_file = 'styles.xml');
 				$this->parse_html_styles = true;
 				break;
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':    // mimetypes in vfs are limited to 64 chars
@@ -2248,6 +2255,11 @@ abstract class Merge
 			//error_log(__METHOD__."() !this->merge() err=$err");
 			return $err;
 		}
+		if (isset($styles_file) && !($merged_styles =& $this->merge($styles_url,$ids,$err,$mimetype,$fix)))
+		{
+			//error_log(__METHOD__."() !this->merge() err=$err");
+			return $err;
+		}
 		// Apply HTML formatting to target document, if possible
 		// check if we can use the XSL extension, to not give a fatal error and rendering whole merge-print non-functional
 		if(class_exists('XSLTProcessor') && class_exists('DOMDocument') && $this->parse_html_styles)
@@ -2255,6 +2267,7 @@ abstract class Merge
 			try
 			{
 				$this->apply_styles($merged, $mimetype);
+				if (isset($styles_file)) $this->apply_styles($merged_styles, $mimetype);
 			}
 			catch (\Exception $e)
 			{
@@ -2266,6 +2279,11 @@ abstract class Merge
 				$this->parse_html_styles = false;
 				if(!($merged =& $this->merge($content_url, $ids, $err, $mimetype, $fix)))
 				{
+					return $err;
+				}
+				if (isset($styles_file) && !($merged_styles =& $this->merge($styles_url,$ids,$err,$mimetype,$fix)))
+				{
+					//error_log(__METHOD__."() !this->merge() err=$err");
 					return $err;
 				}
 			}
@@ -2301,6 +2319,10 @@ abstract class Merge
 			if($zip->addFromString($content_file, $merged) !== true)
 			{
 				throw new Api\Exception("!ZipArchive::addFromString('$content_file',\$merged)");
+			}
+			if(isset($styles_file) && $zip->addFromString($styles_file, $merged_styles) !== true)
+			{
+				throw new Api\Exception("!ZipArchive::addFromString('$styles_file',\$merged_styles)");
 			}
 			if($zip->close() !== true)
 			{
@@ -2867,13 +2889,13 @@ abstract class Merge
 			{
 				if($result['failed'])
 				{
-					$response->error($message . join(", ", $result['failed']));
+					$response->error($message . implode(", ", $result['failed']));
 				}
 				else
 				{
 					if($result['success'])
 					{
-						$message .= join(", ", $result['success']);
+						$message .= implode(", ", $result['success']);
 					}
 				}
 			}
