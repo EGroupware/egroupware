@@ -1900,6 +1900,7 @@ class addressbook_ui extends addressbook_bo
 						break;
 					}
 					$query['order'] = 'n_family';
+					// fall-through
 				case 'n_family':
 					$order = "n_family<>'' DESC,n_family $sort,n_given $sort,org_name $sort";
 					break;
@@ -1919,6 +1920,10 @@ class addressbook_ui extends addressbook_bo
 					break;
 				case 'contact_id':
 					$order = "egw_addressbook.$query[order] $sort";
+					break;
+				case 'account_lid':
+					$order = "account_lid<>'' DESC,account_lid $sort,n_family $sort,n_given $sort";
+					break;
 			}
 			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
