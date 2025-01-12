@@ -1496,7 +1496,7 @@ class Link extends Link\Storage
 		if (!($extra = self::get_registry($app,'find_extra'))) $extra = array();
 
 		// always use regular links stream wrapper here: extended one is unnecessary (slow) for just listing attachments
-		if (substr($path,0,13) == 'stylite.links') $path = substr($path,8);
+		if ($app !== 'invoices' && substr($path,0,13) == 'stylite.links') $path = substr($path,8);
 
 		$attached = array();
 		if (($url2stats = Vfs::find($path,array('need_mime'=>true,'type'=>'F','url'=>true)+$extra,true)))
