@@ -653,7 +653,7 @@ no profile defined for user %1	admin	de	Es besteht kein Profil für den Benutzer
 no sieve support detected, either fix configuration manually or leave it switched off.	admin	de	Keine Sieve-Unterstützung gefunden. Konfiguration entweder manuell anpassen oder Sieve ausgeschalten lassen.
 no supported imap authentication method could be found.	admin	de	Keine unterstützte IMAP-Authentifizierungsmethode gefunden.
 non profit: clubs, associations, ...	admin	de	Gemeinnützig: Vereine, Verbände, ...
-not enabled	admin	de	Nicht einschalten
+not enabled	admin	de	Nicht aktiv
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit Curl-Unterstützung gebaut wurde.
 notification mail	admin	de	Benachrichtigungs-E-Mail
 notify user by email	admin	de	Benutzer per E-Mail benachrichtigen
