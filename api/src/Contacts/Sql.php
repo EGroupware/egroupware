@@ -603,8 +603,9 @@ class Sql extends Api\Storage
 			unset($filter['list']);
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
-		if ((is_array($owner) ? in_array(0, $owner) : !$owner) && substr($this->account_repository,0,3) == 'sql' &&
-			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
+		if ((is_array($owner) ? in_array(0, $owner) : !$owner) &&
+			substr($this->account_repository,0,3) == 'sql' &&
+			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false)
 		{
 			$join .= self::ACCOUNT_ACTIVE_JOIN;
 			$extra_cols[] = 'account_lid AS account_lid';
