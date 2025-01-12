@@ -560,12 +560,10 @@ standard imap server	admin	nl	Standaard IMAP-server
 standard smtp-server	admin	nl	Standaard SMTP-server
 start	admin	nl	Start
 start testjob!	admin	nl	Testtaak starten
-stationery	admin	nl	Stationery
 submit changes	admin	nl	Wijzigingen toepassen
 submit the search string	admin	nl	Verzend de zoekopdracht
 subtype	admin	nl	Subtype
 switch it off, if users are randomly thrown out	admin	nl	Schakel het uit, wanneer gebruiker willekeurig eruit gegooid worden
-templates	admin	nl	Sjablonen
 that loginid has already been taken	admin	nl	Die loginnaam is reeds in gebruik!
 the api is current	admin	nl	De API is actueel.
 the api requires an upgrade	admin	nl	De API vereist een upgrade.
@@ -636,7 +634,10 @@ username/password defined by admin	admin	nl	Gebruikersnaam/Wachtwoord ingesteld 
 username@domainname (virtual mail manager)	admin	nl	gebruikersnaam@domeinnaam (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	nl	Gebruikers kunnen hun eigen emailaccounts definiëren
 users can define their own identities	admin	nl	Gebruikers kunnen hun eigen identiteit instellen
+users can define their own signatures	admin	nl	Gebruikers kunnen hun eigen handtekeningen definiëren
 users choice	admin	nl	Gebruikerskeuze
+vacation messages with start- and end-date require an admin account to be set	admin	nl	Voor vakantieberichten met begin- en einddatum moet een beheerdersaccount worden ingesteld!
+vacation notice	admin	nl	Vakantiebericht
 value for column %1 is not unique!	admin	nl	Waarde in kolom %1 is niet uniek!
 view access log	admin	nl	Toegangslog bekijken
 view account	admin	nl	Account weergegeven
@@ -651,6 +652,7 @@ who would you like to transfer records owned by the deleted user to?	admin	nl	Aa
 wrong account type: %1 is no %2 !!!	admin	nl	Verkeerde account type: %1 is GEEN %2 !
 wrong admin-account or -password !!!	admin	nl	Verkeerde beheerders account of -wachtwoord!
 xml-rpc	admin	nl	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	nl	Je kunt wizard gebruiken om accountinstellingen te wijzigen of account te verwijderen.
 you have entered an invalid expiration date	admin	nl	U heeft u een ongeldige verloopdatum ingevoerd.
 you have received a new message on the	admin	nl	U heeft een nieuw bericht ontvangen op de
 you have to enter a name, to create a new field!!!	admin	nl	U moet een naam invullen om een nieuwe veld te creëeren!

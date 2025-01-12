@@ -2,29 +2,47 @@
 %1 accessories restored	resources	lt	%1 priedai atkurti
 %1 resource(s) %2	resources	lt	%1 ištekliai %2
 %1 resource(s) %2, %3 failed	resources	lt	%1 ištekliai %2, %3 nepavyko
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	lt	%1 ištekliaus (-ių) %2, %3 nepavyko atkurti dėl nepakankamų teisių !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	lt	%1 ištekliaus(-ių) %2, %3 nepavyko atkurti dėl nepakankamų teisių!
 %1 resource(s) booked	resources	lt	%1 išteklių(-ų) rezervuota
 %1 resource(s) view calendar	resources	lt	%1 ištekliaus (-ių) kalendoriaus peržiūra
 accessories	resources	lt	Priedai
 accessories of	resources	lt	Priedai iš
-accessories:	resources	lt	Priedai:
 accessory of	resources	lt	Priedai iš
 add group to event participants	resources	lt	Pridėti grupę prie renginio dalyvių
 allow booking requests from any user when creating events?	resources	lt	Kuriant įvykius leisti užsakymo užklausas iš bet kurio naudotojo?
+allow ignore conflicts	admin	lt	Leisti ignoruoti konfliktus
+book resource	resources	lt	Knygos ištekliai
 booking requests	resources	lt	Užsakymo užklausos
 category admin	resources	lt	Kategorijos administratorius
 category saved.	resources	lt	Išsaugota kategorija.
 choose category admin	resources	lt	Pasirinkite kategorijos administratorių
 delete accessories of selected resources too?	resources	lt	Taip pat ištrinti pasirinktų išteklių priedus?
 do you really want to delete this resource?	resources	lt	Ar tikrai norite ištrinti šį išteklių?
+exports a list of resources to a csv file.	resources	lt	Eksportuoja išteklių sąrašą į CSV failą.
 icon	resources	lt	Ikona
+if you specify an export definition, it will be used when you export	resources	lt	Jei nurodysite eksporto apibrėžtį, ji bus naudojama eksportuojant
+imports a list of resources from a csv file.	resources	lt	Importuoja išteklių sąrašą iš CSV failo.
+is resource bookable?	resources	lt	Ar išteklius galima rezervuoti
+is the ressource bookable?	resources	lt	Ar išteklius galima rezervuoti?
+is this resource bookable?	resources	lt	Ar šį išteklių galima rezervuoti
 manage mapping	resources	lt	Tvarkyti žemėlapius
+new accessory	resources	lt	Naujas priedas
+new resource	resources	lt	Naujas išteklius
 no - leave them	resources	lt	Ne - palikite juos
 no - make them resources	resources	lt	Ne - paverskite juos ištekliais
 no, users will need to contact users with direct booking permission	resources	lt	Ne, naudotojams reikės susisiekti su naudotojais, turinčiais tiesioginio užsakymo leidimą
+prize	resources	lt	Kaina
 registration confirmed %1	resources	lt	Registracija patvirtinta %1
 remove accessories before changing accessory of	resources	lt	Pašalinkite priedus prieš keisdami Priedas iš
+resource	resources	lt	Išteklius
+resource %1 deleted!	resources	lt	Išteklius %1 ištrintas!
+resource %1 saved!	resources	lt	Išteklius %1 išsaugotas!
+resource / accessories	resources	lt	Ištekliai / Priedai
 un-delete accessories of selected resources too?	resources	lt	Atkurti pasirinktų išteklių priedus?
 unable to link to %1 "%2"	resources	lt	Nepavyksta susieti su %1 "%2"
+view accessories	resources	lt	Peržiūrėti priedus
+view calendar	resources	lt	Peržiūrėti kalendorių
 yes - delete accessories too	resources	lt	Taip - taip pat ištrinti priedus
 yes - un-delete accessories too	resources	lt	Taip - taip pat atkurti priedus
+yes, all users can ignore conflicts	resources	lt	Taip, visi naudotojai gali ignoruoti konfliktus
+yes, only users with direct booking permission	resources	lt	Taip, tik naudotojai, turintys tiesioginio užsakymo leidimą

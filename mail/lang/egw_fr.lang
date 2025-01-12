@@ -619,7 +619,6 @@ subscription successfully saved.	mail	fr	Abonnement sauvegardé avec succès
 succeeded on %1 folders, failed on %2	mail	fr	Réussi sur %1 dossiers, échoué sur %2
 switch off encryption?	mail	fr	Désactiver l'encryption
 template folder	mail	fr	Dossier de modèles
-templates	mail	fr	Modèles
 templates folder	mail	fr	Dossier de modèles
 test connection	mail	fr	Tester la connexion active
 test connection and display basic information about the selected profile	mail	fr	Tester la connexion et afficher des informations de base sur le profil sélectionné

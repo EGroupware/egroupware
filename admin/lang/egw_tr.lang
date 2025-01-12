@@ -425,7 +425,11 @@ user groups	admin	tr	Kullanıcı grupları
 user hidden from non-admins.	admin	tr	Kullanıcı yönetici olmayanlar için gizli
 user-agent	admin	tr	User-Agent
 userdata	admin	tr	Kullanıcı verileri
+users can define their own identities	admin	tr	Kullanıcılar kendi kimliklerini tanımlayabilirler
+users can define their own signatures	admin	tr	Kullanıcılar kendi imzalarını tanımlayabilir
 users choice	admin	tr	Kullanıcı Seçimleri
+vacation messages with start- and end-date require an admin account to be set	admin	tr	Başlangıç ve bitiş tarihi içeren tatil mesajlarının ayarlanması için bir yönetici hesabı gerekir!
+vacation notice	admin	tr	Tatil bildirimi
 view access log	admin	tr	Erişim kütüğünü görüntüle
 view account	admin	tr	Hesap görüntüle
 view category	admin	tr	Kategori görüntüle
@@ -436,6 +440,7 @@ view user account	admin	tr	Kullanıcı hesabını görüntüle
 who would you like to transfer all records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime taşımak istesiniz?
 who would you like to transfer records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime aktarmak istersiniz?
 xml-rpc	admin	tr	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	tr	Hesap ayarlarını düzeltmek veya hesabı silmek için sihirbazı kullanabilirsiniz.
 you have entered an invalid expiration date	admin	tr	Geçersiz bir zaman aşım tarihi girdiniz
 you must add at least 1 permission or group to this account	admin	tr	Bu hesaba en az 1 izin ya da grup tanımlaması yapmalısınız
 you must enter a group name.	admin	tr	Bir grup adı girmelisiniz

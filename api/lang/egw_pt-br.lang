@@ -146,6 +146,7 @@ applications	common	pt-br	Aplicativos
 applies the changes made	common	pt-br	Aplicar as alterações realizadas
 applies the changes to the given version of the template	common	pt-br	Aplicar as alterações para a versão do modelo informado
 apply	common	pt-br	Aplicar
+apps & license	common	pt-br	Aplicativos e licenças
 apps &amp; license	common	pt-br	Aplicativos e licença
 april	common	pt-br	Abril
 are you sure you want to delete these entries ?	common	pt-br	Deseja remover estes registros?
@@ -278,7 +279,7 @@ clear window	common	pt-br	Limpar janela
 click	common	pt-br	Clique
 click here to attach the file	common	pt-br	Clique aqui para anexar o arquivo
 click here to create the link	common	pt-br	Clique aqui para criar o link
-click here to resume your egroupware session.	common	pt-br	Clique aqui para restaurar sua sessão EGroupware.
+click here to resume your egroupware session.	common	pt-br	Clique para retomar sua sessão do EGroupware.
 click here to start the search	common	pt-br	Clique aqui para inicar uma pesquisa
 click here to upload the file	common	pt-br	Clique aqui para enviar o arquivo
 click this image on the navbar: %1	common	pt-br	Clique nesta imagem na barra de navegação: %1
@@ -462,7 +463,12 @@ editable templates - editor	common	pt-br	Modelos editáveis - Editor
 editable templates - search	common	pt-br	Modelos editáveis - Localizar
 editable templates - show template	common	pt-br	Modelos editáveis - Visualizar Modelo
 egroupware	common	pt-br	EGroupware
+egroupware administrators group, do not delete	common	pt-br	Grupo de administradores do EGroupware, NÃO exclua
+egroupware all users group, do not delete	common	pt-br	Grupo de todos os usuários do EGroupware, NÃO exclua
+egroupware anonymous users group, do not delete	common	pt-br	Grupo de usuários anônimos do EGroupware, NÃO exclua
 egroupware api version	common	pt-br	Versão da API EGroupware
+egroupware maintenance update %1 available	common	pt-br	Atualização de manutenção do EGroupware %1 disponível
+egroupware security update %1 needs to be installed!	common	pt-br	A atualização de segurança do EGroupware %1 precisa ser instalada!
 egroupware version	common	pt-br	Versão do EGroupware
 egroupware: login blocked for user '%1', ip %2	common	pt-br	Login bloqueado para o usuário '%1', endereço IP %2
 egypt	common	pt-br	EGITO
@@ -482,7 +488,7 @@ end time	common	pt-br	Hora do término
 enter '' for an empty default, nothing mean no default	common	pt-br	Informe '' para campos vazios, nada não significa padrão algum
 enter a search pattern	common	pt-br	Informe um teste padrão para a busca
 enter filename to upload and attach, use [browse...] to search for it	common	pt-br	Informe o nome do arquivo para envio e anexe, use [Localizar...] para procurar por ele
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Informe a localização da Extranet em um URL .<br>Exemplo: https://egw.seudomínio.com.br/extranet ou /extranet<br><b>Não finalize com uma BARRA</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Informe a localização da Extranet em um URL .<br>Exemplo: https://egw.seudomínio.com.br/egroupware ou /egroupware<br><b>Não finalize com uma BARRA</b>
 enter the new version number here (> old_version), empty for no update-file	common	pt-br	Informe o número da nova versão aqui (> old_version), deixe vazio para não atualizar o arquivo
 enter the new version number here (has to be > old_version)	common	pt-br	Informe o número da nova versão aqui (tem que ser > old_version)
 enter your file name	common	pt-br	Digite o nome do arquivo
@@ -698,7 +704,7 @@ insert row after	common	pt-br	Inserir linha depois
 insert row before	common	pt-br	Inserir linha antes
 insert timestamp into description field	common	pt-br	Insira o carimbo da hora no campo de descrição
 install	common	pt-br	Instalar
-install egroupware as mail-handler?	common	pt-br	Armazenar um arquivo
+install egroupware as mail-handler?	common	pt-br	Instalar o EGroupware como gestor de correio eletrónico?
 integer	common	pt-br	Inteiro
 international	common	pt-br	Internacional
 introduction	common	pt-br	Introdução
@@ -960,7 +966,7 @@ open existing contact	common	pt-br	Abrir contato existente
 open notify window	common	pt-br	Abrir janela de notificação
 open popup window	common	pt-br	Abrir janela
 open the online help.	common	pt-br	Abra a ajuda on-line
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pt-br	O login do OpenIDConnect foi bem-sucedido, mas o usuário '%1' NÃO existe no EGroupware, e a criação automática de usuários está desativada!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pt-br	O login do OpenID Connect foi bem-sucedido, mas o usuário '%1' NÃO existe no EGroupware, e a criação automática de usuários está desativada!
 operator	common	pt-br	Operador
 optional note about the link	common	pt-br	Nota opcional para o link
 options	common	pt-br	Opções
@@ -1311,6 +1317,7 @@ tanzania, united republic of	common	pt-br	TANZÂNIA
 template	common	pt-br	Modelo
 template deleted	common	pt-br	Modelo removido.
 template saved	common	pt-br	Modelo salvo.
+templates	common	pt-br	Modelos
 text	common	pt-br	Texto
 text color:	common	pt-br	Cor do texto:
 textarea	common	pt-br	Área para texto
@@ -1424,8 +1431,8 @@ welcome	common	pt-br	Bem Vindo
 western european	common	pt-br	Europa Ocidental
 western sahara	common	pt-br	WESTERN SAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt-br	O que acontece com o conteúdo excedente: vísivel (default), oculto, scroll, auto (o navegador decide)
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	pt-br	Quando você mesclar entradas em documentos, elas serão armazenadas aqui. Se nenhuma pasta for fornecida, eles serão armazenados em seu diretório pessoal (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt-br	Quando você escolhe sim, os botões Página Inicial e Desconectar são exibidos como aplicativos na barra de aplicativos principais.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	pt-br	Onde e como os links como Preferências, Sobre e Desconectar serão exibidos.
 which groups	common	pt-br	Qual grupo
 whole query	common	pt-br	Toda a consulta
 widget copied into clipboard	common	pt-br	Widget copiado para a área de transferência

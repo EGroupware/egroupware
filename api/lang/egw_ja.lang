@@ -148,6 +148,7 @@ applies the changes made	common	ja	変更を適用する
 applies the changes to the given version of the template	common	ja	Applies the changes to the given version of the template
 apply	common	ja	適用
 apply the action on the whole query, not only the shown entries	common	ja	Apply the action on the whole query, NOT only the shown entries
+apps & license	common	ja	アプリとライセンス
 apps &amp; license	common	ja	アプリとライセンス
 april	common	ja	4月
 are you sure you want to delete these entries ?	common	ja	これらの項目を削除してよろしいですか？
@@ -186,7 +187,7 @@ bangladesh	common	ja	バングラデシュ
 barbados	common	ja	バルバドス
 baseline	common	ja	ベースライン
 bcc	common	ja	Bcc
-before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	ja	Before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with EGroupware.
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	ja	先に進む前に、MailvelopeプラグインがEGroupwareでどのように動作するか、この短いビデオをご覧になることを強くお勧めします。
 belarus	common	ja	ベラルーシ
 belgium	common	ja	ベルギー
 belize	common	ja	ベリーズ
@@ -818,8 +819,8 @@ luxembourg	common	ja	ルクセンブルク
 macedonia, the former yugoslav republic of	common	ja	マケドニア
 madagascar	common	ja	マダガスカル
 mail domain, eg. "%1"	common	ja	メール・ドメイン（例: "%1"）
-mailvelope addon installation failed! please try again.	common	ja	Mailvelope addon installation failed! Please try again.
-mailvelope addon installation succeded. now you may configure the options.	common	ja	Mailvelope addon installation succeded. Now you may configure the options.
+mailvelope addon installation failed! please try again.	common	ja	Mailvelope アドオンのインストールに失敗しました！再試行してください。
+mailvelope addon installation succeded. now you may configure the options.	common	ja	Mailvelopeアドオンのインストールに成功しました。これでオプションを設定することができます。
 main category	common	ja	メイン・カテゴリ
 maintainer	common	ja	Maintainer
 malawi	common	ja	マラウィ
@@ -1336,6 +1337,7 @@ tanzania, united republic of	common	ja	タンザニア
 template	common	ja	テンプレート
 template deleted	common	ja	テンプレートを削除しました。
 template saved	common	ja	テンプレートを保存しました。
+templates	common	ja	テンプレート
 text	common	ja	テキスト
 text color:	common	ja	テキスト色:
 textarea	common	ja	テキスト領域
@@ -1459,7 +1461,6 @@ western sahara	common	ja	西サハラ
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	ja	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ja	エントリーをドキュメントにマージすると、それらはここに保存されます。フォルダが提供されない場合、それらはホームディレクトリ(%1)に保存されます。
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ja	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	ja	Where and how will the EGroupware links like Preferences, About and Log out be displayed.
 which groups	common	ja	Which groups
 which infolog types should be synced with the device, default only tasks.	common	ja	デバイスと同期するインフォログのタイプを指定します。既定ではタスクのみ同期します。
 whole query	common	ja	クエリ全体

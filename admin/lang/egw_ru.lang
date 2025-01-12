@@ -655,7 +655,6 @@ standard smtp-server	admin	ru	Стандартный SMTP сервер
 start	admin	ru	Пуск
 start testjob!	admin	ru	Начать тестовое задание!
 starts with	admin	ru	Начинается с
-stationery	admin	ru	Бланк
 submit changes	admin	ru	Подтвердить изменения
 submit displayed information?	admin	ru	Подтвердить указанную информацию
 submit statistic information	admin	ru	Подтвердить статистическую информацию
@@ -664,7 +663,6 @@ submit to egroupware.org	admin	ru	Подтвердить на egroupware.org
 subtype	admin	ru	Подтип
 success	admin	ru	Успешно
 switch it off, if users are randomly thrown out	admin	ru	Выключите, если пользователи отключаются произвольно
-templates	admin	ru	Шаблоны
 that loginid has already been taken	admin	ru	Этот логин уже занят
 the api is current	admin	ru	Обновление API не требуется
 the api requires an upgrade	admin	ru	API требует обновления
@@ -744,8 +742,10 @@ username/password defined by admin	admin	ru	Имя пользователя/Па
 username@domainname (virtual mail manager)	admin	ru	username@domainname (Менеджер Виртуальной почты)
 users can define their own emailaccounts	admin	ru	Пользователь может назначать свои собственные учетные записи эл. почты.
 users can define their own identities	admin	ru	Пользователи могут устанавливать свои собственные данные идентификации
+users can define their own signatures	admin	ru	Пользователи могут определять свои собственные подписи
 users choice	admin	ru	Выбор пользователя
 vacation messages with start- and end-date require an admin account to be set	admin	ru	Сообщения автоответчика с датами начала и окончания требуют установленной учетной записи администратора!
+vacation notice	admin	ru	Уведомление об отпуске
 value for column %1 is not unique!	admin	ru	Значение колонки %1 не уникально!
 vfs directory "%1" not found!	admin	ru	Каталог VFS "%1" не найден!
 view access log	admin	ru	Просмотр журнала подключений
@@ -768,6 +768,7 @@ yes, but no scayt	admin	ru	Да, но не проверять правописа
 yes, use browser based spell checking engine	admin	ru	Да, но использовать проверку правописания браузером
 yes, use webspellchecker	admin	ru	Да, использовать интерактивный WebSpellChecker
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	ru	Хэш можно сменить, если установлен случайный пароль или используются текстовые (plaintext) пароли!
+you can use wizard to fix account settings or delete account.	admin	ru	Вы можете воспользоваться мастером, чтобы исправить настройки учетной записи или удалить ее.
 you have entered an invalid expiration date	admin	ru	Вы ввели неправильную дату окончания
 you have no email address for your user set !!!	admin	ru	Вы не указали e-mail адрес для пользователя!
 you have received a new message on the	admin	ru	Вы получили сообщения на

@@ -2,34 +2,27 @@
 %1 accessories restored	resources	ru	%1 аксессуары восстановлены
 %1 resource(s) %2	resources	ru	%1 ресурс(ы) %2
 %1 resource(s) %2, %3 failed	resources	ru	%1 ресурс(ы) %2, %3 не работает
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	ru	%1 ресурс(ы) %2, %3 не работает из-за недостаточного количества прав !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	ru	%1 ресурс(ы) %2, %3 не работает из-за недостаточного количества прав!
 %1 resource(s) booked	resources	ru	%1 ресурс(ы) забронирован(ы)
 %1 resource(s) view calendar	resources	ru	%1 ресурс(ы) просмотр календаря
 accessories	resources	ru	Комплектующие
 accessories of	resources	ru	Комплектующие к
-accessories:	resources	ru	Комплектующие:
 accessory of	resources	ru	Аксессуар из
-actions	resources	ru	Действия
-add accessory	resources	ru	Добавить комплектующее
 add group to event participants	resources	ru	Добавить группу к участникам мероприятия
 add resource	resources	ru	добавить ресурс
-add resources	resources	ru	Добавить ресурсы
 administrator	resources	ru	Администратор
-all categories	resources	ru	Все категории
 allow booking requests from any user when creating events?	resources	ru	Разрешить запросы на бронирование от любого пользователя при создании событий?
+allow ignore conflicts	admin	ru	Разрешить игнорировать конфликты
 book	resources	ru	Бронь
 book resource	resources	ru	Бронировать ресурсы
-book selected resources	resources	ru	Бронировать выбранные ресурсы
 book this resource	resources	ru	Бронировать этот ресурс
 bookable	resources	ru	Бронируемый
 booking requests	resources	ru	Запросы на бронирование
 buy this article	resources	ru	Купить эту статью
-buy this resource	resources	ru	Купить этот ресурс
 buyable	resources	ru	Покупаемый
 category admin	resources	ru	Администратор категории
 category saved.	resources	ru	Категория сохранена.
 category:	resources	ru	Категория:
-check all	resources	ru	Отметить все
 choose category admin	resources	ru	Выбрать администратора категории
 clear selection	resources	ru	очистить выбор
 configure access permissions	admin	ru	Настроить разрешения доступа
@@ -47,7 +40,6 @@ deleted	resources	ru	Удалено
 description (short)	resources	ru	Описание (краткое)
 direct booking permissions	resources	ru	Разрешения прямого бронирования
 do you really want to delete this resource?	resources	ru	Вы действительно хотите удалить этот ресурс?
-don't use vfs (this will need a symlink --> see readme)	resources	ru	Не использовать VFS (это требует применеия символических ссылок --> см. README)
 edit this entry	resources	ru	Редактировать эту запись
 existing links	resources	ru	Существующие ссылки
 exists	resources	ru	Существуют
@@ -76,6 +68,7 @@ inventory number	resources	ru	Инвентаризационный номер
 inventory number:	resources	ru	Инвентаризационный номер:
 is resource bookable?	resources	ru	Ресурс бронируемый?
 is resource buyable?	resources	ru	Ресурс покупаемый?
+is the ressource bookable?	resources	ru	Можно ли забронировать ресурс?
 is this resource bookable?	resources	ru	Этот ресурс бронируемый?
 is this resource buyable?	resources	ru	Этот ресурс покупаемый?
 links	resources	ru	Ссылки
@@ -112,11 +105,15 @@ read permissions	resources	ru	Прочитать разрешения досту
 registration confirmed %1	resources	ru	Регистрация подтверждена %1
 related links	resources	ru	Связанные ссылки
 remove accessories before changing accessory of	resources	ru	Удаление аксессуаров перед заменой аксессуаров
+resource	resources	ru	Ресурс
+resource %1 deleted!	resources	ru	Ресурс %1 удален!
+resource %1 saved!	resources	ru	Ресурс %1 сохранен!
+resource / accessories	resources	ru	Ресурс / Аксессуары
 resource id	resources	ru	Идентификатор ресурса ID
 resources	common	ru	Ресурсы
 resources and accessories	resources	ru	Ресурсы и Комплектующие
-resources csv export	resources	ru	Экспорт ресурсов CVS
-resources csv import	resources	ru	Импорт ресурсов CVS
+resources csv export	resources	ru	Экспорт ресурсов CSV
+resources csv import	resources	ru	Импорт ресурсов CSV
 resources list	resources	ru	Список ресурсов
 responsible:	resources	ru	Ответственный:
 saves entry and exits	resources	ru	Сохраняет запись и выходит
@@ -143,6 +140,7 @@ use general resources icon	resources	ru	Использовать общую пи
 use own picture	resources	ru	Использовать своё изображение
 use the category's icon	resources	ru	Использовать пиктограмму категории
 useable	resources	ru	доступный
+view accessories	resources	ru	Просмотр аксессуаров
 view calendar	resources	ru	Обзор календаря
 view this entry	resources	ru	Показать эту запись
 web-page of resource	resources	ru	Веб-Страница ресурса
@@ -152,7 +150,9 @@ which category does this resource belong to?	resources	ru	К какой кате
 write permissions	resources	ru	Разрешение на запись
 yes - delete accessories too	resources	ru	Да - Также удалить аксессуары
 yes - un-delete accessories too	resources	ru	Да - Также восстановить принадлежности
+yes, all users can ignore conflicts	resources	ru	Да, все пользователи могут игнорировать конфликты
 yes, only admins can purge deleted items	admin	ru	Да, только администраторы могут очистить удалённые записи
+yes, only users with direct booking permission	resources	ru	Да, только пользователи с правом прямого бронирования
 yes, users can purge their deleted items	admin	ru	Да, пользователи могут очистить удалённые ими записи
 you are not permitted to delete this resource!	resources	ru	У вас нет прав на удаление этого ресурса!
 you are not permitted to edit this resource!	resources	ru	У вас нет прав на редактирование этого ресурса!

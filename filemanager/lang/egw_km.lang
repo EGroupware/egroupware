@@ -47,7 +47,6 @@ can't open directory %1!	filemanager	km	មិនអាចបើកថត %1 ប
 cancel editing %1 without saving	filemanager	km	បោះបង់ការកែសម្រួល%1 ដោយមិនចាំបាច់រក្សាទុក
 cannot create directory because it begins or ends in a space	filemanager	km	មិន​អាច​បង្កើត​ថត​បាន​ទេ ព្រោះ​វា​ចាប់​ផ្តើម ឬ​បញ្ចប់​ក្នុង​ចន្លោះ។
 cautiously rejecting to remove folder '%1'!	filemanager	km	បដិសេធដោយប្រុងប្រយ័ត្នដើម្បីលុបថត '%1'!
-check all	filemanager	km	ពិនិត្យ​ទាំងអស់
 check virtual filesystem	common	km	ពិនិត្យប្រព័ន្ធឯកសារនិម្មិត
 classic	filemanager	km	របារឧបករណ៍ស្តង់ដារ
 clear search	filemanager	km	ជម្រះការស្វែងរក
@@ -237,7 +236,6 @@ projectmanager	filemanager	km	អ្នកគ្រប់គ្រងគម្�
 properties saved.	filemanager	km	ទ្រព្យសម្បត្តិត្រូវបានរក្សាទុក។
 protocol to use	filemanager	km	ពិធីការដែលត្រូវប្រើ
 protocols	filemanager	km	ពិធីការ
-quick jump to	filemanager	km	លោតយ៉ាងលឿនទៅ
 quota	filemanager	km	កូតា
 quota exceeded	filemanager	km	លើសកូតា
 read & write access	filemanager	km	ការចូលអាន និងសរសេរ

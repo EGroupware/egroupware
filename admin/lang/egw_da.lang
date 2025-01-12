@@ -496,7 +496,11 @@ user hidden from non-admins.	admin	da	Bruger skjult for ikke-admins
 user-agent	admin	da	User-Agent
 userdata	admin	da	Brugerdata
 users can define their own emailaccounts	admin	da	Brugere kan selv definere deres egne e-mail kontoer
+users can define their own identities	admin	da	Brugere kan definere deres egne identiteter
+users can define their own signatures	admin	da	Brugere kan definere deres egne signaturer
 users choice	admin	da	Brugerens valg
+vacation messages with start- and end-date require an admin account to be set	admin	da	Feriebeskeder med start- og slutdato kræver en administratorkonto for at blive indstillet!
+vacation notice	admin	da	Meddelelse om ferie
 view access log	admin	da	Vis adgangslog
 view account	admin	da	Vis konto
 view category	admin	da	Vis kategori
@@ -509,6 +513,7 @@ who would you like to transfer all records owned by the deleted user to?	admin	d
 who would you like to transfer records owned by the deleted user to?	admin	da	Hvem vil du gerne overføre poster, der ejes af den slettede bruger, til?
 xml-rpc	admin	da	XML-RPC
 you can set an initial value, which gets incremented every time a new serial get generated	admin	da	du kan indstille en startværdi, som øges, hver gang der genereres en ny serie
+you can use wizard to fix account settings or delete account.	admin	da	Du kan bruge guiden til at rette kontoindstillinger eller slette kontoen.
 you have entered an invalid expiration date	admin	da	Du har indtastet en ugyldig udløbsdato!
 you must add at least 1 permission or group to this account	admin	da	Du skal mindst tilføje en rettighed eller gruppe til denne konto!
 you must enter a group name.	admin	da	Du skal indtaste et gruppenavn.

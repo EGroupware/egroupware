@@ -131,7 +131,7 @@ contact maintenance	admin	el	Συντήρηση επαφών
 contact modified by %1 at %2	addressbook	el	Επαφή τροποποιήθηκε από %1 στις %2
 contact not found!	addressbook	el	Δεν βρέθηκε η επαφή!
 contact repository	admin	el	Αποθήκη επαφής
-contact saved	addressbook	el	Επαφή αποθηκεύτηκε
+contact saved	addressbook	el	Επαφή αποθηκεύτηκε.
 contact settings	admin	el	Ρυθμίσεις επαφής
 contactform	addressbook	el	Φόρμα επαφής
 contacts	common	el	Επαφές
@@ -150,6 +150,7 @@ country (private)	addressbook	el	Χώρα (προσ.)
 country code	addressbook	el	Κωδικός χώρας
 country code (private)	addressbook	el	Κωδικός χώρας (προσ.)
 create new links	addressbook	el	Δημιουργία νέων συνδέσμων
+create new shares writable	addressbook	el	Δημιουργία νέων μετοχών με δυνατότητα εγγραφής
 created	addressbook	el	Δημιουργήθηκε
 credit	addressbook	el	Πίστωση
 crm view list	addressbook	el	Εμφάνιση λίστας CRM
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	el	Φορτώστε ή διαγράψτε
 url (business)	addressbook	el	url ιστότοπος (εργασίας)
 url (private)	addressbook	el	url ιστότοπος (προσωπικός)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	el	Διεύθυνση URL για τη σύνδεση αριθμών τηλεφώνου με. Χρησιμοποιήστε %1 = αριθμός προς κλήση, %u = όνομα λογαριασμού, %t = τηλέφωνο λογαριασμού.
-use a category tree?	addressbook	el	Χρήση δέντρου για την επιλογή κατηγοριών
 use addressbooks "own sorting" attribute	addressbook	el	να γίνεται χρήση του χαρακτηριστικού "προσωπική ταξινόμηση"
 use an extra tab for private custom fields?	admin	el	Χρήση πρόσθετου διαχωριστικού για την εμφάνιση προσαρμοσμένων προσωπικών πεδίων.
 use country list	addressbook	el	Χρήση καταλόγου χωρών

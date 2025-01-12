@@ -619,7 +619,6 @@ subscription successfully saved.	mail	es-es	La suscripción se ha grabado correc
 succeeded on %1 folders, failed on %2	mail	es-es	Se ha realizado correctamente en %1 carpetas, ha fallado en %2
 switch off encryption?	mail	es-es	¿Desea desactivar el cifrado?
 template folder	mail	es-es	Carpeta de plantillas
-templates	mail	es-es	Plantillas
 templates folder	mail	es-es	Carpeta de plantillas
 test connection	mail	es-es	Conexión de prueba
 test connection and display basic information about the selected profile	mail	es-es	Probar conexión y mostrar información básica sobre el perfil seleccionado

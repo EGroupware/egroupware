@@ -129,6 +129,7 @@ application name needed to write a langfile or dump the etemplates !!!	common	id
 applications	common	id	Aplikasi
 applies the changes made	common	id	Terapkan perubahan
 apply	common	id	Terapkan
+apps & license	common	id	Aplikasi & Lisensi
 april	common	id	April
 are you sure you want to delete these entries ?	common	id	Apakah Anda yakin ingin menghapus entri-entri ini?
 are you sure you want to delete this entry ?	common	id	Apakah Anda yakin ingin menghapus entri ini?
@@ -322,6 +323,7 @@ description	common	id	Uraian
 detail	common	id	Detil
 details	common	id	Detil
 directory	common	id	Direktori
+directory for storing merged documents	preferences	id	Folder untuk menyimpan dokumen yang digabungkan
 disabled	common	id	Disabled
 discard changes	common	id	Buang pengubahan
 djibouti	common	id	DJIBOUTI
@@ -338,6 +340,7 @@ domestic	common	id	Domestik
 dominica	common	id	DOMINIKA
 dominican republic	common	id	REPUBLIK DOMINIKA
 don't ask again!	common	id	Jangan tanya lagi!
+don't show this again	common	id	Jangan tampilkan ini lagi
 done	common	id	Selesai
 download	common	id	Unduh
 drop table	common	id	Buang Tabel
@@ -349,11 +352,17 @@ eastern european	common	id	Eropa Timur
 ecuador	common	id	EKUADOR
 edit	common	id	Edit
 edit %1 category for	common	id	Edit kategori %1 untuk
+edit avatar	common	id	Edit avatar
 edit categories	common	id	Edit Kategori
 edit category	common	id	Edit kategori
 edit...	common	id	Edit ...
 egroupware	common	id	EGroupware
+egroupware administrators group, do not delete	common	id	Grup administrator EGroupware, JANGAN hapus
+egroupware all users group, do not delete	common	id	Grup semua pengguna EGroupware, JANGAN hapus
+egroupware anonymous users group, do not delete	common	id	Grup pengguna anonim EGroupware, JANGAN hapus
 egroupware api version	common	id	Versi API EGroupware
+egroupware maintenance update %1 available	common	id	Pembaruan pemeliharaan EGroupware %1 tersedia
+egroupware security update %1 needs to be installed!	common	id	Pembaruan keamanan EGroupware %1 perlu diinstal!
 egroupware version	common	id	Versi EGroupware
 egypt	common	id	MESIR
 el salvador	common	id	EL SALVADOR
@@ -727,7 +736,7 @@ open existing contact	common	id	Buka kontak yang ada
 open notify window	common	id	Buka jendela pemberitahuan
 open popup window	common	id	Buka jendela popup
 open the online help.	common	id	Buka bantuan online
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	id	Login OpenIDConnect berhasil, namun pengguna '%1' TIDAK ada di EGroupware, DAN pembuatan pengguna otomatis dinonaktifkan!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	id	Login OpenID Connect berhasil, namun pengguna '%1' TIDAK ada di EGroupware, DAN pembuatan pengguna otomatis dinonaktifkan!
 operator	common	id	Operator
 optional note about the link	common	id	Catatan opsional untuk tautan
 options	common	id	Options
@@ -954,9 +963,10 @@ tabs	common	id	Tabs
 taiwan	common	id	TAIWAN/TAIPEI
 tajikistan	common	id	TAJIKISTAN
 tanzania, united republic of	common	id	REPUBLIK TANZANIA
-template	common	id	Template
+template	common	id	Templat
 template deleted	common	id	Template dihapus
 template saved	common	id	Template disimpan
+templates	common	id	Templat
 text	common	id	Text
 text color:	common	id	Warna Teks:
 textarea	common	id	Textarea
@@ -1028,6 +1038,7 @@ weekend	common	id	Akhir minggu
 welcome	common	id	Selamat Datang
 western european	common	id	Eropa Barat
 western sahara	common	id	SAHARA BARAT
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	id	Ketika Anda menggabungkan entri ke dalam dokumen, entri tersebut akan disimpan di sini. Jika tidak ada folder yang disediakan, mereka akan disimpan di direktori rumah Anda (%1)
 whole query	common	id	Seluruh query
 width	common	id	Width
 width, disabled	common	id	Width, Disabled

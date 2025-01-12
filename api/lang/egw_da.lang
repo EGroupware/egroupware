@@ -92,6 +92,7 @@ application	common	da	Applikation
 applications	common	da	Applikationer
 applies the changes made	common	da	Anvender ændringerne
 apply	common	da	Anvend
+apps & license	common	da	Apps og licenser
 april	common	da	April
 are you sure you want to delete these entries ?	common	da	Vil du virkelige slette disse felter?
 are you sure you want to delete this entry ?	common	da	Vil Du virkelig slette dette felt?
@@ -187,6 +188,7 @@ clear	common	da	Slet
 clear form	common	da	Slet formular
 click	common	da	Klik
 click here to create the link	common	da	Clik her for at oprette linket
+click here to resume your egroupware session.	common	da	Klik for at genoptage din EGroupware-session.
 click here to start the search	common	da	Klik her for at starte søgningen
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	da	Klienter, der ikke udtrykkeligt angiver en grænse, bliver begrænset til så mange dage. En for høj grænse kan give problemer med nogle klienter.
 clipboard contents	common	da	Udklipsholderens indhold
@@ -621,7 +623,7 @@ open existing contact	common	da	Åbn eksisterende kontakt
 open notify window	common	da	Åben Notificer Vindue
 open popup window	common	da	Åben popup vindue
 open the online help.	common	da	Åbn online-hjælp
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	da	OpenIDConnect-login vellykket, men brugeren '%1' findes IKKE i EGroupware, OG automatisk brugeroprettelse er deaktiveret!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	da	OpenID Connect-login vellykket, men brugeren '%1' findes IKKE i EGroupware, OG automatisk brugeroprettelse er deaktiveret!
 operator	common	da	Operatør
 optional note about the link	common	da	Valgfri note til link
 options	common	da	Indstillinger
@@ -816,6 +818,8 @@ table properties	common	da	Table properties
 taiwan	common	da	Taiwan/Taipei
 tajikistan	common	da	Tajikistan
 tanzania, united republic of	common	da	Tanzania, Den forenede Republik
+template	common	da	Skabelon
+templates	common	da	Skabeloner
 text	common	da	Tekst
 textarea	common	da	Tekstområde
 thailand	common	da	Thailand
@@ -890,6 +894,7 @@ wallis and futuna	common	da	Wallis og Futuna
 wednesday	common	da	Onsdag
 welcome	common	da	Velkommen
 western sahara	common	da	Vest Sahara
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	da	Når du fletter poster til dokumenter, gemmes de her. Hvis der ikke er angivet en mappe, gemmes de i din hjemmemappe (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	da	Hvis du siger ja, bliver hjem og logout knapperne vist som applikationer i hoved applikations linien.
 which groups	common	da	Hvilke grupper
 width	common	da	Bredde

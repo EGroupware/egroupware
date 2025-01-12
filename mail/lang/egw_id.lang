@@ -295,7 +295,6 @@ smtp	mail	id	SMTP
 sneak preview in list	mail	id	Pratinjau pesan
 sort order	mail	id	Sort Order
 template folder	mail	id	Folder Templat
-templates	mail	id	Templat
 text	mail	id	Text
 text/plain	mail	id	Teks
 the imap server need to meet certain requirements and be configured for it:	mail	id	Server IMAP harus memenuhi persyaratan tertentu DAN dikonfigurasi untuk itu:

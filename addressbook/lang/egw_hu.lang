@@ -117,6 +117,7 @@ copy a contact and edit the copy	addressbook	hu	Kapcsolat másolása és a máso
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	hu	Másold a módosításokat a vágólapra, %1frissítsd az oldalat%2 és fűzd hozzá.
 country	common	hu	Ország
 create new links	addressbook	hu	Új hivatkozás létrehozása
+create new shares writable	addressbook	hu	Új részvények létrehozása írható
 created	addressbook	hu	Létrehozva
 credit	addressbook	hu	Hitel
 crm-view	addressbook	hu	CRM nézet
@@ -416,7 +417,6 @@ unshared	addressbook	hu	már nem közös
 update a single entry by passing the fields.	addressbook	hu	Egy egyedüli bejegyzés frissítése a mezök beírásával.
 updated	addressbook	hu	Frissítve
 upload or delete the photo	addressbook	hu	Fotó feltöltése vagy törlése
-use a category tree?	addressbook	hu	Fát használjon a kategóriák kiválasztásához
 use addressbooks "own sorting" attribute	addressbook	hu	Címkönyvek "saját rendezés" attribútumának használata
 use country list	addressbook	hu	Ország lista használata
 user groups are automatically shown as distribution lists.	addressbook	hu	A felhasználói csoportok automatikusan elosztási listaként jelennek meg.

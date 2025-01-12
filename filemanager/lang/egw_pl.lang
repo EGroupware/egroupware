@@ -28,7 +28,6 @@ can't open directory %1!	filemanager	pl	Nie mogę otworzyć katalogu %1!
 cancel editing %1 without saving	filemanager	pl	Przerwij edycję %1 bez zapisywania
 cannot create directory because it begins or ends in a space	filemanager	pl	Nie moge utworzyć katalogu, ponieważ nazwa zaczyna lub konczy się spacją
 cautiously rejecting to remove folder '%1'!	filemanager	pl	Z ostrożności nie usuwam folderu '%1'!
-check all	filemanager	pl	Zaznacz wszystkie
 classic	filemanager	pl	Standardowy pasek narzędzi
 clear search	filemanager	pl	wyczyść wyszukiwanie
 comment	filemanager	pl	Komentarz
@@ -179,7 +178,6 @@ projectmanager	filemanager	pl	Menedżer Projektów
 properties saved.	filemanager	pl	Zapisano właściwości
 protocol to use	filemanager	pl	Protokół do użycia
 protocols	filemanager	pl	Protokoły
-quick jump to	filemanager	pl	Szybki skok do
 quota	filemanager	pl	Limit
 quota exceeded	filemanager	pl	Przekroczono limit
 read & write access	filemanager	pl	Dostęp do odczytu i zapisu

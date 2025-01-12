@@ -2,33 +2,27 @@
 %1 accessories restored	resources	sl	%1 dodatki obnovljeni
 %1 resource(s) %2	resources	sl	%1 viri %2
 %1 resource(s) %2, %3 failed	resources	sl	%1 viri %2, %3 niso uspeli
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	sl	%1 viri %2, %3 niso bili vzpostavljeni zaradi pomanjkljivih pravic !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	sl	%1 viri %2, %3 niso bili vzpostavljeni zaradi pomanjkljivih pravic!
 %1 resource(s) booked	resources	sl	%1 viri so bili rezervirani
 %1 resource(s) view calendar	resources	sl	%1 viri si ogledajo koledar
 accessories	resources	sl	Dodatki
 accessories of	resources	sl	Pripomočki v
-accessories:	resources	sl	Pripomočki:
 accessory of	resources	sl	Dodatki iz
-actions	resources	sl	Dejanja
-add accessory	resources	sl	Dodaj pripomoček
 add group to event participants	resources	sl	Dodajte skupino udeležencem dogodka
 add resource	resources	sl	Dodaj sredstvo
-add resources	resources	sl	Dodaj sredstvo
 administrator	resources	sl	Administrator
-all categories	resources	sl	Vse kategorije
 allow booking requests from any user when creating events?	resources	sl	Omogočiti zahteve za rezervacijo od katerega koli uporabnika pri ustvarjanju dogodkov?
+allow ignore conflicts	admin	sl	Dovolite, da se prezrejo konflikti
 book	resources	sl	Rezerviraj
-book selected resources	resources	sl	Rezervira izbrano sredstvo
+book resource	resources	sl	Vir knjig
 book this resource	resources	sl	Rezerviraj to sredstvo
 bookable	resources	sl	Se lahko rezervira
 booking requests	resources	sl	Zahteve za rezervacijo
 buy this article	resources	sl	Kupi ta artikel
-buy this resource	resources	sl	Kupi to sredstvo
 buyable	resources	sl	Se lahko kupi
 category admin	resources	sl	Upravitelj kategorije
 category saved.	resources	sl	Prihranjena kategorija.
 category:	resources	sl	Kategorija:
-check all	resources	sl	Lzberi vse
 choose category admin	resources	sl	Izberite upravitelja kategorije
 clear selection	resources	sl	Izbriši izbor
 configure access permissions	admin	sl	Konfiguriraj pravice dostopa
@@ -45,10 +39,10 @@ deleted	resources	sl	Zbrisano
 description (short)	resources	sl	Opis (kratek)
 direct booking permissions	resources	sl	Neposredno dovoljenje za rezervacijo
 do you really want to delete this resource?	resources	sl	Ali res želite izbrisati ta vir?
-don't use vfs (this will need a symlink --> see readme)	resources	sl	Ne uporabljaj VFS (za to potrebujete symlink --> glejte README)
 edit this entry	resources	sl	Uredi ta vnos
 existing links	resources	sl	Obstoječe povezave
 exists	resources	sl	Obstaja
+exports a list of resources to a csv file.	resources	sl	Exporterar en lista med resurser till en CSV-fil.
 general	resources	sl	Splošno
 general informations about resource	resources	sl	Splošne informacije o sredstvu
 gernal resource	resources	sl	Splošno sredstvo
@@ -60,8 +54,10 @@ how many of them are useable?	resources	sl	Koliko jih je uporabnih?
 how many of this resource are usable	resources	sl	Koliko sredstev je uporabnih
 how many of this resource exists	resources	sl	Koliko teh sredstev obstaja
 icon	resources	sl	Ikona
+if you specify an export definition, it will be used when you export	resources	sl	Om du anger en exportdefinition kommer den att användas när du exporterar
 implies booking permission	resources	sl	Vsebuje dovoljenje za rezervacijo
 implies read permission	resources	sl	Vsebuje dovoljenje za branje
+imports a list of resources from a csv file.	resources	sl	Importerar en lista med resurser från en CSV-fil.
 information about storage	resources	sl	Informacije o prostoru
 informations about the location of resource	resources	sl	Informacije o lokaciji sredstva
 insert	resources	sl	Vstavi
@@ -69,6 +65,7 @@ inventory number	resources	sl	Inventarna številka
 inventory number:	resources	sl	Inventarna številka:
 is resource bookable?	resources	sl	Se sredstvo lahko rezervira?
 is resource buyable?	resources	sl	Se sredstvo lahko kupi?
+is the ressource bookable?	resources	sl	Ali je vir mogoče rezervirati?
 is this resource bookable?	resources	sl	Se to sredstvo lahko rezervira?
 is this resource buyable?	resources	sl	Se to sredstvo lahko kupi?
 links	resources	sl	Povezave
@@ -78,6 +75,8 @@ location:	resources	sl	Lokacija:
 manage mapping	resources	sl	Upravljaj mapiranje
 name of resource	resources	sl	Ime sredstva
 name:	resources	sl	Ime:
+new accessory	resources	sl	Nova oprema
+new resource	resources	sl	Nov vir
 no - leave them	resources	sl	Ne - pustite jih
 no - make them resources	resources	sl	Ne - naredite jih za vire
 no description available	resources	sl	Opis ni na voljo
@@ -89,6 +88,7 @@ picture source	resources	sl	Izvor slike
 picture type is not supported, sorry!	resources	sl	Ta vsta slike ni podprta!
 pictures or resource	resources	sl	Slika serdstva
 planer	resources	sl	Planer
+prize	resources	sl	Cena
 prizeing information for booking or buying	resources	sl	Informacija o ceni za rezervacijo ali nakup
 quantity	resources	sl	Količina
 quantity of resource	resources	sl	Količina sredstva
@@ -98,6 +98,10 @@ read permissions	resources	sl	Dovoljenje branja
 registration confirmed %1	resources	sl	Registracija potrjena %1
 related links	resources	sl	Povezave na to temo
 remove accessories before changing accessory of	resources	sl	Odstranite pripomočke, preden spremenite pripomoček iz
+resource	resources	sl	Vir
+resource %1 deleted!	resources	sl	Vir %1 izbrisan!
+resource %1 saved!	resources	sl	Sredstvo %1 shranjeno!
+resource / accessories	resources	sl	Vir / Dodatki
 resources	common	sl	Sredstva
 resources list	resources	sl	Seznam sredstev
 responsible:	resources	sl	Odgovorni:
@@ -122,6 +126,8 @@ use general resources icon	resources	sl	Uporabi splošno ikono za sredstva
 use own picture	resources	sl	Uporabi lastno sliko
 use the category's icon	resources	sl	Uporabi ikono kategorije
 useable	resources	sl	Uporabno
+view accessories	resources	sl	Prikaži dodatke
+view calendar	resources	sl	Ogled koledarja
 view this entry	resources	sl	Poglej ta vnos
 web-page of resource	resources	sl	Spletna stran sredstva
 web-site for this resource	resources	sl	Spletna stran tega sredstva
@@ -130,7 +136,9 @@ which category does this resource belong to?	resources	sl	Kateri kategoriji to s
 write permissions	resources	sl	Dovoljenje za pisanje
 yes - delete accessories too	resources	sl	Da - izbrišite tudi dodatke
 yes - un-delete accessories too	resources	sl	Da - obnovite tudi dodatke
+yes, all users can ignore conflicts	resources	sl	Da, vsi uporabniki lahko ignorirajo konflikte
 yes, only admins can purge deleted items	admin	sl	Da, samo skrbniki lahko dokončno izbrišejo podatke
+yes, only users with direct booking permission	resources	sl	Da, samo uporabniki z dovoljenjem za neposredno rezervacijo
 yes, users can purge their deleted items	admin	sl	Da, uporabniki lahko dokončno izbrišejo podatke
 you are not permitted to get information about this resource!	resources	sl	Nimate dovoljenja pridobiti informacij o tem sredstvu!
 you chose more resources than available	resources	sl	Izbrali ste več sredstev, kot jih je na voljo

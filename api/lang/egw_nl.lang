@@ -148,6 +148,7 @@ applies the changes made	common	nl	De gemaakte wijzigingen doorvoeren
 applies the changes to the given version of the template	common	nl	De gemaakte wijzigingen doorvoeren op de opgegeven versie van de template
 apply	common	nl	Toepassen
 apply the action on the whole query, not only the shown entries	common	nl	Voer de aktie uit op voor de gehele query, NIET alleen voor de getoonde invoer
+apps & license	common	nl	Apps & Licentie
 apps &amp; license	common	nl	Apps & Licentie
 april	common	nl	April
 are you sure you want to delete these entries ?	common	nl	Weet u zeker dat uw deze records wilt verwijderen?
@@ -1325,9 +1326,10 @@ tabs	common	nl	Tabs
 taiwan	common	nl	TAIWAN/TAIPEI
 tajikistan	common	nl	TADZJIKISTAN
 tanzania, united republic of	common	nl	TANZANIA
-template	common	nl	Template
+template	common	nl	Sjabloon
 template deleted	common	nl	Template verwijderd
 template saved	common	nl	Template opgeslagen
+templates	common	nl	Sjablonen
 text	common	nl	Tekst
 text color:	common	nl	Tekstkleur:
 textarea	common	nl	Textruimte
@@ -1449,7 +1451,6 @@ western sahara	common	nl	WESTELIJK SAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	nl	Wat gebeurt er met overflowing content: visible (standaard), hidden, scroll, auto (browser bepaalt)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	nl	Wanneer je items samenvoegt in documenten, worden ze hier opgeslagen. Als er geen map is opgegeven, worden ze opgeslagen in je thuismap (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	nl	Indien u ja antwoord worden de home en loguit knop gepresenteerd als toepassingen in de toepassingenbalk.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	nl	Waar en op welke manier moeten de EGroupware links zoals voorkeuren, informatie en uitloggen getoond worden.
 which groups	common	nl	Welke groepen
 which infolog types should be synced with the device, default only tasks.	common	nl	Welke InfoLog typen zouden met dit apparaat moeten worden gesynchroniseerd, standaard is het alleen taken.
 whole query	common	nl	Gehele query

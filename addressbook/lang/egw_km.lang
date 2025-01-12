@@ -510,7 +510,6 @@ upload or delete the photo	addressbook	km	បង្ហោះ ឬលុបរូ�
 url (business)	addressbook	km	url (អាជីវកម្ម)
 url (private)	addressbook	km	url (ឯកជន)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	km	URL ដើម្បីភ្ជាប់លេខទូរស័ព្ទទៅ។ ប្រើ %1 = លេខដើម្បីហៅ, %u = ឈ្មោះគណនី, %t = ទូរស័ព្ទគណនី។
-use a category tree?	addressbook	km	ប្រើមែកធាងសម្រាប់ជ្រើសរើសប្រភេទ
 use addressbooks "own sorting" attribute	addressbook	km	ប្រើសៀវភៅអាសយដ្ឋាន "តម្រៀបផ្ទាល់ខ្លួន" គុណលក្ខណៈ
 use an extra tab for private custom fields?	admin	km	ប្រើផ្ទាំងបន្ថែមសម្រាប់វាលផ្ទាល់ខ្លួនឯកជន
 use country list	addressbook	km	ប្រើបញ្ជីប្រទេស

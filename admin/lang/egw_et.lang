@@ -319,7 +319,11 @@ user for smtp-authentication (leave it empty if no auth required)	admin	et	Kasut
 user groups	admin	et	Kasutajate grupid
 user hidden from non-admins.	admin	et	Kasutaja peidetud mitte-adminide jaoks
 user-agent	admin	et	User-Agent
+users can define their own identities	admin	et	Kasutajad saavad määrata oma identiteedid
+users can define their own signatures	admin	et	Kasutajad saavad määratleda oma allkirjad
 users choice	admin	et	Kasutajate Valik
+vacation messages with start- and end-date require an admin account to be set	admin	et	Puhkuseteated algus- ja lõppkuupäevaga nõuavad admini konto seadistamist!
+vacation notice	admin	et	Puhkuse teatis
 view access log	admin	et	Vaata sisselogimise logi
 view account	admin	et	Vaata kontot
 view category	admin	et	Vaata kategooriat
@@ -329,6 +333,7 @@ view this user	admin	et	Vaata seda kasutajat
 view user account	admin	et	Vaata kasutaja kontot
 who would you like to transfer records owned by the deleted user to?	admin	et	Kellele soovite kustutatud kasutajale kuuluvaid kirjeid üle kanda?
 you can set an initial value, which gets incremented every time a new serial get generated	admin	et	saab määrata algväärtuse, mida suurendatakse iga kord, kui luuakse uus seeriaviis
+you can use wizard to fix account settings or delete account.	admin	et	Konto seadete fikseerimiseks või konto kustutamiseks saate kasutada viisardit.
 you have to enter a name, to create a new field!!!	admin	et	Pead sisestama mime uuele väljale!
 you must enter a group name.	admin	et	Pead sisestama grupi nime.
 you must enter a lastname	admin	et	Pead sisestama perekonnanime.

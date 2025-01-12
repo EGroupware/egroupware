@@ -1,22 +1,12 @@
 accessories of	resources	eu	osagarri
-accessories:	resources	eu	Osagarriak
-actions	resources	eu	Akzioak
-add accessory	resources	eu	Gehitu osagarria
 add resource	resources	eu	Errekurtsoa gehitu
-add resources	resources	eu	Errekurtsoak gehitu
 administrator	resources	eu	Administratzailea
-all categories	resources	eu	Kategoria guztiak
 book	resources	eu	Erreserbatu
-book selected resources	resources	eu	Erreserbatu hautatutako errekurtsoak
 book this resource	resources	eu	Erreserbatu errekurtso hau
 bookable	resources	eu	Erreserba liteke
 buy this article	resources	eu	Artikulu hau erosi
-buy this resource	resources	eu	Errekurtso hau erosi
 buyable	resources	eu	Eros liteke
-categories admin	resources	eu	Kategoriak admin.
 category:	resources	eu	Kategoria:
-check all	resources	eu	Guztiak hautatu
-choose categories admin	resources	eu	Hautatu kategorien admin.
 clear selection	resources	eu	Garbitu hautaketa
 configure access permissions	admin	eu	Sarrera Baimenak Kudeatu
 create new accessory for this resource	resources	eu	Osagarri berria sortu errekurtsoarendako
@@ -28,7 +18,6 @@ delete this entry	resources	eu	Sarrera hau ezabatu
 deleted	resources	eu	ezabatua
 description (short)	resources	eu	Deskribapena (motza)
 direct booking permissions	resources	eu	Zuzeneko erretserbarako baimenak
-don't use vfs (this will need a symlink --> see readme)	resources	eu	ez erabili VFS (symlink bat beharko luke --> ikusi README)
 edit this entry	resources	eu	Sarrera hau aldatu
 existing links	resources	eu	Orain dauden estekak
 general	resources	eu	Orokorra
@@ -92,8 +81,6 @@ use general resources icon	resources	eu	Erabili errekurtsoen irudi orokorra
 use own picture	resources	eu	Irudi ezberdina erabili
 use the category's icon	resources	eu	Kategoriaren irudia erabili
 useable	resources	eu	erabilgarria
-useable:	resources	eu	Erabilgarria
-view accessories for this resource	resources	eu	Errekurtso honen osagarriak ikusi
 view this entry	resources	eu	Sarrera hau ikusi
 web-page of resource	resources	eu	Errekurtsoaren webgunea
 web-site for this resource	resources	eu	Errekurtso honen webgunea

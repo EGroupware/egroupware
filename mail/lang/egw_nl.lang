@@ -569,7 +569,6 @@ subscription folders	mail	nl	Gabonneerde mappen
 subscription successfully saved.	mail	nl	Het abonnerren op deze map is succesvol bewaard.
 succeeded on %1 folders, failed on %2	mail	nl	Gelukt op %1 mappen, mislukt op %2
 template folder	mail	nl	Sjabloon folder
-templates	mail	nl	Sjablonen
 templates folder	mail	nl	Sjablonen map
 test connection	mail	nl	Test actieve connectie
 test connection and display basic information about the selected profile	mail	nl	Test connectie en toon de basis informatie van het gekozen profiel

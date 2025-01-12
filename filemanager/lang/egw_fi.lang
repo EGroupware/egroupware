@@ -35,7 +35,6 @@ basedirectory	filemanager	fi	Kantahakemisto (Base directory)
 can't open directory %1!	filemanager	fi	Hakemistoa %1 ei voitu avata!
 cancel editing %1 without saving	filemanager	fi	Peru %1:n muokkaus tallentamatta muutoksia
 cannot create directory because it begins or ends in a space	filemanager	fi	Hakemistoa ei voi luoda, koska nimi alkaa tai päättyy välilyöntiin
-check all	filemanager	fi	Valitse kaikki
 check virtual filesystem	common	fi	Tarkista VFS
 classic	filemanager	fi	Standardityökalurivi
 clear search	filemanager	fi	Tyhjennä haku
@@ -206,7 +205,6 @@ projectmanager	filemanager	fi	Projektinhallinta
 properties saved.	filemanager	fi	Asetukset tallennettu.
 protocol to use	filemanager	fi	Käytettävä protokolla
 protocols	filemanager	fi	Pöytäkirjat
-quick jump to	filemanager	fi	Mene
 quota	filemanager	fi	Kiintiö
 quota exceeded	filemanager	fi	Kiintiö ylitetty
 read & write access	filemanager	fi	Luku- ja kirjoitusoikeudet (ACL)

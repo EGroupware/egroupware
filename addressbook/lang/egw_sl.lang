@@ -150,6 +150,7 @@ country (private)	addressbook	sl	Država (zasebna)
 country code	addressbook	sl	Koda države
 country code (private)	addressbook	sl	Koda države (zasebna)
 create new links	addressbook	sl	Ustvari nove povezave
+create new shares writable	addressbook	sl	Ustvarjanje novih delnic, ki jih je mogoče zapisati
 created	addressbook	sl	Ustvarjeno
 credit	addressbook	sl	Zasluge
 crm view list	addressbook	sl	CRM seznam pogledov
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	sl	Naloži ali izbriši fotografijo
 url (business)	addressbook	sl	URL (službeno)
 url (private)	addressbook	sl	URL (zasebno)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	sl	URL, na katerega se povežejo številke telefonov (%1 = številka za klicanje, %u = ime računa, %t = telefonska številka računa).
-use a category tree?	addressbook	sl	Uporabite drevo za izbiro kategorij
 use addressbooks "own sorting" attribute	addressbook	sl	Use addressbooks "own sorting" attribute
 use an extra tab for private custom fields?	admin	sl	Uporaba dodatni zavihek za osebna polja po meri
 use country list	addressbook	sl	Uporabi seznam držav

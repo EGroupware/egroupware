@@ -835,7 +835,6 @@ standard smtp-server	admin	sk	Štandardný SMTP server
 start	admin	sk	Štart
 start testjob!	admin	sk	Spustiť testovaciu úlohu
 starts with	admin	sk	Začať s
-stationery	admin	sk	Kancelárske potreby
 strictly required, user can not login without	admin	sk	Striktne vyžadovať, používateľ sa bez toho neprihlási
 submit changes	admin	sk	Vykonať Zmeny
 submit displayed information?	admin	sk	Odoslať zobrazené informácie
@@ -849,7 +848,6 @@ successfull, but no refresh-token received!	admin	sk	Úspech, ale NEdostali sme 
 switch back to standard identity to save account.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie účtu.
 switch back to standard identity to save other account data.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie údajov účtu.
 switch it off, if users are randomly thrown out	admin	sk	Vypnite to, ak sú používatelia náhodne odpájaní
-templates	admin	sk	Šablóny
 that loginid has already been taken	admin	sk	Takéto ID prihlásenia sa už používa.
 the api is current	admin	sk	API je aktuálne
 the api requires an upgrade	admin	sk	API potrebuje aktualizáciu
@@ -949,8 +947,7 @@ username/password defined by admin	admin	sk	Používateľské meno/heslo definov
 username@domainname (virtual mail manager)	admin	sk	používateľ@doména (Virtuálny Mail ManaGeR)
 users can define their own emailaccounts	admin	sk	Používatelia môžu definovať svoje vlastné E-mailové účty
 users can define their own identities	admin	sk	Používatelia môžu definovať svoje vlastné identity
-users can define their own signatures	admin	sk	Používatelia môžu definovať svoje vlastné podpisy
-users can utilize these stationery templates	admin	sk	Používatelia môžu využívať tieto statické šablóny
+users can define their own signatures	admin	sk	Používatelia si môžu definovať vlastné podpisy
 users choice	admin	sk	Používateľská voľba
 using data from mozilla ispdb for provider %1	admin	sk	Používajú sa údaje z Mozilla ISPDB pre poskytovateľa %1
 using fallback via regular json requests	admin	sk	Použitie záložného riešenia prostredníctvom bežných požiadaviek JSON

@@ -104,6 +104,7 @@ copy a contact and edit the copy	addressbook	sv	Kopiera en kontakt och gör änd
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	sv	Kopiera dina ändringar till urklipp, %1 ladda om posten och migrera.
 country	common	sv	Land
 create new links	addressbook	sv	Skapa ny länk
+create new shares writable	addressbook	sv	Skapa nya skrivbara aktier
 created	addressbook	sv	Skapad
 credit	addressbook	sv	Erkännande
 crm-view	addressbook	sv	CRM-vy
@@ -373,10 +374,10 @@ translation	addressbook	sv	Översättning
 type	addressbook	sv	Typ
 unable to import into %1, using %2	addressbook	sv	Det gick inte att importera till %1, använd %2
 unknown type %1, imported as %2	addressbook	sv	Okänd typ %1, importerad som %2
+unshare	addressbook	sv	Avlägsna andelar
 update a single entry by passing the fields.	addressbook	sv	Updatera enskild post genom att ange fälten.
 updated	addressbook	sv	Uppdaterad
 upload or delete the photo	addressbook	sv	Ladda upp eller radera foto
-use a category tree?	addressbook	sv	Använd ett träd för att välja kategorier
 use country list	addressbook	sv	Använd nationslista
 use setup for a full account-migration	admin	sv	Använd installationen för en komplett konto migrering
 used for links and for the own sorting of the list	addressbook	sv	Används för länkar och sortering av listan

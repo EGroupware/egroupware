@@ -144,6 +144,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	address
 country	common	ru	Страна
 country code	addressbook	ru	Код страны
 create new links	addressbook	ru	Создайте новые ссылки
+create new shares writable	addressbook	ru	Создание новых акций, доступных для записи
 created	addressbook	ru	Создано
 credit	addressbook	ru	Кредит
 crm view list	addressbook	ru	Список представлений CRM
@@ -503,7 +504,6 @@ update fields by edited organisations?	admin	ru	Обновить поля отр
 updated	addressbook	ru	Обновлено
 upload or delete the photo	addressbook	ru	Выгрузить или удалить фото
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	ru	URL для связи с телефонными номерами (используйте %1 = номер для звонка,%u = наименование учётной записи, %t = телефон учётной записи).
-use a category tree?	addressbook	ru	Использование дерева для выбора категорий
 use addressbooks "own sorting" attribute	addressbook	ru	Используйте атрибут адресной книги «собственная сортировка»
 use an extra tab for private custom fields?	admin	ru	Использовать дополнительную закладку для частных пользовательских полей?
 use country list	addressbook	ru	Использовать список стран

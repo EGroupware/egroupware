@@ -40,7 +40,6 @@ can't open directory %1!	filemanager	nl	kan map %1! niet openen
 cancel editing %1 without saving	filemanager	nl	Annuleer het bewerken van %1 zonder op te slaan
 cannot create directory because it begins or ends in a space	filemanager	nl	Kan de directory niet aanmaken omdat de naam met en spatie begint of eindigt
 cautiously rejecting to remove folder '%1'!	filemanager	nl	Geweigerd (voorzorg) om map te verwijderen %1!
-check all	filemanager	nl	Markeer alles
 check virtual filesystem	common	nl	Controleer het virtueel bestandsysteem
 classic	filemanager	nl	Standaard werkbalk
 clear search	filemanager	nl	zoekcriteria leegmaken
@@ -216,7 +215,6 @@ projectmanager	filemanager	nl	Projectmanager
 properties saved.	filemanager	nl	Eigenschappen opgeslagen.
 protocol to use	filemanager	nl	Te gebruiken protocol
 protocols	filemanager	nl	Protocollen
-quick jump to	filemanager	nl	Snel springen naar
 quota	filemanager	nl	Quota
 quota exceeded	filemanager	nl	Quota overschreden
 read & write access	filemanager	nl	Lees en schrijf toegang

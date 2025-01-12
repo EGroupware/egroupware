@@ -845,7 +845,6 @@ standard smtp-server	admin	de	Standard SMTP-Server
 start	admin	de	Start
 start testjob!	admin	de	Test-Job starten!
 starts with	admin	de	Startet mit
-stationery	admin	de	Briefpapier
 strictly required, user can not login without	admin	de	Unbedingt benötigt, Benutzer können sich ohne nicht mehr anmelden
 submit changes	admin	de	Änderungen speichern
 submit displayed information?	admin	de	Angezeigte Informationen übertragen
@@ -859,7 +858,6 @@ successfull, but no refresh-token received!	admin	de	Erfolgreich, aber keine Ref
 switch back to standard identity to save account.	admin	de	Kehren Sie zur Standard-Identität zurück um das Konto zu speichern.
 switch back to standard identity to save other account data.	admin	de	Kehren Sie zur Standard-Identität zurück um andere Kontendaten zu speichern.
 switch it off, if users are randomly thrown out	admin	de	Schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
-templates	admin	de	Vorlagen
 that loginid has already been taken	admin	de	Diese Login-ID ist bereits vergeben.
 the api is current	admin	de	Das API ist aktuell
 the api requires an upgrade	admin	de	Das API benötigt ein Upgrade
@@ -960,7 +958,6 @@ username@domainname (virtual mail manager)	admin	de	Benutzername@Domänenname (V
 users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren
 users can define their own identities	admin	de	Anwender können ihre eigenen Identitäten definieren
 users can define their own signatures	admin	de	Anwender können ihre eigenen Signaturen definieren
-users can utilize these stationery templates	admin	de	Benutzer können diese Briefpapiervorlagen verwenden
 users choice	admin	de	Benutzerauswahl
 using data from mozilla ispdb for provider %1	admin	de	Benutze Mozilla ISPDB für Provider %1
 using fallback via regular json requests	admin	de	Verwendung von Fallback über reguläre JSON-Anfragen

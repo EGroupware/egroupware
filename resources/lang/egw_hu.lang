@@ -2,33 +2,27 @@
 %1 accessories restored	resources	hu	%1 tartozékok helyreállítva
 %1 resource(s) %2	resources	hu	%1 erőforrás(ok) %2
 %1 resource(s) %2, %3 failed	resources	hu	%1 erőforrás(ok) %2, %3 sikertelenül működött(ek)
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	hu	%1 erőforrás(ok) %2, %3 nem sikerült, mert nem megfelelőek a jogok !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	hu	%1 erőforrás(ok) %2, %3 nem sikerült, mert nem megfelelőek a jogok!
 %1 resource(s) booked	resources	hu	%1 erőforrás(ok) lefoglalva
 %1 resource(s) view calendar	resources	hu	%1 erőforrás(ok) naptár megtekintése
 accessories	resources	hu	Tartozékok
 accessories of	resources	hu	Kiegészítői
-accessories:	resources	hu	Tartozékok:
 accessory of	resources	hu	Accessory from
-actions	resources	hu	Műveletek
-add accessory	resources	hu	Kiegészítő hozzáadása
 add group to event participants	resources	hu	Csoport hozzáadása az esemény résztvevőihez
 add resource	resources	hu	Erőforrás hozzáadása
-add resources	resources	hu	Erőforrások hozzáadása
 administrator	resources	hu	Adminisztrátor
-all categories	resources	hu	Összes kategória
 allow booking requests from any user when creating events?	resources	hu	Események létrehozásakor bármely felhasználó foglalási kérelmeinek engedélyezése?
+allow ignore conflicts	admin	hu	Engedélyezze a konfliktusok figyelmen kívül hagyását
 book	resources	hu	Foglalás
-book selected resources	resources	hu	Kiválasztott erőforrások foglalása
+book resource	resources	hu	Könyv erőforrás
 book this resource	resources	hu	Az erőforrás foglalása
 bookable	resources	hu	Lefoglalható
 booking requests	resources	hu	Foglalási kérelmek
 buy this article	resources	hu	Cikk megvásárlása
-buy this resource	resources	hu	Erőforrás megvásárlása
 buyable	resources	hu	Megvásárolható
 category admin	resources	hu	Kategória admin
 category saved.	resources	hu	Kategória mentve.
 category:	resources	hu	Kategória
-check all	resources	hu	Összes ellenőrzése
 choose category admin	resources	hu	Válassza ki a kategória admin
 clear selection	resources	hu	Kijelölés eltávolítása
 configure access permissions	admin	hu	Hozzáférési jogosultságok beállítása
@@ -45,9 +39,9 @@ deleted	resources	hu	törölve
 description (short)	resources	hu	Leírás (rövid)
 direct booking permissions	resources	hu	Közvetlen foglalási jogosultságok
 do you really want to delete this resource?	resources	hu	Tényleg törölni szeretné ezt az erőforrást?
-don't use vfs (this will need a symlink --> see readme)	resources	hu	Ne haszálja a VFS-t (a működéshez egy symlink hozzáadása szükséges, lásd. a README-t)
 edit this entry	resources	hu	Bejegyzés szerkesztése
 existing links	resources	hu	Meglévő hivatkozások
+exports a list of resources to a csv file.	resources	hu	Az erőforrások listájának exportálása CSV-fájlba.
 general	resources	hu	Általános
 general informations about resource	resources	hu	Általános információk az erőforrásról
 gernal resource	resources	hu	általános erőforrás
@@ -59,14 +53,17 @@ how many of them are useable?	resources	hu	Hány darab használható közülük?
 how many of this resource are usable	resources	hu	Hány darab használható ebből az erőforrásból
 how many of this resource exists	resources	hu	Hány darab létezik ebből az erőforrásból
 icon	resources	hu	Ikon
+if you specify an export definition, it will be used when you export	resources	hu	Ha megad egy exportálási definíciót, akkor azt fogja használni az exportáláskor.
 implies booking permission	resources	hu	Foglalási jogosultságot feltételez
 implies read permission	resources	hu	Olvasási jogosultságot feltételez
+imports a list of resources from a csv file.	resources	hu	Az erőforrások listájának importálása CSV-fájlból.
 information about storage	resources	hu	Információ a raktárról
 informations about the location of resource	resources	hu	Információ az erőforrás helyéről
 inventory number	resources	hu	Leltári szám
 inventory number:	resources	hu	Leltári szám:
 is resource bookable?	resources	hu	Az erőforrás lefoglalható?
 is resource buyable?	resources	hu	Az erőforrás megvásárolható?
+is the ressource bookable?	resources	hu	Foglalható-e az erőforrás?
 is this resource bookable?	resources	hu	Ez az erőforrás lefoglalható?
 is this resource buyable?	resources	hu	Megvásárolható ez az erőforrás?
 links	resources	hu	Hivatkozások
@@ -76,6 +73,8 @@ location:	resources	hu	Hely:
 manage mapping	resources	hu	Hozzárendelés kezelése
 name of resource	resources	hu	Az erőforrás neve
 name:	resources	hu	Név:
+new accessory	resources	hu	Új tartozék
+new resource	resources	hu	Új erőforrás
 no - leave them	resources	hu	Nem - hagyja meg őket
 no - make them resources	resources	hu	Nem - Tegye őket erőforrásokká
 no description available	resources	hu	Nincs elérhető leírás
@@ -88,6 +87,7 @@ picture source	resources	hu	Kép forrása
 picture type is not supported, sorry!	resources	hu	A kép formátuma nem támogatott!
 pictures or resource	resources	hu	Képek vagy erőforrások
 planer	resources	hu	Tervező
+prize	resources	hu	Ár
 prizeing information for booking or buying	resources	hu	Árinformáció a foglaláshoz vagy vásárláshoz
 quantity	resources	hu	Mennyiség
 quantity of resource	resources	hu	Erőforrás mennyisége:
@@ -97,6 +97,10 @@ read permissions	resources	hu	Olvasási jogosultságok
 registration confirmed %1	resources	hu	Regisztráció megerősítve %1
 related links	resources	hu	Kapcsolódó hivatkozások
 remove accessories before changing accessory of	resources	hu	Távolítsa el a tartozékokat, mielőtt megváltoztatná a Accessory of
+resource	resources	hu	Erőforrás
+resource %1 deleted!	resources	hu	Erőforrás %1 törölve!
+resource %1 saved!	resources	hu	Erőforrás %1 mentve!
+resource / accessories	resources	hu	Erőforrás / Tartozékok
 resources	common	hu	Erőforrások
 resources list	resources	hu	Erőforrások listája
 responsible:	resources	hu	Felelős:
@@ -122,6 +126,8 @@ use general resources icon	resources	hu	Használja az 'Általános erőforrások
 use own picture	resources	hu	Saját kép használata
 use the category's icon	resources	hu	Használja a kategória ikonját
 useable	resources	hu	Felhasználható
+view accessories	resources	hu	Tartozékok megtekintése
+view calendar	resources	hu	Naptár megtekintése
 view this entry	resources	hu	Bejegyzés megtekintése
 web-page of resource	resources	hu	Az erőforrás weboldala
 web-site for this resource	resources	hu	Az erőforrás webhelye
@@ -130,6 +136,8 @@ which category does this resource belong to?	resources	hu	Melyik kategóriába t
 write permissions	resources	hu	Írási jogosultságok
 yes - delete accessories too	resources	hu	Igen - A tartozékok törlése is
 yes - un-delete accessories too	resources	hu	Igen - A tartozékok visszaállítása is
+yes, all users can ignore conflicts	resources	hu	Igen, minden felhasználó figyelmen kívül hagyhatja a konfliktusokat
 yes, only admins can purge deleted items	admin	hu	Igen, csak az adminisztrátorok távolíthatják el a törölt elemeket
+yes, only users with direct booking permission	resources	hu	Igen, csak a közvetlen foglalási jogosultsággal rendelkező felhasználók
 you are not permitted to get information about this resource!	resources	hu	Nincs jogosultság az erőforrás adatainak megtekintéséhez!
 you chose more resources than available	resources	hu	Több erőforrás lett kiválasztva, mint amennyi elérhető

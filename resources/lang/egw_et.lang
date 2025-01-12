@@ -2,21 +2,19 @@
 %1 accessories restored	resources	et	%1 tarvikud taastatud
 %1 resource(s) %2	resources	et	%1 ressurss(id) %2
 %1 resource(s) %2, %3 failed	resources	et	%1 ressurss(id) %2, %3 ebaõnnestus(id)
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	et	%1 ressurss(id) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	et	%1 ressurss(id) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu!
 %1 resource(s) booked	resources	et	%1 ressurss(id) broneeritud
 %1 resource(s) view calendar	resources	et	%1 ressurss(id) vaadata kalendrit
 accessories	resources	et	Aksessuaarid
 accessories of	resources	et	Aksessuaarid alates
-accessories:	resources	et	Tilbehør:
 accessory of	resources	et	Tarvikud alates
-actions	resources	et	Tegevused
 add group to event participants	resources	et	Lisa grupp ürituse osalejatele
-all categories	resources	et	Kõik kategooriad
 allow booking requests from any user when creating events?	resources	et	Luba broneerimistaotlusi igalt kasutajalt sündmuste loomisel?
+allow ignore conflicts	admin	et	Lubage ignoreerida konflikte
+book resource	resources	et	Raamatu ressurss
 booking requests	resources	et	Broneerimistaotlused
 category admin	resources	et	Kategooria administraator
 category saved.	resources	et	Kategooria salvestatud.
-check all	resources	et	Kontrolli kõik
 choose category admin	resources	et	Valige kategooria admin
 configure access permissions	admin	et	Konfigureeri Ligipääsu Õigusi
 create new links	resources	et	Tee uued lingid
@@ -27,30 +25,46 @@ deleted	resources	et	kustutatud
 do you really want to delete this resource?	resources	et	Kas te tõesti soovite seda ressurssi kustutada?
 edit this entry	resources	et	Muuda seda kirjet
 existing links	resources	et	Eksisteerivad lingid
+exports a list of resources to a csv file.	resources	et	Eksporterer en liste over ressourcer til en CSV-fil.
 general	resources	et	Üldine
 global categories	resources	et	Globaalsed Kategooriad
 hours	resources	et	Tundi
 icon	resources	et	Ikoon
+if you specify an export definition, it will be used when you export	resources	et	Hvis du angiver en eksportdefinition, vil den blive brugt, når du eksporterer
+imports a list of resources from a csv file.	resources	et	Importerer en liste over ressourcer fra en CSV-fil.
 inventory number	resources	et	Inventari number
 inventory number:	resources	et	Inventari number:
+is resource bookable?	resources	et	Kas ressurss on broneeritav
+is the ressource bookable?	resources	et	Kan ressourcen bookes?
 links	resources	et	Lingid
 location	resources	et	Asukoht
 location:	resources	et	Asukoht:
 name:	resources	et	Nimi:
+new accessory	resources	et	Uus lisavarustus
+new resource	resources	et	Uus ressurss
 no - leave them	resources	et	Ei - jätke need alles
 no - make them resources	resources	et	Ei - muuta need ressurssideks
 no description available	resources	et	Kirjeldust ei ole
 no, users will need to contact users with direct booking permission	resources	et	Ei, kasutajad peavad võtma ühendust kasutajatega, kellel on otsene broneerimisõigus
 picture	resources	et	Pilt
+prize	resources	et	Hind
 quantity	resources	et	Kogus
 quantity:	resources	et	Kogus:
 read permissions	resources	et	Lugemise õigused
+resource	resources	et	Ressurss
+resource %1 deleted!	resources	et	Ressurss %1 kustutatud!
+resource %1 saved!	resources	et	Ressurss %1 salvestatud!
+resource / accessories	resources	et	Ressurss / tarvikud
 resources	common	et	Resursid
 select a category	resources	et	Vali Kategooria
 select resources	common	et	Vali resursid
 short description	resources	et	Lühike kirjeldus
 un-delete accessories of selected resources too?	resources	et	Taastada valitud ressursside tarvikud?
 useable	resources	et	kasutatav
+view accessories	resources	et	Vaata tarvikuid
+view calendar	resources	et	Vaata kalendrit
 write permissions	resources	et	Kirjutamise õigused
 yes - delete accessories too	resources	et	Jah - kustutada ka tarvikud
 yes - un-delete accessories too	resources	et	Jah - taastada ka tarvikud
+yes, all users can ignore conflicts	resources	et	Jah, kõik kasutajad saavad konflikte ignoreerida
+yes, only users with direct booking permission	resources	et	Jah, ainult kasutajad, kellel on otsese broneerimise õigus

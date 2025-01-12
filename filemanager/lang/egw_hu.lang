@@ -27,7 +27,6 @@ basedirectory	filemanager	hu	Alapkönyvtár
 can't open directory %1!	filemanager	hu	%1 mappa nem nyitható meg!
 cancel editing %1 without saving	filemanager	hu	%1 szerkesztésének megszakítása, mentés nélkül
 cannot create directory because it begins or ends in a space	filemanager	hu	Könyvtár létrehozása nem lehetséges, mert a név elején/végén 'fehér' karakter szerepel (space).
-check all	filemanager	hu	Összes kijelölése
 classic	filemanager	hu	Standard eszköztár
 clear search	filemanager	hu	keresés eredményének törlése
 comment	filemanager	hu	Megjegyzés
@@ -176,7 +175,6 @@ projectmanager	filemanager	hu	Projektmanager
 properties saved.	filemanager	hu	Tulajdosnágok elmentve.
 protocol to use	filemanager	hu	Használandó protokoll
 protocols	filemanager	hu	Jegyzőkönyvek
-quick jump to	filemanager	hu	Gyors ugrás ide
 quota	filemanager	hu	Kvóta
 quota exceeded	filemanager	hu	Kvóta túllépése
 read & write access	filemanager	hu	Olvasás és írási hozzáférés

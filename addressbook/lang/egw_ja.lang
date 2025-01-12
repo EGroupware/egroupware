@@ -150,6 +150,7 @@ country (private)	addressbook	ja	国 (個人)
 country code	addressbook	ja	国番号
 country code (private)	addressbook	ja	国番号 (個人)
 create new links	addressbook	ja	新規リンクを作成
+create new shares writable	addressbook	ja	创建可写的新股票
 created	addressbook	ja	作成
 credit	addressbook	ja	与信
 crm view list	addressbook	ja	CRM 表示リスト
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	ja	写真を更新/削除
 url (business)	addressbook	ja	URL（仕事）
 url (private)	addressbook	ja	URL（個人）
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	ja	電話番号にリンクさせる URL。（%1 = 電話番号, %u = アカウント名, %t = アカウントの電話番号）
-use a category tree?	addressbook	ja	カテゴリ選択にツリー表示を使う
 use addressbooks "own sorting" attribute	addressbook	ja	アドレス帳の「独自並べ変え」属性を使う
 use an extra tab for private custom fields?	admin	ja	個人用カスタム項目で追加タブを使う
 use country list	addressbook	ja	国選択リストを使う

@@ -619,7 +619,6 @@ subscription successfully saved.	mail	sl	Naročnina je uspešno shranjena.
 succeeded on %1 folders, failed on %2	mail	sl	Uspešno v %1 mapi, neuspešno v %2
 switch off encryption?	mail	sl	Izklopite šifriranje?
 template folder	mail	sl	Mapa s predlogami
-templates	mail	sl	Predloge
 templates folder	mail	sl	Predloge mape
 test connection	mail	sl	Preskusna povezava
 test connection and display basic information about the selected profile	mail	sl	Test Povezava in prikaz osnovnih informacij o izbranem profilu

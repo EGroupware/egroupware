@@ -150,6 +150,7 @@ country (private)	addressbook	es-es	País (privado)
 country code	addressbook	es-es	Código del país
 country code (private)	addressbook	es-es	Código del país (privado)
 create new links	addressbook	es-es	Crear enlaces nuevos
+create new shares writable	addressbook	es-es	Crear nuevas acciones escribibles
 created	addressbook	es-es	Creado
 credit	addressbook	es-es	Crédito
 crm view list	addressbook	es-es	Lista de vistas CRM
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	es-es	Copiar al servidor o borrar la foto
 url (business)	addressbook	es-es	URL (negocio)
 url (private)	addressbook	es-es	URL (privado)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	es-es	URL a la que enlazar los números de teléfono (use %1 = número para llamar, %u = nombre de la cuenta, %t = teléfono de la cuenta)
-use a category tree?	addressbook	es-es	Utilizar un árbol para seleccionar categorías
 use addressbooks "own sorting" attribute	addressbook	es-es	Usar atributo "ordenación propia" de libretas de direcciones
 use an extra tab for private custom fields?	admin	es-es	¿Usar una pestaña extra para campos personalizados privados?
 use country list	addressbook	es-es	Utilizar lista de países

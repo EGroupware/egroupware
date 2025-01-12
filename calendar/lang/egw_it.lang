@@ -530,7 +530,7 @@ select a time	calendar	it	Seleziona un'orario
 select multiple contacts for a further action	calendar	it	Seleziona contatti multipli per azioni ulteriori
 select resources	calendar	it	Seleziona risorse
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	it	Seleziona se vuoi reimpostare lo stato dei partecipanti a "sconosciuto", se un appuntamento viene spostato a più tardi
-select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	it	Selezionare se si desidera che lo stato della risorsa venga ripristinato a sconosciuto, se un evento viene spostato. Per gli esterni, lo stato dei partecipanti viene sempre riportato a sconosciuto.
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	it	Selezionate se volete che lo stato della risorsa sia reimpostato su “Nessuna risposta”, se un appuntamento viene spostato.
 select who should get the alarm	calendar	it	Seleziona chi dovrà avere la sveglia
 selected range	calendar	it	Intervallo di selezione
 selected users/groups	calendar	it	Utenti/Gruppi selezionati

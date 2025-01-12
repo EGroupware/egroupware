@@ -47,7 +47,6 @@ can't open directory %1!	filemanager	ja	ディレクトリ %1 を開けません
 cancel editing %1 without saving	filemanager	ja	保存せずに %1 の編集をキャンセル
 cannot create directory because it begins or ends in a space	filemanager	ja	空白文字で開始/終端する名前でディレクトリを作成することはできません。
 cautiously rejecting to remove folder '%1'!	filemanager	ja	フォルダ '%1' の削除が拒否されました!
-check all	filemanager	ja	全て選択
 check virtual filesystem	common	ja	仮想ファイルシステムをチェック
 classic	filemanager	ja	標準ツールバー
 clear search	filemanager	ja	検索をクリア
@@ -235,7 +234,6 @@ projectmanager	filemanager	ja	プロジェクト・マネージャ
 properties saved.	filemanager	ja	プロパティを保存しました。
 protocol to use	filemanager	ja	使用プロトコル
 protocols	filemanager	ja	プロトコル
-quick jump to	filemanager	ja	クイック・ジャンプ:
 quota	filemanager	ja	クォータ
 quota exceeded	filemanager	ja	クォータ超過
 read & write access	filemanager	ja	読み書き

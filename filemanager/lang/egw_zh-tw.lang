@@ -4,7 +4,6 @@ administrators	filemanager	zh-tw	管理者
 applications	common	zh-tw	應用程式
 cancel editing %1 without saving	filemanager	zh-tw	取消編輯%1，不儲存
 cannot create directory because it begins or ends in a space	filemanager	zh-tw	資料夾名稱包含空白字元，無法建立資料夾
-check all	filemanager	zh-tw	全選
 clear search	filemanager	zh-tw	清除搜尋
 comment	filemanager	zh-tw	備註
 configuration changed.	filemanager	zh-tw	組態更新了
@@ -67,7 +66,6 @@ preview	filemanager	zh-tw	預覽
 preview %1	filemanager	zh-tw	預覽 %1
 preview of %1	filemanager	zh-tw	%1 的預覽
 projectmanager	filemanager	zh-tw	專案管理員
-quick jump to	filemanager	zh-tw	快速切換
 reload	filemanager	zh-tw	重新讀取
 renamed %1 to %2	filemanager	zh-tw	把%1 檔名改成 %2
 replaced %1	filemanager	zh-tw	%1 完成修改

@@ -2,33 +2,27 @@
 %1 accessories restored	resources	no	%1 tilbehør gjenopprettet
 %1 resource(s) %2	resources	no	%1 ressurs(er) %2
 %1 resource(s) %2, %3 failed	resources	no	%1 ressurs(er) %2, %3 mislyktes
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	no	%1 ressurs(er) %2, %3 mislyktes på grunn av utilstrekkelige rettigheter !!!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	no	%1 ressurs(er) %2, %3 mislyktes på grunn av utilstrekkelige rettigheter!
 %1 resource(s) booked	resources	no	%1 ressurs(er) booket
 %1 resource(s) view calendar	resources	no	%1 ressurs(er) se kalender
 accessories	resources	no	Tilbehør
 accessories of	resources	no	Tilbehør fra
-accessories:	resources	no	Tilbehør:
 accessory of	resources	no	Tilbehør fra
-actions	resources	no	Aksjoner
-add accessory	resources	no	Legg til rekvista
 add group to event participants	resources	no	Legg til gruppe til deltakere på arrangementet
 add resource	resources	no	Legg til ressurs
-add resources	resources	no	Legg til ressurser
 administrator	resources	no	Administrator
-all categories	resources	no	Alle kategorier
 allow booking requests from any user when creating events?	resources	no	Tillate bestillingsforespørsler fra alle brukere når du oppretter arrangementer?
+allow ignore conflicts	admin	no	Tillat å ignorere konflikter
 book	resources	no	Bestill
-book selected resources	resources	no	Bestill valgte ressurser
+book resource	resources	no	Bokressurs
 book this resource	resources	no	Bestille denne ressursen
 bookable	resources	no	Mulig å bestille
 booking requests	resources	no	Bestillingsforespørsler
 buy this article	resources	no	Kjøp denne artikkelen
-buy this resource	resources	no	Kjøp denne ressursen
 buyable	resources	no	Mulig å kjøpe
 category admin	resources	no	Kategoriadministrator
 category saved.	resources	no	Kategorien er lagret.
 category:	resources	no	Kategori
-check all	resources	no	Kontroller alle
 choose category admin	resources	no	Velg kategoriadministrator
 clear selection	resources	no	Opphev valgene
 configure access permissions	admin	no	Konfigurer aksesstillatelser
@@ -43,9 +37,9 @@ deleted	resources	no	slettet
 description (short)	resources	no	Beskrivelse (kort)
 direct booking permissions	resources	no	Deleger bestillingsrettigheter
 do you really want to delete this resource?	resources	no	Vil du virkelig slette denne ressursen?
-don't use vfs (this will need a symlink --> see readme)	resources	no	Ikke bruke VFS (dette trenger en symlink-->Se LESMEG
 edit this entry	resources	no	Endre denne registreringen
 existing links	resources	no	Eksisterende lenker
+exports a list of resources to a csv file.	resources	no	Eksporterer en liste over ressurser til en CSV-fil.
 general	resources	no	Generell
 general informations about resource	resources	no	Generell informasjon om ressursen
 gernal resource	resources	no	Generell ressurs
@@ -56,14 +50,17 @@ how many of them are useable?	resources	no	Hvor mange av dem er brukbare ?
 how many of this resource are usable	resources	no	Hvor mange av denne ressursen er brukbare ?
 how many of this resource exists	resources	no	Hvor mange eksisterer det av denne ressursen
 icon	resources	no	Ikon
+if you specify an export definition, it will be used when you export	resources	no	Hvis du angir en eksportdefinisjon, vil den bli brukt når du eksporterer
 implies booking permission	resources	no	Innbefatter bestillingsrettigheter
 implies read permission	resources	no	Innbefatter leserettigheter
+imports a list of resources from a csv file.	resources	no	Importerer en liste med ressurser fra en CSV-fil.
 information about storage	resources	no	Informasjon om lagersted
 informations about the location of resource	resources	no	Informasjon om hvor ressursen er lagret
 inventory number	resources	no	Inventarnummer
 inventory number:	resources	no	Inventarnummer:
 is resource bookable?	resources	no	Er det mulig å bestille ressursen ?
 is resource buyable?	resources	no	Er det mulig å kjøpe ressursen ?
+is the ressource bookable?	resources	no	Er ressursen bokbar?
 is this resource bookable?	resources	no	Er det mulig å bestille denne ressursen ?
 is this resource buyable?	resources	no	Er det mulig å kjøpe denne ressursen ?
 links	resources	no	Lenker
@@ -73,6 +70,8 @@ location:	resources	no	Lokasjon:
 manage mapping	resources	no	Administrere kartlegging
 name of resource	resources	no	Navn på ressurs
 name:	resources	no	Navn:
+new accessory	resources	no	Nytt tilbehør
+new resource	resources	no	Ny ressurs
 no - leave them	resources	no	Nei - la dem ligge
 no - make them resources	resources	no	Nei - gjør dem til ressurser
 no description available	resources	no	Ingen beskrivelse tilgjengelig
@@ -84,6 +83,7 @@ picture source	resources	no	Bildekilde
 picture type is not supported, sorry!	resources	no	Bildetype supporteres ikke, dessverre !
 pictures or resource	resources	no	Bilder av ressurs
 planer	resources	no	Planlegger
+prize	resources	no	Pris
 prizeing information for booking or buying	resources	no	Prisinformasjon for bestilling eller kjøp
 quantity	resources	no	Antall
 quantity of resource	resources	no	Antall av  ressurs
@@ -93,6 +93,10 @@ read permissions	resources	no	Lesetillatelser
 registration confirmed %1	resources	no	Registrering bekreftet %1
 related links	resources	no	Relaterte lenker
 remove accessories before changing accessory of	resources	no	Fjern tilbehør før du endrer Tilbehør til
+resource	resources	no	Ressurs
+resource %1 deleted!	resources	no	Ressurs %1 slettet!
+resource %1 saved!	resources	no	Ressurs %1 lagret!
+resource / accessories	resources	no	Ressurs / Tilbehør
 resources	common	no	Ressurser
 resources list	resources	no	Liste over ressurser
 responsible:	resources	no	Ansvarlig :
@@ -116,6 +120,8 @@ use general resources icon	resources	no	Bruk generelt ikon for ressursen
 use own picture	resources	no	Bruk eget bilde
 use the category's icon	resources	no	Bruk kategoriens ikon
 useable	resources	no	Brukbare
+view accessories	resources	no	Vis tilbehør
+view calendar	resources	no	Vis kalender
 view this entry	resources	no	Vis denne oppføringen
 web-page of resource	resources	no	Nettsider for ressursen
 web-site for this resource	resources	no	Nettsted for denne ressursen
@@ -124,5 +130,7 @@ which category does this resource belong to?	resources	no	Hvilken kategori høre
 write permissions	resources	no	Skrivetillatelser
 yes - delete accessories too	resources	no	Ja - Slett også tilbehør
 yes - un-delete accessories too	resources	no	Ja - Gjenopprett også tilbehør
+yes, all users can ignore conflicts	resources	no	Ja, alle brukere kan ignorere konflikter
+yes, only users with direct booking permission	resources	no	Ja, bare brukere med tillatelse til direktebestilling
 you are not permitted to get information about this resource!	resources	no	Du har ikke tillatelse til å få informasjon om denne ressursen
 you chose more resources than available	resources	no	Du valgte flere ressurser enn tilgjengelige

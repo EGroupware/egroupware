@@ -95,6 +95,7 @@ api	common	hu	EGroupware API
 application	common	hu	Alkalmazás
 applications	common	hu	Alkalmazások
 apply	common	hu	Alkalmaz
+apps & license	common	hu	Alkalmazások & licenc
 april	common	hu	Április
 are you sure you want to delete these entries ?	common	hu	Biztosan törölni akarja ezeket a bejegyzéseket?
 are you sure you want to delete this entry ?	common	hu	Biztosan törölni akarja ezt a bejegyzést?
@@ -123,6 +124,7 @@ bangladesh	common	hu	Banglades
 barbados	common	hu	Barbados
 baseline	common	hu	Alapvonal
 bcc	common	hu	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	hu	Mielőtt továbblépne, javasoljuk, hogy nézze meg ezt a rövid videót, hogy lássa, hogyan működik a Mailvelope plugin az EGroupware-rel.
 belarus	common	hu	Fehéroroszország
 belgium	common	hu	Belgium
 belize	common	hu	Belize
@@ -288,6 +290,7 @@ domestic	common	hu	Belföldi
 dominica	common	hu	Dominika
 dominican republic	common	hu	Dominikai Köztársaság
 don't ask again!	common	hu	Ne kérdezd újra!
+don't show this again	common	hu	Ne mutasd meg ezt újra
 done	common	hu	Kész
 download	common	hu	Letölt
 duration	common	hu	Időtartam
@@ -297,11 +300,18 @@ eastern european	common	hu	Kelet-európai
 ecuador	common	hu	Ecuador
 edit	common	hu	Szerkeszt
 edit %1 category for	common	hu	%1 kategória módosítása
+edit avatar	common	hu	Avatar szerkesztése
 edit categories	common	hu	Kategóriák módosítása
 edit category	common	hu	Kategória módosítása
 edit...	common	hu	Szerkeszt ...
 egroupware	common	hu	EGroupware
+egroupware administrators group, do not delete	common	hu	EGroupware rendszergazdák csoportja, NEM törölhető
+egroupware all users group, do not delete	common	hu	EGroupware minden felhasználó csoport, NEM törölhető
+egroupware anonymous users group, do not delete	common	hu	EGroupware anonim felhasználók csoportja, NEM törlendő
 egroupware api version	common	hu	EGroupware API verzió
+egroupware maintenance update %1 available	common	hu	EGroupware karbantartási frissítés %1 elérhető
+egroupware security update %1 needs to be installed!	common	hu	EGroupware biztonsági frissítés %1 telepítése szükséges!
+egroupware version	common	hu	EGroupware verzió
 egroupware: login blocked for user '%1', ip %2	common	hu	EGroupware: %1 felhasználó bejelentkezése blokkolva az %2 IP címről
 egypt	common	hu	Egyiptom
 el salvador	common	hu	Salvador
@@ -592,6 +602,7 @@ netherlands antilles	common	hu	Holland Antillák
 never	common	hu	Soha
 new	common	hu	Új
 new caledonia	common	hu	Újkaledónia
+new egroupware release %1 available	common	hu	Új EGroupware kiadás %1 elérhető
 new entry added sucessfully	common	hu	Új bejegyzés hozzáadva.
 new main category	common	hu	Új főkategória
 new password	common	hu	Új jelszó
@@ -856,6 +867,7 @@ taiwan	common	hu	Taiwan
 tajikistan	common	hu	Tadzsikisztán
 tanzania, united republic of	common	hu	Tanzánia
 template	common	hu	Sablon
+templates	common	hu	Sablonok
 text	common	hu	Szöveg
 text color:	common	hu	Szöveg szín:
 textarea	common	hu	Szövegterület
@@ -932,7 +944,6 @@ western european	common	hu	Nyugat-európai
 western sahara	common	hu	Nyugat-Szahara
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	hu	Amikor a bejegyzéseket dokumentumokká egyesíti, azok itt kerülnek tárolásra. Ha nincs mappa megadva, akkor a fájlok az otthoni könyvtárban (%1) lesznek tárolva
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	hu	Igen választása esetén a Kezdőlap és Kilépés gombok megjelennek a felső alkalmazás tálcán.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	hu	Hol és hogyan legyenek az EGroupware link szerű tulajdonságok, leírások és kijelentkezés megjelenítve.
 which groups	common	hu	Melyik csoport
 whole query	common	hu	Teljes lekérdezés
 width	common	hu	Szélesség

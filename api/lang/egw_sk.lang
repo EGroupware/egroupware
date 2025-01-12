@@ -152,6 +152,7 @@ applies the changes made	common	sk	Uplatnia sa vykonané zmeny
 applies the changes to the given version of the template	common	sk	vykoná zmeny urobené na danej verzii šablóny
 apply	common	sk	Použiť
 apply the action on the whole query, not only the shown entries	common	sk	Vykonať akciu na celom výbere, NIE len na zobrazených položkách
+apps & license	common	sk	Aplikácie & licencie
 apps &amp; license	common	sk	Aplikácie & Licencie
 april	common	sk	Apríl
 are you sure you want to delete these entries ?	common	sk	Skutočne chcete odstrániť tieto záznamy?
@@ -1372,6 +1373,7 @@ tanzania, united republic of	common	sk	TANZÁNIA
 template	common	sk	Šablóna
 template deleted	common	sk	Šablóna bola odstránené
 template saved	common	sk	Šablóna uložená.
+templates	common	sk	Šablóny
 text	common	sk	Text
 text color:	common	sk	Farba písma:
 textarea	common	sk	Oblasť textu
@@ -1500,7 +1502,6 @@ western sahara	common	sk	ZÁPADNÁ SAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sk	Čo sa stane s presahujúcim obsahom: viditeľný (predvolené), skrytý, skrolovať, automaticky (prehliadač rozhodne)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	sk	Keď zlúčite položky do dokumentov, budú uložené na tomto mieste. Ak neposkytnete priečinok, uložia sa do Vášho domovského priečinku (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sk	Keď odpoviete áno, tlačítka Domov a Odhlásenie sa zobrazia ako aplikácie v hlavnom paneli aplikácií.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	sk	Kde a ako sa budú zobrazovať odkazy EGroupware, ako sú Nastavenia, O aplikácii a Odhlásiť.
 which groups	common	sk	Ktoré skupiny
 which infolog types should be synced with the device, default only tasks.	common	sk	Ktoré typy Záznamníka sa majú synchronizovať s týmto zariadením; štandardne iba úlohy.
 whole query	common	sk	Celý výber

@@ -478,7 +478,11 @@ user hidden from non-admins.	admin	lv	Lietotājs, kas nav administrators, ir pas
 user-agent	admin	lv	User-Agent
 userdata	admin	lv	Lietotāja dati
 users can define their own emailaccounts	admin	lv	LIetotāji  paši var definēt savus e-pasta kontus
+users can define their own identities	admin	lv	Lietotāji var noteikt savu identitāti
+users can define their own signatures	admin	lv	Lietotāji var definēt savus parakstus
 users choice	admin	lv	LIetotāju izvēle
+vacation messages with start- and end-date require an admin account to be set	admin	lv	Brīvdienu ziņām ar sākuma un beigu datumu ir nepieciešams iestatīt administratora kontu!
+vacation notice	admin	lv	Paziņojums par atvaļinājumu
 view access log	admin	lv	Parādīt pieejas logu
 view account	admin	lv	Parādīt kontu
 view category	admin	lv	Parādīt kategoriju
@@ -490,6 +494,7 @@ virtual mail manager	admin	lv	VIrtuālais MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	lv	Kam tu vēlies pārsūtīt izdzēstā lietotāja AAL ierakstus?
 who would you like to transfer records owned by the deleted user to?	admin	lv	Kam vēlaties nodot ierakstus, kas pieder dzēstajam lietotājam?
 xml-rpc	admin	lv	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	lv	Jūs varat izmantot vedni, lai labotu konta iestatījumus vai dzēstu kontu.
 you have entered an invalid expiration date	admin	lv	Tu esi ievadījis nederīgu izbeigšanās (expiration) datumu
 you must add at least 1 permission or group to this account	admin	lv	Tev jāpievieno vismaz 1 atļauja vai grupa šim kontam
 you must enter a group name.	admin	lv	Jums jāievada grupas vārds

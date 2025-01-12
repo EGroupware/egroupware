@@ -396,7 +396,11 @@ user groups	admin	uk	Групи користувачів
 user hidden from non-admins.	admin	uk	Користувач прихований для неадміністраторів
 user-agent	admin	uk	User-Agent
 userdata	admin	uk	Дані користувача
+users can define their own identities	admin	uk	Користувачі можуть визначати власні ідентифікатори
+users can define their own signatures	admin	uk	Користувачі можуть визначати власні підписи
 users choice	admin	uk	Вибір користувача
+vacation messages with start- and end-date require an admin account to be set	admin	uk	Повідомлення про відпустку з датою початку та закінчення вимагають створення облікового запису адміністратора!
+vacation notice	admin	uk	Повідомлення про відпустку
 view access log	admin	uk	Перегляд протоколу доступів
 view account	admin	uk	Перегляд рахунку
 view category	admin	uk	Перегляд категорії
@@ -407,6 +411,7 @@ view user account	admin	uk	Перегляд рахунку користувач�
 who would you like to transfer all records owned by the deleted user to?	admin	uk	Кому передати ВСІ записи користувача, що видаляється ?
 who would you like to transfer records owned by the deleted user to?	admin	uk	Кому ви хочете передати записи, що належать видаленому користувачеві?
 xml-rpc	admin	uk	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	uk	Ви можете скористатися майстром, щоб виправити налаштування облікового запису або видалити його.
 you have entered an invalid expiration date	admin	uk	Ви ввели невірну дату припинення
 you must add at least 1 permission or group to this account	admin	uk	Необхідно надати рахунку хоча б один дозвіл чи групу.
 you must enter a group name.	admin	uk	Необхідно ввести назву групи

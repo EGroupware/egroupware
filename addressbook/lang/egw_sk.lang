@@ -150,6 +150,7 @@ country (private)	addressbook	sk	Krajina (súkromné)
 country code	addressbook	sk	Kód krajiny
 country code (private)	addressbook	sk	Kód krajiny (súkromné)
 create new links	addressbook	sk	Vytvoriť nové odkazy
+create new shares writable	addressbook	sk	Vytvorenie nových akcií zapisovateľných
 created	addressbook	sk	Vytvoril/a
 credit	addressbook	sk	Kredit
 crm view list	addressbook	sk	CRM zobraziť zoznam
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	sk	Nahrať alebo odstrániť túto fotku
 url (business)	addressbook	sk	URL (zamestnanie)
 url (private)	addressbook	sk	URL (súkromné)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	sk	URL adresa, na ktorú sa majú odkázať telefónne čísla (použite %1 = volané číslo, %u = názov účtu, %t = telefónne číslo účtu).
-use a category tree?	addressbook	sk	Použiť strom pre výber kategórií
 use addressbooks "own sorting" attribute	addressbook	sk	použiť "vlastný" triediaci algoritmus adresára
 use an extra tab for private custom fields?	admin	sk	Použiť extra kartu pre súkromné vlastné polia?
 use country list	addressbook	sk	Použiť zoznam krajín

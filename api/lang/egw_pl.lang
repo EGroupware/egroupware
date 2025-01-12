@@ -147,6 +147,7 @@ applies the changes made	common	pl	Zatwierdza wykonane zmiany
 applies the changes to the given version of the template	common	pl	Zatwierdza wykonane zmiany dla podanej wersji szablonu
 apply	common	pl	Uaktualnij
 apply the action on the whole query, not only the shown entries	common	pl	Zastosuj akcję do całego zapytania, a NIE tylko do wyświetlonych wpisów
+apps & license	common	pl	Aplikacje i licencje
 apps &amp; license	common	pl	Aplikacje i licencja
 april	common	pl	Kwiecień
 are you sure you want to delete these entries ?	common	pl	Czy na pewno usunąć te wpisy?
@@ -1259,6 +1260,7 @@ tanzania, united republic of	common	pl	TANZANIA
 template	common	pl	Szablon
 template deleted	common	pl	Szablon usunięto.
 template saved	common	pl	Szablon zapisano.
+templates	common	pl	Szablony
 text	common	pl	Tekst
 text color:	common	pl	Kolor tekstu:
 textarea	common	pl	Obszar tekstu
@@ -1371,7 +1373,6 @@ western sahara	common	pl	SAHARA ZACHODNIA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pl	Co dzieje się z przepełnioną zawartością (overflow): visible (domyślne), hidden, scroll, auto
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	pl	Po scaleniu wpisów w dokumenty zostaną one zapisane w tym folderze. Jeśli nie podano folderu, zostaną one zapisane w katalogu domowym (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pl	Jeżeli wybierzesz "TAK", "Powrót na stronę domową" oraz "Wylogowanie" będą pokazywane jako przyciski aplikacji na głównym pasku aplikacji.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	pl	Gdzie będą wyświetlane linki wylogowania EGroupware.
 which groups	common	pl	Które grupy
 whole query	common	pl	Całe zapytanie
 widget copied into clipboard	common	pl	Obiekt skopiowano do schowka

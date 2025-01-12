@@ -29,6 +29,7 @@ calendar integration	addressbook	lt	Kalendoriaus integracija
 change addressbook when updating	addressbook	lt	Keisti adresų knygelę atnaujinant
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	lt	Pasirinkite iš anksto nustatytą žemėlapio šaltinį arba naudokite pasirinktinį URL (naudokite %r = gatvė, %t = miestas, %c = šalis, %z = pašto indeksas)
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	lt	Išvalyti adresų knygelės laukus, taikyti, jei sinchronizacijos metu atsiranda dublikatų
+create new shares writable	addressbook	lt	Sukurti naujas akcijas, kurias galima įrašyti
 crm-view	addressbook	lt	CRM peržiūra
 default action on double-click	addressbook	lt	Numatytasis veiksmas dukart spustelėjus
 default geolocation source address	addressbook	lt	Numatytasis GeoLocation šaltinio adresas
@@ -118,7 +119,6 @@ unable to import into %1, using %2	addressbook	lt	Nepavyksta importuoti į %1, n
 unknown type %1, imported as %2	addressbook	lt	Nežinomas tipas %1, importuotas kaip %2
 unshare	addressbook	lt	Daugiau nebesidalyti
 unshared	addressbook	lt	nebesidalijama
-use a category tree?	addressbook	lt	Kategorijų pasirinkimui naudoti medį
 user groups are automatically shown as distribution lists.	addressbook	lt	Vartotojų grupės automatiškai rodomos kaip paskirstymo sąrašai.
 video call	addressbook	lt	Vaizdo skambutis
 when viewing a contact, show linked entries from the selected application	addressbook	lt	Peržiūrint kontaktą, rodyti susietus pasirinktos programos įrašus

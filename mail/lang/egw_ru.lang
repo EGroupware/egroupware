@@ -400,7 +400,6 @@ sources	mail	ru	Исходные коды
 start new messages with mime type plain/text or html?	mail	ru	новые сообщения начинать как текст или HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	ru	Создать ответ на сообщение как текст (или HTML), или использовать формат сообщения по умолчанию?
 template folder	mail	ru	Папка шаблонов
-templates	mail	ru	Шаблоны
 test connection	mail	ru	Проверка подключения
 test connection and display basic information about the selected profile	mail	ru	Проверить соединение и показать основную информацию о выбранном профиле
 text	mail	ru	Текст

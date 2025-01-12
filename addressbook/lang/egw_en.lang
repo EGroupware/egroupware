@@ -131,7 +131,7 @@ contact maintenance	admin	en	Contact maintenance
 contact modified by %1 at %2	addressbook	en	Contact modified by %1 at %2.
 contact not found!	addressbook	en	Contact not found!
 contact repository	admin	en	Contact repository
-contact saved	addressbook	en	Contact saved
+contact saved	addressbook	en	Contact saved.
 contact settings	admin	en	Contact settings
 contactform	addressbook	en	Contact form
 contacts	common	en	Contacts
@@ -150,6 +150,7 @@ country (private)	addressbook	en	Country (private)
 country code	addressbook	en	Country code
 country code (private)	addressbook	en	Country code (private)
 create new links	addressbook	en	Create new links
+create new shares writable	addressbook	en	Create new shares writable
 created	addressbook	en	Created
 credit	addressbook	en	Credit
 crm view list	addressbook	en	CRM view list

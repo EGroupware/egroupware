@@ -148,6 +148,7 @@ applies the changes made	common	sl	Potrdi spremembe
 applies the changes to the given version of the template	common	sl	potrdi spremembe podane verzije predloge
 apply	common	sl	Uporabi
 apply the action on the whole query, not only the shown entries	common	sl	Uporabite dejanje za celotno poizvedbo, NE samo prikazani vnosi
+apps & license	common	sl	Aplikacije in licence
 apps &amp; license	common	sl	Aplikacije in licence
 april	common	sl	April
 are you sure you want to delete these entries ?	common	sl	Ste prepričani, da želite izbrisati te vnose?
@@ -1354,6 +1355,7 @@ tanzania, united republic of	common	sl	TANZANIJA
 template	common	sl	Predloga
 template deleted	common	sl	Predloga zbrisana.
 template saved	common	sl	Predloga shranjena.
+templates	common	sl	Predloge
 text	common	sl	Besedilo
 text color:	common	sl	Barva besedila:
 textarea	common	sl	Besedilno polje
@@ -1482,7 +1484,6 @@ western sahara	common	sl	ZAHODNA SAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sl	Kaj se zgodi s prenasičeno vsebino: vidna (privzeto), skrij, vklopi pomikanje, samodejno (se odloči brskalnik)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	sl	Ko vnose združite v dokumente, bodo ti shranjeni tukaj. Če mape ne navedete, bodo shranjeni v vašem domačem imeniku (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sl	Če odgovorite z Da, bosta gumba Domov in Odjavi v orodni vrstici aplikacij.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	sl	Kje in kako naj egroupware prikaže povezave za nastavitve in odjavo.
 which groups	common	sl	Katere skupine
 which infolog types should be synced with the device, default only tasks.	common	sl	Kateri tipi InfoLogov bi morali sinhronizirati z napravo, privzeti samo nalogi.
 whole query	common	sl	Celotno povpraševanje

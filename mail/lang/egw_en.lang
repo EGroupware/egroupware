@@ -619,7 +619,6 @@ subscription successfully saved.	mail	en	Subscription successfully saved.
 succeeded on %1 folders, failed on %2	mail	en	Succeeded on %1 folders, failed on %2
 switch off encryption?	mail	en	Switch off encryption?
 template folder	mail	en	Template Folder
-templates	mail	en	Templates
 templates folder	mail	en	Templates Folder
 test connection	mail	en	Test connection
 test connection and display basic information about the selected profile	mail	en	Test connection and display basic information about the selected profile
