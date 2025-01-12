@@ -5723,10 +5723,8 @@ div#topmenu_info_update {
   display: inline-block;
 }
 div#topmenu_info_update img {
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  padding: 5px;
+  witdh: 24px;
+  padding: 11px;
 }
 /**
  * EGroupware: Stylite Pixelegg template
