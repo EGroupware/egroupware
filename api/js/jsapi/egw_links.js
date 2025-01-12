@@ -146,7 +146,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		get_mime_info: function(_type, _app_or_num)
 		{
-			if (typeof _app_or_num === 'undefined') _app_or_num = 1;
+			if (!_app_or_num) _app_or_num = 1;
 			let wildcard_mime;
 			for(const app of isNaN(_app_or_num) ? [_app_or_num] : Object.keys(link_registry))
 			{
