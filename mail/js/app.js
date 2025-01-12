@@ -4715,10 +4715,14 @@ app.classes.mail = AppJS.extend(
 				widgets[expanderBtn].widget.set_disabled(false);
 				jQuery(widgets[widget].jQClass).hide();
 			}
+			else
+			{
+				jQuery(widgets[widget].jQClass).show();
+			}
 		}
 	},
 
-		/**
+	/**
 	 * Display Folder,Cc or Bcc fields in compose popup
 	 *
 	 * @param {jQuery event} event
