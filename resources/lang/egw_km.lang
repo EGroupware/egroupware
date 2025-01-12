@@ -2,35 +2,26 @@
 %1 accessories restored	resources	km	គ្រឿងបន្លាស់ %1 ត្រូវបានស្ដារឡើងវិញ
 %1 resource(s) %2	resources	km	ធនធាន %1 %2
 %1 resource(s) %2, %3 failed	resources	km	%1 ធនធាន %2, %3 បានបរាជ័យ
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	km	%1 ធនធាន %2, %3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់ !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	km	%1 ធនធាន %2, %3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់!
 %1 resource(s) booked	resources	km	ធនធាន %1 បានកក់ទុក
 %1 resource(s) view calendar	resources	km	%1 ធនធាន មើលប្រតិទិន
 accessories	resources	km	គ្រឿងបន្លាស់
 accessories of	resources	km	គ្រឿងបន្លាស់របស់
-accessories:	resources	km	គ្រឿង​បន្ថែម៖
 accessory of	resources	km	គ្រឿងបន្លាស់របស់
-actions	resources	km	សកម្មភាព
-add accessory	resources	km	បន្ថែមគ្រឿងបន្លាស់
 add group to event participants	resources	km	បន្ថែមក្រុមទៅអ្នកចូលរួមព្រឹត្តិការណ៍
 add resource	resources	km	បន្ថែមធនធាន
-add resources	resources	km	បន្ថែមធនធាន
 administrator	resources	km	អ្នកគ្រប់គ្រង
-all categories	resources	km	ប្រភេទ​ទាំងអស់
 allow booking requests from any user when creating events?	resources	km	អនុញ្ញាតសំណើកក់ពីអ្នកប្រើប្រាស់ណាមួយនៅពេលបង្កើតព្រឹត្តិការណ៍?
 allow ignore conflicts	admin	km	អនុញ្ញាតឱ្យមិនអើពើនឹងជម្លោះ
 book	resources	km	សៀវភៅ
 book resource	resources	km	ធនធានសៀវភៅ
-book selected resources	resources	km	សៀវភៅធនធានដែលបានជ្រើសរើស
 book this resource	resources	km	កក់ធនធាននេះ។
 bookable	resources	km	អាចកក់បាន។
-booked	resources	km	បានកក់ទុក
 booking requests	resources	km	សំណើកក់ទុក
 buy this article	resources	km	ទិញអត្ថបទនេះ
-buy this resource	resources	km	ទិញធនធាននេះ
 buyable	resources	km	អាចទិញបាន។
 category admin	resources	km	ប្រភេទអ្នកគ្រប់គ្រង
 category:	resources	km	ប្រភេទ៖
-check all	resources	km	ពិនិត្យ​ទាំងអស់
 choose category admin	resources	km	ជ្រើសរើសអ្នកគ្រប់គ្រងប្រភេទ
 clear selection	resources	km	ជម្រះការជ្រើសរើស
 configure access permissions	admin	km	កំណត់រចនាសម្ព័ន្ធ ACL
@@ -48,7 +39,6 @@ deleted	resources	km	បានលុប
 description (short)	resources	km	ការពិពណ៌នាខ្លី
 direct booking permissions	resources	km	ការអនុញ្ញាតការកក់ដោយផ្ទាល់
 do you really want to delete this resource?	resources	km	តើអ្នកពិតជាចង់លុបធនធាននេះមែនទេ?
-don't use vfs (this will need a symlink --> see readme)	resources	km	កុំប្រើ vfs (វានឹងត្រូវការ symlink --> មើល README)
 edit this entry	resources	km	កែសម្រួលធាតុនេះ។
 event start	resources	km	ព្រឹត្តិការណ៍ចាប់ផ្តើម
 existing links	resources	km	តំណភ្ជាប់ដែលមានស្រាប់

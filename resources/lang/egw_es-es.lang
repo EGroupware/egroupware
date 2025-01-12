@@ -2,28 +2,21 @@
 %1 accessories restored	resources	es-es	%1 accesorios restaurados
 %1 resource(s) %2	resources	es-es	%1 recurso(s) %2
 %1 resource(s) %2, %3 failed	resources	es-es	%1 recurso(s) %2, %3 fallidos
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	es-es	¡¡¡%1 recurso(s) %2, %3 falló debido a derechos insuficientes !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	es-es	¡%1 recurso(s) %2, %3 falló debido a derechos insuficientes!
 %1 resource(s) booked	resources	es-es	%1 recurso(s) reservado(s)
-%1 resource(s) view calendar	resources	es-es	%1 recurso(s) ver calendario
+%1 resource(s) view calendar	resources	es-es	%1 recurso(s) ver calendario.
 accessories	resources	es-es	Accesorios
 accessories of	resources	es-es	Accesorios de
-accessories:	resources	es-es	Accesorios:
 accessory of	resources	es-es	Accesorio de
-actions	resources	es-es	Acciones
-add accessory	resources	es-es	Añadir accesorio
 add group to event participants	resources	es-es	Añadir grupo a los participantes del evento
 add resource	resources	es-es	Añadir recurso
-add resources	resources	es-es	Añadir recursos
 administrator	resources	es-es	Administrador
-all categories	resources	es-es	Todas las categorías
 allow booking requests from any user when creating events?	resources	es-es	¿Permitir solicitudes de reserva de cualquier usuario al crear eventos?
 allow ignore conflicts	admin	es-es	Permitir ignorar conflictos
 book	resources	es-es	Reservar
 book resource	resources	es-es	Reservar recurso
-book selected resources	resources	es-es	Reservar los recursos seleccionados
 book this resource	resources	es-es	Reservar este recurso
 bookable	resources	es-es	Reservable
-booked	resources	es-es	reservado
 booking requests	resources	es-es	Solicitudes de reserva
 buy this article	resources	es-es	Comprar este artículo
 buy this resource	resources	es-es	Adquirir este recurso
@@ -50,7 +43,6 @@ deleted	resources	es-es	borrado
 description (short)	resources	es-es	Descripción (corta)
 direct booking permissions	resources	es-es	Permisos de reserva directa
 do you really want to delete this resource?	resources	es-es	¿Realmente quieres eliminar este recurso?
-don't use vfs (this will need a symlink --> see readme)	resources	es-es	No usar VFS (esto necesitaría un enlace simbólico --> ver README)
 edit this entry	resources	es-es	Editar esta entrada
 event start	resources	es-es	Inicio del evento
 existing links	resources	es-es	Enlaces existentes
@@ -81,6 +73,7 @@ inventory number	resources	es-es	Número de inventario
 inventory number:	resources	es-es	Número de inventario:
 is resource bookable?	resources	es-es	¿Se puede realizar una reserva sobre el recurso?
 is resource buyable?	resources	es-es	¿Se puede realizar una compra del recurso?
+is the ressource bookable?	resources	es-es	¿Se puede reservar el recurso?
 is this resource bookable?	resources	es-es	¿Se puede realizar una reserva sobre este recurso?
 is this resource buyable?	resources	es-es	¿Se puede realizar una compra de este recurso?
 links	resources	es-es	Enlaces

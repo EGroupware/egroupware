@@ -7,7 +7,6 @@ acl deleted.	filemanager	id	ACL dihapus.
 administrators	filemanager	id	Administrators
 applications	common	id	Aplikasi
 basedirectory	filemanager	id	Direktori basis
-check all	filemanager	id	Contreng semua
 clear search	filemanager	id	bersihkan pencarian
 comment	filemanager	id	Komentar
 configuration changed.	filemanager	id	Konfigurasi changed.
@@ -104,7 +103,6 @@ projectmanager	filemanager	id	Manajer Proyek
 properties saved.	filemanager	id	Properties saved.
 protocol to use	filemanager	id	Protokol yang digunakan
 protocols	filemanager	id	Protokol
-quick jump to	filemanager	id	Loncat ke
 quota	filemanager	id	Kuota
 quota exceeded	filemanager	id	Kuota terlampaui
 read & write access	filemanager	id	Akses Baca & Tulis

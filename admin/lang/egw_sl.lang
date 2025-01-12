@@ -738,7 +738,6 @@ standard smtp-server	admin	sl	Standardni SMTP strežnik
 start	admin	sl	Začetek
 start testjob!	admin	sl	Poženi testno nalogo (TestJob)!
 starts with	admin	sl	Začne z
-stationery	admin	sl	Stacionarno
 submit changes	admin	sl	Shrani spremembe
 submit displayed information?	admin	sl	Pošljite prikazane informacije
 submit statistic information	admin	sl	Pošljite statistične podatke
@@ -750,7 +749,6 @@ successful connected to %1 server%2.	admin	sl	Uspešno priključen na %1 strežn
 switch back to standard identity to save account.	admin	sl	Preklopite nazaj na standardno identiteto, da shranite račun.
 switch back to standard identity to save other account data.	admin	sl	Preklopite nazaj na standardno identiteto, da shranite druge podatke o računu.
 switch it off, if users are randomly thrown out	admin	sl	Izključite, če se uporabnike izloči naključno
-templates	admin	sl	Predloge
 that loginid has already been taken	admin	sl	Ta uporabniško ime je že uporabljeno.
 the api is current	admin	sl	API je najnovejši
 the api requires an upgrade	admin	sl	API potrebuje nadgradnjo.
@@ -838,8 +836,7 @@ username/password defined by admin	admin	sl	Uporabniško ime/geslo dodeljeno s s
 username@domainname (virtual mail manager)	admin	sl	uporabnik@domena (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	sl	Uporabniki lahko določajo lastne E-poštne predale
 users can define their own identities	admin	sl	Uporabniki lahko določijo lastne identitete
-users can define their own signatures	admin	sl	Uporabniki lahko določijo lastne podpise
-users can utilize these stationery templates	admin	sl	Uporabniki lahko uporabljajo te predloge za pisalne potrebščine
+users can define their own signatures	admin	sl	Uporabniki lahko določijo svoje podpise
 users choice	admin	sl	Uporabnikova izbira
 using data from mozilla ispdb for provider %1	admin	sl	Uporaba podatkov iz Mozilla ISPDB za ponudnika %1
 vacation messages with start- and end-date require an admin account to be set	admin	sl	Sporočila za počitnice z začetnim in končnim datumom zahtevajo nastavitev skrbniškega računa!

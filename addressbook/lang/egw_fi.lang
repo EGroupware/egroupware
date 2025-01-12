@@ -44,6 +44,7 @@ addressbook	common	fi	Osoitekirja
 addressbook csv export	addressbook	fi	Osoitekirjan CSV-vienti
 addressbook csv import	addressbook	fi	Osoitekirjan CSV-vienti
 addressbook field	addressbook	fi	Osoitekirjan kenttä
+addressbook list	addressbook	fi	Osoitekirjaluettelo
 addressbook menu	addressbook	fi	Osoitekirjan valikko
 addressbook of	addressbook	fi	Osoitekirja:
 addressbook preferences	addressbook	fi	Osoitekirjan asetukset
@@ -141,6 +142,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	address
 country	common	fi	Maa
 country code	addressbook	fi	Maakoodi
 create new links	addressbook	fi	Luo uusia linkkejä
+create new shares writable	addressbook	fi	Luo uusia osakkeita kirjoitettavissa
 created	addressbook	fi	Luotu
 credit	addressbook	fi	Luotto
 crm view list	addressbook	fi	CRM-näkymien luettelo
@@ -487,9 +489,11 @@ translation	addressbook	fi	Käännös
 two of: %1	addressbook	fi	Kaksi seuraavista: %1
 type	addressbook	fi	Tyyppi
 un-delete	addressbook	fi	Palauta
+unable to import into %1, using %2	addressbook	fi	Tuonti %1:een ei onnistu, käyttäen %2:ta
 unique id (uid)	addressbook	fi	Yksilöllinen ID (UID)
 unique id<br />(to update existing records)	addressbook	fi	Yksillölinen ID<br>päivittää jo olemassaolevat tietueet
 unknown type %1, imported as %2	addressbook	fi	Tuntematon tyyppi %1, tuotu nimellä %2
+unshare	addressbook	fi	Poista jakaminen
 update a single entry by passing the fields.	addressbook	fi	Päivitä yksittäistä tietuetta antamalla kentät.
 update fields by edited organisations?	admin	fi	Päivitetäänkö organisaation muokatut kentät
 updated	addressbook	fi	Päivitetty
@@ -497,7 +501,6 @@ upload or delete the photo	addressbook	fi	Lataa tai poista kuva
 url (business)	addressbook	fi	URL-osoite (yritys)
 url (private)	addressbook	fi	URL-osoite (yksityinen)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	fi	URL linkki puhelinnumeroon (käytä %1 = soitettava numero, %u = käyttäjän nimi, %t = käyttäjän puhelin).
-use a category tree?	addressbook	fi	Luokkien valitseminen puun avulla
 use addressbooks "own sorting" attribute	addressbook	fi	Käytä osoitekirjan "oma lajittelu" vaihtoehtoa
 use an extra tab for private custom fields?	admin	fi	Käytä ylimääräistä välilehteä yksityisille lisäkentille
 use country list	addressbook	fi	Käytä maaluetteloa

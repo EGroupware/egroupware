@@ -39,7 +39,6 @@ can't open directory %1!	filemanager	ru	Невозможно открыть ка
 cancel editing %1 without saving	filemanager	ru	Редактирование прервано %1 без сохранения
 cannot create directory because it begins or ends in a space	filemanager	ru	Невозможно создание каталога в связи с отсутствием дискового пространства.
 cautiously rejecting to remove folder '%1'!	filemanager	ru	Отказано в перемещении папки %1
-check all	filemanager	ru	Проверить все
 check virtual filesystem	common	ru	Проверить файловую систему
 classic	filemanager	ru	Стандартная панель инструментов
 clear search	filemanager	ru	Очистить результаты поиска
@@ -209,7 +208,6 @@ projectmanager	filemanager	ru	Проекты
 properties saved.	filemanager	ru	Свойства сохранены.
 protocol to use	filemanager	ru	Используемый протокол
 protocols	filemanager	ru	Протоколы
-quick jump to	filemanager	ru	Быстрый переход к
 quota	filemanager	ru	Квота
 quota exceeded	filemanager	ru	Квота превышена
 read & write access	filemanager	ru	Доступ к чтению/записи

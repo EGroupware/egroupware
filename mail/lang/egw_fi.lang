@@ -348,7 +348,6 @@ sneak preview in list	mail	fi	Viestin esikatselu
 sort order	mail	fi	Lajittelujärjestys
 start new messages with mime type plain/text or html?	mail	fi	Haluatko aloitaa uudet viestit pelkkänä tekstinä vai HTML:nä?
 template folder	mail	fi	Mallipohjat -kansio
-templates	mail	fi	Mallipohjat
 text	mail	fi	Teksti
 text/plain	mail	fi	Pelkkä teksti
 the imap server need to meet certain requirements and be configured for it:	mail	fi	IMAP-palvelimen on täytettävä tietyt vaatimukset JA se on määritettävä sitä varten:

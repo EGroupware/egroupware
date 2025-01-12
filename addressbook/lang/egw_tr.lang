@@ -29,6 +29,7 @@ address type	addressbook	tr	Adres tipi
 addressbook	common	tr	Adres Defteri
 addressbook csv export	addressbook	tr	Adres Defteri CSV dışa aktarma
 addressbook csv import	addressbook	tr	Adres Defteri CSV içe aktarma
+addressbook list	addressbook	tr	Adres defteri listesi
 addressbook preferences	addressbook	tr	Adres Defteri tercihleri
 addressbook vcard export	addressbook	tr	Adres defteri vCard dışa aktarma
 addressbook vcard import	addressbook	tr	Adres defteri vCard içe aktarma
@@ -65,6 +66,7 @@ contact application	admin	tr	İletişim başvurusu
 contact settings	admin	tr	İletişim ayarları
 copied by %1, from record #%2.	addressbook	tr	%1 tarafından #%2 kaydından kopyalandı.
 country	common	tr	Ülke
+create new shares writable	addressbook	tr	Yazılabilir yeni paylaşımlar oluşturun
 crm-view	addressbook	tr	CRM Görünümü
 csv-fieldname	addressbook	tr	CSV alan adı
 csv-filename	addressbook	tr	CSV dosya adı
@@ -216,7 +218,6 @@ unshare	addressbook	tr	Artık paylaşılmıyor
 unshared	addressbook	tr	artık paylaşılmıyor
 update a single entry by passing the fields.	addressbook	tr	Alanları ileterek tek bir girişi güncelleyin.
 updated	addressbook	tr	Güncelle
-use a category tree?	addressbook	tr	Kategorileri seçmek için bir ağaç kullanın
 use addressbooks "own sorting" attribute	addressbook	tr	Adres defterlerinin "kendi sıralama" özelliğini kullanın
 use country list	addressbook	tr	Ülke listesi kullan
 user groups are automatically shown as distribution lists.	addressbook	tr	Kullanıcı grupları otomatik olarak dağıtım listeleri olarak gösterilir.

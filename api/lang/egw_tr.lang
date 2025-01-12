@@ -21,6 +21,7 @@
 5 minutes	common	tr	5 dakika
 5 seconds	common	tr	5 saniye
 abort	common	tr	İptal
+about egroupware	common	tr	EGroupware Hakkında
 account has been created	common	tr	Hesap oluþturuldu.
 account has been deleted	common	tr	Hesap silindi.
 account has been updated	common	tr	Hesap güncellendi.
@@ -50,10 +51,12 @@ and	common	tr	Ve
 answering no will not ask you again for this browser.	common	tr	Hayır yanıtını verirseniz, artık bu tarayıcı istenmeyecektir.
 application	common	tr	Uygulama
 apply	common	tr	Uygula
+apps & license	common	tr	Uygulamalar & Lisans
 attention: action will be applied to all rows, not only visible ones!	api	tr	Dikkat: eylem yalnızca görünen satırlara değil, tüm satırlara uygulanacaktır!
 authenticate	common	tr	Kimlik Doğrulama
 avatar	common	tr	Avatar
 back	common	tr	Geri
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	tr	Daha ileri gitmeden önce, Mailvelope eklentisinin EGroupware ile nasıl çalıştığını görmek için bu kısa videoyu izlemenizi şiddetle tavsiye ederiz.
 bottom	common	tr	Taban
 browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	tr	Tarayıcı %1 %2 önerilmez. Sorunlarla ve çalışmayan özelliklerle karşılaşabilirsiniz. Lütfen Chrome, Firefox veya Edge'in en son sürümünü kullanın. Teşekkürler!
 calendar	common	tr	Takvim
@@ -63,6 +66,7 @@ changes that you made may not be saved.	common	tr	Yaptığınız değişiklikler
 charset	common	tr	Karakter kümesi
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	tr	IF deyimlerinde boş değerleri kontrol edin. Örnek {{IF url~EMPTY~~Web Sitesi:}} - Eğer url boş değilse, "Web sitesi:" yazar
 choose the default filename for merged documents.	preferences	tr	Birleştirilen belgeler için varsayılan dosya adını seçin.
+click here to resume your egroupware session.	common	tr	EGroupware oturumunuza devam etmek için tıklayın.
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	tr	Açıkça bir limit belirtmeyen müşteriler bu kadar günle sınırlandırılır. Çok yüksek bir limit bazı istemcilerde sorunlara neden olabilir.
 clipboard contents	common	tr	Pano içeriği
 code	common	tr	Kod
@@ -94,9 +98,18 @@ disabled	common	tr	Engellendi
 documents	common	tr	Belgeler
 domestic	common	tr	Ev
 don't ask again!	common	tr	Tekrar sorma!
+don't show this again	common	tr	Bunu bir daha gösterme.
 done	common	tr	Tamam
 download	common	tr	İndir
 edit	common	tr	Düzenle
+edit avatar	common	tr	Avatarı düzenle
+egroupware	common	tr	EGroupware
+egroupware administrators group, do not delete	common	tr	EGroupware administrators grubu, SİLMEYİN
+egroupware all users group, do not delete	common	tr	EGroupware tüm kullanıcılar grubu, SİLMEYİN
+egroupware anonymous users group, do not delete	common	tr	EGroupware anonim kullanıcılar grubu, SİLMEYİN
+egroupware maintenance update %1 available	common	tr	EGroupware bakım güncellemesi %1 kullanılabilir
+egroupware security update %1 needs to be installed!	common	tr	EGroupware güvenlik güncelleştirmesi %1'in yüklenmesi gerekiyor!
+egroupware version	common	tr	EGroupware sürümü
 emails	common	tr	E-postalar
 enabled	common	tr	Etkin
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
@@ -166,6 +179,7 @@ moved %1 children from directory fs_id=%2 to %3	admin	tr	fs_id=%2 klasöründeki
 moved unconnected %1 %2 to %3.	admin	tr	Bağlantısız %1 %2'yi %3'e taşıdı.
 my account	common	tr	Benim Hesabım
 name	common	tr	Ýsim
+new egroupware release %1 available	common	tr	Yeni EGroupware sürümü %1 kullanılabilir
 new password	common	tr	Yeni şifre
 no filters	common	tr	Filtre yok
 ok	common	tr	Tamam
@@ -213,6 +227,8 @@ sign up	common	tr	Kaydolun
 site configuration	common	tr	Konfigürasyon
 spreadsheets	common	tr	Elektronik Tablolar
 submit	common	tr	Gönder
+template	common	tr	Şablon
+templates	common	tr	Şablonlar
 title	common	tr	Baþlýk
 today	common	tr	Bugün
 top	common	tr	Maks

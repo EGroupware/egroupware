@@ -56,6 +56,7 @@ andorra	common	lt	ANDORA
 angola	common	lt	ANGOLA
 answering no will not ask you again for this browser.	common	lt	Jei atsakysite "ne", šios naršyklės jūsų nebebus prašoma.
 api	common	lt	EGroupware API
+apps & license	common	lt	Programos ir licencija
 april	common	lt	Balandis
 argentina	common	lt	ARGENTINA
 armenia	common	lt	ARMĖNIJA
@@ -69,6 +70,7 @@ author	common	lt	Autorius
 avatar	common	lt	Avatar
 back	common	lt	Atgal
 bcc	common	lt	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	lt	Prieš tęsdami toliau, labai rekomenduojame pažiūrėti šį trumpą vaizdo įrašą, kad pamatytumėte, kaip Mailvelope priedas veikia su EGroupware.
 belarus	common	lt	BALTARUSIJA
 belgium	common	lt	BELGIJA
 belize	common	lt	BELIZAS
@@ -92,6 +94,7 @@ check for empty values in if statements.  example {{if url~empty~~website:}} - i
 chile	common	lt	ČILĖ
 china	common	lt	KINIJA
 choose the default filename for merged documents.	preferences	lt	Pasirinkite numatytąjį sujungtų dokumentų failo pavadinimą.
+click here to resume your egroupware session.	common	lt	Spustelėkite , jei norite tęsti EGroupware seansą.
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	lt	Klientams, kurie aiškiai nenurodo limito, suteikiama tik tiek dienų. Dėl per didelio limito kai kuriems klientams gali kilti problemų.
 clipboard contents	common	lt	Prisegtuko turinys
 code	common	lt	Kodas
@@ -133,11 +136,20 @@ directory for storing merged documents	preferences	lt	Aplankas sujungtiems dokum
 djibouti	common	lt	DŽIBUTIS
 documents	common	lt	Dokumentai
 don't ask again!	common	lt	Nepaklauskite dar kartą!
+don't show this again	common	lt	Daugiau to nerodyti
 e-mail	common	lt	El. paštas
 ecuador	common	lt	EKVADORAS
 edit	common	lt	Redaguoti
+edit avatar	common	lt	Redaguoti avatarą
 edit categories	common	lt	Redaguoti kategorijas
 edit category	common	lt	Redaguoti kategoriją
+egroupware	common	lt	EGroupware
+egroupware administrators group, do not delete	common	lt	EGroupware administratorių grupė, NENUTRAUKITE
+egroupware all users group, do not delete	common	lt	EGroupware visų naudotojų grupė, NENUTRAUKITE
+egroupware anonymous users group, do not delete	common	lt	EGroupware anoniminių naudotojų grupė, NENUTRAUKITE
+egroupware maintenance update %1 available	common	lt	EGroupware techninės priežiūros atnaujinimas %1 pasiekiamas
+egroupware security update %1 needs to be installed!	common	lt	Reikia įdiegti EGroupware saugumo atnaujinimą %1!
+egroupware version	common	lt	EGroupware versija
 egypt	common	lt	EGIPTAS
 el salvador	common	lt	SALVADORAS
 email	common	lt	El. paštas
@@ -256,6 +268,7 @@ namibia	common	lt	NAMIBIJA
 nepal	common	lt	NEPALAS
 netherlands	common	lt	OLANDIJA
 never	common	lt	Niekada
+new egroupware release %1 available	common	lt	Yra nauja EGroupware versija %1
 new password	common	lt	Naujas slaptažodis
 new zealand	common	lt	NAUJOJI ZELANDIJA
 next	common	lt	Kitas
@@ -317,6 +330,8 @@ show/hide	common	lt	Rodyti/paslėpti šoninę juostą
 sign up	common	lt	Užsiregistruoti
 site configuration	common	lt	Programos konfigūracija
 spreadsheets	common	lt	Skaičiuoklės
+template	common	lt	Šablonas
+templates	common	lt	Šablonai
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lt	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
 too many rows selected.<br />select all, or less than %1 rows	common	lt	Too many rows selected.<br>Select all, or less than %1 rows
 total: %1 successful: %2 failed: %3 skipped: %4	common	lt	Total: %1 Successful: %2 Failed: %3 Skipped: %4

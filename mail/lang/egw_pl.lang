@@ -341,7 +341,6 @@ sneak preview in list	mail	pl	Podgląd wiadomości
 sort order	mail	pl	Porządek sortowania
 start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy HTML?
 template folder	mail	pl	Katalog szablnów
-templates	mail	pl	Szablony
 text	mail	pl	Tekst
 text/plain	mail	pl	Tekst
 the imap server need to meet certain requirements and be configured for it:	mail	pl	Serwer IMAP musi spełniać określone wymagania ORAZ być odpowiednio skonfigurowany:

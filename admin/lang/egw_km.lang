@@ -799,7 +799,6 @@ standard smtp-server	admin	km	ម៉ាស៊ីនមេ SMTP ស្តង់�
 start	admin	km	ចាប់ផ្តើម
 start testjob!	admin	km	ចាប់ផ្តើម TestJob!
 starts with	admin	km	ចាប់ផ្តើមជាមួយ
-stationery	admin	km	សម្ភារៈការិយាល័យ
 strictly required, user can not login without	admin	km	ទាមទារយ៉ាងតឹងរ៉ឹង អ្នកប្រើប្រាស់មិនអាចចូលដោយគ្មាន
 submit changes	admin	km	ដាក់ស្នើការផ្លាស់ប្តូរ
 submit displayed information?	admin	km	បញ្ជូនព័ត៌មានដែលបានបង្ហាញ
@@ -813,7 +812,6 @@ successfull, but no refresh-token received!	admin	km	ជោគជ័យ ប៉�
 switch back to standard identity to save account.	admin	km	ប្តូរទៅអត្តសញ្ញាណស្តង់ដារវិញ ដើម្បីរក្សាទុកគណនី។
 switch back to standard identity to save other account data.	admin	km	ប្តូរទៅអត្តសញ្ញាណស្តង់ដារវិញ ដើម្បីរក្សាទុកទិន្នន័យគណនីផ្សេងទៀត។
 switch it off, if users are randomly thrown out	admin	km	បិទវា ប្រសិនបើអ្នកប្រើប្រាស់ត្រូវបានចេញដោយចៃដន្យ
-templates	admin	km	គំរូ
 that loginid has already been taken	admin	km	លេខសម្គាល់ចូលនោះត្រូវបានយករួចហើយ។
 the api is current	admin	km	API គឺបច្ចុប្បន្ន
 the api requires an upgrade	admin	km	API ទាមទារការអាប់ដេត

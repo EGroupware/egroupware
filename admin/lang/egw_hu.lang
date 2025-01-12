@@ -575,12 +575,10 @@ standard imap server	admin	hu	Szabványos IMAP-kiszolgáló
 standard smtp-server	admin	hu	Szabványos SMTP-kiszolgáló
 start	admin	hu	Indít
 start testjob!	admin	hu	TesztFeladat indítása!
-stationery	admin	hu	Irodaszer
 submit changes	admin	hu	Változások elküldése
 submit the search string	admin	hu	Keresési szöveg elküldése
 subtype	admin	hu	Altípus
 switch it off, if users are randomly thrown out	admin	hu	Kapcsolja ki, a felhasználókat véletlenszerűen kidobja a rendszer
-templates	admin	hu	Sablonok
 that loginid has already been taken	admin	hu	Ez a felhasználónév már foglalt.
 the api is current	admin	hu	Az API nem igényel frissítést
 the api requires an upgrade	admin	hu	Az API frissítést igényel
@@ -647,7 +645,10 @@ username/password defined by admin	admin	hu	Az adminisztrátok által meghatáro
 username@domainname (virtual mail manager)	admin	hu	felhasználónév@tartománynév (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	hu	A felhasználók saját maguk állíthatják be az email postafiókjaikat
 users can define their own identities	admin	hu	A felhasználók beállíthatják a saját azonosítójukat
+users can define their own signatures	admin	hu	A felhasználók meghatározhatják saját aláírásukat
 users choice	admin	hu	Felhasználói választás
+vacation messages with start- and end-date require an admin account to be set	admin	hu	A kezdő és befejező dátummal ellátott vakációs üzenetek beállításához admin fiók szükséges!
+vacation notice	admin	hu	Ünnepnapi értesítés
 view access log	admin	hu	Elérési napló megtekintése
 view account	admin	hu	Azonosító megtekintése
 view category	admin	hu	Kategória megtekintése
@@ -661,6 +662,7 @@ who would you like to transfer records owned by the deleted user to?	admin	hu	Ki
 wrong admin-account or -password !!!	admin	hu	Érvénytelen adminisztrátor felhasználó vagy jelszó!
 xml-rpc	admin	hu	XML-RPC
 you can set an initial value, which gets incremented every time a new serial get generated	admin	hu	beállíthat egy kezdeti értéket, amely minden egyes alkalommal növekszik, amikor egy új sorozatot generálnak
+you can use wizard to fix account settings or delete account.	admin	hu	A varázsló segítségével javíthatja a fiókbeállításokat vagy törölheti a fiókot.
 you have entered an invalid expiration date	admin	hu	Érvénytelen lejárati időt adott meg!
 you have received a new message on the	admin	hu	Új üzenet érkezett a
 you have to enter a name, to create a new field!!!	admin	hu	Meg kell adnia egy nevet, hogy az új mezőt létre lehessen hozni!

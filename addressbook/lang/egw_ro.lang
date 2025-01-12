@@ -29,6 +29,7 @@ calendar integration	addressbook	ro	Integrare calendar
 change addressbook when updating	addressbook	ro	Schimbă agenda de adrese la actualizare
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	ro	Alegeți sursa predefinită a hărții sau utilizați un URL personalizat (utilizați %r = stradă, %t = oraș, %c = țară, %z = cod poștal)
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	ro	Curățați câmpurile din agenda de adrese, aplicați dacă sincronizarea creează duplicate
+create new shares writable	addressbook	ro	Crearea de noi acțiuni inscriptibile
 crm-view	addressbook	ro	Vizualizare CRM
 default action on double-click	addressbook	ro	Acțiune implicită la dublu clic
 default geolocation source address	addressbook	ro	Adresa predefinită a sursei GeoLocation
@@ -121,7 +122,6 @@ unable to import into %1, using %2	addressbook	ro	Imposibil de importat în %1, 
 unknown type %1, imported as %2	addressbook	ro	Tip necunoscut %1, importat ca %2
 unshare	addressbook	ro	Nu mai partajați
 unshared	addressbook	ro	nu mai este partajat
-use a category tree?	addressbook	ro	Utilizați un arbore pentru selectarea categoriilor
 user groups are automatically shown as distribution lists.	addressbook	ro	Grupurile de utilizatori sunt afișate automat ca liste de distribuție.
 video call	addressbook	ro	Apel video
 when viewing a contact, show linked entries from the selected application	addressbook	ro	La vizualizarea unui contact, afișați intrările legate din aplicația selectată

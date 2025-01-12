@@ -87,6 +87,7 @@ antarctica	common	bg	Антарктика
 antigua and barbuda	common	bg	Антигуа и Барбуда
 application	common	bg	Приложение
 apply	common	bg	Приложи
+apps & license	common	bg	Приложения и лиценз
 april	common	bg	Април
 are you sure you want to delete these entries ?	common	bg	Наистина ли искате да изтриете тези записи?
 are you sure you want to delete this entry ?	common	bg	Наистина ли искате да изтриете този запис?
@@ -250,6 +251,7 @@ detail	common	bg	Детайл
 details	common	bg	Детайли
 directory	common	bg	Директория
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	bg	Директорията не съществува, не е позволено четенето и от WEB сървъра или не е даден относителният път спрямо document root!
+directory for storing merged documents	preferences	bg	Папка за съхранение на обединени документи
 disabled	common	bg	Забранено
 djibouti	common	bg	Джибути
 do you also want to delete all subcategories ?	common	bg	Искате ли също така да изтриете и всички подкатегории?
@@ -265,6 +267,7 @@ domestic	common	bg	Домашен
 dominica	common	bg	Доминика
 dominican republic	common	bg	Доминиканска Република
 don't ask again!	common	bg	Не питайте отново!
+don't show this again	common	bg	Не показвайте това отново
 done	common	bg	Готово
 download	common	bg	Изтегляне
 duration	common	bg	Продължителност
@@ -273,10 +276,17 @@ east timor	common	bg	Източен Тимур
 ecuador	common	bg	Еквадор
 edit	common	bg	Редактиране
 edit %1 category for	common	bg	Редактиране на %1 категория за
+edit avatar	common	bg	Редактиране на avatar
 edit categories	common	bg	Редактиране на категориите
 edit category	common	bg	Редактиране на категория
 egroupware	common	bg	EGroupware
+egroupware administrators group, do not delete	common	bg	Група администратори на EGroupware, НЕ изтривайте
+egroupware all users group, do not delete	common	bg	Група EGroupware всички потребители, НЕ изтривайте
+egroupware anonymous users group, do not delete	common	bg	Група EGroupware анонимни потребители, НЕ изтривайте
 egroupware api version	common	bg	версия на EGroupware API
+egroupware maintenance update %1 available	common	bg	Налична е актуализация за поддръжка на EGroupware %1
+egroupware security update %1 needs to be installed!	common	bg	Необходимо е да се инсталира актуализация на сигурността на EGroupware %1!
+egroupware version	common	bg	Версия на EGroupware
 egroupware: login blocked for user '%1', ip %2	common	bg	EGroupware: влизането блокирано за потребител '%1' от IP-адрес %2
 egypt	common	bg	Египет
 el salvador	common	bg	Ел Салвадор
@@ -545,6 +555,7 @@ netherlands antilles	common	bg	Холандски Антили
 never	common	bg	Никога
 new	common	bg	Нова
 new caledonia	common	bg	Нова Каледония
+new egroupware release %1 available	common	bg	Налична е нова версия на EGroupware %1
 new entry added sucessfully	common	bg	Новият запис е добавен успешно
 new main category	common	bg	Нова основна категория
 new password	common	bg	Нова парола
@@ -599,7 +610,7 @@ open existing contact	common	bg	Отваряне на съществуващ к�
 open notify window	common	bg	Отваряне на прозореца за известяване
 open popup window	common	bg	Отваряне на "изскачащ" прозорец
 open the online help.	common	bg	Отваряне на онлайн помощ
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	bg	Входът в OpenIDConnect е успешен, но потребител '%1' НЕ съществува в EGroupware, а автоматичното създаване на потребители е деактивирано!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	bg	Входът в OpenID Connect е успешен, но потребител '%1' НЕ съществува в EGroupware, а автоматичното създаване на потребители е деактивирано!
 operator	common	bg	Оператор
 optional note about the link	common	bg	Незадължителна бележка за връзката
 options	common	bg	Опции
@@ -802,6 +813,7 @@ taiwan	common	bg	Тайван/Тайпе
 tajikistan	common	bg	Таджикистан
 tanzania, united republic of	common	bg	Обединена Република Танзания
 template	common	bg	Шаблон
+templates	common	bg	Шаблони
 text color:	common	bg	Цвят на текста:
 thailand	common	bg	Тайланд
 the following applications require upgrades	common	bg	Следните приложения имат нужда от обновяване
@@ -879,8 +891,8 @@ wallis and futuna	common	bg	Уолис и Футуна
 wednesday	common	bg	Сряда
 welcome	common	bg	Добре дошли
 western sahara	common	bg	Западна Сахара
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	bg	Когато обединявате записи в документи, те ще се съхраняват тук. Ако не е предоставена папка, те ще се съхраняват в домашната ви директория (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	bg	Ако отговорите ДА бутоните Home и Logout ще се появят като приложения в горната главна лента на приложенията.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	bg	Къде и как да се изобразяват връзките на EGroupware като настройки, "относно" и Logout.
 which groups	common	bg	Кои групи
 whole query	common	bg	всички резултати
 width	common	bg	Ширина

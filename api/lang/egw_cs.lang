@@ -148,6 +148,7 @@ applies the changes made	common	cs	Použije provedené změny
 applies the changes to the given version of the template	common	cs	Použije změny provedené v dané verzi šablony
 apply	common	cs	Použít
 apply the action on the whole query, not only the shown entries	common	cs	Použít akci na celý databázový dotaz, ne jen na zobrazené záznamy
+apps & license	common	cs	Aplikace a licence
 apps &amp; license	common	cs	Aplikace a licence
 april	common	cs	Duben
 are you sure you want to delete these entries ?	common	cs	Opravdu chcete smazat tyto záznamy?
@@ -988,7 +989,7 @@ open existing contact	common	cs	Otevřít stávající kontakt
 open notify window	common	cs	Otevřít okno s upozorněním
 open popup window	common	cs	Otevřít překryvné okno
 open the online help.	common	cs	Otevřit online nápovědu
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	cs	Přihlášení pomocí OpenIDConnect proběhlo úspěšně, ale uživatel '%1' v EGroupware NEexistuje a automatické vytváření uživatelů je zakázáno!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	cs	Přihlášení pomocí OpenID Connect proběhlo úspěšně, ale uživatel '%1' v EGroupware NEexistuje a automatické vytváření uživatelů je zakázáno!
 operator	common	cs	Operátor
 optional note about the link	common	cs	Volitelná poznámka o odkazu
 options	common	cs	Volby
@@ -1355,6 +1356,7 @@ tanzania, united republic of	common	cs	TANZANIE
 template	common	cs	Šablona
 template deleted	common	cs	Šablona smazána.
 template saved	common	cs	Šablona uložena.
+templates	common	cs	Šablony
 text	common	cs	Text
 text color:	common	cs	Barva textu:
 textarea	common	cs	Textová oblast
@@ -1482,7 +1484,6 @@ western sahara	common	cs	ZÁPADNÍ SAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	cs	Co se stane s přetékajícím obsahem: viditelný (výchozí), skrytý,rolovat,auto(rozhoduje prohlížeč)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	cs	Když sloučíte záznamy do dokumentů, budou uloženy zde. Pokud není zadána žádná složka, budou uloženy ve vašem domovském adresáři (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	cs	Odpovíte-li ano, potom tlačítka pro hlavní stranu a odhlášení budou přítomna ve vrchní aplikační liště.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	cs	Kde a jak budou zobrazeny v EGroupware odkazy jako předvolby, o aplikaci nebo odhlášení.
 which groups	common	cs	Které skupiny
 which infolog types should be synced with the device, default only tasks.	common	cs	Které typy úkolů by měly být se zařízením synchronizovány, přednastavená hodnota je pouze úkoly.
 whole query	common	cs	Celý dotaz

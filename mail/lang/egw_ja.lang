@@ -619,7 +619,6 @@ subscription successfully saved.	mail	ja	購読フォルダーを更新しまし
 succeeded on %1 folders, failed on %2	mail	ja	フォルダ %1 で成功しましたが、%2 で失敗しました
 switch off encryption?	mail	ja	暗号化を解除しますか？
 template folder	mail	ja	テンプレート・フォルダ
-templates	mail	ja	テンプレート
 templates folder	mail	ja	テンプレート・フォルダ
 test connection	mail	ja	接続テスト
 test connection and display basic information about the selected profile	mail	ja	選択されたプロフィールによる接続試験を実行し基本情報を表示

@@ -537,7 +537,11 @@ user hidden from non-admins.	admin	sv	Пользователь скрыт для
 user-agent	admin	sv	User-Agent
 userdata	admin	sv	Användaradata
 users can define their own emailaccounts	admin	sv	Användare kan definiera egna epost konton?
+users can define their own identities	admin	sv	Användare kan definiera sina egna identiteter
+users can define their own signatures	admin	sv	Användare kan definiera sina egna signaturer
 users choice	admin	sv	Användares val
+vacation messages with start- and end-date require an admin account to be set	admin	sv	Semestermeddelanden med start- och slutdatum kräver ett adminkonto för att kunna ställas in!
+vacation notice	admin	sv	Meddelande om semester
 view access log	admin	sv	Visa accesslogg
 view account	admin	sv	Visa konto
 view category	admin	sv	Visa kategori
@@ -549,6 +553,7 @@ virtual mail manager	admin	sv	Virtuell E-post administration
 who would you like to transfer all records owned by the deleted user to?	admin	sv	Till vem vill du föra över SAMTLIGA poster som ägs av den raderade användaren?
 who would you like to transfer records owned by the deleted user to?	admin	sv	Кому вы хотите передать записи, принадлежащие удаленному пользователю?
 xml-rpc	admin	sv	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	sv	Du kan använda guiden för att fixa kontoinställningar eller radera konto.
 you have entered an invalid expiration date	admin	sv	Du har angivit ett ogiltigt förfallodatum
 you have to enter a name, to create a new field!!!	admin	sv	Du måste ange ett namn för att skapa nytt fält!
 you have to enter a name, to create a new type!	admin	sv	Du måste ange ett namn för att skapa ny typ!

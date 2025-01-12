@@ -118,6 +118,7 @@ copy a contact and edit the copy	addressbook	zh	复制联系人并编辑副本
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	zh	复制您的改变到剪贴板，%1重新载入条目%2并合并它们。
 country	common	zh	国家
 create new links	addressbook	zh	创建新链接
+create new shares writable	addressbook	zh	创建可写的新股票
 created	addressbook	zh	创建
 credit	addressbook	zh	信用
 crm-view	addressbook	zh	客户关系管理视图
@@ -424,7 +425,6 @@ update a single entry by passing the fields.	addressbook	zh	通过字段来更�
 updated	addressbook	zh	更新
 upload or delete the photo	addressbook	zh	上传或删除照片
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	zh	连接电话号码的网址 (使用 %1 = 拨打号码，%u = 帐户名，%t = 电话帐户)
-use a category tree?	addressbook	zh	使用树形结构选择类别
 use country list	addressbook	zh	使用“国家/地区”列表
 use setup for a full account-migration	admin	zh	使用安装程序来完整帐户迁移
 used for links and for the own sorting of the list	addressbook	zh	使用链接为列表拥有者排序

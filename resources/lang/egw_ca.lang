@@ -1,7 +1,4 @@
-actions	resources	ca	Accions
-all categories	resources	ca	Totes les categories
 bookable	resources	ca	Reservable
-check all	resources	ca	Comprova-ho tot
 configure access permissions	admin	ca	Configurar permissos d'accés
 create new links	resources	ca	Crear nous enllaços
 custom fields	resources	ca	Camps personalitzats

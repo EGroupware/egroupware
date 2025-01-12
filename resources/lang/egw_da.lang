@@ -2,17 +2,16 @@
 %1 accessories restored	resources	da	%1 tilbehør restaureret
 %1 resource(s) %2	resources	da	%1 ressource(r) %2
 %1 resource(s) %2, %3 failed	resources	da	%1 ressource(r) %2, %3 mislykkedes
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	da	%1 ressource(r) %2, %3 mislykkedes på grund af utilstrækkelige rettigheder !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	da	%1 ressource(r) %2, %3 mislykkedes på grund af utilstrækkelige rettigheder!
 %1 resource(s) booked	resources	da	%1 ressource(r) booket
 %1 resource(s) view calendar	resources	da	%1 ressource(r) se kalender
 accessories	resources	da	Tilbehør
 accessories of	resources	da	Tilbehør fra
-accessories:	resources	da	Tilbehør:
 accessory of	resources	da	Tilbehør fra
-actions	resources	da	Handling
 add group to event participants	resources	da	Tilføj gruppe til eventdeltagere
-all categories	resources	da	Alle kategorier
 allow booking requests from any user when creating events?	resources	da	Tillad bookinganmodninger fra enhver bruger, når du opretter begivenheder?
+allow ignore conflicts	admin	da	Tillad at ignorere konflikter
+book resource	resources	da	Bog-ressource
 booking requests	resources	da	Booking-anmodninger
 category admin	resources	da	Kategoriadministrator
 category saved.	resources	da	Gemt kategori.
@@ -27,21 +26,37 @@ deleted	resources	da	slettet
 do you really want to delete this resource?	resources	da	Ønsker du virkelig at slette denne ressource?
 edit this entry	resources	da	Redigér denne indstasning
 existing links	resources	da	Eksisterende links
+exports a list of resources to a csv file.	resources	da	Eksporterer en liste over ressourcer til en CSV-fil.
 general	resources	da	Generelt
 global categories	resources	da	Globale Kategorier
 hours	resources	da	timer
 icon	resources	da	Ikon
+if you specify an export definition, it will be used when you export	resources	da	Hvis du angiver en eksportdefinition, vil den blive brugt, når du eksporterer
 implies read permission	resources	da	læserettigheder underforstået
+imports a list of resources from a csv file.	resources	da	Importerer en liste over ressourcer fra en CSV-fil.
+is resource bookable?	resources	da	Kan ressourcen bookes
+is the ressource bookable?	resources	da	Kan ressourcen bookes?
 links	resources	da	Links
 location	resources	da	Sted
+new accessory	resources	da	Nyt tilbehør
+new resource	resources	da	Ny ressource
 no - leave them	resources	da	Nej - lad dem være
 no - make them resources	resources	da	Nej - Gør dem til ressourcer
 no, users will need to contact users with direct booking permission	resources	da	Nej, brugere skal kontakte brugere med direkte bookingtilladelse.
+prize	resources	da	Pris
 read permissions	resources	da	Læserettigheder
+resource	resources	da	Ressource
+resource %1 deleted!	resources	da	Ressource %1 slettet!
+resource %1 saved!	resources	da	Ressource %1 gemt!
+resource / accessories	resources	da	Ressource / Tilbehør
 resources	common	da	Ressourcer
 select a category	resources	da	Vælg en kategori
 select resources	common	da	Vælg ressourcer
 un-delete accessories of selected resources too?	resources	da	Gendan tilbehør til de valgte ressourcer?
+view accessories	resources	da	Vis tilbehør
+view calendar	resources	da	Se kalender
 write permissions	resources	da	Skriverettigheder
 yes - delete accessories too	resources	da	Ja - Slet også tilbehør
 yes - un-delete accessories too	resources	da	Ja - Gendan også tilbehør
+yes, all users can ignore conflicts	resources	da	Ja, alle brugere kan ignorere konflikter
+yes, only users with direct booking permission	resources	da	Ja, kun brugere med tilladelse til direkte booking

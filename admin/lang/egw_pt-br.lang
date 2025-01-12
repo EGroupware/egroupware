@@ -603,14 +603,12 @@ standard smtp-server	admin	pt-br	Servidor SMTP padrão
 start	admin	pt-br	Iniciar
 start testjob!	admin	pt-br	Inicie o trabalho de teste!
 starts with	admin	pt-br	Começa com
-stationery	admin	pt-br	Artigos de papelaria
 submit changes	admin	pt-br	Enviar alterações
 submit the search string	admin	pt-br	Enviar expressão de busca
 subtype	admin	pt-br	Sub tipo
 successful connected to %1 server%2.	admin	pt-br	Successful ligado ao %1servidor%2.
 switch back to standard identity to save account.	admin	pt-br	Volte para a identidade padrão para salvar conta.
 switch it off, if users are randomly thrown out	admin	pt-br	Desabilite, se usuários estiverem, aleatoriamente, sendo desconectados
-templates	admin	pt-br	Templates
 that loginid has already been taken	admin	pt-br	Este código de usuário já existe.
 the api is current	admin	pt-br	A base (API) do EGroupware está atualizada
 the api requires an upgrade	admin	pt-br	A base (API) do EGroupware precisa ser atualizada
@@ -682,10 +680,11 @@ username/password defined by admin	admin	pt-br	Nome de usuário/Senha definidos 
 username@domainname (virtual mail manager)	admin	pt-br	nomedousuario@nomedodominio (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	pt-br	Os usuários podem definir sua próprias contas de correio
 users can define their own identities	admin	pt-br	Usuários podem definir suas próprias identidades
-users can define their own signatures	admin	pt-br	Usuários podem definir suas próprias assinaturas
-users can utilize these stationery templates	admin	pt-br	Os usuários podem utilizar esses modelos de papel de carta
+users can define their own signatures	admin	pt-br	Os usuários podem definir suas próprias assinaturas
 users choice	admin	pt-br	Escolha do usuário
 using data from mozilla ispdb for provider %1	admin	pt-br	Usando dados da Mozilla ISPDB do fornecedor %1
+vacation messages with start- and end-date require an admin account to be set	admin	pt-br	As mensagens de férias com datas de início e fim exigem a configuração de uma conta de administrador!
+vacation notice	admin	pt-br	Aviso de férias
 value for column %1 is not unique!	admin	pt-br	Valor da coluna %1 não é único!
 view access log	admin	pt-br	Exibir registro de acessos
 view account	admin	pt-br	Exibir conta
@@ -701,6 +700,7 @@ wrong account type: %1 is no %2 !!!	admin	pt-br	Tipo de conta errado: %1 NÃO é
 wrong admin-account or -password !!!	admin	pt-br	Conta de administração ou -senha errada!
 xml-rpc	admin	pt-br	XML-RPC
 you can set an initial value, which gets incremented every time a new serial get generated	admin	pt-br	você pode definir um valor inicial, que é incrementado sempre que uma nova série é gerada
+you can use wizard to fix account settings or delete account.	admin	pt-br	Você pode usar o assistente para corrigir as configurações da conta ou excluir a conta.
 you have entered an invalid expiration date	admin	pt-br	A data de expiração digitada é inválida!
 you have received a new message on the	admin	pt-br	Você recebeu uma nova mensagem na
 you have to enter a name, to create a new field!!!	admin	pt-br	Você precisa informar um nome para criar um novo campo!

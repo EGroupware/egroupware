@@ -152,6 +152,7 @@ applies the changes made	common	es-es	Aplica los cambios realizados
 applies the changes to the given version of the template	common	es-es	Aplica los cambios a la versión dada de la plantilla
 apply	common	es-es	Aplicar
 apply the action on the whole query, not only the shown entries	common	es-es	Aplicar la acción a toda la consulta, NO solo a las entradas mostradas
+apps & license	common	es-es	Aplicaciones y licencias
 apps &amp; license	common	es-es	Aplicaciones y licencia
 april	common	es-es	Abril
 are you sure you want to delete these entries ?	common	es-es	¿Seguro que desea borrar estas entradas?
@@ -1002,7 +1003,7 @@ open existing contact	common	es-es	Abrir contacto existente
 open notify window	common	es-es	Abrir ventana de notificación
 open popup window	common	es-es	Abrir ventana emergente
 open the online help.	common	es-es	Abrir la ayuda en línea
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	es-es	El inicio de sesión OpenIDConnect se ha realizado correctamente, pero el usuario '%1' NO existe en EGroupware, ¡Y la creación automática de usuarios está desactivada!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	es-es	El inicio de sesión OpenID Connect se ha realizado correctamente, pero el usuario '%1' NO existe en EGroupware, ¡Y la creación automática de usuarios está desactivada!
 operator	common	es-es	Operador
 optional note about the link	common	es-es	Nota opcional sobre el enlace
 options	common	es-es	Opciones
@@ -1378,6 +1379,7 @@ tanzania, united republic of	common	es-es	TANZANIA, UNITED REPUBLIC OF
 template	common	es-es	Plantilla
 template deleted	common	es-es	Plantilla borrada.
 template saved	common	es-es	Plantilla guardada.
+templates	common	es-es	Plantillas
 text	common	es-es	Texto
 text color:	common	es-es	Color del texto:
 textarea	common	es-es	Area de texto
@@ -1506,7 +1508,6 @@ western sahara	common	es-es	SAHARA OCCIDENTAL
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	es-es	Qué hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, automático (decide el navegador)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	es-es	Cuando fusione entradas en documentos, se almacenarán aquí. Si no se proporciona ninguna carpeta, se almacenarán en su directorio personal (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	es-es	Si dice que sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra principal de aplicaciones.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	es-es	Dónde y cómo mostrar los enlaces de egroupware com las preferencias, acerca de y salir.
 which groups	common	es-es	Qué grupos
 which infolog types should be synced with the device, default only tasks.	common	es-es	Cuales tipos de InfoLog deben sincronizarse con el dispositivo, solo tareas predeterminadas.
 whole query	common	es-es	La consulta completa
@@ -1560,7 +1561,7 @@ you need to select some entries first!	common	es-es	¡Necesita seleccionar algun
 you need to set enable logging to "%1" to create/update a log.	groupdav	es-es	Debe establecer habilitar el registro en "%1" para crear/actualizar un registro.
 you tried to automatically size a flex column, which always takes the rest of the space	common	es-es	Intentó dimensionar automáticamente una columna flexible, que siempre ocupa el resto del espacio.
 you will not be able to send or receive encrypted mails before completing that step!	common	es-es	¡NO podrá enviar ni recibir correos cifrados antes de completar ese paso!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	¡Ha intentado abrir la aplicación de EGroupware %1, pero no tiene permiso para acceder a esta aplicación.!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	¡Ha intentado abrir la aplicación de EGroupware %1, pero no tiene permiso para acceder a esta aplicación!
 your account has been updated with new data from your identity provider.	common	es-es	Su cuenta ha sido actualizada con los nuevos datos de su proveedor de identidad.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	es-es	Su navegador no está actualizado (compatible con JavaScript ES6), es posible que algunas de las funciones no funcionen.
 your code is incorrect !!!	common	es-es	¡Código es incorrecto!

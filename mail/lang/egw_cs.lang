@@ -606,7 +606,6 @@ subscription successfully saved.	mail	cs	Nastavení odběru složek bylo úspě�
 succeeded on %1 folders, failed on %2	mail	cs	Úspěšně na %1 složky, neúspěšně na %2
 switch off encryption?	mail	cs	Vypnout šifrování?
 template folder	mail	cs	Složka šablon
-templates	mail	cs	Šablony
 templates folder	mail	cs	Složka pro šablony
 test connection	mail	cs	Test připojení
 test connection and display basic information about the selected profile	mail	cs	Test připojení a zobrazení základních informací o vybraném profilu

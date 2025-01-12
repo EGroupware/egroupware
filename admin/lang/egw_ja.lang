@@ -739,7 +739,6 @@ standard smtp-server	admin	ja	標準 SMTP サーバー
 start	admin	ja	Start
 start testjob!	admin	ja	テスト・ジョブを開始します!
 starts with	admin	ja	Starts with
-stationery	admin	ja	Stationery
 strictly required, user can not login without	admin	ja	がないとユーザはログインできません。
 submit changes	admin	ja	変更を送信
 submit displayed information?	admin	ja	表示中の情報を送信しますか
@@ -752,7 +751,6 @@ successful connected to %1 server%2.	admin	ja	%1 サーバー %2 に接続しま
 switch back to standard identity to save account.	admin	ja	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	ja	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	ja	ユーザがランダムに強制ログアウトしてしまう場合は無効にしてください
-templates	admin	ja	テンプレート
 that loginid has already been taken	admin	ja	ログインIDは既に登録済みです。
 the api is current	admin	ja	The API is current
 the api requires an upgrade	admin	ja	The API requires an upgrade
@@ -842,6 +840,7 @@ username/password defined by admin	admin	ja	Username / Password defined by admin
 username@domainname (virtual mail manager)	admin	ja	username@domainname (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	ja	Users can define their own email accounts
 users can define their own identities	admin	ja	Users can define their own identities
+users can define their own signatures	admin	ja	ユーザーは自分の署名を定義できます
 users choice	admin	ja	ユーザ選択
 using data from mozilla ispdb for provider %1	admin	ja	Using data from Mozilla ISPDB for provider %1
 vacation messages with start- and end-date require an admin account to be set	admin	ja	Vacation messages with start and end date require an admin account to be set!

@@ -619,7 +619,6 @@ subscription successfully saved.	mail	sk	Stav prihlásenia úspešne uložené.
 succeeded on %1 folders, failed on %2	mail	sk	Úspešné na %1 priečinkov, neúspešné na %2
 switch off encryption?	mail	sk	Vypnúť šifrovanie?
 template folder	mail	sk	Priečinok Šablóny
-templates	mail	sk	Šablóny
 templates folder	mail	sk	Priečinok šablón
 test connection	mail	sk	Testovať aktívne pripojenie
 test connection and display basic information about the selected profile	mail	sk	Testovať pripojenie a zobraziť základné informácie o vybranom profile

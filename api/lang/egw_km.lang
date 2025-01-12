@@ -145,6 +145,7 @@ applies the changes made	common	km	អនុវត្តការផ្លាស
 applies the changes to the given version of the template	common	km	អនុវត្តការផ្លាស់ប្តូរទៅកំណែដែលបានផ្តល់ឱ្យនៃគំរូ
 apply	common	km	អនុវត្ត
 apply the action on the whole query, not only the shown entries	common	km	អនុវត្តសកម្មភាពលើសំណួរទាំងមូល មិនត្រឹមតែធាតុដែលបានបង្ហាញប៉ុណ្ណោះទេ
+apps & license	common	km	កម្មវិធី និងអាជ្ញាប័ណ្ណ
 apps &amp; license	common	km	កម្មវិធី និងអាជ្ញាប័ណ្ណ
 april	common	km	មេសា
 are you sure you want to delete these entries ?	common	km	តើអ្នកប្រាកដថាចង់លុបធាតុទាំងនេះទេ?
@@ -1341,6 +1342,7 @@ tanzania, united republic of	common	km	តង់ហ្សានី សាធា�
 template	common	km	គំរូ
 template deleted	common	km	គំរូត្រូវបានលុប។
 template saved	common	km	គំរូត្រូវបានរក្សាទុក។
+templates	common	km	គំរូ
 text	common	km	អត្ថបទ
 text color:	common	km	ពណ៌អត្ថបទ៖
 textarea	common	km	តំបន់អត្ថបទ
@@ -1465,7 +1467,6 @@ western sahara	common	km	សាហារ៉ាខាងលិច
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	km	តើមានអ្វីកើតឡើងជាមួយនឹងមាតិកាដែលហៀរចេញ៖ អាចមើលឃើញ (លំនាំដើម), លាក់, រមូរ, ស្វ័យប្រវត្តិ (កម្មវិធីរុករកសម្រេច)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	km	នៅពេលអ្នកបញ្ចូលធាតុទៅក្នុងឯកសារ ពួកវានឹងត្រូវបានរក្សាទុកនៅទីនេះ។ ប្រសិន​បើ​គ្មាន​ថត​ឯកសារ​ត្រូវ​បាន​ផ្ដល់​ទេ ពួកវា​នឹង​ត្រូវ​បាន​រក្សា​ទុក​ក្នុង​ថត​ផ្ទះ​របស់​អ្នក (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	km	ប្រសិនបើអ្នកនិយាយថាបាទ/ចាស ប៊ូតុងដើម និងចេញពីគណនីត្រូវបានបង្ហាញជាកម្មវិធីនៅក្នុងរបារកម្មវិធីកំពូលចម្បង។
-where and how will the egroupware links like preferences, about and logout be displayed.	common	km	តើតំណ EGroupware ដូចជា Preferences, About និង Log Out នឹងបង្ហាញនៅឯណា និងរបៀបណា។
 which groups	common	km	ក្រុមណា
 which infolog types should be synced with the device, default only tasks.	common	km	ប្រភេទ InfoLog ណាដែលគួរត្រូវបានធ្វើសមកាលកម្មជាមួយឧបករណ៍ មានតែភារកិច្ចលំនាំដើមប៉ុណ្ណោះ។
 whole query	common	km	សំណួរទាំងមូល

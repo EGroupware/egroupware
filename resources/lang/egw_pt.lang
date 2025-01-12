@@ -2,33 +2,27 @@
 %1 accessories restored	resources	pt	%1 acessórios restaurados
 %1 resource(s) %2	resources	pt	%1 recurso(s) %2
 %1 resource(s) %2, %3 failed	resources	pt	%1 recurso(s) %2, %3 falhou(s)
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	pt	%1 recurso(s) %2, %3 falhou(s) devido a direitos insuficientes !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	pt	%1 recurso(s) %2, %3 falhou(s) devido a direitos insuficientes!
 %1 resource(s) booked	resources	pt	%1 recurso(s) reservado(s)
-%1 resource(s) view calendar	resources	pt	%1 recurso(s) ver calendário
+%1 resource(s) view calendar	resources	pt	%1 recurso(s) ver calendário.
 accessories	resources	pt	Acessórios
 accessories of	resources	pt	Acessórios de
-accessories:	resources	pt	Acessórios:
 accessory of	resources	pt	Acessório de
-actions	resources	pt	Acções
-add accessory	resources	pt	Adicionar acessório
 add group to event participants	resources	pt	Adicionar grupo aos participantes do evento
 add resource	resources	pt	Adicionar recurso
-add resources	resources	pt	Adicionar recursos
 administrator	resources	pt	Administrador
-all categories	resources	pt	Todas as categorias
 allow booking requests from any user when creating events?	resources	pt	Permitir pedidos de reserva de qualquer utilizador ao criar eventos?
+allow ignore conflicts	admin	pt	Permitir ignorar conflitos
 book	resources	pt	Agendar
-book selected resources	resources	pt	Agendar recursos seleccionados
+book resource	resources	pt	Recurso livro
 book this resource	resources	pt	Agendar este recurso
 bookable	resources	pt	Agendável
 booking requests	resources	pt	Pedidos de reserva
 buy this article	resources	pt	Comprar este artigo
-buy this resource	resources	pt	Comprar este recurso
 buyable	resources	pt	À venda
 category admin	resources	pt	Administrador da categoria
 category saved.	resources	pt	Categoria guardada.
 category:	resources	pt	Categoria
-check all	resources	pt	Marcar todas
 choose category admin	resources	pt	Selecionar o administrador da categoria
 clear selection	resources	pt	Limpar selecção
 configure access permissions	admin	pt	Configurar permissões de acesso
@@ -43,12 +37,12 @@ deleted	resources	pt	eliminado/a
 description (short)	resources	pt	Descrição (breve)
 direct booking permissions	resources	pt	Permissões de agendamento directo
 do you really want to delete this resource?	resources	pt	Pretende mesmo eliminar este recurso?
-don't use vfs (this will need a symlink --> see readme)	resources	pt	Não utilize VFS (necessitará de um symlink --> ver README)
 edit this entry	resources	pt	Editar este registo
 existing links	resources	pt	Ligações existentes
 exists	resources	pt	Existe
 export definition to use for nextmatch export	resources	pt	Definição Exportar para usar para exportação NextMatch
 export definitition to use for nextmatch export	resources	pt	Definição Exportar para usar para exportação NextMatch
+exports a list of resources to a csv file.	resources	pt	Exporta uma lista de recursos para um ficheiro CSV.
 general	resources	pt	Geral
 general informations about resource	resources	pt	Informações gerais sobre recurso
 gernal resource	resources	pt	Recurso geral
@@ -60,8 +54,10 @@ how many of them are useable?	resources	pt	Quantos deles estão funcionais?
 how many of this resource are usable	resources	pt	Quantos deste recurso estão funcionais
 how many of this resource exists	resources	pt	Quantos deste recurso existem
 icon	resources	pt	Ícone
+if you specify an export definition, it will be used when you export	resources	pt	Se especificar uma definição de exportação, esta será utilizada quando exportar
 implies booking permission	resources	pt	Implica permissão de agendamento
 implies read permission	resources	pt	Implica permissão de leitura
+imports a list of resources from a csv file.	resources	pt	Importa uma lista de recursos de um ficheiro CSV.
 information about storage	resources	pt	Informações sobre armazenamento
 informations about the location of resource	resources	pt	Informações sobre a localização do recurso
 insert	resources	pt	Inserir
@@ -69,6 +65,7 @@ inventory number	resources	pt	Número de inventário
 inventory number:	resources	pt	Número de inventário:
 is resource bookable?	resources	pt	É possível agendar recurso?
 is resource buyable?	resources	pt	É possívem comprar recurso?
+is the ressource bookable?	resources	pt	O recurso pode ser reservado?
 is this resource bookable?	resources	pt	Este recurso é agendável?
 is this resource buyable?	resources	pt	Este recurso está à venda?
 links	resources	pt	Ligações
@@ -78,6 +75,8 @@ location:	resources	pt	Local:
 manage mapping	resources	pt	Gerenciar mapeamento
 name of resource	resources	pt	Nome do recurso
 name:	resources	pt	Nome:
+new accessory	resources	pt	Novo acessório
+new resource	resources	pt	Novo recurso
 no - leave them	resources	pt	Não - Deixá-los
 no - make them resources	resources	pt	Não - Torná-los recursos
 no description available	resources	pt	Sem descrição disponível
@@ -89,6 +88,7 @@ picture source	resources	pt	Fonte da imagem
 picture type is not supported, sorry!	resources	pt	Pedimos desculpa, mas o tipo de imagem não é suportado!
 pictures or resource	resources	pt	Imagens ou recurso
 planer	resources	pt	Planeamento
+prize	resources	pt	Preço
 prizeing information for booking or buying	resources	pt	Tabela de preços para reserva ou compra
 quantity	resources	pt	Quantidade
 quantity of resource	resources	pt	Quantidade do recurso
@@ -98,6 +98,10 @@ read permissions	resources	pt	Ler permissões
 registration confirmed %1	resources	pt	Registo confirmado %1
 related links	resources	pt	Ligações relacionadas
 remove accessories before changing accessory of	resources	pt	Remover acessórios antes de alterar Acessório de
+resource	resources	pt	Recurso
+resource %1 deleted!	resources	pt	Recurso %1 eliminado!
+resource %1 saved!	resources	pt	Recurso %1 guardado!
+resource / accessories	resources	pt	Recursos / Acessórios
 resources	common	pt	Recursos
 resources list	resources	pt	Lista de recursos
 responsible:	resources	pt	Responsável:
@@ -121,6 +125,8 @@ use general resources icon	resources	pt	Utilizar ícone de recursos gerais
 use own picture	resources	pt	Utilizar imagem própria
 use the category's icon	resources	pt	Utilizar o ícone da categoria
 useable	resources	pt	Usabilidade
+view accessories	resources	pt	Ver acessórios
+view calendar	resources	pt	Ver calendário
 view this entry	resources	pt	Ver este registo
 web-page of resource	resources	pt	Recurso de página Web
 web-site for this resource	resources	pt	Página Web para este recurso
@@ -129,6 +135,8 @@ which category does this resource belong to?	resources	pt	A que categoria perten
 write permissions	resources	pt	Permissões de escrita
 yes - delete accessories too	resources	pt	Sim - Eliminar também os acessórios
 yes - un-delete accessories too	resources	pt	Sim - Restaurar também os acessórios
+yes, all users can ignore conflicts	resources	pt	Sim, todos os utilizadores podem ignorar conflitos
 yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
+yes, only users with direct booking permission	resources	pt	Sim, apenas utilizadores com permissão de reserva direta
 you are not permitted to get information about this resource!	resources	pt	Não tem permissões para aceder a informações sobre este recurso!
 you chose more resources than available	resources	pt	Escolheu mais recursos do que os disponíveis

@@ -2,21 +2,19 @@
 %1 accessories restored	resources	bg	%1 възстановени аксесоари
 %1 resource(s) %2	resources	bg	%1 ресурс(и) %2
 %1 resource(s) %2, %3 failed	resources	bg	%1 ресурс(и) %2, %3 не са функционирали
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	bg	%1 ресурс(и) %2, %3 не са успешни поради недостатъчни права!!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	bg	%1 ресурс(и) %2, %3 не са успешни поради недостатъчни права!
 %1 resource(s) booked	resources	bg	%1 ресурс(и) резервиран(и)
 %1 resource(s) view calendar	resources	bg	%1 ресурс(и) - преглед на календара
 accessories	resources	bg	Аксесоари
 accessories of	resources	bg	Аксесоар от
-accessories:	resources	bg	Аксесоари:
 accessory of	resources	bg	Аксесоар от
-actions	resources	bg	Действия
 add group to event participants	resources	bg	Добавяне на група към участниците в събитието
-all categories	resources	bg	Всички категории
 allow booking requests from any user when creating events?	resources	bg	Да разрешавате заявки за резервации от всеки потребител при създаване на събития?
+allow ignore conflicts	admin	bg	Позволете игнорирането на конфликти
+book resource	resources	bg	Ресурс на книгата
 booking requests	resources	bg	Заявки за резервация
 category admin	resources	bg	Администратор на категория
 category saved.	resources	bg	Запазена категория.
-check all	resources	bg	Маркира всички
 choose category admin	resources	bg	Изберете администратор на категория
 create new links	resources	bg	Създаване на нови връзки
 custom etemplate for the contactform	resources	bg	eTemplate по избор за формата за контакти
@@ -28,22 +26,38 @@ deleted	resources	bg	изтрит
 do you really want to delete this resource?	resources	bg	Наистина ли искате да изтриете този ресурс?
 edit this entry	resources	bg	Редактиране на записа
 existing links	resources	bg	Съществуващи връзки
+exports a list of resources to a csv file.	resources	bg	Експортира списък с ресурси в CSV файл.
 general	resources	bg	Общи
 global categories	resources	bg	Глобални категории
 history logging	admin	bg	Запис на история
 hours	resources	bg	часа
 icon	resources	bg	Икона
+if you specify an export definition, it will be used when you export	resources	bg	Ако посочите дефиниция за експортиране, тя ще бъде използвана при експортиране на
+imports a list of resources from a csv file.	resources	bg	Импортира списък с ресурси от CSV файл.
+is resource bookable?	resources	bg	Може ли ресурсът да бъде резервиран
+is the ressource bookable?	resources	bg	Може ли ресурсът да се резервира?
 links	resources	bg	Връзки
 location	resources	bg	Местоположение
 manage mapping	resources	bg	Управление на съответствията
+new accessory	resources	bg	Нов аксесоар
+new resource	resources	bg	Нов ресурс
 no - leave them	resources	bg	Не - оставете ги
 no - make them resources	resources	bg	Не - направете ги ресурси
 no, users will need to contact users with direct booking permission	resources	bg	Не, потребителите ще трябва да се свържат с потребителите с разрешение за директни резервации
+prize	resources	bg	Цена
 quantity	resources	bg	Количество
+resource	resources	bg	Ресурс
+resource %1 deleted!	resources	bg	Ресурс %1 изтрит!
+resource %1 saved!	resources	bg	Ресурс %1 запазен!
+resource / accessories	resources	bg	Ресурс / Аксесоари
 resources	common	bg	Ресурси
 select resources	common	bg	Изберете ресурси
 un-delete accessories of selected resources too?	resources	bg	Възстановяване на аксесоарите на избраните ресурси?
+view accessories	resources	bg	Преглед на аксесоари
+view calendar	resources	bg	Преглед на календара
 view this entry	resources	bg	Преглед на записа
 yes - delete accessories too	resources	bg	Да - Също така изтрийте аксесоарите
 yes - un-delete accessories too	resources	bg	Да - Възстановявайте и аксесоарите
+yes, all users can ignore conflicts	resources	bg	Да, всички потребители могат да игнорират конфликти
 yes, only admins can purge deleted items	admin	bg	Да, само администраторите могат да заличават изтрити записи
+yes, only users with direct booking permission	resources	bg	Да, само потребители с разрешение за директна резервация

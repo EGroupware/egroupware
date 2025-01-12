@@ -131,7 +131,7 @@ contact maintenance	admin	de	Kontakt Wartung
 contact modified by %1 at %2	addressbook	de	Kontakt geändert von %1 am %2
 contact not found!	addressbook	de	Kontakt nicht gefunden!
 contact repository	admin	de	Speicherort Kontakte
-contact saved	addressbook	de	Kontakt gespeichert
+contact saved	addressbook	de	Kontakt gespeichert.
 contact settings	admin	de	Kontakt Einstellungen
 contactform	addressbook	de	Kontaktformular
 contacts	common	de	Kontakte
@@ -150,6 +150,7 @@ country (private)	addressbook	de	Land (Privat)
 country code	addressbook	de	Länderkennung
 country code (private)	addressbook	de	Länderkennung (Privat)
 create new links	addressbook	de	Neue Verknüpfung erstellen
+create new shares writable	addressbook	de	Neue Freigaben beschreibbar erstellen
 created	addressbook	de	Angelegt
 credit	addressbook	de	Darlehen
 crm view list	addressbook	de	CRM-Ansicht

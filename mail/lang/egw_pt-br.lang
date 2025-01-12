@@ -423,7 +423,6 @@ sort order	mail	pt-br	Ordem de classificação
 spamtitan api url	mail	pt-br	SpamTitan API URL
 start new messages with mime type plain/text or html?	mail	pt-br	Iniciar novas mensagens com mime type plain/text ou HTML?
 template folder	mail	pt-br	Pasta Modelos
-templates	mail	pt-br	Modelos
 text	mail	pt-br	Texto
 text mode	mail	pt-br	Modo de texto
 text/plain	mail	pt-br	Texto

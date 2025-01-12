@@ -4,7 +4,6 @@ administrators	filemanager	ca	Administradors
 applications	common	ca	Aplicacions
 cancel editing %1 without saving	filemanager	ca	Cancelar la edición de %1 sin guardar
 cannot create directory because it begins or ends in a space	filemanager	ca	No es pot crear el directori perqué comença o acaba amb un espai
-check all	filemanager	ca	Comprova-ho tot
 comment	filemanager	ca	Comentari
 configuration changed.	filemanager	ca	Configuració canviada.
 copied %1 to %2	filemanager	ca	Copiat %1 a %2
@@ -60,7 +59,6 @@ preview	filemanager	ca	Visualització prèvia
 preview %1	filemanager	ca	Vista previa de %1
 preview of %1	filemanager	ca	Vista previa de %1
 projectmanager	filemanager	ca	Gestor de Projectes
-quick jump to	filemanager	ca	Salt ràpid a
 reload	filemanager	ca	recargar
 renamed %1 to %2	filemanager	ca	S'ha reanomenat %1 a %2
 replaced %1	filemanager	ca	Reemplaçat %1

@@ -2,33 +2,27 @@
 %1 accessories restored	resources	pl	%1 przywrócone akcesoria
 %1 resource(s) %2	resources	pl	%1 zasób(y) %2
 %1 resource(s) %2, %3 failed	resources	pl	%1 zasób(y) %2, %3 nie powiodło się
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	pl	%1 zasób(y) %2, %3 nie powiodło się z powodu niewystarczających uprawnień !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	pl	%1 zasób(y) %2, %3 nie powiodło się z powodu niewystarczających uprawnień!
 %1 resource(s) booked	resources	pl	%1 zasób(y) zarezerwowany(e)
 %1 resource(s) view calendar	resources	pl	%1 zasobów w widoku kalendarza
 accessories	resources	pl	Akcesoria
 accessories of	resources	pl	Akcesoria od
-accessories:	resources	pl	Akcesoria:
 accessory of	resources	pl	Akcesoria od
-actions	resources	pl	Polecenia
-add accessory	resources	pl	Dodaj akcesorium
 add group to event participants	resources	pl	Dodaj grupę do uczestników wydarzenia
 add resource	resources	pl	Dodaj zasób
-add resources	resources	pl	Dodaj zasoby
 administrator	resources	pl	Administrator
-all categories	resources	pl	Wszystkie kategorie
 allow booking requests from any user when creating events?	resources	pl	Zezwalać na prośby o rezerwację od dowolnego użytkownika podczas tworzenia wydarzeń?
+allow ignore conflicts	admin	pl	Zezwalaj na ignorowanie konfliktów
 book	resources	pl	Rezerwuj
-book selected resources	resources	pl	Dezerwować wybrane zasoby
+book resource	resources	pl	Zasób książki
 book this resource	resources	pl	Rezerwuj ten zasób
 bookable	resources	pl	Do zarezerwowania
 booking requests	resources	pl	Żądania rezerwacji
 buy this article	resources	pl	Kup ten artykuł
-buy this resource	resources	pl	Kup ten zasób
 buyable	resources	pl	Do kupienia
 category admin	resources	pl	Administrator kategorii
 category saved.	resources	pl	Kategoria zapisana.
 category:	resources	pl	Kategoria
-check all	resources	pl	Zaznacz wszysto
 choose category admin	resources	pl	Wybierz kategorię administratora
 clear selection	resources	pl	Odhacz wybrane elementy
 configure access permissions	admin	pl	Konfiguruj Prawa Dostępu
@@ -45,10 +39,10 @@ deleted	resources	pl	skasowany
 description (short)	resources	pl	Opis (krótki)
 direct booking permissions	resources	pl	Pozwolenie na bezpośrednią rezerwacje
 do you really want to delete this resource?	resources	pl	Czy naprawdę chcesz usunąć ten zasób?
-don't use vfs (this will need a symlink --> see readme)	resources	pl	Nie używaj 'VFS' (to będzie wymagać odnośników symbolicznych --> patrz README)
 edit this entry	resources	pl	Edytuj ten wpis
 existing links	resources	pl	Istniejące odsyłacze
 exists	resources	pl	Istnieje
+exports a list of resources to a csv file.	resources	pl	Eksportuje listę zasobów do pliku CSV.
 general	resources	pl	Ogólnie
 general informations about resource	resources	pl	Ogólne informacje o zasobie
 gernal resource	resources	pl	Ogólne zasony
@@ -59,8 +53,10 @@ how many of them are useable?	resources	pl	Ile z nich jest do użytku?
 how many of this resource are usable	resources	pl	Jaka ilość tego zasobu jest do użytku?
 how many of this resource exists	resources	pl	Jaka ilość tego zasobu istnieje
 icon	resources	pl	Ikona
+if you specify an export definition, it will be used when you export	resources	pl	Jeśli określisz definicję eksportu, zostanie ona użyta podczas eksportu.
 implies booking permission	resources	pl	Implikuje prawa rezerwacji
 implies read permission	resources	pl	Implikuje prawa odczytu
+imports a list of resources from a csv file.	resources	pl	Importuje listę zasobów z pliku CSV.
 information about storage	resources	pl	Informacje o przechowywaniu
 informations about the location of resource	resources	pl	Informacje o lokalizacji zsobu
 insert	resources	pl	Wstaw
@@ -68,6 +64,7 @@ inventory number	resources	pl	Numer inwentarza
 inventory number:	resources	pl	Numer inwentarza
 is resource bookable?	resources	pl	Czy zasób jest do zarezewowania?
 is resource buyable?	resources	pl	Czy zasób jest do kupienia?
+is the ressource bookable?	resources	pl	Czy zasób można zarezerwować?
 is this resource bookable?	resources	pl	Czy ten zasób jest do zarezerwowania?
 is this resource buyable?	resources	pl	Czy ten zasób jest do kupienia?
 links	resources	pl	Odsyłacze
@@ -77,6 +74,8 @@ location:	resources	pl	Lokalizacja:
 manage mapping	resources	pl	Zarządzaj mapowaniem
 name of resource	resources	pl	Nazwa zasobu
 name:	resources	pl	Nazwa:
+new accessory	resources	pl	Nowe akcesorium
+new resource	resources	pl	Nowy zasób
 no - leave them	resources	pl	Nie - pozostaw je
 no - make them resources	resources	pl	Nie - zmień je w zasoby
 no description available	resources	pl	Opis niedostępny
@@ -88,6 +87,7 @@ picture source	resources	pl	Źródło obrazu
 picture type is not supported, sorry!	resources	pl	Ten rodzaj obrazu nie jest wspierany, przykro nam!
 pictures or resource	resources	pl	Obrazy zasobu
 planer	resources	pl	Planista
+prize	resources	pl	Cena
 prizeing information for booking or buying	resources	pl	Informacje na temat ceny wynajmu lub zakupu
 quantity	resources	pl	Ilość
 quantity of resource	resources	pl	Ilość zasobu
@@ -97,6 +97,10 @@ read permissions	resources	pl	Pozwolenie odczytu
 registration confirmed %1	resources	pl	Rejestracja potwierdzona %1
 related links	resources	pl	Powiązane odsyłacze
 remove accessories before changing accessory of	resources	pl	Usuń akcesoria przed zmianą Akcesoria
+resource	resources	pl	Zasób
+resource %1 deleted!	resources	pl	Zasób %1 usunięty!
+resource %1 saved!	resources	pl	Zasób %1 zapisany!
+resource / accessories	resources	pl	Zasoby / Akcesoria
 resources	common	pl	Zasoby
 resources list	resources	pl	Lista zasobów
 responsible:	resources	pl	Odpowiedzialny:
@@ -121,6 +125,8 @@ use general resources icon	resources	pl	Użyj domyślnej ikonki zasobów
 use own picture	resources	pl	Użyj własnego obrazu
 use the category's icon	resources	pl	Użyj ikonki kategorii
 useable	resources	pl	Do użytku
+view accessories	resources	pl	Wyświetl akcesoria
+view calendar	resources	pl	Wyświetlanie kalendarza
 view this entry	resources	pl	Pokaż ten wpis
 web-page of resource	resources	pl	Strona internetowa zasobu
 web-site for this resource	resources	pl	Serwis internetowy tego zasobu
@@ -129,5 +135,7 @@ which category does this resource belong to?	resources	pl	Do jakiej kategori nal
 write permissions	resources	pl	Pozwolenie zapisu
 yes - delete accessories too	resources	pl	Tak - Usuń również akcesoria
 yes - un-delete accessories too	resources	pl	Tak - Przywróć również akcesoria
+yes, all users can ignore conflicts	resources	pl	Tak, wszyscy użytkownicy mogą ignorować konflikty
+yes, only users with direct booking permission	resources	pl	Tak, tylko użytkownicy z uprawnieniami do bezpośredniej rezerwacji
 you are not permitted to get information about this resource!	resources	pl	Nie masz zezwolenia by otrzymać informację na temat tego zasobu!
 you chose more resources than available	resources	pl	Wybrałeś więcej zasobów niż jest dostępnych

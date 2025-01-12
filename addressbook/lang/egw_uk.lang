@@ -71,6 +71,7 @@ contact settings	admin	uk	Параметри Контакту
 copied by %1, from record #%2.	addressbook	uk	Скопійовано %1, з запису #%2.
 country	common	uk	Країна
 create new links	addressbook	uk	Створити нові посилання
+create new shares writable	addressbook	uk	Створення нових спільних ресурсів, доступних для запису
 crm-view	addressbook	uk	Подання CRM
 csv-fieldname	addressbook	uk	Назва поля CSV
 csv-filename	addressbook	uk	Ім'я файлу CSV
@@ -250,7 +251,6 @@ unshare	addressbook	uk	Більше не ділитися
 unshared	addressbook	uk	більше не ділиться
 update a single entry by passing the fields.	addressbook	uk	Змінити один запис шляхом заповнення полів.
 updated	addressbook	uk	Змінено
-use a category tree?	addressbook	uk	Використовувати дерево для вибору категорій
 use addressbooks "own sorting" attribute	addressbook	uk	Використовувати атрибут адресних книг "власне сортування"
 use country list	addressbook	uk	Використовувати перелік країн
 user groups are automatically shown as distribution lists.	addressbook	uk	Групи користувачів автоматично відображаються у вигляді списків розсилки.

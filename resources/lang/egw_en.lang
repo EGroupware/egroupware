@@ -1,27 +1,22 @@
-%1 accessories now resources	resources	en	%1 accessories now resources
-%1 accessories restored	resources	en	%1 accessories restored
-%1 resource(s) %2	resources	en	%1 resource(s) %2
-%1 resource(s) %2, %3 failed	resources	en	%1 resource(s) %2, %3 failed
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	en	%1 resource(s) %2, %3 failed because of insufficent rights !!!
-%1 resource(s) booked	resources	en	%1 resource(s) booked
-%1 resource(s) view calendar	resources	en	%1 resource(s) view calendar
+%1 accessories now resources	resources	en	%1 accessories now resources.
+%1 accessories restored	resources	en	%1 accessories restored.
+%1 resource(s) %2	resources	en	%1 resource(s) %2.
+%1 resource(s) %2, %3 failed	resources	en	%1 resource(s) %2, %3 failed.
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	en	%1 resource(s) %2, %3 failed because of insufficent rights!
+%1 resource(s) booked	resources	en	%1 resource(s) booked.
+%1 resource(s) view calendar	resources	en	%1 resource(s) view calendar.
 accessories	resources	en	Accessories
 accessories of	resources	en	Accessories of
-accessories:	resources	en	Accessories:
 accessory of	resources	en	Accessory of
-add accessory	resources	en	Add accessory
 add group to event participants	resources	en	Add group to event participants
 add resource	resources	en	Add resource
-add resources	resources	en	Add resources
 administrator	resources	en	Administrator
 allow booking requests from any user when creating events?	resources	en	Allow booking requests from any user when creating events?
 allow ignore conflicts	admin	en	Allow ignore conflicts
 book	resources	en	Book
 book resource	resources	en	Book resource
-book selected resources	resources	en	Book selected resources
 book this resource	resources	en	Book this resource
 bookable	resources	en	Bookable
-booked	resources	en	booked
 booking requests	resources	en	Booking requests
 buy this article	resources	en	Buy this article
 buy this resource	resources	en	Buy this resource
@@ -32,7 +27,7 @@ category:	resources	en	Category:
 check all	resources	en	Check all
 choose category admin	resources	en	Choose category admin
 clear selection	resources	en	Clear selection
-configure access permissions	admin	en	Configure ACL
+configure access permissions	admin	en	Configure access rights
 confirmation email text	resources	en	Confirmation email text
 confirmed addressbook.	resources	en	Confirmed addressbook.
 conflict	resources	en	conflict
@@ -79,6 +74,7 @@ inventory number	resources	en	Inventory number
 inventory number:	resources	en	Inventory number:
 is resource bookable?	resources	en	Is resource bookable
 is resource buyable?	resources	en	Is resource buyable
+is the ressource bookable?	resources	en	Is the ressource bookable?
 is this resource bookable?	resources	en	Is this resource bookable
 is this resource buyable?	resources	en	Is this resource buyable
 links	resources	en	Links
@@ -91,7 +87,7 @@ manage mapping	resources	en	Manage mapping
 name of resource	resources	en	Name of resource
 name:	resources	en	Name:
 new accessory	resources	en	New accessory
-new resource	resources	en	New Resource
+new resource	resources	en	New resource
 no - leave them	resources	en	No - Leave them
 no - make them resources	resources	en	No - Make them resources
 no description available	resources	en	No description available.
@@ -161,6 +157,7 @@ view calendar	resources	en	View calendar
 view this entry	resources	en	View entry
 web-page of resource	resources	en	Web page of resource
 web-site for this resource	resources	en	Website for this resource
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	resources	en	When you merge entries into documents, they will be stored here.  If no directory is provided, they will be stored in your home directory (/home/unverricht)
 where to find this resource?	resources	en	Location information
 which category does this resource belong to?	resources	en	Category of the resource
 write permissions	resources	en	Write permissions

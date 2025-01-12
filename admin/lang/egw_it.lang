@@ -845,7 +845,6 @@ standard smtp-server	admin	it	Server SMTP standard
 start	admin	it	Avvio
 start testjob!	admin	it	Inizia il Lavoro di Test
 starts with	admin	it	Comincia con
-stationery	admin	it	Modeillo
 strictly required, user can not login without	admin	it	strettamente necessario, l'utente non può accedere senza
 submit changes	admin	it	Invia Modifiche
 submit displayed information?	admin	it	Invia le informazioni mostrate
@@ -859,7 +858,6 @@ successfull, but no refresh-token received!	admin	it	Successo, ma nessun refresh
 switch back to standard identity to save account.	admin	it	Ritornare all'identità standard per conservare l'account.
 switch back to standard identity to save other account data.	admin	it	Ritornare all'identità standard per conservare gli altri dati dell'account.
 switch it off, if users are randomly thrown out	admin	it	Spegnilo in caso di logout casuali degli utenti
-templates	admin	it	Modelli
 that loginid has already been taken	admin	it	Quel nome utente è già stato scelto.
 the api is current	admin	it	Le API sono aggiornate
 the api requires an upgrade	admin	it	Le API hanno bisogno di essere aggiornate
@@ -959,6 +957,7 @@ username/password defined by admin	admin	it	Nome utente / password definiti dall
 username@domainname (virtual mail manager)	admin	it	nomeutente@nome dominio (ManaGeR MAIL Virtuale)
 users can define their own emailaccounts	admin	it	Gli utenti possono definire i propri account email
 users can define their own identities	admin	it	Gli utenti possono definire le loro identità personali
+users can define their own signatures	admin	it	Gli utenti possono definire le proprie firme
 users choice	admin	it	Scelta dell'utente
 using data from mozilla ispdb for provider %1	admin	it	Utilizzo dei dati da Mozilla ISPDB per il provider %1
 using fallback via regular json requests	admin	it	Utilizzo del fallback tramite normali richieste JSON

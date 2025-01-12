@@ -150,6 +150,7 @@ country (private)	addressbook	bg	Държава - лична (private)
 country code	addressbook	bg	Код на държавата
 country code (private)	addressbook	bg	Код на държавата - личен  (private)
 create new links	addressbook	bg	Създаване на нови връзки
+create new shares writable	addressbook	bg	Създаване на нови акции, които могат да се записват
 created	addressbook	bg	Създаден
 credit	addressbook	bg	Кредит
 crm view list	addressbook	bg	Списък за преглед в CRM
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	bg	Запис или изтриване �
 url (business)	addressbook	bg	URL адрес (служебен)
 url (private)	addressbook	bg	URL адрес (личен / private)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	bg	URL за връзка към телефонните номера (използвайте %1 = номер, който да се набере, %u = име на какунт, %t = телефон на акаунт).
-use a category tree?	addressbook	bg	Използване на "дървото" (tree) за избор на категории
 use addressbooks "own sorting" attribute	addressbook	bg	Използване на атрибута "own sorting" на адр. указател
 use an extra tab for private custom fields?	admin	bg	Допълнителен таб за лични полета по избор
 use country list	addressbook	bg	Използване на списък с държави

@@ -131,7 +131,7 @@ contact maintenance	admin	cs	Údržba kontaktu
 contact modified by %1 at %2	addressbook	cs	Kontakt změněnil(a) %1v %2.
 contact not found!	addressbook	cs	Kontakt nebyl nalezen!
 contact repository	admin	cs	Databáze kontaktů
-contact saved	addressbook	cs	Kontakt uložen
+contact saved	addressbook	cs	Kontakt uložen.
 contact settings	admin	cs	Nastavení kontaktu
 contactform	addressbook	cs	Formulář kontaktu
 contacts	common	cs	Kontakty
@@ -150,6 +150,7 @@ country (private)	addressbook	cs	Země (soukromá)
 country code	addressbook	cs	Zkratka země
 country code (private)	addressbook	cs	Zkratka země (soukromá)
 create new links	addressbook	cs	Vytvořit nové odkazy
+create new shares writable	addressbook	cs	Vytvořit nové akcie zapisovatelné
 created	addressbook	cs	Vytvořeno
 credit	addressbook	cs	Platební lhůta
 crm view list	addressbook	cs	Zobratit seznam CRM
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	cs	Upload nebo smazání fotografie
 url (business)	addressbook	cs	URL (firemní)
 url (private)	addressbook	cs	URL (soukromá)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	cs	URL na které má telefonní číslo odkazovat (použijte %1 = vytáčené telefonní číslo, %u = název účtu, %t = telefon účtu)
-use a category tree?	addressbook	cs	Použijte stromové zobrazení pro výměr kategorií
 use addressbooks "own sorting" attribute	addressbook	cs	Použijte atribut "vlastní třídění" adresáře
 use an extra tab for private custom fields?	admin	cs	Použít extra založku pro soukromé uživatelsky definované položky
 use country list	addressbook	cs	Použít seznam zemí

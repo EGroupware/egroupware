@@ -2,9 +2,9 @@
 %1 active file(s) with same name as directory inactivated!	admin	it	%1 file attivi con lo stesso nome della cartella disattivata!
 %1 copied - the copy can now be edited	common	it	%1 copiato - la copia può adesso essere modificata
 %1 directories %2 found!	admin	it	%1 cartelle trovate!
-%1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
-%1 email(s) added into %2	common	it	%1 email aggiunte in %2
-%1 etemplates deleted	common	it	%1 eTemplate cancellati
+%1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti.
+%1 email(s) added into %2	common	it	%1 email aggiunte in %2.
+%1 etemplates deleted	common	it	%1 eTemplate cancellati.
 %1 etemplates found	common	it	%1 eTemplate trovati.
 %1 file	common	it	%1 file
 %1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver!
@@ -147,6 +147,7 @@ applies the changes made	common	it	Applica le modifiche fatte
 applies the changes to the given version of the template	common	it	Applica le modifiche alla data versione del template
 apply	common	it	Applica
 apply the action on the whole query, not only the shown entries	common	it	Applica l'azione all'intera query, NON solo le voci visualizzate
+apps & license	common	it	Applicazioni e licenze
 apps &amp; license	common	it	Applicazioni e licenza
 april	common	it	Aprile
 are you sure you want to delete these entries ?	common	it	Vuoi davvero cancellare queste voci?
@@ -281,7 +282,7 @@ clear window	common	it	Pulisci finestra
 click	common	it	Clicca
 click here to attach the file	common	it	Premi qui per allegare il file
 click here to create the link	common	it	Premi qui per creare il Link
-click here to resume your egroupware session.	common	it	Clicca qui per ripristinare la tua sessione EGroupware
+click here to resume your egroupware session.	common	it	Clicca qui per ripristinare la tua sessione EGroupware.
 click here to start the search	common	it	Premi qui per iniziare la ricerca
 click here to upload the file	common	it	Premi qui per caricare il file
 click this image on the navbar: %1	common	it	Clicca su questa immagine sulla barra di navigazione: %1
@@ -471,7 +472,7 @@ egroupware all users group, do not delete	common	it	Gruppo per tutti gli utenti:
 egroupware anonymous users group, do not delete	common	it	Gruppo utenti anonimi: NON eliminare
 egroupware api version	common	it	Versione API EGroupware
 egroupware maintenance update %1 available	common	it	Aggiornamento di manutenzione %1 EPL disponibile
-egroupware security update %1 needs to be installed!	common	it	E' necessario installare l'aggiornamento di sicurezza %1 !
+egroupware security update %1 needs to be installed!	common	it	E' necessario installare l'aggiornamento di sicurezza %1!
 egroupware version	common	it	Versione EGroupware
 egroupware: login blocked for user '%1', ip %2	common	it	EGroupware: login bloccato per l'utente '%1', IP %2
 egypt	common	it	EGITTO
@@ -988,7 +989,7 @@ open existing contact	common	it	Aprire il contatto esistente
 open notify window	common	it	Apri finestra di Notifica
 open popup window	common	it	Apri finestra popup
 open the online help.	common	it	Apre help online.
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	it	L'accesso a OpenIDConnect è riuscito, ma l'utente '%1' NON esiste in EGroupware e la creazione automatica dell'utente è disabilitata!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	it	L'accesso a OpenID Connect è riuscito, ma l'utente '%1' NON esiste in EGroupware e la creazione automatica dell'utente è disabilitata!
 operator	common	it	Operatore
 optional note about the link	common	it	Optional note about the Link
 options	common	it	Opzioni
@@ -1356,9 +1357,10 @@ tabs	common	it	Tabs
 taiwan	common	it	TAIWAN/TAIPEI
 tajikistan	common	it	TAJIKISTAN
 tanzania, united republic of	common	it	TANZANIA, REPUBBLICA UNITA DELLA
-template	common	it	Template
+template	common	it	Modello
 template deleted	common	it	Template cancellato.
 template saved	common	it	Template salvato.
+templates	common	it	Modelli
 text	common	it	Testo
 text color:	common	it	Colore testo:
 textarea	common	it	Area di Testo
@@ -1487,7 +1489,6 @@ western sahara	common	it	SAHARA OCCIDENTALE
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	it	Cosa succede con i contenuti in eccesso: visibile (default), nascosto, scroll, auto (decide il browser)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	it	Quando si uniscono le voci in un documento, queste vengono memorizzate qui. Se non viene fornita alcuna cartella, verranno memorizzate nella propria home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	it	Se dirai sì, i pulsanti Home e Logout saranno presenti come applicazioni sulla barra principale delle applicazioni.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	it	Come e dove verranno visualizzati i collegamenti come Preferenze, About e Log.
 which groups	common	it	Quali gruppi
 which infolog types should be synced with the device, default only tasks.	common	it	Quali tipi di Attività dovrebbero essere sincronizzati con il dispositivo? Predefinito = solo task
 whole query	common	it	Tutta la query

@@ -36,7 +36,6 @@ can't open directory %1!	filemanager	pt-br	Não é possível abrir a pasta% 1!
 cancel editing %1 without saving	filemanager	pt-br	Cancelar edição de %1 sem salvar
 cannot create directory because it begins or ends in a space	filemanager	pt-br	Não foi possível criar o diretório em razão do nome começar ou terminar com um espaço
 cautiously rejecting to remove folder '%1'!	filemanager	pt-br	Cautelosamente rejeitando para remover a pasta '% 1'!
-check all	filemanager	pt-br	Checar todos
 check virtual filesystem	common	pt-br	Verifique o sistema de arquivos virtual
 classic	filemanager	pt-br	Barra de ferramentas padrão
 clear search	filemanager	pt-br	limpar pesquisa
@@ -207,7 +206,6 @@ projectmanager	filemanager	pt-br	Gerenciador de Projetos
 properties saved.	filemanager	pt-br	Propriedades salvas.
 protocol to use	filemanager	pt-br	Protocolo a ser usado
 protocols	filemanager	pt-br	Protocolos
-quick jump to	filemanager	pt-br	Saltar para
 quota	filemanager	pt-br	Cota
 quota exceeded	filemanager	pt-br	Cota excedida
 read & write access	filemanager	pt-br	Acesso de leitura e gravação

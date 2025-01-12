@@ -150,6 +150,7 @@ country (private)	addressbook	nl	Land (prive)
 country code	addressbook	nl	Land Code
 country code (private)	addressbook	nl	Land code (prive)
 create new links	addressbook	nl	Nieuwe links aanmaken
+create new shares writable	addressbook	nl	Nieuwe aandelen schrijfbaar maken
 created	addressbook	nl	Gecreëerd
 credit	addressbook	nl	Credit
 crm view list	addressbook	nl	CRM overzicht lijst
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	nl	Upload of verwijder de foto
 url (business)	addressbook	nl	URL (zakelijk)
 url (private)	addressbook	nl	URL (prive)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	nl	URL waaraan telefoonnummers gelinkt moeten worden (gebruik %1 = nummer dat je wilt bellen, %u = account naam, %t = account telefoonnummer)
-use a category tree?	addressbook	nl	Gebruik een boom voor het selecteren van categorieën
 use addressbooks "own sorting" attribute	addressbook	nl	Gebruik adresboek zijn "eigen sorteer" methode
 use an extra tab for private custom fields?	admin	nl	Een extra categorie tabblad gebruiken voor persoonlijke aangepaste velden?
 use country list	addressbook	nl	Gebruik Landenlijst

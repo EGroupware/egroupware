@@ -494,7 +494,6 @@ smtp	mail	bg	SMTP
 sneak preview in list	mail	bg	Предварителен преглед на съобщението
 start new messages with mime type plain/text or html?	mail	bg	Започва нови съобщения като чист текст или HTML?
 template folder	mail	bg	Папка "Шаблони"
-templates	mail	bg	Шаблони
 text/plain	mail	bg	текст
 the imap server need to meet certain requirements and be configured for it:	mail	bg	Сървърът на IMAP трябва да отговаря на определени изисквания И да бъде конфигуриран за него:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	bg	Подателят на съобщението е заявил обратна разписка. Желаете ли да му я изпратите?

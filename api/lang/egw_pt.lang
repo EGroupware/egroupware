@@ -135,6 +135,7 @@ applications	common	pt	Aplicações
 applies the changes made	common	pt	Aplica as alterações efectuadas
 applies the changes to the given version of the template	common	pt	Aplica as alterações em determinada versão do modelo
 apply	common	pt	Aplicar
+apps & license	common	pt	Aplicações e licenças
 april	common	pt	Abril
 are you sure you want to delete these entries ?	common	pt	Tem a certeza de que deseja eliminar estes registos?
 are you sure you want to delete this entry ?	common	pt	Tem a certeza de que deseja eliminar este registo?
@@ -250,6 +251,7 @@ clear form	common	pt	Limpar Formulário
 click	common	pt	Clicar
 click here to attach the file	common	pt	Clique aqui para anexar o ficheiro
 click here to create the link	common	pt	Clique aqui para criar a ligação
+click here to resume your egroupware session.	common	pt	Clique para retomar a sua sessão EGroupware.
 click here to start the search	common	pt	Clique aqui para iniciar a pesquisa
 click here to upload the file	common	pt	Clique aqui para enviar o ficheiro
 click to order after that criteria	common	pt	Clique para ordenar sob esse critério
@@ -360,6 +362,7 @@ description	common	pt	Descrição
 detail	common	pt	Detalhe
 details	common	pt	Detalhes
 directory	common	pt	Directoria
+directory for storing merged documents	preferences	pt	Pasta para armazenar documentos fundidos
 disabled	common	pt	Desactivado
 discard changes	common	pt	Ignorar alterações
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	pt	Surge em frente do campo ou o campo é inserido para um(a) %s' na etiqueta (etiqueta do botão de submissão ou nome do ficheiro da imagem).
@@ -381,6 +384,7 @@ domestic	common	pt	Doméstico
 dominica	common	pt	Dominica
 dominican republic	common	pt	República Dominicana
 don't ask again!	common	pt	Não pergunte novamente!
+don't show this again	common	pt	Não voltar a mostrar isto
 done	common	pt	Feito
 download	common	pt	Transferência
 drop a table - this can not be undone	common	pt	Deixar uma tabela - esta acção NÃO pode ser anulada
@@ -392,6 +396,7 @@ east timor	common	pt	Timor Leste
 ecuador	common	pt	Equador
 edit	common	pt	Editar
 edit %1 category for	common	pt	Editar categoria %1 para
+edit avatar	common	pt	Editar avatar
 edit categories	common	pt	Editar categorias
 edit category	common	pt	Editar categorias
 edit embeded css styles or of the applications app.css file	common	pt	Editar estilos de CSS embebidos ou de ficheiros app.css de aplicações
@@ -402,6 +407,13 @@ editable templates - delete template	common	pt	Modelos editáveis - Eliminar mod
 editable templates - editor	common	pt	Modelos editáveis - Editor
 editable templates - search	common	pt	Modelos editáveis - Pesquisa
 editable templates - show template	common	pt	Modelos editáveis - Exibir modelo
+egroupware	common	pt	EGroupware
+egroupware administrators group, do not delete	common	pt	Grupo de administradores do EGroupware, NÃO apagar
+egroupware all users group, do not delete	common	pt	Grupo de todos os utilizadores do EGroupware, NÃO apagar
+egroupware anonymous users group, do not delete	common	pt	Grupo de utilizadores anónimos do EGroupware, NÃO apagar
+egroupware maintenance update %1 available	common	pt	Atualização de manutenção do EGroupware %1 disponível
+egroupware security update %1 needs to be installed!	common	pt	A atualização de segurança do EGroupware %1 tem de ser instalada!
+egroupware version	common	pt	Versão do EGroupware
 egroupware: login blocked for user '%1', ip %2	common	pt	EGroupware: entrada bloqueada para o utilizador '%1', IP %2
 egypt	common	pt	Egipto
 el salvador	common	pt	Salvador
@@ -732,6 +744,7 @@ merge	common	pt	Fundir
 merge & send	common	pt	Fundir e enviar
 merge individually	common	pt	Fundir individualmente
 merge options	common	pt	Opções de fusão
+merged document filename	preferences	pt	Nome do ficheiro do documento fundido
 message	common	pt	Mensagem
 message ...	common	pt	Mensagem ...
 message prepared for sending.	common	pt	Mensagem preparado para o envio.
@@ -854,7 +867,7 @@ open existing contact	common	pt	Abrir contacto existente
 open notify window	common	pt	Abrir janela de aviso
 open popup window	common	pt	Abrir janela popup
 open the online help.	common	pt	Abrir ajuda em linha
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pt	Início de sessão do OpenIDConnect bem sucedido, mas o utilizador '%1' NÃO existe no EGroupware, E a criação automática de utilizadores está desactivada!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pt	Início de sessão do OpenID Connect bem sucedido, mas o utilizador '%1' NÃO existe no EGroupware, E a criação automática de utilizadores está desactivada!
 operator	common	pt	Operador
 optional note about the link	common	pt	Informações adicionais sobre a ligação
 options	common	pt	Opções
@@ -1147,6 +1160,7 @@ tanzania, united republic of	common	pt	Tanzânia, República Unida da
 template	common	pt	Modelo
 template deleted	common	pt	Modelo eliminado
 template saved	common	pt	Modelo guardado
+templates	common	pt	Modelos
 text	common	pt	Texto
 text color:	common	pt	Cor do texto:
 textarea	common	pt	Área de texto
@@ -1248,6 +1262,7 @@ weekend	common	pt	Fim-de-semana
 welcome	common	pt	Bem-vindo
 western sahara	common	pt	Saara Ocidental
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt	O que acontece ao conteúdo excedente: visível (por omissão), oculto, consultável utilizando a barra de deslocamento, automático (decisão do navegador)
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	pt	Quando funde entradas em documentos, estes são armazenados aqui. Se não for fornecida uma pasta, serão guardados no seu diretório pessoal (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt	Se disser que sim, os botões "página inicial" e "sair" serão apresentados como aplicações na barra de aplicações.
 which groups	common	pt	Que grupo(s)
 whole query	common	pt	Consulta completa

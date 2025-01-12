@@ -2,33 +2,27 @@
 %1 accessories restored	resources	nl	%1 accessoires hersteld
 %1 resource(s) %2	resources	nl	%1 middel(en) %2
 %1 resource(s) %2, %3 failed	resources	nl	%1 bron(nen) %2, %3 mislukt
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	nl	%1 bron(nen) %2, %3 mislukt vanwege onvoldoende rechten !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	nl	%1 bron(nen) %2, %3 mislukt vanwege onvoldoende rechten!
 %1 resource(s) booked	resources	nl	%1 hulpbron(nen) geboekt
 %1 resource(s) view calendar	resources	nl	%1 hulpbron(nen) kalender bekijken
 accessories	resources	nl	Accessoires
 accessories of	resources	nl	Accessoires van
-accessories:	resources	nl	Accessoires:
 accessory of	resources	nl	Accessoires van
-actions	resources	nl	Acties
-add accessory	resources	nl	Toebehoren toevoegen
 add group to event participants	resources	nl	Groep toevoegen aan deelnemers evenement
 add resource	resources	nl	Hulpbron toevoegen
-add resources	resources	nl	Hulpbronnen toevoegen
 administrator	resources	nl	Beheerder
-all categories	resources	nl	Alle categorieën
 allow booking requests from any user when creating events?	resources	nl	Boekingsaanvragen van elke gebruiker toestaan bij het maken van evenementen?
+allow ignore conflicts	admin	nl	Sta negeren van conflicten toe
 book	resources	nl	Boeken
-book selected resources	resources	nl	Boek de geselecteerde hulpbronnen
+book resource	resources	nl	Hulpbron Boek
 book this resource	resources	nl	Deze hulpbron boeken
 bookable	resources	nl	Te boeken
 booking requests	resources	nl	Reserveringsverzoeken
 buy this article	resources	nl	Koop dit artikel
-buy this resource	resources	nl	Deze hulpbron kopen
 buyable	resources	nl	Te kopen
 category admin	resources	nl	Categorie beheerder
 category saved.	resources	nl	Categorie opgeslagen.
 category:	resources	nl	Categorie:
-check all	resources	nl	Alles markeren
 choose category admin	resources	nl	Kies categorie beheerder
 clear selection	resources	nl	Selectie wissen
 configure access permissions	admin	nl	Toegangsrechten configureren
@@ -46,12 +40,12 @@ deleted	resources	nl	verwijderd
 description (short)	resources	nl	Beschrijving (kort)
 direct booking permissions	resources	nl	Direct boeken rechten
 do you really want to delete this resource?	resources	nl	Wil je deze bron echt verwijderen?
-don't use vfs (this will need a symlink --> see readme)	resources	nl	VFS niet gebruiken (dit vereist een symlink --> zie README)
 edit this entry	resources	nl	Deze entry bewerken
 existing links	resources	nl	Bestaande links
 exists	resources	nl	Bestaat
 export definition to use for nextmatch export	resources	nl	Export definitie om te gebruiken bij nextmatch export
 export definitition to use for nextmatch export	resources	nl	Export definitie om te gebruiken bij nextmatch export
+exports a list of resources to a csv file.	resources	nl	Exporteert een lijst met bronnen naar een CSV-bestand.
 general	resources	nl	Algemeen
 general informations about resource	resources	nl	Algemene informatie over hulpbron
 gernal resource	resources	nl	algemene hulpbron
@@ -66,6 +60,7 @@ icon	resources	nl	Pictogram
 if you specify an export definition, it will be used when you export	resources	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 implies booking permission	resources	nl	Veronderstelt boekingsrechten
 implies read permission	resources	nl	Veronderstelt leesrechten
+imports a list of resources from a csv file.	resources	nl	Importeert een lijst met resources uit een CSV-bestand.
 information about storage	resources	nl	Informatie over de opslag
 informations about the location of resource	resources	nl	Informatie over de locatie van de hulpbron
 insert	resources	nl	Voeg toe
@@ -73,6 +68,7 @@ inventory number	resources	nl	Inventarisnummer
 inventory number:	resources	nl	Inventarisnummer:
 is resource bookable?	resources	nl	Is hulpbron te boeken?
 is resource buyable?	resources	nl	Is hulpbron te kopen?
+is the ressource bookable?	resources	nl	Is het middel boekbaar?
 is this resource bookable?	resources	nl	Is deze hulpbron te boeken?
 is this resource buyable?	resources	nl	Is deze hulpbron te kopen?
 links	resources	nl	Links
@@ -82,6 +78,8 @@ location:	resources	nl	Locatie
 manage mapping	resources	nl	Beheer de mappings
 name of resource	resources	nl	Naam van de hulpbron
 name:	resources	nl	Naam:
+new accessory	resources	nl	Nieuw accessoire
+new resource	resources	nl	Nieuw middel
 no - leave them	resources	nl	Nee - Laat ze staan
 no - make them resources	resources	nl	Nee - Maak ze resources
 no description available	resources	nl	Geen beschrijving beschikbaar
@@ -93,6 +91,7 @@ picture source	resources	nl	Afbeeldingsbron
 picture type is not supported, sorry!	resources	nl	Afbeeldingsbron wordt niet ondersteund, sorry!
 pictures or resource	resources	nl	Afbeeldingen van hulpbron
 planer	resources	nl	Planner
+prize	resources	nl	Prijs
 prizeing information for booking or buying	resources	nl	Prijsinformatie voor boeking of koop
 quantity	resources	nl	Hoeveelheid
 quantity of resource	resources	nl	Hoeveelheid van de hulpbron
@@ -102,6 +101,10 @@ read permissions	resources	nl	Leesrechten
 registration confirmed %1	resources	nl	Registratie bevestigd %1
 related links	resources	nl	Gerelateerde links
 remove accessories before changing accessory of	resources	nl	Verwijder het toebehoren voordat u het toebehoren van
+resource	resources	nl	Hulpmiddel
+resource %1 deleted!	resources	nl	Hulpmiddel %1 verwijderd!
+resource %1 saved!	resources	nl	Hulpmiddel %1 opgeslagen!
+resource / accessories	resources	nl	Hulpbron / Accessoires
 resources	common	nl	Hulpbronnen
 resources list	resources	nl	Hulpbronnen lijst
 responsible:	resources	nl	Verantwoordelijk:
@@ -127,6 +130,8 @@ use general resources icon	resources	nl	Gebruik de algemene hulpbronnen icoon
 use own picture	resources	nl	Gebruik eigen afbeelding
 use the category's icon	resources	nl	Gebruik de categorie icoon
 useable	resources	nl	Bruikbaar
+view accessories	resources	nl	Accessoires weergeven
+view calendar	resources	nl	Kalender bekijken
 view this entry	resources	nl	Deze entry weergeven
 web-page of resource	resources	nl	Webpagina van hulpbron
 web-site for this resource	resources	nl	Website voor deze hulpbron
@@ -135,7 +140,9 @@ which category does this resource belong to?	resources	nl	Tot welke categorie be
 write permissions	resources	nl	Schrijfrechten
 yes - delete accessories too	resources	nl	Ja - Verwijder ook accessoires
 yes - un-delete accessories too	resources	nl	Ja - Accessoires ook herstellen
+yes, all users can ignore conflicts	resources	nl	Ja, alle gebruikers kunnen conflicten negeren
 yes, only admins can purge deleted items	admin	nl	Ja, alleen beheerders kunnen gewiste items definitief verwijderen
+yes, only users with direct booking permission	resources	nl	Ja, alleen gebruikers met directe boekingsrechten
 yes, users can purge their deleted items	admin	nl	Ja, gebruikers kunnen hun verwijderde items defintief verwijderen
 you are not permitted to get information about this resource!	resources	nl	U bent niet bevoegd informatie over deze hulpbron op te vragen!
 you chose more resources than available	resources	nl	U koos meer hulpbronnen dan er beschikbaar zijn

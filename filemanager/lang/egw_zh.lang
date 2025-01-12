@@ -16,7 +16,6 @@ and all it's childeren	filemanager	zh	并且全部是自文件夹
 applications	common	zh	应用程序
 cancel editing %1 without saving	filemanager	zh	取消编辑%1， 不保存
 cannot create directory because it begins or ends in a space	filemanager	zh	无法创建目录, 目录名开头或末尾不能带有空格
-check all	filemanager	zh	全选
 classic	filemanager	zh	标准工具栏
 clear search	filemanager	zh	清除搜索
 comment	filemanager	zh	注释
@@ -139,7 +138,6 @@ preview of %1	filemanager	zh	%1的预览
 projectmanager	filemanager	zh	项目管理
 protocol to use	filemanager	zh	使用协议
 protocols	filemanager	zh	协议
-quick jump to	filemanager	zh	快速跳转到
 quota	filemanager	zh	配额
 quota exceeded	filemanager	zh	超出配额
 read & write access	filemanager	zh	读写访问

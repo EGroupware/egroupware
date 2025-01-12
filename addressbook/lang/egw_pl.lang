@@ -133,6 +133,7 @@ copy instead of move	addressbook	pl	Kopiuj zamiast przenieś
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pl	Skopiuj zmiany do schowka, %1przeładuj wpis%2 i zastosuj je.
 country	common	pl	Kraj
 create new links	addressbook	pl	Utwórz nowe linki
+create new shares writable	addressbook	pl	Utwórz nowe udziały zapisywalne
 created	addressbook	pl	Utworzony
 credit	addressbook	pl	Kredyt
 crm view list	addressbook	pl	Lista widoków CRM
@@ -482,7 +483,6 @@ update fields by edited organisations?	admin	pl	Zaktualizować pola przez edycje
 updated	addressbook	pl	Uaktualniony
 upload or delete the photo	addressbook	pl	Załaduj lub usuń zdjęcie
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pl	Odnośnik URL do numerów telefonów (użyj %1 zamiast numeru telefonu, %2 zamiast nazwy konta, %3 zamiast numeru telefonu konta)
-use a category tree?	addressbook	pl	Używanie drzewa do wybierania kategorii
 use an extra tab for private custom fields?	admin	pl	Używać dodatkowej zakładki dla prywatnych pól własnych
 use country list	addressbook	pl	Użyj listy krajów
 use setup for a full account-migration	admin	pl	Użyj (/setup) w celu pełnej migracji kont

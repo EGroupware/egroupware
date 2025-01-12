@@ -482,7 +482,11 @@ user hidden from non-admins.	admin	no	Bruker skjult for ikke-admins
 user-agent	admin	no	User-Agent
 userdata	admin	no	Brukerdata
 users can define their own emailaccounts	admin	no	Brukere kan definere egne e-post kontoer
+users can define their own identities	admin	no	Brukere kan definere sine egne identiteter
+users can define their own signatures	admin	no	Brukere kan definere sine egne signaturer
 users choice	admin	no	Brukers valg
+vacation messages with start- and end-date require an admin account to be set	admin	no	Feriemeldinger med start- og sluttdato krever en administratorkonto for å kunne settes opp!
+vacation notice	admin	no	Varsel om ferie
 view access log	admin	no	Vis access log
 view account	admin	no	Vis konto
 view category	admin	no	Vis kategori
@@ -494,6 +498,7 @@ virtual mail manager	admin	no	Virtuell Mail Manager
 who would you like to transfer all records owned by the deleted user to?	admin	no	Til hvem ønsker du å overføre alle poster tilhørende den slettede bruker?
 who would you like to transfer records owned by the deleted user to?	admin	no	Hvem ønsker du å overføre poster som eies av den slettede brukeren til?
 xml-rpc	admin	no	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	no	Du kan bruke veiviseren til å fikse kontoinnstillinger eller slette kontoen.
 you have entered an invalid expiration date	admin	no	Du har registrert en ugyldig utløpsdato?
 you must add at least 1 permission or group to this account	admin	no	Du må legge til minst 1 tillatelse eller gruppe for denne kontoen.
 you must enter a group name.	admin	no	Du må registrere et gruppenavn

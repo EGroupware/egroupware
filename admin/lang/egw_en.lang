@@ -845,7 +845,6 @@ standard smtp-server	admin	en	Standard SMTP server
 start	admin	en	Start
 start testjob!	admin	en	Start test job!
 starts with	admin	en	Starts with
-stationery	admin	en	Stationery
 strictly required, user can not login without	admin	en	Strictly required, user can not login without
 submit changes	admin	en	Submit changes
 submit displayed information?	admin	en	Submit displayed information
@@ -859,7 +858,6 @@ successfull, but no refresh-token received!	admin	en	Successfull, but NO refresh
 switch back to standard identity to save account.	admin	en	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	en	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	en	Switch it off, if users are randomly logged out
-templates	admin	en	Templates
 that loginid has already been taken	admin	en	That login ID has already been taken.
 the api is current	admin	en	The API is current
 the api requires an upgrade	admin	en	The API requires an upgrade
@@ -960,7 +958,6 @@ username@domainname (virtual mail manager)	admin	en	username@domainname (Virtual
 users can define their own emailaccounts	admin	en	Users can define their own email accounts
 users can define their own identities	admin	en	Users can define their own identities
 users can define their own signatures	admin	en	Users can define their own signatures
-users can utilize these stationery templates	admin	en	Users can utilize these stationery templates
 users choice	admin	en	Users choice
 using data from mozilla ispdb for provider %1	admin	en	Using data from Mozilla ISPDB for provider %1
 using fallback via regular json requests	admin	en	Using fallback via regular JSON requests

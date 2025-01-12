@@ -599,7 +599,11 @@ userdata	admin	zh	用户数据
 username (standard)	admin	zh	用户名(标准)
 username@domainname (virtual mail manager)	admin	zh	用户名@域 (虚拟邮箱管理)
 users can define their own emailaccounts	admin	zh	用户可以自定义邮箱账户
+users can define their own identities	admin	zh	用户可定义自己的身份
+users can define their own signatures	admin	zh	用户可以定义自己的签名
 users choice	admin	zh	用户选择
+vacation messages with start- and end-date require an admin account to be set	admin	zh	带有开始和结束日期的假期信息需要管理员账户才能设置！
+vacation notice	admin	zh	放假通知
 value for column %1 is not unique!	admin	zh	栏%1的值不是唯一的！
 view access log	admin	zh	查看访问日志
 view account	admin	zh	查看帐户
@@ -614,6 +618,7 @@ who would you like to transfer records owned by the deleted user to?	admin	zh	�
 wrong account type: %1 is no %2 !!!	admin	zh	错误的帐户类型：%1没有%2！
 wrong admin-account or -password !!!	admin	zh	错误的管理员账户或密码！
 xml-rpc	admin	zh	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	zh	您可以使用向导修复账户设置或删除账户。
 you have entered an invalid expiration date	admin	zh	输入的有效期限无效
 you have to enter a name, to create a new field!!!	admin	zh	为创建一新字段域，您需要输入一个新字段名！
 you have to enter a name, to create a new type!	admin	zh	您必须输入名称来创建新类型！

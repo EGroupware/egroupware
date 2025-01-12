@@ -16,6 +16,7 @@ added	addressbook	et	Lisatud
 added by synchronisation	addressbook	et	lisatud sünkroniseerimise käigus
 addressbook csv export	addressbook	et	Aadressiraamatu CSV eksport
 addressbook csv import	addressbook	et	Aadressiraamatu CSV import
+addressbook list	addressbook	et	Aadressiraamatu nimekiri
 addressbook vcard export	addressbook	et	Aadressiraamatu vCard eksport
 addressbook vcard import	addressbook	et	Aadressiraamatu vCard import
 allow	addressbook	et	Luba
@@ -37,6 +38,7 @@ contact	common	et	Kontakt
 contains	addressbook	et	Sisaldab
 country	common	et	Riik
 create new links	addressbook	et	Tee uued lingid
+create new shares writable	addressbook	et	Uute aktsiate loomine kirjutatavaks
 created	addressbook	et	Tehtud
 crm-view	addressbook	et	CRM vaade
 csv-fieldname	addressbook	et	CSV-Väljanimi
@@ -135,6 +137,7 @@ street	common	et	Tänav
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	et	Zip-laiend on vajalik, et sisestada kontaktandmed LibreOffice'i või MS Office'i dokumentidesse.
 translation	addressbook	et	Tõlkimine
 type	addressbook	et	Sisestage
+unable to import into %1, using %2	addressbook	et	Ei ole võimalik importida %1, kasutades %2
 unshare	addressbook	et	Enam ei jaga
 unshared	addressbook	et	ei ole enam jagatud
 updated	addressbook	et	Uuendatud

@@ -639,7 +639,6 @@ standard smtp-server	admin	cs	Standardní SMTP server
 start	admin	cs	Start
 start testjob!	admin	cs	Zahájit testovací úlohu!
 starts with	admin	cs	Začíná na
-stationery	admin	cs	Šablony
 strictly required, user can not login without	admin	cs	striktně vyžadováno, uživatel se nemůže přihlásit bez
 submit changes	admin	cs	Odeslat změny
 submit displayed information?	admin	cs	Odeslat zobrazené informace
@@ -649,7 +648,6 @@ submit to egroupware.org	admin	cs	Odeslat na egroupware.org
 subtype	admin	cs	Podtyp
 success	admin	cs	Podařilo se
 switch it off, if users are randomly thrown out	admin	cs	Vypněte, pokud jsou uživatelé náhodně vyhazováni
-templates	admin	cs	Šablony
 that loginid has already been taken	admin	cs	Takové přihlašovací id už bylo použito.
 the api is current	admin	cs	API je aktuální
 the api requires an upgrade	admin	cs	API vyžaduje aktualizaci
@@ -733,9 +731,12 @@ username/password defined by admin	admin	cs	Uživatelské jméno/Heslo definovan
 username@domainname (virtual mail manager)	admin	cs	uživatelskéjméno@doména (Virtuální správce pošty)
 users can define their own emailaccounts	admin	cs	Uživatelé smí definovat vlastní poštovní účty
 users can define their own identities	admin	cs	Uživatelé smí definovat své vlastní identity
+users can define their own signatures	admin	cs	Uživatelé si mohou definovat vlastní podpisy
 users choice	admin	cs	Uživatelská volba
 using fallback via regular json requests	admin	cs	Používání zpětné vazby prostřednictvím běžných požadavků JSON
 using native swoole push	admin	cs	Použití nativního Swoole Push
+vacation messages with start- and end-date require an admin account to be set	admin	cs	Zprávy o dovolené s datem začátku a konce vyžadují nastavení účtu správce!
+vacation notice	admin	cs	Oznámení o dovolené
 value for column %1 is not unique!	admin	cs	Hodnota pro sloupec %1 není unikátní!
 view access log	admin	cs	Zobrazit přístupový protokol
 view account	admin	cs	Zobrazit účet
@@ -753,6 +754,7 @@ wrong account type: %1 is no %2 !!!	admin	cs	Špatný typ účtu: %1 NENÍ %2!
 wrong admin-account or -password !!!	admin	cs	Špatný účet administrátora nebo heslo!
 xml-rpc	admin	cs	XML-RPC
 you can set an initial value, which gets incremented every time a new serial get generated	admin	cs	můžete nastavit počáteční hodnotu, která se zvýší při každém generování nové série
+you can use wizard to fix account settings or delete account.	admin	cs	Pomocí průvodce můžete opravit nastavení účtu nebo účet odstranit.
 you have entered an invalid expiration date	admin	cs	Zadal(a) jste neplatné datum expirace!
 you have no email address for your user set !!!	admin	cs	Nenastavil(a) jste uživateli žádnou emailovou adresu!
 you have received a new message on the	admin	cs	Přišla Vám nová zpráva na

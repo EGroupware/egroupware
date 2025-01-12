@@ -1,27 +1,22 @@
-%1 accessories now resources	resources	de	%1 Zubehör ist jetzt eine Ressource
-%1 accessories restored	resources	de	%1 Zubehör wiederhergestellt
-%1 resource(s) %2	resources	de	%1 Ressource(n) %2
-%1 resource(s) %2, %3 failed	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen
+%1 accessories now resources	resources	de	%1 Zubehör ist jetzt eine Ressource.
+%1 accessories restored	resources	de	%1 Zubehör wiederhergestellt.
+%1 resource(s) %2	resources	de	%1 Ressource(n) %2.
+%1 resource(s) %2, %3 failed	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen.
 %1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	de	%1 Ressource(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
-%1 resource(s) booked	resources	de	%1 Ressource(n) gebucht
-%1 resource(s) view calendar	resources	de	Kalender anzeigen von %1 Ressourcen
+%1 resource(s) booked	resources	de	%1 Ressource(n) gebucht.
+%1 resource(s) view calendar	resources	de	Kalender anzeigen von %1 Ressourcen.
 accessories	resources	de	Zubehör
 accessories of	resources	de	Zubehör von
-accessories:	resources	de	Zubehör:
 accessory of	resources	de	Zubehör von
-add accessory	resources	de	Zubehör hinzufügen
 add group to event participants	resources	de	Gruppe zu den Teilnehmern des Termins hinzufügen
 add resource	resources	de	Ressource hinzufügen
-add resources	resources	de	Ressourcen hinzufügen
 administrator	resources	de	Verwalter
 allow booking requests from any user when creating events?	resources	de	Buchungsanfragen von beliebigen Benutzern bei der Erstellung von Terminen erlauben?
-allow ignore conflicts	admin	de	Wer darf Buchungskonflikte ignorieren?
+allow ignore conflicts	admin	de	Wer darf Buchungskonflikte ignorieren
 book	resources	de	Buchen
 book resource	resources	de	Ressource buchen
-book selected resources	resources	de	Ausgewählte Ressourcen buchen
 book this resource	resources	de	Ressource buchen
 bookable	resources	de	Buchbar
-booked	resources	de	gebucht
 booking requests	resources	de	Buchungsanfragen
 buy this article	resources	de	Diesen Artikel kaufen
 buy this resource	resources	de	Diese Ressource kaufen
@@ -48,7 +43,6 @@ deleted	resources	de	gelöscht
 description (short)	resources	de	Kurzbeschreibung
 direct booking permissions	resources	de	Erlaubnis direkt zu buchen
 do you really want to delete this resource?	resources	de	Wollen Sie diese Ressource wirklich löschen?
-don't use vfs (this will need a symlink --> see readme)	resources	de	VFS nicht benutzen. (Dies erfordert einen symlink --> siehe README)
 edit this entry	resources	de	Diesen Eintrag bearbeiten
 event start	resources	de	Ereignis startet
 existing links	resources	de	Bestehende Verknüpfungen
@@ -68,7 +62,7 @@ how many of them are useable?	resources	de	Anzahl nutzbarer Ressourcen
 how many of this resource are usable	resources	de	Anzahl nutzbarer Ressourcen
 how many of this resource exists	resources	de	Anzahl existierender Ressourcen
 icon	resources	de	Symbol
-if you specify an export definition, it will be used when you export	resources	de	Wählen Sie eine Export Definition für den Export.
+if you specify an export definition, it will be used when you export	resources	de	Wählen Sie eine Export Definition für den Export
 implies booking permission	resources	de	Impliziert Buchungsberechtigung
 implies read permission	resources	de	Impliziert Leseberechtigung
 imports a list of resources from a csv file.	resources	de	Importiert eine Liste im CSV Format
@@ -79,6 +73,7 @@ inventory number	resources	de	Inventarnummer
 inventory number:	resources	de	Inventarnummer:
 is resource bookable?	resources	de	Ist diese Ressource buchbar?
 is resource buyable?	resources	de	Ist diese Ressource käuflich?
+is the ressource bookable?	resources	de	Ist die Ressource buchbar?
 is this resource bookable?	resources	de	Ist diese Ressource buchbar?
 is this resource buyable?	resources	de	Ist diese Ressource käuflich?
 links	resources	de	Verknüpfungen
@@ -96,8 +91,8 @@ no - leave them	resources	de	Nein - Belassen
 no - make them resources	resources	de	Nein - Sie zu Ressourcen machen
 no description available	resources	de	Keine Beschreibung vorhanden
 no matches	resources	de	Keine Treffer
-no resources selected	resources	de	Keine Ressource ausgewählt
-no, users will need to contact users with direct booking permission	resources	de	Nein, Benutzer müssen sich mit Benutzern mit direkter Buchungsberechtigung in Verbindung setzen.
+no resources selected	resources	de	Keine Ressource ausgewählt.
+no, users will need to contact users with direct booking permission	resources	de	Nein, Benutzer müssen sich mit Benutzern mit direkter Buchungsberechtigung in Verbindung setzen
 notify your administrator to correct this situation	resources	de	Benachrichtigen Sie ihren Administrator um diese Situation zu lösen
 picture	resources	de	Bild
 picture source	resources	de	Quelle des Bildes
@@ -140,8 +135,8 @@ short description	resources	de	Kurzbeschreibung
 short description of resource	resources	de	Kurzbeschreibung der Ressource
 show calendar of resource	resources	de	Kalender der Ressource anzeigen
 simple reservation of a single item	resources	de	Einfache Reservierung eines einzelnen Elements
-something went wrong by deleting resource	resources	de	Beim Löschen der Ressource gab es ein Problem
-something went wrong by saving resource	resources	de	Beim Speichern der Ressource gab es ein Problem
+something went wrong by deleting resource	resources	de	Beim Löschen der Ressource gab es ein Problem!
+something went wrong by saving resource	resources	de	Beim Speichern der Ressource gab es ein Problem!
 storage	resources	de	Informationen zur Lagerung
 storage information	resources	de	Informationen zur Lagerung
 storage information:	resources	de	Informationen zur Lagerung:
@@ -161,8 +156,8 @@ view calendar	resources	de	Kalender anzeigen
 view this entry	resources	de	Diesen Eintrag anschauen
 web-page of resource	resources	de	Ausführliche Beschreibung der Ressource
 web-site for this resource	resources	de	Ausführliche Beschreibung der Ressource
-where to find this resource?	resources	de	Wo findet man diese Ressource?
-which category does this resource belong to?	resources	de	Zu welcher Kategorie gehört diese Ressource?
+where to find this resource?	resources	de	Wo findet man diese Ressource
+which category does this resource belong to?	resources	de	Zu welcher Kategorie gehört diese Ressource
 write permissions	resources	de	Schreibberechtigung
 yes - delete accessories too	resources	de	Ja - Zubehör auch löschen
 yes - un-delete accessories too	resources	de	Ja - Auch Zubehör wieder herstellen
@@ -172,5 +167,5 @@ yes, only users with direct booking permission	resources	de	Nur Benutzer mit dir
 yes, users can purge their deleted items	admin	de	Ja, Benutzer dürfen ihre gelöschten Einträge endgültig löschen
 you are not permitted to delete this resource!	resources	de	Sie haben keine Berechtigung, diese Ressource zu löschen!
 you are not permitted to edit this resource!	resources	de	Sie haben keine Berechtigung, diese Ressource zu bearbeiten!
-you are not permitted to get information about this resource!	resources	de	Sie haben keine Erlaubnis sich Informationen über diese Ressource anzuschauen
-you chose more resources than available	resources	de	Sie haben mehr Ressourcen ausgewählt als verfügbar sind
+you are not permitted to get information about this resource!	resources	de	Sie haben keine Erlaubnis sich Informationen über diese Ressource anzuschauen!
+you chose more resources than available	resources	de	Sie haben mehr Ressourcen ausgewählt als verfügbar sind!

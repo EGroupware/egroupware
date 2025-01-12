@@ -77,6 +77,7 @@ copied by %1, from record #%2.	addressbook	no	Kopiert av %1, fra rekke #%2.
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	no	Kopier endringene dine til utklippstavlen, %1oppfrisk forekomsten%2 og sammenstill de.
 country	common	no	Land
 create new links	addressbook	no	Opprette nye lenker
+create new shares writable	addressbook	no	Opprett nye aksjer skrivbare
 created	addressbook	no	Opprettet
 credit	addressbook	no	Krediter
 crm-view	addressbook	no	CRM-visning
@@ -266,9 +267,9 @@ translation	addressbook	no	Oversetting
 type	addressbook	no	Type
 unable to import into %1, using %2	addressbook	no	Kunne ikke importere til %1, bruker %2
 unknown type %1, imported as %2	addressbook	no	Ukjent type %1, importert som %2
+unshare	addressbook	no	Fjern deling
 update a single entry by passing the fields.	addressbook	no	Oppdater ett enkelt innslag ved å legge inn felter.
 updated	addressbook	no	Oppdatert
-use a category tree?	addressbook	no	Bruk et tre for å velge kategorier
 use country list	addressbook	no	Bruk landliste
 vcard	common	no	vCard
 vcards require a first name entry.	addressbook	no	vCard krever fornavn.

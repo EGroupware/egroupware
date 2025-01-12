@@ -47,7 +47,6 @@ can't open directory %1!	filemanager	it	Impossibile aprire la cartella %1!
 cancel editing %1 without saving	filemanager	it	Annulla modifiche di %1 senza salvare
 cannot create directory because it begins or ends in a space	filemanager	it	Non posso creare la directory perché inizia o finisce con uno spazio
 cautiously rejecting to remove folder '%1'!	filemanager	it	Eliminazione della cartella %1 rigettata per precauzione!
-check all	filemanager	it	Seleziona tutto
 check virtual filesystem	common	it	Controlla il filesystem virtuale
 classic	filemanager	it	Barra degli strumenti predefinita
 clear search	filemanager	it	Reimposta la ricerca
@@ -238,7 +237,6 @@ projectmanager	filemanager	it	Project Manager
 properties saved.	filemanager	it	Proprietà salvate.
 protocol to use	filemanager	it	Protocollo da usare
 protocols	filemanager	it	Protocolli
-quick jump to	filemanager	it	Salta a
 quota	filemanager	it	Quota
 quota exceeded	filemanager	it	Quota superata
 read & write access	filemanager	it	Lettura e scrittura

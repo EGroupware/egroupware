@@ -337,7 +337,6 @@ smtp	mail	hu	SMTP
 sneak preview in list	mail	hu	Üzenet előnézet
 start new messages with mime type plain/text or html?	mail	hu	Új üzenet írása egyszerű szöveg vagy HTML-ként?
 template folder	mail	hu	Sablonok mappa
-templates	mail	hu	Sablonok
 text	mail	hu	Szöveg
 text/plain	mail	hu	Szöveg
 the imap server need to meet certain requirements and be configured for it:	mail	hu	Az IMAP-kiszolgálónak meg kell felelnie bizonyos követelményeknek ÉS be kell lennie konfigurálva:

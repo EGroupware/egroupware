@@ -592,7 +592,6 @@ standard imap server	admin	pl	Standardowy serwer IMAP
 standard smtp-server	admin	pl	Standardowy serwer SMTP
 start	admin	pl	Początek
 start testjob!	admin	pl	Uruchom Testjob
-stationery	admin	pl	Stacjonarny
 submit changes	admin	pl	Zatwierdź zmiany
 submit displayed information?	admin	pl	Przesłać wyświetlone informacje?
 submit statistic information	admin	pl	Prześlij informacje statystyczne
@@ -601,7 +600,6 @@ submit to egroupware.org	admin	pl	Prześlij do egroupware.org
 subtype	admin	pl	Pod-typ
 success	admin	pl	Sukces
 switch it off, if users are randomly thrown out	admin	pl	Wyłącz to, jeżeli użytkownicy są wyrzucani losowo
-templates	admin	pl	Szablony
 that loginid has already been taken	admin	pl	Taki login już istnieje
 the api is current	admin	pl	Wersja API jest aktualna
 the api requires an upgrade	admin	pl	Wersja API wymaga aktualizacji
@@ -678,7 +676,10 @@ username/password defined by admin	admin	pl	Nazwa uzytkownika/Hasło określone 
 username@domainname (virtual mail manager)	admin	pl	login@domena (wirtualny zarządca kont)
 users can define their own emailaccounts	admin	pl	Użytkownicy mogą definiować swoje własne konta poczty elektronicznej
 users can define their own identities	admin	pl	Użytkownicy mogą definiować swoje własne tożsamości
+users can define their own signatures	admin	pl	Użytkownicy mogą definiować własne podpisy
 users choice	admin	pl	Wybór użytkownika
+vacation messages with start- and end-date require an admin account to be set	admin	pl	Wiadomości urlopowe z datą rozpoczęcia i zakończenia wymagają konta administratora!
+vacation notice	admin	pl	Powiadomienie o wakacjach
 value for column %1 is not unique!	admin	pl	Wartość dla kolumny %1 nie jest unikatowa!
 view access log	admin	pl	Wyświetl dziennik dostępu
 view account	admin	pl	Wyświetl konto
@@ -695,6 +696,7 @@ who would you like to transfer records owned by the deleted user to?	admin	pl	Do
 wrong account type: %1 is no %2 !!!	admin	pl	Zły typ konta: %1 to nie %2 !
 wrong admin-account or -password !!!	admin	pl	Niepoprawne konto administratora lub hasło!
 xml-rpc	admin	pl	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	pl	Możesz użyć kreatora, aby poprawić ustawienia konta lub usunąć konto.
 you have entered an invalid expiration date	admin	pl	Podałeś niewłaściwą datę wygaśnięcia
 you have no email address for your user set !!!	admin	pl	Nie masz ustawionego adresu email dla swojego użytkownika!
 you have received a new message on the	admin	pl	Otrzymałeś nową wiadomość o

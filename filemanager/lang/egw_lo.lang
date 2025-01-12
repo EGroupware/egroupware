@@ -24,7 +24,6 @@ basedirectory	filemanager	lo	ໄດເລັກເທີລີພື້ນຖາ
 can't open directory %1!	filemanager	lo	ບໍ່ສາມາດເປີດໄດເລັກເທີລີ %1! 
 cancel editing %1 without saving	filemanager	lo	ການແກ້ໄຂຍົກເລີກ %1 ໂດຍບໍ່ບັນທຶກ
 cannot create directory because it begins or ends in a space	filemanager	lo	ບໍ່ສາມາດສ້າງໄດເລັກເທີລີເພາະມັນຈະເລີ້ມຕົ້ນຫຼືສີ້ນສຸດໃນພື້ນທີ່ວ່າງ
-check all	filemanager	lo	ເລືອກທັງໝົດ
 clear search	filemanager	lo	ລົບລ້າງການຄົ້ນຫາ
 comment	filemanager	lo	ຄວາມຄິດເຫັນ
 copied	filemanager	lo	ໄດ້ສໍາເນົາ
@@ -122,7 +121,6 @@ preview %1	filemanager	lo	ເບິ່ງພາບຕົວຢ່າງ %1
 preview of %1	filemanager	lo	ເບິ່ງພາບຕົວຢ່າງຂອງ %1
 projectmanager	filemanager	lo	ຜູ້ຈັດການໂຄງການ
 properties saved.	filemanager	lo	ຄຸນລັກສະນະໄດ້ຖືກບັນທຶກ
-quick jump to	filemanager	lo	ໂດດໄປທີ່
 read & write access	filemanager	lo	ເຂົ້າອ່ານ ແລະ ຂຽນໄດ້
 read access only	filemanager	lo	ເຂົ້າອ່ານໄດ້ຢ່າງດຽວ
 reload	filemanager	lo	ໂຫຼດໃໝ່

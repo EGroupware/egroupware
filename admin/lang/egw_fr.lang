@@ -845,7 +845,6 @@ standard smtp-server	admin	fr	Serveur SMTP standard
 start	admin	fr	Début
 start testjob!	admin	fr	Démarrer le Travail de test!
 starts with	admin	fr	Commence par
-stationery	admin	fr	Entrepôt
 strictly required, user can not login without	admin	fr	Absolument nécessaire, l'utilisateur ne pas se connecter sans
 submit changes	admin	fr	Soumettre les changements
 submit displayed information?	admin	fr	Envoyer les informations affichées
@@ -859,7 +858,6 @@ successfull, but no refresh-token received!	admin	fr	Réussi, mais AUCUN refresh
 switch back to standard identity to save account.	admin	fr	Revenir à l'identité standard pour sauvegarder le compte.
 switch back to standard identity to save other account data.	admin	fr	Revenez à l'identité standard pour sauvegarder les autres données du compte.
 switch it off, if users are randomly thrown out	admin	fr	Décocher si des utilisateurs sont déconnectés par hasard
-templates	admin	fr	Templates
 that loginid has already been taken	admin	fr	Ce LoginID a déjà été pris.
 the api is current	admin	fr	L'API est à jour
 the api requires an upgrade	admin	fr	L'API nécessite une mise à jour
@@ -959,6 +957,7 @@ username/password defined by admin	admin	fr	Login / mot de passe définis par l'
 username@domainname (virtual mail manager)	admin	fr	utilisateur@domaine (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	fr	Les utilisateurs peuvent définir leurs propres comptes de messagerie
 users can define their own identities	admin	fr	Les utilisateurs peuvent définir leurs propres identités
+users can define their own signatures	admin	fr	Les utilisateurs peuvent définir leurs propres signatures
 users choice	admin	fr	Choix de l'utilisateur
 using data from mozilla ispdb for provider %1	admin	fr	Utilisation des données de Mozilla ISPDB pour le fournisseur %1
 using fallback via regular json requests	admin	fr	Utilisation d'une solution de repli via des requêtes JSON normales

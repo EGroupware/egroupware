@@ -119,7 +119,7 @@ contact id cannot be changed by import	addressbook	pt-br	O ID do contato não po
 contact modified by %1 at %2	addressbook	pt-br	Contato alterado por %1 em %2.
 contact not found!	addressbook	pt-br	Contato não encontrato!
 contact repository	admin	pt-br	Repositório de contatos
-contact saved	addressbook	pt-br	Contato salvo
+contact saved	addressbook	pt-br	Contato salvo.
 contact settings	admin	pt-br	Preferências de Contatos
 contactform	addressbook	pt-br	Formulário de contatos
 contacts and account contact-data to ldap	admin	pt-br	Contatos e dados da conta de contatos para LDAP
@@ -133,6 +133,7 @@ copy a contact and edit the copy	addressbook	pt-br	Copiar um contato e editar a 
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pt-br	Copiar suas alterações para a área de transferência, %1recarregar o registro%2 e mesclá-los.
 country	common	pt-br	País
 create new links	addressbook	pt-br	Criar novos links
+create new shares writable	addressbook	pt-br	Criar novos compartilhamentos graváveis
 created	addressbook	pt-br	Criado
 credit	addressbook	pt-br	Crédito
 crm-view	addressbook	pt-br	Visualização do CRM
@@ -467,7 +468,6 @@ update fields by edited organisations?	admin	pt-br	Atualizar campos por organiza
 updated	addressbook	pt-br	Atualizado
 upload or delete the photo	addressbook	pt-br	Carregar ou remover a foto
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pt-br	URL para linkar números de telefones (use %1 = número a ser chamado, %u = nome da conta, %t = número do telefone)
-use a category tree?	addressbook	pt-br	Usar uma árvore para selecionar categorias
 use addressbooks "own sorting" attribute	addressbook	pt-br	usar catálogos de endereços "possuir classificação" atributo
 use an extra tab for private custom fields?	admin	pt-br	Usar uma aba extra para campos privados personalizados
 use country list	addressbook	pt-br	Usar lista de países
