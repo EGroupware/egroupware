@@ -201,7 +201,8 @@ class Link extends Etemplate\Widget
 		$app = $value['to_app'];
 		$id = $value['to_id'];
 
-		$links = Api\Link::get_links($app, $id, $value['only_app'], 'link_lastmod DESC, link_id DESC', true, $value['show_deleted'], $value['limit']);
+		$links = Api\Link::get_links($app, $id, $value['only_app']??'', 'link_lastmod DESC, link_id DESC',
+			true, $value['show_deleted']??false, $value['limit']??null);
 
 		$only_links = [];
 		if($value['only_app'])
