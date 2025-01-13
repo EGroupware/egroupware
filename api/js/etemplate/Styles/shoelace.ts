@@ -43,4 +43,10 @@ export default [css`
 		color: var(--sl-input-label-color);
 		margin-right: var(--sl-spacing-medium);
 	}
+
+	/* Hide placeholder in disabled inputs */
+
+	.input--disabled input::placeholder, input[disabled]::placeholder, [disabled]::part(display-input)::placeholder {
+		opacity: 0;
+	}
 `];
