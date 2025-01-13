@@ -158,6 +158,21 @@ abstract class Merge
 	public $keep_emails = true;
 
 	/**
+	 * The merge document is an XML document
+	 *
+	 * If the document is an XML document, special handling is needed in some cases
+	 */
+	protected $is_xml = false;
+
+	/**
+	 * Line feed character(s) for the document.
+	 * This may be different based on the document type.
+	 *
+	 * @var string
+	 */
+	protected $line_feed = "\n";
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -823,6 +838,60 @@ abstract class Merge
 			$mimetype = 'application/rtf';
 		}
 
+		switch($mimetype)
+		{
+			case 'application/vnd.oasis.opendocument.text':        // open office
+			case 'application/vnd.oasis.opendocument.spreadsheet':
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
+			case 'application/vnd.ms-word.document.macroenabled.12':
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
+			case 'application/xml':
+			case 'text/xml':
+			case 'text/html':
+				$this->is_xml = true;
+				break;
+		}
+
+		switch($mimetype)
+		{
+			case 'application/rtf':
+			case 'text/rtf':
+				$this->line_feed = '}\par \pard\plain{';
+				break;
+			case 'application/vnd.oasis.opendocument.text':
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
+				$this->line_feed = '<text:line-break/>';
+				break;
+			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+				$this->line_feed = '</text:p><text:p>';
+				break;
+			case 'application/xmlExcel.Sheet':    // Excel 2003
+				$this->line_feed = '&#10;';
+				break;
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+			case 'application/vnd.ms-word.document.macroenabled.12':
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
+				$this->line_feed = '</w:t></w:r></w:p><w:p><w:r><w:t>';
+				break;
+			case 'application/xml';
+				$this->line_feed = '</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
+				break;
+			case 'text/html':
+				$this->line_feed = "<br/>";
+				break;
+			default:
+				$this->line_feed = "\n";
+		}
+
 		try
 		{
 			$content = $this->merge_string($content, $ids, $err, $mimetype, $fix);
@@ -1147,12 +1216,28 @@ abstract class Merge
 					{
 						for($n = 0; ($row_replacements = $this->$callback($plugin, $id, $n, $repeat)); ++$n)
 						{
+							if($this->is_xml)
+							{
+								$row_replacements = str_replace(
+									array('&', '&amp;amp;', '<', '>', "\r", "\n"),
+									array('&amp;', '&amp;', '&lt;', '&gt;', '', $this->line_feed),
+									$row_replacements
+								);
+							}
 							$_repeat = $this->process_commands($repeat, $row_replacements);
 							$repeats .= $this->replace($_repeat, $row_replacements, $mimetype, $mso_application_progid);
 						}
 					}
 					$content = str_replace($match[0], $repeats, $content);
 				}
+			}
+			if($this->is_xml)
+			{
+				$replacements = str_replace(
+					array('&', '&amp;amp;', '<', '>', "\r", "\n"),
+					array('&amp;', '&amp;', '&lt;', '&gt;', '', $this->line_feed),
+					$replacements
+				);
 			}
 			$content = $this->process_commands($this->replace($content, $replacements, $mimetype, $mso_application_progid, $charset), $replacements);
 
@@ -1936,21 +2021,21 @@ abstract class Merge
 	{
 		if(strpos($content, '$$IF') !== false)
 		{    //Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
-			$this->replacements =& $replacements;
+			$this->replacements = $replacements;
 			$content = preg_replace_callback('/\$\$IF ([#0-9a-z_\/-]+)~(.*)~(.*)~(.*)\$\$/imU', array($this,
 																									  'replace_callback'), $content);
 			unset($this->replacements);
 		}
 		if(strpos($content, '$$NELF') !== false)
 		{    //Example: $$NEPBR org_unit$$ sets a LF and value of org_unit, only if there is a value
-			$this->replacements =& $replacements;
+			$this->replacements = $replacements;
 			$content = preg_replace_callback('/\$\$NELF ([#0-9a-z_\/-]+)\$\$/imU', array($this,
 																						 'replace_callback'), $content);
 			unset($this->replacements);
 		}
 		if(strpos($content, '$$NENVLF') !== false)
 		{    //Example: $$NEPBRNV org_unit$$ sets only a LF if there is a value for org_units, but did not add any value
-			$this->replacements =& $replacements;
+			$this->replacements = $replacements;
 			$content = preg_replace_callback('/\$\$NENVLF ([#0-9a-z_\/-]+)\$\$/imU', array($this,
 																						   'replace_callback'), $content);
 			unset($this->replacements);
@@ -1962,7 +2047,7 @@ abstract class Merge
 		}
 		if(strpos($content, '$$LETTERPREFIXCUSTOM') !== false)
 		{    //Example use to use for a custom Letter Prefix: $$LETTERPREFIX n_prefix title n_family$$
-			$this->replacements =& $replacements;
+			$this->replacements = $replacements;
 			$content = preg_replace_callback('/\$\$LETTERPREFIXCUSTOM ([#0-9a-z_-]+)(.*)\$\$/imU', array($this,
 																										 'replace_callback'), $content);
 			unset($this->replacements);
@@ -1993,65 +2078,9 @@ abstract class Merge
 			$pattern = '/^$/';
 		}
 		$replace = preg_match($pattern, $this->replacements['$$' . $param[1] . '$$'] ?? '') ? ($param[3]??null) : ($param[4]??null);
-		switch($this->mimetype)
-		{
-			case 'application/vnd.oasis.opendocument.text':        // open office
-			case 'application/vnd.oasis.opendocument.spreadsheet':
-			case 'application/vnd.oasis.opendocument.presentation':
-			case 'application/vnd.oasis.opendocument.text-template':
-			case 'application/vnd.oasis.opendocument.spreadsheet-template':
-			case 'application/vnd.oasis.opendocument.presentation-template':
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
-			case 'application/vnd.ms-word.document.macroenabled.12':
-			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-			case 'application/vnd.ms-excel.sheet.macroenabled.12':
-			case 'application/xml':
-			case 'text/xml':
-			case 'text/html':
-				$is_xml = true;
-				break;
-		}
 
-		switch($this->mimetype)
-		{
-			case 'application/rtf':
-			case 'text/rtf':
-				$LF = '}\par \pard\plain{';
-				break;
-			case 'application/vnd.oasis.opendocument.text':
-			case 'application/vnd.oasis.opendocument.presentation':
-			case 'application/vnd.oasis.opendocument.text-template':
-			case 'application/vnd.oasis.opendocument.presentation-template':
-				$LF = '<text:line-break/>';
-				break;
-			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
-			case 'application/vnd.oasis.opendocument.spreadsheet-template':
-				$LF = '</text:p><text:p>';
-				break;
-			case 'application/xmlExcel.Sheet':    // Excel 2003
-				$LF = '&#10;';
-				break;
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-			case 'application/vnd.ms-word.document.macroenabled.12':
-			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-			case 'application/vnd.ms-excel.sheet.macroenabled.12':
-				$LF = '</w:t></w:r></w:p><w:p><w:r><w:t>';
-				break;
-			case 'application/xml';
-				$LF = '</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
-				break;
-			case 'text/html':
-				$LF = "<br/>";
-				break;
-			default:
-				$LF = "\n";
-		}
-		if($is_xml)
-		{
-			$this->replacements = str_replace(array('&', '&amp;amp;', '<', '>', "\r", "\n"), array('&amp;', '&amp;',
-																								   '&lt;', '&gt;', '',
-																								   $LF), $this->replacements);
-		}
+		$LF = $this->line_feed;
+
 		if(strpos($param[0], '$$NELF') === 0)
 		{    //sets a Pagebreak and value, only if the field has a value
 			if(!empty($this->replacements['$$' . $param[1] . '$$']))
