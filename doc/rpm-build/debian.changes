@@ -1,3 +1,21 @@
+egroupware-docker (23.1.20250113) hardy; urgency=low
+
+  * Mail: use account of selected From address to send mails, not the current open mailbox
+  * Mail: prefer identity email over SMTP username for Return-Path header, if both are from the same domain
+  * Addressbook: fix non-active accounts where visible for non-admins, if hidden accounts exist
+  * All apps: merge-print of OpenDocument files now also replaces in header- and footer-lines or text-frames (styles.xml part of the document)
+  * Tracker: Add 'View linked Time Sheet entries' action
+  * Invoices (EPL): allow to use Invoices app as viewer for e-invoices in Mail (without rights for Invoices app itself)
+  * Invoices (EPL): allow to select a mail template and directly mail invoice to buyer
+  * Invoices (EPL): attach imported invoice pdf/xml to the imported invoice and link it with the seller
+  * Invoices (EPL): allow to set and import product characteristics and country of origin
+  * Invoices (EPL): display/import invoices in UBL XML syntax too (generated invoices use CII syntax)
+  * Invoices (EPL): allow to download multiple invoices as PDF, XML or ZIP-archive
+  * Invoices (EPL): allow to select "XML invoice", even if Collabora is available, e.g. for customers requesting XML over PDF
+  * Invoices (EPL): additonally support UBL syntax for import or display, beside the already used CII syntax, used for creating invoices
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 13 Jan 2025 10:21:12 +0100
+
 egroupware-docker (23.1.20241214) hardy; urgency=low
 
   * LDAP/AD: bugfixes introduced by last maintenance release
