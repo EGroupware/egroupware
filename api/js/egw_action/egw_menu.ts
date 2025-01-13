@@ -128,6 +128,11 @@ export class egwMenu
 	{
 	}
 
+	remove()
+	{
+		this.instance?.remove();
+	}
+
 	/**
 	 * The private _checkImpl function checks whether a menu implementation is available.
 	 *
