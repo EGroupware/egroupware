@@ -122,7 +122,10 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			{
 				menu = _selected[0].parent.manager.data.menu
 			}
-			this._addCopyPaste(_links, _selected);
+			if(this.auto_paste && !window.egwIsMobile() && (!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/)))
+			{
+				this._addCopyPaste(_links, _selected);
+			}
 			if(!menu)
 			{
 				menu = this._buildMenu(_links, _selected, _target);
@@ -559,10 +562,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         }
 
         for (const k in _links) {
-			if(_links[k].actionObj.type == "popup")
-			{
-				_links[k].actionObj.appendToTree(tree);
-			}
+			_links[k].actionObj.appendToTree(tree);
 		}
 
         // We need the dummy object container in order to pass the array by
@@ -800,9 +800,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             // Add titles of entries
             for (let i = 0; i < clipboard.selected.length; i++) {
                 let id = clipboard.selected[i].id.split('::');
-                window.egw.link_title(id[0], id[1], function (title) {
-                    if (title) this.hint += title + "\n";
-                }, paste_action);
+				window.egw.link_title(id[0], id[1], (title) =>
+				{
+					if(title)
+					{
+						hint += title + "\n";
+					}
+				}, paste_action);
             }
 
             // Add into links, so it's included in menu
@@ -827,7 +831,11 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
                 // Add in actual actions as children
                 for (let k in drop) {
-                    // Add some choices - need to be a copy, or they interfere with
+					if(k == "egw_cancel_drop")
+					{
+						continue;
+					}
+					// Add some choices - need to be a copy, or they interfere with
                     // the original
                     //replace jQuery with spread operator
                     // set the Prototype of the copy set_onExecute is not available otherwise
@@ -841,7 +849,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     drop_clone.set_onExecute(paste_exec);
                     parent.children.push(drop_clone);
                     parent.allowOnMultiple = paste_action.allowOnMultiple && drop_clone.allowOnMultiple;
-                    _links[k] = jQuery.extend({}, drop[k]);
+					_links[k] = Object.assign({}, drop[k]);
                     _links[k].actionObj = drop_clone;
 
                     // Drop is allowed if clipboard types intersect drop types

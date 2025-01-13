@@ -1,5 +1,5 @@
 import {css, html, LitElement, nothing} from "lit";
-import {SlMenu, SlMenuItem} from "@shoelace-style/shoelace";
+import {SlDivider, SlMenu, SlMenuItem} from "@shoelace-style/shoelace";
 import {egwMenuItem} from "./egw_menu";
 import {customElement} from "lit/decorators/custom-element.js";
 import {repeat} from "lit/directives/repeat.js";
@@ -28,7 +28,7 @@ export class EgwMenuShoelace extends LitElement
 
 				/* sl-menu-item:host overrides display */
 
-				sl-menu-item[hidden] {
+				sl-menu-item[hidden], sl-divider[hidden] {
 					display: none !important;
 				}
 
@@ -142,7 +142,7 @@ export class EgwMenuShoelace extends LitElement
 		{
 			// Causes scroll issues if we don't position
 			this.popup.popup.style = "top: 0px";
-			(<SlMenuItem>this.menu.querySelector('sl-menu-item')).focus();
+			(<SlMenuItem>this.menu.querySelector('sl-menu-item'))?.focus();
 		});
 	}
 
@@ -153,9 +153,15 @@ export class EgwMenuShoelace extends LitElement
 	 */
 	public applyContext(_links, _selected, _target)
 	{
+		// Reset & hide all, in case some actions were not included in links
+		this.menu.querySelectorAll("sl-menu-item").forEach(i => i.disabled = i.hidden = true);
+		this.menu.querySelectorAll("sl-divider").forEach(i => i.hidden = false);
+
 		Object.keys(_links).forEach((actionId) =>
 		{
-			const menuItem = <SlMenuItem>this.shadowRoot.querySelector("[data-action-id='" + actionId + "']");
+			// Take the last one if there's more than one with the same ID as a work-around to automatic drag actions getting added twice
+			// in different places in some cases (nextmatch_controller vs EgwPopupActionImplementation)
+			const menuItem = <SlMenuItem>Array.from(this.shadowRoot.querySelectorAll("[data-action-id='" + actionId + "']")).pop();
 			if(!menuItem)
 			{
 				return;
@@ -167,6 +173,9 @@ export class EgwMenuShoelace extends LitElement
 				menuItem.checked = _links[actionId].actionObj.checked ?? false;
 			}
 		});
+
+		// Hide dividers before empty sections
+		this.menu.querySelectorAll("sl-divider:not(:has( + sl-menu-item:not([hidden])))").forEach((i : SlDivider) => i.hidden = true);
 
 		// Copy caption changes
 		let osClipboard;
