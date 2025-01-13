@@ -510,7 +510,7 @@ class mail_compose
 			{
 				try
 				{
-					$success = $this->send($_content);
+					$success = $this->send($_content, $_content['mailaccount']);
 
 					//hook mail_compose_after_save
 					Api\Hooks::process( array(
