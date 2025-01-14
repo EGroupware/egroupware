@@ -1936,6 +1936,10 @@ abstract class Merge
 		{
 			$document_merge = new $classname();
 		}
+		elseif(($classname = '\EGroupware\\' . ucfirst($appname) . '\Merge') && class_exists($classname) && is_subclass_of($classname, 'EGroupware\\Api\\Storage\\Merge'))
+		{
+			$document_merge = new $classname();
+		}
 		else
 		{
 			$document_merge = new Api\Contacts\Merge();
