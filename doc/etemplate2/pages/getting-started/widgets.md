@@ -25,7 +25,8 @@ If you just want to use existing widgets, you can put them in your .xet template
 
 ## Attributes
 
-Widget behaviour is customised by setting attributes
+Widget behaviour is customised by setting attributes. Different widgets will have different attributes, but some are
+fairly common across widgets.
 
 ### ID
 
@@ -53,5 +54,61 @@ Hidden widgets are not visible, but may be enabled via javascript.
 ```
 
 When the page is submitted normal and hidden widgets will have their values returned and validated. Widgets that are
-disabled when the page is submitted will not return their value.
+disabled when the page is generated or submitted will not return their value.
 Readonly widgets do not return a value.
+
+#### Start disabled, change to enabled
+
+If you want a widget to start disabled and at some point become enabled when some condition is met, there are two ways
+to achieve this.
+If you set the disable attribute to true or a truthy value in the template file, it is impossible for a widget to return
+a value, even if you later enable the widget via javascript. This may be fine for buttons, but for other inputs you want
+the value.
+
+##### Method 1: Submit
+
+Submit the etemplate, change the condition from the server so the field is enabled.
+
+This method requires a submit which may be unwanted, but it is impossible for the user to change the value until the
+widget is enabled by the server.
+Template
+
+```xml
+
+<et2-textbox id="test" disabled="@no_edit"></et2-textbox> 
+```
+
+PHP
+
+```php
+    ...
+    $content['no_edit'] = $content['id'] != ''; // Whatever condition disables the field
+    ...
+    $this->template->exec(..., $content, ...);
+```
+
+##### Method 2: Javascript
+
+The field starts enabled in the template, but it is disabled in et2_ready(). This method allows for better UI flow since
+fields can be enabled directly, but the disabled attribute becomes a UI suggestion instead of a rule enforced by
+etemplate.
+
+Template:
+
+```xml
+
+<et2-textbox id="test"></et2-textbox> 
+```
+
+app.ts
+
+```ts
+et2_ready(et2, name)
+{
+	et2.getWidgetById("test").disabled = true;
+}
+enableTestField()
+{
+	this.et2.getWidgetById("test").disabled = false;
+}
+```
