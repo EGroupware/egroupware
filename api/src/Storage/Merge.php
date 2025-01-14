@@ -1219,8 +1219,8 @@ abstract class Merge
 							if($this->is_xml)
 							{
 								$row_replacements = str_replace(
-									array('&', '&amp;amp;', '<', '>', "\r", "\n"),
-									array('&amp;', '&amp;', '&lt;', '&gt;', '', $this->line_feed),
+									array('&', '&amp;amp;', '<', '>', "\r"),
+									array('&amp;', '&amp;', '&lt;', '&gt;', ''),
 									$row_replacements
 								);
 							}
@@ -1234,12 +1234,12 @@ abstract class Merge
 			if($this->is_xml)
 			{
 				$replacements = str_replace(
-					array('&', '&amp;amp;', '<', '>', "\r", "\n"),
-					array('&amp;', '&amp;', '&lt;', '&gt;', '', $this->line_feed),
+					array('&', '&amp;amp;', '<', '>', "\r"),
+					array('&amp;', '&amp;', '&lt;', '&gt;', ''),
 					$replacements
 				);
 			}
-			$content = $this->process_commands($this->replace($content, $replacements, $mimetype, $mso_application_progid, $charset), $replacements);
+			$content = $this->replace($this->process_commands($content, $replacements), $replacements, $mimetype, $mso_application_progid, $charset);
 
 			// remove not existing replacements (eg. from calendar array)
 			if(strpos($content, '$$') !== null)
@@ -1546,49 +1546,21 @@ abstract class Merge
 			}
 
 			// replace CRLF with linebreak tag of given type
-			switch($mimetype . $mso_application_progid)
-			{
-				case 'application/vnd.oasis.opendocument.text':        // open office writer
-				case 'application/vnd.oasis.opendocument.text-template':
-				case 'application/vnd.oasis.opendocument.presentation':
-				case 'application/vnd.oasis.opendocument.presentation-template':
-					$break = '<text:line-break/>';
-					break;
-				case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
-				case 'application/vnd.oasis.opendocument.spreadsheet-template':
-					$break = '</text:p><text:p>';
-					break;
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms word 2007
-				case 'application/vnd.ms-word.document.macroenabled.12':
-					$break = '</w:t><w:br/><w:t>';
-					break;
-				case 'application/xmlExcel.Sheet':    // Excel 2003
-					$break = '&#10;';
-					break;
-				case 'application/xmlWord.Document':    // Word 2003*/
-					$break = '</w:t><w:br/><w:t>';
-					break;
-				case 'text/html':
-					$break = '<br/>';
-					break;
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':    // ms excel 2007
-				case 'application/vnd.ms-excel.sheet.macroenabled.12':
-				default:
-					$break = "\r\n";
-					break;
-			}
+
 			// now decode &, < and >, which need to be encoded as entities in xml
 			// Check for encoded >< getting double-encoded
 			if($this->parse_html_styles)
 			{
-				$replacements = str_replace(array('&', "\r", "\n", '&amp;lt;', '&amp;gt;'), array('&amp;', '', $break,
-																								  '&lt;',
-																								  '&gt;'), $replacements);
+				$replacements = str_replace(
+					array('&', "\r", "\n", '&amp;lt;', '&amp;gt;'),
+					array('&amp;', '', $this->line_feed, '&lt;', '&gt;'),
+					$replacements
+				);
 			}
 			else
 			{
 				// Need to at least handle new lines, or it'll be run together on one line
-				$replacements = str_replace(array("\r", "\n"), array('', $break), $replacements);
+				$replacements = str_replace(array("\r", "\n"), array('', $this->line_feed), $replacements);
 			}
 		}
 		if($mimetype == 'application/x-yaml')
@@ -2065,11 +2037,11 @@ abstract class Merge
 	{
 		if(!empty($param[4]) && array_key_exists('$$' . $param[4] . '$$', $this->replacements))
 		{
-			$param[4] = $this->replacements['$$' . $param[4] . '$$'];
+			$param[4] = '$$' . $param[4] . '$$';
 		}
 		if(!empty($param[3]) && array_key_exists('$$' . $param[3] . '$$', $this->replacements))
 		{
-			$param[3] = $this->replacements['$$' . $param[3] . '$$'];
+			$param[3] = '$$' . $param[3] . '$$';
 		}
 
 		$pattern = '/' . preg_quote($param[2]??'', '/') . '/';
@@ -2085,7 +2057,7 @@ abstract class Merge
 		{    //sets a Pagebreak and value, only if the field has a value
 			if(!empty($this->replacements['$$' . $param[1] . '$$']))
 			{
-				$replace = $LF . $this->replacements['$$' . $param[1] . '$$'];
+				$replace = $LF . '$$' . $param[1] . '$$';
 			}
 		}
 		if(strpos($param[0], '$$NENVLF') === 0)
@@ -2103,7 +2075,7 @@ abstract class Merge
 			{
 				if(!empty($this->replacements['$$' . $nameprefix . '$$']))
 				{
-					$replaceprefixsort[] = $this->replacements['$$' . $nameprefix . '$$'];
+					$replaceprefixsort[] = '$$' . $nameprefix . '$$';
 				}
 			}
 			$replace = implode(' ', $replaceprefixsort);
