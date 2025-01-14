@@ -836,6 +836,13 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                    .value=${this.hasFocus ? "" : this.displayLabel}
                    @keydown=${this.handleSearchKeyDown}
                    @blur=${this.handleInternalBlur}
+                   @click=${() =>
+                   {
+                       if(!this.open)
+                       {
+                           this.show();
+                       }
+                   }}
                    @focus=${this.handleSearchFocus}
                    @paste=${this.handlePaste}
             />
