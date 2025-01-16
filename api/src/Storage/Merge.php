@@ -832,65 +832,7 @@ abstract class Merge
 			return $ret;
 		}
 
-		// fix application/msword mimetype for rtf files
-		if($mimetype == 'application/msword' && strtolower(substr($document, -4)) == '.rtf')
-		{
-			$mimetype = 'application/rtf';
-		}
-
-		switch($mimetype)
-		{
-			case 'application/vnd.oasis.opendocument.text':        // open office
-			case 'application/vnd.oasis.opendocument.spreadsheet':
-			case 'application/vnd.oasis.opendocument.presentation':
-			case 'application/vnd.oasis.opendocument.text-template':
-			case 'application/vnd.oasis.opendocument.spreadsheet-template':
-			case 'application/vnd.oasis.opendocument.presentation-template':
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
-			case 'application/vnd.ms-word.document.macroenabled.12':
-			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-			case 'application/vnd.ms-excel.sheet.macroenabled.12':
-			case 'application/xml':
-			case 'text/xml':
-			case 'text/html':
-				$this->is_xml = true;
-				break;
-		}
-
-		switch($mimetype)
-		{
-			case 'application/rtf':
-			case 'text/rtf':
-				$this->line_feed = '}\par \pard\plain{';
-				break;
-			case 'application/vnd.oasis.opendocument.text':
-			case 'application/vnd.oasis.opendocument.presentation':
-			case 'application/vnd.oasis.opendocument.text-template':
-			case 'application/vnd.oasis.opendocument.presentation-template':
-				$this->line_feed = '<text:line-break/>';
-				break;
-			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
-			case 'application/vnd.oasis.opendocument.spreadsheet-template':
-				$this->line_feed = '</text:p><text:p>';
-				break;
-			case 'application/xmlExcel.Sheet':    // Excel 2003
-				$this->line_feed = '&#10;';
-				break;
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-			case 'application/vnd.ms-word.document.macroenabled.12':
-			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-			case 'application/vnd.ms-excel.sheet.macroenabled.12':
-				$this->line_feed = '</w:t></w:r></w:p><w:p><w:r><w:t>';
-				break;
-			case 'application/xml';
-				$this->line_feed = '</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
-				break;
-			case 'text/html':
-				$this->line_feed = "<br/>";
-				break;
-			default:
-				$this->line_feed = "\n";
-		}
+		$this->apply_mimetype($mimetype, $document);
 
 		try
 		{
@@ -1001,6 +943,73 @@ abstract class Merge
 	}
 
 	/**
+	 * Use a different mimetype.  Sets this.is_xml & this.line_feed
+	 */
+	private function apply_mimetype($mimetype, $document = '')
+	{
+		// fix application/msword mimetype for rtf files
+		if($mimetype == 'application/msword' && strtolower(substr($document, -4)) == '.rtf')
+		{
+			$mimetype = 'application/rtf';
+		}
+
+		switch($mimetype)
+		{
+			case 'application/vnd.oasis.opendocument.text':        // open office
+			case 'application/vnd.oasis.opendocument.spreadsheet':
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
+			case 'application/vnd.ms-word.document.macroenabled.12':
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
+			case 'application/xml':
+			case 'text/xml':
+			case 'text/html':
+				$this->is_xml = true;
+				break;
+		}
+
+		switch($mimetype)
+		{
+			case 'application/rtf':
+			case 'text/rtf':
+				$this->line_feed = '}\par \pard\plain{';
+				break;
+			case 'application/vnd.oasis.opendocument.text':
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
+				$this->line_feed = '<text:line-break/>';
+				break;
+			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+				$this->line_feed = '</text:p><text:p>';
+				break;
+			case 'application/xmlExcel.Sheet':    // Excel 2003
+				$this->line_feed = '&#10;';
+				break;
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+			case 'application/vnd.ms-word.document.macroenabled.12':
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
+				$this->line_feed = '</w:t></w:r></w:p><w:p><w:r><w:t>';
+				break;
+			case 'application/xml';
+				$this->line_feed = '</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
+				break;
+			case 'text/html':
+				$this->line_feed = "<br/>";
+				break;
+			default:
+				$this->line_feed = "\n";
+		}
+		return $mimetype;
+	}
+
+	/**
 	 * Merges a given document with contact data
 	 *
 	 * @param string $_content
@@ -1043,7 +1052,7 @@ abstract class Merge
 		}
 
 		// make currently processed mimetype available to class methods;
-		$this->mimetype = $mimetype;
+		$this->mimetype = $this->apply_mimetype($mimetype);
 
 		// fix garbled placeholders
 		if($fix && is_array($fix))
@@ -1481,12 +1490,15 @@ abstract class Merge
 							}
 							else
 							{
-								$value = $cleaned;
+								// Strip some specific stuff to avoid the extra new lines
+								$value = str_replace(["<html>\n", "<head>\n<title></title>\n</head>\n", "<body>\n",
+													  "</body>\n", "</html>\n"], '', $cleaned);
 							}
 						}
 						// replace </p> and <br /> with CRLF (remove <p> and CRLF)
-						$value = strip_tags(str_replace(array("\r", "\n", '<p>', '</p>', '<div>', '</div>', '<br />'),
-														array('', '', '', "\r\n", '', "\r\n", "\r\n"), $value
+						$value = strip_tags(str_replace(array("\r", '<p>', "</p>\n", '</p>', '<div>', '</div>',
+															  '<br />'),
+														array('', '', "\n", "\n", '', "\n", "\n"), $value
 											),
 											implode('', $replace_tags)
 						);
