@@ -16,7 +16,11 @@ import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw_getObjectManager} from '../../api/js/egw_action/egw_action';
 import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common";
-import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants";
+import {
+	EGW_AO_FLAG_DEFAULT_FOCUS,
+	EGW_KEY_ARROW_DOWN,
+	EGW_KEY_ARROW_UP
+} from "../../api/js/egw_action/egw_action_constants";
 import {
 	egw_keycode_translation_function,
 	egw_keycode_makeValid,
@@ -24,6 +28,7 @@ import {
 } from "../../api/js/egw_action/egw_keymanager";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {Et2VfsSelectButton} from "../../api/js/etemplate/Et2Vfs/Et2VfsSelectButton";
+import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 
@@ -2219,14 +2224,20 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * Delete mails - actually calls the backend function for deletion
-	 * takes in all arguments
+	 *
+	 * Most other apps we tell the server directly, then refresh() tells the nextmatch to remove the rows.  Nextmatch
+	 * then removes the rows & selects the next row for focus.  In mail we tell the nextmatch to remove the rows
+	 * immediately and keep track of the rows above & below the deleted row(s), not setting focus to a new row.
+	 * Then tell the server, and if the user presses up or down arrow in the next 10s, we focus the above or below row.
+	 * see et2_extension_nextmatch option "disable_selection_advance"
+	 *
 	 * @param {string} _msg - message list
 	 * @param {object} _action - optional action
 	 * @param {object} _calledFromPopup
 	 */
 	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
-		var message, ftree, _foldernode, displayname;
+		let message, ftree, _foldernode, displayname;
 		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		if (ftree)
 		{
@@ -2237,13 +2248,97 @@ app.classes.mail = AppJS.extend(
 			message = this.mail_splitRowId(_msg['msg'][0]);
 			if (message[3]) _foldernode = displayname = atob(message[3]);
 		}
+		// nextmatch normally handles selection of next row after delete, but mail is different
+		// (uses et2_nextmatch option disable_selection_advance)
+		const nm = this.et2.getWidgetById('nm');
+
+		// Note above and below rows
+		const rows = {above: null, below: null};
+		const row_ids = _msg["msg"];
+		if (!_msg["all"])
+		{
+			// Find 'top' & 'bottom', since selection order depends on which way user was moving
+			let entry = null;
+			row_ids.forEach(r =>
+			{
+				const rowEntry = nm.controller._selectionMgr._getRegisteredRowsEntry(r);
+				if (rows.above == null || rowEntry?.idx < rows.above.idx)
+				{
+					rows.above = rowEntry;
+				}
+				if (rows.below == null || rowEntry?.idx > rows.below.idx)
+				{
+					rows.below = rowEntry;
+				}
+			})
+			rows.above = rows.above.ao.getPrevious(1);
+			rows.below = rows.below?.ao?.getNext(1) ?? rows.above;
+
+			// Immediately remove from nextmatch
+			nm.refresh(row_ids, et2_nextmatch.DELETE);
+		}
+
+		// If auto-refresh is on, turn it off until the delete request finishes
+		const nm_autorefresh = nm._get_autorefresh();
+		if (nm_autorefresh)
+		{
+			nm._set_autorefresh(0);
+		}
 
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)])
-			.sendRequest(true);
+			.sendRequest(true)
+			.finally(() =>
+			{
+				// Restart autorefresh
+				if (nm_autorefresh)
+				{
+					nm._set_autorefresh(nm_autorefresh);
+				}
+			})
 
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
 		this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
+		if (_msg["all"])
+		{
+			return;
+		}
+
+		// Wait to see if user moves the cursor via keyboard
+		const grid = nm.controller._grid.innerTbody.get(0);
+		const selectRemembered = (e) =>
+		{
+			let next = null;
+			if (e.keyCode === EGW_KEY_ARROW_UP && rows.above)
+			{
+				next = rows.above;
+			}
+			else if (e.keyCode === EGW_KEY_ARROW_DOWN)
+			{
+				next = rows.below;
+			}
+			if (next)
+			{
+				// Prevent double-move
+				e.preventDefault();
+				e.stopImmediatePropagation();
+
+				// Focus with action system
+				nm.controller._selectionMgr.setSelected(next.id, true);
+				nm.controller._selectionMgr.setFocused(next.id, true);
+
+				// Scroll into view
+				next.iface.getDOMNode().scrollIntoViewIfNeeded();
+			}
+		}
+		// Bind listener
+		document.body.addEventListener("keydown", selectRemembered, {once: true});
+
+		// Remove listener after 10s
+		window.setTimeout(() =>
+		{
+			document.body.removeEventListener("keydown", selectRemembered);
+		}, 10000);
 	},
 
 	/**
@@ -2266,11 +2361,6 @@ app.classes.mail = AppJS.extend(
 			{
 				this.egw.refresh(_msg['egw_message'], 'mail', _msg['msg'][i].replace(/mail::/, ''), 'delete');
 			}
-
-			// Nextmatch automatically selects the next row and calls preview.
-			// Unselect it and thanks to the timeout selectionMgr uses, preview
-			// will close when the selection callback fires.
-			this.et2.getWidgetById(this.nm_index).controller._selectionMgr.resetSelection();
 		}
 	},
 
@@ -2282,6 +2372,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_retryForcedDelete: function(responseObject)
 	{
+		// Start a full list refresh to show current data
+		const nm = this.et2.getWidgetById('nm');
+		nm?.refresh();
+
 		var reason = responseObject['response'];
 		var messageList = responseObject['messageList'];
 		if (confirm(reason))
