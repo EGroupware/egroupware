@@ -70,6 +70,7 @@ module.exports = function (eleventyConfig)
 	eleventyConfig.addPassthroughCopy({
 		"../../vendor/bower-asset/jquery/dist/jquery.min.js": "assets/scripts/vendor/bower-asset/jquery/dist/jquery.min.js",
 		"../../vendor/bower-asset/cropper/dist/cropper.min.js": "assets/scripts/vendor/bower-asset/cropper/dist/cropper.min.js",
+		"../../vendor/bower-asset/diff2html/dist/diff2html.min.js": "assets/scripts/vendor/bower-asset/diff2html/dist/diff2html.min.js",
 		"../../vendor/tinymce/tinymce/tinymce.min.js": "assets/scripts/vendor/tinymce/tinymce/tinymce.min.js",
 	})
 
@@ -77,6 +78,7 @@ module.exports = function (eleventyConfig)
 	eleventyConfig.addPassthroughCopy({"../../chunks": "assets/scripts/chunks"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/sub/dir/etemplate/etemplate2.js"});
 	eleventyConfig.addPassthroughCopy({"../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css": "assets/styles/bootstrap-icons.min.css"});
+	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/*/doc/*": "assets/components/"});
 	eleventyConfig.addPassthroughCopy({"../../node_modules/diff2html/bundles/css/diff2html.min.css": "assets/styles/diff2html.min.css"});
 
 	//eleventyConfig.addPassthroughCopy({"../../vendor/**/*min.js": "assets/scripts/vendor/"});

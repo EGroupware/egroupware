@@ -67,11 +67,11 @@
     max-width: 100%
 }
 
-.et2_container > div:not([class]) {
+.et2_container > *:not([class]) {
     height: 100%;
 }
 
-.et2_container > div:not([class]) > table {
+.et2_container > *:not([class]) > table {
 	table-layout: fixed;
 	width: 100%;
 }
@@ -2044,7 +2044,7 @@ egw-validation-feedback[type] {
     background-color: transparent;
 }
 
-.et2_nextmatch .nextmatch_header_row > div {
+.et2_nextmatch .nextmatch_header_row > div, .et2_nextmatch .nextmatch_header_row et2-template::part(base) {
     display: inline-flex;
     flex-direction: row;
     gap: 1ex;

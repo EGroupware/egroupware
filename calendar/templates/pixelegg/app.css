@@ -132,7 +132,7 @@
 #calendar-toolbar {
   height: auto;
 }
-#calendar-toolbar > div {
+#calendar-toolbar > et2-template::part(base) {
   display: flex;
   align-items: center;
 }
@@ -179,7 +179,7 @@
   left: 0px;
   right: 0px;
 }
-form#calendar-toolbar > div {
+form#calendar-toolbar > * {
   column-gap: 1ex;
 }
 #calendar-todo {
