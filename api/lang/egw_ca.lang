@@ -943,7 +943,6 @@ welcome	common	ca	Benvingut
 western sahara	common	ca	SAHARA OCCIDENTAL
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	ca	Qué hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, automático (decide el navegador)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ca	Si dius que sí, els botons d'Inici i Sortir se presenten com a aplicacions a la barra principal d'aplicacions.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	ca	On i com seran mostrats els enllaços de egroupware com preferències, sobre i desconnexió.
 which groups	common	ca	Quins grups
 whole query	common	ca	consulta sencera
 width	common	ca	Ancho

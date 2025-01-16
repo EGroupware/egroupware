@@ -80,7 +80,7 @@
 						<et2-button  statustext="Apply the changes" label="Apply" id="button[apply]" image="apply"></et2-button>
 						<et2-button  statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
 					</et2-hbox>
-					<et2-button  align="right" statustext="delete this entry" label="Delete" id="button[delete]" image="delete" onclick="et2_dialog.confirm(widget,'Delete this entry?','Delete')" span="all"></et2-button>
+                    <et2-button align="right" statustext="delete this entry" label="Delete" id="button[delete]" image="delete" onclick="Et2Dialog.confirm(widget,'Delete this entry?','Delete')" span="all"></et2-button>
 				</row>
 			</rows>
 		</grid>

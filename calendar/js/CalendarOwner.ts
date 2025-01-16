@@ -73,7 +73,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath("calendar_owner_etemplate_widget::ajax_owner"))),
 			[newValueElement]).then((results) =>
 		{
-			return this._processResultCount(results);
+			return this._processResultCount([{value: newValueElement, label: results}]);
 		});
 	}
 	/**

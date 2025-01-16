@@ -2,33 +2,26 @@
 %1 accessories restored	resources	pt-br	%1 acessórios restaurados
 %1 resource(s) %2	resources	pt-br	%1 recurso(s) %2
 %1 resource(s) %2, %3 failed	resources	pt-br	%1 recurso(s) %2, %3 falhou(s)
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	pt-br	%1 recurso(s) %2, %3 falhou(s) devido a direitos insuficientes !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	pt-br	%1 recurso(s) %2, %3 falhou(s) devido a direitos insuficientes!
 %1 resource(s) booked	resources	pt-br	%1 recurso(s) reservado(s)
-%1 resource(s) view calendar	resources	pt-br	%1 recurso(s) visualizado(s) no calendário
+%1 resource(s) view calendar	resources	pt-br	%1 recurso(s) visualizado(s) no calendário.
 accessories	resources	pt-br	Acessórios
 accessories of	resources	pt-br	Acessórios de
-accessories:	resources	pt-br	Acessórios:
 accessory of	resources	pt-br	Acessório de
-actions	resources	pt-br	Ações
-add accessory	resources	pt-br	Adicionar acessório
 add group to event participants	resources	pt-br	Adicionar grupo aos participantes do evento
 add resource	resources	pt-br	Adicionar recurso
-add resources	resources	pt-br	Adicionar recursos
 administrator	resources	pt-br	Administrador
-all categories	resources	pt-br	Todas as categorias
 allow booking requests from any user when creating events?	resources	pt-br	Permitir solicitações de reserva de qualquer usuário ao criar eventos?
+allow ignore conflicts	admin	pt-br	Permitir ignorar conflitos
 book	resources	pt-br	Reserva
-book selected resources	resources	pt-br	Reservar recursos selecionados
 book this resource	resources	pt-br	Reservar este recurso
 bookable	resources	pt-br	Pode ser reservado
 booking requests	resources	pt-br	Solicitações de agendamento
 buy this article	resources	pt-br	Comprar este artigo
-buy this resource	resources	pt-br	Comprar este recurso
 buyable	resources	pt-br	Comprável
 category admin	resources	pt-br	Solicitações de agendamento
 category saved.	resources	pt-br	Categoria salva.
 category:	resources	pt-br	Categoria:
-check all	resources	pt-br	Checar tudo
 choose category admin	resources	pt-br	Selecionar o administrador da categoria
 clear selection	resources	pt-br	Limpar seleção
 configure access permissions	admin	pt-br	Configurar permissões de acesso
@@ -50,6 +43,7 @@ edit this entry	resources	pt-br	Editar este registro
 existing links	resources	pt-br	Links existentes
 exists	resources	pt-br	Existe
 export definition to use for nextmatch export	resources	pt-br	Definição Exportar para usar para exportação NextMatch
+exports a list of resources to a csv file.	resources	pt-br	Exporta uma lista de recursos para um arquivo CSV.
 general	resources	pt-br	Geral
 general informations about resource	resources	pt-br	Informações gerais sobre recursos
 gernal resource	resources	pt-br	Recurso geral
@@ -61,8 +55,10 @@ how many of them are useable?	resources	pt-br	Quantos deles podem ser usados?
 how many of this resource are usable	resources	pt-br	Quantos destes recursos podem ser usados?
 how many of this resource exists	resources	pt-br	Quantos destes recursos existem?
 icon	resources	pt-br	Ícone
+if you specify an export definition, it will be used when you export	resources	pt-br	Se você especificar uma definição de exportação, ela será usada quando você exportar
 implies booking permission	resources	pt-br	Envolve permissões de reserva
 implies read permission	resources	pt-br	Envolve permissões de leitura
+imports a list of resources from a csv file.	resources	pt-br	Importa uma lista de recursos de um arquivo CSV.
 information about storage	resources	pt-br	Informação sobre estoque
 informations about the location of resource	resources	pt-br	Informações sobre o local do recurso
 insert	resources	pt-br	Inserir
@@ -70,6 +66,7 @@ inventory number	resources	pt-br	Número do inventário
 inventory number:	resources	pt-br	Número do inventário:
 is resource bookable?	resources	pt-br	Recurso pode ser reservado?
 is resource buyable?	resources	pt-br	Recurso pode ser comprado?
+is the ressource bookable?	resources	pt-br	O recurso pode ser reservado?
 is this resource bookable?	resources	pt-br	Este recurso pode ser reservado?
 is this resource buyable?	resources	pt-br	Este recurso pode ser comprado?
 links	resources	pt-br	Links
@@ -79,6 +76,8 @@ location:	resources	pt-br	Local:
 manage mapping	resources	pt-br	Gerenciar mapeamento
 name of resource	resources	pt-br	Nome do recurso
 name:	resources	pt-br	Nome:
+new accessory	resources	pt-br	Novo acessório
+new resource	resources	pt-br	Novo recurso
 no - leave them	resources	pt-br	Não - Deixá-los
 no - make them resources	resources	pt-br	Não - Torná-los recursos
 no description available	resources	pt-br	Nenhuma descrição disponível
@@ -91,6 +90,7 @@ picture source	resources	pt-br	Origem da figura
 picture type is not supported, sorry!	resources	pt-br	Tipo da figura não é suportado, desculpe!
 pictures or resource	resources	pt-br	Figuras ou recurso
 planer	resources	pt-br	Organizador
+prize	resources	pt-br	Preço
 prizeing information for booking or buying	resources	pt-br	Informação de preços para reserva ou compra
 quantity	resources	pt-br	Quantidade
 quantity of resource	resources	pt-br	Quantidade do recurso
@@ -100,6 +100,10 @@ read permissions	resources	pt-br	Permissões de leitura
 registration confirmed %1	resources	pt-br	Registro confirmado %1
 related links	resources	pt-br	Links correlatos
 remove accessories before changing accessory of	resources	pt-br	Remova os acessórios antes de alterar o acessório de
+resource	resources	pt-br	Recurso
+resource %1 deleted!	resources	pt-br	Recurso %1 excluído!
+resource %1 saved!	resources	pt-br	Recurso %1 salvo!
+resource / accessories	resources	pt-br	Recurso / Acessórios
 resources	common	pt-br	Recursos
 resources list	resources	pt-br	Lista de recursos
 responsible:	resources	pt-br	Responsável:
@@ -125,6 +129,8 @@ use general resources icon	resources	pt-br	Usar ícone comum para recursos
 use own picture	resources	pt-br	Usar própria figura
 use the category's icon	resources	pt-br	Usar o ícone da categoria
 useable	resources	pt-br	Pode ser usado
+view accessories	resources	pt-br	Exibir acessórios
+view calendar	resources	pt-br	Exibir calendário
 view this entry	resources	pt-br	Exibir este registro
 web-page of resource	resources	pt-br	Página web do recurso
 web-site for this resource	resources	pt-br	Site para este recurso
@@ -133,6 +139,8 @@ which category does this resource belong to?	resources	pt-br	Qual categoria este
 write permissions	resources	pt-br	Permissões de escrita
 yes - delete accessories too	resources	pt-br	Sim - Excluir também os acessórios
 yes - un-delete accessories too	resources	pt-br	Sim - Restaurar também os acessórios
+yes, all users can ignore conflicts	resources	pt-br	Sim, todos os usuários podem ignorar conflitos
 yes, only admins can purge deleted items	admin	pt-br	Sim, somente administradores podem limpar registros removidos
+yes, only users with direct booking permission	resources	pt-br	Sim, somente usuários com permissão de reserva direta
 you are not permitted to get information about this resource!	resources	pt-br	Você não tem permissão para ver informações sobre este recurso!
 you chose more resources than available	resources	pt-br	Você escolheu mais recursos do que disponível

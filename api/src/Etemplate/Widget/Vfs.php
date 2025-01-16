@@ -351,7 +351,7 @@ class Vfs extends File
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		// do not validate, as it would overwrite preserved values with null!
-		if (in_array($this->type, array('vfs-size', 'vfs-uid', 'vfs-gid', 'vfs', 'vfs-mime')) ||
+		if(in_array($this->type, array('vfs-size', 'et2-vfs-uid', 'et2-vfs-gid', 'vfs', 'et2-vfs-mime')) ||
 			$this->is_readonly($cname, $form_name = self::form_name($cname, $this->id, $expand)))
 		{
 			return;

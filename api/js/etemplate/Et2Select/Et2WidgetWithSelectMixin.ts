@@ -280,16 +280,17 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
                 <span>Override _optionTemplate(). ${option.value} => ${option.label}</span>`;
 		}
 
-		_groupTemplate(option) : TemplateResult
+		_groupTemplate(option : SelectOption) : TemplateResult
 		{
-			if(!Array.isArray(option.value))
+			if(!Array.isArray(option.value) && !Array.isArray(option.children) && !option.hasChildren)
 			{
 				return this._optionTemplate(option);
 			}
+			// option.value is deprecated, option.children is defined in SelectOption
+			const options = Array.isArray(option.value) ? <SelectOption[]>option.value : <SelectOption[]>option.children;
 			return html`
-
                 <small>${this.noLang ? option.label : this.egw().lang(option.label)}</small>
-                ${option.value.map(this._optionTemplate.bind(this))}
+                ${options.map(this._optionTemplate.bind(this))}
                 <sl-divider></sl-divider>
 			`;
 		}

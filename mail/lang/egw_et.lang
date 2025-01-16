@@ -56,6 +56,7 @@ checking admin credentials failed	mail	et	Administraatori volituste kontrollimin
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
 contact label	mail	et	Kontakt silt
 contains	mail	et	sisaldab
+continue	mail	et	Jätka
 convert mail to item and attach its attachments to this item (standard)	mail	et	E-posti muutmine elemendiks ja selle manuste lisamine sellele elemendile (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	et	Teisenda e-kiri elemendiks, lisa selle manuseid ja lisa manusena toorsõnum (.eml)
 convert only mail to item (ignore possible attachments)	mail	et	Konverteerida ainult e-kiri elemendiks (ignoreerida võimalikke manuseid)
@@ -74,12 +75,13 @@ discard	mail	et	unusta
 discard message	mail	et	unusta kirjad
 display of html emails	mail	et	Näita HTML emaile
 display only when no plain text is available	mail	et	Näita ainult kui plain tekst pole saadaval
-displaying html messages is disabled	mail	et	html kirjade näitamine on välja lülitatud
+displaying html messages is disabled	mail	et	HTML kirjade näitamine on välja lülitatud
 do you really want to delete folder %1 ?	mail	et	Kas te tõesti tahate kustutada kausta %1?
 do you really want to delete this rule	mail	et	Kas te tõesti soovite seda reeglit KUSTUTA?
 do you really want to toggle flag %1 for all messages in the current view?	mail	et	Kas te tõesti tahate lülitada lipukese %1 kõigi praeguses vaates olevate sõnumite jaoks?
 do you really want to toggle label %1 for all messages in the current view?	mail	et	Kas te tõesti tahate lülitada märgistuse %1 kõigi sõnumite jaoks praeguses vaates?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	et	Kas soovite, et enne valitud sõnumite lisamist uuele e-kirjale küsitaks kinnitust?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	et	Kas soovite, et enne valitud sõnumite teisaldamist teise kausta küsitakse kinnitust?
 does not contain	mail	et	ei sisalda
 don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
@@ -136,6 +138,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	et	Töö
 junk	mail	et	Junk
 junk folder	mail	et	Junkkaust
+keep a copy	mail	et	Säilitada koopia
 keep a copy of the message in your inbox	mail	et	Hoidke sõnumi koopia oma postkastis
 kilobytes	mail	et	kilobaidid
 later	mail	et	Hiljem
@@ -278,6 +281,7 @@ to do	mail	et	Teha
 toggled on actions	mail	et	Tegevuste sisselülitamine
 trash	mail	et	Prügikasti
 trash folder	mail	et	Prügikasti kaust
+unconditional	mail	et	Alati
 unread	mail	et	lugematta
 write	mail	et	Kirjuta
 you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.

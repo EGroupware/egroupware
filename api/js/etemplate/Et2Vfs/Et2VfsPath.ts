@@ -118,9 +118,14 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 	public blur()
 	{
+		const oldEditing = this.editing;
 		this.editing = false;
+		this.requestUpdate("editing", oldEditing);
+		if(!this._edit)
+		{
+			return;
+		}
 
-		this.requestUpdate("editing");
 		let oldValue = this.value;
 		this.value = this._edit.value;
 
@@ -149,7 +154,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 	{
 		const wrapper = this.shadowRoot.querySelector(".vfs-path__scroll");
 		const path = wrapper?.querySelector("sl-breadcrumb");
-		const scroll = path?.shadowRoot.querySelector("nav");
+		const scroll = path?.shadowRoot?.querySelector("nav");
 		if(!wrapper || !scroll)
 		{
 			return;
@@ -183,14 +188,21 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		switch(event.key)
 		{
 			case "Enter":
-				event.stopPropagation();
-				event.preventDefault();
-				this.editing = !this.editing;
-				this.requestUpdate("editing");
-				break;
+				const oldValue = this.value;
+				this.value = this._edit.value;
+				this.requestUpdate("value", oldValue);
+				if(oldValue != this.value)
+				{
+					this.updateComplete.then(() =>
+					{
+						this.dispatchEvent(new Event("change"));
+					});
+				}
+			// Fall through
 			case "Escape":
 				event.stopPropagation();
 				event.preventDefault();
+				this._edit.value = this.value;
 				this.blur();
 				break;
 		}
@@ -262,7 +274,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 	protected _getIcon(pathParts)
 	{
 		let image = this.egw().image("navbar", "filemanager");
-		if(pathParts.length > 2 && pathParts[1] == "apps")
+		if(pathParts.length > 2 && (pathParts[1] == "apps" || pathParts[1] == "templates"))
 		{
 			const app = this.egw().app(pathParts[2], 'name') || this.egw().appByTitle(pathParts[2], 'name');
 			if (app && !(image = this.egw().image('navbar', app)))
@@ -277,18 +289,18 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 	protected pathPartTemplate(pathParts, path, index)
 	{
 		let pathName : string | TemplateResult<1> = path.trim();
-		if(pathParts.length > 1 && pathParts[1] == "apps")
+		if(pathParts.length > 1 && (pathParts[1] == "apps" || pathParts[1] == "templates"))
 		{
 			switch(index)
 			{
 				case 1:
-					pathName = this.egw().lang("applications");
+					pathName = this.egw().lang(pathParts[1] == "apps" ? "Applications" : "Templates");
 					break;
 				case 2:
 					pathName = this.egw().lang(pathName);
 					break;
 				case 3:
-					if(!isNaN(<number><unknown>pathName))
+					if(!isNaN(<number><unknown>pathName) && pathParts[1] !== "templates")
 					{
 						pathName = html`${until(this.egw().link_title(pathParts[2], pathParts[3], true) || pathName, pathName)}`
 					}
@@ -372,7 +384,6 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                                 ?required=${this.required}
                                 .value=${this.value}
                                 tabindex="-1"
-                                aria-hidden="true"
                                 @blur=${() => this.blur()}
                                 @keydown=${this.handleKeyDown}
                         />

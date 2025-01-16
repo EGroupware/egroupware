@@ -2527,7 +2527,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$acc_id = $hA['profileID'];
 
 				$attachmentHTML[$key]['mime_data'] = Link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount', array(
-					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'], true
+					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'] ?? false, true
 				));
 				$attachmentHTML[$key]['size']=Vfs::hsize($value['size']);
 				$attachmentHTML[$key]['attachment_number']=$key;
@@ -2635,9 +2635,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						break;
 				}
 				// we either use mime_data for server-side supported mime-types or mime_url for client-side or download
-				if (empty($attachmentHTML[$key]['mime_data']))
+				if (empty($attachmentHTML[$key]['mime_data']) || preg_match('#^(application|text)/xml$#i', $attachmentHTML[$key]['type']))
 				{
 					$attachmentHTML[$key]['mime_url'] = Egw::link('/index.php',$linkData);
+
+					// always check invoices (or it's EPL viewer) too and then add mime_data unconditionally
+					if (Link::get_mime_info($attachmentHTML[$key]['type'],
+						!empty($GLOBALS['egw_info']['user']['apps']['invoices']) ? 'invoices' : 'stylite'))
+					{
+						$attachmentHTML[$key]['invoice_data'] = Link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount',
+							[$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'] ?? false, true], true);
+					}
 					unset($attachmentHTML[$key]['mime_data']);
 				}
 				$attachmentHTML[$key]['windowName'] = $windowName;

@@ -124,6 +124,7 @@ applications	common	no	Applikasjoner
 applies the changes made	common	no	Lagre utførte endringer
 applies the changes to the given version of the template	common	no	Lagre utførte endringer til en gitt versjon av malen
 apply	common	no	Utfør
+apps & license	common	no	Apper og lisenser
 april	common	no	April
 are you sure you want to delete these entries ?	common	no	Er du sikkert på at du vil slette disse innslagene?
 are you sure you want to delete this entry ?	common	no	Er du sikker du vil slette dette innslaget?
@@ -156,6 +157,7 @@ bangladesh	common	no	BANGLADESH
 barbados	common	no	BARBADOS
 baseline	common	no	Grunnlinje
 bcc	common	no	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	no	Før du går videre, anbefaler vi deg å se denne korte videoen for å se hvordan Mailvelope plugin fungerer med EGroupware.
 belarus	common	no	HVITERUSSLAND
 belgium	common	no	BELGIA
 belize	common	no	BELIZE
@@ -216,6 +218,7 @@ checkbox	common	no	Sjekkboks
 chile	common	no	CHILE
 china	common	no	KINA
 choose the category	common	no	Velg kategori
+choose the default filename for merged documents.	preferences	no	Velg standard filnavn for sammenslåtte dokumenter.
 choose the parent category	common	no	Velg overordnet kategori
 christmas island	common	no	CHRISTMAS ISLAND
 class	common	no	Class
@@ -225,6 +228,7 @@ clear form	common	no	Tøm skjema
 click	common	no	Klikk
 click here to attach the file	common	no	Klikk her for å legge til filen
 click here to create the link	common	no	Klikk her for å lage lenke
+click here to resume your egroupware session.	common	no	Klikk for å gjenoppta EGroupware-økten.
 click here to start the search	common	no	Klikk her for å starte søket
 click here to upload the file	common	no	Klikk her for å laste opp filen
 click to order after that criteria	common	no	Klikk for å sortere etter disse kriteria
@@ -304,6 +308,7 @@ description	common	no	Beskrivelse
 detail	common	no	Detalj
 details	common	no	Detaljer
 directory	common	no	Mappe
+directory for storing merged documents	preferences	no	Mappe for lagring av sammenslåtte dokumenter
 disabled	common	no	Utkoblet
 discard changes	common	no	Opphev endringer
 djibouti	common	no	DJIBOUTI
@@ -312,6 +317,7 @@ doctype:	common	no	Dok.type:
 document properties	common	no	Dokumentegenskaper
 document title:	common	no	Dokumenttittel:
 documentation	common	no	Dokumentasjon
+documents	common	no	Dokumenter
 doesn't matter	common	no	Spiller ingen rolle
 domain	common	no	Domene
 domain name for mail-address, eg. "%1"	common	no	Domene navn for mail adresser, f.eks:"%1"
@@ -319,6 +325,7 @@ domestic	common	no	Innenlands
 dominica	common	no	DOMINICA
 dominican republic	common	no	DOMINIKANSKE REPUBLIKK
 don't ask again!	common	no	Ikke spør igjen!
+don't show this again	common	no	Ikke vis dette igjen
 done	common	no	Ferdig
 download	common	no	Last ned
 drop a table - this can not be undone	common	no	Slette en tabell - dette kan ikke gjøres om
@@ -329,6 +336,7 @@ east timor	common	no	ØST TIMOR
 ecuador	common	no	ECUADOR
 edit	common	no	Rediger
 edit %1 category for	common	no	Endre %1 kategori for
+edit avatar	common	no	Rediger avatar
 edit categories	common	no	Endre kategorier
 edit category	common	no	Endre kategori
 edit the etemplate spez. above	common	no	Rediger eTemplate
@@ -339,11 +347,18 @@ editable templates - editor	common	no	Editerbare Maler - Tekstbehandler
 editable templates - search	common	no	Editerbare Maler - Søk
 editable templates - show template	common	no	Editerbare Maler - Vis mal
 egroupware	common	no	EGroupware
+egroupware administrators group, do not delete	common	no	EGroupware-administratorgruppe, må IKKE slettes
+egroupware all users group, do not delete	common	no	EGroupware alle brukere-gruppe, IKKE slett
+egroupware anonymous users group, do not delete	common	no	EGroupware anonymous users group, IKKE slett
+egroupware maintenance update %1 available	common	no	EGroupware vedlikeholdsoppdatering %1 tilgjengelig
+egroupware security update %1 needs to be installed!	common	no	EGroupware sikkerhetsoppdatering %1 må installeres!
+egroupware version	common	no	EGroupware-versjon
 egroupware: login blocked for user '%1', ip %2	common	no	EGroupware: pålogging blokkert for bruker '%1', IP %2
 egypt	common	no	EGYPT
 el salvador	common	no	EL SALVADOR
 email	common	no	Epost
 email-address of the user, eg. "%1"	common	no	Brukerens epost-adresse, f.eks: "%1"
+emails	common	no	E-poster
 enabled	common	no	Påslått
 end date	common	no	Sluttdato
 end time	common	no	Slutt tidspunkt
@@ -491,6 +506,7 @@ id	common	no	ID
 if you use "2-factor-authentication", please enter the code here.	common	no	Hvis du bruker "2-faktor-autentisering", vennligst skriv inn koden her.
 image	common	no	Bilde
 image url	common	no	Bildets URL
+images	common	no	Bilder
 import	common	no	Importer
 import an etemplate from a xml-file	common	no	Importer en eTemplate fra en XML-fil
 import table-definitions from existing db-table	common	no	Importer en tabelldefinisjon fra en eksisterende tabell
@@ -649,6 +665,7 @@ netherlands antilles	common	no	NEDERLANDSKE ANTILLER
 never	common	no	Aldri
 new	common	no	Opprett
 new caledonia	common	no	NY KALEDONIA
+new egroupware release %1 available	common	no	Ny EGroupware-versjon %1 tilgjengelig
 new entry added sucessfully	common	no	Ny innslag ble lagt til.
 new main category	common	no	Ny hovedkategori
 new search	common	no	Nytt søk
@@ -706,6 +723,7 @@ open	common	no	Åpne
 open existing contact	common	no	Åpne eksisterende kontakt
 open notify window	common	no	Åpne varslingsvindu
 open popup window	common	no	Åpne pop-up vindu
+open the online help.	common	no	Åpne den elektroniske hjelpen
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	no	OpenIDConnect-pålogging vellykket, men brukeren '%1' finnes IKKE i EGroupware, OG automatisk brukeroppretting er deaktivert!
 optional note about the link	common	no	Valgri kommentar om denne lenken
 options	common	no	Alternativer
@@ -905,6 +923,7 @@ sorry, your login has expired	login	no	Beklager, din bruker har gått ut på dat
 south africa	common	no	SØR_AFRIKA
 south georgia and the south sandwich islands	common	no	SØR GEORGIA OG SØR SANDWICH ØYENE
 spain	common	no	SPANIA
+spreadsheets	common	no	Regneark
 sri lanka	common	no	SRI LANKA
 start a new search, cancel this link	common	no	Start nytt søk, annuller denne lenken
 start date	common	no	Startdato
@@ -932,6 +951,7 @@ tanzania, united republic of	common	no	TANZANIA
 template	common	no	Mal
 template deleted	common	no	Mal slettet.
 template saved	common	no	Mal lagret.
+templates	common	no	Maler
 text	common	no	Tekst
 text color:	common	no	Tekstfarge:
 textarea	common	no	Tekstområde
@@ -1000,6 +1020,7 @@ vanuatu	common	no	VANUATU
 vbox	common	no	vBox
 venezuela	common	no	VENEZUELA
 version	common	no	Versjon
+videos	common	no	Videoer
 viet nam	common	no	VIETNAM
 view	common	no	Vis
 view this etemplate	common	no	Vis denne eTemplate
@@ -1011,6 +1032,7 @@ wednesday	common	no	Onsdag
 weekend	common	no	Helg
 welcome	common	no	Velkommen
 western sahara	common	no	VEST-SAHARA
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	no	Når du slår sammen oppføringer til dokumenter, lagres de her. Hvis ingen mappe er oppgitt, lagres de i hjemmekatalogen din (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	no	Når du svarer ja vil hjem- og avloggingsknappene prsenteres som valg i topp av hovedbildet.
 which groups	common	no	Hvilke grupper
 width	common	no	Bredde

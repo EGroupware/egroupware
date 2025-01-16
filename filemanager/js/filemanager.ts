@@ -1072,7 +1072,7 @@ export class filemanagerAPP extends EgwApp
 		actions.push({
 			id:_action.id+'_current', caption: current_dir, path: current_dir,
 			enabled: dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 ||
-				!dir && path_widget && !path_widget.options?.readonly
+				!dir && path_widget && !path_widget.readonly
 		});
 
 		// Target, if directory
@@ -1136,6 +1136,15 @@ export class filemanagerAPP extends EgwApp
 			_action.getActionById(actions[i].id).onExecute = _action.onExecute.clone();
 
 			_action.getActionById(actions[i].id).set_onExecute(paste_exec);
+		}
+
+		// Changing the actions like this is incompatible with re-using the menu
+		// Remove the menu it so it will be re-generated
+		const nm_action = _action.getManager();
+		if(actions.length > 0 && nm_action && nm_action.data?.menu)
+		{
+			nm_action.data.menu.remove();
+			delete nm_action.data.menu;
 		}
 		return actions.length > 0;
 	}
@@ -1447,7 +1456,7 @@ export class filemanagerAPP extends EgwApp
 		document.body.appendChild(dialog);
 		dialog.addEventListener("load", () =>
 		{
-			dialog.template.widgetContainer.getWidgetById("share_link").onclick = copy_link_to_clipboard;
+			dialog.eTemplate.widgetContainer.getWidgetById("share_link").onclick = copy_link_to_clipboard;
 		});
 	}
 

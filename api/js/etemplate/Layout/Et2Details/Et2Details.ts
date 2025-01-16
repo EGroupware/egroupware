@@ -76,6 +76,24 @@ export class Et2Details extends Et2Widget(SlDetails)
 					display: block;
 				}
 
+				.details:not(.hoist).details--open.details--overlay-summary {
+					.details__summary {
+						visibility: hidden;
+					}
+
+					.details__body {
+						margin-top: calc(-1 * var(--sl-input-height-medium));
+					}
+
+					.details__body.overlaySummaryRightAligned {
+						padding-right: calc(3 * var(--sl-spacing-medium));
+					}
+
+					.details__body.overlaySummaryLeftAligned {
+						padding-left: calc(3 * var(--sl-spacing-medium));
+					}
+				}
+
 				.details.hoist .details__body {
 					position: absolute;
 					z-index: var(--sl-z-index-drawer);
@@ -131,6 +149,13 @@ export class Et2Details extends Et2Widget(SlDetails)
 	overlaySummaryOnOpen = false;
 
 	/**
+	 * Group multiple details together so only one can be open at once
+	 * @type {string}
+	 */
+	@property({type: String})
+	accordionGroup : string;
+
+	/**
 	 * List of properties that get translated
 	 * Done separately to not interfere with properties - if we re-define label property,
 	 * labels go missing.
@@ -143,9 +168,20 @@ export class Et2Details extends Et2Widget(SlDetails)
 		}
 	}
 
+	constructor()
+	{
+		super();
+		this.handleAccordionOpen = this.handleAccordionOpen.bind(this);
+	}
+
 	connectedCallback()
 	{
 		super.connectedCallback();
+
+		if(this.accordionGroup)
+		{
+			window.document.addEventListener("sl-show", this.handleAccordionOpen);
+		}
 
 		this.updateComplete.then(() => {
 			if (this.toggleOnHover) {
@@ -158,6 +194,8 @@ export class Et2Details extends Et2Widget(SlDetails)
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+
+		window.document.removeEventListener("sl-show", this.handleAccordionOpen);
 		window.document.removeEventListener('mouseout', this._mouseOutEvent);
 	}
 
@@ -168,6 +206,14 @@ export class Et2Details extends Et2Widget(SlDetails)
 	_mouseOutEvent(event)
 	{
 		if (!this.getDOMNode().contains(event.relatedTarget)) this.hide();
+	}
+
+	handleAccordionOpen(event)
+	{
+		if(event.target !== this && this.accordionGroup && event.target.accordionGroup == this.accordionGroup)
+		{
+			this.hide();
+		}
 	}
 
 	render()
@@ -182,6 +228,7 @@ export class Et2Details extends Et2Widget(SlDetails)
                         'details--open': this.open,
                         'details--disabled': this.disabled,
                         'details--rtl': isRtl,
+                        'details--overlay-summary': this.overlaySummaryOnOpen,
                         'hoist': this.hoist
                     })}
             >

@@ -1392,8 +1392,12 @@ et2-image.calendar_print_button,
 et2-appicon.calendar_print_appicon,
 et2-appicon.calendar_print_appicon img {
   height: 24px;
-  width: 26px;
+  width: 24px;
   font-size: 24px;
+}
+et2-image.calendar_print_button::before {
+  vertical-align: -0.125em;
+  /*reset to bootstrap chosen alignment*/
 }
 /*Sortable views*/
 .srotable_cal_wk_ph {
@@ -1518,9 +1522,6 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
 .ui-toolbar-menulist et2-switch::part(label),
 .ui-toolbar-menulist et2-switch .label {
   width: 100%!important;
-}
-#calendar-toolbar_toolbar .et2_toolbar_more {
-  margin-top: 0;
 }
 #calendar-toolbar button#toolbar-today {
   color: #616161;
@@ -1734,6 +1735,14 @@ img.sideboxstar:active {
   background-repeat: repeat-x;
 }
 /* calender view*/
+/**
+ * grid table view
+ * used in month and multi-week view
+ */
+.et2_container > div:not([class]) > table {
+  table-layout: auto;
+  width: 100%;
+}
 /*defind in layout_raster.less , because frame*/
 span#start {
   margin-right: 1em;
@@ -2700,6 +2709,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 }
 #calendar-toolbar {
   margin-bottom: 0.3em;
+  margin-top: 0.3em;
 }
 #calendar-toolbar_toolbar et2-switch .label.on span.off {
   filter: opacity(0.4);

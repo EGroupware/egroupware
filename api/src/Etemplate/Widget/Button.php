@@ -46,6 +46,12 @@ class Button extends Etemplate\Widget
 	 */
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
+		// Can't "validate" a button without an ID.
+		// It won't have anywhere to go in the $content, and may overwrite its siblings
+		if(!$this->id)
+		{
+			return;
+		}
 		$form_name = self::form_name($cname, $this->id, $expand);
 		//error_log(__METHOD__."('$cname', ".array2string($expand).", ...) $this: get_array(\$content, '$form_name')=".array2string(self::get_array($content, $form_name)));
 

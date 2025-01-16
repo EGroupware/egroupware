@@ -57,6 +57,7 @@ answering no will not ask you again for this browser.	common	ko	아니요라고 
 application	common	ko	응용프로그램
 applications	common	ko	응용프로그램들
 apply	common	ko	적용
+apps & license	common	ko	앱 및 라이선스
 april	common	ko	4월
 are you sure you want to delete these entries ?	common	ko	이 항목들을 정말로 삭제하시겠습니까?
 are you sure you want to delete this entry ?	common	ko	현재 항목을 삭제하시겠습니까?
@@ -89,10 +90,12 @@ choose a background image.	common	ko	배경이미지를 선택하세요
 choose a background style.	common	ko	배경스타일을 선택하세요
 choose a text color for the icons	common	ko	아이콘의 글자색을 선택하세요
 choose the category	common	ko	분류를 선택하세요
+choose the default filename for merged documents.	preferences	ko	병합된 문서의 기본 파일명을 선택합니다.
 choose the parent category	common	ko	상위 분류를 선택하세요
 clear	common	ko	초기화
 clear form	common	ko	초기화
 click here to create the link	common	ko	새 링크를 생성하려면 클릭하세요
+click here to resume your egroupware session.	common	ko	E그룹웨어 세션을 다시 시작하려면 클릭합니다.
 click here to start the search	common	ko	검색을 시작하려면 클릭하세요
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	ko	명시적으로 한도를 지정하지 않은 고객은 이 기간으로 제한됩니다. 한도가 너무 높으면 일부 클라이언트에서 문제가 발생할 수 있습니다.
 clipboard contents	common	ko	클립보드 내용
@@ -130,24 +133,36 @@ delete this entry	common	ko	이 엔트리 삭제
 description	common	ko	내용
 detail	common	ko	상세
 details	common	ko	상세
+directory for storing merged documents	preferences	ko	병합된 문서를 저장할 폴더
 disabled	common	ko	비활성화됨
 do you also want to delete all subcategories ?	common	ko	모든 하위 분류들을 삭제하시겠습니까?
 doctype:	common	ko	문서형식:
 document properties	common	ko	문서 속성
 document title:	common	ko	문서 제목:
+documents	common	ko	문서
 domain	common	ko	도메인
 domain name for mail-address, eg. "%1"	common	ko	이메일 주소를 위한 도메인 (예 : %1)
 domestic	common	ko	기숙사
 don't ask again!	common	ko	다시 묻지 마세요!
+don't show this again	common	ko	다시 표시하지 않기
 done	common	ko	완료
 download	common	ko	내려받기
 duration	common	ko	기간
 e-mail	common	ko	E-Mail
 edit	common	ko	수정
+edit avatar	common	ko	아바타 편집
 edit categories	common	ko	분류 수정
 edit category	common	ko	분류 수정
+egroupware	common	ko	EGroupware
+egroupware administrators group, do not delete	common	ko	EGroupware 관리자 그룹, 삭제하지 마세요
+egroupware all users group, do not delete	common	ko	EGroupware 모든 사용자 그룹, 삭제하지 마세요
+egroupware anonymous users group, do not delete	common	ko	EGroupware 익명 사용자 그룹, 삭제하지 않음
+egroupware maintenance update %1 available	common	ko	이그룹웨어 유지 관리 업데이트 %1을(를) 사용할 수 있습니다
+egroupware security update %1 needs to be installed!	common	ko	E그룹웨어 보안 업데이트 %1을(를) 설치해야 합니다!
+egroupware version	common	ko	EGroupware 버전
 egroupware: login blocked for user '%1', ip %2	common	ko	EGroupware: 사용자 %1 및 IP %2에 대한 로그인이 차단되었습니다.
 email	common	ko	E-Mail
+emails	common	ko	이메일
 enabled	common	ko	활성화됨
 end date	common	ko	종료일
 end time	common	ko	종료시간
@@ -208,6 +223,7 @@ hours	common	ko	시간
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ko	최상위 페이지의 네비게이션 바에서 몇개의 아이콘이 보이길 원하나요. 여분의 아이콘은 가장 네비게이션바의 가장 오른쪽 아이콘의 풀다운 메뉴안으로 들어갑니다.
 html links to any entries linked to the current record, excluding attached files	common	ko	첨부 파일을 제외한 현재 레코드에 연결된 모든 항목에 대한 HTML 링크입니다.
 image url	common	ko	그림 URL
+images	common	ko	이미지
 import	common	ko	가져오기
 insert column after	common	ko	뒤에 행 넣기
 insert column before	common	ko	앞에 행 넣기
@@ -263,11 +279,11 @@ maintainer	common	ko	관리자
 march	common	ko	3월
 may	common	ko	5월
 medium	common	ko	중간
-merge	common	ko	マージ
-merge & send	common	ko	マージして送信
-merge individually	common	ko	個別にマージ
-merge options	common	ko	マージオプション
-merged document filename	preferences	ko	マージされたドキュメントのファイル名
+merge	common	ko	병합
+merge & send	common	ko	병합 및 보내기
+merge individually	common	ko	개별적으로 병합
+merge options	common	ko	병합 옵션
+merged document filename	preferences	ko	병합된 문서 파일명
 message	common	ko	메세지
 minute	common	ko	분
 minutes	common	ko	분
@@ -282,6 +298,7 @@ name	common	ko	이름
 name of the user, eg. "%1"	common	ko	사용자의 이름, 예. "%1"
 never	common	ko	절대(never)
 new	common	ko	새로만들기
+new egroupware release %1 available	common	ko	새 EGroupware 릴리스 %1을(를) 사용할 수 있습니다
 new entry added sucessfully	common	ko	새로운 데이터가 추가되었습니다.
 new main category	common	ko	새 기본 분류
 new search	common	ko	새 검색
@@ -320,6 +337,7 @@ open	common	ko	개설
 open existing contact	common	ko	기존 연락처 열기
 open notify window	common	ko	알림창 열기
 open popup window	common	ko	팝업창 열기
+open the online help.	common	ko	온라인 도움말 열기
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	ko	OpenIDConnect 로그인에 성공했지만 사용자 '%1'이(가) EGroupware에 존재하지 않으며 자동 사용자 생성이 비활성화되었습니다!
 operator	common	ko	운영자
 optional note about the link	common	ko	링크에 대한 선택적 참고 사항
@@ -431,12 +449,15 @@ show_more_apps	common	ko	더 많은 응용프로그램 보기
 sign up	common	ko	가입하기
 site configuration	common	ko	앱 구성
 sorry, your login has expired	login	ko	귀하의 사용자ID는 만료되어 더 이상 사용하실수 없습니다.
+spreadsheets	common	ko	스프레드시트
 start a new search, cancel this link	common	ko	이 링크를 취소하고 새로 검색
 status	common	ko	상태
 subject	common	ko	제목
 submit	common	ko	전송
 sunday	common	ko	일요일
 table properties	common	ko	테이블 속성
+template	common	ko	템플릿
+templates	common	ko	템플릿
 the following applications require upgrades	common	ko	다음의 응용프로그램은 업그레이드가 필요합니다.
 thursday	common	ko	목요일
 time	common	ko	시간
@@ -463,9 +484,11 @@ username	common	ko	사용자ID
 users	common	ko	사용자
 users choice	common	ko	사용자 선택
 version	common	ko	버전
+videos	common	ko	동영상
 view	common	ko	보기
 wednesday	common	ko	수요일
 welcome	common	ko	환영합니다
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ko	항목을 문서로 병합하면 여기에 저장됩니다. 폴더를 지정하지 않으면 홈 디렉터리(%1)에 저장됩니다.
 which groups	common	ko	그룹선택
 width	common	ko	너비
 wk	common	ko	주

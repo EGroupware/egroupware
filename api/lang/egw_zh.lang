@@ -120,6 +120,7 @@ applications	common	zh	应用程序
 applies the changes made	common	zh	应用所作修改
 applies the changes to the given version of the template	common	zh	应用修改到指定模板的版本
 apply	common	zh	应用
+apps & license	common	zh	应用程序和许可证
 april	common	zh	四月
 are you sure you want to delete these entries ?	common	zh	确定要删除这些条目吗？
 are you sure you want to delete this entry ?	common	zh	确定要删除该条目吗？
@@ -149,6 +150,7 @@ bangladesh	common	zh	孟加拉国
 barbados	common	zh	巴巴多斯岛
 baseline	common	zh	基线
 bcc	common	zh	暗送
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	zh	在继续之前，我们强烈建议您观看此简短视频，了解 Mailvelope 插件如何与 EGroupware 配合使用。
 belarus	common	zh	白俄罗斯
 belgium	common	zh	比利时
 belize	common	zh	伯利兹城
@@ -160,7 +162,6 @@ blurtext	common	zh	模煳文字
 bold	common	zh	粗体
 bolivia	common	zh	玻利维亚
 border	common	zh	边框
-border-line-thickness for the table-tag	common	zh	表格标签使用的框线宽度
 bosnia and herzegovina	common	zh	波黑
 botswana	common	zh	博茨瓦纳
 bottom	common	zh	底部
@@ -344,6 +345,7 @@ detail	common	zh	详细信息
 details	common	zh	详细信息
 directory	common	zh	目录
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	zh	目录不存在、对于Web服务器不可读或不是相对的文档根目录！
+directory for storing merged documents	preferences	zh	用于存储合并文件的文件夹
 disabled	common	zh	已禁用
 discard changes	common	zh	放弃更改
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	zh	在输入之前显示或输入是为'%s'插入标签中(提交按钮标签或图片文件名)
@@ -357,6 +359,7 @@ document '%1' does not exist or is not readable for you!	preferences	zh	文件'%
 document properties	common	zh	文件属性
 document title:	common	zh	文件标题：
 documentation	common	zh	文档
+documents	common	zh	文件
 doesn't matter	common	zh	没关系
 domain	common	zh	域
 domain name for mail-address, eg. "%1"	common	zh	邮件地址的域名，例如："%1"
@@ -364,6 +367,7 @@ domestic	common	zh	国内
 dominica	common	zh	多米尼加
 dominican republic	common	zh	多米尼加共和国
 don't ask again!	common	zh	不再询问！
+don't show this again	common	zh	不要再显示此内容
 done	common	zh	完成
 download	common	zh	下载
 drop a table - this can not be undone	common	zh	删去数据表 - 这将无法撤消
@@ -375,6 +379,7 @@ east timor	common	zh	东帝汶
 ecuador	common	zh	厄瓜多尔
 edit	common	zh	编辑
 edit %1 category for	common	zh	编辑类别%1为
+edit avatar	common	zh	编辑头像
 edit categories	common	zh	类别编辑
 edit category	common	zh	类别编辑
 edit embeded css styles or of the applications app.css file	common	zh	编辑 CSS 嵌入式样式表或应用程序 app.css 文件
@@ -386,12 +391,19 @@ editable templates - editor	common	zh	可编辑模板 - 编辑器
 editable templates - search	common	zh	可编辑模板 - 搜索
 editable templates - show template	common	zh	可编辑模板 - 显示模板
 egroupware	common	zh	EGroupware
+egroupware administrators group, do not delete	common	zh	EGroupware 管理员组，请勿删除
+egroupware all users group, do not delete	common	zh	EGroupware 所有用户组，请勿删除
+egroupware anonymous users group, do not delete	common	zh	EGroupware 匿名用户组，请勿删除
 egroupware api version	common	zh	EGroupware API 版本
+egroupware maintenance update %1 available	common	zh	EGroupware 维护更新 %1 可用
+egroupware security update %1 needs to be installed!	common	zh	EGroupware 安全更新 %1 需要安装！
+egroupware version	common	zh	关于 EGroupware
 egroupware: login blocked for user '%1', ip %2	common	zh	EGroupware：用户'%1'，IP地址%2已被禁止登录
 egypt	common	zh	埃及
 el salvador	common	zh	萨尔瓦多
 email	common	zh	电子邮件
 email-address of the user, eg. "%1"	common	zh	用户的电子邮件地址，例如："%1"
+emails	common	zh	电子邮件
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	zh	CSS嵌入式样式表，例如'.red { background: red;}' (注意'.'在类名称之前)或是 '@import url(...)' (类名称可以在全局网页使用！)
 enable javascript onchange submit	common	zh	启用 JavaScript 改动时提交功能
 enabled	common	zh	已启用
@@ -554,6 +566,7 @@ if you use "2-factor-authentication", please enter the code here.	common	zh	如�
 image	common	zh	图片
 image directory relative to document root (use / !), example:	common	zh	相对文档根目录的图片目录(使用：/)，例如：
 image url	common	zh	图片网址
+images	common	zh	图片
 import	common	zh	导入
 import an etemplate from a xml-file	common	zh	从XML文件导入一个模板
 import table-definitions from existing db-table	common	zh	从已有的数据表导入表定义文件
@@ -737,6 +750,7 @@ netherlands antilles	common	zh	荷兰属安的列斯群岛
 never	common	zh	从不
 new	common	zh	新建
 new caledonia	common	zh	新克里多尼亚
+new egroupware release %1 available	common	zh	新的 EGroupware 版本 %1 可用
 new entry added sucessfully	common	zh	新条目添加成功
 new main category	common	zh	新建主类别
 new password	common	zh	新密码
@@ -1062,6 +1076,7 @@ spacing	common	zh	间隔
 spain	common	zh	西班牙
 span	common	zh	Span
 span, class	common	zh	Span, Class
+spreadsheets	common	zh	电子表格
 sri lanka	common	zh	斯里兰卡
 stack	common	zh	Stack
 start a new search, cancel this link	common	zh	取消此链接，开始新的搜索
@@ -1102,6 +1117,7 @@ tanzania, united republic of	common	zh	坦桑尼亚联合共和国
 template	common	zh	模板
 template deleted	common	zh	模板已删除。
 template saved	common	zh	模板已保存。
+templates	common	zh	模板
 text	common	zh	文字
 text color:	common	zh	文字颜色：
 textarea	common	zh	文字区
@@ -1184,6 +1200,7 @@ vbox	common	zh	VBox
 venezuela	common	zh	委内瑞拉
 version	common	zh	版本
 vertical alignment of row	common	zh	行的垂直对齐
+videos	common	zh	视频
 viet nam	common	zh	越南
 view	common	zh	查看
 view this etemplate	common	zh	查看这个模板
@@ -1196,8 +1213,8 @@ weekend	common	zh	周末
 welcome	common	zh	欢迎
 western sahara	common	zh	西撒哈拉
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	zh	发生内容超出：显示(默认)，隐藏，卷动，自动(由浏览器决定)
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	zh	将条目合并为文档时，它们将存储在此处。如果没有提供文件夹，它们将存储在您的主目录 (%1) 中。
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	zh	如果选择“是”，“首页”和“注销”图标将显示在应用程序工具条中。
-where and how will the egroupware links like preferences, about and logout be displayed.	common	zh	将在什么位置和如何以喜欢偏好显示 EGroupware、关于及注销的链接。
 which groups	common	zh	哪一个组
 whole query	common	zh	完整查询
 widget copied into clipboard	common	zh	容器复制到剪贴簿

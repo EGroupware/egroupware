@@ -146,6 +146,7 @@ applies the changes made	common	ru	Применяет изменения
 applies the changes to the given version of the template	common	ru	Применяет изменения к выбранной версии шаблона
 apply	common	ru	Применить
 apply the action on the whole query, not only the shown entries	common	ru	Применить действие на весь запрос, а не только на отображаемые записи
+apps & license	common	ru	Приложения и лицензия
 april	common	ru	Апрель
 are you sure you want to delete these entries ?	common	ru	Вы уверены, что хотите удалить эти записи?
 are you sure you want to delete this entry ?	common	ru	Вы уверены, что хотите удалить эту запись?
@@ -175,6 +176,7 @@ bangladesh	common	ru	Бангладеш
 barbados	common	ru	Барбадос
 baseline	common	ru	Базовая линия
 bcc	common	ru	Скрытая копия (Bcc)
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	ru	Прежде чем продолжить, мы настоятельно рекомендуем вам посмотреть это короткое видео, чтобы увидеть, как плагин Mailvelope работает с EGroupware.
 belarus	common	ru	Белоруссия
 belgium	common	ru	Бельгия
 belize	common	ru	Белиз
@@ -411,6 +413,7 @@ document '%1' does not exist or is not readable for you!	preferences	ru	Доку
 document properties	common	ru	Свойства документа
 document title:	common	ru	Заголовок документа:
 documentation	common	ru	Документация
+documents	common	ru	Документы
 doesn't matter	common	ru	не важно
 domain	common	ru	Домен
 domain name for mail-address, eg. "%1"	common	ru	Доменное имя для почтового адреса, напр. "%1"
@@ -445,7 +448,12 @@ editable templates - editor	common	ru	Редактируемые Шаблоны 
 editable templates - search	common	ru	Редактируемые Шаблоны - Поиск
 editable templates - show template	common	ru	Редактируемые Шаблоны - Показать Шаблон
 egroupware	common	ru	EGroupware
+egroupware administrators group, do not delete	common	ru	Группа администраторов EGroupware, НЕ удалять
+egroupware all users group, do not delete	common	ru	Группа всех пользователей EGroupware, НЕ удалять
+egroupware anonymous users group, do not delete	common	ru	Группа анонимных пользователей EGroupware, НЕ удалять
 egroupware api version	common	ru	Версия API EGroupware
+egroupware maintenance update %1 available	common	ru	Доступно обновление обслуживания EGroupware %1
+egroupware security update %1 needs to be installed!	common	ru	Необходимо установить обновление безопасности EGroupware %1!
 egroupware version	common	ru	Версия EGroupware
 egroupware: login blocked for user '%1', ip %2	common	ru	EGroupware: вход для пользователя '%1', IP %2 заблокирован
 egypt	common	ru	Египет
@@ -453,6 +461,7 @@ el salvador	common	ru	Сальвадор
 element role title	common	ru	Название роли элемента
 email	common	ru	Эл.почта
 email-address of the user, eg. "%1"	common	ru	Почтовый адрес для пользователя, напр. "%1"
+emails	common	ru	Электронные письма
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	ru	встроенные стили css, yапр. '.red { background: red; }' (отметьте знак '.' gеред именем класса) или '@import url(...)' (имя класса глобально для всей страницы!)
 empty file	common	ru	Пустой файл
 enable javascript onchange submit	common	ru	разрешить подчинение JavaScript onchange
@@ -641,6 +650,7 @@ if you use "2-factor-authentication", please enter the code here.	common	ru	Ес
 image	common	ru	Картинка
 image directory relative to document root (use / !), example:	common	ru	Папка изображений относительно корня документов (используйте / !), пример:
 image url	common	ru	Ссылка на изображение
+images	common	ru	Изображения
 import	common	ru	Импортировать
 import an etemplate from a xml-file	common	ru	импорт е-Шаблона из xml-файла
 import table-definitions from existing db-table	common	ru	Импорт определений таблицы из существующей таблицы БД
@@ -1197,6 +1207,7 @@ spacing	common	ru	Интервал
 spain	common	ru	Испания
 span	common	ru	Span
 span, class	common	ru	Span, Class
+spreadsheets	common	ru	Электронные таблицы
 sri lanka	common	ru	Шри-Ланка
 stack	common	ru	Стек
 start a new search, cancel this link	common	ru	Запуск нового поиска, отказ от этой ссылки
@@ -1242,6 +1253,7 @@ tanzania, united republic of	common	ru	Танзания
 template	common	ru	Шаблон
 template deleted	common	ru	Шаблон удален
 template saved	common	ru	Шаблон сохранен
+templates	common	ru	Шаблоны
 text	common	ru	Текст
 text color:	common	ru	Цвет текста:
 textarea	common	ru	область текста
@@ -1329,6 +1341,7 @@ venezuela	common	ru	Венесуэлла
 version	common	ru	Версия
 vertical alignment of row	common	ru	вертикальное выравнивание строки
 vfs upload directory	common	ru	VFS каталог выгрузки
+videos	common	ru	Видео
 viet nam	common	ru	Вьетнам
 view	common	ru	Просмотреть(вид)
 view this etemplate	common	ru	посмотреть этот е-Шаблон
@@ -1344,7 +1357,6 @@ western sahara	common	ru	Западная Сахара
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	ru	что происходит при переполнении содержимого: видимо (по-умолчанию), скрыто, прокрутка, авто (решается браузером)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ru	Когда вы объединяете записи в документы, они будут храниться здесь. Если папка не указана, они будут храниться в вашем домашнем каталоге (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ru	Если Вы ответите "да", кнопки "Домой" и "Выход" будут представлены в виде иконок на верхней панели.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	ru	Где и как EGroupware будет показывать такие ссылки как Настройки, О Нас и Выход.
 which groups	common	ru	Какие группы
 whole query	common	ru	Всего запросов
 widget copied into clipboard	common	ru	виджет скопирован в буфер

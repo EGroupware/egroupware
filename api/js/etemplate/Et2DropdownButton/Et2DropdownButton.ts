@@ -147,6 +147,7 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
                     value="${option.value}"
                     type="${ifDefined(option.checkbox)}checkbox"
                     ?checked=${option.checked}
+					title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
             >
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}

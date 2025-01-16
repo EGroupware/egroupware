@@ -2,29 +2,24 @@
 %1 accessories restored	resources	lv	%1 piederumi atjaunoti
 %1 resource(s) %2	resources	lv	%1 resurss(-i) %2
 %1 resource(s) %2, %3 failed	resources	lv	%1 resursi %2, %3 neizdevās
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	lv	%1 resursa(-u) %2, %3 atjaunošana neizdevās nepietiekamu tiesību dēļ!!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	lv	%1 resursa(-u) %2, %3 atjaunošana neizdevās nepietiekamu tiesību dēļ!
 %1 resource(s) booked	resources	lv	%1 resurss(-i) rezervēts(-i)
 %1 resource(s) view calendar	resources	lv	%1 resursa(-u) kalendāra apskate
 accessories	resources	lv	Aksesuāri
 accessories of	resources	lv	Aksesuāri no
-accessories:	resources	lv	Aksesuāri:
 accessory of	resources	lv	Aksesuāri no
-actions	resources	lv	Darbības
-add accessory	resources	lv	Pievienot piederumu
 add group to event participants	resources	lv	Pievienot grupu pasākuma dalībniekiem
 add resource	resources	lv	Pievienot resursu
-add resources	resources	lv	Pievienot resursus
 administrator	resources	lv	Administrators
-all categories	resources	lv	Visas kategorijas
 allow booking requests from any user when creating events?	resources	lv	Atļaut rezervācijas pieprasījumus no jebkura lietotāja, veidojot notikumus?
+allow ignore conflicts	admin	lv	Atļaut ignorēt konfliktus
+book resource	resources	lv	Grāmatu resurss
 book this resource	resources	lv	Grāmatot šo resursu
 bookable	resources	lv	Grāmatojams
 booking requests	resources	lv	Rezervēšanas pieprasījumi
-buy this resource	resources	lv	Pirkt šo resursu
 buyable	resources	lv	Pērkams
 category admin	resources	lv	Kategorijas administrators
 category saved.	resources	lv	Saglabātā kategorija.
-check all	resources	lv	Pārbaudīt visu
 choose category admin	resources	lv	Izvēlēties kategorijas administratoru
 clear selection	resources	lv	Notīrīt izvēli
 configure access permissions	admin	lv	Konfigurēt pieejas atļaujas
@@ -40,6 +35,7 @@ direct booking permissions	resources	lv	Tiešās grāmatošanas atļaujas
 do you really want to delete this resource?	resources	lv	Vai tiešām vēlaties dzēst šo resursu?
 edit this entry	resources	lv	Rediģ''et šo ierakstu
 existing links	resources	lv	Esošās saites
+exports a list of resources to a csv file.	resources	lv	Eksportē resursu sarakstu uz CSV failu.
 general	resources	lv	Vispārējs
 general informations about resource	resources	lv	Vispārēja informācija par resursu
 gernal resource	resources	lv	vispārējs resurss
@@ -50,11 +46,14 @@ how many of them are useable?	resources	lv	Cik daudz no tiem ir izmantojami?
 how many of this resource are usable	resources	lv	Cik daudz no šī resursa ir izmantojams/
 how many of this resource exists	resources	lv	Cik daudz no šī resursa eksistē?
 icon	resources	lv	Ikona
+if you specify an export definition, it will be used when you export	resources	lv	Ja norādīsiet eksporta definīciju, tā tiks izmantota, eksportējot
 implies booking permission	resources	lv	satur grāmatošanas atļauju
 implies read permission	resources	lv	satur lasīšanas atļauju
+imports a list of resources from a csv file.	resources	lv	Importē resursu sarakstu no CSV faila.
 informations about the location of resource	resources	lv	Informācija par resursa novietojumu
 is resource bookable?	resources	lv	Vai resurss ir grāmatojams?
 is resource buyable?	resources	lv	Vai resurss ir nopērkams?
+is the ressource bookable?	resources	lv	Vai resurss ir rezervējams?
 is this resource bookable?	resources	lv	Vai šis resurss ir grāmatojams?
 is this resource buyable?	resources	lv	Vai šis resurss ir nopērkams?
 links	resources	lv	Saires
@@ -62,6 +61,8 @@ location	resources	lv	Novietojums
 location of resource	resources	lv	Resursa novietojums
 manage mapping	resources	lv	Pārvaldīt kartēšanu
 name of resource	resources	lv	Resursa nosaukums
+new accessory	resources	lv	Jauns piederums
+new resource	resources	lv	Jauns resurss
 no - leave them	resources	lv	Nē - atstājiet tos
 no - make them resources	resources	lv	Nē - padarīt tos par resursiem
 no description available	resources	lv	Apraksts nav pieejams
@@ -72,6 +73,7 @@ picture	resources	lv	Attēls
 picture source	resources	lv	attēla avots
 picture type is not supported, sorry!	resources	lv	Netabalsta attēla tipu!
 pictures or resource	resources	lv	Attēli vai resursi
+prize	resources	lv	Cena
 quantity	resources	lv	Daudzums
 quantity of resource	resources	lv	Resursa daudzums
 quantity:	resources	lv	Daudzums:
@@ -79,6 +81,10 @@ read calendar permissions	resources	lv	Lasīt kalendāra atļaujas
 read permissions	resources	lv	Lasīt atļaujas
 related links	resources	lv	Saistītās saites
 remove accessories before changing accessory of	resources	lv	Noņemiet piederumus, pirms maināt piederumu Accessory of
+resource	resources	lv	Resurss
+resource %1 deleted!	resources	lv	Resurss %1 dzēsts!
+resource %1 saved!	resources	lv	Resurss %1 saglabāts!
+resource / accessories	resources	lv	Resurss / Aksesuāri
 resources	common	lv	Resursi
 resources list	resources	lv	Resursu saraksts
 responsible:	resources	lv	Atbildīgs:
@@ -98,6 +104,8 @@ use general resources icon	resources	lv	Lietot vispārējo resursu ikonu
 use own picture	resources	lv	Lietot paša attēlu
 use the category's icon	resources	lv	Lietot kategorijas ikonu
 useable	resources	lv	izmantojams
+view accessories	resources	lv	Pārskatīt piederumus
+view calendar	resources	lv	Skatīt kalendāru
 view this entry	resources	lv	Rādīt šo ierakstu
 web-page of resource	resources	lv	Resursa tīmekļa lapa
 web-site for this resource	resources	lv	Šī resursa tīmekļa vietne
@@ -106,5 +114,7 @@ which category does this resource belong to?	resources	lv	Kurai kategorijai pied
 write permissions	resources	lv	Rakstīt atļaujas
 yes - delete accessories too	resources	lv	Jā - arī dzēst piederumus
 yes - un-delete accessories too	resources	lv	Jā - arī atjaunot piederumus
+yes, all users can ignore conflicts	resources	lv	Jā, visi lietotāji var ignorēt konfliktus
+yes, only users with direct booking permission	resources	lv	Jā, tikai lietotāji ar tiešās rezervēšanas atļauju
 you are not permitted to get information about this resource!	resources	lv	Tev nav atļauts iegūt informāciju par šo resursu!
 you chose more resources than available	resources	lv	Tu izvēlies vairāk resursu kā pieejams

@@ -98,7 +98,7 @@
 					<et2-hbox  span="all" width="100%">
 						<et2-button-icon  statustext="Saves this entry and add a new one" id="button[save_new]" image="save_new"></et2-button-icon>
 						<et2-button-icon  statustext="Applies the changes made" id="button[apply]" image="apply"></et2-button-icon>
-						<et2-button-icon  statustext="Delete this entry" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button-icon>
+                        <et2-button-icon statustext="Delete this entry" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button-icon>
 						<et2-number  id="ts_id" readonly="true" class="entry_id" precision="0"></et2-number>
 					</et2-hbox>
 				</row>

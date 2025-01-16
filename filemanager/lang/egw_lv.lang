@@ -4,7 +4,6 @@ administrators	filemanager	lv	administratori
 applications	common	lv	Aplikācijas
 cancel editing %1 without saving	filemanager	lv	Pārtraukt rediģēt %1 un nesaglabāt izmaiņas
 cannot create directory because it begins or ends in a space	filemanager	lv	Nevar izveidot mapi jo tās nosaukums sākas vai beidzas ar atstarpi
-check all	filemanager	lv	Parbaudīt visu
 classic	filemanager	lv	Standarta rīkjosla
 comment	filemanager	lv	Komentārs
 copied %1 to %2	filemanager	lv	Pārkopēja %1 uz %2
@@ -109,7 +108,6 @@ preview of %1	filemanager	lv	%1 priekšskatījums
 projectmanager	filemanager	lv	Projekta Vadītājs
 protocol to use	filemanager	lv	Izmantojamais protokols
 protocols	filemanager	lv	Protokoli
-quick jump to	filemanager	lv	Ātri pārlekt uz
 quota	filemanager	lv	Kvota
 quota exceeded	filemanager	lv	Pārsniegta kvota
 read & write access	filemanager	lv	Piekļuve lasīšanai un rakstīšanai

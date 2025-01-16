@@ -138,22 +138,31 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		/**
 		 * Get mime-type information from app-registry
 		 *
-		 * We prefer a full match over a wildcard like 'text/*' (written as regualr expr. "/^text\\//"
+		 * We prefer a full match over a wildcard like 'text/*' (written as regular expr. "/^text\\//"
 		 *
 		 * @param {string} _type
+		 * @param {number|string} _app_or_num default 1, return 1st, 2nd, n-th match, or match from application _app_or_num only
 		 * @return {object} with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
 		 */
-		get_mime_info: function(_type)
+		get_mime_info: function(_type, _app_or_num)
 		{
+			if (!_app_or_num) _app_or_num = 1;
 			let wildcard_mime;
-			for(var app in link_registry)
+			for(const app of isNaN(_app_or_num) ? [_app_or_num] : Object.keys(link_registry))
 			{
 				const reg = link_registry[app];
-				if (typeof reg.mime !== 'undefined')
+				if (typeof reg?.mime !== 'undefined')
 				{
 					for(let mime in reg.mime)
 					{
-						if (mime === _type) return reg.mime[_type];
+						if (mime === _type)
+						{
+							if (isNaN(_app_or_num) || !--_app_or_num)
+							{
+								return reg.mime[_type];
+							}
+							continue;
+						}
 						if (mime[0] === '/' && _type.match(new RegExp(mime.substring(1, mime.length-1), 'i')))
 						{
 							wildcard_mime = reg.mime[mime];
@@ -168,11 +177,12 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * Get handler (link-data) for given path and mime-type
 		 *
 		 * @param {string|object} _path vfs path, egw_link::set_data() id or
-		 *	object with attr path, optinal download_url or id, app2 and id2 (path=/apps/app2/id2/id)
+		 *	object with attr path, optional download_url or id, app2 and id2 (path=/apps/app2/id2/id)
 		 * @param {string} _type mime-type, if not given in _path object
+		 * @param {number|string} _app_or_num default 1, use 1st, 2nd, n-th match, or match from application _app_or_num only
 		 * @return {string|object} string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
 		 */
-		mime_open: function(_path, _type)
+		mime_open: function(_path, _type, _app_or_num)
 		{
 			let path;
 			if (typeof _path === 'object')
@@ -198,11 +208,11 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			{
 				path = _path;
 			}
-			let mime_info = this.get_mime_info(_type);
+			let mime_info = this.get_mime_info(_type, _app_or_num);
 			let data = {};
 			if (mime_info)
 			{
-				if (this.isCollaborable(_type))
+				if ((typeof _app_or_num === 'undefined' || _app_or_num === 'collabora') && this.isCollaborable(_type))
 				{
 					data = {
 						'menuaction': 'collabora.EGroupware\\collabora\\Ui.editor',
@@ -216,9 +226,16 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					switch(attr)
 					{
 						case 'mime_url':
-							data[mime_info.mime_url] = 'vfs://default' + path;
+							if (path)
+							{
+								data[mime_info.mime_url] = 'vfs://default' + path;
+							}
 							break;
 						case 'mime_data':
+							if (!path && _path && typeof _path === 'string')
+							{
+								data[mime_info.mime_data] = _path;
+							}
 							break;
 						case 'mime_type':
 							data[mime_info.mime_type] = _type;

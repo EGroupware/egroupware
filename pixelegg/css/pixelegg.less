@@ -8,7 +8,16 @@
  * @author Hadi Nategh <hn@stylite.de>
  * @package pixelegg
  */
-@import "monochrome.less";
+@import "../less/darkmode.less";
+@import "../less/etemplate2.less";
+// print ausgabe
+@import "../less/print.less";
+@import "../less/jquery-ui.less";
+
+/**
+ * layout_*.less files are Pixelegg template specific
+ */
+@import "../less/layout_definitions.less";
 @import "../less/app_colors.less";
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
 
@@ -52,6 +61,8 @@
 	height: 100%;
 	width: 100%;
 }
+
+//sidebar
 #egw_fw_sidebar {
 	#egw_fw_sidemenu {
 		#addressbook_sidebox_content {
@@ -127,9 +138,7 @@
 }
 #addressbook_sidebox_header {border-left:4px solid @addressbook-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #addressbook-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @addressbook-color;
-	border-top-width: 4px !important;
 }
 
 /**
@@ -150,9 +159,7 @@ Addressbook sidebox grid table
 }
 #admin_sidebox_header {border-left:4px solid @admin-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #admin-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @admin-color;
-	border-top-width: 4px !important;
 }
 // Bookmarks
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #bookmarks_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -165,9 +172,7 @@ Addressbook sidebox grid table
 }
 #bookmarks_sidebox_header {border-left:4px solid @bookmarks-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #bookmarks-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @bookmarks-color;
-	border-top-width: 4px !important;
 }
 
 // Calendar
@@ -181,9 +186,7 @@ Addressbook sidebox grid table
 }
 #calendar_sidebox_header {border-left:4px solid @calendar-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #calendar-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @calendar-color;
-	border-top-width: 4px !important;
 }
 // Filemanager
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -196,9 +199,7 @@ Addressbook sidebox grid table
 }
 #filemanager_sidebox_header {border-left:4px solid @filemanager-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #filemanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @filemanager-color;
-	border-top-width: 4px !important;
 }
 // Infolog
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #infolog_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -213,9 +214,7 @@ Addressbook sidebox grid table
 	border-left: 0px !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #infolog-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @infolog-color;
-	border-top-width: 4px !important;
 }
 // Mail
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -231,9 +230,7 @@ Addressbook sidebox grid table
 }
 
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #mail-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @mail-color;
-	border-top-width: 4px !important;
 }
 // Projectmanager
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #projectmanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -246,9 +243,7 @@ Addressbook sidebox grid table
 }
 #projectmanager_sidebox_header {border-left:4px solid @projectmanager-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #projectmanager-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @projectmanager-color;
-	border-top-width: 4px !important;
 }
 // Resources
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #resources_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -261,9 +256,7 @@ Addressbook sidebox grid table
 }
 #resources_sidebox_header {border-left:4px solid @resources-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #resources-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @resources-color;
-	border-top-width: 4px !important;
 }
 
 // Timesheet
@@ -277,9 +270,7 @@ Addressbook sidebox grid table
 }
 #timesheet_sidebox_header {border-left:4px solid @timesheet-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #timesheet-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @timesheet-color;
-	border-top-width: 4px !important;
 }
 // Tracker
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #tracker_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -292,9 +283,7 @@ Addressbook sidebox grid table
 }
 #tracker_sidebox_header {border-left:4px solid @tracker-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #tracker-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @tracker-color;
-	border-top-width: 4px !important;
 }
 // Wiki
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #wiki_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -307,9 +296,7 @@ Addressbook sidebox grid table
 }
 #wiki_sidebox_header {border-left:4px solid @wiki-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #wiki-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @wiki-color;
-	border-top-width: 4px !important;
 }
 //Kanban
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #kanban_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -322,9 +309,7 @@ Addressbook sidebox grid table
 }
 #kanban_sidebox_header {border-left:4px solid @kanban-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #kanban-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @kanban-color;
-	border-top-width: 4px !important;
 }
 
 // Ranking
@@ -338,14 +323,10 @@ Addressbook sidebox grid table
 }
 #ranking_sidebox_header {border-left:4px solid @ranking-color !important;}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #ranking-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
-	border-top: 4px solid;
 	border-top-color: @ranking-color;
-	border-top-width: 4px !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon{
 	filter: none;
-	width: calc(1em + 2px) !important;
-	height: calc(1em + 2px) !important;
 }
 .standartTreeImage {
 	filter: none;
@@ -378,20 +359,11 @@ Addressbook sidebox grid table
 	}
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {
-	border-top-color: @default-color;
 	border-top: 4px solid;
-}
-
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
-	background-color : transparent;
-	background-image: none;
-}
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon {
+	border-top-color: @default-color;
 
 }
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.complex_arrow {
-  background-image: url('../../api/templates/default/images/dhxmenu_subar.svg');
-}
+
 body > .egw_menu::part(popup) {
   z-index: var(--sl-z-index-dropdown);
 }

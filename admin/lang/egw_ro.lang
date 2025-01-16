@@ -80,6 +80,16 @@ soap	admin	ro	SOAP
 ssl	admin	ro	SSL
 total records	admin	ro	Total înregistrări
 upload your certificate .p12/.pfx file	admin	ro	Încărcați fișierul .p12/.pfx al certificatului dvs
-user hidden vom non-admins.	admin	ro	Utilizator ascuns de persoanele care nu sunt administratori
+user choice	admin	ro	Alegerea utilizatorului
+user csv export	admin	ro	Export CSV utilizator
+user csv import	admin	ro	Import CSV utilizator
+user hidden from non-admins.	admin	ro	Utilizator ascuns pentru non-admins
 user-agent	admin	ro	User-Agent
+users can define their own identities	admin	ro	Utilizatorii își pot defini propriile identități
+users can define their own signatures	admin	ro	Utilizatorii își pot defini propriile semnături
+vacation messages with start- and end-date require an admin account to be set	admin	ro	Mesajele de vacanță cu dată de început și de sfârșit necesită un cont de administrator pentru a fi setate!
+vacation notice	admin	ro	Anunț de vacanță
+who would you like to transfer records owned by the deleted user to?	admin	ro	Cui doriți să transferați înregistrările deținute de utilizatorul șters?
 xml-rpc	admin	ro	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	ro	Puteți utiliza expertul pentru a corecta setările contului sau pentru a șterge contul.
+you need to select some users first!	admin	ro	Mai întâi trebuie să selectați câțiva utilizatori!

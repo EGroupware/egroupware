@@ -2,36 +2,27 @@
 %1 accessories restored	resources	ja	%1 個のアクセサリを復元しました。
 %1 resource(s) %2	resources	ja	%1 個のリソースを %2
 %1 resource(s) %2, %3 failed	resources	ja	%1 個のリソースを %2, %3 個は失敗
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	ja	%1 個のリソースを %2, %3 個は権限不足のため失敗!!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	ja	%1 個のリソースを %2, %3 個は権限不足のため失敗!
 %1 resource(s) booked	resources	ja	%1リソースが予約されました
 %1 resource(s) view calendar	resources	ja	リソース %1 カレンダを表示
 accessories	resources	ja	アクセサリ
 accessories of	resources	ja	アクセサリ:
-accessories:	resources	ja	アクセサリ:
 accessory of	resources	ja	アクセサリ:
-actions	resources	ja	動作
-add accessory	resources	ja	アクセサリを追加
 add group to event participants	resources	ja	イベント参加者にグループを追加
 add resource	resources	ja	リソースを追加
-add resources	resources	ja	リソースを追加
 administrator	resources	ja	管理者
-all categories	resources	ja	全カテゴリ
 allow booking requests from any user when creating events?	resources	ja	イベント作成時にどのユーザーからの予約リクエストも許可しますか？
 allow ignore conflicts	admin	ja	衝突の無視を許可
 book	resources	ja	予約
 book resource	resources	ja	リソースを予約
-book selected resources	resources	ja	選択されたリソースを予約
 book this resource	resources	ja	このリソースを予約
 bookable	resources	ja	予約可能
-booked	resources	ja	予約済み
 booking requests	resources	ja	予約リクエスト
 buy this article	resources	ja	この記事を購入
-buy this resource	resources	ja	このリソースを購入
 buyable	resources	ja	購入可能
 category admin	resources	ja	1 "%2" にリンクできません。
 category saved.	resources	ja	カテゴリが保存されました。
 category:	resources	ja	カテゴリ:
-check all	resources	ja	全て選択
 choose category admin	resources	ja	カテゴリ管理者を選択
 clear selection	resources	ja	選択を解除
 configure access permissions	admin	ja	ACL を構成
@@ -50,7 +41,6 @@ deleted	resources	ja	削除済み
 description (short)	resources	ja	概要
 direct booking permissions	resources	ja	直接予約権限
 do you really want to delete this resource?	resources	ja	本当にこのリソースを削除しますか?
-don't use vfs (this will need a symlink --> see readme)	resources	ja	VFS使用禁止
 edit this entry	resources	ja	この項目を編集
 event start	resources	ja	イベント開始日時
 existing links	resources	ja	リンク
@@ -81,6 +71,7 @@ inventory number	resources	ja	資産番号
 inventory number:	resources	ja	資産番号:
 is resource bookable?	resources	ja	予約可能？
 is resource buyable?	resources	ja	購入可能？
+is the ressource bookable?	resources	ja	リソースは予約可能ですか？
 is this resource bookable?	resources	ja	このリソースは予約可能ですか？
 is this resource buyable?	resources	ja	このリソースは購入可能ですか？
 links	resources	ja	リンク

@@ -84,6 +84,7 @@ api-accounts	common	et	Kasutajakontod
 application	common	et	Rakendus
 applications	common	et	Rakendused
 apply	common	et	Uuenda
+apps & license	common	et	Rakendused ja litsents
 april	common	et	Aprill
 are you sure you want to delete these entries ?	common	et	Oled kindel, et soovid neid kirjeid kustutada?
 are you sure you want to delete this entry ?	common	et	Oled kindel, et soovid seda kirjet kustutada?
@@ -169,7 +170,7 @@ choose a background style.	common	et	Vali taustastiil
 choose a text color for the icons	common	et	Vali teksti värv ikoonidel
 choose file...	common	et	Valige fail ...
 choose the category	common	et	Vali kategooria
-choose the default filename for merged documents.	preferences	et	Valige ühendatud dokumentide vaikimisi failinimi.
+choose the default filename for merged documents.	preferences	et	Valige vaikimisi failinimi ühendatud dokumentidele.
 choose the parent category	common	et	Vali ülem kategooria
 christmas island	common	et	Jõulusaar
 class	common	et	Class
@@ -178,6 +179,7 @@ clear	common	et	Puhasta
 clear form	common	et	Puhasta vorm
 click	common	et	Vajuta
 click here to create the link	common	et	Vajuta siia tegemaks Link
+click here to resume your egroupware session.	common	et	EGroupware seansi jätkamiseks klõpsake.
 click here to start the search	common	et	Vajuta siia alustamaks otsingut
 close	common	et	Sule
 colombia	common	et	KOLUMBIA
@@ -245,6 +247,7 @@ denmark	common	et	TAANI
 description	common	et	Kirjeldus
 detail	common	et	Detail
 details	common	et	Detailselt
+directory for storing merged documents	preferences	et	Kaust ühendatud dokumentide salvestamiseks
 disabled	common	et	Väljalülitatud
 discard changes	common	et	Unusta muudatused
 do you also want to delete all subcategories ?	common	et	Tahad kustutada samuti kõik alamkataloogid?
@@ -252,6 +255,7 @@ do you want to save the changes you made in table %s?	common	et	Kas soovid salve
 document properties	common	et	Dokumendi omadused
 document title:	common	et	Dokumendi pealkiri:
 documentation	common	et	Dokumentatsioon
+documents	common	et	Dokumendid
 doesn't matter	common	et	Pole tähtis
 domain	common	et	Doomeninimi
 domain name for mail-address, eg. "%1"	common	et	Doomeninimi mail-aadressijaoks, nagu "%1"
@@ -259,6 +263,7 @@ domestic	common	et	Kodumaine
 dominica	common	et	DOMINICA
 dominican republic	common	et	DOMINIKAANI VABARIIK
 don't ask again!	common	et	Ärge küsige uuesti!
+don't show this again	common	et	Ära näita seda uuesti
 done	common	et	Valmis
 download	common	et	Lae alla
 duration	common	et	Kestvus
@@ -272,6 +277,9 @@ edit categories	common	et	Muuda Kategooriaid
 edit category	common	et	Muuda katekooria
 edit...	common	et	Muuda ...
 egroupware	common	et	EGroupware
+egroupware administrators group, do not delete	common	et	EGroupware administraatorite grupp, EI kustuta
+egroupware all users group, do not delete	common	et	EGroupware kõik kasutajad grupp, EI kustuta
+egroupware anonymous users group, do not delete	common	et	EGroupware anonüümsete kasutajate rühm, EI kustuta
 egroupware api version	common	et	EGroupware API versioon
 egroupware maintenance update %1 available	common	et	EGroupware hooldusuuendus %1 saadaval
 egroupware security update %1 needs to be installed!	common	et	EGroupware turvavärskendus %1 tuleb paigaldada!
@@ -281,6 +289,7 @@ egypt	common	et	EGIPTUS
 el salvador	common	et	EL SALVADOR
 email	common	et	E-Mail
 email-address of the user, eg. "%1"	common	et	Kasutaja email-aadress, nagu "%1"
+emails	common	et	E-kirjad
 enabled	common	et	Lubatud
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	et	Võimaldab CalDAV/CardDAV-liikluse logimist, et diagnoosida probleeme seadmetega.
 end date	common	et	Lõpu kuupäev
@@ -381,6 +390,7 @@ id	common	et	ID
 if you use "2-factor-authentication", please enter the code here.	common	et	Kui kasutate "2-faktorilist autentimist", sisestage kood siia.
 image	common	et	Pilt
 image url	common	et	Pildi URL
+images	common	et	Pildid
 import	common	et	Import
 import xml	common	et	Impordi XML
 include access to any linked files (links tab)	common	et	Lisage juurdepääs lingitud failidele (vahekaart "Lingid").
@@ -441,6 +451,11 @@ march	common	et	Märts
 may	common	et	Mai
 medium	common	et	Keskmine
 menu	common	et	Menüü
+merge	common	et	Ühendamine
+merge & send	common	et	Ühendamine ja saatmine
+merge individually	common	et	Ühendada ükshaaval
+merge options	common	et	Ühendamise valikud
+merged document filename	preferences	et	Ühendatud dokumendi failinimi
 message	common	et	Teade
 minute	common	et	minut
 minutes	common	et	minutit
@@ -504,7 +519,8 @@ only yours	common	et	Ainult sinu
 open	common	et	Avatud
 open existing contact	common	et	Avage olemasolev kontakt
 open popup window	common	et	Ava hüpikaken
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	et	OpenIDConnecti sisselogimine õnnestus, kuid kasutaja '%1' EI OLE EGroupware'is olemas JA automaatne kasutaja loomine on keelatud!
+open the online help.	common	et	Avage veebipõhine abi
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	et	OpenID Connecti sisselogimine õnnestus, kuid kasutaja '%1' EI OLE EGroupware'is olemas JA automaatne kasutaja loomine on keelatud!
 operator	common	et	Operaator
 optional note about the link	common	et	Valikuline märkus lingi jaoks
 options	common	et	Omadused
@@ -644,6 +660,7 @@ sorry, your login has expired	login	et	Vabandust, sinu logimine on aegunud.
 spain	common	et	HISPAANIA
 span	common	et	Span
 span, class	common	et	Span, Class
+spreadsheets	common	et	Tabelid
 start date	common	et	Algus kuupäev
 start time	common	et	Algus aeg
 status	common	et	Staatus
@@ -653,6 +670,8 @@ sudan	common	et	SUDAAN
 sunday	common	et	Pühapäev
 sweden	common	et	ROOTSI
 tablename	common	et	Tabeli Nimi
+template	common	et	Mall
+templates	common	et	Mallid
 text	common	et	Tekst
 text color:	common	et	Teksti värv:
 textarea	common	et	Tekstiväli
@@ -709,12 +728,14 @@ vanuatu	common	et	VANUATU
 vbox	common	et	VBox
 venezuela	common	et	VENETSUEELA
 version	common	et	Versioon
+videos	common	et	Videod
 viet nam	common	et	VIETNAM
 view	common	et	Vaade
 wednesday	common	et	Kolmapäev
 weekend	common	et	Weekend
 welcome	common	et	Tere tulemast
 western sahara	common	et	LÄÄNE SAHARA
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	et	Kui ühendate kirjed dokumentideks, salvestatakse need siia. Kui kausta ei ole antud, salvestatakse need teie kodukataloogi (%1).
 which groups	common	et	Millised grupid
 width	common	et	Laius
 wk	common	et	Nd

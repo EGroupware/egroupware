@@ -479,7 +479,6 @@ start testjob!	admin	pt	Iniciar trabalho de teste!
 submit changes	admin	pt	Enviar alterações
 submit the search string	admin	pt	Enviar termo de pesquisa
 subtype	admin	pt	Subtipo
-templates	admin	pt	Templates
 that loginid has already been taken	admin	pt	Esse nome de utilizador já existe
 the api is current	admin	pt	A base (API) do EGroupware está actualizada
 the api requires an upgrade	admin	pt	A base (API) do EGroupware precisa ser actualizada
@@ -524,16 +523,23 @@ use tls authentication	admin	pt	Utilizar autenticação TLS
 use tls encryption	admin	pt	Utilizar cifra TLS
 user accounts	admin	pt	Contas de utilizadores
 user can edit forwarding address	admin	pt	O utilizador pode editar endereços reencaminhados
+user choice	admin	pt	Escolha do utilizador
+user csv export	admin	pt	Exportação CSV do utilizador
+user csv import	admin	pt	Importação de CSV de utilizador
 user data	common	pt	Dados de utilizadores
 user for smtp-authentication (leave it empty if no auth required)	admin	pt	Utilizador para autenticação SMTP (deixar vazio se a autenticação não for necessária)
 user groups	admin	pt	Grupos de utilizadores
-user hidden vom non-admins.	admin	pt	Utilizador oculto para não-administradores
+user hidden from non-admins.	admin	pt	Utilizador oculto para não-administradores
 user-agent	admin	pt	User-Agent
 userdata	admin	pt	Dados de utilizadores
 username (standard)	admin	pt	Nome de utilizador (por omissão)
 username@domainname (virtual mail manager)	admin	pt	utilizador@dominio (Gestor virtual de correio electrónico)
 users can define their own emailaccounts	admin	pt	Os utilizadores podem definir as suas contas de correio electrónico
+users can define their own identities	admin	pt	Os utilizadores podem definir as suas próprias identidades
+users can define their own signatures	admin	pt	Os utilizadores podem definir as suas próprias assinaturas
 users choice	admin	pt	Personalizar...
+vacation messages with start- and end-date require an admin account to be set	admin	pt	As mensagens de férias com datas de início e fim requerem a criação de uma conta de administrador!
+vacation notice	admin	pt	Aviso de férias
 view access log	admin	pt	Ver registo de acessos
 view account	admin	pt	Ver conta
 view category	admin	pt	Ver categorias
@@ -543,7 +549,9 @@ view this user	admin	pt	Ver este utilizador
 view user account	admin	pt	Ver conta do utilizador
 virtual mail manager	admin	pt	Gestor virtual de correio electrónico
 who would you like to transfer all records owned by the deleted user to?	admin	pt	Para quem deseja transferir TODOS os registos do utilizador eliminado ?
+who would you like to transfer records owned by the deleted user to?	admin	pt	Para quem gostaria de transferir os registos pertencentes ao utilizador eliminado?
 xml-rpc	admin	pt	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	pt	Pode utilizar o assistente para corrigir as definições da conta ou eliminar a conta.
 you have entered an invalid expiration date	admin	pt	Inseriu uma data de expiração inválida
 you have to enter a name, to create a new field!!!	admin	pt	É necessário inserir um nome para criar um novo campo!
 you have to enter a name, to create a new type!	admin	pt	É necessário inserir um nome para criar um novo tipo!
@@ -553,6 +561,7 @@ you must enter a lastname	admin	pt	É necessário inserir um apelido
 you must enter a loginid	admin	pt	É necessário inserir um ID de acesso
 you must enter an application name.	admin	pt	É necessário atribuir um nome à aplicação.
 you must enter an application title.	admin	pt	É necessário atribuir um título à aplicação.
+you need to select some users first!	admin	pt	Primeiro, é necessário selecionar alguns utilizadores!
 you will need to remove the subcategories before you can delete this category	admin	pt	É necessário remover as subcategorias para poder eliminar esta categoria !
 your name	admin	pt	O seu nome
 your session could not be verified.	admin	pt	A sua sessão expirou

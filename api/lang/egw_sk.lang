@@ -152,6 +152,7 @@ applies the changes made	common	sk	Uplatnia sa vykonané zmeny
 applies the changes to the given version of the template	common	sk	vykoná zmeny urobené na danej verzii šablóny
 apply	common	sk	Použiť
 apply the action on the whole query, not only the shown entries	common	sk	Vykonať akciu na celom výbere, NIE len na zobrazených položkách
+apps & license	common	sk	Aplikácie & licencie
 apps &amp; license	common	sk	Aplikácie & Licencie
 april	common	sk	Apríl
 are you sure you want to delete these entries ?	common	sk	Skutočne chcete odstrániť tieto záznamy?
@@ -436,6 +437,7 @@ document '%1' does not exist or is not readable for you!	preferences	sk	Dokument
 document properties	common	sk	Vlastnosti dokumentu
 document title:	common	sk	Nadpis dokumentu
 documentation	common	sk	Dokumentácia
+documents	common	sk	Dokumenty
 doesn't matter	common	sk	Nezáleží
 domain	common	sk	Doména
 domain name for mail-address, eg. "%1"	common	sk	Názov domény pre mailovú adresu, napr. "%1"
@@ -483,6 +485,7 @@ el salvador	common	sk	SALVADOR
 element role title	common	sk	Názov úlohy v prvku
 email	common	sk	E-Mail
 email-address of the user, eg. "%1"	common	sk	E-mailová adresa používateľa, napr. "%1"
+emails	common	sk	E-maily
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	sk	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	sk	Prázdny súbor
 enable javascript onchange submit	common	sk	Zapnúť odosielanie JavaScript onchange
@@ -691,6 +694,7 @@ if you use "2-factor-authentication", please enter the code here.	common	sk	Ak p
 image	common	sk	Obrázok
 image directory relative to document root (use / !), example:	common	sk	Adresár obrázkov vzťahujúci sa na koreňový adresár dokumentov (použite / !), príklad:
 image url	common	sk	URL adresa obrázka
+images	common	sk	Obrázky
 import	common	sk	Import
 import an etemplate from a xml-file	common	sk	Importovať eTemplate zo súboru XML
 import table-definitions from existing db-table	common	sk	Importovať definície tabuľky z existujúcej db-tabuľky
@@ -996,6 +1000,7 @@ open	common	sk	Otvoriť
 open existing contact	common	sk	Otvoriť existujúci kontakt
 open notify window	common	sk	Otvor pripomínacie okno
 open popup window	common	sk	Otvor vyskakovacie okno
+open the online help.	common	sk	Otvorenie online nápovedy
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	sk	Prihlásenie do OpenIDConnect bolo úspešné, ale používateľ '%1' v EGroupware NEexistuje a automatické vytváranie používateľov je vypnuté!
 operator	common	sk	Operátor
 optional note about the link	common	sk	Voliteľná poznámka o Odkaze
@@ -1317,6 +1322,7 @@ spain	common	sk	ŠPANIELSKO
 span	common	sk	Span
 span, class	common	sk	Span, Class
 special characters	common	sk	špeciálne znaky
+spreadsheets	common	sk	Tabuľky
 sri lanka	common	sk	SRÍ LANKA
 stack	common	sk	Zásobník
 start a new search, cancel this link	common	sk	Začať nové hľadanie, zrušiť tento odkaz
@@ -1367,6 +1373,7 @@ tanzania, united republic of	common	sk	TANZÁNIA
 template	common	sk	Šablóna
 template deleted	common	sk	Šablóna bola odstránené
 template saved	common	sk	Šablóna uložená.
+templates	common	sk	Šablóny
 text	common	sk	Text
 text color:	common	sk	Farba písma:
 textarea	common	sk	Oblasť textu
@@ -1475,6 +1482,7 @@ version	common	sk	Verzia
 vertical alignment of row	common	sk	Zvislé zarovnanie riadku
 vfs upload directory	common	sk	VFS adresár pre odovzdanie
 video tutorials	common	sk	Videonávody
+videos	common	sk	Videá
 viet nam	common	sk	VIETNAM
 view	common	sk	Zobraziť
 view linked %1 entries	common	sk	Zobraziť odkazovaných %1 položiek
@@ -1494,7 +1502,6 @@ western sahara	common	sk	ZÁPADNÁ SAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sk	Čo sa stane s presahujúcim obsahom: viditeľný (predvolené), skrytý, skrolovať, automaticky (prehliadač rozhodne)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	sk	Keď zlúčite položky do dokumentov, budú uložené na tomto mieste. Ak neposkytnete priečinok, uložia sa do Vášho domovského priečinku (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sk	Keď odpoviete áno, tlačítka Domov a Odhlásenie sa zobrazia ako aplikácie v hlavnom paneli aplikácií.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	sk	Kde a ako sa budú zobrazovať odkazy EGroupware, ako sú Nastavenia, O aplikácii a Odhlásiť.
 which groups	common	sk	Ktoré skupiny
 which infolog types should be synced with the device, default only tasks.	common	sk	Ktoré typy Záznamníka sa majú synchronizovať s týmto zariadením; štandardne iba úlohy.
 whole query	common	sk	Celý výber

@@ -238,7 +238,6 @@ projectmanager	filemanager	cs	Správce projektů
 properties saved.	filemanager	cs	Vlastnosti nastaveny
 protocol to use	filemanager	cs	Protokol, který se má použít
 protocols	filemanager	cs	Protokoly
-quick jump to	filemanager	cs	Rychlý skok na
 quota	filemanager	cs	Kvóta
 quota exceeded	filemanager	cs	Překročení kvóty
 read & write access	filemanager	cs	Přístup pro čtení i zápis

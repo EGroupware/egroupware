@@ -25,12 +25,12 @@ import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_dataview} from "./et2_dataview";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_dataview_controller} from "./et2_dataview_controller";
-import {et2_diff} from "./et2_widget_diff";
 import {et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interfaces";
 import {et2_customfields_list} from "./et2_extension_customfields";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {cleanSelectOptions, SelectOption} from "./Et2Select/FindSelectOptions";
+import {Et2Diff} from "./Et2Diff/Et2Diff";
 
 /**
  * eTemplate history log widget displays a list of changes to the current record.
@@ -98,7 +98,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 	private dataview: et2_dataview;
 	private controller: et2_dataview_controller;
 	private fields: any;
-	private diff: et2_diff;
+	private diff : { nodes : Et2Diff, widget : Et2Diff };
 
 	/**
 	 * Constructor
@@ -399,11 +399,10 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			};
 		}
 		// Widget for text diffs
-		const diff = et2_createWidget('diff', {}, this);
+		const diff = loadWebComponent('et2-diff', {}, this);
 		this.diff = {
-		// @ts-ignore
 			widget: diff,
-			nodes: jQuery(diff.getDetachedNodes())
+			nodes: diff
 		};
 	}
 
@@ -656,7 +655,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 					widget = self.diff.widget;
 					nodes = self.diff.nodes.clone();
 
-					if(widget) widget.setDetachedAttributes(nodes, {
+					if(nodes) nodes.setDetachedAttributes(nodes, {
 						value: value,
 						label: jthis.parents("td").prev().text()
 					});
@@ -678,7 +677,11 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 					{
 						const id = widget._children[j].id;
 						const widget_value = value ? value[id] || "" : "";
-						widget._children[j].setDetachedAttributes(nodes[j], {value: widget_value});
+						widget._children[j].setDetachedAttributes(widget._children[j], {value: widget_value});
+						if(widget._children[j] instanceof Et2Diff)
+						{
+							self._spanValueColumns(jQuery(this));
+						}
 					}
 				}
 				else
@@ -754,7 +757,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		if(this.dataview)
 		{
 			const columns = this.dataview.getColumnMgr();
-			jQuery('.et2_diff', this.div).closest('.innerContainer')
+			jQuery('[colspan=2]', this.div).find('.innerContainer')
 				.width(columns.getColumnWidth(et2_historylog.NEW_VALUE) + columns.getColumnWidth(et2_historylog.OLD_VALUE));
 		}
 	}

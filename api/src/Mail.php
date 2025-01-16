@@ -6960,7 +6960,15 @@ class Mail
 						}
 
 						if ( $myUrl[0]!='/' && strlen($basedir) > 1 && !str_ends_with($basedir, '/')) { $basedir .= '/'; }
-						if ($needTempFile && empty($attachment) && !str_starts_with($myUrl, "http")) $data = file_get_contents($basedir.urldecode($myUrl));
+						if ($needTempFile && empty($attachment) && !str_starts_with($myUrl, "http"))
+						{
+							try {
+								$data = file_get_contents($basedir.urldecode($myUrl));
+							}
+							catch (\Throwable $e) {
+								_egw_log_exception($e);
+							}
+						}
 					}
 					if (str_starts_with($url, 'data:'))
 					{
@@ -7117,19 +7125,17 @@ class Mail
 					$errorInfo = $email = '';
 					$sendOK = $openComposeWindow = $openAsDraft = null;
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Id To Merge:'.$val);
-					if (/*$GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&*/
-						(count($SendAndMergeTocontacts) > 1 || $_folder === FALSE) && $val &&
+					if ((count($SendAndMergeTocontacts) > 1 || $_folder === FALSE) && $val &&
 						(is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val))) // do the merge
 					{
-						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject));
-
 						// Parse destinations for placeholders
 						foreach(Mailer::$type2header as $type => $h)
 						{
 							//error_log('ID ' . $val . ' ' .$type . ': ' . $mailObject->getHeader(Mailer::$type2header[$type]) . ' -> ' .$bo_merge->merge_string($mailObject->getHeader(Mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset));
-							$merged = $bo_merge->merge_string($headers[$type],$val,$e,'text/plain',array(),self::$displayCharset);
+							$merged = empty($headers[$type]) || strpos($headers[$type], '{{') === false ? $headers[$type] :
+								$bo_merge->merge_string($headers[$type],$val,$e,'text/plain',array(),self::$displayCharset);
 							$mailObject->clearAddresses($type);
-							$mailObject->addAddress($merged,'',$type);
+							$mailObject->addAddress($merged,'', $type);
 							if($type == 'to')
 							{
 								$email = $merged;
@@ -7158,11 +7164,20 @@ class Mail
 						$mailObject->removeHeader('Message-ID');
 						$mailObject->removeHeader('Date');
 						$mailObject->clearCustomHeaders();
-						$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
+						if (strpos($Subject, '{{') !== false)
+						{
+							$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
+						}
 						//error_log(__METHOD__.' ('.__LINE__.') '.' ContentType:'.$mailObject->BodyContentType);
 						if($text_body) $text_body->setContents($bo_merge->merge_string($Body, $val, $e, 'text/plain', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 						//error_log(__METHOD__.' ('.__LINE__.') '.' Result:'.$mailObject->Body.' error:'.array2string($e));
 						if($html_body) $html_body->setContents($bo_merge->merge_string($AltBody, $val, $e, 'text/html', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+
+						// add attachments from app-specific merge-class
+						foreach($bo_merge->getAttachments($val) as $file)
+						{
+							$mailObject->addAttachment($file);
+						}
 
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject));
 						// set a higher timeout for big messages
@@ -7196,7 +7211,8 @@ class Mail
 							$header = $mailObject->getHeader(Mailer::$type2header[$type]);
 							if(is_array($header)) $header = implode(', ',$header);
 							$mailObject->clearAddresses($type);
-							$merged = $bo_merge->merge_string($header,$val,$e,'text/plain',array(),self::$displayCharset);
+							$merged = empty($header) || strpos($header, '{{') === false ? $header :
+								$bo_merge->merge_string($header,$val,$e,'text/plain',array(),self::$displayCharset);
 							//error_log($type . ': ' . $mailObject->getHeader(Mailer::$type2header[$type]) . ' -> ' .$merged);
 							$mailObject->addAddress(trim($merged,'"'),'',$type);
 						}
@@ -7215,7 +7231,10 @@ class Mail
 								$mailObject->addAddress(Horde_Idna::encode($email), $nfn);
 							}
 						}
-						$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
+						if (strpos($Subject, '{{') !== false)
+						{
+							$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
+						}
 						//error_log(__METHOD__.' ('.__LINE__.') '.' ContentType:'.$mailObject->BodyContentType);
 						if (!empty($Body)) $text_body->setContents($bo_merge->merge_string($Body, $val, $e, 'text/plain', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 						//error_log(__METHOD__.' ('.__LINE__.') '.' Result:'.$mailObject->Body.' error:'.array2string($e));
@@ -7223,6 +7242,11 @@ class Mail
 						if(!$_folder !== false)
 						{
 							$_folder = $this->getDraftFolder();
+						}
+						// add attachments from app-specific merge-class
+						foreach($bo_merge->getAttachments($val) as $file)
+						{
+							$mailObject->addAttachment($file);
 						}
 					}
 					if ($sendOK || $openAsDraft)

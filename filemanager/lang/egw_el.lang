@@ -6,7 +6,6 @@ all types	filemanager	el	Όλοι οι τύποι
 applications	common	el	Εφαρμογές
 cancel editing %1 without saving	filemanager	el	Ακύρωση επεξεργασίας %1 χωρίς αποθήκευση
 cannot create directory because it begins or ends in a space	filemanager	el	Δεν μπορεί να δημιουργηθεί ο φάκελος γιατί ξεκινά ή τελειώνει με κενό
-check all	filemanager	el	Έλεγχος όλων
 classic	filemanager	el	Τυπική γραμμή εργαλείων
 clear search	filemanager	el	καθαρισμός αναζήτησης
 comment	filemanager	el	Σχόλιο
@@ -136,7 +135,6 @@ preview %1	filemanager	el	Προεπισκόπηση %1
 preview of %1	filemanager	el	Προεπισκόπηση του %1
 protocol to use	filemanager	el	Πρωτόκολλο προς χρήση
 protocols	filemanager	el	Πρωτόκολλα
-quick jump to	filemanager	el	Γρήγορη μετάβαση στο
 quota	filemanager	el	Ποσοστό
 quota exceeded	filemanager	el	Υπέρβαση ποσόστωσης
 read & write access	filemanager	el	Πρόσβαση ανάγνωσης & εγγραφής

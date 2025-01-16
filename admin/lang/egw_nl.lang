@@ -560,12 +560,10 @@ standard imap server	admin	nl	Standaard IMAP-server
 standard smtp-server	admin	nl	Standaard SMTP-server
 start	admin	nl	Start
 start testjob!	admin	nl	Testtaak starten
-stationery	admin	nl	Stationery
 submit changes	admin	nl	Wijzigingen toepassen
 submit the search string	admin	nl	Verzend de zoekopdracht
 subtype	admin	nl	Subtype
 switch it off, if users are randomly thrown out	admin	nl	Schakel het uit, wanneer gebruiker willekeurig eruit gegooid worden
-templates	admin	nl	Sjablonen
 that loginid has already been taken	admin	nl	Die loginnaam is reeds in gebruik!
 the api is current	admin	nl	De API is actueel.
 the api requires an upgrade	admin	nl	De API vereist een upgrade.
@@ -622,10 +620,13 @@ use tls authentication	admin	nl	Gebruik TLS authenticatie
 use tls encryption	admin	nl	Gebruik TLS-encryptie
 user accounts	admin	nl	Gebruikersaccounts
 user can edit forwarding address	admin	nl	Gebruiker kan het doorstuuradres aanpassen
+user choice	admin	nl	Gebruiker keuze
+user csv export	admin	nl	CSV gebruiker exporteren
+user csv import	admin	nl	Gebruiker CSV importeren
 user data	common	nl	Gebruikersgegevens
 user for smtp-authentication (leave it empty if no auth required)	admin	nl	Gebruikersnaam voor SMTP-authenticatie (leeglaten indien geen auth vereist is)
 user groups	admin	nl	Gebruikersgroepen
-user hidden vom non-admins.	admin	nl	Gebruiker verborgen voor niet-admins
+user hidden from non-admins.	admin	nl	Gebruiker verborgen voor niet-admins
 user-agent	admin	nl	User-Agent
 userdata	admin	nl	Gebruikersgegevens
 username (standard)	admin	nl	Gebruikersnaam (standaard)
@@ -633,8 +634,10 @@ username/password defined by admin	admin	nl	Gebruikersnaam/Wachtwoord ingesteld 
 username@domainname (virtual mail manager)	admin	nl	gebruikersnaam@domeinnaam (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	nl	Gebruikers kunnen hun eigen emailaccounts definiëren
 users can define their own identities	admin	nl	Gebruikers kunnen hun eigen identiteit instellen
-users can define their own signatures	admin	nl	Gebruikers kunnen hun eigen ondertekening instellen
+users can define their own signatures	admin	nl	Gebruikers kunnen hun eigen handtekeningen definiëren
 users choice	admin	nl	Gebruikerskeuze
+vacation messages with start- and end-date require an admin account to be set	admin	nl	Voor vakantieberichten met begin- en einddatum moet een beheerdersaccount worden ingesteld!
+vacation notice	admin	nl	Vakantiebericht
 value for column %1 is not unique!	admin	nl	Waarde in kolom %1 is niet uniek!
 view access log	admin	nl	Toegangslog bekijken
 view account	admin	nl	Account weergegeven
@@ -645,9 +648,11 @@ view this user	admin	nl	Deze gebruiker weergeven
 view user account	admin	nl	Gebruikersaccount weergeven
 virtual mail manager	admin	nl	Virtual MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	nl	Wie wilt u ALLE records in eigendom van de verwijderde gebruiker laten verplaatsen?
+who would you like to transfer records owned by the deleted user to?	admin	nl	Aan wie wil je de records van de verwijderde gebruiker overdragen?
 wrong account type: %1 is no %2 !!!	admin	nl	Verkeerde account type: %1 is GEEN %2 !
 wrong admin-account or -password !!!	admin	nl	Verkeerde beheerders account of -wachtwoord!
 xml-rpc	admin	nl	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	nl	Je kunt wizard gebruiken om accountinstellingen te wijzigen of account te verwijderen.
 you have entered an invalid expiration date	admin	nl	U heeft u een ongeldige verloopdatum ingevoerd.
 you have received a new message on the	admin	nl	U heeft een nieuw bericht ontvangen op de
 you have to enter a name, to create a new field!!!	admin	nl	U moet een naam invullen om een nieuwe veld te creëeren!
@@ -660,6 +665,7 @@ you must enter an application name.	admin	nl	U moet een toepassingsnaam invoeren
 you must enter an application title.	admin	nl	U moet een toepassingstitel invoeren.
 you must select at least one group member.	admin	nl	U moet tenminse één groepslid selecteen.
 you need to enter install id and password!	admin	nl	U moet het installatie ID EN wachtwoord invoeren!
+you need to select some users first!	admin	nl	Je moet eerst een aantal gebruikers selecteren!
 you will need to remove the subcategories before you can delete this category	admin	nl	U moet eerst de subcategorieën verwijderen voordat u deze bovenliggende categorie kunt verwijderen!
 your name	admin	nl	Uw naam
 your session could not be verified.	admin	nl	Uw sessie kon niet geverifieerd worden

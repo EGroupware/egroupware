@@ -3,7 +3,6 @@
 applications	common	eu	Aplikazioak
 cancel editing %1 without saving	filemanager	eu	Kantzelatu %1 en edizioa gorde gabe
 cannot create directory because it begins or ends in a space	filemanager	eu	Direktorioa sortzea ezinezkoa izan da hasieran edo bukaeran zuriune bat duelako
-check all	filemanager	eu	Guztia hautatu
 comment	filemanager	eu	Oharra
 copied %1 to %2	filemanager	eu	%1 %2 ra kopiatuta
 copy to	filemanager	eu	Kopiatu Hona
@@ -55,7 +54,6 @@ please select a file to delete.	filemanager	eu	Ezabatzeko fitxategi bat aukeratu
 preview %1	filemanager	eu	%1 bistaratu
 preview of %1	filemanager	eu	%1 en bistaratzea
 projectmanager	filemanager	eu	Proiektuen administratzailea
-quick jump to	filemanager	eu	Jauzi azkarra
 reload	filemanager	eu	Birkargatu
 renamed %1 to %2	filemanager	eu	%1 %2 ra berrizendatu
 replaced %1	filemanager	eu	%1 ordezkatua

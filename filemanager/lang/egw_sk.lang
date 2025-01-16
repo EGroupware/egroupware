@@ -47,7 +47,6 @@ can't open directory %1!	filemanager	sk	Nepodarilo sa otvoriť priečinok %1!
 cancel editing %1 without saving	filemanager	sk	Zrušiť úpravy %1 bez uloženia
 cannot create directory because it begins or ends in a space	filemanager	sk	Nemôžem vytvoriť priečinok lebo začína alebo končí medzerou
 cautiously rejecting to remove folder '%1'!	filemanager	sk	Z opatrnosti odmietam odstrániť priečinok '%1'!
-check all	filemanager	sk	Označiť všetko
 check virtual filesystem	common	sk	Skontrolovať virtuálny súborový systém
 classic	filemanager	sk	Štandardný panel nástrojov
 clear search	filemanager	sk	Vyčistiť hľadanie
@@ -237,7 +236,6 @@ projectmanager	filemanager	sk	Projektovník
 properties saved.	filemanager	sk	Vlastnosti uložené
 protocol to use	filemanager	sk	Použitý protokol
 protocols	filemanager	sk	Protokoly
-quick jump to	filemanager	sk	Rýchly skok na
 quota	filemanager	sk	Kvóta
 quota exceeded	filemanager	sk	Kvóta bola prekročená
 read & write access	filemanager	sk	Prístup na čítanie a zápis

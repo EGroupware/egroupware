@@ -618,7 +618,6 @@ subscription successfully saved.	mail	de	Das Abonnieren der Ordner wurde erfolgr
 succeeded on %1 folders, failed on %2	mail	de	Erfolgreich bei %1 Ordnern, fehlgeschlagen bei %2
 switch off encryption?	mail	de	Verschlüsselung ausschalten?
 template folder	mail	de	Vorlagen Ordner
-templates	mail	de	Vorlagen
 templates folder	mail	de	Ordner für Vorlage Nachrichten
 test connection	mail	de	Verbindungstest
 test connection and display basic information about the selected profile	mail	de	Teste Verbindung und zeige Basisinformationen zum ausgewählten (aktiven) Profil

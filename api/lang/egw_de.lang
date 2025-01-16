@@ -152,6 +152,7 @@ applies the changes made	common	de	Übernimmt die Änderungen
 applies the changes to the given version of the template	common	de	Übernimmt die Änderungen in die angegebene Version des Templates
 apply	common	de	Übernehmen
 apply the action on the whole query, not only the shown entries	common	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Einträge
+apps & license	common	de	Apps & License
 apps &amp; license	common	de	Apps & Lizenzen
 april	common	de	April
 are you sure you want to delete these entries ?	common	de	Sind Sie sicher, daß Sie diese Einträge löschen möchten?
@@ -203,7 +204,6 @@ blurtext	common	de	blurText
 bold	common	de	Fett
 bolivia	common	de	BOLIVIEN
 border	common	de	Rand
-border-line-thickness for the table-tag	common	de	Randbreite (border) für die Tabelle
 bosnia and herzegovina	common	de	BOSNIEN UND HERZEGOVINA
 botswana	common	de	BOTSWANA
 bottom	common	de	Unten
@@ -863,8 +863,8 @@ medium	common	de	Mittel
 menu	common	de	Menü
 merge	common	de	Zusammenführen
 merge & send	common	de	Zusammenführen & Versenden
-merge individually	common	de	einzeln zusammenführen
-merge options	common	de	Optionen beim Zusammenführen
+merge individually	common	de	Einzeln zusammenführen
+merge options	common	de	Optionen für das Zusammenführen
 merged document filename	preferences	de	Dateiname des zusammengeführten Dokuments
 message	common	de	Nachricht
 message ...	common	de	Nachricht ...
@@ -1003,7 +1003,7 @@ open existing contact	common	de	Vorhandenen Kontakt öffnen
 open notify window	common	de	Benachrichtigungsfenster öffnen
 open popup window	common	de	Pop-up Fenster öffnen
 open the online help.	common	de	Öffnet die Online-Hilfe
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	de	OpenIDConnect Anmeldung erfolgreich, aber der Benutzer '%1' existiert NICHT in EGroupware, UND das automatische Anlegen von Benutzers ist ausgeschaltet!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	de	OpenID Connect Anmeldung erfolgreich, aber der Benutzer '%1' existiert NICHT in EGroupware, UND das automatische Anlegen von Benutzers ist ausgeschaltet!
 operator	common	de	Operator
 optional note about the link	common	de	Optionale Notiz zur Verknüpfung
 options	common	de	Optionen
@@ -1376,9 +1376,10 @@ tabs	common	de	Karteikarten
 taiwan	common	de	TAIWAN/TAIPEI
 tajikistan	common	de	TAJIKISTAN
 tanzania, united republic of	common	de	TANZANIA, VEREINIGTE REPUBLIK
-template	common	de	Template
+template	common	de	Vorlage
 template deleted	common	de	Template gelöscht.
 template saved	common	de	Template gespeichert.
+templates	common	de	Vorlagen
 text	common	de	Textfeld
 text color:	common	de	Textfarbe:
 textarea	common	de	Mehrzeiliges Textfeld
@@ -1507,7 +1508,6 @@ western sahara	common	de	WEST SAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	de	Was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	de	Wenn Sie Einträge mit Platzhalter-Dokumenten zusammenführen, werden diese hier gespeichert. Wenn Sie kein Ordner angeben, werden diese in Ihrem Homeordner gespeichert (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren, werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware-Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
 which groups	common	de	Welche Gruppen
 which infolog types should be synced with the device, default only tasks.	common	de	Welche InfoLog-Typen sollen synchronisiert werden, Vorgabe nur Aufgaben.
 whole query	common	de	Gesamte Abfrage

@@ -149,7 +149,6 @@ describe("Select is not editable", () =>
 
 	it("Does not have edit button when not editable", async() =>
 	{
-		debugger;
 		let tag = element.select.combobox.querySelectorAll(tag_name);
 		assert.isAbove(tag.length, 0, "No tags found");
 

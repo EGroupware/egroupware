@@ -197,7 +197,7 @@ export class Et2VfsSelectDialog
 		return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(Et2VfsSelectDialog.SERVER_URL))),
 			[content, attrs]).then((results) =>
 		{
-			debugger;
+			//debugger;
 
 		});
 	}

@@ -6,9 +6,6 @@
  * Stefan Reinhardt
  */
 
-@import (reference) "./def_design_pattern_color_font_shadow.less";
-@import (reference) "./def_buttons.less";
-/*@import (less) "../../api/templates/default/etemplate2.css";*/
 
 
 @media all {
@@ -495,8 +492,12 @@ div.header_row_right{
 .et2_nextmatch .nextmatch_header {
     padding: 0;
     border: none;
+	border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
     background-image: none;
     background-color: transparent;
+	.nextmatch_header_row {
+		padding-bottom: 0.25em;
+	}
 }
 
 // ALL images

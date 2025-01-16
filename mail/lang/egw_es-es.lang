@@ -113,6 +113,7 @@ connection status	mail	es-es	Estado de la conexión
 contact label	mail	es-es	Etiqueta de contacto
 contains	mail	es-es	contiene
 contains(*)	mail	es-es	Contiene(*)
+continue	mail	es-es	Continuar
 convert mail to item and attach its attachments to this item (standard)	mail	es-es	Convertir el correo a elemento y adjuntar sus adjuntos a este elemento (estándar)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	es-es	Convertir el correo a elemento, adjuntar sus archivos adjuntos y agregar mensaje en bruto (message/rfc822 (.eml) ) como archivo adjunto
 convert only mail to item (ignore possible attachments)	mail	es-es	Convertir sólo el correo a elemento (ignorar los archivos adjuntos posibles)
@@ -322,6 +323,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	es-es	Trabajo
 junk	mail	es-es	Basura
 junk folder	mail	es-es	Carpeta de correo basura
+keep a copy	mail	es-es	Conserve una copia
 keep a copy of the message in your inbox	mail	es-es	Guardar una copia del mensaje en la bandeja de entrada
 kilobytes	mail	es-es	kilobytes
 later	mail	es-es	Más tarde
@@ -617,7 +619,6 @@ subscription successfully saved.	mail	es-es	La suscripción se ha grabado correc
 succeeded on %1 folders, failed on %2	mail	es-es	Se ha realizado correctamente en %1 carpetas, ha fallado en %2
 switch off encryption?	mail	es-es	¿Desea desactivar el cifrado?
 template folder	mail	es-es	Carpeta de plantillas
-templates	mail	es-es	Plantillas
 templates folder	mail	es-es	Carpeta de plantillas
 test connection	mail	es-es	Conexión de prueba
 test connection and display basic information about the selected profile	mail	es-es	Probar conexión y mostrar información básica sobre el perfil seleccionado
@@ -648,6 +649,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	es-es	Intentar recuperar los datos de la sesión
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	es-es	Desactivar la línea horizontal entre la firma y el mensaje compuesto (esto no está de acuerdo con RFC).<br>Si utiliza plantillas, esta opción sólo se aplica a la parte de texto del mensaje.
 unable to fetch vacation!	mail	es-es	¡No se pueden recuperar las vacaciones!
+unconditional	mail	es-es	Siempre
 undelete	mail	es-es	Deshacer
 unflagged	mail	es-es	Sin marcar
 unread	mail	es-es	No leído

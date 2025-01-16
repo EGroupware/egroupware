@@ -209,11 +209,11 @@ export class et2_placeholder_select extends et2_inputWidget
 	 */
 	_on_template_load()
 	{
-		let app = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("app");
-		let group = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("group");
-		let placeholder_list = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("placeholder_list");
-		let preview = <Et2Description><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("preview_placeholder");
-		let entry = <Et2LinkEntry><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
+		let app = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("app");
+		let group = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("group");
+		let placeholder_list = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("placeholder_list");
+		let preview = <Et2Description><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_placeholder");
+		let entry = <Et2LinkEntry><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("entry");
 
 		placeholder_list.set_select_options(this._get_placeholders(app.get_value(), group.get_value()));
 
@@ -253,13 +253,13 @@ export class et2_placeholder_select extends et2_inputWidget
 		}
 		placeholder_list.onchange = this._on_placeholder_select.bind(this);
 		entry.onchange = this._on_placeholder_select.bind(this);
-		(<Et2Button><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("insert_placeholder")).onclick = () =>
+		(<Et2Button><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("insert_placeholder")).onclick = () =>
 		{
-			this.options.insert_callback(this.dialog.template.widgetContainer.getDOMWidgetById("preview_placeholder").getDOMNode().textContent);
+			this.options.insert_callback(this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_placeholder").getDOMNode().textContent);
 		};
-		(<Et2Button><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("insert_content")).onclick = () =>
+		(<Et2Button><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("insert_content")).onclick = () =>
 		{
-			this.options.insert_callback(this.dialog.template.widgetContainer.getDOMWidgetById("preview_content").getDOMNode().textContent);
+			this.options.insert_callback(this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_content").getDOMNode().textContent);
 		};
 
 		app.set_value(app.get_value());
@@ -271,11 +271,11 @@ export class et2_placeholder_select extends et2_inputWidget
 	 */
 	_on_placeholder_select()
 	{
-		let app = <Et2LinkEntry><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("app");
-		let entry = <Et2LinkEntry><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
-		let placeholder_list = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("placeholder_list");
-		let preview = <Et2Description><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("preview_placeholder");
-		let preview_content = <Et2Description><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("preview_content");
+		let app = <Et2LinkEntry><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("app");
+		let entry = <Et2LinkEntry><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("entry");
+		let placeholder_list = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("placeholder_list");
+		let preview = <Et2Description><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_placeholder");
+		let preview_content = <Et2Description><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_content");
 
 		// Show the selected placeholder
 		this.set_value(placeholder_list.get_value());
@@ -443,10 +443,10 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	 */
 	_on_template_load()
 	{
-		let app = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("app");
-		let placeholder_list = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("placeholder_list");
-		let preview = <Et2Description><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("preview_content");
-		let entry = <Et2LinkEntry><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
+		let app = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("app");
+		let placeholder_list = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("placeholder_list");
+		let preview = <Et2Description><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_content");
+		let entry = <Et2LinkEntry><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("entry");
 
 
 		placeholder_list.set_select_options(this._get_placeholders("addressbook", "addresses"));
@@ -473,10 +473,10 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	 */
 	_on_placeholder_select()
 	{
-		let app = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("app");
-		let entry = <Et2LinkEntry><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
-		let placeholder_list = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("placeholder_list");
-		let preview_content = <Et2Description><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("preview_content");
+		let app = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("app");
+		let entry = <Et2LinkEntry><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("entry");
+		let placeholder_list = <Et2Select><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("placeholder_list");
+		let preview_content = <Et2Description><unknown>this.dialog.eTemplate.widgetContainer.getDOMWidgetById("preview_content");
 		let placeholder = "";
 		if(app && app.value)
 		{

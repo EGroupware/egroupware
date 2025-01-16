@@ -116,6 +116,15 @@ img.sideboxstar {
 
 /* calender view*/
 
+/**
+ * grid table view
+ * used in month and multi-week view
+ */
+.et2_container > div:not([class]) > table {
+    table-layout: auto;
+    width: 100%;
+}
+
 /*defind in layout_raster.less , because frame*/
 
 
@@ -1149,8 +1158,12 @@ div#calendar-container {
 
 #calendar-toolbar {
   margin-bottom: 0.3em;
+    margin-top: 0.3em;
 }
 #calendar-toolbar_toolbar {
+    .et2_toolbar_more{
+       // margin-top: 0.5em;
+    }
 	et2-switch .label.on {
 		span.off {
 			filter: opacity(.4);

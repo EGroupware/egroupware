@@ -103,6 +103,7 @@ connection status	mail	nl	Status van de verbinding
 contact label	mail	nl	Label contact
 contains	mail	nl	bevat
 contains(*)	mail	nl	Bevat (*)
+continue	mail	nl	Doorgaan
 convert mail to item and attach its attachments to this item (standard)	mail	nl	Converteer Bericht naar bestand en voeg de bijlagen aan dit bestand toe (Standaard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	nl	Converteer bericht naar bestand, voeg de bijlagen toe en voeg dit bericht (.eml) toe als bijlage
 convert only mail to item (ignore possible attachments)	mail	nl	Converteer alleen Bericht naar een item (laat mogelijke bijlagen buiten beschouwing)
@@ -302,6 +303,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	nl	Taak
 junk	mail	nl	Junk
 junk folder	mail	nl	Junk map
+keep a copy	mail	nl	Een kopie bewaren
 keep a copy of the message in your inbox	mail	nl	Bewaar een kopie van het bericht in uw inbox
 kilobytes	mail	nl	kilobytes
 later	mail	nl	Later
@@ -567,7 +569,6 @@ subscription folders	mail	nl	Gabonneerde mappen
 subscription successfully saved.	mail	nl	Het abonnerren op deze map is succesvol bewaard.
 succeeded on %1 folders, failed on %2	mail	nl	Gelukt op %1 mappen, mislukt op %2
 template folder	mail	nl	Sjabloon folder
-templates	mail	nl	Sjablonen
 templates folder	mail	nl	Sjablonen map
 test connection	mail	nl	Test actieve connectie
 test connection and display basic information about the selected profile	mail	nl	Test connectie en toon de basis informatie van het gekozen profiel
@@ -594,6 +595,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	nl	Probeer vanaf sessie data te herstellen.
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	nl	Zet de horizontale liniaal uit tussen de handtekening en het geschreven bericht (Dit is niet volgens RFC).<br>Als u sjablonen gebruikt, is deze optie alleen van toepassing op het gedeelte van de tekst van het bericht.
 unable to fetch vacation!	mail	nl	Niet mogelijk afwezigheidsbericht te tonen!
+unconditional	mail	nl	Altijd
 undelete	mail	nl	Verwijderen ongedaan maken
 unflagged	mail	nl	Niet gemarkeerd
 unread	mail	nl	ongelezen

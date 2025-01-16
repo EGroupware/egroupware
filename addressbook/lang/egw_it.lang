@@ -131,7 +131,7 @@ contact maintenance	admin	it	Manutenzione contatti
 contact modified by %1 at %2	addressbook	it	Contatto modificato da %1 alle %2.
 contact not found!	addressbook	it	Contatto non trovato!
 contact repository	admin	it	Archivio contatti
-contact saved	addressbook	it	Contatto salvato
+contact saved	addressbook	it	Contatto salvato.
 contact settings	admin	it	Impostazioni Contatto
 contactform	addressbook	it	Modulo di contatto
 contacts	common	it	Contatti
@@ -150,6 +150,7 @@ country (private)	addressbook	it	Nazione (privato)
 country code	addressbook	it	Codice nazione
 country code (private)	addressbook	it	Codice nazione (privato)
 create new links	addressbook	it	Crea nuovi collegamenti
+create new shares writable	addressbook	it	Crea nuove azioni scrivibili
 created	addressbook	it	Creato
 credit	addressbook	it	Credito
 crm view list	addressbook	it	Vista elenco CRM
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	it	Carica o cancella la foto
 url (business)	addressbook	it	URL (ufficio)
 url (private)	addressbook	it	URL (privato)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	it	URL per collegare numeri di telefono. Usare %1 = numero da chiamare, %u = nome account, %t = telefono acccount.
-use a category tree?	addressbook	it	Usare una vista ad albero per selezionare categorie
 use addressbooks "own sorting" attribute	addressbook	it	Usare il "proprio ordinamento" della rubrica
 use an extra tab for private custom fields?	admin	it	Usa una liguetta extra per i campi personalizzati privati
 use country list	addressbook	it	Usa la lista delle nazioni

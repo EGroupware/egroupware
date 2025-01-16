@@ -27,6 +27,7 @@
 abort	common	uk	Перервати
 about	common	uk	Щодо
 about %1	common	uk	Щодо %1
+about egroupware	common	uk	Про EGroupware
 access	common	uk	Доступ
 access not permitted	common	uk	Доступ не дозволено.
 account has been created	common	uk	Рахунок створено.
@@ -70,6 +71,7 @@ api	common	uk	EGroupware API
 application	common	uk	Приложення
 applications	common	uk	Приложення
 apply	common	uk	Застосувати
+apps & license	common	uk	Програми та ліцензія
 april	common	uk	Квітень
 are you sure you want to delete these entries ?	common	uk	Ви впевнені, що хочете видалити ці записи?
 are you sure you want to delete this entry ?	common	uk	Ви впевнені, що хочете видалити цей запис?
@@ -92,6 +94,7 @@ bahrain	common	uk	БАХРЕЙН
 bangladesh	common	uk	БАНГЛАДЕШ
 barbados	common	uk	БАРБАДОС
 bcc	common	uk	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	uk	Перш ніж продовжити, ми наполегливо рекомендуємо вам переглянути це коротке відео, щоб побачити, як плагін Mailvelope працює з EGroupware.
 belgium	common	uk	БЕЛЬГІЯ
 bermuda	common	uk	БЕРМУДА
 blocked, too many attempts	common	uk	Заблоковано, надто багато спроб.
@@ -127,6 +130,7 @@ clear	common	uk	Очистити
 clear form	common	uk	Очистити форму
 click	common	uk	Натискати
 click here to create the link	common	uk	натисніть тут для створення Посилання
+click here to resume your egroupware session.	common	uk	Натисніть, щоб відновити сеанс EGroupware.
 click here to start the search	common	uk	натисніть тут щоб почати пошук
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	uk	Клієнти, які не вказали ліміт, обмежуються цією кількістю днів. Занадто високий ліміт може спричинити проблеми з деякими клієнтами.
 clipboard contents	common	uk	Вміст буфера обміну
@@ -186,11 +190,13 @@ details	common	uk	Деталі
 directory for storing merged documents	preferences	uk	Папка для зберігання об'єднаних документів
 disabled	common	uk	Вимкнено
 do you also want to delete all subcategories ?	common	uk	Чи хочете ви також видалити вся підкатегорії?
+documents	common	uk	Документи
 domain	common	uk	Domain
 domain name for mail-address, eg. "%1"	common	uk	Domain ім'я для email адреси. Наприклад "%1"
 domestic	common	uk	Місцевий
 dominica	common	uk	ДОМІНІКА
 don't ask again!	common	uk	Не перепитуйте більше!
+don't show this again	common	uk	Не показувати це знову
 done	common	uk	Зроблено
 download	common	uk	Загрузити
 duration	common	uk	Тривалість
@@ -198,12 +204,21 @@ e-mail	common	uk	E-Mail
 ecuador	common	uk	ЕКВАДОР
 edit	common	uk	Редагувати
 edit %1 category for	common	uk	Редагувати категорію %1 для
+edit avatar	common	uk	Редагувати аватар
 edit categories	common	uk	Редагувати категорії
 edit category	common	uk	Редагувати категорію
+egroupware	common	uk	EGroupware
+egroupware administrators group, do not delete	common	uk	Група адміністраторів EGroupware, НЕ видаляти
+egroupware all users group, do not delete	common	uk	Група адміністраторів EGroupware, НЕ видаляти
+egroupware anonymous users group, do not delete	common	uk	Група анонімних користувачів EGroupware, НЕ видаляти
+egroupware maintenance update %1 available	common	uk	Оновлення для обслуговування EGroupware %1 доступне
+egroupware security update %1 needs to be installed!	common	uk	Оновлення безпеки EGroupware %1 потрібно інсталювати!
+egroupware version	common	uk	Версія EGroupware
 egroupware: login blocked for user '%1', ip %2	common	uk	Заблоковано вхід для користувача '%1', IP %2
 egypt	common	uk	ЄГИПЕТ
 email	common	uk	E-Mail
 email-address of the user, eg. "%1"	common	uk	email адреса користувача, наприклад "%1".
+emails	common	uk	Електронні листи
 enabled	common	uk	Ввімкнено
 end date	common	uk	Кінцева дата
 end time	common	uk	Кінцевий час
@@ -289,6 +304,7 @@ hungary	common	uk	УГОРЩИНА
 id	common	uk	Id
 if you use "2-factor-authentication", please enter the code here.	common	uk	Якщо ви використовуєте "2-факторну автентифікацію", будь ласка, введіть код тут.
 image url	common	uk	URL зображення
+images	common	uk	Зображення
 import	common	uk	Імпорт
 include access to any linked files (links tab)	common	uk	Включити доступ до будь-яких пов'язаних файлів (вкладка "Посилання")
 infolog types to sync	common	uk	Типи інфологів для синхронізації
@@ -387,6 +403,7 @@ name of the user, eg. "%1"	common	uk	Ім'я користувача, тобто 
 namibia	common	uk	НАМІБІЯ
 nepal	common	uk	НЕПАЛ
 never	common	uk	Ніколи
+new egroupware release %1 available	common	uk	Доступна нова версія EGroupware %1
 new entry added sucessfully	common	uk	Новий запис додано успішно
 new main category	common	uk	Нова основна категорія
 new password	common	uk	Новий пароль
@@ -425,6 +442,7 @@ open	common	uk	відкрито
 open existing contact	common	uk	Відкрити існуючий контакт
 open notify window	common	uk	Відкрити вікно повідомлень
 open popup window	common	uk	Відкрити вспливаюче вікно
+open the online help.	common	uk	Відкрити онлайн-довідку
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	uk	Вхід до OpenIDConnect виконано успішно, але користувача '%1' НЕ ІСНУЄ в EGroupware, а автоматичне створення користувачів вимкнено!
 original	common	uk	Оригінальне
 other	common	uk	Інше
@@ -543,6 +561,7 @@ slovenia	common	uk	СЛОВЕНІЯ
 somalia	common	uk	СОМАЛІ
 sorry, your login has expired	login	uk	Вибачте, Ваше право входу вичерпано.
 spain	common	uk	ІСПАНІЯ
+spreadsheets	common	uk	Електронні таблиці
 sri lanka	common	uk	ШРІ ЛАНКА
 start a new search, cancel this link	common	uk	Розпочати новий пошук, покинути це посилання
 start date	common	uk	Дата початку
@@ -559,6 +578,8 @@ sweden	common	uk	ШВЕЦІЯ
 switzerland	common	uk	ШВЕЙЦАРІЯ
 taiwan	common	uk	ТАЙВАНЬ
 tajikistan	common	uk	ТАДЖИКИСТАН
+template	common	uk	Шаблон
+templates	common	uk	Шаблони
 text	common	uk	Текст
 thailand	common	uk	ТАЇЛАНД
 the following applications require upgrades	common	uk	Наступні приложення потребують поновлення
@@ -606,6 +627,7 @@ users choice	common	uk	Вибір користувачів
 uzbekistan	common	uk	УЗБЕКИСТАН
 venezuela	common	uk	ВЕНЕСУЕЛА
 version	common	uk	Версія
+videos	common	uk	Відео
 viet nam	common	uk	В'ЄТНАМ
 view	common	uk	Перегляд
 view this linked entry in its application	common	uk	переглянути посилання в відповідному приложенні

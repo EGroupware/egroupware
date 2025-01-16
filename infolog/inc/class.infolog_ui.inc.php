@@ -243,7 +243,6 @@ class infolog_ui
 			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], $only_app, 'link_lastmod DESC', true, true, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']))))
 		{
 			$info['filelinks']['total'] = $show_links == 'attach' ? count($info['links']) : Link::$row_count;
-			$timesheets = array();
 			foreach($info['links'] as $link)
 			{
 				// incl. link modification time into row_mod (link's lastmod is always in server-time!)
@@ -274,10 +273,10 @@ class infolog_ui
 				{
 					$info['pm_id'] = $link['id'];
 				}
-				if ($link['app'] == 'timesheet') $timesheets[] = $link['id'];
 			}
-			if ($this->prefs['show_times'] && isset($GLOBALS['egw_info']['user']['apps']['timesheet']) && $timesheets)
+			if($this->prefs['show_times'] && isset($GLOBALS['egw_info']['user']['apps']['timesheet']))
 			{
+				$timesheets = Link::get_links('infolog', $info['info_id'], 'timesheet');
 				$sum = $timesheet_bo->sum($timesheets, !$config['respect_timesheet_rights']);
 				$info['info_sum_timesheets'] = $sum['duration'];
 				// incl. max timesheet modification in row_mod

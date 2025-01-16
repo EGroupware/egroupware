@@ -30,7 +30,7 @@
 					<et2-description  id="${row}[offset]" noLang="1"></et2-description>
 					<et2-checkbox  align="center" id="${row}[all]" readonly="true"></et2-checkbox>
 					<et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
-					<et2-button  align="left" disabled="!$row_cont[time]" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"></et2-button>
+                    <et2-button align="left" disabled="!$row_cont[time]" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="Et2Dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"></et2-button>
 				</row>
 			</rows>
 		</grid>
@@ -87,10 +87,10 @@
 	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="110"/>
-				<column width="208"/>
-				<column width="95"/>
-				<column width="208"/>
+                <column/>
+                <column/>
+                <column/>
+                <column/>
 				<column/>
 			</columns>
 			<rows>
@@ -131,12 +131,12 @@
 							<rows>
 								<row>
 									<et2-date-time id="$row" readonly="true"></et2-date-time>
-									<et2-button-icon statustext="Delete this recurrence" id="delete_rdate[$row_cont]" onclick="et2_dialog.confirm(widget,'Delete this recurrence','Delete')" image="delete"></et2-button-icon>
+                                    <et2-button-icon statustext="Delete this recurrence" id="delete_rdate[$row_cont]" onclick="Et2Dialog.confirm(widget,'Delete this recurrence','Delete')" image="delete"></et2-button-icon>
 								</row>
 							</rows>
 						</grid>
 						<et2-hbox>
-							<et2-date-time id="recur_rdate"></et2-date-time>
+							<et2-date-time id="recur_rdate" placement="top"></et2-date-time>
 							<et2-button id="button[add_rdate]" image="add" statustext="Add recurrence"></et2-button>
 						</et2-hbox>
 					</et2-vbox>
@@ -152,7 +152,7 @@
 							<rows>
 								<row>
 									<et2-date-time  id="$row" readonly="true"></et2-date-time>
-									<et2-button-icon statustext="Delete this exception" id="delete_exception[$row_cont]" onclick="et2_dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button-icon>
+                                    <et2-button-icon statustext="Delete this exception" id="delete_exception[$row_cont]" onclick="Et2Dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button-icon>
 								</row>
 							</rows>
 						</grid>

@@ -512,14 +512,21 @@ use smtp auth	admin	el	Χρήση SMTP αυθ
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	el	Χρησιμοποιήστε τις ακόλουθες επιλογές:\nnoVfsSelect=1\nmime=application/pdf ή /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	el	Χρησιμοποίηση θέματος
 user accounts	admin	el	Λογαριασμοί χρήστη
+user choice	admin	el	Επιλογή χρήστη
+user csv export	admin	el	Εξαγωγή CSV χρηστών
+user csv import	admin	el	Εισαγωγή CSV χρήστη
 user data	common	el	Δεδομένα χρήστη
 user for smtp-authentication (leave it empty if no auth required)	admin	el	Χρήστης για την SMTP-πιστοποίηση (να μείνει κενό αν δεν χρειάζεται πιστοποίηση)
 user groups	admin	el	Ομάδες χρήστη
-user hidden vom non-admins.	admin	el	Χρήστης κρυμμένος από μη διαχειριστές
+user hidden from non-admins.	admin	el	Χρήστης κρυμμένος για μη διαχειριστές
 user-agent	admin	el	User-Agent
 userdata	admin	el	δεδομένα χρήστη
 users can define their own emailaccounts	admin	el	Οι χρήστες μπορούν να ορίσουν τους δικούς τους email λογαριασμούς
+users can define their own identities	admin	el	Οι χρήστες μπορούν να ορίσουν τις δικές τους ταυτότητες
+users can define their own signatures	admin	el	Οι χρήστες μπορούν να ορίσουν τις δικές τους υπογραφές
 users choice	admin	el	Επιλογή Χρήστη
+vacation messages with start- and end-date require an admin account to be set	admin	el	Τα μηνύματα διακοπών με ημερομηνία έναρξης και λήξης απαιτούν τον ορισμό ενός λογαριασμού διαχειριστή!
+vacation notice	admin	el	Ανακοίνωση διακοπών
 view access log	admin	el	Εμφάνιση καταγραφής πρόσβασης
 view account	admin	el	Εμφάνιση λογαριασμού
 view category	admin	el	Εμφάνιση κατηγορίας
@@ -528,8 +535,10 @@ view sessions	admin	el	Εμφάνιση περιόδων
 view this user	admin	el	εμφάνιση αυτού του χρήστη
 view user account	admin	el	Εμφάνιση λογαριασμού χρήστη
 who would you like to transfer all records owned by the deleted user to?	admin	el	Ποιός θα θέλατε να μεταφέρει ΟΛΕΣ της εγγραφές που ανήκουν στον χρήστη που διαγραφηκε;
+who would you like to transfer records owned by the deleted user to?	admin	el	Σε ποιον θα θέλατε να μεταφέρετε τις εγγραφές που ανήκουν στον διαγραμμένο χρήστη;
 xml-rpc	admin	el	XML-RPC
 you can set an initial value, which gets incremented every time a new serial get generated	admin	el	μπορείτε να ορίσετε μια αρχική τιμή, η οποία αυξάνεται κάθε φορά που δημιουργείται μια νέα σειριακή έκδοση
+you can use wizard to fix account settings or delete account.	admin	el	Μπορείτε να χρησιμοποιήσετε τον οδηγό για να διορθώσετε τις ρυθμίσεις του λογαριασμού ή να διαγράψετε τον λογαριασμό.
 you have entered an invalid expiration date	admin	el	Εχετε εισάγει μια λάθοςημερομηνία λήξης!
 you have to enter a name, to create a new field!!!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου πεδίου!
 you have to enter a name, to create a new type!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου τύπου!
@@ -540,5 +549,6 @@ you must enter a loginid	admin	el	Πρέπει να εισάγετε ένα ID �
 you must enter an application name.	admin	el	Πρέπει να εισάγετε ένα όνομα εφαρμογής.
 you must enter an application title.	admin	el	Πρέπει να εισάγετε έναν τίτλο εφαρμογής.
 you must select at least one group member.	admin	el	Πρέπει να επιλέξετε τουλάχιστον ένα μέλος ομάδας.
+you need to select some users first!	admin	el	Πρέπει πρώτα να επιλέξετε ορισμένους χρήστες!
 you will need to remove the subcategories before you can delete this category	admin	el	Θα πρέπει να διαγραφούν οι υποκατηγορίες πριν διαγράψετε αυτή την κατηγορία!
 your session could not be verified.	admin	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί.

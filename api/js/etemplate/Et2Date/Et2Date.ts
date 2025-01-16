@@ -9,7 +9,7 @@
  */
 
 
-import {css, html, nothing} from "lit";
+import {css, html, nothing, PropertyValueMap} from "lit";
 import 'lit-flatpickr';
 import {dateStyles} from "./DateStyles";
 import type {Instance} from 'flatpickr/dist/types/instance';
@@ -413,6 +413,22 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		this.findInputField()?.removeEventListener("input", this._handleInputChange);
 	}
 
+	update(changedProperties : PropertyValueMap<any>)
+	{
+		super.update(changedProperties);
+
+		// Flatpickr puts some inputs we don't have direct control over
+		if(changedProperties.has("disabled") && this._inputNode)
+		{
+			this._inputNode.disabled = this.disabled;
+			if(typeof this._inputNode.requestUpdate == "function")
+			{
+				this._inputNode?.requestUpdate("disabled");
+				this._inputNode.shadowRoot.querySelectorAll("input").forEach(i => i.disabled = this.disabled);
+			}
+		}
+	}
+
 	/**
 	 * Override parent to skip call to CDN
 	 * @returns {Promise<void>}
@@ -719,6 +735,11 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	 */
 	_handleInputChange(e : InputEvent)
 	{
+		if(this.disabled)
+		{
+			return;
+		}
+
 		// Update
 		const value = this.findInputField().value;
 
@@ -1031,7 +1052,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		if(typeof egwIsMobile == "function" && egwIsMobile())
 		{
 			// Plain input for mobile
-			return html`<input type=${this._mobileInputType()}></input>`;
+			return html`<input type=${this._mobileInputType()} ?disabled=${this.disabled}></input>`;
 		}
 		// This element gets hidden and used for value, but copied by flatpickr and used for input
 		return html`
@@ -1042,16 +1063,16 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
             >
                 ${this._incrementButtonTemplate()}
             </et2-textbox>
-            <slot name="sufix"></slot>
+            <slot name="suffix"></slot>
 		`;
 	}
 
 	protected _incrementButtonTemplate()
 	{
 		// No increment buttons on mobile
-		if(typeof egwIsMobile == "function" && egwIsMobile())
+		if(typeof egwIsMobile == "function" && egwIsMobile() || this.disabled)
 		{
-			return '';
+			return nothing;
 		}
 
 		return html`

@@ -26,6 +26,7 @@ address type	addressbook	pt	Tipo de endereço
 addressbook	common	pt	Livro de endereços
 addressbook csv export	addressbook	pt	Exportação CSV do livro de endereços
 addressbook csv import	addressbook	pt	Importação de CSV do livro de endereços
+addressbook list	addressbook	pt	Lista do livro de endereços
 addressbook preferences	addressbook	pt	Preferências do livro de endereços
 addressbook vcard export	addressbook	pt	Exportação de vCard do livro de endereços
 addressbook vcard import	addressbook	pt	Importação de vCard do livro de endereços
@@ -77,6 +78,7 @@ copied by %1, from record #%2.	addressbook	pt	Copiado do registo #%2, por %1.
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pt	Copia as suas alterações para a área de transferência, %recarrega o registo% e funde-os.
 country	common	pt	País
 create new links	addressbook	pt	Criar novas ligações
+create new shares writable	addressbook	pt	Criar novas acções graváveis
 created	addressbook	pt	Criado
 credit	addressbook	pt	Crédito
 crm-view	addressbook	pt	Vista CRM
@@ -294,11 +296,11 @@ today is %1's birthday!	common	pt	Hoje é o aniversário de %1.
 tomorrow is %1's birthday.	common	pt	Amanhã é o aniversário de %1.
 translation	addressbook	pt	Tradução
 type	addressbook	pt	Tipo de contacto
+unable to import into %1, using %2	addressbook	pt	Não é possível importar para %1, utilizando %2
 unshare	addressbook	pt	Não partilhar mais
 unshared	addressbook	pt	Já não partilhado
 update a single entry by passing the fields.	addressbook	pt	Actualizar um registo único passando os campos.
 updated	addressbook	pt	Actualizado
-use a category tree?	addressbook	pt	Utilizar uma árvore para selecionar categorias
 use country list	addressbook	pt	Utilizar lista de países
 user groups are automatically shown as distribution lists.	addressbook	pt	Os grupos de utilizadores são automaticamente mostrados como listas de distribuição.
 vcard	common	pt	vCard

@@ -21,6 +21,7 @@
 5 minutes	common	ro	5 minute
 5 seconds	common	ro	5 secunde
 abort	common	ro	Abandonați
+about egroupware	common	ro	Despre EGroupware
 add current	common	ro	Vizualizarea curentă ca favorită
 add to clipboard	common	ro	Adaugă în clipboard
 add user to responsibles	groupdav	ro	Adăugați utilizatorul la responsabilități
@@ -37,15 +38,18 @@ all files	common	ro	Toate fișierele
 all in one	groupdav	ro	Toate într-una singură
 allow editing the %1	common	ro	Permiteți editarea lui %1
 answering no will not ask you again for this browser.	common	ro	Dacă răspundeți "nu", nu vi se va mai solicita acest browser.
+apps & license	common	ro	Aplicații și licențe
 attention: action will be applied to all rows, not only visible ones!	api	ro	Atenție: acțiunea se va aplica tuturor rândurilor, nu numai celor vizibile!
 authenticate	common	ro	Autentificare
 avatar	common	ro	Avatar
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	ro	Înainte de a continua, vă recomandăm să urmăriți acest scurt videoclip, pentru a vedea cum funcționează pluginul Mailvelope cu EGroupware.
 browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	ro	Browserul %1 %2 nu este recomandat. Este posibil să întâmpinați probleme și să nu funcționeze funcțiile. Vă rugăm să utilizați cea mai recentă versiune de Chrome, Firefox sau Edge. Vă mulțumim!
 cancel	common	ro	Renunţă
 changes that you made may not be saved.	common	ro	Este posibil ca modificările pe care le-ați făcut să nu fie salvate.
 charset	common	ro	Set de caractere
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	ro	Verificați dacă există valori goale în declarațiile IF. Exemplu {{IF url~EMPTY~~~Website:}}} - Dacă url nu este gol, scrie "Website:"
 choose the default filename for merged documents.	preferences	ro	Alegeți numele de fișier implicit pentru documentele fuzionate.
+click here to resume your egroupware session.	common	ro	Faceți clic pentru a vă relua sesiunea EGroupware.
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	ro	Clienții care nu indică în mod explicit o limită se limitează la acest număr de zile. O limită prea mare poate cauza probleme cu unii clienți.
 clipboard contents	common	ro	Conținutul clipboard-ului
 code	common	ro	Cod
@@ -69,8 +73,18 @@ dark mode	common	ro	Mod întunecat
 date + time	common	ro	Data + Ora
 date+time	common	ro	Data+Ora
 directory for storing merged documents	preferences	ro	Folder pentru stocarea documentelor fuzionate
+documents	common	ro	Documente
 don't ask again!	common	ro	Nu întrebați din nou!
+don't show this again	common	ro	Nu afișați acest lucru din nou
+edit avatar	common	ro	Editare avatar
 egroupware	common	ro	EGroupware
+egroupware administrators group, do not delete	common	ro	Grupul de administratori EGroupware, NU ștergeți
+egroupware all users group, do not delete	common	ro	Grupul EGroupware all users, NU ștergeți
+egroupware anonymous users group, do not delete	common	ro	Grupul de utilizatori anonimi EGroupware, NU ștergeți
+egroupware maintenance update %1 available	common	ro	Actualizarea de întreținere EGroupware %1 disponibilă
+egroupware security update %1 needs to be installed!	common	ro	Actualizarea de securitate EGroupware %1 trebuie să fie instalată!
+egroupware version	common	ro	Versiunea EGroupware
+emails	common	ro	Email-uri
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
@@ -92,6 +106,7 @@ how many days to sync in the past (default %1)	groupdav	ro	Câte zile de sincron
 how many rows to print	common	ro	Câte rânduri să se tipărească
 html links to any entries linked to the current record, excluding attached files	common	ro	Legături HTML către orice intrări legate de înregistrarea curentă, cu excepția fișierelor atașate
 if you use "2-factor-authentication", please enter the code here.	common	ro	Dacă utilizați "Autentificare cu 2 factori", introduceți codul aici.
+images	common	ro	Imagini
 include access to any linked files (links tab)	common	ro	Includeți accesul la orice fișier legat (fila Links)
 infolog types to sync	common	ro	Tipuri de InfoLog de sincronizat
 insert placeholder	common	ro	Inserir espaço reservado
@@ -121,11 +136,13 @@ move	common	ro	Mutați
 moved %1 children from directory fs_id=%2 to %3	admin	ro	A mutat %1 copii din folderul fs_id=%2 în %3
 moved unconnected %1 %2 to %3.	admin	ro	A mutat %1 neconectat %1 %2 în %3.
 my account	common	ro	Contul meu
+new egroupware release %1 available	common	ro	Noua versiune EGroupware %1 disponibilă
 new password	common	ro	Parolă nouă
 no filters	common	ro	Fără filtre
 ok	common	ro	Acceptă
 open	common	ro	Deschideți
 open existing contact	common	ro	Deschidere contact existent
+open the online help.	common	ro	Deschideți ajutorul online
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	ro	Logare OpenIDConnect reușită, dar utilizatorul „%1” NU există în EGroupware, iar crearea automată de utilizatori este dezactivată!
 ownership	common	ro	Proprietate
 permission denied!	common	ro	Permisiune refuzată!
@@ -152,6 +169,10 @@ show password	common	ro	Afișare parolă
 show/hide	common	ro	Afișați / ascundeți bara laterală
 sign up	common	ro	Înregistrare
 site configuration	common	ro	Configurația aplicației
+spreadsheets	common	ro	Foi de calcul
+template	common	ro	Șablon
+templates	common	ro	Șabloane
+videos	common	ro	Videoclipuri
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ro	Atunci când îmbinați intrările în documente, acestea vor fi stocate aici. Dacă nu este furnizat niciun dosar, acestea vor fi stocate în directorul dvs. personal (%1)
 your account has been updated with new data from your identity provider.	common	ro	Contul dvs. a fost actualizat cu date noi de la furnizorul dvs. de identitate.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	ro	Browserul dvs. nu este actualizat (compatibil cu JavaScript ES6), este posibil ca unele dintre caracteristici să nu funcționeze.

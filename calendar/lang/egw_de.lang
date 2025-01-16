@@ -529,8 +529,8 @@ select a color for this calendar	calendar	de	Wählen Sie eine Farbe für diesen 
 select a time	calendar	de	Eine Zeit auswählen
 select multiple contacts for a further action	calendar	de	Mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
-select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird. Der Teilnehmerstatus von Externen wird immer zurückgesetzt!
-select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	de	Soll der Status einer Ressource auf "keine Antwort" zurückgesetzt werden, wenn ein Termin verschoben wird?
+select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird. Der Teilnehmerstatus von Externen wird immer zurückgesetzt.
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	de	Soll der Status einer Ressource auf "Keine Antwort" zurückgesetzt werden, wenn ein Termin verschoben wird?
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
 selected range	calendar	de	Ausgewählter Zeitraum
 selected users/groups	calendar	de	Ausgewählte Benutzer/Gruppen

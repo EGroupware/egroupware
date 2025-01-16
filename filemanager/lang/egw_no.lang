@@ -3,7 +3,6 @@ administrators	filemanager	no	administratorer
 applications	common	no	Applikasjoner
 cancel editing %1 without saving	filemanager	no	Avbryt redigering %1 uten å lagre
 cannot create directory because it begins or ends in a space	filemanager	no	Kan ikke opprette mappe fordi den begynner eller slutter med mellomrom
-check all	filemanager	no	Kontroller alle
 classic	filemanager	no	Standard verktøylinje
 comment	filemanager	no	Kommentar
 copied %1 to %2	filemanager	no	Kopiert %1 til %2
@@ -106,7 +105,6 @@ preview of %1	filemanager	no	Forhåndsvining av %1
 projectmanager	filemanager	no	Prosjektadm.
 protocol to use	filemanager	no	Protokoller som skal brukes
 protocols	filemanager	no	Protokoller
-quick jump to	filemanager	no	Hurtighopp til
 quota	filemanager	no	Kvote
 quota exceeded	filemanager	no	Kvote overskredet
 read & write access	filemanager	no	Lese- og skrivetilgang

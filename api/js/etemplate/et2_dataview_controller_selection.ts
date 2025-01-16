@@ -701,10 +701,10 @@ export class et2_dataview_selectionManager
 		(this._context._widget.getDOMNode() || document.body).append(dialog);
 		dialog.updateComplete.then(() =>
 		{
-			dialog.template.DOMContainer.addEventListener('load', () =>
+			dialog.eTemplate.DOMContainer.addEventListener('load', () =>
 			{
 				// Get access to template widgets
-				progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
+				progressbar = dialog.eTemplate.widgetContainer.getWidgetById('progressbar');
 				let rangePromise = fetchPromise;
 
 				for(var i = 0; i < queryRanges.length; i++)

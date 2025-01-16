@@ -73,6 +73,7 @@ copied by %1, from record #%2.	addressbook	da	Kopieret af %1, fra postering #%2.
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	da	Kopier dine ændringer til 'Udklipsholderen', %1reload indtastning%2 og bland dem.
 country	common	da	Land
 create new links	addressbook	da	Lav nyt link
+create new shares writable	addressbook	da	Opret nye aktier, der kan skrives
 created	addressbook	da	Oprettet
 crm-view	addressbook	da	CRM-visning
 csv-fieldname	addressbook	da	CSV-Feltnavn
@@ -273,7 +274,6 @@ unshare	addressbook	da	Ikke længere dele
 unshared	addressbook	da	ikke længere delt
 update a single entry by passing the fields.	addressbook	da	opdater et enkelt element ve at sende felter.
 updated	addressbook	da	Opdateret
-use a category tree?	addressbook	da	Brug et træ til at vælge kategorier
 use country list	addressbook	da	Brug Lande Liste
 user groups are automatically shown as distribution lists.	addressbook	da	Brugergrupper vises automatisk som distributionslister.
 vcard	common	da	vCard

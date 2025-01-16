@@ -201,7 +201,8 @@ class Link extends Etemplate\Widget
 		$app = $value['to_app'];
 		$id = $value['to_id'];
 
-		$links = Api\Link::get_links($app, $id, $value['only_app'], 'link_lastmod DESC, link_id DESC', true, $value['show_deleted'], $value['limit']);
+		$links = Api\Link::get_links($app, $id, $value['only_app']??'', 'link_lastmod DESC, link_id DESC',
+			true, $value['show_deleted']??false, $value['limit']??null);
 
 		$only_links = [];
 		if($value['only_app'])
@@ -414,7 +415,7 @@ class Link extends Etemplate\Widget
 			$value = $value_in =& self::get_array($content, $form_name, false, true);
 
 			// keep values added into request by other ajax-functions, eg. files draged into htmlarea (Vfs)
-			if((!$value || is_array($value) && !$value['to_id']) && is_array($expand['cont'][$this->id]) && !empty($expand['cont'][$this->id]['to_id']))
+			if((!$value || is_array($value) && !$value['to_id']) && is_array($expand['cont']) && is_array($expand['cont'][$this->id]) && !empty($expand['cont'][$this->id]['to_id']))
 			{
 				if(!is_array($value))
 				{

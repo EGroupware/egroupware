@@ -739,7 +739,6 @@ standard smtp-server	admin	ja	標準 SMTP サーバー
 start	admin	ja	Start
 start testjob!	admin	ja	テスト・ジョブを開始します!
 starts with	admin	ja	Starts with
-stationery	admin	ja	Stationery
 strictly required, user can not login without	admin	ja	がないとユーザはログインできません。
 submit changes	admin	ja	変更を送信
 submit displayed information?	admin	ja	表示中の情報を送信しますか
@@ -752,7 +751,6 @@ successful connected to %1 server%2.	admin	ja	%1 サーバー %2 に接続しま
 switch back to standard identity to save account.	admin	ja	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	ja	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	ja	ユーザがランダムに強制ログアウトしてしまう場合は無効にしてください
-templates	admin	ja	テンプレート
 that loginid has already been taken	admin	ja	ログインIDは既に登録済みです。
 the api is current	admin	ja	The API is current
 the api requires an upgrade	admin	ja	The API requires an upgrade
@@ -776,7 +774,6 @@ this category is currently being used by applications as a parent category	admin
 this controls exports and merging.	admin	ja	この設定は、エクスポートとマージ印刷に影響します。
 this is a mail account for all users!	admin	ja	これは全ユーザのメール・アカウントです！
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	ja	This is NOT a personal mail account!\n\nAccount will be deleted for ALL users!\n\nAre you really sure you want to do that?
-this key used in the html code your site serves to users.	admin	ja	HTMLコードに埋め込むサイト・キー。
 this php has no imap support compiled in!!	admin	ja	This PHP has no IMAP support compiled in!!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	ja	Timeout for application session data in seconds. Default 86400 = 1 day
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	ja	Timeout for sessions in seconds. Default 14400 = 4 hours
@@ -833,7 +830,7 @@ user csv import	admin	ja	ユーザ CSV インポート
 user data	common	ja	ユーザ・データ
 user for smtp-authentication (leave it empty if no auth required)	admin	ja	SMTP 認証を使用します。認証が不要の場合は空欄のままにしてください。
 user groups	admin	ja	ユーザ・グループ
-user hidden vom non-admins.	admin	ja	管理者以外には表示されないユーザー
+user hidden from non-admins.	admin	ja	管理者以外は非表示
 user-agent	admin	ja	User-Agent
 userdata	admin	ja	ユーザ・データ
 userid@domain eg. u1234@domain	admin	ja	UserId@domain 例: u1234@domain
@@ -843,8 +840,7 @@ username/password defined by admin	admin	ja	Username / Password defined by admin
 username@domainname (virtual mail manager)	admin	ja	username@domainname (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	ja	Users can define their own email accounts
 users can define their own identities	admin	ja	Users can define their own identities
-users can define their own signatures	admin	ja	Users can define their own signatures
-users can utilize these stationery templates	admin	ja	Users can utilize these stationery templates
+users can define their own signatures	admin	ja	ユーザーは自分の署名を定義できます
 users choice	admin	ja	ユーザ選択
 using data from mozilla ispdb for provider %1	admin	ja	Using data from Mozilla ISPDB for provider %1
 vacation messages with start- and end-date require an admin account to be set	admin	ja	Vacation messages with start and end date require an admin account to be set!
@@ -863,13 +859,12 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	ja	送信される情報は、全世界でのEGroupwareの利用概観を得るためにのみ使用されます。
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	ja	個人・団体を特定し得るデータについては一切保存しません。
 who would you like to transfer all records owned by the deleted user to?	admin	ja	削除ユーザの全レコードを転送するユーザを選択してください。
+who would you like to transfer records owned by the deleted user to?	admin	ja	削除されたユーザーのレコードを誰に転送しますか？
 wrong account type: %1 is no %2 !!!	admin	ja	アカウント・タイプが不正です: %1 は %2 ではありません!
 wrong admin-account or -password !!!	admin	ja	管理者アカウントまたはパスワードが不正です!
 xml-rpc	admin	ja	XML-RPC
 yes, but no scayt	admin	ja	Yes, but no Spell Check As You Type (online)
 yes, use browser based spell checking engine	admin	ja	Yes, use browser based spell checking engine
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	ja	Yes, use credentials below only for alarms and notifications, otherwise use credentials of current user
-yes, use credentials of current user or if given credentials below	admin	ja	Yes, use credentials of current user or if given credentials below
 yes, use webspellchecker	admin	ja	Yes, use online WebSpellChecker
 you can not use --dry-run together with --skip-checks!	admin	ja	You can NOT use --dry-run together with --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	ja	You can change the hash only, if you set a random password or currently use plaintext passwords!

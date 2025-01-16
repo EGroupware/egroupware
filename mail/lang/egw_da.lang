@@ -61,6 +61,7 @@ configured values will be set automatically on compose dialog for respected fiel
 connect to profile %1	mail	da	Opret forbindelse til profil %1
 contact label	mail	da	Kontakt-label
 contains	mail	da	indeholder
+continue	mail	da	Fortsæt
 convert mail to item and attach its attachments to this item (standard)	mail	da	Konverter e-mail til element og vedhæft vedhæftede filer til dette element (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	da	Konverter e-mail til element, vedhæft dets vedhæftede filer og tilføj rå besked (.eml) som vedhæftet fil
 convert only mail to item (ignore possible attachments)	mail	da	Konverter kun e-mail til emne (ignorér eventuelle vedhæftede filer)
@@ -85,6 +86,7 @@ do you really want to delete this rule	mail	da	Vil du virkelig slette denne rege
 do you really want to toggle flag %1 for all messages in the current view?	mail	da	Ønsker du virkelig at skifte flag %1 for ALLE beskeder i den aktuelle visning?
 do you really want to toggle label %1 for all messages in the current view?	mail	da	Ønsker du virkelig at skifte etiketten %1 for ALLE beskeder i den aktuelle visning?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	da	Ønsker du at blive bedt om at bekræfte, før du vedhæfter udvalgte beskeder til en ny e-mail?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	da	Ønsker du at blive bedt om at bekræfte, før du flytter udvalgte beskeder til en anden mappe?
 does not contain	mail	da	indeholder ikke
 does not match	mail	da	passer ikke sammen
 does not match regexp	mail	da	passer ikke til regexp
@@ -153,6 +155,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	da	Virksomhed
 junk	mail	da	Junk
 junk folder	mail	da	Junk-mappe
+keep a copy	mail	da	Behold en kopi
 keep a copy of the message in your inbox	mail	da	Opbevar en kopi af beskeden i din indbakke
 kilobytes	mail	da	Kilobyte
 later	mail	da	Senere
@@ -308,6 +311,7 @@ to do	mail	da	Sådan gør du
 toggled on actions	mail	da	Aktiveret på handlinger
 trash	mail	da	Papirkurv
 trash folder	mail	da	Papirkurv-mappe
+unconditional	mail	da	Altid
 unflagged	mail	da	Flag ikke sat
 unread	mail	da	ulæst
 when deleting messages	mail	da	Når meddelser slettes

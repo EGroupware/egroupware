@@ -1139,7 +1139,8 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 			jQuery(window).on('popstate', function(e){
 				// Check if user wants to logout and ask a confirmation
 				if (window.location.hash == '#main') {
-					et2_dialog.show_dialog(function(button){
+					Et2Dialog.show_dialog(function (button)
+					{
 						if (button === 3){
 							history.forward();
 							return;

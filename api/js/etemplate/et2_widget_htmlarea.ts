@@ -597,7 +597,8 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		});
 		// TinyMCE inserts a BR in the first P --> remove it, if it's not the only child, as it is not wanted (moves the text down on each submit)
 		const firstChild = body.firstChild;
-		if (firstChild.nodeName === 'P' && firstChild.firstChild !== firstChild.lastChild && firstChild.firstChild.nodeName === 'BR')
+
+		if (firstChild && firstChild.nodeName === 'P' && firstChild.firstChild !== firstChild.lastChild && firstChild.firstChild.nodeName === 'BR')
 		{
 			firstChild.removeChild(firstChild.firstChild);
 		}

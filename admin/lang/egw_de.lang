@@ -653,7 +653,7 @@ no profile defined for user %1	admin	de	Es besteht kein Profil für den Benutzer
 no sieve support detected, either fix configuration manually or leave it switched off.	admin	de	Keine Sieve-Unterstützung gefunden. Konfiguration entweder manuell anpassen oder Sieve ausgeschalten lassen.
 no supported imap authentication method could be found.	admin	de	Keine unterstützte IMAP-Authentifizierungsmethode gefunden.
 non profit: clubs, associations, ...	admin	de	Gemeinnützig: Vereine, Verbände, ...
-not enabled	admin	de	Nicht einschalten
+not enabled	admin	de	Nicht aktiv
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit Curl-Unterstützung gebaut wurde.
 notification mail	admin	de	Benachrichtigungs-E-Mail
 notify user by email	admin	de	Benutzer per E-Mail benachrichtigen
@@ -845,7 +845,6 @@ standard smtp-server	admin	de	Standard SMTP-Server
 start	admin	de	Start
 start testjob!	admin	de	Test-Job starten!
 starts with	admin	de	Startet mit
-stationery	admin	de	Briefpapier
 strictly required, user can not login without	admin	de	Unbedingt benötigt, Benutzer können sich ohne nicht mehr anmelden
 submit changes	admin	de	Änderungen speichern
 submit displayed information?	admin	de	Angezeigte Informationen übertragen
@@ -859,7 +858,6 @@ successfull, but no refresh-token received!	admin	de	Erfolgreich, aber keine Ref
 switch back to standard identity to save account.	admin	de	Kehren Sie zur Standard-Identität zurück um das Konto zu speichern.
 switch back to standard identity to save other account data.	admin	de	Kehren Sie zur Standard-Identität zurück um andere Kontendaten zu speichern.
 switch it off, if users are randomly thrown out	admin	de	Schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
-templates	admin	de	Vorlagen
 that loginid has already been taken	admin	de	Diese Login-ID ist bereits vergeben.
 the api is current	admin	de	Das API ist aktuell
 the api requires an upgrade	admin	de	Das API benötigt ein Upgrade
@@ -885,7 +883,6 @@ this category is currently being used by applications as a parent category	admin
 this controls exports and merging.	admin	de	Steuert den Export und den Merge Print von Dokumenten/E-Mails.
 this is a mail account for all users!	admin	de	Das ist ein Mail-Konto für ALLE Benutzer!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!<br>Das Konto wird für ALLE Benutzer gelöscht!<br>Sind Sie wirklich sicher, dass Sie das wollen?
-this key used in the html code your site serves to users.	admin	de	Dieser Schlüssel steht im HTML Code den Ihre Website ausliefert.
 this php has no imap support compiled in!!	admin	de	Dieses PHP hat keine IMAP Unterstützung!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)
@@ -950,7 +947,7 @@ user csv import	admin	de	CSV-Import von Benutzern
 user data	common	de	Benutzerdaten
 user for smtp-authentication (leave it empty if no auth required)	admin	de	Benutzer für SMTP-Authentifizierung (leer lassen falls keine Authentifizierung nötig).
 user groups	admin	de	Benutzergruppen
-user hidden from non-admins.	admin	de	Benutzer verborgen von nicht Administratoren.
+user hidden from non-admins.	admin	de	Benutzer versteckt für Nicht-Administratoren
 user-agent	admin	de	Browser
 userdata	admin	de	Benutzerkonto
 userid@domain eg. u1234@domain	admin	de	UserId@domain z.B. u1234@domain
@@ -961,7 +958,6 @@ username@domainname (virtual mail manager)	admin	de	Benutzername@Domänenname (V
 users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren
 users can define their own identities	admin	de	Anwender können ihre eigenen Identitäten definieren
 users can define their own signatures	admin	de	Anwender können ihre eigenen Signaturen definieren
-users can utilize these stationery templates	admin	de	Benutzer können diese Briefpapiervorlagen verwenden
 users choice	admin	de	Benutzerauswahl
 using data from mozilla ispdb for provider %1	admin	de	Benutze Mozilla ISPDB für Provider %1
 using fallback via regular json requests	admin	de	Verwendung von Fallback über reguläre JSON-Anfragen
@@ -991,8 +987,6 @@ wrong credentials to access the header.inc.php file!	admin	de	Falsche Zugangsdat
 xml-rpc	admin	de	XML-RPC
 yes, but no scayt	admin	de	Ja, aber keine automatische Rechtschreibüberprüfung
 yes, use browser based spell checking engine	admin	de	Ja, benutze nur die im Browser eingebaute Rechtschreibhilfe
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	de	Ja, die Daten darunter nur für Alarme und Benachrichtigungen verwenden, ansonsten die Daten des aktiven Benutzers
-yes, use credentials of current user or if given credentials below	admin	de	Ja, benutze Daten des aktuellen Benutzers oder wenn angegeben die Daten darunter
 yes, use webspellchecker	admin	de	Ja, benutze nur den WebSpellChecker (online)
 you can not use --dry-run together with --skip-checks!	admin	de	Die Verwendung von --dry-run und --skip-checks zusammen ist nicht möglich!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	de	Sie können die Passwort-Verschlüsselung nur ändern, wenn sie ein zufälliges Passwort setzen oder bisher Passworte im Klartext gespeichert haben!

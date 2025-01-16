@@ -79,5 +79,17 @@ show groups in container based on	admin	lt	Rodyti grupes konteineryje pagal
 smtp only: to create only an smtp account	admin	lt	Sukurti tik SMTP paskyrą be IMAP
 total records	admin	lt	Iš viso įrašų
 upload your certificate .p12/.pfx file	admin	lt	Įkelkite savo sertifikato .p12/.pfx failą
-user hidden vom non-admins.	admin	lt	Vartotojas paslėptas nuo neadministratorių
+use users email-address (as seen in useraccount)	admin	lt	Naudotojo CSV importas
+user choice	admin	lt	Vartotojo pasirinkimas
+user csv export	admin	lt	Naudotojo CSV eksportas
+user csv import	admin	lt	Naudotojo CSV importas
+user hidden from non-admins.	admin	lt	Vartotojas paslėptas ne administratoriams
 user-agent	admin	lt	User-Agent
+users can define their own identities	admin	lt	Vartotojai gali nustatyti savo tapatybes
+users can define their own signatures	admin	lt	Vartotojai gali nustatyti savo parašus
+users choice	admin	lt	Vartotojo pasirinkimas
+vacation messages with start- and end-date require an admin account to be set	admin	lt	Atostogų pranešimams su pradžios ir pabaigos data reikia nustatyti administratoriaus paskyrą!
+vacation notice	admin	lt	Pranešimas apie atostogas
+who would you like to transfer records owned by the deleted user to?	admin	lt	Kam norėtumėte perkelti pašalintam naudotojui priklausančius įrašus?
+you can use wizard to fix account settings or delete account.	admin	lt	Paskyros nustatymams pataisyti arba paskyrai ištrinti galite naudoti vedlį.
+you need to select some users first!	admin	lt	Pirmiausia turite pasirinkti kai kuriuos naudotojus!

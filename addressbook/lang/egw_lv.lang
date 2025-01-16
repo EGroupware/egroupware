@@ -73,6 +73,7 @@ contains	addressbook	lv	Satur
 copied by %1, from record #%2.	addressbook	lv	Kopēja %1 no ieraksta #%2.
 country	common	lv	Valsts
 create new links	addressbook	lv	Izveidot jaunas saites
+create new shares writable	addressbook	lv	Izveidot jaunas akcijas rakstāms
 created	addressbook	lv	Izveidots
 crm-view	addressbook	lv	CRM skats
 csv-fieldname	addressbook	lv	CSV-Lauka nosaukums
@@ -268,7 +269,6 @@ unshare	addressbook	lv	Vairs nav koplietošanas
 unshared	addressbook	lv	vairs nav koplietojams
 update a single entry by passing the fields.	addressbook	lv	Atjaunini vienu ierakstu apejot lauku.
 updated	addressbook	lv	Atjaunināts
-use a category tree?	addressbook	lv	Kategoriju atlasei izmantot koku
 use country list	addressbook	lv	Izmantot valstu sarakstu
 user groups are automatically shown as distribution lists.	addressbook	lv	Lietotāju grupas automātiski tiek parādītas kā sadales saraksti.
 vcard	common	lv	vCard

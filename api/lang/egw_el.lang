@@ -85,6 +85,7 @@ application	common	el	Εφαρμογή
 applications	common	el	Εφαρμογές
 applies the changes made	common	el	Εφαρμόζει τις αλλαγές
 apply	common	el	Εφαρμογή
+apps & license	common	el	Εφαρμογές & Άδεια χρήσης
 apps &amp; license	common	el	Εφαρμογές & άδεια χρήσης
 april	common	el	Απρίλιος
 are you sure you want to delete these entries ?	common	el	Είστε σίγουροι ότι θέλετε να διαγράψετε αυτές τις καταχωρίσεις;
@@ -277,6 +278,7 @@ do you also want to delete all subcategories ?	common	el	Θέλετε να δι�
 document properties	common	el	Ιδιότητες εγγράφου
 document title:	common	el	Τίτλος εγγράφου:
 documentation	common	el	Τεκμηρίωση
+documents	common	el	Έγγραφα
 doesn't matter	common	el	δεν έχει σημασία
 domain	common	el	Τομέας
 domain name for mail-address, eg. "%1"	common	el	Όνομα Τομέα για διεύθυνση ηλεκτρονικού ταχυδρομείου π.χ. "%1"
@@ -298,6 +300,9 @@ edit categories	common	el	Επεξεργασία Κατηγοριών
 edit category	common	el	Επεξεργασία Κατηγορίας
 edit the etemplate spez. above	common	el	Επεξεργασία eTemplate
 egroupware	common	el	EGroupware
+egroupware administrators group, do not delete	common	el	Ομάδα διαχειριστών EGroupware, ΜΗ διαγράψετε
+egroupware all users group, do not delete	common	el	Ομάδα EGroupware όλοι οι χρήστες, ΜΗ διαγράψετε
+egroupware anonymous users group, do not delete	common	el	Ομάδα ανώνυμων χρηστών EGroupware, ΜΗ διαγράψετε
 egroupware api version	common	el	Έκδοση API EGroupware
 egroupware maintenance update %1 available	common	el	Διαθέσιμη η ενημερωμένη έκδοση συντήρησης EGroupware %1
 egroupware security update %1 needs to be installed!	common	el	Πρέπει να εγκατασταθεί η ενημερωμένη έκδοση ασφαλείας EGroupware %1!
@@ -307,6 +312,7 @@ egypt	common	el	ΑΙΓΥΠΤΟΣ
 el salvador	common	el	ΕΛ ΣΑΛΒΑΔΟΡ
 email	common	el	Ε-Μail
 email-address of the user, eg. "%1"	common	el	E-mail του χρήστη π.χ. "%1"
+emails	common	el	Emails
 enabled	common	el	Ενεργοποιημένο
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	el	Ενεργοποιεί την καταγραφή της κίνησης CalDAV/CardDAV για τη διάγνωση προβλημάτων με συσκευές.
 end date	common	el	Ημερομηνία παράδοσης
@@ -430,6 +436,7 @@ if there are some images in the background folder you can choose the one you wou
 if you use "2-factor-authentication", please enter the code here.	common	el	Εάν χρησιμοποιείτε "2-Factor-Authentication", παρακαλούμε εισάγετε τον κωδικό εδώ.
 image directory relative to document root (use / !), example:	common	el	Κατάλογος εικόνας σχετικός με τη ρίζα εγγράφου (χρήση /!), π.χ.:
 image url	common	el	Εικόνα URL
+images	common	el	Εικόνες
 import	common	el	Εισαγωγή
 import xml	common	el	Εισαγωγή XML
 include access to any linked files (links tab)	common	el	Συμπεριλάβετε την πρόσβαση σε όλα τα συνδεδεμένα αρχεία (καρτέλα Σύνδεσμοι)
@@ -647,7 +654,7 @@ open existing contact	common	el	Άνοιγμα υπάρχουσας επαφής
 open notify window	common	el	Ανοιξε το παράθυρο ειδοποίησης
 open popup window	common	el	Ανοιξε το εκτινασσόμενο παράθυρο
 open the online help.	common	el	Άνοιγμα της ηλεκτρονικής βοήθειας
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	el	Επιτυχής σύνδεση OpenIDConnect, αλλά ο χρήστης '%1' ΔΕΝ υπάρχει στο EGroupware, ΚΑΙ η αυτόματη δημιουργία χρηστών είναι απενεργοποιημένη!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	el	Επιτυχής σύνδεση OpenID Connect, αλλά ο χρήστης '%1' ΔΕΝ υπάρχει στο EGroupware, ΚΑΙ η αυτόματη δημιουργία χρηστών είναι απενεργοποιημένη!
 operator	common	el	Χειριστής
 optional note about the link	common	el	Προαιρετική σημείωση για σύνδεσμο
 options	common	el	Επιλογές
@@ -845,6 +852,7 @@ sorry, your login has expired	login	el	Η σύνδεσή σας έχει λήξ�
 south africa	common	el	ΝΟΤΙΑ ΑΦΡΙΚΗ
 south georgia and the south sandwich islands	common	el	ΝΟΤΙΑ ΓΕΩΡΓΙΑ & ΝΟΤΙΑ ΝΗΣΙΑ ΣΑΝΤΟΥΪΤΣ
 spain	common	el	ΙΣΠΑΝΙΑ
+spreadsheets	common	el	Υπολογιστικά φύλλα
 sri lanka	common	el	ΣΡΙ ΛΑΝΚΑ
 start a new search, cancel this link	common	el	έναρξη νέας αναζήτησης, ακύρωση αυτού του συνδέσμου
 start date	common	el	Hμερομηνία έναρξης
@@ -872,6 +880,7 @@ taiwan	common	el	ΤΑΪΒΑΝ/ΤΑΪΠΕΪ
 tajikistan	common	el	ΤΑΖΙΚΙΣΤΑΝ
 tanzania, united republic of	common	el	ΤΑΝΖΑΝΙΑ
 template	common	el	Πρότυπο
+templates	common	el	Πρότυπα
 text color:	common	el	Χρώμα κειμένου:
 thailand	common	el	ΤΑΪΛΑΝΔΗ
 the backup key has been deleted.	common	el	Το εφεδρικό κλειδί έχει διαγραφεί.
@@ -945,6 +954,7 @@ uzbekistan	common	el	ΟΥΖΜΠΕΚΙΣΤΑΝ
 vanuatu	common	el	ΒΑΝΟΥΑΤΟΥ
 venezuela	common	el	ΒΕΝΕΖΟΥΕΛΑ
 version	common	el	Έκδοση
+videos	common	el	Βίντεο
 viet nam	common	el	ΒΙΕΤΝΑΜ
 view	common	el	Προβολή
 view this linked entry in its application	common	el	εμφάνιση αυτής της συνδεδεμένης καταχώρησης στην αίτησή της
@@ -955,6 +965,7 @@ wednesday	common	el	Τετάρτη
 weekend	common	el	Σαββατοκύριακο
 welcome	common	el	Καλώς ήρθατε
 western sahara	common	el	ΔΥΤΙΚΗ ΣΑΧΑΡΑ
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	el	Όταν συγχωνεύετε καταχωρήσεις σε έγγραφα, θα αποθηκεύονται εδώ. Εάν δεν έχει δοθεί φάκελος, θα αποθηκευτούν στον αρχικό σας κατάλογο (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	el	Όταν λέτε ναι τα κουμπιά αρχικής σελίδας και εξόδου από το σύστημα εμφανίζονται ως εφαρμογές στην κύρια μπάρα εργασιών.
 which groups	common	el	Ποιές ομάδες
 whole query	common	el	ολόκληρη απορία

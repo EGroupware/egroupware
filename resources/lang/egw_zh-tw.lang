@@ -1,22 +1,12 @@
 accessories of	resources	zh-tw	附屬於
-accessories:	resources	zh-tw	附件：
-actions	resources	zh-tw	動作
-add accessory	resources	zh-tw	新增附件
 add resource	resources	zh-tw	新增資源
-add resources	resources	zh-tw	新增資源
 administrator	resources	zh-tw	管理者
-all categories	resources	zh-tw	所有類別
 book	resources	zh-tw	預約
-book selected resources	resources	zh-tw	預約選擇的資源
 book this resource	resources	zh-tw	預約這個資源
 bookable	resources	zh-tw	可預約
 buy this article	resources	zh-tw	購買這篇文章
-buy this resource	resources	zh-tw	購買這個資源
 buyable	resources	zh-tw	可購買
-categories admin	resources	zh-tw	類別管理
 category:	resources	zh-tw	類別：
-check all	resources	zh-tw	勾選全部
-choose categories admin	resources	zh-tw	選擇類別管理者
 clear selection	resources	zh-tw	清除選擇的項目
 configure access permissions	admin	zh-tw	設定存取權限
 create new accessory for this resource	resources	zh-tw	新增這個資源的附件
@@ -29,7 +19,6 @@ delete this entry	resources	zh-tw	刪除這一筆資料
 deleted	resources	zh-tw	刪除了
 description (short)	resources	zh-tw	說明（簡短）
 direct booking permissions	resources	zh-tw	直接預定權限
-don't use vfs (this will need a symlink --> see readme)	resources	zh-tw	不要使用虛擬檔案系統（這將會需要使用符號連結，請參考 README 文件說明）
 edit this entry	resources	zh-tw	編輯這個資料
 existing links	resources	zh-tw	已經存在的連結
 general	resources	zh-tw	一般
@@ -96,8 +85,6 @@ use general resources icon	resources	zh-tw	使用一般資源圖示
 use own picture	resources	zh-tw	使用自訂圖示
 use the category's icon	resources	zh-tw	使用這個類別的圖示
 useable	resources	zh-tw	可以使用
-useable:	resources	zh-tw	可以使用：
-view accessories for this resource	resources	zh-tw	瀏覽這個資源的附件
 view this entry	resources	zh-tw	瀏覽這個資料
 web-page of resource	resources	zh-tw	資源的網頁
 web-site for this resource	resources	zh-tw	這個資源的網站

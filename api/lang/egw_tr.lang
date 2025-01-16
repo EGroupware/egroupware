@@ -21,6 +21,7 @@
 5 minutes	common	tr	5 dakika
 5 seconds	common	tr	5 saniye
 abort	common	tr	İptal
+about egroupware	common	tr	EGroupware Hakkında
 account has been created	common	tr	Hesap oluþturuldu.
 account has been deleted	common	tr	Hesap silindi.
 account has been updated	common	tr	Hesap güncellendi.
@@ -50,10 +51,12 @@ and	common	tr	Ve
 answering no will not ask you again for this browser.	common	tr	Hayır yanıtını verirseniz, artık bu tarayıcı istenmeyecektir.
 application	common	tr	Uygulama
 apply	common	tr	Uygula
+apps & license	common	tr	Uygulamalar & Lisans
 attention: action will be applied to all rows, not only visible ones!	api	tr	Dikkat: eylem yalnızca görünen satırlara değil, tüm satırlara uygulanacaktır!
 authenticate	common	tr	Kimlik Doğrulama
 avatar	common	tr	Avatar
 back	common	tr	Geri
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	tr	Daha ileri gitmeden önce, Mailvelope eklentisinin EGroupware ile nasıl çalıştığını görmek için bu kısa videoyu izlemenizi şiddetle tavsiye ederiz.
 bottom	common	tr	Taban
 browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	tr	Tarayıcı %1 %2 önerilmez. Sorunlarla ve çalışmayan özelliklerle karşılaşabilirsiniz. Lütfen Chrome, Firefox veya Edge'in en son sürümünü kullanın. Teşekkürler!
 calendar	common	tr	Takvim
@@ -63,6 +66,7 @@ changes that you made may not be saved.	common	tr	Yaptığınız değişiklikler
 charset	common	tr	Karakter kümesi
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	tr	IF deyimlerinde boş değerleri kontrol edin. Örnek {{IF url~EMPTY~~Web Sitesi:}} - Eğer url boş değilse, "Web sitesi:" yazar
 choose the default filename for merged documents.	preferences	tr	Birleştirilen belgeler için varsayılan dosya adını seçin.
+click here to resume your egroupware session.	common	tr	EGroupware oturumunuza devam etmek için tıklayın.
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	tr	Açıkça bir limit belirtmeyen müşteriler bu kadar günle sınırlandırılır. Çok yüksek bir limit bazı istemcilerde sorunlara neden olabilir.
 clipboard contents	common	tr	Pano içeriği
 code	common	tr	Kod
@@ -91,11 +95,22 @@ delete category	common	tr	Kategori sil
 description	common	tr	Açýklama
 directory for storing merged documents	preferences	tr	Birleştirilmiş belgeleri saklamak için klasör
 disabled	common	tr	Engellendi
+documents	common	tr	Belgeler
 domestic	common	tr	Ev
 don't ask again!	common	tr	Tekrar sorma!
+don't show this again	common	tr	Bunu bir daha gösterme.
 done	common	tr	Tamam
 download	common	tr	İndir
 edit	common	tr	Düzenle
+edit avatar	common	tr	Avatarı düzenle
+egroupware	common	tr	EGroupware
+egroupware administrators group, do not delete	common	tr	EGroupware administrators grubu, SİLMEYİN
+egroupware all users group, do not delete	common	tr	EGroupware tüm kullanıcılar grubu, SİLMEYİN
+egroupware anonymous users group, do not delete	common	tr	EGroupware anonim kullanıcılar grubu, SİLMEYİN
+egroupware maintenance update %1 available	common	tr	EGroupware bakım güncellemesi %1 kullanılabilir
+egroupware security update %1 needs to be installed!	common	tr	EGroupware güvenlik güncelleştirmesi %1'in yüklenmesi gerekiyor!
+egroupware version	common	tr	EGroupware sürümü
+emails	common	tr	E-postalar
 enabled	common	tr	Etkin
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
@@ -127,6 +142,7 @@ how many days to sync in the past (default %1)	groupdav	tr	Geçmişte kaç gün 
 how many rows to print	common	tr	Kaç satır yazdırılacağı
 html links to any entries linked to the current record, excluding attached files	common	tr	Ekli dosyalar hariç olmak üzere, geçerli kayda bağlı tüm girişlere HTML bağlantıları
 if you use "2-factor-authentication", please enter the code here.	common	tr	2 Faktörlü Kimlik Doğrulama kullanıyorsanız, lütfen kodu buraya girin.
+images	common	tr	Görüntüler
 include access to any linked files (links tab)	common	tr	Bağlantılı dosyalara erişimi dahil edin (Bağlantılar sekmesi)
 infolog types to sync	common	tr	Senkronize edilecek InfoLog türleri
 insert placeholder	common	tr	Yer tutucu ekle
@@ -163,11 +179,13 @@ moved %1 children from directory fs_id=%2 to %3	admin	tr	fs_id=%2 klasöründeki
 moved unconnected %1 %2 to %3.	admin	tr	Bağlantısız %1 %2'yi %3'e taşıdı.
 my account	common	tr	Benim Hesabım
 name	common	tr	Ýsim
+new egroupware release %1 available	common	tr	Yeni EGroupware sürümü %1 kullanılabilir
 new password	common	tr	Yeni şifre
 no filters	common	tr	Filtre yok
 ok	common	tr	Tamam
 open	common	tr	Açık
 open existing contact	common	tr	Mevcut kontağı aç
+open the online help.	common	tr	Çevrimiçi yardımı açın
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	tr	OpenIDConnect girişi başarılı, ancak '%1' kullanıcısı EGroupware'de mevcut DEĞİL VE otomatik kullanıcı oluşturma devre dışı!
 or	common	tr	ya da
 original	common	tr	Orjinal
@@ -207,7 +225,10 @@ select all	common	tr	Tümünü seçin
 show password	common	tr	Şifreyi göster
 sign up	common	tr	Kaydolun
 site configuration	common	tr	Konfigürasyon
+spreadsheets	common	tr	Elektronik Tablolar
 submit	common	tr	Gönder
+template	common	tr	Şablon
+templates	common	tr	Şablonlar
 title	common	tr	Baþlýk
 today	common	tr	Bugün
 top	common	tr	Maks
@@ -217,6 +238,7 @@ user accounts	common	tr	Kullanýcý hesaplarý
 user groups	common	tr	Kullanýcý gruplarý
 users choice	common	tr	Kullanýcý Seçimleri
 version	common	tr	Sürüm
+videos	common	tr	Videolar
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	tr	Girdileri belgelerle birleştirdiğinizde, burada saklanacaktır. Herhangi bir klasör belirtilmemişse, bunlar ev dizininizde (%1) saklanacaktır
 you have not entered a title	common	tr	Bir baþlýk girmediniz.
 you have not entered a valid date	common	tr	Geçerli bir tarih girmediniz.

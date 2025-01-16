@@ -144,8 +144,10 @@ class Mailer extends Horde_Mime_Mail
 		}
 
 		// use smpt-username as sender/return-path, if available, but only if it is a full email address
-		$sender = $this->account->acc_smtp_username && strpos($this->account->acc_smtp_username, '@') !== false ?
-			$this->account->acc_smtp_username : $identity['ident_email'];
+		$sender = empty($this->account->acc_smtp_username) || strpos($this->account->acc_smtp_username, '@') === false ||
+			// if both are from the same domain, prefer the identity email over the smtp-username
+			explode('@', $identity['ident_email'])[1] === explode('@', $this->account->acc_smtp_username)[1] ?
+			$identity['ident_email'] : $this->account->acc_smtp_username;
 		$this->addHeader('Return-Path', '<'.$sender.'>', true);
 
 		$this->setFrom($identity['ident_email'], $identity['ident_realname']);
@@ -328,7 +330,7 @@ class Mailer extends Horde_Mime_Mail
 	 *
 	 * "text/calendar; method=..." get automatic detected and added as highest priority alternative
 	 *
-	 * @param string|resource $data Path to the attachment or open file-descriptor
+	 * @param string|resource|array $data Path to the attachment or open file-descriptor or array with values for keys "data", "name" and "type"
 	 * @param string $name =null file name to use for the attachment
 	 * @param string $type =null content type of the file, incl. parameters eg. "text/plain; charset=utf-8"
 	 * @param string $old_type =null used to support phpMailer signature (deprecated)
@@ -343,6 +345,12 @@ class Mailer extends Horde_Mime_Mail
 			$type = $old_type;
 		}
 
+		if (is_array($data))
+		{
+			$name = $data['name'] ?? null;
+			$type = $data['type'] ?? null;
+			$data = $data['data'] ?? null;
+		}
 		// pass file as resource to Horde_Mime_Part::setContent()
 		if (is_resource($data))
 		{

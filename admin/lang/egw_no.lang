@@ -472,14 +472,21 @@ use theme	admin	no	Bruk tema
 use tls authentication	admin	no	Bruk TLS autentisering
 use tls encryption	admin	no	Bruk TLS kryptering
 user accounts	admin	no	Brukerkontoer
+user choice	admin	no	Valg av bruker
+user csv export	admin	no	CSV-eksport av bruker
+user csv import	admin	no	CSV-import av bruker
 user data	common	no	Brukerdata
 user for smtp-authentication (leave it empty if no auth required)	admin	no	Brukes for SMTP autentisering (la det stå tomt dersom aut. ikke er nødvendig)
 user groups	admin	no	Brukergrupper
-user hidden vom non-admins.	admin	no	Bruker skjult for ikke-admins
+user hidden from non-admins.	admin	no	Bruker skjult for ikke-admins
 user-agent	admin	no	User-Agent
 userdata	admin	no	Brukerdata
 users can define their own emailaccounts	admin	no	Brukere kan definere egne e-post kontoer
+users can define their own identities	admin	no	Brukere kan definere sine egne identiteter
+users can define their own signatures	admin	no	Brukere kan definere sine egne signaturer
 users choice	admin	no	Brukers valg
+vacation messages with start- and end-date require an admin account to be set	admin	no	Feriemeldinger med start- og sluttdato krever en administratorkonto for å kunne settes opp!
+vacation notice	admin	no	Varsel om ferie
 view access log	admin	no	Vis access log
 view account	admin	no	Vis konto
 view category	admin	no	Vis kategori
@@ -489,7 +496,9 @@ view this user	admin	no	Vis denne bruker
 view user account	admin	no	Vis brukerkonto
 virtual mail manager	admin	no	Virtuell Mail Manager
 who would you like to transfer all records owned by the deleted user to?	admin	no	Til hvem ønsker du å overføre alle poster tilhørende den slettede bruker?
+who would you like to transfer records owned by the deleted user to?	admin	no	Hvem ønsker du å overføre poster som eies av den slettede brukeren til?
 xml-rpc	admin	no	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	no	Du kan bruke veiviseren til å fikse kontoinnstillinger eller slette kontoen.
 you have entered an invalid expiration date	admin	no	Du har registrert en ugyldig utløpsdato?
 you must add at least 1 permission or group to this account	admin	no	Du må legge til minst 1 tillatelse eller gruppe for denne kontoen.
 you must enter a group name.	admin	no	Du må registrere et gruppenavn
@@ -497,6 +506,7 @@ you must enter a lastname	admin	no	Du må registrere et etternavn
 you must enter a loginid	admin	no	Du må registrere et påloggingsident
 you must enter an application name.	admin	no	Du må registrere et programnavn
 you must enter an application title.	admin	no	Du må registrere et programtittel
+you need to select some users first!	admin	no	Du må velge noen brukere først!
 you will need to remove the subcategories before you can delete this category	admin	no	Du må først fjerne underkategorier før du kan slette denne kategorien!
 your name	admin	no	Ditt navn
 your session could not be verified.	admin	no	Din sesjon kunne ikke bekreftes

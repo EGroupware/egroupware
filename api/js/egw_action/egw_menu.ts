@@ -9,15 +9,6 @@
  *
  */
 import {EgwMenuShoelace} from "./EgwMenuShoelace";
-import {egw_registeredShortcuts, egw_shortcutIdx} from './egw_keymanager';
-import {
-	EGW_KEY_ARROW_DOWN,
-	EGW_KEY_ARROW_LEFT,
-	EGW_KEY_ARROW_RIGHT,
-	EGW_KEY_ARROW_UP,
-	EGW_KEY_ENTER,
-	EGW_KEY_ESCAPE
-} from "./egw_action_constants";
 
 //Global variable which is used to store the currently active menu so that it
 //may be closed when another menu opens
@@ -137,6 +128,11 @@ export class egwMenu
 	{
 	}
 
+	remove()
+	{
+		this.instance?.remove();
+	}
+
 	/**
 	 * The private _checkImpl function checks whether a menu implementation is available.
 	 *
@@ -160,7 +156,6 @@ export class egwMenu
 		if (this.instance != null)
 		{
 			this.instance.hide();
-			this.instance = null;
 		}
 	}
 
@@ -196,16 +191,51 @@ export class egwMenu
 			//Obtain a new egwMenuImpl object and pass this instance to it
 			this.instance = new EgwMenuShoelace(this.children);
 
-			_egw_active_menu = this;
-
-			this.instance.showAt(_x, _y, () => {
-				this.instance = null;
-				_egw_active_menu = null;
-			});
-			return true;
 		}
 
-		return false;
+		_egw_active_menu = this;
+
+		this.instance.showAt(_x, _y, () =>
+		{
+			_egw_active_menu = null;
+		});
+		return true;
+	}
+
+
+	/**
+	 * Enable / disable menu items for the given selection & target
+	 *
+	 * @param _context
+	 * @param _links
+	 * @param _selected
+	 * @param _target
+	 * @private
+	 */
+	public applyContext(_links, _selected, _target)
+	{
+		if(!this.instance)
+		{
+			this.instance = new EgwMenuShoelace(this.children);
+		}
+		this.instance.applyContext(_links, _selected, _target);
+		let setOnClick = (menuItem) =>
+		{
+			menuItem.set_onClick((elem) =>
+			{
+				// Copy the "checked" state
+				if(typeof elem.data.checked != "undefined")
+				{
+					elem.data.checked = elem.checked;
+				}
+				elem.data.execute(_selected, _target);
+			});
+			menuItem.children.forEach(c => setOnClick(c));
+		};
+		this.children.forEach(menuItem =>
+		{
+			setOnClick(menuItem);
+		});
 	}
 
 	/**

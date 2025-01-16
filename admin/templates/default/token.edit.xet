@@ -66,7 +66,7 @@
 						<et2-button label="Apply" id="button[apply]"></et2-button>
 						<et2-button label="Cancel" id="button[cancel]" noValidation="true"></et2-button>
 						<et2-button align="right" label="Revoke" id="button[delete]"
-							onclick="et2_dialog.confirm(widget,'Revoke this token','Revoke')"></et2-button>
+                                    onclick="Et2Dialog.confirm(widget,'Revoke this token','Revoke')"></et2-button>
 					</et2-hbox>
 				</row>
 			</rows>

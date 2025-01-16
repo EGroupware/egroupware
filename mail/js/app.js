@@ -13,11 +13,14 @@
 
 import {AppJS} from "../../api/js/jsapi/app_base.js";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
-import {et2_button} from "../../api/js/etemplate/et2_widget_button";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw_getObjectManager} from '../../api/js/egw_action/egw_action';
 import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common";
-import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants";
+import {
+	EGW_AO_FLAG_DEFAULT_FOCUS,
+	EGW_KEY_ARROW_DOWN,
+	EGW_KEY_ARROW_UP
+} from "../../api/js/egw_action/egw_action_constants";
 import {
 	egw_keycode_translation_function,
 	egw_keycode_makeValid,
@@ -25,6 +28,7 @@ import {
 } from "../../api/js/egw_action/egw_keymanager";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {Et2VfsSelectButton} from "../../api/js/etemplate/Et2Vfs/Et2VfsSelectButton";
+import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 
@@ -385,7 +389,7 @@ app.classes.mail = AppJS.extend(
 					}
 					else
 					{
-						that.compose_fieldExpander();
+						//that.compose_fieldExpander();
 					}
 				});
 
@@ -1265,6 +1269,17 @@ app.classes.mail = AppJS.extend(
 						sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [collabora, ...actions];
 					}
 				}
+				// if mime-type is supported by invoices (or the EPL viewer), add it at the end
+				const invoices_app = this.egw.user('apps')['invoices'] ? 'invoices' : 'stylite';
+				if (egw.get_mime_info(_item.type, invoices_app))
+				{
+					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, {
+						id: invoices_app,
+						label: 'invoices',
+						icon: 'invoices/navbar',
+						value: invoices_app
+					}];
+				}
 			});
 
 			sel_options.attachmentsBlock.actions = actions;
@@ -1590,7 +1605,7 @@ app.classes.mail = AppJS.extend(
 				var self = this;
 				var buttons = [
 					{label: this.egw.lang("Empty Trash and Junk"), id: "cleanup", class: "ui-priority-primary", default: true, image: "delete"},
-					{label: this.egw.lang("Cancel"), id: "cancel"}
+					{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 				];
 				var server = [{iface:{id: _data.data.profileid+'::'}}];
 				Et2Dialog.show_dialog(function (_button_id)
@@ -2209,14 +2224,20 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * Delete mails - actually calls the backend function for deletion
-	 * takes in all arguments
+	 *
+	 * Most other apps we tell the server directly, then refresh() tells the nextmatch to remove the rows.  Nextmatch
+	 * then removes the rows & selects the next row for focus.  In mail we tell the nextmatch to remove the rows
+	 * immediately and keep track of the rows above & below the deleted row(s), not setting focus to a new row.
+	 * Then tell the server, and if the user presses up or down arrow in the next 10s, we focus the above or below row.
+	 * see et2_extension_nextmatch option "disable_selection_advance"
+	 *
 	 * @param {string} _msg - message list
 	 * @param {object} _action - optional action
 	 * @param {object} _calledFromPopup
 	 */
 	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
-		var message, ftree, _foldernode, displayname;
+		let message, ftree, _foldernode, displayname;
 		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		if (ftree)
 		{
@@ -2227,13 +2248,97 @@ app.classes.mail = AppJS.extend(
 			message = this.mail_splitRowId(_msg['msg'][0]);
 			if (message[3]) _foldernode = displayname = atob(message[3]);
 		}
+		// nextmatch normally handles selection of next row after delete, but mail is different
+		// (uses et2_nextmatch option disable_selection_advance)
+		const nm = this.et2.getWidgetById('nm');
+
+		// Note above and below rows
+		const rows = {above: null, below: null};
+		const row_ids = _msg["msg"];
+		if (!_msg["all"])
+		{
+			// Find 'top' & 'bottom', since selection order depends on which way user was moving
+			let entry = null;
+			row_ids.forEach(r =>
+			{
+				const rowEntry = nm.controller._selectionMgr._getRegisteredRowsEntry(r);
+				if (rows.above == null || rowEntry?.idx < rows.above.idx)
+				{
+					rows.above = rowEntry;
+				}
+				if (rows.below == null || rowEntry?.idx > rows.below.idx)
+				{
+					rows.below = rowEntry;
+				}
+			})
+			rows.above = rows.above.ao.getPrevious(1);
+			rows.below = rows.below?.ao?.getNext(1) ?? rows.above;
+
+			// Immediately remove from nextmatch
+			nm.refresh(row_ids, et2_nextmatch.DELETE);
+		}
+
+		// If auto-refresh is on, turn it off until the delete request finishes
+		const nm_autorefresh = nm._get_autorefresh();
+		if (nm_autorefresh)
+		{
+			nm._set_autorefresh(0);
+		}
 
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)])
-			.sendRequest(true);
+			.sendRequest(true)
+			.finally(() =>
+			{
+				// Restart autorefresh
+				if (nm_autorefresh)
+				{
+					nm._set_autorefresh(nm_autorefresh);
+				}
+			})
 
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
 		this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
+		if (_msg["all"])
+		{
+			return;
+		}
+
+		// Wait to see if user moves the cursor via keyboard
+		const grid = nm.controller._grid.innerTbody.get(0);
+		const selectRemembered = (e) =>
+		{
+			let next = null;
+			if (e.keyCode === EGW_KEY_ARROW_UP && rows.above)
+			{
+				next = rows.above;
+			}
+			else if (e.keyCode === EGW_KEY_ARROW_DOWN)
+			{
+				next = rows.below;
+			}
+			if (next)
+			{
+				// Prevent double-move
+				e.preventDefault();
+				e.stopImmediatePropagation();
+
+				// Focus with action system
+				nm.controller._selectionMgr.setSelected(next.id, true);
+				nm.controller._selectionMgr.setFocused(next.id, true);
+
+				// Scroll into view
+				next.iface.getDOMNode().scrollIntoViewIfNeeded();
+			}
+		}
+		// Bind listener
+		document.body.addEventListener("keydown", selectRemembered, {once: true});
+
+		// Remove listener after 10s
+		window.setTimeout(() =>
+		{
+			document.body.removeEventListener("keydown", selectRemembered);
+		}, 10000);
 	},
 
 	/**
@@ -2256,11 +2361,6 @@ app.classes.mail = AppJS.extend(
 			{
 				this.egw.refresh(_msg['egw_message'], 'mail', _msg['msg'][i].replace(/mail::/, ''), 'delete');
 			}
-
-			// Nextmatch automatically selects the next row and calls preview.
-			// Unselect it and thanks to the timeout selectionMgr uses, preview
-			// will close when the selection callback fires.
-			this.et2.getWidgetById(this.nm_index).controller._selectionMgr.resetSelection();
 		}
 	},
 
@@ -2272,6 +2372,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_retryForcedDelete: function(responseObject)
 	{
+		// Start a full list refresh to show current data
+		const nm = this.et2.getWidgetById('nm');
+		nm?.refresh();
+
 		var reason = responseObject['response'];
 		var messageList = responseObject['messageList'];
 		if (confirm(reason))
@@ -2522,7 +2626,7 @@ app.classes.mail = AppJS.extend(
 			{
 				var buttons = [
 					{label: this.egw.lang("Yes"), id: "all", "class": "ui-priority-primary", "default": true, image: 'check'},
-					{label: this.egw.lang("Cancel"), id: "cancel"}
+					{label: this.egw.lang("Cancel"), id: "cancel", image: 'cancelDialog'},
 				];
 				var messageToDisplay = '';
 				var actionlabel =_action.id;
@@ -2563,24 +2667,24 @@ app.classes.mail = AppJS.extend(
 						messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current view?",this.egw.lang(type?type:_action.id))+" ";
 				}
 				return Et2Dialog.show_dialog(function (_button_id)
+				{
+					var rv = false;
+					switch (_button_id)
 					{
-						var rv = false;
-						switch (_button_id)
-						{
-							case "all":
-								rv = true;
-								break;
-							case "cancel":
-								rv = 'cancel';
-						}
-						if (rv != "cancel")
-						{
-							that.lock_tree();
-						}
-						switch (_action.id)
+						case "all":
+							rv = true;
+							break;
+						case "cancel":
+							rv = 'cancel';
+					}
+					if (rv != "cancel")
+					{
+						that.lock_tree();
+					}
+					switch (_action.id)
 					{
 						case "delete":
-							that.mail_callDelete(_action, _elems,rv);
+							that.mail_callDelete(_action, _elems, rv);
 							break;
 						case "readall":
 						case "unlabel":
@@ -2592,22 +2696,19 @@ app.classes.mail = AppJS.extend(
 						case "flagged":
 						case "read":
 						case "undelete":
-							that.mail_callFlagMessages(_action, _elems,rv);
+							that.mail_callFlagMessages(_action, _elems, rv);
 							break;
 						case "drop_move_mail":
-							that.mail_callMove(_action, _elems,_target, rv);
+							that.mail_callMove(_action, _elems, _target, rv);
 							break;
 						case "drop_copy_mail":
-							that.mail_callCopy(_action, _elems,_target, rv);
+							that.mail_callCopy(_action, _elems, _target, rv);
 							break;
 						default:
-							if (_action.id.substr(0,4)=='move') that.mail_callMove(_action, _elems,_target, rv);
-							if (_action.id.substr(0,4)=='copy') that.mail_callCopy(_action, _elems,_target, rv);
+							if (_action.id.substr(0, 4) == 'move') that.mail_callMove(_action, _elems, _target, rv);
+							if (_action.id.substr(0, 4) == 'copy') that.mail_callCopy(_action, _elems, _target, rv);
 					}
-				},
-				messageToDisplay,
-				this.egw.lang("Confirm"),
-				null, buttons);
+				}, messageToDisplay, this.egw.lang("Confirm"), null, buttons);
 			}
 			else
 			{
@@ -3368,6 +3469,9 @@ app.classes.mail = AppJS.extend(
 						document.body.style.cursor = '';
 					});
 				break;
+			case 'invoices':
+				egw.open_link(attachments[row_id].invoice_data, '_blank', '', action, true, attachments[row_id].type);
+				break;
 		}
 	},
 
@@ -3811,8 +3915,8 @@ app.classes.mail = AppJS.extend(
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		var buttons = [
-			{label: this.egw.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
-			{label: this.egw.lang("Cancel"), id: "cancel"}
+			{label: this.egw.lang("Add"), id: "add", image:'plus', "class": "ui-priority-primary", "default": true},
+			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
 		Et2Dialog.show_prompt(function (_button_id, _value)
 			{
@@ -3852,7 +3956,7 @@ app.classes.mail = AppJS.extend(
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		var buttons = [
 			{label: this.egw.lang("Rename"), id: "rename", "class": "ui-priority-primary", image: 'edit', "default": true},
-			{label: this.egw.lang("Cancel"), id: "cancel"}
+			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
 		Et2Dialog.show_prompt(function (_button_id, _value)
 			{
@@ -4704,10 +4808,14 @@ app.classes.mail = AppJS.extend(
 				widgets[expanderBtn].widget.set_disabled(false);
 				jQuery(widgets[widget].jQClass).hide();
 			}
+			else
+			{
+				jQuery(widgets[widget].jQClass).show();
+			}
 		}
 	},
 
-		/**
+	/**
 	 * Display Folder,Cc or Bcc fields in compose popup
 	 *
 	 * @param {jQuery event} event
@@ -4716,8 +4824,8 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_fieldExpander: function(event,widget)
 	{
-		var expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
-		for (var name in expWidgets)
+		const expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
+		for (const name in expWidgets)
 		{
 			expWidgets[name] = this.et2.getWidgetById(name+'_expander');
 		}
@@ -4730,37 +4838,38 @@ app.classes.mail = AppJS.extend(
 					jQuery(".mailComposeJQueryCc").show();
 					if (typeof expWidgets.cc !='undefined')
 					{
-						expWidgets.cc.set_disabled(true);
+						//expWidgets.cc.set_disabled(true);
 					}
 					break;
 				case 'bcc_expander':
 					jQuery(".mailComposeJQueryBcc").show();
 					if (typeof expWidgets.bcc !='undefined')
 					{
-						expWidgets.bcc.set_disabled(true);
+						//expWidgets.bcc.set_disabled(true);
 					}
 					break;
 				case 'folder_expander':
 					jQuery(".mailComposeJQueryFolder").show();
 					if (typeof expWidgets.folder !='undefined')
 					{
-						expWidgets.folder.set_disabled(true);
+						//expWidgets.folder.set_disabled(true);
 					}
 					break;
 				case 'replyto_expander':
 					jQuery(".mailComposeJQueryReplyto").show();
 					if (typeof expWidgets.replyto !='undefined')
 					{
-						expWidgets.replyto.set_disabled(true);
+						//expWidgets.replyto.set_disabled(true);
 					}
 					break;
 			}
+			widget.parentElement.hide()
 		}
 		else if (typeof widget == "undefined")
 		{
-			var widgets = {cc:{},bcc:{},folder:{},replyto:{}};
+			const widgets = {cc:{},bcc:{},folder:{},replyto:{}};
 
-			for(var widget in widgets)
+			for(const widget in widgets)
 			{
 				widgets[widget] = this.et2.getWidgetById(widget);
 
@@ -4770,30 +4879,30 @@ app.classes.mail = AppJS.extend(
 					{
 						case 'cc':
 							jQuery(".mailComposeJQueryCc").show();
-							if (typeof expWidgets.cc != 'undefiend')
+							if (typeof expWidgets.cc != 'undefined')
 							{
-								expWidgets.cc.set_disabled(true);
+								//expWidgets.cc.set_disabled(true);
 							}
 							break;
 						case 'bcc':
 							jQuery(".mailComposeJQueryBcc").show();
-							if (typeof expWidgets.bcc != 'undefiend')
+							if (typeof expWidgets.bcc != 'undefined')
 							{
-								expWidgets.bcc.set_disabled(true);
+								//expWidgets.bcc.set_disabled(true);
 							}
 							break;
 						case 'folder':
 							jQuery(".mailComposeJQueryFolder").show();
-							if (typeof expWidgets.folder != 'undefiend')
+							if (typeof expWidgets.folder != 'undefined')
 							{
-								expWidgets.folder.set_disabled(true);
+								//expWidgets.folder.set_disabled(true);
 							}
 							break;
 						case 'replyto':
 							jQuery(".mailComposeJQueryReplyto").show();
 							if (typeof expWidgets.replyto != 'undefiend')
 							{
-								expWidgets.replyto.set_disabled(true);
+								//expWidgets.replyto.set_disabled(true);
 							}
 							break;
 					}
@@ -5901,8 +6010,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var self = this;
 		var pass_exp = egw.preference('smime_pass_exp', 'mail');
-		et2_createWidget("dialog",
-		{
+		const dialog = loadWebComponent("et2-dialog", {
 			callback: function(_button_id, _value)
 			{
 				if (_button_id == 'send' && _value)
@@ -5917,8 +6025,8 @@ app.classes.mail = AppJS.extend(
 			},
 			title: egw.lang('Request for passphrase'),
 			buttons: [
-				{label: this.egw.lang("Send"), id: "send", "class": "ui-priority-primary", "default": true},
-				{label: this.egw.lang("Cancel"), id: "cancel"}
+				{label: this.egw.lang("Send"), id: "send", image:'send', "class": "ui-priority-primary", "default": true},
+				{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 			],
 			value:{
 				content:{
@@ -5928,7 +6036,8 @@ app.classes.mail = AppJS.extend(
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**
@@ -6088,7 +6197,7 @@ app.classes.mail = AppJS.extend(
 		var content = jQuery.extend(true, {message:_metadata.msg}, _metadata);
 		var buttons = [
 
-			{label: this.egw.lang("Close"), id: "close"}
+			{label: this.egw.lang("Close"), id: "close", image:'cancelDialog'}
 		];
 		if (!_display)
 		{
@@ -6109,8 +6218,7 @@ app.classes.mail = AppJS.extend(
 			'presets[org_unit]': _metadata.certDetails.subject.organizationUnitName
 		};
 		content.class="";
-		et2_createWidget("dialog",
-		{
+		const dialog = et2_createWidget('et2-dialog', {
 			callback: function(_button_id, _value)
 			{
 				if (_button_id == 'contact' && _value)
@@ -6132,7 +6240,8 @@ app.classes.mail = AppJS.extend(
 			value:{content:content},
 			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**
@@ -6179,7 +6288,7 @@ app.classes.mail = AppJS.extend(
 		var data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
 		var subject = data && data.data? data.data.subject : "";
 
-		et2_createWidget("dialog",
+		const dialog = et2_createWidget("et2-dialog",
 		{
 			callback: function(_button_id, _value) {
 				var newSubject = null;
@@ -6217,7 +6326,8 @@ app.classes.mail = AppJS.extend(
 			template: egw.webserverUrl + '/mail/templates/default/modifyMessageSubjectDialog.xet?1',
 			resizable: false,
 			width: 500
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**
@@ -6246,7 +6356,7 @@ app.classes.mail = AppJS.extend(
 					var widget = this.et2.getWidgetById(actions[i]);
 					if (widget)
 					{
-						jQuery(widget.getDOMNode()).trigger('click');
+					//	jQuery(widget.getDOMNode()).trigger('click');
 					}
 				}
 			}
@@ -6265,7 +6375,7 @@ app.classes.mail = AppJS.extend(
 		var pref_id = _senders[0].id.split('::')[0]+'_predefined_compose_addresses';
 		var prefs = egw.preference(pref_id, 'mail');
 
-		et2_createWidget("dialog",
+		const dialog = loadWebComponent("et2-dialog",
 		{
 			callback: function (_button_id, _value)
 			{
@@ -6283,7 +6393,8 @@ app.classes.mail = AppJS.extend(
 			minWidth: 410,
 			template: egw.webserverUrl + '/mail/templates/default/predefinedAddressesDialog.xet?',
 			resizable: false,
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**

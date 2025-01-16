@@ -20,6 +20,7 @@ import "./Et2PortletNote";
 import './Et2PortletWeather';
 import "../../calendar/js/Et2PortletCalendar";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 
 /**
  * JS for home application
@@ -343,7 +344,7 @@ export class HomeApp extends EgwApp
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: function(button_id, value)
 			{
-				if(button_id != et2_dialog.OK_BUTTON)
+				if(button_id != Et2Dialog.OK_BUTTON)
 				{
 					return;
 				}
@@ -351,7 +352,7 @@ export class HomeApp extends EgwApp
 				// Pass them to server
 				egw.json('home_ui::ajax_set_default', ['add', portlet_ids, value.group || false]).sendRequest(true);
 			},
-			buttons: et2_dialog.BUTTONS_OK_CANCEL,
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			title: action.caption,
 			template: "home.set_default",
 			value: {content: {}, sel_options: {group: {default: egw.lang('All'), forced: egw.lang('Forced')}}}

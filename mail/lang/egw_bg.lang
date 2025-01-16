@@ -113,6 +113,7 @@ connection status	mail	bg	Статус на връзката
 contact label	mail	bg	Етикет за контакт
 contains	mail	bg	съдържа
 contains(*)	mail	bg	Съдържа(*)
+continue	mail	bg	Продължи
 convert mail to item and attach its attachments to this item (standard)	mail	bg	конвертирайте Поща/Mail в елемент и прикачете своите прикачени файлове към този елемент (стандартно)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	bg	конвертирайте Поща/Mail в елемент, прикачете неговите прикачени файлове и добавете необработено съобщение (message/rfc822 (.eml)) като прикачен файл
 convert only mail to item (ignore possible attachments)	mail	bg	конвертиране само Поща/Mail в елемент (игнорирайте възможни прикачени файлове)
@@ -322,6 +323,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	bg	Работа
 junk	mail	bg	Нежелани
 junk folder	mail	bg	Папка с нежелани файлове
+keep a copy	mail	bg	Запазване на копие
 keep a copy of the message in your inbox	mail	bg	запазване на копие от съобщението във Входящи
 kilobytes	mail	bg	килобайта
 later	mail	bg	По-късно
@@ -492,7 +494,6 @@ smtp	mail	bg	SMTP
 sneak preview in list	mail	bg	Предварителен преглед на съобщението
 start new messages with mime type plain/text or html?	mail	bg	Започва нови съобщения като чист текст или HTML?
 template folder	mail	bg	Папка "Шаблони"
-templates	mail	bg	Шаблони
 text/plain	mail	bg	текст
 the imap server need to meet certain requirements and be configured for it:	mail	bg	Сървърът на IMAP трябва да отговаря на определени изисквания И да бъде конфигуриран за него:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	bg	Подателят на съобщението е заявил обратна разписка. Желаете ли да му я изпратите?
@@ -508,6 +509,7 @@ to do	mail	bg	За да направите
 toggled on actions	mail	bg	Превключване на действията
 trash	mail	bg	Кошче
 trash folder	mail	bg	Папка за отпадъци
+unconditional	mail	bg	Винаги
 unflagged	mail	bg	немаркирано
 unread	mail	bg	Непрочетено
 vacation notice	mail	bg	ваканционна бележка

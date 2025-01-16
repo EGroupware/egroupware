@@ -147,6 +147,7 @@ applies the changes made	common	pl	Zatwierdza wykonane zmiany
 applies the changes to the given version of the template	common	pl	Zatwierdza wykonane zmiany dla podanej wersji szablonu
 apply	common	pl	Uaktualnij
 apply the action on the whole query, not only the shown entries	common	pl	Zastosuj akcję do całego zapytania, a NIE tylko do wyświetlonych wpisów
+apps & license	common	pl	Aplikacje i licencje
 apps &amp; license	common	pl	Aplikacje i licencja
 april	common	pl	Kwiecień
 are you sure you want to delete these entries ?	common	pl	Czy na pewno usunąć te wpisy?
@@ -429,6 +430,7 @@ document '%1' does not exist or is not readable for you!	preferences	pl	Dokument
 document properties	common	pl	Ustawienia dokumentu
 document title:	common	pl	Tytuł dokumentu:
 documentation	common	pl	Dokumentacja
+documents	common	pl	Dokumenty
 doesn't matter	common	pl	Bez znaczenia
 domain	common	pl	Domena
 domain name for mail-address, eg. "%1"	common	pl	Nawza domeny adresu mailowego, np. "%1"
@@ -475,6 +477,7 @@ egypt	common	pl	EGIPT
 el salvador	common	pl	SALWADOR
 email	common	pl	E-mail
 email-address of the user, eg. "%1"	common	pl	email użytkownika, np. "%1"
+emails	common	pl	E-maile
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pl	Osadzone style CSS, np. ".red { background: red; }" (zwróć uwagę na "." przed nazwą klasy) lub "@import url(...)" (nazwy klas są globalne dla całej strony!).
 empty file	common	pl	Pusty plik
 enable javascript onchange submit	common	pl	Aktywuj przesłanie formularza poprzez JavaScript na onchange
@@ -672,6 +675,7 @@ if you use "2-factor-authentication", please enter the code here.	common	pl	Jeś
 image	common	pl	Obrazek
 image directory relative to document root (use / !), example:	common	pl	Katalog przechowywania obrazków - względny do DOCUMENT_ROOT (użyj ciacha - / !), przykład:
 image url	common	pl	Adres URL obrazka
+images	common	pl	Obrazy
 import	common	pl	Importuj
 import an etemplate from a xml-file	common	pl	Importuj e-Szablon z pliku XML
 import table-definitions from existing db-table	common	pl	Importuj definicję tabel z istniejących tabel bazy danych
@@ -946,6 +950,7 @@ open	common	pl	Otwórz
 open existing contact	common	pl	Otwarty istniejący kontakt
 open notify window	common	pl	Otwórz okno powiadamiania
 open popup window	common	pl	Otwórz okno typu popup
+open the online help.	common	pl	Otwórz pomoc online
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pl	Logowanie OpenIDConnect powiodło się, ale użytkownik '%1' NIE istnieje w EGroupware, a automatyczne tworzenie użytkowników jest wyłączone!
 operator	common	pl	Operator
 optional note about the link	common	pl	Opcjonalna notatka związana z odnośnikiem
@@ -1213,6 +1218,7 @@ spacing	common	pl	Rozdzielenie
 spain	common	pl	HISZPANIA
 span	common	pl	Span
 span, class	common	pl	Span, Class
+spreadsheets	common	pl	Arkusze kalkulacyjne
 sri lanka	common	pl	SRI LANKA
 stack	common	pl	Stos
 start a new search, cancel this link	common	pl	Zacznij nowe wyszukiwanie, anuluj ten link
@@ -1254,6 +1260,7 @@ tanzania, united republic of	common	pl	TANZANIA
 template	common	pl	Szablon
 template deleted	common	pl	Szablon usunięto.
 template saved	common	pl	Szablon zapisano.
+templates	common	pl	Szablony
 text	common	pl	Tekst
 text color:	common	pl	Kolor tekstu:
 textarea	common	pl	Obszar tekstu
@@ -1348,6 +1355,7 @@ vbox	common	pl	VBox
 venezuela	common	pl	WENEZUELA
 version	common	pl	Wersja
 vertical alignment of row	common	pl	Pionowe porządkowanie wiersza
+videos	common	pl	Filmy
 viet nam	common	pl	WIETNAM
 view	common	pl	Przeglądaj
 view linked %1 entries	common	pl	%1: zobacz powiązane wpisy
@@ -1365,7 +1373,6 @@ western sahara	common	pl	SAHARA ZACHODNIA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pl	Co dzieje się z przepełnioną zawartością (overflow): visible (domyślne), hidden, scroll, auto
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	pl	Po scaleniu wpisów w dokumenty zostaną one zapisane w tym folderze. Jeśli nie podano folderu, zostaną one zapisane w katalogu domowym (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pl	Jeżeli wybierzesz "TAK", "Powrót na stronę domową" oraz "Wylogowanie" będą pokazywane jako przyciski aplikacji na głównym pasku aplikacji.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	pl	Gdzie będą wyświetlane linki wylogowania EGroupware.
 which groups	common	pl	Które grupy
 whole query	common	pl	Całe zapytanie
 widget copied into clipboard	common	pl	Obiekt skopiowano do schowka

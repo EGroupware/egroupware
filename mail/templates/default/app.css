@@ -80,7 +80,7 @@ tr.deleted .status_img {
 }
 
 tr.unseen .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-fill.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope.svg);
 }
 
 tr.flagged_seen .status_img {
@@ -173,6 +173,10 @@ A.sieveRowInActive
 }
 table tr.attachmentRow > td{
 	vertical-align: middle;
+}
+div#popupMainDiv #mail-compose table tr.attachmentRow > td et2-description{
+	width: 84vw;
+	overflow-wrap: anywhere;
 }
 table tr.attachmentRow > td > img {
 	background:transparent;
@@ -356,6 +360,7 @@ div.mailUploadSection > div.et2_hbox > label {
 	min-width: 15ex;
 }
 #mail-compose_selectFromVFSForCompose{
+	height:0;
 	width:20px;
 	float:none;
 	background-color: transparent;
@@ -897,24 +902,35 @@ and (orientation : landscape) {
 
 }
 
-#mail-compose_cc_expander,
-#mail-compose_bcc_expander,
-#mail-compose_folder_expander,
-#mail-compose_replyto_expander {
-	width: 100%;
-	margin: 0px;
-	margin-left: 1em;
-	text-align: left;
-	padding: 0;
-	cursor: pointer;
-	border:	none;
-	color: rgb(38, 83, 124);
-	background-color: transparent;
+#mail-compose_cc_expander::part(main) {
+	margin-left:1em;
+
 }
-#mail-compose_mimeType{margin-left:1em;}
+
+#popupMainDiv .et2_container .mailComposeHeaderSection et2-hbox {
+	border-bottom: 1px solid;
+	border-color: hsl(240 5% 64.9%);/*var(--sl-panel-border-color);*/
+
+	&::part(base){
+		gap: 1em;
+	}
+
+	#mail-compose_mimeType {
+		flex-grow: 0;
+	}
+	.et2_toolbar
+	{
+		border:none;
+	}
+}
+
 /*Make file uploads in compose dialog invisible*/
 .mail-compose_toolbar_assist div.mail-compose_fileselector, .mail-compose_toolbar_assist {
 	display:none;
+}
+
+et2-vbox.mailComposeHeaderSection{
+	padding-bottom: 5px;
 }
 
 div.mailComposeHeaderSection>table {
@@ -985,6 +1001,11 @@ et2-image.smime_cert_unknownemail {
   border: none;
   outline: none;
 }
+#mail-compose tr.mailComposeHeaders et2-dropdown et2-button::part(base){
+	margin-left: 1ex;
+	background-color: var(--sl-color-gray-150);
+}
+
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn-focus {
   border: none;
   box-shadow: none;
@@ -994,9 +1015,6 @@ et2-image.smime_cert_unknownemail {
     width: 100%;
 }
 
-#mail-compose_subject {
-	padding: 10px 0 10px 0;
-}
 div#mail-index_nm.splitter-pane {min-height: 100px;}
 #mail-index_mailSplitter .splitter-bar-horizontal {background: white;}
 
@@ -1114,4 +1132,15 @@ table.et2_egw_action_ddHelper_row .innerContainer {
 
 .et2_egw_action_ddHelper_row et2-vbox::part(base) {
 	gap: 1px;
+}
+
+/* hide by default hidden compose header-lines, to not show them briefly before hidden by app.js */
+tr.mailComposeJQueryCc, tr.mailComposeJQueryBcc, tr.mailComposeJQueryFolder, tr.mailComposeJQueryReplyto  {
+	display: none;
+}
+tr.mailComposeHeaders > td > et2-dropdown {
+	position: relative;
+	left: -1em;
+	width: 100%;
+	max-width: 100%;
 }

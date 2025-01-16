@@ -51,6 +51,7 @@ condition	mail	id	kondisi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	id	Nilai yang dikonfigurasi akan diatur secara otomatis pada dialog penulisan untuk bidang yang dihormati saat membuat email baru.
 contact label	mail	id	Label kontak
 contains	mail	id	mengandung
+continue	mail	id	Lanjutkan
 convert mail to item and attach its attachments to this item (standard)	mail	id	Mengonversi email menjadi item dan melampirkan lampirannya ke item ini (standar)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	id	Mengonversi email menjadi item, melampirkan lampirannya dan menambahkan pesan mentah (.eml) sebagai lampiran
 convert only mail to item (ignore possible attachments)	mail	id	Hanya mengonversi email ke item (abaikan kemungkinan lampiran)
@@ -71,6 +72,7 @@ discard message	mail	id	buang pesan
 do you really want to toggle flag %1 for all messages in the current view?	mail	id	Apakah Anda benar-benar ingin mengganti bendera %1 untuk SEMUA pesan di tampilan saat ini?
 do you really want to toggle label %1 for all messages in the current view?	mail	id	Apakah Anda benar-benar ingin mengganti label %1 untuk SEMUA pesan di tampilan saat ini?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	id	Apakah Anda ingin dimintai konfirmasi sebelum melampirkan pesan yang dipilih ke email baru?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	id	Apakah Anda ingin dimintai konfirmasi sebelum memindahkan pesan yang dipilih ke folder lain?
 draft folder	mail	id	Folder Konsep
 drafts	mail	id	Draf
 edit account	mail	id	Edit akoun
@@ -142,6 +144,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	id	Bekerja
 junk	mail	id	Sampah
 junk folder	mail	id	Folder sampah
+keep a copy	mail	id	Menyimpan salinan
 keep a copy of the message in your inbox	mail	id	Menyimpan salinan pesan di kotak masuk Anda
 kilobytes	mail	id	kilobyte
 later	mail	id	Later
@@ -292,7 +295,6 @@ smtp	mail	id	SMTP
 sneak preview in list	mail	id	Pratinjau pesan
 sort order	mail	id	Sort Order
 template folder	mail	id	Folder Templat
-templates	mail	id	Templat
 text	mail	id	Text
 text/plain	mail	id	Teks
 the imap server need to meet certain requirements and be configured for it:	mail	id	Server IMAP harus memenuhi persyaratan tertentu DAN dikonfigurasi untuk itu:
@@ -306,6 +308,7 @@ to do	mail	id	Melakukan
 toggled on actions	mail	id	Mengaktifkan tindakan
 trash	mail	id	Trash
 trash folder	mail	id	Trash Folder
+unconditional	mail	id	Selalu
 unflagged	mail	id	Tak ditandai
 unread	mail	id	Tak dibaca
 vacation notice	mail	id	Pemberitahuan liburan

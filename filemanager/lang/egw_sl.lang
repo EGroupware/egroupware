@@ -47,7 +47,6 @@ can't open directory %1!	filemanager	sl	Ne morem odpreti mape %1!
 cancel editing %1 without saving	filemanager	sl	Prekini urejanje %1 brez shranjevanja
 cannot create directory because it begins or ends in a space	filemanager	sl	Mapa ne more biti ustvarjena, ker se začne ali konča s presledkom.
 cautiously rejecting to remove folder '%1'!	filemanager	sl	Ne morem odstraniti mape '%1'!
-check all	filemanager	sl	Preveri vse
 check virtual filesystem	common	sl	Preverite virtualni datotečni sistem
 classic	filemanager	sl	Standardna orodna vrstica
 clear search	filemanager	sl	Izbriši iskanje
@@ -237,7 +236,6 @@ projectmanager	filemanager	sl	Upravljalec projektov
 properties saved.	filemanager	sl	Lastnosti so bile shranjene.
 protocol to use	filemanager	sl	Protokol za uporabo
 protocols	filemanager	sl	Protokoli
-quick jump to	filemanager	sl	Hiter skok v
 quota	filemanager	sl	Kvota
 quota exceeded	filemanager	sl	Kvota je presežena
 read & write access	filemanager	sl	Pravice branja in pisanja

@@ -60,8 +60,8 @@ export class Et2Number extends Et2Textbox
 				}
 
 				.form-control-input {
-					min-width: 4em;
-					max-width: 7em;
+					min-width: var(--width, 4em);
+					max-width: var(--width, 7em);
 				}
 
 				.input__control {
@@ -192,6 +192,11 @@ export class Et2Number extends Et2Textbox
 		{
 			attrs.validator = attrs.precision === 0 ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/';
 		}
+		if(typeof attrs.width != "undefined")
+		{
+			this.style.setProperty("--width", attrs.width);
+			delete attrs.width;
+		}
 		super.transformAttributes(attrs);
 	}
 
@@ -224,7 +229,23 @@ export class Et2Number extends Et2Textbox
 			// Remove separator so parseFloat works
 			if(typeof val === 'string')
 			{
-				val = val.replace(this.thousandsSeparator, "").replace(",", '.');
+				// Special exception if someone is entering a decimal using . even though their preference is , (N.A. number in Europe)
+				// Only 1 ".", no thousands separator and if precision is set decimal places must match
+				if(this.decimalSeparator != "." && val.indexOf(".") == val.lastIndexOf(".") && !val.includes(",") && (
+					// Starts with .
+					val.indexOf(".") == 0 ||
+					// No precision, and it's not in a thousands place
+					(typeof this.precision == "undefined" && (val.length - val.indexOf(".") - 1 != 3 || val.indexOf(".") > 4)) ||
+					// Precision, and it's got the right number of decimals
+					typeof this.precision != "undefined" && this.precision == val.length - val.indexOf(".") - 1
+				))
+				{
+					// Leave it
+				}
+				else
+				{
+					val = val.replaceAll(this.thousandsSeparator, "").replace(",", '.');
+				}
 			}
 
 			if(typeof this.precision !== 'undefined')

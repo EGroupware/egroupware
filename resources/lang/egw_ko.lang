@@ -2,17 +2,16 @@
 %1 accessories restored	resources	ko	%1 액세서리가 복원되었습니다.
 %1 resource(s) %2	resources	ko	%1 리소스 %2
 %1 resource(s) %2, %3 failed	resources	ko	%1 리소스 %2, %3이(가) 실패했습니다.
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	ko	권한이 부족하여 %1 리소스 %2, %3을(를) 실패했습니다 !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	ko	권한이 부족하여 %1 리소스 %2, %3을(를) 실패했습니다!
 %1 resource(s) booked	resources	ko	%1 리소스 예약됨
 %1 resource(s) view calendar	resources	ko	%1 리소스(들)의 캘린더 보기
 accessories	resources	ko	액세서리
 accessories of	resources	ko	액세서리 출발지
-accessories:	resources	ko	액세서리:
 accessory of	resources	ko	액세서리 출발지
-actions	resources	ko	액션
 add group to event participants	resources	ko	이벤트 참가자에 그룹 추가
-all categories	resources	ko	모든 카테고리
 allow booking requests from any user when creating events?	resources	ko	이벤트를 만들 때 모든 사용자의 예약 요청을 허용하시겠습니까?
+allow ignore conflicts	admin	ko	충돌 무시 허용
+book resource	resources	ko	리소스 예약
 booking requests	resources	ko	예약 요청
 category admin	resources	ko	카테고리 관리자
 category saved.	resources	ko	카테고리가 저장되었습니다.
@@ -26,17 +25,34 @@ deleted	resources	ko	삭제됨
 do you really want to delete this resource?	resources	ko	이 리소스를 정말 삭제하시겠습니까?
 edit this entry	resources	ko	이 엔트리 수정
 existing links	resources	ko	기존링크
+exports a list of resources to a csv file.	resources	ko	リソースのリストをCSVファイルにエクスポートします。
 general	resources	ko	일반
 global categories	resources	ko	전역 카테고리
 hours	resources	ko	시간
 icon	resources	ko	아이콘
+if you specify an export definition, it will be used when you export	resources	ko	エクスポート定義を指定した場合は、その定義がエクスポート時に使用されます。
+imports a list of resources from a csv file.	resources	ko	リソース：リソースのリストをCSVファイルからインポートします。
+is resource bookable?	resources	ko	리소스를 예약할 수 있나요
+is the ressource bookable?	resources	ko	리소스를 예약할 수 있나요?
+is this resource bookable?	resources	ko	このリソースは予約可能ですか
 links	resources	ko	링크
 location	resources	ko	장소
+new accessory	resources	ko	새 액세서리
+new resource	resources	ko	새 리소스
 no - leave them	resources	ko	아니요 - 그대로 두기
 no - make them resources	resources	ko	아니요 - 리소스로 만들기
 no, users will need to contact users with direct booking permission	resources	ko	아니요, 사용자가 직접 예약 권한을 가진 사용자에게 연락해야 합니다.
+prize	resources	ko	가격
+resource	resources	ko	리소스
+resource %1 deleted!	resources	ko	리소스 %1 삭제되었습니다!
+resource %1 saved!	resources	ko	리소스 %1이 저장되었습니다!
+resource / accessories	resources	ko	리소스 / 액세서리
 resources	common	ko	리소스
 select resources	common	ko	리소스 선택
 un-delete accessories of selected resources too?	resources	ko	선택한 리소스의 액세서리를 복원하시겠습니까?
+view accessories	resources	ko	액세서리 보기
+view calendar	resources	ko	캘린더 보기
 yes - delete accessories too	resources	ko	예 - 액세서리도 삭제
 yes - un-delete accessories too	resources	ko	예 - 액세서리도 복원
+yes, all users can ignore conflicts	resources	ko	예, 모든 사용자가 충돌을 무시할 수 있습니다.
+yes, only users with direct booking permission	resources	ko	예, 직접 예약 권한이 있는 사용자만

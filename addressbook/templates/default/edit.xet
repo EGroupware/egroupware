@@ -423,7 +423,7 @@
 						<et2-button  label="Apply" id="button[apply]" class="button_apply" image="apply"></et2-button>
 						<et2-button  label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; window.close(); return false;" image="cancel"></et2-button>
 						<et2-checkbox  statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all" disabled="@hide_change_org"></et2-checkbox>
-						<et2-button  align="right" label="Delete" id="button[delete]" class="button_delete" onclick="et2_dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" image="delete"></et2-button>
+                        <et2-button align="right" label="Delete" id="button[delete]" class="button_delete" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" image="delete"></et2-button>
 					</et2-hbox>
 
 				</row>

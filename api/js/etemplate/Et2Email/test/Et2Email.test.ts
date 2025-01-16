@@ -194,7 +194,6 @@ describe("Tags", () =>
             <et2-email label="I'm a select" value="one@example.com, two@example.com">
             </et2-email>
 		`);
-		element.loadFromXML(element);
 
 		// Stub egw()
 		sinon.stub(element, "egw").returns(window.egw);

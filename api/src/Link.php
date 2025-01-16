@@ -83,7 +83,7 @@ namespace EGroupware\Api;
  *          'mime' => array(						// Optional register mime-types application can open
  *          	'text/something' => array(
  *          		'mime_url'  => $attr,			// either mime_url or mime_data is required for server-side processing!
- *          		'mime_data' => $attr,			// md5-hash returned from Link::set_data() to retrive content (only server-side)
+ *          		'mime_data' => $attr,			// md5-hash returned from Link::set_data() to retrieve content (only server-side)
  *          		'menuaction' => 'app.class.method',	// method to call
  *          		'mime_popup' => '400x300',		// optional size of popup
  *          		'mime_target' => '_self',		// optional target, default _blank
@@ -1059,11 +1059,12 @@ class Link extends Link\Storage
 	 * We prefer full matches over wildcards like "text/*" written as regexp "/^text\\//".
 	 *
 	 * @param string $type
+	 * @param ?string $_app check only $_app, if given
 	 * @return array with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
 	 */
-	static function get_mime_info($type)
+	static function get_mime_info($type, string $_app=null)
 	{
-		foreach(self::$app_register as $app => $registry)
+		foreach($_app ? [$_app => self::$app_register[$_app] ?? []] : self::$app_register as $app => $registry)
 		{
 			if (isset($registry['mime']) &&
 				(isset($GLOBALS['egw_info']['user']['apps'][$app]) ||
@@ -1495,7 +1496,7 @@ class Link extends Link\Storage
 		if (!($extra = self::get_registry($app,'find_extra'))) $extra = array();
 
 		// always use regular links stream wrapper here: extended one is unnecessary (slow) for just listing attachments
-		if (substr($path,0,13) == 'stylite.links') $path = substr($path,8);
+		if ($app !== 'invoices' && substr($path,0,13) == 'stylite.links') $path = substr($path,8);
 
 		$attached = array();
 		if (($url2stats = Vfs::find($path,array('need_mime'=>true,'type'=>'F','url'=>true)+$extra,true)))

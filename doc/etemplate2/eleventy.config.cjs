@@ -79,6 +79,7 @@ module.exports = function (eleventyConfig)
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/sub/dir/etemplate/etemplate2.js"});
 	eleventyConfig.addPassthroughCopy({"../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css": "assets/styles/bootstrap-icons.min.css"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/*/doc/*": "assets/components/"});
+	eleventyConfig.addPassthroughCopy({"../../node_modules/diff2html/bundles/css/diff2html.min.css": "assets/styles/diff2html.min.css"});
 
 	//eleventyConfig.addPassthroughCopy({"../../vendor/**/*min.js": "assets/scripts/vendor/"});
 	//eleventyConfig.addPassthroughCopy("../dist/etemplate2.js", "assets/scripts/etemplate2.js");

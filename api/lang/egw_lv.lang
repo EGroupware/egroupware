@@ -110,6 +110,7 @@ application	common	lv	Programmatūra
 application name needed to write a langfile or dump the etemplates !!!	common	lv	Programmatūras nosaukumam vajag uzrakstīt <i>langfile</i> vai izmest eTemplates!
 applications	common	lv	Aplikācijas
 apply	common	lv	Aktualizēt
+apps & license	common	lv	Programmas un licences
 apps &amp; license	common	lv	Programmas un licences
 april	common	lv	Aprīlis
 are you sure you want to delete these entries ?	common	lv	Vai esi drošs, ka vēlies dzēst šos ierakstus?
@@ -141,6 +142,7 @@ bahrain	common	lv	BAHREINA
 bangladesh	common	lv	BANGLADEŠA
 barbados	common	lv	BARBADOSA
 bcc	common	lv	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	lv	Pirms turpināt darbu, iesakām noskatīties šo īso video, lai redzētu, kā Mailvelope papildinājums darbojas ar EGroupware.
 belarus	common	lv	BALTKRIEVIJA
 belgium	common	lv	BEĻĢIJA
 belize	common	lv	BELIZA
@@ -207,6 +209,7 @@ clear form	common	lv	Nodzēst formu
 click	common	lv	Klikšķini
 click here to attach the file	common	lv	Uzklišķini šeit, ja vēlies pievienot datni
 click here to create the link	common	lv	Uzklikšķini šeit, lai izveidotu saiti
+click here to resume your egroupware session.	common	lv	Noklikšķiniet, lai atsāktu EGroupware sesiju.
 click here to start the search	common	lv	Uzklikšķini šeit, lai sāktu meklēšanu
 click here to upload the file	common	lv	Uzklikšķini šeit, lai atjauninātu datni
 click to order after that criteria	common	lv	Uzklikšķini, lai sakārtotu pēc tā kritērija
@@ -287,6 +290,7 @@ description	common	lv	Izklāsts
 detail	common	lv	Detaļa
 details	common	lv	Detaļas
 directory	common	lv	Direktorija
+directory for storing merged documents	preferences	lv	Apvienoto dokumentu glabāšanas mape
 disabled	common	lv	Izslēgts
 discard changes	common	lv	Atcelt izmaiņas
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	lv	Parādīts pirms ievades vai arī ievade ievietota iezīmē priekš "%s" (parakstīšanās pogas iezīme vai Attēla datnes vārds).
@@ -297,12 +301,14 @@ do you want to save the changes you made in table %s?	common	lv	Vai vēlies sagl
 document properties	common	lv	Dokumenta rekvizīti
 document title:	common	lv	Dokumenta virsraksts:
 documentation	common	lv	Dokumentācija
+documents	common	lv	Dokumenti
 domain	common	lv	Domeins
 domain name for mail-address, eg. "%1"	common	lv	Domeina vārs e-pasta adresēm, piem. "%1"
 domestic	common	lv	Kopmītne
 dominica	common	lv	DOMINIKA
 dominican republic	common	lv	DOMINIKĀNA
 don't ask again!	common	lv	Neprasiet vēlreiz!
+don't show this again	common	lv	Nerādiet to vēlreiz
 done	common	lv	Gatavs
 download	common	lv	Lejupielādēt
 drop a table - this can not be undone	common	lv	Pabeigt tabulu- tas nevar būt neizdarīts
@@ -314,6 +320,7 @@ east timor	common	lv	AUSTRUMTIMORA
 ecuador	common	lv	EKVADORA
 edit	common	lv	Rediģēt
 edit %1 category for	common	lv	Rediģēt %1 kategoriju par
+edit avatar	common	lv	Rediģēt avatāru
 edit categories	common	lv	Rediģēt Kategorijas
 edit category	common	lv	Rediģēt kategoriju
 editable templates - db-tools	common	lv	Rediģējamas veidnes -DB rīki
@@ -321,11 +328,19 @@ editable templates - delete template	common	lv	Rediģējamas veidnes- Izdzdēst 
 editable templates - editor	common	lv	Rediģējamas veidnes- Redaktors
 editable templates - search	common	lv	Rediģējamas veidnes- Meklēt
 editable templates - show template	common	lv	Rediģējamas veidnes- Rādīt veidni
+egroupware	common	lv	EGroupware
+egroupware administrators group, do not delete	common	lv	EGroupware administratoru grupa, NEizdzēst
+egroupware all users group, do not delete	common	lv	EGroupware visu lietotāju grupa, NEizdzēst
+egroupware anonymous users group, do not delete	common	lv	EGroupware anonīmo lietotāju grupa, NEizdzēst
+egroupware maintenance update %1 available	common	lv	Pieejams EGroupware uzturēšanas atjauninājums %1
+egroupware security update %1 needs to be installed!	common	lv	Jāinstalē EGroupware drošības atjauninājums %1!
+egroupware version	common	lv	EGroupware versija
 egroupware: login blocked for user '%1', ip %2	common	lv	EGroupware: bloķēts lietotājvārds '%1', IP %2
 egypt	common	lv	ĒĢIPTE
 el salvador	common	lv	SALVADORA
 email	common	lv	E-Pasts
 email-address of the user, eg. "%1"	common	lv	Lietotāja e-pasta adrese, piemēram, "%1"
+emails	common	lv	E-pasti
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	lv	Iegultie CSS stili, piem.'.red { background: red; }' (atzīmē '.' pirms klases nosaukuma) or '@import url(...)' (klases nosaukums ir vispārējs visai lapai!)
 enable javascript onchange submit	common	lv	Aktivizē JavaScript uz Izmaiņu apstiprināšanas
 enabled	common	lv	Aktivizēts
@@ -476,6 +491,7 @@ if field is disabled an empty table-cell is displayed, for (temporal) removement
 if you use "2-factor-authentication", please enter the code here.	common	lv	Ja izmantojat "2 faktoru autentifikāciju", lūdzu, ievadiet kodu šeit.
 image	common	lv	Attēls
 image url	common	lv	Attēla URL
+images	common	lv	Attēli
 import	common	lv	Importēt
 import an etemplate from a xml-file	common	lv	importēt eveidni no XML datnes
 import table-definitions from existing db-table	common	lv	Importēt tabulas nosacījumus no eksistējošas DB tabulas
@@ -707,6 +723,7 @@ open	common	lv	Atvērt
 open existing contact	common	lv	Atvērt esošo kontaktu
 open notify window	common	lv	Atvērt informācijas logu
 open popup window	common	lv	Atvērt papildus logu
+open the online help.	common	lv	Atveriet tiešsaistes palīdzību
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	lv	OpenIDConnect pieteikšanās ir veiksmīga, bet lietotājs '%1' EGroupware neeksistē, UN automātiskā lietotāju izveide ir atspējota!
 operator	common	lv	Operators
 optional note about the link	common	lv	Atzīme par saiti pēc izvēles
@@ -918,6 +935,7 @@ south africa	common	lv	DIENVIDĀFRIKA
 south georgia and the south sandwich islands	common	lv	DIENVIDDŽORDŽIJA UN DIENVIDSENDVIČU SALAS
 spacing	common	lv	Atstarpe
 spain	common	lv	SPĀNIJA
+spreadsheets	common	lv	Izklājlapas
 sri lanka	common	lv	ŠRILANKA
 stack	common	lv	Steks
 start a new search, cancel this link	common	lv	Sākt jaunu meklēšanu, atcelt šo saiti
@@ -947,6 +965,7 @@ tanzania, united republic of	common	lv	TANZĀNIJA
 template	common	lv	Veidne
 template deleted	common	lv	Veidne izdzēsta
 template saved	common	lv	Veidne saglabāta
+templates	common	lv	Šabloni
 text	common	lv	Teksts
 text color:	common	lv	Texta krāsa:
 textarea	common	lv	Teksta lauks
@@ -1025,6 +1044,7 @@ vanuatu	common	lv	VANUATU
 vbox	common	lv	VBox
 venezuela	common	lv	VENECUĒLA
 version	common	lv	Versija
+videos	common	lv	Videoklipi
 viet nam	common	lv	VJETNAMA
 view	common	lv	Rādīt
 view this linked entry in its application	common	lv	Rādīt šo saistīto ierakstu tā aplikācijā
@@ -1034,6 +1054,7 @@ wallis and futuna	common	lv	VOLISA SALAS UN FUTUNA
 wednesday	common	lv	Trešdiena
 welcome	common	lv	Laipni Lūdzam
 western sahara	common	lv	RIETUMSAHĀRA
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	lv	Apvienojot ierakstus dokumentos, tie tiks saglabāti šeit. Ja mape nav norādīta, tie tiks saglabāti jūsu mājas direktorijā (%1).
 which groups	common	lv	Kuras grubas
 width	common	lv	Platums
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	lv	Kolonnas platums(% vai pikseļos), neatļauj kolonnu:! = not]<value>[=<check>]piem.,'!@data' neatļauj kolonnu, ja ieraksts ir tukšs

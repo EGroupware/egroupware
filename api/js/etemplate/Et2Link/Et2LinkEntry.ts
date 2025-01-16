@@ -376,7 +376,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
                             ?appIcons=${this.appIcons}
                             applicationList=${this.applicationList ? this.applicationList : nothing}
                             ?disabled=${this.disabled}
-                            ?readonly=${this.disabled}
+                            ?readonly=${this.readonly}
                             .value=${this.__value?.app ? this.__value.app : nothing}
                             @change=${this.handleAppChange}
                     ></et2-link-apps>

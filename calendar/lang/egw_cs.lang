@@ -320,6 +320,7 @@ ical export	calendar	cs	Exportovat iCal
 ical file	calendar	cs	iCal soubor
 ical import	calendar	cs	Importovat iCal
 ical successful imported	calendar	cs	iCal úspěšně naimportován
+if resource is unavailable	calendar	cs	Pokud je zdroj nedostupný
 if start day differs	calendar	cs	Pokud je počáteční datum odlišné
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	cs	Pokud zde nenastavíte heslo, bude informace dostupná každému, kdo zná adresu (URL)!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	cs	Pokud zvolíte rozsah (měsíc, týden a pod.) místo jednotlivých záznamů, budou tyto zvláštní pole k dispozici.
@@ -509,6 +510,7 @@ require an acl grant to invite other users and groups	admin	cs	Vyžadovat ACL op
 required information (start, end, title, ...) missing!	calendar	cs	Chybí požadované údaje (začátek, konev, ...)!
 reset	calendar	cs	Vynulovat
 reset participant stati on event shifts	calendar	cs	Při posunu události obnovit status účastníků
+reset resource status on event shifts	calendar	cs	Obnovení stavu prostředku při posunu události
 resources	calendar	cs	Zdroje
 resources except conflicting ones	calendar	cs	Zdroje kromě konfliktních
 resources with conflict detection	calendar	cs	Zdroje s detekcí konfliktu
@@ -527,7 +529,8 @@ select a color for this calendar	calendar	cs	Vyberte barvu kalendáře
 select a time	calendar	cs	Vybrat čas
 select multiple contacts for a further action	calendar	cs	Vybrat více kontaktů pro další akci
 select resources	calendar	cs	Vybrat zdroje
-select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	cs	Pokud je událost posunuta na později, má být status účastníků obnoven?
+select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	cs	Vyberte, zda chcete, aby byl stav prostředku resetován na neznámý, pokud dojde k posunu události. U externích zdrojů vždy resetujeme stav účastníka na neznámý.
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	cs	Vyberte, zda chcete, aby byl stav prostředku resetován na neznámý, pokud dojde k posunu události.
 select who should get the alarm	calendar	cs	Vybrat kdo dostane připomínku
 selected range	calendar	cs	Vybraný rozsah
 selected users/groups	calendar	cs	Vybraní uživatelé/skupiny

@@ -95,6 +95,9 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
                 display: flex;
 				font-size: 20px !important;
 				padding-left: var(--et2-button-image-padding-left);
+/*fix for firefox esr: this version does not set a width on the image to fill available space
+so we force the button images to be square*/
+				width: 20px;
             }
             ::slotted([slot="icon"][src='']) {
 				display: none;

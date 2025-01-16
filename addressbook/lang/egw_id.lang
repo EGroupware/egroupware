@@ -125,6 +125,7 @@ copied	addressbook	id	disalin
 copied by %1, from record #%2.	addressbook	id	Disalin oleh %1, dari rekaman #%2.
 country	common	id	Negara
 create new links	addressbook	id	Bikin tautan baru
+create new shares writable	addressbook	id	Opret nye aktier, der kan skrives
 created	addressbook	id	Dibikin
 credit	addressbook	id	Kredit
 crm-view	addressbook	id	Tampilan CRM
@@ -404,7 +405,6 @@ unshare	addressbook	id	Tidak lagi berbagi
 unshared	addressbook	id	tidak lagi dibagikan
 updated	addressbook	id	Dikinikan
 upload or delete the photo	addressbook	id	Unggah atau hapus foto
-use a category tree?	addressbook	id	Menggunakan pohon untuk memilih kategori
 use country list	addressbook	id	Gunakan Daftar Negara
 user groups are automatically shown as distribution lists.	addressbook	id	Grup pengguna secara otomatis ditampilkan sebagai daftar distribusi.
 vcard	common	id	vCard

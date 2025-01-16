@@ -292,11 +292,11 @@ export function fetchAll(ids, nextmatch, callback)
 		var count = idsArr.length;
 		var total = nextmatch.controller._grid.getTotalCount();
 		var cancel = false;
-		var dialog = et2_dialog.show_dialog(
+		var dialog = Et2Dialog.show_dialog(
 			// Abort the long task if they canceled the data load
 			function() {count = total; cancel=true;},
 			egw.lang('Loading'), egw.lang('please wait...'),{},[
-				{"button_id": et2_dialog.CANCEL_BUTTON,"text": egw.lang('cancel'),id: 'dialog[cancel]',image: 'cancel'}
+				{"button_id": Et2Dialog.CANCEL_BUTTON, "text": egw.lang('cancel'), id: 'dialog[cancel]', image: 'cancel'}
 			]
 		);
 
@@ -346,11 +346,11 @@ export function doLongTask(idsArr, all, _action, nextmatch)
 		if(all)
 		{
 			var fetching = fetchAll(idsArr, nextmatch,function(idsArr){
-				et2_dialog.long_task(null,_action.data.message||_action.caption,_action.data.title,_action.data.menuaction,idsArr);
+				Et2Dialog.long_task(null, _action.data.message || _action.caption, _action.data.title, _action.data.menuaction, idsArr);
 			});
 			if(fetching) return true;
 		}
-		et2_dialog.long_task(null,_action.data.message||_action.caption,_action.data.title,_action.data.menuaction,idsArr);
+		Et2Dialog.long_task(null, _action.data.message || _action.caption, _action.data.title, _action.data.menuaction, idsArr);
 		return true;
 	}
 	return false;

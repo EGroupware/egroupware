@@ -152,6 +152,7 @@ applies the changes made	common	fr	Applique les modifications
 applies the changes to the given version of the template	common	fr	Applique les modifications à la version mentionnée du modèle
 apply	common	fr	Appliquer
 apply the action on the whole query, not only the shown entries	common	fr	Appliquer l'action sur la requête entière, pas seulement sur les entrées affichées
+apps & license	common	fr	Apps & Licence
 apps &amp; license	common	fr	Applications et licence
 april	common	fr	Avril
 are you sure you want to delete these entries ?	common	fr	Etes-vous sûr de vouloir supprimer ces entrées ?
@@ -287,7 +288,7 @@ clear window	common	fr	Fermer la fenêtre
 click	common	fr	Cliquer
 click here to attach the file	common	fr	Cliquer ici pour joindre le fichier
 click here to create the link	common	fr	Cliquer ici pour créer le lien
-click here to resume your egroupware session.	common	fr	Cliquer pour relancer votre session EGroupware
+click here to resume your egroupware session.	common	fr	Cliquer pour relancer votre session EGroupware.
 click here to start the search	common	fr	Cliquer ici pour démarrer la recherche
 click here to upload the file	common	fr	Cliquer ici pour déposer le fichier
 click this image on the navbar: %1	common	fr	Cliquez cette image sur la barre de navigation: %1
@@ -437,6 +438,7 @@ document '%1' does not exist or is not readable for you!	preferences	fr	Le docum
 document properties	common	fr	Propriétés du document
 document title:	common	fr	Titre du document:
 documentation	common	fr	Documentation
+documents	common	fr	Documents
 doesn't matter	common	fr	Pas d'importance
 domain	common	fr	Domaine
 domain name for mail-address, eg. "%1"	common	fr	Nom du domaine pour les adresses email, p.ex. "%1"
@@ -484,6 +486,7 @@ el salvador	common	fr	SALVADOR
 element role title	common	fr	Titre du rôle
 email	common	fr	Email
 email-address of the user, eg. "%1"	common	fr	Adresse e-mail de l'utilisateur, p.ex. "%1"
+emails	common	fr	Courriels
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	fr	Styles CSS incorporés, p.e. '.rouge { fond: rouge; }' (notez le '.' avant le nom de la classe) ou '@import url(...)' (les noms de classe sont globaux pour la page entière!)
 empty file	common	fr	Fichier vide
 enable javascript onchange submit	common	fr	Activer la soumission sur changement en JavaScript
@@ -692,6 +695,7 @@ if you use "2-factor-authentication", please enter the code here.	common	fr	Si v
 image	common	fr	Image
 image directory relative to document root (use / !), example:	common	fr	Répertoire image relative à la racine des documents (utiliser / !), par exemple :
 image url	common	fr	URL de l'Image
+images	common	fr	Images
 import	common	fr	Importer
 import an etemplate from a xml-file	common	fr	Import an eTemplate from a XML-file
 import table-definitions from existing db-table	common	fr	Importer les définitions de table depuis la table de base de données existante
@@ -998,7 +1002,7 @@ open existing contact	common	fr	Ouvrir un contact existant
 open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
 open the online help.	common	fr	Ouvrir l'aide en ligne
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	fr	Connexion OpenIDConnect réussie, mais l'utilisateur '%1' n'existe PAS dans EGroupware, et la création automatique d'utilisateurs est désactivée !
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	fr	Connexion OpenID Connect réussie, mais l'utilisateur '%1' n'existe PAS dans EGroupware, et la création automatique d'utilisateurs est désactivée !
 operator	common	fr	Opérateur
 optional note about the link	common	fr	Note optionnelle à propos du lien
 options	common	fr	Options
@@ -1322,6 +1326,7 @@ spain	common	fr	ESPAGNE
 span	common	fr	Envergure
 span, class	common	fr	Envergure, Classe
 special characters	common	fr	caractères spéciaux
+spreadsheets	common	fr	Feuilles de calcul
 sri lanka	common	fr	SRI LANKA
 stack	common	fr	Pile
 start a new search, cancel this link	common	fr	Démarre une nouvelle recherche, annule ce lien
@@ -1369,9 +1374,10 @@ tabs	common	fr	Tabs
 taiwan	common	fr	TAIWAN/TAIPEI
 tajikistan	common	fr	TAJIKISTAN
 tanzania, united republic of	common	fr	TANZANIE, REPUBLIQUE DE
-template	common	fr	Template
+template	common	fr	Modèle
 template deleted	common	fr	Template effacé
 template saved	common	fr	Template enregistré
+templates	common	fr	Modèles
 text	common	fr	Texte
 text color:	common	fr	Couleur du Texte :
 textarea	common	fr	ChampTexte
@@ -1480,6 +1486,7 @@ version	common	fr	Version
 vertical alignment of row	common	fr	Alignement vertical de la ligne
 vfs upload directory	common	fr	Dossier d'upload VFS
 video tutorials	common	fr	Tutoriels vidéos
+videos	common	fr	Vidéos
 viet nam	common	fr	VIETNAM
 view	common	fr	Voir
 view linked %1 entries	common	fr	Voir les %1 entrées liées
@@ -1499,7 +1506,6 @@ western sahara	common	fr	SAHARA OCCIDENTAL
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fr	Ce qui se passe avec un contenu débordant: visible (défaut), caché, scroll, auto (le navigateur décide)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	fr	Quand vous fusionnez les entités dans des documents, ils seront stockés ici. Si aucun dossier n'est indiqué, il seront stockés dans votre dossier personnel (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fr	Si vous dites oui, les bouttons Accueil et Déconnexion sont affichés comme des applications dans la barre d'application principale.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	fr	Ou et comment seront affichés les liens comme Préférences, A propos de et Déconnexion.
 which groups	common	fr	Quels groupes
 which infolog types should be synced with the device, default only tasks.	common	fr	Quels types d'infolog doivent-ils être synchronisés avec l'appareil ? (par défaut, les tâches uniquement)
 whole query	common	fr	Requête entière

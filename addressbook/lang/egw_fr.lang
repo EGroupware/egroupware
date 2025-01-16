@@ -150,6 +150,7 @@ country (private)	addressbook	fr	Pays (privé)
 country code	addressbook	fr	Code pays
 country code (private)	addressbook	fr	Code pays (privé)
 create new links	addressbook	fr	Créer de nouveaux liens
+create new shares writable	addressbook	fr	Créer de nouveaux partages en écriture
 created	addressbook	fr	Créé(s)
 credit	addressbook	fr	Crédits
 crm view list	addressbook	fr	Vue CRM en liste
@@ -517,7 +518,6 @@ upload or delete the photo	addressbook	fr	Envoyez ou supprimez la photo
 url (business)	addressbook	fr	url (pro)
 url (private)	addressbook	fr	url (privé)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	fr	URL pour le lien téléphone. %1 = numéro à 'appeler, %u = nom du compte, %t = téléphone du compte.
-use a category tree?	addressbook	fr	Utiliser une arborescence pour sélectionner les catégories
 use addressbooks "own sorting" attribute	addressbook	fr	Utiliser l'attribut "tri perso" (own sorting) du carnet d'adresses
 use an extra tab for private custom fields?	admin	fr	Utiliser un onglet supplémentaire pour les champs privés extra
 use country list	addressbook	fr	Utiliser la liste des pays

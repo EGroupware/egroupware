@@ -96,7 +96,7 @@ try {
 	}
 	else
 	{
-		@list($appName, $className, $functionName, $handler) = explode('.',$_GET['menuaction']);
+		@list($appName, $className, $functionName, $handler) = explode('.', $_GET['menuaction'])+[null, null, null, null];
 	}
 	//error_log("json.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
 

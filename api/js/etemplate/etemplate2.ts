@@ -21,6 +21,7 @@ import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common";
 import './Layout/Et2Box/Et2Box';
 import './Layout/Et2Details/Et2Details';
+import './Layout/Et2Dropdown/Et2Dropdown';
 import './Layout/Et2Groupbox/Et2Groupbox';
 import './Layout/Et2Tabs/Et2Tab';
 import './Layout/Et2Tabs/Et2Tabs';
@@ -50,6 +51,7 @@ import './Et2Date/Et2DateTimeToday';
 import './Et2Description/Et2Description';
 import './Et2Dialog/Et2Dialog';
 import './Et2Dialog/Et2MergeDialog';
+import './Et2Diff/Et2Diff';
 import './Et2DropdownButton/Et2DropdownButton';
 import './Et2Email/Et2Email';
 import './Expose/Et2ImageExpose';
@@ -1132,7 +1134,7 @@ export class etemplate2
 			this.unbind_unload();
 
 			const form = jQuery("<form id='form' action='" + egw().webserverUrl +
-				"/index.php?menuaction=" + this._widgetContainer.egw().getAppName() + ".EGroupware\\Api\\Etemplate.process_exec&ajax=true' method='POST'>");
+				"/index.php?menuaction=" + this._widgetContainer.egw().getAppName() + ".EGroupware\\Api\\Etemplate.process_exec&cd=popup' method='POST'>");
 
 			const etemplate_id = jQuery(document.createElement("input"))
 				.attr("name", 'etemplate_exec_id')

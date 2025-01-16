@@ -40,6 +40,7 @@ check to save as tracker entry on send	mail	ro	Buton de selectare pentru a crea 
 checking admin credentials failed	mail	ro	Verificarea acreditărilor de administrator a eșuat
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
 contact label	mail	ro	Etichetă de contact
+continue	mail	ro	Continuare
 convert mail to item and attach its attachments to this item (standard)	mail	ro	Conversia e-mailului în element și atașarea atașamentelor la acest element (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ro	Conversia e-mailului în element, atașarea atașamentelor acestuia și adăugarea mesajului brut (.eml) ca atașament
 convert only mail to item (ignore possible attachments)	mail	ro	Convertește numai e-mailul în element (ignoră eventualele atașamente)
@@ -54,6 +55,7 @@ disable caching of flags	mail	ro	Dezactivarea memorării în cache a stegulețel
 do you really want to toggle flag %1 for all messages in the current view?	mail	ro	Chiar doriți să activați indicatorul %1 pentru TOATE mesajele din vizualizarea curentă?
 do you really want to toggle label %1 for all messages in the current view?	mail	ro	Chiar doriți să comutați eticheta %1 pentru TOATE mesajele din vizualizarea curentă?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ro	Doriți să vi se ceară confirmarea înainte de a atașa mesajele selectate la un nou e-mail?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	ro	Doriți să vi se ceară confirmare înainte de a muta mesajele selectate într-un alt dosar?
 email address	mail	ro	Adresa de e-mail
 emailaddress	admin	ro	Adresa de e-mail
 emailadmin: profilemanagement	mail	ro	eMailAdmin: Managementul profilurilor
@@ -106,6 +108,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	ro	Lucru
 junk	mail	ro	Junk
 junk folder	mail	ro	Dosarul Junk
+keep a copy	mail	ro	Păstrați o copie
 keep a copy of the message in your inbox	mail	ro	Păstrați o copie a mesajului în căsuța de primire
 kilobytes	mail	ro	kilobiți
 later	mail	ro	Mai târziu
@@ -244,6 +247,7 @@ to do	mail	ro	Pentru a face
 toggled on actions	mail	ro	Toggled on actions
 trash	mail	ro	Coș de gunoi
 trash folder	mail	ro	Dosar coș de gunoi
+unconditional	mail	ro	Întotdeauna
 you can select what info to be displayed on email tag	mail	ro	Puteți selecta ce informații să fie afișate pe eticheta de e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ro	Puteți folosi $$start$$ pentru data de început de mai sus și $$end$$$ pentru data de sfârșit.
 you may add this certificate into your contact, if you trust this signature.	mail	ro	Puteți adăuga acest certificat în contactul dumneavoastră, dacă aveți încredere în această semnătură.

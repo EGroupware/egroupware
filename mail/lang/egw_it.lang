@@ -113,6 +113,7 @@ connection status	mail	it	Stato della connessione
 contact label	mail	it	Etichetta di contatto
 contains	mail	it	contiene
 contains(*)	mail	it	Contiene(*)
+continue	mail	it	Continua
 convert mail to item and attach its attachments to this item (standard)	mail	it	Converti il messaggio email in elemento e allega i suoi allegati a questo elemento (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	it	Converti il messaggio email in elemento e allega i suoi allegati e aggiungi un messaggio "raw" (messaggio/rfc822 (.eml)) come allegato
 convert only mail to item (ignore possible attachments)	mail	it	Converti solo Mail a elemento (ignora gli allegati)
@@ -322,6 +323,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	it	Compito
 junk	mail	it	Spazzatura
 junk folder	mail	it	Cartella mail spazzatura
+keep a copy	mail	it	Conserva una copia
 keep a copy of the message in your inbox	mail	it	Mantieni una copia del messaggio nella posta in arrivo
 kilobytes	mail	it	kilobyte
 later	mail	it	Più tardi
@@ -617,7 +619,6 @@ subscription successfully saved.	mail	it	Sottoscrizione salvata corretamente.
 succeeded on %1 folders, failed on %2	mail	it	Riuscito su %1 cartelle, fallito su %2
 switch off encryption?	mail	it	Disabilitare la cifratura?
 template folder	mail	it	Cartella dei modelli
-templates	mail	it	Modelli
 templates folder	mail	it	Cartella modelli
 test connection	mail	it	Prova connessione attiva
 test connection and display basic information about the selected profile	mail	it	Prova connessione e mostra informazioni di base sul profilo selezionato
@@ -648,6 +649,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	it	Prova di recupero dai dati di sessione
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	it	Rimuovi la linea orizzontale fra firma e messaggio in composizione (in discaccordo con RFC). <br> Se usi i template, questa opzione verrà applicata solo sulla parte testuale del messaggio.
 unable to fetch vacation!	mail	it	Impossibile trovare l'autorisponditore delle ferie!
+unconditional	mail	it	Sempre
 undelete	mail	it	Annulla eliminazione
 unflagged	mail	it	Senza flag
 unread	mail	it	da leggere

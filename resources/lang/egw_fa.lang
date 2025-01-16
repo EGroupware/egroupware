@@ -1,22 +1,12 @@
 accessories of	resources	fa	ملزومات
-accessories:	resources	fa	ملزومات:
-actions	resources	fa	فعالیتها
-add accessory	resources	fa	افزودن ملزومه
 add resource	resources	fa	افزودن منبع
-add resources	resources	fa	افزودن منابع
 administrator	resources	fa	مدیر
-all categories	resources	fa	همه دسته ها
 book	resources	fa	رزرو
-book selected resources	resources	fa	منابع انتخاب شده را رزرو کن
 book this resource	resources	fa	این منبع را رزرو کن
 bookable	resources	fa	قابل رزرو
 buy this article	resources	fa	خرید این کالا
-buy this resource	resources	fa	خرید این منبع
 buyable	resources	fa	قابل خرید
-categories admin	resources	fa	مدیر دسته ها
 category:	resources	fa	دسته:
-check all	resources	fa	انتخاب همه
-choose categories admin	resources	fa	انتخاب مدیر دسته ها
 clear selection	resources	fa	پاک کردن انتخاب
 configure access permissions	admin	fa	پیکربندی مجوز دسترسی
 create new accessory for this resource	resources	fa	ایجاد ملزومه جدید برای این منبع
@@ -28,7 +18,6 @@ delete this entry	resources	fa	حذف این ورودی
 deleted	resources	fa	حذف شد
 description (short)	resources	fa	شرح مختصر
 direct booking permissions	resources	fa	مجوزهای رزور مستقیم
-don't use vfs (this will need a symlink --> see readme)	resources	fa	از vfs استفاده نکن
 edit this entry	resources	fa	ویراستن این ورودی
 existing links	resources	fa	پیوندهای موجود
 general	resources	fa	عمومی
@@ -92,8 +81,6 @@ use general resources icon	resources	fa	از نمایه عمومی منابع ا
 use own picture	resources	fa	استفاده از تصویر خود
 use the category's icon	resources	fa	از نمایه مربوط به دسته استفاده کن
 useable	resources	fa	قابل استفاده
-useable:	resources	fa	قابل استفاده:
-view accessories for this resource	resources	fa	دیدن ملزومات این منبع
 view this entry	resources	fa	دیدن این ورودی
 web-page of resource	resources	fa	صفحه وب منبع
 web-site for this resource	resources	fa	سایت وب این منبع

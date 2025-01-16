@@ -43,6 +43,11 @@ class Json extends Base
 	 */
 	protected $json_column;
 
+	/*
+	 * Regular expression used to filter valid JSON columns, if set
+	 */
+	protected $column_preg;
+
 	/**
 	 * constructor of the class
 	 *
@@ -57,11 +62,16 @@ class Json extends Base
 	 * @param string $timestamp_type =null default null=leave them as is, 'ts'|'integer' use integer unix timestamps,
 	 *    'object' use Api\DateTime objects or 'string' use DB timestamp (Y-m-d H:i:s) string
 	 */
-	function __construct($app='', $table='', $json_column='', Api\Db $db=null, $column_prefix='', $no_clone=true, $timestamp_type='object')
+	function __construct($app='', $table='', $json_column='', Api\Db $db=null, $column_prefix='', $no_clone=true, $timestamp_type='object', $column_preg=null)
 	{
 		parent::__construct($app, $table, $db, $column_prefix, $no_clone, $timestamp_type);
 
 		$this->json_column = $json_column;
+
+		if (isset($column_preg))
+		{
+			$this->column_preg = $column_preg;
+		}
 	}
 
 	/**
@@ -136,8 +146,13 @@ class Json extends Base
 		{
 			$data = &$this->data;
 		}
-		// json-encode non db columns into ths json blob
-		if ($this->json_column && is_array($data) && ($json = array_diff_key($data, array_flip($this->db_cols+[self::USER_TIMEZONE_READ]))))
+		// json-encode non db columns into ths json blob,
+		// omitting NULL values and every key not matching the column_preg, if set
+		if ($this->json_column && is_array($data) && ($json = array_filter($data, function($value, $key)
+			{
+				return isset($value) && !is_int($key) && !isset($this->db_cols[$key]) && !in_array($key, [self::USER_TIMEZONE_READ]) &&
+					(!isset($this->column_preg) || preg_match($this->column_preg, $key));
+			}, ARRAY_FILTER_USE_BOTH)))
 		{
 			$data = [
 				$this->json_column => json_encode($json, JSON_UNESCAPED_SLASHES|JSON_THROW_ON_ERROR),
@@ -147,6 +162,24 @@ class Json extends Base
 	}
 
 	/**
+	 * merges in new values from the given new data-array
+	 *
+	 * @param $new array in form col => new_value with values to set
+	 */
+	function data_merge($new)
+	{
+		parent::data_merge($new);
+
+		foreach($new as $name => $value)
+		{
+			if (!in_array($name, $this->db_cols, true) && (!isset($this->column_preg) || preg_match($this->column_preg, $name)))
+			{
+				$this->data[$name] = $value;
+			}
+		}
+	}
+
+		/**
 	 * magic method to read a property from $this->data
 	 *
 	 * The special property 'id' always refers to the auto-increment id of the object, independent of its name.

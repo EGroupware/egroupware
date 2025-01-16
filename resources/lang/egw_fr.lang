@@ -2,36 +2,27 @@
 %1 accessories restored	resources	fr	%1 accessoire(s) restauré(s)
 %1 resource(s) %2	resources	fr	%1 ressource(s) %2
 %1 resource(s) %2, %3 failed	resources	fr	%1 ressource(s) %2, %3 en échec
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	fr	%1 ressource(s) %2, %3 en échec, pour cause droits insuffisants !!!
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	fr	%1 ressource(s) %2, %3 en échec, pour cause droits insuffisants!
 %1 resource(s) booked	resources	fr	%1 ressource(s) réservée(s)
-%1 resource(s) view calendar	resources	fr	%1 ressource(s) Voir le calendrier
+%1 resource(s) view calendar	resources	fr	%1 ressource(s) voir le calendrier.
 accessories	resources	fr	Accessoires
 accessories of	resources	fr	Accessoires de
-accessories:	resources	fr	Accessoires:
 accessory of	resources	fr	Accessoire de
-actions	resources	fr	Actions
-add accessory	resources	fr	Ajouter un accessoire
 add group to event participants	resources	fr	Ajouter le groupe en tant que participant aux événements
 add resource	resources	fr	Ajouter une ressource
-add resources	resources	fr	Ajouter des ressources
 administrator	resources	fr	Administrateur
-all categories	resources	fr	Toutes les catégories
 allow booking requests from any user when creating events?	resources	fr	Permettre les demandes de réservation pour n'importe quel utilisateur créant des événements ?
 allow ignore conflicts	admin	fr	Autoriser le fait d'ignorer les conflits
 book	resources	fr	Réserver
 book resource	resources	fr	Réserver une ressouce
-book selected resources	resources	fr	Réserver les ressources selectionnées
 book this resource	resources	fr	Réserver cette ressource
 bookable	resources	fr	Réservable
-booked	resources	fr	réservé(s)
 booking requests	resources	fr	Requêtes de réservation
 buy this article	resources	fr	Acheter cet article
-buy this resource	resources	fr	Acheter cette ressource
 buyable	resources	fr	Achetable
 category admin	resources	fr	Administrateur de catégorie
 category saved.	resources	fr	Catégorie sauvegardée.
 category:	resources	fr	Catégorie :
-check all	resources	fr	Tout cocher
 choose category admin	resources	fr	Choisir l'administrateur de la catégorie
 clear selection	resources	fr	Vider la sélection
 configure access permissions	admin	fr	Configurer les droits d'accès
@@ -50,7 +41,6 @@ deleted	resources	fr	supprimé
 description (short)	resources	fr	Description (courte)
 direct booking permissions	resources	fr	Permissions directes de réservation
 do you really want to delete this resource?	resources	fr	Souhaitez-vous vraiment supprimer cette ressource ?
-don't use vfs (this will need a symlink --> see readme)	resources	fr	Ne pas utilisé VFS (ceci nécessitera un lien symbolique --> voir README)
 edit this entry	resources	fr	Modifier cette entrée
 event start	resources	fr	Début de l'événement
 existing links	resources	fr	Liens existants
@@ -81,6 +71,7 @@ inventory number	resources	fr	Numéro d'inventaire
 inventory number:	resources	fr	Numéro d'inventaire :
 is resource bookable?	resources	fr	Peut-on réserver les ressources ?
 is resource buyable?	resources	fr	Peut-on acheter les ressources ?
+is the ressource bookable?	resources	fr	La ressource peut-elle être réservée ?
 is this resource bookable?	resources	fr	Peut-on réserver cette ressource ?
 is this resource buyable?	resources	fr	Peut on acheter cette ressource ?
 links	resources	fr	Liens

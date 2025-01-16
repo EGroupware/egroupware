@@ -91,7 +91,7 @@ class TimesheetApp extends EgwApp
 		{
 			egw.css("#timesheet-index span.timesheet_titleDetails","font-weight:" + (filter2.getValue() == '1' ? "bold;" : "normal;"));
 			// Show / hide descriptions
-			egw.css(".ts_description", "display:" + (filter2.getValue() == '1' ? "block;" : "none;"));
+			egw.css(".ts_description", "display:" + (filter2.getValue() == '1' ? "flex;" : "none;"));
 		}
 	}
 
@@ -280,7 +280,7 @@ class TimesheetApp extends EgwApp
 		const dialog = new Et2Dialog(this.egw);
 		dialog.getUpdateComplete().then(() =>
 		{
-			const time = <Et2DateTime><any>dialog.template.widgetContainer.getWidgetById('time');
+			const time = <Et2DateTime><any>dialog.eTemplate.widgetContainer.getWidgetById('time');
 			// start-time set end-time as max
 			if (0+tse_type & 1)
 			{

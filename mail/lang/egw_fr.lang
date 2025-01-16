@@ -113,6 +113,7 @@ connection status	mail	fr	Statut de la connexion
 contact label	mail	fr	Etiquette de contact
 contains	mail	fr	contient
 contains(*)	mail	fr	Contient(*)
+continue	mail	fr	Continuer
 convert mail to item and attach its attachments to this item (standard)	mail	fr	Convertir le message en item et y attacher ses pièces jointes
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	fr	Convertir le mesasge en item, attacher ses pièces jointes et ajouter le message brut (message/rfc822 (.eml)) en tant que pièce jointe
 convert only mail to item (ignore possible attachments)	mail	fr	ne convertir que le message en élément (ignorer les éventuelles pièces jointes)
@@ -322,6 +323,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	fr	Travail
 junk	mail	fr	Indésirables
 junk folder	mail	fr	Dossier des indésirables
+keep a copy	mail	fr	Garder une copie
 keep a copy of the message in your inbox	mail	fr	Garder une copie du message dans votre boite de réception
 kilobytes	mail	fr	kilo-octets
 later	mail	fr	Plus tard
@@ -617,7 +619,6 @@ subscription successfully saved.	mail	fr	Abonnement sauvegardé avec succès
 succeeded on %1 folders, failed on %2	mail	fr	Réussi sur %1 dossiers, échoué sur %2
 switch off encryption?	mail	fr	Désactiver l'encryption
 template folder	mail	fr	Dossier de modèles
-templates	mail	fr	Modèles
 templates folder	mail	fr	Dossier de modèles
 test connection	mail	fr	Tester la connexion active
 test connection and display basic information about the selected profile	mail	fr	Tester la connexion et afficher des informations de base sur le profil sélectionné
@@ -648,6 +649,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	fr	Essai de récupération des données de session
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	fr	Désactiver la ligne horizontale entre la signature et le message composé (ce n'est pas conforme à la RFC).<br>Si vous utilisez des modèles, cette option ne s'applique qu'à la partie texte du message.
 unable to fetch vacation!	mail	fr	Impossible de rechercher le message d'absense !
+unconditional	mail	fr	Toujours
 undelete	mail	fr	Restaurer
 unflagged	mail	fr	Non-marqué
 unread	mail	fr	Non-lu

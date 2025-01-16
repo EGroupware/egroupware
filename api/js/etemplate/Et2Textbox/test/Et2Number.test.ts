@@ -122,5 +122,49 @@ describe("Number widget", () =>
 		});
 	});
 });
+
+describe("'.' as thousands separator", () =>
+{
+	// Setup run before each test
+	beforeEach(async() =>
+	{
+		await before();
+		element.thousandsSeparator = ".";
+		element.decimalSeparator = ",";
+		element.requestUpdate();
+	})
+
+	const tests = [
+		{args: ["1234567890"], expected: 1234567890},
+		{args: ["123.4567.890"], expected: 1234567890}, // This one is wrongly entered by user
+		{args: ["123.456.789"], expected: 123456789},
+		{args: ["1234567.890"], expected: 1234567.890}, // User probably screwed up decimal
+		{args: ["1234567890,0"], expected: 1234567890},
+		{args: ["123.456.789,0"], expected: 123456789},
+		{args: ["1234567890,1"], expected: 1234567890.1},
+		{args: ["123.456.7890,1"], expected: 1234567890.1},
+		{args: ["1.234.567.890,1"], expected: 1234567890.1},
+		{args: ["1.234567890,1"], expected: 1234567890.1}, // Both , and . means no assumptions
+		{args: ["1.234"], expected: 1234},
+		{args: ["1.234,5"], expected: 1234.5},	// Both , and . means no assumption
+		{args: ["1,234"], expected: 1.234},
+		{args: ["1,234.5"], expected: 1.2345},	// Both , and . means no assumption
+		{args: ["1,5"], expected: 1.5},
+		{args: ["1.5"], expected: 1.5}, // Assume user screwed up decimal, not that they meant 1,500 or 15
+		{args: [",5"], expected: 0.5},
+		{args: [".5"], expected: 0.5}
+	]
+	tests.forEach(({args, expected}) =>
+	{
+		it("Handles " + args[0], () =>
+		{
+			element.value = args[0];
+			assert.equal(element.valueAsNumber, expected, "Failed on setting .value");
+
+			element.blur();
+			assert.equal(element.valueAsNumber, expected, "Failed on blur");
+		});
+	});
+});
 //
 // inputBasicTests(before, "I'm a good test value", "input");

@@ -95,6 +95,9 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
 export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 {
+	// Solves some issues with focus
+	static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
 	static get styles()
 	{
 		return [
@@ -308,7 +311,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	private __value : string | string[] = "";
 
+	// Flag to avoid issues with free entries & fix_bad_value
+	private __inInitialSetup : boolean = true;
+
 	protected tagOverflowObserver : IntersectionObserver = null;
+
+	protected get dropdown() { return this.select; }
 
 	constructor()
 	{
@@ -336,6 +344,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	connectedCallback()
 	{
 		super.connectedCallback();
+		this.addEventListener("focusin", this.handleFocus);
 		this.updateComplete.then(() =>
 		{
 			this.addEventListener("sl-change", this._triggerChange);
@@ -353,7 +362,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.disconnectedCallback();
 
+		this.removeEventListener("focusin", this.handleFocus);
 		this.removeEventListener("sl-change", this._triggerChange);
+	}
+
+	async getUpdateComplete()
+	{
+		const more = await super.getUpdateComplete();
+		await this.select.updateComplete;
+		return more;
 	}
 
 	_triggerChange(e)
@@ -415,6 +432,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		// If no value is set, choose the first option
 		// Only do this on once during initial setup, or it can be impossible to clear the value
+		if(!this.__inInitialSetup)
+		{
+			return;
+		}
 
 		// value not in options --> use emptyLabel, if exists, or first option otherwise
 		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
@@ -548,7 +569,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		super.loadFromXML(_node);
 
 		// Wait for update to be complete before we check for bad value so extending selects can have a chance
-		this.updateComplete.then(() => this.fix_bad_value());
+		this.updateComplete.then(() =>
+		{
+			this.fix_bad_value();
+			this.__inInitialSetup = false;
+		});
 	}
 
 	/** @param changedProperties */
@@ -623,6 +648,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return literal`et2-tag`;
 	}
 
+	/** Sets focus on the control. */
+	focus(options? : FocusOptions)
+	{
+		this.handleFocus();
+	}
+
+	/** Removes focus from the control. */
 	blur()
 	{
 		if(typeof super.blur == "function")
@@ -630,6 +662,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			super.blur();
 		}
 		this.hide();
+	}
+
+	private handleFocus()
+	{
+		if(this.disabled || this.readonly)
+		{
+			return;
+		}
+		this.select?.focus();
 	}
 
 	/**
@@ -823,7 +864,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	/** Hides the listbox. */
 	async hide()
 	{
-		this.select.hide();
+		return this.select.hide();
 	}
 
 	get open()
@@ -905,7 +946,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		const value = (<string>option.value).replaceAll(" ", "___");
-		const classes = option.class ? Object.fromEntries((option.class).split(" ").map(k => [k, true])) : {};
+		const classes = option.class ? Object.fromEntries((option.class).trim().split(" ").map(k => [k, true])) : {};
 		return html`
             <sl-option
                     part="option"
@@ -1063,8 +1104,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     placement=${this.placement}
                     tabindex="0"
                     .getTag=${this._tagTemplate}
-                    .maxOptionsVisible=${0}
-                    .value=${value}
+                    maxOptionsVisible=${0}
+                    value=${Array.isArray(value) ? value.join(" ") : value}
                     @sl-change=${this.handleValueChange}
                     @mouseenter=${this._handleMouseEnter}
                     @mouseup=${this.handleOptionClick}

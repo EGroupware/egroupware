@@ -603,14 +603,12 @@ standard smtp-server	admin	pt-br	Servidor SMTP padrão
 start	admin	pt-br	Iniciar
 start testjob!	admin	pt-br	Inicie o trabalho de teste!
 starts with	admin	pt-br	Começa com
-stationery	admin	pt-br	Artigos de papelaria
 submit changes	admin	pt-br	Enviar alterações
 submit the search string	admin	pt-br	Enviar expressão de busca
 subtype	admin	pt-br	Sub tipo
 successful connected to %1 server%2.	admin	pt-br	Successful ligado ao %1servidor%2.
 switch back to standard identity to save account.	admin	pt-br	Volte para a identidade padrão para salvar conta.
 switch it off, if users are randomly thrown out	admin	pt-br	Desabilite, se usuários estiverem, aleatoriamente, sendo desconectados
-templates	admin	pt-br	Templates
 that loginid has already been taken	admin	pt-br	Este código de usuário já existe.
 the api is current	admin	pt-br	A base (API) do EGroupware está atualizada
 the api requires an upgrade	admin	pt-br	A base (API) do EGroupware precisa ser atualizada
@@ -667,10 +665,13 @@ use tls encryption	admin	pt-br	Usar encriptação TLS
 use users email-address (as seen in useraccount)	admin	pt-br	Use usuários endereço de e-mail, conforme definido na conta do usuário
 user accounts	admin	pt-br	Contas de usuários
 user can edit forwarding address	admin	pt-br	Usuário pode editar endereço de encaminhamento
+user choice	admin	pt-br	Escolha do usuário
+user csv export	admin	pt-br	Exportação de CSV de usuário
+user csv import	admin	pt-br	Importação de CSV de usuário
 user data	common	pt-br	Dados de usuários
 user for smtp-authentication (leave it empty if no auth required)	admin	pt-br	Usuário para autenticação SMTP (deixe em branco se não requer autenticação)
 user groups	admin	pt-br	Grupos de usuários
-user hidden vom non-admins.	admin	pt-br	Usuário oculto para não administradores
+user hidden from non-admins.	admin	pt-br	Usuário oculto para não administradores
 user-agent	admin	pt-br	User-Agent
 userdata	admin	pt-br	Dados de usuário
 userid@domain eg. u1234@domain	admin	pt-br	Domínio @ UserID por exemplo. u1234 @ domínio
@@ -679,10 +680,11 @@ username/password defined by admin	admin	pt-br	Nome de usuário/Senha definidos 
 username@domainname (virtual mail manager)	admin	pt-br	nomedousuario@nomedodominio (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	pt-br	Os usuários podem definir sua próprias contas de correio
 users can define their own identities	admin	pt-br	Usuários podem definir suas próprias identidades
-users can define their own signatures	admin	pt-br	Usuários podem definir suas próprias assinaturas
-users can utilize these stationery templates	admin	pt-br	Os usuários podem utilizar esses modelos de papel de carta
+users can define their own signatures	admin	pt-br	Os usuários podem definir suas próprias assinaturas
 users choice	admin	pt-br	Escolha do usuário
 using data from mozilla ispdb for provider %1	admin	pt-br	Usando dados da Mozilla ISPDB do fornecedor %1
+vacation messages with start- and end-date require an admin account to be set	admin	pt-br	As mensagens de férias com datas de início e fim exigem a configuração de uma conta de administrador!
+vacation notice	admin	pt-br	Aviso de férias
 value for column %1 is not unique!	admin	pt-br	Valor da coluna %1 não é único!
 view access log	admin	pt-br	Exibir registro de acessos
 view account	admin	pt-br	Exibir conta
@@ -693,10 +695,12 @@ view this user	admin	pt-br	Exibir este usuário
 view user account	admin	pt-br	Exibir conta de usuário
 virtual mail manager	admin	pt-br	Virtual MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	pt-br	Para quem você deseja transferir todas as entradas do usuário removido?
+who would you like to transfer records owned by the deleted user to?	admin	pt-br	Para quem você gostaria de transferir os registros pertencentes ao usuário excluído?
 wrong account type: %1 is no %2 !!!	admin	pt-br	Tipo de conta errado: %1 NÃO é %2!
 wrong admin-account or -password !!!	admin	pt-br	Conta de administração ou -senha errada!
 xml-rpc	admin	pt-br	XML-RPC
 you can set an initial value, which gets incremented every time a new serial get generated	admin	pt-br	você pode definir um valor inicial, que é incrementado sempre que uma nova série é gerada
+you can use wizard to fix account settings or delete account.	admin	pt-br	Você pode usar o assistente para corrigir as configurações da conta ou excluir a conta.
 you have entered an invalid expiration date	admin	pt-br	A data de expiração digitada é inválida!
 you have received a new message on the	admin	pt-br	Você recebeu uma nova mensagem na
 you have to enter a name, to create a new field!!!	admin	pt-br	Você precisa informar um nome para criar um novo campo!
@@ -709,6 +713,7 @@ you must enter an application name.	admin	pt-br	Você deve digitar um nome para 
 you must enter an application title.	admin	pt-br	Você deve digitar um título para a aplicação.
 you must select at least one group member.	admin	pt-br	Você deve selecionar ao menos um membro.
 you need to enter install id and password!	admin	pt-br	Você deve informar um ID de instalação E senha!
+you need to select some users first!	admin	pt-br	Você precisa selecionar alguns usuários primeiro!
 you will need to remove the subcategories before you can delete this category	admin	pt-br	Você deverá remover as subcategorias antes de remover esta categoria!
 your name	admin	pt-br	Seu nome
 your session could not be verified.	admin	pt-br	Sua sessão não pôde ser verificada.

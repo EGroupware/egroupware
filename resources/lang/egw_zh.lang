@@ -2,33 +2,27 @@
 %1 accessories restored	resources	zh	恢复 %1 配件
 %1 resource(s) %2	resources	zh	%1 资源 %2
 %1 resource(s) %2, %3 failed	resources	zh	%1 资源 %2, %3 失败
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	zh	%1 资源 %2, %3 因权限不足而失败！！！...........！
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	zh	%1 资源 %2, %3 因权限不足而失败！
 %1 resource(s) booked	resources	zh	已预订 %1 资源
 %1 resource(s) view calendar	resources	zh	%1 资源查看日历
 accessories	resources	zh	附件
 accessories of	resources	zh	附属于
-accessories:	resources	zh	附件：
 accessory of	resources	zh	附件来自
-actions	resources	zh	操作
-add accessory	resources	zh	添加附件
 add group to event participants	resources	zh	为活动参与者添加组别
 add resource	resources	zh	添加资源
-add resources	resources	zh	添加资源
 administrator	resources	zh	管理员
-all categories	resources	zh	所有分类
 allow booking requests from any user when creating events?	resources	zh	创建活动时是否允许任何用户提出预订请求？
+allow ignore conflicts	admin	zh	允许忽略冲突
 book	resources	zh	预订资源
-book selected resources	resources	zh	预订所选资源
+book resource	resources	zh	图书资源
 book this resource	resources	zh	预订这个资源
 bookable	resources	zh	可预约
 booking requests	resources	zh	预订请求
 buy this article	resources	zh	购买这篇文章
-buy this resource	resources	zh	购买这个资源
 buyable	resources	zh	可购买的
 category admin	resources	zh	类别管理员
 category saved.	resources	zh	保存的类别。
 category:	resources	zh	类别：
-check all	resources	zh	选择全部
 choose category admin	resources	zh	选择类别管理
 clear selection	resources	zh	明确的选择
 configure access permissions	admin	zh	设置访问权限
@@ -44,9 +38,9 @@ deleted	resources	zh	已删除
 description (short)	resources	zh	描述 (简短)
 direct booking permissions	resources	zh	直接预订权限
 do you really want to delete this resource?	resources	zh	您真的要删除此资源吗？
-don't use vfs (this will need a symlink --> see readme)	resources	zh	不要使用虚拟文件系统(这将需要使用符号链接，-->请参阅 README 文档说明)
 edit this entry	resources	zh	编辑此条目
 existing links	resources	zh	已存在链接
+exports a list of resources to a csv file.	resources	zh	将资源列表导出为 CSV 文件。
 general	resources	zh	通用
 general informations about resource	resources	zh	关于资源的通用信息
 gernal resource	resources	zh	通用资源
@@ -57,14 +51,17 @@ how many of them are useable?	resources	zh	他们有多少可以使用？
 how many of this resource are usable	resources	zh	该资源有多少可以使用
 how many of this resource exists	resources	zh	该资源有多少
 icon	resources	zh	图标
+if you specify an export definition, it will be used when you export	resources	zh	如果指定了导出定义，导出时将使用该定义。
 implies booking permission	resources	zh	包含预定权限
 implies read permission	resources	zh	包含读取权限
+imports a list of resources from a csv file.	resources	zh	从 CSV 文件导入资源列表。
 information about storage	resources	zh	有关于储存的信息
 informations about the location of resource	resources	zh	有关于资源所在位置的信息
 inventory number	resources	zh	库存数量
 inventory number:	resources	zh	库存数量：
 is resource bookable?	resources	zh	是可预定资源吗？
 is resource buyable?	resources	zh	是可购买资源吗？
+is the ressource bookable?	resources	zh	资源是否可预订？
 is this resource bookable?	resources	zh	该资源可预定吗？
 is this resource buyable?	resources	zh	该资源可购买吗？
 links	resources	zh	链接
@@ -74,6 +71,8 @@ location:	resources	zh	位置：
 manage mapping	resources	zh	管理匹配
 name of resource	resources	zh	资源名称
 name:	resources	zh	名称：
+new accessory	resources	zh	新配件
+new resource	resources	zh	新资源
 no - leave them	resources	zh	不 - 保留它们
 no - make them resources	resources	zh	否 - 使其成为资源
 no description available	resources	zh	没有可用的描述
@@ -85,6 +84,7 @@ picture source	resources	zh	图片来源
 picture type is not supported, sorry!	resources	zh	抱歉，不支持的图片格式！
 pictures or resource	resources	zh	图片或资源
 planer	resources	zh	计划员
+prize	resources	zh	价格
 prizeing information for booking or buying	resources	zh	预定或购买的价格信息
 quantity	resources	zh	数量
 quantity of resource	resources	zh	资源数量
@@ -92,6 +92,10 @@ quantity:	resources	zh	数量：
 read calendar permissions	resources	zh	读取日历权限
 read permissions	resources	zh	读取权限
 related links	resources	zh	相关链接
+resource	resources	zh	资源
+resource %1 deleted!	resources	zh	资源 %1 已删除！
+resource %1 saved!	resources	zh	资源 %1 已保存！
+resource / accessories	resources	zh	资源/附件
 resources	common	zh	资源管理
 resources list	resources	zh	资源列表
 responsible:	resources	zh	责任人：
@@ -115,6 +119,8 @@ use general resources icon	resources	zh	使用通用资源图标
 use own picture	resources	zh	使用自己的图标
 use the category's icon	resources	zh	使用这一类别的图标
 useable	resources	zh	可用
+view accessories	resources	zh	查看附件
+view calendar	resources	zh	查看日历
 view this entry	resources	zh	查看此条目
 web-page of resource	resources	zh	资源网页
 web-site for this resource	resources	zh	这一资源的网站
@@ -123,5 +129,7 @@ which category does this resource belong to?	resources	zh	这一资源属于哪�
 write permissions	resources	zh	写入权限
 yes - delete accessories too	resources	zh	是 - 也删除附件
 yes - un-delete accessories too	resources	zh	是 - 还原附件
+yes, all users can ignore conflicts	resources	zh	是，所有用户均可忽略冲突
+yes, only users with direct booking permission	resources	zh	是，仅限具有直接预订权限的用户
 you are not permitted to get information about this resource!	resources	zh	您没有获取有关这个资源信息的权限！
 you chose more resources than available	resources	zh	您选择的资源超过了现有可用范围！

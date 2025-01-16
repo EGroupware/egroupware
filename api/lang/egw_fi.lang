@@ -148,6 +148,7 @@ applies the changes made	common	fi	Hyväksytään tehdyt muutokset
 applies the changes to the given version of the template	common	fi	Hyväksy muutokset annetun version pohjaan
 apply	common	fi	Käytä
 apply the action on the whole query, not only the shown entries	common	fi	Toiminto vaikuttaa kaikkiin merkintöihin, EI ainoastaan näkyvissä oleviin
+apps & license	common	fi	Sovellukset & lisenssi
 apps &amp; license	common	fi	Sovellukset ja lisenssi
 april	common	fi	Huhtikuu
 are you sure you want to delete these entries ?	common	fi	Haluatko varmasti poistaa nämä merkinnät?
@@ -427,6 +428,7 @@ document '%1' does not exist or is not readable for you!	preferences	fi	Tiedosto
 document properties	common	fi	Asiakirjan ominaisuudet
 document title:	common	fi	Asiakirjan nimi:
 documentation	common	fi	Dokumentointi
+documents	common	fi	Asiakirjat
 doesn't matter	common	fi	Ei väliä
 domain	common	fi	Domain
 domain name for mail-address, eg. "%1"	common	fi	Sähköpostiosoitteen domain, esim. "%1"
@@ -462,7 +464,7 @@ editable templates - search	common	fi	Muokattavat mallipohjat - Haku
 editable templates - show template	common	fi	Muokattavat mallipohjat - Näytä sivupohja
 egroupware	common	fi	EGroupware
 egroupware administrators group, do not delete	common	fi	EGroupwaren ylläpitäjien ryhmä, ÄLÄ poista
-egroupware all users group, do not delete	common	fi	EGroupware all users group, älä poista
+egroupware all users group, do not delete	common	fi	EGroupware all users -ryhmä, ÄLÄ poista.
 egroupware anonymous users group, do not delete	common	fi	EGroupware anonyymien käyttäjien ryhmä, ÄLÄ poista sitä
 egroupware api version	common	fi	EGroupware API versio
 egroupware maintenance update %1 available	common	fi	EGroupwaren ylläpitopäivitys %1 saatavilla
@@ -473,6 +475,7 @@ egypt	common	fi	EGYPTI
 el salvador	common	fi	EL SALVADOR
 email	common	fi	Sähköposti
 email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, esim. "%1"
+emails	common	fi	Sähköpostit
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	fi	Upotetut CSS tyylit, esim. .red { background: red; }' (huomaa '.' ennen luokan nimeä) tai '@import url(...)' (luokan nimi on globaali koko sivulla!)
 empty file	common	fi	Tyhjä tiedosto
 enable javascript onchange submit	common	fi	Salli JavaScript onchange lähetys
@@ -673,6 +676,7 @@ if you use "2-factor-authentication", please enter the code here.	common	fi	Jos 
 image	common	fi	Kuva
 image directory relative to document root (use / !), example:	common	fi	Kuvahakemiston suhteellinen dokumentin juurihakemisto (käytä / !), esimerkiksi:
 image url	common	fi	Kuvan URL
+images	common	fi	Kuvat
 import	common	fi	Tuonti
 import an etemplate from a xml-file	common	fi	Tuo eTemplate XML-tiedostosta
 import table-definitions from existing db-table	common	fi	Tuo taulumääritykset valmiista tietokannasta
@@ -955,7 +959,8 @@ open	common	fi	Avaa
 open existing contact	common	fi	Avaa olemassa oleva yhteyshenkilö
 open notify window	common	fi	Avaa huomautusikkuna
 open popup window	common	fi	Avaa ponnahdusikkuna
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	fi	OpenIDConnect-kirjautuminen onnistui, mutta käyttäjää '%1' EI ole olemassa EGroupwaressa, JA automaattinen käyttäjän luominen on poistettu käytöstä!
+open the online help.	common	fi	Avaa online-ohje
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	fi	OpenID Connect-kirjautuminen onnistui, mutta käyttäjää '%1' EI ole olemassa EGroupwaressa, JA automaattinen käyttäjän luominen on poistettu käytöstä!
 operator	common	fi	Operaattori
 optional note about the link	common	fi	Linkin kuvaus (vapaaehtoinen)
 options	common	fi	Asetukset
@@ -1154,7 +1159,7 @@ select date	common	fi	Valitse päivämäärä
 select day	common	fi	Valitse päivä
 select day of week	common	fi	Valitse viikonpäivä
 select entry	common	fi	Valitse tietue
-select file(s) from vfs	common	fi	Valitse tiedosto(t) EGroupware File Managerista.
+select file(s) from vfs	common	fi	Valitse tiedosto(t) EGroupware File Managerista
 select files from filemanager ...	common	fi	Valitse tiedostot tiedostonhallinnasta ...
 select group	common	fi	Valitse ryhmä
 select home email address	common	fi	Valitse kotisähköpostiosoite
@@ -1251,11 +1256,12 @@ spacing	common	fi	Spacing
 spain	common	fi	ESPANJA
 span	common	fi	Span
 span, class	common	fi	Span, Class
+spreadsheets	common	fi	Taulukot
 sri lanka	common	fi	SRI LANKA
 stack	common	fi	Pino
 start a new search, cancel this link	common	fi	Aloita uusi haku, peruuta tämä yhteys
 start date	common	fi	Aloituspäivä
-start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	fi	Tiedostonhallinnan oletuskansio editorissa selattaessa.
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	fi	Tiedostonhallinnan oletuskansio editorissa selattaessa
 start new search for the above pattern	common	fi	Aloita uusi haku määriteillä
 start time	common	fi	Aloitusaika
 start with	common	fi	Alkaa
@@ -1296,6 +1302,7 @@ tanzania, united republic of	common	fi	TANSANIAN YHDISTYNYT TASAVALTA
 template	common	fi	Mallipohja
 template deleted	common	fi	Mallipohja poistetaan
 template saved	common	fi	Mallipohja tallennetaan.
+templates	common	fi	Mallipohjat
 text	common	fi	Teksti
 text color:	common	fi	Tekstin väri:
 textarea	common	fi	Tekstialue
@@ -1390,6 +1397,7 @@ venezuela	common	fi	VENEZUELA
 version	common	fi	Versio
 vertical alignment of row	common	fi	Rivin pystysuuntainen tasaus
 vfs upload directory	common	fi	VFS kansio
+videos	common	fi	Videot
 viet nam	common	fi	VIETNAM
 view	common	fi	Näytä
 view this etemplate	common	fi	Näytä eTemplate
@@ -1406,7 +1414,6 @@ western sahara	common	fi	LÄNSISAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fi	Mitä tapahtuu ylimenevän osan kanssa: näkyvä (oletus), piilotettu, vieritys (scroll), automaattinen (selain päätää)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	fi	Kun yhdistät merkintöjä asiakirjoihin, ne tallennetaan tänne. Jos kansiota ei ole annettu, ne tallennetaan kotihakemistoosi (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fi	Kun vastaat Kyllä, kotisivu- ja uloskirjautumispainikkeet näkyvät yläreunan valikossa, kuten sovellukset.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	fi	Missä ja kuinka Asetukset, Tietoja ja Kirjaudu Ulos -linkit tulisi näyttää.
 which groups	common	fi	Mitkä ryhmät
 which infolog types should be synced with the device, default only tasks.	common	fi	Mitkä Tehtävienhallinnan tyypit synkronoidaan, oletuksena "Tehtävät".
 whole query	common	fi	Kaikki merkinnät

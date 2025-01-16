@@ -1,9 +1,9 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	en	%1 (%2 new) messages written for application '%3' and languages '%4'
 %1 active file(s) with same name as directory inactivated!	admin	en	%1 active file(s) with same name as folder inactivated!
-%1 copied - the copy can now be edited	common	en	%1 copied - the copy can now be edited
+%1 copied - the copy can now be edited	common	en	%1 copied - the copy can now be edited.
 %1 directories %2 found!	admin	en	%1 directories %2 found!
 %1 email addresses inserted	common	en	%1 email addresses inserted.
-%1 email(s) added into %2	common	en	%1 email(s) added into %2
+%1 email(s) added into %2	common	en	%1 email(s) added into %2.
 %1 etemplates deleted	common	en	%1 eTemplate(s) deleted.
 %1 etemplates found	common	en	%1 eTemplate(s) found.
 %1 file	common	en	%1 file
@@ -152,6 +152,7 @@ applies the changes made	common	en	Applies the changes
 applies the changes to the given version of the template	common	en	Applies the changes to the given version of the template
 apply	common	en	Apply
 apply the action on the whole query, not only the shown entries	common	en	Apply the action on the whole query, NOT only the shown entries
+apps & license	common	en	Apps & License
 apps &amp; license	common	en	Apps & License
 april	common	en	April
 are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries?
@@ -203,7 +204,6 @@ blurtext	common	en	blurText
 bold	common	en	Bold
 bolivia	common	en	BOLIVIA
 border	common	en	Border
-border-line-thickness for the table-tag	common	en	Border line thickness for the table tag
 bosnia and herzegovina	common	en	BOSNIA AND HERZEGOVINA
 botswana	common	en	BOTSWANA
 bottom	common	en	Bottom
@@ -1003,7 +1003,7 @@ open existing contact	common	en	Open existing contact
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
 open the online help.	common	en	Open the online help
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	en	OpenIDConnect login successful, but user '%1' does NOT exist in EGroupware, AND automatic user creating is disabled!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	en	OpenID Connect login successful, but user '%1' does NOT exist in EGroupware, AND automatic user creating is disabled!
 operator	common	en	Operator
 optional note about the link	common	en	Optional note for link
 options	common	en	Options
@@ -1379,6 +1379,7 @@ tanzania, united republic of	common	en	TANZANIA, UNITED REPUBLIC OF
 template	common	en	Template
 template deleted	common	en	Template deleted.
 template saved	common	en	Template saved.
+templates	common	en	Templates
 text	common	en	Text
 text color:	common	en	Text colour:
 textarea	common	en	Text area
@@ -1507,7 +1508,6 @@ western sahara	common	en	WESTERN SAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	en	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	en	When you merge entries into documents, they will be stored here. If no folder is provided, they will be stored in your home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	en	Where and how will the EGroupware links like Preferences, About and Log out be displayed.
 which groups	common	en	Which groups
 which infolog types should be synced with the device, default only tasks.	common	en	Which InfoLog types should be synced with the device, default only tasks.
 whole query	common	en	Whole query

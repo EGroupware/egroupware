@@ -10,6 +10,9 @@ export default css`
 		flex-direction: column;
 		gap: var(--sl-spacing-small);
 	}
+    et2-dialog et2-vfs-select-row{
+        overflow-wrap: anywhere;
+    }
 
 	.et2_toolbar {
 		display: flex;

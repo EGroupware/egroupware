@@ -835,7 +835,6 @@ standard smtp-server	admin	sk	Štandardný SMTP server
 start	admin	sk	Štart
 start testjob!	admin	sk	Spustiť testovaciu úlohu
 starts with	admin	sk	Začať s
-stationery	admin	sk	Kancelárske potreby
 strictly required, user can not login without	admin	sk	Striktne vyžadovať, používateľ sa bez toho neprihlási
 submit changes	admin	sk	Vykonať Zmeny
 submit displayed information?	admin	sk	Odoslať zobrazené informácie
@@ -849,7 +848,6 @@ successfull, but no refresh-token received!	admin	sk	Úspech, ale NEdostali sme 
 switch back to standard identity to save account.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie účtu.
 switch back to standard identity to save other account data.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie údajov účtu.
 switch it off, if users are randomly thrown out	admin	sk	Vypnite to, ak sú používatelia náhodne odpájaní
-templates	admin	sk	Šablóny
 that loginid has already been taken	admin	sk	Takéto ID prihlásenia sa už používa.
 the api is current	admin	sk	API je aktuálne
 the api requires an upgrade	admin	sk	API potrebuje aktualizáciu
@@ -875,7 +873,6 @@ this category is currently being used by applications as a parent category	admin
 this controls exports and merging.	admin	sk	Týmto sa riadia exporty a hromadné tlače.
 this is a mail account for all users!	admin	sk	Toto je poštové konto pre VŠETKÝCH používateľov!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	sk	Toto NIE je osobný poštový účet!\n\nÚčet bude ostránený pre VŠETKÝCH používateľov!\n\nSte si istí že to chcete urobiť?
-this key used in the html code your site serves to users.	admin	sk	Tento kľúč sa používa v HTML kóde, ktorý vaša stránka poskytuje používateľom.
 this php has no imap support compiled in!!	admin	sk	Toto PHP nemá zakompilovanú podporu pre IMAP!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	sk	Čas vypršania údajov o relácii aplikácie, v sekundách (predvolené: 86400 = 1 deň)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	sk	Čas vypršania údajov o relácii, v sekundách (predvolené: 14400 = 4 hodiny)
@@ -940,7 +937,7 @@ user csv import	admin	sk	CSV import používateľov
 user data	common	sk	Používateľské údaje
 user for smtp-authentication (leave it empty if no auth required)	admin	sk	Používateľ pre SMTP overovanie (ak netreba, ponechajte prázdne).
 user groups	admin	sk	Používateľské skupiny
-user hidden vom non-admins.	admin	sk	Používateľ skrytý pre používateľov, ktorí nie sú administrátormi
+user hidden from non-admins.	admin	sk	Používateľ skrytý pre neadministrátorov
 user-agent	admin	sk	User-Agent
 userdata	admin	sk	Používateľské údaje
 userid@domain eg. u1234@domain	admin	sk	PoužívateľskéID@doména napr. u1234@domain
@@ -950,8 +947,7 @@ username/password defined by admin	admin	sk	Používateľské meno/heslo definov
 username@domainname (virtual mail manager)	admin	sk	používateľ@doména (Virtuálny Mail ManaGeR)
 users can define their own emailaccounts	admin	sk	Používatelia môžu definovať svoje vlastné E-mailové účty
 users can define their own identities	admin	sk	Používatelia môžu definovať svoje vlastné identity
-users can define their own signatures	admin	sk	Používatelia môžu definovať svoje vlastné podpisy
-users can utilize these stationery templates	admin	sk	Používatelia môžu využívať tieto statické šablóny
+users can define their own signatures	admin	sk	Používatelia si môžu definovať vlastné podpisy
 users choice	admin	sk	Používateľská voľba
 using data from mozilla ispdb for provider %1	admin	sk	Používajú sa údaje z Mozilla ISPDB pre poskytovateľa %1
 using fallback via regular json requests	admin	sk	Použitie záložného riešenia prostredníctvom bežných požiadaviek JSON
@@ -981,8 +977,6 @@ wrong credentials to access the header.inc.php file!	admin	sk	Nesprávne poveren
 xml-rpc	admin	sk	XML-RPC
 yes, but no scayt	admin	sk	Áno, ale bez kontroly pravopisu pri písaní (online)
 yes, use browser based spell checking engine	admin	sk	Áno, používať kontrolu pravopisu v prehliadači
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	sk	Áno, použiť nižšieuvedené prístupové údaje iba pre upozornenia, ináč použiť prístupové údaje aktuálneho používateľa
-yes, use credentials of current user or if given credentials below	admin	sk	Áno, použiť prístupové údaje aktuálneho používateľa, alebo prístupové údaje uvedené nižšie ak sú vyplnené
 yes, use webspellchecker	admin	sk	Áno, použiť kontrolu pravopisu WebSpellChecker pri písaní (online)
 you can not use --dry-run together with --skip-checks!	admin	sk	NEmôžete použiť --dry-run zároveň s funkciou --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	sk	Ak nastavíte náhodné heslo alebo používateplaintextové heslá , môžete zmeniť len heš!

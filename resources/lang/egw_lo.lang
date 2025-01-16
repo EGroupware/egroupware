@@ -1,22 +1,12 @@
 accessories of	resources	lo	ອຸປະກອນເສີມ
-accessories:	resources	lo	ອຸປະກອນ
-actions	resources	lo	ປະຕິບັດ
-add accessory	resources	lo	ເພີ່ມອຸປະກອນເສີມ
 add resource	resources	lo	ເພີ່ມຊັບພະຍາກອນ
-add resources	resources	lo	ເພີ່ມຊັບພະຍາກອນ
 administrator	resources	lo	ຜູ້ບໍລິຫານ
-all categories	resources	lo	ໝວດໝູ່ທັງໝົດ
 book	resources	lo	ຈອງ
-book selected resources	resources	lo	ຈອງຊັບພະຍາກອນໄດ້ເລືອກແລ້ວ
 book this resource	resources	lo	ຈອງຊັບພະຍາກອນນີ້
 bookable	resources	lo	ໃຫ້ຈອງໄດ້
 buy this article	resources	lo	ຊື້ສິ່ງນີ້
-buy this resource	resources	lo	ຊື້ຊັບພະຍາກອນນີ້
 buyable	resources	lo	ໃຫ້ຊື້ໄດ້
-categories admin	resources	lo	ໝວດໝູ່ຜູ້ຄຸ້ມຄອງລະບົບ
 category:	resources	lo	ໝວດໝູ່
-check all	resources	lo	ເລືອກທັງໝົດ
-choose categories admin	resources	lo	ເລືອກໝວດໝູ່ຜູ້ຄຸ້ມຄອງລະບົບ
 clear selection	resources	lo	ລຶບລ້າງການເລືອກ
 configure access permissions	admin	lo	ກຳໜົດສິດໃນການເຂົ້າໃຊ້
 conflict	resources	lo	ການຂັດແຍ່ງ
@@ -28,7 +18,6 @@ delete selected resources	resources	lo	ລຶບຊັບພະຍາກອນ�
 delete this entry	resources	lo	ລຶບຂໍ້ມູນເຂົ້າມານີ້
 description (short)	resources	lo	ລາຍລະອຽດ(ສັ້ນໆ)
 direct booking permissions	resources	lo	ສິດທິການຈອງໂດຍກົງ
-don't use vfs (this will need a symlink --> see readme)	resources	lo	ຫ້າມໃຊ້ vfs (ນີ້ຈະຕ້ອງການ  symlink--> ເບີ່ງທີ ເອກະສານກໍາກັບ )
 edit this entry	resources	lo	ແກ້ໄຂຂໍ້ບັນທຶກນີ້
 existing links	resources	lo	ທີ່ມີການເຊື່ອມຕໍ່
 exists	resources	lo	ມີຢູ່ແລ້ວ
@@ -91,8 +80,6 @@ use general resources icon	resources	lo	ໃຊ້ໄອຄ໋ອນຊັບພ�
 use own picture	resources	lo	ໃຊ້ຮູບພາບຂອງຕົນເອງ
 use the category's icon	resources	lo	ໃຊ້ໄອຄ໋ອນຂອງໝວດໝູ່
 useable	resources	lo	ສາມາດໃຊ້
-useable:	resources	lo	ສາມາດໃຊ້:
-view accessories for this resource	resources	lo	ເບິ່ງອຸປະກອນເສີມຂ
 view this entry	resources	lo	ເບິ່ງລາຍການຂໍ້ມູນນີ້
 web-page of resource	resources	lo	ໜ້າເວບຂອງຊັບພະຍາກອນ
 web-site for this resource	resources	lo	ເວບໄຊລສຳຫຼັບຊັບພະຍາກອນນີ້

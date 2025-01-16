@@ -404,14 +404,12 @@ standard smtp-server	admin	id	Server SMTP Standar
 start	admin	id	Mulai
 start testjob!	admin	id	Mulai pekerjaan tes!
 starts with	admin	id	Diawali dengan
-stationery	admin	id	Stationery
 submit changes	admin	id	Submit Changes
 submit displayed information?	admin	id	Submit displayed information?
 submit statistic information	admin	id	Submit statistic information
 submit to egroupware.org	admin	id	Submit to egroupware.org
 subtype	admin	id	Subtype
 success	admin	id	Sukses
-templates	admin	id	Templat
 the api is current	admin	id	API saat ini
 the two passwords are not the same	admin	id	Kedua password tidak sama
 the users bellow are still members of group %1	admin	id	Pengguna berikut ini masih menjadi anggota kelompok %1
@@ -437,15 +435,22 @@ upload your certificate .p12/.pfx file	admin	id	Unggah file .p12/.pfx sertifikat
 use default	admin	id	Gunakan bawaan
 use theme	admin	id	Gunakan tema
 user accounts	admin	id	Akoun pengguna
+user choice	admin	id	Pilihan pengguna
+user csv export	admin	id	Ekspor CSV pengguna
+user csv import	admin	id	Impor CSV pengguna
 user data	common	id	Data Pengguna
 user groups	admin	id	Kelompok Pengguna
-user hidden vom non-admins.	admin	id	Pengguna yang disembunyikan dari non-admin
+user hidden from non-admins.	admin	id	Pengguna yang disembunyikan untuk non-admin
 user-agent	admin	id	User-Agent
 userdata	admin	id	Data pengguna
 username (standard)	admin	id	Namapengguna (standar)
 username/password defined by admin	admin	id	Namapengguna/Password dibuat oleh admin
 username@domainname (virtual mail manager)	admin	id	username@domainname (Virtual MAIL ManaGeR)
+users can define their own identities	admin	id	Pengguna dapat menentukan identitas mereka sendiri
+users can define their own signatures	admin	id	Pengguna dapat menentukan tanda tangan mereka sendiri
 users choice	admin	id	Pilihan Pengguna
+vacation messages with start- and end-date require an admin account to be set	admin	id	Pesan liburan dengan tanggal mulai dan berakhir memerlukan akun admin untuk ditetapkan!
+vacation notice	admin	id	Pemberitahuan liburan
 view access log	admin	id	Lihat log akses
 view account	admin	id	Lihat akoun
 view category	admin	id	Lihat kategori
@@ -454,6 +459,9 @@ view sessions	admin	id	Lihat sesi
 view this user	admin	id	lihat pengguna ini
 view user account	admin	id	Lihat akoun pengguna
 virtual mail manager	admin	id	Virtual MAIL ManaGeR
+who would you like to transfer records owned by the deleted user to?	admin	id	Kepada siapa Anda ingin mentransfer catatan yang dimiliki oleh pengguna yang dihapus?
 xml-rpc	admin	id	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	id	Anda dapat menggunakan wizard untuk memperbaiki pengaturan akun atau menghapus akun.
+you need to select some users first!	admin	id	Anda perlu memilih beberapa pengguna terlebih dahulu!
 your name	admin	id	Nama Anda
 your session could not be verified.	admin	id	Sesi anda tidak dapat diperiksa.

@@ -1,5 +1,5 @@
-import {css, html, LitElement, nothing, PropertyValues} from "lit";
-import {SlIcon, SlMenu, SlMenuItem} from "@shoelace-style/shoelace";
+import {css, html, LitElement, nothing} from "lit";
+import {SlDivider, SlMenu, SlMenuItem} from "@shoelace-style/shoelace";
 import {egwMenuItem} from "./egw_menu";
 import {customElement} from "lit/decorators/custom-element.js";
 import {repeat} from "lit/directives/repeat.js";
@@ -24,6 +24,12 @@ export class EgwMenuShoelace extends LitElement
 
 				sl-menu {
 					box-shadow: var(--sl-shadow-x-large);
+				}
+
+				/* sl-menu-item:host overrides display */
+
+				sl-menu-item[hidden], sl-divider[hidden] {
+					display: none !important;
 				}
 
 				sl-menu-item::part(base) {
@@ -51,13 +57,16 @@ export class EgwMenuShoelace extends LitElement
 					line-height: normal;
 					width: 1.3em;
 				}
+				et2-image::before {
+					font-size: 1.3em; /*make bi icons same size as et2-image img*/
+				}
 			`
 		]
 	}
 
 	private structure = [];
 	private popup = null;
-	private removeCallback = null;
+	private hideCallback = null;
 
 	private get menu() : SlMenu { return this.shadowRoot?.querySelector("sl-menu");}
 
@@ -88,16 +97,16 @@ export class EgwMenuShoelace extends LitElement
 			this.popup.remove();
 			this.popup = null;
 		}
-		if(this.removeCallback)
+		if(this.hideCallback)
 		{
-			this.removeCallback.call();
+			this.hideCallback.call();
 		}
 	}
 
 
 	public showAt(_x, _y, _onHide)
 	{
-		this.removeCallback = _onHide;
+		this.hideCallback = _onHide;
 		if(this.popup == null)
 		{
 			this.popup = Object.assign(document.createElement("sl-popup"), {
@@ -108,7 +117,10 @@ export class EgwMenuShoelace extends LitElement
 			});
 			this.popup.append(this);
 			this.popup.classList.add("egw_menu");
+			document.body.append(this.popup);
 		}
+
+		// Open where instructed
 		let menu = this;
 		this.popup.anchor = {
 			getBoundingClientRect()
@@ -126,24 +138,62 @@ export class EgwMenuShoelace extends LitElement
 			}
 		};
 		this.popup.active = true;
-		document.body.append(this.popup);
 		Promise.all([this.updateComplete, this.popup.updateComplete]).then(() =>
 		{
 			// Causes scroll issues if we don't position
 			this.popup.popup.style = "top: 0px";
-			(<SlMenuItem>this.menu.querySelector('sl-menu-item')).focus();
+			(<SlMenuItem>this.menu.querySelector('sl-menu-item'))?.focus();
 		});
 	}
 
+	/**
+	 * Update the menu items with current disabled / visible settings
+	 *
+	 * @param _links
+	 */
+	public applyContext(_links, _selected, _target)
+	{
+		// Reset & hide all, in case some actions were not included in links
+		this.menu.querySelectorAll("sl-menu-item").forEach(i => i.disabled = i.hidden = true);
+		this.menu.querySelectorAll("sl-divider").forEach(i => i.hidden = false);
+
+		Object.keys(_links).forEach((actionId) =>
+		{
+			// Take the last one if there's more than one with the same ID as a work-around to automatic drag actions getting added twice
+			// in different places in some cases (nextmatch_controller vs EgwPopupActionImplementation)
+			const menuItem = <SlMenuItem>Array.from(this.shadowRoot.querySelectorAll("[data-action-id='" + actionId + "']")).pop();
+			if(!menuItem)
+			{
+				return;
+			}
+			menuItem.disabled = !_links[actionId].enabled;
+			menuItem.hidden = !_links[actionId].visible;
+			if(menuItem.type == "checkbox")
+			{
+				menuItem.checked = _links[actionId].actionObj.checked ?? false;
+			}
+		});
+
+		// Hide dividers before empty sections
+		this.menu.querySelectorAll("sl-divider:not(:has( + sl-menu-item:not([hidden])))").forEach((i : SlDivider) => i.hidden = true);
+
+		// Copy caption changes
+		let osClipboard;
+		if(_links.egw_os_clipboard && (osClipboard = <SlMenuItem>this.shadowRoot.querySelector("[data-action-id='egw_os_clipboard']")))
+		{
+			osClipboard.innerText = _links.egw_os_clipboard.actionObj.caption;
+		}
+	}
 	public hide()
 	{
 		if(this.popup)
 		{
 			this.popup.active = false;
 		}
-
-		// egw_menu always creates a new menu
-		this.remove();
+		if(this.hideCallback)
+		{
+			this.hideCallback.call();
+		}
 	}
 
 	handleSelect(event)
@@ -227,14 +277,16 @@ export class EgwMenuShoelace extends LitElement
 		{
 			item.iconUrl = item.checked ? "toggle-on" : "toggle-off";
 		}
+		const id = CSS.escape(item.id);
 
 		return html`
             <sl-menu-item
                     class=${classMap({
                         "default-item": item.default
                     })}
-                    id=${item.id}
+                    id=${id}
                     type="${item.checkbox ? "checkbox" : "normal"}"
+                    data-action-id="${item.id}"
                     ?checked=${item.checkbox && item.checked}
                     ?disabled=${!item.enabled}
                     .value=${item}
@@ -262,6 +314,13 @@ export class EgwMenuShoelace extends LitElement
 		return html`
             <sl-menu
                     @sl-select=${this.handleSelect}
+                    @contextmenu=${(e) =>
+                    {
+                        if(!e.ctrlKey)
+                        {
+                            e.preventDefault();
+                        }
+                    }}
             >
                 ${repeat(this.structure, i => this.itemTemplate(i))}
             </sl-menu>`;

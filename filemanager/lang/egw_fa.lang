@@ -3,7 +3,6 @@ administrators	filemanager	fa	مدیران
 applications	common	fa	کاربردها
 cancel editing %1 without saving	filemanager	fa	لغو ویرایش %1 بدون ذخیره سازی
 cannot create directory because it begins or ends in a space	filemanager	fa	ناتوان از ایجاد پوشه چون با یک فاصله شروع یا تمام می شود
-check all	filemanager	fa	چک کردن همه
 comment	filemanager	fa	توضیحات
 copied %1 to %2	filemanager	fa	%1 به %2 نسخه برداری شد
 copy to	filemanager	fa	نسخه برداری به
@@ -59,7 +58,6 @@ preview	filemanager	fa	پیش نمایش
 preview %1	filemanager	fa	پیش نمایش %1
 preview of %1	filemanager	fa	پیش نمایش %1
 projectmanager	filemanager	fa	مدیریت پروژه
-quick jump to	filemanager	fa	پرش سریع به
 reload	filemanager	fa	باز خوانی
 renamed %1 to %2	filemanager	fa	تغییر نام %1 به %2
 replaced %1	filemanager	fa	جایگزین شد%1

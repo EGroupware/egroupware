@@ -592,7 +592,6 @@ standard imap server	admin	pl	Standardowy serwer IMAP
 standard smtp-server	admin	pl	Standardowy serwer SMTP
 start	admin	pl	Początek
 start testjob!	admin	pl	Uruchom Testjob
-stationery	admin	pl	Stacjonarny
 submit changes	admin	pl	Zatwierdź zmiany
 submit displayed information?	admin	pl	Przesłać wyświetlone informacje?
 submit statistic information	admin	pl	Prześlij informacje statystyczne
@@ -601,7 +600,6 @@ submit to egroupware.org	admin	pl	Prześlij do egroupware.org
 subtype	admin	pl	Pod-typ
 success	admin	pl	Sukces
 switch it off, if users are randomly thrown out	admin	pl	Wyłącz to, jeżeli użytkownicy są wyrzucani losowo
-templates	admin	pl	Szablony
 that loginid has already been taken	admin	pl	Taki login już istnieje
 the api is current	admin	pl	Wersja API jest aktualna
 the api requires an upgrade	admin	pl	Wersja API wymaga aktualizacji
@@ -664,10 +662,13 @@ use tls encryption	admin	pl	Skorzystaj z szyfrowania TLS
 use users email-address (as seen in useraccount)	admin	pl	Użyj adresu użytkownika (taki jak widoczny w opcjach konta)
 user accounts	admin	pl	Konta użytkowników
 user can edit forwarding address	admin	pl	Użytkownik może zmieniać adres przekazywania
+user choice	admin	pl	Wybór użytkownika
+user csv export	admin	pl	Eksport CSV użytkownika
+user csv import	admin	pl	Import CSV użytkownika
 user data	common	pl	Dane użytkownika
 user for smtp-authentication (leave it empty if no auth required)	admin	pl	Użytkownik dla logowania SMTP (pozostaw puste jeśli nie jest wymagane)
 user groups	admin	pl	Grupy użytkownikw
-user hidden vom non-admins.	admin	pl	Użytkownik ukryty przed użytkownikami niebędącymi administratorami
+user hidden from non-admins.	admin	pl	Użytkownik ukryty dla osób niebędących administratorami
 user-agent	admin	pl	User-Agent
 userdata	admin	pl	Dane użytkownika
 username (standard)	admin	pl	Login (standardowo)
@@ -675,9 +676,10 @@ username/password defined by admin	admin	pl	Nazwa uzytkownika/Hasło określone 
 username@domainname (virtual mail manager)	admin	pl	login@domena (wirtualny zarządca kont)
 users can define their own emailaccounts	admin	pl	Użytkownicy mogą definiować swoje własne konta poczty elektronicznej
 users can define their own identities	admin	pl	Użytkownicy mogą definiować swoje własne tożsamości
-users can define their own signatures	admin	pl	Użytkownicy mogą definiować swoje własne podpisy
-users can utilize these stationery templates	admin	pl	Użytkownicy mogą użyć tych szablonów stacjonarnych
+users can define their own signatures	admin	pl	Użytkownicy mogą definiować własne podpisy
 users choice	admin	pl	Wybór użytkownika
+vacation messages with start- and end-date require an admin account to be set	admin	pl	Wiadomości urlopowe z datą rozpoczęcia i zakończenia wymagają konta administratora!
+vacation notice	admin	pl	Powiadomienie o wakacjach
 value for column %1 is not unique!	admin	pl	Wartość dla kolumny %1 nie jest unikatowa!
 view access log	admin	pl	Wyświetl dziennik dostępu
 view account	admin	pl	Wyświetl konto
@@ -690,9 +692,11 @@ virtual mail manager	admin	pl	Wirtualny Serwer Pocztowy - zarządca
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	pl	Prosimy o te dane, aby poprawić nasz profil w prasie oraz lepiej zrozumieć bazę użytkowników egroupware i jej potrzeby.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	pl	Mamy nadzieję, że rozumiesz potrzebę wprowadzenia tej dobrowolnej statystyki i nie wyłączysz jej jeśli nie musisz.
 who would you like to transfer all records owned by the deleted user to?	admin	pl	Kto powinien przejąć wszystkie rekordy usuwanego użytkownika?
+who would you like to transfer records owned by the deleted user to?	admin	pl	Do kogo chcesz przenieść rekordy należące do usuniętego użytkownika?
 wrong account type: %1 is no %2 !!!	admin	pl	Zły typ konta: %1 to nie %2 !
 wrong admin-account or -password !!!	admin	pl	Niepoprawne konto administratora lub hasło!
 xml-rpc	admin	pl	XML-RPC
+you can use wizard to fix account settings or delete account.	admin	pl	Możesz użyć kreatora, aby poprawić ustawienia konta lub usunąć konto.
 you have entered an invalid expiration date	admin	pl	Podałeś niewłaściwą datę wygaśnięcia
 you have no email address for your user set !!!	admin	pl	Nie masz ustawionego adresu email dla swojego użytkownika!
 you have received a new message on the	admin	pl	Otrzymałeś nową wiadomość o
@@ -706,6 +710,7 @@ you must enter an application name.	admin	pl	Musisz podać nazwę aplikacji
 you must enter an application title.	admin	pl	Musisz podać tytuł aplikacji
 you must select at least one group member.	admin	pl	Musisz wybrać przynajmniej jednego członka grupy.
 you need to enter install id and password!	admin	pl	Musisz podać ID instalacji i hasło!
+you need to select some users first!	admin	pl	Musisz najpierw wybrać niektórych użytkowników!
 you will need to remove the subcategories before you can delete this category	admin	pl	Należy usunąć kategorie podrzędne przed skasowaniem tej kategorii!
 your last submission was less then %1 days ago!	admin	pl	Swój ostatni wpis przesłałeś mniej niż %1 dni temu!
 your name	admin	pl	Twoje Imę

@@ -92,6 +92,7 @@ application	common	da	Applikation
 applications	common	da	Applikationer
 applies the changes made	common	da	Anvender ændringerne
 apply	common	da	Anvend
+apps & license	common	da	Apps og licenser
 april	common	da	April
 are you sure you want to delete these entries ?	common	da	Vil du virkelige slette disse felter?
 are you sure you want to delete this entry ?	common	da	Vil Du virkelig slette dette felt?
@@ -187,6 +188,7 @@ clear	common	da	Slet
 clear form	common	da	Slet formular
 click	common	da	Klik
 click here to create the link	common	da	Clik her for at oprette linket
+click here to resume your egroupware session.	common	da	Klik for at genoptage din EGroupware-session.
 click here to start the search	common	da	Klik her for at starte søgningen
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	da	Klienter, der ikke udtrykkeligt angiver en grænse, bliver begrænset til så mange dage. En for høj grænse kan give problemer med nogle klienter.
 clipboard contents	common	da	Udklipsholderens indhold
@@ -274,6 +276,7 @@ document '%1' does not exist or is not readable for you!	preferences	da	Dokument
 document properties	common	da	Dokument egenskaber
 document title:	common	da	Dokument titel:
 documentation	common	da	Dokumentation
+documents	common	da	Dokumenter
 doesn't matter	common	da	Det gør ikke noget
 domain	common	da	Domæne
 domain name for mail-address, eg. "%1"	common	da	Domænenavn til e-mail adresser, f.eks "%1"
@@ -308,6 +311,7 @@ egypt	common	da	Egypten
 el salvador	common	da	El Salvador
 email	common	da	E-mail
 email-address of the user, eg. "%1"	common	da	E-mail-adresse for brugeren, f.eks. "%1"
+emails	common	da	E-mails
 enable logging	groupdav	da	Aktivér logning
 enabled	common	da	Slået til
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	da	Muliggør logning af CalDAV/CardDAV-trafik for at diagnosticere problemer med enheder.
@@ -420,6 +424,7 @@ iceland	common	da	Island
 id	common	da	ID
 if you use "2-factor-authentication", please enter the code here.	common	da	Hvis du bruger "2-Factor-Authentication", skal du indtaste koden her.
 image url	common	da	Billedets adresse
+images	common	da	Billeder
 import	common	da	Importer
 include access to any linked files (links tab)	common	da	Medtag adgang til eventuelle linkede filer (fanen Links)
 india	common	da	Indien
@@ -618,7 +623,7 @@ open existing contact	common	da	Åbn eksisterende kontakt
 open notify window	common	da	Åben Notificer Vindue
 open popup window	common	da	Åben popup vindue
 open the online help.	common	da	Åbn online-hjælp
-openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	da	OpenIDConnect-login vellykket, men brugeren '%1' findes IKKE i EGroupware, OG automatisk brugeroprettelse er deaktiveret!
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	da	OpenID Connect-login vellykket, men brugeren '%1' findes IKKE i EGroupware, OG automatisk brugeroprettelse er deaktiveret!
 operator	common	da	Operatør
 optional note about the link	common	da	Valgfri note til link
 options	common	da	Indstillinger
@@ -793,6 +798,7 @@ sorry, your login has expired	login	da	Desværre, Din session er udløbet.
 south africa	common	da	Syd Afrika
 south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
 spain	common	da	Spanien
+spreadsheets	common	da	Regneark
 sri lanka	common	da	Sri Lanka
 start a new search, cancel this link	common	da	Start en ny søgning, annullere dette link
 start date	common	da	Startdato
@@ -812,6 +818,8 @@ table properties	common	da	Table properties
 taiwan	common	da	Taiwan/Taipei
 tajikistan	common	da	Tajikistan
 tanzania, united republic of	common	da	Tanzania, Den forenede Republik
+template	common	da	Skabelon
+templates	common	da	Skabeloner
 text	common	da	Tekst
 textarea	common	da	Tekstområde
 thailand	common	da	Thailand
@@ -876,6 +884,7 @@ uzbekistan	common	da	Uzbekistan
 vanuatu	common	da	Vanuatu
 venezuela	common	da	Venezuela
 version	common	da	Version
+videos	common	da	Videoer
 viet nam	common	da	Viet Nam
 view	common	da	Se
 view this linked entry in its application	common	da	Se det linkede emne i dets program
@@ -885,6 +894,7 @@ wallis and futuna	common	da	Wallis og Futuna
 wednesday	common	da	Onsdag
 welcome	common	da	Velkommen
 western sahara	common	da	Vest Sahara
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	da	Når du fletter poster til dokumenter, gemmes de her. Hvis der ikke er angivet en mappe, gemmes de i din hjemmemappe (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	da	Hvis du siger ja, bliver hjem og logout knapperne vist som applikationer i hoved applikations linien.
 which groups	common	da	Hvilke grupper
 width	common	da	Bredde

@@ -320,6 +320,7 @@ ical export	calendar	it	Esportazione iCal
 ical file	calendar	it	file iCal
 ical import	calendar	it	Importazione iCal
 ical successful imported	calendar	it	iCal importato con successo
+if resource is unavailable	calendar	it	Se la risorsa non è disponibile
 if start day differs	calendar	it	Se la data di avvio differisce
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	it	Se non stabilisci una password qui, l'informazione sarà disponibile a chiunque conosca l'URL!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	it	Se selezioni un intervallo (mese, settimana, ecc.) al posto di un elenco di voci, questi campi extra sono disponibili.
@@ -509,6 +510,7 @@ require an acl grant to invite other users and groups	admin	it	Richiedi ACL per 
 required information (start, end, title, ...) missing!	calendar	it	Mancano le informazioni obbligatorie (inizio, fine, titolo, ...)!!
 reset	calendar	it	Reimposta
 reset participant stati on event shifts	calendar	it	Reimposta lo stato dei partecipanti in caso di spostamento eventi
+reset resource status on event shifts	calendar	it	Azzeramento dello stato della risorsa in caso di spostamento dell'evento
 resources	calendar	it	Risorse
 resources except conflicting ones	calendar	it	Risorse eccetto quelle in conflitto
 resources with conflict detection	calendar	it	Risorse con rilevamento di conflitti
@@ -528,6 +530,7 @@ select a time	calendar	it	Seleziona un'orario
 select multiple contacts for a further action	calendar	it	Seleziona contatti multipli per azioni ulteriori
 select resources	calendar	it	Seleziona risorse
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	it	Seleziona se vuoi reimpostare lo stato dei partecipanti a "sconosciuto", se un appuntamento viene spostato a più tardi
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	it	Selezionate se volete che lo stato della risorsa sia reimpostato su “Nessuna risposta”, se un appuntamento viene spostato.
 select who should get the alarm	calendar	it	Seleziona chi dovrà avere la sveglia
 selected range	calendar	it	Intervallo di selezione
 selected users/groups	calendar	it	Utenti/Gruppi selezionati

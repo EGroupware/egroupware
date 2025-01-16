@@ -15,7 +15,6 @@ import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
 import {repeat} from "lit/directives/repeat.js";
 import {styleMap} from "lit/directives/style-map.js";
-import {et2_template} from "../et2_widget_template";
 import type {etemplate2} from "../etemplate2";
 import {egw, IegwAppLocal} from "../../jsapi/egw_global";
 import interact from "@interactjs/interactjs";
@@ -25,6 +24,7 @@ import shoelace from "../Styles/shoelace";
 import {SlDialog} from "@shoelace-style/shoelace";
 import {egwIsMobile} from "../../egw_action/egw_action_common";
 import {waitForEvent} from "../Et2Widget/event";
+import {property} from "lit/decorators/property.js";
 
 export interface DialogButton
 {
@@ -40,90 +40,14 @@ export interface DialogButton
 /**
  * A common dialog widget that makes it easy to inform users or prompt for information.
  *
- * It is possible to have a custom dialog by using a template, but you can also use
- * the static method Et2Dialog.show_dialog().  At its simplest, you can just use:
- * ```ts
- *	Et2Dialog.show_dialog(false, "Operation completed");
- * ```
+ * @slot - The dialog's main content
+ * @slot label - The dialog's title.  Alternatively, you can use the title attribute.
+ * @slot header-actions - Optional actions to add to the header. Works best with <et2-button-icon>
+ * @slot footer - The dialog's footer, where we put the buttons.
  *
- * Or a more complete example:
- * ```js
- * let callback = function (button_id)
- *	{
- *		if(button_id == Et2Dialog.YES_BUTTON)
- *		{
- *			// Do stuff
- *		}
- *		else if (button_id == Et2Dialog.NO_BUTTON)
- *		{
- *			// Other stuff
- *		}
- *		else if (button_id == Et2Dialog.CANCEL_BUTTON)
- *		{
- *			// Abort
- *		}
- *	}.
- *	let dialog = Et2Dialog.show_dialog(
- *		callback, "Erase the entire database?","Break things", {} // value
- *		et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE
- *	);
- * ```
- *
- * Or, using Promises instead of a callback:
- * ```ts
- * let result = await Et2Dialog.show_prompt(null, "Name").getComplete();
- * if(result.button_id == Et2Dialog.OK_BUTTON)
- * {
- *     // Do stuff with result.value
- * }
- * ```
- *
- * The parameters for the above are all optional, except callback (which can be null) and message:
- * -	callback - function called when the dialog closes, or false/null.
- *		The ID of the button will be passed.  Button ID will be one of the Et2Dialog.*_BUTTON constants.
- *		The callback is _not_ called if the user closes the dialog with the X in the corner, or presses ESC.
- * -	message - (plain) text to display
- * -	title - Dialog title
- * -	value (for prompt)
- * -	buttons - Et2Dialog BUTTONS_* constant, or an array of button settings.  Use DialogButton interface.
- * -	dialog_type - Et2Dialog *_MESSAGE constant
- * -	icon - URL of icon
- *
- * Note that these methods will _not_ block program flow while waiting for user input unless you use "await" on getComplete().
- * The user's input will be provided to the callback.
- *
- * You can also create a custom dialog using an etemplate, even setting all the buttons yourself.
- * ```ts
- * // Pass egw in the constructor
- * 	let dialog = new Et2Dialog(my_egw_reference);
- *
- * 	// Set attributes.  They can be set in any way, but this is convenient.
- * 	dialog.transformAttributes({
- * 		// If you use a template, the second parameter will be the value of the template, as if it were submitted.
- * 		callback: function(button_id, value) {...},	// return false to prevent dialog closing
- * 		buttons: [
- * 			// These ones will use the callback, just like normal.  Use DialogButton interface.
- * 			{label: egw.lang("OK"),id:"OK", default: true},
- * 			{label: egw.lang("Yes"),id:"Yes"},
- * 			{label: egw.lang("Sure"),id:"Sure"},
- * 			{label: egw.lang("Maybe"),click: function() {
- * 				// If you override, 'this' will be the dialog DOMNode.
- * 				// Things get more complicated.
- * 				// Do what you like here
- * 			}},
- *
- * 		],
- * 		title: 'Why would you want to do this?',
- * 		template:"/egroupware/addressbook/templates/default/edit.xet",
- * 		value: { content: {...default values}, sel_options: {...}...}
- * 	});
- *	// Add to DOM, dialog will auto-open
- *	document.body.appendChild(dialog);
- *	// If you want, wait for close
- *	let result = await dialog.getComplete();
- *```
- *
- * Customize initial focus by setting the "autofocus" attribute on a control, otherwise first input will have focus
+ * @event open - Emitted when the dialog opens
+ * @event close - Emitted when the dialog closes
+ * @event before-load - Emitted before the dialog opens
  */
 export class Et2Dialog extends Et2Widget(SlDialog)
 {
@@ -144,6 +68,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 * @protected
 	 * @internal
 	 */
+	private __template : string; // Name
 	protected _template_widget : etemplate2 | null;
 	protected _template_promise : Promise<boolean>;
 
@@ -274,64 +199,72 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			callback: Function,
+	/**
+	 * Function called when the dialog is closed
+	 *
+	 * Wait for dialog.getComplete() instead
+	 */
+	@property({type: Function})
+	callback : Function;
 
-			/**
-			 * Allow other controls to be accessed while the dialog is visible
-			 * while not conflicting with internal attribute
-			 */
-			isModal: {type: Boolean, reflect: true},
+	/**
+	 * Allow other controls to be accessed while the dialog is visible
+	 * while not conflicting with internal attribute
+	 */
+	@property({type: Boolean, reflect: true})
+	isModal : boolean;
 
-			/**
-			 * Title for the dialog, goes in the header
-			 */
-			title: String,
+	/**
+	 * Pre-defined group of buttons, one of the BUTTONS_*
+	 */
+	@property({type: Number})
+	buttons : Number;
 
-			/**
-			 * Pre-defined group of buttons, one of the BUTTONS_*
-			 */
-			buttons: Number,
+	// Force size on the dialog.  Normally it sizes to content.
+	@property({type: Number})
+	width : number;
+	// Force size on the dialog.  Normally it sizes to content.
+	@property({type: Number})
+	height : number;
 
-			/**
-			 * Instead of a message, show this template file instead
-			 */
-			template: String,
+	/**
+	 * Message to show to user
+	 */
+	@property({type: String})
+	message : string;
 
-			// Force size on the dialog.  Normally it sizes to content.
-			width: Number,
-			height: Number,
+	/**
+	 * Pre-defined dialog styles
+	 */
+	@property({type: Number})
+	dialog_type : number;
 
-			// We just pass these on to Et2DialogContent
-			message: String,
-			dialog_type: Number,
-			icon: String,
-			value: Object,
+	/**
+	 * Include an icon on the dialog
+	 *
+	 * @type {string}
+	 */
+	@property({type: String})
+	icon : string;
 
-			/**
-			 * Automatically destroy the dialog when it closes.  Set to false to keep the dialog around.
-			 */
-			destroyOnClose: Boolean,
+	/**
+	 * Automatically destroy the dialog when it closes.  Set to false to keep the dialog around.
+	 */
+	@property({type: Boolean})
+	destroyOnClose : boolean;
 
-			/**
-			 * Legacy-option for appending dialog into a specific dom node
-			 */
-			appendTo: String,
+	/**
+	 * When it's set to false dialog won't get closed by hitting Esc
+	 */
+	@property({type: Boolean})
+	hideOnEscape : boolean;
 
-			/**
-			 * When it's set to false dialog won't get closed by hitting Esc
-			 */
-			hideOnEscape: Boolean,
+	/**
+	 * When set to true it removes the close button from dialog's header
+	 */
+	@property({type: Boolean, reflect: true})
+	noCloseButton : boolean;
 
-			/**
-			 * When set to true it removes the close button from dialog's header
-			 */
-			noCloseButton: {type: Boolean, reflect: true}
-		}
-	}
 
 	/*
 	* List of properties that get translated
@@ -456,9 +389,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 	destroy()
 	{
-		if(this.template)
+		if(this._template_widget)
 		{
-			this.template.clear(true);
+			this._template_widget.clear(true);
 		}
 		this.remove();
 	}
@@ -476,7 +409,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 	addOpenListeners()
 	{
-		//super.addOpenListeners();
+		super.addOpenListeners();
 
 		// Bind on the ancestor, not the buttons, so their click handler gets a chance to run
 		this.addEventListener("click", this._onButtonClick);
@@ -485,7 +418,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 	removeOpenListeners()
 	{
-		//super.removeOpenListeners();
+		super.removeOpenListeners();
 		this.removeEventListener("click", this._onButtonClick);
 		this.removeEventListener("keydown", this.handleKeyDown);
 	}
@@ -514,6 +447,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		super.firstUpdated(changedProperties);
 
 		render(this._contentTemplate(), this);
+
+		// Rendering content will change some things, SlDialog needs to update
+		this.requestUpdate()
 
 		// If we start open, fire handler to get setup done
 		if(this.open)
@@ -569,6 +505,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 			return;
 		}
 
+		if(typeof document.activeElement?.blur == "function")
+		{
+			document.activeElement?.blur();
+		}
 		this.removeOpenListeners();
 		this._completeResolver([this._button_id, this.value]);
 
@@ -707,12 +647,17 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		return this.value;
 	}
 
-	set value(new_value)
+	@property({type: Object})
+	set value(new_value : Object)
 	{
 		this.__value = new_value;
 	}
 
-	set template(new_template_name)
+	/**
+	 * Instead of a simple message, show this template file instead
+	 */
+	@property({type: String})
+	set template(new_template_name : string)
 	{
 		let old_template = this.__template;
 		this.__template = new_template_name;
@@ -729,18 +674,43 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.requestUpdate("template", old_template);
 	}
 
+
+	/**
+	 * Getter for template name.
+	 *
+	 * Historically this returned the etemplate2 widget, but this was incorrect and has been fixed.
+	 * Use `eTemplate` instead of `template` to access the etemplate2 widget.
+	 *
+	 * @returns {string}
+	 */
 	get template()
 	{
 		// Can't return undefined or requestUpdate() will not notice a change
-		return this._template_widget || null;
+		return this.__template || null;
 	}
 
-	get title() : string { return this.label }
+	/**
+	 * The loaded etemplate2 object.
+	 *
+	 * Only available if `template` is set
+	 *
+	 * @returns {etemplate2}
+	 */
+	get eTemplate()
+	{
+		return this._template_widget;
+	}
 
+	/**
+	 * Title for the dialog, goes in the header
+	 */
+	@property()
 	set title(new_title : string)
 	{
 		this.label = new_title;
 	}
+
+	get title() : string { return this.label }
 
 	updated(changedProperties)
 	{
@@ -980,28 +950,35 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		{
 			return;
 		}
-		if(this.template)
+		if(this._template_widget && typeof this._template_widget.focusOnFirstInput == "function")
 		{
-			this.template.focusOnFirstInput();
+			this._template_widget.focusOnFirstInput();
 		}
 		else
 		{
 			// Not a template, but maybe something?
-			const $input = jQuery('input:visible,et2-textbox:visible,et2-select-email:visible', this)
-				// Date fields open the calendar popup on focus
-				.not('.et2_date')
-				.filter(function()
+			const input = Array.from(this.querySelectorAll('input,et2-textbox,et2-select-email')).filter(element =>
+			{
+				// Skip invisible
+				if(!element.checkVisibility())
 				{
-					// Skip inputs that are out of tab ordering
-					const $this = jQuery(this);
-					return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
-				}).first();
+					return false;
+				}
+
+				// Date fields open the calendar popup on focus
+				if(element.classList.contains("et2_date"))
+				{
+					return false;
+				}
+				// Skip inputs that are out of tab ordering
+				return !element.hasAttribute('tabindex') || parseInt(element.getAttribute('tabIndex')) >= 0
+			}).pop();
 
 			// mobile device, focus only if the field is empty (usually means new entry)
 			// should focus always for non-mobile one
-			if(egwIsMobile() && $input.val() == "" || !egwIsMobile())
+			if(input && (egwIsMobile() && typeof input.getValue == "function" && input.getValue() == "" || !egwIsMobile()))
 			{
-				$input.focus();
+				input.focus();
 			}
 		}
 	}
@@ -1094,7 +1071,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	/**
 	 * Show a confirmation dialog
 	 *
-	 * @param {function} _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
+	 * @param {function} _callback Function called when the user clicks a button.  The context will be the Et2Dialog widget, and the button constant is passed in.
 	 * @param {string} _message Message to be place in the dialog.
 	 * @param {string} _title Text in the top bar of the dialog.
 	 * @param _value passed unchanged to callback as 2. parameter
@@ -1253,7 +1230,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 * check to avoid executing more than intended.
 	 *
 	 * @param {function} _callback Function called when the user clicks a button,
-	 *	or when the list is done processing.  The context will be the et2_dialog
+	 *	or when the list is done processing.  The context will be the Et2Dialog
 	 *	widget, and the button constant is passed in.
 	 * @param {string} _message Message to be place in the dialog.  Usually just
 	 *	text, but DOM nodes will work too.
@@ -1265,7 +1242,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 *	address.  Multiple parameters are allowed, in an array.
 	 * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
 	 *
-	 * @return {et2_dialog}
+	 * @return {Et2Dialog}
 	 */
 	static long_task(_callback, _message, _title, _menuaction, _list, _egw_or_appname)
 	{
@@ -1278,7 +1255,11 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				{
 					// Cancel run
 					cancel = true;
-					jQuery("button[button_id=" + Et2Dialog.CANCEL_BUTTON + "]", dialog.div.parent()).button("disable");
+					let button = <Et2Button>dialog.querySelector("button[button_id=" + Et2Dialog.CANCEL_BUTTON + "]");
+					if(button)
+					{
+						button.disabled = true;
+					}
 					updateUi.call(_list.length, '');
 				}
 			}
@@ -1477,10 +1458,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		dialog.getUpdateComplete().then(async function()
 		{
 			// Get access to template widgets
-			log = dialog.template.widgetContainer.getDOMWidgetById('log').getDOMNode();
-			progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
+			log = dialog.eTemplate.widgetContainer.getDOMWidgetById('log').getDOMNode();
+			progressbar = dialog.eTemplate.widgetContainer.getWidgetById('progressbar');
 			progressbar.set_label('0 / ' + _list.length);
-			totals.widget = dialog.template.widgetContainer.getWidgetById('totals');
+			totals.widget = dialog.eTemplate.widgetContainer.getWidgetById('totals');
 
 			for(let index = 0; index < _list.length && !cancel; index++)
 			{
@@ -1511,8 +1492,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 //@ts-ignore TS doesn't recognize Et2Dialog as HTMLEntry
 customElements.define("et2-dialog", Et2Dialog);
-// make et2_dialog publicly available as we need to call it from templates
+// make Et2Dialog publicly available as we need to call it from templates
 {
-	window['et2_dialog'] = Et2Dialog;
 	window['Et2Dialog'] = Et2Dialog;
 }
