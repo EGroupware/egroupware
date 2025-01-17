@@ -2418,7 +2418,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	set_template(template_name : string)
 	{
-		const template = <Et2Template>loadWebComponent("et2-template", {"id": template_name, class: "hideme"}, this);
+		const template = <Et2Template>loadWebComponent("et2-template", {
+			"id": template_name,
+			class: "hideme",
+			content: "rows"
+		}, this);
 		if(this.template)
 		{
 			// Stop early to prevent unneeded processing, and prevent infinite
@@ -2565,7 +2569,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Explictly add template to DOM since it won't happen otherwise, and webComponents need to be in the DOM
 		// to complete
 		this.div.append(template);
-		template.load();
 
 		return this.template_promise;
 	}
