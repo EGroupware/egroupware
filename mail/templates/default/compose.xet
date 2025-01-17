@@ -150,7 +150,7 @@
 
         </et2-vbox>
         <styles>
-            #mail-compose > div {
+            #mail-compose > et2-template::part(base) {
             display: flex;
             flex-direction: column;
             }
