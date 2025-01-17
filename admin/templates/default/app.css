@@ -160,11 +160,17 @@ span#admin-mailaccount_acc_id {
 	height: 100%;
 }
 
-#admin-site-config .mainContent, #admin-site-config .mainContent et2-tabbox {
+#admin-site-config .mainContent {
 	flex-grow: 1;
+	overflow: hidden auto;
 }
 
-#admin-site-config .mainContent > div {
+#admin-site-config .mainContent et2-tabbox {
+	flex-grow: 10;
+	height: 100%;
+}
+
+#admin-site-config .mainContent > et2-template::part(base) {
 	display: flex;
 	flex-direction: column;
 }

@@ -8,7 +8,7 @@
                 <template template="@template" width="99%"/>
             </et2-box>
             <et2-box disabled="!@need_tab" class="mainContent">
-                <et2-tabbox id="tabs2">
+                <et2-tabbox id="tabs2" tabHeight="auto">
                     <tabs>
                         <tab id="config" label="Configuration"/>
                     </tabs>
