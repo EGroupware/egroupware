@@ -290,6 +290,13 @@ export class Et2Template extends Et2Widget(LitElement)
 			// Empty in case load was called again
 			this.clear();
 
+			// No template, no point in continuing
+			if(!(this.template || this.id))
+			{
+				console.debug("No template name, aborting load", this);
+				return;
+			}
+			
 			// Get template XML
 			let xml : Element;
 			try
