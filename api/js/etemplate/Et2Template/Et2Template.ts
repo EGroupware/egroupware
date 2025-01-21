@@ -464,7 +464,13 @@ export class Et2Template extends Et2Widget(LitElement)
 		// Wait for everything to be loaded, then finish it up.  Use timeout to give anything else a chance
 		// to run.
 		return Promise.race([
-			Promise.all(deferred).then(() => ready = true),
+			Promise.all(deferred).then(() =>
+			{
+				ready = true;
+
+				// Clean up load timeout if it's there, we did eventually finish
+				this.querySelector("#load-error")?.remove();
+			}),
 			// If loading takes too long, give some feedback so we can try to track down why
 			new Promise((resolve) =>
 			{
@@ -475,9 +481,9 @@ export class Et2Template extends Et2Widget(LitElement)
 							return;
 						}
 						this.loadFailed("Load timeout");
-						console.debug("This is the deferred widget list. Look for widgets still pending to find the problem", deferred);
+						console.debug(this.templateName + " @ " + this.getUrl() + " widget loading took too long.  This is the deferred widget list, look for widgets still pending to find the problem", deferred);
 						resolve();
-					}, 10000
+					}, 15000
 				);
 			})
 		]);
@@ -600,7 +606,7 @@ export class Et2Template extends Et2Widget(LitElement)
 	errorTemplate(errorMessage = "")
 	{
 		return html`
-            <sl-alert variant="warning" open>
+            <sl-alert id="load-error" variant="warning" open>
                 <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
                 <strong>${this.egw().lang("Loading failed")}</strong><br/>
                 ${errorMessage}
