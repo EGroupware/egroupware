@@ -766,6 +766,77 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * nextmatch normally handles updates and selection of next row after delete, but mail is different
+	 *
+	 * Mail uses et2_nextmatch option "disable_selection_advance" so here we handle the selection of the "next" row by
+	 * special rules - remember the above & below messages and only select the "next" row if the user uses
+	 * arrow keys in the next 10 seconds.
+	 *
+	 * @param et2_extension_nextmatch nm
+	 * @param string[] row_ids
+	 * @param string type
+	 */
+	refresh: function (nm, row_ids, type)
+	{
+		// Note above and below rows
+		const rows = {above: null, below: null};
+
+		// Find 'top' & 'bottom', since selection order depends on which way user was moving
+		let entry = null;
+		row_ids.forEach(r =>
+		{
+			const rowEntry = nm.controller._selectionMgr._getRegisteredRowsEntry(r);
+			if (rows.above == null || rowEntry?.idx < rows.above.idx)
+			{
+				rows.above = rowEntry;
+			}
+			if (rows.below == null || rowEntry?.idx > rows.below.idx)
+			{
+				rows.below = rowEntry;
+			}
+		})
+		rows.above = rows.above.ao.getPrevious(1);
+		rows.below = rows.below?.ao?.getNext(1) ?? rows.above;
+
+		// Immediately refresh (remove from) nextmatch with normal refresh()
+		nm.refresh(row_ids, type);
+
+		// Wait to see if user moves the cursor via keyboard
+		const grid = nm.controller._grid.innerTbody.get(0);
+		const selectRemembered = (e) =>
+		{
+			let next = null;
+			if (e.keyCode === EGW_KEY_ARROW_UP && rows.above)
+			{
+				next = rows.above;
+			}
+			else if (e.keyCode === EGW_KEY_ARROW_DOWN)
+			{
+				next = rows.below;
+			}
+			if (next)
+			{
+				// Prevent double-move
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				// Focus with action system
+				nm.controller._selectionMgr.setSelected(next.id, true);
+				nm.controller._selectionMgr.setFocused(next.id, true);
+				// Scroll into view
+				next.iface.getDOMNode().scrollIntoViewIfNeeded();
+			}
+		}
+		// Bind listener
+		document.body.addEventListener("keydown", selectRemembered, {once: true});
+
+		// Remove listener after 10s
+		window.setTimeout(() =>
+		{
+			document.body.removeEventListener("keydown", selectRemembered);
+		}, 10000);
+	},
+
+		/**
 	 * mail rebuild Action menu On nm-list
 	 *
 	 * @param _actions
@@ -2252,31 +2323,10 @@ app.classes.mail = AppJS.extend(
 		// nextmatch normally handles selection of next row after delete, but mail is different
 		// (uses et2_nextmatch option disable_selection_advance)
 		const nm = this.et2.getWidgetById('nm');
-
-		// Note above and below rows
-		const rows = {above: null, below: null};
 		const row_ids = _msg["msg"];
 		if (!_msg["all"])
 		{
-			// Find 'top' & 'bottom', since selection order depends on which way user was moving
-			let entry = null;
-			row_ids.forEach(r =>
-			{
-				const rowEntry = nm.controller._selectionMgr._getRegisteredRowsEntry(r);
-				if (rows.above == null || rowEntry?.idx < rows.above.idx)
-				{
-					rows.above = rowEntry;
-				}
-				if (rows.below == null || rowEntry?.idx > rows.below.idx)
-				{
-					rows.below = rowEntry;
-				}
-			})
-			rows.above = rows.above.ao.getPrevious(1);
-			rows.below = rows.below?.ao?.getNext(1) ?? rows.above;
-
-			// Immediately remove from nextmatch
-			nm.refresh(row_ids, et2_nextmatch.DELETE);
+			this.refresh(nm, _msg["msg"], et2_nextmatch.DELETE);
 		}
 
 		// If auto-refresh is on, turn it off until the delete request finishes
@@ -2300,46 +2350,6 @@ app.classes.mail = AppJS.extend(
 
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
 		this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
-		if (_msg["all"])
-		{
-			return;
-		}
-
-		// Wait to see if user moves the cursor via keyboard
-		const grid = nm.controller._grid.innerTbody.get(0);
-		const selectRemembered = (e) =>
-		{
-			let next = null;
-			if (e.keyCode === EGW_KEY_ARROW_UP && rows.above)
-			{
-				next = rows.above;
-			}
-			else if (e.keyCode === EGW_KEY_ARROW_DOWN)
-			{
-				next = rows.below;
-			}
-			if (next)
-			{
-				// Prevent double-move
-				e.preventDefault();
-				e.stopImmediatePropagation();
-
-				// Focus with action system
-				nm.controller._selectionMgr.setSelected(next.id, true);
-				nm.controller._selectionMgr.setFocused(next.id, true);
-
-				// Scroll into view
-				next.iface.getDOMNode().scrollIntoViewIfNeeded();
-			}
-		}
-		// Bind listener
-		document.body.addEventListener("keydown", selectRemembered, {once: true});
-
-		// Remove listener after 10s
-		window.setTimeout(() =>
-		{
-			document.body.removeEventListener("keydown", selectRemembered);
-		}, 10000);
 	},
 
 	/**
@@ -3852,6 +3862,20 @@ app.classes.mail = AppJS.extend(
 		this.mail_preview([],nm);
 		// Restore onselect handler
 		nm.options.onselect = on_select;
+
+		// If auto-refresh is on, turn it off until the move request finishes
+		const nm_autorefresh = nm._get_autorefresh();
+		if (nm_autorefresh)
+		{
+			nm._set_autorefresh(0);
+		}
+
+		// Remove from nm immediately
+		if (!messages["all"])
+		{
+			this.refresh(nm, messages.msg, et2_nextmatch.DELETE);
+		}
+
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
 			self.unlock_tree();
@@ -3865,9 +3889,15 @@ app.classes.mail = AppJS.extend(
 				nm.refresh();
 			}
 		})
-			.sendRequest();
-		this.mail_setRowClass(_senders,'deleted');
-		// Server response may contain refresh, not needed here
+			.sendRequest(true)
+			.finally(() =>
+			{
+				// Restart autorefresh
+				if (nm_autorefresh)
+				{
+					nm._set_autorefresh(nm_autorefresh);
+				}
+			});
 	},
 
 	/**
