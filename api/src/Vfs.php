@@ -2411,7 +2411,7 @@ class Vfs extends Vfs\Base
 			}
 			$pos += $written;
 		}
-		while ($len < $pos);
+		while ($len > $pos);
 
 		rewind($fp);
 
