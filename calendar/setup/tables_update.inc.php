@@ -2434,7 +2434,7 @@ function calendar_upgrade14_2_002()
 {
 	$GLOBALS['egw_setup']->db->query("UPDATE egw_cal_holidays SET hol_mday=26,hol_month_num=5".
 		" WHERE hol_locale='DE' AND hol_name='Fronleichnam' AND hol_occurence=2016",
-		__LINE__, __FILE__, 'calendar');
+		__LINE__, __FILE__);
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.003';
 }
@@ -2841,4 +2841,3 @@ function calendar_upgrade23_1()
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '23.1.001';
 }
-
