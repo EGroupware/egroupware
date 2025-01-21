@@ -275,7 +275,6 @@ WHERE contact_jpegphoto != '' OR contact_pubkey IS NOT NULL AND contact_pubkey L
 					$files |= Api\Contacts::FILES_BIT_PHOTO;
 					$row['contact_jpegphoto'] = null;
 				}
-				fclose($fp);
 			}
 			foreach(array(
 				array(addressbook_bo::$pgp_key_regexp, Api\Contacts::FILES_PGP_PUBKEY, Api\Contacts::FILES_BIT_PGP_PUBKEY, 'application/pgp-keys'),
@@ -296,7 +295,6 @@ WHERE contact_jpegphoto != '' OR contact_pubkey IS NOT NULL AND contact_pubkey L
 						$files |= $bit;
 						$row['contact_pubkey'] = str_replace($matches[0], '', $row['contact_pubkey']);
 					}
-					fclose($fp);
 				}
 			}
 			if (!trim($row['contact_pubkey'])) $row['contact_pubkey'] = null;
