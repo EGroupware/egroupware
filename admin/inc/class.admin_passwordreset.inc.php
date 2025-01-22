@@ -100,9 +100,6 @@ class admin_passwordreset
 		}
 		if (is_array($content) && !isset($_GET['dialog']))
 		{
-			// Save message for next time
-			Api\Config::save_value('password_reset_message',array('subject' => $content['subject'], 'body' => $content['body']),'admin');
-
 			if ($content['download_csv'] && $content['changed'])
 			{
 				Api\Header\Content::type('changed.csv', 'text/csv');
@@ -398,6 +395,18 @@ class admin_passwordreset
 	{
 		$msg = '';
 		$changed = [];
+
+		// Save message for next time
+		if(!empty($content['values']['subject']))
+		{
+			Api\Config::save_value(
+				'password_reset_message', [
+				'subject' => $content['values']['subject'],
+				'body'    => $content['values']['body']],
+				'admin'
+			);
+		}
+
 		if(!($account_repository = $GLOBALS['egw_info']['server']['account_repository']) &&
 			!($account_repository = $GLOBALS['egw_info']['server']['auth_type']))
 		{
