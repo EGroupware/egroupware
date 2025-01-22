@@ -509,7 +509,8 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		let fileInfo = []
 		selected.forEach(file =>
 		{
-			fileInfo.push({...this.pasteDialog.fileInfo(file), app: "link"});
+			const info = this.pasteDialog.fileInfo(file);
+			fileInfo.push(info);
 		})
 		this.handleVfsFile(button, fileInfo);
 		this.pasteButton.value = [];
