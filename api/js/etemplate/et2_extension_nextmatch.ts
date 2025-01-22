@@ -2707,6 +2707,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			for(let i = this.controller._actionManager.children.length - 1; i >= 0; i--)
 			{
 				this.controller._actionManager.children[i].remove();
+
+				// Force menu to regenerate
+				delete this.controller?._actionManager?.data?.menu;
 			}
 			this.options.actions = actions;
 			this.options.settings.action_links = this.controller._actionLinks = this._get_action_links(actions);
