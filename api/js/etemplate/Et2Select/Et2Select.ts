@@ -678,7 +678,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		super.handleOptionClick(event);
 
 		// Only interested in option clicks, but handler is bound higher
-		if(event.target.tagName !== "SL-OPTION")
+		if(event.composedPath().filter(e => e.tagName == "SL-OPTION").length == 0)
 		{
 			return;
 		}

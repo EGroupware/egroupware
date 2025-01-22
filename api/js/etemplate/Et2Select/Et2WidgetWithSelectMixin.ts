@@ -108,6 +108,7 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 * @private
 		 */
 		private _xmlOptions : SelectOption[] = [];
+		private _close_on_select : boolean = false;
 
 		/**
 		 * List of properties that get translated
@@ -302,6 +303,9 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 */
 		loadFromXML(_node : Element)
 		{
+
+			this._close_on_select = this.egw().preference("select_multiple_close") == "close";
+
 			let new_options = [];
 
 			// Read the option-tags, but if not rendered there won't be any yet so check existing options
