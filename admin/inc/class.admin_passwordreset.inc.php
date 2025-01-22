@@ -391,8 +391,7 @@ class admin_passwordreset
 				}
 			}
 		}
-		Framework::message(implode("\n",$msg), 'success');
-		Framework::redirect_link('/index.php', 'menuaction=admin.admin_ui.index','admin');
+		Api\Json\Response::get()->message(implode("\n", $msg), 'success');
 	}
 
 	public function ajax_reset($content)
