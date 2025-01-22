@@ -3444,7 +3444,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			if (!empty($event['whole_day']))
 			{
-				$d =& $this->bo->so->startOfDay($date);
+				$d =& $this->bo->so->startOfDay($d);
 				$d->setUser();
 			}
 			$event = $this->bo->read($eventId, $d, true);
