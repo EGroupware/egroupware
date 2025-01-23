@@ -469,7 +469,7 @@ export class Et2Template extends Et2Widget(LitElement)
 				ready = true;
 
 				// Clean up load timeout if it's there, we did eventually finish
-				this.querySelector("#load-error")?.remove();
+				this.querySelector(":scope > #load-error")?.remove();
 			}),
 			// If loading takes too long, give some feedback so we can try to track down why
 			new Promise((resolve) =>
