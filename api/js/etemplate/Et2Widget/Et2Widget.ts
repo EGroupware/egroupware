@@ -458,7 +458,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 					path.unshift(this.getInstanceManager().uniqueId);
 				}
-				path.push(value);
+				path.push(value.replace(/\./g, '-'));
 				dom_id = path.join("_");
 			}
 			this.setAttribute("id", dom_id);
