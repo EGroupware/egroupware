@@ -1403,47 +1403,48 @@ abstract class Merge
 				}
 			}
 		}
-		if (!empty($is_xml))    // zip'ed xml document (eg. OO)
-		{
-			// Numeric fields
-			$names = array();
+		// Numeric fields
+		$names = array();
 
-			// Tags we can replace with the target document's version
-			$replace_tags = array();
-			// only keep tags, if we have xsl extension available
-			if(class_exists('XSLTProcessor') && class_exists('DOMDocument') && $this->parse_html_styles)
+		// Tags we can replace with the target document's version
+		$replace_tags = array();
+		// only keep tags, if we have xsl extension available
+		if(class_exists('XSLTProcessor') && class_exists('DOMDocument') && $this->parse_html_styles)
+		{
+			switch($mimetype . $mso_application_progid)
 			{
-				switch($mimetype . $mso_application_progid)
-				{
-					case 'text/html':
-						$replace_tags = array(
-							'<b>', '<strong>', '<i>', '<em>', '<u>', '<span>', '<ol>', '<ul>', '<li>',
-							'<table>', '<tr>', '<td>', '<a>', '<style>', '<img>',
-						);
-						break;
-					case 'application/vnd.oasis.opendocument.text':        // open office
-					case 'application/vnd.oasis.opendocument.spreadsheet':
-					case 'application/vnd.oasis.opendocument.presentation':
-					case 'application/vnd.oasis.opendocument.text-template':
-					case 'application/vnd.oasis.opendocument.spreadsheet-template':
-					case 'application/vnd.oasis.opendocument.presentation-template':
-						$replace_tags = array(
-							'<b>', '<strong>', '<i>', '<em>', '<u>', '<span>', '<ol>', '<ul>', '<li>',
-							'<table>', '<tr>', '<td>', '<a>',
-						);
-						break;
-					case 'application/xmlWord.Document':    // Word 2003*/
-					case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
-					case 'application/vnd.ms-word.document.macroenabled.12':
-					case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-					case 'application/vnd.ms-excel.sheet.macroenabled.12':
-						$replace_tags = array(
-							'<b>', '<strong>', '<i>', '<em>', '<u>', '<span>', '<ol>', '<ul>', '<li>',
-							'<table>', '<tr>', '<td>',
-						);
-						break;
-				}
+				case 'text/html':
+					$replace_tags = array(
+						'<b>', '<strong>', '<i>', '<em>', '<u>', '<span>', '<ol>', '<ul>', '<li>',
+						'<table>', '<tr>', '<td>', '<a>', '<style>', '<img>',
+					);
+					break;
+				case 'application/vnd.oasis.opendocument.text':        // open office
+				case 'application/vnd.oasis.opendocument.spreadsheet':
+				case 'application/vnd.oasis.opendocument.presentation':
+				case 'application/vnd.oasis.opendocument.text-template':
+				case 'application/vnd.oasis.opendocument.spreadsheet-template':
+				case 'application/vnd.oasis.opendocument.presentation-template':
+					$replace_tags = array(
+						'<b>', '<strong>', '<i>', '<em>', '<u>', '<span>', '<ol>', '<ul>', '<li>',
+						'<table>', '<tr>', '<td>', '<a>',
+					);
+					break;
+				case 'application/xmlWord.Document':    // Word 2003*/
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
+				case 'application/vnd.ms-word.document.macroenabled.12':
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				case 'application/vnd.ms-excel.sheet.macroenabled.12':
+					$replace_tags = array(
+						'<b>', '<strong>', '<i>', '<em>', '<u>', '<span>', '<ol>', '<ul>', '<li>',
+						'<table>', '<tr>', '<td>',
+					);
+					break;
 			}
+		}
+
+		if(!empty($is_xml))    // zip'ed xml document (eg. OO)
+		{
 			// clean replacements from array values and html or html-entities, which mess up xml
 			foreach($replacements as $name => &$value)
 			{
@@ -1454,7 +1455,6 @@ abstract class Merge
 					continue;
 				}
 				// decode html entities back to utf-8
-
 				if(is_string($value) && (strpos($value, '&') !== false) && $this->parse_html_styles)
 				{
 					$value = html_entity_decode($value, ENT_QUOTES, $charset);
@@ -1462,16 +1462,18 @@ abstract class Merge
 					// remove all non-decodable entities
 					if(strpos($value, '&') !== false)
 					{
-						$value = preg_replace('/&[^; ]+;/', '', $value);
+						//$value = preg_replace('/&[^; ]+;/', '', $value);
 					}
 				}
-				if(!$this->parse_html_styles || (
-						strpos($value, "\n") !== FALSE &&
-						strpos($value, '<br') === FALSE && strpos($value, '<span') === FALSE && strpos($value, '<p') === FALSE && strpos($value, '<div') === FALSE
-					))
+				if(!$this->parse_html_styles)
 				{
 					// Encode special chars so they don't break the file
-					$value = htmlspecialchars($value, ENT_NOQUOTES);
+					//$value = htmlspecialchars($value, ENT_NOQUOTES);
+					strip_tags(str_replace(
+								   array("\r", '<p>', "</p>\n", '</p>', '<div>', '</div>', '<br />'),
+								   array('', '', "\n", "\n", '', "\n", "\n"), $value
+							   ), implode('', $replace_tags)
+					);
 				}
 				else
 				{
@@ -1491,8 +1493,9 @@ abstract class Merge
 							else
 							{
 								// Strip some specific stuff to avoid the extra new lines
-								$value = str_replace(["<html>\n", "<head>\n<title></title>\n</head>\n", "<body>\n",
-													  "</body>\n", "</html>\n"], '', $cleaned);
+								$value = str_replace(["<html>\n", '<html>', "<head>\n<title></title>\n</head>\n",
+													  "<body>\n", '<body>',
+													  "</body>\n", "</html>\n", '</html>'], '', $cleaned);
 							}
 						}
 						// replace </p> and <br /> with CRLF (remove <p> and CRLF)
@@ -1564,15 +1567,27 @@ abstract class Merge
 			if($this->parse_html_styles)
 			{
 				$replacements = str_replace(
-					array('&', "\r", "\n", '&amp;lt;', '&amp;gt;'),
-					array('&amp;', '', $this->line_feed, '&lt;', '&gt;'),
+					array('&', "\r", "\n", '&amp;amp;', '&amp;lt;', '&amp;gt;', '&amp;nbsp;'),
+					array('&amp;', '', $this->line_feed, '&amp;', '&lt;', '&gt;', ' '),
 					$replacements
 				);
 			}
 			else
 			{
 				// Need to at least handle new lines, or it'll be run together on one line
-				$replacements = str_replace(array("\r", "\n"), array('', $this->line_feed), $replacements);
+				$replacements = str_replace(
+					array("\r", "\n", '&amp;amp;'),
+					array('', $this->line_feed, '&amp;'),
+					$replacements
+				);
+			}
+		}
+		else
+		{
+			// HTML into non-XML (plaintext template)
+			foreach($replacements as $name => &$value)
+			{
+				$value = html_entity_decode($value, ENT_QUOTES, $charset);
 			}
 		}
 		if($mimetype == 'application/x-yaml')
@@ -2227,7 +2242,6 @@ abstract class Merge
 				copy($content_url, $archive);
 				$content_url = 'zip://' . $archive . '#' . ($content_file = 'content.xml');
 				$styles_url = 'zip://'.$archive.'#'.($styles_file = 'styles.xml');
-				$this->parse_html_styles = true;
 				break;
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':    // mimetypes in vfs are limited to 64 chars
 				$mimetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
