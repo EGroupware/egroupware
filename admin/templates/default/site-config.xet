@@ -5,7 +5,7 @@
         <et2-vbox height="100%">
             <et2-description value="Site configuration" class="subHeader"></et2-description>
             <et2-box disabled="@need_tab" class="mainContent">
-                <template template="@template" width="99%"/>
+                <template disabled="@need_tab" template="@template" width="99%"/>
             </et2-box>
             <et2-box disabled="!@need_tab" class="mainContent">
                 <et2-tabbox id="tabs2" tabHeight="auto">
@@ -13,7 +13,7 @@
                         <tab id="config" label="Configuration"/>
                     </tabs>
                     <tabpanels>
-                        <template template="@template" width="99%"/>
+                        <template disabled="!@need_tab" template="@template" width="99%"/>
                     </tabpanels>
                 </et2-tabbox>
             </et2-box>
