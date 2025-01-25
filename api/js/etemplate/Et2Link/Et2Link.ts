@@ -34,29 +34,28 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			...super.styles,
 			css`
 			  :host {
-				display: block;
+				display: inline-block;
+				max-width: fit-content;
 				cursor: pointer;
 			  }
 
 			  .link {
-				display: flex;
+				display:  inline-flex;
 				gap: 0.5rem;
 			  }
 
 			  .link__title {
-				flex: 2 1 50%;
+				flex: 0 1 auto;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: max-content;
-                width: 0;
 			  }
 
 			  .link__remark {
-				flex: 1 1 50%;
+				flex: 0 1 auto;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: max-content;
-                width: 0;
 			  }
 
 			  :host:hover {
