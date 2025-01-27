@@ -346,8 +346,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			if(js_files.length > 0)
 			{
 				var start_time = (new Date).getTime();
-				// for some reason using this.includeJS() does NOT work / app.classes does not get set, before the Promise resolves
-				Promise.all(js_files.map((file) => import(file))).then(() => {
+				// Need to use this.egw.window.egw_import() to make sure file is loaded in correct window
+				Promise.all(js_files.map((file) => this.egw.window.egw_import(file))).then(() =>
+				{
 					var end_time = (new Date).getTime();
 					this.handleResponse(data);
 					if (egw.preference('show_generation_time', 'common', false) == "1")
