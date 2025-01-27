@@ -507,3 +507,13 @@ window.egw_rejoin = function ()
 		});
 	}.bind(window), 500);
 }
+/**
+ * Allow egw.json to load JS into popups
+ *
+ * @param url
+ * @returns {Promise<*>}
+ */
+window.egw_import = function (url)
+{
+	return import(url);
+}
