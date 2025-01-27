@@ -198,7 +198,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			$typeselection = $_content['nm']['col_filter']['tid'];
 		}
-		elseif($_GET['add_list'])
+		elseif(!empty($_GET['add_list']))
 		{
 			$list = $this->add_list($_GET['add_list'],$_GET['owner']?$_GET['owner']:$this->user);
 			if ($list === true)
@@ -214,6 +214,10 @@ class addressbook_ui extends addressbook_bo
 				$msg = lang('List creation failed, no rights!');
 			}
 		}
+		elseif (!empty($_GET['template']) && $this->tmpl->read($_GET['template']))
+		{
+			$template = $_GET['template'];
+		}
 		$preserv = array();
 		$content = array();
 		if($msg || $_GET['msg'])
@@ -221,7 +225,7 @@ class addressbook_ui extends addressbook_bo
 			Framework::message($msg ? $msg : $_GET['msg']);
 		}
 
-		$content['nm'] = Api\Cache::getSession('addressbook', 'index');
+		$content['nm'] = Api\Cache::getSession('addressbook', str_replace('addressbook.', '', $template ?? 'index'));
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
@@ -230,7 +234,8 @@ class addressbook_ui extends addressbook_bo
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
 				'start'          =>	0,			// IO position in list
 				'cat_id'         =>	'',			// IO category, if not 'no_cat' => True
-				'search'         =>	'',			// IO search pattern
+				'search'         =>	($template ?? 'addressbook.index') === 'addressbook.select' ? '@' : '', // IO search pattern
+				'main-template'  => $template ?? 'addressbook.index',   // do NOT use "template"!
 				'order'          =>	'n_family',	// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',		// IO direction of the sort: 'ASC' or 'DESC'
 				'col_filter'     =>	array(),	// IO array of column-name value pairs (optional for the filterheaders)
@@ -244,11 +249,15 @@ class addressbook_ui extends addressbook_bo
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
 				// using a positiv list now, as we constantly adding new columns in addressbook, but not removing them from default
-				'default_cols'   => 'type,n_fileas_n_given_n_family_n_family_n_given_org_name_n_family_n_given_n_fileas,'.
+				'default_cols'   => !isset($template) ? 'type,n_fileas_n_given_n_family_n_family_n_given_org_name_n_family_n_given_n_fileas,'.
 					'number,org_name,org_unit,'.
-					'business_adr_one_countrycode_adr_one_postalcode,tel_work_tel_cell_tel_home,url_email_email_home',
+					'business_adr_one_countrycode_adr_one_postalcode,tel_work_tel_cell_tel_home,url_email_email_home' :
+					'!photo,home_adr_two_countrycode_adr_two_postalcode',
 				/* old negative list
 				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner,room',*/
+				//'no_columnselection' => false, // I  turns off the columnselection completly, turned on by default
+				// I  name of the preference (plus 'nextmatch-' prefix), default = template-name
+				'columnselection_pref' => isset($template) ? 'nextmatch-'.$template : null,
 				'filter2_onchange' => "return app.addressbook.filter2_onchange();",
 				'filter2_tags'	=> true,
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
@@ -261,7 +270,7 @@ class addressbook_ui extends addressbook_bo
 			);
 
 			// use the state of the last session stored in the user prefs
-			if (($state = @unserialize($this->prefs['index_state'])))
+			if (($state = @unserialize($this->prefs[str_replace('addressbook.', '', $template ?? 'index').'_state'], ['allowed_classes' => false])))
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
@@ -300,8 +309,8 @@ class addressbook_ui extends addressbook_bo
 			$sel_options['filter2']['add'] = lang('Add a new list').'...';	// put it at the end
 		}
 
-		// Organisation stuff is not (yet) availible with ldap
-		if($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap' && Api\Header\UserAgent::mobile() == '')
+		// Organisation stuff is not (yet) available with ldap
+		if($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap' && Api\Header\UserAgent::mobile() == '' && empty($_GET['template']))
 		{
 			$content['nm']['header_left'] = 'addressbook.index.left';
 		}
@@ -347,6 +356,14 @@ class addressbook_ui extends addressbook_bo
 		}
 
 		$content['nm']['actions'] = $this->get_actions($content['nm']['col_filter']['tid']);
+		// only use a small subset of the full actions
+		if (($template ?? null) === 'addressbook.select')
+		{
+			$content['nm']['actions'] = array_filter($content['nm']['actions'], static function($action)
+			{
+				return in_array($action, ['open', 'email', 'delete']);
+			}, ARRAY_FILTER_USE_KEY);
+		}
 
 		if (!isset($sel_options['grouped_view'][(string) $content['nm']['grouped_view']]))
 		{
@@ -365,9 +382,12 @@ class addressbook_ui extends addressbook_bo
 			'shared' => lang('shared'),
 		];
 
-		$this->tmpl->read('addressbook.index');
+		if (!isset($template))
+		{
+			$this->tmpl->read('addressbook.index');
+		}
 		return $this->tmpl->exec('addressbook.addressbook_ui.index',
-			$content,$sel_options,array(),$preserv);
+			$content, $sel_options, array(), $preserv, empty($_GET['template']) ? 0 : 2);
 	}
 
 	/**
@@ -1711,7 +1731,7 @@ class addressbook_ui extends addressbook_bo
 	 */
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
-		$what = $query['sitemgr_display'] ? $query['sitemgr_display'] : 'index';
+		$what = str_replace('addressbook.', '', $_GET['template'] ?? $query['main-template'] ?? 'index');
 
 		if (!$id_only && !$query['csv_export'])	// do NOT store state for csv_export or querying id's (no regular view)
 		{
@@ -1881,7 +1901,7 @@ class addressbook_ui extends addressbook_bo
 					}
 				}
 			}
-			else if($query['actions'] && !$query['actions']['edit'])
+			else if($query['actions'] && empty($query['actions']['open']))
 			{
 				// Just switched from grouped view, update actions
 				$query['actions'] = $this->get_actions($query['col_filter']['tid']);
@@ -2172,24 +2192,31 @@ class addressbook_ui extends addressbook_bo
 				$rows['sel_options']['grouped_view'] = $this->grouped_views;
 			}
 		}
-		if($query['advanced_search'])
+		if ($what === 'select')
 		{
-			$header[] = lang('Advanced search');
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Select contacts to add to mail');
 		}
-		if ($query['cat_id'])
+		else
 		{
-			$header[] = lang('Category').' '.$GLOBALS['egw']->categories->id2name($query['cat_id']);
+			if($query['advanced_search'])
+			{
+				$header[] = lang('Advanced search');
+			}
+			if ($query['cat_id'])
+			{
+				$header[] = lang('Category').' '.$GLOBALS['egw']->categories->id2name($query['cat_id']);
+			}
+			if ($query['searchletter'])
+			{
+				$order = $order == 'n_given' ? lang('first name') : ($order == 'n_family' ? lang('last name') : lang('Organisation'));
+				$header[] = lang("%1 starts with '%2'",$order,$query['searchletter']);
+			}
+			if ($query['search'] && !$query['advanced_search']) // do not add that, if we have advanced search active
+			{
+				$header[] = lang("Search for '%1'",$query['search']);
+			}
+			$GLOBALS['egw_info']['flags']['app_header'] = implode(': ', $header);
 		}
-		if ($query['searchletter'])
-		{
-			$order = $order == 'n_given' ? lang('first name') : ($order == 'n_family' ? lang('last name') : lang('Organisation'));
-			$header[] = lang("%1 starts with '%2'",$order,$query['searchletter']);
-		}
-		if ($query['search'] && !$query['advanced_search']) // do not add that, if we have advanced search active
-		{
-			$header[] = lang("Search for '%1'",$query['search']);
-		}
-		$GLOBALS['egw_info']['flags']['app_header'] = implode(': ', $header);
 
 		if ($query['grouped_view'] === '' && $query['col_filter']['shared_by'] == $this->user)
 		{
