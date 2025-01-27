@@ -440,6 +440,7 @@ select a view	addressbook	de	Eine Ansicht auswählen
 select addressbook type	addressbook	de	Typ des Adressbuchs auswählen
 select all	addressbook	de	Alles auswählen
 select an opened dialog	addressbook	de	Wählen Sie einen offenen Dialog
+select contacts to add to mail	addressbook	de	Kontakte zum Hinzufügen zur Mail auswählen
 select migration type	admin	de	Migrationstyp auswählen
 select multiple contacts for a further action	addressbook	de	Mehrere Adressen für weiteren Befehl auswählen
 select phone number as prefered way of contact	addressbook	de	Telefonnummer als präferierten Kontaktweg auswählen

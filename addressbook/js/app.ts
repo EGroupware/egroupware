@@ -28,6 +28,7 @@ import type {EgwAction} from "../../api/js/egw_action/EgwAction";
 import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 import {Et2MergeDialog} from "../../api/js/etemplate/Et2Dialog/Et2MergeDialog";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
+import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 
 /**
  * Object to call app.addressbook.openCRMview with
@@ -1061,6 +1062,7 @@ class AddressbookApp extends EgwApp
 	 */
 	addEmail(action, selected)
 	{
+		console.log('addEmail', action, selected);
 		// Check for all selected.
 		var nm = this.et2.getWidgetById('nm');
 		if(fetchAll(selected, nm, jQuery.proxy(function(ids) {
@@ -1112,6 +1114,22 @@ class AddressbookApp extends EgwApp
 		}
 
 		return false;
+	}
+
+	/**
+	 * Onclick of "addessbook.select" template for [To], [Cc] or [Bcc] button
+	 *
+	 * @param _event
+	 * @param _widget
+	 */
+	addEmailToCompose(_event, _widget)
+	{
+		const et2 = etemplate2.getByTemplate('addressbook.select');
+		const nm = <et2_nextmatch>et2[0]?.widgetContainer.getWidgetById('nm');
+		const selected = nm.getSelection().ids.map((uid) => {id: uid});
+		console.log('addEmailToCompose', _widget.id, selected);
+		debugger;
+		this.addEmail({ id: _widget.id}, selected);
 	}
 
 	/**

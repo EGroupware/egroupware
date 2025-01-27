@@ -1700,6 +1700,47 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}
 		});
-	}
+	},
 
+	/**
+	 * Opens _menuaction in an Et2Dialog
+	 *
+	 * Equivalent to egw.openDialog, though this one works in popups too.
+	 *
+	 * @param _menuaction
+	 * @return Promise<Et2Dialog>
+	 */
+	openDialog: function (_menuaction)
+	{
+		let resolver;
+		let rejector;
+		const dialog_promise = new Promise((resolve, reject) =>
+		{
+			resolver = value => resolve(value);
+			rejector = reason => reject(reason);
+		});
+		let request = this.egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
+			['index.php?menuaction=' + _menuaction, true], _response =>
+			{
+				if(Array.isArray(_response) && typeof _response[0] === 'string')
+				{
+					let dialog = jQuery(_response[0]).appendTo(document.body);
+					if(dialog.length > 0 && dialog.get(0))
+					{
+						resolver(dialog.get(0));
+					}
+					else
+					{
+						console.log("Unable to add dialog with dialogExec('" + _menuaction + "')", _response);
+						rejector(new Error("Unable to add dialog"));
+					}
+				}
+				else
+				{
+					console.log("Invalid response to dialogExec('" + _menuaction + "')", _response);
+					rejector(new Error("Invalid response to dialogExec('" + _menuaction + "')"));
+				}
+			}).sendRequest();
+		return dialog_promise;
+	}
 });}).call(window);
