@@ -248,6 +248,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			"type": "any",
 			"description": "The nextmatch settings",
 			"default": {}
+		},
+		"no_dynheight": {
+			"name": "No dynheight",
+			"type": "boolean",
+			"description": "Disable the dynamic height",
+			"default": false
 		}
 	};
 
@@ -365,7 +371,14 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		// Create the dynheight component which dynamically scales the inner
 		// container.
-		this.dynheight = this._getDynheight();
+		if(!this.options.no_dynheight)
+		{
+			this.dynheight = this._getDynheight();
+		}
+		else
+		{
+			this.div.addClass("no_dynheight");
+		}
 
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
@@ -461,7 +474,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	{
 		super.doLoadingFinished();
 
-		if(!this.dynheight)
+		if(!this.dynheight && !this.options.no_dynheight)
 		{
 			this.dynheight = this._getDynheight();
 		}
@@ -542,6 +555,14 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			{
 				this.dataview.resize(_w, _h);
 			}, this);
+		}
+		else
+		{
+			// Browser calculated size
+			const styles = getComputedStyle(this.dataview.table.get(0).parentElement);
+			this.dataview.resize(parseInt(styles.width) - this.dataview.scrollbarWidth, parseInt(styles.height));
+			// This needs to stay at 100% so browser does the work
+			this.dataview.grid.scrollarea.height("100%");
 		}
 	}
 
@@ -2534,10 +2555,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		this.template_promise = Promise.all(promise).then(() =>
 			{
 				parse.call(this, template);
-				if(!this.dynheight)
+				if(!this.dynheight && !this.options.no_dynheight)
 				{
 					this.dynheight = this._getDynheight();
 				}
+				if(this.dynheight)
 				this.dynheight.initialized = false;
 
 				// Give components a chance to finish.  Their size will affect available space, especially column headers.
@@ -2962,10 +2984,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		this.div.addClass('print');
 
 		// Trigger resize, so we can fit on a page
-		this.dynheight.outerNode.css('max-width', this.div.css('max-width'));
+		this.dynheight?.outerNode.css('max-width', this.div.css('max-width'));
 		this.resize();
 		// Reset height to auto (after width resize) so there's no restrictions
-		this.dynheight.innerNode.css('height', 'auto');
+		this.dynheight?.innerNode.css('height', 'auto');
 
 		// Check for rows that aren't loaded yet, or lots of rows
 		const range = this.controller._grid.getIndexRange();
@@ -3042,7 +3064,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				this.print.orientation_style = style;
 
 				// Trigger resize, so we can fit on a page
-				this.dynheight.outerNode.css('max-width', this.div.css('max-width'));
+				this.dynheight?.outerNode.css('max-width', this.div.css('max-width'));
 
 				// Handle columns
 				let column_names = [];
@@ -3276,7 +3298,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// @ts-ignore
 			this.set_columns(pref, app);
 		}
-		this.dynheight.outerNode.css('max-width', 'inherit');
+		this.dynheight?.outerNode.css('max-width', 'inherit');
 		this.resize();
 	}
 }
