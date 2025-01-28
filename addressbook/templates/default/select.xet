@@ -89,7 +89,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.select" template="" lang="" group="0" version="1.9.002">
-		<nextmatch id="nm" template="addressbook.select.rows" span="all"/>
+		<nextmatch id="nm" template="addressbook.select.rows" span="all" no_dynheight="true"/>
 		<et2-hbox class="footer">
 			<et2-select label="Add" id="what_to_use">
 				<option value="">Business or home email</option>
@@ -102,6 +102,7 @@
 			<et2-button label="Close" id="close" onclick="alert('ToDo ;)'); return false;"></et2-button>
 		</et2-hbox>
 		<styles>
+            #addressbook-select > et2-template::part(base) { display: flex; flex-direction: column;}
 			div.dialog_content img.dialog_icon[src=""] { display: none; }
 			et2-dialog#dialog-addressbook-select et2-button { max-width: 125px !important; }
 			et2-dialog#dialog-addressbook-select::part(panel) { width: 90vh; height: 75vh; position: absolute; bottom: 1vh; }
