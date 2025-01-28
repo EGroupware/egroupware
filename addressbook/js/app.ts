@@ -1056,48 +1056,63 @@ class AddressbookApp extends EgwApp
 	 *
 	 * Uses the egw API to handle the opening of the popup.
 	 *
-	 * @param {egwAction} action Action user selected.  Should have ID of either
+	 * @param egwAction action Action user selected.  Should have ID of either
 	 *  'email_business' or 'email_home', from server side definition of actions.
-	 * @param {egwActionObject[]} selected Selected rows
+	 * @param egwActionObject[] selected Selected rows
+	 * @param et2_nextmatch|null nm
+	 * @param "business-or-home"|"both"|"business"|"home"|null which email to add, default use checkboxes in context menu
+	 * @param function(window, content) setCompose app.mail.setCompose function, default use open_link('mailto:...')
 	 */
-	addEmail(action, selected)
+	addEmail(action, selected, nm?, which?, setCompose?)
 	{
-		console.log('addEmail', action, selected);
 		// Check for all selected.
-		var nm = this.et2.getWidgetById('nm');
-		if(fetchAll(selected, nm, jQuery.proxy(function(ids) {
+		if (typeof(nm) === "undefined") nm = this.et2.getWidgetById('nm');
+		if(fetchAll(selected, nm, (ids) => {
 			// fetchAll() returns just the ID, no prefix, so map it to match normal selected
-			this.addEmail(action, ids.map(function(num) {return {id:'addressbook::'+num};}));
-		}, this)))
+			this.addEmail(action, ids.map((num) => { return {id:'addressbook::'+num}; }), nm, add_business, add_home);
+		}))
 		{
 			// Need more IDs, will use the above callback when they're ready.
 			return;
 		}
 
+		// use checkboxes to determine which emails to add
+		if (typeof which === "undefined")
+		{
+			const business = action.getManager().getActionById('email_business').checked;
+			const home = action.getManager().getActionById('email_home').checked;
+			which = business && home ? "both" : (business ? "business" : "home");
+		}
+
 		// Go through selected & pull email addresses from data
-		var emails = [];
-		for(var i = 0; i < selected.length; i++)
+		const emails = [];
+		for(let i = 0; i < selected.length; i++)
 		{
 			// Pull data from global cache
-			var data = egw.dataGetUIDdata(selected[i].id) || {data:{}};
+			const data = egw.dataGetUIDdata(selected[i].id) || {data:{}};
 
-			var email_business = data.data[action.getManager().getActionById('email_business').checked ? 'email' : ''];
-			var email = data.data[action.getManager().getActionById('email_home').checked ? 'email_home' : ''];
 			// prefix email with full name
-			var personal = data.data.n_fn || '';
+			let personal = data.data.n_fn || '';
 			if (personal.match(/[^a-z0-9. -]/i)) personal = '"'+personal.replace(/"/, '\\"')+'"';
 
-			//remove comma in personal as it will confilict with mail content comma seperator in the process
+			// remove comma in personal as it will conflict with mail content comma seperator in the process
 			personal = personal.replace(/,/g,'');
 
-			if(email_business)
+			if(data.data.email && which !== "home")
 			{
-				emails.push((personal?personal+' <':'')+email_business+(personal?'>':''));
+				emails.push((personal?personal+' <':'')+data.data.email+(personal?'>':''));
 			}
-			if(email)
+			if(data.data.email_home && which !== "business" && !(which === "business-or-home" && data.data.email))
 			{
-				emails.push((personal?personal+' <':'')+email+(personal?'>':''));
+				emails.push((personal?personal+' <':'')+data.data.email_home+(personal?'>':''));
 			}
+		}
+		if (typeof setCompose === "function")
+		{
+			const content = {};
+			content[action.id.substr(7)] = emails.join(',');
+			setCompose(window, content);
+			return;
 		}
 		switch (action.id)
 		{
@@ -1117,19 +1132,20 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
-	 * Onclick of "addessbook.select" template for [To], [Cc] or [Bcc] button
+	 * Onclick of "addressbook.select" template for [To], [Cc] or [Bcc] button
 	 *
 	 * @param _event
 	 * @param _widget
 	 */
 	addEmailToCompose(_event, _widget)
 	{
-		const et2 = etemplate2.getByTemplate('addressbook.select');
-		const nm = <et2_nextmatch>et2[0]?.widgetContainer.getWidgetById('nm');
-		const selected = nm.getSelection().ids.map((uid) => {id: uid});
-		console.log('addEmailToCompose', _widget.id, selected);
-		debugger;
-		this.addEmail({ id: _widget.id}, selected);
+		const et2 = etemplate2.getByTemplate('addressbook.select')[0]?.widgetContainer;
+		const nm = et2?.getWidgetById('nm');
+		const what_to_use = et2?.getWidgetById('what_to_use')?.value;
+		const selection = nm?.getSelection();
+		this.addEmail({ id: _widget.id}, selection.ids.map((uid) => {
+			return {id: uid};
+		}), nm, what_to_use || "business-or-home", window.app.mail.setCompose.bind(window.app.mail));
 	}
 
 	/**
