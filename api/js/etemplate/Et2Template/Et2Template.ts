@@ -17,6 +17,7 @@ import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {until} from "lit/directives/until.js";
 import {classMap} from "lit/directives/class-map.js";
+import {SelectOption} from "../Et2Select/FindSelectOptions";
 
 // @ts-ignore
 /**
@@ -261,16 +262,14 @@ export class Et2Template extends Et2Widget(LitElement)
 	 * node and goes through it, creating widgets.  This is normally called automatically when the
 	 * template is added to the DOM, but if you want to re-load or not put it in the DOM you need to call load() yourself.
 	 *
-	 * If you need to set more than just content (select options, readonly or modifications), set it in the array manager
-	 * before calling load:
-	 * ```
-	 * template.setArrayMgr("readonlys", template.getArrayMgr("readonlys").openPerspective(template, newReadonlys));
-	 * ```
 	 *
 	 * @returns {Promise<void>}
 	 * @protected
 	 */
-	public async load(newContent? : object)
+	public async load(newContent? : object,
+					  newSelectOptions? : { [widgetID : string] : SelectOption[] },
+					  newReadonlys? : { [widgetID : string] : string | boolean | object },
+					  newModifications? : { [widgetID : string] : string | boolean | object })
 	{
 		// @ts-ignore can't find disabled, it's in Et2Widget
 		if(this.disabled)
@@ -283,6 +282,21 @@ export class Et2Template extends Et2Widget(LitElement)
 		{
 			// @ts-ignore ArrayMgr still expects et2_widgets
 			this.setArrayMgr("content", this.getArrayMgr("content").openPerspective(this, newContent));
+		}
+		if(typeof newSelectOptions != "undefined")
+		{
+			// @ts-ignore ArrayMgr still expects et2_widgets
+			this.setArrayMgr("sel_options", this.getArrayMgr("sel_options").openPerspective(this, newSelectOptions));
+		}
+		if(typeof newReadonlys != "undefined")
+		{
+			// @ts-ignore ArrayMgr still expects et2_widgets
+			this.setArrayMgr("readonlys", this.getArrayMgr("readonlys").openPerspective(this, newReadonlys));
+		}
+		if(typeof newModifications != "undefined")
+		{
+			// @ts-ignore ArrayMgr still expects et2_widgets
+			this.setArrayMgr("modifications", this.getArrayMgr("modifications").openPerspective(this, newModifications));
 		}
 		this.__isLoading = true;
 		this.loading = new Promise(async(resolve, reject) =>
