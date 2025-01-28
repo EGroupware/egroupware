@@ -1132,20 +1132,27 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
-	 * Onclick of "addressbook.select" template for [To], [Cc] or [Bcc] button
+	 * Onclick of "addressbook.select" template for [To], [Cc] or [Bcc] button or et2-description for email(_home)
 	 *
 	 * @param _event
 	 * @param _widget
 	 */
 	addEmailToCompose(_event, _widget)
 	{
+		// if email is clicked, we need to let the event bubble first, so NM selects the row
+		if (_widget.nodeName === 'ET2-DESCRIPTION' && _event)
+		{
+			window.setTimeout(() => this.addEmailToCompose(null, _widget), 0);
+			return false;
+		}
 		const et2 = etemplate2.getByTemplate('addressbook.select')[0]?.widgetContainer;
 		const nm = et2?.getWidgetById('nm');
 		const what_to_use = et2?.getWidgetById('what_to_use')?.value;
 		const selection = nm?.getSelection();
-		this.addEmail({ id: _widget.id}, selection.ids.map((uid) => {
+		this.addEmail({ id: _widget.nodeName === 'ET2-DESCRIPTION' ? 'add_to_to' : _widget.id}, selection.ids.map((uid) => {
 			return {id: uid};
-		}), nm, what_to_use || "business-or-home", window.app.mail.setCompose.bind(window.app.mail));
+		}), nm, _widget.nodeName === 'ET2-DESCRIPTION' ? (_widget.id.endsWith('[email]') ? 'business' : 'home') :
+				what_to_use || "business-or-home", window.app.mail.setCompose.bind(window.app.mail));
 	}
 
 	/**

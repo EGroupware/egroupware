@@ -1,4 +1,5 @@
 %1 attachments	mail	de	%1 Anhänge
+%1 for all users	mail	de	%1 für alle Benutzer
 %1 has been added to blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Blacklist hinzugefügt
 %1 has been added to whiltelisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Whitelist hinzugefügt
 %1 has been removed from blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse von der Blacklist entfernt
@@ -544,6 +545,7 @@ select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an
 select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager anhängen.
 select files to upload	mail	de	Dateien anhängen
+select mail addresses from addressbook	mail	de	Email Adressen aus dem Adressbuch auswählen
 select multiple	mail	de	Mehrfachauswahl
 select or insert email address	mail	de	Wählen oder fügen Sie eine E-Mail-Adresse ein
 selected	mail	de	ausgewählt

@@ -682,7 +682,6 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 
 		if (action.caption)
 		{
-			if (!egwIsMobile()) widget.statustext = action.caption;
 			if ((this.countActions <= parseInt(this.view_range) ||
 				this.preference[action.id] || !action.iconUrl)	&&
 				!(isCheckbox && isToggleSwitch)) // no caption for slideswitch checkboxes
@@ -690,6 +689,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				widget.classList.add(action.iconUrl ? 'et2_toolbar_hasCaption' : 'et2_toolbar_onlyCaption');
 			}
 		}
+		if ((action.hint || action.caption) && !egwIsMobile()) widget.statustext = action.hint || action.caption;
 	}
 
 	/**
