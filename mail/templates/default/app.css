@@ -1106,9 +1106,6 @@ et2-searchbox#mail-index_nm_search {
 	width: 100%;
 	min-width: 5em;
 }
-.nextmatch_header_row>.filtersContainer>et2-select, .nextmatch_header_row>.filtersContainer>et2-select-cat {
-	width: 80px;
-}
 et2-split#mail-index_mailSplitter.limitted .header_count {
 	display: none;
 }

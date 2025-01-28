@@ -252,10 +252,10 @@ class addressbook_ui extends addressbook_bo
 				'default_cols'   => !isset($template) ? 'type,n_fileas_n_given_n_family_n_family_n_given_org_name_n_family_n_given_n_fileas,'.
 					'number,org_name,org_unit,'.
 					'business_adr_one_countrycode_adr_one_postalcode,tel_work_tel_cell_tel_home,url_email_email_home' :
-					'!photo,home_adr_two_countrycode_adr_two_postalcode',
+					'!photo,home_adr_two_countrycode',
 				/* old negative list
 				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner,room',*/
-				//'no_columnselection' => false, // I  turns off the columnselection completly, turned on by default
+				'no_columnselection' => isset($template), // I  turn off the columnselection completly, turned on by default
 				// I  name of the preference (plus 'nextmatch-' prefix), default = template-name
 				'columnselection_pref' => isset($template) ? 'nextmatch-'.$template : null,
 				'filter2_onchange' => "return app.addressbook.filter2_onchange();",
@@ -361,7 +361,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$content['nm']['actions'] = array_filter($content['nm']['actions'], static function($action)
 			{
-				return in_array($action, ['open', 'email', 'delete']);
+				return in_array($action, ['open', 'delete']);
 			}, ARRAY_FILTER_USE_KEY);
 		}
 
