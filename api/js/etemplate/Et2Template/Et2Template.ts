@@ -318,7 +318,8 @@ export class Et2Template extends Et2Widget(LitElement)
 					attrs[attribute] = xml.getAttribute(attribute);
 				});
 				// Don't change ID, keep what we've got
-				delete attrs["id"];
+				// only if we have an ID, otherwise further templates in an overlay have no id!
+				if (this.id) delete attrs["id"];
 				this.transformAttributes(attrs);
 
 				// Load children into template
