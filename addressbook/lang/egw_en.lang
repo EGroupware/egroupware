@@ -79,11 +79,13 @@ browser location	addressbook	en	Browser location
 business	common	en	Business
 business address	addressbook	en	Business address
 business address line 2	addressbook	en	Business address line 2
+business and home email	addressbook	en	Business and home email
 business city	addressbook	en	Business city
 business country	addressbook	en	Business country
 business country code	addressbook	en	Business country code
 business email	addressbook	en	Business email
 business fax	addressbook	en	Business fax
+business or home email	addressbook	en	Business or home email
 business phone	addressbook	en	Business phone
 business state	addressbook	en	Business state
 business street	addressbook	en	Business street

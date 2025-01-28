@@ -69,11 +69,7 @@
 						</et2-dropdown>
                         <et2-email id="to" width="100%" onclick="app.mail.address_click" autofocus="true"
                                    onchange="app.mail.recipients_onchange"
-                                   placeholder="select or insert email address" includeLists="true" allowPlaceholder="true">
-							<et2-button-icon image="addressbook/navbar" statustext="click to select in addressbook"
-								onclick="app.mail.openDialog('addressbook.addressbook_ui.index&amp;template=addressbook.select')"
-								slot="suffix"></et2-button-icon>
-						</et2-email>
+                                   placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">
 						<et2-description  value="Cc"></et2-description>

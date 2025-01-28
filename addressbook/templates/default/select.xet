@@ -81,8 +81,10 @@
 					</et2-vbox>
 
                     <et2-vbox>
-                        <et2-url-email id="${row}[email]" readonly="true" class="fixedHeight" emailDisplay="email"></et2-url-email>
-                        <et2-url-email id="${row}[email_home]" readonly="true" class="fixedHeight" emailDisplay="email"></et2-url-email>
+                        <et2-description id="${row}[email]" readonly="true" class="fixedHeight" emailDisplay="email"
+							onclick="app.addressbook.addEmailToCompose"></et2-description>
+                        <et2-description id="${row}[email_home]" readonly="true" class="fixedHeight" emailDisplay="email"
+							onclick="app.addressbook.addEmailToCompose"></et2-description>
                     </et2-vbox>
 				</row>
 			</rows>
@@ -95,17 +97,18 @@
 				<option value="">Business or home email</option>
 				<option value="email">Business email</option>
 				<option value="email_home">Home email</option>
+				<option value="both">Business and home email</option>
 			</et2-select>
 			<et2-button label="To" id="add_to_to" onclick="app.addressbook.addEmailToCompose" image="forward-fill"></et2-button>
 			<et2-button label="Cc" id="add_to_cc" onclick="app.addressbook.addEmailToCompose" image="forward-fill"></et2-button>
 			<et2-button label="Bcc" id="add_to_bcc" onclick="app.addressbook.addEmailToCompose" image="forward-fill"></et2-button>
-			<et2-button label="Close" id="close" onclick="alert('ToDo ;)'); return false;"></et2-button>
+			<et2-button label="Close" id="close" onclick="document.querySelector('et2-dialog').close(); return false;"></et2-button>
 		</et2-hbox>
 		<styles>
             #addressbook-select > et2-template::part(base) { display: flex; flex-direction: column;}
 			div.dialog_content img.dialog_icon[src=""] { display: none; }
 			et2-dialog#dialog-addressbook-select et2-button { max-width: 125px !important; }
-			et2-dialog#dialog-addressbook-select::part(panel) { width: 90vh; height: 75vh; position: absolute; bottom: 1vh; }
+			et2-dialog#dialog-addressbook-select::part(panel) { width: 90vh; height: 70vh; position: absolute; bottom: 1vh; }
 			et2-hbox.footer { border-top: 2px solid #696969; padding-top: 10px; }
 		</styles>
 	</template>

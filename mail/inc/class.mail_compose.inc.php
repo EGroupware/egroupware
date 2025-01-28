@@ -189,6 +189,14 @@ class mail_compose
 				'hint' => 'check to save as calendar event on send',
 				'onExecute' => 'javaScript:app.mail.compose_setToggle'
 			),
+			'addressbook' => array(
+				'caption' => 'Addressbook',
+				'icon' => 'addressbook/navbar',
+				'group' => $group,
+				'hint' => 'Select mail addresses from addressbook',
+				'onExecute' => 'javaScript:app.mail.addressbookSelect',
+				'toolbarDefault' => false,
+			),
 			'disposition' => array(
 				'caption' => 'Notification',
 				'icon' => 'notification',

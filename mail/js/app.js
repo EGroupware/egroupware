@@ -6444,19 +6444,24 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
-		addAttachmentPlaceholder: function ()
+	addAttachmentPlaceholder: function ()
+	{
+		if (this.et2.getArrayMgr("content").getEntry("is_html"))
 		{
-			if (this.et2.getArrayMgr("content").getEntry("is_html"))
-			{
-				// Add link placeholder box
-				const email = this.et2.getWidgetById("mail_htmltext");
-				const attach_type = this.et2.getWidgetById("filemode");
-				const placeholder = '<fieldset class="attachments mceNonEditable"><legend>Download attachments</legend>' + this.egw.lang('Attachments') + '</fieldset>';
+			// Add link placeholder box
+			const email = this.et2.getWidgetById("mail_htmltext");
+			const attach_type = this.et2.getWidgetById("filemode");
+			const placeholder = '<fieldset class="attachments mceNonEditable"><legend>Download attachments</legend>' + this.egw.lang('Attachments') + '</fieldset>';
 
-				if (email && !email.getValue().includes(placeholder) && attach_type.getValue() !== "attach")
-				{
-					email.editor.execCommand('mceInsertContent', false, placeholder);
-				}
+			if (email && !email.getValue().includes(placeholder) && attach_type.getValue() !== "attach")
+			{
+				email.editor.execCommand('mceInsertContent', false, placeholder);
 			}
+		}
+	},
+
+	addressbookSelect: function()
+	{
+		this.openDialog('addressbook.addressbook_ui.index&template=addressbook.select');
 	}
 });
