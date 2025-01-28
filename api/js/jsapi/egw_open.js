@@ -68,14 +68,13 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			}
 		}
 
-		// Encode html entities in the URI, otheerwise server XSS protection wont
-		// allow it to pass, because it may get mistaken for some forbiden tags,
+		// Encode html entities in the URI, otherwise server XSS protection won't
+		// allow it to pass, because it may get mistaken for some forbidden tags,
 		// e.g., "Mathias <mathias@example.com>" the first part of email "<mathias"
 		// including "<" would get mistaken for <math> tag, and server will cut it off.
 		uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 		egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri}, /mail_compose.compose/);
-
 
 		for (var index in content)
 		{
@@ -605,7 +604,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 					}
 				}
 
-				// Accoring to microsoft, IE 10/11 can only accept a url with 2083 caharacters
+				// According to microsoft, IE 10/11 can only accept a url with 2083 characters
 				// therefore we need to send request to compose window with POST method
 				// instead of GET. We create a temporary <Form> and will post emails.
 				// ** WebServers and other browsers also have url length limit:

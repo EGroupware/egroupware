@@ -99,7 +99,7 @@
 	<template id="addressbook.select" template="" lang="" group="0" version="1.9.002">
 		<nextmatch id="nm" template="addressbook.select.rows" span="all"/>
 		<et2-hbox>
-			<et2-select label="Add">
+			<et2-select label="Add" id="what_to_use">
 				<option value="">Business or home email</option>
 				<option value="email">Business email</option>
 				<option value="email_home">Home email</option>
