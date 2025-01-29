@@ -443,7 +443,7 @@ export class Et2VfsSelectDialog
 				// Check for existing file, ask what to do
 				if(this.fileInfo(this.value[0]))
 				{
-					let result = await this.overwritePrompt(this._filenameNode ?? this.filename);
+					let result = await this.overwritePrompt(this._filenameNode?.value ?? this.filename);
 					if(result == null)
 					{
 						return;
