@@ -1587,6 +1587,12 @@ abstract class Merge
 			// HTML into non-XML (plaintext template)
 			foreach($replacements as $name => &$value)
 			{
+				// set unresolved array values to empty string
+				if(is_array($value))
+				{
+					$value = '';
+					continue;
+				}
 				$value = html_entity_decode($value, ENT_QUOTES, $charset);
 			}
 		}
