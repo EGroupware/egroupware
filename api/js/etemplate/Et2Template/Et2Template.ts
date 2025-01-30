@@ -308,6 +308,7 @@ export class Et2Template extends Et2Widget(LitElement)
 			if(!(this.template || this.id))
 			{
 				console.debug("No template name, aborting load", this);
+				resolve();
 				return;
 			}
 			
