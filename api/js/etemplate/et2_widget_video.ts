@@ -15,12 +15,12 @@
 	et2_core_baseWidget;
 */
 
-import { et2_baseWidget } from './et2_core_baseWidget'
+import {et2_baseWidget} from './et2_core_baseWidget'
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_IDOMNode} from "./et2_core_interfaces";
-import  "./CustomHtmlElements/multi-video";
-import  "./CustomHtmlElements/pdf-player";
+import "./CustomHtmlElements/multi-video";
+import "./CustomHtmlElements/pdf-player";
 
 /**
  * This widget represents the HTML5 video tag with all its optional attributes
@@ -158,6 +158,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     private static youtubePrefixId : string = "frame-";
 
 	private static youtubeRegexp: RegExp = new RegExp(/^https:\/\/((www\.|m\.)?youtube(-nocookie)?\.com|youtu\.be)\/.*(?:\/|%3D|v=|vi=)([0-9A-z-_]{11})(?:[%#?&]|$)/m);
+	private _isReady = false;
 
     constructor(_parent, _attrs? : WidgetConfig, _child? : object)
     {
@@ -613,8 +614,14 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         if (this._isYoutube() && this.youtube.getIframe) this.youtubeFrame = jQuery(this.youtube.getIframe());
         let event = document.createEvent("Event");
         event.initEvent('et2_video.onReady.'+this.id, true, true);
+		this._isReady = true;
         this.video[0].dispatchEvent(event);
     }
+
+	get isReady() : boolean
+	{
+		return this._isReady;
+	}
 
     private _onTimeUpdate()
     {
