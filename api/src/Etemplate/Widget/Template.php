@@ -252,7 +252,8 @@ class Template extends Etemplate\Widget
 			$expand_name = self::expand_name($this->original_name, '','','','',self::$request->content);
 		}
 		//error_log("$this running $method_name() cname: {$this->id} -> expand_name: $expand_name");
-		if($expand_name && ($expand_name != $this->id || count($this->children) == 0))
+		// Expand if it's different, or it hasn't been expanded yet (no children, and the template actually has children)
+		if($expand_name && ($expand_name != $this->id || count($this->children ?? []) == 0 && count(static::$cache[$expand_name]->children ?? []) > 0))
 		{
 			if (($row_template = self::instance($expand_name)))
 			{
