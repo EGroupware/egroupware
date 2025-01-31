@@ -172,7 +172,7 @@ class DateTime extends \DateTime
 				break;
 
 			case 'object':
-				if ($time instanceof \DateTime)
+				if ($time instanceof \DateTimeInterface)    // \DateTime or \DateTimeImmutable
 				{
 					parent::__construct($time->format('Y-m-d H:i:s'),$time->getTimezone());
 					$this->setTimezone($tz);
