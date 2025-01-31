@@ -113,7 +113,7 @@
 			<et2-button label="Close" id="close" onclick="document.querySelector('et2-dialog').close(); return false;"></et2-button>
 		</et2-hbox>
 		<styles>
-            #addressbook-select > et2-template::part(base) { display: flex; flex-direction: column;}
+            #addressbook-select > div { display: flex; flex-direction: column;}
 			div.dialog_content img.dialog_icon[src=""] { display: none; }
 			et2-dialog#dialog-addressbook-select et2-button { max-width: 125px !important; }
 			et2-dialog#dialog-addressbook-select::part(panel) { width: 90vh; height: 70vh; position: absolute; bottom: 1vh; }
