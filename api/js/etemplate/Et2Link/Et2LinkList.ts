@@ -88,7 +88,7 @@ export class Et2LinkList extends Et2LinkString
 					margin-left:auto;
 					font-weight: bold;
 					font-style: italic;
-					
+					color: var(--sl-color-gray-700)
 				}
 
 				et2-link {
