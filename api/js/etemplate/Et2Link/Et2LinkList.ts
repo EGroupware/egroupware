@@ -84,6 +84,11 @@ export class Et2LinkList extends Et2LinkString
 				et2-link::part(remark) {
 					/* Reset from Et2LinkString */
 					display: initial;
+					/*edit windows link tabs highlight comments*/
+					margin-left:auto;
+					font-weight: bold;
+					font-style: italic;
+					
 				}
 
 				et2-link {
