@@ -128,8 +128,6 @@ class kdots_framework extends Api\Framework\Ajax
 			}
 		}
 
-		//////////
-
 		$vars['topmenu_items'] = "<sl-menu id='egw_fw_topmenu_items'>" . implode("\n", $this->topmenu_items) . "</sl-menu>";
 		$vars['topmenu_info_items'] = '';
 		foreach($this->topmenu_info_items as $id => $item)
@@ -138,6 +136,9 @@ class kdots_framework extends Api\Framework\Ajax
 			{
 				case 'user_avatar':
 					$vars['topmenu_info_items'] .= "<sl-dropdown class=\"topmenu_info_item\" id=\"topmenu_info_{$id}\" aria-label='" . lang("User menu") . "' tabindex='0'><div slot='trigger'>$item</div> {$vars['topmenu_items']}</sl-dropdown>";
+					break;
+				case 'notifications':
+					$vars['topmenu_info_items'] .= $item;
 					break;
 				case 'darkmode':
 					$vars['topmenu_info_items'] .= $item;
@@ -252,6 +253,20 @@ class kdots_framework extends Api\Framework\Ajax
 		$mode = $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == 1 ? 'dark' : 'light';
 		return '<egw-darkmode-toggle title="' . lang("%1 mode", $mode) . '" class="' .
 			($mode == 'dark' ? 'darkmode_on' : '') . '"' . ($mode == 'dark' ? 'darkmode' : '') . '> </egw-darkmode-toggle>';
+	}
+
+	/**
+	 * Prepare notification signal (blinking bell)
+	 *
+	 *
+	 * @return string
+	 */
+	protected static function _get_notification_bell()
+	{
+		// This should all be handled by notification app
+		$path = "../../notifications/js/Et2NotificationBell.js";
+		self::includeJS($path . '?' . filemtime(EGW_SERVER_ROOT . $path));
+		return '<et2-notification-bell loading class="topmenu_info_item"></et2-notification-bell>';
 	}
 
 	/**

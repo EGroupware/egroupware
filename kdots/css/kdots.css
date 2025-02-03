@@ -163,7 +163,7 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
 }
 #egw_fw_topmenu_info_items > * {
   border: none;
-  background: transparent;
+  background-color: transparent;
 }
 #egw_fw_topmenu_info_items et2-avatar {
   --size: var(--icon-size);
@@ -217,7 +217,7 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add {
   display: block;
-  background-image: url(../../api/templates/default/images/add.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/plus-circle.svg);
   background-repeat: no-repeat;
   background-size: 24px;
   background-position: center;
@@ -261,6 +261,9 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(combobox) {
   visibility: hidden;
+}
+#egw_fw_topmenu_info_items #topmenu_info_notifications {
+  background-image: url(../../node_modules/bootstrap-icons/icons/bell-fill.svg);
 }
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar sl-menu-item et2-image {
   width: 1em;
@@ -364,6 +367,11 @@ body egw-app[name="ranking"],
 /*** END APPLICATION ***/
 /*** WIDGETS ***/
 /* This should mostly go away with webcomponents */
+/* Show something for undefined widget */
+*:not(:defined) {
+  background-size: contain;
+  background-image: url(../../node_modules/bootstrap-icons/icons/question-circle.svg);
+}
 /* Get nextmatch sizing more nicely without messing with dynheight */
 div.et2_nextmatch {
   display: flex;

@@ -116,7 +116,7 @@ egw-framework#egw_fw_basecontainer {
 
   & > * {
 	border: none;
-	background: transparent;
+	background-color: transparent;
   }
 
   et2-avatar {
@@ -178,7 +178,7 @@ egw-framework#egw_fw_basecontainer {
 
 	span#quick_add {
 	  display: block;
-	  background-image: url(../../api/templates/default/images/add.svg);
+	  background-image: url(../../node_modules/bootstrap-icons/icons/plus-circle.svg);
 	  background-repeat: no-repeat;
 	  background-size: 24px;
 	  background-position: center;
@@ -231,6 +231,9 @@ egw-framework#egw_fw_basecontainer {
 	}
   }
 
+  #topmenu_info_notifications {
+	background-image: url(../../node_modules/bootstrap-icons/icons/bell-fill.svg);
+  }
   #topmenu_info_user_avatar {
 	sl-menu-item et2-image {
 	  width: 1em;
@@ -347,6 +350,12 @@ body, :root {
 
 /*** WIDGETS ***/
 /* This should mostly go away with webcomponents */
+
+/* Show something for undefined widget */
+*:not(:defined) {
+  background-size: contain;
+  background-image: url(../../node_modules/bootstrap-icons/icons/question-circle.svg);
+}
 
 /* Get nextmatch sizing more nicely without messing with dynheight */
 div.et2_nextmatch {

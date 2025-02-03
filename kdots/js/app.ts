@@ -5,7 +5,6 @@
 import {EgwFramework} from "./EgwFramework";
 import {EgwFrameworkApp} from "./EgwFrameworkApp";
 import {EgwDarkmodeToggle} from "./EgwDarkmodeToggle";
-import {app} from "../../api/js/jsapi/egw_global";
 
 document.addEventListener('DOMContentLoaded', () =>
 {
@@ -57,9 +56,9 @@ document.addEventListener('DOMContentLoaded', () =>
 	}
 });
 
-class KDots
+class KDots extends fw_desktop
 {
 
 }
 
-app.classes.kdots = KDots;
+window['fw_kdots'] = new KDots();
