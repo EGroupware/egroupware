@@ -251,7 +251,6 @@ class Image
 		'calendar/videoconference'	=> 'camera-video',
 		'calendar/week_view'	=> '7-square',
         'calendar/year_view'	=> 'calendar/bi-12-square',
-		'collabora/curly_brackets_icon'	=> 'braces-asterisk',
 		'dhtmlxtree/close'	=> 'caret-down',
 		'dhtmlxtree/folderClosed'	=> 'folder2',
 		'dhtmlxtree/folderOpen'	=> 'folder2-open',
