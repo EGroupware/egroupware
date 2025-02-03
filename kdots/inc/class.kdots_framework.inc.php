@@ -1,7 +1,10 @@
 <?php
 
 use EGroupware\Api;
+use EGroupware\Api\Hooks;
 use EGroupware\Api\Image;
+use EGroupware\Api\Framework\Updates;
+use EGroupware\Api\Header\UserAgent;
 
 class kdots_framework extends Api\Framework\Ajax
 {
@@ -69,9 +72,63 @@ class kdots_framework extends Api\Framework\Ajax
 
 	function topmenu(array $vars, array $apps)
 	{
-		$this->topmenu_items = $this->topmenu_info_items = array();
+		// array of header info items (orders of the items matter)
+		$topmenu_info_items = [
+			'user_avatar'   => $this->_user_avatar_menu(),
+			'update'        => ($update = Updates::notification()) ? $update : null,
+			'notifications' => ($GLOBALS['egw_info']['user']['apps']['notifications']) ? static::_get_notification_bell() : null,
+			'quick_add'     => $vars['quick_add'],
+			'darkmode'      => static::_darkmode_menu(),
+		];
 
-		parent::topmenu($vars, $apps);
+		// array of Avatar menu items (orders of the items matter)
+		$avatar_menu_items = [
+			0 => (is_array(($current_user = $this->_current_users()))) ? $current_user : null,
+		];
+
+		// array of topmenu preferences items (orders of the items matter)
+		$topmenu_preferences = ['prefs', 'acl', 'useraccount', 'cats', 'security'];
+
+		// set topmenu preferences items
+		if($GLOBALS['egw_info']['user']['apps']['preferences'])
+		{
+			foreach($topmenu_preferences as $prefs)
+			{
+				$this->add_preferences_topmenu($prefs);
+			}
+		}
+
+		// call topmenu info items hooks
+		Hooks::process('topmenu_info', array(), true);
+
+		// Add extra items added by hooks
+		foreach(self::$top_menu_extra as $extra_item)
+		{
+			array_push($avatar_menu_items, $extra_item);
+		}
+		// push logout as the last item in topmenu items list
+		array_push($avatar_menu_items, $apps['logout']);
+
+		// set topmenu info items
+		foreach($topmenu_info_items as $id => $content)
+		{
+			if(!$content || (in_array($id, ['search', 'quick_add', 'update', 'darkmode',
+											'print_title']) && (UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')))
+			{
+				continue;
+			}
+			$this->_add_topmenu_info_item($content, $id);
+		}
+		// set topmenu items
+		foreach($avatar_menu_items as $item)
+		{
+			if($item)
+			{
+				$this->_add_topmenu_item($item);
+			}
+		}
+
+		//////////
 
 		$vars['topmenu_items'] = "<sl-menu id='egw_fw_topmenu_items'>" . implode("\n", $this->topmenu_items) . "</sl-menu>";
 		$vars['topmenu_info_items'] = '';
@@ -195,5 +252,15 @@ class kdots_framework extends Api\Framework\Ajax
 		$mode = $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == 1 ? 'dark' : 'light';
 		return '<egw-darkmode-toggle title="' . lang("%1 mode", $mode) . '" class="' .
 			($mode == 'dark' ? 'darkmode_on' : '') . '"' . ($mode == 'dark' ? 'darkmode' : '') . '> </egw-darkmode-toggle>';
+	}
+
+	/**
+	 * Prepare the quick add selectbox
+	 *
+	 * @return string
+	 */
+	protected static function _get_quick_add()
+	{
+		return '<span id="quick_add" title="' . lang('Quick add') . '" class="bi-plus-circle"></span>';
 	}
 }
