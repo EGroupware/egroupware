@@ -2,6 +2,7 @@ import {css, html, LitElement, nothing} from "lit";
 import {SlDivider, SlMenu, SlMenuItem} from "@shoelace-style/shoelace";
 import {egwMenuItem} from "./egw_menu";
 import {customElement} from "lit/decorators/custom-element.js";
+import {ref} from "lit/directives/ref.js";
 import {repeat} from "lit/directives/repeat.js";
 import {classMap} from "lit/directives/class-map.js";
 import bootstrapIcons from "../etemplate/Styles/bootstrap-icons";
@@ -289,11 +290,35 @@ export class EgwMenuShoelace extends LitElement
 				setTimeout(() =>
 				{
 					resolve(html`
+                        <sl-menu slot="submenu">
                         ${repeat(item.children, i => this.itemTemplate(i))}
+                        </sl-menu>
 					`);
 				}, item.children.length);
 			})
 		}
+		// Remove the loading attribute when sub-menu is done
+		const updateLoading = async(element : SlMenuItem) =>
+		{
+			if(item.children.length == 0)
+			{
+				return;
+			}
+			// Menu item was rendered, but give children a chance to render
+			setTimeout(async() =>
+			{
+				// Wait for child creation
+				await childPromise;
+				// Wait for child render
+				await Promise.all((<SlMenuItem[]>Array.from(element.querySelectorAll('sl-menu-item')))
+					.map(e => e.updateComplete));
+				// No longer loading
+				setTimeout(() =>
+				{
+					element.loading = false;
+				}, 100);
+			});
+		};
 
 		return html`
             <sl-menu-item
@@ -305,21 +330,19 @@ export class EgwMenuShoelace extends LitElement
                     data-action-id="${item.id}"
                     ?checked=${item.checkbox && item.checked}
                     ?disabled=${!item.enabled}
-                    ?loading=${until(childPromise.then(() => false), true)}
+                    ?loading=${item.children.length > 0}
                     .value=${item}
                     @click=${item.checkbox ? this.handleCheckboxClick : nothing}
+                    ${ref(updateLoading)}
             >
                 ${item.iconUrl ? html`
                     <et2-image slot="prefix" src="${item.iconUrl}"></et2-image>` : nothing}
 				<span style="color: ${item.color || nothing}">${item.caption}</span>
-                ${item.shortcutCaption ? html`<span slot="suffix"
-                                                    class="keyboard_shortcut">
+                ${item.shortcutCaption ? html`<span slot="suffix" class="keyboard_shortcut">
 					${item.shortcutCaption}
 				</span>` : nothing}
                 ${item.children.length == 0 ? nothing : html`
-                    <sl-menu slot="submenu">
                         ${until(childPromise)}
-                    </sl-menu>
                 `}
             </sl-menu-item>
 		`;
