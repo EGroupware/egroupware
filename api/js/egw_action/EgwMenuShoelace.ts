@@ -5,6 +5,7 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {repeat} from "lit/directives/repeat.js";
 import {classMap} from "lit/directives/class-map.js";
 import bootstrapIcons from "../etemplate/Styles/bootstrap-icons";
+import {until} from "lit/directives/until.js";
 
 @customElement("egw-menu-shoelace")
 export class EgwMenuShoelace extends LitElement
@@ -279,6 +280,21 @@ export class EgwMenuShoelace extends LitElement
 		}
 		const id = CSS.escape(item.id);
 
+		// Defer loading of sub-menus because the forced repaint takes too long with lots of children
+		let childPromise = Promise.resolve(html``);
+		if(item.children.length > 0)
+		{
+			childPromise = new Promise((resolve) =>
+			{
+				setTimeout(() =>
+				{
+					resolve(html`
+                        ${repeat(item.children, i => this.itemTemplate(i))}
+					`);
+				}, item.children.length);
+			})
+		}
+
 		return html`
             <sl-menu-item
                     class=${classMap({
@@ -289,6 +305,7 @@ export class EgwMenuShoelace extends LitElement
                     data-action-id="${item.id}"
                     ?checked=${item.checkbox && item.checked}
                     ?disabled=${!item.enabled}
+                    ?loading=${until(childPromise.then(() => false), true)}
                     .value=${item}
                     @click=${item.checkbox ? this.handleCheckboxClick : nothing}
             >
@@ -301,7 +318,7 @@ export class EgwMenuShoelace extends LitElement
 				</span>` : nothing}
                 ${item.children.length == 0 ? nothing : html`
                     <sl-menu slot="submenu">
-                        ${repeat(item.children, i => this.itemTemplate(i))}
+                        ${until(childPromise)}
                     </sl-menu>
                 `}
             </sl-menu-item>
