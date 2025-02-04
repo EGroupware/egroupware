@@ -159,7 +159,7 @@ class Storage
 			else    // can't do a count, have to run the query without limit
 			{
 				self::$row_count = self::$db->select(
-					self::$table_name, '*', $query, __LINE__, __FILE__, false, $order ? " ORDER BY $order" : '', false, 0
+					self::TABLE, '*', $query, __LINE__, __FILE__, false, $order ? " ORDER BY $order" : '', false, 0
 				)->NumRows();
 			}
 		}
