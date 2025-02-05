@@ -1539,6 +1539,13 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			{
 				return this.getParent().getInstanceManager ? this.getParent().getInstanceManager() : null;
 			}
+				// Widget might be inside another widget, in which case getParent() is null
+			// @ts-ignore host does not always exist on getRootNode()
+			else if(this.getRootNode() && typeof this.getRootNode()?.host?.getParent == "function")
+			{
+				// @ts-ignore host does not always exist on getRootNode()
+				return this.getRootNode().host.getParent()?.getInstanceManager();
+			}
 
 			return null;
 		}
@@ -1552,6 +1559,13 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			if(this.getParent() != null)
 			{
 				return this.getParent().getRoot();
+			}
+				// Widget might be inside another widget, in which case getParent() is null
+			// @ts-ignore host does not always exist on getRootNode()
+			else if(this.getRootNode() && typeof this.getRootNode()?.host?.getParent == "function" && this.getRootNode().host.getParent())
+			{
+				// @ts-ignore host does not always exist on getRootNode()
+				return this.getRootNode().host.getParent();
 			}
 			else
 			{
