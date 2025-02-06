@@ -10,6 +10,15 @@
 @import "./less/dark.less";
 /** End theme customisations **/
 
+/* BI icons */
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
+
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  vertical-align: middle;
+}
+
 html, body {
   width: 100vw;
   height: 100vh;

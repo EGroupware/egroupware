@@ -4,6 +4,7 @@
  * Note that light / dark colors should go in kdots_light.less & kdots_dark.less
  */
 /** Theme customisations **/
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
 :root,
 :host,
 html,
@@ -74,6 +75,12 @@ html[data-darkmode="1"] .nextmatch_sortheader,
   color: #96bcd9;
 }
 /** End theme customisations **/
+/* BI icons */
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  vertical-align: middle;
+}
 html,
 body {
   width: 100vw;
