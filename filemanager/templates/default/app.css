@@ -65,6 +65,7 @@ input#filemanager-index_path {
 table.egwGridView_grid .tile .file_tile {
 	height: 100px;
     width: 135px;
+	word-break: break-all;
 }
 table.egwGridView_grid .tile .file_tile et2-vfs-mime {width: 4em; margin: 0 auto;}
 
