@@ -187,3 +187,7 @@ div#filemanager-index_filemanager-index-header_right {
 	display: inline-flex;
 	gap: 1ex;
 }
+/*navbar icons in filemanager should always have the save size of 32px*/
+.egwGridView_grid et2-vfs-mime img[src*='/navbar'] {
+	width: 32px !important;
+}
