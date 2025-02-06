@@ -6,6 +6,7 @@ import {html, LitElement, nothing} from "lit";
 import {HasSlotController} from "../Et2Widget/slot";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
+import {waitForEvent} from "../Et2Widget/event";
 import {ifDefined} from "lit/directives/if-defined.js";
 
 /**
@@ -66,9 +67,64 @@ export class Et2FileItem extends Et2Widget(LitElement)
 
 	private readonly hasSlotController = new HasSlotController(this, "image", "suffix");
 
+	private get base() : HTMLElement {return this.shadowRoot?.querySelector('[part~="base"]');}
+
+	updated(changedProperties : Map<string, any>)
+	{
+		if(changedProperties.has('hidden'))
+		{
+			this.handleHiddenChange();
+		}
+	}
+
+	/* Hides the file item */
+	async hide()
+	{
+		if(this.hidden)
+		{
+			return undefined;
+		}
+
+		this.hidden = true;
+		this.requestUpdate("hidden");
+		return waitForEvent(this, 'sl-after-hide');
+	}
+
+	async error(message?)
+	{
+		this.variant = "danger";
+		if(message)
+		{
+			this.innerHTML += "<br />" + message;
+		}
+		this.requestUpdate("variant");
+	}
+
 	handleCloseClick()
 	{
-		this.hidden = true;
+		this.hide();
+	}
+
+	async handleHiddenChange()
+	{
+		if(!this.hidden)
+		{
+			// Show
+			this.dispatchEvent(new Event('sl-show', {bubbles: true}));
+			// TODO: Animation?
+			this.base.hidden = false;
+
+			this.dispatchEvent(new Event('sl-after-show', {bubbles: true}));
+		}
+		else
+		{
+			// Hide
+			this.dispatchEvent(new Event('sl-hide', {bubbles: true}));
+			// TODO: Animation?
+			this.base.hidden = true;
+
+			this.dispatchEvent(new Event('sl-after-hide', {bubbles: true}));
+		}
 	}
 
 	handleTriggerKeyUp(event : KeyboardEvent)
@@ -82,6 +138,13 @@ export class Et2FileItem extends Et2Widget(LitElement)
 
 	render()
 	{
+		const progressBar = html`${this.loading ? html`
+            <sl-progress-bar
+                    class="file-item__progress-bar"
+                    ?indeterminate=${this.progress === undefined}
+                    value=${ifDefined(this.progress)}
+            ></sl-progress-bar>` : nothing}`;
+
 		return html`
             <div
                     part="base"
@@ -96,6 +159,7 @@ export class Et2FileItem extends Et2Widget(LitElement)
                         'file-item--large': this.display === "large" || !this.display,
                         'file-item--small': this.display === "small",
                         'file-item--list': this.display === "list",
+                        //@ts-ignore disabled comes from Et2Widget
                         "file-item--disabled": this.disabled,
                         "file-item--hidden": this.hidden,
                         "file-item--closable": this.closable,
@@ -111,6 +175,7 @@ export class Et2FileItem extends Et2Widget(LitElement)
           </span>
           <span part="label" class="file-item__label">
             <slot></slot>
+			  ${this.display == "large" ? progressBar : nothing}
             ${this.size
               ? html`
                         <sl-format-bytes
@@ -120,15 +185,8 @@ export class Et2FileItem extends Et2Widget(LitElement)
                         </sl-format-bytes>`
               : ""}
 		  </span>
-          ${this.loading
-            ? html`
-                      <span class="file-item__progress-bar__container">
-			  <sl-progress-bar
-                      class="file-item__progress-bar"
-                      ?indeterminate=${this.progress === undefined}
-                      value=${ifDefined(this.progress)}
-              ></sl-progress-bar>
-		  </span>` : ""}
+          ${this.display != "large" ? html`<span
+                  class="file-item__progress-bar__container">${progressBar}</span>` : nothing}
 		</span>
                 ${this.closable
                   ? html`

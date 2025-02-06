@@ -191,7 +191,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
                     class="link__icon"
                     ._parent=${this}
                     href="${link.href}"
-                    src=${this.egw().image("" + link.icon)}
+                    src=${link.src ?? this.egw().image("" + link.icon)}
                     ?disabled=${!(link.href || link.icon)}
             ></et2-image-expose>`;
 	}

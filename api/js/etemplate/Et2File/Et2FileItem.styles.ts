@@ -26,16 +26,12 @@ export default css`
 		display: flex;
 		flex: 1;
 		overflow: hidden;
+		align-items: center;
 	}
 
 	.file-item:not(.file-item--has-image) .file-item__image,
 	.file-item:not(.file-item--closable) .file-item__close-button {
 		display: none;
-	}
-
-	.file-item--is-loading .file-item__image,
-	.file-item--is-loading .file-item__label {
-		visibility: hidden;
 	}
 
 	.file-item__image {
@@ -44,6 +40,8 @@ export default css`
 		align-items: center;
 		padding-left: var(--sl-spacing-medium);
 		color: var(--sl-color-primary-600);
+		max-width: 1em;
+		max-height: 1em;
 
 		slot > * {
 			line-height: 1;
