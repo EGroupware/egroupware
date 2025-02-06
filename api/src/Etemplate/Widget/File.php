@@ -119,9 +119,9 @@ class File extends Etemplate\Widget
 				$widget = $template->getElementById($matches[1].':$cont[id]:'.$matches[3]);
 			}
 			$mime = null;
-			if($widget && $widget->attrs['mime'])
+			if($widget && ($widget->attrs['allow'] || $widget->attrs['mime']))
 			{
-				$mime = $widget->attrs['mime'];
+				$mime = $widget->attrs['allow'] ?? $widget->attrs['mime'];
 			}
 
 			// Check for legacy [] in id to indicate multiple - it changes format
@@ -160,6 +160,35 @@ class File extends Etemplate\Widget
 		$response->data($file_data);
 	}
 
+	/**
+	 * Resumable uploads, check if a chunk is already present
+	 *
+	 * @return void
+	 */
+	function ajax_test_chunk()
+	{
+		$request_id = str_replace(' ', '+', rawurldecode($_REQUEST['request_id']));
+		$widget_id = $_REQUEST['widget_id'];
+		if(!self::$request = Etemplate\Request::read($request_id))
+		{
+			header('HTTP/1.1 404 Session Not Found');
+			return;
+		}
+
+		// check the destination file (format <filename.ext>.part<#chunk>
+		// the file is stored in a temporary directory
+		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . str_replace('/', '_', $_REQUEST['resumableIdentifier']);
+		if(!file_exists($temp_dir))
+		{
+			//No content, file is not there
+			return http_response_code(204);
+		}
+		else
+		{
+			$chunk_name = $temp_dir . '/' . str_replace('/', '_', $_REQUEST['resumableFilename']) . '.part' . (int)$_REQUEST['resumableChunkNumber'];
+			return file_exists($chunk_name) ? http_response_code(200) : http_response_code(204);
+		}
+	}
 	/**
 	 * Process one uploaded file.  There should only be one per request...
 	 */

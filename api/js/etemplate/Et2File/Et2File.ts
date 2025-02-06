@@ -142,8 +142,10 @@ export class Et2File extends Et2InputWidget(LitElement)
 				widget_id: this.id,
 			},
 			chunkSize: 1024 * 1024,
-			// Disable checking for already uploaded chunks
-			testChunks: false
+
+			// Checking for already uploaded chunks - resumable uploads
+			testChunks: true,
+			testTarget: this.egw().ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\File::ajax_test_chunk")
 		};
 		if(this.accept)
 		{
