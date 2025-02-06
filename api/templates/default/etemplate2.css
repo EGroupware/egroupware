@@ -807,6 +807,10 @@ et2-dialog et2-button {
 .et2_customfield_list {
     width: 100%;
 }
+/*number in custom field list should be left aligned instead of usual right alignment*/
+.et2_customfield_list et2-number_ro span{
+    text-align: start;
+}
 
 .et2_customfield_list tr td:first-child {
     width: 12%; /* this is somehow equivalent to 100px we usually have in the first column */
