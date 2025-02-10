@@ -99,6 +99,7 @@ class mail_ui
 		'from'		=> 'from',			// lang('from')
 		'to'		=> 'to',			// lang('to')
 		'cc'		=> 'cc',			// lang('cc')
+		'bcc'       => 'bcc',           // lang('Bcc')
 		'text'		=> 'whole message',	// lang('whole message')
 		'larger'		=> 'greater than',	// lang('greater than')
 		'smaller'		=> 'less than',	// lang('less than')
