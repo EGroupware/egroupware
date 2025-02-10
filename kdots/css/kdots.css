@@ -520,6 +520,9 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
 }
 /*** END HEADER ***/
 /*** APPLICATION ***/
+egw-app {
+  /* Application template gets full height */
+}
 egw-app::part(name) {
   display: flex;
   align-items: center;
@@ -529,7 +532,8 @@ egw-app::part(content) {
   flex-direction: column;
   overflow-y: hidden;
 }
-egw-app > div[id] > div {
+egw-app > div[id] > div,
+egw-app > div[id] > et2-template {
   height: 100%;
 }
 /* Individual application colors, should go in each app's CSS */
