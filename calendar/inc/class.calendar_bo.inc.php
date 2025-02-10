@@ -2180,7 +2180,7 @@ class calendar_bo
 		elseif ($GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy'] == 2)
 		{
 			$credentials = $GLOBALS['egw_info']['user']['account_lid']
-				. ':' . $GLOBALS['egw_info']['user']['passwd'];
+				. ':' . $GLOBALS['egw']->session->passwd;
 			$credentials = '&cred=' . base64_encode($credentials);
 		}
 		return Api\Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']).

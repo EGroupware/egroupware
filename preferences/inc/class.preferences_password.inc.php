@@ -311,8 +311,8 @@ class preferences_password
 		}
 		$errors = array();
 
-		if (isset($GLOBALS['egw_info']['user']['passwd']) &&
-			$old_passwd !== $GLOBALS['egw_info']['user']['passwd'])
+		if (isset($GLOBALS['egw']->session->passwd) &&
+			$old_passwd !== $GLOBALS['egw']->session->passwd)
 		{
 			$errors[] = lang('The old password is not correct');
 		}

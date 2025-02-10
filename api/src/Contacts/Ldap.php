@@ -425,7 +425,7 @@ class Ldap
 			$this->ds = Api\Ldap::factory(true,
 				$this->ldap_config['ldap_contact_host'],
 				$GLOBALS['egw_info']['user']['account_dn'],
-				$GLOBALS['egw_info']['user']['passwd'],
+				$GLOBALS['egw']->session->passwd,
 				$reconnect
 			);
 		}
