@@ -499,6 +499,11 @@ class Cache
 			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			return false;	// can no longer store something in the session, eg. because commit_session() was called
 		}
+		// user password is no longer stored (unencrypted) in session, but encrypted by session-class
+		if ($app === 'phpgwapi' && $location === 'password')
+		{
+			return false;
+		}
 		$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = $data;
 
 		if ($expiration > 0)
@@ -528,6 +533,13 @@ class Cache
 			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			$ret = null;	// can no longer store something in the session, eg. because commit_session() was called
 			return $ret;
+		}
+		// user password is no longer stored (unencrypted) in session, but encrypted by session-class
+		if ($app === 'phpgwapi' && $location === 'password')
+		{
+			$passwd = isset($GLOBALS['egw']->session) && $GLOBALS['egw']->session->__isset('passwd') ?
+				base64_encode($GLOBALS['egw']->session->__get('passwd')) : null;
+			return $passwd;
 		}
 		// check if entry is expired and clean it up in that case
 		if (isset($_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]) &&

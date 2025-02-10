@@ -397,8 +397,7 @@ class Auth
 			if ($account_id == $GLOBALS['egw']->session->account_id)
 			{
 				// need to change current users password in session
-				Cache::setSession('phpgwapi', 'password', base64_encode($new_passwd));
-				$GLOBALS['egw_info']['user']['passwd'] = $new_passwd;
+				$GLOBALS['egw']->session->passwd = $new_passwd;
 				$GLOBALS['egw_info']['user']['account_lastpwd_change'] = DateTime::to('now','ts');
 				// invalidate EGroupware session, as password is stored in egw_info in session
 				Egw::invalidate_session_cache();

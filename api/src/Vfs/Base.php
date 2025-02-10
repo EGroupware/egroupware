@@ -87,7 +87,7 @@ class Base
 		{
 			$check_url = strtr($url, [
 				'$user' => $GLOBALS['egw_info']['user']['account_lid'],
-				'$pass' => urlencode($GLOBALS['egw_info']['user']['passwd']),
+				'$pass' => urlencode($GLOBALS['egw']->session->passwd),
 				'$host' => $GLOBALS['egw_info']['user']['domain'],
 				'$home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory']),
 			]);
@@ -291,12 +291,12 @@ class Base
 		// setting default user, passwd and domain, if it's not contained int the url
 		$defaults = array(
 			'user' => $GLOBALS['egw_info']['user']['account_lid'],
-			'pass' => urlencode($GLOBALS['egw_info']['user']['passwd'] ?? ''),
+			'pass' => urlencode($GLOBALS['egw']->session->passwd ?? ''),
 			'host' => $GLOBALS['egw_info']['user']['domain'],
 			'home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory'] ?? ''),
 		);
 		// check if we have a (base64 encoded) fallback-auth GET parameter and need to use it
-		if (empty($GLOBALS['egw_info']['user']['passwd']) && ($query=Vfs::parse_url($_path, PHP_URL_QUERY)) &&
+		if (empty($GLOBALS['egw']->session->passwd) && ($query=Vfs::parse_url($_path, PHP_URL_QUERY)) &&
 			strpos($query, 'fallback-auth=') !== false)
 		{
 			parse_str($query, $query_params);

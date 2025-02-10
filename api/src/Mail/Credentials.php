@@ -297,8 +297,7 @@ class Credentials
 
 		if (isset($data[self::$type2prefix[self::SSO_PASSWORD].'password']))
 		{
-			Api\Cache::setSession('phpgwapi', 'password',
-				base64_encode($GLOBALS['egw']->session->passwd = $data[self::$type2prefix[self::SSO_PASSWORD].'password']));
+			$GLOBALS['egw']->session->passwd = $data[self::$type2prefix[self::SSO_PASSWORD].'password'];
 
 			return $data[self::$type2prefix[self::SSO_PASSWORD].'password'];
 		}
@@ -391,7 +390,7 @@ class Credentials
 			default:
 				throw new Api\Exception\WrongParameter("Unknown data[acc_imap_logintype]=".array2string($data['acc_imap_logintype']).'!');
 		}
-		$password = base64_decode(Api\Cache::getSession('phpgwapi', 'password'));
+		$password = $GLOBALS['egw']->session->passwd;
 		// if session password is a token, do NOT use it, but also do NOT throw, just return NULL for the password(s)
 		if (Api\Auth\Token::isToken($password))
 		{
@@ -580,7 +579,7 @@ class Credentials
 		if (empty($key))
 		{
 			if ($use_system !== true && $account_id > 0 && $account_id == $GLOBALS['egw_info']['user']['account_id'] &&
-				($key = Api\Cache::getSession('phpgwapi', 'password')) &&
+				($key = $GLOBALS['egw']->session->passwd) &&
 				// do NOT encrypt password if (optional) SAML or OpenIdConnect auth is enabled
 				!array_filter(array_keys(Api\Config::read('phpgwapi')), static function($name)
 				{
@@ -736,7 +735,7 @@ class Credentials
 	{
 		if (self::isUser($pw_enc))
 		{
-			$session_key = Api\Cache::getSession('phpgwapi', 'password');
+			$session_key = $GLOBALS['egw']->session->passwd;
 			if (empty($session_key))
 			{
 				throw new NoSessionPassword();
@@ -868,7 +867,7 @@ class Credentials
 		if (empty($data['old_passwd'])) return;
 
 		// as self::encrypt will use password in session, check it is identical to given new password
-		if ($data['new_passwd'] !== base64_decode(Api\Cache::getSession('phpgwapi', 'password')))
+		if ($data['new_passwd'] !== $GLOBALS['egw']->session->passwd)
 		{
 			throw new Api\Exception\AssertionFailed('Password in session !== password given in $data[new_password]!');
 		}
@@ -915,7 +914,7 @@ class Credentials
 			}
 			elseif ($user)
 			{
-				$session_key = Api\Cache::getSession('phpgwapi', 'password');
+				$session_key = $GLOBALS['egw']->session->passwd;
 				if (empty($session_key))
 				{
 					error_log(__METHOD__."() no session password available!");

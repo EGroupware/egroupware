@@ -35,6 +35,8 @@ use League\OAuth2\Server\Exception\OAuthServerException;
  *	{
  *		// switch that on to analyse memory usage in the session
  *		//self::log_session_usage($_SESSION[self::EGW_APPSESSION_VAR],'_SESSION['.self::EGW_APPSESSION_VAR.']',true,5000);
+ *
+ * @var passwd user-password from session (it's stored encrypted in the session)
  */
 class Session
 {
@@ -83,11 +85,17 @@ class Session
 	var $login;
 
 	/**
-	* current user password
+	* current encrypted user password
 	*
 	* @var string
 	*/
-	var $passwd;
+	public $password_encrypted;
+	/**
+	 * @var string decrypted password, do NOT use direct, set or read $this->passwd (__sleep() method ensures it never gets serialized into session)
+	 */
+	private $_password;
+
+	public $passwd_type;
 
 	/**
 	* current user db/ldap account id
@@ -151,7 +159,7 @@ class Session
 	*
 	* @var array
 	*/
-	private $egw_domains;
+	public $egw_domains;
 
 	/**
 	 * Nummeric code why session creation failed
@@ -277,6 +285,62 @@ class Session
 			ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
 		}
 		$this->action = null;
+	}
+
+	/**
+	 * Make sure to NOT serialize unencrypted user password ($this->_password) to session
+	 *
+	 * @return string[]
+	 */
+	function __sleep()
+	{
+		unset($this->_password);    // not really necessary, as get_object_vars() only returns public attributes
+
+		return array_keys(get_object_vars($this));
+	}
+
+	/**
+	 * Magic getter: currently used to decrypt encrypted user password from session ($this->password_encrypted)
+	 * @param $name
+	 * @return mixed
+	 */
+	public function __get($name)
+	{
+		if ($name === 'passwd')
+		{
+			if (!isset($this->_password) && isset($this->password_encrypted))
+			{
+				$this->_password = Mail\Credentials::decrypt([
+					'cred_password' => $this->password_encrypted,
+					'cred_pw_enc' => Mail\Credentials::SYSTEM_AES,  // use system secret aka. DB password
+				]);
+			}
+			return $this->_password;
+		}
+	}
+
+	/**
+	 * Magic setter: currently only used to store user password encrypted in the session
+	 *
+	 * @param $name
+	 * @param $value
+	 * @return void
+	 */
+	public function __set($name, $value)
+	{
+		if ($name === 'passwd')
+		{
+			$this->password_encrypted = Mail\Credentials::encrypt($value, $this->account_id, $pw_enc, true);
+			$this->_password = $value;
+		}
+	}
+
+	public function __isset($name)
+	{
+		if ($name === 'passwd')
+		{
+			return isset($this->password_encrypted);
+		}
 	}
 
 	/**
@@ -578,8 +642,6 @@ class Session
 				return false;
 			}
 
-			Cache::setSession('phpgwapi', 'password', base64_encode($this->passwd));
-
 			// if we have a second factor, check it before forced password change
 			if ($check_2fa !== false)
 			{
@@ -758,7 +820,7 @@ class Session
 	}
 
 	/**
-	 * Check multifcator authentication
+	 * Check multifactor authentication
 	 *
 	 * @param string $code 2fa-code
 	 * @param string $token remember me token
@@ -980,6 +1042,7 @@ class Session
 			// we need to preserve the limits and if authenticated via token
 			'session_limits' => $this->limits,
 			'session_token_auth' => $this->token_auth,
+			'session_password' => $this->password_encrypted,
 		);
 	}
 
@@ -1375,11 +1438,10 @@ class Session
 			if (self::ERROR_LOG_DEBUG) error_log("*** Session::verify($sessionid) accounts is expired");
 			return false;
 		}
-		$this->passwd = base64_decode(Cache::getSession('phpgwapi', 'password'));
+		$this->password_encrypted = $session['session_password'];
 		if ($fill_egw_info_and_repositories)
 		{
 			$GLOBALS['egw_info']['user']['session_ip'] = $session['session_ip'];
-			$GLOBALS['egw_info']['user']['passwd']     = $this->passwd;
 		}
 		if ($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
@@ -2017,7 +2079,7 @@ class Session
 		{
 			$probable_domain = array_pop($parts);
 			//Last part of login string, when separated by @, is a domain name
-			if (in_array($probable_domain,$this->egw_domains))
+			if ($this->egw_domains && in_array($probable_domain, $this->egw_domains))
 			{
 				$got_login = true;
 				$domain = $probable_domain;
