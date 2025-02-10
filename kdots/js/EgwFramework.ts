@@ -590,6 +590,42 @@ export class EgwFramework extends LitElement
 		return alert;
 	}
 
+	/**
+	 * Set a notification message for topmenu info item
+	 *
+	 * @param {string} _id id of topmenu info item with its prefix
+	 * @param {string} _message message that should be displayed
+	 * @param {string} _tooltip hint text as tooltip
+	 */
+	public topmenu_info_notify(_id, _switch, _message, _tooltip)
+	{
+		var $items = jQuery('#egw_fw_topmenu_info_items').children();
+		var prefix = "topmenu_info_";
+
+		$items.each(function(i, item)
+		{
+			if(item.id == prefix + _id || item.id == _id)
+			{
+				var $notify = jQuery(item).find('.egw_fw_topmenu_info_notify');
+				if(_switch)
+				{
+					if($notify.length == 0)
+					{
+						$notify = jQuery(document.createElement('div'))
+							.addClass('egw_fw_topmenu_info_notify')
+							.prop('title', _tooltip)
+							.appendTo(item);
+					}
+					$notify.prop('title', _tooltip).text(_message);
+				}
+				else
+				{
+					$notify.remove();
+				}
+			}
+		});
+	}
+
 	protected getBaseUrl() {return "";}
 
 	protected handleDarkmodeChange(event)

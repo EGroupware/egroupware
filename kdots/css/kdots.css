@@ -286,6 +286,238 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
   height: 45px;
   display: inline-block;
 }
+/* popup copied from pixelegg */
+#egwpopup {
+  top: 46px;
+  right: 0 !important;
+  left: auto !important;
+  height: calc(100% - 69px);
+  width: 277px !important;
+  position: absolute;
+  background: #fff;
+  border: 1px solid silver;
+  border-top: none;
+  border-bottom: none;
+  padding: 1em;
+  /*Button*/
+}
+#egwpopup input#egwpopup_ok_button,
+#egwpopup button#desktop_perms {
+  padding: 0 5px;
+}
+#egwpopup #egwpopup_list::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #fafafa;
+}
+#egwpopup #egwpopup_list::-webkit-scrollbar {
+  width: 4px;
+  background-color: #fafafa;
+}
+#egwpopup #egwpopup_list::-webkit-scrollbar-thumb {
+  background-color: #6a6f71;
+}
+#egwpopup #egwpopup_list {
+  overflow-y: auto;
+  height: calc(100% - 52px);
+}
+#egwpopup #egwpopup_list .egwpopup_time_label {
+  width: 100%;
+  color: #fafafa;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.5;
+  font-size: 10pt;
+  background: #255ea5;
+  font-weight: bold;
+}
+#egwpopup #egwpopup_list span.egwpopup_delete {
+  display: inline-block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  cursor: pointer;
+}
+#egwpopup #egwpopup_list .egwpopup_mark {
+  display: inline-block;
+  float: right;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #b9436c;
+  border-radius: 50%;
+  margin: 7px;
+  background: #b9436c;
+  cursor: pointer;
+}
+#egwpopup #egwpopup_list .egwpopup_message {
+  height: auto;
+  overflow: hidden;
+  padding: 10px;
+  background-color: #fafafa;
+  margin-bottom: 5px;
+}
+#egwpopup #egwpopup_list .egwpopup_message:hover {
+  background-color: rgba(103, 159, 210, 0.2);
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container {
+  height: 63px;
+  overflow: hidden;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container a {
+  max-width: 60em;
+  display: inline-block;
+  overflow-wrap: break-word;
+  vertical-align: text-top;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar {
+  display: inline-block;
+  width: 100%;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_date {
+  float: left;
+  color: #767676;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_open {
+  display: inline-block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../node_modules/bootstrap-icons/icons/search.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  cursor: pointer;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_collapse {
+  display: none;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_actions_container {
+  text-align: center;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_actions_container > button {
+  height: 24px;
+  width: 80px;
+  border: none;
+  background: #e6e6e6;
+  background-size: 16px;
+  background-position: 12px center;
+  background-repeat: no-repeat;
+  padding-left: 26px;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_more_info {
+  color: #767676;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+#egwpopup #egwpopup_list .egwpopup_message span.egwpopup_nav_prev,
+#egwpopup #egwpopup_list .egwpopup_message span.egwpopup_nav_next {
+  display: none;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded {
+  position: fixed;
+  top: 85px;
+  height: calc(100% - 130px);
+  left: 20vw;
+  width: 60vw;
+  box-shadow: 0 0 40px #666;
+  overflow: auto;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded:hover {
+  background-color: #fafafa;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_inner_container {
+  height: calc(100% - 62px);
+  overflow: auto;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_collapse {
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  cursor: pointer;
+  display: inline-block;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_more_info {
+  display: none;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded span.egwpopup_nav_prev {
+  display: inline-block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-left.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px;
+  cursor: pointer;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_nav_disable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded span.egwpopup_nav_next {
+  display: inline-block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-right.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px;
+  cursor: pointer;
+}
+#egwpopup #egwpopup_list .egwpopup_message_seen .egwpopup_mark {
+  cursor: auto;
+  background: none;
+  border-color: #666c6e;
+}
+#egwpopup #egwpopup_list .egwpopup_message_clone {
+  border: 2px dashed silver;
+  opacity: 0.3;
+  height: 125px;
+}
+#egwpopup div#egwpopup_header {
+  font-size: 16px;
+  color: silver;
+  text-align: center;
+  padding: 15px;
+}
+#egwpopup div#egwpopup_header .egwpopup_seenall {
+  float: right;
+  width: 10px;
+  height: 10px;
+  border: 1px solid silver;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 4px 0px 0px 0px;
+}
+#egwpopup div#egwpopup_header .egwpopup_seenall:hover {
+  border-color: gray;
+  background: rgba(103, 159, 210, 0.2);
+}
+#egwpopup div#egwpopup_header .egwpopup_deleteall {
+  background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
+  width: 12px;
+  height: 12px;
+  background-position: center;
+  background-size: 12px;
+  float: right;
+  background-repeat: no-repeat;
+  margin-right: 15px;
+  margin-top: 4px;
+  cursor: pointer;
+  display: inline-block;
+  opacity: 0.5;
+}
+#egwpopup div#egwpopup_header .egwpopup_deleteall:hover {
+  opacity: 1;
+}
 /*** END HEADER ***/
 /*** APPLICATION ***/
 egw-app::part(name) {

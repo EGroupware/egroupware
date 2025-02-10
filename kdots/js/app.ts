@@ -55,10 +55,13 @@ document.addEventListener('DOMContentLoaded', () =>
 		});
 	}
 });
-
+/*
 class KDots extends fw_desktop
 {
 
 }
 
+
 window['fw_kdots'] = new KDots();
+
+ */

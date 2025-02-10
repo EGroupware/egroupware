@@ -258,6 +258,8 @@ class kdots_framework extends Api\Framework\Ajax
 	/**
 	 * Prepare notification signal (blinking bell)
 	 *
+	 * TODO: THis is copied from pixelegg, and is not accessible
+	 *
 	 *
 	 * @return string
 	 */
@@ -266,8 +268,9 @@ class kdots_framework extends Api\Framework\Ajax
 		// This should all be handled by notification app
 		$path = "../../notifications/js/Et2NotificationBell.js";
 		self::includeJS($path . '?' . filemtime(EGW_SERVER_ROOT . $path));
-		return '<et2-notification-bell loading class="topmenu_info_item"></et2-notification-bell>';
+		return '<button class="topmenu_info_item" id="topmenu_info_notifications"></button>';
 	}
+
 
 	/**
 	 * Prepare the quick add selectbox
