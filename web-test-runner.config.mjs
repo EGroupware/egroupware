@@ -60,6 +60,17 @@ export default {
 		),
 
 	plugins: [
+		{
+			// Mock resumable for test, needed due to our weird build environment
+			name: "mock-resumable",
+			resolveImport({source})
+			{
+				if (source === "../../Resumable/resumable")
+				{
+					return "./test/ResumableStub.js";
+				}
+			}
+		},
 		// Handles typescript
 		esbuildPlugin({ts: true})
 	],

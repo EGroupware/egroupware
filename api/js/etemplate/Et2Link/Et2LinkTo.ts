@@ -23,6 +23,7 @@ import {waitForEvent} from "../Et2Widget/event";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2VfsSelectDialog} from "../Et2Vfs/Et2VfsSelectDialog";
 import {Et2File} from "../Et2File/Et2File";
+import type {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
@@ -158,6 +159,8 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                       ?disabled=${this.disabled}
                       ?readonly=${this.readonly}
                       title=${this.egw().lang("File upload")}
+                      dropTarget="popupMainDiv"
+                      @et2-add=${(e) => {(<Et2Tabs>this.closest("et2-tabbox")).activateTab(this);}}
                       @change=${(e) => {this.handleFilesUploaded(e)}}
             ></et2-file>
             <et2-vfs-select

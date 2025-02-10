@@ -4,15 +4,15 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
+import {repeat} from "lit/directives/repeat.js";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2File.styles";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2FileItem} from "./Et2FileItem";
-import {Resumable} from "../../Resumable/resumable";
-import {repeat} from "lit/directives/repeat.js";
+import Resumable from "../../Resumable/resumable";
 
 // ResumableFile not defined in a way we can use it
-export interface FileInfo //extends ResumableFile
+export interface FileInfo extends ResumableFile
 {
 	loading? : boolean;
 	accepted? : boolean;
@@ -73,6 +73,9 @@ export class Et2File extends Et2InputWidget(LitElement)
 	/** Target element to show file list in instead */
 	@property({type: String}) fileListTarget : string;
 
+	/** Component to listen for file drops */
+	@property({type: String}) dropTarget : string;
+
 	@property({type: String}) display : "large" | "small" | "list" = "large";
 
 	/** Show the files inline instead of over the rest of the page */
@@ -91,7 +94,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	@state() files : FileInfo[] = [];
 
-	protected resumable = null;
+	protected resumable : Resumable = null;
 
 	get fileInput() : HTMLInputElement { return this.shadowRoot?.querySelector("#file-input");}
 
@@ -124,6 +127,10 @@ export class Et2File extends Et2InputWidget(LitElement)
 	{
 		const resumable = new Resumable(this.resumableOptions);
 		resumable.assignBrowse(this.fileInput);
+		if(this.dropTarget)
+		{
+			resumable.assignDrop(this.getRoot().getWidgetById(this.dropTarget) || this.egw().window.document.getElementById(this.dropTarget))
+		}
 		resumable.on('fileAdded', this.resumableFileAdded.bind(this));
 		resumable.on('fileProgress', this.resumableFileProgress.bind(this));
 		resumable.on('fileSuccess', this.resumableFileSuccess.bind(this));
@@ -138,7 +145,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		const options = {
 			target: this.egw().ajaxUrl(this.uploadTarget),
 			query: {
-				request_id: this.getInstanceManager().etemplate_exec_id,
+				request_id: this.getInstanceManager()?.etemplate_exec_id,
 				widget_id: this.id,
 			},
 			chunkSize: 1024 * 1024,
@@ -207,6 +214,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 		// Actually start uploading
 		await fileItem.updateComplete;
+		this.dispatchEvent(new CustomEvent("et2-add", {bubbles: true, detail: file}));
 		setTimeout(this.resumable.upload, 100);
 	}
 
@@ -236,6 +244,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 		else
 		{
+			this.dispatchEvent(new CustomEvent("et2-load", {bubbles: true, detail: file}));
 			Object.keys(response).forEach((tempName) =>
 			{
 				fileItem.variant = "success";
@@ -243,7 +252,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 				// Add file into value
 				this.value[tempName] = {
 					file: file.file,
-					src: fileItem.shadowRoot.querySelector("slot[name='image']  ").assignedElements()[0]?.src ?? "",
+					src: (<HTMLSlotElement>fileItem.shadowRoot.querySelector("slot[name='image']")).assignedElements()[0]?.src ?? "",
 					...response[tempName]
 				}
 				// Remove file from file input & resumable
@@ -281,6 +290,11 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	addFile(file : File)
 	{
+		if(typeof file !== "object" || !file.name || !file.type || !file.size)
+		{
+			console.warn("Invalid file", file);
+			return;
+		}
 		if(this.maxFiles && this.files.length >= this.maxFiles)
 		{
 			// TODO : Warn too many files
@@ -288,24 +302,24 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 
 		const fileInfo : FileInfo = {
-			file,
+			abort: () => false,
+			uniqueIdentifier: file.name,
+			file: file,
+			progress: () => 0
 		};
-		/*
-		TODO
-				if(!hasValidFileType(file, this.mime))
-				{
-					fileInfo.accepted = false;
-					fileInfo.warning = this.egw().lang("File is of wrong type (%1 != %2)!", file.type, this.mime)
-				}
-				else if(!hasValidFileSize(file, this.maxFileSize))
-				{
-					fileInfo.accepted = false;
-					// TODO: Stop using et2_vfsSize
-					fileInfo.warning = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.maxFileSize));
-				}
-				else
+		if(!checkMime(file, this.accept))
+		{
+			fileInfo.accepted = false;
+			fileInfo.warning = this.egw().lang("File is of wrong type (%1 != %2)!", file.type, this.accept)
+		}
+		else if(!hasValidFileSize(file, this.maxFileSize))
+		{
+			fileInfo.accepted = false;
+			// TODO: Stop using et2_vfsSize
+			//fileInfo.warning = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.maxFileSize));
+		}
 
-		 */
+		else
 		{
 			fileInfo.accepted = true;
 		}
@@ -346,7 +360,13 @@ export class Et2File extends Et2InputWidget(LitElement)
 			return;
 		}
 
-		Object.values(fileList).forEach(file => this.addFile(file));
+		Object.values(fileList).forEach(file =>
+		{
+			if(typeof file === "object" && file.name && file.type && file.size)
+			{
+				this.addFile(file)
+			}
+		});
 
 		this.dispatchEvent(new CustomEvent("change", {bubbles: true, detail: this.files}));
 	}
@@ -522,4 +542,51 @@ export class Et2File extends Et2InputWidget(LitElement)
                 ${this._helpTextTemplate()}
             </div>`;
 	}
+}
+
+/**
+ * Check to see if the provided file's mimetype matches
+ *
+ * @param f File object
+ * @return boolean
+ */
+export function checkMime(f : File, accept = "")
+{
+	if(!accept || accept == "*")
+	{
+		return true;
+	}
+
+	let mime : string | RegExp = '';
+	if(accept.indexOf("/") != 0)
+	{
+		// Lower case it now, if it's not a regex
+		mime = accept.toLowerCase();
+	}
+	else
+	{
+		// Convert into a js regex
+		var parts = accept.substr(1).match(/(.*)\/([igm]?)$/);
+		mime = new RegExp(parts[1], parts.length > 2 ? parts[2] : "");
+	}
+
+	// If missing, let the server handle it
+	if(!mime || !f.type)
+	{
+		return true;
+	}
+
+	var is_preg = (typeof mime == "object");
+	if(!is_preg && f.type.toLowerCase() == mime || is_preg && mime.test(f.type))
+	{
+		return true;
+	}
+
+	// Not right mime
+	return false;
+}
+
+export function hasValidFileSize(file, maxFileSize)
+{
+	return !maxFileSize || file.size <= maxFileSize;
 }
