@@ -648,7 +648,9 @@ class preferences_settings
 				$sel_options['appname'][$app] = [
 					'value' => $app,
 					'label' => $GLOBALS['egw_info']['apps'][$app]['title'],
-					'icon' => Image::find($app, 'navbar')
+					'icon' => empty($GLOBALS['egw_info']['apps'][$app]['icon']) ? Image::find($app, 'navbar') :
+						(Image::find($GLOBALS['egw_info']['apps'][$app]['icon_app'] ?? 'api', $GLOBALS['egw_info']['apps'][$app]['icon'])
+							?: Image::find($app, 'navbar')),
 				];
 			}
 		}
