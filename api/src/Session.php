@@ -1184,6 +1184,11 @@ class Session
 	);
 
 	/**
+	 * Maximum lifetime of our pseudo session IDs
+	 */
+	const PSEUDO_SESSION_LIFETIME = 4 * 3600;
+
+	/**
 	 * Get the sessionid from Cookie, Get-Parameter or basic auth
 	 *
 	 * @param boolean $only_basic_auth =false return only a basic auth pseudo sessionid, default no
@@ -1197,24 +1202,30 @@ class Session
 			(in_array(basename($_SERVER['SCRIPT_NAME']), self::$pseudo_session_scripts) ||
 				$_SERVER['SCRIPT_NAME'] === '/Microsoft-Server-ActiveSync'))
 		{
-			// we generate a pseudo-sessionid from the basic auth credentials
-			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.
+			// we generate a random sessionid stored under the sha1 hash from the basic auth credentials
+			$sessionid = Cache::getInstance(__CLASS__, sha1($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.
 				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/api/setup/setup.inc.php').
 				// for ActiveSync we add the DeviceID
 				(isset($_GET['DeviceId']) && $_SERVER['SCRIPT_NAME'] === '/Microsoft-Server-ActiveSync' ? ':'.$_GET['DeviceId'] : '').
-				':'.$_SERVER['HTTP_USER_AGENT']);
+				':'.$_SERVER['HTTP_USER_AGENT']), static function()
+			{
+				return session_create_id();
+			}, [], self::PSEUDO_SESSION_LIFETIME);
 			//error_log(__METHOD__."($only_basic_auth) HTTP_HOST=$_SERVER[HTTP_HOST], PHP_AUTH_USER=$_SERVER[PHP_AUTH_USER], DeviceId=$_GET[DeviceId]: sessionid=$sessionid");
 		}
 		// same for digest auth
 		elseif (isset($_SERVER['PHP_AUTH_DIGEST']) &&
 			in_array(basename($_SERVER['SCRIPT_NAME']), self::$pseudo_session_scripts))
 		{
-			// we generate a pseudo-sessionid from the digest username, realm and nounce
 			// can't use full $_SERVER['PHP_AUTH_DIGEST'], as it changes (contains eg. the url)
 			$data = Header\Authenticate::parse_digest($_SERVER['PHP_AUTH_DIGEST']);
-			$sessionid = md5($data['username'].':'.$data['realm'].':'.$data['nonce'].':'.$_SERVER['HTTP_HOST'].
+			// we generate a random sessionid stored under the sha1 hash from the basic auth credentials
+			$sessionid = Cache::getInstance(__CLASS__, sha1($data['username'].':'.$data['realm'].':'.$data['nonce'].':'.$_SERVER['HTTP_HOST'].
 				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/api/setup/setup.inc.php').
-				':'.$_SERVER['HTTP_USER_AGENT']);
+				':'.$_SERVER['HTTP_USER_AGENT']), static function()
+			{
+				return session_create_id();
+			}, [], self::PSEUDO_SESSION_LIFETIME);
 		}
 		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
 		{
