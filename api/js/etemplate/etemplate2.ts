@@ -385,7 +385,7 @@ export class etemplate2
 		}
 	}
 
-	get widgetContainer() : et2_container
+	get widgetContainer() : Et2Template
 	{
 		return this._widgetContainer;
 	}
