@@ -390,9 +390,9 @@ class Credentials
 			default:
 				throw new Api\Exception\WrongParameter("Unknown data[acc_imap_logintype]=".array2string($data['acc_imap_logintype']).'!');
 		}
-		$password = $GLOBALS['egw']->session->passwd;
+		$password = $GLOBALS['egw']->session->passwd ?? null;
 		// if session password is a token, do NOT use it, but also do NOT throw, just return NULL for the password(s)
-		if (Api\Auth\Token::isToken($password))
+		if ($password && Api\Auth\Token::isToken($password))
 		{
 			$password = null;
 		}
@@ -587,7 +587,6 @@ class Credentials
 				}))
 			{
 				$pw_enc = self::USER_AES;
-				$key = base64_decode($key);
 			}
 			else
 			{
@@ -735,12 +734,11 @@ class Credentials
 	{
 		if (self::isUser($pw_enc))
 		{
-			$session_key = $GLOBALS['egw']->session->passwd;
-			if (empty($session_key))
+			$key = $GLOBALS['egw']->session->passwd;
+			if (empty($key))
 			{
 				throw new NoSessionPassword();
 			}
-			$key = base64_decode($session_key);
 		}
 		else
 		{
