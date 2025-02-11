@@ -111,6 +111,16 @@ class preferences_password
 							break;
 
 						case 'two_factor_auth':
+							if (isset($content['2fa']['action']) && empty($content['2fa']['code']))
+							{
+								$tmpl->set_validation_error('code', lang('Code is required'), '2fa');
+								break;
+							}
+							if (!$google2fa->verifyKey($secret_key, $content['2fa']['code']))
+							{
+								$tmpl->set_validation_error('code', lang('Code is invalid'), '2fa');
+								break;
+							}
 							switch(key($content['2fa']['action'] ?? []))
 							{
 								case 'show':
@@ -132,11 +142,6 @@ class preferences_password
 									}
 									break;
 								default:	// no action, save secret
-									if (!$google2fa->verifyKey($secret_key, $content['2fa']['code']))
-									{
-										$tmpl->set_validation_error('code', lang('Code is invalid'), '2fa');
-										break 2;
-									}
 									if (($content['2fa']['cred_id'] = Credentials::write(0,
 										$GLOBALS['egw_info']['user']['account_lid'],
 										$secret_key, Credentials::TWOFA,

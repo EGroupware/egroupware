@@ -23,6 +23,7 @@ charset for the csv export/import	preferences	de	Zeichensatz
 click to install	preferences	de	Klicken zum Installieren
 close after selection	preferences	de	Nach Auswahl schließen
 code is invalid	preferences	de	Der Code ist ungültig
+code is required	preferences	de	Der Code wird benötigt
 color	preferences	de	Farbe
 country	preferences	de	Land
 current password	preferences	de	Aktuelles Passwort
@@ -61,6 +62,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menue Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist, wird diese Option ignoriert. Diese Option ist im Moment noch experimentell.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menu Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist,wird diese Option ignoriert.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	de	Eine verschlüsselte LDAP Verbindung ist erforderlich um Passwörter zu ändern, aber in Ihre Installation nicht konfiguriert.
+enter code to authenticate the actions below	preferences	de	Geben Sie den Code zur Authentifizierung der folgenden Aktionen ein
 enter code to verify correct setup	preferences	de	Bitte geben sie den Code ein um die Einrichtung zu überprüfen
 enter your new password	preferences	de	Neues Passwort eingeben
 enter your old password	preferences	de	Altes Passwort eingeben

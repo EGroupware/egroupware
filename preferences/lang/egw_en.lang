@@ -23,6 +23,7 @@ charset for the csv export/import	preferences	en	Character set
 click to install	preferences	en	click to install
 close after selection	preferences	en	Close after selection
 code is invalid	preferences	en	Code is invalid
+code is required	preferences	en	Code is required
 color	preferences	en	Colour
 country	preferences	en	Country
 current password	preferences	en	Current password
@@ -61,6 +62,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE, the option will not apply. This feature is experimental at the moment.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	en	Encrypted LDAP connection is required to change passwords, but it is not configured in your installation.
+enter code to authenticate the actions below	preferences	en	Enter code to authenticate the actions below
 enter code to verify correct setup	preferences	en	Enter code to verify correct setup
 enter your new password	preferences	en	Enter new password
 enter your old password	preferences	en	Enter old password
