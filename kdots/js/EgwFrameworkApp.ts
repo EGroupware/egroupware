@@ -425,8 +425,20 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return;
 		}
-		// Move top level slotted components (slot watcher will requestUpdate)
-		etemplate.widgetContainer.getDOMNode().querySelectorAll(":scope > [slot]").forEach(node => {this.appendChild(node);});
+
+		// Move templates with slots
+		const slottedTemplates = etemplate.DOMContainer.querySelectorAll(":scope > [slot]");
+		slottedTemplates.forEach(node => {this.appendChild(node);});
+
+		// Move top level slotted components
+		const slottedWidgets = etemplate.widgetContainer.querySelectorAll(":scope > [slot]")
+		slottedWidgets.forEach(node => {this.appendChild(node);});
+
+		// Request update, since slotchanged events are only fired when the attribute changes and they're already set
+		if(slottedTemplates.length > 0 || slottedWidgets.length > 0)
+		{
+			this.requestUpdate();
+		}
 	}
 
 	/**
