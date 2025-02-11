@@ -761,6 +761,7 @@ export class et2_nextmatch_rowWidget extends et2_widget implements et2_IDOMNode
 
 			this._widgets[i] = _widgets[i].clone(this);
 			this._widgets[i].loadingFinished();
+			this._widgets[i]._parent = this;
 			// Set column alignment from widget
 			if(this._widgets[i].align && this._row.childNodes[row_id])
 			{

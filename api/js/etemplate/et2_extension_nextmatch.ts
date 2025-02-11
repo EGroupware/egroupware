@@ -2526,9 +2526,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// Free the template and remove it
 			setTimeout(function()
 			{
+				this.removeChild(template);
 				template.destroy();
 				template.remove();
-			}, 1);
+			}.bind(this), 1);
 
 			// Call the "setNextmatch" function of all registered
 			// INextmatchHeader widgets.  This updates this.activeFilters.col_filters according
