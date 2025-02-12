@@ -1419,20 +1419,18 @@ export class filemanagerAPP extends EgwApp
 		console.log("_data", _data);
 		let app = this;
 
-		let copy_link_to_clipboard = function (evt)
-		{
-			let $target = jQuery(evt.target);
-			$target.select();
+		let copy_link_to_clipboard = function (evt): Promise<boolean> {
+			const target = evt.currentTarget;
+			target.select();
+			target.setSelectionRange(0, 99999) //For mobile devices
 			try
 			{
-				let successful = document.execCommand('copy');
-				if(successful)
-				{
+				return navigator.clipboard.writeText(target.value).then(() => {
 					egw.message(app.egw.lang('Share link copied into clipboard'));
 					return true;
-				}
-			}
-			catch(e)
+				})
+
+			} catch (e)
 			{
 			}
 			egw.message('Failed to copy the link!');
