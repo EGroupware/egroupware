@@ -17,6 +17,7 @@ import shoelace from "../Styles/shoelace";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import "../../../../vendor/bower-asset/cropper/dist/cropper.min.js";
 import {cropperStyles} from "./cropperStyles";
+import type {Et2Button} from "../Et2Button/Et2Button";
 
 export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 {
@@ -250,9 +251,11 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 		this._editBtn = document.createElement('et2-button-icon');
 		this._editBtn.setAttribute('image', 'pencil');
 		this._editBtn.setAttribute('part', 'edit');
-		this._delBtn = document.createElement('et2-button-icon');
+		this._editBtn.noSubmit = true;
+		this._delBtn = <Et2Button>document.createElement('et2-button-icon');
 		this._delBtn.setAttribute('image', 'delete');
 		this._delBtn.setAttribute('part', 'edit');
+		this._delBtn.noSubmit = true;
 		this._baseNode.append(this._editBtn);
 		this._baseNode.append(this._delBtn);
 
@@ -297,6 +300,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			title: _title || egw.lang('Input required'),
 			buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
+				etemplate_exec_id: this.getInstanceManager().etemplate_exec_id,
 				content: _value
 			},
 			width: "90%",
@@ -393,14 +397,16 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 	}
 
 	/**
-	 * Function runs after uplaod in avatar dialog is finished and it tries to
+	 * Function runs after upload in avatar dialog is finished and it tries to
 	 * update image and cropper container.
 	 * @param {type} e
 	 */
 	static uploadAvatar_onFinish(e)
 	{
-		let file = e.data.resumable.files[0].file;
+		const file = e.detail.file;
 		let reader = new FileReader();
+		const fileWidget = e.target;
+		fileWidget.loading = true;
 		reader.onload = function (e)
 		{
 			let widget = document.getElementById('_cropper_image');
@@ -409,8 +415,10 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			widget.getUpdateComplete().then(() =>
 			{
 				jQuery(widget._imageNode).cropper('replace',e.target.result)
+				fileWidget.loading = false;
+				fileWidget.requestUpdate("loading", true);
 			});
-
+			fileWidget.value = {};
 		};
 		reader.readAsDataURL(file);
 	}

@@ -482,15 +482,15 @@ export class filemanagerAPP extends EgwApp
 		{
 			_path = this.get_path();
 		}
-		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
+		if(_file_count && _event.detail)
 		{
-			let widget = _event.data;
+			let widget = _event.target;
 			let value = widget.getValue();
 			value.conflict = _conflict;
 			egw.json(_target, ['upload', value, _path, {ui_path: this.egw.window.location.pathname}],
 				this._upload_callback, this, true, this
 			).sendRequest();
-			widget.set_value('');
+			widget.value = {};
 		}
 	}
 

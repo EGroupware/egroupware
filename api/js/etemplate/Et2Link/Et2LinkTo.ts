@@ -356,6 +356,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 
 		// Clear file upload
 		this.fileUpload.value = {};
+		this.fileUpload.requestUpdate("value");
 
 		// Clear link entry
 		this.select.value = {app: this.select.app, id: ""};

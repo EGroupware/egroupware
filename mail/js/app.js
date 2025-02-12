@@ -5644,8 +5644,6 @@ app.classes.mail = AppJS.extend(
 			switch(widget.id)
 			{
 				case 'uploadForCompose':
-					document.getElementById('mail-compose_uploadForCompose').click();
-					break;
 				case 'selectFromVFSForCompose':
 					widget.show();
 					break;

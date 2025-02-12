@@ -1724,6 +1724,7 @@ class AdminApp extends EgwApp
 			function(_data){
 				taglist.set_value(_data);
 		}).sendRequest();
+		widget.value = {};
 	}
 
 	/**
