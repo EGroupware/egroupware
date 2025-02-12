@@ -1050,7 +1050,8 @@ class filemanager_ui
 		foreach(Vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],$vfs_options,true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);
-
+            // add a title to display as tooltip containing name and comment
+            $row['title'] = lang("name").": ".$row['name'];
 			$dir = dirname($path);
 			if (!isset($dir_is_writable[$dir]))
 			{
@@ -1131,6 +1132,8 @@ class filemanager_ui
 				{
 					if (!$all_cfs && $prop['name'][0] == '#' && !in_array($prop['name'],$cols_to_show)) continue;
 					$row[$prop['name']] = strlen($prop['val']) < 64 ? $prop['val'] : substr($prop['val'],0,64).' ...';
+                    //Update the title attribute to include the comment
+                    $row['title'] .= "\n\n".lang("comment").": ".$row['comment'];
 				}
 			}
 		}
