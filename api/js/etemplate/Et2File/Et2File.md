@@ -1,55 +1,54 @@
 ```html:preview
-<et2-file></et2-file>
+
+<et2-file 
+    multiple
+    image="cloud-upload" 
+    label="Select files to upload" 
+    helpText="Please check your files are complete before uploading"
+></et2-file>
 ```
 
 File allows the user to upload files to EGroupware. The uploaded files are processed on the server when the form is
-submitted.
+submitted. As files are selected, they will be shown in a list with [FileItem](../et2-file-item)
 
 ## Examples
 
-### Closable
+### Icon
 
-Add the `closable` attribute to show a close button that will hide the file.
+Use `image` to specify the icon
 
 ```html:preview
-<et2-file-item image="file-arrow-up" closable>uploaded_file.ext</et2-file-item>
+<et2-file image="cloud-upload" ></et2-file>
 ```
 
-### File size
+### Limit files allowed
 
-Set the `size` attribute in bytes to display the file's size.
+Use the `multiple`, `allow`, `maxFiles` and `maxFileSize` attributes to place restrictions on the files to be uploaded.
 
 ```html:preview
-<et2-file-item image="file-arrow-up" size="123455678" >uploaded_file.ext</et2-file-item>
+<et2-file image="image" allow="image/*" label="Choose an image"></et2-file>
+<et2-file image="images" allow="image/*" multiple label="Choose images"></et2-file>
+<et2-file maxFiles="3" label="Max. 3 files"></et2-file>
+<et2-file maxFileSize="10000" label="Small files only"></et2-file>
 ```
 
-### Loading & Progress
+### Inline
 
-Set the `loading` attribute to indicate action on the file. Set `progress` to show progress.
+Normally the selected files are listed in a dropdown to avoid changing the flow of the rest of the page. Set `inline` to
+not do that
 
 ```html:preview
-<et2-file-item image="file-arrow-up" loading>uploaded_file.ext</et2-file-item>
-<et2-file-item image="file-arrow-up" loading progress="35">uploaded_file.ext</et2-file-item>
+<et2-file label="Choose an image" inline></et2-file>
 ```
 
-### Variants
+### Display
 
-Use the `variant` attribute to set the file item's variant.
-
+Use the `display` attribute for different ways of showing results
 ```html:preview
-<et2-file-item image="file-arrow-up" variant="default">Default</et2-file-item>
-<et2-file-item image="file-arrow-up" variant="primary">Primary</et2-file-item>
-<et2-file-item image="file-arrow-up" variant="success">Success</et2-file-item>
-<et2-file-item image="file-arrow-up" variant="neutral">Neutral</et2-file-item>
-<et2-file-item image="file-arrow-up" variant="warning">Warning</et2-file-item>
-<et2-file-item image="file-arrow-up" variant="danger">Danger</et2-file-item>
+<et2-file display="small" label="Small">
+<et2-file-item slot="list" size="654321000" display="small" closable>Small file</et2-file-item>
+</et2-file>
+<et2-file display="list" label="List">
+<et2-file-item slot="list" size="1234567" display="list" closable>File(s) shown as list</et2-file-item>
+</et2-file>
 ```
-
-### Warnings and errors
-
-`variant` combined with an appropriate image can be used to show a status message.
-
-```html:preview
-<et2-file-item image="file-earmark-check" variant="success">File uploaded successfully</et2-file-item>
-<et2-file-item image="exclamation-triangle" variant="warning">Upload interrupted.  Please try again later.</et2-file-item>
-<et2-file-item image="exclamation-octagon" variant="danger">Wrong filetype</et2-file-item>

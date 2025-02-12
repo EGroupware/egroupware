@@ -1,4 +1,4 @@
-import {html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing, PropertyValueMap, render} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
@@ -32,9 +32,14 @@ export interface FileInfo extends ResumableFile
  * @dependency sl-progress-bar
  * @dependency sl-icon
  *
- * @slot - File name
- * @slot image - The file's image (mimetype icon, status icon, etc)
- * @slot close-button - Close button
+ * @slot image - The component's image
+ * @slot label - Button label
+ * @slot prefix	- Used to prepend a presentational icon or similar element before the button.
+ * @slot suffix - Used to append a presentational icon or similar element after the button.
+ * @slot help-text - Text that describes how to use the input. Alternatively, you can use the help-text attribute.
+ * @slot button - A button to use in lieu of the default button
+ * @slot list - Selected files are listed here.  Place something in this slot to override the normal file list.
+ *
  * @event load - Emitted when file is loaded
  *
  * @csspart base - Component internal wrapper
@@ -70,7 +75,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	/** If true, no file list will be shown */
 	@property({type: Boolean, reflect: true, attribute: "no-file-list"}) noFileList = false;
 
-	/** Target element to show file list in instead */
+	/** Target element to show file list in instead of the default dropdown*/
 	@property({type: String}) fileListTarget : string;
 
 	/** Component to listen for file drops */
@@ -78,7 +83,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	@property({type: String}) display : "large" | "small" | "list" = "large";
 
-	/** Show the files inline instead of over the rest of the page */
+	/** Show the files inline instead of floating over the rest of the page.  This can cause the page to reflow */
 	@property({type: Boolean}) inline = false;
 
 	/** The button's image */
@@ -122,7 +127,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	get list() : HTMLElement
 	{
 		return this.fileListTarget ?
-			   this.egw().window.document.querySelector(this.fileListTarget) ?? this.getRoot()?.getWidgetById(this.fileListTarget) :
+			   this.egw().window.document.querySelector(this.fileListTarget) ?? this.getRoot()?.getWidgetById(this.fileListTarget)?.getDOMNode() :
 			   this.shadowRoot?.querySelector("slot[name='list']");
 	}
 
@@ -142,6 +147,14 @@ export class Et2File extends Et2InputWidget(LitElement)
 	firstUpdated()
 	{
 		this.resumable = this.createResumable();
+	}
+
+	updated(changedProperties : PropertyValueMap<any>)
+	{
+		if(this.fileListTarget && this.list)
+		{
+			render(this.fileListTemplate(), this.list);
+		}
 	}
 
 	protected createResumable()
@@ -335,9 +348,22 @@ export class Et2File extends Et2InputWidget(LitElement)
 			this.dispatchEvent(ev);
 			if(typeof this.onFinish == "function")
 			{
-				this.onFinish(ev);
+				const fileWidget = this;
+				Object.defineProperty(ev, 'data', {
+					get: function()
+					{
+						console.warn("event.data is deprecated, use event.detail");
+						return fileWidget;
+					}
+				});
+				this.onFinish(ev, Object.values(this.value).length);
 			}
 		})
+	}
+
+	public show()
+	{
+		return this.handleBrowseFileClick();
 	}
 
 	addFile(file : File)
@@ -475,6 +501,13 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 	}
 
+	fileListTemplate()
+	{
+		return html`
+            ${repeat(this.files, (file) => file.uniqueIdentifier, (item, index) => this.fileItemTemplate(item, index))}`;
+
+	}
+
 	fileItemTemplate(fileInfo : FileInfo, index)
 	{
 		let icon = fileInfo.icon ?? (fileInfo.warning ? "exclamation-triangle" : undefined);
@@ -529,8 +562,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	render()
 	{
-		const filesList = html`
-            ${repeat(this.files, (file) => file.uniqueIdentifier, (item, index) => this.fileItemTemplate(item, index))}`;
+		const filesList = this.fileListTemplate();
 
 		return html`
             <div
@@ -550,6 +582,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                             this.handleBrowseFileClick();
                         }}"
                 >
+                    <slot name="prefix"></slot>
                     <slot name="button">
                         <et2-button part="button"
                                     class="file__button"
@@ -563,12 +596,13 @@ export class Et2File extends Et2InputWidget(LitElement)
                             ${this._labelTemplate()}
                         </et2-button>
                     </slot>
+                    <slot name="suffix"></slot>
                 </div>
                 <input type="file"
                        id="file-input"
                        style="display: none;"
                        accept=${ifDefined(this.accept)}
-                       ?multiple=${this.multiple}
+                       ?multiple=${this.multiple || this.maxFiles > 1}
                        @change=${this.handleFileInputChange}
                        value=${Array.isArray(this.value)
                                ? this.value.map((f : File | string) => (f instanceof File ? f.name : f)).join(",")
