@@ -1133,7 +1133,9 @@ class filemanager_ui
 					if (!$all_cfs && $prop['name'][0] == '#' && !in_array($prop['name'],$cols_to_show)) continue;
 					$row[$prop['name']] = strlen($prop['val']) < 64 ? $prop['val'] : substr($prop['val'],0,64).' ...';
                     //Update the title attribute to include the comment
-                    $row['title'] .= "\n\n".lang("comment").": ".$row['comment'];
+                    if ($row['comment'] && $row['comment'] != '') {
+                        $row['title'] .= "\n\n" . lang("comment") . ": " . $row['comment'];
+                    }
 				}
 			}
 		}
