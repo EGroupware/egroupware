@@ -2446,7 +2446,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Some apps send header data in 'rows', which is the wrong namespace.  Passing it into the header can trigger
 		// autorepeat in some cases, so pass just the non-numeric keys into header namespace.  Some headers also use content
 		// in the parent nm namespace, just to complicate things.
-		let rows = this.getArrayMgr("content").getEntry("rows");
+		let rows = this.getArrayMgr("content").getEntry("rows")||{};
 		Object.keys(rows).forEach(k =>
 		{
 			if(isNaN(k))
