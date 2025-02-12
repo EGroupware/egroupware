@@ -762,22 +762,22 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				.then(() =>
 				{
 					this._templateResolver(true);
+
+					// Don't let dialog closing destroy the parent session
+					if(this._template_widget.etemplate_exec_id && this._template_widget.app)
+					{
+						for(let et of etemplate2.getByApplication(this._template_widget.app))
+						{
+							if(et !== this._template_widget && et.etemplate_exec_id === this._template_widget.etemplate_exec_id)
+							{
+								// Found another template using that exec_id, don't destroy when dialog closes.
+								this._template_widget.unbind_unload();
+								break;
+							}
+						}
+					}
 				});
 
-
-		// Don't let dialog closing destroy the parent session
-		if(this._template_widget.etemplate_exec_id && this._template_widget.app)
-		{
-			for(let et of etemplate2.getByApplication(this._template_widget.app))
-			{
-				if(et !== this._template_widget && et.etemplate_exec_id === this._template_widget.etemplate_exec_id)
-				{
-					// Found another template using that exec_id, don't destroy when dialog closes.
-					this._template_widget.unbind_unload();
-					break;
-				}
-			}
-		}
 		// set template-name as id, to allow to style dialogs
 		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)?$/, '$2').replace(/\./g, '-'));
 
