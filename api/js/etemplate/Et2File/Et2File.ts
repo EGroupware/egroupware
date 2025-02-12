@@ -90,7 +90,28 @@ export class Et2File extends Et2InputWidget(LitElement)
 	@property({type: Object}) uploadOptions : {};
 
 	/** Files already uploaded */
-	@property({type: Array}) value : { [tempName : string] : FileInfo[] } = {};
+	@property({
+		type: Object, converter: (value, type) =>
+		{
+			if(value == '' || !value)
+			{
+				return {};
+			}
+			if(typeof value == "string")
+			{
+				return JSON.parse(value);
+			}
+			else
+			{
+				return value;
+			}
+		}
+	})
+	value : { [tempName : string] : FileInfo[] } = {};
+
+	@property({type: Function}) onStart : Function;
+	@property({type: Function}) onFinishOne : Function;
+	@property({type: Function}) onFinish : Function;
 
 	@state() files : FileInfo[] = [];
 
@@ -129,11 +150,15 @@ export class Et2File extends Et2InputWidget(LitElement)
 		resumable.assignBrowse(this.fileInput);
 		if(this.dropTarget)
 		{
-			resumable.assignDrop(this.getRoot().getWidgetById(this.dropTarget) || this.egw().window.document.getElementById(this.dropTarget))
+			const target = this.getRoot().getWidgetById(this.dropTarget) ?? this.egw().window.document.getElementById(this.dropTarget);
+			if(target)
+			{
+				resumable.assignDrop([target])
+			}
 		}
 		resumable.on('fileAdded', this.resumableFileAdded.bind(this));
 		resumable.on('fileProgress', this.resumableFileProgress.bind(this));
-		resumable.on('fileSuccess', this.resumableFileSuccess.bind(this));
+		resumable.on('fileSuccess', this.resumableFileComplete.bind(this));
 		resumable.on('fileError', this.resumableFileError.bind(this));
 		resumable.on('complete', this.resumableUploadComplete.bind(this));
 
@@ -214,8 +239,14 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 		// Actually start uploading
 		await fileItem.updateComplete;
-		this.dispatchEvent(new CustomEvent("et2-add", {bubbles: true, detail: file}));
+		const ev = new CustomEvent("et2-add", {bubbles: true, detail: file})
+		this.dispatchEvent(event);
 		setTimeout(this.resumable.upload, 100);
+
+		if(typeof this.onStart == "function")
+		{
+			this.onStart(ev);
+		}
 	}
 
 	private resumableFileProgress(file : FileInfo, event)
@@ -228,23 +259,25 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 	}
 
-	private resumableFileSuccess(file : FileInfo, jsonResponse)
+	private resumableFileComplete(file : FileInfo, jsonResponse)
 	{
-		const response = (JSON.parse(jsonResponse)['response'] ?? {}).find(i => i.type == "data")['data'] ?? {};
+		const response = ((JSON.parse(jsonResponse)['response'] ?? {}).find(i => i['type'] == "data") ?? {})['data'] ?? {};
 		const fileItem = this.findFileItem(file);
 		file.loading = false;
 		fileItem.progress = 100;
 		fileItem.loading = false;
 
-		if(!response || response.length == 0)
+		if(!response || response.length || Object.entries(response).length == 0)
 		{
+			console.warn("Problem uploading", jsonResponse);
 			file.warning = "No response";
 			fileItem.variant = "warning";
 			fileItem.innerHTML += "<br />" + file.warning;
 		}
 		else
 		{
-			this.dispatchEvent(new CustomEvent("et2-load", {bubbles: true, detail: file}));
+			const ev = new CustomEvent("et2-load", {bubbles: true, detail: file});
+			this.dispatchEvent(ev);
 			Object.keys(response).forEach((tempName) =>
 			{
 				fileItem.variant = "success";
@@ -258,8 +291,11 @@ export class Et2File extends Et2InputWidget(LitElement)
 				// Remove file from file input & resumable
 				this.resumable.removeFile(file);
 				this.removeFile(file);
-			})
-
+			});
+			if(typeof this.onFinishOne == "function")
+			{
+				this.onFinishOne(ev);
+			}
 		}
 
 		fileItem.requestUpdate("loading");
@@ -284,7 +320,12 @@ export class Et2File extends Et2InputWidget(LitElement)
 		this.requestUpdate();
 		this.updateComplete.then(() =>
 		{
-			this.dispatchEvent(new CustomEvent("change", {detail: this.value, bubbles: true}));
+			const ev = new CustomEvent("change", {detail: this.value, bubbles: true});
+			this.dispatchEvent(ev);
+			if(typeof this.onFinish == "function")
+			{
+				this.onFinish(ev);
+			}
 		})
 	}
 

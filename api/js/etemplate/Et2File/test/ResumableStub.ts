@@ -24,6 +24,7 @@ class ResumableStub
 	addFile(file)
 	{
 		const resumableFile = {file: file, uniqueIdentifier: file.name, progress: () => 0};
+		resumableFile.file.uniqueIdentifier = file.name;
 		this.files.push(resumableFile);
 		if(this.events['fileAdded'])
 		{

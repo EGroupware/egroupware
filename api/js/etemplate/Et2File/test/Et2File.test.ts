@@ -163,6 +163,7 @@ describe('Et2File Component', async() =>
 	{
 		const file = new File(['content'], 'test.txt', {type: 'text/plain'});
 		const listener = oneEvent(element, 'et2-add');
+		const clock = sinon.useFakeTimers();
 		element.addFile(file);
 		await element.updateComplete;
 		const event = await listener;
@@ -171,8 +172,31 @@ describe('Et2File Component', async() =>
 		const fileInfo = element.files[0];
 
 		const fileItem = <Et2FileItem>element.findFileItem(fileInfo.file);
+
+		// Et2File waits 100 ms before upload starts
+		clock.tick(101);
 		await fileItem.updateComplete;
 
 		assert.strictEqual(fileItem.progress, 50, 'File progress should be updated');
+	});
+
+	it('should update when file is done', async() =>
+	{
+		const file = new File(['content'], 'test.txt', {type: 'text/plain'});
+		const listener = oneEvent(element, 'et2-load');
+		const clock = sinon.useFakeTimers();
+		element.addFile(file);
+		await element.updateComplete;
+		const fileInfo = element.files[0];
+		const fileItem = <Et2FileItem>element.findFileItem(fileInfo.file);
+
+		// Et2File waits 100 ms before upload starts, stub waits 100 before completing
+		clock.tick(200);
+
+		// Wait for event
+		let event = await listener;
+		assert.equal(event.detail, fileInfo);
+
+		assert.strictEqual(fileItem.progress, 100, 'File progress should be 100%');
 	});
 });
