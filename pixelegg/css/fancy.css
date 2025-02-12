@@ -6927,6 +6927,9 @@ Addressbook sidebox grid table
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #calendar-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-top-color: #CC0033;
 }
+#dialog-calendar-add {
+  --width: 70%;
+}
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(255, 153, 51, 0.3);
   border-left: 4px solid #ff9933 !important;
