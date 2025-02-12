@@ -183,9 +183,9 @@ export class Et2File extends Et2InputWidget(LitElement)
 		{
 			options["fileType"] = this.accept.split(",").map(f => f.trim())
 		}
-		if(this.maxFiles)
+		if(this.maxFiles || !this.multiple)
 		{
-			options["maxFiles"] = this.maxFiles;
+			options["maxFiles"] = this.maxFiles ?? 1;
 		}
 		if(this.maxFileSize)
 		{
@@ -240,7 +240,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		// Actually start uploading
 		await fileItem.updateComplete;
 		const ev = new CustomEvent("et2-add", {bubbles: true, detail: file})
-		this.dispatchEvent(event);
+		this.dispatchEvent(ev);
 		setTimeout(this.resumable.upload, 100);
 
 		if(typeof this.onStart == "function")
@@ -264,15 +264,21 @@ export class Et2File extends Et2InputWidget(LitElement)
 		const response = ((JSON.parse(jsonResponse)['response'] ?? {}).find(i => i['type'] == "data") ?? {})['data'] ?? {};
 		const fileItem = this.findFileItem(file);
 		file.loading = false;
-		fileItem.progress = 100;
-		fileItem.loading = false;
+		if(fileItem)
+		{
+			fileItem.progress = 100;
+			fileItem.loading = false;
+		}
 
 		if(!response || response.length || Object.entries(response).length == 0)
 		{
 			console.warn("Problem uploading", jsonResponse);
 			file.warning = "No response";
-			fileItem.variant = "warning";
-			fileItem.innerHTML += "<br />" + file.warning;
+			if(fileItem)
+			{
+				fileItem.variant = "warning";
+				fileItem.innerHTML += "<br />" + file.warning;
+			}
 		}
 		else
 		{
@@ -280,12 +286,15 @@ export class Et2File extends Et2InputWidget(LitElement)
 			this.dispatchEvent(ev);
 			Object.keys(response).forEach((tempName) =>
 			{
-				fileItem.variant = "success";
+				if(fileItem)
+				{
+					fileItem.variant = "success";
+				}
 
 				// Add file into value
 				this.value[tempName] = {
 					file: file.file,
-					src: (<HTMLSlotElement>fileItem.shadowRoot.querySelector("slot[name='image']")).assignedElements()[0]?.src ?? "",
+					src: (<HTMLSlotElement>fileItem?.shadowRoot.querySelector("slot[name='image']"))?.assignedElements()[0]?.src ?? "",
 					...response[tempName]
 				}
 				// Remove file from file input & resumable
@@ -297,10 +306,12 @@ export class Et2File extends Et2InputWidget(LitElement)
 				this.onFinishOne(ev);
 			}
 		}
-
-		fileItem.requestUpdate("loading");
-		fileItem.requestUpdate("progress");
-		fileItem.requestUpdate("variant");
+		if(fileItem)
+		{
+			fileItem.requestUpdate("loading");
+			fileItem.requestUpdate("progress");
+			fileItem.requestUpdate("variant");
+		}
 	}
 
 	private resumableFileError(file, message)
