@@ -20,8 +20,8 @@ export interface FileInfo extends ResumableFile
 	// ResumableFile
 	uniqueIdentifier : string;
 	file : File;
-	progress : Function;
-	abort : Function
+	progress? : Function;
+	abort? : Function
 }
 
 /**
@@ -112,7 +112,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 			}
 		}
 	})
-	value : { [tempName : string] : FileInfo[] } = {};
+	value : { [tempName : string] : FileInfo } = {};
 
 	@property({type: Function}) onStart : Function;
 	@property({type: Function}) onFinishOne : Function;
@@ -308,7 +308,8 @@ export class Et2File extends Et2InputWidget(LitElement)
 				this.value[tempName] = {
 					file: file.file,
 					src: (<HTMLSlotElement>fileItem?.shadowRoot.querySelector("slot[name='image']"))?.assignedElements()[0]?.src ?? "",
-					...response[tempName]
+					...response[tempName],
+					accepted: true
 				}
 				// Remove file from file input & resumable
 				this.resumable.removeFile(file);
@@ -504,7 +505,9 @@ export class Et2File extends Et2InputWidget(LitElement)
 	fileListTemplate()
 	{
 		return html`
-            ${repeat(this.files, (file) => file.uniqueIdentifier, (item, index) => this.fileItemTemplate(item, index))}`;
+            ${repeat(this.files, (file) => file.uniqueIdentifier, (item, index) => this.fileItemTemplate(item, index))}
+            ${repeat(Object.values(this.value), (file) => file.uniqueIdentifier, (item, index) => this.fileItemTemplate(item, index))}
+		`;
 
 	}
 
@@ -527,7 +530,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                     ?closable=${fileInfo.accepted}
                     ?loading=${fileInfo.loading}
                     image=${ifDefined(icon)}
-                    progress=${fileInfo.progress() || nothing}
+                    progress=${typeof fileInfo.progress == "function" ? fileInfo.progress() : (fileInfo.progress ?? nothing)}
                     data-file-index=${index}
                     data-file-id=${fileInfo.uniqueIdentifier}
                     @sl-after-hide=${(event : CustomEvent) =>

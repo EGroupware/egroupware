@@ -43,8 +43,9 @@ export default css`
 		max-width: 1em;
 		max-height: 1em;
 
-		slot > * {
+		::slotted(*) {
 			line-height: 1;
+			width: 1em;
 		}
 
 	}
