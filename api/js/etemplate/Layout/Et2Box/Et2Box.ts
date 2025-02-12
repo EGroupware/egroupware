@@ -115,7 +115,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	 */
 	getDetachedAttributes(_attrs)
 	{
-		_attrs.push('data', 'onclick');
+		_attrs.push('data', 'onclick', 'statustext');
 	}
 
 	getDetachedNodes()

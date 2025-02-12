@@ -18,10 +18,10 @@
 					<nextmatch-header/>
 				</row>
 				<row class="tile $row_cont[class]">
-					<et2-vbox  class="file_tile" width="135px" height="110px" data="mime:$row_cont[mime]">
+					<et2-vbox  class="file_tile" width="135px" height="110px" data="mime:$row_cont[mime]" statustext="${row_cont}[title]">
 						<et2-vfs-mime  align="center" id="$row" thumbMimeSize="image,128"></et2-vfs-mime>
 						<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
-						<et2-description  id="${row}[comment]"></et2-description>
+<!--						<et2-description  id="${row}[comment]"></et2-description>-->
 					</et2-vbox>
 				</row>
 			</rows>
