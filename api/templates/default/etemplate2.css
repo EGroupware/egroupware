@@ -3731,6 +3731,16 @@ table.et2_grid > tbody > tr > td {
 table.et2_grid > tbody > tr > td:last-child {
     padding-right: 0px;
 }
+table.et2_grid > tbody > tr > td.iphoto:last-child {
+    padding: 0px;
+    font-size: 22px;
+    vertical-align: middle;
+}
+table.et2_grid > tbody > tr > td:last-child et2-image.iphoto{
+    width: auto;
+    flex-direction: column;
+    align-items: center;
+}
 
 .dialogFooterToolbar, .dialogFooterToolbar td {
     padding-top: 10px !important;

@@ -7150,6 +7150,9 @@ img.et2_button_icon[src*="svg"]:hover {
 et2-dialog div#add_favorite et2-select-account_ro {
   display: none;
 }
+#topmenu_info_user_avatar > et2-avatar {
+  padding: 0.6px 0 0 1.6px;
+}
 :root,
 :host,
 .sl-theme-light,
@@ -7252,6 +7255,12 @@ et2-dialog div#add_favorite et2-select-account_ro {
 .et2_toolbar {
   padding: 0;
   border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+}
+.et2_nextmatch .nextmatch_header {
+  border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+}
+.et2_nextmatch .nextmatch_header .nextmatch_header_row {
+  padding-bottom: 0.25em;
 }
 div.flatpickr-calendar {
   border-radius: var(--sl-border-radius-medium);
