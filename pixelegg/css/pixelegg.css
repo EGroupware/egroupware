@@ -6955,6 +6955,12 @@ Addressbook sidebox grid table
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #infolog-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-top-color: #660033;
 }
+#infolog-index_nm .egwGridView_grid et2-link {
+  align-self: flex-start;
+}
+#infolog-index_nm .egwGridView_grid et2-link::part(title) {
+  width: auto;
+}
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 102, 153, 0.3);
   border-left: 4px solid #006699 !important;
