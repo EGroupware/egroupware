@@ -186,6 +186,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		this.selectedNodes = [];
 	}
 
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+
+		this._currentSlTreeItem = null;
+		this.selectedNodes.splice(0, this.selectedNodes.length);
+	}
+
 	private _initCurrent()
 	{
 		this._currentSlTreeItem = this.selected;

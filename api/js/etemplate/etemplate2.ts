@@ -351,6 +351,14 @@ export class etemplate2
 			// Un-register handler
 			this._widgetContainer.egw().unregisterJSONPlugin(this.handle_assign, this, 'assign');
 
+			// Unreference from any app objects
+			for(const app of EgwApp)
+			{
+				if(app.et2 == this.widgetContainer)
+				{
+					app.et2 = null;
+				}
+			}
 			this._widgetContainer.destroy();
 			this._widgetContainer = null;
 		}
@@ -490,6 +498,7 @@ export class etemplate2
 	{
 		if(this._skip_close_prompt || !this.isDirty())
 		{
+			this.clear();
 			return;
 		}
 

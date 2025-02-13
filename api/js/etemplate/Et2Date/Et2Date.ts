@@ -385,6 +385,8 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		}
 	}
 
+	private _boundTooltipElements : HTMLElement[] = [];
+
 	constructor()
 	{
 		super();
@@ -411,6 +413,12 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		super.disconnectedCallback();
 		this._inputNode?.removeEventListener('change', this._onChange);
 		this.findInputField()?.removeEventListener("input", this._handleInputChange);
+
+		this._instance && this._instance.destroy();
+		this._boundTooltipElements.forEach(tooltipped =>
+		{
+			this.egw().tooltipUnbind(tooltipped)
+		});
 	}
 
 	update(changedProperties : PropertyValueMap<any>)
@@ -825,32 +833,33 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			return;
 		}
 
-		let set_holiday = function(holidays, element)
-		{
-			let day_holidays = holidays[formatDate(f_date, {dateFormat: "Ymd"})]
-			let tooltip = '';
-			if(typeof day_holidays !== 'undefined' && day_holidays.length)
-			{
-				for(var i = 0; i < day_holidays.length; i++)
-				{
-					if(typeof day_holidays[i]['birthyear'] !== 'undefined')
-					{
-						element.classList.add('calBirthday');
-					}
-					else
-					{
-						element.classList.add('calHoliday');
-					}
-					tooltip += day_holidays[i]['name'] + "\n";
-				}
-			}
-			if(tooltip)
-			{
-				this.egw().tooltipBind(element, tooltip);
-			}
-		}.bind(this);
+		egw.holidays(f_date.getFullYear()).then((h) => this.set_holiday(f_date, h, dayElement));
+	}
 
-		egw.holidays(f_date.getFullYear()).then((h) => set_holiday(h, dayElement));
+	private set_holiday(f_date : Date, holidays, element : HTMLElement)
+	{
+		let day_holidays = holidays[formatDate(f_date, {dateFormat: "Ymd"})]
+		let tooltip = '';
+		if(typeof day_holidays !== 'undefined' && day_holidays.length)
+		{
+			for(var i = 0; i < day_holidays.length; i++)
+			{
+				if(typeof day_holidays[i]['birthyear'] !== 'undefined')
+				{
+					element.classList.add('calBirthday');
+				}
+				else
+				{
+					element.classList.add('calHoliday');
+				}
+				tooltip += day_holidays[i]['name'] + "\n";
+			}
+		}
+		if(tooltip)
+		{
+			this.egw().tooltipBind(element, tooltip);
+			this._boundTooltipElements.push(element);
+		}
 	}
 
 	/**

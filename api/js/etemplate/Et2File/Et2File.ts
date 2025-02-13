@@ -142,6 +142,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		if(this.resumable)
 		{
 			this.resumable.cancel();
+			this.resumable = null;
 		}
 	}
 

@@ -141,6 +141,16 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			.appendTo(this.table);
 	}
 
+	destroy()
+	{
+		super.destroy();
+		this.cells = [];
+		this.rowData = [];
+		this.colData = [];
+		this.template_node = null;
+		this.sortablejs && this.sortablejs.destroy();
+	}
+
 	_initCells(_colData : ColumnEntry[], _rowData : RowEntry[])
 	{
 		// Copy the width and height

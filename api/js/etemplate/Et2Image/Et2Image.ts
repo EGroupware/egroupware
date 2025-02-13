@@ -167,7 +167,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 
 	render()
 	{
-		let url = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
+		const url = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
 		if(!url)
 		{
 			// Hide if no valid image

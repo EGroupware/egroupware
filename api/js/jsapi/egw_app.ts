@@ -11,7 +11,7 @@
  */
 
 import {etemplate2} from "../etemplate/etemplate2";
-import type {et2_container} from "../etemplate/et2_core_baseWidget";
+import type {Et2Template} from "../etemplate/Et2Template/Et2Template";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import type {IegwAppLocal} from "./egw_global";
@@ -109,9 +109,9 @@ export abstract class EgwApp
 	 *		et2.widgetContainer. ...
 	 * }
 	 *
-	 * @var {et2_container}
+	 * @var {Et2Template}
 	 */
-	et2 : et2_container;
+	et2 : Et2Template;
 
 	/**
 	 * Internal reference to egw client-side api object for current app and window
