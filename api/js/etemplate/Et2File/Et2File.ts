@@ -138,6 +138,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	disconnectedCallback()
 	{
+		super.disconnectedCallback();
 		if(this.resumable)
 		{
 			this.resumable.cancel();

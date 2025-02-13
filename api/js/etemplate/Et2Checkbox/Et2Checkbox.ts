@@ -72,11 +72,6 @@ export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 		this.isSlComponent = true;
 	}
 
-	connectedCallback()
-	{
-		super.connectedCallback();
-	}
-
 	get label()
 	{
 		return this._labelNode?.textContent || "";

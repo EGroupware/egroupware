@@ -338,6 +338,8 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 		disconnectedCallback()
 		{
+			super.disconnectedCallback();
+			
 			this.egw()?.tooltipUnbind(this);
 
 			this.removeEventListener("click", this._handleClick);
