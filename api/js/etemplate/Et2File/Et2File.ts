@@ -518,7 +518,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 		// Pull thumbnail from file if we can
 		let thumbnail;
-		if(!icon && fileInfo.file && fileInfo.file.type.startsWith("image/"))
+		if(!icon && fileInfo.file && fileInfo.file.type?.startsWith("image/"))
 		{
 			thumbnail = URL.createObjectURL(fileInfo.file);
 		}
