@@ -622,7 +622,14 @@ class Db
 	 */
 	function __wakeup()
 	{
-		$this->connect();	// we need to re-connect
+		// we need to re-connect
+		$this->connect(null, null, null, null,
+			// get DB password again from instance-cache, as we don't store it in session
+			Cache::getInstance(__CLASS__, 'Password') ?:
+			// check if header is still available
+			$GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_password'] ??
+			// as last resort, redirect to login
+			Framework::redirect_link('/login.php?cd=2'));
 	}
 
 	/**
@@ -638,7 +645,9 @@ class Db
 		if (!empty($this->setupType)) $this->Type = $this->setupType;	// restore Type eg. to mysqli
 
 		$vars = get_object_vars($this);
-		unset($vars['Link_ID'], $vars['Query_ID'], $vars['privat_Link_ID']);
+		// don't store DB password in session, just in (shared memory) instance-cache
+		Cache::setInstance(__CLASS__, 'Password', $vars['Password'], 86400);
+		unset($vars['Link_ID'], $vars['Query_ID'], $vars['privat_Link_ID'], $vars['Password']);
 		return array_keys($vars);
 	}
 

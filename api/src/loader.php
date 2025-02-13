@@ -18,6 +18,7 @@
 
 use EGroupware\Api\Session;
 use EGroupware\Api\Egw;
+use EGroupware\Api;
 
 // E_STRICT in PHP 5.4 gives various strict warnings in working code, which can NOT be easy fixed in all use-cases :-(
 // Only variables should be assigned by reference, eg. soetemplate::tree_walk()
@@ -64,14 +65,18 @@ if (Session::init_handler())
 			// restoring the egw_info-array
 			$GLOBALS['egw_info'] = array_merge($_SESSION[Session::EGW_INFO_CACHE],array('flags' => $GLOBALS['egw_info']['flags']));
 
-			$GLOBALS['egw'] = unserialize($_SESSION[Session::EGW_OBJECT_CACHE], ['allowed_classes' => true]);
-
-			if (is_object($GLOBALS['egw']) && ($GLOBALS['egw'] instanceof Egw))	// only egw object has wakeup2, setups egw_minimal eg. has not!
+			// check if we have a DB-password in cache, if not restore the session via the header (happens when kill -s USR2 1 is used to restart FPM)
+			if (Api\Cache::getInstance(Api\Db::class, 'Password'))
 			{
-				$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/environment to this request (eg. changed current app)
+				$GLOBALS['egw'] = unserialize($_SESSION[Session::EGW_OBJECT_CACHE], ['allowed_classes' => true]);
 
-				$GLOBALS['egw_info']['flags']['session_restore_time'] = microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time'];
-				if (is_object($GLOBALS['egw']->translation)) return;	// exit this file, as the rest of the file creates a new egw-object and -enviroment
+				if (is_object($GLOBALS['egw']) && ($GLOBALS['egw'] instanceof Egw))	// only egw object has wakeup2, setups egw_minimal eg. has not!
+				{
+					$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/environment to this request (eg. changed current app)
+
+					$GLOBALS['egw_info']['flags']['session_restore_time'] = microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time'];
+					if (is_object($GLOBALS['egw']->translation)) return;	// exit this file, as the rest of the file creates a new egw-object and -environment
+				}
 			}
 			// egw object could NOT be restored from the session, create a new one
 			unset($GLOBALS['egw']);
@@ -101,6 +106,8 @@ $GLOBALS['egw_info']['server'] += $GLOBALS['egw_domain'][$GLOBALS['egw_info']['u
 
 // the egw-object instantiates all sub-classes (eg. $GLOBALS['egw']->db) and the egw_info array
 $GLOBALS['egw'] = new Egw(array_keys($GLOBALS['egw_domain']));
+// do NOT store the DB-password in the session or egw_info, but let DB connect first (and store the password)
+unset($GLOBALS['egw_info']['server']['db_pass']);
 
 if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && !$GLOBALS['egw_info']['server']['show_domain_selectbox'])
 {

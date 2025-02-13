@@ -155,13 +155,21 @@ class Updates
 
 		return Cache::getTree(__CLASS__, 'api_version', function()
 		{
-			$version = preg_replace('/[^0-9.]/', '', $GLOBALS['egw_info']['server']['versions']['api']);
+			if (!isset($GLOBALS['egw_info']['server']['versions']))
+			{
+				$GLOBALS['egw_info']['server']['versions'] = [];
+			}
+			else
+			{
+				$version = preg_replace('/[^0-9.]/', '', $GLOBALS['egw_info']['server']['versions']['api']);
+			}
 
 			if (empty($GLOBALS['egw_info']['server']['versions']['maintenance_release']))
 			{
 				$setup_info = null;
 				include (EGW_SERVER_ROOT.'/api/setup/setup.inc.php');
 				$GLOBALS['egw_info']['server']['versions'] += $setup_info['api']['versions'];
+				$version = $version ?? $setup_info['api']['version'];
 				unset($setup_info);
 			}
 			if (version_compare($version, $GLOBALS['egw_info']['server']['versions']['maintenance_release'], '<'))

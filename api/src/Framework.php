@@ -192,7 +192,7 @@ abstract class Framework extends Framework\Extra
 	static function link($url, $extravars = '', $link_app=null)
 	{
 		unset($link_app);	// not used by required by function signature
-		return $GLOBALS['egw']->session->link($url, $extravars);
+		return Session::link($url, $extravars);
 	}
 
 	/**
