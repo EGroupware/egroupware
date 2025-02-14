@@ -813,7 +813,7 @@ window.egw_fw_ui_tabs.prototype.clean = function()
 	//Reset all arrays and references
 	this.tabs = new Array();
 	this.activeTab = null;
-	this.tabHistroy = new Array();
+	this.tabHistory = new Array();
 
 	return true;
 };
