@@ -298,7 +298,7 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			const options = Array.isArray(option.value) ? <SelectOption[]>option.value : <SelectOption[]>option.children;
 			return html`
                 <small>${this.noLang ? option.label : this.egw().lang(option.label)}</small>
-                ${repeat(options, o => o.value, this._optionTemplate)}
+                ${repeat(options, o => o.value, this._optionTemplate.bind(this))}
                 <sl-divider></sl-divider>
 			`;
 		}
