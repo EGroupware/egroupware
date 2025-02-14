@@ -40,9 +40,13 @@ export interface FileInfo extends ResumableFile
  * @slot button - A button to use in lieu of the default button
  * @slot list - Selected files are listed here.  Place something in this slot to override the normal file list.
  *
- * @event load - Emitted when file is loaded
+ * @event et2-add - Emitted when a file is added
+ * @event et2-load - Emitted when file is complete
+ * @event change - Emitted when all selected files are complete
  *
  * @csspart base - Component internal wrapper
+ * @csspart button - Button that opens browser's file selection dialog
+ * @csspart list - List of files
  */
 @customElement("et2-file")
 export class Et2File extends Et2InputWidget(LitElement)
@@ -616,8 +620,9 @@ export class Et2File extends Et2InputWidget(LitElement)
                 ${(this.noFileList || this.fileListTarget) ? nothing : html`
                     <slot name="list">
                         ${this.inline ? html`
-                            <div class="file__file-list" id="file-list">${filesList}</div>` : html`
+                            <div part="list" class="file__file-list" id="file-list">${filesList}</div>` : html`
                             <sl-popup
+                                    part="list"
                                     class="file__file-list"
                                     id="file-list"
                                     anchor="visible-button"
