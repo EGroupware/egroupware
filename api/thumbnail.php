@@ -175,17 +175,9 @@ function read_thumbnail($src)
 			list($app, $icon) = explode('/', Vfs::mime_icon($mime), 2);
 			list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
 				Api\Image::find($app, $icon), 2);
-			$dst = EGW_SERVER_ROOT.$path;
+			$dst = str_starts_with($path, '/webdav.php/') ? Api\Vfs::PREFIX.substr($path, 11) : EGW_SERVER_ROOT.$path;
 			$_GET['thsize'] = 22;
 			return read_thumbnail($dst);
-			if (function_exists('mime_content_type'))
-			{
-				$output_mime = mime_content_type($dst);
-			}
-			else
-			{
-				$output_mime = Api\MimeMagic::filename2mime($dst);
-			}
 		}
 
 		if ($dst)
