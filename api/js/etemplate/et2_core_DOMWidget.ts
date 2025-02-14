@@ -388,7 +388,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	 */
 	set_parent_node(_node)
 	{
-		if(typeof _node == "string")
+		if(typeof _node == "string" && _node !== "" )
 		{
 			var parent = jQuery('#'+_node);
 			if(parent.length === 0 && window.parent)
