@@ -12,7 +12,7 @@
 import {css, LitElement, PropertyValues} from "lit";
 import '../Et2Image/Et2Image';
 import shoelace from "../Styles/shoelace";
-import {egw_registerGlobalShortcut} from "../../egw_action/egw_keymanager";
+import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../egw_action/egw_keymanager";
 
 type Constructor<T = LitElement> = new (...args : any[]) => T;
 export const ButtonMixin = <T extends Constructor>(superclass : T) => class extends superclass
@@ -184,6 +184,8 @@ so we force the button images to be square*/
 		}
 	}
 
+	private _registeredKeycode : string;
+
 	constructor(...args : any[])
 	{
 		super(...args);
@@ -196,6 +198,21 @@ so we force the button images to be square*/
 
 		// Do not add icon here, no children can be added in constructor
 
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback && super.disconnectedCallback();
+
+		// Remove keycode handler
+		if(this._registeredKeycode)
+		{
+			let [keycode, modifiers] = this._registeredKeycode.split("_");
+			egw_unregisterGlobalShortcut(keycode, modifiers.includes("S"), modifiers.includes("C"), modifiers.includes("A"));
+		}
+
+		// Clean up any added image
+		while(this.lastChild) this.lastChild.remove();
 	}
 
 	set image(new_image : string)
@@ -356,6 +373,7 @@ so we force the button images to be square*/
 			// @ts-ignore
 			if(check_id.match(this.constructor.default_keys[keyindex]))
 			{
+				this._registeredKeycode = keyindex.substring(1);
 				let [keycode, modifiers] = keyindex.substring(1).split("_");
 				egw_registerGlobalShortcut(
 					parseInt(keycode),

@@ -46,6 +46,7 @@
 		{
 			if (_cond(_arr[i]))
 			{
+				_arr[i].instance && _arr[i].instance.unregisterAllPlugins();
 				_arr.splice(i, 1);
 			}
 		}

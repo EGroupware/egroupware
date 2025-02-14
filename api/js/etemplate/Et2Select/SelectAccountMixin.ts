@@ -43,6 +43,12 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 			this.account_options = [];
 		}
 
+		disconnectedCallback()
+		{
+			super.disconnectedCallback && super.disconnectedCallback();
+			this.account_options = [];
+		}
+
 		/**
 		 * If the value has an account that's not already in the list, check with the server.
 		 * We probably don't have all the accounts client side.  This is similar to freeEntries,

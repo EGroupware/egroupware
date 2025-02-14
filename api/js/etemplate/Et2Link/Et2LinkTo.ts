@@ -364,6 +364,11 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		this.select._searchNode.select_options = [];
 	}
 
+	handleSlChange(event)
+	{
+		this.dispatchEvent(new Event("change", {bubbles: true}));
+	}
+
 	/**
 	 * Files have been uploaded (successfully), ready to link
 	 *
@@ -578,10 +583,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     })}
             >
                 ${labelTemplate}
-                <div part="form-control-input" class="form-control-input" @sl-change=${() =>
-                {
-                    this.dispatchEvent(new Event("change", {bubbles: true}));
-                }}>
+                <div part="form-control-input" class="form-control-input" @sl-change=${this.handleSlChange}>
                     ${this._inputGroupBeforeTemplate()}
                     ${this._inputGroupInputTemplate()}
                 </div>

@@ -33,14 +33,18 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	// keeps alive messages stored
 	var alive_messages = [];
 	// Register an 'error' plugin, displaying using the message system
-	this.registerJSONPlugin(function(type, res, req) {
-		if (typeof res.data == 'string')
+	window.setTimeout(() =>
+	{
+		egw(_wnd).registerJSONPlugin(function (type, res, req)
 		{
-			egw.message(res.data,'error');
-			return true;
-		}
-		throw 'Invalid parameters';
-	}, null, 'error');
+			if (typeof res.data == 'string')
+			{
+				egw.message(res.data, 'error');
+				return true;
+			}
+			throw 'Invalid parameters';
+		}, null, 'error');
+	}, 0);
 
 	/**
 	 * Decode html entities so they can be added via .text(_str), eg. html_entity_decode('&amp;') === '&'

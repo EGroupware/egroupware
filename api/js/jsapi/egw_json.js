@@ -699,6 +699,13 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					}
 				}
 			}
+		},
+		unregisterAllPlugins: function ()
+		{
+			for (const type of Object.getOwnPropertyNames(plugins))
+			{
+				delete plugins[type];
+			}
 		}
 	};
 

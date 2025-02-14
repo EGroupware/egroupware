@@ -98,6 +98,16 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 		});
 	}
 
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		const box = this.shadowRoot?.querySelector('.tree-dropdown__combobox');
+		if(box)
+		{
+			this.egw().tooltipUnbind(box, this.egw().lang(this.statustext));
+		}
+	}
+
 	bindTooltip()
 	{
 		//overide so tooltip wont be bound

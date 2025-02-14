@@ -330,6 +330,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		{
 			super.disconnectedCallback();
 			this._unbindListeners();
+
+			while(this.lastChild) this.lastChild.remove();
+			this._selected_remote = [];
+			this._remote_options = [];
 		}
 
 		async getUpdateComplete()

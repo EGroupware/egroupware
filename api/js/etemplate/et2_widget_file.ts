@@ -170,6 +170,7 @@ export class et2_file extends et2_inputWidget
 	{
 		super.destroy();
 		this.set_drop_target(null);
+		this.disabled_buttons = null;
 		this.node = null;
 		this.input = null;
 		this.span = null;
