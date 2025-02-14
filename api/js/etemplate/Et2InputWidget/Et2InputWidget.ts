@@ -366,6 +366,15 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 			this.removeEventListener("focus", this.et2HandleFocus);
 			this.removeEventListener("blur", this.et2HandleBlur);
+
+			// Hacky hack to clean up Shoelace form controller
+			// https://github.com/shoelace-style/shoelace/issues/2376
+			if(this.formControlController && this.formControlController.form)
+			{
+				this.formControlController.form.removeEventListener('formdata', this.formControlController.handleFormData);
+				this.formControlController.form.removeEventListener('submit', this.formControlController.handleFormSubmit);
+				this.formControlController.form.removeEventListener('reset', this.formControlController.handleFormReset);
+			}
 		}
 
 		/**

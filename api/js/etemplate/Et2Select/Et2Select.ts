@@ -364,6 +364,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 		this.removeEventListener("focusin", this.handleFocus);
 		this.removeEventListener("sl-change", this._triggerChange);
+		this.removeEventListener("mouseleave", this._handleMouseLeave);
+
+		// Hacky hack to clean up Shoelace form controller
+		// https://github.com/shoelace-style/shoelace/issues/2376
+		if(this.dropdown?.formControlController && this.dropdown?.formControlController.form)
+		{
+			this.dropdown?.formControlController.form.removeEventListener('formdata', this.dropdown?.formControlController.handleFormData);
+			this.dropdown?.formControlController.form.removeEventListener('submit', this.dropdown?.formControlController.handleFormSubmit);
+			this.dropdown?.formControlController.form.removeEventListener('reset', this.dropdown?.formControlController.handleFormReset);
+		}
 	}
 
 	async getUpdateComplete()
@@ -855,6 +865,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.select.requestUpdate();
 	}
 
+	protected _handleMouseWheel(e : MouseEvent)
+	{
+		// Grab & stop mousewheel to prevent scrolling sidemenu when scrolling through options
+		e => e.stopImmediatePropagation()
+	}
+
 	/** Shows the listbox. */
 	async show()
 	{
@@ -1108,11 +1124,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     value=${Array.isArray(value) ? value.join(" ") : value}
                     @sl-change=${this.handleValueChange}
                     @mouseenter=${this._handleMouseEnter}
+                    @mousewheel=${this._handleMouseWheel}
                     @mouseup=${this.handleOptionClick}
-                    @mousewheel=${
-                            // Grab & stop mousewheel to prevent scrolling sidemenu when scrolling through options
-                            e => e.stopImmediatePropagation()
-                    }
                     size=${this.size || "medium"}
             >
                 ${icon}
