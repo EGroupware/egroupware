@@ -775,14 +775,14 @@ class Backup
 	{
 		if (function_exists('str_getcsv'))	// php5.3+
 		{
-			// we need to take care of literal "NULL" values, replacing them we a special token as str_getcsv removes enclosures around strings
+			// we need to take care of literal "NULL" values, replacing them with a special token as str_getcsv removes enclosures around strings
 			// str_getcsv uses '""' for '"' instead of '\\"' and does not unescape '\\n', '\\r' or '\\\\' (two backslashes)
 			$fields = str_getcsv(strtr($line, array(
 				'"NULL"' => self::NULL_TOKEN,
 				'\\\\'   => self::BACKSLASH_TOKEN,
 				'\\"'    => '""',
 				'\\n'    => "\n",
-				'\\r'    => "\r")), ',', '"', '\0');
+				'\\r'    => "\r")), ',', '"');
 			// replace NULL-token again with 'NULL', 'NULL' with null and BACKSLASH-token with a backslash
 			foreach($fields as &$field)
 			{
