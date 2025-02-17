@@ -976,7 +976,7 @@ class Ldap
 					$filter .= "(modifytimestamp>=".gmdate('YmdHis', $param['modified']).".0Z)";
 				}
 				$filter .= ')';
-				$allValues = $this->vlvSortQuery($this->group_context, $filter, ['cn', 'gidNumber', 'entryuuid'], $order_by, $start, $offset, $group_total);
+				$allValues = $this->vlvSortQuery($this->group_context, $filter, ['cn', 'gidNumber', 'entryuuid', static::MAIL_ATTR], $order_by, $start, $offset, $group_total);
 				$totalcount += $group_total;
 				foreach($allValues ?: [] as $allVals)
 				{
@@ -993,6 +993,7 @@ class Ldap
 							'account_lastname'  => lang('Group'),
 							'account_status'    => 'A',
 							'account_fullname'  => Api\Translation::convert($allVals['cn'][0],'utf-8'),
+							'account_email'     => Api\Translation::convert($allVals[static::MAIL_ATTR][0],'utf-8'),
 						);
 						//if (isset($totalcount)) ++$totalcount;
 					}
