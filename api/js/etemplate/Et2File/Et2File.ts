@@ -311,6 +311,10 @@ export class Et2File extends Et2InputWidget(LitElement)
 				}
 
 				// Add file into value
+				if (typeof this.value !== 'object' || !this.value)
+				{
+					this.value = {};
+				}
 				this.value[tempName] = {
 					file: file.file,
 					src: (<HTMLSlotElement>fileItem?.shadowRoot.querySelector("slot[name='image']"))?.assignedElements()[0]?.src ?? "",
