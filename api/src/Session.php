@@ -328,9 +328,11 @@ class Session
 	 */
 	public function __set($name, $value)
 	{
-		if ($name === 'passwd')
+		if ($name === 'passwd' && !empty($value))
 		{
-			$this->password_encrypted = Mail\Credentials::encrypt($value, $this->account_id, $pw_enc, true);
+			// we also need to update it in session, as extra SSO password uses the hook "session_created" running after call to register_session!
+			$_SESSION[self::EGW_SESSION_VAR]['session_password'] = $this->password_encrypted =
+				Mail\Credentials::encrypt($value, $this->account_id, $pw_enc, true);
 			$this->_password = $value;
 		}
 	}
@@ -2057,7 +2059,6 @@ class Session
 		$user['account_id']  = $this->account_id;
 		$user['account_lid'] = $this->account_lid;
 		$user['userid']      = $this->account_lid;
-		$user['passwd']      = $this->passwd;
 
 		return $user;
 	}
