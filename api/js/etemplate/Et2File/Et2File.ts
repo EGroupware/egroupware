@@ -98,25 +98,6 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	@property({type: Object}) uploadOptions : {};
 
-	/** Files already uploaded */
-	@property({
-		type: Object, converter: (value, type) =>
-		{
-			if(value == '' || !value)
-			{
-				return {};
-			}
-			if(typeof value == "string")
-			{
-				return JSON.parse(value);
-			}
-			else
-			{
-				return value;
-			}
-		}
-	})
-	value : { [tempName : string] : FileInfo } = {};
 
 	@property({type: Function}) onStart : Function;
 	@property({type: Function}) onFinishOne : Function;
@@ -125,7 +106,31 @@ export class Et2File extends Et2InputWidget(LitElement)
 	@state() files : FileInfo[] = [];
 
 	protected resumable : Resumable = null;
+	private __value : { [tempName : string] : FileInfo };
 
+	/** Files already uploaded */
+	@property({type: Object})
+	set value(newValue : { [tempFileName : string] : FileInfo })
+	{
+		const oldValue = this.value;
+		if(typeof newValue !== 'object' || !newValue)
+		{
+			newValue = {};
+		}
+		if(typeof newValue.length !== "undefined")
+		{
+			// We use an object, not an Array
+			newValue = {...newValue};
+		}
+		this.__value = newValue;
+		this.requestUpdate("value", oldValue);
+	}
+
+	get value() : { [tempFileName : string] : FileInfo }
+	{
+		return this.__value;
+	}
+	
 	get fileInput() : HTMLInputElement { return this.shadowRoot?.querySelector("#file-input");}
 
 	get list() : HTMLElement
@@ -289,10 +294,10 @@ export class Et2File extends Et2InputWidget(LitElement)
 			fileItem.loading = false;
 		}
 
-		if(!response || response.length || Object.entries(response).length == 0)
+		if(!response || response.length || Object.entries(response).length == 0 || response[file.file?.name])
 		{
 			console.warn("Problem uploading", jsonResponse);
-			file.warning = "No response";
+			file.warning = response[file?.file?.name] ?? "No response";
 			if(fileItem)
 			{
 				fileItem.variant = "warning";
@@ -585,6 +590,8 @@ export class Et2File extends Et2InputWidget(LitElement)
                         //@ts-ignore disabled comes from Et2Widget
                         "file--disabled": this.disabled,
                         "file--hidden": this.hidden,
+                        "file--multiple": this.multiple,
+                        "file--single": !this.multiple
                     })}
             >
                 <div
@@ -609,6 +616,11 @@ export class Et2File extends Et2InputWidget(LitElement)
                             ${this._labelTemplate()}
                         </et2-button>
                     </slot>
+                    ${this.multiple || this.noFileList || this.fileListTarget ? nothing : html`
+                        <slot name="list">
+                            <div part="list" class="file__file-list" id="file-list">${filesList}</div>
+                        </slot>`
+                    }
                     <slot name="suffix"></slot>
                 </div>
                 <input type="file"
@@ -621,7 +633,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                                ? this.value.map((f : File | string) => (f instanceof File ? f.name : f)).join(",")
                                : ""}
                 />
-                ${(this.noFileList || this.fileListTarget) ? nothing : html`
+                ${(this.noFileList || this.fileListTarget || !this.multiple) ? nothing : html`
                     <slot name="list">
                         ${this.inline ? html`
                             <div part="list" class="file__file-list" id="file-list">${filesList}</div>` : html`

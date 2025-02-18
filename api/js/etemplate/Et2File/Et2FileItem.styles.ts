@@ -69,6 +69,7 @@ export default css`
 		display: flex;
 		flex-direction: column;
 		font-size: var(--sl-font-size-small);
+		min-width: 16em;
 	}
 
 	.file-item__label__size {
@@ -215,6 +216,7 @@ export default css`
 		.file-item__label {
 			flex-direction: row;
 			align-items: center;
+			white-space: nowrap;
 
 			slot {
 				display: inline-block;
