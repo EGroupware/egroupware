@@ -385,14 +385,17 @@ export class EgwAction {
      * @returns boolean true if none has disableClass, false otherwise
      */
     public not_disableClass(_action: EgwAction, _senders: any, _target: any) {
+        if (!Array.isArray(_action.data.disableClass)) {
+            _action.data.disableClass = [_action.data.disableClass];
+        }
         if (_target.iface.getDOMNode()) {
-            return !(_target.iface.getDOMNode()).classList.contains(_action.data.disableClass);
+            return !Array.from((_target.iface.getDOMNode()).classList).filter(name => _action.data.disableClass.includes(name)).length;
         } else if (_target.id) {
             // Checking on a something that doesn't have a DOM node, like a nm row
             // that's not currently rendered
             const data = window.egw.dataGetUIDdata(_target.id);
             if (data && data.data && data.data.class) {
-                return -1 === data.data.class.split(' ').indexOf(_action.data.disableClass);
+                return !data.data.class.split(' ').filter(name => _action.data.disableClass.includes(name)).length;
             }
         }
     };
@@ -408,15 +411,19 @@ export class EgwAction {
     public enableClass(_action: EgwAction, _senders: any[], _target: any) {
         if (typeof _target == 'undefined') {
             return false;
-        } else if (_target.iface.getDOMNode()) {
-            return (_target.iface.getDOMNode()).classList.contains(_action.data.enableClass);
+        }
+        if (!Array.isArray(_action.data.enableClass)) {
+            _action.data.enableClass = [_action.data.enableClass];
+        }
+        if (_target.iface.getDOMNode()) {
+            return Array.from((_target.iface.getDOMNode()).classList).filter(name => _action.data.enableClass.includes(name)).length > 0;
         } else if (_target.id) {
             // Checking on a something that doesn't have a DOM node, like a nm row
             // that's not currently rendered.  Not as good as an actual DOM node check
             // since things can get missed, but better than nothing.
             const data = window.egw.dataGetUIDdata(_target.id);
             if (data && data.data && data.data.class) {
-                return -1 !== data.data.class.split(' ').indexOf(_action.data.enableClass);
+                return data.data.class.split(' ').filter(name => _action.data.enableClass.includes(name)).length > 0;
             }
         }
     };
