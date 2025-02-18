@@ -447,8 +447,11 @@ class CalDAV extends HTTP_WebDAV_Server
 				$files['files'][] = $this->add_collection('/principals/', array(
 					'displayname' => lang('Accounts'),
 				));
+				// users home
+				$this->add_home($files, $path.$GLOBALS['egw_info']['user']['account_lid'].'/', $GLOBALS['egw_info']['user']['account_id'], $options['depth'] == 'infinity' ? 'infinity' : $options['depth']-1);
+				// home of memberships
 				foreach($this->accounts->search([
-					'type'   => 'both',
+					'type'   => 'owngroups',
 					'order'  =>'account_lid',
 					'start'  => $_GET['start'] ?? 0,
 					'offset' => $nresults,

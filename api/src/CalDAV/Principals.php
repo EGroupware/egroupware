@@ -790,21 +790,10 @@ class Principals extends Handler
 
 			if ($options['depth'])
 			{
-				if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
-					!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+				// only display own user by default
+				if (($account = $this->accounts->read($GLOBALS['egw_info']['user']['account_id'])))
 				{
-					if (($account = $this->accounts->read($GLOBALS['egw_info']['user']['account_id'])))
-					{
-						$files[] = $this->add_account($account);
-					}
-				}
-				else
-				{
-					// add all users (account_selection == groupmembers is handled by accounts->search())
-					foreach($this->accounts->search(array('type' => 'accounts','order' => 'account_lid')) as $account)
-					{
-						$files[] = $this->add_account($account);
-					}
+					$files[] = $this->add_account($account);
 				}
 			}
 		}
@@ -862,12 +851,8 @@ class Principals extends Handler
 
 			if ($options['depth'])
 			{
-				// only show own groups, if account-selection is groupmembers or none
-				$type = in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'], array('groupmembers','none')) ?
-					'owngroups' : 'groups';
-
-				// add all groups or only membergroups
-				foreach($this->accounts->search(array('type' => $type,'order' => 'account_lid')) as $account)
+				// only show own groups
+				foreach($this->accounts->search(array('type' => 'owngroups','order' => 'account_lid')) as $account)
 				{
 					$files[] = $this->add_group($account);
 				}
