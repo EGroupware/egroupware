@@ -296,9 +296,15 @@ class File extends Etemplate\Widget
 			}
 
 			// create the final destination file
+			set_time_limit($total_files / 100);
 			if (($fp = fopen($new_file, 'w')) !== false) {
 				for ($i=1; $i<=$total_files; $i++) {
-					fwrite($fp, file_get_contents($temp_dir.'/'.$fileName.'.part'.$i));
+					$chunk = fopen($temp_dir . '/' . $fileName . '.part' . $i, 'r');
+					while(!feof($chunk))
+					{
+						fwrite($fp, fread($chunk, 1024 * 1024));
+					}
+					fclose($chunk);
 				}
 				fclose($fp);
 			} else {
@@ -413,9 +419,21 @@ class File extends Etemplate\Widget
 		$unit = strtolower(substr($upload_max_filesize, -1));
 		$upload_max_filesize = (float)$upload_max_filesize;
 		if (!is_numeric($unit)) $upload_max_filesize *= $unit === 'm' ? 1024*1024 : 1024;
-		if ($upload_max_filesize > 1024*1024)
+
+		$current_max_chunk = self::getElementAttribute($form_name, 'chunkSize') ?? $this->attrs['chunkSize'];
+		if($current_max_chunk)
 		{
-			self::setElementAttribute($form_name, 'chunk_size', ($upload_max_filesize-1024*1024)/2);
+			$unit = strtolower(substr($current_max_chunk, -1));
+			$current_max_chunk = (float)$current_max_chunk;
+			if(!is_numeric($unit))
+			{
+				$current_max_chunk *= $unit === 'm' ? 1024 * 1024 : 1024;
+			}
+			$upload_max_filesize = min($upload_max_filesize, $current_max_chunk);
+		}
+		if($upload_max_filesize != 1024 * 1024)
+		{
+			self::setElementAttribute($form_name, 'chunkSize', ($upload_max_filesize - 1024 * 1024) / 2);
 		}
 	}
 }

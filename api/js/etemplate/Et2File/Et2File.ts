@@ -98,6 +98,8 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	@property({type: Object}) uploadOptions : {};
 
+	/** Chunk size can be altered by the server */
+	@property({type: Number}) chunkSize = 1020 * 1024;
 
 	@property({type: Function}) onStart : Function;
 	@property({type: Function}) onFinishOne : Function;
@@ -106,7 +108,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	@state() files : FileInfo[] = [];
 
 	protected resumable : Resumable = null;
-	private __value : { [tempName : string] : FileInfo };
+	private __value : { [tempName : string] : FileInfo } = {};
 
 	/** Files already uploaded */
 	@property({type: Object})
@@ -130,7 +132,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	{
 		return this.__value;
 	}
-	
+
 	get fileInput() : HTMLInputElement { return this.shadowRoot?.querySelector("#file-input");}
 
 	get list() : HTMLElement
@@ -197,11 +199,14 @@ export class Et2File extends Et2InputWidget(LitElement)
 				request_id: this.getInstanceManager()?.etemplate_exec_id,
 				widget_id: this.id,
 			},
-			chunkSize: 1024 * 1024,
+			chunkSize: this.chunkSize,
 
 			// Checking for already uploaded chunks - resumable uploads
 			testChunks: true,
-			testTarget: this.egw().ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\File::ajax_test_chunk")
+			testTarget: this.egw().ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\File::ajax_test_chunk"),
+
+			// Failure & retry
+			//xhrTimeout: 10000
 		};
 		if(this.accept)
 		{
@@ -279,6 +284,11 @@ export class Et2File extends Et2InputWidget(LitElement)
 		if(fileItem && file.progress())
 		{
 			fileItem.progress = file.progress() * 100;
+			// Show indeterminate while processing
+			if(fileItem.progress == 100)
+			{
+				delete fileItem.progress;
+			}
 			fileItem.requestUpdate("progress");
 		}
 	}
@@ -489,14 +499,27 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	handleFileRemove(info : FileInfo)
 	{
-		const index = this.files.indexOf(info);
+		let index = this.files.indexOf(info);
+		if(index === -1)
+		{
+			const source = <FileInfo[]>Object.values(this.value);
+			index = source.indexOf(info);
+			delete this.value[Object.keys(this.value)[index]];
+		}
+		else
+		{
+			this.files.splice(index, 1);
+		}
+
 		if(index === -1)
 		{
 			return;
 		}
-		const fileInfo = this.files[index];
+		if(info && typeof info.progress == "function" && typeof info.abort == "function" && info.progress() < 1)
+		{
+			info.abort();
+		}
 
-		this.files.splice(index, 1);
 		this.requestUpdate();
 
 		this.updateComplete.then(() =>
@@ -528,21 +551,24 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	fileItemTemplate(fileInfo : FileInfo, index)
 	{
+		const label = (fileInfo.accepted ? fileInfo.file.name : fileInfo.warning) ?? fileInfo['name'];
 		let icon = fileInfo.icon ?? (fileInfo.warning ? "exclamation-triangle" : undefined);
 
 		// Pull thumbnail from file if we can
+		const type = fileInfo.file?.type ?? fileInfo["type"];
 		let thumbnail;
-		if(!icon && fileInfo.file && fileInfo.file.type?.startsWith("image/"))
+		if(!icon && fileInfo.file && type?.startsWith("image/"))
 		{
 			thumbnail = URL.createObjectURL(fileInfo.file);
 		}
+		const closable = !this.readonly && (fileInfo.accepted || Object.values(this.value).indexOf(fileInfo) !== -1)
 
 		return html`
             <et2-file-item
                     display=${this.display}
                     size=${fileInfo.accepted ? fileInfo.file.size : nothing}
                     variant=${fileInfo.accepted && !fileInfo.warning ? "default" : "warning"}
-                    ?closable=${fileInfo.accepted}
+                    ?closable=${closable}
                     ?loading=${fileInfo.loading}
                     image=${ifDefined(icon)}
                     progress=${typeof fileInfo.progress == "function" ? fileInfo.progress() : (fileInfo.progress ?? nothing)}
@@ -560,19 +586,19 @@ export class Et2File extends Et2InputWidget(LitElement)
                         this.handleFileRemove(fileInfo);
                     }}
             >
-                ${!icon && thumbnail || !fileInfo.file.type ? html`
+                ${!icon && thumbnail || !type ? html`
                     <et2-image slot="image"
                                src=${thumbnail ?? "upload"}
                     />
                 ` : nothing}
-                ${!icon && !thumbnail && fileInfo.file.type ? html`
+                ${!icon && !thumbnail && type ? html`
                     <et2-vfs-mime
                             slot="image"
-                            mime=${fileInfo.file.type}
-                            .value=${{mime: fileInfo.file.type}}
+                            mime=${type}
+                            .value=${{mime: type}}
                     ></et2-vfs-mime>` : nothing
                 }
-                ${fileInfo.accepted ? fileInfo.file.name : fileInfo.warning}
+                ${label}
             </et2-file-item>
 		`;
 	}

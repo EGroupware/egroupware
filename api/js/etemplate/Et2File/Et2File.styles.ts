@@ -4,6 +4,9 @@ export default css`
 	:host {
 	}
 
+	:host([loading]) .file__button et2-image {
+		display: none;
+	}
 	.file--single > div {
 		display: flex;
 		flex-direction: row;

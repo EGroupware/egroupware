@@ -485,12 +485,19 @@ export class filemanagerAPP extends EgwApp
 		if(_file_count && _event.detail)
 		{
 			let widget = _event.target;
+			widget.loading = true;
+			_event.detail.accepted = false; // Turn off removable, it's too late now
 			let value = widget.getValue();
 			value.conflict = _conflict;
+			widget.requestUpdate("loading");
 			egw.json(_target, ['upload', value, _path, {ui_path: this.egw.window.location.pathname}],
 				this._upload_callback, this, true, this
-			).sendRequest();
-			widget.value = {};
+			).sendRequest().finally(() =>
+			{
+				widget.loading = false;
+				widget.value = {};
+				widget.requestUpdate("loading", true);
+			});
 		}
 	}
 
