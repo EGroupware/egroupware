@@ -209,6 +209,9 @@ tr.revoked > td * {
     color: grey !important;
     font-style: italic;
 }
+tr.template > td * {
+    color: darkblue !important;
+}
 td.token {
     border: 3px solid red;
 }
