@@ -59,6 +59,9 @@ class Token extends Admin\Token
 			],
 			'sel_options' => [
 			],
+			'readonlys' => [
+				'token[add]' => self::templatesOnly(),
+			],
 			'save_callback' => __CLASS__.'::save_callback',
 		];
 	}

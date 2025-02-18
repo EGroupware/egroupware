@@ -103,6 +103,7 @@ it sets content size (text only) according to selected size.	preferences	de	Stel
 just clicking on the line, like a checkbox	preferences	de	Einfaches anklicken der Zeile, wie eine Checkbox
 keep list open for selecting multiple	preferences	de	Liste für die Auswahl mehrerer Optionen offen halten
 language	preferences	de	Sprache
+limit following groups to only create application passwords via templates	preferences	de	Beschränke die folgenden Gruppen darauf nur Anwendungspasswörter aus Vorlagen generieren zu dürfen
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	de	Das Anmelden per SingleSignOn liefert kein Passwort das an Mail- oder Datei-Server weiter gegeben werden kann.
 look & feel	preferences	de	Aussehen und Handhabung
 lowercase letters	preferences	de	Kleinbuchstaben

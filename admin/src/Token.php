@@ -43,12 +43,26 @@ class Token
 	}
 
 	/**
+	 * Allow to use only (preexisting, admin-created) templates to create new token
+	 *
+	 * @return bool
+	 */
+	public static function templatesOnly()
+	{
+		return static::APP !== 'admin' &&
+			!empty($GLOBALS['egw_info']['server']['limit_application_password_templates']) &&
+			array_intersect($GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true),
+				(array)$GLOBALS['egw_info']['server']['limit_application_password_templates']);
+	}
+
+	/**
 	 * Edit or add a token
 	 *
 	 * @param array $content =null
 	 */
 	public function edit(array $content=null)
 	{
+		$readonlys = [];
 		if (!is_array($content))
 		{
 			if (!empty($_GET['token_id']))
@@ -56,6 +70,21 @@ class Token
 				if (!($content = $this->token->read(['token_id' => $_GET['token_id']])))
 				{
 					Api\Framework::window_close(lang('Token not found!'));
+				}
+				// opening a template outside admin app
+				if (static::APP !== 'admin' && !$content['account_id'] && empty($content['token_hash']) && empty($content['token_revoked']))
+				{
+					$content['new_token'] = true;
+					// treat valid_until as relative to creation date
+					if (!empty($content['token_valid_until']))
+					{
+						$content['token_valid_until'] = new Api\DateTime(time()+strtotime($content['token_valid_until'])-strtotime($content['token_created']));
+					}
+					unset($content['token_id'], $content['token_created'], $content['token_remark']);
+					// all fields, but buttons and password are readonly
+					$readonlys['__ALL__'] = true;
+					$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['button[cancel]'] =
+						$readonlys['password'] = $readonlys['token_remark'] = false;
 				}
 			}
 			else
@@ -84,7 +113,7 @@ class Token
 					case 'save':
 					case 'apply':
 						$content['token_limits'] = Api\Auth\Token::apps2limits($content['token_apps']);
-						if (empty($content['token_id']) || $content['new_token'])
+						if (empty($content['token_id']) && static::APP !== 'admin' || $content['new_token'])
 						{
 							$content['new_token'] = true;
 							$button = 'apply';  // must not close window to show token
@@ -123,7 +152,7 @@ class Token
 		$content['token_apps'] = Api\Auth\Token::limits2apps($content['token_limits']);
 		$content['admin'] = !empty($GLOBALS['egw_info']['user']['apps']['admin']) && static::APP === 'admin';
 		if (empty($content['account_id'])) $content['account_id'] = '';
-		$readonlys = [
+		$readonlys += [
 			'button[delete]' => !$content['token_id'],
 			'account_id' => empty($GLOBALS['egw_info']['user']['apps']['admin']) || static::APP !== 'admin',
 		];
@@ -149,9 +178,10 @@ class Token
 	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false,$only_keys=false,$extra_cols=array())
 	{
 		// do NOT show all users or other users to non-admin or regular user UI
+		// show templates (account_id=0 AND token_hash='')
 		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) || static::APP !== 'admin')
 		{
-			$query['col_filter']['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
+			$query['col_filter'][] = "(account_id=0 AND token_hash='' AND token_revoked IS NULL OR account_id=".(int)$GLOBALS['egw_info']['user']['account_id'].')';
 		}
 		// sort revoked token behind active ones
 		if (empty($query['order']) || $query['order'] === 'token_id')
@@ -171,6 +201,10 @@ class Token
 			if ($row['token_revoked'])
 			{
 				$row['class'] = 'revoked';
+			}
+			elseif (!$row['account_id'] && empty($row['token_hash']))
+			{
+				$row['class'] = 'template';
 			}
 		}
 		return $this->token->total;
@@ -259,7 +293,7 @@ class Token
 				'caption' => 'Revoke',
 				'confirm' => 'Revoke this token',
 				'icon' => 'delete',
-				'disableClass' => 'revoked',
+				'disableClass' => static::APP !== 'admin' ? ['template', 'revoked'] : 'revoked',
 				'group' => $group,
 			],
 		];
@@ -273,6 +307,14 @@ class Token
 				$actions[$action]['onExecute'] = 'javaScript:'.$exec;
 				unset($actions[$action]['url'], $actions[$action]['popup']);
 			}
+		}
+		// are users allowed to create arbitrary tokens (and edit them), or only new ones from templates
+		if (self::templatesOnly())
+		{
+			unset($actions['add']);
+			$actions['edit']['caption'] = 'Create';
+			$actions['edit']['enableClass'] = 'template';
+			$actions['edit']['icon'] = 'add';
 		}
 		return $actions;
 	}
