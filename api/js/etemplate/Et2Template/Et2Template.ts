@@ -301,9 +301,6 @@ export class Et2Template extends Et2Widget(LitElement)
 		this.__isLoading = true;
 		this.loading = new Promise(async(resolve, reject) =>
 		{
-			// Empty in case load was called again
-			this.clear();
-
 			// No template, no point in continuing
 			if(!(this.template || this.id))
 			{
@@ -323,6 +320,10 @@ export class Et2Template extends Et2Widget(LitElement)
 				reject(e);
 				return;
 			}
+
+			// Empty in case load was called again
+			this.clear();
+
 			// Read the XML structure of the requested template
 			if(typeof xml != 'undefined')
 			{
