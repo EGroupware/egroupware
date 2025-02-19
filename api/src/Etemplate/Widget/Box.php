@@ -49,7 +49,10 @@ class Box extends Etemplate\Widget
 		$old_cname = $params[0];
 		$old_expand = $params[1];
 
-		if ($this->id && $this->type != 'groupbox') $cname = self::form_name($cname, $this->id, $params[1]);
+		if($this->id && !in_array($this->type, ['groupbox', 'et2-groupbox']))
+		{
+			$cname = self::form_name($cname, $this->id, $params[1]);
+		}
 		if (($expand['cname'] ?? null) !== $cname && trim($cname))
 		{
 			$expand['cont'] =& self::get_array(self::$request->content, $cname, false, true);
