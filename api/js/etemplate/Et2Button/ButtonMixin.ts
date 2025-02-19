@@ -210,7 +210,10 @@ so we force the button images to be square*/
 			let [keycode, modifiers] = this._registeredKeycode.split("_");
 			egw_unregisterGlobalShortcut(keycode, modifiers.includes("S"), modifiers.includes("C"), modifiers.includes("A"));
 		}
+	}
 
+	destroy()
+	{
 		// Clean up any added image
 		while(this.lastChild) this.lastChild.remove();
 	}
