@@ -224,7 +224,11 @@ class mail_hooks
 			'replyto_expander' => array(
 				'id' => 'replyto_expander',
 				'label' => lang('Reply to')
-			)
+			),
+            'from_expander' => array(
+                'id' => 'from_expander',
+                'label' => lang('hide from')
+            )
 		);
 
 		foreach($allActions as $name => $action)

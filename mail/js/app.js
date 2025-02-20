@@ -4820,20 +4820,29 @@ app.classes.mail = AppJS.extend(
 			replyto:{
 				widget:{},
 				jQClass: '.mailComposeJQueryReplyto'
-			}};
+			},
+			from:{
+				widget:{},
+				jQClass: '.mailComposeJQueryFrom'
+			}
+	};
 		var actions = egw.preference('toggledOnActions', 'mail');
 		actions = actions ? actions.split(',') : [];
 		for(var widget in widgets)
 		{
 			var expanderBtn = widget + '_expander';
 			widgets[widget].widget = this.et2.getWidgetById(widget);
+			if(widget === 'from')
+				widgets['from'].widget = this.et2.getWidgetById('mailaccount');
 			// Add expander button widget to the widgets object
 			widgets[expanderBtn] = {widget:this.et2.getWidgetById(expanderBtn)};
 
-			if (typeof widgets[widget].widget != 'undefined'
+			if ((typeof widgets[widget].widget != 'undefined'
 					&& typeof widgets[expanderBtn].widget != 'undefined'
 					&& (!widgets[widget].widget.value || !widgets[widget].widget.value.length)
 					&& actions.indexOf(expanderBtn)<0)
+					|| expanderBtn ==='from_expander'
+			)
 			{
 				widgets[expanderBtn].widget.set_disabled(false);
 				jQuery(widgets[widget].jQClass).hide();
@@ -4891,6 +4900,9 @@ app.classes.mail = AppJS.extend(
 					{
 						//expWidgets.replyto.set_disabled(true);
 					}
+					break;
+				case 'from_expander':
+					document.querySelector('.mailComposeHideFrom').style.display=''
 					break;
 			}
 			widget.parentElement.hide()
