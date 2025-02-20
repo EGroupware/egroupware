@@ -33,9 +33,9 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			egw.tooltipUnbind(node);
 		});
 		tooltipped.splice(0, tooltipped.length);
-		if (tooltip_div)
+		if (tooltip_div && tooltipped_div.off)
 		{
-			tooltipped.off();
+			tooltipped_div.off();
 		}
 		return null;
 	})
