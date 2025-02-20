@@ -28,7 +28,9 @@ use EGroupware\Api;
  * 	'no_filter2'     => True// I  disable the 2. filter (params are the same as for filter)
  * 	'no_cat'         => True// I  disable the cat-selectbox
  *	'cat_app'        =>     // I  application the cat's should be from, default app in get_rows
- *	'cat_is_select'  =>     // I  true||'no_lang' use selectbox instead of category selection, default null
+ *	'cat_is_select'  =>     // I  true||'no_lang' use selectbox instead of category selection, default null (cat_widget has higher precedence!)
+ *  '(filter|filter2|cat)_widget' => // I widget to use instead of the regular et2-select(-cat)
+ *  '(filter|filter2|cat)_placeholder' => // I placeholder-text to use
  * 	'template'       =>		// I  template to use for the rows, if not set via options
  * 	'header_left'    =>		// I  template to show left of the range-value, left-aligned (optional)
  * 	'header_right'   =>		// I  template to show right of the range-value, right-aligned (optional)

@@ -15,6 +15,7 @@
 namespace EGroupware\Api\Contacts;
 
 use EGroupware\Api;
+use EGroupware\Api\Etemplate\Widget\Tree;
 
 /**
  * Contacts storage object
@@ -1204,15 +1205,28 @@ class Storage
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1' &&
 				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] !== '1')
 		{
-			foreach($GLOBALS['egw']->accounts->search(array(
-				'type' => 'groups'
-			)) as $account_id => $group)
-			{
-				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] === '0' || !empty($group['account_email']))
+			unset($lists['']);
+			return array_merge([
+				[Tree::ID => 0, Tree::LABEL => lang('No distribution list')],    // empty label
+				// add distribution lists in a (by default) open container "Distribution lists"
+				[
+					Tree::ID => '0',
+					Tree::LABEL => lang('Distribution lists'),
+					Tree::IMAGE_FOLDER_OPEN => Api\Image::find('api', 'dhtmlxtree/folderOpen'),
+					Tree::IMAGE_FOLDER_CLOSED => Api\Image::find('api', 'dhtmlxtree/folderClosed'),
+					Tree::OPEN => true,
+					Tree::UNSELECTABLE => true,
+					Tree::CHILDREN => array_values(array_map(static function($label, $key)
 				{
-					$lists[(string)$account_id] = Api\Accounts::format_username($group['account_lid'], '', '', $account_id);
-				}
-			}
+					return [Tree::ID => $key, Tree::LABEL => $label, Tree::IMAGE_LEAF => 'list'];
+				}, $lists, array_keys($lists)))],
+			],
+			// add the groups behind also using containers, if defined (taking into account the pref which groups to show)
+			Tree::groups('', $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] === '0' ? null :
+				static function($group)
+				{
+					return !empty($group['account_email']);
+				}));
 		}
 
 		return $lists;

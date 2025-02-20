@@ -114,6 +114,11 @@ class Tree extends Etemplate\Widget
     const CLASS_LIST = 'class';
 
 	/**
+	 * Container which can be opened/closed, but not selected
+	 */
+	const UNSELECTABLE = 'unselectable';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string|\XMLReader $xml string with xml or XMLReader positioned on the element to construct
@@ -548,7 +553,7 @@ class Tree extends Etemplate\Widget
 		// store link as userdata, maybe we should store everything not directly understood by tree this way ...
 		foreach(array_diff_key($data, array_flip([
 			self::ID, self::LABEL, self::TOOLTIP, self::IMAGE_LEAF, self::IMAGE_FOLDER_OPEN, self::IMAGE_FOLDER_CLOSED,
-			'item', self::AUTOLOAD_CHILDREN, 'select', self::OPEN, 'call',
+			self::CHILDREN, self::AUTOLOAD_CHILDREN, 'select', self::OPEN, 'call', self::UNSELECTABLE,
 		])) as $name => $content)
 		{
 			$data['userdata'][] = array(
@@ -565,9 +570,10 @@ class Tree extends Etemplate\Widget
 	 * Get list of all groups as tree, taking container into account, if enabled
 	 *
 	 * @param string $root root for building tree-IDs, "" for just using IDs, no path
+	 * @param ?callable $check function to check if group should be added
 	 * @return array[] with tree-children, groups have IDs $root/$account_id (independent of container!), while container use $root/md5($container_name)
 	 */
-	public static function groups(string $root='/groups')
+	public static function groups(string $root='/groups', ?callable $check=null)
 	{
 		if ($root) $root = rtrim($root, '/').'/';
 
@@ -579,6 +585,7 @@ class Tree extends Etemplate\Widget
 			'start' => false,   // to NOT limit number of returned groups
 		)) as $group)
 		{
+			if ($check && !$check($group)) continue;
 			if (($container_name = Api\Accounts::container($group)))
 			{
 				foreach($children as &$container)
@@ -592,6 +599,7 @@ class Tree extends Etemplate\Widget
 						Tree::ID => $root.md5($container_name),
 						Tree::IMAGE_FOLDER_OPEN => Api\Image::find('api', 'dhtmlxtree/folderOpen'),
 						Tree::IMAGE_FOLDER_CLOSED => Api\Image::find('api', 'dhtmlxtree/folderClosed'),
+						Tree::UNSELECTABLE => true,
 						Tree::CHILDREN => [],
 					]);
 					$container =& $children[count($children)-1];
