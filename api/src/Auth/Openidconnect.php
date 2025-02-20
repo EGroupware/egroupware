@@ -146,10 +146,22 @@ class Openidconnect implements BackendSSO
 	 * @param string $passwd corresponding password
 	 * @param string $passwd_type ='text' 'text' for cleartext passwords (default)
 	 * @return boolean true if successful authenticated, false otherwise
-	 * @ToDo: add config about which claim to use and use this with Client Credentials claim, would allow to use OID like LDAP/AD with password
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
+		// add username and password
+		$this->client->addAuthParam([
+			'username' => $username,
+			'password' => $passwd,
+		]);
+		// perform the auth and return the token (to validate check if the access_token property is there and a valid JWT) :
+		try {
+			$token = $this->client->requestResourceOwnerToken(TRUE)->access_token;
+			return !empty($token);
+		}
+		catch(OpenIDConnectClientException $e) {
+			// ignore
+		}
 		return false;
 	}
 
