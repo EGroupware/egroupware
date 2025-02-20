@@ -137,7 +137,7 @@
 						<et2-description  value="Expiration" style="align-self: center;"></et2-description>
 						<et2-date  id="expiration" placeholder="@expiration_blur" dataFormat="Y-m-d"></et2-date>
 					</et2-hbox>
-					<et2-password  id="password" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!" placeholder="password protect"></et2-password>
+					<et2-password  id="password" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!" placeholder="password protect" autocomplete="new-password"></et2-password>
                 </et2-hbox>
             </et2-vbox>
             <et2-hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
