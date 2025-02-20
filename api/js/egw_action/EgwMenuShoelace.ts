@@ -177,8 +177,13 @@ export class EgwMenuShoelace extends LitElement
 		});
 
 		// Hide dividers before empty sections
-		this.menu.querySelectorAll("sl-divider:not(:has( + sl-menu-item:not([hidden])))").forEach((i : SlDivider) => i.hidden = true);
-
+		try
+		{
+			this.menu.querySelectorAll("sl-divider:not(:has( + sl-menu-item:not([hidden])))").forEach((i: SlDivider) => i.hidden = true);
+		}catch (e)
+		{
+			console.log("It appears you are using an older browser version, please consider updating")
+		}
 		// Copy caption changes
 		let osClipboard;
 		if(_links.egw_os_clipboard && (osClipboard = <SlMenuItem>this.shadowRoot.querySelector("[data-action-id='egw_os_clipboard']")))
