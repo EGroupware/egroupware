@@ -244,6 +244,8 @@ class addressbook_ui extends addressbook_bo
 				'filter'         =>	'',	// =All	// IO filter, if not 'no_filter' => True
 				'filter_no_lang' => True,		// I  set no_lang for filter (=dont translate the options)
 				'no_filter2'     => True,		// I  disable the 2. filter (params are the same as for filter)
+				'filter2_widget' => 'et2-tree-dropdown',
+				'filter2_placeholder' => lang('No distribution list'),
 				//'filter2_label'=>	lang('Distribution lists'),			// IO filter2, if not 'no_filter2' => True
 				'filter2'        =>	'',			// IO filter2, if not 'no_filter2' => True
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
@@ -348,7 +350,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$this->tmpl->disableElement('nm[col_filter][tid]');
 		}
-		// get the availible grouped-views plus the label of the contacts view of one group
+		// get the available grouped-views plus the label of the contacts view of one group
 		$sel_options['grouped_view'] = $this->grouped_views;
 		if (isset($grouped_view))
 		{

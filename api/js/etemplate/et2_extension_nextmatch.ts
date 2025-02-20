@@ -3554,8 +3554,9 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		if(!settings.no_cat)
 		{
 			if(typeof settings.cat_id_label == 'undefined') settings.cat_id_label = '';
-			this.category = this._build_select('cat_id', settings.cat_is_select ?
-														 'et2-select' : 'et2-select-cat', settings.cat_id, settings.cat_is_select !== true, {
+			this.category = this._build_select('cat_id', settings.cat_widget ?? (settings.cat_is_select ?
+				'et2-select' : 'et2-select-cat'), settings.cat_id, settings.cat_is_select !== true, {
+				placeholder: settings.cat_placeholder,
 				multiple: false,
 				class: "select-cat",
 				value_class: settings.cat_id_class
@@ -3565,14 +3566,17 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		// Filter 1
 		if(!settings.no_filter)
 		{
-			this.filter = this._build_select('filter', 'et2-select', settings.filter, settings.filter_no_lang);
+			this.filter = this._build_select('filter', settings.filter_widget ?? 'et2-select', settings.filter, settings.filter_no_lang, {
+				placeholder: settings.filter_placeholder,
+			});
 		}
 
 		// Filter 2
 		if(!settings.no_filter2)
 		{
-			this.filter2 = this._build_select('filter2', 'et2-select', settings.filter2,
+			this.filter2 = this._build_select('filter2', settings.filter2_widget ?? 'et2-select', settings.filter2,
 				settings.filter2_no_lang, {
+					placeholder: settings.filter2_placeholder,
 					multiple: false,
 					class: "select-cat",
 					value_class: settings.filter2_class
