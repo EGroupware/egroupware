@@ -273,6 +273,7 @@ ham folder	mail	de	Ordner für nicht Spam-Nachrichten
 handling of external http images / mixed content in mails	mail	de	Behandlung von externen Bilder per http / gemischter Inhalt in E-Mails
 header	mail	de	Kopfzeilen
 header lines	mail	de	Kopfzeilen anzeigen
+hide from	mail	de	Von ausblenden
 high	mail	de	hoch
 high priority	mail	de	Hohe Priorität
 hold %1 to drag files to your computer	mail	de	%1 halten um Dateien auf Ihren Computer zu ziehen
