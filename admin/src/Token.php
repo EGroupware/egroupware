@@ -74,18 +74,23 @@ class Token
 				// opening a template outside admin app
 				if (static::APP !== 'admin' && !$content['account_id'] && empty($content['token_hash']) && empty($content['token_revoked']))
 				{
-					$content['new_token'] = true;
+					$content['new_token'] = $content['from_template'] = true;
 					// treat valid_until as relative to creation date
 					if (!empty($content['token_valid_until']))
 					{
 						$content['token_valid_until'] = new Api\DateTime(time()+strtotime($content['token_valid_until'])-strtotime($content['token_created']));
 					}
 					unset($content['token_id'], $content['token_created'], $content['token_remark']);
-					// all fields, but buttons and password are readonly
-					$readonlys['__ALL__'] = true;
-					$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['button[cancel]'] =
-						$readonlys['password'] = $readonlys['token_remark'] = false;
 				}
+				// if only templates are allowed, we assume all existing tokens are from templates, and NOT editable
+				elseif ($this->templatesOnly())
+				{
+					$content['from_template'] = true;
+				}
+			}
+			elseif($this->templatesOnly())
+			{
+				Api\Framework::window_close(lang('Permission denied!'));
 			}
 			else
 			{
@@ -148,6 +153,14 @@ class Token
 			catch(\Exception $e) {
 				Api\Framework::message($e->getMessage(), 'error');
 			}
+		}
+		// if token is from template: all fields, but buttons and password are readonly
+		if (!empty($content['from_template']))
+		{
+			$readonlys['__ALL__'] = true;
+			$readonlys['new_token'] = empty($content['token_hash']);
+			$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['button[cancel]'] =
+				$readonlys['password'] = $readonlys['token_remark'] = false;
 		}
 		$content['token_apps'] = Api\Auth\Token::limits2apps($content['token_limits']);
 		$content['admin'] = !empty($GLOBALS['egw_info']['user']['apps']['admin']) && static::APP === 'admin';
@@ -311,10 +324,12 @@ class Token
 		// are users allowed to create arbitrary tokens (and edit them), or only new ones from templates
 		if (self::templatesOnly())
 		{
-			unset($actions['add']);
-			$actions['edit']['caption'] = 'Create';
-			$actions['edit']['enableClass'] = 'template';
-			$actions['edit']['icon'] = 'add';
+			$actions['add'] = [
+				'caption' => 'Create',
+				'enableClass' => 'template',
+			]+$actions['edit'];
+
+			$actions['edit']['disableClass'] = 'template';
 		}
 		return $actions;
 	}
