@@ -20,11 +20,7 @@ use EGroupware\Api\Session;
 use EGroupware\Api\Egw;
 use EGroupware\Api;
 
-// E_STRICT in PHP 5.4 gives various strict warnings in working code, which can NOT be easy fixed in all use-cases :-(
-// Only variables should be assigned by reference, eg. soetemplate::tree_walk()
-// Declaration of <extended method> should be compatible with <parent method>, various places where method parameters change
-// --> switching it off for now, as it makes error-log unusable
-error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 
 $egw_min_php_version = '8.0';
 if (!function_exists('version_compare') || version_compare(PHP_VERSION,$egw_min_php_version) < 0)
