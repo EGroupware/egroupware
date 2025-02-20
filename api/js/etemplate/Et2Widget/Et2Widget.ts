@@ -804,12 +804,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			// Clear any deferred properties, functions may live in here
 			this._deferred_properties = {};
 
-			// Not really needed, use the disconnectedCallback() and let the browser handle it
-
 			// Call the destructor of all children so any legacy widgets get destroyed
 			for(let i = this.getChildren().length - 1; i >= 0; i--)
 			{
 				this.getChildren()[i].destroy();
+				this.getChildren()[i] instanceof Et2WidgetClass && (<Et2WidgetClass>this.getChildren()[i]).remove();
 			}
 
 			// Free the array managers if they belong to this widget

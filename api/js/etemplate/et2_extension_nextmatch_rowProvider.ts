@@ -61,8 +61,11 @@ export class et2_nextmatch_rowProvider
 	destroy()
 	{
 		this._rowProvider.destroy();
+		this._rowProvider = null;
 		this._subgridCallback = null;
 		this._context = null;
+		this._rootWidget = null;
+		this._template = null;
 		this._dataRow = null;
 	}
 

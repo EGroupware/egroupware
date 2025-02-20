@@ -301,12 +301,14 @@ export class et2_widget extends ClassWithAttributes
 		{
 			this._children[i].destroy();
 		}
+		this._children.splice(0, this._children.length);
 
 		// Remove this element from the parent, if it exists
 		if(typeof this._parent != "undefined" && this._parent !== null && this._parent instanceof et2_widget)
 		{
 			this._parent.removeChild(this);
 		}
+		this._parent = null;
 
 		// Free the array managers if they belong to this widget
 		for (var key in this._mgrs)
