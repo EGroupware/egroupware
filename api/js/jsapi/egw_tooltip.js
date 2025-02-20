@@ -26,7 +26,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	"use strict";
 
 	const tooltipped = [];
-	_wnd.addEventListener("beforeunload", (e) =>
+	_wnd.addEventListener("unload", (e) =>
 	{
 		tooltipped.forEach(node =>
 		{
@@ -37,6 +37,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			tooltipped.off();
 		}
+		return null;
 	})
 
 	let tooltip_div = null;
