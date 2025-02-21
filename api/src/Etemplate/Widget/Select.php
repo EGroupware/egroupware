@@ -495,6 +495,24 @@ class Select extends Etemplate\Widget
 	 */
 	public static function fix_encoded_options(array &$options, $use_array_of_objects=null)
 	{
+		// check if $options is already a real (non-associative) array of (associative) arrays
+		// important to pass et2-tree-dropdown options through, which uses keys "id" and "text", but also requires "value"!
+		if ($use_array_of_objects && isset($options[0], $options[count($options)-1]) && is_array($options[0]))
+		{
+			foreach($options as $key => &$option)
+			{
+				if (!isset($option['value']))
+				{
+					$option['value'] = $option['id'] ?? (string)$key;
+				}
+				if (isset($option['item']) && is_array($option['item']))
+				{
+					self::fix_encoded_options($option['item'], $use_array_of_objects);
+				}
+			}
+			return;
+		}
+
 		$backup_options = $options;
 
 		$values = array();

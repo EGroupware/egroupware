@@ -1270,7 +1270,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			return true
 		}
 		// TODO: Move this mail-specific stuff into mail
-		if(selectOption.id && (selectOption.id.endsWith("INBOX") || selectOption.id == window.egw.preference("ActiveProfileID", "mail")))
+		if(typeof selectOption.id === "string" && (selectOption.id.endsWith("INBOX") || selectOption.id == window.egw.preference("ActiveProfileID", "mail")))
 		{
 			selectOption.open = 1
 			return true

@@ -12,6 +12,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Etemplate\Widget\Tree;
 use EGroupware\Api\Link;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
@@ -307,8 +308,7 @@ class addressbook_ui extends addressbook_bo
 		Api\Cache::setSession('addressbook','active_tid',$content['nm']['col_filter']['tid']);
 		if ($this->lists_available())
 		{
-			$sel_options['filter2'] = $this->get_lists(Acl::READ,array('' => lang('No distribution list')));
-			$sel_options['filter2']['add'] = lang('Add a new list').'...';	// put it at the end
+			$sel_options['filter2'] = $this->distribution_lists();
 		}
 
 		// Organisation stuff is not (yet) available with ldap
@@ -390,6 +390,55 @@ class addressbook_ui extends addressbook_bo
 		}
 		return $this->tmpl->exec('addressbook.addressbook_ui.index',
 			$content, $sel_options, array(), $preserv, empty($_GET['template']) ? 0 : 2);
+	}
+
+	/**
+	 * Get sel-options for distribution lists, will be hierarchical, if groups are added too
+	 *
+	 * @return array
+	 */
+	protected function distribution_lists()
+	{
+		// add groups for all backends, if accounts addressbook is not hidden &
+		// preference has not turned them off
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1' &&
+			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] !== '1')
+		{
+			$lists = $this->get_lists(Acl::READ, null, false);
+			$lists = array_merge([
+				[Tree::ID => '', Tree::LABEL => lang('No distribution list')],    // empty label
+				// add distribution lists in a (by default) open container "Distribution lists"
+				[
+					Tree::ID => 'lists',
+					Tree::LABEL => lang('Distribution lists'),
+					Tree::IMAGE_FOLDER_OPEN => Api\Image::find('api', 'dhtmlxtree/folderOpen'),
+					Tree::IMAGE_FOLDER_CLOSED => Api\Image::find('api', 'dhtmlxtree/folderClosed'),
+					Tree::OPEN => true,
+					Tree::UNSELECTABLE => true,
+					Tree::CHILDREN => array_values(array_map(static function($label, $key)
+					{
+						return [Tree::ID => (string)$key, Tree::LABEL => $label, Tree::IMAGE_LEAF => 'list'];
+					}, $lists, array_keys($lists)))],
+				],
+				// add the groups behind also using containers, if defined (taking into account the pref which groups to show)
+				Tree::groups('', $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] === '0' ? null :
+					static function($group)
+					{
+						return !empty($group['account_email']);
+					}));
+
+			$lists[] = [
+				Etemplate\Widget\Tree::ID => 'add',
+				Etemplate\Widget\Tree::LABEL => lang('Add a new list').'...',
+				Etemplate\Widget\Tree::IMAGE_LEAF => Api\Image::find('api', 'add'),
+			];
+		}
+		else
+		{
+			$lists = $this->get_lists(Acl::READ, ['' => lang('No distribution list')], false);
+			$lists['add'] = lang('Add a new list').'...';
+		}
+		return $lists;
 	}
 
 	/**

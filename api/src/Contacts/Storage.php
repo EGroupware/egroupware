@@ -1169,10 +1169,11 @@ class Storage
 	 *
 	 * @param int $required =Api\Acl::READ required rights on the list or multiple rights or'ed together,
 	 * 	to return only lists fulfilling all the given rights
-	 * @param string $extra_labels =null first labels if given (already translated)
+	 * @param ?array $extra_labels =null first labels if given (already translated)
+	 * @param boolean $add_groups
 	 * @return array with id => label pairs or false if backend does not support lists
 	 */
-	function get_lists($required=Api\Acl::READ,$extra_labels=null)
+	function get_lists($required=Api\Acl::READ, ?array $extra_labels=null, $add_groups=true)
 	{
 		$lists = is_array($extra_labels) ? $extra_labels : array();
 
@@ -1202,31 +1203,18 @@ class Storage
 
 		// add groups for all backends, if accounts addressbook is not hidden &
 		// preference has not turned them off
-		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1' &&
-				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] !== '1')
+		if ($add_groups && $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== '1' &&
+			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] !== '1')
 		{
-			unset($lists['']);
-			return array_merge([
-				[Tree::ID => 0, Tree::LABEL => lang('No distribution list')],    // empty label
-				// add distribution lists in a (by default) open container "Distribution lists"
-				[
-					Tree::ID => '0',
-					Tree::LABEL => lang('Distribution lists'),
-					Tree::IMAGE_FOLDER_OPEN => Api\Image::find('api', 'dhtmlxtree/folderOpen'),
-					Tree::IMAGE_FOLDER_CLOSED => Api\Image::find('api', 'dhtmlxtree/folderClosed'),
-					Tree::OPEN => true,
-					Tree::UNSELECTABLE => true,
-					Tree::CHILDREN => array_values(array_map(static function($label, $key)
+			foreach($GLOBALS['egw']->accounts->search(array(
+				'type' => 'groups'
+			)) as $account_id => $group)
+			{
+				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] === '0' || !empty($group['account_email']))
 				{
-					return [Tree::ID => $key, Tree::LABEL => $label, Tree::IMAGE_LEAF => 'list'];
-				}, $lists, array_keys($lists)))],
-			],
-			// add the groups behind also using containers, if defined (taking into account the pref which groups to show)
-			Tree::groups('', $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] === '0' ? null :
-				static function($group)
-				{
-					return !empty($group['account_email']);
-				}));
+					$lists[(string)$account_id] = Api\Accounts::format_username($group['account_lid'], '', '', $account_id);
+				}
+			}
 		}
 
 		return $lists;

@@ -247,10 +247,11 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.displayLabel = "";
 		if(!this.multiple)
 		{
-			const option = this.optionSearch(this.__value[0], this.select_options, 'value', 'children');
+			const option = this.optionSearch(this.__value[0], this.select_options, 'value', 'item') ??
+				this.optionSearch(this.__value[0], this.select_options, 'value', 'children');
 			if(option)
 			{
-				this.displayLabel = option.label;
+				this.displayLabel = option.label ?? option.text;
 			}
 		}
 
@@ -277,10 +278,11 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		// Overridden so we can update displayLabel in the case where value got set before selectOptions
 		if(this.value && !this.multiple)
 		{
-			const option = this.optionSearch(typeof this.value == "string" ? this.value : this.value[0], this.select_options, 'value', 'children');
+			const option = this.optionSearch(typeof this.value == "string" ? this.value : this.value[0], this.select_options, 'value', 'item') ??
+				this.optionSearch(typeof this.value == "string" ? this.value : this.value[0], this.select_options, 'value', 'children');
 			if(option)
 			{
-				this.displayLabel = option.label;
+				this.displayLabel = option.label ?? option.text;
 			}
 		}
 
@@ -807,7 +809,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		}
 		if(!this.multiple && this.value && !this.open)
 		{
-			const option = this.optionSearch(this.value, this.select_options, 'value', 'children');
+			const option = this.optionSearch(this.value, this.select_options, 'value', 'item') ??
+				this.optionSearch(this.value, this.select_options, 'value', 'children');
 			image = option ? this.iconTemplate(option?.option ?? option) : null;
 		}
 		if(this.disabled || this.readonly)
@@ -889,7 +892,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                 ${map(value, (value, index) =>
                 {
                     // Deal with value that is not in options
-                    const option = this.optionSearch(value, this.select_options, 'value', 'children');
+                    const option = this.optionSearch(value, this.select_options, 'value', 'item') ?? 
+						this.optionSearch(value, this.select_options, 'value', 'children');
                     return option ? this.tagTemplate(option) : nothing;
                 })}
             </div>`;
