@@ -181,10 +181,6 @@ window.app = {classes: {}};
 		// window.onpagehide = (e) => {	debugger;};
 		window.addEventListener("pagehide", (e) =>
 		{
-			if (window.framework)
-			{
-				window.framework.popup_close(window);
-			}
 			window.framework = null;
 			window.egw = null;
 		})
