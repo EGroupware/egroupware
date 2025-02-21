@@ -26,22 +26,23 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	"use strict";
 
 	const tooltipped = [];
-	_wnd.addEventListener("unload", (e) =>
+	let tooltip_div = null;
+	let current_elem = null;
+	_wnd.addEventListener("pagehide", () =>
 	{
 		tooltipped.forEach(node =>
 		{
 			egw.tooltipUnbind(node);
 		});
 		tooltipped.splice(0, tooltipped.length);
-		if (tooltip_div && tooltipped_div.off)
+		if (tooltip_div && tooltip_div.off)
 		{
-			tooltipped_div.off();
+			tooltip_div.off();
+			tooltip_div = null;
 		}
 		return null;
 	})
 
-	let tooltip_div = null;
-	let current_elem = null;
 
 	const time_delta = 100;
 	let show_delta = 0;
@@ -152,7 +153,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		jQuery(_wnd.document.body).append(tooltip_div);
 
 		//The tooltip should automatically hide when the mouse comes over it
-		tooltip_div.on("mouseenter.tooltip", function ()
+		tooltip_div.get(0).addEventListener("mouseover", () =>
 		{
 				if (_options.hideonhover) hide();
 		});

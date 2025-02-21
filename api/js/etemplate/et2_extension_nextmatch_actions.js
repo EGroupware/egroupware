@@ -576,5 +576,5 @@ window.nm_hide_popup = function(element, div_id)
  */
 window.nm_activate_link = function(_action, _senders)
 {
-	jQuery(_senders[0].iface.getDOMNode()).find('.et2_clickable:first').trigger('click');
+	_senders[0].iface.getDOMNode().querySelector('.et2_clickable').dispatchEvent(new Event('click'));
 }

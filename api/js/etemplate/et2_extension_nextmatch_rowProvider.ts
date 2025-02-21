@@ -65,6 +65,7 @@ export class et2_nextmatch_rowProvider
 		this._subgridCallback = null;
 		this._context = null;
 		this._rootWidget = null;
+		this._template.seperated = null;
 		this._template = null;
 		this._dataRow = null;
 	}

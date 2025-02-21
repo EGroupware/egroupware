@@ -174,6 +174,22 @@ window.app = {classes: {}};
 		window.egw.top = window;
 	}
 
+	// Register unload listener for cleanup
+	if (popup)
+	{
+		// Uncomment this to debug pagehide events
+		// window.onpagehide = (e) => {	debugger;};
+		window.addEventListener("pagehide", (e) =>
+		{
+			if (window.framework)
+			{
+				window.framework.popup_close(window);
+			}
+			window.framework = null;
+			window.egw = null;
+		})
+	}
+
 	// focus window / call window.focus(), if data-window-focus is specified
 	var window_focus = egw_script.getAttribute('data-window-focus');
 	if (window_focus && JSON.parse(window_focus))

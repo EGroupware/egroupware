@@ -62,6 +62,7 @@
 		if (this.sidemenuEntry) this.sidemenuEntry.remove();
 		delete this.sidemenuEntry;
 		delete this.browser;
+		delete this.parentFw;
 		delete (framework.applications[this.appName]);
 	};
 
