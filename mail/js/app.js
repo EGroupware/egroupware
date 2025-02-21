@@ -4825,7 +4825,7 @@ app.classes.mail = AppJS.extend(
 				widget:{},
 				jQClass: '.mailComposeJQueryFrom'
 			}
-	};
+		};
 		var actions = egw.preference('toggledOnActions', 'mail');
 		actions = actions ? actions.split(',') : [];
 		for(var widget in widgets)
@@ -4844,7 +4844,7 @@ app.classes.mail = AppJS.extend(
 					|| expanderBtn ==='from_expander'
 			)
 			{
-				widgets[expanderBtn].widget.set_disabled(false);
+				widgets[expanderBtn].widget?.set_disabled(false);
 				jQuery(widgets[widget].jQClass).hide();
 			}
 			else
