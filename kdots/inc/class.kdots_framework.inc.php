@@ -253,7 +253,7 @@ class kdots_framework extends Api\Framework\Ajax
 		$mode = $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == 1 ? 'dark' : 'light';
 		return '<egw-darkmode-toggle title="' . lang("%1 mode", $mode) . '" class="' .
 			($mode == 'dark' ? 'darkmode_on' : '') . '"' . ($mode == 'dark' ? 'darkmode' : '') .
-			' aria-label="' . lang('Dark mode') . '"> </egw-darkmode-toggle>';
+			' label="' . lang('Dark mode') . '"> </egw-darkmode-toggle>';
 	}
 
 	/**
