@@ -227,7 +227,7 @@ class JsBase
 						$data['value'] = round($data['value']);
 						break;
 					case 'select':
-						if (is_scalar($data['value'])) $data['value'] = explode(',', $data['value']);
+						if (is_scalar($data['value'])) $data['value'] = preg_split('/,\s*/', $data['value']);
 						$data['value'] = array_intersect(array_keys($definition['values']), $data['value']);
 						$data['value'] = $data['value'] ? implode(',', (array)$data['value']) : null;
 						break;
