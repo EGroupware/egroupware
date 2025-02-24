@@ -468,6 +468,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			if(this.editModeEnabled)
 			{
 				edit = html`<input id="edit" type="text" part="input" autocomplete="off" style="width:100%"
+                                   aria-label="${this.egw().lang('Edit tag')}"
                                    @keydown=${this._handleEditKeyDown}
                                    @click=${(e) => e.stopPropagation()}
                                    @blur=${this.stopEdit.bind(this)}
@@ -479,6 +480,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
                     novalue: (this.value?.length == 0)
                 })} slot="prefix">
                 <et2-textbox id="search" type="text" part="input"
+                             aria-label="${this.egw().lang("search")}"
                              exportparts="base:search__base"
                              clearable
                              autocomplete="off"
