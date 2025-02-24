@@ -121,6 +121,9 @@ export default css`
 		/* Allow some shrinking with limited size */
 		min-width: calc(var(--tab-icon-size, 32px) / 2);
 		min-height: calc(var(--tab-icon-size) / 2);
+		/* Prevent large icons from causing problems */
+		max-width: var(--tab-icon-size, 32px);
+		max-height: var(--tab-icon-size, 32px);
 	}
 
 	.egw_fw__open_applications sl-tab[active] et2-image {

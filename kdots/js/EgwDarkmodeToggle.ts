@@ -21,6 +21,10 @@ export class EgwDarkmodeToggle extends LitElement
 	{
 		return [
 			css`
+				:host {
+					height: 1em;
+					width: 1em;
+				}
 				sl-icon-button::part(base) {
 					padding: 0;
 				}
