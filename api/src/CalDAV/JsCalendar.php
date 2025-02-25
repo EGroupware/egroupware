@@ -255,7 +255,8 @@ class JsCalendar extends JsBase
 				'egroupware.org:price' => $entry['info_price'] ? (double)$entry['info_price'] : null,
 				'egroupware.org:completed' => $entry['info_datecomplete'] ?
 					self::DateTime($entry['info_datecompleted'], Api\DateTime::$user_timezone->getName()) : null,
-			] + self::Locations(['location' => $entry['info_location'] ?? null]) + self::relatedToParent($entry['info_id_parent']) + [
+			] + self::Locations(['location' => $entry['info_location'] ?? null]) + [
+				'relatedTo' => self::relatedTo($entry['info_id_parent'], $entry['info_link_id'], $entry['info_id']),
 				'egroupware.org:customfields' => self::customfields($entry, 'infolog', Api\DateTime::$user_timezone->getName()),
 			];
 
@@ -373,7 +374,7 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'relatedTo':
-						$event['info_id_parent'] = self::parseRelatedToParent($value);
+						$event += self::parseRelatedTo($value);
 						break;
 
 					case 'egroupware.org:customfields':
@@ -1203,41 +1204,117 @@ class JsCalendar extends JsBase
 		return $return_bool ? ($value === 'public') : $value;
 	}
 
-	protected static function relatedToParent(int $info_id_parent)
+	protected static function relatedTo(?int $info_id_parent, ?int $info_link_id, int $info_id)
 	{
-		if (!$info_id_parent || !($parent = self::getInfolog()->read($info_id_parent)))
+		$relatedTo = [];
+		if ($info_id_parent && ($parent = self::getInfolog()->read($info_id_parent)))
 		{
-			if ($info_id_parent) error_log(__METHOD__."($info_id_parent) could NOT read parent!");
-			return [];
+			$relatedTo[$parent['info_uid']] = [
+				self::AT_TYPE => self::TYPE_RELATION,
+				'relation' => 'parent',
+			];
 		}
-		return [
-			'relatedTo' => [
-				$parent['info_uid'] => [
+		if ($info_link_id && ($link = Api\Link::get_link($info_link_id)))
+		{
+			if ($link['link_app1'] === 'infolog' && $link['link_id1'] == $info_id)
+			{
+				$relatedTo[$link['link_app2'].':'.$link['link_id2']] = [
 					self::AT_TYPE => self::TYPE_RELATION,
-					'relation' => 'parent',
-				],
-			],
-		];
+					'relation' => 'egroupware.org-primary',
+				];
+			}
+			elseif ($link['link_app2'] === 'infolog' && $link['link_id2'] == $info_id)
+			{
+				$relatedTo[$link['link_app1'].':'.$link['link_id1']] = [
+					self::AT_TYPE => self::TYPE_RELATION,
+					'relation' => 'egroupware.org-primary',
+				];
+			}
+		}
+		return $relatedTo;
 	}
 
-	protected static function parseRelatedToParent(array $related_to, bool $strict=false)
+	/**
+	 * Parse relatedTo object:
+	 * - "<uid>": {"@Type":"Relation","relation":"parent"}
+	 * - "<app>:<id>": {"@Type":"Relation","relation":"egroupware.org-primary"}
+	 * - "addressbook:<value>:<field>": {"@Type":"Relation","relation":"egroupware.org-primary"}
+	 * - you can use null, instead of the relation object, to unset a relation in a PATCH command
+	 *
+	 * <uid>: InfoLog UID
+	 * <app>: EGroupware app the current user has access to, which participates in linking
+	 * <id>: ID of EGroupware app
+	 * <field>: addressbook field like "id" or "email" (no "contact_" prefix), or "egroupware.org:customfields/<name>"
+	 * <value>: the value to search for in <field>, the search must return exactly on result!
+	 *
+	 * @param array $related_to
+	 * @param bool $strict
+	 * @return array
+	 */
+	protected static function parseRelatedTo(array $related_to, bool $strict=false)
 	{
+		$result = [];
 		foreach($related_to as $uid => $relation)
 		{
-			if (!($parent = self::getInfolog()->read(['info_uid' => $uid])))
-			{
-				throw new \InvalidArgumentException("UID '$uid' NOT found!");
-			}
-			if ($strict && $relation[self::AT_TYPE]??null !== self::TYPE_RELATION)
+			if ($strict && isset($relation) && $relation[self::AT_TYPE]??null !== self::TYPE_RELATION)
 			{
 				throw new \InvalidArgumentException("Missing or invalid @Type!");
 			}
-			if ($relation['relation'] !== 'parent')
+			switch($relation['relation'] ?? (strpos($uid, ':') === false ? 'parent' : 'egroupware.org-primary'))
 			{
-				throw new \InvalidArgumentException("Unsupported relation-type: ".json_encode($relation['relation']??null)."!");
+				case 'parent':
+					if (!($parent = self::getInfolog()->read(['info_uid' => $uid])))
+					{
+						throw new \InvalidArgumentException("UID '$uid' NOT found!");
+					}
+					$result['info_id_parent'] = isset($relation) ? $parent['info_id'] : null;
+					break;
+
+				case 'egroupware.org-primary':
+					[$app, $id, $field] = explode(':', $uid, 3)+[null, null, null];
+					if (!isset($GLOBALS['egw_info']['user']['apps'][$app]))
+					{
+						// invalid app
+					}
+					elseif (empty($field) && !empty($id) && Api\Link::title($app, $id))
+					{
+						$result['info_contact'] = ['app' => $app, 'id' => $id];
+					}
+					elseif ($app === 'addressbook' && !empty($id) && !empty($field))
+					{
+						$filter = [];
+						if (str_starts_with($field, 'egroupware.org:customfields/'))
+						{
+							$filter['#' . substr($field, 28)] = $id;
+						}
+						else
+						{
+							$filter[$field] = $id;
+						}
+						$contacts = new Api\Contacts();
+						if (($rows = $contacts->search(null, true, '', '', '', false, 'AND', [0, 1], $filter)) &&
+							$contacts->total === 1)
+						{
+							$result['info_contact'] = ['app' => $app, 'id' => $rows[0]['id']];
+						}
+					}
+					if (!isset($result['info_contact']))
+					{
+						throw new \InvalidArgumentException("Unsupported or not found relation: ".json_encode($relation)."!");
+					}
+					// to delete a primary-link we have to set it to 0
+					if (!isset($relation))
+					{
+						unset($result['info_contact']);
+						$result['info_link_id'] = 0;
+					}
+					break;
+
+				default:
+					throw new \InvalidArgumentException("Unsupported relation-type: ".json_encode($relation['relation']??null)."!");
 			}
 		}
-		return $parent ? $parent['info_id'] : null;
+		return $result;
 	}
 
 	/**

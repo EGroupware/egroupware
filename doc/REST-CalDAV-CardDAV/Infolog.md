@@ -34,9 +34,14 @@ Following RFCs / drafts used/planned for JSON encoding of InfoLog entries
 * `egroupware.org:price` float value with price, if set
 * `egroupware.org:pricelist` integer ID of used price-list (readonly)
 * `egroupware.org:customfields` custom-field object, if custom-fields are defined by admin and used in the entry
-* `relatedTo` object with UID of parent-entry as attribute-name and object as value with attributes
+* `relatedTo` object with attribute-names and Relation-object as value with attributes
   * `@type` `Relation`
-  * `relation` and value `parent`, other relation types are NOT supported
+  * `relation` and value 
+    * `parent` attribute-name is UID of the parent-entry
+    * `egroupware.org-primary` with the following attribute-names
+      * `"<app>:<id>"` or
+      * `"addressbook:<value>:<field>"` with addressbook field like `id` or `email` (no `contact_` prefix), or `egroupware.org:customfields/<name>`
+  * you can use `null` instead of a Relation-object to delete the existing value
 * you can use the [`links` sub-collection](Links-and-attachments.md) of each entry to add relations/links to other application-entries
 * InfoLogs primary link can also be created via the [`links` sub-collection](Links-and-attachments.md) with a`rel` of `egroupware.org-primary`
 
