@@ -1583,6 +1583,13 @@ export class filemanagerAPP extends EgwApp
 		return !!data.data.mime.match(mime.mime_odf_regex);
 	}
 
+	checkInvoice(_egwAction, _senders) : boolean
+	{
+		if (_senders.length>1) return false;
+		let data = egw.dataGetUIDdata(_senders[0].id);
+		return data.data?.mime && ['application/pdf', 'text/xml', 'application/xml'].includes(data.data.mime);
+	}
+
 	/**
 	 * Method to create a new document
 	 * @param {object} _action either action or node
