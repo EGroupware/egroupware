@@ -41,7 +41,8 @@ Following RFCs / drafts used/planned for JSON encoding of InfoLog entries
     * `egroupware.org-primary` with the following attribute-names
       * `"<app>:<id>"` or
       * `"addressbook:<value>:<field>"` with addressbook field like `id` or `email` (no `contact_` prefix), or `egroupware.org:customfields/<name>`
-  * you can use `null` instead of a Relation-object to delete the existing value
+      * if you client only allows to send a 1-dimensional object you can use `"relatedTo/addressbook:<value>:#<name>":"egroupware.org-primary"`, to specify the contact to link to via a (unique!) custom-field value
+  * you can use `null` instead of a Relation-object to delete the existing value (not sending the attribute will NOT delete it!)
 * you can use the [`links` sub-collection](Links-and-attachments.md) of each entry to add relations/links to other application-entries
 * InfoLogs primary link can also be created via the [`links` sub-collection](Links-and-attachments.md) with a`rel` of `egroupware.org-primary`
 

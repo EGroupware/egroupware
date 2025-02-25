@@ -357,7 +357,7 @@ class JsBase
 				{
 					throw new \InvalidArgumentException("Trying to patch not existing attribute with path $path!");
 				}
-				$parent = $target;
+				$parent = &$target;
 				$target = &$target[$part];
 			}
 			if (isset($value))

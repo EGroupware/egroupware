@@ -1260,7 +1260,7 @@ class JsCalendar extends JsBase
 			{
 				throw new \InvalidArgumentException("Missing or invalid @Type!");
 			}
-			switch($relation['relation'] ?? (strpos($uid, ':') === false ? 'parent' : 'egroupware.org-primary'))
+			switch($relation['relation'] ?? $relation ?? (strpos($uid, ':') === false ? 'parent' : 'egroupware.org-primary'))
 			{
 				case 'parent':
 					if (!($parent = self::getInfolog()->read(['info_uid' => $uid])))

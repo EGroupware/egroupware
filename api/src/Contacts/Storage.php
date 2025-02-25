@@ -764,7 +764,7 @@ class Storage
 		$rows = $backend->search($criteria, $only_keys, $order_by, $extra_cols,
 			$wildcard, $empty, $op, $start, $filter, $join, false, $ignore_acl);
 
-		$this->total = $backend->total;
+		$this->total = (int)$backend->total;
 
 		if ($rows)
 		{
