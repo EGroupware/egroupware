@@ -1240,6 +1240,7 @@ class JsCalendar extends JsBase
 	 * - "<app>:<id>": {"@Type":"Relation","relation":"egroupware.org-primary"}
 	 * - "addressbook:<value>:<field>": {"@Type":"Relation","relation":"egroupware.org-primary"}
 	 * - you can use null, instead of the relation object, to unset a relation in a PATCH command
+	 * - "egroupware.org-primary:<app>[:<field>]": "<id-or-value>"
 	 *
 	 * <uid>: InfoLog UID
 	 * <app>: EGroupware app the current user has access to, which participates in linking
@@ -1259,6 +1260,12 @@ class JsCalendar extends JsBase
 			if ($strict && isset($relation) && $relation[self::AT_TYPE]??null !== self::TYPE_RELATION)
 			{
 				throw new \InvalidArgumentException("Missing or invalid @Type!");
+			}
+			// allow to use {"egroupware.org-primary:<app>[:<field>]":"<id-or-value>"}
+			if (str_starts_with($uid, 'egroupware.org-primary:'))
+			{
+				$uid = substr($uid, 23).':'.$relation;
+				$relation = 'egroupware.org-primary';
 			}
 			switch($relation['relation'] ?? $relation ?? (strpos($uid, ':') === false ? 'parent' : 'egroupware.org-primary'))
 			{
