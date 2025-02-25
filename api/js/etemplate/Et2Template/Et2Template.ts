@@ -527,7 +527,7 @@ export class Et2Template extends Et2Widget(LitElement)
 		}
 
 		let url = "";
-		const parts = (this.template || this.id).split('?');
+		const parts = ((this.template || this.id) + "").split('?');
 		const cache_buster = parts.length > 1 ? parts.pop() : ((new Date).valueOf() / 86400 | 0).toString();
 		let template_name = this.templateName;
 
@@ -557,7 +557,7 @@ export class Et2Template extends Et2Widget(LitElement)
 
 	public get app()
 	{
-		const parts = (this.template || this.id).split('?');
+		const parts = ((this.template || this.id) + "").split('?');
 		const cache_buster = parts.length > 1 ? parts.pop() : null;
 		let template_name = parts.pop();
 
@@ -567,7 +567,7 @@ export class Et2Template extends Et2Widget(LitElement)
 
 	public get templateName()
 	{
-		const parts = (this.template || this.id).split('?');
+		const parts = ((this.template || this.id) + "").split('?');
 		const cache_buster = parts.length > 1 ? parts.pop() : null;
 		let template_name = parts.pop() || "";
 
