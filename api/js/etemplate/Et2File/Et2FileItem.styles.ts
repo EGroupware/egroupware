@@ -11,6 +11,7 @@ export default css`
 	.file-item {
 		position: relative;
 		display: flex;
+		box-sizing: border-box;
 		background-color: var(--sl-panel-background-color);
 		border: var(--sl-panel-border-width) var(--border-style, solid) var(--sl-panel-border-color);
 		border-radius: var(--sl-border-radius-medium);

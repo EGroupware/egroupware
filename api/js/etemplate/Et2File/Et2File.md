@@ -23,11 +23,11 @@ Use `image` to specify the icon
 
 ### Limit files allowed
 
-Use the `multiple`, `allow`, `maxFiles` and `maxFileSize` attributes to place restrictions on the files to be uploaded.
+Use the `multiple`, `accept`, `maxFiles` and `maxFileSize` attributes to place restrictions on the files to be uploaded.
 
 ```html:preview
-<et2-file image="image" allow="image/*" label="Choose an image"></et2-file>
-<et2-file image="images" allow="image/*" multiple label="Choose images"></et2-file>
+<et2-file image="image" accept="image/*" label="Choose an image"></et2-file>
+<et2-file image="images" accept="image/*" multiple label="Choose images"></et2-file>
 <et2-file maxFiles="3" label="Max. 3 files"></et2-file>
 <et2-file maxFileSize="10000" label="Small files only"></et2-file>
 ```
@@ -45,6 +45,9 @@ not do that
 
 Use the `display` attribute for different ways of showing results
 ```html:preview
+<et2-file display="large" label="Large">
+<et2-file-item slot="list" size="654321000" display="large" closable>Large file (default)</et2-file-item>
+</et2-file>
 <et2-file display="small" label="Small">
 <et2-file-item slot="list" size="654321000" display="small" closable>Small file</et2-file-item>
 </et2-file>

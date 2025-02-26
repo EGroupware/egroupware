@@ -17,6 +17,10 @@ export interface FileInfo extends ResumableFile
 	loading? : boolean;
 	accepted? : boolean;
 	warning? : string;
+
+	// Existing values
+	path? : string;
+
 	// ResumableFile
 	uniqueIdentifier : string;
 	file : File;
@@ -61,7 +65,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		];
 	}
 
-	/** A string that defines the file types the file dropzone should accept. Defaults to all. */
+	/** A string that defines the file types the file should accept. Defaults to all. */
 	@property({type: String, reflect: true}) accept = "";
 
 	/** An optional maximum size of a file that will be considered valid. */
@@ -124,6 +128,13 @@ export class Et2File extends Et2InputWidget(LitElement)
 			// We use an object, not an Array
 			newValue = {...newValue};
 		}
+		Object.keys(newValue).forEach((key) =>
+		{
+			if(typeof newValue[key].uniqueIdentifier == "undefined")
+			{
+				newValue[key].uniqueIdentifier = (newValue[key]['ino'] ?? key) + newValue[key].path;
+			}
+		});
 		this.__value = newValue;
 		this.requestUpdate("value", oldValue);
 	}
@@ -147,6 +158,12 @@ export class Et2File extends Et2InputWidget(LitElement)
 		return Array.from(this.list?.querySelectorAll("et2-file-item")) ?? [];
 	}
 
+	constructor()
+	{
+		super();
+		this.resumableQuery = this.resumableQuery.bind(this);
+	}
+
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
@@ -167,6 +184,17 @@ export class Et2File extends Et2InputWidget(LitElement)
 		if(this.fileListTarget && this.list)
 		{
 			render(this.fileListTemplate(), this.list);
+		}
+	}
+
+	loadFromXML(node : Node)
+	{
+		super.loadFromXML(node);
+
+		// Set display to "small" for multiple=false && nothing else set
+		if(!node.hasAttribute("display") && !this.multiple)
+		{
+			this.display = "small";
 		}
 	}
 
@@ -195,10 +223,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	{
 		const options = {
 			target: this.egw().ajaxUrl(this.uploadTarget),
-			query: {
-				request_id: this.getInstanceManager()?.etemplate_exec_id,
-				widget_id: this.id,
-			},
+			query: this.resumableQuery,
 			chunkSize: this.chunkSize,
 
 			// Checking for already uploaded chunks - resumable uploads
@@ -226,12 +251,26 @@ export class Et2File extends Et2InputWidget(LitElement)
 		return options;
 	}
 
+	protected resumableQuery(file /*: ResumableFile*/, chunk /*: ResumableChunk */)
+	{
+		return {
+			request_id: this.getInstanceManager()?.etemplate_exec_id,
+			widget_id: this.id,
+		};
+	}
+
 	public findFileItem(file)
 	{
-		const fileInfo = this.files.find((i) => i.file.uniqueIdentifier == file.uniqueIdentifier);
+		const searchIdentifier = file.uniqueIdentifier;
+		let fileInfo = this.files.find((i) => i.file.uniqueIdentifier == searchIdentifier);
+		if(!fileInfo)
+		{
+			const source = <FileInfo[]>Object.values(this.value);
+			fileInfo = source.find(e => e.uniqueIdentifier == searchIdentifier);
+		}
+
 		file = fileInfo;
-		const fileIndex = this.files.indexOf(fileInfo) ?? null;
-		const fileItem : Et2FileItem = fileIndex !== -1 ? this.fileItemList[fileIndex] : null;
+		const fileItem : Et2FileItem = this.fileItemList.find(i => i.dataset.fileId == searchIdentifier);
 		return fileItem;
 	}
 
@@ -298,6 +337,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		const response = ((JSON.parse(jsonResponse)['response'] ?? {}).find(i => i['type'] == "data") ?? {})['data'] ?? {};
 		const fileItem = this.findFileItem(file);
 		file.loading = false;
+		file.progress = () => 100;
 		if(fileItem)
 		{
 			fileItem.progress = 100;
@@ -332,6 +372,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 				}
 				this.value[tempName] = {
 					file: file.file,
+					uniqueIdentifier: file.uniqueIdentifier,
 					src: (<HTMLSlotElement>fileItem?.shadowRoot.querySelector("slot[name='image']"))?.assignedElements()[0]?.src ?? "",
 					...response[tempName],
 					accepted: true
@@ -540,13 +581,31 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 	}
 
+	handleFileClick(e)
+	{
+		// If super didn't handle it (returns false), just use egw.open()
+		if(super._handleClick(e) && e.target?.dataset?.path)
+		{
+			this.egw().open({
+				path: e.target.dataset.path,
+				type: e.target.dataset.type
+			}, "file");
+
+			e.stopImmediatePropagation();
+			return;
+		}
+	}
+
 	fileListTemplate()
 	{
 		return html`
+            <div part="list" class="file__file-list" id="file-list"
+                 @click=${this.handleFileClick}
+            >
             ${repeat(this.files, (file) => file.uniqueIdentifier, (item, index) => this.fileItemTemplate(item, index))}
             ${repeat(Object.values(this.value), (file) => file.uniqueIdentifier, (item, index) => this.fileItemTemplate(item, index))}
+            </div>
 		`;
-
 	}
 
 	fileItemTemplate(fileInfo : FileInfo, index)
@@ -561,19 +620,22 @@ export class Et2File extends Et2InputWidget(LitElement)
 		{
 			thumbnail = URL.createObjectURL(fileInfo.file);
 		}
+		const variant = !fileInfo.warning ? "default" : "warning";
 		const closable = !this.readonly && (fileInfo.accepted || Object.values(this.value).indexOf(fileInfo) !== -1)
 
 		return html`
             <et2-file-item
                     display=${this.display}
-                    size=${fileInfo.accepted ? fileInfo.file.size : nothing}
-                    variant=${fileInfo.accepted && !fileInfo.warning ? "default" : "warning"}
+                    size=${fileInfo.accepted ? (fileInfo.file.size) : fileInfo.size ?? nothing}
+                    variant=${variant}
                     ?closable=${closable}
                     ?loading=${fileInfo.loading}
                     image=${ifDefined(icon)}
                     progress=${typeof fileInfo.progress == "function" ? fileInfo.progress() : (fileInfo.progress ?? nothing)}
                     data-file-index=${index}
                     data-file-id=${fileInfo.uniqueIdentifier}
+                    data-path=${fileInfo.path ?? nothing}
+                    data-type=${fileInfo.file?.type ?? fileInfo.type ?? nothing}
                     @sl-after-hide=${(event : CustomEvent) =>
                     {
                         event.stopPropagation();
@@ -595,7 +657,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                     <et2-vfs-mime
                             slot="image"
                             mime=${type}
-                            .value=${{mime: type}}
+                            .value=${{...fileInfo, mime: type}}
                     ></et2-vfs-mime>` : nothing
                 }
                 ${label}
@@ -644,7 +706,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                     </slot>
                     ${this.multiple || this.noFileList || this.fileListTarget ? nothing : html`
                         <slot name="list">
-                            <div part="list" class="file__file-list" id="file-list">${filesList}</div>
+                            ${filesList}
                         </slot>`
                     }
                     <slot name="suffix"></slot>
@@ -662,7 +724,8 @@ export class Et2File extends Et2InputWidget(LitElement)
                 ${(this.noFileList || this.fileListTarget || !this.multiple) ? nothing : html`
                     <slot name="list">
                         ${this.inline ? html`
-                            <div part="list" class="file__file-list" id="file-list">${filesList}</div>` : html`
+                            ${filesList}
+                        ` : html`
                             <sl-popup
                                     part="list"
                                     class="file__file-list"
@@ -672,6 +735,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                                     strategy="fixed"
                                     placement="bottom-start"
                                     auto-size="vertical"
+                                    @click=${this.handleFileClick}
                             >${filesList}
                             </sl-popup>`
                         }

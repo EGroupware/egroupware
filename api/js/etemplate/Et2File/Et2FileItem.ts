@@ -100,8 +100,9 @@ export class Et2FileItem extends Et2Widget(LitElement)
 		this.requestUpdate("variant");
 	}
 
-	handleCloseClick()
+	handleCloseClick(e)
 	{
+		e.stopPropagation();
 		this.hide();
 	}
 
