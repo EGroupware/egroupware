@@ -136,7 +136,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 			}
 		});
 		this.__value = newValue;
-		this.requestUpdate("value", oldValue);
+		this.requestUpdate("value");
 	}
 
 	get value() : { [tempFileName : string] : FileInfo }
@@ -281,12 +281,17 @@ export class Et2File extends Et2InputWidget(LitElement)
 			loading: true,
 			...file
 		}
-		this.files = this.multiple ? [...this.files, file] : [file];
-		this.requestUpdate();
 		if(!file.accepted)
 		{
 			return;
 		}
+		this.files = this.multiple ? [...this.files, file] : [file];
+		if(!this.multiple)
+		{
+			// New selection overwrites existing
+			this.__value = {};
+		}
+		this.requestUpdate();
 
 		await this.updateComplete;
 

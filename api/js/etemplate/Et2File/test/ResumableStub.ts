@@ -9,6 +9,7 @@ class ResumableStub
 		this.options = options;
 		this.files = [];
 		this.events = {};
+		this.upload = this.upload.bind(this);
 	}
 
 	assignBrowse()
