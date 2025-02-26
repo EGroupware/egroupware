@@ -19,7 +19,7 @@
 */
 
 import {et2_valueWidget} from "./et2_core_valueWidget";
-import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_description} from "./et2_widget_description";
 import {et2_file} from "./et2_widget_file";
@@ -478,15 +478,10 @@ export type et2_vfsUid = Et2VfsUid;
  */
 export type et2_vfsGid = Et2VfsGid;
 
-/* vfs-upload aka VFS file:       displays either download and delete (x) links or a file upload
-*   + ID is either a vfs path or colon separated $app:$id:$relative_path, eg: infolog:123:special/offer
-*   + if empty($id) / new entry, file is created in a hidden temporary directory in users home directory
-*     and calling app is responsible to move content of that dir to entry directory, after entry is saved
-*   + option: required mimetype or regular expression for mimetype to match, eg. '/^text\//i' for all text files
-*   + if path ends in a slash, multiple files can be uploaded, their original filename is kept then
-*
-* @augments et2_file
-*/
+
+/**
+ * @deprecated use Et2VfsUpload;
+ */
 export class et2_vfsUpload extends et2_file
 {
 	static readonly _attributes : any = {

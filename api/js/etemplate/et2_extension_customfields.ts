@@ -882,13 +882,23 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 	_setup_filemanager( field_name, field, attrs)
 	{
-		attrs.type = 'vfs-upload';
+		attrs.type = 'et2-vfs-upload';
 		delete(attrs.label);
 
 		// allow to set/pass further et2_file attributes to the vfs-upload
 		if (field.values && typeof field.values === 'object')
 		{
-			['mime', 'accept', 'max_file_size'].forEach((name) => {
+			const deprecated = {mime: 'accept', max_file_size: 'maxFileSize'}
+			Object.keys(deprecated).forEach((oldField) =>
+			{
+				if(typeof field.values[oldField] !== 'undefined')
+				{
+					this.egw().debug("warn", "Deprecated field '" + oldField + "' in " + field_name + ", use '" + deprecated[oldField] + "' instead");
+					field.values[deprecated[oldField]] = field.values[oldField];
+				}
+			});
+			['accept', 'maxFileSize'].forEach((name) =>
+			{
 				if (typeof field.values[name] !== 'undefined')
 				{
 					attrs[name] = field.values[name];
@@ -914,17 +924,25 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				.appendTo(row);
 
 			// Create upload widget
-			let upload_attrs = {...attrs};
+			let upload_attrs = {
+				display: "small",
+				inline: true,
+				required: attrs["required"] || attrs["needed"],
+				class: "et2_file",
+				helptext: this.egw().lang("fileupload"),
+				...attrs
+			};
+			delete upload_attrs.needed;
 			let widget = this.widgets[field_name] = <et2_DOMWidget>et2_createWidget(attrs.type ? attrs.type : field.type, upload_attrs, this);
 
 			// This controls where the widget is placed in the DOM
 			this.rows[attrs.id] = cf[0];
-			jQuery(widget.getDOMNode(widget)).css('vertical-align','top');
+			jQuery(widget.getDOMNode(widget)).css('display', 'inline-block');
 
 			// Should we show the upload button
 			if(typeof field.values?.noUpload !== "undefined")
 			{
-				widget.node.querySelector('et2-button').classList.add("hideme");
+				widget.classList.add("hideme");
 			}
 			// should we show the VfsSelect
 			if (!field.values || typeof field.values !== 'object' || !field.values.noVfsSelect)
@@ -932,17 +950,19 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				// Add a link to existing VFS file
 				const required = attrs.needed ?? attrs.required;
 				delete attrs.needed;
-				const path = widget.options.path ?? attrs.path;
+				const path = widget.path ?? attrs.path;
 				const select_attrs = {
 					...attrs,
 					// Filemanager select
 					...{
 						path: '~',
-						mode: widget.options.multiple ? 'open-multiple' : 'open',
-						multiple: widget.options.multiple,
+						mode: widget.multiple ? 'open-multiple' : 'open',
+						multiple: widget.multiple,
 						method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing',
 						methodId: path,
-						buttonLabel: this.egw().lang('Link')
+						buttonLabel: this.egw().lang('Link'),
+						class: "et2_vfs_btn",
+						title: this.egw().lang("select file(s) from vfs")
 					},
 					type: 'et2-vfs-select',
 					required: required
@@ -951,7 +971,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 				// No links if no ID - server can't handle links
 				let s = path.split(":");
-				select_attrs.disabled = (s.length != 3 || s[1] == '');
+				select_attrs.disabled = widget.disabled = (s.length != 3 || s[1] == '');
 
 				// This controls where the button is placed in the DOM
 				this.rows[select_attrs.id] = cf[0];
@@ -967,33 +987,21 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 					// Show file(s)
 					const list = e.target.getParent().getWidgetById(attrs.id);
-					const value = typeof e.target.value == "string" ? [e.target.value] : e.target.value;
-					value.forEach(v =>
+					const value = list.multiple ? list.value : {};
+					(typeof e.target.value == "string" ? [e.target.value] : e.target.value).forEach(v =>
 					{
-						const info = {...e.target._dialog.fileInfo(v)};
-						if(!e.target.multiple)
-						{
-							// Clear list here, _addFile won't replace with the cachebuster
-							list.list.empty();
-							list._children.forEach((c) =>
-							{
-								if(typeof c.remove == "function")
-								{
-									c.remove();
-								}
-								c.getParent().removeChild(c);
-								c.destroy();
-							});
-							info.name = field.name;
-
-							// Use a cache buster since file has the same name
-							info.path = "/apps/" + e.target.methodId.replaceAll(":", "/") + "#" + new Date().getTime();
-						}
-						list?._addFile(info);
+						const fileInfo = e.target._dialog.fileInfo(v);
+						const uniqueIdentifier = Object.values(value).length + fileInfo.path
+						value[uniqueIdentifier] = {
+							...fileInfo, type: fileInfo.mime,
+							uniqueIdentifier: uniqueIdentifier
+						};
 					});
+					list.value = value;
+
 					list.getDOMNode().classList.remove("hideme");
 				});
-				jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
+				jQuery(widget.getDOMNode(widget)).css({'vertical-align': 'top', display: 'inline-block'}).prependTo(cf);
 			}
 		}
 		return false;

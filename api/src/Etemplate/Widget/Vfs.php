@@ -37,42 +37,44 @@ class Vfs extends File
 	 */
 	public function beforeSendToClient($cname, $expand = array())
 	{
-		if ($this->type === 'vfs-upload' || !empty($this->attrs['type']) && $this->attrs['type'] === 'vfs-upload')
+		parent::beforeSendToClient($cname, $expand);
+
+		$form_name = self::form_name($cname, $this->id, $expand ?: array('cont' => self::$request->content));
+		if(!empty($this->attrs['path']))
 		{
-			$form_name = self::form_name($cname, $this->id, $expand ?: array('cont' => self::$request->content));
-			if (!empty($this->attrs['path']))
-			{
-				$path = self::expand_name($this->attrs['path'], $expand['c'] ?? null, $expand['row'], $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont']);
-			}
-			else
-			{
-				$path = $form_name;
-			}
+			$path = self::expand_name($this->attrs['path'], $expand['c'] ?? null, $expand['row'], $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont']);
+		}
+		else
+		{
+			$path = $form_name;
+		}
 
-			self::setElementAttribute($form_name, 'path', $path);
-			// ID maps to path - check there for any existing files
-			list($app, $id, $relpath) = explode(':', $path, 3);
-			if ($app && $id)
+		self::setElementAttribute($form_name, 'path', $path);
+		// ID maps to path - check there for any existing files
+		list($app, $id, $relpath) = explode(':', $path, 3);
+		if($app && $id)
+		{
+			if(!is_numeric($id))
 			{
-				if (!is_numeric($id))
+				$_id = self::expand_name($id, 0, 0, 0, 0, self::$request->content);
+				if($_id != $id && $_id)
 				{
-					$_id = self::expand_name($id, 0, 0, 0, 0, self::$request->content);
-					if ($_id != $id && $_id)
-					{
-						$id = $_id;
-						$form_name = "$app:$id:$relpath";
-					}
-					else
-					{
-						return;
-					}
+					$id = $_id;
+					$form_name = "$app:$id:$relpath";
 				}
-				$value =& self::get_array(self::$request->content, $form_name, true);
-				$path = Api\Link::vfs_path($app, $id, '', true);
-				if (!empty($relpath)) $path .= '/' . $relpath;
-
-				$value = self::findAttachments($path);
+				else
+				{
+					return;
+				}
 			}
+			$value =& self::get_array(self::$request->content, $form_name, true);
+			$path = Api\Link::vfs_path($app, $id, '', true);
+			if(!empty($relpath))
+			{
+				$path .= '/' . $relpath;
+			}
+
+			$value = self::findAttachments($path);
 		}
 	}
 
@@ -94,7 +96,7 @@ class Vfs extends File
 			$file = Api\Vfs::stat($path);
 			$file['path'] = $path;
 			$file['name'] = Api\Vfs::basename($file['path']);
-			$file['mime'] = Api\Vfs::mime_content_type($file['path']);
+			$file['type'] = Api\Vfs::mime_content_type($file['path']);
 			$file['download_url'] = Api\Vfs::download_url($file['path']);
 			$value = array($file);
 		}
@@ -111,7 +113,7 @@ class Vfs extends File
 				$file_info = Api\Vfs::stat($file);
 				$file_info['path'] = $file;
 				$file_info['name'] = Api\Vfs::basename($file_info['path']);
-				$file_info['mime'] = Api\Vfs::mime_content_type($file_info['path']);
+				$file_info['type'] = Api\Vfs::mime_content_type($file_info['path']);
 				$file_info['download_url'] = Api\Vfs::download_url($file_info['path']);
 				$value[] = $file_info;
 			}
@@ -124,7 +126,7 @@ class Vfs extends File
 				$file_info = Api\Vfs::stat("$path$file");
 				$file_info['path'] = "$path$file";
 				$file_info['name'] = Api\Vfs::basename($file_info['path']);
-				$file_info['mime'] = Api\Vfs::mime_content_type($file_info['path']);
+				$file_info['type'] = Api\Vfs::mime_content_type($file_info['path']);
 				$file_info['download_url'] = Api\Vfs::download_url($file_info['path']);
 				$value[] = $file_info;
 			}
@@ -135,6 +137,34 @@ class Vfs extends File
 	public static function ajax_upload()
 	{
 		parent::ajax_upload();
+	}
+
+	public static function ajax_remove($request_id, $widget_id, $path)
+	{
+		$response = Api\Json\Response::get();
+		$request_id = str_replace(' ', '+', rawurldecode($request_id));
+		$response_data = array('errs' => 0);
+		if(!self::$request = Etemplate\Request::read($request_id))
+		{
+			$response->error("Could not read session");
+			return;
+		}
+		try
+		{
+			if(!Api\Vfs::unlink($path))
+			{
+				unset($response_data['errs']);
+				$e = error_get_last();
+				$response_data['msg'] = $e['message'];
+			}
+		}
+		catch (\Exception $e)
+		{
+			$response_data['msg'] = $e->getMessage();
+		}
+
+		// Set up response
+		$response->data($response_data);
 	}
 
 	/**
@@ -362,6 +392,7 @@ class Vfs extends File
 		switch($this->type)
 		{
 			case 'vfs-upload':
+			case 'et2-vfs-upload';
 				if(!is_array($value)) $value = array();
 				/* Check & skip files that made it asynchronously, or they */
 				list($app, $id, $relpath) = explode(':', $this->attrs['path'], 3);
