@@ -701,6 +701,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                                     class="file__button"
                                     id="visible-button"
                                     ?disabled=${this.disabled}
+                                    title=${this.helptext ?? this.egw().lang("fileupload")}
                                     noSubmit
                                     image=${!this.loading ? this.image : ""}
                         >
