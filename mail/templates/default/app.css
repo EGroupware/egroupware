@@ -1001,10 +1001,18 @@ et2-image.smime_cert_unknownemail {
   border: none;
   outline: none;
 }
+#mail-compose tr.mailComposeHeaders > td > et2-dropdown {
+	position: relative;
+	max-width: 100%;
+}
 #mail-compose tr.mailComposeHeaders et2-dropdown et2-button::part(base){
-	margin-left: 1ex;
 	background-color: var(--sl-color-gray-150);
 }
+#mail-compose tr.mailComposeHeaders et2-dropdown et2-button::part(label){
+	padding-left: 0;
+	margin-left: -1px;
+}
+
 
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn-focus {
   border: none;
@@ -1134,10 +1142,4 @@ table.et2_egw_action_ddHelper_row .innerContainer {
 /* hide by default hidden compose header-lines, to not show them briefly before hidden by app.js */
 tr.mailComposeJQueryCc, tr.mailComposeJQueryBcc, tr.mailComposeJQueryFolder, tr.mailComposeJQueryReplyto  {
 	display: none;
-}
-tr.mailComposeHeaders > td > et2-dropdown {
-	position: relative;
-	left: -1em;
-	width: 100%;
-	max-width: 100%;
 }

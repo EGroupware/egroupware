@@ -44,7 +44,7 @@
 					<column width="90%"/>
 				</columns>
 				<rows>
-					<row class="mailComposeHeaders" >
+					<row class="mailComposeHeaders mailComposeJQueryFrom" >
 						<et2-description  value="From"></et2-description>
 						<et2-select  id="mailaccount" onchange="app.mail.submitOnChange"></et2-select>
 					</row>
@@ -62,6 +62,7 @@
 							<et2-button slot="trigger" caret="true" noSubmit="true">
 								<et2-description value="To"></et2-description>
 							</et2-button>
+							<et2-button id="from_expander" label="From" onclick="app.mail.compose_fieldExpander"></et2-button>
 							<et2-button id="cc_expander" label="Cc" onclick="app.mail.compose_fieldExpander"></et2-button>
 							<et2-button id="bcc_expander" label="Bcc" onclick="app.mail.compose_fieldExpander"></et2-button>
 							<et2-button id="replyto_expander" label="Reply to" onclick="app.mail.compose_fieldExpander"></et2-button>
