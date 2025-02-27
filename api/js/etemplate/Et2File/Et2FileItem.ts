@@ -93,6 +93,7 @@ export class Et2FileItem extends Et2Widget(LitElement)
 	async error(message?)
 	{
 		this.variant = "danger";
+		this.loading = false;
 		if(message)
 		{
 			this.innerHTML += "<br />" + message;

@@ -162,6 +162,7 @@ class Vfs extends File
 		}
 		if(!Api\Vfs::is_writable($path))
 		{
+			$response_data['errs']++;
 			$response_data['msg'] = 'Permission denied';
 		}
 		else
@@ -178,10 +179,7 @@ class Vfs extends File
 					$response_data['filename'] = $extFilename;
 					$existing = Api\Vfs::find(Api\Vfs::dirname($path), array('type' => 'f', 'maxdepth' => 1,
 																			 'name' => Api\Vfs::basename($path) . '.*'));
-					if($existing)
-					{
-						$response_data['exists'] = true;
-					}
+					$response_data['exists'] = count($existing) > 0;
 				}
 			}
 			elseif(Api\Vfs::is_dir($path))

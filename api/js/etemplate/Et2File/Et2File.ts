@@ -27,6 +27,7 @@ export interface FileInfo extends ResumableFile
 	file : File;
 	progress? : Function;
 	abort? : Function
+	cancel? : Function;
 }
 
 /**
@@ -277,6 +278,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	protected async resumableFileAdded(file : FileInfo, event)
 	{
+		this.set_validation_error(false);
 		file = {
 			accepted: true,
 			loading: true,

@@ -49,7 +49,7 @@ export class Et2VfsUpload extends Et2File
 	@property({type: String})
 	set path(newPath : string)
 	{
-		this.__path = newPath;
+		this.__path = newPath ?? "";
 		this.multiple = this.__path.endsWith("/");
 	}
 
@@ -120,6 +120,10 @@ export class Et2VfsUpload extends Et2File
 			info.file.type
 		]).then(async(data) =>
 		{
+			if(data && data.errs != 0)
+			{
+				info.cancel();
+			}
 			if(data && data.exists && this.conflict == "rename" && data.filename)
 			{
 				info.fileName = data.filename;
@@ -129,10 +133,19 @@ export class Et2VfsUpload extends Et2File
 				const upload = await this.confirmConflict(info, data.filename ?? info.fileName);
 				if(!upload)
 				{
+					info.cancel();
 					return;
 				}
 			}
-			return superAdded(info, event);
+			await superAdded(info, event);
+			if(data.errs != 0 && data.msg)
+			{
+				let item = this.findFileItem(info);
+				if(item)
+				{
+					item.error(data.msg);
+				}
+			}
 		});
 	}
 
