@@ -124,8 +124,9 @@ export class Et2VfsUpload extends Et2File
 			{
 				info.cancel();
 			}
-			if(data && data.exists && this.conflict == "rename" && data.filename)
+			if(data && (data.exists && this.conflict == "rename" || !data.exists) && data.filename)
 			{
+				// Server provided a new name, no user interaction needed
 				info.fileName = data.filename;
 			}
 			else if(data && data.exists && this.conflict == "ask")

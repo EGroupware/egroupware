@@ -160,7 +160,7 @@ class Vfs extends File
 		{
 			$path = self::get_vfs_path($path);
 		}
-		if(!Api\Vfs::is_writable($path))
+		if(Api\Vfs::is_dir($path) && !Api\Vfs::is_writable($path))
 		{
 			$response_data['errs']++;
 			$response_data['msg'] = 'Permission denied';
