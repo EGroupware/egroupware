@@ -43,8 +43,6 @@
   html[data-darkmode='1'] sl-menu-item::part(prefix),
   html[data-darkmode='1'] et2-select-country::part(prefix),
   html[data-darkmode='1'] et2-button::part(prefix),
-  html[data-darkmode='1'] *::part(image),
-  html[data-darkmode='1'] et2-image,
   html[data-darkmode='1'] #blueimp-gallery:not(:fullscreen),
   html[data-darkmode='1'] #blueimp-gallery ol,
   html[data-darkmode='1'] et2-select-account::part(icon),
@@ -60,6 +58,11 @@
   html[data-darkmode='1'] et2-avatar-group,
   html[data-darkmode='1'] .blueimp-gallery .slide {
     filter: invert(1) hue-rotate(180deg) !important;
+  }
+  html[data-darkmode='1'] et2-button .bi::before,
+  html[data-darkmode='1'] et2-button [class^="bi-"]::before,
+  html[data-darkmode='1'] et2-button [class*=" bi-"]::before {
+    filter: invert(1) hue-rotate(180deg);
   }
   html[data-darkmode='1'] et2-image > img {
     filter: none !important;
