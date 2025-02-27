@@ -902,21 +902,6 @@ and (orientation : landscape) {
 
 }
 
-#mail-compose_cc_expander,
-#mail-compose_bcc_expander,
-#mail-compose_folder_expander,
-#mail-compose_replyto_expander {
-	width: 100%;
-	margin: 0px;
-	margin-left: 1em;
-	text-align: left;
-	padding: 0;
-	cursor: pointer;
-	border:	none;
-	color: rgb(38, 83, 124);
-	background-color: transparent;
-}
-
 #popupMainDiv .et2_container .mailComposeHeaderSection et2-hbox {
 	border-bottom: 1px solid;
 	border-color: hsl(240 5% 64.9%);/*var(--sl-panel-border-color);*/
@@ -1013,14 +998,18 @@ et2-image.smime_cert_unknownemail {
 }
 #mail-compose tr.mailComposeHeaders > td > et2-dropdown {
 	position: relative;
+	width: 90%;
 	max-width: 100%;
 }
 #mail-compose tr.mailComposeHeaders et2-dropdown et2-button::part(base){
 	background-color: var(--sl-color-gray-150);
 }
-#mail-compose tr.mailComposeHeaders et2-dropdown et2-button::part(label){
+#mail-compose tr.mailComposeHeaders et2-dropdown et2-button:first-child::part(label){
 	padding-left: 0;
 	margin-left: -1px;
+}
+#mail-compose tr.mailComposeHeaders et2-dropdown et2-button:first-child::part(caret){
+	margin-left: auto;
 }
 
 
@@ -1123,9 +1112,6 @@ et2-vbox.addresses et2-hbox::part(base) {
 et2-searchbox#mail-index_nm_search {
 	width: 100%;
 	min-width: 5em;
-}
-.nextmatch_header_row>.filtersContainer>et2-select, .nextmatch_header_row>.filtersContainer>et2-select-cat {
-	width: 80px;
 }
 et2-split#mail-index_mailSplitter.limitted .header_count {
 	display: none;

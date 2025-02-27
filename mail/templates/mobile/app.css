@@ -172,33 +172,14 @@
   body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders.subjectContainer td:first-child::after {
     content: '';
   }
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders {
-    border-bottom: 1px solid silver;
-  }
   body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span {
     font-size: 10pt;
   }
   body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders .subjectContainer:first-child::after {
     content: ':';
   }
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders:first-child {
-    border-top: 1px solid silver;
-  }
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders #mail-compose_cc_expander,
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_cc_expander,
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders #mail-compose_bcc_expander,
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_bcc_expander,
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders #mail-compose_folder_expander,
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_folder_expander,
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders #mail-compose_replyto_expander,
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span#mail-compose_replyto_expander {
-    background: transparent;
-    border: none;
-    color: #26537c;
-    font-size: 10pt;
-    width: 65px;
-    height: 25px;
-    margin-left: initial;
+  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders et2-dropdown et2-button:nth-child(n+2) {
+    padding: 0.5em 0;
   }
   body #mail-compose .mailComposeHeaderSection > table div.et2_taglist > *,
   body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject,

@@ -20,64 +20,69 @@
 				<et2-checkbox  statustext="check to encrypt the message on send" id="smime_encrypt" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-password  id="smime_passphrase"></et2-password>
 				<et2-select  id="priority"></et2-select>
+				<et2-vbox class="expanderFirstRow">
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="composeID"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="serverID"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="mode"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" id="lastDrafted"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="references"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="in-reply-to"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="thread-topic"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="thread-index"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="list-id"></et2-textbox>
+				</et2-vbox>
 			</et2-hbox>
 
 			<grid  width="100%" resize_ratio="0">
 				<columns>
-					<column widtd="10%"/>
-					<column width="80%"/>
 					<column width="10%"/>
+					<column width="90%"/>
 				</columns>
 				<rows>
-					<row class="mailComposeHeaders" >
+					<row class="mailComposeHeaders mailComposeJQueryFrom" >
 						<et2-description  value="From"></et2-description>
 						<et2-select  id="mailaccount" onchange="app.mail.submitOnChange"></et2-select>
-						<et2-vbox>
-							<et2-description  id="replyto_expander" value="Reply to" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
-							<et2-description  id="folder_expander" value="Folder" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
-							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="composeID"></et2-textbox>
-							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="serverID"></et2-textbox>
-							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"></et2-textbox>
-							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="mode"></et2-textbox>
-							<et2-textbox  class="mail-index_quotaDisplayNone" id="lastDrafted"></et2-textbox>
-							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="references"></et2-textbox>
-							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="in-reply-to"></et2-textbox>
-							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="thread-topic"></et2-textbox>
-							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="thread-index"></et2-textbox>
-							<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="list-id"></et2-textbox>
-						</et2-vbox>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryReplyto">
 						<et2-description  value="Reply to"></et2-description>
 						<et2-email  id="replyto" width="100%" onclick="app.mail.address_click" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
-						<et2-description></et2-description>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryFolder">
 						<et2-description  value="Folder"></et2-description>
 						<et2-select  id="folder" allowFreeEntries="false" onclick="app.mail.address_click" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions=""></et2-select>
-						<et2-description></et2-description>
 					</row>
 					<row class="mailComposeHeaders" >
-						<et2-description  value="To"></et2-description>
-                        <et2-email id="to" width="100%" onclick="app.mail.address_click" onchange="app.mail.recipients_onchange" includeLists="true"></et2-email>
-						<et2-vbox>
-							<et2-description  id="cc_expander" value="Cc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
-							<et2-description  id="bcc_expander" value="Bcc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"></et2-description>
-						</et2-vbox>
+						<et2-dropdown>
+							<et2-button slot="trigger" caret="true" noSubmit="true">
+								<et2-description value="To"></et2-description>
+							</et2-button>
+							<et2-button id="from_expander" label="From" onclick="app.mail.compose_fieldExpander"></et2-button>
+							<et2-button id="cc_expander" label="Cc" onclick="app.mail.compose_fieldExpander"></et2-button>
+							<et2-button id="bcc_expander" label="Bcc" onclick="app.mail.compose_fieldExpander"></et2-button>
+							<et2-button id="replyto_expander" label="Reply to" onclick="app.mail.compose_fieldExpander"></et2-button>
+							<et2-button id="folder_expander" label="Folder" onclick="app.mail.compose_fieldExpander"></et2-button>
+						</et2-dropdown>
+                        <et2-email id="to" width="100%" onclick="app.mail.address_click" autofocus="true"
+                                   onchange="app.mail.recipients_onchange"
+                                   placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">
 						<et2-description  value="Cc"></et2-description>
-                        <et2-email id="cc" width="100%" onclick="app.mail.address_click" onchange="app.mail.recipients_onchange" includeLists="true"></et2-email>
-						<et2-description></et2-description>
-					</row>
-					<row  class="mailComposeHeaders mailComposeJQueryBcc">
-						<et2-description  value="Bcc"></et2-description>
-                        <et2-email id="bcc" width="100%" onclick="app.mail.address_click" onchange="app.mail.recipients_onchange" includeLists="true"></et2-email>
-						<et2-description></et2-description>
-					</row>
-					<row class="mailComposeHeaders subjectContainer">
-						<et2-textbox  span="2" align="left" width="100%" id="subject" height="25" onchange="app.mail.subject2title" placeholder="Subject"></et2-textbox>
-						<et2-checkbox  statustext="Change editor type" label="HTML" id="mimeType" onchange="app.mail.submitOnChange" tabindex="7" roTrue=" " roFalse="disable"></et2-checkbox>
+                        <et2-email id="cc" width="100%" onclick="app.mail.address_click"
+                                          onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+                                   placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
+                    </row>
+                    <row class="mailComposeHeaders mailComposeJQueryBcc">
+                        <et2-description value="Bcc"></et2-description>
+                        <et2-email id="bcc" width="100%" onclick="app.mail.address_click"
+                                          onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+                                   placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
+                    </row>
+                    <row class="mailComposeHeaders">
+                        <et2-description value="Subject"></et2-description>
+                        <et2-textbox align="left" width="100%" id="subject" height="25" onchange="app.mail.subject2title"></et2-textbox>
+
 					</row>
 				</rows>
 			</grid>
