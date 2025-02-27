@@ -9,12 +9,25 @@
 ```
 
 VFS Upload allows the user to upload files to a specified location in the VFS. It works much the same
-as [File](../et2-file), but files go directly into the VFS without the application needing to handle them.
+as [File](../et2-file), but there are differences:
+
+1. Files go directly into the VFS without the application needing to handle them. With the File widget the file is
+   stored temporarily and the application must move it.
+2. Any operations (save, delete, replace existing file) are handled directly. With the File widget, the application must
+   handle this.
 
 Any option for File will also work for VfsUpload.
 
-`VfsUpload` does return file information to the application since all file actions are done immediately via
-AJAX
+`VfsUpload` does not return file information to the application since all file actions are done immediately via
+AJAX.
+
+:::tip
+There are two widgets for uploading files, [File](../et2-file) and [VfsUpload](../et2-vfs-upload).
+
+Use `File` when you don't know where in the VFS the file will be stored or don't intend to store it.
+
+Use `VfsUpload` otherwise.
+:::
 
 ## Examples
 

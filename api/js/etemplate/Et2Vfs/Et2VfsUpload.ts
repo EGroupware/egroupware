@@ -1,4 +1,4 @@
-import {Et2File, FileInfo as UploadFileInfo} from "../Et2File/Et2File";
+import {Et2File, FileInfo, FileInfo as UploadFileInfo} from "../Et2File/Et2File";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
@@ -25,6 +25,7 @@ export type VfsFileInfo = UploadFileInfo & DialogFileInfo;
 @customElement('et2-vfs-upload')
 export class Et2VfsUpload extends Et2File
 {
+	@property({type: String}) conflict : "overwrite" | "rename" | "ask" = "ask";
 
 	private __path = ""
 
@@ -41,6 +42,10 @@ export class Et2VfsUpload extends Et2File
 		});
 	}
 
+	/**
+	 * Target VFS path.  Specifying a directory will allow multiple files.  Including the filename will rename the file.
+	 * @param {string} newPath
+	 */
 	@property({type: String})
 	set path(newPath : string)
 	{
@@ -48,7 +53,7 @@ export class Et2VfsUpload extends Et2File
 		this.multiple = this.__path.endsWith("/");
 	}
 
-	get path() { return this.__path; }
+	get path() : string { return this.__path; }
 
 	handleFileRemove(info : VfsFileInfo)
 	{
@@ -98,6 +103,85 @@ export class Et2VfsUpload extends Et2File
 				this.egw().message(data.msg, data.errs == 0 ? 'success' : 'error');
 			}
 		});
+	}
+
+	resumableFileAdded(info : FileInfo, event)
+	{
+		const superAdded = super.resumableFileAdded.bind(this);
+		// If we're not just overwriting, check
+		if(this.conflict == "overwrite")
+		{
+			return superAdded(info, event);
+		}
+		this.egw().request("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_conflict_check", [
+			this.getInstanceManager()?.etemplate_exec_id, 			// request_id
+			this.path,	// path
+			info.file.name,
+			info.file.type
+		]).then(async(data) =>
+		{
+			if(data && data.exists && this.conflict == "rename" && data.filename)
+			{
+				info.fileName = data.filename;
+			}
+			else if(data && data.exists && this.conflict == "ask")
+			{
+				const upload = await this.confirmConflict(info, data.filename ?? info.fileName);
+				if(!upload)
+				{
+					return;
+				}
+			}
+			return superAdded(info, event);
+		});
+	}
+
+	protected async confirmConflict(info : FileInfo, suggestedName : string)
+	{
+		const buttons = [
+			{
+				label: this.egw().lang("Overwrite"),
+				id: "overwrite",
+				class: "ui-priority-primary",
+				"default": true,
+				image: 'check'
+			},
+			{label: this.egw().lang("Rename"), id: "rename", image: 'edit'},
+			{label: this.egw().lang("Cancel"), id: "cancel", image: "cancel"}
+		];
+		let button_id, value;
+		if(this.path.endsWith("/"))
+		{
+			// Filename is up to user, let them rename
+			[button_id, value] = <[string, Object]><unknown>await Et2Dialog.show_prompt(undefined,
+				this.egw().lang('Do you want to overwrite existing file %1 in directory %2?', info.fileName, this.path),
+				this.egw().lang('File %1 already exists', info.fileName),
+				suggestedName ?? info.fileName, buttons, this.egw()
+			).getComplete();
+		}
+		else
+		{
+			// Filename is set, only ask to overwrite
+			buttons.splice(1, 1);
+			info.fileName = suggestedName ?? info.fileName;
+			[button_id, value] = <[string, Object]><unknown>await Et2Dialog.show_dialog(undefined,
+				this.egw().lang('Do you want to overwrite existing file %1 in directory %2?', info.fileName, this.label ?? this.title ?? this.path),
+				this.egw().lang('File %1 already exists', info.fileName),
+				undefined, buttons, Et2Dialog.QUESTION_MESSAGE, "", this.egw()
+			).getComplete();
+		}
+		switch(button_id)
+		{
+			case "overwrite":
+				// Upload as set
+				return true;
+			case "rename":
+				info.fileName = value?.value ?? info.fileName;
+				return true;
+			case "cancel":
+				// Don't upload
+				return false;
+		}
 	}
 
 	protected confirmDelete(info : VfsFileInfo)

@@ -139,6 +139,65 @@ class Vfs extends File
 		parent::ajax_upload();
 	}
 
+	/**
+	 * Check to see if the file already exists before we start uploading it.
+	 * If it does, it returns a suggested alternate filename.
+	 * @param $request_id
+	 * @param $path
+	 * @return void
+	 */
+	public static function ajax_conflict_check($request_id, $path, $filename, $mimetype)
+	{
+		$response = Api\Json\Response::get();
+		$request_id = str_replace(' ', '+', rawurldecode($request_id));
+		$response_data = array('errs' => 0);
+		if(!self::$request = Etemplate\Request::read($request_id))
+		{
+			$response->error("Could not read session");
+			return;
+		}
+		if($path[0] !== '/')
+		{
+			$path = self::get_vfs_path($path);
+		}
+		if(!Api\Vfs::is_writable($path))
+		{
+			$response_data['msg'] = 'Permission denied';
+		}
+		else
+		{
+			// Path is to a single file
+			if(!str_ends_with($path, '/'))
+			{
+				$response_data['exists'] = Api\Vfs::file_exists($path);
+
+				$extFilename = static::addExtension($path, ['name' => $filename, 'mime' => $mimetype]);
+				// Check for anything matching, ignoring extension
+				if($filename != $extFilename)
+				{
+					$response_data['filename'] = $extFilename;
+					$existing = Api\Vfs::find(Api\Vfs::dirname($path), array('type' => 'f', 'maxdepth' => 1,
+																			 'name' => Api\Vfs::basename($path) . '.*'));
+					if($existing)
+					{
+						$response_data['exists'] = true;
+					}
+				}
+			}
+			elseif(Api\Vfs::is_dir($path))
+			{
+				$response_data['exists'] = Api\Vfs::file_exists($path . $filename);
+
+				if($response_data['exists'] && !$response_data['filename'])
+				{
+					$response_data['filename'] = Api\Vfs::basename(Api\Vfs::make_unique($path . $filename));
+				}
+			}
+		}
+
+		$response->data($response_data);
+	}
+
 	public static function ajax_remove($request_id, $widget_id, $path)
 	{
 		$response = Api\Json\Response::get();
@@ -330,16 +389,9 @@ class Vfs extends File
 		$filename = $file['name'];
 		if ($path && substr($path,-1) !== '/')
 		{
-			$parts = explode('.', $filename);
 			// check if path already contains a valid extension --> don't add another one
-			$path_parts = explode('.', Api\Vfs::basename($path));
-			if ((!($path_ext = array_pop($path_parts)) || Api\MimeMagic::ext2mime($path_ext) === 'application/octet-stream') &&
-				(($extension = array_pop($parts) ?: Api\MimeMagic::mime2ext($file['mime'])) && $extension != $filename))
-			{
-				// add extension to path
-				$path .= '.'.$extension;
-			}
-			$file['name'] = Api\Vfs::basename($path);
+			$file['name'] = static::addExtension($path, $file);
+			$path = rtrim($path, $filename) . $file['name'];
 		}
 		else if ($path)   // multiple upload with dir given (trailing slash)
 		{
@@ -454,6 +506,26 @@ class Vfs extends File
 		}
 		if (!empty($relpath)) $path .= '/'.$relpath;
 		return $path;
+	}
+
+	/**
+	 * Sometimes target path has a filename but no extension.  Add the appropriate extension for the file.
+	 * @param $path
+	 * @param $filename
+	 * @return void
+	 */
+	protected static function addExtension($path, $file)
+	{
+		$parts = explode('.', $file['name']);
+		// check if path already contains a valid extension --> don't add another one
+		$path_parts = explode('.', Api\Vfs::basename($path));
+		if((!($path_ext = array_pop($path_parts)) || Api\MimeMagic::ext2mime($path_ext) === 'application/octet-stream') &&
+			(($extension = array_pop($parts) ?: Api\MimeMagic::mime2ext($file['mime'])) && $extension != $file['name']))
+		{
+			// add extension to path
+			$path .= '.' . $extension;
+		}
+		return Api\Vfs::basename($path);
 	}
 
 	/**

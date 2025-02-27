@@ -22,6 +22,7 @@ export interface FileInfo extends ResumableFile
 	path? : string;
 
 	// ResumableFile
+	fileName : string;
 	uniqueIdentifier : string;
 	file : File;
 	progress? : Function;
@@ -274,7 +275,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		return fileItem;
 	}
 
-	private async resumableFileAdded(file : FileInfo, event)
+	protected async resumableFileAdded(file : FileInfo, event)
 	{
 		file = {
 			accepted: true,
@@ -322,7 +323,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 	}
 
-	private resumableFileProgress(file : FileInfo, event)
+	protected resumableFileProgress(file : FileInfo, event)
 	{
 		const fileItem = this.findFileItem(file);
 		if(fileItem && file.progress())
@@ -337,7 +338,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 	}
 
-	private resumableFileComplete(file : FileInfo, jsonResponse)
+	protected resumableFileComplete(file : FileInfo, jsonResponse)
 	{
 		const response = ((JSON.parse(jsonResponse)['response'] ?? {}).find(i => i['type'] == "data") ?? {})['data'] ?? {};
 		const fileItem = this.findFileItem(file);
@@ -400,7 +401,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 	}
 
-	private resumableFileError(file, message)
+	protected resumableFileError(file, message)
 	{
 		const fileItem = this.findFileItem(file);
 		fileItem.loading = false;
@@ -412,7 +413,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		fileItem.requestUpdate("loading");
 	}
 
-	private resumableUploadComplete()
+	protected resumableUploadComplete()
 	{
 		this.requestUpdate();
 		this.updateComplete.then(() =>
@@ -616,7 +617,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	fileItemTemplate(fileInfo : FileInfo, index)
 	{
-		const label = (fileInfo.accepted ? fileInfo.file.name : fileInfo.warning) ?? fileInfo['name'];
+		const label = (fileInfo.accepted ? (fileInfo['name'] ?? fileInfo.file.name) : fileInfo.warning) ?? fileInfo['name'];
 		let icon = fileInfo.icon ?? (fileInfo.warning ? "exclamation-triangle" : undefined);
 
 		// Pull thumbnail from file if we can

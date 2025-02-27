@@ -8,8 +8,17 @@
 ></et2-file>
 ```
 
-File allows the user to upload files to EGroupware. The uploaded files are processed on the server when the form is
+File allows the user to upload files to EGroupware. The uploaded files are processed on the server by the application
+after the form is
 submitted. As files are selected, they will be shown in a list with [FileItem](../et2-file-item)
+
+:::tip
+There are two widgets for uploading files, [File](../et2-file) and [VfsUpload](../et2-vfs-upload).
+
+Use `File` when you don't know where in the VFS the file will be stored or don't intend to store it.
+
+Use `VfsUpload` otherwise.
+:::
 
 ## Examples
 
