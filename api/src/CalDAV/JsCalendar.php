@@ -237,8 +237,8 @@ class JsCalendar extends JsBase
 				'due' => $entry['info_enddate'] ? self::DateTime($entry['info_enddate'], Api\DateTime::$user_timezone->getName()) : null,
 				'duration' => $entry['info_used_time'] ?
 					self::Duration(0, $entry['info_used_time']*60) : null,
-				'estimatedDuration' => $entry['info_plannedtime'] ?
-					self::Duration(0, $entry['info_plannedtime']*60) : null,
+				'estimatedDuration' => $entry['info_planned_time'] ?
+					self::Duration(0, $entry['info_planned_time']*60) : null,
 				//'freeBusyStatus' => $entry['non_blocking'] ? 'free' : null,   // default is busy
 				'description' => $entry['info_des'],
 				'participants' => self::Responsible($entry),
@@ -341,7 +341,7 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'estimatedDuration':
-						$event['info_plannedtime'] = self::parseSignedDuration($value, true)/60;
+						$event['info_planned_time'] = self::parseSignedDuration($value, true)/60;
 						break;
 
 					case 'participants':
