@@ -465,6 +465,10 @@ export class filemanagerAPP extends EgwApp
 	uploadOnOne(_event)
 	{
 		this.upload(_event,1);
+
+		// Stop nm from refreshing, we'll get it on the push
+		_event.stopPropagation();
+		return false;
 	}
 
 	/**
@@ -487,15 +491,18 @@ export class filemanagerAPP extends EgwApp
 			let widget = _event.target;
 			widget.loading = true;
 			_event.detail.accepted = false; // Turn off removable, it's too late now
-			let value = widget.getValue();
-			value.conflict = _conflict;
+			const widgetValue = widget.getValue();
+			const value = {};
+			value[_event.detail.tempName] = {...widgetValue[_event.detail.tempName]};
+			delete widgetValue[_event.detail.tempName];
+			widget.value = widgetValue;
+			value["conflict"] = _conflict;
 			widget.requestUpdate("loading");
 			egw.json(_target, ['upload', value, _path, {ui_path: this.egw.window.location.pathname}],
 				this._upload_callback, this, true, this
 			).sendRequest().finally(() =>
 			{
 				widget.loading = false;
-				widget.value = {};
 				widget.requestUpdate("loading", true);
 			});
 		}

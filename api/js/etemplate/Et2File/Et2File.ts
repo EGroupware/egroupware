@@ -362,13 +362,14 @@ export class Et2File extends Et2InputWidget(LitElement)
 		else
 		{
 			const ev = new CustomEvent("et2-load", {bubbles: true, detail: file});
-			this.dispatchEvent(ev);
 			Object.keys(response).forEach((tempName) =>
 			{
 				if(fileItem)
 				{
 					fileItem.variant = "success";
 				}
+				file['tempName'] = tempName;
+				this.dispatchEvent(ev);
 
 				// Add file into value
 				if (typeof this.value !== 'object' || !this.value)
@@ -625,7 +626,14 @@ export class Et2File extends Et2InputWidget(LitElement)
 		// so we check if it is actually a file
 		if(!icon && fileInfo.file instanceof File && type?.startsWith("image/"))
 		{
-			thumbnail = URL.createObjectURL(fileInfo.file);
+			try
+			{
+				thumbnail = URL.createObjectURL(fileInfo.file);
+			}
+			catch(e)
+			{
+				// Thumbnail creation failed, but we don't really care
+			}
 		}
 		const variant = !fileInfo.warning ? "default" : "warning";
 		const closable = !this.readonly && (fileInfo.accepted || Object.values(this.value).indexOf(fileInfo) !== -1)

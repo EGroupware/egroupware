@@ -57,7 +57,7 @@
 			disabled="!@show_refresh" hideOnReadonly="true" image="reload" noSubmit="true"></et2-button>
         <et2-file label="Upload" statustext="Select file to upload in current directory" id="upload" class="et2_toolbar_hasCaption"
                   dropTarget="filemanager-index" multiple="true"
-                  onFinishOne="app.filemanager.uploadOnOne"/>
+                  onFinishOne="app.filemanager.uploadOnOne" onchange="widget.value={}; return false;"/>
     </template>
 	<template id="filemanager.index.header_row" template="" lang="" group="0" version="1.9.002">
 		<et2-button  id="home" statustext="Go to your home directory" image="gohome" onclick="app.filemanager.change_dir('~',widget);" noSubmit="true"></et2-button>
