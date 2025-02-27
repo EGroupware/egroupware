@@ -32,7 +32,7 @@ import {Et2VfsSelectButton} from "../../api/js/etemplate/Et2Vfs/Et2VfsSelectButt
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
-
+var keepFromExpander;
 /**
  * UI for mail
  *
@@ -4842,7 +4842,7 @@ app.classes.mail = AppJS.extend(
 					&& typeof widgets[expanderBtn].widget != 'undefined'
 					&& (!widgets[widget].widget.value || !widgets[widget].widget.value.length)
 					&& actions.indexOf(expanderBtn)<0)
-					|| expanderBtn ==='from_expander'
+					|| expanderBtn ==='from_expander' && !keepFromExpander
 			)
 			{
 				widgets[expanderBtn].widget.set_disabled(false);
@@ -4903,12 +4903,13 @@ app.classes.mail = AppJS.extend(
 					}
 					break;
 				case 'from_expander':
-					document.querySelector('.mailComposeHideFrom').style.display=''
+					document.querySelector('.mailComposeJQueryFrom').style.display=''
+					keepFromExpander = true;
 					break;
 			}
 			widget.parentElement.hide()
 		}
-		else if (typeof widget == "undefined")
+		else if (typeof widget == "undefined") //show all widgets
 		{
 			var widgets = {cc:{},bcc:{},folder:{},replyto:{}};
 
@@ -4961,7 +4962,7 @@ app.classes.mail = AppJS.extend(
 	{
 		if (!document.getElementById('mail_folder_lock_div'))
 		{
-			var parent = jQuery('#mail-index_nm\\[foldertree\\]');
+			var parent = document.querySelector('#mail-index_nm\\[foldertree\\]');
 			var lock_div = jQuery(document.createElement('div'));
 			lock_div.attr('id', 'mail_folder_lock_div')
 				.addClass('mail_folder_lock');
