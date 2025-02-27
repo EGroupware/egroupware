@@ -1264,7 +1264,9 @@ class JsCalendar extends JsBase
 			// allow to use {"egroupware.org-primary:<app>[:<field>]":"<id-or-value>"}
 			if (str_starts_with($uid, 'egroupware.org-primary:'))
 			{
-				$uid = substr($uid, 23).':'.$relation;
+				$uid = explode(':', substr($uid, 23), 2);
+				array_splice($uid, 1, 0, $relation);
+				$uid = implode(':', $uid);
 				$relation = 'egroupware.org-primary';
 			}
 			switch($relation['relation'] ?? $relation ?? (strpos($uid, ':') === false ? 'parent' : 'egroupware.org-primary'))
