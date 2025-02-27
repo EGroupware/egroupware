@@ -621,7 +621,9 @@ export class Et2File extends Et2InputWidget(LitElement)
 		// Pull thumbnail from file if we can
 		const type = fileInfo.file?.type ?? fileInfo["type"];
 		let thumbnail;
-		if(!icon && fileInfo.file && type?.startsWith("image/"))
+		//fileInfo.file can be string this leads to js error
+		// so we check if it is actually a file
+		if(!icon && fileInfo.file instanceof File && type?.startsWith("image/"))
 		{
 			thumbnail = URL.createObjectURL(fileInfo.file);
 		}
