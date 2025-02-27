@@ -901,13 +901,20 @@ class JsContact extends Api\CalDAV\JsBase
 
 	/**
 	 * @var string[] name-component type => attribute-name pairs
+	 * @link https://datatracker.ietf.org/doc/html/rfc9553#section-2.2.1.2
 	 */
 	protected static $nameType2attribute = [
-		'prefix'     => 'n_prefix',
-		'personal'   => 'n_given',
-		'additional' => 'n_middle',
+		'title'      => 'n_prefix', // new component name in final RFC
+		'prefix'     => 'n_prefix', // old name used in our REST API, kept to allow parsing requests
+		'given'      => 'n_given',  // new component name in final RFC
+		'personal'   => 'n_given',  // old name used in our REST API, kept to allow parsing requests
+		'given2'     => 'n_middle', // new component name in final RFC
+		'additional' => 'n_middle', // old name used in our REST API, kept to allow parsing requests
 		'surname'    => 'n_family',
-		'suffix'     => 'n_suffix',
+		'surname2'   => 'n_middle', // currently NOT supported separate from given2, so only given2 is stored, when both are specified
+		'credential' => 'n_suffix', // new component name in final RFC
+		'generation' => 'n_suffix', // currently NOT supported separate from credential, so only credential is stored, when both are attempt to set
+		'suffix'     => 'n_suffix', // old name used in our REST API, kept to allow parsing requests
 	];
 
 	const TYPE_NAME_COMPONENT = 'NameComponent';
@@ -915,7 +922,10 @@ class JsContact extends Api\CalDAV\JsBase
 	/**
 	 * Return name-components objects with "type" and "value" attributes
 	 *
-	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-2.2.1
+	 * We return only the rfc names: "title", "given", "given2", "surname" and "credential".
+	 * "surname2" and "generation" are NOT stored (or only stored if there is no "given2" or "credential" is specified)!
+	 *
+	 * @link https://datatracker.ietf.org/doc/html/rfc9553#section-2.2.1.2
 	 * @param array $contact
 	 * @return array[]
 	 */
@@ -924,7 +934,7 @@ class JsContact extends Api\CalDAV\JsBase
 		$components = array_filter(array_map(function($attr) use ($contact)
 		{
 			return $contact[$attr];
-		}, self::$nameType2attribute));
+		}, array_unique(self::$nameType2attribute)));   // array_unique to ensure only first / rfc name is used, not further aliases for parsing!
 		return array_map(function($type, $value)
 		{
 			return [
@@ -943,8 +953,8 @@ class JsContact extends Api\CalDAV\JsBase
 	 */
 	protected static function parseNameComponents(array $components, bool $stict=true)
 	{
-		$contact = array_combine(array_values(self::$nameType2attribute),
-			array_fill(0, count(self::$nameType2attribute), null));
+		$contact = array_combine(array_unique(self::$nameType2attribute),
+			array_fill(0, count(array_unique(self::$nameType2attribute)), null));
 
 		foreach($components as $type => $component)
 		{
@@ -961,7 +971,11 @@ class JsContact extends Api\CalDAV\JsBase
 			{
 				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($component, self::JSON_OPTIONS_ERROR));
 			}
-			$contact[self::$nameType2attribute[$component['type']]] = $component['value'];
+			// do NOT overwrite already set values, as we have (beside the rfc-name) multiple aliases (after the rfc-name)q
+			if (!isset($contact[self::$nameType2attribute[$component['type']]]))
+			{
+				$contact[self::$nameType2attribute[$component['type']]] = $component['value'];
+			}
 		}
 		return $contact;
 	}
