@@ -28,7 +28,7 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
       "created": "2010-10-21T09:55:42Z",
       "updated": "2014-06-02T14:45:24Z",
       "name": [
-        { "@type": "NameComponent", "type": "personal", "value": "Default" },
+        { "@type": "NameComponent", "type": "given", "value": "Default" },
         { "@type": "NameComponent", "type": "surname", "value": "Tester" }
       ],
       "fullName": { "value": "Default Tester" },
@@ -168,7 +168,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/?sync-token=https:
       "created": "2010-10-21T09:55:42Z",
       "updated": "2014-06-02T14:45:24Z",
       "name": [
-        { "@type": "NameComponent", "type": "personal", "value": "Default" },
+        { "@type": "NameComponent", "type": "given", "value": "Default" },
         { "@type": "NameComponent", "type": "surname", "value": "Tester" }
       ],
       "fullName": "Default Tester",
@@ -194,11 +194,11 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/6502' -H "Accept: 
     "updated": "2022-12-14T13:39:14Z",
     "kind": "individual",
     "name": [
-        { "@type": "NameComponent", "type": "prefix", "value": "Prefix/Title" },
-        { "@type": "NameComponent", "type": "personal", "value": "Frist" },
-        { "@type": "NameComponent", "type": "additional", "value": "Middle" },
+        { "@type": "NameComponent", "type": "title", "value": "Prefix/Title" },
+        { "@type": "NameComponent", "type": "given", "value": "Frist" },
+        { "@type": "NameComponent", "type": "given2", "value": "Middle" },
         { "@type": "NameComponent", "type": "surname", "value": "Last" },
-        { "@type": "NameComponent", "type": "suffix", "value": "Postfix" }
+        { "@type": "NameComponent", "type": "credential", "value": "Suffix" }
     ],
     "fullName": "Prefix/Title Frist Middle Last Postfix",
     "organizations": {
@@ -359,6 +359,15 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/6502' -H "Accept: 
     "egroupware.org:assistant": "Assistent"
 }
 ```
+> Please note: [nameComponent](https://www.rfc-editor.org/rfc/rfc9553.html#section-2.2.1.2) names have changed in the final RFC 9553, compared to the draft we used to implement the REST API
+> * `title`: was `prefix`, which is still parsed, but not returned (stored in DB colum `n_prefix`)
+> * `given`: was `personal`, which is still parsed, but not returned (stored in DB colum `n_given`)
+> * `given2`: was `additional`, which is still parsed, but not returned (stored in DB colum `n_middle`)
+> * `surname`: has not changed  (stored in DB colum `n_family`)
+> * `surname2`: is currently not stored separate, but stored in DB column `n_middle`, if `given2` is not also set
+> * `credential`: was `suffix`, which is still parsed, but not returned (stored in DB colum `n_suffix`)
+> * `generation`: is currently not stored separate, but stored in DB column `n_suffix`, if `credential` is not also set
+> * `separator`: is currently not stored, so the default of one space is always used
 </details>
 
 #### **POST** requests to collection with a `Content-Type: application/json` header add new entries in addressbook or calendar collections
@@ -374,7 +383,7 @@ cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addr
   "created": "2010-10-21T09:55:42Z",
   "updated": "2014-06-02T14:45:24Z",
   "name": [
-    { "type": "@type": "NameComponent", "personal", "value": "Default" },
+    { "type": "@type": "NameComponent", "given", "value": "Default" },
     { "type": "@type": "NameComponent", "surname", "value": "Tester" }
   ],
   "fullName": { "value": "Default Tester" },
@@ -394,7 +403,7 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addressbook/' -X POST -d @- -H "Content-Type: application/json" --user <username>
 {
   "fullName": "First Tester",
-  "name/personal": "First",
+  "name/given": "First",
   "name/surname":  "Tester",
   "organizations/org/name": "Test Organization",
   "emails/work": "test.user@test-user.org",
@@ -428,7 +437,7 @@ cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addr
   "created": "2010-10-21T09:55:42Z",
   "updated": "2014-06-02T14:45:24Z",
   "name": [
-    { "type": "@type": "NameComponent", "personal", "value": "Default" },
+    { "type": "@type": "NameComponent", "given", "value": "Default" },
     { "type": "@type": "NameComponent", "surname", "value": "Tester" }
   ],
   "fullName": { "value": "Default Tester" },
@@ -451,7 +460,7 @@ cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addr
   "created": "2010-10-21T09:55:42Z",
   "updated": "2014-06-02T14:45:24Z",
   "name": [
-    { "type": "@type": "NameComponent", "personal", "value": "Default" },
+    { "type": "@type": "NameComponent", "given", "value": "Default" },
     { "type": "@type": "NameComponent", "surname", "value": "Tester" }
   ],
   "fullName": { "value": "Default Tester" },
@@ -482,7 +491,7 @@ cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addr
   "name": [
     {
       "@type": "NameComponent",
-      "type": "personal",
+      "type": "given",
       "value": "Testfirst"
     },
     {
