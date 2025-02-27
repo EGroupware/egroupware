@@ -902,11 +902,6 @@ and (orientation : landscape) {
 
 }
 
-#mail-compose_cc_expander::part(main) {
-	margin-left:1em;
-
-}
-
 #popupMainDiv .et2_container .mailComposeHeaderSection et2-hbox {
 	border-bottom: 1px solid;
 	border-color: hsl(240 5% 64.9%);/*var(--sl-panel-border-color);*/
@@ -1003,14 +998,18 @@ et2-image.smime_cert_unknownemail {
 }
 #mail-compose tr.mailComposeHeaders > td > et2-dropdown {
 	position: relative;
+	width: 90%;
 	max-width: 100%;
 }
 #mail-compose tr.mailComposeHeaders et2-dropdown et2-button::part(base){
 	background-color: var(--sl-color-gray-150);
 }
-#mail-compose tr.mailComposeHeaders et2-dropdown et2-button::part(label){
+#mail-compose tr.mailComposeHeaders et2-dropdown et2-button:first-child::part(label){
 	padding-left: 0;
 	margin-left: -1px;
+}
+#mail-compose tr.mailComposeHeaders et2-dropdown et2-button:first-child::part(caret){
+	margin-left: auto;
 }
 
 
