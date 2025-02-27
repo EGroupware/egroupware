@@ -1285,8 +1285,12 @@ class JsCalendar extends JsBase
 					{
 						// invalid app
 					}
-					elseif (empty($field) && !empty($id) && Api\Link::title($app, $id))
+					elseif (empty($field) && !empty($id))
 					{
+						if (!Api\Link::title($app, $id))
+						{
+							throw new \InvalidArgumentException("UID '$uid' NOT found!");
+						}
 						$result['info_contact'] = ['app' => $app, 'id' => $id];
 					}
 					elseif ($app === 'addressbook' && !empty($id) && !empty($field))
@@ -1301,15 +1305,22 @@ class JsCalendar extends JsBase
 							$filter[$field] = $id;
 						}
 						$contacts = new Api\Contacts();
-						if (($rows = $contacts->search(null, true, '', '', '', false, 'AND', [0, 1], $filter)) &&
-							$contacts->total === 1)
+						if (($rows = $contacts->search(null, true, '', '', '', false, 'AND', [0, 1], $filter)))
 						{
+							if ($contacts->total > 1)
+							{
+								throw new \InvalidArgumentException("UID '$uid' NOT unique (returned more than one result)!");
+							}
 							$result['info_contact'] = ['app' => $app, 'id' => $rows[0]['id']];
+						}
+						else
+						{
+							throw new \InvalidArgumentException("UID '$uid' NOT found!");
 						}
 					}
 					if (!isset($result['info_contact']))
 					{
-						throw new \InvalidArgumentException("Unsupported or not found relation: ".json_encode($relation)."!");
+						throw new \InvalidArgumentException("Unsupported relation: ".json_encode([$uid => $relation])."!");
 					}
 					// to delete a primary-link we have to set it to 0
 					if (!isset($relation))
