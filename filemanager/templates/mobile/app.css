@@ -51,9 +51,12 @@
   #filemanager-index_nm #filemanager-index_tarp {
     display: none !important;
   }
-  #filemanager-index_nm #filemanager-index_filemanager-index-header_left {
+  #filemanager-index_nm #filemanager-index_nm_filemanager-index-header_left {
     height: auto;
     order: 100;
+  }
+  #filemanager-index_nm #filemanager-index_nm_filemanager-index-header_left::part(base) {
+    width: 100%;
   }
   #filemanager-index_nm .nextmatch_header.nm_header_hide {
     display: inline-block !important;

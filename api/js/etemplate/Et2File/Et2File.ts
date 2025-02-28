@@ -10,6 +10,7 @@ import styles from "./Et2File.styles";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2FileItem} from "./Et2FileItem";
 import Resumable from "../../Resumable/resumable";
+import {HasSlotController} from "../Et2Widget/slot";
 
 // ResumableFile not defined in a way we can use it
 export interface FileInfo extends ResumableFile
@@ -113,6 +114,8 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	@state() files : FileInfo[] = [];
 
+	// Allows us to check to see if label or help-text is set.  Overridden to check additional slots.
+	protected readonly hasSlotController = new HasSlotController(this, 'help-text', 'label', 'button', 'list');
 	protected resumable : Resumable = null;
 	private __value : { [tempName : string] : FileInfo } = {};
 
@@ -687,6 +690,8 @@ export class Et2File extends Et2InputWidget(LitElement)
 	render()
 	{
 		const filesList = this.fileListTemplate();
+		const hasButtonSlot = this.hasSlotController?.test('button');
+		const anchorTarget = hasButtonSlot ? this.shadowRoot?.querySelector("slot[name='button']")?.assignedNodes()[0] : null;
 
 		return html`
             <div
@@ -749,10 +754,12 @@ export class Et2File extends Et2InputWidget(LitElement)
                                     part="list"
                                     class="file__file-list"
                                     id="file-list"
-                                    anchor="visible-button"
+                                    .anchor=${anchorTarget ?? "visible-button"}
                                     ?active=${this.files.length > 0 || Object.values(this.value).length > 0}
                                     strategy="fixed"
-                                    placement="bottom-start"
+                                    placement=${"bottom-start"}
+                                    flip
+                                    flip-fallback-placements="top-end"
                                     auto-size="vertical"
                                     @click=${this.handleFileClick}
                             >${filesList}

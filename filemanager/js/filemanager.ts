@@ -361,6 +361,21 @@ export class filemanagerAPP extends EgwApp
 		return path_widget ? path_widget.get_value.apply(path_widget) : null;
 	}
 
+	handlePathChange(widget)
+	{
+		if(widget.getValue() == '')
+		{
+			this.change_dir('~', widget);
+		}
+		const upload = this.et2.getWidgetById('upload');
+		if(upload)
+		{
+			// Et2VfsUpload needs the trailing /
+			upload.path = widget.getValue() + '/';
+		}
+		return true;
+	}
+
 	/**
 	 * Open compose with already attached files
 	 *
