@@ -202,7 +202,7 @@ class File extends Etemplate\Widget
 			$file['name'] = $_POST['resumableFilename'];
 			$file['type'] = $_POST['resumableType'];
 		}
-
+		$new_file = false;
 		if ($file['error'] == UPLOAD_ERR_OK && trim($file['name']) != '' && $file['size'] > 0 && is_uploaded_file($file['tmp_name'])) {
 			// Don't trust what the browser tells us for mime
 			if(function_exists('mime_content_type'))
@@ -258,7 +258,7 @@ class File extends Etemplate\Widget
 				);
 			}
 		}
-		return true;
+		return $new_file;
 	}
 
 	/**

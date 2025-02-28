@@ -231,7 +231,11 @@ class Vfs extends File
 	 */
 	protected static function process_uploaded_file($field, Array &$file, $mime, Array &$file_data)
 	{
-		parent::process_uploaded_file($field, $file, $mime, $file_data);
+		$done = parent::process_uploaded_file($field, $file, $mime, $file_data);
+		if(!$done)
+		{
+			return;
+		}
 		$path = self::store_file($_REQUEST['path'] ?: $_REQUEST['widget_id'], $file);
 		if($path)
 		{
