@@ -355,6 +355,7 @@ class Import
 										'location' => 'addaccount'
 									),False,True);	// called for every app now, not only enabled ones)
 							}
+							Api\Accounts::cache_invalidate($account_id);
 
 							$this->logger("Successful created user '$account[account_lid]' (#$account[account_id]".
 								($account['account_id'] != $account_id ? " as #$account_id" : '').')', 'detail');
@@ -412,6 +413,8 @@ class Import
 													'addaccount' : 'editaccount',
 											), False, True);    // called for every app now, not only enabled ones)
 										}
+										Api\Accounts::cache_invalidate($account_id);
+
 										$this->logger("Successful updated user '$account[account_lid]' (#$account_id): " .
 											json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
 										if (!$new) $new = false;
@@ -769,6 +772,7 @@ class Import
 					Api\Hooks::process($group+array(
 							'location' => 'addgroup'
 						),False,True);	// called for every app now, not only enabled ones)
+					Api\Accounts::cache_invalidate($sql_id);
 
 					$this->logger("Successful created group '$group[account_lid]' (#$account_id".($sql_id != $account_id ? " as #$sql_id" : '').')', 'detail');
 					$created++;
@@ -806,6 +810,7 @@ class Import
 								'location' => 'editgroup',
 								'old_name' => $sql_group['account_lid'],
 							),False,True);	// called for every app now, not only enabled ones)
+						Api\Accounts::cache_invalidate($sql_id);
 
 						$this->logger("Successful updated group '$group[account_lid]' (#$sql_id): " .
 							json_encode($diff, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), 'detail');
@@ -1121,6 +1126,7 @@ class Import
 					{
 						return $this->accounts_sql->name2id($account_lid);
 					}, $account['memberships'] ?? [])), $sql_account['account_id']);
+					Api\Accounts::cache_invalidate($sql_account['account_id']);
 				}
 				else
 				{
@@ -1133,6 +1139,7 @@ class Import
 					if (!isset($memberships[$sql_group_id]))
 					{
 						$this->accounts_sql->set_memberships(array_merge(array_keys($memberships), [$sql_group_id]), $account_id);
+						Api\Accounts::cache_invalidate($account_id);
 						$this->logger("Adding membership of user '$account_lid' (#$account_id) to group '$group' (#$sql_group_id)", 'detail');
 						$updated++;
 					}
@@ -1149,11 +1156,13 @@ class Import
 					{
 						unset($memberships[$sql_group_id]);
 						$this->accounts_sql->set_memberships(array_keys($memberships), $sql_account_id);
+						Api\Accounts::cache_invalidate($sql_account_id);
 						$this->logger("Removing membership of user '$sql_account_lid' (#$sql_account_id) from group '$group' (#$sql_group_id)", 'detail');
 						$updated++;
 					}
 				}
 			}
+			Api\Accounts::cache_invalidate($sql_group_id);
 		}
 		return [
 			'created' => $created,
