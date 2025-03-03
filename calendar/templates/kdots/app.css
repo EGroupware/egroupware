@@ -120,7 +120,7 @@
 #calendar-toolbar {
   height: auto;
 }
-#calendar-toolbar > div {
+#calendar-toolbar > et2-template::part(base) {
   display: flex;
   align-items: center;
 }
@@ -167,7 +167,7 @@
   left: 0px;
   right: 0px;
 }
-form#calendar-toolbar > div {
+form#calendar-toolbar > * {
   column-gap: 1ex;
 }
 #calendar-todo {
@@ -1380,8 +1380,12 @@ et2-image.calendar_print_button,
 et2-appicon.calendar_print_appicon,
 et2-appicon.calendar_print_appicon img {
   height: 24px;
-  width: 26px;
+  width: 24px;
   font-size: 24px;
+}
+et2-image.calendar_print_button::before {
+  vertical-align: -0.125em;
+  /*reset to bootstrap chosen alignment*/
 }
 /*Sortable views*/
 .srotable_cal_wk_ph {
@@ -1507,9 +1511,6 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
 .ui-toolbar-menulist et2-switch .label {
   width: 100%!important;
 }
-#calendar-toolbar_toolbar .et2_toolbar_more {
-  margin-top: 0;
-}
 #calendar-toolbar button#toolbar-today {
   color: #616161;
   font-weight: 500;
@@ -1631,8 +1632,10 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
 }
 #calendar-todo {
   width: 100%;
-  height: calc(100% - 10px);
-  left: initial !important;
+  height: 100%;
+  left: initial ;
+  right: initial ;
+  bottom: initial ;
 }
 .calendar_calEvent:not([class*=" cat_"]) {
   background-color: var(--primary-background-color);
