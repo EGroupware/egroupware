@@ -1120,7 +1120,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     placement=${this.placement}
                     tabindex="0"
                     .getTag=${this._tagTemplate}
-                    maxOptionsVisible=${0}
+                    .maxOptionsVisible=${0}
                     value=${Array.isArray(value) ? value.join(" ") : value}
                     @sl-change=${this.handleValueChange}
                     @mouseenter=${this._handleMouseEnter}
