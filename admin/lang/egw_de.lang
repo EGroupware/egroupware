@@ -476,6 +476,7 @@ group excepted from above export limit (admins are always excepted)	admin	de	Gru
 group has been added	common	de	Gruppe wurde hinzugefügt.
 group has been deleted	common	de	Gruppe wurde gelöscht.
 group has been updated	common	de	Gruppe wurde aktualisiert.
+group hidden from non-admins	admin	de	Gruppe versteckt für Nicht-Administratoren
 group hierarchy	admin	de	Gruppen Hierarchie
 group list	admin	de	Liste der Gruppen
 group manager	admin	de	Gruppenmanager

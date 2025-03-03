@@ -2,12 +2,12 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.group.edit.members" template="" lang="" group="0" version="1.9.001">
-		<et2-select-account  id="account_members" multiple="true" accountType="accounts" required="true"></et2-select-account>
+		<et2-select-account  id="account_members" multiple="true" accountType="accounts" required="true" rows="5"></et2-select-account>
 	</template>
 	<template id="admin.group.edit.apps" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" id="apps" overflow="auto" height="200" resize_ratio="1">
+		<grid width="100%" id="apps" overflow="auto" height="250" resize_ratio="1">
 			<columns>
-				<column width="32px"/>
+				<column width="44px"/>
 				<column/>
 				<column/>
 			</columns>
@@ -41,7 +41,10 @@
                 </row>
                 <row>
                     <et2-description  value="Filesystem quota"></et2-description>
-                    <et2-textbox  id="quota" disabled="!@epl" placeholder="@default_quota"></et2-textbox>
+					<et2-hbox>
+						<et2-textbox  id="quota" disabled="!@epl" placeholder="@default_quota"></et2-textbox>
+						<et2-checkbox  id="hidden" label="Group hidden from non-admins"></et2-checkbox>
+					</et2-hbox>
                 </row>
 				<row>
 					<et2-description value="Container" for="account_dn"></et2-description>
@@ -49,7 +52,7 @@
 				</row>
             </rows>
 		</grid>
-		<et2-tabbox  id="tabs" class="et2_nowrap" span="all" width="100%" tabHeight="250px">
+		<et2-tabbox  id="tabs" class="et2_nowrap" span="all" width="100%" tabHeight="280px">
 			<tabs>
 				<tab id="members" label="Members" statustext="Users in this group"/>
 				<tab id="apps" label="Applications" statustext="Applications this group can use"/>

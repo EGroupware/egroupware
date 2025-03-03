@@ -1010,7 +1010,7 @@ class Ads
 	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
 	 * @param $param['active'] boolean true: only return active / not expired accounts
 	 * @param $param['modified'] int if given minimum modification time
-	 * @param $param['account_id'] int[] return only given account_id's
+	 * @param $param['account_id'] int[]|string[] return only given account_id's, include "!" to return everything, but the given account_id's
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */

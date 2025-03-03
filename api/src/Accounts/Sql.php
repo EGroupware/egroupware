@@ -424,7 +424,7 @@ class Sql
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
 	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
-	 * @param $param['account_id'] int[] return only given account_id's
+	 * @param $param['account_id'] int[]|string[] return only given account_id's, include "!" to return everything, but the given account_id's
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
@@ -466,7 +466,14 @@ class Sql
 			$join .= ' LEFT JOIN '.Api\Mail\Smtp\Sql::TABLE.' ON '.$this->table.'.account_id=-'.Api\Mail\Smtp\Sql::TABLE.'.account_id AND mail_type='.Api\Mail\Smtp\Sql::TYPE_ALIAS;
 		}
 
-		$filter = empty($param['account_id']) ? [] : ['account_id' => (array)$param['account_id']];
+		$filter = [];
+		// implement negated account_id filter used for hidden accounts/groups
+		if (!empty($param['account_id']) && ($not_account_ids = array_search('!', $param['account_id'])) !== false)
+		{
+			unset($param['account_id'][$not_account_ids]);
+			$filter[] = $this->db->expression(self::TABLE, 'NOT ('.self::TABLE.'.', ['account_id' => array_map('abs', (array)$param['account_id'])], ')');
+			unset($param['account_id']);
+		}
 		switch($param['type'])
 		{
 			case 'accounts':
@@ -502,20 +509,21 @@ class Sql
 				$filter[] = "(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)";
 				break;
 		}
+		// if params also has an account_id filter, we need to intersect both (the negated account_id filter is already handled above)
+		if (!empty($params['account_id']))
+		{
+			$filter['account_id'] = isset($filter['account_id']) ? array_intersect($filter['account_id'], $params['account_id']) : $params['account_id'];
+		}
 		// fix ambiguous account_id (used in accounts and contacts table)
 		if (array_key_exists('account_id', $filter))
 		{
-			if (!$filter['account_id'])	// eg. group without members (would give SQL error)
+			if (!$filter['account_id'])	// e.g. group without members (would give SQL error)
 			{
 				$this->total = 0;
 				return array();
 			}
-			if (($not_account_id = array_search('!', $filter['account_id'])) !== false)
-			{
-				unset($filter['account_id'][$not_account_id]);
-			}
-			$filter[] = ($not_account_id !== false ? ' NOT ' : '').$this->db->expression($this->table, $this->table.'.', array(
-				'account_id' => $filter['account_id'],
+			$filter[] = $this->db->expression($this->table, $this->table.'.', array(
+				'account_id' => array_map('abs', (array)$filter['account_id']),
 			));
 			unset($filter['account_id']);
 		}
