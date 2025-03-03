@@ -193,7 +193,7 @@ class Customfields implements \IteratorAggregate
 	}
 
 	/**
-	 * Non printable custom fields eg. UI elements
+	 * Non-printable custom fields e.g. UI elements
 	 *
 	 * @var array
 	 */
@@ -214,9 +214,9 @@ class Customfields implements \IteratorAggregate
 				if ($value)
 				{
 					$values = array();
-					foreach($field['rows'] > 1 ? explode(',', $value) : (array) $value as $value)
+					foreach($field['rows'] > 1 && !is_array($value) ? explode(',', $value) : (array)$value as $val)
 					{
-						$values[] = is_numeric($value) ? Api\Accounts::username($value) : $value;
+						$values[] = is_numeric($val) ? Api\Accounts::username($val) : $val;
 					}
 					$value = implode(', ',$values);
 				}
@@ -233,9 +233,9 @@ class Customfields implements \IteratorAggregate
 					$field['values'] = self::get_options_from_file($field['values']['@']);
 				}
 				$values = array();
-				foreach($field['rows'] > 1 ? explode(',', $value) : (array) $value as $value)
+				foreach($field['rows'] > 1 && !is_array($value) ? explode(',', $value) : (array)$value as $val)
 				{
-					$values[] = isset($field['values'][$value]) ? $field['values'][$value] : '#'.$value;
+					$values[] = isset($field['values'][$val]) ? $field['values'][$val] : '#'.$val;
 				}
 				$value = implode(', ', $values);
 				break;
