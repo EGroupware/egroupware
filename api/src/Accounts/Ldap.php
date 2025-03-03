@@ -757,7 +757,7 @@ class Ldap
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
 	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
 	 * @param $param['modified'] int if given minimum modification time
-	 * @param $param['account_id'] int[] return only given account_id's
+	 * @param $param['account_id'] int[]|string[] return only given account_id's, include "!" to return everything, but the given account_id's
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
@@ -848,7 +848,10 @@ class Ldap
 						$filter .= '(!';
 						unset($param['account_id'][$not_account_ids]);
 					}
-					$filter .= '(|(uidNumber=' . implode(')(uidNumber=', (array)$param['account_id']) . '))';
+					$filter .= '(|'.implode('', array_map(static function($account_id)
+					{
+						return $account_id < 0 ? '(gidNumber='.$account_id.')' : '(uidNumber='.$account_id.')';
+					})).')';
 					if ($not_account_ids !== false)
 					{
 						$filter .= ')';

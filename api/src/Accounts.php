@@ -292,17 +292,21 @@ class Accounts
 		$serial = self::cacheKey($param, $serial_unlimited);
 
 		// implement $param['hidden'] via $param['account_id']
-		if (isset($param['hidden']) && !in_array($param['type'],['groups', 'owngroups']) &&
+		if (isset($param['hidden']) &&
 			($account_id_filter = self::hidden2account_id($param['hidden'], (array)($param['account_id']??null))))
 		{
 			$param['account_id'] = $account_id_filter;
+			$hidden_groups = (bool)array_filter($account_id_filter, static function ($account_id)
+			{
+				return $account_id !== '!' && $account_id < 0;
+			});
 		}
 		unset($param['hidden']);
 
-		// cache list of all groups on instance level (not session)
+		// cache list of all groups on instance level (not session), taking into account that some groups might be hidden from non-admins
 		if ($serial_unlimited === self::cacheKey(['type'=>'groups','active'=>true]))
 		{
-			$result = Cache::getCache($this->config['install_id'], __CLASS__, 'groups', function() use ($param)
+			$result = Cache::getCache($this->config['install_id'], __CLASS__, 'groups'.(!empty($hidden_groups)?'-hidden':''), function() use ($param)
 			{
 				return $this->backend->search($param);
 			}, [], self::READ_CACHE_TIMEOUT);

@@ -82,6 +82,10 @@ class admin_cmd_edit_group extends admin_cmd
 		{
 			$data['account_members'] = admin_cmd::parse_accounts($data['account_members'],true);
 		}
+		if (isset($data['hidden']))
+		{
+			$data['hidden'] = admin_cmd::parse_boolean($data['hidden'],null);
+		}
 		if ($check_only) return true;
 
 		if (($update = $this->account))
@@ -120,6 +124,18 @@ class admin_cmd_edit_group extends admin_cmd
 		if ($data['account_members'])
 		{
 			admin_cmd::$accounts->set_members($data['account_members'],$data['account_id']);
+		}
+		if (isset($data['hidden']))
+		{
+			admin_cmd::_instanciate_acl();
+			if ($data['hidden'])
+			{
+				admin_cmd::$acl->add_repository('phpgwapi','hidden',$data['account_id'],1);
+			}
+			else
+			{
+				admin_cmd::$acl->delete_repository('phpgwapi','hidden',$data['account_id']);
+			}
 		}
 		// make new account_id available to caller
 		$this->account = $data['account_id'];
@@ -177,7 +193,7 @@ class admin_cmd_edit_group extends admin_cmd
 	{
 		$widgets = parent::get_change_widgets();
 
-		$widgets['account_id'] = 'integer';	// normaly not displayed
+		$widgets['account_id'] = 'integer';	// normally not displayed
 		$widgets['run'] = 'select-app';
 
 		return $widgets;
@@ -186,7 +202,7 @@ class admin_cmd_edit_group extends admin_cmd
 	/**
 	 * Return the whole object-data as array, it's a cast of the object to an array
 	 *
-	 * Reimplement to supress data not relevant for groups, but historically stored
+	 * Reimplement to suppress data not relevant for groups, but historically stored
 	 *
 	 * @todo Fix command to store it's data in a more sane way, like we use it.
 	 * @return array

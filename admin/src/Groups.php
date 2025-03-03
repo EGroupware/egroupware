@@ -118,6 +118,9 @@ class Groups
 						unset($content['account_members'][$key]);
 					}
 				}
+				$acl = new Acl($content['account_id']);
+				$acl->read_repository();
+				$content['hidden'] = $acl->check('hidden', 1, 'phpgwapi');
 				$content['old'] = $content;
 			}
 			else
@@ -238,7 +241,7 @@ class Groups
 			if ($run_rights[$app]) $content['old_run'][] = $app;
 			$readonlys['apps']['button['.$app.']'] = !$acl_action;
 		}
-		usort($content['apps'], function($a, $b)
+		usort($content['apps'], static function($a, $b)
 		{
 			if ($a['run'] !== $b['run']) return $b['run']-$a['run'];
 			return strcasecmp($a['title'], $b['title']);
@@ -271,6 +274,7 @@ class Groups
 			'account_lid',
 			'account_description',
 			'account_members',
+			'hidden',
 		);
 		// Only send real changes
 		$account = array();
@@ -301,11 +305,11 @@ class Groups
 		if(count($account) == 0) return $content['account_id'];
 
 		$cmd = new admin_cmd_edit_group(array(
-											'account' => (int)$content['account_id'],
-											'set'     => $account,
-											'old'     => $old,
-											// This is the documentation from policy app
-										)+(array)$content['admin_cmd']);
+			'account' => (int)$content['account_id'],
+			'set'     => $account,
+			'old'     => $old,
+			// This is the documentation from policy app
+		)+(array)$content['admin_cmd']);
 		$msg = $cmd->run();
 		return $cmd->account;
 	}
