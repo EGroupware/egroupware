@@ -36,11 +36,11 @@ export default css`
 		align-items: center;
 		justify-items: stretch;
 		flex: 1 0 2em;
-		max-height: 3em;
+		max-height: var(--sl-font-size-3x-large);
 
 		background-color: var(--application-color, var(--primary-background-color));
 		color: var(--application-header-text-color, var(--sl-color-neutral-0));
-		font-size: 1.8em;
+		font-size: var(--sl-font-size-x-large);
 	}
 
 	.egw_fw_app__header sl-icon-button::part(base), .egw_fw_app__header et2-button-icon {
