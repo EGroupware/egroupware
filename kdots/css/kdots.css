@@ -667,4 +667,10 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr {
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   background-color: var(--highlight-background-color);
 }
+div.et2_toolbar .et2_toolbar_actionlist > span {
+  gap: var(--sl-spacing-small);
+}
+div.et2_toolbar .et2_toolbar_actionlist > span * {
+  margin-right: 0px;
+}
 /*** END WIDGETS ***/

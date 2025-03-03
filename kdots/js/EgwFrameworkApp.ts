@@ -171,7 +171,7 @@ export class EgwFrameworkApp extends LitElement
 
 	protected async getUpdateComplete() : Promise<boolean>
 	{
-		const result = await super.updateComplete;
+		const result = await super.getUpdateComplete();
 		await this.loadingPromise;
 
 		return result
@@ -280,22 +280,22 @@ export class EgwFrameworkApp extends LitElement
 
 	public showLeft()
 	{
-		this.showSide("left");
+		return this.showSide("left");
 	}
 
 	public hideLeft()
 	{
-		this.hideSide("left");
+		return this.hideSide("left");
 	}
 
 	public showRight()
 	{
-		this.showSide("right");
+		return this.showSide("right");
 	}
 
 	public hideRight()
 	{
-		this.hideSide("right");
+		return this.hideSide("right");
 	}
 
 	public async print()
@@ -382,6 +382,7 @@ export class EgwFrameworkApp extends LitElement
 		const attribute = `${side}Collapsed`;
 		this[attribute] = false;
 		this[`${side}Splitter`].position = this[`${side}PanelInfo`].preferenceWidth || this[`${side}PanelInfo`].defaultWidth;
+		return this.updateComplete;
 	}
 
 	protected hideSide(side : "left" | "right")
@@ -391,6 +392,7 @@ export class EgwFrameworkApp extends LitElement
 		this[attribute] = true;
 		this[`${side}Splitter`].position = this[`${side}PanelInfo`].hiddenWidth;
 		this.requestUpdate(attribute, oldValue);
+		return this.updateComplete;
 	}
 
 	get egw()
@@ -426,9 +428,16 @@ export class EgwFrameworkApp extends LitElement
 			return;
 		}
 
-		// Move templates with slots
+		// Move templates with slots (along with DOMContainer if only one template there to keep it together)
 		const slottedTemplates = etemplate.DOMContainer.querySelectorAll(":scope > [slot]");
-		slottedTemplates.forEach(node => {this.appendChild(node);});
+		if(slottedTemplates.length == 1 && etemplate.DOMContainer.childElementCount == 1)
+		{
+			etemplate.DOMContainer.slot = slottedTemplates[0].slot;
+		}
+		else
+		{
+			slottedTemplates.forEach(node => {this.appendChild(node);});
+		}
 
 		// Move top level slotted components
 		const slottedWidgets = etemplate.widgetContainer.querySelectorAll(":scope > [slot]")
