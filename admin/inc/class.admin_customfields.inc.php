@@ -174,14 +174,16 @@ class admin_customfields
 				$this->content_types = (array)Api\Link::get_registry($this->appname,'default_types');
 			}
 			// Set this now, we need to know it for updates
-			$this->content_type = $content['content_types']['types'] ?: (array_key_exists(0,$this->content_types) ? $this->content_types[0] : key($this->content_types));
+			$this->content_type = $content['content_types']['types'] ?? null ?:
+				(array_key_exists(0,$this->content_types) ?
+					($this->content_types[0]['name'] ?? $this->content_types[0]) : key($this->content_types));
 
 			// Common type changes - add, delete
-			if($content['content_types']['delete'])
+			if (!empty($content['content_types']['delete']))
 			{
 				$this->delete_content_type($content);
 			}
-			elseif($content['content_types']['create'])
+			elseif (!empty($content['content_types']['create']))
 			{
 				if(($new_type = $this->create_content_type($content)))
 				{
@@ -198,7 +200,7 @@ class admin_customfields
 		}
 
 		// Custom field deleted from nextmatch
-		if($content['nm']['action'] == 'delete')
+		if(($content['nm']['action'] ?? null) == 'delete')
 		{
 			foreach($this->fields as $name => $data)
 			{
