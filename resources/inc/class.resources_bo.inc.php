@@ -641,7 +641,7 @@ class resources_bo
 
 		if(!is_array($res_id) && $res_id < 1) return;
 
-		$data = $this->so->search(array('res_id' => $res_id),self::TITLE_COLS.',useable');
+		$data = $this->so->search(array('res_id' => $res_id),self::title_cols('useable'));
 		if (!is_array($data))
 		{
 			//error_log(__METHOD__." No Calendar Data found for Resource with id $res_id");
@@ -912,8 +912,19 @@ class resources_bo
 	/**
 	 * Columns displayed in title (or required for ACL)
 	 *
+	 * @param string[]|string|null $extra further columns to add
+	 * @return string[]
 	 */
-	const TITLE_COLS = ['res_id', 'name', 'cat_id'];
+	static function title_cols($extra=null)
+	{
+		$cols = ['res_id', 'name', 'cat_id'];
+		$cols[] = $GLOBALS['egw_info']['user']['preferences']['title_show'] ?? 'short_description';
+		if ($extra)
+		{
+			$cols = array_unique(array_merge($cols, is_array($extra) ? $extra : explode(',', $extra)));
+		}
+		return cols;
+	}
 
 	/**
 	 * Get title for multiple resources identified by $ids
@@ -926,8 +937,7 @@ class resources_bo
 	function link_titles(array $ids)
 	{
 		$titles = array();
-		if (($resources =& $this->so->search(array('res_id' => $ids),
-			array_merge(self::TITLE_COLS, [$GLOBALS['egw_info']['user']['preferences']['title_show'] ?? 'short_description']))))
+		if (($resources =& $this->so->search(array('res_id' => $ids), self::title_cols())))
 		{
 			foreach($resources as $resource)
 			{
