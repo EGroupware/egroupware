@@ -113,7 +113,11 @@ export class Et2VfsUpload extends Et2File
 		{
 			return superAdded(info, event);
 		}
-		this.egw().request("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_conflict_check", [
+		// Pause uploads while we check
+		this.resumable.pause();
+
+		this._uploadPending[info.uniqueIdentifier] = this.egw().request(
+			"EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_conflict_check", [
 			this.getInstanceManager()?.etemplate_exec_id, 			// request_id
 			this.path,	// path
 			info.file.name,
@@ -190,7 +194,7 @@ export class Et2VfsUpload extends Et2File
 				// Upload as set
 				return true;
 			case "rename":
-				info.fileName = value?.value ?? info.fileName;
+				info.fileName = info['name'] = value?.value ?? info.fileName;
 				return true;
 			case "cancel":
 				// Don't upload

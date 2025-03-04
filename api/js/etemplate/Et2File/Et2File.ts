@@ -119,6 +119,10 @@ export class Et2File extends Et2InputWidget(LitElement)
 	protected resumable : Resumable = null;
 	private __value : { [tempName : string] : FileInfo } = {};
 
+	// In case we need to do things between file added and start of upload, we wait
+	protected _uploadPending : { [uniqueIdentifier : string] : Promise<void> } = {};
+	private _uploadDelayTimeout : number;
+
 	/** Files already uploaded */
 	@property({type: Object})
 	set value(newValue : { [tempFileName : string] : FileInfo })
@@ -320,12 +324,30 @@ export class Et2File extends Et2InputWidget(LitElement)
 		await fileItem.updateComplete;
 		const ev = new CustomEvent("et2-add", {bubbles: true, detail: file})
 		this.dispatchEvent(ev);
-		setTimeout(this.resumable.upload, 100);
 
 		if(typeof this.onStart == "function")
 		{
 			this.onStart(ev);
 		}
+		if(ev.defaultPrevented)
+		{
+			// Event handling canceled the upload
+			file.cancel();
+		}
+		// We can't pause individual files, just the upload as a whole, so wait together
+		if(this._uploadDelayTimeout)
+		{
+			window.clearTimeout(this._uploadDelayTimeout);
+		}
+		this._uploadDelayTimeout = window.setTimeout(() =>
+		{
+			Promise.allSettled(Object.values(this._uploadPending)).then(() =>
+			{
+				this._uploadPending = {};
+				this._uploadDelayTimeout = null;
+				setTimeout(this.resumable.upload);
+			});
+		}, 100);
 	}
 
 	protected resumableFileProgress(file : FileInfo, event)
