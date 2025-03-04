@@ -889,7 +889,7 @@ class resources_bo
 	}
 
 	/**
-	 * get title for an infolog entry identified by $res_id
+	 * Get title for a resource entry identified by $res_id
 	 *
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int|array $resource
@@ -905,17 +905,18 @@ class resources_bo
 		{
 			return false;
 		}
-		return $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+		$show = $resource[$GLOBALS['egw_info']['user']['preferences']['title_show'] ?? 'short_description'];
+		return $resource['name'].(!empty($show) ? ' ('.$show.')' : '');
 	}
 
 	/**
 	 * Columns displayed in title (or required for ACL)
 	 *
 	 */
-	const TITLE_COLS = 'res_id,name,short_description,cat_id';
+	const TITLE_COLS = ['res_id', 'name', 'cat_id'];
 
 	/**
-	 * get title for multiple contacts identified by $ids
+	 * Get title for multiple resources identified by $ids
 	 *
 	 * Is called as hook to participate in the linking.
 	 *
@@ -925,7 +926,8 @@ class resources_bo
 	function link_titles(array $ids)
 	{
 		$titles = array();
-		if (($resources =& $this->so->search(array('res_id' => $ids),self::TITLE_COLS)))
+		if (($resources =& $this->so->search(array('res_id' => $ids),
+			array_merge(self::TITLE_COLS, [$GLOBALS['egw_info']['user']['preferences']['title_show'] ?? 'short_description']))))
 		{
 			foreach($resources as $resource)
 			{

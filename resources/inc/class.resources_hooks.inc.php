@@ -200,9 +200,23 @@ class resources_hooks
 	 */
 	static function settings()
 	{
-		$settings[] = array(
+		$settings = [[
 			'type'    => 'section',
-			'title'   => lang('Data exchange settings'),
+			'title'   => lang('General settings'),
+			'no_lang' => true,
+			'xmlrpc'  => False,
+			'admin'   => False
+		]];
+		$settings[] = array(
+			'type'    => 'select',
+			'name'    => 'title_show',
+			'label'   => lang('Show in title (beside name)'),
+			'default' => 'short_description',
+			'values'  => [
+				'short_description' => lang('short description'),
+				'location' => lang('location'),
+				'inventory_number' => lang('inventory number'),
+			],
 			'no_lang' => true,
 			'xmlrpc'  => False,
 			'admin'   => False
@@ -211,6 +225,13 @@ class resources_hooks
 		// Merge print
 		if($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
+			$settings[] = array(
+				'type'    => 'section',
+				'title'   => lang('Data exchange settings'),
+				'no_lang' => true,
+				'xmlrpc'  => False,
+				'admin'   => False
+			);
 			$merge = new resources_merge();
 			$settings += $merge->merge_preferences();
 		}
