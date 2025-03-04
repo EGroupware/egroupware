@@ -35,6 +35,7 @@ create new accessory for this resource	resources	en	Create new accessory for thi
 create new links	resources	en	Create new links
 custom etemplate for the contactform	resources	en	Custom eTemplate for the contactform
 custom fields	resources	en	Custom Fields
+data exchange settings	common	en	Data exchange settings
 days	resources	en	Days
 delete accessories of selected resources too?	resources	en	Delete accessories of selected resources too?
 delete selected resources	resources	en	Delete selected resources
@@ -135,6 +136,7 @@ select/deselect all	resources	en	Select/deselect all
 short description	resources	en	Short description
 short description of resource	resources	en	Short description of resource
 show calendar of resource	resources	en	Show calendar of resource
+show in title (beside name)	resources	en	Show in title (beside name)
 simple reservation of a single item	resources	en	Simple reservation of a single item
 something went wrong by deleting resource	resources	en	Error deleting resource!
 something went wrong by saving resource	resources	en	Error saving resource!
