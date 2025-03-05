@@ -136,6 +136,8 @@ class admin_cmd_edit_group extends admin_cmd
 			{
 				admin_cmd::$acl->delete_repository('phpgwapi','hidden',$data['account_id']);
 			}
+			// invalidate hidden groups cache
+			Accounts::cache_invalidate($data['account_id']);
 		}
 		// make new account_id available to caller
 		$this->account = $data['account_id'];

@@ -1490,6 +1490,7 @@ class Accounts
 		if ($invalidate_groups)
 		{
 			Cache::unsetCache($instance->config['install_id'], __CLASS__, 'groups');
+			Cache::unsetCache($instance->config['install_id'], __CLASS__, 'groups-hidden');
 		}
 
 		// session-cache
