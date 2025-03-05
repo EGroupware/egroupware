@@ -620,7 +620,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.setCurrentTag(null);
 
 		// Don't show if only tabbed into
-		if(!event.relatedTarget)
+		if(!event.relatedTarget && !this.open)
 		{
 			this.show();
 		}
@@ -629,6 +629,10 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	private handleInternalBlur(event)
 	{
 		// Focus lost to some other internal component - ignore it
+		if(this.shadowRoot.contains(event.target))
+		{
+			return;
+		}
 		let o = event.relatedTarget;
 		while(o)
 		{
@@ -755,6 +759,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		event.stopPropagation();
 
 		this.hasFocus = true;
+		const oldValue = this.open;
 		if(this.open)
 		{
 			this._popup.active = false;
@@ -766,12 +771,15 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		}
 		this.open = this._popup.active;
 		this.treeOrSearch = "tree";
-		this.requestUpdate("open");
-		this.updateComplete.then(() =>
+		this.requestUpdate("open", oldValue);
+		if(this.open)
 		{
-			this._tree.style.minWidth = getComputedStyle(this).width;
-			this.focus();
-		})
+			this.updateComplete.then(() =>
+			{
+				this._tree.style.minWidth = getComputedStyle(this).width;
+				this.focus();
+			});
+		}
 	}
 
 	/**
