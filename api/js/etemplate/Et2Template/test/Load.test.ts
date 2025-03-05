@@ -142,6 +142,7 @@ describe("Loading", () =>
 	});
 	it("loads last template in file when it has no template otherwise", async() =>
 	{
+		const listener = oneEvent(element, "load");
 		// Stub the url to point to the fixture
 		let xml = fakedTemplate(MULTIPLE);
 
@@ -149,10 +150,12 @@ describe("Loading", () =>
 		sinon.stub(element, "loadFromFile").returns(xml);
 
 		// We don't set the template, just give the URL
+		element.id = "Test-template";
 		element.url = "load a file that has several template"
+		element.requestUpdate("url");
 
 		// Wait for load
-		await element.updateComplete;
+		await listener;
 
 		assert.isTrue(element.classList.contains("multiple"));
 	});
@@ -177,7 +180,7 @@ describe("Loading", () =>
 		assert.isNotNull(loader, "Loader (shown while loading) not found")
 
 		// Wait for load, check the loader is gone
-		await element.updateComplete;
+		await oneEvent(element, "load");
 		loader = element.shadowRoot.querySelector(".template--loading");
 		assert.isNull(loader, "Loader still there after load");
 	});
