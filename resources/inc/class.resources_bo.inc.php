@@ -923,7 +923,7 @@ class resources_bo
 		{
 			$cols = array_unique(array_merge($cols, is_array($extra) ? $extra : explode(',', $extra)));
 		}
-		return cols;
+		return $cols;
 	}
 
 	/**
