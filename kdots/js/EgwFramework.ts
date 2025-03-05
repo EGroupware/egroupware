@@ -105,11 +105,13 @@ export class EgwFramework extends LitElement
 
 	// Keep track of open popups
 	private _popups : Window[] = [];
+	private _popupsGCInterval : number;
 
 	// Keep track of open messages
 	private _messages : SlAlert[] = [];
 
 	private get tabs() : SlTabGroup { return this.shadowRoot.querySelector("sl-tab-group");}
+
 
 	constructor()
 	{
@@ -459,6 +461,11 @@ export class EgwFramework extends LitElement
 
 		windowID.framework = this;
 		this._popups.push(windowID);
+		if(!this._popupsGCInterval)
+		{
+			// Check every 60s to make sure we didn't miss any
+			window.setInterval(() => this.popups_garbage_collector, 60000);
+		}
 
 		if(_returnID !== false)
 		{
@@ -472,12 +479,18 @@ export class EgwFramework extends LitElement
 	 */
 	public popups_garbage_collector()
 	{
-		for(var i = 0; i < this._popups.length; i++)
+		let i = this._popups.length;
+		while(i--)
 		{
 			if(this._popups[i].closed)
 			{
 				this._popups.splice(i, 1);
 			}
+		}
+		if(this._popups.length == 0 && this._popupsGCInterval)
+		{
+			window.clearInterval(this._popupsGCInterval);
+			this._popupsGCInterval = null;
 		}
 	}
 

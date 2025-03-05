@@ -945,6 +945,7 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 
 		windowID.framework = this;
 		this.popups.push(windowID);
+		this.popups_garbage_collector();
 
 		if (navigate)
 		{
@@ -995,7 +996,8 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 	 */
 	popups_garbage_collector: function ()
 	{
-		for (var i=0; i < this.popups.length; i++)
+		let i = this.popups.length;
+		while (i--)
 		{
 			if (this.popups[i].closed) this.popups.splice(i,1);
 		}
