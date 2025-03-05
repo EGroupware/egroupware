@@ -79,6 +79,8 @@ class ResumableStub
 	{
 		this.files = [];
 	}
+
+	pause() {}
 }
 
 export default ResumableStub;

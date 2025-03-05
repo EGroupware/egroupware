@@ -91,7 +91,7 @@ describe('Et2File Component', async() =>
 		assert.isTrue(clickSpy.calledOnce);
 	});
 
-	it('should dispatch a change event when a file is added', async() =>
+	it('should dispatch a change event when a file is uploaded', async() =>
 	{
 		const file = new File(['content'], 'test.txt', {type: 'text/plain'});
 		const fileList = {
@@ -165,16 +165,14 @@ describe('Et2File Component', async() =>
 		const listener = oneEvent(element, 'et2-add');
 		const clock = sinon.useFakeTimers();
 		element.addFile(file);
-		await element.updateComplete;
 		const event = await listener;
-
+		// Wait for progress
+		clock.tick(101);
+		await Promise.allSettled(Object.values(element._uploadPending));
+		clock.tick(1);
 
 		const fileInfo = element.files[0];
-
 		const fileItem = <Et2FileItem>element.findFileItem(fileInfo.file);
-
-		// Et2File waits 100 ms before upload starts
-		clock.tick(101);
 		await fileItem.updateComplete;
 
 		assert.strictEqual(fileItem.progress, 50, 'File progress should be updated');

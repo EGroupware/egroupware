@@ -176,6 +176,10 @@ export class Et2File extends Et2InputWidget(LitElement)
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+		if(this._uploadDelayTimeout)
+		{
+			window.clearTimeout(this._uploadDelayTimeout);
+		}
 		if(this.resumable)
 		{
 			this.resumable.cancel();
@@ -345,7 +349,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 			{
 				this._uploadPending = {};
 				this._uploadDelayTimeout = null;
-				setTimeout(this.resumable.upload);
+				window.setTimeout(this.resumable.upload);
 			});
 		}, 100);
 	}
