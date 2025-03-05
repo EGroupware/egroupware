@@ -151,7 +151,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	@property({type: Function})
 	onopenend   //description: "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
 	@property({type: String})
-	imagePath: string = egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/" //TODO we will need a different path here! maybe just rename the path?
+	imagePath : string = egw?.webserverUrl + "/api/templates/default/images/dhtmlxtree/" //TODO we will need a different path here! maybe just rename the path?
 	//     description: "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
 	@property()
 	value = []
@@ -233,8 +233,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		if (this._selectOptions?.length) this._initCurrent()
 
 		// Actions can't be initialized without being connected to InstanceManager
-		this._initActions();
-		this._link_actions(this.actions)
+		if(this.actions && Object.values(this.actions).length)
+		{
+			this._initActions();
+			this._link_actions(this.actions)
+		}
 	}
 
 	protected updated(_changedProperties: PropertyValues)
@@ -360,17 +363,20 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				this._actionManager = gam.addAction("actionManager", this.id);
 			}
 		}
-		// @ts-ignore egw() exists on this
-		this._actionManager.updateActions(this.actions, this.egw().appName);
-		// @ts-ignore
-		if(this.options.default_execute)
+		if(this._actionManager)
 		{
-			this._actionManager.setDefaultExecute(this.options.default_execute);
-		}
+			// @ts-ignore egw() exists on this
+			this._actionManager.updateActions(this.actions, this.egw().appName);
+			// @ts-ignore
+			if(this.options.default_execute)
+			{
+				this._actionManager.setDefaultExecute(this.options.default_execute);
+			}
 
-		// Put a reference to the widget into the action stuff, so we can
-		// easily get back to widget context from the action handler
-		this._actionManager.data = {widget: this};
+			// Put a reference to the widget into the action stuff, so we can
+			// easily get back to widget context from the action handler
+			this._actionManager.data = {widget: this};
+		}
 	}
 
 	/** Sets focus on the control. */
