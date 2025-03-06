@@ -390,7 +390,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					var handler_level = handlers[handler_idx];
 					if (typeof handler_level[res.type] !== 'undefined')
 					{
-						for (var j = 0; j < handler_level[res.type].length; j++) {
+						const handlerCount = handler_level[res.type].length;
+						for (let j = handlerCount - 1; j >= 0; j--)
+						{
 							try {
 								// Get a reference to the plugin
 								var plugin = handler_level[res.type][j];
