@@ -115,7 +115,7 @@ egw-framework#egw_fw_basecontainer {
 }
 egw-framework#egw_fw_basecontainer::part(status-split) {
   /* This limits the max size of the status panel */
-  --max: 32px;
+  --max: 15em;
 }
 egw-framework#egw_fw_basecontainer::part(header) {
   --icon-size: 32px;
