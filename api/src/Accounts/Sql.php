@@ -468,10 +468,10 @@ class Sql
 
 		$filter = [];
 		// implement negated account_id filter used for hidden accounts/groups
-		if (!empty($param['account_id']) && ($not_account_ids = array_search('!', $param['account_id'])) !== false)
+		if (!empty($param['account_id']) && is_array($param['account_id']) && ($not_account_ids = array_search('!', $param['account_id'])) !== false)
 		{
 			unset($param['account_id'][$not_account_ids]);
-			$filter[] = $this->db->expression(self::TABLE, 'NOT ('.self::TABLE.'.', ['account_id' => array_map('abs', (array)$param['account_id'])], ')');
+			$filter[] = $this->db->expression(self::TABLE, 'NOT ('.self::TABLE.'.', ['account_id' => array_map('abs', $param['account_id'])], ')');
 			unset($param['account_id']);
 		}
 		switch($param['type'])
