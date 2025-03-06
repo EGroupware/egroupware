@@ -63,7 +63,9 @@
   html[data-darkmode='1'] .et2_taglist_tags_icon,
   html[data-darkmode='1'] .fw_avatar_stat,
   html[data-darkmode='1'] et2-avatar-group,
-  html[data-darkmode='1'] .blueimp-gallery .slide {
+  html[data-darkmode='1'] .blueimp-gallery .slide,
+  html[data-darkmode='1'] et2-avatar::part(image),
+  html[data-darkmode='1'] et2-lavatar::part(image) {
     filter: invert(1) hue-rotate(180deg) !important;
   }
   html[data-darkmode='1'] et2-button .bi::before,
