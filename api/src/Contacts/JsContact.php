@@ -202,6 +202,7 @@ class JsContact extends Api\CalDAV\JsBase
 						$contact['fileas'] = $value;
 						break;
 
+					case self::AT_TYPE:
 					case 'prodId':
 					case 'created':
 					case 'updated':
@@ -1162,6 +1163,9 @@ class JsContact extends Api\CalDAV\JsBase
 
 					case 'members':
 						$group['members'] = self::parseMembers($value);
+						break;
+
+					case self::AT_TYPE:
 						break;
 
 					default:

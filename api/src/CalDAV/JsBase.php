@@ -365,7 +365,7 @@ class JsBase
 				// objects need to be merged, to not unset all not given attributes
 				if (is_array($value) && !array_key_exists(0, $value) && $target)
 				{
-					$target = array_merge($target, $value);
+					$target = $value + $target;
 				}
 				else
 				{

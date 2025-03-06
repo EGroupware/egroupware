@@ -630,7 +630,7 @@ class Sql
 	 */
 	function name2id($name,$which='account_lid',$account_type=null)
 	{
-		if ($account_type === 'g' && $which != 'account_lid') return false;
+		if ($account_type === 'g' && !in_array($which, ['account_lid', 'account_email'])) return false;
 
 		$where = array();
 		$cols = 'account_id';
@@ -671,7 +671,22 @@ class Sql
 		}
 		if (!($rs = $this->db->select($table,$cols,$where,__LINE__,__FILE__)) || !($row = $rs->fetch()))
 		{
-			//error_log(__METHOD__."('$name', '$which', ".array2string($account_type).") db->select('$table', '$cols', ".array2string($where).") returned ".array2string($rs).' '.function_backtrace());
+			// search group-email or alias-address of user in a mail-enabled EGroupware
+			if ($which === 'account_email')
+			{
+				try {
+					if (($account_id = $this->db->select(Api\Mail\Smtp\Sql::TABLE, 'account_id', [
+						'mail_value' => $name,
+						'mail_type'  => Api\Mail\Smtp\Sql::TYPE_ALIAS,
+					]+($account_type ? [$account_type === 'g' ? 'account_id<0' : 'account_id>0'] : []), __LINE__, __FILE__)->fetchColumn()))
+					{
+						return (int)$account_id;
+					}
+				}
+				catch (\Exception $e) {
+					// ignore exception
+				}
+			}
 			return false;
 		}
 		return (($row['account_type']??null) === 'g' ? -1 : 1) * $row['account_id'];

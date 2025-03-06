@@ -184,6 +184,7 @@ class JsCalendar extends JsBase
 						$event = array_merge($event, self::parseCustomfields($value, 'calendar', $data['timeZone']));
 						break;
 
+					case self::AT_TYPE:
 					case 'prodId':
 					case 'created':
 					case 'updated':
@@ -253,7 +254,7 @@ class JsCalendar extends JsBase
 				'egroupware.org:type' => $entry['info_type'],
 				'egroupware.org:pricelist' => $entry['pl_id'] ? (int)$entry['pl_id'] : null,
 				'egroupware.org:price' => $entry['info_price'] ? (double)$entry['info_price'] : null,
-				'egroupware.org:completed' => $entry['info_datecomplete'] ?
+				'egroupware.org:completed' => $entry['info_datecompleted'] ?
 					self::DateTime($entry['info_datecompleted'], Api\DateTime::$user_timezone->getName()) : null,
 			] + self::Locations(['location' => $entry['info_location'] ?? null]) + [
 				'relatedTo' => self::relatedTo($entry['info_id_parent'], $entry['info_link_id'], $entry['info_id']),
@@ -389,6 +390,7 @@ class JsCalendar extends JsBase
 						$event['info_price'] = self::parseFloat($value);
 						break;
 
+					case self::AT_TYPE:
 					case 'prodId':
 					case 'created':
 					case 'updated':
@@ -636,6 +638,7 @@ class JsCalendar extends JsBase
 						break;
 					case 'g':
 						$info['kind'] = 'group';
+						$info['name'] = Api\Accounts::id2name($uid);    // use just the group-name, not adding translated "Group"
 						break;
 					case 'r':
 						$info['kind'] = Api\CalDAV\Principals::resource_is_location($user_id) ? 'location' : 'resource';
@@ -685,6 +688,11 @@ class JsCalendar extends JsBase
 			{
 				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($participant, self::JSON_OPTIONS_ERROR));
 			}
+			elseif (!isset($participant))
+			{
+				// ignore/unset/no set participant set to null
+				continue;
+			}
 			elseif (!is_array($participant))
 			{
 				$participant = [
@@ -694,11 +702,20 @@ class JsCalendar extends JsBase
 			// check if the uid is valid and matches the data in the object
 			if (($test_uid = self::Participants(['participants' => [
 				$uid => 'U'
-			]])) && ($test_uid['email'] ?? null) === $participant['email'] &&
-				($test_uid['kind'] ?? null) === ($participant['kind'] ?? null) &&
-				($test_uid['name'] ?? null) === ($participant['name'] ?? null))
+			]])) && ($test_uid['kind'] ?? null) === ($participant['kind'] ?? null) &&
+				// compare case-insensitive email OR name
+				(strtolower($test_uid['email'] ?? '') === strtolower($participant['email'] ?? '') ||
+					strtolower($test_uid['name'] ?? '') === strtolower($participant['name'] ?? '')))
 			{
 				// use $uid as is
+			}
+			elseif ($participant['kind'] === 'group')
+			{
+				if (!(!empty($participant['email']) && ($uid = Api\Accounts::getInstance()->name2id($participant['email'], 'account_email', 'g')) ||
+					!empty($participant['name']) && ($uid = Api\Accounts::getInstance()->name2id($participant['name'], 'account_lid', 'g'))))
+				{
+					throw new \InvalidArgumentException("Unknown or invalid participant: ".json_encode($participant, self::JSON_OPTIONS_ERROR));
+				}
 			}
 			else
 			{
@@ -1242,7 +1259,7 @@ class JsCalendar extends JsBase
 	 * - you can use null, instead of the relation object, to unset a relation in a PATCH command
 	 * - "egroupware.org-primary:<app>[:<field>]": "<id-or-value>"
 	 *
-	 * <uid>: InfoLog UID
+	 * <uid>: InfoLog UID (optional prefixed with "urn:uuid:")
 	 * <app>: EGroupware app the current user has access to, which participates in linking
 	 * <id>: ID of EGroupware app
 	 * <field>: addressbook field like "id" or "email" (no "contact_" prefix), or "egroupware.org:customfields/<name>"
@@ -1272,7 +1289,7 @@ class JsCalendar extends JsBase
 			switch($relation['relation'] ?? $relation ?? (strpos($uid, ':') === false ? 'parent' : 'egroupware.org-primary'))
 			{
 				case 'parent':
-					if (!($parent = self::getInfolog()->read(['info_uid' => $uid])))
+					if (!($parent = self::getInfolog()->read(['info_uid' => preg_replace('/^urn:uuid:/', '', $uid)])))
 					{
 						throw new \InvalidArgumentException("UID '$uid' NOT found!");
 					}
