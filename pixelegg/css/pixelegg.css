@@ -66,6 +66,9 @@
   html[data-darkmode='1'] et2-button [class*=" bi-"]::before {
     filter: invert(1) hue-rotate(180deg);
   }
+  html[data-darkmode='1'] et2-calendar-owner::part(icon) {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
   html[data-darkmode='1'] et2-image > img {
     filter: none !important;
   }
