@@ -838,32 +838,14 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					var label_index = false;
 					var category = cats[cat] ? parseInt(cats[cat],10) : false;
 					if(category == 0 || !category) category = '';
-					for(var i = 0; i < labels.length; i++)
-					{
-						if(labels[i].id == category)
-						{
-							// If there's no cat filter, only show the top level
-							if(!app_calendar.state.cat_id)
-							{
-								for(var j = 0; j < labels.length; j++)
-								{
-									if(labels[j].id == labels[i].main)
-									{
-										label_index = j;
-										break;
-									}
-								}
-								break;
-							}
-							label_index = i;
-							break;
-						}
-					}
-					if(label_index !== false && typeof rows[label_index] === 'undefined')
+					const indexCheck = (l) => l.value == category || l.id == category || typeof l.children != "undefined" && l.children.findIndex(indexCheck) != -1;
+					label_index = labels.findIndex(indexCheck);
+
+					if(label_index !== -1 && typeof rows[label_index] === 'undefined')
 					{
 						rows[label_index] = [];
 					}
-					if(label_index !== false && rows[label_index].indexOf(event) === -1)
+					if(label_index !== -1 && rows[label_index].indexOf(event) === -1)
 					{
 						rows[label_index].push(event);
 					}
@@ -2076,11 +2058,11 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 							this._deferred_row_updates[id] = window.setTimeout(jQuery.proxy(this._deferred_row_update, this, id), et2_calendar_planner.DEFERRED_ROW_TIME);
 						}
 					}
-					else
+					else if(event.data)
 					{
 						// Could be an event no row is interested in, could be a problem.
-						// Just redraw everything
-						invalidate = true;
+						// Just ignore it
+						console.log("Event could not be grouped", event.data.app_id + ": " + event.data.title);
 						continue;
 					}
 
