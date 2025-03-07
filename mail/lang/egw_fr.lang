@@ -500,6 +500,7 @@ report as ham	mail	fr	Marqué comme HAM
 report as spam	mail	fr	Marqué comme SPAM
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	fr	Signaler le contenu de cet e-mail comme Ham (pas spam) - les solutions anti-spam comme SpamTitan apprendront
 report this email content as spam - spam solutions like spamtitan will learn	mail	fr	Signaler le contenu de cet e-mail en tant que spam - les solutions anti-spam comme SpamTitan vont apprendre
+request for passphrase	mail	fr	Demande de phrase d'authentification
 required pear class mail/mimedecode.php not found.	mail	fr	Classe PEAR class Mail/mimeDecode.php non trouvée.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	fr	Doit être désactivée si vous utilisez Dovecot avec des drapeaux "private seen" sur des dossiers partagés ou des dossiers d'utilisateurs !
 resend after how many days?	mail	fr	Ré-envoyer après combien de jours ?

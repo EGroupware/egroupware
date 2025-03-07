@@ -58,11 +58,15 @@ application	common	ko	응용프로그램
 applications	common	ko	응용프로그램들
 apply	common	ko	적용
 apps & license	common	ko	앱 및 라이선스
+apps &amp; license	common	ko	앱 및 라이선스
 april	common	ko	4월
 are you sure you want to delete these entries ?	common	ko	이 항목들을 정말로 삭제하시겠습니까?
 are you sure you want to delete this entry ?	common	ko	현재 항목을 삭제하시겠습니까?
+are you sure you want to logout?	common	ko	정말 로그아웃하시겠습니까?
+are you sure, you would like to delete the backup key?	common	ko	정말 백업 키를 삭제하시겠습니까?
 attach file	common	ko	파일 첨부
 august	common	ko	8월
+automatic update check failed, you need to check manually!	common	ko	자동 업데이트 확인에 실패했습니다. 수동으로 확인해야 합니다!
 avatar	common	ko	Avatar
 back	common	ko	뒤로
 back to user login	common	ko	사용자 접속으로 돌아가기
@@ -167,6 +171,7 @@ enabled	common	ko	활성화됨
 end date	common	ko	종료일
 end time	common	ko	종료시간
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	EGroupware의 URL 위치를 입력해주세요<BR>예제: http://www.domain.com/egroupware 혹은 /egroupware<br><b>마지막에 / (슬래시)를 붙이지 마세요</b>
+enter your passphrase	common	ko	비밀번호 입력
 entry has been deleted sucessfully	common	ko	데이터가 성공적으로 삭제되었습니다.
 entry updated sucessfully	common	ko	데이터가 성공적으로 수정되었습니다.
 error	common	ko	오류
@@ -388,6 +393,7 @@ postal	common	ko	우편번호
 preferences	common	ko	환경설정
 previous page	common	ko	이전 페이지로
 primary group	common	ko	주 그룹
+print orientation	common	ko	방향
 priority	common	ko	중요도
 private	common	ko	개인
 project	common	ko	프로젝트

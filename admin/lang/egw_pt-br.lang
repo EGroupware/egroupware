@@ -155,6 +155,7 @@ change access	admin	pt-br	Alterar direitos de acesso
 change account_id	admin	pt-br	Alterar ID da conta
 change acl rights	admin	pt-br	Mudar direitos da ACL
 change config settings	admin	pt-br	Mudar parâmetros de configuração
+change domain of email address and aliases	admin	pt-br	Alterar o domínio do endereço de e-mail e aliases
 change login screen message	admin	pt-br	Alterar mensagem da tela principal
 change password for %1	admin	pt-br	Alterar senha para %1
 check acl for entries of not (longer) existing accounts	admin	pt-br	Verificar registros ACL para contas não mais existentes.
@@ -568,6 +569,7 @@ server settings	admin	pt-br	Configurações do servidor
 server type(mode)	admin	pt-br	Tipo de servidor (modo)
 server url	admin	pt-br	URL do servidor
 server username	admin	pt-br	Usuário do servidor
+set a random password	admin	pt-br	Definir uma senha aleatória
 set preference values.	admin	pt-br	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt-br	A tela de conexão deve incluír uma caixa de seleção de idioma? (útil para sites de demonstração)
 show access log	admin	pt-br	Exibir registros de acessos
@@ -699,6 +701,7 @@ who would you like to transfer records owned by the deleted user to?	admin	pt-br
 wrong account type: %1 is no %2 !!!	admin	pt-br	Tipo de conta errado: %1 NÃO é %2!
 wrong admin-account or -password !!!	admin	pt-br	Conta de administração ou -senha errada!
 xml-rpc	admin	pt-br	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	pt-br	Você pode alterar o hash somente se definir uma senha aleatória ou se estiver usando senhas de texto simples!
 you can set an initial value, which gets incremented every time a new serial get generated	admin	pt-br	você pode definir um valor inicial, que é incrementado sempre que uma nova série é gerada
 you can use wizard to fix account settings or delete account.	admin	pt-br	Você pode usar o assistente para corrigir as configurações da conta ou excluir a conta.
 you have entered an invalid expiration date	admin	pt-br	A data de expiração digitada é inválida!

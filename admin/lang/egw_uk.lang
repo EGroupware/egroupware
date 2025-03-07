@@ -108,6 +108,7 @@ certificate validation in days	admin	uk	Термін дії сертифікат
 change access	admin	uk	Змінити права доступу
 change acl rights	admin	uk	Змінити ACL права
 change config settings	admin	uk	Змінити конфігураційні установки
+change domain of email address and aliases	admin	uk	Зміна домену адреси електронної пошти та псевдонімів
 change login screen message	admin	uk	Змінити повідомлення основного екрану
 check ip address of all sessions	admin	uk	перевіряти ip адресу для всіх сесій
 container	admin	uk	Контейнер
@@ -342,6 +343,7 @@ server password	admin	uk	Пароль серверу
 server type(mode)	admin	uk	Тип серверу (режим)
 server url	admin	uk	URL серверу
 server username	admin	uk	ім'я користувача на сервері
+set a random password	admin	uk	Встановити випадковий пароль
 set preference values.	admin	uk	Встановити значення параметрів.
 show access log	admin	uk	Показати протокол доступу
 show current action	admin	uk	Показати поточні дії
@@ -411,6 +413,7 @@ view user account	admin	uk	Перегляд рахунку користувач�
 who would you like to transfer all records owned by the deleted user to?	admin	uk	Кому передати ВСІ записи користувача, що видаляється ?
 who would you like to transfer records owned by the deleted user to?	admin	uk	Кому ви хочете передати записи, що належать видаленому користувачеві?
 xml-rpc	admin	uk	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	uk	Ви можете змінити хеш, тільки якщо ви встановили випадковий пароль або використовуєте відкритий текстовий пароль!
 you can use wizard to fix account settings or delete account.	admin	uk	Ви можете скористатися майстром, щоб виправити налаштування облікового запису або видалити його.
 you have entered an invalid expiration date	admin	uk	Ви ввели невірну дату припинення
 you must add at least 1 permission or group to this account	admin	uk	Необхідно надати рахунку хоча б один дозвіл чи групу.

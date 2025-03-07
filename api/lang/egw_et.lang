@@ -85,10 +85,12 @@ application	common	et	Rakendus
 applications	common	et	Rakendused
 apply	common	et	Uuenda
 apps & license	common	et	Rakendused ja litsents
+apps &amp; license	common	et	Rakendused ja litsents
 april	common	et	Aprill
 are you sure you want to delete these entries ?	common	et	Oled kindel, et soovid neid kirjeid kustutada?
 are you sure you want to delete this entry ?	common	et	Oled kindel, et soovid seda kirjet kustutada?
 are you sure you want to logout?	common	et	Kas olete kindel, et soovite välja logida?
+are you sure, you would like to delete the backup key?	common	et	Kas olete kindel, et soovite kustutada varukoopia võtme?
 argentina	common	et	ARGENTIINA
 armenia	common	et	ARMEENIA
 aruba	common	et	ARUBA
@@ -100,6 +102,7 @@ australia	common	et	AUSTRAALIA
 austria	common	et	AUSTRIA
 authenticate	common	et	Autentimine
 author	common	et	Autor
+automatic update check failed, you need to check manually!	common	et	Automaatne uuenduskontroll ebaõnnestus, peate kontrollima käsitsi!
 autosave default category	common	et	Salvesta Automaatlselt Vaikimisi Kategooria
 avatar	common	et	Avatar
 azerbaijan	common	et	ASERBAIDŽAAN
@@ -294,6 +297,7 @@ enabled	common	et	Lubatud
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	et	Võimaldab CalDAV/CardDAV-liikluse logimist, et diagnoosida probleeme seadmetega.
 end date	common	et	Lõpu kuupäev
 end time	common	et	Lõpu aeg
+enter your passphrase	common	et	Sisestage oma salasõna
 entry has been deleted sucessfully	common	et	Kirje kustutatud täielikult.
 entry saved	common	et	Kirje salvestatud
 entry updated sucessfully	common	et	Kirje uuendatud täielikult.
@@ -566,6 +570,7 @@ previous page	common	et	Eelmine leht
 primary group	common	et	Primaarne Grupp
 primary style-sheet:	common	et	Primaarne siilileht:
 print	common	et	Prindi
+print orientation	common	et	Orienteerumine
 priority	common	et	Prioriteet
 private	common	et	Privaatne
 programs	common	et	Programmid

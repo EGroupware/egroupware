@@ -115,7 +115,7 @@ filesystem	filemanager	hu	Fájlrendszer
 filesystem check reported no problems.	filemanager	hu	A fájlrendszer ellenőrzése nem jelentett problémát.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	hu	Fájlrendszer: könyvtár mountolása (a /var/lib/egroupware könyvtáron belül !) a hoszt fájlrendszeréből
 finally delete	filemanager	hu	Végül törölje
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	hu	Végül törli az összes régebbi verziót és törölt fájlt az adott mappa alatt.\n\nEzt NEM lehet visszacsinálni!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	hu	Végül törli az összes régebbi verziót és törölt fájlt az adott mappa alatt? Ezt NEM lehet visszacsinálni!
 finally delete this version	filemanager	hu	Végül törölje ezt a verziót
 fix reported problems	filemanager	hu	Jelentett problémák javítása
 folder up	filemanager	hu	Felső mappa

@@ -44,6 +44,7 @@ certificate	admin	ro	Certificat
 certificate details	admin	ro	Detalii certificat
 certificate validation in days	admin	ro	Validarea certificatului în zile
 change access	admin	ro	Modificarea drepturilor de acces
+change domain of email address and aliases	admin	ro	Schimbarea domeniului adresei de e-mail și a aliasurilor
 container	admin	ro	Container
 current certificate	admin	ro	Certificat curent
 custom 1	admin	ro	Personalizat 1
@@ -74,6 +75,7 @@ own categories	admin	ro	Categorii proprii
 own install id	admin	ro	Propria instalare ID
 own install id:	admin	ro	Propria instalare ID:
 regular expression to find part to use as container	admin	ro	Expresie regulată pentru a găsi partea care urmează să fie utilizată ca container
+set a random password	admin	ro	Setați o parolă aleatorie
 show groups in container based on	admin	ro	Afișarea grupurilor în container pe baza
 smtp only: to create only an smtp account	admin	ro	Creați cont numai SMTP fără IMAP
 soap	admin	ro	SOAP
@@ -91,5 +93,6 @@ vacation messages with start- and end-date require an admin account to be set	ad
 vacation notice	admin	ro	Anunț de vacanță
 who would you like to transfer records owned by the deleted user to?	admin	ro	Cui doriți să transferați înregistrările deținute de utilizatorul șters?
 xml-rpc	admin	ro	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	ro	Puteți modifica hash-ul numai dacă ați setat o parolă aleatorie sau dacă utilizați în prezent parole în text clar!
 you can use wizard to fix account settings or delete account.	admin	ro	Puteți utiliza expertul pentru a corecta setările contului sau pentru a șterge contul.
 you need to select some users first!	admin	ro	Mai întâi trebuie să selectați câțiva utilizatori!

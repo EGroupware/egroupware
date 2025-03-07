@@ -86,7 +86,6 @@ chair	calendar	id	Pimpinan
 change history	calendar	id	Riwayat pengubahan
 changed event-data applied	calendar	id	Perubahan data acara yang diterapkan
 charset of file	calendar	id	Karakter file
-check all	calendar	id	Contreng semua
 choose a category	calendar	id	Pilih kategori
 close the window	calendar	id	Tutup jendela
 compose a mail to all participants after the event is saved	calendar	id	Tulis surat ke seluruh peserta setelah kegiatan disimpan
@@ -116,7 +115,7 @@ dayview	calendar	id	Tampilan Harian
 delegated	calendar	id	Didelegasikan
 delete selected events	calendar	id	Hapus kegiatan terpilih
 delete series	calendar	id	Hapus runtun
-delete this alarm	calendar	id	Hapus alarm ini
+delete this alarm	calendar	id	Hapus alarm ini?
 delete this event	calendar	id	Hapus kegiatan ini
 delete this exception	calendar	id	Hapus pengecualian ini
 delete this series of recurring events	calendar	id	Hapus runtun kegiatan yang berulang ini
@@ -360,7 +359,6 @@ weekdays	calendar	id	Weekdays
 weekly	calendar	id	Mingguan
 weekview	calendar	id	Tampilan mingguan
 whole day	calendar	id	Sepanjang hari
-wk	calendar	id	Mg
 work day ends on	calendar	id	Jam Kerja Berakhir
 work day starts on	calendar	id	Jam Kerja Dimulai
 workday	calendar	id	Hari Kerja

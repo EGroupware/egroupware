@@ -103,6 +103,7 @@ australia	common	el	ΑΥΣΤΡΑΛΙΑ
 austria	common	el	ΑΥΣΤΡΙΑ
 authenticate	common	el	Πιστοποίηση ταυτότητας
 author	common	el	Συγγραφέας
+automatic update check failed, you need to check manually!	common	el	Ο αυτόματος έλεγχος ενημέρωσης απέτυχε, πρέπει να τον ελέγξετε χειροκίνητα!
 autosave default category	common	el	Αυτόματη αποθήκευση της προεπιλεγμένης κατηγορίας.
 avatar	common	el	Avatar
 azerbaijan	common	el	ΑΖΕΡΜΠΑΪΤΖΑΝ
@@ -318,6 +319,7 @@ enables logging of caldav/carddav traffic to diagnose problems with devices.	gro
 end date	common	el	Ημερομηνία παράδοσης
 end time	common	el	Ώρα παράδοσης
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του EGroupware URL.<br>Παράδειγμα: https://egw.domain.com/egroupware or /egroupware<br><b>Χωρίς δεξιά παύλα στο τέλος</b>
+enter your passphrase	common	el	Εισάγετε τη συνθηματική σας φράση
 enter your password	common	el	Εισάγετε τον κωδικό πρόσβασής σας
 entry has been deleted sucessfully	common	el	Η καταχώρηση διαγράφηκε επιτυχώς
 entry updated sucessfully	common	el	Η καταχώρηση ενημερώθηκε επιτυχώς.
@@ -722,6 +724,7 @@ previous page	common	el	Προηγούμενη σελίδα
 primary group	common	el	Κυρίως ομάδα
 primary style-sheet:	common	el	Αρχικός τύπος φύλλου:
 print	common	el	Εκτύπωση
+print orientation	common	el	Προσανατολισμός
 priority	common	el	Προτεραιότητα
 private	common	el	Προσωπικό
 programs	common	el	Προγράμματα

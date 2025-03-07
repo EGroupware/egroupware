@@ -17,6 +17,7 @@ each value is a line like <id>[=<label>]	timesheet	uk	Кожне значенн�
 edit this entry	timesheet	uk	Редагувати цей запис
 error storing working time	timesheet	uk	Помилка збереження робочого часу
 existing links	timesheet	uk	Існуючі посилання
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	uk	Експортує записи з Табеля обліку робочого часу в CSV-файл. На вкладці Параметри ви також можете вибрати інші роздільники.
 forgot to switch off working time?	common	uk	Забули вимкнути робочий час?
 global categories	timesheet	uk	Глобальні категорії
 id	timesheet	uk	Id
@@ -25,6 +26,7 @@ leaves without saveing	timesheet	uk	вийти без збереження
 length<br>rows	timesheet	uk	Довжина<br>Рядки
 links	timesheet	uk	Посилання
 max length of the input [, length of the inputfield (optional)]	timesheet	uk	максимальна довжина вводу[, видима довжина поля вводу (необов'язково)]
+mode	timesheet	uk	Режим
 modified	timesheet	uk	Змінено
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	uk	кількість рядків для багаторядкового поля вводу або рядків віконця вибору множини
 order	timesheet	uk	Послідовність
@@ -33,9 +35,11 @@ overwriting start or stop time	timesheet	uk	Перезапис часу запу
 pause	common	uk	Пауза
 pause time	timesheet	uk	Час паузи
 paused	timesheet	uk	На паузі
+project fields	timesheet	uk	Поля проекту
 recorded	timesheet	uk	Записано
 restore this entry	timesheet	uk	Відновити цей запис
 saves the changes made and leaves	timesheet	uk	зберігає зроблені зміни та виходить
+select the predefined status, when creating a new timesheet	preferences	uk	Виберіть попередньо визначений статус при створенні нового запису.
 start & stop timer	common	uk	Таймер запуску та зупинки
 start timer	common	uk	Таймер запуску
 start-time can not be before last stop- or pause-time %1!	common	uk	Час запуску не може бути раніше часу останньої зупинки або паузи %1!

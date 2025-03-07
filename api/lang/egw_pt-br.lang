@@ -146,6 +146,7 @@ applications	common	pt-br	Aplicativos
 applies the changes made	common	pt-br	Aplicar as alterações realizadas
 applies the changes to the given version of the template	common	pt-br	Aplicar as alterações para a versão do modelo informado
 apply	common	pt-br	Aplicar
+apply the action on the whole query, not only the shown entries	common	pt-br	Aplicar a ação em toda a consulta, NÃO apenas nas entradas mostradas
 apps & license	common	pt-br	Aplicativos e licenças
 apps &amp; license	common	pt-br	Aplicativos e licença
 april	common	pt-br	Abril
@@ -492,6 +493,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	pt-br	Informe o número da nova versão aqui (> old_version), deixe vazio para não atualizar o arquivo
 enter the new version number here (has to be > old_version)	common	pt-br	Informe o número da nova versão aqui (tem que ser > old_version)
 enter your file name	common	pt-br	Digite o nome do arquivo
+enter your passphrase	common	pt-br	Introduza a sua frase-chave
 enter your password	common	pt-br	Digite sua senha
 entry has been deleted sucessfully	common	pt-br	Registro removido com sucesso.
 entry not found!	common	pt-br	Registro não localizado!
@@ -1053,6 +1055,7 @@ primary key	common	pt-br	Chave primária
 primary key for the table, gets automaticaly indexed	common	pt-br	A Chave primária para a tabela, inicia na posição automáticamente
 primary style-sheet:	common	pt-br	Estilho de folha primário:
 print	common	pt-br	Imprimir
+print orientation	common	pt-br	Orientação
 priority	common	pt-br	Prioridade
 private	common	pt-br	Particular
 programs	common	pt-br	Programas

@@ -159,7 +159,7 @@ filesystem	filemanager	ja	ファイルシステム
 filesystem check reported no problems.	filemanager	ja	ファイルシステムに問題は見つかりませんでした。
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	ja	ファイルシステム：ホストファイルシステムからマウントディレクトリ（/var/lib/egroupware !)
 finally delete	filemanager	ja	完全削除
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ja	ディレクトリ内の古いバージョン、および削除済みファイルを完全に削除します。\n\nこの作業は元に戻せません。
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ja	指定したフォルダの下にあるすべての古いバージョンと削除されたファイルを最終的に削除しますか？これは元に戻せません！
 finally delete this version	filemanager	ja	このバージョンを完全削除
 fix reported problems	filemanager	ja	見つかった問題を修正
 folder up	filemanager	ja	上のフォルダ
@@ -306,7 +306,6 @@ upload fields	filemanager	ja	項目をアップロード
 upload files	filemanager	ja	ファイルをアップロード
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
 used space	filemanager	ja	使用領域
-user color indicator	filemanager	ja	ユーザ色標識
 user home quota	filemanager	ja	ユーザーホームクォータ
 username for webdav and smb, use $user for name of logged in user	filemanager	ja	WebDAVとSMBのユーザー名、ログインユーザー名には$userを使用します。
 users and groups	filemanager	ja	ユーザとグループ

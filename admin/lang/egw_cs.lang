@@ -158,6 +158,7 @@ change access	admin	cs	Změnit přístupová práva
 change account_id	admin	cs	Změnit ID účtu
 change acl rights	admin	cs	Změnit ACL práva
 change config settings	admin	cs	Změnít konfigurační nastavení
+change domain of email address and aliases	admin	cs	Změna domény e-mailové adresy a aliasů
 change login screen message	admin	cs	Změnit zprávu na hlavní obrazovce
 change password for %1	admin	cs	Změnit heslo pro %1
 check acl for entries of not (longer) existing accounts	admin	cs	Zkontrolovat ACL zda neobsahují záznamy již zrušených účtů.
@@ -602,6 +603,7 @@ server type(mode)	admin	cs	Typ (režim) serveru
 server url	admin	cs	URL serveru
 server username	admin	cs	Uživatelské jméno serveru
 sessions last 30 days	admin	cs	Relací za posledních 30 dní
+set a random password	admin	cs	Nastavení náhodného hesla
 set preference values.	admin	cs	Nastavit preferované hodnoty.
 should exceptions contain a trace (including function arguments)	admin	cs	Mají výjimky obsahovat i trasování (včetně argumentů funkcí).
 should the login page include a language selectbox (useful for demo-sites) ?	admin	cs	Má přihlašovací stránka zobrazovat rozbalovací nabídku s výběrem jazyka (užitečné pro demo stránky)?
@@ -676,7 +678,6 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	cs	Vytvořený žeton.
 token not found!	admin	cs	Token nebyl nalezen!
 token revoked.	admin	cs	Token odvolán.
-token saved.	admin	cs	Token uložen.
 top	admin	cs	Nahoře
 total of %1 accounts deleted.	admin	cs	Celkem %1 účtů smazáno.
 total of %1 id's changed.	admin	cs	Celkem změněno %1 ID.
@@ -753,6 +754,7 @@ who would you like to transfer records owned by the deleted user to?	admin	cs	Na
 wrong account type: %1 is no %2 !!!	admin	cs	Špatný typ účtu: %1 NENÍ %2!
 wrong admin-account or -password !!!	admin	cs	Špatný účet administrátora nebo heslo!
 xml-rpc	admin	cs	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	cs	Hash můžete změnit pouze v případě, že jste nastavili náhodné heslo nebo v současné době používáte hesla v prostém textu!
 you can set an initial value, which gets incremented every time a new serial get generated	admin	cs	můžete nastavit počáteční hodnotu, která se zvýší při každém generování nové série
 you can use wizard to fix account settings or delete account.	admin	cs	Pomocí průvodce můžete opravit nastavení účtu nebo účet odstranit.
 you have entered an invalid expiration date	admin	cs	Zadal(a) jste neplatné datum expirace!

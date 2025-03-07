@@ -136,7 +136,7 @@ filesystem	filemanager	pt-br	Sistema de arquivos
 filesystem check reported no problems.	filemanager	pt-br	Verificação do sistema de arquivos não relatou nenhum problema.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	pt-br	Sistema de arquivos: monte o diretório (dentro de /var/lib/egroupware !) a partir do sistema de arquivos do host
 finally delete	filemanager	pt-br	Excluir finalmente
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	pt-br	Exclui finalmente todas as versões mais antigas e os arquivos excluídos em uma determinada pasta.
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	pt-br	Finalmente excluir todas as versões mais antigas e arquivos excluídos em uma determinada pasta? Isso NÃO pode ser desfeito!
 finally delete this version	filemanager	pt-br	Finalmente eliminar versão
 fix reported problems	filemanager	pt-br	Corrigir problemas relatados
 folder up	filemanager	pt-br	Pasta acima

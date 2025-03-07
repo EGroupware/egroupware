@@ -16,7 +16,6 @@ change category	timesheet	sl	Spremeni kategorijo
 change owner when updating	timesheet	sl	Sprememba lastnika pri posodabljanju
 changed category to %1	timesheet	sl	Spremenjena kategorija v %1
 changed status	timesheet	sl	Spremenjen status.
-check all	timesheet	sl	Preveri vse
 choose 'creator' of imported data	timesheet	sl	Izberite "ustvarjalec" uvoženih podatkov
 comment by %1 at %2:	timesheet	sl	Komentarji od %1 pri %2
 create a single 'working time' timesheet per	timesheet	sl	Ustvarite en delovni list „Delovni čas“ na
@@ -51,8 +50,8 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	sl	Obstoječe povezave
 exists	timesheet	sl	Obstaja
 export definition to use for nextmatch export	timesheet	sl	Izvozna definicija, ki jo je treba uporabiti za izvoz naslednjega računa
-export to openoffice spreadsheet	timesheet	sl	Izvozi v preglednico OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	sl	Izvozi vnose iz časovnega lista v datoteko CSV
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	sl	Izvozi vnose iz časovnice v datoteko CSV. V zavihku Možnosti lahko izberete tudi druga ločila.
 field must not be empty !!!	timesheet	sl	Polje ne sme biti prazno!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
 forgot to switch off working time?	common	sl	Ste pozabili izklopiti delovni čas?
@@ -85,6 +84,7 @@ links to specified application.  example: {{links/infolog}}	timesheet	sl	Povezav
 list of files linked to the current record	timesheet	sl	Seznam datotek, povezanih s trenutnim zapisom
 manage mapping	timesheet	sl	Upravljanje map
 max length of the input [, length of the inputfield (optional)]	timesheet	sl	Največja dolžina vnosa [, dolžina vnosnega polja (opcijsko)]
+mode	timesheet	sl	Način
 modified	timesheet	sl	Spremenjeno
 modify status	timesheet	sl	Spremenjen status
 name of current user, all other contact fields are valid too	timesheet	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
@@ -125,7 +125,6 @@ select a project	timesheet	sl	Izberite projekt
 select a status of the timesheet	timesheet	sl	Izberite stanje časovnega razporeda
 select infolog	timesheet	sl	Izberite InfoLog
 select multiple timeshhets for a further action	timesheet	sl	Za nadaljnje ukrepanje izberite več časovnic
-select the predefined status, whan creating a new timesheet	preferences	sl	Če želite ustvariti nov vnos, izberite vnaprej določen status
 select the predefined status, when creating a new timesheet	preferences	sl	Če želite ustvariti nov vnos, izberite vnaprej določen status
 set to	timesheet	sl	Nastavljena
 show a quantity sum (eg. to sum up negative overtime)	admin	sl	Prikaži količinsko vsoto, npr. da bi povzeli negativne nadure

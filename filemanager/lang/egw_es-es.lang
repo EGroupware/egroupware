@@ -160,7 +160,7 @@ filesystem	filemanager	es-es	Sistema de archivos
 filesystem check reported no problems.	filemanager	es-es	La comprobación del sistema de archivos no ha encontrado problemas
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	es-es	Sistema de archivos: montar directorio (dentro de /var/lib/egroupware !) desde el sistema de archivos del host
 finally delete	filemanager	es-es	Fnalmente suprimido
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	es-es	Finalmente suprime todas las versiones anteriores y los archivos borrados en el directorio dado.\n\n¡Esto NO se puede deshacer!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	es-es	¿Finalmente suprime todas las versiones anteriores y los archivos borrados en el directorio dado? ¡Esto NO se puede deshacer!
 finally delete this version	filemanager	es-es	Finalmente suprime esta versión
 fix reported problems	filemanager	es-es	Corregir los problemas encontrados
 folder up	filemanager	es-es	Subir un directorio

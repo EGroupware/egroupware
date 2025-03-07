@@ -87,7 +87,7 @@ default calendar view	calendar	ko	기본 일정 보기
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	ko	새롭게 생성될 이벤트의 기본 길이. 길이는 분단위 예) 60 은 한시간
 default week view	calendar	ko	기본 주간보기
 delete series	calendar	ko	연속 삭제
-delete this alarm	calendar	ko	이 알람 삭제
+delete this alarm	calendar	ko	이 알람을 삭제하시겠습니까?
 delete this event	calendar	ko	이 이벤트 삭제
 delete this exception	calendar	ko	이 예외 삭제
 delete this series of recurring events	calendar	ko	이 연속 이벤트 삭제
@@ -323,7 +323,6 @@ weekview	calendar	ko	주간 보기
 weekview with weekend	calendar	ko	주간보기 (주말포함)
 weekview without weekend	calendar	ko	주간보기 (주말제외)
 whole day	calendar	ko	하루종일
-wk	calendar	ko	주
 work day ends on	calendar	ko	업무 끝나는 날
 work day starts on	calendar	ko	업무 시작하는 날
 yearly	calendar	ko	매년

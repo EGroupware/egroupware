@@ -1,3 +1,8 @@
+%1 directories and %2 files copied.	filemanager	lt	nukopijuoti %1 katalogai ir %2 failai.
+%1 directories and %2 files deleted.	filemanager	lt	%1 katalogai ir %2 failai ištrinti.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	lt	%1 kopijavimo klaidos, %2 katalogai ir %3 failai nukopijuoti!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	lt	%1 klaidos trinant, %2 katalogai ir %3 failai ištrinti!
+%1 failed, %2 succeded	filemanager	lt	%1 nepavyko, %2 pavyko.
 %1 files unlocked.	filemanager	lt	%1 failai atrakinti.
 classic	filemanager	lt	Standartinė įrankių juosta
 default action on double-click	filemanager	lt	Numatytasis veiksmas dukart spustelėjus
@@ -29,7 +34,7 @@ filesystem	filemanager	lt	Failų sistema
 filesystem check reported no problems.	filemanager	lt	Patikrinus failų sistemą, jokių problemų nepastebėta.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	lt	Failų sistema: prijungti katalogą (viduje /var/lib/egroupware !) iš priimančiosios failų sistemos
 finally delete	filemanager	lt	Galiausiai ištrinkite
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	lt	Galiausiai ištrinkite visas senesnes versijas ir ištrintus failus iš nurodyto aplanko.\n\nŠio veiksmo negalima atšaukti!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	lt	Galiausiai ištrinkite visas senesnes versijas ir ištrintus failus iš nurodyto aplanko? Šio veiksmo negalima atšaukti!
 finally delete this version	filemanager	lt	Galiausiai ištrinti šią versiją
 fix reported problems	filemanager	lt	Ištaisykite praneštas problemas
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	lt	Failų, susietų su programos įrašu (viduje /apps/appname/id/), atveju taip pat galima naudoti tos programos žymenis. Galimų vietos žymenų sąrašą rasite konkrečioje programoje.

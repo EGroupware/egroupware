@@ -16,7 +16,6 @@ change category	timesheet	km	ផ្លាស់ប្តូរប្រភេទ
 change owner when updating	timesheet	km	ផ្លាស់ប្តូរម្ចាស់នៅពេលធ្វើបច្ចុប្បន្នភាព
 changed category to %1	timesheet	km	បានប្តូរប្រភេទទៅជា%1
 changed status	timesheet	km	បានផ្លាស់ប្តូរស្ថានភាព
-check all	timesheet	km	ពិនិត្យ​ទាំងអស់
 choose 'creator' of imported data	timesheet	km	ជ្រើសរើស 'អ្នកបង្កើត' នៃទិន្នន័យដែលបាននាំចូល
 comment by %1 at %2:	timesheet	km	ផ្ដល់មតិដោយ%1 នៅ%2៖
 create a single 'working time' timesheet per	timesheet	km	បង្កើតតារាងពេលវេលា 'ម៉ោងធ្វើការ' តែមួយក្នុងមួយ
@@ -52,7 +51,6 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	km	តំណភ្ជាប់ដែលមានស្រាប់
 exists	timesheet	km	មាន
 export definition to use for nextmatch export	timesheet	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
-export to openoffice spreadsheet	timesheet	km	នាំចេញទៅសៀវភៅបញ្ជី OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	km	នាំចេញធាតុពី Time Sheet ទៅជាឯកសារ CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	km	នាំចេញធាតុពី Time Sheet ទៅជាឯកសារ CSV  CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស' នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត
 field must not be empty !!!	timesheet	km	វាលមិនត្រូវទទេ!
@@ -127,7 +125,6 @@ select a project	timesheet	km	ជ្រើសរើសគម្រោងមួ�
 select a status of the timesheet	timesheet	km	ជ្រើសរើសស្ថានភាពនៃតារាងពេលវេលា
 select infolog	timesheet	km	ជ្រើសរើស InfoLog
 select multiple timeshhets for a further action	timesheet	km	ជ្រើសរើសតារាងពេលវេលាច្រើនសម្រាប់សកម្មភាពបន្ថែម
-select the predefined status, whan creating a new timesheet	preferences	km	ជ្រើសរើសស្ថានភាពដែលបានកំណត់ជាមុន នៅពេលបង្កើតធាតុថ្មី
 select the predefined status, when creating a new timesheet	preferences	km	ជ្រើសរើសស្ថានភាពដែលបានកំណត់ជាមុន នៅពេលបង្កើតធាតុថ្មី
 set to	timesheet	km	កំណត់​ទៅ
 show a quantity sum (eg. to sum up negative overtime)	admin	km	បង្ហាញបរិមាណ ឧ. ដើម្បីបូកសរុបម៉ោងបន្ថែមអវិជ្ជមាន

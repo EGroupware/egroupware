@@ -6,7 +6,6 @@ all projects	timesheet	zh-tw	所有專案
 applies the changes	timesheet	zh-tw	套用變更
 both: allow to use projectmanager and free project-names	admin	zh-tw	兩者：允許使用 ProjectManager 與自訂專案名稱
 by	timesheet	zh-tw	由
-check all	timesheet	zh-tw	全選
 comment by %1 at %2:	timesheet	zh-tw	%1 在 %2 提出意見：
 create new links	timesheet	zh-tw	建立新連結
 creates a new field	timesheet	zh-tw	建立新欄位

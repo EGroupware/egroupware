@@ -10,7 +10,6 @@ by	timesheet	pt-br	por
 category for 'working time'	admin	pt-br	Categoria para 'Tempo de trabalho'
 change category	timesheet	pt-br	alterar categoria
 change owner when updating	timesheet	pt-br	Alterar o proprietário ao atualizar
-check all	timesheet	pt-br	Verificar todos
 comment by %1 at %2:	timesheet	pt-br	Comentário feito por %1 em %2:
 create a single 'working time' timesheet per	timesheet	pt-br	Criar uma única planilha de horas de “Tempo de trabalho” por
 create new links	timesheet	pt-br	Criar novos links
@@ -40,8 +39,7 @@ error storing working time	timesheet	pt-br	Erro ao armazenar o horário de traba
 existing links	timesheet	pt-br	Links existentes
 exists	timesheet	pt-br	Existe
 export definition to use for nextmatch export	timesheet	pt-br	Definição Exportar para usar para exportação NextMatch
-export to openoffice spreadsheet	timesheet	pt-br	Exportar como Planilha do OpenOffice
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	pt-br	Exporta registros de sua Planilha de Tempo em um arquivo CSV. CSV significa 'Valores Separados por Vírgula'. Entretando, na aba Opções você pode escolher outros separadores.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	pt-br	Exporta registros de sua Planilha de Tempo em um arquivo CSV.. Entretando, na aba Opções você pode escolher outros separadores.
 field must not be empty !!!	timesheet	pt-br	Campo não pode estar vazio !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
 forgot to switch off working time?	common	pt-br	Esqueceu-se de desativar o horário de trabalho?
@@ -65,6 +63,7 @@ links	timesheet	pt-br	Links
 links and attached files	timesheet	pt-br	Links e arquivos anexados
 list of files linked to the current record	timesheet	pt-br	Lista de arquivos vinculados ao registro atual
 max length of the input [, length of the inputfield (optional)]	timesheet	pt-br	tamanho máximo da entrada [, tamanho do campo de entrada (opcional)]
+mode	timesheet	pt-br	Modo
 modified	timesheet	pt-br	Modificado
 modify status	timesheet	pt-br	modificar o estado
 name of current user, all other contact fields are valid too	timesheet	pt-br	Nome do usuário atual, todos outros campos são válidos também
@@ -83,6 +82,7 @@ pause time	timesheet	pt-br	Tempo de pausa
 paused	timesheet	pt-br	Pausado
 permission denied!!!	timesheet	pt-br	Permissão negada !!
 price	timesheet	pt-br	Preço
+project fields	timesheet	pt-br	Campos de projeto
 projectmanager integration	admin	pt-br	Integração com Gerenciador de Projetos
 quantity	timesheet	pt-br	Quantidade
 recorded	timesheet	pt-br	Gravado
@@ -94,6 +94,7 @@ saves the changes made and leaves	timesheet	pt-br	salvar as alterações feitas 
 saves this entry and add a new one	timesheet	pt-br	Salvar este registro e adicionar um novo
 select a price	timesheet	pt-br	Selecionar um preço
 select a project	timesheet	pt-br	Selecionar um projeto
+select the predefined status, when creating a new timesheet	preferences	pt-br	Selecione o status predefinido ao criar uma nova entrada.
 show a quantity sum (eg. to sum up negative overtime)	admin	pt-br	Exibir uma soma de quantidade (exemplo: para somar tempo extra negativo)
 start	timesheet	pt-br	Início
 start & stop timer	common	pt-br	Iniciar e parar o cronômetro

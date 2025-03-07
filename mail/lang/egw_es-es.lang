@@ -500,6 +500,7 @@ report as ham	mail	es-es	Informar como Ham
 report as spam	mail	es-es	Reportar como spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	es-es	Informar de este contenido de correo electrónico como Ham (no spam) - soluciones de spam como SpamTitan aprenderán
 report this email content as spam - spam solutions like spamtitan will learn	mail	es-es	Reportar este contenido de correo-e como Spam - soluciones antispam como SpamTitan aprenderán
+request for passphrase	mail	es-es	Solicitud de contraseña
 required pear class mail/mimedecode.php not found.	mail	es-es	Requerido PEAR clase Mail/mimeDecode.php no se encuentra.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	es-es	¡Requerido para deshabilitar si usa Dovecot con banderas vistas privadas en carpeta compartida o de usuario!
 resend after how many days?	mail	es-es	¿Reenviar después de cuántos días?

@@ -40,6 +40,7 @@ by default (nothing is set here) egroupware allows only the organizer/owner to a
 category report	calendar	ro	Raport de categorie
 changed event-data applied	calendar	ro	S-a aplicat modificarea datelor de eveniment
 date range	calendar	ro	Intervalul de date
+delete this alarm	calendar	ro	Ștergeți această alarmă?
 email address migration	calendar	ro	Migrarea adresei de e-mail
 error notifying %1	calendar	ro	Eroare de notificare %1
 exclude weekend	calendar	ro	Excludeți Weekend

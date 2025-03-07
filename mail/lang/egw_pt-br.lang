@@ -349,6 +349,7 @@ real name organization email	mail	pt-br	Nome real Organização [e-mail]
 refresh time in minutes	mail	pt-br	Tempo de atualização em minutos
 reject with	mail	pt-br	rejeitar com
 reloaded account %1	mail	pt-br	Conta recarregada %1.
+reloaded folder %1	mail	pt-br	Pasta recarregada %1
 remember the password for	mail	pt-br	Lembrar a senha de
 remove all	mail	pt-br	Remover tudo
 remove immediately	mail	pt-br	Remover imediatamente
@@ -368,6 +369,7 @@ report as ham	mail	pt-br	Denunciar como Ham
 report as spam	mail	pt-br	Denunciar como Spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	pt-br	Denunciar este conteúdo de e-mail como Ham (não spam) - soluções de spam como o spamTitan aprenderão
 report this email content as spam - spam solutions like spamtitan will learn	mail	pt-br	Denunciar este conteúdo de e-mail como Spam - soluções de spam como o spamTitan aprenderão
+request for passphrase	mail	pt-br	Solicitação de senha
 required pear class mail/mimedecode.php not found.	mail	pt-br	Classe PEAR requeridos Correio / mimeDecode.php não encontrado.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	pt-br	É necessário desativar se você usar o Dovecot com sinalizadores de visualização privada em pastas compartilhadas ou de usuário!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	pt-br	A criptografia S/MIME falhou porque nenhum certificado foi encontrado para o endereço do remetente: %1
@@ -399,6 +401,7 @@ set / remove labels	mail	pt-br	Ajustar / Remover Etiquetas
 set flags	mail	pt-br	Bandeiras de bandeira
 set predefined values for compose...	mail	pt-br	Definir valores pré-definidos para compor ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pt-br	A assinatura deve ser inserida após (padrão) ou antes de uma resposta ou encaminhamento, e a assinatura deve ser visível e alterável durante a composição.
+show all addresses	mail	pt-br	Mostrar todos os endereços
 show all attachments	mail	pt-br	Mostrar todos os anexos
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pt-br	Mostrar todas as pastas (inscritas e não inscritas) no painel de pastas da tela principal.
 show notification for new arriving mails	mail	pt-br	Mostrar notificação para novos e-mails recebidos
@@ -419,8 +422,10 @@ smime encrypted message	mail	pt-br	S/MIME mensagem criptografada
 smime signed message	mail	pt-br	Mensagem assinada S/MIME
 smtp	mail	pt-br	SMTP
 sneak preview in list	mail	pt-br	Pré-visualização da mensagem
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	pt-br	Alguns clientes não conseguem detectar o conjunto de caracteres correto, se as linhas fluidas estiverem ativadas
 sort order	mail	pt-br	Ordem de classificação
 spamtitan api url	mail	pt-br	SpamTitan API URL
+spamtitan integration requires epl version	mail	pt-br	A integração com o SpamTitan requer a versão EPL
 start new messages with mime type plain/text or html?	mail	pt-br	Iniciar novas mensagens com mime type plain/text ou HTML?
 template folder	mail	pt-br	Pasta Modelos
 text	mail	pt-br	Texto

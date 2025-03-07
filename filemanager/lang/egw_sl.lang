@@ -159,7 +159,7 @@ filesystem	filemanager	sl	Datotečni sistem
 filesystem check reported no problems.	filemanager	sl	Preverjanje datotečnega sistema ni poročalo o težavah.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	sl	Datotečni sistem: namestite imenik (znotraj /var/lib/egroupware !) iz gostiteljskega datotečnega sistema
 finally delete	filemanager	sl	Končno izbrišite
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	sl	Končno izbrišite vse starejše različice in izbrisane datoteke pod določenim imenikom.\N\nTega ne morete razveljaviti!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	sl	Končno izbrišite vse starejše različice in izbrisane datoteke pod določenim imenikom? Tega ne morete razveljaviti!
 finally delete this version	filemanager	sl	Dokončno izbriši to različico
 fix reported problems	filemanager	sl	Popravite prijavljene težave
 folder up	filemanager	sl	Nadrejena mapa
@@ -314,7 +314,6 @@ upload fields	filemanager	sl	Naloži polja
 upload files	filemanager	sl	Naloži datoteke
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 used space	filemanager	sl	Uporabljen prostor
-user color indicator	filemanager	sl	Kazalnik barve uporabnika
 user home quota	filemanager	sl	Uporabniška domača kvota
 username for webdav and smb, use $user for name of logged in user	filemanager	sl	Uporabniško ime za WebDAV in SMB, uporabite $user za ime prijavljenega uporabnika
 users and groups	filemanager	sl	Uporabniki in skupine

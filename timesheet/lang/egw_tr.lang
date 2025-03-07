@@ -9,8 +9,11 @@ do you want to associate it with the selected %1 entry?	common	tr	Seçilen %1 gi
 do you want to start your working time?	common	tr	Çalışma sürenizi başlatmak mı istiyorsunuz?
 do you want to stop your working time?	common	tr	Çalışma sürenizi durdurmak istiyor musunuz?
 error storing working time	timesheet	tr	Çalışma süresi kaydedilirken hata oluştu
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	tr	Zaman Çizelgesindeki girişleri bir CSV dosyasına aktarır. Seçenekler sekmesinde diğer ayırıcıları da seçebilirsiniz.
 forgot to switch off working time?	common	tr	Çalışma süresini kapatmayı mı unuttunuz?
 global categories	timesheet	tr	Genel kategoriler
+id	timesheet	tr	ID
+mode	timesheet	tr	Mod
 modified	timesheet	tr	Değiştirilmiş
 order	timesheet	tr	Sıralama
 overwrite time	common	tr	Üzerine yazma süresi
@@ -18,8 +21,10 @@ overwriting start or stop time	timesheet	tr	Başlangıç veya bitiş zamanının
 pause	common	tr	Duraklat
 pause time	timesheet	tr	Duraklama süresi
 paused	timesheet	tr	Duraklatıldı
+project fields	timesheet	tr	Proje alanları
 recorded	timesheet	tr	Kaydedildi
 restore this entry	timesheet	tr	Bu girişi geri yükle
+select the predefined status, when creating a new timesheet	preferences	tr	Yeni bir giriş oluştururken önceden tanımlanmış durumu seçin.
 start & stop timer	common	tr	Zamanlayıcıyı başlat ve durdur
 start timer	common	tr	Zamanlayıcıyı başlat
 start-time can not be before last stop- or pause-time %1!	common	tr	Başlangıç zamanı son durma veya duraklatma zamanı %1'den önce olamaz!

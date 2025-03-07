@@ -30,8 +30,7 @@ error deleting the entry!!!	timesheet	bg	Грешка при изтриване!
 error saving the entry!!!	timesheet	bg	Грешка при запис!!!
 error storing working time	timesheet	bg	Грешка при съхраняването на работното време
 existing links	timesheet	bg	Съществуващи връзки
-export to openoffice spreadsheet	timesheet	bg	Експорт в OpenOffice електронна таблица
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	bg	Експортира записите от Графика Ви в CSV-файл (стойности, разделени със запетая). Може да изберете друг разделител чрез таб Опции.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	bg	Експортира записите от Time Sheet в CSV файл. В раздела с опции можете да изберете и други разделители.
 field must not be empty !!!	timesheet	bg	Полето трябва да бъде попълнено !!!
 forgot to switch off working time?	common	bg	Забравили сте да изключите работното време?
 full: use only projectmanager	admin	bg	Пълна: използва само имена от Проект-мениджъра
@@ -49,6 +48,7 @@ leaves without saveing	timesheet	bg	изход без запис
 length<br>rows	timesheet	bg	Дължина<br>Редове
 links	timesheet	bg	Връзки
 max length of the input [, length of the inputfield (optional)]	timesheet	bg	макс. дължина на входа[, дължнина на вх.поле (опция)]
+mode	timesheet	bg	Режим
 modified	timesheet	bg	Редактирано
 name of current user, all other contact fields are valid too	timesheet	bg	Име на текущия потребител, останалите полета на контакта също са валидни
 no details	timesheet	bg	без детайли
@@ -65,6 +65,7 @@ pause time	timesheet	bg	Време за пауза
 paused	timesheet	bg	Пауза
 permission denied!!!	timesheet	bg	Достъпът отказан!!!
 price	timesheet	bg	Цена
+project fields	timesheet	bg	Полета на проекта
 projectmanager integration	admin	bg	Интеграция с Проект-мениджъра
 quantity	timesheet	bg	Количество
 recorded	timesheet	bg	Записано
@@ -75,6 +76,7 @@ saves the changes made and leaves	timesheet	bg	запазва направени
 saves this entry and add a new one	timesheet	bg	Запазва записа и добавя нов
 select a price	timesheet	bg	Изберете цена
 select a project	timesheet	bg	Изберете проект
+select the predefined status, when creating a new timesheet	preferences	bg	Изберете предварително определения статус, когато създавате нов запис.
 start	timesheet	bg	Начало
 start & stop timer	common	bg	Стартиране и спиране на таймера
 start timer	common	bg	Стартиране на таймера

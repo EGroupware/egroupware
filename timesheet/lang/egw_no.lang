@@ -5,7 +5,6 @@ ask to start and stop working time with session	timesheet	no	Be om å starte og 
 by	timesheet	no	av
 category for 'working time'	admin	no	Kategori for 'Arbeidstid'
 change owner when updating	timesheet	no	Endre eier ved oppdatering
-check all	timesheet	no	Kontroller alle
 create a single 'working time' timesheet per	timesheet	no	Opprett en enkelt timeseddel for 'Arbeidstid' per
 create new links	timesheet	no	Opprett nye lenker
 creates a new field	timesheet	no	lager nytt felt
@@ -28,6 +27,7 @@ error deleting the entry!!!	timesheet	no	Feil ved sletting av forekomst!
 error saving the entry!!!	timesheet	no	Feil ved lagring av forekomst!
 error storing working time	timesheet	no	Feil ved lagring av arbeidstid
 existing links	timesheet	no	Eksisterende lenker
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	no	Eksporterer oppføringer fra Time Sheet til en CSV-fil. I kategorien Alternativer kan du også velge andre separatorer.
 field must not be empty !!!	timesheet	no	Feltet kan ikke være tomt!
 forgot to switch off working time?	common	no	Har du glemt å slå av arbeidstiden?
 global categories	timesheet	no	Globale Kategorier
@@ -42,6 +42,7 @@ leaves without saveing	timesheet	no	avslutt uten å lagre
 length<br>rows	timesheet	no	Lengde<br>Kolonner
 links	timesheet	no	Lenker
 max length of the input [, length of the inputfield (optional)]	timesheet	no	maks. lengde på innslag [,feltlengde (valgfri)]
+mode	timesheet	no	Modus
 modified	timesheet	no	Endret
 no details	timesheet	no	Ingen detaljer
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	no	antall rekker i multi-linje felter eller linjer i multi-valg bokser
@@ -54,6 +55,7 @@ pause time	timesheet	no	Tid for pause
 paused	timesheet	no	Pauset
 permission denied!!!	timesheet	no	Adgang nektes!
 price	timesheet	no	Pris
+project fields	timesheet	no	Prosjekt-felt
 quantity	timesheet	no	Antall
 recorded	timesheet	no	Innspilt
 restore this entry	timesheet	no	Gjenopprett denne oppføringen
@@ -63,6 +65,7 @@ saves the changes made and leaves	timesheet	no	lagrer endringene og lukker
 saves this entry and add a new one	timesheet	no	Lagre denne forekomsten og opprette en ny
 select a price	timesheet	no	Velg en pris
 select a project	timesheet	no	Velg et prosjekt
+select the predefined status, when creating a new timesheet	preferences	no	Velg den forhåndsdefinerte statusen når du oppretter en ny oppføring.
 start	timesheet	no	Start
 start & stop timer	common	no	Start- og stopptimer
 start timer	common	no	Start tidtaker

@@ -160,7 +160,7 @@ filesystem	filemanager	cs	Souborový systém
 filesystem check reported no problems.	filemanager	cs	Kontrola souborového systému nezaznamenala žádné problémy.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	cs	Souborový systém: připojte adresář (uvnitř /var/lib/egroupware !) ze souborového systému hostitele.
 finally delete	filemanager	cs	Nakonec odstraňte
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	cs	Konečně smaže všechny starší verze a smazané soubory v dané složce.\n\nToto nelze vrátit zpět!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	cs	Konečně smaže všechny starší verze a smazané soubory v dané složce? Toto nelze vrátit zpět!
 finally delete this version	filemanager	cs	Nakonec tuto verzi odstraňte
 fix reported problems	filemanager	cs	Oprava nahlášených problémů
 folder up	filemanager	cs	O složku výše

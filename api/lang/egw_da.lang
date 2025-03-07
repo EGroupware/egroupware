@@ -93,6 +93,7 @@ applications	common	da	Applikationer
 applies the changes made	common	da	Anvender ændringerne
 apply	common	da	Anvend
 apps & license	common	da	Apps og licenser
+apps &amp; license	common	da	Apps og licens
 april	common	da	April
 are you sure you want to delete these entries ?	common	da	Vil du virkelige slette disse felter?
 are you sure you want to delete this entry ?	common	da	Vil Du virkelig slette dette felt?
@@ -108,6 +109,7 @@ australia	common	da	Australien
 austria	common	da	Østrig
 authenticate	common	da	Godkend
 author	common	da	Forfatter
+automatic update check failed, you need to check manually!	common	da	Automatisk opdateringstjek mislykkedes, du skal tjekke manuelt!
 autosave default category	common	da	Autogem Standard Kategori.
 avatar	common	da	Avatar
 azerbaijan	common	da	Azerbaijan
@@ -318,6 +320,7 @@ enables logging of caldav/carddav traffic to diagnose problems with devices.	gro
 end date	common	da	Slutdato
 end time	common	da	Sluttid
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
+enter your passphrase	common	da	Indtast din adgangskode
 enter your password	common	da	Indtast din adgangskode
 entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
 entry updated sucessfully	common	da	Emnet er succesrigt opdateret
@@ -690,6 +693,7 @@ previous	common	da	Tidligere
 previous page	common	da	Forrige side
 primary group	common	da	Primær gruppe
 print	common	da	Udskriv
+print orientation	common	da	Orientering
 priority	common	da	Prioritet
 private	common	da	Privat
 project	common	da	Projekt

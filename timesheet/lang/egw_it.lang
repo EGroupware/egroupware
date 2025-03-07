@@ -16,7 +16,6 @@ change category	timesheet	it	Modifica categoria
 change owner when updating	timesheet	it	Cambiare il proprietario durante l'aggiornamento
 changed category to %1	timesheet	it	Categoria modificata in %1
 changed status	timesheet	it	Stato modificato
-check all	timesheet	it	Seleziona tutto
 choose 'creator' of imported data	timesheet	it	Seleziona "creatore" dei dati importati
 comment by %1 at %2:	timesheet	it	Commento di %1 il %2:
 create a single 'working time' timesheet per	timesheet	it	Creare un singolo timesheet 'Orario di lavoro' per
@@ -51,9 +50,8 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	it	Collegamenti esistenti
 exists	timesheet	it	Esiste
 export definition to use for nextmatch export	timesheet	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
-export to openoffice spreadsheet	timesheet	it	Esporta in openoffice calc
 exports entries from your timesheet into a csv file.	timesheet	it	Esporta fogli ore in CSV
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	it	Esporta fogli ore in CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni è possibile scegliere altri separatori
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	it	Esporta le voci del foglio presenze in un file CSV. Nella scheda Opzioni è possibile scegliere anche altri separatori.
 field must not be empty !!!	timesheet	it	Il campo non può essere vuoto !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
 forgot to switch off working time?	common	it	Avete dimenticato di disattivare l'orario di lavoro?
@@ -85,6 +83,7 @@ links and attached files	timesheet	it	Collegamenti e file allegati
 links to specified application.  example: {{links/infolog}}	timesheet	it	Collegamenti alla applicazione specificata. Esempio: {{links/infolog}}
 list of files linked to the current record	timesheet	it	Elenco dei file collegati al record attuale
 max length of the input [, length of the inputfield (optional)]	timesheet	it	lunghezza massima del input [, length of the inputfield (optional)]
+mode	timesheet	it	Modalità
 modified	timesheet	it	Modificato
 modify status	timesheet	it	Modifica stato
 name of current user, all other contact fields are valid too	timesheet	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
@@ -125,7 +124,6 @@ select a project	timesheet	it	Seleziona un progetto
 select a status of the timesheet	timesheet	it	Seleziona uno status del foglio ore
 select infolog	timesheet	it	Seleziona scheda attività
 select multiple timeshhets for a further action	timesheet	it	Seleziona fogli ore multipli per ulteriori azioni
-select the predefined status, whan creating a new timesheet	preferences	it	Seleziona lo stato predefinito, quando si crea una nuova voce
 select the predefined status, when creating a new timesheet	preferences	it	Seleziona lo stato predefinito, quando si crea una nuova voce
 set to	timesheet	it	Imposta a
 show a quantity sum (eg. to sum up negative overtime)	admin	it	Mostra una somma p.es somma dello straordinario negativo
@@ -156,11 +154,9 @@ timer already running or paused	common	it	Timer già in funzione o in pausa
 timesheet	common	it	Foglio Ore
 timesheet csv export	timesheet	it	Esportazione folgio ore in CSV
 timesheet csv import	timesheet	it	Importazione folgio ore da CSV
-timesheet fields:	timesheet	it	Campi foglio ore:
 timesheet id	timesheet	it	ID foglio ore
 timesheet list	timesheet	it	Elenco fogli ore
 timesheet modified by %1 at %2	timesheet	it	Foglio ore modificato da %1 alle %2
-timesheet openoffice export	timesheet	it	Esportazione foglio ore  in openoffice
 timesheet status-%1 '%2' added.	timesheet	it	Stato %1 '%2' aggiunto al foglio ore
 timesheet-%1 '%2' updated.	timesheet	it	Stato %1 '%2' aggiornato
 timesheet-%1 deleted.	timesheet	it	Stato %1 eliminato

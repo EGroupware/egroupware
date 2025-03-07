@@ -50,7 +50,6 @@ category acl	common	lo	ໝວດ ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	lo	ໝວດໝູ່ ACL ຈໍາກັດສະເພາະການເພີ່ມໝວດໝູ່ເຂົ້າໃນເຫດການ ຫຼື ການປ່ຽນສະຖານະຂອງຜູ້ມີສ່ວນຮ່ວມ. ມັນຈະບໍ່ປ່ຽນການສະແດງຜົນຂອງເຫດການ
 chair	calendar	lo	ປະທານ
 change history	calendar	lo	ປະຫວັດການປ່ຽນແປງ
-check all	calendar	lo	ກວດສອບທັງໝົດ
 close the window	calendar	lo	ປິດໜ້າຕ່າງ
 compose a mail to all participants after the event is saved	calendar	lo	ຂຽນຈົດໝາຍຫາຜູ້ມີສ່ວນຮ່ວມທັງໝົດຫຼັງຈາກໄດ້ມີການຖືກບັນທືກແລ້ວ
 conflict	calendar	lo	ການຂັດແຍ່ງ
@@ -384,7 +383,6 @@ weekview	calendar	lo	ສະແດງເປັນອາທິດ
 weekview with weekend	calendar	lo	ສະແດງເປັນອາທິດ ລວມທັງວັນເສົາ ແລະ ວັນອາທິດ
 weekview without weekend	calendar	lo	ສະແດງເປັນອາທິດ ແຕ່ບໍ່ລວມວັນເສົາ ແລະ ວັນອາທິດ
 whole day	calendar	lo	ໝົດມື້
-wk	calendar	lo	ອາທິດໜຶ່ງ
 work day ends on	calendar	lo	ມື້ເຮັດວຽກສິ້ນສຸດໃນ
 work day starts on	calendar	lo	ມື້ເລີ່ມຕົ້ນເຮັດວຽກ
 workday	calendar	lo	ມື້ເຮັດວຽກ

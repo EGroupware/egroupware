@@ -1,13 +1,18 @@
+creates a new field	timesheet	lt	Kuriamas naujas laukas
 do you want to associate it with the selected %1 entry?	common	lt	Ar norite jį susieti su pasirinktu %1 įrašu?
 error storing working time	timesheet	lt	Klaida saugant darbo laiką
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	lt	Eksportuokite įrašus iš darbo laiko apskaitos žiniaraščio į CSV failą. Skirtuke Parinktys taip pat galite pasirinkti kitus skirtukus.
 forgot to switch off working time?	common	lt	Pamiršote išjungti darbo laiką?
+mode	timesheet	lt	Režimas
 overwrite time	common	lt	Perrašymo laikas
 overwriting start or stop time	timesheet	lt	Perrašytas pradžios arba pabaigos laikas
 pause	common	lt	Pauzė
 pause time	timesheet	lt	Pauzės laikas
 paused	timesheet	lt	Pauzė
+project fields	timesheet	lt	Projekto laukai
 recorded	timesheet	lt	Įrašyta
 restore this entry	timesheet	lt	Atkurti šį įrašą
+select the predefined status, when creating a new timesheet	preferences	lt	Kurdami naują įrašą pasirinkite iš anksto nustatytą būseną.
 start & stop timer	common	lt	Paleidimo ir sustabdymo laikmatis
 start timer	common	lt	Paleisti laikmatį
 start-time can not be before last stop- or pause-time %1!	common	lt	Pradžios laikas negali būti ankstesnis už paskutinį sustabdymo arba pauzės laiką %1!

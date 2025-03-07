@@ -450,7 +450,7 @@ quota limit warning in megabyte (recommended value is 30 mb).	mail	cs	Upozorněn
 quota not provided by server	mail	cs	Kvóty nejsou serverem podporovány
 quota: %1	mail	cs	Kvóta: %1
 read	mail	cs	Přečtené
-read / unread	mail	cs	Přečtené / nepřečtené
+read / unread	mail	cs	Přečtené / Nepřečtené
 readable	mail	cs	Čitelné
 real name	mail	cs	Skutečné jméno
 real name email	mail	cs	Skutečné jméno [E-mail]
@@ -487,6 +487,7 @@ report as ham	mail	cs	Nahlásit jako ham
 report as spam	mail	cs	Nahlásit jako spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	cs	Nahlásit tento e-mail jako ham (ne spam)
 report this email content as spam - spam solutions like spamtitan will learn	mail	cs	Nahlásit tento e-mail jako spam
+request for passphrase	mail	cs	Žádost o přístupovou frázi
 required pear class mail/mimedecode.php not found.	mail	cs	Požadovaná třída PEAR class Mail/mimeDecode.php nebyla nalezena.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	cs	Nutné vypnout, pokud používáte Dovecot s příznaky private seen na sdílené nebo uživatelské složce!
 resend after how many days?	mail	cs	Po kolika dnech opakovat odeslání?

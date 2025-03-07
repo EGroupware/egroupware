@@ -111,7 +111,6 @@ change history	calendar	sk	Zmeniť históriu
 change your status	calendar	sk	Zmeniť váš status
 changed event-data applied	calendar	sk	Zmeny v údajoch udalosti boli uložené
 charset of file	calendar	sk	Znaková sada súboru
-check all	calendar	sk	Označiť všetko
 choose a category	calendar	sk	Vyberte kategóriu
 choose owner of imported data	calendar	sk	Vyberte vlastníka importovaných údajov
 close the window	calendar	sk	Zavrieť okno
@@ -167,7 +166,7 @@ delegated	calendar	sk	Delegované
 delete exceptions	calendar	sk	Odstrániť výnimky
 delete selected events	calendar	sk	Odstrániť vybrané udalosti
 delete series	calendar	sk	Odstrániť sériu
-delete this alarm	calendar	sk	Odstrániť túto pripomienku
+delete this alarm	calendar	sk	Odstrániť túto pripomienku?
 delete this event	calendar	sk	Odstrániť túto udalosť
 delete this exception	calendar	sk	Odstrániť túto výnimku
 delete this meeting for all participants	calendar	sk	Odstrániť toto stretnutie pre všetkých účastníkov
@@ -695,7 +694,6 @@ which view to show on home page	calendar	sk	Aký pohľad použiť pre domovskú 
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	sk	Minimálny počet používateľov pre zobrazenie denného a týždenného pohľadu v konsolidovanom tvare. Predvolené = 5.
 whole day	calendar	sk	Celý deň
 with credentials included	calendar	sk	Vrátane mena/hesla
-wk	calendar	sk	Týž
 work day ends on	calendar	sk	Pracovný deň končí o
 work day starts on	calendar	sk	Pracovný deň začína o
 workday	calendar	sk	Pracovný deň

@@ -16,7 +16,6 @@ change category	timesheet	fi	Muuta kategoria
 change owner when updating	timesheet	fi	Vaihda omistajaa päivityksen yhteydessä
 changed category to %1	timesheet	fi	Kategoria muutettu: %1
 changed status	timesheet	fi	Tila muutettu
-check all	timesheet	fi	Valitse kaikki
 choose 'creator' of imported data	timesheet	fi	Valitse omistaja tuodulle tiedostolle
 comment by %1 at %2:	timesheet	fi	Kommentoinut: %1, %1
 create a single 'working time' timesheet per	timesheet	fi	Luo yksi 'Työaika'-aikataulu per
@@ -51,9 +50,8 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	fi	Olemassa olevat linkit
 exists	timesheet	fi	Olemassaoleva
 export definition to use for nextmatch export	timesheet	fi	Vienti asetukset 'nextmatch' vientiin
-export to openoffice spreadsheet	timesheet	fi	Vie OpenOffice Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon. Voit valita myös muita erotustapoja.
 field must not be empty !!!	timesheet	fi	Kenttää ei voi jättää tyhjäksi!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.
 forgot to switch off working time?	common	fi	Unohditko kytkeä työajan pois päältä?
@@ -83,6 +81,7 @@ links and attached files	timesheet	fi	Linkit ja liitetyt tiedostot
 links to specified application.  example: {{links/infolog}}	timesheet	fi	Linkki määriteltyyn sovellukseen. Esim. {{links/infolog}}
 list of files linked to the current record	timesheet	fi	Lista liitetyistä tiedostoista
 max length of the input [, length of the inputfield (optional)]	timesheet	fi	Maksimipituus merkinnälle. [, merkintäkentän pituus (valinnainen)]
+mode	timesheet	fi	Tila
 modified	timesheet	fi	Muokattu
 modify status	timesheet	fi	Muokkaa tilaa
 name of current user, all other contact fields are valid too	timesheet	fi	Käyttäjän nimi, myös muut kentät ovat voimassaolevia
@@ -122,7 +121,6 @@ select a project	timesheet	fi	Valitse projekti
 select a status of the timesheet	timesheet	fi	Valitse tila
 select infolog	timesheet	fi	Valitse tehtävä
 select multiple timeshhets for a further action	timesheet	fi	Valitse useampi merkintä jatkaaksesi
-select the predefined status, whan creating a new timesheet	preferences	fi	Valitse oletustila uutta merkintää luotaessa.
 select the predefined status, when creating a new timesheet	preferences	fi	Valitse oletustila uutta merkintää luotaessa.
 set to	timesheet	fi	Aseta
 show a quantity sum (eg. to sum up negative overtime)	admin	fi	Näytä määrän summa

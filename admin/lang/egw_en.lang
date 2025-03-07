@@ -190,7 +190,7 @@ change access	admin	en	Change access control
 change account_id	admin	en	Change account ID
 change acl rights	admin	en	Change ACL rights
 change config settings	admin	en	Change config settings
-change domain of email address and aliases	admin	en	change domain of email address and aliases
+change domain of email address and aliases	admin	en	Change domain of email address and aliases
 change login screen message	admin	en	Change login screen message
 change owner	admin	en	Change owner
 change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	en	Files in /home will have owner changed to the new user. The home folder will be moved to /home/new-user/old-home-username.
@@ -892,7 +892,6 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	en	Token created.
 token not found!	admin	en	Token not found!
 token revoked.	admin	en	Token revoked.
-token saved.	admin	en	Token saved.
 top	admin	en	Top
 total of %1 accounts deleted.	admin	en	Total of %1 accounts deleted.
 total of %1 id's changed.	admin	en	Total of %1 ID's changed.

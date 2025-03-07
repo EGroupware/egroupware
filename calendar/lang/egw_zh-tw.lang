@@ -44,7 +44,6 @@ calendar-fieldname	calendar	zh-tw	行事曆欄位名稱
 can't add alarms in the past !!!	calendar	zh-tw	無法新增過去的警告！
 canceled	calendar	zh-tw	取消
 charset of file	calendar	zh-tw	檔案字元編碼設定
-check all	calendar	zh-tw	全選
 choose a category	calendar	zh-tw	選擇一個類別
 close the window	calendar	zh-tw	關閉視窗
 compose a mail to all participants after the event is saved	calendar	zh-tw	在這個事件儲存後發信通知所有的參與人
@@ -320,7 +319,6 @@ weekview	calendar	zh-tw	週行事曆
 weekview with weekend	calendar	zh-tw	週曆包含週末
 weekview without weekend	calendar	zh-tw	週曆不包含週末
 whole day	calendar	zh-tw	整天
-wk	calendar	zh-tw	週
 work day ends on	calendar	zh-tw	每日結束時間
 work day starts on	calendar	zh-tw	每日開始時間
 yearly	calendar	zh-tw	每年

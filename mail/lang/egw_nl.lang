@@ -445,6 +445,7 @@ refresh time in minutes	mail	nl	Ververstijd in minuten
 refused to delete folder inbox	mail	nl	Het verwiijderen van INBOX is geweigerd
 refused to delete folder with subfolders	mail	nl	Mappen met submappen mogen niet worden verwijdert
 reject with	mail	nl	weiger met
+reloaded folder %1	mail	nl	Map %1 opnieuw geladen
 remember the password for	mail	nl	Onthoud het wachtwoord voor
 remove all	mail	nl	Alles verwijderen
 remove immediately	mail	nl	Meteen verwijderen
@@ -466,6 +467,7 @@ report as ham	mail	nl	Rapporteren als Ham
 report as spam	mail	nl	Rapporteren als Spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	nl	Rapporteer deze e-mail als ham (geen spam) - spamoplossingen zoals spamTitan zullen het leren
 report this email content as spam - spam solutions like spamtitan will learn	mail	nl	Rapporteer deze e-mail als spam - spamoplossingen zoals spamTitan zullen het leren
+request for passphrase	mail	nl	Verzoek voor wachtwoordzin
 required pear class mail/mimedecode.php not found.	mail	nl	PEAR benodigd, class MAIL/mimeDecode.php niet gevonden
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	nl	Verplicht uit te schakelen als je Dovecot gebruikt met private seen flags op gedeelde of gebruikersmappen!
 resend after how many days?	mail	nl	Opnieuw verzenden na hoeveel dagen?
@@ -528,6 +530,7 @@ set it as default:	mail	nl	Maak dit standaard
 set predefined values for compose...	mail	nl	Voorgedefinieerde waarden instellen voor samenstellen ...
 should new messages show up on the home page	mail	nl	Moeten nieuwe bercihten getoond worden op beginpagina
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	nl	Moet handtekening worden ingevoegd na (standaard) of voor een antwoord of doorsturen, en moet handtekening zichtbaar en veranderbaar zijn tijdens het opstellen.
+show all addresses	mail	nl	Toon alle adressen
 show all folders	mail	nl	Toon alle mappen
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	nl	Alle mappen tonen (geabonneerd EN niet geabonneerd) in het mappenpaneel van het hoofdscherm.
 show new messages on home page	mail	nl	Toon nieuw bericht op begin pagina
@@ -553,9 +556,12 @@ smime encrypted message	mail	nl	S/MIME gecodeerd bericht
 smime signed message	mail	nl	S/MIME ondertekend bericht
 smtp	mail	nl	SMTP
 sneak preview in list	mail	nl	Bericht preview
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	nl	Sommige clients detecteren niet de juiste karakterset als flowed regels zijn ingeschakeld
 sort order	mail	nl	Volgorde
 source	mail	nl	Bron
 sources	mail	nl	Bronnen
+spamtitan api url	mail	nl	SpamTitan API URL
+spamtitan integration requires epl version	mail	nl	SpamTitan integratie vereist EPL versie
 start new messages with mime type plain/text or html?	mail	nl	Begin nieuwe berichten met tekst of HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	nl	Begin antwoorden van het bericht met tekst of HTML of probeer het getoonde formaat (standaard)?
 step 1: imap - incoming mail	mail	nl	Stap 1: IMAP - Inkomende berichten

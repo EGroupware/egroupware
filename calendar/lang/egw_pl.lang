@@ -93,7 +93,6 @@ chair	calendar	pl	Prowadzący
 change history	calendar	pl	Zmień historię
 changed event-data applied	calendar	pl	Zastosowano zmienione dane zdarzenia
 charset of file	calendar	pl	Strona kodowa pliku
-check all	calendar	pl	Sprawdź wszystko
 choose a category	calendar	pl	Wybierz kategorię
 close the window	calendar	pl	Zamknij okno
 compose a mail to all participants after the event is saved	calendar	pl	Po zapisaniu terminu, przejdź do tworzenia wiadomości poczty elektronicznej dla wszystkich uczestników
@@ -131,7 +130,7 @@ delegated	calendar	pl	Oddelegowane
 delete exceptions	calendar	pl	Usuń wyjątki
 delete selected events	calendar	pl	Usuń wybrane zdarzenia
 delete series	calendar	pl	Skasuj serię
-delete this alarm	calendar	pl	Usuń ten alarm
+delete this alarm	calendar	pl	Usuń ten alarm?
 delete this event	calendar	pl	Usuń ten termin
 delete this exception	calendar	pl	Usuń ten wyjątek
 delete this meeting for all participants	calendar	pl	Usuń to spotkanie dla wszystkich uczestników
@@ -529,7 +528,6 @@ weekview	calendar	pl	Widok tygodniowy
 weekview with weekend	calendar	pl	Widok tygodniowy z weekendem
 weekview without weekend	calendar	pl	Widok tygodniowy bez weekendu
 whole day	calendar	pl	Cały dzień
-wk	calendar	pl	Tdź
 work day ends on	calendar	pl	Koniec dnia o
 work day starts on	calendar	pl	Początek dnia o
 workday	calendar	pl	Dzień roboczy

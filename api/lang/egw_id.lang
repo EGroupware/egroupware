@@ -130,6 +130,7 @@ applications	common	id	Aplikasi
 applies the changes made	common	id	Terapkan perubahan
 apply	common	id	Terapkan
 apps & license	common	id	Aplikasi & Lisensi
+apps &amp; license	common	id	Εφαρμογές & Άδεια χρήσης
 april	common	id	April
 are you sure you want to delete these entries ?	common	id	Apakah Anda yakin ingin menghapus entri-entri ini?
 are you sure you want to delete this entry ?	common	id	Apakah Anda yakin ingin menghapus entri ini?
@@ -372,6 +373,7 @@ enabled	common	id	Enabled
 end date	common	id	Tanggal berakhir
 end time	common	id	Waktu berakhir
 enter a search pattern	common	id	Masukan pola pencarian
+enter your passphrase	common	id	Εισάγετε τη συνθηματική σας φράση
 entry not found!	common	id	Entri tidak ditemukan!
 entry saved	common	id	Entri disimpan
 entry updated sucessfully	common	id	Entri sukses dikinikan.
@@ -799,6 +801,7 @@ primary group	common	id	Kelompok utama
 primary key	common	id	Primary Key
 primary style-sheet:	common	id	Primary style-sheet:
 print	common	id	Cetak
+print orientation	common	id	Orientasi
 priority	common	id	Prioritas
 private	common	id	Privat
 programs	common	id	Program

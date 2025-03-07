@@ -167,7 +167,7 @@ delegated	calendar	es-es	Delegado
 delete exceptions	calendar	es-es	Borrar excepciones
 delete selected events	calendar	es-es	Borrar los eventos seleccionados
 delete series	calendar	es-es	Borrar series
-delete this alarm	calendar	es-es	Borrar esta alarma
+delete this alarm	calendar	es-es	¿Borrar esta alarma?
 delete this event	calendar	es-es	Borrar este evento
 delete this exception	calendar	es-es	Borrar esta excepción
 delete this meeting for all participants	calendar	es-es	Eliminar esta reunión para todos los participantes
@@ -698,7 +698,6 @@ which view to show on home page	calendar	es-es	Cuál vista a mostrar en la pági
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	es-es	Número mínimo de usuarios para mostrar las vistas de día y semana como consolidadas. Por defecto = 5
 whole day	calendar	es-es	Todo el día
 with credentials included	calendar	es-es	Con credenciales incluidas
-wk	calendar	es-es	Semana
 work day ends on	calendar	es-es	Los días laborables acaban en
 work day starts on	calendar	es-es	Los días laborables empiezan en
 workday	calendar	es-es	Día laborable

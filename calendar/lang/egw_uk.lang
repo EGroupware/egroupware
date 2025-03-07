@@ -70,6 +70,7 @@ default calendar filter	calendar	uk	Типовий фільтр календар
 default calendar view	calendar	uk	Типовий вигляд календарю
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	uk	Типова тривалість нових подій (в хвилинах).
 delete series	calendar	uk	Видалити серію подій
+delete this alarm	calendar	uk	Видалити цей будильник?
 deleted	calendar	uk	Видалено
 display status of events	calendar	uk	Показувати статус подій
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	uk	Чи хочете Ви отримувати повідомлення щодо нових або змінених призначень? Ви будете їх отримувати щодо змін, які зробили самі.<br>Ви можете обмежити отрумавання повідомлень тілько щодо деяких змін. Кожний елемент включає всі повідомлення, що вказані вище. Всі зміни включають зміни назви, опису, учасників, але не відповіді учасників. Якщо власник події захоче отримувати повідомлення, він завжди буде отримувати і відповіді учасників (Відмова, Прийнято, тощо);

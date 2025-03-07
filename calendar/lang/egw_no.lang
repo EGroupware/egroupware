@@ -76,7 +76,6 @@ canceled	calendar	no	Annullert
 category report	calendar	no	Kategorirapport
 changed event-data applied	calendar	no	Endrede hendelsesdata brukt
 charset of file	calendar	no	Karaktersett for filen
-check all	calendar	no	Kontroller alle
 choose a category	calendar	no	Velg en kategori
 choose owner of imported data	calendar	no	Velg eier av importerte data
 close the window	calendar	no	Lukk vinduet
@@ -107,7 +106,7 @@ default calendar view	calendar	no	Standard kalender visning
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	no	Standard lengde for nyopprettede hendelse. Lengden er i minutter, f.eks 60 for 1 time.
 default week view	calendar	no	Standard ukevisning
 delete series	calendar	no	Slett en serie
-delete this alarm	calendar	no	Slett denne alarmen
+delete this alarm	calendar	no	Slett denne alarmen?
 delete this event	calendar	no	Slett denne hendelsen
 delete this exception	calendar	no	Slett dette unntaket
 delete this series of recurring events	calendar	no	Slett serie med repeterende hendelser
@@ -376,7 +375,6 @@ weekview	calendar	no	Ukevisning
 weekview with weekend	calendar	no	Ukevisning inkl. helg
 weekview without weekend	calendar	no	Ukevisning eksl. helg
 whole day	calendar	no	Hele dagen
-wk	calendar	no	Uke
 work day ends on	calendar	no	Arbeidsdagen ender på
 work day starts on	calendar	no	Arbeidsdagen starter på
 yearly	calendar	no	Årlig

@@ -116,7 +116,7 @@ filesystem	filemanager	pl	System plików
 filesystem check reported no problems.	filemanager	pl	Kontrola systemu plików nie wykazała żadnych problemów.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	pl	System plików: zamontuj katalog (wewnątrz /var/lib/egroupware !) z systemu plików hosta
 finally delete	filemanager	pl	Ostateczne usunięcie
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	pl	Ostatecznie usuwa wszystkie starsze wersje i usunięte pliki w danym folderze. Nie można tego cofnąć!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	pl	Ostatecznie usuwa wszystkie starsze wersje i usunięte pliki w danym folderze? Nie można tego cofnąć!
 finally delete this version	filemanager	pl	Ostatecznie usuń tę wersję
 fix reported problems	filemanager	pl	Napraw zgłoszone problemy
 folder up	filemanager	pl	Folder w górę

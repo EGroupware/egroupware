@@ -159,7 +159,7 @@ filesystem	filemanager	it	Filesystem
 filesystem check reported no problems.	filemanager	it	Non sono stati individuati problemi dopo il controllo del filesystem.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	it	Filesystem: monta la directory (dentro /var/lib/egroupware!) dal filesystem dell'host
 finally delete	filemanager	it	Eliminare definitivamente
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	it	Eliminare definitivamente tutte le versioni vecchie e i file eliminato nella cartella specificata.\n\nNON è un'operazione reversibile!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	it	Eliminare definitivamente tutte le versioni vecchie e i file eliminato nella cartella specificata? NON è un'operazione reversibile!
 finally delete this version	filemanager	it	Cancellazione finale di questa versione
 fix reported problems	filemanager	it	Problemi riparati
 folder up	filemanager	it	Cartella superiore
@@ -315,7 +315,6 @@ upload fields	filemanager	it	Campi caricamento
 upload files	filemanager	it	Carica File
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 used space	filemanager	it	Spazio utilizzato
-user color indicator	filemanager	it	Indicatore colorato utente
 user home quota	filemanager	it	Quota casa utente
 username for webdav and smb, use $user for name of logged in user	filemanager	it	Nome utente per WebDAV e SMB, utilizzare $user per il nome dell'utente connesso
 users and groups	filemanager	it	Utenti e gruppo

@@ -447,6 +447,7 @@ reason!	mail	el	Αιτιολογία!
 receive notification	mail	el	Λήψη ειδοποίησης
 refresh time in minutes	mail	el	Ανανέωση ώρας σε λεπτά
 reject with	mail	el	απόρριψη με
+reloaded folder %1	mail	el	Επαναφορτωμένος φάκελος %1
 remember the password for	mail	el	Θυμηθείτε τον κωδικό πρόσβασης για
 remove all	mail	el	Αφαίρεση όλων
 remove immediately	mail	el	Άμεση μετακίνηση
@@ -470,6 +471,7 @@ report as ham	mail	el	Αναφορά ως Ham
 report as spam	mail	el	Αναφορά ως Spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	el	Αναφέρετε αυτό το περιεχόμενο email ως Ham (όχι spam) - λύσεις για spam όπως το spamTitan θα μάθουν
 report this email content as spam - spam solutions like spamtitan will learn	mail	el	Αναφέρετε αυτό το περιεχόμενο email ως Spam - λύσεις spam όπως το spamTitan θα μάθουν
+request for passphrase	mail	el	Αίτημα για κωδική φράση
 required pear class mail/mimedecode.php not found.	mail	el	Η απαιτούμενη κλάση PEAR Mail/mimeDecode.php δεν βρέθηκε.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	el	Απαιτείται να απενεργοποιήσετε εάν χρησιμοποιείτε το Dovecot με σημαίες private seen στον κοινόχρηστο φάκελο ή στον φάκελο χρήστη!
 resend after how many days?	mail	el	Επαναποστολή μετά από πόσες ημέρες;
@@ -561,6 +563,7 @@ smime encrypted message	mail	el	Κρυπτογραφημένο μήνυμα S/MI
 smime signed message	mail	el	Υπογεγραμμένο μήνυμα S/MIME
 smtp	mail	el	SMTP
 sneak preview in list	mail	el	Εμφάνιση των πρώτων λέξεων του μηνύματος (Sneak preview) στην λίστα των μηνυμάτων
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	el	Ορισμένοι πελάτες αποτυγχάνουν να εντοπίσουν το σωστό σετ χαρακτήρων, εάν είναι ενεργοποιημένες οι γραμμές με ροή
 sort order	mail	el	Κατεύθυνση ταξινόμησης
 source	mail	el	Πηγή
 sources	mail	el	Πηγές

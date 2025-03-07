@@ -186,7 +186,7 @@ change access	admin	sk	Zmena prístupových práv
 change account_id	admin	sk	Zmeniť ID účtu
 change acl rights	admin	sk	Zmeniť prístupové práva (ACL)
 change config settings	admin	sk	Zmeniť voľby nastanení
-change domain of email address and aliases	admin	sk	zmeniť doménu e-mailových adries a aliasov
+change domain of email address and aliases	admin	sk	Zmeniť doménu e-mailových adries a aliasov
 change login screen message	admin	sk	Zmeniť text na hlavnej stránke
 change owner	admin	sk	Zmeniť vlastníka
 change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	sk	Súbory v /home budú mať zmenené vlastníctvo na nového používateľa. Domovský priečinok bude premiestnený do /home/novy_pouzivatel/stary_home_pouzivatel.
@@ -793,7 +793,7 @@ server url	admin	sk	URL adresa servera
 server username	admin	sk	Používateľské meno pre server
 sessions	admin	sk	Relácie
 sessions last 30 days	admin	sk	Relácií za ostatných 30 dní
-set a random password	admin	sk	Nastaviť náhodné heslo.
+set a random password	admin	sk	Nastaviť náhodné heslo
 set preference values.	admin	sk	Nastaviť hodnoty.
 settings	admin	sk	Nastavenia
 should exceptions contain a trace (including function arguments)	admin	sk	Chcete, aby výnimky obsahovali trasovacie údaje (vrátane argumentov funkcií).
@@ -881,7 +881,6 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	sk	Vytvorený token.
 token not found!	admin	sk	Token nebol nájdený!
 token revoked.	admin	sk	Token bol zrušený.
-token saved.	admin	sk	Token uložený.
 top	admin	sk	Navrchu
 total of %1 accounts deleted.	admin	sk	Celkovo bolo odstránených %1 účtov.
 total of %1 id's changed.	admin	sk	Celkovo bolo zmenených %1 ID.
@@ -979,7 +978,7 @@ yes, but no scayt	admin	sk	Áno, ale bez kontroly pravopisu pri písaní (online
 yes, use browser based spell checking engine	admin	sk	Áno, používať kontrolu pravopisu v prehliadači
 yes, use webspellchecker	admin	sk	Áno, použiť kontrolu pravopisu WebSpellChecker pri písaní (online)
 you can not use --dry-run together with --skip-checks!	admin	sk	NEmôžete použiť --dry-run zároveň s funkciou --skip-checks!
-you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	sk	Ak nastavíte náhodné heslo alebo používateplaintextové heslá , môžete zmeniť len heš!
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	sk	Ak nastavíte náhodné heslo alebo používateplaintextové heslá, môžete zmeniť len heš!
 you can set an initial value, which gets incremented every time a new serial get generated	admin	sk	môžete nastaviť počiatočnú hodnotu, ktorá sa zvýši pri každom generovaní nového seriálu
 you can use wizard to fix account settings or delete account.	admin	sk	Ohľadom opravy nastavení účtu alebo odstránenia účtu môžete použiť Sprievodcu.
 you have entered an invalid expiration date	admin	sk	Zadali ste nesprávny čas vypršania!

@@ -97,6 +97,7 @@ folder %1 %2 failed because of %3!	mail	lv	Mapes %1 %2 neizdevās %3 dēļ!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	lv	Mape %1 ir veiksmīgi izveidota, lai gan abonēšana neizdevās %2 dēļ
 folder settings	mail	lv	Mapes uzstādījumi
 forward	mail	lv	Pārsūtīt
+forward to	mail	lv	Uz priekšu
 from	mail	lv	No
 general	admin	lv	Vispārējs
 get acl rights failed from imap server!	mail	lv	ACL tiesību iegūšana no IMAP servera neizdevās!
@@ -205,10 +206,12 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	lv	Push paziņojumi
 quicksearch	mail	lv	Ātrā meklēšana
 quicksearch (with cc)	mail	lv	Ātrā meklēšana (+kopēšana)
+read / unread	mail	lv	Lasīt / Neizlasīts
 real name	mail	lv	Īstais vārds
 real name email	mail	lv	Īstais vārds [E-pasts]
 real name organization email	mail	lv	Īstais vārds Organizācija [E-pasts]
 refresh time in minutes	mail	lv	Atjaunošanas laiks ( minūtēs )
+reloaded folder %1	mail	lv	Pārlādēta mape %1
 remember the password for	mail	lv	Atcerēties paroli
 remove all	mail	lv	Noņemt visus
 remove immediately	mail	lv	Pārvietot nekavējoties
@@ -227,6 +230,7 @@ report as ham	mail	lv	Ziņot kā Ham
 report as spam	mail	lv	Ziņot kā surogātpastu
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	lv	Ziņot par šo e-pasta saturu kā par Ham (nevis surogātpastu) - surogātpasta risinājumi, piemēram, spamTitan, to uzzinās
 report this email content as spam - spam solutions like spamtitan will learn	mail	lv	Ziņot par šo e-pasta saturu kā par surogātpastu - tādi surogātpasta risinājumi kā spamTitan to uzzinās
+request for passphrase	mail	lv	Pieprasījums pēc piekļuves frāzes
 required pear class mail/mimedecode.php not found.	mail	lv	Nepieciešamā PEAR klase Mail/mimeDecode.php nav atrasta.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	lv	Nepieciešams atslēgt, ja izmantojat Dovecot ar privātiem redzamajiem karogiem koplietošanas vai lietotāja mapē!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	lv	S/MIME Šifrēšana neizdevās, jo sūtītāja adresei nav atrasts sertifikāts: %1
@@ -251,6 +255,7 @@ sent folder	mail	lv	Mape nosūtīts
 server supports special-use folders	mail	lv	Serveris atbalsta īpašas izmantošanas mapes
 set predefined values for compose...	mail	lv	Iestatiet iepriekš definētas vērtības sastādīšanai ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	lv	Vai paraksts jāieliek pēc (standarta) vai pirms atbildes vai pārsūtīšanas, un vai paraksts ir redzams un maināms sastādīšanas laikā.
+show all addresses	mail	lv	Rādīt visas adreses
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	lv	galvenajā ekrāna mapju panelī rādīt visas mapes (parakstītās UN neparakstītās).
 show notification for new arriving mails	mail	lv	Parādīt paziņojumu par jaunām ienākošām vēstulēm
 show test connection section and control the level of info displayed?	mail	lv	Rādīt testa savienojuma sadaļu un kontrolēt rādītās informācijas līmeni?
@@ -269,7 +274,10 @@ smime encrypted message	mail	lv	S/MIME šifrēta ziņa
 smime signed message	mail	lv	S/MIME parakstīts ziņojums
 smtp	mail	lv	SMTP
 sneak preview in list	mail	lv	Ziņu priekšskatījums
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	lv	Daži klienti nespēj noteikt pareizo rakstzīmju kopu, ja ir iespējotas plūsmotās rindas
 sort order	mail	lv	Vieta pēc kārtas
+spamtitan api url	mail	lv	SpamTitan API URL
+spamtitan integration requires epl version	mail	lv	SpamTitan integrācijai nepieciešama EPL versija
 text	mail	lv	Teksts
 the imap server need to meet certain requirements and be configured for it:	mail	lv	IMAP serverim ir jāatbilst noteiktām prasībām UN tas ir jākonfigurē:
 the rule with priority %1 successfully saved!	mail	lv	Noteikums ar prioritāti %1 veiksmīgi saglabāts!

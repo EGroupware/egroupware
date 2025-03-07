@@ -50,8 +50,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	es-es	Enlaces existentes
 exists	timesheet	es-es	Existe
 export definition to use for nextmatch export	timesheet	es-es	Exportar la definición a usar para exportar nextmatch
-export to openoffice spreadsheet	timesheet	es-es	Exportar a hoja de cálculo de OpenOffice
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	es-es	Exporta entradas desde la hoja de tiempos en un fichero CSV (valores separados por comas). Sin embargo, también se pueden elegir otros separadores en la pestaña de opciones.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	es-es	Exporta las entradas de la Hoja del Tiempo a un archivo CSV. En la pestaña de opciones también puede elegir otros separadores.
 field must not be empty !!!	timesheet	es-es	¡El campo no debe estar vacío!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
 forgot to switch off working time?	common	es-es	¿Ha olvidado desconectar el tiempo de trabajo?
@@ -80,6 +79,7 @@ links and attached files	timesheet	es-es	Enlaces y ficheros adjuntos
 links to specified application.  example: {{links/infolog}}	timesheet	es-es	Enlaces a la aplicación especificada. Ejemplo: {{links/infolog}}
 list of files linked to the current record	timesheet	es-es	Lista de ficheros vinculados al registro actual
 max length of the input [, length of the inputfield (optional)]	timesheet	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
+mode	timesheet	es-es	Modo
 modified	timesheet	es-es	Modificado
 modify status	timesheet	es-es	Estado de modificación
 name of current user, all other contact fields are valid too	timesheet	es-es	Nombre del usuario actual. Todos los demás campos del contacto también son válidos.
@@ -103,6 +103,7 @@ paused	timesheet	es-es	Pausa
 permission denied!!!	timesheet	es-es	¡Se ha denegado el permiso!
 permissions error - %1 could not %2	timesheet	es-es	Error en los permisos - %1 no pudo %2
 price	timesheet	es-es	Precio
+project fields	timesheet	es-es	Campos del proyecto
 projectmanager integration	admin	es-es	Integración con el Administrador de proyectos
 quantity	timesheet	es-es	Cantidad
 recorded	timesheet	es-es	Grabado
@@ -117,7 +118,7 @@ select a project	timesheet	es-es	Seleccionar un proyecto
 select a status of the timesheet	timesheet	es-es	seleccionar un estado de una hoja de tiempo
 select infolog	timesheet	es-es	seleccionar elemento de tareas
 select multiple timeshhets for a further action	timesheet	es-es	Seleccionar múltiples hojas de tiempo para una acción posterior
-select the predefined status, whan creating a new timesheet	preferences	es-es	Seleccionar el estado predefinido cuando se cree una hoja de tiempos nueva
+select the predefined status, when creating a new timesheet	preferences	es-es	Seleccione el estado predefinido, al crear una nueva entrada.
 show a quantity sum (eg. to sum up negative overtime)	admin	es-es	Mostrar una suma de cantidades (p. ej. sumar tiempo extra negativo)
 start	timesheet	es-es	Inicio
 start & stop timer	common	es-es	Iniciar y detener temporizador
@@ -143,7 +144,6 @@ timer already running or paused	common	es-es	Temporizador ya en marcha o en paus
 timesheet	common	es-es	Hoja de presencia
 timesheet csv export	timesheet	es-es	Exportar a CSV la hoja de presencia
 timesheet modified by %1 at %2	timesheet	es-es	Hoja de tiempos modificada por %1 a las %2
-timesheet openoffice export	timesheet	es-es	Exportar a OpenOffice la hoja de presencia
 timesheet status-%1 '%2' added.	timesheet	es-es	Estado de la hoja de tiempo-%1 '%2' añadido.
 timesheet-%1 '%2' updated.	timesheet	es-es	Hoja de tiempo-%1 '%2' actualizado.
 timesheet-%1 deleted.	timesheet	es-es	Hoja de tiempo-%1 '%2' borrado.

@@ -107,6 +107,7 @@ certificate validation in days	admin	ko	인증서 유효성 검사 일수
 change account_id	admin	ko	계정 ID 변경
 change acl rights	admin	ko	ACL 권한 변경
 change config settings	admin	ko	구성 설정 변경
+change domain of email address and aliases	admin	ko	이메일 주소 및 별칭의 도메인 변경
 change login screen message	admin	ko	주 화면 메세지 변경
 check ip address of all sessions	admin	ko	모든 세션에 ip 주소 확인
 check items to <b>%1</b> to %2 for %3	admin	ko	%3의 항목을 <b>%1</b>에서 %2로 체크
@@ -351,6 +352,7 @@ server password	admin	ko	서버 암호
 server type(mode)	admin	ko	서버 타입(모드)
 server url	admin	ko	서버 URL
 server username	admin	ko	서버 사용자이름
+set a random password	admin	ko	임의 비밀번호 설정
 set preference values.	admin	ko	환경설정 값을 결정
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ko	접속 페이지에서 언어 선택박스를 포함할까요 (데모사이트에서 유용) ?
 show access log	admin	ko	접근 기록을 보임
@@ -428,6 +430,7 @@ view user account	admin	ko	사용자 계정 보기
 who would you like to transfer all records owned by the deleted user to?	admin	ko	누구에게 삭제된 사용자 소유의 모든 레코드를 전송 하시겠습니까?
 who would you like to transfer records owned by the deleted user to?	admin	ko	삭제된 사용자가 소유한 기록을 누구에게 이전하시겠습니까?
 xml-rpc	admin	ko	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	ko	무작위 비밀번호를 설정했거나 현재 일반 텍스트 비밀번호를 사용하는 경우에만 해시를 변경할 수 있습니다!
 you can use wizard to fix account settings or delete account.	admin	ko	마법사를 사용하여 계정 설정을 수정하거나 계정을 삭제할 수 있습니다.
 you have entered an invalid expiration date	admin	ko	부적절한 만료 날짜를 입력하셨습니다
 you must add at least 1 permission or group to this account	admin	ko	이 계정에 최소한 하나의 권한이나 그룹을 추가하셔야 합니다

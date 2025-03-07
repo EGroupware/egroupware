@@ -1,3 +1,8 @@
+%1 directories and %2 files copied.	filemanager	uk	Скопійовано %1 каталогів і %2 файлів.
+%1 directories and %2 files deleted.	filemanager	uk	Видалено %1 каталог і %2 файли.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	uk	Копіювання %1 помилки, скопійовано %2 каталоги та %3 файли!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	uk	Видалення %1 помилок, видалено %2 каталоги та %3 файли!
+%1 failed, %2 succeded	filemanager	uk	Не вдалося виконати %1, успішно виконано %2.
 %1 files unlocked.	filemanager	uk	Розблоковано %1 файл.
 applications	common	uk	Приложення
 classic	filemanager	uk	Стандартна панель інструментів
@@ -46,7 +51,7 @@ filesystem	filemanager	uk	Файлова система
 filesystem check reported no problems.	filemanager	uk	Перевірка файлової системи не виявила проблем.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	uk	Файлова система: змонтувати каталог (всередині /var/lib/egroupware !) з файлової системи хоста
 finally delete	filemanager	uk	Остаточно видалити
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	uk	Остаточно видалити усі старіші версії і видалені файли у цій теці.\n\nЦе неможливо скасувати!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	uk	Остаточно видалити усі старіші версії і видалені файли у цій теці? Це неможливо скасувати!
 finally delete this version	filemanager	uk	Остаточно видалити цю версію
 fix reported problems	filemanager	uk	Виправити виявлені проблеми
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	uk	Для файлів, пов'язаних із записом програми (у /apps/appname/id/), також доступні заповнювачі для цієї програми. Список доступних заповнювачів дивіться у відповідному додатку.

@@ -502,6 +502,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	en	Enter new version number, > old_version, empty for no update file
 enter the new version number here (has to be > old_version)	common	en	Enter new version number, has to be > old_version
 enter your file name	common	en	Enter your file name
+enter your passphrase	common	en	Enter your passphrase
 enter your password	common	en	Enter your password
 entry has been deleted sucessfully	common	en	Entry has been deleted successfully.
 entry not found!	common	en	Entry not found!
@@ -1092,6 +1093,7 @@ primary key	common	en	Primary key
 primary key for the table, gets automaticaly indexed	common	en	Primary key for the table, gets automatically indexed
 primary style-sheet:	common	en	Primary style sheet:
 print	common	en	Print
+print orientation	common	en	Orientation
 priority	common	en	Priority
 private	common	en	Private
 programs	common	en	Programs

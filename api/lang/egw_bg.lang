@@ -76,6 +76,7 @@ all users	common	bg	Всички потребители
 allow editing the %1	common	bg	Разрешете редактирането на %1
 alternate style-sheet:	common	bg	Алтернативен style-sheet:
 american samoa	common	bg	Американска Самоа
+an admin required that you must change your password upon login.	common	bg	Администраторът изисква да промените паролата си при влизане в системата.
 an error happened	common	bg	Възникнала е грешка
 an existing and by the webserver readable directory enables the image browser and upload.	common	bg	Браузърът за изображения и ъплоудът се разрешават чрез съществуваща И достъпна за четене от WEB сървъра директория.
 and	common	bg	И
@@ -87,10 +88,14 @@ antarctica	common	bg	Антарктика
 antigua and barbuda	common	bg	Антигуа и Барбуда
 application	common	bg	Приложение
 apply	common	bg	Приложи
+apply the action on the whole query, not only the shown entries	common	bg	Прилагайте действието върху цялата заявка, а не само върху показаните записи
 apps & license	common	bg	Приложения и лиценз
+apps &amp; license	common	bg	Приложения и лиценз
 april	common	bg	Април
 are you sure you want to delete these entries ?	common	bg	Наистина ли искате да изтриете тези записи?
 are you sure you want to delete this entry ?	common	bg	Наистина ли искате да изтриете този запис?
+are you sure you want to logout?	common	bg	Сигурни ли сте, че искате да излезете от системата?
+are you sure, you would like to delete the backup key?	common	bg	Сигурни ли сте, че искате да изтриете резервния ключ?
 argentina	common	bg	Аржентина
 armenia	common	bg	Армения
 aruba	common	bg	Аруба
@@ -101,6 +106,8 @@ australia	common	bg	Австралия
 austria	common	bg	Автсрия
 authenticate	common	bg	Удостоверяване на
 author	common	bg	Автор
+automatic update check failed, you need to check manually!	common	bg	Автоматичната проверка на актуализациите се е провалила, трябва да проверите ръчно!
+automatically refresh list	common	bg	Автоматично опресняване на списъка
 autosave default category	common	bg	Автоматично запазване на категория Default
 avatar	common	bg	Avatar
 azerbaijan	common	bg	Азербайджан
@@ -297,6 +304,7 @@ enabled	common	bg	Разрешено
 end date	common	bg	Крайна дата
 end time	common	bg	Краен час
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	bg	Въведете URL на EGroupware.<br>Пример: http://www.domain.com/egroupware или /egroupware<br><b>Да не завършва с "/"</b>
+enter your passphrase	common	bg	Въведете паролата си
 entry has been deleted sucessfully	common	bg	Записът беше изтрит успешно
 entry not found!	common	bg	Записът не е намерен!
 entry saved	common	bg	Записът е запазен
@@ -678,6 +686,7 @@ preview with entry	common	bg	Предварителен преглед с във
 previous page	common	bg	Предишна страница
 primary style-sheet:	common	bg	Основен набор стилове (style-sheet):
 print	common	bg	Печат
+print orientation	common	bg	Ориентация
 priority	common	bg	Приоритет
 private	common	bg	Личен
 programs	common	bg	Програми

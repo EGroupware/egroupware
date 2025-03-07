@@ -96,6 +96,7 @@ folder %1 %2 failed because of %3!	mail	no	Mappen %1 %2 mislyktes på grunn av %
 folder %1 has been created successfully, although the subscription failed because of %2	mail	no	Mappen %1 er opprettet, selv om abonnementet mislyktes på grunn av %2
 folder settings	mail	no	Mappeinnstillinger
 forward	mail	no	Videresend
+forward to	mail	no	Videresend til
 from	mail	no	Fra
 general	admin	no	Generell
 get acl rights failed from imap server!	mail	no	Få ACL-rettigheter mislyktes fra IMAP-serveren!
@@ -188,10 +189,12 @@ printing	mail	no	Utskrift
 push notifications	mail	no	Push-varsler
 quicksearch	mail	no	Hurtigsøk
 quicksearch (with cc)	mail	no	Hurtigsøk (+Kopi)
+read / unread	mail	no	Lest / Ulest
 real name	mail	no	Ekte navn
 real name email	mail	no	Ekte navn [E-post]
 real name organization email	mail	no	Ekte navn Organisasjon [E-post]
 refresh time in minutes	mail	no	Oppdateringstid i minutter
+reloaded folder %1	mail	no	Lastet inn mappen %1 på nytt
 remember the password for	mail	no	Husk passordet for
 remove all	mail	no	Fjern alle
 remove immediately	mail	no	Fjern umiddelbart
@@ -208,6 +211,7 @@ replyto	mail	no	SvarTil
 report as spam	mail	no	Rapporter som søppelpost
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	no	Rapporter denne e-posten som Ham (ikke spam) - spam-løsninger som spamTitan vil lære av dette
 report this email content as spam - spam solutions like spamtitan will learn	mail	no	Rapporter denne e-posten som søppelpost - spamløsninger som spamTitan vil lære seg det
+request for passphrase	mail	no	Forespørsel om passordfrase
 required pear class mail/mimedecode.php not found.	mail	no	Påkrevd PEAR-klasse Mail/mimeDecode.php ikke funnet.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	no	Påkrevd å deaktivere hvis du bruker Dovecot med private seen-flagg på delt mappe eller brukermappe!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	no	S/MIME-kryptering mislyktes fordi det ikke ble funnet noe sertifikat for avsenderadressen: %1
@@ -228,6 +232,7 @@ send message pgp encrypted: requires keys from all recipients!	mail	no	Send meld
 sent folder	mail	no	Sendt Mappe
 server supports special-use folders	mail	no	Serveren støtter mapper for spesialbruk
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	no	Skal signaturen settes inn etter (standard) eller før et svar eller videresending, og skal signaturen være synlig og kunne endres under skriving.
+show all addresses	mail	no	Vis alle adresser
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	no	Vis alle mapper (abonnerte OG ikke-abonnerte) i hovedskjermens mapperute.
 show notification for new arriving mails	mail	no	Vis varsel for nye innkommende e-poster
 show test connection section and control the level of info displayed?	mail	no	Vis testtilkoblingsdelen og kontroller nivået på informasjonen som vises?
@@ -240,7 +245,10 @@ shows a temporary visible notification including from address, subject and a sni
 sign your message with smime certificate	mail	no	Signer meldingen med S/MIME-sertifikat
 signature	mail	no	Signatur
 signed by	mail	no	Signert av
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	no	Noen klienter klarer ikke å oppdage riktig tegnsett hvis flytlinjer er aktivert
 sort order	mail	no	Sortering
+spamtitan api url	mail	no	SpamTitan API URL
+spamtitan integration requires epl version	mail	no	SpamTitan-integrering krever EPL-versjon
 text	mail	no	Tekst
 the imap server need to meet certain requirements and be configured for it:	mail	no	IMAP-serveren må oppfylle visse krav OG være konfigurert for dette:
 the rule with priority %1 successfully saved!	mail	no	Regelen med prioritet %1 ble lagret!

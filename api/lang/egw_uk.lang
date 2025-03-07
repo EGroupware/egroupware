@@ -72,9 +72,12 @@ application	common	uk	Приложення
 applications	common	uk	Приложення
 apply	common	uk	Застосувати
 apps & license	common	uk	Програми та ліцензія
+apps &amp; license	common	uk	Програми та ліцензія
 april	common	uk	Квітень
 are you sure you want to delete these entries ?	common	uk	Ви впевнені, що хочете видалити ці записи?
 are you sure you want to delete this entry ?	common	uk	Ви впевнені, що хочете видалити цей запис?
+are you sure you want to logout?	common	uk	Ви впевнені, що хочете вийти з системи?
+are you sure, you would like to delete the backup key?	common	uk	Ви впевнені, що хочете видалити резервний ключ?
 argentina	common	uk	АРГЕНТИНА
 armenia	common	uk	ВІРМЕНІЯ
 attach file	common	uk	Прикласти файл
@@ -84,6 +87,7 @@ australia	common	uk	АВСТРАЛІЯ
 austria	common	uk	АВСТРІЯ
 authenticate	common	uk	Автентифікація
 author	common	uk	Автор
+automatic update check failed, you need to check manually!	common	uk	Автоматична перевірка оновлень не пройшла, перевірте вручну!
 autosave default category	common	uk	Автоматично зберегти категорію по замовченню
 avatar	common	uk	Аватар
 azerbaijan	common	uk	АЗЕРБАЙДЖАН
@@ -223,6 +227,7 @@ enabled	common	uk	Ввімкнено
 end date	common	uk	Кінцева дата
 end time	common	uk	Кінцевий час
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL EGroupware.<br>наприклад: https://egw.domain.com/egroupware або /egroupware<br><b>Без / в кінці</b>
+enter your passphrase	common	uk	Введіть свою парольну фразу
 entry has been deleted sucessfully	common	uk	Запис видалено успішно
 entry updated sucessfully	common	uk	Запис змінено успішно.
 error	common	uk	Помилка
@@ -493,6 +498,7 @@ preferences	common	uk	Налаштування
 previous page	common	uk	Попередня сторінка
 primary group	common	uk	первинна група
 print	common	uk	Друкувати
+print orientation	common	uk	Орієнтація
 priority	common	uk	Пріоритет
 private	common	uk	Особисте
 project	common	uk	Проект

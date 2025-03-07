@@ -124,6 +124,7 @@ certificate validation in days	admin	pt	Validação do certificado em dias
 change access	admin	pt	Alterar direitos de acesso
 change acl rights	admin	pt	Alterar direitos de ACL
 change config settings	admin	pt	Alterar configurações
+change domain of email address and aliases	admin	pt	Alterar o domínio do endereço de correio eletrónico e aliases
 change login screen message	admin	pt	Alterar mensagem da página inicial
 check ip address of all sessions	admin	pt	Verificar endereço IP de todas as sessões
 check items to <b>%1</b> to %2 for %3	admin	pt	Marcar items de <b>%1</b> a %2 para %3
@@ -446,6 +447,7 @@ server settings	admin	pt	Definições do servidor
 server type(mode)	admin	pt	Tipo de servidor (modo)
 server url	admin	pt	URL do servidor
 server username	admin	pt	Utilizador do servidor
+set a random password	admin	pt	Definir uma palavra-passe aleatória
 set preference values.	admin	pt	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt	A página de acesso deve incluir uma caixa de selecção de idioma (útil para sítios de demonstração)?
 show access log	admin	pt	Exibir registo de acesso
@@ -551,6 +553,7 @@ virtual mail manager	admin	pt	Gestor virtual de correio electrónico
 who would you like to transfer all records owned by the deleted user to?	admin	pt	Para quem deseja transferir TODOS os registos do utilizador eliminado ?
 who would you like to transfer records owned by the deleted user to?	admin	pt	Para quem gostaria de transferir os registos pertencentes ao utilizador eliminado?
 xml-rpc	admin	pt	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	pt	Só pode alterar o hash se definir uma palavra-passe aleatória ou se utilizar atualmente palavras-passe de texto simples!
 you can use wizard to fix account settings or delete account.	admin	pt	Pode utilizar o assistente para corrigir as definições da conta ou eliminar a conta.
 you have entered an invalid expiration date	admin	pt	Inseriu uma data de expiração inválida
 you have to enter a name, to create a new field!!!	admin	pt	É necessário inserir um nome para criar um novo campo!

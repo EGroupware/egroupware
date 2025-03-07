@@ -146,6 +146,7 @@ change access	admin	pl	Zmiana praw dostępu
 change account_id	admin	pl	Zmień account_ID
 change acl rights	admin	pl	zmiana prawa dostępu (ACL)
 change config settings	admin	pl	Zmiana ustawień
+change domain of email address and aliases	admin	pl	Zmiana domeny adresu e-mail i aliasów
 change login screen message	admin	pl	Zmiana komunikatu na stronie głównej
 change password for %1	admin	pl	Zmień hasło dla %1
 check acl for entries of not (longer) existing accounts	admin	pl	Sprawdź ACL dla wpisów nie istniejących (już) kont
@@ -561,6 +562,7 @@ server type(mode)	admin	pl	Typ serwera (tryb)
 server url	admin	pl	Adres URL serwera
 server username	admin	pl	Nazwa użytkownika na serwerze
 sessions last 30 days	admin	pl	Sesje w ostatnich 30 dniach
+set a random password	admin	pl	Ustaw losowe hasło
 set preference values.	admin	pl	Ustaw wartości preferencji
 should exceptions contain a trace (including function arguments)	admin	pl	Czy wyjątki powinny zawierać dane śledzenia wykonania (razem z argumentami funkcji)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pl	Czy strona zalogowania powinna zawiera box z wyborem języka (przydatne dla serwerów demo) ?
@@ -696,6 +698,7 @@ who would you like to transfer records owned by the deleted user to?	admin	pl	Do
 wrong account type: %1 is no %2 !!!	admin	pl	Zły typ konta: %1 to nie %2 !
 wrong admin-account or -password !!!	admin	pl	Niepoprawne konto administratora lub hasło!
 xml-rpc	admin	pl	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	pl	Możesz zmienić hash tylko, jeśli ustawiłeś losowe hasło lub obecnie używasz haseł w postaci zwykłego tekstu!
 you can use wizard to fix account settings or delete account.	admin	pl	Możesz użyć kreatora, aby poprawić ustawienia konta lub usunąć konto.
 you have entered an invalid expiration date	admin	pl	Podałeś niewłaściwą datę wygaśnięcia
 you have no email address for your user set !!!	admin	pl	Nie masz ustawionego adresu email dla swojego użytkownika!

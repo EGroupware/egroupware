@@ -414,7 +414,7 @@ directory with documents to insert entries	preferences	ja	エントリーを挿�
 disabled	common	ja	不可
 discard changes	common	ja	変更を破棄
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	ja	Displayed in front of input or input is inserted for a '%s' in the label of the Submit button or image file name.
-displayed in statusline of browser if input-field gets focus	common	ja	Displayed in status line of browser if input field gets focus.
+displayed in statusline of browser if input-field gets focus	common	ja	入力フィールドにフォーカスが当たった場合、ブラウザのステータス行に表示されます。
 displayed in the top line of the groupbox (legend)	common	ja	Displayed in the top line of the group box (legend).
 distribution lists as groups	groupdav	ja	グループ化した配信リスト
 djibouti	common	ja	ジブチ
@@ -493,6 +493,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	ja	Enter new version number, > old_version, empty for no update file
 enter the new version number here (has to be > old_version)	common	ja	Enter new version number, has to be > old_version
 enter your file name	common	ja	ファイル名を入力
+enter your passphrase	common	ja	パスフレーズを入力
 enter your password	common	ja	パスワードを入力
 entry has been deleted sucessfully	common	ja	項目を削除しました。
 entry not found!	common	ja	項目が見つかりません!
@@ -1066,6 +1067,7 @@ primary key	common	ja	プライマリ・キー
 primary key for the table, gets automaticaly indexed	common	ja	Primary key for the table, gets automatically indexed
 primary style-sheet:	common	ja	プライマリ・スタイルシート:
 print	common	ja	印刷
+print orientation	common	ja	ページの向き
 priority	common	ja	優先順位
 private	common	ja	プライベート
 programs	common	ja	プログラム

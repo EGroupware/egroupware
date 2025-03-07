@@ -238,11 +238,13 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	zh	推送通知
 quicksearch	mail	zh	快速搜索
 quicksearch (with cc)	mail	zh	快速搜索（+复制）
+read / unread	mail	zh	已读 / 未读
 real name	mail	zh	真实姓名
 real name email	mail	zh	真实姓名 [电子邮件］
 real name organization email	mail	zh	真实姓名 组织 [电子邮件］
 refresh time in minutes	mail	zh	刷新时间分钟数
 reject with	mail	zh	拒绝
+reloaded folder %1	mail	zh	重新加载文件夹 %1
 remember the password for	mail	zh	记住以下密码
 remove all	mail	zh	全部删除
 remove immediately	mail	zh	立刻删除
@@ -261,6 +263,7 @@ report as ham	mail	zh	报告为垃圾邮件
 report as spam	mail	zh	报告为垃圾邮件
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	zh	将此电子邮件内容报告为垃圾邮件（非垃圾邮件） - 垃圾邮件解决方法（如 spamTitan）将学习
 report this email content as spam - spam solutions like spamtitan will learn	mail	zh	将此电子邮件内容报告为垃圾邮件 - 垃圾邮件解决方案（如 spamTitan）将学习
+request for passphrase	mail	zh	请求密码
 required pear class mail/mimedecode.php not found.	mail	zh	未找到所需的 PEAR 类 Mail/mimeDecode.php。
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	zh	如果您使用 Dovecot 并在共享文件夹或用户文件夹上设置了私人可见标志，则需要禁用！
 save all	mail	zh	保存所有
@@ -286,6 +289,7 @@ sent folder	mail	zh	发件夹
 server supports special-use folders	mail	zh	服务器支持特殊用途文件夹
 set predefined values for compose...	mail	zh	设置用于撰写的预定义值...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	zh	是否应在回复或转发之后（标准）或之前插入签名，以及是否应在撰写过程中显示和更改签名。
+show all addresses	mail	zh	显示所有地址
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	zh	在主屏幕文件夹窗格中显示所有文件夹（已订阅和未订阅文件夹
 show notification for new arriving mails	mail	zh	显示新到邮件通知
 show test connection section and control the level of info displayed?	mail	zh	显示测试连接部分并控制显示信息的级别？
@@ -303,7 +307,10 @@ smime encrypted message	mail	zh	S/MIME加密的信息
 smime signed message	mail	zh	S/MIME签名信息
 smtp	mail	zh	SMTP
 sneak preview in list	mail	zh	信息预览
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	zh	如果启用了流水号，某些客户端无法检测到正确的字符集
 sort order	mail	zh	分类排序
+spamtitan api url	mail	zh	SpamTitan API URL
+spamtitan integration requires epl version	mail	zh	SpamTitan 集成需要 EPL 版本
 text	mail	zh	文字
 the imap server need to meet certain requirements and be configured for it:	mail	zh	IMAP 服务器需要满足某些要求并为此进行配置：
 the mimeparser can not parse this message.	mail	zh	MIME 解析器不能解析这个邮件。

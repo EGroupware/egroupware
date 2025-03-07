@@ -112,6 +112,7 @@ certificate validation in days	admin	no	Sertifikatvalidering i dager
 change access	admin	no	Endre tilgangsrettigheter
 change acl rights	admin	no	Endre ACL rettigheter
 change config settings	admin	no	Endre innstillinger for konfigurasjon
+change domain of email address and aliases	admin	no	Endre domenet til e-postadressen og aliasene
 change login screen message	admin	no	Endre melding på hovedside
 check ip address of all sessions	admin	no	Sjekk alle sesjoners IP-adresse
 check items to <b>%1</b> to %2 for %3	admin	no	Sjekk oppføringene til <b>%1</b> til %2 for %3
@@ -403,6 +404,7 @@ server password	admin	no	Server passord
 server type(mode)	admin	no	Server type (mode)
 server url	admin	no	Tjener URL
 server username	admin	no	Tjener brukernavn
+set a random password	admin	no	Angi et tilfeldig passord
 set preference values.	admin	no	Sett referanseverdier
 should the login page include a language selectbox (useful for demo-sites) ?	admin	no	Skal login siden inneholde valg av språk (fint for demo-site)?
 show access log	admin	no	Vis aksesslogg
@@ -498,6 +500,7 @@ virtual mail manager	admin	no	Virtuell Mail Manager
 who would you like to transfer all records owned by the deleted user to?	admin	no	Til hvem ønsker du å overføre alle poster tilhørende den slettede bruker?
 who would you like to transfer records owned by the deleted user to?	admin	no	Hvem ønsker du å overføre poster som eies av den slettede brukeren til?
 xml-rpc	admin	no	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	no	Du kan bare endre hashen hvis du har angitt et tilfeldig passord eller bruker passord i klartekst!
 you can use wizard to fix account settings or delete account.	admin	no	Du kan bruke veiviseren til å fikse kontoinnstillinger eller slette kontoen.
 you have entered an invalid expiration date	admin	no	Du har registrert en ugyldig utløpsdato?
 you must add at least 1 permission or group to this account	admin	no	Du må legge til minst 1 tillatelse eller gruppe for denne kontoen.

@@ -270,11 +270,13 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	sv	Push-meddelanden
 quicksearch	mail	sv	Snabbsök
 quicksearch (with cc)	mail	sv	Snabbsök (+Kopia)
+read / unread	mail	sv	Läst / Oläst
 real name	mail	sv	Verkligt namn
 real name email	mail	sv	Verkligt namn [E-post]
 real name organization email	mail	sv	Verkligt namn Organisation [E-post]
 refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
 reject with	mail	sv	Avvisa med
+reloaded folder %1	mail	sv	Återladdad mapp %1
 remember the password for	mail	sv	Kom ihåg lösenordet för
 remove all	mail	sv	Radera samtliga
 remove immediately	mail	sv	Radera omedelbart
@@ -295,6 +297,7 @@ report as ham	mail	sv	Rapportera som Ham
 report as spam	mail	sv	Rapportera som skräppost
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	sv	Rapportera det här e-postmeddelandet som Ham (inte spam) - spamlösningar som spamTitan kommer att lära sig
 report this email content as spam - spam solutions like spamtitan will learn	mail	sv	Rapportera detta e-postmeddelande som Spam - spamlösningar som spamTitan kommer att lära sig
+request for passphrase	mail	sv	Begäran om lösenfras
 required pear class mail/mimedecode.php not found.	mail	sv	PEAR-klassen Mail/mimeDecode.php hittades inte.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	sv	Krävs för att inaktivera om du använder Dovecot med privata flaggor på delad eller användarmapp!
 rights	mail	sv	Rättigheter
@@ -328,6 +331,7 @@ server supports special-use folders	mail	sv	Servern stöder mappar för särskil
 set flags	mail	sv	Markera e-post som
 set predefined values for compose...	mail	sv	Ställ in fördefinierade värden för sammansättning ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sv	Ska signatur infogas efter (standard) eller före ett svar eller vidarebefordran, och ska signaturen vara synlig och ändringsbar under komponeringen.
+show all addresses	mail	sv	Visa alla adresser
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	sv	Visa alla mappar (prenumererade OCH avprenumererade) i huvudskärmens mappfönster.
 show notification for new arriving mails	mail	sv	Visa avisering för nya inkommande e-postmeddelanden
 show test connection section and control the level of info displayed?	mail	sv	Visa testanslutningsavsnitt och kontrollera nivån på den information som visas?
@@ -347,6 +351,7 @@ smime encrypted message	mail	sv	S/MIME-krypterat meddelande
 smime signed message	mail	sv	S/MIME-signerat meddelande
 smtp	mail	sv	SMTP
 sneak preview in list	mail	sv	Förhandsgranskning av meddelande
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	sv	Vissa klienter upptäcker inte rätt teckenuppsättning om flödade rader är aktiverade
 spamtitan api url	mail	sv	SpamTitan API URL
 spamtitan integration requires epl version	mail	sv	SpamTitan-integration kräver EPL-version
 start new messages with mime type plain/text or html?	mail	sv	Starta nya meddelanden med Text eller HTML?

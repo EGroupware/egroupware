@@ -1,3 +1,8 @@
+%1 directories and %2 files copied.	filemanager	ro	%1 directoare și %2 fișiere copiate.
+%1 directories and %2 files deleted.	filemanager	ro	%1 directoare și %2 fișiere șterse.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	ro	%1 erori de copiere, %2 directoare și %3 fișiere copiate!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	ro	%1 erori de ștergere, %2 directoare și %3 fișiere șterse!
+%1 failed, %2 succeded	filemanager	ro	%1 a eșuat, %2 a reușit.
 %1 files unlocked.	filemanager	ro	%1 fișiere deblocate.
 classic	filemanager	ro	Bara de instrumente standard
 default action on double-click	filemanager	ro	Acțiune implicită la dublu clic
@@ -40,7 +45,7 @@ filesystem	filemanager	ro	Sistem de fișiere
 filesystem check reported no problems.	filemanager	ro	Verificarea sistemului de fișiere nu a raportat probleme.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	ro	Filesystem: mount directory (în interiorul /var/lib/egroupware !) din sistemul de fișiere gazdă
 finally delete	filemanager	ro	În cele din urmă, ștergeți
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ro	Șterge în cele din urmă toate versiunile mai vechi și fișierele șterse din folderul dat.\n\nAcest lucru NU poate fi anulat!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ro	Șterge în cele din urmă toate versiunile mai vechi și fișierele șterse din folderul dat? Acest lucru NU poate fi anulat!
 finally delete this version	filemanager	ro	În sfârșit, ștergeți această versiune
 fix reported problems	filemanager	ro	Remediați problemele raportate
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	ro	Pentru fișierele legate de o intrare de aplicație (în interiorul /apps/appname/id/), sunt disponibile, de asemenea, și locurile pentru acea aplicație. Consultați aplicația specifică pentru o listă de caractere de poziție disponibile.

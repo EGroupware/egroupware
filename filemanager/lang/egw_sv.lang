@@ -1,4 +1,9 @@
 %1 already exists as a file	filemanager	sv	%1 finns redan som fil
+%1 directories and %2 files copied.	filemanager	sv	%1 kataloger och %2 filer kopierade.
+%1 directories and %2 files deleted.	filemanager	sv	%1 kataloger och %2 filer raderade.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	sv	%1 fel vid kopiering, %2 kataloger och %3 filer kopierade!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	sv	%1 fel vid radering, %2 kataloger och %3 filer raderade!
+%1 failed, %2 succeded	filemanager	sv	%1 misslyckades, %2 lyckades.
 %1 files unlocked.	filemanager	sv	%1 filer är upplåsta.
 %1 starts with '%2'	filemanager	sv	%1 börjar med '%2'
 applications	common	sv	Applikationer
@@ -73,7 +78,7 @@ filesystem	filemanager	sv	Filsystem
 filesystem check reported no problems.	filemanager	sv	Kontrollen av filsystemet visade inga problem.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	sv	Filsystem: montera katalog (inuti /var/lib/egroupware !) från värdfilsystemet
 finally delete	filemanager	sv	Ta bort till slut
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	sv	Ta bort alla äldre versioner och borttagna filer under en viss mapp.\n\nDetta kan INTE ångras!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	sv	Ta bort alla äldre versioner och borttagna filer under en viss mapp? Detta kan INTE ångras!
 finally delete this version	filemanager	sv	Ta bort den här versionen
 fix reported problems	filemanager	sv	Åtgärda rapporterade problem
 folder up	filemanager	sv	Upp ett steg

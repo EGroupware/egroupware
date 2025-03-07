@@ -16,7 +16,6 @@ change category	timesheet	sk	Zmeniť kategóriu
 change owner when updating	timesheet	sk	Zmeniť vlastníka pri aktualizácii
 changed category to %1	timesheet	sk	Kategória zmenená na %1
 changed status	timesheet	sk	Zmenený stav.
-check all	timesheet	sk	Označiť všetko
 choose 'creator' of imported data	timesheet	sk	Vyberte 'tvorcu' importovaných údajov
 comment by %1 at %2:	timesheet	sk	Poznámka od %1 ku %2:
 create a single 'working time' timesheet per	timesheet	sk	Vytvoriť jeden rozvrh 'Pracovný čas' na
@@ -52,9 +51,8 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	sk	Existujúce odkazy
 exists	timesheet	sk	Existuje
 export definition to use for nextmatch export	timesheet	sk	Exportná definícia pre použitie v exporte
-export to openoffice spreadsheet	timesheet	sk	Exportovať do zošita OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	sk	Exportuje položky z Harmonogramu do súboru CSV
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	sk	THIS IS JUST A TEST FOR TRACKER #2121 PLEASE RETRANSLATE
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	sk	Exportuje záznamy z časového hárku do súboru CSV. Na karte Možnosti môžete vybrať aj iné oddeľovače.
 field must not be empty !!!	timesheet	sk	Pole nesmie byť prázdne!!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	sk	Pre sériový list použite túto značku. Obsah, ktorý chcete zopakovať, vložte medzi dve značky.
 forgot to switch off working time?	common	sk	Zabudli ste vypnúť pracovný čas?
@@ -129,7 +127,6 @@ select a project	timesheet	sk	Vyberte projekt
 select a status of the timesheet	timesheet	sk	Vyberte stav tohto harmonogramu
 select infolog	timesheet	sk	Vyberte záznamník
 select multiple timeshhets for a further action	timesheet	sk	Vyberte viacero harmonogramov pre budúcu akciu
-select the predefined status, whan creating a new timesheet	preferences	sk	Vyberte prednastavený stav, pri vytváraní harmonogramu
 select the predefined status, when creating a new timesheet	preferences	sk	Vyberte prednastavený stav, pri vytváraní harmonogramu
 set to	timesheet	sk	Nastaviť na
 show a quantity sum (eg. to sum up negative overtime)	admin	sk	Zobraziť kvantitatívnu sumu (napríklad na spočítanie negatívneho meškania)

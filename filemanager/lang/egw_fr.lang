@@ -159,7 +159,7 @@ filesystem	filemanager	fr	Système de fichiers
 filesystem check reported no problems.	filemanager	fr	La vérification du système de fichiers n'a trouvé aucun problème.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	fr	Système de fichiers : dossier de montage (dans /var/lib/egroupware !) sur le serveur hôte
 finally delete	filemanager	fr	Suppression finale
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	fr	Supprimer définitivement toutes les anciennes versions et supprimer les fichiers dans ce répertoire.\n\nAction irrévocable!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	fr	Supprimer définitivement toutes les anciennes versions et supprimer les fichiers dans ce répertoire? Action irrévocable!
 finally delete this version	filemanager	fr	Supprimer définitivement cette version
 fix reported problems	filemanager	fr	Réparer les problèmes trouvé
 folder up	filemanager	fr	Répertoire parent
@@ -315,7 +315,6 @@ upload fields	filemanager	fr	Champs d'envoi
 upload files	filemanager	fr	Fichiers à envoyer
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 used space	filemanager	fr	Espace utilisé
-user color indicator	filemanager	fr	Indicateur de couleur de l'utilisateur
 user home quota	filemanager	fr	Quota de l'accueil utilisateur
 username for webdav and smb, use $user for name of logged in user	filemanager	fr	Nom d'utilisateur pour WebDAV et SMB, utilisez $user pour le nom de l'utilisateur connecté.
 users and groups	filemanager	fr	Utilisateurs et groupes

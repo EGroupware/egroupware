@@ -85,7 +85,6 @@ category report	calendar	hu	Kategória jelentés
 change history	calendar	hu	Történet módosítása
 changed event-data applied	calendar	hu	Módosított esemény-adatok alkalmazása
 charset of file	calendar	hu	Állomány karakterkészlete
-check all	calendar	hu	Összes kijelölese
 choose a category	calendar	hu	Válasszon kategóriát
 close the window	calendar	hu	Ablak bezárás
 compose a mail to all participants after the event is saved	calendar	hu	Mail szerkesztése az összes résztvevőnek az esemény mentését követően.
@@ -120,7 +119,7 @@ default type of resources selection	calendar	hu	Erőforráskiválasztés alapér
 default week view	calendar	hu	Alapértelmezett hét nézet
 delegated	calendar	hu	Megbízva
 delete series	calendar	hu	Sorozat törlése
-delete this alarm	calendar	hu	Riasztás törlése
+delete this alarm	calendar	hu	Riasztás törlése?
 delete this event	calendar	hu	Esemény törlése
 delete this exception	calendar	hu	Kivétel törlése
 delete this series of recurring events	calendar	hu	Ismétlődő esemény sorozatának törlése
@@ -433,7 +432,6 @@ weekview	calendar	hu	Heti Nézet
 weekview with weekend	calendar	hu	Heti nézet hétvégével
 weekview without weekend	calendar	hu	Heti nézet hétköznapokkal
 whole day	calendar	hu	Egész nap
-wk	calendar	hu	Hét
 work day ends on	calendar	hu	Munkanapok vége
 work day starts on	calendar	hu	Munkanapok kezdete
 yearly	calendar	hu	Évente

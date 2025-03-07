@@ -167,7 +167,7 @@ delegated	calendar	en	Delegated
 delete exceptions	calendar	en	Delete exceptions
 delete selected events	calendar	en	Delete selected events
 delete series	calendar	en	Delete series
-delete this alarm	calendar	en	Delete this alarm
+delete this alarm	calendar	en	Delete this alarm?
 delete this event	calendar	en	Delete this event
 delete this exception	calendar	en	Delete this exception
 delete this meeting for all participants	calendar	en	Delete this meeting for all participants
@@ -583,7 +583,6 @@ startdate / -time	calendar	en	Start date/time
 startdate and -time of the search	calendar	en	Start date and time of the search
 startdate of the export	calendar	en	Start date of the export
 startrecord	calendar	en	Start record
-status	calendar	en	Status
 status already applied	calendar	en	Status already applied
 status changed	calendar	en	Status changed.
 status for all future scheduled days changed	calendar	en	Status for all future scheduled days changed.

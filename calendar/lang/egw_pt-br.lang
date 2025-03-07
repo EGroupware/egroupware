@@ -102,7 +102,6 @@ change history	calendar	pt-br	Mudar a história
 change your status	calendar	pt-br	Alterar seu status
 changed event-data applied	calendar	pt-br	Dados de eventos alterados aplicados
 charset of file	calendar	pt-br	Charset do arquivo
-check all	calendar	pt-br	Verificar todos
 choose a category	calendar	pt-br	Escolha uma categoria
 choose owner of imported data	calendar	pt-br	Escolher o proprietário dos dados importados
 close the window	calendar	pt-br	Fechar a janela
@@ -153,7 +152,7 @@ delegated	calendar	pt-br	Designado
 delete exceptions	calendar	pt-br	Excluir exceções
 delete selected events	calendar	pt-br	Excluir eventos selecionados
 delete series	calendar	pt-br	Remover série
-delete this alarm	calendar	pt-br	Remover este alarme
+delete this alarm	calendar	pt-br	Remover este alarme?
 delete this event	calendar	pt-br	Remover este evento
 delete this exception	calendar	pt-br	Remover esta exceção
 delete this meeting for all participants	calendar	pt-br	Excluir esta reunião para todos os participantes
@@ -525,7 +524,6 @@ weekview	calendar	pt-br	Visão Semanal
 weekview with weekend	calendar	pt-br	Visão semanal com finais de semana
 weekview without weekend	calendar	pt-br	Visão semanal sem finais de semana
 whole day	calendar	pt-br	Dia inteiro
-wk	calendar	pt-br	Semana
 work day ends on	calendar	pt-br	Dia de trabalho termina às
 work day starts on	calendar	pt-br	Dia de trabalho começa às
 yearly	calendar	pt-br	Anualmente

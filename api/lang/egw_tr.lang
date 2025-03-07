@@ -52,8 +52,12 @@ answering no will not ask you again for this browser.	common	tr	Hayır yanıtın
 application	common	tr	Uygulama
 apply	common	tr	Uygula
 apps & license	common	tr	Uygulamalar & Lisans
+apps &amp; license	common	tr	Uygulamalar & Lisans
+are you sure you want to logout?	common	tr	Oturumu kapatmak istediğinizden emin misiniz?
+are you sure, you would like to delete the backup key?	common	tr	Yedek anahtarı silmek istediğinizden emin misiniz?
 attention: action will be applied to all rows, not only visible ones!	api	tr	Dikkat: eylem yalnızca görünen satırlara değil, tüm satırlara uygulanacaktır!
 authenticate	common	tr	Kimlik Doğrulama
+automatic update check failed, you need to check manually!	common	tr	Otomatik güncelleme kontrolü başarısız oldu, manuel olarak kontrol etmeniz gerekiyor!
 avatar	common	tr	Avatar
 back	common	tr	Geri
 before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	tr	Daha ileri gitmeden önce, Mailvelope eklentisinin EGroupware ile nasıl çalıştığını görmek için bu kısa videoyu izlemenizi şiddetle tavsiye ederiz.
@@ -113,6 +117,7 @@ egroupware version	common	tr	EGroupware sürümü
 emails	common	tr	E-postalar
 enabled	common	tr	Etkin
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
+enter your passphrase	common	tr	Parolanızı girin
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
@@ -214,6 +219,7 @@ postal	common	tr	Posta
 preference	common	tr	Tercih
 preferences	common	tr	Tercihler
 primary group	common	tr	Ana grup
+print orientation	common	tr	Oryantasyon
 project	common	tr	Proje
 read this list of methods.	common	tr	Method listesini oku
 repeat password	common	tr	Şifreyi tekrarla

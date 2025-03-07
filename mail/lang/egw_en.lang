@@ -501,6 +501,7 @@ report as ham	mail	en	Report as Ham
 report as spam	mail	en	Report as Spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	en	Report this email content as Ham (not spam) - spam solutions like SpamTitan will learn
 report this email content as spam - spam solutions like spamtitan will learn	mail	en	Report this email content as Spam - spam solutions like SpamTitan will learn
+request for passphrase	mail	en	Request for passphrase
 required pear class mail/mimedecode.php not found.	mail	en	Required PEAR class Mail/mimeDecode.php not found.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	en	Required to disable if you use Dovecot with private seen flags on shared or user folder!
 resend after how many days?	mail	en	Resend after how many days?
@@ -600,7 +601,7 @@ smime encrypted message	mail	en	S/MIME encrypted message
 smime signed message	mail	en	S/MIME signed message
 smtp	mail	en	SMTP
 sneak preview in list	mail	en	Sneak preview in list
-some clients fail to detect correct charset, if flowed lines are enabled.	mail	en	Some clients fail to detect correct charset, if flowed lines are enabled.
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	en	Some clients fail to detect correct charset, if flowed lines are enabled
 sort order	mail	en	Sort order
 source	mail	en	Source
 sources	mail	en	Sources

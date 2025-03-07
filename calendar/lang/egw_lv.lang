@@ -56,7 +56,6 @@ canceled	calendar	lv	Atcelts
 category report	calendar	lv	Kategorija Pārskats
 changed event-data applied	calendar	lv	Izmainīti notikuma datu lietojumi
 charset of file	calendar	lv	Faila kodējums
-check all	calendar	lv	Parbaudīt visu
 choose a category	calendar	lv	Izvēlies sadaļu
 countries	calendar	lv	Valstis
 country	calendar	lv	Valsts
@@ -75,6 +74,7 @@ dayview	calendar	lv	Dienas skats
 default calendar filter	calendar	lv	Noklusētais kalendāra filtrs
 default calendar view	calendar	lv	Noklusētais kalendāra skats
 delete series	calendar	lv	Dzēš sērijas
+delete this alarm	calendar	lv	Dzēst šo trauksmi?
 deleted	calendar	lv	Izdzēsts
 display status of events	calendar	lv	Parādīt notikumu statusu
 download	calendar	lv	Lejupielādēt

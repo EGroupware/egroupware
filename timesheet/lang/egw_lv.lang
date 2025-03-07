@@ -2,7 +2,6 @@ applies the changes	timesheet	lv	apstiprināt izmaiņas
 ask to start and stop working time with session	timesheet	lv	Jautājiet, lai sāktu un pārtrauktu darba laiku ar sesiju
 category for 'working time'	admin	lv	Kategorija “Darba laiks
 change owner when updating	timesheet	lv	Īpašnieka maiņa, veicot atjaunināšanu
-check all	timesheet	lv	Parbaudīt visu
 create a single 'working time' timesheet per	timesheet	lv	Izveidot vienu darba laika uzskaites lapu “Darba laiks” uz
 create new links	timesheet	lv	Izveidot jaunas saites
 creates a new field	timesheet	lv	veido jaunu lauku
@@ -20,6 +19,7 @@ edit this entry	timesheet	lv	Rediģēt šo ierakstu
 entry saved	timesheet	lv	Ieraksts saglabāts
 error storing working time	timesheet	lv	Kļūda darba laika saglabāšanā
 existing links	timesheet	lv	Eksistējošas saites
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	lv	Eksportē ierakstus no Time Sheet uz CSV failu. Iespēju cilnē var izvēlēties arī citus atdalītājus.
 field must not be empty !!!	timesheet	lv	Lauks nedīkst būt tukšs
 forgot to switch off working time?	common	lv	Aizmirsāt izslēgt darba laiku?
 global categories	timesheet	lv	Globālās kategorijas
@@ -30,6 +30,7 @@ leaves without saveing	timesheet	lv	aiziet bez saglabāšanas
 length<br>rows	timesheet	lv	Garums<br>Rindas
 links	timesheet	lv	Saites
 max length of the input [, length of the inputfield (optional)]	timesheet	lv	ievades datu maksimālais garums[, ievades lauka garums (pēc izvēles)]
+mode	timesheet	lv	Režīms
 modified	timesheet	lv	Pārveidots
 order	timesheet	lv	Kārtība
 overwrite time	common	lv	Pārrakstīšanas laiks
@@ -38,11 +39,13 @@ parent	timesheet	lv	Vecāki
 pause	common	lv	Pauze
 pause time	timesheet	lv	Pauzes laiks
 paused	timesheet	lv	Pauzes
+project fields	timesheet	lv	Projekta lauki
 quantity	timesheet	lv	Daudzums
 recorded	timesheet	lv	Ierakstīts
 restore this entry	timesheet	lv	Atjaunot šo ierakstu
 saves the changes made and leaves	timesheet	lv	saglabā izdarītās izmaiņas un aiziet
 select a project	timesheet	lv	atzīmēt projektu
+select the predefined status, when creating a new timesheet	preferences	lv	Izvēlieties iepriekš noteiktu statusu, kad veidojat jaunu ierakstu.
 start & stop timer	common	lv	Sākuma un apturēšanas taimeris
 start timer	common	lv	Sākt taimeri
 start-time can not be before last stop- or pause-time %1!	common	lv	Sākuma laiks nevar būt pirms pēdējā apstāšanās vai pauzes laika %1!

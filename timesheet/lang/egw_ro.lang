@@ -7,14 +7,19 @@ do you want to associate it with the selected %1 entry?	common	ro	Doriți să o 
 do you want to start your working time?	common	ro	Doriți să vă începeți timpul de lucru?
 do you want to stop your working time?	common	ro	Doriți să vă opriți timpul de lucru?
 error storing working time	timesheet	ro	Eroare la memorarea timpului de lucru
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ro	Exportă intrările din Time Sheet într-un fișier CSV. În fila Opțiuni puteți alege și alți separatori.
 forgot to switch off working time?	common	ro	Ați uitat să dezactivați timpul de lucru?
+id	timesheet	ro	ID
+mode	timesheet	ro	Mod
 overwrite time	common	ro	Timp de suprascriere
 overwriting start or stop time	timesheet	ro	Suprascrierea orei de pornire sau de oprire
 pause	common	ro	Pauză
 pause time	timesheet	ro	Timp de pauză
 paused	timesheet	ro	Pauză
+project fields	timesheet	ro	Câmpuri de proiect
 recorded	timesheet	ro	Înregistrat
 restore this entry	timesheet	ro	Restaurați această intrare
+select the predefined status, when creating a new timesheet	preferences	ro	Selectați statutul predefinit, atunci când creați o intrare nouă.
 start & stop timer	common	ro	Start & stop timer
 start timer	common	ro	Start timer
 start-time can not be before last stop- or pause-time %1!	common	ro	Timpul de pornire nu poate fi înainte de ultimul timp de oprire sau pauză %1!

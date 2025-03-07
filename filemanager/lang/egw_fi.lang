@@ -135,7 +135,7 @@ filesystem	filemanager	fi	Tiedostojärjestelmä
 filesystem check reported no problems.	filemanager	fi	Tiedostojärjestelmän tarkistus ei raportoinut ongelmia.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	fi	Tiedostojärjestelmä: mount-hakemisto (sisällä /var/lib/egroupware !) isännän tiedostojärjestelmästä.
 finally delete	filemanager	fi	Lopuksi poista
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	fi	Poistaa lopullisesti kaikki vanhemmat versiot ja poistetut tiedostot annetusta kansiosta.\n\nTätä ei voi peruuttaa!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	fi	Poistaa lopullisesti kaikki vanhemmat versiot ja poistetut tiedostot annetusta kansiosta? Tätä ei voi peruuttaa!
 finally delete this version	filemanager	fi	Poista tämä versio
 fix reported problems	filemanager	fi	Korjaa raportoidut ongelmat
 folder up	filemanager	fi	Ylempi kansio

@@ -84,6 +84,7 @@ flagged %1 messages as flagged in %2	mail	uk	Позначити повідомл
 flagged %1 messages as unflagged in %2	mail	uk	Позначено %1 повідомлення як такі, що не позначені у %2
 folder %1 %2 failed because of %3!	mail	uk	Теку %1 %2 не вдалося створити через %3!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	uk	Теку %1 успішно створено, хоча підписку не вдалося виконати через %2
+forward to	mail	uk	Вперед до
 from	mail	uk	Від
 get acl rights failed from imap server!	mail	uk	Не вдалося отримати права ACL від сервера IMAP!
 ham folder	mail	uk	Тека "Шинка
@@ -192,6 +193,7 @@ read / unread	mail	uk	Прочитано / Не прочитано
 real name	mail	uk	Справжнє ім'я
 real name email	mail	uk	Справжнє ім'я [Email]
 real name organization email	mail	uk	Справжнє ім'я Організація [email]
+reloaded folder %1	mail	uk	Перезавантажено папку %1
 remember the password for	mail	uk	Запам'ятайте пароль для
 remove all	mail	uk	Видалити всі
 removing %1 from blacklisted email addresses failed because of %2	mail	uk	Видалення %1 з чорного списку не вдалося через %2
@@ -203,6 +205,7 @@ report as ham	mail	uk	Повідомити як шинку
 report as spam	mail	uk	Повідомити як спам
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	uk	Повідомте про вміст цього листа як шинку (не спам) - рішення для боротьби зі спамом, такі як SpamTitan, дізнаються про це
 report this email content as spam - spam solutions like spamtitan will learn	mail	uk	Повідомити про вміст цього листа як спам - рішення для боротьби зі спамом, такі як SpamTitan, дізнаються про це
+request for passphrase	mail	uk	Запит парольної фрази
 required pear class mail/mimedecode.php not found.	mail	uk	Необхідний клас PEAR Mail/mimeDecode.php не знайдено.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	uk	Необхідно вимкнути, якщо ви використовуєте Dovecot з прапорами приватного перегляду у спільній або користувацькій папці!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	uk	Шифрування S/MIME не вдалося, оскільки для адреси відправника не знайдено сертифіката: %1
@@ -224,6 +227,7 @@ send message pgp encrypted: requires keys from all recipients!	mail	uk	Наді�
 server supports special-use folders	mail	uk	Сервер підтримує папки спеціального призначення
 set predefined values for compose...	mail	uk	Встановити заздалегідь визначені значення для складання ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	uk	Чи потрібно вставляти підпис після (стандартний) або перед відповіддю або пересиланням, а також чи повинен підпис бути видимим і змінюваним під час створення повідомлення.
+show all addresses	mail	uk	Показати всі адреси
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	uk	показувати всі папки (підписані і не підписані) в панелі папок на головному екрані.
 show notification for new arriving mails	mail	uk	Показувати сповіщення про нові листи
 show test connection section and control the level of info displayed?	mail	uk	Показувати розділ тестового з'єднання і контролювати рівень інформації, що відображається?
@@ -242,6 +246,9 @@ smime encrypted message	mail	uk	S/MIME зашифроване повідомле
 smime signed message	mail	uk	Повідомлення з підписом S/MIME
 smtp	mail	uk	SMTP
 sneak preview in list	mail	uk	Попередній перегляд повідомлень
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	uk	Деякі клієнти не можуть визначити правильну кодування, якщо ввімкнено обтікання рядків
+spamtitan api url	mail	uk	SpamTitan API URL
+spamtitan integration requires epl version	mail	uk	Для інтеграції SpamTitan потрібна версія EPL
 text	mail	uk	Текст
 the imap server need to meet certain requirements and be configured for it:	mail	uk	Сервер IMAP повинен відповідати певним вимогам і бути налаштований для цього:
 the rule with priority %1 successfully saved!	mail	uk	Правило з пріоритетом %1 успішно збережено!

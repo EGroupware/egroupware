@@ -3,7 +3,6 @@ ask to start and stop working time with session	timesheet	el	Ζητήστε να
 by	timesheet	el	μέσω
 category for 'working time'	admin	el	Κατηγορία για 'Χρόνος εργασίας'
 change owner when updating	timesheet	el	Αλλαγή ιδιοκτήτη κατά την ενημέρωση
-check all	timesheet	el	Έλεγχος όλων
 create a single 'working time' timesheet per	timesheet	el	Δημιουργία ενός μόνο φύλλου εργασίας «Χρόνος εργασίας» ανά
 create new links	timesheet	el	Δημιουργία νέων συνδέσμων
 creates a new field	timesheet	el	δημιουργεί νέο πεδίο
@@ -19,6 +18,7 @@ edit status	timesheet	el	Επιμέλεια κατάστασης
 edit this entry	timesheet	el	Επιμέλεια αυτής της καταχώρησης
 end	timesheet	el	Τέλος
 existing links	timesheet	el	Υπάρχοντες σύνδεσμοι
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	el	Εξάγει καταχωρήσεις από το Φύλλο Χρόνου σε αρχείο CSV. Στην καρτέλα επιλογών μπορείτε επίσης να επιλέξετε άλλα διαχωριστικά.
 field must not be empty !!!	timesheet	el	Το πεδίο δεν πρέπει να μείνει κενό !!!
 general fields:	timesheet	el	Γενικά πεδία:
 global categories	timesheet	el	Παγκόσμιες κατηγορίες
@@ -30,6 +30,7 @@ leaves without saveing	timesheet	el	αποχώρηση χωρίς αποθήκε
 length<br>rows	timesheet	el	Μήκος<br>Γραμμές
 links	timesheet	el	Σύνδεσμοι
 max length of the input [, length of the inputfield (optional)]	timesheet	el	μέγιστο μήκος για την εισαγωγή, [μήκος του πεδίου εισαγωγής (κατ'επιλογήν)]
+mode	timesheet	el	Λειτουργία
 modified	timesheet	el	Τροποποιήθηκε
 no details	timesheet	el	συνοπτικά
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	el	αριθμός σειρών για ένα πολυγραμμικό πεδίο εισαγωγής ή γραμμών για ένα πολυ-επιλογών-κουτί
@@ -40,6 +41,7 @@ pause	common	el	Παύση
 pause time	timesheet	el	Χρόνος παύσης
 paused	timesheet	el	Παύση
 price	timesheet	el	Τιμή
+project fields	timesheet	el	Πεδία έργου
 quantity	timesheet	el	Ποσότητα
 recorded	timesheet	el	Καταγεγραμμένο
 restore this entry	timesheet	el	Επαναφορά αυτής της καταχώρησης
@@ -47,6 +49,7 @@ saves the changes made	timesheet	el	αποθηκεύει τις αλλαγές �
 saves the changes made and leaves	timesheet	el	αποθηκέυει όλες τις αλλαγές που έγιναν και αποχωρεί
 select a price	timesheet	el	Επιλέξτε μια τιμή
 select a project	timesheet	el	Επιλέξτε ένα έργο
+select the predefined status, when creating a new timesheet	preferences	el	Επιλέξτε την προκαθορισμένη κατάσταση, όταν δημιουργείτε μια νέα καταχώρηση.
 start	timesheet	el	Έναρξη
 start-time can not be before last stop- or pause-time %1!	common	el	Ο χρόνος έναρξης δεν μπορεί να είναι πριν από τον τελευταίο χρόνο διακοπής ή παύσης %1!
 stop- or pause-time can not be before the start-time %1!	common	el	Ο χρόνος διακοπής ή παύσης δεν μπορεί να είναι πριν από τον χρόνο έναρξης %1!

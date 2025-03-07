@@ -143,6 +143,7 @@ certificate validation in days	admin	nl	Validatie certificaat in dagen
 change account_id	admin	nl	Wijzig Account-ID
 change acl rights	admin	nl	Bewerk ACL-rechten
 change config settings	admin	nl	Bewerk configuratieinstellingen
+change domain of email address and aliases	admin	nl	Domein van e-mailadres en aliassen wijzigen
 change login screen message	admin	nl	Bericht op start- of loginpagina wijzigen
 change password for %1	admin	nl	Wijzig wachtwoord voor %1
 check acl for entries of not (longer) existing accounts	admin	nl	Controle ACL voor records van niet (meer) bestaande accounts
@@ -529,6 +530,7 @@ server settings	admin	nl	Server instellingen
 server type(mode)	admin	nl	Servertype(modus)
 server url	admin	nl	Server-URL
 server username	admin	nl	Servergebruikersnaam
+set a random password	admin	nl	Een willekeurig wachtwoord instellen
 set preference values.	admin	nl	Stel waarden van voorkeuren in
 should exceptions contain a trace (including function arguments)	admin	nl	Moeten excepties een fout trace bevatten (inclusief functie argumenten)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	nl	Moet de login pagina een taalkeuze box bevatten (handig voor demo sites) ?
@@ -652,6 +654,7 @@ who would you like to transfer records owned by the deleted user to?	admin	nl	Aa
 wrong account type: %1 is no %2 !!!	admin	nl	Verkeerde account type: %1 is GEEN %2 !
 wrong admin-account or -password !!!	admin	nl	Verkeerde beheerders account of -wachtwoord!
 xml-rpc	admin	nl	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	nl	Je kunt de hash alleen wijzigen als je een willekeurig wachtwoord instelt of momenteel wachtwoorden in platte tekst gebruikt!
 you can use wizard to fix account settings or delete account.	admin	nl	Je kunt wizard gebruiken om accountinstellingen te wijzigen of account te verwijderen.
 you have entered an invalid expiration date	admin	nl	U heeft u een ongeldige verloopdatum ingevoerd.
 you have received a new message on the	admin	nl	U heeft een nieuw bericht ontvangen op de

@@ -1,3 +1,8 @@
+%1 directories and %2 files copied.	filemanager	tr	%1 dizinleri ve %2 dosyaları kopyalandı.
+%1 directories and %2 files deleted.	filemanager	tr	%1 dizinler ve %2 dosyalar silindi.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	tr	%1 kopyalama hatası, %2 dizin ve %3 dosya kopyalandı!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	tr	%1 silme hatası, %2 dizin ve %3 dosya silindi!
+%1 failed, %2 succeded	filemanager	tr	%1 başarısız, %2 başarılı.
 %1 files unlocked.	filemanager	tr	%1 dosyanın kilidi açıldı.
 applications	common	tr	Uygulamalar
 classic	filemanager	tr	Standart Araç Çubuğu
@@ -48,7 +53,7 @@ filesystem	filemanager	tr	Dosya Sistemi
 filesystem check reported no problems.	filemanager	tr	Dosya sistemi kontrolü herhangi bir sorun bildirmedi.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	tr	Dosya sistemi: ana dosya sisteminden dizin bağlama (/var/lib/egroupware içinde!)
 finally delete	filemanager	tr	Son olarak sil
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	tr	Son olarak verilen klasör altındaki tüm eski sürümleri ve silinmiş dosyaları silin.<br>Bu geri alınamaz!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	tr	Son olarak verilen klasör altındaki tüm eski sürümleri ve silinmiş dosyaları silin? Bu geri alınamaz!
 finally delete this version	filemanager	tr	Son olarak bu sürümü silin
 fix reported problems	filemanager	tr	Bildirilen sorunları düzeltin
 folder up	filemanager	tr	Klasör yukarı

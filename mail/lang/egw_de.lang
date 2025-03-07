@@ -31,7 +31,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufüge
 adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mail-Adresse zur Whitelist ist fehlgeschlagen, da %2
 after reply, visible during compose	mail	de	Unter dem zitierten Text, sichtbar während der Bearbeitung
 aliases+forwards	mail	de	Aliase + Weiterleitungen
-all	mail	de	alle
+all	mail	de	Alle
 all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
 all filtered	mail	de	Alle gefilterten
@@ -260,7 +260,7 @@ forward as attachment	mail	de	Weiterleiten als Anhang
 forward inline	mail	de	Weiterleiten
 forward messages to:	mail	de	Nachricht weiterleiten an:
 forward messages:	mail	de	Nachricht weiterleiten an (mehrere Adressen durch Komma trennen):
-forward to	mail	de	weiterleiten an
+forward to	mail	de	Weiterleiten an
 forward to address (*):	mail	de	Weiterleiten an Adresse (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	de	Die Weiterleitung dieser Nachricht ist fehlgeschlagen, weil der Inhalt dieser Nachricht verschlüsselt zu sein scheint und nicht richtig entschlüsselt werden kann. Wenn Sie dennoch den Inhalt dieser verschlüsselten Nachricht weiterleiten möchten, können Sie versuchen, statt dessen Weiterleitung als Anhang zu verwenden.
 forwards	mail	de	weiterleiten an
@@ -501,6 +501,7 @@ report as ham	mail	de	Als "gute E-Mail" kennzeichnen
 report as spam	mail	de	Als Spam kennzeichnen
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als "gute E-Mail" (kein Spam) - Spam-Lösungen wie SpamTitan lernen entsprechend
 report this email content as spam - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als Spam - Spam-Lösungen wie SpamTitan lernen entsprechend
+request for passphrase	mail	de	Anforderung einer Passphrase
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	de	Muss ausgeschaltet werden, wenn Sie Dovecot mit privaten Gelesen-Flags auf geteilten oder freigegebenen Ordnern benutzen!
 resend after how many days?	mail	de	Nach wie vielen Tagen erneut senden?
@@ -600,7 +601,7 @@ smime encrypted message	mail	de	S/MIME-verschlüsselte Nachricht
 smime signed message	mail	de	S/MIME-signierte Nachricht
 smtp	mail	de	Postausgangs-Server
 sneak preview in list	mail	de	Mit Kurzvorschau
-some clients fail to detect correct charset, if flowed lines are enabled.	mail	de	Einige Mail-Programme haben Probleme den Zeichensatz zu erkennen, wenn variabler Zeilenumbruch verwendet wird.
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	de	Einige Mail-Programme haben Probleme den Zeichensatz zu erkennen, wenn variabler Zeilenumbruch verwendet wird
 sort order	mail	de	Sortierreihenfolge
 source	mail	de	Quelltext
 sources	mail	de	HTML-Quellcode

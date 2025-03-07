@@ -124,6 +124,7 @@ folder %1 %2 failed because of %3!	mail	da	Mappen %1 %2 mislykkedes på grund af
 folder %1 has been created successfully, although the subscription failed because of %2	mail	da	Mappen %1 er blevet oprettet, selvom abonnementet mislykkedes på grund af %2
 folder settings	mail	da	Mappe indstillinger
 forward	mail	da	Vidersend
+forward to	mail	da	Gå videre til
 from	mail	da	Fra
 general	admin	da	Generelt
 get acl rights failed from imap server!	mail	da	Få ACL-rettigheder mislykkedes fra IMAP-server!
@@ -234,10 +235,12 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	da	Push-meddelelser
 quicksearch	mail	da	Hurtigsøgning
 quicksearch (with cc)	mail	da	Hurtigsøgning (+Kopi)
+read / unread	mail	da	Læst / Ulæst
 real name	mail	da	Rigtigt navn
 real name email	mail	da	Rigtigt navn [e-mail]
 real name organization email	mail	da	Rigtigt navn Organisation [E-mail]
 refresh time in minutes	mail	da	Opdaterings interval i minutter
+reloaded folder %1	mail	da	Genindlæst mappe %1
 remember the password for	mail	da	Husk adgangskoden til
 remove all	mail	da	Fjern alle
 remove immediately	mail	da	Fjern nu
@@ -256,6 +259,7 @@ report as ham	mail	da	Rapporter som skinke
 report as spam	mail	da	Rapporter som spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	da	Rapporter denne e-mail som Ham (ikke spam) - spamløsninger som spamTitan vil lære det
 report this email content as spam - spam solutions like spamtitan will learn	mail	da	Rapporter denne e-mail som spam - spamløsninger som spamTitan vil lære det
+request for passphrase	mail	da	Anmodning om adgangssætning
 required pear class mail/mimedecode.php not found.	mail	da	Påkrævet PEAR-klasse Mail/mimeDecode.php ikke fundet.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	da	Påkrævet at deaktivere, hvis du bruger Dovecot med private seen flags på delt eller brugermappe!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	da	S/MIME-kryptering mislykkedes, fordi der ikke blev fundet et certifikat til afsenderadressen: %1
@@ -280,6 +284,7 @@ server supports special-use folders	mail	da	Serveren understøtter mapper til s�
 set flags	mail	da	Markér e-mail som
 set predefined values for compose...	mail	da	Indstil foruddefinerede værdier for sammensætning ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	da	Skal signaturen indsættes efter (standard) eller før et svar eller en videresendelse, og skal signaturen være synlig og kunne ændres under udarbejdelsen.
+show all addresses	mail	da	Vis alle adresser
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	da	Vis alle mapper (abonnerede OG ikke-abonnerede) i hovedskærmens mapperude.
 show notification for new arriving mails	mail	da	Vis notifikation for nye ankomne mails
 show test connection section and control the level of info displayed?	mail	da	Vis testforbindelsessektion og kontroller niveauet af vist info?
@@ -298,7 +303,10 @@ smime encrypted message	mail	da	S/MIME-krypteret meddelelse
 smime signed message	mail	da	S/MIME-signeret meddelelse
 smtp	mail	da	SMTP
 sneak preview in list	mail	da	Visning af besked
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	da	Nogle klienter registrerer ikke korrekt tegnsæt, hvis flydende linjer er aktiveret
 sort order	mail	da	Soterings rækkefølge
+spamtitan api url	mail	da	SpamTitan API URL
+spamtitan integration requires epl version	mail	da	SpamTitan-integration kræver EPL-version
 text	mail	da	Tekst
 the imap server need to meet certain requirements and be configured for it:	mail	da	IMAP-serveren skal opfylde visse krav OG være konfigureret til det:
 the rule with priority %1 successfully saved!	mail	da	Reglen med prioritet %1 er gemt med succes!

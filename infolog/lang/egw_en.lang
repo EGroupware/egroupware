@@ -463,7 +463,6 @@ startdate for new entries	infolog	en	Start date for new entries
 startdate must be before enddate!!!	infolog	en	Startdate must be before due date!
 starting %1	infolog	en	Starting %1
 startrecord	infolog	en	Start record
-status	infolog	en	Status
 status ...	infolog	en	Status ...
 status, percent and date completed are always allowed.	infolog	en	Status, percent and date completed are always allowed.
 sub	infolog	en	Sub

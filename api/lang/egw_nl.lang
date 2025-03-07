@@ -495,6 +495,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	nl	Vul het nieuwe versienummer hierin (> old_version), leeg voor "geen update bestand"
 enter the new version number here (has to be > old_version)	common	nl	Vul het nieuwe versienummer hier in (moet > old_version zijn)
 enter your file name	common	nl	Voer uw bestandsnaam in
+enter your passphrase	common	nl	Voer uw wachtwoordzin in
 enter your password	common	nl	Wachtwoord invoeren
 entry has been deleted sucessfully	common	nl	Item succesvol verwijderd
 entry not found!	common	nl	Item niet gevonden!
@@ -1058,6 +1059,7 @@ primary key	common	nl	Primaire sleutel
 primary key for the table, gets automaticaly indexed	common	nl	Primaire sleutel van de tabel, wordt automatisch geindexeerd
 primary style-sheet:	common	nl	Primaire style-sheet:
 print	common	nl	Afdrukken
+print orientation	common	nl	Oriëntatie
 priority	common	nl	Prioriteit
 private	common	nl	Privé
 programs	common	nl	Programma's

@@ -16,7 +16,6 @@ change category	timesheet	ru	Изменить категорию
 change owner when updating	timesheet	ru	Смена владельца при обновлении
 changed category to %1	timesheet	ru	Категория изменена на %1
 changed status	timesheet	ru	Состояние изменено.
-check all	timesheet	ru	Проверить все
 choose 'creator' of imported data	timesheet	ru	Изменить "создателя" импортированных данных
 comment by %1 at %2:	timesheet	ru	Комментировать по %1 на %2
 create a single 'working time' timesheet per	timesheet	ru	Создать один табель учета рабочего времени на
@@ -51,9 +50,8 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	ru	Существующие ссылки
 exists	timesheet	ru	Существует
 export definition to use for nextmatch export	timesheet	ru	Определение экспорта для последующего использования
-export to openoffice spreadsheet	timesheet	ru	Экспорт в электронную таблицу OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	ru	Экспортирует записи Табеля в файл формата CSV
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ru	Экспортирует записи в файл CSV. CSV означает 'Значения, Разделенные Запятыми'. Однако, в закладке опции вы можете также выбрать другие разделители.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ru	Экспорт записей из Табеля учета рабочего времени в CSV-файл. На вкладке «Параметры» вы можете выбрать другие разделители.
 field must not be empty !!!	timesheet	ru	Поле не должно быть пустым !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	ru	Для серии писем используйте этот тэг. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 forgot to switch off working time?	common	ru	Забыли выключить рабочее время?
@@ -85,6 +83,7 @@ links and attached files	timesheet	ru	Ссылки и прикреплённые
 links to specified application.  example: {{links/infolog}}	timesheet	ru	Ссылки на указанное приложение. Пример: {{links/infolog}}
 list of files linked to the current record	timesheet	ru	Список файлов, связанных с текущей записью
 max length of the input [, length of the inputfield (optional)]	timesheet	ru	Максимальная длина ввода  [, длина поля ввода (дополнительно)]
+mode	timesheet	ru	Режим
 modified	timesheet	ru	Изменено
 modify status	timesheet	ru	Состояние изменено
 name of current user, all other contact fields are valid too	timesheet	ru	Имя текущего пользователя, все остальные поля контакта также верны
@@ -125,7 +124,6 @@ select a project	timesheet	ru	Выбрать проект
 select a status of the timesheet	timesheet	ru	Выберите состояние табеля
 select infolog	timesheet	ru	Выберите ИнфоЖурнал
 select multiple timeshhets for a further action	timesheet	ru	Выберите несколько записей Табеля для дальнейших действий
-select the predefined status, whan creating a new timesheet	preferences	ru	Выберите уже существующий статус при создании новой записи
 select the predefined status, when creating a new timesheet	preferences	ru	Выберите уже существующий статус при создании новой записи
 set to	timesheet	ru	Установить в
 show a quantity sum (eg. to sum up negative overtime)	admin	ru	Показывать суммарное количество (напр. для суммирования перерасходов времени)

@@ -146,6 +146,7 @@ certificate validation in days	admin	hu	Tanúsítvány érvényesítés napokban
 change access	admin	hu	Hozzáférési jogok módosítása
 change acl rights	admin	hu	ACL jogok változtatása
 change config settings	admin	hu	Beállítások megváltoztatása
+change domain of email address and aliases	admin	hu	Az e-mail cím és az aliasok domainjének módosítása
 change login screen message	admin	hu	Főképernyőn megjelenő üzenet változtatása
 change password for %1	admin	hu	Jelszó módosítása %1-hez
 check ip address of all sessions	admin	hu	Összes session IP cím ellenőrzése
@@ -544,6 +545,7 @@ server settings	admin	hu	Szerver beállítások
 server type(mode)	admin	hu	Szerver típus (mód)
 server url	admin	hu	Szerver URL
 server username	admin	hu	Szerver felhasználónév
+set a random password	admin	hu	Véletlenszerű jelszó beállítása
 set preference values.	admin	hu	Set preference values.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	hu	A Bejelentkező képernyő tartalmazzon Nyelv választási lehetőséget (hasznos pl. a demo oldal esetén)?
 show access log	admin	hu	Hozzáférési napló megjelenítése
@@ -661,6 +663,7 @@ who would you like to transfer all records owned by the deleted user to?	admin	h
 who would you like to transfer records owned by the deleted user to?	admin	hu	Kinek szeretné átadni a törölt felhasználó tulajdonában lévő rekordokat?
 wrong admin-account or -password !!!	admin	hu	Érvénytelen adminisztrátor felhasználó vagy jelszó!
 xml-rpc	admin	hu	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	hu	A hash-t csak akkor tudja megváltoztatni, ha véletlenszerű jelszót állított be, vagy jelenleg egyszerű szöveges jelszavakat használ!
 you can set an initial value, which gets incremented every time a new serial get generated	admin	hu	beállíthat egy kezdeti értéket, amely minden egyes alkalommal növekszik, amikor egy új sorozatot generálnak
 you can use wizard to fix account settings or delete account.	admin	hu	A varázsló segítségével javíthatja a fiókbeállításokat vagy törölheti a fiókot.
 you have entered an invalid expiration date	admin	hu	Érvénytelen lejárati időt adott meg!

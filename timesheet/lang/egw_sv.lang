@@ -31,6 +31,7 @@ error deleting the entry!!!	timesheet	sv	Fel uppstod vid radering av posten!
 error saving the entry!!!	timesheet	sv	Fel uppstod vid sparandet av posten!
 error storing working time	timesheet	sv	Fel vid lagring av arbetstid
 existing links	timesheet	sv	Nuvarande länkar
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	sv	Exporterar poster från Time Sheet till en CSV-fil. I fliken Alternativ kan du även välja andra separatorer.
 field must not be empty !!!	timesheet	sv	Fältet kan inte vara tomt
 forgot to switch off working time?	common	sv	Har du glömt att stänga av arbetstiden?
 global categories	timesheet	sv	Globala kategorier
@@ -44,6 +45,7 @@ leaves without saveing	timesheet	sv	lämnas utan att sparas
 length<br>rows	timesheet	sv	Längd<br>Rader
 links	timesheet	sv	Länkar
 max length of the input [, length of the inputfield (optional)]	timesheet	sv	max indata längd[, Indatafälts längd (option)]
+mode	timesheet	sv	Läget
 modified	timesheet	sv	Ändrad
 no details	timesheet	sv	Inga detaljer
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	sv	Antal rader för flerraders indatafält eller flervalsruta
@@ -55,6 +57,7 @@ pause time	timesheet	sv	Tid för paus
 paused	timesheet	sv	Pausad
 permission denied!!!	timesheet	sv	Åtkomst nekad!
 price	timesheet	sv	Pris
+project fields	timesheet	sv	Projekt fält
 quantity	timesheet	sv	Antal
 recorded	timesheet	sv	Inspelad
 restore this entry	timesheet	sv	Återställ denna post
@@ -64,6 +67,7 @@ saves the changes made and leaves	timesheet	sv	Sparar ändringar och avslutar
 saves this entry and add a new one	timesheet	sv	Spara och skapa ny
 select a price	timesheet	sv	Välj pris
 select a project	timesheet	sv	Välj projekt
+select the predefined status, when creating a new timesheet	preferences	sv	Välj den fördefinierade statusen när du skapar en ny post.
 start	timesheet	sv	Start
 start & stop timer	common	sv	Starta & stoppa timer
 start timer	common	sv	Starta timer

@@ -190,7 +190,7 @@ change access	admin	es-es	Cambiar derechos de acceso
 change account_id	admin	es-es	Cambiar el campo account ID
 change acl rights	admin	es-es	Cambiar permisos de ACL
 change config settings	admin	es-es	Cambiar opciones de configuración
-change domain of email address and aliases	admin	es-es	cambiar el dominio de la dirección de correo y alias
+change domain of email address and aliases	admin	es-es	Cambiar el dominio de la dirección de correo y alias
 change login screen message	admin	es-es	Cambiar mensaje de la pantalla principal
 change owner	admin	es-es	Cambiar el propietario
 change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	es-es	Los archivos en /home tendrán el propietario cambiado al nuevo usuario. La carpeta de inicio se moverá a /home/ new-user/old-home-username.
@@ -803,7 +803,7 @@ server url	admin	es-es	URL del servidor
 server username	admin	es-es	Usuario del servidor
 sessions	admin	es-es	Sesiones
 sessions last 30 days	admin	es-es	Sesiones en los últimos 30 días
-set a random password	admin	es-es	Establecer una contraseña aleatoria.
+set a random password	admin	es-es	Establecer una contraseña aleatoria
 set preference values.	admin	es-es	Establecer valores para las preferencias.
 settings	admin	es-es	Configuraciones
 should exceptions contain a trace (including function arguments)	admin	es-es	Las excepciones deben contener una traza (incluyendo argumentos de funciones).
@@ -891,7 +891,6 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	es-es	Ficha creada.
 token not found!	admin	es-es	¡Ficha no encontrada!
 token revoked.	admin	es-es	Ficha revocada.
-token saved.	admin	es-es	Ficha guardada.
 top	admin	es-es	Superior
 total of %1 accounts deleted.	admin	es-es	Total de %1 cuentas suprimidas.
 total of %1 id's changed.	admin	es-es	Se han cambiado en total %1 IDs.

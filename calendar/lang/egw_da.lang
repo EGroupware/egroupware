@@ -103,7 +103,7 @@ default calendar view	calendar	da	Standard kalender fremvisning
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	da	Standard længde af nyoprettede hændelser. Længden er i minutter, f.eks. 60 for en time.
 default week view	calendar	da	Standard uge view
 delete series	calendar	da	Slet rækker
-delete this alarm	calendar	da	Slet denne alarm
+delete this alarm	calendar	da	Slet denne alarm?
 delete this event	calendar	da	Slet denne aftale
 delete this exception	calendar	da	Slet denne undtagelse
 delete this series of recurring events	calendar	da	Slet denne række af gentagne aftaler
@@ -387,7 +387,6 @@ weekview	calendar	da	Ugentlig visning
 weekview with weekend	calendar	da	Uge view med week-end
 weekview without weekend	calendar	da	Uge view uden wek-end
 whole day	calendar	da	Hele dagen
-wk	calendar	da	Uge
 work day ends on	calendar	da	Arbejdsdage slutter om
 work day starts on	calendar	da	Arbejdsdage begynder om
 yearly	calendar	da	Årlig

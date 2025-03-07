@@ -169,7 +169,7 @@ change access	admin	ja	アクセス権の変更
 change account_id	admin	ja	アカウント ID を変更する
 change acl rights	admin	ja	ACL 権限を変更する
 change config settings	admin	ja	環境設定を変更
-change domain of email address and aliases	admin	ja	電子メール・アドレスのドメインと別名を変更
+change domain of email address and aliases	admin	ja	メールアドレスのドメインとエイリアスの変更
 change login screen message	admin	ja	メイン画面のメッセージを変更
 change owner	admin	ja	所有者を変更
 change password for %1	admin	ja	%1 のパスワードを変更
@@ -867,7 +867,7 @@ yes, but no scayt	admin	ja	Yes, but no Spell Check As You Type (online)
 yes, use browser based spell checking engine	admin	ja	Yes, use browser based spell checking engine
 yes, use webspellchecker	admin	ja	Yes, use online WebSpellChecker
 you can not use --dry-run together with --skip-checks!	admin	ja	You can NOT use --dry-run together with --skip-checks!
-you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	ja	You can change the hash only, if you set a random password or currently use plaintext passwords!
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	ja	ランダムなパスワードを設定した場合、または現在平文パスワードを使用している場合のみ、ハッシュを変更することができます！
 you can use wizard to fix account settings or delete account.	admin	ja	You can use wizard to fix account settings or delete account.
 you have entered an invalid expiration date	admin	ja	You have entered an invalid expiration date!
 you have no email address for your user set !!!	admin	ja	You have no email address set for your user!

@@ -16,12 +16,11 @@ change category	timesheet	ja	カテゴリを変更
 change owner when updating	timesheet	ja	更新時に所有者を変更する
 changed category to %1	timesheet	ja	カテゴリを %1 に変更しました。
 changed status	timesheet	ja	状態を変更しました。
-check all	timesheet	ja	全て選択
 choose 'creator' of imported data	timesheet	ja	インポート・データの作成者を選択
 comment by %1 at %2:	timesheet	ja	%1が%2にコメント:
 create a single 'working time' timesheet per	timesheet	ja	作業時間'のタイムシートを1つずつ作成する
 create new links	timesheet	ja	新規リンクを作成
-creates a new field	timesheet	ja	Creates a new field
+creates a new field	timesheet	ja	新しいフィールドを作成します。
 creating new entry	timesheet	ja	新規項目を作成中
 custom fields	timesheet	ja	カスタム項目
 default document to insert entries	timesheet	ja	項目を挿入する既定のドキュメント
@@ -51,7 +50,6 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	ja	リンク
 exists	timesheet	ja	存在
 export definition to use for nextmatch export	timesheet	ja	エクスポートで用いる設定ファイル
-export to openoffice spreadsheet	timesheet	ja	OpenOffice スプレッドシートにエクスポート
 exports entries from your timesheet into a csv file.	timesheet	ja	タイムシートの項目をCSV ファイルにエクスポート
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ja	タイムシートの項目をCSVファイルにエクスポートします。
 field must not be empty !!!	timesheet	ja	項目を空にすることはできません!
@@ -85,6 +83,7 @@ links and attached files	timesheet	ja	リンクと添付ファイル
 links to specified application.  example: {{links/infolog}}	timesheet	ja	指定されたアプリケーションへのリンク。  例: {{links/infolog}}
 list of files linked to the current record	timesheet	ja	List of files linked to the current record
 max length of the input [, length of the inputfield (optional)]	timesheet	ja	入力の最大長 [, 入力項目の長さ (オプショナル)]
+mode	timesheet	ja	モード
 modified	timesheet	ja	変更日時
 modify status	timesheet	ja	状態を変更
 name of current user, all other contact fields are valid too	timesheet	ja	ユーザ名（他のコンタクト項目も有効）
@@ -125,7 +124,6 @@ select a project	timesheet	ja	プロジェクトを選択
 select a status of the timesheet	timesheet	ja	タイムシートの状態を選択
 select infolog	timesheet	ja	インフォログを選択
 select multiple timeshhets for a further action	timesheet	ja	タイムシートを選択してアクションを実行
-select the predefined status, whan creating a new timesheet	preferences	ja	新規項目作成時に規定の状態を選択
 select the predefined status, when creating a new timesheet	preferences	ja	新規項目作成時に規定の状態を選択
 set to	timesheet	ja	設定値:
 show a quantity sum (eg. to sum up negative overtime)	admin	ja	合計を表示

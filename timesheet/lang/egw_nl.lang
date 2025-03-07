@@ -9,7 +9,6 @@ both: allow to use projectmanager and free project-names	admin	nl	Beiden: accept
 by	timesheet	nl	door
 category for 'working time'	admin	nl	Categorie voor 'Werktijd'
 change owner when updating	timesheet	nl	Eigenaar wijzigen bij bijwerken
-check all	timesheet	nl	Markeer alles
 comment by %1 at %2:	timesheet	nl	Commentaar door %1 op %2:
 create a single 'working time' timesheet per	timesheet	nl	Maak een enkel 'Werktijd' timesheet per
 create new links	timesheet	nl	Creëer nieuwe links
@@ -43,8 +42,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	nl	Bestaande links
 exists	timesheet	nl	Bestaat
 export definition to use for nextmatch export	timesheet	nl	Export definitie om te gebruiken bij nextmatch export
-export to openoffice spreadsheet	timesheet	nl	Export naar OpenOffice rekenblad
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	nl	Exporteert records uit uw urenregistratie naar een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het opties tabblad kunt u ook andere scheidingstekens kiezen.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	nl	Exporteert records uit uw urenregistratie naar een CSV bestand. Maar in het opties tabblad kunt u ook andere scheidingstekens kiezen.
 field must not be empty !!!	timesheet	nl	Veld mag niet leeg zijn !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	nl	Gebruik deze tag voor serie brieven. Plaats de inhoud die herhaald moet worden tussen de twee tags.
 forgot to switch off working time?	common	nl	Vergeten de werktijd uit te schakelen?
@@ -72,6 +70,7 @@ links and attached files	timesheet	nl	Link naar bijgesloten bestand
 links to specified application.  example: {{links/infolog}}	timesheet	nl	Verwijst naar een specifieke applicatie. Voorbeeld: {{links/infolog}}
 list of files linked to the current record	timesheet	nl	Lijs van bestanden gelinkt aan huidig record
 max length of the input [, length of the inputfield (optional)]	timesheet	nl	max lengte van de invoer [, lengte van het invoerveld (optioneel)]
+mode	timesheet	nl	Modus
 modified	timesheet	nl	Gewijzigd
 name of current user, all other contact fields are valid too	timesheet	nl	Naam van de huidige gebruiker, alle andere contactvelden zijn ook geldig
 new ticket submitted by %1 at %2	timesheet	nl	Nieuwe melding ingelegd door %1 op %2
@@ -89,6 +88,7 @@ pause time	timesheet	nl	Tijd pauze
 paused	timesheet	nl	Gepauzeerd
 permission denied!!!	timesheet	nl	Toegang geweigerd!!!
 price	timesheet	nl	Tarief
+project fields	timesheet	nl	Projectvelden
 projectmanager integration	admin	nl	ProjectManager integratie
 quantity	timesheet	nl	Hoeveelheid
 recorded	timesheet	nl	Opgenomen
@@ -101,6 +101,7 @@ saves the changes made and leaves	timesheet	nl	bewaart de gemaakte wijzigingen e
 saves this entry and add a new one	timesheet	nl	Bewaar dit item en maak een nieuwe
 select a price	timesheet	nl	Selecteer een tarief
 select a project	timesheet	nl	Selecteer een project
+select the predefined status, when creating a new timesheet	preferences	nl	Selecteer de voorgedefinieerde status bij het aanmaken van een nieuw item.
 show a quantity sum (eg. to sum up negative overtime)	admin	nl	Toont een optelling van hoeveelheid (bijvoorbeeld om negatieve overtijd op te tellen)
 start	timesheet	nl	Start
 start & stop timer	common	nl	Timer starten & stoppen

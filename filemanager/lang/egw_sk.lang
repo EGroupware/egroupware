@@ -159,7 +159,7 @@ filesystem	filemanager	sk	Súborový systém
 filesystem check reported no problems.	filemanager	sk	Kontrola súborového systému nenašla žiadne problémy
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	sk	Súborový systém: priečinok pripojenia (v rámci /var/lib/egroupware!) z hostiteľského súborového systému
 finally delete	filemanager	sk	Definitívne odstrániť
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	sk	Definitívne odstrániť všetky staršie verzie a odstránené súbory v danom adresári.\n\nToto sa už NEBUDE dať vrátiť späť!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	sk	Definitívne odstrániť všetky staršie verzie a odstránené súbory v danom adresári? Toto sa už NEBUDE dať vrátiť späť!
 finally delete this version	filemanager	sk	Definitívne odstrániť túto verziu
 fix reported problems	filemanager	sk	Opraviť objavené problémy
 folder up	filemanager	sk	O priečinok vyššie
@@ -314,7 +314,6 @@ upload fields	filemanager	sk	Odovzdať polia
 upload files	filemanager	sk	Odovzdať súbory
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	sk	Použiť túto značku pre označenie adries. Vložte obsah, ktorý chcete, medzi dve značky.
 used space	filemanager	sk	Použitý priestor
-user color indicator	filemanager	sk	Indikátor používateľskej farby
 user home quota	filemanager	sk	Kvóta pre používateľov domovský priečinok
 username for webdav and smb, use $user for name of logged in user	filemanager	sk	Používateľské meno pre WebDAV a SMB; ak chcete použiť meno prihláseného používateľa, zadajte $user
 users and groups	filemanager	sk	Používatelia a skupiny
