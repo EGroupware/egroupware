@@ -78,7 +78,7 @@ class setup_cmd_install extends setup_cmd
 		// use uploaded backup, instead installing from scratch
 		if ($this->backup)
 		{
-			$db_backup = new db_backup();
+			$db_backup = new Api\Db\Backup();
 
 			if (!is_resource($f = $db_backup->fopen_backup($this->backup,true)))
 			{
