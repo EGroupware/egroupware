@@ -88,6 +88,10 @@
 					<et2-select-account  id="newsettings[allow_account_edit]" multiple="true" width="100%" accountType="groups"></et2-select-account>
 				</row>
 				<row>
+					<et2-description  value="Allow members of following groups to show the account name column" label="%s:"></et2-description>
+					<et2-select-account  id="newsettings[allow_account_name]" multiple="true" placeholder="Admins" accountType="groups"></et2-select-account>
+				</row>
+				<row>
 					<et2-description  value="History logging" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>

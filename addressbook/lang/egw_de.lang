@@ -62,6 +62,7 @@ all types	addressbook	de	Alle Typen
 allow	addressbook	de	Erlauben
 allow for contacts only	addressbook	de	Nur für Kontakte erlauben
 allow members of following groups to edit contact-data of accounts	addressbook	de	Erlaube Mitgliedern der folgenden Gruppen die Kontaktdaten von Benutzern zu bearbeiten
+allow members of following groups to show the account name column	addressbook	de	Erlaube Mitgliedern der folgenden Gruppen die Spalte Benutzernamen anzuzeigen
 allow users to maintain their own account-data	admin	de	Erlaube Benutzern ihre eigenen Benutzerdaten zu verwalten
 alt. csv import	addressbook	de	Alt. CSV Import
 always	addressbook	de	immer
@@ -162,7 +163,7 @@ csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
 custom etemplate for the contactform	addressbook	de	Eigenes eTemplate für das Kontaktformular
 custom fields	addressbook	de	Benutzerdefinierte Felder
-data exchange settings	addressbook	de	Einstellungen Datenaustausch
+data exchange settings	common	de	Einstellungen Datenaustausch
 default	addressbook	de	Standard
 default action on double-click	addressbook	de	Vorgabe beim Doppel-Klick einer Adresse
 default address format	addressbook	de	Vorgabe für Format der Adresse
