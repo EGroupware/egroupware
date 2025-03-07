@@ -23,7 +23,7 @@
 				<column width="50"/>
 				<column width="80" disabled="@no_event_column"/>
 				<column width="120"/>
-				<column width="120"/>
+				<column width="120" disabled="@no_account_lid_column"/>
 			</columns>
 			<rows>
 				<row class="th">

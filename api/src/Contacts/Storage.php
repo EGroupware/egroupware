@@ -769,8 +769,13 @@ class Storage
 
 		if ($rows)
 		{
+			$allow_account_name = Api\Contacts::allowAccountName();
 			foreach($rows as $n => $row)
 			{
+				if (!$allow_account_name)
+				{
+					unset($row['account_lid']);
+				}
 				$rows[$n] = $this->db2data($row);
 			}
 

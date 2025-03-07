@@ -302,6 +302,8 @@ class addressbook_ui extends addressbook_bo
 		{
 			$content['nm']['no_kanban'] = true;
 		}
+		// disable account-name column, if not allowed for current user
+		$content['nm']['no_account_lid_column'] = !Api\Contacts::allowAccountName();
 
 		// save the tid for use in creating new addressbook entrys via UI. Current tid is to be used as type of new entrys
 		//error_log(__METHOD__.__LINE__.' '.$content['nm']['col_filter']['tid']);

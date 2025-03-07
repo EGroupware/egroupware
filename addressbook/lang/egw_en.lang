@@ -62,6 +62,7 @@ all types	addressbook	en	All types
 allow	addressbook	en	Allow
 allow for contacts only	addressbook	en	Allow for contacts only
 allow members of following groups to edit contact-data of accounts	addressbook	en	Allow members of following groups to edit contact-data of accounts
+allow members of following groups to show the account name column	addressbook	en	Allow members of following groups to show the account name column
 allow users to maintain their own account-data	admin	en	Allow users to maintain their own account data
 alt. csv import	addressbook	en	Alt. CSV Import
 always	addressbook	en	Always
@@ -162,7 +163,7 @@ csv-filename	addressbook	en	CSV file name
 custom	addressbook	en	Custom
 custom etemplate for the contactform	addressbook	en	Custom eTemplate for the contact form
 custom fields	addressbook	en	Custom fields
-data exchange settings	addressbook	en	Data exchange settings
+data exchange settings	common	en	Data exchange settings
 default	addressbook	en	Default
 default action on double-click	addressbook	en	Default action on double-click
 default address format	addressbook	en	Default address format

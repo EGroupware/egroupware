@@ -3040,4 +3040,20 @@ class Contacts extends Contacts\Storage
 		error_log("crm.php: calling push(#$this->user)->call('$func', $arg)");
 		return "calling push(#$this->user)->call('$func', $arg)";
 	}
+
+	/**
+	 * Check if current user is allowed to see the account-name column
+	 *
+	 * @return boolean
+	 */
+	public static function allowAccountName()
+	{
+		if (!empty($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			return true;
+		}
+		return !empty($GLOBALS['egw_info']['server']['allow_account_name']) &&
+			array_intersect((array)$GLOBALS['egw_info']['server']['allow_account_name'],
+				Accounts::getInstance()->memberships($GLOBALS['egw_info']['user']['account_id']));
+	}
 }
