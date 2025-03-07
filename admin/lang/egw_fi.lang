@@ -153,6 +153,7 @@ change access	admin	fi	Muuta käyttöoikeuksia
 change account_id	admin	fi	Vaihda account_ID
 change acl rights	admin	fi	Muuta ACL -oikeuksia
 change config settings	admin	fi	Muuta asetuksia
+change domain of email address and aliases	admin	fi	Vaihda sähköpostiosoitteen verkkotunnusta ja peitenimiä
 change login screen message	admin	fi	Vaihda päänäytön viesti
 change owner	admin	fi	Vaihda omistaja
 change password for %1	admin	fi	Vaihda salasana %1
@@ -607,7 +608,7 @@ server type(mode)	admin	fi	Palvelimen tyyppi (moodi)
 server url	admin	fi	Palvelimen URL
 server username	admin	fi	Palvelimen käyttäjätunnus
 sessions last 30 days	admin	fi	Istunnot viimeisen kuukauden ajalta
-set a random password	admin	fi	Aseta satunnainen salasana.
+set a random password	admin	fi	Aseta satunnainen salasana
 set preference values.	admin	fi	Tee asetukset.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fi	Näytetäänkö kirjautumisnäytöllä kielien valintalista (käytännöllinen esittelyjä varten)?
 show access log	admin	fi	Näytä käyttöloki
@@ -747,6 +748,7 @@ who would you like to transfer records owned by the deleted user to?	admin	fi	Ke
 wrong account type: %1 is no %2 !!!	admin	fi	Virheellinen tilityyppi: %1 ei ole %2!
 wrong admin-account or -password !!!	admin	fi	Virheellinen Admin-tunnus tai salasana!
 xml-rpc	admin	fi	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	fi	Voit vaihtaa hashin vain, jos olet asettanut satunnaisen salasanan tai käytät tällä hetkellä pelkkiä salasanoja!
 you can set an initial value, which gets incremented every time a new serial get generated	admin	fi	voit asettaa alkuarvon, jota kasvatetaan aina kun uusi sarja luodaan
 you can use wizard to fix account settings or delete account.	admin	fi	Voit käyttää ohjattua toimintoa tilin asetusten korjaamiseen tai tilin poistamiseen.
 you have entered an invalid expiration date	admin	fi	Virheellinen vanhenemispäivä!

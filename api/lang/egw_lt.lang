@@ -57,7 +57,10 @@ angola	common	lt	ANGOLA
 answering no will not ask you again for this browser.	common	lt	Jei atsakysite "ne", šios naršyklės jūsų nebebus prašoma.
 api	common	lt	EGroupware API
 apps & license	common	lt	Programos ir licencija
+apps &amp; license	common	lt	Programėlės ir licencija
 april	common	lt	Balandis
+are you sure you want to logout?	common	lt	Ar tikrai norite atsijungti?
+are you sure, you would like to delete the backup key?	common	lt	Ar tikrai norite ištrinti atsarginės kopijos raktą?
 argentina	common	lt	ARGENTINA
 armenia	common	lt	ARMĖNIJA
 aruba	common	lt	ARUBA
@@ -67,6 +70,7 @@ australia	common	lt	AUSTRALIJA
 austria	common	lt	AUSTRIJA
 authenticate	common	lt	Autentiškumo nustatymas
 author	common	lt	Autorius
+automatic update check failed, you need to check manually!	common	lt	Automatinis atnaujinimo patikrinimas nepavyko, reikia patikrinti rankiniu būdu!
 avatar	common	lt	Avatar
 back	common	lt	Atgal
 bcc	common	lt	Bcc
@@ -155,6 +159,7 @@ el salvador	common	lt	SALVADORAS
 email	common	lt	El. paštas
 email-address of the user, eg. "%1"	common	lt	Naudotojo el. pašto adresas, pvz., "%1"
 emails	common	lt	Elektroniniai laiškai
+enter your passphrase	common	lt	Įveskite savo slaptažodį
 error	common	lt	Klaida
 estonia	common	lt	ESTIJA
 ethiopia	common	lt	ETIOPIJA
@@ -318,6 +323,7 @@ portugal	common	lt	PORTUGALIJA
 postal	common	lt	Pašto kodas
 preference	common	lt	Pageidavimai
 print	common	lt	Spausdinti
+print orientation	common	lt	Orientavimasis
 project	common	lt	Projektas
 qatar	common	lt	KATARAS
 repeat password	common	lt	Pakartoti slaptažodį

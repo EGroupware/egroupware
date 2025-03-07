@@ -4,6 +4,7 @@
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	zh	%1复制错误(%2目录和%3文件已复制)！
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	zh	%1删除错误(%2目录和%3文件已删除)！
 %1 errors moving (%2 files moved)!	filemanager	zh	%1移动错误(%2文件已移动)！
+%1 failed, %2 succeded	filemanager	zh	%1 失败，%2 成功。
 %1 files copied.	filemanager	zh	%1文件已复制。
 %1 files deleted.	filemanager	zh	%1文件已删除。
 %1 files moved.	filemanager	zh	%1文件已移动。
@@ -86,7 +87,7 @@ filesystem	filemanager	zh	文件系统
 filesystem check reported no problems.	filemanager	zh	文件系统检查报告没有问题。
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	zh	文件系统：从主机文件系统挂载目录（在 /var/lib/egroupware 内 !
 finally delete	filemanager	zh	最后删除
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	zh	最后删除指定文件夹下的所有旧版本和已删除文件！
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	zh	最后删除指定文件夹下的所有旧版本和已删除文件？无法撤销！
 finally delete this version	filemanager	zh	最后删除此版本
 fix reported problems	filemanager	zh	修复报告的问题
 folder up	filemanager	zh	向上

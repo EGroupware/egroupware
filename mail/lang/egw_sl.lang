@@ -500,6 +500,7 @@ report as ham	mail	sl	Poročaj kot Ham
 report as spam	mail	sl	Prijavite kot neželeno pošto
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	sl	Prijavite to e-poštno vsebino kot Ham (ne vsiljena pošta) - rešitve neželene pošte, kot je SpamTitan, se bodo naučile
 report this email content as spam - spam solutions like spamtitan will learn	mail	sl	Prijavite to e-poštno vsebino kot spam-spam rešitve, kot je SpamTitan
+request for passphrase	mail	sl	Zahteva za geslo
 required pear class mail/mimedecode.php not found.	mail	sl	Potreben PEAR razred Mail / mimeDecode.php ni našel.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	sl	Potrebno onemogočiti, če uporabljate Dovecot z zastavicami private seen na skupni ali uporabniški mapi!
 resend after how many days?	mail	sl	Ponovno pošlji po številu dni?

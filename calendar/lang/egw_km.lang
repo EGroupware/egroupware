@@ -103,7 +103,6 @@ change history	calendar	km	ផ្លាស់ប្តូរប្រវត្�
 change your status	calendar	km	ផ្លាស់ប្តូរស្ថានភាពរបស់អ្នក។
 changed event-data applied	calendar	km	បានផ្លាស់ប្តូរទិន្នន័យព្រឹត្តិការណ៍
 charset of file	calendar	km	សំណុំតួអក្សរ
-check all	calendar	km	ពិនិត្យ​ទាំងអស់
 choose a category	calendar	km	ជ្រើសរើសប្រភេទ
 choose owner of imported data	calendar	km	ជ្រើសរើសម្ចាស់ទិន្នន័យដែលបាននាំចូល
 close the window	calendar	km	បិទ​បង្អួច
@@ -674,7 +673,6 @@ which view to show on home page	calendar	km	ទិដ្ឋភាពមួយណ
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	km	ចំនួនអ្នកប្រើប្រាស់អប្បបរមាសម្រាប់បង្ហាញការមើលថ្ងៃ និងសប្តាហ៍ជាការរួមបញ្ចូល។ លំនាំដើម = ៥
 whole day	calendar	km	ពេញមួយថ្ងៃ
 with credentials included	calendar	km	រួមបញ្ចូលជាមួយលិខិតសម្គាល់
-wk	calendar	km	Wk
 work day ends on	calendar	km	ថ្ងៃធ្វើការត្រូវបញ្ចប់
 work day starts on	calendar	km	ថ្ងៃធ្វើការចាប់ផ្តើម
 workday	calendar	km	ថ្ងៃធ្វើការ

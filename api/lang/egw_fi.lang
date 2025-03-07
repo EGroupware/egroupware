@@ -491,6 +491,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	fi	Anna uusi versio numero (>vanha_versio), tyhjä jos ei ole päivitettävää tiedostoa
 enter the new version number here (has to be > old_version)	common	fi	Anna uusi versio numero (täytyy olla > vanha_versio)
 enter your file name	common	fi	Anna tiedostonimi
+enter your passphrase	common	fi	Syötä salasanasi
 enter your password	common	fi	Anna salasanasi
 entry has been deleted sucessfully	common	fi	Kohde poistettu.
 entry not found!	common	fi	Kohdetta ei löytynyt!
@@ -1045,6 +1046,7 @@ primary key	common	fi	Pää avain (ensisijainen)
 primary key for the table, gets automaticaly indexed	common	fi	Taulukon pääavain saa automaattisen indeksoinnin
 primary style-sheet:	common	fi	Ensisijainen tyyli:
 print	common	fi	Tulosta
+print orientation	common	fi	Orientaatio
 priority	common	fi	Tärkeys
 private	common	fi	Yksityinen
 programs	common	fi	Ohjelmat

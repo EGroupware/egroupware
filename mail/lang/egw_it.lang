@@ -500,6 +500,7 @@ report as ham	mail	it	Segnala come Ham
 report as spam	mail	it	Segnala come Spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	it	Segnala questo contenuto della mail come Ham (non Spam) - soluzioni antispam come SpamTitan riescono ad apprendere
 report this email content as spam - spam solutions like spamtitan will learn	mail	it	Segnala questo contenuto della mail come Spam - soluzioni antispam come SpamTitan riescono ad apprendere
+request for passphrase	mail	it	Richiesta di passphrase
 required pear class mail/mimedecode.php not found.	mail	it	La classe PEAR Mail /mimeDecode.php necessaria, non è stata trovata.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	it	Da disabilitare se si usa Dovecot con flag di visualizzazione privata su cartelle condivise o utente!
 resend after how many days?	mail	it	Dopo quanti giorni tentare di reinviare?

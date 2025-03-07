@@ -64,6 +64,7 @@ flagged %1 messages as flagged in %2	mail	ko	%2에서 %1 메시지를 %2로 플�
 flagged %1 messages as unflagged in %2	mail	ko	%2에서 %1 메시지를 플래그가 없는 것으로 플래그 지정했습니다
 folder %1 %2 failed because of %3!	mail	ko	%3 때문에 %1 폴더 %2을(를) 구독하지 못했습니다!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	ko	%2 때문에 구독이 실패했지만 %1 폴더를 성공적으로 만들었습니다
+forward to	mail	ko	전달 대상
 from	mail	ko	부터
 general	admin	ko	일반
 get acl rights failed from imap server!	mail	ko	IMAP 서버에서 ACL 권한 가져오기에 실패했습니다!
@@ -149,9 +150,11 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	ko	푸시 알림
 quicksearch	mail	ko	빠른 검색
 quicksearch (with cc)	mail	ko	빠른 검색(+복사)
+read / unread	mail	ko	읽기/읽지 않음
 real name	mail	ko	실명
 real name email	mail	ko	실명 [이메일]
 real name organization email	mail	ko	실명 조직 [이메일]
+reloaded folder %1	mail	ko	폴더 %1을(를) 다시 로드했습니다
 remember the password for	mail	ko	다음 비밀번호를 기억하세요
 remove all	mail	ko	모두 제거
 removing %1 from blacklisted email addresses failed because of %2	mail	ko	%2 때문에 블랙리스트에 추가된 전자 메일 주소에서 %1을(를) 제거하지 못했습니다
@@ -163,6 +166,7 @@ report as ham	mail	ko	햄으로 신고
 report as spam	mail	ko	스팸으로 신고
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	ko	이 이메일 콘텐츠를 햄(스팸이 아님)으로 신고 - 스팸타이탄과 같은 스팸 솔루션에서 학습합니다
 report this email content as spam - spam solutions like spamtitan will learn	mail	ko	이 이메일 콘텐츠를 스팸으로 신고 - 스팸타이탄과 같은 스팸 솔루션에서 학습합니다
+request for passphrase	mail	ko	암호 요청
 required pear class mail/mimedecode.php not found.	mail	ko	필수 PEAR 클래스 Mail/mimeDecode.php를 찾을 수 없습니다.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ko	공유 폴더 또는 사용자 폴더에서 비공개로 표시됨 플래그와 함께 도브콧을 사용하는 경우 비활성화하는 데 필요합니다!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	ko	보낸 사람 주소에 대한 인증서를 찾을 수 없으므로 S/MIME 암호화에 실패했습니다: %1
@@ -182,6 +186,7 @@ send message and move to send folder (if configured)	mail	ko	메시지 보내기
 send message pgp encrypted: requires keys from all recipients!	mail	ko	메시지 보내기 PGP 암호화: 모든 수신자의 키가 필요합니다!
 server supports special-use folders	mail	ko	서버에서 특수 용도 폴더 지원
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	ko	답장 또는 전달 후(표준) 또는 전달 전에 서명을 삽입해야 하며, 작성 중에 서명이 표시되고 변경 가능해야 합니다.
+show all addresses	mail	ko	모든 주소 표시
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ko	메인 화면 폴더 창에 모든 폴더(가입 및 탈퇴한 폴더)를 표시합니다.
 show notification for new arriving mails	mail	ko	새 메일 도착 알림 표시
 show test connection section and control the level of info displayed?	mail	ko	테스트 연결 섹션을 표시하고 표시되는 정보의 수준을 제어할 수 있나요?
@@ -193,6 +198,9 @@ show/hide preview pane in mail list view	mail	ko	메일 목록 보기에서 미�
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	ko	보낸 사람 주소, 제목 및 이메일 스니펫을 포함하여 임시로 표시되는 알림을 표시합니다.
 sign your message with smime certificate	mail	ko	S/MIME 인증서로 메시지 서명
 signed by	mail	ko	서명자
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	ko	흐름줄이 활성화된 경우 일부 클라이언트에서 올바른 문자 집합을 감지하지 못함
+spamtitan api url	mail	ko	SpamTitan API URL
+spamtitan integration requires epl version	mail	ko	스팸타이탄 통합에는 EPL 버전이 필요합니다
 the imap server need to meet certain requirements and be configured for it:	mail	ko	IMAP 서버는 특정 요구 사항을 충족해야 하며 이를 위해 구성되어야 합니다:
 the rule with priority %1 successfully saved!	mail	ko	우선 순위가 %1인 규칙이 성공적으로 저장되었습니다!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ko	체 스크립트를 저장할 공간이 없으므로 메일 서버의 구성에서 sieve_maxscriptsize 옵션을 확인하세요.

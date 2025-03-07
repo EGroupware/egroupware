@@ -167,7 +167,7 @@ delegated	calendar	cs	Delegované
 delete exceptions	calendar	cs	Smazat vyjímky
 delete selected events	calendar	cs	Smazat vybrané události
 delete series	calendar	cs	Smazat řadu pravidelných opakování
-delete this alarm	calendar	cs	Smazat tuto připomínku
+delete this alarm	calendar	cs	Smazat tuto připomínku?
 delete this event	calendar	cs	Smazat tuto událost
 delete this exception	calendar	cs	Smazat tuto vyjímku
 delete this meeting for all participants	calendar	cs	Smazat tuto schůzku pro všechny účastníky

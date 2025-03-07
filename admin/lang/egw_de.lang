@@ -190,7 +190,7 @@ change access	admin	de	Zugriffsrechte ändern
 change account_id	admin	de	Änderung der Konto-ID
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
-change domain of email address and aliases	admin	de	ändert Domain von E-Mail-Adressen oder Aliase
+change domain of email address and aliases	admin	de	Ändert Domain von E-Mail-Adressen oder Aliase
 change login screen message	admin	de	Nachricht der Startseite ändern
 change owner	admin	de	Besitzer ändern
 change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	de	Ändert den Besitzer der gefundenen Dateien in /home auf den neuen Benutzer und verschiebt den Benutzerordner in /home/new-user/old-home-username.
@@ -783,7 +783,7 @@ select language to define language based message. language 'english' is default 
 select multiple	admin	de	Mehrere auswählen
 select owner	admin	de	Besitzer auswählen
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe
-select the applications you want the token to be limited to, or leave the default of all applications.	admin	de	Wählen Sie die Anwendungen auf die das Token beschränkt sein soll, oder lassen Sie die Vorgabe alle Anwendungen.
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	de	Wählen Sie die Anwendungen auf welche das Token beschränkt sein soll, oder lassen Sie die Vorgabe alle Anwendungen.
 select the parent category. if this is a main category select no category	admin	de	Eine übergeordnete Kategorie auswählen. Wenn dies eine Hauptkategorie ist, KEINE KATEGORIE auswählen.
 select type of imap server	admin	de	IMAP-Server Typ auswählen
 select type of smtp server	admin	de	SMTP-Server Typ auswählen
@@ -804,7 +804,7 @@ server url	admin	de	Server-URL
 server username	admin	de	Server-Benutzername
 sessions	admin	de	Sitzungen
 sessions last 30 days	admin	de	Sitzungen in letzten 30 Tagen
-set a random password	admin	de	Setze ein zufälliges Passwort.
+set a random password	admin	de	Setze ein zufälliges Passwort
 set preference values.	admin	de	Einstellungswert wurde geändert.
 settings	admin	de	Einstellungen
 should exceptions contain a trace (including function arguments)	admin	de	Sollen Ausnahmefehler eine Rückverfolgung enthalten (einschl. Funktionsargumente).
@@ -892,7 +892,6 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	de	Token erzeugt.
 token not found!	admin	de	Token nicht gefunden!
 token revoked.	admin	de	Token widerrufen.
-token saved.	admin	de	Token gespeichert.
 top	admin	de	Oben
 total of %1 accounts deleted.	admin	de	Insgesamt %1 Benutzerkonten gelöscht.
 total of %1 id's changed.	admin	de	Die Gesamtanzahl von %1 IDs wurde geändert.

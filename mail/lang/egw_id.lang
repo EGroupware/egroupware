@@ -225,10 +225,12 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	id	Pemberitahuan push
 quicksearch	mail	id	Pencarian cepat
 quicksearch (with cc)	mail	id	Pencarian Cepat (+Salin)
+read / unread	mail	id	Baca / Belum dibaca
 real name	mail	id	Nama asli
 real name email	mail	id	Nama asli [Email]
 real name organization email	mail	id	Nama asli Organisasi [Email]
 reject with	mail	id	tolak dengan
+reloaded folder %1	mail	id	Folder yang dimuat ulang %1
 remember the password for	mail	id	Ingat kata sandi untuk
 remove all	mail	id	Buang semua
 remove immediately	mail	id	Buang segera
@@ -247,6 +249,7 @@ report as ham	mail	id	Laporkan sebagai Ham
 report as spam	mail	id	Laporkan sebagai Spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	id	Laporkan konten email ini sebagai Ham (bukan spam) - solusi spam seperti spamTitan akan mempelajarinya
 report this email content as spam - spam solutions like spamtitan will learn	mail	id	Laporkan konten email ini sebagai Spam - solusi spam seperti spamTitan akan mempelajarinya
+request for passphrase	mail	id	Meminta kata sandi
 required pear class mail/mimedecode.php not found.	mail	id	Kelas PEAR yang diperlukan Mail/mimeDecode.php tidak ditemukan.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	id	Wajib dinonaktifkan jika Anda menggunakan Dovecot dengan bendera private seen pada folder bersama atau pengguna!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	id	Enkripsi S/MIME gagal karena tidak ada sertifikat yang ditemukan untuk alamat pengirim: %1
@@ -275,6 +278,7 @@ sent folder	mail	id	Sent Folder
 server supports special-use folders	mail	id	Server mendukung folder penggunaan khusus
 set predefined values for compose...	mail	id	Tetapkan nilai yang telah ditentukan sebelumnya untuk penulisan ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	id	Haruskah tanda tangan dimasukkan setelah (standar) atau sebelum balasan atau penerusan, dan haruskah tanda tangan terlihat dan dapat diubah selama penulisan.
+show all addresses	mail	id	Tampilkan semua alamat
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	id	Tampilkan semua folder, (berlangganan DAN berhenti berlangganan) di panel folder layar utama.
 show notification for new arriving mails	mail	id	Tampilkan pemberitahuan untuk email baru yang masuk
 show test connection section and control the level of info displayed?	mail	id	Tampilkan bagian uji koneksi dan kendalikan tingkat info yang ditampilkan?
@@ -293,7 +297,10 @@ smime encrypted message	mail	id	Pesan terenkripsi S/MIME
 smime signed message	mail	id	Pesan yang ditandatangani S/MIME
 smtp	mail	id	SMTP
 sneak preview in list	mail	id	Pratinjau pesan
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	id	Beberapa klien gagal mendeteksi charset yang benar, jika baris mengalir diaktifkan
 sort order	mail	id	Sort Order
+spamtitan api url	mail	id	SpamTitan API URL
+spamtitan integration requires epl version	mail	id	Integrasi SpamTitan memerlukan versi EPL
 template folder	mail	id	Folder Templat
 text	mail	id	Text
 text/plain	mail	id	Teks

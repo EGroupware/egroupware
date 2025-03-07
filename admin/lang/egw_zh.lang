@@ -129,6 +129,7 @@ change access	admin	zh	更改访问权限
 change account_id	admin	zh	更改帐户 ID
 change acl rights	admin	zh	更改 ACL 权限
 change config settings	admin	zh	更改配置设定
+change domain of email address and aliases	admin	zh	更改电子邮件地址和别名的域名
 change login screen message	admin	zh	更改主页面信息
 change password for %1	admin	zh	更改%1的密码
 check acl for entries of not (longer) existing accounts	admin	zh	检查 ACL (长期)不是现有的帐户条目
@@ -502,6 +503,7 @@ server settings	admin	zh	服务器设置
 server type(mode)	admin	zh	服务器类型 (模式)
 server url	admin	zh	服务器网址
 server username	admin	zh	服务器用户名
+set a random password	admin	zh	设置随机密码
 set preference values.	admin	zh	设置偏好参数。
 should the login page include a language selectbox (useful for demo-sites) ?	admin	zh	登录页需要包含语言选单吗 (有益于站点演示)？
 show access log	admin	zh	显示访问日志
@@ -618,6 +620,7 @@ who would you like to transfer records owned by the deleted user to?	admin	zh	�
 wrong account type: %1 is no %2 !!!	admin	zh	错误的帐户类型：%1没有%2！
 wrong admin-account or -password !!!	admin	zh	错误的管理员账户或密码！
 xml-rpc	admin	zh	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	zh	只有在设置了随机密码或目前使用明文密码的情况下，才能更改哈希值！
 you can use wizard to fix account settings or delete account.	admin	zh	您可以使用向导修复账户设置或删除账户。
 you have entered an invalid expiration date	admin	zh	输入的有效期限无效
 you have to enter a name, to create a new field!!!	admin	zh	为创建一新字段域，您需要输入一个新字段名！

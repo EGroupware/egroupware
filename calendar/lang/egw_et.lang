@@ -60,7 +60,6 @@ can't add alarms in the past !!!	calendar	et	Alarmi ei saa lisada minevikku!
 canceled	calendar	et	Tühistatud
 category report	calendar	et	Kategooria aruanne
 changed event-data applied	calendar	et	Muudetud sündmuse andmed rakendatud
-check all	calendar	et	Kontrolli kõik
 choose a category	calendar	et	Vali kategooria
 close the window	calendar	et	Sule see aken
 copy this event	calendar	et	Kopeeri seda sündmust
@@ -85,7 +84,7 @@ default calendar view	calendar	et	Vaikimisi kalendri vaade
 default week view	calendar	et	Vaikimisi nädala vaade
 delegated	calendar	et	Delegeeritud
 delete series	calendar	et	Kustuta seeria
-delete this alarm	calendar	et	Kustuta see alarm
+delete this alarm	calendar	et	Kustuta see alarm?
 delete this event	calendar	et	Kustuta see sündmus
 delete this exception	calendar	et	Kustuta see erand
 deleted	calendar	et	Kustutatud.
@@ -284,7 +283,6 @@ weekview	calendar	et	Nädalavaade
 weekview with weekend	calendar	et	Nädalavaade koos nädalavahetusega
 weekview without weekend	calendar	et	Nädalavaade ilma nädalavahetuseta
 whole day	calendar	et	Terve päev
-wk	calendar	et	Nd
 work day ends on	calendar	et	Tööpäeva lõpp
 work day starts on	calendar	et	Tööpäeva algus
 yearly	calendar	et	Aastati

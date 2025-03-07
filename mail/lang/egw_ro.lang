@@ -79,6 +79,7 @@ flagged %1 messages as flagged in %2	mail	ro	Mesaj(e) %1 marcat(e) ca fiind marc
 flagged %1 messages as unflagged in %2	mail	ro	Mesaj(e) %1 marcat(e) ca ne-marcat(e) în %2
 folder %1 %2 failed because of %3!	mail	ro	Dosarul %1 %2 a eșuat din cauza lui %3!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	ro	Dosarul %1 a fost creat cu succes, deși abonarea a eșuat din cauza lui %2
+forward to	mail	ro	Înainte către
 get acl rights failed from imap server!	mail	ro	Obțineți drepturile ACL eșuate de pe serverul IMAP!
 ham folder	mail	ro	Dosarul Ham
 handling of external http images / mixed content in mails	mail	ro	Gestionarea imaginilor http externe / conținut mixt în e-mailuri
@@ -182,9 +183,11 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	ro	Notificări push
 quicksearch	mail	ro	Căutare rapidă
 quicksearch (with cc)	mail	ro	Căutare rapidă (+Copiere)
+read / unread	mail	ro	Citit / Necitit
 real name	mail	ro	Numele real
 real name email	mail	ro	Nume real [Email]
 real name organization email	mail	ro	Nume real Organizația [Email]
+reloaded folder %1	mail	ro	Dosar reîncărcat %1
 remember the password for	mail	ro	Rețineți parola pentru
 remove all	mail	ro	Eliminați toate
 removing %1 from blacklisted email addresses failed because of %2	mail	ro	Eliminarea lui %1 din adresele de e-mail de pe lista neagră a eșuat din cauza lui %2
@@ -196,6 +199,7 @@ report as ham	mail	ro	Raportează ca Ham
 report as spam	mail	ro	Raportează ca spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	ro	Raportați acest conținut de e-mail ca Ham (nu spam) - soluțiile de spam precum spamTitan vor învăța
 report this email content as spam - spam solutions like spamtitan will learn	mail	ro	Raportează acest conținut de e-mail ca Spam - soluții de spam precum spamTitan va învăța
+request for passphrase	mail	ro	Cerere pentru fraza de acces
 required pear class mail/mimedecode.php not found.	mail	ro	Clasa necesară PEAR Mail/mimeDecode.php nu a fost găsită.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ro	Necesar de dezactivat dacă folosiți Dovecot cu steaguri private văzute pe folderul partajat sau de utilizator!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	ro	Criptarea S/MIME a eșuat deoarece nu a fost găsit niciun certificat pentru adresa expeditorului: %1
@@ -217,6 +221,7 @@ send message pgp encrypted: requires keys from all recipients!	mail	ro	Trimiteț
 server supports special-use folders	mail	ro	Serverul acceptă foldere de utilizare specială
 set predefined values for compose...	mail	ro	Setați valori predefinite pentru compunere ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	ro	Ar trebui ca semnătura să fie inserată după (standard) sau înainte de un răspuns sau de o expediere și ar trebui ca semnătura să fie vizibilă și schimbabilă în timpul compunerii.
+show all addresses	mail	ro	Afișați toate adresele
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ro	Afișarea tuturor dosarelor, (abonate ȘI dezabonate) în panoul de dosare din ecranul principal
 show notification for new arriving mails	mail	ro	Afișare notificare pentru mesajele noi sosite
 show test connection section and control the level of info displayed?	mail	ro	Să se afișeze secțiunea de testare a conexiunii și să se controleze nivelul de informații afișate?
@@ -237,6 +242,9 @@ smime encrypted message	mail	ro	Mesaj criptat S/MIME
 smime signed message	mail	ro	Mesaj semnat S/MIME
 smtp	mail	ro	SMTP
 sneak preview in list	mail	ro	Previzualizare mesaj
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	ro	Unii clienți nu reușesc să detecteze setul de caractere corect, dacă sunt activate liniile curgătoare
+spamtitan api url	mail	ro	SpamTitan API URL
+spamtitan integration requires epl version	mail	ro	Integrarea SpamTitan necesită versiunea EPL
 the imap server need to meet certain requirements and be configured for it:	mail	ro	Serverul IMAP trebuie să îndeplinească anumite cerințe ȘI să fie configurat în acest scop:
 the rule with priority %1 successfully saved!	mail	ro	Regula cu prioritatea %1 a fost salvată cu succes!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ro	Nu mai există spațiu pentru a stoca scriptul sieve, vă rugăm să verificați opțiunea sieve_maxscriptsize din configurația serverului de poștă electronică.

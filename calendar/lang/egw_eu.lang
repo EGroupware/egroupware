@@ -39,7 +39,6 @@ calendar-fieldname	calendar	eu	Egutegia-Eremuaren izena
 can't add alarms in the past !!!	calendar	eu	Alarmak ezin dira iraganean gehitu!
 canceled	calendar	eu	Ezeztatu
 charset of file	calendar	eu	Fitxategiaren Karaktere bilduma
-check all	calendar	eu	Guztia hautatu
 close the window	calendar	eu	Itxi leihoa
 compose a mail to all participants after the event is saved	calendar	eu	Partehartzaile guztie bidaltzeko posta bat sortu gertakaria gorde ondoren
 copy this event	calendar	eu	Gertakari hau kopiatu
@@ -64,7 +63,7 @@ default calendar view	calendar	eu	Egutegia aurkezteko modu lehenetsia
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	eu	Gertaera berri bat sortzean duen iraupen lehenetsia (minututan).
 default week view	calendar	eu	Asteko ikuspegia lehenetsita
 delete series	calendar	eu	Serieak ezabatu
-delete this alarm	calendar	eu	Alarma hau ezabatu
+delete this alarm	calendar	eu	Alarma hau ezabatu?
 delete this event	calendar	eu	Gertakari hau ezabatu
 delete this exception	calendar	eu	Salbuespen hau ezabatu
 delete this series of recurring events	calendar	eu	Gertakari serie hau ezabatu
@@ -292,7 +291,6 @@ weekview	calendar	eu	Astearen ikuspegia
 weekview with weekend	calendar	eu	Asteko ikuspegia asteburuarekin
 weekview without weekend	calendar	eu	Asteko ikuspegia astebukaerarik gabe
 whole day	calendar	eu	egun osoa
-wk	calendar	eu	Ast
 work day ends on	calendar	eu	Lan egunak bukatzen dira
 work day starts on	calendar	eu	Lan egunak hasten dira
 yearly	calendar	eu	Urtero

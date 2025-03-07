@@ -500,6 +500,7 @@ report as ham	mail	sk	Označiť ako NIE nevyžiadanú
 report as spam	mail	sk	Označiť ako nevyžiadanú
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	sk	Označiť správu ako dobrú (NIE nevyžiadanú) - filtre ako napr. spamTitan sa podľa toho učia rozpoznávať dobré správy
 report this email content as spam - spam solutions like spamtitan will learn	mail	sk	Označiť správu ako nevyžiadanú) - filtre ako napr. spamTitan sa podľa toho učia rozpoznávať Spam
+request for passphrase	mail	sk	Preinštalovaný priečinok %1
 required pear class mail/mimedecode.php not found.	mail	sk	Nenašla sa požadovaná trieda PEAR Mail/mimeDecode.php.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	sk	Nutné vypnúť, ak používate Dovecot s príznakmi private seen na zdieľanom alebo používateľskom priečinku!
 resend after how many days?	mail	sk	Po koľkých dňoch znovu odoslať?

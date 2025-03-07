@@ -1,3 +1,8 @@
+%1 directories and %2 files copied.	filemanager	id	%1 direktori dan %2 file disalin.
+%1 directories and %2 files deleted.	filemanager	id	%1 direktori dan %2 file dihapus.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	id	%1 kesalahan menyalin, %2 direktori dan %3 file disalin!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	id	%1 kesalahan menghapus, %2 direktori dan %3 file dihapus!
+%1 failed, %2 succeded	filemanager	id	%1 gagal, %2 berhasil.
 %1 files	common	id	%1 berkas
 %1 files unlocked.	filemanager	id	%1 file tidak terkunci.
 %1 starts with '%2'	filemanager	id	%1 diawali dengan '%2'
@@ -54,7 +59,7 @@ filesystem	filemanager	id	Sistem berkas
 filesystem check reported no problems.	filemanager	id	Pemeriksaan sistem file melaporkan tidak ada masalah.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	id	Sistem berkas: mount direktori (di dalam /var/lib/egroupware !) dari sistem berkas hos
 finally delete	filemanager	id	Akhirnya hapus
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	id	Terakhir, hapus semua versi lama dan file yang dihapus di bawah folder tertentu.\n\nIni TIDAK dapat dibatalkan!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	id	Terakhir, hapus semua versi lama dan file yang dihapus di bawah folder tertentu? Ini TIDAK dapat dibatalkan!
 finally delete this version	filemanager	id	Akhirnya hapus versi ini
 fix reported problems	filemanager	id	Memperbaiki masalah yang dilaporkan
 folder up	filemanager	id	Folder Up

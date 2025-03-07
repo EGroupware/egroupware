@@ -493,6 +493,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	pl	Podaj nowy numer wersji (musi być większy niż aktualny), pusta wartość jeżeli nie chcesz aktualizować pliku
 enter the new version number here (has to be > old_version)	common	pl	Podaj nowy numer wersji (musi być większy niż aktualny)
 enter your file name	common	pl	Wprowadź nazwę pliku
+enter your passphrase	common	pl	Wprowadź hasło
 enter your password	common	pl	Wprowadź hasło
 entry has been deleted sucessfully	common	pl	Dane zostały usunięte.
 entry not found!	common	pl	Nie znaleziono danych!
@@ -1031,6 +1032,7 @@ primary key	common	pl	Klucz główny
 primary key for the table, gets automaticaly indexed	common	pl	Klucz główny dla tabeli, zostaje automatycznie indeksowany
 primary style-sheet:	common	pl	Podstawowy arkusz stylu:
 print	common	pl	Drukuj
+print orientation	common	pl	Orientacja
 priority	common	pl	Priorytet
 private	common	pl	Prywatny
 programs	common	pl	Programy

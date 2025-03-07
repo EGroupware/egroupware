@@ -165,7 +165,7 @@ change access	admin	sl	Spreminjanje pravic dostopa
 change account_id	admin	sl	Spremeni ID računa
 change acl rights	admin	sl	Spremeni pravice ACL
 change config settings	admin	sl	Spremeni konfiguracijske nastavitve
-change domain of email address and aliases	admin	sl	spremenite domeno e-poštnega naslova in vzdevkov
+change domain of email address and aliases	admin	sl	Spremenite domeno e-poštnega naslova in vzdevkov
 change login screen message	admin	sl	Spremeni besedilo osnovnega zaslona
 change owner	admin	sl	Spremeni lastnika
 change password for %1	admin	sl	Spremeni geslo z %1
@@ -699,7 +699,7 @@ server type(mode)	admin	sl	Tip (način) strežnika
 server url	admin	sl	URL strežnika
 server username	admin	sl	Uporabniško ime strežnika
 sessions last 30 days	admin	sl	Seje zadnjih 30 dni
-set a random password	admin	sl	Nastavite naključno geslo.
+set a random password	admin	sl	Nastavite naključno geslo
 set preference values.	admin	sl	Vnesite vrednosti nastavitev.
 should exceptions contain a trace (including function arguments)	admin	sl	Če izjeme vsebujejo sled, vključno z argumenti funkcij.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sl	Ali naj vstopna stran vsebuje možnost izbire jezika (uporabno za demo-strani) ?

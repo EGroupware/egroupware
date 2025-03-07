@@ -496,6 +496,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	sl	Sem vnesite novo številko različice (> stara_različica), prazno za ne-obnovo datoteke
 enter the new version number here (has to be > old_version)	common	sl	Sem vnesite novo številko različice (mora biti > stara_različica)
 enter your file name	common	sl	Vnesite ime datoteke
+enter your passphrase	common	sl	Vnesite geslo
 enter your password	common	sl	Vnesite svoje geslo
 entry has been deleted sucessfully	common	sl	Vnos je bil uspešno izbrisan.
 entry not found!	common	sl	Ne najdem vnosa!
@@ -1073,6 +1074,7 @@ primary key	common	sl	Primarni ključ
 primary key for the table, gets automaticaly indexed	common	sl	Primarni ključ za tabelo je samodejno indeksiran
 primary style-sheet:	common	sl	Glavna CSS predloga
 print	common	sl	Natisni
+print orientation	common	sl	Orientacija
 priority	common	sl	Prioriteta
 private	common	sl	Zasebno
 programs	common	sl	Programi

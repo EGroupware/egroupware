@@ -9,7 +9,6 @@ category for 'working time'	admin	pt	Categoria para 'Tempo de trabalho'
 change category	timesheet	pt	Alterar categoria
 change owner when updating	timesheet	pt	Alterar o proprietário ao atualizar
 changed category to %1	timesheet	pt	Categoria alterada para 1%
-check all	timesheet	pt	Marcar todas
 create a single 'working time' timesheet per	timesheet	pt	Criar uma única folha de tempos “Tempo de trabalho” por
 create new links	timesheet	pt	Criar novas ligações
 creates a new field	timesheet	pt	cria um novo campo
@@ -36,6 +35,7 @@ error storing working time	timesheet	pt	Erro na memorização do tempo de trabal
 existing links	timesheet	pt	Ligações existentes
 exists	timesheet	pt	Existe
 export definition to use for nextmatch export	timesheet	pt	Definição Exportar para usar para exportação NextMatch
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	pt	Exporta entradas da folha de horas para um ficheiro CSV. No separador Opções, também pode escolher outros separadores.
 field must not be empty !!!	timesheet	pt	O campo não pode estar vazio !!!
 forgot to switch off working time?	common	pt	Esqueceu-se de desligar o tempo de trabalho?
 general fields:	timesheet	pt	Campos gerais:
@@ -56,6 +56,7 @@ links	timesheet	pt	Ligações
 links and attached files	timesheet	pt	Links e arquivos anexados
 list of files linked to the current record	timesheet	pt	Lista de arquivos vinculados ao registro atual
 max length of the input [, length of the inputfield (optional)]	timesheet	pt	comprimento máximo [, comprimento do campo (opcional)]
+mode	timesheet	pt	Modo
 modified	timesheet	pt	Modificado
 no details	timesheet	pt	Sem detalhes
 no project	timesheet	pt	Nenhum projeto
@@ -70,6 +71,7 @@ paused	timesheet	pt	Pausado
 permission denied!!!	timesheet	pt	Permissão negada!!!
 permissions error - %1 could not %2	timesheet	pt	Erro de permissões -% 1 não pôde% 2
 price	timesheet	pt	Preço
+project fields	timesheet	pt	Campos de projeto
 quantity	timesheet	pt	Quantidade
 recorded	timesheet	pt	Gravado
 replacements for inserting entries into documents	timesheet	pt	Substitutos para a inserção de entradas em documentos
@@ -80,6 +82,7 @@ saves the changes made and leaves	timesheet	pt	guarda as alterações e deixa
 saves this entry and add a new one	timesheet	pt	Guarda este registo e adiciona um novo
 select a price	timesheet	pt	Seleccione um preço
 select a project	timesheet	pt	Seleccione um projecto
+select the predefined status, when creating a new timesheet	preferences	pt	Selecionar o estado predefinido, ao criar uma nova entrada.
 start	timesheet	pt	Início
 start & stop timer	common	pt	Iniciar e parar o temporizador
 start timer	common	pt	Temporizador de arranque

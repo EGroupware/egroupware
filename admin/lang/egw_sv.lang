@@ -125,6 +125,7 @@ certificate validation in days	admin	sv	Certifikatsvalidering i dagar
 change access	admin	sv	Ändra åtkomsträttigheter
 change acl rights	admin	sv	Ändra ACL behörigheter
 change config settings	admin	sv	Ändra inställningar
+change domain of email address and aliases	admin	sv	Ändra domän för e-postadress och alias
 change login screen message	admin	sv	Ändra Startsidans meddelande
 check ip address of all sessions	admin	sv	Kontrollera IP adress på alla sessioner
 check items to <b>%1</b> to %2 for %3	admin	sv	Kontrollera punkterna till <b>%1</b> till %2 för %3
@@ -451,6 +452,7 @@ server password	admin	sv	Serverlösenord
 server type(mode)	admin	sv	Servertyp (läge)
 server url	admin	sv	URL för servern
 server username	admin	sv	Användarnamn för servern
+set a random password	admin	sv	Ange ett slumpmässigt lösenord
 set preference values.	admin	sv	Gör inställningar
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sv	Skall inloginsidan ha en valruta för språk (praktisk vid demosajter)?
 show access log	admin	sv	Visa Accesslogg
@@ -553,6 +555,7 @@ virtual mail manager	admin	sv	Virtuell E-post administration
 who would you like to transfer all records owned by the deleted user to?	admin	sv	Till vem vill du föra över SAMTLIGA poster som ägs av den raderade användaren?
 who would you like to transfer records owned by the deleted user to?	admin	sv	Кому вы хотите передать записи, принадлежащие удаленному пользователю?
 xml-rpc	admin	sv	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	sv	Du kan bara ändra hashen om du anger ett slumpmässigt lösenord eller om du för närvarande använder lösenord i klartext!
 you can use wizard to fix account settings or delete account.	admin	sv	Du kan använda guiden för att fixa kontoinställningar eller radera konto.
 you have entered an invalid expiration date	admin	sv	Du har angivit ett ogiltigt förfallodatum
 you have to enter a name, to create a new field!!!	admin	sv	Du måste ange ett namn för att skapa nytt fält!

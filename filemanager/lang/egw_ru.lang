@@ -138,7 +138,7 @@ filesystem	filemanager	ru	Файловая система
 filesystem check reported no problems.	filemanager	ru	Проверка файловой системы проблем не выявила
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	ru	Файловая система: смонтировать каталог (внутри /var/lib/egroupware !) из файловой системы хоста
 finally delete	filemanager	ru	Окончательно удалить
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ru	Окончательно удаляет все старые версии и удаленные файлы в данной папке.\n\nЭто НЕ может быть отменено!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ru	Окончательно удаляет все старые версии и удаленные файлы в данной папке? Это НЕ может быть отменено!
 finally delete this version	filemanager	ru	Окончательно удалить эту версию
 fix reported problems	filemanager	ru	Зафиксировано сообщение о проблемах
 folder up	filemanager	ru	Папка на один уровень выше

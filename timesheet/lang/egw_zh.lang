@@ -9,7 +9,6 @@ both: allow to use projectmanager and free project-names	admin	zh	两者：使�
 by	timesheet	zh	由
 category for 'working time'	admin	zh	工作时间 "分类
 change owner when updating	timesheet	zh	更新时更改所有者
-check all	timesheet	zh	全选
 comment by %1 at %2:	timesheet	zh	%1在%2的评论：
 create a single 'working time' timesheet per	timesheet	zh	为每个人创建一张 “工作时间 ”时间表
 create new links	timesheet	zh	创建新链接
@@ -35,8 +34,7 @@ error deleting the entry!!!	timesheet	zh	删除条目错误！
 error saving the entry!!!	timesheet	zh	保存条目错误！
 error storing working time	timesheet	zh	存储工作时间出错
 existing links	timesheet	zh	现有链接
-export to openoffice spreadsheet	timesheet	zh	导出到 OpenOffice 电子表格
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	zh	从您的Timesheet导出词条到CSV文件。CSV采用'逗号分隔'方法。然而在选项标签您仍能够选择其它分隔符。
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	zh	将时间工作表中的条目导出为 CSV 文件。在选项卡中还可以选择其他分隔符。
 field must not be empty !!!	timesheet	zh	字段不得为空！
 forgot to switch off working time?	common	zh	忘记关闭工作时间？
 full: use only projectmanager	admin	zh	完全：只使用项目管理
@@ -53,6 +51,7 @@ leaves without saveing	timesheet	zh	不保存
 length<br>rows	timesheet	zh	字段长度<br>字段行数
 links	timesheet	zh	链接
 max length of the input [, length of the inputfield (optional)]	timesheet	zh	输入的最大长度 [, 输入字段的长度 (可选)]
+mode	timesheet	zh	模式
 modified	timesheet	zh	修改
 name of current user, all other contact fields are valid too	timesheet	zh	目前用户的名称，所有其他联系人字段也是正确的
 new ticket submitted by %1 at %2	timesheet	zh	新传票由%1在%2提交
@@ -70,6 +69,7 @@ pause time	timesheet	zh	暂停时间
 paused	timesheet	zh	已暂停
 permission denied!!!	timesheet	zh	没有权限！
 price	timesheet	zh	价格
+project fields	timesheet	zh	项目字段
 projectmanager integration	admin	zh	项目管理集成
 quantity	timesheet	zh	数量
 recorded	timesheet	zh	已记录
@@ -80,6 +80,7 @@ saves the changes made and leaves	timesheet	zh	保存修改并离开
 saves this entry and add a new one	timesheet	zh	保存此条目并新添另一个
 select a price	timesheet	zh	选择一个价格
 select a project	timesheet	zh	选择一个项目
+select the predefined status, when creating a new timesheet	preferences	zh	创建新条目时，选择预定义状态。
 show a quantity sum (eg. to sum up negative overtime)	admin	zh	显示数量合计(如：合计超时加班的费用)
 start	timesheet	zh	开始
 start & stop timer	common	zh	开始和停止计时器

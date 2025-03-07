@@ -122,6 +122,7 @@ certificate validation in days	admin	tr	Gün içinde sertifika doğrulama
 change access	admin	tr	Erişim haklarını değiştirme
 change acl rights	admin	tr	ACL haklarını değiştir
 change config settings	admin	tr	Sistem ayarlarını değiştir
+change domain of email address and aliases	admin	tr	E-posta adresi ve takma adların etki alanını değiştirme
 change login screen message	admin	tr	Ana ekran mesajını değiştir
 check ip address of all sessions	admin	tr	Bütün oturumların IP'leri kontrol et
 check items to <b>%1</b> to %2 for %3	admin	tr	%3 ögelerini <b>%1</b>den %2'ye kadar seç
@@ -367,6 +368,7 @@ server type(mode)	admin	tr	Sunucu tipi (mod)
 server url	admin	tr	Sunucu URL
 server username	admin	tr	Sunucu kullanıcı adı
 sessions last 30 days	admin	tr	Son 30 günlük oturumlar
+set a random password	admin	tr	Rastgele bir parola belirleyin
 set preference values.	admin	tr	Ayar değerini giriniz
 should the login page include a language selectbox (useful for demo-sites) ?	admin	tr	Sistem giriş sayfası dil seçim kutusu içerecek mi?
 show access log	admin	tr	Erişim kütüğünü göster
@@ -440,6 +442,7 @@ view user account	admin	tr	Kullanıcı hesabını görüntüle
 who would you like to transfer all records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime taşımak istesiniz?
 who would you like to transfer records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime aktarmak istersiniz?
 xml-rpc	admin	tr	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	tr	Hash'i yalnızca rastgele bir parola belirlediyseniz veya şu anda düz metin parolalar kullanıyorsanız değiştirebilirsiniz!
 you can use wizard to fix account settings or delete account.	admin	tr	Hesap ayarlarını düzeltmek veya hesabı silmek için sihirbazı kullanabilirsiniz.
 you have entered an invalid expiration date	admin	tr	Geçersiz bir zaman aşım tarihi girdiniz
 you must add at least 1 permission or group to this account	admin	tr	Bu hesaba en az 1 izin ya da grup tanımlaması yapmalısınız

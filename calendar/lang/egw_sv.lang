@@ -127,7 +127,7 @@ default type of resources selection	calendar	sv	Förvald typ för resursval
 default week view	calendar	sv	Standard veckovy
 delete selected events	calendar	sv	Radera valda evenemang
 delete series	calendar	sv	Radera serie
-delete this alarm	calendar	sv	Radera larmet
+delete this alarm	calendar	sv	Radera detta larm?
 delete this event	calendar	sv	Radera händelsen
 delete this exception	calendar	sv	Radera undantaget
 delete this series of recurring events	calendar	sv	Radera återkommande händelse

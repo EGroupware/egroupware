@@ -84,6 +84,7 @@ flagged %1 messages as flagged in %2	mail	tr	%1 mesaj(lar)ı %2'de işaretlendi 
 flagged %1 messages as unflagged in %2	mail	tr	%1 mesaj(lar)ını %2'de etiketlenmemiş olarak işaretledi
 folder %1 %2 failed because of %3!	mail	tr	Klasör %1 %2, %3 nedeniyle başarısız oldu!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	tr	%1 klasörü başarıyla oluşturuldu, ancak abonelik %2 nedeniyle başarısız oldu
+forward to	mail	tr	İleriye doğru
 from	mail	tr	Nereden
 get acl rights failed from imap server!	mail	tr	IMAP sunucusundan ACL haklarını alma başarısız oldu!
 ham folder	mail	tr	Ham klasörü
@@ -192,6 +193,7 @@ read / unread	mail	tr	Okundu / Okunmadı
 real name	mail	tr	Gerçek isim
 real name email	mail	tr	Gerçek isim [E-posta]
 real name organization email	mail	tr	Gerçek isim Organizasyon [E-posta]
+reloaded folder %1	mail	tr	Klasör %1 yeniden yüklendi
 remember the password for	mail	tr	için şifreyi hatırlayın
 remove all	mail	tr	Tümünü kaldırın
 removing %1 from blacklisted email addresses failed because of %2	mail	tr	Kara listedeki e-posta adreslerinden %1'in kaldırılması %2 nedeniyle başarısız oldu
@@ -206,6 +208,7 @@ report as ham	mail	tr	Ham olarak bildir
 report as spam	mail	tr	Spam olarak bildir
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	tr	Bu e-posta içeriğini Ham (spam değil) olarak bildirin - spamTitan gibi spam çözümleri öğrenecektir
 report this email content as spam - spam solutions like spamtitan will learn	mail	tr	Bu e-posta içeriğini Spam olarak bildir - spamTitan gibi spam çözümleri öğrenecek
+request for passphrase	mail	tr	Parola için istek
 required pear class mail/mimedecode.php not found.	mail	tr	Gerekli PEAR sınıfı Mail/mimeDecode.php bulunamadı.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	tr	Paylaşılan veya kullanıcı klasöründe özel görülen bayraklarla Dovecot kullanıyorsanız devre dışı bırakmanız gerekir!
 resend after how many days?	mail	tr	Kaç gün sonra tekrar gönderin?
@@ -232,6 +235,7 @@ send message pgp encrypted: requires keys from all recipients!	mail	tr	PGP şifr
 server supports special-use folders	mail	tr	Sunucu özel kullanım klasörlerini destekler
 set predefined values for compose...	mail	tr	Oluşturma için önceden tanımlanmış değerleri ayarlayın ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	tr	İmza, bir yanıttan veya iletiden sonra (standart) veya önce eklenmeli mi ve imza oluşturma sırasında görünür ve değiştirilebilir olmalı mı?
+show all addresses	mail	tr	Tüm adresleri göster
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	tr	Ana ekran klasör bölmesinde tüm klasörleri (abone olunan VE abone olunmayan) gösterme
 show horizontal	mail	tr	Yatay göster
 show notification for new arriving mails	mail	tr	Yeni gelen postalar için bildirim göster
@@ -251,6 +255,9 @@ smime encrypted message	mail	tr	S/MIME şifreli mesaj
 smime signed message	mail	tr	S/MIME imzalı mesaj
 smtp	mail	tr	SMTP
 sneak preview in list	mail	tr	Mesaj önizlemesi
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	tr	Akan satırlar etkinleştirilmişse bazı istemciler doğru karakter kümesini algılayamaz
+spamtitan api url	mail	tr	SpamTitan API URL
+spamtitan integration requires epl version	mail	tr	SpamTitan entegrasyonu EPL sürümü gerektirir
 step 1: imap - incoming mail	mail	tr	Adım 1: IMAP - gelen e-posta
 step 2: folder	mail	tr	Adım 2: Klasör
 step 3: sieve - server side mail filtering	mail	tr	Adım 3: Sieve - sunucu tarafı e-posta filtreleme

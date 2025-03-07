@@ -270,6 +270,7 @@ real name email	mail	hu	Valódi név [Email]
 real name organization email	mail	hu	Valódi név Szervezet [Email]
 refresh time in minutes	mail	hu	Frissítési időintervallum percben
 reject with	mail	hu	elutasítás
+reloaded folder %1	mail	hu	Újratöltött mappa %1
 remember the password for	mail	hu	Emlékezzen a jelszóra
 remove all	mail	hu	Összes eltávolítása
 remove immediately	mail	hu	Azonnali eltávolítás
@@ -288,6 +289,7 @@ report as ham	mail	hu	Jelentés Ham-ként
 report as spam	mail	hu	Spamként jelenteni
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	hu	Jelentse ezt az e-mail tartalmát Ham-ként (nem spamként) - a spam megoldások, mint a SpamTitan, megtanulják
 report this email content as spam - spam solutions like spamtitan will learn	mail	hu	Jelentse ezt az e-mail tartalmat Spamként - a spam megoldások, mint a SpamTitan megtanulják
+request for passphrase	mail	hu	Jelszó kérése
 required pear class mail/mimedecode.php not found.	mail	hu	A szükséges PEAR osztály Mail/mimeDecode.php nem található.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	hu	Kötelező letiltani, ha a Dovecot-ot privát látott zászlókkal használja a megosztott vagy felhasználói mappán!
 save all	mail	hu	Összes mentése
@@ -317,6 +319,7 @@ server supports special-use folders	mail	hu	A kiszolgáló támogatja a speciál
 set flags	mail	hu	Jelölje meg az e-mailt
 set predefined values for compose...	mail	hu	Előre meghatározott értékek beállítása az összeállításhoz ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	hu	Az aláírás a válasz vagy a továbbítás után (standard) vagy előtt legyen-e beillesztve, és az aláírás látható és módosítható legyen-e az összeállítás során.
+show all addresses	mail	hu	Összes cím megjelenítése
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	hu	Az összes mappa (feliratkozott és leiratkozott) megjelenítése a fő képernyő mappatábláján.
 show notification for new arriving mails	mail	hu	Értesítés megjelenítése az újonnan érkező levelekről
 show test connection section and control the level of info displayed?	mail	hu	Tesztkapcsolat szakasz megjelenítése és a megjelenített információk szintjének szabályozása?
@@ -335,6 +338,9 @@ smime encrypted message	mail	hu	S/MIME titkosított üzenet
 smime signed message	mail	hu	S/MIME aláírással ellátott üzenet
 smtp	mail	hu	SMTP
 sneak preview in list	mail	hu	Üzenet előnézet
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	hu	Egyes kliensek nem ismerik fel a helyes karakterkészletet, ha a folyatott sorok engedélyezve vannak
+spamtitan api url	mail	hu	SpamTitan API URL
+spamtitan integration requires epl version	mail	hu	A SpamTitan integráció EPL verziót igényel
 start new messages with mime type plain/text or html?	mail	hu	Új üzenet írása egyszerű szöveg vagy HTML-ként?
 template folder	mail	hu	Sablonok mappa
 text	mail	hu	Szöveg

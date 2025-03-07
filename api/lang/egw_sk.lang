@@ -501,6 +501,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	sk	Zadajte sem nové číslo verzie (> stará verzia), prázdne znamená: bez aktualizácie súboru
 enter the new version number here (has to be > old_version)	common	sk	Zadajte sem nové číslo verzie (musí byť > stará verzia)
 enter your file name	common	sk	Zadajte názov súboru
+enter your passphrase	common	sk	Zadajte svoju prístupovú frázu
 enter your password	common	sk	Zadajte svoje heslo
 entry has been deleted sucessfully	common	sk	Položka bola úspešne odstránená.
 entry not found!	common	sk	Položka sa nenašla!
@@ -1087,6 +1088,7 @@ primary key	common	sk	Primárny kľúč
 primary key for the table, gets automaticaly indexed	common	sk	Primárny kľúč pre tabuľku, indexuje sa automaticky
 primary style-sheet:	common	sk	List primárneho štýlu:
 print	common	sk	Tlač
+print orientation	common	sk	Orientácia
 priority	common	sk	Priorita
 private	common	sk	Súkromné
 programs	common	sk	Programy

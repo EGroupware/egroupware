@@ -410,6 +410,7 @@ refused to delete folder inbox	mail	pt	Recusou-se a eliminar a pasta INBOX
 refused to delete folder with subfolders	mail	pt	recusou-se a excluir a pasta com subpastas
 reject with	mail	pt	rejeitar com
 reloaded account %1	mail	pt	Conta recarregada %1.
+reloaded folder %1	mail	pt	Pasta recarregada %1
 remember the password for	mail	pt	Lembrar a palavra-passe para
 remove all	mail	pt	Remover tudo
 remove immediately	mail	pt	Eliminar imediatamente
@@ -433,6 +434,7 @@ report as ham	mail	pt	Reportar como Ham
 report as spam	mail	pt	Reportar como Spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	pt	Denunciar este conteúdo de e-mail como Ham (não spam) - soluções de spam como o spamTitan aprenderão
 report this email content as spam - spam solutions like spamtitan will learn	mail	pt	Reportar este conteúdo de e-mail como Spam - soluções de spam como o spamTitan aprenderão
+request for passphrase	mail	pt	Pedido de frase-chave
 required pear class mail/mimedecode.php not found.	mail	pt	Classe PEAR requeridos Correio / mimeDecode.php não encontrado.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	pt	Necessário desativar se utilizar o Dovecot com bandeiras de visualização privada na pasta partilhada ou de utilizador!
 resend after how many days?	mail	pt	Reenviar após quantos dias?
@@ -492,6 +494,7 @@ set it as default:	mail	pt	Defini-lo como padrão:
 set predefined values for compose...	mail	pt	Definir valores pré-definidos para compor ...
 should new messages show up on the home page	mail	pt	Caso as novas mensagens aparecem na página inicial
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pt	A assinatura deve ser inserida depois (padrão) ou antes de uma resposta ou reencaminhamento, e a assinatura deve ser visível e alterável durante a composição.
+show all addresses	mail	pt	Mostrar todos os endereços
 show all folders	mail	pt	Mostrar todas as pastas
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pt	Mostrar todas as pastas (subscritas e não subscritas) no painel de pastas do ecrã principal
 show horizontal	mail	pt	Mostrar na horizontal
@@ -518,9 +521,11 @@ smime encrypted message	mail	pt	Mensagem encriptada S/MIME
 smime signed message	mail	pt	Mensagem assinada S/MIME
 smtp	mail	pt	SMTP
 sneak preview in list	mail	pt	Pré-visualização da mensagem
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	pt	Alguns clientes não conseguem detetar o conjunto de caracteres correto, se as linhas fluidas estiverem activadas
 sort order	mail	pt	Ordenar
 source	mail	pt	Fonte
 sources	mail	pt	Fontes
+spamtitan integration requires epl version	mail	pt	A integração do SpamTitan requer a versão EPL
 step 1: imap - incoming mail	mail	pt	Passo 1: IMAP - e-mails recebidos
 step 2: folder	mail	pt	Passo 2: Pasta
 step 3: sieve - server side mail filtering	mail	pt	Passo 3: Sieve - filtragem de correio do lado do servidor

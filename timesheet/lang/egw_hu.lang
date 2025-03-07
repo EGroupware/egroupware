@@ -9,7 +9,6 @@ both: allow to use projectmanager and free project-names	admin	hu	Mindkettő: le
 by	timesheet	hu	by
 category for 'working time'	admin	hu	Kategória 'Munkaidő'
 change owner when updating	timesheet	hu	Tulajdonosváltás frissítéskor
-check all	timesheet	hu	Összes kijelölese
 comment by %1 at %2:	timesheet	hu	%1 megjegyzése ekkor %2:
 create a single 'working time' timesheet per	timesheet	hu	Egyetlen „Munkaidő” munkaidő-nyilvántartás létrehozása egyenként
 create new links	timesheet	hu	Új hivatkozás létrehozása
@@ -34,7 +33,7 @@ error deleting the entry!!!	timesheet	hu	Bejegyzés törlése közben hiba lépe
 error saving the entry!!!	timesheet	hu	Bejegyzés mentése közben hiba lépett fel!!!
 error storing working time	timesheet	hu	Hiba a munkaidő tárolásában
 existing links	timesheet	hu	Meglévő hivatkozások
-export to openoffice spreadsheet	timesheet	hu	Exportálás OpenOffice Táblázatkezelő formátumban
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	hu	A bejegyzések exportálása az Időlapból egy CSV-fájlba. Az opciók lapon más elválasztójeleket is választhat.
 field must not be empty !!!	timesheet	hu	A mezőt ki kell tölteni!!!
 forgot to switch off working time?	common	hu	Elfelejtette kikapcsolni a munkaidőt?
 full: use only projectmanager	admin	hu	Teljes: csak a ProjectManager használata
@@ -52,6 +51,7 @@ leaves without saveing	timesheet	hu	kilépés mentés nélkül
 length<br>rows	timesheet	hu	Sorok<br>Hossza
 links	timesheet	hu	Hivatkozások
 max length of the input [, length of the inputfield (optional)]	timesheet	hu	a beviteli mező maximális hossza (opcionális)
+mode	timesheet	hu	Режим
 modified	timesheet	hu	Módosított
 no details	timesheet	hu	nincsenek részletek
 no project	timesheet	hu	Nincs projekt
@@ -67,6 +67,7 @@ pause time	timesheet	hu	Szünet ideje
 paused	timesheet	hu	Szüneteltetés
 permission denied!!!	timesheet	hu	Hozzáférés megtagadva!!!
 price	timesheet	hu	Ár
+project fields	timesheet	hu	Поля проекту
 projectmanager integration	admin	hu	ProjectManager integráció
 quantity	timesheet	hu	Mennyiség
 recorded	timesheet	hu	Felvett
@@ -77,6 +78,7 @@ saves the changes made and leaves	timesheet	hu	Változások mentése és kilép�
 saves this entry and add a new one	timesheet	hu	Bejegyzés elmentése és új hozzáadása
 select a price	timesheet	hu	Ár kiválasztása
 select a project	timesheet	hu	Projekt kiválasztása
+select the predefined status, when creating a new timesheet	preferences	hu	Виберіть попередньо визначений статус при створенні нового запису.
 show a quantity sum (eg. to sum up negative overtime)	admin	hu	Jelenítse meg a mennyiségi összesítést (pl. hogy összesítse a negatív túlmunkát is)
 start	timesheet	hu	Kezdés
 start & stop timer	common	hu	Az időzítő indítása és leállítása

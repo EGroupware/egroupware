@@ -106,7 +106,6 @@ change history	calendar	fi	Muuta historiaa
 change your status	calendar	fi	Muuta tila
 changed event-data applied	calendar	fi	Muuttuneet tapahtumatiedot sovellettu
 charset of file	calendar	fi	Tiedoston merkistö
-check all	calendar	fi	Merkitse kaikki
 choose a category	calendar	fi	Valitse kategoria
 choose owner of imported data	calendar	fi	Valitse tuotujen tietojen omistaja
 close the window	calendar	fi	Sulje ikkuna
@@ -151,7 +150,7 @@ delegated	calendar	fi	Delegoidut
 delete exceptions	calendar	fi	Poista poikkeukset
 delete selected events	calendar	fi	Poista valitut tapahtumat
 delete series	calendar	fi	Poista sarjat
-delete this alarm	calendar	fi	Poista tämä hälytys
+delete this alarm	calendar	fi	Poista tämä hälytys?
 delete this event	calendar	fi	Poista tämä tapahtuma
 delete this exception	calendar	fi	Poista tämä poikkeus
 delete this meeting for all participants	calendar	fi	Poista tämä kokous kaikkien osallistujien osalta
@@ -628,7 +627,6 @@ weekview without weekend	calendar	fi	Viikkonäkymä ilman viikonloppua
 which view to show on home page	calendar	fi	Näytettävä näkymä etusivulla
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	fi	Käyttäjien minimimäärä, että kalentereita ei näytetä erikseen. Oletus=5
 whole day	calendar	fi	Koko päivä
-wk	calendar	fi	Vk
 work day ends on	calendar	fi	Työpäivä päättyy kello
 work day starts on	calendar	fi	Työpäivä alkaa kello
 workday	calendar	fi	Työpäiva

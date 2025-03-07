@@ -3,7 +3,6 @@ all projects	timesheet	et	Kõik projektid
 ask to start and stop working time with session	timesheet	et	Küsi, et alustada ja lõpetada tööaeg koos seansiga
 category for 'working time'	admin	et	Kategooria 'Tööaeg'
 change owner when updating	timesheet	et	Omaniku muutmine uuendamisel
-check all	timesheet	et	Kontrolli kõik
 create a single 'working time' timesheet per	timesheet	et	Looge üks 'Tööaja' tööajatabel iga
 create new links	timesheet	et	Tee uued lingid
 creates a new field	timesheet	et	teeb uue välja
@@ -22,6 +21,7 @@ entry saved	timesheet	et	Kirje salvestatud
 error saving the entry!!!	timesheet	et	Viga kirje salvestamisel !!!
 error storing working time	timesheet	et	Viga tööaja salvestamisel
 existing links	timesheet	et	Eksisteerivad lingid
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	et	Ekspordib kanded ajalehest CSV-faili. Valikute vahekaardil saate valida ka muid eraldajaid.
 field must not be empty !!!	timesheet	et	Väli ei tohi jääda tühjaks !!!
 forgot to switch off working time?	common	et	Unustasite tööaja välja lülitada?
 global categories	timesheet	et	Globaalsed Kategooriad
@@ -33,6 +33,7 @@ last week	timesheet	et	Viimane nädal
 last year	timesheet	et	Viimane aasta
 leaves without saveing	timesheet	et	lahkub ilma salvestamatta
 links	timesheet	et	Lingid
+mode	timesheet	et	Režiim
 modified	timesheet	et	Muudetud
 no details	timesheet	et	mitte detailselt
 or endtime	timesheet	et	või Lõpuaeg
@@ -43,12 +44,14 @@ pause time	timesheet	et	Pausi aeg
 paused	timesheet	et	Pausitud
 permission denied!!!	timesheet	et	Ligipääs keelatud !!!
 price	timesheet	et	Hind
+project fields	timesheet	et	Projekti väljad
 quantity	timesheet	et	Kogus
 recorded	timesheet	et	Salvestatud
 restore this entry	timesheet	et	Selle kirje taastamine
 save & new	timesheet	et	Salvesta & Uus
 select a price	timesheet	et	Vali hind
 select a project	timesheet	et	Vali Projekt
+select the predefined status, when creating a new timesheet	preferences	et	Uue kirje loomisel valige eelnevalt määratud staatus.
 start	timesheet	et	Start
 start & stop timer	common	et	Tööaja käivitamine ja peatamine
 start timer	common	et	Käivitage taimer

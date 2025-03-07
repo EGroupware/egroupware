@@ -102,6 +102,7 @@ bulk changes	admin	bg	Групови промени
 bulk password reset	admin	bg	Групово възстановяване на паролата
 can be used to show groups by container, if enabled	admin	bg	Може да се използва за показване на групи по контейнер, ако е разрешено
 change access	admin	bg	Промяна на правата за достъп
+change domain of email address and aliases	admin	bg	Промяна на домейна на имейл адреса и псевдонимите
 checking push (green for success or red for failure)	admin	bg	Проверка на PUSH (зелено = ОК, червено = не е ОК)
 container	admin	bg	Контейнер
 copy of	admin	bg	Копие на
@@ -159,6 +160,7 @@ regular expression to find part to use as container	admin	bg	Редовен из
 requested	admin	bg	Заявена
 select accounts for which the custom field should be visible	admin	bg	Изберете сметки, за които потребителското поле трябва да бъде само за четене.
 serial number	admin	bg	Сериен номер
+set a random password	admin	bg	Задаване на произволна парола
 show groups in container based on	admin	bg	Показване на групите в контейнера въз основа на
 smtp only: to create only an smtp account	admin	bg	Създаване на акаунт само за SMTP без IMAP
 start	admin	bg	Старт
@@ -178,6 +180,7 @@ using native swoole push	admin	bg	Използване на native Swoole Push
 vacation messages with start- and end-date require an admin account to be set	admin	bg	Ваканционните съобщения с начална и крайна дата изискват задаване на администраторски акаунт!
 vacation notice	admin	bg	Известие за ваканция
 who would you like to transfer records owned by the deleted user to?	admin	bg	На кого искате да прехвърлите записите, притежавани от изтрития потребител?
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	bg	Можете да промените хеша само ако сте задали случайна парола или в момента използвате пароли в обикновен текст!
 you can set an initial value, which gets incremented every time a new serial get generated	admin	bg	можете да зададете първоначална стойност, която се увеличава всеки път, когато се генерира нов сериен файл
 you can use wizard to fix account settings or delete account.	admin	bg	Можете да използвате съветника, за да коригирате настройките на акаунта или да го изтриете.
 you need to select some users first!	admin	bg	Първо трябва да изберете някои потребители!

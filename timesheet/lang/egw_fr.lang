@@ -16,7 +16,6 @@ change category	timesheet	fr	Changer la catégorie
 change owner when updating	timesheet	fr	Changer le propriétaire lors de la mise à jour
 changed category to %1	timesheet	fr	Changer la catégorie en %1
 changed status	timesheet	fr	Statut modifié.
-check all	timesheet	fr	Vérifier tout
 choose 'creator' of imported data	timesheet	fr	Choisir le "créateur" des données importées.
 comment by %1 at %2:	timesheet	fr	Commentaire par %1 à %2:
 create a single 'working time' timesheet per	timesheet	fr	Créer une "Feuille de temps" unique par
@@ -52,9 +51,8 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	fr	Liens existants
 exists	timesheet	fr	Existe
 export definition to use for nextmatch export	timesheet	fr	Définition de l'export à utiliser pour l'export "nextmatch"
-export to openoffice spreadsheet	timesheet	fr	Export vers un classeur Office
 exports entries from your timesheet into a csv file.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV. CSV tient pour "Comma Separated Values". Dans l'onglet Options, vous pouvez aussi choisir d'autres séparateurs.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV. Dans l'onglet Options, vous pouvez aussi choisir d'autres séparateurs.
 field must not be empty !!!	timesheet	fr	Le champ ne doit pas être vide !
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 forgot to switch off working time?	common	fr	Avez-vous oublié d'arrêter votre compteur de temps de travail ?
@@ -129,7 +127,6 @@ select a project	timesheet	fr	Choisissez un projet
 select a status of the timesheet	timesheet	fr	Choisissez un statut de la feuille de temps
 select infolog	timesheet	fr	Choisissez un InfoLog
 select multiple timeshhets for a further action	timesheet	fr	Sélectionner plusieurs feuilles de temps pour un action
-select the predefined status, whan creating a new timesheet	preferences	fr	Choisissez un statut par défaut pour la création d'une nouvelle entrée.
 select the predefined status, when creating a new timesheet	preferences	fr	Choisissez un statut par défaut pour la création d'une nouvelle entrée.
 set to	timesheet	fr	Mettre à
 show a quantity sum (eg. to sum up negative overtime)	admin	fr	Afficher une somme de quantité, par exemple pour additionner des heures supplémentaires négatives
@@ -162,11 +159,9 @@ timer already running or paused	common	fr	Le timer est déjà lancé ou en pause
 timesheet	common	fr	Feuille de temps
 timesheet csv export	timesheet	fr	Export CSV de feuilles de temps
 timesheet csv import	timesheet	fr	Imports CSV de feuilles de temps
-timesheet fields:	timesheet	fr	Champs de feuilles de temps
 timesheet id	timesheet	fr	ID de feuille de temps
 timesheet list	timesheet	fr	Liste de feuilles de temps
 timesheet modified by %1 at %2	timesheet	fr	Feuille de temps modifié par by %1 à %2
-timesheet openoffice export	timesheet	fr	Export OpenOffice de feuille de temps
 timesheet status-%1 '%2' added.	timesheet	fr	Statut de feuille de temps - %1 '%2' ajouté.
 timesheet-%1 '%2' updated.	timesheet	fr	Feuille de temps - %1 '%2' mis à jour.
 timesheet-%1 deleted.	timesheet	fr	Feuille de temps - %1 supprimé.

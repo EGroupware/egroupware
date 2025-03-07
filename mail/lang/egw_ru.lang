@@ -318,6 +318,7 @@ real name email	mail	ru	Реальное имя [Email]
 real name organization email	mail	ru	Реальное имя Организация [Email]
 refresh time in minutes	mail	ru	Время обновления в минутах
 reject with	mail	ru	Отклонить с
+reloaded folder %1	mail	ru	Перезагруженная папка %1
 remember the password for	mail	ru	Запомнить пароль для
 remove all	mail	ru	Удалить все
 remove immediately	mail	ru	Удалить немедленно
@@ -336,6 +337,7 @@ report as ham	mail	ru	Пометить как не-спам
 report as spam	mail	ru	Пометить как спам
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	ru	Сообщите об этом содержимом электронной почты как о хаме (не спаме) - решения для борьбы со спамом, подобные spamTitan, будут изучены
 report this email content as spam - spam solutions like spamtitan will learn	mail	ru	Сообщить об этом сообщении как о спаме - решения для борьбы со спамом, такие как spamTitan, будут изучены
+request for passphrase	mail	ru	Запрос парольной фразы
 required pear class mail/mimedecode.php not found.	mail	ru	Необходимый PEAR class Mail/mimeDecode.php не найден.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ru	Требуется отключить, если вы используете Dovecot с флагами private seen на общей или пользовательской папке!
 restrict acl management	admin	ru	Ограничение управления правами ACL
@@ -373,6 +375,7 @@ set flags	mail	ru	Пометить электронную почту как
 set predefined values for compose...	mail	ru	Установите предопределенные значения для составления ...
 should new messages show up on the home page	mail	ru	отображать новые сообщения на домашней странице
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	ru	Должна ли подпись вставляться после (стандартно) или перед ответом или пересылкой, а также должна ли подпись быть видимой и изменяемой при составлении сообщения.
+show all addresses	mail	ru	Показать все адреса
 show all folders	mail	ru	Отображать все каталоги
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ru	Отображать в панели команд главной страницы все каталоги, как подписные, так и те, на которые пользователь не подписан
 show new messages on home page	mail	ru	отображать новые сообщения на домашней странице
@@ -394,9 +397,12 @@ smime encrypted message	mail	ru	Зашифрованное сообщение S/
 smime signed message	mail	ru	S/MIME подписанное сообщение
 smtp	mail	ru	SMTP
 sneak preview in list	mail	ru	Предварительный просмотр в списке
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	ru	Некоторые клиенты не могут определить правильную кодировку, если включены обтекаемые строки
 sort order	mail	ru	Порядок сортировки
 source	mail	ru	Исходный код
 sources	mail	ru	Исходные коды
+spamtitan api url	mail	ru	SpamTitan API URL
+spamtitan integration requires epl version	mail	ru	Для интеграции SpamTitan требуется версия EPL
 start new messages with mime type plain/text or html?	mail	ru	новые сообщения начинать как текст или HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	ru	Создать ответ на сообщение как текст (или HTML), или использовать формат сообщения по умолчанию?
 template folder	mail	ru	Папка шаблонов

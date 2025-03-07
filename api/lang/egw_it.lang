@@ -496,6 +496,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	it	Inserire il numero della nuova versione, > old_version, vuoto per nessun file di aggiornamento
 enter the new version number here (has to be > old_version)	common	it	Inserisci il numero della nuova versione qui (deve essere > old_version)
 enter your file name	common	it	Inserisci il nome del file
+enter your passphrase	common	it	Inserire la passphrase
 enter your password	common	it	Inserisci la password
 entry has been deleted sucessfully	common	it	La voce è stata cancellata correttamente.
 entry not found!	common	it	Voce non trovata!
@@ -1076,6 +1077,7 @@ primary key	common	it	Chiave Primaria
 primary key for the table, gets automaticaly indexed	common	it	Primary key for the table, gets automaticaly indexed
 primary style-sheet:	common	it	Foglio di stile primario:
 print	common	it	Stampa
+print orientation	common	it	Orientamento
 priority	common	it	Priorità
 private	common	it	Privato
 programs	common	it	Programmi

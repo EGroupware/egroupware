@@ -160,7 +160,7 @@ filesystem	filemanager	en	Filesystem
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	en	Filesystem: mount directory (inside /var/lib/egroupware !) from host filesystem
 finally delete	filemanager	en	Finally delete
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	en	Finally delete all older versions and deleted files under given folder. This can NOT be undone!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	en	Finally delete all older versions and deleted files under given folder? This can NOT be undone!
 finally delete this version	filemanager	en	Finally delete this version
 fix reported problems	filemanager	en	Fix reported problems
 folder up	filemanager	en	Folder up

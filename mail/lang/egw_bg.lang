@@ -260,7 +260,7 @@ forward as attachment	mail	bg	препращане като приложение
 forward inline	mail	bg	препращане в съобщението
 forward messages to:	mail	bg	Препращане на съобщения към:
 forward messages:	mail	bg	Препращащи съобщения:
-forward to	mail	bg	препрати до
+forward to	mail	bg	Препрати до
 forward to address (*):	mail	bg	Препрати до адрес (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	bg	Предаването на това съобщение не бе успешно, изглежда че съдържанието на това съобщение е криптирано и не може да бъде дешифрирано правилно.
 forwards	mail	bg	Препраща
@@ -421,11 +421,13 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	bg	Известия Push
 quicksearch	mail	bg	Бързо търсене
 quicksearch (with cc)	mail	bg	Бързо търсене (+Копиране)
+read / unread	mail	bg	Прочетено / Непрочетено
 real name	mail	bg	Истинско име
 real name email	mail	bg	Истинско име [Имейл]
 real name organization email	mail	bg	Истинско име Организация [Имейл]
 refresh time in minutes	mail	bg	Време на опресняване в минути
 reject with	mail	bg	откажи с
+reloaded folder %1	mail	bg	Презареждане на папка %1
 remember the password for	mail	bg	Запомнете паролата за
 remove all	mail	bg	Премахване на всички
 remove immediately	mail	bg	Премахни незабавно
@@ -444,6 +446,7 @@ report as ham	mail	bg	Докладвайте като Ham
 report as spam	mail	bg	Докладвайте като спам
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	bg	Докладвайте това съдържание на имейла като Ham (не спам) - решенията за спам като spamTitan ще се научат
 report this email content as spam - spam solutions like spamtitan will learn	mail	bg	Докладвайте това имейл съдържание като спам - спам решения като spamTitan ще се научат
+request for passphrase	mail	bg	Запитване за парола
 required pear class mail/mimedecode.php not found.	mail	bg	Не е намерен необходимият PEAR клас Mail/mimeDecode.php.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	bg	Задължително се деактивира, ако използвате Dovecot с флагове за частно виждане на споделена или потребителска папка!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	bg	S/MIME Криптирането е неуспешно, тъй като не е намерен сертификат за адреса на подателя: %1
@@ -473,6 +476,7 @@ serverside vacationnotice (via sieve) are not activated	mail	bg	Съобщени
 set flags	mail	bg	Маркирайте имейл като
 set predefined values for compose...	mail	bg	Задаване на предварително определени стойности за compose ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	bg	Трябва ли подписът да се поставя след (стандартно) или преди отговор или препращане и трябва ли подписът да е видим и да може да се променя по време на съставяне.
+show all addresses	mail	bg	Покажи всички адреси
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	bg	Показва всички папки (абонирани и неабонирани) в панела с папки на главния екран.
 show notification for new arriving mails	mail	bg	Показване на известие за нови пристигащи писма
 show test connection section and control the level of info displayed?	mail	bg	Да се показва раздел за тестова връзка и да се контролира нивото на показваната информация?
@@ -492,6 +496,9 @@ smime encrypted message	mail	bg	S/MIME криптирано съобщение
 smime signed message	mail	bg	S/MIME подписано съобщение
 smtp	mail	bg	SMTP
 sneak preview in list	mail	bg	Предварителен преглед на съобщението
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	bg	Някои клиенти не успяват да открият правилния набор от символи, ако са разрешени поточни линии
+spamtitan api url	mail	bg	SpamTitan API URL
+spamtitan integration requires epl version	mail	bg	Интеграцията на SpamTitan изисква версия EPL
 start new messages with mime type plain/text or html?	mail	bg	Започва нови съобщения като чист текст или HTML?
 template folder	mail	bg	Папка "Шаблони"
 text/plain	mail	bg	текст

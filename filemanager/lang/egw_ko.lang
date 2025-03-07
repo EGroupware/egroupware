@@ -1,3 +1,8 @@
+%1 directories and %2 files copied.	filemanager	ko	%1 디렉터리 및 %2 파일을 복사했습니다.
+%1 directories and %2 files deleted.	filemanager	ko	%1 디렉터리 및 %2 파일이 삭제되었습니다.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	ko	%1 복사 중 오류, %2 디렉터리 및 %3 파일이 복사되었습니다!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	ko	%1 삭제 중 오류, %2 디렉터리 및 %3 파일이 삭제되었습니다!
+%1 failed, %2 succeded	filemanager	ko	%1 실패, %2 성공했습니다.
 applications	common	ko	응용프로그램들
 classic	filemanager	ko	표준 도구 모음
 comment	filemanager	ko	커멘트
@@ -34,7 +39,7 @@ filesystem	filemanager	ko	파일 시스템
 filesystem check reported no problems.	filemanager	ko	파일 시스템 검사에서 문제가 없는 것으로 보고되었습니다.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	ko	파일 시스템: 호스트 파일 시스템에서 디렉토리(/var/lib/egroupware 내부!)를 마운트합니다.
 finally delete	filemanager	ko	최종 삭제
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ko	지정된 폴더 아래의 모든 이전 버전과 삭제된 파일을 최종 삭제합니다.\n\n이 작업은 실행 취소할 수 없습니다!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	ko	마지막으로 지정된 폴더에서 이전 버전과 삭제된 파일을 모두 삭제하셨나요? 이것은 되돌릴 수 없습니다!
 finally delete this version	filemanager	ko	마지막으로 이 버전 삭제
 fix reported problems	filemanager	ko	보고된 문제 수정
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	ko	애플리케이션 항목에 링크된 파일(/apps/앱명/id/ 내부)의 경우 해당 애플리케이션의 자리 표시자도 사용할 수 있습니다. 사용 가능한 플레이스홀더 목록은 특정 애플리케이션을 참조하세요.

@@ -1,4 +1,9 @@
 %1 already exists as a file	filemanager	lv	%1 jau pastāv kā fails
+%1 directories and %2 files copied.	filemanager	lv	%1 direktoriju un %2 failu kopēšana.
+%1 directories and %2 files deleted.	filemanager	lv	%1 direktoriju un %2 failu dzēšana.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	lv	%1 kļūdas kopēšanā, %2 direktoriji un %3 faili ir kopēti!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	lv	%1 kļūdas dzēšot, %2 direktoriji un %3 faili dzēsti!
+%1 failed, %2 succeded	filemanager	lv	%1 neizdevās, %2 izdevās.
 %1 files unlocked.	filemanager	lv	%1 faili atbloķēti.
 administrators	filemanager	lv	administratori
 applications	common	lv	Aplikācijas
@@ -60,7 +65,7 @@ filesystem	filemanager	lv	Failu sistēma
 filesystem check reported no problems.	filemanager	lv	Failu sistēmas pārbaude ziņoja, ka problēmu nav.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	lv	Failu sistēma: pievienojiet direktoriju (iekšpusē /var/lib/egroupware !) no resursdatora failu sistēmas.
 finally delete	filemanager	lv	Visbeidzot dzēst
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	lv	Beidzot izdzēš visas vecākās versijas un izdzēstos failus dotajā mapē.\n\nTo nevar atcelt!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	lv	Beidzot izdzēš visas vecākās versijas un izdzēstos failus dotajā mapē? To nevar atcelt!
 finally delete this version	filemanager	lv	Beidzot dzēst šo versiju
 fix reported problems	filemanager	lv	Labot ziņotās problēmas
 folder up	filemanager	lv	Mapi uz augšu

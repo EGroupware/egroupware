@@ -14,7 +14,6 @@ by	timesheet	id	oleh
 category for 'working time'	admin	id	Kategori untuk 'Waktu kerja'
 change owner when updating	timesheet	id	Ubah pemilik saat memperbarui
 changed status	timesheet	id	status yang diubah
-check all	timesheet	id	Contreng semua
 comment by %1 at %2:	timesheet	id	Komentar oleh %1 pada %2:
 create a single 'working time' timesheet per	timesheet	id	Membuat satu lembar waktu 'Waktu kerja' per
 create new links	timesheet	id	Bikin tautan baru
@@ -40,7 +39,7 @@ error deleting the entry!!!	timesheet	id	Error deleting the entry!!!
 error saving the entry!!!	timesheet	id	Error saving the entry!!!
 error storing working time	timesheet	id	Kesalahan menyimpan waktu kerja
 existing links	timesheet	id	Tautan yang ada
-export to openoffice spreadsheet	timesheet	id	Expor ke OpenOffice Spreadsheet
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	id	Mengekspor entri dari Lembar Waktu ke dalam file CSV. Di Tab opsi Anda juga dapat memilih pemisah lainnya.
 field must not be empty !!!	timesheet	id	Field tidak boleh kosong !!!
 forgot to switch off working time?	common	id	Lupa mematikan waktu kerja?
 full: use only projectmanager	admin	id	Full: hanya menggunakan ManajerProyek
@@ -58,6 +57,7 @@ leave it empty for a full week	timesheet	id	Biarkan kosong bila seminggu penuh
 leaves without saveing	timesheet	id	tinggalkan tanpa menyimpan
 length<br>rows	timesheet	id	Length<br>Rows
 links	timesheet	id	Tautan
+mode	timesheet	id	Mode
 modified	timesheet	id	Diubah
 new ticket submitted by %1 at %2	timesheet	id	Tiket baru dikirimkan oleh %1 pada %2
 new timesheet submitted by %1 at %2	timesheet	id	LembarWaktu baru dikirim oleh %1 pada %2
@@ -78,6 +78,7 @@ pause time	timesheet	id	Jeda waktu
 paused	timesheet	id	Dijeda
 permission denied!!!	timesheet	id	Ijin ditolak!!!
 price	timesheet	id	Harga
+project fields	timesheet	id	Bidang proyek
 projectmanager integration	admin	id	Terpadu dengan ManajerProyek
 quantity	timesheet	id	Quantity
 recorded	timesheet	id	Direkam
@@ -91,6 +92,7 @@ select a project	timesheet	id	Pilih proyek
 select a status of the timesheet	timesheet	id	pilih status LembarWaktu
 select infolog	timesheet	id	pilih InfoLog
 select multiple timeshhets for a further action	timesheet	id	Pilih beberapa lembarwaktu untuk tindakan berikutnya
+select the predefined status, when creating a new timesheet	preferences	id	Pilih status yang telah ditentukan sebelumnya, saat membuat entri baru.
 start	timesheet	id	Mulai
 start & stop timer	common	id	Mulai & hentikan pengatur waktu
 start timer	common	id	Mulai pengatur waktu

@@ -96,9 +96,12 @@ application	common	hu	Alkalmazás
 applications	common	hu	Alkalmazások
 apply	common	hu	Alkalmaz
 apps & license	common	hu	Alkalmazások & licenc
+apps &amp; license	common	hu	Alkalmazások és licenc
 april	common	hu	Április
 are you sure you want to delete these entries ?	common	hu	Biztosan törölni akarja ezeket a bejegyzéseket?
 are you sure you want to delete this entry ?	common	hu	Biztosan törölni akarja ezt a bejegyzést?
+are you sure you want to logout?	common	hu	Biztos, hogy ki szeretne jelentkezni?
+are you sure, you would like to delete the backup key?	common	hu	Biztos, hogy törölni szeretné a biztonsági kulcsot?
 argentina	common	hu	Argentína
 armenia	common	hu	Örményország
 aruba	common	hu	Aruba
@@ -110,6 +113,7 @@ australia	common	hu	Ausztrália
 austria	common	hu	Ausztria
 authenticate	common	hu	Hitelesítés
 author	common	hu	Szerző
+automatic update check failed, you need to check manually!	common	hu	Az automatikus frissítésellenőrzés sikertelen, manuálisan kell ellenőriznie!
 autosave default category	common	hu	Alapértelmezett kategória automatikus mentése.
 avatar	common	hu	Avatar
 azerbaijan	common	hu	Azerbajdzsán
@@ -322,6 +326,7 @@ enabled	common	hu	Engedélyezve
 end date	common	hu	Befejezés dátuma
 end time	common	hu	Befejezés ideje
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hu	Kérem adja meg az EGroupware URL helyét.<br>Például: https://egw.domain.com/eroupware vagy /egroupware<br><b>Lezáró / jel nélkül!<b>
+enter your passphrase	common	hu	Adja meg a jelszavát
 entry has been deleted sucessfully	common	hu	Bejegyzés törölve
 entry not found!	common	hu	Bejegyzés nem létezik!
 entry saved	common	hu	Bejegyzés elmentve
@@ -726,6 +731,7 @@ previous page	common	hu	Előző oldal
 primary group	common	hu	Elsődleges csoport
 primary style-sheet:	common	hu	Elsődleges stíluslap
 print	common	hu	Nyomtat
+print orientation	common	hu	Tájolása
 priority	common	hu	Prioritás
 private	common	hu	Privát
 programs	common	hu	Programok

@@ -130,6 +130,7 @@ australia	common	lv	AUSTRĀLIJA
 austria	common	lv	AUSTRIJA
 authenticate	common	lv	Autentificēt
 author	common	lv	Autors
+automatic update check failed, you need to check manually!	common	lv	Automātiskā atjaunināšanas pārbaude nav izdevusies, jums ir jāveic pārbaude manuāli!
 autosave default category	common	lv	Automātiski saglabāt Noklusēto Kategoriju.
 avatar	common	lv	Avatar
 azerbaijan	common	lv	AZERBAIDŽĀNA
@@ -352,6 +353,7 @@ enter filename to upload and attach, use [browse...] to search for it	common	lv	
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
 enter the new version number here (> old_version), empty for no update-file	common	lv	Ievadi jaunās versijas numuru šeit (>vecā versija), atstāj tukšu, lai neielādētu datni
 enter the new version number here (has to be > old_version)	common	lv	Ievadi jaunās versijas numuru šeit (jābūt>vecā_versija)
+enter your passphrase	common	lv	Ievadiet savu piekļuves frāzi
 entry has been deleted sucessfully	common	lv	Leraksts tika veiksmīgi izdzēsts.
 entry saved	common	lv	Leraksts saglabāts
 entry updated sucessfully	common	lv	Leraksts veiksmīgi tika atjaunināts.
@@ -792,6 +794,7 @@ primary key	common	lv	Primārā atslēga
 primary key for the table, gets automaticaly indexed	common	lv	Tabulas primārā atslēga tiek indeksēta automātiski
 primary style-sheet:	common	lv	Primārā stilu lapa:
 print	common	lv	Drukāt
+print orientation	common	lv	Orientēšanās
 priority	common	lv	Prioritāte
 private	common	lv	Privātos
 project	common	lv	Projekts

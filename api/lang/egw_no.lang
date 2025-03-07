@@ -125,6 +125,7 @@ applies the changes made	common	no	Lagre utførte endringer
 applies the changes to the given version of the template	common	no	Lagre utførte endringer til en gitt versjon av malen
 apply	common	no	Utfør
 apps & license	common	no	Apper og lisenser
+apps &amp; license	common	no	Apper og lisens
 april	common	no	April
 are you sure you want to delete these entries ?	common	no	Er du sikkert på at du vil slette disse innslagene?
 are you sure you want to delete this entry ?	common	no	Er du sikker du vil slette dette innslaget?
@@ -364,6 +365,7 @@ end date	common	no	Sluttdato
 end time	common	no	Slutt tidspunkt
 enter a search pattern	common	no	Registrer en søkestreng
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Skriv inn EGroupwares Internett adresse (URL).<br> F.eks: https://egw.domain.com/egroupware or /egroupware<br><b>Ingen avsluttende skråstrek</b>
+enter your passphrase	common	no	Skriv inn passordfrasen din
 entry has been deleted sucessfully	common	no	Innslaget ble slettet.
 entry saved	common	no	Registrering lagret
 entry updated sucessfully	common	no	Innslaget ble oppdatert.
@@ -793,6 +795,7 @@ primary key	common	no	Hovednøkkel
 primary key for the table, gets automaticaly indexed	common	no	Hovednøkkel for tabellen, blir automatisk indeksert
 primary style-sheet:	common	no	Primær style-sheet:
 print	common	no	Skriv ut
+print orientation	common	no	Orientering
 priority	common	no	Prioritet
 private	common	no	Privat
 project	common	no	Prosjekt

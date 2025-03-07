@@ -1,3 +1,8 @@
+%1 directories and %2 files copied.	filemanager	et	%1 kataloogid ja %2 failid kopeeritud.
+%1 directories and %2 files deleted.	filemanager	et	%1 kataloogid ja %2 failid kustutatud.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	et	%1 kopeerimisviga, %2 kataloogid ja %3 failid kopeeritud!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	et	%1 error deleting, %2 kataloogid ja %3 failid kustutatud!
+%1 failed, %2 succeded	filemanager	et	%1 ebaõnnestus, %2 õnnestus.
 %1 files unlocked.	filemanager	et	%1 failid on lukustamata.
 applications	common	et	Rakendused
 classic	filemanager	et	Standardne tööriistariba
@@ -36,7 +41,7 @@ filesystem	filemanager	et	Failisüsteem
 filesystem check reported no problems.	filemanager	et	Failisüsteemi kontroll ei ole probleeme.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	et	Failisüsteem: mount-kataloog (/var/lib/egroupware sees !) host-failisüsteemist.
 finally delete	filemanager	et	Lõpuks kustutage
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	et	Lõplikult kustutab kõik vanemad versioonid ja kustutatud failid antud kausta alt.\n\nSeda ei saa tühistada!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	et	Lõplikult kustutab kõik vanemad versioonid ja kustutatud failid antud kausta alt? Seda ei saa tühistada!
 finally delete this version	filemanager	et	Lõplikult kustutada see versioon
 fix reported problems	filemanager	et	Parandage teatatud probleemid
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	et	Rakenduse kirjega seotud failide puhul (/apps/appname/id/ sees) on ka selle rakenduse paigutussätted saadaval. Vt konkreetse rakenduse puhul loetelu olemasolevatest paigutussalvestitest.
@@ -63,8 +68,10 @@ move	filemanager	et	liiguta
 noone	filemanager	et	Mittekeegi
 notebookbar	filemanager	et	Tabbed
 open	filemanager	et	avatud
+open documents with collabora, if permissions are given	filemanager	et	Dokumentide avamine Collabora Online'iga, kui õigused on antud
 password for webdav and smb, use $pass for password of logged in user	filemanager	et	Parool WebDAVi ja SMB jaoks, kasutage $pass sisselogitud kasutaja parooliks.
 path and query-parameters, smb: share and optional path (with /)	filemanager	et	Path ja päringuparameetrid, SMB: share ja valikuline tee (koos /-ga)
+permission denied!	filemanager	et	Lubade andmine keelatud!
 permissions	filemanager	et	Õigused
 preview	filemanager	et	Eelvaade
 protocol to use	filemanager	et	Kasutatav protokoll
@@ -85,5 +92,9 @@ renamed %1 to %2.	filemanager	et	Ümbernimetamine %1 ümber %2-ks
 save changes	filemanager	et	Salvesta muudatused
 show	filemanager	et	Näita
 size	filemanager	et	suurus
+smb, webdavs and vfs require a username!	filemanager	et	SMB, WebDAV ja VFS nõuavad kasutajanime!
+smb: mount samba or windows fileserver shares	filemanager	et	SMB: Samba või Windowsi failiserverite jagamiste ühendamine
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	et	Dokument võib sisaldada paigutusi nagu {{%3}}, mis asendatakse andmetega (%1täielik loetelu paigutuste nimedest%2).
 up	filemanager	et	üles
+username for webdav and smb, use $user for name of logged in user	filemanager	et	WebDAV ja SMB puhul kasutajanimi, kasuta $user sisselogitud kasutaja nime
 you need to become root, to enable or disable versioning on a directory!	filemanager	et	Sa pead saama superuser, et lubada või keelata kausta versioonimine!

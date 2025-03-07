@@ -111,7 +111,6 @@ change history	calendar	ru	Изменить историю
 change your status	calendar	ru	Изменить ваш статус
 changed event-data applied	calendar	ru	Применены измененные данные о событиях
 charset of file	calendar	ru	Кодировка файла
-check all	calendar	ru	Проверить все
 choose a category	calendar	ru	Изменить категорию
 choose owner of imported data	calendar	ru	Выберите владельца импортированных данных
 close the window	calendar	ru	Закрыть окно
@@ -167,7 +166,7 @@ delegated	calendar	ru	Поручено
 delete exceptions	calendar	ru	Удалить исключения
 delete selected events	calendar	ru	Удалить выбранные события
 delete series	calendar	ru	Удалить серии
-delete this alarm	calendar	ru	Удалить данный сигнал
+delete this alarm	calendar	ru	Удалить данный сигнал?
 delete this event	calendar	ru	Удалить данное событие
 delete this exception	calendar	ru	Удалить данное исключение
 delete this meeting for all participants	calendar	ru	Удалить это собрание для всех участников
@@ -695,7 +694,6 @@ which view to show on home page	calendar	ru	Какой обзор использ
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	ru	Минимальное количество пользователей для консолидированного обзора дня и недели. По умолчанию = 5
 whole day	calendar	ru	Целый день
 with credentials included	calendar	ru	Включая уполномоченных
-wk	calendar	ru	Раб
 work day ends on	calendar	ru	Рабочий день заканчивается в
 work day starts on	calendar	ru	Рабочий день начинается в
 workday	calendar	ru	Рабочий день

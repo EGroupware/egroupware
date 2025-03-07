@@ -45,6 +45,7 @@ certificate	admin	lt	Sertifikatas
 certificate details	admin	lt	Sertifikato informacija
 certificate validation in days	admin	lt	Sertifikato patvirtinimas per kelias dienas
 change access	admin	lt	Keisti prieigos teises
+change domain of email address and aliases	admin	lt	Pakeisti el. pašto adreso domeną ir slapyvardžius
 container	admin	lt	Konteineris
 current certificate	admin	lt	Dabartinis sertifikatas
 custom 1	admin	lt	Pasirinktinis 1
@@ -75,6 +76,7 @@ own categories	admin	lt	Savos kategorijos
 own install id	admin	lt	Nuosavas diegimo ID
 own install id:	admin	lt	Nuosavas diegimo ID:
 regular expression to find part to use as container	admin	lt	Reguliarioji išraiška daliai, kurią galima naudoti kaip konteinerį, rasti
+set a random password	admin	lt	Nustatykite atsitiktinį slaptažodį
 show groups in container based on	admin	lt	Rodyti grupes konteineryje pagal
 smtp only: to create only an smtp account	admin	lt	Sukurti tik SMTP paskyrą be IMAP
 total records	admin	lt	Iš viso įrašų
@@ -91,5 +93,6 @@ users choice	admin	lt	Vartotojo pasirinkimas
 vacation messages with start- and end-date require an admin account to be set	admin	lt	Atostogų pranešimams su pradžios ir pabaigos data reikia nustatyti administratoriaus paskyrą!
 vacation notice	admin	lt	Pranešimas apie atostogas
 who would you like to transfer records owned by the deleted user to?	admin	lt	Kam norėtumėte perkelti pašalintam naudotojui priklausančius įrašus?
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	lt	Slaptažodį galite pakeisti tik tuo atveju, jei nustatėte atsitiktinį slaptažodį arba šiuo metu naudojate paprastojo teksto slaptažodžius!
 you can use wizard to fix account settings or delete account.	admin	lt	Paskyros nustatymams pataisyti arba paskyrai ištrinti galite naudoti vedlį.
 you need to select some users first!	admin	lt	Pirmiausia turite pasirinkti kai kuriuos naudotojus!

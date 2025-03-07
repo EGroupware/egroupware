@@ -1,4 +1,9 @@
 %1 already exists as a file	filemanager	no	%1 finnes allerede som en fil
+%1 directories and %2 files copied.	filemanager	no	%1 kataloger og %2 filer kopiert.
+%1 directories and %2 files deleted.	filemanager	no	%1 kataloger og %2 filer slettet.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	no	%1 feil ved kopiering, %2 kataloger og %3 filer kopiert!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	no	%1 feil ved sletting, %2 kataloger og %3 filer slettet!
+%1 failed, %2 succeded	filemanager	no	%1 mislyktes, %2 lyktes.
 administrators	filemanager	no	administratorer
 applications	common	no	Applikasjoner
 cancel editing %1 without saving	filemanager	no	Avbryt redigering %1 uten å lagre
@@ -60,7 +65,7 @@ filesystem	filemanager	no	Filsystem
 filesystem check reported no problems.	filemanager	no	Kontrollen av filsystemet rapporterte ingen problemer.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	no	Filsystem: montere katalog (i /var/lib/egroupware !) fra vertsfilsystemet
 finally delete	filemanager	no	Slett til slutt
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	no	Slett til slutt alle eldre versjoner og slettede filer under en gitt mappe.\n\n\nDette kan IKKE angres!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	no	Slett til slutt alle eldre versjoner og slettede filer under en gitt mappe? nDette kan IKKE angres!
 finally delete this version	filemanager	no	Slett endelig denne versjonen
 fix reported problems	filemanager	no	Løs rapporterte problemer
 folder up	filemanager	no	Mappe opp

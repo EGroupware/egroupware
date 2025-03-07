@@ -154,7 +154,7 @@ filesystem	filemanager	bg	Файлова система
 filesystem check reported no problems.	filemanager	bg	При проверката на файловата система няма проблеми.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	bg	Файлова система: монтиране на директория (вътре в /var/lib/egroupware !) от файловата система на хоста
 finally delete	filemanager	bg	Изтриване без отмяна!
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	bg	Накрая изтрийте всички по-стари версии и изтрити файлове в дадена директория. \n\n Това НЕ МОЖЕ да бъде отменено!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	bg	Да изтриете накрая всички по-стари версии и изтрити файлове в дадена папка? Това НЕ може да бъде върнато!
 finally delete this version	filemanager	bg	Накрая изтрийте тази версия
 fix reported problems	filemanager	bg	Поправете докладваните проблеми
 folder up	filemanager	bg	Нагоре (в директориите)
@@ -221,6 +221,7 @@ paste link	filemanager	bg	Поставяне на копираната връз�
 path %1 not found or not a directory!	filemanager	bg	Посочената директория %1 не е намерена или не е директория!
 path and query-parameters, smb: share and optional path (with /)	filemanager	bg	Път и параметри на заявката, SMB: дял и незадължителен път (с /)
 percentage	filemanager	bg	Процент
+permission denied!	filemanager	bg	Разрешението е отказано!
 permissions	filemanager	bg	Права
 permissions of %1 changed.	filemanager	bg	Права на %1 променени.
 please select a file to delete.	filemanager	bg	Моля, изберете файл за изтриване.
@@ -276,6 +277,8 @@ show link "your home directory" in side box menu?	filemanager	bg	Да покаж
 show link "your home directory*" in side box menu?*	filemanager	bg	Да покаже ли връзката "Вашата домашна директория*" в поле на страничното меню?*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	bg	Да се показва ли връзка към базовата директория на файл мениджъра в страничното меню?
 size	filemanager	bg	Размер
+smb, webdavs and vfs require a username!	filemanager	bg	SMB, WebDAV и VFS изискват потребителско име!
+smb: mount samba or windows fileserver shares	filemanager	bg	SMB: монтиране на дялове на Samba или Windows файлови сървъри
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	bg	Някои функции изискват разрешения от суперпотребител, моля, влезте тук като filemanager superuser - разрешените потребители са дефинирани в настройката.
 sqlfs statistics	filemanager	bg	sqlFS статистика
 start search	filemanager	bg	Стартиране на търсене
@@ -286,12 +289,14 @@ superuser (root)	filemanager	bg	Суперпотребител (основен)
 symlink to %1 created.	filemanager	bg	Symlink до %1 създаден.
 tag to mark positions for address labels	filemanager	bg	Отбележете маркираните позиции като адресни етикети
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	bg	Стартовата директория по подразбиране е Вашата лична (домашна) директория. Тя се използва, ако оставите това поле непопълнено, посочената директория не съществува или нямате нужните права за достъп.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	bg	Документът може да съдържа заместващи символи като {{%3}}, които да бъдат заменени с данните (%1пълен списък на имената на заместващите символи%2).
 the following document-types are supported:	filemanager	bg	Поддържат се следните типове документи:
 the requested path %1 is not available.	filemanager	bg	Зададената директория %1 не е достъпна.
 there's already a directory with that name!	filemanager	bg	Вече има директория с това име!
 there's already a file with that name!	filemanager	bg	Вече има файл с това име!
 to overwrite the existing file store again.	filemanager	bg	Дава възможност да презапишете съществуващия файл отново
 total files	filemanager	bg	Общо файлове
+ui mode	filemanager	bg	Стандартна лента с инструменти
 under directory	filemanager	bg	под директория
 unmount	filemanager	bg	Демонтиране/ Спиране
 unused space	filemanager	bg	Неизползвано пространство
@@ -302,6 +307,7 @@ upload files	filemanager	bg	Прехвърлени файлове
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	bg	Използвайте този маркер за адресни етикети. Поставете съдържанието, което искате да повторите, в рамките на двата маркера.
 used space	filemanager	bg	Използвано пространство
 user color indicator	filemanager	bg	Цветен индикатор на потребител
+username for webdav and smb, use $user for name of logged in user	filemanager	bg	Потребителско име за WebDAV и SMB, използвайте $user за името на влезлия потребител
 users and groups	filemanager	bg	Потребители и групи
 webdav link copied into clipboard	filemanager	bg	Връзката WebDAV копирана в клипборда
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	bg	На кого се дава разрешение на окончателно изтриване на изтрити файлове или старите версии на файл:

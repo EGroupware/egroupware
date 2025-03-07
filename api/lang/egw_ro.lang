@@ -39,8 +39,12 @@ all in one	groupdav	ro	Toate într-una singură
 allow editing the %1	common	ro	Permiteți editarea lui %1
 answering no will not ask you again for this browser.	common	ro	Dacă răspundeți "nu", nu vi se va mai solicita acest browser.
 apps & license	common	ro	Aplicații și licențe
+apps &amp; license	common	ro	Aplicații și licență
+are you sure you want to logout?	common	ro	Sunteți sigur că doriți să vă deconectați?
+are you sure, you would like to delete the backup key?	common	ro	Sunteți sigur că doriți să ștergeți cheia de rezervă?
 attention: action will be applied to all rows, not only visible ones!	api	ro	Atenție: acțiunea se va aplica tuturor rândurilor, nu numai celor vizibile!
 authenticate	common	ro	Autentificare
+automatic update check failed, you need to check manually!	common	ro	Verificarea automată a actualizării a eșuat, trebuie să verificați manual!
 avatar	common	ro	Avatar
 before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	ro	Înainte de a continua, vă recomandăm să urmăriți acest scurt videoclip, pentru a vedea cum funcționează pluginul Mailvelope cu EGroupware.
 browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	ro	Browserul %1 %2 nu este recomandat. Este posibil să întâmpinați probleme și să nu funcționeze funcțiile. Vă rugăm să utilizați cea mai recentă versiune de Chrome, Firefox sau Edge. Vă mulțumim!
@@ -85,6 +89,7 @@ egroupware maintenance update %1 available	common	ro	Actualizarea de întreține
 egroupware security update %1 needs to be installed!	common	ro	Actualizarea de securitate EGroupware %1 trebuie să fie instalată!
 egroupware version	common	ro	Versiunea EGroupware
 emails	common	ro	Email-uri
+enter your passphrase	common	ro	Introduceți fraza dvs. de acces
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
@@ -162,6 +167,7 @@ please type %1 more characters	common	ro	Vă rugăm să introduceți încă %1 c
 please type 1 more character	common	ro	Vă rugăm să introduceți încă 1 caracter
 preference	common	ro	Preferințe
 preferences	common	ro	Preferințe
+print orientation	common	ro	Orientare
 repeat password	common	ro	Repetarea parolei
 saved column sizes to preferences.	common	ro	Salvat dimensiunile coloanelor în preferințe.
 selection of files can only be done in one folder.  %1 files unselected.	common	ro	Selectarea fișierelor se poate face doar într-un singur dosar. %1 fișiere neselectate.

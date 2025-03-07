@@ -43,7 +43,6 @@ calendar-fieldname	calendar	ca	Calendari - Nom de camp
 can't add alarms in the past !!!	calendar	ca	No se poden activar alarmes en el passat !!!
 canceled	calendar	ca	Cancel·lat
 charset of file	calendar	ca	Joc de caràcters de l'arxiu
-check all	calendar	ca	Comprova-ho tot
 choose a category	calendar	ca	Tria una categoria
 close the window	calendar	ca	Tanca la finestra
 compose a mail to all participants after the event is saved	calendar	ca	Edita un correu a tots els participants després de guardar la cita
@@ -72,7 +71,7 @@ default calendar view	calendar	ca	Vista per defecte del calendari
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	ca	Duració per defecte de les noves cites creades. La duració és en minuts, ex. 60 = 1 hora.
 default week view	calendar	ca	Vista setmanal per defecte
 delete series	calendar	ca	Esborrar sèries
-delete this alarm	calendar	ca	Esborra aquesta alarma
+delete this alarm	calendar	ca	Esborra aquesta alarma?
 delete this event	calendar	ca	Esborra aquesta cita
 delete this exception	calendar	ca	Esborra aquesta excepció
 delete this series of recurring events	calendar	ca	Esborra aquesta sèrie de cites recurrents
@@ -311,7 +310,6 @@ weekview	calendar	ca	Vista setmanal
 weekview with weekend	calendar	ca	Vista setmanal amb cap de setmana
 weekview without weekend	calendar	ca	vista setmanal sense incloure caps de setmana
 whole day	calendar	ca	dia sencer
-wk	calendar	ca	Stm
 work day ends on	calendar	ca	La jornada laboral acaba a les
 work day starts on	calendar	ca	La jornada laboral comença a les
 yearly	calendar	ca	Anual

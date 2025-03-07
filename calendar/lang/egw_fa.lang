@@ -40,7 +40,6 @@ calendar-fieldname	calendar	fa	نام فیلد-تقویم
 can't add alarms in the past !!!	calendar	fa	هشدار در گذشته نمی تواند اضافه شود!!!
 canceled	calendar	fa	لغو شد
 charset of file	calendar	fa	UTF-8
-check all	calendar	fa	چک کردن همه
 choose a category	calendar	fa	دسته را انتخاب کنید
 close the window	calendar	fa	بستن پنجره
 compose a mail to all participants after the event is saved	calendar	fa	ایجاد نامه برای برای همه همراهان، بعد از ضبط شدن رویداد
@@ -298,7 +297,6 @@ weekview	calendar	fa	نمای هفته
 weekview with weekend	calendar	fa	نمای هفتگی با تعطیلات آخر هفته
 weekview without weekend	calendar	fa	نمای هفتگی بدون تعطیلات آخر هفته
 whole day	calendar	fa	همه روز
-wk	calendar	fa	هفته
 work day ends on	calendar	fa	روز کاری تمام می شود در
 work day starts on	calendar	fa	روز کاری شروع می شود در
 yearly	calendar	fa	سالانه

@@ -111,7 +111,6 @@ change history	calendar	fr	Historique des changements
 change your status	calendar	fr	Changer votre statut
 changed event-data applied	calendar	fr	Données d'événement modifiées appliquées
 charset of file	calendar	fr	Jeu de caractères du fichier
-check all	calendar	fr	Vérifier tout
 choose a category	calendar	fr	Choisissez une catégorie
 choose owner of imported data	calendar	fr	Choisir le propriétaire des données importées
 close the window	calendar	fr	Fermer la fenêtre
@@ -167,7 +166,7 @@ delegated	calendar	fr	Délégué
 delete exceptions	calendar	fr	Supprimer les exceptions
 delete selected events	calendar	fr	Supprimer les événements sélectionnés
 delete series	calendar	fr	Supprimer des occurences
-delete this alarm	calendar	fr	Supprimer cette alarme
+delete this alarm	calendar	fr	Supprimer cette alarme ?
 delete this event	calendar	fr	Supprimer cet événement
 delete this exception	calendar	fr	Supprimer cette exception
 delete this meeting for all participants	calendar	fr	Supprimer cette réunion pour tous les participants
@@ -698,7 +697,6 @@ which view to show on home page	calendar	fr	Quelle vue afficher dans l'accueil ?
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	fr	Nombre minimum d'utilisateur pour afficher la vue journalière et multi-semaine en consolidée. 5 par défaut.
 whole day	calendar	fr	Journée entière
 with credentials included	calendar	fr	Avec les droits inclus
-wk	calendar	fr	Sem
 work day ends on	calendar	fr	La journée de travail finit à
 work day starts on	calendar	fr	La journée de travail démarre à
 workday	calendar	fr	Jour ouvré

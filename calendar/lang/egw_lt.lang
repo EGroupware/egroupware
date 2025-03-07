@@ -29,6 +29,7 @@ by default (nothing is set here) egroupware allows only the organizer/owner to a
 category report	calendar	lt	Kategorija Ataskaita
 changed event-data applied	calendar	lt	Taikomi pakeisti įvykio duomenys
 date range	calendar	lt	Datų intervalas
+delete this alarm	calendar	lt	Ištrinti šį pavojaus signalą?
 email address migration	calendar	lt	El. pašto adreso perkėlimas
 error notifying %1	calendar	lt	Klaida pranešant %1
 exclude weekend	calendar	lt	Neįtraukti savaitgalio

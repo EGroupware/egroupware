@@ -500,6 +500,7 @@ report as ham	mail	ja	ハムとして報告
 report as spam	mail	ja	スパムとして報告
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	ja	このメールをハム（スパムでない）として報告 - spamTitan 等のスパム処理機能の学習用
 report this email content as spam - spam solutions like spamtitan will learn	mail	ja	このメールをスパムとして報告 - spamTitan 等のスパム処理機能の学習用
+request for passphrase	mail	ja	パスフレーズのリクエスト
 required pear class mail/mimedecode.php not found.	mail	ja	必要な PEAR クラス Mail/mimeDecode.php が見つかりません。
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ja	共有フォルダやユーザーフォルダでDovecotを使用し、private seenフラグを使用している場合は、無効にする必要があります！
 resend after how many days?	mail	ja	指定日数後に再送信?

@@ -75,6 +75,7 @@ flagged %1 messages as flagged in %2	mail	lt	%1 pranešimas (-ai) pažymėtas (-
 flagged %1 messages as unflagged in %2	mail	lt	%1 pranešimas(-ai) pažymėtas(-i) kaip nepažymėtas(-i) %2
 folder %1 %2 failed because of %3!	mail	lt	Aplankas %1 %2 nepavyko dėl %3!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	lt	Aplankas %1 sukurtas sėkmingai, nors prenumerata nepavyko dėl %2
+forward to	mail	lt	Pirmyn į
 get acl rights failed from imap server!	mail	lt	Nepavyko gauti ACL teisių iš IMAP serverio!
 ham folder	mail	lt	Kumpio aplankas
 handling of external http images / mixed content in mails	mail	lt	Išorinių http vaizdų / mišraus turinio tvarkymas el. laiškuose
@@ -175,9 +176,11 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	lt	Push pranešimai
 quicksearch	mail	lt	Greita paieška
 quicksearch (with cc)	mail	lt	Greita paieška (+ kopijavimas)
+read / unread	mail	lt	Skaityti / Neperskaityta
 real name	mail	lt	Tikrasis vardas
 real name email	mail	lt	Tikrasis vardas [El. paštas]
 real name organization email	mail	lt	Tikrasis vardas Organizacija [El. paštas]
+reloaded folder %1	mail	lt	Perkrautas aplankas %1
 remember the password for	mail	lt	Prisiminti slaptažodį
 remove all	mail	lt	Pašalinti visus
 removing %1 from blacklisted email addresses failed because of %2	mail	lt	Pašalinti %1 iš juodojo sąrašo el. pašto adresų nepavyko dėl %2
@@ -189,6 +192,7 @@ report as ham	mail	lt	Pranešti kaip Ham
 report as spam	mail	lt	Pranešti kaip šlamštą
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	lt	Praneškite apie šį el. laiško turinį kaip apie šlamštą (ne šlamštą) - šlamšto sprendimai, pvz., "SpamTitan", sužinos
 report this email content as spam - spam solutions like spamtitan will learn	mail	lt	Praneškite apie šį el. pašto turinį kaip Spam - spam sprendimai, tokie kaip spamTitan, išmoks
+request for passphrase	mail	lt	Prašymas pateikti slaptažodį
 required pear class mail/mimedecode.php not found.	mail	lt	Reikalinga PEAR klasė Mail/mimeDecode.php nerasta.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	lt	Būtina išjungti, jei naudojate Dovecot su private seen vėliavėlėmis bendrajame arba naudotojo aplanke!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	lt	S/MIME šifravimas nepavyko, nes siuntėjo adresui nerasta sertifikato: %1
@@ -210,6 +214,7 @@ send message pgp encrypted: requires keys from all recipients!	mail	lt	Siųsti �
 server supports special-use folders	mail	lt	Serveris palaiko specialios paskirties aplankus
 set predefined values for compose...	mail	lt	Nustatykite iš anksto nustatytas reikšmes compose ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	lt	Ar parašas turėtų būti įterpiamas po (standartinio) ar prieš atsakymą ar persiuntimą, taip pat ar parašas turėtų būti matomas ir keičiamas sudarymo metu.
+show all addresses	mail	lt	Rodyti visus adresus
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	lt	rodyti visus aplankus (prenumeruojamus ir neprenumeruojamus) pagrindiniame ekrano aplankų lange.
 show notification for new arriving mails	mail	lt	Rodyti pranešimus apie naujai gautus laiškus
 show test connection section and control the level of info displayed?	mail	lt	Rodyti bandomojo ryšio skyrių ir valdyti rodomos informacijos lygį?
@@ -228,6 +233,9 @@ smime encrypted message	mail	lt	S/MIME užšifruotas pranešimas
 smime signed message	mail	lt	S/MIME pasirašytas pranešimas
 smtp	mail	lt	SMTP
 sneak preview in list	mail	lt	Pranešimo peržiūra
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	lt	Kai kurie klientai nesugeba nustatyti teisingos ženklų rinkmenos, jei įjungtos srautinės eilutės
+spamtitan api url	mail	lt	SpamTitan API URL
+spamtitan integration requires epl version	mail	lt	SpamTitan integracijai reikia EPL versijos
 the imap server need to meet certain requirements and be configured for it:	mail	lt	IMAP serveris turi atitikti tam tikrus reikalavimus IR būti sukonfigūruotas:
 the rule with priority %1 successfully saved!	mail	lt	Taisyklė su prioritetu %1 sėkmingai išsaugota!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	lt	Neliko vietos sieve scenarijui saugoti, patikrinkite sieve_maxscriptsize parinktį savo pašto serverio konfigūracijoje.

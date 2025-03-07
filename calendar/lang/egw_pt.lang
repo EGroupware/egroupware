@@ -69,7 +69,6 @@ category report	calendar	pt	Relatório de categoria
 change history	calendar	pt	Mudar a história
 changed event-data applied	calendar	pt	Dados de eventos alterados aplicados
 charset of file	calendar	pt	Charset do ficheiro
-check all	calendar	pt	Marcar todas
 choose a category	calendar	pt	Escolher uma categoria
 choose owner of imported data	calendar	pt	Selecionar o proprietário dos dados importados
 close the window	calendar	pt	Fechar janela
@@ -102,7 +101,7 @@ default length of newly created events. the length is in minutes, eg. 60 for 1 h
 default week view	calendar	pt	Visualização semanal por omissão
 delegated	calendar	pt	Delegada
 delete series	calendar	pt	Eliminar consjuntos
-delete this alarm	calendar	pt	Eliminar este aviso
+delete this alarm	calendar	pt	Eliminar este aviso?
 delete this event	calendar	pt	Eliminar este evento
 delete this exception	calendar	pt	Eliminar esta excepção
 delete this series of recurring events	calendar	pt	Eliminar este conjunto de eventos recorrentes
@@ -403,7 +402,6 @@ weekview	calendar	pt	Visualização semanal
 weekview with weekend	calendar	pt	Visualização semanal com fim de semana
 weekview without weekend	calendar	pt	Visualização semanal sem fim de semana
 whole day	calendar	pt	Dia inteiro
-wk	calendar	pt	Sem
 work day ends on	calendar	pt	Dia de trabalho termina às
 work day starts on	calendar	pt	Dia de trabalho começa às
 yearly	calendar	pt	Anual

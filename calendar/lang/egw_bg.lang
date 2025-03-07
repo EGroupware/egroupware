@@ -111,7 +111,6 @@ change history	calendar	bg	Промяна на историята
 change your status	calendar	bg	Променете статуса си
 changed event-data applied	calendar	bg	Прилагане на променени данни за събития
 charset of file	calendar	bg	Символен набор на файла
-check all	calendar	bg	Маркира всички
 choose a category	calendar	bg	Избери категория
 choose owner of imported data	calendar	bg	Изберете собственик на импортирани данни
 close the window	calendar	bg	Затвори прозореца
@@ -167,7 +166,7 @@ delegated	calendar	bg	Делегиран
 delete exceptions	calendar	bg	Изтриване на изключенията
 delete selected events	calendar	bg	Изтриване на избраните събития
 delete series	calendar	bg	Изтриване на серия
-delete this alarm	calendar	bg	Изтриване на "Алармата"
+delete this alarm	calendar	bg	Да изтриете тази аларма?
 delete this event	calendar	bg	Изтриване на събитието
 delete this exception	calendar	bg	Изтриване на изключението
 delete this meeting for all participants	calendar	bg	Изтриване на тази среща за всички участници
@@ -695,7 +694,6 @@ which view to show on home page	calendar	bg	Кой изглед да се пок
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	bg	Минимален брой потребители за показване на дневни и седмични изгледи като консолидирани. По подразбиране = 5
 whole day	calendar	bg	цял ден
 with credentials included	calendar	bg	С включени пълномощия
-wk	calendar	bg	Седм.
 work day ends on	calendar	bg	Работно време - край
 work day starts on	calendar	bg	Работно време - начало
 workday	calendar	bg	Работен ден

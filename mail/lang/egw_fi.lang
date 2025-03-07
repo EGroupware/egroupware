@@ -140,7 +140,7 @@ folder settings	mail	fi	Kansion asetukset
 forward	mail	fi	Välitä eteenpäin
 forward as attachment	mail	fi	Liitteenä
 forward inline	mail	fi	Viestiin sisällytettynä
-forward to	mail	fi	Välitä:
+forward to	mail	fi	Eteenpäin
 from	mail	fi	Mistä
 general	admin	fi	Yleinen
 get acl rights failed from imap server!	mail	fi	ACL-oikeuksien hakeminen epäonnistui IMAP-palvelimelta!
@@ -271,11 +271,13 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	fi	Push-ilmoitukset
 quicksearch	mail	fi	Pikahaku
 quicksearch (with cc)	mail	fi	Pikahaku (+kopiointi)
+read / unread	mail	fi	Luettu / Lukematon
 real name	mail	fi	Oikea nimi
 real name email	mail	fi	Oikea nimi [Sähköposti]
 real name organization email	mail	fi	Oikea nimi Organisaatio [Sähköposti]
 refresh time in minutes	mail	fi	Päivitysaika minuutteina
 reject with	mail	fi	Hylkää
+reloaded folder %1	mail	fi	Uudelleen ladattu kansio %1
 remember the password for	mail	fi	Muista salasana
 remove all	mail	fi	Poista kaikki
 remove immediately	mail	fi	Poista heti
@@ -293,6 +295,7 @@ replyto	mail	fi	Vastaanottaja
 report as ham	mail	fi	Ilmoita Ham
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	fi	Ilmoita tämä sähköpostin sisältö Hamina (ei roskapostina) - roskapostiratkaisut, kuten spamTitan, oppivat siitä
 report this email content as spam - spam solutions like spamtitan will learn	mail	fi	Ilmoita tämä sähköpostin sisältö roskapostina - spamTitanin kaltaiset roskapostiratkaisut oppivat siitä
+request for passphrase	mail	fi	Pyyntö salasanasta
 required pear class mail/mimedecode.php not found.	mail	fi	Tarvittavaa PEAR-luokkaa Mail/mimeDecode.php ei löydy.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	fi	Vaaditaan poistettavaksi käytöstä, jos käytät Dovecotia, jossa on private seen -liput jaetussa tai käyttäjäkansiossa!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	fi	S/MIME-salaus epäonnistui, koska lähettäjän osoitteelle ei löytynyt sertifikaattia: %1
@@ -326,6 +329,7 @@ server supports special-use folders	mail	fi	Palvelin tukee erityiskäytössä ol
 set flags	mail	fi	Merkitse sähköposti
 set predefined values for compose...	mail	fi	Aseta valmiiksi määritetyt arvot lähettämistä varten ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	fi	Pitäisikö allekirjoitus lisätä vastauksen tai edelleenlähetyksen jälkeen (vakio) tai ennen vastausta tai eteenpäinlähetystä ja pitäisikö allekirjoituksen olla näkyvissä ja muutettavissa laatimisen aikana.
+show all addresses	mail	fi	Näytä kaikki osoitteet
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	fi	Näytä kaikki kansiot (tilatut ja tilaamattomat) päänäytön kansioruudussa.
 show notification for new arriving mails	mail	fi	Näytä ilmoitus uusista saapuneista sähköpostiviesteistä
 show test connection section and control the level of info displayed?	mail	fi	Näytä testiyhteysosio ja säädä näytettävien tietojen tasoa?
@@ -345,7 +349,10 @@ smime encrypted message	mail	fi	S/MIME-salattu viesti
 smime signed message	mail	fi	S/MIME-allekirjoitettu viesti
 smtp	mail	fi	SMTP
 sneak preview in list	mail	fi	Viestin esikatselu
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	fi	Jotkin asiakkaat eivät tunnista oikeaa merkistöä, jos virtausrivit on otettu käyttöön
 sort order	mail	fi	Lajittelujärjestys
+spamtitan api url	mail	fi	SpamTitan API URL
+spamtitan integration requires epl version	mail	fi	SpamTitan-integraatio vaatii EPL-version
 start new messages with mime type plain/text or html?	mail	fi	Haluatko aloitaa uudet viestit pelkkänä tekstinä vai HTML:nä?
 template folder	mail	fi	Mallipohjat -kansio
 text	mail	fi	Teksti

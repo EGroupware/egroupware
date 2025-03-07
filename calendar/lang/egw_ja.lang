@@ -111,7 +111,6 @@ change history	calendar	ja	変更履歴
 change your status	calendar	ja	ステータスを変更
 changed event-data applied	calendar	ja	変更されたイベントデータ
 charset of file	calendar	ja	ファイルの文字セット
-check all	calendar	ja	全て選択
 choose a category	calendar	ja	カテゴリを選択
 choose owner of imported data	calendar	ja	インポートしたデータの所有者を選択
 close the window	calendar	ja	ウィンドウを閉じる
@@ -167,7 +166,7 @@ delegated	calendar	ja	代理人の参加回答済み
 delete exceptions	calendar	ja	例外を削除
 delete selected events	calendar	ja	選択されたイベントを削除
 delete series	calendar	ja	繰返しイベント削除
-delete this alarm	calendar	ja	このアラームを削除
+delete this alarm	calendar	ja	このアラームを削除しますか？
 delete this event	calendar	ja	このイベントを削除
 delete this exception	calendar	ja	この例外を削除
 delete this meeting for all participants	calendar	ja	参加者全員のこの会議を削除する
@@ -680,7 +679,6 @@ which view to show on home page	calendar	ja	ホーム画面で使用する表示
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	ja	統合表示するために必要な、最低ユーザ数。既定値 = 5
 whole day	calendar	ja	終日
 with credentials included	calendar	ja	資格証明を含む
-wk	calendar	ja	週
 work day ends on	calendar	ja	日表示の終了時刻
 work day starts on	calendar	ja	日表示の開始時刻
 workday	calendar	ja	就業日カレンダー

@@ -90,6 +90,7 @@ certificate details	admin	et	Sertifikaadi andmed
 certificate validation in days	admin	et	Sertifikaadi valideerimine päevade jooksul
 change access	admin	et	Juurdepääsuõiguste muutmine
 change acl rights	admin	et	Muuda ACL Õigusi
+change domain of email address and aliases	admin	et	E-posti aadressi domeeni ja varjunimede muutmine
 change login screen message	admin	et	Muuda pealehe sõnumit
 click to select a color	admin	et	Kliki valimaks värvi
 color	admin	et	Värv
@@ -278,6 +279,7 @@ server list	admin	et	Serveri Nimekiri
 server password	admin	et	Serveri Parool
 server settings	admin	et	Serveri setingud
 server username	admin	et	Serveri Kasutajanimi
+set a random password	admin	et	Määra juhuslik parool
 show access log	admin	et	Näita külastuste logi
 show error log	admin	et	Näita vigade logi
 show groups in container based on	admin	et	Konteineri gruppide kuvamine konteineri alusel
@@ -332,6 +334,7 @@ view sessions	admin	et	Vaata aktiivseid sessioone
 view this user	admin	et	Vaata seda kasutajat
 view user account	admin	et	Vaata kasutaja kontot
 who would you like to transfer records owned by the deleted user to?	admin	et	Kellele soovite kustutatud kasutajale kuuluvaid kirjeid üle kanda?
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	et	Saate muuta hashi ainult siis, kui olete määranud juhusliku parooli või kasutate praegu lihtkirjas paroole!
 you can set an initial value, which gets incremented every time a new serial get generated	admin	et	saab määrata algväärtuse, mida suurendatakse iga kord, kui luuakse uus seeriaviis
 you can use wizard to fix account settings or delete account.	admin	et	Konto seadete fikseerimiseks või konto kustutamiseks saate kasutada viisardit.
 you have to enter a name, to create a new field!!!	admin	et	Pead sisestama mime uuele väljale!

@@ -111,7 +111,6 @@ change history	calendar	sl	Spremembe
 change your status	calendar	sl	Spremeni status
 changed event-data applied	calendar	sl	Uporabljeni spremenjeni podatki o dogodku
 charset of file	calendar	sl	Kodna tabela datoteke
-check all	calendar	sl	Preveri vse
 choose a category	calendar	sl	Izberite kategorijo
 choose owner of imported data	calendar	sl	Izberite lastnika uvoženih podatkov
 close the window	calendar	sl	Zapri okno
@@ -167,7 +166,7 @@ delegated	calendar	sl	Delegirano
 delete exceptions	calendar	sl	Izbriši izjeme
 delete selected events	calendar	sl	Izbriši izbrane dogodke
 delete series	calendar	sl	Izbriši serijo
-delete this alarm	calendar	sl	Zbriši ta alarm
+delete this alarm	calendar	sl	Zbriši ta alarm?
 delete this event	calendar	sl	Zbriši ta dogodek
 delete this exception	calendar	sl	Zbriši to izjemo
 delete this meeting for all participants	calendar	sl	Izbriši ta sestanek za vse udeležence
@@ -660,7 +659,6 @@ which view to show on home page	calendar	sl	Kateri pogled se prikaže na domači
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	sl	Najmanjše število uporabnikov za prikazovanje dnevnih in tedenskih pregledov kot konsolidiranih. Privzeto = 5
 whole day	calendar	sl	Cel dan
 with credentials included	calendar	sl	Z vključenimi poverilnicami
-wk	calendar	sl	Ted
 work day ends on	calendar	sl	Delovnik se konča ob
 work day starts on	calendar	sl	Delovnik se začne ob
 workday	calendar	sl	Delovni dan

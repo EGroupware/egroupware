@@ -502,6 +502,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	common	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
 enter your file name	common	de	Dateiname
+enter your passphrase	common	de	Geben Sie Ihre Passphrase ein
 enter your password	common	de	Geben Sie Ihr Passwort ein
 entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht.
 entry not found!	common	de	Eintrag nicht gefunden!
@@ -1092,6 +1093,7 @@ primary key	common	de	Primary Key
 primary key for the table, gets automaticaly indexed	common	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
 primary style-sheet:	common	de	Haupt-Stylesheet:
 print	common	de	Drucken
+print orientation	common	de	Ausrichtung
 priority	common	de	Priorität
 private	common	de	Privat
 programs	common	de	Programme

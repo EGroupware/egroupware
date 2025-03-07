@@ -52,9 +52,8 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	de	Bestehende Verknüpfungen
 exists	timesheet	de	Vorhanden
 export definition to use for nextmatch export	timesheet	de	Exportdefinition für den nextmatch Export
-export to openoffice spreadsheet	timesheet	de	Zu Office exportieren
 exports entries from your timesheet into a csv file.	timesheet	de	Exportiert Einträge der Stundenzettel-App in eine CSV-Datei.
-exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	de	Exportiert die Einträge des Stundenzettels in eine CSV-Datei. CSV bedeutet, Komma getrennte Werte. In dem Optionen-Tab können Sie andere Trennzeichen festlegen.
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	de	Exportiert die Einträge des Stundenzettels in eine CSV-Datei. In dem Optionen-Tab können Sie andere Trennzeichen festlegen.
 field must not be empty !!!	timesheet	de	Dieses Feld darf nicht leer sein!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	de	Für den Seriendruck, wählen die diesen Platzhalter. Fügen Sie den Inhalt, den Sie wiederholen möchten, zwischen zwei Platzhaltern ein.
 forgot to switch off working time?	common	de	Haben Sie vergessen Ihre Arbeitszeit zu beenden?
@@ -129,7 +128,6 @@ select a project	timesheet	de	Projekt auswählen
 select a status of the timesheet	timesheet	de	Einen Status auswählen
 select infolog	timesheet	de	InfoLog auswählen
 select multiple timeshhets for a further action	timesheet	de	Wählen Sie mehrere Stundenzettel für einen weitere Aktion aus
-select the predefined status, whan creating a new timesheet	preferences	de	Wählen Sie einen Status als Vorgabe für neu zu erstellende Stundenzettel aus
 select the predefined status, when creating a new timesheet	preferences	de	Wählen Sie hier einen Status aus, der bei neu erstellten Stundenzetteln automatisch vorausgewählt wird.
 set to	timesheet	de	Änderungen anwenden für
 show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengensumme (z.B. um negative Überstunden zu summieren)
@@ -162,11 +160,9 @@ timer already running or paused	common	de	Zeitnehmer läuft bereits oder ist pau
 timesheet	common	de	Stundenzettel
 timesheet csv export	timesheet	de	Export des  Stundenzettels als CSV
 timesheet csv import	timesheet	de	Stundenzettel CSV-Import
-timesheet fields:	timesheet	de	Felder Stundenzettel
 timesheet id	timesheet	de	Stundenzettel ID
 timesheet list	timesheet	de	Stundenzettel Liste
 timesheet modified by %1 at %2	timesheet	de	Stundenzettel verändert von %1 am %2
-timesheet openoffice export	timesheet	de	Export des  Stundenzettels als Office-Dokument
 timesheet status-%1 '%2' added.	timesheet	de	Stundenzettel Status %1 '%2' hinzugefügt.
 timesheet-%1 '%2' updated.	timesheet	de	Stundenzettel Status %1 '%2' geändert
 timesheet-%1 deleted.	timesheet	de	Stundenzettel %1 gelöscht

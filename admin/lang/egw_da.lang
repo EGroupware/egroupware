@@ -114,6 +114,7 @@ certificate validation in days	admin	da	Certifikatvalidering i dage
 change access	admin	da	Skift adgangsrettigheder
 change acl rights	admin	da	Ændre ACL-rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
+change domain of email address and aliases	admin	da	Skift domæne for e-mailadresse og aliasser
 change login screen message	admin	da	Ændre startside besked
 check ip address of all sessions	admin	da	Kontrollere IP adresse for alle sessioner
 click to select a color	admin	da	Klik for at vælge en farve
@@ -412,6 +413,7 @@ server settings	admin	da	Serverindstillinger
 server type(mode)	admin	da	Server Type
 server url	admin	da	Server URL
 server username	admin	da	Server brugernavn
+set a random password	admin	da	Indstil en tilfældig adgangskode
 set preference values.	admin	da	Sæt præference værdierne.
 settings	admin	da	Indstillinger
 should the login page include a language selectbox (useful for demo-sites) ?	admin	da	Skal loginsiden inkludere et sprog selectboks (brugbar på demo-sider)?
@@ -512,6 +514,7 @@ virtual mail manager	admin	da	Virtuel post håndtering
 who would you like to transfer all records owned by the deleted user to?	admin	da	Hvem vil du overføre ALLE posteringer ejet af den slettede bruger til?
 who would you like to transfer records owned by the deleted user to?	admin	da	Hvem vil du gerne overføre poster, der ejes af den slettede bruger, til?
 xml-rpc	admin	da	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	da	Du kan kun ændre hashen, hvis du indstiller en tilfældig adgangskode eller i øjeblikket bruger adgangskoder i klartekst!
 you can set an initial value, which gets incremented every time a new serial get generated	admin	da	du kan indstille en startværdi, som øges, hver gang der genereres en ny serie
 you can use wizard to fix account settings or delete account.	admin	da	Du kan bruge guiden til at rette kontoindstillinger eller slette kontoen.
 you have entered an invalid expiration date	admin	da	Du har indtastet en ugyldig udløbsdato!

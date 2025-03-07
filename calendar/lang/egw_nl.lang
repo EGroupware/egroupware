@@ -87,7 +87,6 @@ category report	calendar	nl	Categorierapport
 change history	calendar	nl	Historie van wijzigingen
 changed event-data applied	calendar	nl	Gewijzigde gebeurtenisgegevens toegepast
 charset of file	calendar	nl	Karakterset van bestand
-check all	calendar	nl	Markeer alles
 choose a category	calendar	nl	Kies een categorie
 close the window	calendar	nl	Venster sluiten
 compose a mail to all participants after the event is saved	calendar	nl	Stel een email aan alle deelnemers op nadat de gebeurtenis is opgeslagen
@@ -129,7 +128,7 @@ default type of resources selection	calendar	nl	Standaard type van hulpmiddelen 
 default week view	calendar	nl	Standaard weekoverzicht
 delegated	calendar	nl	Gedelegeerd
 delete series	calendar	nl	Series verwijderen
-delete this alarm	calendar	nl	Deze herinnering verwijderen
+delete this alarm	calendar	nl	Deze herinnering verwijderen?
 delete this event	calendar	nl	Deze gebeurtenis verwijderen
 delete this exception	calendar	nl	Deze uitzondering verwijderen
 delete this series of recurring events	calendar	nl	Deze serie herhalende gebeurtenissen verwijderen
@@ -481,7 +480,6 @@ weekview	calendar	nl	Weekweergave
 weekview with weekend	calendar	nl	Weekweergave met weekend
 weekview without weekend	calendar	nl	Weekweergave zonder weekend
 whole day	calendar	nl	Hele dag
-wk	calendar	nl	Wk
 work day ends on	calendar	nl	Werkdag eindigt om
 work day starts on	calendar	nl	Werkdag begint om
 yearly	calendar	nl	Jaarlijks

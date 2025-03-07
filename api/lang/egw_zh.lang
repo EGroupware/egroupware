@@ -121,9 +121,12 @@ applies the changes made	common	zh	应用所作修改
 applies the changes to the given version of the template	common	zh	应用修改到指定模板的版本
 apply	common	zh	应用
 apps & license	common	zh	应用程序和许可证
+apps &amp; license	common	zh	应用程序和许可证
 april	common	zh	四月
 are you sure you want to delete these entries ?	common	zh	确定要删除这些条目吗？
 are you sure you want to delete this entry ?	common	zh	确定要删除该条目吗？
+are you sure you want to logout?	common	zh	您确定要注销吗？
+are you sure, you would like to delete the backup key?	common	zh	您确定要删除备份密钥吗？
 argentina	common	zh	阿根廷
 armenia	common	zh	亚美尼亚
 aruba	common	zh	阿鲁巴岛
@@ -136,6 +139,7 @@ australia	common	zh	澳大利亚
 austria	common	zh	奥地利
 authenticate	common	zh	认证
 author	common	zh	作者
+automatic update check failed, you need to check manually!	common	zh	自动更新检查失败，您需要手动检查！
 autosave default category	common	zh	自动保存为默认类别
 avatar	common	zh	头像
 azerbaijan	common	zh	阿塞拜疆
@@ -415,6 +419,7 @@ enter filename to upload and attach, use [browse...] to search for it	common	zh	
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	输入EGroupware 网址。<br>例如：http://www.domain.com/egroupware 或 /egroupware<br><b>结尾无斜线</b>
 enter the new version number here (> old_version), empty for no update-file	common	zh	输入新的版本号(大于旧版本)，空白表示没有更新
 enter the new version number here (has to be > old_version)	common	zh	输入新的版本号(必须大于旧版本)
+enter your passphrase	common	zh	输入密码
 entry has been deleted sucessfully	common	zh	条目已删除
 entry not found!	common	zh	条目没找到！
 entry saved	common	zh	条目已储存
@@ -908,6 +913,7 @@ primary key	common	zh	主键
 primary key for the table, gets automaticaly indexed	common	zh	表的主键，自动获取索引
 primary style-sheet:	common	zh	主要样式表：
 print	common	zh	打印
+print orientation	common	zh	定位
 priority	common	zh	优先级
 private	common	zh	私有条目
 programs	common	zh	程序

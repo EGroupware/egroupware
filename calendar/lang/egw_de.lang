@@ -167,7 +167,7 @@ delegated	calendar	de	Delegiert
 delete exceptions	calendar	de	Ausnahmen löschen
 delete selected events	calendar	de	Ausgewählte Termine löschen
 delete series	calendar	de	Serie löschen
-delete this alarm	calendar	de	Diesen Alarm löschen
+delete this alarm	calendar	de	Diesen Alarm löschen?
 delete this event	calendar	de	Diesen Termin löschen
 delete this exception	calendar	de	Diese Ausnahme löschen
 delete this meeting for all participants	calendar	de	Löscht diesen Termin für alle Teilnehmer

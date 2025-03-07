@@ -75,6 +75,7 @@ default calendar filter	calendar	tr	Varsayılan takvim süzgeci
 default calendar view	calendar	tr	Varsayılan takvim görünümü
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	tr	Yeni oluşturulmuş etkinlikler için varsayılan uzunluk. uzunluk dakika cinsindendir, ör. 1 saat için 60 giriniz.
 delete series	calendar	tr	Seriyi sil
+delete this alarm	calendar	tr	Bu alarmı silelim mi?
 deleted	calendar	tr	Silindi
 display status of events	calendar	tr	Etkinliklerin durumlarını görüntüle
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	tr	Yeni ya da değişiklik yapılmış toplantılardan haberdar olmak ister misiniz? Kendi yaptığınız değişiklikler hakkında da uyarı emailleri alacaksınız.<br>Uyarıları istediğiniz belli eylemlerle sınırlandırabilirsiniz.Her bir öge yukarıda listelenen bütün uyarı metodlarına sahiptir. Bütün değişiklikler; başlık, açıklama, katılımcı değişikliklerini içerir. Bir etkinlik sahibi bir uyarı talep etmişse; katılımcıların kabul ve red mesajlarını da ayrıca uyarı olarak alacaktır.

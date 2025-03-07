@@ -267,11 +267,13 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	pl	Powiadomienia push
 quicksearch	mail	pl	Szybkie wyszukiwanie
 quicksearch (with cc)	mail	pl	Szybkie wyszukiwanie (+Kopia)
+read / unread	mail	pl	Przeczytane / Nieprzeczytane
 real name	mail	pl	Prawdziwe imię i nazwisko
 real name email	mail	pl	Prawdziwe imię i nazwisko [Email]
 real name organization email	mail	pl	Prawdziwa nazwa Organizacja [Email]
 refresh time in minutes	mail	pl	Czas odświeżania w minutach
 reject with	mail	pl	odrzuć z
+reloaded folder %1	mail	pl	Przeładowano folder %1
 remember the password for	mail	pl	Zapamiętaj hasło dla
 remove all	mail	pl	Usuń wszystko
 remove immediately	mail	pl	Usuń natychmiast
@@ -289,6 +291,7 @@ report as ham	mail	pl	Zgłoś jako Ham
 report as spam	mail	pl	Zgłoś jako spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	pl	Zgłoś tę wiadomość jako spam - rozwiązania antyspamowe, takie jak SpamTitan, nauczą się
 report this email content as spam - spam solutions like spamtitan will learn	mail	pl	Zgłoś tę treść wiadomości e-mail jako spam - rozwiązania antyspamowe, takie jak spamTitan, będą się uczyć
+request for passphrase	mail	pl	Prośba o podanie hasła
 required pear class mail/mimedecode.php not found.	mail	pl	Nie znaleziono wymaganej klasy PEAR Mail/mimeDecode.php.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	pl	Wymagane do wyłączenia, jeśli używasz Dovecot z prywatnymi flagami widocznymi w folderze współdzielonym lub folderze użytkownika!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	pl	Szyfrowanie S/MIME nie powiodło się, ponieważ nie znaleziono certyfikatu dla adresu nadawcy: %1
@@ -319,6 +322,7 @@ server supports special-use folders	mail	pl	Serwer obsługuje foldery specjalneg
 set flags	mail	pl	Oznacz e-mail jako
 set predefined values for compose...	mail	pl	Ustaw predefiniowane wartości dla komponowania ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pl	Czy podpis powinien być wstawiany po (standardowo) lub przed odpowiedzią lub przesłaniem dalej oraz czy podpis powinien być widoczny i możliwy do zmiany podczas tworzenia.
+show all addresses	mail	pl	Pokaż wszystkie adresy
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pl	Pokazywanie wszystkich folderów (subskrybowanych i niesubskrybowanych) w panelu folderów na ekranie głównym.
 show notification for new arriving mails	mail	pl	Wyświetlaj powiadomienia o nowych wiadomościach
 show test connection section and control the level of info displayed?	mail	pl	Pokazywać sekcję połączenia testowego i kontrolować poziom wyświetlanych informacji?
@@ -338,7 +342,10 @@ smime encrypted message	mail	pl	Komunikat zaszyfrowany S/MIME
 smime signed message	mail	pl	Komunikat podpisany S/MIME
 smtp	mail	pl	SMTP
 sneak preview in list	mail	pl	Podgląd wiadomości
+some clients fail to detect correct charset, if flowed lines are enabled.	mail	pl	Niektóre klienty nie wykrywają poprawnego zestawu znaków, jeśli włączone są przepływające linie
 sort order	mail	pl	Porządek sortowania
+spamtitan api url	mail	pl	SpamTitan API URL
+spamtitan integration requires epl version	mail	pl	Integracja SpamTitan wymaga wersji EPL
 start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy HTML?
 template folder	mail	pl	Katalog szablnów
 text	mail	pl	Tekst

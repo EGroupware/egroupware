@@ -20,6 +20,7 @@ edit this entry	timesheet	da	Redigér denne indstasning
 end	timesheet	da	Slut
 error storing working time	timesheet	da	Fejl ved lagring af arbejdstid
 existing links	timesheet	da	eksisterende links
+exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	da	Eksporterer poster fra Time Sheet til en CSV-fil. I fanen Indstillinger kan du også vælge andre separatorer.
 forgot to switch off working time?	common	da	Har du glemt at slukke for arbejdstiden?
 global categories	timesheet	da	Globale Kategorier
 history	timesheet	da	Historisk
@@ -29,6 +30,7 @@ leaves without saveing	timesheet	da	forlad uden at gemme
 length<br>rows	timesheet	da	Længde<br>række
 links	timesheet	da	Links
 max length of the input [, length of the inputfield (optional)]	timesheet	da	maks længde af inputtet [længde af input feltet (valg frit)]
+mode	timesheet	da	Tilstand
 modified	timesheet	da	Modificeret
 no details	timesheet	da	Ingen detaljer
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	da	Antal af rækker for et multi-linie felt eller linier i en multi-select box
@@ -39,10 +41,12 @@ parent	timesheet	da	Overstående
 pause	common	da	Pause
 pause time	timesheet	da	Tid for pause
 paused	timesheet	da	Pauseret
+project fields	timesheet	da	Projekt-felter
 recorded	timesheet	da	Optaget
 restore this entry	timesheet	da	Gendan denne post
 saves the changes made	timesheet	da	gem ændringer
 saves the changes made and leaves	timesheet	da	gem ændringerne og afslut
+select the predefined status, when creating a new timesheet	preferences	da	Vælg den foruddefinerede status, når du opretter en ny post.
 start	timesheet	da	Start
 start & stop timer	common	da	Start og stop timer
 start timer	common	da	Start timer

@@ -313,7 +313,6 @@ upload fields	filemanager	km	ផ្ទុកឡើងវាល
 upload files	filemanager	km	ផ្ទុកឯកសារឡើង
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	km	ប្រើស្លាកនេះសម្រាប់ស្លាកអាសយដ្ឋាន។ ដាក់មាតិកាដែលអ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ។
 used space	filemanager	km	កន្លែងទំនេរ
-user color indicator	filemanager	km	សូចនាករពណ៌អ្នកប្រើប្រាស់
 user home quota	filemanager	km	កូតាផ្ទះអ្នកប្រើប្រាស់
 username for webdav and smb, use $user for name of logged in user	filemanager	km	ឈ្មោះអ្នកប្រើប្រាស់សម្រាប់ WebDAV និង SMB ប្រើ $user សម្រាប់ឈ្មោះអ្នកប្រើប្រាស់ដែលបានចូល
 users and groups	filemanager	km	អ្នកប្រើប្រាស់ និងក្រុម

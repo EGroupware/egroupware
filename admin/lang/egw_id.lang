@@ -122,6 +122,7 @@ change access	admin	id	Mengubah hak akses
 change account_id	admin	id	Ubah ID akun
 change acl rights	admin	id	Ubah Hak-hak ACL
 change config settings	admin	id	Ubah seting konfigurasi
+change domain of email address and aliases	admin	id	Mengubah domain alamat email dan alias
 change login screen message	admin	id	Ubah pesan pada layar utama
 children	admin	id	Anak
 click to select a color	admin	id	Klik untuk memilih warna
@@ -378,6 +379,7 @@ server settings	admin	id	Pengaturan Server
 server type(mode)	admin	id	Server Type(mode)
 server url	admin	id	Server URL
 server username	admin	id	Server Username
+set a random password	admin	id	Mengatur kata sandi acak
 set preference values.	admin	id	Set preference values.
 show access log	admin	id	Tampilkan log akses
 show current action	admin	id	Tampilkan tindakan saat ini
@@ -461,6 +463,7 @@ view user account	admin	id	Lihat akoun pengguna
 virtual mail manager	admin	id	Virtual MAIL ManaGeR
 who would you like to transfer records owned by the deleted user to?	admin	id	Kepada siapa Anda ingin mentransfer catatan yang dimiliki oleh pengguna yang dihapus?
 xml-rpc	admin	id	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	id	Anda hanya dapat mengubah hash, jika Anda menetapkan kata sandi acak atau saat ini menggunakan kata sandi teks biasa!
 you can use wizard to fix account settings or delete account.	admin	id	Anda dapat menggunakan wizard untuk memperbaiki pengaturan akun atau menghapus akun.
 you need to select some users first!	admin	id	Anda perlu memilih beberapa pengguna terlebih dahulu!
 your name	admin	id	Nama Anda

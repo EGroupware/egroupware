@@ -83,7 +83,6 @@ canceled	calendar	el	Ακυρώθηκε
 category report	calendar	el	Αναφορά κατηγορίας
 changed event-data applied	calendar	el	Εφαρμόζονται τροποποιημένα δεδομένα συμβάντος
 charset of file	calendar	el	Κωδικοποίηση αρχείου
-check all	calendar	el	Επιλογή όλων
 choose a category	calendar	el	Επιλέξτε μία κατηγορία
 close the window	calendar	el	Κλείσιμο παραθύρου
 compose a mail to all participants after the event is saved	calendar	el	Συντάξτε ένα μήνυμα σε όλους τους συμμετέχοντες αφού σωθεί το γεγονός
@@ -116,7 +115,7 @@ delegated	calendar	el	εξουσιοδοτήθηκε
 delete exceptions	calendar	el	Διαγραφή εξαιρέσεων
 delete selected events	calendar	el	Διαγραφή επιλεγμένων γεγονότων
 delete series	calendar	el	Διαγραφή σειράς
-delete this alarm	calendar	el	Διαγραφή αυτής της ειδοποίησης
+delete this alarm	calendar	el	Διαγραφή αυτής της ειδοποίησης;
 delete this event	calendar	el	Διαγραφή αυτού του γεγονότος
 delete this exception	calendar	el	Διαγραφή αυτής της εξαίρεσης
 delete this recurrence	calendar	el	Διαγραφή αυτής της επανάληψης
@@ -485,7 +484,6 @@ weekview	calendar	el	Εμφάνιση εβδομάδας
 weekview with weekend	calendar	el	Εμφάνιση εβδομάδας με Σαββατοκύριακο
 weekview without weekend	calendar	el	Εμφάνιση εβδομάδας χωρίς Σαββατοκύριακο
 whole day	calendar	el	ολόκληρη ημέρα
-wk	calendar	el	Εβδ
 work day ends on	calendar	el	Ημέρα εργασίας ολοκληρώνεται την
 work day starts on	calendar	el	Ημέρα εργασίας ξεκινά την
 workday	calendar	el	Εργάσιμη ημέρα

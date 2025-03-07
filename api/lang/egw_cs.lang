@@ -496,6 +496,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the new version number here (> old_version), empty for no update-file	common	cs	Sem zadejte číslo nové verze (> stará_verze), ponechte prázdné pokud nechcete aktualizovat soubor
 enter the new version number here (has to be > old_version)	common	cs	Sem zadejte číslo nové verze (musí být > stará_verze)
 enter your file name	common	cs	Zadejte název souboru
+enter your passphrase	common	cs	Zadejte svou přístupovou frázi
 enter your password	common	cs	Zadejte své heslo
 entry has been deleted sucessfully	common	cs	Záznam byl úspěšně smazán.
 entry not found!	common	cs	Záznam nebyl nalezen!
@@ -1076,6 +1077,7 @@ primary key	common	cs	Primární klíč
 primary key for the table, gets automaticaly indexed	common	cs	Primární klíč tabulky, je automaticky indexován
 primary style-sheet:	common	cs	Primární formátovací sada:
 print	common	cs	Tisknout
+print orientation	common	cs	Orientace
 priority	common	cs	Priorita
 private	common	cs	Soukromé
 programs	common	cs	Programy

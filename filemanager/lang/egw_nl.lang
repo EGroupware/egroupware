@@ -143,7 +143,7 @@ filesystem	filemanager	nl	Bestandssysteem
 filesystem check reported no problems.	filemanager	nl	Check van bestandsysteem rapporteert geen problemen
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	nl	Bestandssysteem: mount directory (binnen /var/lib/egroupware !) van host bestandssysteem
 finally delete	filemanager	nl	Eindelijk verwijderen
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	nl	Verwijder alle oudere versies en verwijderde bestanden in de opgegeven map. Dit kan NIET ongedaan gemaakt worden!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	nl	Verwijder alle oudere versies en verwijderde bestanden in de opgegeven map? Dit kan NIET ongedaan gemaakt worden!
 finally delete this version	filemanager	nl	Verwijder deze vesie definitief
 fix reported problems	filemanager	nl	Hersteld gerapporteerde problemen
 folder up	filemanager	nl	Folder omhoog
@@ -199,12 +199,14 @@ notebookbar	filemanager	nl	Getabd
 older versions or deleted files	filemanager	nl	Oude versiers of verwijderde bestanden
 only owner can rename or delete the content	filemanager	nl	Alleen de eigenaar kan de inhoud hernoemen of verwijderen
 open	filemanager	nl	open
+open documents with collabora, if permissions are given	filemanager	nl	Documenten openen met Collabora Online, als de rechten zijn gegeven
 operation	filemanager	nl	Bewerking
 password for webdav and smb, use $pass for password of logged in user	filemanager	nl	Wachtwoord voor WebDAV en SMB, gebruik $pass voor wachtwoord van ingelogde gebruiker
 paste link	filemanager	nl	Plak link
 path %1 not found or not a directory!	filemanager	nl	Pad %1 niet gevonden of geen map !
 path and query-parameters, smb: share and optional path (with /)	filemanager	nl	Pad en query-parameters, SMB: share en optioneel pad (met /)
 percentage	filemanager	nl	Percentage
+permission denied!	filemanager	nl	Toestemming geweigerd!
 permissions	filemanager	nl	Toestemmingen
 permissions of %1 changed.	filemanager	nl	Toestemmingen van %1 gewijzigd.
 please select a file to delete.	filemanager	nl	Selecteer svp een bestand om te verwijderen.
@@ -256,6 +258,8 @@ show link "your home directory" in side box menu?	filemanager	nl	Toon link naar 
 show link "your home directory*" in side box menu?*	filemanager	nl	Toon link naar "Uw thuis map"in zij menu?*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	nl	Toon link naar bestandbeheerder's basisdirectory (/) in zijkant menu?
 size	filemanager	nl	Grootte
+smb, webdavs and vfs require a username!	filemanager	nl	SMB, WebDAV en VFS vereisen een gebruikersnaam!
+smb: mount samba or windows fileserver shares	filemanager	nl	SMB: Samba of Windows fileserver aandelen mounten
 sqlfs statistics	filemanager	nl	sqlFS Statistieken
 start search	filemanager	nl	start zoeken
 startfolder	filemanager	nl	Beginmap
@@ -280,6 +284,7 @@ upload fields	filemanager	nl	Upload velden
 upload files	filemanager	nl	Upload bestanden
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	nl	Gebruik deze tag voor adres labels. Zet de inhoud, welke e wilt herhalen, tussen twee tags
 used space	filemanager	nl	Gebruikte ruimte
+username for webdav and smb, use $user for name of logged in user	filemanager	nl	Gebruikersnaam voor WebDAV en SMB, gebruik $user voor naam van ingelogde gebruiker
 users and groups	filemanager	nl	Gebruikers en groepen
 versioning	filemanager	nl	Versie beheer
 vfs mounts and versioning	common	nl	VFS laden en versie beheren

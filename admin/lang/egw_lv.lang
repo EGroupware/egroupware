@@ -118,6 +118,7 @@ certificate validation in days	admin	lv	Sertifikāta apstiprināšana dienās
 change access	admin	lv	Mainīt piekļuves tiesības
 change acl rights	admin	lv	Mainīt ACL tiesības
 change config settings	admin	lv	Mainīt konfigurācijas iestatījumus
+change domain of email address and aliases	admin	lv	E-pasta adreses un aizstājvārdu domēna maiņa
 change login screen message	admin	lv	Mainīt galvenā loga ziņojumu
 check ip address of all sessions	admin	lv	Pārbaudīt IP adresi visām sesijām
 check items to <b>%1</b> to %2 for %3	admin	lv	Pārbaudīt vienības <b>%1</b> to %2 for %3
@@ -403,6 +404,7 @@ server password	admin	lv	Servera Parole
 server type(mode)	admin	lv	Servera Tips(veids)
 server url	admin	lv	Servera URL
 server username	admin	lv	Servera Lietotājvārds
+set a random password	admin	lv	Izlases paroles iestatīšana
 set preference values.	admin	lv	Uzstādi izvēlētās vētības
 should the login page include a language selectbox (useful for demo-sites) ?	admin	lv	Vai autorizācijas lapā ir iekļauta valodu izvēlne (noderīgi demo-lapām)?
 show access log	admin	lv	Rādīt pieejas logu
@@ -494,6 +496,7 @@ virtual mail manager	admin	lv	VIrtuālais MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	lv	Kam tu vēlies pārsūtīt izdzēstā lietotāja AAL ierakstus?
 who would you like to transfer records owned by the deleted user to?	admin	lv	Kam vēlaties nodot ierakstus, kas pieder dzēstajam lietotājam?
 xml-rpc	admin	lv	XML-RPC
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	lv	Jūs varat mainīt hash tikai tad, ja esat iestatījis nejaušu paroli vai pašlaik izmantojat vienkāršā teksta paroles!
 you can use wizard to fix account settings or delete account.	admin	lv	Jūs varat izmantot vedni, lai labotu konta iestatījumus vai dzēstu kontu.
 you have entered an invalid expiration date	admin	lv	Tu esi ievadījis nederīgu izbeigšanās (expiration) datumu
 you must add at least 1 permission or group to this account	admin	lv	Tev jāpievieno vismaz 1 atļauja vai grupa šim kontam

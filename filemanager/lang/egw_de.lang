@@ -160,7 +160,7 @@ filesystem	filemanager	de	Dateisystem
 filesystem check reported no problems.	filemanager	de	Die Überprüfung des des Dateisystems ergab keine Probleme.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	de	Dateisystem: Mounted Verzeichnisse (innerhalb von /var/lib/egroupware) vom Dateisystem des Hosts
 finally delete	filemanager	de	Endgültig löschen
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Ordner endgültig löschen. Das kann NICHT rückgängig gemacht werden!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Ordner endgültig löschen? Das kann NICHT rückgängig gemacht werden!
 finally delete this version	filemanager	de	Diese Version endgültig löschen
 fix reported problems	filemanager	de	Gefundene Probleme beheben
 folder up	filemanager	de	Übergeordneter Ordner
