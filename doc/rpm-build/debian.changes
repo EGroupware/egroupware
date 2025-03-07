@@ -1,3 +1,35 @@
+egroupware-docker (23.1.20250307) hardy; urgency=low
+
+  * Api: diverse security hardening following up a pentest through SySS GmbH contracted by one of our customers
+  * Api: allow to check passwords e.g. for application secrets via OpenID Connect authentication (requires "password" grant!)
+  * Addressbook: hide account-name column for non-admins, unless otherwise configured in app-configuration of addressbook
+  * CalDAV/CardDAV: only show own user and memberships on automatic index page (or PROPFIND) for privacy and security reasons
+  * Admin/Api: allow to hide groups from non-admins
+  * Admin/Preferences: allow to use templates for creating application-passwords (and optionally limit groups to just use pre-existing templates)
+  * Calendar: Stop constant flickering in planner view
+  * Addressbook: use a hierarchical list to show distribution lists incl. groups (if groups are enabled)
+  * Filemanager: tile view show filename and comment on hover
+  * Mail: allow to search for Bcc addresses (works only in Sent folder!)
+  * Mail: allow to select (multiple) mail addresses from addressbook directly in compose window
+  * Mail: Deleting emails from the list is faster
+  * Mail: added an option in mail preferences to hide the 'From' address header in the compose window
+  * Collabora: white icons for new notebookbar in new Collabora version 24.04.11
+  * Tracker: Update Times column as timesheets are added to tickets
+  * Tracker: new filter "Not closed or pending"
+  * Resources: new setting what to show in title beside name: short description (default), location or inventory number
+  * Addressbook/REST-API: changed NameComponent names to match final RFC 9553 (old names are parsed, but no longer returned, see the docu)
+  * InfoLog/REST-API: allow to set primary link via relatedTo object, see updated REST API docu for InfoLog
+  * LDAP/Univention: fix not imported or read group mail address
+  * LDAP/ADS/Import: invalidating accounts-cache during import for groups, accounts and memberships
+  * EPL/eSyncProvisioning: allow to NOT set the optional MaxDevicePasswordFailedAttempts policy
+  * Invoices (EPL): new invoice-types "Corrected invoice" (384) to cancel invoices and "Credit note" (381)
+  * Invoices (EPL): allow to configure a full and reduced tax rate, to reduce errors by manual repeated entry
+  * Invoices (EPL): schema update to fit "cancelled" status and prefer matching business email over other matches on import
+  * Invoices (EPL): translation of unit-codes and {{*/en}} placeholders for untranslated content (without it's translated to users language)
+  * Invoices (EPL): fix (regular) PDFs on mobile device are opened in invoices viewer and give an error it's no invoice
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 07 Mar 2025 16:16:16 +0100
+
 egroupware-docker (23.1.20250113) hardy; urgency=low
 
   * Mail: use account of selected From address to send mails, not the current open mailbox
