@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware: About informations
+ * EGroupware: About information
  *
  * rewrite of the old PHPLib based about page
  * it now uses eTemplate2

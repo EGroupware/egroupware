@@ -79,7 +79,7 @@ if (($GLOBALS['sessionid'] = Api\Auth::login()))
 }
 else
 {
-	// allow template to overide login-template (without modifying header.inc.php) by setting default or forced pref
+	// allow template to override login-template (without modifying header.inc.php) by setting default or forced pref
 	$prefs = new Api\Preferences();
 	$prefs->account_id = Api\Preferences::DEFAULT_ID;
 	$prefs->read_repository();
@@ -180,7 +180,7 @@ else
 		}
 	}
 
-	// use HTTP status code 401 for a failed login, so tools like fail2ban can recognice that for login page too
+	// use HTTP status code 401 for a failed login, so tools like fail2ban can recognize that for login page too
 	if ($_GET['cd'] == Api\Session::CD_BAD_LOGIN_OR_PASSWORD)
 	{
 		http_response_code(401);

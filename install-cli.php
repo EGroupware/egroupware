@@ -22,7 +22,7 @@
  * Both will create a git clone, which can be further updated by calling this tool without argument.
  *
  * We currently use 3 "channels":
- * - release: taged maintenance releases only eg. 17.1.20190214
+ * - release: tagged maintenance releases only eg. 17.1.20190214
  * - bugfix:  release-branch incl. latest bugfixes eg. 17.1 or 17.1.x-dev for composer
  * - master:  latest development for next release
  * To change the channel, call install-cli.php <channel-to-update-to>.
@@ -41,9 +41,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-chdir(__DIR__);	// to enable relative pathes to work
+chdir(__DIR__);	// to enable relative paths to work
 
-if (php_sapi_name() !== 'cli')	// security precaution: forbit calling setup-cli as web-page
+if (php_sapi_name() !== 'cli')	// security precaution: forbid calling setup-cli as web-page
 {
 	die('<h1>install-cli.php must NOT be called as web-page --> exiting !!!</h1>');
 }
@@ -324,7 +324,7 @@ exit(count($failed));
 /**
  * Run a command and collect number of succieded or failed command
  *
- * @param string $cmd comamnd to run
+ * @param string $cmd command to run
  * @param string $name task name to report on failure
  * @return int exit code of command
  */
@@ -381,7 +381,7 @@ function run_git(array $argv, $main_too=true)
 /**
  * Get the latest release
  *
- * @param boolean $prerelease =false include releases taged as prerelease
+ * @param boolean $prerelease =false include releases tagged as prerelease
  * @param boolean $return_name =true true: just return name, false: full release object
  * @return array|string|null null if no release found
  */

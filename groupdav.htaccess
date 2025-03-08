@@ -1,7 +1,7 @@
 # EGroupware CalDav/CardDAV and ActiveSync support via .htaccess
 #
 # Please note:
-# - this file needs to be copyied as .htaccess to your document root
+# - this file needs to be copied as .htaccess to your document root
 #   to support CalDAV/CardDAV or ActiveSync synchronisation.
 # - your Apache web server needs to be setup to read .htaccess files and
 #   allow use of the RewriteEngine directive (AllowOverride FileInfo).
