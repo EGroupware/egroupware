@@ -238,7 +238,7 @@ class addressbook_bo extends Api\Contacts
 					$key = $keys[$contact['email']];
 				}
 
-				// key is stored in file for sql backend or allways for pgp key
+				// key is stored in file for sql backend or always for pgp key
 				$path = null;
 				if ($contact['id'] && $this->pubkey_use_file($pgp, $contact))
 				{
@@ -411,7 +411,7 @@ class addressbook_bo extends Api\Contacts
 	 * Saves contact
 	 *
 	 * Reimplemented to strip pubkeys pasted into pubkey field or imported and store them as files in Vfs.
-	 * We allways store PGP pubkeys to Vfs, but S/Mime ones only for SQL backend, not for LDAP or AD.
+	 * We always store PGP pubkeys to Vfs, but S/Mime ones only for SQL backend, not for LDAP or AD.
 	 *
 	 * @param array &$contact contact array from etemplate::exec
 	 * @param boolean $ignore_acl =false should the acl be checked or not
@@ -431,7 +431,7 @@ class addressbook_bo extends Api\Contacts
 				list($regexp, $file, $bit) = $data;
 				$matches = null;
 				if (!empty($contact['pubkey']) && preg_match($regexp, $contact['pubkey'], $matches) &&
-					// check if we store that pubkey as file (PGP allways, but S/Mime only for SQL backend, not for LDAP or AD!)
+					// check if we store that pubkey as file (PGP always, but S/Mime only for SQL backend, not for LDAP or AD!)
 					$this->pubkey_use_file($bit === Api\Contacts::FILES_BIT_PGP_PUBKEY, $contact))
 				{
 					// check_perms && save check ACL, in case of access only via own-account we have to use root to allow the update

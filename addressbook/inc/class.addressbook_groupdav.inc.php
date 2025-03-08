@@ -152,7 +152,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		{
 			return false;
 		}
-		if ($id) $path = dirname($path).'/';	// carddav_name get's added anyway in the callback
+		if ($id) $path = dirname($path).'/';	// carddav_name gets added anyway in the callback
 
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id) filter=".array2string($filter));
 
@@ -1221,7 +1221,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	}
 
 	/**
-	 * Check if user has the neccessary rights on a contact
+	 * Check if user has the necessary rights on a contact
 	 *
 	 * @param int $acl Acl::READ, Acl::EDIT or Acl::DELETE
 	 * @param array|int $contact contact-array or id
@@ -1265,7 +1265,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		// if "Sync all selected addressbook into one" is set --> no (additional) shared addressbooks
 		if (!$ignore_all_in_one && in_array('O',$this->home_set_pref)) return array();
 
-		// replace symbolic id's with real nummeric id's
+		// replace symbolic id's with real numeric id's
 		foreach(array(
 			'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
 			'U' => '0',
@@ -1311,7 +1311,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	}
 
 	/**
-	 * Return appliction specific settings
+	 * Return application specific settings
 	 *
 	 * @param array $hook_data values for keys 'location', 'type' and 'account_id'
 	 * @return array of array with settings
