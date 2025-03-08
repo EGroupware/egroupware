@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Addressbook: incomming CTI / open CRM view for a given telephon-number and user
+ * EGroupware Addressbook: incoming CTI / open CRM view for a given telephon-number and user
  *
  * Usage: curl --user "<user>:<password>" "https://example.com/egroupware/addressbook/crm.php?from=<phone-number>"
  *

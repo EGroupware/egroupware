@@ -82,7 +82,7 @@ class addressbook_hooks
 					'ajax'       => 'true',
 				)),
 			);
-			// custom fields are not availible in LDAP
+			// custom fields are not available in LDAP
 			if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
 			{
 				$file['Custom fields'] = Egw::link('/index.php',array(
@@ -157,7 +157,7 @@ class addressbook_hooks
 			'values' => array('1' => lang('Hide all accounts'), '0' => lang('Show active accounts'), 'none' => lang('Show all accounts')),
 			'label'  => 'Hide accounts from addressbook',
 			'name'   => 'hide_accounts',
-			'help'   => 'Hides accounts completly from the adressbook.',
+			'help'   => 'Hides accounts completely from the adressbook.',
 			'xmlrpc' => True,
 			'admin'  => false,
 			'default'=> '0'
@@ -541,7 +541,7 @@ class addressbook_hooks
 		$copy_fields = array();
 		foreach($bocontacts->contact_fields as $field => $label)
 		{
-			// some fields the user should never be allowed to copy or are coverted by an other attribute (n_fn for all n_*)
+			// some fields the user should never be allowed to copy or are converted by an other attribute (n_fn for all n_*)
 			if (!in_array($field,array('id','tid','created','creator','modified','modifier','account_id','uid','etag','n_fn')))
 			{
 				$copy_fields[$field] = $label;
@@ -561,7 +561,7 @@ class addressbook_hooks
 		}
 
 		$repositories = array('sql' => 'SQL');
-		// check account-repository, contact-repository LDAP is only availible for account-repository == ldap
+		// check account-repository, contact-repository LDAP is only available for account-repository == ldap
 		if ($config['account_repository'] == 'ldap' || !$config['account_repository'] && $config['auth_type'] == 'ldap')
 		{
 			$repositories['ldap'] = 'LDAP';

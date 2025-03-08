@@ -65,7 +65,7 @@
                 <row disabled="@addr_format=city_state_postcode">
                     <et2-description  for="tel_assistent" value="Assistent phone"></et2-description>
                     <et2-url-phone  id="tel_assistent" tabindex="23"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_assistent" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_one_locality" value="city"></et2-description>
                     <et2-hbox  class="city_state_postcode">
@@ -76,7 +76,7 @@
                 <row disabled="@addr_format=city_state_postcode">
                     <et2-description  for="tel_fax" value="fax"></et2-description>
                     <et2-url-fax  id="tel_fax" tabindex="24" autocomplete="fax"></et2-url-fax>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_fax" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_one_countryname" value="country"></et2-description>
                     <et2-select-country  id="adr_one_countrycode" tabindex="15" allowFreeEntries="true" autocomplete="country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
@@ -84,7 +84,7 @@
                 <row disabled="@addr_format=city_state_postcode">
                     <et2-description  for="tel_other" value="Other phone"></et2-description>
                     <et2-url-phone  id="tel_other" tabindex="25" autocomplete="tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_other" ro_true="&amp;hearts;" />
                     <et2-description  value="Region"></et2-description>
                     <et2-select-state  class="city_state_postcode" statustext="State" allowFreeEntries="true" id="adr_one_region" tabindex="16" maxlength="64" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
@@ -92,7 +92,7 @@
                 <row disabled="!@addr_format=city_state_postcode">
                     <et2-description  for="tel_assistent" value="Assistent phone"></et2-description>
                     <et2-url-phone  id="tel_assistent" tabindex="23"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_assistent" ro_true="&amp;hearts;" />
                     <et2-description  value="City"></et2-description>
                     <et2-hbox>
@@ -104,7 +104,7 @@
                 <row disabled="!@addr_format=city_state_postcode">
                     <et2-description  for="tel_fax" value="fax"></et2-description>
                     <et2-url-fax  id="tel_fax" tabindex="24" autocomplete="fax"></et2-url-fax>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_fax" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_one_countryname" value="country"></et2-description>
                     <et2-select-country  tabindex="16" id="adr_one_countrycode" allowFreeEntries="true" autocomplete="country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
@@ -112,7 +112,7 @@
                 <row disabled="!@addr_format=city_state_postcode">
                     <et2-description  for="tel_other" value="Other Phone"></et2-description>
                     <et2-url-phone  id="tel_other" tabindex="25" autocomplete="tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_other" ro_true="&amp;hearts;" />
                     <et2-description></et2-description>
                     <et2-description></et2-description>
@@ -120,7 +120,7 @@
                 <row>
                     <et2-description  for="tel_car" value="car phone"></et2-description>
                     <et2-url-phone  id="tel_car" tabindex="26"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_car" ro_true="&amp;hearts;" />
                     <et2-description  disabled="@no_tid" for="tid" value="Type"></et2-description>
                     <et2-select  id="tid" onchange="1" disabled="@no_tid" noLang="1"></et2-select>
@@ -204,7 +204,7 @@
                 <row>
                     <et2-description  for="tel_home" value="Home phone"></et2-description>
                     <et2-url-phone  id="tel_home" tabindex="27" autocomplete="section-two home tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_home" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_two_street" tabindex="32" value="street"></et2-description>
                     <et2-textbox  id="adr_two_street" tabindex="33" maxlength="64" autocomplete="section-two address-line1"></et2-textbox>
@@ -213,7 +213,7 @@
                 <row>
                     <et2-description  for="tel_cell_private" value="mobile phone"></et2-description>
                     <et2-url-phone  id="tel_cell_private" tabindex="28" autocomplete="section-two mobile tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_cell_private" ro_true="&amp;hearts;" />
                     <et2-description></et2-description>
                     <et2-textbox  statustext="address line 2" id="adr_two_street2" tabindex="34" maxlength="64" autocomplete="section-two address-line2"></et2-textbox>
@@ -222,7 +222,7 @@
                 <row disabled="@addr_format=city_state_postcode">
                     <et2-description  for="tel_fax_home" value="fax"></et2-description>
                     <et2-url-fax  id="tel_fax_home" tabindex="29" autocomplete="section-two fax tel"></et2-url-fax>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_fax_home" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_two_locality" value="city"></et2-description>
                     <et2-hbox  class="city_state_postcode">
@@ -234,7 +234,7 @@
                 <row disabled="@addr_format=city_state_postcode">
                     <et2-description  for="tel_pager" value="pager" autocomplete="section-two pager tel"></et2-description>
                     <et2-url-phone  id="tel_pager" tabindex="30"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_pager" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_two_countryname" value="country"></et2-description>
                     <et2-select-country  tabindex="37" id="adr_two_countrycode" allowFreeEntries="true" autocomplete="section-two country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
@@ -251,7 +251,7 @@
                 <row disabled="!@addr_format=city_state_postcode">
                     <et2-description  for="tel_fax_home" value="fax"></et2-description>
                     <et2-url-fax  id="tel_fax_home" autocomplete="fax tel"></et2-url-fax>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_fax_home" ro_true="&amp;hearts;" />
                     <et2-description  value="City"></et2-description>
                     <et2-hbox>
@@ -264,7 +264,7 @@
                 <row disabled="!@addr_format=city_state_postcode">
                     <et2-description  for="tel_pager" value="pager"></et2-description>
                     <et2-url-phone  id="tel_pager"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_pager" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_two_countryname" value="country"></et2-description>
                     <et2-select-country  id="adr_two_countrycode" allowFreeEntries="true" autocomplete="section-two country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
@@ -352,7 +352,7 @@
                 <row class="dialogHeader2">
                     <et2-description  for="tel_work" value="Business phone"></et2-description>
                     <et2-url-phone  id="tel_work" tabindex="17" class="telNumbers" autocomplete="work tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_work" ro_true="&amp;hearts;" />
                     <et2-description  for="org_unit" value="department"></et2-description>
                     <et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="8" maxlength="128"></et2-textbox>
@@ -361,7 +361,7 @@
                 <row class="dialogHeader3">
                     <et2-description  for="tel_cell" value="mobile phone"></et2-description>
                     <et2-url-phone  id="tel_cell" tabindex="18" class="telNumbers" autocomplete="mobile tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                    <radio statustext="select phone number as preferred way of contact" id="tel_prefer"
                            set_value="tel_cell" ro_true="&amp;hearts;" />
                     <et2-description  for="title" value="Title"></et2-description>
                     <et2-textbox  id="title" maxlength="128" tabindex="9" autocomplete="organization-title"></et2-textbox>

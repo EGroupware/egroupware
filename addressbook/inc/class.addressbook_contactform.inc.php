@@ -123,7 +123,7 @@ class addressbook_contactform
 					else
 					{
 						return '<p align="center">'.lang('There was an error saving your data :-(').'<br />'.
-							lang('Either the configured email addesses are wrong or the mail configuration.').'</p>';
+							lang('Either the configured email addresses are wrong or the mail configuration.').'</p>';
 					}
 				}
 			}

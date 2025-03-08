@@ -24,7 +24,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	);
 
 	/**
-	 * actions wich could be done to data entries
+	 * actions which could be done to data entries
 	 */
 	protected static $actions = array('insert');
 
@@ -330,9 +330,9 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	}
 
 	/**
-	 * retruns file suffix(s) plugin can handle (e.g. csv)
+	 * returns file suffix(s) plugin can handle (e.g. csv)
 	 *
-	 * @return string suffix (comma seperated)
+	 * @return string suffix (comma separated)
 	 */
 	public static function get_filesuffix() {
 		return 'vcf';
@@ -341,7 +341,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	/**
 	 * return etemplate components for options.
 	 * @abstract We can't deal with etemplate objects here, as an uietemplate
-	 * objects itself are scipt orientated and not "dialog objects"
+	 * objects itself are script oriented and not "dialog objects"
 	 *
 	 * @return array (
 	 * 		name 		=> string,
@@ -373,7 +373,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	}
 
 	/**
-	 * returns etemplate name for slectors of this plugin
+	 * returns etemplate name for selectors of this plugin
 	 *
 	 * @return string etemplate name
 	 */

@@ -20,7 +20,7 @@ use EGroupware\Api\Acl;
 class addressbook_export_contacts_csv implements importexport_iface_export_plugin
 {
 	/**
-	 * Constants used for exploding categories & multi-selectboxes into seperate fields
+	 * Constants used for exploding categories & multi-selectboxes into separate fields
 	 */
 	const NO_EXPLODE = False;
 	const MAIN_CATS = 'main_cats';	// Only the top-level categories get their own field
@@ -329,7 +329,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	}
 
 	/**
-	 * retruns file suffix for exported file
+	 * returns file suffix for exported file
 	 *
 	 * @return string suffix
 	 */
@@ -374,7 +374,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	}
 
 	/**
-	 * returns slectors of this plugin via xajax
+	 * returns selectors of this plugin via xajax
 	 *
 	 */
 	public function get_selectors_etpl() {

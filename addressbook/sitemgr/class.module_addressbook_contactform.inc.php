@@ -27,7 +27,7 @@ class module_addressbook_contactform extends sitemgr_module
 	function __construct()
 	{
 		$this->i18n = true;
-		$this->arguments = array();	// get's set in get_user_interface
+		$this->arguments = array();	// gets set in get_user_interface
 		$this->title = lang('Contactform');
 		$this->description = lang('This module displays a contactform, that stores direct into the addressbook.');
 

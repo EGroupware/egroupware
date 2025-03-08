@@ -20,7 +20,7 @@ $setup_info['addressbook']['description'] =
 	'Contact manager with Vcard support.<br />
 	 Always have your address book available for updates or look ups from anywhere. <br />
 	 Share address book contact information with others. <br />
-	 Link contacts to calendar events or InfoLog entires like phonecalls.<br />
+	 Link contacts to calendar events or InfoLog entries like phonecalls.<br />
 	 Addressbook is the eGroupWare default contact application. <br />
 	 It stores contact information via SQL or LDAP and provides contact services via the eGroupWare API.';
 

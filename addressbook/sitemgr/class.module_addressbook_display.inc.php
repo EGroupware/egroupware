@@ -25,7 +25,7 @@ class module_addressbook_display extends sitemgr_module
 	 */
 	function __construct()
 	{
-		$this->arguments = array();	// get's set in get_user_interface
+		$this->arguments = array();	// gets set in get_user_interface
 		$this->title = lang('Display Contact');
 		$this->description = lang('This module displays Block from a Adddressbook Group.');
 

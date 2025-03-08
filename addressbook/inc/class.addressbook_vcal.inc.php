@@ -131,7 +131,7 @@ class addressbook_vcal extends addressbook_bo
 	* import a vard into addressbook
 	*
 	* @param string	$_vcard		the vcard
-	* @param int/string	$_abID =null		the internal addressbook id or !$_abID for a new enty
+	* @param int/string	$_abID =null		the internal addressbook id or !$_abID for a new entry
 	* @param boolean $merge =false	merge data with existing entry
 	* @param string $charset  The encoding charset for $text. Defaults to
     *                         utf-8 for new format, iso-8859-1 for old format.
@@ -168,7 +168,7 @@ class addressbook_vcal extends addressbook_bo
 					}
 					else
 					{
-						// restore from orignal
+						// restore from original
 						$contact['cat_id'] = $old_contact['cat_id'];
 					}
 				}
@@ -232,7 +232,7 @@ class addressbook_vcal extends addressbook_bo
 			$values = array();
 			$options = array();
 			$hasdata = 0;
-			// seperate fields from their options/attributes
+			// separate fields from their options/attributes
 			$vcardFields = explode(';', $vcardField);
 			$vcardField = $vcardFields[0];
 			$i = 1;
@@ -645,7 +645,7 @@ class addressbook_vcal extends addressbook_bo
 			}
 
 
-			// expand 3.0 TYPE paramters to 2.1 qualifiers
+			// expand 3.0 TYPE parameters to 2.1 qualifiers
 			$vcardRow['tparams'] = array();
 			foreach ($vcardRow['uparams'] as $pname => $params)
 			{

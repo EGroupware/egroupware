@@ -60,7 +60,7 @@ class addressbook_display extends addressbook_ui
 			$content['nm1'] = array(
 				'get_rows'       =>	'addressbook.addressbook_display.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 				'bottom_too'     => false,		// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
-				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
+				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entry
 				'start'          =>	0,			// IO position in list
 				'cat_id'         =>	'',			// IO category, if not 'no_cat' => True
 				'no_cat'         =>	'True',

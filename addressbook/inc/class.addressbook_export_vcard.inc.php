@@ -112,7 +112,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin
 	}
 
 	/**
-	 * retruns file suffix for exported file
+	 * returns file suffix for exported file
 	 *
 	 * @return string suffix
 	 */
@@ -158,7 +158,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin
 	}
 
 	/**
-	 * returns slectors of this plugin via xajax
+	 * returns selectors of this plugin via xajax
 	 *
 	 */
 	public function get_selectors_etpl()

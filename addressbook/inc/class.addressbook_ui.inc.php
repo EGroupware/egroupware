@@ -173,7 +173,7 @@ class addressbook_ui extends addressbook_bo
 					{
 						if (empty($error_msg))
 						{
-							$msg .= lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!', $success, $action_msg, $failed);
+							$msg .= lang('%1 contact(s) %2, %3 failed because of insufficient rights !!!', $success, $action_msg, $failed);
 						}
 						else
 						{
@@ -232,7 +232,7 @@ class addressbook_ui extends addressbook_bo
 			$content['nm'] = array(
 				'get_rows'       =>	'addressbook.addressbook_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 				'bottom_too'     => false,		// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
-				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
+				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entry
 				'start'          =>	0,			// IO position in list
 				'cat_id'         =>	'',			// IO category, if not 'no_cat' => True
 				'search'         =>	($template ?? 'addressbook.index') === 'addressbook.select' ? '@' : '', // IO search pattern
@@ -251,14 +251,14 @@ class addressbook_ui extends addressbook_bo
 				'filter2'        =>	'',			// IO filter2, if not 'no_filter2' => True
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
-				// using a positiv list now, as we constantly adding new columns in addressbook, but not removing them from default
+				// using a positive list now, as we constantly adding new columns in addressbook, but not removing them from default
 				'default_cols'   => !isset($template) ? 'type,n_fileas_n_given_n_family_n_family_n_given_org_name_n_family_n_given_n_fileas,'.
 					'number,org_name,org_unit,'.
 					'business_adr_one_countrycode_adr_one_postalcode,tel_work_tel_cell_tel_home,url_email_email_home' :
 					'!photo,home_adr_two_countrycode',
 				/* old negative list
 				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner,room',*/
-				'no_columnselection' => isset($template), // I  turn off the columnselection completly, turned on by default
+				'no_columnselection' => isset($template), // I  turn off the columnselection completely, turned on by default
 				// I  name of the preference (plus 'nextmatch-' prefix), default = template-name
 				'columnselection_pref' => isset($template) ? 'nextmatch-'.$template : null,
 				'filter2_onchange' => "return app.addressbook.filter2_onchange();",
@@ -305,7 +305,7 @@ class addressbook_ui extends addressbook_bo
 		// disable account-name column, if not allowed for current user
 		$content['nm']['no_account_lid_column'] = !Api\Contacts::allowAccountName();
 
-		// save the tid for use in creating new addressbook entrys via UI. Current tid is to be used as type of new entrys
+		// save the tid for use in creating new addressbook entries via UI. Current tid is to be used as type of new entries
 		//error_log(__METHOD__.__LINE__.' '.$content['nm']['col_filter']['tid']);
 		Api\Cache::setSession('addressbook','active_tid',$content['nm']['col_filter']['tid']);
 		if ($this->lists_available())
@@ -599,7 +599,7 @@ class addressbook_ui extends addressbook_bo
 					'prefix' => 'to_list_',
 					'icon' => 'foldertree_nolines_plus',
 					'enabled' => ($add_lists?true:false), // if there are editable lists, allow to add a contact to one of them,
-					//'disableClass' => 'rowNoEdit',	  // wether you are allowed to edit the contact or not, as you alter a list, not the contact
+					//'disableClass' => 'rowNoEdit',	  // whether you are allowed to edit the contact or not, as you alter a list, not the contact
 				),
 				'remove_from_list' => array(
 					'caption' => 'Remove from distribution list',
@@ -636,7 +636,7 @@ class addressbook_ui extends addressbook_bo
 		// move to AB
 		if (($move2addressbooks = $this->get_addressbooks(Acl::ADD)))	// do we have addressbooks, we should
 		{
-			unset($move2addressbooks[0]);	// do not offer action to move contact to an account, as we dont support that currrently
+			unset($move2addressbooks[0]);	// do not offer action to move contact to an account, as we don't support that currently
 			foreach($move2addressbooks as $owner => $label)
 			{
 				$icon = $type_label = null;
@@ -1031,7 +1031,7 @@ class addressbook_ui extends addressbook_bo
 	 * Get a nice name for the given grouped view ID
 	 *
 	 * @param String $view_id Some kind of indicator for a specific group, either
-	 *	organisation or duplicate.  It looks like key:value pairs seperated by |||.
+	 *	organisation or duplicate.  It looks like key:value pairs separated by |||.
 	 *
 	 * @return Array(ID => name), where ID is the $view_id passed in
 	 */
@@ -1227,7 +1227,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		if ((int)$list_id && !$this->check_list((int)$list_id, Acl::EDIT, $owner))
 		{
-			Api\Json\Response::get()->apply('egw.message', array(  lang('Insufficent rights to edit this list!'),'error'));
+			Api\Json\Response::get()->apply('egw.message', array(  lang('Insufficient rights to edit this list!'),'error'));
 			return;
 		}
 
@@ -1309,15 +1309,15 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * apply an action to multiple contacts
 	 *
-	 * @param string/int $action 'delete', 'vcard', 'csv' or nummerical account_id to move contacts to that addessbook
+	 * @param string/int $action 'delete', 'vcard', 'csv' or numerical account_id to move contacts to that addessbook
 	 * @param array $checked contact id's to use if !$use_all
 	 * @param boolean $use_all if true use all contacts of the current selection (in the session)
-	 * @param int &$success number of succeded actions
-	 * @param int &$failed number of failed actions (not enought permissions)
+	 * @param int &$success number of succeeded actions
+	 * @param int &$failed number of failed actions (not enough permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
 	 * @param string/array $session_name 'index' or array with session-data depending if we are in the main list or the popup
 	 * @param ?string& $error_msg on return optional error-message
-	 * @return boolean true if all actions succeded, false otherwise
+	 * @return boolean true if all actions succeeded, false otherwise
 	 */
 	function action($action, $checked, $use_all, &$success, &$failed, &$action_msg, $session_name, &$msg, $checkboxes = NULL, &$error_msg=null)
 	{
@@ -1404,7 +1404,7 @@ class addressbook_ui extends addressbook_bo
 				}
 				elseif($this->delete_list($query['filter2']) === false)
 				{
-					$msg = lang('Insufficent rights to delete this list!');
+					$msg = lang('Insufficient rights to delete this list!');
 				}
 				else
 				{
@@ -1692,11 +1692,11 @@ class addressbook_ui extends addressbook_bo
 	 * Successful lookups are removed from the checked array.
 	 *
 	 * Used for action on organisation and duplicate views
-	 * @param string/int $action 'delete', 'vcard', 'csv' or nummerical account_id to move contacts to that addessbook
+	 * @param string/int $action 'delete', 'vcard', 'csv' or numerical account_id to move contacts to that addessbook
 	 * @param array $checked contact id's to use if !$use_all
 	 * @param boolean $use_all if true use all contacts of the current selection in the session (NOT used!)
-	 * @param int &$success number of succeded actions
-	 * @param int &$failed number of failed actions (not enought permissions)
+	 * @param int &$success number of succeeded actions
+	 * @param int &$failed number of failed actions (not enough permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
 	 * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
 	 *
@@ -2056,7 +2056,7 @@ class addressbook_ui extends addressbook_bo
 						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
 					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);
-					// distributionlist memership for the entrys
+					// distributionlist membership for the entries
 					//_debug_array($this->get_lists(Acl::EDIT));
 					if ($show_distributionlist && $available_distib_lists)
 					{
@@ -2134,7 +2134,7 @@ class addressbook_ui extends addressbook_bo
 				{
 					$row[$name] .= ' '.($row['tel_prefer'] == $name ? $prefer_marker : '');		// .' ' to NOT remove the field
 				}
-				// always show the prefered phone, if not already shown
+				// always show the preferred phone, if not already shown
 				if (!in_array($row['tel_prefer'],$tel2show) && $row[$row['tel_prefer']])
 				{
 					$row['tel_prefered'] = $row[$row['tel_prefer']].$prefer_marker;
@@ -2474,7 +2474,7 @@ class addressbook_ui extends addressbook_bo
 							}
 							if ($failed_members)
 							{
-								$content['msg'] .= ', '.lang('failed to change %1 organisation member(s) (insufficent rights) !!!',$failed_members);
+								$content['msg'] .= ', '.lang('failed to change %1 organisation member(s) (insufficient rights) !!!',$failed_members);
 							}
 						}
 					}
@@ -2697,7 +2697,7 @@ class addressbook_ui extends addressbook_bo
 				foreach(is_array($_REQUEST['link_app']) ? $_REQUEST['link_app'] : array($_REQUEST['link_app']) as $n => $link_app)
 				{
 					$link_id = $link_ids[$n];
-					if (preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// gard against XSS
+					if (preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// guard against XSS
 					{
 						Link::link('addressbook',$content['link_to']['to_id'],$link_app,$link_id);
 					}
@@ -3395,8 +3395,8 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * convert email-address in compose link
 	 *
-	 * @param string $email email-addresse
-	 * @return array/string array with get-params or mailto:$email, or '' or no mail addresse
+	 * @param string $email email-address
+	 * @return array/string array with get-params or mailto:$email, or '' or no mail address
 	 */
 	function email2link($email)
 	{
