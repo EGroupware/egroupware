@@ -8,14 +8,14 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker@outdoor-training.de
- * (This file was originaly written by Dan Kuykendall)
+ * (This file was originally written by Dan Kuykendall)
  * @version $Id$
  */
 
 // eGW install dir, need to be changed if you copy the server to an other directory
 define('EGW_SERVER_ROOT','{SERVER_ROOT}');
 
-// other pathes depending on the one above
+// other paths depending on the one above
 define('EGW_INCLUDE_ROOT',EGW_SERVER_ROOT);
 define('EGW_API_INC',EGW_INCLUDE_ROOT.'/phpgwapi/inc');
 
