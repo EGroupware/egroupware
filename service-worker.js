@@ -8,5 +8,5 @@
  */
 
 this.addEventListener('fetch', function (event) {
-    // temporary just to ommit error app not installable
+    // temporary just to omit error app not installable
 });
