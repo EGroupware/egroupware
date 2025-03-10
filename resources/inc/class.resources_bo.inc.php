@@ -684,7 +684,7 @@ class resources_bo
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * query infolog for entries matching $pattern
 	 * @param string|array $pattern if it's a string it is the string we will search for as a criteria, if it's an array we
-	 * 	will seach for 'search' key in this array to get the string criteria. others keys handled are actually used
+	 * 	will search for 'search' key in this array to get the string criteria. others keys handled are actually used
 	 *	for calendar disponibility.
 	 * @param array $options Array of options for the search
 	 *
@@ -693,15 +693,15 @@ class resources_bo
 	{
 		if (is_array($pattern))
 		{
-			$criteria =array('name' => $pattern['search']
-					,'short_description' => $pattern['search']);
+			$pattern = $pattern['search'];
 		}
-		else
-		{
-			$criteria = array('name' => $pattern
-				, 'short_description' => $pattern);
-		}
-		$only_keys = 'res_id,name,short_description,bookable,useable,quantity';
+		$criteria = [
+			'name' => $pattern,
+			'short_description' => $pattern,
+			'location' => $pattern,
+			'inventory_number' => $pattern,
+		];
+		$only_keys = self::title_cols('bookable,useable,quantity');
 
 		// If no read access to any category, just stop
 		if(!$this->acl->get_cats(Acl::READ))
@@ -727,7 +727,7 @@ class resources_bo
 			$filter['accessory_of'] = $options['accessory_of'];
 		}
 		$list = array();
-		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
+		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',null,$op='OR',$limit,$filter);
 		// we need to check availability of the searched resources in the calendar if $pattern ['exec'] contains some extra args
 		$show_conflict=False;
 		if ($data && $options['exec'])
@@ -815,13 +815,13 @@ class resources_bo
 				{
 					if($show_conflict)
 					{
-						$list[$id] = ' ('.lang('conflict').') '.$resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+						$list[$id] = ' ('.lang('conflict').') '.$this->link_title($resource);
 					}
 				}
 				else
 				{
-					$list[$id] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'') .
-							($resource['useable'] > 1 ? " ( {$resource['useable']} / {$resource['quantity']} )" : '');
+					$list[$id] = $this->link_title($resource['name']) .
+						($resource['useable'] > 1 ? " ( {$resource['useable']} / {$resource['quantity']} )" : '');
 				}
 			}
 		} else {
@@ -830,7 +830,7 @@ class resources_bo
 				foreach($data as $num => $resource)
 				{
 					$id=$resource['res_id'];
-					$list[$id] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+					$list[$id] = $this->link_title($resource['name']);
 				}
 			} else {
 				error_log(__METHOD__." No Data found for Resource with id ".$resource['res_id']);
