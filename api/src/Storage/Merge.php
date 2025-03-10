@@ -2631,7 +2631,7 @@ abstract class Merge
 		{
 			$ids = self::get_all_ids($document_merge);
 		}
-		foreach(['pdf', 'individual', 'link', 'download'] as $option)
+		foreach(['pdf', 'individual', 'link', 'download', 'open_email'] as $option)
 		{
 			$$option = is_null($options) || empty($options) ? (boolean)$_REQUEST['options'][$option] : (boolean)$options[$option];
 		}
