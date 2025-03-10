@@ -16,7 +16,7 @@ use EGroupware\Api\Framework;
 
 /**
  * class addressbook_egw_record
- * compability layer for iface_egw_record needed for importexport
+ * compatibility layer for iface_egw_record needed for importexport
  *
  * Note that last_event and next_event are not automatically loaded by
  * addressbook_bo->read(), so if you need them use:
@@ -75,7 +75,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	/**
 	 * converts this object to array.
 	 * @abstract We need such a function cause PHP5
-	 * dosn't allow objects do define it's own casts :-(
+	 * doesn't allow objects to define its own casts :-(
 	 * once PHP can deal with object casts we will change to them!
 	 *
 	 * @return array complete record as associative array
@@ -134,12 +134,12 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	 * @return string identifier
 	 */
 	public function save ( $_dst_identifier ) {
-		// Not yet implemeted
+		// Not yet implemented
 		$this->identifier = $_dst_identifier;
 	}
 
 	/**
-	 * copys current record to record identified by $_dst_identifier
+	 * copies current record to record identified by $_dst_identifier
 	 *
 	 * @param string $_dst_identifier
 	 * @return string dst_identifier
@@ -160,7 +160,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	}
 
 	/**
-	 * delets current record from backend
+	 * deletes current record from backend
 	 *
 	 */
 	public function delete () {

@@ -110,7 +110,7 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 				}
 				elseif(is_null($msg))
 				{
-					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+					$msg .= lang('%1 entries %2, %3 failed because of insufficient rights !!!',$success,$action_msg,$failed);
 					Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 				}
 				elseif($msg)

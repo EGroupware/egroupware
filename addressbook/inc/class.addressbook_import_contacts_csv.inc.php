@@ -461,13 +461,13 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	 * @return string descriprion
 	 */
 	public static function get_description() {
-		return lang("Imports contacts into your Addressbook from a CSV File. CSV means 'Comma Separated Values'. However in the options Tab you can also choose other seperators.");
+		return lang("Imports contacts into your Addressbook from a CSV File. CSV means 'Comma Separated Values'. However in the options Tab you can also choose other separators.");
 	}
 
 	/**
-	 * retruns file suffix(s) plugin can handle (e.g. csv)
+	 * returns file suffix(s) plugin can handle (e.g. csv)
 	 *
-	 * @return string suffix (comma seperated)
+	 * @return string suffix (comma separated)
 	 */
 	public static function get_filesuffix() {
 		return 'csv';
@@ -476,7 +476,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	/**
 	 * return etemplate components for options.
 	 * @abstract We can't deal with etemplate objects here, as an uietemplate
-	 * objects itself are scipt orientated and not "dialog objects"
+	 * objects itself are script oriented and not "dialog objects"
 	 *
 	 * @return array (
 	 * 		name 		=> string,
@@ -504,7 +504,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 	}
 
 	/**
-	 * returns etemplate name for slectors of this plugin
+	 * returns etemplate name for selectors of this plugin
 	 *
 	 * @return string etemplate name
 	 */

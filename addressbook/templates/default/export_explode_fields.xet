@@ -8,7 +8,7 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-description  value="List as seperate columns"></et2-description>
+					<et2-description  value="List as separate columns"></et2-description>
 				</row>
 				<row disabled="!@explode_multiselects">
 					<grid width="100%" id="explode_multiselects">

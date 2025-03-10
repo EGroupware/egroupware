@@ -203,7 +203,7 @@ export class CRMView extends EgwApp
 	 * - update: request just modified data from given rows.  Sorting is not considered,
 	 *		so if the sort field is changed, the row will not be moved.
 	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
-	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - delete: just delete the given rows clientside (no server interaction necessary)
 	 * - add: ask server for data, add in intelligently
 	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
 	 * @param {number} pushData.account_id User that caused the notification
