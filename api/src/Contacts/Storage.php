@@ -769,7 +769,10 @@ class Storage
 
 		if ($rows)
 		{
-			$allow_account_name = Api\Contacts::allowAccountName();
+			// if we called from Accounts class, "account_lid" is in extra-cols, and we must return it
+			// while being called from Addressbook, it is not, we must check allowAccountName() / user is an admin
+			$extra_cols = is_array($extra_cols) ? $extra_cols : ($extra_cols ? explode(',',$extra_cols) : []);
+			$allow_account_name = in_array('account_lid', $extra_cols) || Api\Contacts::allowAccountName();
 			foreach($rows as $n => $row)
 			{
 				if (!$allow_account_name)
