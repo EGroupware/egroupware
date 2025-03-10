@@ -1362,6 +1362,7 @@ class Db
 		switch($this->Type)
 		{
 			case 'mysql':
+			case 'mysqli':
 				return "LOCATE($substr,$str)";
 			case 'pgsql':
 				return "STRPOS($str,$substr)";
@@ -1382,6 +1383,7 @@ class Db
 		switch($this->Type)
 		{
 			case 'mysql':
+			case 'mysqli':
 				return "UNIX_TIMESTAMP($expr)";
 
 			case 'pgsql':
@@ -1403,6 +1405,7 @@ class Db
 		switch($this->Type)
 		{
 			case 'mysql':
+			case 'mysqli':
 				return "FROM_UNIXTIME($expr)";
 
 			case 'pgsql':
@@ -1428,6 +1431,7 @@ class Db
 		switch($this->Type)
 		{
 			case 'mysql':
+			case 'mysqli':
 				return "DATE_FORMAT($expr,'$format')";
 
 			case 'pgsql':
@@ -1464,6 +1468,7 @@ class Db
 			case 'pgsql':
 				return $expr.'::double';
 			case 'mysql':
+			case 'mysqli':
 				return 'CAST('.$expr.' AS DECIMAL(24,3))';
 		}
 		return $expr;
@@ -1482,6 +1487,7 @@ class Db
 			case 'pgsql':
 				return $expr.'::integer';
 			case 'mysql':
+			case 'mysqli':
 				return 'CAST('.$expr.' AS SIGNED)';
 		}
 		return $expr;
@@ -1974,6 +1980,7 @@ class Db
 					$sql_append = ' UPDATE DUPLICATES';
 					break;
 				case 'mysql':
+				case 'mysqli':
 					// use replace if primary keys are included
 					if (count(array_intersect(array_keys($where),(array)$table_def['pk'])) == count($table_def['pk']))
 					{
