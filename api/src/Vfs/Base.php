@@ -295,6 +295,15 @@ class Base
 			'host' => $GLOBALS['egw_info']['user']['domain'],
 			'home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory'] ?? ''),
 		);
+		// somehow the magic getter Api\Session::__get() is NOT working for Collabora (files mounted with $user:$pass in the URL)
+		// decrypt the password here explicit allows Collabora to edit them
+		if (empty($GLOBALS['egw']->session->passwd) && !empty($GLOBALS['egw']->session->password_encrypted))
+		{
+			$defaults['pass'] = urlencode(Api\Mail\Credentials::decrypt([
+				'cred_password' => $GLOBALS['egw']->session->password_encrypted,
+				'cred_pw_enc' => Api\Mail\Credentials::SYSTEM_AES,  // use system secret aka. DB password
+			]));
+		}
 		// check if we have a (base64 encoded) fallback-auth GET parameter and need to use it
 		if (empty($GLOBALS['egw']->session->passwd) && ($query=Vfs::parse_url($_path, PHP_URL_QUERY)) &&
 			strpos($query, 'fallback-auth=') !== false)
