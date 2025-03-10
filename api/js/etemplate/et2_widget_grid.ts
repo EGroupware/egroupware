@@ -144,9 +144,23 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	destroy()
 	{
 		super.destroy();
+
+		this.cells.forEach(y => y.forEach(x =>
+		{
+			x.td?.remove();
+			x.td = null;
+			x.widget = null;
+		}));
+
 		this.cells = [];
 		this.rowData = [];
 		this.colData = [];
+		this.managementArray.forEach(n =>
+		{
+			n.cell = null;
+			n.widget = null;
+		});
+		this.managementArray = [];
 		this.template_node = null;
 		this.sortablejs && this.sortablejs.destroy();
 	}

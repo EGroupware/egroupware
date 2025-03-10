@@ -810,6 +810,8 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				this.getChildren()[i].destroy();
 				this.getChildren()[i] instanceof Et2WidgetClass && (<Et2WidgetClass>this.getChildren()[i]).remove();
 			}
+			this._children.splice(0, this._children.length);
+			this._legacy_children.splice(0, this._legacy_children.length);
 
 			// Free the array managers if they belong to this widget
 			for(let key in this._mgrs)

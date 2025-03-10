@@ -20,6 +20,7 @@ import {SlChangeEvent, SlOption, SlSelect} from "@shoelace-style/shoelace";
 import {repeat} from "lit/directives/repeat.js";
 import {classMap} from "lit/directives/class-map.js";
 import {state} from "lit/decorators/state.js";
+import {customElement} from "lit/decorators/custom-element.js";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElement))
@@ -92,6 +93,8 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
  * @csspart tag__suffix - The container that wraps the option suffix
  * @csspart tag__limit - Element that is shown when the number of selected options exceeds maxOptionsVisible
  */
+
+@customElement('et2-select')
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
 export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 {
@@ -327,6 +330,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this._handleMouseEnter = this._handleMouseEnter.bind(this);
 		this._handleMouseLeave = this._handleMouseLeave.bind(this);
 		this._handleTagOverflow = this._handleTagOverflow.bind(this);
+		this.handleTagClick = this.handleTagClick.bind(this);
 	}
 	/**
 	 * List of properties that get translated
@@ -604,6 +608,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
+	firstUpdated(changedProperties : PropertyValues)
+	{
+		super.firstUpdated(changedProperties);
+		// Avoid a memory leak by overwriting slot change handler
+		if(this.select)
+		{
+			this.select.handleDefaultSlotChange = this.handleDefaultSlotChange;
+		}
+	}
+
 	/**
 	 * After render, DOM nodes are there
 	 *
@@ -672,6 +686,27 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			super.blur();
 		}
 		this.hide();
+	}
+
+	protected handleDefaultSlotChange()
+	{
+		const allOptions = this.getAllOptions();
+		const value = Array.isArray(this.value) ? this.value : [this.value];
+		const values : string[] = [];
+
+		// Check for duplicate values in menu items
+		if(customElements.get('sl-option'))
+		{
+			allOptions.forEach(option => values.push(option.value));
+
+			// Select only the options that match the new value
+			this.select?.setSelectedOptions(allOptions.filter(el => value.includes(el.value)));
+		}
+		else
+		{
+			// Rerun this handler when <sl-option> is registered
+			customElements.whenDefined('sl-option').then(() => this.handleDefaultSlotChange());
+		}
 	}
 
 	private handleFocus()
@@ -1040,7 +1075,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     .value=${option.value.replaceAll("___", " ")}
                     @change=${this.handleTagEdit}
                     @dblclick=${this._handleDoubleClick}
-                    @mousedown=${typeof this.onTagClick == "function" ? (e) => this.handleTagClick(e) : nothing}
+                    @mousedown=${typeof this.onTagClick == "function" ? this.handleTagClick : nothing}
             >
                 ${image ?? nothing}
                 ${option.getTextLabel().trim()}
@@ -1103,6 +1138,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return html`
             ${this._styleTemplate()}
             <sl-select
+                    id="sl_select_${this.dom_id}"
                     class=${classMap({
                         "form-control--has-label": this.label !== ""
                     })}

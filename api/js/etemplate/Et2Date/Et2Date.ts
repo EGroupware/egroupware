@@ -412,6 +412,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	{
 		super.disconnectedCallback();
 		this._inputNode?.removeEventListener('change', this._onChange);
+		delete this._inputElement?.flatpickr;
 		this.findInputField()?.removeEventListener("input", this._handleInputChange);
 
 		this._boundTooltipElements.forEach(tooltipped =>

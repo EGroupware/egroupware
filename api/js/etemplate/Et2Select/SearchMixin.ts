@@ -329,6 +329,12 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		disconnectedCallback()
 		{
 			super.disconnectedCallback();
+			this._searchPromise = null;
+			if(this._searchTimeout)
+			{
+				window.clearTimeout(this._searchTimeout);
+			}
+			this._searchTimeout = null;
 			this._unbindListeners();
 
 			while(this.lastChild) this.lastChild.remove();
@@ -781,8 +787,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				window.setTimeout(() =>
 				{
-					this._searchInputNode.focus();
-					this._searchInputNode.select();
+					this._searchInputNode?.focus();
+					this._searchInputNode?.select();
 				}, 100);
 			}
 		}
