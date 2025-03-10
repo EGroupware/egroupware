@@ -343,6 +343,16 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			this.egw()?.tooltipUnbind(this);
 
 			this.removeEventListener("click", this._handleClick);
+
+			// Delete all actions
+			let objectManager = egw_getAppObjectManager(false);
+			let widget_object = objectManager?.getObjectById(this.id);
+			if(widget_object)
+			{
+				widget_object.clear();
+				widget_object.unregisterActions();
+				widget_object.remove();
+			}
 		}
 
 
