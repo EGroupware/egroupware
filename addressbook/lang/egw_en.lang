@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	en	%1 contact(s) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	en	%1 contact(s) %2, %3 failed because of %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficient rights!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficient rights!
 %1 contacts updated (%2 errors).	addressbook	en	%1 contacts updated (%2 errors).
 %1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organization member(s) changed.
 %1 key(s) added to public keyserver "%2".	addressbook	en	%1 key(s) added to public keyserver "%2".
@@ -214,7 +214,7 @@ edit custom fields	admin	en	Edit custom fields
 edit extra account-data in the addressbook	admin	en	Edit extra account data in the address book
 edit phonenumbers	addressbook	en	Edit Phonenumbers
 edit phonenumbers -	addressbook	en	Edit phone numbers -
-either the configured email addesses are wrong or the mail configuration.	addressbook	en	Either the configured email addresses are wrong or the mail configuration.
+either the configured email addresses are wrong or the mail configuration.	addressbook	en	Either the configured email addresses are wrong or the mail configuration.
 email & internet	addressbook	en	Email & Internet
 email (private)	addressbook	en	Email (private)
 email addresses (comma separated) to send the contact data	addressbook	en	Email addresses, comma separated, to send the contact data.
@@ -244,12 +244,12 @@ export from addressbook	addressbook	en	Export from address book
 export selection	addressbook	en	Export selection
 exported	addressbook	en	exported
 exports contacts from your addressbook into a csv file.	addressbook	en	Exports contacts from address book into a CSV file.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from address book into a CSV file. In the options tab you can choose separators.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	en	Exports contacts from address book into a CSV file. In the options tab you can choose separators.
 exports contacts from your addressbook into a vcard file.	addressbook	en	Exports contacts from your address book into a vCard file.
 extra	addressbook	en	Extra
 extra encodings	addressbook	en	Extra encodings
 extra private	addressbook	en	Extra private
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	en	Failed to change %1 organization member(s), insufficient rights!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	en	Failed to change %1 organization member(s), insufficient rights!
 favorite phone	addressbook	en	Favorite phone
 fax	addressbook	en	Fax
 fax (private)	addressbook	en	Fax (private)
@@ -311,7 +311,7 @@ import from outlook	addressbook	en	Import from Outlook
 import multiple vcard	addressbook	en	Import multiple vCards
 import next set	addressbook	en	Import next set
 importer's personal	addressbook	en	Importer's personal
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. In the options tab you can choose separators.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	en	Imports contacts into address book from a CSV File. In the options tab you can choose separators.
 imports contacts into your addressbook from a vcard file.	addressbook	en	Imports contacts into your address book from a vCard file.
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 include all groups	addressbook	en	Include all groups
@@ -319,8 +319,8 @@ income	addressbook	en	Income
 infolog-contact	addressbook	en	InfoLog contact
 infolog-organisation	addressbook	en	InfoLog organisation
 insert	addressbook	en	Insert
-insufficent rights to delete this list!	addressbook	en	Insufficient rights to delete this list!
-insufficent rights to edit this list!	addressbook	en	Insufficent rights to edit this list!
+insufficient rights to delete this list!	addressbook	en	Insufficient rights to delete this list!
+insufficient rights to edit this list!	addressbook	en	Insufficient rights to edit this list!
 international	addressbook	en	International
 internet	addressbook	en	Internet
 invite to current call	addressbook	en	Invite to current call
@@ -446,7 +446,7 @@ select an opened dialog	addressbook	en	Select an opened dialog
 select contacts to add to mail	addressbook	en	Select contacts to add to mail
 select migration type	admin	en	Select migration type
 select multiple contacts for a further action	addressbook	en	Select multiple contacts for a further action
-select phone number as prefered way of contact	addressbook	en	Select phone number as preferred way of contact
+select phone number as preferred way of contact	addressbook	en	Select phone number as preferred way of contact
 select where you want to store / retrieve contacts	admin	en	Select where contacts should be stored / retrieved
 selected contacts	addressbook	en	Selected contacts
 send emailcopy to receiver	addressbook	en	Send email copy to receiver

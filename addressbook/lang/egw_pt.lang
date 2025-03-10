@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	pt	%1 contacto(s) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	pt	%1 contacto(s) %2, %3 falhou devido a %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	pt	%1 contacto(s) %2, %3 falhou devido a direitos insuficientes!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	pt	%1 contacto(s) %2, %3 falhou devido a direitos insuficientes!
 %1 contacts updated (%2 errors).	addressbook	pt	%1 contactos actualizados (%2 erros).
 %1 fields in %2 other organisation member(s) changed	addressbook	pt	%1 campos em %2 outro(s) membro(s) da organização alterados.
 %1 key(s) added to public keyserver "%2".	addressbook	pt	%1 chave(s) adicionada(s) ao servidor de chaves público "%2".
@@ -131,7 +131,7 @@ export definitition to use for nextmatch export	addressbook	pt	Definição Expor
 export file name	addressbook	pt	Exportar nome de ficheiro
 export from addressbook	addressbook	pt	Exportar do livro de endereços
 exports contacts from your addressbook into a csv file.	addressbook	pt	Exporta os contactos do livro de endereços para um ficheiro CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt	Exporta os contactos do livro de endereços para um ficheiro CSV. No separador de opções, também pode escolher outros separadores.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	pt	Exporta os contactos do livro de endereços para um ficheiro CSV. No separador de opções, também pode escolher outros separadores.
 extra	addressbook	pt	Extra
 favorite phone	addressbook	pt	Telefone favorito
 fax	addressbook	pt	Fax
@@ -182,15 +182,15 @@ import from outlook	addressbook	pt	Importar do Outlook
 import multiple vcard	addressbook	pt	Importar vários vCard
 import next set	addressbook	pt	Importar o conjunto seguinte
 importer's personal	addressbook	pt	Pessoal do importador
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt	Importa contactos para o livro de endereços a partir de um ficheiro CSV. No separador de opções, também pode escolher outros separadores.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	pt	Importa contactos para o livro de endereços a partir de um ficheiro CSV. No separador de opções, também pode escolher outros separadores.
 imports contacts into your addressbook from a vcard file.	addressbook	pt	Importa contactos para o seu livro de endereços a partir de um ficheiro vCard.
 include all groups	addressbook	pt	Incluir todos os grupos
 income	addressbook	pt	Entrada
 infolog-contact	addressbook	pt	Contacto InfoLog
 infolog-organisation	addressbook	pt	Organização InfoLog
 insert	addressbook	pt	Inserir
-insufficent rights to delete this list!	addressbook	pt	Direitos insuficientes para eliminar esta lista!
-insufficent rights to edit this list!	addressbook	pt	Direitos insuficientes para editar esta lista!
+insufficient rights to delete this list!	addressbook	pt	Direitos insuficientes para eliminar esta lista!
+insufficient rights to edit this list!	addressbook	pt	Direitos insuficientes para editar esta lista!
 international	addressbook	pt	Internacional
 invite to current call	addressbook	pt	Convidar para a chamada atual
 label	addressbook	pt	Comentário

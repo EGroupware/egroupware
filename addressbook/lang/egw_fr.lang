@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	fr	%1 contact(s) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	fr	%1 contact(s) %2, %3 en échec pour %4 !
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fr	%1 contact(s) %2, %3 en erreur (droits d'accès insuffisants) !
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	fr	%1 contact(s) %2, %3 en erreur (droits d'accès insuffisants) !
 %1 contacts updated (%2 errors).	addressbook	fr	%1 contacts mis à jour (%2 erreurs).
 %1 fields in %2 other organisation member(s) changed	addressbook	fr	Le champ %1 dans %2 autre(s) membre(s) de l'organisation a changé.
 %1 key(s) added to public keyserver "%2".	addressbook	fr	%1 clé(s) publique(s) ajoutée(s) au serveur de clés publiques "%2".
@@ -211,7 +211,7 @@ edit custom fields	admin	fr	Editer les champs personnalisés
 edit extra account-data in the addressbook	admin	fr	Editer les données supplémentaires dans le carnet d'adresse
 edit phonenumbers	addressbook	fr	Modifier les numéros de téléphone
 edit phonenumbers -	addressbook	fr	Editer les numéros de téléphone -
-either the configured email addesses are wrong or the mail configuration.	addressbook	fr	Soit les adresses email sont fausses, soit la configuration est mauvaise.
+either the configured email addresses are wrong or the mail configuration.	addressbook	fr	Soit les adresses email sont fausses, soit la configuration est mauvaise.
 email & internet	addressbook	fr	Email & Internet
 email (private)	addressbook	fr	email (privé)
 email addresses (comma separated) to send the contact data	addressbook	fr	Adresses email, séparées par des virgules, pour envoyer les données des contacts.
@@ -241,12 +241,12 @@ export from addressbook	addressbook	fr	Exporter depuis le carnet d'adresses
 export selection	addressbook	fr	Sélection pour l'exportation
 exported	addressbook	fr	exporté
 exports contacts from your addressbook into a csv file.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV. Dans les options, vous pouvez choisir d'autres séparateurs.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV. Dans les options, vous pouvez choisir d'autres séparateurs.
 exports contacts from your addressbook into a vcard file.	addressbook	fr	Exporter les contacts de votre carnet d'adresses vers un fichier vCard.
 extra	addressbook	fr	Supplément
 extra encodings	addressbook	fr	Encodage supplémentairess
 extra private	addressbook	fr	Extra privé
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	fr	Echec du changement des membres de l'organisation %1 (droits insufisants) !
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	fr	Echec du changement des membres de l'organisation %1 (droits insufisants) !
 favorite phone	addressbook	fr	Téléphone favoris
 fax	addressbook	fr	Fax
 fax (private)	addressbook	fr	fax (privé)
@@ -280,7 +280,7 @@ hide all accounts	addressbook	fr	Cacher tous les comptes
 hide all groups	addressbook	fr	Masquer tous les groupes
 hide groups without email address	addressbook	fr	Masquer les groupes sans adresse e-mail
 hide user groups as distribution lists	addressbook	fr	Cacher les groupes en tant que liste de distribution
-hides accounts completly from the adressbook.	addressbook	fr	Complètement cacher les comptes utilisateurs du carnet d'addesses
+hides accounts completly from the adressbook.	addressbook	fr	Complètement cacher les comptes utilisateurs du carnet d'addresses
 history logging	admin	fr	Enregistrement de l'historique
 home address	addressbook	fr	Adresse (domicile)
 home address, birthday, ...	addressbook	fr	Adresse (domicile), Anniversaire, ...
@@ -308,7 +308,7 @@ import from outlook	addressbook	fr	Importer depuis Outlook
 import multiple vcard	addressbook	fr	Importation vCard Multiple
 import next set	addressbook	fr	Importer l'élément suivant
 importer's personal	addressbook	fr	répertoire personnel de l'importeur
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Importer les contacts depuis un fichier CSV. CSV correspond à des valeurs séparées par des virgules. Dans les options, vous pouvez choisir d'autres séparateurs.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	fr	Importer les contacts depuis un fichier CSV. CSV correspond à des valeurs séparées par des virgules. Dans les options, vous pouvez choisir d'autres séparateurs.
 imports contacts into your addressbook from a vcard file.	addressbook	fr	Importer les contacts vers votre carnet d'adresses depuis un fichier vCard.
 in %1 days (%2) is %3's birthday.	addressbook	fr	Dans %1 jours (%2) c'est l'anniversaire de %3.
 include all groups	addressbook	fr	Inclure tous les groupes
@@ -316,8 +316,8 @@ income	addressbook	fr	Revenus
 infolog-contact	addressbook	fr	Contact InfoLog
 infolog-organisation	addressbook	fr	Organisation InfoLog
 insert	addressbook	fr	Insérer
-insufficent rights to delete this list!	addressbook	fr	Autorisations insuffisantes pour supprimer cette liste !
-insufficent rights to edit this list!	addressbook	fr	Autorisations insuffisantes pour modifier cette list e !
+insufficient rights to delete this list!	addressbook	fr	Autorisations insuffisantes pour supprimer cette liste !
+insufficient rights to edit this list!	addressbook	fr	Autorisations insuffisantes pour modifier cette list e !
 international	addressbook	fr	International
 internet	addressbook	fr	Internet
 invite to current call	addressbook	fr	Inviter à l'appel en cours
@@ -442,7 +442,7 @@ select all	addressbook	fr	Sélectionner tout
 select an opened dialog	addressbook	fr	Sélectionner une boîte de dialogue ouverte
 select migration type	admin	fr	Sélectionnez un type de migration
 select multiple contacts for a further action	addressbook	fr	Sélectionner plusieurs contacts pour une même action
-select phone number as prefered way of contact	addressbook	fr	sélectionner le téléphone comme moyen de contact préféré
+select phone number as preferred way of contact	addressbook	fr	sélectionner le téléphone comme moyen de contact préféré
 select where you want to store / retrieve contacts	admin	fr	Sélectionnez où vous voulez stocker / récupérer les contacts
 selected contacts	addressbook	fr	contacts choisis
 send emailcopy to receiver	addressbook	fr	Envoyer une copie email au destinataire

@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	zh	%1个联系人%2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	zh	%1 联系人 %2, %3 因 %4 而失败！
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	zh	%1个联系人%2, %3个错误，因没有足够权限！
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	zh	%1个联系人%2, %3个错误，因没有足够权限！
 %1 contacts updated (%2 errors).	addressbook	zh	%1 联系人已更新（%2 错误）。
 %1 fields in %2 other organisation member(s) changed	addressbook	zh	在%2的其他组织成员中有%1个字段被更改
 %1 key(s) added to public keyserver "%2".	addressbook	zh	%1 密钥已添加到公共密钥服务器"%2"。
@@ -167,7 +167,7 @@ edit custom field	addressbook	zh	编辑自定义字段
 edit custom fields	admin	zh	编辑自定义字段
 edit extra account-data in the addressbook	admin	zh	编辑通讯簿的其他帐户数据
 edit phonenumbers -	addressbook	zh	编辑电话号码 -
-either the configured email addesses are wrong or the mail configuration.	addressbook	zh	邮箱地址或是邮件设置有错误。
+either the configured email addresses are wrong or the mail configuration.	addressbook	zh	邮箱地址或是邮件设置有错误。
 email & internet	addressbook	zh	电子邮件 & 英特网
 email addresses (comma separated) to send the contact data	addressbook	zh	发送联系人数据的信箱(以逗号分隔)
 empty	admin	zh	清空
@@ -194,9 +194,9 @@ export from addressbook	addressbook	zh	从通讯簿导出
 export selection	addressbook	zh	导出选项
 exported	addressbook	zh	已导出
 exports contacts from your addressbook into a csv file.	addressbook	zh	将通讯录中的联系人导出到 CSV 文件。
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从通讯簿导出联系人到 CSV 文件，CSV 是'逗号分隔'方法，不过您也可以在选项标签中选择不同的分隔符。
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	zh	从通讯簿导出联系人到 CSV 文件，CSV 是'逗号分隔'方法，不过您也可以在选项标签中选择不同的分隔符。
 extra	addressbook	zh	额外
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	zh	更改 %1 组织成员时发生错误(没有权限)！
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	zh	更改 %1 组织成员时发生错误(没有权限)！
 favorite phone	addressbook	zh	收藏电话
 fax	addressbook	zh	传真
 fax number	common	zh	传真号码
@@ -254,15 +254,15 @@ import from outlook	addressbook	zh	从 Outlook 导入
 import multiple vcard	addressbook	zh	导入多重 vCard
 import next set	addressbook	zh	导入下一个集合
 importer's personal	addressbook	zh	导入者个人
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从 CSV 文件导入联系人资料到通讯簿，CSV 是'逗号分隔'方式，不过您可以在选项标签指定其他的分隔符。
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	zh	从 CSV 文件导入联系人资料到通讯簿，CSV 是'逗号分隔'方式，不过您可以在选项标签指定其他的分隔符。
 imports contacts into your addressbook from a vcard file.	addressbook	zh	从 vCard 文件向通讯录导入联系人。
 in %1 days (%2) is %3's birthday.	addressbook	zh	在%1 天 (%2) 就是%3的生日。
 include all groups	addressbook	zh	包括所有群组
 income	addressbook	zh	收入
 infolog-contact	addressbook	zh	信息记录仪联系方式
 infolog-organisation	addressbook	zh	信息记录组织
-insufficent rights to delete this list!	addressbook	zh	没有删除这个列表的权限！
-insufficent rights to edit this list!	addressbook	zh	编辑此列表的权限不足！
+insufficient rights to delete this list!	addressbook	zh	没有删除这个列表的权限！
+insufficient rights to edit this list!	addressbook	zh	编辑此列表的权限不足！
 international	addressbook	zh	国际
 invite to current call	addressbook	zh	邀请参加当前通话
 label	addressbook	zh	标签
@@ -371,7 +371,7 @@ select all	addressbook	zh	全选
 select an opened dialog	addressbook	zh	选择已打开的对话框
 select migration type	admin	zh	选择迁移方式
 select multiple contacts for a further action	addressbook	zh	为下一步操作选择多个联系人
-select phone number as prefered way of contact	addressbook	zh	选择联系人的首选电话号码
+select phone number as preferred way of contact	addressbook	zh	选择联系人的首选电话号码
 select where you want to store / retrieve contacts	admin	zh	选择你想要在什么位置储存/找回联系人
 selected contacts	addressbook	zh	选择的联系人
 send fax via email by replacing fax number with an email address	addressbook	zh	用电子邮件地址代替传真号码，通过电子邮件发送传真

@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	ja	%1 個のコンタクトを %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ja	%1 連絡先 %2、%3 が %4 のため失敗しました!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ja	%1 個のコンタクトを %2, （権限不足のため %3 個は失敗!）
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	ja	%1 個のコンタクトを %2, （権限不足のため %3 個は失敗!）
 %1 contacts updated (%2 errors).	addressbook	ja	%1 個のコンタクトを更新しました (%2 個のエラー)。
 %1 fields in %2 other organisation member(s) changed	addressbook	ja	他の組織メンバ %2 の %1 フィールドが変更されました。
 %1 key(s) added to public keyserver "%2".	addressbook	ja	%1 個のキーを公開キー・サーバー "%2" に追加しました。
@@ -211,7 +211,7 @@ edit custom fields	admin	ja	カスタム項目訂正
 edit extra account-data in the addressbook	admin	ja	アドレス帳の拡張アカウント・データを編集
 edit phonenumbers	addressbook	ja	電話番号を編集
 edit phonenumbers -	addressbook	ja	電話番号を編集 -
-either the configured email addesses are wrong or the mail configuration.	addressbook	ja	メール・アドレスが不正か、メール構成が不正です。
+either the configured email addresses are wrong or the mail configuration.	addressbook	ja	メール・アドレスが不正か、メール構成が不正です。
 email & internet	addressbook	ja	メール & インターネット
 email (private)	addressbook	ja	メール・アドレス（個人）
 email addresses (comma separated) to send the contact data	addressbook	ja	コンタクト・データ送付先のメール・アドレス(コンマ区切り）
@@ -241,12 +241,12 @@ export from addressbook	addressbook	ja	エクスポート（アドレス帳）
 export selection	addressbook	ja	選択をエクスポート
 exported	addressbook	ja	エクスポート済み
 exports contacts from your addressbook into a csv file.	addressbook	ja	アドレス帳からコンタクトを CSV ファイルにエクスポート。
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ja	アドレス帳からコンタクトを CSV ファイルにエクスポート。
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	ja	アドレス帳からコンタクトを CSV ファイルにエクスポート。
 exports contacts from your addressbook into a vcard file.	addressbook	ja	アドレス帳からコンタクトを vCard ファイルにエクスポート。
 extra	addressbook	ja	拡張
 extra encodings	addressbook	ja	拡張エンコーディング
 extra private	addressbook	ja	拡張（個人用）
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ja	組織・団体のメンバーを更新できませんでした（権限不足）!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	ja	組織・団体のメンバーを更新できませんでした（権限不足）!
 favorite phone	addressbook	ja	お気に入り電話
 fax	addressbook	ja	FAX
 fax (private)	addressbook	ja	FAX（個人用）
@@ -308,7 +308,7 @@ import from outlook	addressbook	ja	インポート（Outlook）
 import multiple vcard	addressbook	ja	複数の vCards をインポート
 import next set	addressbook	ja	次のセットをインポート
 importer's personal	addressbook	ja	インポート実行者
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ja	CSVファイルからアドレス帳に連絡先をインポートします。CSVは「カンマ区切り値」を意味します。オプションタブで他のセパレータを選択することもできます。
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	ja	CSVファイルからアドレス帳に連絡先をインポートします。CSVは「カンマ区切り値」を意味します。オプションタブで他のセパレータを選択することもできます。
 imports contacts into your addressbook from a vcard file.	addressbook	ja	vCard ファイルからアドレス帳にコンタクトをインポート。
 in %1 days (%2) is %3's birthday.	addressbook	ja	%1 日後（%2）は %3 さんの誕生日です。
 include all groups	addressbook	ja	すべてのグループを含める
@@ -316,8 +316,8 @@ income	addressbook	ja	収入
 infolog-contact	addressbook	ja	InfoLogお問い合わせ先
 infolog-organisation	addressbook	ja	InfoLogの組織
 insert	addressbook	ja	挿入
-insufficent rights to delete this list!	addressbook	ja	このリストを削除する権限が不足しています!
-insufficent rights to edit this list!	addressbook	ja	このリストを編集する権限が不足しています!
+insufficient rights to delete this list!	addressbook	ja	このリストを削除する権限が不足しています!
+insufficient rights to edit this list!	addressbook	ja	このリストを編集する権限が不足しています!
 international	addressbook	ja	国際
 internet	addressbook	ja	インターネット
 invite to current call	addressbook	ja	現在の通話に招待
@@ -442,7 +442,7 @@ select all	addressbook	ja	全て選択
 select an opened dialog	addressbook	ja	開いているダイアログを選択
 select migration type	admin	ja	移行タイプを選択
 select multiple contacts for a further action	addressbook	ja	アクションのためのコンタクトを選択
-select phone number as prefered way of contact	addressbook	ja	優先コンタクト方法として電話番号を選択
+select phone number as preferred way of contact	addressbook	ja	優先コンタクト方法として電話番号を選択
 select where you want to store / retrieve contacts	admin	ja	コンタクトの保存先/取得元を選択
 selected contacts	addressbook	ja	選択済みコンタクト
 send emailcopy to receiver	addressbook	ja	メールのコピーを送信

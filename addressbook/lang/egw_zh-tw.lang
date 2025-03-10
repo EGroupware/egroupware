@@ -1,5 +1,5 @@
 %1 contact(s) %2	addressbook	zh-tw	%1 個聯絡人 %2
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	zh-tw	%1 個聯絡人 %2, %3 個錯誤，因為權限有誤！
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	zh-tw	%1 個聯絡人 %2, %3 個錯誤，因為權限有誤！
 %1 fields in %2 other organisation member(s) changed	addressbook	zh-tw	在 %2 的其他組織成員中有 %1 個欄位異動了
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh-tw	共有%1 筆記錄被讀取（還未被匯入，您應該 %2回上頁%3 並取消「匯入測試」）
 %1 starts with '%2'	addressbook	zh-tw	%1 開始於 '%2'
@@ -128,7 +128,7 @@ edit custom field	addressbook	zh-tw	編輯自訂欄位
 edit custom fields	admin	zh-tw	編輯自訂欄位
 edit extra account-data in the addressbook	admin	zh-tw	編輯通訊錄的其他帳號資料
 edit phonenumbers -	addressbook	zh-tw	編輯電話號碼 -
-either the configured email addesses are wrong or the mail configuration.	addressbook	zh-tw	信箱或是郵件設定有誤。
+either the configured email addresses are wrong or the mail configuration.	addressbook	zh-tw	信箱或是郵件設定有誤。
 email & internet	addressbook	zh-tw	Email & 網路
 email addresses (comma separated) to send the contact data	addressbook	zh-tw	寄送聯絡人資料的信箱（逗點分隔）
 empty	admin	zh-tw	清空
@@ -147,9 +147,9 @@ export file name	addressbook	zh-tw	匯出檔名
 export from addressbook	addressbook	zh-tw	從通訊錄匯出
 export selection	addressbook	zh-tw	匯出選擇的項目
 exported	addressbook	zh-tw	匯出了
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh-tw	從通訊錄匯出聯絡人資料成一個 CSV 檔案， CSV 意思是逗點分隔數值，不過您可以在過程中選擇希望使用的分隔字元。
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	zh-tw	從通訊錄匯出聯絡人資料成一個 CSV 檔案， CSV 意思是逗點分隔數值，不過您可以在過程中選擇希望使用的分隔字元。
 extra	addressbook	zh-tw	其他
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	zh-tw	變更 %1 組織成員時發生錯誤（沒有權限）！
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	zh-tw	變更 %1 組織成員時發生錯誤（沒有權限）！
 fax	addressbook	zh-tw	傳真
 fax number	common	zh-tw	傳真號碼
 field %1 has been added !	addressbook	zh-tw	欄位 %1 已被新增！
@@ -192,11 +192,11 @@ import from ldif, csv, or vcard	addressbook	zh-tw	從LDIF, CSV, 或 VCard匯入
 import from outlook	addressbook	zh-tw	從Outlook匯入
 import multiple vcard	addressbook	zh-tw	匯入多重名片檔
 import next set	addressbook	zh-tw	匯入下一個
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh-tw	從 CSV 檔案匯入聯絡人資料到通訊錄，CSV 表示逗點分隔數值，不過在選項欄位可以指定其他的分隔字元。
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	zh-tw	從 CSV 檔案匯入聯絡人資料到通訊錄，CSV 表示逗點分隔數值，不過在選項欄位可以指定其他的分隔字元。
 in %1 days (%2) is %3's birthday.	addressbook	zh-tw	再 %1 天 (%2) 就是 %3 的生日。
 income	addressbook	zh-tw	收入
 infolog-contact	addressbook	zh-tw	記事本
-insufficent rights to delete this list!	addressbook	zh-tw	沒有刪除這個清單的權限！
+insufficient rights to delete this list!	addressbook	zh-tw	沒有刪除這個清單的權限！
 international	addressbook	zh-tw	國際
 label	addressbook	zh-tw	概述
 last date	addressbook	zh-tw	最後日期
@@ -281,7 +281,7 @@ select addressbook type	addressbook	zh-tw	選擇通訊錄類型
 select all	addressbook	zh-tw	選擇全部
 select migration type	admin	zh-tw	選擇轉換方式
 select multiple contacts for a further action	addressbook	zh-tw	選擇多個聯絡人來進行操作
-select phone number as prefered way of contact	addressbook	zh-tw	選擇聯絡人的建議聯絡電話方式
+select phone number as preferred way of contact	addressbook	zh-tw	選擇聯絡人的建議聯絡電話方式
 select where you want to store / retrieve contacts	admin	zh-tw	選擇您希望儲存、取得聯絡人的位置
 selected contacts	addressbook	zh-tw	選擇的聯絡人
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	zh-tw	照片與家中住址的欄位是否要一直顯示，即使是空白。

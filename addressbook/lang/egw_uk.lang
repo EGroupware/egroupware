@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	uk	%1 контакт(и) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	uk	%1 контакт(и) %2, %3 не вдалося встановити через %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	uk	%1 контакт(и) %2, %3 не вдалося через недостатні права!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	uk	%1 контакт(и) %2, %3 не вдалося через недостатні права!
 %1 contacts updated (%2 errors).	addressbook	uk	Оновлено %1 контакт (%2 помилки).
 %1 fields in %2 other organisation member(s) changed	addressbook	uk	Змінено поля у %1 учасника(ів) інших організацій.
 %1 key(s) added to public keyserver "%2".	addressbook	uk	%1 ключ(и) додано до сервера відкритих ключів "%2".
@@ -111,7 +111,7 @@ export definitition to use for nextmatch export	addressbook	uk	Визначен�
 export file name	addressbook	uk	Назва файлу експорту
 export from addressbook	addressbook	uk	Експорт з Адресної книги
 exports contacts from your addressbook into a csv file.	addressbook	uk	Експорт контактів з адресної книги у CSV-файл.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	uk	Експортувати контакти з адресної книги у CSV-файл. На вкладці параметрів ви також можете вибрати інші роздільники.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	uk	Експортувати контакти з адресної книги у CSV-файл. На вкладці параметрів ви також можете вибрати інші роздільники.
 extra	addressbook	uk	Додаткове
 favorite phone	addressbook	uk	Улюблений телефон
 fax	addressbook	uk	Факс
@@ -153,12 +153,12 @@ import from ldif, csv, or vcard	addressbook	uk	Імпортувати LDIF, CSV 
 import from outlook	addressbook	uk	Імпорт з Outlook
 import next set	addressbook	uk	Імпортувати наступний набір
 importer's personal	addressbook	uk	Особистий імпортер
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	uk	Імпортує контакти в адресну книгу з файлу CSV. CSV означає "Значення, розділені комами". У вкладці параметрів ви також можете вибрати інші роздільники.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	uk	Імпортує контакти в адресну книгу з файлу CSV. CSV означає "Значення, розділені комами". У вкладці параметрів ви також можете вибрати інші роздільники.
 imports contacts into your addressbook from a vcard file.	addressbook	uk	Імпортує контакти до адресної книги з файлу vCard.
 infolog-contact	addressbook	uk	Контакти InfoLog
 infolog-organisation	addressbook	uk	Організація InfoLog
-insufficent rights to delete this list!	addressbook	uk	Недостатньо прав для видалення цього списку!
-insufficent rights to edit this list!	addressbook	uk	Недостатньо прав для редагування цього списку!
+insufficient rights to delete this list!	addressbook	uk	Недостатньо прав для видалення цього списку!
+insufficient rights to edit this list!	addressbook	uk	Недостатньо прав для редагування цього списку!
 international	addressbook	uk	Міжнародний
 invite to current call	addressbook	uk	Запросити до поточного дзвінка
 label	addressbook	uk	Примітки

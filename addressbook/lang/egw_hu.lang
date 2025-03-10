@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	hu	%1 kapcsolat %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	hu	%1 kapcsolat(ok) %2, %3 nem sikerült %4 miatt!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	hu	%1 kapcsolat %2, %3, mivel nem rendelkezik megfelelő jogosultsággal!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	hu	%1 kapcsolat %2, %3, mivel nem rendelkezik megfelelő jogosultsággal!
 %1 contacts updated (%2 errors).	addressbook	hu	%1 kapcsolat frissítve (%2 hiba).
 %1 fields in %2 other organisation member(s) changed	addressbook	hu	%1 mezők %2 más szervezet tagja(i)ban megváltoztak.
 %1 key(s) added to public keyserver "%2".	addressbook	hu	%1 kulcs(ok) hozzáadva a "%2" nyilvános kulcsszerverhez.
@@ -167,7 +167,7 @@ edit custom field	addressbook	hu	Egyedi mező szerkesztése
 edit custom fields	admin	hu	Egyedi mezök szerkesztése
 edit extra account-data in the addressbook	admin	hu	Extra felhasználói adatok szerkesztése a címjegyzékben
 edit phonenumbers -	addressbook	hu	Telefonszámok szerkesztése -
-either the configured email addesses are wrong or the mail configuration.	addressbook	hu	Vagy a beállított email címek rosszak, vagy a levelezés beállítása.
+either the configured email addresses are wrong or the mail configuration.	addressbook	hu	Vagy a beállított email címek rosszak, vagy a levelezés beállítása.
 email & internet	addressbook	hu	Email és Internet
 email addresses (comma separated) to send the contact data	addressbook	hu	Email címek (vesszővel elválasztva) akiknek a kapcsolat adatait elküldjük.
 empty	admin	hu	Üres
@@ -194,9 +194,9 @@ export from addressbook	addressbook	hu	Export a Címjegyzékből
 export selection	addressbook	hu	Kijelölés exportálása
 exported	addressbook	hu	exportálva
 exports contacts from your addressbook into a csv file.	addressbook	hu	A címjegyzékből CSV fájlba exportálja a névjegyeket.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	hu	Kapcsolatok exportálása a Címjegyzékből CSV formátumban. Az opcióknál kiválasztható más elválasztó karakter is, nem csak a vessző.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	hu	Kapcsolatok exportálása a Címjegyzékből CSV formátumban. Az opcióknál kiválasztható más elválasztó karakter is, nem csak a vessző.
 extra	addressbook	hu	Extra
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	hu	Nem sikerült megváltoztatni %1 szervezet tagja(i)t, nem megfelelőek a jogok!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	hu	Nem sikerült megváltoztatni %1 szervezet tagja(i)t, nem megfelelőek a jogok!
 favorite phone	addressbook	hu	Kedvenc telefon
 fax	addressbook	hu	Fax
 fax number	common	hu	Fax Szám
@@ -250,15 +250,15 @@ import from outlook	addressbook	hu	Importálás Outlookból
 import multiple vcard	addressbook	hu	Több vCard importálása
 import next set	addressbook	hu	Következő beállítás importálása
 importer's personal	addressbook	hu	Az importőr személyes
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	hu	CSV fájlból importálja a névjegyeket a címjegyzékbe. A CSV jelentése 'vesszővel elválasztott értékek'. Az opciók lapon más elválasztójeleket is választhat.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	hu	CSV fájlból importálja a névjegyeket a címjegyzékbe. A CSV jelentése 'vesszővel elválasztott értékek'. Az opciók lapon más elválasztójeleket is választhat.
 imports contacts into your addressbook from a vcard file.	addressbook	hu	Importálja a névjegyeket a címjegyzékbe egy vCard fájlból.
 in %1 days (%2) is %3's birthday.	addressbook	hu	%3 születésnapja %1 napon belül eljön (%2).
 include all groups	addressbook	hu	Minden csoport felvétele
 income	addressbook	hu	Jövedelem
 infolog-contact	addressbook	hu	InfoLog Kapcsolat
 infolog-organisation	addressbook	hu	InfoLog szervezet
-insufficent rights to delete this list!	addressbook	hu	Nincs elegendő jog a lista törléséhez!
-insufficent rights to edit this list!	addressbook	hu	Nem elegendő jog a lista szerkesztéséhez!
+insufficient rights to delete this list!	addressbook	hu	Nincs elegendő jog a lista törléséhez!
+insufficient rights to edit this list!	addressbook	hu	Nem elegendő jog a lista szerkesztéséhez!
 international	addressbook	hu	Nemzetközi
 invite to current call	addressbook	hu	Meghívás az aktuális hívásra
 label	addressbook	hu	Címke
@@ -363,7 +363,7 @@ select all	addressbook	hu	Minden kiválasztása
 select an opened dialog	addressbook	hu	Megnyitott párbeszédpanel kiválasztása
 select migration type	admin	hu	Válassza ki a migráció típusát
 select multiple contacts for a further action	addressbook	hu	Válasszon ki több kapcsolatot a további művelethez
-select phone number as prefered way of contact	addressbook	hu	Az előnyben részesített telefonszám a kapcsolatfelvételhez
+select phone number as preferred way of contact	addressbook	hu	Az előnyben részesített telefonszám a kapcsolatfelvételhez
 select where you want to store / retrieve contacts	admin	hu	Válassza ki, hol szeretné tárolni, honnan kérdezné le a kapcsolatait
 selected contacts	addressbook	hu	Kiválasztott kapcsolatok
 send fax via email by replacing fax number with an email address	addressbook	hu	Fax küldése e-mailben a faxszám e-mail címmel való helyettesítésével

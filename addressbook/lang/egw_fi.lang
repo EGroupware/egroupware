@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	fi	%1 yhteystieto(a) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	fi	%1 yhteyshenkilö(t) %2, %3 epäonnistui %4:n vuoksi!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fi	%1 yhteystieto(a) %2, %3 epäonnistui puutteellisien ACL-oikeuksien takia!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	fi	%1 yhteystieto(a) %2, %3 epäonnistui puutteellisien ACL-oikeuksien takia!
 %1 contacts updated (%2 errors).	addressbook	fi	%1 yhteystietoa päivitetty, %2 virhe(ttä).
 %1 fields in %2 other organisation member(s) changed	addressbook	fi	%1 kenttiä %2:ssa muun organisaation jäsen(iä) on muutettu.
 %1 key(s) added to public keyserver "%2".	addressbook	fi	%1 avain(t) lisätty julkiseen avainpalvelimeen "%2".
@@ -203,7 +203,7 @@ edit custom fields	admin	fi	Muokkaa lisäkenttiä
 edit extra account-data in the addressbook	admin	fi	Muokkaa extra-käyttäjätilitietoja osoitekirjassa
 edit phonenumbers	addressbook	fi	Muokkaa puhelinnumeroita
 edit phonenumbers -	addressbook	fi	Muokkaa puhelinnumeroita
-either the configured email addesses are wrong or the mail configuration.	addressbook	fi	Joko sähköpostiosoite tai sähköpostitili on konfiguroitu virheellisesti.
+either the configured email addresses are wrong or the mail configuration.	addressbook	fi	Joko sähköpostiosoite tai sähköpostitili on konfiguroitu virheellisesti.
 email & internet	addressbook	fi	Sähköposti ja Internet
 email addresses (comma separated) to send the contact data	addressbook	fi	Sähköpostiosoitteet (pilkulla eroitetut) joihin yhteystiedot lähetetään
 empty	admin	fi	Tyhjä
@@ -231,11 +231,11 @@ export from addressbook	addressbook	fi	Vie osoitekirjasta
 export selection	addressbook	fi	Vie valinnat
 exported	addressbook	fi	Viety
 exports contacts from your addressbook into a csv file.	addressbook	fi	Vie kontakteja Osoitekirjasta CSV tiedostoon.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fi	Vie osoitekirjan yhteystiedot CSV tiedostoon. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	fi	Vie osoitekirjan yhteystiedot CSV tiedostoon. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
 exports contacts from your addressbook into a vcard file.	addressbook	fi	Vie osoitekirjan yhteystiedot vCard-tiedostoon.
 extra	addressbook	fi	Lisätiedot
 extra private	addressbook	fi	Yksityiset tiedot
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	fi	%1 organisaation jäsen(ien) muutos epäonnistui (Puutteelliset oikeudet)!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	fi	%1 organisaation jäsen(ien) muutos epäonnistui (Puutteelliset oikeudet)!
 favorite phone	addressbook	fi	Suosikkipuhelin
 fax	addressbook	fi	Faksi
 fax number	common	fi	Faksinumero
@@ -296,7 +296,7 @@ import from outlook	addressbook	fi	Tuo Outlookista
 import multiple vcard	addressbook	fi	Tuo useita vCard:ja
 import next set	addressbook	fi	Tuo seuraava ryhmä
 importer's personal	addressbook	fi	Tuojan henkilökohtainen
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fi	Tuo yhteystiedot osoitekirjaan CSV tiedostosta. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	fi	Tuo yhteystiedot osoitekirjaan CSV tiedostosta. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
 imports contacts into your addressbook from a vcard file.	addressbook	fi	Tuo yhteystietoja osoitekirjaan vCard-tiedostosta.
 in %1 days (%2) is %3's birthday.	addressbook	fi	%1:n päivän kuluttua (%2) on syntymäpäivä henkilöllä %3.
 include all groups	addressbook	fi	Sisällytä kaikki ryhmät
@@ -304,8 +304,8 @@ income	addressbook	fi	Tulo
 infolog-contact	addressbook	fi	InfoLog Yhteystiedot
 infolog-organisation	addressbook	fi	InfoLog Organisaatio
 insert	addressbook	fi	Syötä
-insufficent rights to delete this list!	addressbook	fi	Puuttelliset ACL-oikeudet listan poistamiseksi!
-insufficent rights to edit this list!	addressbook	fi	Puutteelliset oikeudet muokata tätä listaa!
+insufficient rights to delete this list!	addressbook	fi	Puuttelliset ACL-oikeudet listan poistamiseksi!
+insufficient rights to edit this list!	addressbook	fi	Puutteelliset oikeudet muokata tätä listaa!
 international	addressbook	fi	Kansainvälinen
 internet	addressbook	fi	Internet
 invite to current call	addressbook	fi	Kutsu nykyiseen puheluun
@@ -430,7 +430,7 @@ select all	addressbook	fi	Valitse kaikki
 select an opened dialog	addressbook	fi	Valitse avattu valintaikkuna
 select migration type	admin	fi	Valitse sulautustapa
 select multiple contacts for a further action	addressbook	fi	Suorita valituille yhteystiedoille seuraava toiminto
-select phone number as prefered way of contact	addressbook	fi	Valitse puhelinnumero ensisijaiseksi yhteydenottotavaksi yhteystiedolle
+select phone number as preferred way of contact	addressbook	fi	Valitse puhelinnumero ensisijaiseksi yhteydenottotavaksi yhteystiedolle
 select where you want to store / retrieve contacts	admin	fi	Valitse minne varastoit / palautat yhteystiedot
 selected contacts	addressbook	fi	Valitse yhteystiedot
 send emailcopy to receiver	addressbook	fi	Lähetä sähköpostikopio vastaanottajalle

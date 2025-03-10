@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	no	%1 kontakt(er) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	no	%1 kontakt(er) %2, %3 mislyktes på grunn av %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	no	%1 kontakt(er) %2, %3 mislyktes på grunn av utilstrekkelige rettigheter!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	no	%1 kontakt(er) %2, %3 mislyktes på grunn av utilstrekkelige rettigheter!
 %1 contacts updated (%2 errors).	addressbook	no	%1 kontakter oppdatert (%2 feil).
 %1 fields in %2 other organisation member(s) changed	addressbook	no	%1 felter i %2 annet/andre organisasjonsmedlem(mer) endret.
 %1 key(s) added to public keyserver "%2".	addressbook	no	%1-nøkkel(er) lagt til på den offentlige nøkkelserveren "%2".
@@ -125,7 +125,7 @@ export definitition to use for nextmatch export	addressbook	no	Eksportdefinisjon
 export file name	addressbook	no	Eksport filnavn
 export from addressbook	addressbook	no	Eksport fra Adresseliste
 exports contacts from your addressbook into a csv file.	addressbook	no	Eksporterer kontakter fra adresseboken til en CSV-fil.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	no	Eksporterer kontakter fra adresseboken til en CSV-fil. I alternativfanen kan du også velge andre separatorer.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	no	Eksporterer kontakter fra adresseboken til en CSV-fil. I alternativfanen kan du også velge andre separatorer.
 extra	addressbook	no	Ekstra
 favorite phone	addressbook	no	Favoritt-telefon
 fax	addressbook	no	Telefaks
@@ -165,14 +165,14 @@ import from outlook	addressbook	no	Importer fra Outlook
 import multiple vcard	addressbook	no	Importer flere vCard
 import next set	addressbook	no	Importer neste sett
 importer's personal	addressbook	no	Importerer personlig
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	no	Importerer kontakter til adresseboken fra en CSV-fil. CSV betyr "kommaseparerte verdier". I alternativfanen kan du også velge andre separatorer.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	no	Importerer kontakter til adresseboken fra en CSV-fil. CSV betyr "kommaseparerte verdier". I alternativfanen kan du også velge andre separatorer.
 imports contacts into your addressbook from a vcard file.	addressbook	no	Importerer kontakter til adresseboken fra en vCard-fil.
 include all groups	addressbook	no	Inkluder alle grupper
 income	addressbook	no	Inntekt
 infolog-contact	addressbook	no	Infolog
 infolog-organisation	addressbook	no	InfoLog-organisasjon
-insufficent rights to delete this list!	addressbook	no	Utilstrekkelige rettigheter til å slette denne listen!
-insufficent rights to edit this list!	addressbook	no	Utilstrekkelige rettigheter til å redigere denne listen!
+insufficient rights to delete this list!	addressbook	no	Utilstrekkelige rettigheter til å slette denne listen!
+insufficient rights to edit this list!	addressbook	no	Utilstrekkelige rettigheter til å redigere denne listen!
 international	addressbook	no	Internasjonal
 invite to current call	addressbook	no	Inviter til gjeldende samtale
 label	addressbook	no	Etikett

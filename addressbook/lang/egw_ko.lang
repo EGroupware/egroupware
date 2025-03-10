@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	ko	%1 연락처 %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ko	%4 때문에 %1 연락처(들) %2, %3이(가) 실패했습니다!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ko	%1 연락처 %2, %3이(가) 권한 부족으로 실패했습니다!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	ko	%1 연락처 %2, %3이(가) 권한 부족으로 실패했습니다!
 %1 contacts updated (%2 errors).	addressbook	ko	%1 연락처가 업데이트되었습니다(%2 오류).
 %1 fields in %2 other organisation member(s) changed	addressbook	ko	%2 다른 조직 구성원의 %1 필드가 변경되었습니다.
 %1 key(s) added to public keyserver "%2".	addressbook	ko	공개 키 서버 "%2"에 %1키가 추가되었습니다.
@@ -128,7 +128,7 @@ export definitition to use for nextmatch export	addressbook	ko	다음 매치 내
 export file name	addressbook	ko	파일이름 내보내기
 export from addressbook	addressbook	ko	주소록에서 내보내기
 exports contacts from your addressbook into a csv file.	addressbook	ko	주소록의 연락처를 CSV 파일로 내보냅니다.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ko	주소록의 연락처를 CSV 파일로 내보냅니다.  CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	ko	주소록의 연락처를 CSV 파일로 내보냅니다.  CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 extra	addressbook	ko	기타
 favorite phone	addressbook	ko	즐겨찾는 전화
 fax	addressbook	ko	팩스
@@ -164,13 +164,13 @@ import from ldif, csv, or vcard	addressbook	ko	LDIF,CSV 나 VCard에서 가져�
 import from outlook	addressbook	ko	아웃룩에서 가져오기
 import next set	addressbook	ko	** 다음 집합(set)에서 가져오기
 importer's personal	addressbook	ko	가져온 사람의 개인
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ko	CSV 파일에서 주소록으로 연락처를 가져옵니다. CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	ko	CSV 파일에서 주소록으로 연락처를 가져옵니다. CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 imports contacts into your addressbook from a vcard file.	addressbook	ko	vCard 파일에서 주소록으로 연락처를 가져옵니다.
 include all groups	addressbook	ko	모든 그룹 포함
 infolog-contact	addressbook	ko	인포로그
 infolog-organisation	addressbook	ko	정보 로그 조직
-insufficent rights to delete this list!	addressbook	ko	이 목록을 삭제할 권한이 없습니다!
-insufficent rights to edit this list!	addressbook	ko	이 목록을 편집할 수 있는 권한이 없습니다!
+insufficient rights to delete this list!	addressbook	ko	이 목록을 삭제할 권한이 없습니다!
+insufficient rights to edit this list!	addressbook	ko	이 목록을 편집할 수 있는 권한이 없습니다!
 international	addressbook	ko	국제
 label	addressbook	ko	라벨
 last modified	addressbook	ko	마지막 수정

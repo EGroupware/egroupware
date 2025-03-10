@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	cs	%1 kontakt(ů) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	cs	%1 kontakt(y) %2, %3 se nezdařil z důvodu %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	cs	%1 kontakt(ů) %2, %3 selhal(o) z důvodu nedostatečných oprávnění!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	cs	%1 kontakt(ů) %2, %3 selhal(o) z důvodu nedostatečných oprávnění!
 %1 contacts updated (%2 errors).	addressbook	cs	%1 kontaktů zaktualizováno (chyb: %2).
 %1 fields in %2 other organisation member(s) changed	addressbook	cs	%1 položek u %2 ostatních členů organizace změněno.
 %1 key(s) added to public keyserver "%2".	addressbook	cs	%1 klíč(ů) bylo přidáno do veřejného úložiště klíčů "%2".
@@ -211,7 +211,7 @@ edit custom fields	admin	cs	Editovat uživatelsky definované položky
 edit extra account-data in the addressbook	admin	cs	Editovat specifické údaje uživatelských účtů v adresáři
 edit phonenumbers	addressbook	cs	Upravit telefonní čísla
 edit phonenumbers -	addressbook	cs	Editovat telefonní čísla -
-either the configured email addesses are wrong or the mail configuration.	addressbook	cs	Nastavené e-mailové adresy nebo konfigurace e-mailu jsou chybné.
+either the configured email addresses are wrong or the mail configuration.	addressbook	cs	Nastavené e-mailové adresy nebo konfigurace e-mailu jsou chybné.
 email & internet	addressbook	cs	E-mail & Internet
 email (private)	addressbook	cs	E-mailová adresa (soukromá)
 email addresses (comma separated) to send the contact data	addressbook	cs	E-mailové adresy (oddělené čárkou) na které mají být odeslána data kontaktu
@@ -241,12 +241,12 @@ export from addressbook	addressbook	cs	Export z adresáře
 export selection	addressbook	cs	Výběr exportu
 exported	addressbook	cs	exportován
 exports contacts from your addressbook into a csv file.	addressbook	cs	Exportuje kontakty z adresáře do souboru CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	cs	Exportuje kontakty z Vašeho adresáře do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete zvolit jiné oddělovače.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	cs	Exportuje kontakty z Vašeho adresáře do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete zvolit jiné oddělovače.
 exports contacts from your addressbook into a vcard file.	addressbook	cs	Exportuje kontakty z adresáře do souboru vCard.
 extra	addressbook	cs	Extra
 extra encodings	addressbook	cs	Zvláštní kódování
 extra private	addressbook	cs	Extra soukromé
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	cs	Nepodařilo se změnit %1 členů organizace (nedostatečná práva)!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	cs	Nepodařilo se změnit %1 členů organizace (nedostatečná práva)!
 favorite phone	addressbook	cs	Oblíbený telefon
 fax	addressbook	cs	Fax
 fax (private)	addressbook	cs	Fax (soukromá)
@@ -308,7 +308,7 @@ import from outlook	addressbook	cs	Importovat z Outlooku
 import multiple vcard	addressbook	cs	Importovat více vCard
 import next set	addressbook	cs	Importovat následující sadu
 importer's personal	addressbook	cs	osobní toho, kdo prování import
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	cs	Importuje kontakty z CSV souboru do Vašeho adresáře. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete zvolit jiné oddělovače.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	cs	Importuje kontakty z CSV souboru do Vašeho adresáře. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete zvolit jiné oddělovače.
 imports contacts into your addressbook from a vcard file.	addressbook	cs	Importuje kontakty ze souboru vCard do Vašeho adresáře.
 in %1 days (%2) is %3's birthday.	addressbook	cs	Za %1 dní (%2) má %3 narozeniny.
 include all groups	addressbook	cs	Zahrnout všechny skupiny
@@ -316,8 +316,8 @@ income	addressbook	cs	Hospodářský výsledek
 infolog-contact	addressbook	cs	InfoLog Kontakt
 infolog-organisation	addressbook	cs	Organizace InfoLog
 insert	addressbook	cs	Vložit
-insufficent rights to delete this list!	addressbook	cs	Nemáte dostatečná oprávnění ke smazání seznamu!
-insufficent rights to edit this list!	addressbook	cs	Nemáte dostatečná oprávnění k úpravě tohoto seznamu!
+insufficient rights to delete this list!	addressbook	cs	Nemáte dostatečná oprávnění ke smazání seznamu!
+insufficient rights to edit this list!	addressbook	cs	Nemáte dostatečná oprávnění k úpravě tohoto seznamu!
 international	addressbook	cs	Mezinárodní
 internet	addressbook	cs	Internet
 invite to current call	addressbook	cs	Pozvat k aktuálnímu hovoru
@@ -442,7 +442,7 @@ select all	addressbook	cs	Vybrat vše
 select an opened dialog	addressbook	cs	Výběr otevřeného dialogového okna
 select migration type	admin	cs	Vybrat typ migrace
 select multiple contacts for a further action	addressbook	cs	Vybrat více kontaktů pro další akci
-select phone number as prefered way of contact	addressbook	cs	vybrat telefonní číslo jako preferovaný způsob kontaktu
+select phone number as preferred way of contact	addressbook	cs	vybrat telefonní číslo jako preferovaný způsob kontaktu
 select where you want to store / retrieve contacts	admin	cs	Vybrat úložiště kontaktů
 selected contacts	addressbook	cs	Vybrané kontakty
 send emailcopy to receiver	addressbook	cs	Poslat kopii e-mailu příjemci

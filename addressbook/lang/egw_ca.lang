@@ -1,5 +1,5 @@
 %1 contact(s) %2	addressbook	ca	%1 contacte(s) %2
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ca	%1 contacte(s) %2, %3 ha fallat per que no teniu suficients drets !!!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	ca	%1 contacte(s) %2, %3 ha fallat per que no teniu suficients drets !!!
 %1 fields in %2 other organisation member(s) changed	addressbook	ca	%1 camps en %2 altres membres de l'organització han canviat
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ca	%1 registres llegits (no importats encara, podeu tornar %2enrere%3 i desmarcar Prova d'Importació)
 %1 starts with '%2'	addressbook	ca	%1 comença amb '%2'
@@ -133,9 +133,9 @@ export file name	addressbook	ca	Nom de l'arxiu a exportar
 export from addressbook	addressbook	ca	Exportar des de la llibreta d'adreces
 export selection	addressbook	ca	Exporta la selecció
 exported	addressbook	ca	exportat
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ca	Exporta contactes de la llibreta d'adreces a un Arxiu CSV. CSV vol dir 'Valors Separats per Comes'. De totes maneres a les opcions de tabulador podeu triar altres separadors.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	ca	Exporta contactes de la llibreta d'adreces a un Arxiu CSV. CSV vol dir 'Valors Separats per Comes'. De totes maneres a les opcions de tabulador podeu triar altres separadors.
 extra	addressbook	ca	Extra
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ca	error per canviar %1 membre(s) de l'organització (drets insuficients) !!!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	ca	error per canviar %1 membre(s) de l'organització (drets insuficients) !!!
 fax	addressbook	ca	Fax
 fax number	common	ca	Número de Fax
 field %1 has been added !	addressbook	ca	Camp %1 afegit !
@@ -179,7 +179,7 @@ import next set	addressbook	ca	Importar següent registre
 in %1 days (%2) is %3's birthday.	addressbook	ca	En %1 dies (%2) es l'aniversari de %3.
 income	addressbook	ca	Entrada
 infolog-contact	addressbook	ca	Tasques i Notes
-insufficent rights to delete this list!	addressbook	ca	Insuficients drets per esborrar aquesta llista!
+insufficient rights to delete this list!	addressbook	ca	Insuficients drets per esborrar aquesta llista!
 international	addressbook	ca	Internacional
 label	addressbook	ca	Etiqueta
 last modified	addressbook	ca	Darrera modificació
@@ -256,7 +256,7 @@ select addressbook type	addressbook	ca	Seleccioneu un tipus de llibreta d'adrece
 select all	addressbook	ca	Seleccionar tot
 select migration type	admin	ca	Seleccioneu un tipus de migració
 select multiple contacts for a further action	addressbook	ca	Seleccioneu múltiples contactes per una propera acció
-select phone number as prefered way of contact	addressbook	ca	Seleccioneu el número de telèfon com a mitjà preferit de contacte
+select phone number as preferred way of contact	addressbook	ca	Seleccioneu el número de telèfon com a mitjà preferit de contacte
 select where you want to store / retrieve contacts	admin	ca	Seleccioneu quan voleu emmagatzemar / recuperar contactes
 selected contacts	addressbook	ca	Contactes selecionats
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	ca	Les columnes de fotografia i domicili han de mostrar-se sempre, fins i tot si estan buides.

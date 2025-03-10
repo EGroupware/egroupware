@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	pt-br	%1 contato(s) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	pt-br	%1 contato(s) %2, %3 falhou devido a %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	pt-br	%1 contato(s) %2, %3 falhou(aram) por insuficiência de direiros de acesso!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	pt-br	%1 contato(s) %2, %3 falhou(aram) por insuficiência de direiros de acesso!
 %1 contacts updated (%2 errors).	addressbook	pt-br	%1 contatos atualizados (%2 erros).
 %1 fields in %2 other organisation member(s) changed	addressbook	pt-br	%1 campo(s) em %2 outro(s) membro(s) da organização alterado(s).
 %1 key(s) added to public keyserver "%2".	addressbook	pt-br	%1 chave(s) adicionada(s) ao servidor de chaves público "%2".
@@ -186,7 +186,7 @@ edit custom field	addressbook	pt-br	Editar campo personalizado
 edit custom fields	admin	pt-br	Editar campos personalizados
 edit extra account-data in the addressbook	admin	pt-br	Editar dados extras no Livro de Contatos
 edit phonenumbers -	addressbook	pt-br	Editar números de telefones
-either the configured email addesses are wrong or the mail configuration.	addressbook	pt-br	Os endereços de e-mail informados estão errados ou a configuração do e-mail é inválida.
+either the configured email addresses are wrong or the mail configuration.	addressbook	pt-br	Os endereços de e-mail informados estão errados ou a configuração do e-mail é inválida.
 email & internet	addressbook	pt-br	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	pt-br	Endereços de e-mail (separados por vírgula) para enviar os dados de contatos
 empty	admin	pt-br	Vazio
@@ -213,11 +213,11 @@ export from addressbook	addressbook	pt-br	Exportar Livro de Contatos
 export selection	addressbook	pt-br	Exportar seleção
 exported	addressbook	pt-br	exportado
 exports contacts from your addressbook into a csv file.	addressbook	pt-br	Exporta contatos do catálogo de endereços para um arquivo CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Exporta seu Livro de Contatos em um arquivo CSV. CSV significa 'Comma Seperated Values' (Valores Separados por Vírgula). No entando na guia Opções você também pode escolher outros separadores.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	pt-br	Exporta seu Livro de Contatos em um arquivo CSV. CSV significa 'Comma Seperated Values' (Valores Separados por Vírgula). No entando na guia Opções você também pode escolher outros separadores.
 exports contacts from your addressbook into a vcard file.	addressbook	pt-br	Exporta contatos do seu catálogo de endereços para um arquivo vCard.
 extra	addressbook	pt-br	Extra
 extra encodings	addressbook	pt-br	Codificações extras
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pt-br	Falha ao alterar %1 membro(s) da organização (direitos insuficientes)!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	pt-br	Falha ao alterar %1 membro(s) da organização (direitos insuficientes)!
 favorite phone	addressbook	pt-br	Telefone favorito
 fax	addressbook	pt-br	Fax
 fax number	common	pt-br	Número do Fax
@@ -277,7 +277,7 @@ import from outlook	addressbook	pt-br	Importar do Outlook
 import multiple vcard	addressbook	pt-br	Importar múltiplo vCard
 import next set	addressbook	pt-br	Importar próximo conjunto
 importer's personal	addressbook	pt-br	Pessoal do importador
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Importa itens em sua lista de Contatos de um arquivo CVS. CVS significa 'Comma Separated Values' (Valores Separados por Vírgula). Na aba Opções, no entanto, você pode escolher outros separadores.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	pt-br	Importa itens em sua lista de Contatos de um arquivo CVS. CVS significa 'Comma Separated Values' (Valores Separados por Vírgula). Na aba Opções, no entanto, você pode escolher outros separadores.
 imports contacts into your addressbook from a vcard file.	addressbook	pt-br	Importa contatos para o seu catálogo de endereços a partir de um arquivo vCard.
 in %1 days (%2) is %3's birthday.	addressbook	pt-br	Em %1 dia(s) (%2) será aniversário de %3
 include all groups	addressbook	pt-br	Incluir todos os grupos
@@ -285,8 +285,8 @@ income	addressbook	pt-br	Renda
 infolog-contact	addressbook	pt-br	Contato tarefas
 infolog-organisation	addressbook	pt-br	Organização tarefas
 insert	addressbook	pt-br	Inserir
-insufficent rights to delete this list!	addressbook	pt-br	Direitos insuficientes para remover esta lista!
-insufficent rights to edit this list!	addressbook	pt-br	Direitos insuficientes para editar essa lista!
+insufficient rights to delete this list!	addressbook	pt-br	Direitos insuficientes para remover esta lista!
+insufficient rights to edit this list!	addressbook	pt-br	Direitos insuficientes para editar essa lista!
 international	addressbook	pt-br	Internacional
 internet	addressbook	pt-br	Internet
 invite to current call	addressbook	pt-br	Convidar para a chamada atual
@@ -406,7 +406,7 @@ select all	addressbook	pt-br	Selecionar todos
 select an opened dialog	addressbook	pt-br	Selecionar uma caixa de diálogo aberta
 select migration type	admin	pt-br	Selecionar tipo de migração
 select multiple contacts for a further action	addressbook	pt-br	Selecione múltiplos contatos para ação posterior
-select phone number as prefered way of contact	addressbook	pt-br	Selecione telefone como forma preferida de contato
+select phone number as preferred way of contact	addressbook	pt-br	Selecione telefone como forma preferida de contato
 select where you want to store / retrieve contacts	admin	pt-br	Selecione onde você quer salvar / recuperar contatos
 selected contacts	addressbook	pt-br	Contatos selecionados
 send emailcopy to receiver	addressbook	pt-br	Enviar cópia de e-mail para o receptor

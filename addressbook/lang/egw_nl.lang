@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	nl	%1 contact(en) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	nl	%1 contact(en) %2, %3 mislukt vanwege %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	nl	%1 contact(en) %2, %3 mislukt vanwege onvoldoende rechten!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	nl	%1 contact(en) %2, %3 mislukt vanwege onvoldoende rechten!
 %1 contacts updated (%2 errors).	addressbook	nl	%1 contacten bijgewerkt (%2 fouten)
 %1 fields in %2 other organisation member(s) changed	addressbook	nl	%1 velden in %2 andere organisatie lid/leden gewijzigd.
 %1 key(s) added to public keyserver "%2".	addressbook	nl	%1 sleutel(s) toegevoegd aan publieke keyserver "%2".
@@ -211,7 +211,7 @@ edit custom fields	admin	nl	Aangepaste velden wijzigen
 edit extra account-data in the addressbook	admin	nl	Extra account-gegevens in het adresboek wijzigen
 edit phonenumbers	addressbook	nl	Telefoonnummers wijzigen
 edit phonenumbers -	addressbook	nl	Telefoonnummers wijzigen -
-either the configured email addesses are wrong or the mail configuration.	addressbook	nl	Of de ingestelde emailadressen zijn onjuist of de email configuratie is onjuist.
+either the configured email addresses are wrong or the mail configuration.	addressbook	nl	Of de ingestelde emailadressen zijn onjuist of de email configuratie is onjuist.
 email & internet	addressbook	nl	E-mail & Internet
 email (private)	addressbook	nl	E-mail (prive)
 email addresses (comma separated) to send the contact data	addressbook	nl	Emailadressen (kommagescheiden) om de contactgegevens te verzenden.
@@ -241,12 +241,12 @@ export from addressbook	addressbook	nl	Exporteer vanuit adresboek
 export selection	addressbook	nl	Exporteer selectie
 exported	addressbook	nl	geexporteerd
 exports contacts from your addressbook into a csv file.	addressbook	nl	Exporteer contacten uit adresboek in CSV bestand formaat.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	nl	Exporteert contacten van jouw adresboek in een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	nl	Exporteert contacten van jouw adresboek in een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
 exports contacts from your addressbook into a vcard file.	addressbook	nl	Exporteer contacten uit uw adresboek in vCard bestand formaat.
 extra	addressbook	nl	Extra
 extra encodings	addressbook	nl	Extra versleutelen
 extra private	addressbook	nl	Extra prive
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	nl	wijzigen van %1 organisatie lid/leden mislukte (onvoldoende rechten)!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	nl	wijzigen van %1 organisatie lid/leden mislukte (onvoldoende rechten)!
 favorite phone	addressbook	nl	Favoriete telefoon
 fax	addressbook	nl	Fax
 fax (private)	addressbook	nl	Fac (prive)
@@ -308,7 +308,7 @@ import from outlook	addressbook	nl	Importeren vanuit Outlook
 import multiple vcard	addressbook	nl	Importeer Meervoudige vCard
 import next set	addressbook	nl	Importeren volgende serie
 importer's personal	addressbook	nl	Importeer eigen
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	nl	Importeert contacten in je adresboek vanuit een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	nl	Importeert contacten in je adresboek vanuit een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
 imports contacts into your addressbook from a vcard file.	addressbook	nl	Importeer contacten in uw adresboek van een bestand in vCard
 in %1 days (%2) is %3's birthday.	addressbook	nl	Over %1 dagen (%2) is %3 jarig.
 include all groups	addressbook	nl	Alle groepen opnemen
@@ -316,8 +316,8 @@ income	addressbook	nl	Inkomend
 infolog-contact	addressbook	nl	InfoLog Contact
 infolog-organisation	addressbook	nl	InfoLog Organisatie
 insert	addressbook	nl	Voeg toe
-insufficent rights to delete this list!	addressbook	nl	Niet genoeg rechten om deze lijst te verwijderen!
-insufficent rights to edit this list!	addressbook	nl	Onvoldoende rechten om deze lijst te bewerken!
+insufficient rights to delete this list!	addressbook	nl	Niet genoeg rechten om deze lijst te verwijderen!
+insufficient rights to edit this list!	addressbook	nl	Onvoldoende rechten om deze lijst te bewerken!
 international	addressbook	nl	Internationaal
 internet	addressbook	nl	Internet
 invite to current call	addressbook	nl	Uitnodigen voor huidig gesprek
@@ -442,7 +442,7 @@ select all	addressbook	nl	Alles selecteren
 select an opened dialog	addressbook	nl	Selecteer een geopend dialoogvenster
 select migration type	admin	nl	Kies een migratie type
 select multiple contacts for a further action	addressbook	nl	Kies meerdere contacten voor verdere actie
-select phone number as prefered way of contact	addressbook	nl	Kies een telefoonnummer als een voorkeur tot contact
+select phone number as preferred way of contact	addressbook	nl	Kies een telefoonnummer als een voorkeur tot contact
 select where you want to store / retrieve contacts	admin	nl	Kies waar je contacten wilt opslaan / ophalen
 selected contacts	addressbook	nl	Geselecteerde contacten
 send emailcopy to receiver	addressbook	nl	Zend een kopie mail naar ontvanger

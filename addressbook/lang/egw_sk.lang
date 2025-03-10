@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	sk	%1 kontakt(ov) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	sk	%1 kontakt(ov) %2, %3 sa nepodarilo z dôvodu %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sk	%1 kontakt(ov) %2, %3 sa nepodarilo z dôvodu nedostatočných práv!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	sk	%1 kontakt(ov) %2, %3 sa nepodarilo z dôvodu nedostatočných práv!
 %1 contacts updated (%2 errors).	addressbook	sk	%1 kontaktov bolo zaktualizovaných (%2 chýb).
 %1 fields in %2 other organisation member(s) changed	addressbook	sk	%1 položiek u %2 členov iných organizácií sa zmenilo.
 %1 key(s) added to public keyserver "%2".	addressbook	sk	%1 kľúčov bolo pridaných na server verejných kľúčov "%2".
@@ -211,7 +211,7 @@ edit custom fields	admin	sk	Upraviť vlastné polia
 edit extra account-data in the addressbook	admin	sk	Upraviť extra údaje účtu v Adresári
 edit phonenumbers	addressbook	sk	Upraviť telefónne čísla
 edit phonenumbers -	addressbook	sk	Upraviť telefónne čísla -
-either the configured email addesses are wrong or the mail configuration.	addressbook	sk	Buď sú chybné E-mailové adresy, alebo nastavenia E-mailu.
+either the configured email addresses are wrong or the mail configuration.	addressbook	sk	Buď sú chybné E-mailové adresy, alebo nastavenia E-mailu.
 email & internet	addressbook	sk	Email & Internet
 email (private)	addressbook	sk	Email (súkromné)
 email addresses (comma separated) to send the contact data	addressbook	sk	E-mailové adresy oddelené čiarkou, kam poslať kontaktné údaje.
@@ -241,12 +241,12 @@ export from addressbook	addressbook	sk	Export z Adresára
 export selection	addressbook	sk	Exportovať výber
 exported	addressbook	sk	Exportované
 exports contacts from your addressbook into a csv file.	addressbook	sk	Vyexportuje kontakty z adresára do súboru CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Vyexportuje kontakty z Vášho Adresára do súboru CSV (Comma Separated Values čiže hodnoty oddelené čiarkou). V karte možností môžete zvoliť aj iný oddeľovač než čiarku.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	sk	Vyexportuje kontakty z Vášho Adresára do súboru CSV (Comma Separated Values čiže hodnoty oddelené čiarkou). V karte možností môžete zvoliť aj iný oddeľovač než čiarku.
 exports contacts from your addressbook into a vcard file.	addressbook	sk	Vyexportuje kontakty z vášho Adresára do súboru vCard.
 extra	addressbook	sk	Extra
 extra encodings	addressbook	sk	Extra kódovania
 extra private	addressbook	sk	Extra súkromné
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sk	Nepodarilo sa vykonať zmeny u %1 členov organizácie -nedostatočné práva!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	sk	Nepodarilo sa vykonať zmeny u %1 členov organizácie -nedostatočné práva!
 favorite phone	addressbook	sk	Obľúbený telefón
 fax	addressbook	sk	Fax
 fax (private)	addressbook	sk	Fax (súkromné)
@@ -308,7 +308,7 @@ import from outlook	addressbook	sk	Importuj z Outlooku
 import multiple vcard	addressbook	sk	Import viacerých vizitek vCard
 import next set	addressbook	sk	Importovať ďalšiu sadu
 importer's personal	addressbook	sk	Importérove súkromné
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Naimportuje kontakty do Vášho Adresára z CSV súboru (CSV znamená Comma Separated Values). V karte možností môžete samozrejme vybrať iný oddeľovač než čiarku.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	sk	Naimportuje kontakty do Vášho Adresára z CSV súboru (CSV znamená Comma Separated Values). V karte možností môžete samozrejme vybrať iný oddeľovač než čiarku.
 imports contacts into your addressbook from a vcard file.	addressbook	sk	Naimportuje kontakty do vášho Adresára zo súboru vCard.
 in %1 days (%2) is %3's birthday.	addressbook	sk	O %1 dní (%2) bude mať narodeniny %3.
 include all groups	addressbook	sk	Zahrnúť všetky skupiny
@@ -316,8 +316,8 @@ income	addressbook	sk	Príjem
 infolog-contact	addressbook	sk	Záznamník
 infolog-organisation	addressbook	sk	Otvoriť CRM pohľad Záznamníka pre túto organizáciu
 insert	addressbook	sk	Vložiť
-insufficent rights to delete this list!	addressbook	sk	Nemáte dostatočné práva k odstráneniu tohto zoznamu!
-insufficent rights to edit this list!	addressbook	sk	Nemáte dostatočné práva k úprave tohto zoznamu!
+insufficient rights to delete this list!	addressbook	sk	Nemáte dostatočné práva k odstráneniu tohto zoznamu!
+insufficient rights to edit this list!	addressbook	sk	Nemáte dostatočné práva k úprave tohto zoznamu!
 international	addressbook	sk	Mezinárodný
 internet	addressbook	sk	Internet
 invite to current call	addressbook	sk	Pozvať na aktuálny hovor
@@ -442,7 +442,7 @@ select all	addressbook	sk	Označiť všetko
 select an opened dialog	addressbook	sk	Vyberte otvorený dialóg
 select migration type	admin	sk	Vyberte typ migrácie
 select multiple contacts for a further action	addressbook	sk	Vybrať viacero kontaktov pre vykonanie nejakej akcie
-select phone number as prefered way of contact	addressbook	sk	vybrať číslo telefónu ako preferovaný spôsob komunikácie
+select phone number as preferred way of contact	addressbook	sk	vybrať číslo telefónu ako preferovaný spôsob komunikácie
 select where you want to store / retrieve contacts	admin	sk	Vyberte, kde chcete ukladať / získavať kontakty
 selected contacts	addressbook	sk	Vybrané kontakty
 send emailcopy to receiver	addressbook	sk	Poslať kópiu e-mailu adresátovi

@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	ru	%1 контакт(а, ов) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ru	%1 контакт(ы) %2, %3 не удался из-за %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ru	%1 контакт(а, ов) %2, %3 не завершено из-за недостаточных прав!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	ru	%1 контакт(а, ов) %2, %3 не завершено из-за недостаточных прав!
 %1 contacts updated (%2 errors).	addressbook	ru	%1 контактов обновлено (%2 ошибок).
 %1 fields in %2 other organisation member(s) changed	addressbook	ru	%1 полей в %2 других представителей организации/й изменено.
 %1 key(s) added to public keyserver "%2".	addressbook	ru	%1 ключ(и) добавлен(ы) на публичный сервер ключей "%2".
@@ -204,7 +204,7 @@ edit custom field	addressbook	ru	Редактировать пользовате
 edit custom fields	admin	ru	Редактировать пользовательские поля
 edit extra account-data in the addressbook	admin	ru	Редактировать дополнительные данные учётной записи в адресной книге
 edit phonenumbers -	addressbook	ru	Редактировать номера телефонов -
-either the configured email addesses are wrong or the mail configuration.	addressbook	ru	Либо адрес электронной почты, либо настройки почты неверны.
+either the configured email addresses are wrong or the mail configuration.	addressbook	ru	Либо адрес электронной почты, либо настройки почты неверны.
 email & internet	addressbook	ru	Электронная почта и Интернет
 email addresses (comma separated) to send the contact data	addressbook	ru	Адреса электронной почты (разделённые запятыми) для отправки данных контакта.
 empty	admin	ru	Пусто
@@ -233,11 +233,11 @@ export from addressbook	addressbook	ru	Экспортировать из адр�
 export selection	addressbook	ru	Экспортировать выбранное
 exported	addressbook	ru	Экспортировано
 exports contacts from your addressbook into a csv file.	addressbook	ru	Экспорт контактов из адресной книги в файл формата CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ru	Экспортировать контакты из адресной книги в файл CSV. CSV (Comma Seperated Values) — «Значения, разделенные запятыми». Однако на вкладке параметров можно выбрать и другие разделители.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	ru	Экспортировать контакты из адресной книги в файл CSV. CSV (Comma Seperated Values) — «Значения, разделенные запятыми». Однако на вкладке параметров можно выбрать и другие разделители.
 extra	addressbook	ru	Дополнительно
 extra encodings	addressbook	ru	Дополнительные кодировки
 extra private	addressbook	ru	Дополнительные личные
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ru	Ошибка при изменении %1 участника(ов) организации (недостаточно прав)!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	ru	Ошибка при изменении %1 участника(ов) организации (недостаточно прав)!
 favorite phone	addressbook	ru	Избранный телефон
 fax	addressbook	ru	Факс
 fax (private)	addressbook	ru	Экспорт контактов из адресной книги в файл vCard.
@@ -299,7 +299,7 @@ import from outlook	addressbook	ru	Импорт из Outlook
 import multiple vcard	addressbook	ru	Импорт нескольких vCard
 import next set	addressbook	ru	Импортировать следующий набор
 importer's personal	addressbook	ru	Личное импортировавшего
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ru	Импортирует контакты в адресную книгу из файла CSV. CSV означает «значения, разделенные запятыми», однако, на вкладке настроек можно выбрать и другой разделитель.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	ru	Импортирует контакты в адресную книгу из файла CSV. CSV означает «значения, разделенные запятыми», однако, на вкладке настроек можно выбрать и другой разделитель.
 imports contacts into your addressbook from a vcard file.	addressbook	ru	Импортирует контакты в вашу адресную книгу из файла vCard
 in %1 days (%2) is %3's birthday.	addressbook	ru	Через %1 день/дней (%2) наступит День рождения %3
 include all groups	addressbook	ru	Скрыть группы без адреса электронной почты
@@ -307,8 +307,8 @@ income	addressbook	ru	Входящие
 infolog-contact	addressbook	ru	Контакт InfoLog
 infolog-organisation	addressbook	ru	Организация InfoLog
 insert	addressbook	ru	Вставить
-insufficent rights to delete this list!	addressbook	ru	Недостаточно прав для удаления этого списка!
-insufficent rights to edit this list!	addressbook	ru	Недостаточно прав для редактирования этого списка!
+insufficient rights to delete this list!	addressbook	ru	Недостаточно прав для удаления этого списка!
+insufficient rights to edit this list!	addressbook	ru	Недостаточно прав для редактирования этого списка!
 international	addressbook	ru	Международный
 internet	addressbook	ru	Интернет
 invite to current call	addressbook	ru	Приглашение на текущий звонок
@@ -432,7 +432,7 @@ select all	addressbook	ru	Выбрать все
 select an opened dialog	addressbook	ru	Выбор открытого диалога
 select migration type	admin	ru	Выбрать тип миграции
 select multiple contacts for a further action	addressbook	ru	Выбрать несколько контактов для дальнейшего действия
-select phone number as prefered way of contact	addressbook	ru	Выбрать телефон как способ связи с контактом
+select phone number as preferred way of contact	addressbook	ru	Выбрать телефон как способ связи с контактом
 select where you want to store / retrieve contacts	admin	ru	Выберите, куда следует записывать/извлекать контакты
 selected contacts	addressbook	ru	Выбранные контакты
 send emailcopy to receiver	addressbook	ru	Отправить копию письма получателю

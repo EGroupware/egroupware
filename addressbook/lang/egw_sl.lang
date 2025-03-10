@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	sl	%1 stikov %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	sl	%1 stik(-i) %2, %3 ni uspel zaradi %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sl	%1 je kontaktiral %2, pri %3 se je pojavila napaka zaradi premajhnih pravic!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	sl	%1 je kontaktiral %2, pri %3 se je pojavila napaka zaradi premajhnih pravic!
 %1 contacts updated (%2 errors).	addressbook	sl	%1 stikov je bilo posodobljenih (%2 napak).
 %1 fields in %2 other organisation member(s) changed	addressbook	sl	%1 polje %2 članu v drugi organizaciji se je spremenilo.
 %1 key(s) added to public keyserver "%2".	addressbook	sl	Ključi %1, dodani javnemu ključevu "%2".
@@ -211,7 +211,7 @@ edit custom fields	admin	sl	Uredi lastna polja
 edit extra account-data in the addressbook	admin	sl	Uredi dodatne podatke računa v adresarju
 edit phonenumbers	addressbook	sl	Urejanje telefonskih številk
 edit phonenumbers -	addressbook	sl	Uredi telefonske številke -
-either the configured email addesses are wrong or the mail configuration.	addressbook	sl	Napačen e-naslov ali konfiguracija.
+either the configured email addresses are wrong or the mail configuration.	addressbook	sl	Napačen e-naslov ali konfiguracija.
 email & internet	addressbook	sl	ePošta in Splet
 email (private)	addressbook	sl	ePošta (zasebno)
 email addresses (comma separated) to send the contact data	addressbook	sl	E-naslovi (ločeni z vejico), na katere pošljem podatke stika.
@@ -241,12 +241,12 @@ export from addressbook	addressbook	sl	Izvoz iz adresarja
 export selection	addressbook	sl	Izvozi izbor
 exported	addressbook	sl	Izvoženo
 exports contacts from your addressbook into a csv file.	addressbook	sl	Izvozi stike iz adresarja v datoteko CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sl	Izvozi stike iz imenika v datoteko CSV. CSV pomeni "vrednosti, ločene z vejico". V zavihku Možnosti lahko izberete tudi druga ločila.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	sl	Izvozi stike iz imenika v datoteko CSV. CSV pomeni "vrednosti, ločene z vejico". V zavihku Možnosti lahko izberete tudi druga ločila.
 exports contacts from your addressbook into a vcard file.	addressbook	sl	Izvozi stike iz svojega adresarja v datoteko vCard.
 extra	addressbook	sl	Dodatno
 extra encodings	addressbook	sl	Dodatno kodiranje
 extra private	addressbook	sl	Posebej zasebno
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sl	Napaka pri spreminjanju %1 članov organizacije (premalo pravic)!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	sl	Napaka pri spreminjanju %1 članov organizacije (premalo pravic)!
 favorite phone	addressbook	sl	Najljubši telefon
 fax	addressbook	sl	Faks
 fax (private)	addressbook	sl	Faks (zasebno)
@@ -308,7 +308,7 @@ import from outlook	addressbook	sl	Uvoz iz Outlook-a
 import multiple vcard	addressbook	sl	Uvoz večih vCard
 import next set	addressbook	sl	Uvozi naslednji niz
 importer's personal	addressbook	sl	Uvoznik je oseben
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sl	Uvozi stike v imenik iz datoteke CSV. CSV pomeni "Vrednosti, ločene z vejico". V zavihku možnosti lahko izberete tudi druga ločila.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	sl	Uvozi stike v imenik iz datoteke CSV. CSV pomeni "Vrednosti, ločene z vejico". V zavihku možnosti lahko izberete tudi druga ločila.
 imports contacts into your addressbook from a vcard file.	addressbook	sl	Uvozi stike v svoj adresar iz datoteke vCard.
 in %1 days (%2) is %3's birthday.	addressbook	sl	V %1 dneh (%2) je rojstni dan %3.
 include all groups	addressbook	sl	Vključi vse skupine
@@ -316,8 +316,8 @@ income	addressbook	sl	Priliv
 infolog-contact	addressbook	sl	InfoDnevnik
 infolog-organisation	addressbook	sl	Organizacija InfoLog
 insert	addressbook	sl	Vstavi
-insufficent rights to delete this list!	addressbook	sl	Nimate dovolj pravic za brisanje tega seznama!
-insufficent rights to edit this list!	addressbook	sl	Neustrezne pravice za urejanje tega seznama!
+insufficient rights to delete this list!	addressbook	sl	Nimate dovolj pravic za brisanje tega seznama!
+insufficient rights to edit this list!	addressbook	sl	Neustrezne pravice za urejanje tega seznama!
 international	addressbook	sl	Mednarodni
 internet	addressbook	sl	Internet
 invite to current call	addressbook	sl	Povabilo v trenutni klic
@@ -442,7 +442,7 @@ select all	addressbook	sl	Izberi vse
 select an opened dialog	addressbook	sl	Izberite odprto pogovorno okno
 select migration type	admin	sl	Izberite vrsto migracije
 select multiple contacts for a further action	addressbook	sl	Izberite več stikov za nadaljnja dejanja
-select phone number as prefered way of contact	addressbook	sl	Izberite telefonsko številko kot privzeto pot komunikacije za kontakt
+select phone number as preferred way of contact	addressbook	sl	Izberite telefonsko številko kot privzeto pot komunikacije za kontakt
 select where you want to store / retrieve contacts	admin	sl	Izberite kje želite shranjevati / sprejemati stike
 selected contacts	addressbook	sl	Izbrani stiki
 send emailcopy to receiver	addressbook	sl	Pošlje kopijo sporočila prejemniku
