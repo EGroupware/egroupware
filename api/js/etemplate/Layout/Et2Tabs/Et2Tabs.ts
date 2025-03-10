@@ -116,6 +116,15 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		}
 	}
 
+	destroy()
+	{
+		super.destroy && super.destroy();
+		this.tabData = [];
+		// Clean these from parent
+		this.tabs = [];
+		this.panels = [];
+	}
+
 	get value()
 	{
 		return this.getActiveTab()?.panel;
