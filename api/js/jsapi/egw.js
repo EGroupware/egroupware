@@ -295,6 +295,7 @@ window.app = {classes: {}};
 		var gen_time_async = jQuery('.asyncIncludeTime').length > 0 ? jQuery('.asyncIncludeTime'):
 				gen_time_div.append('<span class="asyncIncludeTime"></span>').find('.asyncIncludeTime');
 		gen_time_async.text(egw.lang ? egw.lang('async includes took %1s', (end_time - start_time) / 1000) : 'async includes took ' + (end_time - start_time) / 1000);
+		gen_time_async = null;
 
 		// Make sure opener knows when we close - start a heartbeat
 		try {
@@ -324,6 +325,7 @@ window.app = {classes: {}};
 		{
 			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
 		}
+		sidebox = null;
 
 		var resize_attempt = 0;
 		var resize_popup = function()
@@ -377,18 +379,21 @@ window.app = {classes: {}};
 			{
 				resize_attempt = 0;
 			}
+			$main_div = null;
+			$et2 = null;
+			$layoutTable = null;
 		};
 
 		// rest needs DOM to be ready
 		jQuery(function()
 		{
 			// load etemplate2 template(s)
-			jQuery('form.et2_container[data-etemplate]').each(  function(index, node)
+			document.querySelectorAll('form.et2_container[data-etemplate]').forEach(node =>
 			{
 				const data = JSON.parse(node.getAttribute('data-etemplate')) || {};
 				if (popup || window.opener && !egwIsMobile()) {
 					// Resize popup when et2 load is done
-					jQuery(node).on('load', (event) =>
+					node.addEventListener("load", (event) =>
 					{
 						// Only the top-level template, not any sub-templates
 						if (event.target == node)
