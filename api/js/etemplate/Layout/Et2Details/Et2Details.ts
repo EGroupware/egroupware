@@ -26,6 +26,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 			css`
 				:host {
 					display: block;
+					min-height: 1em;
 				}
 				
 				:host([align="right"]) > div {
@@ -61,6 +62,14 @@ export class Et2Details extends Et2Widget(SlDetails)
 					border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
 					margin: 0px;
 					overflow: hidden;
+					height: 100%;
+					display: flex;
+					flex-direction: column;
+				}
+
+				.details__content {
+					height: 100%;
+					overflow-y: auto;
 				}
 
 				.details.hoist {
