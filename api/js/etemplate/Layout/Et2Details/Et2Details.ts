@@ -39,7 +39,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 			css`
 				:host {
 					display: block;
-					min-height: 1em;
+					min-height: var(--sl-input-height-medium);
 				}
 				
 				:host([align="right"]) > div {
@@ -96,6 +96,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 
 				.details--open .details__body {
 					display: block;
+					flex: 1 1 auto;
 				}
 
 				.details:not(.hoist).details--open.details--overlay-summary {
