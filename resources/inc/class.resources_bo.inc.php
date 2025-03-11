@@ -899,7 +899,7 @@ class resources_bo
 		{
 			return false;
 		}
-		$show = $resource[$GLOBALS['egw_info']['user']['preferences']['title_show'] ?? 'short_description'];
+		$show = $resource[$GLOBALS['egw_info']['user']['preferences']['resources']['title_show'] ?? 'short_description'];
 		return $resource['name'].(!empty($show) ? ' ('.$show.')' : '');
 	}
 
@@ -912,7 +912,7 @@ class resources_bo
 	static function title_cols($extra=null)
 	{
 		$cols = ['res_id', 'name', 'cat_id'];
-		$cols[] = $GLOBALS['egw_info']['user']['preferences']['title_show'] ?? 'short_description';
+		$cols[] = $GLOBALS['egw_info']['user']['preferences']['resources']['title_show'] ?? 'short_description';
 		if ($extra)
 		{
 			$cols = array_unique(array_merge($cols, is_array($extra) ? $extra : explode(',', $extra)));
