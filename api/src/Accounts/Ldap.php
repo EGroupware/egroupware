@@ -851,7 +851,7 @@ class Ldap
 					$filter .= '(|'.implode('', array_map(static function($account_id)
 					{
 						return $account_id < 0 ? '(gidNumber='.$account_id.')' : '(uidNumber='.$account_id.')';
-					})).')';
+					}, (array)$param['account_id'])).')';
 					if ($not_account_ids !== false)
 					{
 						$filter .= ')';
