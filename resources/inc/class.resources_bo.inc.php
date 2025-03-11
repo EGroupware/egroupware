@@ -695,12 +695,6 @@ class resources_bo
 		{
 			$pattern = $pattern['search'];
 		}
-		$criteria = [
-			'name' => $pattern,
-			'short_description' => $pattern,
-			'location' => $pattern,
-			'inventory_number' => $pattern,
-		];
 		$only_keys = self::title_cols('bookable,useable,quantity');
 
 		// If no read access to any category, just stop
@@ -727,7 +721,7 @@ class resources_bo
 			$filter['accessory_of'] = $options['accessory_of'];
 		}
 		$list = array();
-		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',null,$op='OR',$limit,$filter);
+		$data = $this->so->search($pattern,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',null,$op='OR',$limit,$filter);
 		// we need to check availability of the searched resources in the calendar if $pattern ['exec'] contains some extra args
 		$show_conflict=False;
 		if ($data && $options['exec'])
@@ -820,7 +814,7 @@ class resources_bo
 				}
 				else
 				{
-					$list[$id] = $this->link_title($resource['name']) .
+					$list[$id] = $this->link_title($resource) .
 						($resource['useable'] > 1 ? " ( {$resource['useable']} / {$resource['quantity']} )" : '');
 				}
 			}
