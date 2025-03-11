@@ -824,7 +824,7 @@ class resources_bo
 				foreach($data as $num => $resource)
 				{
 					$id=$resource['res_id'];
-					$list[$id] = $this->link_title($resource['name']);
+					$list[$id] = $this->link_title($resource);
 				}
 			} else {
 				error_log(__METHOD__." No Data found for Resource with id ".$resource['res_id']);
