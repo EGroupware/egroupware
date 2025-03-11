@@ -186,6 +186,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		this.selectedNodes = [];
 	}
 
+	connectedCallback()
+	{
+		super.connectedCallback();
+		// Actions can't be initialized without being connected to InstanceManager
+		if(this.actions && Object.values(this.actions).length && !this._actionManager)
+		{
+			this._initActions();
+			this._link_actions(this.actions)
+		}
+	}
+
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
@@ -197,7 +208,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			// Delete all actions
 			this._actionManager.remove();
-			this._actionManager = null;
+			this._actionManager = undefined;
 		}
 	}
 

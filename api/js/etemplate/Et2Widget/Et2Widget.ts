@@ -349,8 +349,8 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			let widget_object = objectManager?.getObjectById(this.id);
 			if(widget_object)
 			{
-				widget_object.clear();
 				widget_object.unregisterActions();
+				widget_object.clear();
 				widget_object.remove();
 			}
 		}
@@ -1270,6 +1270,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				let parent = document.querySelector("#" + this.__parentId) || this.__parentId;
 				if(parent && parent instanceof Element)
 				{
+					this.remove();
 					parent.append(<Node><unknown>this);
 					this._parent_node = parent;
 				}

@@ -381,6 +381,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         if (!window.egwIsMobile())
         {
             _node.addEventListener('contextmenu', contextHandler);
+			_context.iface?.handlers['popup'].push({type: 'contextmenu', listener: contextHandler});
         }
     };
 
