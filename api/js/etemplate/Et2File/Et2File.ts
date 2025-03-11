@@ -381,10 +381,12 @@ export class Et2File extends Et2InputWidget(LitElement)
 			fileItem.loading = false;
 		}
 
-		if(!response || response.length || Object.entries(response).length == 0 || response[file.file?.name])
+		if((!response || response.length || Object.entries(response).length == 0 || response[file.file?.name]) || (
+			Object.values(response).length == 1 && typeof Object.values(response)[0] == "string"
+		))
 		{
 			console.warn("Problem uploading", jsonResponse);
-			file.warning = response[file?.file?.name] ?? "No response";
+			file.warning = response[file?.file?.name] ?? Object.values(response).pop() ?? "No response";
 			if(fileItem)
 			{
 				fileItem.variant = "warning";
