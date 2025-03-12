@@ -364,7 +364,6 @@ export class etemplate2
 			this._widgetContainer = null;
 		}
 		while(this.DOMContainer.lastChild) this.DOMContainer.lastChild.remove();
-		this.DOMContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']")?.remove();
 
 		// Remove self from the index
 		for(const name in Et2Template.templateCache)
@@ -493,6 +492,15 @@ export class etemplate2
 			}, this);
 
 			window.addEventListener("unload", this.destroy_session);
+		}
+		const iframe = this.DOMContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']");
+		if(iframe)
+		{
+			window.addEventListener("pagehide", () =>
+			{
+				// Clean up the iframe
+				iframe.remove();
+			});
 		}
 	}
 
