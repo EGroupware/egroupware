@@ -464,7 +464,7 @@ export class EgwFramework extends LitElement
 		if(!this._popupsGCInterval)
 		{
 			// Check every 60s to make sure we didn't miss any
-			window.setInterval(() => this.popups_garbage_collector, 60000);
+			this._popupsGCInterval = window.setInterval(() => this.popups_garbage_collector(), 10000);
 		}
 
 		if(_returnID !== false)

@@ -70,6 +70,7 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 
 		// keep track of opened popups
 		this.popups = [];
+		this._popupsGCInterval = null;
 		window.addEventListener("beforeunload", this.beforeUnloadHandler.bind(this));
 
 
@@ -945,6 +946,11 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 
 		windowID.framework = this;
 		this.popups.push(windowID);
+		if (!this._popupsGCInterval)
+		{
+			// Check every 10s to make sure we didn't miss any
+			this._popupsGCInterval = window.setInterval(() => this.popups_garbage_collector(), 10000);
+		}
 		this.popups_garbage_collector();
 
 		if (navigate)
@@ -1000,6 +1006,11 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 		while (i--)
 		{
 			if (this.popups[i].closed) this.popups.splice(i,1);
+		}
+		if (this.popups.length == 0 && this._popupsGCInterval)
+		{
+			window.clearInterval(this._popupsGCInterval);
+			this._popupsGCInterval = null;
 		}
 	},
 
