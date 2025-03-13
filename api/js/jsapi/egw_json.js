@@ -696,7 +696,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					if (scoped[_type][i].callback == _callback &&
 						scoped[_type][i].context == _context)
 					{
-						scoped[_type].slice(i, 1);
+						scoped[_type].splice(i, 1);
 						break;
 					}
 				}

@@ -261,6 +261,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 			// Unbind all "tooltip" events from the given element
 			_elem.unbind('.tooltip');
+			tooltipped.splice(tooltipped.indexOf(_elem), 1);
 		},
 
 		tooltipDestroy: function () {
