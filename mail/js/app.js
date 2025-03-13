@@ -29,6 +29,7 @@ import {
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {Et2VfsSelectButton} from "../../api/js/etemplate/Et2Vfs/Et2VfsSelectButton";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import {addAttachmentPlaceholder, preSetToggledOnActions, setPredefinedAddresses} from "./mailAppJsFunctions";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 var keepFromExpander;
@@ -6374,36 +6375,7 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Pre set toggled actions
 	 */
-	preSetToggledOnActions: function ()
-	{
-		var actions = egw.preference('toggledOnActions', 'mail');
-		var toolbar = this.et2.getWidgetById('composeToolbar');
-		if (actions)
-		{
-			actions = actions.split(',');
-			for (var i=0; i < actions.length; i++)
-			{
-				if (toolbar && toolbar.options.actions[actions[i]])
-				{
-					let d = document.getElementById('mail-compose_composeToolbar-'+actions[i]);
-					if (d && toolbar._actionManager.getActionById(actions[i]).checkbox
-							&& !toolbar._actionManager.getActionById(actions[i]).checked)
-					{
-						d.click();
-					}
-				}
-				else
-				{
-					var widget = this.et2.getWidgetById(actions[i]);
-					if (widget)
-					{
-					//	jQuery(widget.getDOMNode()).trigger('click');
-					}
-				}
-			}
-		}
-	},
-
+	preSetToggledOnActions: preSetToggledOnActions ,
 	/**
 	 * Set predefined addresses for compose dialog
 	 *
@@ -6411,32 +6383,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {type} _senders
 	 * @returns {undefined}
 	 */
-	set_predefined_addresses: function(action,_senders)
-	{
-		var pref_id = _senders[0].id.split('::')[0]+'_predefined_compose_addresses';
-		var prefs = egw.preference(pref_id, 'mail');
-
-		const dialog = loadWebComponent("et2-dialog",
-		{
-			callback: function (_button_id, _value)
-			{
-				switch (_button_id)
-				{
-					case Et2Dialog.OK_BUTTON:
-						egw.set_preference('mail', pref_id, _value);
-						return;
-					case "cancel":
-				}
-			},
-			title: this.egw.lang("Predefined addresses for compose"),
-			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
-			value: {content: prefs || {}},
-			minWidth: 410,
-			template: egw.webserverUrl + '/mail/templates/default/predefinedAddressesDialog.xet?',
-			resizable: false,
-		});
-		document.body.append(dialog);
-	},
+	set_predefined_addresses: setPredefinedAddresses,
 
 	/**
 	 * open
@@ -6455,21 +6402,7 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
-	addAttachmentPlaceholder: function ()
-	{
-		if (this.et2.getArrayMgr("content").getEntry("is_html"))
-		{
-			// Add link placeholder box
-			const email = this.et2.getWidgetById("mail_htmltext");
-			const attach_type = this.et2.getWidgetById("filemode");
-			const placeholder = '<fieldset class="attachments mceNonEditable"><legend>Download attachments</legend>' + this.egw.lang('Attachments') + '</fieldset>';
-
-			if (email && !email.getValue().includes(placeholder) && attach_type.getValue() !== "attach")
-			{
-				email.editor.execCommand('mceInsertContent', false, placeholder);
-			}
-		}
-	},
+	addAttachmentPlaceholder: addAttachmentPlaceholder,
 
 	addressbookSelect: function()
 	{
