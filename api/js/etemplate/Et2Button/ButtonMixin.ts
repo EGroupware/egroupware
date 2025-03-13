@@ -214,6 +214,8 @@ so we force the button images to be square*/
 
 	destroy()
 	{
+		super.destroy && super.destroy();
+		
 		// Clean up any added image
 		while(this.lastChild) this.lastChild.remove();
 	}
