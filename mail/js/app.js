@@ -4828,7 +4828,8 @@ app.classes.mail = AppJS.extend(
 			}
 		};
 		var actions = egw.preference('toggledOnActions', 'mail');
-		actions = actions ? actions.split(',') : [];
+		if (typeof actions === 'string')
+			actions = actions ? actions.split(',') : [];
 		for(var widget in widgets)
 		{
 			var expanderBtn = widget + '_expander';
