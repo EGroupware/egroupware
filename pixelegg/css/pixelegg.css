@@ -48,25 +48,29 @@
   html[data-darkmode='1'] et2-select-account::part(icon),
   html[data-darkmode='1'] et2-select-email::part(icon),
   html[data-darkmode='1'] sl-menu-item [slot="prefix"],
-  html[data-darkmode='1'] iframe,
   html[data-darkmode='1'] et2-lavatar[image=""]::part(base),
   html[data-darkmode='1'] et2-avatar[id="_cropper_image"],
+  html[data-darkmode='1'] iframe,
   html[data-darkmode='1'] video,
   html[data-darkmode='1'] #loginMainDiv,
   html[data-darkmode='1'] .et2_taglist_tags_icon,
   html[data-darkmode='1'] .fw_avatar_stat,
   html[data-darkmode='1'] et2-avatar-group,
   html[data-darkmode='1'] .blueimp-gallery .slide,
-  html[data-darkmode='1'] et2-avatar::part(image),
-  html[data-darkmode='1'] et2-lavatar::part(image) {
+  html[data-darkmode='1'] et2-avatar::part(image) {
     filter: invert(1) hue-rotate(180deg) !important;
   }
   html[data-darkmode='1'] et2-button .bi::before,
   html[data-darkmode='1'] et2-button [class^="bi-"]::before,
-  html[data-darkmode='1'] et2-button [class*=" bi-"]::before {
+  html[data-darkmode='1'] et2-button [class*=" bi-"]::before,
+  html[data-darkmode='1'] et2-button svg {
     filter: invert(1) hue-rotate(180deg);
   }
-  html[data-darkmode='1'] et2-calendar-owner::part(icon) {
+  html[data-darkmode='1'] et2-calendar-owner::part(icon),
+  html[data-darkmode='1'] et2-lavatar[image*='avatar'],
+  html[data-darkmode='1'] img[src*="avatar"],
+  html[data-darkmode='1'] et2-email::part(image),
+  html[data-darkmode='1'] et2-vfs-mime > img {
     filter: invert(1) hue-rotate(180deg) !important;
   }
   html[data-darkmode='1'] et2-image > img {
