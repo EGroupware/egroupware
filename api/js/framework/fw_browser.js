@@ -213,6 +213,11 @@ window.fw_browser = (function(){ "use strict"; return Class.extend(
 				if(et !== null)
 				{
 					et.clear();
+					// Clean up DOM nodes that are outside the etemplate2
+					const domContainer = et.DOMContainer;
+					domContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']")?.remove();
+					domContainer.remove();
+					et._DOMContainer = null;
 				}
 			});
 		}
