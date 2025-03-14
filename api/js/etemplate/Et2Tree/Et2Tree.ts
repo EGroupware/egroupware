@@ -1032,7 +1032,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			})
 		}
 		const selected = typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value);
-		const draggable = this.widget_object?.actionLinks?.filter(al => al.actionObj.type == "drag").length > 0
+		const draggable = this.widget_object?.actionLinks?.filter(al => al.actionObj?.type == "drag").length > 0
 
 		return html`
             <sl-tree-item
