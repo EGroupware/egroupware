@@ -128,7 +128,7 @@ custom from	infolog	en	Custom from
 custom regarding	infolog	en	Custom regarding
 custom status for typ	infolog	en	Custom status for type
 customfields	infolog	en	Custom fields
-data exchange settings	infolog	en	Data exchange settings
+data exchange settings	common	en	Data exchange settings
 date completed	infolog	en	Date completed
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	en	Date completed. Leave empty to have it automatically set if status is done or billed.
 datecreated	infolog	en	Date created
@@ -221,6 +221,7 @@ full list of placeholder names	infolog	en	Full list of placeholder names
 general fields:	infolog	en	General fields:
 general settings	infolog	en	General settings
 global categories	infolog	en	Global categories
+grant responsible users access to linked contacts?	infolog	en	Grant responsible users access to linked contacts?
 group owner for	infolog	en	Group owner for
 handling of status 'archived'	admin	en	Handling of status 'archived'
 high	infolog	en	High
@@ -335,6 +336,7 @@ only show them if there is a filter	infolog	en	Only show them if there is a filt
 only show them while searching	infolog	en	Only show them while searching
 only the attachments	infolog	en	Only the attachments
 only the links	infolog	en	Only the links
+only to primary contact	infolog	en	Only to primary contact
 open and upcoming	infolog	en	Open and upcoming
 open(status)	infolog	en	Open
 optional note to the link	infolog	en	Optional note to the link
@@ -398,6 +400,7 @@ removed	infolog	en	Removed.
 removed category	infolog	en	removed category
 replacement	infolog	en	Replacement
 replacements for inserting entries into documents	infolog	en	Replacements for inserting entries into documents
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	en	Requires the editing user to have write access to theses contacts, to share them with the responsible user.
 respect timesheet run and read permissions for time totals	infolog	en	Respect timesheet run and read permissions for time totals
 responsible	infolog	en	Responsible
 responsible open	infolog	en	Responsible open
@@ -485,6 +488,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	en	When should the InfoLog be finished
 times	infolog	en	Times
 titles of any entries linked to the current record, excluding attached files	infolog	en	Titles of any entries linked to the current record, excluding attached files
+to all linked contacts	infolog	en	To all linked contacts
 to many might exceed your execution-time-limit	infolog	en	Too many might exceed your execution time limit
 to what should the startdate of new entries be set.	infolog	en	To what should the start date of new entries be set.
 today	infolog	en	Today

@@ -30,9 +30,7 @@
 a short subject for the entry	infolog	de	Einen kurzen Titel für diesen Eintrag
 abort without deleting	infolog	de	Abbruch ohne zu Löschen
 accept	infolog	de	Bei Annahme
-actions...	infolog	de	Befehle ...
 actual date and time	infolog	de	Aktuelles Datum und Uhrzeit
-add	infolog	de	Hinzufügen
 add / remove link	infolog	de	Hinzufügen / Entfernen von Verknüpfungen
 add a file	infolog	de	Datei anhängen
 add a new entry	infolog	de	Einen neuen Eintrag anlegen
@@ -130,7 +128,7 @@ custom from	infolog	de	Benutzerdefinierter  Kontakt
 custom regarding	infolog	de	Benutzerdefinierter Bezug
 custom status for typ	infolog	de	Benutzerdefinierter Status für Typ
 customfields	infolog	de	Benutzerdefinierte Felder
-data exchange settings	infolog	de	Einstellungen Datenaustausch
+data exchange settings	common	de	Einstellungen Datenaustausch
 date completed	infolog	de	Erledigt am
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	de	Fertigstellungsdatum (leer lassen um es automatisch zu setzen wenn der Status erledigt oder abgerechnet ist)
 datecreated	infolog	de	Erstellt am
@@ -223,6 +221,7 @@ full list of placeholder names	infolog	de	Komplette Liste der Platzhalter
 general fields:	infolog	de	Allgemeine Felder:
 general settings	infolog	de	Allgemeine Einstellungen:
 global categories	infolog	de	Globale Kategorien
+grant responsible users access to linked contacts?	infolog	de	Gewähre dem verantwortlichen Benutzer Zugriff auf die verlinkten Kontakte?
 group owner for	infolog	de	Gruppeneigentümer für
 handling of status 'archived'	admin	de	Behandlung des Status 'Archiviert'
 high	infolog	de	Hoch
@@ -337,6 +336,7 @@ only show them if there is a filter	infolog	de	Nur anzeigen wenn gefiltert wird
 only show them while searching	infolog	de	Nur bei einer Suche anzeigen
 only the attachments	infolog	de	Nur die Anhänge
 only the links	infolog	de	Nur die Verknüpfungen
+only to primary contact	infolog	de	Nur zum primären Kontakt
 open and upcoming	infolog	de	Zukünftige und offene
 open(status)	infolog	de	Offen
 optional note to the link	infolog	de	Zusätzliche Notiz zur Verknüpfung
@@ -400,6 +400,7 @@ removed	infolog	de	Entfernt.
 removed category	infolog	de	Kategorie erfolgreich entfernt
 replacement	infolog	de	Platzhalter
 replacements for inserting entries into documents	infolog	de	Platzhalter für das Einfügen in Dokumente
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	de	Setzt voraus, dass der bearbeitende Benutzer Schreibrechte für diese Kontakte hat, um sie mit dem Verantwortliche zu teilen.
 respect timesheet run and read permissions for time totals	infolog	de	Respektieren Sie die Ausführungs- und Leseberechtigungen für Zeit-Tabellen
 responsible	infolog	de	Verantwortlich
 responsible open	infolog	de	Verantwortlich offen
@@ -465,7 +466,6 @@ startdate for new entries	infolog	de	Startdatum für neue Einträge
 startdate must be before enddate!!!	infolog	de	Startdatum muss vor dem Fälligkeitsdatum liegen!
 starting %1	infolog	de	Starte %1
 startrecord	infolog	de	Startdatensatz
-status	infolog	de	Status
 status ...	infolog	de	Status ...
 status, percent and date completed are always allowed.	infolog	de	Status, Prozent und Datum erledigt sind immer erlaubt.
 sub	infolog	de	Unter-<br>einträge
@@ -488,6 +488,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	de	Bis wann soll der InfoLog erledigt sein
 times	infolog	de	Zeiten
 titles of any entries linked to the current record, excluding attached files	infolog	de	Liste aller Einträge die mit dem aktuellen Datensatz verknüpft sind, mit Ausnahme von Dateianhängen
+to all linked contacts	infolog	de	Zu allen verlinkten Kontakten
 to many might exceed your execution-time-limit	infolog	de	Zu viel können Ihre Laufzeitbeschränkung überschreiten
 to what should the startdate of new entries be set.	infolog	de	Auf was soll das Startdatum von neuen Einträgen gesetzt werden.
 today	infolog	de	Heute
