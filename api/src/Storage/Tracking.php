@@ -438,7 +438,7 @@ abstract class Tracking
 		if (!empty($GLOBALS['egw_info']['server']['log_user_agent_action']) && ($changed_fields || !$old))
 		{
 			$this->historylog->add('user_agent_action', $data[$this->id_field],
-				$_SERVER['HTTP_USER_AGENT'], $_SESSION[Api\Session::EGW_SESSION_VAR]['session_action']);
+				$_SERVER['HTTP_USER_AGENT'], Api\Session::getAction());
 		}
 		foreach($changed_fields as $name)
 		{
@@ -532,11 +532,17 @@ abstract class Tracking
 						if ($data[$name] == $old[$name]) continue;
 					}
 				}
-				elseif ($old[$name] == $data[$name] ||
-					is_a($data[$name], \DateTime::class) ? (new Api\DateTime($old[$name], $data[$name]->getTimezone())) == $data[$name] :
-						str_replace("\r", '', $old[$name]) == str_replace("\r", '', $data[$name]))
+				// if one is a DateTime object, compare as such with precision of 1sec
+				elseif (is_a($data[$name], \DateTime::class) || is_a($old[$name], \DateTime::class))
 				{
-					continue;	// change only in CR (eg. different OS) --> ignore
+					if (Api\DateTime::to($data[$name], Api\DateTime::DATABASE) === Api\DateTime::to($old[$name], Api\DateTime::DATABASE))
+					{
+						continue;
+					}
+				}
+				elseif (str_replace("\r", '', $old[$name]) == str_replace("\r", '', $data[$name]))
+				{
+					continue;	// change only in CR (e.g. different OS) --> ignore
 				}
 				$changed_fields[] = $name;
 				//echo "<p>$name: ".array2string($data[$name]).' != '.array2string($old[$name])."</p>\n";

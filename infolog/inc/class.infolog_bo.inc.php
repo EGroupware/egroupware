@@ -493,7 +493,6 @@ class infolog_bo
 			}
 			if (!$info['info_custom_from'])
 			{
-				$info['info_from'] = '';
 				$info['info_custom_from'] = 0;
 			}
 			if ($app == $not_app && $id == $not_id)
@@ -1221,7 +1220,7 @@ class infolog_bo
 		{
 			unset($values['info_link_id']);
 			unset($values['info_contact']);
-			$values['info_from'] = $from ? $from : null;
+			$values['info_from'] = $from ?: null;
 		}
 		if($values['info_id'] && $values['old_pm_id'] !== $values['pm_id'])
 		{
@@ -1277,7 +1276,8 @@ class infolog_bo
 			elseif ($this->ensure_responsible_contact_access === "all")
 			{
 				$check = Link::get_links('infolog', $values['info_id'], 'addressbook');
-			}if (!$check) return;   // no contacts to check
+			}
+			if (!$check) return;   // no contacts to check
 			$contacts = new Api\Contacts();
 			$owner_grants = $memberships = [];
 			$linked_contacts = $contacts->search('', 'owner,id', 'contact_owner', '', '', false, 'AND', false,[
