@@ -237,7 +237,6 @@ export class EgwActionObject {
                 this.parent.children.splice(idx, 1);
             }
         }
-		this.iface = null;
     };
 
     /**
