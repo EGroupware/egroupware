@@ -166,6 +166,9 @@ export class EgwAction {
                 this.parent.children.splice(idx, 1);
             }
         }
+		// Clear context menu.  This probably isn't the right place for it.
+		this.data?.menu && this.data.menu.remove && this.data.menu.remove();
+		this.data = {};
     }
 
     /**

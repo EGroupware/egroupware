@@ -493,14 +493,18 @@ export class etemplate2
 
 			window.addEventListener("unload", this.destroy_session);
 		}
-		const iframe = this.DOMContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']");
-		if(iframe)
+		// If in a popup, remove the associated helper iframe when the popup closes
+		if(window !== egw_topWindow())
 		{
-			window.addEventListener("pagehide", () =>
+			const iframe = this.DOMContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']");
+			if(iframe)
 			{
-				// Clean up the iframe
-				iframe.remove();
-			});
+				window.addEventListener("pagehide", () =>
+				{
+					// Clean up the iframe
+					iframe.remove();
+				});
+			}
 		}
 	}
 

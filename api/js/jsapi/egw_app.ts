@@ -199,7 +199,10 @@ export abstract class EgwApp
 	{
 		delete this.et2;
 		if(this.sidebox)
+		{
 			this.sidebox.off();
+			Sortable.get(document.getElementById('favorite_sidebox_' + this.appname)?.getElementsByTagName('ul')[0])?.destroy();
+		}
 		delete this.sidebox;
 		if (!_app) delete app[this.appname];
 		let index = -1;

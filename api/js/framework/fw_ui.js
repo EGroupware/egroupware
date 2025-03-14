@@ -574,8 +574,9 @@ window.egw_fw_ui_tab.prototype.hideTabHeader = function()
 window.egw_fw_ui_tab.prototype.remove = function()
 {
 	this.hide();
-	jQuery(this.contentDiv).remove();
-	jQuery(this.headerDiv).remove();
+	jQuery(this.contentDiv).empty().remove();
+	jQuery(this.headerDiv).empty().remove();
+	this.notificationDiv.remove();
 };
 
 /**

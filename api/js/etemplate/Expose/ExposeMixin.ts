@@ -430,7 +430,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
                     <a title="${egw().lang('Close')}" class="close"></a>
                     <a title="${egw().lang('Play/Pause')}" class="play-pause"></a>
                     <a title="${egw().lang('Fullscreen')}" class="fullscreen"></a>
-                    <a title="${egw().lang('Save')}" class="download" @click=${this.handleDownload.bind(this)}></a>
+                    <a title="${egw().lang('Save')}" class="download" @click=${this.handleDownload}></a>
                     <ol class="indicator"></ol>
                 </div>
 			`;

@@ -305,7 +305,7 @@ export class EgwMenuShoelace extends LitElement
 		// Remove the loading attribute when sub-menu is done
 		const updateLoading = async(element : SlMenuItem) =>
 		{
-			if(item.children.length == 0)
+			if(item.children.length == 0 || !element)
 			{
 				return;
 			}
