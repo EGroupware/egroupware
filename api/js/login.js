@@ -57,6 +57,8 @@ const login_on_ready = () => {
 				{ "svg": egw_webserverUrl+"/api/templates/default/images/logo164x164.svg", "url": "https://www.egroupware.org/en", "lang": { "de": "https://www.egroupware.org/de/" }},
 				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_contact.svg", "url": "https://www.egroupware.org/en/contact.html", "lang": { "de": "https://www.egroupware.org/de/kontakt.html" }},
 				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_facebook.svg", "url": "https://www.facebook.com/egroupware" },
+				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_bluesky.svg", "url": "https://bsky.app/profile/egroupware.org" },
+				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_mastodon.svg", "url": "https://fosstodon.org/@EGroupware" },
 				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_discourse.svg", "url": "https://help.egroupware.org" },
 				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_github.svg", "url": "https://github.com/EGroupware/egroupware" }
 			]);
