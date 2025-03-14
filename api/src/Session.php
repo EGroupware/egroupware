@@ -1947,29 +1947,7 @@ class Session
 	 */
 	private function update_dla($update_access_log=false)
 	{
-		// This way XML-RPC users aren't always listed as xmlrpc.php
-		if (isset($_GET['menuaction']) && strpos($_GET['menuaction'], '.ajax_exec.template.') !== false)
-		{
-			list(, $action) = explode('.ajax_exec.template.', $_GET['menuaction']);
-
-			if (empty($action)) $action = $_GET['menuaction'];
-		}
-		else
-		{
-			$action = $_SERVER['PHP_SELF'];
-			// remove EGroupware path, if not installed in webroot
-			$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
-			if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
-			if ($action == '/Microsoft-Server-ActiveSync')
-			{
-				$action .= '?Cmd='.($_GET['Cmd']??null).'&DeviceId='.($_GET['DeviceId']??null);
-			}
-			elseif ($egw_path)
-			{
-				list(,$action) = explode($egw_path,$action,2);
-			}
-		}
-		$this->set_action($action);
+		$this->set_action($this->getAction());
 
 		// update dla in access-log table, if we have an access-log row (non-anonymous session)
 		if ($this->sessionid_access_log && $update_access_log &&
@@ -2292,5 +2270,37 @@ class Session
 				'account_id' => $account_id,
 				'notification_heartbeat > '.self::heartbeat_limit(),
 		), __LINE__, __FILE__)->fetchColumn();
+	}
+
+	/**
+	 * Extract an action string describing the current request
+	 *
+	 * @return string menuaction or called URL relative to webserver_url (usually /egroupware)
+	 */
+	public static function getAction()
+	{
+		// This way XML-RPC users aren't always listed as xmlrpc.php
+		if (!empty($_GET['menuaction']))
+		{
+			list($action) = explode('.et2_process', $_GET['menuaction']);
+
+			if (empty($action)) $action = $_GET['menuaction'];
+		}
+		else
+		{
+			$action = $_SERVER['PHP_SELF'];
+			// remove EGroupware path, if not installed in webroot
+			$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
+			if ($egw_path[0] != '/') $egw_path = parse_url($egw_path, PHP_URL_PATH);
+			if ($action == '/Microsoft-Server-ActiveSync')
+			{
+				$action .= '?Cmd=' . ($_GET['Cmd'] ?? null) . '&DeviceId=' . ($_GET['DeviceId'] ?? null);
+			}
+			elseif ($egw_path)
+			{
+				list(, $action) = explode($egw_path, $action, 2);
+			}
+		}
+		return $action;
 	}
 }
