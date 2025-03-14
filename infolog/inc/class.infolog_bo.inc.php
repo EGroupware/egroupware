@@ -150,6 +150,12 @@ class infolog_bo
 	 * Limit rows ordered by last modified to last N month to improve performance on huge sites
 	 */
 	public $limit_modified_n_month;
+	/**
+	 * Ensure responsible user has (read-)access to primary contact or all contacts linked to the entry
+	 *
+	 * @var string|null "primary": primary contact only, "all": all linked contacts, default: do NOT ensure it
+	 */
+	public $ensure_responsible_contact_access;
 
 	/**
 	 * Available filters
@@ -314,6 +320,8 @@ class infolog_bo
 			$this->archived_editable = $config_data['archived_editable'] ?? null;
 
 			$this->limit_modified_n_month = $config_data['limit_modified_n_month'] ?? null;
+
+			$this->ensure_responsible_contact_access = $config_data['ensure_responsible_contact_access'] ?? null;
 		}
 		// sort types by there translation
 		foreach($this->enums['type'] as $key => $val)
@@ -1248,6 +1256,84 @@ class infolog_bo
 		if (!$values['pm_id'] && count($links))
 		{
 			$values['old_pm_id'] = $values['pm_id'] = array_pop($links);
+		}
+
+		// check responsible has access to linked contacts
+		if (!empty($values['info_responsible']) && $this->ensure_responsible_contact_access)
+		{
+			$check = [];
+			if ($this->ensure_responsible_contact_access === "primary" && !empty($info['info_link_id']) &&
+				($link = Link::get_link($info['info_link_id'])))
+			{
+				if ($link['link_app2'] === 'infolog' && $link['link_id2'] == $values['info_id'] && $link['link_app1'] === 'addressbook')
+				{
+					$check[] = $link['link_id1'];
+				}
+				elseif ($link['link_app1'] === 'infolog' && $link['link_id1'] == $values['info_id'] && $link['link_app2'] === 'addressbook')
+				{
+					$check[] = $link['link_id2'];
+				}
+			}
+			elseif ($this->ensure_responsible_contact_access === "all")
+			{
+				$check = Link::get_links('infolog', $values['info_id'], 'addressbook');
+			}if (!$check) return;   // no contacts to check
+			$contacts = new Api\Contacts();
+			$owner_grants = $memberships = [];
+			$linked_contacts = $contacts->search('', 'owner,id', 'contact_owner', '', '', false, 'AND', false,[
+				'contact_id' => $check,
+			]);
+			$contacts_shared_with = $contacts->read_shared($check);
+			foreach($linked_contacts as $contact)
+			{
+				if (!$contacts->check_perms(Api\Acl::EDIT, $contact))
+				{
+					continue;   // no rights to update the contact to share it with the responsible user(s)
+				}
+				if ($contact['owner'] && !isset($owner_grants[$contact['owner']]))
+				{
+					$owner_grants[$contact['owner']] = $GLOBALS['egw']->acl->get_all_rights($contact['owner'], 'addressbook');
+				}
+				$share_with = [];
+				foreach($values['info_responsible'] as $account_id)
+				{
+					if (!isset($memberships[$account_id]))
+					{
+						$memberships[$account_id] = Api\Accounts::getInstance()->memberships($account_id, true);
+						$memberships[$account_id][] = $account_id;
+					}
+					// responsible user has NOT already access via grants
+					if ($contact['owner'] && !array_intersect($memberships[$account_id], array_keys($owner_grants[$contact['owner']])))
+					{
+						// check if contact is already shared with him
+						foreach($contacts_shared_with[$contact['id']] ?? [] as $shared)
+						{
+							if (in_array($shared['shared_with'], $memberships[$account_id]))
+							{
+								continue 2; // already shared with, no need to share again
+							}
+						}
+						$share_with[] = $account_id;
+					}
+				}
+				// need to share contact with the following users
+				if ($share_with)
+				{
+					$backend = $contacts->get_backend(null, $contact['owner']);
+					if (method_exists($backend, 'save_shared'))
+					{
+						$backend->save_shared($contact['id'], array_merge($contacts_shared_with[$contact['id']] ?? [],
+							array_map(static function($account_id) use ($contact)
+							{
+								return [
+									'contact_id' => $contact['id'],
+									'shared_with' => $account_id,
+									'shared_by' => $GLOBALS['egw_info']['user']['account_id'],
+								];
+							}, $share_with)));
+					}
+				}
+			}
 		}
 	}
 
