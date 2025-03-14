@@ -53,8 +53,6 @@
   html[data-darkmode='1'] sl-menu-item::part(prefix),
   html[data-darkmode='1'] et2-select-country::part(prefix),
   html[data-darkmode='1'] et2-button::part(prefix),
-  html[data-darkmode='1'] *::part(image),
-  html[data-darkmode='1'] et2-image,
   html[data-darkmode='1'] #blueimp-gallery:not(:fullscreen),
   html[data-darkmode='1'] #blueimp-gallery ol,
   html[data-darkmode='1'] et2-select-account::part(icon),
@@ -68,7 +66,17 @@
   html[data-darkmode='1'] .et2_taglist_tags_icon,
   html[data-darkmode='1'] .fw_avatar_stat,
   html[data-darkmode='1'] et2-avatar-group,
-  html[data-darkmode='1'] .blueimp-gallery .slide {
+  html[data-darkmode='1'] .blueimp-gallery .slide,
+  html[data-darkmode='1'] et2-avatar::part(image),
+  html[data-darkmode='1'] et2-lavatar::part(image) {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
+  html[data-darkmode='1'] et2-button .bi::before,
+  html[data-darkmode='1'] et2-button [class^="bi-"]::before,
+  html[data-darkmode='1'] et2-button [class*=" bi-"]::before {
+    filter: invert(1) hue-rotate(180deg);
+  }
+  html[data-darkmode='1'] et2-calendar-owner::part(icon) {
     filter: invert(1) hue-rotate(180deg) !important;
   }
   html[data-darkmode='1'] et2-image > img {
@@ -1938,7 +1946,6 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   margin-top: 8px;
 }
 #socialBox #socialMedia {
-  width: 210px;
   margin: 0 auto;
 }
 #socialBox #socialMedia a {
@@ -6934,6 +6941,9 @@ Addressbook sidebox grid table
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #calendar-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-top-color: #CC0033;
 }
+#dialog-calendar-add {
+  --width: 70%;
+}
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #filemanager_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(255, 153, 51, 0.3);
   border-left: 4px solid #ff9933 !important;
@@ -6961,6 +6971,12 @@ Addressbook sidebox grid table
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #infolog-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-top-color: #660033;
+}
+#infolog-index_nm .egwGridView_grid et2-link {
+  align-self: flex-start;
+}
+#infolog-index_nm .egwGridView_grid et2-link::part(title) {
+  width: auto;
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 102, 153, 0.3);
@@ -7147,6 +7163,9 @@ img.et2_button_icon[src*="svg"]:hover {
 /*New favorite hide groups if no rights */
 et2-dialog div#add_favorite et2-select-account_ro {
   display: none;
+}
+#topmenu_info_user_avatar > et2-avatar {
+  padding: 0.6px 0 0 1.6px;
 }
 @keyframes fw-firstload {
   0%,
