@@ -313,10 +313,11 @@ export class et2_widget extends ClassWithAttributes
 		// Free the array managers if they belong to this widget
 		for (var key in this._mgrs)
 		{
-			if (this._mgrs[key] && this._mgrs[key].owner == this)
+			if(this._mgrs[key] && this._mgrs[key].getPerspectiveData().owner == this)
 			{
-				this._mgrs[key].destroy();
+				this._mgrs[key].setPerspectiveData(null);
 			}
+			delete this._mgrs[key];
 		}
 	}
 

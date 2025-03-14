@@ -377,6 +377,13 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			}
 		}
 
+		destroy()
+		{
+			super.destroy();
+			this.onchange = null;
+			this.change = null;
+		}
+
 		/**
 		 * A property has changed, and we want to make adjustments to other things
 		 * based on that

@@ -24,7 +24,7 @@ import {et2_dataview_container} from "./et2_dataview_view_container";
 import {et2_dataview_spacer} from "./et2_dataview_view_spacer";
 import {et2_dataview_rowProvider} from "./et2_dataview_view_rowProvider";
 import {et2_bounds, et2_range, et2_rangeEqual, et2_rangeIntersect} from "./et2_core_common";
-import { egw } from "../jsapi/egw_global";
+import {egw} from "../jsapi/egw_global";
 
 export class et2_dataview_grid extends et2_dataview_container implements et2_dataview_IViewRange
 {
@@ -165,6 +165,10 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 		{
 			window.clearTimeout(this._invalidateTimeout);
 		}
+		this._rowProvider.destroy();
+		this._rowProvider = null;
+		this._parentGrid = null;
+		this._map = null;
 
 		super.destroy();
 	}

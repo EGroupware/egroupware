@@ -87,6 +87,12 @@ export class Et2Template extends Et2Widget(LitElement)
 		this.loading = Promise.resolve();
 	}
 
+	destroy()
+	{
+		super.destroy();
+		this.__egw = null;
+	}
+
 	connectedCallback() : void
 	{
 		super.connectedCallback();
@@ -484,6 +490,7 @@ export class Et2Template extends Et2Widget(LitElement)
 			Promise.all(deferred).then(() =>
 			{
 				ready = true;
+				deferred.splice(0, deferred.length);
 
 				// Clean up load timeout if it's there, we did eventually finish
 				this.querySelector(":scope > #load-error")?.remove();

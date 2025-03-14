@@ -414,18 +414,37 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		// Free the grid components
 		this.dataview.destroy();
+		this.dataview = null;
+		this.blank.remove();
+		this.blank = null;
 		if(this.rowProvider)
 		{
 			this.rowProvider.destroy();
+			this.rowProvider = null;
 		}
 		if(this.controller)
 		{
 			this.controller.destroy();
+			this.controller = null;
 		}
 		if(this.dynheight)
 		{
 			this.dynheight.destroy();
+			this.dynheight = null;
 		}
+		this.header?.destroy();
+		this.header = null;
+		this.header_left?.destroy();
+		this.header_left = null;
+		this.header_right?.destroy();
+		this.header_right = null;
+		this.columns = null;
+		this.settings = null;
+		this.options = null;
+		this.innerDiv.off().empty().remove();
+		this.innerDiv = null;
+		this.div.off().empty().remove();
+		this.div = null;
 
 		super.destroy();
 	}
@@ -3416,7 +3435,57 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		this.nextmatch = null;
 
 		super.destroy();
+		Array.from(this.div.find('*')).forEach(n =>
+		{
+			n.destroy && n.destroy();
+			n.remove && n.remove();
+		})
+		this.div.empty();
+		this.div.remove();
 		this.div = null;
+		this.headers.forEach(h =>
+		{
+			h.remove && h.remove();
+			h.destroy && h.destroy();
+		});
+		this.headers.splice(0, this.headers.length);
+		this.options = null;
+
+		this.header_div?.empty();
+		this.header_div?.remove();
+		this.header_div = null;
+		this.header_row?.empty();
+		this.header_row?.remove();
+		this.header_row = null;
+		this.filter_div?.remove();
+		this.filter_div = null;
+		this.row_div?.remove();
+		this.row_div = null;
+		this.right_div?.empty();
+		this.right_div.remove();
+		this.right_div = null;
+		this.fav_span?.remove();
+		this.fav_span = null;
+		this.toggle_header?.remove();
+		this.toggle_header = null;
+		this.lettersearch?.remove();
+		this.lettersearch = null;
+
+		this.search_box?.empty();
+		this.search_box?.remove();
+		this.search_box = null;
+		this.et2_searchbox.destroy();
+		this.et2_searchbox = null;
+		this.category.destroy();
+		this.category = null;
+		this.filter.destroy();
+		this.filter = null;
+		this.filter2.destroy();
+		this.filter2 = null;
+		this.favorites.destroy();
+		this.favorites = null;
+		this.count = null;
+		this.count_total = null;
 	}
 
 	setNextmatch(nextmatch)
@@ -4024,9 +4093,10 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 	 *
 	 * @param {et2_template} sub_header
 	 */
-	_bindHeaderInput(sub_header)
+	_bindHeaderInput(_sub_header)
 	{
 		const header = this;
+		const sub_header = _sub_header;
 
 		const bind_change = function(_widget)
 		{

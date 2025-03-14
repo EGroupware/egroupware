@@ -814,6 +814,8 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			// Clear any deferred properties, functions may live in here
 			this._deferred_properties = {};
 
+			this.onclick = null;
+
 			// Call the destructor of all children so any legacy widgets get destroyed
 			for(let i = this.getChildren().length - 1; i >= 0; i--)
 			{
@@ -833,6 +835,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			}
 
 			this._parent = null;
+			this._inst = null;
 			// if widget exists DOM-wise outside the parent, we need to explicitly remove it
 			if (this._parent_node) this.remove();
 		}

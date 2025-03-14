@@ -248,7 +248,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		this.rows = {};
 		this.widgets = {};
 		this.detachedNodes = [];
+		this.tbody.empty();
 		this.tbody = null;
+		this.table.empty();
+		this.table.remove();
 		this.table = null;
 	}
 

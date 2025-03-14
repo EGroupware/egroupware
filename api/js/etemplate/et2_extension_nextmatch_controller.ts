@@ -29,14 +29,18 @@ import {et2_dataview_tile} from "./et2_dataview_view_tile";
 import {et2_nextmatch} from "./et2_extension_nextmatch";
 import {et2_dataview_controller} from "./et2_dataview_controller";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
-import {framework, Iegw, egw} from "../jsapi/egw_global";
+import {egw, Iegw} from "../jsapi/egw_global";
 import {
 	egw_getActionManager,
 	egw_getObjectManager,
-	egwActionObjectManager,
-	egwActionObject
+	egwActionObject,
+	egwActionObjectManager
 } from "../egw_action/egw_action";
-import {EGW_AO_FLAG_DEFAULT_FOCUS,EGW_AO_EXEC_SELECTED, EGW_AO_FLAG_IS_CONTAINER} from "../egw_action/egw_action_constants";
+import {
+	EGW_AO_EXEC_SELECTED,
+	EGW_AO_FLAG_DEFAULT_FOCUS,
+	EGW_AO_FLAG_IS_CONTAINER
+} from "../egw_action/egw_action_constants";
 import {nm_action} from "./et2_extension_nextmatch_actions.js";
 import {egwIsMobile} from "../egw_action/egw_action_common";
 
@@ -162,7 +166,9 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 		if (this._actionManager)
 		{
 			this._objectManager.remove();
+			this._objectManager = null;
 			this._actionManager.remove();
+			this._actionManager = null;
 		}
 
 		this._widget = null;
