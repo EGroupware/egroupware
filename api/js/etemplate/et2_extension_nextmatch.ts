@@ -413,9 +413,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		jQuery(this.getInstanceManager().DOMContainer.parentNode).off('hide.et2_nextmatch');
 
 		// Free the grid components
-		this.dataview.destroy();
+		this.dataview?.destroy();
 		this.dataview = null;
-		this.blank.remove();
+		this.blank?.remove();
 		this.blank = null;
 		if(this.rowProvider)
 		{
@@ -3474,15 +3474,15 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		this.search_box?.empty();
 		this.search_box?.remove();
 		this.search_box = null;
-		this.et2_searchbox.destroy();
+		this.et2_searchbox?.destroy();
 		this.et2_searchbox = null;
-		this.category.destroy();
+		this.category?.destroy();
 		this.category = null;
-		this.filter.destroy();
+		this.filter?.destroy();
 		this.filter = null;
-		this.filter2.destroy();
+		this.filter2?.destroy();
 		this.filter2 = null;
-		this.favorites.destroy();
+		this.favorites?.destroy();
 		this.favorites = null;
 		this.count = null;
 		this.count_total = null;
