@@ -421,6 +421,13 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		});
 	}
 
+	destroy()
+	{
+		super.destroy();
+		this._instance?.destroy && this._instance.destroy();
+		this._instance = null;
+	}
+
 	update(changedProperties : PropertyValueMap<any>)
 	{
 		super.update(changedProperties);
