@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	lt	%1 kontaktas (-ai) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	lt	%1 kontaktas (-ai) %2, %3 nepavyko dėl %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	lt	%1 kontaktas (-ai) %2, %3 nepavyko dėl nepakankamų teisių!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	lt	%1 kontaktas (-ai) %2, %3 nepavyko dėl nepakankamų teisių!
 %1 contacts updated (%2 errors).	addressbook	lt	%1 kontaktai atnaujinti (%2 klaidos).
 %1 fields in %2 other organisation member(s) changed	addressbook	lt	Pakeisti %1 laukai, esantys %2 kitos organizacijos nario (-ių) laukeliuose.
 %1 key(s) added to public keyserver "%2".	addressbook	lt	%1 raktas (-ai) pridėtas (-i) į viešąjį raktų serverį "%2".
@@ -49,7 +49,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 export definition to use for nextmatch export	addressbook	lt	Eksporto apibrėžtis, naudojama nextmatch eksportui
 export definitition to use for nextmatch export	addressbook	lt	Eksporto apibrėžtis, naudojama nextmatch eksportui
 exports contacts from your addressbook into a csv file.	addressbook	lt	Eksportuoja adresų knygelės kontaktus į CSV failą.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Eksportuoja adresų knygelės kontaktus į CSV failą. Skirtuke Parinktys galite pasirinkti ir kitus skirtukus.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	lt	Eksportuoja adresų knygelės kontaktus į CSV failą. Skirtuke Parinktys galite pasirinkti ir kitus skirtukus.
 favorite phone	addressbook	lt	Mėgstamiausias telefonas
 fields to check for duplicates	addressbook	lt	Laukai, kuriuose tikrinama, ar nėra dublikatų
 fields to consider when looking for duplicate contacts.	addressbook	lt	Laukai, į kuriuos reikia atsižvelgti ieškant pasikartojančių kontaktų.
@@ -65,13 +65,13 @@ hide user groups as distribution lists	addressbook	lt	Paslėpti naudotojų grupe
 hides accounts completly from the adressbook.	addressbook	lt	Visiškai paslėpti naudotojų paskyras iš adresų knygos.
 how many fields must match for the record to be considered a duplicate.	addressbook	lt	Kiek laukų turi sutapti, kad įrašas būtų laikomas dublikatu.
 importer's personal	addressbook	lt	Asmeninė importuotojo informacija
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Importuoja kontaktus į adresinę iš CSV failo. Parinkčių skirtuke taip pat galite pasirinkti kitus skirtukus.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	lt	Importuoja kontaktus į adresinę iš CSV failo. Parinkčių skirtuke taip pat galite pasirinkti kitus skirtukus.
 imports contacts into your addressbook from a vcard file.	addressbook	lt	Importuokite kontaktus į adresinę iš vCard failo.
 include all groups	addressbook	lt	Įtraukti visas grupes
 infolog-contact	addressbook	lt	InfoLog kontaktai
 infolog-organisation	addressbook	lt	InfoLog organizacija
-insufficent rights to delete this list!	addressbook	lt	Nepakankamos teisės šiam sąrašui ištrinti!
-insufficent rights to edit this list!	addressbook	lt	Nepakankamos teisės redaguoti šį sąrašą!
+insufficient rights to delete this list!	addressbook	lt	Nepakankamos teisės šiam sąrašui ištrinti!
+insufficient rights to edit this list!	addressbook	lt	Nepakankamos teisės redaguoti šį sąrašą!
 invite to current call	addressbook	lt	Pakviesti į dabartinį skambutį
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	lt	Įkelti pasirinktinius laukus į rodyklę, net jei pasirinktinių laukų stulpelis išjungtas (pvz., norint juos rodyti konkrečiame rodyklės stulpelyje)
 mail vcard	addressbook	lt	Pašto vCard

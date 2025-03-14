@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	lv	%1 kontakts(-i) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	lv	%1 kontakts(-i) %2, %3 neizdevās, jo %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	lv	%1 kontakts(-i) %2, %3 neizdevās nepietiekamu tiesību dēļ!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	lv	%1 kontakts(-i) %2, %3 neizdevās nepietiekamu tiesību dēļ!
 %1 contacts updated (%2 errors).	addressbook	lv	%1 kontakti atjaunināti (%2 kļūdas).
 %1 fields in %2 other organisation member(s) changed	addressbook	lv	Mainīti %1 lauki %2 citam(-iem) organizācijas dalībniekam(-iem).
 %1 key(s) added to public keyserver "%2".	addressbook	lv	%1 atslēga(-as) pievienota(-as) publiskajam atslēgu serverim "%2".
@@ -116,7 +116,7 @@ export definitition to use for nextmatch export	addressbook	lv	Eksporta definīc
 export file name	addressbook	lv	Eksportējamā faila nosaukums
 export from addressbook	addressbook	lv	Eksportēt no adrešu grāmatas
 exports contacts from your addressbook into a csv file.	addressbook	lv	Eksportē kontaktus no adrešu grāmatas CSV failā.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lv	Eksportē kontaktus no adrešu grāmatas CSV failā. CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē var izvēlēties arī citus atdalītājus.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	lv	Eksportē kontaktus no adrešu grāmatas CSV failā. CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē var izvēlēties arī citus atdalītājus.
 extra	addressbook	lv	Papildus
 favorite phone	addressbook	lv	Iecienītākais tālrunis
 fax	addressbook	lv	Fakss
@@ -163,12 +163,12 @@ import from outlook	addressbook	lv	Importēt no Outlook
 import multiple vcard	addressbook	lv	Importēt vairākas vCard
 import next set	addressbook	lv	Importēt nākošo porciju
 importer's personal	addressbook	lv	Importētāja personīgā
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lv	Importē kontaktus adrešu grāmatiņā no CSV faila. CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē varat izvēlēties arī citus atdalītājus.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	lv	Importē kontaktus adrešu grāmatiņā no CSV faila. CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē varat izvēlēties arī citus atdalītājus.
 imports contacts into your addressbook from a vcard file.	addressbook	lv	Importē kontaktus no vCard faila jūsu adrešu grāmatiņā.
 infolog-contact	addressbook	lv	InfoLog Kontaktpersona
 infolog-organisation	addressbook	lv	InfoLog organizācija
-insufficent rights to delete this list!	addressbook	lv	Nepietiekamas tiesības dzēst šo sarakstu!
-insufficent rights to edit this list!	addressbook	lv	Nepietiekamas tiesības rediģēt šo sarakstu!
+insufficient rights to delete this list!	addressbook	lv	Nepietiekamas tiesības dzēst šo sarakstu!
+insufficient rights to edit this list!	addressbook	lv	Nepietiekamas tiesības rediģēt šo sarakstu!
 international	addressbook	lv	Starptautiskais
 invite to current call	addressbook	lv	Uzaicināt uz pašreizējo zvanu
 label	addressbook	lv	Marķējums

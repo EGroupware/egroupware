@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	da	%1 kontakt(er) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	da	%1 kontakt(er) %2, %3 mislykkedes på grund af %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	da	%1 kontakt(er) %2, %3 mislykkedes på grund af utilstrækkelige rettigheder!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	da	%1 kontakt(er) %2, %3 mislykkedes på grund af utilstrækkelige rettigheder!
 %1 contacts updated (%2 errors).	addressbook	da	%1 kontakter opdateret (%2 fejl).
 %1 fields in %2 other organisation member(s) changed	addressbook	da	%1 felter i %2 andet/andre organisationsmedlem(mer) ændret.
 %1 key(s) added to public keyserver "%2".	addressbook	da	%1 nøgle(r) tilføjet til offentlig nøgleserver "%2".
@@ -120,7 +120,7 @@ export definitition to use for nextmatch export	addressbook	da	Eksportdefinition
 export file name	addressbook	da	Eksporter filnavn
 export from addressbook	addressbook	da	Eksporter fra adressebogen
 exports contacts from your addressbook into a csv file.	addressbook	da	Eksporterer kontakter fra adressebogen til en CSV-fil.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	da	Eksporterer kontakter fra adressebogen til en CSV-fil. Under fanen Indstillinger kan du også vælge andre separatorer.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	da	Eksporterer kontakter fra adressebogen til en CSV-fil. Under fanen Indstillinger kan du også vælge andre separatorer.
 extra	addressbook	da	Ekstra
 favorite phone	addressbook	da	Favorit-telefon
 fax	addressbook	da	Fax
@@ -168,11 +168,11 @@ import from ldif, csv, or vcard	addressbook	da	Importer fra LDIF, CVS eller vCar
 import from outlook	addressbook	da	Importer fra Outlook
 import multiple vcard	addressbook	da	Importer mange vCards
 import next set	addressbook	da	Impoter næste
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	da	Importerer kontakter til adressebogen fra en CSV-fil. CSV betyder 'kommaseparerede værdier'. I indstillingsfanen kan du også vælge andre separatorer.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	da	Importerer kontakter til adressebogen fra en CSV-fil. CSV betyder 'kommaseparerede værdier'. I indstillingsfanen kan du også vælge andre separatorer.
 include all groups	addressbook	da	Inkluder alle grupper
 infolog-contact	addressbook	da	InfoLog Kontakt
 infolog-organisation	addressbook	da	InfoLog Organisation
-insufficent rights to edit this list!	addressbook	da	Utilstrækkelige rettigheder til at redigere denne liste!
+insufficient rights to edit this list!	addressbook	da	Utilstrækkelige rettigheder til at redigere denne liste!
 international	addressbook	da	International
 invite to current call	addressbook	da	Inviter til aktuelt opkald
 label	addressbook	da	Mærkat

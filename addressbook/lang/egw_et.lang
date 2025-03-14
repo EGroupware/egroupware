@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	et	%1 kontakt(id) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	et	%1 kontakt(id) %2, %3 ebaõnnestusid %4 tõttu!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	et	%1 kontakt(id) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	et	%1 kontakt(id) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu!
 %1 contacts updated (%2 errors).	addressbook	et	%1 kontaktid uuendatud (%2 viga).
 %1 fields in %2 other organisation member(s) changed	addressbook	et	%1 väljad %2 muu(te) organisatsiooni liige(te)s muutunud.
 %1 records imported	addressbook	et	%1 kirjed imporditud.
@@ -68,7 +68,7 @@ example {{nelf role}} - if field role is not empty, you will get a new line with
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	et	Näide {{nenvlf roll}} - kui väli roll ei ole tühi, seatakse LF ilma väljal oleva väärtuseta
 existing links	addressbook	et	Eksisteerivad lingid
 exports contacts from your addressbook into a csv file.	addressbook	et	Ekspordib kontaktid aadressiraamatust CSV-faili.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	et	Ekspordib kontaktid aadressiraamatust CSV-faili.  CSV tähendab 'Comma Separated Values' (komadega eraldatud väärtused). Valikute vahekaardil saate valida ka muid eraldajaid.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	et	Ekspordib kontaktid aadressiraamatust CSV-faili.  CSV tähendab 'Comma Separated Values' (komadega eraldatud väärtused). Valikute vahekaardil saate valida ka muid eraldajaid.
 favorite phone	addressbook	et	Lemmikutelefon
 fax	addressbook	et	Faks
 fields to check for duplicates	addressbook	et	Väljad duplikaatide kontrollimiseks
@@ -92,7 +92,7 @@ how many fields must match for the record to be considered a duplicate.	addressb
 icon	addressbook	et	Ikoon
 import	addressbook	et	Import
 importer's personal	addressbook	et	Importija isiklik
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	et	Impordib kontaktid aadressiraamatusse CSV-failist. CSV tähendab "komadega eraldatud väärtusi". Valikute vahekaardil saate valida ka teisi eraldajaid.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	et	Impordib kontaktid aadressiraamatusse CSV-failist. CSV tähendab "komadega eraldatud väärtusi". Valikute vahekaardil saate valida ka teisi eraldajaid.
 imports contacts into your addressbook from a vcard file.	addressbook	et	Impordib kontaktid oma aadressiraamatusse vCard-failist.
 include all groups	addressbook	et	Kaasa kõik rühmad
 infolog-contact	addressbook	et	InfoLog Kontakt

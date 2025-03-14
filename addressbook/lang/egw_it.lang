@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	it	%1 contatto(i) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	it	%1 contatto/i %2, %3 non è riuscito a causa di %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	it	%1 contatto/i %2, %3 fallita a causa di diritti insufficienti!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	it	%1 contatto/i %2, %3 fallita a causa di diritti insufficienti!
 %1 contacts updated (%2 errors).	addressbook	it	%1 contatti aggiornati (%2 errori).
 %1 fields in %2 other organisation member(s) changed	addressbook	it	%1 campi in %2 altro/i membro/i dell'organizzazione modificati.
 %1 key(s) added to public keyserver "%2".	addressbook	it	%1 chiavi aggiunte nel server pubblico "%2".
@@ -211,7 +211,7 @@ edit custom fields	admin	it	Modifica campi personalizzati
 edit extra account-data in the addressbook	admin	it	Modifica dati-account extra nella rubrica
 edit phonenumbers	addressbook	it	Modifica numeri telefonici
 edit phonenumbers -	addressbook	it	Modifica Numeri telefonici -
-either the configured email addesses are wrong or the mail configuration.	addressbook	it	La configurazione della posta elettronica o gli indirizzi configurati presentano errori.
+either the configured email addresses are wrong or the mail configuration.	addressbook	it	La configurazione della posta elettronica o gli indirizzi configurati presentano errori.
 email & internet	addressbook	it	Email e Internet
 email (private)	addressbook	it	Email (privato)
 email addresses (comma separated) to send the contact data	addressbook	it	Indirizzi email, separati da virgola, per l'invio dei dati di contatto
@@ -241,12 +241,12 @@ export from addressbook	addressbook	it	Esporta dalla Rubrica
 export selection	addressbook	it	Esporta selezione
 exported	addressbook	it	esportato
 exports contacts from your addressbook into a csv file.	addressbook	it	Esporta i contatti della rubrica in un file CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	it	Esporta i contatti della rubrica in un file CSV. CSV significa 'Comma Separated Values' ovvero valori separati da virgola. Si possono scegliere anche separatori diversi.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	it	Esporta i contatti della rubrica in un file CSV. CSV significa 'Comma Separated Values' ovvero valori separati da virgola. Si possono scegliere anche separatori diversi.
 exports contacts from your addressbook into a vcard file.	addressbook	it	Esporta i contatti della rubrica in file vCard.
 extra	addressbook	it	Extra
 extra encodings	addressbook	it	Codifiche extra
 extra private	addressbook	it	Extra privato
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	it	Permessi insufficenti per modificare %1 membri dell'organizzazione!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	it	Permessi insufficienti per modificare %1 membri dell'organizzazione!
 favorite phone	addressbook	it	Telefono preferito
 fax	addressbook	it	Fax
 fax (private)	addressbook	it	Fax (privato)
@@ -308,7 +308,7 @@ import from outlook	addressbook	it	Importa da Outlook
 import multiple vcard	addressbook	it	Importa Molteplici vCard
 import next set	addressbook	it	Import il prossimo set
 importer's personal	addressbook	it	Personale dell'account importatore
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	it	Importa i contatti da file CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni sarà possibile selezionare anche altri separatori.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	it	Importa i contatti da file CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni sarà possibile selezionare anche altri separatori.
 imports contacts into your addressbook from a vcard file.	addressbook	it	Importa contatti nella tua rubrica da un file vCard.
 in %1 days (%2) is %3's birthday.	addressbook	it	Tra %1 giorni (%2) sarà il compleanno di %3.
 include all groups	addressbook	it	Includi tutti i gruppi
@@ -316,8 +316,8 @@ income	addressbook	it	Entrata
 infolog-contact	addressbook	it	Attività
 infolog-organisation	addressbook	it	Apri la visualizzazione CRM dell'organizzazione
 insert	addressbook	it	Inserisci
-insufficent rights to delete this list!	addressbook	it	Permessi insufficienti per eliminare questa lista!
-insufficent rights to edit this list!	addressbook	it	Permessi insufficienti per modificare questa lista!
+insufficient rights to delete this list!	addressbook	it	Permessi insufficienti per eliminare questa lista!
+insufficient rights to edit this list!	addressbook	it	Permessi insufficienti per modificare questa lista!
 international	addressbook	it	Internazionale
 internet	addressbook	it	Internet
 invite to current call	addressbook	it	Invita alla chiamata corrente
@@ -442,7 +442,7 @@ select all	addressbook	it	Seleziona tutto
 select an opened dialog	addressbook	it	Seleziona una finestra di dialogo aperta
 select migration type	admin	it	Seleziona tipo di migrazione
 select multiple contacts for a further action	addressbook	it	Seleziona contatti multipli per azioni ulteriori
-select phone number as prefered way of contact	addressbook	it	Seleziona il numero di telefono come modalità di contatto preferita
+select phone number as preferred way of contact	addressbook	it	Seleziona il numero di telefono come modalità di contatto preferita
 select where you want to store / retrieve contacts	admin	it	Seleziona dove vuoi registrare / recuperare i contatti
 selected contacts	addressbook	it	Contatti selezionati
 send emailcopy to receiver	addressbook	it	Invia copia al destinatario

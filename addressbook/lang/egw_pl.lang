@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	pl	%1 kontakt(ów) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	pl	%1 kontakt(y) %2, %3 nie powiodło się z powodu %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	pl	%1 kontakt(ów)%2, %3 nie było możliwe ponieważ nie masz odpowiednich praw!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	pl	%1 kontakt(ów)%2, %3 nie było możliwe ponieważ nie masz odpowiednich praw!
 %1 contacts updated (%2 errors).	addressbook	pl	Zaktualizowano %1 kontaktów (%2 błędów).
 %1 fields in %2 other organisation member(s) changed	addressbook	pl	%1 pól w %2 członków innej organizacji zmieniono.
 %1 key(s) added to public keyserver "%2".	addressbook	pl	Klucz(e) %1 dodany(e) do publicznego serwera kluczy "%2".
@@ -190,7 +190,7 @@ edit custom field	addressbook	pl	Edytuj pole użytkownika
 edit custom fields	admin	pl	Edytuj pola użytkownika
 edit extra account-data in the addressbook	admin	pl	Eytuj dodatkowe dane kont w książce adresowej
 edit phonenumbers -	addressbook	pl	Edytuj numery telefonów
-either the configured email addesses are wrong or the mail configuration.	addressbook	pl	Skonfigurowane adresy email lub konfiguracja poczty są nie poprawne.
+either the configured email addresses are wrong or the mail configuration.	addressbook	pl	Skonfigurowane adresy email lub konfiguracja poczty są nie poprawne.
 email & internet	addressbook	pl	Email i WWW
 email addresses (comma separated) to send the contact data	addressbook	pl	Adresy email (rozdzielone przecinkiem) na które chcesz przesłać dane kontaktu.
 empty	admin	pl	Pusty
@@ -219,11 +219,11 @@ export from addressbook	addressbook	pl	Eksport z książki adresowej
 export selection	addressbook	pl	Wyeksportuj wybrane
 exported	addressbook	pl	wyeksportowano
 exports contacts from your addressbook into a csv file.	addressbook	pl	Eksportuje kontakty z książki adresowej do pliku CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Eksportuj kontakty z książki adresowej do pliku CSV, czyli "wartości rozdzielone przecinkami". Możesz wybrać również tabulator jako separator.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	pl	Eksportuj kontakty z książki adresowej do pliku CSV, czyli "wartości rozdzielone przecinkami". Możesz wybrać również tabulator jako separator.
 exports contacts from your addressbook into a vcard file.	addressbook	pl	Eksportuje kontakty z książki adresowej do pliku vCard.
 extra	addressbook	pl	Dodatkowe
 extra private	addressbook	pl	Dodatkowe prywatne
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pl	Nie udało się zmienić %1 członków organizacji (brak uprawnień)!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	pl	Nie udało się zmienić %1 członków organizacji (brak uprawnień)!
 favorite phone	addressbook	pl	Ulubiony telefon
 fax	addressbook	pl	Faks
 fax number	common	pl	Numer faksu
@@ -284,7 +284,7 @@ import from outlook	addressbook	pl	Importuj z programu Outlook
 import multiple vcard	addressbook	pl	Importuj wiele plików VCard
 import next set	addressbook	pl	Importuj następny set
 importer's personal	addressbook	pl	Importer's personal
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Importuj kontakty do Twojej książki adresowej z pliku CSV.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	pl	Importuj kontakty do Twojej książki adresowej z pliku CSV.
 imports contacts into your addressbook from a vcard file.	addressbook	pl	Importuje kontakty do książki adresowej z pliku vCard.
 in %1 days (%2) is %3's birthday.	addressbook	pl	Za %1 dni są urodziny %3
 include all groups	addressbook	pl	Uwzględnij wszystkie grupy
@@ -292,8 +292,8 @@ income	addressbook	pl	Dochód
 infolog-contact	addressbook	pl	InfoLog Kontakt
 infolog-organisation	addressbook	pl	Organizacja InfoLog
 insert	addressbook	pl	Wstaw
-insufficent rights to delete this list!	addressbook	pl	Brak wystarczających uprawnień do usunięcia listy!
-insufficent rights to edit this list!	addressbook	pl	Niewystarczające uprawnienia do edycji tej listy!
+insufficient rights to delete this list!	addressbook	pl	Brak wystarczających uprawnień do usunięcia listy!
+insufficient rights to edit this list!	addressbook	pl	Niewystarczające uprawnienia do edycji tej listy!
 international	addressbook	pl	Międzynarodowy
 internet	addressbook	pl	Internet
 invite to current call	addressbook	pl	Zaproś do bieżącego połączenia
@@ -415,7 +415,7 @@ select all	addressbook	pl	Zaznacz wszystkie
 select an opened dialog	addressbook	pl	Wybierz otwarte okno dialogowe
 select migration type	admin	pl	Wybierz typ migracji
 select multiple contacts for a further action	addressbook	pl	Wybierz parę kontaktów dla następującej akcji
-select phone number as prefered way of contact	addressbook	pl	Wybierz numer telefonu jako preferowaną metodę kontaktowania
+select phone number as preferred way of contact	addressbook	pl	Wybierz numer telefonu jako preferowaną metodę kontaktowania
 select where you want to store / retrieve contacts	admin	pl	Wybierz, dokąd mam zapisywać kontakty
 selected contacts	addressbook	pl	wybrane kontakty
 send emailcopy to receiver	addressbook	pl	Wyślij kopię email do odbiorcy

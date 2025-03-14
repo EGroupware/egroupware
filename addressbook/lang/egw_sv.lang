@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	sv	%1 kontakt(er) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	sv	%1 kontakt(er) %2, %3 misslyckades på grund av %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sv	%1 kontakt(er) %2,%3 misslyckades pga otillräckliga rättigheter!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	sv	%1 kontakt(er) %2,%3 misslyckades pga otillräckliga rättigheter!
 %1 contacts updated (%2 errors).	addressbook	sv	%1 kontakter uppdaterade (%2 fel).
 %1 fields in %2 other organisation member(s) changed	addressbook	sv	%1 fält i %2 andra organisations medlemm(ar) ändrade.
 %1 key(s) added to public keyserver "%2".	addressbook	sv	%1 nyckel(ar) tillagd till publik nyckelserver "%2".
@@ -169,9 +169,9 @@ export from addressbook	addressbook	sv	Exportera från adressboken
 export selection	addressbook	sv	Exportera valda
 exported	addressbook	sv	Exporterade
 exports contacts from your addressbook into a csv file.	addressbook	sv	Exporterar kontakter från adressboken till en CSV-fil.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sv	Exporterar kontakter från adressboken till en CSV-fil. På fliken Alternativ kan du även välja andra separatorer.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	sv	Exporterar kontakter från adressboken till en CSV-fil. På fliken Alternativ kan du även välja andra separatorer.
 extra	addressbook	sv	Extra
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sv	kunde inte ändra %1 organisationens medlemmar (otillräckliga rättigheter)
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	sv	kunde inte ändra %1 organisationens medlemmar (otillräckliga rättigheter)
 favorite phone	addressbook	sv	Favorit-telefon
 fax	addressbook	sv	Telefax
 fax number	common	sv	Faxnummer
@@ -225,7 +225,7 @@ import from outlook	addressbook	sv	Importera från OutLook
 import multiple vcard	addressbook	sv	Importera Flera vCard
 import next set	addressbook	sv	Importera nästa set
 importer's personal	addressbook	sv	Importerarens personliga
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sv	Importerar kontakter till adressboken från en CSV-fil. CSV betyder "kommaseparerade värden". På fliken Alternativ kan du även välja andra separatorer.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	sv	Importerar kontakter till adressboken från en CSV-fil. CSV betyder "kommaseparerade värden". På fliken Alternativ kan du även välja andra separatorer.
 imports contacts into your addressbook from a vcard file.	addressbook	sv	Importerar kontakter till din adressbok från en vCard-fil.
 in %1 days (%2) is %3's birthday.	addressbook	sv	Om %1 dagar (%2) fyller %3 år.
 include all groups	addressbook	sv	Inkludera alla grupper
@@ -233,8 +233,8 @@ income	addressbook	sv	Inkomst
 infolog-contact	addressbook	sv	InfoLog Kontakt
 infolog-organisation	addressbook	sv	InfoLog Organisation
 insert	addressbook	sv	Infoga
-insufficent rights to delete this list!	addressbook	sv	Otillräckliga rättigheter för att radera denna lista!
-insufficent rights to edit this list!	addressbook	sv	Otillräckliga rättigheter för att redigera denna lista!
+insufficient rights to delete this list!	addressbook	sv	Otillräckliga rättigheter för att radera denna lista!
+insufficient rights to edit this list!	addressbook	sv	Otillräckliga rättigheter för att redigera denna lista!
 international	addressbook	sv	Internationell
 internet	addressbook	sv	Internet
 invite to current call	addressbook	sv	Bjud in till aktuellt samtal
@@ -333,7 +333,7 @@ select all	addressbook	sv	Välj samtliga
 select an opened dialog	addressbook	sv	Välj en öppnad dialogruta
 select migration type	admin	sv	Välj migreringstyp
 select multiple contacts for a further action	addressbook	sv	Välj flera kontakter för åtgärd
-select phone number as prefered way of contact	addressbook	sv	Välj telefonnummer som kontaktväg
+select phone number as preferred way of contact	addressbook	sv	Välj telefonnummer som kontaktväg
 select where you want to store / retrieve contacts	admin	sv	Välj var du vill spara / hämta kontakter
 selected contacts	addressbook	sv	Valda kontakter
 send fax via email by replacing fax number with an email address	addressbook	sv	Skicka fax via e-post genom att ersätta faxnumret med en e-postadress

@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	tr	%1 kişi(ler) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	tr	%1 kişi(ler) %2, %3 %4 nedeniyle başarısız oldu!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	tr	%1 kişi(ler) %2, %3 yetersiz haklar nedeniyle başarısız oldu!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	tr	%1 kişi(ler) %2, %3 yetersiz haklar nedeniyle başarısız oldu!
 %1 contacts updated (%2 errors).	addressbook	tr	%1 kişi güncellendi (%2 hata).
 %1 fields in %2 other organisation member(s) changed	addressbook	tr	2 diğer kuruluş üye(ler)indeki %1 alanları değişti.
 %1 key(s) added to public keyserver "%2".	addressbook	tr	%1 anahtar(lar) “%2” genel anahtar sunucusuna eklendi.

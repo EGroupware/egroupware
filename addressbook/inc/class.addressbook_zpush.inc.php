@@ -71,7 +71,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		'homestreet'	=>	'adr_two_street',
 		'homefaxnumber'	=> 'tel_fax_home',
 		'homephonenumber'	=>	'tel_home',
-		'jobtitle'	=>	'title',	// unfortunatly outlook only has title & jobtitle, while EGw has 'n_prefix', 'title' & 'role',
+		'jobtitle'	=>	'title',	// unfortunately outlook only has title & jobtitle, while EGw has 'n_prefix', 'title' & 'role',
 		'lastname'	=> 'n_family',
 		'middlename'	=> 'n_middle',
 		'mobilephonenumber'	=> 'tel_cell',
@@ -154,7 +154,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 					}
 					if ($account_id && in_array($account_id,$pref_abs) || in_array('A',$pref_abs) ||
 						$account_id == 0 && in_array('U',$pref_abs) ||
-						$account_id == $GLOBALS['egw_info']['user']['account_id'] ||	// allways sync pers. AB
+						$account_id == $GLOBALS['egw_info']['user']['account_id'] ||	// always sync pers. AB
 						$account_id == $GLOBALS['egw_info']['user']['account_primary_group'] && in_array('G',$pref_abs))
 					{
 						$abs[$account_id] = $label;
@@ -404,7 +404,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 					break;
 				// HTC Desire needs at least one telefon number, otherwise sync of contact fails without error,
 				// but will be retired forerver --> we always return work-phone xml element, even if it's empty
-				// (Mircosoft ActiveSync Contact Class Protocol Specification says all phone-numbers are optional!)
+				// (Microsoft ActiveSync Contact Class Protocol Specification says all phone-numbers are optional!)
 				case 'tel_work':
 					$message->$key = (string)$contact[$attr];
 					break;
@@ -437,7 +437,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	 */
 	public function StatMessage($folderid, $contact)
 	{
-		unset($folderid);	// not used (contact_id is global), but required by function signaure
+		unset($folderid);	// not used (contact_id is global), but required by function signature
 		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
 		if (!is_array($contact)) $contact = $this->addressbook->read($contact);
@@ -595,7 +595,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 						break;
 					case 'title':	// as ol jobtitle mapping changed in egw from role to title, do NOT overwrite title with value of role
 						if ($id && $message->$key == $contact['role']) break;
-						// fall throught
+						// fall through
 					default:
 						$contact[$attr] = $message->$key;
 						break;
@@ -721,7 +721,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	/**
 	 * Return a changes array
 	 *
-	 * if changes occurr default diff engine computes the actual changes
+	 * if changes occur default diff engine computes the actual changes
 	 *
 	 * @param string $folderid
 	 * @param string &$syncstate on call old syncstate, on return new syncstate
@@ -853,7 +853,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 			$addressbooks = $addressbook_bo->get_addressbooks(Acl::READ, null, $user);
 			if ($user > 0)
 			{
-				unset($addressbooks[$user]);	// personal addressbook is allways synced
+				unset($addressbooks[$user]);	// personal addressbook is always synced
 				if (isset($addressbooks[$user.'p']))
 				{
 					$addressbooks[self::PRIVATE_AB] = lang('Private');
@@ -873,7 +873,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 			$addressbooks['N'] = lang('None');
 		}
 
-		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
+		// rewriting owner=0 to 'U', as 0 gets always selected by prefs
 		// not removing it for default or forced prefs based on current users pref
 		if (!isset($addressbooks[0]) && (in_array($hook_data['type'], array('user', 'group')) ||
 			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1'))
