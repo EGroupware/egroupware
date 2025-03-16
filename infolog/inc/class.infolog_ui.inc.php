@@ -2665,7 +2665,7 @@ class infolog_ui
 				Api\Config::save_value('sub_prefix', $content['sub_prefix'], 'infolog');
 				Api\Config::save_value('allow_past_due_date', $content['allow_past_due_date'], 'infolog');
 				Api\Config::save_value('limit_modified_n_month', $content['limit_modified_n_month'], 'infolog');
-				Api\Config::save_value('ensure_responsible_contact_access', $content['ensure_responsible_contact_access'], 'infolog');
+				Api\Config::save_value('responsible_contact_access', $content['responsible_contact_access'], 'infolog');
 				// Notifications
 				$notifications =& $config[infolog_tracking::CUSTOM_NOTIFICATION];
 				$notifications[$content['notification_type']] = $content['notification'];
