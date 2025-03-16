@@ -1261,8 +1261,8 @@ class infolog_bo
 		if (!empty($values['info_responsible']) && $this->ensure_responsible_contact_access)
 		{
 			$check = [];
-			if ($this->ensure_responsible_contact_access === "primary" && !empty($info['info_link_id']) &&
-				($link = Link::get_link($info['info_link_id'])))
+			if ($this->ensure_responsible_contact_access === "primary" && !empty($values['info_link_id']) &&
+				($link = Link::get_link($values['info_link_id'])))
 			{
 				if ($link['link_app2'] === 'infolog' && $link['link_id2'] == $values['info_id'] && $link['link_app1'] === 'addressbook')
 				{
