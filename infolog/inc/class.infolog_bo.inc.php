@@ -321,7 +321,7 @@ class infolog_bo
 
 			$this->limit_modified_n_month = $config_data['limit_modified_n_month'] ?? null;
 
-			$this->ensure_responsible_contact_access = $config_data['ensure_responsible_contact_access'] ?? null;
+			$this->ensure_responsible_contact_access = $config_data['responsible_contact_access'] ?? null;
 		}
 		// sort types by there translation
 		foreach($this->enums['type'] as $key => $val)
