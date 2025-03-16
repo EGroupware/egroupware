@@ -27,7 +27,7 @@
                         <et2-description  value="Grant responsible users access to linked contacts?"></et2-description>
                         <et2-description  value="Requires the editing user to have write access to theses contacts, to share them with the responsible user."></et2-description>
                     </et2-vbox>
-                    <et2-select  id="ensure_responsible_contact_access">
+                    <et2-select  id="responsible_contact_access">
                         <option value="">No</option>
                         <option value="primary">Only to primary contact</option>
                         <option value="all">To all linked contacts</option>
