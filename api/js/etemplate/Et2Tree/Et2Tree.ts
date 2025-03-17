@@ -203,7 +203,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 		this._currentSlTreeItem = null;
 		this.selectedNodes.splice(0, this.selectedNodes.length);
+	}
 
+	destroy()
+	{
 		if(this._actionManager)
 		{
 			// Delete all actions
