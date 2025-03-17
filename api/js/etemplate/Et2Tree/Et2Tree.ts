@@ -1176,13 +1176,16 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				Object.assign(_item, results);
 
 				// Add actions
-				const itemAO = this.widget_object.getObjectById(_item.value ?? _item.id);
-				let parentAO = null;
-				if(itemAO && itemAO.parent)
+				if(Object.entries(this.actions).length > 0)
 				{
-					// Remove previous, if it exists
-					parentAO = itemAO.parent;
-					itemAO.remove();
+					const itemAO = this.widget_object.getObjectById(_item.value ?? _item.id);
+					let parentAO = null;
+					if(itemAO && itemAO.parent)
+					{
+						// Remove previous, if it exists
+						parentAO = itemAO.parent;
+						itemAO.remove();
+					}
 				}
 
 				return results;
