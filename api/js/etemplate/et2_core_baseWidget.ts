@@ -201,7 +201,7 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 		}
 
 		// Remove the binding to the click handler
-		if (this.node)
+		if(this.node && typeof this.node.removeEventListener == "function")
 		{
 			this.node.removeEventListener("click", this.click);
 		}
