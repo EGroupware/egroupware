@@ -768,6 +768,8 @@ export class Et2File extends Et2InputWidget(LitElement)
                        style="display: none;"
                        accept=${ifDefined(this.accept)}
                        ?multiple=${this.multiple || this.maxFiles > 1}
+                       ?readonly=${this.readonly}
+                       ?disabled=${this.disabled}
                        @change=${this.handleFileInputChange}
                        value=${Array.isArray(this.value)
                                ? this.value.map((f : File | string) => (f instanceof File ? f.name : f)).join(",")

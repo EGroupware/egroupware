@@ -9,6 +9,9 @@ export default css`
 		display: none;
 	}
 
+	:host([readonly]) .file__button {
+		display: none;
+	}
 	.file {
 		width: 100%;
 	}
