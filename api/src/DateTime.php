@@ -98,7 +98,7 @@ class DateTime extends \DateTime
 	 * 	array with values for keys('year','month','day') or 'full' plus 'hour','minute' and optional 'second'
 	 * @param DateTimeZone $tz =null timezone, default user time (PHP DateTime default to server time!)
 	 * @param string &$type=null on return type of $time (optional)
-	 * @throws Exception if $time can NOT be parsed
+	 * @throws \Exception if $time can NOT be parsed
 	 */
 	public function __construct($time='now',DateTimeZone $tz=null,&$type=null)
 	{
@@ -121,7 +121,7 @@ class DateTime extends \DateTime
 						parent::__construct($t_str,$tz);
 						break;
 					}
-					catch(Exception $e) {
+					catch(\Exception $e) {
 						// if string is numeric, ignore the exception and treat string as timestamp
 						if (!is_numeric($time)) throw $e;
 					}
@@ -431,7 +431,7 @@ class DateTime extends \DateTime
 			{
 				$time = new DateTime($time, self::$server_timezone, $typeof);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				unset($e);
 				return null;	// time could not be parsed
@@ -461,7 +461,7 @@ class DateTime extends \DateTime
 			{
 				$time = new DateTime($time,self::$user_timezone,$typeof);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				unset($e);
 				return null;	// time could not be parsed
