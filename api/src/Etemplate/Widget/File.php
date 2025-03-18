@@ -151,7 +151,23 @@ class File extends Etemplate\Widget
 				if(!$callback) $callback = $template->getElementAttribute($field, 'callback');
 				if($callback)
 				{
-					ExecMethod2($callback, $_FILES[$field], $widget_id, self::$request, $response);
+					try
+					{
+						ExecMethod2($callback, $_FILES[$field], $widget_id, self::$request, $response);
+					}
+					catch (\Exception $e)
+					{
+						if(false && $_REQUEST['resumableRelativePath'])
+						{
+							// Send error on original name
+							$file_data[$_REQUEST['resumableRelativePath']] = $e->getMessage();
+						}
+						else
+						{
+							// Send error replacing everything
+							$file_data = [$e->getMessage()];
+						}
+					}
 				}
 			}
 		}
