@@ -108,6 +108,9 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 	private cache: {};
 	private _deferred_row_updates: {};
 	private grouper: any;
+	private waitForGroups : Promise<void>[] = [];
+	private waitForIds : string[] = [];
+	private groupWaitTimeout : number = 0;
 
 	/**
 	 * Constructor
@@ -1990,8 +1993,6 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 
 		egw.dataRegisterUID(cache_id, function(data)
 		{
-
-			const waitForGroups = [];
 			if(data && data.length)
 			{
 				for(var i = 0; i < data.length; i++)
@@ -2002,89 +2003,107 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 						continue;
 					}
 					let wait = (<CalendarApp>app.calendar)._fetch_group_members(event.data);
-					if(wait !== null)
-					{
-						waitForGroups.push(wait);
-					}
+					this.waitForGroups.push(wait);
+					this.waitForIds.splice(this.waitForIds.length, 0, ...data);
 				}
 			}
 			if(!data || data.length == 0)
 			{
 				return;
 			}
-			Promise.all(waitForGroups).then(() =>
+			if(this.groupWaitTimeout)
 			{
-				var invalidate = true;
-
-				// Try to determine rows interested
-				var labels = [];
-				var events = {};
-				if(this.grouper)
+				clearTimeout(this.groupWaitTimeout);
+			}
+			else
+			{
+				this.loader.show();
+				this.doInvalidate = false;
+			}
+			this.groupWaitTimeout = setTimeout(() =>
+			{
+				Promise.all(this.waitForGroups).then(() =>
 				{
-					labels = this.grouper.row_labels.call(this);
-					invalidate = false;
-				}
-
-				var im = this.getInstanceManager();
-				for(var i = 0; i < data.length; i++)
-				{
-					var event = egw.dataGetUIDdata('calendar::'+data[i]);
-
-					if(!event) continue;
-					events = {};
+					this.groupWaitTimeout = 0;
+					this.loader.hide();
+					let invalidate = true;
 
 					// Try to determine rows interested
-					if(event.data && this.grouper)
+					let labels = [];
+					let events = {};
+					if(this.grouper)
 					{
-						this.grouper.group.call(this, labels, events, event.data);
+						labels = this.grouper.row_labels.call(this);
+						invalidate = false;
 					}
-					if(Object.keys(events).length > 0 )
+
+					var im = this.getInstanceManager();
+					let waitData = this.waitForIds.filter((value, index, array) => array.indexOf(value) === index);
+					this.waitForIds.splice(0, this.waitForIds.length);
+					for(let i = 0; i < waitData.length; i++)
 					{
-						for(var label_id in events)
+						var event = egw.dataGetUIDdata('calendar::' + waitData[i]);
+
+						if(!event)
 						{
-							var id = ""+labels[label_id].id;
-							if(typeof this.cache[id] === 'undefined')
+							continue;
+						}
+						events = {};
+
+						// Try to determine rows interested
+						if(event.data && this.grouper)
+						{
+							this.grouper.group.call(this, labels, events, event.data);
+						}
+						if(Object.keys(events).length > 0)
+						{
+							for(var label_id in events)
 							{
-								this.cache[id] = [];
+								var id = "" + labels[label_id].id;
+								if(typeof this.cache[id] === 'undefined')
+								{
+									this.cache[id] = [];
+								}
+								if(this.cache[id].indexOf(event.data.row_id) === -1)
+								{
+									this.cache[id].push(event.data.row_id);
+								}
+								if(this._deferred_row_updates[id])
+								{
+									window.clearTimeout(this._deferred_row_updates[id]);
+								}
+								this._deferred_row_updates[id] = window.setTimeout(jQuery.proxy(this._deferred_row_update, this, id), et2_calendar_planner.DEFERRED_ROW_TIME);
 							}
-							if(this.cache[id].indexOf(event.data.row_id) === -1)
-							{
-								this.cache[id].push(event.data.row_id);
-							}
-							if (this._deferred_row_updates[id])
-							{
-								window.clearTimeout(this._deferred_row_updates[id]);
-							}
-							this._deferred_row_updates[id] = window.setTimeout(jQuery.proxy(this._deferred_row_update, this, id), et2_calendar_planner.DEFERRED_ROW_TIME);
+						}
+						else if(event.data)
+						{
+							// Could be an event no row is interested in, could be a problem.
+							// Just ignore it
+							console.log("Event could not be grouped", event.data.app_id + ": " + event.data.title);
+							continue;
+						}
+
+						// If displaying by category, we need the infolog (or other app) categories too
+						if(event && event.data && event.data.app && this.options.group_by == 'category')
+						{
+							// Fake it to use the cache / call
+							this.nodeName = "ET2-SELECT-CAT_RO"
+							let categories = StaticOptions.cached_server_side(this, "cat", ",,," + (event.data.app || 'calendar'), false);
 						}
 					}
-					else if(event.data)
-					{
-						// Could be an event no row is interested in, could be a problem.
-						// Just ignore it
-						console.log("Event could not be grouped", event.data.app_id + ": " + event.data.title);
-						continue;
-					}
 
-					// If displaying by category, we need the infolog (or other app) categories too
-					if(event && event.data && event.data.app && this.options.group_by == 'category')
+					this.doInvalidate = true;
+					if(invalidate)
 					{
-						// Fake it to use the cache / call
-						this.nodeName = "ET2-SELECT-CAT_RO"
-						let categories = StaticOptions.cached_server_side(this, "cat", ",,," + (event.data.app || 'calendar'), false);
+						this.invalidate(false);
 					}
-				}
-
-				if(invalidate)
-				{
-					this.invalidate(false);
-				}
-			})
+				})
 				.then(() =>
 				{
 					// Update the "now" line _after_ rows are done
 					this._updateNow();
 				});
+			}, 100);
 		}, this, this.getInstanceManager().execId,this.id);
 
 		return value;
@@ -2119,7 +2138,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			if(row)
 			{
 				row._data_callback(this.cache[cache_id]);
-				row.set_disabled(this.options.hide_empty && this.cache[cache_id].length === 0);
+				row.set_disabled(this.options.hide_empty && this.cache[cache_id]?.length === 0);
 			}
 			else
 			{
@@ -2536,7 +2555,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			do
 			{
 				row = document.elementFromPoint(x, y);
-				if(this.div.has(row).length == 0)
+				if(row && this.div.has(row).length == 0)
 				{
 					hidden_nodes.push({element: row, display: row.style.display});
 					row.style.display = "none";
