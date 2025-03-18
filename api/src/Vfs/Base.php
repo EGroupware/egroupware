@@ -497,7 +497,7 @@ class Base
 			}
 			elseif(substr($path, 0, $strlen_p + 1) == $p . '/')
 			{
-				$target = $t . substr($path, $strlen_p);
+				$target = Vfs::concat($t, substr($path, $strlen_p));
 				break;
 			}
 		}
