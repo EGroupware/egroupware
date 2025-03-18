@@ -159,10 +159,21 @@ $setup_tpl->set_var('subaction',@$subaction);
 // Old PHP
 if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
 {
-	$GLOBALS['egw_setup']->html->show_header($GLOBALS['egw_info']['setup']['header_msg'],True);
 	$GLOBALS['egw_setup']->html->show_alert_msg('Error',
 		lang('You are using PHP version %1. EGroupware now requires %2 or later, recommended is PHP %3.',
 		PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version));
+	$GLOBALS['egw_setup']->html->show_footer();
+	exit;
+}
+
+// Check failed upload, because post_max_size exceeded
+if (empty($_POST) && empty($_FILES) && $_SERVER['REQUEST_METHOD'] === 'POST')
+{
+	$GLOBALS['egw_setup']->html->show_alert_msg('Error',
+		lang('POST request with size %1 detected, larger than post_max_size=%2, and therefore not processed by PHP!',
+			number_format($_SERVER['CONTENT_LENGTH']/1024/1024, 0, '', '.').'M',
+			ini_get('post_max_size'))."\n".
+		lang('You can work around that limit, by mounting the backup directory into EGroupware filemanager and upload from there.'));
 	$GLOBALS['egw_setup']->html->show_footer();
 	exit;
 }
