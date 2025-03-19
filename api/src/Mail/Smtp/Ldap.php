@@ -259,11 +259,19 @@ class Ldap extends Mail\Smtp
 		// allow extending classes to add extra data
 		$this->addAccountExtra($_hookValues, $allValues[0], $newData);
 
-		if (!($ret = ldap_mod_replace($ds, $accountDN, $newData)) || $this->debug)
-		{
-			error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".
-				array2string($newData).') returning '.array2string($ret).
-				(!$ret?' ('.ldap_error($ds).')':''));
+		$ret = false;
+		try {
+			if (!($ret = ldap_mod_replace($ds, $accountDN, $newData)) || $this->debug)
+			{
+				error_log(__METHOD__ . '(' . array2string(func_get_args()) . ") --> ldap_mod_replace(,'$accountDN'," .
+					array2string($newData) . ') returning ' . array2string($ret) .
+					(!$ret ? ' (' . ldap_error($ds) . ')' : ''));
+			}
+		}
+		catch (\Throwable $e) {
+			// log but ignore exception and return false
+			_egw_log_exception(new \Exception("ldap_mod_replace(\$ds, '$accountDN', ".json_encode($newData).") ".
+				$e->getMessage(), $e->getCode(), $e));
 		}
 		return $ret;
 	}
