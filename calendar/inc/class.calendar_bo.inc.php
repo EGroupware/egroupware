@@ -2024,9 +2024,9 @@ class calendar_bo
 	 */
 	function link_title($event)
 	{
-		if (!is_array($event) && strpos($event, '-') !== false)
+		if(!is_array($event) && (strpos($event, '-') !== false || strpos($event, ':') !== false))
 		{
-			list($id, $recur) = explode('-', $event, 2);
+			list($id, $recur) = explode((strpos($event, '-') !== false ? '-' : ':'), $event, 2);
 			$event = $this->read($id, $recur);
 		}
 		else if (!is_array($event) && (int) $event > 0)
