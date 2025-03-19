@@ -4524,6 +4524,10 @@ export class et2_nextmatch_sortheader extends et2_nextmatch_header implements et
 	{
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch_sortheader._attributes, _child || {}));
 
+		this.node.removeEventListener("click", this.click);
+		this.click = this.click.bind(this);
+		this.node.addEventListener("click", this.click);
+
 		this.sortmode = "none";
 
 		this.labelNode.addClass("nextmatch_sortheader none");
