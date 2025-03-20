@@ -96,6 +96,9 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 	 */
 	protected $callback_params = array();
 
+	const BROKEN_KOPANO_REGEXP = "/\r?\nEND:VEVENT\r?\nBEGIN:VCALENDAR\r?\n.*?\r?\nBEGIN:VEVENT\r?\n/s";
+	const BROKEN_KOPANO_REPLACE = "\nEND:VEVENT\nBEGIN:VEVENT\n";
+
 	/**
 	 * Constructor
 	 *
@@ -122,15 +125,36 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 		if (is_string($ical_file))
 		{
 			// fix broken Kopano ics files, containing opening BEGIN:VCALENDAR for each BEGIN:VEVENT
-			$ical_file = preg_replace('/\r?\nEND:VEVENT\r?\nBEGIN:VCALENDAR\r?\n.*\r?\nBEGIN:VEVENT\r?\n/',
-				"\nEND:VEVENT\nBEGIN:VEVENT\n", $ical_file);
+			$ical_file = preg_replace(self::BROKEN_KOPANO_REGEXP, self::BROKEN_KOPANO_REPLACE, $ical_file);
 			$this->ical_file = fopen('php://temp', 'w+');
 			fwrite($this->ical_file, $ical_file);
 			fseek($this->ical_file, 0, SEEK_SET);
 		}
 		else
 		{
-			$this->ical_file = $ical_file;
+			// fix broken Kopano ics files, containing opening BEGIN:VCALENDAR for each BEGIN:VEVENT
+			if (($chunk = fread($ical_file, $chunk_size = 81920)) && preg_match(self::BROKEN_KOPANO_REGEXP, $chunk))
+			{
+				$this->ical_file = fopen('php://temp', 'w+');
+				while (!feof($ical_file) && ($next_chunk = fread($ical_file, $chunk_size)))
+				{
+					$chunk = preg_replace(self::BROKEN_KOPANO_REGEXP, self::BROKEN_KOPANO_REPLACE, $chunk.$next_chunk);
+					if (feof($ical_file) || strlen($chunk) > $chunk_size)
+					{
+						fwrite ($this->ical_file, substr($chunk, 0, $chunk_size));
+						$chunk = substr($chunk, $chunk_size);
+					}
+				}
+				if ($chunk)
+				{
+					fwrite ($this->ical_file, preg_replace(self::BROKEN_KOPANO_REGEXP, self::BROKEN_KOPANO_REPLACE, $chunk));
+				}
+			}
+			else
+			{
+				$this->ical_file = $ical_file;
+			}
+			fseek($this->ical_file, 0, SEEK_SET);
 		}
 		if (!is_resource($this->ical_file))
 		{
