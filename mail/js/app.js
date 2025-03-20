@@ -914,7 +914,8 @@ app.classes.mail = AppJS.extend(
 		var subject = dataElem.data.subject;
 		//alert('Open Message:'+_id+' '+subject);
 		var h = egw().open( _id,'mail','view',_mode+'='+_id.replace(/=/g,"_")+'&mode='+_mode);
-		egw(h).ready(function() {
+		egw(h).ready(() =>
+		{
 			h.document.title = subject;
 		});
 		// THE FOLLOWING IS PROBABLY NOT NEEDED, AS THE UNEVITABLE PREVIEW IS HANDLING THE COUNTER ISSUE
@@ -2310,7 +2311,19 @@ app.classes.mail = AppJS.extend(
 	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
 		let message, ftree, _foldernode, displayname;
-		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		if (_calledFromPopup)
+		{
+			// getting reference back to the main window
+			//window.egw is global (main) egw
+			//.window is the global main wiondow
+			//.app.mail is the main mail app
+			//.et2 is its etemplate containing the nextmatch and the folder tree
+			//et2 of the mail app taken from the global window variables of the global egw
+			ftree = window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index + '[foldertree]');
+		} else
+		{
+			ftree = this.et2.getWidgetById(this.nm_index + '[foldertree]');
+		}
 		if (ftree)
 		{
                 _foldernode = ftree.getSelectedItem();
@@ -2322,7 +2335,9 @@ app.classes.mail = AppJS.extend(
 		}
 		// nextmatch normally handles selection of next row after delete, but mail is different
 		// (uses et2_nextmatch option disable_selection_advance)
-		const nm = this.et2.getWidgetById('nm');
+		const nm = _calledFromPopup ?
+			window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index) :
+			this.et2.getWidgetById(this.nm_index);
 		const row_ids = _msg["msg"];
 		if (!_msg["all"])
 		{
