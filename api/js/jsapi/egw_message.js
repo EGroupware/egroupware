@@ -281,7 +281,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				_wnd.framework.setWebsiteTitle.call(_wnd.framework, app, title, _header);
 				return;
 			}
-			_wnd.document.querySelector('div#divAppboxHeader').textContent = _header;
+			if (_wnd.document.querySelector('div#divAppboxHeader'))
+			{
+				_wnd.document.querySelector('div#divAppboxHeader').textContent = _header;
+			}
 
 			_wnd.document.title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
 		},
