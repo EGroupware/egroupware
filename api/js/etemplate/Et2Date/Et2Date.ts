@@ -420,11 +420,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			this.egw().tooltipUnbind(tooltipped)
 		});
 		this._boundTooltipElements.splice(0, this._boundTooltipElements.length);
-	}
 
-	destroy()
-	{
-		super.destroy();
 		this._instance?.destroy && this._instance.destroy();
 		if(this._instance)
 		{
@@ -437,6 +433,16 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 				"maxDateHasTime",
 				"days",
 				"daysContainer",
+				"weekWrapper",
+				"weekNumbers",
+				"weekdayContainer",
+				"timeContainer",
+				"minutesContainer",
+				"minuteElement",
+				"hoursContainer",
+				"hourElement",
+				"yearsContainer",
+				"yearElements",
 				"_input",
 				"_positionElement",
 				"innerContainer",
