@@ -1408,9 +1408,10 @@ app.classes.mail = AppJS.extend(
 				console.log(rowId);
 				// Request email body from server
 				IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:rowId}));
-				jQuery(IframeHandle.getDOMNode()).on('load', function(e){
+				IframeHandle.getDOMNode().addEventListener("load", function (e)
+				{
 					self.resolveExternalImages (this.contentWindow.document);
-				});
+				}, {once: true});
 			}, 300));
 		}
 

@@ -195,6 +195,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 	{
 		super();
 		this.handleAccordionOpen = this.handleAccordionOpen.bind(this);
+		this._mouseOutEvent = this._mouseOutEvent.bind(this);
 	}
 
 	connectedCallback()
@@ -209,7 +210,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 		this.updateComplete.then(() => {
 			if (this.toggleOnHover) {
 				this.addEventListener("mouseover", this.show);
-				window.document.addEventListener('mouseout', this._mouseOutEvent.bind(this));
+				window.document.addEventListener('mouseout', this._mouseOutEvent);
 			}
 		});
 	}
