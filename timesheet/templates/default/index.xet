@@ -32,9 +32,7 @@
 				<row class="th">
 					<nextmatch-sortheader label="Date" id="ts_start"/>
 					<grid spacing="0" padding="0">
-						<columns>
-							<column/>
-						</columns>
+						<columns><column width="100vw"/></columns>
 						<rows>
 							<row disabled="@pm_integration=full">
 								<et2-nextmatch-header-filter  id="ts_project" search="false" noLang="1" emptyLabel="All projects"/>
