@@ -121,6 +121,9 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 		}
 		if (is_string($ical_file))
 		{
+			// fix broken Kopano ics files, containing opening BEGIN:VCALENDAR for each BEGIN:VEVENT
+			$ical_file = preg_replace('/\r?\nEND:VEVENT\r?\nBEGIN:VCALENDAR\r?\n.*\r?\nBEGIN:VEVENT\r?\n/',
+				"\nEND:VEVENT\nBEGIN:VEVENT\n", $ical_file);
 			$this->ical_file = fopen('php://temp', 'w+');
 			fwrite($this->ical_file, $ical_file);
 			fseek($this->ical_file, 0, SEEK_SET);
