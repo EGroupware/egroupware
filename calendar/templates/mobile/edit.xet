@@ -63,7 +63,7 @@
 			</columns>
 			<rows>
 				<row  disabled="@view">
-					<calendar-owner id="participant" allowFreeEntries="true"  empty_label="Add new participants or resource"/>
+                    <et2-calendar-owner id="participant" allowFreeEntries="true" empty_label="Add new participants or resource"/>
 				</row>
 				<row disabled="@no_add">
 					<et2-select  class="selectRole" id="role"></et2-select>

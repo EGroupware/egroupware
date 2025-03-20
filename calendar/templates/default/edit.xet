@@ -47,7 +47,7 @@
 			</columns>
 			<rows>
 				<row disabled="@no_add" height="60" class="et2_toolbar">
-                    <calendar-owner id="participant" allowFreeEntries="true" span="4"
+                    <et2-calendar-owner id="participant" allowFreeEntries="true" span="4"
                                     placeholder="Add new participants or resource"
                                     onchange="app.calendar.participantOnChange"/>
                     <et2-hbox  width="100%">

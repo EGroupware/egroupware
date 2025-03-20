@@ -37,7 +37,7 @@
 								<et2-date  statustext="Enddate of the export" id="end"></et2-date>
 							</row>
 							<row>
-								<calendar-owner id="owner" empty_label="Owner" span="2" class="shorter" allowFreeEntries="false" autocomplete_url="calendar.calendar_owner_etemplate_widget.ajax_owner"/>
+                                <et2-calendar-owner id="owner" empty_label="Owner" span="2" class="shorter" allowFreeEntries="false" autocomplete_url="calendar.calendar_owner_etemplate_widget.ajax_owner"/>
 							</row>
 						</rows>
 					</grid>
