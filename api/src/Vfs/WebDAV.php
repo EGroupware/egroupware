@@ -326,6 +326,8 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 		// generate etag from inode (sqlfs: fs_id), modification time and size
 		$stat = stat($fspath);
 		$info['props'][] = self::mkprop('getetag', '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"');
+		// make stat available to PROPFIND, the not query it again
+		$info['stat'] = array_slice($stat, 13);
 
 /*		returning the supportedlock property causes Windows DAV provider and Konqueror to not longer work
 		ToDo: return it only if explicitly requested ($options['props'])
@@ -375,69 +377,89 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 	 */
 	function PROPFIND(&$options, &$files)
 	{
+		if ($this->debug)
+		{
+			$starttime = microtime(true);
+		}
 		if (!parent::PROPFIND($options,$files))
 		{
 			return false;
 		}
-		$path2n = array();
-		foreach($files['files'] as $n => $info)
+		// only query and return additional properties, if certain properties are requested (without currently checking which are requested)
+		// "all" are the automatic properties, extra properties would be an array[] with keys "name" and "ns"
+		if ($options['props'] !== 'all')
 		{
-			// do NOT report /clientsync/.favorites/, as it fails
-			if (strpos($info['path'],'/clientsync/.favorites/') === 0)
+			if ($this->debug)
 			{
-				unset($files['files'][$n]);
-				continue;
+				error_log(__METHOD__."(".json_encode($options).") parent::PROPFIND(...) took ".number_format(microtime(true) - $starttime, 3)." seconds");
 			}
-			$_path = $info['path'];
-			if (!$n && $info['path'] != '/' && substr($info['path'],-1) == '/') $_path = substr($info['path'],0,-1);
-
-			// need to encode path again, as $info['path'] is NOT encoded, but Vfs::(stat|propfind) require it
-			// otherwise pathes containing url special chars like ? or # will not stat
-			$path = Vfs::encodePath($_path);
-			$path2n[$path] = $n;
-
-			// adding some properties used instead of regular DAV times
-			if (($stat = Vfs::stat($path)))
+			$path2n = array();
+			foreach ($files['files'] as $n => $info)
 			{
-				$fileprops =& $files['files'][$path2n[$path]]['props'];
-				foreach(self::$auto_props as $attr => $props)
+				// do NOT report /clientsync/.favorites/, as it fails
+				if (strpos($info['path'], '/clientsync/.favorites/') === 0)
 				{
-					switch($attr)
-					{
-						case 'ctime':
-						case 'mtime':
-						case 'atime':
-							$value = gmdate('D, d M Y H:i:s T',$stat[$attr]);
-							break;
+					unset($files['files'][$n]);
+					continue;
+				}
+				$_path = $info['path'];
+				if (!$n && $info['path'] != '/' && substr($info['path'], -1) == '/') $_path = substr($info['path'], 0, -1);
 
-						default:
-							continue 2;
-					}
-					foreach($props as $prop)
+				// need to encode path again, as $info['path'] is NOT encoded, but Vfs::(stat|propfind) require it
+				// otherwise pathes containing url special chars like ? or # will not stat
+				$path = Vfs::encodePath($_path);
+				$path2n[$path] = $n;
+				$fileprops =& $files['files'][$path2n[$path]]['props'];
+
+				// adding some properties used instead of regular DAV times
+				if (($stat = $files['files'][$path2n[$path]]['stat'] ?? Vfs::stat($path)))
+				{
+					foreach (self::$auto_props as $attr => $props)
 					{
-						$prop['val'] = $value;
+						switch ($attr)
+						{
+							case 'ctime':
+							case 'mtime':
+							case 'atime':
+								$value = gmdate('D, d M Y H:i:s T', $stat[$attr]);
+								break;
+
+							default:
+								continue 2;
+						}
+						foreach ($props as $prop)
+						{
+							$prop['val'] = $value;
+							$fileprops[] = $prop;
+						}
+					}
+				}
+			}
+			if ($path2n && ($path2props = Vfs::propfind(array_keys($path2n), null)))
+			{
+				if ($this->debug)
+				{
+					error_log(__METHOD__ . "(" . json_encode($options) . ") took without extra properties(customfields) " . number_format(microtime(true) - $starttime, 3) . " seconds");
+				}
+				foreach ($path2props as $path => $props)
+				{
+					$fileprops =& $files['files'][$path2n[$path]]['props'];
+					foreach ($props as $prop)
+					{
+						if ($prop['ns'] == Vfs::DEFAULT_PROP_NAMESPACE && $prop['name'][0] == '#')    // eGW's customfields
+						{
+							$prop['ns'] .= 'customfields/';
+							$prop['name'] = substr($prop['name'], 1);
+						}
 						$fileprops[] = $prop;
 					}
 				}
 			}
 		}
-		if ($path2n && ($path2props = Vfs::propfind(array_keys($path2n),null)))
+		if ($this->debug)
 		{
-			foreach($path2props as $path => $props)
-			{
-				$fileprops =& $files['files'][$path2n[$path]]['props'];
-				foreach($props as $prop)
-				{
-					if ($prop['ns'] == Vfs::DEFAULT_PROP_NAMESPACE && $prop['name'][0] == '#')	// eGW's customfields
-					{
-						$prop['ns'] .= 'customfields/';
-						$prop['name'] = substr($prop['name'],1);
-					}
-					$fileprops[] = $prop;
-				}
-			}
+			error_log(__METHOD__."(".json_encode($options).") took ".number_format(microtime(true) - $starttime, 3)." seconds");
 		}
-		if ($this->debug) error_log(__METHOD__."() props=".array2string($files['files']));
 		return true;
 	}
 
