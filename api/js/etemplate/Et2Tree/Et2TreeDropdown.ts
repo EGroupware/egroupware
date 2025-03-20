@@ -176,6 +176,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	{
 		super.disconnectedCallback();
 		document.removeEventListener("click", this.handleDocumentClick);
+		
+		this._tree.destroy();
 	}
 
 	willUpdate(changedProperties)
