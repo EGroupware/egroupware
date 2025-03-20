@@ -135,19 +135,20 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		this.updateComplete.then(() =>
 		{
 			// find that can handle option groups
+			let i;
 			const find = (option) =>
 			{
 				if(Array.isArray(option.value))
 				{
 					return option.value.find(find);
 				}
-				return option.value == this.value[i];
+				return option.value == this.getValueAsArray()[i];
 			}
-			for(var i = 0; i < this.value.length; i++)
+			for(i = 0; i < this.getValueAsArray().length; i++)
 			{
 				if(!this.select_options.find(find))
 				{
-					missing_labels.push(this.value[i]);
+					missing_labels.push(this.getValueAsArray()[i]);
 				}
 			}
 			if(Object.keys(missing_labels).length > 0)
