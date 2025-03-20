@@ -512,6 +512,8 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.removeOpenListeners();
 		this._completeResolver([this._button_id, this.value]);
 
+		interact(this.panel).unset();
+
 		this.dispatchEvent(new Event('close', {bubbles: true}));
 
 		waitForEvent(this, 'sl-after-hide').then(() =>
