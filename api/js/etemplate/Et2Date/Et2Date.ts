@@ -424,44 +424,8 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		this._instance?.destroy && this._instance.destroy();
 		if(this._instance)
 		{
-			this._instance._handlers.forEach(r => r.remove());
-			this._instance.pluginElements.splice(0, this._instance.pluginElements.length);
-			this._instance.monthElements.splice(0, this._instance.monthElements.length);
-			const flatpickerShouldHaveClearedThese = [
-				"selectedDateElem",
-				"minDateHasTime",
-				"maxDateHasTime",
-				"days",
-				"daysContainer",
-				"weekWrapper",
-				"weekNumbers",
-				"weekdayContainer",
-				"timeContainer",
-				"minutesContainer",
-				"minuteElement",
-				"hoursContainer",
-				"hourElement",
-				"yearsContainer",
-				"yearElements",
-				"_input",
-				"_positionElement",
-				"innerContainer",
-				"rContainer",
-				"monthNav",
-				"todayDateElem",
-				"calendarContainer",
-				"weekdayContainer",
-				"prevMonthNav",
-				"nextMonthNav",
-				"monthsDropdownContainer",
-				"currentMonthElement",
-				"currentYearElement",
-				"navigationCurrentMonth",
-				"selectedDateElem",
-				"config"
-			];
-			flatpickerShouldHaveClearedThese.forEach(field => this._instance[field] = null);
-			this._instance = null;
+			delete this._inputNode?._flatpickr;
+			this._instance = undefined;
 		}
 	}
 
