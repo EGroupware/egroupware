@@ -93,7 +93,7 @@ class Session
 	/**
 	 * @var string decrypted password, do NOT use direct, set or read $this->passwd (__sleep() method ensures it never gets serialized into session)
 	 */
-	private $_password;
+	protected $_password;
 
 	public $passwd_type;
 
@@ -328,7 +328,7 @@ class Session
 	 */
 	public function __set($name, $value)
 	{
-		if ($name === 'passwd' && !empty($value))
+		if (($name === 'passwd' || $name === '_password') && !empty($value))
 		{
 			// we also need to update it in session, as extra SSO password uses the hook "session_created" running after call to register_session!
 			$_SESSION[self::EGW_SESSION_VAR]['session_password'] = $this->password_encrypted =
