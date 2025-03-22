@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	km	%1 អ្នកទំនាក់ទំនង %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	km	%1 contact(s) %2, %3 បានបរាជ័យដោយសារតែ %4 !!!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	km	%1 contact(s) %2, %3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	km	%1 contact(s) %2, %3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់!
 %1 contacts updated (%2 errors).	addressbook	km	ទំនាក់ទំនង %1 បានធ្វើបច្ចុប្បន្នភាព (%2 កំហុស) ។
 %1 fields in %2 other organisation member(s) changed	addressbook	km	វាល %1 ក្នុង %2 សមាជិកស្ថាប័នផ្សេងទៀតបានផ្លាស់ប្តូរ។
 %1 key(s) added to public keyserver "%2".	addressbook	km	%1 key(s) បានបន្ថែមទៅម៉ាស៊ីនបម្រើសោសាធារណៈ "%2"។
@@ -208,7 +208,7 @@ edit custom fields	admin	km	កែសម្រួលវាលផ្ទាល់�
 edit extra account-data in the addressbook	admin	km	កែសម្រួលទិន្នន័យគណនីបន្ថែមនៅក្នុងសៀវភៅអាសយដ្ឋាន
 edit phonenumbers	addressbook	km	កែសម្រួលលេខទូរស័ព្ទ
 edit phonenumbers -	addressbook	km	កែសម្រួលលេខទូរស័ព្ទ -
-either the configured email addesses are wrong or the mail configuration.	addressbook	km	ទាំងអាសយដ្ឋានអុីមែលដែលបានកំណត់រចនាសម្ព័ន្ធខុស ឬការកំណត់រចនាសម្ព័ន្ធសំបុត្រ។
+either the configured email addresses are wrong or the mail configuration.	addressbook	km	ទាំងអាសយដ្ឋានអុីមែលដែលបានកំណត់រចនាសម្ព័ន្ធខុស ឬការកំណត់រចនាសម្ព័ន្ធសំបុត្រ។
 email & internet	addressbook	km	អុីមែល និងអុីនធឺណិត
 email (private)	addressbook	km	អុីមែល (ឯកជន)
 email addresses (comma separated) to send the contact data	addressbook	km	អាសយដ្ឋានអុីមែល សញ្ញាក្បៀសបំបែក ដើម្បីផ្ញើទិន្នន័យទំនាក់ទំនង។
@@ -238,12 +238,12 @@ export from addressbook	addressbook	km	នាំចេញពីសៀវភៅ�
 export selection	addressbook	km	នាំចេញជម្រើស
 exported	addressbook	km	នាំចេញ
 exports contacts from your addressbook into a csv file.	addressbook	km	នាំចេញទំនាក់ទំនងពីសៀវភៅអាសយដ្ឋានទៅជាឯកសារ CSV ។
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	km	នាំចេញទំនាក់ទំនងពីសៀវភៅអាសយដ្ឋានទៅជាឯកសារ CSV ។ CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស'។ នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត។
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	km	នាំចេញទំនាក់ទំនងពីសៀវភៅអាសយដ្ឋានទៅជាឯកសារ CSV ។ CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស'។ នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត។
 exports contacts from your addressbook into a vcard file.	addressbook	km	នាំចេញទំនាក់ទំនងពីសៀវភៅអាសយដ្ឋានរបស់អ្នកទៅជាឯកសារ vCard ។
 extra	addressbook	km	ការបន្ថែម
 extra encodings	addressbook	km	ការអុិនកូដបន្ថែម
 extra private	addressbook	km	ឯកជនភាពបន្ថែម
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	km	បរាជ័យក្នុងការផ្លាស់ប្តូរសមាជិក %1 របស់ស្ថាប័ន សិទ្ធិមិនគ្រប់គ្រាន់!
+failed to change %1 organisation member(s) (insufficient rights) !!!	addressbook	km	បរាជ័យក្នុងការផ្លាស់ប្តូរសមាជិក %1 របស់ស្ថាប័ន សិទ្ធិមិនគ្រប់គ្រាន់!
 favorite phone	addressbook	km	ទូរស័ព្ទដែលចូលចិត្ត
 fax	addressbook	km	ទូរសារ
 fax (private)	addressbook	km	ទូរសារ (ឯកជន)
@@ -303,15 +303,15 @@ import from outlook	addressbook	km	នាំចូលពី Outlook
 import multiple vcard	addressbook	km	នាំចូល vCard ច្រើន។
 import next set	addressbook	km	នាំចូលឈុតបន្ទាប់
 importer's personal	addressbook	km	ផ្ទាល់ខ្លួនរបស់អ្នកនាំចូល
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	km	នាំចូលទំនាក់ទំនងទៅក្នុងសៀវភៅអាសយដ្ឋានពីឯកសារ CSV ។ CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស'។ នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត។
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	km	នាំចូលទំនាក់ទំនងទៅក្នុងសៀវភៅអាសយដ្ឋានពីឯកសារ CSV ។ CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស'។ នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត។
 imports contacts into your addressbook from a vcard file.	addressbook	km	នាំចូលទំនាក់ទំនងទៅក្នុងសៀវភៅអាសយដ្ឋានរបស់អ្នកពីឯកសារ vCard ។
 in %1 days (%2) is %3's birthday.	addressbook	km	ក្នុង %1 ថ្ងៃ (%2) គឺជាថ្ងៃកំណើតរបស់ %3 ។
 income	addressbook	km	ចំណូល
 infolog-contact	addressbook	km	ទំនាក់ទំនង InfoLog
 infolog-organisation	addressbook	km	អង្គការ InfoLog
 insert	addressbook	km	បញ្ចូល
-insufficent rights to delete this list!	addressbook	km	សិទ្ធិមិនគ្រប់គ្រាន់ក្នុងការលុបបញ្ជីនេះ!
-insufficent rights to edit this list!	addressbook	km	សិទ្ធិមិនគ្រប់គ្រាន់ដើម្បីកែសម្រួលបញ្ជីនេះ!
+insufficient rights to delete this list!	addressbook	km	សិទ្ធិមិនគ្រប់គ្រាន់ក្នុងការលុបបញ្ជីនេះ!
+insufficient rights to edit this list!	addressbook	km	សិទ្ធិមិនគ្រប់គ្រាន់ដើម្បីកែសម្រួលបញ្ជីនេះ!
 international	addressbook	km	អន្តរជាតិ
 internet	addressbook	km	អុីនធឺណិត
 label	addressbook	km	ស្លាក​សញ្ញា
@@ -434,7 +434,7 @@ select all	addressbook	km	ជ្រើសរើស​ទាំងអស់
 select an opened dialog	addressbook	km	ជ្រើសរើសប្រអប់ដែលបានបើក
 select migration type	admin	km	ជ្រើសរើសប្រភេទការផ្លាស់ប្តូរទីតាំង
 select multiple contacts for a further action	addressbook	km	ជ្រើសរើសទំនាក់ទំនងច្រើនសម្រាប់សកម្មភាពបន្ថែម
-select phone number as prefered way of contact	addressbook	km	ជ្រើសរើសលេខទូរស័ព្ទជាមធ្យោបាយទំនាក់ទំនងដែលពេញចិត្ត
+select phone number as preferred way of contact	addressbook	km	ជ្រើសរើសលេខទូរស័ព្ទជាមធ្យោបាយទំនាក់ទំនងដែលពេញចិត្ត
 select where you want to store / retrieve contacts	admin	km	ជ្រើសរើសកន្លែងដែលទំនាក់ទំនងគួរតែត្រូវបានរក្សាទុក / ទាញយក។
 selected contacts	addressbook	km	ទំនាក់ទំនងដែលបានជ្រើសរើស
 send emailcopy to receiver	addressbook	km	ផ្ញើច្បាប់ចម្លងអុីមែលទៅអ្នកទទួល

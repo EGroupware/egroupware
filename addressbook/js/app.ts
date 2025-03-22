@@ -136,7 +136,7 @@ class AddressbookApp extends EgwApp
 	 * - update: request just modified data from given rows.  Sorting is not considered,
 	 *		so if the sort field is changed, the row will not be moved.
 	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
-	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - delete: just delete the given rows clientside (no server interaction necessary)
 	 * - add: requires full reload for proper sorting
 	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
 	 * @param {object|null} _links app => array of ids of linked entries
@@ -193,7 +193,7 @@ class AddressbookApp extends EgwApp
 	/**
 	 * Handle a push notification about entry changes from the websocket
 	 *
-	 * Get's called for data of all apps, but should only handle data of apps it displays,
+	 * Gets called for data of all apps, but should only handle data of apps it displays,
 	 * which is by default only it's own, but can be for multiple apps eg. for calendar.
 	 *
 	 * @param  pushData
@@ -203,7 +203,7 @@ class AddressbookApp extends EgwApp
 	 * - update: request just modified data from given rows.  Sorting is not considered,
 	 *		so if the sort field is changed, the row will not be moved.
 	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
-	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - delete: just delete the given rows clientside (no server interaction necessary)
 	 * - add: requires full reload for proper sorting
 	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
 	 * @param {number} pushData.account_id User that caused the notification
@@ -593,7 +593,7 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
-	 * [More...] in phones clicked: copy allways shown phone numbers to phone popup
+	 * [More...] in phones clicked: copy always shown phone numbers to phone popup
 	 *
 	 * @param {jQuery.event} _event
 	 * @param {et2_widget} _widget
@@ -1095,7 +1095,7 @@ class AddressbookApp extends EgwApp
 			let personal = data.data.n_fn || '';
 			if (personal.match(/[^a-z0-9. -]/i)) personal = '"'+personal.replace(/"/, '\\"')+'"';
 
-			// remove comma in personal as it will conflict with mail content comma seperator in the process
+			// remove comma in personal as it will conflict with mail content comma separator in the process
 			personal = personal.replace(/,/g,'');
 
 			if(data.data.email && which !== "home")
@@ -1200,7 +1200,7 @@ class AddressbookApp extends EgwApp
 				personal = '"' + personal.replace(/"/, '\\"') + '"';
 			}
 
-			//remove comma in personal as it will confilict with mail content comma seperator in the process
+			//remove comma in personal as it will confilict with mail content comma separator in the process
 			personal = personal.replace(/,/g, '');
 
 			emailAddresses.forEach(mail =>
@@ -1430,7 +1430,7 @@ class AddressbookApp extends EgwApp
 				{
 					if (_msg && typeof _msg == 'string')
 					{
-						egw(window).message(_msg, 'error');	// context get's lost :(
+						egw(window).message(_msg, 'error');	// context gets lost :(
 						_widget.getDOMNode().focus();
 					}
 				}, this).sendRequest();
@@ -1455,7 +1455,7 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
-	 * Enable/Disable geolocation action items in contextmenu base on address availabilty
+	 * Enable/Disable geolocation action items in contextmenu base on address availability
 	 *
 	 * @param {egwAction} _action
 	 * @param {egwActionObject[]} _selected selected rows
@@ -1468,7 +1468,7 @@ class AddressbookApp extends EgwApp
 
 		var url = this.getGeolocationConfig();
 
-		// exit if no url or invalide url given
+		// exit if no url or invalid url given
 		if (!url || typeof url === 'undefined' || typeof url !== 'string')
 		{
 			egw.debug('warn','no url or invalid url given as geoLocationUrl');
@@ -1487,7 +1487,7 @@ class AddressbookApp extends EgwApp
 		];
 
 		var fields = '';
-		// Replcae placeholders with acctual values
+		// Replace placeholders with actual values
 		for (var i=0;i < addrs.length; i++)
 		{
 			fields += addrs[i] ? addrs[i] : '';
@@ -1510,7 +1510,7 @@ class AddressbookApp extends EgwApp
 		var dest_type = _dest_type || 'one';
 		var url = this.getGeolocationConfig();
 
-		// exit if no url or invalide url given
+		// exit if no url or invalid url given
 		if (!url || typeof url === 'undefined' || typeof url !== 'string')
 		{
 			egw.debug('warn','no url or invalid url given as geoLocationUrl');
@@ -1550,7 +1550,7 @@ class AddressbookApp extends EgwApp
 			url = url.replace(/{{%d=.*%d}}/, d_param);
 		}
 
-		// Replcae placeholders with acctual values
+		// Replace placeholders with actual values
 		for (var j=0;j<addrs.length;j++)
 		{
 			for (var i=0;i < addrs[j].length; i++)

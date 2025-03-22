@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	ro	%1 contact(s) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ro	%1 contact(e) %2, %3 a eșuat din cauza lui %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ro	%1 contact(s) %2, %3 a eșuat din cauza drepturilor insuficiente!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	ro	%1 contact(s) %2, %3 a eșuat din cauza drepturilor insuficiente!
 %1 contacts updated (%2 errors).	addressbook	ro	%1 contacte actualizate (%2 erori).
 %1 fields in %2 other organisation member(s) changed	addressbook	ro	%1 câmpuri în %2 membru(i) altei organizații modificate.
 %1 key(s) added to public keyserver "%2".	addressbook	ro	%1 cheie(e) adăugată(e) la serverul public de chei "%2".
@@ -49,7 +49,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 export definition to use for nextmatch export	addressbook	ro	Definiție de export de utilizat pentru exportul nextmatch
 export definitition to use for nextmatch export	addressbook	ro	Definiția de export care trebuie utilizată pentru exportul nextmatch
 exports contacts from your addressbook into a csv file.	addressbook	ro	Exportă contactele din agenda de adrese într-un fișier CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ro	Exportă contactele din agenda de adrese într-un fișier CSV.  CSV înseamnă "Comma Separated Values" (Valori separate prin virgulă). În fila Opțiuni puteți alege și alți separatori.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	ro	Exportă contactele din agenda de adrese într-un fișier CSV.  CSV înseamnă "Comma Separated Values" (Valori separate prin virgulă). În fila Opțiuni puteți alege și alți separatori.
 favorite phone	addressbook	ro	Telefon preferat
 fields to check for duplicates	addressbook	ro	Câmpuri pentru a verifica dacă există dubluri
 fields to consider when looking for duplicate contacts.	addressbook	ro	Câmpuri care trebuie luate în considerare atunci când se caută contacte duplicate.
@@ -65,14 +65,14 @@ hide user groups as distribution lists	addressbook	ro	Ascundeți grupurile de ut
 hides accounts completly from the adressbook.	addressbook	ro	Ascundeți complet conturile de utilizator din cartea de adrese.
 how many fields must match for the record to be considered a duplicate.	addressbook	ro	Câte câmpuri trebuie să corespundă pentru ca înregistrarea să fie considerată duplicat.
 importer's personal	addressbook	ro	Personal al importatorului
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ro	Importă contactele în agendă dintr-un fișier CSV. În fila de opțiuni puteți alege și alți separatori.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	ro	Importă contactele în agendă dintr-un fișier CSV. În fila de opțiuni puteți alege și alți separatori.
 imports contacts into your addressbook from a vcard file.	addressbook	ro	Importă contacte în agendă dintr-un fișier vCard.
 include all groups	addressbook	ro	Includeți toate grupurile
 infolog-contact	addressbook	ro	InfoLog Contact
 infolog-organisation	addressbook	ro	Organizația InfoLog
 insert	addressbook	ro	Introduceți
-insufficent rights to delete this list!	addressbook	ro	Drepturi insuficiente pentru a șterge această listă!
-insufficent rights to edit this list!	addressbook	ro	Drepturi insuficiente pentru a edita această listă!
+insufficient rights to delete this list!	addressbook	ro	Drepturi insuficiente pentru a șterge această listă!
+insufficient rights to edit this list!	addressbook	ro	Drepturi insuficiente pentru a edita această listă!
 internet	addressbook	ro	Internet
 invite to current call	addressbook	ro	Invitați la apelul curent
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	ro	Încărcați câmpurile personalizate în index, chiar dacă coloana câmpurilor personalizate este dezactivată (de exemplu, pentru a le afișa într-o anumită coloană de index)

@@ -1,6 +1,6 @@
 %1 contact(s) %2	addressbook	id	%1 kontak %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	id	%1 kontak %2, %3 gagal karena %4!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	id	%1 kontak %2, %3 gagal karena kurang kewenangan!
+%1 contact(s) %2, %3 failed because of insufficient rights !!!	addressbook	id	%1 kontak %2, %3 gagal karena kurang kewenangan!
 %1 contacts updated (%2 errors).	addressbook	id	%1 kontak dikinikan (%2 kesalahan).
 %1 fields in %2 other organisation member(s) changed	addressbook	id	%1 field dalam %2 anggota organisasi lain diubah.
 %1 key(s) added to public keyserver "%2".	addressbook	id	%1 kunci ditambahkan ke server kunci publik "%2".
@@ -191,7 +191,7 @@ export from addressbook	addressbook	id	Ekspor dari Buku Alamat
 export selection	addressbook	id	Ekspor pilihan
 exported	addressbook	id	diekspor
 exports contacts from your addressbook into a csv file.	addressbook	id	Mengekspor kontak dari buku alamat ke dalam file CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	id	Mengekspor kontak dari buku alamat ke dalam file CSV. CSV berarti 'Nilai yang Dipisahkan dengan Koma'. Pada tab opsi, Anda juga dapat memilih pemisah lainnya.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	id	Mengekspor kontak dari buku alamat ke dalam file CSV. CSV berarti 'Nilai yang Dipisahkan dengan Koma'. Pada tab opsi, Anda juga dapat memilih pemisah lainnya.
 exports contacts from your addressbook into a vcard file.	addressbook	id	Mengekspor kontak dari buku alamat Anda ke dalam file vCard.
 extra	addressbook	id	Tambahan
 extra private	addressbook	id	Privat tambahan
@@ -250,13 +250,13 @@ import from outlook	addressbook	id	Impor dari Outlook
 import multiple vcard	addressbook	id	Impor beberapa vCard
 import next set	addressbook	id	Impor kelompok berikutnya
 importer's personal	addressbook	id	Pribadi pengimpor
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	id	Mengimpor kontak ke dalam buku alamat dari File CSV. Pada tab opsi, Anda juga dapat memilih pemisah lainnya.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other separators.	addressbook	id	Mengimpor kontak ke dalam buku alamat dari File CSV. Pada tab opsi, Anda juga dapat memilih pemisah lainnya.
 imports contacts into your addressbook from a vcard file.	addressbook	id	Mengimpor kontak ke dalam Buku Alamat Anda dari File vCard.
 in %1 days (%2) is %3's birthday.	addressbook	id	Tinggal %1 hari (%2) adalah HUT %3.
 infolog-contact	addressbook	id	Kontak InfoLog
 infolog-organisation	addressbook	id	Organisasi InfoLog
-insufficent rights to delete this list!	addressbook	id	Hak yang tidak memadai untuk menghapus daftar ini!
-insufficent rights to edit this list!	addressbook	id	Hak yang tidak memadai untuk mengedit daftar ini!
+insufficient rights to delete this list!	addressbook	id	Hak yang tidak memadai untuk menghapus daftar ini!
+insufficient rights to edit this list!	addressbook	id	Hak yang tidak memadai untuk mengedit daftar ini!
 international	addressbook	id	Internasional
 internet	addressbook	id	Internet
 invite to current call	addressbook	id	Mengundang ke panggilan saat ini
