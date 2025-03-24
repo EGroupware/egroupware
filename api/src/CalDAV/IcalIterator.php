@@ -133,7 +133,8 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 		else
 		{
 			// fix broken Kopano ics files, containing opening BEGIN:VCALENDAR for each BEGIN:VEVENT
-			if (($chunk = fread($ical_file, $chunk_size = 81920)) && preg_match(self::BROKEN_KOPANO_REGEXP, $chunk))
+			if (($seekable = stream_get_meta_data($ical_file)['seekable']) &&
+				($chunk = fread($ical_file, $chunk_size = 81920)) && preg_match(self::BROKEN_KOPANO_REGEXP, $chunk))
 			{
 				$this->ical_file = fopen('php://temp', 'w+');
 				while (!feof($ical_file) && ($next_chunk = fread($ical_file, $chunk_size)))
@@ -154,7 +155,10 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 			{
 				$this->ical_file = $ical_file;
 			}
-			fseek($this->ical_file, 0, SEEK_SET);
+			if ($seekable)
+			{
+				fseek($this->ical_file, 0, SEEK_SET);
+			}
 		}
 		if (!is_resource($this->ical_file))
 		{
