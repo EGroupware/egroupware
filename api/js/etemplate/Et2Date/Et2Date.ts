@@ -406,6 +406,8 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		super.connectedCallback();
 		this._updateValueOnChange = this._updateValueOnChange.bind(this);
 		this._handleShortcutButtonClick = this._handleShortcutButtonClick.bind(this);
+
+		this.init();
 	}
 
 	disconnectedCallback()
