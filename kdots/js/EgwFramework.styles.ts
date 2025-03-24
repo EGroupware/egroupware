@@ -131,7 +131,6 @@ export default css`
 	}
 
 	.egw_fw__open_applications sl-tab[active] et2-image img {
-		position: absolute;
 		height: var(--tab-icon-size-active, --tab-icon-size);
 		min-width: var(--tab-icon-size-active, --tab-icon-size);
 		min-height: var(--tab-icon-size-active, --tab-icon-size);
