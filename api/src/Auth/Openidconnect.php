@@ -69,7 +69,7 @@ class Openidconnect implements BackendSSO
 					// fail if auto-creation of authenticated users is NOT configured
 					if (empty($GLOBALS['egw_info']['server']['auto_create_acct']))
 					{
-						error_log(__METHOD__."() OpenIDConnect login successful, but user '$account_lid' does NOT exist in EGroupware, AND automatic user creating is disabled!");
+						Api\Auth::log(__METHOD__."() OpenIDConnect login successful, but user '$account_lid' does NOT exist in EGroupware, AND automatic user creating is disabled!");
 						$_GET['cd'] = lang("OpenIDConnect login successful, but user '%1' does NOT exist in EGroupware, AND automatic user creating is disabled!", $account_lid);
 						return null;
 					}
@@ -97,6 +97,7 @@ class Openidconnect implements BackendSSO
 		catch(\Exception $e) {
 			_egw_log_exception($e);
 			$_GET['cd'] = 'OpenIDConnect Error: '.$e->getMessage();
+			Api\Auth::log(__METHOD__."() OpenIDConnect Error: ".$e->getMessage());
 			return null;
 		}
 	}
@@ -156,11 +157,19 @@ class Openidconnect implements BackendSSO
 		]);
 		// perform the auth and return the token (to validate check if the access_token property is there and a valid JWT) :
 		try {
-			$token = $this->client->requestResourceOwnerToken(TRUE)->access_token;
-			return !empty($token);
+			$repsonse = $this->client->requestResourceOwnerToken(TRUE);
+			if (empty($repsonse->access_token))
+			{
+				Api\Auth::log(__METHOD__."('$username', ...) OpenIDConnect Response: ".json_encode($repsonse)." returning FALSE");
+				return false;
+			}
+			Api\Auth::log(__METHOD__."('$username', ...) returning TRUE");
+			return true;
 		}
 		catch(OpenIDConnectClientException $e) {
 			// ignore
+			_egw_log_exception($e);
+			Api\Auth::log(__METHOD__."('$username', ...) OpenIDConnect Error: ".$e->getMessage());
 		}
 		return false;
 	}
