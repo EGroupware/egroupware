@@ -28,7 +28,6 @@ import type {EgwAction} from "../../api/js/egw_action/EgwAction";
 import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 import {Et2MergeDialog} from "../../api/js/etemplate/Et2Dialog/Et2MergeDialog";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
-import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 
 /**
  * Object to call app.addressbook.openCRMview with
@@ -396,7 +395,8 @@ class AddressbookApp extends EgwApp
 				Et2Dialog.confirm(_widget, egw.lang('Delete this contact?'), egw.lang('Delete'));
 				break;
 			case 'button[close]':
-				framework.activeApp.tab.closeButton.click();
+				framework.closeApp && framework.closeApp(framework.activeApp);
+				framework.activeApp?.tab?.closeButton?.click();
 				break;
 			default:	// submit all other buttons back to server
 				et2.widgetContainer._inst.submit();
