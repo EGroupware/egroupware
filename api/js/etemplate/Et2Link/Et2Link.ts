@@ -248,7 +248,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		}
 		if(typeof _value != 'object' && _value)
 		{
-			if(_value.indexOf(':') >= 0)
+			if(("" + _value).indexOf(':') >= 0)
 			{
 				// application_name:ID
 				let app = _value.split(':', 1);
