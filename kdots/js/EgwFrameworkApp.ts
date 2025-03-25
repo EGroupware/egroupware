@@ -162,6 +162,20 @@ export class EgwFrameworkApp extends LitElement
 	{
 		super.disconnectedCallback();
 		this.removeEventListener("load", this.handleEtemplateLoad);
+
+		this.childNodes.forEach((childNode : HTMLElement) =>
+		{
+			const et = etemplate2.getById(childNode.id);
+			if(et !== null)
+			{
+				et.clear();
+				// Clean up DOM nodes that are outside the etemplate2
+				const domContainer = et.DOMContainer;
+				domContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']")?.remove();
+				domContainer.remove();
+				et._DOMContainer = null;
+			}
+		});
 	}
 
 	firstUpdated()
@@ -296,6 +310,12 @@ export class EgwFrameworkApp extends LitElement
 	public hideRight()
 	{
 		return this.hideSide("right");
+	}
+
+	public refresh()
+	{
+		return this.egw.refresh("", this.name);
+		/* Could also be this.load(false); this.load(this.url) */
 	}
 
 	public async print()
@@ -500,6 +520,16 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	protected async handleSideboxMenuClick(event)
+	{
+		return this.egw.open_link(event.target.dataset.item_link);
+	}
+
+	protected handleAppMenuClick(event)
+	{
+		return egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
+	}
+
 	/**
 	 * Displayed for the time between when the application is added and when the server responds with content
 	 *
@@ -601,16 +631,12 @@ export class EgwFrameworkApp extends LitElement
             <et2-button-icon nosubmit name="arrow-clockwise"
                              label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
                              statustext=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
-                             @click=${(e) =>
-                             {
-                                 this.egw.refresh("", this.name);
-                                 /* Could also be this.load(false); this.load(this.url) */
-                             }}
+                             @click=${this.refresh}
             ></et2-button-icon>
             <et2-button-icon nosubmit name="printer"
                              label=${this.egw.lang("Print")}
                              statustext=${this.egw.lang("Print")}
-                             @click=${(e) => this.framework.print()}
+                             @click=${this.framework.print}
             ></et2-button-icon>
             <sl-dropdown class="egw_fw_app__menu">
                 <div slot="trigger">${this.egw.lang("Menu")}
@@ -619,11 +645,7 @@ export class EgwFrameworkApp extends LitElement
                 <sl-menu>
                     ${this.egw.user('apps')['admin'] !== undefined ? html`
                         <sl-menu-item
-                                @click=${(e) =>
-                                {
-                                    // @ts-ignore
-                                    egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
-                                }}
+                                @click=${this.handleAppMenuClick}
                         >
                             <sl-icon slot="prefix" name="gear-wide"></sl-icon>
                             ${this.egw.lang("App configuration")}
@@ -650,35 +672,37 @@ export class EgwFrameworkApp extends LitElement
 			return nothing;
 		}
 
-		return html`${repeat(this._sideboxData, (menu) => menu['menu_name'], (menu) =>
+		return html`${repeat(this._sideboxData, (menu) => menu['menu_name'], this._threeDotsMenuItemTemplate)}`;
+	}
+
+	_threeDotsMenuItemTemplate(menu)
+	{
+		// No favorites here
+		if(menu["title"] == "Favorites" || menu["title"] == this.egw.lang("favorites"))
 		{
-			// No favorites here
-			if(menu["title"] == "Favorites" || menu["title"] == this.egw.lang("favorites"))
-			{
-				return html`
-                    <sl-menu-item>
-                        <et2-image style="width:1em;" src="fav_filter" slot="prefix"></et2-image>
-                        ${menu["title"]}
-                        <et2-favorites-menu slot="submenu" application="${this.appName}"></et2-favorites-menu>
-                    </sl-menu-item>
-				`;
-			}
-			// Just one thing, don't bother with submenu
-			if(menu["entries"].length == 1)
-			{
-				return this._sideboxMenuItemTemplate({...menu["entries"][0], lang_item: menu["title"]})
-			}
 			return html`
                 <sl-menu-item>
+                    <et2-image style="width:1em;" src="fav_filter" slot="prefix"></et2-image>
                     ${menu["title"]}
-                    <sl-menu slot="submenu">
-                        ${repeat(menu["entries"], (entry) =>
-                        {
-                            return this._sideboxMenuItemTemplate(entry);
-                        })}
-                    </sl-menu>
-                </sl-menu-item>`;
-		})}`;
+                    <et2-favorites-menu slot="submenu" application="${this.appName}"></et2-favorites-menu>
+                </sl-menu-item>
+			`;
+		}
+		// Just one thing, don't bother with submenu
+		if(menu["entries"].length == 1)
+		{
+			return this._sideboxMenuItemTemplate({...menu["entries"][0], lang_item: menu["title"]})
+		}
+		return html`
+            <sl-menu-item>
+                ${menu["title"]}
+                <sl-menu slot="submenu">
+                    ${repeat(menu["entries"], (entry) =>
+                    {
+                        return this._sideboxMenuItemTemplate(entry);
+                    })}
+                </sl-menu>
+            </sl-menu-item>`;
 	}
 
 	/**
@@ -696,7 +720,8 @@ export class EgwFrameworkApp extends LitElement
 		return html`
             <sl-menu-item
                     ?disabled=${!item["item_link"]}
-                    @click=${() => this.egw.open_link(item["item_link"])}
+                    data-link=${item["item_link"]}
+                    @click=${this.handleSideboxMenuClick}
             >
                 ${typeof item["icon_or_star"] == "string" && item["icon_or_star"].endsWith("bullet.svg") ? nothing : html`
                     <et2-image name=${item["icon_or_star"]}></et2-image>
@@ -736,7 +761,7 @@ export class EgwFrameworkApp extends LitElement
                 <header class="egw_fw_app__header" part="header">
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
                 </header>
-                ${until(this.framework.getEgwComplete().then(() => this._rightHeaderTemplate()), html`
+                ${until(this.framework?.getEgwComplete().then(() => this._rightHeaderTemplate()), html`
                     <sl-spinner></sl-spinner>`)}
             </div>
             <div class="egw_fw_app__main" part="main">
@@ -744,12 +769,9 @@ export class EgwFrameworkApp extends LitElement
                                 primary="start" position-in-pixels="${leftWidth}"
                                 snap="0px 20%" snap-threshold="50"
                                 .panelInfo=${this.leftPanelInfo}
-                                @sl-reposition=${(e) => this.handleSlide(e)}
+                                @sl-reposition=${this.handleSlide}
                 >
-                    <sl-icon slot="divider" name="grip-vertical" @dblclick=${() =>
-                    {
-                        this.hideLeft();
-                    }}></sl-icon>
+                    <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideLeft}></sl-icon>
                     ${this._asideTemplate("start", "left")}
                     <sl-split-panel slot="end"
                                     class=${classMap({"egw_fw_app__innerSplit": true, "no-content": !hasRightSlots})}
@@ -757,12 +779,9 @@ export class EgwFrameworkApp extends LitElement
                                     position=${rightWidth} snap="50% 80% 100%"
                                     snap-threshold="50"
                                     .panelInfo=${this.rightPanelInfo}
-                                    @sl-reposition=${(e) => this.handleSlide(e)}
+                                    @sl-reposition=${this.handleSlide}
                     >
-                        <sl-icon slot="divider" name="grip-vertical" @dblclick=${() =>
-                        {
-                            this.hideRight();
-                        }}></sl-icon>
+                        <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>
                         <header slot="start" class="egw_fw_app__header header" part="content-header">
                             <slot name="header"><span class="placeholder">header</span></slot>
                         </header>

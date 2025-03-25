@@ -7,7 +7,7 @@ import {until} from "lit/directives/until.js";
 import "@shoelace-style/shoelace/dist/components/split-panel/split-panel.js";
 import styles from "./EgwFramework.styles";
 import {egw} from "../../api/js/jsapi/egw_global";
-import {SlAlert, SlDropdown, SlTab, SlTabGroup} from "@shoelace-style/shoelace";
+import {SlAlert, SlDropdown, SlTabGroup} from "@shoelace-style/shoelace";
 import {EgwFrameworkApp} from "./EgwFrameworkApp";
 import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
 
@@ -103,6 +103,12 @@ export class EgwFramework extends LitElement
 	@property({type: Array, attribute: "application-list"})
 	applicationList : ApplicationInfo[] = [];
 
+	/**
+	 * Special tabs that are not directly associated with an application (CRM)
+	 */
+	private _tabApps : { [id : string] : ApplicationInfo } = {};
+	private serializedTabState : string;
+
 	// Keep track of open popups
 	private _popups : Window[] = [];
 	private _popupsGCInterval : number;
@@ -110,12 +116,23 @@ export class EgwFramework extends LitElement
 	// Keep track of open messages
 	private _messages : SlAlert[] = [];
 
+	// Watch for things (apps) getting added
+	private appDOMObserver : MutationObserver
+
+	// Keep track of egw loaded
+	private _egwLoaded = Promise.resolve();
+
 	private get tabs() : SlTabGroup { return this.shadowRoot.querySelector("sl-tab-group");}
 
 
 	constructor()
 	{
 		super();
+
+		this._tabApps = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps') || null) || {};
+
+		this.handleAppDOMChange = this.handleAppDOMChange.bind(this);
+		this.appDOMObserver = new MutationObserver(this.handleAppDOMChange);
 		this.handleDarkmodeChange = this.handleDarkmodeChange.bind(this);
 	}
 	connectedCallback()
@@ -140,6 +157,7 @@ export class EgwFramework extends LitElement
 		super.disconnectedCallback();
 
 		document.body.removeEventListener("egw-darkmode-change", this.handleDarkmodeChange);
+		this.appDOMObserver.disconnect();
 	}
 
 	protected firstUpdated(_changedProperties : PropertyValues)
@@ -155,14 +173,16 @@ export class EgwFramework extends LitElement
 			}
 		});
 		// Load additional tabs
-		Object.values(this.tabApps).forEach(app => this.loadApp(app.name));
+		Object.values(this._tabApps).forEach(app => this.loadApp(app.name));
 
 		// Init timer
 		this.egw.add_timer('topmenu_info_timer');
 
 		// These need egw fully loaded
-		this.getEgwComplete().then(() =>
+		this.getEgwComplete().then(async() =>
 		{
+			// EGW is loaded now, but framework is not guaranteed to be rendered yet
+
 			// Register the "message" plugin
 			this.egw.registerJSONPlugin((type, res, req) =>
 			{
@@ -190,22 +210,10 @@ export class EgwFramework extends LitElement
 
 			// Deal with bug where avatar menu does not position correctly
 			(<SlDropdown>this.querySelector("#topmenu_info_user_avatar"))?.popup?.dispatchEvent(new Event("slotchange"));
+
+			// Listen for apps added / removed
+			this.appDOMObserver.observe(this, {childList: true});
 		});
-	}
-
-	/**
-	 * Special tabs that are not directly associated with an application (CRM)
-	 * @type {[]}
-	 * @private
-	 */
-	protected get tabApps() : { [id : string] : ApplicationInfo }
-	{
-		return JSON.parse(egw.getSessionItem('api', 'fw_tab_apps') || null) || {};
-	}
-
-	protected set tabApps(apps : { [id : string] : ApplicationInfo })
-	{
-		egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(apps));
 	}
 
 	get egw() : typeof egw
@@ -225,12 +233,11 @@ export class EgwFramework extends LitElement
 	 */
 	getEgwComplete()
 	{
-		let egwLoading = Promise.resolve();
 		if(typeof this.egw.window['egw_ready'] !== "undefined")
 		{
-			egwLoading = this.egw.window['egw_ready'];
+			this._egwLoaded = this.egw.window['egw_ready'];
 		}
-		return egwLoading;
+		return this._egwLoaded;
 	}
 
 	/**
@@ -258,7 +265,7 @@ export class EgwFramework extends LitElement
 			(menuaction ? '.' + menuaction[1] : '');
 	};
 
-	public getApplicationByName(appName)
+	public getApplicationByName(appName) : EgwFrameworkApp
 	{
 		return this.querySelector(`egw-app[name="${appName}"]`);
 	}
@@ -281,7 +288,7 @@ export class EgwFramework extends LitElement
 		{
 			if(active)
 			{
-				this.tabs.show(appname);
+				this.tabs?.show(appname);
 			}
 			if(url)
 			{
@@ -291,7 +298,7 @@ export class EgwFramework extends LitElement
 		}
 
 		const app = this.applicationList.find(a => a.name == appname) ??
-			this.tabApps[appname];
+			this._tabApps[appname];
 
 		if(!app)
 		{
@@ -306,18 +313,19 @@ export class EgwFramework extends LitElement
 		{
 			appComponent.title = app.title;
 		}
+		if(active)
+		{
+			appComponent.setAttribute("active", '');
+		}
 
 		this.append(appComponent);
 		// App was not in the tab list
 		if(typeof app.opened == "undefined")
 		{
 			app.opened = this.shadowRoot.querySelectorAll("sl-tab").length;
-			// Need to update tabApps directly, reference doesn't work
-			if(typeof this.tabApps[appname] == "object")
+			if(typeof this._tabApps[appname] == "object")
 			{
-				let tabApps = {...this.tabApps};
-				tabApps[appname] = app;
-				this.tabApps = tabApps;
+				this._tabApps[appname] = app;
 			}
 			this.requestUpdate("applicationList");
 		}
@@ -325,22 +333,69 @@ export class EgwFramework extends LitElement
 		// Wait until new tab is there to activate it
 		if(active || app.active)
 		{
-			// Wait for egw
-			this.getEgwComplete().then(() =>
+			// Wait for egw & redraw
+			Promise.all([this.getEgwComplete(), this.updateComplete]).then(async() =>
 			{
-				// Wait for redraw after getEgwComplete promise
-				this.updateComplete.then(() =>
+				do
 				{
-					// Tabs present
-					this.updateComplete.then(() =>
-					{
-						this.showTab(appname);
-					});
-				});
+					await this.updateComplete;
+				}
+				while(!this.tabs)
+				// Tabs present
+				await this.tabs.updateComplete;
+				this.tabs.show(appname);
 			});
 		}
 
 		return appComponent;
+	}
+
+	public closeApp(app : string | EgwFrameworkApp)
+	{
+		const applicationInfo = this._tabApps[typeof app == "string" ? app : app.id] ??
+			this.applicationList.find(a => a.name == (typeof app == "string" ? app : app.name));
+
+		if(!applicationInfo || !app)
+		{
+			return;
+		}
+
+		// Mark closed internally
+		this.closeTab(applicationInfo.name);
+
+		// Remove app component from DOM
+		const appComponent = this.querySelector(`egw-app#${applicationInfo.name}`);
+		if(appComponent)
+		{
+			appComponent.remove();
+			appComponent.hasSlotController = null;
+		}
+	}
+
+	private closeTab(tabName : string)
+	{
+		const applicationInfo = this._tabApps[tabName] ??
+			this.applicationList.find(a => a.name == tabName);
+
+		const active = applicationInfo.active || this.querySelector(`egw-app#${applicationInfo.name}`)?.getAttribute("active") != null;
+
+		// Just the tab, ignore the app element
+		delete applicationInfo.opened;
+		applicationInfo.active = false;
+		delete this._tabApps[tabName];
+
+		if(active)
+		{
+			const tab = this.tabs.querySelector('[panel=' + applicationInfo.name + ']');
+			this.showTab(tab.previousElementSibling?.getAttribute("panel") ?? tab.nextElementSibling?.getAttribute("panel"));
+		}
+		else
+		{
+			// Not visible, just update server with closed tab
+			this.updateTabs();
+		}
+
+		this.requestUpdate("applicationList");
 	}
 
 	public get activeApp() : EgwFrameworkApp
@@ -428,10 +483,9 @@ export class EgwFramework extends LitElement
 				opened: undefined
 			};
 			// Store only in session
-			let tabApps = {...this.tabApps};
-			tabApps[appname] = clone;
-			this.tabApps = tabApps;
+			this._tabApps[appname] = clone;
 			this.loadApp(appname, true);
+			this._setTabAppsSession();
 
 			return appname;
 		}
@@ -662,22 +716,25 @@ export class EgwFramework extends LitElement
 		this.showTab(event.target.activeTab.panel);
 	}
 
-	public showTab(appname)
+	public showTab(appname : string)
 	{
 		this.querySelectorAll("egw-app").forEach(app => app.removeAttribute("active"));
 
-		let appComponent = this.querySelector(`egw-app#${appname}`);
-		if(!appComponent)
-		{
-			appComponent = this.loadApp(appname);
-		}
+		let appComponent = this.loadApp(appname, true);
 		appComponent.setAttribute("active", "");
 
+		// Show it now
+		this.tabs?.show(appname)
+		// Keep it through updates
+
+		const applicationInfo = this._tabApps[appname] ??
+			this.applicationList.find(a => a.name == appname);
+		applicationInfo.active = true;
+
 		// Update the list on the server
-		const tabGroup : SlTabGroup = this.shadowRoot.querySelector("sl-tab-group.egw_fw__open_applications");
-		tabGroup.updateComplete.then(() =>
+		this.tabs.updateComplete.then(() =>
 		{
-			this.updateTabs(appComponent);
+			this.updateTabs();
 		});
 	}
 
@@ -686,30 +743,39 @@ export class EgwFramework extends LitElement
 	 */
 	protected handleApplicationTabClose(event)
 	{
-		const tabGroup : SlTabGroup = this.shadowRoot.querySelector("sl-tab-group.egw_fw__open_applications");
 		const tab = event.target;
-		const panel = tabGroup.querySelector(`sl-tab-panel[name="${tab.panel}"]`);
 
-		// Show the previous tab if the tab is currently active
-		if(tab.active)
+		// Remove egw-app from DOM
+		if(this.querySelector(`egw-app[id='${tab.panel}']`))
 		{
-			tabGroup.show(tab.previousElementSibling.panel);
+			this.closeApp(this.querySelector(`egw-app[id='${tab.panel}']`));
 		}
 		else
 		{
-			// Show will update, but closing in the background we call directly
-			tabGroup.updateComplete.then(() =>
-			{
-				this.updateTabs(tabGroup.querySelector("sl-tab[active]"));
-			});
+			this.closeTab(tab.panel);
 		}
+	}
 
-		// Remove the tab + panel
-		tab.remove();
-		if(panel)
+	/**
+	 * Watch for changes in child nodes (applications) and remove the application if its node is removed.
+	 *
+	 * @param mutationList
+	 * @param observer
+	 * @protected
+	 */
+	protected handleAppDOMChange(mutationList, observer)
+	{
+		mutationList.forEach(mutation =>
 		{
-			panel.remove();
-		}
+			mutation.removedNodes.forEach(removedNode =>
+			{
+				if(removedNode instanceof EgwFrameworkApp)
+				{
+					this.closeApp(removedNode);
+				}
+			})
+			mutation.addedNodes.forEach(addedNode => {});
+		});
 	}
 
 	/**
@@ -717,23 +783,26 @@ export class EgwFramework extends LitElement
 	 * tab status being used in order to open all previous opened
 	 * tabs and to activate the last active tab
 	 */
-	private updateTabs(activeTab)
+	private updateTabs()
 	{
 		//Send the current tab list to the server
-		let data = this.assembleTabList(activeTab);
+		let data = this.assembleTabList(this.activeApp);
 
-		// Update session tabs
-		let tabs = {};
-		Object.keys(this.tabApps).forEach((t) =>
+		// If no current app, use the first one
+		if(!this.activeApp && data.length)
 		{
-			if(data.some(d => d.appName == t))
+			data[0].active = true;
+		}
+		else
+		{
+			Object.keys(this._tabApps).forEach((t) =>
 			{
-				tabs[t] = this.tabApps[t];
-				tabs[t].active = t == activeTab.id;
-			}
-		});
-		this.tabApps = tabs;
-
+				if(data.some(d => d.appName == t))
+				{
+					this._tabApps[t].active = t == this.activeApp.id;
+				}
+			});
+		}
 
 		//Serialize the tab list and check whether it really has changed since the last
 		//submit
@@ -741,9 +810,10 @@ export class EgwFramework extends LitElement
 		if(serialized != this.serializedTabState)
 		{
 			this.serializedTabState = serialized;
-			if(this.tabApps)
+			if(this._tabApps)
 			{
-				this._setTabAppsSession(this.tabApps);
+				// Update session tabs
+				this._setTabAppsSession();
 			}
 			egw.jsonq('EGroupware\\Api\\Framework\\Ajax::ajax_tab_changed_state', [data]);
 		}
@@ -752,19 +822,32 @@ export class EgwFramework extends LitElement
 	private assembleTabList(activeTab)
 	{
 		let appList = []
-		Array.from(this.shadowRoot.querySelectorAll("sl-tab-group.egw_fw__open_applications sl-tab")).forEach((tab : SlTab) =>
+		const assembleApp = (app) =>
 		{
-			appList.push({appName: tab.panel, active: activeTab.id == tab.panel})
+			const obj = {appName: app.name};
+			if(activeTab && app.name == activeTab)
+			{
+				obj['active'] = true;
+			}
+			if(app.opened)
+			{
+				appList.push({appName: app.name, active: app.active})
+			}
+		};
+		Array.from(this.applicationList).forEach((app : ApplicationInfo) =>
+		{
+			assembleApp(app);
+		});
+		Object.values(this._tabApps).forEach((app : ApplicationInfo) =>
+		{
+			assembleApp(app);
 		});
 		return appList;
 	}
 
-	private _setTabAppsSession(_tabApps)
+	private _setTabAppsSession()
 	{
-		if(_tabApps)
-		{
-			egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(_tabApps));
-		}
+		egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(this._tabApps));
 	}
 
 	/**
@@ -833,7 +916,7 @@ export class EgwFramework extends LitElement
                                   @sl-tab-show=${this.handleApplicationTabShow}
                                   @sl-close=${this.handleApplicationTabClose}
                     >
-                        ${repeat([...this.applicationList, ...Object.values(this.tabApps)]
+                        ${repeat([...this.applicationList, ...Object.values(this._tabApps)]
                                 .filter(app => typeof app.opened !== "undefined" && app.status !== "5")
                                 .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>

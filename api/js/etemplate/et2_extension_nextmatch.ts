@@ -412,6 +412,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		jQuery(this.getInstanceManager().DOMContainer.parentNode).off('show.et2_nextmatch');
 		jQuery(this.getInstanceManager().DOMContainer.parentNode).off('hide.et2_nextmatch');
 
+		// Need to unbind show/hide handlers first
+		super.destroy();
+
 		// Free the grid components
 		this.dataview?.destroy();
 		this.dataview = null;
@@ -441,12 +444,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		this.columns = null;
 		this.settings = null;
 		this.options = null;
-		this.innerDiv.off().empty().remove();
+		this.innerDiv?.off().empty().remove();
 		this.innerDiv = null;
-		this.div.off().empty().remove();
-		this.div = null;
+		this.div?.off().empty().remove();
+		this.div = [];
 
-		super.destroy();
 	}
 
 	getController()
@@ -3435,13 +3437,13 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		this.nextmatch = null;
 
 		super.destroy();
-		Array.from(this.div.find('*')).forEach(n =>
+		Array.from(this.div?.find('*') ?? []).forEach(n =>
 		{
 			n.destroy && n.destroy();
 			n.remove && n.remove();
 		})
-		this.div.empty();
-		this.div.remove();
+		this.div?.empty();
+		this.div?.remove();
 		this.div = null;
 		this.headers.forEach(h =>
 		{
@@ -3462,7 +3464,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		this.row_div?.remove();
 		this.row_div = null;
 		this.right_div?.empty();
-		this.right_div.remove();
+		this.right_div?.remove();
 		this.right_div = null;
 		this.fav_span?.remove();
 		this.fav_span = null;
