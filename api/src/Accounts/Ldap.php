@@ -1176,9 +1176,23 @@ class Ldap
 	{
 		if (!(int) $account_id || !($account_lid = $this->id2name($account_id))) return false;
 
-		$sri = ldap_search($this->ds,$this->group_context,'(&(objectClass=posixGroup)(memberuid='.Api\Ldap::quote($account_lid).'))',array('cn','gidnumber'));
-		$memberships = array();
-		foreach((array)ldap_get_entries($this->ds, $sri) as $key => $data)
+		$uids = [$account_lid];
+		// if $account_lid is mixed case, try also to query memberships with lower- and upper-cased name, as memberUid is case-sensitive!
+		if (empty($this->frontend->config['case_sensitive_username']))
+		{
+			if (strtolower($account_lid) !== $account_lid)
+			{
+				$uids[] = strtolower($account_lid);
+			}
+			if (strtoupper($account_lid) !== $account_lid)
+			{
+				$uids[] = strtoupper($account_lid);
+			}
+		}
+		$sri = ldap_search($this->ds, $this->group_context,'(&(objectClass=posixGroup)(|(memberuid='.
+			implode(')(memberuid=', array_map('EGroupware\\Api\\Ldap::quote', $uids)).')))',array('cn','gidnumber'));
+		$memberships = [];
+		foreach(ldap_get_entries($this->ds, $sri) ?: [] as $key => $data)
 		{
 			if ($key === 'count') continue;
 
