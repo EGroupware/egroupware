@@ -3885,11 +3885,8 @@ app.classes.mail = AppJS.extend(
 			nm._set_autorefresh(0);
 		}
 
-		// Remove from nm immediately
-		if (!messages["all"])
-		{
-			this.refresh(nm, messages.msg, et2_nextmatch.DELETE);
-		}
+		// Remove from nm immediately so the user gets immediate feedback, we send an error message later in case something went wrong
+		this.refresh(nm, messages.msg, et2_nextmatch.DELETE);
 
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
