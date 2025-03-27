@@ -672,7 +672,7 @@ export class EgwFrameworkApp extends LitElement
 			return nothing;
 		}
 
-		return html`${repeat(this._sideboxData, (menu) => menu['menu_name'], this._threeDotsMenuItemTemplate)}`;
+		return html`${repeat(this._sideboxData, (menu) => menu['menu_name'], this._threeDotsMenuItemTemplate.bind(this))}`;
 	}
 
 	_threeDotsMenuItemTemplate(menu)
@@ -684,7 +684,7 @@ export class EgwFrameworkApp extends LitElement
                 <sl-menu-item>
                     <et2-image style="width:1em;" src="fav_filter" slot="prefix"></et2-image>
                     ${menu["title"]}
-                    <et2-favorites-menu slot="submenu" application="${this.appName}"></et2-favorites-menu>
+                    <et2-favorites-menu slot="submenu" application="${this.name}"></et2-favorites-menu>
                 </sl-menu-item>
 			`;
 		}
