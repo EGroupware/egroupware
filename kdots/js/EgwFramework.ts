@@ -890,7 +890,9 @@ export class EgwFramework extends LitElement
 	render()
 	{
 		const iconSize = getComputedStyle(this).getPropertyValue("--icon-size");
-		const statusPosition = this.egw?.preference("statusPosition", "common") ?? parseInt(iconSize) ?? "36";
+		// Snap positions need to be in pixels
+		const statusSnap = (parseInt(iconSize) + 6) + 'px';
+		const statusPosition = this.egw?.preference("statusPosition", "common") ?? parseInt(statusSnap) ?? "36";
 
 		const classes = {
 			"egw_fw__base": true
@@ -925,7 +927,7 @@ export class EgwFramework extends LitElement
                 </header>
                 <div class="egw_fw__divider">
                     <sl-split-panel part="status-split" position-in-pixels="${statusPosition}" primary="end"
-                                    snap="150px ${iconSize} 0px"
+                                    snap="150px ${statusSnap} 0px"
                                     snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
                                     aria-label="Side menu resize">
                         <main slot="start" part="main" class="egw_fw__main">

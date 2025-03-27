@@ -108,7 +108,7 @@ body #egw_message {
   z-index: var(--sl-z-index-dropdown);
 }
 egw-framework#egw_fw_basecontainer {
-  --icon-size: 32px;
+  --icon-size: 40px;
   --sl-tooltip-arrow-size: 0;
   /* Internals */
   /* Content slotted inside */
@@ -118,9 +118,9 @@ egw-framework#egw_fw_basecontainer::part(status-split) {
   --max: 15em;
 }
 egw-framework#egw_fw_basecontainer::part(header) {
-  --icon-size: 32px;
+  --icon-size: 40px;
   --tab-icon-size: var(--icon-size);
-  --tab-icon-size-active: 40px;
+  --tab-icon-size-active: 46px;
   color: var(--primary-background-color);
   gap: var(--sl-spacing-medium);
   font-size: var(--icon-size);
@@ -156,7 +156,7 @@ egw-framework#egw_fw_basecontainer div#egw_fw_sidebar_r {
 }
 egw-framework#egw_fw_basecontainer div#egw_fw_sidebar_r et2-avatar,
 egw-framework#egw_fw_basecontainer div#egw_fw_sidebar_r et2-lavatar {
-  --size: 26px;
+  --size: 40px;
 }
 egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
   display: flex;
