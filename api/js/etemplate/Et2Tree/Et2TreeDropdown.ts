@@ -194,6 +194,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 			this._tree._selectOptions = <TreeItemData[]>options;
 			this._tree.requestUpdate("_selectOptions");
+			// Trigger displayLabel change
+			this.value = this.value;
 		}
 	}
 
