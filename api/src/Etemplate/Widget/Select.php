@@ -642,7 +642,7 @@ class Select extends Etemplate\Widget
 					}
 					else	// optgroup
 					{
-						foreach($val as $k => $v)
+						foreach(($val['children'] ?? $val) as $k => $v)
 						{
 							$values[] = is_array($v) && isset($v['value']) ? $v['value'] : $k;
 						}

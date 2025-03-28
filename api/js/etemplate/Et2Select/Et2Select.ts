@@ -452,8 +452,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 
 		// value not in options --> use emptyLabel, if exists, or first option otherwise
-		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
-			Array.isArray(option.value) && option.value.filter(o => valueArray.find(val => val == o.value))).length === 0)
+		if(valueArray.filter(val => this.optionSearch(val, this.select_options, "value", "children") ||
+			// Legacy children as value
+			this.optionSearch(val, this.select_options, "value", "value")).length == 0)
 		{
 			let oldValue = this.value;
 			this.value = this.emptyLabel ? "" : "" + this.select_options[0]?.value;
@@ -538,20 +539,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				const filteredArray = arrayToFilter.filter(item =>
 				{
 					// Check if item is found in options
-					return !options.some(option =>
-					{
-						if(typeof option.value === 'string')
-						{
-							// Regular option
-							return option.value === item;
-						}
-						else if(Array.isArray(option.value))
-						{
-							// Recursively check if item is found in nested array (option groups)
-							return filterBySelectOptions([item], option.value).length > 0;
-						}
-						return false;
-					});
+					return !this.optionSearch(item, options, "value", "children") &&
+						// Legacy children as value
+						!this.optionSearch(value, options, "value", "value");
 				});
 
 				return filteredArray;
@@ -1171,7 +1161,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 ${this._extraTemplate()}
                 <slot name="prefix" slot="prefix"></slot>
                 <slot></slot>
+                <slot name="helpText" slot="helpText"></slot>
             </sl-select>
+            ${this._helpTextTemplate()}
 		`;
 	}
 }

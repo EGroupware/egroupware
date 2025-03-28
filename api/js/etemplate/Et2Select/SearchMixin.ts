@@ -393,7 +393,9 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					// Check to see if value is for an option we do not have
 					for(const newValueElement of this.getValueAsArray())
 					{
-						if(this.optionSearch(newValueElement))
+						if(this.optionSearch(newValueElement, null, "value", "children") ||
+							// Legacy children as value
+							this.optionSearch(newValueElement, null, "value", "value"))
 						{
 							continue;
 						}
