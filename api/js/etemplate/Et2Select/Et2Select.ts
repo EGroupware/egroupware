@@ -534,7 +534,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		if(!this.readonly && value && value.length > 0 && !this.allowFreeEntries && this.select_options.length > 0)
 		{
-			function filterBySelectOptions(arrayToFilter, options : SelectOption[])
+			const filterBySelectOptions = (arrayToFilter, options : SelectOption[]) =>
 			{
 				const filteredArray = arrayToFilter.filter(item =>
 				{
