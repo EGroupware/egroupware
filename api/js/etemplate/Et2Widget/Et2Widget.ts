@@ -1251,9 +1251,15 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 					let ids = (new et2_arrayMgr()).explodeKey(_id);
 					let widget : Et2WidgetClass = this;
-					for(let i = 0; i < ids.length && widget !== null; i++)
+					while(widget && ids.length)
 					{
-						widget = widget.getWidgetById(ids[i]);
+						const joined = ids.join("[") + "]";
+						const previous = widget
+						widget = widget.getWidgetById(ids.shift());
+						if(!widget)
+						{
+							return previous.getWidgetById(joined);
+						}
 					}
 					return widget;
 				}
