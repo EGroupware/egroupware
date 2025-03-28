@@ -251,8 +251,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.displayLabel = "";
 		if(!this.multiple)
 		{
-			const option = this.optionSearch(this.__value[0], this.select_options, 'value', 'item') ??
-				this.optionSearch(this.__value[0], this.select_options, 'value', 'children');
+			const option = this.optionSearch(this.value, this.select_options, 'value', 'item') ??
+				this.optionSearch(this.value, this.select_options, 'value', 'children');
 			if(option)
 			{
 				this.displayLabel = option.label ?? option.text;
