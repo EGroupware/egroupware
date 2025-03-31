@@ -142,7 +142,15 @@ class File extends Etemplate\Widget
 			else
 			{
 				// Just one file
-				static::process_uploaded_file($field, $files, $mime, $file_data);
+				try
+				{
+					static::process_uploaded_file($field, $files, $mime, $file_data);
+				}
+				catch (\Exception $e)
+				{
+					// Send error on original name
+					$file_data[$_REQUEST['resumableRelativePath']] = $e->getMessage();
+				}
 			}
 			// Check for a callback, call it if there is one
 			if ($widget)
@@ -202,7 +210,15 @@ class File extends Etemplate\Widget
 		else
 		{
 			$chunk_name = $temp_dir . '/' . str_replace('/', '_', $_REQUEST['resumableFilename']) . '.part' . (int)$_REQUEST['resumableChunkNumber'];
-			return file_exists($chunk_name) ? http_response_code(200) : http_response_code(204);
+			if($_REQUEST['resumableChunkNumber'] == $_REQUEST['resumableTotalChunks'])
+			{
+				// Failed after uploading all chunks - force re-upload and re-process
+				return http_response_code(204);
+			}
+			else
+			{
+				return file_exists($chunk_name) ? http_response_code(200) : http_response_code(204);
+			}
 		}
 	}
 	/**
