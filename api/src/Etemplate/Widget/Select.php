@@ -765,16 +765,16 @@ class Select extends Etemplate\Widget
 			case 'select-cat':
 				// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
 				$application = $widget ? $widget->attrs['application'] ?? $widget->getElementAttribute($form_name, 'application') : "";
-				$application = self::expand_name($application, 0, 0, '', '', self::$cont) ?? $type3;
+				$application = self::expand_name($application, 0, 0, '', '', self::$cont) ?: $type3;
 				$globalCategories = $widget ? $widget->attrs['globalCategories'] ?? $widget->getElementAttribute($form_name, 'globalCategories') : "";
-				$globalCategories = self::expand_name($globalCategories, 0, 0, '', '', self::$cont) ?? $rows;
+				$globalCategories = self::expand_name($globalCategories, 0, 0, '', '', self::$cont) ?: $rows;
 				// set default of true (ajax_get_options uses a legacy_options string, which means nothing set is "")
 				if ($globalCategories === null || $globalCategories === '')
 				{
 					$globalCategories = true;
 				}
 				$parentCat = $widget ? $widget->attrs['parentCat'] ?? $widget->getElementAttribute($form_name, 'parentCat') : "";
-				$parentCat = self::expand_name($parentCat, 0, 0, '', '', self::$cont) ?? $type4;
+				$parentCat = self::expand_name($parentCat, 0, 0, '', '', self::$cont) ?: $type4;
 
 				if((!$application || $application === $GLOBALS['egw']->categories->app_name) &&
 					(!$type5 || $type5 == $GLOBALS['egw']->categories->account_id))
