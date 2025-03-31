@@ -1256,7 +1256,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 						const joined = ids.join("[") + "]";
 						const previous = widget
 						widget = widget.getWidgetById(ids.shift());
-						if(!widget)
+						if(!widget && previous !== this)
 						{
 							return previous.getWidgetById(joined);
 						}
