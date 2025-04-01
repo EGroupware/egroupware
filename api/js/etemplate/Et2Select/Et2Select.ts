@@ -665,6 +665,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	/** Sets focus on the control. */
 	focus(options? : FocusOptions)
 	{
+		super.focus();
 		this.handleFocus();
 	}
 

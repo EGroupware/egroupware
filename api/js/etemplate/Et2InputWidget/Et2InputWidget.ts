@@ -9,6 +9,8 @@ import {ManualMessage} from "../Validators/ManualMessage";
 import {Required} from "../Validators/Required";
 import {EgwValidationFeedback} from "../Validators/EgwValidationFeedback";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
+import {Et2TabPanel} from "../Layout/Et2Tabs/Et2TabPanel";
+import type {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 
 
 /**
@@ -46,6 +48,8 @@ export declare class Et2InputWidgetInterface
 	public resetDirty() : void;
 
 	public isValid(messages : string[]) : boolean;
+
+	public focus() : void;
 }
 
 /**
@@ -673,6 +677,19 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		getInputNode()
 		{
 			return this.shadowRoot?.querySelector('input');
+		}
+
+		async focus()
+		{
+			const tab = <Et2TabPanel>this.closest('et2-tab-panel');
+			if(tab && tab.name)
+			{
+				(<Et2Tabs>tab.parentElement).show(tab.name);
+				await (<Et2Tabs>tab.parentElement).updateComplete;
+			}
+			this.scrollIntoView();
+			super.focus && super.focus();
+			this.getInputNode()?.focus();
 		}
 
 		transformAttributes(attrs)
