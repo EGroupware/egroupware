@@ -470,7 +470,13 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 						else if (user < 0)
 						{
 							// Group, but no users found.  Need those.
-							egw.accountData(parseInt(user),'account_fullname',true,function(result) {
+							egw.accountData(parseInt(user), 'account_fullname', true, (result) =>
+							{
+								if(result && resource)
+								{
+									// Add users into group
+									resource.resources = Object.keys(result);
+								}
 								this.invalidate();
 							},this);
 						}
