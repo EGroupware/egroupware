@@ -317,17 +317,16 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 				width: auto;
 			  }
 
-			  ::slotted([slot='input']) {
-				flex: 1 1 auto;
-				min-width: 12ex;
-			  }
-
-			  /* Scroll buttons */
-
+				/* Scroll buttons */
 				.form-control-input {
-				position: relative;
+					position: relative;
 					display: flex;
-			  }
+
+					et2-textbox {
+						flex: 1 1 auto;
+						min-width: 12ex;
+					}
+				}
 
 				.form-control-input:hover .et2-date-time__scrollbuttons {
 				display: flex;
