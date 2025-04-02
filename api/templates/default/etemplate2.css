@@ -4132,6 +4132,11 @@ button.shortcut-buttons-flatpickr-button {
 	z-index: auto;
 }
 
+/* Minimum height for editor */
+.tox.tox-tinymce {
+	min-height: 8em;
+}
+
 /* Right-align "As PDF" checkbox in merge dialog */
 et2-vfs-select-dialog.egw_app_merge_document et2-checkbox {
 	order: 10;
