@@ -116,12 +116,12 @@ class DateTime extends \DateTime
 				{
 					$t_str = $time;
 					if (is_numeric($time) && strlen($time) == 8) $t_str .= 'T000000';	// 'Ymd' string used in calendar to represent a date
-					// $time ending in a Z (Zulu or UTC time), is unterstood by DateTime class itself
+					// $time ending in a Z (Zulu or UTC time), is understood by DateTime class itself
 					try {
 						parent::__construct($t_str,$tz);
 						break;
 					}
-					catch(\Exception $e) {
+					catch(\Throwable $e) {
 						// if string is numeric, ignore the exception and treat string as timestamp
 						if (!is_numeric($time)) throw $e;
 					}
