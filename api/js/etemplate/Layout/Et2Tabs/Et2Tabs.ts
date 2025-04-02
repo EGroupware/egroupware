@@ -52,6 +52,15 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			::slotted(et2-tab-panel:not([active])) {
     			display: none;
 			}
+
+				:host([tabheight]) {
+					overflow: hidden;
+
+					.tab-group {
+						min-height: initial;
+					}
+				}
+
 			`
 		];
 	}
@@ -80,7 +89,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			 * Leave unset to size automatically from either parent height attribute, or height of first tabpanel
 			 * Set to 'auto' to allow tab height to flex to fill parent element
 			 */
-			tabHeight: {type: String},
+			tabHeight: {type: String, reflect: true},
 
 			/**
 			 * @deprecated use "placement" instead
