@@ -391,6 +391,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				if(this.searchEnabled)
 				{
 					// Check to see if value is for an option we do not have
+					const checking = []
 					for(const newValueElement of this.getValueAsArray())
 					{
 						if(this.optionSearch(newValueElement, null, "value", "children") ||
@@ -400,8 +401,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 							continue;
 						}
 
-						this._missingOption(newValueElement);
+						checking.push(this._missingOption(newValueElement));
 					}
+					// SlSelect removes missing options from its value
+					Promise.all(checking).then(() => { this.select.value = this.value});
 				}
 			}
 		}
@@ -672,7 +675,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		protected _missingOption(newValueElement : string)
 		{
 			// Given a value we need to search for - this will add in all matches, including the one needed
-			this.remoteSearch(newValueElement, this.searchOptions).then((result : SelectOption[]) =>
+			return this.remoteSearch(newValueElement, this.searchOptions).then((result : SelectOption[]) =>
 			{
 				// Re-set / update value since SlSelect probably removed it by now due to missing option
 				if(typeof this.select != "undefined")
