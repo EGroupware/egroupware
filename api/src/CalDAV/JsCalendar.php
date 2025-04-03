@@ -1226,7 +1226,7 @@ class JsCalendar extends JsBase
 		$relatedTo = [];
 		if ($info_id_parent && ($parent = self::getInfolog()->read($info_id_parent)))
 		{
-			$relatedTo[$parent['info_uid']] = [
+			$relatedTo[self::uid($parent['info_uid'])] = [
 				self::AT_TYPE => self::TYPE_RELATION,
 				'relation' => 'parent',
 			];
