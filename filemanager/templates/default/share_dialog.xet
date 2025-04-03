@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="filemanager.share_dialog" template="" lang="" group="0" version="1.9.003"
-              onload="widget = widget.widgetContainer.getWidgetById('share_link'); app.filemanager.copy_share_link(ev,widget)">
+              onload="widget = widget.getWidgetById('share_link'); app.filemanager.copy_share_link(ev,widget)">
         <et2-hbox>
             <et2-textbox id="share_link" onclick="app.filemanager.copy_share_link" noLang="1" readonly="true">
             <!-- just let this click bubble -->

@@ -62,6 +62,9 @@ export class Et2Template extends Et2Widget(LitElement)
 	@property()
 	content : string;
 
+	@property({type: Function})
+	onload : Function;
+
 	/**
 	 * Cache of known templates
 	 * @type {{[name : string] : Element}}
