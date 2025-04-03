@@ -5839,8 +5839,9 @@ app.classes.mail = AppJS.extend(
 		var id,fromaddress,domain, email = '';
 		var data = {};
 		var items = [];
-		var nm = this.et2.getWidgetById(this.nm_index);
-
+		//if call happens from a popup this.et2 is the wrong reference --- see mail_deleteMessages
+		const nm = this.et2.getWidgetById(this.nm_index) ??
+			window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index)
 		// called action for a single row from toolbar
 		if (_senders.length == 0)
 		{
