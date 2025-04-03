@@ -6,11 +6,13 @@
 			<columns>
 				<column width="140"/>
 				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@token">
 					<et2-description value="Token"></et2-description>
 					<et2-textbox id="token" readonly="true" onclick="app.admin.copyClipboard(this)" class="token"></et2-textbox>
+					<et2-button image="copy" noSubmit="true" statustext="Copy to clipboard" onclick="app.admin.copyClipboard(document.querySelector('#admin-token-edit_token'))"/>
 				</row>
 				<row disabled="@admin">
 					<et2-description for="password" value="Current password"></et2-description>
