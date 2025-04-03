@@ -176,9 +176,9 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		super.destroy();
 
 		// Delete all old objects
-		this._actionObject.clear();
-		this._actionObject.unregisterActions();
-		this._actionObject.remove();
+		this._actionObject?.clear && this._actionObject.clear();
+		this._actionObject?.unregisterActions && this._actionObject.unregisterActions();
+		this._actionObject?.remove && this._actionObject.remove();
 		this._actionObject = null;
 
 		this.div.off();
