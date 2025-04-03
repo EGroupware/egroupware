@@ -1301,6 +1301,7 @@ class mail_compose
 		$content['showtempname']=0;
 		//if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merging content with uploadforCompose:'.array2string($content['attachments']));
 		$content['attachments'] = array_merge($content['attachments'] ?? [], $content['uploadForCompose'] ?? []);
+		unset($content['uploadForCompose']);
 		//if (is_array($content['attachments'])) foreach($content['attachments'] as $k => &$file) $file['delete['.$file['tmp_name'].']']=0;
 		$content['no_griddata'] = empty($content['attachments']);
 		$preserv['attachments'] = $content['attachments'];
