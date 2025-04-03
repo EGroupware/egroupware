@@ -1456,8 +1456,13 @@ export class filemanagerAPP extends EgwApp
 
 		let copy_link_to_clipboard = function (evt): Promise<boolean> {
 			const target = evt.currentTarget;
-			target.select();
-			target.setSelectionRange(0, 99999) //For mobile devices
+			//if target is an editable field select the current content
+			//mostly this will be et2-textbox_ro so no selection possible or needed
+			if(target.select && target.setSelectionRange)
+			{
+				target.select();
+				target.setSelectionRange(0, 99999) //For mobile devices
+			}
 			try
 			{
 				return navigator.clipboard.writeText(target.value).then(() => {
