@@ -412,7 +412,7 @@ class calendar_ical extends calendar_boupdate
 				$exceptions = array();
 
 				// dont use "virtual" exceptions created by participant status for GroupDAV or file export
-				if (!in_array($this->productManufacturer,array('file','groupdav')))
+				if (!in_array($this->productManufacturer,array('file','groupdav','full')))
 				{
 					$filter = isset($this->supportedFields['participants']) ? 'rrule' : 'tz_rrule';
 					$exceptions = $this->so->get_recurrence_exceptions($event, $tzid, 0, 0, $filter);
