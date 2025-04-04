@@ -60,7 +60,7 @@
 						<et2-description  id="${row}[title]" noLang="1"></et2-description>
 						<et2-description  id="${row}[first_org]" noLang="1"></et2-description>
 					</et2-vbox>
-					<et2-lavatar  src="$row_cont[photo]" contactId="$row_cont[id]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"></et2-lavatar>
+					<et2-lavatar  src="$row_cont[photo]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"></et2-lavatar>
 					<et2-vbox>
 						<et2-hbox style="position: relative; left: -10px">
 							<et2-description  id="${row}[adr_one_postalcode]" noLang="1"></et2-description>
