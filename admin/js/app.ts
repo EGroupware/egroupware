@@ -83,6 +83,8 @@ class AdminApp extends EgwApp
 		this.iframe = null;
 		this.nm = null;
 		this.acl_dialog = null;
+		this.tree?.destroy && this.tree.destroy();
+		this.tree?.remove && this.tree.remove();
 		this.tree = null;
 
 		// call parent
