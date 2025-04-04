@@ -11,6 +11,7 @@
 import {Et2Avatar} from "./Et2Avatar";
 import shoelace from "../Styles/shoelace";
 import {css} from "lit";
+import {property} from "lit/decorators/property.js";
 
 /**
  * Avatars are used to represent a person or profile.  LAvatar has a coloured background.
@@ -52,23 +53,11 @@ export class Et2LAvatar extends Et2Avatar
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
+	@property()
+	lname = "";
 
-			lname: {type: String},
-
-			fname: {type: String},
-		}
-	}
-
-	constructor()
-	{
-		super();
-		this.lname = "";
-		this.fname = "";
-	}
+	@property()
+	fname = "";
 
 	/**
 	 * Handle changes that have to happen based on changes to properties
@@ -80,15 +69,11 @@ export class Et2LAvatar extends Et2Avatar
 
 		if(changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contactId") || changedProperties.has("src"))
 		{
-			if(!this.src || decodeURIComponent(this.src).match("lavatar=1") && (this.fname || this.lname) && this.contactId)
+			if(!this.image || decodeURIComponent(this.image).match("lavatar=1") && (this.fname || this.lname) && this.contactId)
 			{
 				let lavatar = Et2LAvatar.lavatar(this.fname, this.lname, this.contactId);
 				this.initials = lavatar.initials;
 				this._baseNode.style.backgroundColor = lavatar.background;
-			}
-			else if(this.src)
-			{
-				this.image = this.src;
 			}
 
 			if(this.lname || this.fname)

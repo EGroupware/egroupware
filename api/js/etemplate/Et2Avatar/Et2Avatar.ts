@@ -10,6 +10,7 @@
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {css} from "lit";
+import {property} from "lit/decorators/property.js";
 import {SlAvatar} from "@shoelace-style/shoelace";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {egw} from "../../jsapi/egw_global";
@@ -58,69 +59,42 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * The label of the image
-			 * Actually not used as label, but we put it as title
-			 */
-			label: {
-				type: String
-			},
+	/**
+	 * The label of the image
+	 * Actually not used as label, but we put it as title
+	 */
+	@property()
+	label = "";
 
-			/**
-			 * Contact id should be either user account_id {account:number} or contact_id {contact:number or number}
-			 */
-			contactId: {type: String, noAccessor: true},
+	/**
+	 * The shape of the avatar
+	 * circle | square | rounded
+	 */
+	@property({type: String, reflect: true})
+	shape : string = "rounded";
 
-			/**
-			 * Image
-			 * Displayed image
-			 * @deprecated
-			 */
-			src: {type: String},
+	/**
+	 * Make avatar widget editable to be able to crop profile picture or upload a new photo
+	 */
+	@property({type: Boolean}) editable = false;
 
-			/**
-			 * The shape of the avatar
-			 * circle | square | rounded
-			 */
-			shape: {
-				type: String,
-				reflect: true
-			},
+	@property({type: String, reflect: true})
+	image = "";
 
-			/**
-			 * Make avatar widget editable to be able to crop profile picture or upload a new photo
-			 */
-			editable: {type: Boolean},
+	@property({type: Boolean})
+	crop = false;
 
-			image: {
-				type: String,
-				reflect: true
-			},
-
-			crop: {type: Boolean},
-
-			/**
-			 * Explicitly specify the avatar size.
-			 * Better to set the --size CSS variable in app.css, since it allows inheritance and overriding
-			 */
-			size: {type: String}
-		}
-	}
+	/**
+	 * Explicitly specify the avatar size.
+	 * Better to set the --size CSS variable in app.css, since it allows inheritance and overriding
+	 */
+	@property()
+	size
 
 	constructor()
 	{
 		super();
-		this.src = "";
-		this.label = "";
-		this.contactId = "";
-		this.editable = false;
-		this.crop = false;
-		this.icon = "";
-		this.shape = "rounded";
+		this.image = this.image || this.getAttribute("src");
 	}
 
 	/**
@@ -186,6 +160,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 	 *
 	 * @param {string} _contactId contact id could be as above-mentioned formats
 	 */
+	@property({type: String, noAccessor: true})
 	set contactId(_contactId : string)
 	{
 		let params = {};
@@ -215,14 +190,17 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 		let oldContactId = this._contactId;
 		this._contactId = _contactId;
 		// if our image (incl. cache-buster) already includes the correct id, use that one
-		if (!parsedId)
+		if(_contactId)
 		{
-			this.image = null;
-		}
-		else if(!this.image || !this.image.match("(&|\\?)" + id + "=" + encodeURIComponent(parsedId) + "(&|$)"))
-		{
-			params[id] = parsedId;
-			this.image = this.egw().link('/api/avatar.php', params);
+			if(!parsedId)
+			{
+				this.image = null;
+			}
+			else if(!this.image || !this.image.match("(&|\\?)" + id + "=" + encodeURIComponent(parsedId) + "(&|$)"))
+			{
+				params[id] = parsedId;
+				this.image = this.egw().link('/api/avatar.php', params);
+			}
 		}
 		this.requestUpdate("contactId", oldContactId);
 	}
@@ -440,7 +418,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 	 */
 	getDetachedAttributes(_attrs : string[])
 	{
-		_attrs.push("contactId", "label", "href", "src", "image", "statustext");
+		_attrs.push("contactId", "label", "href", "image", "statustext");
 	}
 
 	getDetachedNodes()
