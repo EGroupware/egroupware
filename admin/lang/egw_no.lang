@@ -246,6 +246,7 @@ group ?	admin	no	Gruppe?
 group has been added	common	no	Gruppen er lagt til
 group has been deleted	common	no	Gruppen er slettet
 group has been updated	common	no	Gruppen er oppdatert
+group hidden from non-admins	admin	no	Gruppe skjult for ikke-admins
 group hierarchy	admin	no	Gruppehierarki
 group list	admin	no	Gruppeliste
 group manager	admin	no	Gruppeleder

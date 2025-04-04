@@ -14,6 +14,7 @@ by	timesheet	id	oleh
 category for 'working time'	admin	id	Kategori untuk 'Waktu kerja'
 change owner when updating	timesheet	id	Ubah pemilik saat memperbarui
 changed status	timesheet	id	status yang diubah
+choose 'creator' of imported data	timesheet	id	Pilih 'pembuat' data yang diimpor
 comment by %1 at %2:	timesheet	id	Komentar oleh %1 pada %2:
 create a single 'working time' timesheet per	timesheet	id	Membuat satu lembar waktu 'Waktu kerja' per
 create new links	timesheet	id	Bikin tautan baru
@@ -39,6 +40,7 @@ error deleting the entry!!!	timesheet	id	Error deleting the entry!!!
 error saving the entry!!!	timesheet	id	Error saving the entry!!!
 error storing working time	timesheet	id	Kesalahan menyimpan waktu kerja
 existing links	timesheet	id	Tautan yang ada
+exports entries from your timesheet into a csv file.	timesheet	id	Mengekspor entri dari Lembar Waktu ke file CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	id	Mengekspor entri dari Lembar Waktu ke dalam file CSV. Di Tab opsi Anda juga dapat memilih pemisah lainnya.
 field must not be empty !!!	timesheet	id	Field tidak boleh kosong !!!
 forgot to switch off working time?	common	id	Lupa mematikan waktu kerja?
@@ -49,6 +51,7 @@ history	timesheet	id	Riwayat
 history logging	admin	id	Catatan riwayat
 id	timesheet	id	ID
 ignore	timesheet	id	Ignore
+imports entries into the timesheet from a csv file.	timesheet	id	Mengimpor entri ke dalam Lembar Waktu dari file CSV
 last modified	timesheet	id	Pengubahan terakhir
 last month	timesheet	id	Bulan lalu
 last week	timesheet	id	Minggu lalu
@@ -111,6 +114,9 @@ ticket modified by %1 at %2	timesheet	id	Tiket diubah oleh %1 pada %2
 timer already running or paused	common	id	Pengatur waktu sudah berjalan atau dijeda
 timesheet	common	id	Lembaran Waktu
 timesheet csv export	timesheet	id	Ekspor CSV LembarWaktu
+timesheet csv import	timesheet	id	Impor CSV Lembar Waktu
+timesheet id	timesheet	id	ID Lembar Waktu
+timesheet list	timesheet	id	Daftar lembar waktu
 timesheet modified by %1 at %2	timesheet	id	LembarWaktu diubah oleh %1 pada %2
 timesheet status-%1 '%2' added.	timesheet	id	Status-%1 LembarWaktu '%2' ditambahkan.
 timesheet-%1 '%2' updated.	timesheet	id	LembarWaktu-%1 '%2' diperbarui.

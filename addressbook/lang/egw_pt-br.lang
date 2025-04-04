@@ -57,6 +57,7 @@ all types	addressbook	pt-br	Todos os tipos
 allow	addressbook	pt-br	Permitir
 allow for contacts only	addressbook	pt-br	Permitir somente para contatos
 allow members of following groups to edit contact-data of accounts	addressbook	pt-br	Permitir que os membros dos seguintes grupos editem os dados de contato das contas
+allow members of following groups to show the account name column	addressbook	pt-br	Permitir que os membros dos grupos a seguir mostrem a coluna do nome da conta
 allow users to maintain their own account-data	admin	pt-br	Permitir usuários a manter seus próprios dados de contatos
 alt. csv import	addressbook	pt-br	Importar CSV
 always	addressbook	pt-br	Sempre
@@ -142,7 +143,6 @@ csv-filename	addressbook	pt-br	CSV-Nome do Arquivo
 custom	addressbook	pt-br	Personalizado
 custom etemplate for the contactform	addressbook	pt-br	eTemplate personalizado para o formulário de contatos
 custom fields	addressbook	pt-br	Campos personalizados
-data exchange settings	addressbook	pt-br	Configurações de troca de dados
 default	addressbook	pt-br	Padrão
 default action on double-click	addressbook	pt-br	Ação padrão ao clicar duas vezes
 default address format	addressbook	pt-br	Formato padrão de endereço
@@ -404,6 +404,7 @@ select a view	addressbook	pt-br	Selecionar uma exibição
 select addressbook type	addressbook	pt-br	Selecionar tipo de Livro de Contatos
 select all	addressbook	pt-br	Selecionar todos
 select an opened dialog	addressbook	pt-br	Selecionar uma caixa de diálogo aberta
+select contacts to add to mail	addressbook	pt-br	Selecionar contatos para adicionar ao e-mail
 select migration type	admin	pt-br	Selecionar tipo de migração
 select multiple contacts for a further action	addressbook	pt-br	Selecione múltiplos contatos para ação posterior
 select phone number as prefered way of contact	addressbook	pt-br	Selecione telefone como forma preferida de contato

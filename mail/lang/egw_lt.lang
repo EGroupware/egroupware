@@ -43,6 +43,7 @@ continue	mail	lt	Tęsti
 convert mail to item and attach its attachments to this item (standard)	mail	lt	Konvertuoti el. laišką į elementą ir pridėti jo priedus prie šio elemento (standartinis)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	lt	Konvertuoti el. laišką į elementą, pridėti jo priedus ir pridėti neapdorotą pranešimą (.eml) kaip priedą
 convert only mail to item (ignore possible attachments)	mail	lt	Konvertuoti tik el. laišką į elementą (ignoruoti galimus priedus)
+copied %1 message(s) from %2 to %3	mail	lt	Nukopijuotas %1 pranešimas (-ai) iš %2 į %3.
 cross account forward attachment is not allowed!	mail	lt	Kryžminės paskyros pirmyn priedas neleidžiamas!
 current subject	mail	lt	Dabartinė tema
 default toolbar actions shown in mail's html editor	mail	lt	HTML redaktoriaus įrankių juostoje įjungtos funkcijos kuriant el. laišką
@@ -79,6 +80,7 @@ forward to	mail	lt	Pirmyn į
 get acl rights failed from imap server!	mail	lt	Nepavyko gauti ACL teisių iš IMAP serverio!
 ham folder	mail	lt	Kumpio aplankas
 handling of external http images / mixed content in mails	mail	lt	Išorinių http vaizdų / mišraus turinio tvarkymas el. laiškuose
+hide from	mail	lt	Paslėpti Nuo
 high priority	mail	lt	Aukštas prioritetas
 html	mail	lt	HTML
 ident name	mail	lt	Identifikatoriaus pavadinimas
@@ -135,6 +137,7 @@ modify subject	mail	lt	Pakeisti temą
 modify subject of this message	mail	lt	Pakeiskite šio pranešimo temą
 move selected to	mail	lt	Pasirinktas perkėlimas į
 move to	mail	lt	Perkelti į
+moved %1 message(s) from %2 to %3	mail	lt	Perkeltas %1 pranešimas (-ai) iš %2 į %3.
 name and domain	mail	lt	Vardas ir domenas
 name and email	mail	lt	Vardas ir el. pašto adresas
 name of account	mail	lt	Sąskaitos pavadinimas
@@ -207,6 +210,7 @@ security	mail	lt	Saugumas
 see attachments for content of the orignial mail	mail	lt	Pradinio el. laiško turinį žr. prieduose
 select an existing entry in order to append mail content to it	mail	lt	Pasirinkite esamą įrašą, norėdami prie jo pridėti laiško turinį
 select an item to read	mail	lt	Pasirinkite elementą, kurį norite perskaityti
+select mail addresses from addressbook	mail	lt	Pasirinkite pašto adresus iš adresų knygos
 select or insert email address	mail	lt	Pasirinkite arba įterpkite el. pašto adresą
 selected date range (with quicksearch)	mail	lt	Pasirinktas datos intervalas (naudojant greitąją paiešką)
 send message and move to send folder (if configured)	mail	lt	Siųsti žinutę ir perkelti į siuntimo aplanką (jei sukonfigūruota)
@@ -216,6 +220,7 @@ set predefined values for compose...	mail	lt	Nustatykite iš anksto nustatytas r
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	lt	Ar parašas turėtų būti įterpiamas po (standartinio) ar prieš atsakymą ar persiuntimą, taip pat ar parašas turėtų būti matomas ir keičiamas sudarymo metu.
 show all addresses	mail	lt	Rodyti visus adresus
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	lt	rodyti visus aplankus (prenumeruojamus ir neprenumeruojamus) pagrindiniame ekrano aplankų lange.
+show horizontal, hide if none selected	mail	lt	Rodyti horizontaliai, paslėpti, jei nepasirinktas nė vienas
 show notification for new arriving mails	mail	lt	Rodyti pranešimus apie naujai gautus laiškus
 show test connection section and control the level of info displayed?	mail	lt	Rodyti bandomojo ryšio skyrių ir valdyti rodomos informacijos lygį?
 show test connection section and control the level of info displayed??	mail	lt	Rodyti bandomojo ryšio skiltį ir valdyti rodomos informacijos lygį?
@@ -236,6 +241,8 @@ sneak preview in list	mail	lt	Pranešimo peržiūra
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	lt	Kai kurie klientai nesugeba nustatyti teisingos ženklų rinkmenos, jei įjungtos srautinės eilutės
 spamtitan api url	mail	lt	SpamTitan API URL
 spamtitan integration requires epl version	mail	lt	SpamTitan integracijai reikia EPL versijos
+the %1 's acl removed from the %2	mail	lt	%1 ACL pašalinta iš %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	lt	Iš %2 pašalintas %1 ACL, įskaitant jo pakatalogius.
 the imap server need to meet certain requirements and be configured for it:	mail	lt	IMAP serveris turi atitikti tam tikrus reikalavimus IR būti sukonfigūruotas:
 the rule with priority %1 successfully saved!	mail	lt	Taisyklė su prioritetu %1 sėkmingai išsaugota!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	lt	Neliko vietos sieve scenarijui saugoti, patikrinkite sieve_maxscriptsize parinktį savo pašto serverio konfigūracijoje.
@@ -247,6 +254,7 @@ toggled on actions	mail	lt	Perjungti veiksmus
 trash	mail	lt	Šiukšliadėžė
 trash folder	mail	lt	Aplankas šiukšliadėžė
 unconditional	mail	lt	Visada
+validate addresses on submit:	mail	lt	Patvirtinkite adresus pateikdami:
 you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lt	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	lt	Šį sertifikatą galite įtraukti į savo kontaktą, jei pasitikite šiuo parašu.

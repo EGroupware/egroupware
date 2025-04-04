@@ -68,7 +68,6 @@ theme (colors/fonts) selection	preferences	zh-tw	選擇畫面配置（顏色及�
 this server is located in the %1 timezone	preferences	zh-tw	這台伺服器主機放置於 %1 時區
 time format	preferences	zh-tw	時間格式
 use default	preferences	zh-tw	預設值
-users choice	preferences	zh-tw	使用者選擇
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	zh-tw	當您選擇"是"，首頁與登出圖示會顯示在導覽列中
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh-tw	CSV 格式檔案希望使用的字元編碼，預設會與安裝一致。
 which currency symbol or name should be used in egroupware.	preferences	zh-tw	您希望在EGroupware中使用什麼貨幣符號或名稱。

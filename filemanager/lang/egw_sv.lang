@@ -114,9 +114,11 @@ no version history for this file/directory	filemanager	sv	Ingen versionshistorik
 noone	filemanager	sv	Ingen
 notebookbar	filemanager	sv	Flikad
 open	filemanager	sv	Öppen
+open documents with collabora, if permissions are given	filemanager	sv	Öppna dokument med Collabora Online, om behörigheter ges
 operation	filemanager	sv	Åtgärd
 password for webdav and smb, use $pass for password of logged in user	filemanager	sv	Lösenord för WebDAV och SMB, använd $pass för lösenord för inloggad användare
 path and query-parameters, smb: share and optional path (with /)	filemanager	sv	Sökväg och frågeparametrar, SMB: delning och valfri sökväg (med /)
+permission denied!	filemanager	sv	Tillstånd nekat!
 permissions	filemanager	sv	Behörigheter
 please select a file to delete.	filemanager	sv	Välj fil för radering
 preview	filemanager	sv	Förhandsgranska
@@ -148,6 +150,9 @@ saved %1	filemanager	sv	Sparade %1
 search for '%1'	filemanager	sv	Sök efter '%1'
 show	filemanager	sv	Visa
 size	filemanager	sv	Storlek
+smb, webdavs and vfs require a username!	filemanager	sv	SMB, WebDAV och VFS kräver ett användarnamn!
+smb: mount samba or windows fileserver shares	filemanager	sv	SMB: Montera Samba- eller Windows-filserverandelar
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	sv	Dokumentet kan innehålla platshållare som {{%3}}, som ska ersättas med data (%1full lista över platshållarnamn%2).
 total files	filemanager	sv	Totalt antal filer
 unused space	filemanager	sv	Ledigt utrymme
 up	filemanager	sv	Upp
@@ -155,6 +160,7 @@ updated comment for %1	filemanager	sv	Uppdaterad kommentar för %1
 upload fields	filemanager	sv	Ladda upp fält
 upload files	filemanager	sv	Ladda upp filer
 used space	filemanager	sv	Använt diskutrymme
+username for webdav and smb, use $user for name of logged in user	filemanager	sv	Användarnamn för WebDAV och SMB, använd $user för namnet på den inloggade användaren
 you do not have access to %1	filemanager	sv	Du har inte behörighet till %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	sv	Du måste bli superuser för att aktivera eller inaktivera versionshantering för en mapp!
 your home dir did not exist, egroupware created a new one.	filemanager	sv	Det fanns ingen hemkatalog för dig, EGroupware skapade en ny åt dig.

@@ -232,6 +232,7 @@ group ?	admin	tr	Grup?
 group has been added	common	tr	Grup eklendi
 group has been deleted	common	tr	Grup silindi
 group has been updated	common	tr	Grup güncellendi
+group hidden from non-admins	admin	tr	Yönetici olmayanlardan gizlenen grup
 group hierarchy	admin	tr	Grup hiyerarşisi
 group list	admin	tr	Grup listesi
 group manager	admin	tr	Grup Yöneticisi

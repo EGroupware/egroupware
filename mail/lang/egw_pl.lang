@@ -55,6 +55,7 @@ continue	mail	pl	Fortsett
 convert mail to item and attach its attachments to this item (standard)	mail	pl	Konwertowanie wiadomości e-mail na element i dołączanie załączników do tego elementu (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	pl	Konwersja wiadomości e-mail do elementu, dołączenie załączników i dodanie nieprzetworzonej wiadomości (.eml) jako załącznika
 convert only mail to item (ignore possible attachments)	mail	pl	Konwertowanie tylko wiadomości e-mail do elementu (ignorowanie ewentualnych załączników)
+copied %1 message(s) from %2 to %3	mail	pl	Skopiowano %1 wiadomości z %2 do %3.
 copy to	mail	pl	Kopiuj do
 cross account forward attachment is not allowed!	mail	pl	Dołączanie do konta forward jest zabronione!
 current subject	mail	pl	Aktualny temat
@@ -142,6 +143,7 @@ greater than	mail	pl	Większe niż
 ham folder	mail	pl	Folder Ham
 handling of external http images / mixed content in mails	mail	pl	Obsługa zewnętrznych obrazów http / zawartości mieszanej w wiadomościach e-mail
 header lines	mail	pl	Linie nagłówka
+hide from	mail	pl	Ukryj Od
 high priority	mail	pl	Wysoki priorytet
 how to forward messages	mail	pl	Sposób przekazywania wiadomości
 html	mail	pl	HTML
@@ -209,6 +211,7 @@ move selected to	mail	pl	Przenieś wiadomości do
 move to	mail	pl	Przenieś do
 move to archive	mail	pl	Przenieś do folderu archiwum
 move to trash	mail	pl	Przenieś do kosza
+moved %1 message(s) from %2 to %3	mail	pl	Przeniesiono %1 wiadomości z %2 do %3.
 name and domain	mail	pl	Nazwa i domena
 name and email	mail	pl	Imię i adres e-mail
 name of account	mail	pl	Nazwa konta
@@ -311,6 +314,7 @@ see attachments for content of the orignial mail	mail	pl	Zobacz załączniki dla
 select all	mail	pl	Zaznacz wszystkie
 select an existing entry in order to append mail content to it	mail	pl	Wybierz istniejący wpis, aby dołączyć do niego treść wiadomości e-mail
 select an item to read	mail	pl	Wybierz element do przeczytania
+select mail addresses from addressbook	mail	pl	Wybieranie adresów e-mail z książki adresowej
 select or insert email address	mail	pl	Wybierz lub wstaw adres e-mail
 selected date range (with quicksearch)	mail	pl	Zakres dat (z szybkim wyszukiwaniem)
 send message and move to send folder (if configured)	mail	pl	Wyślij wiadomość i przenieś do folderu wysyłania (jeśli skonfigurowano)
@@ -324,6 +328,7 @@ set predefined values for compose...	mail	pl	Ustaw predefiniowane wartości dla 
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pl	Czy podpis powinien być wstawiany po (standardowo) lub przed odpowiedzią lub przesłaniem dalej oraz czy podpis powinien być widoczny i możliwy do zmiany podczas tworzenia.
 show all addresses	mail	pl	Pokaż wszystkie adresy
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pl	Pokazywanie wszystkich folderów (subskrybowanych i niesubskrybowanych) w panelu folderów na ekranie głównym.
+show horizontal, hide if none selected	mail	pl	Pokaż poziomo, ukryj, jeśli nie wybrano żadnego
 show notification for new arriving mails	mail	pl	Wyświetlaj powiadomienia o nowych wiadomościach
 show test connection section and control the level of info displayed?	mail	pl	Pokazywać sekcję połączenia testowego i kontrolować poziom wyświetlanych informacji?
 show test connection section and control the level of info displayed??	mail	pl	Pokazać sekcję połączenia testowego i kontrolować poziom wyświetlanych informacji?
@@ -350,6 +355,8 @@ start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości m
 template folder	mail	pl	Katalog szablnów
 text	mail	pl	Tekst
 text/plain	mail	pl	Tekst
+the %1 's acl removed from the %2	mail	pl	Lista ACL %1 została usunięta z %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	pl	Lista ACL %1, w tym jej podfoldery, została usunięta z %2.
 the imap server need to meet certain requirements and be configured for it:	mail	pl	Serwer IMAP musi spełniać określone wymagania ORAZ być odpowiednio skonfigurowany:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pl	Nadawca wiadomości poprosił o potwierdzenie przeczytania wiadomości. Czy chcesz je wysłać?
 the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości.
@@ -370,6 +377,7 @@ unread	mail	pl	nieprzeczytane
 vacation notice	mail	pl	Powiadomienie urlopowe
 vacation notice is active	mail	pl	Powiadomienie urlopowe jest aktywne
 vacation start-date must be before the end-date!	mail	pl	Start Urlopu musi być wcześniejszy niż jego koniec
+validate addresses on submit:	mail	pl	Weryfikacja adresów przy wysyłaniu:
 view header lines	mail	pl	Pokaż linie nagłówka
 when deleting messages	mail	pl	Gdy usuwasz wiadomość
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"

@@ -140,7 +140,6 @@ custom url for ical with holidays for all users	calendar	it	URL personalizzato p
 custom_2	common	it	Libero/Impegnato
 daily	calendar	it	Giornaliero
 daily tables	calendar	it	Tabelle giornaliere
-data exchange settings	calendar	it	Impostazioni di scambio dati
 date for the day of the week	calendar	it	Data per il giorno della settimana
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	it	Data per il giorno della settimana, disponibile per la prima voce in ogni giorno della settimana oppure tabella giornaliera nell'intervallo selezionato.
 date range	calendar	it	Intervallo di date
@@ -492,7 +491,7 @@ reject	calendar	it	Rifiuta
 rejected	calendar	it	Rifiutato
 removes the event from my calendar	calendar	it	Rimuove l'evento dal mio calendario
 repeat days	calendar	it	Giorni di ripetizione
-repeat the event until which date (empty means unlimited)	calendar	it	ripeti l'evento fino a che data (vuoto significa illimitato)
+repeat the event until which date (empty means unlimited)	calendar	it	Ripeti l'evento fino a che data (vuoto significa illimitato)
 repeat type	calendar	it	Tipo di ripetizione
 repeating event information	calendar	it	Informazioni sugli eventi ricorrenti
 repeating interval, eg. 2 to repeat every second week	calendar	it	intervallo di ripetizione, es. 2 per ripetere ogni seconda settimana
@@ -582,7 +581,6 @@ startdate / -time	calendar	it	Data/ora iniziale
 startdate and -time of the search	calendar	it	Data/ora iniziale della ricerca
 startdate of the export	calendar	it	Data iniziale dell'esportazione
 startrecord	calendar	it	Primo Record
-status	calendar	it	Stato
 status already applied	calendar	it	Stato già applicato
 status changed	calendar	it	Stato modificato
 status for all future scheduled days changed	calendar	it	Stato per tutti gli eventi futuri modificato

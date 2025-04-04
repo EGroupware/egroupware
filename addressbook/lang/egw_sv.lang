@@ -45,6 +45,8 @@ all contacts	addressbook	sv	Alla kontakter
 all types	addressbook	sv	Alla typer
 allow	addressbook	sv	Tillåt
 allow for contacts only	addressbook	sv	Tillåt endast för kontakter
+allow members of following groups to edit contact-data of accounts	addressbook	sv	Tillåt medlemmar i följande grupper att redigera kontaktdata för konton
+allow members of following groups to show the account name column	addressbook	sv	Tillåt medlemmar i följande grupper att visa kolumnen för kontonamn
 allow users to maintain their own account-data	admin	sv	Tillåt användare att underhålla sin egen kontaktinformation
 alt. csv import	addressbook	sv	Alternativ CSV import
 always	addressbook	sv	Alltid
@@ -331,6 +333,7 @@ select a view	addressbook	sv	Välj vy
 select addressbook type	addressbook	sv	Välj adressbok typ
 select all	addressbook	sv	Välj samtliga
 select an opened dialog	addressbook	sv	Välj en öppnad dialogruta
+select contacts to add to mail	addressbook	sv	Välj kontakter som ska läggas till i e-postmeddelandet
 select migration type	admin	sv	Välj migreringstyp
 select multiple contacts for a further action	addressbook	sv	Välj flera kontakter för åtgärd
 select phone number as prefered way of contact	addressbook	sv	Välj telefonnummer som kontaktväg

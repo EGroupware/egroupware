@@ -247,6 +247,7 @@ group ?	admin	lv	Grupa?
 group has been added	common	lv	Grupa tika pievienota
 group has been deleted	common	lv	Grupa tika izdzēsta
 group has been updated	common	lv	Grupa tika atjaunināta
+group hidden from non-admins	admin	lv	Grupa paslēpta no personām, kas nav administratori
 group hierarchy	admin	lv	Grupu hierarhija
 group list	admin	lv	Grupu saraksts
 group manager	admin	lv	Grupu pārvaldnieks

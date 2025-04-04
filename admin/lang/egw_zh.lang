@@ -298,6 +298,7 @@ group ?	admin	zh	群组？
 group has been added	common	zh	组已添加
 group has been deleted	common	zh	组已删除
 group has been updated	common	zh	组已更新
+group hidden from non-admins	admin	zh	对非管理员隐藏的组
 group hierarchy	admin	zh	组层次结构
 group list	admin	zh	组列表
 group manager	admin	zh	组管理

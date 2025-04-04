@@ -35,6 +35,7 @@ all incl. rejected	calendar	uk	Усі, включно з відхиленими
 allow booking requests from any user when creating events?	calendar	uk	Дозволити запити на бронювання від будь-якого користувача при створенні подій?
 allow party crashers with email that match the following regular expression	calendar	uk	Дозволити "прогульників" з електронною поштою, яка відповідає наступному регулярному виразу
 allow users to prevent change notifications ('do not notify')	calendar	uk	Дозволити користувачам запобігати сповіщенням про зміни "Не сповіщати
+allows to edit the event again	calendar	uk	Дозволяє повторно редагувати подію
 always	calendar	uk	Завжди
 always use full edit dialog	calendar	uk	Завжди використовувати повне вікно редагування
 always use the full edit dialog, not this little dialog	calendar	uk	Завжди використовувати повне діалогове вікно редагування, а не це маленьке діалогове вікно
@@ -93,6 +94,7 @@ explicit recurrences	calendar	uk	Явні повторення
 extended	calendar	uk	Розширений
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	uk	Розширені зміни завжди включають всі подробиці події. iCal формат може бути імпортовано іншими програмами ведення Календарю.
 fieldseparator	calendar	uk	Розділитель полів
+find free timeslots where the selected participants are available for the given timespan	calendar	uk	Знайдіть вільні часові проміжки, в які обрані учасники будуть доступні протягом заданого періоду часу
 firstname of person to notify	calendar	uk	Ім'я людини для повідомлення
 format of event updates	calendar	uk	Формат змін події
 fri	calendar	uk	Пт
@@ -187,6 +189,7 @@ recordings	calendar	uk	Записи
 recurring event	calendar	uk	Періодична подія
 rejected	calendar	uk	Відхилено
 removes the event from my calendar	calendar	uk	Видаляє подію з мого календаря
+repeat the event until which date (empty means unlimited)	calendar	uk	Повторити подію до якої дати (Порожнє для необмеженої кількості)
 repeat type	calendar	uk	Тип повтору
 repeating event information	calendar	uk	Інформація періодичної події
 repetition	calendar	uk	Повторення
@@ -196,6 +199,7 @@ report	calendar	uk	Звіт
 reset	calendar	uk	Переввести
 rule	calendar	uk	Правило
 sat	calendar	uk	Сб
+saves the event ignoring the conflict	calendar	uk	Зберігає подію, ігноруючи конфлікт
 scheduling conflict	calendar	uk	Конфлікт розкладу
 send notifications	calendar	uk	Надіслати сповіщення
 send notifications to users right now	calendar	uk	Надіслати сповіщення учасникам прямо зараз
@@ -211,7 +215,6 @@ sort by	calendar	uk	Відсортувати по
 start date/time	calendar	uk	Число/Час початку
 startdate	calendar	uk	Число початку
 startrecord	calendar	uk	Початковий запис
-status	calendar	uk	Статус
 submit to repository	calendar	uk	Передати в Репозитарій
 sun	calendar	uk	Нд
 tentative	calendar	uk	Попередньо

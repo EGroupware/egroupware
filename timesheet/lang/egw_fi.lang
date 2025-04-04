@@ -131,7 +131,6 @@ start timer	common	fi	Käynnistä ajastin
 start-time can not be before last stop- or pause-time %1!	common	fi	Aloitusaika ei voi olla ennen viimeisintä pysäytys- tai taukoaikaa %1!
 starttime	timesheet	fi	Aloitusaika
 starttime has to be before endtime !!!	timesheet	fi	Aloitusajan pitää olla ennen päättymiaikaa
-status	timesheet	fi	Tila
 status deleted.	timesheet	fi	Tila poistettu.
 status of created timesheets	timesheet	fi	Luotujen merkintöjen tila.
 status updated.	timesheet	fi	Tila päivitetty.

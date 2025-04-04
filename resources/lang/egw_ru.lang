@@ -124,6 +124,7 @@ select/deselect all	resources	ru	Выбрать/отменить выбор вс
 short description	resources	ru	Краткое описание
 short description of resource	resources	ru	Краткое описание ресурса
 show calendar of resource	resources	ru	Показать календарь ресурса
+show in title (beside name)	resources	ru	Показать в заголовке (рядом с названием)
 something went wrong by deleting resource	resources	ru	Что-то пошло не так при удалении ресурса
 something went wrong by saving resource	resources	ru	Что-то пошло не так при сохранении ресурса
 storage	resources	ru	Хранилище

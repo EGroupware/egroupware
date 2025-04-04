@@ -76,8 +76,10 @@ modified between	filemanager	uk	Змінено між
 mountpoints	filemanager	uk	Точки монтування
 notebookbar	filemanager	uk	З табуляцією
 open	filemanager	uk	відкрито
+open documents with collabora, if permissions are given	filemanager	uk	Відкривайте документи за допомогою Collabora Online, якщо надані дозволи
 password for webdav and smb, use $pass for password of logged in user	filemanager	uk	Пароль для WebDAV і SMB, використовуйте $pass як пароль користувача, що увійшов до системи
 path and query-parameters, smb: share and optional path (with /)	filemanager	uk	Шлях і параметри запиту, SMB: ресурс і необов'язковий шлях (з /)
+permission denied!	filemanager	uk	У дозволі відмовлено!
 permissions	filemanager	uk	Дозволи
 protocol to use	filemanager	uk	Протокол для використання
 protocols	filemanager	uk	Протоколи
@@ -96,4 +98,8 @@ renamed %1 to %2	filemanager	uk	Перейменовано %1 на %2
 renamed %1 to %2.	filemanager	uk	Перейменовано %1 на %2
 replacements for inserting entries into documents	filemanager	uk	Заміни для вставки записів у документи
 save as zip	filemanager	uk	Зберегти як ZIP
+smb, webdavs and vfs require a username!	filemanager	uk	SMB, WebDAV та VFS потребують імені користувача!
+smb: mount samba or windows fileserver shares	filemanager	uk	SMB: Підключіть спільні ресурси файлового сервера Samba або Windows
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	uk	Документ може містити заповнювач типу {{%3}}, який буде замінено на дані (%1повний список назв заповнювачів%2).
+username for webdav and smb, use $user for name of logged in user	filemanager	uk	Ім'я користувача для WebDAV і SMB, використовуйте $user як ім'я користувача, що увійшов до системи
 you need to become root, to enable or disable versioning on a directory!	filemanager	uk	Вам необхідно стати суперкористувачем, щоб увімкнути або вимкнути версійність теки!

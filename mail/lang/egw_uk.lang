@@ -44,6 +44,7 @@ continue	mail	uk	Продовжити
 convert mail to item and attach its attachments to this item (standard)	mail	uk	Конвертувати лист в імейл і прикріпити його вкладення до цього імейлу (стандартно)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	uk	Конвертувати імейл в імейл, прикріпити його вкладення та додати сире повідомлення (.eml) як вкладення
 convert only mail to item (ignore possible attachments)	mail	uk	Конвертувати тільки імейл в елемент (ігнорувати можливі вкладення)
+copied %1 message(s) from %2 to %3	mail	uk	Скопійовано %1 повідомлення з %2 до %3.
 cross account forward attachment is not allowed!	mail	uk	Перехресне прикріплення форвардного рахунку не допускається!
 current subject	mail	uk	Поточна тема
 default toolbar actions shown in mail's html editor	mail	uk	Функції, які вмикаються на панелі інструментів HTML-редактора під час створення листа
@@ -89,6 +90,7 @@ from	mail	uk	Від
 get acl rights failed from imap server!	mail	uk	Не вдалося отримати права ACL від сервера IMAP!
 ham folder	mail	uk	Тека "Шинка
 handling of external http images / mixed content in mails	mail	uk	Обробка зовнішніх http-зображень / змішаного контенту в листах
+hide from	mail	uk	Приховати Від
 high priority	mail	uk	Високий пріоритет
 html	mail	uk	HTML
 ident name	mail	uk	Ім'я користувача
@@ -146,6 +148,7 @@ modify subject of this message	mail	uk	Змінити тему цього пов
 move selected to	mail	uk	Перемістити вибране до
 move to	mail	uk	Перемістити до
 move to archive	mail	uk	Перемістити до папки архіву
+moved %1 message(s) from %2 to %3	mail	uk	Переміщено %1 повідомлення з %2 до %3.
 name and domain	mail	uk	Ім'я та домен
 name and email	mail	uk	Ім'я та email
 name of account	mail	uk	Назва облікового запису
@@ -220,6 +223,7 @@ security	mail	uk	Безпека
 see attachments for content of the orignial mail	mail	uk	Вміст оригінального листа див. у вкладених файлах
 select an existing entry in order to append mail content to it	mail	uk	Виберіть існуючий запис, щоб додати до нього вміст листа
 select an item to read	mail	uk	Виберіть елемент для читання
+select mail addresses from addressbook	mail	uk	Виберіть поштові адреси з адресної книги
 select or insert email address	mail	uk	Виберіть або вставте адресу електронної пошти
 selected date range (with quicksearch)	mail	uk	Вибраний діапазон дат (за допомогою швидкого пошуку)
 send message and move to send folder (if configured)	mail	uk	Надіслати повідомлення та перемістити до папки відправки (якщо налаштовано)
@@ -229,6 +233,7 @@ set predefined values for compose...	mail	uk	Встановити заздале
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	uk	Чи потрібно вставляти підпис після (стандартний) або перед відповіддю або пересиланням, а також чи повинен підпис бути видимим і змінюваним під час створення повідомлення.
 show all addresses	mail	uk	Показати всі адреси
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	uk	показувати всі папки (підписані і не підписані) в панелі папок на головному екрані.
+show horizontal, hide if none selected	mail	uk	Показувати по горизонталі, приховувати, якщо не вибрано жодного
 show notification for new arriving mails	mail	uk	Показувати сповіщення про нові листи
 show test connection section and control the level of info displayed?	mail	uk	Показувати розділ тестового з'єднання і контролювати рівень інформації, що відображається?
 show test connection section and control the level of info displayed??	mail	uk	Показувати розділ тестового з'єднання і керувати рівнем інформації, що відображається?
@@ -250,6 +255,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	u
 spamtitan api url	mail	uk	SpamTitan API URL
 spamtitan integration requires epl version	mail	uk	Для інтеграції SpamTitan потрібна версія EPL
 text	mail	uk	Текст
+the %1 's acl removed from the %2	mail	uk	ACL %1 видалено з %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	uk	Видалено ACL %1, включно з підкаталогами, з %2.
 the imap server need to meet certain requirements and be configured for it:	mail	uk	Сервер IMAP повинен відповідати певним вимогам і бути налаштований для цього:
 the rule with priority %1 successfully saved!	mail	uk	Правило з пріоритетом %1 успішно збережено!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	uk	Не залишилося місця для зберігання скрипту Sieve, будь ласка, перевірте параметр sieve_maxscriptsize у конфігурації вашого поштового сервера.
@@ -261,6 +268,7 @@ toggled on actions	mail	uk	Увімкнені дії
 trash	mail	uk	Смітник
 trash folder	mail	uk	папка сміття
 unconditional	mail	uk	Завжди
+validate addresses on submit:	mail	uk	Підтвердити адреси після надсилання:
 write	mail	uk	Записати
 you can select what info to be displayed on email tag	mail	uk	Ви можете вибрати, яка інформація буде відображатися в тезі листа.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	uk	Ви можете використовувати $$start$$ для вказаної вище дати початку і $$end$$ для дати завершення.

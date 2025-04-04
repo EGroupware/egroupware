@@ -354,6 +354,7 @@ group ?	admin	cs	Skupina?
 group has been added	common	cs	Skupina byla přidána.
 group has been deleted	common	cs	Skupina byla smazána.
 group has been updated	common	cs	Skupina byla aktualizována.
+group hidden from non-admins	admin	cs	Skupina skrytá pro uživatele, kteří nejsou správci
 group hierarchy	admin	cs	Hierarchie skupin
 group list	admin	cs	Seznam skupin
 group manager	admin	cs	Správce skupin

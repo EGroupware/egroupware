@@ -62,6 +62,7 @@ all types	addressbook	nl	Alle types
 allow	addressbook	nl	Toestaan
 allow for contacts only	addressbook	nl	Alleen toestaan voor contactpersonen
 allow members of following groups to edit contact-data of accounts	addressbook	nl	Sta alle leden van de volgende groepen toe alle contact data te wijzigen van accounts
+allow members of following groups to show the account name column	addressbook	nl	Leden van de volgende groepen toestaan om contactgegevens van accounts te bewerken
 allow users to maintain their own account-data	admin	nl	Laat gebruikers toe hun eigen accountgegevens te beheren
 alt. csv import	addressbook	nl	Alternatief CSV-bestand importeren
 always	addressbook	nl	Altijd
@@ -160,7 +161,6 @@ csv-filename	addressbook	nl	CSV-Bestandsnaam
 custom	addressbook	nl	Aangepast
 custom etemplate for the contactform	addressbook	nl	Aangepaste eTemplate voor het contactformulier
 custom fields	addressbook	nl	Aangepast velden
-data exchange settings	addressbook	nl	Data exchange instellingen
 default	addressbook	nl	Standaard
 default action on double-click	addressbook	nl	Standaard actie bij dubbel klikken
 default address format	addressbook	nl	Standaard adresformaat
@@ -440,6 +440,7 @@ select a view	addressbook	nl	Kies een weergave
 select addressbook type	addressbook	nl	Kies een adresboek type
 select all	addressbook	nl	Alles selecteren
 select an opened dialog	addressbook	nl	Selecteer een geopend dialoogvenster
+select contacts to add to mail	addressbook	nl	Selecteer contactpersonen om toe te voegen aan e-mail
 select migration type	admin	nl	Kies een migratie type
 select multiple contacts for a further action	addressbook	nl	Kies meerdere contacten voor verdere actie
 select phone number as prefered way of contact	addressbook	nl	Kies een telefoonnummer als een voorkeur tot contact

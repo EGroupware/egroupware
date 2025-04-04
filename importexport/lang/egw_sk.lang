@@ -1,7 +1,7 @@
 %1 definition(s) %2	importexport	sk	%1 definícií %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	sk	%1 definícií %2, %3 zlyhalo kvôli nedostatočným oprávneniam!
 %1 definitions %2	importexport	sk	%1 definícií %2
-%1 is not a known user or group	importexport	sk	%1 nie je známym používateľom alebo skupinou
+%1 is not a known user or group	importexport	sk	%1 nie je známym používateľom alebo skupinou.
 %1 is not readable	importexport	sk	%1 sa nedá čítať.
 %1 is not writable	importexport	sk	%1 sa nedá zapisovať.
 %1 records processed	importexport	sk	%1 záznamov bolo spracovaných.
@@ -15,7 +15,7 @@ add a new definition	importexport	sk	Pridať novú definíciu
 add an additional condition	importexport	sk	Pridať doplňujúcu podmienku
 addressbook csv import	importexport	sk	Adresár - import CSV
 addressbook vcard import	importexport	sk	Adresár - import vCard
-admin disabled exporting	importexport	sk	Export zakázaný správcom
+admin disabled exporting	importexport	sk	Export zakázaný správcom.
 all custom fields	importexport	sk	Všetky vlastné polia
 all encodings	importexport	sk	Všetky kódovania
 all users	importexport	sk	Všetci používatelia

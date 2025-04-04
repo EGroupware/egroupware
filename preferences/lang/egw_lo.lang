@@ -75,7 +75,6 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	lo	ລະຫັດຜ່ານທັງສອງແມ່ນບໍ່ຄືກັນ
 theme (colors/fonts) selection	preferences	lo	ຮູບແບບ
 this server is located in the %1 timezone	preferences	lo	ເຊີບເວີ້ນີ້ຕັ້ງຢູ່ %1 ເຂດເວລາ
-thousands separator is only used for displaying and not for editing numbers.	preferences	lo	ການແບ່ງຫຼັກພັນແມ່ນໃຊ້ພຽງແຕ່ການສະແດງ ແລະ ບໍ່ໄດ້ໃຊ້ໃນການແກ້ໄຂຈຳນວນ
 time format	preferences	lo	ຮູບແບບເວລາ
 use default	preferences	lo	ໃຊ້ຄ່າເລີ່ມຕົ້ນ
 users choice	preferences	lo	ທາງເລືອກຂອງຜູ້ໃຊ້

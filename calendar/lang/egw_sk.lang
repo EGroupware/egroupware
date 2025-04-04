@@ -140,7 +140,6 @@ custom url for ical with holidays for all users	calendar	sk	Vlastný URL pre iCa
 custom_2	common	sk	Voľný/zaneprázdnený
 daily	calendar	sk	Denne
 daily tables	calendar	sk	Denné tabuľky
-data exchange settings	calendar	sk	Nastavenia pre výmenu údajov
 date for the day of the week	calendar	sk	Dátum pre deň v týždni
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	sk	Dátum pre deň-v-týždni, dostupný pre prvú položku v rámci každého dňa v týždni alebo dennej tabuľky v rámci vybraného rozsahu.
 date range	calendar	sk	Rozsah dátumu
@@ -579,7 +578,6 @@ startdate / -time	calendar	sk	Dátum/čas začiatku
 startdate and -time of the search	calendar	sk	Dátum/čas začiatku hľadania
 startdate of the export	calendar	sk	Dátum/čas začiatku exportu
 startrecord	calendar	sk	Prvý záznam
-status	calendar	sk	Stav
 status already applied	calendar	sk	Stav sa už aplikoval.
 status changed	calendar	sk	Stav sa zmenil
 status for all future scheduled days changed	calendar	sk	Stav všetkých budúcich naplánovaných dní sa zmenil

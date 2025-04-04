@@ -582,7 +582,6 @@ startdate / -time	calendar	fr	Date/Heure de début
 startdate and -time of the search	calendar	fr	Date/Heure de début de la recherche
 startdate of the export	calendar	fr	Date de début de l'exportation
 startrecord	calendar	fr	Enregistrement de début
-status	calendar	fr	Statut
 status already applied	calendar	fr	Statut déjà enregistré
 status changed	calendar	fr	Le statut a été modifié
 status for all future scheduled days changed	calendar	fr	Le statut de tous les jours futurs a été modifié.

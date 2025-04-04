@@ -45,6 +45,11 @@ resource	resources	tr	Kaynak
 resource %1 deleted!	resources	tr	Kaynak %1 silindi!
 resource %1 saved!	resources	tr	Kaynak %1 kaydedildi!
 resource / accessories	resources	tr	Kaynak / Aksesuarlar
+resource id	resources	tr	Kaynak ID
+resources and accessories	resources	tr	Kaynaklar ve Aksesuarlar
+resources csv export	resources	tr	Kaynaklar CSV dışa aktarımı
+resources csv import	resources	tr	Kaynaklar CSV içe aktarma
+show in title (beside name)	resources	tr	Başlıkta göster (adın yanında)
 too many matches	resources	tr	Çok fazla kibrit
 un-delete accessories of selected resources too?	resources	tr	Seçilen kaynakların aksesuarlarını geri yükle?
 unable to link to %1 "%2"	resources	tr	%1 "%2" ile bağlantı kurulamıyor

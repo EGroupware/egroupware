@@ -3,6 +3,7 @@ ask to start and stop working time with session	timesheet	el	Ζητήστε να
 by	timesheet	el	μέσω
 category for 'working time'	admin	el	Κατηγορία για 'Χρόνος εργασίας'
 change owner when updating	timesheet	el	Αλλαγή ιδιοκτήτη κατά την ενημέρωση
+choose 'creator' of imported data	timesheet	el	Επιλέξτε «δημιουργό» των εισαγόμενων δεδομένων
 create a single 'working time' timesheet per	timesheet	el	Δημιουργία ενός μόνο φύλλου εργασίας «Χρόνος εργασίας» ανά
 create new links	timesheet	el	Δημιουργία νέων συνδέσμων
 creates a new field	timesheet	el	δημιουργεί νέο πεδίο
@@ -18,6 +19,7 @@ edit status	timesheet	el	Επιμέλεια κατάστασης
 edit this entry	timesheet	el	Επιμέλεια αυτής της καταχώρησης
 end	timesheet	el	Τέλος
 existing links	timesheet	el	Υπάρχοντες σύνδεσμοι
+exports entries from your timesheet into a csv file.	timesheet	el	Εξαγωγή καταχωρίσεων από το Φύλλο Χρόνου σε αρχείο CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	el	Εξάγει καταχωρήσεις από το Φύλλο Χρόνου σε αρχείο CSV. Στην καρτέλα επιλογών μπορείτε επίσης να επιλέξετε άλλα διαχωριστικά.
 field must not be empty !!!	timesheet	el	Το πεδίο δεν πρέπει να μείνει κενό !!!
 general fields:	timesheet	el	Γενικά πεδία:
@@ -25,6 +27,7 @@ global categories	timesheet	el	Παγκόσμιες κατηγορίες
 history	timesheet	el	Ιστορικό
 history logging	admin	el	Ιστορικό εισόδων
 id	timesheet	el	Id
+imports entries into the timesheet from a csv file.	timesheet	el	Εισάγει εγγραφές στο φύλλο χρόνου από αρχείο CSV
 last modified	timesheet	el	Τελευταία τροποποίηση
 leaves without saveing	timesheet	el	αποχώρηση χωρίς αποθήκευση
 length<br>rows	timesheet	el	Μήκος<br>Γραμμές
@@ -56,6 +59,11 @@ stop- or pause-time can not be before the start-time %1!	common	el	Ο χρόνο
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	el	το όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
 the text displayed to the user	timesheet	el	το κείμενο που προβάλεται στον χρήστη
 timer already running or paused	common	el	Ο χρονοδιακόπτης εκτελείται ήδη ή έχει τεθεί σε παύση
+timesheet	common	el	Λίστα φύλλων χρόνου
+timesheet csv export	timesheet	el	Εξαγωγή φύλλου εργασίας CSV
+timesheet csv import	timesheet	el	Εισαγωγή φύλλου εργασίας CSV
+timesheet id	timesheet	el	Αναγνωριστικό Φύλλου Χρόνου
+timesheet list	timesheet	el	Λίστα φύλλων χρόνου
 use field from csv if possible	timesheet	el	Χρήση πεδίου από CSV εάν είναι δυνατόν
 values for selectbox	timesheet	el	Αξίες του επιλεγμένου κουτιού
 week	timesheet	el	Εβδομάδα

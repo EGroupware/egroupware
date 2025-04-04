@@ -62,7 +62,6 @@ cell phone	addressbook	zh-tw	行動電話
 change all organisation members	addressbook	zh-tw	修改所有組織成員
 charset for the csv export	addressbook	zh-tw	CSV 檔案匯出編碼
 charset of file	addressbook	zh-tw	檔案字元編碼設定
-check all	addressbook	zh-tw	全選
 choose an icon for this contact type	admin	zh-tw	選擇這個聯絡人類型要使用的圖示
 choose owner of imported data	addressbook	zh-tw	選擇匯入資料的擁有者
 chosse an etemplate for this contact type	admin	zh-tw	選擇這個聯絡人類型要使用的 eTemplate
@@ -333,7 +332,6 @@ which address format should the addressbook use for countries it does not know t
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	zh-tw	新增聯絡人時要選擇哪個通訊錄，目前的通訊錄您沒有新增權限。
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh-tw	CSV 格式檔案希望使用的字元編碼，預設會與安裝一致。
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	zh-tw	要匯出哪些欄位，全部代表儲存在通訊錄的每一個欄位，包含自訂欄位；公司或住家住址只包含姓名、公司與選擇的住址。
-whole query	addressbook	zh-tw	整個查詢
 work phone	addressbook	zh-tw	工作電話
 write (update or add) a single entry by passing the fields.	addressbook	zh-tw	透過提供的欄位寫入（更新或新增）一筆獨立資料。
 wrong - try again ...	addressbook	zh-tw	錯誤，請重試...

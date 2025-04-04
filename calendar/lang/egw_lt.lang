@@ -21,6 +21,7 @@ all future	calendar	lt	Visi būsimi
 all incl. rejected	calendar	lt	Visi, įskaitant atmestus
 allow booking requests from any user when creating events?	calendar	lt	Kuriant įvykius leisti užsakymų užklausas iš bet kurio naudotojo?
 allow party crashers with email that match the following regular expression	calendar	lt	Leiskite į vakarėlį įsilaužusiems asmenims siųsti el. laiškus, atitinkančius šią reguliariąją išraišką
+allows to edit the event again	calendar	lt	Leidžia dar kartą redaguoti įvykį
 always use full edit dialog	calendar	lt	Visada naudokite visą redagavimo dialogo langą
 always use the full edit dialog, not this little dialog	calendar	lt	Visada naudokite visą redagavimo langą, o ne šį mažą langą
 apply changes to (future) exceptions too?	calendar	lt	Taikyti pakeitimus ir (būsimoms) išimtims?
@@ -34,6 +35,7 @@ email address migration	calendar	lt	El. pašto adreso perkėlimas
 error notifying %1	calendar	lt	Klaida pranešant %1
 exclude weekend	calendar	lt	Neįtraukti savaitgalio
 explicit recurrences	calendar	lt	Aiškūs pasikartojimai
+find free timeslots where the selected participants are available for the given timespan	calendar	lt	Rasti laisvų laiko intervalų, kuriuose pasirinktieji dalyviai yra laisvi tam tikru laiko tarpu
 how many days to be removed in the future (default 365)	calendar	lt	Kiek dienų bus pašalinta ateityje (numatytoji 365)
 how many days to be removed in the past (default 100)	calendar	lt	Kiek dienų turi būti pašalinta praeityje (numatytoji reikšmė 100)
 how many days to sync in the future (default %1)	calendar	lt	Kiek dienų sinchronizuoti ateityje (numatytoji %1)
@@ -62,15 +64,16 @@ please note: conflict check is never done in the past and always limited by abov
 private event	calendar	lt	Privatus renginys
 recordings	calendar	lt	Įrašai
 removes the event from my calendar	calendar	lt	Pašalina įvykį iš mano kalendoriaus
+repeat the event until which date (empty means unlimited)	calendar	lt	Pakartoti įvykį iki kurios datos (tuščia, jei neribojama)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	lt	Atsakymas "%1" NĖRA renginio dalyvis! Tęskite tik tuo atveju, jei norite įtraukti kaip naują dalyvį.
 report	calendar	lt	Ataskaita
+saves the event ignoring the conflict	calendar	lt	Išsaugo įvykį ignoruodamas konfliktą
 send notifications	calendar	lt	Siųsti pranešimus
 send notifications to users right now	calendar	lt	Siųsti pranešimus dalyviams dabar
 show %1 from %2	calendar	lt	Rodyti %1 iš %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	lt	Rodyti kaip visos dienos neblokuojamus įvykius, taip pat per datos žymėjimą pelės žymekliu.
 single participant	calendar	lt	Vienas dalyvis
 sort by	calendar	lt	Rūšiuoti pagal
-status	calendar	lt	Būsena
 the apple ical apps use this color to display events from this calendar.	calendar	lt	Šią spalvą "Apple iCal" programos naudoja šio kalendoriaus įvykiams rodyti.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	lt	Dokumente gali būti tokios pakaitinės žymos kaip {{%1}}, kurios bus pakeistos duomenimis.
 the extern organizer changed the event!	calendar	lt	Išorinis organizatorius pakeitė įvykį!

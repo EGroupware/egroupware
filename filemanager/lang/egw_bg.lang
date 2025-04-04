@@ -48,7 +48,6 @@ check virtual filesystem	common	bg	Проверете виртуалната ф�
 classic	filemanager	bg	Стандартна лента с инструменти
 clear search	filemanager	bg	Изтрий търсенето
 clipboard is empty!	filemanager	bg	Клипборда е празен!
-collab editor settings	filemanager	bg	Настройки на "Collab" редактора
 comment	filemanager	bg	Коментар
 configuration changed.	filemanager	bg	Конфигурацията е променена.
 confirm final delete	filemanager	bg	Потвърдете окончателното изтриване

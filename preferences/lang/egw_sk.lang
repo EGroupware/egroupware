@@ -27,7 +27,6 @@ current password	preferences	sk	Súčasné heslo
 custom login box color, defaults to above color darkened	preferences	sk	Vlastná farba pre prihlasovacie okno, predvolený je tmavší odtieň vyššieuvedenej farby
 custom sidebar menu active color, defaults to above color darkened	preferences	sk	Vlastná farba pre bočný panel, predvolený je tmavší odtieň vyššieuvedenej farby
 dark mode theme	preferences	sk	Téma tmavého režimu
-data exchange settings	preferences	sk	Nastavenia pre výmenu údajov
 date format	preferences	sk	Formát dátumu
 default	preferences	sk	Predvolený
 default font	preferences	sk	Predvolené písmo
@@ -98,6 +97,7 @@ it sets content size (text only) according to selected size.	preferences	sk	Nast
 just clicking on the line, like a checkbox	preferences	sk	jednoducho kliknutím na riadok, ako začiarkávacie políčko
 keep list open for selecting multiple	preferences	sk	Ponechať zoznam otvorený pre výber viacerých možností
 language	preferences	sk	Jazyk
+limit following groups to only create application passwords via templates	preferences	sk	Tieto skupiny obmedzujú iba vytváranie hesiel aplikácií prostredníctvom šablón
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	sk	Pri prihlásení cez SingleSignOn sa heslo neposkytuje na odovzdanie poštovým alebo súborovým serverom.
 look & feel	preferences	sk	Vzhľad a použiteľnosť
 lowercase letters	preferences	sk	malé písmená
@@ -177,7 +177,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	sk	Heslá sa nezhodujú
 theme (colors/fonts) selection	preferences	sk	Výber témy (farby / písma)
 this server is located in the %1 timezone	preferences	sk	Tento server je v časovej zóne %1
-thousands separator is only used for displaying and not for editing numbers.	preferences	sk	Oddeľovač tisícok sa používa len pri zobrazovaní, nie pri úprave čísiel.
+thousands separator is only used for displaying and not for editing numbers.	preferences	sk	Pre zobrazenie čísel je možné nastaviť formát čísla.
 time format	preferences	sk	Formát času
 two factor auth	preferences	sk	Dvojfaktorová autentifikácia
 two factor auth enabled.	preferences	sk	Dvojfaktorová autentifikácia zapnutá.

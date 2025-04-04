@@ -35,6 +35,11 @@ remove accessories before changing accessory of	resources	ro	Îndepărtați acce
 resource	resources	ro	Resursă
 resource %1 deleted!	resources	ro	Resursa %1 ștearsă!
 resource %1 saved!	resources	ro	Resursa %1 salvată!
+resource id	resources	ro	ID resursă
+resources and accessories	resources	ro	Resurse și accesorii
+resources csv export	resources	ro	Export CSV resurse
+resources csv import	resources	ro	Import CSV resurse
+show in title (beside name)	resources	ro	Afișare în titlu (alături de nume)
 un-delete accessories of selected resources too?	resources	ro	Restaurați accesoriile resurselor selectate?
 unable to link to %1 "%2"	resources	ro	Imposibil să se facă legătura cu %1 "%2"
 yes - delete accessories too	resources	ro	Da - Se șterg și accesoriile

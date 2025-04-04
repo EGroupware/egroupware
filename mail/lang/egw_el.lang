@@ -116,7 +116,7 @@ continue	mail	el	Συνέχεια
 convert mail to item and attach its attachments to this item (standard)	mail	el	Μετατροπή του μηνύματος ηλεκτρονικού ταχυδρομείου σε στοιχείο και επισύναψη των συνημμένων του σε αυτό το στοιχείο (στάνταρ)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	el	Μετατροπή email σε στοιχείο, επισύναψη των συνημμένων του και προσθήκη ακατέργαστου μηνύματος (.eml) ως συνημμένο
 convert only mail to item (ignore possible attachments)	mail	el	Μετατροπή μόνο του email σε στοιχείο (αγνοήστε τα πιθανά συνημμένα)
-copied %1 message(s) from %2 to %3	mail	el	έγινε αντιγραφή %1 μηνυμάτων από %2 στο %3
+copied %1 message(s) from %2 to %3	mail	el	Το μήνυμα %1 αντιγράφηκε από το %2 στο %3.
 copy to	mail	el	Αντιγραφή στο
 could not append message:	mail	el	Δεν μπόρεσα να προσθέσω το μήνυμα:
 could not save the acl because some names are empty	mail	el	Τα δικαιώματα ACL δεν μπόρεσαν να αποθηκευθούν γιατί κάποια όνοματα είναι κενά
@@ -265,6 +265,7 @@ ham folder	mail	el	Φάκελος Ham
 handling of external http images / mixed content in mails	mail	el	Χειρισμός εξωτερικών εικόνων / μικτού περιεχομένου σε μηνύματα ηλεκτρονικού ταχυδρομείου
 header	mail	el	Κεφαλή
 header lines	mail	el	Γραμμές κεφαλής
+hide from	mail	el	Απόκρυψη Από
 high	mail	el	υψηλό
 high priority	mail	el	Υψηλή προτεραιότητα
 hold %1 to drag files to your computer	mail	el	Κρατήστε πατημένο το %1 για να σύρετε αρχεία στον υπολογιστή σας
@@ -359,7 +360,7 @@ move selected to	mail	el	Μετακίνηση επιλεγμένων στο
 move to	mail	el	Μετακίνηση στο
 move to archive	mail	el	Μετακίνηση στον φάκλεο αρχειοθέτησης
 move to trash	mail	el	μετακίνηση στον κάδο αχρήστων
-moved %1 message(s) from %2 to %3	mail	el	μετακινήθηκαν %1 μηνύματα από %2 στο 3%
+moved %1 message(s) from %2 to %3	mail	el	Μεταφέρθηκε το μήνυμα %1 από το %2 στο %3.
 moving folders from one mailaccount to another is not supported	mail	el	Η μετακίνηση φακέλων από έναν λογαριασμού σε άλλο λογαριασμό δεν υποστηρίζεται
 name and domain	mail	el	Όνομα και τομέας
 name and email	mail	el	Όνομα και email
@@ -438,7 +439,7 @@ push notifications	mail	el	Ειδοποιήσεις Push
 quicksearch	mail	el	Γρήγορη αναζήτηση
 quicksearch (with cc)	mail	el	Γρήγορη αναζήτηση (περιλαμβ. πεδίο κοινοποίησης)
 read	mail	el	αναγνώστηκε
-read / unread	mail	el	Αναγνωσμένο / Μη αναγνωσμένο
+read / unread	mail	el	Διαβάστε / Μη αναγνωσμένο
 readable	mail	el	αναγνώσιμο
 real name	mail	el	Πραγματικό όνομα
 real name email	mail	el	Πραγματικό όνομα [διεύθυνση ηλεκτρονικού ταχυδρομείου]
@@ -516,6 +517,7 @@ select file to attach to message	mail	el	Επιλέξτε ένα αρχείο γ
 select file to import into folder	mail	el	Επιλέξτε έαν αρχείο για εισαγωγή στον φάκελο
 select file(s) from vfs	mail	el	Επιλογή αρχείων από VFS
 select files to upload	mail	el	Επιλογή αρχείων για αναφόρτωση
+select mail addresses from addressbook	mail	el	Επιλογή διευθύνσεων αλληλογραφίας από το βιβλίο διευθύνσεων
 select multiple	mail	el	Επιλογή πολλαπλών
 select or insert email address	mail	el	Επιλογή ή εισαγωγή διεύθυνσης ηλεκτρονικού ταχυδρομείου
 selected	mail	el	επιλεγμένο
@@ -587,6 +589,8 @@ test connection	mail	el	Δοκιμή σύνδεσης
 text	mail	el	Κείμενο
 text mode	mail	el	Λειτουργία κειμένου
 text/plain	mail	el	κείμενο/απλό
+the %1 's acl removed from the %2	mail	el	Το ACL του %1 αφαιρέθηκε από το %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	el	Η ACL του %1, συμπεριλαμβανομένων των υποφακέλων του, αφαιρέθηκε από τον %2.
 the imap server need to meet certain requirements and be configured for it:	mail	el	Ο διακομιστής IMAP πρέπει να πληροί ορισμένες απαιτήσεις ΚΑΙ να έχει ρυθμιστεί γι' αυτό:
 the rule with priority %1 successfully saved!	mail	el	Ο κανόνας με προτεραιότητα %1 αποθηκεύτηκε επιτυχώς!
 then	mail	el	ΜΕΤΑ

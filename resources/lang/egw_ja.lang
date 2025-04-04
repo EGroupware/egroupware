@@ -132,6 +132,7 @@ select/deselect all	resources	ja	全て選択/解除
 short description	resources	ja	概要
 short description of resource	resources	ja	リソース概要
 show calendar of resource	resources	ja	リソース・カレンダーを表示
+show in title (beside name)	resources	ja	タイトル（名前の横）に表示
 simple reservation of a single item	resources	ja	アイテムの予約
 something went wrong by deleting resource	resources	ja	リソース削除中にエラー!
 something went wrong by saving resource	resources	ja	リソース保存中にエラー!

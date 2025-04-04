@@ -175,7 +175,7 @@ fieldseparator	calendar	hu	Mező elválasztó
 filemanager	calendar	hu	Filekezelő
 filename	calendar	hu	Állománynév
 filename of the download	calendar	hu	Letöltés fájlneve
-find free timeslots where the selected participants are available for the given timespan	calendar	hu	Üres időpont keresése, ahol a kiválasztott résztvevők szabadok a megadott időintervallumban.
+find free timeslots where the selected participants are available for the given timespan	calendar	hu	Üres időpont keresése, ahol a kiválasztott résztvevők szabadok a megadott időintervallumban
 firstname of person to notify	calendar	hu	A személy vezetékneve az értesítéshez
 for	calendar	hu	nak
 for which views should calendar show distinct lines with a fixed time interval.	calendar	hu	Melyik nézetben mutassa a Naptár a beállított időintervallumokat egyértelműen jelölt sorokkal?
@@ -324,7 +324,7 @@ recurring event	calendar	hu	Ismétlődő esemény
 rejected	calendar	hu	Elutasított
 removes the event from my calendar	calendar	hu	Eltávolítja az eseményt a naptáramból
 repeat days	calendar	hu	Ismétlődő napok
-repeat the event until which date (empty means unlimited)	calendar	hu	ismételje az eseményt a következő dátumig (üres esetén nincs utolsó dátum)
+repeat the event until which date (empty means unlimited)	calendar	hu	Ismételje az eseményt a következő dátumig (üres esetén nincs utolsó dátum)
 repeat type	calendar	hu	Ismétlődés típusa
 repeating event information	calendar	hu	Ismétlődő esemény információ
 repeating interval, eg. 2 to repeat every second week	calendar	hu	ismétlődés időtartama, pl. 2 jelenti a "minden második héten"-t.
@@ -340,7 +340,7 @@ role	calendar	hu	Szerep
 rule	calendar	hu	Szabály
 sat	calendar	hu	Szo
 saves the changes made	calendar	hu	Változások elmentése.
-saves the event ignoring the conflict	calendar	hu	Ütközés figyelmen kívül hagyása és esemény mentése.
+saves the event ignoring the conflict	calendar	hu	Ütközés figyelmen kívül hagyása és esemény mentése
 scheduling conflict	calendar	hu	Ütemezési konfliktus
 select a %1	calendar	hu	Válasszon %1
 select a time	calendar	hu	Válasszon egy időpontot
@@ -373,7 +373,6 @@ startdate / -time	calendar	hu	Kezdés dátuma/ideje
 startdate and -time of the search	calendar	hu	Kereséshez használt kezdés dátuma / ideje
 startdate of the export	calendar	hu	Az exportálás kezdési időpontja
 startrecord	calendar	hu	Kezdő bejegyzés
-status	calendar	hu	Állapot
 status changed	calendar	hu	Státusz megváltozott
 submit to repository	calendar	hu	Gyűjtőbe helyezés
 sun	calendar	hu	Va

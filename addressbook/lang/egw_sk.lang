@@ -62,6 +62,7 @@ all types	addressbook	sk	Všetky typy
 allow	addressbook	sk	Povoliť
 allow for contacts only	addressbook	sk	Povoliť len pre kontakty
 allow members of following groups to edit contact-data of accounts	addressbook	sk	Povoliť členom nasledovných skupín úpravu kontaktných údajov v účtoch
+allow members of following groups to show the account name column	addressbook	sk	Povoliť členom nasledujúcich skupín zobrazovať stĺpec s názvom účtu
 allow users to maintain their own account-data	admin	sk	Povoliť používateľom, aby spravovali údaje svojich vlastných používateľských účtov
 alt. csv import	addressbook	sk	Alternatívny import z CSV
 always	addressbook	sk	Vždy
@@ -160,7 +161,6 @@ csv-filename	addressbook	sk	CSV súbor
 custom	addressbook	sk	Vlastné
 custom etemplate for the contactform	addressbook	sk	Vlastná eTemplate pre tento formulár kontaktu
 custom fields	addressbook	sk	Vlastné polia
-data exchange settings	addressbook	sk	Nastavenia výmeny údajov
 default	addressbook	sk	Predvolené
 default action on double-click	addressbook	sk	Predvolená akcia pri dvojitom kliknutí
 default address format	addressbook	sk	Predvolený formát adresy
@@ -440,6 +440,7 @@ select a view	addressbook	sk	Vyberte pohľad
 select addressbook type	addressbook	sk	Vyberte typ Adresára
 select all	addressbook	sk	Označiť všetko
 select an opened dialog	addressbook	sk	Vyberte otvorený dialóg
+select contacts to add to mail	addressbook	sk	Vyberte kontakty, ktoré chcete pridať do e-mailu
 select migration type	admin	sk	Vyberte typ migrácie
 select multiple contacts for a further action	addressbook	sk	Vybrať viacero kontaktov pre vykonanie nejakej akcie
 select phone number as prefered way of contact	addressbook	sk	vybrať číslo telefónu ako preferovaný spôsob komunikácie

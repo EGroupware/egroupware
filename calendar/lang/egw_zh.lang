@@ -344,7 +344,6 @@ startdate / -time	calendar	zh	开始日期 / -时间
 startdate and -time of the search	calendar	zh	搜索的开始日期和 -时间
 startdate of the export	calendar	zh	导出的开始日期
 startrecord	calendar	zh	开始记录
-status	calendar	zh	状态
 status changed	calendar	zh	状态被改变
 submit to repository	calendar	zh	提交到知识库
 sun	calendar	zh	日

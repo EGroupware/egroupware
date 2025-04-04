@@ -132,6 +132,7 @@ select/deselect all	resources	it	seleziona/deseleziona tutto
 short description	resources	it	Descrizione breve
 short description of resource	resources	it	Descrizione breve della risorsa
 show calendar of resource	resources	it	Mostra calendario della risorsa
+show in title (beside name)	resources	it	Mostra nel titolo (accanto al nome)
 simple reservation of a single item	resources	it	Semplice prenotazione di un singolo elemento
 something went wrong by deleting resource	resources	it	Qualcosa non ha funzionato cancellando la risorsa
 something went wrong by saving resource	resources	it	Qualcosa non ha funzionato salvando la risorsa

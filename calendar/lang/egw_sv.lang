@@ -110,7 +110,6 @@ custom	calendar	sv	Anpassade
 custom fields	common	sv	Anpassade fält
 custom_2	common	sv	Freebusy
 daily	calendar	sv	Daglig
-data exchange settings	calendar	sv	Inställningar för datautbyte
 date range	calendar	sv	Datumintervall
 day	calendar	sv	Dag
 days	calendar	sv	Dagar
@@ -192,7 +191,7 @@ fieldseparator	calendar	sv	Fältavskiljare
 filemanager	calendar	sv	Filhanterare
 filename	calendar	sv	Filnamn
 filename of the download	calendar	sv	Filnamn för nerladdning
-find free timeslots where the selected participants are available for the given timespan	calendar	sv	Hitta en tid då valda deltagare är tillgängliga.
+find free timeslots where the selected participants are available for the given timespan	calendar	sv	Hitta en tid då valda deltagare är tillgängliga
 firstname of person to notify	calendar	sv	Förnamn på person att meddela
 for	calendar	sv	för
 for which views should calendar show distinct lines with a fixed time interval.	calendar	sv	För vilka vyer ska kalendern visa tydliga rader med fast tids intervall.
@@ -377,7 +376,7 @@ rule	calendar	sv	Regel
 sat	calendar	sv	Lör
 save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	sv	Spara händelse som undantag - Radera en förekomst - Ändra status eller larm för denna förekomst.
 saves the changes made	calendar	sv	Spara ändringar.
-saves the event ignoring the conflict	calendar	sv	Spara händelsen och ignorera konflikt.
+saves the event ignoring the conflict	calendar	sv	Spara händelsen och ignorera konflikt
 scheduling conflict	calendar	sv	Schema konflikt
 select a %1	calendar	sv	Välj %1
 select a time	calendar	sv	Välj en tid
@@ -418,7 +417,6 @@ startdate / -time	calendar	sv	Startdatum/start tid
 startdate and -time of the search	calendar	sv	Startdatum/start tid för sökningen
 startdate of the export	calendar	sv	Start datum för export
 startrecord	calendar	sv	Start position
-status	calendar	sv	Status
 status changed	calendar	sv	Status ändrad
 status for all future scheduled days changed	calendar	sv	Status till alla kommande händelser ändrad
 status for this particular day changed	calendar	sv	Status för just denna händelse ändrad

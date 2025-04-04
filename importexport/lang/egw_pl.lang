@@ -1,7 +1,9 @@
+%1 is not a known user or group	importexport	pl	%1 nie jest znanym użytkownikiem lub grupą.
 %1 records processed	importexport	pl	Przetworzono %1 wpisów
 add a new definition	importexport	pl	Dodaj nową definicję
 addressbook csv import	importexport	pl	Import książki adresowej z CSV
 addressbook vcard import	importexport	pl	Import książki adresowej vCard
+admin disabled exporting	importexport	pl	Administrator wyłączył eksportowanie.
 all users	importexport	pl	Wszyscy użytkownicy
 allowed users	importexport	pl	Użytkownicy z dostępem
 automatically created by importexport	importexport	pl	Automatycznie utworzone przez Import/Export
@@ -15,13 +17,16 @@ check all	importexport	pl	Zaznacz wszystkie
 choose a name for this definition	importexport	pl	Wybierz nazwę dla tej definicji
 choose a plugin	importexport	pl	Wybierz wtyczkę
 choose an application	importexport	pl	Wybierz aplikację
+choose fields to export	importexport	pl	Wybierz pola do wyeksportowania
 choose seperator and charset	importexport	pl	Wybierz separator i zestaw znaków
 condition	importexport	pl	warunek
 copied	importexport	pl	skopiowano
 created	importexport	pl	Utworzony
 csv field	importexport	pl	Pole CSV
+database values	importexport	pl	Wartości bazy danych
 define imports|exports	common	pl	Zdefiniuj importy|eksporty
 delete all selected definitions	importexport	pl	usuń WSZYSTKIE wybrane definicje
+delete files after import	importexport	pl	Usuń pliki po imporcie
 deleted	importexport	pl	skasowany
 edit conditions	importexport	pl	Edytuj warunki
 execute	importexport	pl	Wykonaj

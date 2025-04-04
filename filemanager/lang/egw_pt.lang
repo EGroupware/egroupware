@@ -121,10 +121,12 @@ no files in this directory.	filemanager	pt	Nenhum ficheiro nesta directoria.
 no version history for this file/directory	filemanager	pt	Sem histórico de versão para este ficheiro/directoria
 notebookbar	filemanager	pt	Tabulado
 open	filemanager	pt	Abrir
+open documents with collabora, if permissions are given	filemanager	pt	Abrir documentos com Collabora Online, se as permissões forem dadas
 operation	filemanager	pt	Operação
 password for webdav and smb, use $pass for password of logged in user	filemanager	pt	Palavra-passe para WebDAV e SMB, utilizar $pass para a palavra-passe do utilizador com sessão iniciada
 path and query-parameters, smb: share and optional path (with /)	filemanager	pt	Caminho e parâmetros de consulta, SMB: partilha e caminho opcional (com /)
 percentage	filemanager	pt	Percentagem
+permission denied!	filemanager	pt	Permissão negada!
 permissions	filemanager	pt	Permissões
 please select a file to delete.	filemanager	pt	Por favor, seleccione o ficheiro a eliminar.
 preview	filemanager	pt	Pré-visualização
@@ -156,7 +158,10 @@ saved %1	filemanager	pt	%1 guardado
 select file(s) from vfs	common	pt	Selecione o arquivo (s) a partir de VFS
 show	filemanager	pt	Exibir
 size	filemanager	pt	Tamanho
+smb, webdavs and vfs require a username!	filemanager	pt	SMB, WebDAV e VFS requerem um nome de utilizador!
+smb: mount samba or windows fileserver shares	filemanager	pt	SMB: Montar partilhas de servidores de ficheiros Samba ou Windows
 tag to mark positions for address labels	filemanager	pt	Tag para marcar posições para etiquetas de endereço
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	pt	O documento pode conter marcadores de posição como {{%3}}, a serem substituídos pelos dados (%1lista completa de nomes de marcadores de posição%2).
 the following document-types are supported:	filemanager	pt	Os seguintes tipos de documentos são suportados:
 total files	filemanager	pt	Total de ficheiros
 unused space	filemanager	pt	Espaço Não Usado
@@ -165,6 +170,7 @@ updated comment for %1	filemanager	pt	Comentário atualizado para %1
 upload fields	filemanager	pt	campos de envio de arquivos
 upload files	filemanager	pt	Enviar Arquivos
 used space	filemanager	pt	Espaço utilizado
+username for webdav and smb, use $user for name of logged in user	filemanager	pt	Nome de utilizador para WebDAV e SMB, utilizar $user para o nome do utilizador com sessão iniciada
 you are not allowed to finally delete older versions and deleted files!	filemanager	pt	NÃO é permitido apagar finalmente versões mais antigas e ficheiros apagados!
 you do not have access to %1	filemanager	pt	Não tem acesso a %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	pt	Tem de se tornar superuser, para activar ou desactivar a versão numa pasta!

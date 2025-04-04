@@ -6,6 +6,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	da	Et tema, præcisere farverne og skrifttyperne brugt af skabelonen
 acl grants have been updated	preferences	da	ACL rettighederne er blevet opdateret
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	da	Enhver liste i EGroupware vil vise dette antal resultater eller linier.<br>For mange vil gøre visningen af listen langsommere, for få vil koste dig overblikket.
+applications list scroll area	preferences	da	Rulleknap til sidemenu
 are you sure you want to delete this category ?	preferences	da	Er du sikker på at du vil slette denne kategori?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	da	Du kan ændre et adgangskode ved at angive gammel og ny adgangskode. Returnerer TRUE hvis det lykkes og FALSE ellers.
 color	preferences	da	Farve
@@ -15,6 +16,7 @@ date format	preferences	da	Dato format
 default	preferences	da	standard
 default preferences	preferences	da	Standard Præferencer
 delete categories	preferences	da	Slet kategorier
+deny following groups access to application passwords	preferences	da	Nægt følgende grupper adgang til programadgangskoder
 description can not exceed 255 characters in length !	preferences	da	Beskrivelse må ikke være over 255 tegn!
 disable	preferences	da	Deaktivere
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	da	Foretrækker du et 24 timers tids format, eller 12 timers med AM og PM
@@ -42,7 +44,9 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	da	Brugerflade/Skabelon Valg
 it sets content size (text only) according to selected size.	preferences	da	Den indstiller indholdsstørrelsen (kun tekst) i overensstemmelse med den valgte størrelse.
 language	preferences	da	Sprog
+limit following groups to only create application passwords via templates	preferences	da	Disse grupper begrænser kun programadgangskoder, der kan oprettes via skabeloner
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	da	Når man logger ind via SingleSignOn, får man ikke en adgangskode til at sende videre til mail- eller filservere.
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	da	Gør sidepanelet til venstre med scroll-knap scrollbart op/ned (nyttigt for brugere på tablets).
 max matches per page	preferences	da	Maksimale antal resultater pr. side
 max number of icons in navbar	preferences	da	Maksimal antal ikoner i navigations bjælken.
 no default	preferences	da	Ingen Standard
@@ -76,6 +80,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	da	De to adgangskoder stemmer ikke overens
 theme (colors/fonts) selection	preferences	da	Tema (farver/fonte) Valg
 this server is located in the %1 timezone	preferences	da	Denne server er placeret i tidszone %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	da	Talformatet kan indstilles til visning af tal.
 time format	preferences	da	Tidsformat
 use default	preferences	da	Brug standard
 use first %1 letters from username	preferences	da	Brug de første %1 bogstaver fra brugernavnet

@@ -61,6 +61,7 @@ all types	addressbook	ru	Все типы
 allow	addressbook	ru	Разрешить
 allow for contacts only	addressbook	ru	Разрешить только для контактов
 allow members of following groups to edit contact-data of accounts	addressbook	ru	Разрешить членам следующих групп редактировать контактные данные учетных записей
+allow members of following groups to show the account name column	addressbook	ru	Разрешите членам следующих групп отображать колонку с именем учетной записи
 allow users to maintain their own account-data	admin	ru	Разрешить пользователям управлять их собственными данными учётных записей
 alt. csv import	addressbook	ru	Альтернативный импорт CSV
 always	addressbook	ru	Всегда
@@ -154,7 +155,6 @@ csv-filename	addressbook	ru	Имя файла CSV
 custom	addressbook	ru	Пользовательский
 custom etemplate for the contactform	addressbook	ru	Пользовательский е-Шаблон для формы контактов
 custom fields	addressbook	ru	Пользовательские поля
-data exchange settings	addressbook	ru	Установки обмена данных
 default	addressbook	ru	По умолчанию
 default action on double-click	addressbook	ru	Действие по умолчанию при двойном щелчке
 default address format	addressbook	ru	Формат адреса по умолчанию
@@ -430,6 +430,7 @@ select a view	addressbook	ru	Выбрать вид
 select addressbook type	addressbook	ru	Выбрать тип адресной книги
 select all	addressbook	ru	Выбрать все
 select an opened dialog	addressbook	ru	Выбор открытого диалога
+select contacts to add to mail	addressbook	ru	Выбор контактов для добавления в электронную почту
 select migration type	admin	ru	Выбрать тип миграции
 select multiple contacts for a further action	addressbook	ru	Выбрать несколько контактов для дальнейшего действия
 select phone number as prefered way of contact	addressbook	ru	Выбрать телефон как способ связи с контактом

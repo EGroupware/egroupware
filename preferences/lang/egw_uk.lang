@@ -6,6 +6,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	uk	Тема визначає кольори та фонти, що використовуються зразком.
 acl grants have been updated	preferences	uk	ACL доступи змінено
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	uk	Кожен перелік в системі буде показувати вам цю кількість записів або рядків на сторінці.<br>Надто багато буде довго загружатись, надто мало буде заставляти Вас часто пролистувати.
+applications list scroll area	preferences	uk	Кнопка прокрутки для бічного меню
 are you sure you want to delete this category ?	preferences	uk	Ви впевнені, що хочете видалити цю категорію?
 country	preferences	uk	Країна
 dark mode theme	preferences	uk	Тема темного режиму
@@ -13,6 +14,7 @@ date format	preferences	uk	Формат дати
 default	preferences	uk	По замовчуванню
 default preferences	preferences	uk	Типові параметри
 delete categories	preferences	uk	Видалити категорії
+deny following groups access to application passwords	preferences	uk	Заборонити наступним групам доступ до паролів додатків
 description can not exceed 255 characters in length !	preferences	uk	Довжина опису не може перевищувати 255 символів !
 disable	preferences	uk	Відключити
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	uk	Ви використовуєте 24-х годинний формат часу, чи 12-и годинний з am/pm.
@@ -37,6 +39,7 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	uk	Розділ інтерфейсу/зразків.
 it sets content size (text only) according to selected size.	preferences	uk	Встановлює розмір вмісту (тільки текст) відповідно до обраного розміру.
 language	preferences	uk	Мова
+limit following groups to only create application passwords via templates	preferences	uk	Ці групи обмежують доступ лише до паролів додатків, створених за допомогою шаблонів
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	uk	При вході через SingleSignOn пароль не передається на поштові або файлові сервери.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	uk	Зробити список додатків прокручуваним за допомогою кнопок прокрутки вгору/вниз (корисно для користувачів, які працюють з мишею без коліщатка прокрутки)
 max matches per page	preferences	uk	Максимальна кількість на сторінку
@@ -66,6 +69,7 @@ the selectbox shows all available users (can be very slow on big installs with m
 the two passwords are not the same	preferences	uk	Ці два паролі не співпадають
 theme (colors/fonts) selection	preferences	uk	Вибір теми
 this server is located in the %1 timezone	preferences	uk	Цей сервер знаходиться в часовому поясі %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	uk	Для відображення чисел можна встановити формат відображення чисел.
 time format	preferences	uk	Формат часу
 use default	preferences	uk	По замовченню
 use first %1 letters from username	preferences	uk	Використовувати перші %1 літери з імені користувача

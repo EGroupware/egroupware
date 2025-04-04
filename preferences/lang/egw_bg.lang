@@ -4,6 +4,7 @@
 24 hour	preferences	bg	24-часово време
 a theme defines the colors and fonts used by the template.	preferences	bg	Темата задава използваните цветве и шрифтове.
 acl grants have been updated	preferences	bg	Правата за достъп бяха обновени
+applications list scroll area	preferences	bg	Бутон за превъртане на страничното меню
 are you sure you want to delete this category ?	preferences	bg	Наистина ли искате да изтриете тази категория?
 color	preferences	bg	Цвят
 country	preferences	bg	Държава
@@ -11,6 +12,7 @@ date format	preferences	bg	Формат на датата
 default	preferences	bg	по подразбиране
 default preferences	preferences	bg	Настройки по подразбиране
 delete categories	preferences	bg	Изтриване на категории
+deny following groups access to application passwords	preferences	bg	Забранете достъпа на следните групи до паролите на приложенията
 description can not exceed 255 characters in length !	preferences	bg	Описанието не може да превишава 255 символа!
 disable	preferences	bg	Забранява
 edit custom fields	preferences	bg	Редакция на полета по избор
@@ -30,6 +32,7 @@ if enabled, your entered password will be stored and passed on to other server, 
 in which country are you. this is used to set certain defaults for you.	preferences	bg	Страната, в която се намирате. Използва се за някои настройки по подразбиране.
 it sets content size (text only) according to selected size.	preferences	bg	Той задава размера на съдържанието (само за текст) в съответствие с избрания размер.
 language	preferences	bg	Език
+limit following groups to only create application passwords via templates	preferences	bg	Тези групи ограничават само паролите за приложения, които се създават чрез шаблони
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	bg	Влизането чрез SingleSignOn не осигурява парола, която да се предава на пощенски или файлови сървъри.
 max matches per page	preferences	bg	Максимален брой съвпадения на страница
 max number of icons in navbar	preferences	bg	Максимален брой картинки в лентата за управление
@@ -45,6 +48,7 @@ store password retrievable for singlesignon	common	bg	Съхраняване н�
 text only	preferences	bg	Само текст
 the two passwords are not the same	preferences	bg	Паролите не съвпадат
 theme (colors/fonts) selection	preferences	bg	Избор на тема (цветове и шрифтове)
+thousands separator is only used for displaying and not for editing numbers.	preferences	bg	Форматът на числата може да бъде зададен за показване на числата.
 time format	preferences	bg	Формат на часа
 use default	preferences	bg	Използване на стойност по подразбиране
 use first %1 letters from username	preferences	bg	Използвайте първите %1 букви от потребителското име

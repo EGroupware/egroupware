@@ -35,8 +35,11 @@ addressbook vcard export	addressbook	tr	Adres defteri vCard dışa aktarma
 addressbook vcard import	addressbook	tr	Adres defteri vCard içe aktarma
 addressbook-fieldname	addressbook	tr	Adres defteri alan adı
 addvcard	addressbook	tr	vCard Ekle
+allow members of following groups to edit contact-data of accounts	addressbook	tr	Aşağıdaki grupların üyelerinin hesapların iletişim verilerini düzenlemesine izin verin
+allow members of following groups to show the account name column	addressbook	tr	Aşağıdaki grupların üyelerinin hesap adı sütununu göstermesine izin verin
 alt. csv import	addressbook	tr	Alt. CSV İçe Aktarma
 always	addressbook	tr	Her zaman
+apply changes to all members, whose fields have the same previous content	addressbook	tr	Değişiklikleri, alanları önceki içerikle aynı olan tüm üyelere uygulayın.
 are you shure you want to delete this contact?	addressbook	tr	Bu kişiyi silmek istediğinizden emin misiniz?
 are you sure you want to delete this field?	addressbook	tr	Bu alanı silmek istediğinizden emin misiniz?
 audio call	addressbook	tr	Sesli Çağrı
@@ -55,6 +58,7 @@ business street	addressbook	tr	İş caddesi
 business zip code	addressbook	tr	İş posta kodu
 car phone	addressbook	tr	Araç tel.
 cell phone	addressbook	tr	Cep telefonu
+change all organisation members	addressbook	tr	Tüm kuruluş üyelerini değiştirin
 charset of file	addressbook	tr	Dosya Karakter Kümesi
 city	common	tr	Şehir
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	tr	Adres defteri alanlarını temizleyin, senkronizasyon yinelemeler oluşturursa uygulayın
@@ -100,6 +104,7 @@ export file name	addressbook	tr	Dosya adını dışa aktar
 export from addressbook	addressbook	tr	Adres defterinden ihraç et
 exports contacts from your addressbook into a csv file.	addressbook	tr	Adres defterindeki kişileri bir CSV dosyasına aktarır.
 extra	addressbook	tr	Ekstra
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	tr	%1 kuruluş üyesi/üyeleri değiştirilemedi, yetersiz haklar!
 fax	addressbook	tr	Fax
 fax number	common	tr	Fax No
 field %1 has been added !	addressbook	tr	%1 alanı eklendi!
@@ -188,6 +193,7 @@ repetition	addressbook	tr	Tekrarlama
 schedule a video conference	addressbook	tr	Bir video konferans planlayın
 search letter	addressbook	tr	Harf ara
 select all	addressbook	tr	Tümünü seçin
+select contacts to add to mail	addressbook	tr	E-postaya eklenecek kişileri seçin
 share into addressbook	addressbook	tr	Adres defterinde paylaş
 share writable	addressbook	tr	Düzenlenebilir paylaş
 shared	addressbook	tr	paylaşılan

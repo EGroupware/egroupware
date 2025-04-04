@@ -103,6 +103,7 @@ resource %1 saved!	resources	fi	Resurssi %1 tallennettu!
 resource / accessories	resources	fi	Resurssi/tarvikkeet
 resource id	resources	fi	Resurssin ID
 resources	common	fi	Resurssit
+resources and accessories	resources	fi	Resurssit ja lisävarusteet
 resources csv export	resources	fi	CSV vienti
 resources csv import	resources	fi	CSV vienti
 resources list	resources	fi	Resurssiluettelo
@@ -115,6 +116,7 @@ select/deselect all	resources	fi	Valitse / poista valinta kaikista
 short description	resources	fi	Lyhyt kuvaus
 short description of resource	resources	fi	Resurssin lyhyt kuvaus
 show calendar of resource	resources	fi	Näytä resurssin kalenteri
+show in title (beside name)	resources	fi	Näytä otsikossa (nimen vieressä)
 something went wrong by deleting resource	resources	fi	Virhe poistettaessa resurssia
 something went wrong by saving resource	resources	fi	Virhe tallentaessa resurssia
 storage	resources	fi	Varasto

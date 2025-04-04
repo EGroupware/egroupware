@@ -94,7 +94,7 @@ continue	mail	pt-br	Continuar
 convert mail to item and attach its attachments to this item (standard)	mail	pt-br	Converter e-mail em item e anexar seus anexos a esse item (padrão)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	pt-br	Converter e-mail em item, anexar seus anexos e adicionar mensagem bruta (.eml) como anexo
 convert only mail to item (ignore possible attachments)	mail	pt-br	Converter somente o e-mail em item (ignorar possíveis anexos)
-copied %1 message(s) from %2 to %3	mail	pt-br	Copiados %1 mensagem(s) de %2 a 3%
+copied %1 message(s) from %2 to %3	mail	pt-br	Copiados %1 mensagem(s) de %2 a 3%.
 copy to	mail	pt-br	Copiar para
 could not append message:	mail	pt-br	Não foi possível anexar Mensagem:
 create new account	mail	pt-br	Criar nova conta
@@ -215,6 +215,7 @@ greater than	mail	pt-br	Maior que
 ham folder	mail	pt-br	Pasta de spam
 handling of external http images / mixed content in mails	mail	pt-br	Manuseio de imagens externas/conteúdo misto em e-mails
 header lines	mail	pt-br	Linhas de Cabeçalho
+hide from	mail	pt-br	Ocultar De
 high	mail	pt-br	Alto
 high priority	mail	pt-br	Alta prioridade
 hostname or ip	mail	pt-br	Nome do host ou IP
@@ -284,6 +285,7 @@ modify subject of this message	mail	pt-br	Modificar o assunto desta mensagem
 move selected to	mail	pt-br	Mover selecionados para
 move to	mail	pt-br	Mover selecionados para
 move to trash	mail	pt-br	Mover para a lixeira
+moved %1 message(s) from %2 to %3	mail	pt-br	Movida a(s) mensagem(ns) %1 de %2 para %3.
 name and domain	mail	pt-br	Nome e domínio
 name and email	mail	pt-br	Nome e e-mail
 name of account	mail	pt-br	Nome da conta
@@ -389,6 +391,7 @@ select all	mail	pt-br	Selecionar tudo
 select an existing entry in order to append mail content to it	mail	pt-br	Selecionar uma entrada existente para anexar o conteúdo do e-mail a ela
 select an item to read	mail	pt-br	Selecione um item para ler
 select file(s) from vfs	mail	pt-br	Selecione o arquivo(s) a partir de VFS
+select mail addresses from addressbook	mail	pt-br	Selecionar endereços de correio eletrônico do catálogo de endereços
 select or insert email address	mail	pt-br	Selecione ou insira um endereço de e-mail
 selected date range (with quicksearch)	mail	pt-br	Intervalo de datas selecionado (com pesquisa rápida)
 send message and move to send folder (if configured)	mail	pt-br	Enviar mensagem e mover para a pasta de envio (se configurado)
@@ -404,6 +407,7 @@ should signature be inserted after (standard) or before a reply or inline forwar
 show all addresses	mail	pt-br	Mostrar todos os endereços
 show all attachments	mail	pt-br	Mostrar todos os anexos
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pt-br	Mostrar todas as pastas (inscritas e não inscritas) no painel de pastas da tela principal.
+show horizontal, hide if none selected	mail	pt-br	Mostrar na horizontal, ocultar se nenhum estiver selecionado
 show notification for new arriving mails	mail	pt-br	Mostrar notificação para novos e-mails recebidos
 show test connection section and control the level of info displayed?	mail	pt-br	Mostrar a seção de teste de conexão e controlar o nível de informações exibidas?
 show test connection section and control the level of info displayed??	mail	pt-br	Mostrar a seção de teste de conexão e controlar o nível de informações exibidas?
@@ -431,6 +435,8 @@ template folder	mail	pt-br	Pasta Modelos
 text	mail	pt-br	Texto
 text mode	mail	pt-br	Modo de texto
 text/plain	mail	pt-br	Texto
+the %1 's acl removed from the %2	mail	pt-br	A ACL de %1 foi removida de %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	pt-br	A ACL de %1, incluindo suas subpastas, removida de %2.
 the imap server need to meet certain requirements and be configured for it:	mail	pt-br	O servidor IMAP precisa atender a determinados requisitos E ser configurado para isso:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pt-br	O remetente da mensagem solicitou uma resposta para indicar que você a leu. Gostaria de enviá-la?
 the mimeparser can not parse this message.	mail	pt-br	O analisador mime não pôde processar esta mensagem.
@@ -451,6 +457,7 @@ unread	mail	pt-br	Não lido
 vacation notice	mail	pt-br	Notícia de ausência
 vacation notice is active	mail	pt-br	Notícia de ausência está ativa
 vacation start-date must be before the end-date!	mail	pt-br	Data inicial de ausência deve ser ANTERIOR à data final!
+validate addresses on submit:	mail	pt-br	Valide os endereços ao enviá-los:
 view header lines	mail	pt-br	Exibir linhas de cabeçalho
 when deleting messages	mail	pt-br	Ao remover mensagens
 write	mail	pt-br	Gravar

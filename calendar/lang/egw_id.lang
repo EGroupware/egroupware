@@ -49,6 +49,7 @@ all participants	calendar	id	Semua peserta
 allow booking requests from any user when creating events?	calendar	id	Izinkan permintaan pemesanan dari pengguna mana pun saat membuat acara?
 allow party crashers with email that match the following regular expression	calendar	id	Izinkan perusak pesta dengan email yang cocok dengan ekspresi reguler berikut
 allow users to prevent change notifications ('do not notify')	calendar	id	Izinkan pengguna untuk mencegah pemberitahuan perubahan 'Jangan beri tahu'
+allows to edit the event again	calendar	id	Memungkinkan untuk mengedit acara lagi
 always	calendar	id	Selalu
 always use full edit dialog	calendar	id	Selalu gunakan dialog edit lengkap
 always use the full edit dialog, not this little dialog	calendar	id	Selalu gunakan dialog edit lengkap, bukan dialog kecil ini
@@ -105,7 +106,6 @@ custom	calendar	id	Custom
 custom fields	common	id	Custom fields
 custom_2	common	id	Senggang/Sibuk
 daily	calendar	id	Harian
-data exchange settings	calendar	id	Pengaturan pertukaran data
 date range	calendar	id	Rentang tanggal
 day	calendar	id	Hari
 days	calendar	id	Hari
@@ -155,6 +155,7 @@ fieldseparator	calendar	id	Pemisah field
 filemanager	calendar	id	Manajer berkas
 filename	calendar	id	Nama berkas
 filename of the download	calendar	id	Nama berkas untuk unduhan
+find free timeslots where the selected participants are available for the given timespan	calendar	id	Temukan slot waktu luang di mana peserta yang dipilih tersedia untuk rentang waktu tertentu
 for	calendar	id	untuk
 forward half a month	calendar	id	Maju setengah bulan
 forward one month	calendar	id	Maju sebulan
@@ -277,6 +278,7 @@ recurring event	calendar	id	Kegiatan berulang
 rejected	calendar	id	Ditolak
 removes the event from my calendar	calendar	id	Menghapus acara dari kalender saya
 repeat days	calendar	id	Hari-hari pengulangan
+repeat the event until which date (empty means unlimited)	calendar	id	Ulangi acara hingga tanggal berapa (Kosongkan untuk tidak terbatas)
 repeat type	calendar	id	Tipe pengulangan
 repeating event information	calendar	id	Informasi Kegiatan Berulang
 repetition	calendar	id	Pengulangan
@@ -315,7 +317,6 @@ startdate / -time	calendar	id	Tanggal / -waktu mulai
 startdate and -time of the search	calendar	id	Tanggal dan -waktu untuk memulai pencarian
 startdate of the export	calendar	id	Tanggal awal untuk ekspor
 startrecord	calendar	id	Awal Rekaman
-status	calendar	id	Status
 status changed	calendar	id	Status berubah
 sun	calendar	id	Min
 tentative	calendar	id	Tentative

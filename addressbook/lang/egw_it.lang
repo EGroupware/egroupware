@@ -62,6 +62,7 @@ all types	addressbook	it	Tutti i tipi
 allow	addressbook	it	Permettere
 allow for contacts only	addressbook	it	Permettere solo per i contatti
 allow members of following groups to edit contact-data of accounts	addressbook	it	Permettere ai membri dei seguenti gruppi di modificare i dati di contatto degli account
+allow members of following groups to show the account name column	addressbook	it	Consentire ai membri dei seguenti gruppi di mostrare la colonna del nome dell'account
 allow users to maintain their own account-data	admin	it	Permetti agli utenti di gestire i dati del proprio account
 alt. csv import	addressbook	it	Importazione CSV Alternativa
 always	addressbook	it	Sempre
@@ -160,7 +161,6 @@ csv-filename	addressbook	it	CSV-Nome del File
 custom	addressbook	it	Personalizzato
 custom etemplate for the contactform	addressbook	it	Template personalizzato per il modulo di contatto
 custom fields	addressbook	it	Campi Personalizzati
-data exchange settings	addressbook	it	Impostazioni di scambio dati
 default	addressbook	it	Predefinito
 default action on double-click	addressbook	it	Azione predefinita al doppio click
 default address format	addressbook	it	Formato indirizzo predefinito
@@ -440,6 +440,7 @@ select a view	addressbook	it	Seleziona una vista
 select addressbook type	addressbook	it	Seleziona il tipo di rubrica
 select all	addressbook	it	Seleziona tutto
 select an opened dialog	addressbook	it	Seleziona una finestra di dialogo aperta
+select contacts to add to mail	addressbook	it	Selezionare i contatti da aggiungere all'e-mail
 select migration type	admin	it	Seleziona tipo di migrazione
 select multiple contacts for a further action	addressbook	it	Seleziona contatti multipli per azioni ulteriori
 select phone number as prefered way of contact	addressbook	it	Seleziona il numero di telefono come modalità di contatto preferita

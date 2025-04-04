@@ -272,6 +272,7 @@ group ?	admin	sv	Grupp?
 group has been added	common	sv	Grupp har lagts till
 group has been deleted	common	sv	Grupp har raderats
 group has been updated	common	sv	Grupp har uppdaterats
+group hidden from non-admins	admin	sv	Grupp dold för icke-admins
 group hierarchy	admin	sv	Grupphierarki
 group list	admin	sv	Grupplista
 group manager	admin	sv	Gruppansvarig

@@ -58,6 +58,7 @@ continue	mail	zh	继续
 convert mail to item and attach its attachments to this item (standard)	mail	zh	将电子邮件转换为项目并将其附件附加到此项目（标准）
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	zh	将电子邮件转换为项目，附加其附件，并将原始邮件（.eml）添加为附件
 convert only mail to item (ignore possible attachments)	mail	zh	仅将电子邮件转换为项目（忽略可能的附件）
+copied %1 message(s) from %2 to %3	mail	zh	将 %1 条信息从 %2 复制到 %3。
 copy to	mail	zh	复制到
 cross account forward attachment is not allowed!	mail	zh	不允许跨账户转发附件!
 default sorting order	mail	zh	默认排序
@@ -124,6 +125,7 @@ greater than	mail	zh	大于
 ham folder	mail	zh	垃圾邮件文件夹
 handling of external http images / mixed content in mails	mail	zh	处理电子邮件中的外部 http 图像/混合内容
 header lines	mail	zh	邮件头
+hide from	mail	zh	隐藏来自
 high priority	mail	zh	高优先级
 html	mail	zh	HTML
 ident name	mail	zh	标识名称
@@ -187,6 +189,7 @@ modify subject of this message	mail	zh	修改此信息的主题
 move selected to	mail	zh	将选定邮件移至
 move to	mail	zh	将选定邮件移至
 move to trash	mail	zh	移动至回收站
+moved %1 message(s) from %2 to %3	mail	zh	将 %1 信息从 %2 移到 %3。
 name and domain	mail	zh	名称和域名
 name and email	mail	zh	姓名和电子邮件
 name of account	mail	zh	账户名称
@@ -281,6 +284,7 @@ see attachments for content of the orignial mail	mail	zh	原始邮件内容见�
 select all	mail	zh	全选
 select an existing entry in order to append mail content to it	mail	zh	选择一个现有条目，以便将邮件内容添加到该条目中
 select an item to read	mail	zh	选择一个项目阅读
+select mail addresses from addressbook	mail	zh	从地址簿中选择邮件地址
 select or insert email address	mail	zh	选择或插入电子邮件地址
 selected date range (with quicksearch)	mail	zh	选定日期范围（使用快速搜索）
 send message and move to send folder (if configured)	mail	zh	发送信息并移至发送文件夹（如果已配置）
@@ -291,6 +295,7 @@ set predefined values for compose...	mail	zh	设置用于撰写的预定义值..
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	zh	是否应在回复或转发之后（标准）或之前插入签名，以及是否应在撰写过程中显示和更改签名。
 show all addresses	mail	zh	显示所有地址
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	zh	在主屏幕文件夹窗格中显示所有文件夹（已订阅和未订阅文件夹
+show horizontal, hide if none selected	mail	zh	横向显示，如果未选择则隐藏
 show notification for new arriving mails	mail	zh	显示新到邮件通知
 show test connection section and control the level of info displayed?	mail	zh	显示测试连接部分并控制显示信息的级别？
 show test connection section and control the level of info displayed??	mail	zh	显示测试连接部分并控制显示信息的级别？
@@ -312,6 +317,8 @@ sort order	mail	zh	分类排序
 spamtitan api url	mail	zh	SpamTitan API URL
 spamtitan integration requires epl version	mail	zh	SpamTitan 集成需要 EPL 版本
 text	mail	zh	文字
+the %1 's acl removed from the %2	mail	zh	从 %2 中移除 %1 的 ACL。
+the %1 's acl, including its subfolders, removed from the %2	mail	zh	从 %2 中移除 %1 的 ACL，包括其子文件夹。
 the imap server need to meet certain requirements and be configured for it:	mail	zh	IMAP 服务器需要满足某些要求并为此进行配置：
 the mimeparser can not parse this message.	mail	zh	MIME 解析器不能解析这个邮件。
 the rule with priority %1 successfully saved!	mail	zh	优先级为 %1 的规则已成功保存！
@@ -330,6 +337,7 @@ unread	mail	zh	未读
 vacation notice	mail	zh	假期通知
 vacation notice is active	mail	zh	假期通知已激活
 vacation start-date must be before the end-date!	mail	zh	假期开始日期必须是在结束日期之前！
+validate addresses on submit:	mail	zh	提交时验证地址
 view header lines	mail	zh	查看邮件头
 when deleting messages	mail	zh	当删除邮件时
 write	mail	zh	写入

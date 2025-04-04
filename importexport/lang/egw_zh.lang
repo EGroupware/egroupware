@@ -1,6 +1,8 @@
+%1 is not a known user or group	importexport	zh	%1 不是已知的用户或组。
 add a new definition	importexport	zh	添加新定义
 addressbook csv import	importexport	zh	通讯簿 CSV 导入
 addressbook vcard import	importexport	zh	通讯录 vCard 导入
+admin disabled exporting	importexport	zh	管理员禁用了导出。
 all users	importexport	zh	所有用户
 allowed users	importexport	zh	允许的用户
 automatically created by importexport	importexport	zh	导入导出自动地创建
@@ -13,11 +15,14 @@ check all	importexport	zh	全选
 choose a name for this definition	importexport	zh	选择这个定义的名称
 choose a plugin	importexport	zh	选择一插件
 choose an application	importexport	zh	选择一应用程序
+choose fields to export	importexport	zh	选择要导出的字段
 choose seperator and charset	importexport	zh	选择分隔符和字符集
 condition	importexport	zh	条件
 copied	importexport	zh	已复制
 created	importexport	zh	创建
+database values	importexport	zh	数据库值
 delete all selected definitions	importexport	zh	删除所有选择的定义
+delete files after import	importexport	zh	导入后删除文件
 deleted	importexport	zh	已删除
 execute	importexport	zh	执行
 expert options	importexport	zh	高级选项

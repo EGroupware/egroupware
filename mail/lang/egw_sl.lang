@@ -117,7 +117,7 @@ continue	mail	sl	Nadaljuj
 convert mail to item and attach its attachments to this item (standard)	mail	sl	Pretvorite pošto v element in priložite njene priloge temu elementu (standardni)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	sl	Pretvorite Mail v postavko, priložite njene priloge in dodajte surovo sporočilo (.eml) kot prilogo
 convert only mail to item (ignore possible attachments)	mail	sl	Pretvorite samo pošto v postavko (prezrite morebitne priloge)
-copied %1 message(s) from %2 to %3	mail	sl	Kopirali %1 sporočil od %2 do %3
+copied %1 message(s) from %2 to %3	mail	sl	Kopirali %1 sporočil od %2 do %3.
 copy to	mail	sl	Kopiraj v
 could not append message:	mail	sl	Ni bilo mogoče dodati sporočila:
 could not save the acl because some names are empty	mail	sl	ACL ni bilo mogoče shraniti, ker so nekatera imena prazna
@@ -273,6 +273,7 @@ ham folder	mail	sl	Ham mapa
 handling of external http images / mixed content in mails	mail	sl	Ravnanje z zunanjimi slikami http / mešano vsebino v e-poštnih sporočilih
 header	mail	sl	Glava
 header lines	mail	sl	Glava sporočila
+hide from	mail	sl	Skrij Od
 high	mail	sl	Visoko
 high priority	mail	sl	Visoka prioriteta
 hold %1 to drag files to your computer	mail	sl	Držite %1, da povlečete datoteke v računalnik
@@ -372,7 +373,7 @@ move selected to	mail	sl	Premakni označeno v
 move to	mail	sl	Premakni označeno v
 move to archive	mail	sl	Premakni v mapo za arhiviranje
 move to trash	mail	sl	Premakni v smeti
-moved %1 message(s) from %2 to %3	mail	sl	Premaknil %1 sporočil od %2 do %3
+moved %1 message(s) from %2 to %3	mail	sl	Premaknil %1 sporočil od %2 do %3.
 moving folders from one mailaccount to another is not supported	mail	sl	Premikanje map iz enega poštnega računa v drugega ni podprto
 name and domain	mail	sl	Ime in domena
 name and email	mail	sl	Ime in e-pošta
@@ -459,7 +460,7 @@ quota limit warning in megabyte (recommended value is 30 mb).	mail	sl	Opozorilo 
 quota not provided by server	mail	sl	Kvota, ki jo ne zagotavlja strežnik
 quota: %1	mail	sl	Kvota: %1
 read	mail	sl	Prebrano
-read / unread	mail	sl	Branje / Neprebrano
+read / unread	mail	sl	Prebrano / Neprebrano
 readable	mail	sl	berljivo
 real name	mail	sl	Pravo ime
 real name email	mail	sl	Resnično ime [E-pošta]
@@ -546,6 +547,7 @@ select file to attach to message	mail	sl	Izberite datoteko, ki jo želite prilo�
 select file to import into folder	mail	sl	Izberite datoteko, ki jo želite uvoziti v mapo
 select file(s) from vfs	mail	sl	Izberite datoteke iz VFS
 select files to upload	mail	sl	Izberite datoteke za nalaganje
+select mail addresses from addressbook	mail	sl	Izberite poštne naslove iz imenika
 select multiple	mail	sl	Izberite več
 select or insert email address	mail	sl	Izberite ali vstavite e-poštni naslov
 selected	mail	sl	izbran
@@ -626,8 +628,8 @@ test connection and display basic information about the selected profile	mail	sl
 text	mail	sl	Besedilo
 text mode	mail	sl	Način besedila
 text/plain	mail	sl	Navadno besedilo
-the %1 's acl removed from the %2	mail	sl	ACL %1 je odstranjen iz %2
-the %1 's acl, including its subfolders, removed from the %2	mail	sl	ACL %1, vključno z njegovimi podmapami, je bil odstranjen iz %2
+the %1 's acl removed from the %2	mail	sl	ACL %1 je odstranjen iz %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	sl	ACL %1, vključno z njegovimi podmapami, je bil odstranjen iz %2.
 the entered passphrase is not correct! please try again.	mail	sl	Vnesena geslo ni pravilna! Prosim poskusite ponovno.
 the folder %1 's acls saved	mail	sl	Shranjeni so ACL-ji mape %1
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	sl	Uporabljena bo mapa <b>%1</b>, če tukaj ni ničesar in ne bo podana nobena veljavna prednastavitev.

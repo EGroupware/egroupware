@@ -1,12 +1,17 @@
+%1 is not a known user or group	importexport	tr	%1 bilinen bir kullanıcı veya grup değil.
 add a new definition	importexport	tr	Yeni bir tanım ekleyin
 addressbook csv import	importexport	tr	Adres Defteri CSV İçe Aktarma
 addressbook vcard import	importexport	tr	Adres defteri vCard içe aktarma
+admin disabled exporting	importexport	tr	Yönetici dışa aktarmayı devre dışı bıraktı.
 all users	importexport	tr	Tüm Kullanıcılar
 change allowed users	importexport	tr	İzin verilen kullanıcıları değiştirme
 change owner when updating	importexport	tr	Güncelleme sırasında sahibi değiştir
 changed owner	importexport	tr	Sahibi değişti
 charset of file	importexport	tr	Dosya Karakter Kümesi (char-set)
-deleted	importexport	tr	Silindi
+choose fields to export	importexport	tr	Dışa aktarılacak alanları seçin
+database values	importexport	tr	Veritabanı değerleri
+delete files after import	importexport	tr	İçe aktardıktan sonra dosyaları silme
+deleted	importexport	tr	Silindi.
 export	importexport	tr	İhraç Et
 import	importexport	tr	İthalat
 next run	importexport	tr	Sıradaki çalıştırma

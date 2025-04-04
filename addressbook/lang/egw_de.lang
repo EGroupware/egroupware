@@ -163,7 +163,6 @@ csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
 custom etemplate for the contactform	addressbook	de	Eigenes eTemplate für das Kontaktformular
 custom fields	addressbook	de	Benutzerdefinierte Felder
-data exchange settings	common	de	Einstellungen Datenaustausch
 default	addressbook	de	Standard
 default action on double-click	addressbook	de	Vorgabe beim Doppel-Klick einer Adresse
 default address format	addressbook	de	Vorgabe für Format der Adresse

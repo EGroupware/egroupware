@@ -440,7 +440,6 @@ startdate / -time	calendar	pl	Data/czas rozpoczęcia
 startdate and -time of the search	calendar	pl	Data/czas rozpoczęcia przy wyszukwaniu
 startdate of the export	calendar	pl	Data początkowa dla eksportu
 startrecord	calendar	pl	Pierwszy wpis
-status	calendar	pl	Status
 status already applied	calendar	pl	Status już zastosowany
 status changed	calendar	pl	Status został zmieniony
 status for all future scheduled days changed	calendar	pl	Status zaplanowanych dni się zmienił

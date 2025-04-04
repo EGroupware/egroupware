@@ -45,7 +45,6 @@ cell phone	addressbook	eu	Telefono mugikorra
 change all organisation members	addressbook	eu	antolakuntzako partaide guztiak aldatu
 charset for the csv export	addressbook	eu	Fitxategiaren karaktere jokoa
 charset of file	addressbook	eu	Fitxategiaren Karaktere bilduma
-check all	addressbook	eu	Guztia hautatu
 choose an icon for this contact type	admin	eu	Ikono bat aukeratu kontaktu mota honetarako
 chosse an etemplate for this contact type	admin	eu	Plantilla bat aukeratu kontaktu mota honetarako
 city	common	eu	Hiria

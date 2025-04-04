@@ -6,6 +6,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	pl	Tematy służą do określenia kolorów i czcionek używanych w szablonie
 acl grants have been updated	preferences	pl	Uprawniena dostępu (ACL) zostały odnowione
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pl	Wszelkie listy w EGroupware będą wyświetlać tutaj ustawioną liczbę wierszy na stronę.<br />Za wiele spowolni dość znacznie wyświetlanie stron, za mało spowoduje utratę przejrzystości informacji.
+applications list scroll area	preferences	pl	Przycisk przewijania dla menu bocznego
 are you sure you want to delete this category ?	preferences	pl	Napewno skasować tę kategorie ?
 br	preferences	pl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pl	Zmień hasło użytkownika podając stare i nowe hasło. Odpowiedź TRUE oznacza poprawną zmianę, podczas gdy FALSE związane jest z błędem.
@@ -51,8 +52,9 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	pl	Wybór interfejsu/szablonu
 it sets content size (text only) according to selected size.	preferences	pl	Ustawia rozmiar zawartości (tylko tekst) zgodnie z wybranym rozmiarem.
 language	preferences	pl	Język
+limit following groups to only create application passwords via templates	preferences	pl	Odmowa następującym grupom dostępu do haseł aplikacji
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	pl	Logowanie przez SingleSignOn nie zapewnia hasła do przekazania go do serwerów poczty lub plików.
-make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	pl	Możliwość przewijania listy aplikacji za pomocą przycisków przewijania góra/dół (przydatne dla użytkowników pracujących z myszką bez kółka do przewijania)
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	pl	Sprawia, że pasek boczny po lewej stronie z przyciskiem przewijania można przewijać w górę/w dół (przydatne dla użytkowników tabletów).
 max matches per page	preferences	pl	Maksymalna liczba trafień na stronie
 max number of icons in navbar	preferences	pl	Maksymalna liczba ikonek w pasku nawigacji
 no default	preferences	pl	Bez domyślnego
@@ -96,7 +98,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	pl	Te dwa hasła nie są identyczne
 theme (colors/fonts) selection	preferences	pl	Wybór tematu (kolory/czcionki)
 this server is located in the %1 timezone	preferences	pl	Ten serwer znajduje się w strefie czasowej %1
-thousands separator is only used for displaying and not for editing numbers.	preferences	pl	Separator tysięcy służy tylko do wyświetlania, a nie do edycji liczb.
+thousands separator is only used for displaying and not for editing numbers.	preferences	pl	Format liczb można ustawić dla wyświetlania liczb.
 time format	preferences	pl	Format czasu
 use default	preferences	pl	Domyślne
 use first %1 letters from username	preferences	pl	Użyj pierwszych %1 liter z nazwy użytkownika

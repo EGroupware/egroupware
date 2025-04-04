@@ -117,7 +117,7 @@ continue	mail	de	Fortsetzen
 convert mail to item and attach its attachments to this item (standard)	mail	de	Konvertiere E-Mail zum Eintrag und füge die E-Mail-Anhänge hinzu (Standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	de	Konvertiere E-Mail zum Eintrag und füge die Anhänge sowie die original E-Mail (als .eml) hinzu
 convert only mail to item (ignore possible attachments)	mail	de	Konvertiere nur den E-Mail-Text zum Eintrag (keine Anhänge und keine E-Mail als .eml)
-copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert
+copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert.
 copy to	mail	de	Kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not save the acl because some names are empty	mail	de	Konnte die Zugriffsrechte nicht speichern! Grund: einige Bezeichnungen waren leer
@@ -373,7 +373,7 @@ move selected to	mail	de	Verschiebe ausgewählte nach
 move to	mail	de	Verschieben
 move to archive	mail	de	Verschiebe in Archivordner
 move to trash	mail	de	Verschiebe in Papierkorb
-moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
+moved %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 verschoben.
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt.
 name and domain	mail	de	Name und Domain
 name and email	mail	de	Name und E-Mail
@@ -628,8 +628,8 @@ test connection and display basic information about the selected profile	mail	de
 text	mail	de	Text
 text mode	mail	de	Text-Modus
 text/plain	mail	de	Text
-the %1 's acl removed from the %2	mail	de	Die Zugriffsrechte von %1 wurden von %2 entfernt
-the %1 's acl, including its subfolders, removed from the %2	mail	de	Die Zugriffsrechte inkl. Unterordner von %1 wurden von %2 entfernt
+the %1 's acl removed from the %2	mail	de	Die Zugriffsrechte von %1 wurden von %2 entfernt.
+the %1 's acl, including its subfolders, removed from the %2	mail	de	Die Zugriffsrechte inkl. Unterordner von %1 wurden von %2 entfernt.
 the entered passphrase is not correct! please try again.	mail	de	Das eingegebene Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.
 the folder %1 's acls saved	mail	de	Die Zugriffsrechte des Ordners %1 wurden gespeichert
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	de	Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.

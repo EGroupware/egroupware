@@ -85,7 +85,10 @@ resource	resources	lv	Resurss
 resource %1 deleted!	resources	lv	Resurss %1 dzēsts!
 resource %1 saved!	resources	lv	Resurss %1 saglabāts!
 resource / accessories	resources	lv	Resurss / Aksesuāri
+resource id	resources	lv	Resursu ID
 resources	common	lv	Resursi
+resources csv export	resources	lv	Resursu CSV eksports
+resources csv import	resources	lv	Resursu CSV imports
 resources list	resources	lv	Resursu saraksts
 responsible:	resources	lv	Atbildīgs:
 saves entry and exits	resources	lv	Saglabā ierakstu un iziet
@@ -94,6 +97,7 @@ select resource	resources	lv	Iezīmē resursu
 select resources	common	lv	Lezīmē resursus
 short description	resources	lv	īss apraksts
 short description of resource	resources	lv	īss resursa apraksts
+show in title (beside name)	resources	lv	Rādīt virsrakstā (blakus nosaukumam)
 something went wrong by deleting resource	resources	lv	Kaut kas nenotika pareizi dzēšot resursu
 something went wrong by saving resource	resources	lv	Kaut kas notika nepareizi saglabājot resursu
 storage information	resources	lv	Krātuves informācija

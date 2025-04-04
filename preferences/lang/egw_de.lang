@@ -103,7 +103,7 @@ it sets content size (text only) according to selected size.	preferences	de	Stel
 just clicking on the line, like a checkbox	preferences	de	Einfaches anklicken der Zeile, wie eine Checkbox
 keep list open for selecting multiple	preferences	de	Liste für die Auswahl mehrerer Optionen offen halten
 language	preferences	de	Sprache
-limit following groups to only create application passwords via templates	preferences	de	Beschränke die folgenden Gruppen darauf nur Anwendungspasswörter aus Vorlagen generieren zu dürfen
+limit following groups to only create application passwords via templates	preferences	de	Diese Gruppen beschränken nur Anwendungskennwörter über Vorlagen erstellen zu können
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	de	Das Anmelden per SingleSignOn liefert kein Passwort das an Mail- oder Datei-Server weiter gegeben werden kann.
 look & feel	preferences	de	Aussehen und Handhabung
 lowercase letters	preferences	de	Kleinbuchstaben
@@ -183,7 +183,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	de	Die beiden Passworte sind nicht identisch
 theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schriften)
 this server is located in the %1 timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
-thousands separator is only used for displaying and not for editing numbers.	preferences	de	Tausender Trennzeichen werden nur zur Anzeige benutzt, aber nicht, zum bearbeiten von Zahlen.
+thousands separator is only used for displaying and not for editing numbers.	preferences	de	Das Zahlenformat kann für die Anzeige von Zahlen eingestellt werden.
 time format	preferences	de	Zeitformat
 two factor auth	preferences	de	2-Faktor-Authentifizierung
 two factor auth enabled.	preferences	de	2-Faktor-Authentifizierung eingeschaltet.

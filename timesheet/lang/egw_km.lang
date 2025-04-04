@@ -135,7 +135,6 @@ start timer	common	km	ចាប់ផ្តើមកម្មវិធីកំ�
 start-time can not be before last stop- or pause-time %1!	common	km	ម៉ោងចាប់ផ្តើមមិនអាចមុនពេលឈប់ចុងក្រោយ ឬពេលផ្អាក%1!
 starttime	timesheet	km	ពេលវេលាចាប់ផ្តើម
 starttime has to be before endtime !!!	timesheet	km	ពេលវេលាចាប់ផ្តើមត្រូវតែមុនពេលបញ្ចប់!
-status	timesheet	km	ស្ថានភាព
 status deleted.	timesheet	km	ស្ថានភាពត្រូវបានលុប
 status of created timesheets	timesheet	km	ស្ថានភាពនៃតារាងពេលវេលាដែលបានបង្កើត
 status updated.	timesheet	km	ស្ថានភាពបានធ្វើបច្ចុប្បន្នភាព

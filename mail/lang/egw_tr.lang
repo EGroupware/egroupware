@@ -44,6 +44,7 @@ continue	mail	tr	Devam et
 convert mail to item and attach its attachments to this item (standard)	mail	tr	E-postayı öğeye dönüştürme ve eklerini bu öğeye ekleme (standart)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	tr	E-postayı öğeye dönüştürün, eklerini ekleyin ve ham mesajı (.eml) ek olarak ekleyin
 convert only mail to item (ignore possible attachments)	mail	tr	Yalnızca e-postayı öğeye dönüştürün (olası ekleri göz ardı edin)
+copied %1 message(s) from %2 to %3	mail	tr	%1 mesaj(lar)ı %2'den %3'e kopyalandı.
 cross account forward attachment is not allowed!	mail	tr	Çapraz hesap ileri ekine izin verilmez!
 current subject	mail	tr	Güncel konu
 default toolbar actions shown in mail's html editor	mail	tr	E-posta oluştururken HTML düzenleyici araç çubuğunda etkinleştirilen işlevler
@@ -89,6 +90,7 @@ from	mail	tr	Nereden
 get acl rights failed from imap server!	mail	tr	IMAP sunucusundan ACL haklarını alma başarısız oldu!
 ham folder	mail	tr	Ham klasörü
 handling of external http images / mixed content in mails	mail	tr	E-postalarda harici http görüntülerinin / karışık içeriğin işlenmesi
+hide from	mail	tr	Kimden gizle
 high priority	mail	tr	Yüksek öncelik
 html	mail	tr	HTML
 ident name	mail	tr	Kimlik adı
@@ -144,6 +146,7 @@ modify subject of this message	mail	tr	Bu mesajın konusunu değiştirin
 move selected to	mail	tr	Seçileni şuraya taşı
 move to	mail	tr	Şuraya git
 move to archive	mail	tr	Arşiv klasörüne taşı
+moved %1 message(s) from %2 to %3	mail	tr	%1 mesaj(lar)ını %2'den %3'e taşıdı.
 name and domain	mail	tr	İsim ve alan adı
 name of account	mail	tr	Hesap adı
 name of imap servers (space separated host or host:port)	mail	tr	IMAP sunucularının adı (boşluk bırakılarak ayrılmış ana bilgisayar veya ana bilgisayar:bağlantı noktası)
@@ -228,6 +231,7 @@ see attachments for content of the orignial mail	mail	tr	İlk e-postanın içeri
 select all	mail	tr	Tümünü seçin
 select an existing entry in order to append mail content to it	mail	tr	Posta içeriğini eklemek için mevcut bir girişi seçin
 select an item to read	mail	tr	Okumak için bir öğe seçin
+select mail addresses from addressbook	mail	tr	Adres defterinden posta adreslerini seçin
 select or insert email address	mail	tr	E-posta adresini seçin veya ekleyin
 selected date range (with quicksearch)	mail	tr	Seçilen tarih aralığı (hızlı arama ile)
 send message and move to send folder (if configured)	mail	tr	Mesaj gönderme ve gönderme klasörüne taşıma (yapılandırılmışsa)
@@ -238,6 +242,7 @@ should signature be inserted after (standard) or before a reply or inline forwar
 show all addresses	mail	tr	Tüm adresleri göster
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	tr	Ana ekran klasör bölmesinde tüm klasörleri (abone olunan VE abone olunmayan) gösterme
 show horizontal	mail	tr	Yatay göster
+show horizontal, hide if none selected	mail	tr	Yatay göster, hiçbiri seçilmemişse gizle
 show notification for new arriving mails	mail	tr	Yeni gelen postalar için bildirim göster
 show test connection section and control the level of info displayed?	mail	tr	Test bağlantısı bölümünü gösterin ve görüntülenen bilgi düzeyini kontrol edin?
 show test connection section and control the level of info displayed??	mail	tr	Test bağlantısı bölümünü gösterin ve görüntülenen bilgi seviyesini kontrol edin?
@@ -265,6 +270,8 @@ step 4: smtp - outgoing mail	mail	tr	Adım 4: SMTP - giden e-posta
 text	mail	tr	Metin
 text mode	mail	tr	Metin modu
 text/plain	mail	tr	Metin
+the %1 's acl removed from the %2	mail	tr	%1'in ACL'si %2'den kaldırıldı.
+the %1 's acl, including its subfolders, removed from the %2	mail	tr	Alt klasörleri de dahil olmak üzere %1'in ACL'si %2'den kaldırıldı.
 the imap server need to meet certain requirements and be configured for it:	mail	tr	IMAP sunucusunun belirli gereksinimleri karşılaması VE bunun için yapılandırılmış olması gerekir:
 the rule with priority %1 successfully saved!	mail	tr	Öncelik %1 olan kural başarıyla kaydedildi!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	tr	Sieve komut dosyasını depolamak için yer kalmadı, lütfen mailserver'ınızın yapılandırmasındaki sieve_maxscriptsize seçeneğini kontrol edin.
@@ -277,6 +284,7 @@ trash	mail	tr	Çöp
 trash folder	mail	tr	Çöp klasörü
 unconditional	mail	tr	Her zaman
 unsubscribe folder	mail	tr	Klasör aboneliğini iptal et
+validate addresses on submit:	mail	tr	Gönderme sırasında adresleri doğrulayın:
 write	mail	tr	Yaz
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	tr	Yukarıdaki başlangıç tarihi için $$start$$ ve bitiş tarihi için $$end$$ kullanabilirsiniz.
 you may add this certificate into your contact, if you trust this signature.	mail	tr	Bu imzaya güveniyorsanız, bu sertifikayı kişinize ekleyebilirsiniz.

@@ -98,7 +98,11 @@ resource	resources	sv	Resurs
 resource %1 deleted!	resources	sv	Resurs %1 borttagen!
 resource %1 saved!	resources	sv	Resurs %1 sparad!
 resource / accessories	resources	sv	Resurs / Tillbehör
+resource id	resources	sv	Resurs-ID
 resources	common	sv	Resurser
+resources and accessories	resources	sv	Resurser och tillbehör
+resources csv export	resources	sv	Resurser CSV-export
+resources csv import	resources	sv	Resurser CSV-import
 resources list	resources	sv	Resurslista
 responsible:	resources	sv	Ansvarig:
 saves entry and exits	resources	sv	Spara och avsluta
@@ -109,6 +113,7 @@ select/deselect all	resources	sv	Markera / Avmarkera alla
 short description	resources	sv	Kort beskrivning
 short description of resource	resources	sv	Kort beskrivning av resursen
 show calendar of resource	resources	sv	Visa resursens kalender
+show in title (beside name)	resources	sv	Visa i titel (bredvid namn)
 something went wrong by deleting resource	resources	sv	Något gick fel vid radering av resursen
 something went wrong by saving resource	resources	sv	Något gick fel vid sparandet av resursen
 storage information	resources	sv	Lager information

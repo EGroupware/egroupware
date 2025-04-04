@@ -1,6 +1,8 @@
+%1 is not a known user or group	importexport	pt	%1 não é um utilizador ou grupo conhecido.
 add a new definition	importexport	pt	Adicionar uma nova definição
 addressbook csv import	importexport	pt	Importação de CSV do livro de endereços
 addressbook vcard import	importexport	pt	Importação de vCard do livro de endereços
+admin disabled exporting	importexport	pt	O administrador desactivou a exportação.
 all users	importexport	pt	Todos os utilizadores
 change allowed users	importexport	pt	Alterar os utilizadores permitidos
 change owner when updating	importexport	pt	Alterar o proprietário ao atualizar
@@ -8,8 +10,11 @@ changed	importexport	pt	Alterado/a
 changed owner	importexport	pt	Proprietário alterado
 charset of file	importexport	pt	Charset do ficheiro
 check all	importexport	pt	Marcar todas
+choose fields to export	importexport	pt	Selecionar campos para exportar
 condition	importexport	pt	Condição
 created	importexport	pt	Criado
+database values	importexport	pt	Valores da base de dados
+delete files after import	importexport	pt	Eliminar ficheiros após a importação
 deleted	importexport	pt	eliminado/a
 execute	importexport	pt	Executar
 export	importexport	pt	Exportar

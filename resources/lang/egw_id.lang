@@ -90,7 +90,10 @@ resource	resources	id	Sumber daya
 resource %1 deleted!	resources	id	Sumber daya %1 dihapus!
 resource %1 saved!	resources	id	Sumber daya %1 disimpan!
 resource / accessories	resources	id	Sumber daya / Aksesori
+resource id	resources	id	ID Sumber Daya
 resources	common	id	Sumberdaya
+resources csv export	resources	id	Ekspor CSV sumber daya
+resources csv import	resources	id	Impor CSV sumber daya
 resources list	resources	id	Daftar Sumberdaya
 responsible:	resources	id	Penanggungjawab:
 saves entry and exits	resources	id	Simpan entri dan keluar
@@ -101,6 +104,7 @@ select/deselect all	resources	id	Pilih/batalkan semua
 short description	resources	id	Uraian singkat
 short description of resource	resources	id	Uraian singkat dari sumberdaya
 show calendar of resource	resources	id	Tampilkan kalender dari sumberdaya
+show in title (beside name)	resources	id	Tunjukkan dalam judul (di samping nama)
 storage information	resources	id	Informasi penyimpanan
 storage information:	resources	id	Informasi penyimpanan:
 the calendar of this resource	resources	id	Kalender dari sumberdaya ini

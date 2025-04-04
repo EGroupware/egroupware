@@ -222,6 +222,7 @@ group ?	admin	ko	그룹 ?
 group has been added	common	ko	그룹이 추가되었습니다
 group has been deleted	common	ko	그룹이 삭제되었습니다
 group has been updated	common	ko	그룹이 갱신되었습니다
+group hidden from non-admins	admin	ko	관리자가 아닌 사람에게 그룹 숨기기
 group hierarchy	admin	ko	グループ階層
 group list	admin	ko	그룹 리스트
 group manager	admin	ko	그룹 관리자

@@ -62,6 +62,7 @@ all types	addressbook	es-es	Todos los tipos
 allow	addressbook	es-es	Permitir
 allow for contacts only	addressbook	es-es	Permitir sólo contactos
 allow members of following groups to edit contact-data of accounts	addressbook	es-es	Permitir a los miembros de los siguientes grupos edit los datos de contacto de las cuentas
+allow members of following groups to show the account name column	addressbook	es-es	Permitir a los miembros de los siguientes grupos mostrar la columna del nombre de la cuenta
 allow users to maintain their own account-data	admin	es-es	Permitir a los usuarios mantener los datos de su cuenta
 alt. csv import	addressbook	es-es	Importar CSV (avanzado)
 always	addressbook	es-es	Siempre
@@ -440,6 +441,7 @@ select a view	addressbook	es-es	Seleccionar una vista
 select addressbook type	addressbook	es-es	Seleccionar el tipo de libreta de direcciones
 select all	addressbook	es-es	Seleccionar todo
 select an opened dialog	addressbook	es-es	Seleccionar un diálogo abierto
+select contacts to add to mail	addressbook	es-es	Seleccionar contactos para añadir al correo
 select migration type	admin	es-es	Seleccionar el tipo de migración
 select multiple contacts for a further action	addressbook	es-es	Seleccionar múltiples contactos para una acción posterior
 select phone number as prefered way of contact	addressbook	es-es	Seleccionar el número de teléfono como forma preferida de contacto

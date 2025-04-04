@@ -137,7 +137,6 @@ start timer	common	fr	Lancer le timer
 start-time can not be before last stop- or pause-time %1!	common	fr	L'heure de début ne peut pas être après l'heure de fin ou de pause %1 !
 starttime	timesheet	fr	Heure de début
 starttime has to be before endtime !!!	timesheet	fr	L'heure de début doit être avant l'heure de fin !
-status	timesheet	fr	Statut
 status deleted.	timesheet	fr	Statut supprimé.
 status of created timesheets	timesheet	fr	Statut des feuilles de temps créés.
 status updated.	timesheet	fr	Statut mis à jour.

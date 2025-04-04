@@ -52,8 +52,12 @@ resource	resources	el	Πόρος
 resource %1 deleted!	resources	el	Ο πόρος %1 διαγράφηκε!
 resource %1 saved!	resources	el	Ο πόρος %1 αποθηκεύτηκε!
 resource / accessories	resources	el	Πόρος / Αξεσουάρ
+resource id	resources	el	Αναγνωριστικό πόρου
 resources	common	el	Πόροι
+resources csv export	resources	el	Εξαγωγή πόρων CSV
+resources csv import	resources	el	Εισαγωγή πόρων CSV
 select resources	common	el	Επιλέξτε πόρους
+show in title (beside name)	resources	el	Εμφάνιση στον τίτλο (δίπλα στο όνομα)
 the anonymous user needs add rights for it!	resources	el	Ο ανώνυμος χρήστης χρειάζεται δικαιώματα για να προσθέσει σε αυτό!
 un-delete accessories of selected resources too?	resources	el	Να επαναφέρετε τα αξεσουάρ των επιλεγμένων πόρων;
 view accessories	resources	el	Προβολή αξεσουάρ

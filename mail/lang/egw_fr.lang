@@ -117,7 +117,7 @@ continue	mail	fr	Continuer
 convert mail to item and attach its attachments to this item (standard)	mail	fr	Convertir le message en item et y attacher ses pièces jointes
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	fr	Convertir le mesasge en item, attacher ses pièces jointes et ajouter le message brut (message/rfc822 (.eml)) en tant que pièce jointe
 convert only mail to item (ignore possible attachments)	mail	fr	ne convertir que le message en élément (ignorer les éventuelles pièces jointes)
-copied %1 message(s) from %2 to %3	mail	fr	%1 message(s) copié(s) de %2 vers %3
+copied %1 message(s) from %2 to %3	mail	fr	Copie de %1 message(s) de %2 à %3.
 copy to	mail	fr	Copier vers
 could not append message:	mail	fr	Impossible d'ajouter au message:
 could not save the acl because some names are empty	mail	fr	Echec à l'enregistrement de l'ACL certains noms sont vides
@@ -273,6 +273,7 @@ ham folder	mail	fr	Dossier Ham
 handling of external http images / mixed content in mails	mail	fr	Traitement des images http externes / contenu mixte dans les courriers électroniques
 header	mail	fr	En-tête
 header lines	mail	fr	Lignes d'en-tête
+hide from	mail	fr	Cacher De
 high	mail	fr	haute
 high priority	mail	fr	Priorité élevée
 hold %1 to drag files to your computer	mail	fr	Maintenir la touche %1 pour déplacer les fichiers vers votre ordinateur
@@ -372,7 +373,7 @@ move selected to	mail	fr	Déplacer le choix vers
 move to	mail	fr	Déplacer vers
 move to archive	mail	fr	Déplacer vers le dossier archives
 move to trash	mail	fr	Déplacer vers la Corbeille
-moved %1 message(s) from %2 to %3	mail	fr	Déplacer %1 message(s) de %2 vers %3
+moved %1 message(s) from %2 to %3	mail	fr	Déplacement de %1 message(s) de %2 à %3.
 moving folders from one mailaccount to another is not supported	mail	fr	Déplacer des dossiers d'un compte à un autre n'est pas supporté
 name and domain	mail	fr	Nom et domaine
 name and email	mail	fr	Nom et email
@@ -546,6 +547,7 @@ select file to attach to message	mail	fr	Sélectionner le fichier à joindre au 
 select file to import into folder	mail	fr	Sélectionner le fichier à importer dans le dossier
 select file(s) from vfs	mail	fr	Sélectionner des fichiers du VFS
 select files to upload	mail	fr	Sélectionner des fichiers à envoyer
+select mail addresses from addressbook	mail	fr	Sélectionner les adresses de courrier à partir du carnet d'adresses
 select multiple	mail	fr	Sélectionner plusieurs
 select or insert email address	mail	fr	Sélectionner ou insérer une adresse email
 selected	mail	fr	sélectionné
@@ -626,8 +628,8 @@ test connection and display basic information about the selected profile	mail	fr
 text	mail	fr	Texte
 text mode	mail	fr	Mode texte
 text/plain	mail	fr	Texte
-the %1 's acl removed from the %2	mail	fr	Les ACL %1 ont été supprimés de %2
-the %1 's acl, including its subfolders, removed from the %2	mail	fr	L'ACL de %1, y compris ses sous-dossiers, a été supprimée de l'ACL de %2
+the %1 's acl removed from the %2	mail	fr	Les ACL %1 ont été supprimés de %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	fr	L'ACL de %1, y compris ses sous-dossiers, a été supprimée de l'ACL de %2.
 the entered passphrase is not correct! please try again.	mail	fr	La phrase de passe saisie n'est pas correcte ! Veuillez réessayer.
 the folder %1 's acls saved	mail	fr	Les ACL du dossier %1 sont enregistré
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	fr	Le dossier <b>%1</b> sera utilisé si rien n'est défini ici et si aucune prédéfinition valide n'est donnée.

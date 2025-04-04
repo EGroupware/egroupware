@@ -62,6 +62,7 @@ all types	addressbook	el	Όλοι οι τύποι
 allow	addressbook	el	Να επιτρέπεται
 allow for contacts only	addressbook	el	Να επιτρέπεται μόνο για επαφές
 allow members of following groups to edit contact-data of accounts	addressbook	el	Να επιτρέπεται στα μέλη των παρακάτω ομάδων χρηστών να επεξεργάζονται τα στοιχεία λογαριασμών
+allow members of following groups to show the account name column	addressbook	el	Επιτρέψτε στα μέλη των ακόλουθων ομάδων να εμφανίζουν τη στήλη ονόματος λογαριασμού
 allow users to maintain their own account-data	admin	el	Επιτρέψτε στους χρήστες να διατηρούν τα δικά τους στοιχεία λογαριασμού
 alt. csv import	addressbook	el	Εναλλακτική εισαγωγή CSV
 always	addressbook	el	πάντα
@@ -160,7 +161,6 @@ csv-filename	addressbook	el	Ονομα αρχείου CSV
 custom	addressbook	el	Προσαρμογή
 custom etemplate for the contactform	addressbook	el	Προσαρμογή eΤαμπλέτας για τη φόρμα επαφών
 custom fields	addressbook	el	Προσαρμοσμένα πεδία
-data exchange settings	addressbook	el	Ρυθμίσεις ανταλλαγής δεδομένων
 default	addressbook	el	προκαθορισμένο
 default action on double-click	addressbook	el	Προεπιλεγμένη ενέργεια διπλού κλικ
 default address format	addressbook	el	Προκαθορισμένη μορφή διευθύνσεων
@@ -440,6 +440,7 @@ select a view	addressbook	el	Επιλέξτε μία προβολή
 select addressbook type	addressbook	el	Επιλέξτε τύπο βιβλίου διευθύνσεων
 select all	addressbook	el	Επιλογή όλων
 select an opened dialog	addressbook	el	Επιλέξτε ένα ανοικτό παράθυρο
+select contacts to add to mail	addressbook	el	Επιλογή επαφών για προσθήκη στην αλληλογραφία
 select migration type	admin	el	Επιλέξτε τύπο μετανάστευσης
 select multiple contacts for a further action	addressbook	el	Επιλέξτε πολλαπλές επαφές για περαιτέρω ενέργειες
 select phone number as prefered way of contact	addressbook	el	επιλέξτε τον αριθμό τηλεφώνου ως προτιμότερο τρόπο επικοινωνίας

@@ -10,6 +10,7 @@ by	timesheet	pt-br	por
 category for 'working time'	admin	pt-br	Categoria para 'Tempo de trabalho'
 change category	timesheet	pt-br	alterar categoria
 change owner when updating	timesheet	pt-br	Alterar o proprietário ao atualizar
+choose 'creator' of imported data	timesheet	pt-br	Escolha o “criador” dos dados importados
 comment by %1 at %2:	timesheet	pt-br	Comentário feito por %1 em %2:
 create a single 'working time' timesheet per	timesheet	pt-br	Criar uma única planilha de horas de “Tempo de trabalho” por
 create new links	timesheet	pt-br	Criar novos links
@@ -39,6 +40,7 @@ error storing working time	timesheet	pt-br	Erro ao armazenar o horário de traba
 existing links	timesheet	pt-br	Links existentes
 exists	timesheet	pt-br	Existe
 export definition to use for nextmatch export	timesheet	pt-br	Definição Exportar para usar para exportação NextMatch
+exports entries from your timesheet into a csv file.	timesheet	pt-br	Exporta entradas da folha de ponto para um arquivo CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	pt-br	Exporta registros de sua Planilha de Tempo em um arquivo CSV.. Entretando, na aba Opções você pode escolher outros separadores.
 field must not be empty !!!	timesheet	pt-br	Campo não pode estar vazio !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
@@ -51,6 +53,7 @@ history logging	admin	pt-br	Registro de histórico
 html link to the current record	timesheet	pt-br	Link HTML para o registro atual
 id	timesheet	pt-br	ID
 ignore	timesheet	pt-br	Ignorar
+imports entries into the timesheet from a csv file.	timesheet	pt-br	Importa entradas para o Time Sheet a partir de um arquivo CSV
 insert	timesheet	pt-br	Inserir
 last modified	timesheet	pt-br	Modificado por último
 last month	timesheet	pt-br	Último mês
@@ -115,6 +118,9 @@ ticket modified by %1 at %2	timesheet	pt-br	Ticket modificado por %1 em %2
 timer already running or paused	common	pt-br	O timer já está em execução ou pausado
 timesheet	common	pt-br	Planilha de Tempo
 timesheet csv export	timesheet	pt-br	Exportar Planilha - CSV
+timesheet csv import	timesheet	pt-br	Importação de Timesheet CSV
+timesheet id	timesheet	pt-br	ID da planilha de horas
+timesheet list	timesheet	pt-br	Lista de planilhas de horas
 unitprice	timesheet	pt-br	Unidade de preço
 use field from csv if possible	timesheet	pt-br	Use o campo do CSV, se possível
 values for selectbox	timesheet	pt-br	Valores para a caixa de seleção

@@ -97,10 +97,12 @@ no access	filemanager	id	No access
 noone	filemanager	id	Noone
 notebookbar	filemanager	id	Tab
 open	filemanager	id	Open
+open documents with collabora, if permissions are given	filemanager	id	Membuka dokumen dengan Collabora Online, jika izin diberikan
 operation	filemanager	id	Operasi
 password for webdav and smb, use $pass for password of logged in user	filemanager	id	Kata sandi untuk WebDAV dan SMB, gunakan $pass untuk kata sandi pengguna yang masuk
 path and query-parameters, smb: share and optional path (with /)	filemanager	id	Parameter jalur dan kueri, SMB: berbagi dan jalur opsional (dengan /)
 percentage	filemanager	id	Percentage
+permission denied!	filemanager	id	Izin ditolak!
 permissions	filemanager	id	Ijin
 preview	filemanager	id	Preview
 preview %1	filemanager	id	Preview %1
@@ -133,10 +135,14 @@ searchstring	filemanager	id	teks pencarian
 select action...	filemanager	id	Pilih tindakan...
 show	filemanager	id	Tampilkan
 size	filemanager	id	Ukuran
+smb, webdavs and vfs require a username!	filemanager	id	SMB, WebDAV, dan VFS memerlukan nama pengguna!
+smb: mount samba or windows fileserver shares	filemanager	id	SMB: Pasang Samba atau berbagi server berkas Windows
 start search	filemanager	id	mulai pencarian
 superuser	filemanager	id	Superuser
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	id	Dokumen dapat berisi placeholder seperti {{%3}}, yang akan diganti dengan data (%1daftar lengkap nama placeholder%2).
 total files	filemanager	id	Total Berkas
 unused space	filemanager	id	Ruang tidak digunakan
 up	filemanager	id	Up
 used space	filemanager	id	Ruang digunakan
+username for webdav and smb, use $user for name of logged in user	filemanager	id	Nama pengguna untuk WebDAV dan SMB, gunakan $user untuk nama pengguna yang masuk
 you need to become root, to enable or disable versioning on a directory!	filemanager	id	Anda perlu menjadi superuser, untuk mengaktifkan atau menonaktifkan versi pada folder!

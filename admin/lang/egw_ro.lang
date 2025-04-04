@@ -53,6 +53,7 @@ custom 3	admin	ro	Personalizat 3
 delete certificate	admin	ro	Ștergeți certificatul
 export certificate as p12	admin	ro	Exportați certificatul ca p12
 generate certificate	admin	ro	Generarea certificatului
+group hidden from non-admins	admin	ro	Grup ascuns de non-admins
 group hierarchy	admin	ro	Ierarhia grupurilor
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	ro	Câte intrări ar trebui să poată exporta non-admins. Empty = fără limită, No = fără export
 html/plaintext	admin	ro	HTML/Text

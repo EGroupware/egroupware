@@ -44,6 +44,7 @@ continue	mail	ro	Continuare
 convert mail to item and attach its attachments to this item (standard)	mail	ro	Conversia e-mailului în element și atașarea atașamentelor la acest element (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ro	Conversia e-mailului în element, atașarea atașamentelor acestuia și adăugarea mesajului brut (.eml) ca atașament
 convert only mail to item (ignore possible attachments)	mail	ro	Convertește numai e-mailul în element (ignoră eventualele atașamente)
+copied %1 message(s) from %2 to %3	mail	ro	Ați copiat mesajul (mesajele) %1 de la %2 la %3.
 cross account forward attachment is not allowed!	mail	ro	Atașarea contului încrucișat nu este permisă!
 current subject	mail	ro	Subiect curent
 default toolbar actions shown in mail's html editor	mail	ro	Funcții activate în bara de instrumente a editorului HTML atunci când se compune un e-mail
@@ -83,6 +84,7 @@ forward to	mail	ro	Înainte către
 get acl rights failed from imap server!	mail	ro	Obțineți drepturile ACL eșuate de pe serverul IMAP!
 ham folder	mail	ro	Dosarul Ham
 handling of external http images / mixed content in mails	mail	ro	Gestionarea imaginilor http externe / conținut mixt în e-mailuri
+hide from	mail	ro	Ascundeți De la
 high priority	mail	ro	Prioritate ridicată
 html	mail	ro	HTML
 ident name	mail	ro	Nume ident.
@@ -141,6 +143,7 @@ modify subject of this message	mail	ro	Modificați subiectul acestui mesaj
 move selected to	mail	ro	Mutați selectat la
 move to	mail	ro	Mutarea la
 move to archive	mail	ro	Mutarea în folderul de arhivă
+moved %1 message(s) from %2 to %3	mail	ro	A mutat %1 mesaj(e) de la %2 la %3.
 name and domain	mail	ro	Nume și domeniu
 name and email	mail	ro	Nume și e-mail
 name of account	mail	ro	Numele contului
@@ -214,6 +217,7 @@ security	mail	ro	Securitate
 see attachments for content of the orignial mail	mail	ro	Consultați atașamentele pentru conținutul e-mailului original
 select an existing entry in order to append mail content to it	mail	ro	Selectați o intrare existentă pentru a-i adăuga conținutul e-mailului
 select an item to read	mail	ro	Selectați un element pentru a citi
+select mail addresses from addressbook	mail	ro	Selectați adresele de e-mail din agenda de adrese
 select or insert email address	mail	ro	Selectați sau introduceți adresa de e-mail
 selected date range (with quicksearch)	mail	ro	Interval de date selectat (cu căutare rapidă)
 send message and move to send folder (if configured)	mail	ro	Trimiterea mesajului și mutarea în dosarul de trimitere (dacă este configurat)
@@ -223,6 +227,7 @@ set predefined values for compose...	mail	ro	Setați valori predefinite pentru c
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	ro	Ar trebui ca semnătura să fie inserată după (standard) sau înainte de un răspuns sau de o expediere și ar trebui ca semnătura să fie vizibilă și schimbabilă în timpul compunerii.
 show all addresses	mail	ro	Afișați toate adresele
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ro	Afișarea tuturor dosarelor, (abonate ȘI dezabonate) în panoul de dosare din ecranul principal
+show horizontal, hide if none selected	mail	ro	Afișează orizontal, ascunde dacă nu este selectat niciunul
 show notification for new arriving mails	mail	ro	Afișare notificare pentru mesajele noi sosite
 show test connection section and control the level of info displayed?	mail	ro	Să se afișeze secțiunea de testare a conexiunii și să se controleze nivelul de informații afișate?
 show test connection section and control the level of info displayed??	mail	ro	Afișarea secțiunii de testare a conexiunii și controlul nivelului de informații afișate?
@@ -245,6 +250,8 @@ sneak preview in list	mail	ro	Previzualizare mesaj
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	ro	Unii clienți nu reușesc să detecteze setul de caractere corect, dacă sunt activate liniile curgătoare
 spamtitan api url	mail	ro	SpamTitan API URL
 spamtitan integration requires epl version	mail	ro	Integrarea SpamTitan necesită versiunea EPL
+the %1 's acl removed from the %2	mail	ro	ACL-ul lui %1 eliminat din %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	ro	ACL-ul lui %1, inclusiv subfolderele sale, eliminat din %2.
 the imap server need to meet certain requirements and be configured for it:	mail	ro	Serverul IMAP trebuie să îndeplinească anumite cerințe ȘI să fie configurat în acest scop:
 the rule with priority %1 successfully saved!	mail	ro	Regula cu prioritatea %1 a fost salvată cu succes!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ro	Nu mai există spațiu pentru a stoca scriptul sieve, vă rugăm să verificați opțiunea sieve_maxscriptsize din configurația serverului de poștă electronică.
@@ -256,6 +263,7 @@ toggled on actions	mail	ro	Toggled on actions
 trash	mail	ro	Coș de gunoi
 trash folder	mail	ro	Dosar coș de gunoi
 unconditional	mail	ro	Întotdeauna
+validate addresses on submit:	mail	ro	Validarea adreselor la trimitere:
 you can select what info to be displayed on email tag	mail	ro	Puteți selecta ce informații să fie afișate pe eticheta de e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ro	Puteți folosi $$start$$ pentru data de început de mai sus și $$end$$$ pentru data de sfârșit.
 you may add this certificate into your contact, if you trust this signature.	mail	ro	Puteți adăuga acest certificat în contactul dumneavoastră, dacă aveți încredere în această semnătură.

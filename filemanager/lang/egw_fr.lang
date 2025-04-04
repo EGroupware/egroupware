@@ -51,7 +51,6 @@ check virtual filesystem	common	fr	Vérifier le système de fichiers virtuel
 classic	filemanager	fr	Barres de tâche standard
 clear search	filemanager	fr	réinitialiser termes de la recherche
 clipboard is empty!	filemanager	fr	Le presse-papier est vide !
-collab editor settings	filemanager	fr	Paramètres de l'éditeur Collab
 comment	filemanager	fr	Commentaire
 configuration changed.	filemanager	fr	La configuration a été modifiée
 confirm final delete	filemanager	fr	Confirmer la suppression finale

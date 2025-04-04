@@ -583,7 +583,6 @@ startdate / -time	calendar	es-es	Fecha de incio / -hora
 startdate and -time of the search	calendar	es-es	Fecha de inicio y -hora de la búsqueda
 startdate of the export	calendar	es-es	Fecha de inicio de la exportación
 startrecord	calendar	es-es	Registro inicial
-status	calendar	es-es	Estado
 status already applied	calendar	es-es	Estado ya aplicado
 status changed	calendar	es-es	Estado modificado
 status for all future scheduled days changed	calendar	es-es	El estado para las planificaciones futuras se ha modificado

@@ -117,7 +117,7 @@ continue	mail	it	Continua
 convert mail to item and attach its attachments to this item (standard)	mail	it	Converti il messaggio email in elemento e allega i suoi allegati a questo elemento (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	it	Converti il messaggio email in elemento e allega i suoi allegati e aggiungi un messaggio "raw" (messaggio/rfc822 (.eml)) come allegato
 convert only mail to item (ignore possible attachments)	mail	it	Converti solo Mail a elemento (ignora gli allegati)
-copied %1 message(s) from %2 to %3	mail	it	Copiato %1 messaggi(o) da %2 %3
+copied %1 message(s) from %2 to %3	mail	it	Copiato %1 messaggi(o) da %2 %3.
 copy to	mail	it	Copia in
 could not append message:	mail	it	Il messaggio non è stato incluso:
 could not save the acl because some names are empty	mail	it	Impossibile salvare l'ACL perché alcuni nomi sono vuoti
@@ -273,6 +273,7 @@ ham folder	mail	it	Cartella Ham
 handling of external http images / mixed content in mails	mail	it	Gestione di immagini esterne http / contenuti misti nelle mail
 header	mail	it	Intestazione (header)
 header lines	mail	it	Righe intestazione
+hide from	mail	it	Nascondi Da
 high	mail	it	alto
 high priority	mail	it	Alta priorità
 hold %1 to drag files to your computer	mail	it	Tieni premuto %1 per trascinare i file verso il tuo computer
@@ -372,7 +373,7 @@ move selected to	mail	it	Sposta selezionati in
 move to	mail	it	Sposta in
 move to archive	mail	it	Sposta in archivio
 move to trash	mail	it	Sposta nel cestino
-moved %1 message(s) from %2 to %3	mail	it	spostato %1 messaggi(o) da %2 a %3
+moved %1 message(s) from %2 to %3	mail	it	Spostato %1 messaggi(o) da %2 a %3.
 moving folders from one mailaccount to another is not supported	mail	it	Lo spostamento di cartelle fra account non è consentito
 name and domain	mail	it	Nome e dominio
 name and email	mail	it	Nome e email
@@ -546,6 +547,7 @@ select file to attach to message	mail	it	Seleziona file da allegare al messaggio
 select file to import into folder	mail	it	Seleziona file da importare nella cartella
 select file(s) from vfs	mail	it	Seleziona file dal sistema virtuale di file (VFS)
 select files to upload	mail	it	Seleziona file da caricare
+select mail addresses from addressbook	mail	it	Selezionare gli indirizzi di posta dalla rubrica
 select multiple	mail	it	Selezione multipla
 select or insert email address	mail	it	Selezionare o inserire l'indirizzo e-mail
 selected	mail	it	selezionato
@@ -575,7 +577,7 @@ show all attachments	mail	it	Mostra tutti gli allegati
 show all folders	mail	it	mostra tutte le cartelle
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	it	mostra tutte le cartelle (sottoscritte e non) nella schermata principale del pannello delle cartelle.
 show horizontal	mail	it	mostra in orizzonale
-show horizontal, hide if none selected	mail	it	mostra orizzontale, nascondi se nessuno selezionato
+show horizontal, hide if none selected	mail	it	Mostra orizzontale, nascondi se nessuno selezionato
 show new messages on home page	mail	it	mostra nuovi messaggi in home page
 show notification for new arriving mails	mail	it	Mostra notifica per le nuove mail in arrivo
 show test connection section and control the level of info displayed?	mail	it	Mostrare la sezione di Test della connessione e controllare il livello delle informazioni mostrate?
@@ -626,8 +628,8 @@ test connection and display basic information about the selected profile	mail	it
 text	mail	it	Testo
 text mode	mail	it	Modalità testo
 text/plain	mail	it	Testo
-the %1 's acl removed from the %2	mail	it	ACL di %1 rimossi da %2
-the %1 's acl, including its subfolders, removed from the %2	mail	it	ACL di %1, incluse le sottocartelle, rimossi da %2
+the %1 's acl removed from the %2	mail	it	ACL di %1 rimossi da %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	it	ACL di %1, incluse le sottocartelle, rimossi da %2.
 the entered passphrase is not correct! please try again.	mail	it	La frase di accesso non è corretta! Per favore riprovare.
 the folder %1 's acls saved	mail	it	Salvate regole ACL per la cartella %1
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	it	La cartella <b>%1</b> sarà usata, se non ci fosse nulla qui e non fosse fornito un valore predefinito valido.

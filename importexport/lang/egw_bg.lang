@@ -1,7 +1,7 @@
 %1 definition(s) %2	importexport	bg	%1 дефиниция(и) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	bg	%1 дефиниция(и) %2, %3 се провали поради недостатъчни права !!!
 %1 definitions %2	importexport	bg	%1 определения %2
-%1 is not a known user or group	importexport	bg	%1 е неизвестен потребител или група
+%1 is not a known user or group	importexport	bg	%1 е неизвестен потребител или група.
 %1 is not readable	importexport	bg	%1 не се чете.
 %1 is not writable	importexport	bg	%1 не може да се записва.
 %1 records processed	importexport	bg	%1 обработени записи.
@@ -15,7 +15,7 @@ add a new definition	importexport	bg	Добавете ново определе�
 add an additional condition	importexport	bg	Добавете допълнително условие
 addressbook csv import	importexport	bg	Импортиране на CSV от адресната книга
 addressbook vcard import	importexport	bg	Импорт на vCard от адресната книга
-admin disabled exporting	importexport	bg	Експортирането на администратор е деактивирано
+admin disabled exporting	importexport	bg	Експортирането на администратор е деактивирано.
 all encodings	importexport	bg	Всички кодировки
 all users	importexport	bg	Всички потребители
 allowed users	importexport	bg	Допуснати (разрешени) потребители

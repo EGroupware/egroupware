@@ -1,6 +1,11 @@
+%1 is not a known user or group	importexport	ro	%1 nu este un utilizator sau un grup cunoscut.
 add a new definition	importexport	ro	Adăugați o nouă definiție
 addressbook csv import	importexport	ro	Import CSV agendă
 addressbook vcard import	importexport	ro	Import carte de adrese vCard
+admin disabled exporting	importexport	ro	Administratorul a dezactivat exportul.
 change allowed users	importexport	ro	Modificarea utilizatorilor autorizați
 change owner when updating	importexport	ro	Schimbarea proprietarului la actualizare
 changed owner	importexport	ro	Schimbare proprietar
+choose fields to export	importexport	ro	Alegeți câmpurile pentru export
+database values	importexport	ro	Valorile bazei de date
+delete files after import	importexport	ro	Ștergeți fișierele după import

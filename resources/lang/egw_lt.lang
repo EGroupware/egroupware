@@ -38,6 +38,10 @@ resource	resources	lt	Išteklius
 resource %1 deleted!	resources	lt	Išteklius %1 ištrintas!
 resource %1 saved!	resources	lt	Išteklius %1 išsaugotas!
 resource / accessories	resources	lt	Ištekliai / Priedai
+resource id	resources	lt	Išteklių ID
+resources csv export	resources	lt	Ištekliai CSV eksportas
+resources csv import	resources	lt	Išteklių CSV importas
+show in title (beside name)	resources	lt	Rodyti pavadinime (šalia pavadinimo)
 un-delete accessories of selected resources too?	resources	lt	Atkurti pasirinktų išteklių priedus?
 unable to link to %1 "%2"	resources	lt	Nepavyksta susieti su %1 "%2"
 view accessories	resources	lt	Peržiūrėti priedus

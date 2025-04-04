@@ -101,7 +101,11 @@ resource	resources	pl	Zasób
 resource %1 deleted!	resources	pl	Zasób %1 usunięty!
 resource %1 saved!	resources	pl	Zasób %1 zapisany!
 resource / accessories	resources	pl	Zasoby / Akcesoria
+resource id	resources	pl	ID zasobów
 resources	common	pl	Zasoby
+resources and accessories	resources	pl	Zasoby i akcesoria
+resources csv export	resources	pl	Eksport CSV zasobów
+resources csv import	resources	pl	Import CSV zasobów
 resources list	resources	pl	Lista zasobów
 responsible:	resources	pl	Odpowiedzialny:
 saves entry and exits	resources	pl	Zachowuje wpis i wychodzi
@@ -112,6 +116,7 @@ select/deselect all	resources	pl	Wybierz/cofnij wybór wszystkiego
 short description	resources	pl	Krótki opis
 short description of resource	resources	pl	Krótki opis zasobu
 show calendar of resource	resources	pl	Pokaż kalendarz zasobu
+show in title (beside name)	resources	pl	Pokaż w tytule (obok nazwy)
 something went wrong by deleting resource	resources	pl	Coś poszło nie tak przy usuwaniu zasobu
 something went wrong by saving resource	resources	pl	Coś poszlo nie tak przy zapisywaniu zasobu
 storage information	resources	pl	Informacje o przechowywaniu

@@ -101,7 +101,10 @@ resource	resources	hu	Erőforrás
 resource %1 deleted!	resources	hu	Erőforrás %1 törölve!
 resource %1 saved!	resources	hu	Erőforrás %1 mentve!
 resource / accessories	resources	hu	Erőforrás / Tartozékok
+resource id	resources	hu	Erőforrás azonosító
 resources	common	hu	Erőforrások
+resources csv export	resources	hu	Erőforrások CSV exportálása
+resources csv import	resources	hu	Erőforrások CSV importálása
 resources list	resources	hu	Erőforrások listája
 responsible:	resources	hu	Felelős:
 saves entry and exits	resources	hu	Kilépés mentéssel
@@ -112,6 +115,7 @@ select/deselect all	resources	hu	Összes kijelölése/jelölés visszavonása
 short description	resources	hu	Rövid leírás
 short description of resource	resources	hu	Az erőforrás rövid leírása
 show calendar of resource	resources	hu	Az erőforrás naptárjának megjelenítése
+show in title (beside name)	resources	hu	Megjelenítés a címben (a név mellett)
 something went wrong by deleting resource	resources	hu	Hiba történt az erőforrás törlésekor
 something went wrong by saving resource	resources	hu	Hiba történt az erőforrás mentésekor
 storage information	resources	hu	Információ a raktározásról

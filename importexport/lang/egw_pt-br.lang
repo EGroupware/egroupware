@@ -1,5 +1,5 @@
 %1 definitions %2	importexport	pt-br	%1 definições %2
-%1 is not a known user or group	importexport	pt-br	% 1 não é um usuário ou grupo conhecido
+%1 is not a known user or group	importexport	pt-br	% 1 não é um usuário ou grupo conhecido.
 %1 is not readable	importexport	pt-br	% 1 não é legível.
 %1 is not writable	importexport	pt-br	% 1 não é gravável.
 %1 records processed	importexport	pt-br	% 1 registros processados.
@@ -11,7 +11,7 @@
 add a new definition	importexport	pt-br	Adicionar uma nova definição
 addressbook csv import	importexport	pt-br	Endereços CSV Import
 addressbook vcard import	importexport	pt-br	Importação de endereços vCard
-admin disabled exporting	importexport	pt-br	Exportação desativado Administrador
+admin disabled exporting	importexport	pt-br	Exportação desativado Administrador.
 all encodings	importexport	pt-br	Todas as codificações
 all users	importexport	pt-br	Todos usuários
 allowed users	importexport	pt-br	Usuários permitidos
@@ -39,6 +39,7 @@ day of week	importexport	pt-br	Dia da semana
 define imports|exports	common	pt-br	Definir Importações | Exportações
 definition	importexport	pt-br	Definição
 delete all selected definitions	importexport	pt-br	remover TODAS as definições selecionadas
+delete files after import	importexport	pt-br	Excluir arquivos após a importação
 deleted	importexport	pt-br	removido
 delimiter	importexport	pt-br	Delimitador
 duplicate name, please choose another.	importexport	pt-br	Duplicar nome, escolha outra.

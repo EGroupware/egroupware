@@ -50,6 +50,8 @@ all contacts	addressbook	zh	所有联系人
 all types	addressbook	zh	所有类型
 allow	addressbook	zh	允许
 allow for contacts only	addressbook	zh	仅允许联系人
+allow members of following groups to edit contact-data of accounts	addressbook	zh	允许以下组的成员编辑账户的联系人数据
+allow members of following groups to show the account name column	addressbook	zh	允许以下组的成员显示账户名称列
 allow users to maintain their own account-data	admin	zh	允许用户维护他们自己的帐户数据
 alt. csv import	addressbook	zh	从 CSV 文件导入
 always	addressbook	zh	永远
@@ -369,6 +371,7 @@ select a view	addressbook	zh	选择一个查看
 select addressbook type	addressbook	zh	选择通讯簿类型
 select all	addressbook	zh	全选
 select an opened dialog	addressbook	zh	选择已打开的对话框
+select contacts to add to mail	addressbook	zh	选择要添加到电子邮件的联系人
 select migration type	admin	zh	选择迁移方式
 select multiple contacts for a further action	addressbook	zh	为下一步操作选择多个联系人
 select phone number as prefered way of contact	addressbook	zh	选择联系人的首选电话号码

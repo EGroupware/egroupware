@@ -52,6 +52,11 @@ resource	resources	uk	Ресурс
 resource %1 deleted!	resources	uk	Ресурс %1 видалено!
 resource %1 saved!	resources	uk	Ресурс %1 збережено!
 resource / accessories	resources	uk	Ресурси / Аксесуари
+resource id	resources	uk	ID ресурсу
+resources and accessories	resources	uk	Ресурси та аксесуари
+resources csv export	resources	uk	Експорт CSV ресурсів
+resources csv import	resources	uk	Імпорт CSV ресурсів
+show in title (beside name)	resources	uk	Показати в заголовку (поруч з назвою)
 too many matches	resources	uk	Занадто багато збігів
 un-delete accessories of selected resources too?	resources	uk	Відновити аксесуари вибраних ресурсів?
 unable to link to %1 "%2"	resources	uk	Неможливо створити посилання на %1 "%2"

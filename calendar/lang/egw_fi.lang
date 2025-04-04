@@ -236,7 +236,7 @@ fieldseparator	calendar	fi	Kentän erotin
 filemanager	calendar	fi	Tiedostonhallinta
 filename	calendar	fi	Tiedostonimi
 filename of the download	calendar	fi	Latauksen tiedostonimi
-find free timeslots where the selected participants are available for the given timespan	calendar	fi	Etsi vapaa aika, jolloin osallistujat ovat saatavilla valitulla aikavälillä.
+find free timeslots where the selected participants are available for the given timespan	calendar	fi	Etsi vapaa aika, jolloin osallistujat ovat saatavilla valitulla aikavälillä
 firstname of person to notify	calendar	fi	Huomautettavan henkilön etunimi
 for	calendar	fi	for
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.
@@ -442,7 +442,7 @@ reject	calendar	fi	Hylkää
 rejected	calendar	fi	Hylätyt
 removes the event from my calendar	calendar	fi	Poistaa tapahtuman kalenteristani
 repeat days	calendar	fi	Toistopäivät
-repeat the event until which date (empty means unlimited)	calendar	fi	Toista tapahtumaa tähän päivään asti (tyhjä tarkoittaa loputtomasti).
+repeat the event until which date (empty means unlimited)	calendar	fi	Toista tapahtumaa tähän päivään asti (tyhjä tarkoittaa loputtomasti)
 repeat type	calendar	fi	Toistuvuus
 repeating event information	calendar	fi	Toistuvan tapahtuman tiedot
 repeating interval, eg. 2 to repeat every second week	calendar	fi	Toiston tiheys, esim. 2 = toistetaan joka toinen viikko
@@ -527,7 +527,6 @@ startdate / -time	calendar	fi	Aloituspäivä/-aika
 startdate and -time of the search	calendar	fi	Haun aloituspäivä ja -aika
 startdate of the export	calendar	fi	Viennin alkamispäivä
 startrecord	calendar	fi	Aloitustietue
-status	calendar	fi	Tila
 status already applied	calendar	fi	Tila on jo käytössä
 status changed	calendar	fi	Tila muuttunut
 status for all future scheduled days changed	calendar	fi	Kaikkien tulevien (scheduled) päivien tapahtumien tila on muuttunut!

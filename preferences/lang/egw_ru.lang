@@ -8,6 +8,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	ru	Тема определяет цвета и фоны,используемые в шаблонах
 acl grants have been updated	preferences	ru	разрешения ACL обновлены
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ru	Любой список EGroupware будет показывать вам это количество записей или строк на  странице.<br> Слишком большое количество может замедлить обновление страницы, слишком малое приведет к увеличенным затратам всего списка.
+applications list scroll area	preferences	ru	Кнопка прокрутки для бокового меню
 are you sure you want to delete this category ?	preferences	ru	Вы уверены, что хотите удалить данную категорию?
 automatically start with this font	preferences	ru	Автоматически загружать данный шрифт при старте
 automatically start with this font size	preferences	ru	Автоматически устанавливать данный размер шрифта при старте
@@ -17,13 +18,13 @@ charset for the csv export/import	preferences	ru	Кодировка
 color	preferences	ru	Цвет
 country	preferences	ru	Страна
 dark mode theme	preferences	ru	Темный режим темы
-data exchange settings	preferences	ru	Установки обмена данных
 date format	preferences	ru	Формат даты
 default	preferences	ru	по умолчанию
 default font	preferences	ru	Шрифт по умолчанию
 default font size	preferences	ru	Размер шрифта по умолчанию
 default preferences	preferences	ru	Настройки по умолчанию
 delete categories	preferences	ru	Удалить категории
+deny following groups access to application passwords	preferences	ru	Запретить доступ к паролям приложений следующим группам
 description can not exceed 255 characters in length !	preferences	ru	Описание не должно быть более 255 символов !
 disable	preferences	ru	Запретить
 display thumbnails for linked images	preferences	ru	Показывать миниатюры связанных изображений
@@ -68,6 +69,7 @@ interface/template selection	preferences	ru	Выбор Интерфейса/Ша
 it sets content size (text only) according to selected size.	preferences	ru	Устанавливает размер содержимого (только текст) в соответствии с выбранным размером.
 just clicking on the line, like a checkbox	preferences	ru	просто нажмите на строку, как в меню
 language	preferences	ru	Язык
+limit following groups to only create application passwords via templates	preferences	ru	Эти группы ограничивают только пароли приложений, создаваемые с помощью шаблонов
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ru	При входе через SingleSignOn пароль не передается почтовым или файловым серверам.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	ru	Сделать список приложений прокручиваемым с помощью кнопок прокрутки вверх/вниз (полезно для пользователей, работающих с мышью без колеса прокрутки)
 max matches per page	preferences	ru	Максимум совпадений на странице
@@ -121,7 +123,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	ru	Два пароля не одинаковы
 theme (colors/fonts) selection	preferences	ru	выбор темы(цвета/фоны)
 this server is located in the %1 timezone	preferences	ru	Данный сервер расположен во временной зоне %1
-thousands separator is only used for displaying and not for editing numbers.	preferences	ru	Тысячи разделителей используются только для отображения, но не для редактирования чисел.
+thousands separator is only used for displaying and not for editing numbers.	preferences	ru	Для отображения чисел можно задать их формат.
 time format	preferences	ru	Формат времени
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	ru	Единицы размера шрифта: пиксели (px) для Web-страниц, или точки (pt) для текстового редактора
 use default	preferences	ru	использовать по умолчанию

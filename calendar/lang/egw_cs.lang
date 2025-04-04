@@ -493,7 +493,7 @@ reject	calendar	cs	Odmítnout
 rejected	calendar	cs	Odmítnuto
 removes the event from my calendar	calendar	cs	Odstraní událost z mého kalendáře
 repeat days	calendar	cs	Opakovat ve dnech
-repeat the event until which date (empty means unlimited)	calendar	cs	opakovat událost až do data (nevyplněno znamená bez omezení)
+repeat the event until which date (empty means unlimited)	calendar	cs	Opakovat událost až do data (nevyplněno znamená bez omezení)
 repeat type	calendar	cs	Typ opakování
 repeating event information	calendar	cs	Informace o opakující se události
 repeating interval, eg. 2 to repeat every second week	calendar	cs	interval opakovaní, např. 2 pro jednou za dva týdny
@@ -583,7 +583,6 @@ startdate / -time	calendar	cs	Počáteční datum/čas
 startdate and -time of the search	calendar	cs	Počáteční datum/čas hledání
 startdate of the export	calendar	cs	Počáteční datum exportu
 startrecord	calendar	cs	První záznam
-status	calendar	cs	Stav
 status already applied	calendar	cs	Stav již byl nastaven
 status changed	calendar	cs	Stav změněn
 status for all future scheduled days changed	calendar	cs	Stav všech do budoucna naplánovaných dní byl změněn

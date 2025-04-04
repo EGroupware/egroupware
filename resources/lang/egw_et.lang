@@ -55,10 +55,14 @@ resource	resources	et	Ressurss
 resource %1 deleted!	resources	et	Ressurss %1 kustutatud!
 resource %1 saved!	resources	et	Ressurss %1 salvestatud!
 resource / accessories	resources	et	Ressurss / tarvikud
+resource id	resources	et	Ressursi ID
 resources	common	et	Resursid
+resources csv export	resources	et	Ressursside CSV eksport
+resources csv import	resources	et	Ressursside CSV import
 select a category	resources	et	Vali Kategooria
 select resources	common	et	Vali resursid
 short description	resources	et	Lühike kirjeldus
+show in title (beside name)	resources	et	Näita pealkirjas (nime kõrval)
 un-delete accessories of selected resources too?	resources	et	Taastada valitud ressursside tarvikud?
 useable	resources	et	kasutatav
 view accessories	resources	et	Vaata tarvikuid

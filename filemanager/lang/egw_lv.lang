@@ -101,10 +101,12 @@ no files in this directory.	filemanager	lv	Šajā direktorijā datņu nav.
 no version history for this file/directory	filemanager	lv	Nav vēstures par šo datni vai direktoriju
 notebookbar	filemanager	lv	Cilnē
 open	filemanager	lv	atvērt
+open documents with collabora, if permissions are given	filemanager	lv	Atvērt dokumentus ar Collabora Online, ja ir piešķirtas atļaujas
 operation	filemanager	lv	Operācija
 password for webdav and smb, use $pass for password of logged in user	filemanager	lv	Parole WebDAV un SMB, izmantojiet $pass kā pieteiktā lietotāja paroli.
 path and query-parameters, smb: share and optional path (with /)	filemanager	lv	Ceļš un vaicājuma parametri, SMB: koplietošana un izvēles ceļš (ar /)
 percentage	filemanager	lv	Procenti
+permission denied!	filemanager	lv	Atļauja liegta!
 permissions	filemanager	lv	Atļaujas
 please select a file to delete.	filemanager	lv	Lūdzu norādi failu, kuru izdzēst
 preview	filemanager	lv	Priekšskatījums
@@ -134,6 +136,9 @@ save changes	filemanager	lv	Saglabāt izmaiņas
 saved %1	filemanager	lv	Saglabāts %1
 show	filemanager	lv	Parādīt
 size	filemanager	lv	Izmērs
+smb, webdavs and vfs require a username!	filemanager	lv	SMB, WebDAV un VFS prasa lietotājvārdu!
+smb: mount samba or windows fileserver shares	filemanager	lv	SMB: Mount Samba vai Windows failu servera kopijas
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	lv	Dokumentā var būt vietvārdi, piemēram, {{%3}}, kas jāaizstāj ar datiem (%1pilns vietvārdu saraksts%2).
 total files	filemanager	lv	Datnes kopā
 unused space	filemanager	lv	Brīva vieta
 up	filemanager	lv	Uz augšu
@@ -141,6 +146,7 @@ updated comment for %1	filemanager	lv	Atjaunināts komentārs %1
 upload fields	filemanager	lv	augšupielādēt laukus
 upload files	filemanager	lv	Augšupielādēt datnes
 used space	filemanager	lv	Izmantotais apjoms
+username for webdav and smb, use $user for name of logged in user	filemanager	lv	Lietotājvārds WebDAV un SMB, izmantojiet $user kā pieteiktā lietotāja vārdu.
 you do not have access to %1	filemanager	lv	Tev nav pieeja %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	lv	Jums jākļūst par superuser, lai iespējotu vai atspējotu versiju iestatīšanu mapē!
 your home dir did not exist, egroupware created a new one.	filemanager	lv	Tava Mājas direktorija neeksistēja, EGroupware izveidoja jaunu!

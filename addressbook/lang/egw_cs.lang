@@ -62,6 +62,7 @@ all types	addressbook	cs	Všechny typy
 allow	addressbook	cs	Povolit
 allow for contacts only	addressbook	cs	Povolit pouze kontakty
 allow members of following groups to edit contact-data of accounts	addressbook	cs	Dovolit uživatelům patřících do těchto skupin upravovat kontaktní údaje účtů
+allow members of following groups to show the account name column	addressbook	cs	Povolit členům následujících skupin zobrazit sloupec s názvem účtu
 allow users to maintain their own account-data	admin	cs	Povolit uživatelům měnit jejich vlastní data
 alt. csv import	addressbook	cs	Alternativní import z CSV
 always	addressbook	cs	Vždy
@@ -440,6 +441,7 @@ select a view	addressbook	cs	Vybrat pohled
 select addressbook type	addressbook	cs	Vybrat typ adresáře
 select all	addressbook	cs	Vybrat vše
 select an opened dialog	addressbook	cs	Výběr otevřeného dialogového okna
+select contacts to add to mail	addressbook	cs	Výběr kontaktů pro přidání do pošty
 select migration type	admin	cs	Vybrat typ migrace
 select multiple contacts for a further action	addressbook	cs	Vybrat více kontaktů pro další akci
 select phone number as prefered way of contact	addressbook	cs	vybrat telefonní číslo jako preferovaný způsob kontaktu

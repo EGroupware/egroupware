@@ -6,16 +6,17 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	pt	Um tema define a cor e fonte utilizadas no modelo.
 acl grants have been updated	preferences	pt	As permissões ACL foram actualizadas
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pt	Cada listagem do EGroupware irá conter este número de registos ou linhas por página.<br>Se o número for elevado, a apresentação da página será lenta; Se for reduzido, diminui a qualidade do sumário.
+applications list scroll area	preferences	pt	Botão de deslocação para o menu lateral
 are you sure you want to delete this category ?	preferences	pt	Tem a certeza de que deseja eliminar esta categoria ?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pt	Altere a senha de um utilizador fornecendo as senhas antiga e nova. Em caso de sucesso, devolve Verdadeiro. Em caso de erro, devolve Falso.
 color	preferences	pt	Cor
 country	preferences	pt	País
 dark mode theme	preferences	pt	Tema do modo negro
-data exchange settings	preferences	pt	Configurações de troca de dados
 date format	preferences	pt	Formato de data
 default	preferences	pt	por omissão
 default preferences	preferences	pt	Preferências por omissão
 delete categories	preferences	pt	Eliminar categorias
+deny following groups access to application passwords	preferences	pt	Negar aos seguintes grupos o acesso a palavras-passe de aplicações
 description can not exceed 255 characters in length !	preferences	pt	A descrição não pode exceder os 255 caracteres !
 disable	preferences	pt	Desactivar
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pt	O formato horário deve ser de 24 horas ou de 12 horas com am/pm anexado.
@@ -44,6 +45,7 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	pt	Selecção de Interface/Modelo
 it sets content size (text only) according to selected size.	preferences	pt	Estabelece o tamanho do conteúdo (apenas texto) de acordo com o tamanho seleccionado.
 language	preferences	pt	Idioma
+limit following groups to only create application passwords via templates	preferences	pt	Estes grupos restringem apenas as palavras-passe de aplicações a serem criadas através de modelos
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	pt	O início de sessão através do SingleSignOn não fornece uma palavra-passe para a passar para os servidores de correio eletrónico ou de ficheiros.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	pt	Faça com que a lista de aplicações possa ser deslocada com botões de deslocamento para cima/para baixo (útil para utilizadores que trabalham com o rato sem roda de rolagem)
 max matches per page	preferences	pt	Máximo de ocorrências por página
@@ -77,6 +79,7 @@ the selectbox shows all available users (can be very slow on big installs with m
 the two passwords are not the same	preferences	pt	As duas senhas não são iguais
 theme (colors/fonts) selection	preferences	pt	Selecção do tema (cores/fontes)
 this server is located in the %1 timezone	preferences	pt	Este servidor está localizado no fuso horário %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	pt	O formato do número pode ser definido para a visualização de números.
 time format	preferences	pt	Formato do horário
 use default	preferences	pt	Utilizar definições por omissão
 use first %1 letters from username	preferences	pt	Utilizar as primeiras %1 letras do nome de utilizador

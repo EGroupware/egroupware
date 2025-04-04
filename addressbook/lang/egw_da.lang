@@ -35,8 +35,11 @@ all addressbooks	addressbook	da	Alle adressebøger
 all types	addressbook	da	Alle typer
 allow	addressbook	da	Tillad
 allow for contacts only	addressbook	da	Tillad kun for kontakter
+allow members of following groups to edit contact-data of accounts	addressbook	da	Tillad medlemmer af følgende grupper at redigere kontaktdata for konti
+allow members of following groups to show the account name column	addressbook	da	Tillad medlemmer af følgende grupper at vise kolonnen med kontonavn
 alt. csv import	addressbook	da	Alt. CSV Importering
 always	addressbook	da	Altid
+apply changes to all members, whose fields have the same previous content	addressbook	da	Anvend ændringer på alle medlemmer, hvis felter har samme tidligere indhold.
 are you shure you want to delete this contact?	addressbook	da	Er du sikker på at du vil slette denne kontakt?
 are you sure you want to delete this field?	addressbook	da	Er du sikker på at du vil slette dette felt?
 audio call	addressbook	da	Lydopkald
@@ -57,6 +60,7 @@ calendar integration	addressbook	da	Kalender-integration
 car phone	addressbook	da	Bil telefonnummer
 cell phone	addressbook	da	Mobil telefonnummer
 change addressbook when updating	addressbook	da	Skift adressebog ved opdatering
+change all organisation members	addressbook	da	Ændre alle organisationsmedlemmer
 charset of file	addressbook	da	Karakterset for fil
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	da	Vælg foruddefineret kortkilde eller brug brugerdefineret URL (brug %r = gade, %t = by, %c = land, %z = postnummer)
 city	common	da	By
@@ -122,6 +126,7 @@ export from addressbook	addressbook	da	Eksporter fra adressebogen
 exports contacts from your addressbook into a csv file.	addressbook	da	Eksporterer kontakter fra adressebogen til en CSV-fil.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	da	Eksporterer kontakter fra adressebogen til en CSV-fil. Under fanen Indstillinger kan du også vælge andre separatorer.
 extra	addressbook	da	Ekstra
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	da	Det lykkedes ikke at ændre %1 organisationsmedlem(mer), utilstrækkelige rettigheder!
 favorite phone	addressbook	da	Favorit-telefon
 fax	addressbook	da	Fax
 fax number	common	da	Faxnummer
@@ -237,6 +242,7 @@ search letter	addressbook	da	Søg bogstav
 select a source address to be used in geolocation routing system	addressbook	da	Vælg en kildeadresse, der skal bruges i GeoLocation-routingsystemet
 select all	addressbook	da	Vælg alle
 select an opened dialog	addressbook	da	Vælg en åbnet dialog
+select contacts to add to mail	addressbook	da	Vælg kontakter, der skal tilføjes til mail
 send fax via email by replacing fax number with an email address	addressbook	da	Send fax via e-mail ved at erstatte faxnummeret med en e-mailadresse
 send succeeded to %1	common	da	Send lykkedes til %1
 share into addressbook	addressbook	da	Del til adressebog

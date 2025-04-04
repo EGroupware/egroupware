@@ -9,6 +9,7 @@ both: allow to use projectmanager and free project-names	admin	hu	Mindkettő: le
 by	timesheet	hu	by
 category for 'working time'	admin	hu	Kategória 'Munkaidő'
 change owner when updating	timesheet	hu	Tulajdonosváltás frissítéskor
+choose 'creator' of imported data	timesheet	hu	Válassza ki az importált adatok „létrehozóját
 comment by %1 at %2:	timesheet	hu	%1 megjegyzése ekkor %2:
 create a single 'working time' timesheet per	timesheet	hu	Egyetlen „Munkaidő” munkaidő-nyilvántartás létrehozása egyenként
 create new links	timesheet	hu	Új hivatkozás létrehozása
@@ -33,6 +34,7 @@ error deleting the entry!!!	timesheet	hu	Bejegyzés törlése közben hiba lépe
 error saving the entry!!!	timesheet	hu	Bejegyzés mentése közben hiba lépett fel!!!
 error storing working time	timesheet	hu	Hiba a munkaidő tárolásában
 existing links	timesheet	hu	Meglévő hivatkozások
+exports entries from your timesheet into a csv file.	timesheet	hu	A bejegyzések exportálása a munkaidő-nyilvántartásból egy CSV fájlba
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	hu	A bejegyzések exportálása az Időlapból egy CSV-fájlba. Az opciók lapon más elválasztójeleket is választhat.
 field must not be empty !!!	timesheet	hu	A mezőt ki kell tölteni!!!
 forgot to switch off working time?	common	hu	Elfelejtette kikapcsolni a munkaidőt?
@@ -42,6 +44,7 @@ global categories	timesheet	hu	Globális kategóriák
 history	timesheet	hu	Történet
 history logging	admin	hu	Történet követése (log)
 id	timesheet	hu	Azonosító
+imports entries into the timesheet from a csv file.	timesheet	hu	Bejegyzések importálása a munkaidő-nyilvántartásba CSV fájlból
 last modified	timesheet	hu	Utolsó módosítás
 last month	timesheet	hu	Korábbi hónap
 last week	timesheet	hu	Korábbi hét
@@ -96,6 +99,9 @@ this year	timesheet	hu	Folyó év
 timer already running or paused	common	hu	Az időzítő már fut vagy szünetel
 timesheet	common	hu	Regiszter
 timesheet csv export	timesheet	hu	Regiszter CSV export
+timesheet csv import	timesheet	hu	Időalap CSV importálása
+timesheet id	timesheet	hu	Időlap azonosítója
+timesheet list	timesheet	hu	Időlap lista
 unitprice	timesheet	hu	Egységár
 use field from csv if possible	timesheet	hu	Ha lehetséges, használja a CSV mezőt
 values for selectbox	timesheet	hu	Éktékek a kiválasztódoboznak

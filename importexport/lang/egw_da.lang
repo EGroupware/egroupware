@@ -1,13 +1,18 @@
+%1 is not a known user or group	importexport	da	%1 er ikke en kendt bruger eller gruppe.
 add a new definition	importexport	da	Tilføj en ny definition
 addressbook csv import	importexport	da	CSV-import af adressebog
 addressbook vcard import	importexport	da	Import af adressebog vCard
+admin disabled exporting	importexport	da	Administrator har deaktiveret eksport.
 all users	importexport	da	Alle brugere
 change allowed users	importexport	da	Ændre tilladte brugere
 change owner when updating	importexport	da	Skift ejer ved opdatering
 changed	importexport	da	Ændret
 changed owner	importexport	da	Ændret ejer
 charset of file	importexport	da	Karakterset for fil
+choose fields to export	importexport	da	Vælg felter, der skal eksporteres
 created	importexport	da	Oprettet
+database values	importexport	da	Database-værdier
+delete files after import	importexport	da	Slet filer efter import
 deleted	importexport	da	slettet
 execute	importexport	da	Eksekvere
 export	importexport	da	Exporter

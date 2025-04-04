@@ -69,7 +69,6 @@ theme (colors/fonts) selection	preferences	ca	Selecció  de Tema (colors/fonts)
 this server is located in the %1 timezone	preferences	ca	Aquest servidor pertany a la zona horària %1
 time format	preferences	ca	Format d'hora
 use default	preferences	ca	Utilitza el valor per defecte
-users choice	preferences	ca	Tria de l'usuari
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	ca	Quan dieu que sí els botons d'inici i tancar sessió es presenten com a plicacions a la barra superior principal.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ca	Quin joc de caràcters ha de ser utilitzat per l'exportació CSV. El sistema per defecte és el joc de caràcters de la instal·lació d'aquest EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	ca	Quin símbol o nom de moneda s'ha d'utilitzar a EGroupware?

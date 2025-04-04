@@ -245,6 +245,7 @@ group ?	admin	da	Gruppe?
 group has been added	common	da	Gruppen er tilføjet.
 group has been deleted	common	da	Gruppen er slettet.
 group has been updated	common	da	Gruppen er opdateret.
+group hidden from non-admins	admin	da	Gruppe skjult for ikke-admins
 group hierarchy	admin	da	Gruppe-hierarki
 group list	admin	da	Gruppe liste
 group manager	admin	da	Gruppe Manager

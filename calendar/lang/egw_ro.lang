@@ -32,6 +32,7 @@ all future	calendar	ro	Toate evenimentele viitoare
 all incl. rejected	calendar	ro	Toate, inclusiv cele respinse
 allow booking requests from any user when creating events?	calendar	ro	Permiteți cererile de rezervare de la orice utilizator la crearea de evenimente?
 allow party crashers with email that match the following regular expression	calendar	ro	Permiteți petrecăreților care se prezintă cu e-mailuri care se potrivesc cu următoarea expresie regulată
+allows to edit the event again	calendar	ro	Permite editarea din nou a evenimentului
 always use full edit dialog	calendar	ro	Utilizați întotdeauna fereastra de editare completă
 always use the full edit dialog, not this little dialog	calendar	ro	Utilizați întotdeauna fereastra de editare completă, nu această fereastră de dialog redusă
 apply changes to (future) exceptions too?	calendar	ro	Aplicați modificările și excepțiilor (viitoare)?
@@ -45,6 +46,7 @@ email address migration	calendar	ro	Migrarea adresei de e-mail
 error notifying %1	calendar	ro	Eroare de notificare %1
 exclude weekend	calendar	ro	Excludeți Weekend
 explicit recurrences	calendar	ro	Recurențe explicite
+find free timeslots where the selected participants are available for the given timespan	calendar	ro	Găsiți intervale de timp libere în care participanții selectați sunt disponibili pentru intervalul de timp dat
 how many days to be removed in the future (default 365)	calendar	ro	Câte zile trebuie să fie eliminate în viitor (implicit 365)
 how many days to be removed in the past (default 100)	calendar	ro	Câte zile trebuie să fie eliminate în trecut (implicit 100)
 how many days to sync in the future (default %1)	calendar	ro	Câte zile trebuie sincronizate în viitor (implicit %1)
@@ -80,15 +82,16 @@ please note: conflict check is never done in the past and always limited by abov
 private event	calendar	ro	Eveniment privat
 recordings	calendar	ro	Înregistrări
 removes the event from my calendar	calendar	ro	Elimină evenimentul din calendarul meu
+repeat the event until which date (empty means unlimited)	calendar	ro	Repetați evenimentul până la ce dată (Gol pentru nelimitat)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	ro	Răspundeți "%1" NU este un participant la eveniment! Continuați numai dacă doriți să adăugați un nou participant.
 report	calendar	ro	Raport
+saves the event ignoring the conflict	calendar	ro	Salvează evenimentul ignorând conflictul
 send notifications	calendar	ro	Trimiteți notificări
 send notifications to users right now	calendar	ro	Trimiteți notificări participanților chiar acum
 show %1 from %2	calendar	ro	Afișați %1 din %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	ro	Afișează ca evenimente care nu se blochează toată ziua, precum și prin trecerea mouse-ului peste data.
 single participant	calendar	ro	Participant unic
 sort by	calendar	ro	Sortează după
-status	calendar	ro	Stare
 the apple ical apps use this color to display events from this calendar.	calendar	ro	Aplicațiile Apple iCal utilizează această culoare pentru a afișa evenimentele din acest calendar.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	ro	Documentul poate conține caractere de subsol precum {{%1}}, care vor fi înlocuite cu datele.
 the extern organizer changed the event!	calendar	ro	Organizatorul extern a modificat evenimentul!

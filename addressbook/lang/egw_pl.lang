@@ -56,6 +56,8 @@ all contacts	addressbook	pl	Wszystkie kontakty
 all types	addressbook	pl	Wszystkie typy
 allow	addressbook	pl	Zezwalaj
 allow for contacts only	addressbook	pl	Zezwalaj tylko dla kontaktów
+allow members of following groups to edit contact-data of accounts	addressbook	pl	Zezwalanie członkom następujących grup na edytowanie danych kontaktowych kont
+allow members of following groups to show the account name column	addressbook	pl	Zezwalanie członkom następujących grup na wyświetlanie kolumny z nazwą konta
 allow users to maintain their own account-data	admin	pl	Pozwól użytkownikom zarządzać danymi własnego konta
 alt. csv import	addressbook	pl	Alt. CSV Import
 always	addressbook	pl	Zawsze
@@ -143,7 +145,6 @@ csv-filename	addressbook	pl	Nazwa pliku CSV
 custom	addressbook	pl	Użytkownika
 custom etemplate for the contactform	addressbook	pl	Własny eSzablon do formularza kontaktowego
 custom fields	addressbook	pl	Pola użytkownika
-data exchange settings	addressbook	pl	Ustawienia wymiany danych
 default	addressbook	pl	Domyślne
 default action on double-click	addressbook	pl	Domyślna akcja po dwukrotnym kliknięciu
 default address format	addressbook	pl	Domyślny format adresu
@@ -413,6 +414,7 @@ select a view	addressbook	pl	Wybierz wygląd
 select addressbook type	addressbook	pl	Wybierz typ książki adresowej
 select all	addressbook	pl	Zaznacz wszystkie
 select an opened dialog	addressbook	pl	Wybierz otwarte okno dialogowe
+select contacts to add to mail	addressbook	pl	Wybierz kontakty do dodania do wiadomości e-mail
 select migration type	admin	pl	Wybierz typ migracji
 select multiple contacts for a further action	addressbook	pl	Wybierz parę kontaktów dla następującej akcji
 select phone number as prefered way of contact	addressbook	pl	Wybierz numer telefonu jako preferowaną metodę kontaktowania

@@ -117,7 +117,7 @@ continue	mail	ja	続ける
 convert mail to item and attach its attachments to this item (standard)	mail	ja	メール本文と添付ファイルを保存（標準）
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ja	メール本文、添付ファイル、およびRFC822 (.eml)形式のメール・ソースを保存
 convert only mail to item (ignore possible attachments)	mail	ja	メール本文を保存（添付ファイルを無視）
-copied %1 message(s) from %2 to %3	mail	ja	%1 個のメッセージが %2 から %3 にコピーされました
+copied %1 message(s) from %2 to %3	mail	ja	%1 個のメッセージが %2 から %3 にコピーされました。
 copy to	mail	ja	コピー先
 could not append message:	mail	ja	メッセージを追加できませんでした：
 could not save the acl because some names are empty	mail	ja	名前の一部が空欄のためACLを保存できませんでした
@@ -273,6 +273,7 @@ ham folder	mail	ja	ハム・フォルダ
 handling of external http images / mixed content in mails	mail	ja	メール内の外部 http 画像/混合コンテンツの処理
 header	mail	ja	メール・ヘッダを表示
 header lines	mail	ja	ヘッダ行
+hide from	mail	ja	差出人 を隠す
 high	mail	ja	高
 high priority	mail	ja	高い優先度
 hold %1 to drag files to your computer	mail	ja	%1 を押したままファイルをコンピュータにドラッグします。
@@ -372,7 +373,7 @@ move selected to	mail	ja	選択されたメールを移動:
 move to	mail	ja	移動
 move to archive	mail	ja	アーカイブに移動
 move to trash	mail	ja	ゴミ箱に移動
-moved %1 message(s) from %2 to %3	mail	ja	%1 個のメッセージを %2 から %3 に移動しました
+moved %1 message(s) from %2 to %3	mail	ja	%1 個のメッセージを %2 から %3 に移動しました。
 moving folders from one mailaccount to another is not supported	mail	ja	別のメール・アカウントのフォルダへの移動はできません
 name and domain	mail	ja	名前とドメイン
 name and email	mail	ja	名前とメール
@@ -546,6 +547,7 @@ select file to attach to message	mail	ja	添付するファイルを選択して
 select file to import into folder	mail	ja	フォルダにインポートするファイルを選択してください
 select file(s) from vfs	mail	ja	VFSからファイルを選択
 select files to upload	mail	ja	アップロードするファイルを選択
+select mail addresses from addressbook	mail	ja	アドレス帳からメールアドレスを選択
 select multiple	mail	ja	複数選択
 select or insert email address	mail	ja	メールアドレスの選択または挿入
 selected	mail	ja	を選択しました
@@ -626,8 +628,8 @@ test connection and display basic information about the selected profile	mail	ja
 text	mail	ja	テキスト
 text mode	mail	ja	テキスト・モード
 text/plain	mail	ja	テキスト
-the %1 's acl removed from the %2	mail	ja	%2 から %1 の ACL を削除しました
-the %1 's acl, including its subfolders, removed from the %2	mail	ja	%1 の ACL(サブフォルダを含む)を %2 から削除しました
+the %1 's acl removed from the %2	mail	ja	%2 から %1 の ACL を削除しました。
+the %1 's acl, including its subfolders, removed from the %2	mail	ja	%1 の ACL(サブフォルダを含む)を %2 から削除しました。
 the entered passphrase is not correct! please try again.	mail	ja	パスフレーズが不正です！再入力してください。
 the folder %1 's acls saved	mail	ja	フォルダ %1 の ACL を保存しました
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	ja	この値が空で、かつ有効な既定値が存在しない場合は、フォルダ <b>%1</b> が使用されます。

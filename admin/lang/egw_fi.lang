@@ -357,6 +357,7 @@ group csv import	admin	fi	Ryhmän CSV tuonti
 group has been added	common	fi	Ryhmä lisätty.
 group has been deleted	common	fi	Ryhmä poistettu.
 group has been updated	common	fi	Ryhmä päivitetty.
+group hidden from non-admins	admin	fi	Ryhmä piilotettu muilta kuin järjestelmänvalvojilta
 group hierarchy	admin	fi	Ryhmähierarkia
 group list	admin	fi	Ryhmäluettelo
 group manager	admin	fi	Ryhmien hallinta

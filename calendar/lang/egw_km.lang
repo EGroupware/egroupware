@@ -132,7 +132,6 @@ custom url for ical with holidays for all users	calendar	km	URL ផ្ទាល�
 custom_2	common	km	ទំនេរ/រវល់
 daily	calendar	km	ប្រចាំថ្ងៃ
 daily tables	calendar	km	តារាងប្រចាំថ្ងៃ
-data exchange settings	calendar	km	ការកំណត់ការផ្លាស់ប្តូរទិន្នន័យ
 date for the day of the week	calendar	km	កាលបរិច្ឆេទសម្រាប់ថ្ងៃនៃសប្តាហ៍
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	km	កាលបរិច្ឆេទសម្រាប់ថ្ងៃនៃសប្តាហ៍ មានសម្រាប់ធាតុដំបូងនៅខាងក្នុងថ្ងៃនីមួយៗនៃសប្តាហ៍ ឬតារាងប្រចាំថ្ងៃនៅក្នុងជួរដែលបានជ្រើសរើស។
 day	calendar	km	ថ្ងៃ
@@ -560,7 +559,6 @@ startdate / -time	calendar	km	កាលបរិច្ឆេទ / ពេលវ�
 startdate and -time of the search	calendar	km	ចាប់ផ្តើមកាលបរិច្ឆេទ និងពេលវេលានៃការស្វែងរក
 startdate of the export	calendar	km	កាលបរិច្ឆេទចាប់ផ្តើមនៃការនាំចេញ
 startrecord	calendar	km	ចាប់ផ្តើមកំណត់ត្រា
-status	calendar	km	ស្ថានភាព
 status already applied	calendar	km	ស្ថានភាពបានអនុវត្តរួចហើយ
 status changed	calendar	km	ស្ថានភាពបានផ្លាស់ប្តូរ។
 status for all future scheduled days changed	calendar	km	ស្ថានភាពសម្រាប់ថ្ងៃដែលបានគ្រោងទុកនាពេលអនាគតទាំងអស់បានផ្លាស់ប្តូរ។

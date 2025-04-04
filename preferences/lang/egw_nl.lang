@@ -6,17 +6,18 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	nl	Een thema bepaalt de kleuren en lettertypes die worden gebruikt door een template
 acl grants have been updated	preferences	nl	ACL-toegang is bijgewerkt.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	nl	Elk overzicht in EGroupware zal dit aantal regels per pagina weergeven. <br /> Te veel kan het systeem traag maken, te weinig kan het onoverzichtelijk maken
+applications list scroll area	preferences	nl	Scrollknop voor zijmenu
 are you sure you want to delete this category ?	preferences	nl	Weet u zeker dat u deze categorie wilt verwijderen
 br	preferences	nl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	nl	Wijzig een gebruikerswachtwoord door de oude en de nieuwe mee te geven. Geeft TRUE terug bij succesvolle wijziging, FALSE bij fouten.
 color	preferences	nl	Kleur
 country	preferences	nl	Land
 dark mode theme	preferences	nl	Thema donkere modus
-data exchange settings	preferences	nl	Data exchange instellingen
 date format	preferences	nl	Datumweergave
 default	preferences	nl	standaard
 default preferences	preferences	nl	Standaard voorkeuren
 delete categories	preferences	nl	Verwijder categorieën
+deny following groups access to application passwords	preferences	nl	Ontzeg de volgende groepen de toegang tot applicatiewachtwoorden
 description can not exceed 255 characters in length !	preferences	nl	Beschrijving mag de 255 tekens niet overschrijden in lengte!
 disable	preferences	nl	Deactiveren
 display thumbnails for linked images	preferences	nl	Toon miniaturen voor gekoppelde afbeeldingen
@@ -50,6 +51,7 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	nl	Interface/Template Selectie
 it sets content size (text only) according to selected size.	preferences	nl	Het stelt de inhoudsgrootte (alleen tekst) in volgens de geselecteerde grootte.
 language	preferences	nl	Taal
+limit following groups to only create application passwords via templates	preferences	nl	Deze groepen beperken alleen de applicatiewachtwoorden die via sjablonen kunnen worden aangemaakt
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	nl	Inloggen via SingleSignOn geeft geen wachtwoord om door te geven aan mail- of file-servers.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	nl	Toepassingenlijst scrolbaar maken met omhoog/omlaag knoppen (handig voor gebruikers die werken met een muis zonder scrollwiel)
 max matches per page	preferences	nl	Max. resultaten per pagina
@@ -90,6 +92,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	nl	De twee wachtwoorden komen niet overeen
 theme (colors/fonts) selection	preferences	nl	Themaselectie (kleuren/lettertypen)
 this server is located in the %1 timezone	preferences	nl	Tijdzone
+thousands separator is only used for displaying and not for editing numbers.	preferences	nl	De getalnotatie kan worden ingesteld voor de weergave van getallen.
 time format	preferences	nl	Tijdweergave
 use default	preferences	nl	Gebruik standaard
 use first %1 letters from username	preferences	nl	Gebruik de eerste %1 letters van de gebruikersnaam

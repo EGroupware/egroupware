@@ -2,6 +2,7 @@ applies the changes	timesheet	lv	apstiprināt izmaiņas
 ask to start and stop working time with session	timesheet	lv	Jautājiet, lai sāktu un pārtrauktu darba laiku ar sesiju
 category for 'working time'	admin	lv	Kategorija “Darba laiks
 change owner when updating	timesheet	lv	Īpašnieka maiņa, veicot atjaunināšanu
+choose 'creator' of imported data	timesheet	lv	Izvēlēties importēto datu “radītāju”.
 create a single 'working time' timesheet per	timesheet	lv	Izveidot vienu darba laika uzskaites lapu “Darba laiks” uz
 create new links	timesheet	lv	Izveidot jaunas saites
 creates a new field	timesheet	lv	veido jaunu lauku
@@ -19,12 +20,14 @@ edit this entry	timesheet	lv	Rediģēt šo ierakstu
 entry saved	timesheet	lv	Ieraksts saglabāts
 error storing working time	timesheet	lv	Kļūda darba laika saglabāšanā
 existing links	timesheet	lv	Eksistējošas saites
+exports entries from your timesheet into a csv file.	timesheet	lv	Eksportē ierakstus no Time Sheet uz CSV failu
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	lv	Eksportē ierakstus no Time Sheet uz CSV failu. Iespēju cilnē var izvēlēties arī citus atdalītājus.
 field must not be empty !!!	timesheet	lv	Lauks nedīkst būt tukšs
 forgot to switch off working time?	common	lv	Aizmirsāt izslēgt darba laiku?
 global categories	timesheet	lv	Globālās kategorijas
 history	timesheet	lv	Vēsture
 id	timesheet	lv	ID
+imports entries into the timesheet from a csv file.	timesheet	lv	Importē ierakstus Time Sheet no CSV faila
 last modified	timesheet	lv	Pēdējo reizi pārveidots
 leaves without saveing	timesheet	lv	aiziet bez saglabāšanas
 length<br>rows	timesheet	lv	Garums<br>Rindas
@@ -55,6 +58,9 @@ this month	timesheet	lv	Šis mēnesis
 this week	timesheet	lv	Šī nedēļa
 this year	timesheet	lv	Šis gads
 timer already running or paused	common	lv	Taimeris jau darbojas vai ir apturēts
+timesheet csv export	timesheet	lv	Timesheet CSV eksports
+timesheet csv import	timesheet	lv	Timesheet CSV imports
+timesheet id	timesheet	lv	Laika lapas ID
 use field from csv if possible	timesheet	lv	Ja iespējams, izmantojiet lauku no CSV
 values for selectbox	timesheet	lv	Vērtības<i>selectboxam</i>
 view this entry	timesheet	lv	Rādīt šo ierakstu

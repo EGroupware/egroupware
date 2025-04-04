@@ -68,6 +68,7 @@ contains	mail	ru	Содержит
 continue	mail	ru	Продолжить
 convert mail to item and attach its attachments to this item (standard)	mail	ru	Конвертировать сообщение как отдельное сообщение и прикрепить к этой части (стандартное)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ru	конвертировать сообщение как отдельное сообщение,прикрепить и добавить raw message (.eml) как вложение
+copied %1 message(s) from %2 to %3	mail	ru	Скопировано %1 сообщение(я) из %2 в %3.
 copy to	mail	ru	Копировать в
 could not append message:	mail	ru	Не могу добавить сообщение
 create new account	mail	ru	Создать учётную запись
@@ -170,6 +171,7 @@ ham folder	mail	ru	Папка Ham
 handling of external http images / mixed content in mails	mail	ru	Обработка внешних http-изображений / смешанного содержимого в электронных письмах
 header	mail	ru	Заголовок
 header lines	mail	ru	Строки заголовка
+hide from	mail	ru	Скрыть От
 high priority	mail	ru	Высокий приоритет
 home page folders	mail	ru	Заголовки домашней страницы
 how often to check with the server for new mail	mail	ru	Интервал проверки почты на сервере
@@ -242,6 +244,7 @@ move selected to	mail	ru	Переместить выбранное в
 move to	mail	ru	Переместить в
 move to archive	mail	ru	Переместить в архивную папку
 move to trash	mail	ru	Переместить в корзину
+moved %1 message(s) from %2 to %3	mail	ru	Переместил %1 сообщение(я) из %2 в %3.
 name and domain	mail	ru	Имя и домен
 name and email	mail	ru	Имя и email
 name of account	mail	ru	Имя учетной записи
@@ -362,6 +365,7 @@ security	mail	ru	Безопасность .
 select all	mail	ru	Выбрать все
 select an existing entry in order to append mail content to it	mail	ru	Выберите существующую запись для добавления в неё содержимого письма
 select an item to read	mail	ru	Выберите сообщение для просмотра
+select mail addresses from addressbook	mail	ru	Выберите почтовые адреса из адресной книги
 select or insert email address	mail	ru	Выберите или вставьте адрес электронной почты
 selected	mail	ru	Выбранный
 selected date range (with quicksearch)	mail	ru	Выбранный диапазон дат (с быстрым поиском)
@@ -378,6 +382,7 @@ should signature be inserted after (standard) or before a reply or inline forwar
 show all addresses	mail	ru	Показать все адреса
 show all folders	mail	ru	Отображать все каталоги
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ru	Отображать в панели команд главной страницы все каталоги, как подписные, так и те, на которые пользователь не подписан
+show horizontal, hide if none selected	mail	ru	Показать горизонтально, скрыть, если ни один не выбран
 show new messages on home page	mail	ru	отображать новые сообщения на домашней странице
 show notification for new arriving mails	mail	ru	Показывать уведомления о новых пришедших письмах
 show test connection section and control the level of info displayed?	mail	ru	показать пункт меню "Проверка подключения"?
@@ -410,6 +415,8 @@ test connection	mail	ru	Проверка подключения
 test connection and display basic information about the selected profile	mail	ru	Проверить соединение и показать основную информацию о выбранном профиле
 text	mail	ru	Текст
 text/plain	mail	ru	Простой текст
+the %1 's acl removed from the %2	mail	ru	ACL папки %1 удален из папки %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	ru	ACL папки %1, включая ее подпапки, удален из папки %2.
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	ru	Каталог <b>%1</b> будет использоваться, если здесь не задано ничего иного, а также отсутствуют другие предварительные установки.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	ru	Отправитель сообщения затребовал уведомление о прочтении сообщения. Вы хотите послать подтверждение о прочтении?
 the mimeparser can not parse this message.	mail	ru	Обработчик MIME не может обработать это сообщение.
@@ -439,6 +446,7 @@ vacation notice is active	mail	ru	Автоответчик активен
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	ru	Автоответчик ещё не сохранен! (Но мы заполнили некоторые значения по умолчанию, чтобы исправить некоторые ошибки.Проверьте и исправьте настройки и сохраните снова.)
 vacation notice update failed	mail	ru	Обновить уведомление об отпуске не удалось
 vacation start-date must be before the end-date!	mail	ru	Дата начала действия автоответчика должно быть РАНЬШЕ даты окончания!
+validate addresses on submit:	mail	ru	Проверка адресов при отправке:
 view full mail source	mail	ru	Показать полный исходный код сообщения
 view header lines	mail	ru	Просмотр строк заголовка
 what do do with html email	mail	ru	Что делать с почтой в формате HTML

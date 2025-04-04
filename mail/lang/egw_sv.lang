@@ -66,6 +66,7 @@ continue	mail	sv	Fortsätt
 convert mail to item and attach its attachments to this item (standard)	mail	sv	Konvertera e-post till objekt och bifoga dess bilagor till detta objekt (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	sv	Konvertera e-post till objekt, bifoga dess bilagor och lägg till råmeddelande (.eml) som bilaga
 convert only mail to item (ignore possible attachments)	mail	sv	Konvertera endast e-post till objekt (ignorera eventuella bilagor)
+copied %1 message(s) from %2 to %3	mail	sv	Kopierade %1 meddelande(n) från %2 till %3.
 copy to	mail	sv	Kopiera
 create new account	mail	sv	Skapa nytt konto
 cross account forward attachment is not allowed!	mail	sv	Det är inte tillåtet att bifoga ett konto för korsändamål!
@@ -148,6 +149,7 @@ greater than	mail	sv	Större än
 ham folder	mail	sv	Ham-mappen
 handling of external http images / mixed content in mails	mail	sv	Hantering av externa http-bilder / blandat innehåll i e-postmeddelanden
 header lines	mail	sv	Brevhuvud
+hide from	mail	sv	Dölj Från
 high priority	mail	sv	Hög prioritet
 html	mail	sv	HTML
 html mode	mail	sv	HTML-läge
@@ -217,7 +219,7 @@ move selected to	mail	sv	Flytta valda till
 move to	mail	sv	Flytta till
 move to archive	mail	sv	Flytta till arkivmapp
 move to trash	mail	sv	Flytta till Borttaget
-moved %1 message(s) from %2 to %3	mail	sv	Flyttade %1 meddelande(n) från %2 till %3
+moved %1 message(s) from %2 to %3	mail	sv	Flyttade %1 meddelande(n) från %2 till %3.
 moving folders from one mailaccount to another is not supported	mail	sv	Flyttning av mappar från ett e-postkonto till ett annat stöds inte
 name and domain	mail	sv	Namn och domän
 name and email	mail	sv	Namn och e-post
@@ -320,6 +322,7 @@ select a date	mail	sv	Välj ett datum
 select all	mail	sv	Välj samtliga
 select an existing entry in order to append mail content to it	mail	sv	Välj en befintlig post för att bifoga e-postinnehåll till den
 select an item to read	mail	sv	Välj en artikel att läsa
+select mail addresses from addressbook	mail	sv	Välj e-postadresser från adressboken
 select or insert email address	mail	sv	Välj eller infoga e-postadress
 selected date range (with quicksearch)	mail	sv	Valt datumintervall (med snabbsökning)
 send message and move to send folder (if configured)	mail	sv	Skicka meddelande och flytta till mappen Skicka (om konfigurerat)
@@ -333,6 +336,7 @@ set predefined values for compose...	mail	sv	Ställ in fördefinierade värden f
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sv	Ska signatur infogas efter (standard) eller före ett svar eller vidarebefordran, och ska signaturen vara synlig och ändringsbar under komponeringen.
 show all addresses	mail	sv	Visa alla adresser
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	sv	Visa alla mappar (prenumererade OCH avprenumererade) i huvudskärmens mappfönster.
+show horizontal, hide if none selected	mail	sv	Visa horisontellt, dölj om ingen är markerad
 show notification for new arriving mails	mail	sv	Visa avisering för nya inkommande e-postmeddelanden
 show test connection section and control the level of info displayed?	mail	sv	Visa testanslutningsavsnitt och kontrollera nivån på den information som visas?
 show test connection section and control the level of info displayed??	mail	sv	Visa testanslutningsavsnittet och kontrollera nivån på den information som visas?
@@ -358,6 +362,8 @@ start new messages with mime type plain/text or html?	mail	sv	Starta nya meddela
 text	mail	sv	Text
 text mode	mail	sv	Textläge
 text/plain	mail	sv	Text
+the %1 's acl removed from the %2	mail	sv	ACL:n för %1 har tagits bort från %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	sv	ACL:n för %1, inklusive dess undermappar, har tagits bort från %2.
 the imap server need to meet certain requirements and be configured for it:	mail	sv	IMAP-servern måste uppfylla vissa krav OCH vara konfigurerad för detta:
 the mimeparser can not parse this message.	mail	sv	MIME-tolken kunde inte tolka meddelandet.
 the rule with priority %1 successfully saved!	mail	sv	Regeln med prioritet %1 sparades framgångsrikt!
@@ -374,6 +380,7 @@ unconditional	mail	sv	Alltid
 unflagged	mail	sv	Oflaggad
 unread	mail	sv	Oläst
 vacation notice	mail	sv	Frånvaro meddelande
+validate addresses on submit:	mail	sv	Validera adresser när du skickar:
 view header lines	mail	sv	Visa brevhuvudet
 when deleting messages	mail	sv	Vid meddelande radering
 write	mail	sv	Skriv

@@ -1,7 +1,7 @@
 %1 definition(s) %2	importexport	ja	%1 definition(s) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	ja	%1 definition(s) %2, %3 failed because of insufficient rights !!!
 %1 definitions %2	importexport	ja	%1 definitions %2
-%1 is not a known user or group	importexport	ja	%1 is not a known user or group
+%1 is not a known user or group	importexport	ja	%1 は既知のユーザでもグループでもありません。
 %1 is not readable	importexport	ja	%1 is not readable.
 %1 is not writable	importexport	ja	%1 is not writable.
 %1 records processed	importexport	ja	%1 records processed.
@@ -13,7 +13,7 @@
 add a new definition	importexport	ja	新しい定義を追加する
 addressbook csv import	importexport	ja	Addressbook CSV Import
 addressbook vcard import	importexport	ja	Addressbook vCard import
-admin disabled exporting	importexport	ja	Admin disabled exporting
+admin disabled exporting	importexport	ja	管理者はエクスポートを無効にしています。
 all encodings	importexport	ja	All encodings
 all users	importexport	ja	全てのユーザ
 allowed users	importexport	ja	Allowed users
@@ -28,7 +28,7 @@ check all	importexport	ja	Check all
 choose a name for this definition	importexport	ja	Choose a name for this definition
 choose a plugin	importexport	ja	Choose a plugin
 choose an application	importexport	ja	Choose an application
-choose fields to export	importexport	ja	Choose fields to export
+choose fields to export	importexport	ja	エクスポートするフィールドを選択してください。
 choose seperator and charset	importexport	ja	Choose separator and charset
 column mismatch.  expected %1 columns, your file has %2.	importexport	ja	Column mismatch.  Expected %1 columns, your file has %2.
 column mismatch: %1 should be %2, not %3	importexport	ja	Column mismatch: %1 should be %2, not %3
@@ -38,12 +38,13 @@ create a <a href="%1">new definition</a> for this file	importexport	ja	Create a 
 create export	importexport	ja	Create export
 created	importexport	ja	作成
 csv field	importexport	ja	CSV field
-database values	importexport	ja	Database values
+database values	importexport	ja	データベースの値
 day of week	importexport	ja	Day of week
 define imports|exports	common	ja	Define Imports|Exports
 definition	importexport	ja	Definition
 definition filter	importexport	ja	定義フィルター
 delete all selected definitions	importexport	ja	Delete ALL selected definitions
+delete files after import	importexport	ja	インポート後のファイルの削除
 deleted	importexport	ja	Deleted.
 delimiter	importexport	ja	区切り記号
 duplicate name, please choose another.	importexport	ja	Duplicate name, please choose another.

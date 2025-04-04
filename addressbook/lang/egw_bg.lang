@@ -62,6 +62,7 @@ all types	addressbook	bg	Всички видове
 allow	addressbook	bg	Позволено
 allow for contacts only	addressbook	bg	Позволено само за контакти
 allow members of following groups to edit contact-data of accounts	addressbook	bg	Позволява на членовете на следните групи, да редактират данни за контакт на акаунти
+allow members of following groups to show the account name column	addressbook	bg	Позволете на членовете на следните групи да показват колоната с името на акаунта
 allow users to maintain their own account-data	admin	bg	Позволява на потребителите да въвеждат данни за собствените си акаунти
 alt. csv import	addressbook	bg	Алтернативен импорт на CSV
 always	addressbook	bg	Винаги
@@ -160,7 +161,6 @@ csv-filename	addressbook	bg	Име на CSV файл
 custom	addressbook	bg	По избор
 custom etemplate for the contactform	addressbook	bg	eTemplate по избор за формата за контакти
 custom fields	addressbook	bg	Полета по избор
-data exchange settings	addressbook	bg	Настройки за обмен на данни
 default	addressbook	bg	По подразбиране
 default action on double-click	addressbook	bg	Действие по подразбиране при двойно щракване
 default address format	addressbook	bg	Формат на адреса по подразбиране
@@ -440,6 +440,7 @@ select a view	addressbook	bg	Избор на изглед
 select addressbook type	addressbook	bg	Избор на тип адресен указател
 select all	addressbook	bg	Избиране на всичко
 select an opened dialog	addressbook	bg	Избор на отворен диалогов прозорец
+select contacts to add to mail	addressbook	bg	Избиране на контакти за добавяне към пощата
 select migration type	admin	bg	Избор на тип миграция
 select multiple contacts for a further action	addressbook	bg	Избор на множество контакти
 select phone number as prefered way of contact	addressbook	bg	Изберете телефонния номер за предпочитан

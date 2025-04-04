@@ -164,10 +164,12 @@ noone	filemanager	pl	Nikt, ale naprawdę nikt
 notebookbar	filemanager	pl	Zakładka
 only owner can rename or delete the content	filemanager	pl	Tylko właściciel może zmienić nazwę lub usunąć zawartość
 open	filemanager	pl	Otwórz
+open documents with collabora, if permissions are given	filemanager	pl	Otwieranie dokumentów za pomocą Collabora Online, jeśli nadano uprawnienia
 operation	filemanager	pl	Operacja
 password for webdav and smb, use $pass for password of logged in user	filemanager	pl	Hasło dla WebDAV i SMB, użyj $pass dla hasła zalogowanego użytkownika
 path and query-parameters, smb: share and optional path (with /)	filemanager	pl	Ścieżka i parametry zapytania, SMB: udział i opcjonalna ścieżka (z /)
 percentage	filemanager	pl	w procentach
+permission denied!	filemanager	pl	Odmowa uprawnień!
 permissions	filemanager	pl	Uprawnienia
 permissions of %1 changed.	filemanager	pl	Zmieniono uprawnienia do %1
 please select a file to delete.	filemanager	pl	Proszę wybrać plik do skasowania.
@@ -211,12 +213,15 @@ show	filemanager	pl	Wyświetl
 show hidden files	filemanager	pl	Pokaż ukryte pliki
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	pl	Pokazać link do katalogu bazowego managera plików w menu bocznym?
 size	filemanager	pl	Wielkość
+smb, webdavs and vfs require a username!	filemanager	pl	SMB, WebDAV i VFS wymagają nazwy użytkownika!
+smb: mount samba or windows fileserver shares	filemanager	pl	SMB: montowanie udziałów serwera plików Samba lub Windows
 start search	filemanager	pl	rozpocznij wyszukiwanie
 startfolder	filemanager	pl	Folder początkowy
 superuser	filemanager	pl	Super-użytkownik
 symlink to %1 created.	filemanager	pl	Utworzono link do %1
 tag to mark positions for address labels	filemanager	pl	Zaznacz, aby oznaczyć pozycję dla etykiet adresu
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	pl	Domyślny folder startowy to twój folder osobisty. Domyślna wartość jest używana jeśli zostawisz to pole puste, ścieżka nie istnieje lub nie masz uprawnień
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	pl	Dokument może zawierać symbole zastępcze, takie jak {{%3}}, które zostaną zastąpione danymi (%1pełna lista nazw symboli zastępczych%2).
 the requested path %1 is not available.	filemanager	pl	Żądana ścieżka %1 nie jest dostępna
 there's already a directory with that name!	filemanager	pl	Istnieje już katalog z tą nazwą
 there's already a file with that name!	filemanager	pl	Istnieje już plik z tą nazwą
@@ -229,6 +234,7 @@ upload fields	filemanager	pl	wczytywanych plików
 upload files	filemanager	pl	Wczytaj pliki
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	pl	Użyj tego znacznika dla etykiet adresu. Wstaw zawartość którą chcesz powtórzyć pomiędzy dwa znaczniki.
 used space	filemanager	pl	Wykorzystane miejsce
+username for webdav and smb, use $user for name of logged in user	filemanager	pl	Nazwa użytkownika dla WebDAV i SMB, użyj $user dla nazwy zalogowanego użytkownika
 users and groups	filemanager	pl	Użytkownicy i grupy
 wrong username or password!	filemanager	pl	Niepoprawna nazwa użytkownika lub hasło!
 you are not allowed to upload a script!	filemanager	pl	Nie możesz załadować skryptu!

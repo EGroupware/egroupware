@@ -52,7 +52,6 @@ check virtual filesystem	common	cs	Kontrola virtuálního souborového systému
 classic	filemanager	cs	Standardní panel nástrojů
 clear search	filemanager	cs	Nové hledání
 clipboard is empty!	filemanager	cs	Schránka je prázdná!
-collab editor settings	filemanager	cs	Nastavení editoru Collab
 comment	filemanager	cs	Komentář
 configuration changed.	filemanager	cs	Konfigurace změněna
 confirm final delete	filemanager	cs	Potvrďte konečné odstranění

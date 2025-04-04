@@ -137,7 +137,6 @@ start timer	common	sk	Spustiť časovač
 start-time can not be before last stop- or pause-time %1!	common	sk	Čas začiatku nemôže byť pred posledným časom konca alebo pozastavenia %1 !
 starttime	timesheet	sk	Čas začiatku
 starttime has to be before endtime !!!	timesheet	sk	Čas začiatku musí byť skôr než čas konca !!!
-status	timesheet	sk	Stav
 status deleted.	timesheet	sk	Stav bol vymazaný.
 status of created timesheets	timesheet	sk	Stav vytvorených harmonogramov
 status updated.	timesheet	sk	Stav bol aktualizovaný.

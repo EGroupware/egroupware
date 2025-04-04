@@ -131,6 +131,7 @@ global categories	common	bg	Глобални категории
 group has been added	common	bg	Групата е добавена.
 group has been deleted	common	bg	Групата е била изтрита.
 group has been updated	common	bg	Групата е актуализирана.
+group hidden from non-admins	admin	bg	Група, скрита за неадминистратори
 group hierarchy	admin	bg	Йерархия на групите
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	bg	Колко записа трябва да могат да експортират неадминистраторите. Празно = няма ограничение, Не = няма експорт
 html/plaintext	admin	bg	HTML/текст

@@ -62,6 +62,7 @@ all types	addressbook	id	Semua jenis
 allow	addressbook	id	Izinkan
 allow for contacts only	addressbook	id	Izinkan untuk kontak saja
 allow members of following groups to edit contact-data of accounts	addressbook	id	Izinkan anggota grup berikut mengedit data kontak akun
+allow members of following groups to show the account name column	addressbook	id	Izinkan anggota grup berikut untuk menampilkan kolom nama akun
 allow users to maintain their own account-data	admin	id	Izinkan pengguna untuk mengelola data akun mereka sendiri
 always	addressbook	id	Selalu
 apply changes to all members, whose fields have the same previous content	addressbook	id	Menerapkan perubahan pada semua anggota, yang bidangnya memiliki konten yang sama sebelumnya.
@@ -195,6 +196,7 @@ exports contacts from your addressbook into a csv file. csv means 'comma separat
 exports contacts from your addressbook into a vcard file.	addressbook	id	Mengekspor kontak dari buku alamat Anda ke dalam file vCard.
 extra	addressbook	id	Tambahan
 extra private	addressbook	id	Privat tambahan
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	id	Gagal mengubah %1 anggota organisasi, hak tidak mencukupi!
 favorite phone	addressbook	id	Telepon favorit
 fax	addressbook	id	Fax
 fax number	common	id	Nomor Fax
@@ -359,6 +361,7 @@ select a view	addressbook	id	Pilih tampilan
 select addressbook type	addressbook	id	Pilih tipe buku alamat
 select all	addressbook	id	Pilih semua
 select an opened dialog	addressbook	id	Pilih dialog yang terbuka
+select contacts to add to mail	addressbook	id	Memilih kontak yang akan ditambahkan ke email
 select migration type	admin	id	Pilih tipe migrasi
 select multiple contacts for a further action	addressbook	id	Pilih beberapa kontak untuk tindakan selanjutnya
 selected contacts	addressbook	id	Kontak terpilih

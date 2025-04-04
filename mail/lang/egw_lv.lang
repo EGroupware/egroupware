@@ -46,6 +46,7 @@ continue	mail	lv	Turpināt
 convert mail to item and attach its attachments to this item (standard)	mail	lv	Konvertēt e-pastu uz elementu un pievienot tā pielikumus šim elementam (standarta)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	lv	Konvertēt e-pastu vienībā, pievienot tā pielikumus un pievienot neapstrādātu ziņojumu (.eml) kā pielikumu
 convert only mail to item (ignore possible attachments)	mail	lv	Konvertēt tikai e-pastu vienumam (neņemot vērā iespējamos pielikumus).
+copied %1 message(s) from %2 to %3	mail	lv	Nokopēts %1 ziņojums(-i) no %2 uz %3.
 copy to	mail	lv	Kopēt Uz:
 cross account forward attachment is not allowed!	mail	lv	Nav atļauts pievienot starpkonta priekšējo pielikumu!
 current subject	mail	lv	Pašreizējais temats
@@ -105,6 +106,7 @@ greater than	mail	lv	lielāks nekā
 ham folder	mail	lv	Šķiņķa mape
 handling of external http images / mixed content in mails	mail	lv	Ārējo http attēlu apstrāde / jaukts saturs e-pasta ziņojumos
 header lines	mail	lv	Galvenes rindas
+hide from	mail	lv	Paslēpt No
 html	mail	lv	HTML
 ident name	mail	lv	Identitātes nosaukums
 ident name email	mail	lv	Identitātes nosaukums [E-pasts]
@@ -161,6 +163,7 @@ modify subject of this message	mail	lv	Mainīt šī ziņojuma tematu
 move selected to	mail	lv	Pārvietot atlasītās uz
 move to	mail	lv	Pārvietot atlasītās uz
 move to trash	mail	lv	Pārvietot uz atkritumiem
+moved %1 message(s) from %2 to %3	mail	lv	Pārvietots %1 ziņojums(-i) no %2 uz %3.
 name and domain	mail	lv	Nosaukums un domēns
 name and email	mail	lv	Vārds un e-pasts
 name of account	mail	lv	Konta nosaukums
@@ -247,6 +250,7 @@ see attachments for content of the orignial mail	mail	lv	Oriģinālās e-pasta v
 select all	mail	lv	Izvēlieties visu
 select an existing entry in order to append mail content to it	mail	lv	Izvēlieties esošo ierakstu, lai tam pievienotu pasta saturu
 select an item to read	mail	lv	Izvēlieties elementu, lai izlasītu
+select mail addresses from addressbook	mail	lv	Pasta adrešu atlase no adrešu grāmatas
 select or insert email address	mail	lv	Izvēlieties vai ievietojiet e-pasta adresi
 selected date range (with quicksearch)	mail	lv	Izvēlētais datuma diapazo
 send message and move to send folder (if configured)	mail	lv	Nosūtīt ziņu un pārvietot uz nosūtīšanas mapi (ja konfigurēts)
@@ -257,6 +261,7 @@ set predefined values for compose...	mail	lv	Iestatiet iepriekš definētas vēr
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	lv	Vai paraksts jāieliek pēc (standarta) vai pirms atbildes vai pārsūtīšanas, un vai paraksts ir redzams un maināms sastādīšanas laikā.
 show all addresses	mail	lv	Rādīt visas adreses
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	lv	galvenajā ekrāna mapju panelī rādīt visas mapes (parakstītās UN neparakstītās).
+show horizontal, hide if none selected	mail	lv	Rādīt horizontāli, paslēpt, ja nav izvēlēts neviens
 show notification for new arriving mails	mail	lv	Parādīt paziņojumu par jaunām ienākošām vēstulēm
 show test connection section and control the level of info displayed?	mail	lv	Rādīt testa savienojuma sadaļu un kontrolēt rādītās informācijas līmeni?
 show test connection section and control the level of info displayed??	mail	lv	Rādīt testa savienojuma sadaļu un kontrolēt rādītās informācijas līmeni?
@@ -279,6 +284,8 @@ sort order	mail	lv	Vieta pēc kārtas
 spamtitan api url	mail	lv	SpamTitan API URL
 spamtitan integration requires epl version	mail	lv	SpamTitan integrācijai nepieciešama EPL versija
 text	mail	lv	Teksts
+the %1 's acl removed from the %2	mail	lv	%1's ACL noņemts no %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	lv	%1 ACL, ieskaitot tā apakšmapes, noņemts no %2.
 the imap server need to meet certain requirements and be configured for it:	mail	lv	IMAP serverim ir jāatbilst noteiktām prasībām UN tas ir jākonfigurē:
 the rule with priority %1 successfully saved!	mail	lv	Noteikums ar prioritāti %1 veiksmīgi saglabāts!
 then	mail	lv	THEN
@@ -293,6 +300,7 @@ trash folder	mail	lv	Atkritumu mape
 unconditional	mail	lv	Vienmēr
 unread	mail	lv	Nelasīts
 vacation notice	mail	lv	Norāde par atrašanos atvaļinājumā
+validate addresses on submit:	mail	lv	Pārbaudiet adreses, kad nosūtāt:
 when deleting messages	mail	lv	Kad dzēš vēstules
 write	mail	lv	Rakstīt
 wrote	mail	lv	rakstīja

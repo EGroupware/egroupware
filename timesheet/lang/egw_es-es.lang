@@ -17,6 +17,7 @@ change owner when updating	timesheet	es-es	Cambiar propietario al actualizar
 changed category to %1	timesheet	es-es	La categoría se ha cambiado a %1
 changed status	timesheet	es-es	estado cambiado
 check all	timesheet	es-es	Marcar todo
+choose 'creator' of imported data	timesheet	es-es	Seleccione el «creador» de los datos importados
 comment by %1 at %2:	timesheet	es-es	Comentario por %1 a las %2:
 create a single 'working time' timesheet per	timesheet	es-es	Crear una única hoja de horas de 'Tiempo de trabajo' por
 create new links	timesheet	es-es	Crear enlaces nuevos
@@ -50,6 +51,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	es-es	Enlaces existentes
 exists	timesheet	es-es	Existe
 export definition to use for nextmatch export	timesheet	es-es	Exportar la definición a usar para exportar nextmatch
+exports entries from your timesheet into a csv file.	timesheet	es-es	Exporta las entradas de la hoja de horario a un archivo CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	es-es	Exporta las entradas de la Hoja del Tiempo a un archivo CSV. En la pestaña de opciones también puede elegir otros separadores.
 field must not be empty !!!	timesheet	es-es	¡El campo no debe estar vacío!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
@@ -65,6 +67,7 @@ if you specify a directory (full vfs path) here, %1 displays an action for each 
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
 if you specify an export definition, it will be used when you export	timesheet	es-es	Si especifica una definición de exportación, se usará al exportar
 ignore	timesheet	es-es	Ignorar
+imports entries into the timesheet from a csv file.	timesheet	es-es	Importa entradas a la Hoja del Tiempo desde un archivo CSV
 insert	timesheet	es-es	Insertar
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	es-es	El ID del propietario no es válido: %1. Puede ser una mala traducción del campo. Se ha usado %2 en su lugar.
 last modified	timesheet	es-es	Ultima modificación
@@ -143,6 +146,9 @@ ticket modified by %1 at %2	timesheet	es-es	Ticket modificado por %1 a las %2
 timer already running or paused	common	es-es	Temporizador ya en marcha o en pausa
 timesheet	common	es-es	Hoja de presencia
 timesheet csv export	timesheet	es-es	Exportar a CSV la hoja de presencia
+timesheet csv import	timesheet	es-es	Importación CSV
+timesheet id	timesheet	es-es	ID de la hoja de horas
+timesheet list	timesheet	es-es	Lista de hojas de horas
 timesheet modified by %1 at %2	timesheet	es-es	Hoja de tiempos modificada por %1 a las %2
 timesheet status-%1 '%2' added.	timesheet	es-es	Estado de la hoja de tiempo-%1 '%2' añadido.
 timesheet-%1 '%2' updated.	timesheet	es-es	Hoja de tiempo-%1 '%2' actualizado.

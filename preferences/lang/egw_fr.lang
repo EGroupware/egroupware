@@ -29,7 +29,6 @@ current password	preferences	fr	Mot de passe actuel
 custom login box color, defaults to above color darkened	preferences	fr	Couleur de la boîte de connexion personnalisée, par défaut, plus sombre
 custom sidebar menu active color, defaults to above color darkened	preferences	fr	Couleur de la sélection active sur le menu latéral, par défaut, plus sombre
 dark mode theme	preferences	fr	Thème du mode sombre
-data exchange settings	preferences	fr	Paramètres d'échange de données
 date format	preferences	fr	Format de date
 default	preferences	fr	Défaut
 default font	preferences	fr	Police par défaut
@@ -101,6 +100,7 @@ it sets content size (text only) according to selected size.	preferences	fr	Il d
 just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
 keep list open for selecting multiple	preferences	fr	Garder la liste ouverte pour la sélection multiple
 language	preferences	fr	Langue
+limit following groups to only create application passwords via templates	preferences	fr	Ces groupes restreignent uniquement les mots de passe d'application à créer via des modèles.
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	fr	La connexion via SingleSignOn ne fournit pas de mot de passe pour le transmettre à des serveurs de courrier ou de fichiers.
 look & feel	preferences	fr	Ergonomie
 lowercase letters	preferences	fr	lettres minuscules
@@ -180,7 +180,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	fr	Les deux mots de passe ne sont pas identiques
 theme (colors/fonts) selection	preferences	fr	Sélection de thème (couleurs/polices)
 this server is located in the %1 timezone	preferences	fr	Ce serveur est situé dans le fuseau horaire %1
-thousands separator is only used for displaying and not for editing numbers.	preferences	fr	Le séparateur des milliers est utilisé seulement pour afficher et non pour modifier les nombres.
+thousands separator is only used for displaying and not for editing numbers.	preferences	fr	Le format des nombres peut être défini pour l'affichage des nombres.
 time format	preferences	fr	Format d'heure
 two factor auth	preferences	fr	Authentification à double facteur
 two factor auth enabled.	preferences	fr	Authentification à double facteur activée.

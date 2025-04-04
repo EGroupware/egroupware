@@ -86,7 +86,6 @@ csv-filename	calendar	pt	CSV-Nome de ficheiro
 custom	calendar	pt	Personalizar
 custom fields	common	pt	Personalizar campos
 daily	calendar	pt	Diário/a
-data exchange settings	calendar	pt	Configurações de troca de dados
 date range	calendar	pt	Intervalo de datas
 day	calendar	pt	Dia
 days	calendar	pt	Dias
@@ -348,7 +347,6 @@ startdate / -time	calendar	pt	Data/hora de início
 startdate and -time of the search	calendar	pt	Data/hora de início da pesquisa
 startdate of the export	calendar	pt	Data de início da exportação
 startrecord	calendar	pt	Registo inicial
-status	calendar	pt	Estado
 status changed	calendar	pt	Estado alterado
 submit to repository	calendar	pt	Submeter no Repositório
 sun	calendar	pt	Dom

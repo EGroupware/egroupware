@@ -91,7 +91,7 @@ continue	mail	pt	Continuar
 convert mail to item and attach its attachments to this item (standard)	mail	pt	Converter o correio eletrónico num item e anexar os seus anexos a este item (padrão)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	pt	Converter o correio eletrónico em item, anexar os seus anexos e adicionar a mensagem em bruto (.eml) como anexo
 convert only mail to item (ignore possible attachments)	mail	pt	Converter apenas o correio eletrónico para o item (ignorar possíveis anexos)
-copied %1 message(s) from %2 to %3	mail	pt	Copiados %1 mensagem (s) de %2 a 3%
+copied %1 message(s) from %2 to %3	mail	pt	Copiados %1 mensagem(ns) de %2 a 3%.
 copy to	mail	pt	Copiar para
 could not append message:	mail	pt	Não foi possível anexar Mensagem:
 create new account	mail	pt	Criar nova conta
@@ -232,6 +232,7 @@ ham folder	mail	pt	Pasta de spam
 handling of external http images / mixed content in mails	mail	pt	Tratamento de imagens http externas / conteúdo misto em mensagens de correio eletrónico
 header	mail	pt	Cabeçalho
 header lines	mail	pt	Linhas de cabeçalho
+hide from	mail	pt	Ocultar De
 high priority	mail	pt	Alta prioridade
 home page folders	mail	pt	pastas home page
 hostname or ip	mail	pt	Nome do host ou IP
@@ -319,7 +320,7 @@ move folder	mail	pt	Mover pasta
 move selected to	mail	pt	Mover mensagens seleccionadas para
 move to	mail	pt	Mover-se para
 move to trash	mail	pt	Mover para o lixo
-moved %1 message(s) from %2 to %3	mail	pt	Movida %1 mensagem (s) de %2 a 3%
+moved %1 message(s) from %2 to %3	mail	pt	Movida %1 mensagem(ns) de %2 a 3%.
 moving folders from one mailaccount to another is not supported	mail	pt	Não é possível mover pastas de uma conta de correio eletrónico para outra
 name and domain	mail	pt	Nome e domínio
 name and email	mail	pt	Nome e correio eletrónico
@@ -473,6 +474,7 @@ select an item to read	mail	pt	Selecionar um item para ler
 select file to attach to message	mail	pt	Selecione o arquivo para anexar a mensagem
 select file to import into folder	mail	pt	Selecione o arquivo para importar para pasta
 select file(s) from vfs	mail	pt	Selecione o arquivo (s) a partir de VFS
+select mail addresses from addressbook	mail	pt	Selecionar endereços de correio do livro de endereços
 select or insert email address	mail	pt	Seleccionar ou inserir endereço de e-mail
 selected	mail	pt	selecionado
 selected date range (with quicksearch)	mail	pt	Intervalo de datas selecionado (com pesquisa rápida)
@@ -541,6 +543,8 @@ test connection	mail	pt	Teste de conexão
 text	mail	pt	Texto
 text mode	mail	pt	O modo de texto
 text/plain	mail	pt	Texto
+the %1 's acl removed from the %2	mail	pt	A ACL de %1 removida de %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	pt	A ACL de %1, incluindo as suas subpastas, removida de %2.
 the imap server need to meet certain requirements and be configured for it:	mail	pt	O servidor IMAP tem de cumprir determinados requisitos E estar configurado para o efeito:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pt	O remetente da mensagem solicitou uma resposta para indicar que leu esta mensagem. Deseja enviar um recibo?
 the mimeparser can not parse this message.	mail	pt	O mimeparser não pode analisar estas mensagem.

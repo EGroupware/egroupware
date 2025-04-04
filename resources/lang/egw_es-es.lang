@@ -134,6 +134,7 @@ select/deselect all	resources	es-es	Seleccionar/deseleccionar todo
 short description	resources	es-es	Descripción corta
 short description of resource	resources	es-es	Descripción corta del recurso
 show calendar of resource	resources	es-es	Mostrar el calendario del recurso
+show in title (beside name)	resources	es-es	Mostrar en el título (junto al nombre)
 simple reservation of a single item	resources	es-es	Reserva simple de un solo rubro
 something went wrong by deleting resource	resources	es-es	Ocurrió algo extraño al borrar el recurso
 something went wrong by saving resource	resources	es-es	Ocurrió algo extraño al guardar el recurso
