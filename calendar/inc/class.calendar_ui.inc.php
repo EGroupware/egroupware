@@ -534,10 +534,6 @@ class calendar_ui
 	 */
 	function sidebox_etemplate($content = array())
 	{
-		Etemplate::reset_request();
-		$sidebox = new Etemplate('calendar.sidebox');
-		$sidebox->set_dom_attributes(['slot' => 'left']);
-
 		$cont = $this->cal_prefs['saved_states'];
 		if (!is_array($cont)) $cont = array();
 		$cont['view'] = $this->view ? $this->view : 'week';
@@ -612,7 +608,16 @@ class calendar_ui
 			}
 		}
 
+		// developer-tools scanning for phrases --> return and do NOT execute eTemplate
+		if (str_starts_with($_GET['menuaction']??'', 'developer.'))
+		{
+			return;
+		}
+
 		// Sidebox?
+		Etemplate::reset_request();
+		$sidebox = new Etemplate('calendar.sidebox');
+		$sidebox->set_dom_attributes(['slot' => 'left']);
 		$sidebox->exec('calendar.calendar_ui.sidebox_etemplate', $cont, $sel_options, $readonlys);
 	}
 
