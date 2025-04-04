@@ -48,7 +48,9 @@ export class Et2LAvatar extends Et2Avatar
 			...super.styles,
 			shoelace,
 			css`
-			
+				[part='base'] {
+					background-color: var(--background-color, var(--sl-color-neutral-400));
+				}
 			`
 		];
 	}
@@ -63,17 +65,16 @@ export class Et2LAvatar extends Et2Avatar
 	 * Handle changes that have to happen based on changes to properties
 	 *
 	 */
-	updated(changedProperties)
+	willUpdate(changedProperties)
 	{
-		super.updated(changedProperties);
+		super.willUpdate(changedProperties);
 
-		if(changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contactId") || changedProperties.has("src"))
+		if(changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contactId") || changedProperties.has("image"))
 		{
-			if(!this.image || decodeURIComponent(this.image).match("lavatar=1") && (this.fname || this.lname) && this.contactId)
+			if((!this.image || decodeURIComponent(this.image).match("lavatar=1")) || (this.fname || this.lname))
 			{
 				let lavatar = Et2LAvatar.lavatar(this.fname, this.lname, this.contactId);
 				this.initials = lavatar.initials;
-				this._baseNode.style.backgroundColor = lavatar.background;
 			}
 
 			if(this.lname || this.fname)
@@ -88,7 +89,17 @@ export class Et2LAvatar extends Et2Avatar
 				}
 			}
 		}
+	}
 
+
+	updated(changedProperties)
+	{
+		super.updated(changedProperties);
+		if(changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contactId") || changedProperties.has("image"))
+		{
+			let lavatar = Et2LAvatar.lavatar(this.fname, this.lname, this.contactId);
+			this._baseNode?.style.setProperty("--background-color", lavatar.background);
+		}
 	}
 
 	/**

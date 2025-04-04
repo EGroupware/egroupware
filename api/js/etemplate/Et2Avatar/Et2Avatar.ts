@@ -163,7 +163,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 	@property({type: String, noAccessor: true})
 	set contactId(_contactId : string)
 	{
-		let params = {};
+		let params = {no_gen: true};
 		let id = 'contact_id';
 		let parsedId = "";
 

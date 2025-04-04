@@ -39,6 +39,11 @@ export class Et2EmailTag extends Et2Tag
 
 			  opacity: 30%;
 			  cursor: pointer;
+
+
+				et2-lavatar {
+					--size: var(--icon-width, 1em);
+				}
 			}
 
 			.tag__has_plus et2-button-icon {
@@ -184,10 +189,10 @@ export class Et2EmailTag extends Et2Tag
 				button_or_avatar = html`
                 <et2-lavatar slot="prefix" exportparts="image" part="icon" tabindex="-1"
                              @mousedown=${this.handleContactMouseDown}
-                             .size=${style.getPropertyValue("--icon-width")}
                              lname=${option.lname || nothing}
                              fname=${option.fname || nothing}
                              image=${option.photo || nothing}
+                             contactid=${option.photo ? nothing : `email:${option.email}`}
                              statustext="${this.egw().lang("Open existing contact") + ": " + option.n_fn}"
                 >
                 </et2-lavatar>`;
