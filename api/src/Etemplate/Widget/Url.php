@@ -163,7 +163,7 @@ class Url extends Etemplate\Widget
 		$response = Api\Json\Response::get();
 		$result = $GLOBALS['egw']->contacts->search(
 			array('contact_email' => $emails, 'contact_email_home' => $emails),
-			array('contact_id', 'email', 'email_home', 'n_fn'),
+			array('contact_id', 'email', 'email_home', 'n_fn', 'files', 'n_family AS lname', 'n_given AS fname'),
 			'', '', '%', false, 'OR', false
 		);
 		// iterate through the possibilities and find the best match to what was entered

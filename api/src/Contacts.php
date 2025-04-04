@@ -775,9 +775,13 @@ class Contacts extends Contacts\Storage
 				$data[$name] = DateTime::server2user($data[$name], $date_format);
 			}
 		}
-		$data['photo'] = $this->photo_src($data['id'] ?? null,
+		$photo = $this->photo_src($data['id'] ?? null,
 			// do NOT replace with self::hasPhoto($data) as it also checks file is non-empty in VFS and breaks
 			!empty($data['jpegphoto']) || (($data['files']??0) & self::FILES_BIT_PHOTO), '', $data['etag'] ?? null);
+		if($photo && (((int)$data['files'] ?? 0) & self::FILES_BIT_PHOTO))
+		{
+			$data['photo'] = $photo;
+		}
 
 		// set freebusy_uri for accounts
 		if (empty($data['freebusy_uri']) && empty($data['owner']) && !empty($data['account_id']) && empty($GLOBALS['egw_setup']))
@@ -2757,14 +2761,17 @@ class Contacts extends Contacts\Storage
 		{
 			$email = strtolower(current(Mail::stripRFC822Addresses([$_GET['email']])));
 
-			if (!($contact = current($this->search(['contact_email' => $email, 'contact_email_home' => $email],
+			$contact = current($this->search(
+				['contact_email' => $email, 'contact_email_home' => $email],
 				['contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family', 'contact_files', 'etag', 'account_lid'],
-				'contact_files & '.self::FILES_BIT_PHOTO.' DESC', '', '', false, 'OR', [0, 1]) ?: [])) ||
-				!self::hasPhoto($contact))
+				'contact_files & ' . self::FILES_BIT_PHOTO . ' DESC', '', '', false, 'OR', [0, 1]
+			) ?: []
+			);
+			if(!$contact || $_GET['no_gen'] && !((int)$contact['files'] & self::FILES_BIT_PHOTO))
 			{
-				Session::cache_control(86400);	// cache for 1 day
+				Session::cache_control(86400 * 10);    // cache for 10 days
 				header('Content-type: image/jpeg');
-				http_response_code(204);
+				http_response_code(404);
 				exit;
 			}
 		}
