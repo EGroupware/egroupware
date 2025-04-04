@@ -238,7 +238,7 @@ export class filemanagerAPP extends EgwApp
 		}
 		let result = super.setState(state, 'filemanager.index');
 
-		if(state.state?.path && this.et2.getWidgetById("upload"))
+		if(state.state?.path && this.et2?.getWidgetById("upload"))
 		{
 			// Update file upload since changing the path programmatically doesn't fire a change event
 			this.et2.getWidgetById("upload").path = state.state.path + (state.state.path.endsWith("/") ? "" : "/");
