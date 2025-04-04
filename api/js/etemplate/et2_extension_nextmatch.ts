@@ -4150,9 +4150,17 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 					}
 					else
 					{
-						// Not null is easy, just get values
+						// Not null is easy, just get values, the nextmatch could be inside another widget i.e. a grid or a box that's why we use the getPath in combination with getNestedValueByPath
+						const nmpath = [...header.nextmatch.getPath(), header.nextmatch.id];
 						const value = this.getInstanceManager().getValues(sub_header);
-						header.nextmatch.applyFilters(value[header.nextmatch.id]);
+
+						function getNestedValueByPath(obj: any, path: string[]): any {
+							return path.reduce((acc, part) => acc && acc[part], obj);
+						}
+
+						const filters = getNestedValueByPath(value, nmpath);
+						header.nextmatch.applyFilters(filters);
+
 					}
 				}
 				// In case this gets bound twice, it's important to return
