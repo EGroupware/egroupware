@@ -23,10 +23,14 @@ all addressbooks	addressbook	lt	Visos adresų knygos
 all types	addressbook	lt	Visi tipai
 allow	addressbook	lt	Leisti
 allow for contacts only	addressbook	lt	Leisti tik kontaktams
+allow members of following groups to edit contact-data of accounts	addressbook	lt	Leisti šių grupių nariams redaguoti paskyrų kontaktų duomenis
+allow members of following groups to show the account name column	addressbook	lt	Leisti šių grupių nariams rodyti paskyros pavadinimo stulpelį
+apply changes to all members, whose fields have the same previous content	addressbook	lt	Taikyti pakeitimus visiems nariams, kurių laukai turi tą patį ankstesnį turinį.
 audio call	addressbook	lt	Garso skambutis
 browser location	addressbook	lt	Naršyklės vieta
 calendar integration	addressbook	lt	Kalendoriaus integracija
 change addressbook when updating	addressbook	lt	Keisti adresų knygelę atnaujinant
+change all organisation members	addressbook	lt	Pakeiskite visus organizacijos narius
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	lt	Pasirinkite iš anksto nustatytą žemėlapio šaltinį arba naudokite pasirinktinį URL (naudokite %r = gatvė, %t = miestas, %c = šalis, %z = pašto indeksas)
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	lt	Išvalyti adresų knygelės laukus, taikyti, jei sinchronizacijos metu atsiranda dublikatų
 create new shares writable	addressbook	lt	Sukurti naujas akcijas, kurias galima įrašyti
@@ -50,6 +54,7 @@ export definition to use for nextmatch export	addressbook	lt	Eksporto apibrėžt
 export definitition to use for nextmatch export	addressbook	lt	Eksporto apibrėžtis, naudojama nextmatch eksportui
 exports contacts from your addressbook into a csv file.	addressbook	lt	Eksportuoja adresų knygelės kontaktus į CSV failą.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Eksportuoja adresų knygelės kontaktus į CSV failą. Skirtuke Parinktys galite pasirinkti ir kitus skirtukus.
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	lt	Nepavyko pakeisti %1 organizacijos nario (-ių), nepakanka teisių!
 favorite phone	addressbook	lt	Mėgstamiausias telefonas
 fields to check for duplicates	addressbook	lt	Laukai, kuriuose tikrinama, ar nėra dublikatų
 fields to consider when looking for duplicate contacts.	addressbook	lt	Laukai, į kuriuos reikia atsižvelgti ieškant pasikartojančių kontaktų.
@@ -100,6 +105,7 @@ schedule a video conference	addressbook	lt	Suplanuoti vaizdo konferenciją
 search letter	addressbook	lt	Paieškos raidė
 select a source address to be used in geolocation routing system	addressbook	lt	Pasirinkite šaltinio adresą, kuris bus naudojamas "GeoLocation" maršruto parinkimo sistemoje
 select an opened dialog	addressbook	lt	Pasirinkite atidarytą dialogo langą
+select contacts to add to mail	addressbook	lt	Pasirinkite kontaktus, kuriuos norite įtraukti į el. paštą
 send fax via email by replacing fax number with an email address	addressbook	lt	Siųskite faksogramą el. paštu, pakeisdami fakso numerį el. pašto adresu
 send succeeded to %1	common	lt	Siųsti pavyko į %1
 share into addressbook	addressbook	lt	Bendrinti į adresinę

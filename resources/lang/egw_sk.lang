@@ -132,6 +132,7 @@ select/deselect all	resources	sk	Vybrať všetko / zrušiť výber
 short description	resources	sk	Stručný popis
 short description of resource	resources	sk	Zobraziť popis zdroja
 show calendar of resource	resources	sk	Zobraziť kalendár zdroja
+show in title (beside name)	resources	sk	Zobraziť v názve (vedľa názvu)
 simple reservation of a single item	resources	sk	Jednoduchá rezervácia jednej položky
 something went wrong by deleting resource	resources	sk	Počas odstraňovania zdroja sa niečo nepodarilo
 something went wrong by saving resource	resources	sk	Počas ukladania zdroja sa niečo nepodarilo

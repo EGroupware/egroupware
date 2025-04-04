@@ -6,6 +6,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	id	Tema menentukan warna dan huruf yang digunakan pada templat.
 acl grants have been updated	preferences	id	Ijin ACL telah dikinikan
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	id	Setiap daftar pada EGroupware akan menampilkan sejumlah entri atau baris per halaman.<br>Terlalu banyak akan memperlambat, terlalu sedikit akan mengurangi penampilan.
+applications list scroll area	preferences	id	Tombol gulir untuk menu samping
 are you sure you want to delete this category ?	preferences	id	Anda yakin ingin menghapus kategori ini?
 br	preferences	id	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	id	Ubah password pengguna dengan mengisikan password lama dan baru. Memberikan nilai TRUE jika sukses, FALSE jika gagal.
@@ -16,6 +17,7 @@ date format	preferences	id	Format tanggal
 default	preferences	id	bawaan
 default preferences	preferences	id	Kesukaan Bawaan
 delete categories	preferences	id	Hapus Kategori
+deny following groups access to application passwords	preferences	id	Menolak akses grup berikut ke kata sandi aplikasi
 description can not exceed 255 characters in length !	preferences	id	Panjang uraian tidak boleh melebihi 255 karakter!
 disable	preferences	id	Disable
 display thumbnails for linked images	preferences	id	Tampilkan <em>thumbnail</em> gambar terkait
@@ -45,6 +47,7 @@ interface/template selection	preferences	id	Pemilihan Antarmuka/Templat
 it sets content size (text only) according to selected size.	preferences	id	Ini menetapkan ukuran konten (hanya teks) menurut ukuran yang dipilih.
 language	preferences	id	Bahasa
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	id	Masuk melalui SingleSignOn tidak memberikan kata sandi untuk diteruskan ke server email atau file.
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	id	Membuat bilah sisi di sebelah kiri dengan tombol gulir dapat digulir ke atas/bawah (berguna bagi pengguna tablet).
 max matches per page	preferences	id	Maks. pencocokan per halaman
 max number of icons in navbar	preferences	id	Maks. jumlah ikon pada baris navigasi
 no default	preferences	id	Tanpa bawaan
@@ -77,7 +80,7 @@ the old password is not correct	preferences	id	Password lama keliru
 the two passwords are not the same	preferences	id	Kedua password tidak sama
 theme (colors/fonts) selection	preferences	id	Pemilihan Tema (warna/huruf)
 this server is located in the %1 timezone	preferences	id	Server ini terletak pada zonawaktu %1
-thousands separator is only used for displaying and not for editing numbers.	preferences	id	Pemisah ribuan hanya untuk tampilan dan bukan untuk pengubahan angka-angka.
+thousands separator is only used for displaying and not for editing numbers.	preferences	id	Format angka dapat diatur untuk tampilan angka.
 time format	preferences	id	Format waktu
 use default	preferences	id	Gunakan bawaan
 use first %1 letters from username	preferences	id	Gunakan %1 huruf pertama dari nama pengguna

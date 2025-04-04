@@ -55,7 +55,6 @@ theme (colors/fonts) selection	preferences	hr	Theme (colors/fonts) Selection
 this server is located in the %1 timezone	preferences	hr	This server is located in the %1 timezone
 time format	preferences	hr	Time format
 use default	preferences	hr	Use default
-users choice	preferences	hr	Users choice
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	hr	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
 you can show the applications as icons only, icons with app-name or both.	preferences	hr	You can show the applications as icons only, icons with app-name or both.
 you do not have permission to set acl's in this mode!	preferences	hr	You do not have permission to set ACL's in this mode!

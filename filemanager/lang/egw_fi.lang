@@ -190,11 +190,13 @@ notebookbar	filemanager	fi	Tabbed
 older versions or deleted files	filemanager	fi	Vanhat versiot ja/tai poistetut tiedostot
 only owner can rename or delete the content	filemanager	fi	Ainoastaan omistaja voi uudellennimetä tai poistaa sisällön
 open	filemanager	fi	Avoin
+open documents with collabora, if permissions are given	filemanager	fi	Avaa dokumentit Collabora Online -ohjelmalla, jos oikeudet on annettu.
 operation	filemanager	fi	Operaatio
 password for webdav and smb, use $pass for password of logged in user	filemanager	fi	Salasana WebDAV:lle ja SMB:lle, käytä $pass kirjautuneen käyttäjän salasanaa.
 path %1 not found or not a directory!	filemanager	fi	Polkua %1 ei löytynyt tai kansiota ei ole olemassa!
 path and query-parameters, smb: share and optional path (with /)	filemanager	fi	Polku ja kyselyparametrit, SMB: jako ja valinnainen polku (/:n kanssa).
 percentage	filemanager	fi	Prosentti
+permission denied!	filemanager	fi	Lupa evätty!
 permissions	filemanager	fi	ACL-oikeudet
 permissions of %1 changed.	filemanager	fi	ACL-oikeudet muutettu: %1
 please select a file to delete.	filemanager	fi	Valitse poistettava tiedosto.
@@ -241,6 +243,8 @@ show link "users and groups*" in side box menu?*	filemanager	fi	Näyt linkki "K�
 show link "your home directory*" in side box menu?*	filemanager	fi	Näyt linkki "Oma kansio" navigointipalkissa
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	fi	Näytetäänkö linkki Tiedostonhallinnan kantahakemistoon (base directory) (/) sivuvalikossa?
 size	filemanager	fi	Koko
+smb, webdavs and vfs require a username!	filemanager	fi	SMB, WebDAV ja VFS vaativat käyttäjätunnuksen!
+smb: mount samba or windows fileserver shares	filemanager	fi	SMB: Asenna Samba- tai Windows-tiedostopalvelinjakoja.
 sqlfs statistics	filemanager	fi	sqlFS tilastot
 start search	filemanager	fi	Aloita haku
 startfolder	filemanager	fi	Aloituskansio
@@ -264,6 +268,7 @@ upload fields	filemanager	fi	Lataa kenttiä
 upload files	filemanager	fi	Lataa tiedostoja
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	fi	Käytä tägiä esim. osoitetarroihin. Lisää haluamasi kentät kahden tägin väliin.
 used space	filemanager	fi	Käytetty tila
+username for webdav and smb, use $user for name of logged in user	filemanager	fi	Käyttäjätunnus WebDAV:lle ja SMB:lle, käytä $user kirjautuneen käyttäjän nimeä.
 users and groups	filemanager	fi	Käyttäjät ja ryhmät
 versioning	filemanager	fi	Versiointi
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	fi	Kenen/Keiden sallitaan lopullisesti poistaa vanhoja versioita ja poistettuja tiedostoja:

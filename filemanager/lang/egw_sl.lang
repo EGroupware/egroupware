@@ -51,7 +51,6 @@ check virtual filesystem	common	sl	Preverite virtualni datotečni sistem
 classic	filemanager	sl	Standardna orodna vrstica
 clear search	filemanager	sl	Izbriši iskanje
 clipboard is empty!	filemanager	sl	Odložišče je prazno!
-collab editor settings	filemanager	sl	Nastavitve urejevalnika Collab
 comment	filemanager	sl	Komentar
 configuration changed.	filemanager	sl	Konfiguracija spremenjena.
 confirm final delete	filemanager	sl	Potrdite dokončno brisanje
@@ -226,6 +225,7 @@ paste link	filemanager	sl	Prilepi povezavo
 path %1 not found or not a directory!	filemanager	sl	Pot %1 ni nila najdena ali pa ni mapa!
 path and query-parameters, smb: share and optional path (with /)	filemanager	sl	Pot in parametri poizvedbe, SMB: delež in neobvezna pot (z /)
 percentage	filemanager	sl	Odstotek
+permission denied!	filemanager	sl	Dovoljenje zavrnjeno!
 permissions	filemanager	sl	Pravice
 permissions of %1 changed.	filemanager	sl	Pravice za %1 so bile spremenjene.
 please select a file to delete.	filemanager	sl	Izberite datoteko za brisanje.

@@ -136,6 +136,10 @@ export class et2_dataview_selectionManager
 			this.unregisterRow(key, this._registeredRows[key].tr);
 		}
 		this.select_callback = null;
+		this._makeVisibleCallback = null;
+		this._queryRangeCallback = null;
+		this._actionObjectManager = null;
+		this._context = null;
 	}
 
 	clear( )
@@ -366,8 +370,8 @@ export class et2_dataview_selectionManager
 	_getDummyAOI( _entry, _tr, _uid, _idx)
 	{
 		// Create AOI
-		var dummyAOI = new egwActionObjectInterface();
-		var self = this;
+		const dummyAOI = new egwActionObjectInterface();
+		const self = this;
 
 		// Handling for Action Implementations updating the state
 		dummyAOI.doSetState = function (_state) {
@@ -392,7 +396,7 @@ export class et2_dataview_selectionManager
 
 		// Implementation of the getDOMNode function, so that the event
 		// handlers can be properly bound
-		dummyAOI.getDOMNode = function () { return _tr; };
+		dummyAOI.getDOMNode = () => _tr;
 
 		return dummyAOI;
 	}
@@ -402,7 +406,7 @@ export class et2_dataview_selectionManager
 
 		// Get the dummyAOI which connects the action object to the tr but
 		// does no selection handling
-		var dummyAOI = this._getDummyAOI(_entry, _tr, _uid, _idx);
+		const dummyAOI = this._getDummyAOI(_entry, _tr, _uid, _idx);
 
 		// Create an action object for the tr and connect it to a dummy AOI
 		if(this._actionObjectManager)
@@ -701,10 +705,10 @@ export class et2_dataview_selectionManager
 		(this._context._widget.getDOMNode() || document.body).append(dialog);
 		dialog.updateComplete.then(() =>
 		{
-			dialog.template.DOMContainer.addEventListener('load', () =>
+			dialog.eTemplate.DOMContainer.addEventListener('load', () =>
 			{
 				// Get access to template widgets
-				progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
+				progressbar = dialog.eTemplate.widgetContainer.getWidgetById('progressbar');
 				let rangePromise = fetchPromise;
 
 				for(var i = 0; i < queryRanges.length; i++)

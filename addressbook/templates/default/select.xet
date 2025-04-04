@@ -4,12 +4,12 @@
 	<template id="addressbook.select.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
-				<column width="20"/> <!-- type -->
+				<column width="40"/> <!-- type -->
 				<column width="30%" minWidth="150"/> <!-- file as -->
 				<column width="80"/> <!-- photo -->
-				<column width="180"/> <!-- business addr -->
-				<column width="180"/> <!-- home addr -->
-				<column width="200"/> <!-- url, email, email-home -->
+				<column width="200"/> <!-- business addr -->
+				<column width="200" disabled="true"/> <!-- home addr -->
+				<column width="250"/> <!-- url, email, email-home -->
 			</columns>
 			<rows>
 				<row class="th">
@@ -20,9 +20,6 @@
 							<column/>
 						</columns>
 						<rows>
-							<row disabled="!@order=n_fileas">
-								<nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
-							</row>
 							<row disabled="!@order=n_given">
 								<nextmatch-sortheader label="Firstname" id="n_given"/>
 								<nextmatch-sortheader label="Name" id="n_family"/>
@@ -38,21 +35,16 @@
 								<nextmatch-sortheader label="Name" id="n_family"/>
 								<nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
 							</row>
-							<row disabled="@order=n_fileas">
-								<nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
-							</row>
 						</rows>
 					</grid>
 					<nextmatch-header label="Photo" id="photo"/>
 					<et2-vbox>
 						<nextmatch-header label="Business address" id="business"/>
 						<et2-nextmatch-header-custom  id="adr_one_countrycode" class="countrySelect" widgetType="select-country" emptyLabel="Country"/>
-						<nextmatch-sortheader label="zip code" id="adr_one_postalcode"/>
 					</et2-vbox>
 					<et2-vbox>
 						<nextmatch-header label="Home address" id="home"/>
 						<et2-nextmatch-header-custom  id="adr_two_countrycode" class="countrySelect" widgetType="select-country" emptyLabel="Country"/>
-						<nextmatch-sortheader label="zip code" id="adr_two_postalcode"/>
 					</et2-vbox>
 					<et2-vbox>
 						<nextmatch-header label="Business email" id="email"/>
@@ -68,9 +60,9 @@
 						<et2-description  id="${row}[title]" noLang="1"></et2-description>
 						<et2-description  id="${row}[first_org]" noLang="1"></et2-description>
 					</et2-vbox>
-					<et2-lavatar  src="$row_cont[photo]" contactId="$row_cont[id]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"></et2-lavatar>
+					<et2-lavatar  src="$row_cont[photo]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"></et2-lavatar>
 					<et2-vbox>
-						<et2-hbox>
+						<et2-hbox style="position: relative; left: -10px">
 							<et2-description  id="${row}[adr_one_postalcode]" noLang="1"></et2-description>
 							<et2-description  value=" " id="${row}[adr_one_locality]" class="leftPad5" noLang="1"></et2-description>
 							<et2-description  id="${row}[adr_one_region]" class="leftPad5" noLang="1"></et2-description>
@@ -79,7 +71,7 @@
 						<et2-select-country  id="${row}[adr_one_countrycode]" readonly="true"></et2-select-country>
 					</et2-vbox>
 					<et2-vbox>
-						<et2-hbox>
+						<et2-hbox style="position: relative; left: -10px">
 							<et2-description  id="${row}[adr_two_postalcode]" noLang="1"></et2-description>
 							<et2-description  value=" " id="${row}[adr_two_locality]" class="leftPad5" noLang="1"></et2-description>
 							<et2-description  id="${row}[adr_two_region]" class="leftPad5" noLang="1"></et2-description>
@@ -113,7 +105,7 @@
 			<et2-button label="Close" id="close" onclick="document.querySelector('et2-dialog').close(); return false;"></et2-button>
 		</et2-hbox>
 		<styles>
-            #addressbook-select > div { display: flex; flex-direction: column;}
+            #addressbook-select > et2-template::part(base) { display: flex; flex-direction: column;}
 			div.dialog_content img.dialog_icon[src=""] { display: none; }
 			et2-dialog#dialog-addressbook-select et2-button { max-width: 125px !important; }
 			et2-dialog#dialog-addressbook-select::part(panel) { width: 90vh; height: 70vh; position: absolute; bottom: 1vh; }

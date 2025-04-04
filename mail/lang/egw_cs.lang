@@ -108,7 +108,7 @@ continue	mail	cs	Pokračovat
 convert mail to item and attach its attachments to this item (standard)	mail	cs	Změnit e-mail na záznam a přílohy v e-mailu přiložit k tomuto záznamu (standardně)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	cs	Změnit e-mail na záznam a k záznamu přiložit původní e-mail jalo e-mailovou zprávu (message/rfc822 (.eml))
 convert only mail to item (ignore possible attachments)	mail	cs	Pouze změnit e-mail na záznam a případné přílohy v něm ignorovat
-copied %1 message(s) from %2 to %3	mail	cs	%1 zpráv(a/y) byla(y) zkopírovány z %2 do %3
+copied %1 message(s) from %2 to %3	mail	cs	%1 zpráv(a/y) byla(y) zkopírovány z %2 do %3.
 copy to	mail	cs	Kopírovat do
 could not append message:	mail	cs	Není možné připojit zprávu:
 could not save the acl because some names are empty	mail	cs	Není možné uložit ACL, protože některá ze jmen jsou prázdná
@@ -264,6 +264,7 @@ ham folder	mail	cs	Složka Ham
 handling of external http images / mixed content in mails	mail	cs	Zpracování externích obrázků http / smíšeného obsahu v e-mailech
 header	mail	cs	Záhlaví
 header lines	mail	cs	Řádky hlavičky
+hide from	mail	cs	Skrýt Od
 high	mail	cs	Vysoký
 high priority	mail	cs	Vysoká priorita
 hold %1 to drag files to your computer	mail	cs	Stiskněte a držte %1 pro přetažení souborů do vašeho počítače
@@ -363,7 +364,7 @@ move selected to	mail	cs	Přesunout vybrané (kam)
 move to	mail	cs	Přesunout do
 move to archive	mail	cs	Přesunout do archivu
 move to trash	mail	cs	Přesunout do koše
-moved %1 message(s) from %2 to %3	mail	cs	%1 zpráv bylo přesunuto z %2 do %3
+moved %1 message(s) from %2 to %3	mail	cs	%1 zpráv bylo přesunuto z %2 do %3.
 moving folders from one mailaccount to another is not supported	mail	cs	Přesouvání složek z jednoho e-mailového účtu do jiného není podporováno
 name and domain	mail	cs	Jméno a doména
 name and email	mail	cs	Jméno a e-mail
@@ -533,6 +534,7 @@ select file to attach to message	mail	cs	Vyberte soubor, který se má přiloži
 select file to import into folder	mail	cs	Vyberte soubor, který se má importovat do složky
 select file(s) from vfs	mail	cs	Vyberte soubor(y) z VFS
 select files to upload	mail	cs	Vyberte soubory pro nahrání
+select mail addresses from addressbook	mail	cs	Výběr poštovních adres z adresáře
 select multiple	mail	cs	Vyberte více
 select or insert email address	mail	cs	Vyberte nebo vložte e-mailovou adresu
 selected	mail	cs	Vybráno
@@ -613,8 +615,8 @@ test connection and display basic information about the selected profile	mail	cs
 text	mail	cs	Text
 text mode	mail	cs	Textový režim
 text/plain	mail	cs	Prostý text
-the %1 's acl removed from the %2	mail	cs	%1 práv ACL bylo odebráno z %2
-the %1 's acl, including its subfolders, removed from the %2	mail	cs	%1 práv ACL, včetně podsložek bylo odebráno z %2
+the %1 's acl removed from the %2	mail	cs	%1 práv ACL bylo odebráno z %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	cs	%1 práv ACL, včetně podsložek bylo odebráno z %2.
 the entered passphrase is not correct! please try again.	mail	cs	Zadaná přístupová fráze není správná! Zkuste to prosím znovu.
 the folder %1 's acls saved	mail	cs	ACL práva pro složku %1 byla úspěšně uložena
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	cs	Pokud na tomto místě není nic nastaveno a neexistuje platná předdefinovaná hodnota, bude použita složka <b>%1</b>.

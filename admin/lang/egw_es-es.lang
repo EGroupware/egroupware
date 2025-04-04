@@ -476,6 +476,7 @@ group excepted from above export limit (admins are always excepted)	admin	es-es	
 group has been added	common	es-es	El grupo ha sido añadido.
 group has been deleted	common	es-es	El grupo ha sido eliminado.
 group has been updated	common	es-es	El grupo ha sido actualizado.
+group hidden from non-admins	admin	es-es	Grupo oculto a los no administradores
 group hierarchy	admin	es-es	Jerarquía de grupos
 group list	admin	es-es	Lista de grupos
 group manager	admin	es-es	Administrador de grupos

@@ -132,6 +132,7 @@ select/deselect all	resources	fr	Tout cocher/décocher
 short description	resources	fr	Description courte
 short description of resource	resources	fr	Description courte de ressource
 show calendar of resource	resources	fr	Montrez le calendrier de la ressource
+show in title (beside name)	resources	fr	Näita pealkirjas (nime kõrval)
 simple reservation of a single item	resources	fr	Réservation simple d'un seul élément
 something went wrong by deleting resource	resources	fr	Erreur à la suppression de la ressource !
 something went wrong by saving resource	resources	fr	Erreur à l'enregistrement de la ressource !

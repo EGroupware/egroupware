@@ -25,6 +25,16 @@ test -n "$EGW_MAX_EXECUTION_TIME" && test "$EGW_MAX_EXECUTION_TIME" -ge 90 && \
 	sed -e "s/^;\?max_execution_time.*/max_execution_time=$EGW_MAX_EXECUTION_TIME/g" \
 		-i /etc/php/$PHP_VERSION/fpm/php.ini
 
+# if EGW_POST_MAX_SIZE is set in environment, propagate value to php.ini
+test -n "$EGW_POST_MAX_SIZE" && \
+	sed -e "s/^;\?post_max_size.*/post_max_size=$EGW_POST_MAX_SIZE/g" \
+		-i /etc/php/$PHP_VERSION/fpm/php.ini
+
+# if EGW_UPLOAD_MAX_FILESIZE is set in environment, propagate value to php.ini
+test -n "$EGW_UPLOAD_MAX_FILESIZE" && \
+	sed -e "s/^;\?upload_max_filesize.*/upload_max_filesize=$EGW_UPLOAD_MAX_FILESIZE/g" \
+		-i /etc/php/$PHP_VERSION/fpm/php.ini
+
 # ToDo check version before copy
 rsync -a --delete /usr/share/egroupware-sources/ /usr/share/egroupware/
 

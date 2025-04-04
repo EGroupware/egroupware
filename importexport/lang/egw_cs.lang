@@ -1,7 +1,9 @@
+%1 is not a known user or group	importexport	cs	%1 není známý uživatel nebo skupina.
 %1 records processed	importexport	cs	%1 záznamů zpracováno
 add a new definition	importexport	cs	Přidat novou definici
 addressbook csv import	importexport	cs	Import adresáře CSV
 addressbook vcard import	importexport	cs	Import adresáře vCard
+admin disabled exporting	importexport	cs	Správce zakázal export.
 all users	importexport	cs	Všichni uživatelé
 allowed users	importexport	cs	Oprávnění uživatelé
 automatically created by importexport	importexport	cs	Automaticky vytvořeno aplikací ImportExport
@@ -15,13 +17,16 @@ check all	importexport	cs	Označit všechny
 choose a name for this definition	importexport	cs	Zvolte název pro tuto definici
 choose a plugin	importexport	cs	Zvolte plugin
 choose an application	importexport	cs	Zvolte aplikaci
+choose fields to export	importexport	cs	Vyberte pole, která chcete exportovat
 choose seperator and charset	importexport	cs	Vybrat oddělovač a znakovou sadu
 condition	importexport	cs	podmínka
 copied	importexport	cs	zkopírováno
 created	importexport	cs	Vytvořeno
 csv field	importexport	cs	CSV pole
+database values	importexport	cs	Hodnoty databáze
 define imports|exports	common	cs	Definovat importy|exporty
 delete all selected definitions	importexport	cs	Smazat VŠECHNY vybrané definice
+delete files after import	importexport	cs	Odstranění souborů po importu
 deleted	importexport	cs	smazáno
 edit conditions	importexport	cs	Editovat podmínky
 expert options	importexport	cs	Rozšířené volby

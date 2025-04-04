@@ -1,6 +1,8 @@
+%1 is not a known user or group	importexport	el	Ο %1 δεν είναι γνωστός χρήστης ή ομάδα.
 add a new definition	importexport	el	Προσθήκη νέου ορισμού
 addressbook csv import	importexport	el	Εισαγωγή βιβλίου διευθύνσεων CSV
 addressbook vcard import	importexport	el	Εισαγωγή vCard βιβλίου διευθύνσεων
+admin disabled exporting	importexport	el	Ο διαχειριστής απενεργοποίησε την εξαγωγή.
 all users	importexport	el	Ολοι οι χρήστες
 change allowed users	importexport	el	Αλλαγή επιτρεπόμενων χρηστών
 change owner when updating	importexport	el	Αλλαγή ιδιοκτήτη κατά την ενημέρωση
@@ -8,8 +10,11 @@ changed	importexport	el	Έγινε αλλαγή
 changed owner	importexport	el	Αλλαγή ιδιοκτήτη
 charset of file	importexport	el	Κωδικοσελίδα αρχείου
 check all	importexport	el	Έλεγχος όλων
+choose fields to export	importexport	el	Επιλέξτε πεδία για εξαγωγή
 condition	importexport	el	κατάσταση
 created	importexport	el	Δημιουργήθηκε
+database values	importexport	el	Τιμές βάσης δεδομένων
+delete files after import	importexport	el	Διαγραφή αρχείων μετά την εισαγωγή
 deleted	importexport	el	διεγράφη
 execute	importexport	el	Εκτέλεση
 export	importexport	el	εξαγωγή

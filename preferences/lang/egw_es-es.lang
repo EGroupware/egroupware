@@ -101,6 +101,7 @@ it sets content size (text only) according to selected size.	preferences	es-es	E
 just clicking on the line, like a checkbox	preferences	es-es	simplemente haciendo clic en la línea, como una casilla de verificación
 keep list open for selecting multiple	preferences	es-es	Mantener la lista abierta para seleccionar varios
 language	preferences	es-es	Idioma
+limit following groups to only create application passwords via templates	preferences	es-es	Estos grupos restringen sólo las contraseñas de aplicaciones que se crean a través de plantillas
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	es-es	El inicio de sesión a través de SingleSignOn no proporciona una contraseña para pasarla a servidores de correo o archivos.
 look & feel	preferences	es-es	Aspecto
 lowercase letters	preferences	es-es	letras minúsculas
@@ -180,7 +181,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	es-es	Las dos contraseñas son distintas
 theme (colors/fonts) selection	preferences	es-es	Selección de temas (colores/tipos de letra)
 this server is located in the %1 timezone	preferences	es-es	Este servidor se encuentra en la zona horaria %1
-thousands separator is only used for displaying and not for editing numbers.	preferences	es-es	El separador de miles se usa sólo para mostrar y no para editar números.
+thousands separator is only used for displaying and not for editing numbers.	preferences	es-es	Se puede configurar el formato de los números para su visualización.
 time format	preferences	es-es	Formato de la hora
 two factor auth	preferences	es-es	Autenticación de dos factores
 two factor auth enabled.	preferences	es-es	Autenticación de dos factores activada.

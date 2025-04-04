@@ -109,7 +109,7 @@ contains(*)	mail	km	មាន (*)
 convert mail to item and attach its attachments to this item (standard)	mail	km	បំប្លែងសំបុត្រទៅជាធាតុ ហើយភ្ជាប់ឯកសារភ្ជាប់របស់វាទៅធាតុនេះ (ស្តង់ដារ)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	km	បំប្លែងសំបុត្រទៅជាធាតុ ភ្ជាប់ឯកសារភ្ជាប់របស់វា និងបន្ថែមសារឆៅ (message/rfc822 (.eml)) ជាឯកសារភ្ជាប់
 convert only mail to item (ignore possible attachments)	mail	km	បំប្លែងតែសំបុត្រទៅជាធាតុ (មិនអើពើឯកសារភ្ជាប់ដែលអាចមាន)
-copied %1 message(s) from %2 to %3	mail	km	បានចម្លងសារ %1 ពី %2 ទៅ % 3
+copied %1 message(s) from %2 to %3	mail	km	បានចម្លងសារ %1 ពី %2 ទៅ %3
 copy to	mail	km	ចម្លង​ទៅ
 could not append message:	mail	km	មិន​អាច​បន្ថែម​សារ៖
 could not save the acl because some names are empty	mail	km	មិនអាចរក្សាទុក ACL បានទេ ដោយសារឈ្មោះខ្លះទទេ
@@ -355,7 +355,7 @@ move selected to	mail	km	ផ្លាស់ទីដែលបានជ្រើ�
 move to	mail	km	ផ្លាស់ទី​ទៅ
 move to archive	mail	km	ផ្លាស់ទីទៅថតឯកសារ
 move to trash	mail	km	ផ្លាស់ទីទៅធុងសំរាម
-moved %1 message(s) from %2 to %3	mail	km	បានផ្លាស់ទីសារ %1 ពី %2 ទៅ % 3
+moved %1 message(s) from %2 to %3	mail	km	បានផ្លាស់ទីសារ %1 ពី %2 ទៅ %3
 moving folders from one mailaccount to another is not supported	mail	km	ការផ្លាស់ទីថតឯកសារពីគណនីសំបុត្រមួយទៅគណនីអុីមែលមួយផ្សេងទៀតមិនត្រូវបានគាំទ្រទេ។
 name of account	mail	km	ឈ្មោះគណនី
 name of imap servers (space separated host or host:port)	mail	km	ឈ្មោះម៉ាស៊ីនមេ IMAP (ម៉ាស៊ីនបំបែកចន្លោះ ឬម៉ាស៊ីន៖ ច្រក)

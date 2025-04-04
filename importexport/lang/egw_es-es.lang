@@ -1,3 +1,4 @@
+%1 is not a known user or group	importexport	es-es	%1 no es un usuario o grupo conocido.
 %1 is not readable	importexport	es-es	%1 no es legible.
 %1 is not writable	importexport	es-es	%1 no es escribible.
 %1 records processed	importexport	es-es	%1 registros procesados
@@ -7,6 +8,7 @@
 add a new definition	importexport	es-es	Añadir una nueva definición
 addressbook csv import	importexport	es-es	Importación CSV de libretas de direcciones
 addressbook vcard import	importexport	es-es	Importación de vCard de Agenda
+admin disabled exporting	importexport	es-es	El administrador ha desactivado la exportación.
 all users	importexport	es-es	Todos los usuarios
 allowed users	importexport	es-es	Usuarios permitidos
 automatically created by importexport	importexport	es-es	Creados automáticamente por importexport
@@ -20,15 +22,18 @@ check all	importexport	es-es	Marcar todo
 choose a name for this definition	importexport	es-es	Elija un nombre para esta definición
 choose a plugin	importexport	es-es	Elija un plugin
 choose an application	importexport	es-es	Elija una aplicación
+choose fields to export	importexport	es-es	Elija los campos a exportar
 choose seperator and charset	importexport	es-es	Elija separador y juego de caracteres
 condition	importexport	es-es	Condición
 copied	importexport	es-es	Copiado
 created	importexport	es-es	Creado
 csv field	importexport	es-es	Campo CSV
+database values	importexport	es-es	Valores de la base de datos
 day of week	importexport	es-es	Día de la semana
 define imports|exports	common	es-es	Definir importaciones|exportaciones
 definition	importexport	es-es	Definición
 delete all selected definitions	importexport	es-es	Suprimir TODAS las definiciones seleccionadas
+delete files after import	importexport	es-es	Borrar archivos tras la importación
 deleted	importexport	es-es	Suprimido
 delimiter	importexport	es-es	Delimitador
 duplicate name, please choose another.	importexport	es-es	Nombre duplicado, por favor elija otro.

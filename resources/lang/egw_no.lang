@@ -97,7 +97,10 @@ resource	resources	no	Ressurs
 resource %1 deleted!	resources	no	Ressurs %1 slettet!
 resource %1 saved!	resources	no	Ressurs %1 lagret!
 resource / accessories	resources	no	Ressurs / Tilbehør
+resource id	resources	no	Ressurs-ID
 resources	common	no	Ressurser
+resources csv export	resources	no	Ressurser CSV-eksport
+resources csv import	resources	no	Ressurser CSV-import
 resources list	resources	no	Liste over ressurser
 responsible:	resources	no	Ansvarlig :
 saves entry and exits	resources	no	Lagre endringene og fortsette
@@ -108,6 +111,7 @@ select/deselect all	resources	no	Velg/fravelg alle
 short description	resources	no	Kort beskrivelse
 short description of resource	resources	no	Kort beskivelse av ressursen
 show calendar of resource	resources	no	Vis kalender for ressursen
+show in title (beside name)	resources	no	Vis i tittel (ved siden av navn)
 something went wrong by deleting resource	resources	no	Noe gikk galt ved sletting av ressyrsen
 something went wrong by saving resource	resources	no	Noe gikk galt ved lagring av ressursen
 storage information	resources	no	Lagringsinformasjon

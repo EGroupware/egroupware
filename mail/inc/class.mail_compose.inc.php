@@ -1301,6 +1301,7 @@ class mail_compose
 		$content['showtempname']=0;
 		//if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merging content with uploadforCompose:'.array2string($content['attachments']));
 		$content['attachments'] = array_merge($content['attachments'] ?? [], $content['uploadForCompose'] ?? []);
+		unset($content['uploadForCompose']);
 		//if (is_array($content['attachments'])) foreach($content['attachments'] as $k => &$file) $file['delete['.$file['tmp_name'].']']=0;
 		$content['no_griddata'] = empty($content['attachments']);
 		$preserv['attachments'] = $content['attachments'];
@@ -1432,8 +1433,29 @@ class mail_compose
 		if (isset($content['to'])) $content['to'] = self::resolveEmailAddressList($content['to']);
 		$content['html_toolbar'] = empty(Mail::$mailConfig['html_toolbar']) ?
 			implode(',', Etemplate\Widget\HtmlArea::$toolbar_default_list) : implode(',', Mail::$mailConfig['html_toolbar']);
+
+		//Allow other apps to hook into mail_compose
+		$readonlys = [];
+		$temp = Api\Hooks::process( array(
+			'location' => 'mail_compose_prepare',
+			'content' => $content,
+			'readonlys' => $readonlys,
+			'sel_options' => $sel_options
+		));
+
+		foreach ($temp as $hook){
+			if($hook){
+				$content =  array_merge($content,	$hook['content']);
+				$readonlys = array_merge($readonlys,$hook['readonlys']);
+				$preserv = array_merge($readonlys,	$hook['preserv']);
+				$sel_options = array_merge($readonlys,	$hook['sel_options']);
+			}
+
+		}
+		unset($temp,$hook);
+
 		//error_log(__METHOD__.__LINE__.array2string($content));
-		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
+		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	/**

@@ -140,7 +140,6 @@ custom url for ical with holidays for all users	calendar	sl	URL po meri za iCal 
 custom_2	common	sl	Prosto/zasedeno
 daily	calendar	sl	Dnevno
 daily tables	calendar	sl	Dnevne tabele
-data exchange settings	calendar	sl	Nastavitve za izmenjavo podatkov
 date for the day of the week	calendar	sl	Datum za dan v tednu
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	sl	Datum za dan v tednu, ki je na voljo za prvi vnos znotraj vsakega tedna ali dnevne tabele v izbranem obsegu.
 date range	calendar	sl	Razpon datumov
@@ -249,6 +248,7 @@ fieldseparator	calendar	sl	Ločilo polj
 filemanager	calendar	sl	Dokumenti
 filename	calendar	sl	Ime datoteke
 filename of the download	calendar	sl	Ime datoteke za prenos
+find free timeslots where the selected participants are available for the given timespan	calendar	sl	Poiščite proste časovne intervale, v katerih so izbrani udeleženci na voljo v danem časovnem obdobju
 firstname of person to notify	calendar	sl	Ime osebe, ki jo obveščamo
 for	calendar	sl	Za
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
@@ -555,7 +555,6 @@ startdate / -time	calendar	sl	Začetni datum /-čas
 startdate and -time of the search	calendar	sl	Začetni datum in -čas iskanja
 startdate of the export	calendar	sl	Začetni datum izvoza
 startrecord	calendar	sl	Začetni zapis
-status	calendar	sl	Stanje
 status already applied	calendar	sl	Stanje, ki je že bilo uporabljeno
 status changed	calendar	sl	Status spremenjen
 status for all future scheduled days changed	calendar	sl	Stanje za vse prihodnje predvidene dni se je spremenilo.

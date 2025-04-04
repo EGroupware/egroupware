@@ -102,7 +102,11 @@ resource	resources	pt	Recurso
 resource %1 deleted!	resources	pt	Recurso %1 eliminado!
 resource %1 saved!	resources	pt	Recurso %1 guardado!
 resource / accessories	resources	pt	Recursos / Acessórios
+resource id	resources	pt	ID do recurso
 resources	common	pt	Recursos
+resources and accessories	resources	pt	Recursos e acessórios
+resources csv export	resources	pt	Recursos Exportação CSV
+resources csv import	resources	pt	Importação de recursos CSV
 resources list	resources	pt	Lista de recursos
 responsible:	resources	pt	Responsável:
 saves entry and exits	resources	pt	Guarda registo e sai
@@ -113,6 +117,7 @@ select/deselect all	resources	pt	Seleccionar/não seleccionar todos
 short description	resources	pt	Breve descrição
 short description of resource	resources	pt	Breve descrição do recurso
 show calendar of resource	resources	pt	Exibir recurso do calendário
+show in title (beside name)	resources	pt	Mostrar no título (ao lado do nome)
 something went wrong by deleting resource	resources	pt	Ocorreu um erro ao eliminar recurso
 something went wrong by saving resource	resources	pt	Ocorreu um erro ao guardar recurso
 storage information	resources	pt	Informações sobre armazenamento

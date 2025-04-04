@@ -60,7 +60,7 @@ continue	mail	et	Jätka
 convert mail to item and attach its attachments to this item (standard)	mail	et	E-posti muutmine elemendiks ja selle manuste lisamine sellele elemendile (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	et	Teisenda e-kiri elemendiks, lisa selle manuseid ja lisa manusena toorsõnum (.eml)
 convert only mail to item (ignore possible attachments)	mail	et	Konverteerida ainult e-kiri elemendiks (ignoreerida võimalikke manuseid)
-copied %1 message(s) from %2 to %3	mail	et	Kopeeritud %1 sõnum(id) %2-st %3-sse
+copied %1 message(s) from %2 to %3	mail	et	Kopeeritud %1 sõnum(id) %2-st %3-sse.
 cross account forward attachment is not allowed!	mail	et	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 default sorting order	mail	et	Vaikimisi sorteerimise järjekord
 default toolbar actions shown in mail's html editor	mail	et	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
@@ -116,6 +116,7 @@ general	admin	et	Üldine
 get acl rights failed from imap server!	mail	et	ACL-õiguste saamine IMAP-serverist ebaõnnestus!
 ham folder	mail	et	Ham kaust
 handling of external http images / mixed content in mails	mail	et	Välise http-pildi / segatud sisu käsitlemine e-kirjades
+hide from	mail	et	Peida Alates
 high priority	mail	et	Kõrge prioriteet
 html	mail	et	HTML
 ident name	mail	et	Tunnuse nimi
@@ -171,6 +172,7 @@ modify subject of this message	mail	et	Muuda selle sõnumi teemat
 move selected to	mail	et	Liigutage valitud aadressile
 move to	mail	et	Liiguta aadressile
 move to trash	mail	et	Liiguta trash-i
+moved %1 message(s) from %2 to %3	mail	et	Kolimisin %1 sõnumi(d) %2-st %3-sse.
 name and domain	mail	et	Nimi ja domeen
 name and email	mail	et	Nimi ja e-posti aadress
 name of account	mail	et	Konto nimi
@@ -214,7 +216,7 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	et	Push-teated
 quicksearch	mail	et	Kiirotsing
 quicksearch (with cc)	mail	et	Kiirotsing (+Kopeerimine)
-read / unread	mail	et	Lugemata / Lugemata
+read / unread	mail	et	Loetud / Lugemata
 real name	mail	et	Tegelik nimi
 real name email	mail	et	Tegelik nimi [E-post]
 real name organization email	mail	et	Tegelik nimi Organisatsioon [E-post]
@@ -248,6 +250,7 @@ see attachments for content of the orignial mail	mail	et	Vaata manuseid esialgse
 select all	mail	et	Märgi kõik
 select an existing entry in order to append mail content to it	mail	et	Valige olemasolev kirje, et lisada sellele posti sisu
 select an item to read	mail	et	Valige kirje lugemiseks
+select mail addresses from addressbook	mail	et	Valige postiaadressid aadressiraamatust
 select or insert email address	mail	et	Valige või sisestage e-posti aadress
 selected date range (with quicksearch)	mail	et	Valitud kuupäevavahemik (kiirotsinguga)
 send message and move to send folder (if configured)	mail	et	Sõnumi saatmine ja liigutamine saatekausta (kui see on konfigureeritud)
@@ -258,6 +261,7 @@ set predefined values for compose...	mail	et	Määrake komplekteerimise jaoks et
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	et	Kas allkiri peaks olema lisatud pärast (standard) või enne vastust või edastamist ning kas allkiri peaks olema nähtav ja muudetav koostamise ajal.
 show all addresses	mail	et	Näita kõiki aadresse
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	et	näidata kõiki kaustu (tellitud JA mitte-tellitud) põhiekraani kaustapaneelil.
+show horizontal, hide if none selected	mail	et	Näita horisontaalne, peida, kui ükski ei ole valitud
 show notification for new arriving mails	mail	et	Näita teateid uute saabunud kirjade kohta
 show test connection section and control the level of info displayed?	mail	et	Näidata testühenduse osa ja kontrollida kuvatava info taset?
 show test connection section and control the level of info displayed??	mail	et	Näita testühenduse osa ja kontrollida kuvatava teabe taset??
@@ -279,6 +283,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	e
 spamtitan api url	mail	et	SpamTitan API URL
 spamtitan integration requires epl version	mail	et	SpamTitani integreerimine nõuab EPL-versiooni.
 text	mail	et	Tekst
+the %1 's acl removed from the %2	mail	et	%1-i ACL eemaldati %2-st.
+the %1 's acl, including its subfolders, removed from the %2	mail	et	%1-i ACL, sealhulgas selle alamkaustad, eemaldatud %2-st.
 the imap server need to meet certain requirements and be configured for it:	mail	et	IMAP-server peab vastama teatavatele nõuetele JA olema selleks konfigureeritud:
 the rule with priority %1 successfully saved!	mail	et	Reegel prioriteediga %1 edukalt salvestatud!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	et	Sieve skripti salvestamiseks ei ole enam ruumi, palun kontrollige sieve_maxscriptsize valikut oma mailserveri seadistuses.
@@ -291,6 +297,7 @@ trash	mail	et	Prügikasti
 trash folder	mail	et	Prügikasti kaust
 unconditional	mail	et	Alati
 unread	mail	et	lugematta
+validate addresses on submit:	mail	et	Kinnitage aadressid esitamisel:
 write	mail	et	Kirjuta
 you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	et	Saate kasutada $$start$$ ülaltoodud alguskuupäeva ja $$end$$$ lõppkuupäeva jaoks.

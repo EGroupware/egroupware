@@ -96,7 +96,11 @@ resource	resources	zh	资源
 resource %1 deleted!	resources	zh	资源 %1 已删除！
 resource %1 saved!	resources	zh	资源 %1 已保存！
 resource / accessories	resources	zh	资源/附件
+resource id	resources	zh	资源 ID
 resources	common	zh	资源管理
+resources and accessories	resources	zh	资源和附件
+resources csv export	resources	zh	资源 CSV 导出
+resources csv import	resources	zh	资源 CSV 导入
 resources list	resources	zh	资源列表
 responsible:	resources	zh	责任人：
 saves entry and exits	resources	zh	保存后退出
@@ -107,6 +111,7 @@ select/deselect all	resources	zh	选择/全部取消
 short description	resources	zh	简短描述
 short description of resource	resources	zh	资源的简短描述
 show calendar of resource	resources	zh	显示资源日历
+show in title (beside name)	resources	zh	显示在标题中（名称旁边）
 something went wrong by deleting resource	resources	zh	删除资源时发生错误
 something went wrong by saving resource	resources	zh	保存资源时发生错误
 storage information	resources	zh	存储信息

@@ -238,6 +238,12 @@ export class filemanagerAPP extends EgwApp
 		}
 		let result = super.setState(state, 'filemanager.index');
 
+		if(state.state?.path && this.et2.getWidgetById("upload"))
+		{
+			// Update file upload since changing the path programmatically doesn't fire a change event
+			this.et2.getWidgetById("upload").path = state.state.path + (state.state.path.endsWith("/") ? "" : "/");
+		}
+
 		// This has to happen after the parent, changing to tile recreates
 		// nm controller
 		if(typeof state == "object" && state.state && state.state.view)
@@ -361,6 +367,21 @@ export class filemanagerAPP extends EgwApp
 		return path_widget ? path_widget.get_value.apply(path_widget) : null;
 	}
 
+	handlePathChange(widget)
+	{
+		if(widget.getValue() == '')
+		{
+			this.change_dir('~', widget);
+		}
+		const upload = this.et2.getWidgetById('upload');
+		if(upload)
+		{
+			// Et2VfsUpload needs the trailing /
+			upload.path = widget.getValue() + '/';
+		}
+		return true;
+	}
+
 	/**
 	 * Open compose with already attached files
 	 *
@@ -465,6 +486,10 @@ export class filemanagerAPP extends EgwApp
 	uploadOnOne(_event)
 	{
 		this.upload(_event,1);
+
+		// Stop nm from refreshing, we'll get it on the push
+		_event.stopPropagation();
+		return false;
 	}
 
 	/**
@@ -482,15 +507,25 @@ export class filemanagerAPP extends EgwApp
 		{
 			_path = this.get_path();
 		}
-		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
+		if(_file_count && _event.detail)
 		{
-			let widget = _event.data;
-			let value = widget.getValue();
-			value.conflict = _conflict;
+			let widget = _event.target;
+			widget.loading = true;
+			_event.detail.accepted = false; // Turn off removable, it's too late now
+			const widgetValue = widget.getValue();
+			const value = {};
+			value[_event.detail.tempName] = {...widgetValue[_event.detail.tempName]};
+			delete widgetValue[_event.detail.tempName];
+			widget.value = widgetValue;
+			value["conflict"] = _conflict;
+			widget.requestUpdate("loading");
 			egw.json(_target, ['upload', value, _path, {ui_path: this.egw.window.location.pathname}],
 				this._upload_callback, this, true, this
-			).sendRequest();
-			widget.set_value('');
+			).sendRequest().finally(() =>
+			{
+				widget.loading = false;
+				widget.requestUpdate("loading", true);
+			});
 		}
 	}
 
@@ -1423,8 +1458,13 @@ export class filemanagerAPP extends EgwApp
 
 		let copy_link_to_clipboard = function (evt): Promise<boolean> {
 			const target = evt.currentTarget;
-			target.select();
-			target.setSelectionRange(0, 99999) //For mobile devices
+			//if target is an editable field select the current content
+			//mostly this will be et2-textbox_ro so no selection possible or needed
+			if(target.select && target.setSelectionRange)
+			{
+				target.select();
+				target.setSelectionRange(0, 99999) //For mobile devices
+			}
 			try
 			{
 				return navigator.clipboard.writeText(target.value).then(() => {
@@ -1456,7 +1496,7 @@ export class filemanagerAPP extends EgwApp
 		document.body.appendChild(dialog);
 		dialog.addEventListener("load", () =>
 		{
-			dialog.template.widgetContainer.getWidgetById("share_link").onclick = copy_link_to_clipboard;
+			dialog.eTemplate.widgetContainer.getWidgetById("share_link").onclick = copy_link_to_clipboard;
 		});
 	}
 

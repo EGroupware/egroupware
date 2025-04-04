@@ -9,6 +9,7 @@ both: allow to use projectmanager and free project-names	admin	nl	Beiden: accept
 by	timesheet	nl	door
 category for 'working time'	admin	nl	Categorie voor 'Werktijd'
 change owner when updating	timesheet	nl	Eigenaar wijzigen bij bijwerken
+choose 'creator' of imported data	timesheet	nl	Kies 'maker' van geïmporteerde gegevens
 comment by %1 at %2:	timesheet	nl	Commentaar door %1 op %2:
 create a single 'working time' timesheet per	timesheet	nl	Maak een enkel 'Werktijd' timesheet per
 create new links	timesheet	nl	Creëer nieuwe links
@@ -42,6 +43,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	nl	Bestaande links
 exists	timesheet	nl	Bestaat
 export definition to use for nextmatch export	timesheet	nl	Export definitie om te gebruiken bij nextmatch export
+exports entries from your timesheet into a csv file.	timesheet	nl	Exporteert invoer vanuit Time Sheet naar een CSV-bestand
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	nl	Exporteert records uit uw urenregistratie naar een CSV bestand. Maar in het opties tabblad kunt u ook andere scheidingstekens kiezen.
 field must not be empty !!!	timesheet	nl	Veld mag niet leeg zijn !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	nl	Gebruik deze tag voor serie brieven. Plaats de inhoud die herhaald moet worden tussen de twee tags.
@@ -57,6 +59,7 @@ if you specify a directory (full vfs path) here, %1 displays an action for each 
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
 if you specify an export definition, it will be used when you export	timesheet	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 ignore	timesheet	nl	Negeren
+imports entries into the timesheet from a csv file.	timesheet	nl	Importeert gegevens in Time Sheet vanuit een CSV-bestand
 insert	timesheet	nl	Voeg toe
 last modified	timesheet	nl	Laatst gewijzigd
 last month	timesheet	nl	Vorige maand
@@ -123,6 +126,9 @@ ticket modified by %1 at %2	timesheet	nl	Melding gewijzigd door %1 op %2
 timer already running or paused	common	nl	Timer loopt al of is gepauzeerd
 timesheet	common	nl	Urenregistratie
 timesheet csv export	timesheet	nl	Urenregistratie CSV export
+timesheet csv import	timesheet	nl	Timesheet CSV import
+timesheet id	timesheet	nl	Timesheet ID
+timesheet list	timesheet	nl	Timesheet lijst
 titles of any entries linked to the current record, excluding attached files	timesheet	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
 unitprice	timesheet	nl	Eenheidstarief
 use field from csv if possible	timesheet	nl	Gebruik veld uit CSV indien mogelijk

@@ -248,7 +248,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		invalidateCache: function(_name, _attr)
 		{
 			// string with regular expression like "/^something/i"
-			if (typeof _attr === 'string' && _attr[0] === '/', _attr.indexOf('/', 1) !== -1)
+			if (typeof _attr === 'string' && (_attr[0] === '/', _attr.indexOf('/', 1) !== -1))
 			{
 				let parts = _attr.split('/');
 				parts.shift();

@@ -52,7 +52,6 @@ check virtual filesystem	common	de	Virtuelles Dateisystem überprüfen
 classic	filemanager	de	Symbolleisten
 clear search	filemanager	de	Suchfelder zurücksetzen
 clipboard is empty!	filemanager	de	Zwischenablage ist leer!
-collab editor settings	filemanager	de	Collabora Online Einstellungen
 comment	filemanager	de	Kommentar
 configuration changed.	filemanager	de	Konfiguration geändert
 confirm final delete	filemanager	de	Endgültiges Löschen bestätigen

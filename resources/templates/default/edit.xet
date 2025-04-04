@@ -175,7 +175,7 @@
 						<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
 						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
 					</et2-hbox>
-					<et2-button  align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Do you really want to delete this resource?','Delete')" image="delete"></et2-button>
+                    <et2-button align="right" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this resource?','Delete')" image="delete"></et2-button>
 				</row>
 			</rows>
 		</grid>

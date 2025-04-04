@@ -161,10 +161,12 @@ noone	filemanager	hu	Senki
 notebookbar	filemanager	hu	Tabbed
 only owner can rename or delete the content	filemanager	hu	Csak a tulajdonos tudja átnevezni és törölni a tartalmat
 open	filemanager	hu	Megnyit
+open documents with collabora, if permissions are given	filemanager	hu	Dokumentumok megnyitása a Collabora Online segítségével, ha a jogosultságok meg vannak adva.
 operation	filemanager	hu	Művelet
 password for webdav and smb, use $pass for password of logged in user	filemanager	hu	Jelszó a WebDAV és SMB esetében, a $pass a bejelentkezett felhasználó jelszavát jelöli.
 path and query-parameters, smb: share and optional path (with /)	filemanager	hu	Útvonal és lekérdezési paraméterek, SMB: megosztás és opcionális útvonal (/-vel)
 percentage	filemanager	hu	Százalék
+permission denied!	filemanager	hu	Engedély megtagadva!
 permissions	filemanager	hu	Hozzáférés
 permissions of %1 changed.	filemanager	hu	%1 hozzáférése módosult
 please select a file to delete.	filemanager	hu	Kérem jelöljön ki egy állományt a törléshez.
@@ -208,10 +210,13 @@ show	filemanager	hu	Mutat
 show hidden files	filemanager	hu	Rejtett fileok megjelenítése
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	hu	Az oldaldobozban mutasson egy link az alapkönyvtárra?
 size	filemanager	hu	Méret
+smb, webdavs and vfs require a username!	filemanager	hu	Az SMB, WebDAV és VFS felhasználónevet igényel!
+smb: mount samba or windows fileserver shares	filemanager	hu	SMB: Samba vagy Windows fájlszerver megosztások csatlakoztatása
 start search	filemanager	hu	keresés
 superuser	filemanager	hu	Operator
 symlink to %1 created.	filemanager	hu	Symlink %1-hez létrehozva.
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	hu	Az alapértelmezett kezdőmappa a saját könyvtárad. Az alapértelmezett mappa lesz beállítva ha ez a mező üres, az elérési út nem létezik vagy nincs hozzáférésed.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	hu	A dokumentum tartalmazhat helyőrzőt, például {{%3}}, amelyet az adatokkal kell helyettesíteni (%1teljes lista a helyőrző nevekről%2).
 the requested path %1 is not available.	filemanager	hu	%1 elérési út nem létezik.
 there's already a directory with that name!	filemanager	hu	A megadott néven már létezik egy mappa.
 there's already a file with that name!	filemanager	hu	A megadott néven már létezik egy file.
@@ -221,6 +226,7 @@ unused space	filemanager	hu	Szabad terület
 up	filemanager	hu	Fel
 updated comment for %1	filemanager	hu	%1 megjegyzése frissítve
 used space	filemanager	hu	Felhasznált terület
+username for webdav and smb, use $user for name of logged in user	filemanager	hu	Felhasználónév a WebDAV és az SMB esetében, a $user-t használja a bejelentkezett felhasználó neveként.
 users and groups	filemanager	hu	Felhasználók és csoportok
 wrong username or password!	filemanager	hu	Hibás felhasználónév vagy jelszó!
 you are not allowed to upload a script!	filemanager	hu	Végrehajtható file feltöltéséhez nincs hjogosultságod!

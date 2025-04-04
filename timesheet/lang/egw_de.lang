@@ -138,7 +138,6 @@ start timer	common	de	Zeitnehmer starten
 start-time can not be before last stop- or pause-time %1!	common	de	Start-Zeit kann nicht vor der letzen Stop- oder Pausen-Zeit %1 liegen!
 starttime	timesheet	de	Startzeit
 starttime has to be before endtime !!!	timesheet	de	Startzeit muss vor der Endzeit liegen!
-status	timesheet	de	Status
 status deleted.	timesheet	de	Status gelöscht
 status of created timesheets	timesheet	de	Status für neue Stundenzettel
 status updated.	timesheet	de	Status geändert

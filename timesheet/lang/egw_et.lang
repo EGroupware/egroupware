@@ -3,6 +3,7 @@ all projects	timesheet	et	Kõik projektid
 ask to start and stop working time with session	timesheet	et	Küsi, et alustada ja lõpetada tööaeg koos seansiga
 category for 'working time'	admin	et	Kategooria 'Tööaeg'
 change owner when updating	timesheet	et	Omaniku muutmine uuendamisel
+choose 'creator' of imported data	timesheet	et	Valige imporditud andmete looja
 create a single 'working time' timesheet per	timesheet	et	Looge üks 'Tööaja' tööajatabel iga
 create new links	timesheet	et	Tee uued lingid
 creates a new field	timesheet	et	teeb uue välja
@@ -21,12 +22,14 @@ entry saved	timesheet	et	Kirje salvestatud
 error saving the entry!!!	timesheet	et	Viga kirje salvestamisel !!!
 error storing working time	timesheet	et	Viga tööaja salvestamisel
 existing links	timesheet	et	Eksisteerivad lingid
+exports entries from your timesheet into a csv file.	timesheet	et	Ekspordib kanded Tööajatabelist CSV-faili.
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	et	Ekspordib kanded ajalehest CSV-faili. Valikute vahekaardil saate valida ka muid eraldajaid.
 field must not be empty !!!	timesheet	et	Väli ei tohi jääda tühjaks !!!
 forgot to switch off working time?	common	et	Unustasite tööaja välja lülitada?
 global categories	timesheet	et	Globaalsed Kategooriad
 history	timesheet	et	Ajalugu
 id	timesheet	et	Id
+imports entries into the timesheet from a csv file.	timesheet	et	Impordib kanded Tööajatabelisse CSV-failist.
 last modified	timesheet	et	Viimati muudetud
 last month	timesheet	et	Viimane kuu
 last week	timesheet	et	Viimane nädal
@@ -60,6 +63,10 @@ starttime	timesheet	et	Startimise aeg
 starttime has to be before endtime !!!	timesheet	et	Startimise aeg on pärast lõpetamise aega !!!
 stop- or pause-time can not be before the start-time %1!	common	et	Stopp- või pausiaeg ei saa olla enne stardiaega %1!
 timer already running or paused	common	et	Taimer juba töötab või on pausis
+timesheet csv export	timesheet	et	Tööajatabelite CSV-eksport
+timesheet csv import	timesheet	et	Timesheet CSV import
+timesheet id	timesheet	et	Tööajatabel ID
+timesheet list	timesheet	et	Tööajatabelite nimekiri
 use field from csv if possible	timesheet	et	Võimaluse korral kasutage välju CSV-st
 week	timesheet	et	Nädal
 what should be done with unknown values?	timesheet	et	Mida tuleks teha tundmatute väärtustega?

@@ -15,6 +15,7 @@ category for 'working time'	admin	cs	Kategorie pro 'Pracovní doba'
 change owner when updating	timesheet	cs	Změna vlastníka při aktualizaci
 changed status	timesheet	cs	Změněný stav
 check all	timesheet	cs	Označit vše
+choose 'creator' of imported data	timesheet	cs	Zvolte „tvůrce“ importovaných dat
 comment by %1 at %2:	timesheet	cs	Komentář od %1 v %2:
 create a single 'working time' timesheet per	timesheet	cs	Vytvořit jeden pracovní výkaz „Pracovní doba“ na
 create new links	timesheet	cs	Vytvořit nové odkazy
@@ -40,6 +41,7 @@ error deleting the entry!!!	timesheet	cs	Chyba při mazání záznamu!
 error saving the entry!!!	timesheet	cs	Chyba při ukládání záznamu!
 error storing working time	timesheet	cs	Chyba při ukládání pracovní doby
 existing links	timesheet	cs	Stávající odkazy
+exports entries from your timesheet into a csv file.	timesheet	cs	Exportuje záznamy z Time Sheetu do souboru CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	cs	Exportuje záznamy z Vašeho Pracovního výkazu do CSV souboru. Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
 field must not be empty !!!	timesheet	cs	Položka nesmí být prázdná!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
@@ -51,6 +53,7 @@ history	timesheet	cs	Historie
 history logging	admin	cs	Protokolování historie
 id	timesheet	cs	ID
 ignore	timesheet	cs	Ignorovat
+imports entries into the timesheet from a csv file.	timesheet	cs	Importuje záznamy do Time Sheetu ze souboru CSV
 last modified	timesheet	cs	Naposledy změněno
 last month	timesheet	cs	Minulý měsíc
 last week	timesheet	cs	Minulý týden
@@ -119,6 +122,9 @@ ticket modified by %1 at %2	timesheet	cs	Ohlášení změnil(a) %1 v %2
 timer already running or paused	common	cs	Časovač již běží nebo je pozastavený
 timesheet	common	cs	Pracovní výkaz
 timesheet csv export	timesheet	cs	Export pracovního výkazu do CSV
+timesheet csv import	timesheet	cs	Import CSV z Timesheetu
+timesheet id	timesheet	cs	ID Timesheetu
+timesheet list	timesheet	cs	Timesheet list
 timesheet modified by %1 at %2	timesheet	cs	Pracovní výkaz změnil(a) %1 v %2
 timesheet status-%1 '%2' added.	timesheet	cs	Pracovní výkaz stav-%1 '%2' byl přidán.
 timesheet-%1 '%2' updated.	timesheet	cs	Pracovní výkaz-%1 '%2' byl zaktualizován.

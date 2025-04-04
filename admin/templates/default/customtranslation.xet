@@ -17,7 +17,7 @@
 				<row>
 					<et2-textbox  id="${row}[phrase]"></et2-textbox>
 					<et2-textbox  id="${row}[translation]"></et2-textbox>
-					<et2-button  align="center" label="Delete" id="delete[$row]" onclick="et2_dialog.confirm(widget,'Delete','Delete')" image="delete"></et2-button>
+                    <et2-button align="center" label="Delete" id="delete[$row]" onclick="Et2Dialog.confirm(widget,'Delete','Delete')" image="delete"></et2-button>
 				</row>
 			</rows>
 		</grid>

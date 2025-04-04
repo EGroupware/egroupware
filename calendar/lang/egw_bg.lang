@@ -579,7 +579,6 @@ startdate / -time	calendar	bg	Нач.дата / -час
 startdate and -time of the search	calendar	bg	Начална дата и час за търсенето
 startdate of the export	calendar	bg	Начална дата за експорт
 startrecord	calendar	bg	Начален запис
-status	calendar	bg	Статус
 status already applied	calendar	bg	Статусът е приложен
 status changed	calendar	bg	Статусът е променен
 status for all future scheduled days changed	calendar	bg	Статусът за планираното разписание е променено.

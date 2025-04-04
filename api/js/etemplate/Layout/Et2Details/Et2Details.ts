@@ -15,6 +15,19 @@ import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {classMap} from "lit/directives/class-map.js";
 
+/**
+ * Details show a brief summary and expand to show additional content
+ *
+ * @slot - The details’ main content.
+ * @slot summary - The details’ summary. Alternatively, you can use the summary attribute.
+ * @slot expand-icon - Optional expand icon to use instead of the default. Works best with <sl-icon>.
+ * @slot collapse-icon - Optional collapse icon to use instead of the default. Works best with <sl-icon>.
+ *
+ * @csspart base - Component wrapper
+ * @csspart header - Header content
+ * @csspart summary-icon - expand / collapse icon wrapper
+ * @csspart content - The details' main content
+ */
 @customElement("et2-details")
 export class Et2Details extends Et2Widget(SlDetails)
 {
@@ -26,7 +39,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 			css`
 				:host {
 					display: block;
-					min-height: 1em;
+					min-height: var(--sl-input-height-medium);
 				}
 				
 				:host([align="right"]) > div {
@@ -83,6 +96,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 
 				.details--open .details__body {
 					display: block;
+					flex: 1 1 auto;
 				}
 
 				.details:not(.hoist).details--open.details--overlay-summary {
@@ -181,6 +195,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 	{
 		super();
 		this.handleAccordionOpen = this.handleAccordionOpen.bind(this);
+		this._mouseOutEvent = this._mouseOutEvent.bind(this);
 	}
 
 	connectedCallback()
@@ -195,7 +210,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 		this.updateComplete.then(() => {
 			if (this.toggleOnHover) {
 				this.addEventListener("mouseover", this.show);
-				window.document.addEventListener('mouseout', this._mouseOutEvent.bind(this));
+				window.document.addEventListener('mouseout', this._mouseOutEvent);
 			}
 		});
 	}

@@ -38,6 +38,7 @@ alarms	calendar	lv	Trauksmes
 all day	calendar	lv	VIsu dienu
 allow booking requests from any user when creating events?	calendar	lv	Atļaut rezervācijas pieprasījumus no jebkura lietotāja, veidojot notikumus?
 allow party crashers with email that match the following regular expression	calendar	lv	Atļaujiet ierasties uz ballīti personām, kuru e-pasta vēstules atbilst šādai regulārajai izteiksmei
+allows to edit the event again	calendar	lv	Ļauj vēlreiz rediģēt notikumu
 always	calendar	lv	Vienmēr
 always use full edit dialog	calendar	lv	Vienmēr izmantojiet pilnu rediģēšanas dialogu
 always use the full edit dialog, not this little dialog	calendar	lv	Vienmēr izmantojiet pilnu rediģēšanas logu, nevis šo mazo logu.
@@ -98,6 +99,7 @@ extended	calendar	lv	Paplašinats
 fieldseparator	calendar	lv	Lauka atdalītājs
 filemanager	calendar	lv	Datņu pārvaldnieks
 filename	calendar	lv	Faila nosaukums
+find free timeslots where the selected participants are available for the given timespan	calendar	lv	Atrast brīvos laika intervālus, kuros izvēlētie dalībnieki ir pieejami noteiktā laika posmā
 firstname of person to notify	calendar	lv	Personas vārds, kurai jāpaziņo
 format of event updates	calendar	lv	Formatēt notikumu atjauninājumus
 freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	lv	Brīvsaizņemts: Nezināms lietotājs "%1", nepareiza parole vai nav pieejams nav ielogojies lietotājs!
@@ -195,6 +197,7 @@ recordings	calendar	lv	Ieraksti
 recurring event	calendar	lv	Nepārtraukts notikums
 rejected	calendar	lv	Noraidīts
 removes the event from my calendar	calendar	lv	Noņem notikumu no mana kalendāra
+repeat the event until which date (empty means unlimited)	calendar	lv	Atkārtot notikumu, līdz kuram datumam (Tukšs neierobežots)
 repeat type	calendar	lv	Atkārtot tipu
 repeating event information	calendar	lv	Atkārtojamā notikuma informācija
 repetition	calendar	lv	Atkārtojums
@@ -206,6 +209,7 @@ resources	calendar	lv	Resursi
 role	calendar	lv	Loma
 rule	calendar	lv	Kārtula
 sat	calendar	lv	Sestdiena
+saves the event ignoring the conflict	calendar	lv	Saglabājiet notikumu, ignorējot konfliktu
 scheduling conflict	calendar	lv	Pretrunas plānošana
 select resources	calendar	lv	Iezīmē resursus
 send notifications	calendar	lv	Nosūtīt paziņojumus
@@ -219,7 +223,6 @@ sort by	calendar	lv	Atlasīt pēc
 start date/time	calendar	lv	Sākums datums/laiks
 startdate	calendar	lv	Sākumdatums
 startrecord	calendar	lv	Sākumieraksts
-status	calendar	lv	Statuss
 submit to repository	calendar	lv	Iesniegt repozitorijā
 sun	calendar	lv	Svētdiena
 tentative	calendar	lv	Iepriekšējs

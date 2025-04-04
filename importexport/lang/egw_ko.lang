@@ -1,13 +1,18 @@
+%1 is not a known user or group	importexport	ko	%1은(는) 알려진 사용자 또는 그룹이 아닙니다.
 add a new definition	importexport	ko	새 정의 추가
 addressbook csv import	importexport	ko	주소록 CSV 가져오기
 addressbook vcard import	importexport	ko	주소록 vCard 가져오기
+admin disabled exporting	importexport	ko	관리자가 내보내기를 비활성화했습니다.
 all users	importexport	ko	모든 사용자
 change allowed users	importexport	ko	허용된 사용자 변경
 change owner when updating	importexport	ko	업데이트 시 소유자 변경
 changed	importexport	ko	변경됨
 changed owner	importexport	ko	소유자 변경
 charset of file	importexport	ko	파일의 문자셋
+choose fields to export	importexport	ko	내보낼 필드를 선택하세요.
 created	importexport	ko	생성됨
+database values	importexport	ko	데이터베이스 값
+delete files after import	importexport	ko	가져오기 후 파일 삭제
 deleted	importexport	ko	삭제됨
 export	importexport	ko	내보내기
 false	importexport	ko	거짓

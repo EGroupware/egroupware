@@ -71,6 +71,7 @@
       <ref name="et2-button-icon"/>
       <ref name="et2-button-scroll"/>
       <ref name="et2-button-timestamp"/>
+      <ref name="et2-button-toggle"/>
       <ref name="et2-category-tag"/>
       <ref name="et2-checkbox"/>
       <ref name="et2-colorpicker"/>
@@ -87,6 +88,7 @@
       <ref name="et2-description-expose"/>
       <ref name="et2-details"/>
       <ref name="et2-dialog"/>
+      <ref name="et2-dropdown"/>
       <ref name="et2-dropdown-button"/>
       <ref name="et2-email"/>
       <ref name="et2-email-tag"/>
@@ -111,6 +113,7 @@
       <ref name="et2-link-string"/>
       <ref name="et2-link-to"/>
       <ref name="et2-listbox"/>
+      <ref name="et2-menu-item"/>
       <ref name="et2-merge-dialog"/>
       <ref name="et2-number"/>
       <ref name="et2-password"/>
@@ -140,6 +143,7 @@
       <ref name="et2-spinner"/>
       <ref name="et2-split"/>
       <ref name="et2-switch"/>
+      <ref name="et2-switch-icon"/>
       <ref name="et2-tabbox"/>
       <ref name="et2-tag"/>
       <ref name="et2-textarea"/>
@@ -147,7 +151,6 @@
       <ref name="et2-thumbnail-tag"/>
       <ref name="et2-tree"/>
       <ref name="et2-tree-dropdown"/>
-      <ref name="et2-tree-cat"/>
       <ref name="et2-url"/>
       <ref name="et2-url-email"/>
       <ref name="et2-url-fax"/>
@@ -5934,6 +5937,147 @@
       <attribute name="width"/>
     </optional>
   </define>
+  <define name="et2-button-toggle">
+    <element name="et2-button-toggle">
+      <ref name="attlist.et2-button-toggle"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.et2-button-toggle" combine="interleave">
+    <optional>
+      <attribute name="accesskey"/>
+    </optional>
+    <optional>
+      <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="ariaDescription"/>
+    </optional>
+    <optional>
+      <attribute name="ariaLabel"/>
+    </optional>
+    <optional>
+      <attribute name="autocomplete"/>
+    </optional>
+    <optional>
+      <attribute name="autofocus">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="data"/>
+    </optional>
+    <optional>
+      <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="helpText"/>
+    </optional>
+    <optional>
+      <attribute name="hidden">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="icon"/>
+    </optional>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
+    <optional>
+      <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="offIcon"/>
+    </optional>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="onclick"/>
+    </optional>
+    <optional>
+      <attribute name="onIcon"/>
+    </optional>
+    <optional>
+      <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="span">
+        <choice>
+          <value>all</value>
+          <value>2</value>
+          <value>3</value>
+          <value>4</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="tabindex"/>
+    </optional>
+    <optional>
+      <attribute name="variant"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+  </define>
   <define name="et2-category-tag">
     <element name="et2-category-tag">
       <ref name="attlist.et2-category-tag"/>
@@ -7063,6 +7207,9 @@
       <attribute name="statustext"/>
     </optional>
     <optional>
+      <attribute name="step"/>
+    </optional>
+    <optional>
       <attribute name="style"/>
     </optional>
     <optional>
@@ -7940,6 +8087,9 @@
       <attribute name="accesskey"/>
     </optional>
     <optional>
+      <attribute name="accordionGroup"/>
+    </optional>
+    <optional>
       <attribute name="align"/>
     </optional>
     <optional>
@@ -8069,9 +8219,6 @@
       <attribute name="align"/>
     </optional>
     <optional>
-      <attribute name="appendTo"/>
-    </optional>
-    <optional>
       <attribute name="buttons"/>
     </optional>
     <optional>
@@ -8117,7 +8264,13 @@
       </attribute>
     </optional>
     <optional>
-      <attribute name="hideOnEscape"/>
+      <attribute name="hideOnEscape">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="icon"/>
@@ -8214,6 +8367,129 @@
       <attribute name="width"/>
     </optional>
   </define>
+  <define name="et2-dropdown">
+    <element name="et2-dropdown">
+      <ref name="attlist.et2-dropdown"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.et2-dropdown" combine="interleave">
+    <optional>
+      <attribute name="accesskey"/>
+    </optional>
+    <optional>
+      <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="data"/>
+    </optional>
+    <optional>
+      <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="distance"/>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="hidden">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="hoist">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
+    <optional>
+      <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="onclick"/>
+    </optional>
+    <optional>
+      <attribute name="open">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="placement"/>
+    </optional>
+    <optional>
+      <attribute name="skidding"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="span">
+        <choice>
+          <value>all</value>
+          <value>2</value>
+          <value>3</value>
+          <value>4</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="stay-open-on-select">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="sync"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+  </define>
   <define name="et2-dropdown-button">
     <element name="et2-dropdown-button">
       <ref name="attlist.et2-dropdown-button"/>
@@ -8301,6 +8577,9 @@
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="placement"/>
     </optional>
     <optional>
       <attribute name="readonly">
@@ -8942,6 +9221,9 @@
       <attribute name="parentId"/>
     </optional>
     <optional>
+      <attribute name="placement"/>
+    </optional>
+    <optional>
       <attribute name="readonly">
         <choice>
           <value>false</value>
@@ -9279,6 +9561,9 @@
       <attribute name="accesskey"/>
     </optional>
     <optional>
+      <attribute name="accordionGroup"/>
+    </optional>
+    <optional>
       <attribute name="align"/>
     </optional>
     <optional>
@@ -9377,6 +9662,15 @@
     </optional>
     <optional>
       <attribute name="summary"/>
+    </optional>
+    <optional>
+      <attribute name="summaryInside">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="toggleAlign"/>
@@ -10698,6 +10992,9 @@
       <attribute name="label"/>
     </optional>
     <optional>
+      <attribute name="limit"/>
+    </optional>
+    <optional>
       <attribute name="linkType"/>
     </optional>
     <optional>
@@ -11174,6 +11471,9 @@
       <attribute name="label"/>
     </optional>
     <optional>
+      <attribute name="limit"/>
+    </optional>
+    <optional>
       <attribute name="linkType"/>
     </optional>
     <optional>
@@ -11512,6 +11812,119 @@
     </optional>
     <optional>
       <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="value"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+  </define>
+  <define name="et2-menu-item">
+    <element name="et2-menu-item">
+      <ref name="attlist.et2-menu-item"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.et2-menu-item" combine="interleave">
+    <optional>
+      <attribute name="accesskey"/>
+    </optional>
+    <optional>
+      <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="checked">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="data"/>
+    </optional>
+    <optional>
+      <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="hidden">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
+    <optional>
+      <attribute name="loading">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="onclick"/>
+    </optional>
+    <optional>
+      <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="span">
+        <choice>
+          <value>all</value>
+          <value>2</value>
+          <value>3</value>
+          <value>4</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="type">
+        <choice>
+          <value>normal</value>
+          <value>checkbox</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="value"/>
@@ -13786,16 +14199,10 @@
       <attribute name="accesskey"/>
     </optional>
     <optional>
-      <attribute name="align"/>
+      <attribute name="actions"/>
     </optional>
     <optional>
-      <attribute name="allowFreeEntries">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
+      <attribute name="align"/>
     </optional>
     <optional>
       <attribute name="application"/>
@@ -13817,6 +14224,9 @@
           <value>1</value>
         </choice>
       </attribute>
+    </optional>
+    <optional>
+      <attribute name="autoloading"/>
     </optional>
     <optional>
       <attribute name="class"/>
@@ -13879,6 +14289,9 @@
       <attribute name="label"/>
     </optional>
     <optional>
+      <attribute name="leafOnly"/>
+    </optional>
+    <optional>
       <attribute name="multiple">
         <choice>
           <value>false</value>
@@ -13903,7 +14316,22 @@
       <attribute name="onclick"/>
     </optional>
     <optional>
-      <attribute name="onTagClick"/>
+      <attribute name="open">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="openAtSelection">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="parentCat"/>
@@ -13913,14 +14341,6 @@
     </optional>
     <optional>
       <attribute name="placeholder"/>
-    </optional>
-    <optional>
-      <attribute name="placement">
-        <choice>
-          <value>top</value>
-          <value>bottom</value>
-        </choice>
-      </attribute>
     </optional>
     <optional>
       <attribute name="readonly">
@@ -13939,9 +14359,6 @@
           <value>1</value>
         </choice>
       </attribute>
-    </optional>
-    <optional>
-      <attribute name="rows"/>
     </optional>
     <optional>
       <attribute name="select_options"/>
@@ -13964,9 +14381,6 @@
     </optional>
     <optional>
       <attribute name="style"/>
-    </optional>
-    <optional>
-      <attribute name="tabindex"/>
     </optional>
     <optional>
       <attribute name="value"/>
@@ -16989,6 +17403,141 @@
       <attribute name="width"/>
     </optional>
   </define>
+  <define name="et2-switch-icon">
+    <element name="et2-switch-icon">
+      <ref name="attlist.et2-switch-icon"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.et2-switch-icon" combine="interleave">
+    <optional>
+      <attribute name="accesskey"/>
+    </optional>
+    <optional>
+      <attribute name="align"/>
+    </optional>
+    <optional>
+      <attribute name="ariaDescription"/>
+    </optional>
+    <optional>
+      <attribute name="ariaLabel"/>
+    </optional>
+    <optional>
+      <attribute name="autocomplete"/>
+    </optional>
+    <optional>
+      <attribute name="autofocus">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="data"/>
+    </optional>
+    <optional>
+      <attribute name="disabled">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="helpText"/>
+    </optional>
+    <optional>
+      <attribute name="hidden">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id"/>
+    </optional>
+    <optional>
+      <attribute name="label"/>
+    </optional>
+    <optional>
+      <attribute name="noLang">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="offIcon"/>
+    </optional>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="onclick"/>
+    </optional>
+    <optional>
+      <attribute name="onIcon"/>
+    </optional>
+    <optional>
+      <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="slot"/>
+    </optional>
+    <optional>
+      <attribute name="span">
+        <choice>
+          <value>all</value>
+          <value>2</value>
+          <value>3</value>
+          <value>4</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="statustext"/>
+    </optional>
+    <optional>
+      <attribute name="style"/>
+    </optional>
+    <optional>
+      <attribute name="tabindex"/>
+    </optional>
+    <optional>
+      <attribute name="width"/>
+    </optional>
+  </define>
   <define name="et2-tabbox">
     <element name="et2-tabbox">
       <ref name="attlist.et2-tabbox"/>
@@ -18090,6 +18639,15 @@
       <attribute name="leafIcon"/>
     </optional>
     <optional>
+      <attribute name="leafOnly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="multiple"/>
     </optional>
     <optional>
@@ -18207,6 +18765,15 @@
       <attribute name="class"/>
     </optional>
     <optional>
+      <attribute name="clearable">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="data"/>
     </optional>
     <optional>
@@ -18246,181 +18813,7 @@
       <attribute name="label"/>
     </optional>
     <optional>
-      <attribute name="multiple">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="noLang">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="onchange"/>
-    </optional>
-    <optional>
-      <attribute name="onclick"/>
-    </optional>
-    <optional>
-      <attribute name="open">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="parentId"/>
-    </optional>
-    <optional>
-      <attribute name="placeholder"/>
-    </optional>
-    <optional>
-      <attribute name="readonly">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="required">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="select_options"/>
-    </optional>
-    <optional>
-      <attribute name="slot"/>
-    </optional>
-    <optional>
-      <attribute name="span">
-        <choice>
-          <value>all</value>
-          <value>2</value>
-          <value>3</value>
-          <value>4</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="statustext"/>
-    </optional>
-    <optional>
-      <attribute name="style"/>
-    </optional>
-    <optional>
-      <attribute name="value"/>
-    </optional>
-    <optional>
-      <attribute name="width"/>
-    </optional>
-  </define>
-  <define name="et2-tree-cat">
-    <element name="et2-tree-cat">
-      <ref name="attlist.et2-tree-cat"/>
-      <empty/>
-    </element>
-  </define>
-  <define name="attlist.et2-tree-cat" combine="interleave">
-    <optional>
-      <attribute name="accesskey"/>
-    </optional>
-    <optional>
-      <attribute name="actions"/>
-    </optional>
-    <optional>
-      <attribute name="align"/>
-    </optional>
-    <optional>
-      <attribute name="application"/>
-    </optional>
-    <optional>
-      <attribute name="ariaDescription"/>
-    </optional>
-    <optional>
-      <attribute name="ariaLabel"/>
-    </optional>
-    <optional>
-      <attribute name="autocomplete"/>
-    </optional>
-    <optional>
-      <attribute name="autofocus">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="autoloading"/>
-    </optional>
-    <optional>
-      <attribute name="class"/>
-    </optional>
-    <optional>
-      <attribute name="data"/>
-    </optional>
-    <optional>
-      <attribute name="disabled">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="emptyLabel"/>
-    </optional>
-    <optional>
-      <attribute name="globalCategories">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="height"/>
-    </optional>
-    <optional>
-      <attribute name="help-text"/>
-    </optional>
-    <optional>
-      <attribute name="helpText"/>
-    </optional>
-    <optional>
-      <attribute name="hidden">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="id"/>
-    </optional>
-    <optional>
-      <attribute name="label"/>
+      <attribute name="leafOnly"/>
     </optional>
     <optional>
       <attribute name="multiple">
@@ -18448,6 +18841,15 @@
     </optional>
     <optional>
       <attribute name="open">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="openAtSelection">
         <choice>
           <value>false</value>
           <value>true</value>

@@ -117,7 +117,7 @@ continue	mail	en	Continue
 convert mail to item and attach its attachments to this item (standard)	mail	en	Convert email to item and attach its attachments to this item (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	Convert email to item, attach its attachments and add raw message (.eml) as attachment
 convert only mail to item (ignore possible attachments)	mail	en	Convert only email to item (ignore possible attachments)
-copied %1 message(s) from %2 to %3	mail	en	Copied %1 message(s) from %2 to %3
+copied %1 message(s) from %2 to %3	mail	en	Copied %1 message(s) from %2 to %3.
 copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
 could not save the acl because some names are empty	mail	en	Could not save the ACL because some names are empty
@@ -273,7 +273,7 @@ ham folder	mail	en	Ham folder
 handling of external http images / mixed content in mails	mail	en	Handling of external images / mixed content in emails
 header	mail	en	Header
 header lines	mail	en	Header lines
-hide from	mail	en	Hide from
+hide from	mail	en	Hide From
 high	mail	en	High
 high priority	mail	en	High priority
 hold %1 to drag files to your computer	mail	en	Hold %1 to drag files to your computer
@@ -373,7 +373,7 @@ move selected to	mail	en	Move selected to
 move to	mail	en	Move to
 move to archive	mail	en	Move to archive folder
 move to trash	mail	en	Move to trash
-moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3
+moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3.
 moving folders from one mailaccount to another is not supported	mail	en	Moving folders from one email account to another is not supported.
 name and domain	mail	en	Name and domain
 name and email	mail	en	Name and email
@@ -628,8 +628,8 @@ test connection and display basic information about the selected profile	mail	en
 text	mail	en	Text
 text mode	mail	en	Text mode
 text/plain	mail	en	Text
-the %1 's acl removed from the %2	mail	en	The %1's ACL removed from the %2
-the %1 's acl, including its subfolders, removed from the %2	mail	en	The %1's ACL, including its subfolders, removed from the %2
+the %1 's acl removed from the %2	mail	en	The %1's ACL removed from the %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	en	The %1's ACL, including its subfolders, removed from the %2.
 the entered passphrase is not correct! please try again.	mail	en	The entered passphrase is not correct! Please try again.
 the folder %1 's acls saved	mail	en	The folder %1's ACLs saved
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.

@@ -210,6 +210,7 @@ group ?	admin	uk	Група?
 group has been added	common	uk	Група створена
 group has been deleted	common	uk	Група видалена
 group has been updated	common	uk	Група змінена
+group hidden from non-admins	admin	uk	Група прихована від неадміністраторів
 group hierarchy	admin	uk	Ієрархія груп
 group list	admin	uk	Перелік груп
 group manager	admin	uk	Керування групами

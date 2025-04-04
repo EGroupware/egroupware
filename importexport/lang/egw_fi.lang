@@ -1,5 +1,6 @@
 %1 definition(s) %2	importexport	fi	%1 asetus(ta) %1
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	fi	%1 asetus(ta) %1, %3 epäonnistui riittämättömien käyttöoikeuksien vuoksi
+%1 is not a known user or group	importexport	fi	%1 ei ole tunnettu käyttäjä tai ryhmä.
 %1 is not readable	importexport	fi	%1 ei ole luettavissa
 %1 is not writable	importexport	fi	%1 ei ole kirjoitettavissa
 %1 records processed	importexport	fi	%1 tietuetta toimitettu
@@ -11,6 +12,7 @@
 add a new definition	importexport	fi	Lisää uusi määritelmä
 addressbook csv import	importexport	fi	Osoitekirjan CSV-vienti
 addressbook vcard import	importexport	fi	Osoitekirjan vCard-tuonti
+admin disabled exporting	importexport	fi	Järjestelmänvalvoja poisti viennin käytöstä.
 all users	importexport	fi	Kaikki käyttäjät
 allowed users	importexport	fi	Sallittu käyttäjille
 automatically created by importexport	importexport	fi	Luotu automaattisesti tuonnissa/viennissä.
@@ -35,6 +37,7 @@ day of week	importexport	fi	Viikonpäivä
 define imports|exports	common	fi	Määrittele tuonti | vienti
 definition	importexport	fi	Määritelmä
 delete all selected definitions	importexport	fi	Poista kaikki selitteet
+delete files after import	importexport	fi	Poista tiedostot tuonnin jälkeen
 deleted	importexport	fi	Poistettu
 duplicate name, please choose another.	importexport	fi	Valitse toinen nimi, ehdottamasi on jo käytössä
 edit conditions	importexport	fi	Muokkaa ehtoja

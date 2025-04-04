@@ -173,6 +173,10 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 						{
 							this._selected_remote.push(data[owner]);
 						}
+						else if(index !== -1 && typeof data[owner].resources !== "undefined" && !this.select_options[index].resources)
+						{
+							this.select_options[index].resources = data[owner].resources;
+						}
 					}
 					this.requestUpdate("select_options");
 				}, this, true, this).sendRequest();

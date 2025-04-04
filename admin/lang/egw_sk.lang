@@ -468,6 +468,7 @@ group excepted from above export limit (admins are always excepted)	admin	sk	Sku
 group has been added	common	sk	Skupina bola pridaná.
 group has been deleted	common	sk	Skupina bola odstránená.
 group has been updated	common	sk	Skupina bola aktualizovaná.
+group hidden from non-admins	admin	sk	Skupina skrytá pred neadministrátormi
 group hierarchy	admin	sk	Hierarchia skupín
 group list	admin	sk	Zoznam skupín
 group manager	admin	sk	Správca skupín

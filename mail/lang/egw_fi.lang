@@ -66,6 +66,7 @@ continue	mail	fi	Jatka
 convert mail to item and attach its attachments to this item (standard)	mail	fi	Muunna sähköposti kohteeksi ja liitä sen liitteet tähän kohteeseen (vakio)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	fi	Muunna sähköpostiviesti kohteeksi, liitä sen liitteet ja lisää raakaviesti (.eml) liitetiedostoksi
 convert only mail to item (ignore possible attachments)	mail	fi	Muunna vain sähköposti kohteeksi (jätä mahdolliset liitteet huomiotta)
+copied %1 message(s) from %2 to %3	mail	fi	Kopioitu %1 viesti(t) %2:sta %3:een.
 copy to	mail	fi	Kopio
 cross account forward attachment is not allowed!	mail	fi	Tilin rajat ylittävä eteenpäin kiinnittäminen ei ole sallittua!
 default sorting order	mail	fi	Oletus lajittelujärjestys
@@ -148,6 +149,7 @@ greater than	mail	fi	Suurempi kuin
 ham folder	mail	fi	Ham-kansio
 handling of external http images / mixed content in mails	mail	fi	Ulkoisten http-kuvien / sekasisällön käsittely sähköpostiviesteissä
 header lines	mail	fi	Ylätunnisterivit
+hide from	mail	fi	Piilota Lähettäjä
 high priority	mail	fi	Korkea prioriteetti
 how to forward messages	mail	fi	Kuinka viestejä välitetään
 html	mail	fi	HTML
@@ -213,6 +215,7 @@ modify subject of this message	mail	fi	Muokkaa tämän viestin aihetta
 move selected to	mail	fi	Siirrä valittu osoitteeseen
 move to	mail	fi	Siirrä osoitteeseen
 move to trash	mail	fi	Siirrä roskakoriin
+moved %1 message(s) from %2 to %3	mail	fi	Siirrettiin %1 viesti(t) paikasta %2 paikkaan %3.
 name and domain	mail	fi	Nimi ja verkkotunnus
 name and email	mail	fi	Nimi ja sähköpostiosoite
 name of account	mail	fi	Tilin nimi
@@ -318,6 +321,7 @@ see attachments for content of the orignial mail	mail	fi	Katso alkuperäisen sä
 select all	mail	fi	Valitse kaikki
 select an existing entry in order to append mail content to it	mail	fi	Valitse olemassa oleva merkintä, jotta voit liittää siihen sähköpostin sisällön
 select an item to read	mail	fi	Valitse kohde luettavaksi
+select mail addresses from addressbook	mail	fi	Valitse sähköpostiosoitteet osoitekirjasta
 select or insert email address	mail	fi	Valitse tai lisää sähköpostiosoite
 selected date range (with quicksearch)	mail	fi	Valittu päivämääräväli (pikahaun avulla)
 send message and move to send folder (if configured)	mail	fi	Lähetä viesti ja siirrä se lähetyskansioon (jos määritetty)
@@ -331,6 +335,7 @@ set predefined values for compose...	mail	fi	Aseta valmiiksi määritetyt arvot 
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	fi	Pitäisikö allekirjoitus lisätä vastauksen tai edelleenlähetyksen jälkeen (vakio) tai ennen vastausta tai eteenpäinlähetystä ja pitäisikö allekirjoituksen olla näkyvissä ja muutettavissa laatimisen aikana.
 show all addresses	mail	fi	Näytä kaikki osoitteet
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	fi	Näytä kaikki kansiot (tilatut ja tilaamattomat) päänäytön kansioruudussa.
+show horizontal, hide if none selected	mail	fi	Näytä vaakasuora, piilota, jos mikään ei ole valittuna
 show notification for new arriving mails	mail	fi	Näytä ilmoitus uusista saapuneista sähköpostiviesteistä
 show test connection section and control the level of info displayed?	mail	fi	Näytä testiyhteysosio ja säädä näytettävien tietojen tasoa?
 show test connection section and control the level of info displayed??	mail	fi	Näytä testiyhteysosio ja säädä näytettävien tietojen tasoa?
@@ -357,6 +362,8 @@ start new messages with mime type plain/text or html?	mail	fi	Haluatko aloitaa u
 template folder	mail	fi	Mallipohjat -kansio
 text	mail	fi	Teksti
 text/plain	mail	fi	Pelkkä teksti
+the %1 's acl removed from the %2	mail	fi	%1:n ACL on poistettu %2:sta.
+the %1 's acl, including its subfolders, removed from the %2	mail	fi	%1:n ACL, mukaan lukien sen alikansiot, poistettu %2:sta.
 the imap server need to meet certain requirements and be configured for it:	mail	fi	IMAP-palvelimen on täytettävä tietyt vaatimukset JA se on määritettävä sitä varten:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	fi	Viestin lähettäjä haluaa vahvistuksen, että olet saanut tämän viestin. Haluatko lähettää sen?
 the mimeparser can not parse this message.	mail	fi	Mimeparseri ei voi jäsentää tätä viestiä.
@@ -377,6 +384,7 @@ unread	mail	fi	Lukematon
 vacation notice	mail	fi	Lomavastaaja
 vacation notice is active	mail	fi	Lomavastaaja on käytössä
 vacation start-date must be before the end-date!	mail	fi	Lomavastaajan aloituspäivän pitää olla ennen loppumispäivää!
+validate addresses on submit:	mail	fi	Vahvista osoitteet lähetettäessä:
 view header lines	mail	fi	Näytä ylätunnisterivit
 when deleting messages	mail	fi	Kun poistetaan viestejä
 when sending messages	mail	fi	Kun lähetetään viestejä

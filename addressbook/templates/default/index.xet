@@ -113,7 +113,7 @@
 					</et2-vbox>
 					<et2-description  id="${row}[role]"></et2-description>
 					<et2-select-cat  id="${row}[cat_id]" readonly="true" rows="2" multiple="1"></et2-select-cat>
-					<et2-lavatar  src="$row_cont[photo]" contactId="$row_cont[id]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"></et2-lavatar>
+                    <et2-lavatar src="$row_cont[photo]" lname="$row_cont[n_family]" fname="$row_cont[n_given]" loading="lazy"></et2-lavatar>
 					<et2-date  id="${row}[bday]" readonly="true" dataFormat="Y-m-d" ></et2-date>
 					<et2-vbox>
 						<et2-description  id="${row}[adr_one_street]" noLang="1"></et2-description>

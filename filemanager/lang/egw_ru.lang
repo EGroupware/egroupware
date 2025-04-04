@@ -193,11 +193,13 @@ notebookbar	filemanager	ru	Вкладка
 older versions or deleted files	filemanager	ru	Старые версии или удалённые файлы
 only owner can rename or delete the content	filemanager	ru	Только владелец может переименовать или удалить содержимое.
 open	filemanager	ru	Открыть
+open documents with collabora, if permissions are given	filemanager	ru	Открывайте документы с помощью Collabora Online, если разрешения предоставлены.
 operation	filemanager	ru	Операция
 password for webdav and smb, use $pass for password of logged in user	filemanager	ru	Пароль для WebDAV и SMB, используйте $pass для пароля вошедшего пользователя
 path %1 not found or not a directory!	filemanager	ru	Путь %1 не найден или нет директории!
 path and query-parameters, smb: share and optional path (with /)	filemanager	ru	Путь и параметры запроса, SMB: общий ресурс и необязательный путь (с /)
 percentage	filemanager	ru	Проценты
+permission denied!	filemanager	ru	Отказано в разрешении!
 permissions	filemanager	ru	Разрешения
 permissions of %1 changed.	filemanager	ru	Разрешения %1 изменены.
 please select a file to delete.	filemanager	ru	Выберите файл для удаления
@@ -244,6 +246,8 @@ show link "users and groups*" in side box menu?*	filemanager	ru	Показыва
 show link "your home directory*" in side box menu?*	filemanager	ru	Показывать ссылку "Ваш домашний каталог" в боковом меню?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	ru	Показывать ссылку на базовый каталог ФайлМенеджера в боковом меню?
 size	filemanager	ru	Размер
+smb, webdavs and vfs require a username!	filemanager	ru	Для SMB, WebDAV и VFS требуется имя пользователя!
+smb: mount samba or windows fileserver shares	filemanager	ru	SMB: монтирование общих ресурсов Samba или файловых серверов Windows
 sqlfs statistics	filemanager	ru	Статистика файловой системы  SQL
 start search	filemanager	ru	Начать поиск
 startfolder	filemanager	ru	Начальная папка
@@ -268,6 +272,7 @@ upload fields	filemanager	ru	Загружены поля
 upload files	filemanager	ru	Загружены файлы
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	ru	Используйте этот тег для адресных меток. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 used space	filemanager	ru	Использовано пространство
+username for webdav and smb, use $user for name of logged in user	filemanager	ru	Имя пользователя для WebDAV и SMB, используйте $user для имени вошедшего пользователя
 users and groups	filemanager	ru	Пользователи и группы
 versioning	filemanager	ru	Управление версиями
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	ru	Кому разрешено окончательно удалять файлы или старые версии файлов:

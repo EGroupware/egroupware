@@ -476,6 +476,7 @@ group excepted from above export limit (admins are always excepted)	admin	fr	Gro
 group has been added	common	fr	Le groupe a été ajouté.
 group has been deleted	common	fr	Le groupe a été effacé.
 group has been updated	common	fr	Le groupe a été mis à jour.
+group hidden from non-admins	admin	fr	Groupe caché aux non-administrateurs
 group hierarchy	admin	fr	Hiérarchie des groupes
 group list	admin	fr	Liste des groupes
 group manager	admin	fr	Gestionnaire de groupe

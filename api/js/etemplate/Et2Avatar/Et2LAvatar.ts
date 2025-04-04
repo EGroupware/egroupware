@@ -12,6 +12,19 @@ import {Et2Avatar} from "./Et2Avatar";
 import shoelace from "../Styles/shoelace";
 import {css} from "lit";
 
+/**
+ * Avatars are used to represent a person or profile.  LAvatar has a coloured background.
+ *
+ * @slot icon The default icon to use when no image or initials are provided.
+ *
+ * @event sl-error	The image could not be loaded. This may because of an invalid URL, a temporary network condition, or some unknown cause.
+ *
+ * @csspart base	The component’s base wrapper.
+ * @csspart icon	The container that wraps the avatar’s icon.
+ * @csspart initials	The container that wraps the avatar’s initials.
+ * @csspart image	The avatar image. Only shown when the image attribute is set, or when contactId has an associated avatar image
+ */
+
 export class Et2LAvatar extends Et2Avatar
 {
 	/**

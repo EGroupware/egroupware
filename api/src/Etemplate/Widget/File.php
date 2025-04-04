@@ -119,9 +119,9 @@ class File extends Etemplate\Widget
 				$widget = $template->getElementById($matches[1].':$cont[id]:'.$matches[3]);
 			}
 			$mime = null;
-			if($widget && $widget->attrs['mime'])
+			if($widget && ($widget->attrs['allow'] || $widget->attrs['mime']))
 			{
-				$mime = $widget->attrs['mime'];
+				$mime = $widget->attrs['allow'] ?? $widget->attrs['mime'];
 			}
 
 			// Check for legacy [] in id to indicate multiple - it changes format
@@ -142,7 +142,15 @@ class File extends Etemplate\Widget
 			else
 			{
 				// Just one file
-				static::process_uploaded_file($field, $files, $mime, $file_data);
+				try
+				{
+					static::process_uploaded_file($field, $files, $mime, $file_data);
+				}
+				catch (\Exception $e)
+				{
+					// Send error on original name
+					$file_data[$_REQUEST['resumableRelativePath']] = $e->getMessage();
+				}
 			}
 			// Check for a callback, call it if there is one
 			if ($widget)
@@ -151,7 +159,23 @@ class File extends Etemplate\Widget
 				if(!$callback) $callback = $template->getElementAttribute($field, 'callback');
 				if($callback)
 				{
-					ExecMethod2($callback, $_FILES[$field], $widget_id, self::$request, $response);
+					try
+					{
+						ExecMethod2($callback, $_FILES[$field], $widget_id, self::$request, $response);
+					}
+					catch (\Exception $e)
+					{
+						if(false && $_REQUEST['resumableRelativePath'])
+						{
+							// Send error on original name
+							$file_data[$_REQUEST['resumableRelativePath']] = $e->getMessage();
+						}
+						else
+						{
+							// Send error replacing everything
+							$file_data = [$e->getMessage()];
+						}
+					}
 				}
 			}
 		}
@@ -160,6 +184,43 @@ class File extends Etemplate\Widget
 		$response->data($file_data);
 	}
 
+	/**
+	 * Resumable uploads, check if a chunk is already present
+	 *
+	 * @return void
+	 */
+	function ajax_test_chunk()
+	{
+		$request_id = str_replace(' ', '+', rawurldecode($_REQUEST['request_id']));
+		$widget_id = $_REQUEST['widget_id'];
+		if(!self::$request = Etemplate\Request::read($request_id))
+		{
+			header('HTTP/1.1 404 Session Not Found');
+			return;
+		}
+
+		// check the destination file (format <filename.ext>.part<#chunk>
+		// the file is stored in a temporary directory
+		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . str_replace('/', '_', $_REQUEST['resumableIdentifier']);
+		if(!file_exists($temp_dir))
+		{
+			//No content, file is not there
+			return http_response_code(204);
+		}
+		else
+		{
+			$chunk_name = $temp_dir . '/' . str_replace('/', '_', $_REQUEST['resumableFilename']) . '.part' . (int)$_REQUEST['resumableChunkNumber'];
+			if($_REQUEST['resumableChunkNumber'] == $_REQUEST['resumableTotalChunks'])
+			{
+				// Failed after uploading all chunks - force re-upload and re-process
+				return http_response_code(204);
+			}
+			else
+			{
+				return file_exists($chunk_name) ? http_response_code(200) : http_response_code(204);
+			}
+		}
+	}
 	/**
 	 * Process one uploaded file.  There should only be one per request...
 	 */
@@ -173,7 +234,7 @@ class File extends Etemplate\Widget
 			$file['name'] = $_POST['resumableFilename'];
 			$file['type'] = $_POST['resumableType'];
 		}
-
+		$new_file = false;
 		if ($file['error'] == UPLOAD_ERR_OK && trim($file['name']) != '' && $file['size'] > 0 && is_uploaded_file($file['tmp_name'])) {
 			// Don't trust what the browser tells us for mime
 			if(function_exists('mime_content_type'))
@@ -229,7 +290,7 @@ class File extends Etemplate\Widget
 				);
 			}
 		}
-		return true;
+		return $new_file;
 	}
 
 	/**
@@ -267,9 +328,15 @@ class File extends Etemplate\Widget
 			}
 
 			// create the final destination file
+			set_time_limit($total_files / 100);
 			if (($fp = fopen($new_file, 'w')) !== false) {
 				for ($i=1; $i<=$total_files; $i++) {
-					fwrite($fp, file_get_contents($temp_dir.'/'.$fileName.'.part'.$i));
+					$chunk = fopen($temp_dir . '/' . $fileName . '.part' . $i, 'r');
+					while(!feof($chunk))
+					{
+						fwrite($fp, fread($chunk, 1024 * 1024));
+					}
+					fclose($chunk);
 				}
 				fclose($fp);
 			} else {
@@ -384,9 +451,21 @@ class File extends Etemplate\Widget
 		$unit = strtolower(substr($upload_max_filesize, -1));
 		$upload_max_filesize = (float)$upload_max_filesize;
 		if (!is_numeric($unit)) $upload_max_filesize *= $unit === 'm' ? 1024*1024 : 1024;
-		if ($upload_max_filesize > 1024*1024)
+
+		$current_max_chunk = self::getElementAttribute($form_name, 'chunkSize') ?? $this->attrs['chunkSize'];
+		if($current_max_chunk)
 		{
-			self::setElementAttribute($form_name, 'chunk_size', ($upload_max_filesize-1024*1024)/2);
+			$unit = strtolower(substr($current_max_chunk, -1));
+			$current_max_chunk = (float)$current_max_chunk;
+			if(!is_numeric($unit))
+			{
+				$current_max_chunk *= $unit === 'm' ? 1024 * 1024 : 1024;
+			}
+			$upload_max_filesize = min($upload_max_filesize, $current_max_chunk);
+		}
+		if($upload_max_filesize != 1024 * 1024)
+		{
+			self::setElementAttribute($form_name, 'chunkSize', ($upload_max_filesize - 1024 * 1024) / 2);
 		}
 	}
 }

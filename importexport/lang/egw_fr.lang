@@ -1,7 +1,7 @@
 %1 definition(s) %2	importexport	fr	%1 définition(s) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	fr	%1 définition(s) %2, %3 a échoué à cause de droits insuffisants !!!
 %1 definitions %2	importexport	fr	%1 définitions %2
-%1 is not a known user or group	importexport	fr	%1 n'est pas un utilisateur ou un goupe connu
+%1 is not a known user or group	importexport	fr	%1 n'est pas un utilisateur ou un goupe connu.
 %1 is not readable	importexport	fr	%1 n'est pas lisible.
 %1 is not writable	importexport	fr	%1 n'est pas inscriptible.
 %1 records processed	importexport	fr	%1 enregistrements traités.
@@ -15,7 +15,7 @@ add a new definition	importexport	fr	Ajouter une nouvelle définition
 add an additional condition	importexport	fr	Ajouter une nouvelle condition
 addressbook csv import	importexport	fr	Import csv du carnet d'adresses
 addressbook vcard import	importexport	fr	Import vCard du carnet d'adresses
-admin disabled exporting	importexport	fr	L'administrateur a désactivé les exports
+admin disabled exporting	importexport	fr	L'administrateur a désactivé les exports.
 all custom fields	importexport	fr	Tous les champs personnalisés
 all encodings	importexport	fr	Tous les encodages
 all users	importexport	fr	Tous les utilisateurs

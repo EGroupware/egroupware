@@ -415,6 +415,7 @@ group excepted from above export limit (admins are always excepted)	admin	sl	Sku
 group has been added	common	sl	Skupina je bila dodana.
 group has been deleted	common	sl	Skupina je bila izbrisana.
 group has been updated	common	sl	Skupina je bila posodobljena.
+group hidden from non-admins	admin	sl	Skupina je skrita za osebe, ki niso upravljavci
 group hierarchy	admin	sl	Hierarhija skupin
 group list	admin	sl	Seznam skupin
 group manager	admin	sl	Upravljalec skupin

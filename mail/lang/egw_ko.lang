@@ -35,6 +35,7 @@ continue	mail	ko	계속
 convert mail to item and attach its attachments to this item (standard)	mail	ko	이메일을 항목으로 변환하고 첨부 파일을 이 항목에 첨부하기(표준)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ko	이메일을 항목으로 변환하고 첨부 파일을 첨부하며 원시 메시지(.eml)를 첨부 파일로 추가합니다.
 convert only mail to item (ignore possible attachments)	mail	ko	이메일만 항목으로 변환(가능한 첨부 파일 무시)
+copied %1 message(s) from %2 to %3	mail	ko	%2에서 %3으로 %1 메시지를 복사했습니다.
 delete selected folders	mail	ko	選択したフォルダを削除する
 deleted	mail	ko	삭제됨
 do you really want to toggle flag %1 for all messages in the current view?	mail	ko	현재 보기의 모든 메시지에 대해 %1 플래그를 전환하시겠습니까?
@@ -70,6 +71,7 @@ general	admin	ko	일반
 get acl rights failed from imap server!	mail	ko	IMAP 서버에서 ACL 권한 가져오기에 실패했습니다!
 ham folder	mail	ko	햄 폴더
 handling of external http images / mixed content in mails	mail	ko	전자 메일의 외부 http 이미지/혼합 콘텐츠 처리
+hide from	mail	ko	보낸 사람 숨기기
 high priority	mail	ko	높은 우선순위
 html	mail	ko	HTML
 ident name	mail	ko	아이디 이름
@@ -112,6 +114,7 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 message learned as spam and moved to spam folder	mail	ko	메시지가 스팸으로 인식되어 스팸 폴더로 이동되었습니다
 move selected to	mail	ko	선택한 위치로 이동
 move to	mail	ko	다음으로 이동
+moved %1 message(s) from %2 to %3	mail	ko	%2에서 %3으로 %1 메시지를 이동했습니다.
 name and domain	mail	ko	이름 및 도메인
 name and email	mail	ko	이름 및 이메일
 name of account	mail	ko	계정 이름
@@ -143,6 +146,7 @@ please contact your administrator to validate if your server supports serverside
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ko	서버에서 서버측 휴가 메시지를 지원하는지 여부와 활성 계정(%1)의 ID:%2에 대해 EGroupware에서 이를 사용하도록 설정하는 방법을 확인하려면 관리자에게 문의하세요.
 please enter password	mail	ko	암호를 입력하세요
 please select a address	mail	ko	주소를 선택하세요
+predefined addresses for compose	mail	ko	작성 시 미리 정의된 값
 preview pane	mail	ko	창 레이아웃
 printing	mail	ko	인쇄
 processing of file %1 failed. failed to meet basic restrictions.	mail	ko	%1 파일을 처리하지 못했습니다. 기본 제한을 충족하지 못했습니다.
@@ -181,6 +185,7 @@ see attachments for content of the orignial mail	mail	ko	원본 전자 메일의
 select all	mail	ko	모두 선택
 select an existing entry in order to append mail content to it	mail	ko	메일 내용을 추가하려면 기존 항목을 선택하세요.
 select an item to read	mail	ko	읽을 항목을 선택하세요.
+select mail addresses from addressbook	mail	ko	주소록에서 메일 주소 선택
 selected date range (with quicksearch)	mail	ko	선택한 날짜 범위(빠른 검색 사용)
 send message and move to send folder (if configured)	mail	ko	메시지 보내기 및 보내기 폴더로 이동(설정된 경우)
 send message pgp encrypted: requires keys from all recipients!	mail	ko	메시지 보내기 PGP 암호화: 모든 수신자의 키가 필요합니다!
@@ -188,6 +193,7 @@ server supports special-use folders	mail	ko	서버에서 특수 용도 폴더 �
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	ko	답장 또는 전달 후(표준) 또는 전달 전에 서명을 삽입해야 하며, 작성 중에 서명이 표시되고 변경 가능해야 합니다.
 show all addresses	mail	ko	모든 주소 표시
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ko	메인 화면 폴더 창에 모든 폴더(가입 및 탈퇴한 폴더)를 표시합니다.
+show horizontal, hide if none selected	mail	ko	가로로 표시, 선택되지 않은 경우 숨기기
 show notification for new arriving mails	mail	ko	새 메일 도착 알림 표시
 show test connection section and control the level of info displayed?	mail	ko	테스트 연결 섹션을 표시하고 표시되는 정보의 수준을 제어할 수 있나요?
 show test connection section and control the level of info displayed??	mail	ko	테스트 연결 섹션을 표시하고 표시되는 정보 수준을 제어하시겠습니까?
@@ -201,6 +207,8 @@ signed by	mail	ko	서명자
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	ko	흐름줄이 활성화된 경우 일부 클라이언트에서 올바른 문자 집합을 감지하지 못함
 spamtitan api url	mail	ko	SpamTitan API URL
 spamtitan integration requires epl version	mail	ko	스팸타이탄 통합에는 EPL 버전이 필요합니다
+the %1 's acl removed from the %2	mail	ko	%2에서 %1의 ACL이 제거되었습니다.
+the %1 's acl, including its subfolders, removed from the %2	mail	ko	하위 폴더를 포함한 %1의 ACL이 %2에서 제거되었습니다.
 the imap server need to meet certain requirements and be configured for it:	mail	ko	IMAP 서버는 특정 요구 사항을 충족해야 하며 이를 위해 구성되어야 합니다:
 the rule with priority %1 successfully saved!	mail	ko	우선 순위가 %1인 규칙이 성공적으로 저장되었습니다!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ko	체 스크립트를 저장할 공간이 없으므로 메일 서버의 구성에서 sieve_maxscriptsize 옵션을 확인하세요.
@@ -212,6 +220,7 @@ toggled on actions	mail	ko	동작 토글
 trash	mail	ko	휴지통
 trash folder	mail	ko	휴지통 폴더
 unconditional	mail	ko	항상
+validate addresses on submit:	mail	ko	제출할 주소의 유효성을 검사합니다:
 write	mail	ko	쓰기
 you can select what info to be displayed on email tag	mail	ko	이메일 태그에 표시할 정보를 선택할 수 있습니다.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ko	위의 시작 날짜는 $$start$$로, 종료 날짜는 $$end$$로 사용할 수 있습니다.

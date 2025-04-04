@@ -364,6 +364,7 @@ group excepted from above export limit (admins are always excepted)	admin	ru	Г�
 group has been added	common	ru	Группа добавлена
 group has been deleted	common	ru	Группа удалена
 group has been updated	common	ru	Группа обновлена
+group hidden from non-admins	admin	ru	Группа, скрытая от неадминистраторов
 group hierarchy	admin	ru	Иерархия групп
 group list	admin	ru	Список групп
 group manager	admin	ru	Менеджер группы

@@ -411,6 +411,7 @@ group excepted from above export limit (admins are always excepted)	admin	ja	上
 group has been added	common	ja	グループを追加しました。
 group has been deleted	common	ja	グループを削除しました。
 group has been updated	common	ja	グループを更新しました。
+group hidden from non-admins	admin	ja	管理者以外から隠されたグループ
 group hierarchy	admin	ja	グループ階層
 group list	admin	ja	グループ一覧
 group manager	admin	ja	グループ管理

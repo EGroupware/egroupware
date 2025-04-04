@@ -6,6 +6,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	no	Et tema bestemmer farger og skrifttype som brukes av malen.
 acl grants have been updated	preferences	no	ACL tilganger ble oppdatert
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	no	Alle utlistinger i EGroupware vil vise dette antall innslag eller linjer per side.<br>For mange fører til sen sideoppdatering, for få reduserer oversiktsbildet.
+applications list scroll area	preferences	no	Rulleknapp for sidemeny
 are you sure you want to delete this category ?	preferences	no	Er du sikker på at du vil slette denne kategorien?
 color	preferences	no	Farge
 country	preferences	no	Land
@@ -36,7 +37,9 @@ if enabled, your entered password will be stored and passed on to other server, 
 in which country are you. this is used to set certain defaults for you.	preferences	no	Hvilket land du befinner deg i. Brukes for å velge visse standardverdier for deg.
 interface/template selection	preferences	no	Valg av mal
 language	preferences	no	Språk
+limit following groups to only create application passwords via templates	preferences	no	Disse gruppene begrenser kun applikasjonspassord som kan opprettes via maler
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	no	Når du logger inn via SingleSignOn, får du ikke passord for å sende det videre til e-post- eller filservere.
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	no	Gjør sidefeltet til venstre med rulleknapp mulig å rulle opp/ned (nyttig for brukere på nettbrett).
 max matches per page	preferences	no	Maks. treff per side
 max number of icons in navbar	preferences	no	Maks. antall ikoner på navigasjonslinjen
 no default	preferences	no	Ingen standardverdi
@@ -65,6 +68,7 @@ the selectbox shows all available users (can be very slow on big installs with m
 the two passwords are not the same	preferences	no	Passordene stemmer ikke overens
 theme (colors/fonts) selection	preferences	no	Mal (farger/skrifttype) valg
 this server is located in the %1 timezone	preferences	no	Tjeneren står i %1 tidssonen
+thousands separator is only used for displaying and not for editing numbers.	preferences	no	Tallformatet kan stilles inn for visning av tall.
 time format	preferences	no	Tidsformat
 use default	preferences	no	Bruk standard
 use first %1 letters from username	preferences	no	Bruk de første %1 bokstavene fra brukernavnet

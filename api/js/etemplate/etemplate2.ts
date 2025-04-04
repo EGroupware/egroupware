@@ -16,9 +16,6 @@ import {EgwApp} from "../jsapi/egw_app";
 import {et2_IInput, et2_IPrint, et2_IResizeable, et2_ISubmitListener} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 import {et2_arrayMgr, et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
-import {et2_checkType} from "./et2_core_common";
-import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
-import {et2_loadXMLFromURL} from "./et2_core_xml";
 import {et2_nextmatch, et2_nextmatch_header_bar} from "./et2_extension_nextmatch";
 import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common";
@@ -54,12 +51,15 @@ import './Et2Date/Et2DateTimeToday';
 import './Et2Description/Et2Description';
 import './Et2Dialog/Et2Dialog';
 import './Et2Dialog/Et2MergeDialog';
+import './Et2Diff/Et2Diff';
 import './Et2DropdownButton/Et2DropdownButton';
 import './Et2Email/Et2Email';
 import './Expose/Et2ImageExpose';
 import './Expose/Et2DescriptionExpose';
 import './Et2Favorites/Et2Favorites';
 import './Et2Favorites/Et2FavoritesMenu';
+import './Et2File/Et2File';
+import './Et2File/Et2FileItem';
 import './Et2Image/Et2Image';
 import './Et2Image/Et2AppIcon';
 import './Et2Avatar/Et2LAvatar';
@@ -87,6 +87,7 @@ import './Et2Select/Tag/Et2ThumbnailTag';
 import './Et2Spinner/Et2Spinner';
 import './Et2Switch/Et2Switch';
 import './Et2Switch/Et2SwitchIcon';
+import './Et2Template/Et2Template';
 import './Et2Textarea/Et2Textarea';
 import './Et2Textarea/Et2TextareaReadonly';
 import './Et2Textbox/Et2Textbox';
@@ -111,6 +112,7 @@ import "./Et2Vfs/Et2VfsSelectDialog";
 import "./Et2Vfs/Et2VfsSelectRow";
 import "./Et2Vfs/Et2VfsUid";
 import "./Et2Vfs/Et2VfsName";
+import "./Et2Vfs/Et2VfsUpload";
 import "./Validators/EgwValidationFeedback";
 import "./Et2Textbox/Et2Password";
 import './Et2Textbox/Et2Searchbox';
@@ -157,6 +159,7 @@ import './et2_extension_nextmatch';
 import './et2_extension_customfields';
 import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
+import {Et2Template} from "./Et2Template/Et2Template";
 
 
 /**
@@ -184,7 +187,7 @@ export class etemplate2
 	private uniqueId : void | string;
 	private template_base_url : string;
 
-	private _widgetContainer : et2_container;
+	private _widgetContainer : Et2Template;
 	private _DOMContainer : HTMLElement;
 
 	private resize_timeout : number | boolean;
@@ -217,7 +220,6 @@ export class etemplate2
 
 		/**
 		 * Preset the object variable
-		 * @type {et2_container}
 		 */
 		this._widgetContainer = null;
 
@@ -226,15 +228,15 @@ export class etemplate2
 		// We share list of templates with iframes and popups
 		try
 		{
-			if(opener && opener.etemplate2)
+			if(opener && opener.Et2Template)
 			{
-				etemplate2.templates = opener.etemplate2.templates;
+				Et2Template.templateCache = opener.Et2Template.templateCache;
 			}
 			// @ts-ignore
-			else if(top.etemplate2)
+			else if(top.Et2Template)
 			{
 				// @ts-ignore
-				etemplate2.templates = top.etemplate2.templates;
+				Et2Template.templateCache = top.Et2Template.templateCache;
 			}
 		}
 		catch(e)
@@ -350,13 +352,21 @@ export class etemplate2
 			// Un-register handler
 			this._widgetContainer.egw().unregisterJSONPlugin(this.handle_assign, this, 'assign');
 
+			// Unreference from any app objects
+			for(const app of EgwApp)
+			{
+				if(app.et2 == this.widgetContainer)
+				{
+					app.et2 = null;
+				}
+			}
 			this._widgetContainer.destroy();
 			this._widgetContainer = null;
 		}
-		jQuery(this._DOMContainer).empty();
+		while(this.DOMContainer.lastChild) this.DOMContainer.lastChild.remove();
 
 		// Remove self from the index
-		for(const name in etemplate2.templates)
+		for(const name in Et2Template.templateCache)
 		{
 			if(typeof etemplate2._byTemplate[name] == "undefined")
 			{
@@ -384,7 +394,7 @@ export class etemplate2
 		}
 	}
 
-	get widgetContainer() : et2_container
+	get widgetContainer() : Et2Template
 	{
 		return this._widgetContainer;
 	}
@@ -483,12 +493,26 @@ export class etemplate2
 
 			window.addEventListener("unload", this.destroy_session);
 		}
+		// If in a popup, remove the associated helper iframe when the popup closes
+		if(window !== egw_topWindow())
+		{
+			const iframe = this.DOMContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']");
+			if(iframe)
+			{
+				window.addEventListener("pagehide", () =>
+				{
+					// Clean up the iframe
+					iframe.remove();
+				});
+			}
+		}
 	}
 
 	private _close_changed_prompt(e : BeforeUnloadEvent)
 	{
 		if(this._skip_close_prompt || !this.isDirty())
 		{
+			this.clear();
 			return;
 		}
 
@@ -676,10 +700,17 @@ export class etemplate2
 			}
 
 			// Create the basic widget container and attach it to the DOM
-			this._widgetContainer = new et2_container(null);
-			this._widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this._DOMContainer)));
+			this._widgetContainer = new Et2Template(egw(currentapp, egw.elemWindow(this._DOMContainer)));
 			this._widgetContainer.setInstanceManager(this);
-			this._widgetContainer.setParentDOMNode(this._DOMContainer);
+			this._widgetContainer.template = this.name;
+			if(_url)
+			{
+				this._widgetContainer.url = _url;
+			}
+			// Set array managers first, or errors will happen
+			this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+			// Template starts loading when added
+			this.DOMContainer.append(this._widgetContainer);
 
 			// store the id to submit it back to server
 			if(_data)
@@ -697,14 +728,6 @@ export class etemplate2
 
 			const _load = function()
 			{
-				egw.debug("log", "Loading template...");
-				if(egw.debug_level() >= 4 && console.timeStamp)
-				{
-					console.timeStamp("Begin rendering template");
-					console.time("Template load");
-					console.time("loadFromXML");
-				}
-
 				// Add into indexed list - do this before, so anything looking can find it,
 				// even if it's not loaded
 				if(typeof etemplate2._byTemplate[_name] == "undefined")
@@ -712,22 +735,6 @@ export class etemplate2
 					etemplate2._byTemplate[_name] = [];
 				}
 				etemplate2._byTemplate[_name].push(this);
-
-				// Read the XML structure of the requested template
-				if(etemplate2.templates[this.name].hasAttribute("slot"))
-				{
-					this.DOMContainer.setAttribute("slot", etemplate2.templates[this.name].getAttribute("slot"));
-				}
-
-				this._widgetContainer.loadFromXML(etemplate2.templates[this.name]);
-				console.timeEnd("loadFromXML");
-				console.time("deferred");
-
-				// List of Promises from widgets that are not quite fully loaded
-				const deferred = [];
-
-				// Inform the widget tree that it has been successfully loaded.
-				this._widgetContainer.loadingFinished(deferred);
 
 				// Connect to the window resize event
 				jQuery(window).on("resize." + this.uniqueId, this, function(e)
@@ -748,27 +755,8 @@ export class etemplate2
 				// to run.
 				setTimeout(() =>
 				{
-					Promise.race([Promise.all(deferred),
-						// If loading takes too long, give some feedback so we can try to track down why
-						new Promise((resolve) =>
-						{
-							setTimeout(() =>
-								{
-									if(this.ready)
-									{
-										return;
-									}
-									egw.debug("error", "Loading timeout");
-									console.debug("Deferred widget list, look for widgets still pending.", deferred);
-									resolve()
-								}, 10000
-							);
-						})
-					]).then(() =>
+					this._widgetContainer.updateComplete.then(() =>
 					{
-
-						console.timeEnd("deferred");
-						console.timeStamp("Deferred done");
 						// Clear dirty now that it's all loaded
 						this.widgetContainer.iterateOver((_widget) =>
 						{
@@ -785,7 +773,7 @@ export class etemplate2
 						this.resize();
 
 						// Automatically set focus to first visible input for popups
-						if(this._widgetContainer._egw.is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0)
+						if(this._widgetContainer.egw().is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0)
 						{
 							this.focusOnFirstInput();
 						}
@@ -816,16 +804,6 @@ export class etemplate2
 							detail: this
 						}));
 
-						if(etemplate2.templates[this.name].attributes.onload)
-						{
-							let onload = et2_checkType(etemplate2.templates[this.name].attributes.onload.value, 'js', 'onload', {});
-							if(typeof onload === 'string')
-							{
-								onload = et2_compileLegacyJS(onload, this, this._widgetContainer);
-							}
-							onload.call(this._widgetContainer);
-						}
-
 						// Profiling
 						if(egw.debug_level() >= 4)
 						{
@@ -850,58 +828,9 @@ export class etemplate2
 				});
 			};
 
-
 			// Load & process
-			try
-			{
-				if(etemplate2.templates[_name])
-				{
-					// Set array managers first, or errors will happen
-					this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
-
-					// Already have it
-					_load.apply(this, []);
-					return;
-				}
-			}
-			catch(e)
-			{
-				// weird security exception in IE denying access to template cache in opener
-				if(e.message == 'Permission denied')
-				{
-					etemplate2.templates = {};
-				}
-				// other error eg. in app.js et2_ready or event handlers --> rethrow it
-				else
-				{
-					throw e;
-				}
-			}
-			// Split the given data into array manager objects and pass those to the
-			// widget container - do this here because file is loaded async
-			this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
-
-			// Asynchronously load the XET file
-			return et2_loadXMLFromURL(_url, function(_xmldoc)
-			{
-
-				// Scan for templates and store them
-				for(let i = 0; i < _xmldoc.childNodes.length; i++)
-				{
-					const template = _xmldoc.childNodes[i];
-					if(template.nodeName.toLowerCase() != "template")
-					{
-						continue;
-					}
-					etemplate2.templates[template.getAttribute("id")] = template;
-					if(!_name)
-					{
-						this.name = template.getAttribute("id");
-					}
-				}
-				_load.apply(this, []);
-			}, this);
-		});
+			_load.apply(this, []);
+		}).then(async() => await this._widgetContainer.updateComplete);
 	}
 
 	public focusOnFirstInput()

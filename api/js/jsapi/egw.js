@@ -174,6 +174,18 @@ window.app = {classes: {}};
 		window.egw.top = window;
 	}
 
+	// Register unload listener for cleanup
+	if (popup)
+	{
+		// Uncomment this to debug pagehide events
+		// window.onpagehide = (e) => {	debugger;};
+		window.addEventListener("pagehide", (e) =>
+		{
+			window.framework = null;
+			window.egw = null;
+		})
+	}
+
 	// focus window / call window.focus(), if data-window-focus is specified
 	var window_focus = egw_script.getAttribute('data-window-focus');
 	if (window_focus && JSON.parse(window_focus))
@@ -283,6 +295,7 @@ window.app = {classes: {}};
 		var gen_time_async = jQuery('.asyncIncludeTime').length > 0 ? jQuery('.asyncIncludeTime'):
 				gen_time_div.append('<span class="asyncIncludeTime"></span>').find('.asyncIncludeTime');
 		gen_time_async.text(egw.lang ? egw.lang('async includes took %1s', (end_time - start_time) / 1000) : 'async includes took ' + (end_time - start_time) / 1000);
+		gen_time_async = null;
 
 		// Make sure opener knows when we close - start a heartbeat
 		try {
@@ -312,13 +325,14 @@ window.app = {classes: {}};
 		{
 			window.framework.setSidebox.apply(window.framework, JSON.parse(sidebox));
 		}
+		sidebox = null;
 
 		var resize_attempt = 0;
 		var resize_popup = function()
 		{
 			var $main_div = jQuery('#popupMainDiv');
 			let $et2 = jQuery('.et2_container');
-			let $layoutTable = jQuery(".et2_container > div > table", $main_div);
+			let $layoutTable = jQuery(".et2_container > * > table", $main_div);
 			if ($layoutTable.length && $et2.width() < $layoutTable.width())
 			{
 				// Still using a layout table, and it's bigger.
@@ -344,7 +358,7 @@ window.app = {classes: {}};
 				delta_height = 0;
 			}
 			if((delta_width != 0 || delta_height != 0) &&
-				(delta_width >2 || delta_height >2 || delta_width<-2 || delta_height < -2) && (scrollHeight>0 || scrollWidth>0))
+				(delta_width > 2 || delta_height > 2 || delta_width < -2 || delta_height < -2))
 			{
 
 				if (window.framework && typeof window.framework.resize_popup != 'undefined')
@@ -365,18 +379,28 @@ window.app = {classes: {}};
 			{
 				resize_attempt = 0;
 			}
+			$main_div = null;
+			$et2 = null;
+			$layoutTable = null;
 		};
 
 		// rest needs DOM to be ready
 		jQuery(function()
 		{
 			// load etemplate2 template(s)
-			jQuery('form.et2_container[data-etemplate]').each(  function(index, node)
+			document.querySelectorAll('form.et2_container[data-etemplate]').forEach(node =>
 			{
 				const data = JSON.parse(node.getAttribute('data-etemplate')) || {};
 				if (popup || window.opener && !egwIsMobile()) {
 					// Resize popup when et2 load is done
-					jQuery(node).on('load', () => window.setTimeout(resize_popup, 50));
+					node.addEventListener("load", (event) =>
+					{
+						// Only the top-level template, not any sub-templates
+						if (event.target == node)
+						{
+							window.setTimeout(resize_popup, 50)
+						}
+					});
 				}
 				const et2 = new etemplate2(node, data.data.menuaction);
 				et2.load(data.name, data.url, data.data);

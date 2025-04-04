@@ -3,6 +3,7 @@ ask to start and stop working time with session	timesheet	da	Bed om at starte og
 by	timesheet	da	af
 category for 'working time'	admin	da	Kategori for 'Arbejdstid'
 change owner when updating	timesheet	da	Skift ejer ved opdatering
+choose 'creator' of imported data	timesheet	da	Vælg 'skaber' af importerede data
 create a single 'working time' timesheet per	timesheet	da	Opret en enkelt timeseddel for 'Arbejdstid' pr.
 create new links	timesheet	da	Lav nyt link
 creates a new field	timesheet	da	opretter et nyt felt
@@ -20,11 +21,13 @@ edit this entry	timesheet	da	Redigér denne indstasning
 end	timesheet	da	Slut
 error storing working time	timesheet	da	Fejl ved lagring af arbejdstid
 existing links	timesheet	da	eksisterende links
+exports entries from your timesheet into a csv file.	timesheet	da	Eksporterer poster fra Time Sheet til en CSV-fil
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	da	Eksporterer poster fra Time Sheet til en CSV-fil. I fanen Indstillinger kan du også vælge andre separatorer.
 forgot to switch off working time?	common	da	Har du glemt at slukke for arbejdstiden?
 global categories	timesheet	da	Globale Kategorier
 history	timesheet	da	Historisk
 id	timesheet	da	ID
+imports entries into the timesheet from a csv file.	timesheet	da	Importerer poster til Time Sheet fra en CSV-fil
 last modified	timesheet	da	Sidst opdateret
 leaves without saveing	timesheet	da	forlad uden at gemme
 length<br>rows	timesheet	da	Længde<br>række
@@ -55,6 +58,10 @@ stop- or pause-time can not be before the start-time %1!	common	da	Stop- eller p
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige
 the text displayed to the user	timesheet	da	teksten som vises til brugeren
 timer already running or paused	common	da	Timer kører allerede eller er sat på pause
+timesheet csv export	timesheet	da	Timesheet CSV-eksport
+timesheet csv import	timesheet	da	Import af CSV-fil fra Timesheet
+timesheet id	timesheet	da	Timesheet ID
+timesheet list	timesheet	da	Liste over timesedler
 use field from csv if possible	timesheet	da	Brug felt fra CSV, hvis det er muligt
 values for selectbox	timesheet	da	Værdier for selectboks
 week	timesheet	da	Uge

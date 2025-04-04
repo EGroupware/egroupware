@@ -10,7 +10,6 @@ export default css`
 	.form-control-input {
 		/* This allows the dropdown to show over other inputs */
 		position: relative;
-		z-index: 1;
 	}
 
 	.email .email__combobox {

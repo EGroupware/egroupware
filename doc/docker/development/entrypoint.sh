@@ -4,9 +4,35 @@ set -ex
 VERSION=${VERSION:-dev-master}
 PHP_VERSION=${PHP_VERSION:-8.1}
 
+# if EGW_APC_SHM_SIZE is set in environment, propagate value to apcu.ini, otherwise set default of 128M
+grep "apc.shm_size" /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini >/dev/null && \
+  sed -e "s/^;\?apc.shm_size.*/apc.shm_size=${EGW_APC_SHM_SIZE:-128M}/g" \
+    -i /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini || \
+  echo "apc.shm_size=${EGW_APC_SHM_SIZE:-128M}" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini
+
 # if EGW_SESSION_TIMEOUT is set in environment, propagate value to php.ini
-test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 &&
+test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 && \
 	sed -e "s/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime=$EGW_SESSION_TIMEOUT/g" \
+		-i /etc/php/$PHP_VERSION/fpm/php.ini
+
+# if EGW_MEMORY_LIMIT is set in environment, propagate value to pool.d/www.conf, which has higher precedence then php.ini
+test -n "$EGW_MEMORY_LIMIT" && \
+	sed -e "s/^;\?php_admin_value\[memory_limit\].*/php_admin_value[memory_limit]=$EGW_MEMORY_LIMIT/g" \
+		-i /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
+
+# if EGW_MAX_EXECUTION_TIME is set in environment, propagate value to php.ini
+test -n "$EGW_MAX_EXECUTION_TIME" && test "$EGW_MAX_EXECUTION_TIME" -ge 90 && \
+	sed -e "s/^;\?max_execution_time.*/max_execution_time=$EGW_MAX_EXECUTION_TIME/g" \
+		-i /etc/php/$PHP_VERSION/fpm/php.ini
+
+# if EGW_POST_MAX_SIZE is set in environment, propagate value to php.ini
+test -n "$EGW_POST_MAX_SIZE" && \
+	sed -e "s/^;\?post_max_size.*/post_max_size=$EGW_POST_MAX_SIZE/g" \
+		-i /etc/php/$PHP_VERSION/fpm/php.ini
+
+# if EGW_UPLOAD_MAX_FILESIZE is set in environment, propagate value to php.ini
+test -n "$EGW_UPLOAD_MAX_FILESIZE" && \
+	sed -e "s/^;\?upload_max_filesize.*/upload_max_filesize=$EGW_UPLOAD_MAX_FILESIZE/g" \
 		-i /etc/php/$PHP_VERSION/fpm/php.ini
 
 # if XDEBUG_REMOTE_HOST is set, patch it into xdebug config

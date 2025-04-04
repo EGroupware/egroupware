@@ -1,6 +1,8 @@
+%1 is not a known user or group	importexport	et	%1 ei ole teadaolev kasutaja või grupp.
 add a new definition	importexport	et	Uue määratluse lisamine
 addressbook csv import	importexport	et	Aadressiraamatu CSV import
 addressbook vcard import	importexport	et	Aadressiraamatu vCard-i import
+admin disabled exporting	importexport	et	Admin keelas eksportimise.
 all users	importexport	et	Kõik kasutajad
 allowed users	importexport	et	Lubatud kasutajad
 automatically created by importexport	importexport	et	automaatselt tehtud Import-Eksport poolt
@@ -11,8 +13,11 @@ check all	importexport	et	Kontrolli kõik
 choose a name for this definition	importexport	et	Vali nimi selle definitsioonijaoks
 choose a plugin	importexport	et	Vali plugin
 choose an application	importexport	et	Vali rakendus
+choose fields to export	importexport	et	Valige eksporditavad väljad
 created	importexport	et	Tehtud
+database values	importexport	et	Andmebaasi väärtused
 delete all selected definitions	importexport	et	kustuta KÕIK valitud definitsioonid
+delete files after import	importexport	et	Kustutage failid pärast importimist
 deleted	importexport	et	kustutatud
 expert options	importexport	et	Ekspordi omadused
 export	importexport	et	Eksport

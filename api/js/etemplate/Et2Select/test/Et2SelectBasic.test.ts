@@ -3,6 +3,7 @@ import {assert, elementUpdated, fixture, html, oneEvent} from '@open-wc/testing'
 import * as sinon from 'sinon';
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import {Et2Select} from "../Et2Select";
+import {waitForEvent} from "../../Et2Widget/event";
 
 /**
  * Test file for Etemplate webComponent Select
@@ -25,7 +26,7 @@ async function before()
 	// Create an element to test with, and wait until it's ready
 	// @ts-ignore
 	element = await fixture<Et2Select>(html`
-        <et2-select label="I'm a select">
+        <et2-select label="I'm a select" emptyLabel="No option">
         </et2-select>
 	`);
 
@@ -65,26 +66,26 @@ describe("Select widget basics", () =>
 	{
 	// WIP
 		const blurSpy = sinon.spy();
+		const showSpy = sinon.spy();
+		element.addEventListener("sl-show", showSpy);
 		element.addEventListener('sl-hide', blurSpy);
-		const showPromise = new Promise(resolve =>
-		{
-			element.addEventListener("sl-after-show", resolve);
-		});
-		const hidePromise = new Promise(resolve =>
-		{
-			element.addEventListener("sl-hide", resolve);
-		});
-		await elementUpdated(element);
+
 		element.focus();
 
-		await showPromise;
+		// Does not open on focus, so open it
+		sinon.assert.notCalled(showSpy);
+		element.show();
 		await elementUpdated(element);
+
+		// Opens
+		waitForEvent(element, "sl-after-show");
+		sinon.assert.calledOnce(showSpy);
 
 		element.blur();
 		await elementUpdated(element);
 
-		await hidePromise;
-
+		// Hides when blurred
+		waitForEvent(element, "sl-after-hide")
 		sinon.assert.calledOnce(blurSpy);
 
 		// Check that it actually closed dropdown

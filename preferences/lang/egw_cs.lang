@@ -101,6 +101,7 @@ it sets content size (text only) according to selected size.	preferences	cs	Nast
 just clicking on the line, like a checkbox	preferences	cs	Pouze klikáním na řádek, jako u zaškrtávacího políčka
 keep list open for selecting multiple	preferences	cs	Ponechání otevřeného seznamu pro výběr více
 language	preferences	cs	Jazyk
+limit following groups to only create application passwords via templates	preferences	cs	Tyto skupiny omezují pouze hesla aplikací, která lze vytvářet prostřednictvím šablon
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	cs	Při přihlašování přes SingleSignOn není heslo předáváno poštovním nebo souborovým serverům.
 look & feel	preferences	cs	Vzhled
 lowercase letters	preferences	cs	malá písmena
@@ -180,7 +181,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	cs	Zadaná hesla se neshodují
 theme (colors/fonts) selection	preferences	cs	Výběr tématu (barev/fontů)
 this server is located in the %1 timezone	preferences	cs	Server se nachází v časové zóně %1
-thousands separator is only used for displaying and not for editing numbers.	preferences	cs	Oddělovač tisíců se používá jen pro zobrazování čísel, ne pro jejich editaci.
+thousands separator is only used for displaying and not for editing numbers.	preferences	cs	Pro zobrazení čísel lze nastavit formát čísla.
 time format	preferences	cs	Formát času
 two factor auth	preferences	cs	Ověřování dvěma faktory
 two factor auth enabled.	preferences	cs	Dvoufaktorové ověřování je povoleno.

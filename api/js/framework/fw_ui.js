@@ -574,8 +574,9 @@ window.egw_fw_ui_tab.prototype.hideTabHeader = function()
 window.egw_fw_ui_tab.prototype.remove = function()
 {
 	this.hide();
-	jQuery(this.contentDiv).remove();
-	jQuery(this.headerDiv).remove();
+	jQuery(this.contentDiv).empty().remove();
+	jQuery(this.headerDiv).empty().remove();
+	this.notificationDiv.remove();
 };
 
 /**
@@ -813,7 +814,7 @@ window.egw_fw_ui_tabs.prototype.clean = function()
 	//Reset all arrays and references
 	this.tabs = new Array();
 	this.activeTab = null;
-	this.tabHistroy = new Array();
+	this.tabHistory = new Array();
 
 	return true;
 };

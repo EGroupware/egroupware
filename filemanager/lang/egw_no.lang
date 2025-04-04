@@ -98,10 +98,12 @@ no files in this directory.	filemanager	no	Ingen filer i mappen
 no version history for this file/directory	filemanager	no	Ingen versjon for denne filen/mappen
 notebookbar	filemanager	no	Feltet
 open	filemanager	no	åpen
+open documents with collabora, if permissions are given	filemanager	no	Åpne dokumenter med Collabora Online, hvis tillatelser er gitt
 operation	filemanager	no	Operasjon
 password for webdav and smb, use $pass for password of logged in user	filemanager	no	Passord for WebDAV og SMB, bruk $pass for passordet til den innloggede brukeren.
 path and query-parameters, smb: share and optional path (with /)	filemanager	no	Sti og spørringsparametere, SMB: deling og valgfri sti (med /)
 percentage	filemanager	no	Prosent
+permission denied!	filemanager	no	Tillatelse avslått!
 permissions	filemanager	no	Tillatelser
 please select a file to delete.	filemanager	no	Vennligst velg en fil å slette
 preview	filemanager	no	Forhåndsvis
@@ -131,6 +133,9 @@ save changes	filemanager	no	Lagre endringer
 saved %1	filemanager	no	Lagret %1
 show	filemanager	no	Vis
 size	filemanager	no	Størrelse
+smb, webdavs and vfs require a username!	filemanager	no	SMB, WebDAV og VFS krever et brukernavn!
+smb: mount samba or windows fileserver shares	filemanager	no	SMB: Monter Samba- eller Windows-filserver-aksjer
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	no	Dokumentet kan inneholde plassholdere som {{%3}}, som skal erstattes med dataene (%1full liste over plassholdernavn%2).
 total files	filemanager	no	Totalt antall filer
 unused space	filemanager	no	Ubrukt område
 up	filemanager	no	Opp
@@ -138,5 +143,6 @@ updated comment for %1	filemanager	no	Oppdatert kommentar for %1
 upload fields	filemanager	no	last opp felter
 upload files	filemanager	no	Last opp filer
 used space	filemanager	no	Brukt område
+username for webdav and smb, use $user for name of logged in user	filemanager	no	Brukernavn for WebDAV og SMB, bruk $user for navnet på den påloggede brukeren
 you do not have access to %1	filemanager	no	Du har ikke adgang til %1
 your home dir did not exist, egroupware created a new one.	filemanager	no	Din hjemmemappe fantes ikke, EGroupware opprettet en ny.

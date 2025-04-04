@@ -67,11 +67,11 @@
     max-width: 100%
 }
 
-.et2_container > div:not([class]) {
+.et2_container > *:not([class]) {
     height: 100%;
 }
 
-.et2_container > div:not([class]) > table {
+.et2_container > *:not([class]) > table {
 	table-layout: fixed;
 	width: 100%;
 }
@@ -911,62 +911,42 @@ for printing
 /**
  * Diff widget
  */
-div.et2_diff {
-    width: 100%;
-}
 
-.et2_diff thead,
-.author,
-.d2h-file-header,
-.d2h-file-info,
-.d2h-info,
-.et2_diff:not(.ui-dialog-content) .d2h-cntx {
+
+et2-diff thead,
+et2-diff .author,
+et2-diff .d2h-file-header,
+et2-diff .d2h-file-info,
+et2-diff .d2h-info {
     display: none;
 }
 
-.d2h-file-diff {
+et2-diff .d2h-file-diff {
     white-space: normal;
 }
 
-.et2_diff .d2h-file-wrapper {
-}
-
-.et2_diff .d2h-file-diff {
+et2-diff .d2h-file-diff {
     overflow-x: hidden;
 }
 
-.et2_diff .d2h-code-wrapper {
+et2-diff .d2h-code-wrapper {
     position: relative;
 }
 
-.ui-widget-content .d2h-code-line-ctn {
-    white-space: normal;
+et2-diff .d2h-del, et2-diff.d2h-del.d2h-change, et2-diff .d2h-file-diff .d2h-del.d2h-change {
+	background-color: var(--sl-color-red-100, #ffeef0);
 }
 
-.ui-widget-content .d2h-file-diff {
-    overflow-x: visible;
-    overflow-y: visible;
+et2-diff .d2h-code-line del, et2-diff .d2h-code-side-line del {
+	background-color: var(--sl-color-red-300, #fdb8c0);
 }
 
-.et2_diff .ui-icon {
-    margin-top: -14px;
-    float: right;
+et2-diff .d2h-ins, et2-diff.d2h-ins.d2h-change, et2-diff .d2h-file-diff .d2h-ins.d2h-change {
+	background-color: var(--sl-color-green-100, #e6ffed);
 }
 
-.et2_diff .d2h-del, .et2_diff.d2h-del.d2h-change, .et2_diff .d2h-file-diff .d2h-del.d2h-change {
-    background-color: #ffeef0;
-}
-
-.et2_diff .d2h-code-line del, .et2_diff .d2h-code-side-line del {
-    background-color: #fdb8c0;
-}
-
-.et2_diff .d2h-ins, .et2_diff.d2h-ins.d2h-change, .et2_diff .d2h-file-diff .d2h-ins.d2h-change {
-    background-color: #e6ffed;
-}
-
-.et2_diff .d2h-code-line ins, .et2_diff .d2h-code-side-line ins {
-    background-color: #acf2bd;
+et2-diff .d2h-code-line ins, et2-diff .d2h-code-side-line ins {
+	background-color: var(--sl-color-green-300, #acf2bd);
 }
 
 /** Display a loading icon **/
@@ -2092,7 +2072,7 @@ egw-validation-feedback[type] {
     background-color: transparent;
 }
 
-.et2_nextmatch .nextmatch_header_row > div {
+.et2_nextmatch .nextmatch_header_row > div, .et2_nextmatch .nextmatch_header_row et2-template::part(base) {
     display: inline-flex;
     flex-direction: row;
     gap: 1ex;
@@ -2960,7 +2940,7 @@ et2-button.transparent-button::part(container) {
 
 .et2_toolbar-dropdown {
     display: inline-block;
-    height: 24px;
+    height: auto;
     text-align: left;
     font-weight: normal !important;
     font-size: 9pt !important;

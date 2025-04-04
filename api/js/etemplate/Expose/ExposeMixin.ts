@@ -102,6 +102,9 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		// @ts-ignore
 		private _gallery : blueimp.Gallery;
 
+		// We store the wheel handler here so we can remove it properly
+		private _wheelHandler : (ev: WheelEvent) => void = null;
+
 		private __mediaContentFunction : Function | null;
 
 		constructor(...args : any[])
@@ -427,7 +430,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
                     <a title="${egw().lang('Close')}" class="close"></a>
                     <a title="${egw().lang('Play/Pause')}" class="play-pause"></a>
                     <a title="${egw().lang('Fullscreen')}" class="fullscreen"></a>
-                    <a title="${egw().lang('Save')}" class="download" @click=${this.handleDownload.bind(this)}></a>
+                    <a title="${egw().lang('Save')}" class="download" @click=${this.handleDownload}></a>
                     <ol class="indicator"></ol>
                 </div>
 			`;
@@ -818,11 +821,13 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 					 */
 
-
-					// Bind the mousewheel handler
-					$indicator[0].addEventListener('wheel', function(event, _delta)
+					// Store the handler for removal later
+					this._wheelHandler = (event: WheelEvent) =>
 					{
-						let delta = _delta || event.deltaY / 120;
+						// Convert delta as it was in original code
+						let _delta = event.deltaY / 120;
+						let delta = _delta;
+
 						let g_width = parseInt(getComputedStyle(this._gallery.container[0]).width);
 						let width = parseInt(getComputedStyle(this._gallery.indicatorContainer[0]).width);
 						let left = parseInt(getComputedStyle(this._gallery.indicatorContainer[0]).left);
@@ -831,7 +836,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 							return;
 						}
 
-						//Reload next pictures into the gallery by scrolling on thumbnails
+						// Reload next pictures into the gallery by scrolling on thumbnails
 						if(delta < 0 && width + left < g_width)
 						{
 							let nextIndex = this._gallery.indicatorContainer.find('[title="loading"]')[0];
@@ -843,10 +848,13 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 						}
 						// Move it about 5 indicators
 						let i_width = parseInt(getComputedStyle(this._gallery.activeIndicator[0]).width);
-						jQuery($indicator[0]).css('left', left - (-delta * i_width * 5) + 'px');
+						jQuery($indicator[0]).css('left', (left - (-delta * i_width * 5)) + 'px');
 
 						event.preventDefault();
-					}.bind(this));
+					};
+
+					// Native addEventListener for 'wheel'
+					$indicator[0].addEventListener('wheel', this._wheelHandler);
 				}
 			}
 		}
@@ -939,6 +947,14 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			// Check to see if we're in a nextmatch, remove magic
 			let nm = this.find_nextmatch(this);
 
+			// Unregister the wheel handler to prevent leaks
+			let $indicator = this._gallery.container.find('.indicator');
+			if(this._wheelHandler)
+			{
+				$indicator[0].removeEventListener('wheel', this._wheelHandler);
+				this._wheelHandler = null;
+			}
+
 			// redefine essential removeClass method in case the active element has no longer contains it.
 			if (!this._gallery.activeIndicator.removeClass)
 			{
@@ -947,9 +963,8 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			if(nm && !this._is_target_indepth(nm))
 			{
 				// Remove scrolling from thumbnails
-				this._gallery.container.find('.indicator')
+				$indicator
 					.removeClass('paginating')
-					.off('mousewheel')
 					.off('swipe');
 
 				// Remove applied mime filter

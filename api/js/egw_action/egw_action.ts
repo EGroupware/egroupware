@@ -388,21 +388,26 @@ export class egwDragAction extends EgwDragAction {
     };
 })()
 
-let _dragActionImpl = null;
-
 export function getDragImplementation() {
-    if (!_dragActionImpl) {
-        _dragActionImpl = new EgwDragActionImplementation();
+	if(typeof window["_egwActionImpls"] != "object")
+	{
+		window["_egwActionImpls"] = {};
+	}
+	if(!window["_egwActionImpls"]._dragActionImpl)
+	{
+		window["_egwActionImpls"]._dragActionImpl = new EgwDragActionImplementation();
     }
-    return _dragActionImpl;
+	return window["_egwActionImpls"]._dragActionImpl;
 }
 
-
-let _dropActionImpl = null;
-
 export function getDropImplementation() {
-    if (!_dropActionImpl) {
-        _dropActionImpl = new egwDropActionImplementation();
+	if(typeof window["_egwActionImpls"] != "object")
+	{
+		window["_egwActionImpls"] = {};
+	}
+	if(!window["_egwActionImpls"]._dropActionImpl)
+	{
+		window["_egwActionImpls"]._dropActionImpl = new egwDropActionImplementation();
     }
-    return _dropActionImpl;
+	return window["_egwActionImpls"]._dropActionImpl;
 }

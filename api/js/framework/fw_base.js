@@ -70,6 +70,7 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 
 		// keep track of opened popups
 		this.popups = [];
+		this._popupsGCInterval = null;
 		window.addEventListener("beforeunload", this.beforeUnloadHandler.bind(this));
 
 
@@ -568,8 +569,9 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 	tabCloseClickCallback: function(_sender)
 	{
 		//Save references to the application and the tabsUi as "this" will be deleted
-		var app = this.tag;
-		var tabsUi = this.parent;
+		const app = this.tag;
+		const tabsUi = this.parent;
+		const parentFw = app.parentFw;
 
 		//At least one tab must stay open
 		if (tabsUi.tabs.length > 1)
@@ -578,7 +580,7 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 			//unload handler
 			app.browser.blank();
 
-			this.tag.parentFw.notifyTabChangeEnabled = false;
+			parentFw.notifyTabChangeEnabled = false;
 
 			tabsUi.removeTab(this);
 			app.tab = null;
@@ -588,24 +590,26 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 				app.sidemenuEntry.hideAjaxLoader();
 
 			//Set the active application to the application of the currently active tab
-			app.parentFw.setActiveApp(tabsUi.activeTab.tag);
+			parentFw.setActiveApp(tabsUi.activeTab.tag);
 
-			this.tag.parentFw.notifyTabChangeEnabled = true;
+			parentFw.notifyTabChangeEnabled = true;
 
-			this.tag.parentFw.notifyTabChange();
+			parentFw.notifyTabChange();
 		}
 
 		tabsUi.setCloseable(tabsUi._isNotTheLastTab());
 
 		//As a new tab might remove a row from the tab header, we have to resize all tab content browsers
-		 this.tag.parentFw.resizeHandler();
+		this.tag.parentFw.resizeHandler();
+
+		//delete app from parent framework and update parent framework before app it destroyed
+		delete (parentFw.tabApps[this.tag.appName]);
+		parentFw._setTabAppsSession(parentFw.tabApps);
+
 		if (app.isFrameworkTab)
 		{
 			app.destroy();
 		}
-
-		delete(this.tag.parentFw.tabApps[this.tag.appName]);
-		this.tag.parentFw._setTabAppsSession(this.tag.parentFw.tabApps);
 	 },
 
 	/**
@@ -945,6 +949,12 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 
 		windowID.framework = this;
 		this.popups.push(windowID);
+		if (!this._popupsGCInterval)
+		{
+			// Check every 10s to make sure we didn't miss any
+			this._popupsGCInterval = window.setInterval(() => this.popups_garbage_collector(), 10000);
+		}
+		this.popups_garbage_collector();
 
 		if (navigate)
 		{
@@ -995,9 +1005,15 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 	 */
 	popups_garbage_collector: function ()
 	{
-		for (var i=0; i < this.popups.length; i++)
+		let i = this.popups.length;
+		while (i--)
 		{
 			if (this.popups[i].closed) this.popups.splice(i,1);
+		}
+		if (this.popups.length == 0 && this._popupsGCInterval)
+		{
+			window.clearInterval(this._popupsGCInterval);
+			this._popupsGCInterval = null;
 		}
 	},
 

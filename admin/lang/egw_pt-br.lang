@@ -108,6 +108,7 @@ applications	admin	pt-br	Aplicativos
 applications available on mobile devices	admin	pt-br	Aplicativos disponíveis em dispositivos móveis
 applications list	admin	pt-br	Lista de Aplicativos
 applications run rights updated.	admin	pt-br	Direitos de execução dos aplicativos atualizados.
+applications this group can use	admin	pt-br	Applications this group can use
 applies the changes	admin	pt-br	Aplicar as alterações
 apply changes	admin	pt-br	Aplicar alterações
 apply the changes	admin	pt-br	Aplicar as alterações
@@ -350,6 +351,7 @@ group csv import	admin	pt-br	Importação de CSV de grupo
 group has been added	common	pt-br	Grupo adicionado.
 group has been deleted	common	pt-br	Grupo removido.
 group has been updated	common	pt-br	Grupo atualizado.
+group hidden from non-admins	admin	pt-br	Grupo oculto para não administradores
 group hierarchy	admin	pt-br	Hierarquia de grupos
 group list	admin	pt-br	Lista de Grupos
 group manager	admin	pt-br	Manutenção de Grupos

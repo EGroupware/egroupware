@@ -1,7 +1,7 @@
 %1 definition(s) %2	importexport	it	%1 definizioni %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	it	%1 definizione(i) %2, %3 non creata(e) a causa di diritti insufficienti.
 %1 definitions %2	importexport	it	%1 definizioni %2
-%1 is not a known user or group	importexport	it	%1 non è un utente o un gruppo
+%1 is not a known user or group	importexport	it	%1 non è un utente o un gruppo.
 %1 is not readable	importexport	it	%1 non è leggibile
 %1 is not writable	importexport	it	%1 non è scrivibile
 %1 records processed	importexport	it	%1 voci processate
@@ -15,7 +15,7 @@ add a new definition	importexport	it	Aggiungere una nuova definizione
 add an additional condition	importexport	it	Aggiungere una condizione supplementare
 addressbook csv import	importexport	it	Importazione da CSV rubrica
 addressbook vcard import	importexport	it	Importazione da vCard rubrica
-admin disabled exporting	importexport	it	L'amministratore ha disabilitato l'esportazione
+admin disabled exporting	importexport	it	L'amministratore ha disabilitato l'esportazione.
 all custom fields	importexport	it	Tutti i campi personalizzati
 all encodings	importexport	it	Tutte le codifiche
 all users	importexport	it	Tutti gli utenti

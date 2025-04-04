@@ -556,6 +556,7 @@ pop/imap mail server hostname or ip address	setup	de	POP/IMAP Mail-Server-Hostna
 port	setup	de	Port
 possible reasons	setup	de	Mögliche Gründe
 possible solutions	setup	de	Mögliche Lösungen
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	de	POST Request mit Größe von %1 erkannt, größer als post_max_size=%2, und daher nicht von PHP verarbeitet worden!
 post-install dependency failure	setup	de	Abhängigkeitsfehler nach der Installation
 postfix with ldap: [yes(user edit forwarding)]	setup	de	Postfix mit LDAP: [yes(Benutzer Weiterleitung ändern)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	de	PostgreSQL: Leer lassen für die empfohlenen Unix Domain Sockets anstatt einer TCP/IP-Verbindung
@@ -805,6 +806,7 @@ you are using php version %1. egroupware now requires %2 or later, recommended i
 you can install it by running:	setup	de	Installation durch ausführen von:
 you can specify multiple idp on separate lines.	setup	de	Sie können mehrere IdP in separaten Zeilen angeben.
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	de	Sie können den Benutzer und das Passwort der Headerverwaltung auch für jede Domain verwenden. Wenn das Passwort nicht in der Kommandozeile angegeben wurde, wird es aus der Umgebungsvariable EGW_CLI_PASSWORD gelesen oder vom Benutzer abgefragt.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	de	Sie können um das Limit herum arbeiten, in dem das Backup Verzeichnis in den EGroupware Dateimanager gemounted wird und der Upload von dort erfolgt.
 you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwort für die Domain %1 angegeben
 you didn't enter a config username for domain %1	setup	de	Sie haben keinen Benutzernamen für die Domain %1 angegeben
 you didn't enter a header admin password	setup	de	Sie haben kein Passwort für die Headerverwaltung eingegeben

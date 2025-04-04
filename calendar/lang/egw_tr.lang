@@ -96,6 +96,7 @@ explicit recurrences	calendar	tr	Açık yinelemeler
 extended	calendar	tr	Genişletilmiş
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	tr	Genişletilmiş güncellemeler daima etkinlik detaylarının tamamını içerir. iCal bir çok takvim uygulaması tarafından ithal edilebilen bir formatdır.
 fieldseparator	calendar	tr	Alan Ayracı
+find free timeslots where the selected participants are available for the given timespan	calendar	tr	Belirli bir zaman aralığı için seçilen katılımcıların müsait olduğu boş zaman dilimlerini bulun
 firstname of person to notify	calendar	tr	Uyarılacak kişinin ilk adı
 format of event updates	calendar	tr	Etkinlik güncellemelerinin formatı
 fri	calendar	tr	Cum
@@ -190,6 +191,7 @@ recordings	calendar	tr	Kayıtlar
 recurring event	calendar	tr	Tekrarlanan etkinlik
 rejected	calendar	tr	Reddedildi
 removes the event from my calendar	calendar	tr	Etkinliği takvimimden kaldırır
+repeat the event until which date (empty means unlimited)	calendar	tr	Etkinliğin hangi tarihe kadar tekrarlanacağı (Sınırsız için boş)
 repeat type	calendar	tr	Tekrar şekli
 repeating event information	calendar	tr	Tekrar Eden Etkinlik Bilgisi
 repetition	calendar	tr	Tekrarlama
@@ -199,6 +201,7 @@ report	calendar	tr	Rapor
 reset	calendar	tr	Sıfırla
 rule	calendar	tr	Kural
 sat	calendar	tr	Cte
+saves the event ignoring the conflict	calendar	tr	Çatışmayı yok sayarak olayı kaydeder
 scheduling conflict	calendar	tr	Zamanlama çakışması
 send notifications	calendar	tr	Bildirim gönder
 send notifications to users right now	calendar	tr	Katılımcılara hemen bildirim gönderin
@@ -212,7 +215,6 @@ sort by	calendar	tr	Göre sırala
 start date/time	calendar	tr	Başlangıç Tarih/Zaman
 startdate	calendar	tr	Başlangıç tarihi
 startrecord	calendar	tr	Kaydetmeye başla
-status	calendar	tr	Durum
 submit to repository	calendar	tr	Depoya gönder
 sun	calendar	tr	Paz
 tentative	calendar	tr	Geçici

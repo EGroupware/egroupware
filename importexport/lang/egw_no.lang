@@ -1,6 +1,8 @@
+%1 is not a known user or group	importexport	no	%1 er ikke en kjent bruker eller gruppe.
 add a new definition	importexport	no	Legg til en ny definisjon
 addressbook csv import	importexport	no	CSV-import av adressebok
 addressbook vcard import	importexport	no	Adressebok vCard-import
+admin disabled exporting	importexport	no	Administratoren har deaktivert eksport.
 all users	importexport	no	Alle brukere
 change allowed users	importexport	no	Endre tillatte brukere
 change owner when updating	importexport	no	Endre eier ved oppdatering
@@ -8,7 +10,10 @@ changed	importexport	no	Endret
 changed owner	importexport	no	Endret eier
 charset of file	importexport	no	Karaktersett for filen
 check all	importexport	no	Kontroller alle
+choose fields to export	importexport	no	Velg felt som skal eksporteres
 created	importexport	no	Opprettet
+database values	importexport	no	Databaseverdier
+delete files after import	importexport	no	Slett filer etter import
 deleted	importexport	no	slettet
 execute	importexport	no	Utfør
 export	importexport	no	Eksporter

@@ -94,6 +94,13 @@ export class et2_iframe extends et2_valueWidget
 		this.setDOMNode(this.htmlNode[0]);
 	}
 
+	destroy()
+	{
+		super.destroy();
+		this.htmlNode.attr("src", "about:blank");
+		this.htmlNode.off();
+	}
+
 	/**
 	 * Set name of iframe (to be used as target for links)
 	 *

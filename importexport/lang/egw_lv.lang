@@ -1,6 +1,8 @@
+%1 is not a known user or group	importexport	lv	%1 nav zināms lietotājs vai grupa.
 add a new definition	importexport	lv	Pievienot jaunu definīciju
 addressbook csv import	importexport	lv	Adrešu grāmatas CSV imports
 addressbook vcard import	importexport	lv	Adrešu grāmatas vCard imports
+admin disabled exporting	importexport	lv	Administrators ir atspējojis eksportēšanu.
 all users	importexport	lv	Visi lietotāji
 change allowed users	importexport	lv	Mainīt atļautos lietotājus
 change owner when updating	importexport	lv	Mainīt īpašnieku atjaunināšanas laikā
@@ -8,7 +10,10 @@ changed	importexport	lv	Mainīts
 changed owner	importexport	lv	Mainīts īpašnieks
 charset of file	importexport	lv	faila kodējums
 check all	importexport	lv	Parbaudīt visu
+choose fields to export	importexport	lv	Izvēlieties eksportējamos laukus
 created	importexport	lv	Izveidots
+database values	importexport	lv	Datubāzes vērtības
+delete files after import	importexport	lv	Dzēst failus pēc importēšanas
 deleted	importexport	lv	Izdzēsts
 execute	importexport	lv	Izpildīt
 export	importexport	lv	Eksportēt

@@ -65,6 +65,7 @@ continue	mail	da	Fortsæt
 convert mail to item and attach its attachments to this item (standard)	mail	da	Konverter e-mail til element og vedhæft vedhæftede filer til dette element (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	da	Konverter e-mail til element, vedhæft dets vedhæftede filer og tilføj rå besked (.eml) som vedhæftet fil
 convert only mail to item (ignore possible attachments)	mail	da	Konverter kun e-mail til emne (ignorér eventuelle vedhæftede filer)
+copied %1 message(s) from %2 to %3	mail	da	Kopierede %1 meddelelse(r) fra %2 til %3.
 copy to	mail	da	Kopier til
 cross account forward attachment is not allowed!	mail	da	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 current subject	mail	da	Nuværende emne
@@ -130,6 +131,7 @@ general	admin	da	Generelt
 get acl rights failed from imap server!	mail	da	Få ACL-rettigheder mislykkedes fra IMAP-server!
 ham folder	mail	da	Ham-mappe
 handling of external http images / mixed content in mails	mail	da	Håndtering af eksterne http-billeder / blandet indhold i mails
+hide from	mail	da	Skjul Fra
 high priority	mail	da	Høj prioritet
 html	mail	da	HTML
 ident name	mail	da	Ident navn
@@ -192,6 +194,7 @@ modify subject of this message	mail	da	Ændre emnet for denne meddelelse
 move selected to	mail	da	Flyt valgte til
 move to	mail	da	Flyt til
 move to trash	mail	da	Flyt til skraldespanden
+moved %1 message(s) from %2 to %3	mail	da	Flyttede %1 meddelelse(r) fra %2 til %3.
 name and domain	mail	da	Navn og domæne
 name and email	mail	da	Navn og e-mail
 name of account	mail	da	Navn på konto
@@ -275,6 +278,7 @@ see attachments for content of the orignial mail	mail	da	Se vedhæftede filer fo
 select all	mail	da	Vælg alle
 select an existing entry in order to append mail content to it	mail	da	Vælg en eksisterende post for at tilføje mailindhold til den
 select an item to read	mail	da	Vælg et element at læse
+select mail addresses from addressbook	mail	da	Vælg mailadresser fra adressebogen
 select or insert email address	mail	da	Vælg eller indsæt e-mail-adresse
 selected date range (with quicksearch)	mail	da	Valgt datointerval (med hurtigsøgning)
 send message and move to send folder (if configured)	mail	da	Send besked og flyt til sendemappe (hvis konfigureret)
@@ -286,6 +290,7 @@ set predefined values for compose...	mail	da	Indstil foruddefinerede værdier fo
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	da	Skal signaturen indsættes efter (standard) eller før et svar eller en videresendelse, og skal signaturen være synlig og kunne ændres under udarbejdelsen.
 show all addresses	mail	da	Vis alle adresser
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	da	Vis alle mapper (abonnerede OG ikke-abonnerede) i hovedskærmens mapperude.
+show horizontal, hide if none selected	mail	da	Vis vandret, skjul hvis ingen er valgt
 show notification for new arriving mails	mail	da	Vis notifikation for nye ankomne mails
 show test connection section and control the level of info displayed?	mail	da	Vis testforbindelsessektion og kontroller niveauet af vist info?
 show test connection section and control the level of info displayed??	mail	da	Vis testforbindelsessektionen, og kontroller niveauet af de viste oplysninger?
@@ -308,6 +313,8 @@ sort order	mail	da	Soterings rækkefølge
 spamtitan api url	mail	da	SpamTitan API URL
 spamtitan integration requires epl version	mail	da	SpamTitan-integration kræver EPL-version
 text	mail	da	Tekst
+the %1 's acl removed from the %2	mail	da	ACL'en for %1 fjernet fra %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	da	%1's ACL, inklusive dens undermapper, fjernet fra %2.
 the imap server need to meet certain requirements and be configured for it:	mail	da	IMAP-serveren skal opfylde visse krav OG være konfigureret til det:
 the rule with priority %1 successfully saved!	mail	da	Reglen med prioritet %1 er gemt med succes!
 then	mail	da	SÅ
@@ -322,6 +329,7 @@ trash folder	mail	da	Papirkurv-mappe
 unconditional	mail	da	Altid
 unflagged	mail	da	Flag ikke sat
 unread	mail	da	ulæst
+validate addresses on submit:	mail	da	Valider adresserne, når du sender:
 when deleting messages	mail	da	Når meddelser slettes
 write	mail	da	Skriv
 wrote	mail	da	skrev

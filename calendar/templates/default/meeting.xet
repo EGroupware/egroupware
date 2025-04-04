@@ -53,7 +53,7 @@
 						<et2-description  value="This mail cancels a meeting" class="meetingRequestMessage"></et2-description>
 						<et2-hbox class="buttonRow">
 							<et2-button  label="Apply" statustext="Removes the event from my calendar" id="button[cancel]"></et2-button>
-							<et2-button  label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this meeting for all participants','Delete')"></et2-button>
+                            <et2-button label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this meeting for all participants','Delete')"></et2-button>
 							<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit"
 								onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;"></et2-button>
 						</et2-hbox>

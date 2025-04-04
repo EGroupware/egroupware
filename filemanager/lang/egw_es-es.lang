@@ -52,7 +52,6 @@ check virtual filesystem	common	es-es	Comprobar el sistema de ficheros virtual
 classic	filemanager	es-es	Barra de herramientas estandar
 clear search	filemanager	es-es	Limpiar búsqueda
 clipboard is empty!	filemanager	es-es	¡El portapapeles está vacío!
-collab editor settings	filemanager	es-es	Configuración del editor de collab
 comment	filemanager	es-es	Comentario
 configuration changed.	filemanager	es-es	Se ha modificdo la configuración.
 confirm final delete	filemanager	es-es	Confirmar eliminación final

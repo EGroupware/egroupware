@@ -117,7 +117,7 @@ continue	mail	es-es	Continuar
 convert mail to item and attach its attachments to this item (standard)	mail	es-es	Convertir el correo a elemento y adjuntar sus adjuntos a este elemento (estándar)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	es-es	Convertir el correo a elemento, adjuntar sus archivos adjuntos y agregar mensaje en bruto (message/rfc822 (.eml) ) como archivo adjunto
 convert only mail to item (ignore possible attachments)	mail	es-es	Convertir sólo el correo a elemento (ignorar los archivos adjuntos posibles)
-copied %1 message(s) from %2 to %3	mail	es-es	copiado %1 mensaje(s) de %2 a %3
+copied %1 message(s) from %2 to %3	mail	es-es	Copiado %1 mensaje(s) de %2 a %3.
 copy to	mail	es-es	Copiar a
 could not append message:	mail	es-es	No se pudo agregar el mensaje:
 could not save the acl because some names are empty	mail	es-es	No se pudo guardar la lista de control de acceso porque algunos nombres están vacíos
@@ -273,6 +273,7 @@ ham folder	mail	es-es	Carpeta Ham
 handling of external http images / mixed content in mails	mail	es-es	Tratamiento de imágenes http externas / contenido mixto en los correos
 header	mail	es-es	Encabezado
 header lines	mail	es-es	Líneas de encabezado
+hide from	mail	es-es	Ocultar De
 high	mail	es-es	alto
 high priority	mail	es-es	Alta prioridad
 hold %1 to drag files to your computer	mail	es-es	Sostenga %1 para arrastrar archivos a su computadora
@@ -372,7 +373,7 @@ move selected to	mail	es-es	Mover los seleccionados a
 move to	mail	es-es	Mover a
 move to archive	mail	es-es	Mover a carpeta de archivo
 move to trash	mail	es-es	Mover a la papelera
-moved %1 message(s) from %2 to %3	mail	es-es	Movido %1 mensaje(s) de %2 a %3
+moved %1 message(s) from %2 to %3	mail	es-es	Movido %1 mensaje(s) de %2 a %3.
 moving folders from one mailaccount to another is not supported	mail	es-es	Mover carpetas de una cuenta de correo a otra no está soportada
 name and domain	mail	es-es	Nombre y dominio
 name and email	mail	es-es	Nombre y correo electrónico
@@ -546,6 +547,7 @@ select file to attach to message	mail	es-es	Seleccionar archivo para adjuntar al
 select file to import into folder	mail	es-es	Seleccionar archivo para importar a la carpeta
 select file(s) from vfs	mail	es-es	Seleccionar ficheros desde VFS
 select files to upload	mail	es-es	Seleccionar archivos para subir
+select mail addresses from addressbook	mail	es-es	Seleccionar direcciones de correo de la libreta de direcciones
 select multiple	mail	es-es	Seleccionar varios
 select or insert email address	mail	es-es	Seleccionar o insertar la dirección de correo electrónico
 selected	mail	es-es	seleccionado
@@ -626,8 +628,8 @@ test connection and display basic information about the selected profile	mail	es
 text	mail	es-es	Texto
 text mode	mail	es-es	Modo texto
 text/plain	mail	es-es	Texto
-the %1 's acl removed from the %2	mail	es-es	El %1 's ACL eliminado del %2
-the %1 's acl, including its subfolders, removed from the %2	mail	es-es	La ACL de %1, incluidas sus subcarpetas, eliminada de %2
+the %1 's acl removed from the %2	mail	es-es	El %1 's ACL eliminado del %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	es-es	La ACL de %1, incluidas sus subcarpetas, eliminada de %2.
 the entered passphrase is not correct! please try again.	mail	es-es	La contraseña introducida no es correcta. Inténtelo de nuevo.
 the folder %1 's acls saved	mail	es-es	Las ACL de la carpeta %1 guardadas
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	es-es	Se utilizará la carpeta <b>%1</b>, si no hay nada establecido aquí, y no se ha dado ninguna predefinición válida.

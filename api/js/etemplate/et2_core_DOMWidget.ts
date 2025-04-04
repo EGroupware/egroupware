@@ -360,7 +360,8 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 		do {
 			template = template.getParent();
 			// @ts-ignore
-		} while (template !== tabbox && template.getType() !== 'template');
+		}
+		while(template !== tabbox && ['template', 'ET2-TEMPLATE'].indexOf(template.getType()) == -1);
 		for (var i = tabbox.tabData.length - 1; i >= 0; i--)
 		{
 			if(template && template.id &&
@@ -387,7 +388,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	 */
 	set_parent_node(_node)
 	{
-		if(typeof _node == "string")
+		if(typeof _node == "string" && _node !== "" )
 		{
 			var parent = jQuery('#'+_node);
 			if(parent.length === 0 && window.parent)

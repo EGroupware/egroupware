@@ -212,7 +212,7 @@ export class Et2VfsMime extends Et2ImageExpose
 		{
 			this.__download_url = _value.download_url;
 		}
-		let src = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
+		let src = _value.src ?? this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
 		if(src)
 		{
 			this.src = src;

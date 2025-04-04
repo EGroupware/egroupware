@@ -107,7 +107,7 @@ continue	mail	nl	Doorgaan
 convert mail to item and attach its attachments to this item (standard)	mail	nl	Converteer Bericht naar bestand en voeg de bijlagen aan dit bestand toe (Standaard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	nl	Converteer bericht naar bestand, voeg de bijlagen toe en voeg dit bericht (.eml) toe als bijlage
 convert only mail to item (ignore possible attachments)	mail	nl	Converteer alleen Bericht naar een item (laat mogelijke bijlagen buiten beschouwing)
-copied %1 message(s) from %2 to %3	mail	nl	Kopieer %1 bericht(en) van %2 naar %3
+copied %1 message(s) from %2 to %3	mail	nl	Kopieer %1 bericht(en) van %2 naar %3.
 copy to	mail	nl	Kopieer naar
 could not append message:	mail	nl	Kon niet aan bericht toevoegen:
 could not save the acl because some names are empty	mail	nl	Kon de ACL niet opslaan omdat sommige namen leeg zijn
@@ -253,6 +253,7 @@ ham folder	mail	nl	Ham-map
 handling of external http images / mixed content in mails	mail	nl	Omgaan met externe http-afbeeldingen / gemengde inhoud in e-mails
 header	mail	nl	Kop
 header lines	mail	nl	Kop lijnen
+hide from	mail	nl	Verberg Van
 high	mail	nl	Hoog
 high priority	mail	nl	Hoge prioriteit
 hold %1 to drag files to your computer	mail	nl	Houd %1 ingedrukt om bestanden naar je computer te slepen
@@ -348,7 +349,7 @@ move selected to	mail	nl	Verplaats geselecteeerde
 move to	mail	nl	Verplaats naar
 move to archive	mail	nl	Verplaatsen naar archiefmap
 move to trash	mail	nl	Verplaatsen naar prullenmand
-moved %1 message(s) from %2 to %3	mail	nl	%1 bericht verplaatst van %2 naar %3
+moved %1 message(s) from %2 to %3	mail	nl	Verplaatst %1 bericht(en) van %2 naar %3.
 name and domain	mail	nl	Naam en domein
 name and email	mail	nl	Naam en e-mail
 name of account	mail	nl	Naam van
@@ -509,6 +510,7 @@ select an item to read	mail	nl	Selecteer een item om te lezen
 select file to attach to message	mail	nl	Selecteer een bestand om met dit bericht te verzenden
 select file to import into folder	mail	nl	Selecteer het bestand om in deze map te importeren
 select file(s) from vfs	mail	nl	Selecteer het cq de bestand(en) van VFS
+select mail addresses from addressbook	mail	nl	Selecteer e-mailadressen uit adresboek
 select or insert email address	mail	nl	Selecteer of voeg e-mailadres in
 selected	mail	nl	Geselecteerd
 selected date range (with quicksearch)	mail	nl	Geselecteerd datumbereik (met snelzoeken)
@@ -533,6 +535,7 @@ should signature be inserted after (standard) or before a reply or inline forwar
 show all addresses	mail	nl	Toon alle adressen
 show all folders	mail	nl	Toon alle mappen
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	nl	Alle mappen tonen (geabonneerd EN niet geabonneerd) in het mappenpaneel van het hoofdscherm.
+show horizontal, hide if none selected	mail	nl	Horizontaal tonen, verbergen indien geen geselecteerd
 show new messages on home page	mail	nl	Toon nieuw bericht op begin pagina
 show notification for new arriving mails	mail	nl	Notificatie tonen voor nieuw binnengekomen mails
 show test connection section and control the level of info displayed?	mail	nl	Toon test connectie en controleer het niveau van informatie wat wordt getoond?
@@ -581,6 +584,8 @@ test connection and display basic information about the selected profile	mail	nl
 text	mail	nl	Tekst
 text mode	mail	nl	Tekst mode
 text/plain	mail	nl	Tekst
+the %1 's acl removed from the %2	mail	nl	De ACL van %1 verwijderd uit de %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	nl	De ACL van %1, inclusief de submappen, verwijderd uit de %2.
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	nl	De map %1 zal worden gebruikt, als er hier niets is opgegeven, en er geen standaard bekend is.
 the imap server need to meet certain requirements and be configured for it:	mail	nl	De IMAP-server moet aan bepaalde eisen voldoen EN ervoor geconfigureerd zijn:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	nl	De persoon die het bericht heeft verstuurd heeft gevraagd om een reactie om te laten zien dat u het bericht heeft gelezen. Wilt u een leesbevestiging versturen?

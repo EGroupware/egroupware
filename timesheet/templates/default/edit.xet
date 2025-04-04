@@ -187,7 +187,7 @@
 							<et2-button  statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
 							<html id="js"/>
 						</et2-hbox>
-						<et2-button  hideOnReadonly="true" align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button>
+                        <et2-button hideOnReadonly="true" align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button>
 						<et2-button  hideOnReadonly="true" align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]" image="undelete"></et2-button>
 					</et2-hbox>
 				</row>

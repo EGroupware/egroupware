@@ -6,6 +6,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	sv	Ett tema specificerar färger och fonter som används av en mall.
 acl grants have been updated	preferences	sv	Behörighetslistan (ACL) har uppdaterats
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sv	Alla listor i EGroupware kommer att visa såhär många rader.<br>För många rader gör att det blir långsamt, för få och du förlorar överblicken.
+applications list scroll area	preferences	sv	Skrollknapp för sidomenyn
 are you sure you want to delete this category ?	preferences	sv	Vill du verkligen radera kategorin?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sv	Ändra lösenord genom att ange det gamla och ett nytt lösenord. Returnerar TRUE vid lyckat och FALSE om misslyckas.
 color	preferences	sv	Färg
@@ -15,6 +16,7 @@ date format	preferences	sv	Datumformat
 default	preferences	sv	Standard
 default preferences	preferences	sv	Standard inställningar
 delete categories	preferences	sv	Radera kategorier
+deny following groups access to application passwords	preferences	sv	Neka följande grupper åtkomst till applikationslösenord
 description can not exceed 255 characters in length !	preferences	sv	Beskrivningen kan inte vara längre än 255 tecken
 disable	preferences	sv	Inaktivera
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sv	Föredrar du 24 timmars format, eller 12 med fm/em.
@@ -42,6 +44,7 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	sv	Gränsnitt / mall val
 it sets content size (text only) according to selected size.	preferences	sv	Den ställer in storleken på innehållet (endast text) i enlighet med den valda storleken.
 language	preferences	sv	Språk
+limit following groups to only create application passwords via templates	preferences	sv	Dessa grupper begränsar endast programlösenord som ska skapas via mallar
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	sv	Inloggning via SingleSignOn ger inte ett lösenord för att vidarebefordra det till mail- eller filservrar.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	sv	Gör programlistan rullbar med upp-/nedrullningsknappar (användbart för användare som arbetar med mus utan rullhjul).
 max matches per page	preferences	sv	Max träffar per sida
@@ -78,6 +81,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	sv	Lösenorden är inte lika
 theme (colors/fonts) selection	preferences	sv	Tema (färg/font) val
 this server is located in the %1 timezone	preferences	sv	Denna server är placerad i tidzon %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	sv	Sifferformatet kan ställas in för visning av siffror.
 time format	preferences	sv	Tidformat
 use default	preferences	sv	Använd standard
 use first %1 letters from username	preferences	sv	Använd de första %1 bokstäverna i användarnamnet

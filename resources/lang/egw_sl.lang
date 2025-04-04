@@ -102,7 +102,11 @@ resource	resources	sl	Vir
 resource %1 deleted!	resources	sl	Vir %1 izbrisan!
 resource %1 saved!	resources	sl	Sredstvo %1 shranjeno!
 resource / accessories	resources	sl	Vir / Dodatki
+resource id	resources	sl	ID vira
 resources	common	sl	Sredstva
+resources and accessories	resources	sl	Viri in dodatki
+resources csv export	resources	sl	Izvoz virov CSV
+resources csv import	resources	sl	Uvoz virov CSV
 resources list	resources	sl	Seznam sredstev
 responsible:	resources	sl	Odgovorni:
 saves entry and exits	resources	sl	Shrani vnos in zapre okna
@@ -113,6 +117,7 @@ select/deselect all	resources	sl	Označi/odznači vse
 short description	resources	sl	Kratek opis
 short description of resource	resources	sl	Kratek opis sredstva
 show calendar of resource	resources	sl	Prikaži koledar sredstva
+show in title (beside name)	resources	sl	Prikaži v naslovu (poleg imena)
 something went wrong by deleting resource	resources	sl	Nekaj ni bilo v redu pri brisanju sredstva
 something went wrong by saving resource	resources	sl	Nekaj ni bilo v redu pri shranjevanju sredstva
 storage information	resources	sl	Informacija o prostoru

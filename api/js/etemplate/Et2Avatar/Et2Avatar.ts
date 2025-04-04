@@ -17,7 +17,20 @@ import shoelace from "../Styles/shoelace";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import "../../../../vendor/bower-asset/cropper/dist/cropper.min.js";
 import {cropperStyles} from "./cropperStyles";
+import type {Et2Button} from "../Et2Button/Et2Button";
 
+/**
+ * Avatars are used to represent a person or profile.
+ *
+ * @slot icon The default icon to use when no image or initials are provided.
+ *
+ * @event sl-error	The image could not be loaded. This may because of an invalid URL, a temporary network condition, or some unknown cause.
+ *
+ * @csspart base	The component’s base wrapper.
+ * @csspart icon	The container that wraps the avatar’s icon.
+ * @csspart initials	The container that wraps the avatar’s initials.
+ * @csspart image	The avatar image. Only shown when the image attribute is set, or when contactId has an associated avatar image
+ */
 export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 {
 	private _contactId;
@@ -209,7 +222,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 		else if(!this.image || !this.image.match("(&|\\?)" + id + "=" + encodeURIComponent(parsedId) + "(&|$)"))
 		{
 			params[id] = parsedId;
-			this.image = egw.link('/api/avatar.php', params);
+			this.image = this.egw().link('/api/avatar.php', params);
 		}
 		this.requestUpdate("contactId", oldContactId);
 	}
@@ -250,9 +263,11 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 		this._editBtn = document.createElement('et2-button-icon');
 		this._editBtn.setAttribute('image', 'pencil');
 		this._editBtn.setAttribute('part', 'edit');
-		this._delBtn = document.createElement('et2-button-icon');
+		this._editBtn.noSubmit = true;
+		this._delBtn = <Et2Button>document.createElement('et2-button-icon');
 		this._delBtn.setAttribute('image', 'delete');
 		this._delBtn.setAttribute('part', 'edit');
+		this._delBtn.noSubmit = true;
 		this._baseNode.append(this._editBtn);
 		this._baseNode.append(this._delBtn);
 
@@ -297,6 +312,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			title: _title || egw.lang('Input required'),
 			buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
+				etemplate_exec_id: this.getInstanceManager().etemplate_exec_id,
 				content: _value
 			},
 			width: "90%",
@@ -393,14 +409,16 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 	}
 
 	/**
-	 * Function runs after uplaod in avatar dialog is finished and it tries to
+	 * Function runs after upload in avatar dialog is finished and it tries to
 	 * update image and cropper container.
 	 * @param {type} e
 	 */
 	static uploadAvatar_onFinish(e)
 	{
-		let file = e.data.resumable.files[0].file;
+		const file = e.detail.file;
 		let reader = new FileReader();
+		const fileWidget = e.target;
+		fileWidget.loading = true;
 		reader.onload = function (e)
 		{
 			let widget = document.getElementById('_cropper_image');
@@ -409,8 +427,10 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			widget.getUpdateComplete().then(() =>
 			{
 				jQuery(widget._imageNode).cropper('replace',e.target.result)
+				fileWidget.loading = false;
+				fileWidget.requestUpdate("loading", true);
 			});
-
+			fileWidget.value = {};
 		};
 		reader.readAsDataURL(file);
 	}

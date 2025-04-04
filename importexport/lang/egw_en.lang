@@ -1,7 +1,7 @@
 %1 definition(s) %2	importexport	en	%1 definition(s) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	en	%1 definition(s) %2, %3 failed because of insufficient rights!
 %1 definitions %2	importexport	en	%1 definitions %2
-%1 is not a known user or group	importexport	en	%1 is not a known user or group
+%1 is not a known user or group	importexport	en	%1 is not a known user or group.
 %1 is not readable	importexport	en	%1 is not readable.
 %1 is not writable	importexport	en	%1 is not writable.
 %1 records processed	importexport	en	%1 records processed.
@@ -15,7 +15,7 @@ add a new definition	importexport	en	Add a new definition
 add an additional condition	importexport	en	Add an additional condition
 addressbook csv import	importexport	en	Addressbook CSV Import
 addressbook vcard import	importexport	en	Addressbook vCard import
-admin disabled exporting	importexport	en	Admin disabled exporting
+admin disabled exporting	importexport	en	Admin disabled exporting.
 all custom fields	importexport	en	All custom fields
 all encodings	importexport	en	All encodings
 all users	importexport	en	All users

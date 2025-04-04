@@ -140,7 +140,6 @@ custom url for ical with holidays for all users	calendar	ru	Пользовате
 custom_2	common	ru	Занят/Свободен
 daily	calendar	ru	Ежедневно
 daily tables	calendar	ru	Ежедневные таблицы
-data exchange settings	calendar	ru	Установки обмена данных
 date for the day of the week	calendar	ru	Дата для дня недели
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	ru	Дата для дня недели, доступно для первой записи каждого дня недели или дневной таблицы выбранного диапазона
 date range	calendar	ru	Диапазон дат
@@ -491,7 +490,7 @@ reject	calendar	ru	Отказ
 rejected	calendar	ru	Отменено
 removes the event from my calendar	calendar	ru	Удаляет событие из моего календаря
 repeat days	calendar	ru	Повтор дней
-repeat the event until which date (empty means unlimited)	calendar	ru	Повторить событие до даты.
+repeat the event until which date (empty means unlimited)	calendar	ru	Повторить событие до даты
 repeat type	calendar	ru	Тип повтора
 repeating event information	calendar	ru	Информация о повторяющемся событии
 repeating interval, eg. 2 to repeat every second week	calendar	ru	интервал повторения, напр. 2 - повторять каждую вторую неделю
@@ -579,7 +578,6 @@ startdate / -time	calendar	ru	дата начала/ время
 startdate and -time of the search	calendar	ru	Дата начала и время поиска
 startdate of the export	calendar	ru	дата начала экспорта
 startrecord	calendar	ru	Запись начала
-status	calendar	ru	Статус
 status already applied	calendar	ru	Прошлый статус
 status changed	calendar	ru	Состояние изменено
 status for all future scheduled days changed	calendar	ru	Статус всех будущих дней расписания изменен.

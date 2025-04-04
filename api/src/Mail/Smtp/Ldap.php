@@ -259,11 +259,23 @@ class Ldap extends Mail\Smtp
 		// allow extending classes to add extra data
 		$this->addAccountExtra($_hookValues, $allValues[0], $newData);
 
-		if (!($ret = ldap_mod_replace($ds, $accountDN, $newData)) || $this->debug)
-		{
-			error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".
-				array2string($newData).') returning '.array2string($ret).
-				(!$ret?' ('.ldap_error($ds).')':''));
+		$ret = false;
+		try {
+			if (isset($newData['mail']) && !is_array($newData['mail']))
+			{
+				$newData['mail'] = (array)$newData['mail'];
+			}
+			if (!($ret = ldap_mod_replace($ds, $accountDN, $newData)) || $this->debug)
+			{
+				error_log(__METHOD__ . '(' . array2string(func_get_args()) . ") --> ldap_mod_replace(,'$accountDN'," .
+					array2string($newData) . ') returning ' . array2string($ret) .
+					(!$ret ? ' (' . ldap_error($ds) . ')' : ''));
+			}
+		}
+		catch (\Throwable $e) {
+			// log but ignore exception and return false
+			_egw_log_exception(new \Exception("ldap_mod_replace(\$ds, '$accountDN', ".json_encode($newData).") ".
+				$e->getMessage(), $e->getCode(), $e));
 		}
 		return $ret;
 	}
@@ -652,6 +664,10 @@ class Ldap extends Mail\Smtp
 
 		if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 
+		if (isset($newData['mail']) && is_array($newData['mail']))
+		{
+			$newData['mail'] = (array)$newData['mail'];
+		}
 		if (!($ret = @ldap_mod_replace($ldap, $accountDN, $newData)) && static::CHECK_FORWARD_ATTR)
 		{
 			unset($newData[static::FORWARD_ATTR]);
@@ -752,6 +768,10 @@ class Ldap extends Mail\Smtp
 			}
 			if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'{$allValues[0]['dn']}',".array2string($newData).')');
 
+			if (isset($newData['mail']) && is_array($newData['mail']))
+			{
+				$newData['mail'] = (array)$newData['mail'];
+			}
 			return ldap_modify ($ds, $allValues[0]['dn'], $newData);
 		}
 	}

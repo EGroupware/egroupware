@@ -51,7 +51,6 @@ check virtual filesystem	common	sk	Skontrolovať virtuálny súborový systém
 classic	filemanager	sk	Štandardný panel nástrojov
 clear search	filemanager	sk	Vyčistiť hľadanie
 clipboard is empty!	filemanager	sk	Schránka je prázdna!
-collab editor settings	filemanager	sk	Nastavenia pre Collab Editor
 comment	filemanager	sk	Poznámka
 configuration changed.	filemanager	sk	Konfigurácia bola zmenená.
 confirm final delete	filemanager	sk	Potvrďte konečné zmazanie

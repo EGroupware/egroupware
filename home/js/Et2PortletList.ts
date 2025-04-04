@@ -67,7 +67,7 @@ export class Et2PortletList extends Et2Portlet
 			let dialog = et2_createWidget("dialog", {
 				callback: function(button_id, value)
 				{
-					if(button_id == et2_dialog.CANCEL_BUTTON)
+					if(button_id == Et2Dialog.CANCEL_BUTTON)
 					{
 						return;
 					}
@@ -91,7 +91,7 @@ export class Et2PortletList extends Et2Portlet
 						list.set_value(new_list);
 					}
 				},
-				buttons: et2_dialog.BUTTONS_OK_CANCEL,
+				buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 				title: app.home.egw.lang('add'),
 				template: path,
 				value: {content: [{label: app.home.egw.lang('add'), type: 'link-entry', name: 'add', size: ''}]}
@@ -122,7 +122,7 @@ export class Et2PortletList extends Et2Portlet
 			}
 			if(changed)
 			{
-				widget._process_edit(et2_dialog.OK_BUTTON, {
+				widget._process_edit(Et2Dialog.OK_BUTTON, {
 					list: new_list || {}
 				});
 			}

@@ -49,9 +49,13 @@ resource	resources	da	Ressource
 resource %1 deleted!	resources	da	Ressource %1 slettet!
 resource %1 saved!	resources	da	Ressource %1 gemt!
 resource / accessories	resources	da	Ressource / Tilbehør
+resource id	resources	da	Ressource-ID
 resources	common	da	Ressourcer
+resources csv export	resources	da	Ressourcer CSV-eksport
+resources csv import	resources	da	Ressourcer CSV-import
 select a category	resources	da	Vælg en kategori
 select resources	common	da	Vælg ressourcer
+show in title (beside name)	resources	da	Vis i titel (ved siden af navn)
 un-delete accessories of selected resources too?	resources	da	Gendan tilbehør til de valgte ressourcer?
 view accessories	resources	da	Vis tilbehør
 view calendar	resources	da	Se kalender

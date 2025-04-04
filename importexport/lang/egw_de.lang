@@ -1,7 +1,7 @@
 %1 definition(s) %2	importexport	de	%1 Profildefinition(en) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	de	%1 Definition(en) %2, %3 fehlgeschlagen wegen unzureichender Rechte!
 %1 definitions %2	importexport	de	%1 Import-/Export-Definition(en) %2
-%1 is not a known user or group	importexport	de	%1 ist kein Benutzer oder Gruppe
+%1 is not a known user or group	importexport	de	%1 ist kein Benutzer oder Gruppe.
 %1 is not readable	importexport	de	%1 ist nicht lesbar
 %1 is not writable	importexport	de	%1 ist nicht möglich zu schreiben
 %1 records processed	importexport	de	%1 Einträge ausgeführt
@@ -15,7 +15,7 @@ add a new definition	importexport	de	Hinzufügen einer neuen Definition
 add an additional condition	importexport	de	Eine zusätzliche Bedingung hinzufügen
 addressbook csv import	importexport	de	Adressen per CSV Importieren
 addressbook vcard import	importexport	de	Adressen per vCard Importieren
-admin disabled exporting	importexport	de	Ihr Administrator hat den Export deaktiviert
+admin disabled exporting	importexport	de	Ihr Administrator hat den Export deaktiviert.
 all custom fields	importexport	de	Alle benutzerdefinierten Felder
 all encodings	importexport	de	Alle Enkodierungen
 all users	importexport	de	Alle Benutzer

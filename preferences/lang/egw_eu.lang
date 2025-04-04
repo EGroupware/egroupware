@@ -63,7 +63,6 @@ theme (colors/fonts) selection	preferences	eu	Gai aukeraketa (kolora/letra mota)
 this server is located in the %1 timezone	preferences	eu	Zerbitzari hau %1 ordu zonan aurkitzen da
 time format	preferences	eu	Orduaren formatua
 use default	preferences	eu	Lehenetsia erabili
-users choice	preferences	eu	Erabiltzaileak aukeratua
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	eu	Bai aukeratzen bada sarrera eta irteera botoiak aplikazio nagusien barran agertuko dira.
 which currency symbol or name should be used in egroupware.	preferences	eu	EGroupwarek erabili behar duen txanpon sinbolo edo izena.
 write prefs for the specified application.	preferences	eu	Hobespenak idatzi aplikazio zehatzetarako

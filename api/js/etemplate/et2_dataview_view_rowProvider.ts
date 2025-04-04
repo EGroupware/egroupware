@@ -57,6 +57,7 @@ export class et2_dataview_rowProvider
 		this._template = null;
 		this._mgrs = null;
 		this._rootWidget = null;
+		Object.values(this._prototypes).forEach(p => p.remove && p.remove());
 		this._prototypes = {};
 		this._columnIds = [];
 	}

@@ -43,6 +43,7 @@ day of week	importexport	ru	День недели
 define imports|exports	common	ru	Определите Импорт/Экспорт
 definition	importexport	ru	Определение
 delete all selected definitions	importexport	ru	удаление ВСЕХ выбранных определений
+delete files after import	importexport	ru	Удаление файлов после импорта
 deleted	importexport	ru	Удалённый.
 delimiter	importexport	ru	Снятие ограничений
 duplicate name, please choose another.	importexport	ru	Повторяющееся имя, пожалуйста выберите другое.

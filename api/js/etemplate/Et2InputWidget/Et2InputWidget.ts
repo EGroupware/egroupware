@@ -9,6 +9,8 @@ import {ManualMessage} from "../Validators/ManualMessage";
 import {Required} from "../Validators/Required";
 import {EgwValidationFeedback} from "../Validators/EgwValidationFeedback";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
+import {Et2TabPanel} from "../Layout/Et2Tabs/Et2TabPanel";
+import type {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 
 
 /**
@@ -46,6 +48,8 @@ export declare class Et2InputWidgetInterface
 	public resetDirty() : void;
 
 	public isValid(messages : string[]) : boolean;
+
+	public focus() : void;
 }
 
 /**
@@ -366,6 +370,22 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 			this.removeEventListener("focus", this.et2HandleFocus);
 			this.removeEventListener("blur", this.et2HandleBlur);
+
+			// Hacky hack to clean up Shoelace form controller
+			// https://github.com/shoelace-style/shoelace/issues/2376
+			if(this.formControlController && this.formControlController.form)
+			{
+				this.formControlController.form.removeEventListener('formdata', this.formControlController.handleFormData);
+				this.formControlController.form.removeEventListener('submit', this.formControlController.handleFormSubmit);
+				this.formControlController.form.removeEventListener('reset', this.formControlController.handleFormReset);
+			}
+		}
+
+		destroy()
+		{
+			super.destroy();
+			this.onchange = null;
+			this.change = null;
 		}
 
 		/**
@@ -640,7 +660,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		isValid(messages)
 		{
 			var ok = true;
-			debugger;
 
 			// Check for required
 			if(this.required && !this.readonly && !this.disabled &&
@@ -658,6 +677,19 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		getInputNode()
 		{
 			return this.shadowRoot?.querySelector('input');
+		}
+
+		async focus()
+		{
+			const tab = <Et2TabPanel>this.closest('et2-tab-panel');
+			if(tab && tab.name)
+			{
+				(<Et2Tabs>tab.parentElement).show(tab.name);
+				await (<Et2Tabs>tab.parentElement).updateComplete;
+			}
+			this.scrollIntoView();
+			super.focus && super.focus();
+			this.getInputNode()?.focus();
 		}
 
 		transformAttributes(attrs)

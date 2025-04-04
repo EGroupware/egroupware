@@ -12,19 +12,18 @@
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {css, html, LitElement, nothing} from "lit";
-import {et2_createWidget, et2_widget} from "../et2_core_widget";
-import {et2_file} from "../et2_widget_file";
 import {Et2Button} from "../Et2Button/Et2Button";
 import {Et2LinkEntry} from "./Et2LinkEntry";
 import {egw} from "../../jsapi/egw_global";
 import {LinkInfo} from "./Et2Link";
 import {ManualMessage} from "../Validators/ManualMessage";
-import {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 import {Et2VfsSelectButton} from "../Et2Vfs/Et2VfsSelectButton";
 import {Et2LinkPasteDialog, getClipboardFiles} from "./Et2LinkPasteDialog";
 import {waitForEvent} from "../Et2Widget/event";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2VfsSelectDialog} from "../Et2Vfs/Et2VfsSelectDialog";
+import {Et2File} from "../Et2File/Et2File";
+import type {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
@@ -99,6 +98,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		};
 	}
 
+	private get fileUpload() : Et2File { return this.shadowRoot?.querySelector("et2-file");}
 	private get pasteButton() : Et2VfsSelectButton { return this.shadowRoot?.querySelector("#paste"); }
 
 	private get pasteDialog() : Et2LinkPasteDialog { return <Et2LinkPasteDialog><unknown>this.pasteButton?.querySelector("et2-link-paste-dialog"); }
@@ -117,13 +117,6 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		this.handleVfsSelected = this.handleVfsSelected.bind(this);
 
 		this.handleLinkDeleted = this.handleLinkDeleted.bind(this);
-	}
-
-	firstUpdated()
-	{
-		// Add file buttons in
-		// TODO: Replace when they're webcomponents
-		this._fileButtons();
 	}
 
 	connectedCallback()
@@ -153,7 +146,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 
 			getClipboardFiles().then((files) =>
 			{
-				if(files.length > 0)
+				if(files.length > 0 && !this.disabled && !this.readonly)
 				{
 					this.pasteButton.removeAttribute("disabled");
 				}
@@ -162,10 +155,19 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 
 		return html`
             <slot name="before"></slot>
+            <et2-file multiple id=${this.id}
+                      ?disabled=${this.disabled}
+                      ?readonly=${this.readonly}
+                      title=${this.egw().lang("File upload")}
+                      dropTarget="popupMainDiv"
+                      @et2-add=${(e) => {(<Et2Tabs>this.closest("et2-tabbox")).activateTab(this);}}
+                      @change=${(e) => {this.handleFilesUploaded(e)}}
+            ></et2-file>
             <et2-vfs-select
                     part="vfs button"
                     exportparts="base:button_base"
                     id="link"
+                    ?disabled=${this.disabled}
                     ?readonly=${this.readonly}
                     method=${method || nothing}
                     method-id=${method_id || nothing}
@@ -235,6 +237,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
             <et2-link-entry .onlyApp="${this.onlyApp}"
                             .applicationList="${this.applicationList}"
                             .readonly=${this.readonly}
+                            ?disabled=${this.disabled}
                             @sl-change=${this.handleEntrySelected}
                             @sl-clear="${this.handleEntryCleared}">
             </et2-link-entry>
@@ -242,55 +245,6 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                         @click=${this.handleLinkButtonClick}>
             </et2-button>
 		`;
-	}
-
-	// TODO: Replace when they're webcomponents
-	_fileButtons()
-	{
-		if(this.noFiles)
-		{
-			return "";
-		}
-
-		// File upload
-		//@ts-ignore IDE doesn't know about Et2WidgetClass
-		let self : Et2WidgetClass | et2_widget = this;
-		let file_attrs = {
-			multiple: true,
-			id: this.id + '_file',
-			label: '',
-			// Make the whole template a drop target
-			drop_target: this.getInstanceManager().DOMContainer.getAttribute("id"),
-			readonly: this.readonly,
-
-			// Change to this tab when they drop
-			onStart: function(event, file_count)
-			{
-				// Find the tab widget, if there is one
-				let tabs = self;
-				do
-				{
-					tabs = tabs.getParent();
-				}
-				while(tabs != self.getRoot() && tabs.getType() != 'ET2-TABBOX');
-				if(tabs != self.getRoot())
-				{
-					(<Et2Tabs><unknown>tabs).activateTab(self);
-				}
-				return true;
-			},
-			onFinish: function(event, file_count)
-			{
-				// Auto-link uploaded files
-				self.handleFilesUploaded(event);
-			}
-		};
-
-		this.file_upload = <et2_file>et2_createWidget("file", file_attrs, this);
-		this.file_upload.set_readonly(this.readonly);
-		this.file_upload.getDOMNode().slot = "before";
-
-		this.append(this.file_upload.getDOMNode());
 	}
 
 	/**
@@ -348,6 +302,12 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 
 				for(let link in success)
 				{
+					// Thumbnail might already be there
+					if(typeof success[link]['id']?.src == "string")
+					{
+						success[link]['src'] = success[link]['id']?.src;
+					}
+
 					// Icon should be in registry
 					if(typeof success[link].icon == 'undefined')
 					{
@@ -395,16 +355,18 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		delete this.value.id;
 
 		// Clear file upload
-		for(var file in this.file_upload.options.value)
-		{
-			delete this.file_upload.options.value[file];
-		}
-		this.file_upload.progress.empty();
+		this.fileUpload.value = {};
+		this.fileUpload.requestUpdate("value");
 
 		// Clear link entry
 		this.select.value = {app: this.select.app, id: ""};
 		this.select._searchNode.clearSearch();
 		this.select._searchNode.select_options = [];
+	}
+
+	handleSlChange(event)
+	{
+		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}
 
 	/**
@@ -420,7 +382,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		let links = [];
 
 		// Get files from file upload widget
-		let files = this.file_upload.get_value();
+		let files = this.fileUpload.value;
 		for(let file in files)
 		{
 			links.push({
@@ -428,18 +390,13 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 				id: file,
 				name: files[file].name,
 				type: files[file].type,
-
-				// Not sure what this is...
-				/*
-					remark: jQuery("li[file='" + files[file].name.replace(/'/g, '&quot') + "'] > input", self.file_upload.progress)
-						.filter(function ()
-						{
-							return jQuery(this).attr("placeholder") != jQuery(this).val();
-						}).val()
-				 */
+				src: files[file].src
 			});
 		}
-		this.createLink(links);
+		if(links.length)
+		{
+			this.createLink(links);
+		}
 	}
 
 	/**
@@ -626,10 +583,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     })}
             >
                 ${labelTemplate}
-                <div part="form-control-input" class="form-control-input" @sl-change=${() =>
-                {
-                    this.dispatchEvent(new Event("change", {bubbles: true}));
-                }}>
+                <div part="form-control-input" class="form-control-input" @sl-change=${this.handleSlChange}>
                     ${this._inputGroupBeforeTemplate()}
                     ${this._inputGroupInputTemplate()}
                 </div>

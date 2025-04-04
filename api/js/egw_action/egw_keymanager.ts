@@ -14,7 +14,6 @@
 */
 
 import {egw_getAppObjectManager, egw_globalObjectManager} from "./egw_action";
-import {_egw_active_menu} from "./egw_menu";
 import {
 	EGW_AO_EXEC_SELECTED,
 	EGW_AO_FLAG_DEFAULT_FOCUS,
@@ -137,9 +136,13 @@ ready(() => {//waits for DOM ready
 /**
  * Required to catch the context menu
  */
-jQuery(window).on("contextmenu",document, function(event) {
+window.addEventListener("contextmenu", function(event)
+{
 	// Check for actual key press
-	if (!(event.originalEvent.x == 1 && event.originalEvent.y == 1)) return true;
+	if(!(event.x == 1 && event.y == 1))
+	{
+		return true;
+	}
 	if (!event.ctrlKey && egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))
 	{
 		// If the key handler successfully passed the key event to some
@@ -148,7 +151,7 @@ jQuery(window).on("contextmenu",document, function(event) {
 		return false;
 	}
 	return true;
-})
+});
 
 
 /**

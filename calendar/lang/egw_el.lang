@@ -179,6 +179,7 @@ fieldseparator	calendar	el	Διαχωριστής πεδίων
 filemanager	calendar	el	Διαχειριστής αρχείων
 filename	calendar	el	Όνομα αρχείου
 filename of the download	calendar	el	Όνομα αρχείου για download.
+find free timeslots where the selected participants are available for the given timespan	calendar	el	Εύρεση ελεύθερων χρονοθυρίδων όπου οι επιλεγμένοι συμμετέχοντες είναι διαθέσιμοι για το συγκεκριμένο χρονικό διάστημα
 firstname of person to notify	calendar	el	Ονομα του ατόμου να ειδοποιηθεί
 for	calendar	el	για
 for which views should calendar show distinct lines with a fixed time interval.	calendar	el	Για ποιες εμφανίσεις πρέπει το ημερολόγιο να δείχνει ευδιάκριτες γραμμές με καθορισμένα χρονικά διαστήματα.
@@ -414,7 +415,6 @@ startdate / -time	calendar	el	ημερομηνία/ -ώρα έναρξης
 startdate and -time of the search	calendar	el	ημερομηνία έναρξης και ώρα της αναζήτησης
 startdate of the export	calendar	el	Αρχική ημερομηνία της εξαγωγής
 startrecord	calendar	el	Έναρξη εγγραφής
-status	calendar	el	Κατάστασηv
 status already applied	calendar	el	Η κατάσταση έχει ήδη εφαρμοστεί
 status changed	calendar	el	Η κατάσταση άλλαξε
 submit to repository	calendar	el	Υποβολή στην αποθήκη

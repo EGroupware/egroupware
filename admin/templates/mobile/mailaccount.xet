@@ -238,7 +238,7 @@
 				<row disabled="@no_forward_available">
 					<et2-description></et2-description>
 					<et2-vbox>
-						<et2-checkbox  label="Forward only" id="deliveryMode" onchange="if (widget.getValue()) et2_dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');" selectedValue="forwardOnly"></et2-checkbox>
+                        <et2-checkbox label="Forward only" id="deliveryMode" onchange="if (widget.getValue()) Et2Dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');" selectedValue="forwardOnly"></et2-checkbox>
 						<et2-checkbox  label="Allow users to change forwards" id="acc_user_forward"></et2-checkbox>
 					</et2-vbox>
 				</row>
@@ -302,8 +302,8 @@
 						<et2-button-icon  id="button[save]"></et2-button-icon>
 						<et2-button-icon  id="button[apply]"></et2-button-icon>
 						<et2-button-icon  statustext="Use wizard to detect or verify configuration" id="button[wizard]" image="magicwand"></et2-button-icon>
-						<et2-button-icon  id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"></et2-button-icon>
-						<et2-button-icon  label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')" image="delete"></et2-button-icon>
+                        <et2-button-icon id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this account','Delete')"></et2-button-icon>
+                        <et2-button-icon label="Delete identity" id="button[delete_identity]" onclick="Et2Dialog.confirm(widget,'Delete identity','Delete')" image="delete"></et2-button-icon>
 					</et2-hbox>
 				</row>
 				<row disabled="!@accounts" class="dialogHeader">

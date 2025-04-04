@@ -56,7 +56,15 @@
 		}
 		#filemanager-index_filemanager-index-header_right {width:100%;}
 		#filemanager-index_tarp {display: none !important;}
-		#filemanager-index_filemanager-index-header_left {height:auto;order:100;}
+
+	  #filemanager-index_nm_filemanager-index-header_left {
+		&::part(base) {
+		  width: 100%;
+		}
+
+		height: auto;
+		order: 100;
+	  }
 		.nextmatch_header.nm_header_hide {
 			display:inline-block !important;
 			.header_row_right, .filtersContainer, .header_count {display:none;}

@@ -820,7 +820,7 @@ class Nextmatch extends Etemplate\Widget
 	/**
 	 * Default maximum length for context submenus, longer menus are put as a "More" submenu
 	 */
-	const DEFAULT_MAX_MENU_LENGTH = 14;
+	const DEFAULT_MAX_MENU_LENGTH = 50;
 
 	/**
 	 * Return egw_actions

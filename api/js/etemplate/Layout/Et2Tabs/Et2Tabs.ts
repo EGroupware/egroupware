@@ -12,10 +12,10 @@ import {loadWebComponent} from "../../Et2Widget/Et2Widget";
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "../../et2_core_xml";
 import {css, PropertyValues} from "lit";
 import shoelace from "../../Styles/shoelace";
-import {et2_createWidget} from "../../et2_core_widget";
 import {colorsDefStyles} from "../../Styles/colorsDefStyles";
 import {Et2InputWidget} from "../../Et2InputWidget/Et2InputWidget";
 import {et2_IResizeable} from "../../et2_core_interfaces";
+import {Et2Template} from "../../Et2Template/Et2Template";
 
 
 export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeable
@@ -123,6 +123,15 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		{
 			this.placement = 'end';
 		}
+	}
+
+	destroy()
+	{
+		super.destroy && super.destroy();
+		this.tabData = [];
+		// Clean these from parent
+		this.tabs = [];
+		this.panels = [];
 	}
 
 	get value()
@@ -474,7 +483,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		}
 		else
 		{
-			et2_createWidget('template', tab.widget_options, tab.contentDiv);
+			<Et2Template>loadWebComponent('et2-template', tab.widget_options, tab.contentDiv);
 		}
 
 		return tab.contentDiv;

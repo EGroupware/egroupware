@@ -135,7 +135,6 @@ start timer	common	sl	Začetek časovnika
 start-time can not be before last stop- or pause-time %1!	common	sl	Začetni čas ne sme biti pred zadnjim časom ustavitve ali prekinitve %1!
 starttime	timesheet	sl	Začetni čas
 starttime has to be before endtime !!!	timesheet	sl	Začetni čas mora biti pred koncem!
-status	timesheet	sl	Stanje
 status deleted.	timesheet	sl	Stanje je izbrisano.
 status of created timesheets	timesheet	sl	Stanje ustvarjenih časopisov
 status updated.	timesheet	sl	Stanje posodobljeno.

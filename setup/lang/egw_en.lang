@@ -556,6 +556,7 @@ pop/imap mail server hostname or ip address	setup	en	POP3/IMAP mail server hostn
 port	setup	en	port
 possible reasons	setup	en	Possible reasons
 possible solutions	setup	en	Possible solutions
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	en	POST request with size %1 detected, larger than post_max_size=%2, and therefore not processed by PHP!
 post-install dependency failure	setup	en	Post-install dependency failure
 postfix with ldap: [yes(user edit forwarding)]	setup	en	Postfix with LDAP: [yes(user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	en	PostgreSQL: Leave it empty to use the preferred unix domain sockets instead of a TCP/IP connection
@@ -805,6 +806,7 @@ you are using php version %1. egroupware now requires %2 or later, recommended i
 you can install it by running:	setup	en	You can install it by running:
 you can specify multiple idp on separate lines.	setup	en	You can specify multiple IdP on separate lines.
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	en	You can use the header user and password for every domain too. If the password is not set via the command line, it is read from the environment variable EGW_CLI_PASSWORD or queried from the user.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	en	You can work around that limit, by mounting the backup directory into EGroupware filemanager and upload from there.
 you didn't enter a config password for domain %1	setup	en	You didn't enter a config password for domain %1
 you didn't enter a config username for domain %1	setup	en	You didn't enter a config username for domain %1
 you didn't enter a header admin password	setup	en	You didn't enter a header admin password

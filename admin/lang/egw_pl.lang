@@ -329,6 +329,7 @@ group ?	admin	pl	Grupa?
 group has been added	common	pl	Dodano grupę
 group has been deleted	common	pl	Usunięto grupę
 group has been updated	common	pl	Zaktualizowano grupę
+group hidden from non-admins	admin	pl	Grupa ukryta przed osobami niebędącymi administratorami
 group hierarchy	admin	pl	Hierarchia grup
 group list	admin	pl	Lista grup
 group manager	admin	pl	Menedżer grup

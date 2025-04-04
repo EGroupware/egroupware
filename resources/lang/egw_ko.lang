@@ -47,8 +47,12 @@ resource	resources	ko	리소스
 resource %1 deleted!	resources	ko	리소스 %1 삭제되었습니다!
 resource %1 saved!	resources	ko	리소스 %1이 저장되었습니다!
 resource / accessories	resources	ko	리소스 / 액세서리
+resource id	resources	ko	리소스 ID
 resources	common	ko	리소스
+resources csv export	resources	ko	리소스 CSV 내보내기
+resources csv import	resources	ko	리소스 CSV 가져오기
 select resources	common	ko	리소스 선택
+show in title (beside name)	resources	ko	제목에 표시(이름 옆)
 un-delete accessories of selected resources too?	resources	ko	선택한 리소스의 액세서리를 복원하시겠습니까?
 view accessories	resources	ko	액세서리 보기
 view calendar	resources	ko	캘린더 보기

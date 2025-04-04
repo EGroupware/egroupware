@@ -147,6 +147,8 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			.addClass('verticalBar')
 			.appendTo(this.div);
 
+		this.click = this.click.bind(this);
+
 		this.value = [];
 
 		// Update timer, to avoid redrawing twice when changing start & end date

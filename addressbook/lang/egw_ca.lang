@@ -59,7 +59,6 @@ cell phone	addressbook	ca	Telèfon móvil
 change all organisation members	addressbook	ca	canvia tots els membres de l'organització
 charset for the csv export	addressbook	ca	Joc de caràcters per l'exportació CSV
 charset of file	addressbook	ca	Joc de caràcters de l'arxiu
-check all	addressbook	ca	Comprova-ho tot
 choose an icon for this contact type	admin	ca	Tria una icona per aquest tipus de contacte
 chosse an etemplate for this contact type	admin	ca	Tria un eTemplate per aquest tipus de contacte
 city	common	ca	Ciutat
@@ -300,7 +299,6 @@ which address format should the addressbook use for countries it does not know t
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	ca	Quina llista d'adreces ha de ser seleccionada quan s'afegeix un contacte I no teniu drets afegits a la llibreta d'adreces actual.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ca	Quin joc de caràcters ha de ser utilitzat per l'exportació CSV. El sistema per defecte és el joc de caràcters de la instal·lació d'aquest EGroupware.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	ca	Quins camps han de ser exportats. Tot significa cada camp guardat en la llista d'adreces incloent els camps personalitzats. Les adreces de la feina o el domicili només contenen nom, empresa i l'adreça seleccionada.
-whole query	addressbook	ca	consulta sencera
 work phone	addressbook	ca	Telèfon del treball
 write (update or add) a single entry by passing the fields.	addressbook	ca	Escriu (actualitza o afegeix) una entrada simple, donant els camps.
 yes, for the next three days	addressbook	ca	Sí, pels propers tres dies

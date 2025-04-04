@@ -296,7 +296,7 @@ recurring event	calendar	da	Tilbagevendende hændelse
 rejected	calendar	da	Forkastet
 removes the event from my calendar	calendar	da	Fjerner begivenheden fra min kalender
 repeat days	calendar	da	Gentag antal dage
-repeat the event until which date (empty means unlimited)	calendar	da	Gentag aftale indtil hvilken dato (tom betyder : uendeligt)
+repeat the event until which date (empty means unlimited)	calendar	da	Gentag begivenheden indtil hvilken dato (tom for ubegrænset)
 repeat type	calendar	da	Gentagelsestype
 repeating event information	calendar	da	Information for gentaget aftale
 repeating interval, eg. 2 to repeat every second week	calendar	da	Gentagelses interval, f.eks. 2 for hver anden uge
@@ -309,7 +309,7 @@ resources	calendar	da	Ressourcer
 rule	calendar	da	Regel
 sat	calendar	da	Lør
 saves the changes made	calendar	da	Gem ændringer
-saves the event ignoring the conflict	calendar	da	Ignorér konflikt og gem aftale,
+saves the event ignoring the conflict	calendar	da	Ignorér konflikt og gem aftale
 scheduling conflict	calendar	da	Aftale konflikt
 select a %1	calendar	da	Vælg en %1
 select a time	calendar	da	Vælg et tidspunkt
@@ -335,7 +335,6 @@ startdate / -time	calendar	da	Startdato / tid
 startdate and -time of the search	calendar	da	Søgningens startdato og tid
 startdate of the export	calendar	da	Startdato for exporten
 startrecord	calendar	da	Startpostering
-status	calendar	da	Status
 status changed	calendar	da	Status ændret
 submit to repository	calendar	da	Indsend til EGroupware.org
 sun	calendar	da	Søn

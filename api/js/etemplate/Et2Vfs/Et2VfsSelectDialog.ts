@@ -181,27 +181,6 @@ export class Et2VfsSelectDialog
 		this.handleCreateDirectory = this.handleCreateDirectory.bind(this);
 	}
 
-	transformAttributes(attr)
-	{
-		super.transformAttributes(attr);
-
-		// Start request to get server-side info
-		let content = {};
-		let attrs = {
-			mode: this.mode,
-			label: this.buttonLabel,
-			path: this.path || null,
-			mime: this.mime || null,
-			name: this.title
-		};
-		return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(Et2VfsSelectDialog.SERVER_URL))),
-			[content, attrs]).then((results) =>
-		{
-			//debugger;
-
-		});
-	}
-
 	connectedCallback()
 	{
 		super.connectedCallback();
@@ -443,7 +422,7 @@ export class Et2VfsSelectDialog
 				// Check for existing file, ask what to do
 				if(this.fileInfo(this.value[0]))
 				{
-					let result = await this.overwritePrompt(this._filenameNode ?? this.filename);
+					let result = await this.overwritePrompt(this._filenameNode?.value ?? this.filename);
 					if(result == null)
 					{
 						return;

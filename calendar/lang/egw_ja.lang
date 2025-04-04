@@ -140,7 +140,6 @@ custom url for ical with holidays for all users	calendar	ja	全ユーザで共�
 custom_2	common	ja	空き/予定あり
 daily	calendar	ja	日単位
 daily tables	calendar	ja	日表
-data exchange settings	calendar	ja	データ交換設定
 date for the day of the week	calendar	ja	曜日の日付
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	ja	各曜日(または選択範囲内の日表）の最初の項目で利用可能な、曜日の日付。
 date range	calendar	ja	日付範囲
@@ -252,7 +251,7 @@ fieldseparator	calendar	ja	項目の区切り
 filemanager	calendar	ja	ファイル・マネージャ
 filename	calendar	ja	ファイル名
 filename of the download	calendar	ja	ダウンロード・ファイル名
-find free timeslots where the selected participants are available for the given timespan	calendar	ja	選択された参加者全員が参加できる空き時間帯を検索します。
+find free timeslots where the selected participants are available for the given timespan	calendar	ja	選択された参加者全員が参加できる空き時間帯を検索します
 firstname of person to notify	calendar	ja	通知先の名
 for	calendar	ja	に
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	ja	シリアルレター向けタグ。任意のコンテンツをこのタグで囲んで使用します。
@@ -480,7 +479,7 @@ reject	calendar	ja	不参加回答
 rejected	calendar	ja	不参加回答済み
 removes the event from my calendar	calendar	ja	カレンダーからイベントを削除します
 repeat days	calendar	ja	繰返し日数
-repeat the event until which date (empty means unlimited)	calendar	ja	いつまで繰り返すかを指定します。空欄を指定すると無期限に繰り返します。
+repeat the event until which date (empty means unlimited)	calendar	ja	いつまで繰り返すかを指定します。空欄を指定すると無期限に繰り返します
 repeat type	calendar	ja	繰返しタイプ
 repeating event information	calendar	ja	イベントの繰返し条件
 repeating interval, eg. 2 to repeat every second week	calendar	ja	繰返し周期（例: 隔週で2回）
@@ -568,7 +567,6 @@ startdate / -time	calendar	ja	開始日時
 startdate and -time of the search	calendar	ja	検索開始日時
 startdate of the export	calendar	ja	エクスポート開始日時
 startrecord	calendar	ja	開始項目
-status	calendar	ja	ステータス
 status already applied	calendar	ja	状態は適用済み。
 status changed	calendar	ja	状態変更日時
 status for all future scheduled days changed	calendar	ja	未来方向の予定の状態が変更されました。

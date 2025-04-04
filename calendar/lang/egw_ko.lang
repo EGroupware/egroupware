@@ -135,6 +135,7 @@ extended updates always include the complete event-details. ical's can be import
 fieldseparator	calendar	ko	필드구분자
 filename	calendar	ko	파일명
 filename of the download	calendar	ko	내려받을 파일명
+find free timeslots where the selected participants are available for the given timespan	calendar	ko	선택한 참가자가 주어진 시간대에 사용할 수 있는 여유 시간대를 찾습니다
 firstname of person to notify	calendar	ko	알림 메세징 할 사람의 이름
 format of event updates	calendar	ko	이벤트 갱신 형식
 freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	ko	Freebusy: 알수없는 사용자 '%1', 암호가 틀렸거나, 접속한 사용자중에 없으므로 불가능합니다!!!
@@ -279,7 +280,6 @@ start date/time	calendar	ko	시작 날짜/시간
 startdate	calendar	ko	시작일
 startdate / -time	calendar	ko	시작 날짜/-시간
 startrecord	calendar	ko	시작레코드
-status	calendar	ko	상태
 status changed	calendar	ko	상태 변경됨
 submit to repository	calendar	ko	저장소로 보내기(서브밋)
 sun	calendar	ko	일요일

@@ -62,6 +62,7 @@ all types	addressbook	ja	全タイプ
 allow	addressbook	ja	許可
 allow for contacts only	addressbook	ja	連絡先のみ許可
 allow members of following groups to edit contact-data of accounts	addressbook	ja	下記グループに所属するメンバーによるコンタクト・データの更新を許可
+allow members of following groups to show the account name column	addressbook	ja	以下のグループのメンバーにアカウント名カラムの表示を許可する
 allow users to maintain their own account-data	admin	ja	ユーザ自身のコンタクト・データの更新を許可
 alt. csv import	addressbook	ja	CSVインポート
 always	addressbook	ja	常に
@@ -160,7 +161,6 @@ csv-filename	addressbook	ja	CSVファイル名
 custom	addressbook	ja	カスタム
 custom etemplate for the contactform	addressbook	ja	eTemplate をコンタクト・フォーム用にカスタマイズ
 custom fields	addressbook	ja	カスタム項目
-data exchange settings	addressbook	ja	データ交換設定
 default	addressbook	ja	既定値
 default action on double-click	addressbook	ja	ダブル・クリック時の既定のアクション
 default address format	addressbook	ja	既定の住所書式
@@ -440,6 +440,7 @@ select a view	addressbook	ja	表示を選択
 select addressbook type	addressbook	ja	アドレス帳タイプを選択
 select all	addressbook	ja	全て選択
 select an opened dialog	addressbook	ja	開いているダイアログを選択
+select contacts to add to mail	addressbook	ja	メールに追加する連絡先を選択する
 select migration type	admin	ja	移行タイプを選択
 select multiple contacts for a further action	addressbook	ja	アクションのためのコンタクトを選択
 select phone number as prefered way of contact	addressbook	ja	優先コンタクト方法として電話番号を選択

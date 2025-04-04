@@ -35,8 +35,11 @@ addvcard	addressbook	pt	Adicionar vCard
 all types	addressbook	pt	Todos os tipos
 allow	addressbook	pt	Permitir
 allow for contacts only	addressbook	pt	Permitir apenas para contactos
+allow members of following groups to edit contact-data of accounts	addressbook	pt	Permitir que os membros dos seguintes grupos editem os dados de contacto das contas
+allow members of following groups to show the account name column	addressbook	pt	Permitir que os membros dos seguintes grupos mostrem a coluna do nome da conta
 alt. csv import	addressbook	pt	Importar CSV
 always	addressbook	pt	Sempre
+apply changes to all members, whose fields have the same previous content	addressbook	pt	Aplicar as alterações a todos os membros, cujos campos têm o mesmo conteúdo anterior.
 are you shure you want to delete this contact?	addressbook	pt	Tem a certeza de que deseja eliminar este contacto?
 are you sure you want to delete this field?	addressbook	pt	Tem certeza que de deseja eliminar este campo ?
 audio call	addressbook	pt	Chamada de áudio
@@ -58,6 +61,7 @@ car phone	addressbook	pt	Telefone do carro
 category tree	admin	pt	Categoria árvore
 cell phone	addressbook	pt	Telemóvel
 change addressbook when updating	addressbook	pt	Alterar o livro de endereços ao atualizar
+change all organisation members	addressbook	pt	Alterar todos os membros da organização
 charset of file	addressbook	pt	Charset do ficheiro
 check all	addressbook	pt	Marcar todas
 choose an icon for this contact type	admin	pt	Escolha um ícone para este tipo de contacto
@@ -86,7 +90,6 @@ csv-fieldname	addressbook	pt	CSV - Nome do campo
 csv-filename	addressbook	pt	CSV - Nome do ficheiro
 custom	addressbook	pt	Personalizar
 custom fields	addressbook	pt	Personalizar campos
-data exchange settings	addressbook	pt	Configurações de troca de dados
 default	addressbook	pt	Por omissão
 default action on double-click	addressbook	pt	Ação predefinida ao fazer duplo clique
 default filter	addressbook	pt	Filtro padrão
@@ -133,6 +136,7 @@ export from addressbook	addressbook	pt	Exportar do livro de endereços
 exports contacts from your addressbook into a csv file.	addressbook	pt	Exporta os contactos do livro de endereços para um ficheiro CSV.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt	Exporta os contactos do livro de endereços para um ficheiro CSV. No separador de opções, também pode escolher outros separadores.
 extra	addressbook	pt	Extra
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pt	Falha ao alterar %1 membro(s) da organização, direitos insuficientes!
 favorite phone	addressbook	pt	Telefone favorito
 fax	addressbook	pt	Fax
 fax number	common	pt	Número de fax
@@ -262,6 +266,7 @@ schedule a video conference	addressbook	pt	Agendar uma videoconferência
 search letter	addressbook	pt	Pesquisar carta
 select all	addressbook	pt	Seleccionar tudo
 select an opened dialog	addressbook	pt	Selecionar um diálogo aberto
+select contacts to add to mail	addressbook	pt	Selecionar contactos para adicionar ao correio eletrónico
 select multiple contacts for a further action	addressbook	pt	Selecionar vários contatos para uma nova acção
 send fax via email by replacing fax number with an email address	addressbook	pt	Enviar fax por correio eletrónico, substituindo o número de fax por um endereço de correio eletrónico
 send succeeded to %1	common	pt	Enviar com êxito para %1

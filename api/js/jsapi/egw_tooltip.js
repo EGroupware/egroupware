@@ -25,17 +25,33 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 {
 	"use strict";
 
-	var tooltip_div = null;
-	var current_elem = null;
+	const tooltipped = [];
+	let tooltip_div = null;
+	let current_elem = null;
+	_wnd.addEventListener("pagehide", () =>
+	{
+		tooltipped.forEach(node =>
+		{
+			egw.tooltipUnbind(node);
+		});
+		tooltipped.splice(0, tooltipped.length);
+		if (tooltip_div && tooltip_div.off)
+		{
+			tooltip_div.off();
+			tooltip_div = null;
+		}
+		return null;
+	})
 
-	var time_delta = 100;
-	var show_delta = 0;
-	var show_delay = 200;
 
-	var x = 0;
-	var y = 0;
+	const time_delta = 100;
+	let show_delta = 0;
+	const show_delay = 200;
 
-	var optionsDefault = {
+	let x = 0;
+	let y = 0;
+
+	const optionsDefault = {
 		hideonhover: true,
 		position:'right',
 		open: function(){},
@@ -137,7 +153,8 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		jQuery(_wnd.document.body).append(tooltip_div);
 
 		//The tooltip should automatically hide when the mouse comes over it
-		tooltip_div.mouseenter(function() {
+		tooltip_div.get(0).addEventListener("mouseover", () =>
+		{
 				if (_options.hideonhover) hide();
 		});
 	}
@@ -176,7 +193,8 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		tooltipBind: function(_elem, _html, _isHtml, _options) {
 
 			var options = {...optionsDefault, ...(_options||{})};
-
+			const elem = _elem instanceof Node ? _elem : (typeof _elem.get == "function" ? _elem.get(0) : _elem);
+			tooltipped.push(elem);
 			_elem = jQuery(_elem);
 			if (_html && !egwIsMobile())
 			{
@@ -243,6 +261,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 			// Unbind all "tooltip" events from the given element
 			_elem.unbind('.tooltip');
+			tooltipped.splice(tooltipped.indexOf(_elem), 1);
 		},
 
 		tooltipDestroy: function () {

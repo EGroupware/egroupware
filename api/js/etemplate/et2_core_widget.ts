@@ -97,9 +97,16 @@ export function et2_createWidget(_name: string, _attrs: object, _parent?: any): 
 	}
 
 	// check and return web-components in case widget is no longer available as legacy widget
-	if (typeof et2_registry[_name] === "undefined" && window.customElements.get('et2-'+_name))
+	if(typeof et2_registry[_name] === "undefined")
 	{
-		return loadWebComponent('et2-'+_name, _attrs, _parent);
+		if(window.customElements.get('et2-' + _name))
+		{
+			return loadWebComponent('et2-' + _name, _attrs, _parent);
+		}
+		else if(window.customElements.get(_name))
+		{
+			return loadWebComponent(_name, _attrs, _parent);
+		}
 	}
 
 	// Parse the "readonly" and "type" flag for this element here, as they
@@ -294,20 +301,23 @@ export class et2_widget extends ClassWithAttributes
 		{
 			this._children[i].destroy();
 		}
+		this._children.splice(0, this._children.length);
 
 		// Remove this element from the parent, if it exists
 		if(typeof this._parent != "undefined" && this._parent !== null && this._parent instanceof et2_widget)
 		{
 			this._parent.removeChild(this);
 		}
+		this._parent = null;
 
 		// Free the array managers if they belong to this widget
 		for (var key in this._mgrs)
 		{
-			if (this._mgrs[key] && this._mgrs[key].owner == this)
+			if(this._mgrs[key] && this._mgrs[key].getPerspectiveData().owner == this)
 			{
-				this._mgrs[key].destroy();
+				this._mgrs[key].setPerspectiveData(null);
 			}
+			delete this._mgrs[key];
 		}
 	}
 

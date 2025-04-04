@@ -414,7 +414,6 @@ startdate / -time	calendar	nl	Begindatum/-tijd
 startdate and -time of the search	calendar	nl	Begindatum en -tijd van de zoekopdracht
 startdate of the export	calendar	nl	Begindatum van de export
 startrecord	calendar	nl	Startregel
-status	calendar	nl	Status
 status changed	calendar	nl	Status gewijzigd
 submit to repository	calendar	nl	Naar repository inzenden
 sun	calendar	nl	Zon

@@ -26,14 +26,14 @@ tr.prefRow > td.prefValueColumn {
 	padding: 0 !important;
 }
 .prefHelp {
-    position: absolute;
+    position: fixed;
     display: none;
     width: 250px;
     max-height: 90vh;
-    height: calc(85vh - 10px);
+    height: 50%;
     background-color: var(--sl-color-neutral-50);
     padding: 10px;
-    top: 60px;
+    top: 143px;
     overflow-y: auto;
     z-index: 1;
 	border-radius: var(--sl-border-radius-medium);

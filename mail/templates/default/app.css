@@ -954,6 +954,7 @@ div.mailComposeHeaderSection>table {
 #mail-compose_mailaccount {max-width: 100% !important;}
 
 .header_row_right.vertical_splitter {float:left;}
+.et2_nextmatch .nextmatch_header_row>div.header_row_right {gap: 0;}
 .header_row_right.vertical_splitter div#mail-index_mail-index-vacationnotice .et2_vbox {margin-right: 0;}
 
 et2-box.smime_cert_notverified {
@@ -1112,6 +1113,9 @@ et2-vbox.addresses et2-hbox::part(base) {
 et2-searchbox#mail-index_nm_search {
 	width: 100%;
 	min-width: 5em;
+}
+et2-split#mail-index_mailSplitter:not([vertical]) .header_count {
+	margin: 0 3px 0 0;
 }
 et2-split#mail-index_mailSplitter.limitted .header_count {
 	display: none;

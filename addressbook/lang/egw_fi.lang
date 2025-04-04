@@ -61,6 +61,7 @@ all types	addressbook	fi	Kaikki tyypit
 allow	addressbook	fi	Salli
 allow for contacts only	addressbook	fi	Salli vain yhteystiedot
 allow members of following groups to edit contact-data of accounts	addressbook	fi	Salli seuraavien ryhmien jäsenten muokata tilien yhteystietoja
+allow members of following groups to show the account name column	addressbook	fi	Salli seuraavien ryhmien jäsenten näyttää tilin nimi-sarake
 allow users to maintain their own account-data	admin	fi	Salli käyttäjien muokata omia yhteystietojaan
 alt. csv import	addressbook	fi	Alt. CSV tuonti
 always	addressbook	fi	Aina
@@ -152,7 +153,6 @@ csv-filename	addressbook	fi	CSV-tiedoston nimi
 custom	addressbook	fi	Lisätiedot
 custom etemplate for the contactform	addressbook	fi	Muokkaa eMallipohja yhteystietokaavakkeelle
 custom fields	addressbook	fi	Lisätiedot
-data exchange settings	addressbook	fi	Tiedonvaihdon asetukset
 default	addressbook	fi	Oletus
 default action on double-click	addressbook	fi	Kaksoisnapsautuksen oletustoiminto
 default address format	addressbook	fi	Oletusosoitteen muoto
@@ -428,6 +428,7 @@ select a view	addressbook	fi	Valitse näkymä
 select addressbook type	addressbook	fi	Valitse osoitekirjan tyyppi
 select all	addressbook	fi	Valitse kaikki
 select an opened dialog	addressbook	fi	Valitse avattu valintaikkuna
+select contacts to add to mail	addressbook	fi	Valitse sähköpostiin lisättävät yhteystiedot
 select migration type	admin	fi	Valitse sulautustapa
 select multiple contacts for a further action	addressbook	fi	Suorita valituille yhteystiedoille seuraava toiminto
 select phone number as prefered way of contact	addressbook	fi	Valitse puhelinnumero ensisijaiseksi yhteydenottotavaksi yhteystiedolle

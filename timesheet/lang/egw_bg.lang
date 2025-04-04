@@ -8,6 +8,7 @@ by	timesheet	bg	от
 category for 'working time'	admin	bg	Категория за 'Работно време'
 change owner when updating	timesheet	bg	Промяна на собственика при актуализиране
 check all	timesheet	bg	Маркира всички
+choose 'creator' of imported data	timesheet	bg	Изберете „създател“ на импортираните данни
 create a single 'working time' timesheet per	timesheet	bg	Създаване на един-единствен работен график „Работно време“ за
 create new links	timesheet	bg	Създаване на нови връзки
 creates a new field	timesheet	bg	създава ново поле
@@ -30,6 +31,7 @@ error deleting the entry!!!	timesheet	bg	Грешка при изтриване!
 error saving the entry!!!	timesheet	bg	Грешка при запис!!!
 error storing working time	timesheet	bg	Грешка при съхраняването на работното време
 existing links	timesheet	bg	Съществуващи връзки
+exports entries from your timesheet into a csv file.	timesheet	bg	Експортиране на записи от Time Sheet в CSV файл
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	bg	Експортира записите от Time Sheet в CSV файл. В раздела с опции можете да изберете и други разделители.
 field must not be empty !!!	timesheet	bg	Полето трябва да бъде попълнено !!!
 forgot to switch off working time?	common	bg	Забравили сте да изключите работното време?
@@ -39,6 +41,7 @@ global categories	timesheet	bg	Глобални категории
 history	timesheet	bg	История
 history logging	admin	bg	Запис на история
 id	timesheet	bg	ИД
+imports entries into the timesheet from a csv file.	timesheet	bg	Импортира записи в Time Sheet от CSV файл
 last modified	timesheet	bg	Последно измемение
 last month	timesheet	bg	Миналия месец
 last week	timesheet	bg	Миналата седмица
@@ -93,6 +96,9 @@ this year	timesheet	bg	Тази година
 timer already running or paused	common	bg	Таймерът вече работи или е спрян на пауза
 timesheet	common	bg	График
 timesheet csv export	timesheet	bg	График: експорт в CSV
+timesheet csv import	timesheet	bg	Импортиране на CSV от Timesheet
+timesheet id	timesheet	bg	Идентификатор на таймсхемата
+timesheet list	timesheet	bg	Списък на часовите листове
 unitprice	timesheet	bg	Цена на артикул
 use field from csv if possible	timesheet	bg	Използвайте поле от CSV, ако е възможно
 values for selectbox	timesheet	bg	Стойности за избор

@@ -42,6 +42,8 @@ all contacts	addressbook	ko	모든 연락처
 all types	addressbook	ko	모든 유형
 allow	addressbook	ko	허용
 allow for contacts only	addressbook	ko	연락처만 허용
+allow members of following groups to edit contact-data of accounts	addressbook	ko	다음 그룹의 구성원이 계정의 연락처 데이터를 수정할 수 있도록 허용하기
+allow members of following groups to show the account name column	addressbook	ko	다음 그룹의 구성원에게 계정 이름 열 표시 허용하기
 alt. csv import	addressbook	ko	다른 방법으로 CVS 가져오기
 always	addressbook	ko	언제나
 apply changes to all members, whose fields have the same previous content	addressbook	ko	이전 내용과 동일한 필드를 가진 모든 멤버들에 대한 변경사항이 적용됩니다
@@ -65,6 +67,7 @@ calendar integration	addressbook	ko	캘린더 통합
 car phone	addressbook	ko	차량 전용 전화
 cell phone	addressbook	ko	이동전화
 change addressbook when updating	addressbook	ko	업데이트 시 주소록 변경
+change all organisation members	addressbook	ko	모든 조직 구성원 변경
 charset of file	addressbook	ko	파일의 문자셋
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	ko	사전 정의된 지도 소스를 선택하거나 사용자 지정 URL 사용(%r = 거리, %t = 도시, %c = 국가, %z = 우편번호 사용)
 city	common	ko	도시
@@ -130,6 +133,7 @@ export from addressbook	addressbook	ko	주소록에서 내보내기
 exports contacts from your addressbook into a csv file.	addressbook	ko	주소록의 연락처를 CSV 파일로 내보냅니다.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ko	주소록의 연락처를 CSV 파일로 내보냅니다.  CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 extra	addressbook	ko	기타
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ko	권한이 부족하여 %1 조직 구성원을 변경하지 못했습니다!
 favorite phone	addressbook	ko	즐겨찾는 전화
 fax	addressbook	ko	팩스
 fax number	common	ko	팩스 번호
@@ -225,6 +229,7 @@ schedule a video conference	addressbook	ko	화상 회의 예약하기
 select a source address to be used in geolocation routing system	addressbook	ko	지리적 위치 라우팅 시스템에서 사용할 소스 주소를 선택하세요.
 select all	addressbook	ko	모두 선택
 select an opened dialog	addressbook	ko	열린 대화상자 선택
+select contacts to add to mail	addressbook	ko	이메일에 추가할 연락처 선택
 send fax via email by replacing fax number with an email address	addressbook	ko	팩스 번호를 이메일 주소로 대체하여 이메일로 팩스 보내기
 send succeeded to %1	common	ko	%1로 전송에 성공했습니다.
 show active accounts	addressbook	ko	활성 계정 표시

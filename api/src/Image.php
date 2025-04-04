@@ -173,6 +173,7 @@ class Image
 		'mime128_image_vnd.adobe.photoshop' => 'filetype-psd',
 		'mime128_image_vnd.adobe.illustrator' => 'filetype-ai',
 		'mime128_audio' => 'file-earmark-music',
+		'mime128_audio_mpeg' => 'filetype-mp3',
 		'mime128_audio_mp4' => 'filetype-mp4',
 		'mime128_audio_x-wav' => 'filetype-wav',
 		'minus'	=> 'dash-lg',

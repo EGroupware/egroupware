@@ -428,7 +428,7 @@ role	calendar	pt-br	Função
 rule	calendar	pt-br	Regra
 sat	calendar	pt-br	Sáb
 saves the changes made	calendar	pt-br	Salvar as alterações feitas
-saves the event ignoring the conflict	calendar	pt-br	Salvar o evento ignorando o conflito.
+saves the event ignoring the conflict	calendar	pt-br	Salvar o evento ignorando o conflito
 scheduling conflict	calendar	pt-br	Conflito de agendamento
 select a %1	calendar	pt-br	Selecionar um %1
 select a time	calendar	pt-br	Selecionar um horário
@@ -462,7 +462,6 @@ startdate / -time	calendar	pt-br	Data Inicial / Horário
 startdate and -time of the search	calendar	pt-br	Início e horário para pesquisar
 startdate of the export	calendar	pt-br	Data Inicial da exportação
 startrecord	calendar	pt-br	Registro inicial
-status	calendar	pt-br	Status
 status changed	calendar	pt-br	Status alterado
 submit to repository	calendar	pt-br	Enviar para o repositório
 sun	calendar	pt-br	Dom

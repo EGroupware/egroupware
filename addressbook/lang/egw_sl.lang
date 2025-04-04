@@ -62,6 +62,7 @@ all types	addressbook	sl	Vse vrste
 allow	addressbook	sl	Dovolite
 allow for contacts only	addressbook	sl	Dovolite samo za stike
 allow members of following groups to edit contact-data of accounts	addressbook	sl	Dovoli članom naslednjih skupin, da uredijo kontaktne podatke računov
+allow members of following groups to show the account name column	addressbook	sl	Dovolite članom naslednjih skupin, da prikažejo stolpec z imenom računa
 allow users to maintain their own account-data	admin	sl	Dovoli uporabnikom, da sami vzdržuejo svoje podatke o računu
 alt. csv import	addressbook	sl	Uvoz CSV datoteke
 always	addressbook	sl	Vedno
@@ -160,7 +161,6 @@ csv-filename	addressbook	sl	CSV-Ime datoteke
 custom	addressbook	sl	Lasten
 custom etemplate for the contactform	addressbook	sl	eTemplate po meri za obrazec za stike
 custom fields	addressbook	sl	Lastna polja
-data exchange settings	addressbook	sl	Nastavitve za izmenjavo podatkov
 default	addressbook	sl	Privzeto
 default action on double-click	addressbook	sl	Privzeto dejanje - dvokliknite
 default address format	addressbook	sl	Privzeta oblika naslovov
@@ -440,6 +440,7 @@ select a view	addressbook	sl	Izberite pogled
 select addressbook type	addressbook	sl	Izberite vrsto adresarja
 select all	addressbook	sl	Izberi vse
 select an opened dialog	addressbook	sl	Izberite odprto pogovorno okno
+select contacts to add to mail	addressbook	sl	Izberite stike, ki jih želite dodati v e-pošto
 select migration type	admin	sl	Izberite vrsto migracije
 select multiple contacts for a further action	addressbook	sl	Izberite več stikov za nadaljnja dejanja
 select phone number as prefered way of contact	addressbook	sl	Izberite telefonsko številko kot privzeto pot komunikacije za kontakt

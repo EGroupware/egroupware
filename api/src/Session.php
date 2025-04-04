@@ -648,7 +648,7 @@ class Session
 			if ($check_2fa !== false)
 			{
 				try {
-					$this->checkMultifactorAuth($check_2fa, $_COOKIE[self::REMEMBER_ME_COOKIE]);
+					$this->checkMultifactorAuth($check_2fa, $_COOKIE[self::REMEMBER_ME_COOKIE] ?? null);
 				}
 				catch(\Exception $e) {
 					$this->cd_reason = $e->getCode();

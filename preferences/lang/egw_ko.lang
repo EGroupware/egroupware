@@ -6,6 +6,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	ko	테마는 템플릿에서 사용할 색과 글꼴을 정의합니다.
 acl grants have been updated	preferences	ko	ACL 허용이 업데이트 되었습니다.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ko	EGroupware에서 사용되는 어떠한 리스트의 개수나 페이지당 라인은 설정한 수만큼 보입니다.<br>너무 큰 수는 페이지 표시가 느려지고 , 너무 작은 수는 전체적인 보기에 많은 시간을 소비하게 됩니다.
+applications list scroll area	preferences	ko	사이드 메뉴 스크롤 버튼
 are you sure you want to delete this category ?	preferences	ko	정말 이 카테고리를 삭제할까요?
 color	preferences	ko	색
 country	preferences	ko	국가
@@ -13,6 +14,7 @@ date format	preferences	ko	날짜 형식
 default	preferences	ko	기본
 default preferences	preferences	ko	기본 환경설정
 delete categories	preferences	ko	카테고리 삭제
+deny following groups access to application passwords	preferences	ko	애플리케이션 비밀번호에 대한 다음 그룹의 액세스 거부
 description can not exceed 255 characters in length !	preferences	ko	설명은 255 글자를 넘길수 없습니다!
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ko	24시간 시간 형식이 좋으신가요? 아니면 12시간 시간형식에 am/pm 이 덧붙혀 표기되는 형식이 좋으신가요?
 edit custom fields	preferences	ko	사용자정의 필드를 편집
@@ -33,7 +35,9 @@ if enabled, your entered password will be stored and passed on to other server, 
 in which country are you. this is used to set certain defaults for you.	preferences	ko	지금 계신 국가는? 이 설정은 기본설정이 됩니다.
 interface/template selection	preferences	ko	인터페이스/템플릿 선택
 language	preferences	ko	언어
+limit following groups to only create application passwords via templates	preferences	ko	이러한 그룹은 템플릿을 통해 생성되는 애플리케이션 비밀번호만 제한합니다.
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ko	싱글사인온을 통해 로그인하면 메일 서버나 파일 서버에 전달할 비밀번호가 제공되지 않습니다.
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	ko	스크롤 버튼이 있는 왼쪽 사이드바를 위/아래로 스크롤할 수 있도록 설정합니다(태블릿 사용자에게 유용함).
 max matches per page	preferences	ko	페이지당 최대 일치 개수
 max number of icons in navbar	preferences	ko	네비게이션바 에서 최대 아이콘 개수
 no default	preferences	ko	기본설정 없음
@@ -61,6 +65,7 @@ the selectbox shows all available users (can be very slow on big installs with m
 the two passwords are not the same	preferences	ko	두 암호가 서로 다릅니다
 theme (colors/fonts) selection	preferences	ko	테마 (컬러/폰트) 선택
 this server is located in the %1 timezone	preferences	ko	이 서버는 %1 시간대에 있습니다
+thousands separator is only used for displaying and not for editing numbers.	preferences	ko	숫자 표시를 위해 숫자 형식을 설정할 수 있습니다.
 time format	preferences	ko	시간 형식
 use default	preferences	ko	기본 사용
 use first %1 letters from username	preferences	ko	사용자 이름에서 첫 %1글자 사용

@@ -134,6 +134,7 @@ select/deselect all	resources	cs	Označit vše/zrušit označení všech
 short description	resources	cs	Stručný popis
 short description of resource	resources	cs	Stručný popis zdroje
 show calendar of resource	resources	cs	Zobrazit kalendář zdroje
+show in title (beside name)	resources	cs	Zobrazit v názvu (vedle jména)
 simple reservation of a single item	resources	cs	Jedna rezervace jedné položly
 something went wrong by deleting resource	resources	cs	Během mazání zdroje se něco nezdařilo
 something went wrong by saving resource	resources	cs	Během ukládání zdroje se něco nezdařilo

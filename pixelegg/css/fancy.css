@@ -660,8 +660,12 @@
   .et2_nextmatch .nextmatch_header {
     padding: 0;
     border: none;
+    border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
     background-image: none;
     background-color: transparent;
+  }
+  .et2_nextmatch .nextmatch_header .nextmatch_header_row {
+    padding-bottom: 0.25em;
   }
   .et2_nextmatch > img {
     width: 16px;
@@ -4686,7 +4690,7 @@ body.scrollVertical {
   margin: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  margin-top: 0.4em;
+  margin-top: 7px;
 }
 #egw_fw_main .egw_fw_ui_tab_content > div {
   width: 100%;
@@ -7266,12 +7270,6 @@ et2-dialog div#add_favorite et2-select-account_ro {
 .et2_toolbar {
   padding: 0;
   border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
-}
-.et2_nextmatch .nextmatch_header {
-  border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
-}
-.et2_nextmatch .nextmatch_header .nextmatch_header_row {
-  padding-bottom: 0.25em;
 }
 div.flatpickr-calendar {
   border-radius: var(--sl-border-radius-medium);

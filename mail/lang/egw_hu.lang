@@ -59,6 +59,7 @@ continue	mail	hu	Folytassa
 convert mail to item and attach its attachments to this item (standard)	mail	hu	E-mail elemmé alakítása és a mellékletek csatolása ehhez az elemhez (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	hu	E-mail átalakítása elemmé, csatolmányainak csatolása és nyers üzenet (.eml) csatolmányként történő hozzáadása
 convert only mail to item (ignore possible attachments)	mail	hu	Csak az e-mailt alakítja át elemmé (figyelmen kívül hagyva az esetleges mellékleteket)
+copied %1 message(s) from %2 to %3	mail	hu	%1 üzenet(ek) átmásolása %2-ből %3-ba.
 copy to	mail	hu	Másold ide:
 cross account forward attachment is not allowed!	mail	hu	Kereszt számla előre csatolása nem megengedett!
 current subject	mail	hu	Jelenlegi téma
@@ -145,6 +146,7 @@ greater than	mail	hu	Nagyobb mint
 ham folder	mail	hu	Ham mappa
 handling of external http images / mixed content in mails	mail	hu	Külső http képek / vegyes tartalom kezelése e-mailekben
 header lines	mail	hu	Email fejléce
+hide from	mail	hu	Elrejteni Tőle
 high priority	mail	hu	Kiemelt prioritás
 how to forward messages	mail	hu	Üzenet továbbítás módja
 html	mail	hu	HTML
@@ -208,6 +210,7 @@ move selected to	mail	hu	Kijelöltek mozgatása
 move to	mail	hu	Kijelöltek mozgatása
 move to archive	mail	hu	Áthelyezés az archív mappába
 move to trash	mail	hu	Szemetesbe mozgatás
+moved %1 message(s) from %2 to %3	mail	hu	%1 üzenet(ek) áthelyezése %2-ből %3-ba.
 name and domain	mail	hu	Név és domain
 name and email	mail	hu	Név és e-mail cím
 name of account	mail	hu	A számla neve
@@ -308,6 +311,7 @@ see attachments for content of the orignial mail	mail	hu	Az eredeti e-mail tarta
 select all	mail	hu	Minden kiválasztása
 select an existing entry in order to append mail content to it	mail	hu	Válasszon ki egy meglévő bejegyzést a levél tartalmának hozzácsatolásához
 select an item to read	mail	hu	Válasszon ki egy elemet az olvasáshoz
+select mail addresses from addressbook	mail	hu	Levelezési címek kiválasztása a címjegyzékből
 select or insert email address	mail	hu	E-mail cím kiválasztása vagy beillesztése
 selected date range (with quicksearch)	mail	hu	Kiválasztott dátumtartomány (gyorskereséssel)
 send message and move to send folder (if configured)	mail	hu	Üzenet küldése és áthelyezése a küldési mappába (ha konfigurálva van)
@@ -321,6 +325,7 @@ set predefined values for compose...	mail	hu	Előre meghatározott értékek be�
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	hu	Az aláírás a válasz vagy a továbbítás után (standard) vagy előtt legyen-e beillesztve, és az aláírás látható és módosítható legyen-e az összeállítás során.
 show all addresses	mail	hu	Összes cím megjelenítése
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	hu	Az összes mappa (feliratkozott és leiratkozott) megjelenítése a fő képernyő mappatábláján.
+show horizontal, hide if none selected	mail	hu	Vízszintes megjelenítése, elrejtése, ha nincs kiválasztva
 show notification for new arriving mails	mail	hu	Értesítés megjelenítése az újonnan érkező levelekről
 show test connection section and control the level of info displayed?	mail	hu	Tesztkapcsolat szakasz megjelenítése és a megjelenített információk szintjének szabályozása?
 show test connection section and control the level of info displayed??	mail	hu	Tesztkapcsolat szakasz megjelenítése és a megjelenített információk szintjének szabályozása?
@@ -345,6 +350,8 @@ start new messages with mime type plain/text or html?	mail	hu	Új üzenet írás
 template folder	mail	hu	Sablonok mappa
 text	mail	hu	Szöveg
 text/plain	mail	hu	Szöveg
+the %1 's acl removed from the %2	mail	hu	A %1 ACL-t eltávolították a %2-ből.
+the %1 's acl, including its subfolders, removed from the %2	mail	hu	A %1 ACL-je, beleértve az almappákat is, eltávolítva a %2-ből.
 the imap server need to meet certain requirements and be configured for it:	mail	hu	Az IMAP-kiszolgálónak meg kell felelnie bizonyos követelményeknek ÉS be kell lennie konfigurálva:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	hu	A feladó kéri tértivevényt küldését amely jelzi, hogy megkaptad az üzenetet. Szeretnéd hogy elküldjem?
 the mimeparser can not parse this message.	mail	hu	A MIME feldolgozó nem tudta feldolgozni ezt az üzenetet.
@@ -365,6 +372,7 @@ unread	mail	hu	Olvasatlan
 vacation notice	mail	hu	Szabadság értesítés
 vacation notice is active	mail	hu	Szabadság értesítő aktív
 vacation start-date must be before the end-date!	mail	hu	Szabadság kezdete korábban legyen mint a vége!
+validate addresses on submit:	mail	hu	Érvényesítse a címeket az elküldéskor:
 view header lines	mail	hu	Fejléc tartalom megjelenítése
 when deleting messages	mail	hu	Üzenet törlése esetén
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	hu	melyik mappa legyen az Elküldött levelek mappa szerint megjelenítve

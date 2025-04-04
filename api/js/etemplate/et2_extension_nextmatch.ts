@@ -76,6 +76,8 @@ import {Et2AccountFilterHeader} from "./Et2Nextmatch/Headers/AccountFilterHeader
 import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
 import type {LitElement} from "lit";
+import {Et2Template} from "./Et2Template/Et2Template";
+import {waitForEvent} from "./Et2Widget/event";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -410,22 +412,43 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		jQuery(this.getInstanceManager().DOMContainer.parentNode).off('show.et2_nextmatch');
 		jQuery(this.getInstanceManager().DOMContainer.parentNode).off('hide.et2_nextmatch');
 
+		// Need to unbind show/hide handlers first
+		super.destroy();
+
 		// Free the grid components
-		this.dataview.destroy();
+		this.dataview?.destroy();
+		this.dataview = null;
+		this.blank?.remove();
+		this.blank = null;
 		if(this.rowProvider)
 		{
 			this.rowProvider.destroy();
+			this.rowProvider = null;
 		}
 		if(this.controller)
 		{
 			this.controller.destroy();
+			this.controller = null;
 		}
 		if(this.dynheight)
 		{
 			this.dynheight.destroy();
+			this.dynheight = null;
 		}
+		this.header?.destroy();
+		this.header = null;
+		this.header_left?.destroy();
+		this.header_left = null;
+		this.header_right?.destroy();
+		this.header_right = null;
+		this.columns = null;
+		this.settings = null;
+		this.options = null;
+		this.innerDiv?.off().empty().remove();
+		this.innerDiv = null;
+		this.div?.off().empty().remove();
+		this.div = [];
 
-		super.destroy();
 	}
 
 	getController()
@@ -1325,9 +1348,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// Bind a resize while we're here
 			if(tab.flagDiv)
 			{
-				tab.flagDiv.addEventListener("click", (e) =>
+				tab.flagDiv.addEventListener("click", async(e) =>
 				{
-					window.setTimeout(() => this.resize(), 1);
+					// Wait for the tab to be done being shown
+					await waitForEvent(tab.flagDiv.parentElement, "sl-tab-show");
+					// then resize
+					this.resize();
 				});
 			}
 			return new et2_dynheight(tab.contentDiv, this.innerDiv, 100);
@@ -2434,7 +2460,22 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	set_template(template_name : string)
 	{
-		const template = et2_createWidget("template", {"id": template_name}, this);
+		const template = <Et2Template>loadWebComponent("et2-template", {
+			"id": template_name,
+			class: "hideme"
+		}, this);
+		// Some apps send header data in 'rows', which is the wrong namespace.  Passing it into the header can trigger
+		// autorepeat in some cases, so pass just the non-numeric keys into header namespace.  Some headers also use content
+		// in the parent nm namespace, just to complicate things.
+		let rows = this.getArrayMgr("content").getEntry("rows")||{};
+		Object.keys(rows).forEach(k =>
+		{
+			if(isNaN(k))
+			{
+				this.getArrayMgr("content").data[k] = rows[k];
+			}
+		});
+
 		if(this.template)
 		{
 			// Stop early to prevent unneeded processing, and prevent infinite
@@ -2503,11 +2544,13 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				return;
 			}
 
-			// Free the template again, but don't remove it
+			// Free the template and remove it
 			setTimeout(function()
 			{
+				this.removeChild(template);
 				template.destroy();
-			}, 1);
+				template.remove();
+			}.bind(this), 1);
 
 			// Call the "setNextmatch" function of all registered
 			// INextmatchHeader widgets.  This updates this.activeFilters.col_filters according
@@ -2546,13 +2589,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this._set_autorefresh(this._get_autorefresh());
 		};
 
-		// Template might not be loaded yet, defer parsing
-		const promise = [];
-		template.loadingFinished(promise);
-
 		// Wait until template (& children) are done
 		// Keep promise so we can return it from doLoadingFinished
-		this.template_promise = Promise.all(promise).then(() =>
+		this.template_promise = template.updateComplete.then(() =>
 			{
 				parse.call(this, template);
 				if(!this.dynheight && !this.options.no_dynheight)
@@ -2580,6 +2619,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				});
 			}
 		).finally(() => this.template_promise = null);
+		this.template_promise.widget = this;
+
+		// Explictly add template to DOM since it won't happen otherwise, and webComponents need to be in the DOM
+		// to complete
+		this.div.append(template);
 
 		return this.template_promise;
 	}
@@ -3393,7 +3437,57 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		this.nextmatch = null;
 
 		super.destroy();
+		Array.from(this.div?.find('*') ?? []).forEach(n =>
+		{
+			n.destroy && n.destroy();
+			n.remove && n.remove();
+		})
+		this.div?.empty();
+		this.div?.remove();
 		this.div = null;
+		this.headers.forEach(h =>
+		{
+			h.remove && h.remove();
+			h.destroy && h.destroy();
+		});
+		this.headers.splice(0, this.headers.length);
+		this.options = null;
+
+		this.header_div?.empty();
+		this.header_div?.remove();
+		this.header_div = null;
+		this.header_row?.empty();
+		this.header_row?.remove();
+		this.header_row = null;
+		this.filter_div?.remove();
+		this.filter_div = null;
+		this.row_div?.remove();
+		this.row_div = null;
+		this.right_div?.empty();
+		this.right_div?.remove();
+		this.right_div = null;
+		this.fav_span?.remove();
+		this.fav_span = null;
+		this.toggle_header?.remove();
+		this.toggle_header = null;
+		this.lettersearch?.remove();
+		this.lettersearch = null;
+
+		this.search_box?.empty();
+		this.search_box?.remove();
+		this.search_box = null;
+		this.et2_searchbox?.destroy();
+		this.et2_searchbox = null;
+		this.category?.destroy();
+		this.category = null;
+		this.filter?.destroy();
+		this.filter = null;
+		this.filter2?.destroy();
+		this.filter2 = null;
+		this.favorites?.destroy();
+		this.favorites = null;
+		this.count = null;
+		this.count_total = null;
 	}
 
 	setNextmatch(nextmatch)
@@ -3679,47 +3773,37 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 
 		// Load the template
 		const self = this;
-		const header = <et2_template>et2_createWidget("template", {"id": template_name}, this);
+		const header = <Et2Template>loadWebComponent("et2-template", {"id": template_name}, this);
 		this.headers[id] = header;
-		const deferred = [];
-		header.loadingFinished(deferred);
+
+		// fix order in DOM by reattaching templates in correct position
+		switch(id)
+		{
+			case 0:	// header_left: prepend
+				jQuery(header.getDOMNode()).prependTo(self.header_div);
+				break;
+			case 1:	// header_right: before favorites and count
+				window.setTimeout(() =>
+					jQuery(header.getDOMNode()).prependTo(self.header_div.find('div.header_row_right')));
+				break;
+			case 2:	// header_row: after search
+				window.setTimeout(function()
+				{	// otherwise we might end up after filters
+					jQuery(header.getDOMNode()).insertAfter(self.header_div.find('div.search'));
+				}, 1);
+				break;
+			case 3:	// header_row2: below everything
+				window.setTimeout(function()
+				{	// otherwise we might end up after filters
+					jQuery(header.getDOMNode()).insertAfter(self.header_div);
+				}, 1);
+				break;
+		}
 
 		// Wait until all child widgets are loaded, then bind
-		Promise.all(deferred).then(() =>
+		header.updateComplete.then(() =>
 		{
-			// fix order in DOM by reattaching templates in correct position
-			switch(id)
-			{
-				case 0:	// header_left: prepend
-					jQuery(header.getDOMNode()).prependTo(self.header_div);
-					break;
-				case 1:	// header_right: before favorites and count
-					window.setTimeout(() =>
-						jQuery(header.getDOMNode()).prependTo(self.header_div.find('div.header_row_right')));
-					break;
-				case 2:	// header_row: after search
-					window.setTimeout(function()
-					{	// otherwise we might end up after filters
-						jQuery(header.getDOMNode()).insertAfter(self.header_div.find('div.search'));
-					}, 1);
-					break;
-				case 3:	// header_row2: below everything
-					window.setTimeout(function()
-					{	// otherwise we might end up after filters
-						jQuery(header.getDOMNode()).insertAfter(self.header_div);
-					}, 1);
-					break;
-			}
-			// Give child templates a chance to load before we bind inputs
-			let children = [];
-			header.iterateOver((_widget) =>
-			{
-				children.push(_widget.loading);
-			}, this, et2_template);
-			Promise.all(children).then(() =>
-			{
-				self._bindHeaderInput(header);
-			});
+			self._bindHeaderInput(header);
 		});
 	}
 
@@ -4011,9 +4095,10 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 	 *
 	 * @param {et2_template} sub_header
 	 */
-	_bindHeaderInput(sub_header)
+	_bindHeaderInput(_sub_header)
 	{
 		const header = this;
+		const sub_header = _sub_header;
 
 		const bind_change = function(_widget)
 		{
@@ -4440,6 +4525,10 @@ export class et2_nextmatch_sortheader extends et2_nextmatch_header implements et
 	constructor(_parent?, _attrs? : WidgetConfig, _child? : object)
 	{
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch_sortheader._attributes, _child || {}));
+
+		this.node.removeEventListener("click", this.click);
+		this.click = this.click.bind(this);
+		this.node.addEventListener("click", this.click);
 
 		this.sortmode = "none";
 

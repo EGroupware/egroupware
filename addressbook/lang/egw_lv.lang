@@ -37,8 +37,11 @@ all addressbooks	addressbook	lv	Visas adrešu grāmatas
 all types	addressbook	lv	Visi veidi
 allow	addressbook	lv	Atļaut
 allow for contacts only	addressbook	lv	Atļaut tikai kontaktiem
+allow members of following groups to edit contact-data of accounts	addressbook	lv	Atļaut kontu kontaktu datu rediģēšanu šādu grupu dalībniekiem
+allow members of following groups to show the account name column	addressbook	lv	Atļaut šādu grupu dalībniekiem rādīt konta nosaukuma kolonnu
 alt. csv import	addressbook	lv	Alternatīva CSV importēšana
 always	addressbook	lv	Vienmēr
+apply changes to all members, whose fields have the same previous content	addressbook	lv	Piemērot izmaiņas visiem dalībniekiem, kuru laukiem ir tāds pats iepriekšējais saturs.
 are you sure you want to delete this field?	addressbook	lv	Vai esi drošs ka vēlies dzēst šo lauku?
 audio call	addressbook	lv	Audio zvans
 birthday	common	lv	Dzimšanas diena
@@ -58,6 +61,7 @@ calendar integration	addressbook	lv	Kalendāra integrācija
 car phone	addressbook	lv	Automašīnas Telefons
 cell phone	addressbook	lv	Mobīlais telefons
 change addressbook when updating	addressbook	lv	Mainīt adrešu grāmatu atjaunināšanas laikā
+change all organisation members	addressbook	lv	Mainīt visus organizācijas biedrus
 charset of file	addressbook	lv	Faila kodējums
 check all	addressbook	lv	Parbaudīt visu
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	lv	Izvēlieties iepriekš noteiktu kartes avotu vai izmantojiet pielāgotu URL (izmantojiet %r = iela, %t = pilsēta, %c = valsts, %z = pasta indekss)
@@ -118,6 +122,7 @@ export from addressbook	addressbook	lv	Eksportēt no adrešu grāmatas
 exports contacts from your addressbook into a csv file.	addressbook	lv	Eksportē kontaktus no adrešu grāmatas CSV failā.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lv	Eksportē kontaktus no adrešu grāmatas CSV failā. CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē var izvēlēties arī citus atdalītājus.
 extra	addressbook	lv	Papildus
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	lv	Neizdevās mainīt %1 organizācijas locekli(-us), nepietiekamas tiesības!
 favorite phone	addressbook	lv	Iecienītākais tālrunis
 fax	addressbook	lv	Fakss
 fax number	common	lv	Faksa numurs
@@ -234,6 +239,7 @@ search letter	addressbook	lv	Meklēt burtu
 select a source address to be used in geolocation routing system	addressbook	lv	Izvēlieties avota adresi, kas tiks izmantota GeoLocation maršrutēšanas sistēmā
 select all	addressbook	lv	Iezīmēt visus
 select an opened dialog	addressbook	lv	Izvēlieties atvērto dialoglodziņu
+select contacts to add to mail	addressbook	lv	Atlasiet kontaktus, kurus pievienot e-pastam
 send fax via email by replacing fax number with an email address	addressbook	lv	Sūtīt faksu pa e-pastu, aizstājot faksa numuru ar e-pasta adresi
 send succeeded to %1	common	lv	Nosūtīt veiksmīgi uz %1
 share into addressbook	addressbook	lv	Kopīgot adrešu grāmatiņā

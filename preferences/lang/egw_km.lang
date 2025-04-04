@@ -28,7 +28,6 @@ current password	preferences	km	លេខសំងាត់​បច្ចុប
 custom login box color, defaults to above color darkened	preferences	km	ពណ៌ប្រអប់ចូលផ្ទាល់ខ្លួន លំនាំដើមទៅពណ៌ខាងលើងងឹត
 custom sidebar menu active color, defaults to above color darkened	preferences	km	ម៉ឺនុយរបារចំហៀងផ្ទាល់ខ្លួន ពណ៌សកម្ម លំនាំដើមទៅពណ៌ខាងលើងងឹត
 dark mode theme	preferences	km	រចនាប័ទ្មងងឹត
-data exchange settings	preferences	km	ការកំណត់ការផ្លាស់ប្តូរទិន្នន័យ
 date format	preferences	km	ទម្រង់កាលបរិច្ឆេទ
 default	preferences	km	លំនាំដើម
 default font	preferences	km	ពុម្ពអក្សរលំនាំដើម
@@ -170,7 +169,6 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	km	លេខសម្ងាត់ទាំងពីរមិនដូចគ្នាទេ!
 theme (colors/fonts) selection	preferences	km	ស្បែក
 this server is located in the %1 timezone	preferences	km	ម៉ាស៊ីនមេនេះមានទីតាំងនៅតំបន់ពេលវេលា%1
-thousands separator is only used for displaying and not for editing numbers.	preferences	km	សញ្ញាបំបែករាប់ពាន់ត្រូវបានប្រើសម្រាប់តែបង្ហាញ និងមិនមែនសម្រាប់កែសម្រួលលេខទេ។
 time format	preferences	km	ទម្រង់ពេលវេលា
 two factor auth	preferences	km	ការផ្ទៀងផ្ទាត់កត្តាពីរ
 two factor auth enabled.	preferences	km	បានបើកដំណើរការការផ្ទៀងផ្ទាត់កត្តាពីរ។

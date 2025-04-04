@@ -45,6 +45,11 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 		@state()
 		protected fetchComplete : Promise<SelectOption[] | void> = Promise.resolve();
 
+		disconnectedCallback()
+		{
+			super.disconnectedCallback();
+			this._static_options = [];
+		}
 		async getUpdateComplete() : Promise<boolean>
 		{
 			const result = await super.getUpdateComplete();

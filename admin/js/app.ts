@@ -619,7 +619,7 @@ class AdminApp extends EgwApp
 		dialog.transformAttributes(attrs);
 		this.et2.getInstanceManager().DOMContainer.appendChild(dialog);
 		dialog.updateComplete.then(() => {
-			dialog.template.widgetContainer.getWidgetById("apps").focus();
+			dialog.eTemplate.widgetContainer.getWidgetById("apps").focus();
 		});
 	}
 
@@ -1653,14 +1653,14 @@ class AdminApp extends EgwApp
 						{
 							continue;
 						}
-						widget = this.template.widgetContainer.getWidgetById(required[i]);
+						widget = this.eTemplate.widgetContainer.getWidgetById(required[i]);
 						widget.set_validation_error('This field is required!');
 						isValid = false;
 					}
 					// check mismatch passphrase
 					if (_value.passphrase && _value.passphrase !== _value.passphraseConf)
 					{
-						var passphraseConf = this.template.widgetContainer.getWidgetById('passphrase');
+						var passphraseConf = this.eTemplate.widgetContainer.getWidgetById('passphrase');
 						passphraseConf.set_validation_error('Confirm passphrase is not match!');
 						isValid = false;
 					}
@@ -1724,6 +1724,7 @@ class AdminApp extends EgwApp
 			function(_data){
 				taglist.set_value(_data);
 		}).sendRequest();
+		widget.value = {};
 	}
 
 	/**

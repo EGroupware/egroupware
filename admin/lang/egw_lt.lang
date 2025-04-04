@@ -54,6 +54,7 @@ custom 3	admin	lt	Pasirinktinis 3
 delete certificate	admin	lt	Ištrinti sertifikatą
 export certificate as p12	admin	lt	Eksportuoti sertifikatą kaip p12
 generate certificate	admin	lt	Generuoti sertifikatą
+group hidden from non-admins	admin	lt	Grupė paslėpta nuo neadministratorių
 group hierarchy	admin	lt	Grupių hierarchija
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	lt	Kiek įrašų gali eksportuoti ne administratoriai. Tuščias = neribojama, Ne = neeksportuojama
 html/plaintext	admin	lt	HTML / Tekstas

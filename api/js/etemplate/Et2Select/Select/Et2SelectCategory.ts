@@ -93,9 +93,19 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 		this.searchOptions.globalCategories = this.globalCategories;
 
 		this.fetchComplete = so.cat(this).then(options => {
-			this.select_options = options;
+			this._static_options = options;
 			this.requestUpdate("select_options");
 		});
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		const box = this.shadowRoot?.querySelector('.tree-dropdown__combobox');
+		if(box)
+		{
+			this.egw().tooltipUnbind(box);
+		}
 	}
 
 	bindTooltip()
@@ -117,7 +127,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 			changedProperties.has("application") || changedProperties.has("parentCat"))
 		{
 			this.fetchComplete = so.cat(this).then(options => {
-				this.select_options = options;
+				this._static_options = options;
 				this.requestUpdate("select_options");
 			});
 		}

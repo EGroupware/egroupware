@@ -50,6 +50,8 @@ all contacts	addressbook	hu	Összes kapcsolat
 all types	addressbook	hu	Minden típus
 allow	addressbook	hu	Engedélyezze a
 allow for contacts only	addressbook	hu	Csak a névjegyek engedélyezése
+allow members of following groups to edit contact-data of accounts	addressbook	hu	Engedélyezze a következő csoportok tagjainak a fiókok kapcsolati adatainak szerkesztését
+allow members of following groups to show the account name column	addressbook	hu	A következő csoportok tagjainak engedélyezi a fióknév oszlop megjelenítését
 allow users to maintain their own account-data	admin	hu	Felhasználók kezelhetik saját felhasználói fiók adataikat
 alt. csv import	addressbook	hu	Alternatív CSV Import
 always	addressbook	hu	Állandóan
@@ -361,6 +363,7 @@ select a view	addressbook	hu	Nézet választása
 select addressbook type	addressbook	hu	Válassza ki a Címjegyzék típusát
 select all	addressbook	hu	Minden kiválasztása
 select an opened dialog	addressbook	hu	Megnyitott párbeszédpanel kiválasztása
+select contacts to add to mail	addressbook	hu	A levelezéshez hozzáadandó kapcsolatok kiválasztása
 select migration type	admin	hu	Válassza ki a migráció típusát
 select multiple contacts for a further action	addressbook	hu	Válasszon ki több kapcsolatot a további művelethez
 select phone number as prefered way of contact	addressbook	hu	Az előnyben részesített telefonszám a kapcsolatfelvételhez

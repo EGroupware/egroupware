@@ -29,7 +29,6 @@ current password	preferences	it	Password attuale
 custom login box color, defaults to above color darkened	preferences	it	Colore personalizzato per il box di login.
 custom sidebar menu active color, defaults to above color darkened	preferences	it	Colore della barra di menù attiva.
 dark mode theme	preferences	it	Tema Scuro
-data exchange settings	preferences	it	Impostazioni di scambio dati
 date format	preferences	it	Formato data
 default	preferences	it	predefinito
 default font	preferences	it	Font predefinito
@@ -101,6 +100,7 @@ it sets content size (text only) according to selected size.	preferences	it	Impo
 just clicking on the line, like a checkbox	preferences	it	semplicemente cliccando sulla riga come se fosse una casella da spuntare
 keep list open for selecting multiple	preferences	it	Mantenere l'elenco aperto per la selezione di più elementi
 language	preferences	it	Lingua
+limit following groups to only create application passwords via templates	preferences	it	Questi gruppi limitano solo le password delle applicazioni da creare tramite i modelli
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	it	L'accesso tramite SingleSignOn non fornisce una password da trasmettere ai server di posta o di file.
 look & feel	preferences	it	Look & Feel
 lowercase letters	preferences	it	lettere minuscole
@@ -180,7 +180,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	it	Le due password non sono uguali
 theme (colors/fonts) selection	preferences	it	Selezione tema (colori/caratteri)
 this server is located in the %1 timezone	preferences	it	Questo server è situato nel fuso orario %1
-thousands separator is only used for displaying and not for editing numbers.	preferences	it	Il separatore di migliaia è usato solo per mostrare e non per modificare i numeri.
+thousands separator is only used for displaying and not for editing numbers.	preferences	it	È possibile impostare il formato dei numeri per la loro visualizzazione.
 time format	preferences	it	Formato ora
 two factor auth	preferences	it	Autenticazione a due fattori
 two factor auth enabled.	preferences	it	Autenticazione a due fattori abilitata.

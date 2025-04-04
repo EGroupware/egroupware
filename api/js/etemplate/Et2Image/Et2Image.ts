@@ -167,7 +167,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 
 	render()
 	{
-		let url = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
+		const url = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
 		if(!url)
 		{
 			// Hide if no valid image
@@ -223,7 +223,10 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	{
 		img_href = img_href || '';
 		// allow url's too
-		if(img_href[0] == '/' || img_href.substr(0, 4) == 'http' || img_href.substr(0, 5) == 'data:')
+		if(img_href[0] == '/' || img_href.substr(0, 4) == 'http' ||
+			img_href.substr(0, 5) == 'data:' ||
+			img_href.substr(0, 5) == 'blob:'
+		)
 		{
 			return img_href;
 		}

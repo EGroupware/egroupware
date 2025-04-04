@@ -43,6 +43,7 @@ day of week	importexport	sl	Dan v tednu
 define imports|exports	common	sl	Določite uvoz | Izvoz
 definition	importexport	sl	Opredelitev
 delete all selected definitions	importexport	sl	Izbriši vse izbrane definicije
+delete files after import	importexport	sl	Brisanje datotek po uvozu
 deleted	importexport	sl	Zbrisano
 delimiter	importexport	sl	Deljitelj
 duplicate name, please choose another.	importexport	sl	Podvojeno ime, izberite drugo.

@@ -97,6 +97,17 @@ else
 	echo $GLOBALS['egw']->framework->navbar();
 	$run_in_egw = true;
 }
+
+// Check failed upload, because post_max_size exceeded
+if (empty($_POST) && empty($_FILES) && $_SERVER['REQUEST_METHOD'] === 'POST')
+{
+	$setup_tpl->set_var('error_msg',
+		lang('POST request with size %1 detected, larger than post_max_size=%2, and therefore not processed by PHP!',
+			number_format($_SERVER['CONTENT_LENGTH']/1024/1024, 0, '', '.').'M',
+			ini_get('post_max_size'))."\n".
+		lang('You can work around that limit, by mounting the backup directory into EGroupware filemanager and upload from there.'));
+}
+
 // save backup housekeeping settings
 if (!empty($_POST['save_backup_settings']))
 {

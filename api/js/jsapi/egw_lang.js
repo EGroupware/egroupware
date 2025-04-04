@@ -29,7 +29,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.lang() or egw.set_lang_arr()
 	 */
-	var lang_arr = {};
+	const lang_arr = {};
 
 	// Return the actual extension
 	return {

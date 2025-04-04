@@ -1,9 +1,11 @@
+applications list scroll area	preferences	et	Külgmise menüü kerimisnuppu
 are you sure you want to delete this category ?	preferences	et	Oled kindel, et tahad kustutada kategooriat ?
 color	preferences	et	Värv
 country	preferences	et	Riik
 dark mode theme	preferences	et	Tumedas režiimis teema
 default	preferences	et	vaikimisi
 delete categories	preferences	et	Kustuta kategooriad
+deny following groups access to application passwords	preferences	et	Keelata järgmiste rühmade juurdepääs rakenduste paroolidele
 disable	preferences	et	Keela
 enable	preferences	et	luba
 enter your new password	preferences	et	Sisesta uus parool
@@ -21,7 +23,9 @@ icons only	preferences	et	ainult ikoonid
 if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	et	Kui see on lubatud, salvestatakse teie sisestatud parool ja edastatakse teistele serveritele, kui logite sisse SSO kaudu.
 it sets content size (text only) according to selected size.	preferences	et	See määrab sisu suuruse (ainult teksti) vastavalt valitud suurusele.
 language	preferences	et	Keel
+limit following groups to only create application passwords via templates	preferences	et	Need rühmad piiravad ainult rakenduste paroolide loomist mallide kaudu
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	et	SingleSignOn kaudu sisselogimine ei anna parooli edasi posti- või failiserverile.
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	et	Teeb vasakpoolse küljeriba koos kerimisnupuga üles/alla keritavaks (kasulik tahvelarvutite kasutajatele).
 no default	preferences	et	Mitte vaikimisi
 password stored	preferences	et	Salasõna salvestatakse.
 re-enter your password	preferences	et	Sisesta parool uuesti
@@ -32,6 +36,7 @@ store password retrievable for singlesignon	common	et	SingleSignOni jaoks taasta
 text only	preferences	et	Ainult tekst
 the old password is not correct	preferences	et	Vana parool pole õige
 the two passwords are not the same	preferences	et	Kaks parooli pole identsed
+thousands separator is only used for displaying and not for editing numbers.	preferences	et	Numbrite kuvamiseks saab määrata numbrite formaadi.
 time format	preferences	et	Aja formaat
 use default	preferences	et	Kasuta vaikimisi
 use first %1 letters from username	preferences	et	Kasuta kasutajanime esimesi %1 tähti

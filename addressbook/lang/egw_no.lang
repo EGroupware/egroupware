@@ -36,8 +36,11 @@ all addressbooks	addressbook	no	Alle adressebøker
 all types	addressbook	no	Alle typer
 allow	addressbook	no	Tillat
 allow for contacts only	addressbook	no	Tillat kun for kontakter
+allow members of following groups to edit contact-data of accounts	addressbook	no	Tillat medlemmer av følgende grupper å redigere kontaktdata for kontoer
+allow members of following groups to show the account name column	addressbook	no	Tillat medlemmer av følgende grupper å vise kolonnen for kontonavn
 alt. csv import	addressbook	no	Alt. CSV Import
 always	addressbook	no	Alltid
+apply changes to all members, whose fields have the same previous content	addressbook	no	Bruk endringene på alle medlemmer som har samme innhold i feltene som tidligere.
 are you shure you want to delete this contact?	addressbook	no	Er du sikker på at du ønsker å slette denne kontakten?
 are you sure you want to delete this field?	addressbook	no	Er du sikker du vil slette dette feltet?
 audio call	addressbook	no	Lydanrop
@@ -58,6 +61,7 @@ calendar integration	addressbook	no	Kalenderintegrering
 car phone	addressbook	no	Bil Telefon
 cell phone	addressbook	no	Mobiltelefon
 change addressbook when updating	addressbook	no	Endre adressebok ved oppdatering
+change all organisation members	addressbook	no	Endre alle organisasjonsmedlemmer
 charset of file	addressbook	no	Karaktersett for filen
 check all	addressbook	no	Kontroller alle
 choose an icon for this contact type	admin	no	Velg et ikon for denne kontakttype
@@ -127,6 +131,7 @@ export from addressbook	addressbook	no	Eksport fra Adresseliste
 exports contacts from your addressbook into a csv file.	addressbook	no	Eksporterer kontakter fra adresseboken til en CSV-fil.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	no	Eksporterer kontakter fra adresseboken til en CSV-fil. I alternativfanen kan du også velge andre separatorer.
 extra	addressbook	no	Ekstra
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	no	Kunne ikke endre %1 organisasjonsmedlem(mer), utilstrekkelige rettigheter!
 favorite phone	addressbook	no	Favoritt-telefon
 fax	addressbook	no	Telefaks
 fax number	common	no	Telefaks Nummer
@@ -240,6 +245,7 @@ schedule a video conference	addressbook	no	Planlegge en videokonferanse
 select a source address to be used in geolocation routing system	addressbook	no	Velg en kildeadresse som skal brukes i GeoLocation-rutingssystemet
 select all	addressbook	no	Velg alle
 select an opened dialog	addressbook	no	Velg en åpnet dialogboks
+select contacts to add to mail	addressbook	no	Velg kontakter som skal legges til i e-post
 send fax via email by replacing fax number with an email address	addressbook	no	Send faks via e-post ved å erstatte faksnummeret med en e-postadresse
 send succeeded to %1	common	no	Send vellykket til %1
 show	addressbook	no	Vis

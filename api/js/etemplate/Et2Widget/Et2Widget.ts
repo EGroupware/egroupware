@@ -13,6 +13,12 @@ import {dedupeMixin} from "@open-wc/dedupe-mixin";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
 import bootstrapIcons from "../Styles/bootstrap-icons";
+import {EgwAction} from "../../egw_action/EgwAction";
+import {property} from "lit/decorators/property.js";
+import {egw_getActionManager, egw_getAppObjectManager} from "../../egw_action/egw_action";
+import {EgwEt2WidgetObject} from "../../egw_action/EgwEt2WidgetObject";
+import {EgwActionObject} from "../../egw_action/EgwActionObject";
+import {EgwActionObjectInterface} from "../../egw_action/EgwActionObjectInterface";
 
 /**
  * This mixin will allow any LitElement to become an Et2Widget
@@ -100,6 +106,8 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * @internal
 		 */
 		protected _deferred_properties : { [key : string] : string } = {};
+
+		protected _actionManager : EgwAction = null;
 
 
 		/** WebComponent **/
@@ -267,6 +275,10 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				data: {
 					type: String,
 					reflect: false
+				},
+
+				actions: {
+					type: Object
 				}
 			};
 		}
@@ -326,9 +338,30 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 		disconnectedCallback()
 		{
+			super.disconnectedCallback();
+			
 			this.egw()?.tooltipUnbind(this);
 
 			this.removeEventListener("click", this._handleClick);
+
+			// Delete all actions
+			if(this.getInstanceManager() && this.getInstanceManager().app)
+			{
+				try
+				{
+					let objectManager = egw_getAppObjectManager(false, this.getInstanceManager().app);
+					let widget_object = objectManager?.getObjectById(this.id);
+					if(widget_object)
+					{
+						widget_object.unregisterActions();
+						widget_object.clear();
+						widget_object.remove();
+					}
+				}
+				catch(e)
+				{
+				}
+			}
 		}
 
 
@@ -397,8 +430,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * Wrapper on this.disabled because legacy had it.
 		 *
 		 * @deprecated Use widget.disabled for visually disabled, widget.hidden for visually hidden.
-		 * 	Widgets that are hidden from the server via attribute or $readonlys will not be created.
-		 * 	Widgets that are disabled from the server will not return a value to the application code.
+		 * <a href="/getting-started/widgets/#disabled-vs-readonly-vs-hidden">Disabled vs Readonly vs Hidden</a>
 		 *
 		 * @param {boolean} value
 		 */
@@ -447,7 +479,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 					path.unshift(this.getInstanceManager().uniqueId);
 				}
-				path.push(value);
+				path.push(value.replace(/\./g, '-'));
 				dom_id = path.join("_");
 			}
 			this.setAttribute("id", dom_id);
@@ -496,6 +528,156 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				data.push(k + ":" + this.dataset[k]);
 			})
 			return data.join(",");
+		}
+
+		/**
+		 * Set Actions on the widget
+		 *
+		 * Each action is defined as an object:
+		 *
+		 * move: {
+		 *      type: "drop",
+		 *      acceptedTypes: "mail",
+		 *      icon:   "move",
+		 *      caption:	"Move to"
+		 *      onExecute:      javascript:mail_move"
+		 * }
+		 *
+		 * This will turn the widget into a drop target for "mail" drag types.  When "mail" drag types are dropped,
+		 * the global function mail_move(egwAction action, egwActionObject sender) will be called.  The ID of the
+		 * dragged "mail" will be in sender.id, some information about the sender will be in sender.context.  The
+		 * etemplate2 widget involved can typically be found in action.parent.data.widget, so your handler
+		 * can operate in the widget context easily.  The location varies depending on your action though.  It
+		 * might be action.parent.parent.data.widget
+		 *
+		 * To customise how the actions are handled for a particular widget, override _link_actions().  It handles
+		 * the more widget-specific parts.
+		 *
+		 * @param {object} actions {ID: {attributes..}+} map of egw action information
+		 * @see api/src/Etemplate/Widget/Nextmatch.php egw_actions() method
+		 */
+		@property({type: Object})
+		set actions(actions : EgwAction[] | { [id : string] : object })
+		{
+			if(!(Array.isArray(actions) && actions.length > 0 || Object.entries(actions).length > 0))
+			{
+				// Not trying to clear actions, just called automatic
+				if(!this._actionManager)
+				{
+					return;
+				}
+			}
+			if(this.id == "" || typeof this.id == "undefined")
+			{
+				this.egw().debug("warn", "Widget should have an ID if you want actions", this);
+				return;
+			}
+
+			// Initialize the action manager and add some actions to it
+			if(this._actionManager == null)
+			{
+				// Find the apropriate parent action manager
+				let parent_am = null;
+				let widget = <Et2WidgetClass | et2_widget>this;
+				while(widget.getParent() && !parent_am)
+				{
+					// @ts-ignore
+					if(widget._actionManager)
+					{
+						// @ts-ignore
+						parent_am = widget._actionManager;
+					}
+					widget = widget.getParent();
+				}
+				if(!parent_am)
+				{
+					// Only look 1 level deep
+					parent_am = egw_getActionManager(this.egw().appName, true, 1);
+				}
+				if(parent_am.getActionById(this.getInstanceManager().uniqueId, 1) !== null)
+				{
+					parent_am = parent_am.getActionById(this.getInstanceManager().uniqueId, 1);
+				}
+				if(parent_am.getActionById(this.id, 1) != null)
+				{
+					this._actionManager = parent_am.getActionById(this.id, 1);
+				}
+				else
+				{
+					this._actionManager = parent_am.addAction("actionManager", this.id);
+				}
+			}
+			this._actionManager.updateActions(actions, this.egw().appName);
+
+			// Put a reference to the widget into the action stuff, so we can
+			// easily get back to widget context from the action handler
+			this._actionManager.data = {widget: this};
+
+			// Link the actions to the DOM
+			this._link_actions(actions);
+		}
+
+		get actions()
+		{
+			return this._actionManager?.children || {};
+		}
+
+		/**
+		 * Get all action-links / id's of 1.-level actions from a given action object
+		 *
+		 * This can be overwritten to not allow all actions, by not returning them here.
+		 *
+		 * @param actions
+		 * @returns {Array}
+		 */
+		protected _get_action_links(actions)
+		{
+			const action_links = [];
+			for(let i in actions)
+			{
+				let action = actions[i];
+				action_links.push(typeof action.id != 'undefined' ? action.id : i);
+			}
+			return action_links;
+		}
+
+		/**
+		 * Link the actions to the DOM nodes / widget bits.
+		 *
+		 * @param {object} actions {ID: {attributes..}+} map of egw action information
+		 */
+		protected _link_actions(actions)
+		{
+			// Get the top level element for the tree
+			let objectManager = egw_getAppObjectManager(true);
+			let widget_object = objectManager.getObjectById(this.id);
+
+			if(widget_object == null)
+			{
+				// Add a new container to the object manager which will hold the widget
+				// objects
+				widget_object = objectManager.insertObject(false, new EgwActionObject(
+					this.id, objectManager, this.createWidgetObjectInterface(),
+					this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
+				));
+			}
+			else
+			{
+				widget_object.setAOI(this.createWidgetObjectInterface());
+			}
+
+			// Delete all old objects
+			widget_object.clear();
+			widget_object.unregisterActions();
+
+			// Go over the widget & add links - this is where we decide which actions are
+			// 'allowed' for this widget at this time
+			widget_object.updateActionLinks(this._get_action_links(actions));
+		}
+
+		protected createWidgetObjectInterface() : EgwActionObjectInterface
+		{
+			return <EgwActionObjectInterface><unknown>(new EgwEt2WidgetObject(this));
 		}
 
 		/**
@@ -638,13 +820,19 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 **/
 		destroy()
 		{
-			// Not really needed, use the disconnectedCallback() and let the browser handle it
+			// Clear any deferred properties, functions may live in here
+			this._deferred_properties = {};
+
+			this.onclick = null;
 
 			// Call the destructor of all children so any legacy widgets get destroyed
 			for(let i = this.getChildren().length - 1; i >= 0; i--)
 			{
 				this.getChildren()[i].destroy();
+				this.getChildren()[i] instanceof Et2WidgetClass && (<Et2WidgetClass>this.getChildren()[i]).remove();
 			}
+			this._children.splice(0, this._children.length);
+			this._legacy_children.splice(0, this._legacy_children.length);
 
 			// Free the array managers if they belong to this widget
 			for(let key in this._mgrs)
@@ -655,6 +843,8 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				}
 			}
 
+			this._parent = null;
+			this._inst = null;
 			// if widget exists DOM-wise outside the parent, we need to explicitly remove it
 			if (this._parent_node) this.remove();
 		}
@@ -1011,7 +1201,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				if(!this._parent_node && this.getParent() instanceof et2_widget && (<et2_DOMWidget>this.getParent()).getDOMNode(this) != this.parentNode)
 				{
 					// @ts-ignore this is not an et2_widget, and Et2Widget is not a Node
-					(<et2_DOMWidget>this.getParent()).getDOMNode(this).append(this);
+					(<et2_DOMWidget>this.getParent()).getDOMNode(this)?.append(this);
 				}
 
 				// An empty text node causes problems with legacy widget children
@@ -1061,9 +1251,15 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 					let ids = (new et2_arrayMgr()).explodeKey(_id);
 					let widget : Et2WidgetClass = this;
-					for(let i = 0; i < ids.length && widget !== null; i++)
+					while(widget && ids.length)
 					{
-						widget = widget.getWidgetById(ids[i]);
+						const joined = ids.join("[") + "]";
+						const previous = widget
+						widget = widget.getWidgetById(ids.shift());
+						if(!widget && previous !== this)
+						{
+							return previous.getWidgetById(joined);
+						}
 					}
 					return widget;
 				}
@@ -1092,6 +1288,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				let parent = document.querySelector("#" + this.__parentId) || this.__parentId;
 				if(parent && parent instanceof Element)
 				{
+					this.remove();
 					parent.append(<Node><unknown>this);
 					this._parent_node = parent;
 				}
@@ -1378,6 +1575,13 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			{
 				return this.getParent().getInstanceManager ? this.getParent().getInstanceManager() : null;
 			}
+				// Widget might be inside another widget, in which case getParent() is null
+			// @ts-ignore host does not always exist on getRootNode()
+			else if(this.getRootNode() && typeof this.getRootNode()?.host?.getParent == "function")
+			{
+				// @ts-ignore host does not always exist on getRootNode()
+				return this.getRootNode().host.getParent()?.getInstanceManager();
+			}
 
 			return null;
 		}
@@ -1391,6 +1595,13 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			if(this.getParent() != null)
 			{
 				return this.getParent().getRoot();
+			}
+				// Widget might be inside another widget, in which case getParent() is null
+			// @ts-ignore host does not always exist on getRootNode()
+			else if(this.getRootNode() && typeof this.getRootNode()?.host?.getParent == "function" && this.getRootNode().host.getParent())
+			{
+				// @ts-ignore host does not always exist on getRootNode()
+				return this.getRootNode().host.getParent();
 			}
 			else
 			{
@@ -1445,6 +1656,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			// These methods are used inside widgets, but may not always be available depending on egw() loading (tests, docs)
 			const required = {
 				debug: () => {console.log(arguments);},
+				image: () => "",
 				lang: (l) => {return l;},
 				preference: () => {return false;},
 			};
@@ -1589,6 +1801,11 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		widget.style.setProperty("flex", "0 0 auto");
 		delete attributes.width;
 	}
+	if(attributes.height)
+	{
+		widget.style.setProperty("height", attributes.height);
+		delete attributes.height;
+	}
 
 	// Apply any set attributes - widget will do its own coercion
 	for(let attribute in attributes)
@@ -1712,7 +1929,10 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 			continue;
 		}
 		// Set as property
+		const old_value = widget[attribute];
 		widget[attribute] = attrValue;
+		// Due to reactive properties not updating properly, make sure to trigger an update
+		widget.requestUpdate(attribute, old_value);
 	}
 
 	if(widget_class.getPropertyOptions("value") && widget.set_value)

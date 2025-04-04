@@ -1276,7 +1276,8 @@ class infolog_bo
 			elseif ($this->ensure_responsible_contact_access === "all")
 			{
 				$check = Link::get_links('infolog', $values['info_id'], 'addressbook');
-			}if (!$check) return;   // no contacts to check
+			}
+			if (!$check) return;   // no contacts to check
 			$contacts = new Api\Contacts();
 			$owner_grants = $memberships = [];
 			$linked_contacts = $contacts->search('', 'owner,id', 'contact_owner', '', '', false, 'AND', false,[

@@ -1,6 +1,8 @@
+%1 is not a known user or group	importexport	sv	%1 är inte en känd användare eller grupp.
 add a new definition	importexport	sv	Lägg till en ny definition
 addressbook csv import	importexport	sv	Adressbok CSV-import
 addressbook vcard import	importexport	sv	Adressbok vCard-import
+admin disabled exporting	importexport	sv	Administratören inaktiverade export.
 all users	importexport	sv	Alla användare
 change allowed users	importexport	sv	Ändra tillåtna användare
 change owner when updating	importexport	sv	Ändra ägare vid uppdatering
@@ -8,9 +10,12 @@ changed	importexport	sv	Ändrad
 changed owner	importexport	sv	Ändrad ägare
 charset of file	importexport	sv	Teckenuppsättning för filen
 check all	importexport	sv	Markera alla
+choose fields to export	importexport	sv	Välj fält att exportera
 condition	importexport	sv	vilkor
 created	importexport	sv	Skapad
-deleted	importexport	sv	Raderad
+database values	importexport	sv	Värden i databasen
+delete files after import	importexport	sv	Ta bort filer efter import
+deleted	importexport	sv	Raderad.
 execute	importexport	sv	Exekvera
 export	importexport	sv	Exportera
 exported	importexport	sv	Exporterade

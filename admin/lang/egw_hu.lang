@@ -331,6 +331,7 @@ group ?	admin	hu	Csoport?
 group has been added	common	hu	A csoport hozzáadása megtörtént.
 group has been deleted	common	hu	A csoport törlése megtörtént.
 group has been updated	common	hu	A csoport frissítése megtörtént.
+group hidden from non-admins	admin	hu	Nem adminok számára rejtett csoport
 group hierarchy	admin	hu	Csoport-hierarchia
 group list	admin	hu	Csoportlista
 group manager	admin	hu	Csoportmenedzser

@@ -8,6 +8,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	ja	テンプレートで使用される色、フォントをテーマで定義します。
 acl grants have been updated	preferences	ja	ACL を更新しました。
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ja	Any listing in EGroupware will show this number of entries or lines per page. Too many slow down the page display, too less will cost you the overview.
+applications list scroll area	preferences	ja	サイドメニューのスクロールボタン
 are you sure you want to delete this category ?	preferences	ja	このカテゴリを削除してよろしいですか？
 audio effect	preferences	ja	オーディオ効果
 audio effect enables|disables sound effects used in the theme	preferences	ja	テーマで使うオーディオ効果を有効化/無効化します。
@@ -21,7 +22,6 @@ color	preferences	ja	色
 country	preferences	ja	国
 custom login box color, defaults to above color darkened	common	ja	ログイン・ボックスの色。
 custom sidebar menu active color, defaults to above color darkened	common	ja	サイドバー・メニューのアクティブ色。
-data exchange settings	preferences	ja	データ交換設定
 date format	preferences	ja	日付書式
 default	preferences	ja	既定値
 default application	preferences	ja	既定のアプリケーション
@@ -30,6 +30,7 @@ default font size	preferences	ja	既定のフォント・サイズ
 default preferences	preferences	ja	設定の既定値
 delete categories	preferences	ja	カテゴリを削除
 deny following groups access to acl (grant access)	admin	ja	Deny following groups access to ACL (grant access)
+deny following groups access to application passwords	preferences	ja	Questi gruppi limitano solo le password delle applicazioni da creare tramite i modelli
 deny following groups access to edit categories	admin	ja	Deny following groups access to edit categories
 deny following groups access to preferences	admin	ja	Deny following groups access to preferences
 description can not exceed 255 characters in length !	preferences	ja	説明は255文字以下である必要があります!
@@ -74,9 +75,11 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	ja	テンプレート選択
 just clicking on the line, like a checkbox	preferences	ja	チェックボックスのように単純クリックで選択
 language	preferences	ja	言語
+limit following groups to only create application passwords via templates	preferences	ja	これらのグループは、テンプレート経由で作成されるアプリケーションパスワードのみを制限します。
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ja	SingleSignOn経由でログインしても、メールサーバやファイルサーバにパスワードを渡すことはできません。
 look & feel	preferences	ja	ルック&フィール
 lowercase letters	preferences	ja	小文字
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	ja	左側のサイドバーをスクロールボタンで上下にスクロールできるようにする（タブレットを使用しているユーザーに便利）。
 max matches per page	preferences	ja	１ページ最大行数
 max number of icons in navbar	preferences	ja	ナビゲーション・バーで表示する最大アイコン数
 no default	preferences	ja	既定値無し
@@ -134,7 +137,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	ja	2個のパスワードが一致しません!
 theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
 this server is located in the %1 timezone	preferences	ja	サーバーはタイムゾーン %1 で稼働中
-thousands separator is only used for displaying and not for editing numbers.	preferences	ja	3桁区切りは表示時のみ使用されます。入力時は使用しません。
+thousands separator is only used for displaying and not for editing numbers.	preferences	ja	数字の表示形式を設定できます。
 time format	preferences	ja	時間書式
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	ja	フォント・サイズの単位: ウェブ等で用いられる"px"か、印刷等で用いられる "pt"。
 uppercase letters	preferences	ja	大文字

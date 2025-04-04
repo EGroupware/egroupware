@@ -26,10 +26,12 @@ export class Et2DateTime extends Et2Date
 				display: inline-block;
 			  }
 
-			  ::slotted([slot='input']) {
-				flex: 1 1 auto;
-				min-width: 17ex;
-			  }
+				.form-control-input {
+					et2-textbox {
+						flex: 1 1 auto;
+						min-width: 17ex;
+					}
+				}
 
 			  ::slotted(.calendar_button) {
 				border: none;

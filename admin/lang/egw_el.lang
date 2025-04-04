@@ -278,6 +278,7 @@ group ?	admin	el	Ομάδα;
 group has been added	common	el	Ομάδα προστέθηκε.
 group has been deleted	common	el	Ομάδα έχει σβηστεί.
 group has been updated	common	el	Ομάδα έχει ενημερωθεί.
+group hidden from non-admins	admin	el	Ομάδα κρυμμένη από μη διαχειριστές
 group hierarchy	admin	el	Ιεραρχία ομάδων
 group list	admin	el	Λίστα ομάδας
 group manager	admin	el	Διαχειριστής ομάδας

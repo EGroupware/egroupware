@@ -105,7 +105,10 @@ resource	resources	nl	Hulpmiddel
 resource %1 deleted!	resources	nl	Hulpmiddel %1 verwijderd!
 resource %1 saved!	resources	nl	Hulpmiddel %1 opgeslagen!
 resource / accessories	resources	nl	Hulpbron / Accessoires
+resource id	resources	nl	Hulpbron-ID
 resources	common	nl	Hulpbronnen
+resources csv export	resources	nl	Hulpbronnen CSV exporteren
+resources csv import	resources	nl	Bronnen CSV importeren
 resources list	resources	nl	Hulpbronnen lijst
 responsible:	resources	nl	Verantwoordelijk:
 saves entry and exits	resources	nl	Opslaan en sluiten
@@ -116,6 +119,7 @@ select/deselect all	resources	nl	Alles (de)selecteren
 short description	resources	nl	Korte beschrijving
 short description of resource	resources	nl	Korte beschrijving van hulpbron
 show calendar of resource	resources	nl	Toon de agenda van de hulpbron
+show in title (beside name)	resources	nl	Toon in titel (naast naam)
 something went wrong by deleting resource	resources	nl	Er ging iets mis tijdens het verwijderen van de hulpbron
 something went wrong by saving resource	resources	nl	Er ging iets mis tijdens het bewaren van de hulpbron
 storage information	resources	nl	Opslaginformatie

@@ -321,6 +321,7 @@ group ?	admin	nl	Groep?
 group has been added	common	nl	Groep is toegevoegd.
 group has been deleted	common	nl	Groep is verwijderd.
 group has been updated	common	nl	Groep is bijgewerkt.
+group hidden from non-admins	admin	nl	Groep verborgen voor niet-admins
 group hierarchy	admin	nl	Groep hiërarchie
 group list	admin	nl	Groepenlijst
 group manager	admin	nl	Groepsmanager

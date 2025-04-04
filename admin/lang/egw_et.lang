@@ -181,6 +181,7 @@ generate certificate	admin	et	Sertifikaadi genereerimine
 global categories	common	et	Globaalsed Kategooriad
 global options	admin	et	Globaalsed omadused
 group ?	admin	et	Grupp?
+group hidden from non-admins	admin	et	Mitte-administraatorite eest varjatud grupp
 group hierarchy	admin	et	Grupi hierarhia
 group list	admin	et	Gruppi nimekiri
 group name	admin	et	Grupi Nimi

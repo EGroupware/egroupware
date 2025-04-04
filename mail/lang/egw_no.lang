@@ -46,6 +46,7 @@ continue	mail	no	Fortsett
 convert mail to item and attach its attachments to this item (standard)	mail	no	Konverter e-post til element og legg ved vedleggene til dette elementet (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	no	Konverter e-post til element, legg ved vedleggene og legg til råmelding (.eml) som vedlegg
 convert only mail to item (ignore possible attachments)	mail	no	Konverter kun e-post til sak (ignorer eventuelle vedlegg)
+copied %1 message(s) from %2 to %3	mail	no	Kopierte %1 melding(er) fra %2 til %3.
 copy to	mail	no	Kopier til
 default sorting order	mail	no	Standard sortering
 delete folder	mail	no	Slett Mappe
@@ -104,6 +105,7 @@ greater than	mail	no	Større enn
 ham folder	mail	no	Mappe for søppelpost
 handling of external http images / mixed content in mails	mail	no	Håndtering av eksterne http-bilder / blandet innhold i e-poster
 header lines	mail	no	Hodelinjer
+hide from	mail	no	Skjul Fra
 high priority	mail	no	Høy prioritet
 html	mail	no	HTML
 html mode	mail	no	HTML-modus
@@ -153,6 +155,7 @@ move selected to	mail	no	Flytt valgt til
 move to	mail	no	Flytt til
 move to archive	mail	no	Flytt til arkivmappe
 move to trash	mail	no	Flytt til søppelkurv
+moved %1 message(s) from %2 to %3	mail	no	Flyttet %1 melding(er) fra %2 til %3.
 name and domain	mail	no	Navn og domene
 name and email	mail	no	Navn og e-post
 name of account	mail	no	Navn på konto
@@ -184,6 +187,7 @@ please configure your s/mime certificate in encryption tab located at edit accou
 please select a address	mail	no	Vennligst velg en adresse
 please select the number of days to wait between responses	mail	no	Vennligst velg antall dager for vent melding tilbakemeldinger
 please supply the message to send with auto-responses	mail	no	Vennligst registrer meldingen som skal sendes som automatisk tilbakemelding
+predefined addresses for compose	mail	no	Forhåndsdefinerte verdier for komponering
 preview pane	mail	no	Vindusoppsett
 printing	mail	no	Utskrift
 push notifications	mail	no	Push-varsler
@@ -226,6 +230,7 @@ security	mail	no	Sikkerhet
 see attachments for content of the orignial mail	mail	no	Se vedlegg for innholdet i den opprinnelige e-posten.
 select all	mail	no	Velg alle
 select an existing entry in order to append mail content to it	mail	no	Velg en eksisterende oppføring for å legge til e-postinnhold i den.
+select mail addresses from addressbook	mail	no	Velg e-postadresser fra adresseboken
 selected date range (with quicksearch)	mail	no	Valgt datointervall (med hurtigsøk)
 send message and move to send folder (if configured)	mail	no	Send melding og flytt til sendemappe (hvis konfigurert)
 send message pgp encrypted: requires keys from all recipients!	mail	no	Send meldingen PGP-kryptert: krever nøkler fra alle mottakere!
@@ -234,6 +239,7 @@ server supports special-use folders	mail	no	Serveren støtter mapper for spesial
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	no	Skal signaturen settes inn etter (standard) eller før et svar eller videresending, og skal signaturen være synlig og kunne endres under skriving.
 show all addresses	mail	no	Vis alle adresser
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	no	Vis alle mapper (abonnerte OG ikke-abonnerte) i hovedskjermens mapperute.
+show horizontal, hide if none selected	mail	no	Vis horisontal, skjul hvis ingen er valgt
 show notification for new arriving mails	mail	no	Vis varsel for nye innkommende e-poster
 show test connection section and control the level of info displayed?	mail	no	Vis testtilkoblingsdelen og kontroller nivået på informasjonen som vises?
 show test connection section and control the level of info displayed??	mail	no	Vis testtilkoblingsdelen og kontroller nivået på informasjonen som vises?
@@ -250,6 +256,8 @@ sort order	mail	no	Sortering
 spamtitan api url	mail	no	SpamTitan API URL
 spamtitan integration requires epl version	mail	no	SpamTitan-integrering krever EPL-versjon
 text	mail	no	Tekst
+the %1 's acl removed from the %2	mail	no	ACL-en for %1 fjernet fra %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	no	ACL-en for %1, inkludert undermappene, fjernes fra %2.
 the imap server need to meet certain requirements and be configured for it:	mail	no	IMAP-serveren må oppfylle visse krav OG være konfigurert for dette:
 the rule with priority %1 successfully saved!	mail	no	Regelen med prioritet %1 ble lagret!
 then	mail	no	DA
@@ -266,6 +274,7 @@ unconditional	mail	no	Alltid
 unflagged	mail	no	Avflagget
 unread	mail	no	Ulest
 vacation notice	mail	no	Ferie melding
+validate addresses on submit:	mail	no	Valider adresser ved sending:
 when deleting messages	mail	no	Når du sletter meldinger
 write	mail	no	Lagre
 wrote	mail	no	skrev

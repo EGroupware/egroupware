@@ -23,10 +23,14 @@ all addressbooks	addressbook	ro	Toate agendele de adrese
 all types	addressbook	ro	Toate tipurile
 allow	addressbook	ro	Permiteți
 allow for contacts only	addressbook	ro	Permite numai pentru contacte
+allow members of following groups to edit contact-data of accounts	addressbook	ro	Permiteți membrilor următoarelor grupuri să editeze datele de contact ale conturilor
+allow members of following groups to show the account name column	addressbook	ro	Permiteți membrilor următoarelor grupuri să afișeze coloana cu numele contului
+apply changes to all members, whose fields have the same previous content	addressbook	ro	Aplicați modificările tuturor membrilor, ale căror câmpuri au același conținut anterior.
 audio call	addressbook	ro	Apel audio
 browser location	addressbook	ro	Locație browser
 calendar integration	addressbook	ro	Integrare calendar
 change addressbook when updating	addressbook	ro	Schimbă agenda de adrese la actualizare
+change all organisation members	addressbook	ro	Modificarea tuturor membrilor organizației
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	ro	Alegeți sursa predefinită a hărții sau utilizați un URL personalizat (utilizați %r = stradă, %t = oraș, %c = țară, %z = cod poștal)
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	ro	Curățați câmpurile din agenda de adrese, aplicați dacă sincronizarea creează duplicate
 create new shares writable	addressbook	ro	Crearea de noi acțiuni inscriptibile
@@ -50,6 +54,7 @@ export definition to use for nextmatch export	addressbook	ro	Definiție de expor
 export definitition to use for nextmatch export	addressbook	ro	Definiția de export care trebuie utilizată pentru exportul nextmatch
 exports contacts from your addressbook into a csv file.	addressbook	ro	Exportă contactele din agenda de adrese într-un fișier CSV.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ro	Exportă contactele din agenda de adrese într-un fișier CSV.  CSV înseamnă "Comma Separated Values" (Valori separate prin virgulă). În fila Opțiuni puteți alege și alți separatori.
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ro	A eșuat modificarea %1 membru(i) organizației, drepturi insuficiente!
 favorite phone	addressbook	ro	Telefon preferat
 fields to check for duplicates	addressbook	ro	Câmpuri pentru a verifica dacă există dubluri
 fields to consider when looking for duplicate contacts.	addressbook	ro	Câmpuri care trebuie luate în considerare atunci când se caută contacte duplicate.
@@ -103,6 +108,7 @@ schedule a video conference	addressbook	ro	Programarea unei conferințe video
 search letter	addressbook	ro	Scrisoare de căutare
 select a source address to be used in geolocation routing system	addressbook	ro	Selectați o adresă sursă care să fie utilizată în sistemul de rutare GeoLocation
 select an opened dialog	addressbook	ro	Selectați un dialog deschis
+select contacts to add to mail	addressbook	ro	Selectarea contactelor pentru adăugarea la e-mail
 send fax via email by replacing fax number with an email address	addressbook	ro	Trimiteți un fax prin e-mail înlocuind numărul de fax cu o adresă de e-mail
 send succeeded to %1	common	ro	Trimitere reușită către %1
 share into addressbook	addressbook	ro	Partajați în agenda de adrese

@@ -131,7 +131,7 @@
                             <et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
                             <et2-select  id="${row}[rights]" readonly="true"></et2-select>
                             <et2-description  id="${row}[path]"></et2-description>
-                            <et2-button  label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="et2_dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"></et2-button>
+                            <et2-button label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="Et2Dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"></et2-button>
                         </row>
                     </rows>
                 </grid>

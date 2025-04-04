@@ -123,6 +123,7 @@ exports events from your calendar into a csv file.	calendar	et	Ekspordib sündmu
 extended	calendar	et	Laiendatud
 fieldseparator	calendar	et	Väljaeraldaja
 filename	calendar	et	Failinimi
+find free timeslots where the selected participants are available for the given timespan	calendar	et	Leia vabad ajad, kus valitud osalejad on antud ajaperioodil saadaval
 firstname of person to notify	calendar	et	Eesnimi persoonist kedllele teatatakse
 forward half a month	calendar	et	Lükka edasi pool kuud
 forward one month	calendar	et	Lükka edasi üks kuu
@@ -245,7 +246,6 @@ start	calendar	et	Start
 start date/time	calendar	et	Start kuupäev/Aeg
 startdate	calendar	et	Algus kuupäev
 startdate / -time	calendar	et	Start kuupäev/Aeg
-status	calendar	et	Staatus
 status changed	calendar	et	Staatus muudetud
 sun	calendar	et	Püh
 tentative	calendar	et	Ebakindel

@@ -2,7 +2,6 @@ all users	importexport	zh-tw	所有使用者
 allowed users	importexport	zh-tw	允許使用的帳號
 changed	importexport	zh-tw	已異動
 charset of file	importexport	zh-tw	檔案字元編碼設定
-check all	importexport	zh-tw	全選
 choose a name for this definition	importexport	zh-tw	選擇這個定義的名稱
 choose a plugin	importexport	zh-tw	選擇一個外掛
 choose an application	importexport	zh-tw	選擇一個模組

@@ -93,6 +93,11 @@ export class et2_dataview_container extends ClassWithInterfaces implements et2_d
 		{
 			this._destroyCallback.call(this._destroyContext, this);
 		}
+		this._attachData = null;
+		this._nodes = [];
+		this._destroyCallback = null;
+		this._destroyContext = null;
+		this.tr = null;
 	}
 
 	/**

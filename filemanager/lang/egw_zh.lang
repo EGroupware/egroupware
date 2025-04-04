@@ -127,10 +127,12 @@ no version history for this file/directory	filemanager	zh	该文件/目录夹无
 noone	filemanager	zh	没有人
 notebookbar	filemanager	zh	标签
 open	filemanager	zh	待决事项
+open documents with collabora, if permissions are given	filemanager	zh	如果有权限，使用 Collabora Online 打开文档
 operation	filemanager	zh	操作
 password for webdav and smb, use $pass for password of logged in user	filemanager	zh	WebDAV 和 SMB 的密码，使用 $pass 作为登录用户的密码
 path and query-parameters, smb: share and optional path (with /)	filemanager	zh	路径和查询参数，SMB：共享和可选路径（带/）。
 percentage	filemanager	zh	百分比
+permission denied!	filemanager	zh	权限被拒绝！
 permissions	filemanager	zh	访问权限
 please select a file to delete.	filemanager	zh	请选择要删除文件。
 preview	filemanager	zh	预览
@@ -163,7 +165,10 @@ searchstring	filemanager	zh	搜索字符串
 select action...	filemanager	zh	选择动作...
 show	filemanager	zh	显示
 size	filemanager	zh	大小
+smb, webdavs and vfs require a username!	filemanager	zh	SMB、WebDAV 和 VFS 需要用户名！
+smb: mount samba or windows fileserver shares	filemanager	zh	SMB：挂载 Samba 或 Windows 文件服务器共享
 start search	filemanager	zh	开始搜索
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	zh	文件可以包含占位符，如 {{%3}}，并用数据替换（占位符名称 %1 完整列表%2）。
 total files	filemanager	zh	全部文件
 unused space	filemanager	zh	可用空间
 up	filemanager	zh	向上
@@ -171,6 +176,7 @@ updated comment for %1	filemanager	zh	%1的注释已更新
 upload fields	filemanager	zh	上传字段
 upload files	filemanager	zh	上传文件
 used space	filemanager	zh	已用空间
+username for webdav and smb, use $user for name of logged in user	filemanager	zh	WebDAV 和 SMB 的用户名，使用 $user 作为登录用户的名称
 you do not have access to %1	filemanager	zh	您无权访问%1
 you need to become root, to enable or disable versioning on a directory!	filemanager	zh	你需要成为超级用户，以启用或禁用一个文件夹的版本管理
 you need to select some files first!	filemanager	zh	您需要首先选择某文件!

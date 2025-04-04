@@ -1,6 +1,11 @@
+%1 is not a known user or group	importexport	lt	%1 nėra žinomas naudotojas arba grupė.
 add a new definition	importexport	lt	Pridėti naują apibrėžtį
 addressbook csv import	importexport	lt	Adresinės CSV importas
 addressbook vcard import	importexport	lt	Adresų knygos vCard importas
+admin disabled exporting	importexport	lt	Administratorius uždraudė eksportavimą.
 change allowed users	importexport	lt	Keisti leidžiamus naudotojus
 change owner when updating	importexport	lt	Keisti savininką atnaujinant
 changed owner	importexport	lt	Pakeistas savininkas
+choose fields to export	importexport	lt	Pasirinkite eksportuojamus laukus
+database values	importexport	lt	Duomenų bazės reikšmės
+delete files after import	importexport	lt	Ištrinti failus po importo

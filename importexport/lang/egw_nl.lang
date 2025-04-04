@@ -1,6 +1,8 @@
+%1 is not a known user or group	importexport	nl	%1 is geen bekende gebruiker of groep.
 add a new definition	importexport	nl	Een nieuwe definitie toevoegen
 addressbook csv import	importexport	nl	Adresboek CSV import
 addressbook vcard import	importexport	nl	Adresboek vCard import
+admin disabled exporting	importexport	nl	Admin heeft exporteren uitgeschakeld.
 all users	importexport	nl	Alle gebruikers
 allowed users	importexport	nl	Toegestane gebruikers
 automatically created by importexport	importexport	nl	Automatisch aangemaakt door importexport
@@ -13,11 +15,14 @@ check all	importexport	nl	Markeer alles
 choose a name for this definition	importexport	nl	Kies een naam voor deze definitie
 choose a plugin	importexport	nl	Kies een plugin
 choose an application	importexport	nl	Kies een toepassing
+choose fields to export	importexport	nl	Kies velden om te exporteren
 choose seperator and charset	importexport	nl	Kies scheidingsteken en karakterset
 condition	importexport	nl	conditie
 copied	importexport	nl	gekopieerd
 created	importexport	nl	Gecreëerd
+database values	importexport	nl	Databasewaarden
 delete all selected definitions	importexport	nl	verwijder ALLE geselecteerde definities
+delete files after import	importexport	nl	Bestanden verwijderen na import
 deleted	importexport	nl	verwijderd
 expert options	importexport	nl	Expert opties
 export	importexport	nl	Export

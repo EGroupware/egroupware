@@ -13,8 +13,7 @@
 
 import {AppJS} from "../../api/js/jsapi/app_base.js";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
-import {et2_button} from "../../api/js/etemplate/et2_widget_button";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw_getObjectManager} from '../../api/js/egw_action/egw_action';
 import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common";
 import {
@@ -30,6 +29,7 @@ import {
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {Et2VfsSelectButton} from "../../api/js/etemplate/Et2Vfs/Et2VfsSelectButton";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import {addAttachmentPlaceholder, preSetToggledOnActions, setPredefinedAddresses} from "./mailAppJsFunctions";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 var keepFromExpander;
@@ -1408,9 +1408,10 @@ app.classes.mail = AppJS.extend(
 				console.log(rowId);
 				// Request email body from server
 				IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:rowId}));
-				jQuery(IframeHandle.getDOMNode()).on('load', function(e){
+				IframeHandle.getDOMNode().addEventListener("load", function (e)
+				{
 					self.resolveExternalImages (this.contentWindow.document);
-				});
+				}, {once: true});
 			}, 300));
 		}
 
@@ -4840,7 +4841,8 @@ app.classes.mail = AppJS.extend(
 			}
 		};
 		var actions = egw.preference('toggledOnActions', 'mail');
-		actions = actions ? actions.split(',') : [];
+		if (typeof actions === 'string')
+			actions = actions ? actions.split(',') : [];
 		for(var widget in widgets)
 		{
 			var expanderBtn = widget + '_expander';
@@ -4876,8 +4878,8 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_fieldExpander: function(event,widget)
 	{
-		var expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
-		for (var name in expWidgets)
+		const expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
+		for (const name in expWidgets)
 		{
 			expWidgets[name] = this.et2.getWidgetById(name+'_expander');
 		}
@@ -4890,28 +4892,28 @@ app.classes.mail = AppJS.extend(
 					jQuery(".mailComposeJQueryCc").show();
 					if (typeof expWidgets.cc !='undefined')
 					{
-						expWidgets.cc.set_disabled(true);
+						//expWidgets.cc.set_disabled(true);
 					}
 					break;
 				case 'bcc_expander':
 					jQuery(".mailComposeJQueryBcc").show();
 					if (typeof expWidgets.bcc !='undefined')
 					{
-						expWidgets.bcc.set_disabled(true);
+						//expWidgets.bcc.set_disabled(true);
 					}
 					break;
 				case 'folder_expander':
 					jQuery(".mailComposeJQueryFolder").show();
 					if (typeof expWidgets.folder !='undefined')
 					{
-						expWidgets.folder.set_disabled(true);
+						//expWidgets.folder.set_disabled(true);
 					}
 					break;
 				case 'replyto_expander':
 					jQuery(".mailComposeJQueryReplyto").show();
 					if (typeof expWidgets.replyto !='undefined')
 					{
-						expWidgets.replyto.set_disabled(true);
+						//expWidgets.replyto.set_disabled(true);
 					}
 					break;
 				case 'from_expander':
@@ -4923,9 +4925,9 @@ app.classes.mail = AppJS.extend(
 		}
 		else if (typeof widget == "undefined") //show all widgets
 		{
-			var widgets = {cc:{},bcc:{},folder:{},replyto:{}};
+			const widgets = {cc:{},bcc:{},folder:{},replyto:{}};
 
-			for(var widget in widgets)
+			for(const widget in widgets)
 			{
 				widgets[widget] = this.et2.getWidgetById(widget);
 
@@ -4935,30 +4937,30 @@ app.classes.mail = AppJS.extend(
 					{
 						case 'cc':
 							jQuery(".mailComposeJQueryCc").show();
-							if (typeof expWidgets.cc != 'undefiend')
+							if (typeof expWidgets.cc != 'undefined')
 							{
-								expWidgets.cc.set_disabled(true);
+								//expWidgets.cc.set_disabled(true);
 							}
 							break;
 						case 'bcc':
 							jQuery(".mailComposeJQueryBcc").show();
-							if (typeof expWidgets.bcc != 'undefiend')
+							if (typeof expWidgets.bcc != 'undefined')
 							{
-								expWidgets.bcc.set_disabled(true);
+								//expWidgets.bcc.set_disabled(true);
 							}
 							break;
 						case 'folder':
 							jQuery(".mailComposeJQueryFolder").show();
-							if (typeof expWidgets.folder != 'undefiend')
+							if (typeof expWidgets.folder != 'undefined')
 							{
-								expWidgets.folder.set_disabled(true);
+								//expWidgets.folder.set_disabled(true);
 							}
 							break;
 						case 'replyto':
 							jQuery(".mailComposeJQueryReplyto").show();
 							if (typeof expWidgets.replyto != 'undefiend')
 							{
-								expWidgets.replyto.set_disabled(true);
+								//expWidgets.replyto.set_disabled(true);
 							}
 							break;
 					}
@@ -5670,8 +5672,6 @@ app.classes.mail = AppJS.extend(
 			switch(widget.id)
 			{
 				case 'uploadForCompose':
-					document.getElementById('mail-compose_uploadForCompose').click();
-					break;
 				case 'selectFromVFSForCompose':
 					widget.show();
 					break;
@@ -5839,8 +5839,9 @@ app.classes.mail = AppJS.extend(
 		var id,fromaddress,domain, email = '';
 		var data = {};
 		var items = [];
-		var nm = this.et2.getWidgetById(this.nm_index);
-
+		//if call happens from a popup this.et2 is the wrong reference --- see mail_deleteMessages
+		const nm = this.et2.getWidgetById(this.nm_index) ??
+			window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index)
 		// called action for a single row from toolbar
 		if (_senders.length == 0)
 		{
@@ -6066,8 +6067,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var self = this;
 		var pass_exp = egw.preference('smime_pass_exp', 'mail');
-		et2_createWidget("dialog",
-		{
+		const dialog = loadWebComponent("et2-dialog", {
 			callback: function(_button_id, _value)
 			{
 				if (_button_id == 'send' && _value)
@@ -6093,7 +6093,8 @@ app.classes.mail = AppJS.extend(
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**
@@ -6274,8 +6275,7 @@ app.classes.mail = AppJS.extend(
 			'presets[org_unit]': _metadata.certDetails.subject.organizationUnitName
 		};
 		content.class="";
-		et2_createWidget("dialog",
-		{
+		const dialog = et2_createWidget('et2-dialog', {
 			callback: function(_button_id, _value)
 			{
 				if (_button_id == 'contact' && _value)
@@ -6297,7 +6297,8 @@ app.classes.mail = AppJS.extend(
 			value:{content:content},
 			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**
@@ -6344,7 +6345,7 @@ app.classes.mail = AppJS.extend(
 		var data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
 		var subject = data && data.data? data.data.subject : "";
 
-		et2_createWidget("dialog",
+		const dialog = et2_createWidget("et2-dialog",
 		{
 			callback: function(_button_id, _value) {
 				var newSubject = null;
@@ -6382,42 +6383,14 @@ app.classes.mail = AppJS.extend(
 			template: egw.webserverUrl + '/mail/templates/default/modifyMessageSubjectDialog.xet?1',
 			resizable: false,
 			width: 500
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**
 	 * Pre set toggled actions
 	 */
-	preSetToggledOnActions: function ()
-	{
-		var actions = egw.preference('toggledOnActions', 'mail');
-		var toolbar = this.et2.getWidgetById('composeToolbar');
-		if (actions)
-		{
-			actions = actions.split(',');
-			for (var i=0; i < actions.length; i++)
-			{
-				if (toolbar && toolbar.options.actions[actions[i]])
-				{
-					let d = document.getElementById('mail-compose_composeToolbar-'+actions[i]);
-					if (d && toolbar._actionManager.getActionById(actions[i]).checkbox
-							&& !toolbar._actionManager.getActionById(actions[i]).checked)
-					{
-						d.click();
-					}
-				}
-				else
-				{
-					var widget = this.et2.getWidgetById(actions[i]);
-					if (widget)
-					{
-					//	jQuery(widget.getDOMNode()).trigger('click');
-					}
-				}
-			}
-		}
-	},
-
+	preSetToggledOnActions: preSetToggledOnActions ,
 	/**
 	 * Set predefined addresses for compose dialog
 	 *
@@ -6425,31 +6398,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {type} _senders
 	 * @returns {undefined}
 	 */
-	set_predefined_addresses: function(action,_senders)
-	{
-		var pref_id = _senders[0].id.split('::')[0]+'_predefined_compose_addresses';
-		var prefs = egw.preference(pref_id, 'mail');
-
-		et2_createWidget("dialog",
-		{
-			callback: function (_button_id, _value)
-			{
-				switch (_button_id)
-				{
-					case Et2Dialog.OK_BUTTON:
-						egw.set_preference('mail', pref_id, _value);
-						return;
-					case "cancel":
-				}
-			},
-			title: this.egw.lang("Predefined addresses for compose"),
-			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
-			value: {content: prefs || {}},
-			minWidth: 410,
-			template: egw.webserverUrl + '/mail/templates/default/predefinedAddressesDialog.xet?',
-			resizable: false,
-		}, et2_dialog._create_parent('mail'));
-	},
+	set_predefined_addresses: setPredefinedAddresses,
 
 	/**
 	 * open
@@ -6468,21 +6417,7 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
-	addAttachmentPlaceholder: function ()
-	{
-		if (this.et2.getArrayMgr("content").getEntry("is_html"))
-		{
-			// Add link placeholder box
-			const email = this.et2.getWidgetById("mail_htmltext");
-			const attach_type = this.et2.getWidgetById("filemode");
-			const placeholder = '<fieldset class="attachments mceNonEditable"><legend>Download attachments</legend>' + this.egw.lang('Attachments') + '</fieldset>';
-
-			if (email && !email.getValue().includes(placeholder) && attach_type.getValue() !== "attach")
-			{
-				email.editor.execCommand('mceInsertContent', false, placeholder);
-			}
-		}
-	},
+	addAttachmentPlaceholder: addAttachmentPlaceholder,
 
 	addressbookSelect: function()
 	{

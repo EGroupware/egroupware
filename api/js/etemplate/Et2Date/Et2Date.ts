@@ -317,17 +317,16 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 				width: auto;
 			  }
 
-			  ::slotted([slot='input']) {
-				flex: 1 1 auto;
-				min-width: 12ex;
-			  }
-
-			  /* Scroll buttons */
-
+				/* Scroll buttons */
 				.form-control-input {
-				position: relative;
+					position: relative;
 					display: flex;
-			  }
+
+					et2-textbox {
+						flex: 1 1 auto;
+						min-width: 12ex;
+					}
+				}
 
 				.form-control-input:hover .et2-date-time__scrollbuttons {
 				display: flex;
@@ -385,6 +384,8 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		}
 	}
 
+	private _boundTooltipElements : HTMLElement[] = [];
+
 	constructor()
 	{
 		super();
@@ -404,13 +405,45 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		super.connectedCallback();
 		this._updateValueOnChange = this._updateValueOnChange.bind(this);
 		this._handleShortcutButtonClick = this._handleShortcutButtonClick.bind(this);
+
+		this.init();
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
 		this._inputNode?.removeEventListener('change', this._onChange);
+		delete this._inputElement?.flatpickr;
 		this.findInputField()?.removeEventListener("input", this._handleInputChange);
+
+		this._boundTooltipElements.forEach(tooltipped =>
+		{
+			this.egw().tooltipUnbind(tooltipped)
+		});
+		this._boundTooltipElements.splice(0, this._boundTooltipElements.length);
+
+		this._instance?.destroy && this._instance.destroy();
+		if(this._instance)
+		{
+			delete this._inputNode?._flatpickr;
+			this._instance = undefined;
+		}
+	}
+
+	update(changedProperties : PropertyValueMap<any>)
+	{
+		super.update(changedProperties);
+
+		// Flatpickr puts some inputs we don't have direct control over
+		if(changedProperties.has("disabled") && this._inputNode)
+		{
+			this._inputNode.disabled = this.disabled;
+			if(typeof this._inputNode.requestUpdate == "function")
+			{
+				this._inputNode?.requestUpdate("disabled");
+				this._inputNode.shadowRoot.querySelectorAll("input").forEach(i => i.disabled = this.disabled);
+			}
+		}
 	}
 
 	update(changedProperties : PropertyValueMap<any>)
@@ -825,32 +858,33 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			return;
 		}
 
-		let set_holiday = function(holidays, element)
-		{
-			let day_holidays = holidays[formatDate(f_date, {dateFormat: "Ymd"})]
-			let tooltip = '';
-			if(typeof day_holidays !== 'undefined' && day_holidays.length)
-			{
-				for(var i = 0; i < day_holidays.length; i++)
-				{
-					if(typeof day_holidays[i]['birthyear'] !== 'undefined')
-					{
-						element.classList.add('calBirthday');
-					}
-					else
-					{
-						element.classList.add('calHoliday');
-					}
-					tooltip += day_holidays[i]['name'] + "\n";
-				}
-			}
-			if(tooltip)
-			{
-				this.egw().tooltipBind(element, tooltip);
-			}
-		}.bind(this);
+		egw.holidays(f_date.getFullYear()).then((h) => this.set_holiday(f_date, h, dayElement));
+	}
 
-		egw.holidays(f_date.getFullYear()).then((h) => set_holiday(h, dayElement));
+	private set_holiday(f_date : Date, holidays, element : HTMLElement)
+	{
+		let day_holidays = holidays[formatDate(f_date, {dateFormat: "Ymd"})]
+		let tooltip = '';
+		if(typeof day_holidays !== 'undefined' && day_holidays.length)
+		{
+			for(var i = 0; i < day_holidays.length; i++)
+			{
+				if(typeof day_holidays[i]['birthyear'] !== 'undefined')
+				{
+					element.classList.add('calBirthday');
+				}
+				else
+				{
+					element.classList.add('calHoliday');
+				}
+				tooltip += day_holidays[i]['name'] + "\n";
+			}
+		}
+		if(tooltip)
+		{
+			this.egw().tooltipBind(element, tooltip);
+			this._boundTooltipElements.push(element);
+		}
 	}
 
 	/**

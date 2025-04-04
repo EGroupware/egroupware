@@ -50,8 +50,12 @@ resource	resources	bg	Ресурс
 resource %1 deleted!	resources	bg	Ресурс %1 изтрит!
 resource %1 saved!	resources	bg	Ресурс %1 запазен!
 resource / accessories	resources	bg	Ресурс / Аксесоари
+resource id	resources	bg	Идентификатор на ресурса
 resources	common	bg	Ресурси
+resources csv export	resources	bg	Експорт на ресурси в CSV
+resources csv import	resources	bg	Импорт на ресурси CSV
 select resources	common	bg	Изберете ресурси
+show in title (beside name)	resources	bg	Показване в заглавието (до името)
 un-delete accessories of selected resources too?	resources	bg	Възстановяване на аксесоарите на избраните ресурси?
 view accessories	resources	bg	Преглед на аксесоари
 view calendar	resources	bg	Преглед на календара

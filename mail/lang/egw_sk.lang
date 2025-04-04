@@ -117,7 +117,7 @@ continue	mail	sk	Pokračovať
 convert mail to item and attach its attachments to this item (standard)	mail	sk	Konvertovať e-mail na položku, vrátane jeho príloh (štandard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	sk	Konvertovať e-mail na položku, vrátane jeho príloh, a pripojiť aj zdrojový kód správy (.eml)
 convert only mail to item (ignore possible attachments)	mail	sk	Konvertovať iba e-mail na položku (ignorovať prípadné prílohy)
-copied %1 message(s) from %2 to %3	mail	sk	Skopírovaných %1 správ z %2 do %3
+copied %1 message(s) from %2 to %3	mail	sk	Skopírovaných %1 správ z %2 do %3.
 copy to	mail	sk	Kopírovať do
 could not append message:	mail	sk	Nepodarilo sa pripojiť správu:
 could not save the acl because some names are empty	mail	sk	Nepodarilo sa uložiť ACL! Pretože niektoré mená sú prázdne
@@ -273,6 +273,7 @@ ham folder	mail	sk	Priečinok dobrých správ
 handling of external http images / mixed content in mails	mail	sk	Spracovanie externých obrázkov http / zmiešaného obsahu v e-mailoch
 header	mail	sk	Hlavička
 header lines	mail	sk	Riadky hlavičky
+hide from	mail	sk	Skryť Od
 high	mail	sk	Vysoká
 high priority	mail	sk	Vysoká priorita
 hold %1 to drag files to your computer	mail	sk	Podržte %1 a presuňte súbory do počítača
@@ -372,7 +373,7 @@ move selected to	mail	sk	Presunúť vybrané do
 move to	mail	sk	Presunúť do
 move to archive	mail	sk	Presunúť do priečinku Archív
 move to trash	mail	sk	Presunúť do Odpadkového koša
-moved %1 message(s) from %2 to %3	mail	sk	%1 správ bolo presunutých z %2 do %3
+moved %1 message(s) from %2 to %3	mail	sk	Presunutá správa(y) %1 z %2 do %3.
 moving folders from one mailaccount to another is not supported	mail	sk	Presúvanie priečinkov z jedného poštového účtu do druhého nie je podporované
 name and domain	mail	sk	Názov a doména
 name and email	mail	sk	Meno a e-mail
@@ -546,6 +547,7 @@ select file to attach to message	mail	sk	Vyberte súbor ktorý sa pripojí v pr�
 select file to import into folder	mail	sk	Vyberte súvor ktorý sa naimportuje do priečinka
 select file(s) from vfs	mail	sk	Vyberte súbor(y) z VFS
 select files to upload	mail	sk	Vyberte súbory ktoré sa priložia k správe
+select mail addresses from addressbook	mail	sk	Výber poštových adries z adresára
 select multiple	mail	sk	Vyberte viacero
 select or insert email address	mail	sk	Vyberte alebo vložte e-mailovú adresu
 selected	mail	sk	vybrané
@@ -626,8 +628,8 @@ test connection and display basic information about the selected profile	mail	sk
 text	mail	sk	Text
 text mode	mail	sk	Textový režim
 text/plain	mail	sk	Čistý text
-the %1 's acl removed from the %2	mail	sk	ACL pre %1 bolo odstránené z %2
-the %1 's acl, including its subfolders, removed from the %2	mail	sk	ACL pre %1 vrátane podpriečinkov bolo odstránené z %2
+the %1 's acl removed from the %2	mail	sk	ACL pre %1 bolo odstránené z %2.
+the %1 's acl, including its subfolders, removed from the %2	mail	sk	ACL pre %1 vrátane podpriečinkov bolo odstránené z %2.
 the entered passphrase is not correct! please try again.	mail	sk	Zadané heslo je nesprávne! Prosím skúste to znovu.
 the folder %1 's acls saved	mail	sk	ACL priečinku %1 bolo uložené
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	sk	Ak tu nie je nič nastavené a nie je ani preddefinovaná hodnota, použije sa priečinok <b>%1</b>

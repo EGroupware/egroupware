@@ -329,7 +329,17 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		disconnectedCallback()
 		{
 			super.disconnectedCallback();
+			this._searchPromise = null;
+			if(this._searchTimeout)
+			{
+				window.clearTimeout(this._searchTimeout);
+			}
+			this._searchTimeout = null;
 			this._unbindListeners();
+
+			while(this.lastChild) this.lastChild.remove();
+			this._selected_remote = [];
+			this._remote_options = [];
 		}
 
 		async getUpdateComplete()
@@ -381,15 +391,20 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				if(this.searchEnabled)
 				{
 					// Check to see if value is for an option we do not have
+					const checking = []
 					for(const newValueElement of this.getValueAsArray())
 					{
-						if(this.optionSearch(newValueElement))
+						if(this.optionSearch(newValueElement, null, "value", "children") ||
+							// Legacy children as value
+							this.optionSearch(newValueElement, null, "value", "value"))
 						{
 							continue;
 						}
 
-						this._missingOption(newValueElement);
+						checking.push(this._missingOption(newValueElement));
 					}
+					// SlSelect removes missing options from its value
+					Promise.all(checking).then(() => { this.select.value = this.value});
 				}
 			}
 		}
@@ -464,6 +479,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			if(this.editModeEnabled)
 			{
 				edit = html`<input id="edit" type="text" part="input" autocomplete="off" style="width:100%"
+                                   aria-label="${this.egw().lang('Edit tag')}"
                                    @keydown=${this._handleEditKeyDown}
                                    @click=${(e) => e.stopPropagation()}
                                    @blur=${this.stopEdit.bind(this)}
@@ -475,6 +491,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
                     novalue: (this.value?.length == 0)
                 })} slot="prefix">
                 <et2-textbox id="search" type="text" part="input"
+                             aria-label="${this.egw().lang("search")}"
                              exportparts="base:search__base"
                              clearable
                              autocomplete="off"
@@ -658,7 +675,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		protected _missingOption(newValueElement : string)
 		{
 			// Given a value we need to search for - this will add in all matches, including the one needed
-			this.remoteSearch(newValueElement, this.searchOptions).then((result : SelectOption[]) =>
+			return this.remoteSearch(newValueElement, this.searchOptions).then((result : SelectOption[]) =>
 			{
 				// Re-set / update value since SlSelect probably removed it by now due to missing option
 				if(typeof this.select != "undefined")
@@ -775,8 +792,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				window.setTimeout(() =>
 				{
-					this._searchInputNode.focus();
-					this._searchInputNode.select();
+					this._searchInputNode?.focus();
+					this._searchInputNode?.select();
 				}, 100);
 			}
 		}

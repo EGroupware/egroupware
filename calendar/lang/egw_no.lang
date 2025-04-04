@@ -156,7 +156,7 @@ fieldseparator	calendar	no	Feltseperator
 filemanager	calendar	no	Filhåndterer
 filename	calendar	no	Filnavn
 filename of the download	calendar	no	Filnavn for nedlastingen
-find free timeslots where the selected participants are available for the given timespan	calendar	no	Finn frie tidssoner hvor de valgte deltagerne er tilgjengelig for angitt varighet.
+find free timeslots where the selected participants are available for the given timespan	calendar	no	Finn frie tidssoner hvor de valgte deltagerne er tilgjengelig for angitt varighet
 firstname of person to notify	calendar	no	Fornavn til person som skal varsles
 for	calendar	no	for
 format of event updates	calendar	no	Format på hendelsesoppdateringer
@@ -324,7 +324,6 @@ startdate / -time	calendar	no	Startdato/-tid
 startdate and -time of the search	calendar	no	Startdato og -tid i søket
 startdate of the export	calendar	no	Startdato for eksport
 startrecord	calendar	no	Startrekke
-status	calendar	no	Status
 status changed	calendar	no	Status endret
 submit to repository	calendar	no	Send til Arkiv
 sun	calendar	no	Søn

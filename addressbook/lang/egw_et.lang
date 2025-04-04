@@ -21,7 +21,10 @@ addressbook vcard export	addressbook	et	Aadressiraamatu vCard eksport
 addressbook vcard import	addressbook	et	Aadressiraamatu vCard import
 allow	addressbook	et	Luba
 allow for contacts only	addressbook	et	Luba ainult kontaktidele
+allow members of following groups to edit contact-data of accounts	addressbook	et	Luba järgmiste gruppide liikmetel kontode kontaktandmeid muuta
+allow members of following groups to show the account name column	addressbook	et	Luba järgmiste rühmade liikmetel näidata konto nime veergu
 always	addressbook	et	Alati
+apply changes to all members, whose fields have the same previous content	addressbook	et	Rakendada muudatusi kõigile liikmetele, kelle väljadel on sama varasem sisu.
 audio call	addressbook	et	Helikõne
 birthday	common	et	Sünnipäev
 birthdays	common	et	Sünnipäevad
@@ -29,6 +32,7 @@ browser location	addressbook	et	Brauseri asukoht
 calendar integration	addressbook	et	Kalendri integreerimine
 cell phone	addressbook	et	Mobiil telefon
 change addressbook when updating	addressbook	et	Muuda aadressiraamatut uuendamisel
+change all organisation members	addressbook	et	Muutke kõiki organisatsiooni liikmeid
 check all	addressbook	et	Kontrolli kõik
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	et	Valige eelnevalt määratud kaardiallikas või kasutage kohandatud URL-i (kasutage %r = tänav, %t = linn, %c = riik, %z = postiindeks).
 city	common	et	Linn
@@ -69,6 +73,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	addressbook	et	Eksisteerivad lingid
 exports contacts from your addressbook into a csv file.	addressbook	et	Ekspordib kontaktid aadressiraamatust CSV-faili.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	et	Ekspordib kontaktid aadressiraamatust CSV-faili.  CSV tähendab 'Comma Separated Values' (komadega eraldatud väärtused). Valikute vahekaardil saate valida ka muid eraldajaid.
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	et	Organisatsiooni liikme(te) %1 muutmine ebaõnnestus, ebapiisavad õigused!
 favorite phone	addressbook	et	Lemmikutelefon
 fax	addressbook	et	Faks
 fields to check for duplicates	addressbook	et	Väljad duplikaatide kontrollimiseks
@@ -122,6 +127,7 @@ schedule a video conference	addressbook	et	Videokonverentsi planeerimine
 search letter	addressbook	et	Otsi kirja
 select all	addressbook	et	Märgi kõik
 select an opened dialog	addressbook	et	Valige avatud dialoog
+select contacts to add to mail	addressbook	et	Valige kontaktid, mida lisada posti
 send fax via email by replacing fax number with an email address	addressbook	et	Faksi saatmine e-posti teel, asendades faksinumbri e-posti aadressiga
 share into addressbook	addressbook	et	Jaga aadressiraamatusse
 share writable	addressbook	et	Jaga kirjutatav

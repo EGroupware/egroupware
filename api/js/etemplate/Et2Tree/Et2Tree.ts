@@ -186,6 +186,35 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		this.selectedNodes = [];
 	}
 
+	connectedCallback()
+	{
+		super.connectedCallback();
+		// Actions can't be initialized without being connected to InstanceManager
+		if(this.actions && Object.values(this.actions).length && !this._actionManager)
+		{
+			this._initActions();
+			this._link_actions(this.actions)
+		}
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+
+		this._currentSlTreeItem = null;
+		this.selectedNodes.splice(0, this.selectedNodes.length);
+	}
+
+	destroy()
+	{
+		if(this._actionManager)
+		{
+			// Delete all actions
+			this._actionManager.remove();
+			this._actionManager = undefined;
+		}
+	}
+
 	private _initCurrent()
 	{
 		this._currentSlTreeItem = this.selected;
@@ -946,14 +975,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			this.selectedNodes = event.detail.selection
 		}*/
-		if(typeof this.onclick == "function")
-		{
-			// wait for the update, so app founds DOM in the expected state
-			this._tree.updateComplete.then(() =>
-			{
-				this.onclick(nodes[0].id, this, event.detail.previous)
-			});
-		}
 	}
 
 	protected async finishedLazyLoading()
@@ -1014,7 +1035,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			})
 		}
 		const selected = typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value);
-		const draggable = this.widget_object?.actionLinks?.filter(al => al.actionObj.type == "drag").length > 0
+		const draggable = this.widget_object?.actionLinks?.filter(al => al.actionObj?.type == "drag").length > 0
 
 		return html`
             <sl-tree-item
@@ -1155,13 +1176,16 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				Object.assign(_item, results);
 
 				// Add actions
-				const itemAO = this.widget_object.getObjectById(_item.value ?? _item.id);
-				let parentAO = null;
-				if(itemAO && itemAO.parent)
+				if(this.actions && Object.entries(this.actions).length > 0)
 				{
-					// Remove previous, if it exists
-					parentAO = itemAO.parent;
-					itemAO.remove();
+					const itemAO = this.widget_object.getObjectById(_item.value ?? _item.id);
+					let parentAO = null;
+					if(itemAO && itemAO.parent)
+					{
+						// Remove previous, if it exists
+						parentAO = itemAO.parent;
+						itemAO.remove();
+					}
 				}
 
 				return results;

@@ -51,7 +51,6 @@ check virtual filesystem	common	ja	仮想ファイルシステムをチェック
 classic	filemanager	ja	標準ツールバー
 clear search	filemanager	ja	検索をクリア
 clipboard is empty!	filemanager	ja	クリップボードが空です!
-collab editor settings	filemanager	ja	Collab エディタ設定
 comment	filemanager	ja	コメント
 configuration changed.	filemanager	ja	構成を変更しました。
 confirm final delete	filemanager	ja	完全削除確認
@@ -124,7 +123,7 @@ error mounting %1 on %2!	filemanager	ja	%2 に %1 をマウント中にエラー
 error unmounting %1!	filemanager	ja	%1 をアンマウント中にエラー!
 error uploading file!	filemanager	ja	ファイルのアップロード中にエラー!
 error while creating directory.	filemanager	ja	ディレクトリの作成中にエラー
-everyone	filemanager	ja	Everyone
+everyone	filemanager	ja	全員
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
@@ -218,12 +217,14 @@ notebookbar	filemanager	ja	タブ
 older versions or deleted files	filemanager	ja	古いバージョン、または削除済みファイル
 only owner can rename or delete the content	filemanager	ja	所有者だけが名称変更したり内容変更/削除できます。
 open	filemanager	ja	開く
+open documents with collabora, if permissions are given	filemanager	ja	権限が与えられている場合、Collabora Onlineでドキュメントを開く
 operation	filemanager	ja	オペレーション
 password for webdav and smb, use $pass for password of logged in user	filemanager	ja	WebDAVとSMBのパスワード、ログインユーザーのパスワードには$passを使用
 paste link	filemanager	ja	リンクを貼り付ける
 path %1 not found or not a directory!	filemanager	ja	%1 が見つかりません!
 path and query-parameters, smb: share and optional path (with /)	filemanager	ja	パスとクエリパラメータ、SMB：共有とオプションのパス（/付き）
 percentage	filemanager	ja	パーセンテージ
+permission denied!	filemanager	ja	パーミッションが拒否されました！
 permissions	filemanager	ja	パーミッション
 permissions of %1 changed.	filemanager	ja	%1 のパーミッションが変更されました。
 please select a file to delete.	filemanager	ja	削除するファイルを選択してください。
@@ -278,6 +279,8 @@ show link "your home directory" in side box menu?	filemanager	ja	サイドボッ
 show link "your home directory*" in side box menu?*	filemanager	ja	サイドボックス・メニューに"ホーム・ディレクトリ*"リンクを表示しますか？*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	ja	サイドボックス・メニューにファイル・マネージャのベース・ディレクトリ（/）を表示しますか？
 size	filemanager	ja	サイズ
+smb, webdavs and vfs require a username!	filemanager	ja	SMB、WebDAV、VFS にはユーザー名が必要です！
+smb: mount samba or windows fileserver shares	filemanager	ja	SMB: Samba または Windows ファイルサーバーの共有をマウントします。
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	ja	一部の機能を利用するには、スーパー・ユーザ権限が必要です。ファイル・マネージャのスーパー・ユーザでログインしてください。
 sqlfs statistics	filemanager	ja	sqlFS 統計
 start search	filemanager	ja	検索を開始

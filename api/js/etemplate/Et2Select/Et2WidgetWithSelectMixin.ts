@@ -14,6 +14,7 @@ import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 
 import {SearchMixinInterface} from "../Et2Widget/SearchMixin";
+import {repeat} from "lit/directives/repeat.js";
 
 /**
  * @summary Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
@@ -130,6 +131,12 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			this.__select_options = <SelectOption[]>[];
 		}
 
+		destroy()
+		{
+			super.destroy && super.destroy();
+			this.__select_options = [];
+			this._xmlOptions = [];
+		}
 		async getUpdateComplete() : Promise<boolean>
 		{
 			const result = await super.getUpdateComplete();
@@ -291,7 +298,7 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			const options = Array.isArray(option.value) ? <SelectOption[]>option.value : <SelectOption[]>option.children;
 			return html`
                 <small>${this.noLang ? option.label : this.egw().lang(option.label)}</small>
-                ${options.map(this._optionTemplate.bind(this))}
+                ${repeat(options, o => o.value, this._optionTemplate.bind(this))}
                 <sl-divider></sl-divider>
 			`;
 		}

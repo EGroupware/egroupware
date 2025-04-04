@@ -226,6 +226,7 @@ group ?	admin	id	Kelompok?
 group has been added	common	id	Kelompok telah dibuat
 group has been deleted	common	id	Kelompok telah dihapus
 group has been updated	common	id	Kelompok telah dikinikan
+group hidden from non-admins	admin	id	Grup disembunyikan dari non-admin
 group hierarchy	admin	id	Hirarki grup
 group list	admin	id	Daftar Kelompok
 group manager	admin	id	Manajer Kelompok

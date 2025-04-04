@@ -964,6 +964,16 @@ class calendar_uiviews extends calendar_ui
 
 		$actions['delete']['onExecute'] = 'javaScript:app.calendar.delete';
 
+		// allow other apps to add actions
+		foreach(Api\Hooks::process(array(
+			'location' => 'add_calendar_non_list_actions',
+			'template_name' => 'calendar_non_list',
+		), array('policy'), true) as $app => $data)
+		{
+			// todo: place new items based on group
+			if ($data) $actions = EGroupware\Api\Etemplate\Widget\Nextmatch::merge_actions_by_group((array)$actions, $data);
+		}
+
 		return $actions;
 	}
 

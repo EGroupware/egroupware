@@ -61,8 +61,10 @@ modified between	filemanager	ko	수정됨
 mountpoints	filemanager	ko	마운트 포인트
 notebookbar	filemanager	ko	탭
 open	filemanager	ko	개설
+open documents with collabora, if permissions are given	filemanager	ko	권한이 부여된 경우 콜러보라 온라인에서 문서 열기
 password for webdav and smb, use $pass for password of logged in user	filemanager	ko	WebDAV 및 SMB의 비밀번호, 로그인한 사용자의 비밀번호는 $pass 사용
 path and query-parameters, smb: share and optional path (with /)	filemanager	ko	경로 및 쿼리 매개변수, SMB: 공유 및 선택적 경로(/ 포함)
+permission denied!	filemanager	ko	권한이 거부되었습니다!
 permissions	filemanager	ko	권한
 preview	filemanager	ko	미리보기
 protocol to use	filemanager	ko	사용할 프로토콜
@@ -81,3 +83,7 @@ rename, change permissions or ownership	filemanager	ko	이름 바꾸기, 사용 
 renamed %1 to %2	filemanager	ko	%1의 이름을 %2로 변경했습니다.
 renamed %1 to %2.	filemanager	ko	%1의 이름을 %2로 변경했습니다.
 save as zip	filemanager	ko	ZIP으로 저장
+smb, webdavs and vfs require a username!	filemanager	ko	SMB, WebDAV 및 VFS에는 사용자 이름이 필요합니다!
+smb: mount samba or windows fileserver shares	filemanager	ko	SMB: Samba 또는 Windows 파일서버 공유 마운트
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ko	문서에 데이터로 대체할 {{%3}}과 같은 자리 표시자를 포함할 수 있습니다(%1자리 표시자 이름의 전체 목록%2).
+username for webdav and smb, use $user for name of logged in user	filemanager	ko	WebDAV 및 SMB의 사용자 이름, 로그인한 사용자의 이름에 $user 사용

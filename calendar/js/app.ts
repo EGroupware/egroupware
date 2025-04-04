@@ -1820,11 +1820,6 @@ export class CalendarApp extends EgwApp
 		{
 			app = data.data.app;
 			app_id = data.data.app_id;
-			if (app === 'calendar' && app_id.indexOf(':'))
-			{
-				let parts = app_id.split(':');
-				app_id = parts[0];
-			}
 			id = data.data.id;
 		}
 		else
@@ -2922,6 +2917,7 @@ export class CalendarApp extends EgwApp
 			if(state.state.last && state.state.last.toJSON) state.state.last = state.state.last.toJSON();
 
 			// Toggle todos
+			let frameworkApp = framework.getApplicationByName("calendar");
 			if((state.state.view == 'day' || this.state.view == 'day') && jQuery(view.etemplates[0].DOMContainer).is(':visible'))
 			{
 				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile()
@@ -2929,9 +2925,22 @@ export class CalendarApp extends EgwApp
 					&& egw.user('apps')['infolog'] && egw.preference('cal_show','infolog') !== '0'
 				)
 				{
-					// Set width to 70%, otherwise if a scrollbar is needed for the view, it will conflict with the todo list
-					jQuery((<etemplate2>CalendarApp.views.day.etemplates[0]).DOMContainer).css("width","70%");
-					jQuery(view.etemplates[1].DOMContainer).css({"left":"70%"});
+					if(typeof frameworkApp.showRight == "function")
+					{
+						frameworkApp.updateComplete.then(async() =>
+						{
+							await frameworkApp.showRight();
+							view.etemplates[0].resize();
+							view.etemplates[1]?.resize();
+						});
+					}
+					else
+					{
+						// Set width to 70%, otherwise if a scrollbar is needed for the view, it will conflict with the todo list
+						jQuery((<etemplate2>CalendarApp.views.day.etemplates[0]).DOMContainer).css("width", "70%");
+						jQuery(view.etemplates[1].DOMContainer).css({"left": "70%"});
+					}
+
 					// TODO: Maybe some caching here
 					this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
 						this.getWidgetById('label').set_value(data.label||'');
@@ -2941,9 +2950,16 @@ export class CalendarApp extends EgwApp
 				}
 				else
 				{
-					jQuery((<etemplate2>CalendarApp.views.day.etemplates[1]).DOMContainer).css("left","100%");
-					jQuery((<etemplate2>CalendarApp.views.day.etemplates[1]).DOMContainer).hide();
-					jQuery((<etemplate2>CalendarApp.views.day.etemplates[0]).DOMContainer).css("width","100%");
+					if(typeof frameworkApp.hideRight == "function")
+					{
+						frameworkApp.hideRight();
+					}
+					else
+					{
+						jQuery((<etemplate2>CalendarApp.views.day.etemplates[1]).DOMContainer).css("left", "100%");
+						jQuery((<etemplate2>CalendarApp.views.day.etemplates[1]).DOMContainer).hide();
+						jQuery((<etemplate2>CalendarApp.views.day.etemplates[0]).DOMContainer).css("width", "100%");
+					}
 					view.etemplates[0].widgetContainer.iterateOver(function(w) {
 						w.set_width('100%');
 					},this,et2_calendar_timegrid);
@@ -2951,10 +2967,19 @@ export class CalendarApp extends EgwApp
 			}
 			else if(jQuery(view.etemplates[0].DOMContainer).is(':visible'))
 			{
-				jQuery(view.etemplates[0].DOMContainer).css("width","");
-				view.etemplates[0].widgetContainer.iterateOver(function(w) {
+				if(typeof frameworkApp.hideRight == "function")
+				{
+					frameworkApp.updateComplete.then(async() =>
+					{
+						await frameworkApp.hideRight();
+						view.etemplates[0].resize();
+					});
+				}
+				view.etemplates[0].DOMContainer.style.width = "";
+				view.etemplates[0].widgetContainer.iterateOver(function(w)
+				{
 					w.set_width('100%');
-				},this,et2_calendar_timegrid);
+				}, this, et2_calendar_timegrid);
 			}
 
 			// List view (nextmatch) has slightly different fields

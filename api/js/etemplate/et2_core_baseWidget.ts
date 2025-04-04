@@ -201,9 +201,9 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 		}
 
 		// Remove the binding to the click handler
-		if (this.node)
+		if(this.node && typeof this.node.removeEventListener == "function")
 		{
-			jQuery(this.node).unbind("click.et2_baseWidget");
+			this.node.removeEventListener("click", this.click);
 		}
 
 		return super.detachFromDOM();
@@ -216,9 +216,7 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 		// Add the binding for the click handler
 		if (this.node)
 		{
-			jQuery(this.node).bind("click.et2_baseWidget", this, function(e) {
-				return e.data.click.call(e.data, e, this);
-			});
+			this.node.addEventListener("click", this.click);
 			if (typeof this.onclick == 'function') jQuery(this.node).addClass('et2_clickable');
 		}
 

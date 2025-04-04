@@ -51,7 +51,6 @@ check virtual filesystem	common	it	Controlla il filesystem virtuale
 classic	filemanager	it	Barra degli strumenti predefinita
 clear search	filemanager	it	Reimposta la ricerca
 clipboard is empty!	filemanager	it	Gli appunti sono vuoti!
-collab editor settings	filemanager	it	Impostazioni Collab Editor
 comment	filemanager	it	Commento
 configuration changed.	filemanager	it	Configurazione modificata
 confirm final delete	filemanager	it	Confermare la rimozione definitiva
