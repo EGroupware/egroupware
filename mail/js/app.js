@@ -73,6 +73,8 @@ app.classes.mail = AppJS.extend(
 	 */
 	subscription_treeLastState : "",
 
+	tree_wdg : null,
+
 	/**
 	 * abbrevations for common access rights
 	 * @array
@@ -150,6 +152,10 @@ app.classes.mail = AppJS.extend(
 
 		// Unregister client side cache
 		this.egw.dataCacheUnregister('mail');
+
+		this.tree_wdg?.destroy && this.tree_wdg.destroy();
+		this.tree_wdg?.remove && this.tree_wdg.remove();
+		this.tree_wdg = null;
 
 		delete this.et2_obj;
 		// call parent
@@ -255,12 +261,14 @@ app.classes.mail = AppJS.extend(
 						}
 					});
 				}
-                    const tree_wdg = this.et2.getWidgetById(this.nm_index + '[foldertree]');
-                    if (tree_wdg) {
-                        //TODO check if there are changes necessary
+				if(!this.tree_wdg){
+					this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+				}
+				if (this.tree_wdg) {
+					//TODO check if there are changes necessary
 
-					tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
-					tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
+					this.tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
+					this.tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
 				}
 				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
 				var alreadyrefreshed = this.mail_searchtype_change();
@@ -1623,9 +1631,11 @@ app.classes.mail = AppJS.extend(
 		}
 		try
 		{
-			var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+			if(!this.tree_wdg){
+				this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+			}
 
-			var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
+			const activeFolders = this.tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 			//alert(activeFolders.join('#,#'));
 			this.mail_queueRefreshFolderList((mode=='thisfolderonly'&&nodeToRefresh?[_nodeID]:activeFolders));
 			if (_refreshGridArea)
