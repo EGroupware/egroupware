@@ -29,7 +29,7 @@ export class Et2DateTime extends Et2Date
 				.form-control-input {
 					et2-textbox {
 						flex: 1 1 auto;
-						min-width: 17ex;
+						min-width: 19ex;
 					}
 				}
 

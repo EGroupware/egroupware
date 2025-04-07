@@ -324,7 +324,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 
 					et2-textbox {
 						flex: 1 1 auto;
-						min-width: 12ex;
+						min-width: 14ex;
 					}
 				}
 
