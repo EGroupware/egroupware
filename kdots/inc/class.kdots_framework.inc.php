@@ -41,7 +41,7 @@ class kdots_framework extends Api\Framework\Ajax
 		}
 		$data = parent::_get_header($extra);
 
-		$data['theme'] .= $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] ? 'data-darkmode="1" class="sl-theme-dark"' : '';
+		$data['theme'] .= $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] ? 'data-darkmode="1"' : '';
 		unset($data['darkmode']);
 
 		if($extra['navbar-apps'])
