@@ -100,6 +100,17 @@ egw-framework#egw_fw_basecontainer {
 	  min-width: 1em;
 	  min-height: 1em;
 	}
+
+	#quick_add_selectbox::part(emptyLabel) {
+	  display: none;
+	}
+
+	#quick_add_selectbox::part(combobox) {
+	  width: 1px;
+	  padding: 0;
+	  box-shadow: none;
+	  border: none
+	}
   }
 
   div#egw_fw_sidebar_r {

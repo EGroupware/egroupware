@@ -195,8 +195,9 @@ export class EgwFramework extends LitElement
 				throw 'Invalid parameters';
 			}, null, 'message');
 
+			await this.updateComplete
 			// Quick add
-			this.egw.link_quick_add('topmenu_info_quick_add');
+			this.egw.link_quick_add(<HTMLElement>this.querySelector('#egw_fw_topmenu_info_items'));
 
 			// Ask about timer before logout
 			const logout = this.querySelector('#topmenu_logout');

@@ -112,7 +112,7 @@ class kdots_framework extends Api\Framework\Ajax
 		// set topmenu info items
 		foreach($topmenu_info_items as $id => $content)
 		{
-			if(!$content || (in_array($id, ['search', 'quick_add', 'update', 'darkmode',
+			if(!$content || (in_array($id, ['search', 'quick_add', 'update', 'quick_add', 'darkmode',
 											'print_title']) && (UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')))
 			{
 				continue;
@@ -138,9 +138,8 @@ class kdots_framework extends Api\Framework\Ajax
 					$vars['topmenu_info_items'] .= "<sl-dropdown class=\"topmenu_info_item\" id=\"topmenu_info_{$id}\" aria-label='" . lang("User menu") . "' tabindex='0'><div slot='trigger'>$item</div> {$vars['topmenu_items']}</sl-dropdown>";
 					break;
 				case 'notifications':
-					$vars['topmenu_info_items'] .= $item;
-					break;
 				case 'darkmode':
+				case 'quick_add':
 					$vars['topmenu_info_items'] .= $item;
 					break;
 				default:
@@ -280,6 +279,6 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	protected static function _get_quick_add()
 	{
-		return '<span id="quick_add" title="' . lang('Quick add') . '" class="bi-plus-circle"></span>';
+		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" name="plus-circle" nosubmit></et2-button-icon>';
 	}
 }

@@ -150,6 +150,15 @@ egw-framework#egw_fw_basecontainer #egw_fw_topmenu_info_items .topmenu_info_item
   min-width: 1em;
   min-height: 1em;
 }
+egw-framework#egw_fw_basecontainer #egw_fw_topmenu_info_items #quick_add_selectbox::part(emptyLabel) {
+  display: none;
+}
+egw-framework#egw_fw_basecontainer #egw_fw_topmenu_info_items #quick_add_selectbox::part(combobox) {
+  width: 1px;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+}
 egw-framework#egw_fw_basecontainer div#egw_fw_sidebar_r {
   position: initial;
   top: initial;
