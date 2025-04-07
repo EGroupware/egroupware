@@ -497,6 +497,11 @@ class calendar_ui
 		{
 			$file['Placeholders'] = Egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
 		}
+		// subscribe to CalDAV calendars
+		$file['Subscribe calendar'] = "javascript:egw_openWindowCentered2('" . Egw::link('/index.php', [
+				'menuaction' => 'calendar.calendar_uiforms.subscribe',
+			], false) . "','_blank',480,600,'yes')";
+
 		$appname = 'calendar';
 		$menu_title = lang('Calendar Menu');
 		display_sidebox($appname,$menu_title,$file);
@@ -526,7 +531,7 @@ class calendar_ui
 		}
 		display_sidebox('calendar', lang('Utilities'), array('Category report' => "javascript:egw_openWindowCentered2('".
 					Egw::link('/index.php',array('menuaction'=>'calendar.calendar_category_report.index','ajax'=>true),false).
-					"','_blank',870,500,'yes')" ));
+					"','_blank',720,300,'yes')" ));
 	}
 
 	/**
