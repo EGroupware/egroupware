@@ -40,7 +40,8 @@ class calendar_uiforms extends calendar_ui
 		'cat_acl' => true,
 		'meeting' => true,
 		'mail_import' => true,
-		'notify' => true
+		'notify' => true,
+		'subscribe' => true,
 	);
 
 	/**
@@ -3752,5 +3753,114 @@ class calendar_uiforms extends calendar_ui
 		$preserve['id'] = $_GET['id'];
 
 		$etpl->exec('calendar.calendar_uiforms.notify', $content, $sel_options, $readonlys, $preserve,2);
+	}
+
+	public const SUBSCRIBED_CALENDAR = '*SUBSCRIBED-CALENDAR*';
+
+	/**
+	 * Subscribe to another CalDAV calendar
+	 *
+	 * @param array|null $content
+	 * @param string|null $msg
+	 * @return void
+	 */
+	public function subscribe(?array $content=null, ?string $msg=null)
+	{
+		$sel_options = $readonlys = [];
+		$cats = new Api\Categories('', 'calendar');
+		foreach($cats->return_array('appandmains', 0, false) as $cat)
+		{
+			if ($cat['owner'] == $GLOBALS['egw_info']['user']['account_id'] &&
+				$cat['access'] === 'private' &&
+				isset($cat['data']['type']) && $cat['data']['type'] === self::SUBSCRIBED_CALENDAR)
+			{
+				$sel_options['cat_id'][$cat['id']] = $cat['name'];
+			}
+		}
+		// show first subscription
+		if (!is_array($content) && !empty($sel_options['cat_id']))
+		{
+			$content = ['cat_id' => key($sel_options['cat_id'])];
+		}
+		if (!is_array($content))
+		{
+			$content = [];
+		}
+		elseif (!empty($content['cat_id']) && $content['cat_id'] !== $content['old_cat_id'])
+		{
+			if (!($cat = $cats->read($content['cat_id'])))
+			{
+				throw new Api\Exception\NotFound("Unknown id='$content[cat_id]'!");
+			}
+			$content = [
+				'cat_id' => $cat['id'],
+			]+$cat+$cat['data'];
+		}
+		elseif (!empty($content['button']))
+		{
+			$button = key($content['button'] ?? []);
+			unset($content['button']);
+			try
+			{
+				switch ($button)
+				{
+					case 'sync':
+						$caldav_client = new EGroupware\Api\CalDAV\Sync($content['url'], $content['user'], $content['password']);
+						if (!isset($content['sync_token']))
+						{
+							$content['sync_token'] = null;
+						}
+						$caldav_client->sync($content['sync_token'], $content['cat_id'], $content['participants'] ?? []);
+						// fall-through to save sync-token
+					case 'save':
+					case 'apply':
+						$caldav_client = new EGroupware\Api\CalDAV\Sync($content['url'], $content['user'], $content['password']);
+						$content['url'] = $caldav_client->test();
+						$content['cat_id'] = $cats->add([
+							'id' => $content['cat_id'] ?? null,
+							'name' => $content['name'],
+							'access' => 'private',
+							'data' => [
+								'type' => self::SUBSCRIBED_CALENDAR,
+								'url' => $content['url'],
+								'user' => $content['user'],
+								'password' => $content['password'],
+								'sync_token' => $content['sync_token'],
+							],
+						]);
+						if ($button === 'save')
+						{
+							Framework::refresh_opener(lang('Subscription saved.'));
+							Framework::window_close();
+						}
+						Framework::message($button==='sync'?lang('Subscription synced.') : lang('Subscription saved.'), 'success');
+						$sel_options['cat_id'][$content['cat_id']] = $content['name'];
+						break;
+
+					case 'cancel':
+						Framework::window_close();
+						break;
+
+					case 'delete':
+						$cats->delete($content['cat_id']);
+						unset($sel_options['cat_id'][$content['cat_id']]);
+						$content = [];
+						Framework::message(lang('Subscription deleted.'), 'success');
+						break;
+				}
+			}
+			catch (\Exception $e) {
+				Framework::message($e->getMessage(), 'error');
+			}
+		}
+		if (empty($content['cat_id']))
+		{
+			$readonlys['button[delete]'] = true;
+			$readonlys['button[sync]'] = true;
+		}
+		$tmpl = new Etemplate('calendar.subscribe');
+		$tmpl->exec('calendar.calendar_uiforms.subscribe', $content, $sel_options, $readonlys, $content+[
+				'old_cat_id' => $content['cat_id'] ?? null,
+			], 2);
 	}
 }
