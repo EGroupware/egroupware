@@ -8,7 +8,7 @@ import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import styles from "./EgwFrameworkApp.styles";
 import {SlSplitPanel} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
-import type {EgwFramework} from "./EgwFramework";
+import type {EgwFramework, FeatureList} from "./EgwFramework";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
 import {repeat} from "lit/directives/repeat.js";
@@ -101,6 +101,9 @@ export class EgwFrameworkApp extends LitElement
 
 	@property()
 	url = "";
+
+	@property()
+	features : FeatureList = {};
 
 	@state()
 	leftCollapsed = false;
@@ -202,6 +205,11 @@ export class EgwFrameworkApp extends LitElement
 			return;
 		}
 		this.url = url;
+		if(window.app[this.name]?.linkHandler && this.egw.window.app[this.name].linkHandler(url))
+		{
+			// app.ts linkHandler handled it.
+			return;
+		}
 		let targetUrl = "";
 		this.useIframe = true;
 		let matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*&ajax=true.*)$/);
@@ -643,7 +651,7 @@ export class EgwFrameworkApp extends LitElement
                     <sl-icon-button name="chevron-double-down"></sl-icon-button>
                 </div>
                 <sl-menu>
-                    ${this.egw.user('apps')['admin'] !== undefined ? html`
+                    ${!this.egw.user('apps')['admin'] || !this.features.appConfig ? nothing : html`
                         <sl-menu-item
                                 @click=${this.handleAppMenuClick}
                         >
@@ -651,7 +659,15 @@ export class EgwFrameworkApp extends LitElement
                             ${this.egw.lang("App configuration")}
                         </sl-menu-item>
                         <sl-divider></sl-divider>
-                    ` : nothing}
+                    `}
+                    ${!this.egw.user('apps')['preferences'] || !this.features.preferences ? nothing : html`
+                        <sl-menu-item
+                                @click=${() => this.egw.show_preferences('prefs', [this.name])}
+                        >
+                            <sl-icon slot="prefix" name="gear"></sl-icon>
+                            ${this.egw.lang("Preferences")}
+                        </sl-menu-item>
+                    `}
                     ${this._threeDotsMenuTemplate()}
                 </sl-menu>
             </sl-dropdown>

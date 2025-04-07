@@ -46,12 +46,18 @@ class kdots_framework extends Api\Framework\Ajax
 
 		if($extra['navbar-apps'])
 		{
-			// Fix wrong icon type
-			array_walk($extra['navbar-apps'], function (&$item, $key)
+			$hooks = ['preferences' => 'settings', 'appConfig' => 'admin'];
+			array_walk($extra['navbar-apps'], function (&$item, $key) use (&$hooks)
 			{
+				// Fix wrong icon type
 				if(!$item['icon'] || !str_ends_with($item['icon'], 'svg'))
 				{
 					$item['icon'] = Image::find('api', 'navbar');
+				}
+				// Enable preferences etc. for app
+				foreach($hooks as $feature_name => $hookname)
+				{
+					$item['features'][$feature_name] = Hooks::exists($hookname, $item['name']);
 				}
 			});
 			$data['application-list'] = htmlentities(json_encode($extra['navbar-apps'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');
@@ -87,15 +93,12 @@ class kdots_framework extends Api\Framework\Ajax
 		];
 
 		// array of topmenu preferences items (orders of the items matter)
-		$topmenu_preferences = ['prefs', 'acl', 'useraccount', 'cats', 'security'];
+		$topmenu_preferences = ['prefs', 'acl', 'useraccount', 'security'];
 
-		// set topmenu preferences items
-		if($GLOBALS['egw_info']['user']['apps']['preferences'])
+		// set avatar menu items
+		foreach($topmenu_preferences as $prefs)
 		{
-			foreach($topmenu_preferences as $prefs)
-			{
-				$this->add_preferences_topmenu($prefs);
-			}
+			$this->add_preferences_topmenu($prefs);
 		}
 
 		// call topmenu info items hooks
@@ -151,6 +154,97 @@ class kdots_framework extends Api\Framework\Ajax
 		$this->topmenu_items = $this->topmenu_info_items = null;
 
 		return $vars;
+	}
+
+	protected function add_preferences_topmenu($type = 'prefs')
+	{
+		static $memberships = null;
+		if(!isset($memberships))
+		{
+			$memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
+		}
+		if(!$GLOBALS['egw_info']['user']['apps']['preferences'] || $GLOBALS['egw_info']['server']['deny_' . $type] &&
+			array_intersect($memberships, (array)$GLOBALS['egw_info']['server']['deny_' . $type]) &&
+			!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			return;    // user has no access to Preferences app
+		}
+		static $types = array(
+			'prefs'       => array(
+				'title' => 'Preferences',
+				'hook'  => 'settings',
+				'icon'  => 'preferences',
+			),
+			'acl'         => array(
+				'title' => 'Access',
+				'hook'  => 'acl_rights',
+				'icon'  => 'lock',
+			),
+			'useraccount' => array(
+				'title' => 'My Account',
+				'hook'  => 'user_account',
+				'icon'  => 'addressbook/accounts',
+			),
+			'cats'        => array(
+				'title'    => 'Categories',
+				'hook'     => 'categories',
+				'run_hook' => true,    // acturally run hook, not just look it's implemented
+				'icon'     => 'tag',
+			),
+			'security'    => array(
+				'title' => 'Security & Password',
+				'hook'  => 'preferences_security',
+				'icon'  => 'key',
+			),
+		);
+
+		if(isset($types[$type]['run_hook']))
+		{
+			$apps = Hooks::process($types[$type]['hook']);
+			// as all apps answer, we need to remove none-true responses
+			foreach($apps as $app => $val)
+			{
+				if(!$val)
+				{
+					unset($apps[$app]);
+				}
+			}
+		}
+		else
+		{
+			$apps = Hooks::implemented($types[$type]['hook']);
+		}
+		if(!$apps)
+		{
+			return;
+		}
+
+		switch($type)
+		{
+			case 'security':
+				// always display password in topmenu, if user has rights to change it
+				if($GLOBALS['egw_info']['server']['2fa_required'] !== 'disabled' ||
+					!$GLOBALS['egw']->acl->check('nopasswordchange', 1))
+				{
+					$this->_add_topmenu_item(array(
+												 'id'    => 'password',
+												 'name'  => 'preferences',
+												 'title' => lang($types[$type]['title']),
+												 'url'   => 'javascript:egw.open_link("' .
+													 self::link('/index.php?menuaction=preferences.preferences_password.change') . '","_blank","850x580")',
+												 'icon'  => $types[$type]['icon'],
+											 ));
+				}
+				break;
+			default:
+				$this->_add_topmenu_item(array(
+											 'id'    => $type,
+											 'name'  => 'preferences',
+											 'icon'  => $types[$type]['icon'],
+											 'title' => lang($types[$type]['title']),
+											 'url'   => "javascript:egw.show_preferences(\"$type\",[],\"common\")",
+										 ));
+		}
 	}
 
 	/**

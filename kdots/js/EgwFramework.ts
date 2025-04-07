@@ -318,6 +318,7 @@ export class EgwFramework extends LitElement
 		{
 			appComponent.setAttribute("active", '');
 		}
+		appComponent.features = app.features;
 
 		this.append(appComponent);
 		// App was not in the tab list
@@ -820,6 +821,13 @@ export class EgwFramework extends LitElement
 		}
 	}
 
+	/**
+	 * Assemble the list of application tabs
+	 *
+	 * @param activeTab
+	 * @returns {any[]}
+	 * @private
+	 */
 	private assembleTabList(activeTab)
 	{
 		let appList = []
@@ -968,4 +976,11 @@ export interface ApplicationInfo
 	opened? : number,
 	/* Is the app currently active */
 	active? : boolean// = false
+	features : FeatureList
+}
+
+// List of features that the framework can handle in a standard way for each app
+export type FeatureList = {
+	appConfig? : boolean,
+	preferences? : boolean;
 }
