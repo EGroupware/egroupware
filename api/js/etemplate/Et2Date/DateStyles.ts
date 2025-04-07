@@ -13,6 +13,7 @@ export const dateStyles = [
 		display: block;
 		white-space: nowrap;
 		min-width: fit-content;
+		background-color: transparent;
 	}
 	.overdue {
 		color: red; // var(--whatever the theme color)
