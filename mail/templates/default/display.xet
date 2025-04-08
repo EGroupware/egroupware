@@ -18,7 +18,7 @@
                 <et2-date-time  align="right" id="mail_displaydate" readonly="true" style="max-width: fit-content;"></et2-date-time>
                 <et2-vbox>
                     <et2-hbox>
-                        <et2-lavatar  src="@avatar" lname="@from[0]" shape="rounded"></et2-lavatar>
+                        <et2-lavatar contactId="email:$cont[from][0]" shape="rounded"></et2-lavatar>
                         <grid id="from">
                             <columns>
                                 <column/>
@@ -72,7 +72,7 @@
                 </grid>
             </et2-vbox>
             <et2-hbox  width="100%" class="mailPreviewHeaders noPrint">
-                <et2-lavatar  src="@avatar" lname="@from[0]" shape="rounded"></et2-lavatar>
+                <et2-lavatar image="@avatar" contactId="email:$cont[from][0]" shape="rounded"></et2-lavatar>
                 <et2-vbox  class="previewWrapper">
                     <et2-hbox>
                         <et2-vbox  class="addresses">
