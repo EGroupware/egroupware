@@ -12,6 +12,7 @@ import {Et2Avatar} from "./Et2Avatar";
 import shoelace from "../Styles/shoelace";
 import {css} from "lit";
 import {property} from "lit/decorators/property.js";
+import {splitEmail} from "../Et2Email/utils";
 
 /**
  * Avatars are used to represent a person or profile.  LAvatar has a coloured background.
@@ -71,6 +72,16 @@ export class Et2LAvatar extends Et2Avatar
 
 		if(changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contactId") || changedProperties.has("image"))
 		{
+			if(changedProperties.has("contactId") && this.contactId.startsWith("email:") && this.contactId.includes("<"))
+			{
+				// Accept ONLY the email, including the name with it changes the lavatar color
+				const split = splitEmail(this.contactId.substr(6))
+				if(!this.lname && !this.fname && split.name)
+				{
+					[this.fname, this.lname] = split.name.split(" ");
+				}
+				this.contactId = "email:" + split['email'];
+			}
 			if((!this.image || decodeURIComponent(this.image).match("lavatar=1")) || (this.fname || this.lname))
 			{
 				let lavatar = Et2LAvatar.lavatar(this.fname, this.lname, this.contactId);
