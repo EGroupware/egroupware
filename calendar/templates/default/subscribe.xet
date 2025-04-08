@@ -10,7 +10,8 @@
 			<rows>
 				<row>
 					<et2-description for="name" value="Subscriptions"></et2-description>
-					<et2-select id="cat_id" emptyLabel="Create a new subscription" onchange="widget.getInstanceManager().submit(null,false,true); return false;"></et2-select>
+					<et2-select id="cat_id" emptyLabel="Create a new subscription"
+						onchange="widget.getInstanceManager().submit(null,false,true); return false;"></et2-select>
 				</row>
 				<row>
 					<et2-description for="name" value="Name"></et2-description>
@@ -32,13 +33,35 @@
 					<et2-select-account id="participants" multiple="true" accountType="both"></et2-select-account>
 				</row>
 				<row>
+					<et2-description  value="Color" for="color"></et2-description>
+					<et2-hbox>
+						<et2-colorpicker  id="color"></et2-colorpicker>
+						<et2-select label="Icon" id="icon" emptyLabel="None" search="true"
+							searchUrl="preferences.preferences_categories_ui.ajax_search"></et2-select>
+					</et2-hbox>
+				</row>
+				<row>
+					<et2-description value="Automatic update"></et2-description>
+					<et2-select id="sync_frequence">
+						<option value="">Never</option>
+						<option value="1440">daily</option>
+						<option value="480">8 {hours}</option>
+						<option value="240">4 {hours}</option>
+						<option value="120">2 {hours}</option>
+						<option value="60">1 {hour}</option>
+						<option value="30">30 {minutes}</option>
+						<option value="15">15 {minutes}</option>
+						<option value="5">5 {minutes}</option>
+					</et2-select>
+				</row>
+				<row>
 					<et2-hbox span="all" width="100%">
 						<et2-button accesskey="s" label="Save" id="button[save]" hideOnReadonly="true"></et2-button>
 						<et2-button label="Apply" id="button[apply]" hideOnReadonly="true"></et2-button>
 						<et2-button label="Cancel" id="button[cancel]" onclick="window.close(); return false;" hideOnReadonly="true"></et2-button>
 						<et2-button align="right" label="Sync now" id="button[sync]" image="arrow-repeat"></et2-button>
 						<et2-button align="right" label="Delete" id="button[delete]"
-							onclick="Et2Dialog.confirm(widget,'Do you really want to delete this subscription?','Delete')"></et2-button>
+							onclick="Et2Dialog.confirm(widget,'Do you want to delete this subscription incl. the synced events?','Delete')"></et2-button>
 					</et2-hbox>
 				</row>
 			</rows>

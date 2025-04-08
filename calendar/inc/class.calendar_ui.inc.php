@@ -492,16 +492,6 @@ class calendar_ui
 			'icon' => false
 		);
 
-		// Merge print placeholders (selectbox in etemplate)
-		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
-		{
-			$file['Placeholders'] = Egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
-		}
-		// subscribe to CalDAV calendars
-		$file['Subscribe calendar'] = "javascript:egw_openWindowCentered2('" . Egw::link('/index.php', [
-				'menuaction' => 'calendar.calendar_uiforms.subscribe',
-			], false) . "','_blank',480,600,'yes')";
-
 		$appname = 'calendar';
 		$menu_title = lang('Calendar Menu');
 		display_sidebox($appname,$menu_title,$file);
@@ -529,9 +519,22 @@ class calendar_ui
 			);
 			$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');
 		}
-		display_sidebox('calendar', lang('Utilities'), array('Category report' => "javascript:egw_openWindowCentered2('".
-					Egw::link('/index.php',array('menuaction'=>'calendar.calendar_category_report.index','ajax'=>true),false).
-					"','_blank',720,300,'yes')" ));
+		$file = [];
+		// Merge print placeholders (selectbox in etemplate)
+		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
+		{
+			$file['Placeholders'] = Egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
+		}
+		// subscribed calendars
+		$file['Subscribed calendar'] = "javascript:egw_openWindowCentered2('" . Egw::link('/index.php', [
+				'menuaction' => 'calendar.calendar_uiforms.subscribe',
+			], false) . "','_blank',480,600,'yes')";
+
+		$file['Category report'] = "javascript:egw_openWindowCentered2('".
+			Egw::link('/index.php',array('menuaction'=>'calendar.calendar_category_report.index','ajax'=>true),false).
+			"','_blank',720,300,'yes')";
+
+		display_sidebox('calendar', lang('Utilities'), $file);
 	}
 
 	/**

@@ -36,6 +36,7 @@ add timesheet entry	calendar	de	Stundenzettel hinzufügen
 added	calendar	de	Neuer Termin
 added by synchronization	calendar	de	Durch Synchronisation hinzugefügt
 added recurrence on %1.	calendar	de	Wiederholung am %1 hinzugefügt.
+additional participants	calendar	de	Zusätzliche Teilnehmer
 after	calendar	de	Nach
 after %1	calendar	de	Nach dem %1
 after current date	calendar	de	Nach dem aktuellen Datum
@@ -67,6 +68,7 @@ appointment settings	calendar	de	Einstellungen der Terminverwaltung
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	de	Als Alternative können Sie auch einen %1MySQL Dump herunterladen%2 und diesen von Hand in die Datenbank Tabelle egw_cal_timezones importieren.
 at start of the event	calendar	de	am Beginn des Termins
 attention	calendar	de	Achtung
+automatic update	calendar	de	Automatisches Update
 automatically purge old events after	admin	de	Bereinigt bzw. löscht alte Termine automatisch nach
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	de	Verfügbar für den ersten Eintrag innerhalb eines jeden Tages oder für die Liste innerhalb des ausgewählten Bereichs:
 back half a month	calendar	de	Einen halben Monat zurück
@@ -116,6 +118,7 @@ check all	calendar	de	Alle auswählen
 choose a category	calendar	de	Wählen Sie eine Kategorie
 choose owner of imported data	calendar	de	Eigentümer der importierten Daten auswählen
 close the window	calendar	de	Schließt das Fenster
+color	calendar	de	Farbe
 compose a mail to all participants after the event is saved	calendar	de	Schreibe eine E-Mail an alle Teilnehmer, nachdem der Termin gespeichert wurde.
 configuration settings	calendar	de	Einstellungen der Konfiguration
 conflict	calendar	de	Konflikt
@@ -124,6 +127,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	calenda
 countries	calendar	de	Länder
 country	calendar	de	Land
 create a new series	calendar	de	Neue Serie anlegen
+create a new subscription	calendar	de	Ein neues Abonnement anlegen
 create an exception for the given date	calendar	de	Erzeugt eine Ausnahme am angegebenen Datum
 create an infolog from this event	calendar	de	Erstelle ein InfoLog von diesem Termin
 create exception	calendar	de	Ausnahme erzeugen
@@ -194,6 +198,7 @@ do you want to be notified about changes of appointments you modified?	calendar	
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br>Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Ablehnungen) zur Verfügung gestellt.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br>Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Ablehnungen) zur Verfügung gestellt.
 do you want to be notified about participant responses from events you created, but are not participating in?	calendar	de	Möchten Sie über die Antworten der Teilnehmer von Terminen, die Sie erstellt haben, an denen Sie aber nicht teilnehmen, informiert werden?
+do you want to delete this subscription incl. the synced events?	calendar	de	Wollen Sie dieses Abonnement einschl. der synchronisierten Termine löschen?
 do you want to edit this event as an exception or the whole series?	calendar	de	Wollen Sie diesen Termin als Ausnahme bearbeiten oder die ganze Serie?
 do you want to keep the series exceptions in your calendar?	calendar	de	Wollen Sie die Ausnahmen dieses Serientermins in Ihrem Kalender behalten?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre Standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet, wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
@@ -280,6 +285,7 @@ full edit dialog	calendar	de	Vollständiger Bearbeitungsdialog
 fullname of person to notify	calendar	de	Name der zu benachrichtigenden Person
 general fields:	calendar	de	Allgemeine Felder:
 general settings	calendar	de	Allgemeine Einstellungen
+given url is not a caldav server: missing %1!	calendar	de	Die angegebene URL ist kein CalDAV Server: es fehlt %1!
 global categories	calendar	de	Globale Kategorien
 global public and group public	calendar	de	Global öffentlich und Gruppen öffentlich
 global public only	calendar	de	Nur Global öffentlich
@@ -590,8 +596,14 @@ status for all future scheduled days changed	calendar	de	Status alle zukünftig 
 status for this particular day changed	calendar	de	Status für diesen Tag geändert
 status of participants set to unknown because of missing category rights	calendar	de	Status der Teilnehmer auf unbekannt gesetzt wegen fehlender Kategorie-Rechte.
 submit to repository	calendar	de	Übertragen zu www.egroupware.org
+subscribed calendar	calendar	de	Abonnierter Kalender
+subscription incl. the synced events deleted.	calendar	de	Abonnement einschl. der synchronisierten Termine gelöscht.
+subscription saved.	calendar	de	Abonnement gespeichert.
+subscription synced.	calendar	de	Abonnement synchronisiert.
+subscriptions	calendar	de	Abonnements
 summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	de	Zusammenfassung des Teilnehmerstatus: 3 Teilnehmer: 1 Angenommen, 2 Unbekannt
 sun	calendar	de	So
+sync now	calendar	de	Jetzt synchronisieren
 tag to mark positions for address labels	calendar	de	Kennzeichnet die Position für Adress-Aufkleber
 tentative	calendar	de	Vorläufige Zusage
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an).

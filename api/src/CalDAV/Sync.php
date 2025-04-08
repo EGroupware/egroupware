@@ -20,32 +20,49 @@ class Sync
 	protected $url;
 	protected $user;
 	protected $password;
-	public function __construct(string $url, string $user, string $password)
+	protected $sync_type;
+
+	/**
+	 * Constructor
+	 *
+	 * @param string $url
+	 * @param string|null $user
+	 * @param string|null $password
+	 * @param string|null $sync_type
+	 */
+	public function __construct(string $url, ?string $user=null, ?string $password=null, ?string $sync_type=null)
 	{
 		$this->url = $url;
 		$this->user = $user;
 		$this->password = $password;
+		$this->sync_type = $sync_type;
 	}
 
 	/**
 	 * Check given URL is a CalDAV calendar collection optionally supporting sync-collection report
 	 *
 	 * @ToDo autodetection if only a hostname is given
+	 * @param-out string $sync_type "calendar-get", "calendar-get-etag" or "sync-collection-report"
 	 * @return string full URL after autodetection
 	 * @throws \Exception
 	 */
-	public function test()
+	public function test(?string &$sync_type=null)
 	{
-		$xml = api($this->url, 'PROPFIND', '', [
-				'Accept: application/xml',
-				'Depth: 0',
-				'Authorization: Basic '.base64_encode($this->user.':'.$this->password),
-				'User-Agent: '.str_replace('\\', '/', __CLASS__).'/'.$GLOBALS['egw_info']['apps']['api']['version'],
-			], $response_header);
+		// check for an ics-file with Content-Type: text/calendar
+		api($this->url, 'HEAD', '', $this->header(['Accept: text/calendar']), $response_header);
+		if (preg_match('#^text/calendar(;|$)#', $response_header['content-type']))
+		{
+			$sync_type = 'calendar-get'.(!empty($response_header['etag']) ? '-etag' : '');
+			return $this->url;
+		}
+		$xml = api($this->url, 'PROPFIND', '', $this->header([
+			'Accept: application/xml',
+			'Depth: 0',
+		]), $response_header);
 
 		if (!isset($response_header['x-webdav-status']) || (int)$response_header['x-webdav-status'] !== 207)
 		{
-			throw new \Exception('Given URL is not a CalDAV or WebDAV server: no X-WebDAV-Status header found!');
+			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "'X-WebDAV-Status' header"));
 		}
 		$xml_reader = new \SimpleXMLElement($xml, 0, false, 'DAV', false);
 		$reports = $resource_types = [];
@@ -56,21 +73,41 @@ class Sync
 		}
 		if (!in_array('calendar', $resource_types))
 		{
-			throw new \Exception("Given URL is not a CalDAV or WebDAV server: missing resourcetype 'calendar'!");
+			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "resourcetype 'calendar'"));
 		}
 		foreach($xml_reader->xpath('//D:report') as $report)
 		{
 			$reports[] = key($report->children(Api\CalDAV::DAV)) ?? key($report->children(Api\CalDAV::CALDAV));
 		}
-		if (!array_intersect(['sync-collection', 'calendar-query'], $reports))
+		$supported_reports = ['sync-collection', /* not yet supported: 'calendar-query'*/];
+		if (!array_intersect($supported_reports, $reports))
 		{
-			throw new \Exception("Given URL is not a CalDAV or WebDAV server: missing supported-report 'sync-collection' or 'calendar-query'!");
+			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "'".implode("' ".lang('or')." '", $supported_reports)));
 		}
+		/* ToDo: check ctag is supported to use calendar-query report
 		if (!in_array('sync-collection', $reports))
 		{
-			// ToDo: check ctag is supported
-		}
+
+		}*/
+		$sync_type = 'sync-collection-report';
 		return $this->url;
+	}
+
+	/**
+	 * Return request-headers: User-Agent and Authorization
+	 *
+	 * @param array $header additional headers to return
+	 * @return array
+	 */
+	protected function header(array $header=[])
+	{
+		$header[] = 'User-Agent: '.str_replace('\\', '/', __CLASS__).'/'.$GLOBALS['egw_info']['apps']['api']['version'];
+
+		if (!empty($this->user) && !empty($this->password))
+		{
+			$header[] = 'Authorization: Basic '.base64_encode($this->user.':'.$this->password);
+		}
+		return $header;
 	}
 
 	/**
@@ -86,7 +123,7 @@ class Sync
 	 * $yield_href_ical = true: key: href, value: iCal string or null (for 404 Not found)
 	 * @throws \Exception on error
 	 */
-	public function sync_collection(?string &$sync_token=null, bool $yield_href_ical=false)
+	protected function sync_collection(?string &$sync_token=null, bool $yield_href_ical=false)
 	{
 		$xml = api($this->url, 'REPORT', $body=<<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
@@ -98,16 +135,14 @@ class Sync
     <C:calendar-data xmlns:C="urn:ietf:params:xml:ns:caldav"/>
   </D:prop>
 </D:sync-collection>
-EOT, [
+EOT, $this->header([
 			'Content-Type: application/xml; charset=utf-8',
 			'Accept: application/xml',
 			'Depth: 1',
-			'Authorization: Basic '.base64_encode($this->user.':'.$this->password),
-			'User-Agent: '.str_replace('\\', '/', __CLASS__).'/'.$GLOBALS['egw_info']['apps']['api']['version'],
-		], $response_header);
-		if (($http_status = explode(' ', $response_header[0])[1]) != 207)
+		]), $response_header);
+		if ((int)($http_status = explode(' ', $response_header[0], 2)[1]) != 207)
 		{
-			throw new HttpException("Unexpected HTTP status code $http_status for sync-collection REPORT: ".
+			throw new \Exception("Unexpected HTTP status code $http_status for sync-collection REPORT: ".
 				($response_header['www-authenticate'] ?? ''), (int)$http_status,
 				'REPORT', $this->url, $body, $response_header);
 		}
@@ -130,7 +165,42 @@ EOT, [
 		$sync_token = (string)$xml_reader->xpath('//D:sync-token')[0];
 	}
 
+	/**
+	 * Sync the subscribed calendar using $this->sync_type
+	 *
+	 * @param string|null &$sync_token current sync_token or etag and on return new one
+	 * @param int $cat_id
+	 * @param array $participants
+	 * @throws \Exception
+	 */
 	public function sync(?string &$sync_token, int $cat_id, array $participants=[])
+	{
+		if (empty($this->sync_type))
+		{
+			$this->test($this->sync_type);
+		}
+		switch($this->sync_type)
+		{
+			case 'calendar-get':
+			case 'calendar-get-etag':
+				return $this->sync_calendar_get($sync_token, $cat_id, $participants);
+
+			case 'sync-collection-report':
+				return $this->sync_collection_report($sync_token, $cat_id, $participants);
+
+			default:
+				throw new \Exception("Invalid sync_type '$this->sync_type'!");
+		}
+	}
+
+	/**
+	 * @param string|null $sync_token
+	 * @param int $cat_id
+	 * @param array $participants
+	 * @return void
+	 * @throws \Exception
+	 */
+	protected function sync_collection_report(?string &$sync_token, int $cat_id, array $participants=[])
 	{
 		$ical_class = new \calendar_ical();
 		foreach($this->sync_collection($sync_token, true) as $href => $ical)
@@ -156,6 +226,89 @@ EOT, [
 			{
 				$ical_class->delete($event['id']);
 			}
+		}
+	}
+
+	/**
+	 * Sync via ics file with or without ETag
+	 *
+	 * Existing event of given $cat_id will be queried before and deleted, if they are no longer in the imported file.
+	 *
+	 * @param string|null $etag
+	 * @param int $cat_id
+	 * @param array $participants
+	 * @return array|void
+	 * @throws \JsonException
+	 */
+	protected function sync_calendar_get(string &$etag=null, int $cat_id, array $participants=[])
+	{
+		// check for an ics-file with Content-Type: text/calendar
+		if (!empty($etag))
+		{
+			api($this->url, 'HEAD', '', $this->header([
+				'Accept: text/calendar',
+				'If-None-Match: '.$etag,
+			]), $response_header);
+			// check for 304 Not Modified or unchanged ETag
+			if (explode(' ', $response_header[0])[1] == 304 || $response_header['etag'] === $etag)
+			{
+				return;
+			}
+		}
+		$ical_class = new \calendar_ical();
+		// fetch current events, to be able to delete the ones no longer returned
+		$old_events = $ical_class->search(['cat_id' => $cat_id]);
+		$ical_class->event_callback = static function(array &$event) use ($cat_id, $participants, &$old_events)
+		{
+			$event['category'] = empty($event['category']) ? $cat_id : $event['category'].','.$cat_id;
+			foreach($participants as $uid)
+			{
+				if (!isset($event['participants'][$uid]))
+				{
+					$event['participants'][$uid] = 'U';
+				}
+			}
+			// delete imported event from $old_events (plus non-calendar event with not-numeric ids)
+			$old_events = array_filter($old_events, static function(array $old_event) use($event)
+			{
+				return is_numeric($old_event['id']) && $old_event['uid'] !== $event['uid'];
+			});
+			return true;
+		};
+		$ical_class->importVCal(api($this->url, 'GET', '', $this->header([
+			'Accept: text/calendar',
+		]), $response_header));
+
+		// delete NOT imported $old_events
+		foreach($old_events as $old_event)
+		{
+			$ical_class->delete($old_event['id']);
+		}
+		$etag = $response_header['etag'];
+	}
+
+	/**
+	 * Run subscribed calendar sync as cronjob
+	 *
+	 * @param int $cat_id
+	 */
+	public static function cronjob(int $cat_id)
+	{
+		$cats = new Api\Categories('', 'calendar');
+		if (($cat = $cats->read($cat_id)) && $cat['data']['type'] === \calendar_uiforms::SUBSCRIBED_CALENDAR)
+		{
+			try {
+				$self = new self($cat['data']['url'], $cat['data']['user']??null, $cat['data']['password']??null, $cat['data']['sync_type']??null);
+				$self->sync($cat['data']['sync_token']);
+				unset($cat['data']['error_time'], $cat['data']['error_msg'], $cat['data']['error_trace']);
+			}
+			catch (\Throwable $e) {
+				_egw_log_exception($e);
+				$cat['data']['error_time'] = Api\DateTime::to('now');
+				$cat['data']['error_msg'] = $e->getMessage();
+				$cat['data']['error_trace'] = $e->getTrace();
+			}
+			$cats->add($cat);
 		}
 	}
 }
