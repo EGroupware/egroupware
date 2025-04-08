@@ -1018,19 +1018,19 @@ class JsContact extends Api\CalDAV\JsBase
 				// allow German date format "dd.mm.yyyy"
 				if (preg_match('/^(\d+)\.(\d+).(\d+)$/', $anniversary, $matches))
 				{
-					$matches = sprintf('%04d-%02d-%02d', (int)$matches[3], (int)$matches[2], (int)$matches[1]);
+					$anniversary = sprintf('%04d-%02d-%02d', (int)$matches[3], (int)$matches[2], (int)$matches[1]);
 				}
 				// allow US date format "mm/dd/yyyy"
 				elseif (preg_match('#^(\d+)/(\d+)/(\d+)$#', $anniversary, $matches))
 				{
-					$matches = sprintf('%04d-%02d-%02d', (int)$matches[3], (int)$matches[1], (int)$matches[2]);
+					$anniversary = sprintf('%04d-%02d-%02d', (int)$matches[3], (int)$matches[1], (int)$matches[2]);
 				}
 				$anniversary = ['type' => $id, 'date' => $anniversary];
 			}
-			if (!is_array($anniversary) || !is_string($anniversary['date']) ||
+			if (!empty($anniversary['date']) && (!is_array($anniversary) || !is_string($anniversary['date']) ||
 				!preg_match('/^\d{4}-\d{2}-\d{2}$/', $anniversary['date']) ||
 				(!list($year, $month, $day) = explode('-', $anniversary['date'])) ||
-				!(1 <= $month && $month <= 12 && 1 <= $day && $day <= 31))
+				!(1 <= $month && $month <= 12 && 1 <= $day && $day <= 31)))
 			{
 				throw new \InvalidArgumentException("Invalid anniversary object with id '$id': ".json_encode($anniversary, self::JSON_OPTIONS_ERROR));
 			}
@@ -1038,13 +1038,13 @@ class JsContact extends Api\CalDAV\JsBase
 			{
 				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($anniversary, self::JSON_OPTIONS_ERROR));
 			}
-			if (!isset($contact['bday']) && ($id === 'bday' || $anniversary['type'] === 'birth'))
+			if (!isset($contact['bday']) && (in_array($id, ['bday', 'birth']) || $anniversary['type'] === 'birth'))
 			{
-				$contact['bday'] = $anniversary['date'];
+				$contact['bday'] = $anniversary['date'] ?? null;
 			}
 			else
 			{
-				error_log(__METHOD__."() only one birtday is supported, ignoring aniversary: ".json_encode($anniversary, self::JSON_OPTIONS_ERROR));
+				error_log(__METHOD__."() only one birthday is supported, ignoring anniversary: ".json_encode($anniversary, self::JSON_OPTIONS_ERROR));
 			}
 		}
 		return $contact;
