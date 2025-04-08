@@ -78,7 +78,7 @@ export class Et2LAvatar extends Et2Avatar
 				const split = splitEmail(this.contactId.substr(6))
 				if(!this.lname && !this.fname && split.name)
 				{
-					[this.fname, this.lname] = split.name.split(" ");
+					[this.fname, this.lname] = Object.assign(['', ''], split.name.split(" "));
 				}
 				this.contactId = "email:" + split['email'];
 			}
