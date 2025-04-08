@@ -118,6 +118,54 @@ export function splitEmail(email_string) : { name : string, email : string }
 }
 
 /**
+ * Parse a full email address and extract first & last name
+ * Takes into account lastname, firstname and some common prefixes
+ *
+ * 	 - "Ralf Becker <rb@egroupware.org>" --> ["fname" => "Ralf", "lname" => "Becker"]
+ * 	 - "'Becker, Ralf' <rb@egroupware.org> --> dito
+ * 	 - "ralf.becker@egroupware.org" --> dito
+ * 	 - "rb@egroupware.org" --> ["fname" --> "r", "lname" => "b"]
+ *
+ * @param {string} address
+ * @returns {{lname : string, fname : string, label : string, email : string}}
+ */
+export function parseEmail(address : string) : { lname : string, fname : string, label : string, email : string }
+{
+	const split = splitEmail(address);
+	const parsed = {lname: "", fname: "", label: "", email: split.email};
+	if(!address)
+	{
+		return parsed;
+	}
+	let matches = [];
+	let parts = [];
+
+	if(matches = address.match(/^\"?'?(.*?)'?\"?\s+<([^<>'\"]+)>$/))
+	{
+		if((parts = matches[1].split(/[, ]+/)))
+		{
+			// if we have a usual title prefixing the name, skip it
+			while(parts[0].match(/^(Hr\.|Herr|Mr.|Mister|Fr\.|Frau|Ms.|Miss|Dr\.|Doktor|Prof.|Professor)/))
+			{
+				parts.shift();
+			}
+			parsed.fname = parts.shift() ?? "";
+			parsed.lname = parts.shift() ?? "";
+			parsed.label = matches[1];
+			return parsed;
+		}
+		address = matches[2];
+	}
+	if((parts = address.split(/[._]/)) && parts.length >= 2)
+	{
+		parsed.fname = parts.shift();
+		parsed.lname = parts.shift();
+		parsed.label = address;
+	}
+	return parsed;
+}
+
+/**
  * Format an email address according to user preference
  *
  * @param address
