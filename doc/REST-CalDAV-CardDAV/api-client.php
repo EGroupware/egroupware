@@ -127,6 +127,7 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 		case 'POST':
 			curl_setopt($curl, CURLOPT_POST, true);
 			break;
+		default:
 		case 'PUT':
 		case 'DELETE':
 		case 'PATCH':
@@ -135,9 +136,12 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 		case 'GET':
 			curl_setopt($curl, CURLOPT_HTTPGET, true);
 			break;
+		case 'HEAD':
+			curl_setopt($curl, CURLOPT_NOBODY, true);
+			break;
 	}
 	$header = array_merge($header, ['User-Agent: '.basename(__FILE__, '.php'), $authorization[parse_url($url, PHP_URL_HOST)]]);
-	if (in_array(strtoupper($method), ['POST', 'PUT', 'PATCH']))
+	if (in_array(strtoupper($method), ['POST', 'PUT', 'PATCH', 'REPORT']))
 	{
         if (is_resource($body))
         {

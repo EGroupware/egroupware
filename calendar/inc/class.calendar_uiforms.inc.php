@@ -3758,7 +3758,7 @@ class calendar_uiforms extends calendar_ui
 	public const SUBSCRIBED_CALENDAR = '*SUBSCRIBED-CALENDAR*';
 
 	/**
-	 * Subscribe to another CalDAV calendar
+	 * Subscribe to another calendar: ics file, CalDAV collection
 	 *
 	 * @param array|null $content
 	 * @param string|null $msg
@@ -3782,10 +3782,12 @@ class calendar_uiforms extends calendar_ui
 		{
 			$content = ['cat_id' => key($sel_options['cat_id'])];
 		}
-		if (!is_array($content))
+		// new subscription
+		if (!is_array($content) || !isset($content['button']) && empty($content['cat_id']))
 		{
 			$content = [];
 		}
+		// loading an existing subscription
 		elseif (!empty($content['cat_id']) && $content['cat_id'] !== $content['old_cat_id'])
 		{
 			if (!($cat = $cats->read($content['cat_id'])))
@@ -3795,6 +3797,11 @@ class calendar_uiforms extends calendar_ui
 			$content = [
 				'cat_id' => $cat['id'],
 			]+$cat+$cat['data'];
+			// if last sync was NOT successful, show it now as an error
+			if (!empty($cat['data']['error']))
+			{
+				Framework::message(lang('Last sync failed at %1', $cat['data']['error_time']).': '.$cat['data']['error_msg']);
+			}
 		}
 		elseif (!empty($content['button']))
 		{
@@ -3802,10 +3809,12 @@ class calendar_uiforms extends calendar_ui
 			unset($content['button']);
 			try
 			{
+				$caldav_client = new EGroupware\Api\CalDAV\Sync($content['url'],
+					$content['user']??null, $content['password']??null, $content['sync_type']??null);
+
 				switch ($button)
 				{
 					case 'sync':
-						$caldav_client = new EGroupware\Api\CalDAV\Sync($content['url'], $content['user'], $content['password']);
 						if (!isset($content['sync_token']))
 						{
 							$content['sync_token'] = null;
@@ -3814,26 +3823,46 @@ class calendar_uiforms extends calendar_ui
 						// fall-through to save sync-token
 					case 'save':
 					case 'apply':
-						$caldav_client = new EGroupware\Api\CalDAV\Sync($content['url'], $content['user'], $content['password']);
-						$content['url'] = $caldav_client->test();
+						if (!isset($content['sync_type']))
+						{
+							$content['sync_type'] = null;
+						}
+						$content['url'] = $caldav_client->test($content['sync_type']);
 						$content['cat_id'] = $cats->add([
 							'id' => $content['cat_id'] ?? null,
 							'name' => $content['name'],
 							'access' => 'private',
+							'description' => lang('Subscribed calendar').' '.
+								(!empty($content['user'])?$content['user'].'@':'').parse_url($content['url'], PHP_URL_HOST),
 							'data' => [
 								'type' => self::SUBSCRIBED_CALENDAR,
-								'url' => $content['url'],
-								'user' => $content['user'],
-								'password' => $content['password'],
-								'sync_token' => $content['sync_token'],
-							],
+							]+array_diff_key($content, array_flip(['cat_id','name'])),
 						]);
+						$async = new Api\Asyncservice();
+						$async_id = 'cal-sync-'.$content['cat_id'];
+						$method = Api\CalDAV\Sync::class.'::cronjob';
+						switch($content['sync_frequence'])
+						{
+							case '':
+								$async->cancel_timer($async_id);
+								break;
+							case 5: case 15: case 30:
+								$async->set_timer(['min' => '*/'.$content['sync_frequence']], $async_id, $method, $content['cat_id']);
+								break;
+							case 60: case 120: case 240:case 480:
+								$async->set_timer(['hour' => '*/'.($content['sync_frequence']/60),'min'=>rand(0,59)], $async_id, $method, $content['cat_id']);
+								break;
+							case 1440:
+								$async->set_timer(['day' => '*'.($content['sync_frequence']/60),'hour'=>rand(0,6),'min'=>rand(0,59)], $async_id, $method, $content['cat_id']);
+								break;
+						}
 						if ($button === 'save')
 						{
-							Framework::refresh_opener(lang('Subscription saved.'));
+							Framework::refresh_opener(lang('Subscription saved.'), 'calendar');
 							Framework::window_close();
 						}
-						Framework::message($button==='sync'?lang('Subscription synced.') : lang('Subscription saved.'), 'success');
+						Framework::message($button === 'sync' ? lang('Subscription synced.') :
+							lang('Subscription saved.'), 'success');
 						$sel_options['cat_id'][$content['cat_id']] = $content['name'];
 						break;
 
@@ -3842,10 +3871,14 @@ class calendar_uiforms extends calendar_ui
 						break;
 
 					case 'delete':
+						foreach($this->bo->search(['cat_id' => $content['cat_id']]) as $event)
+						{
+							$this->bo->delete($event['id'], 0, false, true);    // do NOT notify
+						}
 						$cats->delete($content['cat_id']);
 						unset($sel_options['cat_id'][$content['cat_id']]);
 						$content = [];
-						Framework::message(lang('Subscription deleted.'), 'success');
+						Framework::message(lang('Subscription incl. the synced events deleted.'), 'success');
 						break;
 				}
 			}
