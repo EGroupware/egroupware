@@ -67,6 +67,10 @@ class Password extends Etemplate\Widget\Textbox
 				$value = str_repeat('*', strlen($preserv));
 			}
 		}
+		else
+		{
+			$value = null;
+		}
 	}
 
 	/**

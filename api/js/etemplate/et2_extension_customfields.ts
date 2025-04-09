@@ -675,7 +675,8 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		let defaults = {
 			viewable:true,
 			plaintext: false,
-			suggest: 16
+			suggest: 16,
+			autocomplete: "new-password"
 		};
 		for(let key of Object.keys(defaults))
 		{
