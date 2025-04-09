@@ -427,8 +427,12 @@ div.mail-compose_fileselector {
     overflow: hidden;
     position: relative;
     background-color: white;
-	width: calc(100% - 1em);
 	margin-left: 1ex;
+}
+
+#mail-index_mail-index-preview::part(base) {
+	display: flex;
+	flex-direction: column;
 }
 
 #mail-index_mailSplitter[vertical] #mail-index_mail-index-preview {
@@ -1030,7 +1034,7 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 	padding-left: 8px !important;
 }
 #mail-index_mailPreviewContainer {
-	height: calc(100% - 13em);
+	flex: 2 1 auto;
 	border-top: 1px solid silver;
 	margin-bottom: 0;
 }
