@@ -2629,7 +2629,7 @@ abstract class Merge
 		}
 		if($_REQUEST['select_all'] === 'true')
 		{
-			$ids = self::get_all_ids($document_merge);
+			$ids = static::get_all_ids($document_merge);
 		}
 		foreach(['pdf', 'individual', 'link', 'download', 'open_email'] as $option)
 		{
@@ -3048,7 +3048,11 @@ abstract class Merge
 				$ui_class = $appname . '_ui';
 				break;
 		}
+		return static::get_all_ids_app($appname, $merge, $ui_class, $locations);
+	}
 
+	protected static function get_all_ids_app($appname, &$merge, $ui_class, $locations)
+	{
 		// Ask app
 		if(class_exists($ui_class))
 		{
