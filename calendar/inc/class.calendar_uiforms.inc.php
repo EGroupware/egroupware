@@ -3796,11 +3796,12 @@ class calendar_uiforms extends calendar_ui
 			}
 			$content = [
 				'cat_id' => $cat['id'],
-			]+$cat+$cat['data'];
+				'name' => $cat['name'],
+			]+$cat['data'];
 			// if last sync was NOT successful, show it now as an error
-			if (!empty($cat['data']['error']))
+			if (!empty($cat['data']['error_msg']))
 			{
-				Framework::message(lang('Last sync failed at %1', $cat['data']['error_time']).': '.$cat['data']['error_msg']);
+				Framework::message(lang('Last sync failed at %1', $cat['data']['error_time']).': '.$cat['data']['error_msg'], 'error');
 			}
 		}
 		elseif (!empty($content['button']))
@@ -3836,7 +3837,7 @@ class calendar_uiforms extends calendar_ui
 								(!empty($content['user'])?$content['user'].'@':'').parse_url($content['url'], PHP_URL_HOST),
 							'data' => [
 								'type' => self::SUBSCRIBED_CALENDAR,
-							]+array_diff_key($content, array_flip(['cat_id','name'])),
+							]+array_diff_key($content, array_flip(['cat_id','name','data','error_msg','error_time','error_trace','old_cat_id'])),
 						]);
 						$async = new Api\Asyncservice();
 						$async_id = 'cal-sync-'.$content['cat_id'];
