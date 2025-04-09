@@ -3785,7 +3785,7 @@ class calendar_uiforms extends calendar_ui
 		// new subscription
 		if (!is_array($content) || !isset($content['button']) && empty($content['cat_id']))
 		{
-			$content = [];
+			$content = ['icon' => 'arrow-repeat'];
 		}
 		// loading an existing subscription
 		elseif (!empty($content['cat_id']) && $content['cat_id'] !== $content['old_cat_id'])
