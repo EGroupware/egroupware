@@ -58,7 +58,7 @@ class Sync
 		$xml_reader = $this->propfind(0, [
 			'resourcetype', 'supported-report-set', 'current-user-principal',
 			['ns' => Api\CalDAV::CALDAV, 'name' => 'supported-calendar-component-set'],
-			['ns' => Api\CalDAV::CALENDARSERVER, 'name'=>'getctag'],
+			['ns' => Api\CalDAV::CALENDARSERVER, 'name' => 'getctag'],
 		], [], $response_header);
 		$reports = $resource_types = [];
 		$xml_reader->registerXPathNamespace('D', 'DAV:');
@@ -74,17 +74,21 @@ class Sync
 		{
 			$reports[] = key($report->children(Api\CalDAV::DAV)) ?? key($report->children(Api\CalDAV::CALDAV));
 		}
-		$supported_reports = ['sync-collection', /* not yet supported: 'calendar-query'*/];
-		if (!array_intersect($supported_reports, $reports))
+		// check if sync-collection is supported and prefer it
+		if (in_array('sync-collection', $reports))
 		{
-			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "'".implode("' ".lang('or')." '", $supported_reports)));
+			$sync_type = 'sync-collection-report';
 		}
-		/* ToDo: check ctag is supported to use calendar-query report
-		if (!in_array('sync-collection', $reports))
+		else
 		{
-
-		}*/
-		$sync_type = 'sync-collection-report';
+			$sync_type = 'calendar-propfind';
+			// check getctag is supported to use calendar-query report
+			$xml_reader->registerXPathNamespace('CS', Api\CalDAV::CALENDARSERVER);
+			if ($xml_reader->xpath('//CS:getctag'))
+			{
+				$sync_type .= '-ctag';
+			}
+		}
 		return $this->url;
 	}
 
@@ -242,6 +246,10 @@ EOT, $this->header([
 			case 'sync-collection-report':
 				return $this->sync_collection_report($sync_token, $cat_id, $participants);
 
+			case 'calendar-propfind':
+			case 'calendar-propfind-ctag':
+				return $this->calendar_propfind($sync_token, $cat_id, $participants);
+
 			default:
 				throw new \Exception("Invalid sync_type '$this->sync_type'!");
 		}
@@ -274,12 +282,100 @@ EOT, $this->header([
 					}
 					return true;
 				};
-				$ical_class->importVCal($ical);
+				$ical_class->importVCal($ical, -1, null, false, 0, '',
+					null, null, null, true);
 			}
 			elseif (($event = $ical_class->read(['#sync-href' => $href])))
 			{
 				$ical_class->delete($event['id']);
 			}
+		}
+	}
+
+	/**
+	 * Run PROPFIND on a calendar collection
+	 *
+	 * @param-out string|null &$getctag
+	 * @return \Generator href => propstat
+	 * @throws \Exception
+	 */
+	protected function profind_collection(?string &$getctag=null)
+	{
+		$xml = $this->propfind(1, [
+			['ns' => Api\CalDAV::CALENDARSERVER, 'name' => 'getctag'],
+			'getetag',
+			['ns' => Api\CalDAV::CALDAV, 'name' => 'calendar-data'],
+		]);
+		$xml->registerXPathNamespace('D', 'DAV:');
+		foreach($xml->xpath('//D:response') as $key => $response)
+		{
+			if (!$key) continue;    // do NOT return the collection itself
+
+			$dav_children = $response->children(Api\CalDAV::DAV);
+			yield (string)$dav_children->href => (int)(string)$dav_children->propstat->status === 404 ?
+				null : (array)$dav_children->propstat->prop->children(Api\CalDAV::CALDAV) +
+				(array)$dav_children->propstat->prop->children('DAV:');
+		}
+		$xml->registerXPathNamespace('CS', Api\CalDAV::CALENDARSERVER);
+		$getctag = ($val=$xml->xpath('//CS:getctag')) ? (string)$val[0] : null;
+	}
+
+	/**
+	 * Sync via PROPFIND on a calendar collection (optionally using getctag)
+	 *
+	 * @param string|null $getctag
+	 * @param int $cat_id
+	 * @param array $participants
+	 * @return void
+	 * @throws \Exception
+	 * @ToDo: request only etag first, check with $old_events if changed, and then use calendar-multiget report to only get the changes
+	 */
+	protected function calendar_propfind(?string &$getctag, int $cat_id, array $participants=[])
+	{
+		// check if we already have a ctag and the current one is identical
+		if (!empty($getctag))
+		{
+			$xml = $this->propfind(0, [['ns'=>Api\CalDAV::CALENDARSERVER,'name'=>'getctag']]);
+			$xml->registerXPathNamespace('CS', Api\CalDAV::CALENDARSERVER);
+			if (((string)$xml->xpath('//CS:getctag')[0]) === $getctag)
+			{
+				return;
+			}
+		}
+		$ical_class = new \calendar_ical();
+		// fetch current events, to be able to delete the ones no longer returned
+		$old_events = $ical_class->search(['cat_id' => $cat_id, 'enum_recuring' => false]);
+		foreach($this->profind_collection($getctag) as $href => $props)
+		{
+			if (($ical = $props['calendar-data'] ?? null))
+			{
+				$ical_class->event_callback = static function(array &$event) use ($href, $cat_id, $participants, &$old_events, $props)
+				{
+					$event['#sync-href'] = $href;
+					$event['#sync-etag'] = $props['getetag'];
+					$event['category'] = empty($event['category']) ? $cat_id : $event['category'].','.$cat_id;
+					foreach($participants as $uid)
+					{
+						if (!isset($event['participants'][$uid]))
+						{
+							$event['participants'][$uid] = 'U';
+						}
+					}
+					// delete imported event from $old_events (plus non-calendar event with not-numeric ids)
+					$old_events = array_filter($old_events, static function(array $old_event) use($event)
+					{
+						return is_numeric($old_event['id']) && $old_event['uid'] !== $event['uid'];
+					});
+					return true;
+				};
+				$ical_class->importVCal($ical, -1, null, false, 0, '',
+					null, null, null, true);
+			}
+		}
+		// delete NOT imported $old_events
+		foreach($old_events as $old_event)
+		{
+			$ical_class->delete($old_event['id']);
 		}
 	}
 
@@ -331,7 +427,8 @@ EOT, $this->header([
 		};
 		$ical_class->importVCal(api($this->url, 'GET', '', $this->header([
 			'Accept: text/calendar',
-		]), $response_header));
+		]), $response_header), -1, null, false, 0, '',
+			null, null, null, true);
 
 		// delete NOT imported $old_events
 		foreach($old_events as $old_event)
@@ -353,7 +450,7 @@ EOT, $this->header([
 		{
 			try {
 				$self = new self($cat['data']['url'], $cat['data']['user']??null, $cat['data']['password']??null, $cat['data']['sync_type']??null);
-				$self->sync($cat['data']['sync_token']);
+				$self->sync($cat['data']['sync_token'], $cat['id'], $cat['data']['participants']);
 				unset($cat['data']['error_time'], $cat['data']['error_msg'], $cat['data']['error_trace']);
 			}
 			catch (\Throwable $e) {
