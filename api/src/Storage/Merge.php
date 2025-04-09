@@ -1544,6 +1544,14 @@ abstract class Merge
 					{
 						$replacements[$raw_placeholder] = $replacements[$this->prefix("", $fieldname, '$')];
 						$replacements[$this->prefix("", $fieldname, '$')] = self::number_format($replacements[$raw_placeholder], 2, $this->mimetype);
+
+						// Check for decimal places formatter
+						$format_matches = [];
+						preg_match_all("\$($fieldname):(?<decimals>[\d])\$", $content, $format_matches);
+						foreach($format_matches['decimals'] as $decimal)
+						{
+							$replacements[$this->prefix("", $fieldname . ':' . $decimal, '$')] = self::number_format($replacements[$raw_placeholder], $decimal, $this->mimetype);
+						}
 					}
 				}
 				$this->format_spreadsheet_numbers($content, $names, $mimetype . $mso_application_progid);

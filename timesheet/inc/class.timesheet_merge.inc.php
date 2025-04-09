@@ -36,11 +36,11 @@ class timesheet_merge extends Api\Storage\Merge
 	 * Fields that are numeric, for special numeric handling
 	 */
 	protected $numeric_fields = array(
-		'$$ts_duration$$',
-		'$$ts_paused$$',
-		'$$ts_quantity$$',
-		'$$ts_unitprice$$',
-		'$$ts_total$$'
+		'ts_duration',
+		'ts_paused',
+		'ts_quantity',
+		'ts_unitprice',
+		'ts_total'
 	);
 
 	/**
