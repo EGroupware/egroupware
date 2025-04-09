@@ -55,16 +55,11 @@ class Sync
 			$sync_type = 'calendar-get'.(!empty($response_header['etag']) ? '-etag' : '');
 			return $this->url;
 		}
-		$xml = api($this->url, 'PROPFIND', '', $this->header([
-			'Accept: application/xml',
-			'Depth: 0',
-		]), $response_header);
-
-		if (!isset($response_header['x-webdav-status']) || (int)$response_header['x-webdav-status'] !== 207)
-		{
-			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "'X-WebDAV-Status' header"));
-		}
-		$xml_reader = new \SimpleXMLElement($xml, 0, false, 'DAV', false);
+		$xml_reader = $this->propfind(0, [
+			'resourcetype', 'supported-report-set', 'current-user-principal',
+			['ns' => Api\CalDAV::CALDAV, 'name' => 'supported-calendar-component-set'],
+			['ns' => Api\CalDAV::CALENDARSERVER, 'name'=>'getctag'],
+		], [], $response_header);
 		$reports = $resource_types = [];
 		$xml_reader->registerXPathNamespace('D', 'DAV:');
 		foreach($xml_reader->xpath('//D:resourcetype') as $type)
@@ -108,6 +103,65 @@ class Sync
 			$header[] = 'Authorization: Basic '.base64_encode($this->user.':'.$this->password);
 		}
 		return $header;
+	}
+
+	/**
+	 * Make a PROPFIND request
+	 *
+	 * @param int|"infinit" $depth
+	 * @param array[]|null $props default null="DAV:allprop" or requested props as array[] with values for keys "ns" and "name"
+	 * @param string[] $header values are strings header-name: header-value
+	 * @param-out array|null &$response_header keys are lowercased header-names
+	 * @return \SimpleXMLElement
+	 */
+	protected function propfind($depth=0, ?array $props=null, array $header=[], ?array &$response_header=null)
+	{
+		$namespaces = [];
+		if (!$props)
+		{
+			$prop_xml = "<allprop/>";
+		}
+		else
+		{
+			$prop_xml = "<prop>\n";
+			foreach($props as $prop)
+			{
+				if (is_string($prop) || $prop['ns'] === 'DAV:')
+				{
+					$prop_xml .= "\t\t<$prop/>\n";
+				}
+				elseif (!is_array($prop) || empty($prop['ns']) || empty($prop['name']))
+				{
+					throw new \Exception("Invalid prop " . json_encode($prop) . '!');
+				}
+				else
+				{
+					if (!($prefix = array_search($prop['ns'], $namespaces)))
+					{
+						for($prefix='A'; isset($namespaces[$prefix]); $prefix=chr(ord($prefix)+1)){}
+						$namespaces[$prefix] = $prop['ns'];
+					}
+					$prop_xml .= "\t\t<$prefix:$prop[name] xmlns:$prefix=\"$prop[ns]\"/>\n";
+				}
+			}
+			$prop_xml .= "\t</prop>";
+		}
+		$xml = api($this->url, 'PROPFIND', $body=<<<EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<propfind xmlns="DAV:">
+	$prop_xml
+</propfind>
+EOT, $this->header([
+			"Content-Type: application/xml; charset=utf8",
+			'Accept: application/xml',
+			"Depth: $depth",
+		]), $response_header);
+		if ((int)explode(' ', $response_header[0], 2)[1] !== 207 ||
+			!isset($response_header['x-webdav-status']) || (int)$response_header['x-webdav-status'] !== 207)
+		{
+			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "'X-WebDAV-Status: 207 Multistatus' header"));
+		}
+		return new \SimpleXMLElement($xml, 0, false, 'DAV:', false);
 	}
 
 	/**

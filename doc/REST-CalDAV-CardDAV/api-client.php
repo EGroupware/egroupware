@@ -106,7 +106,7 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
     {
         $url = $base_url . $url;
     }
-	if (in_array(strtoupper($method), ['GET', 'DELETE']) && $body && !is_resource($body))
+	if (in_array(strtoupper($method), ['GET', 'DELETE', 'HEAD']) && $body && !is_resource($body))
 	{
 		$url .= '?' . (is_array($body) ? http_build_query($body) : $body);
 	}
@@ -141,7 +141,7 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 			break;
 	}
 	$header = array_merge($header, ['User-Agent: '.basename(__FILE__, '.php'), $authorization[parse_url($url, PHP_URL_HOST)]]);
-	if (in_array(strtoupper($method), ['POST', 'PUT', 'PATCH', 'REPORT']))
+	if (in_array(strtoupper($method), ['POST', 'PUT', 'PATCH', 'REPORT', 'PROPFIND', 'PROPPATCH']))
 	{
         if (is_resource($body))
         {
