@@ -382,7 +382,7 @@ export const StaticOptions = new class StaticOptionsType
 	{
 		const options = widget.apps ? ',,'+widget.apps : widget.options || '';
 
-		return this.cached_server_side(widget, 'select-app', options, true);
+		return <Promise<SelectOption[]>>this.cached_server_side(widget, 'select-app', options, true);
 	}
 
 	access(widget : Et2SelectWidgets) : SelectOption[]
@@ -426,10 +426,10 @@ export const StaticOptions = new class StaticOptionsType
 		return <Promise<SelectOption[]>>this.cached_server_side(widget, 'select-dow', options, true);
 	}
 
-	lang(widget : Et2SelectWidgets, attrs) : SelectOption[] | Promise<SelectOption[]>
+	lang(widget : Et2SelectWidgets, attrs) : Promise<SelectOption[]>
 	{
 		var options = ',' + (attrs.other || []).join(',');
-		return this.cached_server_side(widget, 'select-lang', options);
+		return <Promise<SelectOption[]>>this.cached_server_side(widget, 'select-lang', options, true);
 	}
 
 	timezone(widget : Et2SelectWidgets, attrs) : Promise<SelectOption[]>

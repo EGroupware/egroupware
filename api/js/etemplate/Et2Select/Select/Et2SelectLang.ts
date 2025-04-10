@@ -1,13 +1,19 @@
 import {Et2Select} from "../Et2Select";
 import {Et2StaticSelectMixin, StaticOptions} from "../StaticOptions";
+import {cleanSelectOptions} from "../FindSelectOptions";
 
 export class Et2SelectLang extends Et2StaticSelectMixin(Et2Select)
 {
-	constructor()
+	connectedCallback()
 	{
-		super();
+		super.connectedCallback();
 
-		this._static_options = StaticOptions.lang(this, {other: this.other || []});
+		// Wait for connected instead of constructor because attributes make a difference in
+		// which options are offered
+		this.fetchComplete = StaticOptions.lang(this, {other: this.other || []}).then(options =>
+		{
+			this.set_static_options(cleanSelectOptions(options));
+		});
 	}
 }
 
