@@ -4850,7 +4850,7 @@ app.classes.mail = AppJS.extend(
 				jQClass: '.mailComposeJQueryFrom'
 			}
 		};
-		var actions = egw.preference('toggledOnActions', 'mail');
+		var actions = egw.preference('toggledOnActions', 'mail') ?? [];
 		if (typeof actions === 'string')
 			actions = actions ? actions.split(',') : [];
 		for(var widget in widgets)
