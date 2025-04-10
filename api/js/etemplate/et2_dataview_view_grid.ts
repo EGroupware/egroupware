@@ -165,7 +165,6 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 		{
 			window.clearTimeout(this._invalidateTimeout);
 		}
-		this._rowProvider.destroy();
 		this._rowProvider = null;
 		this._parentGrid = null;
 		this._map = null;
