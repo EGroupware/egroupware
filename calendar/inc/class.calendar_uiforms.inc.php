@@ -3851,7 +3851,7 @@ class calendar_uiforms extends calendar_ui
 						{
 							$this->bo->delete($event['id'], 0, false, true);    // do NOT notify
 						}
-						$cats->delete($content['cat_id']);
+						Api\CalDAV\Sync::deleteSubscription($content['cat_id']);
 						unset($sel_options['cat_id'][$content['cat_id']]);
 						$content = [];
 						Framework::message(lang('Subscription incl. the synced events deleted.'), 'success');

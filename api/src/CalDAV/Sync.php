@@ -161,9 +161,9 @@ EOT, $this->header([
 			"Depth: $depth",
 		]), $response_header);
 		if ((int)explode(' ', $response_header[0], 2)[1] !== 207 ||
-			!isset($response_header['x-webdav-status']) || (int)$response_header['x-webdav-status'] !== 207)
+			!isset($response_header['dav']) || !in_array('calendar-access', explode(', ', $response_header['dav'])))
 		{
-			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "'X-WebDAV-Status: 207 Multistatus' header"));
+			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "'Dav: calendar-access' header"));
 		}
 		return new \SimpleXMLElement($xml, 0, false, 'DAV:', false);
 	}
@@ -530,5 +530,17 @@ EOT, $this->header([
 			}
 		}
 		return $subscriptions;
+	}
+
+	/**
+	 * Delete subscription
+	 *
+	 * @param int $id cat_id
+	 * @return void
+	 */
+	public static function deleteSubscription(int $id)
+	{
+		$cats = new Api\Categories('', 'calendar');
+		$cats->delete($id);
 	}
 }
