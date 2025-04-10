@@ -2876,7 +2876,7 @@ app.classes.mail = AppJS.extend(
 				{
 					tree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 				}
-				folder = tree.getSelectedNode().id;
+				folder = tree.value;
 				break;
 			case 'readall':
 				rowClass = 'seen';
