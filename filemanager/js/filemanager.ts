@@ -120,7 +120,8 @@ export class filemanagerAPP extends EgwApp
 		{
 			this.path_widget[et2.DOMContainer.id] = path_widget;
 			// Bind to removal to remove from list
-			jQuery(et2.DOMContainer).on('clear', function(e) {
+			et2.DOMContainer.addEventListener('clear', function(e)
+			{
 				if (app.filemanager && app.filemanager.path_widget) delete app.filemanager.path_widget[e.target.id];
 			});
 		}
