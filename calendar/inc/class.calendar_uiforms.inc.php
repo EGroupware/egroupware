@@ -3755,8 +3755,6 @@ class calendar_uiforms extends calendar_ui
 		$etpl->exec('calendar.calendar_uiforms.notify', $content, $sel_options, $readonlys, $preserve,2);
 	}
 
-	public const SUBSCRIBED_CALENDAR = '*SUBSCRIBED-CALENDAR*';
-
 	/**
 	 * Subscribe to another calendar: ics file, CalDAV collection
 	 *
@@ -3766,17 +3764,10 @@ class calendar_uiforms extends calendar_ui
 	 */
 	public function subscribe(?array $content=null, ?string $msg=null)
 	{
-		$sel_options = $readonlys = [];
-		$cats = new Api\Categories('', 'calendar');
-		foreach($cats->return_array('appandmains', 0, false) as $cat)
-		{
-			if ($cat['owner'] == $GLOBALS['egw_info']['user']['account_id'] &&
-				$cat['access'] === 'private' &&
-				isset($cat['data']['type']) && $cat['data']['type'] === self::SUBSCRIBED_CALENDAR)
-			{
-				$sel_options['cat_id'][$cat['id']] = $cat['name'];
-			}
-		}
+		$readonlys = [];
+		$sel_options =  [
+			'cat_id' => Api\CalDAV\Sync::listSubscriptions(),
+		];
 		// show first subscription
 		if (!is_array($content) && !empty($sel_options['cat_id']))
 		{
@@ -3790,24 +3781,17 @@ class calendar_uiforms extends calendar_ui
 		// loading an existing subscription
 		elseif (!empty($content['cat_id']) && $content['cat_id'] !== $content['old_cat_id'])
 		{
-			if (!($cat = $cats->read($content['cat_id'])))
-			{
-				throw new Api\Exception\NotFound("Unknown id='$content[cat_id]'!");
-			}
-			$content = [
-				'cat_id' => $cat['id'],
-				'name' => $cat['name'],
-			]+$cat['data'];
+			$content = Api\CalDAV\Sync::readSubscription($content['cat_id']);
 			// if last sync was NOT successful, show it now as an error
-			if (!empty($cat['data']['error_msg']))
+			if (!empty($content['error_msg']))
 			{
-				Framework::message(lang('Last sync failed at %1', $cat['data']['error_time']).': '.$cat['data']['error_msg'], 'error');
+				Framework::message(lang('Last sync failed at %1', $content['error_time']).': '.$content['error_msg'], 'error');
 			}
 		}
 		elseif (!empty($content['button']))
 		{
 			$button = key($content['button'] ?? []);
-			unset($content['button']);
+			unset($content['button'], $content['old_cat_id'], $content['error_msg'], $content['error_time'], $content['error_trace']);
 			try
 			{
 				$caldav_client = new EGroupware\Api\CalDAV\Sync($content['url'],
@@ -3821,7 +3805,10 @@ class calendar_uiforms extends calendar_ui
 							$content['sync_token'] = null;
 						}
 						$caldav_client->sync($content['sync_token'], $content['cat_id'], $content['participants'] ?? []);
-						// fall-through to save sync-token
+						Api\CalDAV\Sync::writeSubscription($content);
+						Framework::message(lang('Subscription synced.'), 'success');
+						break;
+
 					case 'save':
 					case 'apply':
 						if (!isset($content['sync_type']))
@@ -3829,24 +3816,12 @@ class calendar_uiforms extends calendar_ui
 							$content['sync_type'] = null;
 						}
 						$content['url'] = $caldav_client->test($content['sync_type']);
-						$content['cat_id'] = $cats->add([
-							'id' => $content['cat_id'] ?? null,
-							'name' => $content['name'],
-							'access' => 'private',
-							'description' => lang('Subscribed calendar').' '.
-								(!empty($content['user'])?$content['user'].'@':'').parse_url($content['url'], PHP_URL_HOST),
-							'data' => [
-								'type' => self::SUBSCRIBED_CALENDAR,
-							]+array_diff_key($content, array_flip(['cat_id','name','data','error_msg','error_time','error_trace','old_cat_id'])),
-						]);
+						$content['cat_id'] = Api\CalDAV\Sync::writeSubscription($content);
 						$async = new Api\Asyncservice();
-						$async_id = 'cal-sync-'.$content['cat_id'];
+						$async->cancel_timer($async_id = 'cal-sync-'.$content['cat_id']);
 						$method = Api\CalDAV\Sync::class.'::cronjob';
 						switch($content['sync_frequence'])
 						{
-							case '':
-								$async->cancel_timer($async_id);
-								break;
 							case 5: case 15: case 30:
 								$async->set_timer(['min' => '*/'.$content['sync_frequence']], $async_id, $method, $content['cat_id']);
 								break;
@@ -3854,7 +3829,7 @@ class calendar_uiforms extends calendar_ui
 								$async->set_timer(['hour' => '*/'.($content['sync_frequence']/60),'min'=>rand(0,59)], $async_id, $method, $content['cat_id']);
 								break;
 							case 1440:
-								$async->set_timer(['day' => '*'.($content['sync_frequence']/60),'hour'=>rand(0,6),'min'=>rand(0,59)], $async_id, $method, $content['cat_id']);
+								$async->set_timer(['day' => '*','hour'=>rand(0,6),'min'=>rand(0,59)], $async_id, $method, $content['cat_id']);
 								break;
 						}
 						if ($button === 'save')

@@ -445,21 +445,90 @@ EOT, $this->header([
 	 */
 	public static function cronjob(int $cat_id)
 	{
-		$cats = new Api\Categories('', 'calendar');
-		if (($cat = $cats->read($cat_id)) && $cat['data']['type'] === \calendar_uiforms::SUBSCRIBED_CALENDAR)
+		if (($data = self::readSubscription($cat_id)))
 		{
 			try {
-				$self = new self($cat['data']['url'], $cat['data']['user']??null, $cat['data']['password']??null, $cat['data']['sync_type']??null);
-				$self->sync($cat['data']['sync_token'], $cat['id'], $cat['data']['participants']);
-				unset($cat['data']['error_time'], $cat['data']['error_msg'], $cat['data']['error_trace']);
+				$self = new self($data['url'], $data['user']??null, $data['password']??null, $data['sync_type']??null);
+				$self->sync($data['sync_token'], $data['cat_id'], $data['participants']);
+				unset($data['error_time'], $data['error_msg'], $data['error_trace']);
 			}
 			catch (\Throwable $e) {
 				_egw_log_exception($e);
-				$cat['data']['error_time'] = Api\DateTime::to('now');
-				$cat['data']['error_msg'] = $e->getMessage();
-				$cat['data']['error_trace'] = $e->getTrace();
+				$data['error_time'] = Api\DateTime::to('now');
+				$data['error_msg'] = $e->getMessage();
+				$data['error_trace'] = $e->getTrace();
 			}
-			$cats->add($cat);
+			self::writeSubscription($data);
 		}
+	}
+
+	/**
+	 * Read a subscription
+	 *
+	 * @param int $id cat_id
+	 * @return array values for keys "cat_id", "name", "url", "user", "password", "color", "icon", ...
+	 * @throws Api\Exception\AssertionFailed
+	 * @throws Api\Exception\NotFound
+	 * @throws Api\Exception\WrongParameter
+	 */
+	public static function readSubscription(int $id) : array
+	{
+		$cats = new Api\Categories('', 'calendar');
+		if (!($cat = $cats->read($id)))
+		{
+			throw new Api\Exception\NotFound("Unknown subscription-id='$id'!");
+		}
+		return [
+			'cat_id' => $cat['id'],
+			'name' => $cat['name'],
+			'password' => empty($cat['data']['password']) || strlen($cat['data']['password']) <= 32 ? $cat['data']['password'] :
+				Api\Mail\Credentials::decrypt(['cred_pw_enc' => Api\Mail\Credentials::SYSTEM_AES, 'cred_password' => $cat['data']['password']]),
+		]+$cat['data'];
+	}
+
+	public const SUBSCRIBED_CALENDAR = '*SUBSCRIBED-CALENDAR*';
+
+	/**
+	 * Update/create subscription
+	 *
+	 * @param array $data values for keys "cat_id", "name", "url", "user", "password", "color", "icon", ...
+	 * @return int cat_id
+	 */
+	public static function writeSubscription(array $data) : int
+	{
+		$cats = new Api\Categories('', 'calendar');
+		return $cats->add([
+			'id' => $data['cat_id'] ?? null,
+			'name' => $data['name'],
+			'access' => 'private',
+			'description' => lang('Subscribed calendar').' '.
+				(!empty($data['user'])?$data['user'].'@':'').parse_url($data['url'], PHP_URL_HOST),
+			'data' => [
+					'type' => self::SUBSCRIBED_CALENDAR,
+					// encrypt password with system secret (can NOT use user-password as running as cronjob!)
+					'password' => Api\Mail\Credentials::encrypt($data['password'], 0, $pw_enc, true),
+				]+array_diff_key($data, array_flip(['cat_id','name'])),
+		]);
+	}
+
+	/**
+	 * List subscriptions of current user
+	 *
+	 * @return array cat_id => name pairs
+	 */
+	public static function listSubscriptions() : array
+	{
+		$cats = new Api\Categories('', 'calendar');
+		$subscriptions = [];
+		foreach($cats->return_array('appandmains', 0, false) as $cat)
+		{
+			if ($cat['owner'] == $GLOBALS['egw_info']['user']['account_id'] &&
+				$cat['access'] === 'private' &&
+				isset($cat['data']['type']) && $cat['data']['type'] === Api\CalDAV\Sync::SUBSCRIBED_CALENDAR)
+			{
+				$subscriptions[$cat['id']] = $cat['name'];
+			}
+		}
+		return $subscriptions;
 	}
 }
