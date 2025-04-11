@@ -821,6 +821,11 @@ et2-dialog et2-button {
     width: calc(100% - 20px);
 }
 
+/* Hide the upload button if desired, we still use the widget to show the selected file */
+.et2_customfield_list tr et2-vfs-upload.noUpload::part(button) {
+	display: none;
+}
+
 .et2_customfield_list input, .et2_customfield_list textarea {
     max-width: 100ex;
 }

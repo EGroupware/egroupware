@@ -945,7 +945,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			// Should we show the upload button
 			if(typeof field.values?.noUpload !== "undefined")
 			{
-				widget.classList.add("hideme");
+				widget.classList.add("noUpload");
 			}
 			// should we show the VfsSelect
 			if (!field.values || typeof field.values !== 'object' || !field.values.noVfsSelect)
@@ -1001,8 +1001,6 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 						};
 					});
 					list.value = value;
-
-					list.getDOMNode().classList.remove("hideme");
 				});
 				jQuery(widget.getDOMNode(widget)).css({'vertical-align': 'top', display: 'inline-block'}).prependTo(cf);
 			}
