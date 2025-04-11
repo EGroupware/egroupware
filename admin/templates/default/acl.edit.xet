@@ -11,12 +11,12 @@
 				<row disabled="@acl_location=run" part="header">
 					<et2-description  value="Application"></et2-description>
 					<!-- app.admin doesn't exist (for unknown reason), but accessing it through etemplate2 works -->
-                    <et2-select id="acl_appname" onchange="let admin = app.admin ?? etemplate2.getById('admin-acl').app_obj.admin; admin.acl_reopen_dialog();" required="1" emptyLabel="Select one"></et2-select>
+                    <et2-select id="acl_appname" onchange="let admin = etemplate2.getById('admin-acl').app_obj.admin; admin.acl_reopen_dialog();" required="1" emptyLabel="Select one"></et2-select>
 				</row>
 				<row part="header">
 					<et2-description  value="Data from" for="acl_account"></et2-description>
 					<!-- app.admin doesn't exist (for unknown reason), but accessing it through etemplate2 works -->
-                    <et2-select-account id="acl_account" onchange="let admin = app.admin ?? etemplate2.getById('admin-acl').app_obj.admin; admin.acl_reopen_dialog();" accountType="both" required="1"></et2-select-account>
+                    <et2-select-account id="acl_account" onchange="let admin = etemplate2.getById('admin-acl').app_obj.admin; admin.acl_reopen_dialog();" accountType="both" required="1"></et2-select-account>
 				</row>
 				<row disabled="@acl_location=run" part="header">
 					<et2-description  value="Access by" for="acl_location"></et2-description>

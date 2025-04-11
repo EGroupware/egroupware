@@ -1070,7 +1070,7 @@ class AdminApp extends EgwApp
 		{
 			let app_egw = egw(appname);
 			app_egw.langRequireApp(window, appname);
-			nm.getRoot().setApiInstance(app_egw);
+//			nm.getRoot().setApiInstance(app_egw);
 		}
 	}
 
