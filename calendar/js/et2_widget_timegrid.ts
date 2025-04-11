@@ -1615,7 +1615,12 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				self._drag_helper(helper, selected[0].iface.getDOMNode(), null);
 				document.body.append(helper);
 
-				// System drag helper - empty span so we can update with the target time
+				// Safari doesn't update our drag helper, and anything ese breaks DnD
+				if(/^((?!chrome|android).)*safari/i.test(navigator.userAgent))
+				{
+					return false;
+				}
+				// System drag helper - empty span so we can use our own and update with the target time
 				return document.createElement("span");
 			},true);
 		}
