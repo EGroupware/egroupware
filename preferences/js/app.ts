@@ -44,16 +44,18 @@ export class PreferencesApp extends EgwApp
 
 	addToken(_ev : PointerEvent, _button : Et2Button)
 	{
-		console.log('app.preferences.addToken', arguments);
-
 		this.openDialog('preferences.EGroupware\\Preferences\\Token.edit');
 	}
 
 	editToken(_action, _selection)
 	{
-		console.log('app.preferences.editToken', arguments);
-
 		this.openDialog('preferences.EGroupware\\Preferences\\Token.edit&token_id='+_selection[0].id.split('::')[1]);
+	}
+
+	refreshToken(_msg, _type)
+	{
+		this.et2.getWidgetById('token').refresh();	// refresh token NM
+		this.egw.refresh(_msg, _type);
 	}
 }
 

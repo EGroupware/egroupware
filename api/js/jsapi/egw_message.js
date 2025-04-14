@@ -364,7 +364,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			// Log for debugging purposes
 			this.debug("log", "egw_refresh(%s, %s, %s, %o, %s, %s)", _msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type, _links);
 
-			var win = typeof _targetapp != 'undefined' ? _wnd.egw_appWindow(_targetapp) : _wnd;
+			var win = _targetapp ? _wnd.egw_appWindow(_targetapp) : _wnd;
 
 			this.message(_msg, _msg_type);
 

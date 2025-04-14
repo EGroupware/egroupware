@@ -128,8 +128,17 @@ class Token
 							}
 						}
 						$this->token->save($content);
-						Api\Framework::refresh_opener(empty($content['new_token']) ? lang('Token saved.') : lang('Token created.'),
-							self::APP, $this->token->data['token_id'],'edit');
+						if (static::APP === 'admin')
+						{
+							Api\Framework::refresh_opener(empty($content['new_token']) ? lang('Token saved.') : lang('Token created.'),
+								self::APP, $this->token->data['token_id'],'edit');
+						}
+						else
+						{
+							// we need to refresh the token-NM not just one from the many in the security popup!
+							Api\Json\Response::get()->call('app.preferences.refreshToken',
+								empty($content['new_token']) ? lang('Token saved.') : lang('Token created.'), 'success');
+						}
 						unset($content['new_token']);
 						$content = array_merge($content, $this->token->data);
 						if ($button === 'save')

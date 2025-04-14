@@ -70,7 +70,7 @@ class Token extends Admin\Token
 	{
 		Api\Translation::add_app('admin');
 		try {
-			Api\Framework::message(self::action($content['token']['action'], $content['token']['selected']), 'success');
+			Api\Json\Response::get()->call('app.preferences.refreshToken', self::action($content['token']['action'], $content['token']['selected']), 'success');
 		}
 		catch (\Exception $e) {
 			Api\Framework::message($e->getMessage(), 'error');
