@@ -94,8 +94,7 @@ export class HomeApp extends EgwApp
 			// call parent
 			super.et2_ready(et2, name);
 
-			this.et2.set_id('home.index');
-			this.et2.set_actions(this.et2.getArrayMgr('modifications').getEntry('home.index')['actions']);
+			this.et2.actions = this.et2.getArrayMgr('modifications').getEntry('home.index')['actions'] ?? [];
 
 			this.portlet_container = this.et2.getWidgetById("portlets");
 
