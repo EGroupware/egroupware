@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	hu	Egy rövid tárgy a bejegyzésnek
 abort without deleting	infolog	hu	Megszakítás törlés nélkül
 accept	infolog	hu	Elfogad
-action	infolog	hu	Művelet
-actions...	infolog	hu	Műveletek ...
 actual date and time	infolog	hu	Aktuális dátum és idő
-add	infolog	hu	Hozzáad
 add / remove link	infolog	hu	Link hozzáadása / eltávolítása
 add a file	infolog	hu	Állomány hozzáadása
 add a new entry	infolog	hu	Új bejegyzés hozzáadása
@@ -120,7 +117,6 @@ custom from	infolog	hu	Egyedi innen
 custom regarding	infolog	hu	Egyedi vonatkozás
 custom status for typ	infolog	hu	Típus egyedi státusza
 customfields	infolog	hu	Egyedi mezők
-data exchange settings	infolog	hu	Adatcsere beállítások
 date completed	infolog	hu	Teljesítés dátuma
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	hu	Teljesítés dátuma (ha üresen hagyja, akkor készrejelentés vagy számlázás esetén az a dátum kerül beállításra).
 datecreated	infolog	hu	Létrehozás dátuma
@@ -159,7 +155,6 @@ do you want a notification, if items you delegated are due?	infolog	hu	Kér ért
 do you want to receive notifications as html-mails or plain text?	infolog	hu	Az értesítést html vagy normál szöveges formában kéri.
 don't show infolog	infolog	hu	InfoLog bejegyzés elrejtése
 done	infolog	hu	Kész
-download	infolog	hu	Fájl mentése
 download url for links	infolog	hu	Linkek letöltési URL címe
 due %1	infolog	hu	Esedékes %1
 due date	infolog	hu	Esedékes dátum
@@ -199,7 +194,6 @@ exists	infolog	hu	Létezik
 export definition to use for nextmatch export	infolog	hu	A nextmatch exportáláshoz használandó export-definíció
 exports in ical format.	infolog	hu	iCal formátumban történő exportálás.
 exports infolog entries into a csv file.	infolog	hu	Az InfoLog bejegyzéseket CSV fájlba exportálja.
-favorites	infolog	hu	Kedvencek
 fax	infolog	hu	Fax
 field must not be empty !!!	infolog	hu	A mezőt ki kell tölteni!
 fields to exclude when copying an infolog:	infolog	hu	Az InfoLog másolásakor kizárandó mezők:
@@ -215,6 +209,7 @@ full list of placeholder names	infolog	hu	A helyőrző nevek teljes listája
 general fields:	infolog	hu	Általános mezők:
 general settings	infolog	hu	Általános beállítások
 global categories	infolog	hu	Globális kategóriák
+grant responsible users access to linked contacts?	infolog	hu	Felelős felhasználóknak hozzáférést biztosít a kapcsolt kapcsolatokhoz?
 group owner for	infolog	hu	Csoport tulajdonos
 handling of status 'archived'	admin	hu	Az 'archivált' státusz kezelése
 high	infolog	hu	Magas
@@ -327,6 +322,7 @@ only show them if there is a filter	infolog	hu	Csak akkor jeleníti meg őket, h
 only show them while searching	infolog	hu	Csak keresés közben jeleníti meg őket
 only the attachments	infolog	hu	Csupán a mellékletek
 only the links	infolog	hu	Csupán a hivatkozások
+only to primary contact	infolog	hu	Csak az elsődleges kapcsolattartónak
 open and upcoming	infolog	hu	Megnyitás és közelgő
 open(status)	infolog	hu	Nyitott
 optional note to the link	infolog	hu	Tetszőleges megjegyzés a hivatkozáshoz
@@ -390,6 +386,7 @@ removed	infolog	hu	Eltávolítva.
 removed category	infolog	hu	eltávolított kategória
 replacement	infolog	hu	Csere
 replacements for inserting entries into documents	infolog	hu	Pótlások a bejegyzések dokumentumba való beillesztéséhez
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	hu	A szerkesztő felhasználónak írási hozzáféréssel kell rendelkeznie ezekhez a kapcsolatokhoz, hogy megoszthassa azokat a felelős felhasználóval.
 respect timesheet run and read permissions for time totals	infolog	hu	A munkaidő-nyilvántartás futtatási és olvasási engedélyek tiszteletben tartása az időösszegek esetében
 responsible	infolog	hu	Felelős
 responsible open	infolog	hu	Felelős nyitott
@@ -455,7 +452,6 @@ startdate for new entries	infolog	hu	Új bejegyzés kezdési időpontja
 startdate must be before enddate!!!	infolog	hu	A kezdő dátumnak az esedékesség előtt kell lennie!
 starting %1	infolog	hu	Kezdő %1
 startrecord	infolog	hu	Kezdő bejegyzés
-status	infolog	hu	Állapot
 status ...	infolog	hu	Állapot ...
 status, percent and date completed are always allowed.	infolog	hu	Állapot, százalék és befejezés dátuma mindig megengedett.
 sub	infolog	hu	Albejegyzés
@@ -478,6 +474,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	hu	Amíg a Tennivalók vagy Telefonhívások befejeződnek
 times	infolog	hu	Időigény
 titles of any entries linked to the current record, excluding attached files	infolog	hu	Az aktuális rekordhoz kapcsolódó bármely bejegyzés címe, kivéve a csatolt fájlokat.
+to all linked contacts	infolog	hu	Az összes összekapcsolt kapcsolathoz
 to many might exceed your execution-time-limit	infolog	hu	Futtatási időkorlát túllépés
 to what should the startdate of new entries be set.	infolog	hu	Új bejegyzés esetén az alapértelmezett kezdési időpont.
 today	infolog	hu	Ma

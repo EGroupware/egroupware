@@ -45,7 +45,6 @@ created	infolog	ro	Creat
 current user	infolog	ro	Utilizator curent
 custom from	infolog	ro	Personalizat de la
 customfields	infolog	ro	Câmpuri personalizate
-data exchange settings	infolog	ro	Setări privind schimbul de date
 date completed	infolog	ro	Data finalizării
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ro	Data finalizării. Lăsați gol pentru ca aceasta să fie setată automat dacă statutul este terminat sau facturat.
 default category for new infolog entries	infolog	ro	Categoria implicită pentru noile intrări InfoLog
@@ -68,7 +67,6 @@ do you want a notification, if items you delegated are about to start?	infolog	r
 do you want a notification, if items you delegated are due?	infolog	ro	Primiți notificări dacă intrările pe care le-ați delegat sunt scadente.
 do you want to receive notifications as html-mails or plain text?	infolog	ro	Primiți notificări sub formă de e-mailuri HTML sau text simplu.
 don't show infolog	infolog	ro	NU afișați InfoLog
-download	infolog	ro	Salvați fișierul
 download url for links	infolog	ro	URL de descărcare pentru linkuri
 due %1	infolog	ro	Due %1
 due date	infolog	ro	Data scadentă
@@ -91,7 +89,6 @@ exists	infolog	ro	Există
 export definition to use for nextmatch export	infolog	ro	Definiția de export care trebuie utilizată pentru exportul nextmatch
 exports in ical format.	infolog	ro	Exportă în format iCal.
 exports infolog entries into a csv file.	infolog	ro	Exportă intrările InfoLog într-un fișier CSV.
-favorites	infolog	ro	Favorite
 fax	infolog	ro	Fax
 field must not be empty !!!	infolog	ro	Câmpul nu trebuie să fie gol!
 fields to exclude when copying an infolog:	infolog	ro	Câmpuri de exclus la copierea unui InfoLog:
@@ -107,6 +104,7 @@ full list of placeholder names	infolog	ro	Lista completă a numelor de caractere
 general fields:	infolog	ro	Câmpuri generale:
 general settings	infolog	ro	Setări generale
 global categories	infolog	ro	Categorii globale
+grant responsible users access to linked contacts?	infolog	ro	Acordarea accesului utilizatorilor responsabili la contactele legate?
 group owner for	infolog	ro	Proprietarul grupului pentru
 handling of status 'archived'	admin	ro	Gestionarea statutului 'arhivat'
 high	infolog	ro	Mare
@@ -155,6 +153,7 @@ one day after	infolog	ro	O zi după
 one day in advance	infolog	ro	Cu o zi înainte
 only show them if there is a filter	infolog	ro	Afișează-le doar dacă există un filtru
 only show them while searching	infolog	ro	Afișează-le numai în timpul căutării
+only to primary contact	infolog	ro	Numai la contactul principal
 open(status)	infolog	ro	Deschis
 other configurations	infolog	ro	Alte configurații
 owner, responsible	infolog	ro	Proprietar, Responsabil
@@ -178,6 +177,7 @@ removed	infolog	ro	Eliminat.
 removed category	infolog	ro	categoria eliminat
 replacement	infolog	ro	Înlocuire
 replacements for inserting entries into documents	infolog	ro	Înlocuitori pentru inserarea de intrări în documente
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	ro	Necesită ca utilizatorul care editează să aibă acces în scris la aceste contacte, pentru a le partaja cu utilizatorul responsabil.
 respect timesheet run and read permissions for time totals	infolog	ro	Respectați permisiunile de execuție și de citire a foii de pontaj pentru totalurile de timp
 responsible open and upcoming	infolog	ro	Răspundeți de situațiile deschise și viitoare
 responsible overdue	infolog	ro	Responsabil întârziat
@@ -217,6 +217,7 @@ tag to mark positions for address labels	infolog	ro	Etichetă pentru a marca poz
 tasks of	infolog	ro	Sarcini de
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ro	Documentul poate conține caractere de subsol, cum ar fi {{%1}}, care vor fi înlocuite cu datele.
 the following document-types are supported:	infolog	ro	Sunt acceptate următoarele tipuri de documente:
+to all linked contacts	infolog	ro	La toate contactele legate
 type of field	infolog	ro	Tipul de câmp
 type of the log-entry: note, phonecall or todo	infolog	ro	Tipul de intrare în InfoLog
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	ro	Nu se poate face legătura cu %3 prin câmpul personalizat "%1": "%4". %2 se potrivește.

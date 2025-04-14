@@ -545,9 +545,9 @@ select an existing entry in order to append mail content to it	mail	de	Bestehend
 select an item to read	mail	de	Wählen Sie ein zu lesendes Element aus
 select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an diese Nachricht anhängen möchten.
 select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
-select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager anhängen.
+select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager anhängen
 select files to upload	mail	de	Dateien anhängen
-select mail addresses from addressbook	mail	de	Email Adressen aus dem Adressbuch auswählen
+select mail addresses from addressbook	mail	de	E-Mail-Adressen aus dem Adressbuch auswählen
 select multiple	mail	de	Mehrfachauswahl
 select or insert email address	mail	de	Wählen oder fügen Sie eine E-Mail-Adresse ein
 selected	mail	de	ausgewählt

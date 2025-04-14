@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	fi	Lyhyt aihe merkinnälle
 abort without deleting	infolog	fi	Keskeytä ilman poistamista
 accept	infolog	fi	Hyväksy
-action	infolog	fi	Toiminnot
-actions...	infolog	fi	Toiminnot ...
 actual date and time	infolog	fi	Tämänhetkinen päivä ja aika
-add	infolog	fi	Lisää
 add / remove link	infolog	fi	Lisää / poista linkki
 add a file	infolog	fi	Lisää tiedosto
 add a new entry	infolog	fi	Lisää uusi merkintä
@@ -131,7 +128,6 @@ custom from	infolog	fi	Muokkaa:
 custom regarding	infolog	fi	Muokkaa:
 custom status for typ	infolog	fi	Muokattava tila tehtävätyypille
 customfields	infolog	fi	Lisäkentät
-data exchange settings	infolog	fi	Tiedonvaihtoasetukset
 date completed	infolog	fi	Valmistumispäivä
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	fi	Valmistumispäivä (jätä tyhjäksi automaattista asetusta varten, jos tilana on "Valmis" tai "Laskutettu").
 datecreated	infolog	fi	Luotu
@@ -170,7 +166,6 @@ do you want a notification, if items you delegated are due?	infolog	fi	Haluatko 
 do you want to receive notifications as html-mails or plain text?	infolog	fi	Haluatko muistutusviestiesi olevan HTML vai pelkkänä tekstinä.
 don't show infolog	infolog	fi	Älä näytä tehtäviä
 done	infolog	fi	Valmis
-download	infolog	fi	Tallenna tiedosto
 download url for links	infolog	fi	Linkkien URL
 due %1	infolog	fi	Erääntyy %1
 due date	infolog	fi	Eräpäivä
@@ -210,7 +205,6 @@ exists	infolog	fi	Olemassaoleva
 export definition to use for nextmatch export	infolog	fi	Vienti asetukset 'nextmatch' vientiin
 exports in ical format.	infolog	fi	Vie iCal-muodossa.
 exports infolog entries into a csv file.	infolog	fi	Tuo merkintöjä CSV tiedostoon.
-favorites	infolog	fi	Suosikit
 fax	infolog	fi	Faksi
 field must not be empty !!!	infolog	fi	Kenttää ei voi jättää tyhjäksi!
 fields to exclude when copying an infolog:	infolog	fi	Kentät, jotka jätetään pois InfoLogia kopioitaessa:
@@ -226,6 +220,7 @@ full list of placeholder names	infolog	fi	Täydellinen luettelo paikanhaltijoide
 general fields:	infolog	fi	Yleiset kentät
 general settings	infolog	fi	Yleiset asetukset
 global categories	infolog	fi	Yleiset kategoriat
+grant responsible users access to linked contacts?	infolog	fi	Myönnätkö vastuullisille käyttäjille pääsyn linkitettyihin yhteystietoihin?
 group owner for	infolog	fi	Ryhmän omistaja
 handling of status 'archived'	admin	fi	Tilan 'arkistoitu' käsittely
 high	infolog	fi	Korkea
@@ -340,6 +335,7 @@ only show them if there is a filter	infolog	fi	Näyttää ne vain, jos on olemas
 only show them while searching	infolog	fi	Näytä ne vain haun aikana
 only the attachments	infolog	fi	Vain liitteet
 only the links	infolog	fi	Vain linkit
+only to primary contact	infolog	fi	Vain ensisijaiselle yhteyshenkilölle
 open and upcoming	infolog	fi	Avoimet ja tulevat
 open(status)	infolog	fi	Avoimet
 optional note to the link	infolog	fi	Vapaaehtoinen muistiinpano linkkiin
@@ -403,6 +399,7 @@ removed	infolog	fi	Poistettu.
 removed category	infolog	fi	Poistettu luokka
 replacement	infolog	fi	Sijaismerkintä
 replacements for inserting entries into documents	infolog	fi	Asiakirjoihin syötettävät sijaismerkinnät
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	fi	Edellyttää, että muokkaavalla käyttäjällä on kirjoitusoikeus näihin yhteystietoihin, jotta hän voi jakaa ne vastuukäyttäjän kanssa.
 respect timesheet run and read permissions for time totals	infolog	fi	Kunnioita työaikataulujen ajo- ja lukuoikeuksia aikasummia varten
 responsible	infolog	fi	Vastuuhenkilö
 responsible open	infolog	fi	Vastuuhenkilö, avoimet
@@ -428,8 +425,6 @@ select a priority for this task	infolog	fi	Valitse tehtävän tärkeys
 select a project	infolog	fi	Valitse projekti
 select a responsible user: a person you want to delegate this task	infolog	fi	Valitse vastuuhenkilö, jolle haluat siirtää tehtävän
 select a typ to edit it's status-values or delete it	infolog	fi	Valitse tyyppi muokataksesi sen tilan arvoa tai poistaaksesi sen
-select an action	infolog	fi	Valitse toiminto
-select an action...	infolog	fi	Valitse toiminto ...
 select an app to search in	infolog	fi	Valitse haettava sovellus
 select an entry to link with	infolog	fi	Valitse merkintä linkitettäväksi
 select multiple contacts for a further action	infolog	fi	Valitse useita merkintöjä
@@ -470,7 +465,6 @@ startdate for new entries	infolog	fi	Aloituspäivä uusille merkinnöille
 startdate must be before enddate!!!	infolog	fi	Aloituspäivän on oltava ennen eräpäivää!
 starting %1	infolog	fi	Alkaa %1
 startrecord	infolog	fi	Startrecord
-status	infolog	fi	Tila
 status ...	infolog	fi	Tila ...
 status, percent and date completed are always allowed.	infolog	fi	Tila, prosentit, valmistumispäivä ovat aina sallittuja.
 sub	infolog	fi	Sub
@@ -493,6 +487,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	fi	Milloin tehtävä tai puhelinsoitto on valmistunut
 times	infolog	fi	Ajat
 titles of any entries linked to the current record, excluding attached files	infolog	fi	Linkitettyjen tietueiden otsikot/aiheet, poissulkien liitetyt tiedostot
+to all linked contacts	infolog	fi	Kaikkiin linkitettyihin yhteystietoihin
 to many might exceed your execution-time-limit	infolog	fi	Liian moni saattaa ylittää suoritusajan ylärajan
 to what should the startdate of new entries be set.	infolog	fi	Mikä alkamispäivä uusille merkinnöille asetetaan.
 today	infolog	fi	Tänään

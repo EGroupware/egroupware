@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	sk	Krátky predmet záznamu
 abort without deleting	infolog	sk	Zrušiť bez odstránenia
 accept	infolog	sk	Prijať
-action	infolog	sk	Akcia
-actions...	infolog	sk	Akcie ...
 actual date and time	infolog	sk	Aktuálny dátum a čas
-add	infolog	sk	Pridať
 add / remove link	infolog	sk	Pridať / odstrániť odkaz
 add a file	infolog	sk	Pridať súbor
 add a new entry	infolog	sk	Pridať nový Záznam
@@ -131,7 +128,6 @@ custom from	infolog	sk	Používateľom definované od
 custom regarding	infolog	sk	Používateľom definované ohľadom
 custom status for typ	infolog	sk	Používateľom definovaný stav pre typ
 customfields	infolog	sk	Používateľské polia
-data exchange settings	infolog	sk	Nastavenia výmeny údajov
 date completed	infolog	sk	Dátum dokončenia
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	sk	Dátum dokončenia (ak ponecháte prázdne, vyplní sa automaticky podľa toho, kedy bol nastavený stav "hotovo", alebo kedy prebehlo vyúčtovanie).
 datecreated	infolog	sk	Dátum vytvorenia
@@ -170,7 +166,6 @@ do you want a notification, if items you delegated are due?	infolog	sk	Chcete do
 do you want to receive notifications as html-mails or plain text?	infolog	sk	E-mailové pripomienky chcete dostávať ako HTML, alebo ako čistý text.
 don't show infolog	infolog	sk	NEzobrazovať Záznamník
 done	infolog	sk	Hotovo
-download	infolog	sk	Uložiť súbor
 download url for links	infolog	sk	Stiahnuť URL pre odkazy
 due %1	infolog	sk	Termín %1
 due date	infolog	sk	Termín splnenia
@@ -210,7 +205,6 @@ exists	infolog	sk	Existuje
 export definition to use for nextmatch export	infolog	sk	Exportná definícia pre použitie v exporte
 exports in ical format.	infolog	sk	Exportuje vo formáte iCal.
 exports infolog entries into a csv file.	infolog	sk	Exportuje položky Záznamníka do CSV súboru.
-favorites	infolog	sk	Obľúbené
 fax	infolog	sk	Fax
 field must not be empty !!!	infolog	sk	Pole nesmie byť prázdne!
 fields to exclude when copying an infolog:	infolog	sk	Polia, ktoré vynechať pri kopírovaní Záznamníka:
@@ -226,6 +220,7 @@ full list of placeholder names	infolog	sk	Úplný zoznam názvov zástupných zn
 general fields:	infolog	sk	Všeobecné polia:
 general settings	infolog	sk	Veobecné nastavenia
 global categories	infolog	sk	Globálne kategórie
+grant responsible users access to linked contacts?	infolog	sk	Udeliť zodpovedným používateľom prístup k prepojeným kontaktom?
 group owner for	infolog	sk	Skupinový vlastník pre
 handling of status 'archived'	admin	sk	Spracovanie stavu 'archivovaný'
 high	infolog	sk	Vysoká
@@ -340,6 +335,7 @@ only show them if there is a filter	infolog	sk	Zobraziť ich len ak je tu filter
 only show them while searching	infolog	sk	Zobraziť ich počas hľadania
 only the attachments	infolog	sk	Iba prílohy
 only the links	infolog	sk	Iba odkazy
+only to primary contact	infolog	sk	Len primárnemu kontaktu
 open and upcoming	infolog	sk	Otvorené a blížiace sa
 open(status)	infolog	sk	Otvorené
 optional note to the link	infolog	sk	Voliteľná poznámka k odkazu
@@ -403,6 +399,7 @@ removed	infolog	sk	Odstránené.
 removed category	infolog	sk	Odstránená kategória
 replacement	infolog	sk	Náhrada
 replacements for inserting entries into documents	infolog	sk	Náhrady pre vkladanie polí do dokumentov
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	sk	Vyžaduje, aby mal editujúci používateľ prístup na zápis do týchto kontaktov, aby ich mohol zdieľať so zodpovedným používateľom.
 respect timesheet run and read permissions for time totals	infolog	sk	Rešpektovať oprávnenia na spúšťanie a čítanie časových súčtov
 responsible	infolog	sk	Zodpovednosť
 responsible open	infolog	sk	Zodpovednosť - otvorené
@@ -468,7 +465,6 @@ startdate for new entries	infolog	sk	Dátum začatia pre nové záznamy
 startdate must be before enddate!!!	infolog	sk	Dátu začiatku musí byť pred dátumom konca!
 starting %1	infolog	sk	Začiatok %1
 startrecord	infolog	sk	Prvý záznam
-status	infolog	sk	Stav
 status ...	infolog	sk	Stav ...
 status, percent and date completed are always allowed.	infolog	sk	Stav, percentuálny stav vybavenia a dátum dokončenia sú prístupné vždy.
 sub	infolog	sk	Podradené
@@ -491,6 +487,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	sk	Dokedy treba vybaviť Úlohu alebo Telefonát
 times	infolog	sk	Časy
 titles of any entries linked to the current record, excluding attached files	infolog	sk	Názvy akýchkoľvek položiek pripojených na súčasný záznam, okrem priložených súborov
+to all linked contacts	infolog	sk	Ku všetkým prepojeným kontaktom
 to many might exceed your execution-time-limit	infolog	sk	Ak priveľa, môže dôjsť k prekročeniu Vašich obmedzení ohľadom povoleného času behu aplikácie
 to what should the startdate of new entries be set.	infolog	sk	Ako má byť nastavený dátum začatia u nových záznamov.
 today	infolog	sk	Dnes

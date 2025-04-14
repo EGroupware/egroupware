@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	pt-br	Um nome curto para este registro
 abort without deleting	infolog	pt-br	Cancelar sem apagar
 accept	infolog	pt-br	Aceitar
-action	infolog	pt-br	Ação
-actions...	infolog	pt-br	Ações ...
 actual date and time	infolog	pt-br	Data e Hora atuais
-add	infolog	pt-br	Adicionar
 add / remove link	infolog	pt-br	Adicionar / remover link
 add a file	infolog	pt-br	Adicionar um arquivo
 add a new entry	infolog	pt-br	Adicionar um novo registro
@@ -222,6 +219,7 @@ full list of placeholder names	infolog	pt-br	Lista completa de nomes de titulare
 general fields:	infolog	pt-br	Campos gerais:
 general settings	infolog	pt-br	Definições gerais
 global categories	infolog	pt-br	Categorias Globais
+grant responsible users access to linked contacts?	infolog	pt-br	Conceder aos usuários responsáveis acesso aos contatos vinculados?
 group owner for	infolog	pt-br	Grupo-proprietário para
 handling of status 'archived'	admin	pt-br	Tratamento do status 'arquivado'
 high	infolog	pt-br	Alta
@@ -332,6 +330,7 @@ only show them if there is a filter	infolog	pt-br	Mostrar apenas se houver um fi
 only show them while searching	infolog	pt-br	Mostrar apenas durante a pesquisa
 only the attachments	infolog	pt-br	Apenas arquivos anexos
 only the links	infolog	pt-br	Apenas links
+only to primary contact	infolog	pt-br	Somente ao contato principal
 open and upcoming	infolog	pt-br	Aberto e futuro
 open(status)	infolog	pt-br	Abrir
 optional note to the link	infolog	pt-br	Nota opcional para o Link
@@ -395,6 +394,7 @@ removed	infolog	pt-br	Removido.
 removed category	infolog	pt-br	categoria removida
 replacement	infolog	pt-br	Substituição
 replacements for inserting entries into documents	infolog	pt-br	Substitutos para a inserção de entradas em documentos
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	pt-br	Requer que o usuário que está editando tenha acesso de gravação a esses contatos, para compartilhá-los com o usuário responsável.
 respect timesheet run and read permissions for time totals	infolog	pt-br	Respeitar as permissões de execução e leitura da planilha de horas para os totais de horas
 responsible	infolog	pt-br	Responsável
 responsible open	infolog	pt-br	Responsável pela abertura
@@ -460,7 +460,6 @@ startdate for new entries	infolog	pt-br	Data inicial para novas tarefas
 startdate must be before enddate!!!	infolog	pt-br	A data de início deve ser anterior à data de vencimento!
 starting %1	infolog	pt-br	Iniciando %1
 startrecord	infolog	pt-br	Iniciar registro
-status	infolog	pt-br	Status
 status ...	infolog	pt-br	Status ...
 status, percent and date completed are always allowed.	infolog	pt-br	Status, percentagem e data de finalização são sempre autorizados.
 sub	infolog	pt-br	Sub
@@ -483,6 +482,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	pt-br	Até quando uma pendência ou chamada esteja encerrada
 times	infolog	pt-br	Horários
 titles of any entries linked to the current record, excluding attached files	infolog	pt-br	Títulos de quaisquer entradas vinculadas ao registro atual, excluindo arquivos anexados
+to all linked contacts	infolog	pt-br	Para todos os contatos vinculados
 to many might exceed your execution-time-limit	infolog	pt-br	Mostrar muitos registros pode provocar a violação do tempo limite do servidor
 to what should the startdate of new entries be set.	infolog	pt-br	Para que data inicial novas tarefas deverão ser configuradas.
 today	infolog	pt-br	Para Hoje

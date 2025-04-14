@@ -30,9 +30,7 @@
 a short subject for the entry	infolog	da	Et kort emne for indtastningen
 abort without deleting	infolog	da	Afbryd uden sletning
 accept	infolog	da	Accepter
-action	infolog	da	Handling
 actual date and time	infolog	da	Faktisk dato og klokkeslæt
-add	infolog	da	Tilføj
 add / remove link	infolog	da	Tilføj/fjern link
 add a file	infolog	da	Tilføj en fil
 add a new entry	infolog	da	Tilføj et nyt felt
@@ -110,7 +108,6 @@ custom fields	infolog	da	Egne felter
 custom fields, type and status	common	da	Egne felter, type og status
 custom status for typ	infolog	da	Egen status for type
 customfields	infolog	da	Egne felter
-data exchange settings	infolog	da	Indstillinger for dataudveksling
 datecreated	infolog	da	Dato oprettet
 dates, status, access	infolog	da	Datoer, status og adgang
 days	infolog	da	Dage
@@ -147,7 +144,6 @@ do you want a notification, if items you delegated are due?	infolog	da	Få beske
 do you want to receive notifications as html-mails or plain text?	infolog	da	Modtag notifikationer som HTML-e-mails eller almindelig tekst.
 don't show infolog	infolog	da	Vis IKKE InfoLog
 done	infolog	da	Udført
-download	infolog	da	Gem fil
 download url for links	infolog	da	Download URL til links
 due %1	infolog	da	Forfald %1
 due date	infolog	da	Forfaldsdato
@@ -187,7 +183,6 @@ exists	infolog	da	Eksisterer
 export definition to use for nextmatch export	infolog	da	Eksportdefinition, der skal bruges til nextmatch-eksport
 exports in ical format.	infolog	da	Eksporterer i iCal-format.
 exports infolog entries into a csv file.	infolog	da	Eksporterer InfoLog-poster til en CSV-fil.
-favorites	infolog	da	Favoritter
 fax	infolog	da	Fax
 field must not be empty !!!	infolog	da	Feltet må ikke være tomt!
 fields to exclude when copying an infolog:	infolog	da	Felter, der skal udelades ved kopiering af en InfoLog:
@@ -203,6 +198,7 @@ full list of placeholder names	infolog	da	Komplet liste over navne på pladshold
 general fields:	infolog	da	Generelle felter:
 general settings	infolog	da	Generelle indstillinger
 global categories	infolog	da	Globale Kategorier
+grant responsible users access to linked contacts?	infolog	da	Giv ansvarlige brugere adgang til tilknyttede kontakter?
 group owner for	infolog	da	Gruppeejer for
 handling of status 'archived'	admin	da	Håndtering af status 'arkiveret'
 high	infolog	da	Høj
@@ -315,6 +311,7 @@ only show them if there is a filter	infolog	da	Vis dem kun, hvis der er et filte
 only show them while searching	infolog	da	Vis dem kun under søgning
 only the attachments	infolog	da	Kun vedhæftninger
 only the links	infolog	da	Kun linkene
+only to primary contact	infolog	da	Kun til den primære kontakt
 open(status)	infolog	da	Åben
 optional note to the link	infolog	da	Valgfri notat til Link
 order	infolog	da	Rækkefølge
@@ -359,6 +356,7 @@ removed	infolog	da	Fjernet.
 removed category	infolog	da	fjernet kategori
 replacement	infolog	da	Erstatning
 replacements for inserting entries into documents	infolog	da	Erstatninger til indsættelse af poster i dokumenter
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	da	Kræver, at den redigerende bruger har skriveadgang til disse kontakter for at kunne dele dem med den ansvarlige bruger.
 respect timesheet run and read permissions for time totals	infolog	da	Respekter tilladelser til at køre timesedler og læse tidstotaler
 responsible	infolog	da	Ansvarlig
 responsible open	infolog	da	Ansvarlig - åben
@@ -384,8 +382,6 @@ select a priority for this task	infolog	da	Vælg en prioritet for denne opgave
 select a project	infolog	da	Vælg et projekt
 select a responsible user: a person you want to delegate this task	infolog	da	Vælg den ansvarlige bruger: en person du vil uddele denne opgave til
 select a typ to edit it's status-values or delete it	infolog	da	Vælg en type som dens status-værdi skal redigeres eller slettes
-select an action	infolog	da	Vælg en handling
-select an action...	infolog	da	Vælg en handling...
 select an app to search in	infolog	da	Vælg en appilkation at søge i
 select an entry to link with	infolog	da	Vælg en opgave at linke med
 select multiple contacts for a further action	infolog	da	Vælg flere kontakter til en yderligere handling
@@ -423,7 +419,6 @@ startdate for new entries	infolog	da	Startdato for nye poster
 startdate must be before enddate!!!	infolog	da	Startdatoen skal være før forfaldsdatoen!
 starting %1	infolog	da	Starter %1
 startrecord	infolog	da	Startpostering
-status	infolog	da	Status
 status ...	infolog	da	Status ...
 status, percent and date completed are always allowed.	infolog	da	Status, procent og dato for afslutning er altid tilladt.
 sub	infolog	da	Under<br>kategori
@@ -442,6 +437,7 @@ the text displayed to the user	infolog	da	Teksten som vises til brugeren
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	da	Dette er filteret som Opgaver bruger når du starter applikationen. Filteret begrænser hvilke opgaver der vises som standart. Der er filter som viser kun udførte, åbne eller kommende opgaver for dig eller alle andre brugere.
 til when should the todo or phonecall be finished	infolog	da	Hvornår skal opgaven eller telefon kaldet være udført
 times	infolog	da	Tider
+to all linked contacts	infolog	da	Til alle tilknyttede kontakter
 to many might exceed your execution-time-limit	infolog	da	For mange vil måske overstige din eksekvere tid begrænsning
 today	infolog	da	I dag
 todo	infolog	da	Opgaver

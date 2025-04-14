@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	nl	Een kort onderwerp voor een nieuw InfoLog
 abort without deleting	infolog	nl	Afbreken zonder te verwijderen
 accept	infolog	nl	Accepteren
-action	infolog	nl	Actie
-actions...	infolog	nl	Acties ...
 actual date and time	infolog	nl	werkelijke datum en tijd
-add	infolog	nl	Toevoegen
 add / remove link	infolog	nl	Link toevoegen / verwijderen
 add a file	infolog	nl	Een bestand toevoegen
 add a new entry	infolog	nl	Een nieuw InfoLog toevoegen
@@ -120,7 +117,6 @@ custom from	infolog	nl	Aangepast van
 custom regarding	infolog	nl	Aangepast m.b.t.
 custom status for typ	infolog	nl	Aangepaste status voor type
 customfields	infolog	nl	Aanpaste velden
-data exchange settings	infolog	nl	Data exchange instellingen
 date completed	infolog	nl	Datum voltooid
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	nl	Datum voltooid (leeg laten als je het automatisch wilt laten vullen indien de status op gedaan of gefactureerd wordt gezet).
 datecreated	infolog	nl	Datum aangemaakt
@@ -159,7 +155,6 @@ do you want a notification, if items you delegated are due?	infolog	nl	Wilt u ee
 do you want to receive notifications as html-mails or plain text?	infolog	nl	Wilt u notificaties ontvangen als html-emails of als platte tekst.
 don't show infolog	infolog	nl	InfoLog NIET weergeven
 done	infolog	nl	Gereed
-download	infolog	nl	Bestand opslaan
 download url for links	infolog	nl	Download URL voor links
 due %1	infolog	nl	Vervallen %1
 due date	infolog	nl	Vervaldatum
@@ -199,7 +194,6 @@ exists	infolog	nl	Bestaat
 export definition to use for nextmatch export	infolog	nl	Export definitie om te gebruiken bij nextmatch export
 exports in ical format.	infolog	nl	Exporteert in iCal formaat.
 exports infolog entries into a csv file.	infolog	nl	Exporteert InfoLog-items naar een CSV-bestand.
-favorites	infolog	nl	Favorieten
 fax	infolog	nl	Fax
 field must not be empty !!!	infolog	nl	Veld mag niet leeg zijn!
 fields to exclude when copying an infolog:	infolog	nl	Uit te sluiten velden bij het kopiëren van een InfoLog:
@@ -215,6 +209,7 @@ full list of placeholder names	infolog	nl	Volledige lijst met namen van plaatsho
 general fields:	infolog	nl	Algemene velden:
 general settings	infolog	nl	Algemene instellingen
 global categories	infolog	nl	Algemene categoriën
+grant responsible users access to linked contacts?	infolog	nl	Verantwoordelijke gebruikers toegang geven tot gekoppelde contactpersonen?
 group owner for	infolog	nl	Groepseigenaar
 handling of status 'archived'	admin	nl	Afhandeling van status 'gearchiveerd'
 high	infolog	nl	Hoog
@@ -329,6 +324,7 @@ only show them if there is a filter	infolog	nl	Alleen tonen als er een filter is
 only show them while searching	infolog	nl	Alleen tonen tijdens zoeken
 only the attachments	infolog	nl	Alleen de bijlagen
 only the links	infolog	nl	Alleen de links
+only to primary contact	infolog	nl	Alleen tot primaire contactpersoon
 open and upcoming	infolog	nl	Openen en aankomen
 open(status)	infolog	nl	Open
 optional note to the link	infolog	nl	Optionele notitie bij de link
@@ -392,6 +388,7 @@ removed	infolog	nl	Verwijderd.
 removed category	infolog	nl	verwijderde categorie
 replacement	infolog	nl	Vervanging
 replacements for inserting entries into documents	infolog	nl	Vervanging voor het invoeren van gegevens in documenten
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	nl	Vereist dat de bewerkende gebruiker schrijftoegang heeft tot deze contactpersonen, om ze te delen met de verantwoordelijke gebruiker.
 respect timesheet run and read permissions for time totals	infolog	nl	Respecteer timesheet run- en leesrechten voor tijdtotalen
 responsible	infolog	nl	Verantwoordelijk
 responsible open	infolog	nl	Verantwoordelijk open
@@ -457,7 +454,6 @@ startdate for new entries	infolog	nl	Startdatum voor nieuwe items
 startdate must be before enddate!!!	infolog	nl	Startdatum moet voor de vervaldatum liggen!
 starting %1	infolog	nl	Start %1
 startrecord	infolog	nl	Startregel
-status	infolog	nl	Status
 status ...	infolog	nl	Status ...
 status, percent and date completed are always allowed.	infolog	nl	Status, percentage en datum voltooid zijn altijd toegestaan.
 sub	infolog	nl	Onderliggende
@@ -480,6 +476,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	nl	Wanneer moet de taak of het telefoongesprek afgehandeld zijn
 times	infolog	nl	Tijden
 titles of any entries linked to the current record, excluding attached files	infolog	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
+to all linked contacts	infolog	nl	Naar alle gekoppelde contactpersonen
 to many might exceed your execution-time-limit	infolog	nl	Te veel kan mogelijk de uitvoertijd van dit programme overschrijden.
 to what should the startdate of new entries be set.	infolog	nl	Waarop moet de startdatum van nieuwe items ingesteld worden.
 today	infolog	nl	Vandaag

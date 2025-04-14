@@ -26,10 +26,7 @@
 a short subject for the entry	infolog	zh-tw	一個簡短的主題
 abort without deleting	infolog	zh-tw	取消刪除
 accept	infolog	zh-tw	確定
-action	infolog	zh-tw	動作
-actions...	infolog	zh-tw	動作...
 actual date and time	infolog	zh-tw	實際日期與時間
-add	infolog	zh-tw	新增
 add a file	infolog	zh-tw	新增檔案
 add a new entry	infolog	zh-tw	新增個事件
 add a new note	infolog	zh-tw	新增記事
@@ -126,7 +123,6 @@ do you want a notification, if items you delegated are due?	infolog	zh-tw	您指
 do you want to receive notifications as html-mails or plain text?	infolog	zh-tw	您希望收到的提醒信件格式為 html 或純文字？
 don't show infolog	infolog	zh-tw	不要顯示記事本
 done	infolog	zh-tw	完成
-download	infolog	zh-tw	下載
 duration	infolog	zh-tw	進行期間
 each value is a line like <id>[=<label>]	infolog	zh-tw	每個值都是這樣的線 <id>[=<label>]
 edit	infolog	zh-tw	編輯
@@ -176,7 +172,7 @@ infolog - new subproject	infolog	zh-tw	記事本 - 新增附屬專案
 infolog - subprojects from	infolog	zh-tw	記事本 - 附屬專案自
 infolog entry deleted	infolog	zh-tw	記事本資料刪除了
 infolog entry saved	infolog	zh-tw	記事本資料儲存了
-InfoLog filter for the home screen	infolog	zh-tw	首頁的記事本顯示規則
+infolog filter for the home screen	infolog	zh-tw	首頁的記事本顯示規則
 infolog list	infolog	zh-tw	記事本清單
 infolog preferences	common	zh-tw	記事本設定
 infolog-fieldname	infolog	zh-tw	記事本 - 欄位名稱
@@ -300,7 +296,7 @@ select to filter by responsible	infolog	zh-tw	依據負責人過濾
 sets the status of this entry and its subs to done	infolog	zh-tw	設定這筆資料與附屬項目的狀態為完成
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	zh-tw	記事本需要在一般瀏覽中顯示附屬任務，聯絡清單或是記事嗎？您可以在原始事件中看到附屬的資訊。
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	zh-tw	記事本是否要顯示與其他應用程式的連結與/或附加檔案（通常會在進入記事本時看到）。
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	zh-tw	首頁要依據指定的規則顯示記事本嗎？如果您沒有設定預設的應用程式（偏好中）就會顯示。
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	zh-tw	首頁要依據指定的規則顯示記事本嗎？如果您沒有設定預設的應用程式（偏好中）就會顯示。
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	zh-tw	記事本使用全名或是登入名稱？
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	zh-tw	記事清單是否要顯示唯一的編號，其他功能可能會需要，例如傳票編號。
 should the infolog list show the column "last modified".	infolog	zh-tw	記事本清單要顯示異動日期欄位嗎？
@@ -320,14 +316,12 @@ startdate	infolog	zh-tw	開始日期
 startdate enddate	infolog	zh-tw	開始日期 結束日期
 startdate for new entries	infolog	zh-tw	新資料的開始日期
 startrecord	infolog	zh-tw	開始紀錄
-status	infolog	zh-tw	狀態
-status, percent and date completed are always allowed.	infolog	zh-tw	狀態、比率與完成日期預設都會允許。
 status ...	infolog	zh-tw	狀態...
+status, percent and date completed are always allowed.	infolog	zh-tw	狀態、比率與完成日期預設都會允許。
 sub	infolog	zh-tw	附屬
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	zh-tw	如果沒有父項目的資訊，附屬資料會歸屬到主要資料的父項目
 subject	infolog	zh-tw	主題
 task	infolog	zh-tw	待辦事項
-template	infolog	zh-tw	樣板
 test import (show importable records <u>only</u> in browser)	infolog	zh-tw	測試匯入(<u>只在</u>瀏覽器中顯示可以匯入的資料)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	zh-tw	內部名稱(小於10個字元)，修改它將造成目前的資料無法瀏覽
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	zh-tw	內部名稱(小於20個字元)，修改它將造成目前的資料無法瀏覽
@@ -360,19 +354,15 @@ view the parent of this entry and all his subs	infolog	zh-tw	顯示這個事件�
 view this linked entry in its application	infolog	zh-tw	在應用程式中顯示這個被連結的事件
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	zh-tw	待辦事項或是聯絡清單應該開始的時間？當過濾條件為"所有未完成"或是"自己未完成"時顯示在開始頁面。
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	zh-tw	哪些額外欄位即使負責人沒有編輯權限也能夠編輯？
-which implicit acl rights should the responsible get?	infolog	zh-tw	負責人可以取得哪個隱含的權限？
 which types should the calendar show	infolog	zh-tw	行事曆要顯示哪些類型
 will-call	infolog	zh-tw	將連絡
 write (add or update) a record by passing its fields.	infolog	zh-tw	透過傳遞它的欄位來寫入(新增或更新)一筆記錄
-yes - delete	infolog	zh-tw	確定 - 刪除
 yes - delete including sub-entries	infolog	zh-tw	確定 - 刪除（包含附屬資料）
 yes, noone can purge deleted items	infolog	zh-tw	是，沒有人可以排除刪除的項目
 yes, only admins can purge deleted items	infolog	zh-tw	是，只有管理者可以排除刪除的項目
-yes, with larger fontsize	infolog	zh-tw	是，使用較大的字體
 yes, with purging of deleted items possible	infolog	zh-tw	是，與可能排除的項目
 you can't delete one of the stock types !!!	infolog	zh-tw	您不能刪除股票的種類！
 you have entered an invalid ending date	infolog	zh-tw	您輸入了錯誤的結束日期
 you have entered an invalid starting date	infolog	zh-tw	您輸入了錯誤的開始日期
-you have to enter a name, to create a new typ!!!	infolog	zh-tw	您必須輸入一個名稱來建立一個新的格式！
 you must enter a subject or a description	infolog	zh-tw	您必須輸入主題或是描述
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	zh-tw	您的資料庫架構需要更新(%1 vs. %2)，請執行%3安裝%4來更新資料庫。
