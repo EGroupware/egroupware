@@ -123,7 +123,7 @@
     <td colspan="2"><b>{lang_Authentication_/_Accounts}</b></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
@@ -135,7 +135,7 @@
     </td>
    </tr>
 
-    <tr class="row_off">
+    <tr class="row_on">
     <td>{lang_Authentication_type_for_application}: <b>CalDAV/CardDAV Sync</b></td>
     <td>
      <select name="newsettings[auth_type_groupdav]">
@@ -145,12 +145,22 @@
     </td>
    </tr>
 
-    <tr class="row_on">
+    <tr class="row_off">
     <td>{lang_Authentication_type_for_application}: <b>eSync (ActiveSync)</b></td>
     <td>
      <select name="newsettings[auth_type_activesync]">
       <option value="">{lang_Standard,_as_defined_above}</option>
 {hook_auth_type_activesync}
+     </select>
+    </td>
+   </tr>
+
+    <tr class="row_on">
+    <td>{lang_Authentication_type_for_application}: <b>{lang_Security_&_Password}</b></td>
+    <td>
+     <select name="newsettings[auth_type_security]">
+      <option value="">{lang_Standard,_as_defined_above}</option>
+{hook_auth_type_security}
      </select>
     </td>
    </tr>

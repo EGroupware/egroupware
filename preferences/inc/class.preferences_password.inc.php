@@ -67,7 +67,9 @@ class preferences_password
 				unset($content['2fa']['secret_key']);
 
 				// check user password for everything but password change, where it will be checked anyway
-				$auth = new Api\Auth($GLOBALS['egw_info']['server']['auth_type'] ?? $GLOBALS['egw_info']['server']['account_repository'] ?? 'sql');
+				$auth = new Api\Auth($GLOBALS['egw_info']['server']['auth_type_security'] ??
+					$GLOBALS['egw_info']['server']['auth_type'] ??
+					$GLOBALS['egw_info']['server']['account_repository'] ?? 'sql');
 				if ($content['tabs'] !== 'change_password' &&
 					!$auth->authenticate($GLOBALS['egw_info']['user']['account_lid'], $content['password']))
 				{

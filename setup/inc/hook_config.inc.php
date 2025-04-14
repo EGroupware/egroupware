@@ -186,6 +186,10 @@ function auth_type_host($config)
 {
 	return _options_from(setup_cmd_config::auth_types(),$config['auth_type_host']);
 }
+function auth_type_security($config)
+{
+	return _options_from(setup_cmd_config::auth_types()+['fallback' => 'Fallback (LDAP->SQL)'],$config['auth_type_mail']);
+}
 
 /**
  * Make account-repository-types from setup_cmd_config available
