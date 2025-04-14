@@ -58,7 +58,7 @@ export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetac
 
 	render()
 	{
-		let parsed : Date | Boolean = this.value ? this.parser(this.value, this.dataFormat) : false
+		let parsed : Date | Boolean = this.value ? this.parser(this.value.date ?? this.value, this.dataFormat) : false
 
 		return html`
             <span slot="label">${this.label}</span>

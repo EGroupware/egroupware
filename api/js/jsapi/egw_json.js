@@ -238,7 +238,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			const controller = new AbortController();
 			const signal = controller.signal;
 			let response_ok = false;
-			promise = (this.egw.window?this.egw.window:window).fetch(url, {...init, ...signal})
+			promise = _wnd.fetch(url, {...init, ...signal})
 				.then((response) => {
 					response_ok = response.ok;
 					if (!response.ok) {
@@ -601,7 +601,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					// check if we need a not yet included app.js object --> include it now and return a Promise
 					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'undefined')
 					{
-						return import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400|0).toString())
+						return _wnd.egw_import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400|0).toString())
 							.then(() => this.applyFunc(_func, args, _context),
 								(err) => {console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.")});
 					}
