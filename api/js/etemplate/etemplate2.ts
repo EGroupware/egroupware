@@ -1530,15 +1530,19 @@ export class etemplate2
 		// handle Api\Framework::window_close(), this will terminate execution
 		if(data['window-close'])
 		{
-			if(typeof data['window-close'] == 'string' && data['window-close'] !== 'true')
+			// Let anything else in the response run first
+			egw.window.setTimeout(() =>
 			{
-				alert(data['window-close']);
-			}
-			if (dialog)
-			{
-				return dialog.close();
-			}
-			egw.close();
+				if(typeof data['window-close'] == 'string' && data['window-close'] !== 'true')
+				{
+					alert(data['window-close']);
+				}
+				if(dialog)
+				{
+					return dialog.close();
+				}
+				egw.close();
+			});
 			return true;
 		}
 
