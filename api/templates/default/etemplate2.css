@@ -868,12 +868,22 @@ which caused click on free space infront of a tag stops nm row selection*/
 .et2_nextmatch.no_dynheight .egwGridView_outer {
 	width: 100%;
 	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
+.et2_nextmatch.no_dynheight .egwGridView_outer > thead {
+	flex: 0 0 auto;
+}
+
+.et2_nextmatch.no_dynheight .egwGridView_outer > tbody {
+	flex: 1 1 100%;
+}
 .et2_nextmatch.no_dynheight .egwGridView_scrollarea {
 	height: 100%;
 	overflow: hidden;
 	overflow-y: auto;
+	max-height: 5em;
 }
 
 /*

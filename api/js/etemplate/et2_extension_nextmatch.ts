@@ -586,6 +586,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.dataview.resize(parseInt(styles.width) - this.dataview.scrollbarWidth, parseInt(styles.height));
 			// This needs to stay at 100% so browser does the work
 			this.dataview.grid.scrollarea.height("100%");
+
+			// Browser can't handle the nested div / table / div / table (Firefox).  Force it.
+			this.dataview.grid.scrollarea.css("max-height", "5em");
+			const maxHeight = parseInt(getComputedStyle(this.innerDiv[0]).height) - parseInt(getComputedStyle(this.dataview.headTr[0]).height);
+			this.dataview.grid.scrollarea.css("max-height", maxHeight + "px");
 		}
 	}
 
