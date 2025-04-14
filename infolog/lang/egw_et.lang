@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	et	Kande lühike teema
 abort without deleting	infolog	et	Loobu ilma kustutamatta
 accept	infolog	et	Kinnita
-action	infolog	et	Tegevus
-actions...	infolog	et	Tegevused ...
 actual date and time	infolog	et	Käesolev kuupäev ja kellaaeg
-add	infolog	et	Lisa
 add / remove link	infolog	et	Lisa / eemalda link
 add a file	infolog	et	Faili lisamine
 add a new entry	infolog	et	Lisa uus Kirje
@@ -102,7 +99,6 @@ current user	infolog	et	Praegune kasutaja
 custom	infolog	et	Kohandatud väljad
 custom from	infolog	et	Custom from
 customfields	infolog	et	Kohandatud väljad
-data exchange settings	infolog	et	Andmevahetuse seaded
 date completed	infolog	et	Lõpetamise kuupäev
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	et	Lõpetamise kuupäev (jäta see tühjaks kui see on seatud automaatselt lõpetatud kui on valmis või makstud).
 datecreated	infolog	et	Kuupäev tehtud
@@ -136,7 +132,6 @@ do you want a notification, if items you delegated are due?	infolog	et	Saate tea
 do you want to receive notifications as html-mails or plain text?	infolog	et	Saate teateid HTML-e-kirjana või tavalise tekstina.
 don't show infolog	infolog	et	ÄRA näita InfoLog
 done	infolog	et	Valmis
-download	infolog	et	Salvesta faili
 download url for links	infolog	et	EI näita InfoLogi
 due %1	infolog	et	Kohustuslik %1
 due date	infolog	et	Tähtaeg
@@ -172,7 +167,6 @@ exists	infolog	et	Olemas
 export definition to use for nextmatch export	infolog	et	Nextmatchi ekspordiks kasutatav ekspordimääratlus
 exports in ical format.	infolog	et	Ekspordib iCal-vormingus.
 exports infolog entries into a csv file.	infolog	et	Ekspordib InfoLogi kirjed CSV-faili.
-favorites	infolog	et	Lemmikud
 fax	infolog	et	Faks
 field must not be empty !!!	infolog	et	Väli ei tohi jääda tühjaks!
 fields to exclude when copying an infolog:	infolog	et	Väljad, mis jäetakse välja InfoLogi kopeerimisel:
@@ -185,6 +179,7 @@ for serial letter use this tag. put the content, you want to repeat between two 
 full list of placeholder names	infolog	et	Täielik loetelu paigutussalvestiste nimedest
 general settings	infolog	et	Üldised seaded
 global categories	infolog	et	Globaalsed Kategooriad
+grant responsible users access to linked contacts?	infolog	et	Kas anda vastutavatele kasutajatele juurdepääs lingitud kontaktidele?
 group owner for	infolog	et	Rühma omanik
 handling of status 'archived'	admin	et	Staatuse "arhiveeritud" käsitlemine
 high	infolog	et	Kõrge
@@ -282,6 +277,7 @@ one day in advance	infolog	et	Üks päev enne
 ongoing	infolog	et	Käimasolev
 only show them if there is a filter	infolog	et	Näitab neid ainult siis, kui on olemas filter
 only show them while searching	infolog	et	Näita neid ainult otsingu ajal
+only to primary contact	infolog	et	Ainult esmasele kontaktisikule
 open(status)	infolog	et	Avatud
 other configurations	infolog	et	Muud seadistused
 own	infolog	et	Endaoma
@@ -314,6 +310,7 @@ removed	infolog	et	Eemaldatud.
 removed category	infolog	et	eemaldatud kategooria
 replacement	infolog	et	Asendamine
 replacements for inserting entries into documents	infolog	et	Asendused kirjete sisestamiseks dokumentidesse
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	et	Nõuab, et redigeerival kasutajal oleks kirjutamisõigus nendele kontaktidele, et jagada neid vastutava kasutajaga.
 respect timesheet run and read permissions for time totals	infolog	et	Ajakirjanduse jooksva tööaja ja loe aja kogusummade lugemisõigust austama
 responsible	infolog	et	Vastutav
 responsible open	infolog	et	Vastutav avatud
@@ -329,8 +326,6 @@ second parameter for preg_replace	infolog	et	Teine parameeter preg_replace jaoks
 select	infolog	et	Märgi
 select a price	infolog	et	Vali hind
 select a project	infolog	et	Vali Projekt
-select an action	infolog	et	Valige tegevus
-select an action...	infolog	et	Valige tegevus ...
 select new category	infolog	et	Valige uus kategooria
 select users or groups	infolog	et	Valige kasutajad või rühmad
 selected calendars	infolog	et	Valitud kalendrid
@@ -353,7 +348,6 @@ startdate for new entries	infolog	et	Uute kannete alguskuupäev
 startdate must be before enddate!!!	infolog	et	Alguskuupäev peab olema enne tähtaega!
 starting %1	infolog	et	Algus %1
 startrecord	infolog	et	Algusrekord
-status	infolog	et	Staatus
 status ...	infolog	et	Staatus ...
 status, percent and date completed are always allowed.	infolog	et	Staatus, protsent ja lõpetamise kuupäev on alati lubatud.
 sub	infolog	et	Alam
@@ -363,6 +357,7 @@ subject	infolog	et	Subjekt
 sum	infolog	et	Summa
 tag to mark positions for address labels	infolog	et	Silt aadressimärkide positsioonide tähistamiseks
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	et	Dokument võib sisaldada paigutussätteid nagu {{%1}}, mis asendatakse andmetega.
+to all linked contacts	infolog	et	Kõigile lingitud kontaktidele
 today	infolog	et	Täna
 typ	infolog	et	Tüüp
 typ '%1' already exists !!!	infolog	et	Tüüp '%1' eksisteerib juba!

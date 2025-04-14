@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	pt	Uma pequena descrição para o registo
 abort without deleting	infolog	pt	Cancelar sem eliminar
 accept	infolog	pt	Aceitar
-action	infolog	pt	Acção
-actions...	infolog	pt	Ações ...
 actual date and time	infolog	pt	Data e hora actuais
-add	infolog	pt	Adicionar
 add / remove link	infolog	pt	Adicionar / remover ligação
 add a file	infolog	pt	Adicionar um ficheiro
 add a new entry	infolog	pt	Adicionar novo registo
@@ -130,7 +127,6 @@ custom from	infolog	pt	Personalizado
 custom regarding	infolog	pt	Personalizar tendo em conta
 custom status for typ	infolog	pt	Personalizar estado do tipo
 customfields	infolog	pt	Campos personalizados
-data exchange settings	infolog	pt	Configurações de troca de dados
 date completed	infolog	pt	Data de conclusão
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pt	Data de conclusão (deixar vazio para definir automaticamente se o estado é concluído ou facturado)
 datecreated	infolog	pt	Data de criação
@@ -220,6 +216,7 @@ full list of placeholder names	infolog	pt	Lista completa de nomes de espaço res
 general fields:	infolog	pt	Campos gerais:
 general settings	infolog	pt	Definições gerais
 global categories	infolog	pt	Categorias gerais
+grant responsible users access to linked contacts?	infolog	pt	Conceder aos utilizadores responsáveis acesso aos contactos associados?
 group owner for	infolog	pt	Proprietário do grupo para
 high	infolog	pt	Alta
 history	infolog	pt	Histórico
@@ -332,6 +329,7 @@ only show them if there is a filter	infolog	pt	Só as mostrar se existir um filt
 only show them while searching	infolog	pt	Mostrar apenas durante a pesquisa
 only the attachments	infolog	pt	Apenas os anexos
 only the links	infolog	pt	Apenas as ligações
+only to primary contact	infolog	pt	Apenas ao contacto principal
 open and upcoming	infolog	pt	Abra e próximo
 open(status)	infolog	pt	Abrir
 optional note to the link	infolog	pt	Nota opcional da ligação
@@ -395,6 +393,7 @@ removed	infolog	pt	Removido.
 removed category	infolog	pt	categoria removido
 replacement	infolog	pt	Substituição
 replacements for inserting entries into documents	infolog	pt	Substitutos para a inserção de entradas em documentos
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	pt	Requer que o utilizador que edita tenha acesso de escrita a estes contactos, para os partilhar com o utilizador responsável.
 respect timesheet run and read permissions for time totals	infolog	pt	Respeitar as permissões de execução e leitura da folha de tempos para os totais de tempo
 responsible	infolog	pt	Responsável
 responsible open	infolog	pt	Responsável -- abertas
@@ -460,7 +459,6 @@ startdate for new entries	infolog	pt	Data de início para novos registos
 startdate must be before enddate!!!	infolog	pt	STARTDATE deve ser antes endDate!
 starting %1	infolog	pt	A partir de 1%
 startrecord	infolog	pt	Iniciar registo
-status	infolog	pt	Estado
 status ...	infolog	pt	Estado ...
 status, percent and date completed are always allowed.	infolog	pt	A edição do estado, percentagem e data de conclusão é sempre autorizada.
 sub	infolog	pt	Sub-registo
@@ -483,6 +481,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	pt	Data limite de conclusão da tarefa a executar ou da chamada telefónica
 times	infolog	pt	Previsões
 titles of any entries linked to the current record, excluding attached files	infolog	pt	Títulos de quaisquer entradas ligadas ao registo atual, excluindo ficheiros anexados
+to all linked contacts	infolog	pt	A todos os contactos ligados
 to many might exceed your execution-time-limit	infolog	pt	Demasiados podem exceder o seu tempo limite de execução
 to what should the startdate of new entries be set.	infolog	pt	Definição da data de início para novos registos.
 today	infolog	pt	Hoje

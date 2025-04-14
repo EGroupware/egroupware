@@ -390,7 +390,7 @@ see attachments for content of the orignial mail	mail	pt-br	Ver anexos para o co
 select all	mail	pt-br	Selecionar tudo
 select an existing entry in order to append mail content to it	mail	pt-br	Selecionar uma entrada existente para anexar o conteúdo do e-mail a ela
 select an item to read	mail	pt-br	Selecione um item para ler
-select file(s) from vfs	mail	pt-br	Selecione o arquivo(s) a partir de VFS
+select file(s) from vfs	mail	pt-br	Selecione o(s) arquivo(s) no Gerenciador de Arquivos do EGroupware
 select mail addresses from addressbook	mail	pt-br	Selecionar endereços de correio eletrônico do catálogo de endereços
 select or insert email address	mail	pt-br	Selecione ou insira um endereço de e-mail
 selected date range (with quicksearch)	mail	pt-br	Intervalo de datas selecionado (com pesquisa rápida)

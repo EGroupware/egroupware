@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	sv	Ett kort ämne för post
 abort without deleting	infolog	sv	Avbryt utan att radera
 accept	infolog	sv	Acceptera
-action	infolog	sv	Åtgärd
-actions...	infolog	sv	Åtgärder ...
 actual date and time	infolog	sv	Faktiskt datum och tid
-add	infolog	sv	Lägg till
 add / remove link	infolog	sv	Lägg till / ta bort länk
 add a file	infolog	sv	Lägg till fil
 add a new entry	infolog	sv	Lägg till Post
@@ -131,7 +128,6 @@ custom from	infolog	sv	Anpassad från
 custom regarding	infolog	sv	Anpassa beträffande
 custom status for typ	infolog	sv	Anpassad status för typ
 customfields	infolog	sv	Anpassat fält
-data exchange settings	infolog	sv	Inställningar för datautbyte
 date completed	infolog	sv	Datum färdigt
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	sv	Datum färdigt (lämnas tomt för att automatiskt fyllas i vid färdigställande eller fakturering).
 datecreated	infolog	sv	Skapad datum
@@ -170,7 +166,6 @@ do you want a notification, if items you delegated are due?	infolog	sv	Få ett m
 do you want to receive notifications as html-mails or plain text?	infolog	sv	Ta emot aviseringar som HTML-e-postmeddelanden eller vanlig text.
 don't show infolog	infolog	sv	Visa INTE InfoLog
 done	infolog	sv	Färdig
-download	infolog	sv	Spara fil
 download url for links	infolog	sv	Ladda ner URL för länkar
 due %1	infolog	sv	Förfallodatum %1
 due date	infolog	sv	Förfallodatum
@@ -210,7 +205,6 @@ exists	infolog	sv	Existerar
 export definition to use for nextmatch export	infolog	sv	Exportdefinition att använda för nextmatch-export
 exports in ical format.	infolog	sv	Exporterar i iCal-format.
 exports infolog entries into a csv file.	infolog	sv	Exporterar InfoLog-poster till en CSV-fil.
-favorites	infolog	sv	Favoriter
 fax	infolog	sv	Fax
 field must not be empty !!!	infolog	sv	Fältet kan inte vara tomt!
 fields to exclude when copying an infolog:	infolog	sv	Fält som ska uteslutas vid kopiering av en InfoLog:
@@ -226,6 +220,7 @@ full list of placeholder names	infolog	sv	Fullständig lista över namn på plat
 general fields:	infolog	sv	Allmänna fält:
 general settings	infolog	sv	Allmänna inställningar
 global categories	infolog	sv	Globala kategorier
+grant responsible users access to linked contacts?	infolog	sv	Ge ansvariga användare tillgång till länkade kontakter?
 group owner for	infolog	sv	Gruppägare för
 handling of status 'archived'	admin	sv	Hantering av statusen 'arkiverad'
 high	infolog	sv	Hög
@@ -340,6 +335,7 @@ only show them if there is a filter	infolog	sv	Visa dem endast om det finns ett 
 only show them while searching	infolog	sv	Visa dem endast under sökning
 only the attachments	infolog	sv	Endast bilagor
 only the links	infolog	sv	Endast länkar
+only to primary contact	infolog	sv	Endast till den primära kontakten
 open and upcoming	infolog	sv	Öppna och kommande
 open(status)	infolog	sv	Öppen
 optional note to the link	infolog	sv	Frivillig anteckning till länken
@@ -403,6 +399,7 @@ removed	infolog	sv	Borttagen.
 removed category	infolog	sv	borttagen kategori
 replacement	infolog	sv	Ersättning
 replacements for inserting entries into documents	infolog	sv	Ersättare för att infoga poster i dokument
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	sv	Kräver att den redigerande användaren har skrivåtkomst till dessa kontakter för att kunna dela dem med den ansvariga användaren.
 respect timesheet run and read permissions for time totals	infolog	sv	Respektera kör- och läsbehörigheter för tidrapporter för totalsummor
 responsible	infolog	sv	Ansvarig
 responsible open	infolog	sv	Ansvarig öppna
@@ -468,7 +465,6 @@ startdate for new entries	infolog	sv	Startdatum för nya poster
 startdate must be before enddate!!!	infolog	sv	Startdatum måste vara före förfallodatum!
 starting %1	infolog	sv	Startar %1
 startrecord	infolog	sv	Startposition
-status	infolog	sv	Status
 status ...	infolog	sv	Status ...
 status, percent and date completed are always allowed.	infolog	sv	Status, procent och datum är alltid tillåtna.
 sub	infolog	sv	Under
@@ -491,6 +487,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	sv	Tills när ska Uppgift och Samtal vara utförda
 times	infolog	sv	Antal
 titles of any entries linked to the current record, excluding attached files	infolog	sv	Titlar på alla poster som är länkade till den aktuella posten, exklusive bifogade filer
+to all linked contacts	infolog	sv	Till alla länkade kontakter
 to many might exceed your execution-time-limit	infolog	sv	För många kan gå över exekverings tidgränsen
 to what should the startdate of new entries be set.	infolog	sv	Till vilket startdatum ska nya poster sättas.
 today	infolog	sv	Idag

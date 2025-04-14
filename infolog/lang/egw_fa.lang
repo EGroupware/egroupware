@@ -17,9 +17,7 @@
 a short subject for the entry	infolog	fa	یک موضوع برای ورودی
 abort without deleting	infolog	fa	خروج بدون حذف
 accept	infolog	fa	قبول
-action	infolog	fa	فعالیت
 actual date and time	infolog	fa	تاریخ و ساعت واقعی
-add	infolog	fa	افزودن
 add a file	infolog	fa	افزودن پرونده
 add a new entry	infolog	fa	افزودن ورودی
 add a new note	infolog	fa	افزودن یادداشت
@@ -98,7 +96,6 @@ disables a status without deleting it	infolog	fa	یک وضعیت را بدون �
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fa	آیا تاییدیه ای از پاسخگویی روی :قبول است۷ تمام شد یا هر دو می خواهید؟
 don't show infolog	infolog	fa	کارها را نمایش نده
 done	infolog	fa	انجام شده
-download	infolog	fa	دریافت
 duration	infolog	fa	مدت
 each value is a line like <id>[=<label>]	infolog	fa	هرمقدار در یک خط باشد مثل: <id>[=<label>]
 edit	infolog	fa	ویراستن
@@ -142,7 +139,7 @@ infolog - new subproject	infolog	fa	کارها-زیر پروژه جدید
 infolog - subprojects from	infolog	fa	کارها-زیر پروژه از
 infolog entry deleted	infolog	fa	ورودی کارها حذف شد
 infolog entry saved	infolog	fa	ورودی  کارها ذخیره شد
-InfoLog filter for the home screen	infolog	fa	صافی  کارها برای صفحه اصلی
+infolog filter for the home screen	infolog	fa	صافی  کارها برای صفحه اصلی
 infolog list	infolog	fa	فهرست کارها
 infolog preferences	common	fa	تنظیمات کارها
 infolog-fieldname	infolog	fa	ثبت اطلاعات - نام فیلد
@@ -247,7 +244,7 @@ select to filter by responsible	infolog	fa	برای صافی توسط مسئول
 sets the status of this entry and its subs to done	infolog	fa	وضعیت این ورودی و جواب/ارجاعهایش را انجام شده قرار بده
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	fa	آیا «کارها» باید زیروظایف،تماسها یا یادداشتها را در نمای معمولی نشان دهد یا نه. شما همیشه ارجاعات/جوابها را میتوانید از طریق والد آنها ببینید.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	fa	آیا «کارها» باید پیوند به دیگر کاربردها و پرونده ها را رد فهرست خود نمایش دهد.(درنمای معمولی)
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	fa	آیا «کارها» باید درصفحه خانه دیده شود، و با کدام صافی. وقتی کار می کند که شما کاربردی را در صفحه خانه انتخاب نکرده باشید.(در تنظیمات)
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	fa	آیا «کارها» باید درصفحه خانه دیده شود، و با کدام صافی. وقتی کار می کند که شما کاربردی را در صفحه خانه انتخاب نکرده باشید.(در تنظیمات)
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	fa	آیا  کارها باید نام کامل استفاده کند(نام و نام خانوادگی) یا فقط از شناسه ورود استفاده کند
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	fa	آیا  کارها در فهرستها باید عدد یکتائی که بعدا بعنوان شناسه بلیط در نظر گرفته شود، نمایش دهد
 should the infolog list show the column "last modified".	infolog	fa	آیا کارها باید ستون «آخرین تغییر» را نمایش دهد
@@ -267,9 +264,8 @@ startdate	infolog	fa	تاریخ شروع
 startdate enddate	infolog	fa	تاریخ شروع تاریخ انجام
 startdate for new entries	infolog	fa	تاریخ شروع برای ورودی های جدید
 startrecord	infolog	fa	رکورد شروع
-status	infolog	fa	وضعیت
-status, percent and date completed are always allowed.	infolog	fa	وضعیت درصد پیشرفت و تاریخ، تمام شده، همیشه مجازند
 status ...	infolog	fa	وضعیت...
+status, percent and date completed are always allowed.	infolog	fa	وضعیت درصد پیشرفت و تاریخ، تمام شده، همیشه مجازند
 sub	infolog	fa	ارجاع/جواب
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	fa	اگر والدی نباشد، زیر ورودی تحت والد یا بعنوان ورودی اصلی می شود
 subject	infolog	fa	موضوع
@@ -307,7 +303,6 @@ view the parent of this entry and all his subs	infolog	fa	نمایش والد ا
 view this linked entry in its application	infolog	fa	نمایش این ورودی پیوند شده در برنامه اش
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	fa	زمان شروع یک کار «برای انجام» یا «تماس تلفنی» چه زمانی است.
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	fa	کدام فیلد دیگر باید توسط مسئول اجرا قابل ویرایش باشد بدون آنکه حقوق ویرایشگری داشته باشد؟
-which implicit acl rights should the responsible get?	infolog	fa	کدام حق دسترسی را باید مسئول اجرا داشته باشد؟
 will-call	infolog	fa	تماس خواهد گرفت
 write (add or update) a record by passing its fields.	infolog	fa	نوشتن(افزودن یا بهنگام سازی) یک رکورد با ارسال یک فیلد به آن
 yes - delete	infolog	fa	بله - حذف کن
@@ -315,6 +310,5 @@ yes - delete including sub-entries	infolog	fa	بله - بهمراه جواب/ا�
 you can't delete one of the stock types !!!	infolog	fa	شما نمی توانید یک از انواع سهام را حذف کنید
 you have entered an invalid ending date	infolog	fa	شما یک تاریخ انجام نامعتبر وارد کردید
 you have entered an invalid starting date	infolog	fa	شما یک تاریخ شروع نامعتبر وارد کردید
-you have to enter a name, to create a new typ!!!	infolog	fa	شما باید یک نام برای ایجاد یک نوع جدید وارد کنید
 you must enter a subject or a description	infolog	fa	شما باید یک موضوع یا شرح وارد کنید
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	fa	پایگاه داده شما بهنگام نیست ((%1 بجای %2) لطفا %3نصب%4 را اجرا کنید تا پایگاه داده شما بهنگام شود

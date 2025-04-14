@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	uk	Коротка тема запису
 abort without deleting	infolog	uk	Перервати без видалення
 accept	infolog	uk	прийнято
-action	infolog	uk	Дія
-actions...	infolog	uk	Дії ...
 actual date and time	infolog	uk	Актуальна дата та час
-add	infolog	uk	Додати
 add / remove link	infolog	uk	Додати / видалити посилання
 add a file	infolog	uk	Додати файл
 add a new entry	infolog	uk	Додати новий запис
@@ -125,7 +122,6 @@ disables a status without deleting it	infolog	uk	відключає статус
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	uk	Чи потрібне Вам підтвердження від Відповідального у випадках прийняття та/або закінчення
 do you want a notification if items owned by groups you are part of get updated ?	infolog	uk	Ви хочете отримувати сповіщення, якщо елементи, що належать групам, до яких ви належите, оновлюються?
 done	infolog	uk	виконано
-download	infolog	uk	Зберегти файл
 download url for links	infolog	uk	URL для завантаження посилань
 due %1	infolog	uk	До сплати %1
 due date	infolog	uk	Термін виконання
@@ -162,7 +158,6 @@ exists	infolog	uk	Існує
 export definition to use for nextmatch export	infolog	uk	Визначення експорту для використання для експорту наступного матчу
 exports in ical format.	infolog	uk	Експорт у форматі iCal.
 exports infolog entries into a csv file.	infolog	uk	Експортує записи InfoLog у файл CSV.
-favorites	infolog	uk	Вибране
 fax	infolog	uk	Факс
 field must not be empty !!!	infolog	uk	Поле не повинно бути порожнім!
 fields to exclude when copying an infolog:	infolog	uk	Поля для виключення при копіюванні InfoLog:
@@ -178,6 +173,7 @@ full list of placeholder names	infolog	uk	Повний список імен з�
 general fields:	infolog	uk	Загальні поля:
 general settings	infolog	uk	Загальні налаштування
 global categories	infolog	uk	Глобальні категорії
+grant responsible users access to linked contacts?	infolog	uk	Надати відповідальним користувачам доступ до пов'язаних контактів?
 group owner for	infolog	uk	Власник групи для
 handling of status 'archived'	admin	uk	Обробка статусу 'архівовано'
 high	infolog	uk	високий
@@ -269,6 +265,7 @@ only show them if there is a filter	infolog	uk	Показувати лише з�
 only show them while searching	infolog	uk	Показувати тільки під час пошуку
 only the attachments	infolog	uk	тільки додатки
 only the links	infolog	uk	тільки посилання
+only to primary contact	infolog	uk	Тільки до основного контакту
 open(status)	infolog	uk	відкрито
 optional note to the link	infolog	uk	необов'язкова примітка до Посилання
 order	infolog	uk	Послідовність
@@ -310,6 +307,7 @@ removed	infolog	uk	Видалено.
 removed category	infolog	uk	видалена категорія
 replacement	infolog	uk	Заміна
 replacements for inserting entries into documents	infolog	uk	Заміни для вставки записів у документи
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	uk	Вимагає, щоб користувач-редактор мав доступ на запис до цих контактів, щоб поділитися ними з відповідальним користувачем.
 respect timesheet run and read permissions for time totals	infolog	uk	Поважати дозволи на запуск та читання табеля для підсумків часу
 responsible	infolog	uk	Відповідальний
 responsible open and upcoming	infolog	uk	Відповідальні відкриті та майбутні
@@ -360,7 +358,6 @@ startdate for new entries	infolog	uk	Дата початку для нових �
 startdate must be before enddate!!!	infolog	uk	Дата старту повинна бути раніше дедлайну!
 starting %1	infolog	uk	Початок %1
 startrecord	infolog	uk	Початковий запис
-status	infolog	uk	Статус
 status ...	infolog	uk	Статус ...
 status, percent and date completed are always allowed.	infolog	uk	Статус, відсоток і дата завершення завжди дозволені.
 sub	infolog	uk	Підзапис
@@ -380,6 +377,7 @@ the text displayed to the user	infolog	uk	текст, що показуютьс�
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	uk	Це фільтр, який використовується Записками зразу після входу в приложення. Фільтри обмежують перелік записів, які мають показуватись в поточному вигляді. Існують фільтри для показу тільки виконаних, відкритих або майбутніх записів - Ваших, чи всіх користувачів.
 times	infolog	uk	Раз
 titles of any entries linked to the current record, excluding attached files	infolog	uk	Назви будь-яких записів, пов'язаних з поточним записом, за винятком прикріплених файлів
+to all linked contacts	infolog	uk	До всіх пов'язаних контактів
 to many might exceed your execution-time-limit	infolog	uk	надто багато може перевищити Ваш ліміт часу
 today	infolog	uk	Сьогодні
 todo	infolog	uk	Завдання

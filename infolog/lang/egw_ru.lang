@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	ru	короткая тема для записи
 abort without deleting	infolog	ru	Прервать без удаления
 accept	infolog	ru	принять
-action	infolog	ru	Действие
-actions...	infolog	ru	Действия ...
 actual date and time	infolog	ru	актуальные дата и время
-add	infolog	ru	Добавить
 add / remove link	infolog	ru	Добавить / удалить ссылку
 add a file	infolog	ru	Добавить файл
 add a new entry	infolog	ru	Добавить новую Запись
@@ -131,7 +128,6 @@ custom from	infolog	ru	Пользовательский из
 custom regarding	infolog	ru	Пользовательский относительно
 custom status for typ	infolog	ru	Пользовательское состояние для типа
 customfields	infolog	ru	Пользовательские поля
-data exchange settings	infolog	ru	Установки обмена данных
 date completed	infolog	ru	Дата завершения
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ru	Дата завершения (оставьте незаполненным, если хотите чтобы она автоматически установилась если состояние будет "сделано" или "оплачено").
 datecreated	infolog	ru	дата создания
@@ -170,7 +166,6 @@ do you want a notification, if items you delegated are due?	infolog	ru	Вы же
 do you want to receive notifications as html-mails or plain text?	infolog	ru	Вы желаете получать напоминания в виде HTML или обычного текста.
 don't show infolog	infolog	ru	НЕ показывать ИнфоЖурнал
 done	infolog	ru	Выполнено
-download	infolog	ru	Сохранить файл
 download url for links	infolog	ru	Загрузить URL ссылок
 due %1	infolog	ru	Выполнено %1
 due date	infolog	ru	Дата выполнения
@@ -210,7 +205,6 @@ exists	infolog	ru	Существует
 export definition to use for nextmatch export	infolog	ru	Определение экспорта для последующего использования
 exports in ical format.	infolog	ru	Экспорт в формате iCal.
 exports infolog entries into a csv file.	infolog	ru	Экспорт записей ИнфоЖурнала в файл CSV.
-favorites	infolog	ru	Избранное
 fax	infolog	ru	Факс
 field must not be empty !!!	infolog	ru	Поле должно быть заполнено!
 fields to exclude when copying an infolog:	infolog	ru	Поля для исключения при копировании записей ИнфоЖурнала:
@@ -226,6 +220,7 @@ full list of placeholder names	infolog	ru	Полный список имён в�
 general fields:	infolog	ru	Общие поля:
 general settings	infolog	ru	Основные установки
 global categories	infolog	ru	Общие категории
+grant responsible users access to linked contacts?	infolog	ru	Предоставить ответственным пользователям доступ к связанным контактам?
 group owner for	infolog	ru	Группа-владелец для
 handling of status 'archived'	admin	ru	Обработка статуса 'архивировано'
 high	infolog	ru	Высокий
@@ -340,6 +335,7 @@ only show them if there is a filter	infolog	ru	Показывать их тол�
 only show them while searching	infolog	ru	Показывать их только во время поиска
 only the attachments	infolog	ru	Только вложения
 only the links	infolog	ru	Только ссылки
+only to primary contact	infolog	ru	Только основному контакту
 open and upcoming	infolog	ru	Открытые и наступающие
 open(status)	infolog	ru	Открытые
 optional note to the link	infolog	ru	Необязательная заметка к Ссылке
@@ -403,6 +399,7 @@ removed	infolog	ru	Удалено.
 removed category	infolog	ru	Удаленная категория
 replacement	infolog	ru	Замена
 replacements for inserting entries into documents	infolog	ru	Замены для вставки записей в документы
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	ru	Требуется, чтобы редактирующий пользователь имел доступ на запись к этим контактам, чтобы поделиться ими с ответственным пользователем.
 respect timesheet run and read permissions for time totals	infolog	ru	Rešpektovať oprávnenia na spúšťanie a čítanie časových súčtov
 responsible	infolog	ru	Ответственный
 responsible open	infolog	ru	Ответственного открытые
@@ -468,7 +465,6 @@ startdate for new entries	infolog	ru	Дата начала для новых з�
 startdate must be before enddate!!!	infolog	ru	Дата начала должна быть раньше даты исполнения!
 starting %1	infolog	ru	Начиная с %1
 startrecord	infolog	ru	Начальная запись
-status	infolog	ru	Состояние
 status ...	infolog	ru	Состояние ...
 status, percent and date completed are always allowed.	infolog	ru	Состояние, процент и дата завершения уже разрешены.
 sub	infolog	ru	Под
@@ -491,6 +487,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	ru	До того как Задание или Звонок будет завершено
 times	infolog	ru	Время
 titles of any entries linked to the current record, excluding attached files	infolog	ru	Заголовки записей, ссылающихся на текущую, исключая прикреплённые файлы
+to all linked contacts	infolog	ru	Ко всем связанным контактам
 to many might exceed your execution-time-limit	infolog	ru	слишком много превысит ваше ограничение на время исполнения
 to what should the startdate of new entries be set.	infolog	ru	Как должна устанавливаться дата начала новой записи.
 today	infolog	ru	Сегодня

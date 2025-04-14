@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	it	Un breve oggetto per la nota
 abort without deleting	infolog	it	Annulla senza cancellare
 accept	infolog	it	Accetta
-action	infolog	it	Azione
-actions...	infolog	it	Azioni ...
 actual date and time	infolog	it	Data e ora effettivi
-add	infolog	it	Aggiungi
 add / remove link	infolog	it	Aggiungi/rimuovi collegamentoi
 add a file	infolog	it	Aggiungi File
 add a new entry	infolog	it	Aggiungi una voce
@@ -131,7 +128,6 @@ custom from	infolog	it	Campo da personalizzato
 custom regarding	infolog	it	Considerazione personale
 custom status for typ	infolog	it	Stato personalizzato per il tipo
 customfields	infolog	it	Customfields
-data exchange settings	infolog	it	Impostazioni di scambio dati
 date completed	infolog	it	Data completamento
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	it	Data completamento (lasciala vuota per averla impostata automaticamento se lo stato è Fatto o Fatturato).
 datecreated	infolog	it	Data creazione
@@ -224,6 +220,7 @@ full list of placeholder names	infolog	it	Lista completa dei nomi dei segnaposto
 general fields:	infolog	it	Campi generici:
 general settings	infolog	it	Impostazioni generali
 global categories	infolog	it	Categorie Globali
+grant responsible users access to linked contacts?	infolog	it	Consentire agli utenti responsabili l'accesso ai contatti collegati?
 group owner for	infolog	it	Proprietario di gruppo per
 handling of status 'archived'	admin	it	Gestione dello stato 'archiviato'
 high	infolog	it	Alta
@@ -338,6 +335,7 @@ only show them if there is a filter	infolog	it	Mostra solo se c'è un filtro
 only show them while searching	infolog	it	Mostra solo durante la ricerca
 only the attachments	infolog	it	Solo gli allegati
 only the links	infolog	it	Solo i collegamenti
+only to primary contact	infolog	it	Solo al contatto principale
 open and upcoming	infolog	it	Aperte prossime
 open(status)	infolog	it	Aperte
 optional note to the link	infolog	it	Note opzionali per il link
@@ -401,6 +399,7 @@ removed	infolog	it	Rimosso.
 removed category	infolog	it	categoria rimossa
 replacement	infolog	it	Sostituzione
 replacements for inserting entries into documents	infolog	it	Sostituzioni per l'inserimento di voci in documenti
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	it	Richiede che l'utente che modifica abbia accesso in scrittura a questi contatti, per condividerli con l'utente responsabile.
 respect timesheet run and read permissions for time totals	infolog	it	Rispettare le autorizzazioni di esecuzione e lettura del timesheet per i totali di tempo
 responsible	infolog	it	Responsabile
 responsible open	infolog	it	Responsabile aperte
@@ -466,7 +465,6 @@ startdate for new entries	infolog	it	Data iniziale per nuove voci
 startdate must be before enddate!!!	infolog	it	La data di inizio deve essere antecedente alla data fine!
 starting %1	infolog	it	Avvio %1
 startrecord	infolog	it	Record Iniziale
-status	infolog	it	Stato
 status ...	infolog	it	Stato ...
 status, percent and date completed are always allowed.	infolog	it	Stato, percentuale e data completamento sono sempre permessi.
 sub	infolog	it	Sub
@@ -489,6 +487,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	it	Quando dovrebbe essere completata l'attività
 times	infolog	it	Tempi
 titles of any entries linked to the current record, excluding attached files	infolog	it	Titoli di qualsiasi voce collegata a quella attuale, allegati esclusi
+to all linked contacts	infolog	it	A tutti i contatti collegati
 to many might exceed your execution-time-limit	infolog	it	Troppi potrebbero superare il tuo limite di tempo di esecuzione
 to what should the startdate of new entries be set.	infolog	it	A quando deve essere impostata la data inizio delle nuove voci.
 today	infolog	it	Oggi

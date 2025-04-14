@@ -5,8 +5,6 @@
 a short subject for the entry	infolog	ko	이 엔트리의 짧은 제목
 abort without deleting	infolog	ko	삭제없이 취소
 accept	infolog	ko	수락
-action	infolog	ko	처리
-add	infolog	ko	추가
 add a file	infolog	ko	파일 추가
 add a new entry	infolog	ko	새 엔트리 추가
 add a new note	infolog	ko	새 노트 추가
@@ -71,7 +69,6 @@ custom	infolog	ko	사용자정의
 custom fields	infolog	ko	사용자정의 필드
 custom from	infolog	ko	사용자 지정
 customfields	infolog	ko	사용자 지정 필드
-data exchange settings	infolog	ko	데이터 교환 설정
 date completed	infolog	ko	완료일
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ko	완료된 날짜입니다. 상태가 완료 또는 청구된 경우 자동으로 설정되도록 비워 두세요.
 datecreated	infolog	ko	개설일
@@ -110,7 +107,6 @@ do you want a notification, if items you delegated are due?	infolog	ko	위임한
 do you want to receive notifications as html-mails or plain text?	infolog	ko	HTML 이메일 또는 일반 텍스트로 통지를 받습니다.
 don't show infolog	infolog	ko	인포로그 보이지 않기
 done	infolog	ko	완료
-download	infolog	ko	파일 저장
 download url for links	infolog	ko	링크 다운로드 URL
 due %1	infolog	ko	마감일 %1
 due date	infolog	ko	마감일
@@ -150,7 +146,6 @@ exists	infolog	ko	존재
 export definition to use for nextmatch export	infolog	ko	다음 경기 내보내기에 사용할 내보내기 정의
 exports in ical format.	infolog	ko	iCal 형식으로 내보냅니다.
 exports infolog entries into a csv file.	infolog	ko	인포로그 항목을 CSV 파일로 내보냅니다.
-favorites	infolog	ko	즐겨찾기
 fax	infolog	ko	팩스
 field must not be empty !!!	infolog	ko	필드가 비어 있지 않아야 합니다!
 fields to exclude when copying an infolog:	infolog	ko	인포로그를 복사할 때 제외할 필드입니다:
@@ -166,6 +161,7 @@ full list of placeholder names	infolog	ko	자리 표시자 이름의 전체 목�
 general fields:	infolog	ko	일반 필드입니다:
 general settings	infolog	ko	일반 설정
 global categories	infolog	ko	전역 카테고리
+grant responsible users access to linked contacts?	infolog	ko	책임 있는 사용자에게 연결된 연락처에 대한 액세스 권한을 부여하시나요?
 group owner for	infolog	ko	그룹 소유자
 handling of status 'archived'	admin	ko	'보관됨' 상태의 처리
 high	infolog	ko	높음
@@ -271,6 +267,7 @@ old fixed definition	infolog	ko	기존 고정 정의
 ongoing	infolog	ko	진행중
 only show them if there is a filter	infolog	ko	필터가 있는 경우에만 표시
 only show them while searching	infolog	ko	검색하는 동안에만 표시
+only to primary contact	infolog	ko	기본 연락처에게만
 open(status)	infolog	ko	개설
 other configurations	infolog	ko	기타 구성
 overdue	infolog	ko	만기초과
@@ -309,6 +306,7 @@ removed	infolog	ko	제거됨
 removed category	infolog	ko	제거된 카테고리
 replacement	infolog	ko	대체
 replacements for inserting entries into documents	infolog	ko	문서에 항목 삽입을 위한 대체 기능
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	ko	편집 사용자에게 해당 연락처에 대한 쓰기 권한이 있어야 담당 사용자와 공유할 수 있습니다.
 respect timesheet run and read permissions for time totals	infolog	ko	작업표 실행 및 시간 총계에 대한 읽기 권한 존중
 responsible	infolog	ko	응답대상
 responsible open	infolog	ko	응답자 개설
@@ -361,7 +359,6 @@ startdate for new entries	infolog	ko	새 엔트리를 위한 시작일
 startdate must be before enddate!!!	infolog	ko	시작 날짜는 마감일 이전이어야 합니다!
 starting %1	infolog	ko	시작 중 %1
 startrecord	infolog	ko	시작레코드
-status	infolog	ko	상태
 status ...	infolog	ko	상태 ...
 status, percent and date completed are always allowed.	infolog	ko	상태, 백분율 및 완료 날짜는 항상 허용됩니다.
 sub	infolog	ko	하위
@@ -377,6 +374,7 @@ template	infolog	ko	템플릿
 test import (show importable records <u>only</u> in browser)	infolog	ko	가져오기 테스트 (가져올수 있는 레코드 <u>오직</u> 브라우저에서만 보여줍니다)
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ko	문서에 데이터로 대체할 {{%1}}과 같은 자리 표시자를 포함할 수 있습니다.
 times	infolog	ko	시간
+to all linked contacts	infolog	ko	연결된 모든 연락처에
 to many might exceed your execution-time-limit	infolog	ko	너무 많을 경우 최대실행시간(execution-time-limit)을 초과함
 today	infolog	ko	오늘
 todays date	infolog	ko	오늘 일자

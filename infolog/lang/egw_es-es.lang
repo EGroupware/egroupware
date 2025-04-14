@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	es-es	Descripción corta para la entrada
 abort without deleting	infolog	es-es	Cancelar sin eliminar
 accept	infolog	es-es	Aceptar
-action	infolog	es-es	Acción
-actions...	infolog	es-es	Acciones...
 actual date and time	infolog	es-es	Fecha y hora actuales
-add	infolog	es-es	Añadir
 add / remove link	infolog	es-es	Añadir / eliminar enlace
 add a file	infolog	es-es	Añadir archivo
 add a new entry	infolog	es-es	Añadir una entrada nueva
@@ -224,6 +221,7 @@ full list of placeholder names	infolog	es-es	Lista completa de nombres de marcad
 general fields:	infolog	es-es	Campos generales:
 general settings	infolog	es-es	Opciones generales
 global categories	infolog	es-es	Categorías globales
+grant responsible users access to linked contacts?	infolog	es-es	¿Conceder a los usuarios responsables acceso a los contactos vinculados?
 group owner for	infolog	es-es	Propietario de grupo para
 handling of status 'archived'	admin	es-es	Tratamiento del estado 'archivado'
 high	infolog	es-es	Alta
@@ -338,6 +336,7 @@ only show them if there is a filter	infolog	es-es	Mostrar sólo si hay un filtro
 only show them while searching	infolog	es-es	Mostrarlas sólo durante la búsqueda
 only the attachments	infolog	es-es	Sólo los adjuntos
 only the links	infolog	es-es	Sólo los enlaces
+only to primary contact	infolog	es-es	Sólo al contacto principal
 open and upcoming	infolog	es-es	Abierto y por venir
 open(status)	infolog	es-es	Abrir
 optional note to the link	infolog	es-es	Nota opcional para el enlace
@@ -401,6 +400,7 @@ removed	infolog	es-es	Eliminado.
 removed category	infolog	es-es	categoría eliminada
 replacement	infolog	es-es	Sustitución
 replacements for inserting entries into documents	infolog	es-es	Sustituciones para insertar entradas en los documentos
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	es-es	Requiere que el usuario editor tenga acceso de escritura a estos contactos, para compartirlos con el usuario responsable.
 respect timesheet run and read permissions for time totals	infolog	es-es	Respetar los permisos de ejecución y lectura de totales de tiempo
 responsible	infolog	es-es	Responsable
 responsible open	infolog	es-es	Responsable abierto
@@ -466,7 +466,6 @@ startdate for new entries	infolog	es-es	Fecha de inicio para entradas nuevas
 startdate must be before enddate!!!	infolog	es-es	La fecha de inicio debe ser anterior a la fecha de vencimiento!
 starting %1	infolog	es-es	Iniciando %1
 startrecord	infolog	es-es	Comenzar grabación de registro
-status	infolog	es-es	Estado
 status ...	infolog	es-es	Estado ...
 status, percent and date completed are always allowed.	infolog	es-es	El estado, porcentaje y fecha de finalización se permiten siempre.
 sub	infolog	es-es	Sub
@@ -489,6 +488,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	es-es	Hasta cuándo puede la tarea o llamada telefónica estar sin terminar
 times	infolog	es-es	Tiempos
 titles of any entries linked to the current record, excluding attached files	infolog	es-es	Títulos de cualquier entrada vinculada al registro actual, excluyendo los ficheros adjuntos
+to all linked contacts	infolog	es-es	A todos los contactos vinculados
 to many might exceed your execution-time-limit	infolog	es-es	Cuánto puede exceder el límite de ejecución
 to what should the startdate of new entries be set.	infolog	es-es	A qué valor establecer la fecha de inicio para las entradas nuevas.
 today	infolog	es-es	Hoy

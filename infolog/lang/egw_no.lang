@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	no	En kort emnebeskrivelse for innslaget
 abort without deleting	infolog	no	Avslutt uten å slette
 accept	infolog	no	Aksepter
-action	infolog	no	Funksjon
-actions...	infolog	no	Handlinger ...
 actual date and time	infolog	no	Aktuell dato og tid
-add	infolog	no	Legg til
 add / remove link	infolog	no	Legg til/fjern lenke
 add a file	infolog	no	Legg til fil
 add a new entry	infolog	no	Legg til ny oppføring
@@ -117,7 +114,6 @@ custom from	infolog	no	Tilpasset fra
 custom regarding	infolog	no	Egendefinert angående
 custom status for typ	infolog	no	Egendefinert status for type
 customfields	infolog	no	Egendefinertfelt
-data exchange settings	infolog	no	Innstillinger for datautveksling
 date completed	infolog	no	Dato utført
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	no	Dato utført (la den stå tom for å settes automatisk ved status er lik utført eller ved fakturering).
 datecreated	infolog	no	Dato opprettet
@@ -156,7 +152,6 @@ do you want a notification, if items you delegated are due?	infolog	no	Bli varsl
 do you want to receive notifications as html-mails or plain text?	infolog	no	Motta varsler som HTML-e-post eller ren tekst.
 don't show infolog	infolog	no	IKKE vis InfoLog
 done	infolog	no	Ferdig
-download	infolog	no	Lagre fil
 download url for links	infolog	no	Last ned URL for lenker
 due %1	infolog	no	Forfall %1
 due date	infolog	no	Forfallsdato
@@ -196,7 +191,6 @@ exists	infolog	no	Eksisterer
 export definition to use for nextmatch export	infolog	no	Eksportdefinisjon som skal brukes for nextmatch-eksport
 exports in ical format.	infolog	no	Eksporterer i iCal-format.
 exports infolog entries into a csv file.	infolog	no	Eksporterer InfoLog-oppføringer til en CSV-fil.
-favorites	infolog	no	Favoritter
 fax	infolog	no	Telefaks
 field must not be empty !!!	infolog	no	Feltet kan ikke være tomt!
 fields to exclude when copying an infolog:	infolog	no	Felt som skal ekskluderes ved kopiering av en InfoLog:
@@ -212,6 +206,7 @@ full list of placeholder names	infolog	no	Fullstendig liste over plassholdernavn
 general fields:	infolog	no	Generelle felt:
 general settings	infolog	no	Generelle innstillinger
 global categories	infolog	no	Globale Kategorier
+grant responsible users access to linked contacts?	infolog	no	Gi ansvarlige brukere tilgang til koblede kontakter?
 group owner for	infolog	no	Gruppeeier for
 handling of status 'archived'	admin	no	Håndtering av statusen 'arkivert'
 high	infolog	no	Høy
@@ -319,6 +314,7 @@ only show them if there is a filter	infolog	no	Vis dem bare hvis det finnes et f
 only show them while searching	infolog	no	Vis dem bare under søk
 only the attachments	infolog	no	Kun vedlegg
 only the links	infolog	no	Kun lenker
+only to primary contact	infolog	no	Bare til primærkontakten
 open and upcoming	infolog	no	Åpne og kommende
 open(status)	infolog	no	Åpen
 optional note to the link	infolog	no	Valgfri notat om Lenken
@@ -373,6 +369,7 @@ removed	infolog	no	Fjernet.
 removed category	infolog	no	fjernet kategori
 replacement	infolog	no	Erstatning
 replacements for inserting entries into documents	infolog	no	Erstatninger for å sette inn oppføringer i dokumenter
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	no	Krever at den redigerende brukeren har skrivetilgang til disse kontaktene for å kunne dele dem med den ansvarlige brukeren.
 respect timesheet run and read permissions for time totals	infolog	no	Respekter kjøring av timelister og lesetillatelser for tidstotaler
 responsible	infolog	no	Ansvarlig
 responsible open	infolog	no	Ansvarlig for åpne
@@ -434,7 +431,6 @@ startdate for new entries	infolog	no	Startdato for nye oppgaver
 startdate must be before enddate!!!	infolog	no	Startdato må være før forfallsdato!
 starting %1	infolog	no	Starter %1
 startrecord	infolog	no	Startrekke
-status	infolog	no	Status
 status ...	infolog	no	Status ...
 status, percent and date completed are always allowed.	infolog	no	Status, prosent og dato for fullført er alltid tillatt.
 sub	infolog	no	Under
@@ -457,6 +453,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	no	Innen hvilket tidspunkt skal gjøremål eller telefonoppkall være avsluttet
 times	infolog	no	Ant. ganger
 titles of any entries linked to the current record, excluding attached files	infolog	no	Titler på alle oppføringer som er knyttet til den aktuelle posten, unntatt vedlagte filer
+to all linked contacts	infolog	no	Til alle koblede kontakter
 to many might exceed your execution-time-limit	infolog	no	For mange kan overgå din uførelse-tids-begrensning
 to what should the startdate of new entries be set.	infolog	no	Hva skal startdato for nye forekomster settes lik.
 today	infolog	no	Idag

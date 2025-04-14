@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	sl	Kratek predmet za vnos
 abort without deleting	infolog	sl	Prekliči brez brisanja
 accept	infolog	sl	Sprejmi
-action	infolog	sl	Dejanje
-actions...	infolog	sl	Dejanja ...
 actual date and time	infolog	sl	Dejanski datum in čas
-add	infolog	sl	Dodaj
 add / remove link	infolog	sl	Dodaj / odstrani povezavo
 add a file	infolog	sl	Dodaj datoteko
 add a new entry	infolog	sl	Dodaj nov zapis
@@ -131,7 +128,6 @@ custom from	infolog	sl	Po meri iz
 custom regarding	infolog	sl	Lastno glede na
 custom status for typ	infolog	sl	Lastni satus za tip
 customfields	infolog	sl	Lastna polja
-data exchange settings	infolog	sl	Nastavitve za izmenjavo podatkov
 date completed	infolog	sl	Datum zaključka
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	sl	Datum zaključka (pustite prazno, da se nastavi samodejno, če je status nastavljen na Končano ali Obračunano).
 datecreated	infolog	sl	Datum ustvarjanja
@@ -170,7 +166,6 @@ do you want a notification, if items you delegated are due?	infolog	sl	Želite p
 do you want to receive notifications as html-mails or plain text?	infolog	sl	Želite prejemati obvestila v obliki HTML ali kot navadno besedilo.
 don't show infolog	infolog	sl	Ne prikaži InfoDnevnika
 done	infolog	sl	Končano
-download	infolog	sl	Shranite datoteko
 download url for links	infolog	sl	Prenesi url za povezave
 due %1	infolog	sl	Zaradi %1
 due date	infolog	sl	Datum zapadlosti
@@ -210,7 +205,6 @@ exists	infolog	sl	Obstaja
 export definition to use for nextmatch export	infolog	sl	Izvozna definicija, ki jo je treba uporabiti za izvoz naslednjega računa
 exports in ical format.	infolog	sl	Izvoz v formatu iCal.
 exports infolog entries into a csv file.	infolog	sl	Izvozi vnose datoteke InfoLog v datoteko CSV.
-favorites	infolog	sl	Priljubljene
 fax	infolog	sl	Faks
 field must not be empty !!!	infolog	sl	Polje ne sme biti prazno!
 fields to exclude when copying an infolog:	infolog	sl	Polja, ki izključujejo kopiranje infologa:
@@ -226,6 +220,7 @@ full list of placeholder names	infolog	sl	Popoln seznam imen imenika
 general fields:	infolog	sl	Splošna polja:
 general settings	infolog	sl	Splošne nastavitve
 global categories	infolog	sl	Globalne kategorije
+grant responsible users access to linked contacts?	infolog	sl	Odgovornim uporabnikom omogočiti dostop do povezanih stikov?
 group owner for	infolog	sl	Skupinski lastnik za
 handling of status 'archived'	admin	sl	Ravnanje s statusom 'arhiviran'
 high	infolog	sl	Visoko
@@ -340,6 +335,7 @@ only show them if there is a filter	infolog	sl	Pokaži jih le, če je filter
 only show them while searching	infolog	sl	Prikazujte jih le med iskanjem
 only the attachments	infolog	sl	Samo priloge
 only the links	infolog	sl	Samo povezave
+only to primary contact	infolog	sl	Samo do primarnega stika
 open and upcoming	infolog	sl	Odprto in prihajajoče
 open(status)	infolog	sl	Odprt
 optional note to the link	infolog	sl	Neobvezna opomba za povezavo
@@ -403,6 +399,7 @@ removed	infolog	sl	Odstranjeno.
 removed category	infolog	sl	odstranjena kategorija
 replacement	infolog	sl	Zamenjava
 replacements for inserting entries into documents	infolog	sl	Zamenjava za vstavljanje vnose v dokumente
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	sl	Zahteva, da ima uporabnik za urejanje dostop za pisanje do teh stikov, da jih lahko deli z odgovornim uporabnikom.
 respect timesheet run and read permissions for time totals	infolog	sl	Upoštevajte dovoljenja za zagon časovnice in branje za skupne seštevke časa
 responsible	infolog	sl	Odgovoren
 responsible open	infolog	sl	Odgovoren odprt
@@ -468,7 +465,6 @@ startdate for new entries	infolog	sl	Začetni datum za nove vnose
 startdate must be before enddate!!!	infolog	sl	Začetni datum mora biti pred končnim datumom!
 starting %1	infolog	sl	Začetek %1
 startrecord	infolog	sl	Začetni zapis
-status	infolog	sl	Status
 status ...	infolog	sl	Status ...
 status, percent and date completed are always allowed.	infolog	sl	Status, odstotek in datum opravljenega so vedno dovoljeni.
 sub	infolog	sl	Podrejeni
@@ -491,6 +487,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	sl	Do kdaj naj bo opravilo ali telefonski klic opravljen
 times	infolog	sl	Časi
 titles of any entries linked to the current record, excluding attached files	infolog	sl	Naslovi vseh vnosov, povezanih s trenutnim zapisom, brez priloženih datotek
+to all linked contacts	infolog	sl	Do vseh povezanih stikov
 to many might exceed your execution-time-limit	infolog	sl	Preveč lahko preseže čas izvajanja
 to what should the startdate of new entries be set.	infolog	sl	Na kaj naj bo nastavljen začetni datum novega vnosa.
 today	infolog	sl	Danes

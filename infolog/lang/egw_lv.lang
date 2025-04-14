@@ -23,8 +23,6 @@
 a short subject for the entry	infolog	lv	Īss ieraksta temats
 abort without deleting	infolog	lv	Pārtraukt bez dzēšanas
 accept	infolog	lv	Piekrist
-action	infolog	lv	Darbība
-add	infolog	lv	Pievienot
 add a file	infolog	lv	Pievienot datni
 add a new entry	infolog	lv	PIevienot jaunu ierakstu
 add a new note	infolog	lv	Pievienot jaunu piezīmi
@@ -91,7 +89,6 @@ custom from	infolog	lv	Pielāgots no
 custom regarding	infolog	lv	Par klientu
 custom status for typ	infolog	lv	Klienta veida statuss
 customfields	infolog	lv	Klienta lauki
-data exchange settings	infolog	lv	Datu apmaiņas iestatījumi
 date completed	infolog	lv	Pabeigšanas datums
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	lv	Pabeigšanas datums. Atstājiet tukšu, lai tas tiktu iestatīts automātiski, ja statuss ir pabeigts vai rēķins.
 datecreated	infolog	lv	Datums, kad izveidots
@@ -130,7 +127,6 @@ do you want a notification, if items you delegated are due?	infolog	lv	Saņemiet
 do you want to receive notifications as html-mails or plain text?	infolog	lv	Saņemiet paziņojumus kā HTML e-pasta ziņojumus vai vienkāršu tekstu.
 don't show infolog	infolog	lv	NEPIEDĀVĀT InfoLog
 done	infolog	lv	Izdarīts
-download	infolog	lv	Saglabāt failu
 download url for links	infolog	lv	Lejupielādējiet URL saites
 due %1	infolog	lv	Pienākums %1
 due date	infolog	lv	Termiņš
@@ -169,7 +165,6 @@ exists	infolog	lv	Pastāv
 export definition to use for nextmatch export	infolog	lv	Eksporta definīcija, kas jāizmanto nextmatch eksportam
 exports in ical format.	infolog	lv	Eksportē iCal formātā.
 exports infolog entries into a csv file.	infolog	lv	Eksportē InfoLog ierakstus CSV failā.
-favorites	infolog	lv	Izlase
 fax	infolog	lv	Fakss
 field must not be empty !!!	infolog	lv	Lauks nedīkst būt tukšs!
 fields to exclude when copying an infolog:	infolog	lv	Lauki, kas jāizslēdz, kopējot InfoLog:
@@ -185,6 +180,7 @@ full list of placeholder names	infolog	lv	Pilns vietvārdu saraksts
 general fields:	infolog	lv	Vispārīgie lauki:
 general settings	infolog	lv	Vispārīgie iestatījumi
 global categories	infolog	lv	Globālās kategorijas
+grant responsible users access to linked contacts?	infolog	lv	Piešķirt atbildīgajiem lietotājiem piekļuvi saistītiem kontaktiem?
 group owner for	infolog	lv	Grupas īpašnieks
 handling of status 'archived'	admin	lv	Statusa "arhivēts" apstrāde
 high	infolog	lv	Augsts
@@ -296,6 +292,7 @@ only show them if there is a filter	infolog	lv	Rādīt tos tikai tad, ja ir filt
 only show them while searching	infolog	lv	Rādīt tos tikai meklēšanas laikā
 only the attachments	infolog	lv	Tikai pielikumi
 only the links	infolog	lv	Tikai saites
+only to primary contact	infolog	lv	Tikai primārajam kontaktam
 open and upcoming	infolog	lv	Atvērt un gaidāms
 open(status)	infolog	lv	Atvērt
 optional note to the link	infolog	lv	Izvēles piezīme saitei
@@ -335,6 +332,7 @@ removed	infolog	lv	Noņemts.
 removed category	infolog	lv	Noņemts kategorija
 replacement	infolog	lv	Aizstāšana
 replacements for inserting entries into documents	infolog	lv	Aizstājēji ierakstu ievietošanai dokumentos
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	lv	Nepieciešams, lai rediģējošajam lietotājam būtu rakstīšanas piekļuve šiem kontaktiem, lai tos kopīgotu ar atbildīgo lietotāju.
 respect timesheet run and read permissions for time totals	infolog	lv	Ievērot darba laika uzskaites izpildes un lasīšanas atļaujas attiecībā uz laika kopsummām
 responsible	infolog	lv	Atbildīgs
 responsible open	infolog	lv	Atbildīgs atvērts
@@ -391,7 +389,6 @@ startdate for new entries	infolog	lv	Jaunu ierakstu sākuma datums
 startdate must be before enddate!!!	infolog	lv	Sākuma datumam jābūt pirms termiņa beigām!
 starting %1	infolog	lv	Sākot no %1
 startrecord	infolog	lv	Sākuma ieraksts
-status	infolog	lv	Statuss
 status ...	infolog	lv	Statuss ...
 status, percent and date completed are always allowed.	infolog	lv	Statuss, procenti un pabeigšanas datums vienmēr ir atļauti.
 sub	infolog	lv	Apakšiedaļa
@@ -409,6 +406,7 @@ the document can contain placeholder like {{%1}}, to be replaced with the data.	
 the text displayed to the user	infolog	lv	Lietotājam parādīts teksts
 til when should the todo or phonecall be finished	infolog	lv	Līdz kuram laikam vajadzētu pabeigt Jādara vai Telefona zvans
 times	infolog	lv	Reizes
+to all linked contacts	infolog	lv	Visiem piesaistītajiem kontaktiem
 to many might exceed your execution-time-limit	infolog	lv	Pārāk daudz, var pārsniegt izpildes laika limitu
 today	infolog	lv	Šodien
 todo	infolog	lv	Jādara

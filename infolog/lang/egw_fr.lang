@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	fr	Un court sujet pour l'entrée
 abort without deleting	infolog	fr	Annuler sans supprimer
 accept	infolog	fr	Accepte
-action	infolog	fr	Action
-actions...	infolog	fr	Actions...
 actual date and time	infolog	fr	Date et heure actuelles
-add	infolog	fr	Ajouter
 add / remove link	infolog	fr	Ajouter / Enlever le lien
 add a file	infolog	fr	Ajouter un fichier
 add a new entry	infolog	fr	Ajouter uen nouvelle entrée
@@ -131,7 +128,6 @@ custom from	infolog	fr	Personnalisé de
 custom regarding	infolog	fr	Personnalisé concernant
 custom status for typ	infolog	fr	Statuts personnalisés pour le type
 customfields	infolog	fr	Champs personnalisés
-data exchange settings	infolog	fr	Paramètres d'échange de données
 date completed	infolog	fr	Date de clôture
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	fr	Date de clôture (laisser vide pour que ce soit rempli automatiquement si le statut est Fait ou Rempli).
 datecreated	infolog	fr	Date de création
@@ -224,6 +220,7 @@ full list of placeholder names	infolog	fr	Liste complète de mots clé
 general fields:	infolog	fr	Champs généraux :
 general settings	infolog	fr	Paramètres généraux
 global categories	infolog	fr	Catégories globales
+grant responsible users access to linked contacts?	infolog	fr	Autoriser les utilisateurs responsables à accéder aux contacts liés ?
 group owner for	infolog	fr	Groupe propriétaire pour
 handling of status 'archived'	admin	fr	Traitement du statut 'archivé'
 high	infolog	fr	Haut
@@ -338,6 +335,7 @@ only show them if there is a filter	infolog	fr	Les afficher uniquement s'il y un
 only show them while searching	infolog	fr	Les afficher uniquement s'il y une recherche
 only the attachments	infolog	fr	Seulement les attachements
 only the links	infolog	fr	Seulement les liens
+only to primary contact	infolog	fr	Uniquement au contact principal
 open and upcoming	infolog	fr	Ouvert et à venir
 open(status)	infolog	fr	Ouvrir
 optional note to the link	infolog	fr	Note optionnelle vers le lien
@@ -401,6 +399,7 @@ removed	infolog	fr	Enlevé.
 removed category	infolog	fr	catégorie supprimée
 replacement	infolog	fr	Remplacement
 replacements for inserting entries into documents	infolog	fr	Remplacements pour insertion d'entrées dans des documents
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	fr	L'utilisateur chargé de l'édition doit avoir un accès en écriture à ces contacts, afin de les partager avec l'utilisateur responsable.
 respect timesheet run and read permissions for time totals	infolog	fr	Respecter les droits d'exécution et de lecture des feuilles de temps pour les totaux de temps
 responsible	infolog	fr	Responsable
 responsible open	infolog	fr	Responsable ouverture
@@ -466,7 +465,6 @@ startdate for new entries	infolog	fr	Date de début pour les nouvelles entrées
 startdate must be before enddate!!!	infolog	fr	La date de début doit être avant la date de fin !
 starting %1	infolog	fr	Début le %1
 startrecord	infolog	fr	Enregistrement de départ
-status	infolog	fr	Statut
 status ...	infolog	fr	Statut ...
 status, percent and date completed are always allowed.	infolog	fr	Statuts, pourcentage et date de fin sont toujours permis.
 sub	infolog	fr	Sous-entrée
@@ -489,6 +487,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	fr	Quand la tâche ou l'appel téléphonique devrait être terminé
 times	infolog	fr	Heures
 titles of any entries linked to the current record, excluding attached files	infolog	fr	Titres de toutes les entrées liées à l'enregistrement courant, à l'exception des fichiers
+to all linked contacts	infolog	fr	À tous les contacts liés
 to many might exceed your execution-time-limit	infolog	fr	Trop peut excéder votre temps limite d´exécution.
 to what should the startdate of new entries be set.	infolog	fr	A quoi devrait être fixée la date de départ de la nouvelle entrée.
 today	infolog	fr	Aujourd'hui

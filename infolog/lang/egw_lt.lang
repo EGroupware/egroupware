@@ -22,7 +22,6 @@ created	infolog	lt	Sukurta
 current user	infolog	lt	Dabartinis naudotojas
 custom from	infolog	lt	Pasirinktinis iš
 customfields	infolog	lt	Pasirinktiniai laukai
-data exchange settings	infolog	lt	Keitimosi duomenimis nustatymai
 date completed	infolog	lt	Įvykdymo data
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	lt	Įvykdymo data. Palikite tuščią, jei norite, kad ji būtų nustatyta automatiškai, jei būsena yra baigta arba išrašyta sąskaita.
 default category for new infolog entries	infolog	lt	Numatytoji naujų InfoLog įrašų kategorija
@@ -46,7 +45,6 @@ do you want a notification, if items you delegated are due?	infolog	lt	Gaukite p
 do you want to receive notifications as html-mails or plain text?	infolog	lt	Gaukite pranešimus kaip HTML el. laiškus arba paprastą tekstą.
 don't show infolog	infolog	lt	NERODYTI informacijos žurnalo
 done	infolog	lt	Išsaugoti failą
-download	infolog	lt	Atsisiųsti
 download url for links	infolog	lt	Atsisiųsti nuorodų URL
 due %1	infolog	lt	Dėl %1
 due date	infolog	lt	Terminas
@@ -70,7 +68,6 @@ exists	infolog	lt	Egzistuoja
 export definition to use for nextmatch export	infolog	lt	Eksporto apibrėžtis, kurią reikia naudoti nextmatch eksportui
 exports in ical format.	infolog	lt	Eksportuoja iCal formatu.
 exports infolog entries into a csv file.	infolog	lt	Eksportuoja InfoLog įrašus į CSV failą.
-favorites	infolog	lt	Mėgstamiausi
 fax	infolog	lt	Fax
 field must not be empty !!!	infolog	lt	Laukas negali būti tuščias!
 fields to exclude when copying an infolog:	infolog	lt	Laukai, į kuriuos reikia neįtraukti kopijuojant InfoLog:
@@ -81,6 +78,7 @@ for serial letter use this tag. put the content, you want to repeat between two 
 full list of placeholder names	infolog	lt	Pilnas vietos laikiklių pavadinimų sąrašas
 general settings	infolog	lt	Bendrieji nustatymai
 global categories	infolog	lt	Bendrosios kategorijos
+grant responsible users access to linked contacts?	infolog	lt	Suteikti atsakingiems naudotojams prieigą prie susietų kontaktų?
 group owner for	infolog	lt	Grupės savininkas
 handling of status 'archived'	admin	lt	Statuso 'archyvuota' tvarkymas
 high	infolog	lt	Didelė
@@ -139,6 +137,7 @@ one day after	infolog	lt	Viena diena po
 one day in advance	infolog	lt	Viena diena iš anksto
 only show them if there is a filter	infolog	lt	Rodyti juos tik tada, jei yra filtras
 only show them while searching	infolog	lt	Rodyti juos tik atliekant paiešką
+only to primary contact	infolog	lt	Tik pagrindiniam kontaktui
 open(status)	infolog	lt	Atviras
 other configurations	infolog	lt	Kitos konfigūracijos
 owner, responsible	infolog	lt	Savininkas, Atsakingas
@@ -161,6 +160,7 @@ removed	infolog	lt	Pašalinta.
 removed category	infolog	lt	pašalinta kategorija
 replacement	infolog	lt	Pakeitimas
 replacements for inserting entries into documents	infolog	lt	Įrašų įterpimo į dokumentus pakaitalai
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	lt	Reikalaujama, kad redaguojantis naudotojas turėtų rašymo prieigą prie šių kontaktų, kad galėtų jais dalytis su atsakingu naudotoju.
 respect timesheet run and read permissions for time totals	infolog	lt	Laikykitės darbo laiko apskaitos žiniaraščio paleidimo ir skaitymo leidimų laiko sumoms
 responsible open and upcoming	infolog	lt	Atsakingi atviri ir būsimi
 responsible overdue	infolog	lt	Atsakingas už vėlavimą
@@ -200,6 +200,7 @@ sum	infolog	lt	Suma
 tag to mark positions for address labels	infolog	lt	Žyma, skirta adresų etikečių pozicijoms žymėti
 tasks of	infolog	lt	Užduotys
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	lt	Dokumente gali būti tokios pakaitinės žymos kaip {{%1}}, kurios bus pakeistos duomenimis.
+to all linked contacts	infolog	lt	Prie visų susietų kontaktų
 type of field	infolog	lt	Lauko tipas
 type of the log-entry: note, phonecall or todo	infolog	lt	Informacijos žurnalo įrašo tipas
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	lt	Nepavyksta susieti su %3 pagal pasirinktinį lauką "%1": "%4". %2 atitinka.

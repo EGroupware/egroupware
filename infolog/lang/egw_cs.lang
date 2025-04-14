@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	cs	Stručný předmět záznamu
 abort without deleting	infolog	cs	Zrušit bez smazání
 accept	infolog	cs	Přijmout
-action	infolog	cs	Akce
-actions...	infolog	cs	Akce ...
 actual date and time	infolog	cs	Aktuální datum a čas
-add	infolog	cs	Přidat
 add / remove link	infolog	cs	Přidat / odebrat propojení
 add a file	infolog	cs	Přidat soubor
 add a new entry	infolog	cs	Přidat nový záznam
@@ -224,6 +221,7 @@ full list of placeholder names	infolog	cs	Seznam použitelných zástupců
 general fields:	infolog	cs	Obecné položky:
 general settings	infolog	cs	Obecné nastavení
 global categories	infolog	cs	Globální kategorie
+grant responsible users access to linked contacts?	infolog	cs	Udělit odpovědným uživatelům přístup k propojeným kontaktům?
 group owner for	infolog	cs	Skupinový vlastník pro
 handling of status 'archived'	admin	cs	Zacházení se stavem "archivováno
 high	infolog	cs	Vysoká
@@ -338,6 +336,7 @@ only show them if there is a filter	infolog	cs	Zobrazit pouze při zapnutém fil
 only show them while searching	infolog	cs	Zobrazit pouze při hledání
 only the attachments	infolog	cs	Jen přílohy
 only the links	infolog	cs	Jen odkazy
+only to primary contact	infolog	cs	Pouze primárnímu kontaktu
 open and upcoming	infolog	cs	Otevřené a nadcházející
 open(status)	infolog	cs	Otevřít
 optional note to the link	infolog	cs	Volitelná poznámka k odkazu
@@ -401,6 +400,7 @@ removed	infolog	cs	Odstraněno.
 removed category	infolog	cs	kategorie odstraněna
 replacement	infolog	cs	Zástupci
 replacements for inserting entries into documents	infolog	cs	Zástupci pro vkládání informací o událostech do dokumentů
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	cs	Vyžaduje, aby měl editující uživatel přístup k zápisu do těchto kontaktů, aby je mohl sdílet s odpovědným uživatelem.
 respect timesheet run and read permissions for time totals	infolog	cs	Respektovat oprávnění ke spuštění a čtení timesheetu pro součty času
 responsible	infolog	cs	Odpovědný
 responsible open	infolog	cs	Odpovědný - otevřené
@@ -466,7 +466,6 @@ startdate for new entries	infolog	cs	Počáteční datum pro nové záznamy
 startdate must be before enddate!!!	infolog	cs	Počáteční datum musí být dříve než datum ukončení
 starting %1	infolog	cs	Začíná %1
 startrecord	infolog	cs	První záznam
-status	infolog	cs	Stav
 status ...	infolog	cs	Stav ...
 status, percent and date completed are always allowed.	infolog	cs	Stav, procento a datum dokončení může vždy.
 sub	infolog	cs	Podpoložka
@@ -489,6 +488,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	cs	Dokud se neukončí úkol nebo telefonát
 times	infolog	cs	Časy
 titles of any entries linked to the current record, excluding attached files	infolog	cs	Názvy všech propojených záznamů k aktuálnímu záznamu, bez připojených souborů
+to all linked contacts	infolog	cs	Ke všem propojeným kontaktům
 to many might exceed your execution-time-limit	infolog	cs	Příliš mnoho může překročit nastavený časový limit spuštění
 to what should the startdate of new entries be set.	infolog	cs	Na jakou hodnotu má být nastaveno počáteční datum nových záznamů.
 today	infolog	cs	Dnes

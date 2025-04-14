@@ -16,8 +16,6 @@
 a short subject for the entry	infolog	hr	kratka tema za novi unos
 abort without deleting	infolog	hr	Prekini bez brisanja
 accept	infolog	hr	Prihvati
-action	infolog	hr	Djelovanje
-add	infolog	hr	Dodaj
 add a file	infolog	hr	Dodaj datoteku
 add a new entry	infolog	hr	Dodaj novi unos
 add a new note	infolog	hr	Dodaj novu bilješku
@@ -85,7 +83,6 @@ determines the order the fields are displayed	infolog	hr	Određuje redosljed pri
 disables a status without deleting it	infolog	hr	Onemogućuje status ne brišući ga
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	hr	želite li potvrdu odgovorne osobe u slučaju: prihvata, završetka ili oboje
 done	infolog	hr	gotovo
-download	infolog	hr	Prenesi sa poslužitelja
 duration	infolog	hr	Trajanje
 each value is a line like <id>[=<label>]	infolog	hr	each value is a line like <id>[=<label>]
 edit	infolog	hr	Uredi
@@ -206,12 +203,10 @@ start a new search, cancel this link	infolog	hr	Započni novu pretragu, prekini 
 startdate	infolog	hr	Datum početka
 startdate enddate	infolog	hr	Datum početka i kraja
 startrecord	infolog	hr	Početak zapisa
-status	infolog	hr	Status
 status ...	infolog	hr	Status ...
 sub	infolog	hr	Sub
 subject	infolog	hr	Tema
 task	infolog	hr	Za obaviti
-template	infolog	hr	Template
 test import (show importable records <u>only</u> in browser)	infolog	hr	Testni uvoz (prikaži datoteke koje se mogu uvesti <u>samo</u> u prozoru)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	hr	ime upotrebljavano interno (<= 10 znakova), mijenjanjem postoječe podatke činite nedostupnima
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	hr	ime upotrebljavano interno (<= 20 znakova), mijenjanjem postoječe podatke činite nedostupnima
@@ -241,9 +236,7 @@ view this linked entry in its application	infolog	hr	view this linked entry in i
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	hr	when should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (startpage)
 will-call	infolog	hr	Nazvat ću
 write (add or update) a record by passing its fields.	infolog	hr	Write (add or update) a record by passing its fields.
-yes - delete	infolog	hr	Da - Obriši
 you can't delete one of the stock types !!!	infolog	hr	Ne možete obrisati neku od vrsta zapisa!!!
 you have entered an invalid ending date	infolog	hr	Unijeli ste nevažeći datum kraja
 you have entered an invalid starting date	infolog	hr	Unijeli ste nevažeći datum početka
-you have to enter a name, to create a new typ!!!	infolog	hr	Morate unijeti ime, da bi napravili novi tip
 you must enter a subject or a description	infolog	hr	Morate unijeti temu ili opis

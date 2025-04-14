@@ -13,7 +13,6 @@ custom fields	infolog	lo	ກໍານົດ fields
 days	infolog	lo	ວັນ
 deletes this field	infolog	lo	ລຶບ field ນີ້
 determines the order the fields are displayed	infolog	lo	ສະແດງລໍາດັບຂອງ fields ທີ່ສະແດງ
-download	infolog	lo	ດາວໂຫຼດ
 duration	infolog	lo	ໄລຍະເວລາ
 each value is a line like <id>[=<label>]	infolog	lo	ແຕ່ລະລາຄ່າເປັນໜຶ່ງແຖວ <id>[=<label>]
 edit this entry	infolog	lo	ແກ້ໄຂຂໍ້ບັນທຶກນີ້
@@ -25,7 +24,6 @@ error: the entry has been updated since you opened it for editing!	infolog	lo	�
 execute a further action for this entry	infolog	lo	ການຈັດການ/ການປະຕິບັດ ການດໍາເນີນການເພີ່ມເຕີມສໍາລັບລາຍການນີ້
 existing links	infolog	lo	ການເຊື່ອມຕໍ່ທີ່ມີຢູ່ແລ້ວ
 exists	infolog	lo	ມີຢູ່ແລ້ວ
-favorites	infolog	lo	ລາຍການທີ່ມັກ
 fieldseparator	infolog	lo	ການແຍກຟີລ
 global categories	infolog	lo	ໝວດທົ່ວໄປ
 history	infolog	lo	ປະຫວັດສາດ
@@ -46,8 +44,6 @@ permission denied	infolog	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ
 projectmanager	infolog	lo	ຜູ້ຈັດການໂຄງການ
 saves the changes made and leaves	infolog	lo	ບັນທຶກການປ່ຽນແປງ made ແລະ leaves
 saves this entry	infolog	lo	ບັນທຶກຂໍ້ມູນການເຂົ້ານີ້
-select an action	infolog	lo	ເລືອກການດໍາເນີນການ/ເລືອກຮູບແບບການປະຕິບັດ
-select an action...	infolog	lo	ເລືອກການດໍາເນີນການ/ເລືອກຮູບແບບການປະຕິບັດ...
 select multiple contacts for a further action	infolog	lo	ເລືອກເອົາການຕິດຕໍ່ຫຼາຍຮູບແບບ ເພື່ອການດໍາເນີນການຕໍ່ໄປ
 start	infolog	lo	ເລີ່ມ
 startdate	infolog	lo	ວັນທີ່ເລີ່ມ

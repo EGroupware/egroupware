@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	km	ប្រធានបទខ្លីសម្រាប់ការចូល
 abort without deleting	infolog	km	បោះបង់ដោយមិនលុប
 accept	infolog	km	ទទួលយក
-action	infolog	km	សកម្មភាព
-actions...	infolog	km	សកម្មភាព...
 actual date and time	infolog	km	កាលបរិច្ឆេទ និងពេលវេលាជាក់ស្តែង
-add	infolog	km	បន្ថែម
 add / remove link	infolog	km	បន្ថែម / លុបតំណ
 add a file	infolog	km	បន្ថែមឯកសារ
 add a new entry	infolog	km	បន្ថែមធាតុថ្មី
@@ -130,7 +127,6 @@ custom from	infolog	km	ផ្ទាល់ខ្លួនពី
 custom regarding	infolog	km	ផ្ទាល់ខ្លួនទាក់ទងនឹង
 custom status for typ	infolog	km	ស្ថានភាពផ្ទាល់ខ្លួនសម្រាប់ប្រភេទ
 customfields	infolog	km	វាលផ្ទាល់ខ្លួន
-data exchange settings	infolog	km	ការកំណត់ការផ្លាស់ប្តូរទិន្នន័យ
 date completed	infolog	km	កាលបរិច្ឆេទបានបញ្ចប់
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	km	កាលបរិច្ឆេទបានបញ្ចប់។ ទុកឱ្យទទេដើម្បីឱ្យវាកំណត់ដោយស្វ័យប្រវត្តិប្រសិនបើស្ថានភាពត្រូវបានធ្វើរួច ឬចេញវិក្កយបត្រ។
 datecreated	infolog	km	កាលបរិច្ឆេទបង្កើត
@@ -169,7 +165,6 @@ do you want a notification, if items you delegated are due?	infolog	km	ទទួ
 do you want to receive notifications as html-mails or plain text?	infolog	km	ទទួលការជូនដំណឹងជាសំបុត្រ HTML ឬអត្ថបទធម្មតា។
 don't show infolog	infolog	km	កុំបង្ហាញ InfoLog
 done	infolog	km	រួចរាល់
-download	infolog	km	ទាញយក
 download url for links	infolog	km	ទាញយក url សម្រាប់តំណ
 due %1	infolog	km	ដល់​កំណត់%1
 due date	infolog	km	កាលបរិច្ឆេទ​កំណត់
@@ -206,7 +201,6 @@ exists	infolog	km	មាន
 export definition to use for nextmatch export	infolog	km	នាំចេញនិយមន័យដែលត្រូវប្រើសម្រាប់ការនាំចេញការប្រកួតបន្ទាប់
 exports in ical format.	infolog	km	ការនាំចេញជាទម្រង់ iCal ។
 exports infolog entries into a csv file.	infolog	km	នាំចេញធាតុ InfoLog ទៅក្នុងឯកសារ CSV ។
-favorites	infolog	km	ចំណូលចិត្ត
 fax	infolog	km	ទូរសារ
 field must not be empty !!!	infolog	km	វាលមិនត្រូវទទេ!
 fields to exclude when copying an infolog:	infolog	km	វាលដែលត្រូវដកចេញនៅពេលចម្លង InfoLog៖
@@ -421,8 +415,6 @@ select a priority for this task	infolog	km	ជ្រើសរើសអាទិ�
 select a project	infolog	km	ជ្រើសរើសគម្រោងមួយ។
 select a responsible user: a person you want to delegate this task	infolog	km	ជ្រើសរើសអ្នកប្រើប្រាស់ដែលមានទំនួលខុសត្រូវ៖ មនុស្សម្នាក់ដែលអ្នកចង់ផ្ទេរភារកិច្ចនេះ។
 select a typ to edit it's status-values or delete it	infolog	km	ជ្រើសរើសប្រភេទដើម្បីកែសម្រួលតម្លៃស្ថានភាពរបស់វា ឬលុបវា។
-select an action	infolog	km	ជ្រើសរើសសកម្មភាព
-select an action...	infolog	km	ជ្រើសរើសសកម្មភាព...
 select an app to search in	infolog	km	ជ្រើសរើសកម្មវិធីដើម្បីស្វែងរក
 select an entry to link with	infolog	km	ជ្រើសរើសធាតុដើម្បីភ្ជាប់ជាមួយ
 select multiple contacts for a further action	infolog	km	ជ្រើសរើសទំនាក់ទំនងច្រើនសម្រាប់សកម្មភាពបន្ថែម
@@ -463,7 +455,6 @@ startdate for new entries	infolog	km	កាលបរិច្ឆេទចាប�
 startdate must be before enddate!!!	infolog	km	កាលបរិច្ឆេទចាប់ផ្តើមត្រូវតែមុនកាលបរិច្ឆេទ!!!
 starting %1	infolog	km	ចាប់ផ្តើម %1
 startrecord	infolog	km	ចាប់ផ្តើមកំណត់ត្រា
-status	infolog	km	ស្ថានភាព
 status ...	infolog	km	ស្ថានភាព...
 status, percent and date completed are always allowed.	infolog	km	ស្ថានភាព ភាគរយ និងកាលបរិច្ឆេទដែលបានបញ្ចប់ត្រូវបានអនុញ្ញាតជានិច្ច។
 sub	infolog	km	អនុ

@@ -128,7 +128,7 @@ custom from	infolog	en	Custom from
 custom regarding	infolog	en	Custom regarding
 custom status for typ	infolog	en	Custom status for type
 customfields	infolog	en	Custom fields
-data exchange settings	common	en	Data exchange settings
+data exchange settings	infolog	en	Data exchange settings
 date completed	infolog	en	Date completed
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	en	Date completed. Leave empty to have it automatically set if status is done or billed.
 datecreated	infolog	en	Date created

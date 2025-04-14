@@ -29,10 +29,7 @@
 a short subject for the entry	infolog	id	Subjek singkat untuk entri
 abort without deleting	infolog	id	Batal tanpa menghapus
 accept	infolog	id	diterima
-action	infolog	id	Tindakan
-actions...	infolog	id	Tindakan ...
 actual date and time	infolog	id	Tanggal dan waktu sesungguhnya
-add	infolog	id	Tambah
 add / remove link	infolog	id	Tambah / hapus tautan
 add a file	infolog	id	Tambah berkas
 add a new entry	infolog	id	Tambah Entri baru
@@ -111,7 +108,6 @@ custom fields, type and status	common	id	Bidang, jenis, dan status khusus
 custom from	infolog	id	Kustom dari
 custom regarding	infolog	id	Khusus tentang
 customfields	infolog	id	Bidang khusus
-data exchange settings	infolog	id	Pengaturan pertukaran data
 date completed	infolog	id	Tanggal selesai
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	id	Tanggal selesai. Biarkan kosong agar secara otomatis diatur jika status selesai atau ditagih.
 datecreated	infolog	id	Tanggal dibuat
@@ -150,7 +146,6 @@ do you want a notification, if items you delegated are due?	infolog	id	Dapatkan 
 do you want to receive notifications as html-mails or plain text?	infolog	id	Menerima pemberitahuan sebagai email HTML atau teks biasa.
 don't show infolog	infolog	id	JANGAN tampilkan InfoLog
 done	infolog	id	Selesai
-download	infolog	id	Menyimpan file
 download url for links	infolog	id	Unduh URL untuk tautan
 due %1	infolog	id	Jatuh Tempo %1
 due date	infolog	id	Tanggal jatuh tempo
@@ -185,7 +180,6 @@ exists	infolog	id	Ada
 export definition to use for nextmatch export	infolog	id	Definisi ekspor yang akan digunakan untuk ekspor nextmatch
 exports in ical format.	infolog	id	Ekspor dalam format iCal.
 exports infolog entries into a csv file.	infolog	id	Mengekspor entri InfoLog ke dalam file CSV.
-favorites	infolog	id	Favorit
 fax	infolog	id	Fax
 field must not be empty !!!	infolog	id	Field tidak boleh kosong!
 fields to exclude when copying an infolog:	infolog	id	Bidang yang harus dikecualikan saat menyalin InfoLog:
@@ -201,6 +195,7 @@ full list of placeholder names	infolog	id	Daftar lengkap nama placeholder
 general fields:	infolog	id	Field Umum:
 general settings	infolog	id	Pengaturan umum
 global categories	infolog	id	Kategori global
+grant responsible users access to linked contacts?	infolog	id	Memberikan akses kepada pengguna yang bertanggung jawab ke kontak yang ditautkan?
 group owner for	infolog	id	Pemilik grup untuk
 handling of status 'archived'	admin	id	Penanganan status 'diarsipkan'
 high	infolog	id	Tinggi
@@ -307,6 +302,7 @@ only for details	infolog	id	Hanya untuk detail
 only show them if there is a filter	infolog	id	Hanya tampilkan jika ada filter
 only show them while searching	infolog	id	Hanya tampilkan saat mencari
 only the attachments	infolog	id	Hanya lampirannya
+only to primary contact	infolog	id	Hanya untuk kontak utama
 open(status)	infolog	id	Buka
 order	infolog	id	Urutan
 organization	infolog	id	Organisasi
@@ -356,6 +352,7 @@ removed	infolog	id	Dihapus
 removed category	infolog	id	kategori yang dihapus
 replacement	infolog	id	Penggantian
 replacements for inserting entries into documents	infolog	id	Penggantian untuk memasukkan entri ke dalam dokumen
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	id	Memerlukan pengguna pengeditan untuk memiliki akses tulis ke kontak-kontak ini, untuk membaginya dengan pengguna yang bertanggung jawab.
 respect timesheet run and read permissions for time totals	infolog	id	Hormati izin menjalankan dan membaca lembar waktu untuk total waktu
 responsible	infolog	id	Penanggungjawab
 responsible open	infolog	id	Terbuka yang bertanggung jawab
@@ -404,7 +401,6 @@ startdate for new entries	infolog	id	Tanggal memulai untuk entri baru
 startdate must be before enddate!!!	infolog	id	Tanggal mulai harus sebelum tanggal jatuh tempo!
 starting %1	infolog	id	Memulai %1
 startrecord	infolog	id	Rekaman awal
-status	infolog	id	Status
 status ...	infolog	id	Status ...
 status, percent and date completed are always allowed.	infolog	id	Status, persen dan tanggal selesai selalu diperbolehkan.
 sub	infolog	id	Sub
@@ -420,6 +416,7 @@ template	infolog	id	Templat
 test import (show importable records <u>only</u> in browser)	infolog	id	Tes Impor (tampilkan rekaman yang dapat diimpor <em>hanya</em> dalam browser).
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	id	Dokumen dapat berisi placeholder seperti {{%1}}, untuk diganti dengan data.
 times	infolog	id	Waktu
+to all linked contacts	infolog	id	Untuk semua kontak yang ditautkan
 to what should the startdate of new entries be set.	infolog	id	Untuk apa tanggal mulai entri baru ditetapkan.
 today	infolog	id	Hari ini
 todays date	infolog	id	Tanggal sekarang

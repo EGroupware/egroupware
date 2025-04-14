@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	ja	この項目の短い件名
 abort without deleting	infolog	ja	削除せずに中断
 accept	infolog	ja	承諾
-action	infolog	ja	アクション
-actions...	infolog	ja	アクション...
 actual date and time	infolog	ja	実際の日時
-add	infolog	ja	追加
 add / remove link	infolog	ja	リンクの追加/削除
 add a file	infolog	ja	ファイルを追加
 add a new entry	infolog	ja	新規項目を追加
@@ -131,7 +128,6 @@ custom from	infolog	ja	カスタム送信者
 custom regarding	infolog	ja	カスタム挨拶文
 custom status for typ	infolog	ja	タイプのカスタム状態
 customfields	infolog	ja	カスタム項目
-data exchange settings	infolog	ja	データ交換設定
 date completed	infolog	ja	完了日
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ja	完了日。状態が完了（または課金済み）になる時に、完了日を自動的に設定する場合は空欄のままにしてください。
 datecreated	infolog	ja	作成日
@@ -170,7 +166,6 @@ do you want a notification, if items you delegated are due?	infolog	ja	あなた
 do you want to receive notifications as html-mails or plain text?	infolog	ja	通知を HTML メールで受信するかプレーン・テキストで受信しますか？
 don't show infolog	infolog	ja	インフォログを表示しない
 done	infolog	ja	完了
-download	infolog	ja	ファイルの保存
 download url for links	infolog	ja	ダウンロード URL
 due %1	infolog	ja	期限 %1
 due date	infolog	ja	期限
@@ -210,7 +205,6 @@ exists	infolog	ja	存在
 export definition to use for nextmatch export	infolog	ja	nextmatch エクスポートで使用する定義をエクスポート
 exports in ical format.	infolog	ja	iCal 形式でエクスポート
 exports infolog entries into a csv file.	infolog	ja	CSV ファイルにインフォログ項目をエクスポート
-favorites	infolog	ja	お気に入り
 fax	infolog	ja	FAX
 field must not be empty !!!	infolog	ja	項目を空欄にする個とはできません!
 fields to exclude when copying an infolog:	infolog	ja	インフォログをコピーする際に除外するフィールド：
@@ -226,6 +220,7 @@ full list of placeholder names	infolog	ja	プレースホルダー一覧
 general fields:	infolog	ja	一般項目:
 general settings	infolog	ja	一般設定
 global categories	infolog	ja	グローバルカテゴリ
+grant responsible users access to linked contacts?	infolog	ja	責任あるユーザーにリンクされた連絡先へのアクセスを許可しますか？
 group owner for	infolog	ja	グループ所有者:
 handling of status 'archived'	admin	ja	アーカイブされた'ステータスの取り扱い
 high	infolog	ja	高
@@ -340,6 +335,7 @@ only show them if there is a filter	infolog	ja	フィルタありの場合のみ
 only show them while searching	infolog	ja	検索中のみ表示
 only the attachments	infolog	ja	添付のみ
 only the links	infolog	ja	リンクのみ
+only to primary contact	infolog	ja	主担当者のみ
 open and upcoming	infolog	ja	オープン 直近
 open(status)	infolog	ja	開く
 optional note to the link	infolog	ja	リンクのノート
@@ -403,6 +399,7 @@ removed	infolog	ja	削除されました。
 removed category	infolog	ja	削除済みカテゴリ
 replacement	infolog	ja	置換
 replacements for inserting entries into documents	infolog	ja	ドキュメントに項目挿入時に用いる置換
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	ja	編集ユーザがこれらの連絡先への書き込み権限を持ち、責任ユーザと共有する必要があります。
 respect timesheet run and read permissions for time totals	infolog	ja	タイムシートの実行と時間合計の読み取り権限の尊重
 responsible	infolog	ja	責任者
 responsible open	infolog	ja	責任者 オープン
@@ -468,7 +465,6 @@ startdate for new entries	infolog	ja	新規項目の開始日
 startdate must be before enddate!!!	infolog	ja	開始日は終了日よりも前である必要があります!!!
 starting %1	infolog	ja	%1 を開始
 startrecord	infolog	ja	レコード開始
-status	infolog	ja	状態
 status ...	infolog	ja	状態 ...
 status, percent and date completed are always allowed.	infolog	ja	状態, 進捗パーセント, 完了日は常に編集を許可されます。
 sub	infolog	ja	サブ
@@ -491,6 +487,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	ja	InfoLogをいつ終了するか
 times	infolog	ja	時間
 titles of any entries linked to the current record, excluding attached files	infolog	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
+to all linked contacts	infolog	ja	すべてのリンクされた連絡先
 to many might exceed your execution-time-limit	infolog	ja	数量が多過ぎるため、実行時間の制限値を越える恐れがあります。
 to what should the startdate of new entries be set.	infolog	ja	新規項目の開始日をどのように設定するかを指定します。
 today	infolog	ja	今日

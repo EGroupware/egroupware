@@ -8,8 +8,6 @@
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	tr	%1 kayıt okundu. Henüz içe aktarılmadı, %2geri%3'e gidebilir ve İçe aktarmayı test et seçeneğinin işaretini kaldırabilirsiniz.
 (and children) deleted	infolog	tr	(ve çocuklar) silindi.
 accept	infolog	tr	Kabul et
-action	infolog	tr	Eylem
-add	infolog	tr	Ekle
 added	infolog	tr	Eklendi
 addressbook placeholders available	infolog	tr	Adres defteri yer tutucuları mevcut
 all other %1 fields are valid	infolog	tr	Diğer tüm %1 alanları geçerlidir
@@ -48,7 +46,6 @@ description	infolog	tr	Açıklama
 directory with documents to insert entries	infolog	tr	Girişleri eklemek için belgelerin bulunduğu klasör
 do you want a notification if items owned by groups you are part of get updated ?	infolog	tr	Dahil olduğunuz grupların sahip olduğu öğeler güncellendiğinde bildirim almak ister misiniz?
 done	infolog	tr	Tamam
-download	infolog	tr	Dosyayı kaydet
 download url for links	infolog	tr	Bağlantılar için URL'yi indirin
 due %1	infolog	tr	Son ödeme tarihi %1
 due date	infolog	tr	Son tarih
@@ -75,7 +72,6 @@ exists	infolog	tr	Mevcut
 export definition to use for nextmatch export	infolog	tr	Nextmatch dışa aktarımı için kullanılacak dışa aktarım tanımı
 exports in ical format.	infolog	tr	iCal formatında dışa aktarır.
 exports infolog entries into a csv file.	infolog	tr	InfoLog girişlerini bir CSV dosyasına aktarır.
-favorites	infolog	tr	Sık Kullanılanlar
 fax	infolog	tr	Fax
 field must not be empty !!!	infolog	tr	Alan boş olmamalıdır!
 fields to exclude when copying an infolog:	infolog	tr	Bir InfoLog kopyalanırken hariç tutulacak alanlar:
@@ -91,6 +87,7 @@ full list of placeholder names	infolog	tr	Yer tutucu adların tam listesi
 general fields:	infolog	tr	Genel alanlar:
 general settings	infolog	tr	Genel ayarlar
 global categories	infolog	tr	Genel kategoriler
+grant responsible users access to linked contacts?	infolog	tr	Sorumlu kullanıcılara bağlantılı kişilere erişim izni verin?
 group owner for	infolog	tr	Grup sahibi için
 handling of status 'archived'	admin	tr	'Arşivlendi' durumunun işlenmesi
 high	infolog	tr	Yüksek
@@ -142,6 +139,7 @@ one day after	infolog	tr	Bir gün sonra
 one day in advance	infolog	tr	Bir gün önceden
 only show them if there is a filter	infolog	tr	Yalnızca filtre varsa gösterin
 only show them while searching	infolog	tr	Sadece arama yaparken gösterin
+only to primary contact	infolog	tr	Yalnızca birincil kişiye
 open(status)	infolog	tr	Açık
 order	infolog	tr	Sıralama
 other configurations	infolog	tr	Diğer konfigürasyonlar
@@ -168,6 +166,7 @@ removed	infolog	tr	Kaldırıldı.
 removed category	infolog	tr	kaldırıldı kategorisi
 replacement	infolog	tr	Değiştirme
 replacements for inserting entries into documents	infolog	tr	Belgelere giriş eklemek için değiştirmeler
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	tr	Düzenleyen kullanıcının, sorumlu kullanıcıyla paylaşmak için bu kişilere yazma erişimine sahip olmasını gerektirir.
 respect timesheet run and read permissions for time totals	infolog	tr	Zaman toplamları için zaman çizelgesi çalıştırma ve okuma izinlerine saygı gösterin
 responsible open and upcoming	infolog	tr	Sorumlu açık ve yaklaşan
 rights for the responsible	infolog	tr	Sorumlular için haklar
@@ -212,6 +211,7 @@ the document can contain placeholder like {{%1}}, to be replaced with the data.	
 the following document-types are supported:	infolog	tr	Aşağıdaki belge türleri desteklenmektedir:
 times	infolog	tr	Kere
 titles of any entries linked to the current record, excluding attached files	infolog	tr	Ekli dosyalar hariç olmak üzere, geçerli kayda bağlı tüm girişlerin başlıkları
+to all linked contacts	infolog	tr	Tüm bağlantılı kişilere
 to many might exceed your execution-time-limit	infolog	tr	Çok fazla sayıda olması yürütme süresi sınırınızı aşabilir
 today	infolog	tr	Bugün
 type of field	infolog	tr	Alan türü

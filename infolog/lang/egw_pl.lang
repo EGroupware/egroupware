@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	pl	Krótki temat tego wpisu
 abort without deleting	infolog	pl	Anuluj bez kasowania
 accept	infolog	pl	Akceptuj
-action	infolog	pl	Czynność
-actions...	infolog	pl	Działania...
 actual date and time	infolog	pl	Aktualna data i czas
-add	infolog	pl	Dodaj
 add / remove link	infolog	pl	Dodaj / usuń link
 add a file	infolog	pl	Dodaj plik
 add a new entry	infolog	pl	Dodaj nowy wpis
@@ -126,7 +123,6 @@ custom from	infolog	pl	Niestandardowe z
 custom regarding	infolog	pl	Custom regarding
 custom status for typ	infolog	pl	Własny status dla typu
 customfields	infolog	pl	Polawłasne
-data exchange settings	infolog	pl	Ustawienia wymiany danych
 date completed	infolog	pl	Data wykonania
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pl	Data wykonania (pozostaw puste aby zostało wypełnione automatycznie przy zmianie statusu na "zakończony".
 datecreated	infolog	pl	Data utworzenia
@@ -165,7 +161,6 @@ do you want a notification, if items you delegated are due?	infolog	pl	Otrzymuj 
 do you want to receive notifications as html-mails or plain text?	infolog	pl	Otrzymuj powiadomienia w postaci wiadomości e-mail w formacie HTML lub zwykłego tekstu.
 don't show infolog	infolog	pl	NIE pokazuj InfoLog
 done	infolog	pl	Wykonano
-download	infolog	pl	Zapisz plik
 download url for links	infolog	pl	Adres URL pobierania dla linków
 due %1	infolog	pl	Termin %1
 due date	infolog	pl	Termin płatności
@@ -205,7 +200,6 @@ exists	infolog	pl	Istnieje
 export definition to use for nextmatch export	infolog	pl	Definicja eksportu do użycia dla eksportu nextmatch
 exports in ical format.	infolog	pl	Eksportuje w formacie iCal.
 exports infolog entries into a csv file.	infolog	pl	Eksportuje wpisy InfoLog do pliku CSV.
-favorites	infolog	pl	Ulubione
 fax	infolog	pl	Fax
 field must not be empty !!!	infolog	pl	Powyższe pole nie może być puste!
 fields to exclude when copying an infolog:	infolog	pl	Pola do wykluczenia podczas kopiowania InfoLog:
@@ -221,6 +215,7 @@ full list of placeholder names	infolog	pl	Pełna lista nazw zastępczych
 general fields:	infolog	pl	Pola ogólne:
 general settings	infolog	pl	Ustawienia ogólne
 global categories	infolog	pl	Kategorie globalne
+grant responsible users access to linked contacts?	infolog	pl	Przyznać odpowiedzialnym użytkownikom dostęp do połączonych kontaktów?
 group owner for	infolog	pl	Właściciel grupowy dla
 handling of status 'archived'	admin	pl	Obsługa statusu 'zarchiwizowany'
 high	infolog	pl	Wysoki
@@ -330,6 +325,7 @@ only show them if there is a filter	infolog	pl	Wyświetlanie ich tylko wtedy, gd
 only show them while searching	infolog	pl	Wyświetlaj je tylko podczas wyszukiwania
 only the attachments	infolog	pl	Tylko załączniki
 only the links	infolog	pl	Tylko linki
+only to primary contact	infolog	pl	Tylko do głównego kontaktu
 open and upcoming	infolog	pl	Otwarte i nadchodzące
 open(status)	infolog	pl	Otwarte
 optional note to the link	infolog	pl	Opcjonalna notatka do linku
@@ -386,6 +382,7 @@ removed	infolog	pl	Usunięto.
 removed category	infolog	pl	usunięta kategoria
 replacement	infolog	pl	Zastąpienie
 replacements for inserting entries into documents	infolog	pl	Zamienniki do wstawiania wpisów do dokumentów
+requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	pl	Wymaga, aby użytkownik edytujący miał dostęp do zapisu do tych kontaktów, aby udostępnić je odpowiedzialnemu użytkownikowi.
 respect timesheet run and read permissions for time totals	infolog	pl	Respektowanie uprawnień do uruchamiania i odczytu arkusza czasu dla sum czasu
 responsible	infolog	pl	Oddelegowane na Ciebie - wszystkie
 responsible open	infolog	pl	Oddelegowane na Ciebie - otwarte
@@ -451,7 +448,6 @@ startdate for new entries	infolog	pl	Data rozpoczęcia dla nowych zadań
 startdate must be before enddate!!!	infolog	pl	Data rozpoczęcia musi być wcześniejsza niż termin płatności!
 starting %1	infolog	pl	Rozpoczęcie %1
 startrecord	infolog	pl	Początkowy rekord
-status	infolog	pl	Status
 status ...	infolog	pl	Status ...
 status, percent and date completed are always allowed.	infolog	pl	Status, stopień zaawansowania oraz data wykonania są zawsze możliwe do edycji.
 sub	infolog	pl	Podrz
@@ -474,6 +470,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	pl	Do kiedy powinno być zakończone Zadanie lub Rozmowa telefoniczna
 times	infolog	pl	Terminy
 titles of any entries linked to the current record, excluding attached files	infolog	pl	Tytuły wszystkich wpisów powiązanych z bieżącym rekordem, z wyłączeniem załączonych plików
+to all linked contacts	infolog	pl	Do wszystkich powiązanych kontaktów
 to many might exceed your execution-time-limit	infolog	pl	Zbyt wiele może spowodować przekroczenie czasu wykonywania
 to what should the startdate of new entries be set.	infolog	pl	Jaką wartość ustawić jako datę początkową dla nowych zadań.
 today	infolog	pl	Dzisiaj
