@@ -1086,6 +1086,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 */
 	static show_dialog(_callback? : Function, _message? : string, _title? : string, _value? : object, _buttons?, _type? : number, _icon? : string, _egw_or_appname? : string | IegwAppLocal)
 	{
+		const document = !_egw_or_appname || typeof _egw_or_appname === 'string' ? window.document : _egw_or_appname.window.document;
 		// Just pass them along, widget handles defaults & missing
 		let dialog = <Et2Dialog><unknown>document.createElement('et2-dialog');
 		dialog._setApiInstance(_egw_or_appname);
@@ -1145,6 +1146,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 */
 	static show_prompt(_callback, _message, _title?, _value?, _buttons?, _egw_or_appname?)
 	{
+		const document = !_egw_or_appname || typeof _egw_or_appname === 'string' ? window.document : _egw_or_appname.window.document;
 		let dialog = <Et2Dialog><unknown>document.createElement('et2-dialog');
 		dialog._setApiInstance();
 		dialog.transformAttributes({
@@ -1266,6 +1268,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				}
 			}
 		];
+		const document = !_egw_or_appname || typeof _egw_or_appname === 'string' ? window.document : _egw_or_appname.window.document;
 		let dialog = new Et2Dialog(_egw_or_appname);
 		dialog.transformAttributes({
 			template: dialog.egw().webserverUrl + '/api/etemplate.php/api/templates/default/long_task.xet',
