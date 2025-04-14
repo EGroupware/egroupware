@@ -300,6 +300,10 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			template: egw.webserverUrl + '/api/templates/default/avatar_edit.xet'
 		});
 		document.body.appendChild(dialog);
+		dialog.updateComplete.then(() =>
+		{
+			dialog.querySelector("#_buttons").addEventListener("click", this._handleRotate);
+		});
 		return dialog;
 	}
 
@@ -322,16 +326,24 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 					[this.getInstanceManager().etemplate_exec_id,  canvas.toDataURL("image/jpeg", 1.0)],
 					this.__editAjaxUpdatePhotoCallback.bind(this)).sendRequest();
 				break;
-			case '_rotate_reset':
+			default:
+				return false;
+		}
+	}
+
+	private _handleRotate(event)
+	{
+		let widget = document.getElementById('_cropper_image');
+		switch(event.target.id)
+		{
+			case 'rotate_reset':
 				jQuery(widget._imageNode).cropper('reset');
 				return false;
-			case '_rotate_l':
+			case 'rotate_l':
 				jQuery(widget._imageNode).cropper('rotate', -90);
 				return false;
-			case '_rotate_r':
+			case 'rotate_r':
 				jQuery(widget._imageNode).cropper('rotate', 90);
-				return false;
-			default:
 				return false;
 		}
 	}
@@ -401,6 +413,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 		{
 			let widget = document.getElementById('_cropper_image');
 			widget.image = e.target.result;
+			widget.requestUpdate("image");
 			// Wait for everything to complete
 			widget.getUpdateComplete().then(() =>
 			{
