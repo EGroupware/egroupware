@@ -344,24 +344,29 @@ app.classes.mail = AppJS.extend(
 				{
 					this.mailvelopeAvailable(this.mailvelopeCompose);
 				}
-				var that = this;
-				var plainText = this.et2.getWidgetById('mail_plaintext');
-				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 				this.mail_isMainWindow = false;
-				var pca = egw.preference(this.et2.getWidgetById('mailaccount').getValue().split(":")[0]+'_predefined_compose_addresses', 'mail');
-				for (var p in pca)
+				// add predefined addresses, but only if not already added (happens on several server-side roundtrips!)
+				const pca = egw.preference(this.et2.getWidgetById('mailaccount').getValue().split(":")[0]+'_predefined_compose_addresses', 'mail');
+				for (const p in pca)
 				{
-					if (this.et2.getWidgetById(p).getValue() && pca[p])
+					if (this.et2.getWidgetById(p).getValue() && pca[p]?.length)
 					{
-						pca[p] = pca[p].concat(this.et2.getWidgetById(p).getValue());
+						const widget = this.et2.getWidgetById(p);
+						const values = widget.getValue();
+						pca[p].forEach((value) => {
+							values.indexOf(value) == -1 && values.push(value);
+						});
+						widget.set_value(pca[p]);
 					}
-					this.et2.getWidgetById(p).set_value(pca[p]);
 				}
 				this.compose_fieldExpander_init();
 				this.check_sharing_filemode();
 
 				this.subject2title();
 
+				var that = this;
+				var plainText = this.et2.getWidgetById('mail_plaintext');
+				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 				// Set autosaving interval to 2 minutes for compose message
 				this.W_INTERVALS.push(window.setInterval(function (){
 					if (jQuery('.ms-editor-wrap').length === 0)
