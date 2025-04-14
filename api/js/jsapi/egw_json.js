@@ -602,7 +602,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'undefined')
 					{
 						return _wnd.egw_import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400|0).toString())
-							.then(() => this.applyFunc(_func, args, _context),
+							.then(() => this.applyFunc(_func, args, _context || _wnd),
 								(err) => {console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.")});
 					}
 					// check if we need a not yet instantiated app.js object --> instantiate it now
