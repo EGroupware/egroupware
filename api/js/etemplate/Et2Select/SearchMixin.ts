@@ -404,7 +404,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 						checking.push(this._missingOption(newValueElement));
 					}
 					// SlSelect removes missing options from its value
-					Promise.all(checking).then(() => { this.select.value = this.value});
+					if(checking.length)
+					{
+						Promise.all(checking).then(() => { this.value = this.value});
+					}
 				}
 			}
 		}
@@ -680,6 +683,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				// Re-set / update value since SlSelect probably removed it by now due to missing option
 				if(typeof this.select != "undefined")
 				{
+					if(this.id.includes("type"))
+					{
+						debugger;
+					}
 					this.select.value = this.shoelaceValue ?? this.value;
 					this.select.requestUpdate("value");
 				}
