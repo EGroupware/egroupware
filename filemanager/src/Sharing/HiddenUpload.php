@@ -49,9 +49,9 @@ class HiddenUpload extends AnonymousList
 
 			// Take over upload, change target and conflict strategy
 			$path = Vfs::concat(self::get_home_dir(), Sharing::HIDDEN_UPLOAD_DIR);
-			$this->etemplate->setElementAttribute('nm[upload]', 'onFinishOne', "app.filemanager.hiddenUploadOnOne");
-			// Not a real attribute, but we need to make sure we always upload to the correct place
-			$this->etemplate->setElementAttribute('nm[upload]', 'uploadPath', $path);
+			// Make sure we always upload to the correct place
+			$this->etemplate->setElementAttribute('nm[upload]', 'path', $path . "/");
+			$this->etemplate->setElementAttribute('nm[upload]', 'conflict', 'rename');
 		}
 
 		return parent::listview($content, $msg);
