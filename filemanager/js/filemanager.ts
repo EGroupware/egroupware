@@ -151,7 +151,7 @@ export class filemanagerAPP extends EgwApp
 		{
 			let fe = egw.link_get_registry('filemanager-editor');
 			let new_widget =  this.et2.getWidgetById('new');
-			if(fe && fe["edit"])
+			if(fe && fe["edit"] && new_widget)
 			{
 				let new_options = this.et2.getArrayMgr('sel_options').getEntry('new');
 				new_widget.set_select_options(new_options);
@@ -1515,13 +1515,7 @@ export class filemanagerAPP extends EgwApp
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
 		return (!_senders[0].id || data.data.is_dir && !readonly);
 	}
-
-	hiddenUploadOnOne(event)
-	{
-		let path = event.data?.options?.uploadPath || this.get_path() + "/Upload";
-		this.upload(event, 1, path, 'rename', 'EGroupware\\Filemanager\\Sharing\\HiddenUpload::ajax_action');
-	}
-
+	
 	/**
 	 * View the link from an existing share
 	 * (EPL only)
