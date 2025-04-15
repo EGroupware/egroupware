@@ -132,6 +132,23 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	function propfind($path,&$options,&$files,$user,$id='')
 	{
 		$filter = array();
+		// If the client send an "If-None-Match" header, we check with the current ctag of the calendar
+		// --> on match we return 304 Not Modified
+		if (isset($_GET['download']))
+		{
+			if (isset($_SERVER['HTTP_IF_NONE_MATCH']))
+			{
+				$http_if_none_match = $_SERVER['HTTP_IF_NONE_MATCH'];
+				// strip of quotes around etag, if they exist, that way we allow etag with and without quotes
+				if ($http_if_none_match[0] == '"') $http_if_none_match = substr($http_if_none_match, 1, -1);
+
+				if ($http_if_none_match === $this->getctag($path, $user))
+				{
+					return '304 Not Modified';
+				}
+			}
+			$filter['address_data'] = true;
+		}
 		// If "Sync selected addressbooks into one" is set
 		if ($user && $user == $GLOBALS['egw_info']['user']['account_id'] && in_array('O',$this->home_set_pref))
 		{
@@ -157,8 +174,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id) filter=".array2string($filter));
 
 		// check if we have to return the full contact data or just the etag's
-		if (!($filter['address_data'] = $options['props'] == 'all' &&
-			$options['root']['ns'] == Api\CalDAV::CARDDAV) && is_array($options['props']))
+		if (!($filter['address_data'] = !empty($filter['address_data']) ||
+			$options['props'] == 'all' && $options['root']['ns'] == Api\CalDAV::CARDDAV) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
@@ -191,6 +208,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		{
 			// return iterator, calling ourselves to return result in chunks
 			$files['files'] = $this->propfind_generator($path,$filter, $files['files']);
+		}
+		if (isset($_GET['download']))
+		{
+			$this->output_vcalendar($files['files'], 'VCARD');
 		}
 		return true;
 	}
@@ -993,7 +1014,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		}
 		//error_log(__METHOD__."('$path', ".array2string($user_in).") --> user=".array2string($user)." --> ctag=$ctag=".date('Y-m-d H:i:s',$ctag).", lists_ctag=".($lists_ctag ? $lists_ctag.'='.date('Y-m-d H:i:s',$lists_ctag) : '').' returning '.max($ctag,$lists_ctag));
 		unset($user_in);
-		return $ctags[$path] = max($ctag, $accounts_ctag, $lists_ctag);
+		return $ctags[$path] = (string)max($ctag, $accounts_ctag, $lists_ctag);
 	}
 
 	/**

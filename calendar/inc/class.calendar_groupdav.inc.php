@@ -183,6 +183,19 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		{
 			return $this->free_busy_report($path, $options, $user);
 		}
+		// If the client send an "If-None-Match" header, we check with the current ctag of the calendar
+		// --> on match we return 304 Not Modified
+		if (isset($_GET['download']) && isset($_SERVER['HTTP_IF_NONE_MATCH']))
+		{
+			$http_if_none_match = $_SERVER['HTTP_IF_NONE_MATCH'];
+			// strip of quotes around etag, if they exist, that way we allow etag with and without quotes
+			if ($http_if_none_match[0] == '"') $http_if_none_match = substr($http_if_none_match, 1, -1);
+
+			if ($http_if_none_match === $this->getctag($path, $user))
+			{
+				return '304 Not Modified';
+			}
+		}
 
 		// ToDo: add parameter to only return id & etag
 		$filter = array(
@@ -288,53 +301,6 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$this->output_vcalendar($files['files']);
 		}
 		return true;
-	}
-
-	/**
-	 * Download whole calendar as big ics file
-	 *
-	 * @param iterator|array $files
-	 */
-	function output_vcalendar($files)
-	{
-		// todo ETag logic with CTag to not download unchanged calendar again
-		Api\Header\Content::type('calendar.ics', 'text/calendar');
-
-		$n = 0;
-		foreach($files as $file)
-		{
-			if (!$n++) continue;	// first entry is collection itself
-
-			$icalendar = $file['props']['calendar-data']['val'];
-			if (($start = strpos($icalendar, 'BEGIN:VEVENT')) !== false &&
-				($end = strrpos($icalendar, 'END:VCALENDAR')) !== false)
-			{
-				if ($n === 2)
-				{
-					// skip X-CALENDARSERVER-ACCESS:CONFIDENTIAL, as it is on VCALENDAR not VEVENT level
-					if (($x_calendarserver_access = strpos($icalendar, 'X-CALENDARSERVER-ACCESS:')) !== false)
-					{
-						echo substr($icalendar, 0, $x_calendarserver_access);
-					}
-					// skip timezones, as we would need to collect them from all events
-					// ans most clients understand timezone by reference anyway
-					elseif (($tz = strpos($icalendar, 'BEGIN:VTIMEZONE')) !== false)
-					{
-						echo substr($icalendar, 0, $tz);
-					}
-					else
-					{
-						echo substr($icalendar, 0, $start);
-					}
-				}
-				echo substr($icalendar, $start, $end-$start);
-			}
-		}
-		if ($icalendar && $end)
-		{
-			echo "END:VCALENDAR\n";
-		}
-		exit();
 	}
 
 	/**
