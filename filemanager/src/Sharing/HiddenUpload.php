@@ -49,6 +49,7 @@ class HiddenUpload extends AnonymousList
 
 			// Take over upload, change target and conflict strategy
 			$path = Vfs::concat(self::get_home_dir(), Sharing::HIDDEN_UPLOAD_DIR);
+			$this->etemplate->setElementAttribute('nm[upload]', 'onFinish', "app.filemanager.hiddenUploadComplete");
 			// Make sure we always upload to the correct place
 			$this->etemplate->setElementAttribute('nm[upload]', 'path', $path . "/");
 			$this->etemplate->setElementAttribute('nm[upload]', 'conflict', 'rename');
@@ -56,55 +57,7 @@ class HiddenUpload extends AnonymousList
 
 		return parent::listview($content, $msg);
 	}
-
-	/**
-	 * Deal with an uploaded file.
-	 * Overridden from the parent to change the message and message type
-	 *
-	 * @param string $action Should be 'upload'
-	 * @param $selected Array of file information
-	 * @param string $dir Target directory
-	 * @param string[] $props ui_path=>path the sharing UI is running eg. "/egroupware/share.php/<token>"
-	 * @param string[] $arr Result
-	 *
-	 * @throws Api\Exception\AssertionFailed
-	 */
-	protected static function handle_upload_action(string $action, $selected, $dir, $props, &$arr)
-	{
-		Translation::add_app('filemanager');
-		$vfs = Vfs::mount();
-		$GLOBALS['egw']->sharing[Sharing::get_token($props['ui_path'])]->redo();
-		parent::handle_upload_action($action, $selected, $dir, null, $arr);
-
-		// Parent upload action ruins our mount and says the upload failed.
-		// Do the mount again
-		$GLOBALS['egw']->sharing[Sharing::get_token($props['ui_path'])]->redo();
-
-		// Check ourselves for success
-		foreach($selected as $filekey => $file_info)
-		{
-			if(!is_array($file_info))
-			{
-				continue;
-			}
-			if($arr['uploaded'][$filekey] && Vfs::stat($arr['uploaded'][$filekey]['path']))
-			{
-				// success
-				$arr['files']++;
-				$arr['errs']--;
-			}
-		}
-		if($arr['files'])
-		{
-			$arr['msg'] = lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.");
-			$arr['type'] = 'notice';
-		}
-		else
-		{
-			$arr['type'] = 'error';
-		}
-	}
-
+	
 	protected function is_hidden_upload_dir($directory)
 	{
 		if (!isset($GLOBALS['egw']->sharing)) return false;

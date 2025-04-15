@@ -1516,7 +1516,20 @@ export class filemanagerAPP extends EgwApp
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
 		return (!_senders[0].id || data.data.is_dir && !readonly);
 	}
-	
+
+	hiddenUploadComplete(event)
+	{
+		if(!event.detail || Object.values(event.detail).length == 0)
+		{
+			return;
+		}
+
+		this.egw.message(
+			this.egw.lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link."),
+			'info'
+		);
+	}
+
 	/**
 	 * View the link from an existing share
 	 * (EPL only)
