@@ -175,6 +175,19 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			// when trying to request not supported components, eg. VTODO on a calendar collection
 			return true;
 		}
+		// If the client send an "If-None-Match" header, we check with the current ctag of the calendar
+		// --> on match we return 304 Not Modified
+		if (isset($_GET['download']) && isset($_SERVER['HTTP_IF_NONE_MATCH']))
+		{
+			$http_if_none_match = $_SERVER['HTTP_IF_NONE_MATCH'];
+			// strip of quotes around etag, if they exist, that way we allow etag with and without quotes
+			if ($http_if_none_match[0] == '"') $http_if_none_match = substr($http_if_none_match, 1, -1);
+
+			if ($http_if_none_match === $this->getctag($path, $user))
+			{
+				return '304 Not Modified';
+			}
+		}
 		// enable time-range filter for tests via propfind / autoindex
 		//$filter[] = $sql = $this->_time_range_filter(array('end' => '20001231T000000Z'));
 
@@ -222,11 +235,15 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		{
 			$files['files'] = $this->propfind_generator($path,$filter, $files['files']);
 		}
+		if (isset($_GET['download']))
+		{
+			$this->output_vcalendar($files['files'], 'VTODO');
+		}
 		return true;
 	}
 
 	/**
-	 * Chunk-size for DB queries of profind_generator
+	 * Chunk-size for DB queries of propfind_generator
 	 */
 	const CHUNK_SIZE = 500;
 

@@ -923,4 +923,65 @@ abstract class Handler
 		}
 		return Api\Link::unlink($link_id) ? '204 No Content' : '400 Something went wrong';
 	}
+
+	/**
+	 * Download whole calendar or addressbook as big ics/vcf file
+	 *
+	 * @param iterator|array $files
+	 * @param string $tag "VEVENT" (default), "VTODO" or "VCARD"
+	 */
+	function output_vcalendar($files, $tag='VEVENT')
+	{
+		if ($tag === 'VCARD')
+		{
+			Api\Header\Content::type('addressbook.vcf', 'text/vcard');
+			$prop = 'address-data';
+		}
+		else
+		{
+			Api\Header\Content::type('calendar.ics', 'text/calendar');
+			$prop='calendar-data';
+		}
+
+		$n = 0;
+		foreach($files as $file)
+		{
+			if (!$n++)
+			{
+				// ETag logic with CTag to not download unchanged calendar again
+				header('ETag: "'.$file['props']['getctag']['val'].'"');
+				continue;   	// first entry is collection itself
+			}
+
+			if (($icalendar = $file['props'][$prop]['val']??null) &&
+				($start = strpos($icalendar, 'BEGIN:'.$tag)) !== false &&
+				($end = strrpos($icalendar, 'END:'.$tag)) !== false)
+			{
+				if ($n === 2)
+				{
+					// skip X-CALENDARSERVER-ACCESS:CONFIDENTIAL, as it is on VCALENDAR not VEVENT level
+					if (($x_calendarserver_access = strpos($icalendar, 'X-CALENDARSERVER-ACCESS:')) !== false)
+					{
+						echo substr($icalendar, 0, $x_calendarserver_access);
+					}
+					// skip timezones, as we would need to collect them from all events
+					// and most clients understand timezone by reference anyway
+					elseif (($tz = strpos($icalendar, 'BEGIN:VTIMEZONE')) !== false)
+					{
+						echo substr($icalendar, 0, $tz);
+					}
+					else
+					{
+						echo substr($icalendar, 0, $start);
+					}
+				}
+				echo substr($icalendar, $start, $end-$start+strlen('END:'.$tag)+2); // +2 for "\r\n"
+			}
+		}
+		if ($icalendar && $end && $tag !== 'VCARD')
+		{
+			echo "END:VCALENDAR\n";
+		}
+		exit();
+	}
 }
