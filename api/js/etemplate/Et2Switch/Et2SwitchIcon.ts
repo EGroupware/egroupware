@@ -127,6 +127,12 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 		return this.switch?.checked;
 	}
 
+	/** Overridden from parent because something in there clears / resets the check value */
+	async validate(skipManual = false)
+	{
+		return;
+	}
+
 	labelTemplate()
 	{
 		return html`

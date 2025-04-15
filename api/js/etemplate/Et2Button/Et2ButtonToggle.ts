@@ -152,7 +152,7 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 		if(changedProperties.has("icon") || this.icon && (!this.onIcon || this.onIcon == "check"))
 		{
 			this.onIcon = this.icon;
-			this.offIcon = this.icon;
+			this.offIcon = this.offIcon || this.icon;
 		}
 	}
 
