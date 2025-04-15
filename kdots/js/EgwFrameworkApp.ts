@@ -144,7 +144,6 @@ export class EgwFrameworkApp extends LitElement
 	/** The application's content must be in an iframe instead of handled normally */
 	protected useIframe = false;
 	protected _sideboxData : any;
-	private _hasFavorites = false;
 
 	connectedCallback()
 	{
@@ -287,12 +286,12 @@ export class EgwFrameworkApp extends LitElement
 	{
 		this._sideboxData = sideboxData;
 
-		if(this._sideboxData?.some(s => s.title == "Favorites" || s.title == this.egw.lang("favorites")))
+		if(this.features?.favorites || this._sideboxData?.some(s => s.title == "Favorites" || s.title == this.egw.lang("favorites")))
 		{
+			this.features.favorites = true;
 			// This might be a little late, but close enough for rendering
 			Favorite.load(this.egw, this.name).then((favorites) =>
 			{
-				this._hasFavorites = (Object.values(favorites).length > 1)
 				this.requestUpdate();
 			});
 		}
@@ -604,27 +603,24 @@ export class EgwFrameworkApp extends LitElement
 	protected _leftMenuTemplate()
 	{
 		// Put favorites in left sidebox if any are set
-		if(!this._hasFavorites)
+		if(!this.features?.favorites)
 		{
 			return nothing;
 		}
 		return html`${until(Favorite.load(this.egw, this.name).then((favorites) =>
 		{
-			// If more than the blank favorite is found, add favorite menu to sidebox
-			if(Object.values(favorites).length > 1)
-			{
-				const favSidebox = this._sideboxData.find(s => s.title.toLowerCase() == "favorites" || s.title == this.egw.lang("favorites"));
-				return html`
-                    <sl-details class="favorites" slot="left"
-                                ?open=${favSidebox?.opened}
-                                summary=${this.egw.lang("Favorites")}
-                                @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
-                                @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
-                    >
-                        <et2-favorites-menu application=${this.name}></et2-favorites-menu>
-                    </sl-details>
-				`;
-			}
+			// Add favorite menu to sidebox
+			const favSidebox = this._sideboxData?.find(s => s.title.toLowerCase() == "favorites" || s.title == this.egw.lang("favorites"));
+			return html`
+                <sl-details class="favorites" slot="left"
+                            ?open=${favSidebox?.opened}
+                            summary=${this.egw.lang("Favorites")}
+                            @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
+                            @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
+                >
+                    <et2-favorites-menu application=${this.name}></et2-favorites-menu>
+                </sl-details>
+			`;
 		}), nothing)}`;
 	}
 
@@ -749,7 +745,7 @@ export class EgwFrameworkApp extends LitElement
 
 	render()
 	{
-		const hasLeftSlots = this.hasSideContent("left") || this._hasFavorites;
+		const hasLeftSlots = this.hasSideContent("left") || this.features?.favorites;
 		const hasRightSlots = this.hasSideContent("right");
 
 		const leftWidth = this.leftCollapsed || !hasLeftSlots ? this.leftPanelInfo.hiddenWidth :

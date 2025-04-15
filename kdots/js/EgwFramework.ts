@@ -318,7 +318,10 @@ export class EgwFramework extends LitElement
 		{
 			appComponent.setAttribute("active", '');
 		}
-		appComponent.features = app.features;
+		appComponent.features = {
+			...DEFAULT_FEATURES,
+			...app.features
+		};
 
 		this.append(appComponent);
 		// App was not in the tab list
@@ -982,5 +985,13 @@ export interface ApplicationInfo
 // List of features that the framework can handle in a standard way for each app
 export type FeatureList = {
 	appConfig? : boolean,
-	preferences? : boolean;
+	preferences? : boolean,
+	favorites? : boolean
+}
+
+// Feature settings for app when they haven't been set / overridden with anything specific
+export const DEFAULT_FEATURES : FeatureList = {
+	appConfig: false,
+	preferences: false,
+	favorites: false,
 }
