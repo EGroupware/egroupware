@@ -752,7 +752,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	 */
 	_handleInputChange(e : InputEvent)
 	{
-		if(this.disabled)
+		if(this.disabled || this.getOptions().inline)
 		{
 			return;
 		}
@@ -797,7 +797,8 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			}
 			// Update the et2-textbox so it has current value for any (required) validation
 			this._inputNode.value = formattedDate;
-			(<Et2Textbox>this._inputNode).validate();
+			// @ts-ignore
+			this._inputNode.validate && (<Et2Textbox>this._inputNode).validate();
 		}
 		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}

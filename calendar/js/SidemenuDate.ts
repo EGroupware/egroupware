@@ -110,7 +110,7 @@ export class SidemenuDate extends Et2Date
 
 		options.allowInput = false;
 		options.inline = true;
-		options.dateFormat = "Y-m-dT00:00:00\\Z";
+		options.dateFormat = options.altFormat = "Y-m-dT00:00:00\\Z";
 
 		options.onMonthChange = this._handleHeaderChange;
 		options.onYearChange = this._handleHeaderChange;
