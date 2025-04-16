@@ -329,7 +329,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		// Don't do the menu
 		_ev.stopImmediatePropagation();
 
-		let trash = <HTMLElement>(<HTMLElement>_ev.target).parentNode;
+		let trash = <HTMLElement>(<HTMLElement>_ev.target);
 		let line = <SlMenuItem>trash.parentNode;
 		let fav = this.favoriteByID(line.value);
 		line.classList.add("loading");
