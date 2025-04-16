@@ -8,7 +8,7 @@ FROM ${ARCH}ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
-ARG PHP_VERSION=8.2
+ARG PHP_VERSION=8.3
 # Set environment variable for non-interactive install
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TARGETPLATFORM
