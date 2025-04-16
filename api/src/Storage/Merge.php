@@ -1647,14 +1647,14 @@ abstract class Merge
 			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
 			$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")?>.?<([^ >]+?)( ?[^>]*?)>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
-			$replacement = '<table:table-cell$1office:value-type="float" office:value="$6"$2><$3$4>$5</$3></table:table-cell>';
+			$replacement = '<table:table-cell$1office:value-type="float" calcext:value-type="float" office:value="$6"$2><$3$4>$5</$3></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':        // tables in open office writer
 			case 'application/vnd.oasis.opendocument.presentation':
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
 			$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([^ >]+?)( ?[^>]*?)>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
-			$replacement = '<table:table-cell$1office:value-type="float" office:value="$6"$2><text:p $4>$5</text:p></table:table-cell>';
+			$replacement = '<table:table-cell$1office:value-type="float" calcext:value-type="float" office:value="$6"$2><text:p $4>$5</text:p></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':        // open office writer
 			case 'application/xmlExcel.Sheet':    // Excel 2003
@@ -1785,7 +1785,7 @@ abstract class Merge
 				$content = str_ireplace('calcext:value-type="string"', '', $content);
 
 				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>\$\$(' . implode('|', $names) . ')\$\$<\/\3>.?<\/table:table-cell>/s';
-				$replacement = '<table:table-cell$1office:value-type="date" office:date-value="\$\$$4\$\$"$2><$3>\$\$$4\$\$</$3></table:table-cell>';
+				$replacement = '<table:table-cell$1office:value-type="date" calcext:value-type="date" office:date-value="\$\$$4\$\$"$2><$3>\$\$$4\$\$</$3></table:table-cell>';
 				break;
 			case 'application/xmlExcel.Sheet':    // Excel 2003
 				$format = '/' . preg_quote('<Data ss:Type="String">', '/') . '..(' . implode('|', $names) . ')..' . preg_quote('</Data>', '/') . '/';
