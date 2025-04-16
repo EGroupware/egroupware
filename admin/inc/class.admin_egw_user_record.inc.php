@@ -85,7 +85,7 @@ class admin_egw_user_record implements importexport_iface_egw_record
 	 */
 	public function get_title() {
 		return $this->identifier ? Api\Accounts::username($this->identifier) :
-			Accounts::format_username($this->account_lid, $this->account_firstname, $this->account_lastname, $this->identifier);
+			Api\Accounts::format_username($this->account_lid, $this->account_firstname, $this->account_lastname, $this->identifier);
 	}
 
 	/**
