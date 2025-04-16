@@ -365,7 +365,7 @@ class Auth
 			$log_passwd = str_repeat('*', strlen($passwd));
 		}
 		$ret = Cache::getCache($GLOBALS['egw_info']['server']['install_id'],
-			__CLASS__, sha1($username.':'.$passwd.':'.$passwd_type), function($username, $passwd, $passwd_type) use ($log_passwd)
+			__CLASS__, sha1($username.':'.$passwd.':'.$passwd_type.':'.get_class($this->backend)), function($username, $passwd, $passwd_type) use ($log_passwd)
 		{
 			$ret = $this->backend->authenticate($username, $passwd, $passwd_type);
 			self::log(get_class($this->backend)."('$username', '$log_passwd', '$passwd_type') returned ".json_encode($ret));

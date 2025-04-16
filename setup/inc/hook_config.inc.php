@@ -188,7 +188,7 @@ function auth_type_host($config)
 }
 function auth_type_security($config)
 {
-	return _options_from(setup_cmd_config::auth_types()+['fallback' => 'Fallback (LDAP->SQL)'],$config['auth_type_mail']);
+	return _options_from(setup_cmd_config::auth_types()+['fallback' => 'Fallback (LDAP->SQL)'],$config['auth_type_security']);
 }
 
 /**
