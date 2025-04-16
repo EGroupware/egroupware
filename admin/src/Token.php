@@ -107,7 +107,9 @@ class Token
 			unset($content['button']);
 
 			if ($button !== 'cancel' && static::APP !== 'admin' &&
-				!(new Api\Auth())->authenticate($GLOBALS['egw_info']['user']['account_lid'], $content['password']))
+				!(new Api\Auth($GLOBALS['egw_info']['server']['auth_type_security'] ??
+					$GLOBALS['egw_info']['server']['auth_type'] ??
+					$GLOBALS['egw_info']['server']['account_repository'] ?? 'sql'))->authenticate($GLOBALS['egw_info']['user']['account_lid'], $content['password']))
 			{
 				Api\Etemplate::set_validation_error('password', lang('Password is invalid'));
 				$button = null;
