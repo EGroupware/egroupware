@@ -1,3 +1,22 @@
+egroupware-docker (23.1.20250416) hardy; urgency=low
+
+  * API/eTemplate: fix performance degradation over time due to memory-leaks in client-side JavaScript code
+  * API/eTemplate: new webcomponents for file upload and templates
+  * Calendar: allow to subscribe to / show external calendars (ics files or CalDAV collections)
+  * Calendar: fix drag-n-drop for Safari browser
+  * Calendar: fix notifications contained all recurrences as exceptions
+  * Calendar: fix flickering/looping of planner in various situations
+  * InfoLog: new config to give responsible user access to linked contacts
+  * VIDOTEACH: allow to upload and annotate mp3 audio files
+  * Addressbook/REST Api: fix error unsetting birthday / anniversary type="birth"
+  * Addressbook: hide account-name column for non-admins, unless otherwise configured in app-configuration of addressbook
+  * WebDAV: improve performance by not returning all extra properties, if they are not requested
+  * Setup/Preferences: allow to override authentication for Password & Security e.g. for OAuth to check LDAP
+  * API/Mail/Collabora: fix some cases of not available session password since storing it encrypted in the session
+  * Login page: replace Twitter with BlueSky and Mastodon in our social media links
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 16 Apr 2025 08:48:16 +0200
+
 egroupware-docker (23.1.20250307) hardy; urgency=low
 
   * Api: diverse security hardening following up a pentest through SySS GmbH contracted by one of our customers
