@@ -3,11 +3,12 @@
 ## EGroupware development container using Debian 12/Bookworm, NodeJS 20 and PHP from ondrej/php PPA
 ##
 ################################################################################
-FROM node:20-bookworm-slim
+ARG ARCH=
+FROM ${ARCH}node:20-bookworm-slim
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
-ARG PHP_VERSION=8.2
+ARG PHP_VERSION=8.4
 
 # keeping build-arg in environment for entrypoint.sh
 ENV VERSION=$VERSION
