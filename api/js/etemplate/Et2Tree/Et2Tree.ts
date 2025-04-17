@@ -280,7 +280,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			) &&
 			typeof this.onclick === "function" && typeof _ev.target.value === "string")
 		{
-			this.onclick(_ev.target.value, this, _ev.target.value)
+			this.onclick(_ev.target.value, this, this._previousOption?.value ?? this._previousOption?.id)
 		}
 	}
 
