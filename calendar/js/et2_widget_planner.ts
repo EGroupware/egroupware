@@ -376,6 +376,8 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				// Remove helper
 				document.body.querySelectorAll(".calendar_d-n-d_helper").forEach(n => n.remove());
 			});
+
+		this.div.get(0).addEventListener("click", this.click, true);
 		return true;
 	}
 
@@ -2419,7 +2421,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		if(!this.options.readonly && this.gridHeader.has(_ev.target).length === 0 && !jQuery(_ev.target).hasClass('calendar_plannerRowHeader'))
 		{
 			// Event came from inside, maybe a calendar event
-			var event = this._get_event_info(_ev.originalEvent.target);
+			const event = this._get_event_info(_ev.target);
 			if(typeof this.onclick == 'function')
 			{
 				// Make sure function gets a reference to the widget, splice it in as 2. argument if not
