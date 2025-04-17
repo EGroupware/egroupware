@@ -4,9 +4,9 @@ import {cleanSelectOptions} from "../FindSelectOptions";
 
 export class Et2SelectTimezone extends Et2StaticSelectMixin(Et2Select)
 {
-	constructor()
+	connectedCallback()
 	{
-		super();
+		super.connectedCallback();
 		this.fetchComplete = StaticOptions.timezone(this, {other: this.other ?? []}).then((options) =>
 		{
 			this.set_static_options(cleanSelectOptions(options));
