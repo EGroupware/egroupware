@@ -687,7 +687,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				(<Et2Tabs>tab.parentElement).show(tab.name);
 				await (<Et2Tabs>tab.parentElement).updateComplete;
 			}
-			this.scrollIntoView();
+			this.scrollIntoViewIfNeeded();
 			super.focus && super.focus();
 			this.getInputNode()?.focus();
 		}
