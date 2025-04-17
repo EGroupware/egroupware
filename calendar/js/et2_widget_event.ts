@@ -545,7 +545,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						location_node.className = "calendar_calEventLabel";
 						et2_insertLinkText(et2_activateLinks(
 							this.egw().lang('Location') + ': ' +
-							egw.htmlspecialchars(this.options.value.location)), location_node, '_blank');
+							this.options.value.location), location_node, '_blank');
 						location += location_node.outerHTML;
 
 						if (this.options.value['##videoconference'])
