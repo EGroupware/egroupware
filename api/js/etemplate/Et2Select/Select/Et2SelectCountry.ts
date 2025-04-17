@@ -39,17 +39,16 @@ export class Et2SelectCountry extends Et2StaticSelectMixin(Et2Select)
 		super();
 
 		this.search = true;
-
-		this.fetchComplete = (<Promise<SelectOption[]>>so.country(this, {}, true)).then(options =>
-		{
-			this._static_options = options
-			this.requestUpdate("select_options");
-		});
 	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
+		this.fetchComplete = (<Promise<SelectOption[]>>so.country(this, {}, true)).then(options =>
+		{
+			this._static_options = options
+			this.requestUpdate("select_options");
+		});
 	}
 
 	/**
