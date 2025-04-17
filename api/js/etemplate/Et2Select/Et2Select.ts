@@ -894,7 +894,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	protected _handleMouseWheel(e : MouseEvent)
 	{
 		// Grab & stop mousewheel to prevent scrolling sidemenu when scrolling through options
-		e => e.stopImmediatePropagation()
+		if(this.open)
+		{
+			e.stopImmediatePropagation();
+		}
 	}
 
 	/** Shows the listbox. */
