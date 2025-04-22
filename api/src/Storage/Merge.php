@@ -1398,8 +1398,9 @@ abstract class Merge
 			{
 				if(($value = $replacements['$$' . $field . '$$'] ?? null))
 				{
-					$time = Api\DateTime::createFromFormat('+' . Api\DateTime::$user_dateformat . ' ' . Api\DateTime::$user_timeformat . '*', $value);
+					$time = Api\DateTime::createFromFormat('+' . Api\DateTime::$user_dateformat . '*' . Api\DateTime::$user_timeformat . '*', $value);
 					$replacements['$$' . $field . '/date$$'] = $time ? $time->format(Api\DateTime::$user_dateformat) : '';
+					$replacements['$$' . $field . '/time$$'] = $time ? $time->format(Api\DateTime::$user_timeformat) : '';
 				}
 			}
 		}
@@ -1836,7 +1837,7 @@ abstract class Merge
 				$this->numeric_fields[] = "#{$fieldname}";
 					break;
 				case 'date':
-				case 'datetime':
+				case 'date-time':
 				$this->date_fields[] = "#{$fieldname}";
 			}
 		}
