@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id ="admin.mainscreen_message.mainscreen" version="18.1">
+    <template id="admin.mainscreen_message.mainscreen" version="18.1">
 		<et2-vbox>
 			<htmlarea id="html_mainscreen" height="500" width="100%" disabled="!$cont[html]" valid_children="+body[style]"/>
-			<et2-textarea  id="text_mainscreen" disabled="$cont[html]" rows="25" cols="70" height="500"></et2-textarea>
+            <et2-textarea id="text_mainscreen" hidden="$cont[html]" rows="25" cols="70" height="500"></et2-textarea>
 		</et2-vbox>
 	</template>
-	<template id ="admin.mainscreen_message.loginscreen" version="18.1">
+    <template id="admin.mainscreen_message.loginscreen" version="18.1">
 		<et2-vbox>
 			<htmlarea id="html_loginscreen" height="500" width="100%" disabled="!$cont[html]" valid_children="+body[style]"/>
-			<et2-textarea  id="text_loginscreen" disabled="$cont[html]" rows="25" cols="70" height="500"></et2-textarea>
+            <et2-textarea id="text_loginscreen" hidden="$cont[html]" rows="25" cols="70" height="500"></et2-textarea>
 		</et2-vbox>
 	</template>
 	<template id="admin.mainscreen_message" template="" lang="" group="0" version="18.1">
