@@ -2463,6 +2463,8 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
                            hour: date.getUTCHours(),
                            minute: date.getUTCMinutes()
                        }, data));
+					_ev.preventDefault();
+					_ev.stopImmediatePropagation();
 					return false;
 				}
 			}
