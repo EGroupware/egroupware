@@ -39,6 +39,10 @@ export class Et2Tag extends Et2Widget(SlTag)
 				display: inline-block;
 			}
 
+				::slotted(et2-lavatar) {
+					--size: 2rem;
+				}
+
 			.tag__prefix {
 			  line-height: normal;
 			}
