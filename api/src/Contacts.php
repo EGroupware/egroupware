@@ -2763,10 +2763,11 @@ class Contacts extends Contacts\Storage
 
 			$contact = current($this->search(
 				['contact_email' => $email, 'contact_email_home' => $email],
-				['contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family', 'contact_files', 'etag', 'account_lid'],
-				'contact_files & ' . self::FILES_BIT_PHOTO . ' DESC', '', '', false, 'OR', [0, 1]
-			) ?: []
-			);
+				['contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family', 'contact_files', 'etag'],
+				'contact_files & ' . self::FILES_BIT_PHOTO . ' DESC',
+				!empty($GLOBALS['egw_info']['user']['preferences']['common']['avatar_display']) ? ['account_lid'] : [],
+				'', false, 'OR', [0, 1]
+			) ?: []);
 			if(!$contact || $_GET['no_gen'] && !((int)$contact['files'] & self::FILES_BIT_PHOTO))
 			{
 				Session::cache_control(86400 * 10);    // cache for 10 days
