@@ -437,7 +437,10 @@ export class Et2Template extends Et2Widget(LitElement)
 				{
 					continue;
 				}
-				Et2Template.templateCache[template.getAttribute("id")] = <Element>template;
+				if(template.getAttribute("id"))
+				{
+					Et2Template.templateCache[template.getAttribute("id")] = <Element>template;
+				}
 				if(template.getAttribute("id") == template_name)
 				{
 					xml = template;
