@@ -321,13 +321,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		}
 		this.open = true;
 		this.requestUpdate("open", false)
-		if (this.openAtSelection)
-		{
-			//TODO check what to wait on, waiting on updateComplete does not work
-			setTimeout(() =>
-				this._tree.scrollToSelected(),100)
-		}
-		return this.updateComplete
+
+		return this.updateComplete.then(() => { this.openAtSelection && this._tree.scrollToSelected() });
 	}
 
 	/** Hides the tree. */

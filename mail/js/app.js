@@ -265,8 +265,21 @@ app.classes.mail = AppJS.extend(
 					this.tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 				}
 				if (this.tree_wdg) {
+					// show / open selected folder, if necessary autoload it
+					if (this.tree_wdg.value && !this.tree_wdg.scrollToSelected()) {
+						const parts = this.tree_wdg.value.split('::');
+						const path_parts = parts[1].split('/');
+						const do_open = (folder) => {
+							this.tree_wdg.openItem(folder).then(() => {
+								if (path_parts.length > 1)
+								{
+									do_open(folder + '/' + path_parts.shift());
+								}
+							});
+						}
+						path_parts && do_open(parts[0]+'::'+path_parts.shift());
+					}
 					//TODO check if there are changes necessary
-
 					this.tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 					this.tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
 				}
@@ -2621,7 +2634,7 @@ app.classes.mail = AppJS.extend(
 		this.mail_refreshQuotaDisplay(server[0]);
 		this.mail_preview();
 		this.mail_callRefreshVacationNotice(server[0]);
-		if (server[0]!=previousServer[0])
+		if (previousServer && server[0] != previousServer[0])
 		{
 			egw.jsonq('mail.mail_ui.ajax_refreshFilters',[server[0]]);
 		}
