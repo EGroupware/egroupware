@@ -206,7 +206,7 @@ class mail_hooks
 		// Build toogled on actions sel options
 		$allActions = mail_compose::getToolbarActions(array(
 			'priority' => true,
-			'mailaccount' => $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']
+			'mailaccount' => (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']
 		));
 		$toggledOnActions = array (
 			'cc_expander' => array (

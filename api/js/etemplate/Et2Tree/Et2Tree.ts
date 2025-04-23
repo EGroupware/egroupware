@@ -107,10 +107,9 @@ export const composedPathContains = (_ev: any, tag?: string, className?: string)
  */
 export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements FindActionTarget
 {
-	//does not work because it would need to be run on the shadow root
-	//@query("sl-tree-item[selected]") selected: SlTreeItem;
-
-	//the trees lazy-loading promise, so we can externally do additional stuff after it resolves
+	/**
+	 * the trees lazy-loading promise, so we can externally do additional stuff after it resolves
+	 */
 	private lazyLoading: Promise<void>;
 
 	/**
@@ -736,14 +735,16 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 * scrolls to the (first) selected slTreeItem into view
 	 * this function delays, if not all parents of the item are expanded
 	 *
+	 * @return boolean true: selected item scrolled into view, false: selected item not found / loaded
 	 */
 	public scrollToSelected()
 	{
 		try
 		{
 			const item: SlTreeItem = this.shadowRoot.querySelector('sl-tree-item[selected]');
-			if (item == null) return
-
+			if (!item) {
+				return false;
+			}
 
 			//this might not work because item pant is not expanded
 			//in that case expand all parents and wait before trying to scroll again
@@ -752,7 +753,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			if (!parent || parent.expanded)
 			{
 				item.scrollIntoView()
-				return
+				return true;
 			}
 			//fallback
 			//expand all parent items
@@ -761,16 +762,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				if (!parent.expanded) parent.expanded = true;
 				parent = parent.parentElement?.tagName === "SL-TREE-ITEM" ? <SlTreeItem>parent.parentElement : null;
 			}
-			// this.updateComplete.then(
-			// 	(bool: boolean) =>
-			// 		item.scrollIntoView()
-			// )
-			// waiting for update complete is not enough
-			setTimeout(()=> item.scrollIntoView(),500)
+			this.updateComplete.then(() => item.scrollIntoView());
 		} catch (e)
 		{
 			console.log("Could not scroll to item");
 		}
+		return true;
 	}
 
 	/**
@@ -787,7 +784,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			item.open = 1;
 		}
 		this.requestUpdate();
-		return this.updateComplete;
+
+		return this.updateComplete.then(() => this.lazyLoading ? this.lazyLoading : Promise.resolve());
 	}
 
 	/**
@@ -983,8 +981,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	protected async finishedLazyLoading()
 	{
 		await this.lazyLoading;
-		let result = this.lazyLoading
-		return result
+		return this.lazyLoading
 	}
 
 
@@ -1300,12 +1297,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 		if (selectOption.open)
 		{
-			return true
-		}
-		// TODO: Move this mail-specific stuff into mail
-		if(typeof selectOption.id === "string" && (selectOption.id.endsWith("INBOX") || selectOption.id == window.egw.preference("ActiveProfileID", "mail")))
-		{
-			selectOption.open = 1
 			return true
 		}
 		return false;

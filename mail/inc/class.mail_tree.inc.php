@@ -173,15 +173,15 @@ class mail_tree
 	}
 
 	/**
-	 * getTree provides tree structure regarding to selected node
+	 * Provides tree structure regarding the selected node
 	 *
 	 * @param string $_parent = null no parent node means root with the first level of folders
 	 * @param string $_profileID = '' icServer id
 	 * @param int|boolean $_openTopLevel = 1 Open top level folders on load if it's set to 1|true,
 	 *  false|0 leaves them in closed state
-	 * @param $_noCheckboxNS = false no checkbox for namesapaces makes sure to not put checkbox for namespaces node
+	 * @param $_noCheckboxNS = false no checkbox for namespaces makes sure to not put checkbox for namespaces node
 	 * @param boolean $_subscribedOnly = false get only subscribed folders
-	 * @param boolean $_allInOneGo = false, true will get all folders (dependes on subscribedOnly option) of the account in one go
+	 * @param boolean $_allInOneGo = false, true will get all folders of the account in one go
 	 * @param boolean $_checkSubscribed = true, pre-check checkboxes of subscribed folders
 	 *
 	 * @return array returns an array of mail tree structure according to provided node
@@ -544,10 +544,10 @@ class mail_tree
 	 * @param boolean $_allInOneGo = false, true will get all folders (dependes on subscribedOnly option) of the account in one go
 	 * @return type an array of tree
 	 */
-	function getInitialIndexTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_subscribedOnly= false, $_allInOneGo = false)
+	function getInitialIndexTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_subscribedOnly= false)
 	{
-		$tree = $this->getTree($_parent, '', $_openTopLevel, false, $_subscribedOnly, $_allInOneGo);
-		$branches = $this->getTree($_profileID, $_profileID,1,false,$_subscribedOnly,$_allInOneGo);
+		$tree = $this->getTree($_parent, '', $_openTopLevel, false, $_subscribedOnly);
+		$branches = $this->getTree($_profileID, $_profileID,1,false, $_subscribedOnly);
 		foreach ($tree[Tree::CHILDREN] as &$account)
 		{
 			if ($account[Tree::ID] == $_profileID)

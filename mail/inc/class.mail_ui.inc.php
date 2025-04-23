@@ -521,7 +521,7 @@ class mail_ui
 				}
 
 				//$zstarttime = microtime (true);
-				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 				//$zendtime = microtime(true) - $zstarttime;
 				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
@@ -598,7 +598,7 @@ class mail_ui
 			{
 				if (empty($etpl))
 				{
-					$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+					$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 					$etpl = new Etemplate('mail.index');
 				}
 				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions(false));
@@ -885,7 +885,7 @@ class mail_ui
 	{
 		$nodeID = $_GET['id'];
 		if (!is_null($_nodeID)) $nodeID = $_nodeID;
-		$subscribedOnly = (bool)(!is_null($_subscribedOnly)?$_subscribedOnly:!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+		$subscribedOnly = (bool)($_subscribedOnly ?? !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 		$fetchCounters = !is_null($_nodeID);
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
 
@@ -895,11 +895,11 @@ class mail_ui
 		// then we need to reinitialized the index tree
 		if(!$nodeID && !$_profileID)
 		{
-			$data = $this->mail_tree->getInitialIndexTree(null,null,null,null,true,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+			$data = $this->mail_tree->getInitialIndexTree(null, null, null, $subscribedOnly);
 		}
 		else
 		{
-			$data = $this->mail_tree->getTree($nodeID,$_profileID,0, false,$subscribedOnly,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+			$data = $this->mail_tree->getTree($nodeID,$_profileID, 0, false, $subscribedOnly,);
 		}
 		if (!is_null($_nodeID)) return $data;
 		Etemplate\Widget\Tree::send_quote_json($data);
@@ -1583,7 +1583,7 @@ class mail_ui
 		if (!empty($query['selectedFolder']))
 		{
 			list($_profileID,$folderName) = explode(self::$delimiter, $query['selectedFolder'], 2);
-			if (is_numeric(($_profileID)) && $_profileID != $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'])
+			if (is_numeric(($_profileID)) && $_profileID != (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'])
 			{
 				try {
 					$mail_ui = new mail_ui(false);	// do NOT run constructor, as we change profile anyway
@@ -1598,6 +1598,10 @@ class mail_ui
 				}
 				if (empty($folderName)) $query['selectedFolder'] = $_profileID.self::$delimiter.'INBOX';
 			}
+			$prefs = $GLOBALS['egw']->preferences ?? new Api\Preferences();
+			$prefs->read();
+			$prefs->add('mail', 'ActiveProfileID', $query['selectedFolder']);
+			$prefs->save_repository();
 		}
 		if (!isset($mail_ui))
 		{
@@ -4788,7 +4792,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$response = Api\Json\Response::get();
 
-		$previous_id = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		$previous_id = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 
 		if ($icServerID && $icServerID != $previous_id)
 		{
