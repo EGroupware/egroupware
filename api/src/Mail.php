@@ -6107,7 +6107,13 @@ class Mail
 					{
 						//$headerObject=$part->getAllDispositionParameters();//not used anywhere around here
 						$structure_mime = $part->getType();
-						$filename = $part->getName();
+						$filename = $part->getName(true) ?? 'attachment';
+						// add the matching extension for the mime-type to the filename, if it's not already set
+						if (($ext = MimeMagic::mime2ext($structure_mime)) !== MimeMagic::mime2ext(MimeMagic::filename2mime($filename)))
+						{
+							if (substr($filename, -strlen($ext)-1) === '_'.$ext) $filename = substr($filename, 0, -strlen($ext)-1);
+							$filename .= '.'.$ext;
+						}
 						$charset = $part->getContentTypeParameter('charset');
 						//$structure_bytes = $part->getBytes(); $structure_partID=$part->getMimeId(); error_log(__METHOD__.__LINE__." fetchPartContents(".array2string($_uid).", $structure_partID, $_stream, $_preserveSeen,$structure_mime)" );
 						if (empty($part->getContents())) $this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true,$structure_mime);
