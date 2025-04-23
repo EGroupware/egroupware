@@ -508,6 +508,11 @@ class Mail
 				$this->sessionData[$key] = $value;
 			}
 		}
+		// set folder from preference
+		if (empty($this->sessionData['mailbox']) && $this->profileID == (int)($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] ?? null))
+		{
+			$this->sessionData['mailbox'] = explode('::', $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'])[1] ?? 'INBOX';
+		}
 	}
 
 	/**
