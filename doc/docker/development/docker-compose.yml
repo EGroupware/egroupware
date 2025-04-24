@@ -19,7 +19,7 @@ volumes:
       #device: /var/www
       # otherwise sources/document is stored in sources subdirectory of current directory
       device: $PWD/sources
-  # sources for push server, swoolpush subdirectory of egroupware
+  # sources for push server, swoolepush subdirectory of egroupware
   sources-push:
     driver_opts:
       type: none
@@ -78,7 +78,7 @@ services:
     #    - Debian/Ubuntu /var/run/mysqld:/var/run/mysqld
     #- /var/run/mysqld:/var/run/mysqld
     # private CA so egroupware can validate your certificate to talk to Collabora or Rocket.Chat
-    # multiple certificates (eg. a chain) have to be single files in a directory, with one named private-ca.crt!
+    # multiple certificates (e.g. a chain) have to be single files in a directory, with one named private-ca.crt!
     #- /etc/egroupware-docker/private-ca.crt:/usr/local/share/ca-certificates/private-ca.crt:ro
     environment:
     #
@@ -90,14 +90,14 @@ services:
     # a database "egroupware" with a random password is created for you on installation (password is stored in header.inc.php in data directory)
     #- EGW_DB_ROOT=root
     - EGW_DB_ROOT_PW=secret
-    # alternativly you can specify an already existing database with full right by the given user!
+    # alternatively you can specify an already existing database with full right by the given user!
     #- EGW_DB_NAME=egroupware
     #- EGW_DB_USER=egroupware
     #- EGW_DB_PASS=
     #
     # further post_install.php arguments can be passed as a single enviroment variable with space separated assignments
     # "<name1>=<value1> <name2>=<value2>" see https://github.com/EGroupware/egroupware/blob/master/doc/rpm-build/post_install.php#L17
-    # to configure eg. LDAP for authentication and account storage use
+    # to configure e.g. LDAP for authentication and account storage use
     #- EGW_POST_INSTALL='account-auth=ldap,ldap ldap_base=ou=egroupware,dc=example,dc=org ldap_host=tls://ldap.example.org ldap_admin=cn=admin,$base ldap_admin_pw=secret ldap_context=cn=users,$base ldap_group_context=cn=groups,$base'
     #
     # extra non-default apps (need to start with EGW_EXTRA_APP!)
@@ -111,6 +111,8 @@ services:
     #
     # XDEBUG_REMOTE_HOST need to be set, Docker Desktop can use host.docker.internal or Linux the docker0 interface 172.17.0.1
     - XDEBUG_REMOTE_HOST=host.docker.internal
+    # EGW_SKIP_INSTALL: "true": only install if no header.inc.php exists, "always": never install
+    #- EGW_SKIP_INSTALL="true"
     restart: always
     depends_on:
     - db

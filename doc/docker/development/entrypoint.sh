@@ -2,7 +2,7 @@
 set -ex
 
 VERSION=${VERSION:-dev-master}
-PHP_VERSION=${PHP_VERSION:-8.1}
+PHP_VERSION=${PHP_VERSION:-8.4}
 
 # if EGW_APC_SHM_SIZE is set in environment, propagate value to apcu.ini, otherwise set default of 128M
 grep "apc.shm_size" /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini >/dev/null && \
@@ -91,7 +91,7 @@ chmod 600 $LOG
 max_retries=10
 export try=0
 # EGW_SKIP_INSTALL=true skips initial installation (no header.inc.php yet)
-until [ "$EGW_SKIP_INSTALL" = "allways" -o -n "$EGW_SKIP_INSTALL" -a ! -f /var/www/egroupware/header.inc.php ] || \
+until [ "$EGW_SKIP_INSTALL" = "always" -o -z "$EGW_SKIP_INSTALL" -a -f /var/www/egroupware/header.inc.php ] || \
 	php /var/www/egroupware/doc/rpm-build/post_install.php \
 	--start_webserver "" --autostart_webserver "" \
 	--start_db "" --autostart_db "" \
