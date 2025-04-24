@@ -732,24 +732,35 @@ class Contacts extends Contacts\Storage
 	}
 
 	/**
-	 * get full name from the name-parts
+	 * Get full name from the name-parts using "n_fn_parts" preference
 	 *
 	 * @param array $contact
 	 * @return string full name
 	 */
-	function fullname($contact)
+	static function fullname($contact)
 	{
-		if (empty($contact['n_family']) && empty($contact['n_given'])) {
-			$cpart = array('org_name');
-		} else {
-			$cpart = array('n_prefix','n_given','n_middle','n_family','n_suffix');
-		}
-		$parts = array();
-		foreach($cpart as $n)
+		if (empty($contact['n_family']) && empty($contact['n_given']))
 		{
-			if ($contact[$n]) $parts[] = $contact[$n];
+			$cparts = ['org_name'];
 		}
-		return implode(' ',$parts);
+		else
+		{
+			$cparts = explode(' ', $GLOBALS['egw_info']['user']['preferences']['addressbook']['n_fn_parts'] ?? '') ?:
+				['n_prefix','n_given','n_middle','n_family','n_suffix'];
+		}
+		$parts = [];
+		foreach($cparts as $n)
+		{
+			foreach(explode('-or-', $n) as $p)
+			{
+				if (!empty($contact[$p]))
+				{
+					$parts[] = $contact[$p];
+					break;
+				}
+			}
+		}
+		return implode(' ', $parts);
 	}
 
 	/**
@@ -792,6 +803,10 @@ class Contacts extends Contacts\Storage
 				$user = isset($data['account_lid']) ? $data['account_lid'] : $GLOBALS['egw']->accounts->id2name($data['account_id']);
 				$data['freebusy_uri'] = calendar_bo::freebusy_url($user);
 			}
+		}
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['n_fn_parts']))
+		{
+			$data['n_fn'] = self::fullname($data);
 		}
 		return $data;
 	}
@@ -912,7 +927,7 @@ class Contacts extends Contacts\Storage
 		// which means photo has changed.
 		if (!array_key_exists('photo_unchanged',$contact)) $contact['photo_unchanged'] = true;
 
-		// remember if we add or update a entry
+		// remember if we add or update an entry
 		if (($isUpdate = $contact['id'] ?? null))
 		{
 			if (!isset($contact['owner']) || !isset($contact['private']))	// owner/private not set on update, eg. SyncML
@@ -1000,7 +1015,7 @@ class Contacts extends Contacts\Storage
 			$contact['modified'] = $this->now_su;
 		}
 		// set full name and fileas from the content
-		if (!isset($contact['n_fn']))
+		if (!isset($contact['n_fn']) || !empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['n_fn_parts']))
 		{
 			$contact['n_fn'] = $this->fullname($contact);
 		}

@@ -195,6 +195,24 @@ class addressbook_hooks
 			'admin'  => false,
 			'default'=> 'org_name: n_family, n_given',
 		);
+
+		$settings['n_fn_parts'] = [
+			'type'   => 'select',
+			'label'  => 'Full name',
+			'name'   => 'n_fn_parts',
+			'values' => [
+				'n_prefix n_given n_middle n_family n_suffix' => lang('Use prefix plus all other name parts'),
+				'n_given-or-n_given n_middle n_family n_suffix' => lang('Use Prefix, only if no firstname'),
+				'n_prefix-or-n_given n_middle n_family n_suffix' => lang('Use firstname, only if no prefix'),
+				'n_given n_middle n_family n_suffix' => lang('Never use prefix'),
+			],
+			'help'   => 'What should be displayed as full name. If there is neither first- nor lastname, the company name is displayed.',
+			'xmlrpc' => True,
+			'admin'  => false,
+			// no explicit default, keeps previous behavior not to set full-name on every read or save
+			// 'default' => 'n_prefix n_given n_middle n_family n_suffix',
+		];
+
 		if (($cf_opts = Api\Contacts::cf_options()))
 		{
 			$settings['link_title_cf'] = array(
