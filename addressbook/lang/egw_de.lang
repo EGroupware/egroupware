@@ -371,6 +371,7 @@ name for the distribution list	addressbook	de	Name für die Verteilerliste
 name of current user, all other contact fields are valid too	addressbook	de	Name des aktuellen Benutzers, auch alle anderen Kontaktfelder sind erlaubt
 name, address	addressbook	de	Name, Adresse
 name, email, phone	addressbook	de	Name, E-Mail, Telefon
+never use prefix	addressbook	de	Anrede nicht anzeigen
 new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %1 am %2
 next date	addressbook	de	Nächster Termin
 no categories selected	addressbook	de	Keine Kategorien ausgewählt
@@ -524,6 +525,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	de	Verwende die Einstellung "eigene Sortierung"
 use an extra tab for private custom fields?	admin	de	Separaten Reiter für private benutzerdefinierte Felder verwenden?
 use country list	addressbook	de	Länderliste benutzen
+use firstname, only if no prefix	addressbook	de	Benutze Vornamen nur wenn keine Anrede
+use prefix plus all other name parts	addressbook	de	Anrede plus alle anderen Namensbestandteile
+use prefix, only if no firstname	addressbook	de	Anrede nur anzeigen falls keine Vorname
 use setup for a full account-migration	admin	de	Für eine komplette Benutzer Migration setup verwenden
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	de	Benutzen Sie diesen Markierungszeichen für Adressetiketten. Platzieren Sie den Inhalt, der wiederholt werden soll, zwischen zwei Markierungszeichen.
 used for links and for the own sorting of the list	addressbook	de	Wird für Verknüpfungen und die eigene Sortierung der Liste benutzt
@@ -538,6 +542,7 @@ view linked infolog entries	addressbook	de	Verknüpfte InfoLog-Einträge anzeige
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 weekday	addressbook	de	Wochentag
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	de	Was soll als vollständiger Name angezeigt werden. Wenn es weder Vor- noch Nachnamen gibt, wird der Firmenname angezeigt.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
 when viewing a contact, show linked entries from the selected application	addressbook	de	Bei der Ansicht eine Kontaktes werden nur Links zu folgenden Anwendungen gezeigt.
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	de	Wenn Sie Einträge zu Dokumenten zusammenführen, werden sie hier gespeichert. Wenn kein Verzeichnis angegeben wird, werden sie in Ihrem Heimatverzeichnis (/home/...) gespeichert.
