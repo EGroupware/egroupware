@@ -85,11 +85,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 
 	return {
 		/**
-		 * Check if $app is in the registry and has an entry for $name
+		 * Check if _app is in the registry and has an entry for _name
+		 *
+		 * If the returned value is an object, it will always be a clone, not the registry itself!
+		 * (So no need to run this.deepExtend() or jQuery.extend(true, ...) on it.)
 		 *
 		 * @param {string} _app app-name
-		 * @param {string} _name name / key in the registry, eg. 'view'
-		 * @return {boolean|string} false if $app is not registered, otherwise string with the value for $name
+		 * @param {string|undefined} _name name / key in the registry, e.g. 'view' or undefined to get whole registry for _app
+		 * @return {any} false if _app or attribute _name is not registered, otherwise value for attribute _name or whole registry for _app
 		 * @memberOf egw
 		 */
 		link_get_registry: function(_app, _name)
@@ -105,6 +108,11 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			}
 			const reg = link_registry[_app];
 
+			if (reg && typeof _name === 'undefined')
+			{
+				// No key requested, return the whole thing
+				return this.deepExtend({}, reg);
+			}
 			// some defaults (we set them directly in the registry, to do this only once)
 			if (typeof reg[_name] === 'undefined')
 			{
@@ -127,12 +135,54 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 						break;
 				}
 			}
-			if (reg && typeof _name === 'undefined')
+			switch (typeof reg[_name])
 			{
-				// No key requested, return the whole thing
-				return reg;
+				case 'undefined':
+					return false;
+				case 'object':
+					return this.deepExtend({}, reg[_name]);
 			}
-			return typeof reg[_name] === 'undefined' ? false : reg[_name];
+			return reg[_name];
+		},
+
+		/**
+		 * jQuery.extend(true, ...) alternative
+		 *
+		 * Do NOT specify true as first parameter!
+		 *
+		 * For jQuery.extend(out, obj1, ...) use: {...out, ...obj1, ...}
+		 *
+		 * @param {object} out
+		 * @param {Array<any>} arguments_
+		 * @return {{}|*}
+		 */
+		deepExtend: function (out, ...arguments_)
+		{
+			if (!out) {
+				return {};
+			}
+
+			for (const obj of arguments_) {
+				if (!obj) {
+					continue;
+				}
+
+				for (const [key, value] of Object.entries(obj)) {
+					switch (Object.prototype.toString.call(value)) {
+						case '[object Object]':
+							out[key] = out[key] || {};
+							out[key] = this.deepExtend(out[key], value);
+							break;
+						case '[object Array]':
+							out[key] = this.deepExtend(new Array(value.length), value);
+							break;
+						default:
+							out[key] = value;
+					}
+				}
+			}
+
+			return out;
 		},
 
 		/**
@@ -309,11 +359,15 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		{
 			if (typeof _app === 'undefined')
 			{
-				link_registry = _need_clone ? jQuery.extend(true, {}, _registry) : _registry;
+				// guard against (unnecessary) overwriting the link-registry e.g. with partial data
+				if (typeof link_registry === 'undefined')
+				{
+					link_registry = _need_clone ? this.deepExtend( {}, _registry) : _registry;
+				}
 			}
 			else
 			{
-				link_registry[_app] = _need_clone ? jQuery.extend(true, {}, _registry) : _registry;
+				link_registry[_app] = _need_clone ? this.deepExtend({}, _registry) : _registry;
 			}
 		},
 
@@ -356,7 +410,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			const othervars = url_othervars[1];
 			if (_extravars && typeof _extravars == 'object')
 			{
-				jQuery.extend(vars, _extravars);
+				this.deepExtend(vars, _extravars);
 				_extravars = othervars;
 			}
 			else
