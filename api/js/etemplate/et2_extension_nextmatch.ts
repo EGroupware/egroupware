@@ -3788,15 +3788,19 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				jQuery(header.getDOMNode()).prependTo(self.header_div);
 				break;
 			case 1:	// header_right: before favorites and count
-				window.setTimeout(() =>
-					jQuery(header.getDOMNode()).prependTo(self.header_div.find('div.header_row_right')));
-				break;
-			case 2:	// header_row: after search
-				window.setTimeout(function()
+                window.setTimeout(() =>
+				{
+                    const target = self.header_div.find('div.header_row_right')
+                    jQuery(header.getDOMNode()).prependTo(target.length ? target : self.header_div)
+                });
+                break;
+            case 2:	// header_row: after search
+                window.setTimeout(function ()
 				{	// otherwise we might end up after filters
-					jQuery(header.getDOMNode()).insertAfter(self.header_div.find('div.search'));
-				}, 1);
-				break;
+                    const target = self.header_div.find('div.search')
+                    jQuery(header.getDOMNode()).insertAfter(target.length ? target : self.header_div);
+                }, 1);
+                break;
 			case 3:	// header_row2: below everything
 				window.setTimeout(function()
 				{	// otherwise we might end up after filters

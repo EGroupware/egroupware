@@ -481,10 +481,10 @@ class mail_ui
 							'no_columnselection' => false
 						);
 					}
-					if (Api\Header\UserAgent::mobile())
-					{
-						$content[self::$nm_index]['header_row'] = 'mail.index.header_right';
-					}
+//					if (Api\Header\UserAgent::mobile())
+//					{
+//						$content[self::$nm_index]['header_row'] = 'mail.index.header_right';
+//					}
 				}
 
 				// These must always be set, even if $content is an array
