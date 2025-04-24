@@ -406,7 +406,7 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 		// Try a redirect to list, if app defines a "list" value in registry
 		if (egw.link_get_registry(this.appname, 'list'))
 		{
-			url = egw.link('/index.php', jQuery.extend({'favorite': safe_name}, egw.link_get_registry(this.appname, 'list')));
+			url = egw.link('/index.php', {'favorite': safe_name, ...egw.link_get_registry(this.appname, 'list')});
 		}
 		// if no list try index value from application
 		else if (egw.app(this.appname).index)
