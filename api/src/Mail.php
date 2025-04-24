@@ -1756,8 +1756,7 @@ class Mail
 						$headerObject['ATTACHMENTS'][$mime_id]['partID']=$mime_id;
 						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))
 						{
-							$headerObject['ATTACHMENTS'][$mime_id]['name']= $part->getName() ? $part->getName() :
-								($mime_type == "message/rfc822" ? lang('forwarded message') : lang('attachment'));
+							$headerObject['ATTACHMENTS'][$mime_id]['name']= self::attachmentName($part);
 						}
 						if (!strcasecmp($headerObject['ATTACHMENTS'][$mime_id]['name'],'winmail.dat') ||
 							$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=='application/ms-tnef')
@@ -5870,7 +5869,10 @@ class Mail
 				$attachment['mimeType'] = $mime_type;
 				$attachment['uid'] = $_uid;
 				$attachment['partID'] = $mime_id;
-				if (!isset($attachment['name'])||empty($attachment['name'])) $attachment['name'] = $part->getName() ? $part->getName() : ($mime_type == "message/rfc822" ? lang('forwarded message') : lang('attachment'));;
+				if (empty($attachment['name']))
+				{
+					$attachment['name'] = self::attachmentName($part);
+				}
 				if ($fetchTextCalendar)
 				{
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($part->getAllContentTypeParameters()));
@@ -5916,10 +5918,17 @@ class Mail
 						$attachment['uid'] = $tnp['uid'];
 						$attachment['partID'] = $tnp['partID'];
 						$attachment['is_winmail'] = $tnp['uid'].'@'.$tnp['partID'].'@'.$mime_id;
-						if (!isset($attachment['name'])||empty($attachment['name'])) $attachment['name'] = $part->getName();
+						if (empty($attachment['name']))
+						{
+							$attachment['name'] = self::attachmentName($part);
+						}
 						$attachment['size'] = $part->getBytes();
 						if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
-						if (empty($attachment['name'])) $attachment['name'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.MimeMagic::mime2ext($attachment['mimeType']);
+						if (empty($attachment['name']))
+						{
+							$attachment['name'] = (!empty($attachment['cid']) ? $attachment['cid'] : lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).
+								'.'.MimeMagic::mime2ext($attachment['mimeType']);
+						}
 						$attachments[] = $attachment;
 					}
 				}
@@ -6028,14 +6037,16 @@ class Mail
 
 				$attachment = $part->getAllDispositionParameters();
 				$attachment['mimeType'] = $part->getType();
-				if (!isset($attachment['filename'])||empty($attachment['filename'])) $attachment['filename'] = $part->getName();
+				if (empty($attachment['filename']))
+				{
+					$attachment['filename'] = self::attachmentName($part);
+				}
 				if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
 				if (empty($attachment['filename']))
 				{
-					$attachment['filename'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?
-						$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.MimeMagic::mime2ext($attachment['mimeType']);
+					$attachment['filename'] = (!empty($attachment['cid']) ? $attachment['cid'] : lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).
+						'.'.MimeMagic::mime2ext($attachment['mimeType']);
 				}
-
 				$attachment['attachment'] = $part->getContents(array('stream'=>$_stream));
 
 				$attachments[$_uid.'@'.$_partID.'@'.$mime_id] = $attachment;
@@ -6102,13 +6113,7 @@ class Mail
 					{
 						//$headerObject=$part->getAllDispositionParameters();//not used anywhere around here
 						$structure_mime = $part->getType();
-						$filename = $part->getName(true) ?? 'attachment';
-						// add the matching extension for the mime-type to the filename, if it's not already set
-						if (($ext = MimeMagic::mime2ext($structure_mime)) !== MimeMagic::mime2ext(MimeMagic::filename2mime($filename)))
-						{
-							if (substr($filename, -strlen($ext)-1) === '_'.$ext) $filename = substr($filename, 0, -strlen($ext)-1);
-							$filename .= '.'.$ext;
-						}
+						$filename = self::attachmentName($part);
 						$charset = $part->getContentTypeParameter('charset');
 						//$structure_bytes = $part->getBytes(); $structure_partID=$part->getMimeId(); error_log(__METHOD__.__LINE__." fetchPartContents(".array2string($_uid).", $structure_partID, $_stream, $_preserveSeen,$structure_mime)" );
 						if (empty($part->getContents())) $this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true,$structure_mime);
@@ -6117,8 +6122,6 @@ class Mail
 				}
 			}
 		}
-		$ext = MimeMagic::mime2ext($structure_mime);
-		if ($ext && stripos($filename,'.')===false && stripos($filename,$ext)===false) $filename = trim($filename).'.'.$ext;
 		if (!$part)
 		{
 			throw new Exception\WrongParameter("Error: Could not fetch attachment for Uid=".array2string($_uid).", PartId=$_partID, WinMailNr=$_winmail_nr, folder=$_folder");
@@ -6157,7 +6160,7 @@ class Mail
 					if ($_winmail_nr == $wantedPart.'@'.$mime_id)
 					{
 						//error_log(__METHOD__.__LINE__.'#'.$structure_mime.'#'.$filename.'#'.array2string($attachment));
-						if (!isset($attachment['filename'])||empty($attachment['filename'])) $attachment['filename'] = $part->getName();
+						if (empty($attachment['filename'])) $attachment['filename'] = self::attachmentName($part);
 						if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
 						if (empty($attachment['filename'])) $attachment['filename'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.MimeMagic::mime2ext($attachment['mimeType']);
 						$wmattach = $attachment;
@@ -6178,6 +6181,33 @@ class Mail
 			}
 		}
 		return $attachmentData;
+	}
+
+	/**
+	 * Get or generate filename incl. extension for an attachment / mime-part
+	 *
+	 * We fall back to description parameter if no name parameter, and then to
+	 * "attachment" or "forwarded" message.
+	 *
+	 * @param Horde_Mime_Part $part
+	 * @return string
+	 */
+	public static function attachmentName(\Horde_Mime_Part $part)
+	{
+		$mime_type = $part->getType();
+		$filename = trim($part->getName(true)) ?:
+			 ($mime_type == "message/rfc822" ? lang('forwarded message') : lang('attachment'));
+
+		// add the matching extension for the mime-type to the filename, if it's not already set
+		if (($ext = MimeMagic::mime2ext($mime_type)) !== MimeMagic::mime2ext(MimeMagic::filename2mime($filename)))
+		{
+			if (substr($filename, -strlen($ext)-1) === '_'.$ext)
+			{
+				$filename = substr($filename, 0, -strlen($ext)-1);
+			}
+			$filename .= '.'.$ext;
+		}
+		return $filename;
 	}
 
 	/**
@@ -6238,7 +6268,7 @@ class Mail
 		// set name as filename, if not set
 		if ($attachment && !$attachment->getDispositionParameter('filename'))
 		{
-			$attachment->setDispositionParameter('filename', $attachment->getName());
+			$attachment->setDispositionParameter('filename', self::attachmentName($attachment));
 		}
 		// guess type, if not set
 		if ($attachment && $attachment->getType() == 'application/octet-stream')
