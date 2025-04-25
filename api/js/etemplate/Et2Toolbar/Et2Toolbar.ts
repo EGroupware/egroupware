@@ -96,6 +96,8 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 	constructor()
 	{
 		super();
+
+		this.handleClick = this.handleClick.bind(this);
 	}
 
 	connectedCallback()
@@ -122,9 +124,9 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 			this.preferenceApp = this.preferenceApp || this.egw().app_name();
 			this._preference = this.egw().preference(this.preferenceId, this.preferenceApp) || {};
 		}
-		if(!this._actionsParsed && Object.values(this._actions).length > 0)
+		if(!this._actionsParsed)
 		{
-			this.parseActions(this._actions);
+			this.parseActions(this.actions);
 		}
 	}
 
@@ -146,14 +148,17 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 	@property({type: Object})
 	set actions(actions : EgwAction[] | { [id : string] : object })
 	{
-		this._actions = actions;
+		debugger;
+		this._initActions(actions);
 		this.requestUpdate();
 	}
 
 	get actions()
 	{
-		return this._actions || {};
+		return this._actionManager?.children || {};
 	}
+
+	_link_actions() {}
 
 	/**
 	 * Parse a list of actions and create matching inputs into the toolbar
@@ -211,9 +216,9 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 			{
 				last_group = this;
 			}
-			if(name && typeof this._preference[name] == "undefined")
+			if(action.id && typeof this._preference[action.id] == "undefined")
 			{
-				this._preference[name] = false;
+				this._preference[action.id] = false;
 			}
 			this.addAction(action, last_group);
 		}
@@ -224,7 +229,7 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 
 	protected addAction(action : EgwAction, parent)
 	{
-		if(action.children)
+		if(Array.isArray(action.children) && action.children.length > 0)
 		{
 			let children = {};
 			let add_children = (root, children) =>
@@ -331,21 +336,6 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 		const isCheckbox = action && action.checkbox;
 		const isToggleSwitch = action.data?.toggle_on || action.data?.toggle_off || action.data?.onIcon || action.data?.offIcon;
 
-		const actionHandler = function(action, e)
-		{
-			let actionObj = this._actionManager.getActionById(action.id);
-			if(actionObj)
-			{
-				if(actionObj.checkbox)
-				{
-					self.checkbox(actionObj.id, !actionObj.checked);
-				}
-				this.value = actionObj.id;
-				actionObj.data.event = e;
-				actionObj.execute([]);
-			}
-		}.bind(this, action);
-
 		let widget = null;
 		const attrs = {
 			id: action.id,
@@ -392,7 +382,7 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 	{
 		const component = "et2-button";
 		Object.assign(attrs, {
-			image: action.icon || '',
+			image: action.data.icon || action.iconUrl,
 			class: `et2_toolbar_draggable${this.id}`,
 			noSubmit: true
 		});
@@ -430,7 +420,7 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 	private _makeToggle(action, attrs : { [id : string] : string }) : Et2ButtonToggle
 	{
 		Object.assign(attrs, {
-			image: action.iconUrl || '',
+			image: action.data.icon || action.iconUrl || '',
 			class: `et2_toolbar_draggable${this.id}`,
 		});
 		return <Et2ButtonToggle>loadWebComponent("et2-button-toggle", attrs, this);
@@ -543,9 +533,15 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 		}
 	}
 
-	handleOverflow(e : OverflowEvent)
+	handleClick(e : Event)
 	{
-		debugger;
+		// If the element has an action, execute it
+		if(e.target?.dataset?.actionId)
+		{
+			e.stopImmediatePropagation();
+			return this.handleAction(e, this._actionManager.getActionById(e.target.dataset.actionId));
+		}
+		// Otherwise, it's just a normal component
 	}
 
 	handleResize(entries : ResizeObserverEntry[], observer)
@@ -561,12 +557,23 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 
 	handleSettingsClick(e : MouseEvent)
 	{
+		e.stopImmediatePropagation();
 		// Show settings / preferences dialog
 	}
 
 	handleAction(event, action : EgwAction)
 	{
-		debugger;
+		if(action.checkbox)
+		{
+			action.set_checked(this.getWidgetById(action.id).checked);
+		}
+		this.value = {action: action.id};
+		if(!action.data)
+		{
+			action.data = {};
+		}
+		action.data.event = event;
+		action.execute([]);
 	}
 
 	protected overflowTemplate()
@@ -598,7 +605,7 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
             <div
                     part="base"
                     class=${classMap(classes)}
-                    @overflow=${this.handleOverflow}
+                    @click=${this.handleClick}
             >
                 <div part="buttons" class="toolbar-buttons">
                     <slot></slot>

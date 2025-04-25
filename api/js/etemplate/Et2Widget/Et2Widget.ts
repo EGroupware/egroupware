@@ -559,6 +559,16 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		@property({type: Object})
 		set actions(actions : EgwAction[] | { [id : string] : object })
 		{
+			this._initActions(actions);
+		}
+
+		get actions()
+		{
+			return this._actionManager?.children || {};
+		}
+
+		protected _initActions(actions : EgwAction[] | { [id : string] : object })
+		{
 			if(!(Array.isArray(actions) && actions.length > 0 || Object.entries(actions).length > 0))
 			{
 				// Not trying to clear actions, just called automatic
@@ -615,11 +625,6 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 			// Link the actions to the DOM
 			this._link_actions(actions);
-		}
-
-		get actions()
-		{
-			return this._actionManager?.children || {};
 		}
 
 		/**
