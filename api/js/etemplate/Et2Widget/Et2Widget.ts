@@ -1148,9 +1148,12 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			transformAttributes(this, this.getArrayMgr("content"), attrs);
 
 			// Add in additional modifications
-			if(this.id && this.getArrayMgr("modifications")?.getEntry(this.id))
+			const mods = this.getArrayMgr("modifications")?.getPerspectiveData().owner == this ?
+						 this.getArrayMgr("modifications")?.data :
+						 this.getArrayMgr("modifications")?.getEntry(this.id);
+			if(this.id && mods)
 			{
-				transformAttributes(this, this.getArrayMgr("content"), this.getArrayMgr("modifications").getEntry(this.id));
+				transformAttributes(this, this.getArrayMgr("content"), mods);
 			}
 		}
 

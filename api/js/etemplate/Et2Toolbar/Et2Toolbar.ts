@@ -1,0 +1,616 @@
+/**
+ * EGroupware eTemplate2 - Toolbar WebComponent
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @link https://www.egroupware.org
+ * @author Nathan Gray
+ */
+
+import {html, LitElement, nothing, PropertyValueMap} from "lit";
+import {property} from "lit/decorators/property.js";
+import {customElement} from "lit/decorators/custom-element.js";
+import {classMap} from "lit/directives/class-map.js";
+import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import shoelace from "../Styles/shoelace";
+import styles from "./Et2Toolbar.styles";
+import {state} from "lit/decorators/state.js";
+import {EgwAction} from "../../egw_action/EgwAction";
+import {Et2DropdownButton} from "../Et2DropdownButton/Et2DropdownButton";
+import {loadWebComponent} from "../Et2Widget/Et2Widget";
+import {egwIsMobile} from "../../egw_action/egw_action_common";
+import {Et2Switch} from "../Et2Switch/Et2Switch";
+import {Et2SwitchIcon} from "../Et2Switch/Et2SwitchIcon";
+import {Et2ButtonToggle} from "../Et2Button/Et2ButtonToggle";
+import {SlButtonGroup} from "@shoelace-style/shoelace";
+import {HasSlotController} from "../Et2Widget/slot";
+
+/**
+ * Groupbox shows content in a box with a summary
+ */
+@customElement("et2-toolbar")
+export class Et2Toolbar extends Et2InputWidget(LitElement)
+{
+	static get styles()
+	{
+		return [
+			shoelace,
+			super.styles,
+			styles
+		];
+	}
+
+	/** Actions with children should be shown as dropdown (true) or flat list (false) */
+	@property({type: Boolean})
+	groupChildren = false;
+
+	/**
+	 * Define a custom preference id for saving the toolbar preferences.
+	 *
+	 * This is useful when you have the same toolbar and you use it in a pop up but also in a tab, which have different dom ids. When not set it defaults to the dom id of the toolbar.
+	 *
+	 * @type {string}
+	 */
+	@property()
+	preferenceId = "";
+
+	/**
+	 * 	Define a custom preference application for saving the toolbar preferences.
+	 *
+	 * 	This is useful when you have the same toolbar and you use it in multiple places, which have different application names.
+	 * 	When not set it defaults to the result of this.egw().app_name();
+	 *
+	 * @type {string}
+	 */
+	@property()
+	preferenceApp = "";
+
+	/* User is admin */
+	@state() _isAdmin = false;
+	/* Toolbar contents overflow available space */
+	@state() _isOverflowed = false;
+
+	// Allows us to check to see if label or help-text is set.  Overriden to check additional "list" slot.
+	protected readonly hasSlotController = new HasSlotController(this, 'list', 'help-text', 'label');
+
+	// Allows us to make changes when the toolbar is bigger or smaller
+	protected readonly resizeObserver = new ResizeObserver(this.handleResize);
+
+	/**
+	 * Indicates which actions go where
+	 *
+	 * - All actions should be stored in preference
+	 * - Actions inside menu set as true
+	 * - Actions outside menu set as false
+	 * - Actions not set need to be added
+	 */
+	private _preference : { [id : string] : boolean } = {};
+	/* Hold on to actions, as we don't use action system but just use them to create inputs */
+	private _actions = {};
+	/* Actions have been parsed into inputs */
+	private _actionsParsed = false;
+	/* Use a timeout to avoid lots of work when user resizes, just wait until they stop */
+	private _layoutTimeout : number;
+	private static LAYOUT_TIMEOUT = 100;
+
+	constructor()
+	{
+		super();
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		this._isAdmin = typeof (this.egw().user("apps")?.admin) != "undefined" || false;
+
+		this.resizeObserver.observe(this);
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.resizeObserver.disconnect();
+	}
+
+	willUpdate(changedProperties : PropertyValueMap<any>)
+	{
+		super.willUpdate(changedProperties);
+
+		if(changedProperties.has("preferenceId") || changedProperties.has("preferenceApp") || changedProperties.has("id"))
+		{
+			this.preferenceId = this.preferenceId || this.dom_id;
+			this.preferenceApp = this.preferenceApp || this.egw().app_name();
+			this._preference = this.egw().preference(this.preferenceId, this.preferenceApp) || {};
+		}
+		if(!this._actionsParsed && Object.values(this._actions).length > 0)
+		{
+			this.parseActions(this._actions);
+		}
+	}
+
+	firstUpdated(changedProperties : PropertyValueMap<any>)
+	{
+		this.organiseChildren();
+	}
+
+	_createNamespace() : boolean
+	{
+		return true;
+	}
+
+	/**
+	 * Overridden from parent because toolbar can turn actions into buttons
+	 *
+	 * @param {EgwAction[] | {[p : string] : object}} actions
+	 */
+	@property({type: Object})
+	set actions(actions : EgwAction[] | { [id : string] : object })
+	{
+		this._actions = actions;
+		this.requestUpdate();
+	}
+
+	get actions()
+	{
+		return this._actions || {};
+	}
+
+	/**
+	 * Parse a list of actions and create matching inputs into the toolbar
+	 *
+	 * @param actions
+	 * @protected
+	 */
+	protected parseActions(actions : EgwAction[] | { [id : string] : object })
+	{
+		// Clean up anything from actions that's there already - do not remove everything
+		this.querySelectorAll(":scope > [data-action-id], :scope > [data-group]").forEach(n => n.remove());
+
+		// Set order on any existing children
+		Array.from(this.querySelectorAll(":scope > *:not([data-order]):not([data-action-id])"))
+			.forEach((c, index) => c.dataset.order = index);
+
+		let last_group_id;
+		let last_group;
+		let domChildCount = this.children.length;
+		let shownActionCount = domChildCount + Object.values(this._preference).filter(p => !p).length;
+
+		for(let name in actions)
+		{
+			let action = actions[name];
+			if(typeof action == 'string')
+			{
+				action = {id: name, caption: action};
+			}
+			if(!action.id)
+			{
+				action.id = name;
+			}
+
+			// Make sure there's something to display
+			if(!action.caption && !action.icon && !action.iconUrl)
+			{
+				continue;
+			}
+
+			// Add group
+			if(action.group && last_group_id != action.group)
+			{
+				last_group = this.querySelector(`[data-group='${action.group}']`);
+				if(!last_group)
+				{
+					last_group = document.createElement("sl-button-group");
+					last_group.dataset.group = action.group;
+					last_group.dataset.order = domChildCount + action.group;
+					this.append(last_group);
+				}
+
+				last_group_id = action.group;
+			}
+			else if(!action.group)
+			{
+				last_group = this;
+			}
+			if(name && typeof this._preference[name] == "undefined")
+			{
+				this._preference[name] = false;
+			}
+			this.addAction(action, last_group);
+		}
+
+		// Set the flag to avoid duplicates
+		this._actionsParsed = true;
+	}
+
+	protected addAction(action : EgwAction, parent)
+	{
+		if(action.children)
+		{
+			let children = {};
+			let add_children = (root, children) =>
+			{
+				for(let id in root.children)
+				{
+					let info = {
+						id: id || root.children[id].id,
+						value: id || root.children[id].id,
+						label: root.children[id].caption
+					};
+					let childaction = {};
+					if(root.children[id].iconUrl)
+					{
+						info['icon'] = root.children[id].iconUrl;
+					}
+					if(root.children[id].children)
+					{
+						add_children(root.children[id], info);
+					}
+					children[id] = info;
+
+					if(!this.groupChildren)
+					{
+						childaction = root.children[id];
+						if(typeof this._preference[childaction['id']] === 'undefined')
+						{
+							this._setPrefered(childaction.id, !childaction.toolbarDefault ?? true);
+						}
+
+						if(typeof root.children[id].group !== 'undefined' &&
+							typeof root.group !== 'undefined')
+						{
+							childaction['group'] = root.group;
+						}
+						this._makeInput(childaction, this);
+					}
+				}
+			};
+			add_children(action, children);
+			if(!this.groupChildren && children)
+			{
+				return;
+			}
+
+			let dropdown = <Et2DropdownButton><unknown>loadWebComponent("et2-dropdown-button", {
+				id: this.id + "-" + action.id,
+				label: action.caption,
+				//class: this.preference[action.id] ? `et2_toolbar-dropdown et2_toolbar_draggable${this.id} et2_toolbar-dropdown-menulist` : `et2_toolbar-dropdown et2_toolbar_draggable${this.id}`,
+				onchange: function(ev)
+				{
+					let action = that._actionManager.getActionById(dropdown.value);
+					dropdown.set_label(action.caption);
+					if(action)
+					{
+						this.value = action.id;
+						action.execute([]);
+					}
+					//console.debug(selected, this, action);
+				}.bind(action),
+				image: action.iconUrl || ''
+			}, this);
+
+			dropdown.select_options = Object.values(children);
+
+			//Set default selected action
+			if(typeof action.children != 'undefined')
+			{
+				for(let child in action.children)
+				{
+					if(action.children[child].default)
+					{
+						dropdown.label = action.children[child].caption;
+					}
+				}
+			}
+
+			dropdown.onclick = function(selected, dropdown)
+			{
+				let action = that._actionManager.getActionById(this.getValue());
+				if(action)
+				{
+					this.value = action.id;
+					action.execute([]);
+				}
+				//console.debug(selected, this, action);
+			}.bind(dropdown);
+			parent.append(dropdown);
+			dropdown.slot = this._preference[action.id] ? "list" : "";
+		}
+		else
+		{
+			this._makeInput(action, parent);
+		}
+	}
+
+	/**
+	 * Make a button based on the given action
+	 *
+	 * @param {Object} action action object with attributes icon, caption, ...
+	 */
+	protected _makeInput(action : EgwAction, parent : HTMLElement)
+	{
+		const isCheckbox = action && action.checkbox;
+		const isToggleSwitch = action.data?.toggle_on || action.data?.toggle_off || action.data?.onIcon || action.data?.offIcon;
+
+		const actionHandler = function(action, e)
+		{
+			let actionObj = this._actionManager.getActionById(action.id);
+			if(actionObj)
+			{
+				if(actionObj.checkbox)
+				{
+					self.checkbox(actionObj.id, !actionObj.checked);
+				}
+				this.value = actionObj.id;
+				actionObj.data.event = e;
+				actionObj.execute([]);
+			}
+		}.bind(this, action);
+
+		let widget = null;
+		const attrs = {
+			id: action.id,
+			label: action.caption,
+			readonly: action.readonly || this.readonly,
+		};
+		if((action.hint || action.caption) && !egwIsMobile())
+		{
+			attrs.statustext = action.hint || action.caption;
+		}
+		attrs.slot = this._preference[action.id] ? "list" : "";
+
+		if(isToggleSwitch)
+		{
+			widget = this._makeSwitch(action, attrs);
+		}
+		else if(isCheckbox)
+		{
+			widget = this._makeToggle(action, attrs);
+		}
+		else
+		{
+			widget = this._makeButton(action, attrs);
+		}
+
+		if(action.caption)
+		{
+			widget.classList.add('toolbar--hasCaption');
+		}
+
+		widget.dataset.actionId = action.id;
+		const index = Object.keys(this._preference).indexOf(action.id);
+		widget.dataset.order = index >= 0 ? index : parent.childNodes.length;
+
+		if(parent.hasAttribute("data-group") || action.group)
+		{
+			widget.dataset.groupId = parent.dataset.group || action.group;
+		}
+
+		parent.append(widget);
+	}
+
+	private _makeButton(action : EgwAction, attrs : { [id : string] : string })
+	{
+		const component = "et2-button";
+		Object.assign(attrs, {
+			image: action.icon || '',
+			class: `et2_toolbar_draggable${this.id}`,
+			noSubmit: true
+		});
+		if(egwIsMobile())
+		{
+			attrs.name = '';
+		}
+		return <Et2Switch>loadWebComponent(component, attrs, this);
+	}
+
+	private _makeSwitch(action : EgwAction, attrs : { [id : string] : string }) : Et2Switch | Et2SwitchIcon
+	{
+		let component = "et2-switch";
+		Object.assign(attrs, {
+			toggleOn: action.data.toggle_on,
+			toggleOff: action.data.toggle_off,
+			class: `et2_toolbar_draggable${this.id}`,
+			value: action.checked ?? false
+		});
+		if(action.data.onIcon || action.data.offIcon)
+		{
+			component = "et2-switch-icon";
+			if(action.data.onIcon)
+			{
+				attrs["onIcon"] = action.data.onIcon;
+			}
+			if(action.data.offIcon)
+			{
+				attrs["offIcon"] = action.data.offIcon;
+			}
+		}
+		return <Et2Switch>loadWebComponent(component, attrs, this);
+	}
+
+	private _makeToggle(action, attrs : { [id : string] : string }) : Et2ButtonToggle
+	{
+		Object.assign(attrs, {
+			image: action.iconUrl || '',
+			class: `et2_toolbar_draggable${this.id}`,
+		});
+		return <Et2ButtonToggle>loadWebComponent("et2-button-toggle", attrs, this);
+	}
+
+	/**
+	 * Fix function in order to fix toolbar preferences with the new preference structure
+	 * @param {action object} _action
+	 */
+	private _setPrefered(actionId : string, state : boolean)
+	{
+		this._preference[actionId] = state;
+		if(egwIsMobile())
+		{
+			return;
+		}
+		this.egw().set_preference(this.preferenceApp, this.preferenceId, this._preference);
+	}
+
+	/**
+	 * Adjust the location of child inputs without destroying / re-creating them
+	 *
+	 * @protected
+	 */
+	protected organiseChildren()
+	{
+		this._isOverflowed = false;
+		let elements = Array.from(this.querySelectorAll(':scope > *'));
+
+		// Reset slot so it can participate in width calculations
+		elements.forEach(el =>
+		{
+			if(el instanceof SlButtonGroup)
+			{
+				el.childNodes.forEach(c =>
+				{
+					if(!this._preference[c.id])
+					{
+						c.slot = "";
+						this._placeInputInGroup(c);
+					}
+				});
+			}
+			else if(!this._preference[el.id])
+			{
+				el.slot = "";
+				this._placeInputInGroup(el);
+			}
+		});
+
+		elements = Array.from(this.querySelectorAll(':scope > *'));
+		elements.sort((a : HTMLElement, b : HTMLElement) => parseInt(b.dataset.order) - parseInt(a.dataset.order));
+		elements.forEach((el : HTMLElement) =>
+		{
+			if(el instanceof SlButtonGroup)
+			{
+				Array.from(el.childNodes).reverse().forEach(c => this.organiseChild(c));
+			}
+			else
+			{
+				this.organiseChild(el);
+			}
+		});
+
+		// Move any inputs that should be in the list
+		Array.from(this.querySelectorAll("sl-button-group [slot='list']"))
+			.forEach(el => this.append(el));
+
+		// Set order directly since etemplate2.css doesn't like attr()
+		Array.from(this.querySelectorAll("[data-order]"))
+			.forEach((el : HTMLElement) => el.style.order = el.dataset.order);
+
+		// Do not trigger refresh to avoid looping
+		this.shadowRoot.querySelector(".toolbar").classList.toggle("toolbar--overflowed", this._isOverflowed);
+	}
+
+	protected organiseChild(child : HTMLElement)
+	{
+		if(!this.shadowRoot.querySelector(".toolbar-buttons"))
+		{
+			// Not ready yet
+			return;
+		}
+		const isOverflowed = (child.offsetWidth + child.offsetLeft) > (<HTMLElement>this.shadowRoot.querySelector(".toolbar-buttons")).offsetWidth;
+		if(isOverflowed || this._preference[child.id])
+		{
+			this._isOverflowed = this._isOverflowed || isOverflowed;
+			child.slot = "list";
+		}
+		else if(!this._preference[child.id])
+		{
+			child.slot = "";
+		}
+		// Check if input needs to go in a group (moving the other way is done in organiseChildren()
+		this._placeInputInGroup(child);
+	}
+
+	/**
+	 * Put button in its button group, if needed
+	 *
+	 * @param {HTMLElement} child
+	 * @private
+	 */
+	private _placeInputInGroup(child : HTMLElement)
+	{
+		let groupId = child.dataset.groupId;
+		if(groupId && child.slot == "" && this.querySelector(`sl-button-group[data-group="${groupId}"]`))
+		{
+			this.querySelector(`sl-button-group[data-group="${groupId}"]`).append(child);
+		}
+	}
+
+	handleOverflow(e : OverflowEvent)
+	{
+		debugger;
+	}
+
+	handleResize(entries : ResizeObserverEntry[], observer)
+	{
+		// Toolbar changed size, re-organise children
+		// but wait a bit until things stop
+		if(this._layoutTimeout)
+		{
+			window.clearTimeout(this._layoutTimeout);
+		}
+		this._layoutTimeout = window.setTimeout(entries[0]?.target?.organiseChildren.bind(entries[0].target), Et2Toolbar.LAYOUT_TIMEOUT);
+	}
+
+	handleSettingsClick(e : MouseEvent)
+	{
+		// Show settings / preferences dialog
+	}
+
+	handleAction(event, action : EgwAction)
+	{
+		debugger;
+	}
+
+	protected overflowTemplate()
+	{
+		const hasListContent = this.hasSlotController.test("list");
+
+		return !(this._isOverflowed || hasListContent) ? nothing : html`
+            <sl-dropdown hoist placement="bottom-end">
+                <et2-button-icon slot="trigger"
+                                 image="three-dots-vertical" noSubmit="true"
+                                 label="${this.egw().lang("More...")}"
+                ></et2-button-icon>
+                <sl-menu class="toolbar-list">
+                    <slot name="list"></slot>
+                </sl-menu>
+            </sl-dropdown>
+		`;
+	}
+
+	render()
+	{
+		const classes = {
+			toolbar: true,
+			'toolbar--disabled': this.disabled,
+			'toolbar--readonly': this.readonly,
+			'toolbar--overflowed': this._isOverflowed
+		};
+		return html`
+            <div
+                    part="base"
+                    class=${classMap(classes)}
+                    @overflow=${this.handleOverflow}
+            >
+                <div part="buttons" class="toolbar-buttons">
+                    <slot></slot>
+                </div>
+                ${this.overflowTemplate()}
+                ${!this._isAdmin ? nothing : html`
+                    <et2-button-icon image="gear" noSubmit
+                                     label="${this.egw().lang("settings")}"
+                                     @click=${this.handleSettingsClick}
+                    ></et2-button-icon>
+                `}
+            </div>
+		`;
+	}
+}

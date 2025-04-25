@@ -2628,6 +2628,27 @@ table.egwGridView_outer thead tr th.noResize:hover {
 /**
 * et2_toolbar
 */
+/* Move button icon to center */
+et2-toolbar et2-button[slot=""]::part(base) {
+	justify-content: center;
+	padding-inline-start: 0;
+	border: none;
+}
+
+/* Hide input label visually */
+et2-toolbar [slot=""]::part(label) {
+	position: absolute;
+	top: 100%;
+}
+
+/* Make sure inputs are at least square */
+et2-toolbar et2-button {
+	min-width: var(--sl-input-height-medium);
+}
+
+et2-toolbar [slot="list"]::part(base) {
+	border: none;
+}
 .et2_toolbar {
     border: none;
     background: none;
