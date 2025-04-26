@@ -6194,12 +6194,20 @@ class Mail
 	 */
 	public static function attachmentName(\Horde_Mime_Part $part)
 	{
-		$mime_type = $part->getType();
+		$mime_type = strtolower($part->getType());
 		$filename = trim($part->getName(true)) ?:
 			 ($mime_type == "message/rfc822" ? lang('forwarded message') : lang('attachment'));
 
+		// check for "application/octet-stream" if we currently have an extension on the filename
+		if ($mime_type === 'application/octet-stream' &&
+			count($parts = explode('.', $filename)) >= 2 &&
+			strlen(array_pop($parts)) <= 4)
+		{
+			return $filename;   // --> use it (not adding .bin)
+		}
+
 		// add the matching extension for the mime-type to the filename, if it's not already set
-		if (($ext = MimeMagic::mime2ext($mime_type)) !== MimeMagic::mime2ext(MimeMagic::filename2mime($filename)))
+		if (($ext = MimeMagic::mime2ext($mime_type)) !== (MimeMagic::filename2mime($filename)))
 		{
 			if (substr($filename, -strlen($ext)-1) === '_'.$ext)
 			{
@@ -6211,9 +6219,9 @@ class Mail
 	}
 
 	/**
-	 * Fetch a specific attachment from a message by it's cid
+	 * Fetch a specific attachment from a message by its cid
 	 *
-	 * this function is based on a on "Building A PHP-Based Mail Client"
+	 * this function is based on "Building A PHP-Based Mail Client"
 	 * http://www.devshed.com
 	 *
 	 * @param string|int $_uid
