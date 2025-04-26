@@ -620,12 +620,12 @@ class mail_ui
 				break;
 			case "allColumns":
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
-				$etpl->setElementAttribute('nm', 'template', 'mail.index.rows.horizental');
+				$etpl->setElementAttribute('nm', 'template', 'mail.index.rows.horizontal');
 				break;
 			case "expand":
 			case "fixed":
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'h');
-				if (!Api\Header\UserAgent::mobile()) $etpl->setElementAttribute('nm', 'template', 'mail.index.rows.horizental');
+				if (!Api\Header\UserAgent::mobile()) $etpl->setElementAttribute('nm', 'template', 'mail.index.rows.horizontal');
 				break;
 			default:
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
