@@ -2642,7 +2642,7 @@ et2-toolbar sl-button-group::part(base) {
 /* Hide input label visually */
 et2-toolbar :not(.toolbar--needsCaption)[slot=""]::part(label), et2-toolbar :not(.toolbar--needsCaption)[slot=""]::part(form-control-label) {
 	position: absolute;
-	top: 175%;
+	top: 250%;
 }
 
 /* Make sure inputs are at least square */

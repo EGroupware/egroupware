@@ -7,7 +7,7 @@
  * @author Nathan Gray
  */
 
-import {html, LitElement, nothing, PropertyValueMap} from "lit";
+import {html, nothing, PropertyValueMap} from "lit";
 import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {classMap} from "lit/directives/class-map.js";
@@ -27,12 +27,13 @@ import {HasSlotController} from "../Et2Widget/slot";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {Et2Button} from "../Et2Button/Et2Button";
+import {Et2Box} from "../Layout/Et2Box/Et2Box";
 
 /**
  * Groupbox shows content in a box with a summary
  */
 @customElement("et2-toolbar")
-export class Et2Toolbar extends Et2InputWidget(LitElement)
+export class Et2Toolbar extends Et2InputWidget(Et2Box)
 {
 	static get styles()
 	{
@@ -248,8 +249,8 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 				for(let id in root.children)
 				{
 					let info = {
-						id: id || root.children[id].id,
-						value: id || root.children[id].id,
+						id: root.children[id].id ?? id,
+						value: root.children[id].id ?? id,
 						label: root.children[id].caption
 					};
 					let childaction = {};
@@ -287,19 +288,17 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 			}
 
 			let dropdown = <Et2DropdownButton><unknown>loadWebComponent("et2-dropdown-button", {
-				id: this.id + "-" + action.id,
+				id: action.id,
 				label: action.caption,
 				//class: this.preference[action.id] ? `et2_toolbar-dropdown et2_toolbar_draggable${this.id} et2_toolbar-dropdown-menulist` : `et2_toolbar-dropdown et2_toolbar_draggable${this.id}`,
 				onchange: function(ev)
 				{
-					let action = that._actionManager.getActionById(dropdown.value);
-					dropdown.set_label(action.caption);
+					let action = dropdown.closest("et2-toolbar")._actionManager.getActionById(dropdown.value);
+					dropdown.label = action.caption;
 					if(action)
 					{
-						this.value = action.id;
-						action.execute([]);
+						dropdown.closest("et2-toolbar").handleAction(ev, action);
 					}
-					//console.debug(selected, this, action);
 				}.bind(action),
 				image: action.iconUrl || ''
 			}, this);
@@ -320,13 +319,12 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 
 			dropdown.onclick = function(selected, dropdown)
 			{
-				let action = that._actionManager.getActionById(this.getValue());
+				let action = dropdown.closest("et2-toolbar")._actionManager.getActionById(this.getValue());
 				if(action)
 				{
 					this.value = action.id;
 					action.execute([]);
 				}
-				//console.debug(selected, this, action);
 			}.bind(dropdown);
 			parent.append(dropdown);
 			dropdown.slot = this._preference[action.id] ? "list" : "";
@@ -679,6 +677,13 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 			option.label = child.label ?? child.emptyLabel;
 			// @ts-ignore
 			option.icon = child.icon ?? child.image ?? child.onIcon;
+			if(!option.icon)
+			{
+				// Try harder for icon, check original action
+				const action = this._actionManager.getActionById(option.value);
+				option.icon = action?.data?.icon ?? action?.iconUrl
+
+			}
 			if(option.label)
 			{
 				options.push(option);
@@ -715,8 +720,9 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 		const hasListContent = this.hasSlotController.test("list");
 
 		return !(this._isOverflowed || hasListContent || this._isAdmin) ? nothing : html`
-            <sl-dropdown hoist placement="bottom-end">
+            <sl-dropdown placement="bottom-end">
                 <et2-button-icon slot="trigger"
+                                 class="toolbar-list-trigger"
                                  image="three-dots-vertical" noSubmit="true"
                                  label="${this.egw().lang("More...")}"
                 ></et2-button-icon>

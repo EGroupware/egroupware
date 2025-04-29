@@ -21,6 +21,12 @@ export default css`
 			position: relative;
 			flex: 1 1 100%;
 		}
+		.toolbar-list-trigger {
+			font-size: var(--sl-font-size-large);
+			&::part(base) {
+				height: 100%;
+			}
+		}
 
 		.toolbar-list {
 			display: flex;
@@ -50,10 +56,9 @@ export default css`
 
 		/* We don't want these to expand */
 
-		::slotted(sl-button-group), ::slotted(et2-button), ::slotted(et2-button-icon), ::slotted(et2-button-toggle), ::slotted(et2-switch) {
+		::slotted(sl-button-group), ::slotted(et2-button), ::slotted(et2-button-icon), ::slotted(et2-button-toggle), ::slotted(et2-switch), ::slotted(et2-checkbox) {
 			flex: 0 0 fit-content;
 			min-width: var(--sl-input-height-medium);
-			height: var(--sl-input-height-medium);
 		}
 		::slotted(sl-button-group)::part(base) {
 			height: 100%;
