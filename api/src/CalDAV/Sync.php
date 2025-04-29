@@ -452,7 +452,7 @@ EOT, $this->header([
 		{
 			try {
 				$self = new self($data['url'], $data['user']??null, $data['password']??null, $data['sync_type']??null);
-				$self->sync($data['sync_token'], array_intersect_assoc($data, array_flip(['cat_id', 'participants', 'set_private', 'non_blocking'])));
+				$self->sync($data['sync_token'], array_intersect_key($data, array_flip(['cat_id', 'participants', 'set_private', 'non_blocking'])));
 				unset($data['error_time'], $data['error_msg'], $data['error_trace']);
 			}
 			catch (\Throwable $e) {
