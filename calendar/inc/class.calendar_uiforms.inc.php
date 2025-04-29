@@ -3815,6 +3815,14 @@ class calendar_uiforms extends calendar_ui
 						if (!isset($content['sync_type']))
 						{
 							$content['sync_type'] = null;
+							// enable showing subscriptions when a new subscription is created
+							if (!in_array('subscriptions', $toggle=$GLOBALS['egw_info']['user']['preferences']['integration_togle']??[]))
+							{
+								$toggle[] = 'subscriptions';
+							}
+							$prefs = $GLOBALS['egw']->preferences ?? new Api\Preferences('');
+							$prefs->add('calendar', 'integration_toggle', $toggle);
+							$prefs->save_repository();
 						}
 						$content['url'] = $caldav_client->test($content['sync_type']);
 						$content['cat_id'] = Api\CalDAV\Sync::writeSubscription($content);

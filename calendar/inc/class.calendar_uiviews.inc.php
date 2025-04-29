@@ -417,6 +417,20 @@ class calendar_uiviews extends calendar_ui
 
 			}
 		}
+		if (Api\CalDAV\Sync::listSubscriptions())
+		{
+			$actions['subscriptions'] = [
+				'caption'   => 'Subscriptions',
+				'iconUrl'   => Image::find('api', 'arrow-repeat'),
+				'checkbox'  => true,
+				'hint'      => lang('Show subscribed calendars'),
+				'group'     => 'integration',
+				'onExecute' => 'javaScript:app.calendar.toolbar_subscriptions_toggle_action',
+				'checked'   => in_array('subscriptions', (array)$this->cal_prefs['integration_toggle']),
+				'data'      => array('toggle_off' => '0', 'toggle_on' => '1'),
+				'toolbarDefault' => true,
+			];
+		}
 		if (Api\Header\UserAgent::mobile())
 		{
 			foreach (array_keys($actions) as $key)
