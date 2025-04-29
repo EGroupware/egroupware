@@ -30,7 +30,10 @@ import {Et2Button} from "../Et2Button/Et2Button";
 import {Et2Box} from "../Layout/Et2Box/Et2Box";
 
 /**
- * Groupbox shows content in a box with a summary
+ * Toolbar shows inputs in a horizontal line.  Inputs that do not fit are hidden in a dropdown.
+ *
+ * @slot - Toolbar contents
+ * @slot list - Toolbar contents that start hidden in the dropdown
  */
 @customElement("et2-toolbar")
 export class Et2Toolbar extends Et2InputWidget(Et2Box)
@@ -108,7 +111,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	connectedCallback()
 	{
 		super.connectedCallback();
-		this._isAdmin = typeof (this.egw().user("apps")?.admin) != "undefined" || false;
+		this._isAdmin = typeof (this.egw() && this.egw().user && this.egw()?.user("apps")?.admin) != "undefined" || false;
 
 		this.resizeObserver.observe(this);
 	}
@@ -557,7 +560,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	 */
 	private _placeInputInGroup(child : HTMLElement)
 	{
-		let groupId = child.dataset.groupId;
+		let groupId = child.dataset?.groupId;
 		if(groupId && child.slot == "" && this.querySelector(`sl-button-group[data-group="${groupId}"]`))
 		{
 			this.querySelector(`sl-button-group[data-group="${groupId}"]`).append(child);
@@ -609,7 +612,12 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		{
 			window.clearTimeout(this._layoutTimeout);
 		}
-		this._layoutTimeout = window.setTimeout(entries[0]?.target?.organiseChildren.bind(entries[0].target), Et2Toolbar.LAYOUT_TIMEOUT);
+		this._layoutTimeout = window.setTimeout(() =>
+		{
+			const toolbar = entries[0]?.target;
+			toolbar.organiseChildren();
+			toolbar.requestUpdate();
+		}, Et2Toolbar.LAYOUT_TIMEOUT);
 	}
 
 	handleSettingsClick(e : MouseEvent)
@@ -677,7 +685,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			option.label = child.label ?? child.emptyLabel;
 			// @ts-ignore
 			option.icon = child.icon ?? child.image ?? child.onIcon;
-			if(!option.icon)
+			if(!option.icon && this._actionManager)
 			{
 				// Try harder for icon, check original action
 				const action = this._actionManager.getActionById(option.value);
