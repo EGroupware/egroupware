@@ -400,7 +400,7 @@ EOT, $this->header([
 	 * @return array|void
 	 * @throws \JsonException
 	 */
-	protected function sync_calendar_get(string &$etag, array $modifications)
+	protected function sync_calendar_get(?string &$etag, array $modifications)
 	{
 		// check for an ics-file with Content-Type: text/calendar
 		if (!empty($etag))
