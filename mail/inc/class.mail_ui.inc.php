@@ -1873,20 +1873,25 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	/**
 	 * function splitRowID - split the rowID into its parts
 	 *
-	 * @param string $_rowID string - a colon separated string in the form accountID:profileID:folder:message_uid
-	 * @return array populated named result array (accountID,profileID,folder,msgUID)
+	 * @param string|null $_rowID string - a colon separated string in the form accountID:profileID:folder:message_uid
+	 * @return array with values for keys "app", "accountID", "profileID", "folder", "msgUID"
 	 */
-	static function splitRowID($_rowID)
+	static function splitRowID(?string $_rowID)
 	{
-		$res = explode(self::$delimiter,$_rowID);
-		// as a rowID is perceeded by app::, should be mail!
-		//error_log(__METHOD__.__LINE__.array2string($res).' [0] isInt:'.is_int($res[0]).' [0] isNumeric:'.is_numeric($res[0]).' [0] isString:'.is_string($res[0]).' Count:'.count($res));
-		if (count($res)==4 && is_numeric($res[0]) )
+		$res = $_rowID ? explode(self::$delimiter, $_rowID) : [];
+		// as a rowID is prefixed with "$app::", should be mail!
+		if (count($res) === 4 && is_numeric($res[0]))
 		{
 			// we have an own created rowID; prepend app=mail
 			array_unshift($res,'mail');
 		}
-		return array('app'=>$res[0], 'accountID'=>$res[1]??null, 'profileID'=>$res[2]??null, 'folder'=>base64_decode($res[3]??null), 'msgUID'=>$res[4]??null);
+		return [
+			'app' => $res[0],
+			'accountID' => $res[1]??null,
+			'profileID' => $res[2]??null,
+			'folder' => !empty($res[3]) ? base64_decode($res[3]) : null,
+			'msgUID' => $res[4]??null,
+		];
 	}
 
 	/**
@@ -2252,18 +2257,22 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
-	 * display messages
-	 * @param array $_requesteddata etemplate content
-	 * all params are passed as GET Parameters, but can be passed via ExecMethod2 as array too
+	 * Display messages
+	 *
+	 * @param array|null $_requesteddata etemplate content
+	 * all params are passed as GET Parameters, but can be passed via ExecMethod2 as an array too
+	 *
+	 * @throws Api\Exception
+	 * @throws Api\Exception\AssertionFailed
+	 * @throws Api\Json\Exception
 	 */
-	function displayMessage($_requesteddata = null)
+	function displayMessage(?array $_requesteddata = null)
 	{
 		if (is_null($_requesteddata)) $_requesteddata = $_GET;
 
-		$preventRedirect=false;
-		if(isset($_requesteddata['id'])) $rowID	= $_requesteddata['id'];
-		if(isset($_requesteddata['part'])) $partID = $_requesteddata['part']!='null'?$_requesteddata['part']:null;
-		if(isset($_requesteddata['mode'])) $preventRedirect   = (($_requesteddata['mode']=='display' || $_requesteddata['mode'] == 'print')?true:false);
+		$rowID	= $_requesteddata['id'] ?? null;
+		$partID = $_requesteddata['part'] ?? null;
+		$preventRedirect   = isset($_requesteddata['mode']) && in_array($_requesteddata['mode'], ['display', 'print']);
 
 		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
@@ -2272,14 +2281,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
-			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 			$this->changeProfile($icServerID);
 		}
 		$htmlOptions = $this->mail_bo->htmlOptions;
 		if (!empty($_requesteddata['tryastext'])) $htmlOptions  = "only_if_no_text";
 		if (!empty($_requesteddata['tryashtml'])) $htmlOptions  = "always_display";
 
-		//error_log(__METHOD__.__LINE__.array2string($hA));
 		if (($this->mail_bo->isDraftFolder($mailbox)) && $_requesteddata['mode'] == 'print')
 		{
 			$response = Api\Json\Response::get();
@@ -2378,7 +2385,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
 		}
 
-		// DRAG attachments actions
+		// DRAG attachment actions
 		$etpl->setElementAttribute('mail_displayattachments', 'actions', array(
 			'file_drag' => array(
 				'dragType' => 'file',
@@ -2816,20 +2823,25 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 	function getAttachment()
 	{
-		if(isset($_GET['id'])) $rowID	= $_GET['id'];
-
-		$hA = self::splitRowID($rowID);
-		$uid = $hA['msgUID'];
-		$mailbox = $hA['folder'];
-		$icServerID = $hA['profileID'];
+		if(!empty($_GET['id']))
+		{
+			$hA = self::splitRowID($_GET['id']);
+			$uid = $hA['msgUID'] ?? null;
+			$mailbox = $hA['folder'] ?? null;
+			$icServerID = $hA['profileID'] ?? null;
+		}
+		else
+		{
+			$uid = $mailbox = $icServerID = null;
+		}
 		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
 			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 			$this->changeProfile($icServerID);
 		}
-		$part		= $_GET['part'];
-		$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
+		$part		= $_GET['part'] ?? null;
+		$is_winmail = $_GET['is_winmail'] ?? 0;
 
 		$this->mail_bo->reopen($mailbox);
 		$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
