@@ -6198,16 +6198,16 @@ class Mail
 		$filename = trim($part->getName(true)) ?:
 			 ($mime_type == "message/rfc822" ? lang('forwarded message') : lang('attachment'));
 
-		// check for "application/octet-stream" if we currently have an extension on the filename
-		if ($mime_type === 'application/octet-stream' &&
-			count($parts = explode('.', $filename)) >= 2 &&
-			strlen(array_pop($parts)) <= 4)
+		// if we currently have an extension on the filename and mime-type is either "application/octet-stream" or matches the extension
+		if (count($parts = explode('.', $filename)) >= 2 &&
+			strlen($current_ext = array_pop($parts)) <= 4 &&
+			($mime_type == "application/octet-stream" || $current_ext === MimeMagic::mime2ext($mime_type)))
 		{
-			return $filename;   // --> use it (not adding .bin)
+			return $filename;   // --> use it
 		}
 
 		// add the matching extension for the mime-type to the filename, if it's not already set
-		if (($ext = MimeMagic::mime2ext($mime_type)) !== (MimeMagic::filename2mime($filename)))
+		if (($ext = MimeMagic::mime2ext($mime_type)))
 		{
 			if (substr($filename, -strlen($ext)-1) === '_'.$ext)
 			{
