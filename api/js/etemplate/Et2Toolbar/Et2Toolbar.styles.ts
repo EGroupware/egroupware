@@ -26,8 +26,13 @@ export default css`
 			display: flex;
 			flex-direction: column;
 
+			/* Internal components in list */
 			* {
 				order: attr(data-order type(<number>), 99);
+				max-width: 100%;
+				&::part(base) {
+					border: none;
+				}
 			}
 		}
 
@@ -48,6 +53,10 @@ export default css`
 		::slotted(sl-button-group), ::slotted(et2-button), ::slotted(et2-button-icon), ::slotted(et2-button-toggle), ::slotted(et2-switch) {
 			flex: 0 0 fit-content;
 			min-width: var(--sl-input-height-medium);
+			height: var(--sl-input-height-medium);
+		}
+		::slotted(sl-button-group)::part(base) {
+			height: 100%;
 		}
 
 		/* Hide empty button groups (the buttons are in the list) */

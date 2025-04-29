@@ -295,6 +295,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		{
 			return {
 				label: true,
+				helptext: true,
 				statustext: true
 			}
 		}

@@ -147,13 +147,6 @@
 	background: inherit;
 	border:none;
 }
-#calendar-toolbar .egw_fw_ui_app_header_container {
-	border: none;
-	display:flex;
-	align-items: center;
-	min-height: 26px;
-	justify-content: flex-end;
-}
 
 #calendar-toolbar .et2_searchbox input {
 	height: 14px;

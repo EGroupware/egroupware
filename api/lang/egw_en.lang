@@ -1302,6 +1302,7 @@ show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page.
 show page generation time?	common	en	Show page generation time
 show password	common	en	Show password
+show these toolbar items helptext	common	en	Show these items on the toolbar (if they fit).  The others are available in the list [⋮].
 show values	common	en	Show values
 show/hide	common	en	Show/hide sidebar
 showing	common	en	Showing
@@ -1423,6 +1424,7 @@ tonga	common	en	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	en	Too many rows selected.<br>Select all, or less than %1 rows
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	en	Too many unsuccessful attempts to log in: %1 for the user '%2', %3 for the IP %4
 top	common	en	Top
+toolbar settings	common	en	Toolbar settings
 total	common	en	Total
 total: %1 successful: %2 failed: %3 skipped: %4	common	en	Total: %1 Successful: %2 Failed: %3 Skipped: %4
 tree	common	en	Tree

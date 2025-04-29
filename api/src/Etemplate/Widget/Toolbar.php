@@ -77,8 +77,8 @@ class Toolbar extends Etemplate\Widget
 			{
 				case 'actions':
 					$GLOBALS['egw']->preferences->read_repository(true);
-					$GLOBALS['egw']->preferences->add($app, $id, $setting, 'default');
-					$GLOBALS['egw']->preferences->save_repository(true, 'default');
+					$GLOBALS['egw']->preferences->add($app, $id, $setting, $settings['default'] ? 'default' : 'user');
+					$GLOBALS['egw']->preferences->save_repository(true, $settings['default'] ? 'default' : 'user');
 					$GLOBALS['egw']->preferences->read(true);
 					break;
 				case 'reset':
@@ -109,3 +109,5 @@ class Toolbar extends Etemplate\Widget
 		$response->data($GLOBALS['egw']->preferences->default_prefs($app, $id));
 	}
 }
+
+Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Toolbar', array('et2-toolbar'));

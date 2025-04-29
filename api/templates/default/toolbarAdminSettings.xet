@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="api.toolbarAdminSettings" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="100px"/>
-				<column width="300px"/>
-			</columns>
-			<rows>
-                <row>
-                    <et2-description  value="default visible actions" label="%s:"></et2-description>
-                    <et2-select  id="actions" editModeEnabled="false" allowFreeEntries="false" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_search"></et2-select>
-                </row>
-                <row>
-                    <et2-description  value="reset all to default" label="%s:"></et2-description>
-                    <et2-checkbox  id="reset" statustext="This will reset toolbar preferences for all users and set them to configured default prefs."></et2-checkbox>
-                </row>
-            </rows>
-        </grid>
+    <template id="api.toolbarAdminSettings" template="" lang="" group="0" version="1.9.001" height="100%">
+        <et2-vbox height="100%">
+            <et2-select id="actions" editModeEnabled="false" allowFreeEntries="false" multiple="true"
+                        label="show"
+                        helpText="show these toolbar items helptext"
+                        height="100%"
+                        style="flex-grow: 1;"
+            ></et2-select>
+            <et2-vbox hidden="!@isAdmin">
+                <et2-checkbox id="default" label="Set as default" statustext="Save as default preference for all users"></et2-checkbox>
+                <et2-checkbox id="reset" label="reset all to default" statustext="This will reset toolbar preferences for all users and set them to configured default prefs."></et2-checkbox>
+            </et2-vbox>
+        </et2-vbox>
         <styles>
-            #toolbarAdminSettings {
-            min-width: 600px;
-            min-height: 300px;
+            #api-toolbarAdminSettings {
+            height: 100%;
             }
         </styles>
     </template>

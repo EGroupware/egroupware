@@ -15,7 +15,7 @@ Egroupware
     <template id="calendar.toolbar">
 		<et2-button id="add" image="add" class="imageOnly" statustext="add new event" onclick="app.calendar.toolbar_action(widget);" noSubmit="true"></et2-button>
 		<et2-searchbox  id="keywords" overlay="false" onchange="app.calendar.update_state({view: 'listview',search: widget.getValue()});return false;" placeholder="Search"></et2-searchbox>
-		<toolbar id="toolbar" width="100%" flat_list="false"/>
+        <et2-toolbar id="toolbar" style="width: 100%"/>
 		<!-- Fake an app header inside the toolbar -->
 		<et2-box  class="egw_fw_ui_app_header_container">
 			<et2-favorites  app="calendar"></et2-favorites>

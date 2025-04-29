@@ -2635,10 +2635,14 @@ et2-toolbar et2-button[slot=""]::part(base) {
 	border: none;
 }
 
+et2-toolbar sl-button-group::part(base) {
+	height: 100%;
+}
+
 /* Hide input label visually */
-et2-toolbar [slot=""]::part(label) {
+et2-toolbar :not(.toolbar--needsCaption)[slot=""]::part(label), et2-toolbar :not(.toolbar--needsCaption)[slot=""]::part(form-control-label) {
 	position: absolute;
-	top: 100%;
+	top: 175%;
 }
 
 /* Make sure inputs are at least square */
@@ -2649,194 +2653,28 @@ et2-toolbar et2-button {
 et2-toolbar [slot="list"]::part(base) {
 	border: none;
 }
-.et2_toolbar {
-    border: none;
-    background: none;
 
+et2-toolbar {
 	border-bottom-width: var(--sl-panel-border-width);
 	border-color: var(--sl-panel-border-color);
 	border-bottom-style: solid;
 }
 
-.et2_toolbar *[class ^="et2_toolbar_draggable"] {cursor: pointer !important;}
-
-.et2_toolbar et2-button.et2_toolbar_onlyCaption,
-.et2_toolbar .et2_toolbar_actionlist et2-button.et2_toolbar_onlyCaption::part(prefix) {
-    width: auto;
+et2-toolbar :not(et2-button)::part(control) {
+	font-size: var(--sl-font-size-x-large, 20px);
+	border: none;
 }
 
-/* Hide label visually */
-.et2_toolbar et2-button:not(.et2_toolbar_onlyCaption):not(.et2_toolbar_hasCaption)::part(label) {
-	position: absolute;
-	top: 100%;
+et2-toolbar [slot="list"]:not(et2-button)::part(control) {
+	order: -1;
+	margin-inline-start: var(--sl-spacing-small);
+	margin-inline-end: var(--sl-spacing-medium);
 }
 
-.et2_toolbar et2-button:not(:hover)::part(base) {
+et2-toolbar et2-switch-icon:hover:not([disabled]) {
 	border-color: transparent;
 }
 
-.et2_toolbar *:not(.ui-toolbar-menulist) > et2-button:hover::part(base) {
-	background-color: var(--sl-input-background-color);
-}
-
-.et2_toolbar *:not(.ui-toolbar-menulist) > et2-switch-icon {
-	font-size: 20px;
-	border-radius: var(--sl-border-radius-medium);
-	border-color: transparent;
-	border-width: var(--sl-input-border-width);
-	border-style: solid;
-	padding: 0px var(--sl-spacing-medium);
-}
-
-.et2_toolbar *:not(.ui-toolbar-menulist) > et2-switch:hover {
-	border-color: var(--sl-input-border-color-hover);
-	border-width: var(--sl-input-border-width);
-	border-style: solid;
-}
-
-.et2_toolbar et2-switch-icon::part(form-control-label) {
-	position: absolute;
-	top: 100%;
-	visibility: hidden;
-}
-
-.et2_toolbar et2-switch-icon::part(switch-label) {
-	top: calc(-0.3 * var(--sl-spacing-medium));
-}
-
-et2-switch-icon:hover:not([disabled]) {
-	border-color: var(--sl-input-border-color-hover);
-	color: var(--sl-input-color-hover);
-}
-
-
-.et2_toolbar et2-button:not(.et2_toolbar_hasCaption)::part(prefix) {
-	padding: 0;
-}
-
-
-div.et2_toolbar.ui-widget-header {
-    background: none;
-}
-.et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short {
-    background-image: url(../../../node_modules/bootstrap-icons/icons/three-dots-vertical.svg);
-    background-size: 16px;
-    height: 32px;
-    width: 20px;
-    margin-top: 0px;
-    background-repeat: no-repeat;
-    background-position: center;
-    cursor: pointer;
-}
-
-.et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short {
-    padding: 0px !important;
-    width: 40px;
-    height: 32px;
-    margin-top: 0px;
-}
-
-.et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short::marker {
-    top: 0px;
-    left: auto;
-    content: '';
-}
-
-.et2_toolbar details.et2_toolbar_more.admin .ui-toolbar-menulistHeader.list_header-short {
-    background-position: left;
-}
-.et2_toolbar .et2_toolbar_more summary .toolbar-admin-pref {
-    background-image: url(../../../node_modules/bootstrap-icons/icons/gear.svg);
-    background-repeat: no-repeat;
-    background-size: 20px;
-    width: 20px;
-    height: 100%;
-    display: inline-block;
-    background-position: center;
-    float: right;
-    cursor: pointer;
-}
-
-.et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader {
-    border: 1px solid silver;
-    border-radius: 3px;
-    background-color: #fafafa;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol";
-    font-size: 9pt;
-    font-weight: normal;
-    height: 17px;
-    margin-top: 1px;
-    padding-left: 5px;
-    padding-right: 5px;
-    align-items: end;
-    padding-top: 5px;
-}
-.et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader.list_header-short {
-    border: none;
-    background-color: transparent;
-}
-.et2_toolbar details[open].et2_toolbar_more .ui-toolbar-menulistHeader.list_header-short {
-    background-image: url(../../../node_modules/bootstrap-icons/icons/caret-down-fill.svg);
-    background-size: 12px;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.et2_toolbar details[open].et2_toolbar_more.admin .ui-toolbar-menulistHeader.list_header-short {
-    background-position: left;
-}
-
-.et2_toolbar .et2_toolbar_actionlist span[data-group] {
-    display: flex;
-}
-
-.et2_toolbar .et2_toolbar_actionlist span[data-group]:not(:first-child) > button.et2_button:first-child {
-    margin-left: 7px;
-}
-
-.et2_toolbar et2-button {
-	--et2-button-image-padding-left: 0px;
-}
-
-.et2_toolbar *:not(.ui-toolbar-menulist) > et2-button::part(base) {
-	padding-inline-start: 0px;
-	justify-content: center;
-}
-
-.et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image, .nextmatch_header_row .et2_button {
-	width: 24px;
-	height: 24px;
-	background-position: center;
-	background-size: 16px 16px;
-	padding-left: 0;
-	background-color: #fafafa;
-}
-
-.et2_toolbar .et2_toolbar_actionlist > span > * {
-	margin-right: 1ex;
-	min-width: 35px;
-}
-
-/* Make toolbar switches clickable everywhere, not just the top half */
-.et2_toolbar .et2_toolbar_actionlist et2-switch::part(base) {
-	height: 100%;
-}
-
-.et2_toolbar .ui-toolbar-menulist > *:hover {
-	outline: none;
-	background-color: var(--sl-color-primary-600);
-	color: var(--sl-color-neutral-0);
-}
-
-.et2_toolbar .ui-toolbar-menulist > *:hover::part(prefix) {
-	filter: invert(1) brightness(5);
-}
-
-.et2_toolbar .ui-toolbar-menulist > *:hover::part(label) {
-	color: var(--sl-color-neutral-0);
-}
-.et2_toolbar summary::-webkit-details-marker {display: none;}
 .nextmatch_header_row et2-button::part(container) {
 	height: 18px;
 }

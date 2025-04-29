@@ -575,7 +575,7 @@ class mail_ui
 				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions());
 
 				// sending preview toolbar actions
-				if (!empty($content['mailSplitter'])) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
+			$etpl->setElementAttribute('toolbar', 'actions', $this->get_toolbar_actions());
 
 				// We need to send toolbar actions to client-side because view template needs them
 				if (Api\Header\UserAgent::mobile()) $sel_options['toolbar'] = $this->get_toolbar_actions();

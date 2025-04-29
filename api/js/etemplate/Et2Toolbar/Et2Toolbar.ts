@@ -24,6 +24,9 @@ import {Et2SwitchIcon} from "../Et2Switch/Et2SwitchIcon";
 import {Et2ButtonToggle} from "../Et2Button/Et2ButtonToggle";
 import {SlButtonGroup} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../Et2Widget/slot";
+import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
+import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {Et2Button} from "../Et2Button/Et2Button";
 
 /**
  * Groupbox shows content in a box with a summary
@@ -98,6 +101,7 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 		super();
 
 		this.handleClick = this.handleClick.bind(this);
+		this.handleSettingsClose = this.handleSettingsClose.bind(this);
 	}
 
 	connectedCallback()
@@ -148,7 +152,6 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 	@property({type: Object})
 	set actions(actions : EgwAction[] | { [id : string] : object })
 	{
-		debugger;
 		this._initActions(actions);
 		this.requestUpdate();
 	}
@@ -227,6 +230,14 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 		this._actionsParsed = true;
 	}
 
+	/**
+	 * Take a single action and turn it into an input, placing it inside parent
+	 * Handles actions with children
+	 *
+	 * @param {EgwAction} action
+	 * @param parent
+	 * @protected
+	 */
 	protected addAction(action : EgwAction, parent)
 	{
 		if(Array.isArray(action.children) && action.children.length > 0)
@@ -327,14 +338,17 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 	}
 
 	/**
-	 * Make a button based on the given action
+	 * Make an input based on the given action, adds it to parent element
+	 *
+	 * Handles just actions, manages common setup
 	 *
 	 * @param {Object} action action object with attributes icon, caption, ...
 	 */
 	protected _makeInput(action : EgwAction, parent : HTMLElement)
 	{
 		const isCheckbox = action && action.checkbox;
-		const isToggleSwitch = action.data?.toggle_on || action.data?.toggle_off || action.data?.onIcon || action.data?.offIcon;
+		const isToggleSwitch = action.data?.toggle_on || action.data?.toggle_off || action.data?.onIcon || action.data?.offIcon
+			|| isCheckbox && action.data.icon;
 
 		let widget = null;
 		const attrs = {
@@ -382,10 +396,16 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 	{
 		const component = "et2-button";
 		Object.assign(attrs, {
-			image: action.data.icon || action.iconUrl,
-			class: `et2_toolbar_draggable${this.id}`,
 			noSubmit: true
 		});
+		if(typeof action.data.icon !== "undefined" || typeof action.iconUrl !== "undefined")
+		{
+			attrs.image = action.data.icon || action.iconUrl;
+		}
+		if(!attrs.image)
+		{
+			attrs.class = "toolbar--needsCaption";
+		}
 		if(egwIsMobile())
 		{
 			attrs.name = '';
@@ -397,11 +417,16 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 	{
 		let component = "et2-switch";
 		Object.assign(attrs, {
-			toggleOn: action.data.toggle_on,
-			toggleOff: action.data.toggle_off,
-			class: `et2_toolbar_draggable${this.id}`,
 			value: action.checked ?? false
 		});
+		if(typeof action.data.toggle_on !== "undefined")
+		{
+			attrs.toggleOn = action.data.toggle_on;
+		}
+		if(typeof action.data.toggle_off !== "undefined")
+		{
+			attrs.toggleOff = action.data.toggle_off;
+		}
 		if(action.data.onIcon || action.data.offIcon)
 		{
 			component = "et2-switch-icon";
@@ -414,29 +439,31 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 				attrs["offIcon"] = action.data.offIcon;
 			}
 		}
+		else if(action.iconUrl || action.data.icon)
+		{
+			component = "et2-button-toggle";
+			attrs['icon'] = action.data.icon ?? action.iconUrl;
+			attrs["exportparts"] = "form-control-label control";
+		}
 		return <Et2Switch>loadWebComponent(component, attrs, this);
 	}
 
 	private _makeToggle(action, attrs : { [id : string] : string }) : Et2ButtonToggle
 	{
 		Object.assign(attrs, {
-			image: action.data.icon || action.iconUrl || '',
-			class: `et2_toolbar_draggable${this.id}`,
+			image: action.data.icon || action.iconUrl || ''
 		});
 		return <Et2ButtonToggle>loadWebComponent("et2-button-toggle", attrs, this);
 	}
 
 	/**
-	 * Fix function in order to fix toolbar preferences with the new preference structure
+	 * Makes sure preference is valid and contains the action
+	 *
 	 * @param {action object} _action
 	 */
 	private _setPrefered(actionId : string, state : boolean)
 	{
 		this._preference[actionId] = state;
-		if(egwIsMobile())
-		{
-			return;
-		}
 		this.egw().set_preference(this.preferenceApp, this.preferenceId, this._preference);
 	}
 
@@ -497,6 +524,12 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 		this.shadowRoot.querySelector(".toolbar").classList.toggle("toolbar--overflowed", this._isOverflowed);
 	}
 
+	/**
+	 * Slot a child according to preference and available space
+	 *
+	 * @param {HTMLElement} child
+	 * @protected
+	 */
 	protected organiseChild(child : HTMLElement)
 	{
 		if(!this.shadowRoot.querySelector(".toolbar-buttons"))
@@ -533,15 +566,41 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 		}
 	}
 
+	/**
+	 * Handle clicks on child widgets - call action when appropriate
+	 *
+	 * @param {Event} e
+	 */
 	handleClick(e : Event)
 	{
 		// If the element has an action, execute it
-		if(e.target?.dataset?.actionId)
+		if(e.target instanceof Et2Button && e.target?.dataset?.actionId && !e.defaultPrevented)
 		{
-			e.stopImmediatePropagation();
-			return this.handleAction(e, this._actionManager.getActionById(e.target.dataset.actionId));
+			// Please stop, action system has it
+			e.stopPropagation();
+
+			const action = this._actionManager.getActionById(e.target.dataset.actionId);
+
+			// Pass it to the action system
+			return this.handleAction(e, action);
 		}
 		// Otherwise, it's just a normal component
+	}
+
+	/**
+	 * Handle changes on child widgets - call action when appropriate
+	 *
+	 * @param {Event} e
+	 */
+	handleChange(e : Event)
+	{
+		// If the element has an action, execute it
+		if(e.target?.dataset?.actionId && !e.defaultPrevented)
+		{
+			e.stopPropagation();
+			// Pass it to the action system
+			return this.handleAction(e, this._actionManager.getActionById(e.target.dataset.actionId));
+		}
 	}
 
 	handleResize(entries : ResizeObserverEntry[], observer)
@@ -559,13 +618,44 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 	{
 		e.stopImmediatePropagation();
 		// Show settings / preferences dialog
+		this.settingsDialog();
+
+		// Close the list
+		this.shadowRoot.querySelector('sl-dropdown')?.hide();
+	}
+
+	/**
+	 * Update preference, reset if requested
+	 * @param e
+	 */
+	handleSettingsClose(button_id, value, event)
+	{
+		if(button_id !== Et2Dialog.OK_BUTTON)
+		{
+			return;
+		}
+
+		if(value.reset || value.default)
+		{
+			// Admin change preferences for all
+			this.egw().json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_setAdminSettings',
+				[value, this.preferenceId, this.preferenceApp], (_result) =>
+				{
+					this.egw().message(_result);
+				}).sendRequest(true);
+		}
+		this.settingsOptions().forEach(option =>
+		{
+			this._setPrefered(option.value, !value.actions.includes(option.value));
+		});
+		this.organiseChildren();
 	}
 
 	handleAction(event, action : EgwAction)
 	{
 		if(action.checkbox)
 		{
-			action.set_checked(this.getWidgetById(action.id).checked);
+			action.set_checked(this.getWidgetById(action.id).value);
 		}
 		this.value = {action: action.id};
 		if(!action.data)
@@ -576,11 +666,55 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
 		action.execute([]);
 	}
 
+	protected settingsOptions()
+	{
+		const options = [];
+		this.querySelectorAll("[id]").forEach((child : HTMLElement) =>
+		{
+			const option : SelectOption = {
+				value: child.id,
+				label: child.id
+			};
+			// @ts-ignore
+			option.label = child.label ?? child.emptyLabel;
+			// @ts-ignore
+			option.icon = child.icon ?? child.image ?? child.onIcon;
+			if(option.label)
+			{
+				options.push(option);
+			}
+		})
+		return options;
+	}
+
+	protected settingsDialog()
+	{
+		const value = Object.keys(this._preference)
+			.filter(key => !this._preference[key]);
+		const dialog = loadWebComponent("et2-dialog", {
+			title: this.egw().lang("toolbar settings"),
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			style: "--width: 40em",
+			template: "api.toolbarAdminSettings",
+			value: {
+				content: {
+					actions: value,
+					isAdmin: this._isAdmin
+				},
+				sel_options: {
+					actions: this.settingsOptions()
+				}
+			},
+			callback: this.handleSettingsClose
+		}, this);
+		document.body.append(dialog);
+	}
+
 	protected overflowTemplate()
 	{
 		const hasListContent = this.hasSlotController.test("list");
 
-		return !(this._isOverflowed || hasListContent) ? nothing : html`
+		return !(this._isOverflowed || hasListContent || this._isAdmin) ? nothing : html`
             <sl-dropdown hoist placement="bottom-end">
                 <et2-button-icon slot="trigger"
                                  image="three-dots-vertical" noSubmit="true"
@@ -588,6 +722,12 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
                 ></et2-button-icon>
                 <sl-menu class="toolbar-list">
                     <slot name="list"></slot>
+                    <sl-divider data-order="99"></sl-divider>
+                    <et2-button class="toolbar-admin-button"
+                                image="gear" data-order="99" noSubmit
+                                label="${this.egw().lang("settings")}"
+                                @click=${this.handleSettingsClick}
+                    ></et2-button>
                 </sl-menu>
             </sl-dropdown>
 		`;
@@ -606,17 +746,12 @@ export class Et2Toolbar extends Et2InputWidget(LitElement)
                     part="base"
                     class=${classMap(classes)}
                     @click=${this.handleClick}
+                    @change=${this.handleChange}
             >
                 <div part="buttons" class="toolbar-buttons">
                     <slot></slot>
                 </div>
                 ${this.overflowTemplate()}
-                ${!this._isAdmin ? nothing : html`
-                    <et2-button-icon image="gear" noSubmit
-                                     label="${this.egw().lang("settings")}"
-                                     @click=${this.handleSettingsClick}
-                    ></et2-button-icon>
-                `}
             </div>
 		`;
 	}

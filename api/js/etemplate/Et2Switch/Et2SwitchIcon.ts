@@ -163,7 +163,7 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 		return html`
             <sl-switch
                     part="switch"
-                    exportparts="base:switch-label"
+                    exportparts="base:switch-label control"
                     .label=${this.label}
                     .value=${live(this.value)}
                     .checked=${live(this.checked)}
