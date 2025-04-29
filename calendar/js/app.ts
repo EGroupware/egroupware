@@ -851,6 +851,19 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
+	 * Handle the subscriptions toggle from the toolbar
+	 *
+	 * @param action
+	 */
+	toolbar_subscriptions_toggle_action(action : egwAction)
+	{
+		let callback = function() {
+			this.update_state({include_subscriptions: action.checked});
+		}.bind(this);
+		this.toolbar_integration_action(action, [],null, callback);
+	}
+
+	/**
 	 * Handle integration actions from the toolbar
 	 *
 	 * @param action {egwAction} Integration action from the toolbar

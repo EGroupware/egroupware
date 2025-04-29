@@ -431,6 +431,11 @@ class calendar_uilist extends calendar_ui
 				}
 				unset($col_filter['include_videocalls']);
 			}
+			// subscriptions
+			if (empty($params['cat_id']) && !in_array('subscriptions', (array)$this->cal_prefs['integration_toggle']))
+			{
+				$col_filter[] = 'cal_category NOT IN ('.implode(',', array_keys(Api\CalDAV\Sync::listSubscriptions())).')';
+			}
 		}
 		$rows = $js_integration_data = array();
 
