@@ -3040,17 +3040,43 @@ class Mail
 						$reference = empty($reference)?$p:$reference.$delimiter.$p;
 					}
 				}
-				$mainFolder = $subFolders = array();
 
 				if ($_subscribedOnly)
 				{
 					$mainFolder = $this->icServer->listSubscribedMailboxes($reference, 1, true);
-					$subFolders = $this->icServer->listSubscribedMailboxes($node['MAILBOX'].$node['delimiter'], $_search, true);
 				}
 				else
 				{
 					$mainFolder = $this->icServer->getMailboxes($reference, 1, true);
-					$subFolders = $this->icServer->getMailboxes($node['MAILBOX'].$node['delimiter'], $_search, true);
+				}
+
+				// as we need/want to show unsubscribed folders with subscribed children, we always have to look at all subfolders
+				$subFolders = $this->icServer->getMailboxes($node['MAILBOX'].$node['delimiter'], $_search, true);
+				// and throw away the unsubscribed ones without (subscribed) children
+				if ($_subscribedOnly && $subFolders)
+				{
+					foreach ($subFolders as $path => $folder)
+					{
+						// check if the unsubscribed folder has subscribed children
+						if (!$folder['SUBSCRIBED'])
+						{
+							$child = null;
+							if (in_array('\\haschildren', array_map('strtolower', $folder['ATTRIBUTES'])))
+							{
+								foreach ($this->icServer->listSubscribedMailboxes($folder['MAILBOX'] . $folder['delimiter'], $_search, true) as $child)
+								{
+									if ($child['SUBSCRIBED'])
+									{
+										break;
+									}
+								}
+							}
+							if (!($child['SUBSCRIBED'] ?? false))
+							{
+								unset($subFolders[$path]);
+							}
+						}
+					}
 				}
 
 				if (isset($mainFolder['INBOX']) && is_array($mainFolder['INBOX']))
