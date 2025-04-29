@@ -33,6 +33,13 @@
 					<et2-select-account id="participants" multiple="true" accountType="both"></et2-select-account>
 				</row>
 				<row>
+					<et2-description value="Modify events"></et2-description>
+					<et2-hbox width="40%">
+						<et2-checkbox id="set_private" label="private" statustext="Does NOT show event to other users, unless they have a private grant"></et2-checkbox>
+						<et2-checkbox id="non_blocking" label="non blocking" statustext="A non blocking event will not conflict with other events" ></et2-checkbox>
+					</et2-hbox>
+				</row>
+				<row>
 					<et2-description  value="Color" for="color"></et2-description>
 					<et2-hbox>
 						<et2-colorpicker  id="color"></et2-colorpicker>

@@ -227,11 +227,10 @@ EOT, $this->header([
 	 * Sync the subscribed calendar using $this->sync_type
 	 *
 	 * @param string|null &$sync_token current sync_token or etag and on return new one
-	 * @param int $cat_id
-	 * @param array $participants
+	 * @param array $modifications
 	 * @throws \Exception
 	 */
-	public function sync(?string &$sync_token, int $cat_id, array $participants=[])
+	public function sync(?string &$sync_token, array $modifications)
 	{
 		if (empty($this->sync_type))
 		{
@@ -241,14 +240,14 @@ EOT, $this->header([
 		{
 			case 'calendar-get':
 			case 'calendar-get-etag':
-				return $this->sync_calendar_get($sync_token, $cat_id, $participants);
+				return $this->sync_calendar_get($sync_token, $modifications);
 
 			case 'sync-collection-report':
-				return $this->sync_collection_report($sync_token, $cat_id, $participants);
+				return $this->sync_collection_report($sync_token, $modifications);
 
 			case 'calendar-propfind':
 			case 'calendar-propfind-ctag':
-				return $this->calendar_propfind($sync_token, $cat_id, $participants);
+				return $this->calendar_propfind($sync_token, $modifications);
 
 			default:
 				throw new \Exception("Invalid sync_type '$this->sync_type'!");
@@ -256,30 +255,50 @@ EOT, $this->header([
 	}
 
 	/**
+	 * Modify imported event
+	 *
+	 * @param array $event
+	 * @param array $modifications
+	 * @return array
+	 */
+	protected static function modify(array $event, array $modifications)
+	{
+		$event['category'] = empty($event['category']) ? $modifications['cat_id'] : $event['category'].','.$modifications['cat_id'];
+		foreach($modifications['participants'] as $uid)
+		{
+			if (!isset($event['participants'][$uid]))
+			{
+				$event['participants'][$uid] = 'U';
+			}
+		}
+		if (!empty($modifications['set_private']))
+		{
+			$event['public'] = 0;
+		}
+		if (!empty($modifications['non_blocking']))
+		{
+			$event['non_blocking'] = 1;
+		}
+		return $event;
+	}
+
+	/**
 	 * @param string|null $sync_token
-	 * @param int $cat_id
-	 * @param array $participants
+	 * @param array $modifications
 	 * @return void
 	 * @throws \Exception
 	 */
-	protected function sync_collection_report(?string &$sync_token, int $cat_id, array $participants=[])
+	protected function sync_collection_report(?string &$sync_token, array $modifications)
 	{
 		$ical_class = new \calendar_ical();
 		foreach($this->sync_collection($sync_token, true) as $href => $ical)
 		{
 			if ($ical)
 			{
-				$ical_class->event_callback = static function(array &$event) use ($href, $cat_id, $participants)
+				$ical_class->event_callback = static function(array &$event) use ($href, $modifications)
 				{
+					$event = self::modify($event, $modifications);
 					$event['#sync-href'] = $href;
-					$event['category'] = empty($event['category']) ? $cat_id : $event['category'].','.$cat_id;
-					foreach($participants as $uid)
-					{
-						if (!isset($event['participants'][$uid]))
-						{
-							$event['participants'][$uid] = 'U';
-						}
-					}
 					return true;
 				};
 				$ical_class->importVCal($ical, -1, null, false, 0, '',
@@ -324,13 +343,12 @@ EOT, $this->header([
 	 * Sync via PROPFIND on a calendar collection (optionally using getctag)
 	 *
 	 * @param string|null $getctag
-	 * @param int $cat_id
-	 * @param array $participants
+	 * @param array $modifications
 	 * @return void
 	 * @throws \Exception
 	 * @ToDo: request only etag first, check with $old_events if changed, and then use calendar-multiget report to only get the changes
 	 */
-	protected function calendar_propfind(?string &$getctag, int $cat_id, array $participants=[])
+	protected function calendar_propfind(?string &$getctag, array $modifications)
 	{
 		// check if we already have a ctag and the current one is identical
 		if (!empty($getctag))
@@ -344,23 +362,16 @@ EOT, $this->header([
 		}
 		$ical_class = new \calendar_ical();
 		// fetch current events, to be able to delete the ones no longer returned
-		$old_events = $ical_class->search(['cat_id' => $cat_id, 'enum_recuring' => false]);
+		$old_events = $ical_class->search(['cat_id' => $modifications['cat_id'], 'enum_recuring' => false]);
 		foreach($this->profind_collection($getctag) as $href => $props)
 		{
 			if (($ical = $props['calendar-data'] ?? null))
 			{
-				$ical_class->event_callback = static function(array &$event) use ($href, $cat_id, $participants, &$old_events, $props)
+				$ical_class->event_callback = static function(array &$event) use ($href, $modifications, &$old_events, $props)
 				{
+					$event = self::modify($event, $modifications);
 					$event['#sync-href'] = $href;
 					$event['#sync-etag'] = $props['getetag'];
-					$event['category'] = empty($event['category']) ? $cat_id : $event['category'].','.$cat_id;
-					foreach($participants as $uid)
-					{
-						if (!isset($event['participants'][$uid]))
-						{
-							$event['participants'][$uid] = 'U';
-						}
-					}
 					// delete imported event from $old_events (plus non-calendar event with not-numeric ids)
 					$old_events = array_filter($old_events, static function(array $old_event) use($event)
 					{
@@ -385,12 +396,11 @@ EOT, $this->header([
 	 * Existing event of given $cat_id will be queried before and deleted, if they are no longer in the imported file.
 	 *
 	 * @param string|null $etag
-	 * @param int $cat_id
-	 * @param array $participants
+	 * @param array $modifications
 	 * @return array|void
 	 * @throws \JsonException
 	 */
-	protected function sync_calendar_get(string &$etag=null, int $cat_id, array $participants=[])
+	protected function sync_calendar_get(string &$etag, array $modifications)
 	{
 		// check for an ics-file with Content-Type: text/calendar
 		if (!empty($etag))
@@ -407,17 +417,10 @@ EOT, $this->header([
 		}
 		$ical_class = new \calendar_ical();
 		// fetch current events, to be able to delete the ones no longer returned
-		$old_events = $ical_class->search(['cat_id' => $cat_id]);
-		$ical_class->event_callback = static function(array &$event) use ($cat_id, $participants, &$old_events)
+		$old_events = $ical_class->search(['cat_id' => $modifications['cat_id']]);
+		$ical_class->event_callback = static function(array &$event) use ($modifications, &$old_events)
 		{
-			$event['category'] = empty($event['category']) ? $cat_id : $event['category'].','.$cat_id;
-			foreach($participants as $uid)
-			{
-				if (!isset($event['participants'][$uid]))
-				{
-					$event['participants'][$uid] = 'U';
-				}
-			}
+			$event = self::modify($event, $modifications);
 			// delete imported event from $old_events (plus non-calendar event with not-numeric ids)
 			$old_events = array_filter($old_events, static function(array $old_event) use($event)
 			{
@@ -449,7 +452,7 @@ EOT, $this->header([
 		{
 			try {
 				$self = new self($data['url'], $data['user']??null, $data['password']??null, $data['sync_type']??null);
-				$self->sync($data['sync_token'], $data['cat_id'], $data['participants']);
+				$self->sync($data['sync_token'], array_intersect_assoc($data, array_flip(['cat_id', 'participants', 'set_private', 'non_blocking'])));
 				unset($data['error_time'], $data['error_msg'], $data['error_trace']);
 			}
 			catch (\Throwable $e) {

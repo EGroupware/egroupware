@@ -3804,7 +3804,8 @@ class calendar_uiforms extends calendar_ui
 						{
 							$content['sync_token'] = null;
 						}
-						$caldav_client->sync($content['sync_token'], $content['cat_id'], $content['participants'] ?? []);
+						$caldav_client->sync($content['sync_token'],
+							array_intersect_assoc($content, array_flip(['cat_id', 'participants', 'set_private', 'non_blocking'])));
 						Api\CalDAV\Sync::writeSubscription($content);
 						Framework::message(lang('Subscription synced.'), 'success');
 						break;

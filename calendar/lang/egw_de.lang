@@ -202,6 +202,7 @@ do you want to delete this subscription incl. the synced events?	calendar	de	Wol
 do you want to edit this event as an exception or the whole series?	calendar	de	Wollen Sie diesen Termin als Ausnahme bearbeiten oder die ganze Serie?
 do you want to keep the series exceptions in your calendar?	calendar	de	Wollen Sie die Ausnahmen dieses Serientermins in Ihrem Kalender behalten?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre Standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet, wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
+does not show event to other users, unless they have a private grant	calendar	de	Zeigt Termin anderen Benutzern NICHT an, außer diese haben ein Privat-Recht
 download	calendar	de	Herunterladen
 download this event as ical	calendar	de	Termin als iCal herunterladen
 duration	calendar	de	Dauer
@@ -387,6 +388,7 @@ minimum number of users for showing week view as consolidated.	calendar	de	Minde
 minutes	calendar	de	Minuten
 modified	calendar	de	Geändert
 modifier	calendar	de	Geändert von
+modify events	calendar	de	Termin verändern
 mon	calendar	de	Mo
 month	calendar	de	Monat
 monthly	calendar	de	Monatlich
