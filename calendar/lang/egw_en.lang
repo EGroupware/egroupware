@@ -202,6 +202,7 @@ do you want to delete this subscription incl. the synced events?	calendar	en	Do 
 do you want to edit this event as an exception or the whole series?	calendar	en	Do you want to edit this event as an exception or the whole series?
 do you want to keep the series exceptions in your calendar?	calendar	en	Do you want to keep the series exceptions in your calendar?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	en	Do you want to receive regularly a summary of your appointments via email?<br>The summary is sent to your standard email-address on the morning of that day or on Monday for weekly summaries.<br>It is only sent when you have any appointments on that day or week.
+does not show event to other users, unless they have a private grant	calendar	en	Does NOT show event to other users, unless they have a private grant
 download	calendar	en	Download
 download this event as ical	calendar	en	Download this event as iCal
 duration	calendar	en	Duration
@@ -387,6 +388,7 @@ minimum number of users for showing week view as consolidated.	calendar	en	Minim
 minutes	calendar	en	Minutes
 modified	calendar	en	Modified
 modifier	calendar	en	Modifier
+modify events	calendar	en	Modify events
 mon	calendar	en	Mon
 month	calendar	en	Month
 monthly	calendar	en	Monthly
