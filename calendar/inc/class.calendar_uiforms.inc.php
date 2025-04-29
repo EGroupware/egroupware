@@ -3797,33 +3797,30 @@ class calendar_uiforms extends calendar_ui
 				$caldav_client = new EGroupware\Api\CalDAV\Sync($content['url'],
 					$content['user']??null, $content['password']??null, $content['sync_type']??null);
 
+				if (!isset($content['sync_token']))
+				{
+					$content['sync_token'] = null;
+					// enable showing subscriptions when a new subscription is created
+					if (!in_array('subscriptions', $toggle=$GLOBALS['egw_info']['user']['preferences']['integration_togle']??[]))
+					{
+						$toggle[] = 'subscriptions';
+					}
+					$prefs = $GLOBALS['egw']->preferences ?? new Api\Preferences('');
+					$prefs->add('calendar', 'integration_toggle', $toggle);
+					$prefs->save_repository();
+				}
+
 				switch ($button)
 				{
 					case 'sync':
-						if (!isset($content['sync_token']))
-						{
-							$content['sync_token'] = null;
-						}
 						$caldav_client->sync($content['sync_token'],
-							array_intersect_assoc($content, array_flip(['cat_id', 'participants', 'set_private', 'non_blocking'])));
+							array_intersect_key($content, array_flip(['cat_id', 'participants', 'set_private', 'non_blocking'])));
 						Api\CalDAV\Sync::writeSubscription($content);
 						Framework::message(lang('Subscription synced.'), 'success');
 						break;
 
 					case 'save':
 					case 'apply':
-						if (!isset($content['sync_type']))
-						{
-							$content['sync_type'] = null;
-							// enable showing subscriptions when a new subscription is created
-							if (!in_array('subscriptions', $toggle=$GLOBALS['egw_info']['user']['preferences']['integration_togle']??[]))
-							{
-								$toggle[] = 'subscriptions';
-							}
-							$prefs = $GLOBALS['egw']->preferences ?? new Api\Preferences('');
-							$prefs->add('calendar', 'integration_toggle', $toggle);
-							$prefs->save_repository();
-						}
 						$content['url'] = $caldav_client->test($content['sync_type']);
 						$content['cat_id'] = Api\CalDAV\Sync::writeSubscription($content);
 						$async = new Api\Asyncservice();
