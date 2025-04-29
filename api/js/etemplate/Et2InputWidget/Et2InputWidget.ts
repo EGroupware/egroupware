@@ -840,7 +840,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
                         class="form-control__help-text"
                         aria-hidden=${hasHelpText ? 'false' : 'true'}
                 >
-                    <slot name="help-text">${this.helpText}</slot>
+                    ${this.helpText}
+                    <slot name="help-text"></slot>
                 </div>` : nothing;
 		}
 	}
