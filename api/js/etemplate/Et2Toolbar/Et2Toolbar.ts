@@ -134,13 +134,13 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		}
 		if(!this._actionsParsed)
 		{
-			this.parseActions(this.actions);
+			this._parseActions(this.actions);
 		}
 	}
 
 	firstUpdated(changedProperties : PropertyValueMap<any>)
 	{
-		this.organiseChildren();
+		this._organiseChildren();
 	}
 
 	_createNamespace() : boolean
@@ -174,7 +174,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	 * @param actions
 	 * @protected
 	 */
-	protected parseActions(actions : EgwAction[] | { [id : string] : object })
+	protected _parseActions(actions : EgwAction[] | { [id : string] : object })
 	{
 		// Clean up anything from actions that's there already - do not remove everything
 		this.querySelectorAll(":scope > [data-action-id], :scope > [data-group]").forEach(n => n.remove());
@@ -228,7 +228,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			{
 				this._preference[action.id] = false;
 			}
-			this.addAction(action, last_group);
+			this._addAction(action, last_group);
 		}
 
 		// Set the flag to avoid duplicates
@@ -243,7 +243,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	 * @param parent
 	 * @protected
 	 */
-	protected addAction(action : EgwAction, parent)
+	protected _addAction(action : EgwAction, parent)
 	{
 		if(Array.isArray(action.children) && action.children.length > 0)
 		{
@@ -459,13 +459,13 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	}
 
 	/**
-	 * Makes sure preference is valid and contains the action
+	 * Makes sure preference is valid and contains the child / action
 	 *
-	 * @param {action object} _action
+	 * @param {string} childId
 	 */
-	private _setPrefered(actionId : string, state : boolean)
+	private _setPrefered(childId : string, state : boolean)
 	{
-		this._preference[actionId] = state;
+		this._preference[childId] = state;
 		this.egw().set_preference(this.preferenceApp, this.preferenceId, this._preference);
 	}
 
@@ -474,7 +474,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	 *
 	 * @protected
 	 */
-	protected organiseChildren()
+	protected _organiseChildren()
 	{
 		this._isOverflowed = false;
 		let elements = Array.from(this.querySelectorAll(':scope > *'));
@@ -506,11 +506,11 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		{
 			if(el instanceof SlButtonGroup)
 			{
-				Array.from(el.childNodes).reverse().forEach(c => this.organiseChild(c));
+				Array.from(el.childNodes).reverse().forEach(c => this._organiseChild(c));
 			}
 			else
 			{
-				this.organiseChild(el);
+				this._organiseChild(el);
 			}
 		});
 
@@ -532,7 +532,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	 * @param {HTMLElement} child
 	 * @protected
 	 */
-	protected organiseChild(child : HTMLElement)
+	protected _organiseChild(child : HTMLElement)
 	{
 		if(!this.shadowRoot.querySelector(".toolbar-buttons"))
 		{
@@ -549,7 +549,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		{
 			child.slot = "";
 		}
-		// Check if input needs to go in a group (moving the other way is done in organiseChildren()
+		// Check if input needs to go in a group (moving the other way is done in _organiseChildren()
 		this._placeInputInGroup(child);
 	}
 
@@ -616,7 +616,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		this._layoutTimeout = window.setTimeout(() =>
 		{
 			const toolbar = entries[0]?.target;
-			toolbar.organiseChildren();
+			toolbar._organiseChildren();
 			toolbar.requestUpdate();
 		}, Et2Toolbar.LAYOUT_TIMEOUT);
 	}
@@ -655,7 +655,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		{
 			this._setPrefered(option.value, !value.actions.includes(option.value));
 		});
-		this.organiseChildren();
+		this._organiseChildren();
 	}
 
 	handleAction(event, action : EgwAction)
