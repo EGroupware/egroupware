@@ -1,7 +1,11 @@
 import {css} from 'lit';
-
+//this is inside the sl tree set as the color of a selected item
+//background-color: var(--sl-color-neutral-100);
+//         border-inline-start-color: var(--sl-color-primary-600);
 export default css`
 	:host {
+        --sl-color-primary-600:rgb(0, 124, 255);/*This is nextmatch selected color but with no transparency or white*/
+        --sl-color-neutral-100:rgba(153, 204, 255, 0.7);/*This is nextmatch selected color*/
 		--sl-spacing-large: 1rem;
 		display: block;
 	}
@@ -15,6 +19,7 @@ export default css`
         margin-left: -2.4em;
         margin-right: calc(-2em + 10px);
 	}
+
     sl-icon[slot='collapse-icon'],sl-icon[slot='expand-icon']{
         width: inherit;
         height: inherit;
@@ -59,6 +64,9 @@ export default css`
 	/*Mail specific style TODO move it out of the component*/
 
 	sl-tree-item.unread > .tree-item__label {
+		font-weight: bold;
+	}
+	sl-tree-item[selected] > .tree-item__label {
 		font-weight: bold;
 	}
 

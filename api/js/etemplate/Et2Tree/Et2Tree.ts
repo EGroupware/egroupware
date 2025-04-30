@@ -728,7 +728,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	{
 		const item: SlTreeItem = this.getDomNode(_id);
 		if (item == null) return
-		item.scrollIntoView();
+		item.scrollIntoView(false);
 	}
 
 	/**
@@ -752,7 +752,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			//scroll and exit if parent does not need expansion
 			if (!parent || parent.expanded)
 			{
-				item.scrollIntoView()
+				item.scrollIntoView(false)
 				return true;
 			}
 			//fallback
@@ -762,7 +762,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				if (!parent.expanded) parent.expanded = true;
 				parent = parent.parentElement?.tagName === "SL-TREE-ITEM" ? <SlTreeItem>parent.parentElement : null;
 			}
-			this.updateComplete.then(() => item.scrollIntoView());
+			this.updateComplete.then(() => item.scrollIntoView(false));
 		} catch (e)
 		{
 			console.log("Could not scroll to item");
