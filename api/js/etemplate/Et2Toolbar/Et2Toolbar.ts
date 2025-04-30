@@ -157,6 +157,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	set actions(actions : EgwAction[] | { [id : string] : object })
 	{
 		this._initActions(actions);
+		this._actionsParsed = false;
 		this.requestUpdate();
 	}
 
