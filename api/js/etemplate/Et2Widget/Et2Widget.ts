@@ -658,7 +658,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			let objectManager = egw_getAppObjectManager(true);
 			let widget_object = objectManager.getObjectById(this.id);
 
-			if(widget_object == null)
+			if(widget_object == null || widget_object.manager !== this._actionManager)
 			{
 				// Add a new container to the object manager which will hold the widget
 				// objects
