@@ -5,6 +5,7 @@ import {classMap} from "lit/directives/class-map.js";
 import {live} from "lit/directives/live.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlSwitch} from "@shoelace-style/shoelace";
+import {et2_evalBool} from "../et2_core_common";
 
 /**
  * @summary Switch to allow choosing between two options, displayed with two images
@@ -112,6 +113,10 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 
 	set value(new_value : string | boolean)
 	{
+		if(typeof new_value !== "boolean")
+		{
+			new_value = et2_evalBool(new_value);
+		}
 		if(this.switch)
 		{
 			this.switch.checked = !!new_value;
