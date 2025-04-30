@@ -4868,9 +4868,12 @@ app.classes.mail = AppJS.extend(
 				jQClass: '.mailComposeJQueryFrom'
 			}
 		};
-		var actions = egw.preference('toggledOnActions', 'mail') ?? [];
+		let actions = egw.preference('toggledOnActions', 'mail') ?? [];
 		if (typeof actions === 'string')
 			actions = actions ? actions.split(',') : [];
+		//transform empty actions object to empty array
+		if(!actions.indexOf)
+			actions = Object.values(actions)
 		for(var widget in widgets)
 		{
 			var expanderBtn = widget + '_expander';
