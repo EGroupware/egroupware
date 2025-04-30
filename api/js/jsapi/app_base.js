@@ -1320,8 +1320,9 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 		];
 		var dialog = function(_content, _callback)
 		{
-			return et2_createWidget("dialog", {
-				callback: function(_button_id, _value) {
+			return et2_createWidget("et2-dialog", {
+				callback: function (_button_id, _value)
+				{
 					if (typeof _callback == "function")
 					{
 						_callback.call(this, _button_id, _value.value);
@@ -1333,9 +1334,9 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 				value: {
 					content: _content
 				},
-				template: egw.webserverUrl+'/api/templates/default/pgp_installation.xet',
+				template: egw.webserverUrl + '/api/templates/default/pgp_installation.xet',
 				class: "pgp_installation",
-				modal: true
+				isModal: true
 				//resizable:false,
 			});
 		};
@@ -1346,7 +1347,8 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 					'*.'+this._mailvelopeDomain()), video:"test", control:"true"}
 		];
 
-		dialog(content, function(_button){
+		document.body.append(dialog(content, function (_button)
+		{
 			if (_button == 'install')
 			{
 				if (typeof chrome != 'undefined')
@@ -1373,7 +1375,7 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 						});
 				}
 			}
-		});
+		}));
 	},
 
 	/**
