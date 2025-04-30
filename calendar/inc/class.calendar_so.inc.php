@@ -657,7 +657,7 @@ class calendar_so
 		elseif($cat_id)
 		{
 			$cats = $GLOBALS['egw']->categories->return_all_children($cat_id);
-			array_walk($cats, function (&$val, $key)
+			array_walk($cats, static function (&$val, $key)
 			{
 				unset($key);    // not used, but required by function signature
 				$val = (int)$val;
