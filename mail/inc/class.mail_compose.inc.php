@@ -478,7 +478,7 @@ class mail_compose
 		}
 		//error_log(__METHOD__.__LINE__.array2string($_content));
 		if (!empty($_content['serverID']) && $_content['serverID'] != $this->mail_bo->profileID &&
-			($_content['composeToolbar'] === 'send' || $_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
+			($_content['composeToolbar']['action'] === 'send' || $_content['button']['saveAsDraft'] || $_content['button']['saveAsDraftAndPrint'])
 		)
 		{
 			$this->changeProfile($_content['serverID']);
@@ -488,7 +488,7 @@ class mail_compose
 		// at several locations and not necessary initialized before
 		$acc = Mail\Account::read($composeProfile);
 		$buttonClicked = false;
-		if (!empty($_content['composeToolbar']) && $_content['composeToolbar'] === 'send')
+		if(!empty($_content['composeToolbar']) && $_content['composeToolbar']['action'] === 'send')
 		{
 			$buttonClicked = $suppressSigOnTop = true;
 			$sendOK = true;
