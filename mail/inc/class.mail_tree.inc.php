@@ -189,7 +189,8 @@ class mail_tree
 	function getTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_noCheckboxNS = false, $_subscribedOnly= false, $_allInOneGo = false, $_checkSubscribed = true)
 	{
 		//Init mail folders
-        $tree = array(Tree::ID => $_parent ? $_parent : 0, Tree::CHILDREN => array(), 'class' => 'mailAccount');
+        $tree = array(Tree::ID => $_parent ? $_parent : 0, Tree::CHILDREN => array());
+        if (!$_parent) $tree['class'] = 'mailAccount';
 		if (!isset($this->ui->mail_bo)) throw new Api\Exception\WrongUserinput(lang('Initialization of mail failed. Please use the Wizard to cope with the problem'));
 		$hDelimiter = $this->ui->mail_bo->getHierarchyDelimiter();
 
