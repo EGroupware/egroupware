@@ -1979,7 +1979,7 @@ export abstract class EgwApp
 		];
 		var dialog = function(_content, _callback)
 		{
-			return et2_createWidget("dialog", {
+			return et2_createWidget("et2-dialog", {
 				callback: function(_button_id, _value)
 				{
 					if(typeof _callback == "function")
@@ -2008,7 +2008,7 @@ export abstract class EgwApp
 			}
 		];
 
-		dialog(content, function(_button)
+		document.body.append(dialog(content, function(_button)
 		{
 			if(_button == 'install')
 			{
@@ -2037,7 +2037,7 @@ export abstract class EgwApp
 						});
 				}
 			}
-		});
+		}));
 	}
 
 	/**
