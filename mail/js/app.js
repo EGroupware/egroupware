@@ -1232,7 +1232,10 @@ app.classes.mail = AppJS.extend(
 			dataElem.data = jQuery.extend(dataElem.data, content);
 
 			var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
-			if (toolbaractions) this.et2.getWidgetById('displayToolbar').set_actions(toolbaractions);
+			if (toolbaractions)
+			{
+				this.et2.getWidgetById('displayToolbar').actions = toolbaractions;
+			}
 		}
 	},
 
