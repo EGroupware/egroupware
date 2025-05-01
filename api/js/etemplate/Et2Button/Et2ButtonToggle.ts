@@ -25,8 +25,6 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 
 				sl-switch {
 					font-size: inherit;
-					--width: 1em;
-					--height: 1em;
 				}
 
 				sl-switch:not([checked]) slot[name="off"] {
@@ -40,8 +38,18 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 				.label {
 					border: var(--sl-input-border-width) solid var(--sl-input-border-color);
 					border-radius: var(--sl-input-border-radius-medium);
+					background-color: var(--sl-input-background-color);
+					width: var(--sl-input-height-medium);
+					height: var(--sl-input-height-medium);
+					box-sizing: border-box;
+					justify-content: center;
+					align-items: center;
 				}
 
+				:host .label:hover {
+					background-color: var(--sl-input-background-color-hover);
+					border-color: var(--sl-input-border-color-hover);
+				}
 
 				/* Success */
 

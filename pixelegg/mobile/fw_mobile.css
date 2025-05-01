@@ -6848,6 +6848,9 @@ img.et2_button_icon[src*="svg"]:hover {
 ::-ms-input-placeholder {
   color: #666666;
 }
+et2-button-toggle::part(switch) {
+  --height: 20px;
+}
 .et2_toolbar et2-button:not(.et2_toolbar_onlyCaption):not(.et2_toolbar_hasCaption)::part(base) {
   justify-content: center;
   --et2-button-image-padding-left: 0;
