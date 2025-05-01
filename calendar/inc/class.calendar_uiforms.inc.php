@@ -2304,6 +2304,10 @@ class calendar_uiforms extends calendar_ui
 					case 'add':
 						$status = $existing_event['participants'][$user];
 						calendar_so::split_status($status, $quantity, $role);
+						if (!empty($event['category']))
+						{
+							$event['category'] = $this->bo->find_or_add_categories($event['category'], $existing_event);
+						}
 						if (($changed = self::event_changed($event, $existing_event)))
 						{
 							if (!empty($extern_organizer))
@@ -2483,6 +2487,10 @@ class calendar_uiforms extends calendar_ui
 							$event['participant_types']['u'] = $event['participants'][$event['owner']] =
 								calendar_so::combine_status('A', 1, 'CHAIR');
 							$event['owner'] = $this->user;
+						}
+						if (!empty($event['category']))
+						{
+							$event['category'] = $this->bo->find_or_add_categories($event['category']);
 						}
 						// store event without notifications!
 						if (($event['id'] = $this->bo->update($event, $ignore_conflicts=true, true, false, true, $msg, true)))
