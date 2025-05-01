@@ -116,3 +116,13 @@ div#infolog-edit_infolog-edit-description iframe {
 span#infolog-index_\$\{row\}\[info_des\] {
 	flex: unset;
 }
+/**
+ * Mailvelope
+ */
+#infolog-edit_infolog-edit-description > iframe {
+    position: absolute;
+    top: -30px;
+    height: calc(100% + 50px) !important;
+    left: -15px;
+    width: calc(100% + 30px) !important;
+}
