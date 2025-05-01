@@ -1208,7 +1208,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		this.widget_object = objectManager.getObjectById(this.id);
 		const ao_impl = new et2_action_object_impl(this, this);
 		ao_impl.aoi = new EgwDragDropShoelaceTree(this);
-		if(widget_object == null || widget_object.manager !== this._actionManager)
+		if(this.widget_object == null || this.widget_object.manager !== this._actionManager)
 		{
 			// Add a new container to the object manager which will hold the widget
 			// objects
