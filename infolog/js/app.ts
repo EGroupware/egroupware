@@ -752,6 +752,13 @@ class InfologApp extends EgwApp
 	 */
 	toggleEncrypt(_event, _widget, _node)
 	{
+		// otherwise we get called twice
+		_event && _event.preventDefault();
+
+		if (!_widget)
+		{
+			_widget = this.et2.getWidgetById('encrypt');
+		}
 		if(!_node && _widget instanceof HTMLElement)
 		{
 			_node = _widget;

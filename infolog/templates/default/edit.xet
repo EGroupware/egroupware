@@ -161,8 +161,10 @@
 					<et2-description  id="spacer" span="5"></et2-description>
 					<et2-hbox  class="tab_toolbar">
 
-                        <et2-button-timestamp  parentId="infolog-edit_tabs" slot="nav" statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"></et2-button-timestamp>
-                        <et2-button  parentId="infolog-edit_tabs" slot="nav" statustext="Encrypt description" id="encrypt" class="infologExtraButton infologEncrypt" image="lock" onclick="app.infolog.toggleEncrypt" noSubmit="true"></et2-button>
+                        <et2-button-timestamp  parentId="infolog-edit_tabs" slot="nav" statustext="Insert timestamp into description field"
+							id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"></et2-button-timestamp>
+                        <et2-button-toggle parentId="infolog-edit_tabs" slot="nav" statustext="Encrypt description" id="encrypt"
+							class="infologExtraButton infologEncrypt" offIcon="lock" onIcon="unlock" onclick="app.infolog.toggleEncrypt"></et2-button-toggle>
                     </et2-hbox>
 				</row>
 				<row>
