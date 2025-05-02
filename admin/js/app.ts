@@ -1374,7 +1374,7 @@ class AdminApp extends EgwApp
 					{
 
 					}
-				}, msg1, 'Mail Acounts Activation', menuaction, accounts, 'admin');
+				}, msg1, 'Mail Accounts Activation', menuaction, accounts, 'admin');
 			}
 		};
 		// confirmation dialog
