@@ -1668,6 +1668,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				image: () => "",
 				lang: (l) => {return l;},
 				preference: () => {return false;},
+				tooltipUnbind: () => false,
 			};
 			for(let functionName in required)
 			{

@@ -18,6 +18,7 @@ export default css`
 			display: flex;
 			flex-direction: row;
 			flex-wrap: nowrap;
+			align-items: center;
 			overflow: hidden;
 			position: relative;
 			flex: 1 1 100%;

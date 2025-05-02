@@ -1,5 +1,5 @@
 The user can choose which inputs are shown. Inputs that do
-not fit are hidden. If the toolbar has an ID, the user's choice is remembered as a preference.
+not fit are hidden. If the toolbar has an ID, the user's choice of which inputs to hide is remembered as a preference.
 
 ```html:preview
 <et2-toolbar>
@@ -30,21 +30,28 @@ The value of any child widgets will be returned if the form is submitted.
 ```html:preview
 
 <et2-toolbar id="child_example" preferenceApp="docs">
-    <et2-button-icon id="add" image="plus" label="Add"></et2-button-icon>
-    <et2-searchbox id="search"></et2-searchbox> 
-    <!--
-    <et2-button-toggle id="notification" icon="notification" label="Notification></et2-button-toggle>
-    -->
-    <et2-button-toggle id="notification" label="Notification"></et2-button-toggle>
+    <et2-button-icon id="add" image="circle-plus" label="Add" noSubmit onClick="alert('Add clicked')"></et2-button-icon>    <et2-searchbox id="search"></et2-searchbox> 
+    <et2-button-toggle id="notification" label="Notification" icon="bell-fill"></et2-button-toggle>
     <et2-switch id="database" label="Delete database"></et2-switch>
     <et2-switch-icon id="holidays" label="Have holidays" onIcon="check" offIcon="x"></et2-switch-icon>
     <et2-dropdown-button label="Some checkboxes">
         <et2-checkbox id="check_a" label="Checkbox A"></et2-checkbox>
         <et2-checkbox id="check_b" label="Checkbox B"></et2-checkbox>
         <et2-checkbox id="check_c" label="Checkbox C"></et2-checkbox>
-    </et2-dropdown>
+    </et2-dropdown-button>
+    <et2-box>
+        No ID, just text
+    </et2-box>
 </et2-toolbar>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const toolbar = document.getElementById("child_example");
+    toolbar.addEventListener("sl-change", (e) => {
+        alert(e.target.dom_id + " changed to " + e.target.value);
+    });
+    });
+</script>
 ```
 
 ## Actions

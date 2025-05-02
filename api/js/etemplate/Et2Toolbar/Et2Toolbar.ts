@@ -179,14 +179,22 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		// Clean up anything from actions that's there already - do not remove everything
 		this.querySelectorAll(":scope > [data-action-id], :scope > [data-group]").forEach(n => n.remove());
 
-		// Set order on any existing children
-		Array.from(this.querySelectorAll(":scope > *:not([data-order]):not([data-action-id])"))
-			.forEach((c, index) => c.dataset.order = index);
-
 		let last_group_id;
 		let last_group;
 		let domChildCount = this.children.length;
 		let shownActionCount = domChildCount + Object.values(this._preference).filter(p => !p).length;
+
+		// Set order on any existing children
+		Array.from(this.querySelectorAll("*:not([data-order]):not([data-action-id])"))
+			.forEach((c, index) => c.dataset.order = index);
+
+		// Set groups on real children
+		Array.from(this.querySelectorAll(":scope > sl-button-group:not([data-group]), :scope > et2-box:not([data-group]), :scope > et2-hbox:not([data-group])"))
+			.forEach((c, index) =>
+			{
+				c.dataset.group = c.label ?? index + shownActionCount;
+				c.querySelectorAll(":scope > *").forEach(child => child.dataset.groupId = c.dataset.group);
+			})
 
 		for(let name in actions)
 		{
@@ -480,11 +488,11 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		let elements = Array.from(this.querySelectorAll(':scope > *'));
 
 		// Reset slot so it can participate in width calculations
-		elements.forEach(el =>
+		elements.forEach((el : HTMLElement) =>
 		{
-			if(el instanceof SlButtonGroup)
+			if(el instanceof SlButtonGroup || el instanceof Et2Box)
 			{
-				el.childNodes.forEach(c =>
+				el.childNodes.forEach((c : HTMLElement) =>
 				{
 					if(!this._preference[c.id])
 					{
@@ -504,9 +512,9 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		elements.sort((a : HTMLElement, b : HTMLElement) => parseInt(b.dataset.order) - parseInt(a.dataset.order));
 		elements.forEach((el : HTMLElement) =>
 		{
-			if(el instanceof SlButtonGroup)
+			if(typeof el.dataset.group !== "undefined")
 			{
-				Array.from(el.childNodes).reverse().forEach(c => this._organiseChild(c));
+				Array.from(el.childNodes).reverse().forEach((c : HTMLElement) => this._organiseChild(c));
 			}
 			else
 			{
@@ -515,7 +523,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		});
 
 		// Move any inputs that should be in the list
-		Array.from(this.querySelectorAll("sl-button-group [slot='list']"))
+		Array.from(this.querySelectorAll(":scope > * > [slot='list']"))
 			.forEach(el => this.append(el));
 
 		// Set order directly since etemplate2.css doesn't like attr()
