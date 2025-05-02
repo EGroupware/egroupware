@@ -279,6 +279,16 @@ class mail_compose
 			}
 			unset($actions['pgp']);
 		}
+		$toggledOnActions = is_array($GLOBALS['egw_info']['user']['preferences']['mail']['toggledOnActions']) ?
+			$GLOBALS['egw_info']['user']['preferences']['mail']['toggledOnActions'] :
+			explode(',', $GLOBALS['egw_info']['user']['preferences']['mail']['toggledOnActions']);
+		foreach($toggledOnActions as $action)
+		{
+			if($actions[$action]['checkbox'])
+			{
+				$actions[$action]['checked'] = true;
+			}
+		}
 		if (!empty($GLOBALS['egw_info']['server']['disable_pgp_encryption'])) unset($actions['pgp']);
 		// remove vfs actions if the user has no run access to filemanager
 		if (empty($GLOBALS['egw_info']['user']['apps']['filemanager']))

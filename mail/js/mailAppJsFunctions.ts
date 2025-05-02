@@ -27,35 +27,6 @@ export const setPredefinedAddresses = function (action, _senders) {
     document.body.append(dialog);
 }
 
-export const preSetToggledOnActions = function () {
-    let actions = egw.preference('toggledOnActions', 'mail');
-    const toolbar = this.et2.getWidgetById('composeToolbar');
-    if (actions)
-    {
-        if (typeof actions === 'string')
-            actions = actions.split(',');
-        // @ts-ignore
-        for (var i = 0; i < actions.length; i++)
-        {
-            if (toolbar && toolbar.options.actions[actions[i]])
-            {
-                let d = document.getElementById('mail-compose_composeToolbar-' + actions[i]);
-                if (d && toolbar._actionManager.getActionById(actions[i]).checkbox
-                    && !toolbar._actionManager.getActionById(actions[i]).checked)
-                {
-                    d.click();
-                }
-            } else
-            {
-                var widget = this.et2.getWidgetById(actions[i]);
-                if (widget)
-                {
-                    //	jQuery(widget.getDOMNode()).trigger('click');
-                }
-            }
-        }
-    }
-}
 
 export const addAttachmentPlaceholder = function () {
     if (this.et2.getArrayMgr("content").getEntry("is_html"))

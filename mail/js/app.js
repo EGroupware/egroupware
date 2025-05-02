@@ -29,7 +29,7 @@ import {
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {Et2VfsSelectButton} from "../../api/js/etemplate/Et2Vfs/Et2VfsSelectButton";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
-import {addAttachmentPlaceholder, preSetToggledOnActions, setPredefinedAddresses} from "./mailAppJsFunctions";
+import {addAttachmentPlaceholder, setPredefinedAddresses} from "./mailAppJsFunctions";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 var keepFromExpander;
@@ -489,8 +489,6 @@ app.classes.mail = AppJS.extend(
 		}
 		// set image_proxy for resolveExternalImages
 		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
-
-		this.preSetToggledOnActions ();
 	},
 
 	/**
@@ -6421,10 +6419,6 @@ app.classes.mail = AppJS.extend(
 		document.body.append(dialog);
 	},
 
-	/**
-	 * Pre set toggled actions
-	 */
-	preSetToggledOnActions: preSetToggledOnActions ,
 	/**
 	 * Set predefined addresses for compose dialog
 	 *
