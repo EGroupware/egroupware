@@ -1101,7 +1101,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		let objectManager = egw_getAppObjectManager(true, this.getInstanceManager().app);
 		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId, 2) || objectManager;
 		let widget_object = objectManager.getObjectById(this.id);
-		if(widget_object == null)
+		if(widget_object == null || widget_object.manager != this._actionManager)
 		{
 			// Add a new container to the object manager which will hold the widget
 			// objects

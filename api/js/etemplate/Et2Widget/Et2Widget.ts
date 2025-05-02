@@ -1295,7 +1295,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				}
 
 				let parent = document.querySelector("#" + this.__parentId) || this.__parentId;
-				if(parent && parent instanceof Element)
+				if(parent && parent instanceof Element && parent !== this.parentNode)
 				{
 					this.remove();
 					parent.append(<Node><unknown>this);

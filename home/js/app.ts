@@ -97,8 +97,10 @@ export class HomeApp extends EgwApp
 			this.et2.actions = this.et2.getArrayMgr('modifications').getEntry('home.index')['actions'] ?? [];
 
 			this.portlet_container = this.et2.getWidgetById("portlets");
-
-			this._do_ordering()
+			const portlet_container = this.portlet_container.getDOMNode();
+			et2.DOMContainer.parentElement.querySelectorAll("form[id*='portlet_'")
+				.forEach(et => { portlet_container.querySelector("[id$='" + et.id + "']").append(et);});
+			this._do_ordering();
 		}
 		else if(et2.uniqueId)
 		{
@@ -130,21 +132,6 @@ export class HomeApp extends EgwApp
 				let settings = et2_data && et2_data.id == portlet.id && et2_data || portlet_container.getArrayMgr("content").data.find(e => et2.uniqueId.endsWith(e.id)) || {settings: {}};
 				portlet.settings = settings.settings || {};
 				portlet.style.gridArea = settings.row + "/" + settings.col + "/ span " + (settings.height || 1) + "/ span " + (settings.width || 1);
-			}
-
-
-			// It's in the right place for original load, but move it into portlet
-
-			let misplaced = jQuery(etemplate2.getById('home-index').DOMContainer).siblings('#' + et2.DOMContainer.id);
-
-			if(portlet && et2.DOMContainer !== portlet)
-			{
-				portlet.append(et2.DOMContainer);
-				et2.resize();
-			}
-			if(portlet && misplaced.length)
-			{
-				et2.DOMContainer.id = et2.uniqueId;
 			}
 
 			// Ordering of portlets

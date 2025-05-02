@@ -286,6 +286,12 @@ export class Et2Template extends Et2Widget(LitElement)
 			this.loading = Promise.resolve();
 			return this.loading;
 		}
+		// No double-loading
+		// Can happen if you disconnect/reconnect the template while its loading
+		if(this.__isLoading)
+		{
+			return this.loading;
+		}
 
 		if(typeof newContent != "undefined")
 		{
