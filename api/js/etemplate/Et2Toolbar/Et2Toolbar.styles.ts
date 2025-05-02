@@ -4,6 +4,7 @@ export default css`
 	:host {
 		display: block;
 		position: relative;
+		min-width: var(--sl-input-height-medium);
 	}
 
 	.toolbar {
