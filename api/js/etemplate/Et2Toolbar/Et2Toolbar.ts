@@ -34,6 +34,8 @@ import {Et2Box} from "../Layout/Et2Box/Et2Box";
  *
  * @slot - Toolbar contents
  * @slot list - Toolbar contents that start hidden in the dropdown
+ *
+ * @event et2-resize - Emitted when the toolbar re-lays out
  */
 @customElement("et2-toolbar")
 export class Et2Toolbar extends Et2InputWidget(Et2Box)
@@ -129,8 +131,8 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		if(changedProperties.has("preferenceId") || changedProperties.has("preferenceApp") || changedProperties.has("id"))
 		{
 			this.preferenceId = this.preferenceId || this.dom_id;
-			this.preferenceApp = this.preferenceApp || this.egw().app_name();
-			this._preference = this.egw().preference(this.preferenceId, this.preferenceApp) || {};
+			this.preferenceApp = this.preferenceApp || this.egw()?.app_name() || "";
+			this._preference = this.egw()?.preference(this.preferenceId, this.preferenceApp) || {};
 		}
 		if(!this._actionsParsed)
 		{
@@ -615,6 +617,11 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 
 	handleResize(entries : ResizeObserverEntry[], observer)
 	{
+		if(!this._actionsParsed)
+		{
+			return;
+		}
+
 		// Toolbar changed size, re-organise children
 		// but wait a bit until things stop
 		if(this._layoutTimeout)
@@ -626,6 +633,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			const toolbar = entries[0]?.target;
 			toolbar._organiseChildren();
 			toolbar.requestUpdate();
+			this.dispatchEvent(new Event("et2-resize", {bubbles: true, composed: true}));
 		}, Et2Toolbar.LAYOUT_TIMEOUT);
 	}
 

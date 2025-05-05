@@ -7170,6 +7170,17 @@ et2-button-toggle::part(switch) {
 et2-toolbar [slot="list"]:not(et2-button)::part(control) {
   margin-inline-start: 4px;
 }
+et2-toolbar :not(et2-button)::part(control) {
+  border: none;
+  font-size: 20px;
+}
+et2-toolbar et2-switch-icon::part(control) {
+  font-size: var(--sl-font-size-x-large, 20px);
+}
+/* Does not respect font-size or --width or --height for sizing */
+et2-toolbar et2-button-toggle::part(control) {
+  width: 20px;
+}
 /*New favorite hide groups if no rights */
 et2-dialog div#add_favorite et2-select-account_ro {
   display: none;

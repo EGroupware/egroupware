@@ -2661,8 +2661,12 @@ et2-toolbar {
 }
 
 et2-toolbar :not(et2-button)::part(control) {
-	font-size: var(--sl-font-size-x-large, 20px);
 	border: none;
+	font-size: 20px;
+}
+
+et2-toolbar et2-switch-icon::part(control) {
+	font-size: var(--sl-font-size-x-large, 20px);
 }
 
 et2-toolbar [slot="list"]:not(et2-button)::part(control) {

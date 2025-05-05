@@ -311,6 +311,12 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		{
 			super(...args);
 
+			// Don't overwrite ID if it's already set from DOM
+			if(this.hasAttribute("id"))
+			{
+				this._widget_id = this.getAttribute("id");
+			}
+
 			this.disabled = false;
 			this._handleClick = this._handleClick.bind(this);
 
