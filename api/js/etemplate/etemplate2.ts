@@ -1452,6 +1452,30 @@ export class etemplate2
 	}
 
 	/**
+	 * Get all etemplate2 objects with the given etemplate_exec_id
+	 *
+	 * @param {string} exec_id name of server-side eTemplate session
+	 * @returns {etemplate2[]}
+	 */
+	public static getByEtemplateExecId(exec_id) : etemplate2[]
+	{
+		const list = [];
+		for(let name in etemplate2._byTemplate)
+		{
+			for(let i = 0; i < etemplate2._byTemplate[name].length; i++)
+			{
+				const et = etemplate2._byTemplate[name][i];
+
+				if(et._etemplate_exec_id === exec_id)
+				{
+					list.push(et);
+				}
+			}
+		}
+		return list;
+	}
+
+	/**
 	 * Get a etemplate2 object from the given DOM ID
 	 *
 	 * @param {string} id DOM ID of the container node
