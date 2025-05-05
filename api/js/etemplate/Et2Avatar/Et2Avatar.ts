@@ -322,8 +322,9 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			case 1:
 				let canvas = jQuery(widget._imageNode).cropper('getCroppedCanvas');
 				this.image =  canvas.toDataURL("image/jpeg", 1.0)
+				this.requestUpdate('image');
 				this.egw().json('addressbook.addressbook_ui.ajax_update_photo',
-					[this.getInstanceManager().etemplate_exec_id,  canvas.toDataURL("image/jpeg", 1.0)],
+					[this.getInstanceManager().etemplate_exec_id,  this.image],
 					this.__editAjaxUpdatePhotoCallback.bind(this)).sendRequest();
 				break;
 			default:
