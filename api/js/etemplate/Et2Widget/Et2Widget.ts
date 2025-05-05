@@ -605,9 +605,9 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 					// Only look 1 level deep
 					parent_am = egw_getActionManager(this.egw().appName, true, 1);
 				}
-				if(parent_am.getActionById(this.getInstanceManager().uniqueId, 1) !== null)
+				if(parent_am.getActionById(this.getInstanceManager()?.uniqueId ?? "", 1) !== null)
 				{
-					parent_am = parent_am.getActionById(this.getInstanceManager().uniqueId, 1);
+					parent_am = parent_am.getActionById(this.getInstanceManager()?.uniqueId ?? "", 1);
 				}
 				if(parent_am.getActionById(this.id, 1) != null)
 				{
@@ -655,7 +655,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		protected _link_actions(actions)
 		{
 			// Get the top level element for the tree
-			let objectManager = egw_getAppObjectManager(true);
+			let objectManager = egw_getAppObjectManager(true, this.getInstanceManager()?.app);
 			let widget_object = objectManager.getObjectById(this.id);
 
 			if(widget_object == null || widget_object.manager !== this._actionManager)

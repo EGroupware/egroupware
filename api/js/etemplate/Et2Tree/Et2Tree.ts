@@ -191,10 +191,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		// Actions can't be initialized without being connected to InstanceManager
 		if(this.actions && Object.values(this.actions).length)
 		{
-			if(!this._actionManager)
-			{
-				this._initActions();
-			}
+			this._initActions();
 			this._link_actions(this.actions)
 		}
 	}
@@ -1204,7 +1201,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			this.actions = this._actions;
 		}
 		// Get the top level element for the tree
-		let objectManager = egw_getAppObjectManager(true);
+		let objectManager = egw_getAppObjectManager(true, this.getInstanceManager()?.app);
 		this.widget_object = objectManager.getObjectById(this.id);
 		const ao_impl = new et2_action_object_impl(this, this);
 		ao_impl.aoi = new EgwDragDropShoelaceTree(this);
