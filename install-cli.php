@@ -47,11 +47,11 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbid calling setup-cli 
 {
 	die('<h1>install-cli.php must NOT be called as web-page --> exiting !!!</h1>');
 }
-error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+error_reporting(E_ALL & ~E_NOTICE);
 
 // parse arguments
 $verbose = $use_prerelease = $run_git = $continue_on_error = false;
-$composer_args = [];
+$composer_args = ['--ignore-platform-reqs'];    // EGroupware requires php 8.1+, but some (fixed) dependencies require 7.4
 
 $argv = $_SERVER['argv'];
 $cmd  = array_shift($argv);
@@ -314,7 +314,10 @@ if ($npm)
 // if docs site directory exists, keep it updated
 if ($npm && file_exists(__DIR__.'/doc/dist/site'))
 {
- 	run_cmd($npm .' run docs', 'build docs (npm run docs)');
+ 	if (run_cmd($npm .' run docs', 'build docs (npm run docs)') == 0)
+    {
+        run_cmd('rsync -av '.__DIR__.'/doc/dist/site/ dev:/var/www/epl-trunk/doc/dist/site/', 'rsync -av doc/dist/site/ dev:/var/www/epl-trunk/doc/dist/site/');
+    }
 }
 
 echo "\n$succeeded tasks successful run".

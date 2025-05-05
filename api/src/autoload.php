@@ -19,7 +19,7 @@ if (!defined('EGW_SERVER_ROOT'))
 	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
 	define('EGW_INCLUDE_ROOT', EGW_SERVER_ROOT);
 	if (file_exists(EGW_SERVER_ROOT.'/phpgwapi/inc')) define('EGW_API_INC', EGW_SERVER_ROOT.'/phpgwapi/inc');
-	error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+	error_reporting(E_ALL & ~E_NOTICE);
 }
 
 /**

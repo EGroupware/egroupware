@@ -76,7 +76,7 @@ class setup
 	 *
 	 * @var string
 	 */
-	var $recommended_php_version = '8.1';
+	var $recommended_php_version = '8.4';
 
 	function __construct($html=False, $translation=False)
 	{
