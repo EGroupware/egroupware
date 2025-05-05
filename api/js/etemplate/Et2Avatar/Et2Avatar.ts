@@ -108,7 +108,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 		if (changedProperties.has("crop")) {
 			if (this.crop && !this.readonly && this._imageNode)
 			{
-				jQuery(this._imageNode).cropper({aspectRatio: 1/1});
+				jQuery(this._imageNode).cropper({aspectRatio: 1/1, autoCropArea: 1});
 			}
 		}
 		if (changedProperties.has("size"))
@@ -290,6 +290,7 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			title: _title || egw.lang('Input required'),
 			buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
+				etemplate_exec_id: this.getInstanceManager().etemplate_exec_id,
 				content: _value
 			},
 			width: "90%",
