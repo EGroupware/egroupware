@@ -766,14 +766,11 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 					this._templateResolver(true);
 
 					// Don't let dialog closing destroy the parent session
-					if(this._template_widget.etemplate_exec_id && this._template_widget.app)
+					if (this._template_widget.etemplate_exec_id)
 					{
-						// some tabs like CRM-view use app+'-'+rand() as there app-name, in that case we have to use the original app-name!
-						const matches = this._template_widget.etemplate_exec_id.match(/^([^_]+)/);
-						const app = matches && this._template_widget.app.startsWith(matches[1]+'-')? matches[1] : this._template_widget.app;
-						for(let et of etemplate2.getByApplication(app))
+						for(const et of etemplate2.getByEtemplateExecId(this._template_widget.etemplate_exec_id))
 						{
-							if(et !== this._template_widget && et.etemplate_exec_id === this._template_widget.etemplate_exec_id)
+							if (et !== this._template_widget)
 							{
 								// Found another template using that exec_id, don't destroy when dialog closes.
 								this._template_widget.unbind_unload();
