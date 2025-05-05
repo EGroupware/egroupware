@@ -290,7 +290,6 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			title: _title || egw.lang('Input required'),
 			buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
-				etemplate_exec_id: this.getInstanceManager().etemplate_exec_id,
 				content: _value
 			},
 			width: "90%",
