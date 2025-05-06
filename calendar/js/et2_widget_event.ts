@@ -519,14 +519,38 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						  '<span class="calendar_calEventLabel">' + this.egw().lang('Time') + '</span>: ' + timespan :
 						  '<span class="calendar_calEventLabel">' + this.egw().lang('Start') + '</span>:&nbsp;' + formatDateTime(start).replace(' ', '&nbsp;') + ' ' +
 							  '<span class="calendar_calEventLabel">' + this.egw().lang('End') + '</span>:&nbsp;' + formatDateTime(end).replace(' ', '&nbsp;');
-			let cat_label : (string | string[]) = '';
+			let cat_label : (string | string[]) = [];
+			let cat_icons = '';
 			if(this.options.value.category)
 			{
 				let options = <SelectOption[]>so.cached_server_side(<Et2Select><unknown>{
 					nodeName: "ET2-SELECT-CAT_RO",
 					egw: () => this.egw()
-				}, "select-cat", ",,calendar", false) || [];
-				cat_label = options.find((o) => o.value == this.options.value.category)?.label || "";
+				}, "select-cat", "true,,calendar,calendar", false) || [];
+				const cats = typeof this.options.value.category == "string" ? this.options.value.category.split(",") : this.options.value.category;
+				const icons = [];
+				cats.forEach(cat_id =>
+				{
+					const search = o =>
+					{
+						if(o.value == cat_id)
+						{
+							return o;
+						}
+						if(o.children)
+						{
+							return o.children.find(search);
+						}
+					}
+					const option = options.find(search);
+					cat_label.push(option?.label || "");
+					if(option?.icon)
+					{
+						icons.push(`<et2-image src="${option.icon}" statustext="${option.label}"></et2-image>`);
+					}
+				});
+				cat_label = cat_label.join(", ");
+				cat_icons = `<div class="calendar_calEventCategoryIcons">${icons.join("\n")}</div>`;
 			}
 
 				// Activate links in description
@@ -578,22 +602,23 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						}
 				}
 
-				return '<div class="calendar_calEventTooltip ' + this._status_class() + ' ' + this.options.class +
-					'" style="border-color: ' + border + '; background-color: ' + bg_color + ';">' +
-					'<div class="calendar_calEventHeaderSmall">' +
-					'<span style="color:' + header_color + '">' + timespan + '</span>' +
-					this.icons[0].outerHTML +
-					'</div>' +
-					'<div class="calendar_calEventBody">' +
-					'<h1 class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</h1><br>' +
-					description_node.outerHTML +
-					'<p style="margin: 2px 0px;">' + times + '</p>' +
-					location +
-					(cat_label ? '<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Category') + ': </h2>' + cat_label + '</p>' : '') +
-					'<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Participants') + ': </h2><br />' +
-					participants + '</p>' + this._participant_summary(this.options.value.participants) +
-						'</div>' +
-						'</div>';
+			return '<div class="calendar_calEventTooltip ' + this._status_class() + ' ' + this.options.class +
+				'" style="border-color: ' + border + '; background-color: ' + bg_color + ';">' +
+				'<div class="calendar_calEventHeaderSmall">' +
+				cat_icons +
+				'<span style="color:' + header_color + '">' + timespan + '</span>' +
+				this.icons[0].outerHTML +
+				'</div>' +
+				'<div class="calendar_calEventBody">' +
+				'<h1 class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</h1><br>' +
+				description_node.outerHTML +
+				'<p style="margin: 2px 0px;">' + times + '</p>' +
+				location +
+				(cat_label ? '<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Category') + ': </h2>' + cat_label + '</p>' : '') +
+				'<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Participants') + ': </h2><br />' +
+				participants + '</p>' + this._participant_summary(this.options.value.participants) +
+				'</div>' +
+				'</div>';
 		}
 
 		/**
