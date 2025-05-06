@@ -745,8 +745,8 @@ class Contacts extends Contacts\Storage
 		}
 		else
 		{
-			$cparts = explode(' ', $GLOBALS['egw_info']['user']['preferences']['addressbook']['n_fn_parts'] ?? '') ?:
-				['n_prefix','n_given','n_middle','n_family','n_suffix'];
+			$cparts = explode(' ', $GLOBALS['egw_info']['user']['preferences']['addressbook']['n_fn_parts'] ??
+				'n_prefix n_given n_middle n_family n_suffix');
 		}
 		$parts = [];
 		foreach($cparts as $n)
