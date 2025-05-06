@@ -510,7 +510,7 @@ select an item to read	mail	nl	Selecteer een item om te lezen
 select file to attach to message	mail	nl	Selecteer een bestand om met dit bericht te verzenden
 select file to import into folder	mail	nl	Selecteer het bestand om in deze map te importeren
 select file(s) from vfs	mail	nl	Selecteer het cq de bestand(en) van VFS
-select mail addresses from addressbook	mail	nl	Selecteer e-mailadressen uit adresboek
+select mail addresses from addressbook	mail	nl	Selecteer e-mailadres(sen) uit adresboek
 select or insert email address	mail	nl	Selecteer of voeg e-mailadres in
 selected	mail	nl	Geselecteerd
 selected date range (with quicksearch)	mail	nl	Geselecteerd datumbereik (met snelzoeken)

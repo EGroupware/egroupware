@@ -549,6 +549,7 @@ pop/imap mail server hostname or ip address	setup	fr	Nom d'hôte ou adresse IP d
 port	setup	fr	Port
 possible reasons	setup	fr	Raisons possibles
 possible solutions	setup	fr	Solutions possibles
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	fr	Demande de post avec taille% 1 détectée, plus grande que post_max_size =% 2, et donc non traitée par PHP!
 post-install dependency failure	setup	fr	Erreur des dépendances de la post-installation
 postfix with ldap: [yes(user edit forwarding)]	setup	fr	Postfix avec LDAP : [yes(user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	fr	PostgreSQL: Laissez vide pour utiliser le socket du domaine unix au lieu d'une connexion TCP/IP
@@ -798,6 +799,7 @@ you are using php version %1. egroupware now requires %2 or later, recommended i
 you can install it by running:	setup	fr	Vous pouvez l'installer en exécutant:
 you can specify multiple idp on separate lines.	setup	fr	Vous pouvez spécifier plusieurs IdP sur des lignes séparées.
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	fr	Vous pouvez utiliser l'utilisateur et le mot de passe header pour chaque domaine. Si le mot de passe n'est pas configuré via la ligne de commande, il est lu depuis la variable d'environnement EGW_CLI_PASSWORD ou demandé à l'utilisateur.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	fr	Vous pouvez contourner cette limite en montant le répertoire de sauvegarde dans le gestionnaire de fichiers d'EGroupware et en le téléchargeant à partir de là.
 you didn't enter a config password for domain %1	setup	fr	Vous n'avez pas entré de mot de passe de configuration pour le domaine %1
 you didn't enter a config username for domain %1	setup	fr	Vous n'avez pas entré de nom d'utilisateur pour le domaine %1
 you didn't enter a header admin password	setup	fr	Vous n'avez pas entré de mot de passe pour l'administration d'entête

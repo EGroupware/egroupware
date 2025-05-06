@@ -24,6 +24,7 @@ accepted	calendar	bg	Прието
 access denied to the calendar of %1 !!!	calendar	bg	Отказан Ви е достъп до календара на %1!
 access to calendar of %1 denied!	calendar	bg	Достъп до календара на %1 отказан!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	bg	Действия, предизвикали известяването: Добавен, Отменен, Приет, Отказан, ...
+add a comment to send to organizer with your response	calendar	bg	Добавете коментар, който да изпратите на организатора с вашия отговор
 add alarm	calendar	bg	Добавяне на "Аларма"
 add appointments via shortened dialog or complete edit window	calendar	bg	Добавяне на срещи, чрез съкратен диалогов прозорец или прозорец за редактиране
 add current view as favorite	calendar	bg	Добавяне на текущия изглед като любим
@@ -35,6 +36,7 @@ add timesheet entry	calendar	bg	Добави запис в Графика
 added	calendar	bg	Добавено
 added by synchronization	calendar	bg	Добавено чрез синхронизация
 added recurrence on %1.	calendar	bg	Добавено е повторение на %1.
+additional participants	calendar	bg	Допълнителни участници
 after	calendar	bg	След
 after %1	calendar	bg	След %1
 after current date	calendar	bg	След текущата дата
@@ -66,6 +68,7 @@ appointment settings	calendar	bg	Настройки на уговорените 
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	bg	Като алтернатива може да изтеглите %1a MySQL dump%2 и да го импортирате ръчно в egw_cal_timezones таблица.
 at start of the event	calendar	bg	в началото на събитието
 attention	calendar	bg	Внимание
+automatic update	calendar	bg	Atualização automática
 automatically purge old events after	admin	bg	Автоматично почистване на стари събития
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	bg	Позволено за първия запис във всеки ден от седмицата или дневна таблица в избрания диапазон:
 back half a month	calendar	bg	Назад половин месец
@@ -114,6 +117,7 @@ charset of file	calendar	bg	Символен набор на файла
 choose a category	calendar	bg	Избери категория
 choose owner of imported data	calendar	bg	Изберете собственик на импортирани данни
 close the window	calendar	bg	Затвори прозореца
+color	calendar	bg	Цвят
 compose a mail to all participants after the event is saved	calendar	bg	съставяне на e-mail до всички участници след запис на събитието
 configuration settings	calendar	bg	Настройки за конфигурация
 conflict	calendar	bg	Конфликт
@@ -122,6 +126,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	calenda
 countries	calendar	bg	Държави
 country	calendar	bg	Държава
 create a new series	calendar	bg	Създай нова серия
+create a new subscription	calendar	bg	Създаване на нов абонамент
 create an exception for the given date	calendar	bg	Създай изключение за дадената дата
 create an infolog from this event	calendar	bg	Създайте InfoLog от това събитие
 create exception	calendar	bg	Създаване на изключение
@@ -192,6 +197,7 @@ do you want to be notified about changes of appointments you modified?	calendar	
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	bg	Желаете ли известяване за нови или променени ангажименти? Известяването ще бъде и за промените, направени от Вас.<br>Може да ограничите известяването само за определени промени. Всеки елемент включва списък с известяванията. Всички промени включват промени на заглавие, описание и участници, но не и отговора на участниците. Ако собственикът на събитието е заявил известяване, той ще получава и отговорите на участниците (приемане, отказ).
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	bg	Желаете ли да бъдете уведомявани за нови или променени срещи? Ще бъдете известявани за промените, които сами правите.<br>Можете да ограничите известията само до определени промени. Всеки елемент включва всички известия, изброени по-горе. Всички модификации включват промени в заглавието, описанието, участниците, но без отговори на участници. Ако собственикът на събитие поиска да получава известия, ще има достъп до отговорите на участниците (приели и отхвърлили).
 do you want to be notified about participant responses from events you created, but are not participating in?	calendar	bg	Искате ли да бъдете уведомявани за отговори на участници от събития, които сте създали, но в които не участвате?
+do you want to delete this subscription incl. the synced events?	calendar	bg	Искате ли да изтриете този абонамент, включително синхронизираните събития?
 do you want to edit this event as an exception or the whole series?	calendar	bg	Желаете ли да редактирате това събитие като изключение или цялата серия?
 do you want to keep the series exceptions in your calendar?	calendar	bg	Желаете ли да запазите серийните изключения в календара си?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	bg	Желаете ли да получавате кратко описание на ангажиментите Ви чрез e-mail?<br>Съобщенията за деня се изпращат сутрин, а за седмицата - в понеделник. Не се изпращат писма ако нямате ангажименти за деня, съответно седмицата.
@@ -278,6 +284,7 @@ full edit dialog	calendar	bg	Пълен диалог за редактиране
 fullname of person to notify	calendar	bg	Пълно име на лицето за известяване
 general fields:	calendar	bg	Общи полета:
 general settings	calendar	bg	Основни настройки
+given url is not a caldav server: missing %1!	calendar	bg	Даденият URL адрес не е CalDAV сървър: липсва %1!
 global categories	calendar	bg	Глобални категории
 global public and group public	calendar	bg	Глобална и групова публика
 global public only	calendar	bg	Само глобална публика
@@ -585,8 +592,14 @@ status for all future scheduled days changed	calendar	bg	Статусът за �
 status for this particular day changed	calendar	bg	Статусът за този ден е променен.
 status of participants set to unknown because of missing category rights	calendar	bg	Статусът на участниците е настроен на "неопределен", поради липса на права.
 submit to repository	calendar	bg	Подаване към хранилището
+subscribed calendar	calendar	bg	Абониран календар
+subscription incl. the synced events deleted.	calendar	bg	Абонаментът, включително синхронизираните събития, е изтрит.
+subscription saved.	calendar	bg	Абонаментът е запазен.
+subscription synced.	calendar	bg	Абонаментът е синхронизиран.
+subscriptions	calendar	bg	Абонаменти
 summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	bg	Обобщен статус: 3 участника: 1 одобрен, 2 с неопределен статус
 sun	calendar	bg	Нед
+sync now	calendar	bg	Синхронизирайте сега
 tag to mark positions for address labels	calendar	bg	Отбележи като маркирани позиции за адр. етикети
 tentative	calendar	bg	С колебание
 test import (show importable records <u>only</u> in browser)	calendar	bg	Тестов импорт (показва импортируемите записи <u>само</u> в прозореца).

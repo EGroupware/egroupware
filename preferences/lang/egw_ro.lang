@@ -1,8 +1,15 @@
 applications list scroll area	preferences	ro	Buton de derulare pentru meniul lateral
+are you sure you want to delete this category ?	preferences	ro	Sunteți sigur că doriți să ștergeți această categorie?
+are you sure?	preferences	ro	Sunteți sigur?
+code is invalid	preferences	ro	Codul nu este valabil
+code is required	preferences	ro	Codul este necesar
 dark mode theme	preferences	ro	Tema modului întunecat
 deny following groups access to application passwords	preferences	ro	Interzice accesul următoarelor grupuri la parolele aplicațiilor
+enter code to authenticate the actions below	preferences	ro	Introduceți codul pentru a autentifica acțiunile de mai jos
+enter code to verify correct setup	preferences	ro	Introduceți codul pentru a verifica configurarea corectă
 fast	preferences	ro	Rapid
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	ro	Actualizarea rapidă adaugă noi intrări întotdeauna în partea de sus a listei și le actualizează pe cele existente pe loc, cu excepția cazului în care lista este ordonată după ultima modificare. Actualizările exacte fac o reîmprospătare completă, dacă lista nu este ordonată după ultima modificare.
+generate new qrcode to disable existing one, after enabling the new one!	preferences	ro	Generați un nou cod QR pentru a-l dezactiva pe cel existent (după activarea celui nou)
 how to update lists	preferences	ro	Cum se actualizează listele
 if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	ro	Dacă este activată, parola introdusă va fi stocată și transmisă către alte servere, atunci când vă conectați prin SSO.
 it sets content size (text only) according to selected size.	preferences	ro	Setează dimensiunea conținutului (numai pentru text) în funcție de dimensiunea selectată.
@@ -10,7 +17,11 @@ limit following groups to only create application passwords via templates	prefer
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ro	Conectarea prin SingleSignOn nu oferă o parolă pentru a o transmite către serverele de e-mail sau de fișiere.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	ro	Lista de aplicații poate fi derulată cu ajutorul butoanelor de derulare sus/jos (util pentru utilizatorii care lucrează cu un mouse fără rotiță de derulare).
 password stored	preferences	ro	Parolă stocată.
+reset qrcode	preferences	ro	Resetați codul QR
+scan qrcode with a time-based one-time password (totp) app:	preferences	ro	Scanați codul QR cu o aplicație TOTP (Time-based one-time password):
 set content size	preferences	ro	Setați dimensiunea conținutului
+show qrcode	preferences	ro	Afișează codul QR
+show qrcode to enable on an additional device.	preferences	ro	Afișează din nou codul QR pentru a-l configura pe alte dispozitive
 singlesignon and passwords	preferences	ro	SingleSignOn și parolele
 store password retrievable for singlesignon	common	ro	Stocați parola recuperabilă pentru SingleSignOn
 thousands separator is only used for displaying and not for editing numbers.	preferences	ro	Formatul numerelor poate fi setat pentru afișarea numerelor.

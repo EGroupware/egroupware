@@ -194,7 +194,7 @@ email address	mail	es-es	Dirección de correo-e
 email notification successfully updated!	mail	es-es	¡notificación por correo-e actualizada éxitosamente!
 email notification update failed	mail	es-es	falló la actualización de la notificación de correo electrónico
 email notification update failed! you need to set an email address!	mail	es-es	¡Falló la actualización de la notificación por correo-e! ¡Necesita establecer una dirección de correo-e!
-emailaddress	admin	es-es	dirección de correo-e
+emailaddress	admin	es-es	Dirección de correo-e
 emailadmin: profilemanagement	mail	es-es	eMailAdmin: Gestión de perfiles
 emails in blacklisted domains are marked as spam	mail	es-es	Los correos-e en los dominios de la lista negra están marcados como spam
 emails in whitelisted domains are not marked as spam	mail	es-es	Los correos-e en los dominios de la lista blanca están no marcados como spam
@@ -547,7 +547,7 @@ select file to attach to message	mail	es-es	Seleccionar archivo para adjuntar al
 select file to import into folder	mail	es-es	Seleccionar archivo para importar a la carpeta
 select file(s) from vfs	mail	es-es	Seleccionar ficheros desde VFS
 select files to upload	mail	es-es	Seleccionar archivos para subir
-select mail addresses from addressbook	mail	es-es	Seleccionar direcciones de correo de la libreta de direcciones
+select mail addresses from addressbook	mail	es-es	Seleccione la(s) dirección(es) de correo electrónico de la libreta de direcciones
 select multiple	mail	es-es	Seleccionar varios
 select or insert email address	mail	es-es	Seleccionar o insertar la dirección de correo electrónico
 selected	mail	es-es	seleccionado

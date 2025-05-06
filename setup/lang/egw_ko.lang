@@ -287,6 +287,7 @@ please make the following change in your php.ini	setup	ko	귀하의 php.ini에 �
 please wait...	setup	ko	잠시만 기다리세요 ...
 possible reasons	setup	ko	가능한 이유들
 possible solutions	setup	ko	가능한 해결책들
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	ko	post_max_size=%2보다 큰 %1 크기의 POST 요청이 감지되었으므로 PHP에서 처리되지 않았습니다!
 post-install dependency failure	setup	ko	후-설치의존성 실패
 potential problem	setup	ko	잠재적인 문제
 preferences	setup	ko	설정
@@ -348,7 +349,6 @@ show 'powered by' logo on	setup	ko	'Powered by' 로고를 보여줌
 some or all of its tables are missing	setup	ko	일부 또는 전체의 테이블이 없습니다.
 sql encryption type	setup	ko	암호에 사용할 SQL 암호화 타입
 start the postmaster	setup	ko	포스트마스터를 시작
-status	setup	ko	상황
 step %1 - admin account	setup	ko	%1 단계 - 관리자 생성
 step %1 - advanced application management	setup	ko	%1 단계 - 고급사용자용 응용프로그램 관리
 step %1 - configuration	setup	ko	%1 단계 - 설정
@@ -421,6 +421,7 @@ you appear to be running an old version of php <br />it its recommend that you u
 you appear to be running version %1 of egroupware	setup	ko	EGroupware 버전 %1을 사용하고 있습니다
 you appear to have xml support enabled	setup	ko	XML을 지원합니다.
 you are ready for this stage, but this stage is not yet written.<br />	setup	ko	현재 스테이지를 수행할 준비가 되었습니다만, 아직 완전히 작성되지는 않았습니다.<br>
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	ko	이 제한을 해결하려면 백업 디렉터리를 EGroupware 파일 관리자에 마운트하고 거기에서 업로드하면 됩니다.
 you didn't enter a config password for domain %1	setup	ko	%1도메인의 구성암호를 입력하지 않았습니다
 you didn't enter a config username for domain %1	setup	ko	%1도메인의 구성사용자이름을 입력하지 않았습니다
 you didn't enter a header admin password	setup	ko	상위관리자 암호를 입력하지 않았습니다

@@ -15,6 +15,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	tr	Kara liste
 adding %1 to whiltelisted email addresses failed because of %2	mail	tr	Listelenen e-posta adreslerine %1 ekleme işlemi %2 nedeniyle başarısız oldu
 after reply, visible during compose	mail	tr	Yanıttan sonra, oluşturma sırasında görünür
 aliases+forwards	mail	tr	Takma Adlar+İleri Yönler
+all my email addresses	mail	tr	tüm e-posta adreslerim
 always respond / auto-responder	mail	tr	Her zaman yanıt / otomatik yanıtlayıcı
 always show notifiction	mail	tr	Her zaman bildirim göster
 answered	mail	tr	Cevaplandı
@@ -59,8 +60,10 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	tr	Geçerli görünümdeki TÜM iletiler için %1 etiketini gerçekten değiştirmek istiyor musunuz?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	tr	Seçilen iletileri yeni e-postaya eklemeden önce sizden onay istenmesini istiyor musunuz?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	tr	Seçili mesajları başka bir klasöre taşımadan önce sizden onay istenmesini istiyor musunuz?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	tr	E-postalar geldiğinde diğer e-posta adreslerine e-posta ile bildirim düzenlenmesini/kurulumunu engellemek istiyor musunuz( Sieve etkin olsa bile)?
 edit account	mail	tr	Hesap düzenle
 email address	mail	tr	E-posta adresi
+email notification update failed! you need to set an email address!	mail	tr	E-posta bildirimi güncellemesi başarısız oldu! Bir e-posta adresi belirlemeniz gerekiyor!
 emailaddress	admin	tr	E-posta adresi
 emailadmin: profilemanagement	mail	tr	eMailAdmin: Profil yönetimi
 emails in whitelisted domains are not marked as spam	mail	tr	Beyaz listedeki alan adlarındaki e-postalar spam olarak işaretlenmez
@@ -97,6 +100,7 @@ ident name	mail	tr	Kimlik adı
 ident name email	mail	tr	Kimlik adı [E-posta]
 ident name organization email	mail	tr	Kimlik adı Organizasyon [E-posta]
 identity label	mail	tr	Kimlik etiketi
+if different from email address	mail	tr	E-posta adresinden farklıysa
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	tr	Konuya tek tıklayarak bir postanın önizlemesini görmek istiyorsanız, bunu etkinleştirin.
 imap	mail	tr	IMAP
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	tr	%1 mesajının içe aktarımı başarısız oldu. Nedeniyle mesaj %2 klasörüne kaydedilemedi: %3
@@ -231,7 +235,7 @@ see attachments for content of the orignial mail	mail	tr	İlk e-postanın içeri
 select all	mail	tr	Tümünü seçin
 select an existing entry in order to append mail content to it	mail	tr	Posta içeriğini eklemek için mevcut bir girişi seçin
 select an item to read	mail	tr	Okumak için bir öğe seçin
-select mail addresses from addressbook	mail	tr	Adres defterinden posta adreslerini seçin
+select mail addresses from addressbook	mail	tr	Adres defterinden e-posta adres(ler)ini seçin
 select or insert email address	mail	tr	E-posta adresini seçin veya ekleyin
 selected date range (with quicksearch)	mail	tr	Seçilen tarih aralığı (hızlı arama ile)
 send message and move to send folder (if configured)	mail	tr	Mesaj gönderme ve gönderme klasörüne taşıma (yapılandırılmışsa)

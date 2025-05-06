@@ -341,6 +341,7 @@ please make the following change in your php.ini	setup	it	Prego apporta le segue
 please wait...	setup	it	Please Wait...
 possible reasons	setup	it	Possibili Ragioni
 possible solutions	setup	it	Soluzioni possibili
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	it	Richiesta POST con dimensione %1 rilevata, superiore a post_max_size=%2, e quindi non elaborata da PHP!
 potential problem	setup	it	Problema Potenziale
 preferences	setup	it	Preferenze
 problem resolution	setup	it	Risoluzione del problema
@@ -429,6 +430,7 @@ yes	setup	it	Sì
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di EGroupware.<br>Queste versioni non sono più supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br>e poi aggiornare da lì usando questa versione.
 you appear to be running version %1 of egroupware	setup	it	Sembra che tu sta utilizzando la versione %1 di EGroupware
 you are ready for this stage, but this stage is not yet written.<br />	setup	it	Sei pronto per questo passaggio, ma questa procedura non è ancora stata scritta.<br>
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	it	È possibile aggirare questo limite montando la directory di backup nel file manager di EGroupware e caricandola da lì.
 you do not have any languages installed. please install one now <br />	setup	it	Non hai nessuna lingua installata. Per favore installane una adesso.<br>
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	it	Non hai JPGraph nella versione %1 o superiore installato! E' un componente necessario per la generazione del grafico Gantt.
 you must enter a username for the admin	setup	it	Devi inserire un nome utente per l'amministratore

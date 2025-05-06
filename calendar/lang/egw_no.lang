@@ -19,6 +19,7 @@ accepted	calendar	no	Godtatt
 access denied to the calendar of %1 !!!	calendar	no	Ikke tilgang til %1 kalender!
 access to calendar of %1 denied!	calendar	no	Tilgang til kalenderen til %1 nektet!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	no	Handling som utløste denne meldingen: Lagt til, Kansellert, Akseptert, Avslått, ...
+add a comment to send to organizer with your response	calendar	no	Legg til en kommentar som skal sendes til arrangøren med ditt svar
 add alarm	calendar	no	Legg til alarm
 add appointments via shortened dialog or complete edit window	calendar	no	Legg til avtaler via forkortet dialogboks eller fullstendig redigeringsvindu
 add current view as favorite	calendar	no	Legg til gjeldende visning som favoritt
@@ -30,6 +31,7 @@ add timesheet entry	calendar	no	Legg til forekomst i timeregistrering
 added	calendar	no	Lagt til
 added by synchronization	calendar	no	Lagt til ved synkronisering
 added recurrence on %1.	calendar	no	Lagt til gjentakelse på %1.
+additional participants	calendar	no	Flere deltakere
 after	calendar	no	Etter
 after %1	calendar	no	Etter %1
 after current date	calendar	no	Etter inneværende dato
@@ -57,6 +59,7 @@ always use the full edit dialog, not this little dialog	calendar	no	Bruk alltid 
 apply changes to (future) exceptions too?	calendar	no	Bruke endringer på (fremtidige) unntak også?
 apply the changes	calendar	no	Oppdater endringene
 attention	calendar	no	Oppmerksomhet
+automatic update	calendar	no	Automatisk oppdatering
 back half a month	calendar	no	Tilbake en halv mnd.
 back one month	calendar	no	Tilbake en mnd.
 before current date	calendar	no	For inneværende dato
@@ -76,15 +79,18 @@ canceled	calendar	no	Annullert
 category report	calendar	no	Kategorirapport
 changed event-data applied	calendar	no	Endrede hendelsesdata brukt
 charset of file	calendar	no	Karaktersett for filen
+check all	calendar	no	Sjekk alle
 choose a category	calendar	no	Velg en kategori
 choose owner of imported data	calendar	no	Velg eier av importerte data
 close the window	calendar	no	Lukk vinduet
+color	calendar	no	Farge
 compose a mail to all participants after the event is saved	calendar	no	Komponer en mail til alle deltagere etter at hendelsen er lagret
 configuration settings	calendar	no	Konfigurasjonsinnstillinger
 copy this event	calendar	no	Kopier denne hendelsen
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	no	Kopier endringene dine til utklippstavlen, %1oppfrisk forekomsten%2 og sammenstill de
 countries	calendar	no	Land
 country	calendar	no	Land
+create a new subscription	calendar	no	Opprett et nytt abonnement
 create new links	calendar	no	Opprett ny lenke
 created	calendar	no	Opprettet
 creator	calendar	no	Skaper
@@ -115,6 +121,7 @@ display status of events	calendar	no	Vis Status av Hending
 displayed view	calendar	no	Gjeldende visning
 do you want a weekview with or without weekend?	calendar	no	Ønsker du ukevisning uten helg?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	no	Vil du bli varslet om alle forandrede avtaler? Du blir varslet om alle endringer du selv utfører.<br>Du kan begrense varslingen til bare å gjelde spesifikke endringer. Hvert objekt inkluderer alle varslingene over det. Alle endringer inkluderer endringer av tittel, beskrivelse, men ikke deltakeres responser. Hvis eieren av en oppføring ber om varsling, vil han alltid få deltakeres responser som godkjenninger eller avslag også.
+do you want to delete this subscription incl. the synced events?	calendar	no	Vil du slette dette abonnementet inkl. de synkroniserte hendelsene?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	no	Ønsker du å motta regelmessige sammendrag av dine avtaler via e-post?<br>Oppsummeringen vil bli sendt til din standard e-post adresse på morgenen samme dag, eller på mandager for ukentlige sammendrag.<br>Den vil bare bli sendt når du har en avtale den dagen eller uken.
 download	calendar	no	Last ned
 download this event as ical	calendar	no	Last ned denne hendelsen som iCal
@@ -167,6 +174,7 @@ freetime search	calendar	no	Søk etter fri tid
 fri	calendar	no	Fre
 full description	calendar	no	Full beskrivelse
 fullname of person to notify	calendar	no	Hele navnet til person som skal varsles
+given url is not a caldav server: missing %1!	calendar	no	Angitt URL er ikke en CalDAV-server: mangler %1!
 global categories	calendar	no	Globale Kategorier
 global public and group public	calendar	no	Global offentlig og gruppe offentlig
 global public only	calendar	no	Global offentlig Bare
@@ -326,7 +334,13 @@ startdate of the export	calendar	no	Startdato for eksport
 startrecord	calendar	no	Startrekke
 status changed	calendar	no	Status endret
 submit to repository	calendar	no	Send til Arkiv
+subscribed calendar	calendar	no	Abonnert kalender
+subscription incl. the synced events deleted.	calendar	no	Abonnementet inkl. de synkroniserte hendelsene slettet.
+subscription saved.	calendar	no	Abonnementet er lagret.
+subscription synced.	calendar	no	Abonnementet er synkronisert.
+subscriptions	calendar	no	Abonnementer
 sun	calendar	no	Søn
+sync now	calendar	no	Synkroniser nå
 tentative	calendar	no	Foreløpig
 test import (show importable records <u>only</u> in browser)	calendar	no	Test import (vis importerte registreringer <u>bare</u> i nettleseren)
 the apple ical apps use this color to display events from this calendar.	calendar	no	Apple iCal-appene bruker denne fargen til å vise hendelser fra denne kalenderen.

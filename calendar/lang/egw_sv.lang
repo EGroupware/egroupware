@@ -20,6 +20,7 @@ accepted	calendar	sv	Accepterat
 access denied to the calendar of %1 !!!	calendar	sv	Åtkomst nekas till %1 kalender!
 access to calendar of %1 denied!	calendar	sv	Åtkomst till %1:s kalender nekad!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sv	Händelse som orsakade meddelandet: Tillagd, Avbruten, Accepterade, Avvisade, ...
+add a comment to send to organizer with your response	calendar	sv	Lägg till en kommentar för att skicka till arrangören med ditt svar
 add alarm	calendar	sv	Skapa larm
 add appointments via shortened dialog or complete edit window	calendar	sv	Lägg till möten via förkortad dialogruta eller komplett redigeringsfönster
 add current view as favorite	calendar	sv	Lägg till aktuell vy som favorit
@@ -31,6 +32,7 @@ add timesheet entry	calendar	sv	Lägg till tidredovisnings post
 added	calendar	sv	Skapad
 added by synchronization	calendar	sv	Läggs till genom synkronisering
 added recurrence on %1.	calendar	sv	Lade till återkommande på %1.
+additional participants	calendar	sv	Ytterligare deltagare
 after	calendar	sv	Efter
 after %1	calendar	sv	Efter %1
 after current date	calendar	sv	Efter dagens datum
@@ -60,6 +62,7 @@ apply the action on the whole query, not only the shown events	calendar	sv	Anvä
 apply the changes	calendar	sv	Spara ändringar
 appointment settings	calendar	sv	Inställningar för möten
 attention	calendar	sv	Uppmärksamhet
+automatic update	calendar	sv	Automatisk uppdatering
 back half a month	calendar	sv	Tillbaks en halv månad
 back one month	calendar	sv	Tillbaks en månad
 before %1	calendar	sv	Före %1
@@ -93,12 +96,14 @@ charset of file	calendar	sv	Teckenuppsättning för filen
 check all	calendar	sv	Markera alla
 choose a category	calendar	sv	Välj kategori
 close the window	calendar	sv	Stäng fönstret
+color	calendar	sv	Färg
 compose a mail to all participants after the event is saved	calendar	sv	Skicka e-post till alla deltagare efter att händelsen sparats.
 conflict	calendar	sv	Konflikt
 copy this event	calendar	sv	Kopiera händelsen
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	sv	Kopiera dina ändringar till Urklipp, %1ladda om posten%2 och slå ihop dem.
 countries	calendar	sv	Länder
 country	calendar	sv	Land
+create a new subscription	calendar	sv	Skapa en ny prenumeration
 create an exception for the given date	calendar	sv	Skapa ett undantag för givet datum
 create exception	calendar	sv	Skapa undantag
 create new links	calendar	sv	Skapa nya länkar
@@ -137,6 +142,7 @@ displayed view	calendar	sv	Visad vy
 do not include events of group members	calendar	sv	Inkludera inte evenemang för gruppmedlemmar
 do you want a weekview with or without weekend?	calendar	sv	Vill du se veckovy med eller utan veckoslut?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	sv	Vill du mottaga meddelande om nya eller ändrade möten? Du får bekräftelse på dina egna ändringar.<br>Du kan begränsa meddelandena till vissa ändringar. Varje objekt inkluderar alla meddelande typer listade ovan den. Alla ändringar inkluderar titel ändring, beskrivning, deltagare men inte deltagares svar. Om ägaren till en händelse begär meddelande får han/hon deltagarnas svar som accepterar eller tackar nej till.
+do you want to delete this subscription incl. the synced events?	calendar	sv	Vill du ta bort denna prenumeration inklusive de synkroniserade händelserna?
 do you want to edit this event as an exception or the whole series?	calendar	sv	Vill du ändra denna förekomst som ett undantag eller hela serien?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sv	Vill du få regelbunden summering av dina möten via e-post?<br>Summeringen skickas till din standard e-postadress på morgonen eller på måndagar för vecko summering.<br>Skickas bara när du har planerade händelser för dagen eller veckan.
 download	calendar	sv	Ladda ner
@@ -207,6 +213,7 @@ fri	calendar	sv	Fre
 full description	calendar	sv	Fullständig beskrivning
 full edit dialog	calendar	sv	Fullständig redigeringsdialog
 fullname of person to notify	calendar	sv	Fullständigt namn på person att meddela
+given url is not a caldav server: missing %1!	calendar	sv	Angiven URL är inte en CalDAV-server: %1 saknas!
 global categories	calendar	sv	Globala kategorier
 global public and group public	calendar	sv	Global och grupp åtkomst
 global public only	calendar	sv	Endast global åtkomst
@@ -422,7 +429,13 @@ status for all future scheduled days changed	calendar	sv	Status till alla komman
 status for this particular day changed	calendar	sv	Status för just denna händelse ändrad
 status of participants set to unknown because of missing category rights	calendar	sv	Status för deltagare har satts till Okänd pga avsaknad av kategorirättigheter
 submit to repository	calendar	sv	Spara till repositoryt
+subscribed calendar	calendar	sv	Prenumererad kalender
+subscription incl. the synced events deleted.	calendar	sv	Prenumeration inkl. de synkroniserade händelserna borttagen.
+subscription saved.	calendar	sv	Prenumeration sparad.
+subscription synced.	calendar	sv	Prenumerationen synkroniserad.
+subscriptions	calendar	sv	Prenumerationer
 sun	calendar	sv	Sön
+sync now	calendar	sv	Synkronisera nu
 tentative	calendar	sv	Preliminärt
 test import (show importable records <u>only</u> in browser)	calendar	sv	Testa import (visa importerabara poster <u>bara</u> i browser)
 the apple ical apps use this color to display events from this calendar.	calendar	sv	Apparna Apple iCal använder denna färg för att visa händelser från denna kalender.

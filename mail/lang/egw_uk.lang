@@ -15,6 +15,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	uk	Не вд�
 adding %1 to whiltelisted email addresses failed because of %2	mail	uk	Не вдалося додати %1 до білого списку через причину %2
 after reply, visible during compose	mail	uk	Після відповіді, видно під час створення листа
 aliases+forwards	mail	uk	Псевдоніми + переадресація
+all my email addresses	mail	uk	всі мої електронні адреси
 always respond / auto-responder	mail	uk	Завжди відповідати / автовідповідач
 always show notifiction	mail	uk	Завжди показувати сповіщення
 answered	mail	uk	Відповіли
@@ -59,8 +60,10 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	uk	Ви дійсно хочете ввімкнути мітку %1 для ВСІХ повідомлень у поточному поданні?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	uk	Ви хочете, щоб вас запитували про підтвердження, перш ніж прикріплювати вибрані повідомлення до нового листа?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	uk	Ви хочете, щоб я запитував підтвердження перед переміщенням вибраних повідомлень до іншої папки?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	uk	Ви хочете запобігти редагуванню/налаштуванню сповіщень електронною поштою на інші електронні адреси при надходженні листів (навіть якщо увімкнено Sieve)?
 edit account	mail	uk	Редагувати рахунок
 email address	mail	uk	Адреса електронної пошти
+email notification update failed! you need to set an email address!	mail	uk	Не вдалося оновити email-сповіщення! Вам потрібно вказати адресу електронної пошти!
 emailaddress	admin	uk	Адреса електронної пошти
 emailadmin: profilemanagement	mail	uk	eMailAdmin: Керування профілем
 emails in whitelisted domains are not marked as spam	mail	uk	Листи в білих доменах не позначаються як спам
@@ -97,6 +100,7 @@ ident name	mail	uk	Ім'я користувача
 ident name email	mail	uk	Ідентифікаційне ім'я [Електронна пошта]
 ident name organization email	mail	uk	Ідентифікаційне ім'я Організація [Електронна пошта]
 identity label	mail	uk	Ідентифікаційна етикетка
+if different from email address	mail	uk	Якщо відрізняється від адреси
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	uk	Якщо ви хочете переглянути попередній перегляд листа одним натисканням на тему, увімкніть цю опцію.
 imap	mail	uk	IMAP
 imap server	mail	uk	IMAP Server
@@ -223,7 +227,7 @@ security	mail	uk	Безпека
 see attachments for content of the orignial mail	mail	uk	Вміст оригінального листа див. у вкладених файлах
 select an existing entry in order to append mail content to it	mail	uk	Виберіть існуючий запис, щоб додати до нього вміст листа
 select an item to read	mail	uk	Виберіть елемент для читання
-select mail addresses from addressbook	mail	uk	Виберіть поштові адреси з адресної книги
+select mail addresses from addressbook	mail	uk	Виберіть адресу з адресної книги
 select or insert email address	mail	uk	Виберіть або вставте адресу електронної пошти
 selected date range (with quicksearch)	mail	uk	Вибраний діапазон дат (за допомогою швидкого пошуку)
 send message and move to send folder (if configured)	mail	uk	Надіслати повідомлення та перемістити до папки відправки (якщо налаштовано)

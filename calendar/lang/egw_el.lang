@@ -17,6 +17,7 @@ accepted	calendar	el	Αποδέχτηκε
 access denied to the calendar of %1 !!!	calendar	el	Απορρίφθηκε η πρόσβαση στο ημερολόγιο του %1!
 access to calendar of %1 denied!	calendar	el	Δεν έχετε πρόσβαση στο ημερολόγιο του %1!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	el	Ενέργειες που προκάλεσαν την ειδοποίηση: Προστέθηκε, Ακυρώθηκε, Αποδέχτηκε, Απορρίφθηκε, ...
+add a comment to send to organizer with your response	calendar	el	Προσθέστε ένα σχόλιο για να το στείλετε στον διοργανωτή με την απάντησή σας
 add alarm	calendar	el	Προσθέστε Ειδοποίηση
 add appointments via shortened dialog or complete edit window	calendar	el	Προσθήκη ραντεβού μέσω συντομευμένου διαλόγου ή πλήρους παραθύρου επεξεργασίας
 add current view as favorite	calendar	el	Lisää nykyinen näkymä suosikiksi
@@ -28,6 +29,7 @@ add timesheet entry	calendar	el	Προσθήκη καταχώρησης φύλλ
 added	calendar	el	Προστέθηκε
 added by synchronization	calendar	el	Προστέθηκε μέσω συγχρονισμού
 added recurrence on %1.	calendar	el	Προστέθηκε επανάληψη στο %1.
+additional participants	calendar	el	Πρόσθετοι συμμετέχοντες
 after	calendar	el	Μετά
 after %1	calendar	el	Μετά %1
 after current date	calendar	el	Μετά την τωρινή ημερομηνία
@@ -56,6 +58,7 @@ apply the changes	calendar	el	εφαρμόστε τις αλλαγές
 appointment settings	calendar	el	Ρυθμίσεις συναντήσεων
 at start of the event	calendar	el	ως αρχή του γεγονότος
 attention	calendar	el	Προσοχή
+automatic update	calendar	el	Αυτόματη ενημέρωση
 back half a month	calendar	el	Μισό μήνα πίσω
 back one month	calendar	el	Ένα μήνα πίσω
 back one year	calendar	el	Ένα έτος πίσω
@@ -83,12 +86,15 @@ canceled	calendar	el	Ακυρώθηκε
 category report	calendar	el	Αναφορά κατηγορίας
 changed event-data applied	calendar	el	Εφαρμόζονται τροποποιημένα δεδομένα συμβάντος
 charset of file	calendar	el	Κωδικοποίηση αρχείου
+check all	calendar	el	Έλεγχος όλων
 choose a category	calendar	el	Επιλέξτε μία κατηγορία
 close the window	calendar	el	Κλείσιμο παραθύρου
+color	calendar	el	Χρώμα
 compose a mail to all participants after the event is saved	calendar	el	Συντάξτε ένα μήνυμα σε όλους τους συμμετέχοντες αφού σωθεί το γεγονός
 copy this event	calendar	el	Αντιγράψτε αυτό το γεγονός
 countries	calendar	el	Χώρες
 country	calendar	el	Χώρα
+create a new subscription	calendar	el	Δημιουργία νέας συνδρομής
 create an exception for the given date	calendar	el	Δημιουργήστε μια εξαίρεση για τη δοσμένη ημερομηνία
 create exception	calendar	el	Δημιουργία εξαίρεσης
 create new links	calendar	el	Δημιουργήστε νέα links
@@ -126,6 +132,7 @@ displayed view	calendar	el	Εμφάνιση
 distribution list	calendar	el	Πίνακας διανομής
 do you want a weekview with or without weekend?	calendar	el	Θέλετε εμφάνιση της εβδομάδας με ή χωρίς το Σαββατοκύριακο;
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	el	Θέλετε να ειδοποιηθείτε για νέες συναντήσεις ή αλλαγές συναντήσεων; ΔΕΝ θα ειδοποιήστε για αλλαγές που κάνετε ο ίδιος.<br>Μπορείτε να ελαττώσετε τις ειδοποιήσεις σε ορισμένες αλλαγές μόνο. Κάθε αντικείμενο περιλαμβάνει όλες τις ειδοποιήσεις που αναφέρονται παραπάνω. Όλες οι τροποποιήσεις περιλαμβάνουν αλλαγές του τίτλου, της περιγραφής, των συμμετεχόντων, αλλά καμία απάντηση συμμετέχοντος. Αν ο ιδιοκτήτης ενός γεγονότος ζήτησε κάποια ειδοποίηση, θα λαμβάνει πάντα τις απαντήσεις των συμμετεχόντων ως αποδοχές και απορρίψεις επίσης.
+do you want to delete this subscription incl. the synced events?	calendar	el	Θέλετε να διαγράψετε αυτή τη συνδρομή, συμπεριλαμβανομένων των συγχρονισμένων εκδηλώσεων;
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	el	Θέλετε να λαμβάνετε μία τακτική περίληψη των συναντήσεών σας μέσω email;<br>Η περίληψη στέλνεται στην συνηθισμένη σας διεύθυνση email το πρωί εκείνης της ημέρας ή τη Δευτέρα για εβδομαδιαίες περιλήψεις.<br>Αποστέλεται μόνον όταν έχετε κάποια συνάντηση εκείνη την ημέρα ή εβδομάδα.
 download	calendar	el	Φόρτωμα
 download this event as ical	calendar	el	Φόρτωση του γεγονότος ως iCal
@@ -197,6 +204,7 @@ full edit dialog	calendar	el	Πλήρης φόρμα επεξεργασίας
 fullname of person to notify	calendar	el	Πλήρες όνομα του ατόμου να ειδοποιηθεί
 general fields:	calendar	el	Γενικά πεδία:
 general settings	calendar	el	Γενικές ρυθμίσεις
+given url is not a caldav server: missing %1!	calendar	el	Η δεδομένη διεύθυνση URL δεν είναι διακομιστής CalDAV: λείπει το %1!
 global categories	calendar	el	Καθολικές κατηγορίες
 global public and group public	calendar	el	Καθολικές κοινές και ομαδικές κοινές
 global public only	calendar	el	Καθολικές αποκλειστικά κοινές
@@ -418,7 +426,13 @@ startrecord	calendar	el	Έναρξη εγγραφής
 status already applied	calendar	el	Η κατάσταση έχει ήδη εφαρμοστεί
 status changed	calendar	el	Η κατάσταση άλλαξε
 submit to repository	calendar	el	Υποβολή στην αποθήκη
+subscribed calendar	calendar	el	Συνδρομημένο ημερολόγιο
+subscription incl. the synced events deleted.	calendar	el	Διαγραφή της συνδρομής, συμπεριλαμβανομένων των συγχρονισμένων εκδηλώσεων.
+subscription saved.	calendar	el	Η συνδρομή αποθηκεύτηκε.
+subscription synced.	calendar	el	Συνδρομή συγχρονίστηκε.
+subscriptions	calendar	el	Συνδρομές
 sun	calendar	el	Κυρ
+sync now	calendar	el	Συγχρονισμός τώρα
 tentative	calendar	el	Με επιφύλαξη
 test import (show importable records <u>only</u> in browser)	calendar	el	Τεστ Εισαγωγής (παρουσιάστε εισαγώγιμα αρχεία <u>μόνο</u> στον browser
 the apple ical apps use this color to display events from this calendar.	calendar	el	Οι εφαρμογές iCal της Apple χρησιμοποιούν αυτό το χρώμα για την εμφάνιση συμβάντων από αυτό το ημερολόγιο.

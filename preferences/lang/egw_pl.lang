@@ -7,9 +7,12 @@ a theme defines the colors and fonts used by the template.	preferences	pl	Tematy
 acl grants have been updated	preferences	pl	Uprawniena dostępu (ACL) zostały odnowione
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pl	Wszelkie listy w EGroupware będą wyświetlać tutaj ustawioną liczbę wierszy na stronę.<br />Za wiele spowolni dość znacznie wyświetlanie stron, za mało spowoduje utratę przejrzystości informacji.
 applications list scroll area	preferences	pl	Przycisk przewijania dla menu bocznego
-are you sure you want to delete this category ?	preferences	pl	Napewno skasować tę kategorie ?
+are you sure you want to delete this category ?	preferences	pl	Napewno skasować tę kategorie?
+are you sure?	preferences	pl	Czy na pewno?
 br	preferences	pl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pl	Zmień hasło użytkownika podając stare i nowe hasło. Odpowiedź TRUE oznacza poprawną zmianę, podczas gdy FALSE związane jest z błędem.
+code is invalid	preferences	pl	Kod jest nieprawidłowy
+code is required	preferences	pl	Kod jest wymagany
 color	preferences	pl	Kolor
 country	preferences	pl	Państwo
 dark mode theme	preferences	pl	Motyw trybu ciemnego
@@ -29,12 +32,15 @@ enable selectbox dropdown resizing for ie (experimental)	preferences	pl	Aktywuj 
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	pl	Włącza obsługę przeciągnij i upuść we wszystkich aplikacjach. Jeśli przeglądarka tego nie wspiera zostanie automatycznie wyłączone. To funkcja eksperymentalna.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	pl	Aktywuj lub deaktywuj skalowanie pola rozwijanego dla IE we wszystkich aplikacjach. Jeśli przeglądarką  nie jest IE, opcja nie zadziała. To funkcja eksperymentalna.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	pl	Aktywuj lub deaktywuj skalowanie pola wyboru dla IE we wszystkich aplikacjach. Jeśli przeglądarką  nie jest IE, opcja nie zadziała. To funkcja eksperymentalna.
+enter code to authenticate the actions below	preferences	pl	Wprowadź kod, aby uwierzytelnić poniższe działania
+enter code to verify correct setup	preferences	pl	Wprowadź kod, aby zweryfikować poprawność konfiguracji
 enter your new password	preferences	pl	Wprowadź nowe hasło
 enter your old password	preferences	pl	Wprowadź stare hasło
 failed to change password.	preferences	pl	Zmiana hasła nieudana.
 fast	preferences	pl	Szybki
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	pl	Szybka aktualizacja dodaje nowe wpisy zawsze na górze listy i aktualizuje istniejące na miejscu, chyba że lista jest posortowana według ostatniej modyfikacji. Dokładne aktualizacje wykonują pełne odświeżenie, jeśli lista nie jest posortowana według ostatniej modyfikacji.
 forced preferences	preferences	pl	Ustawienia wymuszone
+generate new qrcode to disable existing one, after enabling the new one!	preferences	pl	Wygeneruj nowy kod QR, aby wyłączyć istniejący (po włączeniu nowego)
 help off	preferences	pl	Wyłącz wyświetlanie pomocy
 hours	preferences	pl	godzin
 how do you like to display accounts	preferences	pl	Jak mają być wyświetlane konta użytkowników
@@ -70,6 +76,8 @@ please select your timezone.	preferences	pl	Wybierz strefę czasową
 popup with search	preferences	pl	Okno popup do szukania
 re-enter your password	preferences	pl	Wpisz hasło ponownie
 read prefs for the specified application.	preferences	pl	Odczytaj preferencje dla wybranej aplikacji.
+reset qrcode	preferences	pl	Zresetuj kod QR
+scan qrcode with a time-based one-time password (totp) app:	preferences	pl	Zeskanuj kod QR za pomocą aplikacji TOTP (Time-based one-time password):
 select one	preferences	pl	Wybierz jeden
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pl	Wybierz język tekstów i komunikatów wewnątrz EGroupware.<br />Niektóre języki nie zawierają wszelkich komunikatów. W takich wypadkach wyświetlane będą komunikaty w języku angielskim.
 select the language of the spellchecker integrated into the rich text editor.	preferences	pl	Wybierz język sprawdzania pisowni.
@@ -84,6 +92,8 @@ show helpmessages by default	preferences	pl	Wyświetlaj pomoc domyślnie
 show links between egroupware aps as	common	pl	Pokaż linki pomiędzy aplikacjami EGroupware jako
 show navigation bar as	preferences	pl	Wyświetlaj pasek nawigacji jako
 show number of current users	preferences	pl	Wyświetlaj liczbe zalogowanych użytkowników
+show qrcode	preferences	pl	Pokaż kod QR
+show qrcode to enable on an additional device.	preferences	pl	Wyświetla ponownie kod QR, aby skonfigurować go na innych urządzeniach
 show text on navigation icons	preferences	pl	Wyświetlaj tekst na ikonach nawigacji
 show_more_apps	common	pl	Wyświetl wiecej aplikacji
 singlesignon and passwords	preferences	pl	SingleSignOn i hasła

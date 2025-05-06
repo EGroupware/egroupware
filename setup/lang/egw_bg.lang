@@ -99,6 +99,7 @@ passwords --> sql	setup	bg	Пароли --> SQL
 please wait...	setup	bg	Моля изчакайте...
 possible reasons	setup	bg	Възможни причини
 possible solutions	setup	bg	Възможни решения
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	bg	Открита е POST заявка с размер %1, който е по-голям от post_max_size=%2 и поради това не се обработва от PHP!
 re-check my database	setup	bg	Проверка отново на базата данни
 re-check my installation	setup	bg	Проверка отново на инсталацията
 re-enter password	setup	bg	Въведете отново паролата
@@ -145,6 +146,7 @@ warning!	setup	bg	Внимание
 welcome to the egroupware installation	setup	bg	Добре дошли в инсталацията на EGroupware
 writable by the webserver	setup	bg	с права за запис от уеб-сървъра
 yes	setup	bg	Да
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	bg	Можете да заобиколите това ограничение, като монтирате директорията за резервно копие във файловия мениджър на EGroupware и я качите оттам.
 you need to select your current charset!	setup	bg	Трябва да изберете текущия си charset!
 your database does not exist	setup	bg	Базата ви данни не съществува
 your database is not working!	setup	bg	Базата ви данни не работи!

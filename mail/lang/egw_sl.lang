@@ -547,7 +547,7 @@ select file to attach to message	mail	sl	Izberite datoteko, ki jo želite prilo�
 select file to import into folder	mail	sl	Izberite datoteko, ki jo želite uvoziti v mapo
 select file(s) from vfs	mail	sl	Izberite datoteke iz VFS
 select files to upload	mail	sl	Izberite datoteke za nalaganje
-select mail addresses from addressbook	mail	sl	Izberite poštne naslove iz imenika
+select mail addresses from addressbook	mail	sl	Izberite e-poštne naslove iz imenika
 select multiple	mail	sl	Izberite več
 select or insert email address	mail	sl	Izberite ali vstavite e-poštni naslov
 selected	mail	sl	izbran

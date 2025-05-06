@@ -322,6 +322,7 @@ please make the following change in your php.ini	setup	no	Var vänlig gör följ
 please wait...	setup	no	Vennligst vent ...
 possible reasons	setup	no	Möjliga anledningar
 possible solutions	setup	no	Mulige løsninger
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	no	POST-forespørsel med størrelse %1 oppdaget, større enn post_max_size=%2, og derfor ikke behandlet av PHP!
 post-install dependency failure	setup	no	Efterinstallation har Beroendefel
 potential problem	setup	no	Potensielt problem
 preferences	setup	no	Preferanser
@@ -473,6 +474,7 @@ you appear to be running version %1 of egroupware	setup	no	Du verkar köra versi
 you appear to have %1 support.	setup	no	Du synes å ha %1 support
 you appear to have xml support enabled	setup	no	Du synes å ha støtte for XML aktivert
 you are ready for this stage, but this stage is not yet written.<br />	setup	no	Du är redo för detta stadium, men detta stadium är inte skrivet ännu.<br>
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	no	Du kan omgå denne begrensningen ved å montere sikkerhetskopikatalogen i EGroupware File Manager og laste opp derfra.
 you didn't enter a config password for domain %1	setup	no	Du angav inget config-lösenord  för domän %1
 you didn't enter a config username for domain %1	setup	no	Du angav inget config-användarnamn  för domän %1
 you didn't enter a header admin password	setup	no	Du angav inget header admin-lösenord

@@ -92,6 +92,7 @@ password	setup	hu	Jelszó
 password for smtp-authentication	setup	hu	Jelszó az SMTP-azonosításhoz
 passwords --> sql	setup	hu	Jelszavak --> SQL
 path information	setup	hu	Útvonal-információ
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	hu	%1 méretű POST-kérelem észlelése, amely nagyobb, mint a post_max_size=%2, ezért a PHP nem tudja feldolgozni!
 re-enter password	setup	hu	Jelszó újra
 regular expression to filter by dn	setup	hu	Szabályos kifejezés a DN szerinti szűréshez
 rejected lines	setup	hu	Elutasított sorok
@@ -112,4 +113,5 @@ use pure html compliant code (not fully working yet)	setup	hu	Használjon tiszta
 user for smtp-authentication (leave it empty if no auth required)	setup	hu	Felhasználó az SMTP hitelesítéshez (hagyja üresen, ha nem szükséges hitelesíteni)
 would you like to show each application's upgrade status ?	setup	hu	Akarja, hogy megjelenítésre kerüljön minden alkalmazás upgrade állapota?
 write	setup	hu	Írás
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	hu	Ezt a korlátot megkerülheti, ha a biztonsági mentés könyvtárát az EGroupware fájlkezelőbe csatolja, és onnan tölti fel.
 you need to select your current charset!	setup	hu	Ki kell választania az aktuális karakterkészletet!

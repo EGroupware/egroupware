@@ -9,12 +9,12 @@
 %1 errors linking (%2)!	filemanager	en	%1 errors linking (%2)!
 %1 errors moving (%2 files moved)!	filemanager	en	%1 errors moving. %2 files moved!
 %1 failed, %2 succeded	filemanager	en	%1 failed, %2 succeeded.
-%1 files	common	en	%1 files
-%1 files copied.	filemanager	en	%1 files copied.
-%1 files deleted.	filemanager	en	%1 files deleted.
-%1 files moved.	filemanager	en	%1 files moved.
-%1 files or directories deleted in %2 seconds.	filemanager	en	%1 files or directories deleted in %2 seconds.
-%1 files unlocked.	filemanager	en	%1 files unlocked.
+%1 files	common	en	%1 file(s)
+%1 files copied.	filemanager	en	%1 file(s) copied.
+%1 files deleted.	filemanager	en	%1 file(s) deleted.
+%1 files moved.	filemanager	en	%1 file(s) moved.
+%1 files or directories deleted in %2 seconds.	filemanager	en	%1 file(s) or directories deleted in %2 seconds.
+%1 files unlocked.	filemanager	en	%1 file(s) unlocked.
 %1 shares deleted.	filemanager	en	%1 shares deleted.
 %1 starts with '%2'	filemanager	en	%1 starts with '%2'
 %1 successful unmounted.	filemanager	en	%1 successful unmounted.
@@ -268,7 +268,7 @@ search for '%1'	filemanager	en	Search for '%1'
 searchstring	filemanager	en	Search string
 select action...	filemanager	en	Select action...
 select file to upload in current directory	filemanager	en	Select file to upload in current folder
-select file(s) from vfs	common	en	Select file(s) from VFS
+select file(s) from vfs	common	en	Select file(s) from EGroupware File Manager
 setting for document merge saved.	filemanager	en	Setting for document merge saved.
 share files	filemanager	en	Share files
 share link copied into clipboard	filemanager	en	Share link copied into clipboard

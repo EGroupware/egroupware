@@ -540,6 +540,7 @@ pop/imap mail server hostname or ip address	setup	cs	DNS jméno nebo IP adresa p
 port	setup	cs	Port
 possible reasons	setup	cs	Možné příčiny
 possible solutions	setup	cs	Možná řešení
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	cs	Zjištěn požadavek POST s velikostí %1 větší než post_max_size=%2, a proto jej PHP nezpracuje!
 post-install dependency failure	setup	cs	Poinstalační chyba závislosti
 postfix with ldap: [yes(user edit forwarding)]	setup	cs	Postfix s LDAP: [ano(user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	cs	PostgreSQL: Ponechte prázdné pro použití preferovaných unix socketů místo TCP/IP spojení
@@ -774,6 +775,7 @@ you are ready for this stage, but this stage is not yet written.<br />	setup	cs	
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	cs	Používáte PHP verze %1. EGroupware nyní vyžaduje verzi %2 nebo novější, doporučeno je PHP %3.
 you can install it by running:	setup	cs	Můžete ho nainstalovat spuštěním:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	cs	Uživatelské jméno a heslo administrátora hlaviček můžete také použít pro každou doménu. Pokud není heslo nastaveno prostřednictvím příkazové řádky, je načteno z proměnné prostředí EGW_CLI_PASSWORD nebo vyžádáno od uživatele.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	cs	Tento limit můžete obejít tak, že připojíte adresář se zálohou do správce souborů EGroupware a nahrajete jej odtud.
 you didn't enter a config password for domain %1	setup	cs	Nezadal(a) jste heslo administrátora konfigurace pro doménu %1
 you didn't enter a config username for domain %1	setup	cs	Nezadal(a) jste uživatelské jméno administrátora konfigurace pro doménu %1
 you didn't enter a header admin password	setup	cs	Nezadal(a) jste heslo administrátora hlaviček

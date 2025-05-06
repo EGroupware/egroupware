@@ -342,6 +342,7 @@ please wait...	setup	pt	Por favor, aguarde ...
 pop/imap mail server hostname or ip address	setup	pt	Nome do servidor POP3/IMAP de correio electrónico ou endereço IP
 possible reasons	setup	pt	Possíveis causas
 possible solutions	setup	pt	Possíveis soluções
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	pt	Pedido POST com tamanho %1 detectado, maior do que post_max_size=%2, e por isso não processado pelo PHP!
 post-install dependency failure	setup	pt	Falha de dependência pós-instalação
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	pt	PostgreSQL: Deixe-o vazio para utilizar o unix domain sockets preferido em vez de uma ligação TCP/IP
 potential problem	setup	pt	Problema em potencial
@@ -499,6 +500,7 @@ you appear to have %1 support.	setup	pt	Aparentemente tem o suporte %1.
 you appear to have xml support enabled	setup	pt	Aparentemente tem o suporte XML activado
 you are ready for this stage, but this stage is not yet written.<br />	setup	pt	Está preparado para este passo, mas esta fase ainda não foi escrita.<br>
 you can install it by running:	setup	pt	Pode instalá-lo/a ao executar:
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	pt	Pode contornar esse limite, montando o diretório de cópia de segurança no gestor de ficheiros EGroupware e carregando a partir daí.
 you didn't enter a config password for domain %1	setup	pt	Não inseriu uma senha de configuração para o domínio %1
 you didn't enter a config username for domain %1	setup	pt	Não inseriu um nome de utilizador de configuração para o domínio %1
 you didn't enter a header admin password	setup	pt	Não inseriu uma senha ao administrador de cabeçalhos

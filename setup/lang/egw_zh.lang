@@ -416,6 +416,7 @@ please wait...	setup	zh	请稍候...
 pop/imap mail server hostname or ip address	setup	zh	POP3/IMAP 邮件服务器主机名或IP地址
 possible reasons	setup	zh	可能的原因
 possible solutions	setup	zh	可能的解决方法
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	zh	POST 请求，检测到大小为 %1，大于 post_max_size=%2，因此 PHP 无法处理！
 post-install dependency failure	setup	zh	Post-install Dependency Failure
 postfix with ldap: [yes(user edit forwarding)]	setup	zh	Postfix with LDAP：[yes(user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	zh	Postgres: 留空表示使用自定义 unix domain sockets 取代 tcp/ip 连接
@@ -607,6 +608,7 @@ you are ready for this stage, but this stage is not yet written.<br />	setup	zh	
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	zh	您使用的 PHP 版本为 %1，EGroupware 现在需要 %2 或更新版本，建议使用PHP %3。
 you can install it by running:	setup	zh	您可以执行下面的指令安装：
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	zh	您可以在每个域使用一样的 header 管理员帐户与密码，如果密码是通过指令模式设定，它会从环境变量EGW_CLI_PASSWORD读取或是向用户查询。
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	zh	您可以将备份目录挂载到 EGroupware 文件管理器中，然后从那里上传，从而绕过该限制。
 you didn't enter a config password for domain %1	setup	zh	您没有为域 %1 输入一个配置密码
 you didn't enter a config username for domain %1	setup	zh	您没有输入域 %1 配置人名称
 you didn't enter a header admin password	setup	zh	您没有输入 header 管理密码

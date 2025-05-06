@@ -546,6 +546,7 @@ pop/imap mail server hostname or ip address	setup	es-es	Nombre o dirección IP d
 port	setup	es-es	Puerto
 possible reasons	setup	es-es	Posibles razones
 possible solutions	setup	es-es	Posibles soluciones
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	es-es	Solicitud POST con tamaño %1 detectado, mayor que post_max_size=%2, y por lo tanto no procesado por PHP!
 post-install dependency failure	setup	es-es	Fallo de dependencias en el proceso de post-instalación
 postfix with ldap: [yes(user edit forwarding)]	setup	es-es	Postfix con LDAP: [sí (user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	es-es	PostgreSQL: dejar en blanco para usar sockets unix (preferido) en vez de una conexión TCP/IP
@@ -795,6 +796,7 @@ you are using php version %1. egroupware now requires %2 or later, recommended i
 you can install it by running:	setup	es-es	Puede instalarlo ejecutando:
 you can specify multiple idp on separate lines.	setup	es-es	Puede especificar varios IdP en líneas separadas.
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	es-es	También puede usar el usuario y contraseña del encabezado para cada dominio. Si la contraseña no se indica en la línea de comando, se lee desde la variable de entorno EGW_CLI_PASSWORD, o se le pregunta al usuario.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	es-es	Usted puede trabajar alrededor de ese límite, montando el directorio de copia de seguridad en EGroupware filemanager y subir desde allí.
 you didn't enter a config password for domain %1	setup	es-es	No ha introducido una contraseña de configuración para el dominio %1
 you didn't enter a config username for domain %1	setup	es-es	No ha introducido un usuario de configuración para el dominio %1
 you didn't enter a header admin password	setup	es-es	No ha introducido una contraseña para administrar los encabezados

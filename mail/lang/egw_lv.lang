@@ -17,6 +17,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	lv	%1 pievien
 adding %1 to whiltelisted email addresses failed because of %2	mail	lv	%1 pievienošana e-pasta adresēm, kas iekļautas sarakstā, neizdevās %2 dēļ
 after reply, visible during compose	mail	lv	Pēc atbildes, redzams sastādīšanas laikā
 aliases+forwards	mail	lv	Aliases+Forwards
+all my email addresses	mail	lv	visas manas e-pasta adreses
 always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
 always show notifiction	mail	lv	Vienmēr rādīt paziņojumu
 answered	mail	lv	Atbildēts
@@ -66,12 +67,14 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	lv	Vai jūs patiešām vēlaties pārslēgt atzīmi %1 VISIEM ziņojumiem pašreizējā skatā?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	lv	Vai vēlaties, lai pirms atlasīto ziņojumu pievienošanas jaunam e-pastam tiktu pieprasīts apstiprinājums?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	lv	Vai vēlaties, lai pirms atlasīto ziņojumu pārvietošanas uz citu mapi jums tiek prasīts apstiprinājums?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	lv	Vai jūs vēlaties novērst rediģēšanu/iestatīšanu, ja e-pastā tiek saņemti paziņojumi uz citām e-pasta adresēm, ja e-pasts pienāk(, pat ja ir iespējota Sieve)?
 does not contain	mail	lv	nesatur
 does not match	mail	lv	neatbilst
 don't use sent	mail	lv	Nelieto nosūtīts
 don't use trash	mail	lv	Nelieto atkritui
 edit account	mail	lv	Rediģēt kontu
 email address	mail	lv	E-pasta adrese
+email notification update failed! you need to set an email address!	mail	lv	E-pasta paziņojumu atjaunināšana neizdevās! Jums ir jāiestata e-pasta adrese!
 emailaddress	admin	lv	E-pasta adrese
 emailadmin: profilemanagement	mail	lv	eMailAdmin: Profilu pārvaldība
 emails in whitelisted domains are not marked as spam	mail	lv	E-pasti baltajos sarakstos iekļautajos domēnos netiek atzīmēti kā surogātpasts
@@ -113,6 +116,7 @@ ident name email	mail	lv	Identitātes nosaukums [E-pasts]
 ident name organization email	mail	lv	Identitātes nosaukums Organizācija [E-pasts]
 identity label	mail	lv	Identitātes etiķete
 if	mail	lv	Ja
+if different from email address	mail	lv	Ja atšķiras no e-pasta adreses
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	lv	Ja vēlaties skatīt e-pasta priekšskatījumu, vienreiz noklikšķinot uz temata, iespējojiet šo funkciju.
 imap	mail	lv	IMAP
 imap server	mail	lv	IMAP serveris
@@ -250,7 +254,7 @@ see attachments for content of the orignial mail	mail	lv	Oriģinālās e-pasta v
 select all	mail	lv	Izvēlieties visu
 select an existing entry in order to append mail content to it	mail	lv	Izvēlieties esošo ierakstu, lai tam pievienotu pasta saturu
 select an item to read	mail	lv	Izvēlieties elementu, lai izlasītu
-select mail addresses from addressbook	mail	lv	Pasta adrešu atlase no adrešu grāmatas
+select mail addresses from addressbook	mail	lv	Izvēlieties e-pasta adresi(-es) no adrešu grāmatas
 select or insert email address	mail	lv	Izvēlieties vai ievietojiet e-pasta adresi
 selected date range (with quicksearch)	mail	lv	Izvēlētais datuma diapazo
 send message and move to send folder (if configured)	mail	lv	Nosūtīt ziņu un pārvietot uz nosūtīšanas mapi (ja konfigurēts)

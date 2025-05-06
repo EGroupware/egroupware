@@ -62,6 +62,7 @@ or leave empty and select saml as authentication type above for single sign on	s
 password	setup	uk	Пароль
 passwords --> sql	setup	uk	Паролі --> SQL
 path information	setup	uk	Інформація шляху
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	uk	Виявлено POST-запит з розміром %1, більшим за post_max_size=%2, і тому він не обробляється PHP!
 re-enter password	setup	uk	Перевведіть пароль
 regular expression to filter by dn	setup	uk	Регулярний вираз для фільтрації за DN
 rejected lines	setup	uk	Відхилені рядки
@@ -80,4 +81,5 @@ use cookies to pass sessionid	setup	uk	Використовувати куки �
 use pure html compliant code (not fully working yet)	setup	uk	Використовувати чистий HTML код (ще не повністю працює)
 would you like to show each application's upgrade status ?	setup	uk	Чи показувати стан поновлення кожного приложення?
 write	setup	uk	Записати
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	uk	Ви можете обійти це обмеження, змонтувавши каталог резервної копії у файловий менеджер EGroupware і завантаживши його звідти.
 you need to select your current charset!	setup	uk	Потрібно вибрати поточну кодування!

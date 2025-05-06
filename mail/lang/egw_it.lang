@@ -194,7 +194,7 @@ email address	mail	it	Indirizzo e-mail
 email notification successfully updated!	mail	it	la notifica per le email è stata aggiornata!
 email notification update failed	mail	it	L'aggiornamento della notifica email è fallita
 email notification update failed! you need to set an email address!	mail	it	la notifica non è stata aggiornata! Devi prima impostare un indirizzo di posta elettronica!
-emailaddress	admin	it	Indirizzo email
+emailaddress	admin	it	Indirizzo e-mail
 emailadmin: profilemanagement	mail	it	eMailAdmin: Gestione Profili
 emails in blacklisted domains are marked as spam	mail	it	Segnare come spam email provenienti da domini in blaclist
 emails in whitelisted domains are not marked as spam	mail	it	NON segnare come spam email provenienti da domini in blaclist
@@ -292,7 +292,7 @@ identity label	mail	it	Etichetta identità
 identity+signature	mail	it	Identità+Firma
 if	mail	it	SE
 if authentication required	mail	it	Se è richiesta l'autenticazione
-if different from email address	mail	it	Se diverso dall'indirizzo email
+if different from email address	mail	it	Se diverso dall'indirizzo e-mail
 if from contains:(*)	mail	it	Se il campo "Da" contiene:(*)
 if mail body content / attachment type	mail	it	Se il contenuto del corpo / il tipo di allegato
 if mail body message type	mail	it	Se il tipo di messaggio del corpo dell'email
@@ -547,7 +547,7 @@ select file to attach to message	mail	it	Seleziona file da allegare al messaggio
 select file to import into folder	mail	it	Seleziona file da importare nella cartella
 select file(s) from vfs	mail	it	Seleziona file dal sistema virtuale di file (VFS)
 select files to upload	mail	it	Seleziona file da caricare
-select mail addresses from addressbook	mail	it	Selezionare gli indirizzi di posta dalla rubrica
+select mail addresses from addressbook	mail	it	Selezionare l'indirizzo o gli indirizzi e-mail dalla rubrica
 select multiple	mail	it	Selezione multipla
 select or insert email address	mail	it	Selezionare o inserire l'indirizzo e-mail
 selected	mail	it	selezionato

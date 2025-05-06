@@ -9,12 +9,12 @@
 %1 errors linking (%2)!	filemanager	es-es	¡%1 errores al enlazar (%2)!
 %1 errors moving (%2 files moved)!	filemanager	es-es	%1 errores moviendo (%2 ficheros movidos)
 %1 failed, %2 succeded	filemanager	es-es	%1 fallaron, %2 correctos
-%1 files	common	es-es	%1 ficheros
-%1 files copied.	filemanager	es-es	%1 ficheros copiados.
-%1 files deleted.	filemanager	es-es	%1 ficheros borrados.
-%1 files moved.	filemanager	es-es	%1 ficheros movidos.
-%1 files or directories deleted in %2 seconds.	filemanager	es-es	%1 archivos o directorios suprimidos en %2 segundos.
-%1 files unlocked.	filemanager	es-es	%1 archivos desbloqueados.
+%1 files	common	es-es	%1 fichero(s)
+%1 files copied.	filemanager	es-es	%1 archivo(s) copiado(s).
+%1 files deleted.	filemanager	es-es	%1 fichero(s) borrado(s).
+%1 files moved.	filemanager	es-es	%1 archivo(s) movido(s).
+%1 files or directories deleted in %2 seconds.	filemanager	es-es	%1 archivo(s) o directorios borrados en %2 segundos.
+%1 files unlocked.	filemanager	es-es	%1 archivo(s) desbloqueado(s).
 %1 shares deleted.	filemanager	es-es	%1 comparticiones borradas
 %1 starts with '%2'	filemanager	es-es	%1 empieza por '%2'
 %1 successful unmounted.	filemanager	es-es	% desmontado correctamente.

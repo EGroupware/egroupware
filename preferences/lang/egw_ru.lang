@@ -10,11 +10,14 @@ acl grants have been updated	preferences	ru	разрешения ACL обнов�
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ru	Любой список EGroupware будет показывать вам это количество записей или строк на  странице.<br> Слишком большое количество может замедлить обновление страницы, слишком малое приведет к увеличенным затратам всего списка.
 applications list scroll area	preferences	ru	Кнопка прокрутки для бокового меню
 are you sure you want to delete this category ?	preferences	ru	Вы уверены, что хотите удалить данную категорию?
+are you sure?	preferences	ru	Вы уверены?
 automatically start with this font	preferences	ru	Автоматически загружать данный шрифт при старте
 automatically start with this font size	preferences	ru	Автоматически устанавливать данный размер шрифта при старте
 br	preferences	ru	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	ru	Изменяет пароль пользователя при введении прежнего и нового пароля. Возвращает TRUE при успешном изменении, FALSE - пароль не изменен.
 charset for the csv export/import	preferences	ru	Кодировка
+code is invalid	preferences	ru	Код недействителен
+code is required	preferences	ru	Код необходим
 color	preferences	ru	Цвет
 country	preferences	ru	Страна
 dark mode theme	preferences	ru	Темный режим темы
@@ -38,6 +41,8 @@ enables or disables drag and drop functions in all applications. if the browser 
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	ru	Не существует или не работает выпадающее меню для изменения размера для Интернет Эксплорера во всех приложениях. Если браузер другой, опция не применена.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	ru	Не существует или не работает выпадающее меню для изменения размера для Интернет Эксплорера во всех приложениях. Если браузер другой, опция не применена. В данный момент эта функция работает в экспериментальном режиме.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	ru	Разрешить или запретить выпадающее меню изменения размера окна Internet Explorer для всех приложений. Для других браузеров опция не применима. В настоящее время находится в тестовом режиме
+enter code to authenticate the actions below	preferences	ru	Введите код для подтверждения подлинности действий, описанных ниже
+enter code to verify correct setup	preferences	ru	Введите код для проверки правильности настройки
 enter your new password	preferences	ru	Введите новый пароль
 enter your old password	preferences	ru	введите прежний пароль
 failed to change password.	preferences	ru	Ошибка при смене пароля
@@ -48,6 +53,7 @@ font size unit	preferences	ru	Единица размера шрифта
 forced preferences	preferences	ru	Принудительные настройки
 formatting & general settings	preferences	ru	Основные установки и установки форматирования
 general settings	preferences	ru	Основные установки
+generate new qrcode to disable existing one, after enabling the new one!	preferences	ru	Генерирование нового QR-кода для отключения существующего (после включения нового)
 help off	preferences	ru	Убрать подсказки
 holding ctrl/cmd key and click on the line	preferences	ru	удерживайте клавишу Cntr/Cmd и одновременно нажмите на строку
 hours	preferences	ru	часы
@@ -92,6 +98,8 @@ pt: points (1/72 inch)	preferences	ru	pt – точка (1/72 дюйма)
 px: display pixels	preferences	ru	px – отображать пикселы
 re-enter your password	preferences	ru	Введите пароль еще раз
 read prefs for the specified application.	preferences	ru	Прочтите настройки для указанных приложений
+reset qrcode	preferences	ru	Сброс QR-кода
+scan qrcode with a time-based one-time password (totp) app:	preferences	ru	Сканирование QR-кода с помощью приложения TOTP (Time-based one-time password):
 select additional lines in lists by	preferences	ru	Выберите дополнительные строки в списке по
 select one	preferences	ru	Выберите одно
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ru	Выбирите язык текстов и сообщений в EGroupware. Некоторые языки могут не содержать все сообщения, в этом случае вы увидите сообщение на английском языке.
@@ -107,6 +115,8 @@ show helpmessages by default	preferences	ru	Показывать сообщен�
 show links between egroupware aps as	common	ru	Показывать связи между приложениями EGroupware как
 show navigation bar as	preferences	ru	Отображать строку навигации как
 show number of current users	preferences	ru	Показывать число текущих пользователей
+show qrcode	preferences	ru	Показать QR-код
+show qrcode to enable on an additional device.	preferences	ru	Повторное отображение QR-кода для установки его на других устройствах
 show text on navigation icons	preferences	ru	Показывать текст на значках навигации
 show_more_apps	common	ru	Показывать больше приложений
 singlesignon and passwords	preferences	ru	SingleSignOn и пароли

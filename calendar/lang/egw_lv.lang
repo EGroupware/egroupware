@@ -16,6 +16,7 @@ accept	calendar	lv	Akceptēt
 accepted	calendar	lv	Akceptēts
 access to calendar of %1 denied!	calendar	lv	Piekļuve %1 kalendāram liegta!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	lv	Darbība, kas izsauca paziņojumu: Pievienots, Atcelts, Akceptēts, Noraidīts
+add a comment to send to organizer with your response	calendar	lv	Pievienojiet komentāru, ko nosūtīt organizatoram ar savu atbildi
 add alarm	calendar	lv	PIevienot trauksmi
 add appointments via shortened dialog or complete edit window	calendar	lv	Pievienojiet tikšanās, izmantojot saīsināto dialogu vai pilnu rediģēšanas logu
 add current view as favorite	calendar	lv	Pievienot pašreizējo skatījumu kā iecienītāko
@@ -27,6 +28,7 @@ add timesheet entry	calendar	lv	Pievienot darba laika uzskaites ierakstu
 added	calendar	lv	PIevienots
 added by synchronization	calendar	lv	Pievienots ar sinhronizāciju
 added recurrence on %1.	calendar	lv	Pievienots atkārtojums %1.
+additional participants	calendar	lv	Papildu dalībnieki
 after	calendar	lv	Pēc
 after %1	calendar	lv	Pēc %1
 age:	calendar	lv	Vecums:
@@ -45,6 +47,7 @@ always use the full edit dialog, not this little dialog	calendar	lv	Vienmēr izm
 apply changes to (future) exceptions too?	calendar	lv	Piemērot izmaiņas arī (nākotnes) izņēmumiem?
 apply the changes	calendar	lv	Lietot izmaiņas
 attention	calendar	lv	Uzmanību
+automatic update	calendar	lv	Automātiska atjaunināšana
 before the event	calendar	lv	Pirms šī notikuma
 birthday	calendar	lv	Dzimšanas diena
 birthdays	admin	lv	Dzimšanas dienas
@@ -57,9 +60,12 @@ canceled	calendar	lv	Atcelts
 category report	calendar	lv	Kategorija Pārskats
 changed event-data applied	calendar	lv	Izmainīti notikuma datu lietojumi
 charset of file	calendar	lv	Faila kodējums
+check all	calendar	lv	Pārbaudīt visus
 choose a category	calendar	lv	Izvēlies sadaļu
+color	calendar	lv	Krāsa
 countries	calendar	lv	Valstis
 country	calendar	lv	Valsts
+create a new subscription	calendar	lv	Izveidot jaunu abonementu
 create new links	calendar	lv	Izveidot jaunas saites
 created	calendar	lv	Izveidots
 csv-fieldname	calendar	lv	CSV-lauka nosaukums
@@ -78,6 +84,7 @@ delete series	calendar	lv	Dzēš sērijas
 delete this alarm	calendar	lv	Dzēst šo trauksmi?
 deleted	calendar	lv	Izdzēsts
 display status of events	calendar	lv	Parādīt notikumu statusu
+do you want to delete this subscription incl. the synced events?	calendar	lv	Vai vēlaties izdzēst šo abonementu, ieskaitot sinhronizētos notikumus?
 download	calendar	lv	Lejupielādēt
 duration	calendar	lv	Izpildes laiks
 edit series	calendar	lv	Rediģēt sērijas
@@ -106,6 +113,7 @@ freebusy: unknown user '%1', wrong password or not available to not logged in us
 fri	calendar	lv	Piektdiena
 full description	calendar	lv	Pilns apraksts
 fullname of person to notify	calendar	lv	Pilns personas vārds, kurai jāpaziņo
+given url is not a caldav server: missing %1!	calendar	lv	Dotais URL nav CalDAV serveris: trūkst %1!
 global categories	calendar	lv	VIspārējas kategorijas
 group planner	calendar	lv	Grupu plānotājs
 h	calendar	lv	h
@@ -224,7 +232,13 @@ start date/time	calendar	lv	Sākums datums/laiks
 startdate	calendar	lv	Sākumdatums
 startrecord	calendar	lv	Sākumieraksts
 submit to repository	calendar	lv	Iesniegt repozitorijā
+subscribed calendar	calendar	lv	Abonētais kalendārs
+subscription incl. the synced events deleted.	calendar	lv	Abonements, ieskaitot sinhronizētos notikumus, dzēsts.
+subscription saved.	calendar	lv	Abonements saglabāts.
+subscription synced.	calendar	lv	Abonements sinhronizēts.
+subscriptions	calendar	lv	Abonementi
 sun	calendar	lv	Svētdiena
+sync now	calendar	lv	Sinhronizēt tagad
 tentative	calendar	lv	Iepriekšējs
 test import (show importable records <u>only</u> in browser)	calendar	lv	Pārbaudīt importēšanu (parādīt importējamus ierakstus <u>tikai</u> pārlūkprogrammā)
 the apple ical apps use this color to display events from this calendar.	calendar	lv	Apple iCal lietotnes izmanto šo krāsu, lai parādītu notikumus no šī kalendāra.

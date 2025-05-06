@@ -9,12 +9,12 @@
 %1 errors linking (%2)!	filemanager	de	%1 Fehler beim Verknüpfen (%2)!
 %1 errors moving (%2 files moved)!	filemanager	de	%1 Fehler beim Verschieben (%2 Dateien verschoben)!
 %1 failed, %2 succeded	filemanager	de	%1 fehlgeschlagen, %2 erfolgreich
-%1 files	common	de	%1 Dateien
-%1 files copied.	filemanager	de	%1 Dateien kopiert
-%1 files deleted.	filemanager	de	%1 Dateien gelöscht
-%1 files moved.	filemanager	de	%1 Dateien verschoben
-%1 files or directories deleted in %2 seconds.	filemanager	de	%1 Dateien oder Ordner in %2 Sekunden gelöscht.
-%1 files unlocked.	filemanager	de	%1 Dateien entsperrt
+%1 files	common	de	%1 Dateie(n)
+%1 files copied.	filemanager	de	%1 Dateie(n) kopiert.
+%1 files deleted.	filemanager	de	%1 Dateie(n) gelöscht.
+%1 files moved.	filemanager	de	%1 Dateie(n) verschoben.
+%1 files or directories deleted in %2 seconds.	filemanager	de	%1 Dateie(n) oder Ordner in %2 Sekunden gelöscht.
+%1 files unlocked.	filemanager	de	%1 Dateie(n) entsperrt.
 %1 shares deleted.	filemanager	de	%1 Freigabe(n) gelöscht.
 %1 starts with '%2'	filemanager	de	%1 beginnt mit '%2'
 %1 successful unmounted.	filemanager	de	%1 erfolgreich unmounted

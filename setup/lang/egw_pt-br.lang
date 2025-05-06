@@ -433,6 +433,7 @@ please wait...	setup	pt-br	Por favor aguarde ...
 pop/imap mail server hostname or ip address	setup	pt-br	Endereço IP ou nome do servidor POP3/MAIL do servidor de e-mail
 possible reasons	setup	pt-br	Razões Possíveis
 possible solutions	setup	pt-br	Soluções Possíveis
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	pt-br	Solicitação POST com tamanho %1 detectada, maior que post_max_size=%2 e, portanto, não processada pelo PHP!
 post-install dependency failure	setup	pt-br	Falha em uma dependência posterior a instalação
 postfix with ldap: [yes(user edit forwarding)]	setup	pt-br	Postfix com LDAP: [sim(user edit fowarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	pt-br	PostgreSQL: Deixe-o vazio para usar o socket unix preferido ao invés de uma conexão TCP/IP.
@@ -634,6 +635,7 @@ you are ready for this stage, but this stage is not yet written.<br />	setup	pt-
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pt-br	Você está usando PHP versão %1. EGroupware requer %2 ou superior, %3 é recomendada.
 you can install it by running:	setup	pt-br	Você pode instalá-lo rodando:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pt-br	Você pode usar o usuário e senha de configuração do servidor para todos os domínios também. Se a senha não for definida pela linha de comando, ela é lida da variável de ambiente EGW_CLI_PASSWORD ou requisitada ao usuário.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	pt-br	Você pode contornar esse limite montando o diretório de backup no gerenciador de arquivos do EGroupware e fazendo o upload a partir dele.
 you didn't enter a config password for domain %1	setup	pt-br	Você não digitou uma senha de configuração para o domínio  %1
 you didn't enter a config username for domain %1	setup	pt-br	Você não digitou um usuário de configuração para o domínio  %1
 you didn't enter a header admin password	setup	pt-br	Você não digitou uma senha para configuração do servidor

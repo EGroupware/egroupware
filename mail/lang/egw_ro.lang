@@ -15,6 +15,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	ro	Adăugarea
 adding %1 to whiltelisted email addresses failed because of %2	mail	ro	Adăugarea lui %1 la adresele de e-mail de pe lista neagră a eșuat din cauza lui %2
 after reply, visible during compose	mail	ro	După răspuns, vizibil în timpul compunerii
 aliases+forwards	mail	ro	Aliasuri+Întoarcere
+all my email addresses	mail	ro	toate adresele mele de e-mail
 always respond / auto-responder	mail	ro	Răspundeți întotdeauna / răspuns automat
 always show notifiction	mail	ro	Afișează întotdeauna notificarea
 answered	mail	ro	Răspunsuri
@@ -57,7 +58,9 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	ro	Chiar doriți să comutați eticheta %1 pentru TOATE mesajele din vizualizarea curentă?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ro	Doriți să vi se ceară confirmarea înainte de a atașa mesajele selectate la un nou e-mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	ro	Doriți să vi se ceară confirmare înainte de a muta mesajele selectate într-un alt dosar?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	ro	Doriți să împiedicați editarea/configurarea notificării prin e-mail la alte adrese de e-mail în cazul în care sosesc e-mailuri(, chiar dacă Sieve este activat)?
 email address	mail	ro	Adresa de e-mail
+email notification update failed! you need to set an email address!	mail	ro	Actualizarea notificării prin e-mail a eșuat! Trebuie să setați o adresă de e-mail!
 emailaddress	admin	ro	Adresa de e-mail
 emailadmin: profilemanagement	mail	ro	eMailAdmin: Managementul profilurilor
 emails in whitelisted domains are not marked as spam	mail	ro	Emailurile din domeniile de pe lista albă nu sunt marcate ca spam
@@ -92,6 +95,7 @@ ident name email	mail	ro	Nume identitate [Email]
 ident name organization email	mail	ro	Nume identitate Organizație [Email]
 identity	mail	ro	Identitate
 identity label	mail	ro	Etichetă identitate
+if different from email address	mail	ro	Dacă este diferită de adresa de e-mail
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ro	Se quiser ver uma visualização prévia de um e-mail clicando uma vez no assunto, ative essa opção.
 imap	mail	ro	IMAP
 imap server	mail	ro	IMAP Server
@@ -217,7 +221,7 @@ security	mail	ro	Securitate
 see attachments for content of the orignial mail	mail	ro	Consultați atașamentele pentru conținutul e-mailului original
 select an existing entry in order to append mail content to it	mail	ro	Selectați o intrare existentă pentru a-i adăuga conținutul e-mailului
 select an item to read	mail	ro	Selectați un element pentru a citi
-select mail addresses from addressbook	mail	ro	Selectați adresele de e-mail din agenda de adrese
+select mail addresses from addressbook	mail	ro	Selectați adresa (adresele) de e-mail din agendă
 select or insert email address	mail	ro	Selectați sau introduceți adresa de e-mail
 selected date range (with quicksearch)	mail	ro	Interval de date selectat (cu căutare rapidă)
 send message and move to send folder (if configured)	mail	ro	Trimiterea mesajului și mutarea în dosarul de trimitere (dacă este configurat)

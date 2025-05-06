@@ -438,7 +438,6 @@ standard mailserver settings (used for mail authentication too)	setup	ca	Prefer�
 start the postmaster	setup	ca	Iniciar el postmaster
 start updating languages %1 ...	setup	ca	Comença actualització idiomes %1 ...
 start updating the database ...	setup	ca	Comença actualització de la base de dades
-status	setup	ca	Estat
 step %1 - admin account	setup	ca	Pas %1 - Compte d'Administrador
 step %1 - advanced application management	setup	ca	Pas %1 - Administració avançada d'aplicacions
 step %1 - configuration	setup	ca	Pas %1 - Configuració
@@ -503,10 +502,8 @@ user	setup	ca	usuari
 user account prefix	setup	ca	Prefix de compte d'usuari
 user for smtp-authentication (leave it empty if no auth required)	setup	ca	Usuari per autentificació (deixa-ho buit si no requereix autentificació)
 usernames are casesensitive	setup	ca	Els noms d'usuari són sensibles a majúscules
-users choice	setup	ca	Elecció de l'usuari
 utf-8 (unicode)	setup	ca	utf-8 (Unicode)
 validation errors	setup	ca	Errors de validació
-version	setup	ca	versió
 version mismatch	setup	ca	Disparitat de versions
 view	setup	ca	Vista
 virtual mail manager (login-name includes domain)	setup	ca	Gestor de correu virtual (el nom d'entrada inclou el domini)
@@ -523,8 +520,6 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	ca	Voleu mostrar l'estat de l'actualització de cada aplicació?
 writable by the webserver	setup	ca	pot ser modificat pel servidor web
 write	setup	ca	Escriure
-year	setup	ca	any
-yes	setup	ca	Sí
 yes, with lowercase usernames	setup	ca	Sí, amb nom d'usuaris en minúscules
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ca	Pareix que executes una versió pre-beta d'EGroupware.<br />Aquestes versions ja no tenen suport i no hi ha cap ruta per actualitzar-les a la instal·lació.<br /> Potser t'estimes més actualitzar primer a la versió 0.9.10 (la darrera versió que suporta actualitzacions pre-beta) <br /> i després actualitzar a partir de la versió actual.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ca	Pareix que executes una versió pre-beta d'EGroupware.<br />És recomanable que actualitzis a una versió nova. <br />Les versions antigues de PHP poden fer que EGroupware no funcioni correctament, o gens ni mica. <br /><br />Per favor, actualitza a la darrera versió %1
@@ -537,9 +532,7 @@ you didn't enter a config password for domain %1	setup	ca	No heu entrat una cont
 you didn't enter a config username for domain %1	setup	ca	No heu entrat un nom d'usuari de configuració per al domini %1
 you didn't enter a header admin password	setup	ca	No heu entrat una contrasenya per a l'administració de capceleres
 you didn't enter a header admin username	setup	ca	No heu entrat un nom d'usuari per a l'administració de capceleres
-you do not have any languages installed. please install one now <br />	setup	ca	No tens cap idioma instal·lat. Per favor, instal·la'n un ara <br />
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	ca	Encara no has creat el teu header.inc.php!<br /> El pots crear ara.
-you have successfully logged out	setup	ca	Us heu desconnectat correctament.
 you must enter a username for the admin	setup	ca	Heu d'introduir un nom d'usuari per a l'administrador
 you need to configure egroupware:	setup	ca	Heu de configurar EGroupware:
 you need to select your current charset!	setup	ca	Heu de seleccionar el joc de caràcters actual!

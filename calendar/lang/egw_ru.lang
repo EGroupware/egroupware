@@ -24,6 +24,7 @@ accepted	calendar	ru	Принято
 access denied to the calendar of %1 !!!	calendar	ru	Доступ к календарю %1 отклонен
 access to calendar of %1 denied!	calendar	ru	Запрещен доступ к календарю %1!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ru	Действие которое вызвало запись:добавлено,отменено,принято,
+add a comment to send to organizer with your response	calendar	ru	Добавить комментарий для отправки организатору с вашим ответом
 add alarm	calendar	ru	Добавить сигнал
 add appointments via shortened dialog or complete edit window	calendar	ru	Добавьте назначения через сокращенный диалог или завершите редактирование
 add current view as favorite	calendar	ru	Добавить текущий вид как избранный
@@ -35,6 +36,7 @@ add timesheet entry	calendar	ru	Добавить запись Табеля
 added	calendar	ru	Добавлено
 added by synchronization	calendar	ru	Добавлено при синхронизации
 added recurrence on %1.	calendar	ru	Добавлено повторение для %1.
+additional participants	calendar	ru	Дополнительные участники
 after	calendar	ru	После
 after %1	calendar	ru	После %1
 after current date	calendar	ru	После текущей даты
@@ -66,6 +68,7 @@ appointment settings	calendar	ru	Установки события
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	ru	Альтернативно можете %1загрузить MySQL dump%2 и импортировать вручную в таблицу egw_cal_timezones.
 at start of the event	calendar	ru	при старте события
 attention	calendar	ru	Внимание
+automatic update	calendar	ru	Автоматическое обновление
 automatically purge old events after	admin	ru	Автоматически стирать старые события после
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	ru	Доступно для первого вхождения таблицы каждого дня недели или дневной таблицы выбранного диапазона:
 back half a month	calendar	ru	Назад на половину месяца
@@ -111,9 +114,11 @@ change history	calendar	ru	Изменить историю
 change your status	calendar	ru	Изменить ваш статус
 changed event-data applied	calendar	ru	Применены измененные данные о событиях
 charset of file	calendar	ru	Кодировка файла
+check all	calendar	ru	Проверить все
 choose a category	calendar	ru	Изменить категорию
 choose owner of imported data	calendar	ru	Выберите владельца импортированных данных
 close the window	calendar	ru	Закрыть окно
+color	calendar	ru	Цвет
 compose a mail to all participants after the event is saved	calendar	ru	Составить письмо ко всем участникам после сохранения события
 configuration settings	calendar	ru	Настройки конфигурации
 conflict	calendar	ru	Конфликт
@@ -122,6 +127,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	calenda
 countries	calendar	ru	Страны
 country	calendar	ru	Страна
 create a new series	calendar	ru	Создать новую серию
+create a new subscription	calendar	ru	Создать новую подписку
 create an exception for the given date	calendar	ru	Создать исключения для заданной даты
 create an infolog from this event	calendar	ru	Создать запись ИнфоЖурнала из этого события
 create exception	calendar	ru	Создать исключение
@@ -191,6 +197,7 @@ do you want to be notified about changes of appointments you modified?	calendar	
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	ru	Вам нужны уведомления о новых назначениях? Вы будете оповещены также о своих собственных изменениях. Вы можете ограничить извещения только некоторыми изменениями. Каждая запись включает все извещения показанные в списке над ней. Все изменения включают изменение названия, описания, подписчиков, но не ответы подписчиков. Если владелец события требует какие-либо извещения, он всегда будет получать ответы подписчиков, в том числе такие как присоединение и отказ.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	ru	Вам нужны уведомления о новых или измененных событиях? Вы получаете уведомления о сделанных Вами самим изменениях. Вы можете ограничить уведомления только определенными категориями. Каждое сообщение включает все упомянутые выше уведомления. Все изменения включают изменения названия, описания, участников, но не включают ответы участников. Если владелец события требует всех уведомлений, он всегда будет получать ответы участников, включая принятие или отказ от приглашения.
 do you want to be notified about participant responses from events you created, but are not participating in?	calendar	ru	Вам нужны уведомления от участников событий которые вы создали, но в них не участвуете?
+do you want to delete this subscription incl. the synced events?	calendar	ru	Вы хотите удалить эту подписку, включая синхронизированные события?
 do you want to edit this event as an exception or the whole series?	calendar	ru	Хотите редактировать это событие в качестве исключения или все серии?
 do you want to keep the series exceptions in your calendar?	calendar	ru	Хотите сохранить исключение из серии в вашем Календаре?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ru	Вы хотите получать регулярный отчет о новых назначениях по эл. почте?<br>Суммарный отчет посылается вам на обычный адрес эл. почты утром этого дня либо в Понедельник для отчетов за неделю.<br>Письма посылаются только при наличии встреч в этот день или неделю.
@@ -277,6 +284,7 @@ full edit dialog	calendar	ru	Диалог полного редактирова�
 fullname of person to notify	calendar	ru	Полное имя для оповещения
 general fields:	calendar	ru	Общие поля:
 general settings	calendar	ru	Основные установки
+given url is not a caldav server: missing %1!	calendar	ru	Указанный URL не является сервером CalDAV: отсутствует %1!
 global categories	calendar	ru	Общие категории
 global public and group public	calendar	ru	Глобальная аудитория и группы
 global public only	calendar	ru	только Глобальная аудитория
@@ -584,8 +592,14 @@ status for all future scheduled days changed	calendar	ru	Статус всех �
 status for this particular day changed	calendar	ru	Статус этого отдельного дня изменен.
 status of participants set to unknown because of missing category rights	calendar	ru	Статус участников установлен на "неизвестный" в связи с отсутствием прав.
 submit to repository	calendar	ru	Отправить в хранилище
+subscribed calendar	calendar	ru	Подписанный календарь
+subscription incl. the synced events deleted.	calendar	ru	Подписка с синхронизированными событиями удалена.
+subscription saved.	calendar	ru	Подписка сохранена.
+subscription synced.	calendar	ru	Подписка синхронизирована.
+subscriptions	calendar	ru	Подписки
 summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	ru	Сводка статуса участников: 3 участника, 1 подтверждён, 2 неизвестных
 sun	calendar	ru	Вс
+sync now	calendar	ru	Синхронизировать сейчас
 tag to mark positions for address labels	calendar	ru	Тэг для отметки позиции для метки адреса
 tentative	calendar	ru	Предполагаемый
 test import (show importable records <u>only</u> in browser)	calendar	ru	Тест Импорт (<u>Только</u> показать в браузере записи которые можно импортировать)

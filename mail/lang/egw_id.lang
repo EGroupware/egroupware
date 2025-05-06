@@ -17,6 +17,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	id	Menambahka
 adding %1 to whiltelisted email addresses failed because of %2	mail	id	Menambahkan %1 ke alamat email daftar putih gagal karena %2
 after reply, visible during compose	mail	id	Setelah membalas, terlihat saat menulis
 aliases+forwards	mail	id	Nama samaran + Teruskan
+all my email addresses	mail	id	semua alamat email saya
 all of	mail	id	semua
 always show notifiction	mail	id	Selalu tampilkan pemberitahuan
 answered	mail	id	Menjawab
@@ -74,10 +75,12 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	id	Apakah Anda benar-benar ingin mengganti label %1 untuk SEMUA pesan di tampilan saat ini?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	id	Apakah Anda ingin dimintai konfirmasi sebelum melampirkan pesan yang dipilih ke email baru?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	id	Apakah Anda ingin dimintai konfirmasi sebelum memindahkan pesan yang dipilih ke folder lain?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	id	Apakah Anda ingin mencegah pengeditan/pengaturan notifikasi melalui email ke alamat email lain jika ada email yang masuk (meskipun Sieve diaktifkan)?
 draft folder	mail	id	Folder Konsep
 drafts	mail	id	Draf
 edit account	mail	id	Edit akoun
 email address	mail	id	Alamat email
+email notification update failed! you need to set an email address!	mail	id	Pembaruan pemberitahuan email gagal! Anda perlu mengatur alamat email!
 emailaddress	admin	id	Alamat email
 emailadmin: profilemanagement	mail	id	eMailAdmin: Manajemen profil
 emails in whitelisted domains are not marked as spam	mail	id	Email di domain yang masuk daftar putih tidak ditandai sebagai spam
@@ -127,6 +130,7 @@ ident name organization email	mail	id	Nama identitas Organisasi [Email]
 identity	mail	id	Identitas
 identity label	mail	id	Label identitas
 if	mail	id	IF
+if different from email address	mail	id	Jika berbeda dari alamat email
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	id	Jika Anda ingin melihat pratinjau email dengan sekali klik pada subjek, aktifkan ini.
 imap	mail	id	IMAP
 imap server	mail	id	IMAP Server
@@ -271,7 +275,7 @@ see attachments for content of the orignial mail	mail	id	Melihat lampiran untuk 
 select all	mail	id	Pilih semua
 select an existing entry in order to append mail content to it	mail	id	Pilih entri yang ada untuk menambahkan konten email ke entri tersebut
 select an item to read	mail	id	Pilih item yang akan dibaca
-select mail addresses from addressbook	mail	id	Memilih alamat email dari buku alamat
+select mail addresses from addressbook	mail	id	Pilih alamat email dari buku alamat
 select or insert email address	mail	id	Pilih atau masukkan alamat email
 selected date range (with quicksearch)	mail	id	Rentang tanggal yang dipilih (dengan pencarian cepat)
 send message and move to send folder (if configured)	mail	id	Kirim pesan dan pindahkan ke folder kirim (jika dikonfigurasi)

@@ -4,6 +4,7 @@ accept	calendar	et	Kinnita
 accepted	calendar	et	Kinnitatud
 access denied to the calendar of %1 !!!	calendar	et	Juurdepääs kalendrile %1 keelatud!
 access to calendar of %1 denied!	calendar	et	Juurdepääs kalendrile %1 keelatud!
+add a comment to send to organizer with your response	calendar	et	Lisa kommentaar, et saata korraldajale oma vastus
 add alarm	calendar	et	Lisa alarm
 add appointments via shortened dialog or complete edit window	calendar	et	Kohtumiste lisamine lühendatud dialoogiakna või täieliku redigeerimisakna kaudu
 add current view as favorite	calendar	et	Praeguse vaate lisamine lemmikuks
@@ -15,6 +16,7 @@ add timesheet entry	calendar	et	Lisa Timesheet kirje
 added	calendar	et	Lisatud
 added by synchronization	calendar	et	Lisatud sünkroniseerimise teel
 added recurrence on %1.	calendar	et	Lisatud korduvus %1.
+additional participants	calendar	et	Täiendavad osalejad
 after	calendar	et	Pärast
 after %1	calendar	et	Pärast %1
 after current date	calendar	et	Pärast käesolevat kuupäeva
@@ -41,6 +43,7 @@ always use the full edit dialog, not this little dialog	calendar	et	Kasutage ala
 apply changes to (future) exceptions too?	calendar	et	Rakendada muudatusi ka (tulevastele) eranditele?
 apply the changes	calendar	et	Rakenda uuendused
 attention	calendar	et	Tähelepanu
+automatic update	calendar	et	Automaatne uuendamine
 back half a month	calendar	et	Pool kuud tagasi
 back one month	calendar	et	Üks kuu tagasi
 before %1	calendar	et	Enne %1
@@ -62,10 +65,12 @@ category report	calendar	et	Kategooria aruanne
 changed event-data applied	calendar	et	Muudetud sündmuse andmed rakendatud
 choose a category	calendar	et	Vali kategooria
 close the window	calendar	et	Sule see aken
+color	calendar	et	Värv
 copy this event	calendar	et	Kopeeri seda sündmust
 countries	calendar	et	Riigid
 country	calendar	et	Riik
 create a new series	calendar	et	Looge uus seeria
+create a new subscription	calendar	et	Uue tellimuse loomine
 create an exception for the given date	calendar	et	Tee erand antud kuupäevale
 create exception	calendar	et	Tee erand
 create new links	calendar	et	Tee uued lingid
@@ -92,6 +97,7 @@ display status of events	calendar	et	Näita sündmuste staatust
 displayed view	calendar	et	Näita vaade
 distribution list	calendar	et	Jaotusnimekiri
 do you want a weekview with or without weekend?	calendar	et	Soovid nädalavaadet koos või ilma nädalavahetuseta?
+do you want to delete this subscription incl. the synced events?	calendar	et	Kas soovite selle tellimuse koos sünkroniseeritud sündmustega kustutada?
 download	calendar	et	Lae alla
 download this event as ical	calendar	et	Lae alla see sündmus kui iCal
 duration	calendar	et	Kestvus
@@ -132,6 +138,7 @@ freetime search	calendar	et	Vaba aja otsing
 fri	calendar	et	Ree
 full description	calendar	et	Täielik kirjeldus
 fullname of person to notify	calendar	et	Täisnimi persoonist kellele teatatakse
+given url is not a caldav server: missing %1!	calendar	et	Antud URL ei ole CalDAV server: puudub %1!
 global categories	calendar	et	Globaalsed Kategooriad
 group planner	calendar	et	Grupi planeerija
 groupmember(s) %1 not included, because you have no access.	calendar	et	Grupiliige(med) %1 pole haaratud, sest sul pole ligipääsu.
@@ -247,7 +254,13 @@ start date/time	calendar	et	Start kuupäev/Aeg
 startdate	calendar	et	Algus kuupäev
 startdate / -time	calendar	et	Start kuupäev/Aeg
 status changed	calendar	et	Staatus muudetud
+subscribed calendar	calendar	et	Tellitud kalender
+subscription incl. the synced events deleted.	calendar	et	Tellimus koos sünkroniseeritud sündmustega kustutatud.
+subscription saved.	calendar	et	Tellimus salvestatud.
+subscription synced.	calendar	et	Tellimus sünkroniseeritud.
+subscriptions	calendar	et	Tellimused
 sun	calendar	et	Püh
+sync now	calendar	et	Sünkroniseeri nüüd!
 tentative	calendar	et	Ebakindel
 the apple ical apps use this color to display events from this calendar.	calendar	et	Apple iCal Apps kasutab seda värvi selle kalendri sündmuste kuvamiseks.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	et	Dokument võib sisaldada paigutussätteid nagu {{%1}}, mis asendatakse andmetega.

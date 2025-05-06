@@ -139,6 +139,7 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	pt	Pretende realmente alternar a etiqueta %1 para TODAS as mensagens na vista atual?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	pt	Pretende que lhe seja pedida uma confirmação antes de anexar as mensagens seleccionadas a uma nova mensagem de correio eletrónico?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	pt	Pretende que lhe seja pedida uma confirmação antes de mover as mensagens selecionadas para outra pasta?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	pt	Pretende impedir a edição/configuração da notificação por correio eletrónico para outros endereços de correio eletrónico se chegarem mensagens de correio eletrónico(, mesmo que o Sieve esteja ativado)?
 does not contain	mail	pt	não contém
 does not exist on imap server.	mail	pt	não existe no servidor IMAP.
 does not match	mail	pt	não coincide
@@ -160,6 +161,7 @@ effective only if server supports acl at all	admin	pt	efetiva apenas se o servid
 email address	mail	pt	Endereço de email
 email notification successfully updated!	mail	pt	Notificação de email atualizado com sucesso!
 email notification update failed	mail	pt	Atualização notificação por email falhou
+email notification update failed! you need to set an email address!	mail	pt	A atualização da notificação por correio eletrónico falhou! Tem de definir um endereço de correio eletrónico!
 emailaddress	admin	pt	Endereço de email
 emailadmin: profilemanagement	mail	pt	emailadmin: ProfileManagement
 emails in whitelisted domains are not marked as spam	mail	pt	Os e-mails em domínios da lista branca não são marcados como spam
@@ -474,7 +476,7 @@ select an item to read	mail	pt	Selecionar um item para ler
 select file to attach to message	mail	pt	Selecione o arquivo para anexar a mensagem
 select file to import into folder	mail	pt	Selecione o arquivo para importar para pasta
 select file(s) from vfs	mail	pt	Selecione o arquivo (s) a partir de VFS
-select mail addresses from addressbook	mail	pt	Selecionar endereços de correio do livro de endereços
+select mail addresses from addressbook	mail	pt	Selecione o(s) endereço(s) de correio eletrónico do livro de endereços
 select or insert email address	mail	pt	Seleccionar ou inserir endereço de e-mail
 selected	mail	pt	selecionado
 selected date range (with quicksearch)	mail	pt	Intervalo de datas selecionado (com pesquisa rápida)

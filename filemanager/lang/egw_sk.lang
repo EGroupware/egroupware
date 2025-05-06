@@ -225,6 +225,7 @@ paste link	filemanager	sk	Prilepiť odkaz
 path %1 not found or not a directory!	filemanager	sk	Cesta %1 sa nenašla alebo nie je priečinkom!
 path and query-parameters, smb: share and optional path (with /)	filemanager	sk	Cesta a parametre dopytu, SMB: sieťového úložiska, a voliteľne aj cesta (vrátane /)
 percentage	filemanager	sk	Percento
+permission denied!	filemanager	sk	Prístup bol odmietnutý!
 permissions	filemanager	sk	Prístupové oprávnenia
 permissions of %1 changed.	filemanager	sk	Prístupové oprávnenia ku %1 boli zmenené.
 please select a file to delete.	filemanager	sk	Prosím vyberte, ktorý súbor odstrániť.

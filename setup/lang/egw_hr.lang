@@ -323,7 +323,6 @@ size	setup	hr	Veličina
 some or all of its tables are missing	setup	hr	Some or all of its tables are missing
 sql encryption type	setup	hr	SQL encryption type for passwords (default - md5)
 start the postmaster	setup	hr	Start the postmaster
-status	setup	hr	Status
 step %1 - admin account	setup	hr	Step %1 - Admin Account
 step %1 - advanced application management	setup	hr	Step %1 - Advanced Application Management
 step %1 - configuration	setup	hr	Step %1 - Configuration
@@ -372,9 +371,7 @@ use pure html compliant code (not fully working yet)	setup	hr	Use pure HTML comp
 user account prefix	setup	hr	User account prefix
 user for smtp-authentication (leave it empty if no auth required)	setup	hr	User for SMTP-authentication (leave it empty if no auth required)
 usernames are casesensitive	setup	hr	Usernames are casesensitive
-users choice	setup	hr	Users Choice
 utf-8 (unicode)	setup	hr	utf-8 (Unicode)
-version	setup	hr	version
 version mismatch	setup	hr	Version Mismatch
 view	setup	hr	View
 warning!	setup	hr	Warning!
@@ -390,7 +387,6 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	hr	Would you like to show each application's upgrade status ?
 writable by the webserver	setup	hr	writable by the webserver
 write	setup	hr	Zapiši
-yes	setup	hr	Yes
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	hr	You appear to be running a pre-beta version of EGroupware.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	hr	You appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run EGroupware correctly, if at all. <br /><br />Please upgrade to at least version %1
 you appear to be running version %1 of egroupware	setup	hr	You appear to be running version %1 of EGroupware
@@ -400,9 +396,7 @@ you didn't enter a config password for domain %1	setup	hr	You didn't enter a con
 you didn't enter a config username for domain %1	setup	hr	You didn't enter a config username for domain %1
 you didn't enter a header admin password	setup	hr	You didn't enter a header admin password
 you didn't enter a header admin username	setup	hr	You didn't enter a header admin username
-you do not have any languages installed. please install one now <br />	setup	hr	You do not have any languages installed. Please install one now <br />
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	hr	You have not created your header.inc.php yet!<br /> You can create it now.
-you have successfully logged out	setup	hr	You have successfully logged out
 you must enter a username for the admin	setup	hr	You must enter a username for the admin
 you need to select your current charset!	setup	hr	You need to select your current charset!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	hr	You should either uninstall and then reinstall it, or attempt manual repairs

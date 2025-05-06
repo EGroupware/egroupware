@@ -18,6 +18,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	sv	Att lägga
 adding %1 to whiltelisted email addresses failed because of %2	mail	sv	Lägga till %1 till whiltelisted e-postadresser misslyckades på grund av %2
 after reply, visible during compose	mail	sv	Efter svar, synlig under sammansättning
 aliases+forwards	mail	sv	Alias+Framåt
+all my email addresses	mail	sv	alla mina e-postadresser
 all of	mail	sv	Alla
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	sv	Alla undermappar raderas också och alla meddelanden i alla berörda mappar går förlorade
 always show html emails	mail	sv	Visa alltid HTML e-post
@@ -96,6 +97,7 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	sv	Vill du verkligen växla etiketten %1 för ALLA meddelanden i den aktuella vyn?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	sv	Vill du bli ombedd att bekräfta innan du bifogar valda meddelanden till ett nytt e-postmeddelande?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	sv	Vill du bli ombedd att bekräfta innan du flyttar markerade meddelanden till en annan mapp?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	sv	Vill du förhindra redigering/inställning av avisering via e-post till andra e-postadresser om e-postmeddelanden anländer(, även om Sieve är aktiverat)?
 does not contain	mail	sv	Innehåller inte
 does not match	mail	sv	Matchar inte
 does not match regexp	mail	sv	Matchar inte regexp
@@ -110,6 +112,7 @@ drafts folder	mail	sv	Utkast katalog
 edit account	mail	sv	Ändra konto
 edit vacation settings	mail	sv	Ändra frånvaro alternativ
 email address	mail	sv	E-post adress
+email notification update failed! you need to set an email address!	mail	sv	Uppdateringen av e-postmeddelanden misslyckades! Du måste ange en e-postadress!
 emailaddress	admin	sv	E-post adress
 emailadmin: profilemanagement	mail	sv	E-postmeddelanden i vitlistade domäner markeras inte som skräppost
 emails in whitelisted domains are not marked as spam	mail	sv	E-postmeddelanden i vitlistade domäner markeras inte som skräppost
@@ -159,6 +162,7 @@ ident name organization email	mail	sv	Identnamn Organisation [E-post]
 identity	mail	sv	Identitet
 identity label	mail	sv	Identitetsetikett
 if	mail	sv	OM
+if different from email address	mail	sv	Om annan än e-postadressen
 if mail header	mail	sv	om brevhuvud
 if message size	mail	sv	om meddelande storlek
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	sv	Om du vill se en förhandsgranskning av ett e-postmeddelande genom att klicka på ämnet ska du aktivera detta.
@@ -322,7 +326,7 @@ select a date	mail	sv	Välj ett datum
 select all	mail	sv	Välj samtliga
 select an existing entry in order to append mail content to it	mail	sv	Välj en befintlig post för att bifoga e-postinnehåll till den
 select an item to read	mail	sv	Välj en artikel att läsa
-select mail addresses from addressbook	mail	sv	Välj e-postadresser från adressboken
+select mail addresses from addressbook	mail	sv	Välj e-postadress(er) från adressboken
 select or insert email address	mail	sv	Välj eller infoga e-postadress
 selected date range (with quicksearch)	mail	sv	Valt datumintervall (med snabbsökning)
 send message and move to send folder (if configured)	mail	sv	Skicka meddelande och flytta till mappen Skicka (om konfigurerat)

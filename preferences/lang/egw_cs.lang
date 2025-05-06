@@ -11,6 +11,7 @@ acl grants have been updated	preferences	cs	ACL práva byla aktualizována
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	cs	Každý výpis v eGroupWaru zobrazí tento počet položek na stránku.<br>Příliš velká hodnota zpomalí zobrazování stránky, příliš malá Vám znesnadní přehled.
 applications list scroll area	preferences	cs	Rolovací plocha seznamu aplikací
 are you sure you want to delete this category ?	preferences	cs	Určitě chcete smazat tuto kategorii ?
+are you sure?	preferences	cs	Určitě?
 audio effect	preferences	cs	Zvukové efekty
 audio effect enables|disables sound effects used in the theme	preferences	cs	Povolí, nebo zakáže použití zvukových efektů použitých v tématu.
 automatically start with this font	preferences	cs	Automaticky začínat s tímto typem písma
@@ -23,6 +24,7 @@ charset for the csv export/import	preferences	cs	Znaková sada
 click to install	preferences	cs	Klepnutím na tlačítko nainstalujete
 close after selection	preferences	cs	Zavřít po výběru
 code is invalid	preferences	cs	Kód je neplatný
+code is required	preferences	cs	Kód je vyžadován
 color	preferences	cs	Barva
 country	preferences	cs	Země
 current password	preferences	cs	Aktuální heslo
@@ -61,6 +63,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	cs	Povolí nebo zakáže změnu velikosti rozbalovacích nabídek pro všechny aplikace eGroupWaru v Internet Exploreru. Ostatních internetových prohlížečů se tato volba nedotkne. Pamatujte prosím, že funkce je v tomto okamžiku experimentální.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	cs	Povolí nebo zakáže změnu velikosti rozbalovacích nabídek pro všechny aplikace eGroupWaru v Internet Exploreru. Ostatních internetových prohlížečů se tato volba nedotkne. Pamatujte prosím, že funkce je v tomto okamžiku experimentální.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	cs	Pro změnu hesla je vyžadováno zabezpečené připojení k LDAP, ale to nebylo v průběhu instalace nakonfigurováno.
+enter code to authenticate the actions below	preferences	cs	Zadejte kód pro ověření níže uvedených akcí
 enter code to verify correct setup	preferences	cs	Zadejte kód pro ověření správného nastavení
 enter your new password	preferences	cs	Zadejte Vaše nové heslo
 enter your old password	preferences	cs	Zadejte Vaše staré heslo
@@ -75,7 +78,7 @@ font size unit	preferences	cs	Jednotka velikosti písma
 forced preferences	preferences	cs	Vynucené předvolby
 formatting & general settings	preferences	cs	Formáty a obecné nastavení
 general settings	preferences	cs	Obecné nastavení
-generate new qrcode to disable existing one, after enabling the new one!	preferences	cs	Vygenerujte nový QRCode pro deaktivaci stávajícího, po povolení nového!
+generate new qrcode to disable existing one, after enabling the new one!	preferences	cs	Generování nového QR kódu pro deaktivaci stávajícího (po povolení nového)
 google authenticator for android	preferences	cs	Google Authenticator pro Android
 google authenticator for ios	preferences	cs	Google Authenticator pro iOS
 heading %1	preferences	cs	Hlavička %1
@@ -136,10 +139,10 @@ pt: points (1/72 inch)	preferences	cs	pt: body (1/72 palce)
 px: display pixels	preferences	cs	px: pixely
 re-enter your password	preferences	cs	Zadejte znovu své heslo
 read prefs for the specified application.	preferences	cs	Načíst předvolby pro vybranou aplikaci.
-reset qrcode	preferences	cs	Obnovení kódu QRCode
+reset qrcode	preferences	cs	Obnovení QR kódu
 revoke	preferences	cs	Odvolat
 revoke this token	preferences	cs	Odvolat tento token
-scan qrcode with a time-based one-time password (totp) app:	preferences	cs	Naskenujte QRCode pomocí aplikace TOTP (Time-based One-Time Password):
+scan qrcode with a time-based one-time password (totp) app:	preferences	cs	Skenování QR kódu pomocí aplikace TOTP (Time-based one-time password):
 secret deleted, two factor authentication disabled.	preferences	cs	Vymazání tajemství, dvoufaktorové ověřování zakázáno.
 select additional lines in lists by	preferences	cs	Další řádky v seznamu vybrat
 select one	preferences	cs	Vybrat jeden
@@ -159,8 +162,8 @@ show helpmessages by default	preferences	cs	Standardně zobrazovat pomocné text
 show links between egroupware aps as	common	cs	Zobrazovat odkazy mezi EGroupware aplikacemi jako
 show navigation bar as	preferences	cs	Zobrazovat navigační lištu jako
 show number of current users	preferences	cs	Zobrazovat počet připojených uživatelů
-show qrcode	preferences	cs	Zobrazit QRCode
-show qrcode to enable on an additional device.	preferences	cs	Zobrazit QRCode pro povolení na dalším zařízení.
+show qrcode	preferences	cs	Zobrazit QR kód
+show qrcode to enable on an additional device.	preferences	cs	Znovu zobrazí QR kód pro nastavení na jiných zařízeních
 show text on navigation icons	preferences	cs	Zobrazovat text u navigačních ikon
 show_more_apps	common	cs	Zobrazit více aplikací
 singlesignon and passwords	preferences	cs	SingleSignOn a hesla

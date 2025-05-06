@@ -462,6 +462,7 @@ please wait...	setup	sl	Prosim, počakajte ...
 pop/imap mail server hostname or ip address	setup	sl	Ime ali naslov IP poštnega strežnika POP3/IMAP.
 possible reasons	setup	sl	Možni razlogi
 possible solutions	setup	sl	Možne rešitve
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	sl	Odkrita zahteva POST z velikostjo %1, ki je večja od post_max_size=%2, zato je PHP ne obdela!
 post-install dependency failure	setup	sl	Napaka odvisnosti po namestitvi
 postfix with ldap: [yes(user edit forwarding)]	setup	sl	Postfix z LDAP: [yes(user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	sl	PostgreSQL: Pustite prazno za uporabo vtičnic unix domain namesto povezave TCP/IP.
@@ -670,6 +671,7 @@ you are ready for this stage, but this stage is not yet written.<br />	setup	sl	
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	sl	Uporabljate PHP različico %1. EGroupware zdaj zahteva različico %2 ali novejšo, priporočena je %3.
 you can install it by running:	setup	sl	Namestite jo lahko tako, da poženete:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	sl	Uporabniško ime in geslo glave lahko uporabite tudi za dostop do vseh domen. Če geslo ni podano preko ukazne vrstice, se prebere iz sistemske nastavitve EGW_CLI_PASSWORD ali povpraša uporabnika.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	sl	To omejitev lahko obidete tako, da namestite imenik z varnostno kopijo v upravitelja datotek EGroupware in ga prenesete od tam.
 you didn't enter a config password for domain %1	setup	sl	Niste vnesli konfiguracijskega gesla za domeno %1
 you didn't enter a config username for domain %1	setup	sl	Niste vnesli konfiguracijskega uporabniškega imena za domeno %1
 you didn't enter a header admin password	setup	sl	Niste vnesli upravljalskega gesla za header.inc.php.

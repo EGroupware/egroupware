@@ -633,7 +633,6 @@ start installing application %1 ...	setup	km	ចាប់ផ្តើមដំ�
 start the postmaster	setup	km	ចាប់ផ្តើមមេប្រៃសណីយ៍
 start updating languages %1 ...	setup	km	ចាប់ផ្តើមធ្វើបច្ចុប្បន្នភាពភាសា%1...
 start updating the database ...	setup	km	ចាប់ផ្តើមធ្វើបច្ចុប្បន្នភាពមូលដ្ឋានទិន្នន័យ...
-status	setup	km	ស្ថានភាព
 step %1 - admin account	setup	km	ជំហានទី 1 - គណនីអ្នកគ្រប់គ្រង
 step %1 - advanced application management	setup	km	ជំហានទី 1 - ការគ្រប់គ្រងកម្មវិធីកម្រិតខ្ពស់
 step %1 - configuration	setup	km	ជំហានទី 1 - ការកំណត់រចនាសម្ព័ន្ធ

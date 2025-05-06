@@ -15,6 +15,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	lt	Pridėti %
 adding %1 to whiltelisted email addresses failed because of %2	mail	lt	Įtraukti %1 į "whiltelisted" el. pašto adresus nepavyko dėl %2
 after reply, visible during compose	mail	lt	Po atsakymo, matomas sudarymo metu
 aliases+forwards	mail	lt	Slapyvardžiai + persiuntimas
+all my email addresses	mail	lt	visi mano el. pašto adresai
 always show notifiction	mail	lt	Visada rodyti pranešimą
 answered	mail	lt	Atsakyta
 archive folder	mail	lt	Archyvo aplankas
@@ -56,7 +57,9 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	lt	Ar tikrai norite perjungti žymę %1 VISIEMS dabartiniame rodinyje esantiems pranešimams?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	lt	Ar norite, kad prieš prisegant pasirinktus pranešimus prie naujo el. pašto būtų prašoma patvirtinimo?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	lt	Ar norite, kad prieš perkeliant pasirinktus laiškus į kitą aplanką būtų prašoma patvirtinimo?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	lt	Ar norite neleisti redaguoti ir (arba) nustatyti pranešimo el. paštu kitiems el. pašto adresams, jei gaunami el. laiškai(, net jei „Sieve“ įjungtas)?
 email address	mail	lt	El. pašto adresas
+email notification update failed! you need to set an email address!	mail	lt	Pranešimų el. paštu atnaujinimas nepavyko! Reikia nustatyti el. pašto adresą!
 emailaddress	admin	lt	El. pašto adresas
 emailadmin: profilemanagement	mail	lt	eMailAdmin: Profilio valdymas
 emails in whitelisted domains are not marked as spam	mail	lt	Į baltąjį sąrašą įtrauktų domenų laiškai nepažymimi kaip šlamštas
@@ -87,6 +90,7 @@ ident name	mail	lt	Identifikatoriaus pavadinimas
 ident name email	mail	lt	Identifikatoriaus pavadinimas [El. paštas]
 ident name organization email	mail	lt	Identifikatoriaus pavadinimas Organizacija [El. paštas]
 identity label	mail	lt	Tapatybės ženklas
+if different from email address	mail	lt	Jei skiriasi nuo el. pašto adreso
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	lt	Jei norite matyti laiško peržiūrą vienu spustelėjimu ant temos, įjunkite šią funkciją.
 imap	mail	lt	IMAP
 imap server	mail	lt	IMAP Server
@@ -210,7 +214,7 @@ security	mail	lt	Saugumas
 see attachments for content of the orignial mail	mail	lt	Pradinio el. laiško turinį žr. prieduose
 select an existing entry in order to append mail content to it	mail	lt	Pasirinkite esamą įrašą, norėdami prie jo pridėti laiško turinį
 select an item to read	mail	lt	Pasirinkite elementą, kurį norite perskaityti
-select mail addresses from addressbook	mail	lt	Pasirinkite pašto adresus iš adresų knygos
+select mail addresses from addressbook	mail	lt	Pasirinkite el. pašto adresą (-us) iš adresų knygos
 select or insert email address	mail	lt	Pasirinkite arba įterpkite el. pašto adresą
 selected date range (with quicksearch)	mail	lt	Pasirinktas datos intervalas (naudojant greitąją paiešką)
 send message and move to send folder (if configured)	mail	lt	Siųsti žinutę ir perkelti į siuntimo aplanką (jei sukonfigūruota)

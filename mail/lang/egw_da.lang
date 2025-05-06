@@ -20,6 +20,7 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	da	Tilføjel
 after reply, visible during compose	mail	da	Efter svar, synlig under sammensætning
 aliases+forwards	mail	da	Fremmedord + viderestillinger
 all messages in the folder will be lost	mail	da	Alle beskeder i mappen vil gå tabt.
+all my email addresses	mail	da	alle mine e-mailadresser
 allow external images	mail	da	Tillad eksterne billeder
 allow external images from listed domains	mail	da	Tillad eksterne billeder fra listede domæner
 allow images from external sources in html emails	mail	da	Tillad billeder fra eksterne kilder i HTML-e-mails.
@@ -88,6 +89,7 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	da	Ønsker du virkelig at skifte etiketten %1 for ALLE beskeder i den aktuelle visning?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	da	Ønsker du at blive bedt om at bekræfte, før du vedhæfter udvalgte beskeder til en ny e-mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	da	Ønsker du at blive bedt om at bekræfte, før du flytter udvalgte beskeder til en anden mappe?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	da	Vil du forhindre redigering/opsætning af notifikation via e-mail til andre e-mailadresser, hvis der kommer e-mails(, selv om Sieve er aktiveret)?
 does not contain	mail	da	indeholder ikke
 does not match	mail	da	passer ikke sammen
 does not match regexp	mail	da	passer ikke til regexp
@@ -99,6 +101,7 @@ drafts	mail	da	Udkast
 drafts folder	mail	da	Mappe med udkast
 edit account	mail	da	Redigér konto
 email address	mail	da	E-mail adresse
+email notification update failed! you need to set an email address!	mail	da	Opdatering af e-mailnotifikationer mislykkedes! Du skal angive en e-mailadresse!
 emailaddress	admin	da	E-mail adresse
 emailadmin: profilemanagement	mail	da	eMailAdmin: Profilhåndtering
 emails in whitelisted domains are not marked as spam	mail	da	E-mails i hvidlistede domæner markeres ikke som spam
@@ -139,6 +142,7 @@ ident name email	mail	da	Ident navn [E-mail]
 ident name organization email	mail	da	Identnavn Organisation [E-mail]
 identity label	mail	da	Identitetsmærke
 if	mail	da	HVIS
+if different from email address	mail	da	Hvis forskellig fra e-mail-adresse
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	da	Hvis du vil se en forhåndsvisning af en mail ved at klikke på emnet, skal du aktivere dette.
 imap	mail	da	IMAP
 imap server	mail	da	IMAP Server
@@ -278,7 +282,7 @@ see attachments for content of the orignial mail	mail	da	Se vedhæftede filer fo
 select all	mail	da	Vælg alle
 select an existing entry in order to append mail content to it	mail	da	Vælg en eksisterende post for at tilføje mailindhold til den
 select an item to read	mail	da	Vælg et element at læse
-select mail addresses from addressbook	mail	da	Vælg mailadresser fra adressebogen
+select mail addresses from addressbook	mail	da	Vælg e-mail-adresse(r) fra adressebog
 select or insert email address	mail	da	Vælg eller indsæt e-mail-adresse
 selected date range (with quicksearch)	mail	da	Valgt datointerval (med hurtigsøgning)
 send message and move to send folder (if configured)	mail	da	Send besked og flyt til sendemappe (hvis konfigureret)

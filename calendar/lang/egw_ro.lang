@@ -14,6 +14,7 @@ a party crasher in someone who is not invited to the meeting but somehow got the
 accept	calendar	ro	Acceptă
 accepted	calendar	ro	Acceptat
 access to calendar of %1 denied!	calendar	ro	Accesul la calendarul lui %1 refuzat!
+add a comment to send to organizer with your response	calendar	ro	Adăugați un comentariu pentru a-l trimite organizatorului cu răspunsul dumneavoastră
 add appointments via shortened dialog or complete edit window	calendar	ro	Adăugați programări prin intermediul unei ferestre de dialog scurtate sau al unei ferestre de editare completă
 add current view as favorite	calendar	ro	Adăugați vizualizarea curentă ca favorită
 add new alarm	calendar	ro	Adăugați o nouă alarmă
@@ -23,6 +24,7 @@ add recurrence	calendar	ro	Adăugarea recurenței
 add timesheet entry	calendar	ro	Adăugare intrare în foaia de pontaj
 added by synchronization	calendar	ro	Adăugat prin sincronizare
 added recurrence on %1.	calendar	ro	Adăugarea recurenței la %1.
+additional participants	calendar	ro	Participanți suplimentari
 after	calendar	ro	După
 after %1	calendar	ro	După %1
 age:	calendar	ro	Vârsta:
@@ -37,16 +39,22 @@ always use full edit dialog	calendar	ro	Utilizați întotdeauna fereastra de edi
 always use the full edit dialog, not this little dialog	calendar	ro	Utilizați întotdeauna fereastra de editare completă, nu această fereastră de dialog redusă
 apply changes to (future) exceptions too?	calendar	ro	Aplicați modificările și excepțiilor (viitoare)?
 attention	calendar	ro	În atenția
+automatic update	calendar	ro	Actualizare automată
 by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	ro	În mod implicit (nu este setat nimic aici), EGroupware permite doar organizatorului/proprietarului să îi adauge.
 category report	calendar	ro	Raport de categorie
 changed event-data applied	calendar	ro	S-a aplicat modificarea datelor de eveniment
+check all	calendar	ro	Verificați toate
+color	calendar	ro	Culoare
+create a new subscription	calendar	ro	Creați un abonament nou
 date range	calendar	ro	Intervalul de date
 delete this alarm	calendar	ro	Ștergeți această alarmă?
+do you want to delete this subscription incl. the synced events?	calendar	ro	Doriți să ștergeți acest abonament, inclusiv evenimentele sincronizate?
 email address migration	calendar	ro	Migrarea adresei de e-mail
 error notifying %1	calendar	ro	Eroare de notificare %1
 exclude weekend	calendar	ro	Excludeți Weekend
 explicit recurrences	calendar	ro	Recurențe explicite
 find free timeslots where the selected participants are available for the given timespan	calendar	ro	Găsiți intervale de timp libere în care participanții selectați sunt disponibili pentru intervalul de timp dat
+given url is not a caldav server: missing %1!	calendar	ro	URL-ul dat nu este un server CalDAV: lipsă %1!
 how many days to be removed in the future (default 365)	calendar	ro	Câte zile trebuie să fie eliminate în viitor (implicit 365)
 how many days to be removed in the past (default 100)	calendar	ro	Câte zile trebuie să fie eliminate în trecut (implicit 100)
 how many days to sync in the future (default %1)	calendar	ro	Câte zile trebuie sincronizate în viitor (implicit %1)
@@ -92,6 +100,12 @@ show %1 from %2	calendar	ro	Afișați %1 din %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	ro	Afișează ca evenimente care nu se blochează toată ziua, precum și prin trecerea mouse-ului peste data.
 single participant	calendar	ro	Participant unic
 sort by	calendar	ro	Sortează după
+subscribed calendar	calendar	ro	Calendar subscris
+subscription incl. the synced events deleted.	calendar	ro	Abonament, inclusiv evenimentele sincronizate, șters.
+subscription saved.	calendar	ro	Abonament salvat.
+subscription synced.	calendar	ro	Abonament sincronizat.
+subscriptions	calendar	ro	Abonamente
+sync now	calendar	ro	Sincronizați acum
 the apple ical apps use this color to display events from this calendar.	calendar	ro	Aplicațiile Apple iCal utilizează această culoare pentru a afișa evenimentele din acest calendar.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	ro	Documentul poate conține caractere de subsol precum {{%1}}, care vor fi înlocuite cu datele.
 the extern organizer changed the event!	calendar	ro	Organizatorul extern a modificat evenimentul!

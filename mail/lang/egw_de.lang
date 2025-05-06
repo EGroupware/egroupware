@@ -292,7 +292,7 @@ identity label	mail	de	Anzeige E-Mail-Profil im Seitenmenü
 identity+signature	mail	de	Identität+Signatur
 if	mail	de	Wenn
 if authentication required	mail	de	Wenn Benutzeranmeldung erforderlich ist
-if different from email address	mail	de	Falls abweichend zur E-Mailadresse
+if different from email address	mail	de	Falls abweichend zur E-Mail-Adresse
 if from contains:(*)	mail	de	wenn Von enthält:(*)
 if mail body content / attachment type	mail	de	wenn E-Mail Text enthält/Anhang-Type
 if mail body message type	mail	de	wenn E-Mail Text
@@ -547,7 +547,7 @@ select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an
 select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager anhängen
 select files to upload	mail	de	Dateien anhängen
-select mail addresses from addressbook	mail	de	E-Mail-Adressen aus dem Adressbuch auswählen
+select mail addresses from addressbook	mail	de	E-Mail-Adresse(n) aus dem Adressbuch auswählen
 select multiple	mail	de	Mehrfachauswahl
 select or insert email address	mail	de	Wählen oder fügen Sie eine E-Mail-Adresse ein
 selected	mail	de	ausgewählt

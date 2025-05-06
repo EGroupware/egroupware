@@ -7,8 +7,11 @@ a theme defines the colors and fonts used by the template.	preferences	pt	Um tem
 acl grants have been updated	preferences	pt	As permissões ACL foram actualizadas
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pt	Cada listagem do EGroupware irá conter este número de registos ou linhas por página.<br>Se o número for elevado, a apresentação da página será lenta; Se for reduzido, diminui a qualidade do sumário.
 applications list scroll area	preferences	pt	Botão de deslocação para o menu lateral
-are you sure you want to delete this category ?	preferences	pt	Tem a certeza de que deseja eliminar esta categoria ?
+are you sure you want to delete this category ?	preferences	pt	Tem a certeza de que deseja eliminar esta categoria?
+are you sure?	preferences	pt	Tem a certeza?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pt	Altere a senha de um utilizador fornecendo as senhas antiga e nova. Em caso de sucesso, devolve Verdadeiro. Em caso de erro, devolve Falso.
+code is invalid	preferences	pt	O código é inválido
+code is required	preferences	pt	O código é necessário
 color	preferences	pt	Cor
 country	preferences	pt	País
 dark mode theme	preferences	pt	Tema do modo negro
@@ -22,6 +25,8 @@ disable	preferences	pt	Desactivar
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pt	O formato horário deve ser de 24 horas ou de 12 horas com am/pm anexado.
 edit custom fields	preferences	pt	Editar campos personalizados
 enable	preferences	pt	Activar
+enter code to authenticate the actions below	preferences	pt	Introduzir o código para autenticar as acções abaixo
+enter code to verify correct setup	preferences	pt	Introduzir o código para verificar a configuração correta
 enter your new password	preferences	pt	Insira sua nova senha
 enter your old password	preferences	pt	Insira sua antiga senha
 failed to change password.	preferences	pt	Não foi possível alterar a senha.
@@ -29,6 +34,7 @@ fast	preferences	pt	Rápido
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	pt	Actualização rápida adicionar novas entradas sempre no topo da lista e actualizar as existentes no local, a menos que a lista seja ordenada pela última modificação. As actualizações exactas fazem uma actualização completa, se a lista não for ordenada pela última modificação.
 forced preferences	preferences	pt	Preferências obrigatórias
 general settings	preferences	pt	Definições gerais
+generate new qrcode to disable existing one, after enabling the new one!	preferences	pt	Gerar um novo código QR para desativar o existente (depois de ativar o novo)
 help off	preferences	pt	Ajuda
 hours	preferences	pt	horas
 how do you like to display accounts	preferences	pt	Como deseja apresentar as contas
@@ -58,6 +64,8 @@ password stored	preferences	pt	Palavra-passe armazenada.
 popup with search	preferences	pt	Janela popup com pesquisa
 re-enter your password	preferences	pt	Insira a sua senha novamente
 read prefs for the specified application.	preferences	pt	Ler preferências da aplicação específica.
+reset qrcode	preferences	pt	Repor o código QR
+scan qrcode with a time-based one-time password (totp) app:	preferences	pt	Digitalizar o código QR com uma aplicação TOTP (Time-based one-time password):
 select one	preferences	pt	Seleccione um
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pt	Seleccione o idioma dos textos e mensagens do EGroupware.<br>Alguns idiomas podem não conter todas as mensagens. Nesse caso verá uma mensagem em inglês.
 selectbox	preferences	pt	Caixa de selecção
@@ -69,6 +77,8 @@ should this help messages shown up always, when you enter the preferences or onl
 show helpmessages by default	preferences	pt	Exibir mensagens de ajuda por omissão
 show navigation bar as	preferences	pt	Exibir a barra de navegação como
 show number of current users	preferences	pt	Exibir número de utilizadores ligados
+show qrcode	preferences	pt	Mostrar código QR
+show qrcode to enable on an additional device.	preferences	pt	Apresenta novamente o código QR para o configurar noutros dispositivos
 show text on navigation icons	preferences	pt	Exibir o texto na barra de navegação
 show_more_apps	common	pt	Exibir mais aplicações
 singlesignon and passwords	preferences	pt	SingleSignOn e palavras-passe

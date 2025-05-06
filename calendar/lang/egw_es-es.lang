@@ -24,6 +24,7 @@ accepted	calendar	es-es	Aceptado
 access denied to the calendar of %1 !!!	calendar	es-es	¡Acceso denegado al calendario de %1!
 access to calendar of %1 denied!	calendar	es-es	¡Acceso al calendario de %1 denegado!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	es-es	Acción que causó la notificación: Añadido, Cancelado, Aceptado, Rechazado, ...
+add a comment to send to organizer with your response	calendar	es-es	Añade un comentario para enviarlo al organizador con tu respuesta
 add alarm	calendar	es-es	Añadir alarma
 add appointments via shortened dialog or complete edit window	calendar	es-es	Añada citas por medio de un diálogo reducido o complete la ventana de edición
 add current view as favorite	calendar	es-es	Añadir vista actual como favorita
@@ -35,6 +36,7 @@ add timesheet entry	calendar	es-es	Añadir entrada en la hoja de tiempos
 added	calendar	es-es	Añadido
 added by synchronization	calendar	es-es	Añadido por sincronización
 added recurrence on %1.	calendar	es-es	Recurrencia añadida en %1.
+additional participants	calendar	es-es	Participantes adicionales
 after	calendar	es-es	Después
 after %1	calendar	es-es	Después de %1
 after current date	calendar	es-es	Después de la fecha actual
@@ -66,6 +68,7 @@ appointment settings	calendar	es-es	Ajustes de Citas
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	es-es	Como alternativa, puede %1descargar un volcado de MySQL%2 e importarlo manualmente en la tabla egw_cal_timezones.
 at start of the event	calendar	es-es	al inicio del evento
 attention	calendar	es-es	Atención
+automatic update	calendar	es-es	Actualización automática
 automatically purge old events after	admin	es-es	Purgar automáticamente eventos antiguos después de
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	es-es	Disponible para la primera entrada dentro de cada día de la semana o tabla diaria dentro del rango seleccionado:
 back half a month	calendar	es-es	Medio mes hacia atrás
@@ -115,6 +118,7 @@ check all	calendar	es-es	Marcar todo
 choose a category	calendar	es-es	Elija una categoría
 choose owner of imported data	calendar	es-es	Elegir propietario de datos importados
 close the window	calendar	es-es	Cerrar la ventana
+color	calendar	es-es	Color
 compose a mail to all participants after the event is saved	calendar	es-es	Redactar un correo para todos los participantes después de guardar el evento
 configuration settings	calendar	es-es	Ajustes de configuración
 conflict	calendar	es-es	Conflicto
@@ -123,6 +127,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	calenda
 countries	calendar	es-es	Paises
 country	calendar	es-es	País
 create a new series	calendar	es-es	Crear una serie nueva
+create a new subscription	calendar	es-es	Crear una nueva suscripción
 create an exception for the given date	calendar	es-es	Crear una excepción para la fecha indicada
 create an infolog from this event	calendar	es-es	Crear un InfoLog de este evento
 create exception	calendar	es-es	Crear excepción
@@ -193,6 +198,7 @@ do you want to be notified about changes of appointments you modified?	calendar	
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	es-es	¿Desea que se le notifiquen citas nuevas o modificadas? Se le notificará de los cambios que haga usted mismo.<br>Puede limitar las notificaciones para sólo ciertos cambios. Cada elemento incluye toda la notificación listada encima. Todas las modificaciones incluyen cambios de título, participantes, pero no las respuestas de los participantes. Si el dueño de un evento solicitó alguna notificación, siempre obtendrá las respuestas de aceptación o rechazo del participante.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	es-es	¿Desea recibir notificaciones sobre las citas nuevas o modificadas? Recibirá notificaciones cuando usted mismo haga cambios.<br>Puede limitar las modificaciones sólo a ciertos cambios. Cada elemento incluye todas las notificaciones de la lista que tenga encima de ella. Todas las modificaciones incluyen los cambios de título, descripción, participantes, pero no las respuestas de los participantes. Si el propietario de un evento solicitó alguna notificación, siempre recibirá las respuestas del participante, como aceptacines y también rechazos.
 do you want to be notified about participant responses from events you created, but are not participating in?	calendar	es-es	¿Desea recibir notificaciones sobre las respuestas de los participantes de los eventos que creó, pero en los que no participa?
+do you want to delete this subscription incl. the synced events?	calendar	es-es	¿Desea eliminar esta suscripción, incluidos los eventos sincronizados?
 do you want to edit this event as an exception or the whole series?	calendar	es-es	¿Desea editar este evento como una excepción o la serie completa?
 do you want to keep the series exceptions in your calendar?	calendar	es-es	¿Desea mantener las excepciones a la serie en su calendario?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	es-es	¿Desea recibir regularmente por correo un resumen de sus citas?<br>El resumen se le enviará a su correo electrónico habitual el mismo día por la mañana o el lunes para resúmenes semanales.<br>Sólo se envía si hay citas en ese día o esa semana.
@@ -279,6 +285,7 @@ full edit dialog	calendar	es-es	Diálogo de edición completa
 fullname of person to notify	calendar	es-es	Nombre completo de la persona a la que notificar
 general fields:	calendar	es-es	Campos generales:
 general settings	calendar	es-es	Opciones generales
+given url is not a caldav server: missing %1!	calendar	es-es	La URL indicada no es un servidor CalDAV: ¡falta %1!
 global categories	calendar	es-es	Categorías globales
 global public and group public	calendar	es-es	Público Global y grupo público
 global public only	calendar	es-es	Público global sólo
@@ -589,8 +596,14 @@ status for all future scheduled days changed	calendar	es-es	El estado para las p
 status for this particular day changed	calendar	es-es	El estado para este día en particular se ha modificado
 status of participants set to unknown because of missing category rights	calendar	es-es	El estado de los participantes se ha establecido a desconocido debido a la fata de derechos en la categoría
 submit to repository	calendar	es-es	Enviar al repositorio
+subscribed calendar	calendar	es-es	Calendario suscrito
+subscription incl. the synced events deleted.	calendar	es-es	Suscripción incl. los eventos sincronizados eliminada.
+subscription saved.	calendar	es-es	Suscripción guardada.
+subscription synced.	calendar	es-es	Suscripción sincronizada.
+subscriptions	calendar	es-es	Suscripciones
 summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	es-es	Resumen de la situación de los participantes: 3 Participantes: 1 Aceptado, 2 Desconocido
 sun	calendar	es-es	Dom
+sync now	calendar	es-es	Sincronizar ahora
 tag to mark positions for address labels	calendar	es-es	Etiqueta para marcar las posiciones para las etiquetas de direcciones
 tentative	calendar	es-es	Provisional
 test import (show importable records <u>only</u> in browser)	calendar	es-es	Probar Importar (mostrar <u>solamente</u> registros importables en el navegador)

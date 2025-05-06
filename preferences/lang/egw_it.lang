@@ -11,6 +11,7 @@ acl grants have been updated	preferences	it	Le autorizzazioni ACL sono state agg
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	it	Ogni lista in EGroupware visualizzerà questo numero di voci o di linee per pagina.<br>Un numero elevato rallenta la visualizzazione della pagina, troppo poche ti costringono ad un lavoro aggiuntivo.
 applications list scroll area	preferences	it	Area di scorrimento dell'elenco delle applicazioni
 are you sure you want to delete this category ?	preferences	it	Sei sicuro di voler eliminare questa categoria?
+are you sure?	preferences	it	Sei sicuro?
 audio effect	preferences	it	Avviso sonoro
 audio effect enables|disables sound effects used in the theme	preferences	it	L'impostazione dell'effetto sonoro abilita/disabilita i suoni usati nel tema
 automatically start with this font	preferences	it	Comincia automaticamente con questo font
@@ -23,6 +24,7 @@ charset for the csv export/import	preferences	it	Set di caratteri
 click to install	preferences	it	click per installare
 close after selection	preferences	it	Chiudere dopo la selezione
 code is invalid	preferences	it	Codice non valido
+code is required	preferences	it	Kode diperlukan
 color	preferences	it	Colore
 country	preferences	it	Paese
 current password	preferences	it	Password attuale
@@ -60,6 +62,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	it	Abilita o disabilita il ridimensionamento del menù a tendina per IE in tutte le applicazioni. Se il tuo browser non è Internet Explorer, l'ozione non verrà applicata. La funzione è sperimentale al momento
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	it	Abilita o disabilita il ridimensionamento del menù a tendina per IE in tutte le applicazioni. Se il tuo browser non è Internet Explorer, l'ozione non verrà applicata. La funzione è sperimentale al momento
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	it	E' necessaria una connessione LDAP criptata per cambiare le password, ma non è configurata nella tua installazione.
+enter code to authenticate the actions below	preferences	it	Masukkan kode untuk mengautentikasi tindakan di bawah ini
 enter code to verify correct setup	preferences	it	Inserire il codice per verificare la correttezza dell'installazione
 enter your new password	preferences	it	Inserisci la tua nuova password
 enter your old password	preferences	it	Inserisci la tua vecchia password
@@ -74,7 +77,7 @@ font size unit	preferences	it	Unità misura dimensione font
 forced preferences	preferences	it	Preferenze Forzate
 formatting & general settings	preferences	it	Formattazione e impostazioni generali
 general settings	preferences	it	Impostazioni generali
-generate new qrcode to disable existing one, after enabling the new one!	preferences	it	Generare un nuovo codice QR per disabilitare l'attuale, solo dopo aver abilitato quello nuovo!
+generate new qrcode to disable existing one, after enabling the new one!	preferences	it	Genera un nuovo codice QR per disabilitare quello esistente (dopo aver abilitato il nuovo)
 google authenticator for android	preferences	it	Google Authenticator per Android
 google authenticator for ios	preferences	it	Google Authenticator per iOS
 heading %1	preferences	it	Intestazione %1
@@ -135,10 +138,10 @@ pt: points (1/72 inch)	preferences	it	pt: Punti  (1/72 pollici)
 px: display pixels	preferences	it	px: Pixel
 re-enter your password	preferences	it	Reinserisci la password
 read prefs for the specified application.	preferences	it	Legge le preferenze per l'applicazione specificata.
-reset qrcode	preferences	it	Reimposta codice QR
+reset qrcode	preferences	it	Resetta il codice QR
 revoke	preferences	it	Revoca
 revoke this token	preferences	it	Revoca questo token
-scan qrcode with a time-based one-time password (totp) app:	preferences	it	Scansiona il codice QR con una apposita app:
+scan qrcode with a time-based one-time password (totp) app:	preferences	it	Scansiona il codice QR con un'app TOTP (Time-based one-time password):
 secret deleted, two factor authentication disabled.	preferences	it	Codice segreto eliminato, la autenticazione a due fattori è stata disabilitata.
 select additional lines in lists by	preferences	it	Selezionare righe aggiuntive nelle lista con
 select one	preferences	it	Seleziona uno
@@ -159,7 +162,7 @@ show links between egroupware aps as	common	it	Icone applicazioni e link
 show navigation bar as	preferences	it	Mostra la barra di navigazione come
 show number of current users	preferences	it	Visualizza il numero degli utenti correnti
 show qrcode	preferences	it	Mostra codice QR
-show qrcode to enable on an additional device.	preferences	it	Mostra il codice QR da abilitare su altro dispositivo
+show qrcode to enable on an additional device.	preferences	it	Visualizza nuovamente il codice QR per impostarlo su altri dispositivi
 show text on navigation icons	preferences	it	Mostra testo nelle icone di navigazione
 show_more_apps	common	it	Visualizza altre applicazioni
 singlesignon and passwords	preferences	it	SingleSignOn e le password

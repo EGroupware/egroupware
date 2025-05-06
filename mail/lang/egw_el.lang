@@ -167,6 +167,7 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	el	Θέλετε πραγματικά να ενεργοποιήσετε την ετικέτα %1 για ΟΛΑ τα μηνύματα στην τρέχουσα προβολή;
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	el	Θέλετε να ερωτάστε για επιβεβαίωση πριν την επισύναψη επιλεγμένων μηνυμάτων σε νέο μήνυμα;
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	el	Θέλετε να ερωτάστε για επιβεβαίωση πριν από την μεταφορά επιλεγμένων μηνυμάτων σε άλλο φάκελο;
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	el	Θέλετε να αποτρέψετε την επεξεργασία/ρύθμιση της ειδοποίησης μέσω email σε άλλες διευθύνσεις email εάν φτάσουν emails(, ακόμη και αν το Sieve είναι ενεργοποιημένο);
 does not contain	mail	el	δεν περιέχει
 does not exist on imap server.	mail	el	δεν υπάρχει στο εξυπηρετητή IMAP.
 does not match	mail	el	δεν συμπίπτει
@@ -517,7 +518,7 @@ select file to attach to message	mail	el	Επιλέξτε ένα αρχείο γ
 select file to import into folder	mail	el	Επιλέξτε έαν αρχείο για εισαγωγή στον φάκελο
 select file(s) from vfs	mail	el	Επιλογή αρχείων από VFS
 select files to upload	mail	el	Επιλογή αρχείων για αναφόρτωση
-select mail addresses from addressbook	mail	el	Επιλογή διευθύνσεων αλληλογραφίας από το βιβλίο διευθύνσεων
+select mail addresses from addressbook	mail	el	Επιλέξτε διεύθυνση(ες) ηλεκτρονικού ταχυδρομείου από το βιβλίο διευθύνσεων
 select multiple	mail	el	Επιλογή πολλαπλών
 select or insert email address	mail	el	Επιλογή ή εισαγωγή διεύθυνσης ηλεκτρονικού ταχυδρομείου
 selected	mail	el	επιλεγμένο

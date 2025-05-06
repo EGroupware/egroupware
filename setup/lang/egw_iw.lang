@@ -322,7 +322,6 @@ size	setup	iw	גודל
 some or all of its tables are missing	setup	iw	לפחות חלק מהטבלאות חסר
 sql encryption type	setup	iw	(md-5 - ברירת מחדל) SQL סוג ההצפנה של
 start the postmaster	setup	iw	postmaster-התחל את ה
-status	setup	iw	סטאטוס
 step %1 - admin account	setup	iw	צעד %1 - חשבון ניהול
 step %1 - advanced application management	setup	iw	צעד %1 - ניהול יישומים מתקדם
 step %1 - configuration	setup	iw	צעד %1 - קונפיגורציה

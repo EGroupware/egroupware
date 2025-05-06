@@ -461,7 +461,6 @@ standard mailserver settings (used for mail authentication too)	setup	zh-tw	標�
 start the postmaster	setup	zh-tw	開始postmaster
 start updating languages %1 ...	setup	zh-tw	開始更新語言 %1 ...
 start updating the database ...	setup	zh-tw	開始更新資料庫 ...
-status	setup	zh-tw	狀態
 step %1 - admin account	setup	zh-tw	步驟%1 - 管理者帳號
 step %1 - advanced application management	setup	zh-tw	步驟%1 - 進階應用程式管理
 step %1 - configuration	setup	zh-tw	步驟%1 - 設定
@@ -531,11 +530,9 @@ user	setup	zh-tw	使用者
 user account prefix	setup	zh-tw	使用者帳號前置字元
 user for smtp-authentication (leave it empty if no auth required)	setup	zh-tw	SMTP驗證的帳號（如果不需要就保持空白）
 usernames are casesensitive	setup	zh-tw	使用者帳號有大小寫之分
-users choice	setup	zh-tw	使用者的選擇
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	zh-tw	通常是多餘的，管理者可以透過帳號或群組管理來授予其他模組的權限。
 utf-8 (unicode)	setup	zh-tw	utf-8 (多國語言編碼)
 validation errors	setup	zh-tw	驗證錯誤
-version	setup	zh-tw	版本
 version mismatch	setup	zh-tw	版本不符
 view	setup	zh-tw	瀏覽
 virtual mail manager (login-name includes domain)	setup	zh-tw	虛擬郵件管理員（登入名稱包含網域）
@@ -552,8 +549,6 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	zh-tw	您希望顯示每一個應用程式升級的資訊嗎？
 writable by the webserver	setup	zh-tw	網頁伺服器可以寫入
 write	setup	zh-tw	寫入
-year	setup	zh-tw	年
-yes	setup	zh-tw	是
 yes, with lowercase usernames	setup	zh-tw	是，使用英文小寫的帳號
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	zh-tw	您目前安裝的為測試版本的 EGroupware。<br />目前已經不再支援這個版本，建議您先升級到 0.9.10 版﹝最後一個測試版本﹞ <br />再升級到現在的版本。
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	zh-tw	您似乎正在執行較舊版本的PHP<br />建議您將它更新到較新的版本。<br />較舊的PHP版本也許無法正確執行EGroupware。<br /><br />請將版本至少更新到%1
@@ -568,9 +563,7 @@ you didn't enter a config password for domain %1	setup	zh-tw	您並未輸入%1�
 you didn't enter a config username for domain %1	setup	zh-tw	您並未輸入
 you didn't enter a header admin password	setup	zh-tw	您並未輸入頁首管理員密碼
 you didn't enter a header admin username	setup	zh-tw	您並未輸入頁首管理員帳號
-you do not have any languages installed. please install one now <br />	setup	zh-tw	您目前沒有安裝任何的語言，請安裝至少一種語言。<br />
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	zh-tw	您尚未建立您的header.inc.php！<br />您可以現在建立。
-you have successfully logged out	setup	zh-tw	您已經成功登出了
 you must enter a username for the admin	setup	zh-tw	您必須輸入管理者的帳號名稱
 you need to add at least one egroupware domain / database instance.	setup	zh-tw	您至少必須新增一個 EGroupware 網域/資料庫實例。
 you need to configure egroupware:	setup	zh-tw	您必須設定 EGroupware ：

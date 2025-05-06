@@ -12,6 +12,7 @@ accepted	calendar	zh	已接受
 access denied to the calendar of %1 !!!	calendar	zh	对 %1 的日历的访问被拒绝！
 access to calendar of %1 denied!	calendar	zh	拒绝访问 %1 的日历！
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zh	执行下列操作将发出通知：添加, 取消, 接受, 拒绝...
+add a comment to send to organizer with your response	calendar	zh	添加评论，将您的回复发送给组织者
 add alarm	calendar	zh	添加闹铃
 add appointments via shortened dialog or complete edit window	calendar	zh	通过缩短的对话框或完整的编辑窗口添加约会
 add current view as favorite	calendar	zh	将当前视图添加为收藏夹
@@ -23,6 +24,7 @@ add timesheet entry	calendar	zh	添加时间表条目
 added	calendar	zh	添加
 added by synchronization	calendar	zh	通过同步添加
 added recurrence on %1.	calendar	zh	在 %1 上添加了递归。
+additional participants	calendar	zh	附加参与者
 after	calendar	zh	之后
 after %1	calendar	zh	在%1以后
 after current date	calendar	zh	在当前日期之后
@@ -49,6 +51,7 @@ always use the full edit dialog, not this little dialog	calendar	zh	始终使用
 apply changes to (future) exceptions too?	calendar	zh	将更改也应用于（未来的）异常？
 apply the changes	calendar	zh	应用修改
 attention	calendar	zh	注意事项
+automatic update	calendar	zh	自动更新
 back half a month	calendar	zh	上半个月
 back one month	calendar	zh	上个月
 before %1	calendar	zh	在%1之前
@@ -71,13 +74,16 @@ canceled	calendar	zh	取消
 category report	calendar	zh	类别报告
 changed event-data applied	calendar	zh	应用更改后的事件数据
 charset of file	calendar	zh	文件的字符集
+check all	calendar	zh	检查所有
 choose a category	calendar	zh	选择分类
 close the window	calendar	zh	关闭窗口
+color	calendar	zh	颜色
 compose a mail to all participants after the event is saved	calendar	zh	在事件保存后发邮件通知每一个参与者
 copy this event	calendar	zh	复制此事件
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	zh	复制您的改变到剪贴板，%1重新载入条目%2并合并它们。
 countries	calendar	zh	国家
 country	calendar	zh	国家
+create a new subscription	calendar	zh	创建新订阅
 create an exception for the given date	calendar	zh	为特定日期创建一个例外
 create exception	calendar	zh	创建例外
 create new links	calendar	zh	创建新链接
@@ -109,6 +115,7 @@ deleted	calendar	zh	已删除
 display status of events	calendar	zh	显示事件状态
 displayed view	calendar	zh	显示视图
 do you want a weekview with or without weekend?	calendar	zh	您想在周视图上包含或不包含周末？
+do you want to delete this subscription incl. the synced events?	calendar	zh	您要删除此订阅（包括同步的事件）吗？
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zh	您希望通过邮件接收您的约会的规则概要吗？<br>该概要是在当天早上或者在每个周一的每周概要发到您的标准信箱。<br>它只会在当您有约会的那一天或是那一周发出。
 download	calendar	zh	下载
 download this event as ical	calendar	zh	下载这一事件的 iCal 格式
@@ -164,6 +171,7 @@ fri	calendar	zh	五
 full description	calendar	zh	完整描述
 fullname of person to notify	calendar	zh	被通知者的全名
 general fields:	calendar	zh	通用字段：
+given url is not a caldav server: missing %1!	calendar	zh	所给 URL 不是 CalDAV 服务器：缺少 %1！
 global categories	calendar	zh	全局分类
 global public and group public	calendar	zh	全局公用及群组公用
 global public only	calendar	zh	全局公用
@@ -346,7 +354,13 @@ startdate of the export	calendar	zh	导出的开始日期
 startrecord	calendar	zh	开始记录
 status changed	calendar	zh	状态被改变
 submit to repository	calendar	zh	提交到知识库
+subscribed calendar	calendar	zh	订阅的日历
+subscription incl. the synced events deleted.	calendar	zh	已删除订阅和同步事件。
+subscription saved.	calendar	zh	已保存订阅。
+subscription synced.	calendar	zh	已同步订阅。
+subscriptions	calendar	zh	订阅
 sun	calendar	zh	日
+sync now	calendar	zh	现在同步
 tentative	calendar	zh	暂定的
 test import (show importable records <u>only</u> in browser)	calendar	zh	测试导入(<u>只有</u>在浏览器中显示可以导入的纪录)
 the apple ical apps use this color to display events from this calendar.	calendar	zh	Apple iCal 应用程序使用这种颜色来显示该日历中的事件。

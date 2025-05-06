@@ -10,6 +10,7 @@
 %1 weeks	calendar	id	%1 minggu
 (%1 events in %2 seconds)	calendar	id	(%1 kegiatan dalam %2 detik)
 (empty = use global limit, no = no export at all)	admin	id	(empty = gunakan pembatasan global, no = tidak ada ekspor sama sekali)
+a list of email addresses of all participants who have not declined	calendar	id	Tambahkan komentar untuk dikirim ke penyelenggara dengan tanggapan Anda
 a non blocking event will not conflict with other events	calendar	id	Kegiatan yang <em>non blocking tidak akan konflik dengan kegiatan lainnya
 a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	id	Perusak pesta pada seseorang yang TIDAK diundang ke rapat namun entah bagaimana mendapatkan undangan tersebut.
 accept	calendar	id	Diterima
@@ -29,6 +30,7 @@ add timesheet entry	calendar	id	Tamba entri lembarwaktu
 added	calendar	id	Ditambahkan
 added by synchronization	calendar	id	Ditambahkan dengan sinkronisasi
 added recurrence on %1.	calendar	id	Menambahkan pengulangan pada %1.
+additional participants	calendar	id	Peserta tambahan
 after	calendar	id	Setelah
 after %1	calendar	id	Setelah %1
 after current date	calendar	id	Setelah tanggal sekarang
@@ -56,6 +58,7 @@ always use the full edit dialog, not this little dialog	calendar	id	Selalu gunak
 apply changes to (future) exceptions too?	calendar	id	Menerapkan perubahan pada pengecualian (di masa mendatang) juga?
 apply the changes	calendar	id	Terapkan perubahan
 attention	calendar	id	Perhatian
+automatic update	calendar	id	Pembaruan otomatis
 back half a month	calendar	id	Mundur setengah bulan
 back one month	calendar	id	Mundur sebulan
 back one year	calendar	id	Mundur setahun
@@ -87,13 +90,16 @@ chair	calendar	id	Pimpinan
 change history	calendar	id	Riwayat pengubahan
 changed event-data applied	calendar	id	Perubahan data acara yang diterapkan
 charset of file	calendar	id	Karakter file
+check all	calendar	id	Periksa semua
 choose a category	calendar	id	Pilih kategori
 close the window	calendar	id	Tutup jendela
+color	calendar	id	Warna
 compose a mail to all participants after the event is saved	calendar	id	Tulis surat ke seluruh peserta setelah kegiatan disimpan
 conflict	calendar	id	Konflik
 copy this event	calendar	id	Salin kegiatan ini
 countries	calendar	id	Negara
 country	calendar	id	Negara
+create a new subscription	calendar	id	Buat langganan baru
 create an exception for the given date	calendar	id	Bikin pengecualian untuk tanggal tertentu
 create exception	calendar	id	Bikin pengecualian
 create new links	calendar	id	Bikin tautan baru
@@ -121,6 +127,7 @@ delete this exception	calendar	id	Hapus pengecualian ini
 delete this series of recurring events	calendar	id	Hapus runtun kegiatan yang berulang ini
 deleted	calendar	id	Dihapus
 display status of events	calendar	id	Tampilkan status kegiatan
+do you want to delete this subscription incl. the synced events?	calendar	id	Apakah Anda ingin menghapus langganan ini, termasuk acara yang disinkronkan?
 download	calendar	id	Unduh
 download this event as ical	calendar	id	Unduh kegiatan ini sebagai iCal
 duration	calendar	id	Durasi
@@ -166,6 +173,7 @@ freetime search	calendar	id	Mencari waktu Senggang
 fri	calendar	id	Jum
 full description	calendar	id	Uraian lengkap
 general fields:	calendar	id	Field Umum:
+given url is not a caldav server: missing %1!	calendar	id	URL yang diberikan bukan server CalDAV: tidak ada %1!
 global categories	calendar	id	Kategori Global
 group invitation	calendar	id	Undangan secara Kelompok
 group planner	calendar	id	Group planner
@@ -318,7 +326,13 @@ startdate and -time of the search	calendar	id	Tanggal dan -waktu untuk memulai p
 startdate of the export	calendar	id	Tanggal awal untuk ekspor
 startrecord	calendar	id	Awal Rekaman
 status changed	calendar	id	Status berubah
+subscribed calendar	calendar	id	Kalender langganan
+subscription incl. the synced events deleted.	calendar	id	Langganan termasuk acara yang disinkronkan dihapus.
+subscription saved.	calendar	id	Langganan disimpan.
+subscription synced.	calendar	id	Langganan disinkronkan.
+subscriptions	calendar	id	Langganan
 sun	calendar	id	Min
+sync now	calendar	id	Sinkronisasi sekarang
 tentative	calendar	id	Tentative
 test import (show importable records <u>only</u> in browser)	calendar	id	Tes Impor (tampilkan rekaman yang dapat diimpor </u>hanya</u> dalam browser)
 the apple ical apps use this color to display events from this calendar.	calendar	id	Aplikasi Apple iCal menggunakan warna ini untuk menampilkan acara dari kalender ini.

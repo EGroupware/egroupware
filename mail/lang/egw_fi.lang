@@ -17,6 +17,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	fi	%1:n lisä
 adding %1 to whiltelisted email addresses failed because of %2	mail	fi	%1:n lisääminen luettelossa oleviin sähköpostiosoitteisiin epäonnistui %2:n takia
 after reply, visible during compose	mail	fi	Vastauksen jälkeen, näkyvissä kokoamisen aikana
 aliases+forwards	mail	fi	Aliasit+Edelleenlähetys
+all my email addresses	mail	fi	kaikki sähköpostiosoitteeni
 all of	mail	fi	kaikki
 allow external images from listed domains	mail	fi	Salli ulkoiset kuvat luetelluista verkkotunnuksista
 allow images from external sources in html emails	mail	fi	Salli kuvat HTML sähköposteissa
@@ -107,6 +108,7 @@ edit account	mail	fi	Muokkaa käyttäjätiliä
 edit vacation settings	mail	fi	Muokkaa lomavastaaja-asetuksia
 email address	mail	fi	Sähköpostiosoite
 email notification update failed	mail	fi	Sähköpostin huomautusviestipäivitys epäonnistui
+email notification update failed! you need to set an email address!	mail	fi	Sähköposti-ilmoitusten päivitys epäonnistui! Sinun on määritettävä sähköpostiosoite!
 emailaddress	admin	fi	Sähköpostiosoite
 emailadmin: profilemanagement	mail	fi	eMailAdmin: : Profiilinhallinta
 emails in whitelisted domains are not marked as spam	mail	fi	Sähköposteja ei merkitä roskapostiksi valkoisen listan verkkotunnuksissa
@@ -159,6 +161,7 @@ ident name organization email	mail	fi	Tunnuksen nimi Organisaatio [Sähköposti]
 identity	mail	fi	Identiteetti
 identity label	mail	fi	Tunnisteen etiketti
 if	mail	fi	JOS
+if different from email address	mail	fi	Jos eri kuin sähköpostiosoite
 if mail header	mail	fi	Jos postin ylätunniste
 if message size	mail	fi	Jos viestin koko
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	fi	Jos haluat nähdä sähköpostin esikatselun napsauttamalla aiheen kohdalla, ota tämä käyttöön.
@@ -321,7 +324,7 @@ see attachments for content of the orignial mail	mail	fi	Katso alkuperäisen sä
 select all	mail	fi	Valitse kaikki
 select an existing entry in order to append mail content to it	mail	fi	Valitse olemassa oleva merkintä, jotta voit liittää siihen sähköpostin sisällön
 select an item to read	mail	fi	Valitse kohde luettavaksi
-select mail addresses from addressbook	mail	fi	Valitse sähköpostiosoitteet osoitekirjasta
+select mail addresses from addressbook	mail	fi	Valitse sähköpostiosoite(t) osoitekirjasta
 select or insert email address	mail	fi	Valitse tai lisää sähköpostiosoite
 selected date range (with quicksearch)	mail	fi	Valittu päivämääräväli (pikahaun avulla)
 send message and move to send folder (if configured)	mail	fi	Lähetä viesti ja siirrä se lähetyskansioon (jos määritetty)

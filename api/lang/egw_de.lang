@@ -3,7 +3,7 @@
 %1 copied - the copy can now be edited	common	de	%1 Kopie - Diese Kopie kann jetzt bearbeitet werden
 %1 directories %2 found!	admin	de	%1 Ordner %2 gefunden!
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt.
-%1 email(s) added into %2	common	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt
+%1 email(s) added into %2	common	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt.
 %1 etemplates deleted	common	de	%1 eTemplate(s) gelöscht
 %1 etemplates found	common	de	%1 eTemplate(s) gefunden.
 %1 file	common	de	%1 Datei
@@ -1061,7 +1061,7 @@ play/pause	common	de	Wiedergabe/Pause
 please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein!
 please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an!
-please reload the egroupware desktop (f5 / cmd+r).	common	de	Bitte laden Sie die EGroupware-Oberfläche neu (F5 / Ctrl+R).
+please reload the egroupware desktop (f5 / cmd+r).	common	de	Bitte laden Sie die EGroupware-Oberfläche neu (F5 / Strg + R).
 please remember to use '%1' as username for local login's from now on!	common	de	Bitte daran denken ab sofort '%1' als Benutzernamen für lokale Anmeldungen zu benutzen!
 please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
 please select	common	de	Bitte wählen
@@ -1260,7 +1260,7 @@ select work email address	common	de	Geschäftl. E-Mail-Adresse auswählen
 select year	common	de	Jahr auswählen
 selectbox	common	de	Auswahlbox
 selection	common	de	Auswahl
-selection of files can only be done in one folder.  %1 files unselected.	common	de	Die Auswahl von Dateien kann nur in einem Ordner erfolgen. %1 Dateien nicht ausgewählt.
+selection of files can only be done in one folder.  %1 files unselected.	common	de	Die Auswahl von Dateien kann nur in einem Ordner erfolgen. %1 Dateie(n) nicht ausgewählt.
 send	common	de	Senden
 send succeeded to %1	common	de	Versand erfolgreich zu %1
 senegal	common	de	SENEGAL
