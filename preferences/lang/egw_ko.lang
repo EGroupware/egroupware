@@ -8,6 +8,9 @@ acl grants have been updated	preferences	ko	ACL 허용이 업데이트 되었습
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ko	EGroupware에서 사용되는 어떠한 리스트의 개수나 페이지당 라인은 설정한 수만큼 보입니다.<br>너무 큰 수는 페이지 표시가 느려지고 , 너무 작은 수는 전체적인 보기에 많은 시간을 소비하게 됩니다.
 applications list scroll area	preferences	ko	사이드 메뉴 스크롤 버튼
 are you sure you want to delete this category ?	preferences	ko	정말 이 카테고리를 삭제할까요?
+are you sure?	preferences	ko	확실하신가요?
+code is invalid	preferences	ko	코드가 유효하지 않습니다
+code is required	preferences	ko	코드가 필요합니다
 color	preferences	ko	색
 country	preferences	ko	국가
 date format	preferences	ko	날짜 형식
@@ -18,9 +21,12 @@ deny following groups access to application passwords	preferences	ko	애플리�
 description can not exceed 255 characters in length !	preferences	ko	설명은 255 글자를 넘길수 없습니다!
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ko	24시간 시간 형식이 좋으신가요? 아니면 12시간 시간형식에 am/pm 이 덧붙혀 표기되는 형식이 좋으신가요?
 edit custom fields	preferences	ko	사용자정의 필드를 편집
+enter code to authenticate the actions below	preferences	ko	아래 작업을 인증하려면 코드를 입력하세요
+enter code to verify correct setup	preferences	ko	올바른 설정을 확인하려면 코드를 입력하세요.
 enter your new password	preferences	ko	새로운 암호를 입력
 failed to change password.	preferences	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
 forced preferences	preferences	ko	강제 환경설정
+generate new qrcode to disable existing one, after enabling the new one!	preferences	ko	새 QR 코드를 생성하여 기존 코드를 비활성화(새 코드를 활성화한 후)
 help off	preferences	ko	도움말 끄기
 hours	preferences	ko	시간
 how do you like to display accounts	preferences	ko	어떻게 계정을 표시하겠습니까?
@@ -45,6 +51,8 @@ note: this feature does *not* change your email password. this will need to be d
 password stored	preferences	ko	비밀번호 저장.
 popup with search	preferences	ko	팝업으로 검색
 re-enter your password	preferences	ko	새로운 암호 확인
+reset qrcode	preferences	ko	QR 코드 재설정
+scan qrcode with a time-based one-time password (totp) app:	preferences	ko	TOTP(시간 기반 일회용 비밀번호) 앱으로 QR 코드 스캔하기:
 select one	preferences	ko	하나를 선택
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ko	EGroupware의 문장과 메세지의 언어를 선택하세요.<br>특정 언어는 모든 메세지를 포함하고 있지 않아서 영어로 보입니다.
 selectbox	preferences	ko	선택상자
@@ -55,6 +63,8 @@ should this help messages shown up always, when you enter the preferences or onl
 show helpmessages by default	preferences	ko	기본적으로 도움말 보이기
 show navigation bar as	preferences	ko	네비게이션 바를 볼때
 show number of current users	preferences	ko	현재 사용자 수
+show qrcode	preferences	ko	QR코드 보기
+show qrcode to enable on an additional device.	preferences	ko	QR 코드를 다시 표시하여 다른 장치에서 설정하기
 show text on navigation icons	preferences	ko	툴팁보기
 show_more_apps	common	ko	더 많은 응용프로그램 보기
 singlesignon and passwords	preferences	ko	SingleSignOn 및 비밀번호

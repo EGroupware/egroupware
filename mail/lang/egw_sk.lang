@@ -547,7 +547,7 @@ select file to attach to message	mail	sk	Vyberte súbor ktorý sa pripojí v pr�
 select file to import into folder	mail	sk	Vyberte súvor ktorý sa naimportuje do priečinka
 select file(s) from vfs	mail	sk	Vyberte súbor(y) z VFS
 select files to upload	mail	sk	Vyberte súbory ktoré sa priložia k správe
-select mail addresses from addressbook	mail	sk	Výber poštových adries z adresára
+select mail addresses from addressbook	mail	sk	Vyberte e-mailovú adresu (adresy) z adresára
 select multiple	mail	sk	Vyberte viacero
 select or insert email address	mail	sk	Vyberte alebo vložte e-mailovú adresu
 selected	mail	sk	vybrané

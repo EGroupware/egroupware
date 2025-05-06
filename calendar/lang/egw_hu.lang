@@ -19,6 +19,7 @@ accepted	calendar	hu	Elfogadva
 access denied to the calendar of %1 !!!	calendar	hu	%1 naptárhoz a hozzáférés megtagadva!
 access to calendar of %1 denied!	calendar	hu	Hozzáférés a %1 naptárához megtagadva!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	hu	Értesítés a következők miatt: Hozzáadva, Mégsem, Elfogadva, Elutasítva, ...
+add a comment to send to organizer with your response	calendar	hu	Hozzászólás hozzáadása, hogy elküldje a szervezőnek a válaszát
 add alarm	calendar	hu	Riasztás hozzáadása
 add appointments via shortened dialog or complete edit window	calendar	hu	Időpontok hozzáadása rövidített párbeszédpanelen vagy teljes szerkesztőablakon keresztül
 add current view as favorite	calendar	hu	Az aktuális nézet hozzáadása kedvencnek
@@ -30,6 +31,7 @@ add timesheet entry	calendar	hu	Regiszter bejegyzés hozzáadása
 added	calendar	hu	Hozzáadva
 added by synchronization	calendar	hu	Hozzáadás szinkronizálással
 added recurrence on %1.	calendar	hu	Visszatérés hozzáadva %1.
+additional participants	calendar	hu	További résztvevők
 after	calendar	hu	A  után
 after %1	calendar	hu	%1 után
 after current date	calendar	hu	Mai dátum után
@@ -57,6 +59,7 @@ always use the full edit dialog, not this little dialog	calendar	hu	Mindig a tel
 apply changes to (future) exceptions too?	calendar	hu	A változtatásokat a (jövőbeli) kivételekre is alkalmazni?
 apply the changes	calendar	hu	Változások elfogadása
 attention	calendar	hu	Figyelem
+automatic update	calendar	hu	Automatikus frissítés
 back half a month	calendar	hu	Fél hónapot vissza
 back one month	calendar	hu	Egy hónapot vissza
 before %1	calendar	hu	%1 előtt
@@ -85,14 +88,17 @@ category report	calendar	hu	Kategória jelentés
 change history	calendar	hu	Történet módosítása
 changed event-data applied	calendar	hu	Módosított esemény-adatok alkalmazása
 charset of file	calendar	hu	Állomány karakterkészlete
+check all	calendar	hu	Mindent ellenőrizni
 choose a category	calendar	hu	Válasszon kategóriát
 close the window	calendar	hu	Ablak bezárás
+color	calendar	hu	Szín
 compose a mail to all participants after the event is saved	calendar	hu	Mail szerkesztése az összes résztvevőnek az esemény mentését követően.
 conflict	calendar	hu	Ütközés
 copy this event	calendar	hu	Esemény másolása
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	hu	Másold a módosításokat a vágólapra, %1frissítsd az oldalat%2 és fűzd hozzá.
 countries	calendar	hu	Országok
 country	calendar	hu	Ország
+create a new subscription	calendar	hu	Új előfizetés létrehozása
 create an exception for the given date	calendar	hu	Kivétel létrehozása a megadott dátumra
 create exception	calendar	hu	Kivétel létrehozása
 create new links	calendar	hu	Új hivatkozások létrehozása
@@ -129,6 +135,7 @@ display status of events	calendar	hu	Események státuszának megjelenítése
 displayed view	calendar	hu	Megjelenített nézet
 do you want a weekview with or without weekend?	calendar	hu	A heti nézet tartalmazza a hétvégét vagy nem?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	hu	Szeretne kapni értesítést az új vagy megváltozott találkozókról? Értesítést kap arról is amin változtatott.<br>Az értesítéseket limitálhatja meghatározott változásokra is. Az értesítési listán minden szerepel. Minden módosítás tartalmazza a változás címét, leírását, résztvevőket, de a résztvevők válaszait nem. Ha az esemény tulajdonosa kér valamilyen értesítést, mindig megkapja a résztvevő válaszát hogy elfogadták vagy elutasították azt.
+do you want to delete this subscription incl. the synced events?	calendar	hu	Szeretné törölni ezt az előfizetést, beleértve a szinkronizált eseményeket?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	hu	Akar kapni egyszerű összesítést az Ön találkozóiról emailben?<br>Az összesítő az email címére lesz küldve aznap reggel, vagy hétfőn a heti összesítés.<br>Csak akkor lesz elküldve amikor Önnek találkozója van azon a napon vagy héten.
 download	calendar	hu	Letölt
 download this event as ical	calendar	hu	Esemény letöltése iCal formátumban
@@ -190,6 +197,7 @@ fri	calendar	hu	Pé
 full description	calendar	hu	Teljes leírás
 fullname of person to notify	calendar	hu	A személy teljes neve az értesítéshez
 general fields:	calendar	hu	Általános mezők:
+given url is not a caldav server: missing %1!	calendar	hu	A megadott URL nem CalDAV-kiszolgáló: hiányzik %1!
 global categories	calendar	hu	Globális kategóriák
 global public and group public	calendar	hu	Globális publikus és csoport publikus
 global public only	calendar	hu	Csak globális publikus
@@ -375,7 +383,13 @@ startdate of the export	calendar	hu	Az exportálás kezdési időpontja
 startrecord	calendar	hu	Kezdő bejegyzés
 status changed	calendar	hu	Státusz megváltozott
 submit to repository	calendar	hu	Gyűjtőbe helyezés
+subscribed calendar	calendar	hu	Előfizetett naptár
+subscription incl. the synced events deleted.	calendar	hu	Előfizetés a szinkronizált eseményekkel együtt törlésre került.
+subscription saved.	calendar	hu	Az előfizetés elmentve.
+subscription synced.	calendar	hu	Előfizetés szinkronizálva.
+subscriptions	calendar	hu	Előfizetések
 sun	calendar	hu	Va
+sync now	calendar	hu	Szinkronizálás most
 tentative	calendar	hu	Ideiglenesen elfogadva
 test import (show importable records <u>only</u> in browser)	calendar	hu	Import tesztelése (<u>csak</u> a nem beolvasható bejegyzések mutatása a böngészőben)
 the apple ical apps use this color to display events from this calendar.	calendar	hu	Az Apple iCal alkalmazások ezt a színt használják a naptár eseményeinek megjelenítésére.

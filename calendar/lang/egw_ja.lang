@@ -24,6 +24,7 @@ accepted	calendar	ja	参加回答済み
 access denied to the calendar of %1 !!!	calendar	ja	%1 のカレンダーに対するアクセスが拒否されました!!!
 access to calendar of %1 denied!	calendar	ja	%1 のカレンダーに対するアクセスが拒否されました!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ja	通知要因となったアクション（追加, キャンセル, 参加回答, 不参加回答, ...）
+add a comment to send to organizer with your response	calendar	ja	オーガナイザーに送信するコメントの追加
 add alarm	calendar	ja	アラームを追加
 add appointments via shortened dialog or complete edit window	calendar	ja	短縮ダイアログまたは完全な編集ウィンドウで予定を追加
 add current view as favorite	calendar	ja	現在の表示をお気に入りに追加
@@ -35,6 +36,7 @@ add timesheet entry	calendar	ja	タイムシート・エントリーを追加
 added	calendar	ja	追加されました
 added by synchronization	calendar	ja	同期（追加）しました。
 added recurrence on %1.	calendar	ja	%1 に再帰を追加しました。
+additional participants	calendar	ja	参加者の追加
 after	calendar	ja	後
 after %1	calendar	ja	%1 以後
 after current date	calendar	ja	本日以後
@@ -66,6 +68,7 @@ appointment settings	calendar	ja	イベント設定
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	ja	代替策として、MySQLダンプを入手して、テーブル egw_cal_timezones に手作業でインポートする方法があります。
 at start of the event	calendar	ja	イベント開始時
 attention	calendar	ja	注意事項
+automatic update	calendar	ja	自動更新
 automatically purge old events after	admin	ja	下記経過後のイベントを自動削除:
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	ja	週表示中の各日表内、または選択範囲内の日表内の最初の項目で利用可能。
 back half a month	calendar	ja	半月前
@@ -111,9 +114,11 @@ change history	calendar	ja	変更履歴
 change your status	calendar	ja	ステータスを変更
 changed event-data applied	calendar	ja	変更されたイベントデータ
 charset of file	calendar	ja	ファイルの文字セット
+check all	calendar	ja	すべてチェック
 choose a category	calendar	ja	カテゴリを選択
 choose owner of imported data	calendar	ja	インポートしたデータの所有者を選択
 close the window	calendar	ja	ウィンドウを閉じる
+color	calendar	ja	色
 compose a mail to all participants after the event is saved	calendar	ja	イベントを保存して全参加者に送付するメールを作成
 configuration settings	calendar	ja	コンフィギュレーション設定
 conflict	calendar	ja	衝突
@@ -122,6 +127,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	calenda
 countries	calendar	ja	国
 country	calendar	ja	国
 create a new series	calendar	ja	新規繰返しイベントを作成
+create a new subscription	calendar	ja	新規購読の作成
 create an exception for the given date	calendar	ja	指定日の例外を作成
 create an infolog from this event	calendar	ja	このイベントからインフォログを作成
 create exception	calendar	ja	例外を作成
@@ -187,6 +193,7 @@ do you want non-egroupware participants of events you created to be automaticall
 do you want to be notified about changes of appointments you modified?	calendar	ja	あなた自身が変更したイベントについての通知を受けとるか否かを指定します。
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	ja	イベントの作成時/変更時にメールで通知を受けとるか否かを指定します。あなた自身が行なった変更についてメール通知は行なわれません。<br>変更内容に応じて通知を制限することができます（タイトル,説明,参加者。ただし参加者からの回答を除く）。イベントの所有者が通知を受け取る場合は、回答内容を含む通知を受け取ることができます。
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	ja	イベントの作成時/変更時にメールで通知を受けとるか否かを指定します。あなた自身が行なった変更についてメール通知は行なわれません。<br>変更内容に応じて通知を制限することができます（タイトル,説明,参加者。ただし参加者からの回答を除く）。イベントの所有者が通知を受け取る場合は、回答内容を含む通知を受け取ることができます。
+do you want to delete this subscription incl. the synced events?	calendar	ja	同期されたイベントを含むこの購読を削除しますか？
 do you want to edit this event as an exception or the whole series?	calendar	ja	このイベントを例外として編集しますか？それとも繰返しイベント全体として編集しますか？
 do you want to keep the series exceptions in your calendar?	calendar	ja	繰返しイベントの例外を保持しますか？
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ja	自身の約束総覧を定常的に電子メールで受信しますか？<br>総覧メールは、約束当日の朝（週総覧は月曜日の朝）に標準アドレス宛てに送信されます。<br>注: 約束のある日（または週）にしかメールは送信されません。
@@ -273,6 +280,7 @@ full edit dialog	calendar	ja	フル編集ダイアログ
 fullname of person to notify	calendar	ja	通知先氏名
 general fields:	calendar	ja	一般項目:
 general settings	calendar	ja	一般設定
+given url is not a caldav server: missing %1!	calendar	ja	指定された URL は CalDAV サーバーではありません: %1 が見つかりません！
 global categories	calendar	ja	グローバル・カテゴリ
 global public and group public	calendar	ja	パブリックと所属グループ
 global public only	calendar	ja	パブリック
@@ -573,8 +581,14 @@ status for all future scheduled days changed	calendar	ja	未来方向の予定�
 status for this particular day changed	calendar	ja	指定された日の常置あが変更されました。
 status of participants set to unknown because of missing category rights	calendar	ja	カテゴリ権限が無いため、参加者の状態を「未知」に設定しました。
 submit to repository	calendar	ja	リポジトリに送信
+subscribed calendar	calendar	ja	サブスクライブされたカレンダー
+subscription incl. the synced events deleted.	calendar	ja	同期されたイベントを含むサブスクリプションが削除されました。
+subscription saved.	calendar	ja	サブスクリプションが保存されました。
+subscription synced.	calendar	ja	サブスクリプションが同期されました。
+subscriptions	calendar	ja	サブスクリプション
 summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	ja	参加者状態のサマリ: 1=承諾, 2=不明
 sun	calendar	ja	日
+sync now	calendar	ja	今すぐ同期
 tag to mark positions for address labels	calendar	ja	アドレスラベルで、位置を記録するためのタグ
 tentative	calendar	ja	仮承諾済み
 test import (show importable records <u>only</u> in browser)	calendar	ja	インポートの予行演習。ブラウザにインポート可能なレコードを<u>表示するだけ</u>です。

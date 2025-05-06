@@ -12,6 +12,7 @@ add this certificate into contact	mail	no	Legg til dette sertifikatet i kontakt
 add to addressbook	mail	no	Legg til i adressebok
 adding %1 to blacklisted email addresses failed because of %2	mail	no	Legge til %1 til svartelistede e-postadresser mislyktes på grunn av %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	no	Legge til %1 til e-postadresser på hvilliste mislyktes på grunn av %2
+all my email addresses	mail	no	alle mine e-postadresser
 all of	mail	no	alle av
 always respond / auto-responder	mail	no	Alltid svare / autosvar
 always show html emails	mail	no	Vis alltid HTML meldinger
@@ -60,6 +61,7 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	no	Vil du virkelig veksle mellom etiketten %1 for ALLE meldinger i gjeldende visning?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	no	Vil du bli bedt om bekreftelse før du legger ved valgte meldinger i en ny e-post?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	no	Ønsker du å bli bedt om bekreftelse før du flytter valgte meldinger til en annen mappe?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	no	Vil du forhindre redigering/oppsett av varsling via e-post til andre e-postadresser hvis det kommer e-post(, selv om Sieve er aktivert)?
 does not contain	mail	no	inneholder ikke
 does not match	mail	no	stemmer ikke
 does not match regexp	mail	no	stemmer ikke med regexp
@@ -68,6 +70,7 @@ don't use trash	mail	no	Ikke bruk Søppelkurv
 edit account	mail	no	Rediger konto
 edit vacation settings	mail	no	Redigere ferieinnstillinger
 email address	mail	no	E-postadresse
+email notification update failed! you need to set an email address!	mail	no	Oppdatering av e-postvarsling mislyktes! Du må angi en e-postadresse!
 emailaddress	admin	no	E-postadresse
 emailadmin: profilemanagement	mail	no	eMailAdmin: Profiladministrasjon
 emails in whitelisted domains are not marked as spam	mail	no	E-poster i hvitelistede domener blir ikke merket som spam
@@ -114,6 +117,7 @@ ident name email	mail	no	Identnavn [E-post]
 ident name organization email	mail	no	Identnavn Organisasjon [E-post]
 identity label	mail	no	Identitetsetikett
 if	mail	no	Dersom
+if different from email address	mail	no	Hvis forskjellig fra e-postadressen
 if mail header	mail	no	dersom meldingshodet
 if message size	mail	no	dersom meldingsstørrelse
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	no	Hvis du vil se en forhåndsvisning av en e-post ved å klikke på emnet, kan du aktivere dette.
@@ -230,7 +234,8 @@ security	mail	no	Sikkerhet
 see attachments for content of the orignial mail	mail	no	Se vedlegg for innholdet i den opprinnelige e-posten.
 select all	mail	no	Velg alle
 select an existing entry in order to append mail content to it	mail	no	Velg en eksisterende oppføring for å legge til e-postinnhold i den.
-select mail addresses from addressbook	mail	no	Velg e-postadresser fra adresseboken
+select mail addresses from addressbook	mail	no	Velg e-postadresse(r) fra adresseboken
+select or insert email address	mail	no	Velg eller sett inn e-postadresse
 selected date range (with quicksearch)	mail	no	Valgt datointervall (med hurtigsøk)
 send message and move to send folder (if configured)	mail	no	Send melding og flytt til sendemappe (hvis konfigurert)
 send message pgp encrypted: requires keys from all recipients!	mail	no	Send meldingen PGP-kryptert: krever nøkler fra alle mottakere!

@@ -10,6 +10,7 @@ acl grants have been updated	preferences	ja	ACL を更新しました。
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ja	Any listing in EGroupware will show this number of entries or lines per page. Too many slow down the page display, too less will cost you the overview.
 applications list scroll area	preferences	ja	サイドメニューのスクロールボタン
 are you sure you want to delete this category ?	preferences	ja	このカテゴリを削除してよろしいですか？
+are you sure?	preferences	ja	確かですか？
 audio effect	preferences	ja	オーディオ効果
 audio effect enables|disables sound effects used in the theme	preferences	ja	テーマで使うオーディオ効果を有効化/無効化します。
 automatically start with this font	preferences	ja	このフォントで開始
@@ -18,6 +19,8 @@ br	preferences	ja	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	ja	新旧パスワードを設定してパスワードを変更します（TRUE=成功, FALSE=失敗）。
 change password	preferences	ja	パスワード変更
 charset for the csv export/import	preferences	ja	文字セット
+code is invalid	preferences	ja	コードが無効
+code is required	preferences	ja	コードが必要
 color	preferences	ja	色
 country	preferences	ja	国
 custom login box color, defaults to above color darkened	common	ja	ログイン・ボックスの色。
@@ -46,6 +49,8 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	ja	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	ja	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE, the option will not apply. This feature is experimental at the moment.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	ja	Encrypted LDAP connection is required to change passwords, but it is not configured in your installation.
+enter code to authenticate the actions below	preferences	ja	以下のアクションを認証するためにコードを入力
+enter code to verify correct setup	preferences	ja	正しいセットアップを確認するためにコードを入力
 enter your new password	preferences	ja	新しいパスワードを入力して下さい。
 enter your old password	preferences	ja	パスワードを入力して下さい。
 error	preferences	ja	エラー
@@ -55,6 +60,7 @@ font size unit	preferences	ja	フォント・サイズの単位
 forced preferences	preferences	ja	Forced preferences
 formatting & general settings	preferences	ja	書式と一般設定
 general settings	preferences	ja	一般設定
+generate new qrcode to disable existing one, after enabling the new one!	preferences	ja	既存のQRコードを無効にするために新しいQRコードを生成（新しいQRコードを有効にした後）
 help off	preferences	ja	ヘルプ非表示
 holding ctrl/cmd key and click on the line	preferences	ja	Ctrl/Cmd キーを押しながらクリックして選択
 hours	preferences	ja	時間
@@ -104,6 +110,8 @@ pt: points (1/72 inch)	preferences	ja	pt: ポイント (1/72 インチ)
 px: display pixels	preferences	ja	px: ピクセル
 re-enter your password	preferences	ja	パスワードを再入力して下さい。
 read prefs for the specified application.	preferences	ja	アプリケーション個別設定を読み込みます。
+reset qrcode	preferences	ja	QRコードをリセット
+scan qrcode with a time-based one-time password (totp) app:	preferences	ja	TOTP（時間ベースのワンタイムパスワード）アプリでQRコードをスキャン：
 select additional lines in lists by	preferences	ja	複数行を選択する方法
 select one	preferences	ja	選択してください
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ja	表示言語を選択して下さい。
@@ -119,6 +127,8 @@ show helpmessages by default	preferences	ja	ヘルプ・メッセージ
 show links between egroupware aps as	common	ja	アプリケーション・アイコン/リンク
 show navigation bar as	preferences	ja	ナビゲーション
 show number of current users	preferences	ja	現在のユーザ
+show qrcode	preferences	ja	QRコードの表示
+show qrcode to enable on an additional device.	preferences	ja	他のデバイスで設定するためにQRコードを再度表示
 show text on navigation icons	preferences	ja	ナビゲーションアイコンにテキスト表示
 show_more_apps	common	ja	アプリケーションをもっと表示する
 singlesignon and passwords	preferences	ja	SingleSignOnとパスワード

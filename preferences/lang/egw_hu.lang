@@ -8,6 +8,9 @@ acl grants have been updated	preferences	hu	ACL engedélyek frissítése megtör
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Bármilyen lista az EGroupware-ben ennyi bejegyzést vagy sort fog oldalanként megmutatni.<br>A túl nagy szám lelassítja a megjelenítést, a túl kevés az átláthatóságot csökkenti. Ön dönt.
 applications list scroll area	preferences	hu	Gördítő gomb az oldalsó menühöz
 are you sure you want to delete this category ?	preferences	hu	Biztosan törölni kívánja ezt a kategóriát?
+are you sure?	preferences	hu	Biztos?
+code is invalid	preferences	hu	A kód érvénytelen
+code is required	preferences	hu	A kód szükséges
 color	preferences	hu	Szín
 country	preferences	hu	Ország/állam
 dark mode theme	preferences	hu	Sötét üzemmódú téma
@@ -25,11 +28,14 @@ edit custom fields	preferences	hu	egyedi mezők szerkesztése
 enable	preferences	hu	engedélyez
 enable drag and drop functionality (experimental)	preferences	hu	Drag and Drop funkció engedélyezése (haladó)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	hu	Engedélyezi vagy tiltja a Drag and Drop funkciókat az összes alkalmazásban. Ha a böngésző nem támogatja a Drag and Drop-ot, akkor automatikusan le lesz tiltva. Ez a tulajdonság egyelőre haladó.
+enter code to authenticate the actions below	preferences	hu	Adja meg a kódot az alábbi műveletek hitelesítéséhez
+enter code to verify correct setup	preferences	hu	Adja meg a kódot a helyes beállítás ellenőrzéséhez
 enter your new password	preferences	hu	Új jelszó megadása
 enter your old password	preferences	hu	Régi jelszó megadása
 failed to change password.	preferences	hu	Sikertelen jelszó változtatás.
 fast	preferences	hu	Gyors
 forced preferences	preferences	hu	Kényszerített Tulajdonságok
+generate new qrcode to disable existing one, after enabling the new one!	preferences	hu	Új QR-kód generálása a meglévő QR-kód letiltásához (az új engedélyezése után)
 help off	preferences	hu	Segítség kikapcsolása
 hours	preferences	hu	órák
 how do you like to display accounts	preferences	hu	Hogyan szeretné megjeleníteni a hozzáféréseket
@@ -61,6 +67,8 @@ please select timezones, you want to be able to quickly switch between. switch i
 please select your timezone.	preferences	hu	Kérlek válassz időzónát.
 popup with search	preferences	hu	Felugró ablak kereséssel
 re-enter your password	preferences	hu	Jelszó megerősítése
+reset qrcode	preferences	hu	QR-kód visszaállítása
+scan qrcode with a time-based one-time password (totp) app:	preferences	hu	QR-kód beolvasása TOTP (Time-based one-time password) alkalmazással:
 select one	preferences	hu	Válasszon egyet
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	hu	Válassza ki a szövegek és üzenetek nyelvét.<br>Néhány nyelv nem tartalmaz minden üzenetet az ön nyelvére lefordítva, ebben az esetben angolul fog megjelenni az üzenet. Fordítási észrevételeit/javaslatait az előfordulás pontos helyének megjelölésével és a szöveg pontos idézésével küldje el a http://www.osbusiness.hu címre!
 select the language of the spellchecker integrated into the rich text editor.	preferences	hu	Válaszd ki a szövegszerkesztőbe integrált helyesírás-ellenőrzőt.
@@ -75,6 +83,8 @@ show helpmessages by default	preferences	hu	Segítség megjelenítése alapérte
 show links between egroupware aps as	common	hu	Az EGroupware alkalmazások közötti linkeket mutassa
 show navigation bar as	preferences	hu	Mutassa a navigációs panelt mint
 show number of current users	preferences	hu	Aktuálisan bejelentkezett felhasználók számának mutatása
+show qrcode	preferences	hu	QR-kód megjelenítése
+show qrcode to enable on an additional device.	preferences	hu	Újra megjeleníti a QR-kódot, hogy más eszközökön is beállíthassa
 show text on navigation icons	preferences	hu	Szöveg megjelenítése a navigációs ikonokon
 show_more_apps	common	hu	Több program megjelenítése
 singlesignon and passwords	preferences	hu	SingleSignOn és jelszavak

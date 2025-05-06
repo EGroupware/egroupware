@@ -146,7 +146,7 @@ custom url for ical with holidays for all users	calendar	de	Eigene URL für iCal
 custom_2	common	de	Frei / Besetzt
 daily	calendar	de	Täglich
 daily tables	calendar	de	Tabellen für tägliche Einträge
-data exchange settings	common	de	Einstellungen für den Datenaustausch
+data exchange settings	calendar	de	Einstellungen für den Datenaustausch
 date for the day of the week	calendar	de	Datum für den Tag
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	de	Tagesdatum, erste Zeile der Tagesübersicht
 date range	calendar	de	Datumsbereich

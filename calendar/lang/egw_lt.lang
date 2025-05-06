@@ -3,6 +3,7 @@
 (%1 events in %2 seconds)	calendar	lt	(%1 įvykis per %2 sekundes)
 a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	lt	Į vakarėlį įsibrovėlis - tai asmuo, kuris NĖRA kviečiamas į susitikimą, bet kažkokiu būdu gavo kvietimą.
 access to calendar of %1 denied!	calendar	lt	Prieiga prie %1 kalendoriaus atmesta!
+add a comment to send to organizer with your response	calendar	lt	Pridėti komentarą, kurį nusiųsite organizatoriui su savo atsakymu
 add alarm	calendar	lt	Pridėti naują žadintuvą
 add appointments via shortened dialog or complete edit window	calendar	lt	Įtraukti susitikimus per sutrumpintą dialogo langą arba visą redagavimo langą
 add current view as favorite	calendar	lt	Pridėti dabartinį vaizdą kaip mėgstamiausią
@@ -12,6 +13,7 @@ add recurrence	calendar	lt	Pridėti pasikartojimą
 add timesheet entry	calendar	lt	Pridėti darbo laiko apskaitos žiniaraščio įrašą
 added by synchronization	calendar	lt	Pridėta sinchronizuojant
 added recurrence on %1.	calendar	lt	Pridėtas %1 pasikartojimas.
+additional participants	calendar	lt	Papildomi dalyviai
 after	calendar	lt	Po
 after %1	calendar	lt	Po %1
 age:	calendar	lt	Amžius:
@@ -26,16 +28,22 @@ always use full edit dialog	calendar	lt	Visada naudokite visą redagavimo dialog
 always use the full edit dialog, not this little dialog	calendar	lt	Visada naudokite visą redagavimo langą, o ne šį mažą langą
 apply changes to (future) exceptions too?	calendar	lt	Taikyti pakeitimus ir (būsimoms) išimtims?
 attention	calendar	lt	Dėmesio
+automatic update	calendar	lt	Automatinis atnaujinimas
 by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	lt	Pagal numatytuosius nustatymus (čia nieko nenustatyta) "EGroupware" leidžia juos pridėti tik organizatoriui / savininkui.
 category report	calendar	lt	Kategorija Ataskaita
 changed event-data applied	calendar	lt	Taikomi pakeisti įvykio duomenys
+check all	calendar	lt	Patikrinti visus
+color	calendar	lt	Spalva
+create a new subscription	calendar	lt	Sukurti naują prenumeratą
 date range	calendar	lt	Datų intervalas
 delete this alarm	calendar	lt	Ištrinti šį pavojaus signalą?
+do you want to delete this subscription incl. the synced events?	calendar	lt	Ar norite ištrinti šią prenumeratą, įskaitant sinchronizuotus įvykius?
 email address migration	calendar	lt	El. pašto adreso perkėlimas
 error notifying %1	calendar	lt	Klaida pranešant %1
 exclude weekend	calendar	lt	Neįtraukti savaitgalio
 explicit recurrences	calendar	lt	Aiškūs pasikartojimai
 find free timeslots where the selected participants are available for the given timespan	calendar	lt	Rasti laisvų laiko intervalų, kuriuose pasirinktieji dalyviai yra laisvi tam tikru laiko tarpu
+given url is not a caldav server: missing %1!	calendar	lt	Nurodytas URL adresas nėra CalDAV serveris: trūksta %1!
 how many days to be removed in the future (default 365)	calendar	lt	Kiek dienų bus pašalinta ateityje (numatytoji 365)
 how many days to be removed in the past (default 100)	calendar	lt	Kiek dienų turi būti pašalinta praeityje (numatytoji reikšmė 100)
 how many days to sync in the future (default %1)	calendar	lt	Kiek dienų sinchronizuoti ateityje (numatytoji %1)
@@ -74,6 +82,12 @@ show %1 from %2	calendar	lt	Rodyti %1 iš %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	lt	Rodyti kaip visos dienos neblokuojamus įvykius, taip pat per datos žymėjimą pelės žymekliu.
 single participant	calendar	lt	Vienas dalyvis
 sort by	calendar	lt	Rūšiuoti pagal
+subscribed calendar	calendar	lt	Prenumeruojamas kalendorius
+subscription incl. the synced events deleted.	calendar	lt	Prenumerata ir sinchronizuoti įvykiai ištrinti.
+subscription saved.	calendar	lt	Prenumerata išsaugota.
+subscription synced.	calendar	lt	Prenumerata sinchronizuota.
+subscriptions	calendar	lt	Prenumeratos
+sync now	calendar	lt	Sinchronizuoti dabar
 the apple ical apps use this color to display events from this calendar.	calendar	lt	Šią spalvą "Apple iCal" programos naudoja šio kalendoriaus įvykiams rodyti.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	lt	Dokumente gali būti tokios pakaitinės žymos kaip {{%1}}, kurios bus pakeistos duomenimis.
 the extern organizer changed the event!	calendar	lt	Išorinis organizatorius pakeitė įvykį!

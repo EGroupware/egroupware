@@ -164,6 +164,7 @@ please login	setup	id	Mohon login
 please wait...	setup	id	Mohon Tunggu...
 possible reasons	setup	id	Possible Reasons
 possible solutions	setup	id	Possible Solutions
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	id	Permintaan POST dengan ukuran %1 terdeteksi, lebih besar dari post_max_size=%2, dan karena itu tidak diproses oleh PHP!
 potential problem	setup	id	Potensi Masalah
 preferences	setup	id	Kesukaan
 problem resolution	setup	id	Penyelesaian Masalah
@@ -234,5 +235,6 @@ world writable	setup	id	world writable
 write	setup	id	Tulis
 year	setup	id	tahun
 yes	setup	id	Ya
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	id	Anda dapat mengatasi batas tersebut, dengan memasang direktori cadangan ke dalam pengelola berkas EGroupware dan mengunggahnya dari sana.
 you need to select your current charset!	setup	id	Anda perlu memilih charset Anda saat ini!
 [header-password],[header-user],[new-password],[new-user]	setup	id	[header-password],[header-user],[new-password],[new-user]

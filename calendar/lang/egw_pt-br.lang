@@ -22,6 +22,7 @@ accepted	calendar	pt-br	Aceito
 access denied to the calendar of %1 !!!	calendar	pt-br	Acesso negado à agenda de %1!
 access to calendar of %1 denied!	calendar	pt-br	Acesso ao calendário de %1 negada!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pt-br	Ação que provocou a notificação: Adicionada, Cancelada, Aceita, Rejeitada, ...
+add a comment to send to organizer with your response	calendar	pt-br	Adicione um comentário para enviar ao organizador com sua resposta
 add alarm	calendar	pt-br	Adicionar aviso
 add appointments via shortened dialog or complete edit window	calendar	pt-br	Adicionar compromissos por meio de uma caixa de diálogo reduzida ou de uma janela de edição completa
 add current view as favorite	calendar	pt-br	Adicionar visão atual como favorita
@@ -32,6 +33,7 @@ add recurrence	calendar	pt-br	Adicionar recorrência
 add timesheet entry	calendar	pt-br	Adicionar registro à planilha de tempo
 added	calendar	pt-br	Adicionado
 added by synchronization	calendar	pt-br	Adicionado por sincronização
+additional participants	calendar	pt-br	Participantes adicionais
 after	calendar	pt-br	Após
 after %1	calendar	pt-br	Após %1
 after current date	calendar	pt-br	Após data atual
@@ -59,6 +61,7 @@ always use the full edit dialog, not this little dialog	calendar	pt-br	Sempre us
 apply changes to (future) exceptions too?	calendar	pt-br	Aplicar alterações a exceções (futuras) também?
 apply the changes	calendar	pt-br	Aplicar as alterações
 attention	calendar	pt-br	Atendimento
+automatic update	calendar	pt-br	Atualização automática
 automatically purge old events after	admin	pt-br	Purgar automaticamente eventos antigos depois
 back half a month	calendar	pt-br	Voltar metade de um mês
 back one month	calendar	pt-br	Voltar um mês
@@ -105,6 +108,7 @@ charset of file	calendar	pt-br	Charset do arquivo
 choose a category	calendar	pt-br	Escolha uma categoria
 choose owner of imported data	calendar	pt-br	Escolher o proprietário dos dados importados
 close the window	calendar	pt-br	Fechar a janela
+color	calendar	pt-br	Cor
 compose a mail to all participants after the event is saved	calendar	pt-br	Compor um e-mail para todos os participantes após o evento ser salvo
 configuration settings	calendar	pt-br	Definições de configuração
 conflict	calendar	pt-br	Conflito
@@ -113,6 +117,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	calenda
 countries	calendar	pt-br	Países
 country	calendar	pt-br	País
 create a new series	calendar	pt-br	Criar uma nova série
+create a new subscription	calendar	pt-br	Criar uma nova assinatura
 create an exception for the given date	calendar	pt-br	Criar uma exceção para a data informada
 create an infolog from this event	calendar	pt-br	Criar um Infolog deste evento
 create exception	calendar	pt-br	Criar exceção
@@ -164,6 +169,7 @@ display status of events	calendar	pt-br	Exibir status dos eventos
 displayed view	calendar	pt-br	Visualização exibida
 do you want a weekview with or without weekend?	calendar	pt-br	Você quer uma visualização semanal com ou sem finais de semana?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	pt-br	Deseja ser notificado sobre compromissos novos ou alterados? Você será notificado sobre as alterações efetuadas por você mesmo.<br> Você pode limitar essas notificações para apenas algumas alterações. Cada item inclui as notificações listadas sobre o mesmo. Todas as alterações incluem mudança de título, descrição, participantes (menos suas respostas). Se o dono de um evento requisitar qualquer notificação, sempre receberá as respostas dos participantes como aceite ou cancelamentos.
+do you want to delete this subscription incl. the synced events?	calendar	pt-br	Deseja excluir essa assinatura, incluindo os eventos sincronizados?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pt-br	Deseja receber regularmente um resumo de seus compromissos via correio eletrônico?<br>O sumário será enviado para seu endereço eletrônico padrão na manhã de cada dia ou na Segunda-feira para resumos semanais (somente se houverem eventos na semana).
 download	calendar	pt-br	Baixar
 download this event as ical	calendar	pt-br	Baixar este arquivo como iCal
@@ -242,6 +248,7 @@ full edit dialog	calendar	pt-br	Diálogo de edição completo
 fullname of person to notify	calendar	pt-br	Nome completo da pessoa a ser notificada
 general fields:	calendar	pt-br	Campos gerais:
 general settings	calendar	pt-br	Definições gerais
+given url is not a caldav server: missing %1!	calendar	pt-br	O URL fornecido não é um servidor CalDAV: falta %1!
 global categories	calendar	pt-br	Categorias Globais
 global public and group public	calendar	pt-br	Público global e Grupo público
 global public only	calendar	pt-br	Público global somente
@@ -464,7 +471,13 @@ startdate of the export	calendar	pt-br	Data Inicial da exportação
 startrecord	calendar	pt-br	Registro inicial
 status changed	calendar	pt-br	Status alterado
 submit to repository	calendar	pt-br	Enviar para o repositório
+subscribed calendar	calendar	pt-br	Calendário inscrito
+subscription incl. the synced events deleted.	calendar	pt-br	Assinatura, incluindo os eventos sincronizados, excluída.
+subscription saved.	calendar	pt-br	Assinatura salva.
+subscription synced.	calendar	pt-br	Assinatura sincronizada.
+subscriptions	calendar	pt-br	Assinaturas
 sun	calendar	pt-br	Dom
+sync now	calendar	pt-br	Sincronizar agora
 tag to mark positions for address labels	calendar	pt-br	Tag para marcar posições para etiquetas de endereço
 tentative	calendar	pt-br	Tentativa
 test import (show importable records <u>only</u> in browser)	calendar	pt-br	Teste a importação, mostre os registros importáveis <u>apenas</u> no navegador.

@@ -26,6 +26,7 @@ aliases+forwards	mail	pt-br	Pseudônimos+Avanços
 all adresses:	mail	pt-br	Todos os Endereços:
 all available info	admin	pt-br	todas as informações disponíveis
 all messages in the folder will be lost	mail	pt-br	Todas as mensagens da pasta serão perdidas
+all my email addresses	mail	pt-br	todos os meus endereços de e-mail
 all of	mail	pt-br	Todos
 allow external images	mail	pt-br	Permitir imagens externas
 allow external images from listed domains	mail	pt-br	Permitir imagens externas de domínios listados
@@ -139,6 +140,7 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	pt-br	Você realmente deseja alternar o rótulo %1 para TODAS as mensagens na visualização atual?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	pt-br	Deseja que seja solicitada uma confirmação antes de anexar as mensagens selecionadas ao novo e-mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	pt-br	Você deseja ser perguntado para confirmação ao mover mensagens para outra pasta?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	pt-br	Deseja impedir a edição/configuração de notificação por e-mail para outros endereços de e-mail se os e-mails chegarem (mesmo que o Sieve esteja ativado)?
 does not contain	mail	pt-br	não contém
 does not exist on imap server.	mail	pt-br	não existe no Servidor IMAP.
 does not match	mail	pt-br	Não coincide
@@ -160,6 +162,7 @@ effective only if server supports acl at all	admin	pt-br	Efetiva apenas se o ser
 email address	mail	pt-br	Endereço de e-mail
 email notification successfully updated!	mail	pt-br	Notificação de e-mail atualizado com sucesso!
 email notification update failed	mail	pt-br	Atualização do e-mail de notificação falhou
+email notification update failed! you need to set an email address!	mail	pt-br	Falha na atualização da notificação por e-mail! Você precisa definir um endereço de e-mail!
 emailaddress	admin	pt-br	Endereço de e-mail
 emailadmin: profilemanagement	mail	pt-br	E-mailAdmin: Profile Management
 emails in whitelisted domains are not marked as spam	mail	pt-br	Os e-mails em domínios da lista branca não são marcados como spam
@@ -391,7 +394,7 @@ select all	mail	pt-br	Selecionar tudo
 select an existing entry in order to append mail content to it	mail	pt-br	Selecionar uma entrada existente para anexar o conteúdo do e-mail a ela
 select an item to read	mail	pt-br	Selecione um item para ler
 select file(s) from vfs	mail	pt-br	Selecione o(s) arquivo(s) no Gerenciador de Arquivos do EGroupware
-select mail addresses from addressbook	mail	pt-br	Selecionar endereços de correio eletrônico do catálogo de endereços
+select mail addresses from addressbook	mail	pt-br	Selecione o(s) endereço(s) de e-mail do catálogo de endereços
 select or insert email address	mail	pt-br	Selecione ou insira um endereço de e-mail
 selected date range (with quicksearch)	mail	pt-br	Intervalo de datas selecionado (com pesquisa rápida)
 send message and move to send folder (if configured)	mail	pt-br	Enviar mensagem e mover para a pasta de envio (se configurado)

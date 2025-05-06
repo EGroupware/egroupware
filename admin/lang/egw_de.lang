@@ -57,7 +57,7 @@ acl deleted.	admin	de	ACL gelöscht.
 acl entry deleted.	admin	de	ACL Eintrag gelöscht.
 acl manager	admin	de	ACL-Manager
 acl rights	common	de	ACL-Rechte
-acl updated	admin	de	ACL aktualisiert
+acl updated	admin	de	ACL aktualisiert.
 acl updated.	admin	de	ACL aktualisiert.
 activate	admin	de	Aktivieren
 activated	admin	de	Aktiviert
@@ -615,7 +615,7 @@ maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum für Benutzer-ID (z.
 maximum entries in click path history	admin	de	Max. Anzahl Einträge in der Click-Path-Historie
 mb used	admin	de	MB belegt
 members	admin	de	Mitglieder
-message has been updated	admin	de	Nachricht wurde geändert
+message has been updated	admin	de	Nachricht wurde geändert.
 method	admin	de	Methode
 minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum für Benutzer ID (z.B. 500 oder 100)
 minute	admin	de	Minute
@@ -796,7 +796,7 @@ select which location this app should appear on the navbar, lowest (left) to hig
 selectbox	admin	de	Auswahlfeld
 send using this email-address	admin	de	Zum Versenden wird diese E-Mail-Adresse benutzt
 serial number	admin	de	Fortlaufende Nummer
-server %1 has been updated	admin	de	Server %1 wurde aktualisiert
+server %1 has been updated	admin	de	Server %1 wurde aktualisiert.
 server list	admin	de	Server-Liste
 server password	admin	de	Server-Passwort
 server settings	admin	de	Server-Einstellungen
@@ -917,7 +917,7 @@ unsupported action '%1' !!!	admin	de	Nicht unterstützte Aktion '%1'!
 unwilling to save category with current settings. check for inconsistency:	admin	de	Kategorie kann mit den aktuellen Einstellungen nicht gespeichert werden. Bitte überprüfen sie die Einstellungen auf Ungereimtheiten.
 up	admin	de	Hoch
 update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse:
-updated	admin	de	aktualisiert
+updated	admin	de	Aktualisiert
 upload your background image or enter the url	admin	de	Laden Sie ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
 upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein

@@ -19,6 +19,7 @@ accepted	calendar	da	Accepteret
 access denied to the calendar of %1 !!!	calendar	da	Adgang nægtet til %1's kalender!
 access to calendar of %1 denied!	calendar	da	Adgang til %1's kalender nægtet!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	da	Handlingen der forårsagede påmindelsen: Tilføjet, Annulleret, Accepteret, Forkastet, ...
+add a comment to send to organizer with your response	calendar	da	Tilføj en kommentar, som du kan sende til arrangøren med dit svar
 add alarm	calendar	da	Tilføj alarm
 add appointments via shortened dialog or complete edit window	calendar	da	Tilføj aftaler via forkortet dialog eller komplet redigeringsvindue
 add current view as favorite	calendar	da	Tilføj aktuel visning som favorit
@@ -30,6 +31,7 @@ add timesheet entry	calendar	da	Tilføj timeseddel-post
 added	calendar	da	Tilføjet
 added by synchronization	calendar	da	Tilføjet ved synkronisering
 added recurrence on %1.	calendar	da	Tilføjet gentagelse på %1.
+additional participants	calendar	da	Yderligere deltagere
 after	calendar	da	Efter
 after %1	calendar	da	Efter %1
 after current date	calendar	da	Efter aktuel dato
@@ -57,6 +59,7 @@ always use the full edit dialog, not this little dialog	calendar	da	Brug altid d
 apply changes to (future) exceptions too?	calendar	da	Anvend også ændringer på (fremtidige) undtagelser?
 apply the changes	calendar	da	Acceptér ændringerne
 attention	calendar	da	Opmærksomhed
+automatic update	calendar	da	Yderligere deltagere
 back half a month	calendar	da	Halv måned baglæns
 back one month	calendar	da	Hel måned baglæns
 before current date	calendar	da	Før aktuel dato
@@ -78,11 +81,13 @@ changed event-data applied	calendar	da	Ændrede event-data anvendt
 charset of file	calendar	da	Karakterset for fil
 choose a category	calendar	da	Vælg en kategori
 close the window	calendar	da	Luk vindue
+color	calendar	da	Farve
 compose a mail to all participants after the event is saved	calendar	da	Send en mail til alle deltagere efter aftale er gemt
 copy this event	calendar	da	Kopier denne aftale
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	da	Kopier dine ændringer til 'Udklipsholderen', %1reload indtastning%2 og bland dem
 countries	calendar	da	Lande
 country	calendar	da	Land
+create a new subscription	calendar	da	Opret et nyt abonnement
 create new links	calendar	da	Lav nye links
 created	calendar	da	Oprettet
 csv	calendar	da	CSV
@@ -112,6 +117,7 @@ display status of events	calendar	da	Vis status på aftaler
 displayed view	calendar	da	Vist visning
 do you want a weekview with or without weekend?	calendar	da	Ønsker du uge-view med eller uden week-end?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	da	Vil du påmindes om nye eller ændrede aftaler? Vil du påmindes omkring ændringer du selv har lavet.<br>Du kan begrænse påmindelser til bestemte ændringer. Hvert punkt indeholder alle påmindelser listet ovenfor. Alle ændringer inkluderer ændringer af titel, beskrivelse, deltagere, men ikke deltagernes svar. Hvis ejeren af en hændelse har anmodet om påmindelse, vil han også altid modtage deltagerens svar, såsom accepteret og ikke accepteret.
+do you want to delete this subscription incl. the synced events?	calendar	da	Vil du slette dette abonnement inkl. de synkroniserede begivenheder?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	da	Vil du modtage en reglmæssig opsummering af dine aftaler via e-mail?<br>Opsummeringen bliver sendt til din standard e-mail addresse om morgenen på dagen eller mandag for ugenligt opsummering.<br>Den bliver kun sendt hvis du har aftaler på dagen eller ugen.
 download	calendar	da	Hent
 download this event as ical	calendar	da	Download denne aftale som iCal
@@ -168,6 +174,7 @@ freetime search	calendar	da	Søg ledig tid
 fri	calendar	da	Fri
 full description	calendar	da	Fuld beskrivelse
 fullname of person to notify	calendar	da	Det fulde navn på personen at påminde
+given url is not a caldav server: missing %1!	calendar	da	Den angivne URL er ikke en CalDAV-server: mangler %1!
 global categories	calendar	da	Globale Kategorier
 global public and group public	calendar	da	Global offentlig og gruppe offentlig
 global public only	calendar	da	Kun globalt offentlig
@@ -337,7 +344,13 @@ startdate of the export	calendar	da	Startdato for exporten
 startrecord	calendar	da	Startpostering
 status changed	calendar	da	Status ændret
 submit to repository	calendar	da	Indsend til EGroupware.org
+subscribed calendar	calendar	da	Abonneret kalender
+subscription incl. the synced events deleted.	calendar	da	Abonnement inkl. de synkroniserede begivenheder slettet.
+subscription saved.	calendar	da	Abonnement gemt.
+subscription synced.	calendar	da	Abonnementet er synkroniseret.
+subscriptions	calendar	da	Abonnementer
 sun	calendar	da	Søn
+sync now	calendar	da	Synkroniser nu
 tentative	calendar	da	Prøve
 test import (show importable records <u>only</u> in browser)	calendar	da	Test inportering (vis importerbare date <u>kun</u> i browseren)
 the apple ical apps use this color to display events from this calendar.	calendar	da	Apple iCal Apps bruger denne farve til at vise begivenheder fra denne kalender.

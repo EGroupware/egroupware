@@ -10,6 +10,7 @@ acl grants have been updated	preferences	sl	Pravice ACL so bile spremenjene
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sl	Vsak seznam v eGW prikaže število vnosov oz. vrstic na stran.<br>Preveliko število upočasni vpogled strani, premajhno pa omeji vpogled na seznam.
 applications list scroll area	preferences	sl	Gumb za pomikanje za stranski meni
 are you sure you want to delete this category ?	preferences	sl	Ste prepričani, da želite izbrisati to kategorijo?
+are you sure?	preferences	sl	Ste prepričani?
 audio effect	preferences	sl	Zvočni učinek
 audio effect enables|disables sound effects used in the theme	preferences	sl	Zvočni učinek omogoča | onemogoči zvočne učinke, ki se uporabljajo v predlogi
 automatically start with this font	preferences	sl	Samodejno zaženite s to pisavo
@@ -18,6 +19,8 @@ br	preferences	sl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sl	Spremeni geslo uporabniku tako, da podate staro in novo geslo. Če se operacija uspešno izvede, vrne TRUE, drugače pa FALSE.
 change password	preferences	sl	Spremeni geslo
 charset for the csv export/import	preferences	sl	Komplet znakov
+code is invalid	preferences	sl	Koda je neveljavna
+code is required	preferences	sl	Koda je obvezna
 color	preferences	sl	Barva
 country	preferences	sl	Država
 custom login box color, defaults to above color darkened	preferences	sl	Barva prijavnega okna po meri, privzeto, da je barva zatemnjena
@@ -47,6 +50,8 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sl	Omogoči ali onemogoči spremembo v spustnem meniju izbirne vrstice za IE v vseh aplikacijah. Če brskalnik ni IE, ta možnost ne bo uporabljena. Ta funkcija je trenutno eksperimentalna.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	sl	Omogoči ali onemogoči spremembo v spustnem meniju izbirne vrstice za IE v vseh aplikacijah. Če brskalnik ni IE, se možnost ne bo uporabljala. Ta funkcija je trenutno eksperimentalna.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	sl	Encrypted LDAP connection is required to change passwords, but it is not configured in your installation.
+enter code to authenticate the actions below	preferences	sl	Vnesite kodo za potrditev spodaj navedenih dejanj
+enter code to verify correct setup	preferences	sl	Vnesite kodo za preverjanje pravilne nastavitve
 enter your new password	preferences	sl	Vpišite novo geslo
 enter your old password	preferences	sl	Vpišite staro geslo
 error	preferences	sl	Napaka
@@ -58,6 +63,7 @@ font size unit	preferences	sl	Enota velikosti pisave
 forced preferences	preferences	sl	Vsiljene nastavitve
 formatting & general settings	preferences	sl	Oblikovanje in splošne nastavitve
 general settings	preferences	sl	Splošne nastavitve
+generate new qrcode to disable existing one, after enabling the new one!	preferences	sl	Ustvari novo kodo QR, da onemogoči obstoječo (ko omogoči novo)
 help off	preferences	sl	Izključi pomoč
 holding ctrl/cmd key and click on the line	preferences	sl	držite tipko Ctrl / Cmd in kliknite na vrstico
 hours	preferences	sl	Ure
@@ -109,6 +115,8 @@ pt: points (1/72 inch)	preferences	sl	pt: točke (1/72 palca)
 px: display pixels	preferences	sl	px: prikaz slikovnih pik
 re-enter your password	preferences	sl	Ponovno vpišite geslo
 read prefs for the specified application.	preferences	sl	Preberite lastnosti izbrane aplikacije.
+reset qrcode	preferences	sl	Ponastavi kodo QR
+scan qrcode with a time-based one-time password (totp) app:	preferences	sl	Skenirajte kodo QR z aplikacijo TOTP (Time-based one-time password):
 select additional lines in lists by	preferences	sl	Izberite dodatne vrstice v seznamih z
 select one	preferences	sl	Izberite eno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sl	Izberi jezik sporočil in besedil znotraj EGW.<br>Nekateri jeziki morda ne vsebujejo vseh prevodov in v tem primeru bo izpisano besedilo v angleščini.
@@ -125,6 +133,8 @@ show helpmessages by default	preferences	sl	Privzeto prikaži sporočila s pomo�
 show links between egroupware aps as	common	sl	Prikaži povezave med aplikacijami EGroupware kot
 show navigation bar as	preferences	sl	Prikaži navigacijsko vrstico kot
 show number of current users	preferences	sl	Prikaži število prijavljenih uporabnikov
+show qrcode	preferences	sl	Prikaži kodo QR
+show qrcode to enable on an additional device.	preferences	sl	Ponovno prikaže kodo QR, da jo lahko nastavite v drugih napravah
 show text on navigation icons	preferences	sl	Prikaži besedilo na navigacijski ikoni
 show_more_apps	common	sl	Pokaži več aplikacij
 singlesignon and passwords	preferences	sl	SingleSignOn in gesla

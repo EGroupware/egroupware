@@ -118,7 +118,7 @@ check all	calendar	en	Check all
 choose a category	calendar	en	Choose a category
 choose owner of imported data	calendar	en	Choose owner of imported data
 close the window	calendar	en	Close the window
-color	calendar	en	Color
+color	calendar	en	Colour
 compose a mail to all participants after the event is saved	calendar	en	Compose a email to all participants after the event is saved.
 configuration settings	calendar	en	Configuration settings
 conflict	calendar	en	Conflict
@@ -139,14 +139,14 @@ csv	calendar	en	CSV
 csv-fieldname	calendar	en	CSV field name
 csv-filename	calendar	en	CSV file name
 custom	calendar	en	Custom
-custom color for events without category color	calendar	en	Custom color for events without category color
-custom event color	calendar	en	Custom event color
+custom color for events without category color	calendar	en	Custom colour for events without category color
+custom event color	calendar	en	Custom event colour
 custom fields	common	en	Custom fields
 custom url for ical with holidays for all users	calendar	en	Custom URL for iCal with holidays for all users
 custom_2	common	en	Free/Busy
 daily	calendar	en	Daily
 daily tables	calendar	en	Daily tables
-data exchange settings	common	en	Data exchange settings
+data exchange settings	calendar	en	Data exchange settings
 date for the day of the week	calendar	en	Date for the day of the week
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.
 date range	calendar	en	Date range
@@ -534,7 +534,7 @@ saves the event ignoring the conflict	calendar	en	Saves the event ignoring the c
 scheduling conflict	calendar	en	Scheduling conflict
 search string for the events	calendar	en	Search string for the events
 select a %1	calendar	en	Select a %1
-select a color for this calendar	calendar	en	Select a color for calendar
+select a color for this calendar	calendar	en	Select a colour for calendar
 select a time	calendar	en	Select a time
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
@@ -609,7 +609,7 @@ sync now	calendar	en	Sync now
 tag to mark positions for address labels	calendar	en	Tag to mark positions for address labels
 tentative	calendar	en	Tentative
 test import (show importable records <u>only</u> in browser)	calendar	en	Test import, show importable records <u>only</u> in browser.
-the apple ical apps use this color to display events from this calendar.	calendar	en	The Apple iCal Apps use this color to display events from this calendar.
+the apple ical apps use this color to display events from this calendar.	calendar	en	The Apple iCal Apps use this colour to display events from this calendar.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	en	The document can contain placeholder like {{%1}}, to be replaced with the data.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
 the exceptions are deleted together with the series.	calendar	en	The exceptions are deleted together with the series.

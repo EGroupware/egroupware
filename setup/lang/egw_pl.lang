@@ -459,6 +459,7 @@ please make the following change in your php.ini	setup	pl	Wykonaj następujące 
 pop/imap mail server hostname or ip address	setup	pl	Nazwa lub adres IP serwera mail - POP/IMAP
 possible reasons	setup	pl	Prawdopodobne przyczyny
 possible solutions	setup	pl	Możliwe rozwiazania
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	pl	Wykryto żądanie POST o rozmiarze %1 większym niż post_max_size=%2 i dlatego nie zostało ono przetworzone przez PHP!
 post-install dependency failure	setup	pl	Błędy zależności poinstalacyjnych
 postfix with ldap: [yes(user edit forwarding)]	setup	pl	Postfix wraz z LDAP: [tak(użytkownik konfiguruje przekazywanie)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	pl	PostgreSQL: Pozostaw puste by użyć domyślnego połączenia do bazy danych zamiast tcp/ip.
@@ -664,6 +665,7 @@ you are ready for this stage, but this stage is not yet written.<br />	setup	pl	
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pl	Używana wersja PHP %1. EGroupware wymaga teraz wersji %2 lub wcześniejszej, polecana wersja PHP - %3.
 you can install it by running:	setup	pl	Można zainstalować to wydając polecenie:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pl	Możesz teraz używać użytkownika i hasła z HEADER do wszystkich domen. Jeśli to hasło nie jest ustawione przez linię poleceń, to jest pobierane ze zmiennych systemowych EGW_CLI_PASSWORD lub oczekuje podania przez użytkownika.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	pl	Możesz obejść ten limit, montując katalog kopii zapasowej w menedżerze plików EGroupware i przesyłając go stamtąd.
 you didn't enter a config password for domain %1	setup	pl	Nie podano hasła administratora dla domeny '%1'.
 you didn't enter a config username for domain %1	setup	pl	Nie podano nazwy administratora dla domeny '%1'.
 you didn't enter a header admin password	setup	pl	Nie podano hasła do administracji domenami EGw

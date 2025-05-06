@@ -9,6 +9,7 @@ accept	calendar	uk	Прийняти
 accepted	calendar	uk	Прийнято
 access to calendar of %1 denied!	calendar	uk	У доступі до календаря %1 відмовлено!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	uk	Дії, що призводять то сповіщення: Добавлено, Відмінено, Прийнято, Відхилено, ...
+add a comment to send to organizer with your response	calendar	uk	Додати коментар, щоб надіслати організатору свою відповідь
 add alarm	calendar	uk	Добавити попередження
 add appointments via shortened dialog or complete edit window	calendar	uk	Додавання зустрічей через скорочений діалог або повне вікно редагування
 add current view as favorite	calendar	uk	Додати поточний перегляд до обраного
@@ -20,6 +21,7 @@ add timesheet entry	calendar	uk	Додати запис до табеля обл
 added	calendar	uk	Добавлено
 added by synchronization	calendar	uk	Додано шляхом синхронізації
 added recurrence on %1.	calendar	uk	Додано повторення на %1.
+additional participants	calendar	uk	Додаткові учасники
 after	calendar	uk	Після
 after %1	calendar	uk	Після %1
 age:	calendar	uk	Вік:
@@ -41,6 +43,7 @@ always use full edit dialog	calendar	uk	Завжди використовува�
 always use the full edit dialog, not this little dialog	calendar	uk	Завжди використовувати повне діалогове вікно редагування, а не це маленьке діалогове вікно
 apply changes to (future) exceptions too?	calendar	uk	Застосувати зміни і до (майбутніх) винятків?
 attention	calendar	uk	До уваги
+automatic update	calendar	uk	Автоматичне оновлення
 before the event	calendar	uk	перед подією
 birthday	calendar	uk	День народження
 birthdays	admin	uk	Дні народження
@@ -53,8 +56,11 @@ canceled	calendar	uk	Відмінено
 category report	calendar	uk	Звіт по категоріям
 changed event-data applied	calendar	uk	Застосовано змінені дані про подію
 charset of file	calendar	uk	Кодування файлу
+check all	calendar	uk	Перевірити всі
+color	calendar	uk	Колір
 countries	calendar	uk	Країни
 country	calendar	uk	Країна
+create a new subscription	calendar	uk	Створити нову підписку
 create new links	calendar	uk	Створити нові посилання
 csv-fieldname	calendar	uk	Назва поля CSV
 csv-filename	calendar	uk	Ім'я CSV-файлу
@@ -75,6 +81,7 @@ delete this alarm	calendar	uk	Видалити цей будильник?
 deleted	calendar	uk	Видалено
 display status of events	calendar	uk	Показувати статус подій
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	uk	Чи хочете Ви отримувати повідомлення щодо нових або змінених призначень? Ви будете їх отримувати щодо змін, які зробили самі.<br>Ви можете обмежити отрумавання повідомлень тілько щодо деяких змін. Кожний елемент включає всі повідомлення, що вказані вище. Всі зміни включають зміни назви, опису, учасників, але не відповіді учасників. Якщо власник події захоче отримувати повідомлення, він завжди буде отримувати і відповіді учасників (Відмова, Прийнято, тощо);
+do you want to delete this subscription incl. the synced events?	calendar	uk	Ви бажаєте видалити цю підписку разом з синхронізованими подіями?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	uk	Чи хочете Ви отримувати по email регулярні конспективні нагадування про Ваші призначення?<br>Вони будуть надсилатись на Вашу стандартну email-адресу кожного ранку, або по понеділках відносно подій тиждня.<br>І тільки у випадках нявності подій у віповідний день або тиждень.
 download	calendar	uk	Зкачати
 duration	calendar	uk	Тривалість
@@ -100,6 +107,7 @@ format of event updates	calendar	uk	Формат змін події
 fri	calendar	uk	Пт
 full description	calendar	uk	Повний опис
 fullname of person to notify	calendar	uk	Повне ім'я людини для повідомлення
+given url is not a caldav server: missing %1!	calendar	uk	Даний URL не є сервером CalDAV: відсутній %1!
 global categories	calendar	uk	Глобальні категорії
 global public and group public	calendar	uk	Публічне взагалі та для групи
 global public only	calendar	uk	Публічне взагалі
@@ -216,7 +224,13 @@ start date/time	calendar	uk	Число/Час початку
 startdate	calendar	uk	Число початку
 startrecord	calendar	uk	Початковий запис
 submit to repository	calendar	uk	Передати в Репозитарій
+subscribed calendar	calendar	uk	Видалено календар
+subscription incl. the synced events deleted.	calendar	uk	Підписку з синхронізованими подіями видалено.
+subscription saved.	calendar	uk	Підписку збережено.
+subscription synced.	calendar	uk	Синхронізовано підписку.
+subscriptions	calendar	uk	Підписки
 sun	calendar	uk	Нд
+sync now	calendar	uk	Синхронізувати зараз
 tentative	calendar	uk	Попередньо
 test import (show importable records <u>only</u> in browser)	calendar	uk	Тестувати Імпорт (показувати записи <u>тільки</u> в бровзері)
 the apple ical apps use this color to display events from this calendar.	calendar	uk	Додатки Apple iCal використовують цей колір для відображення подій з цього календаря.

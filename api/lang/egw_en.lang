@@ -1260,7 +1260,7 @@ select work email address	common	en	Select work email address
 select year	common	en	Select year
 selectbox	common	en	Select box
 selection	common	en	Selection
-selection of files can only be done in one folder.  %1 files unselected.	common	en	Selection of files can only be done in one folder. %1 files unselected.
+selection of files can only be done in one folder.  %1 files unselected.	common	en	Selection of files can only be done in one folder. %1 file(s) unselected.
 send	common	en	Send
 send succeeded to %1	common	en	Send succeeded to %1
 senegal	common	en	SENEGAL

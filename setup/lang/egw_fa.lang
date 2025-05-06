@@ -391,7 +391,6 @@ sql encryption type	setup	fa	نوع رمزنگاری SQL برای گذرواژه
 standard (login-name identical to egroupware user-name)	setup	fa	استاندارد( نام ورود که برای نام کاربر گروه افزار شناخته شده است)
 standard mailserver settings (used for mail authentication too)	setup	fa	تنظیمات کارگزار رایانامه استاندارد( برای تصدیق رایانامه نیز استفاده می شود)
 start the postmaster	setup	fa	آغاز postmaster
-status	setup	fa	وضعیت
 step %1 - admin account	setup	fa	مرحله %1 - حساب کاربری مدیر
 step %1 - advanced application management	setup	fa	مرحله %1 - مدیریت پیشرفته کاربردها
 step %1 - configuration	setup	fa	مرحله %1 - پیکربندی

@@ -547,7 +547,7 @@ select file to attach to message	mail	fr	Sélectionner le fichier à joindre au 
 select file to import into folder	mail	fr	Sélectionner le fichier à importer dans le dossier
 select file(s) from vfs	mail	fr	Sélectionner des fichiers du VFS
 select files to upload	mail	fr	Sélectionner des fichiers à envoyer
-select mail addresses from addressbook	mail	fr	Sélectionner les adresses de courrier à partir du carnet d'adresses
+select mail addresses from addressbook	mail	fr	Sélectionner l'adresse e-mail dans le carnet d'adresses
 select multiple	mail	fr	Sélectionner plusieurs
 select or insert email address	mail	fr	Sélectionner ou insérer une adresse email
 selected	mail	fr	sélectionné

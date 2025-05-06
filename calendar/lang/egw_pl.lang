@@ -21,6 +21,7 @@ accepted	calendar	pl	Zaakceptowano
 access denied to the calendar of %1 !!!	calendar	pl	Brak dostępu do kalendarza użytkownika %1
 access to calendar of %1 denied!	calendar	pl	Odmowa dostępu do kalendarza %1!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pl	Akcja która spowodowała powiadomienie: Dodano, Anulowano, Zakceptowano, Odrzucono ...
+add a comment to send to organizer with your response	calendar	pl	Dodaj komentarz do wysłania do organizatora wraz z odpowiedzią
 add alarm	calendar	pl	Dodaj alarm
 add appointments via shortened dialog or complete edit window	calendar	pl	Dodawanie spotkań za pomocą skróconego okna dialogowego lub pełnego okna edycji
 add current view as favorite	calendar	pl	Odmowa dostępu do kalendarza %1!
@@ -32,6 +33,7 @@ add timesheet entry	calendar	pl	Dodaj wpis czasu pracy
 added	calendar	pl	Dodano
 added by synchronization	calendar	pl	Dodano przez synchronizację
 added recurrence on %1.	calendar	pl	Dodano nawrót dla %1.
+additional participants	calendar	pl	Dodatkowi uczestnicy
 after	calendar	pl	Po
 after %1	calendar	pl	Po %1
 after current date	calendar	pl	Po bieżącej dacie
@@ -61,6 +63,7 @@ apply the action on the whole query, not only the shown events	calendar	pl	Zasto
 apply the changes	calendar	pl	Zastosuj zmiany
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	pl	Jako alternatywę, możesz %1pobrać zrzut MySQL%2 i importować go ręcznie do tabeli egw_cal_timezones
 attention	calendar	pl	Uwaga
+automatic update	calendar	pl	Automatyczna aktualizacja
 back half a month	calendar	pl	Wstecz o pół miesiąca
 back one month	calendar	pl	Wstecz o jeden miesiąc
 before	calendar	pl	Przed
@@ -93,14 +96,17 @@ chair	calendar	pl	Prowadzący
 change history	calendar	pl	Zmień historię
 changed event-data applied	calendar	pl	Zastosowano zmienione dane zdarzenia
 charset of file	calendar	pl	Strona kodowa pliku
+check all	calendar	pl	Sprawdź wszystkie
 choose a category	calendar	pl	Wybierz kategorię
 close the window	calendar	pl	Zamknij okno
+color	calendar	pl	Kolor
 compose a mail to all participants after the event is saved	calendar	pl	Po zapisaniu terminu, przejdź do tworzenia wiadomości poczty elektronicznej dla wszystkich uczestników
 conflict	calendar	pl	Konflikt
 copy this event	calendar	pl	Skopiuj ten termin
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	pl	Skopiuj zmiany do schowka, %1przeładuj wpis%2 i zastosuj je.
 countries	calendar	pl	Kraje
 country	calendar	pl	Kraj
+create a new subscription	calendar	pl	Utwórz nową subskrypcję
 create an exception for the given date	calendar	pl	Utwórz wyjątek dla podanej daty
 create exception	calendar	pl	Utwórz wyjątek
 create new links	calendar	pl	Stwórz nowe odnośniki
@@ -145,6 +151,7 @@ do you want a weekview with or without weekend?	calendar	pl	Czy widok tygodniowy
 do you want to be notified about changes of appointments you modified?	calendar	pl	Czy chcesz być powiadomiony o zmianach spotkań które modyfikowałeś?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	pl	Czy chcesz być powiadomiony o nowych lub zmienionych spotkaniach? Nie będziesz powiadomiony o zmianach które samemu wprowadziłeś.<br>Możesz ograniczyć powiadomienia tylko do niektórych typów zmian. Każdy element zawiera wszystkie modyfikacje wymienione wyżej. Wszystkie modyfikacje zawierają zmianę tytułu, opisu, uczestników ale nie odpowiedzi uczestników. Jeśli właściciel zdarzenia poprosił o jakiekolwiek powiadomienia zawsze otrzyma odpowiedzi uczestników (takie jak akceptacje lub odrzucenie).
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	pl	Czy chcesz być powiadamiany o nowych lub zmienionych spotkaniach? Będziesz powiadamiany o zmianach które sam zrobisz.<br>Możesz ograniczyć powiadomienia tylko do niektórych zmian. Każda pozycja zawiera wszystkie powiadomienia wymienione powyżej. <i>Wszystkie zmiany</i> zawierają zmiany nazwy, opisu, uczestników, ale nie same odpowiedzi uczestników. Jeżeli właściciel zdarzenia wybierze powiadomienia dowolne, będzie otrzymywał również odpowiedzi uczestników, takie jak akceptacje czy odrzucenia.
+do you want to delete this subscription incl. the synced events?	calendar	pl	Czy chcesz usunąć tę subskrypcję wraz ze zsynchronizowanymi wydarzeniami?
 do you want to edit this event as an exception or the whole series?	calendar	pl	Czy chcesz edytować to zdarzenie jako wyjątek czy całą serię?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pl	Czy chcesz otrzymywać mailem regularne podsumowania swoich spotkań?<br>Podsumowanie jest wysyłane na Twój adres e-mail codziennie rano, lub w poniedziałki dla podsumowań tygodniowych.<br>Podsumowanie jest wysyłane tylko jeżeli masz zaplanowane jakieś spotkania w danym dniu lub tygodniu.
 download	calendar	pl	Ściągnij
@@ -210,6 +217,7 @@ fri	calendar	pl	Pt
 full description	calendar	pl	Pełny opis
 fullname of person to notify	calendar	pl	Imię i nazwisko osoby do powiadomienia
 general fields:	calendar	pl	Pola ogólne:
+given url is not a caldav server: missing %1!	calendar	pl	Podany adres URL nie jest serwerem CalDAV: brak %1!
 global categories	calendar	pl	Kategorie globalne
 global public and group public	calendar	pl	Publiczne dla grupy i globalnie
 global public only	calendar	pl	Tylko globalnie publiczne
@@ -446,7 +454,13 @@ status for all future scheduled days changed	calendar	pl	Status zaplanowanych dn
 status for this particular day changed	calendar	pl	Status tego dnia zmienił się
 status of participants set to unknown because of missing category rights	calendar	pl	Status uczestników ustawiony jako nieznany z powodu brakujących praw kategorii
 submit to repository	calendar	pl	Wyślij do repozytorium
+subscribed calendar	calendar	pl	Subskrybowany kalendarz
+subscription incl. the synced events deleted.	calendar	pl	Usunięto subskrypcję wraz z zsynchronizowanymi wydarzeniami.
+subscription saved.	calendar	pl	Subskrypcja zapisana.
+subscription synced.	calendar	pl	Subskrypcja zsynchronizowana.
+subscriptions	calendar	pl	Subskrypcje
 sun	calendar	pl	Nie
+sync now	calendar	pl	Synchronizuj teraz
 tag to mark positions for address labels	calendar	pl	Zaznacz, aby oznaczyć pozycję dla etykiet adresu
 tentative	calendar	pl	Niezobowiązujący
 test import (show importable records <u>only</u> in browser)	calendar	pl	Import testowy (tylko pokazuje importowane rekordy, nie importuje ich)

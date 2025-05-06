@@ -270,6 +270,7 @@ group ?	admin	pt	Grupo?
 group has been added	common	pt	O grupo foi  adicionado
 group has been deleted	common	pt	O grupo foi eliminado
 group has been updated	common	pt	O grupo foi actualizado
+group hidden from non-admins	admin	pt	Grupo oculto para não-administradores
 group hierarchy	admin	pt	Hierarquia de grupos
 group list	admin	pt	Lista de grupos
 group manager	admin	pt	Manutenção de grupos

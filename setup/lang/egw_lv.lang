@@ -302,6 +302,7 @@ please wait...	setup	lv	Lūdzu uzgaidi ...
 pop/imap mail server hostname or ip address	setup	lv	POP3/IMAP pasta servera hosta vārds vai IP adrese
 possible reasons	setup	lv	Lespējamie iemesli
 possible solutions	setup	lv	Lespējamie iemesli
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	lv	Atklāts POST pieprasījums ar izmēru %1, kas lielāks par post_max_size=%2, tāpēc PHP to neapstrādā!
 potential problem	setup	lv	Potenciālās problēmas
 preferences	setup	lv	Lestatījumi
 problem resolution	setup	lv	Problemas risinājums
@@ -439,6 +440,7 @@ yes, with lowercase usernames	setup	lv	Jā, lietotājvārdi ar maziem burtiem
 you appear to be running version %1 of egroupware	setup	lv	Tu palaid EGroupware versiju %1
 you appear to have %1 support.	setup	lv	Tev atļauts %1 atbalsts
 you appear to have xml support enabled	setup	lv	Tev ir  atļauts XML atbalsts
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	lv	Šo ierobežojumu var apiet, pievienojot dublējuma direktoriju EGroupware failu pārvaldniekā un augšupielādējot no turienes.
 you didn't enter a config password for domain %1	setup	lv	Tu neesi ievadījis konfigurēšanas paroli domēnam %1
 you didn't enter a config username for domain %1	setup	lv	Tu neesi ievadījis konfigurēšanas lietotājvārdu domēnam%1
 you didn't enter a header admin password	setup	lv	Tu neesi ievadījis galvenes administratora paroli

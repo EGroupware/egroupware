@@ -416,6 +416,7 @@ please wait...	setup	fi	Odota hetki ...
 pop/imap mail server hostname or ip address	setup	fi	POP3/IMAP postipalvelimen nimi tai IP osoite
 possible reasons	setup	fi	Mahdolliset syyt
 possible solutions	setup	fi	Mahdolliset ratkaisut
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	fi	POST-pyyntö, jonka koko on %1, on suurempi kuin post_max_size=%2, joten PHP ei voi käsitellä sitä!
 post-install dependency failure	setup	fi	Riippuvuusongelma
 potential problem	setup	fi	Mahdollinen ongelma
 preferences	setup	fi	Asetukset
@@ -570,6 +571,7 @@ you appear to be running version %1 of egroupware	setup	fi	Ajat EGroupwaren vers
 you appear to have xml support enabled	setup	fi	XML on käytettävissä
 you are ready for this stage, but this stage is not yet written.<br />	setup	fi	Olet valmis tätä vaihetta varten, mutta tätä vaihetta ei ole vielä kirjoitettu.<br>
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	fi	Käytät PHP versiota %1. EGroupware vaatii %2 tai uudemman, suositus on PHP %3.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	fi	Voit kiertää tämän rajoituksen asentamalla varmuuskopiohakemiston EGroupwaren tiedostonhallintaan ja lataamalla sen sieltä.
 you didn't enter a config password for domain %1	setup	fi	Et määritellyt konfiguraatiosalasanaa toimialueelle %1
 you didn't enter a config username for domain %1	setup	fi	Et määritellyt konfiguraatiotunnusta toimialueelle %1
 you didn't enter a header admin password	setup	fi	Et määritellyt header-ylläpidon salasanaa

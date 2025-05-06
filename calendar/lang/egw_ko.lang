@@ -12,6 +12,7 @@ accepted	calendar	ko	승락됨
 access denied to the calendar of %1 !!!	calendar	ko	%1 일정의 접근이 금지되었습니다 !!
 access to calendar of %1 denied!	calendar	ko	%1 의 캘린더에 대한 액세스가 거부되었습니다!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ko	알림 메세지를 발생하는 행동: 추가됨,취소됨,승락됨,거부됨, ...
+add a comment to send to organizer with your response	calendar	ko	응답과 함께 주최자에게 보낼 댓글 추가
 add alarm	calendar	ko	알람 추가
 add appointments via shortened dialog or complete edit window	calendar	ko	단축 대화 상자 또는 전체 편집 창을 통해 약속을 추가합니다.
 add current view as favorite	calendar	ko	현재 보기를 즐겨찾기로 추가
@@ -23,6 +24,7 @@ add timesheet entry	calendar	ko	타임시트 엔트리에 추가
 added	calendar	ko	추가됨
 added by synchronization	calendar	ko	동기화에 의해 추가됨
 added recurrence on %1.	calendar	ko	%1에 반복을 추가했습니다.
+additional participants	calendar	ko	추가 참가자
 after	calendar	ko	이후
 after %1	calendar	ko	이후 %1
 after current date	calendar	ko	오늘이후
@@ -49,6 +51,7 @@ always use the full edit dialog, not this little dialog	calendar	ko	항상 이 �
 apply changes to (future) exceptions too?	calendar	ko	(향후) 예외에도 변경 사항을 적용하시겠습니까?
 apply the changes	calendar	ko	변경사항 적용
 attention	calendar	ko	주의
+automatic update	calendar	ko	자동 업데이트
 before current date	calendar	ko	오늘 이전에
 before the event	calendar	ko	이벤트 전에
 birthday	calendar	ko	생일
@@ -63,11 +66,14 @@ canceled	calendar	ko	취소됨
 category report	calendar	ko	카테고리 보고서
 changed event-data applied	calendar	ko	변경된 이벤트 데이터 적용
 charset of file	calendar	ko	파일의 문자셋
+check all	calendar	ko	모두 확인
 close the window	calendar	ko	창닫기
+color	calendar	ko	색상
 compose a mail to all participants after the event is saved	calendar	ko	이벤트 저장후 모든 참석자에게 메일작성
 copy this event	calendar	ko	이 이벤트 복사
 countries	calendar	ko	국가들
 country	calendar	ko	국가
+create a new subscription	calendar	ko	새 구독 만들기
 create new links	calendar	ko	새 링크개설
 created	calendar	ko	생성됨
 csv-fieldname	calendar	ko	컴마구분값-필드이름
@@ -95,6 +101,7 @@ deleted	calendar	ko	삭제됨
 display status of events	calendar	ko	이벤트의 상태를 표시
 do you want a weekview with or without weekend?	calendar	ko	주간보기에 주말을 포함하시겠습니까? 포함하지 않겠습니까?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	ko	약속이 변경되거나 새로 만들어지면 알림메세지를 받으시겠습니까? 만약 그렇다면 자신이 작성한 약속에도 알림메세지를 받게 됩니다.<br> 알림메세지를 특정페이지에서만 동작하도록 제한할수 있습니다. 각 항목은 모든 알림메세지를 가지고 있게 됩니다. 제목, 설명, 참여자를 포함한 어떠한 수정사항이 발생하는 것도 포함합니다. 단 참여자의 응답은 제외합니다. 만약 이벤트의 주최자가 모든 알림메세지를 요구했을 경우 그는 언제든 참여자의 승낙과 거부등의 대답을 받을수 있습니다.
+do you want to delete this subscription incl. the synced events?	calendar	ko	동기화된 이벤트를 포함하여 이 구독을 삭제하시겠습니까?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ko	약속을 요약한 이메일을 정기적 수신하시겠습니까?<br>요약문은 기본 이메일 주소로 매일 아침이나 매주 월요일 주별 요약을 발송합니다.<br> 그 날이나 그 주에 약속이 있을경우에만 발송됩니다.
 download	calendar	ko	내려받기
 download this event as ical	calendar	ko	이 이벤트 iCal로 다운로드
@@ -143,6 +150,7 @@ freetime search	calendar	ko	여분시간 찾기
 fri	calendar	ko	금요일
 full description	calendar	ko	자세한 설명
 fullname of person to notify	calendar	ko	알림 메세징 할 사람의 전체이름
+given url is not a caldav server: missing %1!	calendar	ko	주어진 URL은 CalDAV 서버가 아닙니다: %1이(가) 누락되었습니다!
 global categories	calendar	ko	전역 카테고리
 global public and group public	calendar	ko	전역 공용 과 그룹 공용
 global public only	calendar	ko	전역 공용만
@@ -282,7 +290,13 @@ startdate / -time	calendar	ko	시작 날짜/-시간
 startrecord	calendar	ko	시작레코드
 status changed	calendar	ko	상태 변경됨
 submit to repository	calendar	ko	저장소로 보내기(서브밋)
+subscribed calendar	calendar	ko	구독한 캘린더
+subscription incl. the synced events deleted.	calendar	ko	동기화된 이벤트를 포함한 구독이 삭제되었습니다.
+subscription saved.	calendar	ko	구독이 저장되었습니다.
+subscription synced.	calendar	ko	구독이 동기화되었습니다.
+subscriptions	calendar	ko	구독
 sun	calendar	ko	일요일
+sync now	calendar	ko	지금 동기화
 tentative	calendar	ko	시험적인
 test import (show importable records <u>only</u> in browser)	calendar	ko	가져오기시험 ( 브라우저에 가져올수 있는 레코드 <u> 만 </u> 봅니다 )
 the apple ical apps use this color to display events from this calendar.	calendar	ko	Apple iCal 앱에서는 이 색상을 사용하여 이 캘린더의 이벤트를 표시합니다.

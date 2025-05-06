@@ -24,6 +24,7 @@ accepted	calendar	cs	Přijato
 access denied to the calendar of %1 !!!	calendar	cs	Odmítnut přístup ke kalendáři %1!
 access to calendar of %1 denied!	calendar	cs	Odmítnut přístup ke kalendáři %1!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	cs	Akce, který vyvolala upozornění: Přidáno, Ukončeno, Přijato, Odmítnuto, ...
+add a comment to send to organizer with your response	calendar	cs	Přidejte komentář, který odešlete organizátorovi se svou odpovědí
 add alarm	calendar	cs	Přidat připomínku
 add appointments via shortened dialog or complete edit window	calendar	cs	Přidávání schůzek prostřednictvím zkráceného dialogu nebo kompletního editačního okna
 add current view as favorite	calendar	cs	Přidat tento pohled jako oblíbený
@@ -35,6 +36,7 @@ add timesheet entry	calendar	cs	Přidat pracovní výkaz
 added	calendar	cs	Přidáno
 added by synchronization	calendar	cs	Přidáno synchronizací
 added recurrence on %1.	calendar	cs	Přidána rekurence na %1.
+additional participants	calendar	cs	Další účastníci
 after	calendar	cs	Po
 after %1	calendar	cs	Po %1
 after current date	calendar	cs	Po aktuálním datu
@@ -66,6 +68,7 @@ appointment settings	calendar	cs	Nastavení schůzky
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	cs	Jako alternativu můžete stáhnout %1 MySQL dump %2 a importovat jej ručně do tabulky egw_cal_timezones.
 at start of the event	calendar	cs	na začátku události
 attention	calendar	cs	Pozor
+automatic update	calendar	cs	Automatická aktualizace
 automatically purge old events after	admin	cs	Automaticky mazat staré události po
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	cs	K dispozici pro první položku uvnitř každého dne v týdnu nebo denní tabulky uvnitř vybraného rozsahu:
 back half a month	calendar	cs	Zpět o půl měsíce
@@ -115,6 +118,7 @@ check all	calendar	cs	Označit vše
 choose a category	calendar	cs	Vybrat kategorii
 choose owner of imported data	calendar	cs	Zvolit vlastníka importovaných dat
 close the window	calendar	cs	Zavřít okno
+color	calendar	cs	Barva
 compose a mail to all participants after the event is saved	calendar	cs	Napsat dopis všem účastníkům po uložení události
 configuration settings	calendar	cs	Nastavení konfigurace
 conflict	calendar	cs	Konflikt
@@ -123,6 +127,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	calenda
 countries	calendar	cs	Země
 country	calendar	cs	Země
 create a new series	calendar	cs	Vytvořit novou řadu pravidelných opakování
+create a new subscription	calendar	cs	Vytvoření nového odběru
 create an exception for the given date	calendar	cs	Vytvořit výjimku pro zadané datum
 create an infolog from this event	calendar	cs	Vytvořit úkol z této události
 create exception	calendar	cs	Vytvořit výjimku
@@ -193,6 +198,7 @@ do you want to be notified about changes of appointments you modified?	calendar	
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	cs	Chcete být upozorněni na nové nebo změněné události? NEudete upozorněni na změny, které sami provedete.<br>Upozornění můžete omezit jen na některé události. Každá položka zahrnuje všechna předchozí upozornění. Všechny modifikace zahrnují také změny titulku, popisu a účastníků (nikoli však jejich odpovědi). Pokud vlastník události žádal jakékoli zprávy o změnách, vždy dostane i odpovědi účastníků, mj. také přijetí a odmítnutí.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	cs	Chcete být upozorněni na nové nebo změněné události? Budete upozorněni také na změny, které sami provedete.<br>Upozornění můžete omezit jen na některé události. Každá položka zahrnuje všechna předchozí upozornění. Všechny modifikace zahrnují také změny titulku, popisu a účastníků (nikoli však jejich odpovědi). Pokud vlastník události žádal jakékoli zprávy o změnách, vždy dostane i odpovědi účastníků, mj. také přijetí a odmítnutí.
 do you want to be notified about participant responses from events you created, but are not participating in?	calendar	cs	Chcete dostávat oznámení o odpovědích účastníků z událostí, které jste vytvořili, ale kterých se neúčastníte?
+do you want to delete this subscription incl. the synced events?	calendar	cs	Chcete tento odběr včetně synchronizovaných událostí smazat?
 do you want to edit this event as an exception or the whole series?	calendar	cs	Chcete editovat tuto událost jako výjimku nebo celou řadu pravidelných opakování?
 do you want to keep the series exceptions in your calendar?	calendar	cs	Chcete zachovat výjimky řady pravidelného opakování ve svém kalendáři?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	cs	Chcete pravidelně dostávat přehled Vašich událostí e-mailem?<br>Přehled bude odesílán na Vaši výchozí e-mailovou adresu každý den ráno, respektive v pondělí ráno v případě týdenních přehledů.<br>Přehled bude odeslán jen v případě, že máte na daný den, resp. týden naplánovány nějaké události.
@@ -279,6 +285,7 @@ full edit dialog	calendar	cs	Úplný dialog pro úpravy
 fullname of person to notify	calendar	cs	Celé jméno osoby, která má být upozorněna
 general fields:	calendar	cs	Obecné položky:
 general settings	calendar	cs	Obecné nastavení
+given url is not a caldav server: missing %1!	calendar	cs	Zadaná adresa URL není server CalDAV: chybí %1!
 global categories	calendar	cs	Všeobecné kategorie
 global public and group public	calendar	cs	Veřejné globálně i pro skupinu
 global public only	calendar	cs	Veřejné jen globálně
@@ -589,8 +596,14 @@ status for all future scheduled days changed	calendar	cs	Stav všech do budoucna
 status for this particular day changed	calendar	cs	Stav pro tento konkrétní den byl změněn
 status of participants set to unknown because of missing category rights	calendar	cs	Stav účastníků byl nastaven na neznámý kvůli chybějícím oprávněním kategorie
 submit to repository	calendar	cs	Uložit do databáze
+subscribed calendar	calendar	cs	Přihlášený kalendář
+subscription incl. the synced events deleted.	calendar	cs	Předplatné včetně synchronizovaných událostí odstraněno.
+subscription saved.	calendar	cs	Předplatné uloženo.
+subscription synced.	calendar	cs	Předplatné synchronizováno.
+subscriptions	calendar	cs	Odběry
 summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	cs	Přehled stavu účastníků: 3 Účastníci: 1 Přijat, 2 Neznámý
 sun	calendar	cs	Ne
+sync now	calendar	cs	Synchronizovat nyní
 tag to mark positions for address labels	calendar	cs	Značka pro vyznačení pozic v adresních štítcích
 tentative	calendar	cs	Předběžný
 test import (show importable records <u>only</u> in browser)	calendar	cs	Testovat import (zobrazit importovatelné záznamy <u>jen</u> v prohlížeči)

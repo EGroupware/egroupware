@@ -17,6 +17,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	hu	%1 hozzáa
 adding %1 to whiltelisted email addresses failed because of %2	mail	hu	%1 hozzáadása a listán szereplő e-mail címekhez %2 miatt sikertelen
 after reply, visible during compose	mail	hu	Válasz után, látható az összeállítás során
 aliases+forwards	mail	hu	Aliasok+Továbbítás
+all my email addresses	mail	hu	minden e-mail címem
 all of	mail	hu	összes innnen
 allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben.
 always respond / auto-responder	mail	hu	Mindig válaszolni / automatikus válaszadó
@@ -102,6 +103,7 @@ edit account	mail	hu	Azonosító szerkesztése
 edit vacation settings	mail	hu	Szabadság beállítások szerkesztése
 email address	mail	hu	E-Mail cím
 email notification update failed	mail	hu	E-mail értesítő frissítés mező
+email notification update failed! you need to set an email address!	mail	hu	Az e-mail értesítés frissítése sikertelen! Be kell állítania egy e-mail címet!
 emailaddress	admin	hu	E-Mail cím
 emailadmin: profilemanagement	mail	hu	eMailAdmin: Profilkezelés
 emails in whitelisted domains are not marked as spam	mail	hu	A fehérlistás tartományok e-mailjei nem kerülnek spamként megjelölésre
@@ -156,6 +158,7 @@ ident name organization email	mail	hu	Azonosító neve Szervezet [Email]
 identity	mail	hu	Azonosító
 identity label	mail	hu	Azonosító címke
 if	mail	hu	HA
+if different from email address	mail	hu	Ha eltér az
 if mail header	mail	hu	ha a levél fejléce
 if message size	mail	hu	ha a levél mérete
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	hu	Ha a tárgyra kattintva előnézetet szeretne látni a levélről, engedélyezze ezt.
@@ -311,7 +314,7 @@ see attachments for content of the orignial mail	mail	hu	Az eredeti e-mail tarta
 select all	mail	hu	Minden kiválasztása
 select an existing entry in order to append mail content to it	mail	hu	Válasszon ki egy meglévő bejegyzést a levél tartalmának hozzácsatolásához
 select an item to read	mail	hu	Válasszon ki egy elemet az olvasáshoz
-select mail addresses from addressbook	mail	hu	Levelezési címek kiválasztása a címjegyzékből
+select mail addresses from addressbook	mail	hu	e-mail címtől Válassza ki az e-mail cím(eke)t a címjegyzékből
 select or insert email address	mail	hu	E-mail cím kiválasztása vagy beillesztése
 selected date range (with quicksearch)	mail	hu	Kiválasztott dátumtartomány (gyorskereséssel)
 send message and move to send folder (if configured)	mail	hu	Üzenet küldése és áthelyezése a küldési mappába (ha konfigurálva van)

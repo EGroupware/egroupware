@@ -17,6 +17,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	pl	Dodanie %1
 adding %1 to whiltelisted email addresses failed because of %2	mail	pl	Dodanie %1 do adresów e-mail z białej listy nie powiodło się z powodu %2
 after reply, visible during compose	mail	pl	Po odpowiedzi, widoczne podczas komponowania
 aliases+forwards	mail	pl	Aliasy+Przekazy
+all my email addresses	mail	pl	wszystkie moje adresy e-mail
 all of	mail	pl	wszystkie z
 allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML.
 always respond / auto-responder	mail	pl	Zawsze odpowiadaj / autoresponder
@@ -97,6 +98,7 @@ edit account	mail	pl	Edytuj konto użytkownika
 edit vacation settings	mail	pl	Edytuj ustawienia autorespondera
 email address	mail	pl	Adres e-mail
 email notification update failed	mail	pl	Aktualizacja powiadomień e-mail nie powiodła się
+email notification update failed! you need to set an email address!	mail	pl	Aktualizacja powiadomień e-mail nie powiodła się! Musisz ustawić adres e-mail!
 emailaddress	admin	pl	Adres e-mail
 emailadmin: profilemanagement	mail	pl	eMailAdmin: Zarządzanie profilami
 emails in whitelisted domains are not marked as spam	mail	pl	Wiadomości e-mail w domenach z białej listy nie są oznaczane jako spam
@@ -154,6 +156,7 @@ ident name organization email	mail	pl	Nazwa identyfikatora Organizacja [Email]
 identity	mail	pl	Tożsamość
 identity label	mail	pl	Etykieta tożsamości
 if	mail	pl	JEŻELI
+if different from email address	mail	pl	Jeśli inny niż adres e-mail
 if mail header	mail	pl	jeżeli nagłówek wiadomości
 if message size	mail	pl	jeżeli rozmiar wiadomości
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	pl	Jeśli chcesz zobaczyć podgląd wiadomości po pojedynczym kliknięciu tematu, włącz tę opcję.
@@ -314,7 +317,7 @@ see attachments for content of the orignial mail	mail	pl	Zobacz załączniki dla
 select all	mail	pl	Zaznacz wszystkie
 select an existing entry in order to append mail content to it	mail	pl	Wybierz istniejący wpis, aby dołączyć do niego treść wiadomości e-mail
 select an item to read	mail	pl	Wybierz element do przeczytania
-select mail addresses from addressbook	mail	pl	Wybieranie adresów e-mail z książki adresowej
+select mail addresses from addressbook	mail	pl	Wybierz adres(y) e-mail z książki adresowej
 select or insert email address	mail	pl	Wybierz lub wstaw adres e-mail
 selected date range (with quicksearch)	mail	pl	Zakres dat (z szybkim wyszukiwaniem)
 send message and move to send folder (if configured)	mail	pl	Wyślij wiadomość i przenieś do folderu wysyłania (jeśli skonfigurowano)

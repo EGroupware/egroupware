@@ -24,6 +24,7 @@ accepted	calendar	fr	Accepté
 access denied to the calendar of %1 !!!	calendar	fr	Accès au calendrier de %1 refusé !
 access to calendar of %1 denied!	calendar	fr	Accès au calendrier de %1 refusé !
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	fr	L'action qui a causé la notification: Ajouté, Annulé, Accepté, Rejeté, ...
+add a comment to send to organizer with your response	calendar	fr	Ajouter un commentaire à envoyer à l'organisateur avec votre réponse
 add alarm	calendar	fr	Ajouter une alarme
 add appointments via shortened dialog or complete edit window	calendar	fr	Ajouter les rendez-vous par une boîte de dialogue courte ou par une fenêtre complète
 add current view as favorite	calendar	fr	Ajouter cette vue aux favoris
@@ -35,6 +36,7 @@ add timesheet entry	calendar	fr	Ajouter une entrée feuille de temps
 added	calendar	fr	Ajouté
 added by synchronization	calendar	fr	Ajouté par synchronisation
 added recurrence on %1.	calendar	fr	Ajout d'une récurrence sur %1.
+additional participants	calendar	fr	Participants supplémentaires
 after	calendar	fr	Après
 after %1	calendar	fr	Après %1
 after current date	calendar	fr	Après la date courante
@@ -66,6 +68,7 @@ appointment settings	calendar	fr	Paramètres des rendez-vous
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	fr	Alternativement, vous pouvez %1télécharger un dump MySQL%2 et l'importer manuellement dans la table egw_cal_timezones.
 at start of the event	calendar	fr	au début de l'événement
 attention	calendar	fr	Attention
+automatic update	calendar	fr	Mise à jour automatique
 automatically purge old events after	admin	fr	Purger autoamatiquement les anciens événement après
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	fr	Disponible pour la première entrée sur chaque jour de la semaine ou sur la vue en tableau dans la sélection :
 back half a month	calendar	fr	15 jours dans le passé
@@ -111,9 +114,11 @@ change history	calendar	fr	Historique des changements
 change your status	calendar	fr	Changer votre statut
 changed event-data applied	calendar	fr	Données d'événement modifiées appliquées
 charset of file	calendar	fr	Jeu de caractères du fichier
+check all	calendar	fr	Tout vérifier
 choose a category	calendar	fr	Choisissez une catégorie
 choose owner of imported data	calendar	fr	Choisir le propriétaire des données importées
 close the window	calendar	fr	Fermer la fenêtre
+color	calendar	fr	Couleur
 compose a mail to all participants after the event is saved	calendar	fr	Écrire un email à tous les participants après l'enregistrement de l'événement
 configuration settings	calendar	fr	Paramètres
 conflict	calendar	fr	Conflit
@@ -122,6 +127,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	calenda
 countries	calendar	fr	Pays
 country	calendar	fr	Pays
 create a new series	calendar	fr	Créer une nouvelle série
+create a new subscription	calendar	fr	Créer un nouvel abonnement
 create an exception for the given date	calendar	fr	Créer une exception pour la date donnée
 create an infolog from this event	calendar	fr	Créer un infolog à partir de cet événement
 create exception	calendar	fr	Créer une exception
@@ -192,6 +198,7 @@ do you want to be notified about changes of appointments you modified?	calendar	
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	fr	Voulez-vous être prévenu des rendez-vous nouveaux ou modifiés ? Vous serez prévenu des modifications que vous faites vous-même.<br>Vous pouvez limiter les notifications à certains changements seulement. Chaque objet inclut toutes les notifications listées au-dessus de lui. Toutes les modifications incluent les modifications de titre, description, participants, mais pas les réponses des participants. Si le propriétaire d'un événement a demandé une notification, il aura toujours les réponses des participants comme les acceptations et les rejets aussi.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	fr	Voulez-vous être prévenu des rendez-vous nouveaux ou modifiés ? Vous serez notifiés des changements que vous faites vous-même.<br>Vous pouvez limiter les notifications à certains changements.  Chaque élément inclue toutes les notifications listées ci-dessus.  Toutes les modifications inclut le changement de titre, description, participants, mais pas les réponses des participants.  Si le propriétaire d'un événement a demandé une notification, il aura toujours les réponses des participants comme les acceptations et les rejets aussi.
 do you want to be notified about participant responses from events you created, but are not participating in?	calendar	fr	Souhaitez-vous être informé des réponses des participants aux événements que vous avez créés, mais auxquels vous ne participez pas ?
+do you want to delete this subscription incl. the synced events?	calendar	fr	Voulez-vous supprimer cet abonnement ainsi que les événements synchronisés ?
 do you want to edit this event as an exception or the whole series?	calendar	fr	Souhaitez-vous modifier seulement cet événement comme une exception ou bien toute la série ?
 do you want to keep the series exceptions in your calendar?	calendar	fr	Souhaitez-vous conserver les exceptions dans votre calendrier ?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fr	Voulez-vous recevoir un résumé régulier de vos rendez-vous par email?<br>Le résumé est envoyé à votre adresse email standard le matin ou le lundi pour les résumés hebdomadaires.<br>Il est envoyé seulement quand vous avez des rendez-vous ce jour-là ou cette semaine-là.
@@ -278,6 +285,7 @@ full edit dialog	calendar	fr	Boîte de dialogue complète pour la modification
 fullname of person to notify	calendar	fr	Nom complet de la personne à prévenir
 general fields:	calendar	fr	Champs généraux :
 general settings	calendar	fr	Paramètres principaux
+given url is not a caldav server: missing %1!	calendar	fr	L'URL donnée n'est pas un serveur CalDAV : missing %1 !
 global categories	calendar	fr	Catégorie globale
 global public and group public	calendar	fr	Public global et public groupe
 global public only	calendar	fr	Public global seulement
@@ -588,8 +596,14 @@ status for all future scheduled days changed	calendar	fr	Le statut de tous les j
 status for this particular day changed	calendar	fr	Le statut de ce jour précis a été modifié.
 status of participants set to unknown because of missing category rights	calendar	fr	Le statut des participants a été mis à "pas de réponse" pour cause de manque de droit sur la catégorie
 submit to repository	calendar	fr	Soumettre au Dépôt
+subscribed calendar	calendar	fr	Calendrier souscrit
+subscription incl. the synced events deleted.	calendar	fr	Abonnement ainsi que les événements synchronisés supprimés.
+subscription saved.	calendar	fr	Abonnement sauvegardé.
+subscription synced.	calendar	fr	Abonnement synchronisé.
+subscriptions	calendar	fr	Abonnements
 summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	fr	Résumé des statuts : 3 participant, 1 accepté, 2 inconnu
 sun	calendar	fr	Di
+sync now	calendar	fr	Synchroniser maintenant
 tag to mark positions for address labels	calendar	fr	Balise pour marquer les positions des étiquettes d'adresses
 tentative	calendar	fr	Tentative
 test import (show importable records <u>only</u> in browser)	calendar	fr	Tester l'importation (montrer <u>seulement</u> les enregistrements importables dans le navigateur)

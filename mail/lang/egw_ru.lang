@@ -19,6 +19,7 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	ru	Доба�
 after reply, visible during compose	mail	ru	После ответа, видно во время составления
 aliases+forwards	mail	ru	Псевдонимы+Пересылки
 all available info	admin	ru	Вся доступная информация
+all my email addresses	mail	ru	все мои адреса
 all of	mail	ru	Все из
 allow external images	mail	ru	Разрешить внешние изображения
 allow images from external sources in html emails	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML.
@@ -117,6 +118,7 @@ edit vacation settings	mail	ru	Редактировать настройки н�
 effective only if server supports acl at all	admin	ru	Действует, если сервер поддерживает ACL
 email address	mail	ru	Адрес электронной почты
 email notification update failed	mail	ru	Неудачное обновление уведомления по почте
+email notification update failed! you need to set an email address!	mail	ru	Обновление уведомлений по электронной почте не удалось! Вам необходимо задать адрес электронной почты!
 emailaddress	admin	ru	Адрес электронной почты
 emailadmin: profilemanagement	mail	ru	Администрирование почты: управление профилем
 emails in whitelisted domains are not marked as spam	mail	ru	Письма в белых списках доменов не помечаются как спам
@@ -183,6 +185,7 @@ ident name organization email	mail	ru	Идентификационное имя 
 identity	mail	ru	Идентификация
 identity label	mail	ru	Метка идентификатора
 if	mail	ru	ЕСЛИ
+if different from email address	mail	ru	Если адрес электронной почты отличается от адреса
 if mail header	mail	ru	Если заголовок письма
 if message size	mail	ru	Если размер сообщения
 if shown, which folders should appear on the home page	mail	ru	Если указано, какие каталоги отображать на домашней странице
@@ -365,7 +368,7 @@ security	mail	ru	Безопасность .
 select all	mail	ru	Выбрать все
 select an existing entry in order to append mail content to it	mail	ru	Выберите существующую запись для добавления в неё содержимого письма
 select an item to read	mail	ru	Выберите сообщение для просмотра
-select mail addresses from addressbook	mail	ru	Выберите почтовые адреса из адресной книги
+select mail addresses from addressbook	mail	ru	Выберите адрес(ы) электронной почты из адресной книги
 select or insert email address	mail	ru	Выберите или вставьте адрес электронной почты
 selected	mail	ru	Выбранный
 selected date range (with quicksearch)	mail	ru	Выбранный диапазон дат (с быстрым поиском)

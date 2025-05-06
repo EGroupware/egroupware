@@ -11,6 +11,7 @@ acl grants have been updated	preferences	es-es	Los permisos de la ACL se han act
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-es	Cualquier listado en EGw le mostrará este número de entradas o líneas por página.<br>Demasiadas ralentizan la página, demasiado pocas pueden ser malo.
 applications list scroll area	preferences	es-es	Área de desplazamiento de la lista de aplicaciones
 are you sure you want to delete this category ?	preferences	es-es	¿Seguro que desea borrar esta categoría?
+are you sure?	preferences	es-es	¿Está seguro?
 audio effect	preferences	es-es	Efecto de audio
 audio effect enables|disables sound effects used in the theme	preferences	es-es	El efecto de audio habilita|deshabilita los efectos de sonido usados en el tema
 automatically start with this font	preferences	es-es	Comenzar automáticamente con esta tipografía
@@ -23,6 +24,7 @@ charset for the csv export/import	preferences	es-es	Juego de caracteres
 click to install	preferences	es-es	haga clic para instalar
 close after selection	preferences	es-es	Cerrar después de la selección
 code is invalid	preferences	es-es	El código es no válido
+code is required	preferences	es-es	Se requiere código
 color	preferences	es-es	Color
 country	preferences	es-es	País
 current password	preferences	es-es	Contraseña actual
@@ -61,6 +63,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	es-es	Activa o desactiva el redimensionamiento del desplegable selectbox para IE en todas las aplicaciones. Si el navegador no es IE , la opción no se aplicará. Esta función es experimental por el momento.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	es-es	Activa o desactiva el redimensionamiento del desplegable selectbox para IE en todas las aplicaciones. Si el navegador no es IE, la opción no se aplicará. Esta función es experimental por el momento.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	es-es	La conexión LDAP cifrada es necesaria para cambiar las contraseñas, pero no está configurada en su instalación.
+enter code to authenticate the actions below	preferences	es-es	Introduzca el código para autenticar las siguientes acciones
 enter code to verify correct setup	preferences	es-es	Introduzca el código para verificar la configuración correcta
 enter your new password	preferences	es-es	Introduzca la contraseña nueva
 enter your old password	preferences	es-es	Introduzca la contraseña anterior
@@ -75,7 +78,7 @@ font size unit	preferences	es-es	Unidad de tamaño de tipografía
 forced preferences	preferences	es-es	Preferencias forzadas
 formatting & general settings	preferences	es-es	Formato y ajustes generales
 general settings	preferences	es-es	Opciones generales
-generate new qrcode to disable existing one, after enabling the new one!	preferences	es-es	¡Generar nuevo QRCode para deshabilitar el existente, después de habilitar el nuevo!
+generate new qrcode to disable existing one, after enabling the new one!	preferences	es-es	Genera un nuevo código QR para desactivar el existente (después de activar el nuevo)
 google authenticator for android	preferences	es-es	Autenticador de Google para Android
 google authenticator for ios	preferences	es-es	Autenticador de Google para iOS
 heading %1	preferences	es-es	Rúbrica %1
@@ -136,10 +139,10 @@ pt: points (1/72 inch)	preferences	es-es	pt: puntos (1/72 pulgada)
 px: display pixels	preferences	es-es	px: mostrar pixeles
 re-enter your password	preferences	es-es	Confirme su contraseña
 read prefs for the specified application.	preferences	es-es	Leer las preferencias para la aplicación especificada.
-reset qrcode	preferences	es-es	Reiniciar QRCode
+reset qrcode	preferences	es-es	Restablece el código QR
 revoke	preferences	es-es	Revocar
 revoke this token	preferences	es-es	Revocar este token
-scan qrcode with a time-based one-time password (totp) app:	preferences	es-es	Escanee QRCode con una aplicación de contraseña de un solo uso basada en el tiempo (TOTP):
+scan qrcode with a time-based one-time password (totp) app:	preferences	es-es	Escanea el código QR con una App TOTP (Time-based one-time password):
 secret deleted, two factor authentication disabled.	preferences	es-es	Secreto eliminado, autenticación de dos factores desactivada.
 select additional lines in lists by	preferences	es-es	Seleccionar líneas adicionales en listas mediante
 select one	preferences	es-es	Seleccione uno
@@ -159,8 +162,8 @@ show helpmessages by default	preferences	es-es	Mostrar mensajes de ayuda por def
 show links between egroupware aps as	common	es-es	Mostrar los enlaces entre aplicaciones de EGroupware como
 show navigation bar as	preferences	es-es	Mostrar la barra de navegación como
 show number of current users	preferences	es-es	Mostrar el número actual de usuarios
-show qrcode	preferences	es-es	Mostrar QRCode
-show qrcode to enable on an additional device.	preferences	es-es	Mostrar QRCode para activar en un dispositivo adicional.
+show qrcode	preferences	es-es	Mostrar código QR
+show qrcode to enable on an additional device.	preferences	es-es	Vuelve a mostrar el código QR para configurarlo en otros dispositivos
 show text on navigation icons	preferences	es-es	Mostrar descripción sobre los iconos
 show_more_apps	common	es-es	Mostrar más aplicaciones
 singlesignon and passwords	preferences	es-es	SingleSignOn y las contraseñas

@@ -67,6 +67,7 @@ password	setup	tr	Şifre
 password for smtp-authentication	setup	tr	SMTP doğrulaması için şifre
 passwords --> sql	setup	tr	Şifreler --> SQL
 path information	setup	tr	Yol bilgisi
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	tr	%1 boyutunda POST isteği algılandı, post_max_size=%2'den büyük ve bu nedenle PHP tarafından işlenmiyor!
 preferences	setup	tr	Ayarlar
 re-enter password	setup	tr	Şifreyi yeniden giriniz
 regular expression to filter by dn	setup	tr	DN'ye göre filtrelemek için düzenli ifade
@@ -89,4 +90,5 @@ users choice	setup	tr	Kullanıcı Seçimleri
 version	setup	tr	Sürüm
 would you like to show each application's upgrade status ?	setup	tr	Her uygulamanın güncelleme durumunu görüntülemek ister misiniz?
 write	setup	tr	Yaz
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	tr	Yedekleme dizinini EGroupware dosya yöneticisine bağlayarak ve oradan yükleyerek bu sınırı aşabilirsiniz.
 you need to select your current charset!	setup	tr	Geçerli karakter setinizi seçmeniz gerekir!

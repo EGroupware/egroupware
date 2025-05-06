@@ -11,6 +11,7 @@ acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans EGroupware affichera ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
 applications list scroll area	preferences	fr	Zone de scroll pour la liste des applications
 are you sure you want to delete this category ?	preferences	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
+are you sure?	preferences	fr	Êtes-vous sûr ?
 audio effect	preferences	fr	Effet audio
 audio effect enables|disables sound effects used in the theme	preferences	fr	Effets Audio : active|désactive les effets sonores utilisés dans le thème
 automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
@@ -23,6 +24,7 @@ charset for the csv export/import	preferences	fr	Jeu de caractères
 click to install	preferences	fr	cliquer pour installer
 close after selection	preferences	fr	Fermer après sélection
 code is invalid	preferences	fr	Code invalide
+code is required	preferences	fr	Le code est obligatoire
 color	preferences	fr	Couleur
 country	preferences	fr	Pays
 current password	preferences	fr	Mot de passe actuel
@@ -60,6 +62,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	fr	Active ou désactive l'ajustement automatique des boîtes de sélection pour IE dans toutes les applications.  Si le navigateur n'est pas IE, cette option ne s'applique pas.  Cette fonctionnalité est expérimentale.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	fr	Active ou désactive l'ajustement automatique des boîtes de sélection pour IE dans toutes les applications.  Si le navigateur n'est pas IE, cette option ne s'applique pas.  Cette fonctionnalité est expérimentale.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	fr	Une connexion LDAP encryptée est nécessaire pour changer les mots de passe, mais n'est pas configurée pour votre installation.
+enter code to authenticate the actions below	preferences	fr	Entrez le code pour authentifier les actions ci-dessous
 enter code to verify correct setup	preferences	fr	Entrer le code pour vérifier le paramétrage
 enter your new password	preferences	fr	Entrez votre nouveau mot de passe
 enter your old password	preferences	fr	Entrez votre ancien mot de passe
@@ -74,7 +77,7 @@ font size unit	preferences	fr	Unité de taille de police
 forced preferences	preferences	fr	Préférences forcées
 formatting & general settings	preferences	fr	Formats et paramètres principaux
 general settings	preferences	fr	Paramètres principaux
-generate new qrcode to disable existing one, after enabling the new one!	preferences	fr	Générer un nouveau QRCode pour désactiver le code existant, seulement après avoir activé le nouveau !
+generate new qrcode to disable existing one, after enabling the new one!	preferences	fr	Génère un nouveau code QR pour désactiver le code existant (après avoir activé le nouveau)
 google authenticator for android	preferences	fr	Google Authenticator pour Android
 google authenticator for ios	preferences	fr	Google Authenticator pour iOS
 heading %1	preferences	fr	Entête %1
@@ -135,10 +138,10 @@ pt: points (1/72 inch)	preferences	fr	pt: points (1/72 pouces)
 px: display pixels	preferences	fr	px: affiche des pixels
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe
 read prefs for the specified application.	preferences	fr	Lire les préférences pour l'apllication spécifiée.
-reset qrcode	preferences	fr	Réinitialiser le QRCode
+reset qrcode	preferences	fr	Réinitialise le code QR
 revoke	preferences	fr	Révoquer
 revoke this token	preferences	fr	Révoquer ce jeton
-scan qrcode with a time-based one-time password (totp) app:	preferences	fr	Scanner le QRCode avec un mot de passe à durée limitée (TOTP) :
+scan qrcode with a time-based one-time password (totp) app:	preferences	fr	Scanne le code QR avec une application TOTP (Time-based one-time password) :
 secret deleted, two factor authentication disabled.	preferences	fr	Clé secrète supprimée, authentification à double facteur désactivée.
 select additional lines in lists by	preferences	fr	Sélectionner des lignes supplémentaires dans les listes en
 select one	preferences	fr	Choisissez un(e)
@@ -158,8 +161,8 @@ show helpmessages by default	preferences	fr	Afficher les messages d'aide par dé
 show links between egroupware aps as	common	fr	Icônes et liens d'application
 show navigation bar as	preferences	fr	Afficher la barre de navigation comme
 show number of current users	preferences	fr	Utilisateurs connectés
-show qrcode	preferences	fr	Afficher le QRCode
-show qrcode to enable on an additional device.	preferences	fr	Afficher le QRCode pour ajouter un périphérique
+show qrcode	preferences	fr	Afficher le code QR
+show qrcode to enable on an additional device.	preferences	fr	Réaffiche le code QR pour le configurer sur d'autres appareils
 show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de navigation
 show_more_apps	common	fr	Montrer plus d'Applications
 singlesignon and passwords	preferences	fr	SingleSignOn et mots de passe

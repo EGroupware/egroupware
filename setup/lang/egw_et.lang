@@ -182,6 +182,7 @@ please wait...	setup	et	Palun Oota ...
 pop/imap mail server hostname or ip address	setup	et	POP3/IMAP mail serveri hostinimi või IP aadress
 possible reasons	setup	et	Võimalikud Põhjused
 possible solutions	setup	et	Võimalikud Lahendused
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	et	POST päring suurusega %1, mis on suurem kui post_max_size=%2 ja mida PHP seetõttu ei töötle!
 potential problem	setup	et	Potensiaalne Probleem
 preferences	setup	et	Eelistused
 problem resolution	setup	et	Probleemi lahendus
@@ -254,6 +255,7 @@ version	setup	et	Versioon
 write	setup	et	Kirjuta
 year	setup	et	Aasta
 yes	setup	et	Jah
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	et	Te saate sellest piirangust mööda minna, paigaldades varukoopiate kataloogi EGroupware'i failihaldurisse ja laadige see sealt üles.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	et	Sa pole veel teinud oma header.inc.php!<br /> sa saad teha selle nüüd.
 you have successfully logged out	setup	et	Oled täielikult välja loginud
 you need to select your current charset!	setup	et	Peate valima oma praeguse märgistuse!

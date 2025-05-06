@@ -446,6 +446,7 @@ please wait...	setup	nl	Even geduld ...
 pop/imap mail server hostname or ip address	setup	nl	POP3/IMAP mail server hostnaam of IP adres
 possible reasons	setup	nl	Mogelijke redenen
 possible solutions	setup	nl	Mogelijke oplossingen
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	nl	POST-verzoek met grootte %1 gedetecteerd, groter dan post_max_size=%2, en daarom niet verwerkt door PHP!
 post-install dependency failure	setup	nl	Na-installatie afhankelijkheids fout
 postfix with ldap: [yes(user edit forwarding)]	setup	nl	Postfix met LDAP: [yes(user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	nl	Postgres: Laat dit leeg om de gewenste unix domein sockets te gebruiken in plaats van een TCP/IP verbinding
@@ -652,6 +653,7 @@ you are ready for this stage, but this stage is not yet written.<br />	setup	nl	
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	nl	U gebruikt PHP versie %1. EGroupware vereist nu %2 of hoger, aanbevolen is PHP %3.
 you can install it by running:	setup	nl	U kunt het installeren door het uitvoeren van:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	nl	U kunt de header gebruiker en wachtwoord gebruiker voor ieder domein. Indien het wachtwoord niet ingesteld is via de commandoregel wordt het uit de enviromentvariabele EGW_CLI_PASSWORD gehaald of opgehaald uit het gebruikersrecord.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	nl	U kunt die limiet omzeilen door de backupdirectory te mounten in EGroupware-bestandsbeheer en van daaruit te uploaden.
 you didn't enter a config password for domain %1	setup	nl	U heeft geen configuratie wachtwoord ingevoerd voor domein %1.
 you didn't enter a config username for domain %1	setup	nl	U heeft geen configuratie gebruikersnaam ingevoerd voor domein %1.
 you didn't enter a header admin password	setup	nl	U heeft geen header beheerderwachtwoord ingevoerd.

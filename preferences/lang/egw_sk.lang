@@ -11,6 +11,7 @@ acl grants have been updated	preferences	sk	Práva ACL boli aktualizované.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sk	Akýkoľvek zoznam v EGroupware zobrazí tento počet riadkov na stránku.<br>Ak dáte priveľa, stránka sa bude zobrazovať pomaly. Ak dáte málo, zúži sa váš rozhľad.
 applications list scroll area	preferences	sk	Posuvná oblasť so zoznamom aplikácií
 are you sure you want to delete this category ?	preferences	sk	Skutočne chcete odstrániť túto kategóriu?
+are you sure?	preferences	sk	Ste si istý?
 audio effect	preferences	sk	Zvukový efekt
 audio effect enables|disables sound effects used in the theme	preferences	sk	Zvukový efekt - zapne/vypne zvukvé efekty použité v tejto téme
 automatically start with this font	preferences	sk	Automaticky začať s týmto písmom
@@ -21,6 +22,7 @@ charset for the csv export/import	preferences	sk	Znaková sada
 click to install	preferences	sk	Kliknutím nainštalujete
 close after selection	preferences	sk	Zavrieť po výbere
 code is invalid	preferences	sk	Kód je chybný
+code is required	preferences	sk	Kód je povinný
 color	preferences	sk	Farba
 country	preferences	sk	Krajina
 current password	preferences	sk	Súčasné heslo
@@ -57,6 +59,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletu v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní. Táto funkcia je v zatiaľ experimentálna.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti rozbaľovacieho tlačidla vo všetkých aplikáciách v IE. Keď sa použije iný prehliadač ako IE, táto funkcia sa nepoužije. Táto funkcia je zatiaľ experimentálna.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	sk	Na zmenu hesla je potrebné šifrované spojenie s LDAP, no zatiaľ ho nemáte nastavené v inštalátore.
+enter code to authenticate the actions below	preferences	sk	Zadajte kód na overenie nižšie uvedených akcií
 enter code to verify correct setup	preferences	sk	Zadajte kód pre overenie správnej inštalácie
 enter your new password	preferences	sk	Zadajte vaše heslo
 enter your old password	preferences	sk	Zadajte staré heslo
@@ -71,7 +74,7 @@ font size unit	preferences	sk	Jednotka pre veľkosť písma
 forced preferences	preferences	sk	Vynútené nastavenia
 formatting & general settings	preferences	sk	Formátovanie a všeobecné nastavenia
 general settings	preferences	sk	Všeobecné nastavenia
-generate new qrcode to disable existing one, after enabling the new one!	preferences	sk	Vygenerovať nový QR kód, čím sa po jeho zapnutí zablokuje predošlý.
+generate new qrcode to disable existing one, after enabling the new one!	preferences	sk	Generovanie nového QR kódu na deaktiváciu existujúceho (po povolení nového)
 google authenticator for android	preferences	sk	Overovacia služba Google pre Android
 google authenticator for ios	preferences	sk	Overovacia služba Google pre iOS
 heading %1	preferences	sk	Hlavička %1
@@ -132,10 +135,10 @@ pt: points (1/72 inch)	preferences	sk	pt: body (1/72 palca)
 px: display pixels	preferences	sk	px: zobrazovacie pixle
 re-enter your password	preferences	sk	Zadajte heslo znovu
 read prefs for the specified application.	preferences	sk	Načítať predvoľby pre vybranú aplikáciu.
-reset qrcode	preferences	sk	Reset QR kódu
+reset qrcode	preferences	sk	Obnovenie QR kódu
 revoke	preferences	sk	Odvolať
 revoke this token	preferences	sk	Odvolať tento token
-scan qrcode with a time-based one-time password (totp) app:	preferences	sk	Naskenujte QR kód aplikáciou pre časové jednorázové heslo (TOTP):
+scan qrcode with a time-based one-time password (totp) app:	preferences	sk	Skenovanie QR kódu pomocou aplikácie TOTP (Time-based one-time password):
 secret deleted, two factor authentication disabled.	preferences	sk	Tajomstvo odstránené, dvojfaktorová autentifikácia vypnutá.
 select additional lines in lists by	preferences	sk	Vybrať ďalšie riadky zoznamu pomocou
 select one	preferences	sk	Vyberte si jeden
@@ -155,8 +158,8 @@ show helpmessages by default	preferences	sk	Vždy zobraziť pomocné texty
 show links between egroupware aps as	common	sk	Zobraziť odkazy medzi aplikáciami EGroupware ako
 show navigation bar as	preferences	sk	Ako zobraziť navigačný panel
 show number of current users	preferences	sk	Zobraziť počet pripojených používateľov
-show qrcode	preferences	sk	Ukázať QR kód
-show qrcode to enable on an additional device.	preferences	sk	Ukázať QR kód pre povolenie na prídavnom zariadení.
+show qrcode	preferences	sk	Zobraziť QR kód
+show qrcode to enable on an additional device.	preferences	sk	Znovu zobrazí QR kód, aby ste ho mohli nastaviť na iných zariadeniach
 show text on navigation icons	preferences	sk	Zobrazovať text na navigačných ikonách
 show_more_apps	common	sk	Zobraziť ďalšie aplikácie
 singlesignon and passwords	preferences	sk	SingleSignOn a heslá

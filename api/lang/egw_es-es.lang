@@ -1260,7 +1260,7 @@ select work email address	common	es-es	Seleccione dirección de correo del traba
 select year	common	es-es	Seleccione año
 selectbox	common	es-es	Cuadro de selección
 selection	common	es-es	Selección
-selection of files can only be done in one folder.  %1 files unselected.	common	es-es	La selección de archivos sólo puede hacerse en una carpeta. %1 ficheros no seleccionados.
+selection of files can only be done in one folder.  %1 files unselected.	common	es-es	La selección de archivos sólo se puede hacer en una carpeta. %1 fichero(s) deseleccionado(s).
 send	common	es-es	Enviar
 send succeeded to %1	common	es-es	Enviado correctamente a %1
 senegal	common	es-es	SENEGAL

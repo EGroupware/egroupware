@@ -9,6 +9,7 @@ accept	calendar	tr	Kabul Et
 accepted	calendar	tr	Kabul Edildi
 access to calendar of %1 denied!	calendar	tr	%1'in takvimine erişim reddedildi!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	tr	Uyarıya sebep olan eylem: Eklendi, İptal Edildi, Onaylandı, Reddedildi, ...
+add a comment to send to organizer with your response	calendar	tr	Yanıtınızla birlikte düzenleyiciye göndermek için bir yorum ekleyin
 add alarm	calendar	tr	Alarm Ekle
 add appointments via shortened dialog or complete edit window	calendar	tr	Kısaltılmış iletişim kutusu veya tam düzenleme penceresi aracılığıyla randevu ekleyin
 add current view as favorite	calendar	tr	Geçerli görünümü favori olarak ekle
@@ -20,6 +21,7 @@ add timesheet entry	calendar	tr	Zaman çizelgesi girişi ekleme
 added	calendar	tr	Eklendi
 added by synchronization	calendar	tr	Senkronizasyon tarafından eklendi
 added recurrence on %1.	calendar	tr	%1'e yineleme eklendi.
+additional participants	calendar	tr	Ek katılımcılar
 after	calendar	tr	Sonra
 after %1	calendar	tr	%1'den sonra
 after current date	calendar	tr	Geçerli tarihten sonra
@@ -46,6 +48,7 @@ always use full edit dialog	calendar	tr	Her zaman tam düzenleme iletişim kutus
 always use the full edit dialog, not this little dialog	calendar	tr	Her zaman tam düzenleme iletişim kutusunu kullanın, bu küçük iletişim kutusunu değil
 apply changes to (future) exceptions too?	calendar	tr	Değişiklikleri (gelecekteki) istisnalara da uygulayalım mı?
 attention	calendar	tr	Dikkat
+automatic update	calendar	tr	Otomatik güncelleme
 before the event	calendar	tr	Etkinlikten önce
 birthday	calendar	tr	Doğum Günü
 birthdays	admin	tr	Doğum Günleri
@@ -58,8 +61,11 @@ canceled	calendar	tr	İptal Edildi
 category report	calendar	tr	Kategori Raporu
 changed event-data applied	calendar	tr	Değiştirilen olay verileri uygulandı
 charset of file	calendar	tr	Dosyanın karakter seti
+check all	calendar	tr	Tümünü kontrol et
+color	calendar	tr	Renk
 countries	calendar	tr	Ülkeler
 country	calendar	tr	Ülke
+create a new subscription	calendar	tr	Yeni bir abonelik oluşturun
 csv-fieldname	calendar	tr	CSV-Alan adı
 csv-filename	calendar	tr	CSV-Alan adı
 custom	calendar	tr	Özel
@@ -79,6 +85,7 @@ delete this alarm	calendar	tr	Bu alarmı silelim mi?
 deleted	calendar	tr	Silindi
 display status of events	calendar	tr	Etkinliklerin durumlarını görüntüle
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	tr	Yeni ya da değişiklik yapılmış toplantılardan haberdar olmak ister misiniz? Kendi yaptığınız değişiklikler hakkında da uyarı emailleri alacaksınız.<br>Uyarıları istediğiniz belli eylemlerle sınırlandırabilirsiniz.Her bir öge yukarıda listelenen bütün uyarı metodlarına sahiptir. Bütün değişiklikler; başlık, açıklama, katılımcı değişikliklerini içerir. Bir etkinlik sahibi bir uyarı talep etmişse; katılımcıların kabul ve red mesajlarını da ayrıca uyarı olarak alacaktır.
+do you want to delete this subscription incl. the synced events?	calendar	tr	Senkronize edilen etkinlikler dahil olmak üzere bu aboneliği silmek istiyor musunuz?
 download	calendar	tr	İndir
 duration	calendar	tr	Süre
 edit series	calendar	tr	Seriyi düzenle
@@ -102,6 +109,7 @@ format of event updates	calendar	tr	Etkinlik güncellemelerinin formatı
 fri	calendar	tr	Cum
 full description	calendar	tr	Tam Açıklama
 fullname of person to notify	calendar	tr	Uyarılacak kişinin tam adı
+given url is not a caldav server: missing %1!	calendar	tr	Verilen URL bir CalDAV sunucusu değil: eksik %1!
 global categories	calendar	tr	Genel Kategoriler
 global public and group public	calendar	tr	Genel Umumi(Public) ve Umumi Grup
 global public only	calendar	tr	Genel Umumi(Public) Sadece
@@ -216,7 +224,13 @@ start date/time	calendar	tr	Başlangıç Tarih/Zaman
 startdate	calendar	tr	Başlangıç tarihi
 startrecord	calendar	tr	Kaydetmeye başla
 submit to repository	calendar	tr	Depoya gönder
+subscribed calendar	calendar	tr	Abone olunan takvim
+subscription incl. the synced events deleted.	calendar	tr	Senkronize edilen etkinlikler dahil abonelik silindi.
+subscription saved.	calendar	tr	Abonelik kaydedildi.
+subscription synced.	calendar	tr	Abonelik senkronize edildi.
+subscriptions	calendar	tr	Abonelikler
 sun	calendar	tr	Paz
+sync now	calendar	tr	Şimdi senkronize et
 tentative	calendar	tr	Geçici
 test import (show importable records <u>only</u> in browser)	calendar	tr	İthal etmeyi test et (İthal edilecek kayıtları <u>sadece</u> tarayıcıda göster.)
 the apple ical apps use this color to display events from this calendar.	calendar	tr	Apple iCal Uygulamaları bu takvimdeki etkinlikleri görüntülemek için bu rengi kullanır.

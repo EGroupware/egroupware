@@ -144,6 +144,7 @@ please install	setup	ja	をインストールしてください。
 please login	setup	ja	ログイン
 please login to egroupware and run the admin application for additional site configuration	setup	ja	EGroupware にログインして、admin アプリケーション内の各アプリケーションサイト環境設定を実行して下さい
 possible solutions	setup	ja	可能な解決策
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	ja	サイズ %1 の POST 要求が検出されました。post_max_size=%2 よりも大きいため、PHP によって処理されません！
 potential problem	setup	ja	潜在的な問題
 preferences	setup	ja	ユーザ設定情報
 problem resolution	setup	ja	解決方法
@@ -211,6 +212,7 @@ write	setup	ja	を書く
 year	setup	ja	年
 yes	setup	ja	はい
 you are ready for this stage, but this stage is not yet written.<br />	setup	ja	You are ready for this stage, but this stage is not yet written.<br />
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	ja	EGroupwareファイルマネージャにバックアップディレクトリをマウントし、そこからアップロードすることで、この制限を回避することができます。
 you do not have any languages installed. please install one now <br />	setup	ja	どの言語環境もありません。最低１つの言語環境をインストールして下さい。<br />
 you must enter a username for the admin	setup	ja	ユーザIDを入力して下さい。
 you need to select your current charset!	setup	ja	現在の文字セットを選択する必要があります！

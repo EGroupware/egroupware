@@ -596,7 +596,7 @@ select which location this app should appear on the navbar, lowest (left) to hig
 selectbox	admin	cs	Rozbalovací nabídka
 send using this email-address	admin	cs	Odeslat s touto e-mailovou adresou
 serial number	admin	cs	Sériové číslo
-server %1 has been updated	admin	cs	Server %1 byl zaktualizován
+server %1 has been updated	admin	cs	Server %1 byl zaktualizován.
 server list	admin	cs	Seznam serverů
 server password	admin	cs	Heslo serveru
 server settings	admin	cs	Nastavení serveru

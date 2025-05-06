@@ -11,11 +11,12 @@ add as new	mail	et	Lisada uueks
 add files as %1	mail	et	Lisage failid %1
 add raw message, ignore mail attachments	mail	et	Konverteeri post objektiks, lisa toores sõnum (ignoreeri posti manuseid)
 add this certificate into contact	mail	et	Lisa see sertifikaat kontakti
-adding %1 to blacklisted email addresses failed because of %2	mail	et	%1 lisamine musta nimekirja kantud e-posti aadressidele ebaõnnestus %2 tõttu.
-adding %1 to whiltelisted email addresses failed because of %2	mail	et	%1 lisamine valimisse kantud e-posti aadressidele ebaõnnestus %2 tõttu.
+adding %1 to blacklisted email addresses failed because of %2	mail	et	%1 lisamine musta nimekirja kantud e-posti aadressidele ebaõnnestus %2 tõttu
+adding %1 to whiltelisted email addresses failed because of %2	mail	et	%1 lisamine valimisse kantud e-posti aadressidele ebaõnnestus %2 tõttu
 after reply, visible during compose	mail	et	Pärast vastamist, nähtav koostamise ajal
 aliases+forwards	mail	et	Pseudonimed + Edasisaatmine
 all messages in the folder will be lost	mail	et	Kõik kaustas olevad sõnumid lähevad kaduma.
+all my email addresses	mail	et	kõik minu e-posti aadressid
 all of	mail	et	kõik välja
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	et	Kõik alamkaustad kustutatakse samuti ja kõik sõnumid kõigis mõjutatud kaustades lähevad kaduma.
 allow external images	mail	et	Lubage väliseid pilte
@@ -82,12 +83,14 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	et	Kas te tõesti tahate lülitada märgistuse %1 kõigi sõnumite jaoks praeguses vaates?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	et	Kas soovite, et enne valitud sõnumite lisamist uuele e-kirjale küsitaks kinnitust?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	et	Kas soovite, et enne valitud sõnumite teisaldamist teise kausta küsitakse kinnitust?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	et	Kas soovite vältida e-posti aadresside muutmist/seadistamist, kui saabuvad e-kirjad(, isegi kui Sieve on lubatud)?
 does not contain	mail	et	ei sisalda
 don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
 draft	mail	et	Eelnõu
 edit account	mail	et	Muuda kontot
 email address	mail	et	E-posti aadress
+email notification update failed! you need to set an email address!	mail	et	E-posti teavitamise ajakohastamine ebaõnnestus! Te peate määrama e-posti aadressi!
 emailaddress	admin	et	E-posti aadress
 emailadmin: profilemanagement	mail	et	eMailAdmin: Profiili haldamine
 emails in whitelisted domains are not marked as spam	mail	et	Lubatud
@@ -124,6 +127,7 @@ ident name email	mail	et	Ident name [Email]
 ident name organization email	mail	et	Ident name Organisatsioon [Email]
 identity label	mail	et	Identiteedi silt
 if	mail	et	KUI
+if different from email address	mail	et	Kui see erineb e-posti aadressist
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	et	Kui soovite näha e-kirja eelvaadet, kui klõpsate ainsa klõpsuga teemale, siis lubage see.
 imap	mail	et	IMAP
 imap server	mail	et	IMAP Server
@@ -226,7 +230,7 @@ remember the password for	mail	et	Jäta meelde parool
 remove all	mail	et	Eemalda Kõik
 remove immediately	mail	et	Eemalda koheselt!
 removing %1 from blacklisted email addresses failed because of %2	mail	et	Mustas nimekirjas olevate e-posti aadresside %1 eemaldamine ebaõnnestus %2 tõttu
-removing %1 from whiltelisted email addresses failed because of %2	mail	et	%1 eemaldamine valimisse kantud e-posti aadressidest ebaõnnestus %2 tõttu.
+removing %1 from whiltelisted email addresses failed because of %2	mail	et	%1 eemaldamine valimisse kantud e-posti aadressidest ebaõnnestus %2 tõttu
 replace 'http://' in image urls with (trailing / required!)	mail	et	Asendage 'http://' pildi urlites (tagumine / nõutav!)
 replied	mail	et	vastatud
 reply	mail	et	Vasta
@@ -250,7 +254,7 @@ see attachments for content of the orignial mail	mail	et	Vaata manuseid esialgse
 select all	mail	et	Märgi kõik
 select an existing entry in order to append mail content to it	mail	et	Valige olemasolev kirje, et lisada sellele posti sisu
 select an item to read	mail	et	Valige kirje lugemiseks
-select mail addresses from addressbook	mail	et	Valige postiaadressid aadressiraamatust
+select mail addresses from addressbook	mail	et	Valige e-posti aadress(id) aadressiraamatust
 select or insert email address	mail	et	Valige või sisestage e-posti aadress
 selected date range (with quicksearch)	mail	et	Valitud kuupäevavahemik (kiirotsinguga)
 send message and move to send folder (if configured)	mail	et	Sõnumi saatmine ja liigutamine saatekausta (kui see on konfigureeritud)

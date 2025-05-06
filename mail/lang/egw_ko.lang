@@ -10,6 +10,7 @@ add files as %1	mail	ko	파일을 %1로 추가
 add this certificate into contact	mail	ko	이 인증서를 연락처에 추가
 adding %1 to blacklisted email addresses failed because of %2	mail	ko	%2 때문에 블랙리스트에 추가된 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
 adding %1 to whiltelisted email addresses failed because of %2	mail	ko	%2 때문에 허용되지 않은 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
+all my email addresses	mail	ko	내 모든 이메일 주소
 archive folder	mail	ko	보관 폴더
 attach files	mail	ko	파일 첨부
 attach users vcard at compose to every new mail	mail	ko	모든 새 메일에 작성 시 사용자 vCard를 첨부합니다.
@@ -42,8 +43,10 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	ko	현재 보기의 모든 메시지에 대해 %1 레이블을 전환하시겠습니까?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ko	선택한 메시지를 새 전자 메일에 첨부하기 전에 확인 메시지를 표시하시겠습니까?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	ko	선택한 메시지를 다른 폴더로 옮기기 전에 확인 메시지를 표시하시겠습니까?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	ko	다른 이메일 주소로 이메일이 도착할 경우('체'가 활성화된 경우에도) 이메일로 알림을 수정/설정하지 못하도록 하시겠습니까?
 edit account	mail	ko	계정 편집
 email address	mail	ko	이메일 주소
+email notification update failed! you need to set an email address!	mail	ko	이메일 알림 업데이트에 실패했습니다! 이메일 주소를 설정해야 합니다!
 emailaddress	admin	ko	이메일 주소
 emailadmin: profilemanagement	mail	ko	이메일 관리자: 프로필 관리
 emails in whitelisted domains are not marked as spam	mail	ko	화이트리스트 도메인의 이메일은 스팸으로 표시되지 않습니다
@@ -78,6 +81,7 @@ ident name	mail	ko	아이디 이름
 ident name email	mail	ko	아이디 이름 [이메일]
 ident name organization email	mail	ko	식별자 이름 조직 [이메일]
 identity label	mail	ko	신원 라벨
+if different from email address	mail	ko	이메일 주소와 다른 경우
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ko	제목을 한 번 클릭하여 메일 미리 보기를 보려면 이 기능을 활성화하세요.
 imap	mail	ko	IMAP
 imap server	mail	ko	IMAP Server
@@ -185,7 +189,8 @@ see attachments for content of the orignial mail	mail	ko	원본 전자 메일의
 select all	mail	ko	모두 선택
 select an existing entry in order to append mail content to it	mail	ko	메일 내용을 추가하려면 기존 항목을 선택하세요.
 select an item to read	mail	ko	읽을 항목을 선택하세요.
-select mail addresses from addressbook	mail	ko	주소록에서 메일 주소 선택
+select mail addresses from addressbook	mail	ko	주소록에서 이메일 주소 선택
+select or insert email address	mail	ko	이메일 주소를 선택하거나 입력하세요
 selected date range (with quicksearch)	mail	ko	선택한 날짜 범위(빠른 검색 사용)
 send message and move to send folder (if configured)	mail	ko	메시지 보내기 및 보내기 폴더로 이동(설정된 경우)
 send message pgp encrypted: requires keys from all recipients!	mail	ko	메시지 보내기 PGP 암호화: 모든 수신자의 키가 필요합니다!

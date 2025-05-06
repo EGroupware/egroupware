@@ -19,6 +19,7 @@ password	setup	ro	Senha
 password for smtp-authentication	setup	ro	Senha para autenticação SMTP
 password needed for domain configuration.	setup	ro	Senha necessária para a configuração do domínio.
 passwords --> sql	setup	ro	Senhas --> SQL
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	ro	Cerere POST cu dimensiunea %1 detectată, mai mare decât post_max_size=%2, și, prin urmare, nu este procesată de PHP!
 regular expression to filter by dn	setup	ro	Expresie regulată pentru a filtra după DN
 rejected lines	setup	ro	Linii respinse
 remove	setup	ro	Eliminați
@@ -28,4 +29,5 @@ replace username and email	setup	ro	Înlocuiți numele de utilizator și adresa 
 replace username and keep email	setup	ro	Înlocuiește numele de utilizator și păstrează adresa de e-mail
 required to change passwords	setup	ro	Necesar pentru a schimba parolele
 requires "reset password" privilege, to change passwords!	setup	ro	Necesită privilegiul "Reset Password", pentru a schimba parolele!
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	ro	Puteți ocoli această limită, montând directorul de backup în managerul de fișiere EGroupware și încărcând de acolo.
 you need to select your current charset!	setup	ro	Trebuie să selectați setul de caractere curent!

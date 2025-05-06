@@ -24,6 +24,7 @@ accepted	calendar	it	Accettato
 access denied to the calendar of %1 !!!	calendar	it	Accesso negato all'agenda di %1 !!!
 access to calendar of %1 denied!	calendar	it	Accesso al calendario di %1 negato!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	it	Azione che ha causato la notifica: Aggiunto, Cancellato, Accettato, Rifiutato, ...
+add a comment to send to organizer with your response	calendar	it	Aggiungi un commento da inviare all'organizzatore con la tua risposta
 add alarm	calendar	it	Aggiungi Allarme
 add appointments via shortened dialog or complete edit window	calendar	it	Aggiunti appuntamenti con una finestra di dialogo più corta oppure con la finestra completa
 add current view as favorite	calendar	it	Aggiungi questa visualizzazione come preferita
@@ -35,6 +36,7 @@ add timesheet entry	calendar	it	Aggiungi foglio ore
 added	calendar	it	Aggiunto
 added by synchronization	calendar	it	Aggiunto dalla sincronizzazione
 added recurrence on %1.	calendar	it	Aggiunta ricorrenza su %1.
+additional participants	calendar	it	Partecipanti aggiuntivi
 after	calendar	it	dopo
 after %1	calendar	it	Dopo %1
 after current date	calendar	it	Dopo la data attuale
@@ -66,6 +68,7 @@ appointment settings	calendar	it	Impostazioni appuntamenti
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	it	Come alternativa puoi %scaricare un dump del MySQL%2 e importare manualmente nella tabella egw_cal_timezones
 at start of the event	calendar	it	all'inizio dell'evento
 attention	calendar	it	Attenzione
+automatic update	calendar	it	Aggiornamento automatico
 automatically purge old events after	admin	it	Cancella automaticamente gli eventi vecchi dopo
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	it	Disponibile per la prima immissione in ogni giorno della settimana o tabella giornaliera all'interno dell'intervallo selezionato:
 back half a month	calendar	it	indietro di metà mese
@@ -111,9 +114,11 @@ change history	calendar	it	Cambia storico
 change your status	calendar	it	Cambia stato
 changed event-data applied	calendar	it	Dati evento modificati applicati
 charset of file	calendar	it	Set di Caratteri del file
+check all	calendar	it	Controlla tutti
 choose a category	calendar	it	Seleziona una categoria
 choose owner of imported data	calendar	it	Seleziona il proprietario dei dati importati
 close the window	calendar	it	Chiudi la finestra
+color	calendar	it	Warna
 compose a mail to all participants after the event is saved	calendar	it	componi una email per tutti i partecipanti dopo che l'evento è stato salvato
 configuration settings	calendar	it	Impostazioni di configurazione
 conflict	calendar	it	Conflitto
@@ -122,6 +127,7 @@ copy your changes to the clipboard, %1reload the entry%2 and merge them.	calenda
 countries	calendar	it	Nazioni
 country	calendar	it	Nazione
 create a new series	calendar	it	Crea nuova serie
+create a new subscription	calendar	it	Crea una nuova sottoscrizione
 create an exception for the given date	calendar	it	Crea una eccezione per questa data
 create an infolog from this event	calendar	it	Crea una scheda di attività da questo evento
 create exception	calendar	it	Crea eccezione
@@ -191,6 +197,7 @@ do you want to be notified about changes of appointments you modified?	calendar	
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	it	Vuoi una notifica per i nuovi appuntamenti o per quelli cambiati? Sarai avvertito dei cambiamenti da te effettuati.<br>Puoi limitare la notifica su alcuni cambiamenti. TUTTE LE VOCI include tutte le notifiche elencate sopra di esso. TUTTE LE MODIFICHE include il cambiamento del titolo, della descrizione, dei partecipanti, ma non delle risposte dei partecipanti. Se il creatore dell'evento richiede ogni notifica, avrà sempre le risposte dei partecipanti sia gli accetti che i rifiuti.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	it	Vuoi ricevere una notifica sugli appuntamenti nuovi o modificati? Sarai notificato anche delle modifiche che apporti tu.  Puoi limitare le notifiche a solo alcuni cambiamenti. Ogni elemento include tutte le notifiche sopra di essa.Tutte le modifiche includono cambiamenti di titolo, descrizione, partecipanti, ma non le risposte dei partecipanti. Se il proprietario della scheda di un evento ha richiesto delle notifiche, riceverà sempre le risposte dei partecipanti.
 do you want to be notified about participant responses from events you created, but are not participating in?	calendar	it	Vuoi ricevere una notifica sulla risposta dei partecipanti ad eventi che hai creato, ma ai quali non parteciperai?
+do you want to delete this subscription incl. the synced events?	calendar	it	Vuoi cancellare questa sottoscrizione con gli eventi sincronizzati?
 do you want to edit this event as an exception or the whole series?	calendar	it	Vuoi modificare questo evento come eccezione oppure l'intera ricorrenza?
 do you want to keep the series exceptions in your calendar?	calendar	it	Vuoi mantenere le modifiche alla serie nell'agenda?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	it	Vuoi ricevere regolarmente il resoconto dei tuoi appuntamenti via e-mail?<br>Il resoconto sarà mandato al tuo indirizzo e-mail standard ogni mattina o ogni Lunedì per il resoconto settimanale.<br>Sarà mandato solo se avrai un appuntamento per quel giorno o per quella settimana.
@@ -277,6 +284,7 @@ full edit dialog	calendar	it	Finestra di immissione completa
 fullname of person to notify	calendar	it	Nome completo della persona da avvisare
 general fields:	calendar	it	Campi generali
 general settings	calendar	it	Impostazioni generali
+given url is not a caldav server: missing %1!	calendar	it	L'URL indicato non è un server CalDAV: manca %1!
 global categories	calendar	it	Categorie Globali
 global public and group public	calendar	it	Pubblico Globale e Pubblico per il Gruppo
 global public only	calendar	it	Solo Pubblico Globale
@@ -587,8 +595,14 @@ status for all future scheduled days changed	calendar	it	Stato per tutti gli eve
 status for this particular day changed	calendar	it	Stato per questo giorno in particolare modificato
 status of participants set to unknown because of missing category rights	calendar	it	Stato dei partecipanti impostato a "sconosciuto" a causa di mancanza di diritti per la categoria
 submit to repository	calendar	it	Invia all'archivio
+subscribed calendar	calendar	it	Calendario sottoscritto
+subscription incl. the synced events deleted.	calendar	it	L'abbonamento con gli eventi sincronizzati è stato cancellato.
+subscription saved.	calendar	it	Abbonamento salvato.
+subscription synced.	calendar	it	Abbonamento sincronizzato.
+subscriptions	calendar	it	Sottoscrizioni
 summary of participant status: 3 participants: 1 accepted, 2 unknown	calendar	it	Riassunto dello stato dei partecipanti: 3 Partecipanti: 1 accettato, 2 sconosciuto
 sun	calendar	it	Dom
+sync now	calendar	it	Sincronizza ora
 tag to mark positions for address labels	calendar	it	Tagga per marcare le posizioni per le etichette di indirizzo
 tentative	calendar	it	Tentativo
 test import (show importable records <u>only</u> in browser)	calendar	it	Test d'importazione (visualizza nel browser <u>solo</u> i record importabili)

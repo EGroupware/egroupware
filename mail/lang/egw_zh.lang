@@ -17,6 +17,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	zh	将 %1 添
 adding %1 to whiltelisted email addresses failed because of %2	mail	zh	将 %1 添加到已列入黑名单的电子邮件地址失败，原因是 %2
 after reply, visible during compose	mail	zh	回复后，在撰写过程中可见
 aliases+forwards	mail	zh	别名+转发
+all my email addresses	mail	zh	我所有的电子邮件地址
 all of	mail	zh	所有的
 allow images from external sources in html emails	mail	zh	在HTML邮件中允许外部图片来源
 always respond / auto-responder	mail	zh	始终回复/自动回复
@@ -79,6 +80,7 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	zh	您真的想在当前视图中为所有邮件切换标签 %1 吗？
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	zh	您是否希望在将选定邮件附加到新邮件之前要求确认？
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	zh	在将选定的邮件移动到另一个文件夹之前，您是否希望要求确认？
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	zh	您是否想阻止编辑/设置在电子邮件到达时通过电子邮件通知其他电子邮件地址（即使启用了 Sieve）？
 does not contain	mail	zh	不包含
 does not match	mail	zh	不符合
 does not match regexp	mail	zh	不符合条件
@@ -89,6 +91,7 @@ draft folder	mail	zh	草稿夹
 edit account	mail	zh	编辑账户
 edit vacation settings	mail	zh	编辑假期设置
 email address	mail	zh	邮件地址
+email notification update failed! you need to set an email address!	mail	zh	电子邮件通知更新失败！您需要设置一个电子邮件地址！
 emailaddress	admin	zh	邮件地址
 emailadmin: profilemanagement	mail	zh	eMailAdmin： 资料管理
 emails in whitelisted domains are not marked as spam	mail	zh	白名单域名中的电子邮件不会被标记为垃圾邮件
@@ -134,6 +137,7 @@ ident name organization email	mail	zh	身份名称 组织 [电子邮件］
 identity	mail	zh	身份
 identity label	mail	zh	身份标签
 if	mail	zh	如果
+if different from email address	mail	zh	如果与电子邮件地址不同
 if mail header	mail	zh	如果邮件头
 if message size	mail	zh	如果邮件大小
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	zh	如果你想单击邮件主题查看邮件预览，请启用此功能。
@@ -284,7 +288,7 @@ see attachments for content of the orignial mail	mail	zh	原始邮件内容见�
 select all	mail	zh	全选
 select an existing entry in order to append mail content to it	mail	zh	选择一个现有条目，以便将邮件内容添加到该条目中
 select an item to read	mail	zh	选择一个项目阅读
-select mail addresses from addressbook	mail	zh	从地址簿中选择邮件地址
+select mail addresses from addressbook	mail	zh	从地址簿中选择电子邮件地址
 select or insert email address	mail	zh	选择或插入电子邮件地址
 selected date range (with quicksearch)	mail	zh	选定日期范围（使用快速搜索）
 send message and move to send folder (if configured)	mail	zh	发送信息并移至发送文件夹（如果已配置）

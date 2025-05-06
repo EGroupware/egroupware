@@ -413,6 +413,7 @@ please wait...	setup	sv	Vänta
 pop/imap mail server hostname or ip address	setup	sv	POP3/IMAP e-postserver värdnamn eller IP adress
 possible reasons	setup	sv	Möjliga anledningar
 possible solutions	setup	sv	Möjliga lösningar
+post request with size %1 detected, larger than post_max_size=%2, and therefore not processed by php!	setup	sv	POST-begäran med storlek %1 upptäcktes, större än post_max_size=%2, och därför inte bearbetad av PHP!
 post-install dependency failure	setup	sv	Efterinstallation har beroendefel
 postfix with ldap: [yes(user edit forwarding)]	setup	sv	Postfix med LDAP: [yes(user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	sv	PostgreSQL: lämna tomt för att använda fördefinierad unix socket istället för TCP/IP anslutningar
@@ -599,6 +600,7 @@ you are ready for this stage, but this stage is not yet written.<br />	setup	sv	
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	sv	Du använder  PHP version %1. EGroupware kräver numera version %2 eller senare. Rekomenderar PHP %3
 you can install it by running:	setup	sv	Du kan installera detta genom att exekvera:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	sv	Du kan använda header användare och lösenord för alla domäner också. Om lösenordet inte anges från kommandoprompten läses den från miljövariablen EGW_CLI_PASSWORD eller frågas efter.
+you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	sv	Du kan kringgå denna gräns genom att montera backup-katalogen i EGroupware filhanterare och ladda upp därifrån.
 you didn't enter a config password for domain %1	setup	sv	Du angav inget config-lösenord  för domän %1
 you didn't enter a config username for domain %1	setup	sv	Du angav inget config-användarnamn  för domän %1
 you didn't enter a header admin password	setup	sv	Du angav inget header admin-lösenord
