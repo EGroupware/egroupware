@@ -617,23 +617,23 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 
 	handleResize(entries : ResizeObserverEntry[], observer)
 	{
-		if(!this._actionsParsed)
+		const toolbar = entries[0]?.target;
+		if(!toolbar._actionsParsed)
 		{
 			return;
 		}
 
 		// Toolbar changed size, re-organise children
 		// but wait a bit until things stop
-		if(this._layoutTimeout)
+		if(toolbar._layoutTimeout)
 		{
-			window.clearTimeout(this._layoutTimeout);
+			window.clearTimeout(toolbar._layoutTimeout);
 		}
-		this._layoutTimeout = window.setTimeout(() =>
+		toolbar._layoutTimeout = window.setTimeout(() =>
 		{
-			const toolbar = entries[0]?.target;
 			toolbar._organiseChildren();
 			toolbar.requestUpdate();
-			this.dispatchEvent(new Event("et2-resize", {bubbles: true, composed: true}));
+			toolbar.dispatchEvent(new Event("et2-resize", {bubbles: true, composed: true}));
 		}, Et2Toolbar.LAYOUT_TIMEOUT);
 	}
 

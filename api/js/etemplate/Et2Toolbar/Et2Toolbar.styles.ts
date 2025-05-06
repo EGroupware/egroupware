@@ -22,6 +22,7 @@ export default css`
 			overflow: hidden;
 			position: relative;
 			flex: 1 1 100%;
+			gap: 1em;
 		}
 		.toolbar-list-trigger {
 			font-size: var(--sl-font-size-large);

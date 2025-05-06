@@ -21,6 +21,7 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 			css`
 				slot[name] {
 					display: none;
+					width: 1em;
 				}
 
 				sl-switch {

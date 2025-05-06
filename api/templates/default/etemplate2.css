@@ -2671,6 +2671,7 @@ et2-toolbar et2-switch-icon::part(control) {
 
 et2-toolbar [slot="list"]:not(et2-button)::part(control) {
 	order: -1;
+	width: auto;
 	margin-inline-start: var(--sl-spacing-small);
 	margin-inline-end: var(--sl-spacing-medium);
 }
