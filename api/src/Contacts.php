@@ -804,7 +804,7 @@ class Contacts extends Contacts\Storage
 				$data['freebusy_uri'] = calendar_bo::freebusy_url($user);
 			}
 		}
-		if (!empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['n_fn_parts']))
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['n_fn_parts']) || empty($data['n_fn']))
 		{
 			$data['n_fn'] = self::fullname($data);
 		}
