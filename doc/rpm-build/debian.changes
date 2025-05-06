@@ -5,18 +5,11 @@ egroupware-docker (23.1.20250506) hardy; urgency=low
   * Calendar: fix scrolling up when clicking into search for displayed calendars
   * Calendar: fix not working click on event in planner-view
   * Addressbook: new preference how to generate full name to not use prefix or prefer it over firstname or vice versa
-  * Addressbook: hide account-name column for non-admins, unless otherwise configured in app-configuration of addressbook
-  * Addressbook/REST Api: fix error unsetting birthday / anniversary type="birth"
   * Mail: remember and reopen last used folder in implicit preference and always autoload deeper folder-hierarchies for better performance
   * Mail: if attachment does not have a filename plus extension, fall back to the description and add extension matching the mime-type
   * Mail: fix after tab-/application-change not working context menu on tree
   * Mail/InfoLog (EPL): fix not working Mailvelope install dialog and usage in InfoLog for PGP encryption of description
-  * Setup/Preferences: allow to override authentication for Password & Security e.g. for OAuth to check LDAP
-  * WebDAV: improve performance by not returning all extra properties, if they are not requested
-  * InfoLog: new config to give responsible user access to linked contacts
-  * Login page: replace Twitter with BlueSky and Mastodon in our social media links
   * VIDOTEACH: add video status that makes one video dependent on others
-  * VIDOTEACH: allow to upload and annotate mp3 audio files
   * PHP: Docker images use PHP 8.4 now
 
  -- Ralf Becker <rb@egroupware.org>  Tue, 06 May 2025 11:09:42 +0200
