@@ -295,6 +295,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		{
 			return {
 				label: true,
+				helptext: true,
 				statustext: true
 			}
 		}
@@ -309,6 +310,12 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		constructor(...args : any[])
 		{
 			super(...args);
+
+			// Don't overwrite ID if it's already set from DOM
+			if(this.hasAttribute("id"))
+			{
+				this._widget_id = this.getAttribute("id");
+			}
 
 			this.disabled = false;
 			this._handleClick = this._handleClick.bind(this);
@@ -559,6 +566,16 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		@property({type: Object})
 		set actions(actions : EgwAction[] | { [id : string] : object })
 		{
+			this._initActions(actions);
+		}
+
+		get actions()
+		{
+			return this._actionManager?.children || {};
+		}
+
+		protected _initActions(actions : EgwAction[] | { [id : string] : object })
+		{
 			if(!(Array.isArray(actions) && actions.length > 0 || Object.entries(actions).length > 0))
 			{
 				// Not trying to clear actions, just called automatic
@@ -615,11 +632,6 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 			// Link the actions to the DOM
 			this._link_actions(actions);
-		}
-
-		get actions()
-		{
-			return this._actionManager?.children || {};
 		}
 
 		/**
@@ -1148,9 +1160,12 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			transformAttributes(this, this.getArrayMgr("content"), attrs);
 
 			// Add in additional modifications
-			if(this.id && this.getArrayMgr("modifications")?.getEntry(this.id))
+			const mods = this.getArrayMgr("modifications")?.getPerspectiveData().owner == this ?
+						 this.getArrayMgr("modifications")?.data :
+						 this.getArrayMgr("modifications")?.getEntry(this.id);
+			if(this.id && mods)
 			{
-				transformAttributes(this, this.getArrayMgr("content"), this.getArrayMgr("modifications").getEntry(this.id));
+				transformAttributes(this, this.getArrayMgr("content"), mods);
 			}
 		}
 
@@ -1659,6 +1674,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				image: () => "",
 				lang: (l) => {return l;},
 				preference: () => {return false;},
+				tooltipUnbind: () => false,
 			};
 			for(let functionName in required)
 			{
