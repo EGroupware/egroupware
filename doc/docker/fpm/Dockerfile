@@ -1,6 +1,6 @@
 ################################################################################
 ##
-## EGroupware FPM container using Ubuntu 20.04, NodeJS 20 and PHP 8.2 from ondrej/php PPA
+## EGroupware FPM container using Ubuntu 20.04, NodeJS 20 and PHP 8.4 from ondrej/php PPA
 ##
 ################################################################################
 ARG ARCH=
@@ -8,7 +8,7 @@ FROM ${ARCH}ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
-ARG PHP_VERSION=8.3
+ARG PHP_VERSION=8.4
 # Set environment variable for non-interactive install
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TARGETPLATFORM
@@ -23,7 +23,7 @@ RUN set -e \
 	&& LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php \
 	&& apt-get update \
 	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,opcache,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp,memcached}" \
-	# php8.{0,1}-apcu recommends (not needed) php-apcu-bc, which cause PHP 7.4 to be installed :(
+	# php8.*-apcu recommends (not needed) php-apcu-bc, which cause PHP 7.4 to be installed :(
     && apt-get install --no-install-recommends -y php$PHP_VERSION-apcu \
 	&& bash -c "[[ $PHP_VERSION =~ ^8\..* ]] || apt-get install -y php$PHP_VERSION-json" \
 	# fpm and php.ini settings

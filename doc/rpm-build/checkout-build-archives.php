@@ -44,18 +44,18 @@ $config = array(
 	// add given extra-apps or (uncompressed!) archives to above all.tar.bz2 archive
 	'all-add' => array('contrib'),
 	// diverse binaries we need
-	'svn' => trim(`which svn`),
+	'svn' => trim(`which svn` ?? 'svn'),
 	'tar' => trim(`which gtar` ?: `which gnutar` ?: `which tar`),	// tar on MacOS does not support --owner or --group
 	'mv' => trim(`which mv`),
 	'rm' => trim(`which rm`),
-	'zip' => trim(`which zip`),
-	'bzip2' => trim(`which bzip2`),
-	'clamscan' => trim(`which clamscan`),
-	'freshclam' => trim(`which freshclam`),
-	'git' => trim(`which git`),
-	'gpg' => trim(`which gpg`),
-	'editor' => trim(`which vi`),
-	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*" --exclude "*-policy-*" --exclude "*-webauthn-*" --exclude "*-kanban-*"',
+	'zip' => trim(`which zip` ?? 'zip'),
+	'bzip2' => trim(`which bzip2` ?? 'bzip2'),
+	'clamscan' => trim(`which clamscan` ?? 'clamscan'),
+	'freshclam' => trim(`which freshclam` ?? 'freshclam'),
+	'git' => trim(`which git` ?? 'git'),
+	'gpg' => trim(`which gpg` ?? 'gpg'),
+	'editor' => trim(`which vi` ?? 'vi'),
+	'rsync' => trim(`which rsync` ?? 'rsync').' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*" --exclude "*-policy-*" --exclude "*-webauthn-*" --exclude "*-kanban-*"',
 	'composer' => trim(`which composer.phar`),
 	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@egroupware.org',
@@ -1155,10 +1155,8 @@ function do_virusscan()
 	if (file_exists($config['freshclam']))
 	{
 		echo "Updating virus signatures\n";
-		$cmd = '/usr/bin/sudo bash -c "cd /; '.$config['freshclam'].'"';
-		if (!$verbose && function_exists('posix_getuid') && posix_getuid()) echo $cmd."\n";
 		$output = null;
-		run_cmd($cmd,$output,1);	// 1 = ignore already up to date database
+		run_cmd($config['freshclam'],$output,1);	// 1 = ignore already up to date database
 	}
 	echo "Starting virusscan\n";
 	$cmd = $config['clamscan'].' --quiet -r '.$config['egw_buildroot'];
@@ -1403,12 +1401,12 @@ function do_svntag()
  * 2b) otherwise throws with $cmd as message and exit-code
  *
  * @param string $cmd
- * @param array& $output=null $output of command, only if !$verbose !!!
+ * @param ?array& $output=null $output of command, only if !$verbose !!!
  * @param int|array $no_bailout =null exit code(s) to NOT bail out
  * @throws Exception on non-zero exit-code not matching $no_bailout
  * @return int exit code of $cmd
  */
-function run_cmd($cmd,array &$output=null,$no_bailout=null)
+function run_cmd($cmd, ?array &$output=null, $no_bailout=null)
 {
 	global $verbose;
 
