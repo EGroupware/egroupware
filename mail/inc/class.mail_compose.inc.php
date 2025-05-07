@@ -230,7 +230,7 @@ class mail_compose
 				'smime_sign' => array (
 					'caption' => 'SMIME Sign',
 					'icon' => 'smime_sign',
-					'group' => ++$group,
+					'group' => $group,
 					'onExecute' => 'javaScript:app.mail.compose_setToggle',
 					'checkbox' => true,
 					'hint' => 'Sign your message with smime certificate'
