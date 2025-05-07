@@ -147,13 +147,6 @@
   background: inherit;
   border: none;
 }
-#calendar-toolbar .egw_fw_ui_app_header_container {
-  border: none;
-  display: flex;
-  align-items: center;
-  min-height: 26px;
-  justify-content: flex-end;
-}
 #calendar-toolbar .et2_searchbox input {
   height: 14px;
 }
@@ -800,6 +793,10 @@ Hide subsequent headers in week view with non-consolidated owners
 /* Do not show icons in header, only tooltip */
 .calendar_calEventTooltip .calendar_calEventIcons {
   display: inline-block;
+}
+.calendar_calEventTooltip .calendar_calEventCategoryIcons {
+  display: inline;
+  padding-inline-end: var(--sl-spacing-medium);
 }
 .calendar_calEventTooltip .calendar_calEventBody,
 .calendar_calEventTooltip .calendar_calEventBodySmall {

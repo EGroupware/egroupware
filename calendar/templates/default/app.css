@@ -824,6 +824,11 @@ Hide subsequent headers in week view with non-consolidated owners
 .calendar_calEventTooltip .calendar_calEventIcons {
 	display: inline-block;
 }
+.calendar_calEventTooltip .calendar_calEventCategoryIcons {
+	display: inline-flex;
+	padding-inline-end: var(--sl-spacing-medium);
+	gap: var(--sl-spacing-2x-small);
+}
 .calendar_calEventTooltip .calendar_calEventBody,
 .calendar_calEventTooltip .calendar_calEventBodySmall {
 	padding-bottom: 1em;
