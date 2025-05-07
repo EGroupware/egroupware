@@ -171,7 +171,7 @@ class Token
 			$readonlys['__ALL__'] = true;
 			$readonlys['new_token'] = empty($content['token_hash']);
 			$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['button[cancel]'] =
-				$readonlys['password'] = $readonlys['token_remark'] = false;
+				$readonlys['password'] = $readonlys['token_remark'] = $readonlys['copy_token'] = false;
 		}
 		$content['token_apps'] = Api\Auth\Token::limits2apps($content['token_limits']);
 		$content['admin'] = !empty($GLOBALS['egw_info']['user']['apps']['admin']) && static::APP === 'admin';
