@@ -4140,6 +4140,9 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				// Update filters, if we're not already doing so
 				if((result || typeof result === 'undefined') && !header.update_in_progress)
 				{
+					/*
+					//We think the condition is no longer met in any case we care about
+					//It introduced problems when trying to change a NM filter that never had a value set before but getValues() still returns the correct filters
 					// Widget will not have an entry in getValues() because nulls
 					// are not returned, we remove it from activeFilters
 					if(_widget._oldValue == null)
@@ -4159,6 +4162,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 					}
 					else
 					{
+					*/
 						// Not null is easy, just get values, the nextmatch could be inside another widget i.e. a grid or a box that's why we use the getPath in combination with getNestedValueByPath
 						const nmpath = [...header.nextmatch.getPath(), header.nextmatch.id];
 						const value = this.getInstanceManager().getValues(sub_header);
@@ -4170,7 +4174,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 						const filters = getNestedValueByPath(value, nmpath);
 						header.nextmatch.applyFilters(filters);
 
-					}
+					//}
 				}
 				// In case this gets bound twice, it's important to return
 				return true;
