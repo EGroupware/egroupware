@@ -2684,15 +2684,6 @@ et2-toolbar et2-switch-icon:hover:not([disabled]) {
 	height: 18px;
 }
 
-.et2_toolbar .ui-toolbar-menulist et2-switch-icon::part(switch-label),
-.et2_toolbar .ui-toolbar-menulist et2-switch-icon::part(switch) {
-	width: 100%;
-}
-
-.et2_toolbar .ui-toolbar-menulist et2-switch-icon::part(control) {
-	width: 100%;
-	justify-content: space-evenly;
-}
 et2-button.transparent-button {
 	border: none;
 	background: transparent;
@@ -2703,24 +2694,8 @@ et2-button.transparent-button::part(container) {
     height: auto;
     background: none;
 }
-.et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_hasCaption, .nextmatch_header_row .et2_button_text {
-    width: auto;
-    background-position: 6px center;
-    padding-left: 26px;
-    padding-right: 5px;
-    color: #5B5B5B;
-    z-index: 1000;
-}
-
-.et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_onlyCaption {
-    vertical-align: top;
-    width: auto;
-    padding-left: 3px;
-    background-image: none;
-}
 
 .nextmatch_header_row button,
-.et2_toolbar div.et2_progress,
 .nextmatch_header_row div.et2_progress {
 	border-radius: var(--sl-border-radius-medium, 3px);
     background-color: #fafafa;
@@ -2728,25 +2703,11 @@ et2-button.transparent-button::part(container) {
 	overflow: hidden;
 }
 
-.et2_toolbar div.et2_progress, .nextmatch_header_row div.et2_progress {
-    padding: 0;
-}
-
-.et2_toolbar .et2_progress > div, .nextmatch_header_row .et2_progress > div {
-    border-radius: 3px;
-}
-
 /**
- * Fileupload in toolbar or NM header
+ * Fileupload NM header
  */
-.et2_toolbar div.et2_file {
-    width: 145px;
-    margin-top: 1px;
-    padding-right: 4px;
-}
-
-.et2_toolbar div.et2_file span, .nextmatch_header_row div.et2_file span,
-.et2_toolbar div.et2_file input, .nextmatch_header_row div.et2_file input {
+.nextmatch_header_row div.et2_file span,
+.nextmatch_header_row div.et2_file input {
     height: 16px;
     top: 0;
     margin: 0;
@@ -2758,9 +2719,9 @@ et2-button.transparent-button::part(container) {
 }
 
 /**
- * Textbox in toolbar or NM header
+ * Textbox in NM header
  */
-.et2_toolbar input.et2_textbox, .nextmatch_header_row input.et2_textbox {
+.nextmatch_header_row input.et2_textbox {
     height: 26px;
     border-radius: 3px;
     background-color: #fafafa;

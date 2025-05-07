@@ -36,6 +36,11 @@ import {Et2Box} from "../Layout/Et2Box/Et2Box";
  * @slot list - Toolbar contents that start hidden in the dropdown
  *
  * @event et2-resize - Emitted when the toolbar re-lays out
+ *
+ * @part base - Toolbar wrapper
+ * @part buttons - Wrapper of visible controls
+ * @part list - Wrapper of not visible controls
+ *
  */
 @customElement("et2-toolbar")
 export class Et2Toolbar extends Et2InputWidget(Et2Box)
@@ -192,7 +197,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 
 		// Set groups on real children
 		Array.from(this.querySelectorAll(":scope > sl-button-group:not([data-group]), :scope > et2-box:not([data-group]), :scope > et2-hbox:not([data-group])"))
-			.forEach((c, index) =>
+			.forEach((c : HTMLElement, index) =>
 			{
 				c.dataset.group = c.label ?? index + shownActionCount;
 				c.querySelectorAll(":scope > *").forEach(child => child.dataset.groupId = c.dataset.group);
@@ -751,7 +756,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
                                  image="three-dots-vertical" noSubmit="true"
                                  label="${this.egw().lang("More...")}"
                 ></et2-button-icon>
-                <sl-menu class="toolbar-list">
+                <sl-menu part="list" class="toolbar-list">
                     <slot name="list"></slot>
                     <sl-divider data-order="99"></sl-divider>
                     <et2-button class="toolbar-admin-button"

@@ -22,7 +22,6 @@ export default css`
 			overflow: hidden;
 			position: relative;
 			flex: 1 1 100%;
-			gap: 1em;
 		}
 		.toolbar-list-trigger {
 			font-size: var(--sl-font-size-large);
@@ -66,7 +65,15 @@ export default css`
 		::slotted(sl-button-group)::part(base) {
 			height: 100%;
 		}
-
+		::slotted(sl-button-group) {
+			padding-left: var(--sl-spacing-3x-small);
+			padding-right: var(--sl-spacing-3x-small);
+			background: linear-gradient(var(--sl-panel-border-color) 0 0) left / var(--sl-panel-border-width, 2px) 50%;
+			background-repeat: no-repeat;
+		}
+		::slotted(sl-button-group:first-child) {
+			background: none;
+		}
 		/* Hide empty button groups (the buttons are in the list) */
 
 		::slotted(sl-button-group:empty) {
