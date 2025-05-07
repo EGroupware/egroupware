@@ -105,10 +105,6 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 			this.getAllItems().forEach((i) => i.checked = false);
 			item.checked = true;
 		}
-		else
-		{
-			item.checked = !item.checked;
-		}
 
 		this.dispatchEvent(new Event("change"));
 	}
