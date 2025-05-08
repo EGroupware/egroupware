@@ -13,7 +13,7 @@ export default css`
        
 	}
     
-    .form-control-input:has(.email--focused) {
+    .form-control-input:has(sl-popup[active]) {
         /*This is needed in Safari for the dropdown to show over other inputs */
         z-index: 2;
     }
