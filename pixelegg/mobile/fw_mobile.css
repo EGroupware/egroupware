@@ -5644,7 +5644,7 @@ div#topmenu_info_update {
   display: inline-block;
 }
 div#topmenu_info_update img {
-  witdh: 24px;
+  width: 24px;
   padding: 11px;
 }
 /**
@@ -6864,8 +6864,16 @@ et2-toolbar :not(et2-button)::part(control) {
   border: none;
   font-size: 20px;
 }
+et2-toolbar :not(et2-button)::part(control):hover {
+  background-color: var(--sl-color-gray-150);
+  color: var(--sl-input-color-hover);
+}
 et2-toolbar et2-switch-icon::part(control) {
   font-size: var(--sl-font-size-x-large, 20px);
+}
+et2-toolbar et2-button::part(prefix) {
+  --et2-button-image-padding-left: 0px;
+  padding-left: 0px;
 }
 et2-toolbar et2-button-toggle[slot=""] {
   justify-content: center;
