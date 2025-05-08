@@ -263,7 +263,17 @@ class admin_account
 	{
 		// We skipped the addressbook copy, call it now
 		$ab_ui = new addressbook_ui();
+		$original_content = $content;
 		$ab_ui->copy_contact($content, true);
+
+		// Addressbook removes unwanted keys, we need to clear the value because we're in a hook
+		foreach(array_keys($original_content) as $clear_key)
+		{
+			if(!array_key_exists($clear_key, $content))
+			{
+				$account[$clear_key] = null;
+			}
+		}
 
 		// copy_contact() reset the owner, fix it
 		$content['owner'] = '0';
