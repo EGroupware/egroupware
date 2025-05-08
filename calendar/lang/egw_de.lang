@@ -146,7 +146,7 @@ custom url for ical with holidays for all users	calendar	de	Eigene URL für iCal
 custom_2	common	de	Frei / Besetzt
 daily	calendar	de	Täglich
 daily tables	calendar	de	Tabellen für tägliche Einträge
-data exchange settings	calendar	de	Einstellungen für den Datenaustausch
+data exchange settings	common	de	Einstellungen für den Datenaustausch
 date for the day of the week	calendar	de	Datum für den Tag
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	de	Tagesdatum, erste Zeile der Tagesübersicht
 date range	calendar	de	Datumsbereich
@@ -223,6 +223,7 @@ enddate	calendar	de	Enddatum
 enddate / -time of the meeting, eg. for more then one day	calendar	de	Enddatum und -zeit des Termins, z.B. für mehr als einen Tag
 enddate of the export	calendar	de	Enddatum des Exports
 ends	calendar	de	Endet
+entries	calendar	de	Einträge
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
 error notifying %1	calendar	de	Fehler beim Benachrichtigen von %1
 error saving the event!	calendar	de	Fehler beim Speichern des Termins!
@@ -577,6 +578,7 @@ show only invitations, not yet accepted or rejected	calendar	de	Zeige nur Einlad
 show only rejected events	calendar	de	Zeige nur abgelehnte Termine
 show only tentative accepted events	calendar	de	Zeige nur vorläufig zugesagte Termine
 show only the date, not the year	admin	de	Zeige nur das Datum nicht das Jahr
+show subscribed calendars	calendar	de	Zeige abonnierte Kalender
 show this month	calendar	de	Diesen Monat anzeigen
 show this week	calendar	de	Diese Woche anzeigen
 show year and age	calendar	de	Zeige Jahr und Alter
