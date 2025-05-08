@@ -5913,7 +5913,11 @@ class Mail
 				}
 				$attachment['size'] = $part->getBytes();
 				if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
-				if (empty($attachment['name'])) $attachment['name'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.MimeMagic::mime2ext($mime_type);
+				if (empty($attachment['name']))
+				{
+					$attachment['name'] = (isset($attachment['cid']) && !empty($attachment['cid']) ?
+						$attachment['cid'] : lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.MimeMagic::mime2ext($mime_type);
+				}
 				//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.' Part:'.$_partID.'->'.$mime_id.':'.array2string($attachment));
 				//typical winmail.dat attachment is
 				//Array([size] => 1462762[filename] => winmail.dat[mimeType] => application/ms-tnef[uid] => 100[partID] => 2[name] => winmail.dat)
@@ -6193,7 +6197,11 @@ class Mail
 						//error_log(__METHOD__.__LINE__.'#'.$structure_mime.'#'.$filename.'#'.array2string($attachment));
 						if (empty($attachment['filename'])) $attachment['filename'] = self::attachmentName($part);
 						if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
-						if (empty($attachment['filename'])) $attachment['filename'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.MimeMagic::mime2ext($attachment['mimeType']);
+						if (empty($attachment['filename']))
+						{
+							$attachment['filename'] = (isset($attachment['cid']) && !empty($attachment['cid']) ?
+								$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.MimeMagic::mime2ext($attachment['mimeType']);
+						}
 						$wmattach = $attachment;
 						$wmattach['attachment'] = $part->getContents(array('stream'=>$_stream));
 
@@ -6203,7 +6211,10 @@ class Mail
 			if ($tnefResolved)
 			{
 				$ext = MimeMagic::mime2ext($wmattach['mimeType']);
-				if ($ext && stripos($wmattach['filename'],'.')===false && stripos($wmattach['filename'],$ext)===false) $wmattach['filename'] = trim($wmattach['filename']).'.'.$ext;
+				if ($ext && stripos($wmattach['filename'],'.')===false && stripos($wmattach['filename'],$ext)===false)
+				{
+					$wmattach['filename'] = trim($wmattach['filename']).'.'.$ext;
+				}
 				$attachmentData = array(
 					'type'       => $wmattach['mimeType'],
 					'filename'   => $wmattach['filename'],
@@ -6231,8 +6242,8 @@ class Mail
 
 		// if we currently have an extension on the filename and mime-type is either "application/octet-stream" or matches the extension
 		if (count($parts = explode('.', $filename)) >= 2 &&
-			strlen($current_ext = array_pop($parts)) <= 4 &&
-			($mime_type == "application/octet-stream" || $current_ext === MimeMagic::mime2ext($mime_type)))
+			($mime_type == "application/octet-stream" ||
+				in_array(array_pop($parts), MimeMagic::mime2extensions($mime_type))))
 		{
 			return $filename;   // --> use it
 		}
