@@ -146,7 +146,7 @@ custom url for ical with holidays for all users	calendar	en	Custom URL for iCal 
 custom_2	common	en	Free/Busy
 daily	calendar	en	Daily
 daily tables	calendar	en	Daily tables
-data exchange settings	calendar	en	Data exchange settings
+data exchange settings	common	en	Data exchange settings
 date for the day of the week	calendar	en	Date for the day of the week
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.
 date range	calendar	en	Date range
@@ -223,6 +223,7 @@ enddate	calendar	en	End date
 enddate / -time of the meeting, eg. for more then one day	calendar	en	End date/time of the meeting, e.g. for more than one day
 enddate of the export	calendar	en	End date of the export
 ends	calendar	en	Ends
+entries	calendar	en	entries
 error adding the alarm	calendar	en	Error adding the alarm
 error notifying %1	calendar	en	Error notifying %1
 error saving the event!	calendar	en	Error saving the event!
@@ -577,6 +578,7 @@ show only invitations, not yet accepted or rejected	calendar	en	Show only invita
 show only rejected events	calendar	en	Show only rejected events
 show only tentative accepted events	calendar	en	Show only tentative accepted events
 show only the date, not the year	admin	en	Show only the date, not the year
+show subscribed calendars	calendar	en	Show subscribed calendars
 show this month	calendar	en	Show this month
 show this week	calendar	en	Show this week
 show year and age	calendar	en	Show year and age
