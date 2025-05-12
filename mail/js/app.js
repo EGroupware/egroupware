@@ -5584,7 +5584,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_submitAction: function (_action)
 	{
-		if (this.compose_integrate_submit() && _action) return false;
+		if (_action && this.compose_integrate_submit())
+		{
+			return false;
+		}
 
 		if (this.mailvelope_editor)
 		{
@@ -5627,14 +5630,13 @@ app.classes.mail = AppJS.extend(
 		var integWidget= {};
 		var self = this;
 
-		integWidget = this.et2.getWidgetById(integApps[index]);
-		if (toolbar.options.actions[integApps[index]] &&
-				typeof toolbar.options.actions[integApps[index]]['mail_import'] != 'undefined' &&
-				typeof toolbar.options.actions[integApps[index]]['mail_import']['app_entry_method'] != 'unefined')
+		integWidget = index < integApps.length ? toolbar.getWidgetById(integApps[index]) : null;
+		const action = toolbar.actions.find((action) => action.id == integApps[index]);
+		if (integWidget && integWidget.value && action &&
+			typeof action.data['mail_import'] != 'undefined' &&
+			typeof action.data['mail_import']['app_entry_method'] != 'undefined')
 		{
-			var mail_import_hook = toolbar.options.actions[integApps[index]]['mail_import']['app_entry_method'];
-			if (integWidget.get_value() == 'on')
-			{
+			var mail_import_hook = action.data['mail_import']['app_entry_method'];
 				var title = egw.lang('Select') + ' ' + egw.lang(integApps[index]) + ' ' + (egw.link_get_registry(integApps[index], 'entry') ? egw.link_get_registry(integApps[index], 'entry') : egw.lang('entry'));
 				this.integrate_checkAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook , function (args){
 
@@ -5644,10 +5646,9 @@ app.classes.mail = AppJS.extend(
 					self.compose_integrate_submit(index);
 				});
 				return true;
-			}
 		}
 		// the to_tracker action might not be presented because lack of app permissions
-		else if(integApps[index] == "to_tracker" && !toolbar.options.actions[integApps[index]])
+		else if (integApps[index] == "to_tracker" && !action)
 		{
 			return false;
 		}
