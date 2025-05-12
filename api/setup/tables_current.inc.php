@@ -265,7 +265,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('contact_id'),
 		'fk' => array(),
-		'ix' => array('contact_owner','cat_id','n_fileas','contact_modified','contact_uid','carddav_name',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
+		'ix' => array('contact_owner','cat_id','n_fileas','contact_email(64)','contact_email_home(64)','contact_modified','contact_uid','carddav_name',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
 		'uc' => array('account_id')
 	),
 	'egw_addressbook_extra' => array(
