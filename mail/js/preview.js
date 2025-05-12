@@ -11,27 +11,31 @@
 /*egw:uses
 */
 
-jQuery(function()
+window.addEventListener('load', function ()
 {
-	jQuery('body').on('click', 'a[href]', function()
+	document.body.addEventListener('click', function (event)
 	{
-		// active mailto: links with mail compose
-		if (this.href.substr(0, 7) == 'mailto:')
+		if (event.target.tagName === 'A' && event.target.href)
 		{
-			top.egw.open(null, 'mail', 'add', {send_to: btoa(this.href.substr(7).replace('%40', '@'))});
-
-			return false;	// cant do event.stopImediatePropagation() in on!
-		}
-		// open links with own orgin and "index.php?" as popup (not eg. share.php or *dav.php)
-		else if ((this.href[0] === '/' || this.href.match(new RegExp('^'+location.protocol+'//'+location.host+'/'))) &&
-			this.href.match(/\/index.php\?/))
-		{
-			top.egw.openPopup(this.href.replace(/([?&])no_popup=[^&]*/, '$1'), 800, 600, '_blank');
-			return false;
-		}
-		else	// add target=_blank to all other links, gives CSP error and would open in preview
-		{
-			this.target = '_blank';
+			// active mailto: links with mail compose
+			if (event.target.href.substr(0, 7) == 'mailto:')
+			{
+				top.egw.open(null, 'mail', 'add', {send_to: btoa(event.target.href.substr(7).replace('%40', '@'))});
+				event.preventDefault();
+				return false;
+			}
+			// open links with own origin and "index.php?" as popup (not e.g. share.php or *dav.php)
+			else if ((event.target.href[0] === '/' || event.target.href.match(new RegExp('^' + location.protocol + '//' + location.host + '/'))) &&
+				event.target.href.match(/\/index.php\?/))
+			{
+				top.egw.openPopup(event.target.href.replace(/([?&])no_popup=[^&]*/, '$1'), 800, 600, '_blank');
+				event.preventDefault();
+				return false;
+			}
+			else
+			{ // add target=_blank to all other links, gives CSP error and would open in preview
+				event.target.target = '_blank';
+			}
 		}
 	});
 });
