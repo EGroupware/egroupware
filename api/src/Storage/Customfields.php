@@ -644,7 +644,7 @@ class Customfields implements \IteratorAggregate
 		{
 			foreach($value as $file)
 			{
-				$file['tmp_name'] = Api\Vfs::PREFIX.$file['path'];
+				$file['tmp_name'] = Api\Vfs::PREFIX . ($file['tmp_name'] ?? $file['path']);
 				Api\Etemplate\Widget\Vfs::store_file($path, $file);
 			}
 		}

@@ -147,7 +147,12 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 		{
 			this.sendFiles(button);
 		}
-		this.updateComplete.then(() =>
+		const wait = [this.updateComplete];
+		if(this.processingPromise !== null)
+		{
+			wait.push(this.processingPromise);
+		}
+		Promise.all(wait).then(() =>
 		{
 			this.dispatchEvent(new Event("change", {bubbles: true}));
 
@@ -176,6 +181,11 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 			[this.methodId, value, button/*, savemode*/]
 		).then((data) =>
 			{
+				if(Array.isArray(data) && data.length > 0)
+				{
+					// Server has something different for us
+					this.value = data;
+				}
 				this.processingPromise = null;
 
 				// UI update now that we're done

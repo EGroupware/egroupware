@@ -293,42 +293,70 @@ class Link extends Etemplate\Widget
 	{
 		list($app, $id, $dest_file) = explode(':', $app_id);
 
-		if (empty($app_id) || empty($id))
-		{
-			return;	// cant do anything
-		}
 		if($id && $dest_file && trim($dest_file) !== '')
 		{
 			$id .= "/$dest_file";
+		}
+		$target_path = Api\Link::vfs_path($app, $id, '', true);
+		if(empty($id))
+		{
+			// Target does not yet exist
+			$target_path = Vfs::get_temp_dir($app);
+			Api\Vfs::mkdir($target_path);
+			if($dest_file && trim($dest_file) !== '')
+			{
+				$target_path .= "/$dest_file";
+			}
+			if(str_ends_with($target_path, '/'))
+			{
+				Api\Vfs::mkdir($target_path);
+			}
 		}
 
 		if(!is_array($files)) $files = array($files);
 
 		if ($action == "copy")
 		{
-			Api\Vfs::copy_files($files, Api\Link::vfs_path($app, $id, '', true));
+			Api\Vfs::copy_files($files, $target_path);
 		}
 		elseif ($action == "move")
 		{
 			$errs = $moved = [];
-			Api\Vfs::move_files($files, Api\Link::vfs_path($app, $id, '', true), $errs, $moved);
+			Api\Vfs::move_files($files, $target_path, $errs, $moved);
 		}
 		else
 		{
 			if($dest_file && !str_ends_with($dest_file, '/') && count($files) == 1)
 			{
 				// 1 file to a specific filename, overwrite if already there
-				if(file_exists(Api\Link::vfs_path($app, $id)))
+				if($id && file_exists($target_path))
 				{
-					unlink(Api\Link::vfs_path($app, $id));
+					unlink($target_path);
 				}
-				Api\Vfs::symlink($files[0], Api\Link::vfs_path($app, $id));
+				// Maybe add session ID if no ID?
+				Api\Vfs::symlink($files[0], $target_path);
+				if(empty($id))
+				{
+					// No ID, need to send where to find the file
+					Api\Json\Response::get()->data(array(['path' => $files[0], 'tmp_name' => $target_path,
+														  'name' => $dest_file]));
+				}
 			}
 			else
 			{
+				$data = [];
 				foreach($files as $target)
 				{
 					Api\Link::link_file($app, $id, $target);
+					if(empty($id))
+					{
+						Api\Vfs::symlink($target, $target_path . basename($target));
+						$data[] = ['path' => $target, 'tmp_name' => $target_path . basename($target)];
+					}
+				}
+				if(count($data) > 0)
+				{
+					Api\Json\Response::get()->data($data);
 				}
 			}
 		}

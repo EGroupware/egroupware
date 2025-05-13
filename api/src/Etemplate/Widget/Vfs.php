@@ -409,7 +409,12 @@ class Vfs extends File
 			self::set_validation_error($name,lang('Error create parent directory %1!',Api\Vfs::decodePath($dir)));
 			return false;
 		}
-		if (!copy($file['tmp_name'],Api\Vfs::PREFIX.$path))
+		if(filetype($file['tmp_name']) == 'link')
+		{
+			$target = readlink($file['tmp_name']) ?: $file['path'];
+			Api\Vfs::symlink($target, $path);
+		}
+		else if(!copy($file['tmp_name'], Api\Vfs::PREFIX . $path))
 		{
 			self::set_validation_error($name,lang('Error copying uploaded file to vfs!'));
 			return false;

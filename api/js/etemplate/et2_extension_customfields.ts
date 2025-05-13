@@ -973,10 +973,6 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				}
 				select_attrs.id = attrs.id + '_vfs_select';
 
-				// No links if no ID - server can't handle links
-				let s = path.split(":");
-				select_attrs.disabled = widget.disabled = (s.length != 3 || s[1] == '');
-
 				// This controls where the button is placed in the DOM
 				this.rows[select_attrs.id] = cf[0];
 
@@ -994,12 +990,17 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					const value = list.multiple ? list.value : {};
 					(typeof e.target.value == "string" ? [e.target.value] : e.target.value).forEach(v =>
 					{
-						const fileInfo = e.target._dialog.fileInfo(v);
+						const file = typeof v == "string" ? v : v.path;
+						const fileInfo = e.target._dialog.fileInfo(file);
 						const uniqueIdentifier = Object.values(value).length + fileInfo.path
 						value[uniqueIdentifier] = {
 							...fileInfo, type: fileInfo.mime,
 							uniqueIdentifier: uniqueIdentifier
 						};
+						if(typeof v !== "string")
+						{
+							Object.assign(value[uniqueIdentifier], v);
+						}
 					});
 					list.value = value;
 				});
