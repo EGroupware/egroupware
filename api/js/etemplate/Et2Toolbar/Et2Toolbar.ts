@@ -147,7 +147,12 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 
 	firstUpdated(changedProperties : PropertyValueMap<any>)
 	{
-		this._organiseChildren();
+		// Force popup to correctly position
+		this.shadowRoot.querySelector('sl-dropdown')?.updateComplete.then(() =>
+		{
+			this.shadowRoot.querySelector('sl-dropdown')?.shadowRoot.querySelector('sl-popup')?.handleAnchorChange();
+			this._organiseChildren();
+		})
 	}
 
 	_createNamespace() : boolean
@@ -750,11 +755,14 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		const hasListContent = this.hasSlotController.test("list");
 
 		return !(this._isOverflowed || hasListContent || this._isAdmin) ? nothing : html`
-            <sl-dropdown placement="bottom-end">
+            <sl-dropdown placement="bottom-end" hoist>
                 <et2-button-icon slot="trigger"
+                                 part="trigger"
                                  class="toolbar-list-trigger"
                                  image="three-dots-vertical" noSubmit="true"
                                  label="${this.egw().lang("More...")}"
+                                 ?readonly=${this.readonly}
+                                 ?disabled=${this.disabled}
                 ></et2-button-icon>
                 <sl-menu part="list" class="toolbar-list">
                     <slot name="list"></slot>

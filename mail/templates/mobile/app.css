@@ -31,19 +31,17 @@
     padding: 1px 8px 0 8px;
     background: none;
   }
-  body #popupMainDiv .et2_toolbar.et2_head_toolbar {
-    padding: 1px 5px 5px 10px !important;
-  }
-  body #popupMainDiv .et2_toolbar.et2_head_toolbar et2-button {
-    width: 46px;
-    height: 46px;
-    background-size: 18px 18px;
-  }
-  body #popupMainDiv .et2_toolbar.et2_head_toolbar .et2_toolbar_hasCaption {
-    width: auto;
-  }
-  body #popupMainDiv .et2_toolbar.et2_head_toolbar .et2_toolbar_actionlist {
+  body #popupMainDiv .dialogHeadbar > et2-hbox {
+    overflow: hidden;
     margin-left: 50px;
+  }
+  body #popupMainDiv .et2_head_toolbar::part(trigger) {
+    color: white;
+    font-size: 2em;
+    margin-top: var(--sl-spacing-medium);
+  }
+  body #popupMainDiv .et2_head_toolbar [slot=''] {
+    color: var(--sl-color-neutral-100);
   }
   body #popupMainDiv #mail-compose_composeToolbar #composeToolbar-send {
     height: 46px;

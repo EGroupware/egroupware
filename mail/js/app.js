@@ -6031,7 +6031,8 @@ app.classes.mail = AppJS.extend(
 			// disable the detials if there's no details
 			if (!content.ccaddress && !content.additionaltoaddress) $details.hide();
 
-			toolbar.set_actions(content.toolbar);
+			toolbar.readonly = false;
+			toolbar.actions = content.toolbar;
 			var toaddressdetails = self.et2_view.widgetContainer.getWidgetById('toaddressdetails');
 			if (toaddressdetails && content.additionaltoaddress)
 			{

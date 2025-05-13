@@ -5,8 +5,7 @@
         <et2-vbox width="100%">
 			<et2-hbox  class="dialogHeadbar">
 				<et2-hbox>
-					<toolbar id="toolbar"  class="et2_head_toolbar" width="100%" view_range="1" flat_list="true"/>
-					<et2-description></et2-description>
+                    <toolbar id="toolbar" class="et2_head_toolbar"/>
 				</et2-hbox>
 			</et2-hbox>
 			<et2-hbox  class="mailPreviewHeaders">

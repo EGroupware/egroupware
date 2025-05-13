@@ -39,21 +39,21 @@
 			padding: 1px 8px 0 8px;
 			background: none;
 
-			.et2_toolbar.et2_head_toolbar {
-				padding: 1px 5px 5px 10px !important;
-				et2-button {
-					width:46px;
-					height:46px;
-					background-size: 18px 18px;
-				}
-				.et2_toolbar_hasCaption {
-					width:auto;
-				}
-				.et2_toolbar_actionlist {
-					margin-left: 50px;
-				}
+		  .dialogHeadbar > et2-hbox {
+			overflow: hidden;
+			margin-left: 50px;
+		  }
 
+		  .et2_head_toolbar {
+			&::part(trigger) {
+			  color: white;
+			  font-size: 2em;
+			  margin-top: var(--sl-spacing-medium);
 			}
+			[slot=''] {
+			  color: var(--sl-color-neutral-100);
+			}
+		  }
 			#mail-compose_composeToolbar{
 				// Senden Button
 				#composeToolbar-send{
