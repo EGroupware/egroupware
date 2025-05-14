@@ -42,7 +42,9 @@ class Vfs extends File
 		$form_name = self::form_name($cname, $this->id, $expand ?: array('cont' => self::$request->content));
 		if(!empty($this->attrs['path']))
 		{
-			$path = self::expand_name($this->getElementAttribute($form_name, 'path') ?? $this->attrs['path'], $expand['c'] ?? null, $expand['row'], $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont']);
+			$path = str_contains($this->getElementAttribute($form_name, 'path'), '$') || str_contains($this->getElementAttribute($form_name, 'path'), '$') ?
+				self::expand_name($this->getElementAttribute($form_name, 'path') ?? $this->attrs['path'], $expand['c'] ?? null, $expand['row'], $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont']) :
+				$this->attrs['path'];
 		}
 		else
 		{
