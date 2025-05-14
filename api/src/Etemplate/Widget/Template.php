@@ -282,6 +282,7 @@ class Template extends Etemplate\Widget
 	}
 }
 
+Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Template', array('template', 'et2-template'));
 /*
 if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate_widget_template')
 {
