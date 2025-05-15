@@ -99,7 +99,7 @@ else
 }
 
 // Check failed upload, because post_max_size exceeded
-if (empty($_POST) && empty($_FILES) && $_SERVER['REQUEST_METHOD'] === 'POST')
+if ($_SERVER['CONTENT_LENGTH'] && empty($_POST) && empty($_FILES) && $_SERVER['REQUEST_METHOD'] === 'POST')
 {
 	$setup_tpl->set_var('error_msg',
 		lang('POST request with size %1 detected, larger than post_max_size=%2, and therefore not processed by PHP!',
