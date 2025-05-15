@@ -18,6 +18,7 @@ import {until} from "lit/directives/until.js";
 import {waitForEvent} from "../Et2Widget/event";
 import {Validator} from "../Validators/Validator";
 import {classMap} from "lit/directives/class-map.js";
+import {property} from "lit/decorators/property.js";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -113,6 +114,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				editModeEnabled: {type: Boolean}
 			}
 		}
+		@property({type: Object}) searchOptions : object = {app: "addressbook"};
 
 		static get styles() : CSSResultGroup
 		{
@@ -368,6 +370,15 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				this.search = true;
 				// Decode URL, possibly again.  If set in template, it can wind up double-encoded.
 				this.searchUrl = this.egw().decodePath(this.searchUrl);
+			}
+			if(changedProperties.has("searchOptions") && this.searchOptions){
+				try {
+					if (typeof this.searchOptions === 'string') {
+						this.searchOptions = JSON.parse(this.searchOptions);
+					}
+				} catch (e) {
+					//Could not transform to valid object, keep the string
+				}
 			}
 
 			// Add missing options if search or free entries enabled

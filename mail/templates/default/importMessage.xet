@@ -13,7 +13,7 @@
 				</row>
 				<row>
 					<et2-description  value="Store to Folder"></et2-description>
-					<et2-select  id="FOLDER" allowFreeEntries="false" onclick="app.mail.address_click" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions=""></et2-select>
+					<et2-select  id="FOLDER" allowFreeEntries="false" onclick="app.mail.address_click" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
 				</row>
 				<row>
 					<et2-description  value="Choose file"></et2-description>

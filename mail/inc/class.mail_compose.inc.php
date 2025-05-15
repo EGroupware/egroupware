@@ -3619,6 +3619,7 @@ class mail_compose
 		if (!is_int($_searchStringLength)) $_searchStringLength = 2;
 		if (!is_bool($_returnList)) $_returnList = false;
 		$_searchString = trim($_REQUEST['query']);
+        if ($_REQUEST['noPrefixId'] == "true") $_noPrefixId = true;
 		$results = array();
 		$rememberServerID = $this->mail_bo->icServer->ImapServerId;
 		if (is_null($_mailaccountToSearch) && !empty($_REQUEST['mailaccount'])) $_mailaccountToSearch = $_REQUEST['mailaccount'];

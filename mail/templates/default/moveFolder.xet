@@ -5,7 +5,7 @@
 		<et2-hbox><et2-description  value="Move Folder:"></et2-description><et2-textbox  readonly="true" id="selectedLeaf"></et2-textbox></et2-hbox>
 		<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="selectedNode"></et2-textbox>
 		<et2-vbox  class="mailChooseFolder">
-			<et2-select  id="folder" width="88%" allowFreeEntries="false" onclick="app.mail.address_click" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions=""></et2-select>
+			<et2-select  id="folder" width="88%" allowFreeEntries="false" onclick="app.mail.address_click" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
 			<et2-description  value="The folder will be copied as a new child to the node selected above, and on sucess deleted."></et2-description>
 		</et2-vbox>
 	</template>

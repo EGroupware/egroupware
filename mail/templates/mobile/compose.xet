@@ -50,7 +50,7 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryFolder">
 						<et2-description  value="Folder"></et2-description>
-						<et2-select  id="folder" allowFreeEntries="false" onclick="app.mail.address_click" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions=""></et2-select>
+						<et2-select  id="folder" allowFreeEntries="false" onclick="app.mail.address_click" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
 					</row>
 					<row class="mailComposeHeaders" >
 						<et2-dropdown>
