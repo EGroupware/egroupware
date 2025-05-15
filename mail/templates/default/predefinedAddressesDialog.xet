@@ -18,7 +18,7 @@
 					</row>
 					<row>
 						<et2-description  value="Folder"></et2-description>
-						<et2-select  id="folder" allowFreeEntries="false" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions=""></et2-select>
+						<et2-select  id="folder" allowFreeEntries="false" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
 					</row>
 					<row>
 						<et2-description  value="Cc"></et2-description>
