@@ -22,17 +22,18 @@ namespace EGroupware\Api\Mail\Imap;
 interface PushIface
 {
 	/**
-	 * Check if push is available / konfigured for given server
+	 * Check if push is available / configured for a given server
 	 *
 	 * @return bool
 	 */
 	function pushAvailable();
 
 	/**
-	 * Enable push notifictions for current connection and given account_id
+	 * Enable push notifications for the current connection and given account_id
 	 *
-	 * @param int $account_id =null 0=everyone on the instance
+	 * @param ?int $account_id =null 0=everyone on the instance
+	 * @param ?string $acc_id_folder current acc_id and folder, ::-delimited
 	 * @return bool true on success, false on failure
 	 */
-	function enablePush($account_id=null);
+	function enablePush(?int $account_id=null, ?string $acc_id_folder=null);
 }
