@@ -44,6 +44,7 @@ import {Favorite} from "./Favorite";
  * in preferences, with the name favorite_<name>.  The favorite favorite used for clicking on
  * the filter button is stored in nextmatch-<columnselection_pref>-favorite.
  *
+ * @event et2-load Fires when the favourites are loaded.  The favourite list is in event.detail, and can be filtered.
  */
 export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHeader
 {
@@ -206,12 +207,21 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	 */
 	_load_favorites(app)
 	{
-		Favorite.load(this.egw(), app).then((favorites) =>
+		Favorite.load(this.egw(), app).then(async(favourites) =>
+		{
+			await this.updateComplete;
+			this.dispatchEvent(new CustomEvent("et2-load", {detail: favourites, bubbles: true}));
+			if(this.onLoad && typeof this.onLoad == "function")
+			{
+				return this.onLoad(favourites);
+			}
+			return favourites;
+		}).then((favourites) =>
 		{
 			let options = [];
-			Object.keys(favorites).forEach((name) =>
+			Object.keys(favourites).forEach((name) =>
 			{
-				options.push(Object.assign({value: name, label: favorites[name].name || name}, favorites[name]));
+				options.push(Object.assign({value: name, label: favourites[name].name || name}, favourites[name]));
 			})
 			// Only add 'Add current' if we have a nextmatch
 			if(this._nextmatch)
@@ -259,8 +269,16 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		}
 
 		// Call framework
-		//@ts-ignore TS doesn't know about window.app
-		window.app[this.app].add_favorite(current_filters);
+		if(window.app[this.app]?.add_favorite)
+		{
+			window.app[this.app].add_favorite(current_filters);
+		}
+		// Sub-app with no app.js
+		else if(this.app.includes("-"))
+		{
+			const app = this.app.split("-")[0];
+			window.app[app].add_favorite(current_filters);
+		}
 	}
 
 	/**
