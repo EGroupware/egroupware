@@ -140,6 +140,14 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
                                   label="${this.egw().lang("Link to each entry")}"
                     ></et2-checkbox>
                     <et2-checkbox label=${this.egw().lang("Merge individually")} id="individual"></et2-checkbox>
+                    <et2-checkbox label=${this.egw().lang("smime signed message")}
+                                  id="smime-sign"
+                                  disabled
+                    ></et2-checkbox>
+                    <et2-checkbox label=${this.egw().lang("smime encrypted message")}
+                                  id="smime-encrypted"
+                                  disabled
+                    ></et2-checkbox>
                     <slot></slot>
                 </et2-details>
             </et2-vfs-select-dialog>`;
