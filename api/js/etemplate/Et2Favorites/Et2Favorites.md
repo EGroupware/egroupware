@@ -35,7 +35,7 @@ function filterFavourites(favouriteList)
 }
 ```
 
-A more complicated example using the favourites setting in nextmatch:
+A more complete example using the favourites setting in nextmatch:
 
 ```php
 // PHP:
@@ -51,20 +51,32 @@ $content['nm'] => [
 // app.ts:
 constructor()
 {
+	super("appname");
+	// any other setup ...
 
-	// ...
+	// Add listener for favourite loads
+	document.body.querySelector("form#appname-list").addEventListener("et2-load", this.handleFavouriteLoad);
+}
+destroy(_app)
+{
+	super.destroy(_app);
+	// other cleanup ...
 
-	document.body.querySelector("form#projectmanager-list").addEventListener("et2-load", (e) =>
-	{
-		// Make sure the target is a favourite, other things fire et2-load
-		if(e.target instanceof Et2Favorites)
-		{
-			this.filterFavourites(e.target.filters?.sub_filter ?? "", e.detail);
-		}
-	});
+	// Remove favourite load listener.  
+	// This could also be done after the template loads, if it only needs to be done once
+	document.body.querySelector("form#appname-list").removeEventListener("et2-load", this.handleFavouriteLoad);
 }
 
-function filterFavourites(sub_filter, favouriteList)
+handleFavouriteLoad(e)
+{
+	// Make sure the target is a favourite, other things fire et2-load
+	if(e.target instanceof Et2Favorites)
+	{
+		this.filterFavourites(e.target.filters?.sub_filter ?? "", e.detail);
+	}
+}
+
+filterFavourites(sub_filter, favouriteList)
 {
 	Object.keys(favouriteList).forEach(favouriteName =>
 	{
