@@ -772,7 +772,7 @@ class Session
 	 */
 	public function authenticate()
 	{
-		$is_valid_token = Auth\Token::authenticate($this->account_lid, $this->passwd, $this->limits);
+		$is_valid_token = empty($this->passwd) ? null : Auth\Token::authenticate($this->account_lid, $this->passwd, $this->limits);
 		$this->token_auth = (bool)$is_valid_token;
 		if (!isset($is_valid_token))
 		{
