@@ -1622,7 +1622,7 @@ class mail_ui
 			$mail_ui->mail_bo->icServer->pushAvailable())
 		{
 			Api\Json\Response::get()->call('app.mail.disable_autorefresh',
-				$mail_ui->mail_bo->icServer->enablePush());
+				$mail_ui->mail_bo->icServer->enablePush(null, $query['selectedFolder']));
 		}
 		else
 		{

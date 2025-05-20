@@ -147,7 +147,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	/**
 	 * Construtor
 	 *
-	 * @param array
+	 * @param array $params
 	 * @param bool|int|string $_adminConnection create admin connection if true or account_id or imap username
 	 * @param int $_timeout =null timeout in secs, if none given fmail pref or default of 20 is used
 	 * @return void
@@ -1502,7 +1502,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	/**
 	 * Generate token / user-information for push to be stored by Dovecot
 	 *
-	 * The user informations has the form "$account_id::$acc_id;$token@$host"
+	 * The user information has the form "$account_id::$acc_id;$token@$host"
 	 *
 	 * @param null $account_id
 	 * @param string $token =null default push token of instance ($account_id=='0') or user
@@ -1518,12 +1518,13 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	}
 
 	/**
-	 * Enable push notifictions for current connection and given account_id
+	 * Enable push notifications for the current connection and given account_id
 	 *
-	 * @param int $account_id =null 0=everyone on the instance
+	 * @param ?int $account_id =null 0=everyone on the instance
+	 * @param ?string $acc_id_folder current acc_id and folder, ::-delimited
 	 * @return bool true on success, false on failure
 	 */
-	function enablePush($account_id=null)
+	function enablePush(?int $account_id=null, ?string $acc_id_folder=null)
 	{
 		if (!class_exists(Tokens::class))
 		{
@@ -1570,7 +1571,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	}
 
 	/**
-	 * Check if push is available / configured for given server
+	 * Check if push is available / configured for the given server
 	 *
 	 * @return bool
 	 */

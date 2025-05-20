@@ -564,9 +564,10 @@ app.classes.mail = AppJS.extend(
 		{
 			switch(pushData.acl.event)
 			{
+				case 'Flags':
 				case 'FlagsSet':
-					// TB (probably other MUA too) mark mail as deleted, our UI removes/expunges it immediatly
-					if (pushData.acl.flags.includes('\\Deleted'))
+					// TB (probably other MUA too) mark mail as deleted, our UI removes/expunges it immediately
+					if (pushData.acl.flags.includes('\\Deleted') || pushData.acl.flags.includes('$deleted'))
 					{
 						pushData.type = 'delete';
 						return this._super.call(this, pushData);
@@ -608,39 +609,58 @@ app.classes.mail = AppJS.extend(
 	  */
 	pushUpdateFlags: function(pushData)
 	{
-		let flag = pushData.acl.flags[0] || pushData.acl.keywords[0];
-		let unset = (pushData.acl.flags_old && pushData.acl.flags_old.indexOf(pushData.acl.flags[0]) > -1)
-				|| (pushData.acl.keywords_old && pushData.acl.keywords_old.indexOf(pushData.acl.keywords[0]) > -1) ? true : false;
-		let rowClass = '';
-		if (flag[0] == '\\' || flag[0] == '$') flag = flag.slice(1).toLowerCase();
-		let ids = typeof pushData.id == "string" ? [pushData.id] : pushData.id;
-		for (let i in ids)
+		// Stalwart/JMAP currently pushes just the current flags, not the ones set or unset
+		// therefore, we set all current ones and unset all not set ones
+		if (pushData.acl.event === 'Flags')
 		{
-			let msg = {msg:['mail::'+ids[i]]};
-			switch(flag)
+			if (pushData.acl.flags.length)
 			{
-				case 'seen':
+				pushData.acl.event = 'FlagsSet';
+				this.pushUpdateFlags(pushData);
+			}
+			pushData.acl.flags = ['$seen', '$delete', '$flagged', '$label1', '$label2', '$label3', '$label4', '$label5'].filter((flag => !pushData.acl.flags.includes(flag)));
+			if (pushData.acl.flags.length)
+			{
+				pushData.acl.event = 'FlagsClear';
+				this.pushUpdateFlags(pushData);
+			}
+			return;
+		}
+		(pushData.acl.flags || pushData.acl.keywords || []).forEach(flag => {
+			let unset = (pushData.acl.flags_old && pushData.acl.flags_old.indexOf(flag) > -1) ||
+				(pushData.acl.keywords_old && pushData.acl.keywords_old.indexOf(flag) > -1) ||
+				pushData.acl.event === 'FlagsClear';
+			let rowClass = '';
+			if (flag[0] == '\\' || flag[0] == '$') flag = flag.slice(1).toLowerCase();
+			let ids = typeof pushData.id == "string" ? [pushData.id] : pushData.id;
+			for (let i in ids)
+			{
+				let msg = {msg:['mail::'+ids[i]]};
+				switch(flag)
+				{
+					case 'seen':
 						this.mail_removeRowClass(msg, (unset) ? 'seen' : 'unseen');
 						rowClass = (unset) ? 'unseen' : 'seen';
-					break;
-				case 'label1':
-				case 'label2':
-				case 'label3':
-				case 'label4':
-				case 'label5':
-				case 'flagged':
-					if (unset)
-					{
-						this.mail_removeRowClass(msg, flag);
-					}
-					else
-					{
-						rowClass = flag;
-					}
-					break;
+						break;
+					case 'label1':
+					case 'label2':
+					case 'label3':
+					case 'label4':
+					case 'label5':
+					case 'flagged':
+						if (unset)
+						{
+							this.mail_removeRowClass(msg, flag);
+						}
+						else
+						{
+							rowClass = flag;
+						}
+						break;
+				}
+				this.mail_setRowClass(msg, rowClass);
 			}
-			this.mail_setRowClass(msg, rowClass);
-		}
+		});
 	},
 
 	/**
