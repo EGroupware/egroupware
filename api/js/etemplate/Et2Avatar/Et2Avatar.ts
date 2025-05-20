@@ -8,7 +8,6 @@
  * @author Hadi Nategh
  */
 
-import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {css} from "lit";
 import {property} from "lit/decorators/property.js";
 import {SlAvatar} from "@shoelace-style/shoelace";
@@ -19,6 +18,8 @@ import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import "../../../../vendor/bower-asset/cropper/dist/cropper.min.js";
 import {cropperStyles} from "./cropperStyles";
 import type {Et2Button} from "../Et2Button/Et2Button";
+import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {CachedQueueMixin} from "../Et2Widget/CachedQueueMixin";
 
 /**
  * Avatars are used to represent a person or profile.
@@ -32,7 +33,7 @@ import type {Et2Button} from "../Et2Button/Et2Button";
  * @csspart initials	The container that wraps the avatar’s initials.
  * @csspart image	The avatar image. Only shown when the image attribute is set, or when contactId has an associated avatar image
  */
-export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
+export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements et2_IDetachedDOM
 {
 	private _contactId;
 	private _delBtn: HTMLElement;
@@ -89,7 +90,10 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 	 * Better to set the --size CSS variable in app.css, since it allows inheritance and overriding
 	 */
 	@property()
-	size
+	size;
+
+	// Cached Queue Mixin
+	protected static searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Avatar::ajax_image_check";
 
 	constructor()
 	{
@@ -163,11 +167,20 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 	@property({type: String, noAccessor: true})
 	set contactId(_contactId : string)
 	{
-		let params = {no_gen: true};
+		let oldContactId = this._contactId;
+		this._contactId = _contactId;
+
+		if(!_contactId || this.image)
+		{
+			this.requestUpdate("contactId", oldContactId);
+			return;
+		}
+
+		const params = {no_gen: true};
 		let id = 'contact_id';
 		let parsedId = "";
 
-		if (!_contactId)
+		if(!_contactId)
 		{
 			parsedId = null;
 		}
@@ -187,22 +200,33 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			id = 'contact_id';
 			parsedId = _contactId.replace('contact:', '');
 		}
-		let oldContactId = this._contactId;
-		this._contactId = _contactId;
-		// if our image (incl. cache-buster) already includes the correct id, use that one
 		if(_contactId)
 		{
 			if(!parsedId)
 			{
 				this.image = null;
 			}
+			// if our image (incl. cache-buster) already includes the correct id, use that one
 			else if(!this.image || !this.image.match("(&|\\?)" + id + "=" + encodeURIComponent(parsedId) + "(&|$)"))
 			{
-				params[id] = parsedId;
-				this.image = this.egw().link('/api/avatar.php', params);
+				/**
+				 * To reduce the number of server requests that result in 404 because there is no avatar,
+				 * we cacheQueue the request and only set actual image if server reports there is an avatar image.
+				 */
+				this.cachedQueue([`${id}:${parsedId}`]).then((hasImage) =>
+				{
+					if(!hasImage)
+					{
+						this.image = null;
+						return;
+					}
+
+					params[id] = parsedId;
+					this.image = this.egw().link('/api/avatar.php', params);
+				});
 			}
+			this.requestUpdate("contactId");
 		}
-		this.requestUpdate("contactId", oldContactId);
 	}
 
 	set value(_value)
