@@ -970,7 +970,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		_handleClear(e)
 		{
 			// Only keep remote options that are still used
-			this._selected_remote = this._selected_remote.filter((option) => this.value.indexOf(option.value) !== -1);
+			this._selected_remote = this._selected_remote.filter((option) => this.value?.indexOf(option.value) !== -1);
 
 			if(!this.multiple && this.searchEnabled)
 			{
