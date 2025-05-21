@@ -55,6 +55,7 @@ constructor()
 	// any other setup ...
 
 	// Add listener for favourite loads
+	this.handleFavouriteLoad = this.handleFavouriteLoad.bind(this);
 	document.body.querySelector("form#appname-list").addEventListener("et2-load", this.handleFavouriteLoad);
 }
 destroy(_app)
