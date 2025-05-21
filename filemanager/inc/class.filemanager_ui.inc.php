@@ -1178,7 +1178,8 @@ class filemanager_ui
 		}
 		elseif(!empty($query['search']))
 		{
-			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
+			$namefilter = '/' . str_replace(array('\\?', '\\*'), array('.{1}', '.*'),
+											preg_quote($query['search'])) . '/iu';
 		}
 
 		// Re-map so 'No filters' favorite ('') is depth 1

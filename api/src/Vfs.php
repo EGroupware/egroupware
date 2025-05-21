@@ -359,11 +359,13 @@ class Vfs extends Vfs\Base
 		// process some of the options (need to be done only once)
 		if (isset($options['name']) && !isset($options['name_preg']))	// change from simple *,? wildcards to preg regular expression once
 		{
-			$options['name_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['name'], '/')).'$/i';
+			$options['name_preg'] = '/^' . str_replace(array('\\?', '\\*'), array('.{1}',
+																				  '.*'), preg_quote($options['name'], '/')) . '$/iu';
 		}
 		if (isset($options['path']) && !isset($options['preg_path']))	// change from simple *,? wildcards to preg regular expression once
 		{
-			$options['path_preg'] = '/^'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($options['path'], '/')).'$/i';
+			$options['path_preg'] = '/^' . str_replace(array('\\?', '\\*'), array('.{1}',
+																				  '.*'), preg_quote($options['path'], '/')) . '$/iu';
 		}
 		if (!isset($options['uid']))
 		{
