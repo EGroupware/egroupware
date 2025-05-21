@@ -39,25 +39,34 @@ class Avatar extends Etemplate\Widget
 		$contacts = new Contacts();
 		foreach($contactIds as $parameters)
 		{
-			list($contactId) = $parameters;
-			if(str_starts_with($contactId, 'account:'))
+			[$type, $parsedId] = explode(':', $contactId=current($parameters))+[null, null];
+			switch($type)
 			{
-				$id = 'egw_addressbook.account_id';
-				$parsedId = (int)substr($contactId, 8);
-			}
-			elseif(str_starts_with($contactId, 'email:'))
-			{
-				$id = 'email';
-				preg_match('/<([^<>]+)>$/', $contactId, $matches);
-				$parsedId = $matches ? $matches[1] : substr($contactId, 6);
-			}
-			else
-			{
-				$id = 'contact_id';
-				$parsedId = (int)str_replace('contact:', '', $contactId);
+				case 'account':
+				case 'account_id':
+					$filter = ['egw_addressbook.account_id' => (int)$parsedId];
+					break;
+
+				case 'email':
+					if (preg_match('/<([^<>]+)>$/', $parsedId, $matches))
+					{
+						$parsedId = $matches[1];
+					}
+					$filter = ['email' => $parsedId, 'email_home' => $parsedId];
+					break;
+
+				case 'contact':
+				default:
+					if ($type !== 'contact') $parsedId = $type;
+					$filter = ['contact_id' => (int)$parsedId];
+					break;
 			}
 
-			$matches = $contacts->search([$id => $parsedId], false);
+			$matches = empty($parsedId) ? null : $contacts->search($filter,
+				['contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family', 'contact_files', 'etag'],
+				'contact_files & ' . Contacts::FILES_BIT_PHOTO . ' DESC',
+				!empty($GLOBALS['egw_info']['user']['preferences']['common']['avatar_display']) ? ['account_lid'] : [],
+				'', false, 'OR', [0, 1]);
 			// Result key matches parameters
 			$result[json_encode([$contactId])] = is_array($matches) && count($matches) ? Contacts::hasPhoto($matches[0]) : false;
 		}
