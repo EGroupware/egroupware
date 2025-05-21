@@ -111,8 +111,7 @@ export class Et2LinkSearch extends Et2Select
 			class: "loading"
 		}
 
-		// Weird call instead of just unshift() to make sure to trigger setter
-		this.select_options = Object.assign([option], this.__select_options);
+		this.__select_options.unshift(option);
 		return this.egw()?.link_title(this.app, option.value, true).then(title =>
 		{
 			option.label = title || Et2Link.MISSING_TITLE;
@@ -122,7 +121,6 @@ export class Et2LinkSearch extends Et2Select
 			if(item)
 			{
 				this.requestUpdate();
-				this.select.requestUpdate("value");
 
 				item.classList.remove("loading");
 			}
@@ -131,6 +129,7 @@ export class Et2LinkSearch extends Et2Select
 				// Not already rendered, update the select option
 				this.requestUpdate("select_options");
 			}
+			this.select.requestUpdate("value");
 		});
 	}
 
