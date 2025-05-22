@@ -896,7 +896,7 @@ class mail_compose
                     if (!isset($_REQUEST[$pref]) && !isset($preset[$pref])) {
                         $preset['prefs'][$pref] = $values;
                     } else {
-                        $preset['prefs'][$pref] = array_merge((array)$_REQUEST[$pref],(array)$preset[$pref], (array)$values);
+                        $preset['prefs'][$pref] = $preset[$pref] = array_merge((array)$_REQUEST[$pref], (array)$preset[$pref], (array)$values);
                     }
                 }
             }
@@ -932,6 +932,7 @@ class mail_compose
 				}
                 //Append our presets from preferences to the content if needed
                 foreach ($preset['prefs'] ?? [] as $pref => $values) {
+                    $alreadyProcessed[$pref]=$pref;
                     $content[$pref] = array_merge((array)$content[$pref] ?? [], (array)$values);;
                 }
 
