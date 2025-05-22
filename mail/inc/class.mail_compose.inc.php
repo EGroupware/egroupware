@@ -898,16 +898,28 @@ class mail_compose
 				}
 			}
 			// handle preset info/values
-			if (!empty($_REQUEST['preset']))
+            $preset = $_REQUEST['preset'] ?? [];
+            $preferencePreset = $GLOBALS['egw_info']['user']['preferences']['mail'][$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] . '_predefined_compose_addresses'] ?? [];
+            foreach ($preferencePreset as $pref => $values) {
+                if (!empty($values)) {
+                    if (!isset($preset['prefs'])) $preset['prefs'] = [];
+                    if (!isset($_REQUEST[$pref])) {
+                        $preset['prefs'][$pref] = $values;
+                    } else {
+                        $preset['prefs'][$pref] = array_merge((array)$_REQUEST[$pref], (array)$values);
+                    }
+                }
+            }
+            if (!empty($preset))
 			{
 				$alreadyProcessed=array();
 				//_debug_array($_REQUEST);
-				if (!empty($_REQUEST['preset']['mailto'])) {
+                if (!empty($preset['mailto'])) {
 					// handle mailto strings such as
 					// mailto:larry,dan?cc=mike&bcc=sue&subject=test&body=type+your&body=message+here
 					// the above string may be htmlentyty encoded, then multiple body tags are supported
 					// first, strip the mailto: string out of the mailto URL
-					$tmp_send_to = (stripos($_REQUEST['preset']['mailto'],'mailto')===false?$_REQUEST['preset']['mailto']:trim(substr(html_entity_decode($_REQUEST['preset']['mailto']),7)));
+                    $tmp_send_to = (stripos($preset['mailto'], 'mailto') === false ? $preset['mailto'] : trim(substr(html_entity_decode($preset['mailto']), 7)));
 					// check if there is more than the to address
 					$mailtoArray = explode('?',$tmp_send_to,2);
 					if ($mailtoArray[1]) {
@@ -928,6 +940,11 @@ class mail_compose
 						if ($_REQUEST[$name]) $content[$name] .= (strlen($content[$name])>0 ? ( $name == 'cc' || $name == 'bcc' ? ',' : ' ') : '') . $_REQUEST[$name];
 					}
 				}
+                //Append our presets from preferences to the content if needed
+                foreach ($preset['prefs'] ?? [] as $pref => $values) {
+                    $content[$pref] = array_merge((array)$content[$pref] ?? [], (array)$values);;
+                }
+
 
 				if (!empty($_REQUEST['preset']['mailtocontactbyid'])) {
 					if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
@@ -1270,6 +1287,10 @@ class mail_compose
 			unset($content[strtolower($destination)]);
 			foreach($addr_content as $value) {
 				if ($value === "NIL@NIL") continue;
+                if ($destination === "folder") {
+                    $content[strtolower($destination)][] = $value;
+                    continue;
+                }
 				if ($destination === 'replyto' && str_replace('"','',$value) ===
 					str_replace('"','',$identities[$this->mail_bo->getDefaultIdentity()]))
 				{
@@ -1296,7 +1317,7 @@ class mail_compose
 			if (!$_contentHasSigID && $content['mailidentity'] && array_key_exists('mailidentity',$_content)) unset($_content['mailidentity']);
 			$content = array_merge($content,$_content);
 
-			if (!empty($content['folder'])) $sel_options['folder']=$this->ajax_searchFolder(0,true);
+			if (!empty($content['folder'])) $sel_options['folder']=$this->ajax_searchFolder(0,true,null,true);
 			if (empty($content['mailaccount'])) $content['mailaccount'] = $this->mail_bo->profileID;
 		}
 		else
@@ -3698,6 +3719,8 @@ class mail_compose
 		echo json_encode($results);
 		exit();
 	}
+
+
 
 	public static function ajax_searchAddress($_searchStringLength=2)
 	{
