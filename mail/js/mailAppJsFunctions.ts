@@ -4,7 +4,14 @@ import {egw} from "../../api/js/jsapi/egw_global";
 
 export const setPredefinedAddresses = function (action, _senders) {
     const pref_id = _senders[0].id.split('::')[0] + '_predefined_compose_addresses';
-    const prefs = jQuery.extend(true, {}, egw.preference(pref_id, 'mail'));
+    const prefs = egw.deepExtend({}, egw.preference(pref_id, 'mail'));
+    let selOptions = {}
+    for (const predefined in prefs) {
+        selOptions[predefined] = [];
+        for (const predefinedElement of prefs[predefined]) {
+            selOptions[predefined].push({label: predefinedElement, value: predefinedElement});
+        }
+    }
     // @ts-ignore
     const dialog = loadWebComponent("et2-dialog",
         {
@@ -19,7 +26,10 @@ export const setPredefinedAddresses = function (action, _senders) {
             },
             title: this.egw.lang("Predefined addresses for compose"),
             buttons: Et2Dialog.BUTTONS_OK_CANCEL,
-            value: {content: prefs || {}},
+            value: {
+                content: prefs || {},
+                sel_options: selOptions
+            },
             minWidth: 410,
             template: egw.webserverUrl + '/mail/templates/default/predefinedAddressesDialog.xet?',
             resizable: false,

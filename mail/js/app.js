@@ -359,6 +359,8 @@ app.classes.mail = AppJS.extend(
 				}
 				this.mail_isMainWindow = false;
 				// add predefined addresses, but only if not already added (happens on several server-side roundtrips!)
+				//NOTE: THIS NOW HAPPENS SERVER SIDE ON LOAD
+				/*
 				const pca = egw.preference(this.et2.getWidgetById('mailaccount').getValue().split(":")[0]+'_predefined_compose_addresses', 'mail');
 				for (const p in pca)
 				{
@@ -371,7 +373,7 @@ app.classes.mail = AppJS.extend(
 						});
 						widget.set_value(pca[p]);
 					}
-				}
+				}*/
 				this.compose_fieldExpander_init();
 				this.check_sharing_filemode();
 
@@ -1162,7 +1164,7 @@ app.classes.mail = AppJS.extend(
 				continue;
 			}
 		}
-		if (content['cc'] || content['bcc'])
+		if (content['cc'] || content['bcc'] || content['folder'] || content['replyto'])
 		{
 			this.compose_fieldExpander();
 			this.compose_fieldExpander_init();
