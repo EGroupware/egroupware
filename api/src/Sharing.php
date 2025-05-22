@@ -634,14 +634,17 @@ class Sharing
 		static::path_needs_password($path);
 
 		// check if file has been shared before, with identical attributes AND recipients
-		if (($share = static::$db->select(static::TABLE, '*', $extra+array(
-				'share_path' => $path,
+		// Make sure to use case-sensitive matching
+		$collate = static::$db->setupType == "postgres" ? "unicode" : "utf8_bin";
+		if(($share = static::$db->select(static::TABLE, '*', $extra + array(
+														  "share_path = " . static::$db->quote($path) . " COLLATE $collate",
 				'share_owner' => Vfs::$user,
 				'share_expires' => null,
 				'share_passwd'  => null,
 				'share_writable'=> false,
 				'share_with'    => implode(',', (array)$recipients),
-			), __LINE__, __FILE__, Db::API_APPNAME)->fetch()))
+													  ), __LINE__, __FILE__, false, '', Db::API_APPNAME
+		)->fetch()))
 		{
 			// if yes, nothing to do
 		}
