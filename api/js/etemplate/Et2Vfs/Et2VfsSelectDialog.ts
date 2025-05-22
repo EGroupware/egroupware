@@ -213,7 +213,6 @@ export class Et2VfsSelectDialog
 		// Get file list
 		if(this.open)
 		{
-			debugger;
 			this.startSearch();
 		}
 	}

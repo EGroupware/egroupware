@@ -32,6 +32,7 @@ use Horde_Translation_Handler_Gettext;
 use EGroupware\Api;
 
 use tidy;
+use function PHPUnit\Framework\isEmpty;
 
 /**
  * Mail worker class
@@ -7301,6 +7302,12 @@ class Mail
 								$bo_merge->merge_string($header,$val,$e,'text/plain',array(),self::$displayCharset);
 							//error_log($type . ': ' . $mailObject->getHeader(Mailer::$type2header[$type]) . ' -> ' .$merged);
 							$mailObject->addAddress(trim($merged,'"'),'',$type);
+                            $preferencePreset = $GLOBALS['egw_info']['user']['preferences']['mail'][$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] . '_predefined_compose_addresses'][$type];
+                            if (($preferencePreset)) {
+                                $mailObject->addAddress($preferencePreset, '', $type);
+                            }
+
+
 						}
 						$mailObject->forceBccHeader();
 
@@ -7388,6 +7395,7 @@ class Mail
 					{
 						$processStats['failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
 					}
+
 				}
 			}
 			unset($mailObject);
