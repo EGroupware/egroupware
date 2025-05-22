@@ -78,7 +78,12 @@ class Taglist extends Etemplate\Widget
 		{
 			$options['account_type'] = $_REQUEST['account_type'];
 			$options['tag_list'] = true;
-			$results = Api\Accounts::link_query($query, $options);
+			$options['filter'] ['contact_owner'] = 0;
+			$contacts = new Api\Contacts();
+			foreach($contacts->link_query($query, $options) as $value => $item)
+			{
+				$results[] = ['value' => $value] + $item;
+			}
 		}
 		else
 		{
