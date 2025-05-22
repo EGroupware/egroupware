@@ -903,10 +903,10 @@ class mail_compose
             foreach ($preferencePreset as $pref => $values) {
                 if (!empty($values)) {
                     if (!isset($preset['prefs'])) $preset['prefs'] = [];
-                    if (!isset($_REQUEST[$pref])) {
+                    if (!isset($_REQUEST[$pref]) && !isset($preset[$pref])) {
                         $preset['prefs'][$pref] = $values;
                     } else {
-                        $preset['prefs'][$pref] = array_merge((array)$_REQUEST[$pref], (array)$values);
+                        $preset['prefs'][$pref] = array_merge((array)$_REQUEST[$pref],(array)$preset[$pref], (array)$values);
                     }
                 }
             }
