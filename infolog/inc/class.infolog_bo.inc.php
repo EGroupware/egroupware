@@ -1447,21 +1447,29 @@ class infolog_bo
 				{
 					if ($data[$key])
 					{
-						$time = new Api\DateTime($data[$key], Api\DateTime::$server_timezone);
-						if (!isset($query['date_format']) || $query['date_format'] != 'server')
+						try
 						{
-							if ($time->format('Hi') == '0000')
+							$time = new Api\DateTime($data[$key], Api\DateTime::$server_timezone);
+
+							if (!isset($query['date_format']) || $query['date_format'] != 'server')
 							{
-								// we keep dates the same in user-time
-								$arr = Api\DateTime::to($time,'array');
-								$time = new Api\DateTime($arr, Api\DateTime::$user_timezone);
+								if ($time->format('Hi') == '0000')
+								{
+									// we keep dates the same in user-time
+									$arr = Api\DateTime::to($time, 'array');
+									$time = new Api\DateTime($arr, Api\DateTime::$user_timezone);
+								}
+								else
+								{
+									$time->setTimezone(Api\DateTime::$user_timezone);
+								}
 							}
-							else
-							{
-								$time->setTimezone(Api\DateTime::$user_timezone);
-							}
+							$data[$key] = Api\DateTime::to($time, 'ts');
 						}
-						$data[$key] = Api\DateTime::to($time,'ts');
+						catch (\Exception $e) {
+							// we log and ignore the broken timestamp, practically unset the field
+							_egw_log_exception(new Api\Exception($e->getMessage(), $e->getCode(), $e, "info_id=$data[info_id], data['$key']=".json_encode($data[$key])));
+						}
 					}
 				}
 				// pre-cache title and file access

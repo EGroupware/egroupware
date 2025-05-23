@@ -635,7 +635,8 @@ class calendar_bo
 		// as calling the so-layer without users would give the events of all users (!)
 		if (!count($users) && !$params['ignore_acl'])
 		{
-			return false;
+			$ret = false;
+			return $ret;
 		}
 		if (isset($params['start'])) $start = $this->date2ts($params['start']);
 
@@ -915,7 +916,7 @@ class calendar_bo
 	/**
 	 * set all recurrences for an event until the defined horizont $this->config['horizont']
 	 *
-	 * This methods operates in usertime, while $this->config['horizont'] is in servertime!
+	 * This method operates in usertime, while $this->config['horizont'] is in servertime!
 	 *
 	 * @param array $event
 	 * @param mixed $start =0 minimum start-time for new recurrences or !$start = since the start of the event
@@ -951,33 +952,33 @@ class calendar_bo
 		{
 			$exceptions[] = Api\DateTime::to($exception, true);	// true = date
 		}
-		foreach($events as $event)
+		foreach($events as $ev)
 		{
 			// PERIOD
-			$is_exception = in_array(Api\DateTime::to($event['start'], true), $exceptions);
-			$start = $this->date2ts($event['start'],true);
-			if ($event['whole_day'])
+			$is_exception = in_array(Api\DateTime::to($ev['start'], true), $exceptions);
+			$start = $this->date2ts($ev['start'],true);
+			if ($ev['whole_day'])
 			{
-				$start = new Api\DateTime($event['start'], Api\DateTime::$server_timezone);
+				$start = new Api\DateTime($ev['start'], Api\DateTime::$server_timezone);
 				$start->setTime(0,0,0);
 				$start = $start->format('ts');
-				$time = $this->so->startOfDay(new Api\DateTime($event['end'], Api\DateTime::$user_timezone));
+				$time = $this->so->startOfDay(new Api\DateTime($ev['end'], Api\DateTime::$user_timezone));
 				$time->setTime(23, 59, 59);
 				$end = $this->date2ts($time,true);
 			}
 			else
 			{
-				$end = $this->date2ts($event['end'],true);
+				$end = $this->date2ts($ev['end'],true);
 			}
 			//error_log(__METHOD__."() start=".Api\DateTime::to($start).", is_exception=".array2string($is_exception));
-			$this->so->recurrence($event['id'], $start, $end, $event['participants'], $is_exception);
+			$this->so->recurrence($ev['id'], $start, $end, $ev['participants'], $is_exception);
 		}
 	}
 
 	/**
-	 * Convert data read from the db, eg. convert server to user-time
+	 * Convert data read from the db, e.g., convert server to user-time
 	 *
-	 * Also make sure all timestamps comming from DB as string are converted to integer,
+	 * Make sure all timestamps coming from DB as string are converted to integer too,
 	 * to avoid misinterpretation by Api\DateTime as Ymd string.
 	 *
 	 * @param array &$events array of event-arrays (reference)
@@ -1002,19 +1003,19 @@ class calendar_bo
 			if ($event['whole_day'] && $date_format != 'server')
 			{
 				// Adjust dates to user TZ
-				$stime =& $this->so->startOfDay(new Api\DateTime((int)$event['start'], Api\DateTime::$server_timezone), $event['tzid']);
+				$stime = $this->so->startOfDay(new Api\DateTime((int)$event['start'], Api\DateTime::$server_timezone), $event['tzid']);
 				$event['start'] = Api\DateTime::to($stime, $date_format);
-				$time =& $this->so->startOfDay(new Api\DateTime((int)$event['end'], Api\DateTime::$server_timezone), $event['tzid']);
+				$time = $this->so->startOfDay(new Api\DateTime((int)$event['end'], Api\DateTime::$server_timezone), $event['tzid']);
 				$time->setTime(23, 59, 59);
 				$event['end'] = Api\DateTime::to($time, $date_format);
 				if (!empty($event['recurrence']))
 				{
-					$time =& $this->so->startOfDay(new Api\DateTime((int)$event['recurrence'], Api\DateTime::$server_timezone), $event['tzid']);
+					$time = $this->so->startOfDay(new Api\DateTime((int)$event['recurrence'], Api\DateTime::$server_timezone), $event['tzid']);
 					$event['recurrence'] = Api\DateTime::to($time, $date_format);
 				}
 				if (!empty($event['recur_enddate']))
 				{
-					$time =& $this->so->startOfDay(new Api\DateTime((int)$event['recur_enddate'], Api\DateTime::$server_timezone), $event['tzid']);
+					$time = $this->so->startOfDay(new Api\DateTime((int)$event['recur_enddate'], Api\DateTime::$server_timezone), $event['tzid']);
 					$time->setTime(23, 59, 59);
 					$event['recur_enddate'] = Api\DateTime::to($time, $date_format);
 				}
@@ -1029,10 +1030,18 @@ class calendar_bo
 			{
 				if (!empty($event[$ts]))
 				{
-					$event[$ts] = $this->date2usertime($event[$ts], $date_format);
+					try {
+						$event[$ts] = Api\DateTime::to($event[$ts], $date_format);
+					}
+					catch(\Exception $e) {
+						// we log and ignore the broken timestamp, practically unset the field
+						_egw_log_exception(new Api\Exception($e->getMessage(), $e->getCode(), $e,
+							__METHOD__.'('.json_encode($event).", '$date_format') error converting timestamp '$ts'"));
+						unset($event[$ts]);
+					}
 				}
 			}
-			// same with the recur exceptions and rdates
+			// same with the recurrence-exceptions and rdates
 			foreach(['recur_exception', 'recur_rdates'] as $name)
 			{
 				if (!is_array($event[$name] ?? null)) continue;
@@ -1041,7 +1050,7 @@ class calendar_bo
 					if ($event['whole_day'] && $date_format != 'server')
 					{
 						// Adjust dates to user TZ
-						$time =& $this->so->startOfDay(new Api\DateTime((int)$date, Api\DateTime::$server_timezone), $event['tzid']);
+						$time = $this->so->startOfDay(new Api\DateTime((int)$date, Api\DateTime::$server_timezone), $event['tzid']);
 						$date = Api\DateTime::to($time, $date_format);
 					}
 					else

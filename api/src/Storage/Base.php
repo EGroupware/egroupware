@@ -384,7 +384,14 @@ class Base
 					}
 					else
 					{
-						$data[$name] = Api\DateTime::server2user($data[$name],$this->timestamp_type);
+						try {
+							$data[$name] = Api\DateTime::server2user($data[$name], $this->timestamp_type);
+						}
+						catch(\Exception $e) {
+							// we log and ignore the broken timestamp, practically unset the field
+							_egw_log_exception(new Api\Exception($e->getMessage(), $e->getCode(), $e,
+								__METHOD__.'('.json_encode($data).") error converting timestamp '$name'"));
+						}
 					}
 				}
 			}
