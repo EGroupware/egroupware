@@ -1564,6 +1564,8 @@ export class etemplate2
 				}
 				if(dialog)
 				{
+					// Dialog skips close prompt & cleanup
+					this?.clear();
 					return dialog.close();
 				}
 				egw.close();
