@@ -20,17 +20,24 @@ namespace EGroupware\Api;
 /**
  * EGroupware API - Exceptions
  *
- * All eGroupWare exceptions should extended this class, so we are able to eg. add some logging later.
+ * All eGroupWare exceptions should extend this class, so we are able to e.g., add some logging later.
  *
  * The messages for most exceptions should be translated and ready to be displayed to the user.
- * Only exception to this are exceptions like Exception\AssertionFailed, Exception\WrongParameter
- * or Db\Exception, which are suppost to happen only during program development.
+ * The only exception to this is exceptions like Exception\AssertionFailed, Exception\WrongParameter
+ * or Db\Exception, which are supposed to happen only during program development.
  */
 class Exception extends \Exception
 {
-	// nothing fancy yet
-	function __construct($msg=null,$code=100,\Exception $previous=null)
+	/**
+	 * @var string|null $detail further details about the exception, which will be logged by _egw_log_exception()
+	 * @see _egw_log_exception()
+	 */
+	public $detail;
+
+	function __construct($msg=null,$code=100,\Exception $previous=null, ?string $detail=null)
 	{
 		parent::__construct($msg, $code, $previous);
+
+		$this->detail = $detail;
 	}
 }
