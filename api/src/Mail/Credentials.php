@@ -619,11 +619,6 @@ class Credentials
 		{
 			$salt = openssl_random_pseudo_bytes(self::SALT_LEN);
 		}
-		// load hash_pbkdf2 polyfill for php < 5.5
-		if (!function_exists('hash_pbkdf2'))
-		{
-			require_once __DIR__.'/hash_pbkdf2.php';
-		}
 		$aes_key = hash_pbkdf2($hash, $password, $salt, $iterations, $length, true);
 
 		//error_log(__METHOD__."('$password', '".base64_encode($salt)."') returning ".base64_encode($aes_key).' '.function_backtrace());
