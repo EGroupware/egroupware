@@ -62,7 +62,7 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 				}
 
 				slot {
-					color: var(--sl-color-neutral-400);
+					color: var(--sl-input-placeholder-color);
 				}
 
 				sl-switch {
@@ -81,8 +81,8 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 				}
 
 				.label:hover {
-					background-color: var(--sl-color-primary-50);
-					border-color: var(--sl-color-primary-300);
+					background-color: var(--sl-input-background-color-hover);
+					border-color: var(--sl-input-border-color-hover);
 				}
 			`
 		]

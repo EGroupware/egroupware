@@ -39,7 +39,7 @@ export default css`
 				order: attr(data-order type(<number>), 99);
 				max-width: 100%;
 				&::part(base) {
-					border: none;
+					border-width: 0;
 				}
 			}
 		}

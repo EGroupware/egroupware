@@ -134,6 +134,7 @@ egw-framework#egw_fw_basecontainer {
   display: flex;
   flex-direction: row-reverse;
   align-items: stretch;
+  color: var(--sl-color-neutral-600);
 
   & > * {
 	border: none;
@@ -663,13 +664,69 @@ div.et2_nextmatch {
   }
 }
 
-div.et2_toolbar {
-  .et2_toolbar_actionlist > span {
-	gap: var(--sl-spacing-small);
+/* Special styling for widgets in main-header */
+[slot="main-header"] {
 
-	* {
-	  margin-right: 0px;
+  --sl-input-background-color: transparent;
+  --sl-input-background-color-hover: hsl(from var(--sl-color-neutral-100) h s l / 50%);
+  --sl-input-color: var(--application-header-text-color);
+  --input-text-color: var(--application-header-text-color);
+  --sl-input-icon-color: var(--application-header-text-color);
+  --sl-input-color-hover: var(--application-header-text-color);
+  --sl-input-placeholder-color: hsl(from var(--application-header-text-color) h s l / 50%);
+  color: var(--application-header-text-color);
+
+  input::placeholder {
+	color: black;
+  }
+
+  *::part(base) {
+	color: var(--application-header-text-color);
+	background-color: transparent;
+  }
+
+  et2-button, et2-button-icon, et2-button-image, et2-button-toggle, et2-switch, et2-image {
+	&::part(base) {
+	  background-color: transparent;
+	}
+
+	&:hover::part(base) {
+	  border-color: transparent;
+	  background-color: var(--sl-input-background-color-hover);
 	}
   }
+
+  et2-toolbar {
+	border-bottom-width: 0px;
+
+	::part(list) {
+	  color: var(--sl-color-neutral-700);
+
+	  et2-button::part(base) {
+		color: var(--sl-color-neutral-700);
+	  }
+
+	  et2-button:hover::part(base) {
+		color: var(--sl-color-neutral-700);
+		border-color: var(--sl-input-border-color);
+	  }
+	}
+
+	/* Change colors of things in list back */
+
+	[slot="list"] {
+	  color: var(--sl-color-neutral-700);
+
+	  ::part(base), &::part(base) {
+		color: var(--sl-color-neutral-700);
+	  }
+
+	  :hover::part(base) {
+		border-color: var(--sl-input-border-color);
+	  }
+	}
+  }
+
+
 }
 /*** END WIDGETS ***/

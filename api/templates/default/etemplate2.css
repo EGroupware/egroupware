@@ -2632,7 +2632,7 @@ table.egwGridView_outer thead tr th.noResize:hover {
 et2-toolbar et2-button[slot=""]::part(base) {
 	justify-content: center;
 	padding-inline-start: 0;
-	border: none;
+	border-color: transparent;
 }
 
 et2-toolbar sl-button-group::part(base) {

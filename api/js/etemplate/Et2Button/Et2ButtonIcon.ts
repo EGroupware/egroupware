@@ -26,6 +26,7 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 			...(super.styles || []),
 			css`
             :host {
+				color: inherit;
                 flex: 0 0 auto !important;			
 			}
             `,

@@ -177,6 +177,7 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
   display: flex;
   flex-direction: row-reverse;
   align-items: stretch;
+  color: var(--sl-color-neutral-600);
 }
 #egw_fw_topmenu_info_items > * {
   border: none;
@@ -676,10 +677,63 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr {
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   background-color: var(--highlight-background-color);
 }
-div.et2_toolbar .et2_toolbar_actionlist > span {
-  gap: var(--sl-spacing-small);
+/* Special styling for widgets in main-header */
+[slot="main-header"] {
+  --sl-input-background-color: transparent;
+  --sl-input-background-color-hover: hsl(from var(--sl-color-neutral-100) h s l / 50%);
+  --sl-input-color: var(--application-header-text-color);
+  --input-text-color: var(--application-header-text-color);
+  --sl-input-icon-color: var(--application-header-text-color);
+  --sl-input-color-hover: var(--application-header-text-color);
+  --sl-input-placeholder-color: hsl(from var(--application-header-text-color) h s l / 50%);
+  color: var(--application-header-text-color);
 }
-div.et2_toolbar .et2_toolbar_actionlist > span * {
-  margin-right: 0px;
+[slot="main-header"] input::placeholder {
+  color: black;
+}
+[slot="main-header"] *::part(base) {
+  color: var(--application-header-text-color);
+  background-color: transparent;
+}
+[slot="main-header"] et2-button::part(base),
+[slot="main-header"] et2-button-icon::part(base),
+[slot="main-header"] et2-button-image::part(base),
+[slot="main-header"] et2-button-toggle::part(base),
+[slot="main-header"] et2-switch::part(base),
+[slot="main-header"] et2-image::part(base) {
+  background-color: transparent;
+}
+[slot="main-header"] et2-button:hover::part(base),
+[slot="main-header"] et2-button-icon:hover::part(base),
+[slot="main-header"] et2-button-image:hover::part(base),
+[slot="main-header"] et2-button-toggle:hover::part(base),
+[slot="main-header"] et2-switch:hover::part(base),
+[slot="main-header"] et2-image:hover::part(base) {
+  border-color: transparent;
+  background-color: var(--sl-input-background-color-hover);
+}
+[slot="main-header"] et2-toolbar {
+  border-bottom-width: 0px;
+  /* Change colors of things in list back */
+}
+[slot="main-header"] et2-toolbar ::part(list) {
+  color: var(--sl-color-neutral-700);
+}
+[slot="main-header"] et2-toolbar ::part(list) et2-button::part(base) {
+  color: var(--sl-color-neutral-700);
+}
+[slot="main-header"] et2-toolbar ::part(list) et2-button:hover::part(base) {
+  color: var(--sl-color-neutral-700);
+  border-color: var(--sl-input-border-color);
+}
+[slot="main-header"] et2-toolbar [slot="list"] {
+  color: var(--sl-color-neutral-700);
+}
+[slot="main-header"] et2-toolbar [slot="list"] ::part(base),
+[slot="main-header"] et2-toolbar [slot="list"]::part(base) {
+  color: var(--sl-color-neutral-700);
+}
+[slot="main-header"] et2-toolbar [slot="list"] :hover::part(base) {
+  border-color: var(--sl-input-border-color);
 }
 /*** END WIDGETS ***/
