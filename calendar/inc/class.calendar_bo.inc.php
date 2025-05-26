@@ -1031,7 +1031,7 @@ class calendar_bo
 				if (!empty($event[$ts]))
 				{
 					try {
-						$event[$ts] = Api\DateTime::to($event[$ts], $date_format);
+						$event[$ts] = $this->date2usertime($event[$ts], $date_format);
 					}
 					catch(\Exception $e) {
 						// we log and ignore the broken timestamp, practically unset the field
