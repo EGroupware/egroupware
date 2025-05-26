@@ -831,26 +831,20 @@ export class EgwFramework extends LitElement
 	 * @returns {any[]}
 	 * @private
 	 */
-	private assembleTabList(activeTab)
+	private assembleTabList(activeTab : EgwFrameworkApp)
 	{
 		let appList = []
 		const assembleApp = (app) =>
 		{
 			const obj = {appName: app.name};
-			if(activeTab && app.name == activeTab)
+			if(activeTab && app.name == activeTab.name)
 			{
 				obj['active'] = true;
 			}
-			if(app.opened)
-			{
-				appList.push({appName: app.name, active: app.active})
-			}
+			appList.push(obj);
 		};
-		Array.from(this.applicationList).forEach((app : ApplicationInfo) =>
-		{
-			assembleApp(app);
-		});
-		Object.values(this._tabApps).forEach((app : ApplicationInfo) =>
+		[...this.applicationList, ...Object.values(this._tabApps)]
+			.filter(app => typeof app.opened !== "undefined" && app.status !== "5").forEach((app : ApplicationInfo) =>
 		{
 			assembleApp(app);
 		});
