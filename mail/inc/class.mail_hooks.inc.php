@@ -41,6 +41,7 @@ class mail_hooks
 					'caption' => 'Folder ACL',
 					'icon' => 'lock',
 					'popup' => '750x420',
+					'onExecute' => "javaScript:app.admin.account_edit_action",
 					'url' => Egw::link('/index.php', array(
 						'menuaction' => 'mail.mail_acl.edit',
 						'acc_id' => $data['acc_id'],
@@ -56,6 +57,7 @@ class mail_hooks
 					'caption' => 'Vacation notice',
 					'icon' => 'mail/navbar',
 					'popup' => '750x420',
+					'onExecute' => "javaScript:app.admin.account_edit_action",
 					'url' => Egw::link('/index.php', array(
 						'menuaction' => 'mail.mail_sieve.editVacation',
 						'acc_id' => $data['acc_id'],
