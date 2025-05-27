@@ -472,15 +472,15 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 				// Wait for everything to be there before we start flatpickr
 				await this.updateComplete;
 				await this._inputNode.updateComplete;
-				this._inputNode.requestUpdate();
+				(typeof this._inputNode.requestUpdate == "function") && this._inputNode.requestUpdate();
 				await this._inputNode.updateComplete;
 
 				// Set flag attribute on _internal_ input - flatpickr needs an <input>
-				if(this._inputNode.shadowRoot.querySelectorAll("input[type='text']").length == 1)
+				if(this._inputNode?.shadowRoot.querySelectorAll("input[type='text']").length == 1)
 				{
 					this.findInputField().setAttribute("data-input", "");
 				}
-				if(this.defaultDate)
+				if(this.defaultDate && this._inputNode)
 				{
 					this._inputNode.value = flatpickr.formatDate(<Date>this.defaultDate, this.getOptions().dateFormat);
 				}

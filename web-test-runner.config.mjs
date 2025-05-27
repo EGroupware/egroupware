@@ -61,14 +61,23 @@ export default {
 
 	plugins: [
 		{
-			// Mock resumable for test, needed due to our weird build environment
-			name: "mock-resumable",
+			name: "mock-modules",
 			resolveImport({source})
 			{
-				if (source === "../../Resumable/resumable")
+				if (source.includes('shortcut-buttons-flatpickr'))
 				{
-					return "./test/ResumableStub.js";
+					return './test/FlatpickrShortcutPluginStub.js';
 				}
+				else if (source.includes('scrollPlugin'))
+				{
+					return './test/FlatpickrScrollPluginStub.js';
+				}
+
+				const mockModule = {
+					'../../Resumable/resumable': "./test/ResumableStub.js",
+					"diff2html/lib/types": "../../node_modules/diff2html/lib/types.js",
+				};
+				return mockModule[source];
 			}
 		},
 		// Handles typescript
