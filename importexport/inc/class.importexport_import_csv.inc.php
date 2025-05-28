@@ -315,12 +315,22 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if(!is_numeric($record[$name]))
 					{
 						$results = Link::query($links[$name], $record[$name]);
-						if(count($results) >= 1)
+						if(count($results) == 1)
+						{
+							$record[$name] = key($results);
+							continue;
+						}
+						elseif(count($results) >= 1)
 						{
 							// More than 1 result.  Check for exact match
 							$exact_count = 0;
 							foreach($results as $id => $title)
 							{
+								// Contacts breaks the contract & returns an array instead of title
+								if(is_array($title) && $title['label'])
+								{
+									$title = $title['label'];
+								}
 								if($title == $record[$name])
 								{
 									$exact_count++;
@@ -334,7 +344,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 							{
 								$warnings[] = lang('Unable to link to %1 "%2"',
 									lang($links[$name]), $record[$name]).
- 									' - ' .lang('too many matches');
+									' - ' . ($exact_count > 1 ? lang('too many matches') : lang('no matches'));
 								continue;
 							}
 							elseif ($exact_count == 1)
