@@ -58,7 +58,7 @@
 					</et2-vbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
-					<et2-image  label="$row_cont[type_label]" src="${row}[type]" align="center" noLang="1"></et2-image>
+                    <et2-image label="$row_cont[type_label]" src="$row_cont[type]" align="center" noLang="1" defaultSrc="copy"></et2-image>
 					<et2-number  id="${row}[group_count]" readonly="true" align="center" precision="0"></et2-number>
 					<et2-vbox  id="${row}[id]">
 						<et2-description  id="${row}[line1]" noLang="1"></et2-description>
