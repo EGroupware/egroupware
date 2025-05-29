@@ -2109,7 +2109,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			if (isset($this->grouped_views[(string) $query['grouped_view']]))
 			{
-				$row['type'] = 'home';
+				$row['type'] = $query['grouped_view'] == 'duplicates' ? 'duplicate' : 'organisation';
 				$row['type_label'] = $query['grouped_view'] == 'duplicate' ? lang('Duplicates') : lang('Organisation');
 
 				if ($query['filter'] && !($this->grants[(int)$query['filter']] & Acl::DELETE))
