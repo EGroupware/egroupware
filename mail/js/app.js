@@ -5141,27 +5141,37 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_prepare_print: function(_iframe)
 	{
-		var $mainIframe = _iframe || jQuery('#mail-display_mailDisplayBodySrc');
-		var tmpPrintDiv = jQuery('#tempPrintDiv');
+		const mainIframe = _iframe || document.body.querySelector('#mail-display_mailDisplayBodySrc');
+		let tmpPrintDiv = document.body.querySelector('#tempPrintDiv');
+		let notAttached = false;
 
-		if (tmpPrintDiv.length == 0 && tmpPrintDiv.children())
+		if (!tmpPrintDiv)
 		{
-			tmpPrintDiv = jQuery(document.createElement('div'))
-							.attr('id', 'tempPrintDiv')
-							.addClass('tmpPrintDiv');
-			var notAttached = true;
+			tmpPrintDiv = document.createElement('div');
+			tmpPrintDiv.id = 'tempPrintDiv';
+			tmpPrintDiv.classList.add('tmpPrintDiv');
+			notAttached = true;
 		}
 
-		if ($mainIframe)
+		if (mainIframe && tmpPrintDiv)
 		{
-			window.setTimeout(function(){
-				tmpPrintDiv[0].innerHTML = $mainIframe.contents().find('body').html();
-			}, 600);
+			// Wait for iframe to load
+			mainIframe.contentDocument.body.addEventListener("load", (e) =>
+			{
+				// Wait a little longer
+				window.setTimeout(function ()
+				{
+					tmpPrintDiv.innerHTML = mainIframe.contentDocument.body.innerHTML;
+				}, 600);
+			});
 		}
+
 		// Attach the element to the DOM after maniupulation
-		if (notAttached) $mainIframe.after(tmpPrintDiv);
-		tmpPrintDiv.find('#divAppboxHeader').remove();
-
+		if (notAttached)
+		{
+			mainIframe.parentNode.insertBefore(tmpPrintDiv, mainIframe.nextElementSibling);
+		}
+		tmpPrintDiv.querySelector('#divAppboxHeader')?.remove();
 	},
 
 	/**
