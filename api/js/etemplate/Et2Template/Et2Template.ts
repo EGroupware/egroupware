@@ -335,6 +335,13 @@ export class Et2Template extends Et2Widget(LitElement)
 				reject(e);
 				return;
 			}
+			// Trying to load with no template, but it has children
+			// Something weird happening, maybe DOM copying?
+			if(!xml && this.childElementCount)
+			{
+				resolve();
+				return;
+			}
 
 			// Empty in case load was called again
 			this.clear();
@@ -421,17 +428,20 @@ export class Et2Template extends Et2Widget(LitElement)
 		{
 			const url = this.getUrl();
 			let templates = <Element>{};
-			try
+			if(url)
 			{
-				templates = await this.loadFromFile(url);
-				if(!templates)
+				try
 				{
-					throw new Error("No templates found in template file " + url);
+					templates = await this.loadFromFile(url);
+					if(!templates)
+					{
+						throw new Error("No templates found in template file " + url);
+					}
 				}
-			}
-			catch(e)
-			{
-				throw new Error("Could not load template file " + url);
+				catch(e)
+				{
+					throw new Error("Could not load template file " + url);
+				}
 			}
 
 			// Scan the file for templates and store them
@@ -560,6 +570,12 @@ export class Et2Template extends Et2Widget(LitElement)
 
 			const splitted = template_name.split('.');
 			const app = splitted.shift();
+			// Not a valid URL, skip out
+			if(splitted.length == 0)
+			{
+				return '';
+			}
+
 			url = this.egw().link(
 				'/' + app + "/templates/default/" + splitted.join('.') + ".xet",
 				{download: cache_buster}
