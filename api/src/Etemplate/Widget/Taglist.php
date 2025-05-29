@@ -80,9 +80,10 @@ class Taglist extends Etemplate\Widget
 			$options['tag_list'] = true;
 			$options['filter'] ['contact_owner'] = 0;
 			$contacts = new Api\Contacts();
-			foreach($contacts->link_query($query, $options) as $value => $item)
+			foreach($contacts->link_query($query, $options) as $contact_id => $item)
 			{
-				$results[] = ['value' => $value] + $item;
+				$contact = $contacts->read($contact_id);
+				$results[] = ['value' => $contact['account_id']] + $item;
 			}
 		}
 		else
