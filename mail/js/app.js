@@ -5167,7 +5167,7 @@ app.classes.mail = AppJS.extend(
 		}
 
 		// Attach the element to the DOM after maniupulation
-		if (notAttached)
+		if (notAttached && mainIframe)
 		{
 			mainIframe.parentNode.insertBefore(tmpPrintDiv, mainIframe.nextElementSibling);
 		}
