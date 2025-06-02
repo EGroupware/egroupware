@@ -189,6 +189,24 @@ class timesheet_hooks
 			);
 		}
 
+		$settings['link_title'] = [
+			'type'   => 'select',
+			'label'  => 'Link title',
+			'name'   => 'link_title',
+			'values' => [
+				'date+time' => 'Start date, time and title',
+				'date+duration' => 'Date, duration and title',
+			],
+			'help'   => 'How to display linked timesheets',
+		];
+
+		$settings['infolog_delegation_readable'] = [
+			'type'   => 'check',
+			'label'  => 'Make timesheets readable by InfoLog delegation',
+			'name'   => 'infolog_delegation_readable',
+			'help'   => 'Give InfoLog delegation read-access to timesheets booked on them',
+		];
+
 		// Merge print
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{

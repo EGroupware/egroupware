@@ -396,7 +396,7 @@ abstract class Handler
 			unset($_SERVER['HTTP_IF_NONE_MATCH']);
 
 			// add "Accept: application/json" for JSON and set request-method to GET
-			if (empty($_SERVER['HTTP_ACCEPT']) && Api\CalDAV::isJSON())
+			if ((empty($_SERVER['HTTP_ACCEPT']) || $_SERVER['HTTP_ACCEPT'] === '*/*') && Api\CalDAV::isJSON())
 			{
 				$_SERVER['HTTP_ACCEPT'] = 'application/json';
 			}

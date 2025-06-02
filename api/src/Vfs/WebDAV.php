@@ -324,10 +324,12 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 			$info['props'][] = self::mkprop	('getcontentlength', filesize($fspath));
 		}
 		// generate etag from inode (sqlfs: fs_id), modification time and size
-		$stat = stat($fspath);
-		$info['props'][] = self::mkprop('getetag', '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"');
-		// make stat available to PROPFIND, the not query it again
-		$info['stat'] = array_slice($stat, 13);
+		if (($stat = stat($fspath)))
+		{
+			$info['props'][] = self::mkprop('getetag', '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"');
+		}
+		// make stat available to PROPFIND, to not query it again
+		$info['stat'] = $stat ? array_slice($stat, 13) : $stat;
 
 /*		returning the supportedlock property causes Windows DAV provider and Konqueror to not longer work
 		ToDo: return it only if explicitly requested ($options['props'])

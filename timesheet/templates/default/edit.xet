@@ -4,7 +4,7 @@
 	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" >
 			<columns>
-				<column width="92"/>
+				<column width="100"/>
 				<column width="185"/>
 				<column width="30"/>
 				<column width="92" disabled="@ts_viewtype"/>
@@ -45,10 +45,14 @@
 					<et2-description></et2-description>
 					<et2-date-duration label="Pause time" id="ts_paused" displayFormat="hm" span="all"></et2-date-duration>
 				</row>
-                <row class="row" disabled="@ts_viewtype">
-                    <et2-description value="Category" for="cat_id"></et2-description>
-                    <et2-select-cat span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
-                </row>
+				<row class="row" disabled="@ts_viewtype">
+					<et2-description value="Category" for="cat_id"></et2-description>
+					<et2-select-cat span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
+				</row>
+				<row class="row" disabled="@ts_viewtype">
+					<et2-description value="Readable" for="ts_readable"></et2-description>
+					<et2-select-account span="all" id="ts_readable" emptyLabel="Give additional users access" multiple="true"></et2-select-account>
+				</row>
             </rows>
 		</grid>
 	</template>
@@ -143,7 +147,7 @@
                     <et2-date-timeonly id="end_time" freeMinuteEntry="true"></et2-date-timeonly>
                 </row>
 				<row>
-					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="200">
+					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="225">
 						<tabs>
 							<tab id="notes" label="Description"/>
 							<tab id="general" label="Details"/>

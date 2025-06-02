@@ -395,6 +395,18 @@ class timesheet_bo extends Api\Storage
 		}
 		$ret = $data && !!($grants[$data['ts_owner']] & $required);
 
+		// check explicit read-rights of entry
+		if (!$ret && $required == Acl::READ && !empty($data['ts_readable']))
+		{
+			static $memberships = null;
+			if (!isset($memberships[$user]))
+			{
+				$memberships[$user] = Api\Accounts::getInstance()->memberships($user, true);
+				$memberships[$user][] = $user;
+			}
+			$ret = (bool)array_intersect($memberships[$user], explode(',',$data['ts_readable']));
+		}
+
 		if(($required & Acl::DELETE) && $this->config_data['history'] == 'history' &&
 			$data['ts_status'] == self::DELETED_STATUS)
 		{
@@ -572,7 +584,7 @@ class timesheet_bo extends Api\Storage
 				parent::search($criteria,array(
 					(string)$sum_ts_id[$type],"''","''","''",'MIN(ts_start)','SUM(ts_duration) AS ts_duration',
 					($this->quantity_sum ? "SUM(ts_quantity) AS ts_quantity" : '0'),
-					'0','NULL','0','0','0','0','0','0',"SUM(COALESCE(ts_paused,0)) AS ts_paused","SUM($total_sql) AS ts_total"
+					'0','NULL','0','0','0','0','0','0',"SUM(COALESCE(ts_paused,0)) AS ts_paused",'NULL',"SUM($total_sql) AS ts_total"
 				),'GROUP BY '.$sum_sql[$type],$sum_extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
 				$sum_extra_cols[$type][0] = '0';
 			}
@@ -820,20 +832,34 @@ class timesheet_bo extends Api\Storage
 			// need to preserve the $this->data
 			$backup =& $this->data;
 			unset($this->data);
-			$entry = $this->read( $entry,false,false);
+			$entry = $this->read( $entry,true,false);
 			// restore the data again
 			$this->data =& $backup;
+			// check access now (and not in read to support readable attribute)
+			if (!($e = $this->check_acl(Acl::READ, $entry)))
+			{
+				$entry = $e;
+			}
 		}
 		if (!$entry)
 		{
 			return $entry;
 		}
 		$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
-		if (date('H:i',$entry['ts_start']) != '00:00')	// dont show 00:00 time, as it means date only
+		// how to display link titles: date+time or date+duration
+		switch ($GLOBALS['egw_info']['user']['preferences']['timesheet']['link_title'] ?? 'date+time')
 		{
-			$format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i');
+			case 'date+time':
+				if (date('H:i',$entry['ts_start']) != '00:00')	// dont show 00:00 time, as it means date only
+				{
+					$format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i');
+				}
+				break;
+			case 'date+duration':
+				$duration = ' ('.sprintf('%d:%02d', floor($entry['ts_duration']/60), $entry['ts_duration']%60).')';
+				break;
 		}
-		return date($format,$entry['ts_start']).': '.$entry['ts_title'];
+		return date($format,$entry['ts_start']).($duration??'').': '.$entry['ts_title'];
 	}
 
 	/**
@@ -847,19 +873,19 @@ class timesheet_bo extends Api\Storage
 	function link_titles( array $ids )
 	{
 		$titles = array();
-		if (($entries = $this->search(array('ts_id' => $ids),'ts_id,ts_title,ts_start')))
+		if (($entries = $this->search(array('ts_id' => $ids),'ts_id,ts_title,ts_start,ts_duration')))
 		{
 			foreach($entries as $entry)
 			{
 				$titles[$entry['ts_id']] = $this->link_title($entry);
 			}
 		}
-		// we assume all not returned entries are not readable by the user, as we notify Link about all deletes
+		// we check all not returned entries explicitly, as they might have entry-specific read-rights
 		foreach($ids as $id)
 		{
 			if (!isset($titles[$id]))
 			{
-				$titles[$id] = false;
+				$titles[$id] = $this->link_title($id);
 			}
 		}
 		return $titles;

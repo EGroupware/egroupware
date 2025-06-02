@@ -637,6 +637,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		$timesheet = Api\Db::strip_array_keys($this->bo->data, 'ts_');
 
 		// send necessary response headers: Location, etag, ...
+		$this->check_return_representation($options, $id, $user);
 		$this->put_response_headers($timesheet, $options['path'], $retval);
 
 		if ($this->debug > 1) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($retval));

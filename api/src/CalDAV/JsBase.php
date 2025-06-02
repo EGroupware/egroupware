@@ -96,15 +96,21 @@ class JsBase
 	/**
 	 * Output an account as email, if available, username or as last resort the numerical account_id
 	 *
-	 * @param int|null $account_id
-	 * @return string|int|null
+	 * @param int[]|int|null $account_id
+	 * @return string[]|string|int|null
 	 * @throws \Exception
 	 */
-	protected static function account(int $account_id=null)
+	protected static function account($account_id=null, bool $multiple=false)
 	{
 		if (!$account_id)
 		{
 			return null;
+		}
+		if ($multiple)
+		{
+			$account_id = is_array($account_id) ? $account_id : explode(',', $account_id);
+			return array_combine(array_map(self::class.'::account', $account_id),
+				array_fill(0, count($account_id), true));
 		}
 		return Api\Accounts::id2name($account_id, 'account_email') ?: Api\Accounts::id2name($account_id) ?: $account_id;
 	}
@@ -112,13 +118,20 @@ class JsBase
 	/**
 	 * Parse an account specified as email, account_lid or account_id
 	 *
-	 * @param string|int $value
-	 * @param ?bool $user
-	 * @return int
+	 * @param string[]|string|int $value multiple: object with value => ?true, null|false is ignored
+	 * @param ?bool $user true: only user allowed, false: only groups, null: both
+	 * @param bool $multiple true: allow multiple accounts
+	 * @return int|int[]
 	 * @throws \Exception
 	 */
-	protected static function parseAccount(string $value, bool $user=true)
+	protected static function parseAccount($value, ?bool $user=true, bool $multiple=false)
 	{
+		if ($multiple && $value)
+		{
+			return array_map(function ($v) use ($user) {
+				return self::parseAccount($v, $user);
+			}, array_keys(array_filter((array)$value)));
+		}
 		if (is_numeric($value) && ($exists = Api\Accounts::getInstance()->exists($value)) &&
 			(!isset($user) || $exists === ($user ? 1 : 2)))
 		{
