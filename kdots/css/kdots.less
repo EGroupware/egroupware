@@ -506,6 +506,8 @@ egw-framework#egw_fw_basecontainer {
 
 /*** APPLICATION ***/
 egw-app {
+  --application-header-text-color: var(--sl-color-neutral-600);
+
   &::part(name) {
 	display: flex;
 	align-items: center;
@@ -685,7 +687,8 @@ div.et2_nextmatch {
 	background-color: transparent;
   }
 
-  et2-button, et2-button-icon, et2-button-image, et2-button-toggle, et2-switch, et2-image {
+  et2-button, et2-button-icon, et2-button-image, et2-button-toggle, et2-switch, et2-switch-icon, et2-image {
+	--indicator-color: var(--sl-color-neutral-0);
 	&::part(base) {
 	  background-color: transparent;
 	}

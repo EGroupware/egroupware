@@ -532,6 +532,7 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
 /*** END HEADER ***/
 /*** APPLICATION ***/
 egw-app {
+  --application-header-text-color: var(--sl-color-neutral-600);
   /* Application template gets full height */
 }
 egw-app::part(name) {
@@ -695,11 +696,21 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   color: var(--application-header-text-color);
   background-color: transparent;
 }
+[slot="main-header"] et2-button,
+[slot="main-header"] et2-button-icon,
+[slot="main-header"] et2-button-image,
+[slot="main-header"] et2-button-toggle,
+[slot="main-header"] et2-switch,
+[slot="main-header"] et2-switch-icon,
+[slot="main-header"] et2-image {
+  --indicator-color: var(--sl-color-neutral-0);
+}
 [slot="main-header"] et2-button::part(base),
 [slot="main-header"] et2-button-icon::part(base),
 [slot="main-header"] et2-button-image::part(base),
 [slot="main-header"] et2-button-toggle::part(base),
 [slot="main-header"] et2-switch::part(base),
+[slot="main-header"] et2-switch-icon::part(base),
 [slot="main-header"] et2-image::part(base) {
   background-color: transparent;
 }
@@ -708,6 +719,7 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
 [slot="main-header"] et2-button-image:hover::part(base),
 [slot="main-header"] et2-button-toggle:hover::part(base),
 [slot="main-header"] et2-switch:hover::part(base),
+[slot="main-header"] et2-switch-icon:hover::part(base),
 [slot="main-header"] et2-image:hover::part(base) {
   border-color: transparent;
   background-color: var(--sl-input-background-color-hover);
