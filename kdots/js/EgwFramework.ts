@@ -480,7 +480,6 @@ export class EgwFramework extends LitElement
 			let clone = {
 				...app,
 				..._extra,
-				//isFrameworkTab: true, ??
 				name: appname,
 				internalName: app.name,
 				url: _link,
@@ -724,6 +723,8 @@ export class EgwFramework extends LitElement
 	public showTab(appname : string)
 	{
 		this.querySelectorAll("egw-app").forEach(app => app.removeAttribute("active"));
+		this.applicationList.forEach(a => a.active = false);
+		Object.values(this._tabApps).forEach(a => a.active = false);
 
 		let appComponent = this.loadApp(appname, true);
 		appComponent.setAttribute("active", "");
@@ -753,7 +754,8 @@ export class EgwFramework extends LitElement
 		// Remove egw-app from DOM
 		if(this.querySelector(`egw-app[id='${tab.panel}']`))
 		{
-			this.closeApp(this.querySelector(`egw-app[id='${tab.panel}']`));
+			// DOM listener will get the rest
+			this.querySelector(`egw-app[id='${tab.panel}']`)?.remove();
 		}
 		else
 		{
@@ -837,7 +839,7 @@ export class EgwFramework extends LitElement
 		const assembleApp = (app) =>
 		{
 			const obj = {appName: app.name};
-			if(activeTab && app.name == activeTab.name)
+			if(activeTab && app.name == activeTab.id)
 			{
 				obj['active'] = true;
 			}
