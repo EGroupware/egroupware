@@ -16,7 +16,7 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'ts_id' => array('type' => 'auto','nullable' => False,'comment' => 'id of the timesheet entry'),
 			'ts_project' => array('type' => 'varchar','precision' => '255','comment' => 'project title'),
-			'ts_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'title of the timesheet entry'),
+			'ts_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'title of the timesheet entry in minutes'),
 			'ts_description' => array('type' => 'varchar','precision' => '16384','comment' => 'description of the timesheet entry'),
 			'ts_start' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'timestamp of the startdate'),
 			'ts_duration' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'duration of the timesheet-entry'),
@@ -29,7 +29,8 @@ $phpgw_baseline = array(
 			'pl_id' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'id of the linked project'),
 			'ts_status' => array('type' => 'int','precision' => '4','comment' => 'status of the timesheet-entry'),
 			'ts_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'Creation date of the timesheet'),
-			'ts_paused' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'pause time(s) of the timesheet-entry')
+			'ts_paused' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'pause time(s) of the timesheet-entry'),
+			'ts_readable' => array('type' => 'ascii','meta' => 'account-commasep','precision' => '255','comment' => 'additional users and groups, beyond ACL')
 		),
 		'pk' => array('ts_id'),
 		'fk' => array(),

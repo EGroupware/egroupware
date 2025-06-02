@@ -245,3 +245,15 @@ function timesheet_upgrade23_1()
 
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '23.1.001';
 }
+
+function timesheet_upgrade23_1_001()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_timesheet','ts_readable',array(
+		'type' => 'ascii',
+		'meta' => 'account-commasep',
+		'precision' => '255',
+		'comment' => 'additional users and groups, beyond ACL'
+	));
+
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '23.1.002';
+}

@@ -59,9 +59,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	de	Haben Sie vergessen Ihre Arbeitszeit zu beenden?
 full: use only projectmanager	admin	de	Komplett: verwende nur Projektmanager
 general fields:	timesheet	de	Das Löschen von Einträgen verhindern
+give additional users access	timesheet	de	Erlaube zusätzlichen Benutzer Zugriff
+give infolog delegation read-access to timesheets booked on them	timesheet	de	Gewähre InfoLog Verantwortlichen Leserechte zu Stundenzetteln die darauf gebucht sind
 global categories	timesheet	de	Globale Kategorien
 history	timesheet	de	Historie
 history logging	admin	de	Protokollierung der Historie
+how to display linked timesheets	timesheet	de	Wie sollen verknüpfte Stundenzettel angezeigt werden
 html link to the current record	timesheet	de	HTML-Verknüpfung zum aktuellen Eintrag
 id	timesheet	de	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	de	Wenn Sie hier den Ordner (vollständiger Pfad im virtuellen Dateisystem VFS) angeben, zeigt %1 eine Aktion für jedes Dokument. Diese Aktion erlaubt es das angegebene Dokument herunterzuladen mit den %1 Daten eingefügt.
@@ -81,10 +84,12 @@ last year	timesheet	de	Letztes Jahr
 leave it empty for a full week	timesheet	de	Leer lassen für eine ganze Woche
 leaves without saveing	timesheet	de	Beenden ohne speichern
 length<br>rows	timesheet	de	Länge<br>Reihe
+link title	timesheet	de	Titel der Verknüpfung
 links	timesheet	de	Verknüpfungen
 links and attached files	timesheet	de	Verknüpfungen und angehangene Dateien
 links to specified application.  example: {{links/infolog}}	timesheet	de	Verknüpfung zu Anwendungen. Beispiel: {{links/infolog}}
 list of files linked to the current record	timesheet	de	Liste der zum aktuellen Eintrag verknüpften Dateien.
+make timesheets readable by infolog delegation	timesheet	de	Mache Stundenzettel lesbar für InfoLog Verantwortliche
 manage mapping	timesheet	de	Zuordnungen verwalten
 max length of the input [, length of the inputfield (optional)]	timesheet	de	Maximale Länge der Eingabe[,Länge des Eingabefeldes (optional)]
 mode	timesheet	de	Modus
@@ -115,6 +120,7 @@ price	timesheet	de	Preis
 project fields	timesheet	de	Felder Projektmanager
 projectmanager integration	admin	de	Integration des Projektmanagers
 quantity	timesheet	de	Menge
+readable	timesheet	de	Lesbar
 recorded	timesheet	de	Aufgenommen
 recovered	timesheet	de	wiederhergestellt
 replacements for inserting entries into documents	timesheet	de	Platzhalter für das Einfügen in Dokumente

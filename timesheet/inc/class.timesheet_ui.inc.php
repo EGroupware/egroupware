@@ -382,7 +382,7 @@ class timesheet_ui extends timesheet_bo
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
-		if (!$this->data['ts_id'] && isset($_REQUEST['link_app']) && isset($_REQUEST['link_id']) && !is_array($content['link_to']['to_id']))
+		if (empty($this->data['ts_id']) && isset($_REQUEST['link_app']) && isset($_REQUEST['link_id']) && !is_array($content['link_to']['to_id']))
 		{
 			$link_ids = is_array($_REQUEST['link_id']) ? $_REQUEST['link_id'] : array($_REQUEST['link_id']);
 			foreach(is_array($_REQUEST['link_app']) ? $_REQUEST['link_app'] : array($_REQUEST['link_app']) as $n => $link_app)
@@ -416,9 +416,18 @@ class timesheet_ui extends timesheet_bo
 							}
 							break;
 					}
-					if($link_app == 'calendar')
+					switch($link_app)
 					{
-						list($link_id) = explode(':', $link_id);
+						case 'calendar':
+							list($link_id) = explode(':', $link_id);
+							break;
+
+						case 'infolog':
+							if (($GLOBALS['egw_info']['user']['preferences']['timesheet']['infolog_delegation_readable'] ?? null) &&
+								($infolog = (new infolog_bo)->read($link_id)) && $infolog['info_responsible'])
+							{
+								$content['ts_readable'] = $infolog['info_responsible'];
+							}
 					}
 					Link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
 				}
@@ -428,7 +437,7 @@ class timesheet_ui extends timesheet_bo
 		{
 			$links = Link::get_links(TIMESHEET_APP,$this->data['ts_id'],'projectmanager');
 		}
-		// make all linked projects availible for the pm-pricelist widget, to be able to choose prices from all
+		// make all linked projects available for the pm-pricelist widget, to be able to choose prices from all
 		$content['all_pm_ids'] = array_values($links);
 
 		// set old id, pm selector (for later removal)

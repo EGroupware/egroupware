@@ -66,6 +66,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 			'modifier' => self::account($timesheet['modifier']),
 			'pricelist' => (int)$timesheet['pl_id'] ?: null,
 			'status' => $bo->status_labels[$timesheet['status']] ?? null,
+			'readable' => $timesheet['readable'] ? self::account($timesheet['readable'], true) : null,
 			'egroupware.org:customfields' => self::customfields($timesheet),
 			'etag' => ApiHandler::etag($timesheet)
 		]);
@@ -102,7 +103,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 			//if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
 
 			// check required fields
-			if (!$old || !$method === 'PATCH')
+			if (!$old || $method !== 'PATCH')
 			{
 				static $required = ['title', 'start', 'duration'];
 				if (($missing = array_diff_key(array_filter(array_intersect_key($data, array_flip($required))), array_flip($required))))
@@ -150,6 +151,10 @@ class JsTimesheet extends Api\CalDAV\JsBase
 
 					case 'owner':
 						$timesheet['ts_owner'] = self::parseAccount($value);
+						break;
+
+					case 'readable':
+						$timesheet['ts_readable'] = $value ? self::parseAccount($value, null, true) : null;
 						break;
 
 					case 'category':

@@ -59,9 +59,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	en	Forgot to switch off working time?
 full: use only projectmanager	admin	en	Full: use only Project Manager
 general fields:	timesheet	en	General fields:
+give additional users access	timesheet	en	Give additional users access
+give infolog delegation read-access to timesheets booked on them	timesheet	en	Give InfoLog delegation read-access to timesheets booked on them
 global categories	timesheet	en	Global categories
 history	timesheet	en	History
 history logging	admin	en	History logging
+how to display linked timesheets	timesheet	en	How to display linked timesheets
 html link to the current record	timesheet	en	HTML link to the current record
 id	timesheet	en	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	en	If you specify a directory (full VFS path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
@@ -81,10 +84,12 @@ last year	timesheet	en	Last year
 leave it empty for a full week	timesheet	en	Leave it empty for a full week
 leaves without saveing	timesheet	en	Leaves without saving
 length<br>rows	timesheet	en	Length<br>Rows
+link title	timesheet	en	Link title
 links	timesheet	en	Links
 links and attached files	timesheet	en	Links and attached files
 links to specified application.  example: {{links/infolog}}	timesheet	en	Links to specified application. Example: {{links/infolog}}
 list of files linked to the current record	timesheet	en	List of files linked to the current record
+make timesheets readable by infolog delegation	timesheet	en	Make timesheets readable by InfoLog delegation
 manage mapping	timesheet	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	timesheet	en	Max length of the input [, length of the input field (optional)]
 mode	timesheet	en	Mode
@@ -115,6 +120,7 @@ price	timesheet	en	Price
 project fields	timesheet	en	Project fields
 projectmanager integration	admin	en	Project Manager integration
 quantity	timesheet	en	Quantity
+readable	timesheet	en	Readable
 recorded	timesheet	en	Recorded
 recovered	timesheet	en	recovered
 replacements for inserting entries into documents	timesheet	en	Replacements for inserting entries into documents
