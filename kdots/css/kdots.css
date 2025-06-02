@@ -90,6 +90,8 @@ body {
   margin: 0px;
   /** Messages **/
   /** end messages **/
+  /** Egw loader **/
+  /** End Egw Loader **/
 }
 html .sl-toast-stack,
 body .sl-toast-stack {
@@ -103,6 +105,103 @@ body .sl-toast-stack sl-alert et2-checkbox {
 html #egw_message,
 body #egw_message {
   display: none;
+}
+@keyframes loading-prompt-spinner {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+html .egw-loading-prompt-container::before,
+body .egw-loading-prompt-container::before {
+  opacity: 0.3;
+  content: "";
+  background-color: var(--sl-color-neutral-100);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+}
+html .egw-loading-prompt-container .egw-loading-prompt-spinner-msg,
+body .egw-loading-prompt-container .egw-loading-prompt-spinner-msg {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0;
+  top: 48%;
+  z-index: 999;
+  text-shadow: 4px 4px 7px var(--sl-color-primary-500);
+  color: var(--sl-color-primary-900);
+  margin-top: 52px;
+}
+html .egw-loading-prompt-container .egw-loading-prompt-spinner-animator,
+body .egw-loading-prompt-container .egw-loading-prompt-spinner-animator {
+  width: 38px;
+  height: 38px;
+  position: absolute;
+  margin-left: 50%;
+  left: -17px;
+  top: 48%;
+  z-index: 999;
+  background-position: 3px 3px;
+  opacity: 1;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  border: 5px solid;
+  border: 6px var(--sl-color-primary-500) solid;
+  border-top: 6px var(--sl-color-primary-900) solid;
+  border-radius: 50%;
+  -webkit-animation: loading-prompt-spinner 1.2s infinite linear;
+  animation: loading-prompt-spinner 1.2s infinite linear;
+}
+@keyframes loading-prompt-horizental {
+  0% {
+    transform: translate(-52.5px, -7.5px);
+  }
+  100% {
+    transform: translate(38.5px, -7.5px);
+  }
+}
+html .egw-loading-prompt-container .egw-loading-prompt-horizental-animator::after,
+body .egw-loading-prompt-container .egw-loading-prompt-horizental-animator::after {
+  content: '';
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  z-index: 999;
+  border-radius: 30%;
+  background: #FBC200;
+  animation-name: loading-prompt-horizental;
+  animation-duration: 1.5s;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+html .egw-loading-prompt-container .egw-loading-prompt-horizental-msg,
+body .egw-loading-prompt-container .egw-loading-prompt-horizental-msg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 999;
+  text-shadow: 4px 4px 7px var(--sl-color-primary-500);
+  color: var(--sl-color-primary-900);
+  margin-left: -35px;
+}
+html .egw-loading-prompt-container .egw-loading-prompt-horizental-animator::before,
+body .egw-loading-prompt-container .egw-loading-prompt-horizental-animator::before {
+  content: '';
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  z-index: 999;
+  width: 100px;
+  border-radius: 5px;
+  border: solid 10px var(--sl-color-primary-500);
+  transform: translate(-50%, -50%);
 }
 .egw_menu::part(popup) {
   z-index: var(--sl-z-index-dropdown);
