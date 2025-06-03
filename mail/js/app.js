@@ -5134,15 +5134,17 @@ app.classes.mail = AppJS.extend(
 
 		if (mainIframe && tmpPrintDiv)
 		{
-			// Wait for iframe to load
-			mainIframe.contentDocument.body.addEventListener("load", (e) =>
+			const copyContent = function ()
 			{
 				// Wait a little longer
 				window.setTimeout(function ()
 				{
 					tmpPrintDiv.innerHTML = mainIframe.contentDocument.body.innerHTML;
 				}, 600);
-			});
+			}
+			copyContent();
+			// Wait if iframe fires load, then copy again
+			mainIframe.contentDocument.body.addEventListener("load", copyContent);
 		}
 
 		// Attach the element to the DOM after maniupulation
