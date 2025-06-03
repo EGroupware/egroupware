@@ -676,7 +676,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			super.blur();
 		}
-		this.hide();
+		return this.hide();
 	}
 
 	protected handleDefaultSlotChange()

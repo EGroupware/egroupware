@@ -406,7 +406,10 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		this._updateValueOnChange = this._updateValueOnChange.bind(this);
 		this._handleShortcutButtonClick = this._handleShortcutButtonClick.bind(this);
 
-		this.init();
+		this.updateComplete.then(() =>
+		{
+			this.init();
+		});
 	}
 
 	disconnectedCallback()
@@ -428,6 +431,16 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			delete this._inputNode?._flatpickr;
 			this._instance = undefined;
 		}
+	}
+
+	async getUpdateComplete()
+	{
+		const more = await super.getUpdateComplete();
+		if(this.getOptions().allowInput)
+		{
+			await this._inputNode.updateComplete;
+		}
+		return more;
 	}
 
 	update(changedProperties : PropertyValueMap<any>)
@@ -471,12 +484,11 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 
 				// Wait for everything to be there before we start flatpickr
 				await this.updateComplete;
-				await this._inputNode.updateComplete;
 				(typeof this._inputNode.requestUpdate == "function") && this._inputNode.requestUpdate();
 				await this._inputNode.updateComplete;
 
 				// Set flag attribute on _internal_ input - flatpickr needs an <input>
-				if(this._inputNode?.shadowRoot.querySelectorAll("input[type='text']").length == 1)
+				if(this._inputNode?.shadowRoot?.querySelectorAll("input[type='text']").length == 1)
 				{
 					this.findInputField().setAttribute("data-input", "");
 				}
@@ -843,7 +855,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			return;
 		}
 
-		egw.holidays(f_date.getFullYear()).then((h) => this.set_holiday(f_date, h, dayElement));
+		this.egw().holidays(f_date.getFullYear()).then((h) => this.set_holiday(f_date, h, dayElement));
 	}
 
 	private set_holiday(f_date : Date, holidays, element : HTMLElement)
