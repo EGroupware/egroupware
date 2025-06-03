@@ -6095,7 +6095,7 @@ app.classes.mail = AppJS.extend(
 					if (jQuery(this.contentWindow.document.body).find('#smimePasswordRequest').length == 0)
 					{
 						iframe.set_disabled(true);
-						self.mail_prepare_print(jQuery(this));
+						self.mail_prepare_print(this);
 					}
 				}
 			});
