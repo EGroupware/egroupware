@@ -51,7 +51,10 @@ class Vfs extends File
 			$path = $form_name;
 		}
 
-		self::setElementAttribute($form_name, 'path', $path);
+		if($this->type == "et2-vfs-upload" && !$this->getElementAttribute($form_name, 'path'))
+		{
+			self::setElementAttribute($form_name, 'path', $path);
+		}
 		// ID maps to path - check there for any existing files
 		list($app, $id, $relpath) = explode(':', $path, 3);
 		if($app && $id)
