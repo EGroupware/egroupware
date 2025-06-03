@@ -350,7 +350,7 @@ class importexport_wizard_basic_import_csv
 				$content['mapping'][] = array(
 					'index' => $index + $empties,
 					'title' => lang('Extra %1', $empties),
-					'field' => $field[$index+$empties],
+					'field' => $field[$index + $empties] ?: '',
 					'conversion'	=>	$conversion[$index+$empties]
 				);
 				$empties++;
