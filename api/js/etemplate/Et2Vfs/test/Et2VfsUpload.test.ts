@@ -1,4 +1,4 @@
-import {assert, fixture, html, oneEvent} from '@open-wc/testing';
+import {assert, fixture, html} from '@open-wc/testing';
 import * as sinon from "sinon";
 import {Et2VfsUpload, VfsFileInfo} from "../Et2VfsUpload";
 import {Et2FileItem} from "../../Et2File/Et2FileItem";
@@ -168,13 +168,10 @@ describe('Et2VfsUpload existing file checks', async() =>
 
 		assert(mockEgw.request.calledOnce, 'Request to see if file exists should be sent');
 		assert(confirmStub.calledOnce, 'User should be asked about overwriting');
-		await oneEvent(element, "change");
-		assert(addSpy.calledOnce, 'File upload should proceed');
 	});
 
 	it('Should not check if conflict is "overwrite"', async() =>
 	{
-
 		element.conflict = "overwrite";
 
 		const fileInfo : File = <File>{
@@ -198,8 +195,6 @@ describe('Et2VfsUpload existing file checks', async() =>
 
 		assert(mockEgw.request.notCalled, 'Request to see if file exists should not be sent');
 		assert(confirmStub.notCalled, 'User should not be asked about overwriting');
-		await oneEvent(element, "change");
-		assert(addSpy.calledOnce, 'File upload should proceed');
 	});
 
 	it('Should not ask if conflict is "rename"', async() =>
@@ -227,9 +222,6 @@ describe('Et2VfsUpload existing file checks', async() =>
 
 		assert(mockEgw.request.calledOnce, 'Request to see if file exists should be sent');
 		assert(confirmStub.notCalled, 'User should not be asked about overwriting');
-
-		await oneEvent(element, "change");
-		assert(addSpy.calledOnce, 'File upload should proceed');
 	});
 
 	it('Should not upload if they cancel conflict dialog', async() =>

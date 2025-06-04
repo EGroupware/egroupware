@@ -488,6 +488,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 		const fileInfo : FileInfo = {
 			abort: () => false,
+			cancel: () => false,
 			uniqueIdentifier: file.name,
 			file: file,
 			progress: () => 0
