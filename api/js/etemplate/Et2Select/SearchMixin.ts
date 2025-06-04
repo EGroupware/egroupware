@@ -88,33 +88,31 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 {
 	class Et2WidgetWithSearch extends superclass
 	{
-		static get properties()
-		{
-			return {
-				...super.properties,
-				search: {type: Boolean, reflect: true},
+		@property({type: Boolean, reflect: true})
+		search = false;
 
-				searchUrl: {type: String},
+		@property({type: String})
+		searchUrl = '';
 
-				/**
-				 * Allow custom entries that are not in the options
-				 */
-				allowFreeEntries: {type: Boolean, reflect: true},
+		/**
+		 * Allow custom entries that are not in the options
+		 */
+		@property({type: Boolean, reflect: true})
+		allowFreeEntries = false;
 
-				/**
-				 * Additional search parameters that are passed to the server
-				 * when we query searchUrl
-				 */
-				searchOptions: {type: Object},
+		/**
+		 * Additional search parameters that are passed to the server
+		 * when we query searchUrl
+		 */
+		@property({type: Object})
+		searchOptions : object = {app: "addressbook"};
 
-				/**
-				 * Allow editing tags by clicking on them.
-				 * allowFreeEntries must be true
-				 */
-				editModeEnabled: {type: Boolean}
-			}
-		}
-		@property({type: Object}) searchOptions : object = {app: "addressbook"};
+		/**
+		 * Allow editing tags by clicking on them.
+		 * allowFreeEntries must be true
+		 */
+		@property({type: Boolean})
+		editModeEnabled = false;
 
 		static get styles() : CSSResultGroup
 		{
@@ -427,6 +425,22 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		{
 			super.update(changedProperties);
 
+			// Update any tags if edit mode changes
+			if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
+			{
+				// Required because we explicitly create tags instead of doing it in render()
+				this.select.shadowRoot.querySelectorAll(".select__tags > div > *").forEach((tag : Et2Tag) =>
+				{
+					tag.editable = this.editModeEnabled && !this.readonly;
+					tag.removable = !this.readonly;
+				});
+
+				if(this.readonly)
+				{
+					this._unbindListeners();
+				}
+			}
+
 			// One of the key properties has changed, need to add the needed nodes
 			if(changedProperties.has("search") || changedProperties.has("editModeEnabled") || changedProperties.has("allowFreeEntries"))
 			{
@@ -440,21 +454,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 				// Listeners may have been skipped from connectedCallback()
 				this._bindListeners();
-			}
-			// Update any tags if edit mode changes
-			if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
-			{
-				// Required because we explicitly create tags instead of doing it in render()
-				this.shadowRoot.querySelectorAll(".select__tags > *").forEach((tag : Et2Tag) =>
-				{
-					tag.editable = this.editModeEnabled && !this.readonly;
-					tag.removable = !this.readonly;
-				});
-
-				if(this.readonly)
-				{
-					this._unbindListeners();
-				}
 			}
 		}
 

@@ -1,7 +1,7 @@
 import {assert, fixture, html, oneEvent} from '@open-wc/testing';
 import {Et2Select} from "../Et2Select";
-import * as sinon from 'sinon';
 import {Et2Tag} from "../Tag/Et2Tag";
+import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
 
 // Stub global egw for cssImage & widget.egw() to find
 // @ts-ignore
@@ -13,6 +13,7 @@ window.egw = {
 };
 
 let element : Et2Select;
+let keepMe : Et2Textbox = new Et2Textbox();
 const tag_name = "et2-tag";
 
 async function before(editable = true)
@@ -20,21 +21,14 @@ async function before(editable = true)
 	// Create an element to test with, and wait until it's ready
 	// @ts-ignore
 	element = await fixture<Et2Select>(html`
-        <et2-select label="I'm a select" value="one" multiple="true" .editModeEnabled=${editable}>
+        <et2-select label="I'm a select" multiple="true" editModeEnabled=${editable}>
             <option value="one">One</option>
             <option value="two">Two</option>
         </et2-select>
 	`);
 	// Need to call loadFromXML() explicitly to read the options
 	element.loadFromXML(element);
-
-	// Stub egw()
-	sinon.stub(element, "egw").returns(window.egw);
-
-	await element.updateComplete;
-	let tags = [];
-	element.shadowRoot.querySelectorAll(tag_name).forEach((t : Et2Tag) => tags.push(t.updateComplete));
-	await Promise.all(tags);
+	element.value = "one";
 
 	return element;
 }
@@ -48,33 +42,37 @@ describe("Editable tag", () =>
 	it('is defined', () =>
 	{
 		assert.instanceOf(element, Et2Select);
+		assert.notInstanceOf(element, Et2Tag);
 	});
 
 	it("Tag editable matches editModeEnabled", async() =>
 	{
 		let tag = element.select.combobox.querySelectorAll(tag_name);
 		assert.isAbove(tag.length, 0, "No tags found");
-		assert.isTrue(tag[0].editable);
+		assert.isTrue(tag[0].editable, "Select is editable but tag is not");
 
 		// Change it to false & force immediate update
 		element.editModeEnabled = false;
-		element.requestUpdate();
+		element.requestUpdate("editModeEnabled", true);
 		await element.updateComplete;
 
 		tag = element.select.combobox.querySelectorAll(tag_name);
+		tag.forEach(async t => await t.updateComplete);
 		assert.isAbove(tag.length, 0, "No tags found");
-		assert.isFalse(tag[0].editable);
+		assert.isFalse(tag[0].editable, "Tag was editable but should not be");
 	});
 
 	it("Has edit button when editable ", async() =>
 	{
 		let tag = element.select.combobox.querySelectorAll(tag_name);
+		await tag.updateComplete;
 		assert.isAbove(tag.length, 0, "No tags found");
 		assert.exists(tag[0].shadowRoot.querySelector("et2-button-icon[label='edit*']"), "No edit button");
 	});
 	it("Shows input when edit button is clicked", async() =>
 	{
 		let tag = element.select.combobox.querySelectorAll(tag_name)[0];
+		await tag.updateComplete;
 
 		let edit_button = tag.shadowRoot.querySelector("et2-button-icon");
 		edit_button.click();

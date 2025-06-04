@@ -91,6 +91,16 @@ export class Et2Tag extends Et2Widget(SlTag)
 		this.handleChange = this.handleChange.bind(this);
 	}
 
+	async getUpdateComplete()
+	{
+		const more = await super.getUpdateComplete();
+		if(this.isEditing)
+		{
+			await this._editNode.updateComplete;
+		}
+		return more;
+	}
+
 	protected _styleTemplate() : TemplateResult
 	{
 		return null;
@@ -205,7 +215,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 		this.updateComplete.then(async() =>
 		{
 			await this._editNode.updateComplete;
-			// This stops drag and drop from interfereing with mouse edits
+			// This stops drag and drop from interfering with mouse edits
 			this._editNode.input.setAttribute("contenteditable", "true");
 
 			this._editNode.focus();
@@ -235,7 +245,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 
 	get _editNode() : Et2Textbox
 	{
-		return this.shadowRoot.querySelector('et2-textbox');
+		return <Et2Textbox>this.shadowRoot.querySelector('et2-textbox');
 	}
 
 	handleKeyDown(event : KeyboardEvent)
