@@ -901,6 +901,46 @@ class Backup
 	const ROW_CHUNK = 2000;
 
 	/**
+	 * Get the biggest possible chunk-size for given table to NOT run into memory-limit
+	 *
+	 * We use the average row size reported from the DB for that given table and half of the memory limit.
+	 *
+	 * @param string $table
+	 * @param ?int &$rows on return number of rows in table
+	 * @return float|int
+	 */
+	protected function rowChunk(string $table, ?int &$rows=null)
+	{
+		static $tables = null;
+		static $memory_limit;
+		if (!isset($tables))
+		{
+			try {
+				$memory_limit = ini_get('memory_limit');
+				$memory_limit = function_exists('ini_parse_quantity') ?
+					ini_parse_quantity($memory_limit) : 1024*1024*min(128, (int)$memory_limit);
+				foreach($this->db->query("SELECT TABLE_NAME,TABLE_ROWS,AVG_ROW_LENGTH FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=".$this->db->quote($this->db->Database)) as $row)
+				{
+					$tables[$row['TABLE_NAME']] = [
+						'rows' => $row['TABLE_ROWS'],
+						'avg_length' => $row['AVG_ROW_LENGTH'],
+					];
+				}
+			}
+			catch (\Exception $e) {
+				$tables = false;
+				_egw_log_exception($e);
+			}
+		}
+		$rows = $tables[$table]['rows'] ?? null;
+		if ($tables === false || empty($tables[$table]['avg_length']))
+		{
+			return self::ROW_CHUNK;    // use current default chunk-size
+		}
+		return 1000*round($memory_limit / $tables[$table]['avg_length'] / 2 / 1000) ?: 1000;
+	}
+
+	/**
 	 * Backup all data in the form of a (compressed) csv file
 	 *
 	 * @param resource $f file opened with fopen for writing
@@ -912,7 +952,6 @@ class Backup
 	 */
 	function backup($f, $lock_table=null, bool $skip_files_backup=false)
 	{
-		//echo "function backup($f)<br>";	// !
 		@set_time_limit(0);
 		$dir = $this->files_dir; // $GLOBALS['egw_info']['server']['files_dir'];
 		// we may have to clean up old backup - leftovers
@@ -955,9 +994,11 @@ class Backup
 		// let apps know that backup is about to start
 		Api\Hooks::process('backup_starts', array(), true);
 
+		$t = 0;
 		foreach($this->schemas as $table => $schema)
 		{
 			if (in_array($table,$this->exclude_tables)) continue;	// dont backup
+			$t++;
 
 			// do we have a primary key?
 			// --> use it to order and limit rows, to cope with rows being added during backup
@@ -970,6 +1011,7 @@ class Backup
 				$this->db->row_lock($table);
 			}
 			$total = $max = 0;
+			$row_chunk = $this->rowChunk($table, $db_rows);
 			do {
 				$num_rows = 0;
 				// querying only chunks of 2000 rows, to not run into memory limit on huge tables
@@ -981,7 +1023,7 @@ class Backup
 					empty($pk) ? ($lock_table !== false ? $total : false) : 0,
 					// if we have a primary key, order by it to ensure rows are not read double
 					empty($pk) ? '' : 'ORDER BY '.$this->db->name_quote($pk).' ASC',
-					false, self::ROW_CHUNK) as $row)
+					false, $row_chunk) as $row)
 				{
 					if (!empty($pk)) $max = $row[$pk];
 					if ($total === 0) fwrite($f,"\ntable: $table\n".implode(',',array_keys($row))."\n");
@@ -991,8 +1033,9 @@ class Backup
 					++$total;
 					++$num_rows;
 				}
+				//$this->log($filename, false, null, "#$t. table $table: rowChunk=$row_chunk, total-rows=$db_rows, backed-up=$total");
 			}
-			while((!empty($pk) || $lock_table !== false) && !($total % self::ROW_CHUNK) && $num_rows);
+			while((!empty($pk) || $lock_table !== false) && !($total % $row_chunk) && $num_rows);
 
 			if (!$pk && $lock_table !== false) $this->db->rollback_lock($table);
 		}
@@ -1121,6 +1164,7 @@ class Backup
 				$this->schemas[$table]['fd']['content']['type'] = 'blob';
 			}
 		}
+		ksort($this->schemas, SORT_STRING);
 		$def = "\t\$phpgw_baseline = ";
 		$def .= self::write_array($this->schemas,1);
 		$def .= ";\n";
@@ -1200,9 +1244,9 @@ class Backup
 	 * @param string $file filename
 	 * @param bool|string $restore true: 'Restore', false: 'Backup', string with custom label
 	 * @param bool $start true: start of operation, false: end, null: neither
-	 * @param ?string $error_msg optional error-msg to log
+	 * @param ?string $error_msg optional error-msg to log (prefix with # to not log as error)
 	 */
-	public function log(string $file, $restore, bool $start=null, string $error_msg=null)
+	public function log(string $file, $restore, ?bool $start=null, ?string $error_msg=null)
 	{
 		$msg = (is_string($restore) ? $restore : ($restore ? 'Restore' : 'Backup')).' ';
 		if (isset($start))
@@ -1232,14 +1276,21 @@ class Backup
 		}
 		if (!empty($error_msg))
 		{
-			$msg .= ' ERROR: '.$error_msg;
+			if ($error_msg[0] === '#')
+			{
+				$msg .= ' '.substr($error_msg,1);
+			}
+			else
+			{
+				$msg .= ' ERROR: '.$error_msg;
+			}
 		}
 
 		// try opening log-file in backup-dir, or /var/lib/egroupware
 		if (!empty($this->backup_dir) && ($f = fopen($this->backup_dir.'/'.self::LOG_FILE, 'a')) ||
 			($f = fopen('/var/lib/egroupware/'.self::LOG_FILE, 'a')))
 		{
-			fwrite($f, $msg."\n".(!$start ? "\n" : ''));
+			fwrite($f, $msg."\n".($start === false ? "\n" : ''));
 			fclose($f);
 		}
 		else
