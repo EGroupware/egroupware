@@ -898,7 +898,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				if(typeof field.values[oldField] !== 'undefined')
 				{
 					this.egw().debug("warn", "Deprecated field '" + oldField + "' in " + field_name + ", use '" + deprecated[oldField] + "' instead");
-					field.values[deprecated[oldField]] = field.values[oldField];
+					if(typeof field.values[deprecated[oldField]] === 'undefined')
+					{
+						field.values[deprecated[oldField]] = field.values[oldField];
+					}
 				}
 			});
 			['accept', 'maxFileSize'].forEach((name) =>

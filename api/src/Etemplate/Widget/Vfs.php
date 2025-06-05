@@ -51,7 +51,7 @@ class Vfs extends File
 			$path = $form_name;
 		}
 
-		if($this->type == "et2-vfs-upload" && !$this->getElementAttribute($form_name, 'path'))
+		if(in_array($this->type, ["et2-vfs-upload", 'vfs-upload']) && !$this->getElementAttribute($form_name, 'path'))
 		{
 			self::setElementAttribute($form_name, 'path', $path);
 		}
