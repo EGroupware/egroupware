@@ -11,31 +11,30 @@
 /*egw:uses
 */
 
-window.addEventListener('load', function ()
+
+document.body.addEventListener('click', function (event)
 {
-	document.body.addEventListener('click', function (event)
+	//event.target might not be a link
+	const link = event.target.closest('a[href]');
+	if (link && document.body.contains(link))
 	{
-		if (event.target.tagName === 'A' && event.target.href)
+		// active mailto: links with mail compose
+		if (link.href.substr(0, 7) == 'mailto:')
 		{
-			// active mailto: links with mail compose
-			if (event.target.href.substr(0, 7) == 'mailto:')
-			{
-				top.egw.open(null, 'mail', 'add', {send_to: btoa(event.target.href.substr(7).replace('%40', '@'))});
-				event.preventDefault();
-				return false;
-			}
-			// open links with own origin and "index.php?" as popup (not e.g. share.php or *dav.php)
-			else if ((event.target.href[0] === '/' || event.target.href.match(new RegExp('^' + location.protocol + '//' + location.host + '/'))) &&
-				event.target.href.match(/\/index.php\?/))
-			{
-				top.egw.openPopup(event.target.href.replace(/([?&])no_popup=[^&]*/, '$1'), 800, 600, '_blank');
-				event.preventDefault();
-				return false;
-			}
-			else
-			{ // add target=_blank to all other links, gives CSP error and would open in preview
-				event.target.target = '_blank';
-			}
+			top.egw.open(null, 'mail', 'add', {send_to: btoa(link.href.substr(7).replace('%40', '@'))});
+			event.preventDefault();
+			return false;
 		}
-	});
+		// open links with own origin and "index.php?" as popup (not e.g. share.php or *dav.php)
+		else if ((link.href[0] === '/' || link.href.match(new RegExp('^' + location.protocol + '//' + location.host + '/'))) &&
+			link.href.match(/\/index.php\?/))
+		{
+			top.egw.openPopup(link.href.replace(/([?&])no_popup=[^&]*/, '$1'), 800, 600, '_blank');
+			event.preventDefault();
+			return false;
+		} else
+		{ // add target=_blank to all other links, gives CSP error and would open in preview
+			link.target = '_blank';
+		}
+	}
 });
