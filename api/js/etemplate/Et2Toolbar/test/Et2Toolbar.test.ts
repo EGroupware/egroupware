@@ -1,6 +1,7 @@
 import {assert, fixture, html, nextFrame, oneEvent} from "@open-wc/testing";
 import {Et2Toolbar} from "../Et2Toolbar";
 import * as sinon from "sinon";
+import {waitForEvent} from "../../Et2Widget/event";
 
 // Stub global egw
 // @ts-ignore
@@ -176,6 +177,8 @@ describe("et2-toolbar", () =>
 			"show-action": {id: "show-action", caption: "Visible Action"},
 		};
 		await el.updateComplete;
+		// Resize is deferred to avoid doing it too many times as user drags
+		await waitForEvent(el, "et2-resize");
 
 		// All buttons should be present
 		const buttons = el.querySelectorAll("et2-button");
