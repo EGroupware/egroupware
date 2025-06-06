@@ -14,7 +14,7 @@
 import {AppJS} from "../../api/js/jsapi/app_base.js";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-import {egw_getObjectManager} from '../../api/js/egw_action/egw_action';
+import {egw_getActionManager, egw_getObjectManager} from '../../api/js/egw_action/egw_action';
 import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common";
 import {
 	EGW_AO_FLAG_DEFAULT_FOCUS,
@@ -328,7 +328,7 @@ app.classes.mail = AppJS.extend(
 					// encrypt body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
 					self.mail_prepare_print();
-					self.resolveExternalImages(this.contentWindow.document);
+					self.resolveExternalImages(this.contentWindow.document, window.location.search.endsWith('&mode=print_images'));
 					// Trigger print command if the mail oppend for printing porpuse
 					// load event fires twice in IE and the first time the content is not ready
 					// Check if the iframe content is loaded then trigger the print command
@@ -951,15 +951,23 @@ app.classes.mail = AppJS.extend(
 		}
 		var _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
-		if (!(_mode == 'tryastext' || _mode == 'tryashtml' || _mode == 'view' || _mode == 'print')) _mode = 'view';
+		if (!['tryastext', 'tryashtml', 'view', 'print', 'print_images'].includes(_mode))
+		{
+			_mode = 'view';
+		}
 		this.mail_selectedMails = [];
 		this.mail_selectedMails.push(_id);
 		this.mail_currentlyFocussed = _id;
 
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
+		let command = _mode;
+		if (command == 'print_images')
+		{
+			command = 'print';
+		}
 		//alert('Open Message:'+_id+' '+subject);
-		var h = egw().open( _id,'mail','view',_mode+'='+_id.replace(/=/g,"_")+'&mode='+_mode);
+		var h = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
 		egw(h).ready(() =>
 		{
 			h.document.title = subject;
@@ -1505,13 +1513,21 @@ app.classes.mail = AppJS.extend(
 		}
 	},
 
-	resolveExternalImages: function (_node)
+		/**
+		 * Show external images
+		 * @param _node
+		 * @param show True to show images, otherwise use preferences
+		 */
+		resolveExternalImages: function (_node, show = null)
 	{
 		let image_proxy = this.image_proxy;
 		//Do not run resolve images if it's forced already to show them all
 		// or forced to not show them all.
 		var pref_img = egw.preference('allowExternalIMGs', 'mail');
-		if (pref_img == 0) return;
+		if (!show && pref_img == 0)
+		{
+			return;
+		}
 
 		var external_images = jQuery(_node).find('img[alt*="[blocked external image:"]');
 		if (external_images.length > 0 && jQuery(_node).find('.mail_externalImagesMsg').length == 0)
@@ -1568,6 +1584,10 @@ app.classes.mail = AppJS.extend(
 					node.src = parts.url;
 				});
 			};
+			if (show == true)
+			{
+				return showImages(external_images, false);
+			}
 			var pref = egw.preference('allowExternalDomains', 'mail') || {};
 			pref = Object.values(pref);
 			if (pref.indexOf(host.domain)>-1)
@@ -1587,6 +1607,18 @@ app.classes.mail = AppJS.extend(
 					break;
 				}
 			}
+
+			// Use flag in print button action to keep images
+			const toolbar = egw_getActionManager('toolbar', false) ?? egw_getActionManager('displayToolbar', false);
+			if (toolbar)
+			{
+				const print = toolbar.getActionById('print');
+				if (print)
+				{
+					delete print.data.images;
+				}
+			}
+
 			jQuery(document.createElement('p'))
 					.text(message)
 					.appendTo(container);
@@ -1607,11 +1639,27 @@ app.classes.mail = AppJS.extend(
 			jQuery(document.createElement('button'))
 					.text(this.egw.lang('Show'))
 					.attr ('title', this.egw.lang('Show them this time only'))
-					.click(function(){
-						showImages(external_images);
-						container.remove();
-					})
-					.appendTo(container);
+				.click(() =>
+				{
+					showImages(external_images);
+					container.remove();
+					if (_node.querySelector("body"))
+					{
+						_node.querySelector("body").dispatchEvent(new Event('load'));
+					}
+					const print = toolbar.getActionById('print');
+					if (print)
+					{
+						if (!print.data)
+						{
+							print.data = {};
+						}
+						print.data.images = true;
+						// Reload temp print
+
+					}
+				})
+				.appendTo(container);
 			container.appendTo(_node.body? _node.body:_node);
 		}
 	},
@@ -5201,7 +5249,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_prev_print: function (_action, _elems)
 	{
-		this.mail_open(_action, _elems, 'print');
+		this.mail_open(_action, _elems, _action.data.images ? 'print_images' : 'print');
 	},
 
 	/**
