@@ -711,7 +711,7 @@ class Translation
 			{
 				throw new Exception("List of available languages (%1) missing!", $file);
 			}
-			while(($line = fgetcsv($f, null, "\t")))
+			while(($line = fgetcsv($f, null, "\t", '', '')))
 			{
 				self::$langs[$line[0]] = $line[1];
 			}
