@@ -906,10 +906,6 @@ class timesheet_ui extends timesheet_bo
 		{
 			$query['selectcols'] = explode(',', $query['selectcols']);
 		}
-		if (!$rows['no_owner_col'] && $query['selectcols'] && !in_array('ts_owner', $query['selectcols']))
-		{
-			$rows['no_owner_col'] = 1;
-		}
 
 		$rows += $this->summary;
 
