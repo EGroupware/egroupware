@@ -35,11 +35,12 @@ export default css`
 			flex-direction: column;
 
 			/* Internal components in list */
-			* {
+			& > * {
 				order: attr(data-order type(<number>), 99);
 				max-width: 100%;
 				&::part(base) {
 					border-width: 0;
+					padding: 0 var(--sl-spacing-large);
 				}
 			}
 		}
@@ -53,7 +54,7 @@ export default css`
 		}
 
 		::slotted([slot='list']) {
-			max-width: 100%
+			max-width: 100%;
 		}
 
 		/* We don't want these to expand */

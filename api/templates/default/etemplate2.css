@@ -2652,6 +2652,7 @@ et2-toolbar et2-button {
 
 et2-toolbar [slot="list"]::part(base) {
 	border: none;
+	padding: 0 var(--sl-spacing-large);
 }
 
 et2-toolbar {
