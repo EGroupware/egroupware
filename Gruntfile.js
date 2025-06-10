@@ -50,6 +50,17 @@ module.exports = function (grunt) {
 						"api/templates/default/print.css",
 						"pixelegg/print.css"
 					],
+					"pixelegg/css/icontabs.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
+						"node_modules/diff2html/bundles/css/diff2html.min.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
+						"api/templates/default/etemplate2.css",
+						"pixelegg/css/icontabs.css",
+						"api/templates/default/print.css",
+						"pixelegg/print.css"
+					],
 					"pixelegg/css/pixelegg.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
 						"node_modules/diff2html/bundles/css/diff2html.min.css",
