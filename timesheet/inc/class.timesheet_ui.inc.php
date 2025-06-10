@@ -911,7 +911,7 @@ class timesheet_ui extends timesheet_bo
 
 		$rows['pm_integration'] = $this->pm_integration;
 		$rows['ts_viewtype'] =  $rows['no_ts_quantity'] =  $rows['no_ts_unitprice'] =  $rows['no_ts_total'] = $this->ts_viewtype == 'short';
-		if (!$rows['ts_viewtype'])
+		if(!$rows['ts_viewtype'] && $query['selectcols'])
 		{
 			#_debug_array($query['selectcols']);
 			if(!is_array($query['selectcols'])){
@@ -1035,10 +1035,6 @@ class timesheet_ui extends timesheet_bo
 		if(empty($GLOBALS['egw_info']['user']['apps']['kanban']))
 		{
 			$content['nm']['no_kanban'] = true;
-		}
-		if($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'])
-		{
-			$content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
 		}
 		$sel_options = array(
 			'pm_id'     => array(lang('No project')),
