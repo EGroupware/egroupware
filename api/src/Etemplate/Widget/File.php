@@ -275,8 +275,10 @@ class File extends Etemplate\Widget
 			else
 			{
 				// check if all the parts present, and create the final destination file
-				$new_file = self::createFileFromChunks($temp_dir, str_replace('/','_',$_POST['resumableFilename']),
-						$_POST['resumableTotalSize']);
+				$new_file = self::createFileFromChunks(
+					$temp_dir, str_replace('/', '_', $_POST['resumableFilename']),
+					$_POST['resumableTotalSize'], $_POST['resumableTotalChunks']
+				);
 			}
 			if( $new_file) {
 				$file['tmp_name'] = $new_file;
@@ -302,8 +304,10 @@ class File extends Etemplate\Widget
 	 * @param string $temp_dir - the temporary directory holding all the parts of the file
 	 * @param string $fileName - the original file name
 	 * @param string $totalSize - original file size (in bytes)
+	 * @param string $totalChunks - Total number of chunks expected
 	 */
-	private static function createFileFromChunks($temp_dir, $fileName, $totalSize) {
+	private static function createFileFromChunks($temp_dir, $fileName, $totalSize, $totalChunks)
+	{
 
 		// count all the parts of this file
 		$total_files = $sum_size = 0;
@@ -316,7 +320,7 @@ class File extends Etemplate\Widget
 
 		// check that all the parts are present
 		// the size of the last part is between chunkSize and 2*$chunkSize
-		if ($sum_size >= $totalSize)
+		if($sum_size == $totalSize && $total_files == $totalChunks)
 		{
 			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 			{
@@ -331,12 +335,21 @@ class File extends Etemplate\Widget
 			set_time_limit($total_files / 100);
 			if (($fp = fopen($new_file, 'w')) !== false) {
 				for ($i=1; $i<=$total_files; $i++) {
-					$chunk = fopen($temp_dir . '/' . $fileName . '.part' . $i, 'r');
-					while(!feof($chunk))
+					try
 					{
-						fwrite($fp, fread($chunk, 1024 * 1024));
+						$chunk = fopen($temp_dir . '/' . $fileName . '.part' . $i, 'r');
+						while(!feof($chunk))
+						{
+							fwrite($fp, fread($chunk, 1024 * 1024));
+						}
+
+						fclose($chunk);
 					}
-					fclose($chunk);
+					catch (\Throwable $e)
+					{
+						_egw_log_exception($e);
+						throw new Api\Exception(lang('Error reading chunk %1 of file %2: %3', $i, $fileName, $e->getMessage()));
+					}
 				}
 				fclose($fp);
 			} else {
@@ -353,6 +366,11 @@ class File extends Etemplate\Widget
 			}
 
 			return $new_file;
+		}
+		elseif($sum_size > $totalSize || $total_files > $totalChunks)
+		{
+			self::rrmdir($temp_dir);
+			throw new Api\Exception(lang('Error assembling file, please try again.'));
 		}
 
 		return false;
