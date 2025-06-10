@@ -76,7 +76,7 @@
 		</grid>
 	</template>
 	<template id="api.about.index" template="" lang="" group="0" version="1.8.001">
-		<et2-tabbox  id="general|applications|templates|languages|changelog">
+		<et2-tabbox  id="general|applications|templates|languages|changelog" tabHeight="auto">
 			<tabs>
 				<tab id="changelog" label="Changelog"/>
 				<tab id="general" label="About EGroupware"/>
