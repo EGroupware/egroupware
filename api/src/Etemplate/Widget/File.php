@@ -215,9 +215,15 @@ class File extends Etemplate\Widget
 				// Failed after uploading all chunks - force re-upload and re-process
 				return http_response_code(204);
 			}
+			elseif(!file_exists($chunk_name))
+			{
+				// Does not exist
+				return http_response_code(204);
+			}
 			else
 			{
-				return file_exists($chunk_name) ? http_response_code(200) : http_response_code(204);
+				// Exists, check size matches expected
+				return filesize($chunk_name) == $_REQUEST['resumableCurrentChunkSize'] ? http_response_code(200) : http_response_code(204);
 			}
 		}
 	}
@@ -479,11 +485,13 @@ class File extends Etemplate\Widget
 			{
 				$current_max_chunk *= $unit === 'm' ? 1024 * 1024 : 1024;
 			}
-			$upload_max_filesize = min($upload_max_filesize, $current_max_chunk);
+			// Last chunk can be up to 2x normal chunk size
+			$upload_max_filesize = min($upload_max_filesize / 2, $current_max_chunk);
 		}
-		if($upload_max_filesize != 1024 * 1024)
+		else
 		{
-			self::setElementAttribute($form_name, 'chunkSize', ($upload_max_filesize - 1024 * 1024) / 2);
+			$upload_max_filesize /= 2;
 		}
+		self::setElementAttribute($form_name, 'chunkSize', $upload_max_filesize);
 	}
 }
