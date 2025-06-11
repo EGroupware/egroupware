@@ -519,7 +519,7 @@ abstract class Merge
 	protected function get_all_links($app, $id, $prefix, &$content)
 	{
 		$array = array();
-		$pattern = '@\$\$(links_attachments|links|attachments|link)\/?(title|href|link)?\/?([a-z]*)\$\$@';
+		$pattern = '@\$\$(links_attachments|links|attachments|link)\/?(?<style>title|href|link)?(?:\/?(?<app>[a-z_]*))?(?:\/(?<field>.+))?\$\$@';
 		static $link_cache = null;
 		$matches = null;
 		if(preg_match_all($pattern, $content, $matches))
@@ -576,8 +576,20 @@ abstract class Merge
 						$array['$$' . ($prefix ? $prefix . '/' : '') . $placeholder . '$$'] = $link;
 						break;
 					case 'links':
-						$link_app = $matches[3][$i] ? $matches[3][$i] : '!' . Api\Link::VFS_APPNAME;
-						$array['$$' . ($prefix ? $prefix . '/' : '') . $placeholder . '$$'] = $this->get_links($app, $id, $link_app, array(), $matches[2][$i]);
+						$link_app = $matches['app'][$i] ? $matches['app'][$i] : '!' . Api\Link::VFS_APPNAME;
+						if($matches['app'][$i] && $matches['field'][$i])
+						{
+							// Want a field from a linked entry - find the first one from that app
+							$links = Api\Link::get_links($app, $id, $link_app);
+							$link = array_shift($links);
+							$linked_replacements = $this->get_app_replacements($link_app, $link, '$$' . $matches['field'][$i] . '$$');
+							$array['$$' . ($prefix ? $prefix . '/' : '') . $placeholder . '$$'] = $linked_replacements[$this->prefix('', $matches['field'][$i], '$$')];
+						}
+						else
+						{
+							// Titles from all linked entries
+							$array['$$' . ($prefix ? $prefix . '/' : '') . $placeholder . '$$'] = $this->get_links($app, $id, $link_app, array(), $matches[2][$i]);
+						}
 						break;
 					case 'attachments':
 						$array['$$' . ($prefix ? $prefix . '/' : '') . $placeholder . '$$'] = $this->get_links($app, $id, Api\Link::VFS_APPNAME, array(), $matches[2][$i]);
@@ -3180,6 +3192,7 @@ abstract class Merge
 				'attachments'                   => lang('List of files linked to the current record'),
 				'links_attachments'             => lang('Links and attached files'),
 				'links/[appname]'               => lang('Links to specified application.  Example: {{links/infolog}}'),
+				'links/[appname]/[fieldname]' => lang('Field from the first link to the specified application.  Example: {{links/addressbook/n_fn}}'),
 
 				// General information
 				'date'                          => lang('Date'),
