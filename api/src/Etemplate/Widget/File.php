@@ -210,12 +210,7 @@ class File extends Etemplate\Widget
 		else
 		{
 			$chunk_name = $temp_dir . '/' . str_replace('/', '_', $_REQUEST['resumableFilename']) . '.part' . (int)$_REQUEST['resumableChunkNumber'];
-			if($_REQUEST['resumableChunkNumber'] == $_REQUEST['resumableTotalChunks'])
-			{
-				// Failed after uploading all chunks - force re-upload and re-process
-				return http_response_code(204);
-			}
-			elseif(!file_exists($chunk_name))
+			if(!file_exists($chunk_name))
 			{
 				// Does not exist
 				return http_response_code(204);
@@ -323,6 +318,7 @@ class File extends Etemplate\Widget
 				$sum_size += filesize($temp_dir.'/'.$file);
 			}
 		}
+		error_log(__METHOD__ . ' Chunk #' . $_REQUEST['resumableChunkNumber'] . ' total_files=' . $total_files . ' sum_size=' . $sum_size . ' totalSize=' . $totalSize . ' totalChunks=' . $totalChunks);
 
 		// check that all the parts are present
 		// the size of the last part is between chunkSize and 2*$chunkSize
