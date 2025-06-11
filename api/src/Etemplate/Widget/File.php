@@ -318,7 +318,7 @@ class File extends Etemplate\Widget
 				$sum_size += filesize($temp_dir.'/'.$file);
 			}
 		}
-		error_log(__METHOD__ . ' Chunk #' . $_REQUEST['resumableChunkNumber'] . ' total_files=' . $total_files . ' sum_size=' . $sum_size . ' totalSize=' . $totalSize . ' totalChunks=' . $totalChunks);
+		//error_log(__METHOD__ . ' Chunk #' . $_REQUEST['resumableChunkNumber'] . ' total_files=' . $total_files . ' sum_size=' . $sum_size . ' totalSize=' . $totalSize . ' totalChunks=' . $totalChunks);
 
 		// check that all the parts are present
 		// the size of the last part is between chunkSize and 2*$chunkSize
