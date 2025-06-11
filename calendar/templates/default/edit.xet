@@ -30,7 +30,7 @@
 					<et2-description  id="${row}[offset]" noLang="1"></et2-description>
 					<et2-checkbox  align="center" id="${row}[all]" readonly="true"></et2-checkbox>
 					<et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
-                    <et2-button align="left" disabled="!$row_cont[time]" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="Et2Dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"></et2-button>
+                    <et2-button align="left" hidden="!$row_cont[time]" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="Et2Dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"></et2-button>
 				</row>
 			</rows>
 		</grid>
@@ -225,7 +225,7 @@
 					<et2-select-cat  id="category" height="190" multiple="true" placeholder="Categories"></et2-select-cat>
 				</row>
 				<row>
-					<et2-tabbox  id="tabs" span="all" tabHeight="300">
+					<et2-tabbox  id="tabs" span="all" tabHeight="450">
 						<tabs>
 							<tab id="description" label="Description" statustext="Full description"/>
 							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
