@@ -326,12 +326,12 @@ class File extends Etemplate\Widget
 				$sum_size += filesize($temp_dir.'/'.$file);
 			}
 		}
-		//error_log(__METHOD__ . ' Chunk #' . $_REQUEST['resumableChunkNumber'] . '/' . $total_files . ' sum_size=' . $sum_size . ' totalSize=' . $totalSize . ' totalChunks=' . $totalChunks);
+		//error_log(__METHOD__ . ' Chunk #' . $_REQUEST['resumableChunkNumber'] . '/' . $totalChunks . ' sum_size=' . $sum_size . ' totalSize=' . $totalSize . ' totalChunks=' . $totalChunks);
 
 		// check that all the parts are present
-		// the size of the last part is between chunkSize and 2*$chunkSize
 		if($sum_size == $totalSize && $total_files == $totalChunks)
 		{
+			//error_log(__METHOD__ . ' All parts present, assembling file ' . $fileName);
 			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 			{
 				$new_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'egw_');
@@ -343,30 +343,65 @@ class File extends Etemplate\Widget
 
 			// create the final destination file
 			set_time_limit($total_files / 100);
-			if (($fp = fopen($new_file, 'w')) !== false) {
-				for ($i=1; $i<=$total_files; $i++) {
-					try
-					{
-						$chunk = fopen($temp_dir . '/' . $fileName . '.part' . $i, 'r');
-						while(!feof($chunk))
-						{
-							fwrite($fp, fread($chunk, 1024 * 1024));
-						}
+			$bufferSize = 1024 * 1024;
 
-						fclose($chunk);
-					}
-					catch (\Throwable $e)
+			$totalWritten = 0;
+			error_log(__METHOD__ . " === Starting assembly of $fileName into $new_file ===");
+
+			if (($fp = fopen($new_file, 'w')) !== false) {
+				for($i = 1; $i <= $total_files; $i++)
+				{
+					$chunkPath = "$temp_dir/$fileName.part$i";
+					if(!file_exists($chunkPath))
 					{
-						_egw_log_exception($e);
-						throw new Api\Exception(lang('Error reading chunk %1 of file %2: %3', $i, $fileName, $e->getMessage()));
+						error_log(__METHOD__ . ": Missing chunk file: $chunkPath");
+						continue;
 					}
+
+					$chunkSize = filesize($chunkPath);
+					error_log(__METHOD__ . ": Opening chunk $i ($chunkSize bytes): $chunkPath");
+
+					$chunk = fopen($chunkPath, 'r');
+					if(!$chunk)
+					{
+						error_log(__METHOD__ . ": Failed to open chunk $chunkPath");
+						continue;
+					}
+
+					$chunkBytesWritten = 0;
+					while(($data = fread($chunk, $bufferSize)) !== false && strlen($data) > 0)
+					{
+						$remaining = strlen($data);
+						$offset = 0;
+
+						while($remaining > 0)
+						{
+							$written = fwrite($fp, substr($data, $offset));
+							if($written === false)
+							{
+								error_log(__METHOD__ . ": fwrite() failed on chunk $i");
+								break 2; // break out of both while loops
+							}
+							$offset += $written;
+							$remaining -= $written;
+							$chunkBytesWritten += $written;
+							$totalWritten += $written;
+						}
+					}
+
+					fclose($chunk);
+					error_log(__METHOD__ . " Finished chunk $i: wrote $chunkBytesWritten bytes");
 				}
 				fclose($fp);
+
+				clearstatcache(true, $new_file);
+				$finalSize = filesize($new_file);
+				error_log(__METHOD__ . " === Assembly complete: total written = $totalWritten, final file size = $finalSize ===");
+
+				// Check that it all made it
 				if(filesize($new_file) != $totalSize)
 				{
 					error_log(__METHOD__ . ' Error creating the destination file "' . $new_file . '", size is ' . filesize($new_file) . ' instead of ' . $totalSize);
-					http_response_code(500); // Server error (upload fails)
-					throw new Api\Exception(lang('Error assembling file, please try again.'));
 				}
 			} else {
 				error_log(__METHOD__ . ' cannot create the destination file "'.$new_file.'"');
