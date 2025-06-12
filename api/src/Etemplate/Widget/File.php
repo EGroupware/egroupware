@@ -252,6 +252,7 @@ class File extends Etemplate\Widget
 				{
 					$file_data[$file['name']] = $file['name'].':'.lang('File is of wrong type (%1 != %2)!',$type,$mime);
 					//error_log(__METHOD__.__LINE__.array2string($file_data[$file['name']]));
+					http_response_code(415); // Unsupported Media Type (upload fails)
 					return false;
 				}
 			}
@@ -272,6 +273,13 @@ class File extends Etemplate\Widget
 			if (!move_uploaded_file($file['tmp_name'], $dest_file))
 			{
 				$file_data[$file['name']] = 'Error saving (move_uploaded_file) chunk '.(int)$_POST['resumableChunkNumber'].' for file '.$_POST['resumableFilename'];
+				http_response_code(500); // Server error (upload fails)
+			}
+			elseif(filesize($dest_file) != $_POST['resumableCurrentChunkSize'])
+			{
+				$file_data[$file['name']] = 'Error saving chunk ' . (int)$_POST['resumableChunkNumber'] . ".  Expected {$_POST['resumableCurrentChunkSize']} bytes, got " . filesize($dest_file);
+				// Should retry the chunk, don't use a permanent error code
+				http_response_code(422); // Unprocessable Content (retry chunk)
 			}
 			else
 			{
@@ -356,6 +364,7 @@ class File extends Etemplate\Widget
 				fclose($fp);
 			} else {
 				error_log(__METHOD__ . ' cannot create the destination file "'.$new_file.'"');
+				http_response_code(500); // Server error (upload fails)
 				return false;
 			}
 
@@ -372,6 +381,7 @@ class File extends Etemplate\Widget
 		elseif($sum_size > $totalSize || $total_files > $totalChunks)
 		{
 			self::rrmdir($temp_dir);
+			http_response_code(500); // Server error (upload fails)
 			throw new Api\Exception(lang('Error assembling file, please try again.'));
 		}
 
