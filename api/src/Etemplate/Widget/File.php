@@ -326,7 +326,7 @@ class File extends Etemplate\Widget
 				$sum_size += filesize($temp_dir.'/'.$file);
 			}
 		}
-		//error_log(__METHOD__ . ' Chunk #' . $_REQUEST['resumableChunkNumber'] . ' total_files=' . $total_files . ' sum_size=' . $sum_size . ' totalSize=' . $totalSize . ' totalChunks=' . $totalChunks);
+		//error_log(__METHOD__ . ' Chunk #' . $_REQUEST['resumableChunkNumber'] . '/' . $total_files . ' sum_size=' . $sum_size . ' totalSize=' . $totalSize . ' totalChunks=' . $totalChunks);
 
 		// check that all the parts are present
 		// the size of the last part is between chunkSize and 2*$chunkSize
@@ -362,6 +362,12 @@ class File extends Etemplate\Widget
 					}
 				}
 				fclose($fp);
+				if(filesize($new_file) != $totalSize)
+				{
+					error_log(__METHOD__ . ' Error creating the destination file "' . $new_file . '", size is ' . filesize($new_file) . ' instead of ' . $totalSize);
+					http_response_code(500); // Server error (upload fails)
+					throw new Api\Exception(lang('Error assembling file, please try again.'));
+				}
 			} else {
 				error_log(__METHOD__ . ' cannot create the destination file "'.$new_file.'"');
 				http_response_code(500); // Server error (upload fails)
