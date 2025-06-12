@@ -519,7 +519,7 @@ abstract class Merge
 	protected function get_all_links($app, $id, $prefix, &$content)
 	{
 		$array = array();
-		$pattern = '@\$\$(links_attachments|links|attachments|link)\/?(?<style>title|href|link)?(?:\/?(?<app>[a-z_]*))?(?:\/(?<field>.+))?\$\$@';
+		$pattern = '@\$\$(links_attachments|links|attachments|link)\/?(?<style>title|href|link)?(?:\/?(?<app>[a-z_]*))?(?:\/(?<field>[^$]+))?\$\$@';
 		static $link_cache = null;
 		$matches = null;
 		if(preg_match_all($pattern, $content, $matches))
