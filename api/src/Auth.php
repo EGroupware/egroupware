@@ -408,7 +408,11 @@ class Auth
 
 			// unset (possibly) cached authentication
 			Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'],
-				__CLASS__, sha1(Accounts::id2name($account_id).':'.$old_passwd.':text'));
+							  __CLASS__, sha1(Accounts::id2name($account_id) . ':' . $old_passwd . ':text:' . get_class($this->backend))
+			);
+			Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'],
+							  __CLASS__, sha1(Accounts::id2name($account_id) . ':' . $new_passwd . ':text:' . get_class($this->backend))
+			);
 		}
 		self::log(__METHOD__."(..., $account_id) returned ".json_encode($ret));
 		return $ret;
