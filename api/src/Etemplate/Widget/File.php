@@ -343,74 +343,33 @@ class File extends Etemplate\Widget
 
 			// create the final destination file
 			set_time_limit($total_files / 100);
-			$bufferSize = 1024 * 1024;
-
-			$totalWritten = 0;
-			error_log(__METHOD__ . " === Starting assembly of $fileName into $new_file ===");
-
-			if (($fp = fopen($new_file, 'w')) !== false) {
-				for($i = 1; $i <= $total_files; $i++)
+			$attempt = 0;
+			$exception = null;
+			do
+			{
+				try
 				{
-					$chunkPath = "$temp_dir/$fileName.part$i";
-					if(!file_exists($chunkPath))
-					{
-						error_log(__METHOD__ . ": Missing chunk file: $chunkPath");
-						continue;
-					}
-
-					$chunkSize = filesize($chunkPath);
-					error_log(__METHOD__ . ": Opening chunk $i ($chunkSize bytes): $chunkPath");
-
-					$chunk = fopen($chunkPath, 'r');
-					if(!$chunk)
-					{
-						error_log(__METHOD__ . ": Failed to open chunk $chunkPath");
-						continue;
-					}
-
-					$chunkBytesWritten = 0;
-					while(($data = fread($chunk, $bufferSize)) !== false && strlen($data) > 0)
-					{
-						$remaining = strlen($data);
-						$offset = 0;
-
-						while($remaining > 0)
-						{
-							$written = fwrite($fp, substr($data, $offset));
-							if($written === false)
-							{
-								error_log(__METHOD__ . ": fwrite() failed on chunk $i");
-								break 2; // break out of both while loops
-							}
-							$offset += $written;
-							$remaining -= $written;
-							$chunkBytesWritten += $written;
-							$totalWritten += $written;
-						}
-					}
-
-					fclose($chunk);
-					error_log(__METHOD__ . " Finished chunk $i: wrote $chunkBytesWritten bytes");
+					$new_file = static::assembleChunksSafely($fileName, $totalChunks, $temp_dir, $totalSize);
 				}
-				fclose($fp);
-
-				clearstatcache(true, $new_file);
-				$finalSize = filesize($new_file);
-				error_log(__METHOD__ . " === Assembly complete: total written = $totalWritten, final file size = $finalSize ===");
-
-				// Check that it all made it
-				if(filesize($new_file) != $totalSize)
+				catch (\Exception $e)
 				{
-					error_log(__METHOD__ . ' Error creating the destination file "' . $new_file . '", size is ' . filesize($new_file) . ' instead of ' . $totalSize);
+					$exception = $e;
+					sleep(1);
 				}
-			} else {
-				error_log(__METHOD__ . ' cannot create the destination file "'.$new_file.'"');
+			}
+			while(++$attempt < 5 && !file_exists($new_file) && filesize($new_file) != $totalSize);
+			if($exception && $attempt > 5)
+			{
+				error_log(__METHOD__ . ' cannot create the destination file "' . $new_file . '"');
 				http_response_code(500); // Server error (upload fails)
+
+				// Remove the last chunk or user won't be able to try again
+				unlink($temp_dir . '/' . $fileName . '.part' . $totalChunks);
 				return false;
 			}
 
 			// rename the temporary directory (to avoid access from other
-			// concurrent chunks uploads) and than delete it
+			// concurrent chunks uploads) and then delete it
 			if (rename($temp_dir, $temp_dir.'_UNUSED')) {
 				self::rrmdir($temp_dir.'_UNUSED');
 			} else {
@@ -427,6 +386,87 @@ class File extends Etemplate\Widget
 		}
 
 		return false;
+	}
+
+	static function assembleChunksSafely(string $fileName, int $totalChunks, string $chunkDir, int $expectedSize) : string
+	{
+		// Create a unique local temp file
+		$tmpFile = tempnam(sys_get_temp_dir(), 'egw_upload_');
+		if(($fp = fopen($tmpFile, 'w')) === false)
+		{
+			throw new Api\Exception("Failed to open temporary file: $tmpFile");
+		}
+
+		error_log("=== Starting local assembly of $fileName into $tmpFile ===");
+
+		for($i = 1; $i <= $totalChunks; $i++)
+		{
+			$chunkPath = $chunkDir . '/' . $fileName . '.part' . $i;
+
+			if(!is_readable($chunkPath))
+			{
+				fclose($fp);
+				unlink($tmpFile);
+				throw new Api\Exception("Missing or unreadable chunk $i: $chunkPath");
+			}
+
+			$chunkSize = filesize($chunkPath);
+
+			error_log(": Opening chunk $i ($chunkSize bytes): $chunkPath");
+
+			$chunk = fopen($chunkPath, 'rb');
+			if(!$chunk)
+			{
+				fclose($fp);
+				unlink($tmpFile);
+				throw new Api\Exception("Failed to open chunk $i: $chunkPath");
+			}
+
+			while(!feof($chunk))
+			{
+				$data = fread($chunk, 1024 * 1024);
+				if($data === false)
+				{
+					fclose($chunk);
+					fclose($fp);
+					unlink($tmpFile);
+					throw new Api\Exception("Failed to read chunk $i");
+				}
+				fwrite($fp, $data);
+			}
+
+			fclose($chunk);
+			error_log("Finished chunk $i");
+		}
+
+		fflush($fp);
+		if(function_exists('fsync'))
+		{
+			fsync($fp);
+		}
+		fclose($fp);
+
+		clearstatcache(true, $tmpFile);
+		$actualSize = filesize($tmpFile);
+
+		if($actualSize !== $expectedSize)
+		{
+			unlink($tmpFile);
+			throw new Api\Exception("ERROR: Final assembled file size mismatch: expected $expectedSize, got $actualSize");
+		}
+
+		error_log("=== Assembly complete: wrote $actualSize bytes to local temp ===");
+
+		// Move to final destination on NFS — atomic if same filesystem
+		$finalPath = $tmpFile . "_upload";
+		if(!rename($tmpFile, $finalPath))
+		{
+			unlink($tmpFile);
+			throw new Api\Exception("Failed to move assembled file to final location: $finalPath");
+		}
+
+		error_log("Moved assembled file to $finalPath");
+		return $finalPath;
 	}
 
 	/**
