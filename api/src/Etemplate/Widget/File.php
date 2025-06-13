@@ -407,7 +407,7 @@ class File extends Etemplate\Widget
 	static function assembleChunksSafely(string $fileName, int $totalChunks, string $chunkDir, int $expectedSize) : string
 	{
 		// Create a unique local temp file
-		$tmpFile = tempnam(sys_get_temp_dir(), 'egw_upload_');
+		$tmpFile = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'egw_upload_');
 		if(($fp = fopen($tmpFile, 'w')) === false)
 		{
 			throw new Api\Exception("Failed to open temporary file: $tmpFile");
