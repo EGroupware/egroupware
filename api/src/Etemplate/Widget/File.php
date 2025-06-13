@@ -317,7 +317,6 @@ class File extends Etemplate\Widget
 	 */
 	private static function createFileFromChunks($temp_dir, $fileName, $totalSize, $totalChunks)
 	{
-
 		// count all the parts of this file
 		$total_files = $sum_size = 0;
 		foreach(scandir($temp_dir) as $file) {
@@ -344,6 +343,7 @@ class File extends Etemplate\Widget
 			// create the final destination file
 			set_time_limit($total_files / 100);
 			$attempt = 0;
+			$ATTEMPT_LIMIT = 5;
 			$exception = null;
 			do
 			{
@@ -353,12 +353,16 @@ class File extends Etemplate\Widget
 				}
 				catch (\Exception $e)
 				{
+					error_log(__METHOD__ . ' cannot create the destination file "' . $new_file . '"' .
+							  ($attempt < $ATTEMPT_LIMIT ? ' retrying in 1 second' : ', giving up')
+					);
+					_egw_log_exception($e);
 					$exception = $e;
 					sleep(1);
 				}
 			}
-			while(++$attempt < 5 && !file_exists($new_file) && filesize($new_file) != $totalSize);
-			if($exception && $attempt > 5)
+			while(++$attempt < $ATTEMPT_LIMIT && !file_exists($new_file) && filesize($new_file) != $totalSize);
+			if($exception && $attempt > $ATTEMPT_LIMIT)
 			{
 				error_log(__METHOD__ . ' cannot create the destination file "' . $new_file . '"');
 				http_response_code(500); // Server error (upload fails)
@@ -388,6 +392,18 @@ class File extends Etemplate\Widget
 		return false;
 	}
 
+	/**
+	 * Assemble chunks into final file
+	 *
+	 * Uses a bunch of techniques & checks to make sure all the bytes get in, to avoid issues from NFS
+	 *
+	 * @param string $fileName
+	 * @param int $totalChunks
+	 * @param string $chunkDir
+	 * @param int $expectedSize
+	 * @return string Final filename
+	 * @throws Api\Exception
+	 */
 	static function assembleChunksSafely(string $fileName, int $totalChunks, string $chunkDir, int $expectedSize) : string
 	{
 		// Create a unique local temp file
@@ -397,7 +413,7 @@ class File extends Etemplate\Widget
 			throw new Api\Exception("Failed to open temporary file: $tmpFile");
 		}
 
-		error_log("=== Starting local assembly of $fileName into $tmpFile ===");
+		//error_log("=== Starting local assembly of $fileName into $tmpFile ===");
 
 		for($i = 1; $i <= $totalChunks; $i++)
 		{
@@ -412,7 +428,7 @@ class File extends Etemplate\Widget
 
 			$chunkSize = filesize($chunkPath);
 
-			error_log(": Opening chunk $i ($chunkSize bytes): $chunkPath");
+			//error_log(": Opening chunk $i ($chunkSize bytes): $chunkPath");
 
 			$chunk = fopen($chunkPath, 'rb');
 			if(!$chunk)
@@ -436,7 +452,7 @@ class File extends Etemplate\Widget
 			}
 
 			fclose($chunk);
-			error_log("Finished chunk $i");
+			//error_log("Finished chunk $i");
 		}
 
 		fflush($fp);
@@ -446,26 +462,23 @@ class File extends Etemplate\Widget
 		}
 		fclose($fp);
 
-		clearstatcache(true, $tmpFile);
-		$actualSize = filesize($tmpFile);
-
-		if($actualSize !== $expectedSize)
-		{
-			unlink($tmpFile);
-			throw new Api\Exception("ERROR: Final assembled file size mismatch: expected $expectedSize, got $actualSize");
-		}
-
-		error_log("=== Assembly complete: wrote $actualSize bytes to local temp ===");
-
-		// Move to final destination on NFS — atomic if same filesystem
-		$finalPath = $tmpFile . "_upload";
+		// Move to final destination on NFS — should be atomic if same filesystem
+		$finalPath = $tmpFile . "_complete";
 		if(!rename($tmpFile, $finalPath))
 		{
 			unlink($tmpFile);
 			throw new Api\Exception("Failed to move assembled file to final location: $finalPath");
 		}
+		//error_log("Moved assembled file to $finalPath");
+		clearstatcache(true, $finalPath);
+		$actualSize = filesize($finalPath);
 
-		error_log("Moved assembled file to $finalPath");
+		//error_log("=== Assembly complete: wrote $actualSize bytes to local temp ===");
+		if($actualSize !== $expectedSize)
+		{
+			unlink($finalPath);
+			throw new Api\Exception("ERROR: Final assembled file size mismatch: expected $expectedSize, got $actualSize");
+		}
 		return $finalPath;
 	}
 
