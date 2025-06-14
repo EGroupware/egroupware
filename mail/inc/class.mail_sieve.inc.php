@@ -14,6 +14,7 @@ use EGroupware\Api;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\Sieve\Script;
 
 class mail_sieve
 {
@@ -391,7 +392,7 @@ class mail_sieve
 				0 => 'raw',
 				1 => 'text',
 			),
-			'ctype' => Mail\Script::$btransform_ctype_array,
+			'ctype' => Script::$btransform_ctype_array,
 
 		);
 
@@ -1090,14 +1091,14 @@ class mail_sieve
 		}
 		if ($rule['ctype']!= '0' && !empty($rule['ctype']))
 		{
-			$btransform_ctype = Mail\Script::$btransform_ctype_array[$rule['ctype']];
+			$btransform_ctype = Script::$btransform_ctype_array[$rule['ctype']];
 			$ctype_subtype = "";
 			if ($rule['field_ctype_val'])
 			{
 				$ctype_subtype = "/";
 			}
 			$complete .= " body :content " . " \"" . $btransform_ctype . $ctype_subtype . $rule['field_ctype_val'] . "\"" . " :contains \"\"";
-			//error_log(__CLASS__."::".__METHOD__.array2string(Mail\Script::$btransform_ctype_array));
+			//error_log(__CLASS__."::".__METHOD__.array2string(Script::$btransform_ctype_array));
 		}
 		if (!$rule['unconditional'])
 		{
@@ -1224,9 +1225,9 @@ class mail_sieve
 	function restoreSessionData()
 	{
 		$sessionData = Api\Cache::getSession(__CLASS__, 'sieve_session_data');
-		$this->rules		= $sessionData['sieve_rules'];
-		$this->rulesByID = $sessionData['sieve_rulesByID'];
-		$this->scriptToEdit	= $sessionData['sieve_scriptToEdit'];
+		$this->rules		= $sessionData['sieve_rules'] ?? null;
+		$this->rulesByID = $sessionData['sieve_rulesByID'] ?? null;
+		$this->scriptToEdit	= $sessionData['sieve_scriptToEdit'] ?? null;
 	}
 
 	/**

@@ -24,6 +24,6 @@ handle_push();
 
 function handle_push()
 {
-	Api\Mail\Imap\Stalwart::pushCallback();
+	Api\Mail\Imap\Jmap::pushCallback();
 	exit;
 }

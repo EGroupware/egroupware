@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Api: Mail JMAP protocol
+ * EGroupware Api: JMAP client
  *
  * @link https://www.egroupware.org
  * @package api
@@ -13,8 +13,6 @@
 namespace EGroupware\Api\Mail;
 
 use EGroupware\Api;
-use EGroupware\Api\Cache;
-use Jumbojett\OpenIDConnectClientException;
 
 // ToDo: make this an auto-loadable class or trait
 require_once __DIR__ . '/../../../doc/REST-CalDAV-CardDAV/api-client.php';
@@ -25,6 +23,14 @@ require_once __DIR__ . '/../../../doc/REST-CalDAV-CardDAV/api-client.php';
  * - subscribe for PushSubscription
  *
  * @link https://datatracker.ietf.org/doc/html/rfc8620 The JSON Meta Application Protocol (JMAP)
+ *
+ * @property-read string $accountId JMAP accountId set during bootstrap / constructor
+ * @property-read array $capabilities JMAP capabilities
+ * @property-read array $accountCapabilities JMAP accountCapabilities of $this->accountId
+ * @property-read string $apiUrl e.g. "https://example.org:443/jmap/"
+ * @property-read string $downloadUrl e.g. "https://example.org:443/jmap/download/{accountId}/{blobId}/{name}?accept={type}"
+ * @property-read string $uploadUrl e.g. "https://example.org:443/jmap/upload/{accountId}/"
+ * @property-read string $eventSourceUrl e.g. "https://example.org:443/jmap/eventsource/?types={types}&closeafter={closeafter}&ping={ping}"
  */
 class Jmap
 {
@@ -34,6 +40,25 @@ class Jmap
 	protected array $well_known;
 
 	protected string $accountId;
+	protected array $capabilities;
+	protected array $accountCapabilities;
+
+	/**
+	 * @var string e.g. "https://example.org:443/jmap/",
+	 */
+	protected string $apiUrl;
+	/**
+	 * @var string e.g. "https://example.org:443/jmap/download/{accountId}/{blobId}/{name}?accept={type}"
+	 */
+	protected string $downloadUrl;
+	/**
+	 * @var string e.g. "https://example.org:443/jmap/upload/{accountId}/"
+	 */
+	protected string $uploadUrl;
+	/**
+	 * @var string e.g. "https://example.org:443/jmap/eventsource/?types={types}&closeafter={closeafter}&ping={ping}"
+	 */
+	protected string $eventSourceUrl;
 
 	/**
 	 * Constructor
@@ -77,16 +102,35 @@ class Jmap
 	}
 
 	/**
+	 * Make an API call to given URL
+	 *
+	 * Authorization is added from global $authorization array indexed by host-name of $url or $base_url
+	 *
+	 * @param string $url either path (starting with / and prepending global $base_url) or full URL
+	 * @param string $method
+	 * @param string|array|resource $body for GET&DELETE this is added as query and must not be a resource/file-handle
+	 * @param array $header
+	 * @param array|null $response_header associative array of response headers, key 0 has HTTP status
+	 * @param int $follow how many redirects to follow, default 3, can be set to 0 to NOT follow
+	 * @return array|string array of decoded JSON or string body
+	 * @throws \JsonException for invalid JSON
+	 * @throws \HttpException with code=0: opening http connection, code=HTTP status, if status is NOT 2xx
+	 */
+	function api(string $url, string $method='GET', $body='', array $header=['Content-Type: application/json'], ?array &$response_header=null, int $follow=3)
+	{
+		return api($url, $method, $body, $header, $response_header, $follow);
+	}
+
+	/**
 	 * Get JMAP apiUrl from /.well-known/jmap and fill $this->well_known for later reference
 	 *
 	 * @param bool $use_well_known true: request https://$host/.well-known/jmap, false: $url/
 	 * @param string|null $accountId
-	 * @param array|null $capabilities
 	 * @return string
 	 * @throws Api\Exception
 	 * @throws \JsonException
 	 */
-	public function bootstrap(bool $use_well_known=true, ?string &$accountId=null, ?array &$capabilities=null) : string
+	public function bootstrap(bool $use_well_known=true, ?string &$accountId=null) : string
 	{
 		$url = $this->url;
 		if (!str_starts_with($url, 'https://'))
@@ -99,24 +143,29 @@ class Jmap
 		}
 		if ($use_well_known)
 		{
-			$response = api($url.'/.well-known/jmap');
+			$response = $this->api($url.'/.well-known/jmap');
 		}
 		// as I can't figure out what the Stalwart URL for the session object is, I use .well-know/jmap for now
 		elseif (empty($accountId))
 		{
-			$response = api($url.'/.well-known/jmap');
+			$response = $this->api($url.'/.well-known/jmap');
 		}
 		foreach($response['accounts'] ?? [] as $id => $account)
 		{
 			if ($account['isPersonal'])
 			{
 				$accountId = $id;
+				$this->accountCapabilities = $account['accountCapabilities'] ?? [];
 				break;
 			}
 		}
-		$capabilities = $response['capabilities'] ?? null;
+		$this->capabilities = $response['capabilities'] ?? [];
+		$this->apiUrl = $response['apiUrl'] ?? null;
+		$this->downloadUrl = $response['downloadUrl'] ?? null;
+		$this->uploadUrl = $response['uploadUrl'] ?? null;
+		$this->eventSourceUrl = $response['eventSourceUrl'] ?? null;
 
-		return !$use_well_known ? $this->url : $this->well_known['apiUrl'] ?? throw new Api\Exception("$this->url is NOT a JMAP server!");
+		return !$use_well_known ? $this->url : $this->apiUrl ?? throw new Api\Exception("$this->url is NOT a JMAP server!");
 	}
 
 	/**
@@ -159,7 +208,7 @@ class Jmap
 	{
 		if (!$emulate)
 		{
-			return api($this->url, 'POST', [
+			return $this->api($this->url, 'POST', [
 				'using' => (array)$using,
 				'methodCalls' => $methodCalls,
 			]);
@@ -207,7 +256,8 @@ class Jmap
 	 * -see https://github.com/jmapio/jmap/blob/master/spec/jmap/push.mdown
 	 *
 	 * @param string|null &$sessionState
-	 * @return array ["PushSubscription/get", {"list": [{"id": ..., "deviceClientId": ..., "verificationCode": ..., "expires": ..., "types": [...]}, ...], "notFound": []}, "0"]
+	 * @return array {"list": [{"id": ..., "deviceClientId": ..., "verificationCode": ..., "expires": ..., "types": [...]}, ...], "notFound": []}
+	 * @throws Api\Exception on error
 	 */
 	public function getPushSubscriptions(?string &$sessionState=null)
 	{
@@ -518,5 +568,26 @@ class Jmap
 			$ret[$methodResponse[2]] = $methodResponse[1];
 		}
 		return $ret;
+	}
+
+	/**
+	 * Make some protected variable available readonly
+	 *
+	 * @param string $name
+	 * @return string|null
+	 */
+	public function __get(string $name)
+	{
+		switch ($name)
+		{
+			case 'accountId':
+				return $this->accountId;
+			case 'accountCapabilities':
+				return $this->accountCapabilities;
+			case 'capabilities':
+				return $this->capabilities;
+			default:
+				return null;
+		}
 	}
 }

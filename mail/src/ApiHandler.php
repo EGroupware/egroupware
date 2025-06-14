@@ -196,8 +196,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		{
 			return $imap->getVacationUser($user ?: $GLOBALS['egw_info']['user']['account_id']);
 		}
-		$sieve = new Api\Mail\Sieve($imap);
-		return $sieve->getVacation()+['script' => $sieve->script];
+		return $imap->getVacation()+['script' => $imap->scriptName];
 	}
 
 	/**
@@ -268,8 +267,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		}
 		else
 		{
-			$sieve = new Api\Mail\Sieve($account->imapServer());
-			$sieve->setVacation($vacation, null, $vacation_rule, true);
+			$account->imapServer()->setVacation($vacation, null, $vacation_rule, true);
 		}
 		echo json_encode(array_filter([
 			'status' => 200,

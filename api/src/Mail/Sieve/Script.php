@@ -14,7 +14,7 @@
  * @version $Id$
  */
 
-namespace EGroupware\Api\Mail;
+namespace EGroupware\Api\Mail\Sieve;
 
 use EGroupware\Api\Translation;
 
@@ -77,10 +77,10 @@ class Script
 	/**
 	 * Retrieve the rules
 	 *
-	 * @param Sieve $connection
-	 * @return boolean true, if script written successfull
+	 * @param Connection $connection
+	 * @return boolean true, if script is written successful
 	 */
-	function retrieveRules (Sieve $connection)
+	function retrieveRules (Connection $connection)
 	{
 		#global $_SESSION;
 		$continuebit = 1;
@@ -236,13 +236,13 @@ class Script
 	/**
 	 * update and save sieve script
 	 *
-	 * @param Sieve $connection
+	 * @param Connection $connection
 	 * @param boolean $utf7imap_fileinto =false true: encode foldernames with utf7imap, default utf8
 	 * @param string|null& $vac_rule on return vacation-rule in sieve syntax
 	 * @param bool $throw_exceptions =false true: throw exception with error-message
 	 * @return bool false on error with error-message in $this->error
 	 */
-	function updateScript (Sieve $connection, $utf7imap_fileinto=false, &$vac_rule=null, bool $throw_exceptions=false)
+	function updateScript (Connection $connection, $utf7imap_fileinto=false, &$vac_rule=null, bool $throw_exceptions=false)
 	{
 		#global $_SESSION,$default,$sieve;
 		global $default,$sieve;
@@ -575,7 +575,7 @@ class Script
 			$egw_site_title = $GLOBALS['egw_info']['server']['site_title'];
 			if ($connection->hasExtension('enotify')==true)
 			{
-				$notification_body = lang("You have received a new message on the")." {$egw_site_title}";
+				$notification_body = lang("You have received a new message on the") . " Script.php";
 				if ($connection->hasExtension('variables'))
 				{
 					$notification_body .= ", ";
@@ -596,7 +596,7 @@ class Script
 			}
 			else
 			{
-				$notification_body = lang("You have received a new message on the")." {$egw_site_title}"."\n";
+				$notification_body = lang("You have received a new message on the") . " Script.php" ."\n";
 				$notification_body .= "\n";
 				$notification_body .= 'From: $from$'."\n";
 				if ($this->emailNotification['displaySubject']) {
