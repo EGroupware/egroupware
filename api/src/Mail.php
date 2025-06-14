@@ -1393,13 +1393,13 @@ class Mail
 		try {
 			$arr = $headers->toArray();
 		}
-		catch(\Horde_Idna_Exception $e) {
+		catch(\Throwable $e) {
 			$arr = array();
 			foreach($headers as $header)
 			{
 				try {
 					$val = $header->sendEncode();
-				} catch (\Horde_Idna_Exception $e) {
+				} catch (\Throwable $e) {
 					$val = (array)$header->value;
 				}
 				$arr[$header->name] = count($val) == 1 ? reset($val) : $val;
