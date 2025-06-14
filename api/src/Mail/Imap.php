@@ -25,9 +25,6 @@ use Horde_Imap_Client_Mailbox_List;
  * This class holds all information about the imap connection.
  * This is the base class for all other imap classes.
  *
- * Also proxies Sieve calls to Mail\Sieve (eg. it behaves like the former felamimail bosieve),
- * to allow IMAP plugins to also manage Sieve connection.
- *
  * @property-read integer $ImapServerId acc_id of mail account (alias for acc_id)
  * @property-read boolean $enableSieve sieve enabled (alias for acc_sieve_enabled)
  * @property-read int $acc_id id
@@ -58,6 +55,21 @@ use Horde_Imap_Client_Mailbox_List;
  * @property-read boolean $acc_user_editable are non-admin users allowed to edit this account, if it is for them
  * @property-read array $params parameters passed to constructor (all above as array)
  * @property-read boolean|int|string $isAdminConnection admin connection if true or account_id or imap username
+ *
+ * Proxies Sieve calls to Mail\Sieve\Logic trait (used by Mail\Sieve\ManageSieve or Mail\Sieve\Jmap)
+ * to allow IMAP plugins to also manage Sieve connection.
+ *
+ * @method installScript
+ * @method getScript
+ * @method setEmailNotification
+ * @method getEmailNotification
+ * @method setRules
+ * @method getRules
+ * @method retrieveRules
+ * @method getVacation
+ * @method setVacation
+ * @method getExtensions
+ * @method hasExtension
  */
 class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 {
@@ -1363,14 +1375,17 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	/**
 	 * Instance of Sieve
 	 *
-	 * @var Sieve
+	 * @var Sieve\Logic
 	 */
 	private $sieve;
+	/**
+	 * Class used to implement Sieve implement the Sieve\Logic
+	 */
+	const SIEVE_CLASS = Sieve\ManageSieve::class;
+
 
 	public $scriptName;
 	public $error;
-
-	//public $error;
 
 	/**
 	 * Proxy former felamimail bosieve methods to internal Sieve instance
@@ -1386,7 +1401,6 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		{
 			case 'installScript':
 			case 'getScript':
-			case 'setActive':
 			case 'setEmailNotification':
 			case 'getEmailNotification':
 			case 'setRules':
@@ -1395,9 +1409,10 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			case 'getVacation':
 			case 'setVacation':
 			case 'getExtensions':
+			case 'hasExtension':
 				if (is_null($this->sieve))
 				{
-					$this->sieve = new Sieve($this);
+					$this->sieve = new (self::SIEVE_CLASS)($this);
 					$this->error =& $this->sieve->error;
 				}
 				$ret = call_user_func_array(array($this->sieve,$name),$params);
@@ -1426,7 +1441,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		if (is_null($this->sieve) || $this->isAdminConnection !== $_euser)
 		{
 			$this->adminConnection($_euser);
-			$this->sieve = new Sieve($this, $_euser, $_scriptName);
+			$this->sieve = new ManageSieve($this, $_euser, $_scriptName);
 			$this->scriptName =& $this->sieve->scriptName;
 			$this->error =& $this->sieve->error;
 		}
@@ -1452,7 +1467,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		if (is_null($this->sieve) || $this->isAdminConnection !== $_euser)
 		{
 			$this->adminConnection($_euser);
-			$this->sieve = new Sieve($this, $_euser, $_scriptName);
+			$this->sieve = new ManageSieve($this, $_euser, $_scriptName);
 			$this->error =& $this->sieve->error;
 			$this->scriptName =& $this->sieve->scriptName;
 		}

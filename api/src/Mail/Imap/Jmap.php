@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Api: Support for Stalwart mail-server
+ * EGroupware Api: Support for Jmap e.g. Stalwart mail-server
  *
  * @link https://www.egroupware.org
  * @package api
@@ -17,15 +17,16 @@ use EGroupware\Api\Mail;
 use EGroupware\SwoolePush\Tokens;
 
 /**
- * Manages connection to Dovecot IMAP server
+ * Manages connection to Jmap e.g. Stalwart mail-server
  *
- * Basic differences to Cyrus IMAP:
- * - no real admin user, but master user, whose password can be used to connect instead of real user
- * - mailboxes have to be deleted in filesystem (no IMAP command for that)
- *   --> required by webserver writable user_home to be configured, otherwise deleting get ignored like with defaultimap
- * - quota can be read, but not set
+ * Currently, JMAP is only partially used:
+ * - Push notifications
+ * - Sieve script access
+ * --> everything else still uses an IMAP connection
+ *
+ * @ToDo replace everything with JMAP no longer using / extending IMAP
  */
-class Stalwart extends Mail\Imap
+class Jmap extends Mail\Imap
 {
 	/**
 	 * Label shown in EMailAdmin
@@ -35,6 +36,11 @@ class Stalwart extends Mail\Imap
 	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail
 	 */
 	const CAPABILITIES = 'default|sieve|timedsieve|admin|logintypeemail';
+
+	/**
+	 * Class used to implement Sieve implement the Sieve\Logic
+	 */
+	const SIEVE_CLASS = Mail\Sieve\Jmap::class;
 
 	/**
 	 * prefix for groupnames, when using groups in ACL Management
