@@ -275,8 +275,9 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
 #egw_fw_topmenu_info_items {
   display: flex;
   flex-direction: row-reverse;
-  align-items: stretch;
+  align-items: center;
   color: var(--sl-color-neutral-600);
+  font-size: 32px;
 }
 #egw_fw_topmenu_info_items > * {
   border: none;
