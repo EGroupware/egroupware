@@ -164,6 +164,12 @@ export class EgwFramework extends LitElement
 	{
 		super.firstUpdated(_changedProperties);
 
+		// Set features on any existing egw-app elements for first load
+		this.querySelectorAll("egw-app").forEach((app : EgwFrameworkApp) =>
+		{
+			app.features = this.applicationList.find(a => a.name == app.id)?.features ?? {};
+		})
+
 		// Load hidden apps like status, as long as they can be loaded
 		this.applicationList.forEach((app) =>
 		{
@@ -982,7 +988,9 @@ export interface ApplicationInfo
 export type FeatureList = {
 	appConfig? : boolean,
 	preferences? : boolean,
-	favorites? : boolean
+	favorites? : boolean,
+	aclRights? : false,
+	categories? : false
 }
 
 // Feature settings for app when they haven't been set / overridden with anything specific

@@ -670,6 +670,29 @@ export class EgwFrameworkApp extends LitElement
                             ${this.egw.lang("Preferences")}
                         </sl-menu-item>
                     `}
+                    ${!this.egw.user('apps')['preferences'] || !this.features.aclRights ? nothing : html`
+                        <sl-menu-item
+                                @click=${() => this.egw.show_preferences('acl', [this.name])}
+                        >
+                            <sl-icon slot="prefix" name="lock"></sl-icon>
+                            ${this.egw.lang("Access")}
+                        </sl-menu-item>
+                    `}
+                    ${!this.egw.user('apps')['preferences'] || !this.features.categories ? nothing : html`
+                        <sl-menu-item
+                                @click=${() => this.egw.show_preferences('cats', [this.name])}
+                        >
+                            <sl-icon slot="prefix" name="tag"></sl-icon>
+                            ${this.egw.lang("Cateogries")}
+                        </sl-menu-item>
+                    `}
+                    ${!this.features.favorites ? nothing : html`
+                        <sl-menu-item>
+                            <sl-icon slot="prefix" name="star"></sl-icon>
+                            ${this.egw.lang("Favorites")}
+                            <et2-favorites-menu slot="submenu" application="${this.name}"></et2-favorites-menu>
+                        </sl-menu-item>`
+                    }
                     ${this._threeDotsMenuTemplate()}
                 </sl-menu>
             </sl-dropdown>
@@ -698,13 +721,7 @@ export class EgwFrameworkApp extends LitElement
 		// No favorites here
 		if(menu["title"] == "Favorites" || menu["title"] == this.egw.lang("favorites"))
 		{
-			return html`
-                <sl-menu-item>
-                    <et2-image style="width:1em;" src="fav_filter" slot="prefix"></et2-image>
-                    ${menu["title"]}
-                    <et2-favorites-menu slot="submenu" application="${this.name}"></et2-favorites-menu>
-                </sl-menu-item>
-			`;
+			return nothing;
 		}
 		// Just one thing, don't bother with submenu
 		if(menu["entries"].length == 1)
