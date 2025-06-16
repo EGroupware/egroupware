@@ -631,6 +631,11 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
 }
 /*** END HEADER ***/
 /*** Popup styling ***/
+.popupMainDiv {
+  /* This would make things simpler for sizing, but causes problems with etemplate.resize() and dialogs with grids
+  height: 100%;
+   */
+}
 .popupMainDiv .dialogHeader,
 .popupMainDiv .dialogFooter,
 .popupMainDiv .dialogFooterToolbar {

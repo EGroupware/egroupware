@@ -283,7 +283,18 @@ export class etemplate2
 					const appHeader = jQuery('#divAppboxHeader');
 
 					//Calculate the excess height
-					excess_height = egw(window).is_popup() ? jQuery(window).height() - jQuery(self._DOMContainer).height() - appHeader.outerHeight() + 11 : 0;
+					let frameworkHeight = 0;
+					switch(window.framework?.constructor?.name ?? "")
+					{
+						case 'EgwFramework':
+							// KDots doesn't need extra
+							break;
+						//break;
+						default:
+							frameworkHeight = 11;
+							break;
+					}
+					excess_height = egw(window).is_popup() ? jQuery(window).height() - jQuery(self._DOMContainer).height() - appHeader.outerHeight() + frameworkHeight : 0;
 					// Recalculate excess height if the appheader is shown
 					if(appHeader.length > 0 && appHeader.is(':visible'))
 					{

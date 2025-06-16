@@ -602,6 +602,10 @@ egw-framework#egw_fw_basecontainer {
 
 /*** Popup styling ***/
 .popupMainDiv {
+  /* This would make things simpler for sizing, but causes problems with etemplate.resize() and dialogs with grids
+  height: 100%;
+   */
+
   .dialogHeader, .dialogFooter, .dialogFooterToolbar {
 	// Set border a little thicker & darker
 	--sl-panel-border-width: 2px;
