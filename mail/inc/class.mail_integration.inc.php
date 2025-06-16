@@ -295,7 +295,9 @@ class mail_integration {
 				$mo->openConnection();
 				$mo->reopen($mailbox);
 				try {
-					$mailcontent = Mail::get_mailcontent($mo,$uid,'',$mailbox,null,true,(!(in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'],['text_only','no_attachments']))));
+					$mailcontent = Mail::get_mailcontent($mo, $uid, '', $mailbox, null, true,
+						!in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'], ['text_only','no_attachments']),
+						false); // do NOT output pdf or images, if there is not mail-body
 					// this one adds the mail itself (as message/rfc822 (.eml) file) to the app as additional attachment
 					// this is done to have a simple archive functionality (ToDo: opening .eml in email module)
 					if (in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'],['add_raw','no_attachments']))
@@ -441,4 +443,3 @@ class mail_integration {
 		return isset($old) && $old != $html;
 	}
 }
-

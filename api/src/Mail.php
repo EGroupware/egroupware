@@ -6482,20 +6482,27 @@ class Mail
 	 *				'attachments'=>$attachments,
 	 *				'headers'=>$headers,; boolean false on failure
 	 */
-	static function get_mailcontent(&$mailClass,$uid,$partid='',$mailbox='', $preserveHTML = false, $addHeaderSection=true, $includeAttachments=true)
+	static function get_mailcontent(&$mailClass, $uid, $partid='', $mailbox='', $preserveHTML = false, $addHeaderSection=true, $includeAttachments=true, $output_no_body=true)
 	{
 			//echo __METHOD__." called for $uid,$partid <br>";
 			$headers = $mailClass->getMessageHeader($uid,$partid,true,false,$mailbox);
 			if (empty($headers)) return false;
 			// dont force retrieval of the textpart, let mailClass preferences decide
-			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid,null,false,$mailbox);
+			$calendar_part = null;  // not used, but required to specify $output_no_body
+			$bodyParts = $mailClass->getMessageBody($uid, $preserveHTML?'always_display':'only_if_no_text', $partid, null, false, $mailbox, $calendar_part, $output_no_body);
 			if(!isset($preserveHTML))
 			{
-				$html = static::getdisplayablebody(
+				try {
+					$html = static::getdisplayablebody(
 						$mailClass,
 						$mailClass->getMessageBody($uid,'always_display',$partid,null,false,$mailbox),
 						true
-				);
+					);
+				}
+				catch (\Exception $e) {
+					// happens if there is no (text-)body / mail contains just a pdf or image
+					$preserveHTML = false;
+				}
 
 			}
 			// if we do not want HTML but there is no TextRepresentation with the message itself, try converting
