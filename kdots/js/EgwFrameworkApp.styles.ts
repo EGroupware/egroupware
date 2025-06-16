@@ -38,7 +38,6 @@ export default css`
 		flex: 1 0 2em;
 		max-height: var(--sl-font-size-3x-large);
 
-		--application-header-text-color: var(--sl-color-neutral-100);
 		background-color: var(--application-color, var(--primary-background-color));
 		color: var(--application-header-text-color);
 		--sl-input-color: var(--application-header-text-color);
