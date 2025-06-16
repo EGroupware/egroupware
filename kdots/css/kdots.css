@@ -629,6 +629,20 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
   opacity: 1;
 }
 /*** END HEADER ***/
+/*** Popup styling ***/
+.popupMainDiv .dialogHeader,
+.popupMainDiv .dialogFooter,
+.popupMainDiv .dialogFooterToolbar {
+  --sl-panel-border-width: 2px;
+  --sl-panel-border-color: var(--sl-color-neutral-500);
+}
+.popupMainDiv .dialogHeader {
+  border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+}
+.popupMainDiv .dialogFooter,
+.popupMainDiv .dialogFooterToolbar {
+  border-top: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+}
 /*** APPLICATION ***/
 egw-app {
   --application-header-text-color: var(--sl-color-neutral-600);

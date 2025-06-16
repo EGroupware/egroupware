@@ -599,6 +599,24 @@ egw-framework#egw_fw_basecontainer {
 
 /*** END HEADER ***/
 
+/*** Popup styling ***/
+.popupMainDiv {
+  .dialogHeader, .dialogFooter, .dialogFooterToolbar {
+	// Set border a little thicker & darker
+	--sl-panel-border-width: 2px;
+	--sl-panel-border-color: var(--sl-color-neutral-500);
+  }
+
+  .dialogHeader {
+	border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+  }
+
+  .dialogFooter, .dialogFooterToolbar {
+	border-top: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+  }
+}
+
+
 /*** APPLICATION ***/
 egw-app {
   --application-header-text-color: var(--sl-color-neutral-600);
