@@ -96,6 +96,11 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * Separator for Stalwart master user: <username>%<master>
+	 */
+	const MASTER_SEPARATOR = '%';
+
+	/**
 	 * Ensure we use an admin connection
 	 *
 	 * Prefixes adminUsername with real username (separated by an asterisk)
@@ -105,12 +110,12 @@ class Jmap extends Mail\Imap
 	function adminConnection($_username=true)
 	{
 		// generate admin user name of $username
-		if (($pos = strpos($this->acc_imap_admin_username, '*')) !== false)	// remove evtl. set username
+		if (($pos = strpos($this->acc_imap_admin_username, self::MASTER_SEPARATOR)) !== false)	// remove evtl. set username
 		{
 			$this->params['acc_imap_admin_username'] = substr($this->acc_imap_admin_username, $pos+1);
 		}
 		$this->params['acc_imap_admin_username'] = (is_string($_username) ? $_username : $this->acc_imap_username).
-			'*'.$this->params['acc_imap_admin_username'];
+			self::MASTER_SEPARATOR.$this->params['acc_imap_admin_username'];
 
 		parent::adminConnection($_username);
 	}
