@@ -178,6 +178,12 @@ export class EgwFrameworkApp extends LitElement
 				et._DOMContainer = null;
 			}
 		});
+		// Destroy application js
+		if(window.app[this.name] && window.app[this.name].destroy)
+		{
+			window.app[this.name].destroy();
+			delete window.app[this.name];	// really delete it, so new object get constructed and registered for push
+		}
 	}
 
 	firstUpdated()
@@ -529,7 +535,7 @@ export class EgwFrameworkApp extends LitElement
 
 	protected async handleSideboxMenuClick(event)
 	{
-		return this.egw.open_link(event.target.dataset.item_link);
+		return this.egw.open_link(event.target.dataset.link);
 	}
 
 	protected handleAppMenuClick(event)
