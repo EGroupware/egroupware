@@ -1,0 +1,4 @@
+@import "../default/app.css";
+#mail #mail-index_nm\[foldertree\] {
+  padding: var(--sl-spacing-medium) 0;
+}

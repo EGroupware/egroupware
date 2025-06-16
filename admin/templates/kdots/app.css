@@ -1,0 +1,4 @@
+@import "../default/app.css";
+#admin #admin-index_tree {
+  padding: var(--sl-spacing-medium) 0;
+}
