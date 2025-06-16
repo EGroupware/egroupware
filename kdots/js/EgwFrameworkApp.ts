@@ -503,6 +503,10 @@ export class EgwFrameworkApp extends LitElement
 
 		// Left side is in pixels, round to 2 decimals
 		let newPosition = Math.round(panelInfo.side == "left" ? event.target.positionInPixels * 100 : Math.max(100, event.target.position) * 100) / 100;
+		if(isNaN(newPosition))
+		{
+			return;
+		}
 
 		// Update collapsed
 		this[`${panelInfo.side}Collapsed`] = newPosition == panelInfo.hiddenWidth;
@@ -510,7 +514,7 @@ export class EgwFrameworkApp extends LitElement
 		let preferenceName = panelInfo.preference;
 		let currentPreference = parseFloat("" + await this.egw.preference(preferenceName, this.name, true));
 
-		if(newPosition != currentPreference && !isNaN(newPosition))
+		if(newPosition != currentPreference)
 		{
 			panelInfo.preferenceWidth = newPosition;
 			if(panelInfo.resizeTimeout)
