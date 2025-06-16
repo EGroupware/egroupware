@@ -537,6 +537,24 @@ export class EgwFramework extends LitElement
 		}
 	}
 
+	public setWebsiteTitle(app : EgwFrameworkApp | string, title : string, applicationHeader = null)
+	{
+		let siteTitle = egw.config('site_title', 'phpgwapi') || "EGroupware";
+		if(app)
+		{
+			const appName = typeof app == "string" ? app : app.name;
+			let applicationInfo = this.applicationList.find(a => a.name == appName);
+			if(applicationInfo)
+			{
+				// If they passed in nothing, reset to application name
+				applicationInfo.title = applicationHeader || this.egw.lang("" + this.egw.link_get_registry(appName, "name") || applicationInfo.name);
+				siteTitle += " [" + applicationInfo.title + "]";
+				(<EgwFrameworkApp>this.querySelector("egw-app[name='" + appName + "'][active]")).title = applicationInfo.title;
+			}
+		}
+		document.title = siteTitle;
+	}
+
 	/**
 	 * Collect and close all already closed windows
 	 * egw.open_link expects it from the framework
@@ -742,6 +760,10 @@ export class EgwFramework extends LitElement
 		const applicationInfo = this._tabApps[appname] ??
 			this.applicationList.find(a => a.name == appname);
 		applicationInfo.active = true;
+		if(applicationInfo.title)
+		{
+			this.setWebsiteTitle(appname, applicationInfo.title);
+		}
 
 		// Update the list on the server
 		this.tabs.updateComplete.then(() =>
