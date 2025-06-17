@@ -136,7 +136,7 @@ const config = {
                             errorRecovery: true
                         },
 						plugins: [
-							['@babel/plugin-proposal-decorators', {legacy: true}],
+							['@babel/plugin-proposal-decorators', {legacy: false, decoratorsBeforeExport: false}],
 							['@babel/plugin-transform-class-properties', {loose: false}]
 						],
                         presets: [
