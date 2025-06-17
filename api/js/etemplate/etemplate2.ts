@@ -29,6 +29,7 @@ import './Layout/Et2Tabs/Et2TabPanel';
 import './Layout/Et2Tabs/Et2TabsMobile';
 import './Et2Avatar/Et2Avatar';
 import './Et2Avatar/Et2AvatarGroup';
+import './Et2Badge/Et2Badge';
 import './Et2Button/Et2Button';
 import './Et2Button/Et2ButtonCopy';
 import './Et2Button/Et2ButtonIcon';
