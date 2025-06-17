@@ -369,25 +369,10 @@ div.mailUploadSection > div.et2_hbox > label {
 	background-position: center;
 	border:none;
 }
-#mail-index_button\[mailcreate\], #composeToolbar-send {
+
+#mail-index_button\[mailcreate\] {
 	color: white;
 	background-color: #189800;
-}
-.mail-compose_composeToolbar {
-	border-left: 1px solid silver;
-	border-top: 1px solid silver;
-	border-right: 1px solid gray;
-	border-bottom: 1px solid gray;
-	background-color: #c0d2ec;
-	background-position: center;
-	background-repeat: repeat-x;
-}
-.mail-compose_composeToolbarr > span {
-	padding: 10px;
-	white-space: nowrap;
-}
-.mail-compose_composeToolbar > span.priority {
-	border-right: none;
 }
 .compose_egw_icons {
 	height: 24px;
@@ -484,37 +469,11 @@ et2-details.details {width: 100%}
 	overflow:scroll;
 	overflow-x:hidden;
 }
-#mail-compose_composeToolbar {
-	padding: 0px !important;
-}
-#mail-compose_composeToolbar > button {
-	padding: .2em .4em;
-}
-#mail-compose_composeToolbar > img {
-	width: 16px;
-	padding: 0px;
-	height: 16px !important;
-}
-#mail-compose_composeToolbar > button > span > img {
-	width: 16px;
-	padding: 0px;
-	height: 16px !important;
-}
-#mail-compose_composeToolbar > button {
-	padding: .2em .4em;
-}
 #mail-compose_to div.ms-sel-ctn, #mail-compose_cc .ms-sel-ctn, #mail-compose_bcc .ms-sel-ctn {
 	max-height: 75px;
 }
-#mail-display_toolbar > button > span {
-	padding: .2em .4em;
-}
-#mail-display_toolbar > button > span > img {
-	width: 16px;
-	padding: 0px;
-	height: 16px !important;
-}
-#mail-display_toolbar .et2_button_icon, .previewAttachmentArea .et2_button_icon, #mail-display_mail_displayattachments .et2_button_icon {
+
+.previewAttachmentArea .et2_button_icon, #mail-display_mail_displayattachments .et2_button_icon {
 	width: 16px;
 	height: 16px;
 }
@@ -525,17 +484,6 @@ et2-details.details {width: 100%}
 }
 #mail-index_toolbar {
 	height: 2.95em;
-}
-#mail-index_toolbar > button > span {
-	padding: .2em .4em;
-}
-#mail-index_toolbar > button > span > img {
-	width: 16px;
-	padding: 0px;
-	height: 16px !important;
-}
-#mail-index_toolbar > #toolbar-actionlist {
-	width:auto;
 }
 #mail-index_previewAttachmentArea {
 	background-color:#f0f0f0;
@@ -606,10 +554,6 @@ div.mailDisplayHeaders > span:first-child, div.mailPreviewHeaders > span:first-c
 
 div.mailDisplayHeaders et2-select-email, div.mailPreviewHeaders et2-select-email {
     display: inline-block;
-}
-
-#mail-display_toolbar {
-    display: inline-flex;
 }
 
 div.mailComposeHeaders > span:first-child {
@@ -916,10 +860,6 @@ and (orientation : landscape) {
 
 	#mail-compose_mimeType {
 		flex-grow: 0;
-	}
-	.et2_toolbar
-	{
-		border:none;
 	}
 }
 

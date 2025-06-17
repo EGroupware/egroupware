@@ -7,12 +7,13 @@ export default css`
 		min-width: var(--sl-input-height-medium);
 	}
 
-	.toolbar {
+	:host .toolbar {
 		width: 100%;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
 		overflow: hidden;
+		align-items: center;
 
 		.toolbar-buttons {
 			display: flex;
