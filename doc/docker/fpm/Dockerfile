@@ -4,7 +4,7 @@
 ##
 ################################################################################
 ARG ARCH=
-FROM ${ARCH}ubuntu:20.04
+FROM ${ARCH}ubuntu:24.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master

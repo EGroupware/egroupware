@@ -46,7 +46,7 @@ then
     extra_tags="$extra_tags --tag egroupware/development:$BRANCH"
   }
   # buildx available --> build a multi-platform image and push it for all tags
-  docker buildx build --push --platform $PLATFORMS --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/development:$TAG $extra_tags .
+  docker buildx build --push --platform $PLATFORMS --no-cache --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/development:$TAG $extra_tags .
 else
   # no buildx, only builds amd64!
   docker pull $BASE
