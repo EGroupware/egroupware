@@ -394,8 +394,11 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 				const entry = results.results[i];
 
 				// Filter to avoid duplicates
-				if(this._searchResults.some(o => o.value == entry.value))
+				const found = this._searchResults.find(o => o.value == entry.value);
+				if(found)
 				{
+					// Server says it's a match, but it's already a local option
+					found.isMatch = true;
 					results.total--;
 					results.results.splice(i, 1);
 				}

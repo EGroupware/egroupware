@@ -1428,8 +1428,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					entry.isMatch = true;
 
 					// Avoid duplicates with existing options
-					if(this.select_options.some(o => o.value == entry.value))
+					const found = this.select_options.find(o => o.value == entry.value);
+					if(found)
 					{
+						// Server says it's a match, but it's already a local option
+						found.isMatch = true;
 						duplicateCount++
 						entries.splice(i, 1);
 					}
