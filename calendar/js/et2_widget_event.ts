@@ -531,18 +531,20 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				const icons = [];
 				cats.forEach(cat_id =>
 				{
+					let option = {};
 					const search = o =>
 					{
 						if(o.value == cat_id)
 						{
-							return o;
+							option = o;
+							return true;
 						}
 						if(o.children)
 						{
 							return o.children.find(search);
 						}
 					}
-					const option = options.find(search);
+					options.find(search);
 					cat_label.push(option?.label || "");
 					if(option?.icon)
 					{
