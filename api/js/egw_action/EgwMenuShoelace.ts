@@ -324,7 +324,7 @@ export class EgwMenuShoelace extends LitElement
 				}, 100);
 			});
 		};
-
+		const captionStyle=item.color?`color:${item.color};`:''+item.indentation?`padding-left:${item.indentation}em;`:'';
 		return html`
             <sl-menu-item
                     class=${classMap({
@@ -342,7 +342,7 @@ export class EgwMenuShoelace extends LitElement
             >
                 ${item.iconUrl ? html`
                     <et2-image slot="prefix" src="${item.iconUrl}"></et2-image>` : nothing}
-				<span style="color: ${item.color || nothing}">${item.caption}</span>
+				<span style=${captionStyle||nothing}>${item.caption}</span>
                 ${item.shortcutCaption ? html`<span slot="suffix" class="keyboard_shortcut">
 					${item.shortcutCaption}
 				</span>` : nothing}

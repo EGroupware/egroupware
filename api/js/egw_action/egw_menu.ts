@@ -252,13 +252,14 @@ export class egwMenu
 	 * @param {function} _onClick is the JS function which is being executed when the
 	 * 	menu item is clicked.
 	 * @param {string|null} _color color
+	 * @param _indentation The level of indentation applied to the element
 	 * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
 	 * 	menu item list.
 	 */
-	public addItem(_id, _caption, _iconUrl, _onClick, _color): egwMenuItem
+	public addItem(_id, _caption, _iconUrl, _onClick, _color,_indentation?): egwMenuItem
 	{
 		//Append the item to the list
-		const item: egwMenuItem = new egwMenuItem(this, _id, _caption, _iconUrl, _onClick, _color);
+		const item: egwMenuItem = new egwMenuItem(this, _id, _caption, _iconUrl, _onClick, _color, _indentation);
 		this.children.push(item);
 
 		return item;
@@ -311,6 +312,7 @@ export class egwMenuItem
 {
 	id: string;
 	color: string;
+	indentation: number;
 
 	set_id(_value)
 	{
@@ -363,7 +365,9 @@ export class egwMenuItem
 	//hint might get set somewhere
 	hint: string = "";
 
-	constructor(_parent, _id, _caption="", _iconUrl="", onClick=null, _color=null)
+	constructor(_parent: this | egwMenu, _id: string, _caption = "", _iconUrl = "", onClick = null, _color = null,
+				_indentation: number = 0
+	)
 	{
 		this.parent = _parent;
 		this.id = _id;
@@ -371,6 +375,7 @@ export class egwMenuItem
 		this.iconUrl = _iconUrl;
 		this.onClick = onClick;
 		this.color = _color;
+		this.indentation = _indentation;
 	}
 
 	/**
@@ -407,13 +412,15 @@ export class egwMenuItem
 	 * 	menu item. It may be false, null or "" if you don't want an icon to be displayed.
 	 * @param {function} _onClick is the JS function which is being executed when the
 	 * 	menu item is clicked.
+	 * @param _color The color the item caption will be displayed in
+	 * @param _indentation The level of indentation the item should have, this is used e.g. for subcategories
 	 * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
 	 * 	menu item list.
 	 */
-	addItem(_id: string, _caption: string, _iconUrl: string, _onClick: any, _color: string)
+	addItem(_id: string, _caption: string, _iconUrl: string, _onClick: any, _color: string, _indentation?: number)
 	{
 		//Append the item to the list
-		const item = new egwMenuItem(this, _id, _caption, _iconUrl, _onClick, _color);
+		const item = new egwMenuItem(this, _id, _caption, _iconUrl, _onClick, _color, _indentation);
 		this.children.push(item);
 
 		return item;

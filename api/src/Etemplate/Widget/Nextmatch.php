@@ -1055,12 +1055,14 @@ class Nextmatch extends Etemplate\Widget
 			$cat_actions = array();
 			foreach((array)$cats as $cat)
 			{
-				$name = str_repeat('&nbsp;',2*$cat['level']) . stripslashes($cat['name']);
+				$name = stripslashes($cat['name']);
 
 				$cat_actions[$cat['id']] = array(
 					'caption' => $name,
 					'no_lang' => true,
 				);
+				//add level of indentation according to sub category level
+				if($cat['level']>0)$cat_actions[$cat['id']]['level'] = $cat['level'];
 				// add category icon
 				if (is_array($cat['data']) && !empty($cat['data']['icon']) && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
 				{
