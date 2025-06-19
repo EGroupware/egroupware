@@ -13,6 +13,7 @@ import shoelace from "../Styles/shoelace";
 import {css} from "lit";
 import {property} from "lit/decorators/property.js";
 import {parseEmail} from "../Et2Email/utils";
+import {egw} from "../../jsapi/egw_global";
 
 /**
  * Avatars are used to represent a person or profile.  LAvatar has a coloured background.
@@ -66,7 +67,7 @@ export class Et2LAvatar extends Et2Avatar
 	 * Handle changes that have to happen based on changes to properties
 	 *
 	 */
-	willUpdate(changedProperties)
+	async willUpdate(changedProperties)
 	{
 		super.willUpdate(changedProperties);
 
@@ -84,7 +85,7 @@ export class Et2LAvatar extends Et2Avatar
 			}
 			if((!this.image || decodeURIComponent(this.image).match("lavatar=1")) || (this.fname || this.lname))
 			{
-				let lavatar = Et2LAvatar.lavatar(this.fname, this.lname, this.contactId);
+				let lavatar = await Et2LAvatar.lavatar(this.fname, this.lname, this.contactId);
 				this.initials = lavatar.initials;
 			}
 
@@ -103,12 +104,12 @@ export class Et2LAvatar extends Et2Avatar
 	}
 
 
-	updated(changedProperties)
+	async updated(changedProperties)
 	{
 		super.updated(changedProperties);
 		if(changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contactId") || changedProperties.has("image"))
 		{
-			let lavatar = Et2LAvatar.lavatar(this.fname, this.lname, this.contactId);
+			let lavatar = await Et2LAvatar.lavatar(this.fname, this.lname, this.contactId);
 			this._baseNode?.style.setProperty("--background-color", lavatar.background);
 		}
 	}
@@ -129,7 +130,7 @@ export class Et2LAvatar extends Et2Avatar
 	 * @param {type} _id
 	 * @returns {string} return data url
 	 */
-	static lavatar(_fname, _lname, _id)
+	static async lavatar(_fname, _lname, _id)
 	{
 		let str = _fname + _lname + _id;
 		let getBgColor = function(_str)
@@ -142,7 +143,14 @@ export class Et2LAvatar extends Et2Avatar
 			return Et2LAvatar.LAVATAR_BG_COLORS[hash % Et2LAvatar.LAVATAR_BG_COLORS.length];
 		};
 		let bg = getBgColor(str);
+		let count = egw.preference("avatar_display", "common") ?? 0;
 		let text = (_fname ? _fname[0].toUpperCase() : "")+(_lname ? _lname[0].toUpperCase() : "");
+		if(count > 0 && _id && _id.startsWith("account:"))
+		{
+			const account_id = _id.split(":").pop();
+			text = (await (egw.accountData(account_id, 'account_lid', true, null, null)
+				.then((data) => data[account_id])) || text).substring(0, count);
+		}
 		return {background: bg, initials: text};
 	}
 }
