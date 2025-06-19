@@ -144,6 +144,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
                          lname=${option.lname || nothing}
                          fname=${option.fname || nothing}
                          image=${option.icon || nothing}
+                         contactid=${option.value ? "account:" + option.value : nothing}
             >
             </et2-lavatar>`;
 	}
