@@ -223,8 +223,8 @@ export class CalendarApp extends EgwApp
 
 		if(this.sidebox_et2)
 		{
-			var date = <et2_date>this.sidebox_et2.getWidgetById('date');
-			jQuery(window).off('resize.calendar'+date.dom_id);
+			var date = <et2_date>this.sidebox_et2?.getWidgetById('date');
+			jQuery(window).off('resize.calendar' + date?.dom_id);
 		}
 		this.sidebox_hooked_templates = [];
 

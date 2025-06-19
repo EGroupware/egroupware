@@ -165,24 +165,31 @@ export class EgwFrameworkApp extends LitElement
 		super.disconnectedCallback();
 		this.removeEventListener("load", this.handleEtemplateLoad);
 
-		this.childNodes.forEach((childNode : HTMLElement) =>
+		try
 		{
-			const et = etemplate2.getById(childNode.id);
-			if(et !== null)
+			this.childNodes.forEach((childNode : HTMLElement) =>
 			{
-				et.clear();
-				// Clean up DOM nodes that are outside the etemplate2
-				const domContainer = et.DOMContainer;
-				domContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']")?.remove();
-				domContainer.remove();
-				et._DOMContainer = null;
+				const et = etemplate2.getById(childNode.id);
+				if(et !== null)
+				{
+					et.clear();
+					// Clean up DOM nodes that are outside the etemplate2
+					const domContainer = et.DOMContainer;
+					domContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']")?.remove();
+					domContainer.remove();
+					et._DOMContainer = null;
+				}
+			});
+			// Destroy application js
+			if(window.app[this.name] && window.app[this.name].destroy)
+			{
+				window.app[this.name].destroy();
+				delete window.app[this.name];	// really delete it, so new object get constructed and registered for push
 			}
-		});
-		// Destroy application js
-		if(window.app[this.name] && window.app[this.name].destroy)
+		}
+		catch(e)
 		{
-			window.app[this.name].destroy();
-			delete window.app[this.name];	// really delete it, so new object get constructed and registered for push
+			this.egw.debug("error", "Error closing application", e);
 		}
 	}
 

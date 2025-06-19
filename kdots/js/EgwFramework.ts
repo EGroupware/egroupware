@@ -272,9 +272,10 @@ export class EgwFramework extends LitElement
 			(menuaction ? '.' + menuaction[1] : '');
 	};
 
-	public getApplicationByName(appName) : EgwFrameworkApp
+	public getApplicationByName(appname : string) : ApplicationInfo | null
 	{
-		return this.querySelector(`egw-app[name="${appName}"]`);
+		return this.applicationList.find(a => a.name == appname) ??
+			this._tabApps[appname];
 	}
 
 	/**
@@ -474,7 +475,7 @@ export class EgwFramework extends LitElement
 		if(app)
 		{
 			const appname = app.name + "-" + btoa(_extra.id ? _extra.id : _link).replace(/=/g, 'i');
-			if(this.getApplicationByName(appname))
+			if(this.getApplicationByName(appname).name)
 			{
 				this.loadApp(appname, true, _link);
 				return appname;
@@ -744,6 +745,11 @@ export class EgwFramework extends LitElement
 		this.showTab(event.target.activeTab.panel);
 	}
 
+	public setActiveApp(appname : EgwFrameworkApp | string)
+	{
+		return this.showTab(typeof appname == "string" ? appname : appname.name);
+	}
+
 	public showTab(appname : string)
 	{
 		this.querySelectorAll("egw-app").forEach(app => app.removeAttribute("active"));
@@ -770,6 +776,8 @@ export class EgwFramework extends LitElement
 		{
 			this.updateTabs();
 		});
+
+		return appComponent.updateComplete;
 	}
 
 	/**
@@ -785,10 +793,7 @@ export class EgwFramework extends LitElement
 			// DOM listener will get the rest
 			this.querySelector(`egw-app[id='${tab.panel}']`)?.remove();
 		}
-		else
-		{
-			this.closeTab(tab.panel);
-		}
+		this.closeTab(tab.panel);
 	}
 
 	/**
