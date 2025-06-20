@@ -1493,6 +1493,100 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		});
 		return dialog;
 	}
+
+	/**
+	 * Show a dialog to confirm overwriting an existing file or suggest a new name
+	 *
+	 * @param {string} etemplate_exec_id
+	 * @param {string} path File destination, should include trailing /
+	 * @param {string} filename Original file name
+	 * @param {string} mimetype
+	 * @param {boolean} noConfirm Will not ask user about change or overwrite, just return new filename or null
+	 * @param {string|IegwAppLocal} egw object or application name
+	 *
+	 * @return Promise<string | false | null> Accepted file name, false to cancel, null if there was no conflict
+	 */
+	static async confirm_file(etemplate_exec_id : string, path : string, filename : string, mimetype : string, noConfirm : boolean, _egw_or_appname : string | IegwAppLocal) : Promise<string | false | null>
+	{
+		const confirm_file_dialog = new Et2Dialog(_egw_or_appname);
+
+		// Check to see if the file exists
+		let exists = {exists: false, filename: "", errs: 0, msg: ""};
+
+		exists = await confirm_file_dialog.egw().request(
+			"EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_conflict_check", [
+				etemplate_exec_id,
+				path,
+				filename,
+				mimetype
+			]);
+		if(exists && exists.errs)
+		{
+			throw new Error(exists.msg || "Could not check for conflict " + path + "/" + filename);
+		}
+		if(!exists || !exists.exists)
+		{
+			// No conflicts, use requested name
+			return null;
+		}
+		// If they don't want to be prompted, skip it and just return the name
+		if(noConfirm)
+		{
+			return exists.filename ?? filename;
+		}
+
+		return confirmConflict(confirm_file_dialog.egw(), path, filename, exists.filename ?? filename);
+	}
+}
+
+/* Ask the user if they want to overwrite or change the name, called by Et2Dialog.confirm_file() */
+async function confirmConflict(egw, path, fileName : string, suggestedName : string) : Promise<string | false>
+{
+	const buttons = [
+		{
+			label: egw.lang("Overwrite"),
+			id: "overwrite",
+			class: "ui-priority-primary",
+			"default": true,
+			image: 'check'
+		},
+		{label: egw.lang("Rename"), id: "rename", image: 'edit'},
+		{label: egw.lang("Cancel"), id: "cancel", image: "cancel"}
+	];
+	let button_id, value;
+	if(path.endsWith("/"))
+	{
+		// Filename is up to user, let them rename
+		[button_id, value] = <[string, Object]><unknown>await Et2Dialog.show_prompt(undefined,
+			egw.lang('Do you want to overwrite existing file %1 in directory %2?', fileName, path),
+			egw.lang('File %1 already exists', fileName),
+			suggestedName ?? fileName, buttons, egw
+		).getComplete();
+	}
+	else
+	{
+		// Filename is set, only ask to overwrite
+		buttons.splice(1, 1);
+		fileName = suggestedName ?? fileName;
+		[button_id, value] = <[string, Object]><unknown>await Et2Dialog.show_dialog(undefined,
+			egw.lang('Do you want to overwrite existing file %1 in directory %2?', fileName, path),
+			egw.lang('File %1 already exists', fileName),
+			undefined, buttons, Et2Dialog.QUESTION_MESSAGE, "", egw
+		).getComplete();
+	}
+	switch(button_id)
+	{
+		case "rename":
+			// Take suggestion
+			return suggestedName;
+		// fall through
+		case "overwrite":
+			// Upload as set
+			return fileName;
+		case "cancel":
+			// Don't upload
+			return false;
+	}
 }
 
 //@ts-ignore TS doesn't recognize Et2Dialog as HTMLEntry

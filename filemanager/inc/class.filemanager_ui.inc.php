@@ -737,7 +737,7 @@ class filemanager_ui
 					}
 					elseif (!Vfs::is_dir($path))
 					{
-						$to = Vfs::concat($dir,Vfs::basename($path));
+						$to = Vfs::is_dir($dir) || count($selected) > 1 ? Vfs::concat($dir, Vfs::basename($path)) : $dir;
 						if ($path != $to && Vfs::copy($path,$to))
 						{
 							++$files;
