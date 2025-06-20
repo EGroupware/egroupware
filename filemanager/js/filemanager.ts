@@ -1240,7 +1240,47 @@ export class filemanagerAPP extends EgwApp
 		// Actual action id will be something like file_drop_{move|copy|link}[_other_id],
 		// but we need to send move, copy or link
 		let action_id = _action.id.replace("file_drop_", '').split('_', 1)[0];
-		this._do_action(action_id, src, false, dst || nm_dst);
+
+		// Check for existing
+		let existingChecks = [];
+		src.forEach((src_path, index) =>
+		{
+			if(action_id == 'link')
+			{
+				return;
+			}
+
+			// Get mimetype
+			const mimetype = _elems[index]?.data?.mime || "";
+			const originalName = this.basename(src_path);
+			const path = (dst || nm_dst) + "/";
+			existingChecks.push(
+				Et2Dialog.confirm_file(this.et2.getInstanceManager()._etemplate_exec_id, path, originalName, mimetype, false, this.et2.egw())
+					.then(name =>
+					{
+						// No conflict
+						if(name == null)
+						{
+							return;
+						}
+						src.splice(index, 1);
+						if(name == false)
+						{
+							// Skip
+							return;
+						}
+						// Just this file to new target
+						this._do_action(action_id, [src_path], false, path + name);
+					})
+			);
+		});
+		Promise.all(existingChecks).then(() =>
+		{
+			if(src.length > 0)
+			{
+				this._do_action(action_id, src, false, dst || nm_dst);
+			}
+		});
 	}
 
 	/**
