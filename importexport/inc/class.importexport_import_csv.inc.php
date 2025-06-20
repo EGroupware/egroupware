@@ -314,7 +314,15 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					// Text - search for a matching record
 					if(!is_numeric($record[$name]))
 					{
-						$results = Link::query($links[$name], $record[$name]);
+						$options = [];
+						$search = $record[$name];
+						// Trying to link to an entry, and they've specified a specific field with appname:fieldname:value
+						if(str_contains($record[$name], $links[$name] . ':') && (list($app, $field, $value) = explode(':', $record[$name], 3)) && $app == $links[$name] && $value)
+						{
+							$options['filter'][$field] = $value;
+							$search = '';
+						}
+						$results = Link::query($links[$name], $search, $options);
 						if(count($results) == 1)
 						{
 							$record[$name] = key($results);
