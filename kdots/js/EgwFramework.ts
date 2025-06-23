@@ -557,6 +557,21 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
+	 * This method only used for status app when it tries to broadcast data to users
+	 * avoiding throwing exceptions for users whom might have no status app access
+	 *
+	 * @param {type} _data
+	 * @returns {undefined}
+	 */
+	execPushBroadcastAppStatus(_data)
+	{
+		if(window.app.status)
+		{
+			window.app.status.mergeContent(_data, true);
+		}
+	}
+
+	/**
 	 * Collect and close all already closed windows
 	 * egw.open_link expects it from the framework
 	 */
