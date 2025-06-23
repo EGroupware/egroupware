@@ -980,7 +980,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 			// should focus always for non-mobile one
 			if(input && (egwIsMobile() && typeof input.getValue == "function" && input.getValue() == "" || !egwIsMobile()))
 			{
-				input.focus();
+				input.updateComplete.then(() => {input.focus()})
 			}
 		}
 	}
