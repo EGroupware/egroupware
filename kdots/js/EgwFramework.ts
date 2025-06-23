@@ -365,7 +365,7 @@ export class EgwFramework extends LitElement
 	public closeApp(app : string | EgwFrameworkApp)
 	{
 		const applicationInfo = this._tabApps[typeof app == "string" ? app : app.id] ??
-			this.applicationList.find(a => a.name == (typeof app == "string" ? app : app.name));
+			this.applicationList.find(a => a.name == (typeof app == "string" ? app : app.id));
 
 		if(!applicationInfo || !app)
 		{
@@ -475,7 +475,7 @@ export class EgwFramework extends LitElement
 		if(app)
 		{
 			const appname = app.name + "-" + btoa(_extra.id ? _extra.id : _link).replace(/=/g, 'i');
-			if(this.getApplicationByName(appname).name)
+			if(this.getApplicationByName(appname)?.name)
 			{
 				this.loadApp(appname, true, _link);
 				return appname;
