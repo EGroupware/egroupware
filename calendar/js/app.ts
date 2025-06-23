@@ -2930,7 +2930,7 @@ export class CalendarApp extends EgwApp
 			if(state.state.last && state.state.last.toJSON) state.state.last = state.state.last.toJSON();
 
 			// Toggle todos
-			let frameworkApp = framework.getApplicationByName("calendar");
+			let frameworkApp = framework.querySelector("egw-app#calendar");
 			if((state.state.view == 'day' || this.state.view == 'day') && jQuery(view.etemplates[0].DOMContainer).is(':visible'))
 			{
 				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile()
