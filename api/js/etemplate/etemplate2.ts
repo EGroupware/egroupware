@@ -909,6 +909,8 @@ export class etemplate2
 			form.onsubmit = function(e)
 			{
 				e.stopPropagation();
+				// Avoid blank popup
+				e.preventDefault();
 			};
 
 			// Firefox give a security warning when transmitting to "about:blank" from a https site
