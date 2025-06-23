@@ -1,0 +1,121 @@
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: clip;
+  padding: 0px;
+  margin: 0px;
+
+  /** Messages **/
+
+  .sl-toast-stack {
+	top: auto;
+	bottom: 0px;
+
+	sl-alert et2-checkbox {
+	  padding-top: var(--sl-spacing-large);
+	}
+  }
+
+  #egw_message {
+	display: none
+  }
+
+  /** end messages **/
+
+  @import "./egw_loading.less";
+}
+
+
+/* BI icons - Path is relative to destination directory */
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
+
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  vertical-align: middle;
+}
+
+// Globally set the popup z-index
+.egw_menu::part(popup) {
+  z-index: var(--sl-z-index-dropdown);
+}
+
+egw-framework#egw_fw_basecontainer {
+  --icon-size: 40px;
+  --sl-tooltip-arrow-size: 0;
+
+  /* Internals */
+
+  &::part(status-split) {
+	/* This limits the max size of the status panel */
+	--max: 15em;
+  }
+
+  &::part(header) {
+	--icon-size: 40px;
+	--tab-icon-size: var(--icon-size);
+	--tab-icon-size-active: 46px;
+
+	color: var(--primary-background-color);
+	gap: var(--sl-spacing-medium);
+	font-size: var(--icon-size);
+  }
+
+  /* Content slotted inside */
+
+  [slot="logo"] img {
+	max-width: 220px;
+	max-height: var(--icon-size);
+	display: block;
+	text-align: center;
+  }
+
+  sl-icon-button[slot="header"], et2-image[slot="header"] {
+	font-size: var(--icon-size);
+	color: inherit
+  }
+
+
+  div#egw_fw_toggler {
+	position: initial;
+	display: none;
+  }
+
+  #egw_fw_topmenu_info_items {
+	position: relative;
+	order: 99;
+	margin-left: auto;
+	display: flex;
+
+	.topmenu_info_item {
+	  min-width: 1em;
+	  min-height: 1em;
+	}
+
+	#quick_add_selectbox::part(emptyLabel) {
+	  display: none;
+	}
+
+	#quick_add_selectbox::part(combobox) {
+	  width: 1px;
+	  padding: 0;
+	  box-shadow: none;
+	  border: none
+	}
+  }
+
+  div#egw_fw_sidebar_r {
+	position: initial;
+	top: initial;
+
+	et2-avatar, et2-lavatar {
+	  --size: 40px;
+	}
+  }
+
+  .egw_fw_ui_sidemenu_entry_header {
+	display: flex;
+	gap: var(--sl-spacing-medium);
+	padding-left: 1em;
+  }
+}

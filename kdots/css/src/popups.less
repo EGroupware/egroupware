@@ -1,0 +1,39 @@
+/*** Popup styling ***/
+.popupMainDiv {
+  /* This would make things simpler for sizing, but causes problems with etemplate.resize() and dialogs with grids
+  height: 100%;
+   */
+
+  .dialogHeader, .dialogFooter, .dialogFooterToolbar {
+	// Set border a little thicker & darker
+	--sl-panel-border-width: 2px;
+	--sl-panel-border-color: var(--sl-color-neutral-500);
+  }
+
+  .dialogHeader {
+	border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+  }
+
+  /* Specific to override etemplate2 */
+
+  table.et2_grid > tbody > tr.dialogFooterToolbar > td {
+	padding-top: var(--sl-spacing-small);
+	padding-bottom: var(--sl-spacing-small);
+  }
+
+  .dialogFooter, .dialogFooterToolbar {
+	border-collapse: separate;
+	border-top: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+
+
+	td:first-child {
+	  padding-left: var(--sl-spacing-x-small);
+	}
+
+	td:last-child {
+	  padding-right: var(--sl-spacing-x-small);
+	}
+  }
+}
+
+/*** End popup styling ***/

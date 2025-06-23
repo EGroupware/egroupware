@@ -1,0 +1,30 @@
+body, :root, :host {
+
+  --glassy-color: var(--application-color, --sl-color-primary-500);
+  --glassy-background: linear-gradient(190deg, var(--sl-color-neutral-0) 10%, var(--glassy-color) 35%, transparent 90%);
+
+  /* Rounded corners */
+  --sl-border-radius-small: 0.25rem; /* Small radius */
+  --sl-border-radius-medium: var(--sl-input-height-medium); /* Medium radius */
+  --sl-border-radius-large: 1.75rem; /* Large radius */
+
+  --sl-panel-border-radius: var(--sl-border-radius-medium);
+
+  /* Input field changes */
+  --sl-input-border-radius: 0.5rem;
+
+  /* Buttons */
+  --sl-button-border-radius: 0.5rem;
+  --sl-button-padding: 0.25rem 0.75rem;
+  --sl-button-primary-background-color: hsl(var(--application-color-hsl));
+  --sl-button-primary-color: hsl(var(--sl-color-neutral-0));
+  --sl-button-primary-hover-background-color: hsl(var(--application-color-hsl) / 0.9);
+  --sl-button-primary-hover-border-color: hsl(var(--application-color-hsl) / 1);
+
+  /* Panels */
+  --sl-panel-background-color: hsla(var(--sl-panel-background-color), 0.85);
+
+  panel {
+	backdrop-filter: blur(1em);
+  }
+}

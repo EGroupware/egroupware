@@ -1,0 +1,135 @@
+/*** WIDGETS ***/
+/* This should mostly go away with webcomponents */
+
+/* Show something for undefined widget */
+*:not(:defined) {
+  background-size: contain;
+  background-image: url(../../../node_modules/bootstrap-icons/icons/question-circle.svg);
+}
+
+/* Get nextmatch sizing more nicely without messing with dynheight */
+div.et2_nextmatch {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  & > div:not(:first-child) {
+	flex: 1 1 100%;
+	max-height: 100%;
+  }
+
+  .egwGridView_outer {
+	border-collapse: collapse;
+
+	thead > tr {
+	  background-color: var(--sl-color-neutral-50);
+	  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+
+	  th {
+		border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+
+		div.innerContainer {
+		  max-height: 10em;
+		  overflow-x: hidden;
+		  overflow-y: auto;
+		}
+	  }
+
+	  th.optcol span.selectcols {
+		height: 9px;
+		padding: 4px 14px 0 2px;
+		margin-top: 4px;
+		background-image: url(../../../api/templates/default/images/selectcols.svg);
+		background-repeat: no-repeat;
+		background-size: 10px 10px;
+		display: inline-block;
+		background-position: top;
+	  }
+	}
+
+	.egwGridView_scrollarea {
+	  overflow-x: hidden;
+	  overflow-y: auto;
+	  table {
+		border-collapse: collapse;
+		tr {
+		  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+		}
+		tr.selected {
+		  background-color: var(--highlight-background-color);
+		}
+	  }
+	}
+  }
+}
+
+/* Special styling for widgets in main-header */
+[slot="main-header"] {
+
+  --sl-input-background-color: transparent;
+  --sl-input-background-color-hover: hsl(from var(--sl-color-neutral-100) h s l / 50%);
+  --sl-input-color: var(--application-header-text-color);
+  --input-text-color: var(--application-header-text-color);
+  --sl-input-icon-color: var(--application-header-text-color);
+  --sl-input-color-hover: var(--application-header-text-color);
+  --sl-input-placeholder-color: hsl(from var(--application-header-text-color) h s l / 50%);
+  color: var(--application-header-text-color);
+
+  input::placeholder {
+	color: black;
+  }
+
+  *::part(base) {
+	color: var(--application-header-text-color);
+	background-color: transparent;
+  }
+
+  et2-button, et2-button-icon, et2-button-image, et2-button-toggle, et2-switch, et2-switch-icon, et2-image {
+	--indicator-color: var(--sl-color-neutral-0);
+	&::part(base) {
+	  background-color: transparent;
+	}
+
+	&:hover::part(base) {
+	  border-color: transparent;
+	  background-color: var(--sl-input-background-color-hover);
+	}
+  }
+
+  et2-toolbar {
+	border-bottom-width: 0px;
+
+	::part(list) {
+	  color: var(--sl-color-neutral-700);
+
+	  et2-button::part(base) {
+		color: var(--sl-color-neutral-700);
+	  }
+
+	  et2-button:hover::part(base) {
+		color: var(--sl-color-neutral-700);
+		border-color: var(--sl-input-border-color);
+	  }
+	}
+
+	/* Change colors of things in list back */
+
+	[slot="list"] {
+	  color: var(--sl-color-neutral-700);
+
+	  ::part(base), &::part(base) {
+		color: var(--sl-color-neutral-700);
+	  }
+
+	  :hover::part(base) {
+		border-color: var(--sl-input-border-color);
+	  }
+	}
+  }
+
+
+}
+/*** END WIDGETS ***/

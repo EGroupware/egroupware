@@ -959,7 +959,7 @@ abstract class Framework extends Framework\Extra
 	 * @author Dave Hall (*based* on verdilak? css inclusion code)
 	 * @return array with keys 'app_css' from the css method of the menuaction-class and 'file_css' (app.css file of the application)
 	 */
-	public function _get_css()
+	public function _get_css($themes_to_check = array())
 	{
 		$app_css = '';
 		if (isset($GLOBALS['egw_info']['flags']['css']))
@@ -970,7 +970,6 @@ abstract class Framework extends Framework\Extra
 		if (self::$load_default_css)
 		{
 			// For mobile user-agent we prefer mobile theme over selected one with a final fallback to theme named as template
-			$themes_to_check = array();
 			if (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')
 			{
 				$themes_to_check[] = $this->template_dir.'/mobile/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';

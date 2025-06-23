@@ -24,6 +24,54 @@ class kdots_framework extends Api\Framework\Ajax
 
 
 	/**
+	 * Constructor
+	 *
+	 * Overwritten to set own app/template name (parent can NOT use static::APP!)
+	 *
+	 * @param string $template ='pixelegg' name of the template
+	 */
+	function __construct($template = self::APP)
+	{
+		parent::__construct($template);        // call the constructor of the extended class
+
+		// search 'mobile' dirs first
+		if(Api\Header\UserAgent::mobile())
+		{
+			array_unshift($this->template_dirs, 'mobile');
+		}
+		$this->template_dirs[] = '/kdots/css/themes';
+	}
+
+	/**
+	 * List available themes
+	 *
+	 * Themes are css file in the template directory
+	 *
+	 * @param string $themes_dir ='css'
+	 */
+	function list_themes()
+	{
+		$list = array();
+		if(($dh = @opendir(EGW_SERVER_ROOT . $this->template_dir . '/css/themes')))
+		{
+			while(($file = readdir($dh)))
+			{
+				if(preg_match('/' . "\.css$" . '/i', $file) &&
+					!in_array($file, ['mobile.css', 'mobile.min.css']))
+				{
+					list($name) = explode('.', $file);
+					if(!isset($list[$name]))
+					{
+						$list[$name] = ucfirst($name);
+					}
+				}
+			}
+			closedir($dh);
+		}
+		return $list;
+	}
+
+	/**
 	 * Get header as array to eg. set as vars for a template (from idots' head.inc.php)
 	 *
 	 * @param array $extra =array() extra attributes passed as data-attribute to egw.js
@@ -31,8 +79,6 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	protected function _get_header(array $extra = array())
 	{
-		self::includeCSS('/kdots/assets/styles/kdots.css');
-
 		// Skip making a mess for iframe apps, they're on their own
 		if($extra['check-framework'] == true)
 		{
@@ -42,6 +88,7 @@ class kdots_framework extends Api\Framework\Ajax
 		$data = parent::_get_header($extra);
 
 		$data['theme'] .= $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] ? 'data-darkmode="1"' : '';
+		$data['kdots_theme'] = 'kdots-' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'];
 		unset($data['darkmode']);
 
 		if($extra['navbar-apps'])
@@ -322,9 +369,10 @@ class kdots_framework extends Api\Framework\Ajax
 	 * @return array
 	 * @see Api\Framework::_get_css()
 	 */
-	public function _get_css()
+	public function _get_css($themes_to_check = array())
 	{
-		$ret = parent::_get_css();
+		$themes_to_check[] = $this->template_dir . '/css/themes/' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'] . '.css';
+		$ret = parent::_get_css($themes_to_check);
 
 		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? '12';
 		$ret['app_css'] .= "

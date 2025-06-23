@@ -14,6 +14,7 @@
 	<link rel="manifest" href="{webserver_url}/manifest.json"/>
 	<link rel="icon" href="{img_icon}" type="image/x-ico"/>
 	<link rel="shortcut icon" href="{img_shortcut}"/>
+	<link rel="stylesheet" href="{webserver_url}/kdots/css/kdots.css" type="text/css"/>
 	<link rel="stylesheet" href="{webserver_url}/node_modules/@shoelace-style/shoelace/dist/themes/light.css"/>
 	<link rel="stylesheet" href="{webserver_url}/node_modules/@shoelace-style/shoelace/dist/themes/dark.css"/>
 	<link rel="stylesheet" href="{webserver_url}/api/js/offline/themes/offline-theme-slide.css">
@@ -33,7 +34,7 @@
 {include_wz_tooltip}
 <!-- END head -->
 <!-- BEGIN framework -->
-<egw-framework id="egw_fw_basecontainer" class=" "
+<egw-framework id="egw_fw_basecontainer" class=" {kdots_theme}"
 			   application-list="{application-list}"
 >
 	<a slot="logo" href="{logo_url}" target="_blank"><img src="{logo_header}" title="{logo_title}" alt="Site logo"/></a>
