@@ -956,10 +956,11 @@ abstract class Framework extends Framework\Extra
 	 * 'theme_css' - url of the theme css file
 	 * 'print_css' - url of the print css file
 	 *
+	 * @param array $themes_to_check
 	 * @author Dave Hall (*based* on verdilak? css inclusion code)
 	 * @return array with keys 'app_css' from the css method of the menuaction-class and 'file_css' (app.css file of the application)
 	 */
-	public function _get_css($themes_to_check = array())
+	public function _get_css(array $themes_to_check = array())
 	{
 		$app_css = '';
 		if (isset($GLOBALS['egw_info']['flags']['css']))

@@ -78,12 +78,13 @@ class pixelegg_framework extends Api\Framework\Ajax
 	/**
 	 * Overwrite to NOT add customizable colors from jDots
 	 *
-	 * @see Api\Framework::_get_css()
+	 * @param array $themes_to_check
 	 * @return array
+	 *@see Api\Framework::_get_css()
 	 */
-	public function _get_css()
+	public function _get_css(array $themes_to_check = array())
 	{
-		$ret = parent::_get_css();
+		$ret = parent::_get_css($themes_to_check);
 		// color to use
 		$color = str_replace('custom', $GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'] ?? null,
 			$GLOBALS['egw_info']['user']['preferences']['common']['template_color'] ?? null);

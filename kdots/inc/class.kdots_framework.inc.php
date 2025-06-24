@@ -366,10 +366,11 @@ class kdots_framework extends Api\Framework\Ajax
 	/**
 	 * Set site-wide CSS like preferred font-size
 	 *
+	 * @param array $themes_to_check
 	 * @return array
 	 * @see Api\Framework::_get_css()
 	 */
-	public function _get_css($themes_to_check = array())
+	public function _get_css(array $themes_to_check = array())
 	{
 		$themes_to_check[] = $this->template_dir . '/css/themes/' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'] . '.css';
 		$ret = parent::_get_css($themes_to_check);
