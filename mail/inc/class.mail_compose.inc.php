@@ -498,7 +498,11 @@ class mail_compose
 		// at several locations and not necessary initialized before
 		$acc = Mail\Account::read($composeProfile);
 		$buttonClicked = false;
-		if(!empty($_content['composeToolbar']) && $_content['composeToolbar']['action'] === 'send')
+		if (!is_array($_content['composeToolbar']))
+		{
+			$_content['composeToolbar'] = empty($_content['composeToolbar']) ? [] : json_decode($_content['composeToolbar']);
+		}
+		if(($_content['composeToolbar']['action']??null) === 'send')
 		{
 			$buttonClicked = $suppressSigOnTop = true;
 			$sendOK = true;
