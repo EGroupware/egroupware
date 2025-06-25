@@ -531,17 +531,24 @@ class Sql
 		{
 			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),Api\Contacts\Sql::ACOUNT_ACTIVE_FILTER);
 		}
+		$op = 'AND';
 		$criteria = array();
 		$wildcard = in_array($param['query_type'] ?? '', ['start', 'exact']) ? '' : '%';
 		if (($query = $param['query'] ?? null))
 		{
+			$op = $query[0] == '!' ? 'AND' : 'OR';
 			switch($param['query_type'])
 			{
+				case 'all':
+				default:
+					$op = '';
+					$search_cols = array_diff($search_cols, ['email']);
+					$storage = new Api\Storage\Base('api', $this->table, $this->db);
+					$criteria = $storage->search2criteria($query, $wildcard, $op, null, $search_cols);
+					break;
 				case 'start':
 					$query .= '*';
 					// fall-through
-				case 'all':
-				default:
 				case 'exact':
 					foreach($search_cols as $col)
 					{
@@ -578,7 +585,7 @@ class Sql
 			array_merge(array(1,'n_given','n_family','id','created','modified','files',$this->table.'.account_id AS account_id'),$email_cols),
 			$order, "account_lid,account_type,account_status,account_expires,account_primary_group,account_description".
 			",account_lastlogin,account_lastloginfrom,account_lastpwd_change,account_uuid,account_dn",
-			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',
+										$wildcard, false, $op,
 			!empty($param['offset']) ? array($param['start'], $param['offset']) : $param['start'] ?? false,
 			$filter,$join) ?? [] as $contact)
 		{
