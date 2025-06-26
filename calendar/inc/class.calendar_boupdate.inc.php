@@ -1466,7 +1466,8 @@ class calendar_boupdate extends calendar_bo
 		$GLOBALS['egw_info']['user']['account_id'] = $this->owner = $alarm['owner'];
 
 		$event_time_user = Api\DateTime::server2user($alarm['time'] + $alarm['offset']);	// alarm[time] is in server-time, read requires user-time
-		if (!$alarm['owner'] || !$alarm['cal_id'] || !($event = $this->read($alarm['cal_id'],$event_time_user)))
+		if (!$alarm['owner'] || !$alarm['cal_id'] || !($event = $this->read($alarm['cal_id'],$event_time_user)) ||
+			!empty($event['deleted']))  // no processing of alarms for deleted events
 		{
 			return False;	// event not found
 		}
@@ -2102,13 +2103,7 @@ class calendar_boupdate extends calendar_bo
 				$event['deleted'] = $this->now;
 				$this->save($event, $ignore_acl);
 				// Actually delete alarms
-				if (isset($event['alarm']) && is_array($event['alarm']))
-				{
-					foreach($event['alarm'] as $id => $alarm)
-					{
-						$this->delete_alarm($id, true);
-					}
-				}
+				$this->so->delete_alarm($cal_id);
 			}
 
 			// delete or keep (with new uid) exceptions of a recurring event
