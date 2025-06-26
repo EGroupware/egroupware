@@ -451,7 +451,9 @@ class Sql
 		}
 		if ($param['sort']) $order = implode(' '.$param['sort'].',', explode(',', $order)).' '.$param['sort'];
 
-		$search_cols = array('account_lid','n_family','n_given','email');
+		$search_cols = ['account_lid','n_family','n_given','email',
+			// adding "group" for groups, so search behaves like the user expects as seeing groups always with the suffix "group"
+			"CASE account_type WHEN 'g' THEN ".$this->db->quote(lang('group'))." ELSE NULL END"];
 		$join = $this->contacts_join;
 		$email_cols = array('email');
 
