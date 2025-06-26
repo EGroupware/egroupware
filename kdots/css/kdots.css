@@ -653,6 +653,7 @@ body egw-app[name="ranking"],
   /* This would make things simpler for sizing, but causes problems with etemplate.resize() and dialogs with grids
   height: 100%;
    */
+  padding: 0 var(--sl-spacing-small);
   /* Specific to override etemplate2 */
 }
 .popupMainDiv .dialogHeader,
