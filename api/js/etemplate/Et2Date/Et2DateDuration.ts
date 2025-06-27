@@ -40,9 +40,9 @@ export interface formatOptions
 export function formatDuration(value : number | string, options : formatOptions) : { value : string, unit : string }
 {
 	// Handle empty / 0 / no value
-	if(value === "" || value == "0" || !value)
+	if((value === "" || value == "0" || !value) && !options.emptyNot0)
 	{
-		return {value: options.emptyNot0 ? "0" : "", unit: ""};
+		return {value: "", unit: ""};
 	}
 	// Make sure it's a number now
 	value = typeof value == "string" ? parseInt(value) : value;
