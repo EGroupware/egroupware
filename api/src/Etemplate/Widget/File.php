@@ -119,9 +119,9 @@ class File extends Etemplate\Widget
 				$widget = $template->getElementById($matches[1].':$cont[id]:'.$matches[3]);
 			}
 			$mime = null;
-			if($widget && ($widget->attrs['allow'] || $widget->attrs['mime']))
+			if($widget && !empty($widget->attrs['accept'] ?? $widget->attrs['mime']))
 			{
-				$mime = $widget->attrs['allow'] ?? $widget->attrs['mime'];
+				$mime = !empty($widget->attrs['accept']) ? preg_split('/, */', $widget->attrs['accept']) : $widget->attrs['mime'];
 			}
 
 			// Check for legacy [] in id to indicate multiple - it changes format
@@ -224,8 +224,15 @@ class File extends Etemplate\Widget
 	}
 	/**
 	 * Process one uploaded file.  There should only be one per request...
+	 *
+	 * @param $field
+	 * @param array $file
+	 * @param array|string $mime array of allowed extension (incl. dot!) or mime/types, or string with regular expression of mime-type
+	 * @param array $file_data
+	 * @return false|string
+	 * @throws Api\Exception
 	 */
-	protected static function process_uploaded_file($field, Array &$file, $mime, Array &$file_data)
+	protected static function process_uploaded_file($field, array &$file, $mime, array &$file_data)
 	{
 		unset($field);	// not used
 
@@ -246,11 +253,34 @@ class File extends Etemplate\Widget
 			// Mime check (can only work for the first chunk, further ones will always fail!)
 			if ($mime && (int)$_POST['resumableChunkNumber'] === 1)
 			{
-				$is_preg = $mime[0] == '/';
-				if (!$is_preg && strcasecmp($mime,$type) ||
-					$is_preg && !preg_match($mime,$type))
+				$match = false;
+				foreach((array)$mime as $pattern)
 				{
-					$file_data[$file['name']] = $file['name'].':'.lang('File is of wrong type (%1 != %2)!',$type,$mime);
+					switch($pattern[0])
+					{
+						case '.':   // pattern is an extension
+							$match = str_ends_with($file['name'], $pattern);
+							break;
+						case '/':   // pattern is a regular expression for mime-type
+							$match = preg_match($pattern, $type);
+							break;
+						default:    // pattern must match mime type
+							if (str_ends_with($pattern, '/*'))
+							{
+								$match = str_starts_with($type, substr($pattern, 0, -1));
+							}
+							else
+							{
+								$match = $pattern === $type;
+							}
+							break;
+					}
+					if ($match) break;
+				}
+
+				if (!$match)
+				{
+					$file_data[$file['name']] = $file['name'].': '.lang('File is of wrong type (%1 != %2)!', $type, $mime);
 					//error_log(__METHOD__.__LINE__.array2string($file_data[$file['name']]));
 					http_response_code(415); // Unsupported Media Type (upload fails)
 					return false;
