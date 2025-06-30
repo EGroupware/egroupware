@@ -905,15 +905,18 @@
 			{
 				for (var app in apps)
 				{
-					if (framework.notifyAppTab) framework.notifyAppTab(app, apps[app]);
+					if (framework?.notifyAppTab)
+					{
+						framework.notifyAppTab(app, apps[app]);
+					}
 				}
 
 				$topmenu_info_notifications.addClass('egwpopup_notify');
-				framework.topmenu_info_notify('notifications', true, counter,egw.lang('You have %1 unread notifications', counter));
+				framework?.topmenu_info_notify('notifications', true, counter, egw.lang('You have %1 unread notifications', counter));
 			}
 			else
 			{
-				framework.topmenu_info_notify('notifications', false);
+				framework?.topmenu_info_notify('notifications', false);
 			}
 			return counter;
 		};
