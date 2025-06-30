@@ -69,7 +69,7 @@ export class EgwFrameworkMessage extends LitElement
 	};
 
 	// Map our message types to shoelace variants
-	private static TYPE_MAP = {info: "primary", error: "danger"};
+	private static TYPE_MAP = {info: "success", warning: "warning", error: "danger"};
 
 	private __alert : SlAlert;
 

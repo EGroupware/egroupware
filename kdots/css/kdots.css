@@ -19,6 +19,7 @@ html .sl-toast-stack,
 body .sl-toast-stack {
   top: auto;
   bottom: 0px;
+  width: 50rem;
 }
 html .sl-toast-stack sl-alert et2-checkbox,
 body .sl-toast-stack sl-alert et2-checkbox {
