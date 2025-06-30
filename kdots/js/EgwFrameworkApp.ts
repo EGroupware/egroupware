@@ -14,6 +14,7 @@ import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
 import {repeat} from "lit/directives/repeat.js";
 import {until} from "lit/directives/until.js";
 import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
+import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 
 /**
  * @summary Application component inside EgwFramework
@@ -104,6 +105,13 @@ export class EgwFrameworkApp extends LitElement
 
 	@property()
 	features : FeatureList = {};
+
+	/**
+	 * Display application in a loading state.
+	 * @type {boolean}
+	 */
+	@property({type: Boolean, reflect: true})
+	loading = false;
 
 	@state()
 	leftCollapsed = false;
@@ -241,6 +249,7 @@ export class EgwFrameworkApp extends LitElement
 			window.app[this.name].destroy();
 			delete window.app[this.name];	// really delete it, so new object get constructed and registered for push
 		}
+		this.loading = true;
 		if(!this.useIframe)
 		{
 			return this.loadingPromise = this.egw.request(
@@ -270,6 +279,9 @@ export class EgwFrameworkApp extends LitElement
 				// Might have just slotted aside content, hasSlotController will requestUpdate()
 				// but we need to do it anyway for translation
 				this.requestUpdate();
+			}).finally(() =>
+			{
+				this.loading = false;
 			});
 		}
 		else
@@ -283,6 +295,9 @@ export class EgwFrameworkApp extends LitElement
 					clearTimeout(timeout);
 					resolve()
 				}, {once: true});
+			}).finally(() =>
+			{
+				this.loading = false;
 			});
 			// Might have just changed useIFrame, need to update to show that
 			this.requestUpdate();
@@ -332,10 +347,49 @@ export class EgwFrameworkApp extends LitElement
 		return this.hideSide("right");
 	}
 
-	public refresh()
+	/**
+	 * Refresh given application by refreshing etemplates, or reloading URL
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string|undefined} _app application name
+	 * @param {string|number|undefined} _id id of entry to refresh
+	 * @param {string|undefined} _type either 'edit', 'delete', 'add' or undefined
+	 * @param {string|undefined} _targetapp which app's window should be refreshed, default current
+	 * @param {string|RegExp} _replace regular expression to replace in url
+	 * @param {string} _with
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @return {DOMwindow|null} null if refresh was triggered, or DOMwindow of app
+	 */
+	public refresh(_msg, _app, _id, _type)
 	{
-		return this.egw.refresh("", this.name);
-		/* Could also be this.load(false); this.load(this.url) */
+		if(this.useIframe)
+		{
+			this.querySelector("iframe").contentWindow.location.reload();
+			return this.querySelector("iframe").contentWindow;
+		}
+		this.loading = true;
+
+		// Refresh all child etemplates
+		const etemplates = {};
+		let refresh_done = false;
+		this.querySelectorAll(":scope > div > et2-template").forEach((t : Et2Template) =>
+		{
+			etemplates[t.getInstanceManager().uniqueId] = t.getInstanceManager();
+		})
+		Object.values(etemplates).forEach((etemplate) =>
+		{
+			refresh_done = etemplate.refresh(_msg, this.appName, _id, _type) || refresh_done;
+		});
+
+		// if not trigger a full app refresh
+		if(!refresh_done)
+		{
+			this.load(false);
+			this.load(this.url + (_msg ? '&msg=' + encodeURIComponent(_msg) : ''));
+		}
+		else
+		{
+			this.loading = false;
+		}
 	}
 
 	public async print()
@@ -560,7 +614,7 @@ export class EgwFrameworkApp extends LitElement
 	 * @returns {TemplateResult<1>}
 	 * @protected
 	 */
-	protected _loadingTemplate()
+	protected _loadingTemplate(slot = null)
 	{
 		// Don't show loader for iframe, it will not resolve
 		if(this.useIframe)
@@ -569,7 +623,7 @@ export class EgwFrameworkApp extends LitElement
 		}
 
 		return html`
-            <div class="egw_fw_app__loading">
+            <div class="egw_fw_app__loading" slot=${slot || nothing}>
                 <sl-spinner></sl-spinner>
             </div>`;
 	}
@@ -820,28 +874,33 @@ export class EgwFrameworkApp extends LitElement
                     <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideLeft}></sl-icon>
                     ${this._asideTemplate("start", "left")}
                     <sl-split-panel slot="end"
-                                    class=${classMap({"egw_fw_app__innerSplit": true, "no-content": !hasRightSlots})}
+                                    class=${classMap({
+                                        "egw_fw_app__innerSplit": true,
+                                        "no-content": !hasRightSlots
+                                    })}
                                     primary="start"
                                     position=${rightWidth} snap="50% 80% 100%"
                                     snap-threshold="50"
                                     .panelInfo=${this.rightPanelInfo}
                                     @sl-reposition=${this.handleSlide}
                     >
-                        <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>
-                        <header slot="start" class="egw_fw_app__header header" part="content-header">
-                            <slot name="header"><span class="placeholder">header</span></slot>
-                        </header>
-                        <div slot="start" class="egw_fw_app__main_content content" part="content"
-                             aria-label="${this.name}" tabindex="0">
-                            <slot>
-                                ${this._loadingTemplate()}
-                                <span class="placeholder">main</span>
-                            </slot>
-                        </div>
-                        <footer slot="start" class="egw_fw_app__footer footer" part="footer">
-                            <slot name="footer"><span class="placeholder">main-footer</span></slot>
-                        </footer>
-                        ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
+                        ${this.loading ? this._loadingTemplate("start") : html`
+                            <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>
+                            <header slot="start" class="egw_fw_app__header header" part="content-header">
+                                <slot name="header"><span class="placeholder">header</span></slot>
+                            </header>
+                            <div slot="start" class="egw_fw_app__main_content content" part="content"
+                                 aria-label="${this.name}" tabindex="0">
+                                <slot>
+                                    ${this._loadingTemplate()}
+                                    <span class="placeholder">main</span>
+                                </slot>
+                            </div>
+                            <footer slot="start" class="egw_fw_app__footer footer" part="footer">
+                                <slot name="footer"><span class="placeholder">main-footer</span></slot>
+                            </footer>
+                            ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
+                        `}
                     </sl-split-panel>
                 </sl-split-panel>
             </div>

@@ -190,6 +190,7 @@ export class EgwFrameworkMessage extends LitElement
             <sl-alert
                     variant=${variant}
                     ?closable=${this.closable}
+                    ?countdown=${duration > 5000}
                     duration=${duration || nothing}
                     @sl-hide=${this.handleHide}
             >

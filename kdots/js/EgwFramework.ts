@@ -710,6 +710,58 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
+	 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string|undefined} _app application name
+	 * @param {string|number|undefined} _id id of entry to refresh
+	 * @param {string|undefined} _type either 'edit', 'delete', 'add' or undefined
+	 * @param {string|undefined} _targetapp which app's window should be refreshed, default current
+	 * @param {string|RegExp} _replace regular expression to replace in url
+	 * @param {string} _with
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @return {Window|null} null if refresh was triggered, or DOMwindow of app
+	 */
+	public refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
+	{
+		if(!_app)	// force reload of entire framework, eg. when template-set changes
+		{
+			window.location.href = this.egw.webserverUrl + '/index.php?cd=yes' + (_msg ? '&msg=' + encodeURIComponent(_msg) : '');
+			return;
+		}
+
+		// Call appropriate default / fallback refresh
+		// ? What's this for?
+		let win = window;
+
+		// Preferences app is running under admin app, we need to trigger admin refersh
+		// in order to refresh categories list
+		_app = _app === 'preferences' ? 'admin' : _app;
+
+		// Find & update application
+		const app : EgwFrameworkApp = this.querySelector("egw-app#" + _app);
+		if(app)
+		{
+			const result = app.refresh(_msg, _id, _type, _targetapp);
+			if(result !== null)
+			{
+				win = result as Window & typeof globalThis;
+			}
+		}
+
+		// if different target-app given, refresh it too
+		if(_targetapp && _app != _targetapp)
+		{
+			this.refresh(_msg, _targetapp, null, null, null, _replace, _with, _msg_type);
+		}
+
+		// app runs in iframe (refresh iframe content window)
+		if(win != window)
+		{
+			return win;
+		}
+	}
+
+	/**
 	 * Set a notification message for topmenu info item
 	 *
 	 * @param {string} _id id of topmenu info item with its prefix
