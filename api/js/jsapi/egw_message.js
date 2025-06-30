@@ -73,6 +73,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		message: function(_msg, _type, _discardID)
 		{
+			if (framework && typeof framework.message == 'function')
+			{
+				return framework.message(_msg, _type, null, true, _discardID);
+			}
 			var jQuery = _wnd.jQuery;
 			var wrapper = jQuery('.egw_message_wrapper').length > 0 ? jQuery('.egw_message_wrapper')
 				: jQuery(_wnd.document.createElement('div')).addClass('egw_message_wrapper noPrint').css('position', 'absolute');

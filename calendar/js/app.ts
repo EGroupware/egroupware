@@ -2684,7 +2684,7 @@ export class CalendarApp extends EgwApp
 				// Show loading div to hide redrawing
 				egw.loading_prompt(
 					this.appname,true,egw.lang('please wait...'),
-					typeof framework !== 'undefined' ? framework.applications?.calendar?.tab?.contentDiv : false,
+					typeof framework.querySelector !== 'undefined' ? view.etemplates[0].DOMContainer : framework.applications?.calendar?.tab?.contentDiv ?? false,
 					egwIsMobile()?'horizontal':'spinner'
 				);
 
