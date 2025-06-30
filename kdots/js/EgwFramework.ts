@@ -485,6 +485,7 @@ export class EgwFramework extends LitElement
 			_link += '&fw_target=' + appname;
 			// create an actual clone of existing app object
 			let clone = {
+				icon: appname + '/navbar',
 				...app,
 				..._extra,
 				name: appname,
@@ -493,6 +494,13 @@ export class EgwFramework extends LitElement
 				// Need to override to open, base app might already be opened
 				opened: undefined
 			};
+
+			// Trying to open a tab, so can't be 5
+			if(clone.status == 5)
+			{
+				clone.status = 1;
+			}
+
 			// Store only in session
 			this._tabApps[appname] = clone;
 			this.loadApp(appname, true);
