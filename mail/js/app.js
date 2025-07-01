@@ -5711,7 +5711,7 @@ app.classes.mail = AppJS.extend(
 		var integWidget= {};
 		var self = this;
 
-		integWidget = this.et2.getWidgetById(integApps[index]);
+		integWidget = this.et2.getWidgetById(integApps[index]??"");
 		if (toolbar.options.actions[integApps[index]] &&
 				typeof toolbar.options.actions[integApps[index]]['mail_import'] != 'undefined' &&
 				typeof toolbar.options.actions[integApps[index]]['mail_import']['app_entry_method'] != 'unefined')
