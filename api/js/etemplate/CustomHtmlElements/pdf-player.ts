@@ -168,6 +168,9 @@ class pdf_player extends HTMLElement {
 			this.__render(1).then(_ =>{
 				this.__pushEvent('loadedmetadata');
 			});
+		}).catch((error) =>
+		{
+			egw.message(error.message, 'error');
 		});
 	}
 
