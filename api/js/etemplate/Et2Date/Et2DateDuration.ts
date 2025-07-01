@@ -184,7 +184,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 	 * Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int), 's' = seconds (int).
 	 */
 	@property({type: String, reflect: true})
-	dataFormat = "m";
+	dataFormat : "d" | "h" | "m" | "s" = "m";
 	/**
 	 * Display format
 	 *
@@ -195,6 +195,18 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 	@property({type: String, reflect: true})
 	set displayFormat(value : string)
 	{
+		// Update display if needed
+		let current : number;
+		if(value !== this.__displayFormat)
+		{
+			const currentValue = this._oldValue ?? this._display;
+			current = this._unit_from_value(
+				currentValue.value, this.dataFormat, true, {
+					dataFormat: currentValue.unit || this.dataFormat,
+					hoursPerDay: this.hoursPerDay
+				}
+			);
+		}
 		this.__displayFormat = "";
 		if(!value)
 		{
@@ -210,6 +222,10 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 			{
 				this.__displayFormat += f;
 			}
+		}
+		if(!isNaN(current))
+		{
+			this.value = current;
 		}
 	}
 
@@ -365,6 +381,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 
 	set value(_value)
 	{
+		this._oldValue = {value: _value, unit: this.dataFormat};
 		this._display = this._convert_to_display(this.emptyNot0 && ""+_value === "" ? '' : parseFloat(_value));
 		// Update values
 		(typeof this._display.value == "string" ? this._display.value.split(":") : [this._display.value])
