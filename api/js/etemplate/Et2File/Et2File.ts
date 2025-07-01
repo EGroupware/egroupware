@@ -434,13 +434,23 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 	}
 
-	protected resumableFileError(file, message)
+	protected resumableFileError(file, jsonResponse)
 	{
 		const fileItem = this.findFileItem(file);
+		const response = ((JSON.parse(jsonResponse)['response'] ?? {}).find(i => i['type'] == "data") ?? {})['data'] ?? {};
+		if((!response || response.length || Object.entries(response).length == 0 || response[file.file?.name]) || (
+			Object.values(response).length == 1 && typeof Object.values(response)[0] == "string"
+		))
+		{
+			console.warn("Problem uploading", jsonResponse);
+			file.warning = response[file?.file?.name] ?? Object.values(response).pop() ?? "No response";
+			if(fileItem)
+			{
+				fileItem.variant = "warning";
+				fileItem.error(file.warning);
+			}
+		}
 		fileItem.loading = false;
-		file.warning = message;
-
-		fileItem.error(message);
 
 		fileItem.requestUpdate("variant");
 		fileItem.requestUpdate("loading");
