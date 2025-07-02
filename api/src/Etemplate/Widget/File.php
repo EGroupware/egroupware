@@ -121,10 +121,12 @@ class File extends Etemplate\Widget
 			$mime = null;
 			if($widget && !empty($widget->attrs['accept'] ?? $widget->attrs['mime']))
 			{
-				$mime = !empty($widget->attrs['accept']) ? preg_split('/, */', $widget->attrs['accept']) : $widget->attrs['mime'];
+				$mime = !empty($widget->attrs['accept']) ?
+					preg_split('/, */', self::expand_name($widget->attrs['accept'])) :
+					self::expand_name($widget->attrs['mime']);
 			}
 
-			// Check for legacy [] in id to indicate multiple - it changes format
+			// Check for legacy [] in id to indicate a multiple - it changes format
 			if(is_array($files['name']))
 			{
 				$file_list = array();
