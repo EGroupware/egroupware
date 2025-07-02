@@ -398,7 +398,7 @@ class Vfs extends File
 		{
 			// check if path already contains a valid extension --> don't add another one
 			$file['name'] = static::addExtension($path, $file);
-			$path = rtrim($path, $filename) . $file['name'];
+			$path = Api\Vfs::dirname($path) . '/' . $file['name'];
 		}
 		else if ($path)   // multiple upload with dir given (trailing slash)
 		{
