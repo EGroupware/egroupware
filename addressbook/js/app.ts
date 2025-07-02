@@ -28,7 +28,8 @@ import type {EgwAction} from "../../api/js/egw_action/EgwAction";
 import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 import {Et2MergeDialog} from "../../api/js/etemplate/Et2Dialog/Et2MergeDialog";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
-import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import {Et2TreeDropdown} from "../../api/js/etemplate/Et2Tree/Et2TreeDropdown";
+import {egw_getActionManager} from "../../api/js/egw_action/egw_action";
 
 /**
  * Object to call app.addressbook.openCRMview with
@@ -809,7 +810,8 @@ class AddressbookApp extends EgwApp
 	 */
 	_add_new_list_prompt(owner, contacts)
 	{
-		var lists = <et2_selectbox><unknown>this.et2.getWidgetById('filter2');
+		const filter = <Et2TreeDropdown>this.et2.getWidgetById('filter2')
+		const lists = filter.select_options.find(elem => elem.value === 'lists').item;
 		let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
 		let callback = function(button, values) {
 			if(button == Et2Dialog.OK_BUTTON)
@@ -824,14 +826,15 @@ class AddressbookApp extends EgwApp
 						// Update list
 						if(result)
 						{
-							lists.options.select_options.unshift({value: result, label: values.name});
-							lists.set_select_options(lists.options.select_options);
+							lists.unshift({value: result, label: values.name});
 
 							// Set to new list so they can see it easily
-							lists.set_value(result);
-							// Call change event manually after setting the value
-							// Not sure why our selectbox does not trigger change event
-							jQuery(lists.node).change();
+							filter.value = result
+//		manually trigger a change event so nm can listen to it and update
+							filter.updateComplete.then(() =>
+							{
+								filter.dispatchEvent(new Event("change", {bubbles: true}));
+							});
 						}
 						// Add to actions
 						var addressbook_actions = egw_getActionManager('addressbook',false);
@@ -870,7 +873,7 @@ class AddressbookApp extends EgwApp
 			width: 400
 		});
 
-		document.body.appendChild(<LitElement><unknown>dialog);
+		document.body.appendChild(dialog);
 	}
 
 	/**
@@ -884,42 +887,64 @@ class AddressbookApp extends EgwApp
 	 */
 	rename_list(action, selected)
 	{
-		var lists = this.et2.getWidgetById('filter2');
-		var list = lists.getValue() || 0;
-		var value = null;
-		for(var i = 0; i < lists.select_options.length; i++)
+		let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
+		const filter = <Et2TreeDropdown>this.et2.getWidgetById('filter2')
+		const lists = (filter.select_options.find(elem => elem.value === 'lists')).item;
+		const selectedID = filter.getValue() || 0;
+		const value = lists.find(distributionList => distributionList.value == selectedID);
+		const self =this;
+		if (!value)
 		{
-			if(lists.select_options[i].value == list)
+			egw.message(egw.lang('No Distribution list found to rename'), 'warning')
+			return;
+		}
+		let data = null;
+		egw.json('addressbook.addressbook_ui.ajax_get_list_owner', selectedID,
+			(result: { owner: string, id: string }) =>
 			{
-				value = lists.select_options[i];
+				data = result
+			})
+			.sendRequest(false)
+		const callback = function (button, values)
+		{
+			if (button == Et2Dialog.OK_BUTTON)
+			{
+				egw.json('addressbook.addressbook_ui.ajax_set_list', [selectedID, values.name, values.owner],
+					function (result)
+					{
+						value.text = values.name;
+						filter.value = selectedID
+						filter.requestUpdate()
+						filter.updateComplete.then(() =>
+							{
+								filter.dispatchEvent(new Event("change", {bubbles: true}));
+							});
+
+					}
+				).sendRequest(true);
 			}
 		}
-		Et2Dialog.show_prompt(
-			function(button, name)
-			{
-				if(button == Et2Dialog.OK_BUTTON)
-				{
-					egw.json('addressbook.addressbook_ui.ajax_set_list', [list, name],
-						function(result)
-						{
-							if(typeof result == 'object')
-							{
-								return;
-							} // This response not for us
-							// Update list
-							if(result)
-							{
-								value.label = name;
-								lists.select_options = lists.select_options;
-							}
-						}
-					).sendRequest(true);
+
+		let dialog = new Et2Dialog(this.egw);
+		dialog.transformAttributes({
+			callback: callback,
+			title: 'Rename list',
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			value: {
+				content: {
+					name: value.text || value.label,
+					owner: data.owner
+				},
+				sel_options: {
+					owner: owner_options
 				}
 			},
-			this.egw.lang('Name for the distribution list'),
-			this.egw.lang('Rename list'),
-			value.label
-		);
+			template: egw.webserverUrl + '/addressbook/templates/default/add_list_dialog.xet',
+			class: "et2_prompt",
+			width: 400
+		});
+
+		document.body.appendChild(dialog);
 	}
 
 	/**
