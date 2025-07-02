@@ -30,7 +30,7 @@ export type SearchResult = {
 
 	// The item has children (option group)
 	hasChildren? : boolean,
-	// The item's children
+	// The item's children, called item in some legacy code
 	children? : SearchResult[]
 }
 

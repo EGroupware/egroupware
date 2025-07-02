@@ -1199,6 +1199,25 @@ class addressbook_ui extends addressbook_bo
 	}
 
 	/**
+	 * return current user if $_owner is not set
+	 * @param $_owner
+	 * @return int|mixed
+	 */
+	private function getOwner($_owner)
+	{
+		// Set owner to current user, if not set
+		$owner = $_owner ? $_owner : $GLOBALS['egw_info']['user']['account_id'];
+		// if admin forced or set default for add_default pref
+		// consider default_addressbook as owner which already
+		// covered all cases in contacts class.
+		if ($owner == (int)$GLOBALS['egw']->preferences->default['addressbook']['add_default'] ||
+			$owner == (int)$GLOBALS['egw']->preferences->forced['addressbook']['add_default'])
+		{
+			$owner = $this->default_addressbook;
+		}
+		return $owner;
+	}
+	/**
 	 * Create or rename an existing email list
 	 *
 	 * @param int $list_id ID of existing list, or 0 for a new one
@@ -1209,16 +1228,8 @@ class addressbook_ui extends addressbook_bo
 	 */
 	function ajax_set_list($list_id, $new_name, $_owner = false, $contacts = array())
 	{
-		// Set owner to current user, if not set
-		$owner = $_owner ? $_owner : $GLOBALS['egw_info']['user']['account_id'];
-		// if admin forced or set default for add_default pref
-		// consider default_addressbook as owner which already
-		// covered all cases in contacts class.
-		if ($owner == (int)$GLOBALS['egw']->preferences->default['addressbook']['add_default'] ||
-				$owner == (int)$GLOBALS['egw']->preferences->forced['addressbook']['add_default'])
-		{
-			$owner = $this->default_addressbook;
-		}
+		$owner = $this->getOwner($_owner);
+
 		// Check for valid list & permissions
 		if(!(int)$list_id && !$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner))
 		{
@@ -1237,6 +1248,8 @@ class addressbook_ui extends addressbook_bo
 		if($list_id)
 		{
 			$list = $this->read_list((int)$list_id);
+			//also change to owner to the now selected value
+			$list['list_owner']=$owner;
 		}
 		$list['list_name'] = $new_name;
 
@@ -1252,6 +1265,26 @@ class addressbook_ui extends addressbook_bo
 		));
 		// Success, just update selectbox to new value
 		Api\Json\Response::get()->data($new_id == $list_id ? "true" : $new_id);
+	}
+
+	function ajax_get_list_owner($list_id)
+	{
+		$owner = $this->getOwner(null);
+		if (!$list_id)
+		{
+			Api\Json\Response::get()->apply('egw.message', array(lang('No list Id given'), 'error'));
+			return;
+		};
+		//check for permissions
+		if ((int)$list_id && !$this->check_list((int)$list_id, EGW_ACL_READ, $owner))
+		{
+			Api\Json\Response::get()->apply('egw.message', array(lang('Insufficent rights to view this list!'), 'error'));
+			return;
+		}
+		$list = $this->read_list((int)$list_id);
+		// Success
+		Api\Json\Response::get()->data(['owner'=>$list['list_owner'].'','id'=>''.$list['list_id']]);
+
 	}
 
 	/**
