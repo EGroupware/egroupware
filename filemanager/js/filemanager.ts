@@ -1494,36 +1494,8 @@ export class filemanagerAPP extends EgwApp
 		if(_data.msg || _data.share_link) window.egw_refresh(_data.msg, this.appname);
 		console.log("_data", _data);
 		let app = this;
-
-		let copy_link_to_clipboard = function (evt): Promise<boolean> {
-			const target = evt.currentTarget;
-			//if target is an editable field select the current content
-			//mostly this will be et2-textbox_ro so no selection possible or needed
-			if(target.select && target.setSelectionRange)
-			{
-				target.select();
-				target.setSelectionRange(0, 99999) //For mobile devices
-			}
-			try
-			{
-				return navigator.clipboard.writeText(target.value).then(() => {
-					egw.message(app.egw.lang('Share link copied into clipboard'));
-					return true;
-				})
-
-			} catch (e)
-			{
-			}
-			egw.message('Failed to copy the link!');
-		};
-		jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
 		let dialog = new Et2Dialog(this.egw);
 		dialog.transformAttributes({
-			callback: function()
-			{
-				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
-				return true;
-			},
 			title: _data.title ? _data.title : (_data.writable || _data.action === 'shareWritableLink' ?
 												this.egw.lang("Writable share link") : this.egw.lang("Readonly share link")
 			),
@@ -1533,10 +1505,6 @@ export class filemanagerAPP extends EgwApp
 			value: {content: {"share_link": _data.share_link}}
 		});
 		document.body.appendChild(dialog);
-		dialog.addEventListener("load", () =>
-		{
-			dialog.eTemplate.widgetContainer.getWidgetById("share_link").onclick = copy_link_to_clipboard;
-		});
 	}
 
 	/**
