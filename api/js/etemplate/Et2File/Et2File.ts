@@ -171,6 +171,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	{
 		super();
 		this.resumableQuery = this.resumableQuery.bind(this);
+		this.handleFileClick = this.handleFileClick.bind(this);
 	}
 
 	disconnectedCallback()
