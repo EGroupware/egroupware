@@ -121,9 +121,17 @@ class File extends Etemplate\Widget
 			$mime = null;
 			if($widget && !empty($widget->attrs['accept'] ?? $widget->attrs['mime']))
 			{
-				$mime = !empty($widget->attrs['accept']) ?
-					preg_split('/, */', self::expand_name($widget->attrs['accept'])) :
-					self::expand_name($widget->attrs['mime']);
+				if (!empty($widget->attrs['accept']))
+				{
+					if (!empty($mime = self::expand_name($widget->attrs['accept'], 0, 0)))
+					{
+						$mime = preg_split('/, */', $mime);
+					}
+				}
+				else
+				{
+					$mime = self::expand_name($widget->attrs['mime'], 0, 0);
+				}
 			}
 
 			// Check for legacy [] in id to indicate a multiple - it changes format
