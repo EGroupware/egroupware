@@ -86,7 +86,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	/** If true, no file list will be shown */
 	@property({type: Boolean, reflect: true, attribute: "no-file-list"}) noFileList = false;
 
-	/** Target element to show file list in instead of the default dropdown*/
+	/** Target element to show file list in instead of the default dropdown.  Either a querySelector or widget ID.*/
 	@property({type: String}) fileListTarget : string;
 
 	/** Component to listen for file drops */
@@ -158,7 +158,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	get list() : HTMLElement
 	{
 		return this.fileListTarget ?
-			   this.egw().window.document.querySelector(this.fileListTarget) ?? this.getRoot()?.getWidgetById(this.fileListTarget)?.getDOMNode() :
+			   this.parentNode.querySelector(this.fileListTarget) ?? this.egw().window.document.querySelector(this.fileListTarget) ?? this.getRoot()?.getWidgetById(this.fileListTarget)?.getDOMNode() :
 			   this.shadowRoot?.querySelector("slot[name='list']");
 	}
 
