@@ -663,7 +663,7 @@ export class EgwFramework extends LitElement
 	 */
 	public async message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null)
 	{
-		if(!message || message.type != "string" || !message.trim())
+		if(!message || typeof message != "string" || !message.trim())
 		{
 			return;
 		}
