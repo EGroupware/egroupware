@@ -73,7 +73,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		message: function(_msg, _type, _discardID)
 		{
-			if (framework && typeof framework.message == 'function')
+			if (framework && typeof framework.message == 'function' && _msg && typeof msg == "string" && msg.trim())
 			{
 				return framework.message(_msg, _type, null, true, _discardID);
 			}
