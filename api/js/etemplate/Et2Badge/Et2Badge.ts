@@ -5,7 +5,7 @@ import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 
 @customElement("et2-badge")
-export class Et2Description extends Et2Widget(SlBadge) implements et2_IDetachedDOM
+export class Et2Badge extends Et2Widget(SlBadge) implements et2_IDetachedDOM
 {
 
 	@property({type: String}) label = "";
