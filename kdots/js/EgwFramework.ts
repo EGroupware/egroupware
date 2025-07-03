@@ -663,6 +663,10 @@ export class EgwFramework extends LitElement
 	 */
 	public async message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null)
 	{
+		if(!message.trim())
+		{
+			return;
+		}
 		if(message && !type)
 		{
 			const error_reg_exp = new RegExp('(error|' + egw.lang('error') + ')', 'i');
