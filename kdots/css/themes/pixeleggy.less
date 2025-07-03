@@ -1,0 +1,35 @@
+/* Theme vaguely resembling Pixelegg theme to reduce change stress */
+egw-framework.kdots-pixeleggy {
+
+  &::part(open-applications) {
+	--tab-icon-size: var(--sl-spacing-x-large);
+	--tab-icon-size-active: var(--sl-spacing-x-large);
+  }
+
+  egw-app {
+	--application-header-text-color: var(--sl-color-neutral-900);
+
+	/* Remove big color bar, use just some border */
+
+	&::part(app-header), &::part(header) {
+	  background-color: initial;
+	}
+
+	&::part(app-header), *::part(header) {
+	  border-top: 4px solid var(--application-color, --sl-color-primary-500);
+	}
+  }
+}
+
+.sl-toast-stack {
+  sl-alert {
+	&::part(base) {
+	  border-top: 0px;
+	}
+
+	&::part(icon) {
+	  // TODO: Add variant-specific background-color
+	  padding-inline-start: var(--sl-spacing-small);
+	}
+  }
+}

@@ -34,6 +34,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
  * @slot right-header - Top of right side
  * @slot right-footer - bottom of right side
  *
+ * @csspart app-header - Top bar of application, contains name, header.
  * @csspart name - Top left, holds the application name.
  * @csspart header - Top main application header, optional application toolbar goes here.
  * @csspart content-header - Top of center, optional.
@@ -400,6 +401,7 @@ export class EgwFrameworkApp extends LitElement
 		let et2_list = [];
 		const appWindow = this.framework.egw.window;
 
+		// @ts-ignore that etemplate2 doesn't exist
 		if((template = appWindow.etemplate2.getById(this.id)) && this == template.DOMContainer)
 		{
 			deferred = deferred.concat(template.print());
@@ -410,6 +412,7 @@ export class EgwFrameworkApp extends LitElement
 			// et2 inside, let its widgets prepare
 			this.querySelectorAll(":scope > *").forEach((domNode : HTMLElement) =>
 			{
+				// @ts-ignore etemplate2 doesn't exist
 				let et2 = appWindow.etemplate2.getById(domNode.id);
 				if(et2 && (domNode.offsetWidth > 0 || domNode.offsetHeight > 0 || domNode.getClientRects().length > 0))
 				{
@@ -424,7 +427,7 @@ export class EgwFrameworkApp extends LitElement
 			// Try to clean up after - not guaranteed
 			let afterPrint = () =>
 			{
-				this.egw.loading_prompt(this.name, true, this.egw.lang('please wait...'), this, egwIsMobile() ? 'horizental' : 'spinner');
+				this.egw.loading_prompt(this.name, true, this.egw.lang('please wait...'), this, egwIsMobile() ? 'horizontal' : 'spinner');
 
 				// Give framework a chance to deal, then reset the etemplates
 				appWindow.setTimeout(() =>
@@ -573,7 +576,7 @@ export class EgwFrameworkApp extends LitElement
 		this[`${panelInfo.side}Collapsed`] = newPosition == panelInfo.hiddenWidth;
 
 		let preferenceName = panelInfo.preference;
-		let currentPreference = parseFloat("" + await this.egw.preference(preferenceName, this.name, true));
+		let currentPreference = parseFloat("" + await this.egw.preference(preferenceName, this.name));
 
 		if(newPosition != currentPreference)
 		{
@@ -605,6 +608,7 @@ export class EgwFrameworkApp extends LitElement
 
 	protected handleAppMenuClick(event)
 	{
+		// @ts-ignore
 		return egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
 	}
 
@@ -841,7 +845,7 @@ export class EgwFrameworkApp extends LitElement
 		const rightWidth = this.rightCollapsed || !hasRightSlots ? this.rightPanelInfo.hiddenWidth :
 						   this.rightPanelInfo.preferenceWidth;
 		return html`
-            <div class="egw_fw_app__header">
+            <div class="egw_fw_app__header" part="app-header">
                 <div class="egw_fw_app__name" part="name">
                     ${hasLeftSlots ? html`
                     <sl-icon-button name="${this.leftCollapsed ? "chevron-double-right" : "chevron-double-left"}"
