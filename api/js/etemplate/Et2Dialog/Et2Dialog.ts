@@ -1578,7 +1578,7 @@ async function confirmConflict(egw, path, fileName : string, suggestedName : str
 	{
 		case "rename":
 			// Take suggestion
-			return suggestedName;
+			return value.value;
 		// fall through
 		case "overwrite":
 			// Upload as set
