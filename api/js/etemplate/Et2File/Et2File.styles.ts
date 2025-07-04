@@ -34,6 +34,7 @@ export default css`
 
 	/**
 	 * Single display (multiple=false) match height
+	 * (multiple or readonly look weird with this, so don't change them)
 	 */
 
 	.file--single et2-file-item[display="small"]::part(base) {

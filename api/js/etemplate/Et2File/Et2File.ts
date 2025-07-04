@@ -188,6 +188,11 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 	}
 
+	willUpdate(changedProperties : PropertyValueMap<any>)
+	{
+		super.willUpdate(changedProperties);
+
+	}
 	firstUpdated()
 	{
 		this.resumable = this.createResumable();
@@ -195,6 +200,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	updated(changedProperties : PropertyValueMap<any>)
 	{
+		super.updated(changedProperties);
 		if(this.fileListTarget && this.list)
 		{
 			render(this.fileListTemplate(), this.list);
@@ -204,6 +210,20 @@ export class Et2File extends Et2InputWidget(LitElement)
 	loadFromXML(node : Node)
 	{
 		super.loadFromXML(node);
+
+		// If it's readonly, don't care if multiple wasn't set, show all files
+		if(this.readonly && !node.hasAttribute("multiple") && this.value && Object.values(this.value).length > 1)
+		{
+			this.multiple = true;
+			this.egw().debug("log", "Setting multiple=true for readonly file widget with more than one file");
+		}
+
+		// If it's readonly and inline was not set, show as inline not dropdown
+		if(this.readonly && !node.hasAttribute("inline"))
+		{
+			this.inline = true;
+			this.egw().debug("log", "Setting inline=true for readonly file widget (no popup)");
+		}
 
 		// Set display to "small" for multiple=false && nothing else set
 		if(!node.hasAttribute("display") && !this.multiple)
