@@ -985,7 +985,10 @@ class Widget
 			$form_name = self::form_name($cname, $this->id, $expand);
 		}
 		// readonlys can either be set / used as flat array with complete form-name, hierarchical
-		$readonlys = self::$request->readonlys[$form_name] ?? self::get_array(self::$request->readonlys,$form_name);
+		$readonlys = self::$request->readonlys[$form_name] ?? self::get_array(self::$request->readonlys,$form_name) ??
+			// single custom-fields end here with $cname === '#<cf-name>' and $form_name === '#<cf-name>[#<cf-name]'
+			// which causes their readonly-value not to be found, even if set --> look just under $cname='#<cf-name>'
+			($cname && $cname[0] === '#' && $form_name === $cname.'['.$cname.']' ? self::$request->readonlys[$cname] : null);
 
 		$readonly = $readonlys === true ||
 			// exception to __ALL__ or readonly="true" attribute by setting $readonlys[$from_name] === false
