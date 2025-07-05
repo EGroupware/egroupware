@@ -565,24 +565,28 @@ function gd_create_transparent_image($w, $h)
  */
 function gd_image_thumbnail($file, $maxw, $maxh, $minw, $minh)
 {
-	//Load the image
-	if (($img_src = gd_image_load($file,$maxw,$maxh)) !== false)
-	{
-		//Get the constraints of the image
-		$w = imagesx($img_src);
-		$h = imagesy($img_src);
+	try {
+		//Load the image
+		if (($img_src = gd_image_load($file, $maxw, $maxh)) !== false) {
+			//Get the constraints of the image
+			$w = imagesx($img_src);
+			$h = imagesy($img_src);
 
-		//Calculate the actual size of the thumbnail
-		$scaled = get_scaled_image_size($w, $h, $maxw, $maxh, $minw, $minh);
-		if ($scaled !== false)
-		{
-			list($sw, $sh) = $scaled;
+			//Calculate the actual size of the thumbnail
+			$scaled = get_scaled_image_size($w, $h, $maxw, $maxh, $minw, $minh);
+			if ($scaled !== false) {
+				list($sw, $sh) = $scaled;
 
-			//Now scale it down
-			$img_dst = gd_create_transparent_image($sw, $sh);
-			imagecopyresampled($img_dst, $img_src, 0, 0, 0, 0, $sw, $sh, $w, $h);
-			return $img_dst;
+				//Now scale it down
+				$img_dst = gd_create_transparent_image($sw, $sh);
+				imagecopyresampled($img_dst, $img_src, 0, 0, 0, 0, $sw, $sh, $w, $h);
+				return $img_dst;
+			}
 		}
+	}catch (\Throwable $e) {
+		// Log the error for debugging; return false to indicate failure
+		error_log('[gd_image_thumbnail] ' . $e->getMessage());
+		return false;
 	}
 
 	return false;
