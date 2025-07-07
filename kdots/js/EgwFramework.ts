@@ -223,6 +223,20 @@ export class EgwFramework extends LitElement
 		});
 	}
 
+	protected async getUpdateComplete() : Promise<boolean>
+	{
+		const result = await super.getUpdateComplete();
+		
+		// Make sure everything is ready before we admit the update is complete
+		await Promise.allSettled([
+			this.getEgwComplete(),
+			customElements.whenDefined("sl-tab-group"),
+			customElements.whenDefined("sl-tab-panel"),
+			customElements.whenDefined("sl-tab"),
+		]);
+		return result;
+	}
+
 	get egw() : typeof egw
 	{
 		return window.egw ?? <typeof egw>{

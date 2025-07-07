@@ -120,6 +120,12 @@ export class EgwFrameworkApp extends LitElement
 	@state()
 	rightCollapsed = false;
 
+	/**
+	 * Pay no attention to splitter resizes (does not update preference)
+	 * @type {boolean}
+	 */
+	@state() ignoreSplitterResize = false;
+
 	get leftSplitter() { return <SlSplitPanel>this.shadowRoot.querySelector(".egw_fw_app__outerSplit");}
 
 	get rightSplitter() { return <SlSplitPanel>this.shadowRoot.querySelector(".egw_fw_app__innerSplit");}
@@ -154,25 +160,39 @@ export class EgwFrameworkApp extends LitElement
 	protected useIframe = false;
 	protected _sideboxData : any;
 
+	constructor()
+	{
+		super();
+		this.handleTabHide = this.handleTabHide.bind(this);
+		this.handleTabShow = this.handleTabShow.bind(this);
+	}
 	connectedCallback()
 	{
 		super.connectedCallback();
 		(<Promise<string>>this.egw.preference(this.leftPanelInfo.preference, this.name, true)).then((width) =>
 		{
 			this.leftPanelInfo.preferenceWidth = typeof width !== "undefined" ? parseInt(width) : this.leftPanelInfo.defaultWidth;
+			this.leftSplitter.positionInPixels = this.leftPanelInfo.preferenceWidth;
 		});
 		(<Promise<string>>this.egw.preference(this.rightPanelInfo.preference, this.name, true)).then((width) =>
 		{
 			this.rightPanelInfo.preferenceWidth = typeof width !== "undefined" ? parseInt(width) : this.rightPanelInfo.defaultWidth;
+			this.rightSplitter.position = this.rightPanelInfo.preferenceWidth;
 		});
 
 		this.addEventListener("load", this.handleEtemplateLoad);
+
+		// Work around sl-split-panel resizing to 0 when app is hidden
+		this.framework.addEventListener("sl-tab-hide", this.handleTabHide);
+		this.framework.addEventListener("sl-tab-show", this.handleTabShow);
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
 		this.removeEventListener("load", this.handleEtemplateLoad);
+		this.framework?.removeEventListener("sl-tab-hide", this.handleTabHide);
+		this.framework?.removeEventListener("sl-tab-show", this.handleTabShow);
 
 		try
 		{
@@ -210,8 +230,12 @@ export class EgwFrameworkApp extends LitElement
 	protected async getUpdateComplete() : Promise<boolean>
 	{
 		const result = await super.getUpdateComplete();
-		await this.loadingPromise;
-
+		await Promise.allSettled([
+			this.loadingPromise,
+			customElements.whenDefined("sl-split-panel"),
+			this.leftSplitter.updateComplete,
+			this.rightSplitter.updateComplete
+		]);
 		return result
 	}
 
@@ -556,17 +580,17 @@ export class EgwFrameworkApp extends LitElement
 	protected async handleSlide(event)
 	{
 		// Skip if there's no panelInfo - event is from the wrong place
-		if(typeof event.target?.panelInfo != "object")
+		// Skip if loading, or not active to avoid keeping changes while user is not interacting
+		if(typeof event.target?.dataset.panel == "undefined" || this.ignoreSplitterResize || this.loading || !this.hasAttribute("active"))
 		{
 			return;
 		}
-
-		let panelInfo = event.target.panelInfo;
-
-		await this.loadingPromise;
+		const split = event.target;
+		await this.framework?.updateComplete;
+		let panelInfo = this[split.dataset.panel];
 
 		// Left side is in pixels, round to 2 decimals
-		let newPosition = Math.round(panelInfo.side == "left" ? event.target.positionInPixels * 100 : Math.max(100, event.target.position) * 100) / 100;
+		let newPosition = Math.round(panelInfo.side == "left" ? split.positionInPixels * 100 : Math.min(100, split.position) * 100) / 100;
 		if(isNaN(newPosition))
 		{
 			return;
@@ -576,17 +600,16 @@ export class EgwFrameworkApp extends LitElement
 		this[`${panelInfo.side}Collapsed`] = newPosition == panelInfo.hiddenWidth;
 
 		let preferenceName = panelInfo.preference;
-		let currentPreference = parseFloat("" + await this.egw.preference(preferenceName, this.name));
-
-		if(newPosition != currentPreference)
+		if(newPosition != panelInfo.preferenceWidth)
 		{
-			panelInfo.preferenceWidth = newPosition;
 			if(panelInfo.resizeTimeout)
 			{
 				window.clearTimeout(panelInfo.resizeTimeout);
 			}
 			panelInfo.resizeTimeout = window.setTimeout(() =>
 			{
+				console.log(`Panel resize: ${this.name} ${panelInfo.side} ${panelInfo.preferenceWidth} -> ${newPosition}`);
+				panelInfo.preferenceWidth = newPosition;
 				this.egw.set_preference(this.name, preferenceName, newPosition);
 
 				// Tell etemplates to resize
@@ -604,6 +627,52 @@ export class EgwFrameworkApp extends LitElement
 	protected async handleSideboxMenuClick(event)
 	{
 		return this.egw.open_link(event.target.dataset.link);
+	}
+
+	/**
+	 * Framework's hidden this tab
+	 *
+	 * @param event
+	 * @return {Promise<void>}
+	 * @protected
+	 */
+	protected async handleTabHide(event)
+	{
+		// Only interested in this tab
+		if(event.detail.name !== this.name)
+		{
+			return;
+		}
+
+		// Stop splitter from resizing while app is not active
+		this.ignoreSplitterResize = true;
+		this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
+	}
+
+	/**
+	 * Framework has shown a tab
+	 *
+	 * @param event
+	 * @protected
+	 */
+	protected async handleTabShow(event)
+	{
+		// Only interested in this tab
+		if(event.detail.name !== this.name)
+		{
+			return;
+		}
+
+		// Fix splitter if it has moved while hidden
+		if(this.rightSplitter && (this.rightSplitter.position !== this.rightPanelInfo.preferenceWidth || this.rightCollapsed && this.rightSplitter.position != this.rightPanelInfo.hiddenWidth))
+		{
+			await this.updateComplete;
+			window.setTimeout(() =>
+			{
+				this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
+				this.ignoreSplitterResize = false;
+			}, 0);
+		}
 	}
 
 	protected handleAppMenuClick(event)
@@ -872,7 +941,7 @@ export class EgwFrameworkApp extends LitElement
                 <sl-split-panel class=${classMap({"egw_fw_app__outerSplit": true, "no-content": !hasLeftSlots})}
                                 primary="start" position-in-pixels="${leftWidth}"
                                 snap="0px 20%" snap-threshold="50"
-                                .panelInfo=${this.leftPanelInfo}
+                                data-panel="leftPanelInfo"
                                 @sl-reposition=${this.handleSlide}
                 >
                     <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideLeft}></sl-icon>
@@ -885,7 +954,7 @@ export class EgwFrameworkApp extends LitElement
                                     primary="start"
                                     position=${rightWidth} snap="50% 80% 100%"
                                     snap-threshold="50"
-                                    .panelInfo=${this.rightPanelInfo}
+                                    data-panel="rightPanelInfo"
                                     @sl-reposition=${this.handleSlide}
                     >
                         ${this.loading ? this._loadingTemplate("start") : html`
