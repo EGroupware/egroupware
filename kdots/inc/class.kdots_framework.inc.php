@@ -80,11 +80,13 @@ class kdots_framework extends Api\Framework\Ajax
 	protected function _get_header(array $extra = array())
 	{
 		// Skip making a mess for iframe apps, they're on their own
+		/* status app / jitsi videoconference needs to load the header, so it's not just iframe apps
 		if($extra['check-framework'] == true)
 		{
 			$extra['check-framework'] = false;
 			return [];
 		}
+		*/
 		$data = parent::_get_header($extra);
 
 		$data['theme'] .= $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] ? 'data-darkmode="1"' : '';
