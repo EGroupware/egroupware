@@ -1,0 +1,56 @@
+/* Theme vaguely resembling Pixelegg theme to reduce change stress */
+/* Shoelace overrides */
+:root,
+:host,
+.kdots-pixeleggy {
+  --sl-shadow-x-small: 0 2px 4px hsla(240, 3.8%, 41.6%, 0.52);
+  --sl-shadow-small: 0 4px 4px hsla(240, 3.8%, 46.1%, 0.52);
+  --sl-shadow-medium: 0 4px 8px hsla(240, 3.8%, 46.1%, 0.52);
+  --sl-shadow-large: 0 4px 16px hsla(240, 3.8%, 46.1%, 0.52);
+  --sl-shadow-x-large: 0 8px 32px hsla(240, 3.8%, 46.1%, 0.52);
+}
+:root::part(open-applications),
+:host::part(open-applications),
+.kdots-pixeleggy::part(open-applications) {
+  --tab-icon-size: var(--sl-spacing-x-large);
+  --tab-icon-size-active: var(--sl-spacing-x-large);
+}
+:root egw-app,
+:host egw-app,
+.kdots-pixeleggy egw-app {
+  --application-header-text-color: var(--sl-color-neutral-900);
+  /* Remove big color bar, use just some border */
+}
+:root egw-app::part(app-header),
+:host egw-app::part(app-header),
+.kdots-pixeleggy egw-app::part(app-header),
+:root egw-app::part(header),
+:host egw-app::part(header),
+.kdots-pixeleggy egw-app::part(header) {
+  background-color: initial;
+}
+:root egw-app::part(app-header),
+:host egw-app::part(app-header),
+.kdots-pixeleggy egw-app::part(app-header),
+:root egw-app *::part(header),
+:host egw-app *::part(header),
+.kdots-pixeleggy egw-app *::part(header) {
+  border-top: 4px solid var(--application-color, --sl-color-primary-500);
+}
+/* System messages */
+.sl-toast-stack sl-alert::part(base) {
+  border-top: 0px;
+}
+.sl-toast-stack sl-alert::part(icon) {
+  padding-inline-start: var(--sl-spacing-x-small);
+  padding-inline-end: var(--sl-spacing-x-small);
+}
+.sl-toast-stack sl-alert[variant="success"]::part(icon) {
+  background-color: var(--sl-color-success-200);
+}
+.sl-toast-stack sl-alert[variant="warning"]::part(icon) {
+  background-color: var(--sl-color-warning-200);
+}
+.sl-toast-stack sl-alert[variant="danger"]::part(icon) {
+  background-color: var(--sl-color-danger-200);
+}

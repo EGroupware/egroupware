@@ -1,5 +1,14 @@
 /* Theme vaguely resembling Pixelegg theme to reduce change stress */
-egw-framework.kdots-pixeleggy {
+
+/* Shoelace overrides */
+:root, :host, .kdots-pixeleggy {
+  // BIG shadows
+  --sl-shadow-x-small: 0 2px 4px hsla(240, 3.8%, 41.6%, 52%);
+  --sl-shadow-small: 0 4px 4px hsl(240 3.8% 46.1% / 52%);
+  --sl-shadow-medium: 0 4px 8px hsl(240 3.8% 46.1% / 52%);
+  --sl-shadow-large: 0 4px 16px hsl(240 3.8% 46.1% / 52%);
+  --sl-shadow-x-large: 0 8px 32px hsl(240 3.8% 46.1% / 52%);
+
 
   &::part(open-applications) {
 	--tab-icon-size: var(--sl-spacing-x-large);
@@ -21,6 +30,8 @@ egw-framework.kdots-pixeleggy {
   }
 }
 
+
+/* System messages */
 .sl-toast-stack {
   sl-alert {
 	&::part(base) {
@@ -28,8 +39,20 @@ egw-framework.kdots-pixeleggy {
 	}
 
 	&::part(icon) {
-	  // TODO: Add variant-specific background-color
-	  padding-inline-start: var(--sl-spacing-small);
+	  padding-inline-start: var(--sl-spacing-x-small);
+	  padding-inline-end: var(--sl-spacing-x-small);
+	}
+
+	&[variant="success"]::part(icon) {
+	  background-color: var(--sl-color-success-200);
+	}
+
+	&[variant="warning"]::part(icon) {
+	  background-color: var(--sl-color-warning-200);
+	}
+
+	&[variant="danger"]::part(icon) {
+	  background-color: var(--sl-color-danger-200);
 	}
   }
 }
