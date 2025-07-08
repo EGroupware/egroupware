@@ -200,6 +200,12 @@ so we force the button images to be square*/
 
 	}
 
+	connectedCallback()
+	{
+		super.connectedCallback && super.connectedCallback();
+		this.classList.add("et2-button-widget");
+	}
+
 	disconnectedCallback()
 	{
 		super.disconnectedCallback && super.disconnectedCallback();
