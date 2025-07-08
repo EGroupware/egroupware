@@ -828,7 +828,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
             ${image}
             <input id="search" type="text" part="input"
                    class="tree-dropdown__search search__input"
-                   autocomplete="off"
+                   autocomplete="do-not-autocomplete-${Date.now().toString(36)}"
                    spellcheck="false"
                    autocapitalize="off"
                    aria-controls="listbox"
