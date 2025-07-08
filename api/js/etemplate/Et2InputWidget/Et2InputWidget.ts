@@ -332,6 +332,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		connectedCallback()
 		{
 			super.connectedCallback();
+
+			this.classList.add("et2-input-widget");
 			this._oldChange = this._oldChange.bind(this);
 			this.node = this.getInputNode();
 			this.updateComplete.then(() =>

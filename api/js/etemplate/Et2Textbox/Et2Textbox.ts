@@ -89,6 +89,7 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 	connectedCallback()
 	{
 		super.connectedCallback();
+		this.classList.add("et2-textbox-widget");
 	}
 
 	disconnectedCallback()
