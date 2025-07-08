@@ -1232,7 +1232,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
             <input id="search" type="text" part="input"
                    class="email__search"
                    exportparts="base:search__base"
-                   autocomplete="off"
+                   autocomplete="do-not-autocomplete-${Date.now().toString(36)}"
                    ?disabled=${this.disabled}
                    ?readonly=${this.readonly}
                    placeholder="${this.hasFocus || this.value.length > 0 || this.disabled || this.readonly ? "" : this.placeholder}"
