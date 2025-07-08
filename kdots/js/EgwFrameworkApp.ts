@@ -169,17 +169,6 @@ export class EgwFrameworkApp extends LitElement
 	connectedCallback()
 	{
 		super.connectedCallback();
-		(<Promise<string>>this.egw.preference(this.leftPanelInfo.preference, this.name, true)).then((width) =>
-		{
-			this.leftPanelInfo.preferenceWidth = typeof width !== "undefined" ? parseInt(width) : this.leftPanelInfo.defaultWidth;
-			this.leftSplitter.positionInPixels = this.leftPanelInfo.preferenceWidth;
-		});
-		(<Promise<string>>this.egw.preference(this.rightPanelInfo.preference, this.name, true)).then((width) =>
-		{
-			this.rightPanelInfo.preferenceWidth = typeof width !== "undefined" ? parseInt(width) : this.rightPanelInfo.defaultWidth;
-			this.rightSplitter.position = this.rightPanelInfo.preferenceWidth;
-		});
-
 		this.addEventListener("load", this.handleEtemplateLoad);
 
 		// Work around sl-split-panel resizing to 0 when app is hidden
@@ -600,7 +589,7 @@ export class EgwFrameworkApp extends LitElement
 		this[`${panelInfo.side}Collapsed`] = newPosition == panelInfo.hiddenWidth;
 
 		let preferenceName = panelInfo.preference;
-		if(newPosition != panelInfo.preferenceWidth)
+		if(!this[`${panelInfo.side}Collapsed`] && newPosition != panelInfo.preferenceWidth)
 		{
 			if(panelInfo.resizeTimeout)
 			{
@@ -613,7 +602,7 @@ export class EgwFrameworkApp extends LitElement
 				this.egw.set_preference(this.name, preferenceName, newPosition);
 
 				// Tell etemplates to resize
-				this.querySelectorAll("[id]").forEach(e =>
+				this.querySelectorAll(":scope > [id]").forEach(e =>
 				{
 					if(etemplate2.getById(e.id))
 					{
