@@ -41,7 +41,7 @@ Use the `multiple`, `accept`, `maxFiles` and `maxFileSize` attributes to place r
 <et2-file maxFileSize="10000" label="Small files only"></et2-file>
 ```
 
-`accept` can take mimetypes (`"image/*"`), subtypes (`"image/jpeg"`), extensions (`"svg"`) or combinations (
+`accept` can take mimetypes (`"image/*"`), subtypes (`"image/jpeg"`), extensions (`".svg"`) or combinations (
 `"image/*,application/pdf"`)
 
 ### Inline
