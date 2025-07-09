@@ -126,6 +126,14 @@ class File extends Etemplate\Widget
 					if (!empty($mime = self::expand_name($widget->attrs['accept'], 0, 0)))
 					{
 						$mime = preg_split('/, */', $mime);
+						// Extensions require the dot
+						foreach($mime as &$m)
+						{
+							if(!str_contains($m, '/') && !str_starts_with($m, '.'))
+							{
+								$m = '.' . $m;
+							}
+						}
 					}
 				}
 				else
