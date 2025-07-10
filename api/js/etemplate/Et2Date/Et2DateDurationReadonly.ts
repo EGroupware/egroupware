@@ -16,6 +16,9 @@ import {customElement} from "lit/decorators/custom-element.js";
 
 /**
  * This is a stripped-down read-only widget used in nextmatch
+ *
+ * @slot prefix - Used to prepend a presentational icon or similar element to the widget.
+ * @slot suffix - Like prefix, but after
  */
 @customElement("et2-date-duration_ro")
 export class Et2DateDurationReadonly extends Et2DateDuration
@@ -74,9 +77,11 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 
 		const display = this.formatter(parsed, format_options);
 		return html`
+            <slot name="prefix"></slot>
             <span ${this.id ? html`id="${this._dom_id}"` : ''}>
                   ${display.value}${display.unit}
             </span>
+            <slot name="suffix"></slot>
 		`;
 	}
 
