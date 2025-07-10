@@ -8,6 +8,7 @@ export default css`
 		position: relative;
 
 		--icon-size: 32px;
+		--inactive-tab-opacity: 0.5
 	}
 
 	.egw_fw__layout-default {
@@ -101,6 +102,12 @@ export default css`
 	.egw_fw__header .egw_fw__app_list {
 		flex: none;
 	}
+	.egw_fw__header .spacer {
+        flex-shrink: 0;
+        flex-grow: 6;
+        flex-basis: 0;
+    }
+	
 	.egw_fw__app_list::part(panel) {
 		display: grid;
 		grid-template-columns: repeat(5, 1fr);
@@ -115,27 +122,31 @@ export default css`
 	.egw_fw__open_applications::part(tabs) {
 		align-items: baseline;
 	}
+
+    .egw_fw__open_applications sl-tab {
+        width: auto;
+        flex: 1 1 auto;
+    }
+
+    .egw_fw__open_applications sl-tab:last-of-type {
+        flex: 0 0 auto;
+    }
+	/*make non active tabs a little transparent*/
+	.egw_fw__open_applications sl-tab:not([active]){
+		opacity: var(--inactive-tab-opacity);
+	}
+	
 	.egw_fw__open_applications et2-image {
 		height: var(--tab-icon-size, 32px);
-
-		/* Allow some shrinking with limited size */
-		min-width: calc(var(--tab-icon-size, 32px) / 2);
-		min-height: calc(var(--tab-icon-size) / 2);
+		
+		/* Always force icons to be the same size */
+		min-width: calc(var(--tab-icon-size, 32px));
+		min-height: calc(var(--tab-icon-size, 32px)); 
 		/* Prevent large icons from causing problems */
 		max-width: var(--tab-icon-size, 32px);
 		max-height: var(--tab-icon-size, 32px);
 	}
-
-	.egw_fw__open_applications sl-tab[active] et2-image {
-		width: var(--tab-icon-size-active, --tab-icon-size);
-	}
-
-	.egw_fw__open_applications sl-tab[active] et2-image img {
-		height: var(--tab-icon-size-active, --tab-icon-size);
-		min-width: var(--tab-icon-size-active, --tab-icon-size);
-		min-height: var(--tab-icon-size-active, --tab-icon-size);
-	}
-
+	
 	.egw_fw__open_applications sl-tab::part(base) {
 		padding: 0px;
 		font-size: var(--tab-icon-size);
@@ -146,12 +157,20 @@ export default css`
 		margin-inline-start: var(--sl-spacing-2x-small);
 		color: var(--sl-color-neutral-900);
 	}
-
-	.egw_fw__open_applications sl-tab et2-image {
-		padding: var(--sl-spacing-2x-small) var(--sl-spacing-3x-small);
-	}
-
-	.egw_fw__open_applications sl-tab:hover::part(close-button), .egw_fw__open_applications sl-tab[active]::part(close-button) {
+	
+	.egw_fw__open_applications sl-tab et2-image { 
+		/*align items centered on round app colored background*/
+		padding: var(--sl-spacing-2x-small);
+        background-color: var(--application-color, var(--default-color, var(--sl-color-neutral-600)));
+        border-radius: var(--sl-border-radius-circle);
+		text-align: center;
+        line-height: 105%;
+    } 
+	.egw_fw__open_applications sl-tab et2-image *[part="image"] {
+        /*turn all app icons white*/
+        filter: brightness(0) invert(1);
+    } 
+	.egw_fw__open_applications sl-tab:hover::part(close-button) {
 		visibility: visible;
 	}
 

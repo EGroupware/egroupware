@@ -1014,7 +1014,8 @@ export class EgwFramework extends LitElement
 	protected _applicationTabTemplate(app)
 	{
 		return html`
-            <sl-tab slot="nav" panel="${app.name}" closable aria-label="${app.title}" ?active=${app.active}>
+            <sl-tab slot="nav" panel="${app.name}" closable aria-label="${app.title}" ?active=${app.active} 
+					style="--application-color: var(--${app.name}-color)">
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
                     <et2-image src="${app.icon}"></et2-image>
                 </sl-tooltip>
@@ -1047,6 +1048,7 @@ export class EgwFramework extends LitElement
                         ></sl-icon-button>
                         ${repeat(this.applicationList, (app) => this._applicationListAppTemplate(app))}
                     </sl-dropdown>
+					<div class="spacer"></div>
                     <sl-tab-group part="open-applications" class="egw_fw__open_applications" activation="manual"
                                   role="tablist"
                                   @sl-tab-show=${this.handleApplicationTabShow}
@@ -1056,6 +1058,7 @@ export class EgwFramework extends LitElement
                                 .filter(app => typeof app.opened !== "undefined" && app.status !== "5")
                                 .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
+					<div class="spacer"></div>
                     <slot name="header"><span class="placeholder">header</span></slot>
                     <slot name="header-right"><span class="placeholder">header-right</span></slot>
                 </header>

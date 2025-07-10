@@ -2699,7 +2699,7 @@ et2-button.transparent-button::part(container) {
 .nextmatch_header_row button,
 .nextmatch_header_row div.et2_progress {
 	border-radius: var(--sl-border-radius-medium, 3px);
-    background-color: #fafafa;
+    background-color: initial;
     border: 1px solid silver;
 	overflow: hidden;
 }

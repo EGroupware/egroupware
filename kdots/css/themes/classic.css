@@ -4,10 +4,10 @@
 :host,
 .kdots-classic {
   --sl-shadow-x-small: 0 2px 4px hsla(240, 3.8%, 41.6%, 0.52);
-  --sl-shadow-small: 0 4px 4px hsla(240, 3.8%, 46.1%, 0.52);
-  --sl-shadow-medium: 0 4px 8px hsla(240, 3.8%, 46.1%, 0.52);
-  --sl-shadow-large: 0 4px 16px hsla(240, 3.8%, 46.1%, 0.52);
-  --sl-shadow-x-large: 0 8px 32px hsla(240, 3.8%, 46.1%, 0.52);
+  --sl-shadow-small: 0 4px 4px hsl(240 3.8% 0.88653846%);
+  --sl-shadow-medium: 0 4px 8px hsl(240 3.8% 0.88653846%);
+  --sl-shadow-large: 0 4px 16px hsl(240 3.8% 0.88653846%);
+  --sl-shadow-x-large: 0 8px 32px hsl(240 3.8% 0.88653846%);
 }
 :root::part(open-applications),
 :host::part(open-applications),
@@ -54,3 +54,4 @@
 .sl-toast-stack sl-alert[variant="danger"]::part(icon) {
   background-color: var(--sl-color-danger-200);
 }
+/*# sourceMappingURL=pixeleggy.css.map */
