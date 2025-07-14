@@ -260,3 +260,15 @@ function notifications_upgrade23_1()
 
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '23.1.001';
 }
+
+/**
+ * Create index on notify_type to speed up cleanup query by notify_type='push'
+ *
+ * @return string
+ */
+function notifications_upgrade23_1_001()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_notificationpopup','notify_type');
+
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '23.1.002';
+}

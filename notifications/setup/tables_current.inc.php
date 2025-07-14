@@ -24,7 +24,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('notify_id'),
 		'fk' => array(),
-		'ix' => array('notify_created',array('account_id','notify_type'),array('notify_app','notify_app_id')),
+		'ix' => array('notify_created','notify_type',array('account_id','notify_type'),array('notify_app','notify_app_id')),
 		'uc' => array()
 	)
 );
