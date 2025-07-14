@@ -43,16 +43,16 @@ export class Et2Number extends Et2Textbox
 			css`
 			  /* Scroll buttons */
 
-				:host(:hover) ::slotted(et2-button-scroll) {
+				:host(:hover) .input--medium .input__suffix ::slotted(et2-button-scroll) {
 					visibility: visible;
 				}
 
-				::slotted(et2-button-scroll) {
+				.input--medium .input__suffix ::slotted(et2-button-scroll) {
 					visibility: hidden;
 					padding: 0px;
 					margin: 0px;
 					margin-left: var(--sl-spacing-small);
-					margin-inline-end: 0px;
+					margin-inline-end: var(--sl-spacing-x-small);
 				}
 
 				:host([step]) .input--medium .input__control {

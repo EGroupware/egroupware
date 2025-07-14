@@ -124,56 +124,60 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 			shoelace,
 			...dateStyles,
 			css`
-			  .form-field__group-two {
-				max-width: 100%;
-			  }
+				.form-field__group-two {
+					max-width: 100%;
+				}
 
 				.form-control-input {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: nowrap;
-				align-items: baseline;
-			  }
+					display: flex;
+					flex-direction: row;
+					flex-wrap: nowrap;
+					align-items: baseline;
+				}
 
-			  .input-group__after {
-				display: contents;
-				margin-inline-start: var(--sl-input-spacing-medium);
-			  }
+				.input-group__after {
+					display: contents;
+					margin-inline-start: var(--sl-input-spacing-medium);
+				}
 
 				sl-select {
-				color: var(--input-text-color);
-				border-left: 1px solid var(--input-border-color);
-				flex: 2 1 auto;
+					color: var(--input-text-color);
+					flex: 2 1 auto;
 					min-width: min-content;
 					width: 8em;
-			  }
+
+					&::part(combobox) {
+						border-left: 1px solid var(--input-border-color);
+						border-top-left-radius: 0px;
+						border-bottom-left-radius: 0px;
+					}
+				}
 
 				sl-select::part(control) {
-				border-top-left-radius: 0px;
-				border-bottom-left-radius: 0px;
-			  }
+					border-top-left-radius: 0px;
+					border-bottom-left-radius: 0px;
+				}
 
-			  .duration__input {
-				flex: 1 1 auto;
-				  width: min-content;
-				  min-width: 5em;
-				  /* This is the same as max-width of the number field */
-				  max-width: 7em;
-				margin-right: -2px;
-			  }
+				.duration__input {
+					flex: 1 1 auto;
+					width: min-content;
+					min-width: 5em;
+					/* This is the same as max-width of the number field */
+					max-width: 7em;
+					margin-right: -2px;
+				}
 
 
 				.duration__input:not(:first-child)::part(base) {
 					border-top-left-radius: 0px;
 					border-bottom-left-radius: 0px;
 				}
-			  .duration__input:not(:last-child)::part(base) {
-				border-right: none;
-				border-top-right-radius: 0px;
-				border-bottom-right-radius: 0px;
-			  }
 
-
+				.duration__input:not(:last-child)::part(base) {
+					border-right: none;
+					border-top-right-radius: 0px;
+					border-bottom-right-radius: 0px;
+				}
 			`,
 		];
 	}
@@ -603,7 +607,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		return html`${inputs.map((input : any) =>
                 html`
                     <et2-number part="${"duration__" + input.name}" class="duration__input"
-                                exportparts="scroll:scroll,scrollbutton:scrollbutton"
+                                exportparts="scroll:scroll,scrollbutton:scrollbutton,base"
                                 name=${input.name}
                                 min=${typeof input.min === "number" ? input.min : nothing}                                
 								max=${typeof input.max === "number" ? input.max : nothing}
@@ -641,7 +645,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		// It would be nice to use an et2-select here, but something goes weird with the styling
 		const current = this._display.unit || this.displayFormat[0];
 		return html`
-            <sl-select value="${current}">
+            <sl-select exportparts="combobox" value="${current}">
                 ${[...this.displayFormat].map((format : string) =>
                         html`
                             <sl-option

@@ -1088,7 +1088,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		// This element gets hidden and used for value, but copied by flatpickr and used for input
 		return html`
             <slot name="prefix"></slot>
-            <et2-textbox type="text" placeholder=${this.placeholder}
+            <et2-textbox exportparts="base" type="text" placeholder=${this.placeholder}
                          ?required=${this.required}
                          ?disabled=${this.disabled}
             >
