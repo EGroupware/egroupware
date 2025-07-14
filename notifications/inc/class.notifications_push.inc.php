@@ -117,11 +117,15 @@ class notifications_push implements Json\PushBackend
 	}
 
 	/**
+	 * Delete max. 10000 rows at a time
+	 */
+	const DELETE_CHUNK_SIZE = 10000;
+	/**
 	 * Delete push messages older than our heartbeat-limit (poll frequency of notifications)
 	 */
 	protected static function cleanup_push_msgs()
 	{
-		// rate limit the deletes: max. once per hour for the instance
+		// rate-limit the deletes: max. once per hour for the instance
 		$stamp = date('YmdH');
 		if (Api\Cache::getInstance(__CLASS__, __FUNCTION__) === $stamp)
 		{
@@ -131,29 +135,15 @@ class notifications_push implements Json\PushBackend
 
 		if (($ts = self::$db->from_unixtime(Api\Session::heartbeat_limit())))
 		{
-			try {
+			// delete max. 10000 rows at a time, to not exceed the transaction / writeset limit
+			$n = 0;
+			do {
 				self::$db->delete(self::TABLE, array(
 					'notify_type' => self::TYPE,
 					'notify_created < '.$ts,
-				), __LINE__, __FILE__, self::APP);
+				), __LINE__, __FILE__, self::APP, null, self::DELETE_CHUNK_SIZE);
 			}
-			catch (Api\Db\Exception $e) {
-				if ($e->getCode() == 1205)  // MariaDB: Lock wait timeout exceeded
-				{
-					$n = 0;
-					do {
-						self::$db->delete(self::TABLE, array(
-							'notify_type' => self::TYPE,
-							'notify_created < '.$ts,
-						), __LINE__, __FILE__, self::APP, null, 1000);
-					}
-					while($n++ < 100 && self::$db->affected_rows());
-				}
-				else
-				{
-					_egw_log_exception($e);
-				}
-			}
+			while($n++ < 100 && self::$db->affected_rows() == self::DELETE_CHUNK_SIZE);
 		}
 	}
 
