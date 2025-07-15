@@ -369,6 +369,7 @@ name for the distribution list	addressbook	ja	配信リスト名
 name of current user, all other contact fields are valid too	addressbook	ja	ユーザ名、およびその他の項目は全て有効です。
 name, address	addressbook	ja	氏名, 住所
 name, email, phone	addressbook	ja	名前、メールアドレス、電話番号
+never use prefix	addressbook	ja	プレフィックスは使用しない
 new contact submitted by %1 at %2	addressbook	ja	新規コンタクトは %1 によって %2 に送信されました。
 next date	addressbook	ja	次の日付
 no categories selected	addressbook	ja	カテゴリ未選択
@@ -522,6 +523,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	ja	アドレス帳の「独自並べ変え」属性を使う
 use an extra tab for private custom fields?	admin	ja	個人用カスタム項目で追加タブを使う
 use country list	addressbook	ja	国選択リストを使う
+use firstname, only if no prefix	addressbook	ja	プレフィックスがない場合のみ姓を使用
+use prefix plus all other name parts	addressbook	ja	プレフィックスと他のすべての名前の部分を使用
+use prefix, only if no firstname	addressbook	ja	プレフィックスを使用、姓がない場合のみ
 use setup for a full account-migration	admin	ja	アカウント移行時に設定を使う
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
 used for links and for the own sorting of the list	addressbook	ja	リンク、およびリストの独自並べ変えで使用。
@@ -536,6 +540,7 @@ view linked infolog entries	addressbook	ja	リンクするインフォログの�
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ja	警告!! LDAP をアカウントの保存先としていない場合に限り、LDAP は有効です。
 warning: all contacts found will be deleted!	addressbook	ja	警告: 見つかったコンタクトは全て削除されます!
 weekday	addressbook	ja	曜日
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	ja	フルネームで表示されるべきもの。姓も名もない場合は、会社名が表示されます。
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	ja	アドレス帳のリンクを他のアプリケーションで表示するか否かを指定します。この設定を変更した場合は、再ログイン後に変更が反映されます。
 when viewing a contact, show linked entries from the selected application	addressbook	ja	コンタクト表示時に、指定されたアプリケーションのリンク項目を表示する
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	ja	エントリーを文書に統合すると、ここに保存されます。ディレクトリが指定されていない場合は、ホームディレクトリ(/home/...)に格納されます。

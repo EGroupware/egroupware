@@ -14,6 +14,7 @@
 %1 rights for %2 and applications %3	admin	sl	%1 pravice za %2 in aplikacije %3.
 %1 run rights for applications	admin	sl	%1 zagonske pravice za aplikacije
 %1 sessions killed	admin	sl	Ubitih %1 sej.
+%1 token %2.	admin	sl	%1 žeton %2.
 %1 user %2	admin	sl	%1 uporabnik %2
 (de)activate mail accounts	admin	sl	(de) aktivirate poštne račune
 (no subject)	admin	sl	(brez zadeve)
@@ -57,6 +58,7 @@ activate	admin	sl	Aktiviraj
 activated	admin	sl	aktivirano
 active mail accounts	admin	sl	Aktivni e-poštni računi
 active templates	admin	sl	Aktivne predloge
+active this token again	admin	sl	Ponovno aktivirajte ta žeton
 add a category	admin	sl	Dodaj kategorijo
 add a group	admin	sl	Dodaj skupino
 add a new account.	admin	sl	Dodaj nov račun.
@@ -96,6 +98,7 @@ all users	admin	sl	Vsi uporabniki
 allow anonymous access to this app	admin	sl	Dovoli dostop do te aplikacije anonimnim uporabnikom
 allow remote administration from following install id's (comma separated)	admin	sl	Omogočite oddaljeno administracijo od naslednjih ID-jev namestitve, ločenih z vejico.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	sl	Uporabniku dovolite, da v razdelku „Varnost in gesla“ shrani svoje geslo za funkcijo SingleSignOn.
+allow user to set 'remember me' token	admin	sl	Dovolite uporabniku, da nastavi žeton „Zapomni si me“
 allow users to change forwards	admin	sl	Uporabnikom omogočite, da spremenijo naprej
 allow users to create identities for aliases	admin	sl	Dovoli uporabnikom, da ustvarijo identitete za vzdevke
 alternate email address	admin	sl	Alternativen E-naslov
@@ -179,6 +182,7 @@ check ip address of all sessions	admin	sl	Preveri naslov IP vseh sej
 check items to <b>%1</b> to %2 for %3	admin	sl	Preveri elemente do <b>%1</b> do %2 za %3
 children	admin	sl	Podrejeni
 clear cache and register hooks	admin	sl	Počistite predpomnilnik in registrirajte priključke
+clear security tokens	admin	sl	Izbriši varnostne žetone
 click to select a color	admin	sl	Izbira barve
 color	admin	sl	Barva
 command scheduled to run at %1	admin	sl	Ukaz je predviden za zagon v %1
@@ -354,12 +358,14 @@ error connecting to imap server. %s : %s.	admin	sl	Napaka pri povezavi s strežn
 error connecting to imap server: [%s] %s.	admin	sl	Napaka pri povezavi s strežnikom IMAP: [%s] %s.
 error deleting entry!	admin	sl	Napaka pri brisanju vnosa!
 error deleting log entry!	admin	sl	Napaka pri brisanju vnosa dnevnika!
+error revoking token!	admin	sl	Napaka pri preklicu žetona!
 error saving	admin	sl	Napaka pri shranjevanju!
 error saving account!	admin	sl	Napaka pri shranjevanju računa!
 error saving the command!	admin	sl	Napaka pri shranjevanju ukaza!
 error saving the entry!!!	admin	sl	Napaka pri shranjevanju vnosa!
 error saving to db:	admin	sl	Napaka pri shranjevanju v db:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sl	Napaka ob vzpostavljanju kronometra: napačna sintaksa ali pa je kronometer že vzpostavljen!
+error storing token!	admin	sl	Napaka pri shranjevanju žetona!
 error! no appname found	admin	sl	Napaka! Ime aplikacije ni bilo najdeno
 error, no username!	admin	sl	Napaka, brez uporabniškega imena!
 error: %1 not found or other error !!!	admin	sl	Napaka: ne najdem %1 ali druga napaka!
@@ -399,6 +405,7 @@ forward only disables imap mailbox / storing of mails and just forwards them to 
 full name	admin	sl	Polno ime
 general	admin	sl	Splošno
 generate certificate	admin	sl	Ustvari potrdilo
+generate new token and display it once after saving	admin	sl	Ustvari nov žeton in ga po shranjevanju enkrat prikaže
 git clone	admin	sl	Klon
 global categories	common	sl	Splošne kategorije
 global options	admin	sl	Splošne možnosti
@@ -439,6 +446,7 @@ identity deleted	admin	sl	Identiteta je izbrisana
 identity saved.	admin	sl	Identiteta je shranjena.
 idle	admin	sl	Nedejaven
 if different from email address	admin	sl	če se razlikuje od naslova EMail
+if disabled existing tokens immediatly stop working.	admin	sl	Če je onemogočen, obstoječi žetoni takoj prenehajo delovati.
 if no acl records for user or any group the user is a member of	admin	sl	Če ni nobenega ACL zapisa za uporabnika in za nobeno skupino potem je član
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	sl	Če se uporablja LDAP, ali želite upravljati lastnosti domačega direktorija in prijavne lupine?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	sl	Če uporabljate SSL ali TLS, morate imeti naloženo razširitev PHP openssl
@@ -511,6 +519,7 @@ leave without saveing the entry	admin	sl	Zapusti brez shranjevanja zapisa
 leaves without saveing	admin	sl	Zapre brez shranjevanja
 length	admin	sl	Dolžina
 length<br>rows	admin	sl	Dolžina<br>Vrstic
+lifetime of 'remember me' token	admin	sl	Življenjska doba žetona "Zapomni si me"
 limit global category to members of a certain group	admin	sl	Omeji globalno kategorijo članom določene skupine.
 limit to members of	admin	sl	Omejite na člane
 list config settings	admin	sl	Seznam konfiguracijskih nastavitev
@@ -662,6 +671,7 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	sl	Zahtevano
 required pear class mail/mimedecode.php not found.	admin	sl	Zahtevani PEAR razred Pošta / mimeDecode.php ni mogoče najti.
 reset filter	admin	sl	Ponastavi filter
+revoke this token	admin	sl	Preklic tega žetona
 rights	admin	sl	Pravice
 rows	admin	sl	Vrstice
 rpm or debian package	admin	sl	RPM ali paket Debian
@@ -682,6 +692,7 @@ security	admin	sl	Varnost
 select accounts for which the custom field should be visible	admin	sl	Izberite račune, za katere je treba videti polje po meri.
 select group managers	admin	sl	Izberite oskrbnike skupin
 select permissions this group will have	admin	sl	Izberite dovoljenja te skupine
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	sl	Izberite aplikacije, za katere želite, da je žeton omejen, ali pustite privzeto nastavitev vseh aplikacij.
 select the parent category. if this is a main category select no category	admin	sl	Izberite nadrejeno kategorijo. Če kategorija nima nadrejene kategorije, izberite "BREZ KATEGORIJE"
 select type of imap server	admin	sl	Izberite vrsto strežnika IMAP
 select type of smtp server	admin	sl	Izberite tip SMTP strežnika
@@ -747,6 +758,7 @@ submit to egroupware.org	admin	sl	Pošlji na egroupware.org
 subtype	admin	sl	Podtip
 success	admin	sl	Uspeh
 successful connected to %1 server%2.	admin	sl	Uspešno priključen na %1 strežnik %2.
+successfull, but no refresh-token received!	admin	sl	Uspešno, vendar ni bil prejet noben žeton za osvežitev!
 switch back to standard identity to save account.	admin	sl	Preklopite nazaj na standardno identiteto, da shranite račun.
 switch back to standard identity to save other account data.	admin	sl	Preklopite nazaj na standardno identiteto, da shranite druge podatke o računu.
 switch it off, if users are randomly thrown out	admin	sl	Izključite, če se uporabnike izloči naključno
@@ -777,6 +789,10 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	sl
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	sl	Čas preteka seje v sekundah (privzeto 14400 = 4 ure).
 times	admin	sl	Časi
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	sl	Da bi nam omogočili spremljanje rasti posamezne namestitve, uporabite ta ID, sicer jo izbrišite:
+token created.	admin	sl	Žeton je ustvarjen.
+token not found!	admin	sl	Token ni najden!
+token revoked.	admin	sl	Žeton je preklican.
+token saved.	admin	sl	Žeton shranjen.
 top	admin	sl	Vrh
 total of %1 id's changed.	admin	sl	Skupno število %1 id je spremenjeno.
 total records	admin	sl	Skupno vseh zapisov
@@ -813,6 +829,7 @@ use default	admin	sl	Uporabi privzeto
 use ldap defaults	admin	sl	Uporabi privzeto za LDAP
 use predefined username and password defined below	admin	sl	Uporabi spodnje, vnaprej določeno uporabniško ime in geslo
 use pure html compliant code (not fully working yet)	admin	sl	Uporabi HTML veljavno kodo (popolnoma še ne deluje).
+use save or apply to store the received oauth token!	admin	sl	Za shranjevanje prejetega žetona OAuth uporabite možnost shrani ali uporabi!
 use secure cookies (transmitted only via https)	admin	sl	Uporabite varne piškotke (poslan samo prek https)
 use smtp auth	admin	sl	Uporabi SMTP avtentikacijo
 use theme	admin	sl	Uporabi temo

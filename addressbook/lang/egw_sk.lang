@@ -369,6 +369,7 @@ name for the distribution list	addressbook	sk	Názov pre distribučný zoznam
 name of current user, all other contact fields are valid too	addressbook	sk	Meno súčasného používateľa, ostatné kontaktné polia sú tiež platné.
 name, address	addressbook	sk	Meno, Adresa
 name, email, phone	addressbook	sk	Meno, e-mail, telefón
+never use prefix	addressbook	sk	Nikdy nepoužívajte predponu
 new contact submitted by %1 at %2	addressbook	sk	Nový kontakt odoslal %1 o %2
 next date	addressbook	sk	Nasledujúci dátum
 no categories selected	addressbook	sk	Neboli vybrané kategórie
@@ -522,6 +523,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	sk	použiť "vlastný" triediaci algoritmus adresára
 use an extra tab for private custom fields?	admin	sk	Použiť extra kartu pre súkromné vlastné polia?
 use country list	addressbook	sk	Použiť zoznam krajín
+use firstname, only if no prefix	addressbook	sk	Použite meno, len ak nie je použitý prefix
+use prefix plus all other name parts	addressbook	sk	Použite prefix a všetky ostatné časti mena
+use prefix, only if no firstname	addressbook	sk	Použite prefix, len ak nie je uvedené meno
 use setup for a full account-migration	admin	sk	Pre plnú migráciu účtov použite Setup
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	sk	Použiť túto značku pre označenie adries. Vložte obsah, ktorý chcete, medzi dve značky.
 used for links and for the own sorting of the list	addressbook	sk	Používa sa pre odkazy a vlastné spôsoby triedenia zoznamu
@@ -536,6 +540,7 @@ view linked infolog entries	addressbook	sk	Zobraziť pripojené položky Záznam
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sk	VAROVANIE!! LDAP sa dá použiť jedine ak NEPOUŽÍVATE kontakty na uchovanie používateľských účtov!
 warning: all contacts found will be deleted!	addressbook	sk	POZOR: Všetky kontakty budú odstránené!
 weekday	addressbook	sk	Deň v týždni
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	sk	Čo by sa malo zobrazovať ako celé meno. Ak nie je uvedené ani meno, ani priezvisko, zobrazí sa názov spoločnosti.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sk	Čo sa má v iných aplikáciách zobraziť na mieste odkazu na adresár. Prázdne hodnoty sa vynechajú. Ak zmeníte toto nastavenie, musíte sa znovu prihlásiť!
 when viewing a contact, show linked entries from the selected application	addressbook	sk	Pri zobrazení kontaktu ukázať odkazované položky z vybranej ikácie
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	sk	Pri spájaní záznamov do dokumentov sa budú ukladať sem. Ak nie je uvedený žiadny adresár, budú uložené vo vašom domovskom adresári (/home/...)

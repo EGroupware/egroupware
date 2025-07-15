@@ -39,6 +39,7 @@ acl csv export	admin	da	ACL CSV-eksport
 acl manager	admin	da	ACL Håndtering
 acl rights	common	da	ACL rettigheder
 activate	admin	da	Aktivere
+active this token again	admin	da	Aktivér dette token igen
 add a category	admin	da	Tilføj en kategori
 add a group	admin	da	Tilføj en gruppe
 add a new account.	admin	da	Tilføj en ny konto
@@ -71,6 +72,7 @@ all records and account information will be lost!	admin	da	Alle posteringer og k
 all users	admin	da	Alle brugere
 allow anonymous access to this app	admin	da	Tillad anonym adgang til denne applikation
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	da	Giv brugeren mulighed for at gemme sin adgangskode under 'Sikkerhed og adgangskoder' til SingleSignOn.
+allow user to set 'remember me' token	admin	da	Tillad brugeren at indstille »Husk mig«-token
 alternate email address	admin	da	Alternativ e-mail adresse
 anonymous user	admin	da	Anonym bruger
 anonymous user (not shown in list sessions)	admin	da	Anonym bruger (ikke vist i session loggen).
@@ -117,6 +119,7 @@ change config settings	admin	da	Ændre konfigurations indstillingerne
 change domain of email address and aliases	admin	da	Skift domæne for e-mailadresse og aliasser
 change login screen message	admin	da	Ændre startside besked
 check ip address of all sessions	admin	da	Kontrollere IP adresse for alle sessioner
+clear security tokens	admin	da	Ryd sikkerhedstokens
 click to select a color	admin	da	Klik for at vælge en farve
 color	admin	da	Farve
 container	admin	da	Beholder
@@ -223,7 +226,9 @@ enter your http proxy server port	admin	da	Indtast din HTTP proxy server port
 enter your smtp server hostname or ip address	admin	da	Indtast SMTP-server navn
 enter your smtp server port	admin	da	Indtast SMTP-server port
 error canceling timer, maybe there's none set !!!	admin	da	Fejl ved annullering af timer, måske er den ikke sat!
+error revoking token!	admin	da	Fejl ved tilbagekaldelse af token!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	da	Fejl ved indstillingen af timeren, forkert syntaks eller måske kører den allerede!
+error storing token!	admin	da	Fejl ved lagring af token!
 error: %1 not found or other error !!!	admin	da	Fejl: %1 ikke fundet eller en anden fejl!
 event details follow	admin	da	Hændelses detajler følger
 expires	admin	da	Udløber
@@ -240,6 +245,7 @@ forward only	admin	da	Videresend kun
 full name	admin	da	Fulde Navn
 general	admin	da	Generelt
 generate certificate	admin	da	Generer certifikat
+generate new token and display it once after saving	admin	da	Generer et nyt token, og vis det én gang efter at have gemt det
 global categories	common	da	Globale Kategorier
 group ?	admin	da	Gruppe?
 group has been added	common	da	Gruppen er tilføjet.
@@ -260,6 +266,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	da	Hvor mange minutter skal en konto eller IP låses (standard 30)
 icon	admin	da	Ikon
 if different from email address	admin	da	Hvis forskellig fra e-mailadresse
+if disabled existing tokens immediatly stop working.	admin	da	Hvis eksisterende tokens deaktiveres, holder de straks op med at virke.
 if no acl records for user or any group the user is a member of	admin	da	Hvis ingen ACL journal for en bruger eller gruppe som brugeren er medlem af
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	da	Hvis LDAP bruges, vil du håndtere hjemmemapper og loginshells atributter?
 imap admin password	admin	da	IMAP admin adgangskode
@@ -309,6 +316,7 @@ leave the group untouched and return back to the list	admin	da	Efterlad gruppen 
 leave without saveing the entry	admin	da	Forlad uden at gemme indtastningen
 leaves without saveing	admin	da	Forlad uden at gemme
 length<br>rows	admin	da	Længde<br>række
+lifetime of 'remember me' token	admin	da	Levetid for ›Husk mig‹-token
 list config settings	admin	da	Vis konfigurations indstillinger
 list current sessions	admin	da	Vis nuværende sessions
 list of current users	admin	da	Vis alle nuværende brugere
@@ -387,6 +395,7 @@ read this list of methods.	admin	da	Læs denne liste over metoder.
 regular expression to find part to use as container	admin	da	Regulært udtryk til at finde en del, der skal bruges som container
 remove	admin	da	Fjern
 requires 'openid / oauth2 server' app.	admin	da	Kræver appen 'OpenID / OAuth2 Server'.
+revoke this token	admin	da	Tilbagekald dette token
 rows	admin	da	Rækker
 save the category	admin	da	Gem kategorien.
 save the category and return back to the list	admin	da	Gem kategorien og vend tilbage til listen.
@@ -399,6 +408,7 @@ security	admin	da	Sikkerhed
 select accounts for which the custom field should be readonly	admin	da	Vælg konti, hvor det brugerdefinerede felt skal være skrivebeskyttet
 select group managers	admin	da	Vælg gruppe håndtering
 select permissions this group will have	admin	da	Vælg rettigheder denne gruppe skal have
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	da	Vælg de applikationer, som tokenet skal være begrænset til, eller lad standardindstillingen være alle applikationer.
 select the parent category. if this is a main category select no category	admin	da	Vælg overstående kategori. Hvis det er en hovedkategori vælg INGEN KATEGORI.
 select type of smtp server	admin	da	Vælg time POP3 server
 select users for inclusion	admin	da	Brugere der skal inkluderes
@@ -449,6 +459,7 @@ start	admin	da	Start
 start testjob!	admin	da	Start testjob
 submit changes	admin	da	Gem ændringerne
 submit the search string	admin	da	Send søgningen
+successfull, but no refresh-token received!	admin	da	Vellykket, men INGEN refresh-token modtaget!
 that loginid has already been taken	admin	da	Det loginid er allerede brugt
 the api is current	admin	da	API'en er den nyeste version
 the api requires an upgrade	admin	da	API'en behøver en opgradering
@@ -467,6 +478,10 @@ this php has no imap support compiled in!!	admin	da	Der er ikke understøttelse 
 timeout for application session data in seconds (default 86400 = 1 day)	admin	da	Timeout for applikation session data i sekunder (standard 86400 = 1 dag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	da	Timeout for sessioner i sekunder (standard 14400 = 4 timer)
 times	admin	da	Gange
+token created.	admin	da	Token oprettet.
+token not found!	admin	da	Token ikke fundet!
+token revoked.	admin	da	Token tilbagekaldt.
+token saved.	admin	da	Token gemt.
 top	admin	da	Top
 total records	admin	da	Total posteringer
 translation	admin	da	Oversættelse
@@ -484,6 +499,7 @@ use cookies to pass sessionid	admin	da	Brug cookies som sessionid
 use default	admin	da	Brug standard
 use ldap defaults	admin	da	Brug LDAP standarter
 use pure html compliant code (not fully working yet)	admin	da	Brug ren HTML godkendt kode
+use save or apply to store the received oauth token!	admin	da	Brug save eller apply til at gemme det modtagne OAuth-token!
 use smtp auth	admin	da	Brug SMTP autorisation
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	da	brug følgende indstillinger:\nnoVfsSelect=1\nmime=application/pdf eller /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	da	Brug tema

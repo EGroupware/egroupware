@@ -137,7 +137,6 @@ preformatted	preferences	it	Preformattato
 pt: points (1/72 inch)	preferences	it	pt: Punti  (1/72 pollici)
 px: display pixels	preferences	it	px: Pixel
 re-enter your password	preferences	it	Reinserisci la password
-read prefs for the specified application.	preferences	it	Legge le preferenze per l'applicazione specificata.
 reset qrcode	preferences	it	Resetta il codice QR
 revoke	preferences	it	Revoca
 revoke this token	preferences	it	Revoca questo token
@@ -156,7 +155,6 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	it	Impostazioni
 setup two factor authentication	preferences	it	Imposta autenticazione a due fattori
 should the number of active sessions be displayed for you all the time.	preferences	it	Il numero di sessioni attive sarà sempre visualizzato per te.
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	it	Questo messaggio di aiuto sarà sempre visualizzato quando si modificano le preferenze, o solo su richiesta.
 show helpmessages by default	preferences	it	Per default visualizza i messaggi di aiuto
 show links between egroupware aps as	common	it	Icone applicazioni e link
 show navigation bar as	preferences	it	Mostra la barra di navigazione come
@@ -174,7 +172,6 @@ stay open, but not for email	preferences	it	Rimanete aperti, ma non per le e-mai
 store password retrievable for singlesignon	common	it	Memorizzazione della password recuperabile per SingleSignOn
 text editor settings	preferences	it	Impostazioni dell'editor di testo
 text only	preferences	it	Solo Testo
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	it	L'applicazione predefinita partirà quando entri in EGroupware o premi sull'icona della homepage.<br>Puoi avere più di una applicazione visualizzata in homepage, se non scegli un'applicazione specifica (dovrà esser configurato nelle preferenze di ogni applicazione).
 the old password is not correct	preferences	it	La vecchia password non è corretta.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	it	La selectbox visualizza tutti gli utenti disponibili (può essere molto lenta nelle grandi installazioni con molto utenti). Il popup può cercare gli utenti per nome o gruppo.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	it	La casella di selezione mostra tutti gli utenti disponibili (può diventare molto lento in installazioni con tanti utenti). Il popup può cercare utenti usando il nome o il gruppo. Le ultime due opzioni limitano la visibilità per altri utenti. Dovrebbero pertanto essere forzate e non applicate agli amministratori.
@@ -199,7 +196,6 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	it	Quando dici sì i pulsanti Home e Uscita sono presentati come applicazioni nella barra principale superiore.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	it	Seleziona un set di caratteri per l'importazione/esportazione CSV
 which currency symbol or name should be used in egroupware.	preferences	it	Quale simbolo monetario o nome deve essere usato in EGroupware.
-write prefs for the specified application.	preferences	it	Scrive le preferenze per l'applicazione selezionata.
 you can show the applications as icons only, icons with app-name or both.	preferences	it	Puoi visualizzare le applicazioni come icone, icone con nome o entrambi.
 you can show the linked entries with icons only, icons with app-name or both.	common	it	Mostra applicazioni solo con icone, il nome applicazione, o entrambi
 you do not have permission to set acl's in this mode!	preferences	it	Non hai il permesso di stabilire i permessi ACL in questa modo!

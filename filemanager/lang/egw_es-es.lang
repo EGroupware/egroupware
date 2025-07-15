@@ -218,8 +218,8 @@ notebookbar	filemanager	es-es	Con pestañas
 older versions or deleted files	filemanager	es-es	Versiones anteriores o archivos borrados
 only owner can rename or delete the content	filemanager	es-es	Sólo el propietario puede renombrar o borrar el contenido
 open	filemanager	es-es	Abrir
-open documents with collabora, if permissions are given	filemanager	es-es	abrir documentos con Collabora, si se otorgan permisos
-open odt documents with collabeditor	filemanager	es-es	abrir documentos odt con CollabEditor
+open documents with collabora, if permissions are given	filemanager	es-es	Abrir documentos con Collabora Online, si se otorgan permisos
+open odt documents with collabeditor	filemanager	es-es	Abrir documentos odt con Collabora Online
 operation	filemanager	es-es	Operación
 password for webdav and smb, use $pass for password of logged in user	filemanager	es-es	Contraseña para WebDAV y SMB, utilice $pass para la contraseña del usuario conectado
 paste link	filemanager	es-es	Pegar enlace

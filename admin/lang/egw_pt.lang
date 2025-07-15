@@ -43,6 +43,7 @@ acl csv export	admin	pt	Exportação ACL CSV
 acl manager	admin	pt	Administração de regras de acesso
 acl rights	common	pt	Permissões de acesso
 activate	admin	pt	Activar
+active this token again	admin	pt	Ativar novamente este token
 add a category	admin	pt	Adicionar uma categoria
 add a group	admin	pt	Adicionar um grupo
 add a new account.	admin	pt	Adicionar nova conta.
@@ -76,6 +77,7 @@ all records and account information will be lost!	admin	pt	Todos registos e dado
 all users	admin	pt	Todos os utilizadores
 allow anonymous access to this app	admin	pt	Permitir acesso anónimo a esta aplicação
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	pt	Permitir que o utilizador guarde a sua palavra-passe em 'Segurança e palavras-passe' para SingleSignOn.
+allow user to set 'remember me' token	admin	pt	Permitir ao utilizador definir o token "Lembrar-me"
 alternate email address	admin	pt	Endereço de correio electrónico alternativo
 anonymous user	admin	pt	Utilizador anónimo
 anonymous user (not shown in list sessions)	admin	pt	Utilizador anónimo (não exibido na lista de sessões)
@@ -128,6 +130,7 @@ change domain of email address and aliases	admin	pt	Alterar o domínio do endere
 change login screen message	admin	pt	Alterar mensagem da página inicial
 check ip address of all sessions	admin	pt	Verificar endereço IP de todas as sessões
 check items to <b>%1</b> to %2 for %3	admin	pt	Marcar items de <b>%1</b> a %2 para %3
+clear security tokens	admin	pt	Limpar tokens de segurança
 click to select a color	admin	pt	Clique aqui para seleccionar uma cor
 color	admin	pt	Cor
 container	admin	pt	Contentor
@@ -239,8 +242,10 @@ enter your smtp server hostname or ip address	admin	pt	Insira o endereço do seu
 enter your smtp server port	admin	pt	Insira a porta do seu servidor SMTP
 entry saved	admin	pt	Registo guardado
 error canceling timer, maybe there's none set !!!	admin	pt	Erro ao cancelar cronómetro. Talvez nenhum esteja activo!
+error revoking token!	admin	pt	Erro ao revogar o token!
 error saving the entry!!!	admin	pt	Erro ao guardar o registo!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt	Erro ao activar cronómetro: sintaxe incorrecta ou já existe um em execução!
+error storing token!	admin	pt	Erro ao armazenar o token!
 error! no appname found	admin	pt	Erro! Nenhum nome de aplicação encontrado
 error: %1 not found or other error !!!	admin	pt	Erro: %1 não encontrado ou outro erro!
 event details follow	admin	pt	Seguem detalhes do evento
@@ -264,6 +269,7 @@ forward only	admin	pt	Reencaminhar apenas
 full name	admin	pt	Nome completo
 general	admin	pt	Geral
 generate certificate	admin	pt	Gerar certificado
+generate new token and display it once after saving	admin	pt	Gerar um novo token e apresentá-lo uma vez depois de o guardar
 global categories	common	pt	Categorias gerais
 global options	admin	pt	Opções gerais
 group ?	admin	pt	Grupo?
@@ -288,6 +294,7 @@ how should email addresses for new users be constructed?	admin	pt	Selecionar o f
 icon	admin	pt	Ícone
 idle	admin	pt	Ocioso
 if different from email address	admin	pt	se for diferente do endereço de email
+if disabled existing tokens immediatly stop working.	admin	pt	Se os tokens existentes forem desactivados, deixam imediatamente de funcionar.
 if no acl records for user or any group the user is a member of	admin	pt	Se não houver registo de ACL para um utilizador ou grupo, o utilizador é membro do
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt	Se estiver a utilizar o LDAP, deseja definir atributos de directoria principal e shell de acesso ?
 imap admin password	admin	pt	Senha do administrador IMAP
@@ -335,6 +342,7 @@ leave the group untouched and return back to the list	admin	pt	Deixa o grupo e v
 leave without saveing the entry	admin	pt	Continua sem guardar o registo
 leaves without saveing	admin	pt	Continua sem guardar
 length<br>rows	admin	pt	Altura<br>Linhas
+lifetime of 'remember me' token	admin	pt	Tempo de vida do token "Lembrar-me"
 list config settings	admin	pt	Listar configurações
 list current sessions	admin	pt	Listar sessões actuais
 list of current users	admin	pt	Lista de utilizadores ligados
@@ -422,6 +430,7 @@ register application hooks	admin	pt	Registar pontos de entrada de aplicações
 regular expression to find part to use as container	admin	pt	Expressão regular para encontrar a parte a utilizar como contentor
 remove	admin	pt	Remover
 required pear class mail/mimedecode.php not found.	admin	pt	Classe PEAR requeridos Correio/mimeDecode.php não encontrado.
+revoke this token	admin	pt	Revogar este token
 rows	admin	pt	Linhas
 run asynchronous services	admin	pt	Executar serviços assíncronos
 save the category	admin	pt	Guardar a categoria
@@ -434,6 +443,7 @@ search peer servers	admin	pt	Pesquisar servidores remotos
 security	admin	pt	Segurança
 select group managers	admin	pt	Seleccionar gestores de grupos
 select permissions this group will have	admin	pt	Seleccione as permissões concedidas a este grupo
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	pt	Selecione as aplicações às quais pretende que o token se limite ou deixe a predefinição de todas as aplicações.
 select the parent category. if this is a main category select no category	admin	pt	Seleccione a categoria principal. Se esta é a categoria principal, não seleccione nenhuma categoria.
 select type of smtp server	admin	pt	Seleccionar tipo de servidor SMTP
 select users for inclusion	admin	pt	Seleccione utilizadores para inclusão
@@ -482,6 +492,7 @@ start testjob!	admin	pt	Iniciar trabalho de teste!
 submit changes	admin	pt	Enviar alterações
 submit the search string	admin	pt	Enviar termo de pesquisa
 subtype	admin	pt	Subtipo
+successfull, but no refresh-token received!	admin	pt	Bem sucedido, mas NÃO foi recebido nenhum token de atualização!
 that loginid has already been taken	admin	pt	Esse nome de utilizador já existe
 the api is current	admin	pt	A base (API) do EGroupware está actualizada
 the api requires an upgrade	admin	pt	A base (API) do EGroupware precisa ser actualizada
@@ -503,6 +514,10 @@ this php has no imap support compiled in!!	admin	pt	O PHP não tem suporte de IM
 timeout for application session data in seconds (default 86400 = 1 day)	admin	pt	Os dados da sessão da aplicação expiram em segundos (por omissão 86400 = 1 dia)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	pt	As sessões expiram em segundos (por omissão 14400 = 4 horas)
 times	admin	pt	Tempo
+token created.	admin	pt	Token criado.
+token not found!	admin	pt	Token não encontrado!
+token revoked.	admin	pt	Token revogado.
+token saved.	admin	pt	Token guardado.
 top	admin	pt	Topo
 total records	admin	pt	Total de registos
 translation	admin	pt	Tradução
@@ -520,6 +535,7 @@ use cookies to pass sessionid	admin	pt	Utilizar cookies para transmitir ID de se
 use default	admin	pt	Utilizar definições por omissão
 use ldap defaults	admin	pt	Utilizar definições por omissão do LDAP
 use pure html compliant code (not fully working yet)	admin	pt	Usar puro código HTML (não funciona totalmente ainda)
+use save or apply to store the received oauth token!	admin	pt	Utilize guardar ou aplicar para armazenar o token OAuth recebido!
 use smtp auth	admin	pt	Utilizar autenticação SMTP
 use theme	admin	pt	Utilizar tema
 use tls authentication	admin	pt	Utilizar autenticação TLS

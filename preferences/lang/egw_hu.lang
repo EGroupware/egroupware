@@ -19,6 +19,7 @@ default	preferences	hu	alapértelmezett
 default preferences	preferences	hu	Alapértelmezett Tulajdonságok
 delete categories	preferences	hu	Kategóriák Törlése
 deny following groups access to application passwords	preferences	hu	A következő csoportok hozzáférésének megtagadása az alkalmazások jelszavaihoz
+deny following groups access to preferences	admin	hu	A következő csoportok hozzáférésének megtagadása a beállításokhoz
 description can not exceed 255 characters in length !	preferences	hu	A leírás nem érheti el a 255 karakter hosszúságot!
 disable	preferences	hu	Letilt
 display thumbnails for linked images	preferences	hu	Csatolt képekhez ikon megjelenítése
@@ -66,6 +67,7 @@ permanent time zone selection	preferences	hu	Állandó időzóna szelekció
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	hu	Kérlek válassz időzónát amelyek között váltani szeretnél. A változtatási lehetőség nem lesz feltüntetve ha kevesebb mint két időzóna lett kiválasztva.
 please select your timezone.	preferences	hu	Kérlek válassz időzónát.
 popup with search	preferences	hu	Felugró ablak kereséssel
+preferences saved.	preferences	hu	Preferenciák mentése.
 re-enter your password	preferences	hu	Jelszó megerősítése
 reset qrcode	preferences	hu	QR-kód visszaállítása
 scan qrcode with a time-based one-time password (totp) app:	preferences	hu	QR-kód beolvasása TOTP (Time-based one-time password) alkalmazással:
@@ -78,7 +80,6 @@ selectbox with primary group and search	preferences	hu	Kiválasztó doboz az els
 set content size	preferences	hu	Tartalomméret beállítása
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	hu	Tetszése szerint állítsa be. Biztonsági okokból nem szerencsés, ha a felhasználói neve nyilvánosságra kerül.
 should the number of active sessions be displayed for you all the time.	preferences	hu	Az aktív kapcsolatok számának állandó megjelenítése (egyszerre hányan használják a rendszert).
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	hu	A segítség üzenetek állandóan megjelenítésre kerülnek, amikor változtatja a tulajdonságokat, vagy csak akkor jelennek meg, ha kifejezetten kéri a megjelenítést.
 show helpmessages by default	preferences	hu	Segítség megjelenítése alapértelmezésben
 show links between egroupware aps as	common	hu	Az EGroupware alkalmazások közötti linkeket mutassa
 show navigation bar as	preferences	hu	Mutassa a navigációs panelt mint
@@ -91,7 +92,6 @@ singlesignon and passwords	preferences	hu	SingleSignOn és jelszavak
 spellchecker language	addressbook	hu	Helyesírás-ellenörző nyelve
 store password retrievable for singlesignon	common	hu	A SingleSignOn számára visszakereshető jelszó tárolása
 text only	preferences	hu	Csak szöveg
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	hu	Az alapértelmezett alkalmazás fog elindulni, amikor belép az EGroupware-be vagy a Kezdőlap ikonra kattint.<br>Több alkalmazást is megjeleníthet a Kezdőlapon(Főképernyőn), ha nem jelöl meg itt alapértelmezett alkalmazást. Ezeket az egyes alkalmazások beállításai között kell beállítani (pl. Felamimail, Infolog, Hírszerkesztő stb.).
 the old password is not correct	preferences	hu	A régi jelszó hibás
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	hu	A kiválasztó doboz megjeleníti az összes elérhető felhasználót (nagyon lelassulhat sok felhasználó esetén). A felugró ablakban meg lehet keresni a felhasználókat név vagy csoport alapján.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	hu	Az előbbi két opció korlátozza más felhasználók megtekintését. Ezért ezt meg kell követelni és nem engedélyezni adminisztrátoroknak.

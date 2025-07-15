@@ -369,6 +369,7 @@ name for the distribution list	addressbook	nl	Naam voor de distributielijst
 name of current user, all other contact fields are valid too	addressbook	nl	Naam van de huidige gebruiker, alle andere contactvelden zijn ook geldig.
 name, address	addressbook	nl	Naam, adres
 name, email, phone	addressbook	nl	Naam, e-mail, telefoon
+never use prefix	addressbook	nl	Gebruik nooit voorvoegsel
 new contact submitted by %1 at %2	addressbook	nl	Nieuwe contact toegevoegd op %2 door %1.
 next date	addressbook	nl	Volgende datum
 no categories selected	addressbook	nl	Geen categorieën geselecteerd
@@ -522,6 +523,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	nl	Gebruik adresboek zijn "eigen sorteer" methode
 use an extra tab for private custom fields?	admin	nl	Een extra categorie tabblad gebruiken voor persoonlijke aangepaste velden?
 use country list	addressbook	nl	Gebruik Landenlijst
+use firstname, only if no prefix	addressbook	nl	Gebruik voornaam, alleen als er geen voorvoegsel is
+use prefix plus all other name parts	addressbook	nl	Gebruik voorvoegsel plus alle andere naamdelen
+use prefix, only if no firstname	addressbook	nl	Gebruik voorvoegsel, alleen als er geen voornaam is
 use setup for a full account-migration	admin	nl	Gebruik setup voor een volledige accountmigratie
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	nl	Gebruik deze tag voor adres labels.Plaats de inhoud welke je wilt herhalen tussen twee tags.
 used for links and for the own sorting of the list	addressbook	nl	Gebruikt voor links en voor eigen sortering van de lijst
@@ -536,6 +540,7 @@ view linked infolog entries	addressbook	nl	Gekoppelde InfoLog details bekijken
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	nl	WAARSCHUWING! Alleen LDAP gebruiken als het adresboek niet wordt gebruikt om de accounts op te slaan!
 warning: all contacts found will be deleted!	addressbook	nl	WAARSCHUWING: Alle gevonden contacten worden verwijderd!
 weekday	addressbook	nl	Werkdag
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	nl	Wat moet worden weergegeven als volledige naam. Als er geen voor- of achternaam is, wordt de bedrijfsnaam weergegeven.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	nl	Wat moeten koppelingen aan het adresboek in andere toepassingen moeten weergeven. Lege waardes worden genegeerd. U moet opnieuw inloggen, als u deze instelling wijzigt!
 when viewing a contact, show linked entries from the selected application	addressbook	nl	Bij het bekijken van een contact, toon de verbonden invoer van de geselecteerde invoer
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	nl	Wanneer u vermeldingen in documenten samenvoegt, worden ze hier opgeslagen. Als er geen map is opgegeven, worden ze opgeslagen in uw thuismap (/home/...)

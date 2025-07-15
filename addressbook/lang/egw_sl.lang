@@ -369,6 +369,7 @@ name for the distribution list	addressbook	sl	Ime za distribucijski seznam
 name of current user, all other contact fields are valid too	addressbook	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika.
 name, address	addressbook	sl	Ime, naslov
 name, email, phone	addressbook	sl	Ime, e-pošta, telefon
+never use prefix	addressbook	sl	Nikoli ne uporabljajte predpone
 new contact submitted by %1 at %2	addressbook	sl	Nov stik je dodal/-a %1 dne %2
 next date	addressbook	sl	Naslednji datum
 no categories selected	addressbook	sl	Nobena kategorija ni izbrana
@@ -522,6 +523,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	sl	Use addressbooks "own sorting" attribute
 use an extra tab for private custom fields?	admin	sl	Uporaba dodatni zavihek za osebna polja po meri
 use country list	addressbook	sl	Uporabi seznam držav
+use firstname, only if no prefix	addressbook	sl	Uporabite ime, samo če ni predpone
+use prefix plus all other name parts	addressbook	sl	Uporabite predpono in vse druge dele imena
+use prefix, only if no firstname	addressbook	sl	Uporabite predpono, samo če ni imena
 use setup for a full account-migration	admin	sl	Uporabi namestitev za popolno migracijo računov
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 used for links and for the own sorting of the list	addressbook	sl	Uporabno za povezave in za lastno razvrščanje seznama
@@ -536,6 +540,7 @@ view linked infolog entries	addressbook	sl	Poglej povezane vnose InfoLog
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sl	OPOZORILO!! LDAP je veljaven samo, če ne uporabljate stikov za skladiščenje računov!
 warning: all contacts found will be deleted!	addressbook	sl	Opozorilo: vsi najdeni stiki bodo zbrisani!
 weekday	addressbook	sl	Delovnik
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	sl	Kaj naj se prikaže kot polno ime. Če ni ne imena ne priimka, se prikaže ime podjetja.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sl	Kaj naj povezave do adresarja prikaže v drugih aplikacijah. Prazne vrednosti bodo izpuščene. Če spremenite nastavitve, se morate ponovno prijaviti!
 when viewing a contact, show linked entries from the selected application	addressbook	sl	Ko si ogledujete vizitko, prikažite povezane vnose iz izbrane aplikacije
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	sl	Ko vnose združite v dokumente, bodo shranjeni tukaj. Če imenik ni naveden, bodo shranjeni v vašem domačem imeniku (/home/...)

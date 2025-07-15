@@ -19,7 +19,9 @@ after reply, visible during compose	mail	zh	回复后，在撰写过程中可见
 aliases+forwards	mail	zh	别名+转发
 all my email addresses	mail	zh	我所有的电子邮件地址
 all of	mail	zh	所有的
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	zh	所有子文件夹也将被删除，所有受影响文件夹中的所有信息都将丢失
 allow images from external sources in html emails	mail	zh	在HTML邮件中允许外部图片来源
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	zh	允许用户读取、写入和创建文件夹和邮件，向其发送邮件，向其添加邮件和删除邮件
 always respond / auto-responder	mail	zh	始终回复/自动回复
 always show html emails	mail	zh	总是显示HTML邮件
 always show notifiction	mail	zh	总是显示通知
@@ -27,6 +29,7 @@ answered	mail	zh	已回答
 any of	mail	zh	任何
 any status	mail	zh	任何状态
 archive folder	mail	zh	归档文件夹
+are you sure you want to delete all selected folders?	mail	zh	您确定要删除所有选定的文件夹吗？
 attach files	mail	zh	附加文件
 attach users vcard at compose to every new mail	mail	zh	在撰写每封新邮件时附加用户的 vCard
 attachment has been saved successfully.	mail	zh	附件已成功保存。
@@ -105,6 +108,8 @@ everyone	mail	zh	所有人
 examine namespace to retrieve folders in others and shared	mail	zh	检查命名空间以检索他人和共享文件夹
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	zh	将大于给定大小的附件排除在自动保存为草稿的范围之外（以 MB 为单位）
 extended	mail	zh	扩展
+failed to delete %1 ! reason: %2	mail	zh	删除 %1 失败！原因：%2
+failed to delete %1. server responded:	mail	zh	删除 %1 失败！服务器已响应：
 failed to subscribe folder %1!	mail	zh	订阅文件夹 %1 失败！
 failed to unsubscribe folder %1!	mail	zh	取消订阅文件夹 %1 失败！
 file into	mail	zh	移至
@@ -343,8 +348,10 @@ vacation notice is active	mail	zh	假期通知已激活
 vacation start-date must be before the end-date!	mail	zh	假期开始日期必须是在结束日期之前！
 validate addresses on submit:	mail	zh	提交时验证地址
 view header lines	mail	zh	查看邮件头
+what to do when you delete a message	mail	zh	删除信息时的操作。
 when deleting messages	mail	zh	当删除邮件时
 write	mail	zh	写入
+write & delete	mail	zh	写入和删除
 wrote	mail	zh	写信
 you can select what info to be displayed on email tag	mail	zh	您可以选择要在电子邮件标签上显示的信息。
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	zh	您可以使用 $$start$$ 表示上述开始日期，使用 $$end$$ 表示结束日期。

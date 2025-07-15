@@ -45,6 +45,7 @@ allow external images from listed domains	mail	bg	Показване на вън
 allow images from external sources in html emails	mail	bg	Показване на изображения от външни източници в HTML съобщения.
 allow images from listed domains in html emails	mail	bg	Показване на изображения от изброени домейни в HTML съобщения.
 allow users to create further identities	mail	bg	позволява на потребителите да създават допълнителни самоличности
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	bg	Позволява на потребителя да чете, пише и създава папки и писма, да публикува в тях, да добавя съобщения и да изтрива съобщения.
 always	mail	bg	Винаги
 always allow external sources from %1	mail	bg	Винаги позволява външни източници от %1
 always respond / auto-responder	mail	bg	Винаги отговаряй / автоматичен отговор
@@ -529,8 +530,10 @@ vacation notice is active	mail	bg	Активирана е ваканционна
 vacation start-date must be before the end-date!	mail	bg	Началото на ваканцията трябва да е ПРЕДИ края!
 validate selected addresses on submit:	mail	bg	Потвърдете адресите при изпращане:
 view header lines	mail	bg	Заглавна част (Header)
+what to do when you delete a message	mail	bg	Какво да правите, когато изтривате съобщение.
 when deleting messages	mail	bg	При изтриване на съобщения
 which folders - in general - should not be automatically created, if not existing	mail	bg	кои папки НЕ следва са се създават автоматично, ако не съществуват
+write & delete	mail	bg	Записване и изтриване
 wrote	mail	bg	написа
 you can select what info to be displayed on email tag	mail	bg	Можете да изберете каква информация да се показва на имейл тага.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	bg	Можете да използвате $$start$$ за горната начална дата и $$end$$ за крайната дата.

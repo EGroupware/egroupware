@@ -35,6 +35,7 @@ allow external images from listed domains	mail	pt	Permitir imagens externas de d
 allow images from external sources in html emails	mail	pt	Permitir imagens de fontes externas em HTML e-mails.
 allow images from listed domains in html emails	mail	pt	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt	permitir aos usuários criar novas identidades
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	pt	Permite a um utilizador ler, escrever e criar pastas e mensagens de correio eletrónico, enviar mensagens para as mesmas, anexar mensagens às mesmas e apagar mensagens
 always allow external sources from %1	mail	pt	Permitir sempre fontes externas a partir de %1
 always respond / auto-responder	mail	pt	Responder sempre / resposta automática
 always show html emails	mail	pt	Exibir sempre mensagens HTML
@@ -44,6 +45,7 @@ any of	mail	pt	algum de
 any status	mail	pt	qualquer estado
 append	mail	pt	anexar
 archive folder	mail	pt	Pasta de arquivo
+are you sure you want to delete all selected folders?	mail	pt	Tem a certeza de que pretende apagar todas as pastas selecionadas?
 attach files	mail	pt	Anexar ficheiros
 attach users vcard at compose to every new mail	mail	pt	anexar usuários VCard a compor a cada novo e-mail.
 attach vcard	mail	pt	Anexar vCard
@@ -593,6 +595,7 @@ when sending messages	mail	pt	Ao enviar mensagens
 which method to use when forwarding a message	mail	pt	Qual o método a ser usado ao encaminhar uma mensagem
 with message:	mail	pt	Com a mensagem:
 write	mail	pt	escrever
+write & delete	mail	pt	escrever e apagar
 wrote	mail	pt	Escreveu
 yes, offer copy option	mail	pt	sim, oferecer opção de cópia
 you can select what info to be displayed on email tag	mail	pt	Pode selecionar as informações a apresentar na etiqueta de correio eletrónico.

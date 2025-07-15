@@ -35,7 +35,7 @@ delete categories	preferences	ja	カテゴリを削除
 deny following groups access to acl (grant access)	admin	ja	Deny following groups access to ACL (grant access)
 deny following groups access to application passwords	preferences	ja	Questi gruppi limitano solo le password delle applicazioni da creare tramite i modelli
 deny following groups access to edit categories	admin	ja	Deny following groups access to edit categories
-deny following groups access to preferences	admin	ja	Deny following groups access to preferences
+deny following groups access to preferences	admin	ja	以下のグループの環境設定へのアクセスを拒否する
 description can not exceed 255 characters in length !	preferences	ja	説明は255文字以下である必要があります!
 disable	preferences	ja	無効
 display thumbnails for linked images	preferences	ja	リンク画像のサムネイルを表示
@@ -58,7 +58,7 @@ error	preferences	ja	エラー
 failed to change password.	preferences	ja	パスワードの変更に失敗しました。
 features of the editor	preferences	ja	エディタ機能
 font size unit	preferences	ja	フォント・サイズの単位
-forced preferences	preferences	ja	Forced preferences
+forced preferences	preferences	ja	環境設定の強制
 formatting & general settings	preferences	ja	書式と一般設定
 general settings	preferences	ja	一般設定
 generate new qrcode to disable existing one, after enabling the new one!	preferences	ja	既存のQRコードを無効にするために新しいQRコードを生成（新しいQRコードを有効にした後）
@@ -110,7 +110,6 @@ preferences saved.	preferences	ja	設定を保存しました。
 pt: points (1/72 inch)	preferences	ja	pt: ポイント (1/72 インチ)
 px: display pixels	preferences	ja	px: ピクセル
 re-enter your password	preferences	ja	パスワードを再入力して下さい。
-read prefs for the specified application.	preferences	ja	アプリケーション個別設定を読み込みます。
 reset qrcode	preferences	ja	QRコードをリセット
 scan qrcode with a time-based one-time password (totp) app:	preferences	ja	TOTP（時間ベースのワンタイムパスワード）アプリでQRコードをスキャン：
 select additional lines in lists by	preferences	ja	複数行を選択する方法
@@ -123,7 +122,6 @@ selectbox with primary group and search	preferences	ja	プライマリ・グル�
 server is unwilling to perform.	preferences	ja	Server is unwilling to perform.
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	ja	選択子は全ユーザに表示されます。セキュリティ上の理由からユーザ名は表示しない方がよい場合があります。
 should the number of active sessions be displayed for you all the time.	preferences	ja	アクティブ・セッション数を表示します。
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	ja	Show help messages when modifying preferences or only on request.
 show helpmessages by default	preferences	ja	ヘルプ・メッセージ
 show links between egroupware aps as	common	ja	アプリケーション・アイコン/リンク
 show navigation bar as	preferences	ja	ナビゲーション
@@ -138,7 +136,6 @@ spellchecker language	addressbook	ja	スペルチェックする言語
 store password retrievable for singlesignon	common	ja	SingleSignOnで取得可能なパスワードを保存する。
 text editor settings	preferences	ja	テキスト・エディタ設定
 text only	preferences	ja	テキストのみ
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ja	The default application will be started when you enter EGroupware or click on the Home icon.<br>More than one application scan be shown on the home page, if nothing is selected here. It has to be configured in the preferences of each application.
 the old password is not correct	preferences	ja	The old password is not correct!
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ja	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	ja	セレクト・ボックスは、全ユーザを選択子として表示します（ユーザ数が多い環境では非常に低速）。「検索機能付き」では検索ウィンドウでユーザの検索ができます。
@@ -159,7 +156,6 @@ what to display for an avatar, if there is no photo	preferences	ja	写真がな�
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	ja	ホームやログアウト・ボタンをアプリケーションのようにトップバーに表示します。
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ja	CSV インポート/エクスポートで使う文字セットを選択してください。
 which currency symbol or name should be used in egroupware.	preferences	ja	通貨シンボル/通貨名
-write prefs for the specified application.	preferences	ja	アプリケーション個別設定を保存します。
 you can show the applications as icons only, icons with app-name or both.	preferences	ja	アプリケーションのは、アイコンだけ、アイコン＋アプリケーション名、またはその両方で表示できます。
 you can show the linked entries with icons only, icons with app-name or both.	common	ja	アプリケーションのは、アイコンだけ、アイコン＋アプリケーション名、またはその両方で表示できます。
 you do not have permission to set acl's in this mode!	preferences	ja	このモードで ACL を設定する権限がありません!

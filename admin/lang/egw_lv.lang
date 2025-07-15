@@ -42,6 +42,7 @@ acl csv export	admin	lv	ACL CSV eksports
 acl manager	admin	lv	ACL pārvaldnieks
 acl rights	common	lv	ACL tiesības
 activate	admin	lv	Aktivizēt
+active this token again	admin	lv	Atkal aktivizēt šo žetonu
 add a category	admin	lv	Pievienot kategoriju
 add a group	admin	lv	Pievienot grupu
 add a new account.	admin	lv	Pievienot jaunu kontu
@@ -74,6 +75,7 @@ all records and account information will be lost!	admin	lv	Visi ieraksti un kont
 all users	admin	lv	Visi lietotāji
 allow anonymous access to this app	admin	lv	Atļaut nezināmajam lietotājam piekļūt šai aplikācijai
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	lv	Ļaujiet lietotājam saglabāt savu paroli sadaļā “Drošība un paroles” vienotai pieejai SingleSignOn.
+allow user to set 'remember me' token	admin	lv	Atļaut lietotājam iestatīt žetonu "Atcerēties mani
 alternate email address	admin	lv	Alternatīvas e-pasta adreses
 anonymous user	admin	lv	Nezināmais lietotājs
 anonymous user (not shown in list sessions)	admin	lv	Nezināmais lietotājs (Netiek parādīts sesiju sarakstā)
@@ -122,6 +124,7 @@ change domain of email address and aliases	admin	lv	E-pasta adreses un aizstājv
 change login screen message	admin	lv	Mainīt galvenā loga ziņojumu
 check ip address of all sessions	admin	lv	Pārbaudīt IP adresi visām sesijām
 check items to <b>%1</b> to %2 for %3	admin	lv	Pārbaudīt vienības <b>%1</b> to %2 for %3
+clear security tokens	admin	lv	Izdzēst drošības žetonus
 click to select a color	admin	lv	Noklikšķini, lai izvēlētos krāsu
 color	admin	lv	Krāsa
 container	admin	lv	Konteiners
@@ -225,7 +228,9 @@ enter your smtp server hostname or ip address	admin	lv	Ievadi savu SMTP servera 
 enter your smtp server port	admin	lv	Ievadi savu SMTP servera portu
 entry saved	admin	lv	Ieraksts saglabāts
 error canceling timer, maybe there's none set !!!	admin	lv	Kļūdas atceļot taimeri, iespējams neviens nav uzlikts!
+error revoking token!	admin	lv	Kļūda, atsaucot žetonu!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	lv	Kļūda uzstādot taimeri, kļūdaina sintakse vai, iespējams, kāds jau ir palaists!
+error storing token!	admin	lv	Kļūda token saglabāšanā!
 error: %1 not found or other error !!!	admin	lv	Kļūda: %1 nav atrasts vai cita kļūda!
 expires	admin	lv	Beigas
 export certificate as p12	admin	lv	Eksportēt sertifikātu kā p12
@@ -242,6 +247,7 @@ forward only	admin	lv	Tikai pārsūtīt
 full name	admin	lv	Pilns vārds
 general	admin	lv	Vispārējs
 generate certificate	admin	lv	Izveidot sertifikātu
+generate new token and display it once after saving	admin	lv	Izveidot jaunu žetonu un parādīt to vienreiz pēc saglabāšanas
 global categories	common	lv	Vispārējas (global) kategorijas
 group ?	admin	lv	Grupa?
 group has been added	common	lv	Grupa tika pievienota
@@ -264,6 +270,7 @@ html/plaintext	admin	lv	HTML/Teksts
 icon	admin	lv	Ikona
 idle	admin	lv	Dīkstāve (idle)
 if different from email address	admin	lv	Ja atšķiras no e-pasta adreses
+if disabled existing tokens immediatly stop working.	admin	lv	Ja atspējoti esošie žetoni nekavējoties pārtrauc darboties.
 if no acl records for user or any group the user is a member of	admin	lv	Ja nav ACL ierakstu lietotājiem vai kādai grupai, lietotājs ir ...?
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	lv	Vai vēlies pārvaldīt mājasdirektoriju un pieteikšanāsformas atribūtus, ja lieto LDAP
 imap admin password	admin	lv	IMAP administratora parole
@@ -309,6 +316,7 @@ leave the group untouched and return back to the list	admin	lv	Atstāt grupu nes
 leave without saveing the entry	admin	lv	Aiziet, nesaglabājot ierakstu
 leaves without saveing	admin	lv	Aiziet bez saglabāšanas
 length<br>rows	admin	lv	Garums<br>Rindas
+lifetime of 'remember me' token	admin	lv	Atcerēties mani" žetona darbības laiks
 list config settings	admin	lv	Uzskaitīt konfigurācijas uzstādījumus
 list current sessions	admin	lv	Uzskaitīt esošās sesijas
 list of current users	admin	lv	Uzskaitīt esošos lietotājus
@@ -380,6 +388,7 @@ re-enter password	admin	lv	Atkārtoti ievadi paroli
 read this list of methods.	admin	lv	Izlasi šo metožu sarakstu
 regular expression to find part to use as container	admin	lv	Regulārā izteiksme, lai atrastu daļu, ko izmantot kā konteineru
 remove	admin	lv	Pārvietot
+revoke this token	admin	lv	Atcelt šo žetonu
 rows	admin	lv	Rindas
 run asynchronous services	admin	lv	Palaist asinhronos pakalpojumus
 save the category	admin	lv	Saglabāt kategoriju
@@ -392,6 +401,7 @@ search peer servers	admin	lv	Meklēt vienādranga serverus
 security	admin	lv	Drošība
 select group managers	admin	lv	Atzīmēt Grupu pārvaldniekus
 select permissions this group will have	admin	lv	Atzīmēt kādas tiesības būs šai grupai
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	lv	Izvēlieties lietojumprogrammas, uz kurām vēlaties, lai žetons tiktu ierobežots, vai atstājiet noklusējuma iestatījumu - visas lietojumprogrammas.
 select the parent category. if this is a main category select no category	admin	lv	Atzīmē vecāku kategoriju. Ja tā ir galvenā kategorija atzīmē NO CATEGORY
 select type of smtp server	admin	lv	Atzīmēt SMTP servera tipu
 select users for inclusion	admin	lv	Atzīmē kurus lietotājus ietvert
@@ -435,6 +445,7 @@ standard smtp-server	admin	lv	Standarta SMTP serveris
 start testjob!	admin	lv	Sākt testa darbu!
 submit changes	admin	lv	Apstiprināt Izmaiņas
 submit the search string	admin	lv	Apstiprināt meklēšamas stringu
+successfull, but no refresh-token received!	admin	lv	Veiksmīgi, bet nav saņemts atsvaidzināšanas žetons!
 that loginid has already been taken	admin	lv	Šāds autorizācijas ID jau ir aizņemts
 the api is current	admin	lv	Patreizējais API
 the api requires an upgrade	admin	lv	API pieprasa jauninājumus
@@ -453,6 +464,10 @@ this category is currently being used by applications as a parent category	admin
 this php has no imap support compiled in!!	admin	lv	Šim PHP nav IMAP nokompilēts atbalsts
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	lv	Sesiju taimauts sekundēs (noklusējums 14400=4stundas)
 times	admin	lv	Reizes
+token created.	admin	lv	Žetons izveidots.
+token not found!	admin	lv	Žetons nav atrasts!
+token revoked.	admin	lv	Žetons atsaukts.
+token saved.	admin	lv	Žetons saglabāts.
 top	admin	lv	Augšā
 total records	admin	lv	Kopā ieraksti
 translation	admin	lv	Tulkojums
@@ -466,6 +481,7 @@ use cookies to pass sessionid	admin	lv	Lieto sīkdatnes lai pārietu sesijas ID
 use default	admin	lv	Lietot noklusējumu
 use ldap defaults	admin	lv	Lieto LDAP noklusējumus
 use pure html compliant code (not fully working yet)	admin	lv	Lieto HTML pieļāvīgu kodu (kurš vēl pilnībā nestrādā)
+use save or apply to store the received oauth token!	admin	lv	Izmantojiet save vai apply, lai saglabātu saņemto OAuth žetonu!
 use smtp auth	admin	lv	Lieto SMTP autentifikāciju
 use theme	admin	lv	Lieto tēmu
 use tls authentication	admin	lv	Lieto TLS autentifikāciju

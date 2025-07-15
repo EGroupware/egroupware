@@ -51,6 +51,7 @@ acl manager	admin	cs	Správce ACL
 acl rights	common	cs	ACL práva
 activate	admin	cs	Aktivovat
 active templates	admin	cs	Aktivní šablony
+active this token again	admin	cs	Znovu aktivní tento token
 add a category	admin	cs	Přidat kategorii
 add a group	admin	cs	Přidat skupinu
 add a new account.	admin	cs	Přidat nový účet
@@ -165,6 +166,7 @@ check acl for entries of not (longer) existing accounts	admin	cs	Zkontrolovat AC
 check ip address of all sessions	admin	cs	Kontrolovat IP adresy všech relací
 check items to <b>%1</b> to %2 for %3	admin	cs	Zkontrolovat položky k <b>%1</b> do %2 pro %3
 checking push (green for success or red for failure)	admin	cs	Zkontrolujte PUSH (zelená = OK, červená - není OK)
+clear security tokens	admin	cs	Vymazat bezpečnostní tokeny
 click to select a color	admin	cs	Klikněte pro výběr barvy
 color	admin	cs	Barva
 command scheduled to run at %1	admin	cs	Spuštění příkazu naplánováno na %1
@@ -316,12 +318,14 @@ error changing the password for %1 !!!	admin	cs	Chyba při změně hesla pro 1%!
 error connecting to imap server. %s : %s.	admin	cs	Chyba spojení na IMAP server. %s : %s.
 error connecting to imap server: [%s] %s.	admin	cs	Chyba spojení na IMAP server: [%s] %s.
 error deleting log entry!	admin	cs	Chyba při mazání záznamu v logu!
+error revoking token!	admin	cs	Chyba při odvolání tokenu!
 error saving	admin	cs	Chyba při ukládání!
 error saving account!	admin	cs	Chyba při ukládání účtu!
 error saving the command!	admin	cs	Chyba při ukládání příkazu!
 error saving the entry!!!	admin	cs	Chyba při ukládání záznamu!
 error saving to db:	admin	cs	Chyba při ukládání do databáze:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	cs	Chyba při nastavení časovače, špatná syntaxe nebo už jeden časovač běží!
+error storing token!	admin	cs	Chyba při ukládání tokenu!
 error! no appname found	admin	cs	Chyba: Název aplikace nenalezen!
 error: %1 not found or other error !!!	admin	cs	Chyba: %1 nenalezen nebo jiná chyba!
 event details follow	admin	cs	Následují detaily události
@@ -345,6 +349,7 @@ forward only	admin	cs	Jen přeposlat
 full name	admin	cs	Celé jméno
 general	admin	cs	Obecné
 generate certificate	admin	cs	Vygenerovat certifikát
+generate new token and display it once after saving	admin	cs	Vygenerovat nový token a po uložení jej jednou zobrazit
 global categories	common	cs	Globální kategorie
 global options	admin	cs	Globální volby
 go directly to admin menu, returning here the next time you click on administration.	admin	cs	Jít přímo do administračního menu; sem se vrátíte jakmile příště kliknete na administraci.
@@ -375,6 +380,7 @@ icon	admin	cs	Ikona
 identity deleted	admin	cs	Identita odstraněna.
 idle	admin	cs	Nečinný
 if different from email address	admin	cs	Pokud se liší od e-mailové adresy
+if disabled existing tokens immediatly stop working.	admin	cs	Pokud jsou zakázány stávající tokeny, okamžitě přestanou fungovat.
 if no acl records for user or any group the user is a member of	admin	cs	Pokud pro uživatele nebo žádnou ze skupin které je členem neexistují ACL záznamy
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	cs	Pokud používáte LDAP, chcete spravovat atributy pro domovský adresář a login shell?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	cs	Pokud chcete používat SSL nebo TLS, musíte mít nahráno openssl rozšíření PHP.
@@ -446,6 +452,7 @@ leave without saveing the entry	admin	cs	Ukončit bez uložení záznamu
 leaves without saveing	admin	cs	Ukončí bez ukládání
 length	admin	cs	Délka
 length<br>rows	admin	cs	Délka<br>Řádky
+lifetime of 'remember me' token	admin	cs	Životnost tokenu "Zapamatuj si mě"
 list config settings	admin	cs	Zobrazit konfigurační nastavení
 list current sessions	admin	cs	Zobrazit aktuální relace
 list of current users	admin	cs	Seznam aktuálních uživatelů
@@ -569,6 +576,7 @@ remove	admin	cs	Odstranit
 requested	admin	cs	Požadovaný
 requires 'openid / oauth2 server' app.	admin	cs	Vyžaduje aplikaci "OpenID / OAuth2 Server".
 reset filter	admin	cs	Vyresetovat filtr
+revoke this token	admin	cs	Odvolání tohoto tokenu
 rights	admin	cs	Práva
 rows	admin	cs	Ŕádky
 rpm or debian package	admin	cs	Balíček RPM nebo deb
@@ -586,6 +594,7 @@ select accounts for which the custom field should be readonly	admin	cs	Výběr �
 select accounts for which the custom field should be visible	admin	cs	Vybrat účty, pro které má být uživatelsky definované pole viditelné.
 select group managers	admin	cs	Vybrat skupinové správce
 select permissions this group will have	admin	cs	Vybrat oprávnění pro tuto skupinu
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	cs	Vyberte aplikace, na které má být token omezen, nebo ponechte výchozí nastavení všech aplikací.
 select the parent category. if this is a main category select no category	admin	cs	Vyberte rodičovskou kategorii. Pokud se jedná o hlavní kategorii, zvolte NO CATEGORY.
 select type of imap server	admin	cs	Vyberte typ IMAP serveru
 select type of smtp server	admin	cs	Vyberte typ SMTP serveru
@@ -650,6 +659,7 @@ submit the search string	admin	cs	Odeslat hledaný řetězec
 submit to egroupware.org	admin	cs	Odeslat na egroupware.org
 subtype	admin	cs	Podtyp
 success	admin	cs	Podařilo se
+successfull, but no refresh-token received!	admin	cs	Úspěšně, ale NEPŘIJATÝ token pro obnovení!
 switch it off, if users are randomly thrown out	admin	cs	Vypněte, pokud jsou uživatelé náhodně vyhazováni
 that loginid has already been taken	admin	cs	Takové přihlašovací id už bylo použito.
 the api is current	admin	cs	API je aktuální
@@ -679,6 +689,7 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	cs	Vytvořený žeton.
 token not found!	admin	cs	Token nebyl nalezen!
 token revoked.	admin	cs	Token odvolán.
+token saved.	admin	cs	Token uložen.
 top	admin	cs	Nahoře
 total of %1 accounts deleted.	admin	cs	Celkem %1 účtů smazáno.
 total of %1 id's changed.	admin	cs	Celkem změněno %1 ID.
@@ -712,6 +723,7 @@ use default	admin	cs	Použít výchozí
 use ldap defaults	admin	cs	Použít výchozí hodnoty LDAP
 use predefined username and password defined below	admin	cs	Použít předdefinované uživatelské jméno a heslo uvedené níže
 use pure html compliant code (not fully working yet)	admin	cs	Používat HTML kompatibilní kód (zatím není zcela funkční)
+use save or apply to store the received oauth token!	admin	cs	Pro uložení přijatého tokenu OAuth použijte funkci uložit nebo použít!
 use smtp auth	admin	cs	Použít SMTP autentikaci
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	cs	použijte následující možnosti:\nnoVfsSelect=1\nmime=application/pdf nebo /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	cs	Použít téma

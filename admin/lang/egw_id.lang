@@ -54,6 +54,7 @@ acl manager	admin	id	Manajer ACL
 acl rights	common	id	Hak-hak ACL
 activate	admin	id	Aktifkan
 active templates	admin	id	Templat yang aktif
+active this token again	admin	id	Aktifkan token ini lagi
 add a category	admin	id	Tambah kategori
 add a group	admin	id	Tambah kelompok
 add a subcategory	admin	id	Tambah subkategori
@@ -82,6 +83,7 @@ aliases	admin	id	Alias
 all applications	admin	id	Semua aplikasi
 all users	admin	id	Semua pengguna
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	id	Izinkan pengguna untuk menyimpan kata sandinya di bawah 'Keamanan & Kata Sandi' untuk SingleSignOn.
+allow user to set 'remember me' token	admin	id	Izinkan pengguna untuk mengatur token 'Ingat saya'
 alternate email address	admin	id	Alamat email pengganti
 anonymous user	admin	id	Pengguna Anonymous
 anonymous user (not shown in list sessions)	admin	id	Pengguna anonim. Tidak ditampilkan dalam sesi daftar
@@ -125,6 +127,7 @@ change config settings	admin	id	Ubah seting konfigurasi
 change domain of email address and aliases	admin	id	Mengubah domain alamat email dan alias
 change login screen message	admin	id	Ubah pesan pada layar utama
 children	admin	id	Anak
+clear security tokens	admin	id	Menghapus token keamanan
 click to select a color	admin	id	Klik untuk memilih warna
 color	admin	id	Warna
 container	admin	id	Wadah
@@ -205,9 +208,11 @@ encrypted connection	admin	id	Koneksi ter-enkripsi
 encryption settings	admin	id	Pengaturan Enkripsi
 enter your default mail domain (from: user@domain)	admin	id	Berikan nama domain email anda (dari: pengguna@domain)
 entry saved	admin	id	Entri disimpan
+error revoking token!	admin	id	Kesalahan mencabut token!
 error saving	admin	id	Error menyimpan
 error saving account!	admin	id	Error menyimpan akoun!
 error saving the entry!!!	admin	id	Kesalahan menyimpan entri!
+error storing token!	admin	id	Kesalahan menyimpan token!
 event details follow	admin	id	Berikut adalah detil Kegiatan
 expires	admin	id	Kadaluarsa
 export certificate as p12	admin	id	Ekspor sertifikat sebagai p12
@@ -220,6 +225,7 @@ forward only	admin	id	Hanya Forward
 full name	admin	id	Nama Lengkap
 general	admin	id	Umum
 generate certificate	admin	id	Hasilkan Sertifikat
+generate new token and display it once after saving	admin	id	Buat token baru dan tampilkan sekali setelah disimpan
 global categories	common	id	Kategori Global
 global options	admin	id	Opsi Global
 group ?	admin	id	Kelompok?
@@ -241,6 +247,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 icon	admin	id	Ikon
 idle	admin	id	Menganggur
 if different from email address	admin	id	Tidak ada batasan
+if disabled existing tokens immediatly stop working.	admin	id	Jika menonaktifkan token yang ada, token yang ada akan segera berhenti bekerja.
 imap admin password	admin	id	Password admin IMAP
 imap admin user	admin	id	Admin IMAP
 imap server	admin	id	IMAP Server
@@ -280,6 +287,7 @@ leave empty for no quota	admin	id	Kosongkan bila tanpa kuota
 leave without saveing the entry	admin	id	Tinggalkan tanpa menyimpan entri
 leaves without saveing	admin	id	Tinggalkan tanpa menyimpan
 length<br>rows	admin	id	Panjang<br>Baris
+lifetime of 'remember me' token	admin	id	Masa berlaku token 'Ingat saya'
 limit to members of	admin	id	Terbatas untuk anggota dari
 list config settings	admin	id	Daftar pengaturan konfigurasi
 list current sessions	admin	id	Daftar sesi sekarang
@@ -360,6 +368,7 @@ regular expression to find part to use as container	admin	id	Ekspresi reguler un
 remove	admin	id	Buang
 requested	admin	id	Diminta
 reset filter	admin	id	Ulangi penyaringan
+revoke this token	admin	id	Cabut token ini
 rights	admin	id	Hak
 rows	admin	id	Rows
 save the category	admin	id	Simpan kategori ini
@@ -370,6 +379,7 @@ search groups	admin	id	Cari kelompok
 search peer servers	admin	id	Cari peer servers
 security	admin	id	Kemanan
 select group managers	admin	id	Pilih Manajer Kelompok
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	id	Pilih aplikasi yang Anda inginkan untuk membatasi token, atau biarkan default untuk semua aplikasi.
 select type of imap server	admin	id	Pilih tipe Server IMAP
 select type of smtp server	admin	id	Pilih tipe Server SMTP
 selectbox	admin	id	Pilih kotak
@@ -413,10 +423,15 @@ submit statistic information	admin	id	Submit statistic information
 submit to egroupware.org	admin	id	Submit to egroupware.org
 subtype	admin	id	Subtype
 success	admin	id	Sukses
+successfull, but no refresh-token received!	admin	id	Berhasil, tetapi TIDAK ada token penyegaran yang diterima!
 the api is current	admin	id	API saat ini
 the two passwords are not the same	admin	id	Kedua password tidak sama
 the users bellow are still members of group %1	admin	id	Pengguna berikut ini masih menjadi anggota kelompok %1
 times	admin	id	Times
+token created.	admin	id	Token dibuat.
+token not found!	admin	id	Token tidak ditemukan!
+token revoked.	admin	id	Token dicabut.
+token saved.	admin	id	Token disimpan.
 top	admin	id	Atas
 total records	admin	id	Total rekaman
 translation	admin	id	Terjemahan
@@ -436,6 +451,7 @@ update current email address:	admin	id	Memperbarui alamat email saat ini:
 updated	admin	id	Dikinikan
 upload your certificate .p12/.pfx file	admin	id	Unggah file .p12/.pfx sertifikat Anda
 use default	admin	id	Gunakan bawaan
+use save or apply to store the received oauth token!	admin	id	Gunakan simpan atau terapkan untuk menyimpan token OAuth yang diterima!
 use theme	admin	id	Gunakan tema
 user accounts	admin	id	Akoun pengguna
 user choice	admin	id	Pilihan pengguna

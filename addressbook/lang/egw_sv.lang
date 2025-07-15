@@ -277,6 +277,7 @@ moved	addressbook	sv	Flyttad
 multiple vcard	addressbook	sv	Multipla vCard
 name, address	addressbook	sv	Namn, adress
 name, email, phone	addressbook	sv	Namn, e-post, telefon
+never use prefix	addressbook	sv	Använd aldrig prefix
 no country selected	addressbook	sv	Inget land har valts
 no distribution list	addressbook	sv	Ingen distributionslista
 no vcard	addressbook	sv	Inget vCard
@@ -382,6 +383,9 @@ update a single entry by passing the fields.	addressbook	sv	Updatera enskild pos
 updated	addressbook	sv	Uppdaterad
 upload or delete the photo	addressbook	sv	Ladda upp eller radera foto
 use country list	addressbook	sv	Använd nationslista
+use firstname, only if no prefix	addressbook	sv	Använd förnamn, endast om inget prefix
+use prefix plus all other name parts	addressbook	sv	Använd prefix plus alla andra namndelar
+use prefix, only if no firstname	addressbook	sv	Använd prefix, endast om inget förnamn
 use setup for a full account-migration	admin	sv	Använd installationen för en komplett konto migrering
 used for links and for the own sorting of the list	addressbook	sv	Används för länkar och sortering av listan
 user groups are automatically shown as distribution lists.	addressbook	sv	Användargrupper visas automatiskt som distributionslistor.
@@ -393,6 +397,7 @@ view linked infolog entries	addressbook	sv	Visa länkade InfoLog poster
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sv	WARNING! LDAP är bara giltigt om du inte använder kontakter för att lagra konton!
 warning: all contacts found will be deleted!	addressbook	sv	VARNING: Alla hittade kontakter raderas!
 weekday	addressbook	sv	Veckodag
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	sv	Vad som ska visas som fullständigt namn. Om det inte finns något för- eller efternamn visas företagsnamnet.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sv	Vad ska länkar till adressboken visa i andra applikationer? Tomma värden ignoreras. Do måste logga in återigen för att se förändringar!
 when viewing a contact, show linked entries from the selected application	addressbook	sv	När du visar en kontakt visas länkade poster från det valda programmet
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	sv	När du sammanför poster i dokument lagras de här. Om ingen katalog anges kommer de att lagras i din hemkatalog (/home/...)

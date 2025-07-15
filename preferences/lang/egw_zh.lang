@@ -21,6 +21,7 @@ default	preferences	zh	默认
 default preferences	preferences	zh	默认用户参数
 delete categories	preferences	zh	删除类别
 deny following groups access to application passwords	preferences	zh	拒绝以下组访问应用程序密码
+deny following groups access to preferences	admin	zh	拒绝以下用户访问首选项
 description can not exceed 255 characters in length !	preferences	zh	描述的长度不能超过255个字符！
 disable	preferences	zh	禁用
 display thumbnails for linked images	preferences	zh	显示链接图像的缩略图
@@ -67,8 +68,8 @@ note: this feature does *not* change your email password. this will need to be d
 p: paragraph	preferences	zh	<p> 段落
 password stored	preferences	zh	存储密码。
 popup with search	preferences	zh	弹出式搜索窗口
+preferences saved.	preferences	zh	保存首选项。
 re-enter your password	preferences	zh	重新输入您的密码
-read prefs for the specified application.	preferences	zh	为指定应用程序读取配置文件。
 reset qrcode	preferences	zh	重置 QR 码
 scan qrcode with a time-based one-time password (totp) app:	preferences	zh	使用 TOTP（Time-based one-time password）应用程序扫描 QR 码：
 select one	preferences	zh	选择一个
@@ -80,7 +81,6 @@ selectbox with primary group and search	preferences	zh	基本群组和搜索选�
 set content size	preferences	zh	设置内容尺寸
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	zh	该选项根据您的意愿. 出于安全性原因, 您可能不希望公开显示您的用户名。
 should the number of active sessions be displayed for you all the time.	preferences	zh	选择是否总是显示活动会话的数目。
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	zh	进行用户参数配置时总是显示这些帮助消息，或只应要求时显示。
 show helpmessages by default	preferences	zh	默认情况下显示帮助消息
 show links between egroupware aps as	common	zh	显示 EGroupware 应用程序之间的链接
 show navigation bar as	preferences	zh	导航栏显示模式为
@@ -108,7 +108,6 @@ what to display for an avatar, if there is no photo	preferences	zh	如果没有�
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	zh	如您选择'是'，'主页'和'注销'按钮将作为应用程序显示在顶部应用程序栏上。
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh	其字符集将用于 CSV 输出。系统默认是 EGroupware 安装的字符集。
 which currency symbol or name should be used in egroupware.	preferences	zh	在 EGroupware 中应使用何种货币符号或名称。
-write prefs for the specified application.	preferences	zh	为指定应用程序写入配置文件。
 you can show the applications as icons only, icons with app-name or both.	preferences	zh	您可以让工具栏上的应用程序只显示图标、文字, 或是两者都显示。
 you can show the linked entries with icons only, icons with app-name or both.	common	zh	你可以让链接的条目只显示图标、应用程序名称或两者都显示。
 you do not have permission to set acl's in this mode!	preferences	zh	您没有在该模式下设置 ACL 的权限！

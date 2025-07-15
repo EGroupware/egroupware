@@ -86,6 +86,7 @@ deleted	calendar	tr	Silindi
 display status of events	calendar	tr	Etkinliklerin durumlarını görüntüle
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	tr	Yeni ya da değişiklik yapılmış toplantılardan haberdar olmak ister misiniz? Kendi yaptığınız değişiklikler hakkında da uyarı emailleri alacaksınız.<br>Uyarıları istediğiniz belli eylemlerle sınırlandırabilirsiniz.Her bir öge yukarıda listelenen bütün uyarı metodlarına sahiptir. Bütün değişiklikler; başlık, açıklama, katılımcı değişikliklerini içerir. Bir etkinlik sahibi bir uyarı talep etmişse; katılımcıların kabul ve red mesajlarını da ayrıca uyarı olarak alacaktır.
 do you want to delete this subscription incl. the synced events?	calendar	tr	Senkronize edilen etkinlikler dahil olmak üzere bu aboneliği silmek istiyor musunuz?
+does not show event to other users, unless they have a private grant	calendar	tr	Özel izinleri olmadığı sürece etkinliği diğer kullanıcılara GÖSTERMEZ
 download	calendar	tr	İndir
 duration	calendar	tr	Süre
 edit series	calendar	tr	Seriyi düzenle
@@ -144,6 +145,7 @@ minimum number of users for showing day view as consolidated.	calendar	tr	Gün g
 minimum number of users for showing week view as consolidated.	calendar	tr	Hafta görünümünü konsolide olarak göstermek için minimum kullanıcı sayısı.
 minutes	calendar	tr	Dakika
 modified	calendar	tr	Değiştirilmiş
+modify events	calendar	tr	Olayları değiştirin
 mon	calendar	tr	Ay
 month	calendar	tr	Ay
 monthly	calendar	tr	Aylık
@@ -154,6 +156,8 @@ move to	calendar	tr	Geçmek
 multiple participants	calendar	tr	Çoklu katılımcılar
 never notify externals (non-users) about events i create	calendar	tr	Oluşturduğum olaylar hakkında harici kişileri (kullanıcı olmayanlar) asla bilgilendirmeyin
 new	calendar	tr	Yeni
+new event category	calendar	tr	Yeni etkinlik kategorisi
+new event participants	calendar	tr	Yeni etkinlik katılımcıları
 no matches found	calendar	tr	Eşleşme bulunamadı
 no response	calendar	tr	Yanıt Yok
 notification messages for added events	calendar	tr	Eklenen etkinlikler için uyarı mesajları
@@ -175,6 +179,7 @@ on all modification, but responses	calendar	tr	Bütün değişikliklerde ama yan
 on any time change too	calendar	tr	Herhangi zaman değişiminde de
 on participant responses too	calendar	tr	Katılımcı cavaplarında da
 on time change of more than 4 hours too	calendar	tr	4 saatten fazla zaman değişikliklerinde de
+only group-events	calendar	tr	Sadece grup etkinlikleri
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	tr	Yalnızca birkaç tam uyumlu istemci tarafından desteklenir (örn. Apple'dan). Bir URL girmeniz gerekiyorsa, büyük olasılıkla desteklenmeyecektir!
 open todo's:	calendar	tr	Yapılacak İşleri Aç:
 otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	tr	Aksi takdirde, başlıkta, açıklamada, ... veya yeni katılımcılarda yapılan değişiklikler önceden oluşturulmuş istisnalara aktarılmayacaktır.
@@ -207,10 +212,12 @@ repetitiondetails (or empty)	calendar	tr	Tekrarlama Detayları (ya da boş)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	tr	Yanıtlayan "%1" etkinliğin katılımcısı DEĞİL! Yalnızca yeni katılımcı olarak eklemek istiyorsanız devam edin.
 report	calendar	tr	Rapor
 reset	calendar	tr	Sıfırla
+reset resource status on event shifts	calendar	tr	Olayları taşırken kaynak durumunu sıfırlama
 rule	calendar	tr	Kural
 sat	calendar	tr	Cte
 saves the event ignoring the conflict	calendar	tr	Çatışmayı yok sayarak olayı kaydeder
 scheduling conflict	calendar	tr	Zamanlama çakışması
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	tr	Daha sonra bir olay taşınırsa, kaynak durumunun “Yanıt yok” olarak sıfırlanmasını isteyip istemediğinizi seçin.
 send notifications	calendar	tr	Bildirim gönder
 send notifications to users right now	calendar	tr	Katılımcılara hemen bildirim gönderin
 set new events to private	calendar	tr	Yeni etkinlikleri özel olarak ayarla

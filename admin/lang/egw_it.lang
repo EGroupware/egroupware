@@ -892,6 +892,7 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	it	Token creato.
 token not found!	admin	it	Token non trovato!
 token revoked.	admin	it	Token revocato.
+token saved.	admin	it	Token salvato.
 top	admin	it	In alto
 total of %1 accounts deleted.	admin	it	Un totale di %1 account cancellati.
 total of %1 id's changed.	admin	it	Totale di %1 ID modificati.

@@ -18,9 +18,12 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	lv	%1 pievie
 after reply, visible during compose	mail	lv	Pēc atbildes, redzams sastādīšanas laikā
 aliases+forwards	mail	lv	Aliases+Forwards
 all my email addresses	mail	lv	visas manas e-pasta adreses
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	lv	Tiks dzēstas arī visas apakšmapes, un visi ziņojumi visās attiecīgajās mapēs tiks zaudēti
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	lv	Ļauj lietotājam lasīt, rakstīt un veidot mapes un e-pastus, ievietot tajās ziņojumus, pievienot tiem ziņojumus un dzēst ziņojumus
 always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
 always show notifiction	mail	lv	Vienmēr rādīt paziņojumu
 answered	mail	lv	Atbildēts
+are you sure you want to delete all selected folders?	mail	lv	Vai esat pārliecināts, ka vēlaties dzēst visas atlasītās mapes?
 attach files	mail	lv	Pievienot failus
 attach users vcard at compose to every new mail	mail	lv	Pievienojiet lietotāju vCard, kad sastādāt katru jaunu vēstuli.
 attachment has been saved successfully.	mail	lv	Pielikums ir veiksmīgi saglabāts.
@@ -86,6 +89,8 @@ everyone	mail	lv	Visi
 examine namespace to retrieve folders in others and shared	mail	lv	Pārbaudīt nosaukumu telpu, lai iegūtu mapes citos un koplietojamajos
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	lv	Izslēgt pielikumus, kuru izmērs pārsniedz norādīto, no automātiskas saglabāšanas kā melnrakstu (MB)
 extended	mail	lv	Paplašinats
+failed to delete %1 ! reason: %2	mail	lv	Neizdevās dzēst %1! Iemesls: %2
+failed to delete %1. server responded:	mail	lv	Neizdevās dzēst %1! Serveris atbildēja:
 failed to subscribe folder %1!	mail	lv	Neizdevās abonēt mapi %1!
 failed to unsubscribe folder %1!	mail	lv	Neizdevās noabonēt mapi %1!
 file into	mail	lv	Pārvietot uz
@@ -305,8 +310,10 @@ unconditional	mail	lv	Vienmēr
 unread	mail	lv	Nelasīts
 vacation notice	mail	lv	Norāde par atrašanos atvaļinājumā
 validate addresses on submit:	mail	lv	Pārbaudiet adreses, kad nosūtāt:
+what to do when you delete a message	mail	lv	Ko darīt, dzēšot ziņojumu.
 when deleting messages	mail	lv	Kad dzēš vēstules
 write	mail	lv	Rakstīt
+write & delete	mail	lv	rakstīt un dzēst
 wrote	mail	lv	rakstīja
 you can select what info to be displayed on email tag	mail	lv	Varat izvēlēties, kāda informācija tiks rādīta e-pasta birkā.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lv	Iepriekš minētajam sākuma datumam varat izmantot $$start$$, bet beigu datumam - $$end$$.

@@ -359,6 +359,7 @@ name for the distribution list	addressbook	ru	Имя списка рассылк
 name of current user, all other contact fields are valid too	addressbook	ru	Имя пользователя, все остальные поля контакта также действительны.
 name, address	addressbook	ru	Имя, адрес
 name, email, phone	addressbook	ru	Имя, e-mail, телефон
+never use prefix	addressbook	ru	Никогда не используйте префикс
 new contact submitted by %1 at %2	addressbook	ru	Новый контакт отправлен %1 в %2.
 next date	addressbook	ru	Следующая дата
 no categories selected	addressbook	ru	Не выбрано категорий
@@ -508,6 +509,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	ru	Используйте атрибут адресной книги «собственная сортировка»
 use an extra tab for private custom fields?	admin	ru	Использовать дополнительную закладку для частных пользовательских полей?
 use country list	addressbook	ru	Использовать список стран
+use firstname, only if no prefix	addressbook	ru	Используйте имя и фамилию, только если нет префикса
+use prefix plus all other name parts	addressbook	ru	Используйте префикс плюс все остальные части имени
+use prefix, only if no firstname	addressbook	ru	Использовать префикс, только если нет имени
 use setup for a full account-migration	admin	ru	Использовать установку для полной миграции учётных записей
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	ru	Используйте этот тег для адресных меток. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 used for links and for the own sorting of the list	addressbook	ru	Используется для создания ссылок и собственных условий сортировки списка
@@ -522,6 +526,7 @@ view linked infolog entries	addressbook	ru	Смотреть связанные �
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ru	ПРЕДУПРЕЖДЕНИЕ!! LDAP доступен только в случае, если контакты НЕ использовались для хранения учётных записей!
 warning: all contacts found will be deleted!	addressbook	ru	ПРЕДУПРЕЖДЕНИЕ: Все найденные контакты будут удалены!
 weekday	addressbook	ru	Рабочий день
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	ru	Что должно отображаться в качестве полного имени. Если нет ни имени, ни фамилии, отображается название компании.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	ru	Изображение перехода к адресной книге в других приложениях. Значение «пусто» не допустимо. После изменения данной настройки следует выполнить вход в систему снова
 when viewing a contact, show linked entries from the selected application	addressbook	ru	При просмотре контакта показывать связанные записи из выбранного приложения
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	ru	Когда вы объединяете записи в документы, они будут храниться здесь. Если каталог не указан, они будут храниться в вашем домашнем каталоге (/home/...).

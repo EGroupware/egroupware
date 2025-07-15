@@ -154,6 +154,7 @@ do you want to be notified about new or changed appointments? you be notified ab
 do you want to delete this subscription incl. the synced events?	calendar	pl	Czy chcesz usunąć tę subskrypcję wraz ze zsynchronizowanymi wydarzeniami?
 do you want to edit this event as an exception or the whole series?	calendar	pl	Czy chcesz edytować to zdarzenie jako wyjątek czy całą serię?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pl	Czy chcesz otrzymywać mailem regularne podsumowania swoich spotkań?<br>Podsumowanie jest wysyłane na Twój adres e-mail codziennie rano, lub w poniedziałki dla podsumowań tygodniowych.<br>Podsumowanie jest wysyłane tylko jeżeli masz zaplanowane jakieś spotkania w danym dniu lub tygodniu.
+does not show event to other users, unless they have a private grant	calendar	pl	NIE pokazuje wydarzenia innym użytkownikom, chyba że mają oni prywatną dotację
 download	calendar	pl	Ściągnij
 download this event as ical	calendar	pl	Ściągnij zdarzenia w formacie iCal
 duration	calendar	pl	Czas trwania
@@ -288,6 +289,7 @@ minimum number of users for showing day view as consolidated.	calendar	pl	Minima
 minimum number of users for showing week view as consolidated.	calendar	pl	Minimalna liczba użytkowników do wyświetlenia skonsolidowanego widoku tygodnia.
 minutes	calendar	pl	Minut
 modified	calendar	pl	Zmodyfikowany
+modify events	calendar	pl	Modyfikowanie wydarzeń
 mon	calendar	pl	Pon
 month	calendar	pl	Miesiąc
 monthly	calendar	pl	Miesięczny
@@ -301,6 +303,8 @@ name of current user, all other contact fields are valid too	calendar	pl	Nazwa a
 needs action	calendar	pl	Wymaga akcji
 never notify externals (non-users) about events i create	calendar	pl	Nigdy nie powiadamiaj osób z zewnątrz (niebędących użytkownikami) o wydarzeniach, które tworzę
 new	calendar	pl	Nowa
+new event category	calendar	pl	Nowa kategoria wydarzenia
+new event participants	calendar	pl	Nowi uczestnicy wydarzenia
 new search with the above parameters	calendar	pl	Nowe wyszukiwanie z powyższymi parametrami
 no events found	calendar	pl	Nie znaleziono pasujących terminów
 no filter	calendar	pl	Brak filtra
@@ -385,6 +389,7 @@ report	calendar	pl	Raport
 requested	calendar	pl	Żądany
 require an acl grant to invite other users and groups	admin	pl	Wymagaj zezwolenia ACL aby zaprosić innych użytkowników i grupy
 reset	calendar	pl	Skasuj
+reset resource status on event shifts	calendar	pl	Resetuj status zasobu podczas przenoszenia wydarzeń
 resources	calendar	pl	Zasoby
 resources except conflicting ones	calendar	pl	Zasoby z pominięciem konfliktów
 resources with conflict detection	calendar	pl	Zasoby z wykrywaniem konfliktów
@@ -402,6 +407,7 @@ select a %1	calendar	pl	Wybierz %1
 select a time	calendar	pl	Wybierz czas
 select multiple contacts for a further action	calendar	pl	Wybierz wiele kontaktów dla dalszego przetwarzania
 select resources	calendar	pl	Wybierz zasoby
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	pl	Wybierz, czy chcesz zresetować status zasobu do „Brak odpowiedzi”, jeśli wydarzenie zostanie przeniesione później.
 select who should get the alarm	calendar	pl	Wybierz odbiorców alarmu
 selected range	calendar	pl	Wybrany zakres
 send notifications	calendar	pl	Wyślij powiadomienia

@@ -128,6 +128,7 @@ delete this series of recurring events	calendar	id	Hapus runtun kegiatan yang be
 deleted	calendar	id	Dihapus
 display status of events	calendar	id	Tampilkan status kegiatan
 do you want to delete this subscription incl. the synced events?	calendar	id	Apakah Anda ingin menghapus langganan ini, termasuk acara yang disinkronkan?
+does not show event to other users, unless they have a private grant	calendar	id	TIDAK menampilkan acara kepada pengguna lain, kecuali mereka memiliki hibah pribadi
 download	calendar	id	Unduh
 download this event as ical	calendar	id	Unduh kegiatan ini sebagai iCal
 duration	calendar	id	Durasi
@@ -228,6 +229,7 @@ minimum number of users for showing week view as consolidated.	calendar	id	Jumla
 minutes	calendar	id	Menit
 modified	calendar	id	Diubah
 modifier	calendar	id	Pengubah
+modify events	calendar	id	Memodifikasi acara
 mon	calendar	id	Sen
 month	calendar	id	Bulan
 monthly	calendar	id	Bulanan
@@ -240,6 +242,8 @@ multiple week view	calendar	id	Tampilan beberapa minggu
 needs action	calendar	id	Perlu tindakan
 never notify externals (non-users) about events i create	calendar	id	Jangan pernah memberi tahu pihak luar (bukan pengguna) tentang acara yang saya buat
 new	calendar	id	Baru
+new event category	calendar	id	Kategori acara baru
+new event participants	calendar	id	Peserta acara baru
 no events found	calendar	id	Tidak ditemukan kegiatan
 no filter	calendar	id	Tiada saringan
 no matches found	calendar	id	Tiada yang cocok
@@ -294,6 +298,7 @@ replying "%1" is not a participant of the event! only continue if you want to ad
 report	calendar	id	Laporan
 requested	calendar	id	Permintaan
 reset	calendar	id	Reset
+reset resource status on event shifts	calendar	id	Mengatur ulang status sumber daya saat memindahkan acara
 resources	calendar	id	Sumberdaya
 role	calendar	id	Role
 rule	calendar	id	Rule
@@ -305,6 +310,7 @@ select a %1	calendar	id	Pilih %1
 select a time	calendar	id	Pilih waktu
 select multiple contacts for a further action	calendar	id	Pilih beberapa kontak untuk tindakan selanjutnya
 select resources	calendar	id	Pilih sumber daya
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	id	Pilih apakah Anda ingin mengatur ulang status sumber daya menjadi “Tidak ada respons”, jika acara dipindahkan nanti.
 select who should get the alarm	calendar	id	Pilih siapa saja yang akan menerima alarm
 selected range	calendar	id	Jangkah terpilih
 send notifications	calendar	id	Mengirim pemberitahuan

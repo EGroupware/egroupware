@@ -45,6 +45,7 @@ allow external images from listed domains	mail	ja	指定ドメインからの外
 allow images from external sources in html emails	mail	ja	HTMLメールで外部ソースからの画像を許可。
 allow images from listed domains in html emails	mail	ja	HTMLメールで指定ドメインからの画像を許可。
 allow users to create further identities	mail	ja	追加名称の生成を許可
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ja	フォルダーとメールの読み書き、作成、投稿、メッセージの追加、削除ができます。
 always	mail	ja	常に
 always allow external sources from %1	mail	ja	%1からの外部ソースを常に許可
 always respond / auto-responder	mail	ja	常に応答/自動応答
@@ -694,6 +695,7 @@ with message:	mail	ja	メッセージ:
 wizard	mail	ja	ウィザード
 writable sharing requires epl version!	mail	ja	書き込み可能な共有を利用するには EPL 版が必要!
 write	mail	ja	書き込み
+write & delete	mail	ja	書き込みと削除
 wrote	mail	ja	書き込みました
 yes, offer copy option	mail	ja	はい（コピー・オプションあり）
 you can select what info to be displayed on email tag	mail	ja	メールタグに表示する情報を選択できます。

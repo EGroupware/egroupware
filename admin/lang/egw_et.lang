@@ -58,6 +58,7 @@ all applications	admin	et	Kõik rakendused
 all users	admin	et	Kõik kasutajad
 allow anonymous access to this app	admin	et	Luba anonüümne ligipääs sellele rakendusele
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	et	Lubage kasutajal salvestada oma parool SingleSignOn'i jaoks jaotises „Turvalisus ja paroolid“.
+allow user to set 'remember me' token	admin	et	Luba kasutajal määrata „Mäleta mind“ märgis
 alternate email address	admin	et	Alternatiivne email aadress
 anonymous user	admin	et	Anonymous kasutaja
 anonymous user (not shown in list sessions)	admin	et	Anonüümne Kasutaja (pole nähtav protsesside listis).
@@ -92,6 +93,7 @@ change access	admin	et	Juurdepääsuõiguste muutmine
 change acl rights	admin	et	Muuda ACL Õigusi
 change domain of email address and aliases	admin	et	E-posti aadressi domeeni ja varjunimede muutmine
 change login screen message	admin	et	Muuda pealehe sõnumit
+clear security tokens	admin	et	Turvatunnuste tühjendamine
 click to select a color	admin	et	Kliki valimaks värvi
 color	admin	et	Värv
 container	admin	et	Konteiner
@@ -169,8 +171,10 @@ enter your smtp server hostname or ip address	admin	et	Sisesta oma SMTP serveri 
 enter your smtp server port	admin	et	Sisesta oma SMTP serveri port
 entry saved	admin	et	Kirje salvestatud
 error canceling timer, maybe there's none set !!!	admin	et	Viga taimleri tühistamisel, võibolla pole seda seatud!
+error revoking token!	admin	et	Viga tokeni tühistamisel!
 error saving the entry!!!	admin	et	Viga kirje salvestamisel!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	et	Viga taimleri seadmisel, vale süntaks või võibolla üks juba töötab!
+error storing token!	admin	et	Viga sümboli salvestamisel!
 error: %1 not found or other error !!!	admin	et	Viga: %1 ei leitud või muu viga!
 expires	admin	et	Aegub
 export certificate as p12	admin	et	Sertifikaadi eksportimine p12 kujul
@@ -178,6 +182,7 @@ field '%1' already exists !!!	admin	et	Väli '%1' eksisteerib juba!
 full name	admin	et	Täis nimi
 general	admin	et	Üldine
 generate certificate	admin	et	Sertifikaadi genereerimine
+generate new token and display it once after saving	admin	et	Loo uus sümbol ja näita seda üks kord pärast salvestamist
 global categories	common	et	Globaalsed Kategooriad
 global options	admin	et	Globaalsed omadused
 group ?	admin	et	Grupp?
@@ -193,6 +198,7 @@ how many minutes should an account or ip be blocked (default 1) ?	admin	et	Mitu 
 how should email addresses for new users be constructed?	admin	et	Kuidas EMail aadress uute kasutajatejaoks konstrueeritakse?
 icon	admin	et	Ikoon
 if different from email address	admin	et	Kui erineb e-posti aadressist
+if disabled existing tokens immediatly stop working.	admin	et	Kui olemasolevad märgid on keelatud, lakkavad need kohe töötamast.
 imap admin password	admin	et	IMAP admin parool
 imap admin user	admin	et	IMAP admin kasutaja
 imap server	admin	et	IMAP Server
@@ -218,6 +224,7 @@ ldap settings	admin	et	LDAP setingud
 leave empty for no quota	admin	et	Jäta tühjaks, kui kvooti ei ole
 leave empty to use oauth, if supported	admin	et	Jäta tühjaks, et kasutada OAuthi, kui see on toetatud.
 leaves without saveing	admin	et	Lahkub ilma salvestamata
+lifetime of 'remember me' token	admin	et	Mäletamistähise kehtivusaeg
 list current sessions	admin	et	Nimekiri hetke sessioonidest
 list of current users	admin	et	Nimekiri hetke kasutajatest
 login history	admin	et	Sisselogimise ajalugu
@@ -267,10 +274,12 @@ primary group	admin	et	Primaarne Grupp
 re-enter password	admin	et	Sisesta parool uuesti
 regular expression to find part to use as container	admin	et	Regulaarväljend konteinerina kasutatava osa leidmiseks
 remove	admin	et	Eemalda
+revoke this token	admin	et	Selle sümboli tühistamine
 search categories	admin	et	Otsi kategooriaid
 search groups	admin	et	Otsi gruppe
 security	admin	et	Turvalisus
 select accounts for which the custom field should be readonly	admin	et	Valige kontod, mille jaoks kohandatud väli peaks olema ainult lugemiseks mõeldud
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	et	Valige rakendused, millega soovite, et token oleks piiratud, või jätke vaikimisi kõik rakendused.
 select type of imap server	admin	et	Vali IMAP serveri tüüp
 select type of smtp server	admin	et	Vali SMTP serveri tüüp
 select where you want to store/retrieve filesystem information	admin	et	Vali kuhu sa tahad salvestada failisüsteemi informatsiooni.
@@ -297,6 +306,7 @@ sorry, that group name has already been taken.	admin	et	Vabandust, see grupinimi
 ssl	admin	et	SSL
 start	admin	et	Start
 submit changes	admin	et	Salvesta Muudatused
+successfull, but no refresh-token received!	admin	et	Edukalt, kuid värskendustokenit ei ole saadud!
 that loginid has already been taken	admin	et	See logimis-ID on juba võetud.
 the api is current	admin	et	API on kaasaegne
 the api requires an upgrade	admin	et	API vajab uuendamist
@@ -305,6 +315,10 @@ the loginid can not be more then 8 characters	admin	et	Kasutajanimi ei või olla
 the two passwords are not the same	admin	et	Kaks parooli pole identsed
 this application is current	admin	et	See rakendus on kaasaegne.
 this application requires an upgrade	admin	et	See rakendus vajab uuendust.
+token created.	admin	et	Token on loodud.
+token not found!	admin	et	Tokenit ei leitud!
+token revoked.	admin	et	Token tühistatud.
+token saved.	admin	et	Token salvestatud.
 translation	admin	et	Tõlkimine
 two weeks	admin	et	Kaks nädalat
 unknown account: %1 !!!	admin	et	Tundmatu konto: %1!
@@ -312,6 +326,7 @@ up	admin	et	Üles
 updated	admin	et	Uuendatud
 upload your certificate .p12/.pfx file	admin	et	Laadige oma sertifikaadi .p12/.pfx fail üles.
 use default	admin	et	Kasuta vaikimisi
+use save or apply to store the received oauth token!	admin	et	Kasutage saadud OAuth-tokeni salvestamiseks save või apply!
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	et	kasutage järgmisi valikuid:\nnoVfsSelect=1\nmime=application/pdf või /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	et	Kasuta nahka
 user accounts	admin	et	Kasutaja kontod

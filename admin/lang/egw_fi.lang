@@ -55,6 +55,7 @@ acl manager	admin	fi	ACL -hallinta
 acl rights	common	fi	ACL -oikeudet
 activate	admin	fi	Aktivoi
 active templates	admin	fi	Aktiiviset mallipohjat
+active this token again	admin	fi	Aktiivinen tämä merkki uudelleen
 add a category	admin	fi	Lisää kategoria
 add a group	admin	fi	Lisää ryhmä
 add a new account.	admin	fi	Uusi käyttäjätili.
@@ -90,6 +91,7 @@ all records and account information will be lost!	admin	fi	Kaikki tietueet ja tu
 all users	admin	fi	Kaikki käyttäjät
 allow anonymous access to this app	admin	fi	Sovellusta voi käyttää kirjautumatta järjestelmään
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	fi	Salli käyttäjän tallentaa salasanansa SingleSignOnin 'Security & Passwords' -kohdassa.
+allow user to set 'remember me' token	admin	fi	Salli käyttäjän asettaa ‘Muista minut’ -merkki.
 alternate email address	admin	fi	Vaihtoehtoinen sähköpostiosoite
 anonymous user	admin	fi	Anonyymi käyttäjä
 anonymous user (not shown in list sessions)	admin	fi	Anonyymi käyttäjä (ei näytetä kirjautuneiden luettelossa).
@@ -163,6 +165,7 @@ check acl for entries of not (longer) existing accounts	admin	fi	Tarkista ACL- o
 check categories for not (longer) existing accounts	admin	fi	Tarkista poistettujen käyttäjätilien kategoriat
 check ip address of all sessions	admin	fi	Tarkista IP-osoite kaikille istunnoille
 check items to <b>%1</b> to %2 for %3	admin	fi	Tarkista kohteet <b>%1</b> %2 kohdasta %3
+clear security tokens	admin	fi	Tyhjennä turvakoodit
 click to select a color	admin	fi	Napsauta valitaksesi värin
 color	admin	fi	Väri
 command scheduled to run at %1	admin	fi	Komento suoritetaan kello %1
@@ -313,12 +316,14 @@ error connecting to imap server. %s : %s.	admin	fi	Virhe yhdistettäessä IMAP p
 error connecting to imap server: [%s] %s.	admin	fi	Virhe yhdistettäessä IMAP palvelimeen. [%s] %s.
 error deleting entry!	admin	fi	Virhe poistettaessa!
 error deleting log entry!	admin	fi	Virhe lokimerkinnän poistamisessa!
+error revoking token!	admin	fi	Virhe tokenin peruuttamisessa!
 error saving	admin	fi	Virhe tallennettaessa!
 error saving account!	admin	fi	Virhe tallennettaessa käyttäjätiliä!
 error saving the command!	admin	fi	Virhe tallennettaessa käskyä!
 error saving the entry!!!	admin	fi	Virhe tallennettaessa!
 error saving to db:	admin	fi	Virhe tallennettaessa tietokantaan:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	fi	Virhe tehtäessä ajastusta, komento väärin muotoiltu tai ajastus on jo olemassa!
+error storing token!	admin	fi	Virhe merkin tallentamisessa!
 error! no appname found	admin	fi	Virhe! Sovellusta ei lödy!
 error: %1 not found or other error !!!	admin	fi	Virhe: %1 ei löydy tai muu virhe!
 event details follow	admin	fi	Tapahtuman yksityiskohdat alla
@@ -347,6 +352,7 @@ forward only	admin	fi	Ainoastaan edelleenlähetys
 full name	admin	fi	Koko nimi
 general	admin	fi	Yleinen
 generate certificate	admin	fi	Luo varmenne
+generate new token and display it once after saving	admin	fi	Luo uusi tunniste ja näytä se kerran tallennuksen jälkeen.
 global categories	common	fi	Yleiset kategoriat
 global options	admin	fi	Yleiset asetukset
 governmental: incl. state or municipal authorities or services	admin	fi	Hallituksellinen: Sisältää osavaltioiden ja paikallishallinnot ja palvelut
@@ -375,6 +381,7 @@ how should email addresses for new users be constructed?	admin	fi	Kuinka uusien 
 icon	admin	fi	Kuvake
 idle	admin	fi	Vapaa
 if different from email address	admin	fi	Jos eri kuin sähköpostiosoite
+if disabled existing tokens immediatly stop working.	admin	fi	Jos olemassa olevat tunnukset poistetaan käytöstä, niiden toiminta lakkaa välittömästi.
 if no acl records for user or any group the user is a member of	admin	fi	Jos käyttäjälle tai ryhmälle ei ole ACL -tietueita, kuuluu käyttäjä ryhmään
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fi	Jos käytät LDAP-hakemistoa, haluatko hallita kotihakemistoja ja shellejä?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	fi	Jos SSL tai TLS on käytössä, PHP openssl lisäosa pitää olla ladattuna.
@@ -442,6 +449,7 @@ leave unchanged	admin	fi	Älä muuta
 leave without saveing the entry	admin	fi	Poistu tallentamatta tietuetta
 leaves without saveing	admin	fi	Poistu tallentamatta
 length<br>rows	admin	fi	Pituus<br>Rivit
+lifetime of 'remember me' token	admin	fi	Muista minut -tunnisteen käyttöikä
 limit global category to members of a certain group	admin	fi	Rajoita yleisen kategorian käyttö tietyn ryhmän jäsenille.
 limit to members of	admin	fi	Rajoita ryhmän jäsenille
 list config settings	admin	fi	Näytä asetukset
@@ -572,6 +580,7 @@ regular expression to find part to use as container	admin	fi	Säännöllinen lau
 remove	admin	fi	Poista
 requested	admin	fi	Vaadittu
 reset filter	admin	fi	Poista suodatin
+revoke this token	admin	fi	Tämän merkin peruuttaminen
 rights	admin	fi	ACL -oikeudet
 rows	admin	fi	Rivit
 rpm or debian package	admin	fi	RPM tai deb paketti
@@ -590,6 +599,7 @@ select accounts for which the custom field should be readonly	admin	fi	Valitse t
 select accounts for which the custom field should be visible	admin	fi	Valitse käyttäjät joille lisäkenttien tulisi olla näkyvillä.
 select group managers	admin	fi	Valitse ryhmien ylläpitäjät
 select permissions this group will have	admin	fi	Valitse ryhmälle oikeudet
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	fi	Valitse sovellukset, joihin haluat tokenin olevan rajoitettu, tai jätä oletuksena kaikki sovellukset.
 select the parent category. if this is a main category select no category	admin	fi	Valitse pääkategoria. Jos tämä on pääkategoria, valitse EI KATEGORIAA.
 select type of imap server	admin	fi	Valitse IMAP -palvelimen tyyppi
 select type of smtp server	admin	fi	Valitse SMTP -palvelimen tyyppi
@@ -647,6 +657,7 @@ submit statistic information	admin	fi	Lähetä esitetty tieto
 submit the search string	admin	fi	Hae merkkijonoa
 subtype	admin	fi	Alamuoto
 success	admin	fi	Onnistunut
+successfull, but no refresh-token received!	admin	fi	Onnistui, mutta EI päivitystunnistetta vastaanotettu!
 switch it off, if users are randomly thrown out	admin	fi	Ota pois käytöstä, jos käyttäjät ovat satunnaisesti hylätty
 that loginid has already been taken	admin	fi	Käyttäjätunnus on jo käytössä.
 the api is current	admin	fi	API on ajan tasalla
@@ -673,6 +684,10 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	fi
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fi	Kuinka monta sekuntia on istunnon aikakatkaisu (oletus: 14400 = 4 tuntia)
 times	admin	fi	Ajat
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	fi	Käytä tätä lähetystunnusta, jos sallit tilastotietojen kasvun seuraamisen, muutoin poista se:
+token created.	admin	fi	Token luotu.
+token not found!	admin	fi	Tokenia ei löydy!
+token revoked.	admin	fi	Token peruutettu.
+token saved.	admin	fi	Token tallennettu.
 top	admin	fi	Ylös
 total of %1 id's changed.	admin	fi	Kaikkiaan %1 ID muutettu.
 total records	admin	fi	Tietueita
@@ -704,6 +719,7 @@ use default	admin	fi	Käytä oletusta
 use ldap defaults	admin	fi	Käytä LDAP -oletuksia
 use predefined username and password defined below	admin	fi	Käytä esimääriteltyä käyttäjänimeä ja salasanaa
 use pure html compliant code (not fully working yet)	admin	fi	Käytä HTML yhteensopivuustilaa (ei toimi vielä täysin).
+use save or apply to store the received oauth token!	admin	fi	Tallenna vastaanotettu OAuth-todiste tallentamalla save tai apply!
 use smtp auth	admin	fi	Käytä SMTP -käyttäjätunnistusta
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	fi	Käytä seuraavia vaihtoehtoja:\nnoVfsSelect=1\nmime=application/pdf tai /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	fi	Käytä teemaa

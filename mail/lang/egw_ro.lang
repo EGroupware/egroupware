@@ -16,10 +16,13 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	ro	Adăugare
 after reply, visible during compose	mail	ro	După răspuns, vizibil în timpul compunerii
 aliases+forwards	mail	ro	Aliasuri+Întoarcere
 all my email addresses	mail	ro	toate adresele mele de e-mail
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	ro	Toate subfolderele vor fi șterse și ele, iar toate mesajele din toate folderele afectate vor fi pierdute
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ro	Permite unui utilizator să citească, să scrie și să creeze foldere și e-mailuri, să posteze în ele, să adauge mesaje la ele și să șteargă mesaje
 always respond / auto-responder	mail	ro	Răspundeți întotdeauna / răspuns automat
 always show notifiction	mail	ro	Afișează întotdeauna notificarea
 answered	mail	ro	Răspunsuri
 archive folder	mail	ro	Dosar arhivă
+are you sure you want to delete all selected folders?	mail	ro	Sunteți sigur că doriți să ștergeți toate folderele selectate?
 attach files	mail	ro	Atașați fișiere
 attach users vcard at compose to every new mail	mail	ro	Atașarea vCard-ului utilizatorului la fiecare e-mail nou în momentul compunerii.
 attachment has been saved successfully.	mail	ro	Atașamentul a fost salvat cu succes.
@@ -72,6 +75,8 @@ everyone	mail	ro	Toată lumea
 examine namespace to retrieve folders in others and shared	mail	ro	Examinați spațiul de nume pentru a prelua folderele din altele și partajate
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	ro	Excludeți atașamentele mai mari decât dimensiunea dată de la salvarea automată ca draft (în MB)
 failed to delete %1	mail	ro	Nu s-a reușit ștergerea lui %1
+failed to delete %1 ! reason: %2	mail	ro	A eșuat ștergerea %1! Motivul: %2
+failed to delete %1. server responded:	mail	ro	Eșec la ștergerea %1! Serverul a răspuns:
 failed to subscribe folder %1!	mail	ro	Nu s-a reușit abonarea folderului %1!
 failed to unsubscribe folder %1!	mail	ro	Nu s-a reușit să se dezaboneze folderul %1!
 file into	mail	ro	Treceți la
@@ -268,6 +273,8 @@ trash	mail	ro	Coș de gunoi
 trash folder	mail	ro	Dosar coș de gunoi
 unconditional	mail	ro	Întotdeauna
 validate addresses on submit:	mail	ro	Validarea adreselor la trimitere:
+what to do when you delete a message	mail	ro	Ce trebuie să faceți atunci când ștergeți un mesaj.
+write & delete	mail	ro	scrieți & ștergeți
 you can select what info to be displayed on email tag	mail	ro	Puteți selecta ce informații să fie afișate pe eticheta de e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ro	Puteți folosi $$start$$ pentru data de început de mai sus și $$end$$$ pentru data de sfârșit.
 you may add this certificate into your contact, if you trust this signature.	mail	ro	Puteți adăuga acest certificat în contactul dumneavoastră, dacă aveți încredere în această semnătură.

@@ -127,7 +127,6 @@ preformatted	preferences	km	បានធ្វើទ្រង់ទ្រាយ�
 pt: points (1/72 inch)	preferences	km	pt: ពិន្ទុ (1/72 អ៊ីញ)
 px: display pixels	preferences	km	px: បង្ហាញភីកសែល
 re-enter your password	preferences	km	បញ្ចូលពាក្យសម្ងាត់របស់អ្នកឡើងវិញ
-read prefs for the specified application.	preferences	km	អានចំណូលចិត្តសម្រាប់កម្មវិធីដែលបានបញ្ជាក់។
 reset qrcode	preferences	km	កំណត់ QRCode ឡើងវិញ
 revoke	preferences	km	ដកហូត
 revoke this token	preferences	km	ដកហូតសញ្ញាសម្ងាត់នេះ។
@@ -146,7 +145,6 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	km	ការកំណត់
 setup two factor authentication	preferences	km	ដំឡើងការផ្ទៀងផ្ទាត់កត្តាពីរ
 should the number of active sessions be displayed for you all the time.	preferences	km	បង្ហាញចំនួនវគ្គសកម្ម។
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	km	បង្ហាញសារជំនួយនៅពេលកែប្រែចំណូលចិត្ត ឬតាមសំណើប៉ុណ្ណោះ។
 show helpmessages by default	preferences	km	សារជំនួយ
 show links between egroupware aps as	common	km	រូបតំណាងកម្មវិធី និងតំណ
 show navigation bar as	preferences	km	បង្ហាញរបាររុករកជា
@@ -160,7 +158,6 @@ special characters	preferences	km	តួអក្សរពិសេស
 spellchecker language	addressbook	km	ភាសាអ្នកពិនិត្យអក្ខរាវិរុទ្ធ
 text editor settings	preferences	km	ការកំណត់កម្មវិធីនិពន្ធអត្ថបទ
 text only	preferences	km	អត្ថបទតែប៉ុណ្ណោះ
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	km	កម្មវិធីលំនាំដើមនឹងត្រូវបានចាប់ផ្តើមនៅពេលអ្នកបញ្ចូល EGroupware ឬចុចលើរូបតំណាងដើម។<br>ការស្កេនកម្មវិធីច្រើនជាងមួយត្រូវបានបង្ហាញនៅលើទំព័រដើម ប្រសិនបើគ្មានអ្វីត្រូវបានជ្រើសរើសនៅទីនេះ។ វាត្រូវតែកំណត់រចនាសម្ព័ន្ធតាមចំណូលចិត្តនៃកម្មវិធីនីមួយៗ។
 the old password is not correct	preferences	km	ពាក្យ​សម្ងាត់​ចាស់​មិន​ត្រឹមត្រូវ!
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	km	ប្រអប់ជ្រើសរើសបង្ហាញអ្នកប្រើប្រាស់ដែលមានទាំងអស់ (អាចយឺតណាស់នៅពេលដំឡើងធំជាមួយអ្នកប្រើប្រាស់ជាច្រើន)។ ផ្ទាំងលេចឡើងអាចស្វែងរកអ្នកប្រើប្រាស់តាមឈ្មោះ ឬក្រុម។
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	km	ប្រអប់ជ្រើសរើសបង្ហាញអ្នកប្រើប្រាស់ដែលមានទាំងអស់ (អាចយឺតណាស់នៅពេលដំឡើងធំជាមួយអ្នកប្រើប្រាស់ជាច្រើន)។ ផ្ទាំងលេចឡើងអាចស្វែងរកអ្នកប្រើប្រាស់តាមឈ្មោះ ឬក្រុម។ ជម្រើសចុងក្រោយទាំងពីរកំណត់លទ្ធភាពមើលឃើញរបស់អ្នកប្រើប្រាស់ផ្សេងទៀត។ ដូច្នេះ​ពួកគេ​គួរតែ​បង្ខំ និង​មិន​អនុវត្ត​ចំពោះ​អ្នកគ្រប់គ្រង​។
@@ -180,7 +177,6 @@ users choice	preferences	km	ការជ្រើសរើសអ្នកប្�
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	km	បង្ហាញប៊ូតុង Home និង Logout ជាកម្មវិធីនៅក្នុងរបារខាងលើ។
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	km	ជ្រើសរើសសំណុំតួអក្សរសម្រាប់ CSV នាំចូល|នាំចេញ។
 which currency symbol or name should be used in egroupware.	preferences	km	និមិត្តសញ្ញារូបិយប័ណ្ណ ឬឈ្មោះ។
-write prefs for the specified application.	preferences	km	សរសេរចំណូលចិត្តសម្រាប់កម្មវិធីដែលបានបញ្ជាក់។
 you can show the applications as icons only, icons with app-name or both.	preferences	km	អ្នកអាចបង្ហាញកម្មវិធីជារូបតំណាងតែប៉ុណ្ណោះ រូបតំណាងដែលមានឈ្មោះកម្មវិធី ឬទាំងពីរ។
 you can show the linked entries with icons only, icons with app-name or both.	common	km	បង្ហាញកម្មវិធីដែលមានរូបតំណាងតែប៉ុណ្ណោះ រូបតំណាងដែលមានឈ្មោះកម្មវិធី ឬទាំងពីរ។
 you do not have permission to set acl's in this mode!	preferences	km	អ្នកមិនមានសិទ្ធិកំណត់ ACL នៅក្នុងរបៀបនេះទេ!

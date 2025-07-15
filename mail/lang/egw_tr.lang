@@ -16,10 +16,13 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	tr	Listelene
 after reply, visible during compose	mail	tr	Yanıttan sonra, oluşturma sırasında görünür
 aliases+forwards	mail	tr	Takma Adlar+İleri Yönler
 all my email addresses	mail	tr	tüm e-posta adreslerim
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	tr	Tüm alt klasörler de silinecek ve etkilenen tüm klasörlerdeki tüm mesajlar kaybolacaktır
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	tr	Bir kullanıcının klasörleri ve postaları okumasına, yazmasına ve oluşturmasına, bunlara mesaj göndermesine, bunlara mesaj eklemesine ve mesajları silmesine izin verir
 always respond / auto-responder	mail	tr	Her zaman yanıt / otomatik yanıtlayıcı
 always show notifiction	mail	tr	Her zaman bildirim göster
 answered	mail	tr	Cevaplandı
 archive folder	mail	tr	Arşiv Klasörü
+are you sure you want to delete all selected folders?	mail	tr	Seçili tüm klasörleri silmek istediğinizden emin misiniz?
 attach files	mail	tr	Dosya ekleme
 attach users vcard at compose to every new mail	mail	tr	Her yeni postaya oluşturma sırasında kullanıcıların vCard'ını ekleyin.
 attachment has been saved successfully.	mail	tr	Ek başarıyla kaydedildi.
@@ -77,6 +80,8 @@ examine namespace to retrieve folders in others and shared	mail	tr	Diğer ve pay
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	tr	Belirli boyuttan büyük ekleri otomatik taslak olarak kaydetme dışında tut (MB cinsinden)
 extended	mail	tr	Genişletilmiş
 failed to delete %1	mail	tr	%1 silinemedi
+failed to delete %1 ! reason: %2	mail	tr	%1 silinemedi! Neden: %2
+failed to delete %1. server responded:	mail	tr	%1 silinemedi! Sunucu yanıt verdi:
 failed to subscribe folder %1!	mail	tr	Klasör %1'e abone olunamadı!
 failed to unsubscribe folder %1!	mail	tr	Klasör %1 aboneliğinden çıkılamadı!
 file into	mail	tr	Şuraya taşı
@@ -289,7 +294,9 @@ trash folder	mail	tr	Çöp klasörü
 unconditional	mail	tr	Her zaman
 unsubscribe folder	mail	tr	Klasör aboneliğini iptal et
 validate addresses on submit:	mail	tr	Gönderme sırasında adresleri doğrulayın:
+what to do when you delete a message	mail	tr	Bir mesajı sildiğinizde ne yapmalısınız?
 write	mail	tr	Yaz
+write & delete	mail	tr	yaz & sil
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	tr	Yukarıdaki başlangıç tarihi için $$start$$ ve bitiş tarihi için $$end$$ kullanabilirsiniz.
 you may add this certificate into your contact, if you trust this signature.	mail	tr	Bu imzaya güveniyorsanız, bu sertifikayı kişinize ekleyebilirsiniz.
 you need to enter your s/mime passphrase to send this message.	mail	tr	Bu mesajı göndermek için S/MIME parolanızı girmeniz gerekir.

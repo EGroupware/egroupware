@@ -16,10 +16,13 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	uk	Не вд
 after reply, visible during compose	mail	uk	Після відповіді, видно під час створення листа
 aliases+forwards	mail	uk	Псевдоніми + переадресація
 all my email addresses	mail	uk	всі мої електронні адреси
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	uk	Усі підтеки також буде видалено, а всі повідомлення у всіх теках буде втрачено
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	uk	Дозволяє користувачеві читати, писати і створювати теки і поштові скриньки, писати до них, додавати до них повідомлення і видаляти повідомлення
 always respond / auto-responder	mail	uk	Завжди відповідати / автовідповідач
 always show notifiction	mail	uk	Завжди показувати сповіщення
 answered	mail	uk	Відповіли
 archive folder	mail	uk	Папка архіву
+are you sure you want to delete all selected folders?	mail	uk	Ви впевнені, що хочете видалити всі вибрані теки?
 attach files	mail	uk	Прикріплення файлів
 attach users vcard at compose to every new mail	mail	uk	Прикріплювати vCard користувача при створенні кожного нового листа.
 attachment has been saved successfully.	mail	uk	Вкладення успішно збережено.
@@ -77,6 +80,8 @@ examine namespace to retrieve folders in others and shared	mail	uk	Вивчен�
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	uk	Виключити вкладення, розмір яких перевищує заданий, з автоматичного збереження як чернетки (в МБ)
 extended	mail	uk	Розширений
 failed to delete %1	mail	uk	Не вдалося видалити %1
+failed to delete %1 ! reason: %2	mail	uk	Не вдалося видалити %1! Причина: %2
+failed to delete %1. server responded:	mail	uk	Не вдалося видалити %1! Сервер відповів:
 failed to subscribe folder %1!	mail	uk	Не вдалося підписатися на папку %1!
 failed to unsubscribe folder %1!	mail	uk	Не вдалося відписати папку %1!
 file into	mail	uk	Перейдіть до
@@ -273,7 +278,9 @@ trash	mail	uk	Смітник
 trash folder	mail	uk	папка сміття
 unconditional	mail	uk	Завжди
 validate addresses on submit:	mail	uk	Підтвердити адреси після надсилання:
+what to do when you delete a message	mail	uk	Що робити, коли ви видаляєте повідомлення.
 write	mail	uk	Записати
+write & delete	mail	uk	запис і видалення
 you can select what info to be displayed on email tag	mail	uk	Ви можете вибрати, яка інформація буде відображатися в тезі листа.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	uk	Ви можете використовувати $$start$$ для вказаної вище дати початку і $$end$$ для дати завершення.
 you may add this certificate into your contact, if you trust this signature.	mail	uk	Ви можете додати цей сертифікат до свого контакту, якщо ви довіряєте цьому підпису.

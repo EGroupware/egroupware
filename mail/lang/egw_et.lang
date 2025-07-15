@@ -23,6 +23,7 @@ allow external images	mail	et	Lubage väliseid pilte
 allow external images from listed domains	mail	et	Lubage väliseid pilte loetletud domeenidest
 allow images from external sources in html emails	mail	et	Lubage HTML e-kirjades välistest allikatest pärinevate piltide kasutamine.
 allow images from listed domains in html emails	mail	et	Lubage loetelus olevate domeenide pilte HTML-meilides.
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	et	Võimaldab kasutajal lugeda, kirjutada ja luua kaustu ja kirju, postitada sinna, lisada sinna sõnumeid ja kustutada sõnumeid
 always allow external sources from %1	mail	et	Luba alati väliseid allikaid %1
 always respond / auto-responder	mail	et	Alati vastata / automaatne vastus
 always show html emails	mail	et	Alati näita HTML emaile
@@ -30,6 +31,7 @@ always show notifiction	mail	et	Näita alati teavitust
 answered	mail	et	Vastatud
 any status	mail	et	kõik staatused
 archive folder	mail	et	Arhiivikaust
+are you sure you want to delete all selected folders?	mail	et	Kas olete kindel, et soovite kustutada kõik valitud kaustad?
 attach files	mail	et	Failide lisamine
 attach users vcard at compose to every new mail	mail	et	Lisada kasutajate vCard iga uue posti koostamisel.
 attach vcard	mail	et	Kinnita vCard
@@ -102,6 +104,8 @@ every %1. day	mail	et	Iga %1. päev
 examine namespace to retrieve folders in others and shared	mail	et	Uurige nimeruumi, et otsida kaustu teistes ja jagatud
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	et	Suuremate manuste väljajätmine antud suurusest suuremate manuste automaatsest salvestamisest eelnõuna (MB)
 extended	mail	et	Laiendatud
+failed to delete %1 ! reason: %2	mail	et	Ei õnnestunud kustutada %1! Põhjus: %2
+failed to delete %1. server responded:	mail	et	Ei õnnestunud kustutada %1! Server vastas:
 failed to subscribe folder %1!	mail	et	Ei õnnestunud tellida kausta %1!
 failed to unsubscribe folder %1!	mail	et	Ebaõnnestus kausta %1 tühistamine!
 file into	mail	et	Liiguta
@@ -302,7 +306,9 @@ trash folder	mail	et	Prügikasti kaust
 unconditional	mail	et	Alati
 unread	mail	et	lugematta
 validate addresses on submit:	mail	et	Kinnitage aadressid esitamisel:
+what to do when you delete a message	mail	et	Mida teha sõnumi kustutamise korral.
 write	mail	et	Kirjuta
+write & delete	mail	et	kirjutamine ja kustutamine
 you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	et	Saate kasutada $$start$$ ülaltoodud alguskuupäeva ja $$end$$$ lõppkuupäeva jaoks.
 you may add this certificate into your contact, if you trust this signature.	mail	et	Te võite lisada selle sertifikaadi oma kontakti, kui te usaldate seda allkirja.

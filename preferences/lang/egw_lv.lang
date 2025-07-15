@@ -16,6 +16,7 @@ default	preferences	lv	noklusējums
 default preferences	preferences	lv	Noklusējuma iestatījumi
 delete categories	preferences	lv	Dzēst kategorijas
 deny following groups access to application passwords	preferences	lv	Aizliegt piekļuvi lietojumprogrammu parolēm šādām grupām
+deny following groups access to preferences	admin	lv	Aizliegt šādu grupu piekļuvi iestatījumiem
 description can not exceed 255 characters in length !	preferences	lv	Apraksts nevar pārsniegt 255 simbolu garumu!
 disable	preferences	lv	Deaktivizēt
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	lv	Vai tev labāk patīk 24stundu formāts, vai arī 12, pievienojot am/pm?
@@ -50,6 +51,7 @@ max number of icons in navbar	preferences	lv	Maksimālais ikonu skaits rīku jos
 no default	preferences	lv	Nav noklusējuma
 password stored	preferences	lv	Uzglabā paroli.
 popup with search	preferences	lv	Uzsākt ar meklēšanu
+preferences saved.	preferences	lv	Saglabātas iestatījumi.
 re-enter your password	preferences	lv	Atkārto savu paroli
 reset qrcode	preferences	lv	Atiestatīt QR kodu
 scan qrcode with a time-based one-time password (totp) app:	preferences	lv	Skenēt QR kodu ar TOTP (Time-based one-time password) App:
@@ -57,7 +59,6 @@ select one	preferences	lv	Atzīmē vienu
 selectbox	preferences	lv	Izvēlne (selectbox)
 set content size	preferences	lv	Iestatīt satura izmēru
 should the number of active sessions be displayed for you all the time.	preferences	lv	Vai aktīvo sesiju skaitam vajadzētu tikt tev parā�ītam visu laiku?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	lv	Vai šīm palīdzības vēstulēm vienmēr jāparādās, kad tu maini iestatījumus, vai tikai pēc tava pieprasījuma?
 show helpmessages by default	preferences	lv	Rādīt palīga vēstules pēc noklusējuma
 show navigation bar as	preferences	lv	Rādīt navigācijas joslu kā
 show number of current users	preferences	lv	Rādīt patreizējo lietotaju skaitu

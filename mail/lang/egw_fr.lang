@@ -45,6 +45,7 @@ allow external images from listed domains	mail	fr	Autoriser les images externes 
 allow images from external sources in html emails	mail	fr	Autoriser les images de sources externes dans les emails HTML.
 allow images from listed domains in html emails	mail	fr	Autoriser les images des domaines listes dans les emails HTML.
 allow users to create further identities	mail	fr	Autoriser les utilisateurs à créer d'autres identités
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	fr	Permet à un utilisateur de lire, écrire et créer des dossiers et des messages, d'y poster, d'y ajouter des messages et de les supprimer.
 always	mail	fr	Toujours
 always allow external sources from %1	mail	fr	Toujours autoriser les sources externes de %1
 always respond / auto-responder	mail	fr	Toujours répondre / auto-répondeur
@@ -694,6 +695,7 @@ with message:	mail	fr	Avec le message :
 wizard	mail	fr	Assistant
 writable sharing requires epl version!	mail	fr	Les partages ouverts en écriture nécessitent la version EPL !
 write	mail	fr	Ecrire
+write & delete	mail	fr	écrire et supprimer
 wrote	mail	fr	Ecrivait
 yes, offer copy option	mail	fr	oui, proposer une option de copie
 you can select what info to be displayed on email tag	mail	fr	Vous pouvez sélectionner les informations à afficher sur l'étiquette de l'e-mail.

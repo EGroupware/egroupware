@@ -21,10 +21,12 @@ after reply, visible during compose	mail	da	Efter svar, synlig under sammensætn
 aliases+forwards	mail	da	Fremmedord + viderestillinger
 all messages in the folder will be lost	mail	da	Alle beskeder i mappen vil gå tabt.
 all my email addresses	mail	da	alle mine e-mailadresser
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	da	Alle undermapper vil også blive slettet, og alle beskeder i alle berørte mapper vil gå tabt.
 allow external images	mail	da	Tillad eksterne billeder
 allow external images from listed domains	mail	da	Tillad eksterne billeder fra listede domæner
 allow images from external sources in html emails	mail	da	Tillad billeder fra eksterne kilder i HTML-e-mails.
 allow images from listed domains in html emails	mail	da	Tillad billeder fra listede domæner i HTML-e-mails.
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	da	Giver en bruger mulighed for at læse, skrive og oprette mapper og mails, sende til den, tilføje beskeder til den og slette beskeder.
 always allow external sources from %1	mail	da	Tillad altid eksterne kilder fra %1
 always respond / auto-responder	mail	da	Always respond / auto-responder
 always show html emails	mail	da	Vis altid HTML e-mails
@@ -115,6 +117,8 @@ everyone	mail	da	Enhver
 examine namespace to retrieve folders in others and shared	mail	da	Undersøg navnerummet for at hente mapper i andre og delte mapper
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	da	Udeluk vedhæftede filer, der er større end en given størrelse, fra automatisk at blive gemt som kladde (i MB)
 extended	mail	da	Udvidet
+failed to delete %1 ! reason: %2	mail	da	Det lykkedes ikke at slette %1! Årsag: %2
+failed to delete %1. server responded:	mail	da	Det lykkedes ikke at slette %1! Serveren svarede:
 file into	mail	da	Flyt til
 file into:	mail	da	Flyt til:
 filemanager	mail	da	Filhåndtering
@@ -334,8 +338,10 @@ unconditional	mail	da	Altid
 unflagged	mail	da	Flag ikke sat
 unread	mail	da	ulæst
 validate addresses on submit:	mail	da	Valider adresserne, når du sender:
+what to do when you delete a message	mail	da	Hvad man skal gøre, når man sletter en besked.
 when deleting messages	mail	da	Når meddelser slettes
 write	mail	da	Skriv
+write & delete	mail	da	skriv og slet
 wrote	mail	da	skrev
 you can select what info to be displayed on email tag	mail	da	Du kan vælge, hvilke oplysninger der skal vises på e-mail-tagget.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	da	Du kan bruge $$start$$ for ovenstående startdato og $$end$$ for slutdatoen.

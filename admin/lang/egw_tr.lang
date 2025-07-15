@@ -47,6 +47,7 @@ acl added.	admin	tr	ACL eklendi.
 acl csv export	admin	tr	ACL CSV dışa aktarma
 acl manager	admin	tr	ACL Yöneticisi
 acl rights	common	tr	ACL Hakları
+active this token again	admin	tr	Bu belirteci tekrar etkinleştirin
 add a category	admin	tr	Kategori ekle
 add a group	admin	tr	Grup ekle
 add a new account.	admin	tr	Yeni hesap oluştur
@@ -77,6 +78,7 @@ all records and account information will be lost!	admin	tr	Bütün kayıtlar ve 
 all users	admin	tr	Tüm Kullanıcılar
 allow anonymous access to this app	admin	tr	Bu uygulamaya anonim girişe izin ver
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	tr	Kullanıcının parolasını SingleSignOn için 'Güvenlik ve Parolalar' altında saklamasına izin verin.
+allow user to set 'remember me' token	admin	tr	Kullanıcının ‘Beni hatırla’ belirtecini ayarlamasına izin ver
 anonymous user	admin	tr	Anonim kullanıcı
 anonymous user (not shown in list sessions)	admin	tr	Anonim kullanıcı. Liste oturumlarında gösterilmez.
 anonymous user. not shown in list sessions.	admin	tr	Anonim kullanıcı. Liste oturumlarında gösterilmez
@@ -126,6 +128,7 @@ change domain of email address and aliases	admin	tr	E-posta adresi ve takma adla
 change login screen message	admin	tr	Ana ekran mesajını değiştir
 check ip address of all sessions	admin	tr	Bütün oturumların IP'leri kontrol et
 check items to <b>%1</b> to %2 for %3	admin	tr	%3 ögelerini <b>%1</b>den %2'ye kadar seç
+clear security tokens	admin	tr	Güvenlik belirteçlerini temizleyin
 click to select a color	admin	tr	Renk seçmek için tıklayın
 color	admin	tr	Renk
 container	admin	tr	Konteyner
@@ -214,7 +217,9 @@ enter your http proxy server port	admin	tr	HTTP Proxy sunucu portunuzu giriniz
 enter your smtp server hostname or ip address	admin	tr	SMTP sunucu hostname ve IP'nizi giriniz
 enter your smtp server port	admin	tr	SMTP sunucu portunuzu giriniz
 error canceling timer, maybe there's none set !!!	admin	tr	Zamanlayıcıyı iptal ederken hata oluştu, hiç ayarlı olmayabilir!
+error revoking token!	admin	tr	Belirteç iptal edilirken hata oluştu!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	tr	Zamanlayıcı ayarlarken hata oluştu, yanlış sözdizimi ya da halihazırda çalışan bir tane olabilir!
+error storing token!	admin	tr	Belirteç depolanırken hata oluştu!
 error: %1 not found or other error !!!	admin	tr	Hata: %1 bulunamıyor ya da başka bir hata!
 event details follow	admin	tr	Etkinlik Detayları Ektedir
 expires	admin	tr	Sona Eriyor
@@ -227,6 +232,7 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	tr	Seçimn kurusunu mecburi tut
 full name	admin	tr	Tam isim
 generate certificate	admin	tr	Sertifika Oluştur
+generate new token and display it once after saving	admin	tr	Yeni belirteç oluşturun ve kaydettikten sonra bir kez görüntüleyin
 global categories	common	tr	Genel kategoriler
 group ?	admin	tr	Grup?
 group has been added	common	tr	Grup eklendi
@@ -250,6 +256,7 @@ html/plaintext	admin	tr	HTML/metin
 icon	admin	tr	Simge
 idle	admin	tr	Boşta
 if different from email address	admin	tr	E-posta adresinden farklıysa
+if disabled existing tokens immediatly stop working.	admin	tr	Devre dışı bırakılırsa mevcut belirteçler hemen çalışmayı durdurur.
 if no acl records for user or any group the user is a member of	admin	tr	ACL kaydı olmayan herhangi bir kullanıcı/grup bu grup üyesi sayılacaktır
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	tr	LDAP kullanıyorsanız, ev dizini ve erişim ayarlarını yönetmek ister misiniz?
 inbound	admin	tr	gelen
@@ -279,6 +286,7 @@ leave empty for no quota	admin	tr	Kota olmaması için boş bırakın
 leave empty to use oauth, if supported	admin	tr	Destekleniyorsa OAuth kullanmak için boş bırakın
 leave the category untouched and return back to the list	admin	tr	Kategoriye dokunmadan listeye geri dön
 leave the group untouched and return back to the list	admin	tr	Gruba dokunmadan listeye geri dön
+lifetime of 'remember me' token	admin	tr	'Beni hatırla' jetonunun ömrü
 list config settings	admin	tr	Ayarları listele
 list current sessions	admin	tr	Şu anki oturumları listele
 list of current users	admin	tr	Şu anki kullanıcıları listele
@@ -346,6 +354,7 @@ read this list of methods.	admin	tr	Method listesini oku
 register application hooks	admin	tr	Uygulama bağlantılarını kaydet
 regular expression to find part to use as container	admin	tr	Kapsayıcı olarak kullanılacak parçayı bulmak için düzenli ifade
 remove	admin	tr	Kaldır
+revoke this token	admin	tr	Bu belirteci iptal edin
 run asynchronous services	admin	tr	Asenkron servisleri çalıştır
 save the category	admin	tr	Kategoriyi kaydet
 save the category and return back to the list	admin	tr	Kategoriyi kaydet ve listeye geri dön
@@ -355,6 +364,7 @@ search peer servers	admin	tr	Peer sunucuları ara
 security	admin	tr	Güvenlik
 select group managers	admin	tr	Grup yöneticilerini seç
 select permissions this group will have	admin	tr	Bu gurubun sahip olacağı izinleri seçiniz
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	tr	Belirtecin sınırlı olmasını istediğiniz uygulamaları seçin veya varsayılan olarak tüm uygulamaları bırakın.
 select the parent category. if this is a main category select no category	admin	tr	Ana kategoriyi seçiniz. Eğer bu kategori bir ana kategori ise 'Kategori Yok' (NO CATEGORY) seçiniz.
 select users for inclusion	admin	tr	Dahil edilecek kullanıcıları seçiniz
 select where you want to store/retrieve filesystem information	admin	tr	Dosya sistemi bilgisini saklamak istediğiniz yeri seçiniz.
@@ -390,6 +400,7 @@ standard	admin	tr	Standart
 start testjob!	admin	tr	Test görevini başlat!
 submit changes	admin	tr	Değişiklikleri gönder!
 submit the search string	admin	tr	Arama kriterini gönder
+successfull, but no refresh-token received!	admin	tr	Başarılı, ancak yenileme belirteci alınmadı!
 that loginid has already been taken	admin	tr	Bu kullanıcı adı kullanımda
 the api is current	admin	tr	API güncel
 the api requires an upgrade	admin	tr	API güncelleme gerektiriyor
@@ -407,6 +418,10 @@ this category is currently being used by applications as a parent category	admin
 timeout for application session data in seconds (default 86400 = 1 day)	admin	tr	Oturum verileri için saniye cinsinden zaman aşım süresi (varsayılan 86400 = 1 gün)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	tr	Oturumların saniye cinsinden zaman aşım süresi (varsayılan 14400 = 4 saat)
 times	admin	tr	Kere
+token created.	admin	tr	Belirteç oluşturuldu.
+token not found!	admin	tr	Belirteç bulunamadı!
+token revoked.	admin	tr	Belirteç iptal edildi.
+token saved.	admin	tr	Belirteç kaydedildi.
 top	admin	tr	Maks
 total records	admin	tr	Toplam kayıt
 translation	admin	tr	Tercüme
@@ -417,6 +432,7 @@ updated	admin	tr	Güncelle
 upload your certificate .p12/.pfx file	admin	tr	Sertifika .p12/.pfx dosyanızı yükleyin
 use cookies to pass sessionid	admin	tr	Oturum id'sini taşımak için çerez kullan (cookie)
 use pure html compliant code (not fully working yet)	admin	tr	Saf HTML uyumlu kod kullan (henüz tam olarak çalışmamaktadır)
+use save or apply to store the received oauth token!	admin	tr	Alınan OAuth belirtecini saklamak için kaydet veya uygula seçeneğini kullanın!
 use theme	admin	tr	Kullanılacak şablon
 user accounts	admin	tr	Kullanıcı hesapları
 user choice	admin	tr	Kullanıcı seçimi

@@ -196,6 +196,7 @@ mobile phone	addressbook	ko	이동전화
 modem phone	addressbook	ko	모뎀 전화
 move to addressbook	addressbook	ko	주소록으로 이동
 name, email, phone	addressbook	ko	이름, 이메일, 전화
+never use prefix	addressbook	ko	접두사 사용 안 함
 no distribution list	addressbook	ko	배포 목록 없음
 no vcard	addressbook	ko	VCard 없음
 number of records to read (%1)	addressbook	ko	(%1) 읽을 레코드수
@@ -259,10 +260,14 @@ unshare	addressbook	ko	공유 해제
 update a single entry by passing the fields.	addressbook	ko	필드값으로 단일 엔트리 갱신
 updated	addressbook	ko	갱신됨
 use country list	addressbook	ko	국가 목록 사용
+use firstname, only if no prefix	addressbook	ko	접두사가 없는 경우에만 이름 사용
+use prefix plus all other name parts	addressbook	ko	접두사와 다른 모든 이름 부분 사용
+use prefix, only if no firstname	addressbook	ko	이름이 없는 경우에만 접두사 사용
 vcard	common	ko	vCard
 vcards require a first name entry.	addressbook	ko	vCard에는 이름 항목이 필요합니다.
 vcards require a last name entry.	addressbook	ko	vCard에는 성 항목이 필요합니다.
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ko	경고!! LDAP는 인적관계(contacts)를 계정 저장소(accounts storages)로 사용하지 않을때만 가능합니다!
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	ko	전체 이름으로 표시해야 하는 항목 이름과 성이 모두 없는 경우 회사 이름이 표시됩니다.
 when viewing a contact, show linked entries from the selected application	addressbook	ko	연락처를 볼 때 선택한 애플리케이션에서 연결된 항목을 표시합니다.
 work phone	addressbook	ko	직장 전화
 yes, only admins can purge deleted items	admin	ko	예, 관리자만 삭제된 항목을 삭제할 수 있습니다.

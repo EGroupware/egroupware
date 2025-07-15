@@ -18,6 +18,7 @@ default	preferences	uk	По замовчуванню
 default preferences	preferences	uk	Типові параметри
 delete categories	preferences	uk	Видалити категорії
 deny following groups access to application passwords	preferences	uk	Заборонити наступним групам доступ до паролів додатків
+deny following groups access to preferences	admin	uk	Заборонити наступним групам доступ до налаштувань
 description can not exceed 255 characters in length !	preferences	uk	Довжина опису не може перевищувати 255 символів !
 disable	preferences	uk	Відключити
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	uk	Ви використовуєте 24-х годинний формат часу, чи 12-и годинний з am/pm.
@@ -54,6 +55,7 @@ no default	preferences	uk	Немає замовчування
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	uk	Примітка: Ця можливість НЕ міняє Ваш email пароль. Це повинно бути зроблено вручну.
 password stored	preferences	uk	Пароль збережено.
 popup with search	preferences	uk	Вспливаюче вікно з пошуком
+preferences saved.	preferences	uk	Налаштування збережено.
 re-enter your password	preferences	uk	Введіть пароль ще раз
 reset qrcode	preferences	uk	Скинути QR-код
 scan qrcode with a time-based one-time password (totp) app:	preferences	uk	Відсканувати QR-код за допомогою додатку TOTP (Time-based one-time password):
@@ -63,7 +65,6 @@ selectbox	preferences	uk	Перелік вибору
 set content size	preferences	uk	Встановити розмір вмісту
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	uk	Встановіть як Вам хочеться. С точки зору безпеки, Ви можете не хотіти публікувати Ваше ім'я.
 should the number of active sessions be displayed for you all the time.	preferences	uk	Чи завжди показувати вам кількість активних сессій.
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	uk	Чи повинні повідомлення допомоги показуватись Вам завжди при зміні параметрів, чи тільки по вимозі.
 show helpmessages by default	preferences	uk	Умовчування показу повідомлень допомоги
 show navigation bar as	preferences	uk	Показувати навігаційну панель як
 show number of current users	preferences	uk	Показувати кількість активних користувачів
@@ -74,7 +75,6 @@ show_more_apps	common	uk	Показувати більше приложень
 singlesignon and passwords	preferences	uk	SingleSignOn і паролі
 store password retrievable for singlesignon	common	uk	Зберігати пароль, який можна відновити для SingleSignOn
 text only	preferences	uk	Тільки текст
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	uk	Це приложення буде запущено, коли Ви ввійдете в EGroupware або натиснете на домашній іконці. <br> Ви може мати більше чим одне приложення на домашній сторінці, якщо Ви не вкажете тут якогось приложення, шлахом редактування параметрів кожного окремого приложення.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	uk	Перелік вибору показує всіх доступних користувачів (може бути дуже повільно при великих їх кількостях). Вспливаюче вікно дасть можливість шукати користувачів по імені чи групі.
 the two passwords are not the same	preferences	uk	Ці два паролі не співпадають
 theme (colors/fonts) selection	preferences	uk	Вибір теми

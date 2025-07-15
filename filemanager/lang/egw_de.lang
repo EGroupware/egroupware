@@ -202,6 +202,7 @@ modified between	filemanager	de	Verändert zwischen
 modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterordner und ihre Inhalte anwenden
 mount	filemanager	de	Mount
 mount /etemplates to allow customizing of etemplates	filemanager	de	/etemplates mounten um eTemplates anpassen zu können
+mount permanently	filemanager	de	Dauerhaft mounten
 mountpoints	filemanager	de	Mountpunkte
 move	filemanager	de	Verschieben
 move into folder	filemanager	de	Verschieben in Ordner

@@ -21,6 +21,7 @@ aliases+forwards	mail	sv	Alias+Framåt
 all my email addresses	mail	sv	alla mina e-postadresser
 all of	mail	sv	Alla
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	sv	Alla undermappar raderas också och alla meddelanden i alla berörda mappar går förlorade
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	sv	Tillåter en användare att läsa, skriva och skapa mappar och e-postmeddelanden, posta till dem, lägga till meddelanden till dem och radera meddelanden
 always show html emails	mail	sv	Visa alltid HTML e-post
 always show notifiction	mail	sv	Visar alltid meddelande
 answered	mail	sv	Svarat
@@ -128,6 +129,7 @@ exclude attachments greater than given size from automatic saving as draft (in m
 extended	mail	sv	Utökad
 failed to delete %1	mail	sv	Radering av %1 misslyckades
 failed to delete %1 ! reason: %2	mail	sv	Det gick inte att radera %1! Orsak: %2
+failed to delete %1. server responded:	mail	sv	Det gick inte att ta bort %1! Servern svarade:
 failed to subscribe folder %1!	mail	sv	Det gick inte att prenumerera på mappen %1!
 failed to unsubscribe folder %1!	mail	sv	Det gick inte att avsluta prenumerationen på mappen %1!
 file into	mail	sv	Flytta till
@@ -386,8 +388,10 @@ unread	mail	sv	Oläst
 vacation notice	mail	sv	Frånvaro meddelande
 validate addresses on submit:	mail	sv	Validera adresser när du skickar:
 view header lines	mail	sv	Visa brevhuvudet
+what to do when you delete a message	mail	sv	Vad du ska göra när du tar bort ett meddelande.
 when deleting messages	mail	sv	Vid meddelande radering
 write	mail	sv	Skriv
+write & delete	mail	sv	skriva & radera
 wrote	mail	sv	Skrev
 you can select what info to be displayed on email tag	mail	sv	Du kan välja vilken information som ska visas på e-posttaggen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sv	Du kan använda $$start$$ för ovanstående startdatum och $$end$$ för slutdatum.

@@ -22,6 +22,7 @@ default	preferences	pt-br	padrão
 default preferences	preferences	pt-br	Preferências padrões
 delete categories	preferences	pt-br	Apagar Categorias
 deny following groups access to application passwords	preferences	pt-br	Negar aos seguintes grupos o acesso a senhas de aplicativos
+deny following groups access to preferences	admin	pt-br	Negar aos seguintes grupos o acesso às preferências
 description can not exceed 255 characters in length !	preferences	pt-br	A Descrição não deve exceder 255 caracteres!
 disable	preferences	pt-br	Desabilitada
 display thumbnails for linked images	preferences	pt-br	Exibir miniaturas para imagens linkadas
@@ -71,8 +72,8 @@ notification settings	preferences	pt-br	Configurações de notificação
 p: paragraph	preferences	pt-br	p: Parágrafo
 password stored	preferences	pt-br	Senha armazenada.
 popup with search	preferences	pt-br	Janela  instantânea com busca
+preferences saved.	preferences	pt-br	Preferências salvas.
 re-enter your password	preferences	pt-br	Digite sua senha novamente
-read prefs for the specified application.	preferences	pt-br	Ler preferências do aplicativo específico
 reset qrcode	preferences	pt-br	Redefinir código QR
 scan qrcode with a time-based one-time password (totp) app:	preferences	pt-br	Digitalizar código QR com um aplicativo TOTP (Time-based one-time password):
 select one	preferences	pt-br	Selecione um
@@ -84,7 +85,6 @@ selectbox with primary group and search	preferences	pt-br	Caixa de seleção com
 set content size	preferences	pt-br	Estabelece o tamanho do conteúdo
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pt-br	Selecione isto caso queira. Por razões de segurança, você pode não querer mostrar seu nome de usuário publicamente.
 should the number of active sessions be displayed for you all the time.	preferences	pt-br	O número de sessões ativas deve ser mostrado todo o tempo.
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	pt-br	Essas mensagens de ajuda devem aparecer sempre ao modificar preferências, ou quando somente quando requisitadas.
 show helpmessages by default	preferences	pt-br	Exibir mensagens de ajuda por padrão
 show links between egroupware aps as	common	pt-br	Exibir links entre os aplicativos EGroupware como
 show navigation bar as	preferences	pt-br	Exibir barra de navegação como
@@ -97,7 +97,6 @@ singlesignon and passwords	preferences	pt-br	SingleSignOn e senhas
 spellchecker language	addressbook	pt-br	Idioma do corretor gramatical
 store password retrievable for singlesignon	common	pt-br	Armazenar senha recuperável para o SingleSignOn
 text only	preferences	pt-br	Somente texto
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pt-br	O aplicativo padrão será iniciado quando você entrar no EGroupware ou clicar no ícone página inicial.<br>Você pode ter mais de um aplicativo padrão mostrado na página inicial, caso não seja especificado aqui (precisa ser configurado nas preferências de cada aplicativo)
 the old password is not correct	preferences	pt-br	A antiga senha não está correta
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	pt-br	A caixa de seleção mostra todos os usuários disponíveis (poderá causar lentidão em instalações com muitos usuários). Pela janela instantânea, é possível pesquisar usuários por nome ou grupo.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	pt-br	As duas últimas opções limitam a visibilidade dos outros usuários. Lá para eles deverá ser forçado e NÃO se aplica aos administradores.
@@ -114,7 +113,6 @@ what to display for an avatar, if there is no photo	preferences	pt-br	O que exib
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	pt-br	Quando você selecionar Sim os botões serão colocados na barra de ferramentas ao topo do aplicativo.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pt-br	Que codificação de caracter deverá ser usado para exportação CSV. O padrão é a codificação desta instalação do EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	pt-br	Qual o simbolo monetário ou nome deve ser usado pelo EGroupware.
-write prefs for the specified application.	preferences	pt-br	Gravar preferências para o aplicativo específico
 you can show the applications as icons only, icons with app-name or both.	preferences	pt-br	Você pode exibir os aplicativos como ícones, ícones com o nome do aplicativo ou ambos.
 you can show the linked entries with icons only, icons with app-name or both.	common	pt-br	Você pode exibir os registros linkados como ícones, ícones com o nome do aplicativo ou ambos.
 you do not have permission to set acl's in this mode!	preferences	pt-br	Você não possui permissão para determinar ACL´s nesse modo!

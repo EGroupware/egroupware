@@ -205,6 +205,7 @@ more ...	addressbook	da	Mere ...
 move to addressbook	addressbook	da	Flyt til adressebog
 multiple vcard	addressbook	da	Flere vCards
 name, email, phone	addressbook	da	Navn, e-mail, telefon
+never use prefix	addressbook	da	Brug aldrig præfiks
 no country selected	addressbook	da	Intet land valgt
 no distribution list	addressbook	da	Ingen distributionsliste
 no vcard	addressbook	da	Ingen vCard
@@ -281,6 +282,9 @@ unshared	addressbook	da	ikke længere delt
 update a single entry by passing the fields.	addressbook	da	opdater et enkelt element ve at sende felter.
 updated	addressbook	da	Opdateret
 use country list	addressbook	da	Brug Lande Liste
+use firstname, only if no prefix	addressbook	da	Brug kun fornavn, hvis der ikke er noget præfiks
+use prefix plus all other name parts	addressbook	da	Brug præfiks plus alle andre dele af navnet
+use prefix, only if no firstname	addressbook	da	Brug kun præfiks, hvis der ikke er noget fornavn
 user groups are automatically shown as distribution lists.	addressbook	da	Brugergrupper vises automatisk som distributionslister.
 vcard	common	da	vCard
 vcards require a first name entry.	addressbook	da	vCards kræver et fornavn indtastet.
@@ -288,6 +292,7 @@ vcards require a last name entry.	addressbook	da	vCards kræver et efternavn ind
 video call	addressbook	da	Videoopkald
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	da	ADVARSEL!! LDAP er kun tilgængeligt hvis du ikke bruger kontakter til at gemme kontoer!
 warning: all contacts found will be deleted!	addressbook	da	ADVARSEL: Alle fundne kontakter vil blive slettet!
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	da	Hvad der skal vises som fuldt navn. Hvis der hverken er for- eller efternavn, vises firmanavnet.
 when viewing a contact, show linked entries from the selected application	addressbook	da	Når du ser en kontakt, skal du vise tilknyttede poster fra den valgte applikation
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	da	Når du fletter posteringer i dokumenter, gemmes de her. Hvis der ikke er angivet nogen mappe, vil de blive gemt i din hjemmemappe (/home/...)
 work phone	addressbook	da	Arbejds telefon

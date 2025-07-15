@@ -169,6 +169,7 @@ mobile	addressbook	tr	Mobil
 mobile phone	addressbook	tr	Mobil Tel
 modem phone	addressbook	tr	Modem Tel
 multiple vcard	addressbook	tr	Çoklu vCard
+never use prefix	addressbook	tr	Asla önek kullanmayın
 no vcard	addressbook	tr	vCard yok
 not shared	addressbook	tr	paylaşılmadı
 number of records to read (%1)	addressbook	tr	Okunacak kayıt sayısı (%1)
@@ -226,12 +227,16 @@ update a single entry by passing the fields.	addressbook	tr	Alanları ileterek t
 updated	addressbook	tr	Güncelle
 use addressbooks "own sorting" attribute	addressbook	tr	Adres defterlerinin "kendi sıralama" özelliğini kullanın
 use country list	addressbook	tr	Ülke listesi kullan
+use firstname, only if no prefix	addressbook	tr	Yalnızca ön ek yoksa ilk adı kullanın
+use prefix plus all other name parts	addressbook	tr	Önek artı diğer tüm ad parçalarını kullanın
+use prefix, only if no firstname	addressbook	tr	Önek kullanın, yalnızca ilk ad yoksa
 user groups are automatically shown as distribution lists.	addressbook	tr	Kullanıcı grupları otomatik olarak dağıtım listeleri olarak gösterilir.
 vcard	common	tr	vCard
 vcards require a first name entry.	addressbook	tr	vCard'lar bir ilk isim girişi gerektirir.
 vcards require a last name entry.	addressbook	tr	vCard'lar bir soyadı girişi gerektirir.
 video call	addressbook	tr	Görüntülü Arama
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	tr	UYARI! LDAP yalnızca hesapları depolamak için kişileri KULLANMIYORSANIZ geçerlidir!
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	tr	Tam ad olarak ne görüntülenmelidir. Ad veya soyad yoksa şirket adı görüntülenir.
 when viewing a contact, show linked entries from the selected application	addressbook	tr	Bir kişiyi görüntülerken, seçili uygulamadan bağlantılı girişleri gösterme
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	tr	Girişleri belgelerde birleştirdiğinizde, burada saklanacaktır. Herhangi bir dizin belirtilmemişse, bunlar ev dizininizde saklanacaktır (/home/...)
 which charset should be used for the vcard export.	addressbook	tr	vCard dışa aktarımı için hangi karakter kümesi kullanılmalıdır.

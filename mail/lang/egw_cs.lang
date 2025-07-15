@@ -37,6 +37,7 @@ allow external images from listed domains	mail	cs	Povolit externí obrázky z uv
 allow images from external sources in html emails	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech.
 allow images from listed domains in html emails	mail	cs	Povolit obrázky z uvedených domén v e-mailech HTML.
 allow users to create further identities	mail	cs	Dovolit uživatelům vytvářet další identity
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	cs	Umožňuje uživateli číst, zapisovat a vytvářet složky a poštu, odesílat do nich příspěvky, připojovat k nim zprávy a mazat je.
 always	mail	cs	Vždy
 always allow external sources from %1	mail	cs	Vždy povolit externí zdroje z %1
 always respond / auto-responder	mail	cs	Vždy odpovědět / automatická odpověď
@@ -680,6 +681,7 @@ with message:	mail	cs	Se zprávou:
 wizard	mail	cs	Průvodce
 writable sharing requires epl version!	mail	cs	Sdílení s povoleným zápisem vyžaduje předplatné EPL!
 write	mail	cs	Uložit
+write & delete	mail	cs	Napsat a smazat
 wrote	mail	cs	napsal
 yes, offer copy option	mail	cs	Ano, nabídnout volbu kopírování
 you can select what info to be displayed on email tag	mail	cs	Můžete vybrat, jaké informace se mají zobrazit na e-mailové značce.

@@ -49,6 +49,7 @@ create a new subscription	calendar	ro	Creați un abonament nou
 date range	calendar	ro	Intervalul de date
 delete this alarm	calendar	ro	Ștergeți această alarmă?
 do you want to delete this subscription incl. the synced events?	calendar	ro	Doriți să ștergeți acest abonament, inclusiv evenimentele sincronizate?
+does not show event to other users, unless they have a private grant	calendar	ro	NU arată evenimentul altor utilizatori, cu excepția cazului în care aceștia au un grant privat
 email address migration	calendar	ro	Migrarea adresei de e-mail
 error notifying %1	calendar	ro	Eroare de notificare %1
 exclude weekend	calendar	ro	Excludeți Weekend
@@ -77,12 +78,16 @@ meeting request additional recurrence(s)	calendar	ro	Reuniunea solicită recuren
 min days	calendar	ro	Zile minime
 minimum number of users for showing day view as consolidated.	calendar	ro	Numărul minim de utilizatori pentru afișarea vizualizării zilei ca fiind consolidată.
 minimum number of users for showing week view as consolidated.	calendar	ro	Numărul minim de utilizatori pentru a afișa vizualizarea săptămânală ca fiind consolidată.
+modify events	calendar	ro	Modificarea evenimentelor
 move to	calendar	ro	Treceți la
 multiple participants	calendar	ro	Participanți multipli
 never notify externals (non-users) about events i create	calendar	ro	Nu notificați niciodată persoanele externe (non-utilizatori) despre evenimentele pe care le creez
+new event category	calendar	ro	Categorie nouă de eveniment
+new event participants	calendar	ro	Participanți noi la eveniment
 notify	calendar	ro	Notificare
 notify all externals (non-users) about this event	calendar	ro	Notifică toate persoanele externe (non-utilizatori) despre acest eveniment
 number of resources to be booked	calendar	ro	Numărul de resurse care urmează să fie rezervate
+only group-events	calendar	ro	Doar evenimente de grup
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	ro	Compatibil doar cu câțiva clienți complet compatibili (de exemplu, de la Apple). Dacă trebuie să introduceți un URL, cel mai probabil acesta nu va fi acceptat!
 otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	ro	În caz contrar, modificările aduse titlului, descrierii, ... sau participanților noi nu vor fi transferate excepțiilor care au fost deja create.
 output unit	calendar	ro	Unitate de ieșire
@@ -93,7 +98,9 @@ removes the event from my calendar	calendar	ro	Elimină evenimentul din calendar
 repeat the event until which date (empty means unlimited)	calendar	ro	Repetați evenimentul până la ce dată (Gol pentru nelimitat)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	ro	Răspundeți "%1" NU este un participant la eveniment! Continuați numai dacă doriți să adăugați un nou participant.
 report	calendar	ro	Raport
+reset resource status on event shifts	calendar	ro	Resetarea statutului resursei la mutarea evenimentelor
 saves the event ignoring the conflict	calendar	ro	Salvează evenimentul ignorând conflictul
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	ro	Selectați dacă doriți ca starea resursei să fie resetată la „Fără răspuns”, dacă un eveniment este mutat ulterior.
 send notifications	calendar	ro	Trimiteți notificări
 send notifications to users right now	calendar	ro	Trimiteți notificări participanților chiar acum
 show %1 from %2	calendar	ro	Afișați %1 din %2
