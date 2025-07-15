@@ -319,6 +319,8 @@ class Image
 		'infolog/nonactive'	=> 'slash-circle',
 		'infolog/not-started'	=> 'pause-circle',
 		'infolog/note'	=> 'pencil-square',
+		'infolog/offer' => 'question-lg',
+		'infolog/ongoing'	=> 'arrow-repeat',
 		'infolog/phone'	=> 'phone-vibrate',
 		'infolog/status'	=> 'question-square',
 		'infolog/task'	=> 'check-square',
