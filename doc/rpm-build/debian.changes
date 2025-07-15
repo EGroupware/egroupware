@@ -1,3 +1,21 @@
+egroupware-docker (23.1.20250715) hardy; urgency=low
+
+  * Api/All Apps: improved account widget searching to work with +/- and quotes
+  * Api: New common merge placeholder {{links/[appname]/[fieldname]}} for the field from the first link from that application
+  * Mail/InfoLog/Tracker: fix mail-integration gives error, if mail contains no text-body, but just a PDF or image
+  * Timesheet/InfoLog: allow making individual timesheets readable to certain users or the InfoLog responsible
+  * Admin/Setup: speed up backup and get it working again for huge installations
+  * VIDOTEACH: full UI redesign with cleaner layouts, improved spacing, icons & dropdowns
+  * VIDOTEACH: video bar & comments upgraded – new time/duration picker, “since last visit” filter, better attachment handling
+  * VIDOTEACH: course & preference updates – parent course inheritance, new “no free comments” option, improved sync
+  * VIDOTEACH: stability fixes – resolved SQL/permission errors, notify/preference bugs, removed unused uploads
+  * Invoices: add actions to Addressbook to create an empty invoice or generate one from a template for the selected contact(s) as buyer
+  * Invoices: support for other payment means beside transfer e.g. direct debit or credit card
+  * Invoices: fix (sometimes) not imported tax rate and code
+  * Invoices: adding a custom-field for the seller-ID assigned by the buyer
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 15 Jul 2025 12:38:45 +0200
+
 egroupware-docker (23.1.20250506) hardy; urgency=low
 
   * Calendar: switching all subscribed calendars quickly on or off via an icon in the calendar toolbar
