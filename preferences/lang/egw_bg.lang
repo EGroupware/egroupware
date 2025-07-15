@@ -16,6 +16,7 @@ default	preferences	bg	по подразбиране
 default preferences	preferences	bg	Настройки по подразбиране
 delete categories	preferences	bg	Изтриване на категории
 deny following groups access to application passwords	preferences	bg	Забранете достъпа на следните групи до паролите на приложенията
+deny following groups access to preferences	admin	bg	Забрана за достъп до предпочитанията на следните групи
 description can not exceed 255 characters in length !	preferences	bg	Описанието не може да превишава 255 символа!
 disable	preferences	bg	Забранява
 edit custom fields	preferences	bg	Редакция на полета по избор
@@ -25,6 +26,7 @@ enter code to verify correct setup	preferences	bg	Въведете кода, з�
 enter your new password	preferences	bg	Въведете нова парола
 fast	preferences	bg	Бърз
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	bg	Бързото актуализиране добавя нови записи винаги отгоре на списъка и актуализира съществуващите на място, освен ако списъкът не е подреден по последна промяна. Точните актуализации извършват пълно обновяване, ако списъкът не е подреден по последна промяна.
+forced preferences	preferences	bg	Принудителни предпочитания
 generate new qrcode to disable existing one, after enabling the new one!	preferences	bg	Генериране на нов QR код за деактивиране на съществуващия (след активиране на новия)
 hours	preferences	bg	часа
 how do you like to display accounts	preferences	bg	Как искате да се изобразяват акаунтите
@@ -45,6 +47,7 @@ max number of icons in navbar	preferences	bg	Максимален брой ка�
 no default	preferences	bg	Без стойност по подразбиране
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	bg	Бележка: Това НЕ сменя паролата ви за пощата. Нейната смяна трябва да се направи по друг начин.
 password stored	preferences	bg	Запазена парола.
+preferences saved.	preferences	bg	Запазени предпочитания.
 re-enter your password	preferences	bg	Въведете отново паролата
 reset qrcode	preferences	bg	Нулиране на QR кода
 scan qrcode with a time-based one-time password (totp) app:	preferences	bg	Сканиране на QR кода с приложение TOTP (Time-based one-time password):

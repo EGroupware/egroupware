@@ -20,6 +20,7 @@ default	preferences	pt	por omissão
 default preferences	preferences	pt	Preferências por omissão
 delete categories	preferences	pt	Eliminar categorias
 deny following groups access to application passwords	preferences	pt	Negar aos seguintes grupos o acesso a palavras-passe de aplicações
+deny following groups access to preferences	admin	pt	Negar aos seguintes grupos o acesso às preferências
 description can not exceed 255 characters in length !	preferences	pt	A descrição não pode exceder os 255 caracteres !
 disable	preferences	pt	Desactivar
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pt	O formato horário deve ser de 24 horas ou de 12 horas com am/pm anexado.
@@ -62,8 +63,8 @@ note: this feature does *not* change your email password. this will need to be d
 notification settings	preferences	pt	Configurações de notificação
 password stored	preferences	pt	Palavra-passe armazenada.
 popup with search	preferences	pt	Janela popup com pesquisa
+preferences saved.	preferences	pt	Preferências guardadas.
 re-enter your password	preferences	pt	Insira a sua senha novamente
-read prefs for the specified application.	preferences	pt	Ler preferências da aplicação específica.
 reset qrcode	preferences	pt	Repor o código QR
 scan qrcode with a time-based one-time password (totp) app:	preferences	pt	Digitalizar o código QR com uma aplicação TOTP (Time-based one-time password):
 select one	preferences	pt	Seleccione um
@@ -73,7 +74,6 @@ selectbox with primary group and search	preferences	pt	Caixa de seleccção com 
 set content size	preferences	pt	Estabelece o tamanho do conteúdo
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pt	Configure esta opção a seu gosto. Por razões de segurança, evite exibir o seu nome de utilizador publicamente.
 should the number of active sessions be displayed for you all the time.	preferences	pt	O número de sessões activas deve ser-lhe sempre apresentado.
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	pt	Estas mensagens de ajuda devem ser apresentadas sempre que existirem modificações de preferências, ou a pedido.
 show helpmessages by default	preferences	pt	Exibir mensagens de ajuda por omissão
 show navigation bar as	preferences	pt	Exibir a barra de navegação como
 show number of current users	preferences	pt	Exibir número de utilizadores ligados
@@ -83,7 +83,6 @@ show text on navigation icons	preferences	pt	Exibir o texto na barra de navegaç
 show_more_apps	common	pt	Exibir mais aplicações
 singlesignon and passwords	preferences	pt	SingleSignOn e palavras-passe
 text only	preferences	pt	Apenas texto
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pt	A aplicação por omissão será iniciada ao entrar no EGroupware ou ao clicar no ícone de página inicial.<br>Pode ter mais do que uma aplicação na sua página inicial, se não escolher uma aplicação específica aqui (tem de ser configurado nas preferências de cada aplicação).
 the old password is not correct	preferences	pt	A senha antiga não está correcta
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	pt	A caixa de selecção exibe os utilizadores disponíveis (pode ser bastante lento em instalações com muitos utilizadores). A janela popup pode pesquisar utilizadores por nome ou por grupo.
 the two passwords are not the same	preferences	pt	As duas senhas não são iguais
@@ -98,7 +97,6 @@ users choice	preferences	pt	Personalizar...
 what to display for an avatar, if there is no photo	preferences	pt	O que mostrar para um avatar, se não houver uma foto
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	pt	Se responder "sim", os botões "página inicial" e "sair" serão apresentados como aplicações na barra principal de aplicações no topo da página.
 which currency symbol or name should be used in egroupware.	preferences	pt	Símbolo ou nome de moeda a ser utilizado no EGroupware.
-write prefs for the specified application.	preferences	pt	Escreva as preferências para a aplicação especificada.
 you can show the applications as icons only, icons with app-name or both.	preferences	pt	Pode exibir as aplicações apenas como ícones, nome da aplicação ou ambos.
 you do not have permission to set acl's in this mode!	preferences	pt	Não tem permissões para configurar as ACLs neste modo!
 you must enter a password	preferences	pt	É necessário inserir uma senha

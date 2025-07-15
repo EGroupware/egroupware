@@ -225,6 +225,7 @@ more ...	addressbook	pt	Mais ...
 move to addressbook	addressbook	pt	Mover para o livro de endereços
 multiple vcard	addressbook	pt	Vários vCard
 name, email, phone	addressbook	pt	Nome, e-mail, telefone
+never use prefix	addressbook	pt	Nunca utilizar o prefixo
 no country selected	addressbook	pt	Nenhum país seleccionado
 no distribution list	addressbook	pt	Sem lista de distribuição
 no vcard	addressbook	pt	Nenhum vCard
@@ -307,6 +308,9 @@ unshared	addressbook	pt	Já não partilhado
 update a single entry by passing the fields.	addressbook	pt	Actualizar um registo único passando os campos.
 updated	addressbook	pt	Actualizado
 use country list	addressbook	pt	Utilizar lista de países
+use firstname, only if no prefix	addressbook	pt	Utilizar o nome próprio, apenas se não houver prefixo
+use prefix plus all other name parts	addressbook	pt	Utilizar o prefixo e todas as outras partes do nome
+use prefix, only if no firstname	addressbook	pt	Utilizar o prefixo, apenas se não houver nome próprio
 user groups are automatically shown as distribution lists.	addressbook	pt	Os grupos de utilizadores são automaticamente mostrados como listas de distribuição.
 vcard	common	pt	vCard
 vcards require a first name entry.	addressbook	pt	vCards requer um primeiro nome.
@@ -314,6 +318,7 @@ vcards require a last name entry.	addressbook	pt	vCards requer um apelido.
 video call	addressbook	pt	Chamada de vídeo
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt	Aviso!! LDAP é válido apenas se não estiver a utilizar contactos para armazenamento de contas!
 warning: all contacts found will be deleted!	addressbook	pt	Aviso: Todos os contactos encontrados serão eliminados!
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	pt	O que deve ser apresentado como nome completo. Se não houver nome próprio nem apelido, é apresentado o nome da empresa.
 when viewing a contact, show linked entries from the selected application	addressbook	pt	Ao visualizar um contacto, mostrar entradas ligadas da aplicação selecionada
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	pt	Ao fundir entradas em documentos, estes serão armazenados aqui. Se não for fornecido nenhum directório, eles serão armazenados no seu directório pessoal (/home/...)
 whole query	addressbook	pt	Consulta Whole

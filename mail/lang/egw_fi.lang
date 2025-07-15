@@ -19,9 +19,11 @@ after reply, visible during compose	mail	fi	Vastauksen jälkeen, näkyvissä kok
 aliases+forwards	mail	fi	Aliasit+Edelleenlähetys
 all my email addresses	mail	fi	kaikki sähköpostiosoitteeni
 all of	mail	fi	kaikki
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	fi	Myös kaikki alikansiot poistetaan, ja kaikki viestit kaikissa kansioissa menetetään.
 allow external images from listed domains	mail	fi	Salli ulkoiset kuvat luetelluista verkkotunnuksista
 allow images from external sources in html emails	mail	fi	Salli kuvat HTML sähköposteissa
 allow images from listed domains in html emails	mail	fi	Salli listattujen verkkotunnusten kuvat HTML-sähköposteissa.
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	fi	Käyttäjä voi lukea, kirjoittaa ja luoda kansioita ja sähköposteja, lähettää niihin viestejä, liittää niihin viestejä ja poistaa viestejä.
 always allow external sources from %1	mail	fi	Salli aina ulkoiset lähteet osoitteesta %1
 always respond / auto-responder	mail	fi	Vastaa aina / automaattinen vastaus
 always show html emails	mail	fi	Näytä aina HTML sähköpostit
@@ -128,6 +130,8 @@ everyone	mail	fi	Kaikki käyttäjät
 examine namespace to retrieve folders in others and shared	mail	fi	Tutki nimiavaruutta hakeaksesi kansioita toisissa ja jaetuissa
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	fi	Määritettyä kokoa suurempien liitetiedostojen sulkeminen pois automaattisesta luonnoksena tallentamisesta (MB)
 extended	mail	fi	Laajennettu
+failed to delete %1 ! reason: %2	mail	fi	Poistaminen %1 epäonnistui! Syy: %2
+failed to delete %1. server responded:	mail	fi	Ei onnistunut poisto %1! Palvelin vastasi:
 file into	mail	fi	Siirry osoitteeseen
 file into:	mail	fi	Siirry osoitteeseen:
 filemanager	mail	fi	Tiedostonhallinta
@@ -389,11 +393,13 @@ vacation notice is active	mail	fi	Lomavastaaja on käytössä
 vacation start-date must be before the end-date!	mail	fi	Lomavastaajan aloituspäivän pitää olla ennen loppumispäivää!
 validate addresses on submit:	mail	fi	Vahvista osoitteet lähetettäessä:
 view header lines	mail	fi	Näytä ylätunnisterivit
+what to do when you delete a message	mail	fi	Mitä tehdä, kun poistat viestin.
 when deleting messages	mail	fi	Kun poistetaan viestejä
 when sending messages	mail	fi	Kun lähetetään viestejä
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	fi	Minkä kansioiden (Lähetetyt-kansion lisäksi) tulisi käyttää Sent Folder View Schemaa
 which folders - in general - should not be automatically created, if not existing	mail	fi	Mitä kansioita -yleisesti ottaen - EI pitäisi automaattisesti luoda, jos ne eivät ole jo olemassa
 write	mail	fi	Kirjoita
+write & delete	mail	fi	kirjoita & poista
 wrote	mail	fi	Kirjoitettu
 yes, offer copy option	mail	fi	Kyllä, tarjoa kopiointimahdollisuutta
 you can select what info to be displayed on email tag	mail	fi	Voit valita, mitä tietoja sähköpostitunnisteessa näytetään.

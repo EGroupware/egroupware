@@ -44,6 +44,7 @@ allow external images from listed domains	mail	el	Να επιτρέπονται 
 allow images from external sources in html emails	mail	el	Να επιτρέπονται οι εικόνες από εξωτερικές πηγές στα HTML emails.
 allow images from listed domains in html emails	mail	el	Να επιτρέπονται οι εικόνες από τα αναφερόμενα domains σε μηνύματα τύπου HTML.
 allow users to create further identities	mail	el	να επιτρέπεται στους χρήστες να δημιουργούν πρόσθετες ταυτότητες
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	el	Επιτρέπει σε έναν χρήστη να διαβάζει, να γράφει και να δημιουργεί φακέλους και μηνύματα, να δημοσιεύει σε αυτούς, να προσθέτει μηνύματα σε αυτούς και να διαγράφει μηνύματα
 always	mail	el	Πάντα
 always allow external sources from %1	mail	el	Να επιτρέπονται πάντα εξωτερικές πηγές από %1
 always respond / auto-responder	mail	el	Πάντα να απαντάτε / αυτόματος αναμεταδότης
@@ -631,6 +632,7 @@ whole message	mail	el	ολόκληρο μήνυμα
 with message:	mail	el	Με μήνυμα:
 wizard	mail	el	Βοηθός
 write	mail	el	Γραφή
+write & delete	mail	el	write & delete
 wrote	mail	el	γράφτηκε
 yes, offer copy option	mail	el	ναι, να προτείνεται δυνατότητα αντιγραφής
 you can select what info to be displayed on email tag	mail	el	Μπορείτε να επιλέξετε ποιες πληροφορίες θα εμφανίζονται στην ετικέτα email.

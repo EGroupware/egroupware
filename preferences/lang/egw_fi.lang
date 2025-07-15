@@ -1,4 +1,4 @@
-%1 - preferences	preferences	fi	%1 - asetukset
+%1 - preferences	preferences	fi	%1 - Asetukset
 %1 hours	preferences	fi	%1 tunti(a)
 %1 is no existing vfs directory!	preferences	fi	%1 ei ole olemassaoleva kansio
 %1 is no existing vfs file!	preferences	fi	%1 ei ole olemassaoleva tiedosto
@@ -28,6 +28,7 @@ default font size	preferences	fi	Oletus kirjasinkoko
 default preferences	preferences	fi	Oletusasetukset
 delete categories	preferences	fi	Poista kategoriat
 deny following groups access to application passwords	preferences	fi	Kiellä seuraavien ryhmien pääsy sovellusten salasanoihin
+deny following groups access to preferences	admin	fi	Kielletään seuraavien ryhmien pääsy asetuksiin
 description can not exceed 255 characters in length !	preferences	fi	Kuvauksen pituus ei saa ylittää 255:ä merkkiä!
 disable	preferences	fi	Ota pois käytöstä
 display thumbnails for linked images	preferences	fi	Näytä linkitettyjen kuvien thumbnailit
@@ -87,8 +88,8 @@ permanent time zone selection	preferences	fi	Oletusaikavyöhyke
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fi	Valitse kaikki aikavyöhykkeet, joiden haluat näkyvän pudotusvalikossa sivun yläreunassa. Valitse vähintään kaksi aikavyöhykettä.
 please select your timezone.	preferences	fi	Valitse aikavyöhyke
 popup with search	preferences	fi	Haun ponnahdusikkuna
+preferences saved.	preferences	fi	Tallennetut asetukset.
 re-enter your password	preferences	fi	Anna salasana uudelleen
-read prefs for the specified application.	preferences	fi	Lukuoikeudet tiettyyn sovellukseen
 reset qrcode	preferences	fi	Nollaa QR-koodi
 scan qrcode with a time-based one-time password (totp) app:	preferences	fi	Skannaa QR-koodi TOTP-sovelluksella (Time-based one-time password):
 select additional lines in lists by	preferences	fi	Valitse lisärivit listanäkymässä
@@ -101,7 +102,6 @@ selectbox with primary group and search	preferences	fi	Valintalista ensisijaisel
 set content size	preferences	fi	Sisällön koon asettaminen
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	fi	Valitsemasi tapa näkyy kaikille käyttäjille. Et välttämättä halua näyttää käyttäjätunnusta tietoturvasyistä.
 should the number of active sessions be displayed for you all the time.	preferences	fi	Näytetäänkö aktiivisten istuntojen määrä.
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	fi	Näytetäänkö ohjeviestit aina, vai vain tarvittaessa.
 show helpmessages by default	preferences	fi	Ohjeviestit
 show links between egroupware aps as	common	fi	Sovellusten kuvakkeet ja linkit
 show navigation bar as	preferences	fi	Näytä navigaatiopalkki
@@ -114,7 +114,6 @@ singlesignon and passwords	preferences	fi	SingleSignOn ja salasanat
 spellchecker language	addressbook	fi	Oikolukuohjelman kieli
 store password retrievable for singlesignon	common	fi	Tallenna salasana, joka voidaan hakea SingleSignOn-järjestelmää varten.
 text only	preferences	fi	Vain teksti
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fi	Oletus sovellus käynnistyy kun kirjaudut EGroupwareen tai painat etusivun kuvaketta.<br>Sinulla voi olla enemmän kuin yksi sovellus etusivullasi (pitää asettaa sovelluskohtaisesti), jollet määrittele tiettyä sovellusta tähän.
 the old password is not correct	preferences	fi	Vanha salasana ei ole oikein!
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fi	Valintaruutu näyttää kaikki käytettävissä olevat käyttäjät (saattaa hidastaa järjestelmää, jos käyttäjiä on paljon). Käyttäjiä ja ryhmiä voidaan etsiä ponnahdusikkunassa.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fi	Kaksi viimeistä vaihtoehtoa rajoittava näkyvyyttä käyttäjille. Niitä EI tule asettaa ylläpitäjille.
@@ -131,7 +130,6 @@ what to display for an avatar, if there is no photo	preferences	fi	Mitä näytet
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fi	Näytä Etusivu ja Poistu -kuvakkeet yläpalkissa.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fi	Valitse merkistökoodaus CSV tuontiin ja vientiin.
 which currency symbol or name should be used in egroupware.	preferences	fi	Rahayksikkö: symboli tai nimi.
-write prefs for the specified application.	preferences	fi	Kirjoitusoikeudet sovellukseen.
 you can show the applications as icons only, icons with app-name or both.	preferences	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molempina.
 you can show the linked entries with icons only, icons with app-name or both.	common	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molempina.
 you do not have permission to set acl's in this mode!	preferences	fi	Et voi määritellä käyttöoikeuksia tässä tilassa!

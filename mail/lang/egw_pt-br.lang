@@ -28,11 +28,13 @@ all available info	admin	pt-br	todas as informações disponíveis
 all messages in the folder will be lost	mail	pt-br	Todas as mensagens da pasta serão perdidas
 all my email addresses	mail	pt-br	todos os meus endereços de e-mail
 all of	mail	pt-br	Todos
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	pt-br	Todas as subpastas também serão excluídas, e todas as mensagens em todas as pastas afetadas serão perdidas
 allow external images	mail	pt-br	Permitir imagens externas
 allow external images from listed domains	mail	pt-br	Permitir imagens externas de domínios listados
 allow images from external sources in html emails	mail	pt-br	Todas as imagens de origem externa em e-mails em HTML
 allow images from listed domains in html emails	mail	pt-br	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt-br	Permitir aos usuários criar novas identidades
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	pt-br	Permite que um usuário leia, escreva e crie pastas e e-mails, publique neles, anexe mensagens a eles e exclua mensagens.
 always allow external sources from %1	mail	pt-br	Sempre permitir fontes externas de %1
 always respond / auto-responder	mail	pt-br	Sempre responder / resposta automática
 always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
@@ -187,6 +189,8 @@ examine namespace to retrieve folders in others and shared	mail	pt-br	Examinar o
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	pt-br	Excluir anexos maiores que o tamanho determinado do salvamento automático como rascunho (em MB)
 extended	mail	pt-br	Extendido
 failed to delete %1	mail	pt-br	Falha ao excluir %1
+failed to delete %1 ! reason: %2	mail	pt-br	Falha ao excluir %1! Motivo: %2
+failed to delete %1. server responded:	mail	pt-br	Falha ao excluir %1! O servidor respondeu:
 failed to subscribe folder %1!	mail	pt-br	Falha ao assinar a pasta %1!
 failed to unsubscribe folder %1!	mail	pt-br	Falha ao cancelar a assinatura da pasta %1!
 file into	mail	pt-br	Mover para
@@ -462,8 +466,10 @@ vacation notice is active	mail	pt-br	Notícia de ausência está ativa
 vacation start-date must be before the end-date!	mail	pt-br	Data inicial de ausência deve ser ANTERIOR à data final!
 validate addresses on submit:	mail	pt-br	Valide os endereços ao enviá-los:
 view header lines	mail	pt-br	Exibir linhas de cabeçalho
+what to do when you delete a message	mail	pt-br	O que fazer quando você exclui uma mensagem.
 when deleting messages	mail	pt-br	Ao remover mensagens
 write	mail	pt-br	Gravar
+write & delete	mail	pt-br	escrever e excluir
 wrote	mail	pt-br	escreveu
 you can select what info to be displayed on email tag	mail	pt-br	Você pode selecionar as informações a serem exibidas na tag de e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	pt-br	Você pode usar $$start$$ para a data de início acima e $$end$$ para a data de término.

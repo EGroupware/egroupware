@@ -892,6 +892,7 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	fr	Token créé.
 token not found!	admin	fr	Token non trouvé !
 token revoked.	admin	fr	Token révoqué.
+token saved.	admin	fr	Jeton sauvegardé.
 top	admin	fr	Haut
 total of %1 accounts deleted.	admin	fr	Total de %1 compte(s) supprimé(s).
 total of %1 id's changed.	admin	fr	Total de %1 ID changés.

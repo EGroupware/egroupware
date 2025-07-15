@@ -21,6 +21,7 @@ default	preferences	id	bawaan
 default preferences	preferences	id	Kesukaan Bawaan
 delete categories	preferences	id	Hapus Kategori
 deny following groups access to application passwords	preferences	id	Menolak akses grup berikut ke kata sandi aplikasi
+deny following groups access to preferences	admin	id	Menolak akses grup berikut ke preferensi
 description can not exceed 255 characters in length !	preferences	id	Panjang uraian tidak boleh melebihi 255 karakter!
 disable	preferences	id	Disable
 display thumbnails for linked images	preferences	id	Tampilkan <em>thumbnail</em> gambar terkait
@@ -66,6 +67,7 @@ password stored	preferences	id	Kata sandi tersimpan.
 permanent time zone selection	preferences	id	Pilihan zona-waktu tetap
 please select your timezone.	preferences	id	Pilih zonawaktu anda.
 popup with search	preferences	id	Popup dengan pencarian
+preferences saved.	preferences	id	Preferensi disimpan.
 re-enter your password	preferences	id	Ulangi masukan password
 reset qrcode	preferences	id	Mengatur ulang kode QR
 scan qrcode with a time-based one-time password (totp) app:	preferences	id	Memindai kode QR dengan Aplikasi TOTP (Time-based one-time password):
@@ -98,7 +100,6 @@ use initials from first and last name	preferences	id	Gunakan inisial dari nama d
 users choice	preferences	id	Pilihan pengguna
 what to display for an avatar, if there is no photo	preferences	id	Apa yang akan ditampilkan untuk avatar, jika tidak ada foto
 which currency symbol or name should be used in egroupware.	preferences	id	Simbol atau nama matauang yang digunakan pada EGroupware.
-write prefs for the specified application.	preferences	id	Tulis kesukaan untuk aplikasi
 you do not have permission to set acl's in this mode!	preferences	id	Anda tidak memiliki ijin untuk mengatur ACL!
 you must enter a password	preferences	id	Anda harus mengisikan password
 your preferences	preferences	id	Kesukaan Anda

@@ -21,6 +21,7 @@ default	preferences	nl	standaard
 default preferences	preferences	nl	Standaard voorkeuren
 delete categories	preferences	nl	Verwijder categorieën
 deny following groups access to application passwords	preferences	nl	Ontzeg de volgende groepen de toegang tot applicatiewachtwoorden
+deny following groups access to preferences	admin	nl	Ontzeg de volgende groepen de toegang tot voorkeuren
 description can not exceed 255 characters in length !	preferences	nl	Beschrijving mag de 255 tekens niet overschrijden in lengte!
 disable	preferences	nl	Deactiveren
 display thumbnails for linked images	preferences	nl	Toon miniaturen voor gekoppelde afbeeldingen
@@ -69,8 +70,8 @@ note: this feature does *not* change your email password. this will need to be d
 p: paragraph	preferences	nl	p: Paragraaf
 password stored	preferences	nl	Wachtwoord opslaan.
 popup with search	preferences	nl	Popupvenster met zoekfunctie
+preferences saved.	preferences	nl	Voorkeuren opgeslagen.
 re-enter your password	preferences	nl	Voor uw wachtwoord nogmaals in
-read prefs for the specified application.	preferences	nl	Lees voorkeuren voor de opgegeven toepassing
 reset qrcode	preferences	nl	QR code resetten
 scan qrcode with a time-based one-time password (totp) app:	preferences	nl	Scan QR code met een TOTP (Time-based one-time password) App:
 select one	preferences	nl	Selecteer één
@@ -82,7 +83,6 @@ selectbox with primary group and search	preferences	nl	Keuzevenster met primaire
 set content size	preferences	nl	Inhoudsformaat instellen
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	nl	Stel dit in naar uw voorkeuren. Voor veiligheidsredenen, wilt u eventueel niet uw gebruikersnaam publiekelijk weergeven.
 should the number of active sessions be displayed for you all the time.	preferences	nl	Moet het aantal actieve sessies altijd aan u worden weergegeven?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	nl	Moet deze extra uitleg altijd worden weergegeven als u uw voorkeuren wijzigd?
 show helpmessages by default	preferences	nl	Extra uitleg standaard weergeven.
 show links between egroupware aps as	common	nl	Toon links tussen EGroupware toepassingen als
 show navigation bar as	preferences	nl	Navigatiebalk weergeven als
@@ -95,7 +95,6 @@ singlesignon and passwords	preferences	nl	SingleSignOn en wachtwoorden
 spellchecker language	addressbook	nl	Spellingcontrole
 store password retrievable for singlesignon	common	nl	Wachtwoord opslaan opvraagbaar voor SingleSignOn
 text only	preferences	nl	Alleen tekst
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	nl	De standaard toepassing wordt direct geopend na het inloggen in EGroupware en wanneer u klikt op start.<br />U kunt ook informatie van meerdere applicaties weergeven op de startpagina door hier geen specifieke pagina te selecteren. Niet alle toepassingen kunnen informatie tonen op de startpagina. Een voorbeeld toepassing die het wel kan is 'Kalender'. Zie de voorkeuren van 'Kalender' voor meer informatie.
 the old password is not correct	preferences	nl	Het oude wachtwoord is onjuist
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	nl	De selectbox geeft alle beschikbare gebruikers weer (dit kan erg traag zijn bij installaties met veel gebruikers). In het popupvenster kunt u zoeken op naam of groep.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	nl	De twee laatste opties beperken de zichtbaarheid van andere gebruikers. Daarom zouden zij gedwongen moeten worden en zijn zij niet van toepassing op beheerders
@@ -112,7 +111,6 @@ what to display for an avatar, if there is no photo	preferences	nl	Wat te tonen 
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	nl	Indien je JA antwoordt, worden de start en logout knoppen als applicaties getoond in de knoppenbalk.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	nl	Welke karakterset moet gebruikt worden voor de CSV export. De systeem standaard is de karakterset van deze EGroupware installatie.
 which currency symbol or name should be used in egroupware.	preferences	nl	Welke symbool of naam voor de munteenheid moet gebruikt worden in EGroupware.
-write prefs for the specified application.	preferences	nl	Schrijf de voorkeuren op voor de opgegeven toepassing.
 you can show the applications as icons only, icons with app-name or both.	preferences	nl	U kunt de toepassingen weergeven met alleen iconen iconen met tekst, of alleen tekst.
 you can show the linked entries with icons only, icons with app-name or both.	common	nl	U kunt de gekoppelde records weergeven met alleen ikonen, ikonen met toepassingsnaam of beiden.
 you do not have permission to set acl's in this mode!	preferences	nl	U heeft geen toelating om de ACL's in te stellen in deze modus!

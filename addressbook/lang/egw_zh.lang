@@ -308,6 +308,7 @@ name for the distribution list	addressbook	zh	分发列表的名称
 name of current user, all other contact fields are valid too	addressbook	zh	目前用户的名称，所有其他联系人字段也是正确的
 name, address	addressbook	zh	名称、住址
 name, email, phone	addressbook	zh	姓名、电子邮件、电话
+never use prefix	addressbook	zh	从不使用前缀
 new contact submitted by %1 at %2	addressbook	zh	由%1在%2新建并提交了联系人
 next date	addressbook	zh	下一日期
 no distribution list	addressbook	zh	无分发列表
@@ -429,6 +430,9 @@ updated	addressbook	zh	更新
 upload or delete the photo	addressbook	zh	上传或删除照片
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	zh	连接电话号码的网址 (使用 %1 = 拨打号码，%u = 帐户名，%t = 电话帐户)
 use country list	addressbook	zh	使用“国家/地区”列表
+use firstname, only if no prefix	addressbook	zh	仅在无前缀时使用名
+use prefix plus all other name parts	addressbook	zh	使用前缀和姓名的所有其他部分
+use prefix, only if no firstname	addressbook	zh	使用前缀，仅当没有名字时
 use setup for a full account-migration	admin	zh	使用安装程序来完整帐户迁移
 used for links and for the own sorting of the list	addressbook	zh	使用链接为列表拥有者排序
 user groups are automatically shown as distribution lists.	addressbook	zh	用户组会自动显示为分发列表。
@@ -441,6 +445,7 @@ view linked infolog entries	addressbook	zh	查看链接的记事条目
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh	警告！只有当您不为联系人账户存储时，LDAP才是有效的！
 warning: all contacts found will be deleted!	addressbook	zh	警告：找到的所有联系人都会被删除！
 weekday	addressbook	zh	星期几
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	zh	全名应显示什么。如果既没有名也没有姓，则显示公司名称。
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	zh	如何在其他应用程序中显示链接的通讯簿，空的数值数据将被省略。如果您要修改此设置，您需要重新登录！
 when viewing a contact, show linked entries from the selected application	addressbook	zh	查看联系人时，显示所选应用程序中的链接条目
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	zh	当你把条目合并到文件中时，它们将被储存在这里。如果没有提供目录，它们将被存储在你的主目录（/home/...）。

@@ -303,6 +303,7 @@ multiple vcard	addressbook	hu	Több vCard
 name for the distribution list	addressbook	hu	Disztribúciós lista neve
 name, address	addressbook	hu	Név, Cím
 name, email, phone	addressbook	hu	Név, e-mail, telefon
+never use prefix	addressbook	hu	Soha ne használjon előtagot
 new contact submitted by %1 at %2	addressbook	hu	Új kapcsolat elküldve %1 által ekkor: %2
 no country selected	addressbook	hu	Nincs kiválasztott ország
 no distribution list	addressbook	hu	Nincs elosztási lista
@@ -422,6 +423,9 @@ updated	addressbook	hu	Frissítve
 upload or delete the photo	addressbook	hu	Fotó feltöltése vagy törlése
 use addressbooks "own sorting" attribute	addressbook	hu	Címkönyvek "saját rendezés" attribútumának használata
 use country list	addressbook	hu	Ország lista használata
+use firstname, only if no prefix	addressbook	hu	Használja a keresztnevet, csak ha nincs előtag
+use prefix plus all other name parts	addressbook	hu	Használja az előtagot és az összes többi névrészt
+use prefix, only if no firstname	addressbook	hu	Előtag használata, csak ha nincs keresztnév
 user groups are automatically shown as distribution lists.	addressbook	hu	A felhasználói csoportok automatikusan elosztási listaként jelennek meg.
 vcard	common	hu	vCard
 vcards require a first name entry.	addressbook	hu	A vCard igényel egy vezetéknév bejegyzést.
@@ -432,6 +436,7 @@ view linked infolog entries	addressbook	hu	Kapcsolat InfoLog bejegyzések megtek
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	hu	Figyelem!! Az LDAP csak akkor érvényes, ha felhasználói azonosítók tárolására NEM használjuk a kapcsolatokat!
 warning: all contacts found will be deleted!	addressbook	hu	FIGYELMEZTETÉS: Az összes fellelhető kapcsolat törlődni fog!
 weekday	addressbook	hu	Hétköznap
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	hu	Mi jelenjen meg teljes névként. Ha nincs sem keresztnév, sem vezetéknév, akkor a cég neve jelenik meg.
 when viewing a contact, show linked entries from the selected application	addressbook	hu	Egy névjegy megtekintésekor a kiválasztott alkalmazásból származó linkelt bejegyzések megjelenítése
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	hu	Amikor a bejegyzéseket dokumentumokban egyesíti, azok itt kerülnek tárolásra. Ha nem ad meg könyvtárat, akkor az otthoni könyvtárban (/home/...) lesznek tárolva
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	hu	Milyen karakterkódolást alkalmazzunk CSV exportnál? Az alapértelmezett karakterkódolás az EGroupware rendszer alapértelmezett karakterkódolásával egyezik meg.

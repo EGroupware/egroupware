@@ -52,6 +52,7 @@ acl manager	admin	ru	Менеджер ACL
 acl rights	common	ru	Права ACL
 activate	admin	ru	Активировать
 active templates	admin	ru	Активные шаблоны
+active this token again	admin	ru	Активировать этот токен снова
 add a category	admin	ru	Добавить категорию
 add a group	admin	ru	Добавить группу
 add a new account.	admin	ru	Добавить новую учётную запись
@@ -89,6 +90,7 @@ all users	admin	ru	Все пользователи
 allow anonymous access to this app	admin	ru	Разрешить анонимный доступ к данному приложению
 allow remote administration from following install id's (comma separated)	admin	ru	Разрешить удалённое администрирование со следующих идентификаторов установки (разделённых запятыми)
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ru	Разрешите пользователю хранить свой пароль в разделе «Безопасность и пароли» для SingleSignOn.
+allow user to set 'remember me' token	admin	ru	Разрешить пользователю устанавливать токен "Запомнить меня"
 alternate email address	admin	ru	Добавочный адрес эл. почты
 anonymous user	admin	ru	Анонимный пользователь
 anonymous user (not shown in list sessions)	admin	ru	Анонимный пользователь (не отображается в списке сеансов)
@@ -163,6 +165,7 @@ check ip address of all sessions	admin	ru	Проверить IP-адреса в�
 check items to <b>%1</b> to %2 for %3	admin	ru	Проверить элементы <b>%1</b> и %2 для %3
 children	admin	ru	Дочерние
 clear cache and register hooks	admin	ru	Очистить кэш и зарегистрировать хуки
+clear security tokens	admin	ru	Очистить токены безопасности
 click to select a color	admin	ru	Щёлкните для выбора цвета
 color	admin	ru	Цвет
 command scheduled to run at %1	admin	ru	Команда запланирована на запуск %1
@@ -316,12 +319,14 @@ error connecting to imap server. %s : %s.	admin	ru	Ошибка соединен
 error connecting to imap server: [%s] %s.	admin	ru	Ошибка соединения с сервером IMAP: [%s] %s.
 error deleting entry!	admin	ru	Ошибка при удалении записи!
 error deleting log entry!	admin	ru	Ошибка удаления записи журнала!
+error revoking token!	admin	ru	Ошибка отзыва токена!
 error saving	admin	ru	Ошибка сохранения
 error saving account!	admin	ru	Ошибка сохранения учётной записи!
 error saving the command!	admin	ru	Ошибка сохранения команды!
 error saving the entry!!!	admin	ru	Ошибка при сохранении записи!
 error saving to db:	admin	ru	Ошибка сохранения в БД:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	ru	Ошибка установки таймера, неверный синтаксис, или он уже запущен!
+error storing token!	admin	ru	Ошибка при хранении токена!
 error! no appname found	admin	ru	Ошибка: не найдено имя приложения!
 error: %1 not found or other error !!!	admin	ru	Ошибка: %1 не найден, или иная ошибка!
 event details follow	admin	ru	Детали события следуют
@@ -352,6 +357,7 @@ forward only	admin	ru	Только переслать
 full name	admin	ru	Полное имя
 general	admin	ru	Общие
 generate certificate	admin	ru	Сгенерировать сертификат
+generate new token and display it once after saving	admin	ru	Сгенерировать новый токен и отобразить его один раз после сохранения
 global categories	common	ru	Общие категории
 global options	admin	ru	Общие настройки
 go directly to admin menu, returning here the next time you click on administration.	admin	ru	Перейти прямо в меню администрирования, возвращаясь сюда при следующем клике на Администратор
@@ -383,6 +389,7 @@ how should email addresses for new users be constructed?	admin	ru	Как дол�
 icon	admin	ru	Пиктограмма
 idle	admin	ru	Простой
 if different from email address	admin	ru	Если отличается от адреса электронной почты
+if disabled existing tokens immediatly stop working.	admin	ru	При отключении существующие токены немедленно перестают работать.
 if no acl records for user or any group the user is a member of	admin	ru	Если нет ACL-записей для пользователя или группы, участником которой он является
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ru	При использовании LDAP - хотите ли управлять свойствами "Домашний каталог" и "Оболочка входа"
 if using ssl or tls, you must have the php openssl extension loaded.	admin	ru	При использовании SSL или TLS, у вас должен быть установлен PHP с загруженным расширением openssl
@@ -449,6 +456,7 @@ leave unchanged	admin	ru	Оставить без изменений
 leave without saveing the entry	admin	ru	Выйти без сохранения записи
 leaves without saveing	admin	ru	Выйти без сохранения
 length<br>rows	admin	ru	Длина<br>Строк
+lifetime of 'remember me' token	admin	ru	Срок действия токена "Запомнить меня"
 limit global category to members of a certain group	admin	ru	Ограничить общие категории участниками отдельных групп
 limit to members of	admin	ru	Ограничить участниками
 list config settings	admin	ru	Список установок конфигурации
@@ -587,6 +595,7 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	ru	Запрошен
 required pear class mail/mimedecode.php not found.	admin	ru	Необходимый PEAR class Mail / mimeDecode.php не найден.
 reset filter	admin	ru	Очистить фильтр
+revoke this token	admin	ru	Отмените этот токен
 rights	admin	ru	Права
 rows	admin	ru	Ряды
 rpm or debian package	admin	ru	Пакеты RPM или Debian
@@ -605,6 +614,7 @@ security	admin	ru	Безопасность
 select accounts for which the custom field should be visible	admin	ru	Выбрать учётные записи, для которых пользовательское поле будет видимо
 select group managers	admin	ru	Выбрать менеджеров группы
 select permissions this group will have	admin	ru	Выберите разрешения, которые будет иметь эта группа
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	ru	Выберите приложения, для которых вы хотите ограничить действие токена, или оставьте значение по умолчанию - все приложения.
 select the parent category. if this is a main category select no category	admin	ru	Выбрать родительскую категорию. Если это главная категория, выберите «Нет категории»
 select type of imap server	admin	ru	Выбор типа сервера IMAP
 select type of smtp server	admin	ru	Выбор типа сервера SMTP
@@ -663,6 +673,7 @@ submit the search string	admin	ru	Подтвердить строку поиск
 submit to egroupware.org	admin	ru	Подтвердить на egroupware.org
 subtype	admin	ru	Подтип
 success	admin	ru	Успешно
+successfull, but no refresh-token received!	admin	ru	Успешно, но обновленный токен не получен!
 switch it off, if users are randomly thrown out	admin	ru	Выключите, если пользователи отключаются произвольно
 that loginid has already been taken	admin	ru	Этот логин уже занят
 the api is current	admin	ru	Обновление API не требуется
@@ -690,6 +701,10 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	ru
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	ru	Таймаут для сеанса в секундах (по умолчанию 14400 = 4 часа)
 times	admin	ru	Раз
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	ru	Чтобы позволить нам оценить развитие вашей установки, используйте данный подписной ID, в противном случае удалите его:
+token created.	admin	ru	Токен создан.
+token not found!	admin	ru	Токен не найден!
+token revoked.	admin	ru	Токен отозван.
+token saved.	admin	ru	Токен сохранен.
 top	admin	ru	Верх
 total of %1 id's changed.	admin	ru	Всего изменено %1 идентификаторов.
 total records	admin	ru	Всего записей
@@ -721,6 +736,7 @@ use default	admin	ru	Используйте значение по умолчан
 use ldap defaults	admin	ru	Использовать настройки LDAP по умолчанию
 use predefined username and password defined below	admin	ru	Использовать предопределенное имя пользователя и пароль указанный ниже
 use pure html compliant code (not fully working yet)	admin	ru	Использовать код, отвечающий чистому HTML (пока не полностью работоспособно)
+use save or apply to store the received oauth token!	admin	ru	Используйте save или apply для сохранения полученного OAuth-токена!
 use smtp auth	admin	ru	Использовать авторизацию SMTP
 use theme	admin	ru	Использовать тему
 use tls authentication	admin	ru	Использовать авторизацию TLS

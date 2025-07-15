@@ -41,21 +41,18 @@ no default	preferences	eu	Lehenetsitako balorerik gabe
 note: this feature does *not* change your email password. this will	preferences	eu	oharra: ezaugarri honek *ez* du zure postako pasahitza aldatzen.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	eu	Oharra: aukera honek *ez* du zure postako pasahitza aldatzen. Hau eskuz egin behar da.
 re-enter your password	preferences	eu	Zure pasahitza baieztatu
-read prefs for the specified application.	preferences	eu	Aplikazio zehatzetarako hobespenak irakurri.
 select one	preferences	eu	Aukeratu bat
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	eu	Testuen eta mezuen hizkuntza EGroupware-n aukeratu.<br>Baliteke hizkuntza batzuk mezu guztiak ez izatea, kasu horientan mezua ingelesez ikusiko duzu.
 selectbox	preferences	eu	Aukeratze koadroa
 selectbox with primary group and search	preferences	eu	Aukeratze koadroa talde nagusi eta bilaketarekin
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	eu	Hau zure gustura jarri. Segurtasun arrazoiengatik, baliteke zure erabiltzailea publikoan erakutsi nahi ez izatea.
 should the number of active sessions be displayed for you all the time.	preferences	eu	Denbora guztian aktibatutako saio kopurua erakutsi?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	eu	Laguntza mezu hauek hebespenak aldatzerakoan erakutsi edota zuk eskatzen duzunean bakarrik.
 show helpmessages by default	preferences	eu	Laguntza mezuak erakutsi lehenetsita
 show navigation bar as	preferences	eu	Nabigazio barra erakutsi
 show number of current users	preferences	eu	Momentuko erabiltzaele kopurua erakutsi
 show text on navigation icons	preferences	eu	Ikonoen deskribapena erakutsi
 show_more_apps	common	eu	Aplikazio gehiago erakutsi
 text only	preferences	eu	Testua soilik
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	eu	Lehenetsitako EGroupware aplikazioa saio hasterakoan ikusiko da edo hasiera ikonoa sakatzerakoan.<br>Hasierako orrian aplikazio bat baina gehiago izan dezakezu, aplikazio zehatz bat aukeratu hemen edota aplikazio bakoitzaren hobespenetan konfiguratu.
 the old password is not correct	preferences	eu	Pasahitz zaharra ez da zuzena
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	eu	Aukeratze koadroak libre dauden erabiltzaile guztiak erakusten ditu (erabiltzaile asko dauden instalazio batean oso motela izan daiteke). Leiho emergentak erabiltzaileak bilatu ditzake izen edo taldearen arabera.
 the two passwords are not the same	preferences	eu	Bi pasahitzak ezberdinak dira
@@ -65,7 +62,6 @@ time format	preferences	eu	Orduaren formatua
 use default	preferences	eu	Lehenetsia erabili
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	eu	Bai aukeratzen bada sarrera eta irteera botoiak aplikazio nagusien barran agertuko dira.
 which currency symbol or name should be used in egroupware.	preferences	eu	EGroupwarek erabili behar duen txanpon sinbolo edo izena.
-write prefs for the specified application.	preferences	eu	Hobespenak idatzi aplikazio zehatzetarako
 you can show the applications as icons only, icons with app-name or both.	preferences	eu	Ikonoak ikono moduan edota izenarekin ikus ditzakezu edota biak batera.
 you do not have permission to set acl's in this mode!	preferences	eu	Ez daukazu baimenik ACL modu honetan jartzeko
 you must enter a password	preferences	eu	Pasahitz bat sartu behar duzu

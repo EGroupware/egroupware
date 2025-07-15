@@ -137,7 +137,6 @@ preformatted	preferences	fr	Préformaté
 pt: points (1/72 inch)	preferences	fr	pt: points (1/72 pouces)
 px: display pixels	preferences	fr	px: affiche des pixels
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe
-read prefs for the specified application.	preferences	fr	Lire les préférences pour l'apllication spécifiée.
 reset qrcode	preferences	fr	Réinitialise le code QR
 revoke	preferences	fr	Révoquer
 revoke this token	preferences	fr	Révoquer ce jeton
@@ -156,7 +155,6 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	fr	Paramètres
 setup two factor authentication	preferences	fr	Configurer l'authentification à double facteur
 should the number of active sessions be displayed for you all the time.	preferences	fr	Le nombre de sessions actives doit-il vous être affiché en permanence?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	fr	Ces messages d'aide doivent-ils toujours être affichés quand vous entrez dans les préférences, ou seulement à la demande?
 show helpmessages by default	preferences	fr	Afficher les messages d'aide par défaut.
 show links between egroupware aps as	common	fr	Icônes et liens d'application
 show navigation bar as	preferences	fr	Afficher la barre de navigation comme
@@ -174,7 +172,6 @@ stay open, but not for email	preferences	fr	Rester ouvert, mais pas pour le cour
 store password retrievable for singlesignon	common	fr	Stocker un mot de passe récupérable pour SingleSignOn
 text editor settings	preferences	fr	Paramètre de l'éditeur de texte
 text only	preferences	fr	Texte seulement
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fr	L'application par défaut sera exécutée quand vous entrez dans EGroupware ou cliquez sur l'icône de la page d'accueil.<br>Vous pouvez aussi avoir plus d'une application s'affichant sur la page d'accueil, si vous ne choisissez pas d'application spécifique ici (ceci doit être configuré dans les préférences de chaque application).
 the old password is not correct	preferences	fr	L'ancien mon de passe est erroné
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fr	La boîte de sélection montre tous les utilisateurs disponibles (ceci peut être très lent lors d'installations importantes avec beaucoup d'utilisateurs). La fenêtre Popup peut rechercher les utilisateurs par nom ou groupe.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fr	La boîte de sélection va afficher tous les utilisateurs (cela peut être très long pour les installations avec beaucoup d'utilisateurs).  Le popup permet de recherche sur le nom et le groupe. Les deux dernières options limite la visibilité pour les autres utilisateurs. Ainsi, elle peuvent être forcées et non appliquées pour les administrateurs.
@@ -199,7 +196,6 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fr	Si vous dites Oui, les boutons Accueil et Déconnexion sont présentés comme des applications dans la barre de navigation.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans EGroupware.
-write prefs for the specified application.	preferences	fr	Ecrire les préférences pour l'apllication spécifiée.
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
 you can show the linked entries with icons only, icons with app-name or both.	common	fr	Monter les applications avec des icônes seulement, icônes avec des noms d'application ou les deux.
 you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez pas les droits pour régler les ACLs dans ce mode!

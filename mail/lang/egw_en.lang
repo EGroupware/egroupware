@@ -29,6 +29,7 @@ add this certificate into contact	mail	en	Add this certificate into contact
 add to addressbook	mail	en	Add to addressbook
 adding %1 to blacklisted email addresses failed because of %2	mail	en	Adding %1 to blacklisted email addresses failed because of %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	en	Adding %1 to whiltelisted email addresses failed because of %2
+administer (perform setacl/deleteacl/getacl/listrights)	mail	en	Administer (perform SETACL/DELETEACL/GETACL/LISTRIGHTS)
 after reply, visible during compose	mail	en	After reply, visible during compose
 aliases+forwards	mail	en	Aliases+Forwards
 all	mail	en	all
@@ -45,6 +46,7 @@ allow external images from listed domains	mail	en	Allow external images from lis
 allow images from external sources in html emails	mail	en	Allow images from external sources in HTML emails.
 allow images from listed domains in html emails	mail	en	Allow images from listed domains in HTML emails.
 allow users to create further identities	mail	en	Allow users to create further identities
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	en	Allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.
 always	mail	en	Always
 always allow external sources from %1	mail	en	Always allow external sources from %1
 always respond / auto-responder	mail	en	Always respond / auto-responder
@@ -121,6 +123,7 @@ copied %1 message(s) from %2 to %3	mail	en	Copied %1 message(s) from %2 to %3.
 copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
 could not save the acl because some names are empty	mail	en	Could not save the ACL because some names are empty
+create mailboxes (create new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb	mail	en	Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb
 create new account	mail	en	Create new account
 cross account forward attachment is not allowed!	mail	en	Cross account forward attachment is not allowed!
 current folder	mail	en	current folder
@@ -135,6 +138,8 @@ defines what to show as contact label for added contact into to/cc/bcc when comp
 defines what to show as identity label on mail folder header	common	en	Defines what to show as identity label on email folder header. The labels refer to the fields in the email account.
 delete folder	mail	en	Delete folder
 delete folder %1 ?	mail	en	DELETE folder %1?
+delete mailbox (delete mailbox, old mailbox name in rename)	mail	en	Delete mailbox (DELETE mailbox, old mailbox name in RENAME)
+delete messages (set or clear \deleted flag via store, set \deleted flag during append/copy)	mail	en	Delete messages (set or clear \DELETED flag via STORE, set \DELETED flag during APPEND/COPY)
 delete selected folders	mail	en	Delete selected folders
 delete this acl	mail	en	Delete this ACL
 deleted	mail	en	deleted
@@ -320,6 +325,7 @@ inbox	mail	en	Inbox
 information to show on email tag	mail	en	Information to show on email tag
 initialization of mail failed. please use the wizard to cope with the problem.	mail	en	The initialisation of the E-Mail module failed. Please use the configuration wizard to correct the configuration.
 inline	mail	en	Forward
+insert (perform append, copy into mailbox)	mail	en	Insert (perform APPEND, COPY into mailbox)
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 job	mail	en	Job
 junk	mail	en	Junk
@@ -333,6 +339,7 @@ learning as spam failed because of %1	mail	en	Learning as spam failed because of
 less than	mail	en	less than
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. email compose "Save as InfoLog" action).
+lookup (mailbox is visible to list/lsub commands, subscribe mailbox)	mail	en	Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)
 low priority	mail	en	Low priority
 mail	common	en	Mail
 mail acl	mail	en	Email access rights
@@ -409,6 +416,8 @@ none, create all	mail	en	none, create all
 nothing to change.	mail	en	Nothing to change.
 notify about new mail in this folders	mail	en	Notify about new email in these folders
 notify when new mails arrive in these folders	mail	en	notify when new emails arrive in these folders
+obsolet create right, combination rights of k and x	mail	en	Obsolet create right, combination rights of K and X
+obsolete delete right, combination rights of e, t and x	mail	en	Obsolete delete right, combination rights of E, T and X
 on	mail	en	on
 on behalf of	mail	en	On behalf of
 on vacation	mail	en	On vacation
@@ -431,6 +440,7 @@ organization | real name email	mail	en	Organisation | Real name [Email]
 original message	mail	en	Original message
 outbox	mail	en	Outbox
 password protect	mail	en	password protect
+perform expunge and expunge as a part of close	mail	en	Perform EXPUNGE and expunge as a part of CLOSE
 permission denied	mail	en	Permission denied
 please configure access to an existing individual imap account.	mail	en	Please configure access to an existing individual IMAP account.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	en	Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.
@@ -442,6 +452,7 @@ please select the number of days to wait between responses	mail	en	Please select
 please supply the message to send with auto-responses	mail	en	Please supply the message to send with auto-responses
 please wait while sending your mail	mail	en	Please wait while sending your email
 post	mail	en	post
+post (send mail to submission address for mailbox, not enforced by imap4 itself)	mail	en	Post (send mail to submission address for mailbox, not enforced by IMAP4 itself)
 predefined addresses for compose	mail	en	Predefined values for compose
 prevent managing filters	mail	en	Prevent managing filters
 prevent managing folders	mail	en	Prevent managing folders
@@ -460,6 +471,7 @@ quota limit warning in megabyte (recommended value is 30 mb).	mail	en	Quota limi
 quota not provided by server	mail	en	Quota not provided by server
 quota: %1	mail	en	Quota: %1
 read	mail	en	read
+read (select the mailbox, perform status)	mail	en	Read (SELECT the mailbox, perform STATUS)
 read / unread	mail	en	Read / Unread
 readable	mail	en	readable
 real name	mail	en	Real name
@@ -694,6 +706,8 @@ with message:	mail	en	With message:
 wizard	mail	en	Wizard
 writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
 write	mail	en	write
+write & delete	mail	en	write & delete
+write (set or clear flags other than \seen and \deleted via store, also set them during append/copy)	mail	en	Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)
 wrote	mail	en	wrote
 yes, offer copy option	mail	en	Yes, offer copy option
 you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.

@@ -202,6 +202,7 @@ do you want to delete this subscription incl. the synced events?	calendar	fr	Vou
 do you want to edit this event as an exception or the whole series?	calendar	fr	Souhaitez-vous modifier seulement cet événement comme une exception ou bien toute la série ?
 do you want to keep the series exceptions in your calendar?	calendar	fr	Souhaitez-vous conserver les exceptions dans votre calendrier ?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fr	Voulez-vous recevoir un résumé régulier de vos rendez-vous par email?<br>Le résumé est envoyé à votre adresse email standard le matin ou le lundi pour les résumés hebdomadaires.<br>Il est envoyé seulement quand vous avez des rendez-vous ce jour-là ou cette semaine-là.
+does not show event to other users, unless they have a private grant	calendar	fr	N'affiche PAS l'événement aux autres utilisateurs, à moins qu'ils ne disposent d'une subvention privée.
 download	calendar	fr	Télécharger
 download this event as ical	calendar	fr	Télécharger cet événément en iCal
 duration	calendar	fr	Durée
@@ -387,6 +388,7 @@ minimum number of users for showing week view as consolidated.	calendar	fr	Nombr
 minutes	calendar	fr	Minutes
 modified	calendar	fr	Modifié
 modifier	calendar	fr	Editeur
+modify events	calendar	fr	Modifier les événements
 mon	calendar	fr	Lu
 month	calendar	fr	Mois
 monthly	calendar	fr	Mensuel

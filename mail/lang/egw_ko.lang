@@ -11,7 +11,10 @@ add this certificate into contact	mail	ko	이 인증서를 연락처에 추가
 adding %1 to blacklisted email addresses failed because of %2	mail	ko	%2 때문에 블랙리스트에 추가된 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
 adding %1 to whiltelisted email addresses failed because of %2	mail	ko	%2 때문에 허용되지 않은 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
 all my email addresses	mail	ko	내 모든 이메일 주소
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	ko	모든 하위 폴더도 삭제되며 영향을 받는 모든 폴더의 모든 메시지가 손실됩니다.
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ko	사용자가 폴더와 메일을 읽고, 쓰고, 만들고, 게시하고, 메시지를 추가하고, 메시지를 삭제할 수 있습니다
 archive folder	mail	ko	보관 폴더
+are you sure you want to delete all selected folders?	mail	ko	선택한 모든 폴더를 삭제하시겠습니까?
 attach files	mail	ko	파일 첨부
 attach users vcard at compose to every new mail	mail	ko	모든 새 메일에 작성 시 사용자 vCard를 첨부합니다.
 attachment has been saved successfully.	mail	ko	첨부 파일이 성공적으로 저장되었습니다.
@@ -58,6 +61,8 @@ everyone	mail	ko	모두
 examine namespace to retrieve folders in others and shared	mail	ko	네임스페이스를 검사하여 다른 폴더 및 공유 폴더를 검색합니다
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	ko	指定したサイズ以上の添付ファイルを下書きとして自動保存から除外する(MB単位)
 extended	mail	ko	확장
+failed to delete %1 ! reason: %2	mail	ko	%1을(를) 삭제하지 못했습니다! 이유: %2
+failed to delete %1. server responded:	mail	ko	%1을(를) 삭제하지 못했습니다! 서버가 응답했습니다:
 failed to subscribe folder %1!	mail	ko	%1 폴더를 구독하지 못했습니다!
 failed to unsubscribe folder %1!	mail	ko	%1 폴더의 구독을 취소하지 못했습니다!
 file into	mail	ko	로 이동하십시오
@@ -226,7 +231,9 @@ trash	mail	ko	휴지통
 trash folder	mail	ko	휴지통 폴더
 unconditional	mail	ko	항상
 validate addresses on submit:	mail	ko	제출할 주소의 유효성을 검사합니다:
+what to do when you delete a message	mail	ko	메시지를 삭제할 때 수행할 작업입니다.
 write	mail	ko	쓰기
+write & delete	mail	ko	쓰기 및 삭제
 you can select what info to be displayed on email tag	mail	ko	이메일 태그에 표시할 정보를 선택할 수 있습니다.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ko	위의 시작 날짜는 $$start$$로, 종료 날짜는 $$end$$로 사용할 수 있습니다.
 you may add this certificate into your contact, if you trust this signature.	mail	ko	이 서명을 신뢰하는 경우 이 인증서를 연락처에 추가할 수 있습니다.

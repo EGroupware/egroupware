@@ -369,6 +369,7 @@ name for the distribution list	addressbook	el	Όνομα για την λίστ�
 name of current user, all other contact fields are valid too	addressbook	el	Όνομα του συνδεδεμένου χρήστη, επίσης ισχύουν όλα τα πεδία επαφών.
 name, address	addressbook	el	Όνομα, Διεύθυνση
 name, email, phone	addressbook	el	Όνομα, email, τηλέφωνο
+never use prefix	addressbook	el	Ποτέ μην χρησιμοποιείτε πρόθεμα
 new contact submitted by %1 at %2	addressbook	el	Νέα επαφή υπεβλήθει από %1 στις %2
 next date	addressbook	el	Επόμενη ημερομηνία
 no categories selected	addressbook	el	Δεν έχουν επιλεγεί κατηγορίες
@@ -522,6 +523,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	el	να γίνεται χρήση του χαρακτηριστικού "προσωπική ταξινόμηση"
 use an extra tab for private custom fields?	admin	el	Χρήση πρόσθετου διαχωριστικού για την εμφάνιση προσαρμοσμένων προσωπικών πεδίων.
 use country list	addressbook	el	Χρήση καταλόγου χωρών
+use firstname, only if no prefix	addressbook	el	Χρησιμοποιήστε το όνομα, μόνο αν δεν υπάρχει πρόθεμα
+use prefix plus all other name parts	addressbook	el	Χρησιμοποιήστε πρόθεμα και όλα τα άλλα μέρη του ονόματος
+use prefix, only if no firstname	addressbook	el	Χρήση προθέματος, μόνο αν δεν υπάρχει όνομα
 use setup for a full account-migration	admin	el	χρήση της εγκατάστασης για πλήρη μετανάστευση λογαριασμού
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	el	Χρησιμοποιήστε αυτήν την ετικέτα για ετικέτες διευθύνσεων. Τοποθετήστε το περιεχόμενο που θέλετε να επαναλάβετε ανάμεσα σε δύο ετικέτες.
 used for links and for the own sorting of the list	addressbook	el	χρησιμοποιείται για συνδέσμους και προσωπικές ταξινομήσεις της λίστας
@@ -536,6 +540,7 @@ view linked infolog entries	addressbook	el	Εμφάνιση συνδεδεμέν
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	el	ΠΡΟΣΟΧΗ!! Το LDAP ισχύει μόνο εάν ΔΕΝ χρησιμοποιείτε τις επαφές για την αποθήκευση λογαριασμών!
 warning: all contacts found will be deleted!	addressbook	el	ΠΡΟΣΟΧΗ: Όλες οι επαφές που βρέθηκαν θα διαγραφούν!
 weekday	addressbook	el	Ημέρα της εβδομάδας
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	el	Τι πρέπει να εμφανίζεται ως πλήρες όνομα. Εάν δεν υπάρχει ούτε first- ούτε lastname, εμφανίζεται η επωνυμία της εταιρείας.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	el	Σύνδεσμοι του βιβλίου διευθύνσεων που εμφανίζονται σε άλλες εφαρμογές. Οι κενές τιμές θα παραλείπονται. Πρέπει να συνδεθείτε ξανά, αν αλλάξετε αυτή τη ρύθμιση!
 when viewing a contact, show linked entries from the selected application	addressbook	el	Κατά την προβολή μιας επαφής, να εμφανίζονται οι συνδεδεμένες καταχωρήσεις από την επιλεγμένη εφαρμογή
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	el	Όταν συγχωνεύετε καταχωρήσεις σε έγγραφα, θα αποθηκεύονται εδώ. Εάν δεν έχει δοθεί κατάλογος, θα αποθηκεύονται στον αρχικό σας κατάλογο (/home/...)

@@ -51,7 +51,6 @@ please select timezones, you want to be able to quickly switch between. switch i
 please select your timezone.	preferences	lo	ກະລຸນາເລືອກເຂດເວລາຂອງທ່ານ
 popup with search	preferences	lo	Popup ສໍາລັບການຄົ້ນຫາ
 re-enter your password	preferences	lo	ໃສ່ລະຫັດຜ່ານໃໝ່ຊໍ້າຄືນອີກ
-read prefs for the specified application.	preferences	lo	ຕັ້ງຄ່າການອ່ານສຳລັບແອບພຼິເຄຊັນພິເສດ
 select one	preferences	lo	ເລືອກ
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	lo	ເລືອກພາສາຂອງຂໍ້ຄວາມ ແລະ ຂໍ້ຄວາມພາຍໃນຕາຕະລາງເວລາ. <br> ບາງພາສາອາດຈະບໍ່ມີຂໍ້ຄວາມທັງໝົດ, ໃນກໍລະນີນັ້ນທ່ານຈະເຫັນຂໍ້ຄວາມເປັນພາສາອັງກິດ
 select the language of the spellchecker integrated into the rich text editor.	preferences	lo	ເລືອກພາສາຂອງຕົວກວດສອບສະກົດຄຳຢູ່ໃນການແກ້ໄຂຂໍ້ຄວາມທີ່ສົມບູນ
@@ -60,14 +59,12 @@ selectbox with groupmembers	common	lo	ຊ່ອງເລືອກສະມະຊ
 selectbox with primary group and search	preferences	lo	ຊ່ອງເລືອກກຸ່ມທໍາອິດ ແລະ ຄົ້ນຫາ
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	lo	ກຳໜົດຕາມຄວາມມັກຂອງທ່ານ. ເພື່ອຄວາມປອດໄພ, ທ່ານອາດຈະບໍ່ສະແດງຊື່ເຂົ້າໃຊ້ງານໃນສາທາລະນະ
 should the number of active sessions be displayed for you all the time.	preferences	lo	ຈຳນວນຄັ້ງທີ່ໃຊ້ງານຈະສະແດງໃຫ້ທ່ານຕະຫຼອດເວລາ
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	lo	ຂໍ້ຄວາມຊ່ວຍເຫຼືອເຫຼົ່ານີ້ຈະສະແດງຕະຫຼອດເມື່ອມີການປັບປຽນການຕັ້ງຄ່າຫຼືສະເພາະເມື່ອມີການຮ້ອງຂໍ
 show navigation bar as	preferences	lo	ສະແດງຊ່ອງຕົວເລືອກ
 show number of current users	preferences	lo	ສະແດງຈໍານວນຂອງຜູ້ໃຊ້ປັດຈຸບັນ
 show text on navigation icons	preferences	lo	ສະແດງຂໍ້ຄວາມໃນຊ່ອງຕົວເລືອກໄອຄ໋ອນ
 show_more_apps	common	lo	ສະແດງແອບພຼິເຄຊັນຕື່ມອີກ
 spellchecker language	addressbook	lo	ຕົວກວດສອບສະກົດຄຳຂອງພາສາ
 text only	preferences	lo	ສະເພາະຂໍ້ຄວາມ
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	lo	ຄ່າເລີ່ມຕົ້ນແອບພຼິເຄຊັນຈະເລີ່ມເມື່ອທ່ານໃຊ້ຕາຕະລາງເວລາ ຫຼື ຄຼິກທີ່ໄອຄ໋ອນໜ້າທຳອິດ. <br> ທ່ານຍັງສາມາດມີຫຼາຍກວ່າໜຶ່ງແອບພຼິເຄຊັນທີ່ສະແດງໃນໜ້າທຳອິດ, ຖ້າທ່ານບໍ່ເລືອກໃຊ້ງານສະເພາະບ່ອນນີ້(ຕ້ອງມີການກຳໜົດຄ່າໃນການຕິດຕັ້ງຄ່າຂອງແຕ່ລະແອບພຼິເຄຊັນ)
 the old password is not correct	preferences	lo	ລະຫັດຜ່ານເກົ່າບໍ່ຖືກຕ້ອງ
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	lo	ຊ່ອງເລືອກສະແດງຜູ້ໃຊ້ທັງໝົດ(ສາມາດຊ້າຫຼາຍໃນການຕິດຕັ້ງຂະໜາດໃຫຍ່ທີ່ມີຜູ້ໃຊ້ຈໍານວນຫຼາຍ) popup ສາມາດຄົ້ນຫາໄດ້ດ້ວຍຊື່ ຫຼື ກຸ່ມ
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	lo	ເລືອກຊ່ອງສະແດງທີ່ມີຜູ້ໃຊ້ທັງໝົດ(ສາມາດຊ້າຫຼາຍໃນການຕິດຕັ້ງຂະໜາດໃຫຍ່ທີ່ມີຜູ້ໃຊ້ຈໍານວນຫຼາຍ) popup ສາມາດຄົ້ນຫາໄດ້ດ້ວຍຊື່ ຫຼື ກຸ່ມ. ສອງຕົວເລືອກສຸດທ້າຍກຳນົດການສະແດງຜົນຂອງຜູ້ໃຊ້ຄົນອື່ນໆ. ດັ່ງນັ້ນພວກເຂົາຄວນຈະຖືກບັງຄັບ ແລະ ບໍ່ໃຫ້ໃຊ້ເປັນຜູ້ດູແລລະບົບ.
@@ -80,7 +77,6 @@ use default	preferences	lo	ໃຊ້ຄ່າເລີ່ມຕົ້ນ
 users choice	preferences	lo	ທາງເລືອກຂອງຜູ້ໃຊ້
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	lo	ຕົວອັກສອນໃດຄວນຈະໃຊ້ໃນ CSV ສົ່ງອອກ.
 which currency symbol or name should be used in egroupware.	preferences	lo	ເຄື່ອງໝາຍສະກຸນເງິນ ຫຼື ຊ
-write prefs for the specified application.	preferences	lo	ຂຽນການຕັ້ງຄ່າຂອງການໃຊ້ງານພິເສດ
 you can show the applications as icons only, icons with app-name or both.	preferences	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ແອບພຼິເຄຊັນໃຊ້ງານດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
 you can show the linked entries with icons only, icons with app-name or both.	common	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ການເຊື່ອມຕໍ່ດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
 you do not have permission to set acl's in this mode!	preferences	lo	ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ຕັ້ງ ACL

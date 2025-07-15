@@ -45,6 +45,7 @@ allow external images from listed domains	mail	it	Permetti immagini remote dai s
 allow images from external sources in html emails	mail	it	Permetti immagini da sorgenti esterne nei messaggi HTML
 allow images from listed domains in html emails	mail	it	permetti immagini remote dai domini seguenti nei messaggi HTML
 allow users to create further identities	mail	it	Permetti agli utenti di creare identità ulteriori
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	it	Consente a un utente di leggere, scrivere e creare cartelle e messaggi, di inviarvi messaggi, di aggiungerne e di eliminarli.
 always	mail	it	Sempre
 always allow external sources from %1	mail	it	Permetti sempre sorgenti esterne/remote da %1
 always respond / auto-responder	mail	it	Rispondere sempre / autorisponditore
@@ -694,6 +695,7 @@ with message:	mail	it	Con il messaggio:
 wizard	mail	it	Procedura guidata
 writable sharing requires epl version!	mail	it	La condivisione scrivibile richiede la versione completa EPL!
 write	mail	it	scrivi
+write & delete	mail	it	scrivere e cancellare
 wrote	mail	it	scritto
 yes, offer copy option	mail	it	Sì, fornisci l'ozione di copia
 you can select what info to be displayed on email tag	mail	it	È possibile selezionare le informazioni da visualizzare sul tag e-mail.

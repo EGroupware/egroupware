@@ -35,6 +35,7 @@ account preferences	admin	ko	계정 환경설정
 acl csv export	admin	ko	ACL CSV 내보내기
 acl manager	admin	ko	ACL 메니저
 acl rights	common	ko	ACL 권한
+active this token again	admin	ko	이 토큰 다시 활성화
 add a category	admin	ko	카테고리 추가
 add a group	admin	ko	그룹 추가
 add a new account.	admin	ko	새 계정 추가
@@ -64,6 +65,7 @@ all records and account information will be lost!	admin	ko	이 계정의 자료�
 all users	admin	ko	모든 사용자
 allow anonymous access to this app	admin	ko	이 응용프로그램에 익명 연결 허용
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ko	SingleSignOnの'Security & Passwords'にパスワードを保存できるようにする。
+allow user to set 'remember me' token	admin	ko	사용자가 ‘나를 기억해’ 토큰을 설정하도록 허용하기
 anonymous user	admin	ko	익명 사용자
 anonymous user (not shown in list sessions)	admin	ko	익명 사용자 ( 세션 목록에 나타나지 않음 )
 anonymous user. not shown in list sessions.	admin	ko	익명 사용자. 목록 세션에 표시되지 않음
@@ -111,6 +113,7 @@ change domain of email address and aliases	admin	ko	이메일 주소 및 별칭�
 change login screen message	admin	ko	주 화면 메세지 변경
 check ip address of all sessions	admin	ko	모든 세션에 ip 주소 확인
 check items to <b>%1</b> to %2 for %3	admin	ko	%3의 항목을 <b>%1</b>에서 %2로 체크
+clear security tokens	admin	ko	보안 토큰 지우기
 click to select a color	admin	ko	클릭해서 색깔을 선택
 color	admin	ko	색
 container	admin	ko	コンテナ
@@ -201,7 +204,9 @@ enter your http proxy server port	admin	ko	HTTP 프록시 서버 포트 입력
 enter your smtp server hostname or ip address	admin	ko	SMTP서버 호스트 이름이나 IP주소 입력
 enter your smtp server port	admin	ko	SMTP 서버 포트 입력
 error canceling timer, maybe there's none set !!!	admin	ko	타이머를 취소하는데 오류발생,  설정안되어 있을수도 있습니다!
+error revoking token!	admin	ko	토큰을 해지하는 동안 오류가 발생했습니다!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	ko	타이머를 설정오류 발생, 문법이 틀렸거나 이미 작동중일 수 있습니다!
+error storing token!	admin	ko	토큰 저장 중 오류가 발생했습니다!
 error: %1 not found or other error !!!	admin	ko	오류 : %1을 찾을수 없거나 다른 오류입니다!
 event details follow	admin	ko	다음은 이벤트-설명
 expires	admin	ko	만료
@@ -217,6 +222,7 @@ force selectbox	admin	ko	강제 선택박스
 full name	admin	ko	이름
 general	admin	ko	일반
 generate certificate	admin	ko	인증서 생성
+generate new token and display it once after saving	admin	ko	새 토큰을 생성하고 저장 후 한 번 표시하기
 global categories	common	ko	전역 카테고리
 group ?	admin	ko	그룹 ?
 group has been added	common	ko	그룹이 추가되었습니다
@@ -239,6 +245,7 @@ html/plaintext	admin	ko	HTML/텍스트
 icon	admin	ko	아이콘
 idle	admin	ko	대기시간
 if different from email address	admin	ko	이메일 주소와 다른 경우
+if disabled existing tokens immediatly stop working.	admin	ko	기존 토큰을 비활성화하면 즉시 작동이 중지됩니다.
 if no acl records for user or any group the user is a member of	admin	ko	사용자나 어떤 그룹 사용자 ACL 레코드가 없다면 다음의 멤버 :
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ko	LDAP를 사용한다면, 홈디렉토리와 로그인쉘 속성을 관리 하시겠습니까?
 inbound	admin	ko	인바운드
@@ -270,6 +277,7 @@ leave the category untouched and return back to the list	admin	ko	카테고리�
 leave the group untouched and return back to the list	admin	ko	그룹을 손대지 않고 목록으로 되돌아 가기
 leave without saveing the entry	admin	ko	엔트리를 저장없이 나가기
 leaves without saveing	admin	ko	저장없이 나가기
+lifetime of 'remember me' token	admin	ko	'나를 기억해' 토큰의 수명
 list config settings	admin	ko	구성 설정 목록
 list current sessions	admin	ko	현재 세션 목록
 list of current users	admin	ko	현재 사용자 목록
@@ -329,6 +337,7 @@ read this list of methods.	admin	ko	이 메소드 목록 읽기
 register application hooks	admin	ko	응용프로그램 훅(hooks) 등록
 regular expression to find part to use as container	admin	ko	コンテナとして使用する部分を見つけるための正規表現
 remove	admin	ko	삭제
+revoke this token	admin	ko	이 토큰 해지하기
 rows	admin	ko	줄
 run asynchronous services	admin	ko	비동기 서비스 실행
 save the category	admin	ko	카테고리 저장
@@ -341,6 +350,7 @@ search peer servers	admin	ko	피어 서버 찾기
 security	admin	ko	보안
 select group managers	admin	ko	그룹 관리자 찾기
 select permissions this group will have	admin	ko	이 그룹이 가질 권한을 선택
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	ko	토큰을 제한할 애플리케이션을 선택하거나 모든 애플리케이션의 기본값을 그대로 둡니다.
 select the parent category. if this is a main category select no category	admin	ko	상위 카테고리 선택. 만약 이 것이 주 카테고리고 NO CATEGORY 선택했을때
 select users for inclusion	admin	ko	포함할 사용자를 선택하세요.
 select where you want to store/retrieve filesystem information	admin	ko	어디에 파일시스템 정보를 저장/회수할지 선택
@@ -375,6 +385,7 @@ start	admin	ko	시작
 start testjob!	admin	ko	테스트작업(TestJob) 시작
 submit changes	admin	ko	변경된것을 보냄(Submit)
 submit the search string	admin	ko	검색 문자열 보냄
+successfull, but no refresh-token received!	admin	ko	성공했지만 새로고침 토큰이 수신되지 않았습니다!
 that loginid has already been taken	admin	ko	이 접속ID는 이미 사용중입니다
 the api is current	admin	ko	API는 현재버전
 the api requires an upgrade	admin	ko	API의 업그레이드가 필요
@@ -392,6 +403,10 @@ this category is currently being used by applications as a parent category	admin
 timeout for application session data in seconds (default 86400 = 1 day)	admin	ko	응용프로그램 세션 데이터의 타임아웃 초 (기본 86400 = 하루)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	ko	세션 타임아웃 초 (기본 14400 = 4시간)
 times	admin	ko	시간
+token created.	admin	ko	토큰이 생성되었습니다.
+token not found!	admin	ko	토큰을 찾을 수 없습니다!
+token revoked.	admin	ko	토큰이 해지되었습니다.
+token saved.	admin	ko	토큰이 저장되었습니다.
 top	admin	ko	상위
 total records	admin	ko	총 기록
 translation	admin	ko	번역
@@ -405,6 +420,7 @@ upload your certificate .p12/.pfx file	admin	ko	인증서 .p12/.pfx 파일 업�
 use cookies to pass sessionid	admin	ko	session ID 를 전달하기 위해 쿠키 사용
 use default	admin	ko	기본 사용
 use pure html compliant code (not fully working yet)	admin	ko	순수 HTML 호환 코드 사용 (아직 완전하지 않습니다)
+use save or apply to store the received oauth token!	admin	ko	저장 또는 적용을 사용하여 받은 OAuth 토큰을 저장하세요!
 use theme	admin	ko	테마 사용
 user accounts	admin	ko	사용자 계정
 user choice	admin	ko	사용자 선택

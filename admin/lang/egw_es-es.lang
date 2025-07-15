@@ -892,6 +892,7 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	es-es	Ficha creada.
 token not found!	admin	es-es	¡Ficha no encontrada!
 token revoked.	admin	es-es	Ficha revocada.
+token saved.	admin	es-es	Token opgeslagen.
 top	admin	es-es	Superior
 total of %1 accounts deleted.	admin	es-es	Total de %1 cuentas suprimidas.
 total of %1 id's changed.	admin	es-es	Se han cambiado en total %1 IDs.

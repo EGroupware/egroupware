@@ -16,9 +16,12 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	lt	Įtraukti
 after reply, visible during compose	mail	lt	Po atsakymo, matomas sudarymo metu
 aliases+forwards	mail	lt	Slapyvardžiai + persiuntimas
 all my email addresses	mail	lt	visi mano el. pašto adresai
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	lt	Taip pat bus ištrinti visi pakatalogiai, o visos žinutės iš visų paveiktų aplankų bus prarastos.
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	lt	Leidžia naudotojui skaityti, rašyti ir kurti aplankus ir laiškus, rašyti į juos, pridėti prie jų pranešimus ir juos ištrinti
 always show notifiction	mail	lt	Visada rodyti pranešimą
 answered	mail	lt	Atsakyta
 archive folder	mail	lt	Archyvo aplankas
+are you sure you want to delete all selected folders?	mail	lt	Ar tikrai norite ištrinti visus pasirinktus aplankus?
 attach files	mail	lt	Pridėti failus
 attach users vcard at compose to every new mail	mail	lt	Pridėti naudotojų vCard prie kiekvieno naujo laiško sudarymo metu
 attachment has been saved successfully.	mail	lt	Priedas sėkmingai išsaugotas.
@@ -69,6 +72,8 @@ encrypt your message with smime certificate	mail	lt	Užšifruokite pranešimą n
 everyone	mail	lt	Visi
 examine namespace to retrieve folders in others and shared	mail	lt	Išnagrinėti vardų sritį, kad gautumėte aplankus kituose ir bendrintuose
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	lt	Neįtraukti priedų, kurių dydis didesnis nei nurodytas, į automatinį išsaugojimą kaip juodraštį (MB)
+failed to delete %1 ! reason: %2	mail	lt	Nepavyko ištrinti %1! Priežastis: %2
+failed to delete %1. server responded:	mail	lt	Nepavyko ištrinti %1! Serveris atsakė:
 failed to subscribe folder %1!	mail	lt	Nepavyko prenumeruoti aplanko %1!
 failed to unsubscribe folder %1!	mail	lt	Nepavyko atsisakyti aplanko %1!
 file into	mail	lt	Perkelti į
@@ -259,6 +264,8 @@ trash	mail	lt	Šiukšliadėžė
 trash folder	mail	lt	Aplankas šiukšliadėžė
 unconditional	mail	lt	Visada
 validate addresses on submit:	mail	lt	Patvirtinkite adresus pateikdami:
+what to do when you delete a message	mail	lt	Ką daryti ištrynus pranešimą.
+write & delete	mail	lt	rašyti ir ištrinti
 you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lt	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	lt	Šį sertifikatą galite įtraukti į savo kontaktą, jei pasitikite šiuo parašu.

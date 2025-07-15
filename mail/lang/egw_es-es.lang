@@ -45,6 +45,7 @@ allow external images from listed domains	mail	es-es	Permitir imágenes externas
 allow images from external sources in html emails	mail	es-es	Permitir imágenes de origen externo en correos HTML.
 allow images from listed domains in html emails	mail	es-es	Permitir imágenes de dominios listados en correos electrónicos HTML.
 allow users to create further identities	mail	es-es	Permitir a los usuarios crear nuevas identidades
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	es-es	Permite a un usuario leer, escribir y crear carpetas y correos, enviar mensajes, añadir mensajes y borrar mensajes.
 always	mail	es-es	Siempre
 always allow external sources from %1	mail	es-es	Siempre permitir fuentes externas desde %1
 always respond / auto-responder	mail	es-es	Responder siempre / autoresponder
@@ -694,6 +695,7 @@ with message:	mail	es-es	Con el mensaje:
 wizard	mail	es-es	Asistente
 writable sharing requires epl version!	mail	es-es	¡Compartir escritura requiere la versión EPL!
 write	mail	es-es	escribir
+write & delete	mail	es-es	escribir y borrar
 wrote	mail	es-es	escribió
 yes, offer copy option	mail	es-es	sí, ofrecer la opción de copiar
 you can select what info to be displayed on email tag	mail	es-es	Puede seleccionar la información que se mostrará en la etiqueta de correo electrónico.

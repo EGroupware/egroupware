@@ -50,6 +50,7 @@ acl manager	admin	pl	Meneder ACL
 acl rights	common	pl	Prawa ACL
 activate	admin	pl	Aktywuj
 active templates	admin	pl	Aktywne szablony
+active this token again	admin	pl	Aktywuj ten token ponownie
 add a category	admin	pl	Dodaj kategorie
 add a group	admin	pl	Dodaj grupę użytkowników
 add a new account.	admin	pl	Dodaj nowe konto.
@@ -87,6 +88,7 @@ all users	admin	pl	Wszyscy użytkownicy
 allow anonymous access to this app	admin	pl	Pozwól na dostęp anonimowy do tej aplikacji
 allow remote administration from following install id's (comma separated)	admin	pl	Zezwól na zdalną administrację z tych ID instalacji (rozdzielone przecinkiem)
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	pl	Zezwól użytkownikowi na przechowywanie hasła w sekcji „Bezpieczeństwo i hasła” dla SingleSignOn.
+allow user to set 'remember me' token	admin	pl	Umożliwienie użytkownikowi ustawienia tokenu "Zapamiętaj mnie"
 alternate email address	admin	pl	Alternatywny adres email
 anonymous user	admin	pl	Użytkownik anonimowy
 anonymous user (not shown in list sessions)	admin	pl	Użytkownik anonimowy (nie pojawia się w wykazie sesji)
@@ -152,6 +154,7 @@ change password for %1	admin	pl	Zmień hasło dla %1
 check acl for entries of not (longer) existing accounts	admin	pl	Sprawdź ACL dla wpisów nie istniejących (już) kont
 check ip address of all sessions	admin	pl	Sprawdzanie adresu IP dla każdej sesji
 check items to <b>%1</b> to %2 for %3	admin	pl	Sprawdź pozycje do <b>%1</b> do %2 dla %3
+clear security tokens	admin	pl	Wyczyść tokeny bezpieczeństwa
 click to select a color	admin	pl	Kliknij aby wybrać kolor
 color	admin	pl	Kolor
 command scheduled to run at %1	admin	pl	Uruchomienie polecenia zaplanowane na %1
@@ -289,12 +292,14 @@ error changing the password for %1 !!!	admin	pl	Błąd podczas zmiany hasła dla
 error connecting to imap server. %s : %s.	admin	pl	Błąd połączenia do serwera IMAP. %s : %s
 error connecting to imap server: [%s] %s.	admin	pl	Błąd połączenia do serwera IMAP. [%s]  %s
 error deleting log entry!	admin	pl	Błąd podczas usuwania wpisu dziennika!
+error revoking token!	admin	pl	Błąd cofnięcia tokena!
 error saving	admin	pl	Błąd przy zapisie
 error saving account!	admin	pl	Błąd przy zapisie konta!
 error saving the command!	admin	pl	Błąd przy zapisie polecenia!
 error saving the entry!!!	admin	pl	Błąd przy zachowywaniu wpisu!
 error saving to db:	admin	pl	Błąd zapisu do bazy danych:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	pl	Błąd ustawiania timera - błędna składnia lub może jakiś już jest uruchomiony!
+error storing token!	admin	pl	Błąd przechowywania tokena!
 error! no appname found	admin	pl	Błąd! Brak nazwy aplikacji
 error: %1 not found or other error !!!	admin	pl	Błąd: %1 nie znaleziony lub inny błąd!
 event details follow	admin	pl	Detale Wydarzenia Następują
@@ -320,6 +325,7 @@ forward only	admin	pl	Prześlij tylko
 full name	admin	pl	Pełna nazwa
 general	admin	pl	Główne
 generate certificate	admin	pl	Generowanie certyfikatu
+generate new token and display it once after saving	admin	pl	Wygeneruj nowy token i wyświetl go raz po zapisaniu.
 global categories	common	pl	Kategorie globalne
 global options	admin	pl	Ustawienia globalne
 go directly to admin menu, returning here the next time you click on administration.	admin	pl	Przy powrocie do storny administracji przejdź bezpośrednio do menu administracyjnego.
@@ -348,6 +354,7 @@ how should email addresses for new users be constructed?	admin	pl	Jak tworzyć a
 icon	admin	pl	Ikonka
 idle	admin	pl	Czas jałowy
 if different from email address	admin	pl	Jeśli inny niż adres e-mail
+if disabled existing tokens immediatly stop working.	admin	pl	Jeśli istniejące tokeny zostaną wyłączone, natychmiast przestaną działać.
 if no acl records for user or any group the user is a member of	admin	pl	Jeśli brak uprawnień dostępu (ACL) dla użytkownika lub jakiejkolwiek grupy, której użytkownik jest członkiem
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pl	Jeżeli używasz LDAP, czy chciałbyś administrować katalogiem domowym i atrybutami powłoki?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	pl	Jeżeli korzystasz z SSL lub TLS, musisz zapewnić obsługę OpenSSL w PHP.
@@ -411,6 +418,7 @@ leave the group untouched and return back to the list	admin	pl	Pozostaw grupę n
 leave without saveing the entry	admin	pl	Cofnij bez zapisywania wpisu
 leaves without saveing	admin	pl	Pozostaw bez zmian
 length<br>rows	admin	pl	Długość<br>linie
+lifetime of 'remember me' token	admin	pl	Okres ważności tokenu "Zapamiętaj mnie"
 list config settings	admin	pl	Wyświetl ustawienia
 list current sessions	admin	pl	Wyświetl listę aktualnych sesji
 list of current users	admin	pl	Lista bieżących użytkowników
@@ -530,6 +538,7 @@ remote instance saved	admin	pl	Zdalna instancja zapisana
 remove	admin	pl	Usuń
 requested	admin	pl	Żądany
 reset filter	admin	pl	Resetuj filtr
+revoke this token	admin	pl	Cofnij ten token
 rights	admin	pl	Prawa
 rows	admin	pl	Wiersze
 rpm or debian package	admin	pl	Paczka RPM albo deb
@@ -546,6 +555,7 @@ security	admin	pl	Zabezpieczenie
 select accounts for which the custom field should be visible	admin	pl	Wybierz konta dla których ma być widoczne pole własne
 select group managers	admin	pl	Wybierz managera grupy
 select permissions this group will have	admin	pl	Wybór praw dla grupy
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	pl	Wybierz aplikacje, do których chcesz ograniczyć token, lub pozostaw domyślnie wszystkie aplikacje.
 select the parent category. if this is a main category select no category	admin	pl	Wybierz kategorię nadrzędną. Jeżeli ta kategoria jest jedną z głównych, wybierz BEZ NADRZĘDNEJ
 select type of imap server	admin	pl	Wybierz rodzaj serwera IMAP
 select type of smtp server	admin	pl	Wybierz rodzaj serwera SMTP
@@ -602,6 +612,7 @@ submit the search string	admin	pl	Wyślij tekst zapytania
 submit to egroupware.org	admin	pl	Prześlij do egroupware.org
 subtype	admin	pl	Pod-typ
 success	admin	pl	Sukces
+successfull, but no refresh-token received!	admin	pl	Pomyślnie, ale NIE otrzymano tokena odświeżania!
 switch it off, if users are randomly thrown out	admin	pl	Wyłącz to, jeżeli użytkownicy są wyrzucani losowo
 that loginid has already been taken	admin	pl	Taki login już istnieje
 the api is current	admin	pl	Wersja API jest aktualna
@@ -628,6 +639,10 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	pl
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	pl	Czas wygasnięcia sesji w sekundach (domyślnie 14400 = 4 godziny)
 times	admin	pl	Razy
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	pl	Aby zezwolić na śledzenie rozwoju Twojej instalacji użyj tego ID, w przeciwnym wypadku usuń je:
+token created.	admin	pl	Token został utworzony.
+token not found!	admin	pl	Token nie został znaleziony!
+token revoked.	admin	pl	Token odwołany.
+token saved.	admin	pl	Token zapisany.
 top	admin	pl	Na górze
 total of %1 id's changed.	admin	pl	Zmieniono %1 id.
 total records	admin	pl	Wszystkich rekordów
@@ -658,6 +673,7 @@ use default	admin	pl	Domyślne
 use ldap defaults	admin	pl	Skorzystaj z domyślnych wartości LDAP
 use predefined username and password defined below	admin	pl	Skorzystaj z predefiniowanych nazw użytkownika i hasła podanego poniżej
 use pure html compliant code (not fully working yet)	admin	pl	Używaj kodu zgodnego z czystym HTML (nie działa w pełni)
+use save or apply to store the received oauth token!	admin	pl	Zapisz lub zastosuj, aby zapisać otrzymany token OAuth!
 use smtp auth	admin	pl	Skorzystaj z autentykacji SMTP
 use theme	admin	pl	Używaj tematu
 use tls authentication	admin	pl	Skorzystaj z autentykacji TLS

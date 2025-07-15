@@ -110,11 +110,10 @@ permanent time zone selection	preferences	sl	Stalni časovni pas
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	sl	Izberite časovne pasove za preklop med. Stikalo ni prikazano, če je izbrana manj kot dve časovni pasovi.
 please select your timezone.	preferences	sl	Izberite svoj časovni pas.
 popup with search	preferences	sl	Okno za iskanje
-preferences saved.	preferences	sl	Nastavitve shranjene
+preferences saved.	preferences	sl	Nastavitve shranjene.
 pt: points (1/72 inch)	preferences	sl	pt: točke (1/72 palca)
 px: display pixels	preferences	sl	px: prikaz slikovnih pik
 re-enter your password	preferences	sl	Ponovno vpišite geslo
-read prefs for the specified application.	preferences	sl	Preberite lastnosti izbrane aplikacije.
 reset qrcode	preferences	sl	Ponastavi kodo QR
 scan qrcode with a time-based one-time password (totp) app:	preferences	sl	Skenirajte kodo QR z aplikacijo TOTP (Time-based one-time password):
 select additional lines in lists by	preferences	sl	Izberite dodatne vrstice v seznamih z
@@ -128,7 +127,6 @@ server is unwilling to perform.	preferences	sl	Strežnik ni pripravljen za izvaj
 set content size	preferences	sl	Nastavitev velikosti vsebine
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	sl	Spremenite glede na vaše. Iz varnostnih razlogov morda nočete razkriti vašega uporabniškega imena.
 should the number of active sessions be displayed for you all the time.	preferences	sl	Ali naj bo število aktivnih sej prikazano ves čas?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	sl	Naj bo pomoč vidna vedno ali samo na zahtevo?
 show helpmessages by default	preferences	sl	Privzeto prikaži sporočila s pomočjo
 show links between egroupware aps as	common	sl	Prikaži povezave med aplikacijami EGroupware kot
 show navigation bar as	preferences	sl	Prikaži navigacijsko vrstico kot
@@ -143,7 +141,6 @@ spellchecker language	addressbook	sl	Jezik črkovalnika
 store password retrievable for singlesignon	common	sl	Shranjevanje gesla, ki ga je mogoče priklicati za SingleSignOn
 text editor settings	preferences	sl	Nastavitve urejevalnika besedila
 text only	preferences	sl	Samo besedilo
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sl	Privzeta aplikacija se bo zagnala ob vstopu v EGW ali ob kliku na domačo ikono.<br>Na domači strani je lahko hkrati prikazanih več aplikacij. Prikaz aplikacij določate v nastavitvah aplikacij.
 the old password is not correct	preferences	sl	Staro geslo ni pravilno
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sl	Izbirni seznam prikazuje uporabnike, ki so na voljo (lahko je precej dolg). Z iskalnim oknom lahko iščete uporabnike po imenu ali skupini.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	sl	V izbirnem polju so prikazani vsi razpoložljivi uporabniki (lahko je zelo veliko pri velikih namestitvah pri številnih uporabnikih). Pojavno okno lahko išče uporabnike po imenu ali skupini. Dve zadnji možnosti omejujejo vidnost drugih uporabnikov. Zato jih je treba prisiliti in uporabljati NE za skrbnike.
@@ -164,7 +161,6 @@ what to display for an avatar, if there is no photo	preferences	sl	Kaj prikazati
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sl	Če želite, sta lahko gumba za domačo stran in odjavo na voljo na vrhu aplikacije.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sl	Kateri nabor znakov naj se uporabi pri izvozu CSV. Privzeto se uporabi nabor znakov, ki je nastavljen v EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	sl	Kateri valutni simbol ali ime bo uporabno v EGW.
-write prefs for the specified application.	preferences	sl	Napišite lastnosti izbrane aplikacije.
 you can show the applications as icons only, icons with app-name or both.	preferences	sl	Lahko pokažem aplikacije kot ikone, ikone z imenom aplikacije ali oboje.
 you can show the linked entries with icons only, icons with app-name or both.	common	sl	Vnose s povezavami lahko prikažete samo z ikonami, samo z imenom aplikacije ali z obojim.
 you do not have permission to set acl's in this mode!	preferences	sl	Nimate dovoljenja za nastavitev ACL v tem načinu!

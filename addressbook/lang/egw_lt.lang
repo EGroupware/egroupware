@@ -85,6 +85,7 @@ merge duplicates	addressbook	lt	Sujungti dublikatus
 merge into first or account, deletes all other!	addressbook	lt	Sujungti į pirmąją arba paskyrą, ištrina visus kitus!
 move to addressbook	addressbook	lt	Perkelti į adresų knygelę
 name, email, phone	addressbook	lt	Vardas, el. paštas, telefonas
+never use prefix	addressbook	lt	Niekada nenaudokite priešdėlio
 no country selected	addressbook	lt	Šalis nepasirinkta
 no distribution list	addressbook	lt	Nėra paskirstymo sąrašo
 not shared	addressbook	lt	nesidalijama
@@ -95,6 +96,7 @@ open tracking system crm view	preferences	lt	Atverti sekimo sistemos CRM vaizdą
 permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	lt	Leidimas nesuteiktas! Paprašykite administratoriaus, kad jis leistų nuolatiniams naudotojams atnaujinti savo viešuosius raktus.
 pgp key	addressbook	lt	PGP raktas
 phone number	common	lt	Telefono numeris
+prefix	addressbook	lt	Priešdėlis
 prevent deleting of contacts	admin	lt	Neleisti ištrinti kontaktų
 private address	addressbook	lt	Privatus adresas
 public sharing url	addressbook	lt	Viešas dalijimosi URL
@@ -125,8 +127,12 @@ unable to import into %1, using %2	addressbook	lt	Nepavyksta importuoti į %1, n
 unknown type %1, imported as %2	addressbook	lt	Nežinomas tipas %1, importuotas kaip %2
 unshare	addressbook	lt	Daugiau nebesidalyti
 unshared	addressbook	lt	nebesidalijama
+use firstname, only if no prefix	addressbook	lt	Naudokite vardą, tik jei nėra priešdėlio
+use prefix plus all other name parts	addressbook	lt	Naudokite priešdėlį ir visas kitas vardo dalis
+use prefix, only if no firstname	addressbook	lt	Naudokite priešdėlį, tik jei nėra vardo
 user groups are automatically shown as distribution lists.	addressbook	lt	Vartotojų grupės automatiškai rodomos kaip paskirstymo sąrašai.
 video call	addressbook	lt	Vaizdo skambutis
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	lt	Kas turėtų būti rodoma kaip visas vardas. Jei nėra nei vardo, nei pavardės, rodomas įmonės pavadinimas.
 when viewing a contact, show linked entries from the selected application	addressbook	lt	Peržiūrint kontaktą, rodyti susietus pasirinktos programos įrašus
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	lt	Sujungiant įrašus į dokumentus, jie bus saugomi čia. Jei katalogas nenurodytas, jie bus saugomi jūsų namų kataloge (/home/...)
 yes, only admins can purge deleted items	admin	lt	Taip, ištrintus elementus gali išvalyti tik administratoriai

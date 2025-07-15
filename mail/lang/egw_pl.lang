@@ -19,7 +19,9 @@ after reply, visible during compose	mail	pl	Po odpowiedzi, widoczne podczas komp
 aliases+forwards	mail	pl	Aliasy+Przekazy
 all my email addresses	mail	pl	wszystkie moje adresy e-mail
 all of	mail	pl	wszystkie z
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	pl	Wszystkie podfoldery również zostaną usunięte, a wszystkie wiadomości we wszystkich dotkniętych folderach zostaną utracone
 allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML.
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	pl	Umożliwia użytkownikowi odczytywanie, zapisywanie i tworzenie folderów i wiadomości e-mail, wysyłanie do nich wiadomości, dołączanie do nich wiadomości i usuwanie wiadomości
 always respond / auto-responder	mail	pl	Zawsze odpowiadaj / autoresponder
 always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
 always show notifiction	mail	pl	Zawsze pokazuj powiadomienia
@@ -27,6 +29,7 @@ answered	mail	pl	Odpowiedź na
 any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
 archive folder	mail	pl	Folder archiwum
+are you sure you want to delete all selected folders?	mail	pl	Czy na pewno chcesz usunąć wszystkie wybrane foldery?
 attach files	mail	pl	Dołączanie plików
 attach users vcard at compose to every new mail	mail	pl	Dołączanie wizytówki vCard użytkownika podczas tworzenia wiadomości do każdego nowego maila.
 attachment has been saved successfully.	mail	pl	Załącznik został pomyślnie zapisany.
@@ -119,6 +122,8 @@ examine namespace to retrieve folders in others and shared	mail	pl	Zbadaj przest
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	pl	Wyklucz załączniki większe niż podany rozmiar z automatycznego zapisywania jako wersja robocza (w MB)
 extended	mail	pl	Rozszerzone
 failed to delete %1	mail	pl	Nie udało się usunąć %1
+failed to delete %1 ! reason: %2	mail	pl	Nie udało się usunąć %1! Powód: %2
+failed to delete %1. server responded:	mail	pl	Nie udało się usunąć %1! Serwer odpowiedział:
 failed to subscribe folder %1!	mail	pl	Nie udało się zasubskrybować folderu %1!
 failed to unsubscribe folder %1!	mail	pl	Nie udało się anulować subskrypcji folderu %1!
 file into	mail	pl	Przenieś do
@@ -382,11 +387,13 @@ vacation notice is active	mail	pl	Powiadomienie urlopowe jest aktywne
 vacation start-date must be before the end-date!	mail	pl	Start Urlopu musi być wcześniejszy niż jego koniec
 validate addresses on submit:	mail	pl	Weryfikacja adresów przy wysyłaniu:
 view header lines	mail	pl	Pokaż linie nagłówka
+what to do when you delete a message	mail	pl	Co zrobić po usunięciu wiadomości.
 when deleting messages	mail	pl	Gdy usuwasz wiadomość
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
 which folders - in general - should not be automatically created, if not existing	mail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją
 whole message	mail	pl	Cała wiadomość
 write	mail	pl	Zapisz
+write & delete	mail	pl	zapisz i usuń
 wrote	mail	pl	zapisano
 yes, offer copy option	mail	pl	Tak, oferuj opcję kopii
 you can select what info to be displayed on email tag	mail	pl	Możesz wybrać, jakie informacje mają być wyświetlane w tagu e-mail.

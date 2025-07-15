@@ -45,6 +45,7 @@ allow external images from listed domains	mail	sl	Dovoli zunanje fotografije iz 
 allow images from external sources in html emails	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML.
 allow images from listed domains in html emails	mail	sl	Omogočite slike iz zunanjih virov v HTML e-poštnih sporočilih.
 allow users to create further identities	mail	sl	Uporabnikom omogočajo ustvarjanje nadaljnjih identitet
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	sl	Uporabniku omogoča branje, pisanje in ustvarjanje map in poštnih sporočil, objavljanje v njih, dodajanje sporočil vanje in brisanje sporočil
 always	mail	sl	Vedno
 always allow external sources from %1	mail	sl	Vedno dovoli zunanje vire iz %1
 always respond / auto-responder	mail	sl	Vedno odgovori / samodejni odzivnik
@@ -694,6 +695,7 @@ with message:	mail	sl	S sporočilom:
 wizard	mail	sl	Čarovnik
 writable sharing requires epl version!	mail	sl	Za souporabo, ki omogoča pisanje, je potrebna različica EPL!
 write	mail	sl	Zapiši
+write & delete	mail	sl	napiši in izbriši
 wrote	mail	sl	Je napisal
 yes, offer copy option	mail	sl	Da, ponudi možnost Kopija
 you can select what info to be displayed on email tag	mail	sl	Izberete lahko, katere informacije bodo prikazane na e-poštni oznaki.

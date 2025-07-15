@@ -52,7 +52,6 @@ check virtual filesystem	common	en	Check virtual filesystem
 classic	filemanager	en	Standard Toolbar
 clear search	filemanager	en	Clear search
 clipboard is empty!	filemanager	en	Clipboard is empty!
-collab editor settings	filemanager	en	Collab Editor settings
 comment	filemanager	en	Comment
 configuration changed.	filemanager	en	Configuration changed.
 confirm final delete	filemanager	en	Confirm final delete
@@ -203,6 +202,7 @@ modified between	filemanager	en	Modified between
 modify all subdirectories and their content	filemanager	en	Modify all sub directories and their content
 mount	filemanager	en	Mount
 mount /etemplates to allow customizing of etemplates	filemanager	en	Mount /etemplates to allow customizing of eTemplates
+mount permanently	filemanager	en	Mount permanently
 mountpoints	filemanager	en	Mountpoints
 move	filemanager	en	Move
 move into folder	filemanager	en	Move into folder

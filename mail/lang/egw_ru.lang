@@ -21,8 +21,10 @@ aliases+forwards	mail	ru	Псевдонимы+Пересылки
 all available info	admin	ru	Вся доступная информация
 all my email addresses	mail	ru	все мои адреса
 all of	mail	ru	Все из
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	ru	Все вложенные папки также будут удалены, а все сообщения во всех затронутых папках будут потеряны
 allow external images	mail	ru	Разрешить внешние изображения
 allow images from external sources in html emails	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML.
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ru	Позволяет пользователю читать, писать и создавать папки и письма, отправлять в них сообщения, добавлять в них сообщения и удалять их
 always respond / auto-responder	mail	ru	Всегда отвечать / автоответчик
 always show html emails	mail	ru	Всегда показывать письма формата HTML
 always show notifiction	mail	ru	Всегда показывать уведомление
@@ -31,6 +33,7 @@ any of	mail	ru	Любой из
 any status	mail	ru	Любое состояние
 append	mail	ru	Дополнить
 archive folder	mail	ru	Архивная папка
+are you sure you want to delete all selected folders?	mail	ru	Вы уверены, что хотите удалить все выбранные папки?
 attach files	mail	ru	Прикрепить файлы
 attach users vcard at compose to every new mail	mail	ru	Вкладывать визитку пользователя в каждое новое письмо.
 attach vcard	mail	ru	Вложить vCard (визитку)
@@ -141,6 +144,8 @@ exclude attachments greater than given size from automatic saving as draft (in m
 extended	mail	ru	Расширено.
 extra sent folders	mail	ru	Дополнительные каталоги отправленных
 failed to delete %1	mail	ru	Не удалось удалить %1
+failed to delete %1 ! reason: %2	mail	ru	Не удалось удалить %1! Причина: %2
+failed to delete %1. server responded:	mail	ru	Не удалось удалить %1! Сервер ответил:
 failed to subscribe folder %1!	mail	ru	Не удалось подписаться на папку %1!
 failed to unsubscribe folder %1!	mail	ru	Не удалось отменить подписку на папку %1!
 file into	mail	ru	Переход к
@@ -464,6 +469,7 @@ which folders (additional to the sent folder) should be displayed using the sent
 which folders - in general - should not be automatically created, if not existing	mail	ru	Какие папки не должны автоматически создаваться, если не существуют
 which method to use when forwarding a message	mail	ru	Метод, используемый при пересылке
 write	mail	ru	Записать
+write & delete	mail	ru	написать и удалить
 wrote	mail	ru	Записано
 yes, offer copy option	mail	ru	Да, предложить вариант копирования
 you can select what info to be displayed on email tag	mail	ru	Вы можете выбрать, какая информация будет отображаться в теге email.

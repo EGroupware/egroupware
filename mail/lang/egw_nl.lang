@@ -36,6 +36,7 @@ allow external images from listed domains	mail	nl	Externe afbeeldingen van verme
 allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan.
 allow images from listed domains in html emails	mail	nl	Afbeeldingen van vermelde domeinen toestaan in HTML e-mails.
 allow users to create further identities	mail	nl	Sta gebruikers toe meer identitietien aan te maken
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	nl	Hiermee kan een gebruiker mappen en mails lezen, schrijven en aanmaken, er berichten in plaatsen, berichten toevoegen en berichten verwijderen.
 always	mail	nl	Altijd
 always allow external sources from %1	mail	nl	Sta altijd externe bronnen toe van %1
 always respond / auto-responder	mail	nl	Direct antwoorden / Auto-Responder
@@ -642,6 +643,7 @@ which method to use when forwarding a message	mail	nl	Welke methode gebruiken wa
 with message:	mail	nl	Met bericht:
 writable sharing requires epl version!	mail	nl	Schrijfbaar delen vereist EPL versie!
 write	mail	nl	Schrijf
+write & delete	mail	nl	schrijven & verwijderen
 wrote	mail	nl	schreef
 yes, offer copy option	mail	nl	ja, stel kopieer functie voor
 you can select what info to be displayed on email tag	mail	nl	U kunt selecteren welke informatie op de e-mailtag moet worden weergegeven.

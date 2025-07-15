@@ -118,6 +118,7 @@ do you want a weekview with or without weekend?	calendar	pt	Deseja que a visuali
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	pt	Deseja ser avisado de compromissos novos ou alterados? Será avisado de alterações que fizer.<br>Pode limitar os avisos para apenas algumas alterações. Cada item inclui todas os avisos listados. Todas as modificações incluem alterações de título, descrições, participantes, mas não as respostas dos participantes. Se o administrador de um evento requerer quaisquer avisos, obterá sempre as respostas dos participantes, bem como a aceitação e rejeição das mesmas.
 do you want to delete this subscription incl. the synced events?	calendar	pt	Pretende eliminar esta subscrição, incluindo os eventos sincronizados?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pt	Deseja receber um resumo regular dos seus compromissos através de correio electrónico?<br>O resumo será enviado para a sua conta de correio electrónico na manhã do próprio dia ou à segunda-feira para resumos semanais.<br>Será apenas enviado quando tiver compromissos nesse dia ou semana.
+does not show event to other users, unless they have a private grant	calendar	pt	NÃO mostra o evento a outros utilizadores, a menos que estes tenham uma concessão privada
 download	calendar	pt	Transferir
 download this event as ical	calendar	pt	Transferir este evento como iCal
 duration	calendar	pt	Duração
@@ -240,6 +241,7 @@ minimum number of users for showing week view as consolidated.	calendar	pt	Núme
 minutes	calendar	pt	Minutos
 modified	calendar	pt	Modificado
 modifier	calendar	pt	Modifier
+modify events	calendar	pt	Modificar eventos
 mon	calendar	pt	Seg
 month	calendar	pt	Mês
 monthly	calendar	pt	Mensalmente
@@ -250,6 +252,8 @@ move to	calendar	pt	Mover para
 multiple participants	calendar	pt	Vários participantes
 never notify externals (non-users) about events i create	calendar	pt	Nunca notificar pessoas externas (não utilizadores) sobre eventos que eu criei
 new	calendar	pt	Novo
+new event category	calendar	pt	Nova categoria de evento
+new event participants	calendar	pt	Novos participantes no evento
 new search with the above parameters	calendar	pt	Nova pesquisa com os parâmetros indicados em cima
 no events found	calendar	pt	Nenhum evento encontrado
 no filter	calendar	pt	Sem filtro
@@ -282,6 +286,7 @@ on time change of more than 4 hours too	calendar	pt	Por alterações de horário
 one month	calendar	pt	Um mês
 one week	calendar	pt	Uma semana
 one year	calendar	pt	Um ano
+only group-events	calendar	pt	Apenas eventos de grupo
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	pt	Apenas suportado por alguns clientes totalmente compatíveis (por exemplo, da Apple). Se tiver de introduzir um URL, o mais provável é que não seja suportado!
 only the initial date of that recurring event is checked!	calendar	pt	Apenas será verificada a data de início de um evento recorrente!
 open todo's:	calendar	pt	Abrir lista de tarefas
@@ -323,6 +328,7 @@ repetitiondetails (or empty)	calendar	pt	Detalhes de repetição (ou vazio)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	pt	A resposta "%1" NÃO é um participante do evento! Continuar apenas se pretender adicionar um novo participante.
 report	calendar	pt	Relatório
 reset	calendar	pt	Limpar
+reset resource status on event shifts	calendar	pt	Repor o estado do recurso ao deslocar eventos
 resources	calendar	pt	Fontes
 role	calendar	pt	Papel
 rule	calendar	pt	Regra
@@ -334,6 +340,7 @@ select a %1	calendar	pt	Seleccionar um %1
 select a time	calendar	pt	Seleccionar uma hora
 select multiple contacts for a further action	calendar	pt	Selecionar vários contatos para uma nova acção
 select resources	calendar	pt	Seleccionar fontes
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	pt	Selecionar se se pretende que o estado do recurso seja reposto em “Sem resposta”, se um evento for deslocado mais tarde.
 select who should get the alarm	calendar	pt	Seleccionar quem deve ser avisado
 send notifications	calendar	pt	Enviar notificações
 send notifications to users right now	calendar	pt	Enviar notificações aos participantes neste momento

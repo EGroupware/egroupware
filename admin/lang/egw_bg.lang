@@ -94,6 +94,7 @@ admins	admin	bg	Администратори
 advanced options	admin	bg	Разширени опции
 aliases	admin	bg	Псевдоними
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	bg	Разрешете на потребителя да съхранява паролата си в „Сигурност и пароли“ за SingleSignOn.
+allow user to set 'remember me' token	admin	bg	Позволете на потребителя да зададе токъна "Запомни ме
 application passwords	admin	bg	Пароли за приложения
 apply the changes	admin	bg	Прилагане на промените
 archive: zip or tar	admin	bg	Архив: ZIP или tar
@@ -104,6 +105,7 @@ can be used to show groups by container, if enabled	admin	bg	Може да се 
 change access	admin	bg	Промяна на правата за достъп
 change domain of email address and aliases	admin	bg	Промяна на домейна на имейл адреса и псевдонимите
 checking push (green for success or red for failure)	admin	bg	Проверка на PUSH (зелено = ОК, червено = не е ОК)
+clear security tokens	admin	bg	Изчистване на токените за сигурност
 container	admin	bg	Контейнер
 copy of	admin	bg	Копие на
 country	admin	bg	Държава
@@ -125,8 +127,11 @@ egroupware version	admin	bg	Версия на EGroupware
 enable sieve	admin	bg	Активиране на Sieve
 enter the title for your site	admin	bg	Въведете заглавието на сайта
 enter the title of your logo	admin	bg	Въведете заглавието на логото
+error revoking token!	admin	bg	Грешка при отнемане на токена!
+error storing token!	admin	bg	Грешка при съхраняване на токена!
 event details follow	admin	bg	Следват подробности за събитието
 exists	admin	bg	Съществува
+generate new token and display it once after saving	admin	bg	Генерирайте нов токен и го покажете веднъж след запазване
 global categories	common	bg	Глобални категории
 group has been added	common	bg	Групата е добавена.
 group has been deleted	common	bg	Групата е била изтрита.
@@ -136,10 +141,12 @@ group hierarchy	admin	bg	Йерархия на групите
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	bg	Колко записа трябва да могат да експортират неадминистраторите. Празно = няма ограничение, Не = няма експорт
 html/plaintext	admin	bg	HTML/текст
 if different from email address	admin	bg	Ако е различен от имейл адреса
+if disabled existing tokens immediatly stop working.	admin	bg	Ако се деактивират съществуващите токени, те незабавно спират да работят.
 internal name max. 64 chars	admin	bg	Вътрешно име макс. 64 символа
 invalid format, must end in a group of digits e.g. %1 or %2	admin	bg	Невалиден формат, трябва да завършва с група цифри, например %1 или %2
 last updated	admin	bg	Последна актуализация
 leave empty to use oauth, if supported	admin	bg	Оставете празно, за да използвате OAuth, ако се поддържа
+lifetime of 'remember me' token	admin	bg	Живот на токена "Запомни ме
 manage mapping	admin	bg	Управление на съответствията
 modified	admin	bg	Редактирано
 month	admin	bg	Месец
@@ -159,15 +166,23 @@ own install id:	admin	bg	Идентификатор на собствена ин
 permission denied	admin	bg	Не е позволено
 regular expression to find part to use as container	admin	bg	Редовен израз за намиране на част, която да се използва като контейнер
 requested	admin	bg	Заявена
+revoke this token	admin	bg	Отмяна на този токън
 select accounts for which the custom field should be visible	admin	bg	Изберете сметки, за които потребителското поле трябва да бъде само за четене.
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	bg	Изберете приложенията, до които искате да бъде ограничен токенът, или оставете по подразбиране всички приложения.
 serial number	admin	bg	Сериен номер
 set a random password	admin	bg	Задаване на произволна парола
 show groups in container based on	admin	bg	Показване на групите в контейнера въз основа на
 smtp only: to create only an smtp account	admin	bg	Създаване на акаунт само за SMTP без IMAP
 start	admin	bg	Старт
+successfull, but no refresh-token received!	admin	bg	Успешно, но НЕ е получен токен за обновяване!
+token created.	admin	bg	Създаден е токен.
+token not found!	admin	bg	Токенът не е намерен!
+token revoked.	admin	bg	Токенът е отнет.
+token saved.	admin	bg	Токенът е запазен.
 translation	admin	bg	Превод
 two weeks	admin	bg	две седмици
 updated	admin	bg	Актуализиран
+use save or apply to store the received oauth token!	admin	bg	Използвайте save или apply, за да съхраните получения OAuth токен!
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	bg	Използвайте следните опции:\nnoVfsSelect=1\nmime=application/pdf или /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 user choice	admin	bg	Избор на потребител
 user csv export	admin	bg	Експортиране на потребители в CSV

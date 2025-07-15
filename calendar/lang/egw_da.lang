@@ -119,6 +119,7 @@ do you want a weekview with or without weekend?	calendar	da	Ønsker du uge-view 
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	da	Vil du påmindes om nye eller ændrede aftaler? Vil du påmindes omkring ændringer du selv har lavet.<br>Du kan begrænse påmindelser til bestemte ændringer. Hvert punkt indeholder alle påmindelser listet ovenfor. Alle ændringer inkluderer ændringer af titel, beskrivelse, deltagere, men ikke deltagernes svar. Hvis ejeren af en hændelse har anmodet om påmindelse, vil han også altid modtage deltagerens svar, såsom accepteret og ikke accepteret.
 do you want to delete this subscription incl. the synced events?	calendar	da	Vil du slette dette abonnement inkl. de synkroniserede begivenheder?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	da	Vil du modtage en reglmæssig opsummering af dine aftaler via e-mail?<br>Opsummeringen bliver sendt til din standard e-mail addresse om morgenen på dagen eller mandag for ugenligt opsummering.<br>Den bliver kun sendt hvis du har aftaler på dagen eller ugen.
+does not show event to other users, unless they have a private grant	calendar	da	Viser IKKE begivenheder til andre brugere, medmindre de har en privat bevilling
 download	calendar	da	Hent
 download this event as ical	calendar	da	Download denne aftale som iCal
 duration	calendar	da	Varighed
@@ -232,6 +233,7 @@ minimum number of users for showing week view as consolidated.	calendar	da	Minim
 minutes	calendar	da	Minutter
 modified	calendar	da	Modificeret
 modifier	calendar	da	Modifikator
+modify events	calendar	da	Ændre begivenheder
 mon	calendar	da	Man
 month	calendar	da	Måned
 monthly	calendar	da	Månedligt
@@ -244,6 +246,8 @@ multiple week view	calendar	da	Visning af flere uger
 needs action	calendar	da	Behov for handling
 never notify externals (non-users) about events i create	calendar	da	Underret aldrig eksterne (ikke-brugere) om begivenheder, jeg opretter
 new	calendar	da	Ny
+new event category	calendar	da	Ny begivenhedskategori
+new event participants	calendar	da	Nye deltagere til begivenheden
 new search with the above parameters	calendar	da	Ny søgning med ovenstående parametre
 no events found	calendar	da	Ingen aftaler fundet
 no filter	calendar	da	Intet filter
@@ -273,6 +277,7 @@ on time change of more than 4 hours too	calendar	da	Også når tiden ændres mer
 one month	calendar	da	En måned
 one week	calendar	da	En uge
 one year	calendar	da	Et år
+only group-events	calendar	da	Kun gruppebegivenheder
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	da	Understøttes kun af nogle få fuldt kompatible klienter (f.eks. fra Apple). Hvis du skal indtaste en URL, vil den højst sandsynligt ikke blive understøttet!
 only the initial date of that recurring event is checked!	calendar	da	Kun den initielle dato af den gentagne aftale er checket!
 open todo's:	calendar	da	Åben Opgave:
@@ -312,6 +317,7 @@ repetitiondetails (or empty)	calendar	da	Gentagelse detaljer (eller tom)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	da	Besvarelsen "%1" er IKKE en deltager i begivenheden! Fortsæt kun, hvis du vil tilføje en ny deltager.
 report	calendar	da	Rapport
 reset	calendar	da	Nulstil
+reset resource status on event shifts	calendar	da	Nulstil ressourcestatus ved flytning af events
 resources	calendar	da	Ressourcer
 rule	calendar	da	Regel
 sat	calendar	da	Lør
@@ -321,6 +327,7 @@ scheduling conflict	calendar	da	Aftale konflikt
 select a %1	calendar	da	Vælg en %1
 select a time	calendar	da	Vælg et tidspunkt
 select resources	calendar	da	Vælg ressourcer
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	da	Vælg, om du vil have nulstillet ressourcestatus til »Intet svar«, hvis en begivenhed flyttes senere.
 select who should get the alarm	calendar	da	Vælg hvem der skal have sat alarm
 send notifications	calendar	da	Send notifikationer
 send notifications to users right now	calendar	da	Send notifikationer til deltagere lige nu

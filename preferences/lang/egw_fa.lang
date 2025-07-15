@@ -43,21 +43,18 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fa	تذکر:  این قابلیت گذرواژه رایانامه شما را تغییر نخواهد داد. باید بصورت دستی این کار را انجام دهید.
 popup with search	preferences	fa	پایین افتادنی با جستجو
 re-enter your password	preferences	fa	گذرواژه را مجددا وارد کنید
-read prefs for the specified application.	preferences	fa	خواندن تنظیمات برای کاربرد تعریف شده
 select one	preferences	fa	انتخاب کنید
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fa	زبان متنها و پیامها در گروه افزار را انتخاب کنید.<br> برخی زبانها ممکن است همه پیامها را نداشته باشند در اینصورت آن پیامها به زبان انگلیسی نمایش داده می شوند
 selectbox	preferences	fa	جعبه انتخاب
 selectbox with primary group and search	preferences	fa	جعبه انتخاب برای گروه اولیه و جستجو
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	fa	این را آنطور که می خواهید تنظیم کنید. بدلایل امنیتی شاید بخواهید. شناسه کاربری شما نمایش داده نشود.
 should the number of active sessions be displayed for you all the time.	preferences	fa	می خواهید تعداد نشستهای فعال همیشه برای شما نمایش داده شوند؟
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	fa	می خواهید این متنهای راهنما -همیشه - در زمان تعریف تنظیمات نمایش داده شوند؟
 show helpmessages by default	preferences	fa	نمایش پیامهای کمک بصورت پیش فرض
 show navigation bar as	preferences	fa	نمایش نوار ناوبری بصورت
 show number of current users	preferences	fa	نمایش تعداد کاربران فعلی
 show text on navigation icons	preferences	fa	نمایش متن روی نمایه های ناوبری
 show_more_apps	common	fa	نمایش کاربردهای بیشتر
 text only	preferences	fa	فقط متن
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fa	«کاربرد پیش فرض» در زمان ورود شما به گروه افزار یا با کلیک بر روی نمایه «خانه» نمایش داده خواهد شد.
 the old password is not correct	preferences	fa	گذرواژه قبلی نادرست است
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fa	جعبه انتخاب همه کاربران را نمایش خواهد داد.(می تواند در سیستمهای با تعداد کاربر زیاد، کندی ایجاد کند)
 the two passwords are not the same	preferences	fa	گذرواژه های جدید وارد شده شبیه هم نیستند
@@ -68,7 +65,6 @@ use default	preferences	fa	استفاده از پیش فرض
 users choice	preferences	fa	پسند کاربرها
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fa	وقتی بگوئید «بله» نمایه های «خانه» و «خروج» در نوار ناوبری نمایش داده خواهند شد.
 which currency symbol or name should be used in egroupware.	preferences	fa	کدام واحد (نماد) پولی باید در گروه افزار استفاده شود
-write prefs for the specified application.	preferences	fa	نوشتن تنظیمات برای کاربرد تعریف شده
 you can show the applications as icons only, icons with app-name or both.	preferences	fa	می توانید فقط نمایه، نمایه با متن، یا متن خالی نام کاربرد را در نوار ناوبری ببینید.
 you do not have permission to set acl's in this mode!	preferences	fa	شما دسترسی کافی ندارید.
 you must enter a password	preferences	fa	شما باید یک گذرواژه وارد کنید

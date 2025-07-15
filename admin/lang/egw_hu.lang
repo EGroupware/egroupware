@@ -52,6 +52,7 @@ acl manager	admin	hu	ACL kezelő
 acl rights	common	hu	ACL jogok
 activate	admin	hu	Aktivál
 active templates	admin	hu	Aktív vázlatok
+active this token again	admin	hu	Aktív ez a token újra
 add a category	admin	hu	Kategória hozzáadása
 add a group	admin	hu	Csoport hozzáadása
 add a new account.	admin	hu	Új azonosító hozzáadása
@@ -85,6 +86,7 @@ all records and account information will be lost!	admin	hu	Minden bejegyzés és
 all users	admin	hu	Összes felhasználó
 allow anonymous access to this app	admin	hu	Engedélyezi az anonim hozzáféréseket ehhez az alkalmazáshoz
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	hu	Engedélyezze a felhasználónak, hogy jelszavát a 'Biztonság és jelszavak' alatt tárolja a SingleSignOn-hoz.
+allow user to set 'remember me' token	admin	hu	Engedélyezi a felhasználó számára az „Emlékezz rám” token beállítását
 alternate email address	admin	hu	Alternatív emailcím
 anonymous user	admin	hu	Név nélküli felhasználó
 anonymous user (not shown in list sessions)	admin	hu	Anonim felhasználó (nem jelenik meg a listázáskor).
@@ -151,6 +153,7 @@ change login screen message	admin	hu	Főképernyőn megjelenő üzenet változta
 change password for %1	admin	hu	Jelszó módosítása %1-hez
 check ip address of all sessions	admin	hu	Összes session IP cím ellenőrzése
 check items to <b>%1</b> to %2 for %3	admin	hu	Tételek ellenőrzése <b>%1</b> to %2 for %3
+clear security tokens	admin	hu	Biztonsági tokenek törlése
 click to select a color	admin	hu	Színválasztás
 color	admin	hu	Szín
 configuration	admin	hu	Konfiguráció
@@ -298,9 +301,11 @@ entry saved	admin	hu	Bejegyzés elmentve
 error canceling timer, maybe there's none set !!!	admin	hu	Timer leállítási hiba, talán nincs még beállítva!
 error connecting to imap server. %s : %s.	admin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. %s : %s.
 error connecting to imap server: [%s] %s.	admin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. [%s ]: %s.
+error revoking token!	admin	hu	Hiba a token visszavonása!
 error saving account!	admin	hu	Felhasználói hozzáférés mentése sikertelen!
 error saving the entry!!!	admin	hu	Bejegyzés mentése közben hiba történt!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	hu	Timer beállítási hiba, rossz szintaxis vagy egy példány már fut!!
+error storing token!	admin	hu	Hiba a token tárolásában!
 error! no appname found	admin	hu	Hiba! Alkalmazásnév nem található!
 error: %1 not found or other error !!!	admin	hu	Hiba: %1 nem található vagy egyéb hiba!
 event details follow	admin	hu	Esemény jellemzőinek követése
@@ -325,6 +330,7 @@ forward only	admin	hu	Továbbítás csak ide
 full name	admin	hu	Teljes Neve
 general	admin	hu	Általános
 generate certificate	admin	hu	Tanúsítvány generálása
+generate new token and display it once after saving	admin	hu	Új token generálása és mentés után egyszeri megjelenítése
 global categories	common	hu	Globális kategóriák
 global options	admin	hu	Globális opciók
 group ?	admin	hu	Csoport?
@@ -350,6 +356,7 @@ html/plaintext	admin	hu	HTML/Szöveg
 icon	admin	hu	Ikon
 idle	admin	hu	Inaktív
 if different from email address	admin	hu	Ha eltér az e-mail címtől
+if disabled existing tokens immediatly stop working.	admin	hu	Ha letiltja a meglévő tokeneket, azonnal megszűnik a működés.
 if no acl records for user or any group the user is a member of	admin	hu	Ha a felhasználónak vagy összes csoportjának nincs ACL meghatározva
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	hu	Ha LDAP-ot használ, kívánja kezelni a Saját könyvtárat és a bejelentkezési héj tulajdonságait?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	hu	SSL vagy TLS használatához a PHP openssl kiterjesztését telepíteni kell.
@@ -408,6 +415,7 @@ leave the group untouched and return back to the list	admin	hu	Hagyja érintetle
 leave without saveing the entry	admin	hu	Kilépés mentés nélkül
 leaves without saveing	admin	hu	Kilépés mentés nélkül
 length<br>rows	admin	hu	Sorok<br>Hossza
+lifetime of 'remember me' token	admin	hu	Az „Emlékezz rám” token élettartama
 list config settings	admin	hu	Konfigurációs beállítások listája
 list current sessions	admin	hu	Jelenlegi session-ök listája
 list of current users	admin	hu	Jelenlegi felhasználók listája
@@ -511,6 +519,7 @@ register application hooks	admin	hu	Regisztrálja az alkalmazás visszacsatolás
 regular expression to find part to use as container	admin	hu	Szabályos kifejezés a konténerként használandó rész kereséséhez
 remove	admin	hu	Eltávolítás
 reset filter	admin	hu	Szűrö törlése
+revoke this token	admin	hu	A token visszavonása
 rights	admin	hu	Hozzáférés
 rows	admin	hu	Sorok
 rpm or debian package	admin	hu	RPM vagy deb csomag
@@ -529,6 +538,7 @@ select accounts for which the custom field should be readonly	admin	hu	Olyan sz�
 select accounts for which the custom field should be visible	admin	hu	Válassza ki azokat a számlákat, amelyek számára az egyéni mező látható legyen
 select group managers	admin	hu	Csoport menedzser kiválasztása
 select permissions this group will have	admin	hu	Válassza ki milyen jogosultságokkal rendelkezzen a csoport
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	hu	Válassza ki azokat az alkalmazásokat, amelyekre a tokent korlátozni kívánja, vagy hagyja az alapértelmezett összes alkalmazást.
 select the parent category. if this is a main category select no category	admin	hu	Szülő kategória kiválasztása. Ha ez a főkategória, akkor nincs kategória kiválasztva
 select type of imap server	admin	hu	IMAP szerver típusának kiválasztása
 select type of smtp server	admin	hu	Válassza ki az SMTP szerver típusát
@@ -581,6 +591,7 @@ start testjob!	admin	hu	TesztFeladat indítása!
 submit changes	admin	hu	Változások elküldése
 submit the search string	admin	hu	Keresési szöveg elküldése
 subtype	admin	hu	Altípus
+successfull, but no refresh-token received!	admin	hu	Sikeres, de NEM érkezett frissítési token!
 switch it off, if users are randomly thrown out	admin	hu	Kapcsolja ki, a felhasználókat véletlenszerűen kidobja a rendszer
 that loginid has already been taken	admin	hu	Ez a felhasználónév már foglalt.
 the api is current	admin	hu	Az API nem igényel frissítést
@@ -604,6 +615,10 @@ this php has no imap support compiled in!!	admin	hu	A használt PHP verzió nem 
 timeout for application session data in seconds (default 86400 = 1 day)	admin	hu	Alkalmazás session-ök időtúllépése másodpercben (alapértelmezett 86400 = 1 nap)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	hu	Session-ök időtúllépése másodpercben (alapértelmezett = 4 óra)
 times	admin	hu	Időigény
+token created.	admin	hu	Token létrehozva.
+token not found!	admin	hu	Token nem található!
+token revoked.	admin	hu	Token visszavonva.
+token saved.	admin	hu	Token mentve.
 top	admin	hu	Felül
 total of %1 id's changed.	admin	hu	Összesen %1 azonosító megváltoztatva.
 total records	admin	hu	Összes rekord
@@ -627,6 +642,7 @@ use default	admin	hu	Használja az alapértelmezettet
 use ldap defaults	admin	hu	használja az LDAP alapbeállításokat
 use predefined username and password defined below	admin	hu	Használd a lent megadott felhasználónevet és jelszót
 use pure html compliant code (not fully working yet)	admin	hu	Használjon tiszta HTML kódot (nem teljesen működik egyelőre)
+use save or apply to store the received oauth token!	admin	hu	A kapott OAuth token tárolásához használja a mentést vagy az alkalmazást!
 use smtp auth	admin	hu	SMTP hitelesítés használata
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	hu	használja a következő beállításokat:\nnoVfsSelect=1\nmime=application/pdf vagy /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	hu	Téma használata

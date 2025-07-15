@@ -882,6 +882,7 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	sk	Vytvorený token.
 token not found!	admin	sk	Token nebol nájdený!
 token revoked.	admin	sk	Token bol zrušený.
+token saved.	admin	sk	Token uložený.
 top	admin	sk	Navrchu
 total of %1 accounts deleted.	admin	sk	Celkovo bolo odstránených %1 účtov.
 total of %1 id's changed.	admin	sk	Celkovo bolo zmenených %1 ID.

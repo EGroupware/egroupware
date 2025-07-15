@@ -299,6 +299,7 @@ name for the distribution list	addressbook	id	Nama daftar distribusi
 name of current user, all other contact fields are valid too	addressbook	id	Nama pengguna saat ini, semua bidang kontak lainnya juga valid.
 name, address	addressbook	id	Nama, Alamat
 name, email, phone	addressbook	id	Nama, email, telepon
+never use prefix	addressbook	id	Jangan pernah menggunakan awalan
 new contact submitted by %1 at %2	addressbook	id	Kontak baru dikirim oleh %1 pada %2
 next date	addressbook	id	Tanggal selanjutnya
 no categories selected	addressbook	id	Tiada kategori yang dipilih
@@ -409,12 +410,16 @@ unshared	addressbook	id	tidak lagi dibagikan
 updated	addressbook	id	Dikinikan
 upload or delete the photo	addressbook	id	Unggah atau hapus foto
 use country list	addressbook	id	Gunakan Daftar Negara
+use firstname, only if no prefix	addressbook	id	Gunakan nama depan, hanya jika tidak ada awalan
+use prefix plus all other name parts	addressbook	id	Gunakan awalan ditambah semua bagian nama lainnya
+use prefix, only if no firstname	addressbook	id	Gunakan Awalan, hanya jika tidak ada nama depan
 user groups are automatically shown as distribution lists.	addressbook	id	Grup pengguna secara otomatis ditampilkan sebagai daftar distribusi.
 vcard	common	id	vCard
 verification	addressbook	id	Pengujian
 video call	addressbook	id	Panggilan Video
 view linked infolog entries	addressbook	id	Lihat entri InfoLog terkait
 weekday	addressbook	id	Hari kerja
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	id	Apa yang harus ditampilkan sebagai nama lengkap. Jika tidak ada nama depan atau belakang, maka nama perusahaan yang ditampilkan.
 when viewing a contact, show linked entries from the selected application	addressbook	id	Saat melihat kontak, tampilkan entri tertaut dari aplikasi yang dipilih
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	id	Ketika Anda menggabungkan entri ke dalam dokumen, entri-entri tersebut akan disimpan di sini. Jika tidak ada direktori yang disediakan, mereka akan disimpan di direktori rumah Anda (/home/...)
 whole query	addressbook	id	Seluruh query

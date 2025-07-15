@@ -87,6 +87,7 @@ merge duplicates	addressbook	ro	Unificarea dublurilor
 merge into first or account, deletes all other!	addressbook	ro	Fuzionează în primul sau în cont, șterge toate celelalte!
 move to addressbook	addressbook	ro	Mutarea în cartea de adrese
 name, email, phone	addressbook	ro	Nume, e-mail, telefon
+never use prefix	addressbook	ro	Nu utilizați niciodată prefixul
 no country selected	addressbook	ro	Nici o țară selectată
 no distribution list	addressbook	ro	Nici o listă de distribuție
 not shared	addressbook	ro	nu este împărtășită
@@ -98,6 +99,7 @@ permissiong denied! ask your administrator to allow regular uses to update their
 pgp key	addressbook	ro	Cheie PGP
 phone number	common	ro	Număr de telefon
 phone numbers	common	ro	Numere de telefon
+prefix	addressbook	ro	Prefix
 prevent deleting of contacts	admin	ro	Prevenirea ștergerii contactelor
 private address	addressbook	ro	Adresa privată
 public sharing url	addressbook	ro	URL de partajare publică
@@ -128,8 +130,12 @@ unable to import into %1, using %2	addressbook	ro	Imposibil de importat în %1, 
 unknown type %1, imported as %2	addressbook	ro	Tip necunoscut %1, importat ca %2
 unshare	addressbook	ro	Nu mai partajați
 unshared	addressbook	ro	nu mai este partajat
+use firstname, only if no prefix	addressbook	ro	Utilizați prenumele, numai dacă nu există prefix
+use prefix plus all other name parts	addressbook	ro	Utilizați prefixul plus toate celelalte părți ale numelui
+use prefix, only if no firstname	addressbook	ro	Utilizați prefixul, numai dacă nu există prenume
 user groups are automatically shown as distribution lists.	addressbook	ro	Grupurile de utilizatori sunt afișate automat ca liste de distribuție.
 video call	addressbook	ro	Apel video
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	ro	Ce ar trebui să fie afișat ca nume complet. Dacă nu există nici nume, nici prenume, se afișează numele societății.
 when viewing a contact, show linked entries from the selected application	addressbook	ro	La vizualizarea unui contact, afișați intrările legate din aplicația selectată
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	ro	Atunci când unificați intrările în documente, acestea vor fi stocate aici. Dacă nu este furnizat niciun director, acestea vor fi stocate în directorul dvs. personal (/home/...)
 yes, only admins can purge deleted items	admin	ro	Da, numai administratorii pot curăța elementele șterse

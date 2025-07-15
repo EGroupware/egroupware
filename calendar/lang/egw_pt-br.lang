@@ -171,6 +171,7 @@ do you want a weekview with or without weekend?	calendar	pt-br	Você quer uma vi
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	pt-br	Deseja ser notificado sobre compromissos novos ou alterados? Você será notificado sobre as alterações efetuadas por você mesmo.<br> Você pode limitar essas notificações para apenas algumas alterações. Cada item inclui as notificações listadas sobre o mesmo. Todas as alterações incluem mudança de título, descrição, participantes (menos suas respostas). Se o dono de um evento requisitar qualquer notificação, sempre receberá as respostas dos participantes como aceite ou cancelamentos.
 do you want to delete this subscription incl. the synced events?	calendar	pt-br	Deseja excluir essa assinatura, incluindo os eventos sincronizados?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pt-br	Deseja receber regularmente um resumo de seus compromissos via correio eletrônico?<br>O sumário será enviado para seu endereço eletrônico padrão na manhã de cada dia ou na Segunda-feira para resumos semanais (somente se houverem eventos na semana).
+does not show event to other users, unless they have a private grant	calendar	pt-br	NÃO mostra o evento a outros usuários, a menos que eles tenham uma concessão privada
 download	calendar	pt-br	Baixar
 download this event as ical	calendar	pt-br	Baixar este arquivo como iCal
 duration	calendar	pt-br	Duração
@@ -333,6 +334,7 @@ minimum number of users for showing week view as consolidated.	calendar	pt-br	N�
 minutes	calendar	pt-br	Minutos
 modified	calendar	pt-br	Modificado
 modifier	calendar	pt-br	Modifier
+modify events	calendar	pt-br	Modificar eventos
 mon	calendar	pt-br	Seg
 month	calendar	pt-br	Mês
 monthly	calendar	pt-br	Mensalmente
@@ -346,6 +348,8 @@ name of current user, all other contact fields are valid too	calendar	pt-br	Nome
 needs action	calendar	pt-br	Necessidades ação
 never notify externals (non-users) about events i create	calendar	pt-br	Nunca notificar pessoas externas (não usuários) sobre eventos que eu criei
 new	calendar	pt-br	Novo
+new event category	calendar	pt-br	Nova categoria de evento
+new event participants	calendar	pt-br	Novos participantes do evento
 new search with the above parameters	calendar	pt-br	Nova pesquisa com os parâmetros acima
 no automatic purging	admin	pt-br	Sem purga automática
 no events found	calendar	pt-br	Nenhum evento encontrado
@@ -389,6 +393,7 @@ on time change of more than 4 hours too	calendar	pt-br	Em mudanças superiores a
 one month	calendar	pt-br	Um mês
 one week	calendar	pt-br	Uma semana
 one year	calendar	pt-br	Um ano
+only group-events	calendar	pt-br	Somente eventos de grupo
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	pt-br	Somente suportado por alguns clientes totalmente compatíveis (por exemplo, da Apple). Se você tiver que inserir um URL, ele provavelmente não será compatível!
 only the initial date of that recurring event is checked!	calendar	pt-br	Somente a data inicial do evento recorrente foi informada!
 open todo's:	calendar	pt-br	Abrir tarefas:
@@ -430,6 +435,7 @@ repetitiondetails (or empty)	calendar	pt-br	Detalhes da repetição (ou vazio)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	pt-br	A resposta "%1" NÃO é um participante do evento! Continue somente se você quiser adicionar um novo participante.
 report	calendar	pt-br	Relatório
 reset	calendar	pt-br	Limpar
+reset resource status on event shifts	calendar	pt-br	Redefinir o status do recurso ao mover eventos
 resources	calendar	pt-br	Recursos
 role	calendar	pt-br	Função
 rule	calendar	pt-br	Regra
@@ -441,6 +447,7 @@ select a %1	calendar	pt-br	Selecionar um %1
 select a time	calendar	pt-br	Selecionar um horário
 select multiple contacts for a further action	calendar	pt-br	Selecione múltiplos contatos para ação posterior
 select resources	calendar	pt-br	Selecionar recursos
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	pt-br	Selecione se deseja que o status do recurso seja redefinido para “Sem resposta”, se um evento for transferido posteriormente.
 select who should get the alarm	calendar	pt-br	Selecionar quem deverá receber o alarme
 selected range	calendar	pt-br	Selecione período
 send notifications	calendar	pt-br	Enviar notificações

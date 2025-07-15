@@ -202,6 +202,7 @@ do you want to delete this subscription incl. the synced events?	calendar	es-es	
 do you want to edit this event as an exception or the whole series?	calendar	es-es	¿Desea editar este evento como una excepción o la serie completa?
 do you want to keep the series exceptions in your calendar?	calendar	es-es	¿Desea mantener las excepciones a la serie en su calendario?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	es-es	¿Desea recibir regularmente por correo un resumen de sus citas?<br>El resumen se le enviará a su correo electrónico habitual el mismo día por la mañana o el lunes para resúmenes semanales.<br>Sólo se envía si hay citas en ese día o esa semana.
+does not show event to other users, unless they have a private grant	calendar	es-es	NO muestra el evento a otros usuarios, a menos que tengan una subvención privada
 download	calendar	es-es	Descargar
 download this event as ical	calendar	es-es	Descargar este evento como iCal
 duration	calendar	es-es	Duración
@@ -387,6 +388,7 @@ minimum number of users for showing week view as consolidated.	calendar	es-es	N�
 minutes	calendar	es-es	Minutos
 modified	calendar	es-es	Modificado
 modifier	calendar	es-es	Modificador
+modify events	calendar	es-es	Modificar eventos
 mon	calendar	es-es	Lun
 month	calendar	es-es	Mes
 monthly	calendar	es-es	Mensualmente
