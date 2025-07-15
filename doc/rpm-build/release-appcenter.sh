@@ -76,7 +76,7 @@ $debug univention-appcenter-control upload $ucs/egroupware=$version.$packaging$p
 univention-appcenter-control get $ucs/egroupware=$version.$packaging$postfix --json | jq -r .compose > /tmp/compose
 sed -i "" \
 	-e "s|image:.*docker.software-univention.de/egroupware-egroupware.*|image: download.egroupware.org/egroupware/epl:$version.$packaging|" \
-	-e "s|image:.*docker.software-univention.de/egroupware-push.*|image: phpswoole/swoole:5.0-php8.1-alpine|" \
+	-e "s|image:.*docker.software-univention.de/egroupware-push.*|image: phpswoole/swoole:php8.4-alpine|" \
 	-e "s|image:.*docker.software-univention.de/egroupware-nginx.*|image: nginx:stable-alpine|" \
 	/tmp/compose
 $debug univention-appcenter-control upload $ucs/egroupware=$version.$packaging$postfix /tmp/compose
