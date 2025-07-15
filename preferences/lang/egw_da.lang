@@ -20,6 +20,7 @@ default	preferences	da	standard
 default preferences	preferences	da	Standard Præferencer
 delete categories	preferences	da	Slet kategorier
 deny following groups access to application passwords	preferences	da	Nægt følgende grupper adgang til programadgangskoder
+deny following groups access to preferences	admin	da	Nægt følgende grupper adgang til præferencer
 description can not exceed 255 characters in length !	preferences	da	Beskrivelse må ikke være over 255 tegn!
 disable	preferences	da	Deaktivere
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	da	Foretrækker du et 24 timers tids format, eller 12 timers med AM og PM
@@ -60,8 +61,8 @@ no user-selection at all	common	da	Intet bruger-valg
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	da	Bemærk: Denne feature vil *ikke* ændre Din e-mails adgangskode. Dette skal gøres manuelt.
 password stored	preferences	da	Adgangskoden gemmes.
 popup with search	preferences	da	Popup vindue med søg
+preferences saved.	preferences	da	Indstillinger gemt.
 re-enter your password	preferences	da	Indtast Din adgangskode igen
-read prefs for the specified application.	preferences	da	Læs præferencer for den specificerede applikation.
 reset qrcode	preferences	da	Nulstil QR-kode
 scan qrcode with a time-based one-time password (totp) app:	preferences	da	Scan QR-kode med en TOTP-app (Time-based one-time password):
 select one	preferences	da	Vælg en
@@ -72,7 +73,6 @@ selectbox with primary group and search	preferences	da	Udvælgelses vindue med p
 set content size	preferences	da	Indstil indholdsstørrelse
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	da	Sæt dette efter din smag. Af sikkerhedsgrunde vil du måske ikke vise dit brugernavn frem.
 should the number of active sessions be displayed for you all the time.	preferences	da	Skal antal aktive brugere vises hele tiden?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	da	Skal denne hjælp altid vises når du ændre dine præferencer, eller kun når du beder om det
 show helpmessages by default	preferences	da	Vis hjælp som standard
 show navigation bar as	preferences	da	Vis navigationsbjælke som
 show number of current users	preferences	da	Vis antal aktive brugere
@@ -83,7 +83,6 @@ show_more_apps	common	da	Vis flere applikationer
 singlesignon and passwords	preferences	da	SingleSignOn og adgangskoder
 store password retrievable for singlesignon	common	da	Gem adgangskode, der kan hentes til SingleSignOn
 text only	preferences	da	Kun tekst
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	da	Standard applikationen vil blive vist når du logger på EGroupware eller når du klikker på hjem ikonet.<br>Du kan få vist end én applikation vist samtidigt, hvis du ikke vælger en applikation her (skal konfigures i præferencerne i hvert program).
 the old password is not correct	preferences	da	Den gamle adgangskode er ikke korrekt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	da	Udvælgelses vinduet viser alle tilgængelige brugere (kan være meget langsom i systemer med mange brugere). Popup vinduet med søg giver mulighed for at søge efter brugere eller grupper.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	da	De to sidste valgmuligheder begrænser synligheden af andre brugere. De bør derfor tvinges igennem, og de gælder IKKE for administratorer.
@@ -99,7 +98,6 @@ users choice	preferences	da	Brugerens valg
 what to display for an avatar, if there is no photo	preferences	da	Hvad der skal vises som avatar, hvis der ikke er noget foto
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	da	Hvis du siger ja, bliver hjem og logout knapperne vist som applikationer i hoved applikations linien.
 which currency symbol or name should be used in egroupware.	preferences	da	Hvilket valuta symbol eller navn skal bruges i EGroupware.
-write prefs for the specified application.	preferences	da	Angiv præferencer for den specificerede applikation.
 you can show the applications as icons only, icons with app-name or both.	preferences	da	Du kan få vist applikationerne som Kun ikoner, Ikoner med navn eller begge dele.
 you do not have permission to set acl's in this mode!	preferences	da	Du har ikke rettigheder til at sætte ACL's
 you must enter a password	preferences	da	Du skal angive en adgangskode

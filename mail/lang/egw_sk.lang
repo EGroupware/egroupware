@@ -45,6 +45,7 @@ allow external images from listed domains	mail	sk	Povoliť externé obrázky z d
 allow images from external sources in html emails	mail	sk	Povoliť v HTML E-mailoch obrázky z externých zdrojov.
 allow images from listed domains in html emails	mail	sk	Povoliť pre HTML e-maily obrázky z domén na zozname.
 allow users to create further identities	mail	sk	Povoliť používateľom vytváranie ďalších identít
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	sk	Umožňuje používateľovi čítať, zapisovať a vytvárať priečinky a poštu, odosielať do nich príspevky, pripájať do nich správy a odstraňovať správy
 always	mail	sk	Vždy
 always allow external sources from %1	mail	sk	Vždy povoliť externé zdroje od %1
 always respond / auto-responder	mail	sk	Vždy odpovedať / automatický odpovedník
@@ -694,6 +695,7 @@ with message:	mail	sk	So správou:
 wizard	mail	sk	Sprievodca
 writable sharing requires epl version!	mail	sk	Zapisovateľné zdieľanie vyžaduje verziu EPL!
 write	mail	sk	Zapísať
+write & delete	mail	sk	napísať a vymazať
 wrote	mail	sk	Zapísal
 yes, offer copy option	mail	sk	Áno, ponúknuť možnosť kópie
 you can select what info to be displayed on email tag	mail	sk	Môžete vybrať, ktoré informácie sa majú zobrazovať na e-mailovej značke.

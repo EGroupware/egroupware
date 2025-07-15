@@ -200,6 +200,7 @@ modem phone	addressbook	lv	Modēma tālrunis
 move to addressbook	addressbook	lv	Pārvietot uz adrešu grāmatu
 multiple vcard	addressbook	lv	Vairākas vCard
 name, email, phone	addressbook	lv	Vārds, e-pasts, tālrunis
+never use prefix	addressbook	lv	Nekad neizmantojiet prefiksu
 no country selected	addressbook	lv	Nav izvēlēta neviena valsts
 no distribution list	addressbook	lv	Nav izplatīšanas saraksta
 no vcard	addressbook	lv	Nav vCard
@@ -276,12 +277,16 @@ unshared	addressbook	lv	vairs nav koplietojams
 update a single entry by passing the fields.	addressbook	lv	Atjaunini vienu ierakstu apejot lauku.
 updated	addressbook	lv	Atjaunināts
 use country list	addressbook	lv	Izmantot valstu sarakstu
+use firstname, only if no prefix	addressbook	lv	Izmantojiet vārdu tikai tad, ja nav prefiksa
+use prefix plus all other name parts	addressbook	lv	Izmantojiet prefiksu un visas pārējās vārda daļas
+use prefix, only if no firstname	addressbook	lv	Izmantojiet prefiksu, tikai ja nav vārda
 user groups are automatically shown as distribution lists.	addressbook	lv	Lietotāju grupas automātiski tiek parādītas kā sadales saraksti.
 vcard	common	lv	vCard
 vcards require a first name entry.	addressbook	lv	vCard pieprasa vārda ievadīšanu.
 vcards require a last name entry.	addressbook	lv	vCard pieprasa uzvārda ievadīšanu.
 video call	addressbook	lv	Video zvans
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	lv	BRĪDINĀJUMS!! LDAP ir derīgs tikai tad, ja tu neizmanto kontaktus kontu glabātuvei!
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	lv	Kas jānorāda kā pilns vārds. Ja nav ne vārda, ne uzvārda, tiek parādīts uzņēmuma nosaukums.
 when viewing a contact, show linked entries from the selected application	addressbook	lv	Pārskatot kontaktu, parādīt saistītos ierakstus no izvēlētās lietojumprogrammas.
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	lv	Apvienojot ierakstus dokumentos, tie tiks saglabāti šeit. Ja direktorija nav norādīta, tie tiks saglabāti jūsu mājas direktorijā (/home/...)
 work phone	addressbook	lv	Darba telefons

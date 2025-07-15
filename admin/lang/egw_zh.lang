@@ -37,6 +37,7 @@ acl csv export	admin	zh	导出 ACL CSV
 acl manager	admin	zh	ACL管理器
 acl rights	common	zh	ACL权限
 activate	admin	zh	激活
+active this token again	admin	zh	再次激活此令牌
 add a category	admin	zh	添加类别
 add a group	admin	zh	添加组
 add a new account.	admin	zh	添加新帐户。
@@ -73,6 +74,7 @@ all users	admin	zh	所有用户
 allow anonymous access to this app	admin	zh	允许匿名用户访问此应用程序
 allow remote administration from following install id's (comma separated)	admin	zh	允许从以下的安装 ID (逗号分隔) 进行远程管理
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	zh	允许用户在单点登录的 “安全与密码 ”下存储密码。
+allow user to set 'remember me' token	admin	zh	允许用户设置 “记住我 ”令牌
 alternate email address	admin	zh	候选邮箱地址
 anonymous user	admin	zh	匿名用户
 anonymous user (not shown in list sessions)	admin	zh	匿名用户 (不在会话列表中显示)
@@ -135,6 +137,7 @@ change password for %1	admin	zh	更改%1的密码
 check acl for entries of not (longer) existing accounts	admin	zh	检查 ACL (长期)不是现有的帐户条目
 check ip address of all sessions	admin	zh	检查所有 sessions 的 IP 地址
 check items to <b>%1</b> to %2 for %3	admin	zh	检查%3对%2的权限项目 <b>%1</b>
+clear security tokens	admin	zh	清除安全令牌
 click to select a color	admin	zh	点击选择一种颜色
 color	admin	zh	颜色
 command scheduled to run at %1	admin	zh	计划命令运行在%1
@@ -264,12 +267,14 @@ error canceling timer, maybe there's none set !!!	admin	zh	取消定时器时出
 error changing the password for %1 !!!	admin	zh	为%1更改密码错误！
 error connecting to imap server. %s : %s.	admin	zh	连接到 IMAP 服务器错误。%s : %s。
 error connecting to imap server: [%s] %s.	admin	zh	连接到 IMAP 服务器错误：[%s] %s。
+error revoking token!	admin	zh	撤销令牌出错！
 error saving	admin	zh	保存错误
 error saving account!	admin	zh	保存帐户错误！
 error saving the command!	admin	zh	保存命令错误！
 error saving the entry!!!	admin	zh	保存条目时发生错误！
 error saving to db:	admin	zh	保存到数据库错误：
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	zh	设置定时器时出错，语法不正确或定时器正在运行！
+error storing token!	admin	zh	存储令牌出错！
 error! no appname found	admin	zh	错误！找不到应用程序名称
 error: %1 not found or other error !!!	admin	zh	错误: 无法找到%1或其他原因！
 event details follow	admin	zh	事件细节
@@ -291,6 +296,7 @@ forward only	admin	zh	转发
 full name	admin	zh	姓名
 general	admin	zh	通用
 generate certificate	admin	zh	生成证书
+generate new token and display it once after saving	admin	zh	生成新令牌并在保存后显示一次
 global categories	common	zh	全局分类
 global options	admin	zh	全局选项
 grant	admin	zh	允许
@@ -316,6 +322,7 @@ how should email addresses for new users be constructed?	admin	zh	应该怎么�
 icon	admin	zh	图标
 idle	admin	zh	空闲
 if different from email address	admin	zh	如果与电子邮件地址不同
+if disabled existing tokens immediatly stop working.	admin	zh	如果禁用，现有令牌立即停止工作。
 if no acl records for user or any group the user is a member of	admin	zh	如果没有用户或任何小组的 ACL 纪录，该用户将作为成员属于
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh	如果使用 LDAP，您想要管理主目录和 Login Shell 属性吗？
 if using ssl or tls, you must have the php openssl extension loaded.	admin	zh	如果使用 SSL 或 TLS，您必须加载 PHP openssl 扩展。
@@ -373,6 +380,7 @@ leave the group untouched and return back to the list	admin	zh	不更改组，�
 leave without saveing the entry	admin	zh	取消, 不保存对该事项的操作
 leaves without saveing	admin	zh	不保存
 length<br>rows	admin	zh	长度<br>列数
+lifetime of 'remember me' token	admin	zh	记住我 "令牌的有效期
 list config settings	admin	zh	配置的设置列表
 list current sessions	admin	zh	当前会话列表
 list of current users	admin	zh	当前用户列表
@@ -476,6 +484,7 @@ remote administration need to be enabled in the remote instance under admin > si
 remote instance saved	admin	zh	远程实例已保存
 remove	admin	zh	移除
 requested	admin	zh	请求
+revoke this token	admin	zh	撤销此令牌
 rows	admin	zh	行
 run asynchronous services	admin	zh	运行异步服务
 save the category	admin	zh	保存类别
@@ -489,6 +498,7 @@ search peer servers	admin	zh	搜索对等服务器
 security	admin	zh	安全
 select group managers	admin	zh	选择组管理器
 select permissions this group will have	admin	zh	选择该组权限
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	zh	选择您希望令牌仅限于哪些应用程序，或保留默认的所有应用程序。
 select the parent category. if this is a main category select no category	admin	zh	选择父类别。如果当前是一个主要类别，则选择<b>无类别</b>
 select type of imap server	admin	zh	选择 IMAP 服务器类型
 select type of smtp server	admin	zh	选择 SMTP 服务器类型
@@ -538,6 +548,7 @@ start testjob!	admin	zh	启动测试任务！
 submit changes	admin	zh	提交更改
 submit the search string	admin	zh	提交查找字符串
 subtype	admin	zh	子类型
+successfull, but no refresh-token received!	admin	zh	成功，但未收到刷新令牌！
 switch it off, if users are randomly thrown out	admin	zh	如果用户任意地退出，请将它关闭
 that loginid has already been taken	admin	zh	该登录名已被使用
 the api is current	admin	zh	当前 API
@@ -561,6 +572,10 @@ this php has no imap support compiled in!!	admin	zh	PHP 没有 IMAP 支持的编
 timeout for application session data in seconds (default 86400 = 1 day)	admin	zh	应用程序会话期限，单位：秒 (缺省 86400 = 1天)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	zh	会话时限，单位：秒 (默认 14400 = 4小时)
 times	admin	zh	次数
+token created.	admin	zh	令牌已创建。
+token not found!	admin	zh	未找到令牌！
+token revoked.	admin	zh	令牌已撤销。
+token saved.	admin	zh	令牌已保存。
 top	admin	zh	顶部
 total of %1 id's changed.	admin	zh	共计%1 ID 被改变。
 total records	admin	zh	记录总数
@@ -585,6 +600,7 @@ use cookies to pass sessionid	admin	zh	使用 cookie 保存会话标识
 use default	admin	zh	使用默认值
 use ldap defaults	admin	zh	使用 LDAP 默认值
 use pure html compliant code (not fully working yet)	admin	zh	是否使用纯 HTML 兼容代码 (目前尚未完全可用)
+use save or apply to store the received oauth token!	admin	zh	使用 “保存 ”或 “应用 ”存储收到的 OAuth 令牌！
 use smtp auth	admin	zh	使用 SMTP 认证
 use theme	admin	zh	使用主题
 use tls authentication	admin	zh	使用TLS 认证

@@ -357,6 +357,7 @@ name for the distribution list	addressbook	fi	Nimeä jakelulista
 name of current user, all other contact fields are valid too	addressbook	fi	Nykyisen käyttäjän nimi, myös muut yhteystietokentät ovat voimassa.
 name, address	addressbook	fi	Nimi, osoite
 name, email, phone	addressbook	fi	Nimi, sähköposti, puhelin
+never use prefix	addressbook	fi	Älä koskaan käytä etuliitettä
 new contact submitted by %1 at %2	addressbook	fi	Uusi yhteystieto lisätty: %1, %2
 next date	addressbook	fi	Seuraava tapaaminen
 no categories selected	addressbook	fi	Kategorioita ei ole valittu
@@ -505,6 +506,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	fi	Käytä osoitekirjan "oma lajittelu" vaihtoehtoa
 use an extra tab for private custom fields?	admin	fi	Käytä ylimääräistä välilehteä yksityisille lisäkentille
 use country list	addressbook	fi	Käytä maaluetteloa
+use firstname, only if no prefix	addressbook	fi	Käytä etunimeä, vain jos ei etuliitettä
+use prefix plus all other name parts	addressbook	fi	Käytä etuliitettä ja kaikkia muita nimen osia
+use prefix, only if no firstname	addressbook	fi	Käytä etuliitettä, vain jos etunimeä ei ole
 use setup for a full account-migration	admin	fi	Käytä asetuksia täydellistä tilin siirtoa varten
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	fi	Käytä tägiä esim. osoitetarroihin. Lisää haluamasi kentät kahden tägin väliin.
 used for links and for the own sorting of the list	addressbook	fi	Käytä linkeissä ja omassa lajittelulistassa
@@ -519,6 +523,7 @@ view linked infolog entries	addressbook	fi	Näytä linkitetyt InfoLog-merkinnät
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fi	VAROITUS! LDAP soveltuu vain, jos sitä ei käytetä käyttäjättilien tallentamiseen!
 warning: all contacts found will be deleted!	addressbook	fi	VAROITUS: Kaikki löytyneet osoitteet poistetaan!
 weekday	addressbook	fi	Viikonpäivä
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	fi	Mikä näytetään täydellisenä nimenä. Jos etu- tai sukunimeä ei ole, näytetään yrityksen nimi.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fi	Mitä osoitekirjan linkin tulisi sisältää muissa sovelluksissa esim. InfoLog. Tyhjiä kenttiä ei kuitenkaan näytetä. Kirjaudu sisään uudellen, jos muutat tätä asetusta!
 when viewing a contact, show linked entries from the selected application	addressbook	fi	Näytä yhteystietoa tarkasteltaessa linkitetyt merkinnät valitusta sovelluksesta
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	fi	Kun yhdistät merkintöjä asiakirjoihin, ne tallennetaan tähän. Jos hakemistoa ei ole annettu, ne tallennetaan kotihakemistoosi (/home/...).

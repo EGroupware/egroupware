@@ -14,10 +14,13 @@ adding %1 to blacklisted email addresses failed because of %2	mail	no	Legge til 
 adding %1 to whiltelisted email addresses failed because of %2	mail	no	Legge til %1 til e-postadresser på hvilliste mislyktes på grunn av %2
 all my email addresses	mail	no	alle mine e-postadresser
 all of	mail	no	alle av
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	no	Alle undermapper slettes også, og alle meldinger i alle berørte mapper vil gå tapt
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	no	Tillater en bruker å lese, skrive og opprette mapper og e-poster, legge til meldinger i dem, legge til meldinger i dem og slette meldinger
 always respond / auto-responder	mail	no	Alltid svare / autosvar
 always show html emails	mail	no	Vis alltid HTML meldinger
 any of	mail	no	noen av
 archive folder	mail	no	Arkivmappe
+are you sure you want to delete all selected folders?	mail	no	Er du sikker på at du vil slette alle valgte mapper?
 attach files	mail	no	Legge ved filer
 attach users vcard at compose to every new mail	mail	no	Legg ved brukerens vCard i hver ny e-post når du skriver den
 attachment has been saved successfully.	mail	no	Vedlegg har blitt lagret.
@@ -85,6 +88,8 @@ examine namespace to retrieve folders in others and shared	mail	no	Undersøke na
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	no	Ekskluder vedlegg som er større enn en gitt størrelse fra automatisk lagring som utkast (i MB)
 extended	mail	no	Forlenget
 failed to delete %1	mail	no	Kunne ikke slette %1
+failed to delete %1 ! reason: %2	mail	no	Kunne ikke slette %1! Årsak: %2
+failed to delete %1. server responded:	mail	no	Kunne ikke slette %1! Serveren svarte:
 failed to subscribe folder %1!	mail	no	Kunne ikke abonnere på mappen %1!
 failed to unsubscribe folder %1!	mail	no	Kunne ikke avslutte abonnementet på mappen %1!
 file into	mail	no	Flytt til
@@ -280,8 +285,10 @@ unflagged	mail	no	Avflagget
 unread	mail	no	Ulest
 vacation notice	mail	no	Ferie melding
 validate addresses on submit:	mail	no	Valider adresser ved sending:
+what to do when you delete a message	mail	no	Hva du skal gjøre når du sletter en melding.
 when deleting messages	mail	no	Når du sletter meldinger
 write	mail	no	Lagre
+write & delete	mail	no	skriv og slett
 wrote	mail	no	skrev
 you can select what info to be displayed on email tag	mail	no	Du kan velge hvilken informasjon som skal vises på e-posttaggen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	no	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.

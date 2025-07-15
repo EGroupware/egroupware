@@ -185,6 +185,7 @@ mobile phone	addressbook	uk	Мобільний телефон
 modem phone	addressbook	uk	Модемний телефон
 move to addressbook	addressbook	uk	Перейти до адресної книги
 name, email, phone	addressbook	uk	Ім'я, email, телефон
+never use prefix	addressbook	uk	Ніколи не використовуйте префікс
 no distribution list	addressbook	uk	Немає списку розсилки
 no vcard	addressbook	uk	немає vCard
 not shared	addressbook	uk	не розділяється
@@ -259,12 +260,16 @@ update a single entry by passing the fields.	addressbook	uk	Змінити од�
 updated	addressbook	uk	Змінено
 use addressbooks "own sorting" attribute	addressbook	uk	Використовувати атрибут адресних книг "власне сортування"
 use country list	addressbook	uk	Використовувати перелік країн
+use firstname, only if no prefix	addressbook	uk	Використовуйте ім'я, тільки якщо немає префікса
+use prefix plus all other name parts	addressbook	uk	Використовувати префікс та всі інші частини імені
+use prefix, only if no firstname	addressbook	uk	Використовувати префікс, тільки якщо немає імені
 user groups are automatically shown as distribution lists.	addressbook	uk	Групи користувачів автоматично відображаються у вигляді списків розсилки.
 vcard	common	uk	vCard
 vcards require a first name entry.	addressbook	uk	vCard потребує поле імені.
 vcards require a last name entry.	addressbook	uk	vCard потребує поле прізвища.
 video call	addressbook	uk	Відеодзвінок
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	uk	УВАГА!! LDAP можливий тільки якщо Ви НЕ використовуєте контакти для зберігання рахунків користувачів!
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	uk	Що має відображатися як повна назва. Якщо немає ні імені, ні прізвища, відображається назва компанії.
 when viewing a contact, show linked entries from the selected application	addressbook	uk	При перегляді контакту показувати пов'язані записи з вибраної програми
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	uk	При об'єднанні записів в документи вони будуть зберігатися тут. Якщо каталог не вказано, вони будуть зберігатися у вашому домашньому каталозі (/home/...)
 which charset should be used for the vcard export.	addressbook	uk	Яку кодування використовувати для експорту vCard.

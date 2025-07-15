@@ -335,6 +335,7 @@ name for the distribution list	addressbook	pt-br	Nome da lista de distribuição
 name of current user, all other contact fields are valid too	addressbook	pt-br	Nome do usuário atual, todos outros campos são válidos também.
 name, address	addressbook	pt-br	Nome, Endereço
 name, email, phone	addressbook	pt-br	Nome, e-mail, telefone
+never use prefix	addressbook	pt-br	Nunca use o prefixo
 new contact submitted by %1 at %2	addressbook	pt-br	Novo contato informado por %1 em %2.
 next date	addressbook	pt-br	Próxima data
 no categories selected	addressbook	pt-br	nenhuma categoria selecionada
@@ -472,6 +473,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	pt-br	usar catálogos de endereços "possuir classificação" atributo
 use an extra tab for private custom fields?	admin	pt-br	Usar uma aba extra para campos privados personalizados
 use country list	addressbook	pt-br	Usar lista de países
+use firstname, only if no prefix	addressbook	pt-br	Use o primeiro nome, somente se não houver prefixo
+use prefix plus all other name parts	addressbook	pt-br	Use o prefixo e todas as outras partes do nome
+use prefix, only if no firstname	addressbook	pt-br	Usar prefixo, somente se não houver nome próprio
 use setup for a full account-migration	admin	pt-br	usar setup para uma migração de contas completa
 used for links and for the own sorting of the list	addressbook	pt-br	usado para links e para a ordem própria da lista
 user groups are automatically shown as distribution lists.	addressbook	pt-br	Os grupos de usuários são automaticamente mostrados como listas de distribuição.
@@ -485,6 +489,7 @@ view linked infolog entries	addressbook	pt-br	Exibir entradas de Tarefas relacio
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt-br	AVISO!! LDAP é válido somente se você não estiver usando contatos para guardar as contas!
 warning: all contacts found will be deleted!	addressbook	pt-br	AVISO: Todos os contatos encontrados serão removidos!
 weekday	addressbook	pt-br	Dia da semana
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	pt-br	O que deve ser exibido como nome completo. Se não houver nome nem sobrenome, o nome da empresa será exibido.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pt-br	O que deverá ser exibido pelos links para o Livro de Contatos que estão em outros aplicativos. Valores vazios serão desconsiderados. Você precisará fazer novo login ser alterar esta configuração!
 when viewing a contact, show linked entries from the selected application	addressbook	pt-br	Ao visualizar um contato, mostrar entradas vinculadas do aplicativo selecionado
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	pt-br	Quando você funde as entradas em documentos, eles serão armazenados aqui. Se nenhum diretório for fornecido, eles serão armazenados em seu diretório pessoal (/home/...)

@@ -19,11 +19,14 @@ after reply, visible during compose	mail	id	Setelah membalas, terlihat saat menu
 aliases+forwards	mail	id	Nama samaran + Teruskan
 all my email addresses	mail	id	semua alamat email saya
 all of	mail	id	semua
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	id	Semua subfolder juga akan dihapus, dan semua pesan di semua folder yang terpengaruh akan hilang
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	id	Memungkinkan pengguna untuk membaca, menulis, dan membuat folder dan email, mengirim ke folder tersebut, menambahkan pesan ke folder tersebut, dan menghapus pesan
 always show notifiction	mail	id	Selalu tampilkan pemberitahuan
 answered	mail	id	Menjawab
 any of	mail	id	sembarang
 any status	mail	id	status apapun
 archive folder	mail	id	Folder Arsip
+are you sure you want to delete all selected folders?	mail	id	Apakah Anda yakin ingin menghapus semua folder yang dipilih?
 attach files	mail	id	Melampirkan file
 attach users vcard at compose to every new mail	mail	id	Lampirkan vCard pengguna saat menulis ke setiap email baru.
 attachment has been saved successfully.	mail	id	Lampiran telah berhasil disimpan.
@@ -95,6 +98,8 @@ everyone	mail	id	Semua orang
 examine namespace to retrieve folders in others and shared	mail	id	Periksa ruang nama untuk mengambil folder di folder lain dan dibagikan
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	id	Mengecualikan lampiran yang lebih besar dari ukuran yang diberikan dari penyimpanan otomatis sebagai draf (dalam MB)
 extended	mail	id	Extended
+failed to delete %1 ! reason: %2	mail	id	Gagal menghapus %1! Alasan: %2
+failed to delete %1. server responded:	mail	id	Gagal menghapus %1! Server merespons:
 failed to subscribe folder %1!	mail	id	Gagal berlangganan folder %1!
 failed to unsubscribe folder %1!	mail	id	Gagal berhenti berlangganan folder %1!
 file into	mail	id	Pindah ke
@@ -331,7 +336,9 @@ unflagged	mail	id	Tak ditandai
 unread	mail	id	Tak dibaca
 vacation notice	mail	id	Pemberitahuan liburan
 validate addresses on submit:	mail	id	Memvalidasi alamat saat mengirim:
+what to do when you delete a message	mail	id	Apa yang harus dilakukan saat Anda menghapus pesan.
 write	mail	id	tulis
+write & delete	mail	id	tulis & hapus
 wrote	mail	id	menulis
 yes, offer copy option	mail	id	Ya, tawarkan opsi salin
 you can select what info to be displayed on email tag	mail	id	Anda dapat memilih informasi yang akan ditampilkan pada tag email.

@@ -43,6 +43,7 @@ acl csv export	admin	sv	CSV-export av ACL
 acl manager	admin	sv	ACL hantering
 acl rights	common	sv	ACL behörigheter
 activate	admin	sv	Aktivera
+active this token again	admin	sv	Aktivera denna token igen
 add a category	admin	sv	Lägg till kategori
 add a group	admin	sv	Lägg till grupp
 add a new account.	admin	sv	Lägg till nytt konto.
@@ -76,6 +77,7 @@ all records and account information will be lost!	admin	sv	Alla förteckningar o
 all users	admin	sv	Alla användare
 allow anonymous access to this app	admin	sv	Tillåt anonym åtkomst till applikationen
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	sv	Tillåt användaren att lagra sitt lösenord under ”Säkerhet & lösenord” för SingleSignOn.
+allow user to set 'remember me' token	admin	sv	Tillåt användaren att ställa in ”Kom ihåg mig”-token
 alternate email address	admin	sv	Alternerande e-post adress
 anonymous user	admin	sv	Anonym användare
 anonymous user (not shown in list sessions)	admin	sv	Anonym användare (visas inte bland sessioner)
@@ -129,6 +131,7 @@ change domain of email address and aliases	admin	sv	Ändra domän för e-postadr
 change login screen message	admin	sv	Ändra Startsidans meddelande
 check ip address of all sessions	admin	sv	Kontrollera IP adress på alla sessioner
 check items to <b>%1</b> to %2 for %3	admin	sv	Kontrollera punkterna till <b>%1</b> till %2 för %3
+clear security tokens	admin	sv	Rensa säkerhetstokens
 click to select a color	admin	sv	Klicka för att välja färg
 color	admin	sv	Färg
 connection dropped by imap server.	admin	sv	Anslutningen stängd av IMAP server
@@ -244,8 +247,10 @@ entry saved	admin	sv	Post sparad
 error canceling timer, maybe there's none set !!!	admin	sv	Fel vid avbrytande av timer, är det någon inställd?
 error connecting to imap server. %s : %s.	admin	sv	Kunde inte ansluta till IMAP server %s : %s
 error connecting to imap server: [%s] %s.	admin	sv	Kunde inte ansluta till IMAP server [%s] %s
+error revoking token!	admin	sv	Fel vid återkallande av token!
 error saving the entry!!!	admin	sv	Fel uppstod vid sparandet av posten!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sv	Fel vid inställning av timer, fel syntax eller det kanske redan körs en?
+error storing token!	admin	sv	Fel vid lagring av token!
 error! no appname found	admin	sv	FEL: Inget appnamn kunde hittas
 error: %1 not found or other error !!!	admin	sv	FEL: %1 kunde inte hittas, eller annat fel!
 event details follow	admin	sv	Händelse detaljer följer
@@ -267,6 +272,7 @@ forward only	admin	sv	Vidarebefodra endast
 full name	admin	sv	Fullständigt namn
 general	admin	sv	Allmänt
 generate certificate	admin	sv	Generera certifikat
+generate new token and display it once after saving	admin	sv	Generera en ny token och visa den en gång efter att du sparat den
 global categories	common	sv	Globala kategorier
 group ?	admin	sv	Grupp?
 group has been added	common	sv	Grupp har lagts till
@@ -289,6 +295,7 @@ how should email addresses for new users be constructed?	admin	sv	Hur ska e-post
 icon	admin	sv	Ikon
 idle	admin	sv	Vilande
 if different from email address	admin	sv	Om det skiljer sig från e-postadressen
+if disabled existing tokens immediatly stop working.	admin	sv	Om inaktiverad slutar befintliga tokens omedelbart att fungera.
 if no acl records for user or any group the user is a member of	admin	sv	Om inga ACL poster för användare eller grupp blir användaren medlem i
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	sv	Om LDAP används, vill du hantera hemkatalog och skal-egenskaper?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	sv	Om du vill använda SSL eller TLS måste PHP openssl stödet laddas
@@ -339,6 +346,7 @@ leave the group untouched and return back to the list	admin	sv	Lämna gruppen or
 leave without saveing the entry	admin	sv	Lämna utan att spara post
 leaves without saveing	admin	sv	lämnas utan att sparas
 length<br>rows	admin	sv	Längd<br>Rader
+lifetime of 'remember me' token	admin	sv	Livstid för ”Kom ihåg mig”-token
 list config settings	admin	sv	Lista konfigurations inställningar
 list current sessions	admin	sv	Lista aktiva sessioner
 list of current users	admin	sv	Lista över aktiva användare
@@ -428,6 +436,7 @@ register application hooks	admin	sv	Registera applikationskopplingar
 regular expression to find part to use as container	admin	sv	Reguljärt uttryck för att hitta en del som ska användas som behållare
 remove	admin	sv	Radera
 requested	admin	sv	Begärt
+revoke this token	admin	sv	Återkalla denna token
 rows	admin	sv	Rader
 run asynchronous services	admin	sv	Kör asynkrona tjänster
 save the category	admin	sv	Spara kategorin
@@ -440,6 +449,7 @@ search peer servers	admin	sv	Sök peer servers
 security	admin	sv	Säkerhet
 select group managers	admin	sv	Välj gruppansvariga
 select permissions this group will have	admin	sv	Välj behörigheter denna grupp skall ha
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	sv	Välj de applikationer som du vill att token ska begränsas till, eller lämna standardvärdet för alla applikationer.
 select the parent category. if this is a main category select no category	admin	sv	Välj kategoriförälder. Om detta är en huvudkategori, välj INGEN KATEGORI
 select type of smtp server	admin	sv	Välj typ av SMTP Server
 select users for inclusion	admin	sv	Välj gruppmedlemmar
@@ -485,6 +495,7 @@ start testjob!	admin	sv	Starta testjobb!
 submit changes	admin	sv	Verkställ förändring
 submit the search string	admin	sv	Verkställ sökning
 subtype	admin	sv	Undertyp
+successfull, but no refresh-token received!	admin	sv	Framgångsrikt, men INGEN refresh-token mottagen!
 that loginid has already been taken	admin	sv	Detta inloggnings ID är redan upptaget
 the api is current	admin	sv	API är aktuellt
 the api requires an upgrade	admin	sv	API behöver uppgraderas
@@ -507,6 +518,10 @@ this php has no imap support compiled in!!	admin	sv	Denna installation har inte 
 timeout for application session data in seconds (default 86400 = 1 day)	admin	sv	Paus för applikationens sessionsdata i sekunder (standard 86400 = 1 dygn))
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	sv	Paus för sessioner i sekunder (standard 14400 = 4 timmar)
 times	admin	sv	Tider
+token created.	admin	sv	Token skapad.
+token not found!	admin	sv	Token hittades inte!
+token revoked.	admin	sv	Token återkallad.
+token saved.	admin	sv	Token sparad.
 top	admin	sv	Överst
 total records	admin	sv	Fullständig förteckning
 translation	admin	sv	Översättning
@@ -525,6 +540,7 @@ use cookies to pass sessionid	admin	sv	Använd cookies för att lagra sessionid
 use default	admin	sv	Använd standard
 use ldap defaults	admin	sv	Använd LDAP standarder
 use pure html compliant code (not fully working yet)	admin	sv	Använd fullständigt HTML kompatibel kod (fungerar inte fullständigt ännu).
+use save or apply to store the received oauth token!	admin	sv	Använd save eller apply för att lagra den mottagna OAuth-token!
 use smtp auth	admin	sv	Använd SMTP autentisering
 use theme	admin	sv	Använd tema
 use tls authentication	admin	sv	Använd TLS autentisering

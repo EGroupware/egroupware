@@ -60,6 +60,7 @@ acl updated	admin	ja	ACL を更新しました
 acl updated.	admin	ja	ACL を更新しました。
 activate	admin	ja	有効化
 active templates	admin	ja	有効なテンプレート
+active this token again	admin	ja	このトークンを再度アクティブにする
 add a category	admin	ja	カテゴリを追加
 add a group	admin	ja	グループを追加
 add a new account.	admin	ja	新規アカウントを追加
@@ -99,6 +100,7 @@ all users	admin	ja	全てのユーザ
 allow anonymous access to this app	admin	ja	このアプリケーションに対する匿名ユーザのアクセスを許可
 allow remote administration from following install id's (comma separated)	admin	ja	リモート管理を許可するインストール ID（コンマ区切りで複数指定可）
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ja	SingleSignOnの'Security & Passwords'にパスワードを保存できるようにする。
+allow user to set 'remember me' token	admin	ja	ユーザが「Remember me」トークンを設定できるようにする
 allow users to change forwards	admin	ja	ユーザによるフォワードの変更を許可する
 allow users to create identities for aliases	admin	ja	ユーザがエイリアスの ID を作成できるようにする
 alternate email address	admin	ja	代替メール・アドレス
@@ -183,6 +185,7 @@ check ip address of all sessions	admin	ja	全てのセッションで IP アド�
 check items to <b>%1</b> to %2 for %3	admin	ja	%3(%2)に対する <b>%1</b> の項目をチェックしてください
 children	admin	ja	子孫
 clear cache and register hooks	admin	ja	キャッシュをクリアしてフックを再登録
+clear security tokens	admin	ja	セキュリティトークンを消去する
 click to select a color	admin	ja	クリックして色を選択
 color	admin	ja	色
 command scheduled to run at %1	admin	ja	コマンドは %1 で実行するようにスケジュールされています。
@@ -353,12 +356,14 @@ error connecting to imap server. %s : %s.	admin	ja	IMAP サーバー接続中に
 error connecting to imap server: [%s] %s.	admin	ja	IMAP サーバー接続中にエラー: [%s] %s.
 error deleting entry!	admin	ja	項目の削除中にエラー!
 error deleting log entry!	admin	ja	ログ項目の削除中にエラー!
+error revoking token!	admin	ja	トークン失効エラー
 error saving	admin	ja	保存中にエラー!
 error saving account!	admin	ja	アカウント保存中にエラー!
 error saving the command!	admin	ja	コマンド保存中にエラー!
 error saving the entry!!!	admin	ja	項目保存中にエラー!
 error saving to db:	admin	ja	データベース保存中にエラー:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	ja	タイマー設定中にエラー（シンタックス・エラー、または既にタイマーが稼働中の可能性があります）
+error storing token!	admin	ja	トークンの保存でエラーが発生しました！
 error! no appname found	admin	ja	エラー: アプリケーション名がありません!
 error, no username!	admin	ja	エラー: ユーザ名がありません!
 error: %1 not found or other error !!!	admin	ja	エラー: %1 が見つかりません(または別のエラー)!
@@ -396,6 +401,7 @@ forward only disables imap mailbox / storing of mails and just forwards them to 
 full name	admin	ja	氏名
 general	admin	ja	一般
 generate certificate	admin	ja	証明書の生成
+generate new token and display it once after saving	admin	ja	新しいトークンを生成し、保存後に一度だけ表示する
 global categories	common	ja	グローバルカテゴリ
 global options	admin	ja	全体オプション
 go directly to admin menu, returning here the next time you click on administration.	admin	ja	Go directly to admin menu, returning here the next time you click on administration.
@@ -436,6 +442,7 @@ identity deleted	admin	ja	名称を削除しました
 identity saved.	admin	ja	名称を保存しました。
 idle	admin	ja	アイドル
 if different from email address	admin	ja	if different from EMail address
+if disabled existing tokens immediatly stop working.	admin	ja	無効化されたトークンは直ちに機能しなくなります。
 if no acl records for user or any group the user is a member of	admin	ja	ユーザ/グループにACL権限が無い場合に加入するグループ:
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ja	LDAP 利用時のホームディレクトリとログインシェルの情報
 if using ssl or tls, you must have the php openssl extension loaded.	admin	ja	If using SSL or TLS, you must have the PHP openssl extension loaded.
@@ -662,6 +669,7 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	ja	リクエスト済み
 required pear class mail/mimedecode.php not found.	admin	ja	Required PEAR class Mail/mimeDecode.php not found.
 reset filter	admin	ja	フィルターをリセット
+revoke this token	admin	ja	トークンの失効
 rights	admin	ja	権限
 rows	admin	ja	行
 rpm or debian package	admin	ja	RPM または Debian パッケージ
@@ -682,6 +690,7 @@ security	admin	ja	セキュリティ
 select accounts for which the custom field should be visible	admin	ja	カスタム項目を閲覧できるアカウントを選択してください。
 select group managers	admin	ja	グループ管理者を選択
 select permissions this group will have	admin	ja	利用可能アプリケーション
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	ja	トークンを制限したいアプリケーションを選択するか、デフォルトのすべてのアプリケーションのままにしておきます。
 select the parent category. if this is a main category select no category	admin	ja	Select the parent category. If this is a main category select NO CATEGORY.
 select type of imap server	admin	ja	IMAP サーバーのタイプを選択
 select type of smtp server	admin	ja	SMTP サーバーのタイプを選択
@@ -749,6 +758,7 @@ submit to egroupware.org	admin	ja	egroupware.org に送信
 subtype	admin	ja	サブ・タイプ
 success	admin	ja	成功
 successful connected to %1 server%2.	admin	ja	%1 サーバー %2 に接続しました。
+successfull, but no refresh-token received!	admin	ja	成功しましたが、リフレッシュ・トークンを受信していません！
 switch back to standard identity to save account.	admin	ja	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	ja	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	ja	ユーザがランダムに強制ログアウトしてしまう場合は無効にしてください
@@ -780,6 +790,10 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	ja
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	ja	Timeout for sessions in seconds. Default 14400 = 4 hours
 times	admin	ja	時間条件
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	ja	あなたのサイトの統計情報を追跡することを私たちに許可する場合は下記の送信IDを使用してください。それ以外の場合は消去してください:
+token created.	admin	ja	トークンが作成されました。
+token not found!	admin	ja	トークンが見つかりません！
+token revoked.	admin	ja	トークンは破棄されました。
+token saved.	admin	ja	トークンが保存されました。
 top	admin	ja	上部
 total of %1 id's changed.	admin	ja	合計 %1 ID が変更されました。
 total records	admin	ja	合計
@@ -817,6 +831,7 @@ use default	admin	ja	既定値を使用
 use ldap defaults	admin	ja	LDAP の既定値を使用
 use predefined username and password defined below	admin	ja	ユーザ名とパスワードから導出される値を使用
 use pure html compliant code (not fully working yet)	admin	ja	純粋なHTMLを利用（まだ完全には動作しません）
+use save or apply to store the received oauth token!	admin	ja	受信したOAuthトークンを保存するには、保存または適用を使用します！
 use secure cookies (transmitted only via https)	admin	ja	セキュア・クッキーを使用（httpsでのみ送信）
 use smtp auth	admin	ja	SMTP 認証を使用
 use theme	admin	ja	テーマを選択

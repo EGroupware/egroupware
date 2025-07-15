@@ -19,7 +19,9 @@ after reply, visible during compose	mail	hu	Válasz után, látható az összeá
 aliases+forwards	mail	hu	Aliasok+Továbbítás
 all my email addresses	mail	hu	minden e-mail címem
 all of	mail	hu	összes innnen
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	hu	Az összes almappa is törlődik, és az összes érintett mappában lévő összes üzenet elveszik.
 allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben.
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	hu	Lehetővé teszi a felhasználó számára, hogy mappákat és leveleket olvasson, írjon és hozzon létre, hozzászóljon, üzeneteket csatoljon hozzájuk és üzeneteket töröljön.
 always respond / auto-responder	mail	hu	Mindig válaszolni / automatikus válaszadó
 always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
 always show notifiction	mail	hu	Mindig megjeleníti az értesítést
@@ -27,6 +29,7 @@ answered	mail	hu	Válaszolt
 any of	mail	hu	bármennyi
 any status	mail	hu	bármilyen állapot
 archive folder	mail	hu	Archívum mappa
+are you sure you want to delete all selected folders?	mail	hu	Biztos, hogy az összes kiválasztott mappát törölni szeretné?
 attach files	mail	hu	Fájlok csatolása
 attach users vcard at compose to every new mail	mail	hu	A felhasználók vCard-jának csatolása minden új levélhez a komponáláskor.
 attachment has been saved successfully.	mail	hu	A csatolás sikeresen mentésre került.
@@ -122,6 +125,8 @@ examine namespace to retrieve folders in others and shared	mail	hu	Névtér vizs
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	hu	A megadott méretnél nagyobb mellékletek kizárása a vázlatként való automatikus mentésből (MB-ban)
 extended	mail	hu	Kibővített
 failed to delete %1	mail	hu	A %1 törlése sikertelen volt
+failed to delete %1 ! reason: %2	mail	hu	Sikerült törölni a %1-et! Ok: %2
+failed to delete %1. server responded:	mail	hu	Nem sikerült törölni a %1-et! A szerver válaszolt:
 failed to subscribe folder %1!	mail	hu	Nem sikerült feliratkozni a %1 mappára!
 failed to unsubscribe folder %1!	mail	hu	Nem sikerült leiratkozni a %1 mappáról!
 file into	mail	hu	Áthelyezés a következő helyre
@@ -377,10 +382,12 @@ vacation notice is active	mail	hu	Szabadság értesítő aktív
 vacation start-date must be before the end-date!	mail	hu	Szabadság kezdete korábban legyen mint a vége!
 validate addresses on submit:	mail	hu	Érvényesítse a címeket az elküldéskor:
 view header lines	mail	hu	Fejléc tartalom megjelenítése
+what to do when you delete a message	mail	hu	Mi a teendő, ha töröl egy üzenetet.
 when deleting messages	mail	hu	Üzenet törlése esetén
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	hu	melyik mappa legyen az Elküldött levelek mappa szerint megjelenítve
 which folders - in general - should not be automatically created, if not existing	mail	hu	melyik mappa ne legyen automatikusan létrehozva
 write	mail	hu	Írás
+write & delete	mail	hu	írás és törlés
 wrote	mail	hu	írta
 you can select what info to be displayed on email tag	mail	hu	Kiválaszthatja, hogy milyen információk jelenjenek meg az e-mail címke.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	hu	A fenti kezdő dátumhoz használhatja a $$start$$$-t, a végdátumhoz pedig a $$end$$$-t.

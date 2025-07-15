@@ -134,7 +134,6 @@ preformatted	preferences	sk	Predformátované
 pt: points (1/72 inch)	preferences	sk	pt: body (1/72 palca)
 px: display pixels	preferences	sk	px: zobrazovacie pixle
 re-enter your password	preferences	sk	Zadajte heslo znovu
-read prefs for the specified application.	preferences	sk	Načítať predvoľby pre vybranú aplikáciu.
 reset qrcode	preferences	sk	Obnovenie QR kódu
 revoke	preferences	sk	Odvolať
 revoke this token	preferences	sk	Odvolať tento token
@@ -153,7 +152,6 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	sk	Nastavenia
 setup two factor authentication	preferences	sk	Inštalácia dvojfaktorovej autentifikácie
 should the number of active sessions be displayed for you all the time.	preferences	sk	Má sa stále zobrazovať počet aktívnych relácií (pripojených používateľov)?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	sk	Chcete vidieť pomocné texty pri každej zmene nastavení, alebo iba na požiadanie?
 show helpmessages by default	preferences	sk	Vždy zobraziť pomocné texty
 show links between egroupware aps as	common	sk	Zobraziť odkazy medzi aplikáciami EGroupware ako
 show navigation bar as	preferences	sk	Ako zobraziť navigačný panel
@@ -171,7 +169,6 @@ stay open, but not for email	preferences	sk	Ponechať otvorené, ale nie pre E-m
 store password retrievable for singlesignon	common	sk	Uloženie hesla načítateľného pre SingleSignOn
 text editor settings	preferences	sk	Nastavenia textového editora
 text only	preferences	sk	Iba text
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sk	Predvolená aplikácia sa spustí po prihlásení do EGroupware alebo kliknutí na ikonku Domovskej stránky.<br>Naraz môžete mať na hlavnej stránke zobrazených aj viacero aplikácií, ak si tu nevyberiete žiadnu. Musíte si to však ponastavovať v nastaveniach jednotlivých aplikácií.
 the old password is not correct	preferences	sk	Staré heslo bolo zadané chybne
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sk	Výberová ponuka zobrazuje všetkých dostupných používateľov (môže to veľmi spomaľovať ak máte veľa používateľov). Vyskakovacie okno vie vyhľadať používateľa podľa mena alebo skupiny.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	sk	Výberová ponuka zobrazuje všetkých dostupných používateľov (môže to veľmi spomaľovať ak máte veľa používateľov). Vyskakovacie okno vie vyhľadať používateľav pomocou mena alebo skupiny. Posledné dve možnosti obmedzujú viditeľnosť ostatných používateľov. Preto by sa NEmali vynucovať alebo uplatňovať u správcov.
@@ -196,7 +193,6 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sk	Ak odpoviete [ Áno ], tlačítka [ Domov ] a [ Odhlásiť ] budú vyzerať rovnako ako aplikácie v hlavnom paneli aplikácií navrchu stránky.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	sk	Ktorý symbol alebo názov meny sa má používať v EGroupware.
-write prefs for the specified application.	preferences	sk	Zapísať predvoľby pre vybranú aplikáciu.
 you can show the applications as icons only, icons with app-name or both.	preferences	sk	Aplikácie môžu byť zobrazované ako ikonky, ikonky s názvami alebo obidvoje.
 you can show the linked entries with icons only, icons with app-name or both.	common	sk	Odkazované záznamy sa dajú zobrazovať ako ikony, ikony s názvom aplikácie alebo oboje.
 you do not have permission to set acl's in this mode!	preferences	sk	Nemáte oprávnenia na zmenu ACL v tomto režime!

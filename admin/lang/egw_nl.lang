@@ -50,6 +50,7 @@ acl deleted.	admin	nl	ACL verwijderd.
 acl manager	admin	nl	ACL-beheerder
 acl rights	common	nl	ACL-rechten
 activate	admin	nl	Activeren
+active this token again	admin	nl	Dit token opnieuw activeren
 add a category	admin	nl	Een categorie toevoegen
 add a group	admin	nl	Een goep toevoegen
 add a new account.	admin	nl	Een nieuw gebruikersaccount toevoegen
@@ -87,6 +88,7 @@ all users	admin	nl	Alle gebruikers
 allow anonymous access to this app	admin	nl	Geef anonieme gebruikers toegang tot deze toepassing
 allow remote administration from following install id's (comma separated)	admin	nl	Sta beheer of afstand toe vanaf de volgende installatie IDs (komma gescheiden)
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	nl	Sta de gebruiker toe om zijn wachtwoord op te slaan onder 'Beveiliging & wachtwoorden' voor SingleSignOn.
+allow user to set 'remember me' token	admin	nl	Gebruiker toestaan om ‘Onthoud mij’ token in te stellen
 alternate email address	admin	nl	Alternatief emailadres
 anonymous user	admin	nl	Anonieme gebruiker
 anonymous user (not shown in list sessions)	admin	nl	Anonieme gebruiker (wordt niet weergegeven in sessieoverzichten)
@@ -149,6 +151,7 @@ change password for %1	admin	nl	Wijzig wachtwoord voor %1
 check acl for entries of not (longer) existing accounts	admin	nl	Controle ACL voor records van niet (meer) bestaande accounts
 check ip address of all sessions	admin	nl	Controleer IP-adressen van alle sessies
 check items to <b>%1</b> to %2 for %3	admin	nl	Controleer items van <b>%1</b> tot %2 van %3
+clear security tokens	admin	nl	Beveiligingstoken wissen
 click to select a color	admin	nl	Klik om een kleur te kiezen
 color	admin	nl	Kleur
 command scheduled to run at %1	admin	nl	Command is gepland om om %1 uitgevoerd te worden
@@ -283,12 +286,14 @@ error canceling timer, maybe there's none set !!!	admin	nl	Fout bij het annulere
 error changing the password for %1 !!!	admin	nl	Fout bij wijzigen van wachtwoord voor %1 !
 error connecting to imap server. %s : %s.	admin	nl	Fout verbinden met de IMAP server. %s : %s
 error connecting to imap server: [%s] %s.	admin	nl	Fout verbinden met de IMAP server: [%s] %s
+error revoking token!	admin	nl	Fout bij het intrekken van token!
 error saving	admin	nl	Fout bij opslaan
 error saving account!	admin	nl	Fout bij opslaan van account!
 error saving the command!	admin	nl	Fout bij opslaan van commando!
 error saving the entry!!!	admin	nl	Fout bij het bewaren van de invoer!
 error saving to db:	admin	nl	Fout bij opslaan in database:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	nl	Fout bij het zetten van de timer. verkeerde syntax of misschien draait er al een timer!
+error storing token!	admin	nl	Fout bij opslaan token!
 error! no appname found	admin	nl	Fout! geen appname gevonden
 error: %1 not found or other error !!!	admin	nl	Fout: %1 niet gevonden of een ander fout!
 event details follow	admin	nl	Afspraak details volgen
@@ -314,6 +319,7 @@ forward only	admin	nl	Alleen doorsturen
 full name	admin	nl	Volledige naam
 general	admin	nl	Algemeen
 generate certificate	admin	nl	Certificaat genereren
+generate new token and display it once after saving	admin	nl	Genereer een nieuw token en geef het eenmalig weer na het opslaan
 global categories	common	nl	Algemene Categorieën
 global options	admin	nl	Algemene opties
 grant	admin	nl	Sta toe
@@ -340,6 +346,7 @@ how should email addresses for new users be constructed?	admin	nl	Hoe moet het E
 icon	admin	nl	Pictogram
 idle	admin	nl	Inactief
 if different from email address	admin	nl	Indien afwijkend van EMAIL adres
+if disabled existing tokens immediatly stop working.	admin	nl	Als bestaande tokens zijn uitgeschakeld, werken ze niet meer.
 if no acl records for user or any group the user is a member of	admin	nl	Als er geen ACL-records if groepen zijn voor de gebruiker is de gebruiker lid van
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	nl	Als u LDAP gebruikt, wilt u dan homedirectory en loginshell attributen beheren?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	nl	Indien SSL of TSL wordt gebruikt, moet u de PHP openssl extensie opgeladen hebben
@@ -397,6 +404,7 @@ leave the group untouched and return back to the list	admin	nl	Laat de groep ong
 leave without saveing the entry	admin	nl	Weggaan zonder op te slaan
 leaves without saveing	admin	nl	Verlaat zonder opslaan
 length<br>rows	admin	nl	Lengte<br />Rijen
+lifetime of 'remember me' token	admin	nl	Levensduur van ‘Onthoud mij’ token
 list config settings	admin	nl	Configuratie-instellingen weergeven
 list current sessions	admin	nl	Huidige sessies weergeven
 list of current users	admin	nl	Lijst van huidige gebruikers
@@ -501,6 +509,7 @@ remote instance saved	admin	nl	Afstandbeheer instantie opgeslagen
 remove	admin	nl	Verwijderen
 required pear class mail/mimedecode.php not found.	admin	nl	PEAR benodigd, class MAIL/mimeDecode.php niet gevonden
 reset filter	admin	nl	Filter opnieuw instellen
+revoke this token	admin	nl	Trek dit token in
 rights	admin	nl	Rechten
 rows	admin	nl	Rijen
 run asynchronous services	admin	nl	Asynchrone services uitvoeren
@@ -516,6 +525,7 @@ search peer servers	admin	nl	Doorzoek de peer-servers
 security	admin	nl	Beveiliging
 select group managers	admin	nl	Selecteer Groepsmanagers
 select permissions this group will have	admin	nl	Selecteer de rechten die deze groep krijgt
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	nl	Selecteer de applicaties waartoe je het token wilt beperken, of laat de standaardinstelling van alle applicaties staan.
 select the parent category. if this is a main category select no category	admin	nl	Selecteer de bovenliggende categorieën. Als dit een hoofdcategorie is selecteer dan GEEN CATEGORIE
 select type of imap server	admin	nl	Selecteer IMAP servertype
 select type of smtp server	admin	nl	Selecteer SMTP-servertype
@@ -566,6 +576,7 @@ start testjob!	admin	nl	Testtaak starten
 submit changes	admin	nl	Wijzigingen toepassen
 submit the search string	admin	nl	Verzend de zoekopdracht
 subtype	admin	nl	Subtype
+successfull, but no refresh-token received!	admin	nl	Succesvol, maar GEEN refresh-token ontvangen!
 switch it off, if users are randomly thrown out	admin	nl	Schakel het uit, wanneer gebruiker willekeurig eruit gegooid worden
 that loginid has already been taken	admin	nl	Die loginnaam is reeds in gebruik!
 the api is current	admin	nl	De API is actueel.
@@ -589,6 +600,10 @@ this php has no imap support compiled in!!	admin	nl	Deze PHP heeft geen IMAP ond
 timeout for application session data in seconds (default 86400 = 1 day)	admin	nl	Uitvoertijd is overschreden voor toepassingssessiegegevens in seconden.(standaard 86400 = 1 dag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	nl	Uitvoertijd is overschreden voor sessies in seconden. (standaard 14400 =4 uren)
 times	admin	nl	Tijden
+token created.	admin	nl	Token aangemaakt.
+token not found!	admin	nl	Token niet gevonden!
+token revoked.	admin	nl	Token ingetrokken.
+token saved.	admin	nl	Token opgeslagen.
 top	admin	nl	Boven
 total of %1 id's changed.	admin	nl	Totaal van %1 IDs gewijzigd.
 total records	admin	nl	Totaal aantal records
@@ -617,6 +632,7 @@ use default	admin	nl	Gebruik standaard
 use ldap defaults	admin	nl	Gebruik LDAP standaard instellingen
 use predefined username and password defined below	admin	nl	Gebruik voorgekozen gebruikersnaam en wachtwoord zoals hieronder is ingesteld
 use pure html compliant code (not fully working yet)	admin	nl	Gebruik pure HTML compatible code (werk momenteel niet volledig)
+use save or apply to store the received oauth token!	admin	nl	Gebruik opslaan of toepassen om het ontvangen OAuth-token op te slaan!
 use smtp auth	admin	nl	Gebruik SMTP authenticatie
 use theme	admin	nl	Gebruik thema
 use tls authentication	admin	nl	Gebruik TLS authenticatie

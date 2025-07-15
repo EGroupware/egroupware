@@ -45,6 +45,7 @@ allow external images from listed domains	mail	de	Erlaube externe Inhalte der fo
 allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Quellen in HTML-E-Mails.
 allow images from listed domains in html emails	mail	de	Erlaube Bilder von externen Quellen der folgenden Domains in HTML-E-Mails.
 allow users to create further identities	mail	de	Benutzer dürfen weitere Identitäten anlegen
+allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	de	Ermöglicht es einem Benutzer, Ordner und E-Mails zu lesen, zu schreiben und zu erstellen, darin zu posten, Nachrichten anzuhängen und Nachrichten zu löschen.
 always	mail	de	Immer
 always allow external sources from %1	mail	de	Erlaube externe Bildquellen von %1
 always respond / auto-responder	mail	de	Immer antworten / Auto-Responder
@@ -694,6 +695,7 @@ with message:	mail	de	mit folgender Nachricht:
 wizard	mail	de	Assistent
 writable sharing requires epl version!	mail	de	Beschreibbare Freigaben benötigen die EPL Version!
 write	mail	de	schreiben
+write & delete	mail	de	schreiben & löschen
 wrote	mail	de	schrieb
 yes, offer copy option	mail	de	Ja, mit Kopier-Option
 you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen. Die zusätzliche Anzeige der E-Mail-Adresse ermöglicht die Absenderadresse zu überprüfen.

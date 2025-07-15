@@ -369,6 +369,7 @@ name for the distribution list	addressbook	fr	Nom de la liste de diffusino
 name of current user, all other contact fields are valid too	addressbook	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi.
 name, address	addressbook	fr	Nom, adresse
 name, email, phone	addressbook	fr	Nom, email, téléphone
+never use prefix	addressbook	fr	Ne jamais utiliser de préfixe
 new contact submitted by %1 at %2	addressbook	fr	Nouveau contact soumis par %1 à %2.
 next date	addressbook	fr	Date de prochain contact
 no categories selected	addressbook	fr	Aucune catégorie sélectionnée
@@ -522,6 +523,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	fr	Utiliser l'attribut "tri perso" (own sorting) du carnet d'adresses
 use an extra tab for private custom fields?	admin	fr	Utiliser un onglet supplémentaire pour les champs privés extra
 use country list	addressbook	fr	Utiliser la liste des pays
+use firstname, only if no prefix	addressbook	fr	Utiliser le prénom, seulement s'il n'y a pas de préfixe
+use prefix plus all other name parts	addressbook	fr	Utiliser le préfixe et toutes les autres parties du nom
+use prefix, only if no firstname	addressbook	fr	Utiliser le préfixe, seulement s'il n'y a pas de prénom
 use setup for a full account-migration	admin	fr	Utiliser le setup pour une migration de comptes complète
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 used for links and for the own sorting of the list	addressbook	fr	utilisé pour les liens et le tri de la liste
@@ -536,6 +540,7 @@ view linked infolog entries	addressbook	fr	Afficher les entrées liées à InfoL
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	ATTENTION!! LDAP est valide seulement si vous n'utilisez PAS les contacts pour le stockage des comptes!
 warning: all contacts found will be deleted!	addressbook	fr	AVERTISSEMENT : Tous les contacts trouvés seront supprimés!
 weekday	addressbook	fr	Jour de la semaine
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	fr	Ce qui doit être affiché comme nom complet. S'il n'y a ni prénom ni nom, le nom de l'entreprise est affiché.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fr	Que devraient afficher les liens du carnet d'adresses dans les autres applications. Les valeurs vides ne seront pas prises en compte. Vous devez vous reconnecter si vous modifiez ce paramètre!
 when viewing a contact, show linked entries from the selected application	addressbook	fr	A l'affichage du contact, afficher les entrées liées sur les applications sélectionnées
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	fr	Lorsque vous fusionnez des entrées dans des documents, elles sont stockées ici. Si aucun répertoire n'est fourni, elles seront stockées dans votre répertoire personnel (/home/...).

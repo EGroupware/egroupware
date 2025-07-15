@@ -138,7 +138,6 @@ preformatted	preferences	cs	Předformátovaný
 pt: points (1/72 inch)	preferences	cs	pt: body (1/72 palce)
 px: display pixels	preferences	cs	px: pixely
 re-enter your password	preferences	cs	Zadejte znovu své heslo
-read prefs for the specified application.	preferences	cs	Načíst předvolby pro vybranou aplikaci.
 reset qrcode	preferences	cs	Obnovení QR kódu
 revoke	preferences	cs	Odvolat
 revoke this token	preferences	cs	Odvolat tento token
@@ -157,7 +156,6 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	cs	Nastavení
 setup two factor authentication	preferences	cs	Nastavení dvoufaktorového ověřování
 should the number of active sessions be displayed for you all the time.	preferences	cs	Chcete neustále zobrazovat počet aktivních relací?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	cs	Mají být tyto pomocné texty zobrazeny vždy při úpravě předvoleb nebo jen na vyžádání.
 show helpmessages by default	preferences	cs	Standardně zobrazovat pomocné texty
 show links between egroupware aps as	common	cs	Zobrazovat odkazy mezi EGroupware aplikacemi jako
 show navigation bar as	preferences	cs	Zobrazovat navigační lištu jako
@@ -175,7 +173,6 @@ stay open, but not for email	preferences	cs	Zůstaňte otevření, ale ne pro e-
 store password retrievable for singlesignon	common	cs	Uložení hesla, které lze získat pro SingleSignOn.
 text editor settings	preferences	cs	Nastavení textového editoru
 text only	preferences	cs	Jen text
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	cs	Výchozí aplikace bude spuštěna když se přihlásíte do eGroupWaru nebo kliknete na ikonu hlavní strany.<br>Také můžete na hlavní straně zobrazit více aplikací, pokud zde žádnou konkrétní nevyberete (lze nakonfigurovat v předvolbách každé aplikace).
 the old password is not correct	preferences	cs	Staré heslo je chybné
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	cs	Rozbalovací nabídka zobrazuje všechny dostupné uživatele (může trvat velmi dlouho na velkých instalacích s mnoha uživateli). Překryvné okno umožňuje prohledávat uživatele podle jména nebo skupiny.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	cs	Rozbalovací nabídka zobrazuje všechny dostupné uživatele (může trvat velmi dlouho na velkých instalacích s mnoha uživateli). Překryvné okno umožňuje prohledávat uživatele podle jména nebo skupiny. Poslední dvě volby omezují viditelnost ostatních uživatelů. Proto by měly být vynucené a neuplatňují se v případě administrátorů.
@@ -200,7 +197,6 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	cs	Pokud odpovíte kladně, tlačítka pro hlavní stranu a odhlášení budou zobrazena stejně jako aplikace v navigační liště.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Jaká znaková sada má být použita pro export do CSV souboru. Výchozí znakovou sadou systému je ta, která byla použita při instalaci eGroupWaru.
 which currency symbol or name should be used in egroupware.	preferences	cs	Jaký název nebo symbol měny má EGroupware používat.
-write prefs for the specified application.	preferences	cs	Uložit předvolby pro vybranou aplikaci.
 you can show the applications as icons only, icons with app-name or both.	preferences	cs	Můžete aplikace zobrazovat jen jako ikony, ikony s názvem aplikace nebo obojí.
 you can show the linked entries with icons only, icons with app-name or both.	common	cs	Můžete zobrazovat odkazované záznamy jen ikonami, ikonami s názvem aplikace nebo jen názvem aplikace.
 you do not have permission to set acl's in this mode!	preferences	cs	Nemáte oprávnění nastavovat ACL v tomto režimu!

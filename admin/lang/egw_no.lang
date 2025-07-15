@@ -36,6 +36,7 @@ acl csv export	admin	no	ACL CSV-eksport
 acl manager	admin	no	ACL leder
 acl rights	common	no	ACL rettigheter
 activate	admin	no	Aktiviser
+active this token again	admin	no	Aktiver dette tokenet igjen
 add a category	admin	no	Legg til kategori
 add a group	admin	no	Legg til gruppe
 add a new account.	admin	no	Legg til ny konto
@@ -69,6 +70,7 @@ all records and account information will be lost!	admin	no	All historie og bruke
 all users	admin	no	Alle brukere
 allow anonymous access to this app	admin	no	Tillat anonym tilgang til denne applikasjonen
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	no	Tillat brukeren å lagre passordet sitt under «Sikkerhet og passord» for SingleSignOn.
+allow user to set 'remember me' token	admin	no	Tillat brukeren å angi «Husk meg»-token
 alternate email address	admin	no	Alternativ e-mailadresse
 anonymous user	admin	no	Anonym bruker
 anonymous user (not shown in list sessions)	admin	no	Anonym Bruker (vises ikke i sesjonsliste)
@@ -116,6 +118,7 @@ change domain of email address and aliases	admin	no	Endre domenet til e-postadre
 change login screen message	admin	no	Endre melding på hovedside
 check ip address of all sessions	admin	no	Sjekk alle sesjoners IP-adresse
 check items to <b>%1</b> to %2 for %3	admin	no	Sjekk oppføringene til <b>%1</b> til %2 for %3
+clear security tokens	admin	no	Tøm sikkerhetstokener
 click to select a color	admin	no	Trykk for å velge farge
 color	admin	no	Farge
 container	admin	no	Beholder
@@ -221,8 +224,10 @@ enter your smtp server hostname or ip address	admin	no	Skriv inn din SMTP tjener
 enter your smtp server port	admin	no	Skriv inn din SMTP tjeners portnummer
 entry saved	admin	no	Registrering lagret
 error canceling timer, maybe there's none set !!!	admin	no	En feil oppstod ved kansellering av tidsur, kanskje ingen er angitt!
+error revoking token!	admin	no	Feil ved tilbakekalling av token!
 error saving the entry!!!	admin	no	Feil ved lagring av forekomst!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	no	En feil oppstod ved tidsinnstilling, feil syntaks eller kanskje en allerede kjører!
+error storing token!	admin	no	Feil ved lagring av token!
 error: %1 not found or other error !!!	admin	no	Feil: Fant ikke %1, eller annen feil
 event details follow	admin	no	Hendelses Detaljer Følger
 expires	admin	no	Går ut
@@ -241,6 +246,7 @@ forward only	admin	no	Bare videresending
 full name	admin	no	Fullt Navn
 general	admin	no	Generell
 generate certificate	admin	no	Generer sertifikat
+generate new token and display it once after saving	admin	no	Generer nytt token og vis det én gang etter lagring
 global categories	common	no	Globale kategorier
 group ?	admin	no	Gruppe?
 group has been added	common	no	Gruppen er lagt til
@@ -262,6 +268,7 @@ how many minutes should an account or ip be blocked (default 1) ?	admin	no	Hvor 
 icon	admin	no	Ikon
 idle	admin	no	Idle
 if different from email address	admin	no	Hvis forskjellig fra e-postadressen
+if disabled existing tokens immediatly stop working.	admin	no	Hvis deaktiverte eksisterende tokens slutter umiddelbart å fungere.
 if no acl records for user or any group the user is a member of	admin	no	Dersom ingen ACL post for bruker eller noen gruppe bruker medlem av
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	no	Om LDAP används, vill du hantera attribut för hemktalog och programskal?
 imap admin password	admin	no	IMAP Administrasjonspassord
@@ -307,6 +314,7 @@ leave the group untouched and return back to the list	admin	no	Forlat gruppen ub
 leave without saveing the entry	admin	no	Avslutt uten å lagre innslaget
 leaves without saveing	admin	no	Avslutt uten å lagre
 length<br>rows	admin	no	Lengde<br>Kolonner
+lifetime of 'remember me' token	admin	no	Levetid for «Husk meg»-token
 list config settings	admin	no	Vis konfigurasjonsinnstillinger
 list current sessions	admin	no	Vis nåverende sesjoner
 list of current users	admin	no	Liste over brukere
@@ -380,6 +388,7 @@ read this list of methods.	admin	no	Les denne listen av metoder.
 register application hooks	admin	no	Registrer program hooks
 regular expression to find part to use as container	admin	no	Regulært uttrykk for å finne en del som skal brukes som container
 remove	admin	no	Fjern
+revoke this token	admin	no	Tilbakekall dette token
 rows	admin	no	Rader
 run asynchronous services	admin	no	Kjør asonkrone serviser
 save the category	admin	no	Lagre kategorien
@@ -392,6 +401,7 @@ search peer servers	admin	no	Søk peer servere
 security	admin	no	Sikkerhet
 select group managers	admin	no	Velg gruppeleder
 select permissions this group will have	admin	no	Velg tillatelser for denne gruppen
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	no	Velg hvilke applikasjoner du vil at tokenet skal være begrenset til, eller la standardinnstillingen være alle applikasjoner.
 select the parent category. if this is a main category select no category	admin	no	Velg overordnet kategori.  Dersom dette er hovedkategori velg NO CATEGORY
 select type of smtp server	admin	no	Velg type SMTP Tjener
 select users for inclusion	admin	no	Velg brukere som skal inkluderes
@@ -436,6 +446,7 @@ start	admin	no	Start
 start testjob!	admin	no	Start testjobb!
 submit changes	admin	no	Bekreft endringene
 submit the search string	admin	no	Bekreft søkestrengen
+successfull, but no refresh-token received!	admin	no	Vellykket, men INGEN refresh-token mottatt!
 that loginid has already been taken	admin	no	Den loginID er opptatt
 the api is current	admin	no	API er gjeldende
 the api requires an upgrade	admin	no	API trenger en oppgradering
@@ -456,6 +467,10 @@ this php has no imap support compiled in!!	admin	no	PHP versjonen har ingen IMAP
 timeout for application session data in seconds (default 86400 = 1 day)	admin	no	Utløpstid for program session data i sekunder (standrad 86400 = 1 dag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	no	Utløpstid for sessions i sekunder (standard 14400 = 4 timer)
 times	admin	no	Ant. ganger
+token created.	admin	no	Token opprettet.
+token not found!	admin	no	Token ikke funnet!
+token revoked.	admin	no	Token tilbakekalt.
+token saved.	admin	no	Token lagret.
 top	admin	no	Topp
 total records	admin	no	Total historie
 translation	admin	no	Oversetting
@@ -470,6 +485,7 @@ use cookies to pass sessionid	admin	no	Anvend cookies for å lagre sessionID
 use default	admin	no	Bruk standard
 use ldap defaults	admin	no	Bruk LDAP standaroppsett
 use pure html compliant code (not fully working yet)	admin	no	Bruke ren HTML standard kode (ennå ikke helt funksjonelt)
+use save or apply to store the received oauth token!	admin	no	Bruk save eller apply for å lagre det mottatte OAuth-tokenet!
 use smtp auth	admin	no	Bruk SMTP autentisering
 use theme	admin	no	Bruk tema
 use tls authentication	admin	no	Bruk TLS autentisering

@@ -183,6 +183,7 @@ do you want to delete this subscription incl. the synced events?	calendar	fi	Hal
 do you want to edit this event as an exception or the whole series?	calendar	fi	Haluatko muokata tapahtumaa poikkeuksena vai muokkaatko koko tapahtumasarjaa?
 do you want to keep the series exceptions in your calendar?	calendar	fi	Haluatko säilyttää tapahtuman poikkeukset kalenterissasi?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fi	Haluatko vastaanottaa säännöllisen yhteenvedon tapaamisistasi sähköpostilla?<br>Yhteenveto lähetetään sähköpostiosoitteeseesi joka aamu, tai maanantaina jos kyseessä on viikoittainen yhteenveto.<br>Yhteenveto lähetetään vain, jos  sinulla on tapaamisia kyseisenä päivänä tai kyseisellä viikolla.
+does not show event to other users, unless they have a private grant	calendar	fi	EI näytä tapahtumaa muille käyttäjille, ellei heillä ole yksityistä lupaa.
 download	calendar	fi	Lataa
 download this event as ical	calendar	fi	Lataa tämä tapahtuma iCal-tiedostona
 duration	calendar	fi	Kesto
@@ -353,6 +354,7 @@ minimum number of users for showing week view as consolidated.	calendar	fi	Käyt
 minutes	calendar	fi	Minuuttia
 modified	calendar	fi	Muokattu
 modifier	calendar	fi	Muokkaaja
+modify events	calendar	fi	Tapahtumien muokkaaminen
 mon	calendar	fi	Ma
 month	calendar	fi	Kuukausi
 monthly	calendar	fi	Kuukausittain
@@ -366,6 +368,8 @@ name of current user, all other contact fields are valid too	calendar	fi	Käytt�
 needs action	calendar	fi	Vaatii toimenpiteen
 never notify externals (non-users) about events i create	calendar	fi	En koskaan ilmoita ulkopuolisille (muille kuin käyttäjille) luomistani tapahtumista.
 new	calendar	fi	Uusi
+new event category	calendar	fi	Uusi tapahtumakategoria
+new event participants	calendar	fi	Uudet tapahtuman osallistujat
 new search with the above parameters	calendar	fi	Uusi haku yllä olevilla parametreillä
 no automatic purging	admin	fi	Ei automaattista poistoa
 no events found	calendar	fi	Tapahtumia ei löytynyt
@@ -466,6 +470,7 @@ require an acl grant to invite other users and groups	admin	fi	Muiden käyttäji
 required information (start, end, title, ...) missing!	calendar	fi	Vaadittuja tietoja puuttuu!
 reset	calendar	fi	Tyhjennä
 reset participant stati on event shifts	calendar	fi	Tyhjennä osallistujien Tila kun tapahtumia siirretään
+reset resource status on event shifts	calendar	fi	Resurssin tilan nollaaminen tapahtumia siirrettäessä
 resources	calendar	fi	Resurssit
 resources except conflicting ones	calendar	fi	Resurssit, paitsi konfliktit
 resources with conflict detection	calendar	fi	Resurssit, konfliktihuomautuksella
@@ -485,6 +490,7 @@ select a time	calendar	fi	Valitse aika
 select multiple contacts for a further action	calendar	fi	Valitse useampi yhteystieto jatkaaksesi
 select resources	calendar	fi	Valitse resurssit
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	fi	Asetetaanko osallistujien Tilaksi "Ei vastausta", jos tapahtumaa siirretään?
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	fi	Valitse, haluatko resurssin tilan nollautuvan tilaan ”Ei vastausta”, jos tapahtuma siirretään myöhemmin.
 select who should get the alarm	calendar	fi	Valitse kuka saa hälytyksen
 selected range	calendar	fi	Valittu aikaväli
 send meetingrequest to all participants after the event is saved	calendar	fi	Lähetä kutsu kaikille osallistujille tallentamisen jälkeen

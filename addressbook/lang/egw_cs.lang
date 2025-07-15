@@ -370,6 +370,7 @@ name for the distribution list	addressbook	cs	Název distribučního seznamu
 name of current user, all other contact fields are valid too	addressbook	cs	Jméno aktuálního uživatele, všechny ostatní položky kontaktu jsou také platné
 name, address	addressbook	cs	Jméno, adresa
 name, email, phone	addressbook	cs	Jméno, e-mail, telefon
+never use prefix	addressbook	cs	Nikdy nepoužívejte předponu
 new contact submitted by %1 at %2	addressbook	cs	Nový kontakt odeslal(a) %1 v %2
 next date	addressbook	cs	Následující datum
 no categories selected	addressbook	cs	Nebyly vybrány žádné kategorie
@@ -523,6 +524,9 @@ url to link telephone numbers to (use %1 = number to call, %u = account name, %t
 use addressbooks "own sorting" attribute	addressbook	cs	Použijte atribut "vlastní třídění" adresáře
 use an extra tab for private custom fields?	admin	cs	Použít extra založku pro soukromé uživatelsky definované položky
 use country list	addressbook	cs	Použít seznam zemí
+use firstname, only if no prefix	addressbook	cs	Použijte křestní jméno, pouze pokud nemáte předponu
+use prefix plus all other name parts	addressbook	cs	Použijte křestní jméno, pouze pokud nemáte předponu
+use prefix, only if no firstname	addressbook	cs	Použijte předponu, pouze pokud není uvedeno křestní jméno
 use setup for a full account-migration	admin	cs	pro kompletní migraci účtů použijte setup
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	cs	Použijte tuto značku pro adresní štítky. Obsah, který chcete opakovat, vložte mezi dvě značky.
 used for links and for the own sorting of the list	addressbook	cs	použito pro odkazy a vlastní třídění seznamu
@@ -537,6 +541,7 @@ view linked infolog entries	addressbook	cs	Zobrazit odkazované záznamy v InfoL
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	cs	VAROVÁNÍ!! LDAP je použitelný jen v případě, že NEpoužíváte kontakty pro ukládání uživatelských účtů!
 warning: all contacts found will be deleted!	addressbook	cs	VAROVÁNÍ: Všechny kontakty budou smazány!
 weekday	addressbook	cs	Pracovní den
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	cs	Co by se mělo zobrazovat jako celé jméno. Pokud není uvedeno ani jméno, ani příjmení, zobrazí se název společnosti.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	cs	Co mají odkazy na adresář zobrazovat v ostatních aplikacích. Prázdné hodnoty budou vynechány. Pokud změníte toto nastavení, musíte se znovu přihlásit!
 when viewing a contact, show linked entries from the selected application	addressbook	cs	Při zobrazení kontaktu zobrazovat také připojené záznamy z vybraných aplikací
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	cs	Při slučování záznamů do dokumentů budou uloženy právě zde. Pokud není zadán žádný adresář, budou uloženy v domovském adresáři (/home/...).

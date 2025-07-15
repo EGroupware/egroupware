@@ -82,7 +82,7 @@ default action on double-click	filemanager	cs	Výchozí akce při dvojitém klik
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	cs	Výchozí chování je NE. Odkaz sice nebude zobrazen, ale do adresáře budete moci vstoupit nebo ho nakonfigurovat jako startovní složku či odkaz na složku.
 default document to insert entries	filemanager	cs	Výchozí dokument pro vložení záznamů
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	cs	Určuje, jak se má zacházet s akcí dvojitého kliknutí na soubor dokumentu. Obrázky se vždy otevírají v exponovaném zobrazení a e-maily pomocí e-mailové aplikace. Všechny ostatní typy MIME zpracovává prohlížeč sám.
-defines how to open a merge print document	filemanager	cs	Definuje, jak otevřít dokument pro tisk sloučeného dokumentu
+defines how to open a merge print document	filemanager	cs	Co by se mělo stát s dokumenty poté, co byly vyplněny? <br> <br> <b> Pokud je k dispozici Collabora Online </b>, tyto dokumenty lze otevřít (a dále zpracovávat) přímo v prohlížeči s Collabora Online. <br> <b> bez spolupráce online </B> href = "https://www.egroppeware.org/online-offfice" Target = "_ Blank"> Online Office Collabora v EGroupware </a>
 delete all older versions and deleted files older then %s days	filemanager	cs	Odstranit všechny starší verze a odstraněné soubory starší než %s dní
 delete these files or directories?	filemanager	cs	Smazat tyto soubory nebo adresáře?
 delete these shares?	filemanager	cs	Smazat tyto sdílené soubory?

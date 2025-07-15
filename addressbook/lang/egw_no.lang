@@ -204,6 +204,7 @@ more ...	addressbook	no	Mere ...
 move to addressbook	addressbook	no	Flytt til adressebok
 multiple vcard	addressbook	no	Flere vCard
 name, email, phone	addressbook	no	Navn, e-post, telefon
+never use prefix	addressbook	no	Bruk aldri prefiks
 no distribution list	addressbook	no	Ingen distribusjonsliste
 no vcard	addressbook	no	Ingen vCard
 number	addressbook	no	Nummer
@@ -277,12 +278,16 @@ unshare	addressbook	no	Fjern deling
 update a single entry by passing the fields.	addressbook	no	Oppdater ett enkelt innslag ved å legge inn felter.
 updated	addressbook	no	Oppdatert
 use country list	addressbook	no	Bruk landliste
+use firstname, only if no prefix	addressbook	no	Bruk fornavn, bare hvis ingen prefiks
+use prefix plus all other name parts	addressbook	no	Bruk prefiks pluss alle andre navnedeler
+use prefix, only if no firstname	addressbook	no	Bruk prefiks, bare hvis ingen fornavn
 vcard	common	no	vCard
 vcards require a first name entry.	addressbook	no	vCard krever fornavn.
 vcards require a last name entry.	addressbook	no	vCard krever etternavn.
 video call	addressbook	no	Videoanrop
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	no	ADVARSEL!! LDAP er kun aktuellt dersom du IKKE bruker kontakter til konto lagring!
 warning: all contacts found will be deleted!	addressbook	no	Advarsel: Alle kontakter funnet vil bli slettet!
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	no	Hva som skal vises som fullt navn. Hvis det verken finnes fornavn eller etternavn, vises firmanavnet.
 when viewing a contact, show linked entries from the selected application	addressbook	no	Når du viser en kontakt, kan du vise koblede oppføringer fra det valgte programmet
 work phone	addressbook	no	Telefon arbeid
 yes, only admins can purge deleted items	admin	no	Ja, bare administratorer kan slette slettede elementer

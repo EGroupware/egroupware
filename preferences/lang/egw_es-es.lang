@@ -138,7 +138,6 @@ preformatted	preferences	es-es	Preformateado
 pt: points (1/72 inch)	preferences	es-es	pt: puntos (1/72 pulgada)
 px: display pixels	preferences	es-es	px: mostrar pixeles
 re-enter your password	preferences	es-es	Confirme su contraseña
-read prefs for the specified application.	preferences	es-es	Leer las preferencias para la aplicación especificada.
 reset qrcode	preferences	es-es	Restablece el código QR
 revoke	preferences	es-es	Revocar
 revoke this token	preferences	es-es	Revocar este token
@@ -157,7 +156,6 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	es-es	Ajustes
 setup two factor authentication	preferences	es-es	Configurar la autenticación de dos factores
 should the number of active sessions be displayed for you all the time.	preferences	es-es	¿Mostrar el número de sesiones activas todo el tiempo?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	es-es	¿Mostrar estos mensajes de ayuda al modificar preferencias, o sólo cuando lo solicite?
 show helpmessages by default	preferences	es-es	Mostrar mensajes de ayuda por defecto
 show links between egroupware aps as	common	es-es	Mostrar los enlaces entre aplicaciones de EGroupware como
 show navigation bar as	preferences	es-es	Mostrar la barra de navegación como
@@ -175,7 +173,6 @@ stay open, but not for email	preferences	es-es	Mantente abierto, pero no para el
 store password retrievable for singlesignon	common	es-es	Contraseña almacenada recuperable para SingleSignOn
 text editor settings	preferences	es-es	Ajustes del editor de texto
 text only	preferences	es-es	Sólo texto
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-es	La aplicación predeterminada se mostará al iniciar la sesión en EGroupware o pulsar en el icono de la página de inicio.<br>También puede tener más de una aplicación en la página de inicio, si no elige una aplicación específica aquí, configurándolo en las preferencias de cada aplicación.
 the old password is not correct	preferences	es-es	La contraseña anterior no es correcta
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	es-es	La caja de selección muestra todos los usuarios disponibles (puede ser muy lento en grandes instalaciones con muchos usuarios). La ventana emergente puede buscar usuarios por nombre o grupo.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	es-es	El cuadro de selección muestra todos los usuarios disponibles (puede ser muy lento en instalaciones grandes con muchos usuarios). La ventana emergente puede buscar usuarios por nombre o por grupo. Las dos últimas opciones limitan la visibilidad de otros usuarios. Por tanto, deben ser forzadas y aplicar NO a los administradores.
@@ -200,7 +197,6 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	es-es	Si se indica Sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra de aplicaciones principal.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	es-es	Símbolo de moneda o nombre que debe usar EGroupware
-write prefs for the specified application.	preferences	es-es	Escribir las preferencias para la aplicación especificada.
 you can show the applications as icons only, icons with app-name or both.	preferences	es-es	Puede ver las aplicaciones como iconos sólo, iconos con el nombre, o ambos.
 you can show the linked entries with icons only, icons with app-name or both.	common	es-es	Puede mostrar las entradas vinculadas sólo con iconos, iconos con el nombre de la aplicación, o ambos.
 you do not have permission to set acl's in this mode!	preferences	es-es	Usted no tiene permisos para poner ACLs en este modo

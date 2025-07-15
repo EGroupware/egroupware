@@ -202,6 +202,7 @@ do you want to delete this subscription incl. the synced events?	calendar	cs	Chc
 do you want to edit this event as an exception or the whole series?	calendar	cs	Chcete editovat tuto událost jako výjimku nebo celou řadu pravidelných opakování?
 do you want to keep the series exceptions in your calendar?	calendar	cs	Chcete zachovat výjimky řady pravidelného opakování ve svém kalendáři?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	cs	Chcete pravidelně dostávat přehled Vašich událostí e-mailem?<br>Přehled bude odesílán na Vaši výchozí e-mailovou adresu každý den ráno, respektive v pondělí ráno v případě týdenních přehledů.<br>Přehled bude odeslán jen v případě, že máte na daný den, resp. týden naplánovány nějaké události.
+does not show event to other users, unless they have a private grant	calendar	cs	Nezobrazuje událost ostatním uživatelům, pokud nemají soukromý grant.
 download	calendar	cs	Stáhnout
 download this event as ical	calendar	cs	Stáhnout tuto událost jako iCal
 duration	calendar	cs	Trvání
@@ -387,6 +388,7 @@ minimum number of users for showing week view as consolidated.	calendar	cs	Minim
 minutes	calendar	cs	Minut
 modified	calendar	cs	Změněno
 modifier	calendar	cs	Změnil
+modify events	calendar	cs	Upravovat události
 mon	calendar	cs	Po
 month	calendar	cs	Měsíc
 monthly	calendar	cs	Měsíčně

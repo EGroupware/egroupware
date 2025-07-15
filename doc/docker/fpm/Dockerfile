@@ -104,8 +104,7 @@ RUN set -e \
 	# npm install fails "silent" on network timeouts, retry until it works
 	&& until grunt; do sleep 5; npm install -g grunt-cli; done \
     # fix permissions (as some npm modules have world-writable files)
-    && chmod -R a-x,u=rwX,g=rX,o=rX . \
-    && chmod +x */*cli.php doc/rpm-build/*.php \
+    && chmod -R o-w . \
 	# clean up and remove caches
 	&& npm uninstall -g grunt-cli \
 	&& npm cache clear --force \

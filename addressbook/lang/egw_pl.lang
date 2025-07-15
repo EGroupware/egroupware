@@ -343,6 +343,7 @@ name for the distribution list	addressbook	pl	Nazwa dla listy dystrybucyjnej
 name of current user, all other contact fields are valid too	addressbook	pl	Nazwa aktualnego użytkownika, wszystkie pozostałe pola kontaktu są prawidłowe.
 name, address	addressbook	pl	Imię, adres
 name, email, phone	addressbook	pl	Imię i nazwisko, e-mail, telefon
+never use prefix	addressbook	pl	Nigdy nie używaj prefiksu
 new contact submitted by %1 at %2	addressbook	pl	Nowy kontakt przesłany przez %1 , %2
 next date	addressbook	pl	Następna data
 no categories selected	addressbook	pl	Nie wybrano kategorii
@@ -487,6 +488,9 @@ upload or delete the photo	addressbook	pl	Załaduj lub usuń zdjęcie
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pl	Odnośnik URL do numerów telefonów (użyj %1 zamiast numeru telefonu, %2 zamiast nazwy konta, %3 zamiast numeru telefonu konta)
 use an extra tab for private custom fields?	admin	pl	Używać dodatkowej zakładki dla prywatnych pól własnych
 use country list	addressbook	pl	Użyj listy krajów
+use firstname, only if no prefix	addressbook	pl	Użyj imienia, tylko jeśli nie ma prefiksu
+use prefix plus all other name parts	addressbook	pl	Użyj prefiksu i wszystkich innych części nazwy
+use prefix, only if no firstname	addressbook	pl	Użyj prefiksu, tylko jeśli nie ma imienia
 use setup for a full account-migration	admin	pl	Użyj (/setup) w celu pełnej migracji kont
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	pl	Użyj tego znacznika dla etykiet adresu. Wstaw zawartość którą chcesz powtórzyć pomiędzy dwa znaczniki.
 used for links and for the own sorting of the list	addressbook	pl	używane w odnośnikach oraz we własnym sortowaniu listy
@@ -501,6 +505,7 @@ view linked infolog entries	addressbook	pl	Pokaż wpisy do InfoLog jako link
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pl	UWAGA! Można używać LDAP tylko kiedy NIE używa się kontaktów do przechowywania kont!
 warning: all contacts found will be deleted!	addressbook	pl	UWAGA: Wszystkie znalezione kontakty zostaną skasowane!
 weekday	addressbook	pl	Dzień tygodnia
+what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	pl	Co powinno być wyświetlane jako pełna nazwa. Jeśli nie ma ani imienia, ani nazwiska, wyświetlana jest nazwa firmy.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pl	Jaką treść powinny mieć odnośniki do książki adresowej widocznie w innych aplikacjach? Puste wartości zostaną pominięte. Musisz na nowo się zalogować, jeżeli zmienisz to ustawienie!
 when viewing a contact, show linked entries from the selected application	addressbook	pl	Podczas wyświetlania kontaktu pokazuje powiązane wpisy z wybranej aplikacji
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	pl	Gdy łączysz wpisy w dokumenty, będą one przechowywane w tym miejscu. Jeśli nie podano żadnego katalogu, będą one przechowywane w katalogu domowym (/home/...)

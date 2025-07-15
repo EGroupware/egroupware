@@ -42,7 +42,6 @@ selectbox	preferences	iw	תיבת בחירה
 selectbox with primary group and search	preferences	iw	תיבת בחירה עם קבוצה ראשית וחיפוש
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	iw	.קבע זאת כרצונך. יתכן שלא תרצה לחשוף את שם המשתמש שלך מטעמי אבטחה
 should the number of active sessions be displayed for you all the time.	preferences	iw	?האם להציג את כמות המושבים הפעילים כל הזמן
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	iw	.האם להציג את הודעות העזרה האללו תמיד כאשר משנים עדיפויות, או רק על פי בקשה
 show helpmessages by default	preferences	iw	הצג הודעות עזרה כברירת מחדל
 show navigation bar as	preferences	iw	-הצג פס הניווט כ
 show number of current users	preferences	iw	הצג מספר משתמשים פעילים

@@ -604,7 +604,6 @@ logintime	admin	de	Anmeldezeit
 logoutime	admin	de	Abmeldezeit
 lowercase email addresses	admin	de	E-Mail-Adressen mit Kleinbuchstaben
 mail account	admin	de	E-Mail-Konto
-mail accounts activation	admin	de	Aktivierung von Mail Konten
 mail settings	admin	de	E-Mail-Einstellungen
 main email-address	admin	de	Haupt-E-Mail-Adresse
 main screen message	admin	de	Nachricht der Startseite
@@ -893,6 +892,7 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	de	Token erzeugt.
 token not found!	admin	de	Token nicht gefunden!
 token revoked.	admin	de	Token widerrufen.
+token saved.	admin	de	Token gespeichert.
 top	admin	de	Oben
 total of %1 accounts deleted.	admin	de	Insgesamt %1 Benutzerkonten gelöscht.
 total of %1 id's changed.	admin	de	Die Gesamtanzahl von %1 IDs wurde geändert.

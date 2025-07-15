@@ -133,12 +133,11 @@ permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone.
 popup with search	preferences	de	Pop-up mit Suche
-preferences saved.	preferences	de	Einstellungen gespeichert
+preferences saved.	preferences	de	Einstellungen gespeichert.
 preformatted	preferences	de	Vorformatiert
 pt: points (1/72 inch)	preferences	de	pt: Punkt (1/72 Inch)
 px: display pixels	preferences	de	px: Bildschirmpixel
 re-enter your password	preferences	de	Neues Passwort wiederholen
-read prefs for the specified application.	preferences	de	Liest Einstellungen von den ausgewählten Anwendungen.
 reset qrcode	preferences	de	QR-Code zurücksetzen
 revoke	preferences	de	Zurückziehen
 revoke this token	preferences	de	Diese(s) Token(s) zurückziehen
@@ -157,7 +156,6 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	de	Einstellungen
 setup two factor authentication	preferences	de	Setup 2-Faktor-Authentifizierung
 should the number of active sessions be displayed for you all the time.	preferences	de	Zeigt die Anzahl aktiver Sitzungen im Avatar-Menü an.
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	de	Sollen die Hilfetexte immer angezeigt werden, wenn Sie die Einstellungen aufrufen oder nur auf Anforderung?
 show helpmessages by default	preferences	de	Hilfetexte standardmäßig anzeigen
 show links between egroupware aps as	common	de	Zeige Verknüpfungen zwischen EGroupware Anwendungen als
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
@@ -175,7 +173,6 @@ stay open, but not for email	preferences	de	Liste auflassen, aber nicht für E-M
 store password retrievable for singlesignon	common	de	Passwort wiederherstellbar für SingleSignOn speichern
 text editor settings	preferences	de	Einstellungen des Texteditors
 text only	preferences	de	Nur Text
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie EGroupware neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf Ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
 the old password is not correct	preferences	de	Das alte Passwort ist nicht korrekt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Pop-up ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Pop-up ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann. Die beiden letzten Optionen begrenzen die Sichtbarkeit von Benutzern. Aus diesem Grund sollten diese erzwungen werden, werden aber nicht auf Administratoren angewendet.
@@ -200,7 +197,6 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Wählen Sie hier den Zeichensatz für den CSV Import/Export. Der Standard-Zeichensatz ist der Zeichensatz Ihrer EGroupware Installation.
 which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in EGroupware verwendet werden.
-write prefs for the specified application.	preferences	de	Schreibt die Einstellungen für die jeweilige Anwendung.
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
 you can show the linked entries with icons only, icons with app-name or both.	common	de	Sie können verknüpfte Einträge mit Bild, Anwendungsnamen oder beidem anzeigen.
 you do not have permission to set acl's in this mode!	preferences	de	Sie haben keine Berechtigung die ACL in diesem Modus zu setzen.

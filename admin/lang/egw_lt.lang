@@ -31,11 +31,13 @@
 access token revoked.	admin	lt	Prieigos žetonas atšauktas.
 account	admin	lt	Paskyra
 acl csv export	admin	lt	ACL CSV eksportas
+active this token again	admin	lt	Vėl aktyvus šis simbolis
 add a group	admin	lt	Pridėti prie grupės
 add to group	admin	lt	Pridėti prie grupės
 add user	admin	lt	Pridėti naudotoją
 add user or group	admin	lt	Pridėti naudotoją arba grupę
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	lt	Leisti naudotojui saugoti savo slaptažodį SingleSignOn skiltyje „Saugumas ir slaptažodžiai“.
+allow user to set 'remember me' token	admin	lt	Leisti naudotojui nustatyti žetoną "Prisiminti mane"
 anonymous user. not shown in list sessions.	admin	lt	Anoniminis naudotojas. Nerodoma sąrašo sesijose
 blocking after wrong password	admin	lt	Blokavimas po neteisingo slaptažodžio
 bulk changes	admin	lt	Masiniai pakeitimai
@@ -46,25 +48,31 @@ certificate details	admin	lt	Sertifikato informacija
 certificate validation in days	admin	lt	Sertifikato patvirtinimas per kelias dienas
 change access	admin	lt	Keisti prieigos teises
 change domain of email address and aliases	admin	lt	Pakeisti el. pašto adreso domeną ir slapyvardžius
+clear security tokens	admin	lt	Išvalyti saugumo žetonus
 container	admin	lt	Konteineris
 current certificate	admin	lt	Dabartinis sertifikatas
 custom 1	admin	lt	Pasirinktinis 1
 custom 2	admin	lt	Pasirinktinis 2
 custom 3	admin	lt	Pasirinktinis 3
 delete certificate	admin	lt	Ištrinti sertifikatą
+error revoking token!	admin	lt	Klaida atšaukti žetoną!
+error storing token!	admin	lt	Klaida saugant simbolį!
 export certificate as p12	admin	lt	Eksportuoti sertifikatą kaip p12
 generate certificate	admin	lt	Generuoti sertifikatą
+generate new token and display it once after saving	admin	lt	Sugeneruoti naują simbolį ir jį vieną kartą parodyti po išsaugojimo
 group hidden from non-admins	admin	lt	Grupė paslėpta nuo neadministratorių
 group hierarchy	admin	lt	Grupių hierarchija
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	lt	Kiek įrašų gali eksportuoti ne administratoriai. Tuščias = neribojama, Ne = neeksportuojama
 html/plaintext	admin	lt	HTML / Tekstas
 if different from email address	admin	lt	Jei skiriasi nuo el. pašto adreso
+if disabled existing tokens immediatly stop working.	admin	lt	Jei išjungti esami žetonai iš karto nustoja veikti.
 last %1 logins	admin	lt	Paskutiniai %1 prisijungimai
 last %1 logins for %2	admin	lt	Paskutiniai %1 prisijungimai prie %2
 last time read	admin	lt	Paskutinį kartą perskaitytas
 last updated	admin	lt	Paskutinį kartą atnaujinta
 leave empty for no quota	admin	lt	Palikite tuščią, jei kvotos nėra
 leave empty to use oauth, if supported	admin	lt	Palikite tuščią, jei norite naudoti OAuth, jei palaikoma
+lifetime of 'remember me' token	admin	lt	Ženklo „Prisiminti mane“ gyvavimo trukmė
 no limit	admin	lt	Nėra ribos
 oauth authentiction	admin	lt	OAuth autentiškumo nustatymas
 offer to installing egroupware as mail-handler	admin	lt	Pasiūlymas įdiegti EGroupware kaip pašto tvarkytuvą
@@ -77,11 +85,19 @@ own categories	admin	lt	Savos kategorijos
 own install id	admin	lt	Nuosavas diegimo ID
 own install id:	admin	lt	Nuosavas diegimo ID:
 regular expression to find part to use as container	admin	lt	Reguliarioji išraiška daliai, kurią galima naudoti kaip konteinerį, rasti
+revoke this token	admin	lt	Atšaukti šį simbolį
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	lt	Pasirinkite programas, kurioms norite, kad simbolis būtų taikomas tik jums, arba palikite numatytąjį variantą - visos programos.
 set a random password	admin	lt	Nustatykite atsitiktinį slaptažodį
 show groups in container based on	admin	lt	Rodyti grupes konteineryje pagal
 smtp only: to create only an smtp account	admin	lt	Sukurti tik SMTP paskyrą be IMAP
+successfull, but no refresh-token received!	admin	lt	Pavyko, bet NĖRA gautas atnaujinimo žetonas!
+token created.	admin	lt	Ženklas sukurtas.
+token not found!	admin	lt	Ženklas nerastas!
+token revoked.	admin	lt	Ženklas atšauktas.
+token saved.	admin	lt	Ženklas išsaugotas.
 total records	admin	lt	Iš viso įrašų
 upload your certificate .p12/.pfx file	admin	lt	Įkelkite savo sertifikato .p12/.pfx failą
+use save or apply to store the received oauth token!	admin	lt	Gautam OAuth žetonui išsaugoti naudokite Save arba Apply!
 use users email-address (as seen in useraccount)	admin	lt	Naudotojo CSV importas
 user choice	admin	lt	Vartotojo pasirinkimas
 user csv export	admin	lt	Naudotojo CSV eksportas

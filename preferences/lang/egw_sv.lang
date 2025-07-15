@@ -1,4 +1,4 @@
-%1 - preferences	preferences	sv	%1 - Alternativ
+%1 - preferences	preferences	sv	%1 - Inställningar
 %1 hours	preferences	sv	%1 timmar
 12 hour	preferences	sv	12 timmar
 24 hour	preferences	sv	24 timmar
@@ -20,6 +20,7 @@ default	preferences	sv	Standard
 default preferences	preferences	sv	Standard inställningar
 delete categories	preferences	sv	Radera kategorier
 deny following groups access to application passwords	preferences	sv	Neka följande grupper åtkomst till applikationslösenord
+deny following groups access to preferences	admin	sv	Neka följande grupper tillgång till inställningar
 description can not exceed 255 characters in length !	preferences	sv	Beskrivningen kan inte vara längre än 255 tecken
 disable	preferences	sv	Inaktivera
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sv	Föredrar du 24 timmars format, eller 12 med fm/em.
@@ -61,8 +62,8 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sv	Notera: Funktionen ändrar *inte* ditt e-postlösenord. Detta måste göras manuellt.
 password stored	preferences	sv	Lösenord lagras.
 popup with search	preferences	sv	Popup med sökning
+preferences saved.	preferences	sv	Inställningar sparade.
 re-enter your password	preferences	sv	Bekräfta lösenordet
-read prefs for the specified application.	preferences	sv	Läsrättigheter för vald applikation
 reset qrcode	preferences	sv	Återställ QR-kod
 scan qrcode with a time-based one-time password (totp) app:	preferences	sv	Skanna QR-kod med en TOTP-app (Time-based one-time password):
 select one	preferences	sv	Välj en
@@ -73,7 +74,6 @@ selectbox with primary group and search	preferences	sv	Valruta med primärgrupp 
 set content size	preferences	sv	Ställ in innehållsstorlek
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	sv	Av säkerhets skäl bör du inte visa ditt användarnamn för andra.
 should the number of active sessions be displayed for you all the time.	preferences	sv	Visa alltid antal aktiva sessioner?
-should this help messages shown up always, when you enter the preferences or only on request.	preferences	sv	Visa alltid hjälpmeddelanden eller bara på begäran?
 show helpmessages by default	preferences	sv	Visa alltid hjälpmeddelanden?
 show navigation bar as	preferences	sv	Visa navigeringslisten som
 show number of current users	preferences	sv	Visa antal aktiva användare
@@ -84,7 +84,6 @@ show_more_apps	common	sv	Visa fler applikationer
 singlesignon and passwords	preferences	sv	SingleSignOn och lösenord
 store password retrievable for singlesignon	common	sv	Lagra lösenord som kan hämtas för SingleSignOn
 text only	preferences	sv	Endast text
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sv	Standard applikationen kommer att visas vid inloggning och när du klickar på EGroupware-ikonen överst på sidan.<br>Du kan också visa fler än en applikation på startsidan, om du inte väljer en här.<br>Detta konfigureras under alternativ på respektive applikation.
 the old password is not correct	preferences	sv	Gamla lösenordet är inte rätt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sv	Valrutan visar tillgängliga användare (kan vara långsam med många samtidiga användare). I popup fönstret kan man söka användare efter namn eller grupp.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	sv	De sista två valen begränsar synligheten av andra användare. Därför bör de vara tvingande men INTE ges administratörer.
@@ -101,7 +100,6 @@ what to display for an avatar, if there is no photo	preferences	sv	Vad som ska v
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sv	Om du väljer Ja, kommer hem och utloggnings knappar att visas i navigerings listen.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	sv	Vilken valutasymbol skall användas i EGroupware.
-write prefs for the specified application.	preferences	sv	Skrivrättigheter för vald applikation
 you can show the applications as icons only, icons with app-name or both.	preferences	sv	Du kan se applikationerna som bara ikon, ikon med text eller bara text.
 you do not have permission to set acl's in this mode!	preferences	sv	Du saknar rättighet att ändra ACL i detta läge!
 you must enter a password	preferences	sv	Ange ett lösenord

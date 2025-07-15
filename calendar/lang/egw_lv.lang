@@ -85,6 +85,7 @@ delete this alarm	calendar	lv	Dzēst šo trauksmi?
 deleted	calendar	lv	Izdzēsts
 display status of events	calendar	lv	Parādīt notikumu statusu
 do you want to delete this subscription incl. the synced events?	calendar	lv	Vai vēlaties izdzēst šo abonementu, ieskaitot sinhronizētos notikumus?
+does not show event to other users, unless they have a private grant	calendar	lv	Neparāda notikumu citiem lietotājiem, ja vien tiem nav piešķirta privāta dotācija.
 download	calendar	lv	Lejupielādēt
 duration	calendar	lv	Izpildes laiks
 edit series	calendar	lv	Rediģēt sērijas
@@ -148,6 +149,7 @@ minimum number of users for showing day view as consolidated.	calendar	lv	Minim�
 minimum number of users for showing week view as consolidated.	calendar	lv	Minimālais lietotāju skaits, lai nedēļas skats tiktu parādīts kā konsolidēts.
 minutes	calendar	lv	Minūtes
 modified	calendar	lv	Pārveidots
+modify events	calendar	lv	Mainīt notikumus
 mon	calendar	lv	Pirmdiena
 month	calendar	lv	Mēnesis
 monthly	calendar	lv	Ikmēneša
@@ -158,6 +160,8 @@ move to	calendar	lv	Pārvietot uz
 multiple participants	calendar	lv	Vairāki dalībnieki
 never notify externals (non-users) about events i create	calendar	lv	Nekad nepaziņot ārējiem lietotājiem (kas nav lietotāji) par manis izveidotiem notikumiem
 new	calendar	lv	Jauna
+new event category	calendar	lv	Jauna notikumu kategorija
+new event participants	calendar	lv	Jauni pasākuma dalībnieki
 no filter	calendar	lv	Bez filtra
 no matches found	calendar	lv	Nav atrasti atbilstoši ieraksti
 no response	calendar	lv	Neatbild
@@ -180,6 +184,7 @@ on participant responses too	calendar	lv	Arī uz salībnieku atbildēm
 on time change of more than 4 hours too	calendar	lv	Arī uz laiku vairāk par 4 stundām
 one month	calendar	lv	Viens mēnesis
 one week	calendar	lv	Viena nedēļa
+only group-events	calendar	lv	Tikai grupu pasākumi
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	lv	Atbalsta tikai daži pilnībā saderīgi klienti (piemēram, Apple). Ja jums ir jāievada URL, tas, visticamāk, netiks atbalstīts!
 open todo's:	calendar	lv	Atvērt Jādara vienības
 otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	lv	Pretējā gadījumā izmaiņas nosaukumā, aprakstā, ... vai jauni dalībnieki netiks pārnesti uz jau izveidotiem izņēmumiem.
@@ -213,6 +218,7 @@ repetitiondetails (or empty)	calendar	lv	Atkārtojuma rekvizīti
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	lv	Atbildot "%1" NAV pasākuma dalībnieks! Turpiniet tikai tad, ja vēlaties pievienot kā jaunu dalībnieku.
 report	calendar	lv	Pārskats
 reset	calendar	lv	Atiestate
+reset resource status on event shifts	calendar	lv	Resursu statusa atiestatīšana, pārvietojot notikumus
 resources	calendar	lv	Resursi
 role	calendar	lv	Loma
 rule	calendar	lv	Kārtula
@@ -220,6 +226,7 @@ sat	calendar	lv	Sestdiena
 saves the event ignoring the conflict	calendar	lv	Saglabājiet notikumu, ignorējot konfliktu
 scheduling conflict	calendar	lv	Pretrunas plānošana
 select resources	calendar	lv	Iezīmē resursus
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	lv	Izvēlieties, vai vēlaties, lai resursa statuss tiktu atiestatīts uz “Nav atbildes”, ja notikums tiek pārvietots vēlāk.
 send notifications	calendar	lv	Nosūtīt paziņojumus
 send notifications to users right now	calendar	lv	Nosūtīt paziņojumus dalībniekiem tieši tagad
 show %1 from %2	calendar	lv	Rādīt %1 no %2

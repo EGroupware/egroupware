@@ -137,6 +137,7 @@ do you want a weekview with or without weekend?	calendar	hu	A heti nézet tartal
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	hu	Szeretne kapni értesítést az új vagy megváltozott találkozókról? Értesítést kap arról is amin változtatott.<br>Az értesítéseket limitálhatja meghatározott változásokra is. Az értesítési listán minden szerepel. Minden módosítás tartalmazza a változás címét, leírását, résztvevőket, de a résztvevők válaszait nem. Ha az esemény tulajdonosa kér valamilyen értesítést, mindig megkapja a résztvevő válaszát hogy elfogadták vagy elutasították azt.
 do you want to delete this subscription incl. the synced events?	calendar	hu	Szeretné törölni ezt az előfizetést, beleértve a szinkronizált eseményeket?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	hu	Akar kapni egyszerű összesítést az Ön találkozóiról emailben?<br>Az összesítő az email címére lesz küldve aznap reggel, vagy hétfőn a heti összesítés.<br>Csak akkor lesz elküldve amikor Önnek találkozója van azon a napon vagy héten.
+does not show event to other users, unless they have a private grant	calendar	hu	NEM mutatja meg az eseményt más felhasználóknak, kivéve, ha privát engedéllyel rendelkeznek
 download	calendar	hu	Letölt
 download this event as ical	calendar	hu	Esemény letöltése iCal formátumban
 duration	calendar	hu	Időtartam
@@ -258,6 +259,7 @@ minimum number of users for showing day view as consolidated.	calendar	hu	A felh
 minimum number of users for showing week view as consolidated.	calendar	hu	A felhasználók minimális száma a heti nézet összevontként való megjelenítéséhez.
 minutes	calendar	hu	Perc
 modified	calendar	hu	Módosított
+modify events	calendar	hu	Események módosítása
 mon	calendar	hu	Hé
 month	calendar	hu	Hónap
 monthly	calendar	hu	Havonta
@@ -269,6 +271,8 @@ multiple participants	calendar	hu	Több résztvevő
 multiple week view	calendar	hu	Többheti nézet
 never notify externals (non-users) about events i create	calendar	hu	Soha ne értesítsek külső személyeket (nem felhasználókat) az általam létrehozott eseményekről.
 new	calendar	hu	Új
+new event category	calendar	hu	Új eseménykategória
+new event participants	calendar	hu	Új esemény résztvevői
 new search with the above parameters	calendar	hu	Új keresés a fenti paraméterekkel
 no events found	calendar	hu	Esemény nem található
 no filter	calendar	hu	Szűrő nélkül
@@ -299,6 +303,7 @@ on time change of more than 4 hours too	calendar	hu	Több mint 4 óra idő vált
 one month	calendar	hu	Egy hónap
 one week	calendar	hu	Egy hét
 one year	calendar	hu	Egy év
+only group-events	calendar	hu	Csak csoportos események
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	hu	Csak néhány teljesen kompatibilis kliens támogatja (pl. az Apple-től). Ha URL-t kell megadnia, akkor az valószínűleg nem lesz támogatott!
 only the initial date of that recurring event is checked!	calendar	hu	Az ismétlődő esemény esetén ssak a kezdeti dátum van ellenőrizve!
 open todo's:	calendar	hu	Tennivalók Megnyitása:
@@ -341,6 +346,7 @@ repetitiondetails (or empty)	calendar	hu	Ismétlődés jellemzők (vagy üres)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	hu	Válaszoló "%1" NEM résztvevője az eseménynek! Csak akkor folytassa, ha új résztvevőként szeretné hozzáadni.
 report	calendar	hu	Jelentés
 reset	calendar	hu	Alaphelyzet
+reset resource status on event shifts	calendar	hu	Az erőforrás állapotának visszaállítása események áthelyezésekor
 resources	calendar	hu	Erőforrások
 resources except conflicting ones	calendar	hu	Erőforrások az ütközések kivételével
 resources with conflict detection	calendar	hu	Erőforrások ütközések megjelenítésével
@@ -354,6 +360,7 @@ select a %1	calendar	hu	Válasszon %1
 select a time	calendar	hu	Válasszon egy időpontot
 select multiple contacts for a further action	calendar	hu	Válasszon ki több kapcsolatot a további művelethez
 select resources	calendar	hu	Erőforrások választása
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	hu	Válassza ki, hogy az erőforrás állapota visszaálljon-e „Nincs válasz” értékre, ha egy eseményt később áthelyeznek.
 select who should get the alarm	calendar	hu	Válassza ki, hogy ki kapjon riasztást
 selected range	calendar	hu	Kiválasztott tartomány
 send notifications	calendar	hu	Értesítések küldése

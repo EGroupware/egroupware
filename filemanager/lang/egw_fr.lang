@@ -81,7 +81,7 @@ default action on double-click	filemanager	fr	Action par défaut au double clic
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	fr	Par défaut = Non. Le lien ne sera pas affiché, mais vous pourrez toujours naviguer vers cet emplacement ou configurer cet emplacement particulier comme dossier de démarrage ou lien de dossier.
 default document to insert entries	filemanager	fr	Document par défaut pour insérer les entrées.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	fr	Définit comment gérer l'action de double-clic sur un fichier de document. Les images sont toujours ouvertes dans la vue exposée et les courriels avec l'application de messagerie. Tous les autres types MIME sont gérés par le navigateur lui-même.
-defines how to open a merge print document	filemanager	fr	Définir comment ouvrir un document fusionné
+defines how to open a merge print document	filemanager	fr	Que devrait-il arriver aux documents après avoir été rempli? <br> <br> <b> Si Collabora Online est disponible </b>, ces documents peuvent être ouverts (et traités en outre) directement dans le navigateur avec Collabora Online. <br> <br> <b> Sans plus d'informations sur Collabora Online </b>, <b> <Ab> <A. href = "https://www.egroupware.org/online-office" Target = "_ Blank"> Collabora Online Office dans EGroupware </a>
 delete all older versions and deleted files older then %s days	filemanager	fr	Supprimer toutes les versions plus anciennes et les fichiers supprimés au delà de %s jours
 delete these files or directories?	filemanager	fr	Supprimer ces fichiers ou répertoires ?
 delete these shares?	filemanager	fr	Supprimer ces partages ?
@@ -217,8 +217,8 @@ notebookbar	filemanager	fr	Avec des onglets
 older versions or deleted files	filemanager	fr	Anciennes versions ou fichiers supprimés
 only owner can rename or delete the content	filemanager	fr	Seul le propriétaire peut renommer ou supprimer le contenu.
 open	filemanager	fr	Ouvrir
-open documents with collabora, if permissions are given	filemanager	fr	ouvrir les documents avec Collabora, si les permissions sont données
-open odt documents with collabeditor	filemanager	fr	ouvrir les documents odt avec CollabEditor
+open documents with collabora, if permissions are given	filemanager	fr	Ouvrir les documents avec Collabora, si les permissions sont données
+open odt documents with collabeditor	filemanager	fr	Ouvrir les documents odt avec Collabora Online
 operation	filemanager	fr	Opération
 password for webdav and smb, use $pass for password of logged in user	filemanager	fr	Mot de passe pour WebDAV et SMB, utiliser $pass pour le mot de passe de l'utilisateur connecté
 paste link	filemanager	fr	Coller le lien

@@ -892,6 +892,7 @@ to allow us to track the growth of your individual installation use this submit 
 token created.	admin	en	Token created.
 token not found!	admin	en	Token not found!
 token revoked.	admin	en	Token revoked.
+token saved.	admin	en	Token saved.
 top	admin	en	Top
 total of %1 accounts deleted.	admin	en	Total of %1 accounts deleted.
 total of %1 id's changed.	admin	en	Total of %1 ID's changed.

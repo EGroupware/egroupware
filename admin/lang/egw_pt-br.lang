@@ -52,6 +52,7 @@ acl manager	admin	pt-br	Administração de Regras de Acesso (ACL)
 acl rights	common	pt-br	Permissões de Acesso
 activate	admin	pt-br	Ativar
 active templates	admin	pt-br	Modelos de Ativos
+active this token again	admin	pt-br	Ative esse token novamente
 add a category	admin	pt-br	Adicionar uma categoria
 add a group	admin	pt-br	Adicionar um grupo
 add a new account.	admin	pt-br	Adicionar uma nova conta
@@ -88,6 +89,7 @@ all users	admin	pt-br	Todos usuários
 allow anonymous access to this app	admin	pt-br	Permitir acesso anônimo a esta aplicação
 allow remote administration from following install id's (comma separated)	admin	pt-br	Permitir administração remota dos seguintes IDs (separados por vírgulas).
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	pt-br	Permitir que o usuário armazene sua senha em “Security & Passwords” para SingleSignOn.
+allow user to set 'remember me' token	admin	pt-br	Permitir que o usuário defina o token "Lembrar de mim"
 alternate email address	admin	pt-br	Endereço de e-mail alternativo
 and logged in	admin	pt-br	e registrada no
 anonymous user	admin	pt-br	Usuário Anônimo
@@ -162,6 +164,7 @@ change password for %1	admin	pt-br	Alterar senha para %1
 check acl for entries of not (longer) existing accounts	admin	pt-br	Verificar registros ACL para contas não mais existentes.
 check ip address of all sessions	admin	pt-br	Verificar endereço IP de todas sessões
 check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %2 para %3
+clear security tokens	admin	pt-br	Limpar tokens de segurança
 click to select a color	admin	pt-br	Clique para selecionar uma cor
 color	admin	pt-br	Cor
 command scheduled to run at %1	admin	pt-br	Comando agendado para rodar às %1
@@ -307,12 +310,14 @@ error changing the password for %1 !!!	admin	pt-br	Erro alterando a senha para %
 error connecting to imap server. %s : %s.	admin	pt-br	Erro conectando ao servidor IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	admin	pt-br	Erro conectando ao servidor IMAP: [%s] %s.
 error deleting entry!	admin	pt-br	Erro ao excluir a entrada!
+error revoking token!	admin	pt-br	Erro ao revogar o token!
 error saving	admin	pt-br	Erro salvando
 error saving account!	admin	pt-br	Erro ao salvar conta!
 error saving the command!	admin	pt-br	Erro salvando o comando!
 error saving the entry!!!	admin	pt-br	Erro salvando o registro!
 error saving to db:	admin	pt-br	Erro salvando no banco de dados:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez já exista um sendo executado!
+error storing token!	admin	pt-br	Erro ao armazenar token!
 error! no appname found	admin	pt-br	Erro: Nome de aplicativo não encontrado!
 error, no username!	admin	pt-br	Erro, nenhum nome de usuário!
 error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou outro erro não definido!
@@ -341,6 +346,7 @@ forward only	admin	pt-br	Encaminhar somente
 full name	admin	pt-br	Nome Completo
 general	admin	pt-br	Geral
 generate certificate	admin	pt-br	Gerar certificado
+generate new token and display it once after saving	admin	pt-br	Gerar novo token e exibi-lo uma vez após salvar
 global categories	common	pt-br	Categorias globais
 global options	admin	pt-br	Opções globais
 grant	admin	pt-br	Conceder
@@ -373,6 +379,7 @@ identity deleted	admin	pt-br	Identidade eliminado.
 identity saved.	admin	pt-br	Identidade salvo.
 idle	admin	pt-br	Ocioso
 if different from email address	admin	pt-br	se for diferente do endereço de email
+if disabled existing tokens immediatly stop working.	admin	pt-br	Se os tokens existentes forem desativados, eles deixarão de funcionar imediatamente.
 if no acl records for user or any group the user is a member of	admin	pt-br	Se não houver registro de permissoes ou grupo para o usuário ele é membro do
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt-br	Se estiver usando LDAP, você deseja definir atributos de diretório home e shell de login?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	pt-br	Se estiver usando SSL ou TLS, você deverá ter a extensão PHP 'openssl' carretada.
@@ -432,6 +439,7 @@ leave the group untouched and return back to the list	admin	pt-br	Deixar o grupo
 leave without saveing the entry	admin	pt-br	Sair sem salvar o registro
 leaves without saveing	admin	pt-br	Sair sem salvar
 length<br>rows	admin	pt-br	Tamanho<br>Linhas
+lifetime of 'remember me' token	admin	pt-br	Vida útil do token "Lembrar de mim"
 list config settings	admin	pt-br	Listar parâmetros de configuração
 list current sessions	admin	pt-br	Listar sessões correntes
 list of current users	admin	pt-br	Lista de usuários conectados
@@ -539,6 +547,7 @@ remote instance saved	admin	pt-br	Instância remota salva.
 remove	admin	pt-br	Remover
 required pear class mail/mimedecode.php not found.	admin	pt-br	Classe PEAR requeridos Correio / mimeDecode.php não encontrado.
 reset filter	admin	pt-br	Reiniciar filtro
+revoke this token	admin	pt-br	Revogar esse token
 rights	admin	pt-br	Direitos
 rows	admin	pt-br	Fileiras
 run asynchronous services	admin	pt-br	Executar Serviços Assícronos
@@ -554,6 +563,7 @@ security	admin	pt-br	Segurança
 select accounts for which the custom field should be readonly	admin	pt-br	Selecione as contas para as quais o campo personalizado deve ser somente leitura
 select group managers	admin	pt-br	Selecione Manutenção de Grupos
 select permissions this group will have	admin	pt-br	Selecione as permissões que este grupo terá
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	pt-br	Selecione os aplicativos aos quais deseja que o token seja limitado ou deixe o padrão de todos os aplicativos.
 select the parent category. if this is a main category select no category	admin	pt-br	Selecione a categoria pai. Caso seja um categoria pai selecione SEM CATEGORIA.
 select type of imap server	admin	pt-br	Selecione o tipo de servidor IMAP
 select type of smtp server	admin	pt-br	Selecione o tipo de servidor SMTP
@@ -611,6 +621,7 @@ submit changes	admin	pt-br	Enviar alterações
 submit the search string	admin	pt-br	Enviar expressão de busca
 subtype	admin	pt-br	Sub tipo
 successful connected to %1 server%2.	admin	pt-br	Successful ligado ao %1servidor%2.
+successfull, but no refresh-token received!	admin	pt-br	Bem-sucedido, mas NENHUM token de atualização foi recebido!
 switch back to standard identity to save account.	admin	pt-br	Volte para a identidade padrão para salvar conta.
 switch it off, if users are randomly thrown out	admin	pt-br	Desabilite, se usuários estiverem, aleatoriamente, sendo desconectados
 that loginid has already been taken	admin	pt-br	Este código de usuário já existe.
@@ -635,6 +646,10 @@ this php has no imap support compiled in!!	admin	pt-br	Este PHP não tem suporte
 timeout for application session data in seconds (default 86400 = 1 day)	admin	pt-br	Tempo para expiração de dados da sessão do aplicativo em segundos (padrão 86400 = 1 dia)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	pt-br	Tempo para expiração da sessões em segundos (padrão 14400 = 4 horas)
 times	admin	pt-br	Horários
+token created.	admin	pt-br	Token criado.
+token not found!	admin	pt-br	Token não encontrado!
+token revoked.	admin	pt-br	Token revogado.
+token saved.	admin	pt-br	Token salvo.
 top	admin	pt-br	Topo
 total of %1 id's changed.	admin	pt-br	Total de %1 IDs alterada(s).
 total records	admin	pt-br	Total de registros
@@ -661,6 +676,7 @@ use default	admin	pt-br	Usar o padrão
 use ldap defaults	admin	pt-br	Usar padrões LDAP
 use predefined username and password defined below	admin	pt-br	Usar usuário e senha pré-definidos abaixo
 use pure html compliant code (not fully working yet)	admin	pt-br	Usar código HTML puro (não funciona totalmente ainda)
+use save or apply to store the received oauth token!	admin	pt-br	Use salvar ou aplicar para armazenar o token OAuth recebido!
 use smtp auth	admin	pt-br	Usar SMTP Autenticado
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	pt-br	use as seguintes opções:\nnoVfsSelect=1\nmime=application/pdf ou /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	pt-br	Usar tema

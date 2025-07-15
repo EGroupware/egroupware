@@ -123,6 +123,7 @@ do you want a weekview with or without weekend?	calendar	no	Ønsker du ukevisnin
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	no	Vil du bli varslet om alle forandrede avtaler? Du blir varslet om alle endringer du selv utfører.<br>Du kan begrense varslingen til bare å gjelde spesifikke endringer. Hvert objekt inkluderer alle varslingene over det. Alle endringer inkluderer endringer av tittel, beskrivelse, men ikke deltakeres responser. Hvis eieren av en oppføring ber om varsling, vil han alltid få deltakeres responser som godkjenninger eller avslag også.
 do you want to delete this subscription incl. the synced events?	calendar	no	Vil du slette dette abonnementet inkl. de synkroniserte hendelsene?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	no	Ønsker du å motta regelmessige sammendrag av dine avtaler via e-post?<br>Oppsummeringen vil bli sendt til din standard e-post adresse på morgenen samme dag, eller på mandager for ukentlige sammendrag.<br>Den vil bare bli sendt når du har en avtale den dagen eller uken.
+does not show event to other users, unless they have a private grant	calendar	no	Viser IKKE hendelser til andre brukere, med mindre de har en privat bevilling
 download	calendar	no	Last ned
 download this event as ical	calendar	no	Last ned denne hendelsen som iCal
 duration	calendar	no	Varighet
@@ -220,6 +221,7 @@ minimum number of users for showing day view as consolidated.	calendar	no	Minimu
 minimum number of users for showing week view as consolidated.	calendar	no	Minimum antall brukere for å vise ukevisning som konsolidert.
 minutes	calendar	no	Minutter
 modified	calendar	no	Endret
+modify events	calendar	no	Endre arrangementer
 mon	calendar	no	Man
 month	calendar	no	Måned
 monthly	calendar	no	Månedlig
@@ -230,6 +232,8 @@ move to	calendar	no	Flytt til
 multiple participants	calendar	no	Flere deltakere
 never notify externals (non-users) about events i create	calendar	no	Aldri varsle eksterne (ikke-brukere) om hendelser jeg oppretter
 new	calendar	no	Opprett
+new event category	calendar	no	Ny arrangementskategori
+new event participants	calendar	no	Nye deltakere til arrangementet
 new search with the above parameters	calendar	no	Nytt søk med ovenstårende parametre
 no events found	calendar	no	Ingen hendelser funnet
 no filter	calendar	no	Uten filter
@@ -259,6 +263,7 @@ on time change of more than 4 hours too	calendar	no	På tidsendringer på mer en
 one month	calendar	no	En måned
 one week	calendar	no	En uke
 one year	calendar	no	Et år
+only group-events	calendar	no	Kun gruppere arrangementer
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	no	Støttes bare av noen få klienter som er fullt kompatible (f.eks. fra Apple). Hvis du må oppgi en URL, vil den mest sannsynlig ikke støttes!
 only the initial date of that recurring event is checked!	calendar	no	Bare startdato for den repeterende handlingen blir kontrollert !
 open todo's:	calendar	no	Åpne gjøremål liste:
@@ -301,6 +306,7 @@ repetitiondetails (or empty)	calendar	no	Repitasjonsdetaljer (eller tom)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	no	Svarende "%1" er IKKE deltaker på arrangementet! Fortsett bare hvis du vil legge til en ny deltaker.
 report	calendar	no	Rapport
 reset	calendar	no	Tilbakestill
+reset resource status on event shifts	calendar	no	Tilbakestill ressursstatus ved flytting av arrangementer
 resources	calendar	no	Ressurser
 role	calendar	no	Rolle
 rule	calendar	no	Regel
@@ -311,6 +317,7 @@ scheduling conflict	calendar	no	Planleggingskonflikt
 select a %1	calendar	no	Velg en %1
 select a time	calendar	no	Velg en tid
 select resources	calendar	no	Velg ressurser
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	no	Velg om du vil at ressursstatusen skal tilbakestilles til «Ingen respons» hvis en hendelse flyttes senere.
 select who should get the alarm	calendar	no	Velg hvem som skal motta alarmen
 send notifications	calendar	no	Send varsler
 send notifications to users right now	calendar	no	Send varsler til deltakere akkurat nå

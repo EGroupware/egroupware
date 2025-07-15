@@ -98,6 +98,7 @@ displayed view	calendar	et	Näita vaade
 distribution list	calendar	et	Jaotusnimekiri
 do you want a weekview with or without weekend?	calendar	et	Soovid nädalavaadet koos või ilma nädalavahetuseta?
 do you want to delete this subscription incl. the synced events?	calendar	et	Kas soovite selle tellimuse koos sünkroniseeritud sündmustega kustutada?
+does not show event to other users, unless they have a private grant	calendar	et	EI näita sündmust teistele kasutajatele, välja arvatud juhul, kui neil on privaatne toetus.
 download	calendar	et	Lae alla
 download this event as ical	calendar	et	Lae alla see sündmus kui iCal
 duration	calendar	et	Kestvus
@@ -181,6 +182,7 @@ minimum number of users for showing day view as consolidated.	calendar	et	Minima
 minimum number of users for showing week view as consolidated.	calendar	et	Minimaalne kasutajate arv nädala vaate konsolideeritud näitamiseks.
 minutes	calendar	et	Minutit
 modified	calendar	et	Muudetud
+modify events	calendar	et	Muuda sündmusi
 mon	calendar	et	Esm
 month	calendar	et	Kuu
 monthly	calendar	et	Kuuti
@@ -189,6 +191,8 @@ move to	calendar	et	Liiguta
 multiple participants	calendar	et	Mitu osalejat
 never notify externals (non-users) about events i create	calendar	et	Mitte kunagi ei teavita väliseid (mittekasutajad) minu loodud sündmustest.
 new	calendar	et	Uus
+new event category	calendar	et	Uus sündmuse kategooria
+new event participants	calendar	et	Uued sündmuse osalejad
 no events found	calendar	et	Sündmust ei leitud
 no filter	calendar	et	Filtrita
 no matches found	calendar	et	Sobivaid ei leitud
@@ -201,6 +205,7 @@ old startdate	calendar	et	Vana Algusaeg
 one month	calendar	et	Üks kuu
 one week	calendar	et	Üks kuu
 one year	calendar	et	Üks aasta
+only group-events	calendar	et	Ainult grupisündmused
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	et	Toetavad ainult vähesed täielikult nõuetele vastavad kliendid (nt Apple'ist). Kui peate sisestama URL-i, siis seda tõenäoliselt ei toet
 open todo's:	calendar	et	Ava ToDo's:
 otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	et	Vastasel juhul ei kanta pealkirja, kirjelduse, ... või uute osalejate muudatusi üle juba loodud eranditele.
@@ -227,12 +232,14 @@ repetitiondetails (or empty)	calendar	et	Kordusdetailid (või tühi)
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	et	Vastus "%1" EI OLE ürituse osaleja! Jätkake ainult siis, kui soovite lisada uue osalejana.
 report	calendar	et	Aruanne
 reset	calendar	et	Tühista
+reset resource status on event shifts	calendar	et	Ressursi staatuse lähtestamine sündmuste liigutamisel
 resources	calendar	et	Resursid
 rule	calendar	et	Reegel
 sat	calendar	et	Lau
 saves the event ignoring the conflict	calendar	et	Salvestab sündmuse ignoreerib konflikti
 select a time	calendar	et	Vali aeg
 select resources	calendar	et	Vali resursid
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	et	Valige, kas soovite, et ressursi staatus nullib „Ei reageeri“, kui sündmus hiljem liigub.
 select who should get the alarm	calendar	et	Vali keda alarmeeritakse
 selected range	calendar	et	Vali vahemik
 send notifications	calendar	et	Saatke teateid
