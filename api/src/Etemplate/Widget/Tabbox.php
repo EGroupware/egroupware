@@ -56,7 +56,7 @@ class Tabbox extends Etemplate\Widget
 		// Make sure additional tabs are processed for any method
 		if(!($tabs =& self::setElementAttribute($form_name, 'extraTabs')))
 		{
-			$tabs = $this->attrs['extraTabs'];
+			$tabs = $this->attrs['extraTabs'] ?? null;
 		}
 		if($tabs && !$this->tabs_attr_evaluated)
 		{

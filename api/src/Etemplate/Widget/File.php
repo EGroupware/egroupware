@@ -624,7 +624,7 @@ class File extends Etemplate\Widget
 		$upload_max_filesize = (float)$upload_max_filesize;
 		if (!is_numeric($unit)) $upload_max_filesize *= $unit === 'm' ? 1024*1024 : 1024;
 
-		$current_max_chunk = self::getElementAttribute($form_name, 'chunkSize') ?? $this->attrs['chunkSize'];
+		$current_max_chunk = self::getElementAttribute($form_name, 'chunkSize') ?? $this->attrs['chunkSize'] ?? null;
 		if($current_max_chunk)
 		{
 			$unit = strtolower(substr($current_max_chunk, -1));

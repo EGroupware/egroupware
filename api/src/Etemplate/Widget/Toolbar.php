@@ -49,7 +49,7 @@ class Toolbar extends Etemplate\Widget
 	 */
 	public function beforeSendToClient($cname, array $expand=null)
 	{
-		if ($GLOBALS['egw_info']['user']['apps']['admin'])
+		if (!empty($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			$form_name = self::form_name($cname, $this->id, $expand);
 			$value = &self::get_array(self::$request->modifications, $form_name, true);
@@ -66,7 +66,7 @@ class Toolbar extends Etemplate\Widget
 	{
 		$response = \EGroupware\Api\Json\Response::get();
 		// None admin users are not allowed to access
-		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			$response->data(Lang('Permission denied! This is an administration only feature.'));
 			exit();
@@ -100,7 +100,7 @@ class Toolbar extends Etemplate\Widget
 	{
 		$response = \EGroupware\Api\Json\Response::get();
 		// None admin users are not allowed to access
-		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			$response->data(Lang('Permission denied! This is an administration only feature.'));
 			exit();
