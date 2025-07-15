@@ -36,6 +36,7 @@ import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
  * @cssproperty [--icon-size=32] - Height of icons used in the framework
  * @cssproperty [--tab-icon-size=32] - Height of application icons in header bar
  * @cssproperty [--tab-icon-size-active=40] - Height of active application icon
+ * @cssproperty [--<appname>-color] - Background color of the application tab
  */
 @customElement('egw-framework')
 //@ts-ignore
