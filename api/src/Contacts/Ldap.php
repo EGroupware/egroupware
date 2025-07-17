@@ -296,6 +296,11 @@ class Ldap
 	);
 
 	/**
+	 * Attribute used for email aliases
+	 */
+	const ALIAS_ATTRIBUTE = 'mail';
+
+	/**
 	 * array with the names of all ldap attributes of the above schema2egw array
 	 *
 	 * @var array
@@ -839,7 +844,8 @@ class Ldap
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		//error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).")");
-		$read_photo = $extra_cols ? in_array('jpegphoto', is_array($extra_cols) ? $extra_cols : explode(',', $extra_cols)) : false;
+		if (!is_array($extra_cols)) $extra_cols = $extra_cols ? explode(',', $extra_cols) : [];
+		$read_photo = in_array('jpegphoto', $extra_cols);
 
 		if (is_array($filter['owner']))
 		{
@@ -973,7 +979,12 @@ class Ldap
 		$colFilter = $this->_colFilter($filter);
 		$ldapFilter = "(&$objectFilter$searchFilter$colFilter$datefilter)";
 		//error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).") --> ldapFilter='$ldapFilter'");
-		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType, [], $order_by, $start, $read_photo)))
+		$attributes = $this->all_attributes;
+		if (in_array('aliases', $extra_cols))
+		{
+			$attributes[] = static::ALIAS_ATTRIBUTE;
+		}
+		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $attributes, $addressbookType, [], $order_by, $start, $read_photo)))
 		{
 			return $rows;
 		}
@@ -1413,6 +1424,31 @@ class Ldap
 				if(!empty($entry[$ldapFieldName][0]))
 				{
 					$contact[$egwFieldName] = $this->_ldap2ts($entry[$ldapFieldName][0]);
+				}
+			}
+			// read email aliases, if requested, used by account-import
+			if (in_array(static::ALIAS_ATTRIBUTE, $_attributes))
+			{
+				$contact['aliases'] = [];
+				switch(static::ALIAS_ATTRIBUTE)
+				{
+					case 'proxyaddress':
+						foreach($contact['proxyaddress'] ?? [] as $address)
+						{
+							if (preg_match('/^smtp:([^@]+@[^@]+)$/', $address, $m))
+							{
+								$contact['aliases'][] = strtolower($m[1]);
+							}
+						}
+						break;
+					default:
+						$contact['aliases'] = array_map('strtolower', $contact[static::ALIAS_ATTRIBUTE] ?? []);
+						break;
+				}
+				// remove primary address, if contained in aliases
+				if (($key = array_search($contact['email'], $contact['aliases'])) !== false)
+				{
+					unset($contact['aliases'][$key]);
 				}
 			}
 			$contacts[] = $contact;

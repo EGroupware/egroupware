@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
 }
 
 try {
-	$import = new Api\Accounts\Import(static function($str, $level)
+	$import = new Api\Accounts\Import(empty($_GET['export_ldif']) ? static function($str, $level)
 	{
 		switch($level)
 		{
@@ -44,15 +44,20 @@ try {
 				echo "<p>$str</p>\n";
 				break;
 		}
-	});
+	} : null);
 	if (!empty($_GET['log']))
 	{
 		$import->showLog();
 		return;
 	}
+	if (!empty($_GET['export_ldif']))
+	{
+		Api\Header\Content::type('aliases.ldif', 'text/plain');
+	}
 	$import->logger("Manual import started via setup: initial=$_GET[initial], dry-run=$_GET[dry_run]", 'info');
-	$import->run(!empty($_GET['initial']) && $_GET['initial'] !== 'false',
-		!empty($_GET['dry_run'] ?? $_GET['dry-run']) && ($_GET['dry_run'] ?? $_GET['dry-run']) !== 'false');
+	$import->run(!empty($_GET['initial']) && $_GET['initial'] !== 'false' || !empty($_GET['export_ldif']),
+		!empty($_GET['dry_run'] ?? $_GET['dry-run']) && ($_GET['dry_run'] ?? $_GET['dry-run']) !== 'false',
+		$_GET['export_ldif'] ?? null);
 }
 catch (\Exception $e) {
 	http_response_code(500);

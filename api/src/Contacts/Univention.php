@@ -21,6 +21,11 @@ use EGroupware\Api\Accounts;
  */
 class Univention extends Ldap
 {
+	/**
+	 * Attribute used for email aliases
+	 */
+	const ALIAS_ATTRIBUTE = 'mailalternateaddress';
+
 	function __construct($ldap_config = null, $ds = null)
 	{
 		$this->schema2egw += [
