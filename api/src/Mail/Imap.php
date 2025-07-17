@@ -1412,7 +1412,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			case 'hasExtension':
 				if (is_null($this->sieve))
 				{
-					$this->sieve = new (self::SIEVE_CLASS)($this);
+					$this->sieve = new (static::SIEVE_CLASS)($this);
 					$this->error =& $this->sieve->error;
 				}
 				$ret = call_user_func_array(array($this->sieve,$name),$params);
@@ -1441,7 +1441,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		if (is_null($this->sieve) || $this->isAdminConnection !== $_euser)
 		{
 			$this->adminConnection($_euser);
-			$this->sieve = new ManageSieve($this, $_euser, $_scriptName);
+			$this->sieve = new (static::SIEVE_CLASS)($this, $_euser, $_scriptName);
 			$this->scriptName =& $this->sieve->scriptName;
 			$this->error =& $this->sieve->error;
 		}
@@ -1467,7 +1467,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		if (is_null($this->sieve) || $this->isAdminConnection !== $_euser)
 		{
 			$this->adminConnection($_euser);
-			$this->sieve = new ManageSieve($this, $_euser, $_scriptName);
+			$this->sieve = new (static::SIEVE_CLASS)($this, $_euser, $_scriptName);
 			$this->error =& $this->sieve->error;
 			$this->scriptName =& $this->sieve->scriptName;
 		}
