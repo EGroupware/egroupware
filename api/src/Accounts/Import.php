@@ -181,11 +181,12 @@ class Import
 	/**
 	 * @param bool $initial_import true: initial sync, false: incremental sync
 	 * @param bool $dry_run true: only log what would be done, but do NOT make any changes
+	 * @param null|string $export_ldif null or "aliases" to create ldif file which changes between aliases define in SQL database and AD
 	 * @return array with int values for keys 'created', 'updated', 'uptodate', 'errors' and string 'result'
 	 * @throws \Exception also gets logged as level "fatal"
 	 * @throws \InvalidArgumentException if not correctly configured
 	 */
-	public function run(bool $initial_import=true, bool $dry_run=false)
+	public function run(bool $initial_import=true, bool $dry_run=false, ?string $export_ldif=null)
 	{
 		try {
 			// determine from where we migrate to what
@@ -205,6 +206,7 @@ class Import
 			{
 				throw new \InvalidArgumentException(lang("You need to run the initial import first!"));
 			}
+			$alias_import = $export_ldif ?? !empty($GLOBALS['egw_info']['server']['account_import_aliases']);
 
 			Api\Accounts::cache_invalidate();   // to not get any cached data eg. from the wrong backend
 
@@ -213,7 +215,6 @@ class Import
 			{
 				$delete = 'no';
 			}
-
 			$created = $updated = $uptodate = $errors = $deleted = 0;
 			$default_memberships = $default_group_id = null;
 			if (in_array('groups', explode('+', $type)))
@@ -270,10 +271,21 @@ class Import
 			$last_modified = null;
 			$start_import = time();
 			$cookie = '';
+			$extra_cols = ['account_lid', 'jpegphoto'];
+			if ($alias_import)
+			{
+				$extra_cols = 'aliases';
+				if ($export_ldif)
+				{
+					$ldif = fopen('php://output', 'w');
+					$time = Api\DateTime::to('now', \DateTime::ATOM);
+					fwrite($ldif, "# LDIF file generate by EGroupware on $time\n\n");
+				}
+			}
 			$start = ['', 500, &$cookie]; // cookie must be a reference!
 			do
 			{
-				foreach ($this->contacts->search('', false, '', ['account_lid', 'jpegphoto'], '', '', 'AND', $start, $filter) as $contact)
+				foreach ($this->contacts->search('', false, '', $extra_cols, '', '', 'AND', $start, $filter) as $contact)
 				{
 					// if we have a regexp to filter the DN, continue on non-match
 					if (!empty($GLOBALS['egw_info']['server']['account_import_dn_regexp']) &&
@@ -532,6 +544,11 @@ class Import
 							$this->logger("Contact data of '$account[account_lid]' (#$account_id) already up to date", 'debug');
 						}
 					}
+					// if enabled, import aliases
+					if ($alias_import)
+					{
+						$this->aliasImport($account_id, $contact, $source, $ldif ?? null, $dry_run);
+					}
 					// if requested, also set memberships
 					if (in_array('groups', explode('+', $type)) && !$dry_run)
 					{
@@ -680,6 +697,102 @@ class Import
 			'deleted'  => $deleted,
 			'result'   => $result,
 		];
+	}
+
+	/**
+	 * @param int $account_id
+	 * @param array $contact incl. key "aliases"
+	 * @param string $source "ldap", "ads" or "univention"
+	 * @param null|resource $ldif for ldif export
+	 * @return void
+	 */
+	protected function aliasImport(int $account_id, array $contact, string $source, $ldif, bool $dry_run=false)
+	{
+		// which alias attribute to use, in case alias-import is enabled
+		switch($source)
+		{
+			case 'ldap':
+				$primary_attribute = $alias_attribute = 'mail';
+				break;
+			case 'ads':
+				$alias_attribute = 'proxyaddress';
+				$primary_attribute = 'mail';
+				break;
+			case 'univention':
+				$alias_attribute = 'mailalternativeaddress';
+				$primary_attribute = 'mailprimaryaddress';
+				break;
+		}
+		$mail_accounts = new Api\Mail\Smtp\Sql();
+		$current = $mail_accounts->getUserData($account_id);
+		$sql_alternate_addresses = $current['mailAlternateAddress'] ?? [];
+		$alternate_addresses = $contact['aliases'] ?? [];
+		$new_aliases = array_diff($alternate_addresses, $sql_alternate_addresses);
+		$removed_aliases = array_diff($sql_alternate_addresses, $alternate_addresses);
+		if ($ldif)
+		{
+			if ($removed_aliases || ($contact['email'] ?? null) !== $current['mailLocalAddress'])
+			{
+				fwrite($ldif, "dn: $contact[dn]\n");
+				fwrite($ldif, "changetype: modify\n");
+				if ($removed_aliases || $alias_attribute === 'mail')
+				{
+					if (empty($contact['aliases']))
+					{
+						fwrite($ldif, "add: $alias_attribute\n");
+					}
+					else
+					{
+						fwrite($ldif, "replace: $alias_attribute\n");
+					}
+					switch($alias_attribute)
+					{
+						case 'proxyaddress':
+							fwrite($ldif, "$alias_attribute: SMTP:$current[mailLocalAddress]\n");
+							foreach($current['mailAlternateAddress'] ?? [] as $address)
+							{
+								fwrite($ldif, "$alias_attribute: smtp:$address\n");
+							}
+							break;
+						case 'mail':
+							fwrite($ldif, "$alias_attribute: $current[mailLocalAddress]\n");
+							// fall through
+						case 'mailalternateaddress':
+							foreach($current['mailAlternateAddress'] ?? [] as $address)
+							{
+								fwrite($ldif, "$alias_attribute: $address\n");
+							}
+							break;
+					}
+				}
+				if ($alias_attribute === 'mail')
+				{
+					// nothing to do, already done above
+				}
+				elseif (empty($contact['email']))
+				{
+					fwrite($ldif, "add: $primary_attribute\n");
+					fwrite($ldif, "$primary_attribute: $current[mailLocalAddress]\n");
+				}
+				elseif(($contact['email'] ?? null) !== $current['mailLocalAddress'])
+				{
+					fwrite($ldif, "replace: $primary_attribute\n");
+					fwrite($ldif, "$primary_attribute: $current[mailLocalAddress]\n");
+				}
+				fwrite($ldif, "\n");
+				fflush($ldif);
+			}
+		}
+		elseif ($new_aliases || $removed_aliases)
+		{
+			if ($dry_run)
+			{
+				$this->logger("Dry-run: would add aliases ".json_encode($new_aliases)." and remove ".json_encode($removed_aliases)." for '".Api\Accounts::id2name($account_id)."' #$account_id", 'detail');
+				return;
+			}
+			$mail_accounts->setUserData($account_id, $alternate_addresses, $current['mailForwardingAddress'] ?? null,
+				$current['deliveryMode'] ?? null, $current['accountStatus'] ?? 'active', $contact['email']);
+		}
 	}
 
 	/**

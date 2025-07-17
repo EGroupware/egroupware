@@ -75,6 +75,10 @@ class Ads extends Ldap
 	 */
 	public $is_samba4 = false;
 
+	/**
+	 * Attribute used for email aliases
+	 */
+	const ALIAS_ATTRIBUTE = 'proxyaddress';
 
 	/**
 	 * constructor of the class
