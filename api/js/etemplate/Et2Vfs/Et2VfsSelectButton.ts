@@ -36,7 +36,15 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 	@property() image : string;
 
 	/** Currently selected files */
-	@property() value : string[] | FileInfo[] = [];
+	@property({
+		type: Array,
+		converter: {
+			fromAttribute: (value, type) =>
+			{
+				return value.split(",");
+			}
+		}
+	}) value : string[] | FileInfo[] = [];
 
 	/**
 	 * The dialog’s label as displayed in the header.
@@ -204,7 +212,7 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
             <et2-vfs-select-dialog
                     part="dialog"
                     .title=${this.title ?? nothing}
-                    .value=${this.value ?? nothing}
+                    .value=${this.value && typeof this.value == "object" ? this.value : nothing}
                     .mode=${this.mode ?? nothing}
                     .multiple=${this.multiple ?? nothing}
                     .path=${this.path ?? nothing}
