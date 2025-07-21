@@ -28,6 +28,8 @@ import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
  * @csspart banner -
  * @csspart header -
  * @csspart open-applications - Tab group that has the currently open applications
+ * @csspart tab - Individual tabs
+ * @csspart image - Tab icons
  * @csspart status-split - Status splitter
  * @csspart main
  * @csspart status
@@ -1015,10 +1017,10 @@ export class EgwFramework extends LitElement
 	protected _applicationTabTemplate(app)
 	{
 		return html`
-            <sl-tab slot="nav" panel="${app.name}" closable aria-label="${app.title}" ?active=${app.active} 
-					style="--application-color: var(--${app.name}-color)">
+            <sl-tab slot="nav" part="tab" panel="${app.name}" closable aria-label="${app.title}" ?active=${app.active}
+                    style="--application-color: var(--${app.name}-color)">
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
-                    <et2-image src="${app.icon}"></et2-image>
+                    <et2-image part="tab-icon" src="${app.icon}"></et2-image>
                 </sl-tooltip>
             </sl-tab>`;
 	}

@@ -9,10 +9,29 @@
   --sl-shadow-large: 0 4px 16px hsl(240 3.8% 46.1% / 52%);
   --sl-shadow-x-large: 0 8px 32px hsl(240 3.8% 46.1% / 52%);
 
+  egw-framework#egw_fw_basecontainer {
+	&::part(header) {
+	}
 
-  &::part(open-applications) {
-	--tab-icon-size: var(--sl-spacing-x-large);
-	--tab-icon-size-active: var(--sl-spacing-x-large);
+	&::part(open-applications) {
+	  --icon-size: var(--sl-spacing-x-large);
+	  --tab-icon-size: var(--icon-size);
+	  --tab-icon-size-active: var(--icon-size);
+	}
+
+	/* This doesn't work because ::part() selector can't have any extra bits */
+	&::part(tab-active)[active] {
+	  border-top: 3px solid var(--application-color);
+	}
+
+	&::part(tab-icon) {
+	  border-radius: 0;
+	  background-color: initial;
+	}
+
+	&::part(image) {
+	  filter: none;
+	}
   }
 
   egw-app {
