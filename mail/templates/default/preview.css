@@ -19,6 +19,7 @@ body,html {
     width:100%;
     padding:0px;
     margin:0 !important;
+	overflow: auto;
 }
 .td_display {
     font-family: Verdana, Arial, Helvetica, sans-serif;
