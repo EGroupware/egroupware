@@ -101,8 +101,8 @@ class kdots_framework extends Api\Framework\Ajax
 					  'aclRights'   => 'acl_rights'];
 			array_walk($extra['navbar-apps'], function (&$item, $key) use (&$hooks)
 			{
-				// Fix wrong icon type
-				if(!$item['icon'] || !str_ends_with($item['icon'], 'svg'))
+				// Set missing icon
+				if(!$item['icon'])
 				{
 					$item['icon'] = Image::find('api', 'navbar');
 				}

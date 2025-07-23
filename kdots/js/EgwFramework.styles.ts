@@ -115,6 +115,11 @@ export default css`
 		font-size: var(--icon-size);
 	}
 
+	.egw_fw__app_list img {
+		height: var(--icon-size);
+		width: var(--icon-size);
+	}
+
 	.egw_fw__open_applications {
 		--track-width: 0px;
 	}

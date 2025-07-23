@@ -28,7 +28,9 @@ import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
  * @csspart banner -
  * @csspart header -
  * @csspart open-applications - Tab group that has the currently open applications
+ * @csspart app-list-panel - Dropdown containing the available applications
  * @csspart tab - Individual tabs
+ * @csspart tab-icon Application icon on the tab
  * @csspart image - Tab icons
  * @csspart status-split - Status splitter
  * @csspart main
@@ -1003,14 +1005,14 @@ export class EgwFramework extends LitElement
 
 		return html`
             <sl-tooltip placement="bottom" role="menuitem" content="${app.title}">
-                <et2-button-icon src="${app.icon}" aria-label="${app.title}" role="menuitem" noSubmit
+                <et2-image src="${app.icon}" aria-label="${app.title}" role="menuitem" noSubmit
                                  helptext="${app.title}"
                                  @click=${() =>
                                  {
                                      this.loadApp(app.name, true);
                                      (<SlDropdown>this.shadowRoot.querySelector(".egw_fw__app_list")).hide();
                                  }}
-                ></et2-button-icon>
+                ></et2-image>
             </sl-tooltip>`;
 	}
 
@@ -1044,7 +1046,7 @@ export class EgwFramework extends LitElement
                 </div>
                 <header class="egw_fw__header" part="header">
                     <slot name="logo"></slot>
-                    <sl-dropdown class="egw_fw__app_list" role="menu">
+                    <sl-dropdown class="egw_fw__app_list" role="menu" exportparts="panel:app-list-panel">
                         <sl-icon-button slot="trigger" name="grid-3x3-gap"
                                         label="${this.egw.lang("Application list")}"
                                         aria-description="${this.egw.lang("Activate for a list of applications")}"

@@ -153,6 +153,10 @@ egw-framework#egw_fw_basecontainer::part(header) {
   gap: var(--sl-spacing-medium);
   font-size: var(--icon-size);
 }
+egw-framework#egw_fw_basecontainer::part(app-list-panel) {
+  padding: var(--sl-spacing-medium);
+  gap: var(--sl-spacing-medium);
+}
 egw-framework#egw_fw_basecontainer [slot="logo"] img {
   max-width: 220px;
   max-height: var(--icon-size);
