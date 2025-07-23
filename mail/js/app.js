@@ -479,8 +479,14 @@ app.classes.mail = AppJS.extend(
 				if (composeToolbar._actionManager.getActionById('smime_sign') &&
 						composeToolbar._actionManager.getActionById('smime_encrypt'))
 				{
-					if (smime_sign.getValue() == 'on') composeToolbar.checkbox('smime_sign', true);
-					if (smime_encrypt.getValue() == 'on') composeToolbar.checkbox('smime_encrypt', true);
+					if (smime_sign.getValue() == 'on')
+					{
+						composeToolbar.getWidgetById('smime_sign').value = true;
+					}
+					if (smime_encrypt.getValue() == 'on')
+					{
+						composeToolbar.getWidgetById('smime_encrypt').value = true;
+					}
 				}
 				break;
 			case 'mail.view':
