@@ -374,7 +374,13 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	public function _get_css(array $themes_to_check = array())
 	{
-		$themes_to_check[] = $this->template_dir . '/css/themes/' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'] . '.css';
+		static $theme_map = array(
+			'pixelegg' => 'classic',
+			'fancy'    => 'glassy'
+		);
+		$theme = $GLOBALS['egw_info']['user']['preferences']['common']['theme'];
+		$theme = $theme_map[$theme] ?? $theme;
+		$themes_to_check[] = $this->template_dir . '/css/themes/' . $theme . '.css';
 		$ret = parent::_get_css($themes_to_check);
 
 		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? '12';
