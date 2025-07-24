@@ -147,6 +147,12 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 		// Add extra conversions
 		$import_csv->conversion_class = $this;
 
+		if(!$this->dry_run)
+		{
+			// This needs to scan the whole file, so it can take a while
+			$record_count = $import_csv->get_num_of_records();
+		}
+
 		//check if file has a header lines
 		if ( isset( $_definition->plugin_options['num_header_lines'] ) && $_definition->plugin_options['num_header_lines'] > 0) {
 			$import_csv->skip_records($_definition->plugin_options['num_header_lines']);
@@ -338,6 +344,18 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 			}
 			if($success) $count++;
+
+			// Add some more time
+			if($success && $import_csv->get_current_position() > 0 && $import_csv->get_current_position() % 10 == 0)
+			{
+				set_time_limit(10);
+			}
+			// Send an update to client
+			if(!$this->dry_run)
+			{
+				$complete = $record_count ? (int)(100 * ($import_csv->get_current_position() / $record_count)) : false;
+				$this->sendUpdate($complete, $record);
+			}
 			if($this->warnings[$import_csv->get_current_position()])
 			{
 				$this->warnings[$import_csv->get_current_position()] .= "\nRecord:\n" .array2string($record);
@@ -670,5 +688,26 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 			}
 		}
 		return $app_id;
+	}
+
+	/**
+	 * Send some progress so the UI doesn't look frozen
+	 *
+	 * @param integer $complete 0-100 or false for indeterminate
+	 * @param importexport_iface_egw_record $record
+	 * @return void
+	 * @throws Api\Json\Exception
+	 */
+	protected function sendUpdate($complete, $record)
+	{
+		$label = "";
+		try
+		{
+			$label = $this->boinfolog->link_title($record) ?: "";
+		}
+		catch (Exception $e)
+		{
+		}
+		importexport_import_ui::sendUpdate($complete, $label, substr(array2string($record), 0, 120) . '...');
 	}
 }
