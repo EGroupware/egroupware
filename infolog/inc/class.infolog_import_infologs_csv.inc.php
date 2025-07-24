@@ -122,6 +122,12 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 			'charset' => $_definition->plugin_options['charset'],
 		));
 
+		if(!$this->dry_run)
+		{
+			// This needs to scan the whole file, so it can take a while
+			$record_count = $import_csv->get_num_of_records();
+		}
+
 		$this->definition = $_definition;
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
@@ -146,12 +152,6 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 
 		// Add extra conversions
 		$import_csv->conversion_class = $this;
-
-		if(!$this->dry_run)
-		{
-			// This needs to scan the whole file, so it can take a while
-			$record_count = $import_csv->get_num_of_records();
-		}
 
 		//check if file has a header lines
 		if ( isset( $_definition->plugin_options['num_header_lines'] ) && $_definition->plugin_options['num_header_lines'] > 0) {
@@ -182,8 +182,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 		// Failures
 		$this->errors = array();
 		$this->warnings = array();
-
-		error_log(__METHOD__ . " Importing {$record_count} infolog entries");
+		set_time_limit(100);
 
 		while ( $record = $import_csv->get_record() )
 		{
@@ -191,7 +190,6 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
-
 			$lookups = $_lookups;
 
 			// Early detection of type, to load appropriate statuses
@@ -367,10 +365,6 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 				$this->errors[$import_csv->get_current_position()] .= "\nRecord:\n" .array2string($record);
 			}
 		}
-		error_log(__METHOD__ . ' Finished importing ' . $count . ' infolog entries. Errors: ' . count($this->errors) . ' Warnings: ' . count($this->warnings));
-		error_log(__METHOD__ . ' Errors: ' . array2string($this->errors));
-		error_log(__METHOD__ . ' Warnings: ' . array2string($this->warnings));
-		error_log(__METHOD__ . ' Results: ' . array2string($this->results));
 		return $count;
 	}
 
@@ -646,7 +640,6 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 	 */
 	protected function link_by_cf($record_num, $app, $fieldname, $_value)
 	{
-		error_log(__METHOD__ . "($record_num, $app, $fieldname, $_value)");
 		$app_id = false;
 
 		list($custom_field, $value) = explode(':',$_value);
@@ -717,4 +710,11 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 		}
 		importexport_import_ui::sendUpdate($complete, $label, substr(array2string($record), 0, 120) . '...');
 	}
+
+	function convert($size)
+	{
+		$unit = array('b', 'kb', 'mb', 'gb', 'tb', 'pb');
+		return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
+	}
+
 }

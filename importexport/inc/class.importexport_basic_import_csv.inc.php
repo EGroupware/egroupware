@@ -133,6 +133,12 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			'charset' => $_definition->plugin_options['charset'],
 		));
 
+		if(!$this->dry_run)
+		{
+			// This needs to scan the whole file, so it can take a while
+			$record_count = $import_csv->get_num_of_records();
+		}
+
 		$this->definition = $_definition;
 
 		// user, is admin ?
@@ -147,12 +153,6 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 		// set FieldConversion
 		$import_csv->conversion = $_definition->plugin_options['field_conversion'];
-
-		if(!$this->dry_run)
-		{
-			// This needs to scan the whole file, so it can take a while
-			$record_count = $import_csv->get_num_of_records();
-		}
 
 		//check if file has a header lines
 		if ( isset( $_definition->plugin_options['num_header_lines'] ) && $_definition->plugin_options['num_header_lines'] > 0) {
