@@ -56,6 +56,9 @@
   width: 100%;
 }
 /*     Dialog Import Export      */
+#popupMainDiv {
+  height: 100%;
+}
 #importexport-export_dialog {
   margin: 1em;
 }
