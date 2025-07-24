@@ -2456,7 +2456,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		// Space for todos, if there
 		total_width -= jQuery(this.getInstanceManager().DOMContainer).siblings().has(':visible').not('#calendar-toolbar').outerWidth();
 
-		const day_width = Math.floor((total_width > 0 ? total_width : modify_node.width()) / Math.max(1, this.day_widgets.length));
+		const day_width = Math.floor((total_width > 0 ? total_width : modify_node.width()) / Math.max(1, this.day_widgets.length)) - 2;
 		// update day widgets
 		for(var i = 0; i < this.day_widgets.length; i++)
 		{
