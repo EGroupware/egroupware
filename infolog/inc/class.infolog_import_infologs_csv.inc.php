@@ -183,6 +183,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 		$this->errors = array();
 		$this->warnings = array();
 
+		error_log(__METHOD__ . " Importing {$record_count} infolog entries");
+
 		while ( $record = $import_csv->get_record() )
 		{
 			$success = false;
@@ -365,6 +367,10 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 				$this->errors[$import_csv->get_current_position()] .= "\nRecord:\n" .array2string($record);
 			}
 		}
+		error_log(__METHOD__ . ' Finished importing ' . $count . ' infolog entries. Errors: ' . count($this->errors) . ' Warnings: ' . count($this->warnings));
+		error_log(__METHOD__ . ' Errors: ' . array2string($this->errors));
+		error_log(__METHOD__ . ' Warnings: ' . array2string($this->warnings));
+		error_log(__METHOD__ . ' Results: ' . array2string($this->results));
 		return $count;
 	}
 
@@ -640,6 +646,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 	 */
 	protected function link_by_cf($record_num, $app, $fieldname, $_value)
 	{
+		error_log(__METHOD__ . "($record_num, $app, $fieldname, $_value)");
 		$app_id = false;
 
 		list($custom_field, $value) = explode(':',$_value);
