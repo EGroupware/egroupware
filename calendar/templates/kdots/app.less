@@ -32,3 +32,14 @@
 .calendar_calEvent:not([class*=" cat_"]) {
   background-color: var(--primary-background-color)
 }
+
+/* CalendarOwner needs this to round avatars */
+.kdots-glassy {
+  .et2-input-widget {
+	&:not([disabled]) {
+	  &::part(base), &::part(input-control), &::part(combobox) {
+		--sl-border-radius-medium: var(--sl-input-height-medium);
+	  }
+	}
+  }
+}

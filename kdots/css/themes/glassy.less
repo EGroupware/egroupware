@@ -19,8 +19,21 @@
 
   --sl-panel-border-radius: var(--sl-border-radius-medium);
 
-  /* Input field changes */
+  et2-avatar::part(base) {
+	background-color: transparent;
+  }
 
+  et2-avatar, et2-lavatar {
+	&::part(base) {
+	  border-radius: var(--sl-border-radius-circle);
+	}
+
+	&::part(image) {
+	  border-radius: var(--sl-border-radius-circle);
+	}
+  }
+
+  /* Input field changes */
   .et2-input-widget {
 	&:not([disabled]) {
 	  &::part(base), &::part(input-control), &::part(combobox) {

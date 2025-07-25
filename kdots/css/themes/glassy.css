@@ -28,6 +28,27 @@
   --sl-button-primary-hover-background-color: hsl(calc(var(--application-color-hsl) / 0.9));
   --sl-button-primary-hover-border-color: hsl(calc(var(--application-color-hsl) / 1));
 }
+:root et2-avatar::part(base),
+:host et2-avatar::part(base),
+.kdots-glassy et2-avatar::part(base) {
+  background-color: transparent;
+}
+:root et2-avatar::part(base),
+:host et2-avatar::part(base),
+.kdots-glassy et2-avatar::part(base),
+:root et2-lavatar::part(base),
+:host et2-lavatar::part(base),
+.kdots-glassy et2-lavatar::part(base) {
+  border-radius: var(--sl-border-radius-circle);
+}
+:root et2-avatar::part(image),
+:host et2-avatar::part(image),
+.kdots-glassy et2-avatar::part(image),
+:root et2-lavatar::part(image),
+:host et2-lavatar::part(image),
+.kdots-glassy et2-lavatar::part(image) {
+  border-radius: var(--sl-border-radius-circle);
+}
 :root .et2-input-widget:not([disabled])::part(base),
 :host .et2-input-widget:not([disabled])::part(base),
 .kdots-glassy .et2-input-widget:not([disabled])::part(base),

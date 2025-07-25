@@ -1645,3 +1645,9 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
 .calendar_calEvent:not([class*=" cat_"]) {
   background-color: var(--primary-background-color);
 }
+/* CalendarOwner needs this to round avatars */
+.kdots-glassy .et2-input-widget:not([disabled])::part(base),
+.kdots-glassy .et2-input-widget:not([disabled])::part(input-control),
+.kdots-glassy .et2-input-widget:not([disabled])::part(combobox) {
+  --sl-border-radius-medium: var(--sl-input-height-medium);
+}

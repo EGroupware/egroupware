@@ -379,7 +379,7 @@ class kdots_framework extends Api\Framework\Ajax
 			'fancy'    => 'glassy'
 		);
 		$theme = $GLOBALS['egw_info']['user']['preferences']['common']['theme'];
-		$theme = $theme_map[$theme] ?? $theme;
+		$GLOBALS['egw_info']['user']['preferences']['common']['theme'] = $theme = $theme_map[$theme] ?? $theme;
 		$themes_to_check[] = $this->template_dir . '/css/themes/' . $theme . '.css';
 		$ret = parent::_get_css($themes_to_check);
 
