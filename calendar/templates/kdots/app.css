@@ -688,6 +688,7 @@ Hide subsequent headers in week view with non-consolidated owners
   padding-left: 6px;
   min-height: 1.2em;
   min-width: 5px;
+  line-height: 1em;
   /* It is important there are no CSS transitions, it breaks resize */
   -webkit-transition: none;
   -moz-transition: none !important;
