@@ -257,6 +257,10 @@ export class Et2VfsSelectDialog
 		this._pathNode.value = this.path = path;
 		this.requestUpdate("path", oldValue);
 		this.currentResult = null;
+		if(this.mode == "select-dir")
+		{
+			this.value = [path];
+		}
 
 		return this._searchPromise;
 	}
