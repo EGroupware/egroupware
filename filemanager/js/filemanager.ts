@@ -1674,7 +1674,14 @@ export class filemanagerAPP extends EgwApp
 			['url[user]', 'at'].forEach((name) => {
 				(<et2_textbox>grid.getWidgetById(name))?.set_disabled(false);
 			});
-
 		}
+	}
+
+	/**
+	 * Create a new job
+	 */
+	addJob()
+	{
+		this.openDialog('filemanager.\\EGroupware\\Filemanager\\Jobs.edit');
 	}
 }

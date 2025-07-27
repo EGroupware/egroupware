@@ -100,6 +100,7 @@ class filemanager_hooks
 			'Check virtual filesystem'  => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.fsck'),
 			'Custom fields'             => Egw::link('/index.php', 'menuaction=admin.admin_customfields.index&appname=' . self::$appname . '&ajax=true'),
 			'Quota'                     => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.quota&ajax=true'),
+			'Jobs'                      => Egw::link('/index.php', 'menuaction=filemanager.\\EGroupware\Filemanager\\Jobs.index&ajax=true'),
 		);
 		if (!empty($GLOBALS['egw_info']['user']['apps']['stylite']))
 		{

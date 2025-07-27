@@ -74,6 +74,7 @@ create folder	filemanager	en	Create folder
 created	filemanager	en	Created
 created %1,%2	filemanager	en	Created %1, %2
 created directory %1	filemanager	en	Created folder %1
+creationdate of file	filemanager	en	Creationdate of file
 current directory	filemanager	en	Current folder
 custom fields	filemanager	en	Custom fields
 cut	filemanager	en	Cut
@@ -121,6 +122,7 @@ error adding the acl!	filemanager	en	Error adding the ACL!
 error creating symlink to target %1!	filemanager	en	Error creating symlink to target %1!
 error deleting the acl entry!	filemanager	en	Error deleting the ACL entry!
 error mounting %1 on %2!	filemanager	en	Error mounting %1 on %2!
+error running job	filemanager	en	Error running job
 error unmounting %1!	filemanager	en	Error unmounting %1!
 error uploading file!	filemanager	en	Error uploading file!
 error while creating directory.	filemanager	en	Error while creating folder
@@ -182,7 +184,11 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	en	If you specify an export definition, it will be used when you export
 if you specify an export definition, it will be used when you export*	filemanager	en	If you specify an export definition, it will be used when you export*
 inherited	filemanager	en	Inherited
+job deleted.	filemanager	en	Job deleted.
+job saved.	filemanager	en	Job saved.
+jobs	filemanager	en	Jobs
 last accessed	filemanager	en	Last accessed
+leave empty to delete the file after attaching	filemanager	en	leave empty to delete the file after attaching
 link	filemanager	en	Link
 link %1: %2	filemanager	en	Link %1: %2
 link into folder	filemanager	en	Link into folder
@@ -205,6 +211,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	en	Mount /etemp
 mount permanently	filemanager	en	Mount permanently
 mountpoints	filemanager	en	Mountpoints
 move	filemanager	en	Move
+move file to	filemanager	en	Move file to
 move into folder	filemanager	en	Move into folder
 move to	filemanager	en	Move to
 moved %1 to %2	filemanager	en	Moved %1 to %2
@@ -261,6 +268,7 @@ save %1	filemanager	en	Save %1
 save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing.
 save as zip	filemanager	en	Save as ZIP
 save changes	filemanager	en	Save changes
+save job to clear error and restart it	filemanager	en	Save job to clear error and restart it
 saved %1	filemanager	en	Saved %1
 saving properties failed!	filemanager	en	Saving properties failed!
 saving setting for document merge failed!	filemanager	en	Saving setting for document merge failed!
