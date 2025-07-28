@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+	<template id="filemanager.job.general" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="170"/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@app=infolog">
+					<et2-description value="Type" for="info_type"></et2-description>
+					<et2-select id="info_type" onchange="1"></et2-select>
+				</row>
+				<row disabled="!@app=infolog">
+					<et2-description value="Owner" for="info_owner"></et2-description>
+					<et2-select-account id="info_owner" accountType="both" emptyLabel="Select one..."></et2-select-account>
+				</row>
+				<row disabled="!@app=infolog">
+					<et2-description value="Responsible" for="info_responsible"></et2-description>
+					<et2-select-account id="info_responsible" accountType="both" multiple="true"></et2-select-account>
+				</row>
+				<row disabled="!@app=infolog">
+					<et2-description value="Category" for="info_cat"></et2-description>
+					<et2-select-cat id="info_cat" application="infolog"></et2-select-cat>
+				</row>
+				<row disabled="@no_cfs">
+					<et2-description value="Creationdate of file" for="file_created"></et2-description>
+					<et2-select id="file_created" emptyLabel="Startdate"></et2-select>
+				</row>
+				<row>
+					<et2-description value="Move file to" for="target_dir"></et2-description>
+					<et2-vfs-path id="target_dir" statustext="leave empty to delete the file after attaching"></et2-vfs-path>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.job.custom" template="" lang="" group="0" version="1.9.001">
+		<customfields app="infolog" type_filter="@info_type" disabled="!@app=infolog"></customfields>
+	</template>
+	<template id="filemanager.job" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="170"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<et2-description value="Name" for="name"></et2-description>
+					<et2-textbox id="name"></et2-textbox>
+				</row>
+				<row>
+					<et2-description value="Directory" for="directory"></et2-description>
+					<et2-vfs-path id="directory"></et2-vfs-path>
+				</row>
+				<row>
+					<et2-description value="Application" for="app"></et2-description>
+					<et2-select id="app" onchange="1"></et2-select>
+				</row>
+				<row>
+					<et2-tabbox id="tabs" span="all" width="100%" tabHeight="300">
+						<tabs>
+							<tab id="error" label="Error running job"></tab>
+							<tab id="general" label="General"></tab>
+							<tab id="custom" label="Custom fields"></tab>
+						</tabs>
+						<tabpanels>
+							<et2-vbox>
+								<et2-date-time id="error[time]" readonly="true"></et2-date-time>
+								<et2-description id="error[message]"></et2-description>
+								<et2-description value="Save job to clear error and restart it"></et2-description>
+							</et2-vbox>
+							<template id="filemanager.job.general"></template>
+							<template id="filemanager.job.custom"></template>
+						</tabpanels>
+					</et2-tabbox>
+				</row>
+				<row disabled="!@id">
+					<et2-description value="Last modified" for="data[icon]"></et2-description>
+					<et2-hbox width="100%">
+						<et2-select-account id="modifier" readonly="true"></et2-select-account>
+						<et2-date-time id="modified" readonly="true" align="right"></et2-date-time>
+					</et2-hbox>
+				</row>
+				<row  class="dialogFooterToolbar">
+					<et2-hbox span="all" width="100%">
+						<et2-button label="Save" id="button[save]"></et2-button>
+						<et2-button label="Apply" id="button[apply]"></et2-button>
+						<et2-button label="Cancel" id="button[cancel]"></et2-button>
+						<et2-button label="Delete" id="button[delete]" onclick="Et2Dialog::confirm('Are you sure?')" align="right"></et2-button>
+					</et2-hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

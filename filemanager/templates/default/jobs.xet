@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+	<template id="filemanager.jobs.rows" template="" lang="" group="0" version="1.9.002">
+		<grid width="100%">
+			<columns>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="150"/>
+				<column width="150"/>
+				<column width="150"/>
+				<column width="150"/>
+				<column width="150"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="Name" id="name"/>
+					<nextmatch-sortheader label="Directory" id="directory"/>
+					<et2-nextmatch-header-filter emptyLabel="Application" id="app"/>
+					<nextmatch-header label="Type" id="info_type"></nextmatch-header>
+					<et2-nextmatch-header-account emptyLabel="Owner" id="info_owner" accountType="both"/>
+					<et2-vbox>
+						<nextmatch-sortheader label="Modified" id="modified"/>
+						<et2-nextmatch-header-account emptyLabel="Modifier" id="modifier"/>
+					</et2-vbox>
+					<nextmatch-header label="Error" id="error"/>
+				</row>
+				<row>
+					<et2-description id="${row}[name]"></et2-description>
+					<et2-description id="${row}[directory]"></et2-description>
+					<et2-select-app id="${row}[app]" readonly="true"></et2-select-app>
+					<et2-description id="${row}[info_type]"></et2-description>
+					<et2-select-account id="${row}[info_owner]" readonly="true" accountType="groups"></et2-select-account>
+					<et2-vbox>
+						<et2-date-time id="${row}[modified]" readonly="true"></et2-date-time>
+						<et2-select-account id="${row}[modifier]" readonly="true"></et2-select-account>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-date-time id="${row}[error][time]" readonly="true"></et2-date-time>
+						<et2-description id="${row}[error][message]"></et2-description>
+					</et2-vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="filemanager.jobs.add" template="" lang="" group="0" version="1.9.001">
+		<et2-button  label="Add" id="add" onclick="egw.open_link('filemanager.\\EGroupware\\Filemanager\\Jobs.edit', '_blank', '800x600')" noSubmit="true"></et2-button>
+	</template>
+	<template id="filemanager.jobs" template="" lang="" group="0" version="1.9.001">
+		<nextmatch id="nm" options="filemanager.jobs.rows" span="all" header_left="filemanager.jobs.add"/>
+	</template>
+</overlay>

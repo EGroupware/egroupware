@@ -65,6 +65,7 @@ copy to clipboard	filemanager	de	Kopieren in die Zwischenablage
 could not copy %1 to %2	filemanager	de	Konnte %1 nicht nach %2 kopieren
 could not create %1	filemanager	de	Konnte %1 nicht erstellen
 could not delete %1	filemanager	de	Konnte %1 nicht löschen
+could not install async job	filemanager	de	Konten asynchronen Job nicht installieren
 could not move %1 to %2	filemanager	de	Konnte %1 nicht nach %2 verschieben
 could not rename %1 to %2	filemanager	de	Konnte %1 nicht in %2 umbenennen
 create a link	filemanager	de	Verknüpfung anlegen
@@ -74,6 +75,7 @@ create folder	filemanager	de	Ordner erstellen
 created	filemanager	de	Erstellt
 created %1,%2	filemanager	de	Erstellt %1, %2
 created directory %1	filemanager	de	Ordner %1 erstellt
+creationdate of file	filemanager	de	Erstellungsdatum der Datei
 current directory	filemanager	de	Aktueller Ordner
 custom fields	filemanager	de	Benutzerdefinierte Felder
 cut	filemanager	de	Ausschneiden
@@ -121,6 +123,7 @@ error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
 error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1 !
 error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
 error mounting %1 on %2!	filemanager	de	Fehler beim mounten von %1 nach %2 !
+error running job	filemanager	de	Fehler beim Ausführen des Jobs
 error unmounting %1!	filemanager	de	Fehler beim unmounten von %1 !
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 error while creating directory.	filemanager	de	Fehler beim Anlegen des Ordners
@@ -182,7 +185,12 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	de	Wenn Sie eine Exportdefinition angeben wird diese für den Export angewendet.
 if you specify an export definition, it will be used when you export*	filemanager	de	Wenn Sie eine Exportdefinition angeben wird diese für den Export angewendet.
 inherited	filemanager	de	Geerbt
+job deleted.	filemanager	de	Job gelöscht.
+job folder %1 does not exist or is not writable	filemanager	de	Job Verzeichnis %1 existiert nicht, oder ist nicht beschreibbar
+job saved.	filemanager	de	Job gespeichert.
+jobs	filemanager	de	Jobs
 last accessed	filemanager	de	Letzter Zugriff
+leave empty to delete the file after attaching	filemanager	de	leer lassen um die Datei nach dem Anhängen zu löschen
 link	filemanager	de	verknüpfen
 link %1: %2	filemanager	de	%1 Verknüpfung: %2
 link into folder	filemanager	de	Verknüpfung in ein Ordner
@@ -205,6 +213,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	de	/etemplates 
 mount permanently	filemanager	de	Dauerhaft mounten
 mountpoints	filemanager	de	Mountpunkte
 move	filemanager	de	Verschieben
+move file to	filemanager	de	Datei verschieben nach
 move into folder	filemanager	de	Verschieben in Ordner
 move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
@@ -261,12 +270,14 @@ save %1	filemanager	de	%1 speichern
 save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Ordneransicht
 save as zip	filemanager	de	Als ZIP-Datei speichern
 save changes	filemanager	de	Änderungen speichern
+save job to clear error and restart it	filemanager	de	Speichere den Job und den Fehler zu löschen und neu zu starten
 saved %1	filemanager	de	%1 gespeichert
 saving properties failed!	filemanager	de	Speichern der Eigenschaften fehlgeschlagen!
 saving setting for document merge failed!	filemanager	de	Speichern der Einstellungen für Seriendokumente fehlgeschlagen
 search for '%1'	filemanager	de	Nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
+select custom field	filemanager	de	Benutzerdefiniertes Feld auswählen
 select file to upload in current directory	filemanager	de	Datei(en) zum Hochladen in den aktuellen Ordner auswählen
 select file(s) from vfs	common	de	Datei(en) aus dem EGroupware Dateimanager auswählen
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert
