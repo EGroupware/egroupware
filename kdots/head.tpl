@@ -30,7 +30,7 @@
     {java_script}
 	<script type="module" src="{webserver_url}/kdots/js/app.min.js"></script>
 </head>
-<body {body_tags}>
+<body {body_tags} lang="{lang_code}">
 {include_wz_tooltip}
 <!-- END head -->
 <!-- BEGIN framework -->
