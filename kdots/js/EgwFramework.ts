@@ -1041,6 +1041,9 @@ export class EgwFramework extends LitElement
 
 		return html`${until(this.getEgwComplete().then(() => html`
             <div class=${classMap(classes)} part="base">
+                <sl-visually-hidden>
+                    <h1>${egw.config('site_title', 'phpgwapi') || "EGroupware"}</h1>
+                </sl-visually-hidden>
                 <div class="egw_fw__banner" part="banner" role="banner">
                     <slot name="banner"><span class="placeholder">Banner</span></slot>
                 </div>
