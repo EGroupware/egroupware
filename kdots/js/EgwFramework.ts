@@ -10,6 +10,8 @@ import {egw} from "../../api/js/jsapi/egw_global";
 import {SlAlert, SlDropdown, SlTabGroup} from "@shoelace-style/shoelace";
 import {EgwFrameworkApp} from "./EgwFrameworkApp";
 import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
+import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
+import {state} from "lit/decorators/state.js";
 
 /**
  * @summary Accessable, webComponent-based EGroupware framework
@@ -108,6 +110,10 @@ export class EgwFramework extends LitElement
 	@property({type: Array, attribute: "application-list"})
 	applicationList : ApplicationInfo[] = [];
 
+	@state() hasBanner = false;
+	@state() hasFooter = false;
+	@state() hasStatus = false;
+
 	/**
 	 * Special tabs that are not directly associated with an application (CRM)
 	 */
@@ -123,6 +129,12 @@ export class EgwFramework extends LitElement
 
 	// Watch for things (apps) getting added
 	private appDOMObserver : MutationObserver
+
+	// Check for slots having content, we won't render them if they're empty
+	protected readonly hasSlotController = new HasSlotController(<LitElement><unknown>this,
+		// Don't include status, it causes a loop
+		"banner", "footer"
+	);
 
 	// Keep track of egw loaded
 	private _egwLoaded = Promise.resolve();
@@ -155,6 +167,11 @@ export class EgwFramework extends LitElement
 		}
 
 		document.body.addEventListener("egw-darkmode-change", this.handleDarkmodeChange);
+
+		// Update existence of optional slots
+		this.hasBanner = this.hasSlotController.test('banner');
+		this.hasFooter = this.hasSlotController.test('footer');
+		this.hasStatus = this.hasSlotController.test('status');
 	}
 
 	disconnectedCallback()
@@ -990,6 +1007,23 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
+	 * Accessibility helpers, including skip link for fast navigation
+	 *
+	 * @return {TemplateResult<1>}
+	 * @protected
+	 */
+	protected _accessibleTopTemplate()
+	{
+		return html`
+            <sl-visually-hidden>
+                <h1>${egw.config('site_title', 'phpgwapi') || "EGroupware"}</h1>
+                <!-- Skip link -->
+                <a href="main">${this.egw.lang("Skip to content")}</a>
+            </sl-visually-hidden>
+		`;
+	}
+
+	/**
 	 * Renders one application into the 9-dots application menu
 	 *
 	 * @param app
@@ -1041,12 +1075,12 @@ export class EgwFramework extends LitElement
 
 		return html`${until(this.getEgwComplete().then(() => html`
             <div class=${classMap(classes)} part="base">
-                <sl-visually-hidden>
-                    <h1>${egw.config('site_title', 'phpgwapi') || "EGroupware"}</h1>
-                </sl-visually-hidden>
+                ${this._accessibleTopTemplate()}
+                ${this.hasBanner ? html`
                 <div class="egw_fw__banner" part="banner" role="banner">
                     <slot name="banner"><span class="placeholder">Banner</span></slot>
-                </div>
+                </div>` : nothing
+                }
                 <header class="egw_fw__header" part="header">
                     <slot name="logo"></slot>
                     <sl-dropdown class="egw_fw__app_list" role="menu" exportparts="panel:app-list-panel">
@@ -1059,6 +1093,7 @@ export class EgwFramework extends LitElement
 					<div class="spacer"></div>
                     <sl-tab-group part="open-applications" class="egw_fw__open_applications" activation="manual"
                                   role="tablist"
+                                  aria-label="${this.egw.lang("Open applications")}"
                                   @sl-tab-show=${this.handleApplicationTabShow}
                                   @sl-close=${this.handleApplicationTabClose}
                     >
@@ -1070,12 +1105,13 @@ export class EgwFramework extends LitElement
                     <slot name="header"><span class="placeholder">header</span></slot>
                     <slot name="header-right"><span class="placeholder">header-right</span></slot>
                 </header>
+                ${this.hasStatus ? html`
                 <div class="egw_fw__divider">
                     <sl-split-panel part="status-split" position-in-pixels="${statusPosition}" primary="end"
                                     snap="150px ${statusSnap} 0px"
                                     snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
                                     aria-label="Side menu resize">
-                        <main slot="start" part="main" class="egw_fw__main">
+                        <main slot="start" part="main" class="egw_fw__main" id="main">
                             <slot></slot>
                         </main>
                         <sl-icon slot="divider" name="grip-vertical"></sl-icon>
@@ -1083,12 +1119,18 @@ export class EgwFramework extends LitElement
                             <slot name="status"><span class="placeholder">status</span></slot>
                         </aside>
                     </sl-split-panel>
-                </div>
-                <footer class="egw_fw__footer" part="footer">
-                    <slot name="footer"><span class="placeholder">footer</span></slot>
-                </footer>
+                </div>` : html`
+                    <main part="main" class="egw_fw__main" id="main">
+                        <slot></slot>
+                    </main>`
+                }
+                ${this.hasFooter ? html`
+                    <footer class="egw_fw__footer" part="footer">
+                        <slot name="footer"><span class="placeholder">footer</span></slot>
+                    </footer>` : nothing
+                }
             </div>
-		`), html`<span>Waiting for egw...</span>
+		`), html`<span>Loading...</span>
         <slot></slot>`)}`;
 	}
 }

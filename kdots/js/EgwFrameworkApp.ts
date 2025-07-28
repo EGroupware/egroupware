@@ -934,7 +934,7 @@ export class EgwFrameworkApp extends LitElement
                                 @sl-reposition=${this.handleSlide}
                 >
                     <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideLeft}></sl-icon>
-                    ${this._asideTemplate("start", "left")}
+                    ${this._asideTemplate("start", "left", this.egw.lang("Sidebox"))}
                     <sl-split-panel slot="end"
                                     class=${classMap({
                                         "egw_fw_app__innerSplit": true,
