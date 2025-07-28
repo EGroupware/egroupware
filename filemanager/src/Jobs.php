@@ -142,7 +142,7 @@ class Jobs
 		// unset required CFs
 		foreach($cfs as $cf)
 		{
-			if (!empty($cf['required']))
+			if (!empty($cf['needed']) || !empty($cf['required']))
 			{
 				Api\Etemplate::setElementAttribute('#'.$cf['name'], 'required', false);
 			}
