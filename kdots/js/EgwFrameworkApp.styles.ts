@@ -253,8 +253,14 @@ export default css`
 
 	/* Styling */
 
-	.egw_fw_app__header sl-icon[name="three-dots-vertical"] {
-		padding: var(--sl-spacing-small);
+	.egw_fw_app__menu {
+		sl-menu-item::part(checked-icon) {
+			width: 1em;
+		}
+
+		sl-menu-item::part(prefix) {
+			min-width: var(--sl-spacing-2x-large);
+		}
 	}
 
 	sl-details.favorites::part(content) {

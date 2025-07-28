@@ -1,4 +1,4 @@
-import {css, html, LitElement, nothing, render} from "lit";
+import {css, html, LitElement, nothing, render, TemplateResult} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
@@ -37,6 +37,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
  * @csspart app-header - Top bar of application, contains name, header.
  * @csspart name - Top left, holds the application name.
  * @csspart header - Top main application header, optional application toolbar goes here.
+ * @csspart app-menu - Drop down pplication menu, top right
  * @csspart content-header - Top of center, optional.
  * @csspart main - Main application content.
  * @csspart left - Left optional content.
@@ -283,7 +284,7 @@ export class EgwFrameworkApp extends LitElement
 				else
 				{
 					// We got some data, use it
-					const items = (Array.isArray(data) ? data : [data])
+					const items = (<HTMLElement[]>(Array.isArray(data) ? data : [data]))
 						.filter(data => (typeof data.DOMNodeID == "string" && document.querySelector("[id='" + data.DOMNodeID + "']") == null));
 
 					render(html`${repeat(items, i => i.DOMNodeID, (item) => html`
@@ -779,8 +780,8 @@ export class EgwFrameworkApp extends LitElement
                 <div slot="trigger">${this.egw.lang("Menu")}
                     <sl-icon-button name="chevron-double-down"></sl-icon-button>
                 </div>
-                <sl-menu>
-                    ${!this.egw.user('apps')['admin'] || !this.features.appConfig ? nothing : html`
+                <sl-menu part="app-menu">
+                    ${(typeof this.egw.user('apps')['admin'] == undefined || !this.features.appConfig) ? nothing : html`
                         <sl-menu-item
                                 @click=${this.handleAppMenuClick}
                         >
@@ -820,30 +821,36 @@ export class EgwFrameworkApp extends LitElement
                             <et2-favorites-menu slot="submenu" application="${this.name}"></et2-favorites-menu>
                         </sl-menu-item>`
                     }
-                    ${this._threeDotsMenuTemplate()}
+                    ${this._applicationMenuTemplate()}
                 </sl-menu>
             </sl-dropdown>
 		`;
 	}
 
 	/**
-	 * This is the "three dots menu" in the top-right corner.
+	 * This is the application's "Menu" in the top-right corner.
 	 * Most of what was in the sidebox now goes here.
 	 *
 	 * @returns {TemplateResult<1> | typeof nothing }
 	 * @protected
 	 */
-	protected _threeDotsMenuTemplate()
+	protected _applicationMenuTemplate()
 	{
 		if(!this._sideboxData)
 		{
 			return nothing;
 		}
 
-		return html`${repeat(this._sideboxData, (menu) => menu['menu_name'], this._threeDotsMenuItemTemplate.bind(this))}`;
+		return html`${repeat(this._sideboxData, (menu) => menu['menu_name'], this._applicationMenuItemTemplate.bind(this))}`;
 	}
 
-	_threeDotsMenuItemTemplate(menu)
+	/**
+	 * Template for a single item (top level) in the application menu
+	 *
+	 * @param menu
+	 * @return {TemplateResult<1> | typeof nothing}
+	 */
+	_applicationMenuItemTemplate(menu)
 	{
 		// No favorites here
 		if(menu["title"] == "Favorites" || menu["title"] == this.egw.lang("favorites"))
@@ -853,7 +860,14 @@ export class EgwFrameworkApp extends LitElement
 		// Just one thing, don't bother with submenu
 		if(menu["entries"].length == 1)
 		{
-			return this._sideboxMenuItemTemplate({...menu["entries"][0], lang_item: menu["title"]})
+			if(["--", "<hr />"].includes(menu["entries"][0]["lang_item"]))
+			{
+				return this._applicationSubMenuItemTemplate({...menu["entries"][0], lang_item: '<hr />'});
+			}
+			else
+			{
+				return this._applicationSubMenuItemTemplate({...menu["entries"][0], lang_item: menu["title"]})
+			}
 		}
 		return html`
             <sl-menu-item>
@@ -861,23 +875,29 @@ export class EgwFrameworkApp extends LitElement
                 <sl-menu slot="submenu">
                     ${repeat(menu["entries"], (entry) =>
                     {
-                        return this._sideboxMenuItemTemplate(entry);
+                        return this._applicationSubMenuItemTemplate(entry);
                     })}
                 </sl-menu>
             </sl-menu-item>`;
 	}
 
 	/**
-	 * An individual sub-item in the 3-dots menu
+	 * An individual sub-item in the application menu
 	 * @param item
 	 * @returns {TemplateResult<1>}
 	 */
-	_sideboxMenuItemTemplate(item)
+	_applicationSubMenuItemTemplate(item)
 	{
 		if(item["lang_item"] == "<hr />")
 		{
 			return html`
                 <sl-divider></sl-divider>`;
+		}
+		let icon : symbol | TemplateResult<1> = nothing;
+		if(typeof item["icon"] == "string" && (item["icon"].includes("://") || this.egw.image(item["icon"], this.appName)))
+		{
+			icon = html`
+                <et2-image src=${item["icon"]} slot="prefix"></et2-image>`;
 		}
 		return html`
             <sl-menu-item
@@ -885,9 +905,7 @@ export class EgwFrameworkApp extends LitElement
                     data-link=${item["item_link"]}
                     @click=${this.handleSideboxMenuClick}
             >
-                ${typeof item["icon_or_star"] == "string" && item["icon_or_star"].endsWith("bullet.svg") ? nothing : html`
-                    <et2-image name=${item["icon_or_star"]}></et2-image>
-                `}
+                ${icon}
                 ${item["lang_item"]}
             </sl-menu-item>`;
 
