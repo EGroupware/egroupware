@@ -65,6 +65,7 @@ copy to clipboard	filemanager	en	Copy to clipboard
 could not copy %1 to %2	filemanager	en	Could not copy %1 to %2
 could not create %1	filemanager	en	Could not create %1
 could not delete %1	filemanager	en	Could not delete %1
+could not install async job	filemanager	en	Could not install async job
 could not move %1 to %2	filemanager	en	Could not move %1 to %2
 could not rename %1 to %2	filemanager	en	Could not rename %1 to %2
 create a link	filemanager	en	Create a link
@@ -185,6 +186,7 @@ if you specify an export definition, it will be used when you export	filemanager
 if you specify an export definition, it will be used when you export*	filemanager	en	If you specify an export definition, it will be used when you export*
 inherited	filemanager	en	Inherited
 job deleted.	filemanager	en	Job deleted.
+job folder %1 does not exist or is not writable	filemanager	en	Job folder %1 does not exist or is not writable
 job saved.	filemanager	en	Job saved.
 jobs	filemanager	en	Jobs
 last accessed	filemanager	en	Last accessed
@@ -275,6 +277,7 @@ saving setting for document merge failed!	filemanager	en	Saving setting for docu
 search for '%1'	filemanager	en	Search for '%1'
 searchstring	filemanager	en	Search string
 select action...	filemanager	en	Select action...
+select custom field	filemanager	en	Select custom field
 select file to upload in current directory	filemanager	en	Select file to upload in current folder
 select file(s) from vfs	common	en	Select file(s) from EGroupware File Manager
 setting for document merge saved.	filemanager	en	Setting for document merge saved.

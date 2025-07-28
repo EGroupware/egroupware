@@ -69,6 +69,7 @@ class Jobs
 				{
 					case 'save':
 					case 'apply':
+						$this->checkFolder($content['directory']);
 						$type = empty($content['id']) ? 'add' : 'edit';
 						unset($content['error']);   // unset error to restart job
 						$content = self::save($content);
@@ -284,6 +285,20 @@ class Jobs
 	}
 
 	/**
+	 * Check folder exists and is writable
+	 *
+	 * @param string $folder
+	 * @throws \Exception
+	 */
+	protected function checkFolder(string $folder)
+	{
+		if (!Api\Vfs::file_exists($folder) || !Api\Vfs::is_dir($folder) || !Api\Vfs::is_writable($folder))
+		{
+			throw new \Exception(lang('Job folder %1 does not exist or is not writable', $folder));
+		}
+	}
+
+	/**
 	 * Run all jobs
 	 *
 	 * @param array $data
@@ -297,14 +312,16 @@ class Jobs
 				// stop running an errored job, as it might create a high number of entries e.g. because file can not be deleted
 				if (!empty($job['error'])) continue;
 
-				if (!Api\Vfs::file_exists($job['directory']) || !Api\Vfs::is_dir($job['directory']) || !Api\Vfs::is_writable($job['directory']))
-				{
-					throw new \Exception('Job '.$job['directory'].' does not exist or is not writable');
-				}
+				$this->checkFolder($job['directory']);
+
 				foreach (Api\Vfs::scandir($job['directory']) as $file)
 				{
 					$file = $job['directory'] . '/' . $file;
-					$this->runJob($job, $file);
+					// only run on files not directories, allows also placing archive-/target-folder inside
+					if (!Api\Vfs::is_dir($file) && !Api\Vfs::is_link($file))
+					{
+						$this->runJob($job, $file);
+					}
 				}
 			}
 			catch(\Throwable $e) {
