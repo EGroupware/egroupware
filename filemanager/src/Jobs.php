@@ -59,6 +59,19 @@ class Jobs
 			{
 				$content = ['app' => 'infolog', 'info_type' => 'task'];
 			}
+			// fix old custom-fields
+			elseif(!empty($content['cf']))
+			{
+				foreach ($content['cf'] as $cf)
+				{
+					if (!empty($cf['value']))
+					{
+						$content['#'.$cf['name']] = $cf['value'];
+					}
+				}
+				unset($content['cf']);
+			}
+			$content['tabs'] = empty($content['error']) ? 'general' : 'error';
 		}
 		elseif (!empty($content['button']))
 		{
@@ -70,6 +83,18 @@ class Jobs
 					case 'save':
 					case 'apply':
 						$this->checkFolder($content['directory']);
+						if (!empty($content['target_dir']))
+						{
+							$this->checkFolder($content['target_dir']);
+						}
+						// remove empty custom-fields before storing
+						foreach($content as $name => $value)
+						{
+							if ($name[0] === '#' && empty($value) && (string)$value !== '0')
+							{
+								unset($content[$name]);
+							}
+						}
 						$type = empty($content['id']) ? 'add' : 'edit';
 						unset($content['error']);   // unset error to restart job
 						$content = self::save($content);
@@ -107,6 +132,10 @@ class Jobs
 		$content['no_cfs'] = empty($sel_options['name']);
 		$readonlys = [
 			'button[delete]' => empty($content['id']),
+			'tabs' => [
+				'custom' => $content['no_cfs'],
+				'error' => empty($content['error']),
+			],
 		];
 		$tpl = new Api\Etemplate('filemanager.job');
 		$tpl->exec(self::APP.'.'.self::class.'.edit', $content, $sel_options, $readonlys, $content, 2);
@@ -363,14 +392,10 @@ class Jobs
 			default:
 				throw new \Exception('Not implemented application: '.$job['app']);
 		}
-		// custom fields and optional also for file creation date
-		foreach($job['cf'] as $cf)
-		{
-			if (!empty($cf['name']))
-			{
-				$entry['#'.$cf['name']] = $cf['value'];
-			}
-		}
+		// add custom-fields and optional file creation date
+		$entry += array_filter($job, static function ($name) {
+			return $name[0] === '#';
+		});
 		if (!empty($job['file_created']))
 		{
 			$entry['#'.$job['file_created']] = Api\DateTime::to(filemtime(Api\Vfs::PREFIX.$file), Api\DateTime::ET2);
@@ -381,7 +406,7 @@ class Jobs
 		switch ($job['app'])
 		{
 			case 'infolog':
-				$this->info_bo->write($entry, true, true, true, false, true);
+				$this->info_bo->write($entry, true, true, true, false, true, false, true);
 				break;
 		}
 		// if a target_dir is specified, move the file there, otherwise delete it
