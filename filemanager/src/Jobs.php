@@ -121,13 +121,12 @@ class Jobs
 				Framework::message($e->getMessage(), 'error');
 			}
 		}
-		$cfs = Api\Storage\Customfields::get($content['app'] ?? 'infolog', true, $content['info_type'] ?? '');
 		$sel_options = [
 			'app' => self::$supported_apps,
 			'info_type' => $this->info_bo->enums['type'],
 			'name' => array_map(function ($cf) {
 				return $cf['label'];
-			}, $cfs),
+			}, Api\Storage\Customfields::get($content['app'] ?? 'infolog', true, $content['info_type'] ?? '')),
 		];
 		$sel_options['file_created'] = $sel_options['name'];
 		$content['no_cfs'] = empty($sel_options['name']);
@@ -139,14 +138,6 @@ class Jobs
 			],
 		];
 		$tpl = new Api\Etemplate('filemanager.job');
-		// unset required CFs
-		foreach($cfs as $cf)
-		{
-			if (!empty($cf['needed']) || !empty($cf['required']))
-			{
-				Api\Etemplate::setElementAttribute('#'.$cf['name'], 'required', false);
-			}
-		}
 		$tpl->exec(self::APP.'.'.self::class.'.edit', $content, $sel_options, $readonlys, $content, 2);
 	}
 
@@ -404,7 +395,7 @@ class Jobs
 		// add custom-fields and optional file creation date
 		$entry += array_filter($job, static function ($name) {
 			return $name[0] === '#';
-		});
+		}, ARRAY_FILTER_USE_KEY);
 		if (!empty($job['file_created']))
 		{
 			$entry['#'.$job['file_created']] = Api\DateTime::to(filemtime(Api\Vfs::PREFIX.$file), Api\DateTime::ET2);
