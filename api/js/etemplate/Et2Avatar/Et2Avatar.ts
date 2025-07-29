@@ -186,7 +186,7 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 		}
 		else if(_contactId.substr(0, 8) === 'account:')
 		{
-			id = 'account';
+			id = 'account_id';
 			parsedId = _contactId.substr(8);
 		}
 		else if(_contactId.substr(0, 6) === 'email:')
