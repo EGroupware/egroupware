@@ -241,6 +241,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				url = this.link(url, params);
 			}
 			if (target == '_tab') return {url: url};
+			if (popup == 'dialog')
+			{
+				return this.openDialog(url.split('menuaction=')[1]);
+			}
 			if (type == 'view'  && params && params.target == 'tab') {
 				return this.openTab(params[app_registry['view_id']], app, type, params, {
 					id: params[app_registry['view_id']] + '-' + this.appName,

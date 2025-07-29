@@ -46,7 +46,7 @@ namespace EGroupware\Api;
  *				)
  *			),
  *			'view_id' => 'app_id',					// name of get parameter of the id
- *          'view_popup' => '400x300',				// size of popup (XxY), if view is in popup
+ *          'view_popup' => '400x300',                // size of popup (XxY), if view is in popup or 'dialog' to open in a dialog in the same window
  *			'view_list'  => 'app.class.method'		// deprecated use 'list' instead
  *          'list' => array(						// Method to be called to display a list of links, method should check $_GET['search'] to filter
  *          	'menuaction' => 'app.class.method',
@@ -57,7 +57,7 @@ namespace EGroupware\Api;
  *			),
  *			'add_app'    => 'link_app',				// name of get parameter to add links to other app
  *			'add_id'     => 'link_id',				// --------------------- " ------------------- id
- *			'add_popup' => '400x300',				  // size of popup (XxY), if add is in popup
+ *            'add_popup' => '400x300',                  // size of popup (XxY), if add is in popup or 'dialog' to open in a dialog in the same window
  *			'no_quick_add' => false,          // App does not want to be in quick add selectbox, defaults to false
  *			'notify' => 'app.class.method',			// method to be called if an other applications links or unlinks with app: notify(array $data)
  * 			'file_access' => 'app.class.method',	// method to be called to check file access rights of a given user, see links_stream_wrapper class
