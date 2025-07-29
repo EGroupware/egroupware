@@ -385,7 +385,7 @@ class Jobs
 				];
 				if (empty($job['file_created']))
 				{
-					$entry['info_startdate'] = Api\DateTime::to(filemtime(Api\Vfs::PREFIX.$file), 'object');
+					$entry['info_startdate'] = new Api\DateTime(filemtime(Api\Vfs::PREFIX.$file), new \DateTimeZone('UTC'));
 				}
 				break;
 
@@ -398,7 +398,8 @@ class Jobs
 		}, ARRAY_FILTER_USE_KEY);
 		if (!empty($job['file_created']))
 		{
-			$entry['#'.$job['file_created']] = Api\DateTime::to(filemtime(Api\Vfs::PREFIX.$file), Api\DateTime::ET2);
+			$entry['#'.$job['file_created']] = (new Api\DateTime(filemtime(Api\Vfs::PREFIX.$file), new \DateTimeZone('UTC')))
+				->format(Api\DateTime::ET2);
 		}
 		// link file with entry
 		Api\Link::link($job['app'], $entry['link_to']['to_id'], Api\Link::VFS_APPNAME, Api\Vfs::PREFIX.$file);

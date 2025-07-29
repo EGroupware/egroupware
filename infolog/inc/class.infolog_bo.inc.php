@@ -892,13 +892,17 @@ class infolog_bo
 		}
 		if ($check_defaults)
 		{
-			if (!$values['info_datecompleted'] &&
-				(in_array($values['info_status'],array('done','billed'))))
+			if (empty($values['info_status']))
+			{
+				$values['info_status'] = $this->status['defaults'][$values['info_type']] ?? 'not-started';
+			}
+			if (empty($values['info_datecompleted']) &&
+				(in_array($values['info_status']??null, ['done', 'billed'])))
 			{
 				$values['info_datecompleted'] = $user2server ? $this->user_time_now : $this->now;	// set date completed to today if status == done
 			}
 			// Check for valid status / percent combinations
-			if (in_array($values['info_status'],array('done','billed')))
+			if (in_array($values['info_status']??null, array('done','billed')))
 			{
 				$values['info_percent'] = 100;
 			}
