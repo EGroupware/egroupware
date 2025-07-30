@@ -261,11 +261,25 @@ class Vfs extends File
 	 */
 	public static function ajax_htmlarea_upload()
 	{
-		$request_id = urldecode($_REQUEST['request_id']);
-		$type = $_REQUEST['type'];
-		$widget_id = $_REQUEST['widget_id'];
-		$file = $type == 'htmlarea' ? $_FILES['file'] : $_FILES['upload'];
-		if(!self::$request = Etemplate\Request::read($request_id))
+		$request_id = urldecode($_REQUEST['request_id'] ?? null);
+		$type = $_REQUEST['type'] ?? null;
+		$widget_id = $_REQUEST['widget_id'] ?? null;
+		$file = $_FILES[$type == 'htmlarea' ? 'file' : 'upload'] ?? null;
+		if (!isset($file))
+		{
+			$error = lang('No _FILES[upload] found!');
+		}
+		elseif ($type === 'htmlarea')
+		{
+			// try to show error to user by push and instead of the (anyway not working) URL
+			if (isset($error))
+			{
+				$push = new Json\Push();
+				$push->message($error, 'error');
+			}
+			$result = array ('location' => $error ?? 'data:'.$file['type'].';base64,'.base64_encode(file_get_contents($file['tmp_name'])));
+		}
+		elseif(!$request_id || !(self::$request = Etemplate\Request::read($request_id)))
 		{
 			$error = lang("Could not read session");
 		}
@@ -275,17 +289,13 @@ class Vfs extends File
 			// Can't use callback
 			$error = lang("Could not get template for file upload, callback skipped");
 		}
-		elseif (!isset($file))
-		{
-			$error = lang('No _FILES[upload] found!');
-		}
 		else
 		{
 			$data = self::$request->content[$widget_id];
 			$path = self::store_file($path = (!is_array($data) && $data[0] == '/' ? $data :
 				self::get_vfs_path($data['to_app'].':'.$data['to_id'])).'/', $file);
 
-			// store temp. vfs-path like links to be able to move it to correct location after entry is stored
+			// store temp. vfs-path like links to be able to move it to the correct location after entry is stored
 			if (is_array($data) && (empty($data['to_id']) || is_array($data['to_id'])))
 			{
 				Api\Link::link($data['to_app'], $data['to_id'], Api\Link::VFS_APPNAME, array(
@@ -296,20 +306,7 @@ class Vfs extends File
 				self::$request->content = array_merge(self::$request->content, array($widget_id => $data));
 			}
 		}
-		// switch regular JSON response handling off
-		Json\Request::isJSONRequest(false);
-
-		if ($type == 'htmlarea')
-		{
-			// try to show error to user by push and instead of the (anyway not working) URL
-			if (isset($error))
-			{
-				$push = new Json\Push();
-				$push->message($error, 'error');
-			}
-			$result = array ('location' => $error ?? Api\Framework::link(Api\Vfs::download_url($path)));
-		}
-		else
+		if ($type !== 'htmlarea')
 		{
 			$result = array(
 				"uploaded" => (int)empty($error),
@@ -320,6 +317,9 @@ class Vfs extends File
 				)
 			);
 		}
+
+		// switch regular JSON response handling off
+		Json\Request::isJSONRequest(false);
 
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($result);

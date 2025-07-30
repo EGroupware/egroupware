@@ -472,7 +472,7 @@ class Html
 window.setTimeout(function() {
     window.egw_ready.wait(function() {
 
-var imageUpload = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+"&type=htmlarea";
+var imageUpload = egw.ajaxUrl("EGroupware\\\\Api\\\\Etemplate\\\\Widget\\\\Vfs::ajax_htmlarea_upload")+"&type=htmlarea";
 imageUpload = imageUpload.substr(egw.webserverUrl.length+1);
 var font_size_formats = {
 	pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
