@@ -60,6 +60,8 @@ egw-framework#egw_fw_basecontainer {
 	color: var(--primary-background-color);
 	gap: var(--sl-spacing-medium);
 	font-size: var(--icon-size);
+    padding: 0.4rem;
+    padding-right: 1px;
   }
 
   &::part(app-list-panel) {
@@ -91,7 +93,7 @@ egw-framework#egw_fw_basecontainer {
 	position: relative;
 	order: 99;
 	margin-left: auto;
-	display: flex;
+	gap: var(--sl-spacing-large);
 
 	.topmenu_info_item {
 	  min-width: 1em;
@@ -124,4 +126,9 @@ egw-framework#egw_fw_basecontainer {
 	gap: var(--sl-spacing-medium);
 	padding-left: 1em;
   }
+}
+table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
+  position: relative;
+  left: 10px;
+  top: -2px;
 }

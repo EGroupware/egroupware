@@ -197,6 +197,8 @@ class kdots_framework extends Api\Framework\Ajax
 				case 'quick_add':
 					$vars['topmenu_info_items'] .= $item;
 					break;
+				case 'timer':
+					$item='<sl-icon id="timerIconRunning" name="stopwatch"></sl-icon> <sl-icon id="timerIconPaused" name="pause-circle"></sl-icon>'.$item;
 				default:
 					$vars['topmenu_info_items'] .= '<button class="topmenu_info_item"' .
 						(is_numeric($id) ? '' : ' id="topmenu_info_' . $id . '"') . '>' . $item . "</button>\n";

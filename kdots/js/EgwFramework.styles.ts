@@ -1,5 +1,6 @@
 import {css} from 'lit';
 
+// noinspection CssUnresolvedCustomProperty
 export default css`
 	:host {
 		display: block;
@@ -8,7 +9,8 @@ export default css`
 		position: relative;
 
 		--icon-size: 32px;
-		--inactive-tab-opacity: 0.5
+		--inactive-tab-opacity: 0.5;
+		--header-icon-size: 1.5rem;
 	}
 
 	.egw_fw__layout-default {
@@ -101,6 +103,7 @@ export default css`
 
 	.egw_fw__header .egw_fw__app_list {
 		flex: none;
+		font-size: var(--header-icon-size, var(--sl-font-size-2x-large));
 	}
 	.egw_fw__header .spacer {
         flex-shrink: 0;
@@ -169,11 +172,15 @@ export default css`
         background-color: var(--application-color, var(--default-color, var(--sl-color-neutral-600)));
         border-radius: var(--sl-border-radius-circle);
 		text-align: center;
-        line-height: 105%;
+        line-height: 100%;
+		align-content: end;
     } 
 	.egw_fw__open_applications sl-tab et2-image *[part="image"] {
         /*turn all app icons white*/
         filter: brightness(0) invert(1);
+		max-width: 70% !important;
+		width: 70% !important;
+		
     } 
 	.egw_fw__open_applications sl-tab:hover::part(close-button) {
 		visibility: visible;
