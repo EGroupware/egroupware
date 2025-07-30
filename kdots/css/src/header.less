@@ -1,4 +1,22 @@
 /*** HEADER ***/
+/**
+	color selection for header timer
+	 */
+.timesheet_timer, #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer {
+  text-align: center;
+  font-size: 20px;
+  white-space: nowrap;
+  color: #606060;
+  &.running {
+	color: blue;
+  }
+  &.running.overall {
+	color: black;
+  }
+  &.paused {
+	color: orange;
+  }
+}
 #egw_fw_topmenu_info_items {
 	/*these are the icons on the right
 	timer, darkmode, quickadd, notifications, account
@@ -7,7 +25,7 @@
   flex-direction: row-reverse;
   align-items: center;
   color: var(--sl-color-neutral-600);
-  font-size: 32px;
+  font-size: var(--header-icon-size);
 
   & > * {
 	border: none;
@@ -15,7 +33,10 @@
   }
 
   et2-avatar {
-	--size: var(--icon-size);
+	--size: calc(9px + var(--icon-size));
+	position: relative;
+	right: 5px;
+
 	&::part(base) {
 	  vertical-align: initial;
 	}
@@ -46,29 +67,34 @@
 	display: flex;
 	align-items: center;
 	padding: 0px;
+	width: calc(1.8 * var(--icon-size));
+	height: var(--header-icon-size);
+	left: var(--sl-spacing-large);
+	border: 1px solid var(--sl-color-neutral-600);
+	border-radius: var(--sl-border-radius-pill);
+
+	#timerIconRunning, #timerIconPaused{
+	  padding-left: calc(1.6rem / 7);
+	  font-size: 1.6em;
+
+	}
+	#timerIconRunning:has(~ div.paused){
+	  display: none;
+	}
+	#timerIconPaused:has(~ div:not(.paused)){
+	  display: none;
+	}
+
 
 	#topmenu_timer {
 	  display: block;
 	  width: 100%;
 	  z-index: 2;
+	  font-size: larger;
 	}
 
 	&:hover {
 	  cursor: pointer;
-	}
-
-	&:before {
-	  content: "";
-	  position: absolute;
-	  top: 0;
-	  left: 0;
-	  width: 100%;
-	  height: 100%;
-	  background-image: url(../../timesheet/templates/default/images/navbar.svg);
-	  background-repeat: no-repeat;
-	  background-size: 32px;
-	  background-position: center center;
-	  filter: opacity(0.3);
 	}
   }
 
@@ -135,6 +161,7 @@
 	  width: 1em;
 	}
   }
+
   button#topmenu_info_search {
 	background-image: url(../../api/templates/default/images/topmenu_items/search.svg);
   }
@@ -149,6 +176,7 @@
 	display: inline-block;
   }
 }
+
 /* popup copied from pixelegg */
 #egwpopup {
   top: 46px;
@@ -163,12 +191,14 @@
   border-bottom: none;
   padding: 1em;
   /*Button*/
+
   input#egwpopup_ok_button,
   button#desktop_perms {
 	padding: 0 5px;
   }
-  #egwpopup_list::-webkit-scrollbar-track	{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+
+  #egwpopup_list::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 	background-color: #fafafa;
   }
 
@@ -177,12 +207,14 @@
 	background-color: #fafafa;
   }
 
-  #egwpopup_list::-webkit-scrollbar-thumb	{
+  #egwpopup_list::-webkit-scrollbar-thumb {
 	background-color: #6a6f71;
   }
+
   #egwpopup_list {
 	overflow-y: auto;
 	height: ~"calc(100% - 52px)";
+
 	.egwpopup_time_label {
 	  width: 100%;
 	  color: #fafafa;
@@ -205,6 +237,7 @@
 	  background-size: 12px;
 	  cursor: pointer;
 	}
+
 	.egwpopup_mark {
 	  display: inline-block;
 	  float: right;
@@ -213,18 +246,21 @@
 	  border: 1px solid #b9436c;
 	  border-radius: 50%;
 	  margin: 7px;
-	  background:#b9436c;
+	  background: #b9436c;
 	  cursor: pointer;
 	}
+
 	.egwpopup_message {
 	  height: auto;
 	  overflow: hidden;
 	  padding: 10px;
 	  background-color: #fafafa;
 	  margin-bottom: 5px;
+
 	  &:hover {
 		background-color: rgba(103, 159, 210, 0.2);
 	  }
+
 	  .egwpopup_message_inner_container {
 		height: 63px;
 		overflow: hidden;
@@ -236,13 +272,16 @@
 		  vertical-align: text-top;
 		}
 	  }
+
 	  .egwpopup_message_top_toolbar {
 		display: inline-block;
 		width: 100%;
+
 		.egwpopup_message_date {
 		  float: left;
 		  color: #767676;
 		}
+
 		.egwpopup_message_open {
 		  display: inline-block;
 		  float: right;
@@ -254,12 +293,17 @@
 		  background-size: 12px;
 		  cursor: pointer;
 		}
-		.egwpopup_collapse {display: none;}
+
+		.egwpopup_collapse {
+		  display: none;
+		}
 	  }
+
 	  .egwpopup_actions_container {
 		text-align: center;
 	  }
-	  .egwpopup_actions_container>button {
+
+	  .egwpopup_actions_container > button {
 		height: 24px;
 		width: 80px;
 		border: none;
@@ -269,15 +313,18 @@
 		background-repeat: no-repeat;
 		padding-left: 26px;
 	  }
+
 	  .egwpopup_message_more_info {
-		color:#767676;
+		color: #767676;
 		padding-top: 5px;
 		padding-bottom: 5px;
 	  }
+
 	  span.egwpopup_nav_prev, span.egwpopup_nav_next {
 		display: none;
 	  }
 	}
+
 	.egwpopup_message.egwpopup_expanded {
 	  position: fixed;
 	  top: 85px;
@@ -286,13 +333,16 @@
 	  width: 60vw;
 	  box-shadow: 0 0 40px #666;
 	  overflow: auto;
+
 	  &:hover {
 		background-color: #fafafa;
 	  }
+
 	  .egwpopup_message_inner_container {
 		height: ~"calc(100% - 62px)";
 		overflow: auto;
 	  }
+
 	  .egwpopup_collapse {
 		float: right;
 		width: 24px;
@@ -301,9 +351,14 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 12px;
-		cursor: pointer;display: inline-block
+		cursor: pointer;
+		display: inline-block
 	  }
-	  .egwpopup_message_more_info {display: none;}
+
+	  .egwpopup_message_more_info {
+		display: none;
+	  }
+
 	  span.egwpopup_nav_prev {
 		display: inline-block;
 		float: right;
@@ -315,7 +370,12 @@
 		background-size: 16px;
 		cursor: pointer;
 	  }
-	  .egwpopup_nav_disable {opacity:0.5; pointer-events: none;}
+
+	  .egwpopup_nav_disable {
+		opacity: 0.5;
+		pointer-events: none;
+	  }
+
 	  span.egwpopup_nav_next {
 		display: inline-block;
 		float: right;
@@ -328,20 +388,28 @@
 		cursor: pointer;
 	  }
 	}
+
 	.egwpopup_message_seen {
-	  .egwpopup_mark {cursor: auto;background:none;border-color: #666c6e;}
+	  .egwpopup_mark {
+		cursor: auto;
+		background: none;
+		border-color: #666c6e;
+	  }
 	}
+
 	.egwpopup_message_clone {
-	  border:2px dashed silver;
+	  border: 2px dashed silver;
 	  opacity: 0.3;
 	  height: 125px;
 	}
   }
+
   div#egwpopup_header {
 	font-size: 16px;
 	color: silver;
 	text-align: center;
 	padding: 15px;
+
 	.egwpopup_seenall {
 	  float: right;
 	  width: 10px;
@@ -350,11 +418,13 @@
 	  border-radius: 50%;
 	  cursor: pointer;
 	  margin: 4px 0px 0px 0px;
+
 	  &:hover {
 		border-color: gray;
 		background: rgba(103, 159, 210, 0.2);
 	  }
 	}
+
 	.egwpopup_deleteall {
 	  background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
 	  width: 12px;
@@ -368,6 +438,7 @@
 	  cursor: pointer;
 	  display: inline-block;
 	  opacity: 0.5;
+
 	  &:hover {
 		opacity: 1;
 	  }
