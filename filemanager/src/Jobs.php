@@ -407,7 +407,7 @@ class Jobs
 		switch ($job['app'])
 		{
 			case 'infolog':
-				$this->info_bo->write($entry, true, true, true, false, true, false, true);
+				$this->info_bo->write($entry, true, true, true, $job['no_notifications']??false, true, false, true);
 				break;
 		}
 		// if a target_dir is specified, move the file there, otherwise delete it
