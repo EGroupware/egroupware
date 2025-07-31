@@ -29,6 +29,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
  * @slot footer - Very bottom of the main content.
  * @slot left - Optional content to the left.  Use for application navigation.
  * @slot left-header - Top of left side
+ * @slot left-top - Between left-header and Favourites
  * @slot left-footer - bottom of left side
  * @slot right - Optional content to the right.  Use for application context details.
  * @slot right-header - Top of right side
@@ -737,25 +738,29 @@ export class EgwFrameworkApp extends LitElement
 	protected _leftMenuTemplate()
 	{
 		// Put favorites in left sidebox if any are set
-		if(!this.features?.favorites)
+		let favorites : symbol | TemplateResult = nothing;
+		if(this.features?.favorites)
 		{
-			return nothing;
+			favorites = html`${until(Favorite.load(this.egw, this.name).then((favorites) =>
+			{
+				// Add favorite menu to sidebox
+				const favSidebox = this._sideboxData?.find(s => s.title.toLowerCase() == "favorites" || s.title == this.egw.lang("favorites"));
+				return html`
+                    <sl-details class="favorites" slot="left"
+                                ?open=${favSidebox?.opened}
+                                summary=${this.egw.lang("Favorites")}
+                                @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
+                                @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
+                    >
+                        <et2-favorites-menu application=${this.name}></et2-favorites-menu>
+                    </sl-details>
+				`;
+			}), nothing)}`;
 		}
-		return html`${until(Favorite.load(this.egw, this.name).then((favorites) =>
-		{
-			// Add favorite menu to sidebox
-			const favSidebox = this._sideboxData?.find(s => s.title.toLowerCase() == "favorites" || s.title == this.egw.lang("favorites"));
-			return html`
-                <sl-details class="favorites" slot="left"
-                            ?open=${favSidebox?.opened}
-                            summary=${this.egw.lang("Favorites")}
-                            @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
-                            @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
-                >
-                    <et2-favorites-menu application=${this.name}></et2-favorites-menu>
-                </sl-details>
-			`;
-		}), nothing)}`;
+		return html`
+            <slot name="left-top"></slot>
+            ${favorites}
+		`
 	}
 
 	/**
