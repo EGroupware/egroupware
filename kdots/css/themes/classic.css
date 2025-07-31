@@ -8,34 +8,30 @@
   --sl-shadow-medium: 0 4px 8px hsla(240, 3.8%, 46.1%, 0.52);
   --sl-shadow-large: 0 4px 16px hsla(240, 3.8%, 46.1%, 0.52);
   --sl-shadow-x-large: 0 8px 32px hsla(240, 3.8%, 46.1%, 0.52);
-}
-:root egw-framework#egw_fw_basecontainer,
-:host egw-framework#egw_fw_basecontainer,
-.kdots-classic egw-framework#egw_fw_basecontainer {
-  /* This doesn't work because ::part() selector can't have any extra bits */
-}
-:root egw-framework#egw_fw_basecontainer::part(open-applications),
-:host egw-framework#egw_fw_basecontainer::part(open-applications),
-.kdots-classic egw-framework#egw_fw_basecontainer::part(open-applications) {
-  --icon-size: var(--sl-spacing-x-large);
-  --tab-icon-size: var(--icon-size);
-  --tab-icon-size-active: var(--icon-size);
-}
-:root egw-framework#egw_fw_basecontainer::part(tab-active)[active],
-:host egw-framework#egw_fw_basecontainer::part(tab-active)[active],
-.kdots-classic egw-framework#egw_fw_basecontainer::part(tab-active)[active] {
-  border-top: 3px solid var(--application-color);
-}
-:root egw-framework#egw_fw_basecontainer::part(tab-icon),
-:host egw-framework#egw_fw_basecontainer::part(tab-icon),
-.kdots-classic egw-framework#egw_fw_basecontainer::part(tab-icon) {
-  border-radius: 0;
-  background-color: initial;
-}
-:root egw-framework#egw_fw_basecontainer::part(image),
-:host egw-framework#egw_fw_basecontainer::part(image),
-.kdots-classic egw-framework#egw_fw_basecontainer::part(image) {
-  filter: none;
+  /*  egw-framework#egw_fw_basecontainer {
+	&::part(header) {
+	}
+
+	&::part(open-applications) {
+	  --icon-size: var(--sl-spacing-x-large);
+	  --tab-icon-size: var(--icon-size);
+	  --tab-icon-size-active: var(--icon-size);
+	}
+
+	!* This doesn't work because ::part() selector can't have any extra bits *!
+	&::part(tab-active)[active] {
+	  border-top: 3px solid var(--application-color);
+	}
+
+	&::part(tab-icon) {
+	  border-radius: 0;
+	  background-color: initial;
+	}
+
+	&::part(image) {
+	  filter: none;
+	}
+  }*/
 }
 :root egw-app,
 :host egw-app,
@@ -76,3 +72,4 @@
 .sl-toast-stack sl-alert[variant="danger"]::part(icon) {
   background-color: var(--sl-color-danger-200);
 }
+/*# sourceMappingURL=classic.css.map */

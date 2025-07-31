@@ -234,10 +234,11 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
 #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.paused {
   color: orange;
 }
+/** end color for timer*/
 #egw_fw_topmenu_info_items {
   /*these are the icons on the right
-	timer, darkmode, quickadd, notifications, account
-	*/
+  timer, darkmode, quickadd, notifications, account
+  */
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -248,12 +249,14 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
   border: none;
   background-color: transparent;
 }
-#egw_fw_topmenu_info_items et2-avatar {
-  --size: calc(9px + var(--icon-size));
-  position: relative;
-  right: 5px;
+#egw_fw_topmenu_info_items #topmenu_info_user_avatar {
+  width: calc(calc(2 * var(--sl-spacing-2x-small)) + var(--icon-size));
+  height: calc(calc(2 * var(--sl-spacing-2x-small)) + var(--icon-size));
 }
-#egw_fw_topmenu_info_items et2-avatar::part(base) {
+#egw_fw_topmenu_info_items #topmenu_info_user_avatar et2-avatar {
+  --size: calc(0.6rem + var(--icon-size));
+}
+#egw_fw_topmenu_info_items #topmenu_info_user_avatar::part(base) {
   vertical-align: initial;
 }
 #egw_fw_topmenu_info_items .topmenu_info_item {
@@ -601,6 +604,15 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
   opacity: 1;
 }
 /*** END HEADER ***/
+/***
+application specific overrides for icons etc. in kdots
+ */
+/*
+smallpart icon
+ */
+et2-image[part="tab-icon"] {
+  display: none;
+}
 /*** APPLICATION ***/
 egw-app {
   --application-header-text-color: var(--sl-color-neutral-200);
@@ -637,6 +649,7 @@ body,
   --ranking-color: #404040;
   --default-color: #797979;
   --kanban-color: #4663c8;
+  --smallpart-color: #303333;
 }
 body egw-app[name="addressbook"],
 :root egw-app[name="addressbook"] {
@@ -689,6 +702,10 @@ body egw-app[name="wiki"],
 body egw-app[name="ranking"],
 :root egw-app[name="ranking"] {
   --application-color: var(--ranking-color);
+}
+body egw-app[name="smallpart"],
+:root egw-app[name="smallpart"] {
+  --application-color: var(--smallpart-color);
 }
 /*** END APPLICATION ***/
 /*** Popup styling ***/

@@ -167,7 +167,7 @@ export default css`
         flex: 0 0 auto;
     }
 	/*make non active tabs a little transparent*/
-	.egw_fw__open_applications sl-tab:not([active]){
+	.egw_fw__open_applications sl-tab:not([active]) *[part='tab-icon']{
 		opacity: var(--inactive-tab-opacity);
 	}
 	
@@ -203,11 +203,15 @@ export default css`
 		align-content: end;
     } 
 	.egw_fw__open_applications sl-tab et2-image *[part="image"] {
+		position: relative;
         /*turn all app icons white*/
         filter: brightness(0) invert(1);
-		max-width: 70% !important;
-		width: 70% !important;
+		width: 70%;
 		
+		/*keep avatar images colored*/
+		&[src*="avatar.php"]{
+			filter: none;
+		}
     } 
 	.egw_fw__open_applications sl-tab:hover::part(close-button) {
 		visibility: visible;
