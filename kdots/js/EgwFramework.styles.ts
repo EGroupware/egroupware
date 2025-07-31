@@ -140,7 +140,7 @@ export default css`
         flex: 0 0 auto;
     }
 	/*make non active tabs a little transparent*/
-	.egw_fw__open_applications sl-tab:not([active]){
+	.egw_fw__open_applications sl-tab:not([active]) *[part='tab-icon']{
 		opacity: var(--inactive-tab-opacity);
 	}
 	
@@ -180,7 +180,9 @@ export default css`
         filter: brightness(0) invert(1);
 		max-width: 70% !important;
 		width: 70% !important;
-		
+		&[src*="avatar.php"]{
+			filter: none;
+		}
     } 
 	.egw_fw__open_applications sl-tab:hover::part(close-button) {
 		visibility: visible;
