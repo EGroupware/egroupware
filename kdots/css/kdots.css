@@ -882,22 +882,22 @@ html,
   color token generator using #0053c9
   https://codepen.io/claviska/full/QWveRgL
    */
-  --sl-color-primary-50: rgb(247 250 253);
-  --sl-color-primary-100: rgb(228 237 249);
-  --sl-color-primary-200: rgb(208 223 245);
-  --sl-color-primary-300: rgb(186 208 240);
-  --sl-color-primary-400: rgb(156 188 234);
-  --sl-color-primary-500: rgb(117 162 226);
-  --sl-color-primary-600: rgb(73 132 216);
-  --sl-color-primary-700: rgb(33 105 208);
-  --sl-color-primary-800: rgb(0 81 197);
-  --sl-color-primary-900: rgb(0 58 141);
-  --sl-color-primary-950: rgb(0 36 88);
-  --sl-shadow-x-small: 0 1px 2px hsl(240 3.8% 1.92083333%);
-  --sl-shadow-small: 0 1px 2px hsl(240 3.8% 0.96041667%);
-  --sl-shadow-medium: 0 2px 4px hsl(240 3.8% 0.96041667%);
-  --sl-shadow-large: 0 2px 8px hsl(240 3.8% 0.96041667%);
-  --sl-shadow-x-large: 0 4px 16px hsl(240 3.8% 0.96041667%);
+  --sl-color-primary-50: #f7fafd;
+  --sl-color-primary-100: #e4edf9;
+  --sl-color-primary-200: #d0dff5;
+  --sl-color-primary-300: #bad0f0;
+  --sl-color-primary-400: #9cbcea;
+  --sl-color-primary-500: #75a2e2;
+  --sl-color-primary-600: #4984d8;
+  --sl-color-primary-700: #2169d0;
+  --sl-color-primary-800: #0051c5;
+  --sl-color-primary-900: #003a8d;
+  --sl-color-primary-950: #002458;
+  --sl-shadow-x-small: 0 1px 2px hsla(240, 3.8%, 46.1%, 0.24);
+  --sl-shadow-small: 0 1px 2px hsla(240, 3.8%, 46.1%, 0.48);
+  --sl-shadow-medium: 0 2px 4px hsla(240, 3.8%, 46.1%, 0.48);
+  --sl-shadow-large: 0 2px 8px hsla(240, 3.8%, 46.1%, 0.48);
+  --sl-shadow-x-large: 0 4px 16px hsla(240, 3.8%, 46.1%, 0.48);
   /*** APPLICATION ***/
   /*** End APPLICATION ***/
 }
