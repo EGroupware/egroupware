@@ -249,6 +249,32 @@ export default css`
 		}
 	}
 
+	@media print {
+		.content {
+			overflow-y: visible !important;
+		}
+
+		.egw_fw_app__header > *:not(.egw_fw_app__name) {
+			display: none;
+		}
+
+		/* hide side menu */
+		.egw_fw_app__outerSplit {
+			grid-template-columns: 0px 0px auto !important;
+		}
+
+		/* Show all content */
+		.egw_fw_app__main {
+			overflow: auto !important;
+
+			/* Hide spitter icons */
+
+			[slot="divider"] {
+				display: none;
+			}
+		}
+	}
+
 	/* End layout */
 
 	/* Styling */

@@ -148,6 +148,12 @@ export class EgwFramework extends LitElement
 
 		this._tabApps = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps') || null) || {};
 
+		this.print = this.print.bind(this);
+		this.message = this.message.bind(this);
+		this.getMenuaction = this.getMenuaction.bind(this);
+		this.closeApp = this.closeApp.bind(this);
+		this.loadApp = this.loadApp.bind(this);
+
 		this.handleAppDOMChange = this.handleAppDOMChange.bind(this);
 		this.appDOMObserver = new MutationObserver(this.handleAppDOMChange);
 		this.handleDarkmodeChange = this.handleDarkmodeChange.bind(this);

@@ -94,6 +94,33 @@ export default css`
 			display: none;
 		}
 	}
+	@media print {
+		/* Hide the header */
+		.egw_fw__header {
+			display: none;
+		}
+
+		/* Hide status */
+		.egw_fw__divider {
+			sl-split-panel {
+				grid-template-columns: auto 0px 0px !important;
+			}
+		}
+
+		/* Show all content */
+		:host {
+			height: auto;
+		}
+
+		.egw_fw__main {
+			overflow: auto;
+		}
+
+		::slotted(egw-app[active]) {
+			display: block;
+			height: auto;
+		}
+	}
 
 	/* Actual styles */
 
@@ -186,11 +213,7 @@ export default css`
 		visibility: visible;
 	}
 
-	::slotted(egw-app) {
+	::slotted(egw-app:not([active])) {
 		display: none;
-	}
-
-	::slotted(egw-app[active]) {
-		display: flex;
 	}
 `
