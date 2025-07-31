@@ -604,15 +604,6 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
   opacity: 1;
 }
 /*** END HEADER ***/
-/***
-application specific overrides for icons etc. in kdots
- */
-/*
-smallpart icon
- */
-et2-image[part="tab-icon"] {
-  display: none;
-}
 /*** APPLICATION ***/
 egw-app {
   --application-header-text-color: var(--sl-color-neutral-200);
@@ -762,6 +753,13 @@ div.et2_nextmatch {
 div.et2_nextmatch > div:not(:first-child) {
   flex: 1 1 100%;
   max-height: 100%;
+}
+div.et2_nextmatch th {
+  font-weight: normal;
+}
+div.et2_nextmatch .nextmatch_sortheader {
+  padding-right: var(--sl-spacing-large);
+  margin-right: var(--sl-spacing-large);
 }
 div.et2_nextmatch .egwGridView_outer {
   border-collapse: collapse;
