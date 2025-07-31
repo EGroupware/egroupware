@@ -117,10 +117,7 @@ export default css`
 	}
 
 	/* Trigger */
-
 	.tree-dropdown__expand-icon {
-		height: var(--sl-input-height-small);
-		margin-top: var(--sl-spacing-small);
 		flex: 0 0 auto;
 		display: flex;
 		align-items: center;
@@ -128,6 +125,10 @@ export default css`
 		rotate: 0;
 		margin-inline-start: var(--sl-spacing-small);
 		order: 99;
+	}
+
+	:host([multiple]) .tree-dropdown__expand-icon {
+		margin-top: var(--sl-spacing-small);
 	}
 
 	.tree-dropdown--open .tree-dropdown__expand-icon {
