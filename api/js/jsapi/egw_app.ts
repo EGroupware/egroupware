@@ -45,31 +45,49 @@ export interface PushData
  * Common base class for application javascript
  * Each app should extend as needed.
  *
- * All application javascript should be inside.  Intitialization goes in init(),
+ * All application Type-/JavaScript should be inside.  Initialization goes in constructor(),
  * clean-up code goes in destroy().  Initialization is done once all js is loaded.
  *
- * var app.appname = AppJS.extend({
- *	// Actually set this one, the rest is example
- *	appname: appname,
+ * import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
  *
- *	internal_var: 1000,
- *
- *	init: function()
+ * class AppnameApp extends EgwApp
+ * {
+ * 	/**
+ * 	 * Constructor
+ * 	 */ /*
+ *	construct()
  *	{
- *		// Call the super
- *		this._super.apply(this, arguments);
+ *		// Call the parent constructor
+ *		super('appname');
  *
- *		// Init the stuff
+ *		// Init appname own stuff
  *		if ( egw.preference('dateformat', 'common') )
  *		{
  *			// etc
  *		}
- *	},
- *	_private: function()
- *	{
- *		// Underscore private by convention
  *	}
- * });
+ *	// more class methods like et2_ready()
+ *	/**
+ * 	 * This function is called when the etemplate2 object is loaded
+ * 	 * and ready.  If you must store a reference to the et2 object,
+ * 	 * make sure to clean it up in destroy().
+ * 	 *
+ * 	 * @param {etemplate2} _et2
+ * 	 * @param {string} _name name of template loaded
+ *   */ /*
+ *	et2_ready(_et2, _name)
+ *	{
+ * 		// call parent
+ * 		super.et2_ready(_et2, _name);
+ *
+ * 		switch(_name)
+ *		{
+ * 			case 'appname.index':
+ *				// do stuff for the index template
+ *				break;
+ * 		}
+ *	}
+ * }
  */
 export abstract class EgwApp
 {
