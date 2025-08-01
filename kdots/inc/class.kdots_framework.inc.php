@@ -87,6 +87,8 @@ class kdots_framework extends Api\Framework\Ajax
 			return [];
 		}
 		*/
+		// add our JS incl. cache-buster
+		self::includeJS('/kdots/js/app.min.js');
 		$data = parent::_get_header($extra);
 
 		$data['theme'] .= $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] ? 'data-darkmode="1"' : '';
@@ -393,6 +395,11 @@ class kdots_framework extends Api\Framework\Ajax
 					Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 			}
 		";
+		// add css file incl. cache-buster
+		$css_file = '/kdots/css/kdots.css';
+		$css_file .= '?' . filemtime(EGW_SERVER_ROOT.$css_file);
+		$ret['css_file'] = '<link rel="stylesheet" href="'.$GLOBALS['egw_info']['server']['webserver_url'].$css_file.'" type="text/css"/>'.
+			"\n".$ret['css_file'];
 
 		return $ret;
 	}

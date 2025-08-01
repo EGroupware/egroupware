@@ -14,7 +14,6 @@
 	<link rel="manifest" href="{webserver_url}/manifest.json"/>
 	<link rel="icon" href="{img_icon}" type="image/x-ico"/>
 	<link rel="shortcut icon" href="{img_shortcut}"/>
-	<link rel="stylesheet" href="{webserver_url}/kdots/css/kdots.css" type="text/css"/>
 	<link rel="stylesheet" href="{webserver_url}/node_modules/@shoelace-style/shoelace/dist/themes/light.css"/>
 	<link rel="stylesheet" href="{webserver_url}/node_modules/@shoelace-style/shoelace/dist/themes/dark.css"/>
 	<link rel="stylesheet" href="{webserver_url}/api/js/offline/themes/offline-theme-slide.css">
@@ -28,7 +27,6 @@
 		{firstload_animation_style}
 	</style>
     {java_script}
-	<script type="module" src="{webserver_url}/kdots/js/app.min.js"></script>
 </head>
 <body {body_tags} lang="{lang_code}">
 {include_wz_tooltip}
