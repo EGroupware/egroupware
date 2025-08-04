@@ -276,6 +276,7 @@ export class et2_dataview_selectionManager
 			this._updateEntryState(this._focusedEntry,
 					egwSetBit(this._focusedEntry.state, EGW_AO_STATE_FOCUSED,
 							false));
+			this._focusedEntry.tr.removeAttribute("tabindex");
 			this._focusedEntry = null;
 		}
 		// Mark the new given uid as focused
@@ -283,6 +284,12 @@ export class et2_dataview_selectionManager
 		{
 			//console.log('et2_dataview_controller_selection::setFocused -> UID:'+_uid+' is focused by:'+this._actionObjectManager.name);
 			var entry = this._focusedEntry = this._getRegisteredRowsEntry(_uid);
+			if(this._focusedEntry && this._focusedEntry.tr)
+			{
+				this._focusedEntry.tr.setAttribute("tabindex", "0");
+				this._focusedEntry.tr.focus();
+				this._focusedEntry.tr.scrollIntoViewIfNeeded();
+			}
 			this._updateEntryState(entry,
 					egwSetBit(entry.state, EGW_AO_STATE_FOCUSED, true));
 		}

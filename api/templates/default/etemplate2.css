@@ -2326,6 +2326,11 @@ ul[id$='favorites_popup_state'] span.filter_value {
 }
 
 /* End of hierarchy */
+
+.et2_nextmatch .egwGridView_grid tr:focus {
+	/* Use the background, not the outline */
+	outline: none;
+}
 .et2_nextmatch .egwGridView_grid tr.focused {
     background: rgba(153, 204, 255, 0.4) !important;
 }

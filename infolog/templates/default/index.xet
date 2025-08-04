@@ -79,7 +79,7 @@
 						<et2-image  label="$row_cont[info_type]" src="infolog/$row_cont[info_type]" defaultSrc="infolog/navbar"></et2-image>
 						<et2-image  label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="infolog/$row_cont[info_status_label]" defaultSrc="status"></et2-image>
 						<et2-image  label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_percent]"></et2-image>
-						<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
+                        <progress label="$row_cont[info_percent]" id="{$row}[info_percent2]"/>
 					</et2-hbox>
 					<et2-vbox  class="infolog_fullWidth">
 						<et2-link  label="%s $row_cont[info_addr]" id="${row}[info_link]" app=""></et2-link>
