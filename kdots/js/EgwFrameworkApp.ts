@@ -783,7 +783,9 @@ export class EgwFrameworkApp extends LitElement
             ></et2-button-icon>
             <sl-dropdown class="egw_fw_app__menu">
                 <div slot="trigger">${this.egw.lang("Menu")}
-                    <sl-icon-button name="chevron-double-down"></sl-icon-button>
+                    <sl-icon-button name="chevron-double-down"
+                                    aria-label="${this.egw.lang("Application menu")}"
+                    ></sl-icon-button>
                 </div>
                 <sl-menu part="app-menu">
                     ${(typeof this.egw.user('apps')['admin'] == undefined || !this.features.appConfig) ? nothing : html`

@@ -1046,7 +1046,7 @@ export class EgwFramework extends LitElement
 		return html`
             <sl-tooltip placement="bottom" role="menuitem" content="${app.title}"
                         style="--application-color: var(--${app.name}-color)">
-                <et2-image src="${app.icon}" aria-label="${app.title}" role="menuitem" noSubmit
+                <et2-image src="${app.icon}" aria-label="${app.title}" noSubmit
                                  helptext="${app.title}"
                                  @click=${() =>
                                  {
@@ -1060,7 +1060,9 @@ export class EgwFramework extends LitElement
 	protected _applicationTabTemplate(app)
 	{
 		return html`
-            <sl-tab slot="nav" part="tab" panel="${app.name}" closable aria-label="${app.title}" ?active=${app.active}
+            <sl-tab slot="nav" part="tab" panel="${app.name}" closable aria-label="${app.title}"
+                    role="tab"
+                    ?active=${app.active}
                     style="--application-color: var(--${app.name}-color)">
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
                     <et2-image part="tab-icon" src="${app.icon}"></et2-image>
@@ -1093,13 +1095,13 @@ export class EgwFramework extends LitElement
                     <sl-dropdown class="egw_fw__app_list" role="menu" exportparts="panel:app-list-panel">
                         <sl-icon-button slot="trigger" name="grid-3x3-gap"
                                         label="${this.egw.lang("Application list")}"
+                                        aria-hidden="true"
                                         aria-description="${this.egw.lang("Activate for a list of applications")}"
                         ></sl-icon-button>
                         ${repeat(this.applicationList, (app) => this._applicationListAppTemplate(app))}
                     </sl-dropdown>
 					<div class="spacer"></div>
                     <sl-tab-group part="open-applications" class="egw_fw__open_applications" activation="manual"
-                                  role="tablist"
                                   aria-label="${this.egw.lang("Open applications")}"
                                   @sl-tab-show=${this.handleApplicationTabShow}
                                   @sl-close=${this.handleApplicationTabClose}
