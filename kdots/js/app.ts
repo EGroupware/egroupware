@@ -6,7 +6,7 @@ import {EgwFramework} from "./EgwFramework";
 import {EgwFrameworkApp} from "./EgwFrameworkApp";
 import {EgwDarkmodeToggle} from "./EgwDarkmodeToggle";
 
-document.addEventListener('DOMContentLoaded', () =>
+(<EgwFramework>document.querySelector("egw-framework")).updateComplete.then(() =>
 {
 	// Not sure what's up here, but it makes sure everything is loaded
 	if(!window.customElements.get("egw-framework"))
@@ -21,6 +21,20 @@ document.addEventListener('DOMContentLoaded', () =>
 	{
 		window.customElements.define("egw-darkmode-toggle", EgwDarkmodeToggle);
 	}
+	const framework = <EgwFramework>document.querySelector("egw-framework");
+	// Quick add
+	framework.egw.link_quick_add(<HTMLElement>framework.querySelector('#egw_fw_topmenu_info_items'));
+
+	// Ask about timer before logout
+	const logout = framework.querySelector('#topmenu_logout');
+	logout.addEventListener('click', async(e) =>
+	{
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		await framework.egw.onLogout_timer();
+		framework.egw.open_link(e.target.value);
+	});
+
 	/* Set up listener on avatar menu */
 	const avatarMenu = document.querySelector("#topmenu_info_user_avatar");
 	if(avatarMenu)
@@ -55,13 +69,3 @@ document.addEventListener('DOMContentLoaded', () =>
 		});
 	}
 });
-/*
-class KDots extends fw_desktop
-{
-
-}
-
-
-window['fw_kdots'] = new KDots();
-
- */

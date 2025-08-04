@@ -230,21 +230,6 @@ export class EgwFramework extends LitElement
 			}, null, 'message');
 
 			await this.updateComplete
-			// Quick add
-			this.egw.link_quick_add(<HTMLElement>this.querySelector('#egw_fw_topmenu_info_items'));
-
-			// Ask about timer before logout
-			const logout = this.querySelector('#topmenu_logout');
-			logout.addEventListener('click', async(e) =>
-			{
-				e.preventDefault();
-				e.stopImmediatePropagation();
-				await this.egw.onLogout_timer();
-				this.egw.open_link(e.target.value);
-			});
-
-			// Deal with bug where avatar menu does not position correctly
-			(<SlDropdown>this.querySelector("#topmenu_info_user_avatar"))?.popup?.dispatchEvent(new Event("slotchange"));
 
 			// Listen for apps added / removed
 			this.appDOMObserver.observe(this, {childList: true});
