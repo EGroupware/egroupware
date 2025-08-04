@@ -58,7 +58,9 @@ class ActivateLinksDirective extends Directive
 				{
 					target = _target;
 				}
-				return html`<a href="${item.href}" @click=${click} target="${target}">${item.text}</a>`;
+				return html`<a href="${item.href}" @click=${click} target="${target}"
+                               tabindex="${target.hasAttribute('tabindex') ? target.getAttribute('tabindex') : -1}"
+                >${item.text}</a>`;
 			}
 		})}`;
 	}
