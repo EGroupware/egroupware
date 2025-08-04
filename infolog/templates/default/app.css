@@ -45,8 +45,16 @@ tr.infolog_rowHasParent > td:first-child {
     display: inline-table;
 }
 
+.infoDes {
+	max-height: var(--descHeight, 5em);
+	overflow: clip;
+}
+
+.infoDes:hover {
+	overflow: auto;
+}
 /* break in words if necessary for description */
-div.infoDes > span {
+.infoDes > span {
     overflow-wrap: break-word;
 }
 

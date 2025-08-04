@@ -1104,9 +1104,9 @@ class infolog_ui
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
 		{
 			$values['css'] .= '<style type="text/css">@media screen { .infoDes {  '.
-				' max-height: '.
+				' --descHeight:  ' .
 				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	// dono why em is not real lines
-				'em; overflow: auto; }}</style>';
+				'em;}}</style>';
 		}
 
 		$sel_options = array(
