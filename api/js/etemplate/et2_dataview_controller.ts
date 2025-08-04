@@ -501,6 +501,11 @@ export class et2_dataview_controller
 			}
 		}
 		this._indexMap[_entry.idx] = _entry;
+		// Set tab index on the first row so it can take browser focus
+		if(this._selectionMgr && this._selectionMgr._total == 0 && _entry.idx == 0 && _entry.row)
+		{
+			_entry.row.tr.attr("tabindex", "0");
+		}
 
 		return this.hasData;
 	}
