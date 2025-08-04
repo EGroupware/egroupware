@@ -41,6 +41,10 @@
   #topmenu_info_user_avatar {
 	width: calc(calc(2 * var(--sl-spacing-2x-small)) + var(--icon-size));
 	height: calc(calc(2 * var(--sl-spacing-2x-small)) + var(--icon-size));
+
+	sl-button::part(label) {
+	  padding: 0;
+	}
 	et2-avatar {
 	  --size: calc(0.6rem + var(--icon-size));
 	}

@@ -1,6 +1,7 @@
 <?php
 
 use EGroupware\Api;
+use EGroupware\Api\Egw;
 use EGroupware\Api\Hooks;
 use EGroupware\Api\Image;
 use EGroupware\Api\Framework\Updates;
@@ -192,7 +193,7 @@ class kdots_framework extends Api\Framework\Ajax
 			switch($id)
 			{
 				case 'user_avatar':
-					$vars['topmenu_info_items'] .= "<sl-dropdown class=\"topmenu_info_item\" id=\"topmenu_info_{$id}\" aria-label='" . lang("User menu") . "' tabindex='0'><div slot='trigger'>$item</div> {$vars['topmenu_items']}</sl-dropdown>";
+					$vars['topmenu_info_items'] .= "<sl-dropdown class=\"topmenu_info_item\" id=\"topmenu_info_{$id}\"><sl-button slot='trigger' title='" . lang("User profile") . "' aria-haspopup='listbox'>$item</sl-button> {$vars['topmenu_items']}</sl-dropdown>";
 					break;
 				case 'notifications':
 				case 'darkmode':
@@ -367,6 +368,22 @@ class kdots_framework extends Api\Framework\Ajax
 			"<et2-image slot='prefix' src='${app_data['icon']}'></et2-image>" .
 			$title .
 			'</sl-menu-item>';
+	}
+
+	/**
+	 * Returns user avatar menu
+	 *
+	 * @return string
+	 */
+	protected static function _user_avatar_menu()
+	{
+		$stats = Hooks::process('framework_avatar_stat');
+		$stat = array_pop($stats);
+
+		return '<et2-avatar src="' . Egw::link('/api/avatar.php', array(
+				'account_id' => $GLOBALS['egw_info']['user']['account_id'],
+			)) . '"></et2-avatar>' . (!empty($stat) ?
+				'<span class="fw_avatar_stat ' . $stat['class'] . '" title="' . $stat['title'] . '">' . $stat['body'] . '</span>' : '');
 	}
 
 	/**
