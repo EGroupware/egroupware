@@ -152,6 +152,7 @@ export default css`
 
 	.egw_fw__open_applications {
 		--track-width: 0px;
+		max-width: calc(100vw - 13em);
 	}
 
 	.egw_fw__open_applications::part(tabs) {
@@ -171,17 +172,6 @@ export default css`
 		opacity: var(--inactive-tab-opacity);
 	}
 	
-	.egw_fw__open_applications et2-image {
-		height: var(--tab-icon-size, 32px);
-		
-		/* Always force icons to be the same size */
-		min-width: calc(var(--tab-icon-size, 32px));
-		min-height: calc(var(--tab-icon-size, 32px)); 
-		/* Prevent large icons from causing problems */
-		max-width: var(--tab-icon-size, 32px);
-		max-height: var(--tab-icon-size, 32px);
-	}
-	
 	.egw_fw__open_applications sl-tab::part(base) {
 		padding: 0px;
 		font-size: var(--tab-icon-size);
@@ -189,11 +179,22 @@ export default css`
 
 	.egw_fw__open_applications sl-tab::part(close-button) {
 		visibility: hidden;
-		margin-inline-start: var(--sl-spacing-2x-small);
+		margin: 0;
+		position:relative;
+		bottom: 1em;
+		right: .4em;
 		color: var(--sl-color-neutral-900);
 	}
 	
-	.egw_fw__open_applications sl-tab et2-image { 
+	.egw_fw__open_applications et2-image, .egw_fw__app_list et2-image {
+        /* Always force icons to be the same size */
+        height: var(--tab-icon-size, 32px);
+        min-width: calc(var(--tab-icon-size, 32px));
+        min-height: calc(var(--tab-icon-size, 32px));
+        /* Prevent large icons from causing problems */
+        max-width: var(--tab-icon-size, 32px);
+        max-height: var(--tab-icon-size, 32px);
+		
 		/*align items centered on round app colored background*/
 		padding: var(--sl-spacing-2x-small);
         background-color: var(--application-color, var(--default-color, var(--sl-color-neutral-600)));
@@ -201,18 +202,18 @@ export default css`
 		text-align: center;
         line-height: 100%;
 		align-content: end;
-    } 
-	.egw_fw__open_applications sl-tab et2-image *[part="image"] {
-		position: relative;
-        /*turn all app icons white*/
-        filter: brightness(0) invert(1);
-		width: 70%;
+		
+		*[part="image"] {
+			position: relative;
+			/*turn all app icons white*/
+			filter: brightness(0) invert(1);
+			width: 70%;
 		
 		/*keep avatar images colored*/
 		&[src*="avatar.php"]{
 			filter: none;
 		}
-    } 
+    } }
 	.egw_fw__open_applications sl-tab:hover::part(close-button) {
 		visibility: visible;
 	}

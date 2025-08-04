@@ -150,7 +150,7 @@ egw-framework#egw_fw_basecontainer::part(header) {
   --tab-icon-size: var(--icon-size);
   --tab-icon-size-active: 46px;
   color: var(--primary-background-color);
-  gap: var(--sl-spacing-medium);
+  gap: 0;
   font-size: var(--icon-size);
   padding: 0.4rem;
   padding-right: 1px;
@@ -973,3 +973,4 @@ html[data-darkmode="1"] .nextmatch_sortheader,
   color: #96bcd9;
 }
 /** End theme customisations **/
+/*# sourceMappingURL=kdots.css.map */
