@@ -29,6 +29,8 @@ export default css`
 		margin: 0;
 		margin-inline-start: var(--sl-spacing-medium);
 		font-size: 1em;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 
 	.egw_fw_app__header {
