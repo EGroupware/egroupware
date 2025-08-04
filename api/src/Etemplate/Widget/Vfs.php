@@ -269,27 +269,24 @@ class Vfs extends File
 		{
 			$error = lang('No _FILES[upload] found!');
 		}
-		elseif ($type === 'htmlarea')
+		// try to show error to user by push and instead of the (anyway not working) URL
+		elseif ($type === 'htmlarea' && isset($error))
 		{
-			// try to show error to user by push and instead of the (anyway not working) URL
-			if (isset($error))
-			{
-				$push = new Json\Push();
-				$push->message($error, 'error');
-			}
-			$result = array ('location' => $error ?? 'data:'.$file['type'].';base64,'.base64_encode(file_get_contents($file['tmp_name'])));
+			$push = new Json\Push();
+			$push->message($error, 'error');
 		}
-		elseif(!$request_id || !(self::$request = Etemplate\Request::read($request_id)))
+		elseif($request_id && !(self::$request = Etemplate\Request::read($request_id)))
 		{
 			$error = lang("Could not read session");
 		}
-		elseif (!($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
+		elseif (isset(self::$request) &&
+			!($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
 		{
 			// Can't use callback
 			$error = lang("Could not get template for file upload, callback skipped");
 		}
-		else
+		elseif (isset($template))
 		{
 			$data = self::$request->content[$widget_id];
 			$path = self::store_file($path = (!is_array($data) && $data[0] == '/' ? $data :
@@ -306,7 +303,24 @@ class Vfs extends File
 				self::$request->content = array_merge(self::$request->content, array($widget_id => $data));
 			}
 		}
-		if ($type !== 'htmlarea')
+		if ($type === 'htmlarea')
+		{
+			if (isset($error))
+			{
+				$result = array ('location' => $error);
+			}
+			// eTemplate(2) app without entry to store image in e.g. mail compose
+			elseif (isset($path))
+			{
+				$result = array ('location' => Api\Framework::link(Api\Vfs::download_url($path)));
+			}
+			// app not using eTemplate(2) e.g. old knowledge-base
+			else
+			{
+				$result = array ('location' => 'data:'.$file['type'].';base64,'.base64_encode(file_get_contents($file['tmp_name'])));
+			}
+		}
+		else
 		{
 			$result = array(
 				"uploaded" => (int)empty($error),
