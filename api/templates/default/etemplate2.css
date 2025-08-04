@@ -2093,6 +2093,10 @@ egw-validation-feedback[type] {
     gap: 1ex;
 }
 
+.et2_nextmatch .innerContainer {
+	overflow: clip;
+}
+
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
     position: relative;
