@@ -603,7 +603,10 @@ export class EgwFrameworkApp extends LitElement
 			return;
 		}
 		// Limit to maximum of actual width, splitter handles max
-		newPosition = Math.min(newPosition, split.querySelector(panelInfo.side == "left" ? "[slot='start']" : "[slot='end']").getBoundingClientRect().width);
+		if(panelInfo.side == "left")
+		{
+			newPosition = Math.min(newPosition, split.querySelector("[slot='start']").getBoundingClientRect().width);
+		}
 
 		// Update collapsed
 		this[`${panelInfo.side}Collapsed`] = newPosition == panelInfo.hiddenWidth;
