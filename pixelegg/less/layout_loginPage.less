@@ -289,11 +289,10 @@ div#loginMainDiv.stockLoginBackground {
 			border: 1px solid #cdcdce;
 			border-radius: 5px;
 			.hiddenCredential {display: none;}
-			// Table
-			table.divLoginbox {
+			div.divLoginbox {
 				background-color: transparent;
 				.border_radius_button_lefttop;
-				tr.divLoginboxHeader {}
+				div.divLoginboxHeader {}
 
 				// Passwort Image
 				div.LoginPasswordImage {
@@ -308,9 +307,10 @@ div#loginMainDiv.stockLoginBackground {
 						.dimension_width_height_xl;
 					}
 				}
-				td {
+				div {
 					font-size: 12pt;
 					position: relative;
+					text-align: center;
 				}
 				select {
 					padding-left: 25px;
@@ -326,9 +326,10 @@ div#loginMainDiv.stockLoginBackground {
 					background-repeat: no-repeat;
 					background-position-x: 0;
 				}
-				td.remember_me_row {
+				div.remember_me_row {
 					border-bottom: 1px solid silver;
 					span.remember_me {color:@color_placeholder;opacity:1;}
+					text-align: initial;
 				}
 				select:focus, select:hover {box-shadow:none;}
 				input {
