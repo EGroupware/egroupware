@@ -94,6 +94,12 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			type: "js",
 			default: et2_no_init,
 			description: "Defines sortable start callback function"
+		},
+		role: {
+			name: "Aria role",
+			type: "string",
+			default: et2_no_init,
+			description: "Allows to overwrite the Aria role, which is not-set for auto-repeating and 'presentation' otherwise"
 		}
 	};
 	private table : JQuery;
@@ -132,6 +138,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		// Create the table body and the table
 		this.table = jQuery(document.createElement("table"))
 			.addClass("et2_grid");
+		if (_attrs.role) this.table.attr({ role: _attrs.role });
 		if (_attrs.class) this.table.addClass(_attrs.class);
 		this.thead = jQuery(document.createElement("thead"))
 			.appendTo(this.table);

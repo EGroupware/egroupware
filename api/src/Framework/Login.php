@@ -148,7 +148,7 @@ class Login
 			}
 			$tmpl->set_var(array(
 				'lang_domain'   => lang('domain'),
-				'select_domain' => Api\Html::select('logindomain',$last_domain,$domains,true,'tabindex="2"',0,false),
+				'select_domain' => Api\Html::select('logindomain',$last_domain,$domains,true,'tabindex="2" aria-label="'.lang('Domain').'"',0,false),
 			));
 		}
 		else
@@ -237,7 +237,7 @@ class Login
 			$tmpl->set_var(array(
 				'lang_language' => lang('Language'),
 				'select_language' => Api\Html::select('lang',$GLOBALS['egw_info']['user']['preferences']['common']['lang'],
-				Api\Translation::get_installed_langs(),true,'tabindex="1"',0,false),
+				Api\Translation::get_installed_langs(),true,'tabindex="1" aria-label="'.lang('Language').'"',0,false),
 			));
 		}
 		else
@@ -268,13 +268,14 @@ class Login
 					'P1M' => lang('Remember me for %1', lang('1 Month')),
 					'P3M' => lang('Remember me for %1', lang('3 Month')),
 					'P1Y' => lang('Remember me for %1', lang('1 Year')),
-				), true, 'tabindex="3" title="'.$help.'"', 0, false));
+				), true, 'tabindex="3" title="'.$help.'" aria-label="'.lang('Remember me').'" aria-description="'.$help.'"', 0, false));
 			}
 			else
 			{
 				$tmpl->set_var('lang_remember_me',lang('Remember me'));
 				$tmpl->set_var('select_remember_me',
-					Api\Html::checkbox('remember_me', false, 'True', ' id="remember_me" tabindex="3" title="'.$help.'"'));
+					Api\Html::checkbox('remember_me', false, 'True',
+						' id="remember_me" tabindex="3" title="'.$help.'" aria-label="'.lang('Remember me').'" aria-description="'.$help.'"'));
 			}
 		}
 		else

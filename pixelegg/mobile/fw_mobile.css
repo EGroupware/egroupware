@@ -2071,7 +2071,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
 #loginMainDiv div#centerBox form .hiddenCredential {
   display: none;
 }
-#loginMainDiv div#centerBox form table.divLoginbox {
+#loginMainDiv div#centerBox form div.divLoginbox {
   background-color: transparent;
   -webkit-border-radius: 3px;
   -webkit-border-top-left-radius: 10px;
@@ -2080,7 +2080,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   border-radius: 3px;
   border-top-left-radius: 10px;
 }
-#loginMainDiv div#centerBox form table.divLoginbox div.LoginPasswordImage {
+#loginMainDiv div#centerBox form div.divLoginbox div.LoginPasswordImage {
   background-color: #b3ad54;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjZmZjMjAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjNDA4REQyIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
   background-image: -moz-linear-gradient(top, #ffc200, #408DD2);
@@ -2091,7 +2091,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-image: linear-gradient(top, #ffc200, #408DD2);
   background-repeat: repeat-x;
 }
-#loginMainDiv div#centerBox form table.divLoginbox div.LoginPasswordImage img.passwordImage {
+#loginMainDiv div#centerBox form div.divLoginbox div.LoginPasswordImage img.passwordImage {
   margin: 0 auto;
   max-width: 400px;
   border-top: solid 1px 5px;
@@ -2099,7 +2099,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   border-right: solid 1px #EEE;
   border-bottom: solid 1px #EEE;
 }
-#loginMainDiv div#centerBox form table.divLoginbox div.LoginPasswordImage img.passwordImage[src$="svg"] {
+#loginMainDiv div#centerBox form div.divLoginbox div.LoginPasswordImage img.passwordImage[src$="svg"] {
   border-top: solid 1px 5px;
   border-left: solid 1px #EEE;
   border-right: solid 1px #EEE;
@@ -2107,11 +2107,12 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   width: 40px;
   height: 40px;
 }
-#loginMainDiv div#centerBox form table.divLoginbox td {
+#loginMainDiv div#centerBox form div.divLoginbox div {
   font-size: 12pt;
   position: relative;
+  text-align: center;
 }
-#loginMainDiv div#centerBox form table.divLoginbox select {
+#loginMainDiv div#centerBox form div.divLoginbox select {
   padding-left: 25px;
   width: 100%;
   height: 42px;
@@ -2120,23 +2121,24 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   border-radius: 0px;
   background-color: transparent;
 }
-#loginMainDiv div#centerBox form table.divLoginbox select[name="remember_me"] {
+#loginMainDiv div#centerBox form div.divLoginbox select[name="remember_me"] {
   /*background-image: url(../../node_modules/bootstrap-icons/icons/task.png);*/
   background-repeat: no-repeat;
   background-position-x: 0;
 }
-#loginMainDiv div#centerBox form table.divLoginbox td.remember_me_row {
+#loginMainDiv div#centerBox form div.divLoginbox div.remember_me_row {
   border-bottom: 1px solid silver;
+  text-align: initial;
 }
-#loginMainDiv div#centerBox form table.divLoginbox td.remember_me_row span.remember_me {
+#loginMainDiv div#centerBox form div.divLoginbox div.remember_me_row span.remember_me {
   color: #666666;
   opacity: 1;
 }
-#loginMainDiv div#centerBox form table.divLoginbox select:focus,
-#loginMainDiv div#centerBox form table.divLoginbox select:hover {
+#loginMainDiv div#centerBox form div.divLoginbox select:focus,
+#loginMainDiv div#centerBox form div.divLoginbox select:hover {
   box-shadow: none;
 }
-#loginMainDiv div#centerBox form table.divLoginbox input {
+#loginMainDiv div#centerBox form div.divLoginbox input {
   width: calc(250px - 22px);
   height: 40px;
   padding: 0;
@@ -2147,10 +2149,10 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-color: transparent;
   font-size: 100%;
 }
-#loginMainDiv div#centerBox form table.divLoginbox input:focus {
+#loginMainDiv div#centerBox form div.divLoginbox input:focus {
   outline: none;
 }
-#loginMainDiv div#centerBox form table.divLoginbox span.field_icons {
+#loginMainDiv div#centerBox form div.divLoginbox span.field_icons {
   position: absolute;
   left: 0px;
   width: 20px;
@@ -2162,31 +2164,31 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   z-index: 100;
   opacity: 0.5;
 }
-#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.username {
+#loginMainDiv div#centerBox form div.divLoginbox span.field_icons.username {
   background-image: url(../../node_modules/bootstrap-icons/icons/person.svg);
 }
-#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.password {
+#loginMainDiv div#centerBox form div.divLoginbox span.field_icons.password {
   background-image: url(../../node_modules/bootstrap-icons/icons/key.svg);
 }
-#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.remember_me {
+#loginMainDiv div#centerBox form div.divLoginbox span.field_icons.remember_me {
   background-image: none;
   z-index: 0;
   width: 230px;
   padding-left: 31px;
 }
-#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.domain {
+#loginMainDiv div#centerBox form div.divLoginbox span.field_icons.domain {
   background-image: url(../../node_modules/bootstrap-icons/icons/globe2.svg);
 }
-#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.language {
+#loginMainDiv div#centerBox form div.divLoginbox span.field_icons.language {
   background-image: url(../../node_modules/bootstrap-icons/icons/translate.svg);
 }
-#loginMainDiv div#centerBox form table.divLoginbox input[type="checkbox"] {
+#loginMainDiv div#centerBox form div.divLoginbox input[type="checkbox"] {
   height: 25px !important;
   margin-top: 7px;
   width: auto;
 }
-#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"],
-#loginMainDiv div#centerBox form table.divLoginbox select.onChangeSubmit {
+#loginMainDiv div#centerBox form div.divLoginbox input[type="submit"],
+#loginMainDiv div#centerBox form div.divLoginbox select.onChangeSubmit {
   background-color: #4177A2;
   color: #ffffff;
   font-size: 22px;
@@ -2194,18 +2196,18 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   width: 250px;
   margin-top: 15px;
 }
-#loginMainDiv div#centerBox form table.divLoginbox select.onChangeSubmit {
+#loginMainDiv div#centerBox form div.divLoginbox select.onChangeSubmit {
   padding-left: 25px;
 }
-#loginMainDiv div#centerBox form table.divLoginbox .registration {
+#loginMainDiv div#centerBox form div.divLoginbox .registration {
   font-size: 12px;
 }
-#loginMainDiv div#centerBox form table.divLoginbox .registration a:not(:first-child):before {
+#loginMainDiv div#centerBox form div.divLoginbox .registration a:not(:first-child):before {
   padding-left: 5px;
   padding-right: 5px;
   content: '|';
 }
-#loginMainDiv div#centerBox form table.divLoginbox a.signup {
+#loginMainDiv div#centerBox form div.divLoginbox a.signup {
   margin-top: 8px;
   display: block;
 }
