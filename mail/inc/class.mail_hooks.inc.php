@@ -561,21 +561,24 @@ class mail_hooks
 		$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'];
 
 		$file=array();
-		// Destination div for folder tree
-		$file[] = array(
-			'no_lang' => true,
-			'text'=>'<span id="mail-index_buttonmailcreate" class="button" />',
-			'link'=>false,
-			'icon' => false
-		);
-		$file[] = array(
-			'no_lang' => true,
-			'text'=>'<span id="mail-tree_target" class="dtree" />',
-			'link'=>false,
-			'icon' => false
-		);
-		// display Mail Tree
-		display_sidebox($appname,$menu_title,$file);
+		if($GLOBALS['egw_info']['user']['preferences']['common']['template_set'] == 'pixelegg')
+		{
+			// Destination div for folder tree
+			$file[] = array(
+				'no_lang' => true,
+				'text'    => '<span id="mail-index_buttonmailcreate" class="button" />',
+				'link'    => false,
+				'icon'    => false
+			);
+			$file[] = array(
+				'no_lang' => true,
+				'text'    => '<span id="mail-tree_target" class="dtree" />',
+				'link'    => false,
+				'icon'    => false
+			);
+			// display Mail Tree
+			display_sidebox($appname, $menu_title, $file);
+		}
 
 		$linkData = array(
 			'menuaction' => 'mail.mail_ui.importMessage',
