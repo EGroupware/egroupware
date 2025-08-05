@@ -2035,10 +2035,8 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   overflow-x: clip;
 }
 #loginMainDiv div#login_footer .apps {
-  width: 812px;
-  margin: 0 auto;
   display: flex;
-  overflow: hidden;
+  justify-content: center;
 }
 #loginMainDiv div#login_footer .apps .app {
   width: 30px;
