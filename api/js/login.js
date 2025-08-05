@@ -49,18 +49,52 @@ const login_on_ready = () => {
 					})
 					.appendTo(social)
 					.append(jQuery(document.createElement('img'))
-						.attr('src', data.svg));
+						.attr({
+							src: data.svg,
+							alt: data.name,
+							title: data.name
+						}));
 				}
 			}
 
 			do_social([
-				{ "svg": egw_webserverUrl+"/api/templates/default/images/logo164x164.svg", "url": "https://www.egroupware.org/en", "lang": { "de": "https://www.egroupware.org/de/" }},
-				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_contact.svg", "url": "https://www.egroupware.org/en/contact.html", "lang": { "de": "https://www.egroupware.org/de/kontakt.html" }},
-				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_facebook.svg", "url": "https://www.facebook.com/egroupware" },
-				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_bluesky.svg", "url": "https://bsky.app/profile/egroupware.org" },
-				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_mastodon.svg", "url": "https://fosstodon.org/@EGroupware" },
-				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_discourse.svg", "url": "https://help.egroupware.org" },
-				{ "svg": egw_webserverUrl+"/api/templates/default/images/login_github.svg", "url": "https://github.com/EGroupware/egroupware" }
+				{
+					"name": "EGroupware",
+					"svg": egw_webserverUrl+"/api/templates/default/images/logo164x164.svg",
+					"url": "https://www.egroupware.org/en",
+					"lang": { "de": "https://www.egroupware.org/de/" }
+				},
+				{
+					"name": "Contact",
+					"svg": egw_webserverUrl+"/api/templates/default/images/login_contact.svg",
+					"url": "https://www.egroupware.org/en/contact.html",
+					"lang": { "de": "https://www.egroupware.org/de/kontakt.html" }
+				},
+				{
+					"name": "Facebook",
+					"svg": egw_webserverUrl+"/api/templates/default/images/login_facebook.svg",
+					"url": "https://www.facebook.com/egroupware"
+				},
+				{
+					"name": "Bluesky",
+					"svg": egw_webserverUrl+"/api/templates/default/images/login_bluesky.svg",
+					"url": "https://bsky.app/profile/egroupware.org"
+				},
+				{
+					"name": "Mastodon",
+					"svg": egw_webserverUrl+"/api/templates/default/images/login_mastodon.svg",
+					"url": "https://fosstodon.org/@EGroupware"
+				},
+				{
+					"name": "Forum",
+					"svg": egw_webserverUrl+"/api/templates/default/images/login_discourse.svg",
+					"url": "https://help.egroupware.org"
+				},
+				{
+					"name": "Github",
+					"svg": egw_webserverUrl+"/api/templates/default/images/login_github.svg",
+					"url": "https://github.com/EGroupware/egroupware"
+				}
 			]);
 
 			// automatic submit of SAML IdP selection

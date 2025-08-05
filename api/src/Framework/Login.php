@@ -324,12 +324,16 @@ class Login
 			foreach ($data['apps'] as $id => $app)
 			{
 				$icon = strpos($app['icon'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon'] : $app['icon'];
+				if (strpos($icon_bw = $app['icon_bw'] ?? $app['icon'], '/') === 0)
+				{
+					$icon_bw = $GLOBALS['egw_info']['server']['webserver_url'].$icon_bw;
+				}
 				$icon2 = strpos($app['icon2'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon2'] : $app['icon2'];
 				$icon3 = strpos($app['icon3'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon3'] : $app['icon3'];
 				$title = lang($app['title']);
 				$nodes .= '<div class="app" style="animation:login-apps '.$counter*0.1.'s ease-out" data-id="'.$id.'">'
 					.'<a href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars($title).'" class="" target="blank">'
-					.'<img class="icon" src="'.htmlspecialchars($icon).'"/></a>'
+					.'<img class="icon" src="'.htmlspecialchars($icon_bw).'"/></a>'
 					.'<div class="tooltip">'
 					.'<div class="content">'
 					.'<h3><a href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars($title).'" target="blank">'

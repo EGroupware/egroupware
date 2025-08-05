@@ -254,7 +254,7 @@ div#loginMainDiv.stockLoginBackground {
 		}
 	}
 
-	// Anmeldefenster / Box mit Mesaage + Form
+  // Anmeldefenster / Box mit Message + Form
 	div#centerBox {
 		margin: 0 auto -20px;
 		background: transparent;
@@ -326,8 +326,16 @@ div#loginMainDiv.stockLoginBackground {
 				}
 				div.remember_me_row {
 					border-bottom: 1px solid silver;
-					span.remember_me {color:@color_placeholder;opacity:1;}
-					text-align: initial;
+				    display: flex;
+					span.remember_me {
+					  color:@color_placeholder;
+					  opacity:1;
+					  height: 40px;
+					  top:0;
+					  display: flex;
+					  align-items: center;
+					}
+
 				}
 				select:focus, select:hover {box-shadow:none;}
 				input {
@@ -363,8 +371,6 @@ div#loginMainDiv.stockLoginBackground {
 				span.field_icons.domain {background-image: url(../../node_modules/bootstrap-icons/icons/globe2.svg);}
 				span.field_icons.language {background-image: url(../../node_modules/bootstrap-icons/icons/translate.svg);}
 				input[type="checkbox"] {
-					height: 25px !important;
-					margin-top: 7px;
 					width: auto;
 				}
 				input[type="submit"], select.onChangeSubmit {
