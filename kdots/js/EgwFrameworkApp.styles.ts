@@ -203,53 +203,9 @@ export default css`
 			width: 100%;
 		}
 	}
-	@media (max-width: 599px) {
-		.egw_fw_app__main {
-			grid-template-columns: [start left main-start] fit-content(50%)  [right] auto [main-end end];
-			grid-template-rows: 
-				[start sub-header] fit-content(2em) 
-				[main] auto 
-				[aside-header] fit-content(2em) 
-				[aside] min-content 
-				[aside-footer] fit-content(4em) 
-				[footer] fit-content(4em) 
-				[end];
-		}
-
-		sl-split-panel {
-			display: contents
-		}
-
+	@media (max-width: 799px) {
 		sl-split-panel::part(divider) {
 			display: none;
-		}
-
-		.egw_fw_app__header {
-			grid-column: start / end;
-		}
-		.egw_fw_app__main_content {
-			grid-row: main / aside-header;
-			grid-column: start / end;
-		}
-
-		.egw_fw_app__aside {
-			grid-row: aside-header / footer;
-		}
-
-		.egw_fw_app__aside_header {
-			grid-row: aside-header / aside;
-		}
-
-		.egw_fw_app__aside_content {
-			grid-row: aside / aside-footer;
-		}
-
-		.egw_fw_app__aside_footer {
-			grid-row: aside-footer / footer;
-		}
-
-		.egw_fw_app__footer {
-			grid-column: start / end;
 		}
 	}
 

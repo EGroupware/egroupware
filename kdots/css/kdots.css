@@ -877,6 +877,621 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   border-color: var(--sl-input-border-color);
 }
 /*** END WIDGETS ***/
+body #popupMainDiv.et2_mobile_view {
+  z-index: 102;
+  width: 100%;
+  height: 100%;
+  background: var(--sl-color-neutral-0);
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+}
+body #popupMainDiv.et2_mobile_view .dialogHeadbar {
+  height: var(--sl-spacing-3x-large);
+  color: var(--sl-color-neutral-0);
+  font-size: var(--sl-font-size-x-large);
+  background-color: var(--application-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  box-shadow: var(--sl-shadow-large);
+}
+body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
+  position: absolute;
+  right: var(--sl-spacing-medium);
+  font-weight: var(--sl-font-weight-bold);
+}
+body #popupMainDiv.et2_mobile_view .egw_fw_mobile_popup_close,
+body #popupMainDiv.et2_mobile_view .mobile-view-editBtn {
+  position: fixed;
+  top: 0;
+  color: var(--sl-color-neutral-0);
+  font-size: var(--sl-font-size-2x-large);
+  z-index: 2;
+}
+body #popupMainDiv.et2_mobile_view .mobile-view-editBtn {
+  position: fixed;
+  left: calc(2 * var(--sl-font-size-2x-large));
+}
+@media screen and (max-width: 800px) {
+  html * {
+    touch-action: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  body {
+    /* Stop pull-to-refresh on chrome*/
+    overflow-y: hidden;
+    /* copied from previous framework */
+  }
+  body egw-framework#egw_fw_basecontainer {
+    /* Hide some parts */
+  }
+  body egw-framework#egw_fw_basecontainer::part(open-applications),
+  body egw-framework#egw_fw_basecontainer::part(status),
+  body egw-framework#egw_fw_basecontainer::part(divider) {
+    display: none;
+  }
+  body egw-framework#egw_fw_basecontainer::part(status-split) {
+    --max: 0;
+  }
+  body button[id*="save"]:hover,
+  body button[id*="apply"]:hover,
+  body button[id*="copy"]:hover,
+  body button[id*="edit_button[edit]"]:hover,
+  body button.et2_button:hover {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+  body et2-dialog {
+    --width: 100%;
+  }
+  body et2-dialog::part(panel) {
+    /* make dialog full screen */
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+  }
+  body et2-dialog::part(header) {
+    /* Set header size, color & background */
+    color: var(--sl-color-neutral-100);
+    background: var(--sl-color-primary-500);
+    height: 7ex;
+    padding: 0;
+    padding-left: 1em;
+    border-radius: 0;
+  }
+  body et2-dialog::part(title) {
+    line-height: 5ex;
+  }
+  body et2-dialog::part(close-button) {
+    /* Move dialog close button up, change color */
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  body et2-dialog::part(footer) {
+    order: 0;
+    /*box-shadow: 0px 4px 5px 2px silver;*/
+    width: 100%;
+    margin-top: 0px;
+    background: #0c5da5;
+    /* Allow buttons to wrap */
+    flex-wrap: wrap;
+  }
+  body et2-dialog et2-button[slot="footer"]:has(et2-image) {
+    /* Fixed size on footer buttons */
+    width: 50px;
+    height: 50px;
+  }
+  body et2-dialog et2-button[slot="footer"] et2-image {
+    max-width: initial;
+    left: 0;
+  }
+  body et2-dialog et2-button[slot="footer"] et2-image span {
+    padding-left: 20px;
+  }
+  body et2-dialog et2-button[slot="footer"][id*="cancel"] {
+    /* Hide cancel button, it will look like a duplicated bug so close to dialog close button */
+    display: none;
+  }
+  body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base),
+  body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base):not(:hover),
+  body et2-dialog et2-button[variant=default][slot="footer"]:has(et2-image)::part(base):not(:hover) {
+    /* Have an icon - Hide button style, just show image */
+    border: none;
+    background: transparent;
+    justify-content: center;
+  }
+  body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label) {
+    /* Visually hide labels but leave them there for accessibility */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    flex: 0 1 auto;
+  }
+  body et2-dialog #delete_popup {
+    position: absolute;
+    z-index: 1000000;
+    display: block;
+  }
+  body et2-dialog #timer_dialog::part(header),
+  body et2-dialog et2-dialog#timer_dialog::part(footer) {
+    background-color: var(--timesheet-color);
+  }
+  body .et2_nextmatch .nextmatch_sortheader {
+    padding-right: 0px;
+    margin-right: 0px;
+  }
+  body .et2_nextmatch .nextmatch_header_row,
+  body .et2_nextmatch .nextmatch_header {
+    flex-direction: column;
+    background-color: background-color-egw-dark;
+  }
+  body .et2_nextmatch .nextmatch_header_row div.header_row_right,
+  body .et2_nextmatch .nextmatch_header div.header_row_right {
+    position: absolute;
+    display: block;
+    top: 0;
+    flex-direction: column;
+  }
+  body .et2_nextmatch .nextmatch_header_row .filtersContainer,
+  body .et2_nextmatch .nextmatch_header .filtersContainer {
+    width: 100%;
+    margin-top: 50px;
+    flex-direction: column;
+  }
+  body .et2_nextmatch .nextmatch_header_row .filtersContainer et2-select,
+  body .et2_nextmatch .nextmatch_header .filtersContainer et2-select,
+  body .et2_nextmatch .nextmatch_header_row .filtersContainer et2-select-cat,
+  body .et2_nextmatch .nextmatch_header .filtersContainer et2-select-cat {
+    max-width: 100%;
+  }
+  body .et2_nextmatch .nextmatch_header_row et2-select,
+  body .et2_nextmatch .nextmatch_header et2-select,
+  body .et2_nextmatch .nextmatch_header_row et2-select-cat,
+  body .et2_nextmatch .nextmatch_header et2-select-cat {
+    display: block;
+    width: 100%;
+    height: var(--sl-font-size-large);
+    font-size: var(--sl-font-size-large);
+    background-size: 32px;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    border-bottom: none;
+    padding-left: 10px;
+    max-width: none;
+    background-color: transparent;
+  }
+  body .et2_nextmatch .nextmatch_header_row label,
+  body .et2_nextmatch .nextmatch_header label {
+    display: block;
+    width: 100%;
+    float: left;
+    font-size: var(--sl-font-size-large);
+  }
+  body .et2_nextmatch .nextmatch_header_row label select,
+  body .et2_nextmatch .nextmatch_header label select {
+    display: inline-block;
+    float: right;
+    margin: 0;
+    height: var(--sl-font-size-large);
+    font-size: var(--sl-font-size-large);
+  }
+  body .et2_nextmatch .nextmatch_header_row et2-select-cat,
+  body .et2_nextmatch .nextmatch_header et2-select-cat {
+    height: 50px !important;
+    width: 100% !important;
+    margin: 0;
+    padding-left: 0px;
+    background: white;
+  }
+  body .et2_nextmatch .nextmatch_header_row et2-select-cat a.chzn-single,
+  body .et2_nextmatch .nextmatch_header et2-select-cat a.chzn-single {
+    height: 100%;
+    border-right: none;
+    box-shadow: none;
+    background: white;
+    border-top: none;
+    border-bottom: none;
+    border-left-width: 10px;
+    border-radius: 0;
+  }
+  body .et2_nextmatch .nextmatch_header_row et2-select-cat a.chzn-single span,
+  body .et2_nextmatch .nextmatch_header et2-select-cat a.chzn-single span {
+    height: 100%;
+    line-height: 46px;
+    color: #26537C;
+    font-size: var(--sl-font-size-large);
+  }
+  body .et2_nextmatch .nextmatch_header_row et2-select-cat a.chzn-single div,
+  body .et2_nextmatch .nextmatch_header et2-select-cat a.chzn-single div {
+    width: 40px;
+  }
+  body .et2_nextmatch .nextmatch_header_row et2-select-cat a.chzn-single div b,
+  body .et2_nextmatch .nextmatch_header et2-select-cat a.chzn-single div b {
+    background: white url(../../node_modules/bootstrap-icons/icons/caret-down-fill.svg) no-repeat center !important;
+    background-size: 16px !important;
+  }
+  body .et2_nextmatch .nextmatch_header.nm_header_hide {
+    display: none !important;
+  }
+  body .et2_nextmatch .nextmatch_header {
+    background-color: white;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid silver;
+    border-top: none;
+    box-shadow: 0px 1px 1px 1px silver;
+    z-index: 1;
+    position: relative;
+  }
+  body .et2_nextmatch .nextmatch_header div.et2_box_widget {
+    display: block;
+    height: var(--sl-font-size-large);
+  }
+  body .et2_nextmatch .nextmatch_header .et2_button {
+    width: var(--sl-font-size-large);
+    height: var(--sl-font-size-large);
+  }
+  body .et2_nextmatch .egwGridView_outer thead tr {
+    visibility: hidden;
+  }
+  body .et2_nextmatch .search.searchOn input {
+    border: none;
+    background: white;
+    outline: none;
+    position: absolute;
+    left: 110px;
+    width: 80%;
+    height: var(--sl-font-size-large);
+  }
+  body .et2_nextmatch .search.searchOn button[id$="search_button"] {
+    background-image: none !important;
+  }
+  body .et2_nextmatch .search.searchOn button[id$="search_button"]:after {
+    content: "\2613";
+    font-weight: bold;
+    font-size: 18pt;
+  }
+  body .et2_nextmatch .nm-mob-header {
+    background: var(--primary-color);
+    margin-top: 0;
+    padding-left: 60px;
+    position: relative;
+    height: 50px;
+    z-index: 1;
+    display: flex;
+    border-bottom: 1px solid transparent;
+  }
+  body .et2_nextmatch .nm-mob-header et2-button-icon {
+    font-size: 2.3em;
+    color: var(--sl-color-neutral-0);
+  }
+  body .et2_nextmatch .nm-mob-header button {
+    height: var(--sl-font-size-large);
+    width: var(--sl-font-size-large);
+    background-repeat: no-repeat;
+    font-size: large;
+    background-color: var(--primary-color);
+    border: none;
+    margin: 0;
+    color: white;
+    background-size: 18px 18px;
+    box-shadow: none;
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.et2_searchbox {
+    display: inline-block;
+    width: 50px;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header {
+    background-image: url(../../node_modules/bootstrap-icons/icons/list-task.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    display: block;
+    color: var(--sl-color-neutral-0);
+    order: 9;
+    padding: 0 1em 0 1em;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header:focus {
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_action_header {
+    background-image: url(../../node_modules/bootstrap-icons/icons/three-dots-vertical.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-left: 1px solid silver;
+    border: 0;
+    color: white;
+    width: 50px;
+    height: 50px;
+    display: block;
+    color: var(--sl-color-neutral-0);
+    order: 10;
+    padding: 0 1em 0 1em;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_action_header:focus {
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_action_header.back {
+    background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
+    -webkit-filter: none !important;
+    background-color: white !important;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_delete_action {
+    background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
+    color: var(--sl-color-neutral-0);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-left: 1px solid silver;
+    border: 0;
+    color: black;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    text-align: center;
+    display: none;
+    order: 7;
+    padding: 0 1em 0 1em;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
+    order: 8;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-left: 1px solid silver;
+    border: 0;
+    color: white;
+    height: 50px;
+    display: none;
+    float: right;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div:focus {
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] {
+    top: 0 !important;
+    outline: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child {
+    display: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) {
+    background-position: center;
+    background-image: url(../../node_modules/bootstrap-icons/icons/star.svg) !important;
+    background-size: 24px 24px;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child {
+    display: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites {
+    height: 250px;
+    width: 100%;
+    left: 0px !important;
+    box-shadow: 0px 4px 5px 2px silver;
+    border: 1px solid silver;
+    overflow-y: auto !important;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item[data-id="blank"]:before {
+    content: '';
+    background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
+    background-size: 12px;
+    background-repeat: no-repeat;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-left: 4px;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item:not([data-id="add"]):not([data-id="blank"]):before {
+    content: '';
+    background-image: url(../../node_modules/bootstrap-icons/icons/star.svg);
+    background-size: 12px;
+    background-repeat: no-repeat;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-left: 4px;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-bottom: 1px solid silver;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a {
+    width: 100%;
+    line-height: 30px;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a input {
+    display: none;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash {
+    display: block;
+    padding-right: 8px;
+  }
+  body .et2_nextmatch .nm-mob-header button.nm_toggle_header_on {
+    background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
+    -webkit-filter: none !important;
+    background-color: white !important;
+  }
+  body .et2_nextmatch .nm-mob-header et2-searchbox {
+    order: -1;
+    width: -webkit-fill-available;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_appname_header {
+    width: 100%;
+    display: none;
+    position: absolute;
+    top: 0;
+    height: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: white;
+    font-size: 14pt;
+    font-weight: bold;
+    opacity: 0.2;
+    text-align: center;
+    padding-top: 13px;
+    z-index: -1;
+  }
+  body .et2_nextmatch .header_row_right {
+    height: var(--sl-font-size-large);
+    width: 100%;
+    padding: 0;
+  }
+  body .et2_nextmatch .header_row_right div[id$=favorite_wrapper] {
+    margin: 0;
+    top: 0 !important;
+    height: var(--sl-font-size-large);
+  }
+  body .et2_nextmatch .header_row_right * {
+    float: left;
+    max-width: 100% !important;
+  }
+  body .et2_nextmatch .header_row_right .et2_dropdown button {
+    height: var(--sl-font-size-large);
+    width: var(--sl-font-size-large);
+  }
+  body .et2_nextmatch .header_count {
+    margin: 0;
+    height: var(--sl-font-size-large);
+    font-size: var(--sl-font-size-large);
+    margin-top: -3px;
+    margin-right: 0px;
+    float: right;
+    border: none;
+    border-radius: 0;
+  }
+  body .et2_nextmatch .header_count span {
+    font-size: var(--sl-font-size-large);
+  }
+  body .et2_nextmatch table.egwGridView_grid tr div.h2_hbox {
+    padding-bottom: 4px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tr img {
+    height: 12px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tr et2-image {
+    font-size: 12px;
+    width: 12px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.focused {
+    background-image: none;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) {
+    background: #b0bfd8 !important;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) * {
+    color: white !important;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child:before {
+    content: " ";
+    position: absolute;
+    background: #b0bfd8;
+    right: 0px;
+    bottom: 0px;
+    left: -8px;
+    top: 0px;
+    color: white;
+    background-image: url(../../node_modules/bootstrap-icons/icons/check-lg.svg);
+    background-repeat: no-repeat;
+    height: auto;
+    background-size: 20px;
+    background-position: center;
+    height: 99%;
+    width: 99%;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr:hover {
+    background: transparent;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td {
+    padding: 10px 0px 10px 0px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_label,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_button,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_link,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox_ro,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_email,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td img {
+    padding: 8px 0px 0px 0px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
+  body .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col {
+    padding: 0;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr td div.et2_progress {
+    margin: 0;
+  }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.swipe {
+    background-color: #ffc200;
+    border: none;
+  }
+  body .et2_nextmatch .egwGridView_outer {
+    width: 100%;
+  }
+  body .et2_nextmatch .egwGridView_outer thead {
+    max-height: 1px;
+    display: none;
+  }
+  body .et2_nextmatch .egwGridView_outer thead tr th {
+    font-size: large;
+  }
+  body .et2_nextmatch .egwGridView_outer td img {
+    border: none;
+  }
+  body .et2_details .et2_details_toggle:after {
+    width: 30px;
+    height: 30px;
+    font-size: 18pt;
+    text-align: center;
+    padding: 9px;
+  }
+  et2-button.plus_button {
+    position: fixed !important;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-position: center;
+    z-index: 100;
+    background-color: #0c5da5;
+    border: none;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+  }
+  et2-button.plus_button:hover,
+  et2-button.plus_button:active {
+    background-color: #0c5da5;
+  }
+  et2-button.plus_button::before {
+    color: white;
+    content: "\f64d";
+    font-size: 32px;
+    line-height: 60px;
+    color: #fff;
+    text-align: center;
+    width: 60px;
+    font-weight: bolder;
+    display: inline-block;
+  }
+  et2-button.plus_button::part(base) {
+    display: none;
+  }
+}
 /**
  * These are utility classes used throughout egroupware, but aren't in etemplate.css
  * Most of this kind of thing will probably migrate from etemplate.css into here as webcomponents take over widget styles
@@ -977,4 +1592,3 @@ html[data-darkmode="1"] .nextmatch_sortheader,
   color: #96bcd9;
 }
 /** End theme customisations **/
-/*# sourceMappingURL=kdots.css.map */

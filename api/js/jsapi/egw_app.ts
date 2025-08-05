@@ -705,23 +705,13 @@ export abstract class EgwApp
 		// view container
 		this.viewContainer = jQuery(document.createElement('div'))
 			.addClass('et2_mobile_view')
-			.css({
-				"z-index": 102,
-				width: "100%",
-				height: "100%",
-				background: "white",
-				display: 'block',
-				position: 'absolute',
-				left: 0,
-				bottom: 0,
-				right: 0,
-				overflow: 'auto'
-			})
 			.attr('id', 'popupMainDiv')
 			.appendTo('body');
+		this.viewContainer[0].style.setProperty('--application-color', 'var(--' + this.appname + '-color,var(--primary-color))');
 
 		// close button
-		var close = jQuery(document.createElement('span'))
+		var close = jQuery(document.createElement('et2-button-icon'))
+			.attr("image", "close")
 			.addClass('egw_fw_mobile_popup_close loaded')
 			.click(function()
 			{
@@ -733,7 +723,8 @@ export abstract class EgwApp
 		if(!noEdit)
 		{
 			// edit button
-			var edit = jQuery(document.createElement('span'))
+			var edit = jQuery(document.createElement('et2-button-icon'))
+				.attr("image", "edit")
 				.addClass('mobile-view-editBtn')
 				.click(function()
 				{

@@ -595,6 +595,19 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
+	 * Push state history, set a state as hashed url param
+	 *
+	 * @param {type} _type type of state
+	 * @param {type} _index index of state
+	 */
+	public pushState(_type, _index)
+	{
+		var index = _index || 1;
+		history.pushState({type: _type, index: _index}, _type, '#' + egw.app_name() + "." + _type);
+		history.pushState({type: _type, index: _index}, _type, '#' + egw.app_name() + "." + _type + '#' + index);
+	}
+
+	/**
 	 * This method only used for status app when it tries to broadcast data to users
 	 * avoiding throwing exceptions for users whom might have no status app access
 	 *
@@ -1135,7 +1148,8 @@ export class EgwFramework extends LitElement
                 </header>
                 ${this.hasStatus ? html`
                 <div class="egw_fw__divider">
-                    <sl-split-panel part="status-split" position-in-pixels="${statusPosition}" primary="end"
+                    <sl-split-panel part="status-split" exportparts="divider" position-in-pixels="${statusPosition}"
+                                    primary="end"
                                     snap="150px ${statusSnap} 0px"
                                     snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
                                     aria-label="Side menu resize">

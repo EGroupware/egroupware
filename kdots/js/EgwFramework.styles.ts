@@ -96,6 +96,10 @@ export default css`
         ::slotted([slot="logo"]) {
             display: none;
         }
+
+		::part(divider) {
+			display: none;
+		}
     }
     @media print {
         /* Hide the header */
