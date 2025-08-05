@@ -137,6 +137,7 @@ export default css`
 		display: flex;
 		overflow: hidden;
 		justify-content: space-between;
+		align-content: center;
 	}
 
 	/* Hide logo when things get small (no CSS vars or calc() here) */

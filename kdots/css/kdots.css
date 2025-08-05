@@ -160,7 +160,7 @@ egw-framework#egw_fw_basecontainer::part(app-list-panel) {
   gap: var(--sl-spacing-medium);
 }
 egw-framework#egw_fw_basecontainer [slot="logo"] img {
-  max-width: calc(var(--left-side-width, 220px) - var(--icon-size));
+  width: calc(var(--left-side-width, 220px) - var(--icon-size));
   max-height: var(--icon-size);
   min-width: var(--icon-size);
   flex: 1 1 auto;
