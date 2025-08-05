@@ -11,7 +11,7 @@ export default css`
         --icon-size: 32px;
         --inactive-tab-opacity: 0.5;
         --header-icon-size: 1.5rem;
-		--left-side-width: 200px;
+        --left-side-width: 200px;
     }
 
     .egw_fw__layout-default {
@@ -130,22 +130,23 @@ export default css`
         color: inherit;
     }
 
-	.egw_fw__header .egw_fw__logo_apps {
-		container: logo / inline-size;
-		flex: 1 1 var(--left-side-width);
-		max-width: var(--left-side-width);
-		display: flex;
-		overflow: hidden;
-		justify-content: space-between;
-		align-items: center;
-	}
+    .egw_fw__header .egw_fw__logo_apps {
+        container: logo / inline-size;
+        flex: 1 1 var(--left-side-width);
+        max-width: var(--left-side-width);
+        display: flex;
+        overflow: hidden;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-	/* Hide logo when things get small (no CSS vars or calc() here) */
-	@container logo (width < 150px) {
-		slot {
-			display: none;
-		}
-	}
+    /* Hide logo when things get small (no CSS vars or calc() here) */
+    @container logo (width < 150px) {
+        slot {
+            display: none;
+        }
+    }
+
     .egw_fw__header .egw_fw__app_list {
         flex: none;
         font-size: var(--header-icon-size, var(--sl-font-size-2x-large));
@@ -167,9 +168,9 @@ export default css`
         background-color: var(--sl-color-neutral-0);
         font-size: var(--icon-size);
         border-radius: var(--icon-size);
-	    position: relative;
-	    top: 0.8rem;
-	    left: -1.5rem;
+        position: relative;
+        top: 0.8rem;
+        left: 4em;
     }
 
     .egw_fw__app_list img {
@@ -210,10 +211,12 @@ export default css`
         visibility: hidden;
         margin: 0;
         position: relative;
-        bottom: 1em;
-        right: .4em;
+        bottom: 1.5em;
+        right: .6em;
         color: var(--sl-color-neutral-900);
     }
+
+    /*Icons for open applications that do not have kdots specific icon*/
 
     .egw_fw__open_applications et2-image:not([src*='/kdots/']), .egw_fw__app_list et2-image:not([src*='/kdots/']) {
         /* Always force icons to be the same size */
@@ -248,6 +251,36 @@ export default css`
             }
         }
     }
+
+    /*Icons for applications that have a kdots specific icon*/
+
+    .egw_fw__open_applications et2-image[src*='/kdots/'], .egw_fw__app_list et2-image[src*='/kdots/'] {
+        /* Always force icons to be the same size */
+        height: calc(
+                calc(2 * var(--sl-spacing-2x-small) +
+                var(--tab-icon-size, 32px)));
+        min-width: calc(
+                calc(2 * var(--sl-spacing-2x-small) +
+                var(--tab-icon-size, 32px)));
+        min-height: calc(
+                calc(2 * var(--sl-spacing-2x-small) +
+                var(--tab-icon-size, 32px)));
+        /* Prevent large icons from causing problems */
+        max-width: calc(
+                calc(2 * var(--sl-spacing-2x-small) +
+                var(--tab-icon-size, 32px)));
+        max-height: calc(
+                calc(2 * var(--sl-spacing-2x-small) +
+                var(--tab-icon-size, 32px)));
+
+        *[part="image"] {
+            vertical-align: bottom;
+            width: calc(
+                    calc(2 * var(--sl-spacing-2x-small) +
+                    var(--tab-icon-size, 32px)));
+        }
+    }
+
 
     .egw_fw__open_applications sl-tab:hover::part(close-button) {
         visibility: visible;
