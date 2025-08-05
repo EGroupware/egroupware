@@ -1629,6 +1629,9 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
 #calendar-sidebox iframe {
   display: none;
 }
+#calendar-sidebox_date {
+  flex-grow: 0;
+}
 #calendar-toolbar #calendar-toolbar_app_header {
   color: inherit;
   background-color: transparent;
