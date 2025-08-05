@@ -887,6 +887,16 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
+	 * I'm not sure what this does
+	 * @deprecated use app.iframe.contentWindow ?? this.egw.window;
+	 */
+	public egw_appWindow(appname : string)
+	{
+		const app = this.loadApp(appname);
+		return app.iframe.contentWindow ?? this.egw.window;
+	}
+
+	/**
 	 * An application tab is closed
 	 */
 	protected handleApplicationTabClose(event)

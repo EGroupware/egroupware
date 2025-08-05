@@ -132,6 +132,8 @@ export class EgwFrameworkApp extends LitElement
 
 	get rightSplitter() { return <SlSplitPanel>this.shadowRoot.querySelector(".egw_fw_app__innerSplit");}
 
+	get iframe() { return <HTMLIFrameElement>this.shadowRoot.querySelector("iframe");}
+
 
 	protected readonly hasSlotController = new HasSlotController(<LitElement><unknown>this,
 		'left', 'left-header', 'left-footer',
