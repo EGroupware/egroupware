@@ -1095,7 +1095,7 @@ export class EgwFramework extends LitElement
                         ></sl-icon-button>
                         ${repeat(this.applicationList, (app) => this._applicationListAppTemplate(app))}
                     </sl-dropdown>
-					<div class="spacer"></div>
+					<div class="spacer spacer_start"></div>
                     <sl-tab-group part="open-applications" class="egw_fw__open_applications" activation="manual"
                                   aria-label="${this.egw.lang("Open applications")}"
                                   @sl-tab-show=${this.handleApplicationTabShow}
@@ -1105,7 +1105,7 @@ export class EgwFramework extends LitElement
                                 .filter(app => typeof app.opened !== "undefined" && app.status !== "5")
                                 .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
-					<div class="spacer"></div>
+					<div class="spacer spacer_end"></div>
                     <slot name="header"><span class="placeholder">header</span></slot>
                     <slot name="header-right"><span class="placeholder">header-right</span></slot>
                 </header>
