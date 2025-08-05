@@ -2220,11 +2220,15 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
 }
 #loginMainDiv div#centerBox form div.divLoginbox div.remember_me_row {
   border-bottom: 1px solid silver;
-  text-align: initial;
+  display: flex;
 }
 #loginMainDiv div#centerBox form div.divLoginbox div.remember_me_row span.remember_me {
   color: #666666;
   opacity: 1;
+  height: 40px;
+  top: 0;
+  display: flex;
+  align-items: center;
 }
 #loginMainDiv div#centerBox form div.divLoginbox select:focus,
 #loginMainDiv div#centerBox form div.divLoginbox select:hover {
@@ -2275,8 +2279,6 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-image: url(../../node_modules/bootstrap-icons/icons/translate.svg);
 }
 #loginMainDiv div#centerBox form div.divLoginbox input[type="checkbox"] {
-  height: 25px !important;
-  margin-top: 7px;
   width: auto;
 }
 #loginMainDiv div#centerBox form div.divLoginbox input[type="submit"],
