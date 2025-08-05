@@ -159,11 +159,13 @@ egw-framework#egw_fw_basecontainer::part(app-list-panel) {
   padding: var(--sl-spacing-medium);
   gap: var(--sl-spacing-medium);
 }
+egw-framework#egw_fw_basecontainer [slot="logo"] {
+  flex-grow: 1;
+}
 egw-framework#egw_fw_basecontainer [slot="logo"] img {
-  width: calc(var(--left-side-width, 220px) - var(--icon-size));
+  max-width: calc(var(--left-side-width, 220px) - var(--icon-size));
   max-height: var(--icon-size);
   min-width: var(--icon-size);
-  flex: 1 1 auto;
   display: block;
   text-align: center;
 }

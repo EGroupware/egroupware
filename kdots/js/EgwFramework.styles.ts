@@ -132,12 +132,12 @@ export default css`
 
 	.egw_fw__header .egw_fw__logo_apps {
 		container: logo / inline-size;
-		flex: 0 1 var(--left-side-width);
-		width: var(--left-side-width);
+		flex: 1 1 var(--left-side-width);
+		max-width: var(--left-side-width);
 		display: flex;
 		overflow: hidden;
 		justify-content: space-between;
-		align-content: center;
+		align-items: center;
 	}
 
 	/* Hide logo when things get small (no CSS vars or calc() here) */
