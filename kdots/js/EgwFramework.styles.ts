@@ -12,6 +12,7 @@ export default css`
         --inactive-tab-opacity: 0.5;
         --header-icon-size: 1.5rem;
         --left-side-width: 200px;
+	    --tab-icon-spacing: 2px;
     }
 
     .egw_fw__layout-default {
@@ -170,7 +171,6 @@ export default css`
         border-radius: var(--icon-size);
         position: relative;
         top: 0.8rem;
-        left: 4em;
     }
 
     .egw_fw__app_list img {
@@ -228,7 +228,7 @@ export default css`
         max-height: var(--tab-icon-size, 32px);
 
         /*align items centered on round app colored background*/
-        padding: var(--sl-spacing-2x-small);
+        padding: var(--tab-icon-spacing, 2px);
         background-color: var(--application-color, var(--default-color, var(--sl-color-neutral-600)));
         border-radius: var(--sl-border-radius-circle);
         text-align: center;
@@ -257,26 +257,26 @@ export default css`
     .egw_fw__open_applications et2-image[src*='/kdots/'], .egw_fw__app_list et2-image[src*='/kdots/'] {
         /* Always force icons to be the same size */
         height: calc(
-                calc(2 * var(--sl-spacing-2x-small) +
+                calc(2 * var(--tab-icon-spacing, 2px) +
                 var(--tab-icon-size, 32px)));
         min-width: calc(
-                calc(2 * var(--sl-spacing-2x-small) +
+                calc(2 * var(--tab-icon-spacing, 2px) +
                 var(--tab-icon-size, 32px)));
         min-height: calc(
-                calc(2 * var(--sl-spacing-2x-small) +
+                calc(2 * var(--tab-icon-spacing, 2px) +
                 var(--tab-icon-size, 32px)));
         /* Prevent large icons from causing problems */
         max-width: calc(
-                calc(2 * var(--sl-spacing-2x-small) +
+                calc(2 * var(--tab-icon-spacing, 2px) +
                 var(--tab-icon-size, 32px)));
         max-height: calc(
-                calc(2 * var(--sl-spacing-2x-small) +
+                calc(2 * var(--tab-icon-spacing, 2px) +
                 var(--tab-icon-size, 32px)));
 
         *[part="image"] {
             vertical-align: bottom;
             width: calc(
-                    calc(2 * var(--sl-spacing-2x-small) +
+                    calc(2 * var(--tab-icon-spacing, 2px) +
                     var(--tab-icon-size, 32px)));
         }
     }
