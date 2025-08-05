@@ -11,6 +11,7 @@ export default css`
         --icon-size: 32px;
         --inactive-tab-opacity: 0.5;
         --header-icon-size: 1.5rem;
+		--left-side-width: 200px;
     }
 
     .egw_fw__layout-default {
@@ -129,6 +130,21 @@ export default css`
         color: inherit;
     }
 
+	.egw_fw__header .egw_fw__logo_apps {
+		container: logo / inline-size;
+		flex: 0 1 var(--left-side-width);
+		width: var(--left-side-width);
+		display: flex;
+		overflow: hidden;
+		justify-content: space-between;
+	}
+
+	/* Hide logo when things get small (no CSS vars or calc() here) */
+	@container logo (width < 150px) {
+		slot {
+			display: none;
+		}
+	}
     .egw_fw__header .egw_fw__app_list {
         flex: none;
         font-size: var(--header-icon-size, var(--sl-font-size-2x-large));

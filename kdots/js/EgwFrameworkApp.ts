@@ -173,6 +173,18 @@ export class EgwFrameworkApp extends LitElement
 	connectedCallback()
 	{
 		super.connectedCallback();
+
+		// Get size preferences
+		// @ts-ignore preference() takes _callback = true
+		this.egw.preference(this.leftPanelInfo.preference, this.appName, true).then((value) =>
+		{
+			this.leftPanelInfo.preferenceWidth = value;
+		});
+		// @ts-ignore preference() takes _callback = true
+		this.egw.preference(this.rightPanelInfo.preference, this.appName, true).then((value) =>
+		{
+			this.rightPanelInfo.preferenceWidth = value;
+		});
 		this.addEventListener("load", this.handleEtemplateLoad);
 
 		// Work around sl-split-panel resizing to 0 when app is hidden
@@ -572,6 +584,8 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	protected async handleSlide(event)
 	{
+		event.stopPropagation();
+
 		// Skip if there's no panelInfo - event is from the wrong place
 		// Skip if loading, or not active to avoid keeping changes while user is not interacting
 		if(typeof event.target?.dataset.panel == "undefined" || this.ignoreSplitterResize || this.loading || !this.hasAttribute("active"))
@@ -588,11 +602,28 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return;
 		}
+		// Limit to maximum of actual width, splitter handles max
+		newPosition = Math.min(newPosition, split.querySelector(panelInfo.side == "left" ? "[slot='start']" : "[slot='end']").getBoundingClientRect().width);
 
 		// Update collapsed
 		this[`${panelInfo.side}Collapsed`] = newPosition == panelInfo.hiddenWidth;
 
 		let preferenceName = panelInfo.preference;
+
+		// Send it out with details, in case anyone cares
+		this.dispatchEvent(new CustomEvent("sl-reposition", {
+				detail: {
+					name: this.name,
+					side: panelInfo.side,
+					preference: preferenceName,
+					width: newPosition,
+				},
+				bubbles: true,
+				composed: true,
+			}
+		));
+
+		// Delay preference update & etemplate resize because they're expensive
 		if(!this[`${panelInfo.side}Collapsed`] && newPosition != panelInfo.preferenceWidth)
 		{
 			if(panelInfo.resizeTimeout)
@@ -924,6 +955,7 @@ export class EgwFrameworkApp extends LitElement
 	{
 		const hasLeftSlots = this.hasSideContent("left") || this.features?.favorites;
 		const hasRightSlots = this.hasSideContent("right");
+		const hasHeaderContent = this.hasSlotController.test("main-header");
 
 		const leftWidth = this.leftCollapsed || !hasLeftSlots ? this.leftPanelInfo.hiddenWidth :
 						  this.leftPanelInfo.preferenceWidth;
@@ -931,7 +963,10 @@ export class EgwFrameworkApp extends LitElement
 						   this.rightPanelInfo.preferenceWidth;
 		return html`
             <div class="egw_fw_app__header" part="app-header">
-                <div class="egw_fw_app__name" part="name">
+                <div class=${classMap({
+                    egw_fw_app__name: true,
+                    hasHeaderContent: hasHeaderContent,
+                })} part="name">
                     ${hasLeftSlots ? html`
                     <sl-icon-button name="${this.leftCollapsed ? "chevron-double-right" : "chevron-double-left"}"
                                     label="${this.leftCollapsed ? this.egw.lang("Show left area") : this.egw?.lang("Hide left area")}"

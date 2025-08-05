@@ -160,8 +160,10 @@ egw-framework#egw_fw_basecontainer::part(app-list-panel) {
   gap: var(--sl-spacing-medium);
 }
 egw-framework#egw_fw_basecontainer [slot="logo"] img {
-  max-width: 220px;
+  max-width: calc(var(--left-side-width, 220px) - var(--icon-size));
   max-height: var(--icon-size);
+  min-width: var(--icon-size);
+  flex: 1 1 auto;
   display: block;
   text-align: center;
 }
@@ -614,6 +616,8 @@ egw-app::part(name) {
   display: flex;
   align-items: center;
   text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 egw-app::part(content) {
   flex-direction: column;
@@ -971,4 +975,3 @@ html[data-darkmode="1"] .nextmatch_sortheader,
   color: #96bcd9;
 }
 /** End theme customisations **/
-/*# sourceMappingURL=kdots.css.map */

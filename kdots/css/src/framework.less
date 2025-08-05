@@ -72,8 +72,10 @@ egw-framework#egw_fw_basecontainer {
   /* Content slotted inside */
 
   [slot="logo"] img {
-	max-width: 220px;
+	max-width: calc(var(--left-side-width, 220px) - var(--icon-size));
 	max-height: var(--icon-size);
+	min-width: var(--icon-size);
+	flex: 1 1 auto;
 	display: block;
 	text-align: center;
   }

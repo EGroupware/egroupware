@@ -20,8 +20,10 @@ export default css`
 		display: flex;
 	}
 
-	.egw_fw_app__name {
-		max-width: 20vw;
+	.egw_fw_app__name.hasHeaderContent {
+		max-width: var(--left-side-width, 20vw);
+		/* Keep the collapse icon visible */
+		min-width: 2em;
 		flex: 1 1 20vw;
 	}
 

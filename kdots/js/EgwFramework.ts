@@ -29,6 +29,7 @@ import {state} from "lit/decorators/state.js";
  * @csspart base - Wraps it all.
  * @csspart banner -
  * @csspart header -
+ * @csspart logo
  * @csspart open-applications - Tab group that has the currently open applications
  * @csspart app-list-panel - Dropdown containing the available applications
  * @csspart tab - Individual tabs
@@ -43,6 +44,7 @@ import {state} from "lit/decorators/state.js";
  * @cssproperty [--tab-icon-size=32] - Height of application icons in header bar
  * @cssproperty [--tab-icon-size-active=40] - Height of active application icon
  * @cssproperty [--<appname>-color] - Background color of the application tab
+ * @cssproperty [--left-side-width] - Width of the icon + application list, normally synced to left side menu width
  */
 @customElement('egw-framework')
 //@ts-ignore
@@ -851,6 +853,22 @@ export class EgwFramework extends LitElement
 		this.showTab(event.target.activeTab.panel);
 	}
 
+	/**
+	 * Listen to application sidemenu (left) position & update site logo size
+	 *
+	 * @param event
+	 * @protected
+	 */
+	protected handleSlide(event)
+	{
+		if(!event.detail.width)
+		{
+			return;
+		}
+		const size = event.detail.width ?? 200;
+		this.style.setProperty('--left-side-width', size + 'px');
+	}
+
 	public setActiveApp(appname : EgwFrameworkApp | string)
 	{
 		return this.showTab(typeof appname == "string" ? appname : appname.name);
@@ -1072,6 +1090,9 @@ export class EgwFramework extends LitElement
 		const statusSnap = (parseInt(iconSize) + 6) + 'px';
 		const statusPosition = this.egw?.preference("statusPosition", "common") ?? parseInt(statusSnap) ?? "36";
 
+		// Keep app list icon aligned with sidebox of current application
+		const leftSideWidth = this.activeApp?.leftSplitter?.positionInPixels;
+
 		const classes = {
 			"egw_fw__base": true
 		}
@@ -1086,15 +1107,17 @@ export class EgwFramework extends LitElement
                 </div>` : nothing
                 }
                 <header class="egw_fw__header" part="header">
-                    <slot name="logo"></slot>
-                    <sl-dropdown class="egw_fw__app_list" role="menu" exportparts="panel:app-list-panel">
-                        <sl-icon-button slot="trigger" name="grid-3x3-gap"
-                                        label="${this.egw.lang("Application list")}"
-                                        aria-hidden="true"
-                                        aria-description="${this.egw.lang("Activate for a list of applications")}"
-                        ></sl-icon-button>
-                        ${repeat(this.applicationList, (app) => this._applicationListAppTemplate(app))}
-                    </sl-dropdown>
+                    <div class="egw_fw__logo_apps">
+                        <slot name="logo" part="logo"></slot>
+                        <sl-dropdown class="egw_fw__app_list" role="menu" exportparts="panel:app-list-panel">
+                            <sl-icon-button slot="trigger" name="grid-3x3-gap"
+                                            label="${this.egw.lang("Application list")}"
+                                            aria-hidden="true"
+                                            aria-description="${this.egw.lang("Activate for a list of applications")}"
+                            ></sl-icon-button>
+                            ${repeat(this.applicationList, (app) => this._applicationListAppTemplate(app))}
+                        </sl-dropdown>
+                    </div>
 					<div class="spacer spacer_start"></div>
                     <sl-tab-group part="open-applications" class="egw_fw__open_applications" activation="manual"
                                   aria-label="${this.egw.lang("Open applications")}"
@@ -1115,7 +1138,9 @@ export class EgwFramework extends LitElement
                                     snap="150px ${statusSnap} 0px"
                                     snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
                                     aria-label="Side menu resize">
-                        <main slot="start" part="main" class="egw_fw__main" id="main">
+                        <main slot="start" part="main" class="egw_fw__main" id="main"
+                              @sl-reposition=${this.handleSlide}
+                        >
                             <slot></slot>
                         </main>
                         <sl-icon slot="divider" name="grip-vertical"></sl-icon>
@@ -1124,7 +1149,9 @@ export class EgwFramework extends LitElement
                         </aside>
                     </sl-split-panel>
                 </div>` : html`
-                    <main part="main" class="egw_fw__main" id="main">
+                    <main part="main" class="egw_fw__main" id="main"
+                          @sl-reposition=${this.handleSlide}
+                    >
                         <slot></slot>
                     </main>`
                 }
