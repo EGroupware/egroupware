@@ -894,7 +894,7 @@ export class EgwFramework extends LitElement
 	 */
 	protected handleSlide(event)
 	{
-		if(!event.detail.width)
+		if(!event.detail.width || event.detail.side !== "left")
 		{
 			return;
 		}
