@@ -1654,3 +1654,4 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
 .kdots-glassy .et2-input-widget:not([disabled])::part(combobox) {
   --sl-border-radius-medium: var(--sl-input-height-medium);
 }
+/*# sourceMappingURL=app.css.map */

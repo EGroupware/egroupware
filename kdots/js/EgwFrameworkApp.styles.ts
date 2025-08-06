@@ -1,4 +1,5 @@
 import {css} from 'lit';
+import SlSplitPanelStyles from "./EgwFrameworkSplitPanel.styles";
 
 export default css`
 
@@ -93,19 +94,12 @@ export default css`
 	.egw_fw_app__innerSplit.no-content {
 		--min: 100%;
 	}
+	/*sl-split-panel style*/
+	${SlSplitPanelStyles}
 
 	sl-split-panel::part(divider) {
 		grid-row: start / end;
 		font-size: var(--sl-font-size-medium);
-	}
-
-	sl-split-panel > sl-icon {
-		position: absolute;
-		border-radius: var(--sl-border-radius-small);
-		background-color: var(--application-color);
-		color: var(--sl-color-neutral-0);
-		padding: 0.5rem 0.125rem;
-		z-index: var(--sl-z-index-drawer);
 	}
 
 	sl-split-panel.no-content {

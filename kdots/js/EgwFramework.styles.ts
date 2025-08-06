@@ -1,4 +1,5 @@
 import {css} from 'lit';
+import SlSplitPanelStyles from "./EgwFrameworkSplitPanel.styles";
 
 // noinspection CssUnresolvedCustomProperty
 export default css`
@@ -293,5 +294,9 @@ export default css`
     ::slotted(egw-app:not([active])) {
         display: none;
     }
+	/*
+	This is the same as in EgwFrameworkApp.styles.ts
+	*/
+    ${SlSplitPanelStyles}
 
 `
