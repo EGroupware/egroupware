@@ -919,7 +919,7 @@ export class EgwFramework extends LitElement
 
 	public showTab(appname : string)
 	{
-		// Dispatch hide event, application an listen for it
+		// Dispatch hide (if there is an active app) event, application an listen for it
 		this.querySelector("egw-app[active]")?.dispatchEvent(new CustomEvent("hide", {bubbles: true}));
 
 		this.querySelectorAll("egw-app").forEach(app => app.removeAttribute("active"));

@@ -279,11 +279,15 @@ export default css`
                 var(--tab-icon-size, 32px)));
 
         *[part="image"] {
-            vertical-align: bottom;
+            vertical-align: sub;
             width: calc(
                     calc(2 * var(--tab-icon-spacing, 2px) +
                     var(--tab-icon-size, 32px)));
         }
+    }
+    /* needs different alignment in app_list and open_apps*/
+    .egw_fw__app_list et2-image[src*='/kdots/'] *[part="image"] {
+            vertical-align: initial;
     }
 
 
