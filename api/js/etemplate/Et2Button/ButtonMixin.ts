@@ -132,8 +132,11 @@ so we force the button images to be square*/
 				width: var(--sl-input-height-medium);
 				padding-inline-start: 0;			
 			}
-			.button--has-prefix:not(.button--has-label) ::slotted(et2-image) {
-				padding-left: 0;
+
+				.button--has-prefix:not(.button--has-label) {
+					::slotted(et2-image), .button__label {
+						padding-left: 0;
+					}
 			}
 			
 			/* Override primary styling - we use variant=primary on first dialog button */
