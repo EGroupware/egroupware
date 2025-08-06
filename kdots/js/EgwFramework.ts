@@ -893,6 +893,9 @@ export class EgwFramework extends LitElement
 
 	public showTab(appname : string)
 	{
+		// Dispatch hide event, application an listen for it
+		this.querySelector("egw-app[active]").dispatchEvent(new CustomEvent("hide", {bubbles: true}));
+
 		this.querySelectorAll("egw-app").forEach(app => app.removeAttribute("active"));
 		this.applicationList.forEach(a => a.active = false);
 		Object.values(this._tabApps).forEach(a => a.active = false);
@@ -916,6 +919,11 @@ export class EgwFramework extends LitElement
 		this.tabs.updateComplete.then(() =>
 		{
 			this.updateTabs();
+		});
+		appComponent.updateComplete.then(() =>
+		{
+			// Dispatch show event, application (& nextmatch) can listen for it
+			appComponent.dispatchEvent(new CustomEvent("show", {bubbles: true}))
 		});
 
 		return appComponent.updateComplete;
@@ -1197,7 +1205,7 @@ export interface ApplicationInfo
 	icon : string
 	title : string,
 	url : string,
-	/* What type of application (1: normal, 5: loaded but no tab) */
+	/* What type of application (1: normal, 5: ?) */
 	status : string,// = "1",
 	/* Is the app open, and at what place in the tab list */
 	opened? : number,
