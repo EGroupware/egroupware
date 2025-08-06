@@ -1139,7 +1139,7 @@ export class EgwFramework extends LitElement
                                   @sl-close=${this.handleApplicationTabClose}
                     >
                         ${repeat([...this.applicationList, ...Object.values(this._tabApps)]
-                                .filter(app => typeof app.opened !== "undefined" && app.status !== "5")
+                                .filter(app => typeof app.opened !== "undefined")
                                 .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
 					<div class="spacer spacer_end"></div>
