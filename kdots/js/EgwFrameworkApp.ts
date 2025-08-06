@@ -501,8 +501,9 @@ export class EgwFrameworkApp extends LitElement
 	{
 		const attribute = `${side}Collapsed`;
 		this[attribute] = false;
+		this.ignoreSplitterResize = true;
 		this[`${side}Splitter`].position = this[`${side}PanelInfo`].preferenceWidth || this[`${side}PanelInfo`].defaultWidth;
-		return this.updateComplete;
+		return this.updateComplete.then(() => this.ignoreSplitterResize = false);
 	}
 
 	protected hideSide(side : "left" | "right")
@@ -510,9 +511,10 @@ export class EgwFrameworkApp extends LitElement
 		const attribute = `${side}Collapsed`;
 		const oldValue = this[attribute];
 		this[attribute] = true;
+		this.ignoreSplitterResize = true;
 		this[`${side}Splitter`].position = this[`${side}PanelInfo`].hiddenWidth;
 		this.requestUpdate(attribute, oldValue);
-		return this.updateComplete;
+		return this.updateComplete.then(() => this.ignoreSplitterResize = false);
 	}
 
 	get egw()
@@ -587,8 +589,13 @@ export class EgwFrameworkApp extends LitElement
 			return;
 		}
 		const split = event.target;
-		await this.framework?.updateComplete;
 		let panelInfo = this[split.dataset.panel];
+		if(this[`${panelInfo.side}Collapsed`])
+		{
+			// It's collapsed, it doesn't move
+			split.position = panelInfo.hiddenWidth;
+			return;
+		}
 
 		// Left side is in pixels, round to 2 decimals
 		let newPosition = Math.round(panelInfo.side == "left" ? split.positionInPixels * 100 : Math.min(100, split.position) * 100) / 100;
@@ -596,10 +603,13 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return;
 		}
+
+		await split.updateComplete;
+		
 		// Limit to maximum of actual width, splitter handles max
 		if(panelInfo.side == "left")
 		{
-			newPosition = Math.min(newPosition, split.querySelector("[slot='start']").getBoundingClientRect().width);
+			newPosition = Math.min(newPosition, parseInt(getComputedStyle(split).gridTemplateColumns.split(" ").shift()));
 		}
 
 		// Update collapsed
@@ -1006,7 +1016,9 @@ export class EgwFrameworkApp extends LitElement
                                     @sl-reposition=${this.handleSlide}
                     >
                         ${this.loading ? this._loadingTemplate("start") : html`
-                            <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>
+                            ${this.rightCollapsed ? nothing : html`
+                                <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>`
+                            }
                             <header slot="start" class="egw_fw_app__header header" part="content-header">
                                 <slot name="header"><span class="placeholder">header</span></slot>
                             </header>

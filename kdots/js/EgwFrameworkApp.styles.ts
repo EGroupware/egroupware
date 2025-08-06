@@ -14,6 +14,8 @@ export default css`
 		flex-direction: column;
 
 		--application-color: var(--primary-background-color);
+		--left-min: 0%;
+		--left-max: 20%;
 	}
 
 	:host > * {

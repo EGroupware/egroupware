@@ -1176,6 +1176,7 @@ export class EgwFramework extends LitElement
                 ${this.hasStatus ? html`
                 <div class="egw_fw__divider">
                     <sl-split-panel part="status-split" exportparts="divider" position-in-pixels="${statusPosition}"
+                                    style="--divider-width: 0px;"
                                     primary="end"
                                     snap="150px ${statusSnap} 0px"
                                     disabled
@@ -1186,7 +1187,7 @@ export class EgwFramework extends LitElement
                         >
                             <slot></slot>
                         </main>
-                        <sl-icon slot="divider" name="grip-vertical"></sl-icon>
+                        <!-- No slider until we have more content <sl-icon slot="divider" name="grip-vertical"></sl-icon> -->
                         <aside slot="end" class="egw_fw__status" part="status">
                             <slot name="status"><span class="placeholder">status</span></slot>
                         </aside>
