@@ -897,7 +897,7 @@ abstract class Ajax extends Api\Framework
 	 */
 	public function navbar_apps()
 	{
-		$apps = parent::_get_navbar_apps();
+		$apps = static::_get_navbar_apps();
 
 		//Add its sidebox width to each app
 		foreach ($apps as $app => &$data)

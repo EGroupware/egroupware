@@ -197,8 +197,14 @@ export class EgwFramework extends LitElement
 		// Set features on any existing egw-app elements for first load
 		this.querySelectorAll("egw-app").forEach((app : EgwFrameworkApp) =>
 		{
-			app.features = this.applicationList.find(a => a.name == app.id)?.features ?? {};
-		})
+			const appInfo = this.applicationList.find(a => a.name == app.id);
+			app.features = appInfo?.features ?? {};
+			// Unknown app?
+			if(!appInfo)
+			{
+				debugger;
+			}
+		});
 
 		// Load hidden apps like status, as long as they can be loaded
 		this.applicationList.forEach((app) =>
@@ -346,6 +352,10 @@ export class EgwFramework extends LitElement
 		appComponent.setAttribute("id", appname);
 		appComponent.setAttribute("name", app.internalName || appname);
 		appComponent.url = url ?? app?.url;
+		if(app.slot)
+		{
+			appComponent.slot = app.slot;
+		}
 		if(app.title)
 		{
 			appComponent.title = app.title;
@@ -1128,6 +1138,7 @@ export class EgwFramework extends LitElement
 	{
 		const iconSize = getComputedStyle(this).getPropertyValue("--icon-size");
 		// Snap positions need to be in pixels
+		this.hasStatus = this.hasSlotController.test('status');
 		const statusSnap = (parseInt(iconSize) + 6) + 'px';
 		const statusPosition = this.egw?.preference("statusPosition", "common") ?? parseInt(statusSnap) ?? "36";
 
@@ -1166,7 +1177,7 @@ export class EgwFramework extends LitElement
                                   @sl-close=${this.handleApplicationTabClose}
                     >
                         ${repeat([...this.applicationList, ...Object.values(this._tabApps)]
-                                .filter(app => typeof app.opened !== "undefined")
+                                .filter(app => typeof app.opened !== "undefined" && !app.slot)
                                 .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
 					<div class="spacer spacer_end"></div>
@@ -1225,6 +1236,8 @@ export interface ApplicationInfo
 	url : string,
 	/* What type of application (1: normal, 5: ?) */
 	status : string,// = "1",
+	/* Application will be slotted into a specific spot in the framework, not added as a normal application */
+	slot? : string
 	/* Is the app open, and at what place in the tab list */
 	opened? : number,
 	/* Is the app currently active */

@@ -41,10 +41,6 @@
 	<div slot="header-right" id="egw_fw_topmenu_info_items">
         {topmenu_info_items}
 	</div>
-
-	<!-- status app is looking for this, but it could slot itself -->
-	<div slot="status" id="egw_fw_sidebar_r"></div>
-
 	<!-- Currently open app -->
 	<egw-app id="{open_app_name}" name="{open_app_name}" url="{open_app_url}" active></egw-app>
 </egw-framework>

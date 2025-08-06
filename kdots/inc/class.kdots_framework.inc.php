@@ -131,6 +131,18 @@ class kdots_framework extends Api\Framework\Ajax
 		return $data;
 	}
 
+	static function _get_navbar_apps()
+	{
+		$apps = parent::_get_navbar_apps();
+
+		// Set status to open in the status slot, not like a normal app
+		if(!empty($apps['status']))
+		{
+			$apps['status']['slot'] = 'status';
+		}
+		return $apps;
+	}
+
 	function topmenu(array $vars, array $apps)
 	{
 		// array of header info items (orders of the items matter)

@@ -291,7 +291,7 @@ export default css`
         visibility: visible;
     }
 
-    ::slotted(egw-app:not([active])) {
+	::slotted(egw-app:not([active]):not([slot])) {
         display: none;
     }
 	/*
