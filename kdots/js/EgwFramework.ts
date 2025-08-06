@@ -626,6 +626,26 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
+	 * Check if given window is a "popup" alike, returning integer or undefined if not
+	 *
+	 * @param {DOMWindow} _wnd
+	 * @returns {number|undefined}
+	 */
+	popup_idx(_wnd)
+	{
+		return this._popups.findIndex(w => w === _wnd || w.$iFrame && $iFrame[0].contentWindow === _wnd) ?? undefined;
+	}
+
+	/**
+	 * @param {window} _wnd window object which suppose to be closed
+	 * @deprecated Just close it with `window.close()`
+	 */
+	popup_close(_wnd)
+	{
+		_wnd.close();
+	}
+
+	/**
 	 * Collect and close all already closed windows
 	 * egw.open_link expects it from the framework
 	 */
