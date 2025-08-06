@@ -1178,6 +1178,7 @@ export class EgwFramework extends LitElement
                     <sl-split-panel part="status-split" exportparts="divider" position-in-pixels="${statusPosition}"
                                     primary="end"
                                     snap="150px ${statusSnap} 0px"
+                                    disabled
                                     snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
                                     aria-label="Side menu resize">
                         <main slot="start" part="main" class="egw_fw__main" id="main"
