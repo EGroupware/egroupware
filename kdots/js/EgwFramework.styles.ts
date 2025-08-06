@@ -285,6 +285,10 @@ export default css`
                     var(--tab-icon-size, 32px)));
         }
     }
+    /* needs different alignment in app_list and open_apps*/
+    .egw_fw__app_list et2-image[src*='/kdots/'] *[part="image"] {
+            vertical-align: initial;
+    }
 
 
     .egw_fw__open_applications sl-tab:hover::part(close-button) {
