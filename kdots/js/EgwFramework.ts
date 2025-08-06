@@ -707,23 +707,22 @@ export class EgwFramework extends LitElement
 	 * If no appname given, the id will be prefixed with current app. The discardID will be stored in local storage.
 	 * @returns {Promise<SlAlert>} SlAlert element
 	 */
-	public async message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null)
+	public message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null)
 	{
 		if(!message || typeof message != "string" || !message.trim())
 		{
 			return;
 		}
-		if(message && !type)
+		if(!type)
 		{
 			const error_reg_exp = new RegExp('(error|' + egw.lang('error') + ')', 'i');
 			type = message.match(error_reg_exp) ? 'error' : 'success';
 		}
 
 		// Do not add a same message twice if it's still not dismissed
-		const hash = await this.egw.hashString(message);
-		if(typeof this._messages[hash] !== "undefined")
+		if(typeof this._messages[message] !== "undefined")
 		{
-			return this._messages[hash];
+			return this._messages[message];
 		}
 
 		// Already discarded, just stop
@@ -738,23 +737,20 @@ export class EgwFramework extends LitElement
 			duration: duration * 1000,
 			discard: _discardID,
 			message: message,
-			"data-hash": hash
 		}
 		if(!duration)
 		{
 			delete attributes.duration;
 		}
 
-		const alert = Object.assign(document.createElement("egw-message"), attributes);
+		const alert : EgwFrameworkMessage = <EgwFrameworkMessage>Object.assign(document.createElement("egw-message"), attributes);
 		alert.addEventListener("sl-hide", (e) =>
 		{
 			delete this._messages[e.target["data-hash"] ?? ""];
 		});
-		this._messages[hash] = alert;
+		this._messages[message] = alert;
 		document.body.append(alert);
-		await alert.updateComplete;
-
-		alert.toast();
+		window.setTimeout(() => alert.toast(), 0);
 
 		return alert;
 	}

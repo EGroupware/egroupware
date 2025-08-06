@@ -133,6 +133,11 @@ export class EgwFrameworkMessage extends LitElement
 		return this.alert.hide();
 	}
 
+	public close() : Promise<void>
+	{
+		return this.hide();
+	}
+
 	get alert() : SlAlert { return this.shadowRoot?.querySelector("sl-alert") as SlAlert ?? this.__alert; }
 
 	get egw() : typeof egw
