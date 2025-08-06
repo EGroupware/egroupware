@@ -288,7 +288,7 @@ export class et2_dataview_selectionManager
 			{
 				this._focusedEntry.tr.setAttribute("tabindex", "0");
 				this._focusedEntry.tr.focus();
-				this._focusedEntry.tr.scrollIntoViewIfNeeded();
+				this._focusedEntry.tr.scrollIntoViewIfNeeded && this._focusedEntry.tr.scrollIntoViewIfNeeded();
 			}
 			this._updateEntryState(entry,
 					egwSetBit(entry.state, EGW_AO_STATE_FOCUSED, true));
