@@ -279,7 +279,7 @@ export default css`
                 var(--tab-icon-size, 32px)));
 
         *[part="image"] {
-            vertical-align: bottom;
+            vertical-align: sub;
             width: calc(
                     calc(2 * var(--tab-icon-spacing, 2px) +
                     var(--tab-icon-size, 32px)));
