@@ -418,11 +418,14 @@ export class EgwFramework extends LitElement
 		const applicationInfo = this._tabApps[tabName] ??
 			this.applicationList.find(a => a.name == tabName);
 
-		const active = applicationInfo.active || this.querySelector(`egw-app#${applicationInfo.name}`)?.getAttribute("active") != null;
+		const active = applicationInfo?.active || this.querySelector(`egw-app#${applicationInfo.name}`)?.getAttribute("active") != null;
 
 		// Just the tab, ignore the app element
-		delete applicationInfo.opened;
-		applicationInfo.active = false;
+		if(applicationInfo)
+		{
+			delete applicationInfo.opened;
+			applicationInfo.active = false;
+		}
 		delete this._tabApps[tabName];
 
 		if(active)
@@ -496,9 +499,7 @@ export class EgwFramework extends LitElement
 		}
 	}
 
-	public tabLinkHandler(_link : string, _extra = {
-		id: ""
-	})
+	public tabLinkHandler(_link : string, _extra : Record<string, any> = {id: ""})
 	{
 		const app = this.parseAppFromUrl(_link);
 		if(app)
@@ -514,11 +515,13 @@ export class EgwFramework extends LitElement
 			_link += '&fw_target=' + appname;
 			// create an actual clone of existing app object
 			let clone = {
-				icon: appname + '/navbar',
+				icon: app.name + '/navbar',
+				internalName: app.name,
 				...app,
 				..._extra,
+				title: _extra.displayName ?? app.title,
+				// This is the tab name, not the application name
 				name: appname,
-				internalName: app.name,
 				url: _link,
 				// Need to override to open, base app might already be opened
 				opened: undefined
