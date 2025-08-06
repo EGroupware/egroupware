@@ -380,16 +380,10 @@ export class EgwFrameworkApp extends LitElement
 	/**
 	 * Refresh given application by refreshing etemplates, or reloading URL
 	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
-	 * @param {string|undefined} _app application name
 	 * @param {string|number|undefined} _id id of entry to refresh
 	 * @param {string|undefined} _type either 'edit', 'delete', 'add' or undefined
-	 * @param {string|undefined} _targetapp which app's window should be refreshed, default current
-	 * @param {string|RegExp} _replace regular expression to replace in url
-	 * @param {string} _with
-	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
-	 * @return {DOMwindow|null} null if refresh was triggered, or DOMwindow of app
 	 */
-	public refresh(_msg, _app, _id, _type)
+	public refresh(_msg, _id, _type)
 	{
 		if(this.useIframe)
 		{
