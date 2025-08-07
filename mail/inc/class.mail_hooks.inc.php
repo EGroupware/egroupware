@@ -605,7 +605,7 @@ class mail_hooks
 			$file = Array(
 				'Site Configuration' => Egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
 			);
-			display_sidebox($appname,lang('Admin'),$file);
+			display_sidebox($appname, lang('Configuration'), $file);
 		}
 
 		// add pgp encryption menu at the end

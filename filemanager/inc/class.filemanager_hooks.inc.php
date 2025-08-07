@@ -113,7 +113,7 @@ class filemanager_hooks
 		}
 		else
 		{
-			display_sidebox(self::$appname,lang('Admin'),$file);
+			display_sidebox(self::$appname, lang('Configuration'), $file);
 		}
 	}
 

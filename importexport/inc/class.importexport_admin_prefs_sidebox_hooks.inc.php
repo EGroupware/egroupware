@@ -83,7 +83,7 @@ class importexport_admin_prefs_sidebox_hooks
 			}
 			else
 			{
-				display_sidebox($appname,lang('Admin'),$file);
+				display_sidebox($appname, lang('Configuration'), $file);
 			}
 		}
 	}

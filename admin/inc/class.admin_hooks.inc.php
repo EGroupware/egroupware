@@ -148,7 +148,7 @@ class admin_hooks
 				{
 					if (is_array($url) && $url['link']) $url = $url['link'];
 				}
-				display_sidebox($appname,lang('Admin'),$file);
+				display_sidebox($appname, lang('Configuration'), $file);
 			}
 		}
 	}
