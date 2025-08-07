@@ -828,15 +828,6 @@ export class EgwFrameworkApp extends LitElement
                     ></sl-icon-button>
                 </div>
                 <sl-menu part="app-menu">
-                    ${(typeof this.egw.user('apps')['admin'] == undefined || !this.features.appConfig) ? nothing : html`
-                        <sl-menu-item
-                                @click=${this.handleAppMenuClick}
-                        >
-                            <sl-icon slot="prefix" name="gear-wide"></sl-icon>
-                            ${this.egw.lang("App configuration")}
-                        </sl-menu-item>
-                        <sl-divider></sl-divider>
-                    `}
                     ${!this.egw.user('apps')['preferences'] || !this.features.preferences ? nothing : html`
                         <sl-menu-item
                                 @click=${() => this.egw.show_preferences('prefs', [this.name])}

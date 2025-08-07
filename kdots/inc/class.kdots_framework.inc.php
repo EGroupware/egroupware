@@ -100,7 +100,7 @@ class kdots_framework extends Api\Framework\Ajax
 		{
 			// Enable / disable framework features for each app
 			// Feature name => EGw hook name
-			$hooks = ['preferences' => 'settings', 'appConfig' => 'admin', 'categories' => 'categories',
+			$hooks = ['preferences' => 'settings', 'categories' => 'categories',
 					  'aclRights'   => 'acl_rights'];
 			array_walk($extra['navbar-apps'], function (&$item, $key) use (&$hooks)
 			{

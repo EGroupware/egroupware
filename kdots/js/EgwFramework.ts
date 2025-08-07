@@ -1247,7 +1247,6 @@ export interface ApplicationInfo
 
 // List of features that the framework can handle in a standard way for each app
 export type FeatureList = {
-	appConfig? : boolean,
 	preferences? : boolean,
 	favorites? : boolean,
 	aclRights? : false,
@@ -1256,7 +1255,6 @@ export type FeatureList = {
 
 // Feature settings for app when they haven't been set / overridden with anything specific
 export const DEFAULT_FEATURES : FeatureList = {
-	appConfig: false,
 	preferences: false,
 	favorites: false,
 }
