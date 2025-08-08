@@ -612,6 +612,7 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
 /*** APPLICATION ***/
 egw-app {
   --application-header-text-color: var(--sl-color-neutral-200);
+  /* Nice formatting for templates slotted into header (no need to wrap contents in et2-hbox) */
   /* Application template gets full height */
 }
 egw-app::part(name) {
@@ -621,9 +622,25 @@ egw-app::part(name) {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+egw-app::part(header) {
+  display: flex;
+}
+egw-app et2-template[slot="main-header"]::part(base) {
+  display: flex;
+  flex-direction: row;
+}
 egw-app::part(content) {
   flex-direction: column;
   overflow-y: hidden;
+}
+egw-app::part(filter) {
+  --size: 40em;
+  --label-width: max(15em, 30%);
+}
+@media (max-width: 800px) {
+  egw-app::part(filter) {
+    --size: 100%;
+  }
 }
 egw-app > div[id] > div,
 egw-app > div[id] > et2-template {
@@ -816,6 +833,7 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   --sl-input-color-hover: var(--application-header-text-color);
   --sl-input-placeholder-color: hsl(from var(--application-header-text-color) h s l / 50%);
   color: var(--application-header-text-color);
+  /* Deeper children get normal styling */
 }
 [slot="main-header"] input::placeholder {
   color: black;
@@ -832,6 +850,7 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
 [slot="main-header"] et2-switch-icon,
 [slot="main-header"] et2-image {
   --indicator-color: var(--sl-color-neutral-0);
+  --sl-input-background-color: transparent;
 }
 [slot="main-header"] et2-button::part(base),
 [slot="main-header"] et2-button-icon::part(base),
@@ -875,6 +894,16 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
 }
 [slot="main-header"] et2-toolbar [slot="list"] :hover::part(base) {
   border-color: var(--sl-input-border-color);
+}
+[slot="main-header"] > * {
+  --sl-input-background-color: var(--sl-color-neutral-0);
+  --sl-input-background-color-hover: var(--sl-input-background-color);
+  --sl-input-color: var(--sl-color-neutral-700);
+  --sl-input-color-hover: var(--sl-color-neutral-700);
+  --input-text-color: var(--sl-color-neutral-700);
+  --sl-input-icon-color: var(--sl-color-neutral-500);
+  --sl-input-placeholder-color: var(--sl-color-neutral-500);
+  color: initial;
 }
 /*** END WIDGETS ***/
 body #popupMainDiv.et2_mobile_view {

@@ -141,6 +141,11 @@ export default css`
 		justify-content: stretch;
 		overflow: hidden;
 	}
+
+	.egw_fw_app__filter_drawer [slot="header-actions"] {
+		/* Fixes vertical alignment of et2-button-icon buttons in header actions */
+		display: flex;
+	}
 	.egw_fw_app__header {
 		grid-row: sub-header / main;
 	}

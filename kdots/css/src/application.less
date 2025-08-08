@@ -11,10 +11,30 @@ egw-app {
 	text-overflow: ellipsis;
   }
 
+  &::part(header)
+  {
+	display: flex;
+  }
+
+  /* Nice formatting for templates slotted into header (no need to wrap contents in et2-hbox) */
+  et2-template[slot="main-header"]::part(base) {
+	display: flex;
+	flex-direction: row;
+  }
+
   &::part(content) {
 	flex-direction: column;
 	overflow-y:hidden;
   }
+
+  &::part(filter) {
+	--size: 40em;
+	--label-width: max(15em, 30%);
+	@media (max-width: 800px) {
+	  --size: 100%;
+	}
+  }
+
   /* Application template gets full height */
   & > div[id] > div, & > div[id] > et2-template {
 	height: 100%;

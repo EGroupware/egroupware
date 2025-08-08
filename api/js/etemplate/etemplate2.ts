@@ -61,6 +61,7 @@ import './Et2Favorites/Et2Favorites';
 import './Et2Favorites/Et2FavoritesMenu';
 import './Et2File/Et2File';
 import './Et2File/Et2FileItem';
+import './Et2Filterbox/Et2Filterbox';
 import './Et2Image/Et2Image';
 import './Et2Image/Et2AppIcon';
 import './Et2Avatar/Et2LAvatar';

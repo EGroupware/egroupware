@@ -15,6 +15,8 @@ import {repeat} from "lit/directives/repeat.js";
 import {until} from "lit/directives/until.js";
 import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
+import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
 
 /**
  * @summary Application component inside EgwFramework
@@ -26,6 +28,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
  *
  * @slot - Main application content.  Other slots are normally hidden if they have no content
  * @slot header - Top of app, contains logo, app icons.
+ * @slot filter - Custom filter panel content, leave empty for auto-generated filters
  * @slot footer - Very bottom of the main content.
  * @slot left - Optional content to the left.  Use for application navigation.
  * @slot left-header - Top of left side
@@ -134,6 +137,8 @@ export class EgwFrameworkApp extends LitElement
 
 	get iframe() { return <HTMLIFrameElement>this.shadowRoot.querySelector("iframe");}
 
+	get filters() { return <Et2Filterbox>this.shadowRoot.querySelector(".egw_fw_app__filter");}
+
 
 	protected readonly hasSlotController = new HasSlotController(<LitElement><unknown>this,
 		'left', 'left-header', 'left-footer',
@@ -186,6 +191,7 @@ export class EgwFrameworkApp extends LitElement
 			this.rightPanelInfo.preferenceWidth = value;
 		});
 		this.addEventListener("load", this.handleEtemplateLoad);
+		this.addEventListener("clear", this.handleEtemplateClear);
 
 		// Work around sl-split-panel resizing to 0 when app is hidden
 		this.framework.addEventListener("sl-tab-hide", this.handleTabHide);
@@ -532,6 +538,12 @@ export class EgwFrameworkApp extends LitElement
 		return this.name;
 	}
 
+	get nextmatch() : et2_nextmatch
+	{
+		// Look for a nextmatch by finding the favourites in the header
+		return this.querySelector("et2-template .et2_nextmatch et2-favorites")?.getParent()?.getParent();
+	}
+
 	private hasSideContent(side : "left" | "right")
 	{
 		return this.hasSlotController.test(`${side}-header`) ||
@@ -566,9 +578,22 @@ export class EgwFrameworkApp extends LitElement
 		slottedWidgets.forEach(node => {this.appendChild(node);});
 
 		// Request update, since slotchanged events are only fired when the attribute changes and they're already set
-		if(slottedTemplates.length > 0 || slottedWidgets.length > 0)
+		if(slottedTemplates.length > 0 || slottedWidgets.length > 0 || this.nextmatch)
 		{
 			this.requestUpdate();
+		}
+	}
+
+	/**
+	 * An etemplate has been cleared
+	 * Clear any references & clean up
+	 */
+	protected handleEtemplateClear(event)
+	{
+		if(this.nextmatch && this.nextmatch.getInstanceManager().DOMContainer === event.target)
+		{
+			this.filters.nextmatch = null;
+			this.requestUpdate("nextmatch");
 		}
 	}
 
@@ -811,6 +836,7 @@ export class EgwFrameworkApp extends LitElement
 	protected _rightHeaderTemplate()
 	{
 		return html`
+            ${this._filterButtonTemplate()}
             <et2-button-icon nosubmit name="arrow-clockwise"
                              label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
                              statustext=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
@@ -863,6 +889,60 @@ export class EgwFrameworkApp extends LitElement
                 </sl-menu>
             </sl-dropdown>
 		`;
+	}
+
+	protected _filterButtonTemplate()
+	{
+		if(!this.nextmatch && !this.hasSlotController.test("filter"))
+		{
+			return nothing;
+		}
+		return html`
+            <et2-button-icon nosubmit name="filter-circle"
+                             label=${this.egw.lang("Filters")}
+                             statustext=${this.egw.lang("Filter the list entries")}
+                             @click=${() =>
+                             {
+                                 const filter = this.shadowRoot.querySelector("[part=filter]") ??
+                                         this.querySelector("et2-filterbox").parentElement;
+                                 filter.open = !filter.open;
+                             }}
+            ></et2-button-icon>`;
+	}
+
+	protected _filterTemplate()
+	{
+		if(!this.nextmatch && !this.hasSlotController.test("filter"))
+		{
+			return nothing;
+		}
+
+		return html`
+            <sl-drawer part="filter"
+                       class="egw_fw_app__filter_drawer"
+                       label=${this.egw.lang("Filters")} contained
+                       open
+            >
+                <et2-button-icon slot="header-actions" name="selectcols"
+                                 label=${this.egw.lang("Select columns")}
+                                 statustext=${this.egw.lang("Select columns")}
+                                 @click=${e => {this.nextmatch._selectColumnsClick(e)}} nosubmit>
+                </et2-button-icon>
+
+                <et2-filterbox
+                        exportparts="filters"
+                        class="egw_fw_app__filter"
+                        .nextmatch=${this.nextmatch} originalwidgets="replace"
+                        @change=${e => e.preventDefault()}
+                >
+                    ${this.hasSlotController.test("filter") ? html`
+                        <slot name="filter"></slot>` : nothing}
+                </et2-filterbox>
+                <et2-button slot="footer" label="Apply" nosubmit
+                            @click=${e => this.filters.applyFilters()}
+                >
+                </et2-button>
+            </sl-drawer>`;
 	}
 
 	/**
@@ -987,6 +1067,7 @@ export class EgwFrameworkApp extends LitElement
                     <sl-spinner></sl-spinner>`)}
             </div>
             <div class="egw_fw_app__main" part="main">
+                ${this._filterTemplate()}
                 <sl-split-panel class=${classMap({"egw_fw_app__outerSplit": true, "no-content": !hasLeftSlots})}
                                 primary="start" position-in-pixels="${leftWidth}"
                                 snap="0px 20%" snap-threshold="50"
