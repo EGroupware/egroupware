@@ -921,7 +921,6 @@ export class EgwFrameworkApp extends LitElement
             <sl-drawer part="filter"
                        class="egw_fw_app__filter_drawer"
                        label=${this.egw.lang("Filters")} contained
-                       open
             >
                 <et2-button-icon slot="header-actions" name="selectcols"
                                  label=${this.egw.lang("Select columns")}
