@@ -144,7 +144,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 						white-space: normal;
 					}
 
-					.form-control--has-label .form-control-label {
+					.form-control--has-label .form-control__label {
 						margin-right: var(--sl-spacing-medium);
 					}
 

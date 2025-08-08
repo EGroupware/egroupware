@@ -24,7 +24,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 	static get styles()
 	{
 		return [
-			...super.styles,
+			...(Array.isArray(super.styles) ? super.styles : [super.styles]),
 			css`
 				:host {
 				display: block;
