@@ -990,7 +990,7 @@ class infolog_so
 			$sql_query = "FROM $this->info_table main $join WHERE ($filtermethod $pid ".($sql_query ?? '').') '.($link_extra??'');
 			#error_log("infolog.so.search:\n" . print_r($sql_query, true));
 
-			if ($this->db->Type == 'mysql' && (float)$this->db->ServerInfo['version'] >= 4.0)
+			if (substr($this->db->Type, 0, 5) === 'mysql' && (float)$this->db->ServerInfo['version'] >= 4.0)
 			{
 				$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
 				unset($query['total']);

@@ -1615,6 +1615,25 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
   font-weight: bold;
   color: dimgrey;
 }
+egw-app {
+  --current-day-color: var(--sl-color-amber-200, #ffffcc);
+}
+#calendar-sidebox_date .flatpickr-day {
+  color: var(--sl-color-neutral-900);
+}
+#calendar-sidebox_date .flatpickr-day.today {
+  background-color: var(--current-day-color);
+  color: var(--sl-color-neutral-900);
+}
+#calendar-sidebox_date .flatpickr-day.selected {
+  background-color: var(--application-color);
+}
+.calendar_calTimeGrid .calendar_calDayColHeader .calendar_calToday.et2_link.et2_clickable {
+  background-color: var(--current-day-color);
+}
+table:not(.hideDayColHeader) tbody > tr > td > .calendar_calTimeGrid[id*="daywise"] {
+  margin-top: var(--sl-spacing-medium);
+}
 #calendar-view,
 #calendar-todo,
 #calendar-planner,
@@ -1628,9 +1647,6 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
 }
 #calendar-sidebox iframe {
   display: none;
-}
-#calendar-sidebox_date {
-  flex-grow: 0;
 }
 #calendar-toolbar #calendar-toolbar_app_header {
   color: inherit;
@@ -1654,4 +1670,3 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
 .kdots-glassy .et2-input-widget:not([disabled])::part(combobox) {
   --sl-border-radius-medium: var(--sl-input-height-medium);
 }
-/*# sourceMappingURL=app.css.map */

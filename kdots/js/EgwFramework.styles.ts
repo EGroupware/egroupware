@@ -13,7 +13,7 @@ export default css`
         --inactive-tab-opacity: 0.5;
         --header-icon-size: 1.5rem;
         --left-side-width: 200px;
-	    --tab-icon-spacing: 2px;
+        --tab-icon-spacing: 2px;
     }
 
     .egw_fw__layout-default {
@@ -98,9 +98,9 @@ export default css`
             display: none;
         }
 
-		::part(divider) {
-			display: none;
-		}
+        ::part(divider) {
+            display: none;
+        }
     }
     @media print {
         /* Hide the header */
@@ -156,7 +156,10 @@ export default css`
     .egw_fw__header .egw_fw__app_list {
         flex: none;
         font-size: var(--header-icon-size, var(--sl-font-size-2x-large));
-        padding-left: 0.5rem;
+
+        sl-icon-button::part(base) {
+            padding-left: 0
+        }
     }
 
     .egw_fw__header .spacer {
@@ -205,6 +208,12 @@ export default css`
 
     .egw_fw__open_applications sl-tab:not([active]) *[part='tab-icon'] {
         opacity: var(--inactive-tab-opacity);
+    }
+
+    /* unless you hover over one*/
+
+    .egw_fw__open_applications sl-tab:not([active]):hover *[part='tab-icon'] {
+        opacity: 1;
     }
 
     .egw_fw__open_applications sl-tab::part(base) {
@@ -285,9 +294,11 @@ export default css`
                     var(--tab-icon-size, 32px)));
         }
     }
+
     /* needs different alignment in app_list and open_apps*/
+
     .egw_fw__app_list et2-image[src*='/kdots/'] *[part="image"] {
-            vertical-align: initial;
+        vertical-align: initial;
     }
 
 
@@ -295,10 +306,11 @@ export default css`
         visibility: visible;
     }
 
-	::slotted(egw-app:not([active]):not([slot])) {
+    ::slotted(egw-app:not([active]):not([slot])) {
         display: none;
     }
-	/*
+
+    /*
 	This is the same as in EgwFrameworkApp.styles.ts
 	*/
     ${SlSplitPanelStyles}
