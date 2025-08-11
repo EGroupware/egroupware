@@ -274,7 +274,8 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				 */
 				data: {
 					type: String,
-					reflect: false
+					reflect: false,
+					noAccessor: true
 				},
 
 				actions: {
@@ -524,7 +525,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 					this.dataset[f[0]] = f[1];
 				}
 			});
-
+			this.requestUpdate("data");
 		}
 
 		get data() : string
