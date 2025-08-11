@@ -243,8 +243,11 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		const filters = Array.from(nextmatch.getDOMNode().querySelectorAll("et2-nextmatch-header-filter, et2-nextmatch-header-account, et2-nextmatch-header-entry"));
 		filters.forEach((widget : HTMLElement) =>
 		{
-			const groupName = widget.getParent().instanceOf(et2_nextmatch_customfields) ?
-							  widget.egw().lang('Custom fields') : widget.egw().lang('Column Filters');
+			// Customfields get their own group
+			const groupName = (widget.dataset.groupName ? widget.egw().lang(widget.dataset.groupName) : null) ?? (
+				widget.getParent().instanceOf(et2_nextmatch_customfields) ?
+				widget.egw().lang('Custom fields') : widget.egw().lang('Column Filters')
+			);
 			if(typeof this._groups[groupName] == "undefined")
 			{
 				this._groups[groupName] = {
@@ -404,7 +407,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
                 <slot name="suffix" part="suffix" class="filterbox__suffix"></slot>
                 ${this._helpTextTemplate()}
                 <div slot="footer" part="buttons" class="filterbox__buttons">
-                    ${!this.autoapply ? nothing : html`
+                    ${this.autoapply ? nothing : html`
                         <et2-button variant="primary" label="Apply" nosubmit
                                     ?disabled=${this.disabled}
                                     @click=${this.applyFilters}
