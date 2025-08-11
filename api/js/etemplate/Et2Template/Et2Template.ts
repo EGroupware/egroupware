@@ -101,8 +101,8 @@ export class Et2Template extends Et2Widget(LitElement)
 		super.connectedCallback();
 		this.addEventListener("load", this.handleLoad);
 
-		// If we can, start loading immediately
-		if(this.template || this.id || this.url)
+		// If we can, start loading immediately but don't re-load if we already have contents (probably a DOM move)
+		if(this.childElementCount == 0 && (this.template || this.id || this.url))
 		{
 			this.load();
 		}
