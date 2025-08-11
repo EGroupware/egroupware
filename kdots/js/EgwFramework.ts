@@ -12,6 +12,7 @@ import {EgwFrameworkApp} from "./EgwFrameworkApp";
 import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import {state} from "lit/decorators/state.js";
+import {EgwPopups} from "./EgwPopups";
 
 /**
  * @summary Accessable, webComponent-based EGroupware framework
@@ -122,9 +123,7 @@ export class EgwFramework extends LitElement
 	private _tabApps : { [id : string] : ApplicationInfo } = {};
 	private serializedTabState : string;
 
-	// Keep track of open popups
-	private _popups : Window[] = [];
-	private _popupsGCInterval : number;
+	public popups = new EgwPopups();
 
 	// Keep track of open messages
 	private _messages : SlAlert[] = [];
@@ -575,12 +574,7 @@ export class EgwFramework extends LitElement
 		const windowID = this.egw.openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
 
 		windowID.framework = this;
-		this._popups.push(windowID);
-		if(!this._popupsGCInterval)
-		{
-			// Check every 60s to make sure we didn't miss any
-			this._popupsGCInterval = window.setInterval(() => this.popups_garbage_collector(), 10000);
-		}
+		this.popups.add(windowID);
 
 		if(_returnID !== false)
 		{
@@ -638,15 +632,35 @@ export class EgwFramework extends LitElement
 	/**
 	 * Check if given window is a "popup" alike, returning integer or undefined if not
 	 *
+	 * @deprecated Use `framework.popups.findIndex()` instead
+	 *
 	 * @param {DOMWindow} _wnd
 	 * @returns {number|undefined}
 	 */
 	popup_idx(_wnd)
 	{
-		return this._popups.findIndex(w => w === _wnd || w.$iFrame && $iFrame[0].contentWindow === _wnd) ?? undefined;
+		return this.popups.findIndex(_wnd);
 	}
 
 	/**
+	 * get popups based on application name and regexp
+	 *
+	 * @deprecated Use `framework.popups.get()` instead
+	 *
+	 * @param {string} _app app name
+	 * @param {regexp|object} regex regular expression to check against location.href url or
+	 * an object containing window property to be checked against
+	 *
+	 * @returns {Array} returns array of windows object
+	 */
+	public popups_get(_app, param)
+	{
+		return this.popups.get(_app, param);
+	}
+
+	/**
+	 * Close popup
+	 *
 	 * @param {window} _wnd window object which suppose to be closed
 	 * @deprecated Just close it with `window.close()`
 	 */
@@ -657,23 +671,14 @@ export class EgwFramework extends LitElement
 
 	/**
 	 * Collect and close all already closed windows
+	 *
 	 * egw.open_link expects it from the framework
+	 *
+	 * @deprecated Called automatically
 	 */
 	public popups_garbage_collector()
 	{
-		let i = this._popups.length;
-		while(i--)
-		{
-			if(this._popups[i].closed)
-			{
-				this._popups.splice(i, 1);
-			}
-		}
-		if(this._popups.length == 0 && this._popupsGCInterval)
-		{
-			window.clearInterval(this._popupsGCInterval);
-			this._popupsGCInterval = null;
-		}
+		return;
 	}
 
 	/**
