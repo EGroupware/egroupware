@@ -131,7 +131,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		}
 		if ($path == '/infolog/')
 		{
-			$task_filter= 'own';
+			$task_filter= Api\CalDAV::isJson() ? 'all' : 'own';
 		}
 		else
 		{
@@ -266,8 +266,9 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			$handler = self::_get_handler();
 		}
 		unset($filter['calendar_data']);
-		$task_filter = $filter['filter'];
-		unset($filter['filter']);
+		$task_filter = $filter['filter'] ?? null;
+		$search = $filter['search'] ?? null;
+		unset($filter['filter'], $filter['search']);
 
 		// yield extra resources like the root itself
 		$yielded = 0;
@@ -297,6 +298,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			'filter'    	=> $task_filter,
 			'date_format'	=> $is_jstask ? 'object' : 'server',
 			'col_filter'	=> $filter,
+			'search'        => $search,
 			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
 			'start'         => 0,
 			'num_rows'      => self::CHUNK_SIZE,
