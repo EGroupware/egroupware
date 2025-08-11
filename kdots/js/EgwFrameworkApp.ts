@@ -540,8 +540,15 @@ export class EgwFrameworkApp extends LitElement
 
 	get nextmatch() : et2_nextmatch
 	{
-		// Look for a nextmatch by finding the favourites in the header
-		return this.querySelector("et2-template .et2_nextmatch et2-favorites")?.getParent()?.getParent();
+		// Look for a nextmatch by finding the DOM node by CSS class
+		let nm = null;
+		this.querySelectorAll(".et2_nextmatch").forEach((nm_div : HTMLElement) =>
+		{
+			const template = (<Et2Template>nm_div.closest("et2-template"));
+			const widget_id = nm_div.id.replace(template.getInstanceManager().uniqueId + "_", "");
+			nm = template.getWidgetById(widget_id);
+		})
+		return nm;
 	}
 
 	private hasSideContent(side : "left" | "right")
@@ -919,6 +926,7 @@ export class EgwFrameworkApp extends LitElement
 
 		return html`
             <sl-drawer part="filter"
+                       exportparts="panel:filter__panel "
                        class="egw_fw_app__filter_drawer"
                        label=${this.egw.lang("Filters")} contained
             >

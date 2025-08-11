@@ -35,6 +35,10 @@ egw-app {
 	}
   }
 
+  &::part(filter__panel) {
+	z-index: var(--sl-z-index-drawer);
+  }
+
   /* Application template gets full height */
   & > div[id] > div, & > div[id] > et2-template {
 	height: 100%;

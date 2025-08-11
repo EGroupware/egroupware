@@ -642,6 +642,9 @@ egw-app::part(filter) {
     --size: 100%;
   }
 }
+egw-app::part(filter__panel) {
+  z-index: var(--sl-z-index-drawer);
+}
 egw-app > div[id] > div,
 egw-app > div[id] > et2-template {
   height: 100%;
