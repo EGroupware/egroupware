@@ -1022,6 +1022,7 @@ class infolog_ui
 			$values['nm']['no_kanban'] = true;
 		}
 
+		$values['nm']['row_count_id'] = 'infolog.index.header';
 		$values['nm']['options-filter'] = $this->filters;
 		$values['nm']['get_rows'] = 'infolog.infolog_ui.get_rows';
 		$values['nm']['add_on_top_sort_field'] = 'info_datemodified';

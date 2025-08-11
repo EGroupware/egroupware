@@ -3613,10 +3613,10 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				.hide()
 				.click(function(e)
 				{
-					if (self.nextmatch.getDOMNode().getElementsByClassName('selected').length>0)
+					if(self.nextmatch.getDOMNode().getElementsByClassName('selected').length > 0)
 					{
 						e.stopPropagation();
-						self.nextmatch.getDOMNode().getElementsByClassName('selected')[0].dispatchEvent(new CustomEvent("tapandhold",{type:'tapandhold'}));
+						self.nextmatch.getDOMNode().getElementsByClassName('selected')[0].dispatchEvent(new CustomEvent("tapandhold", {type: 'tapandhold'}));
 					}
 				})
 				.prependTo(this.search_box);
@@ -3625,9 +3625,12 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		// Add category
 		if(!settings.no_cat)
 		{
-			if(typeof settings.cat_id_label == 'undefined') settings.cat_id_label = '';
-			this.category = this._build_select('cat_id', settings.cat_widget ?? (settings.cat_is_select ?
-				'et2-select' : 'et2-select-cat'), settings.cat_id, settings.cat_is_select !== true, {
+			if(typeof settings.cat_id_label == 'undefined')
+			{
+				settings.cat_id_label = '';
+			}
+			this.category = this._build_select(
+				'cat_id', settings.cat_widget ?? (settings.cat_is_select ? 'et2-select' : 'et2-select-cat'), settings.cat_id, settings.cat_is_select !== true, {
 				placeholder: settings.cat_placeholder,
 				multiple: false,
 				class: "select-cat",
@@ -3669,6 +3672,28 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			.appendTo(this.count)
 			.text(settings.total + "");
 		this.count.appendTo(this.row_div);
+		if(settings.row_count_id)
+		{
+			// Where to stick the count has been passed in, but it's probably not there yet.
+			// Wait for load event since kdots will slot sub-template when etemplate fires load
+			this.getInstanceManager().widgetContainer.updateComplete.then(() =>
+			{
+				this.getInstanceManager().widgetContainer.addEventListener("load", () =>
+				{
+					window.setTimeout(() =>
+					{
+						const newCountElement = this.getInstanceManager().widgetContainer.getWidgetById(settings.row_count_id);
+						if(newCountElement)
+						{
+							this.count_total
+								.addClass("nextmatch_count")
+								.attr("aria-label", egw.lang("Row count"))
+								.appendTo(newCountElement);
+						}
+					}, 0);
+				});
+			});
+		}
 
 		// Favorites
 		this._setup_favorites(settings['favorites']);
