@@ -1,5 +1,24 @@
 @import (less) "../default/app.css";
 
+egw-app {
+  --current-day-color: var(--sl-color-amber-200, #ffffcc);
+}
+#calendar-sidebox_date .flatpickr-day{
+  color: var(--sl-color-neutral-900);
+}
+#calendar-sidebox_date .flatpickr-day.today {
+  background-color: var(--current-day-color);
+  color: var(--sl-color-neutral-900)
+}
+#calendar-sidebox_date .flatpickr-day.selected {
+  background-color: var(--application-color);
+}
+.calendar_calTimeGrid .calendar_calDayColHeader .calendar_calToday.et2_link.et2_clickable {
+	background-color: var(--current-day-color);
+}
+table:not(.hideDayColHeader) tbody>tr>td>.calendar_calTimeGrid[id*="daywise"]{
+  margin-top: var(--sl-spacing-medium);
+}
 #calendar-view, #calendar-todo, #calendar-planner, #calendar-list {
   position: relative;
   width: 100% !important;
@@ -11,9 +30,6 @@
   iframe {
 	display: none;
   }
-}
-#calendar-sidebox_date {
-  flex-grow: 0;
 }
 
 #calendar-toolbar {

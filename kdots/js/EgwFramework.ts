@@ -1159,23 +1159,23 @@ export class EgwFramework extends LitElement
             <div class=${classMap(classes)} part="base">
                 ${this._accessibleTopTemplate()}
                 ${this.hasBanner ? html`
-                <div class="egw_fw__banner" part="banner" role="banner">
-                    <slot name="banner"><span class="placeholder">Banner</span></slot>
-                </div>` : nothing
+                    <div class="egw_fw__banner" part="banner" role="banner">
+                        <slot name="banner"><span class="placeholder">Banner</span></slot>
+                    </div>` : nothing
                 }
                 <header class="egw_fw__header" part="header">
                     <div class="egw_fw__logo_apps">
                         <slot name="logo" part="logo"></slot>
-                        <sl-dropdown class="egw_fw__app_list" role="menu" exportparts="panel:app-list-panel">
-                            <sl-icon-button slot="trigger" name="grid-3x3-gap"
-                                            label="${this.egw.lang("Application list")}"
-                                            aria-hidden="true"
-                                            aria-description="${this.egw.lang("Activate for a list of applications")}"
-                            ></sl-icon-button>
-                            ${repeat(this.applicationList, (app) => this._applicationListAppTemplate(app))}
-                        </sl-dropdown>
                     </div>
-					<div class="spacer spacer_start"></div>
+                    <sl-dropdown class="egw_fw__app_list" role="menu" exportparts="panel:app-list-panel">
+                        <sl-icon-button slot="trigger" name="grid-3x3-gap"
+                                        label="${this.egw.lang("Application list")}"
+                                        aria-hidden="true"
+                                        aria-description="${this.egw.lang("Activate for a list of applications")}"
+                        ></sl-icon-button>
+                        ${repeat(this.applicationList, (app) => this._applicationListAppTemplate(app))}
+                    </sl-dropdown>
+                    <div class="spacer spacer_start"></div>
                     <sl-tab-group part="open-applications" class="egw_fw__open_applications" activation="manual"
                                   aria-label="${this.egw.lang("Open applications")}"
                                   @sl-tab-show=${this.handleApplicationTabShow}
@@ -1185,30 +1185,30 @@ export class EgwFramework extends LitElement
                                 .filter(app => typeof app.opened !== "undefined" && !app.slot)
                                 .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
-					<div class="spacer spacer_end"></div>
+                    <div class="spacer spacer_end"></div>
                     <slot name="header"><span class="placeholder">header</span></slot>
                     <slot name="header-right"><span class="placeholder">header-right</span></slot>
                 </header>
                 ${this.hasStatus ? html`
-                <div class="egw_fw__divider">
-                    <sl-split-panel part="status-split" exportparts="divider" position-in-pixels="${statusPosition}"
-                                    style="--divider-width: 0px;"
-                                    primary="end"
-                                    snap="150px ${statusSnap} 0px"
-                                    disabled
-                                    snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
-                                    aria-label="Side menu resize">
-                        <main slot="start" part="main" class="egw_fw__main" id="main"
-                              @sl-reposition=${this.handleSlide}
-                        >
-                            <slot></slot>
-                        </main>
-                        <!-- No slider until we have more content <sl-icon slot="divider" name="grip-vertical"></sl-icon> -->
-                        <aside slot="end" class="egw_fw__status" part="status">
-                            <slot name="status"><span class="placeholder">status</span></slot>
-                        </aside>
-                    </sl-split-panel>
-                </div>` : html`
+                    <div class="egw_fw__divider">
+                        <sl-split-panel part="status-split" exportparts="divider" position-in-pixels="${statusPosition}"
+                                        style="--divider-width: 0px;"
+                                        primary="end"
+                                        snap="150px ${statusSnap} 0px"
+                                        disabled
+                                        snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
+                                        aria-label="Side menu resize">
+                            <main slot="start" part="main" class="egw_fw__main" id="main"
+                                  @sl-reposition=${this.handleSlide}
+                            >
+                                <slot></slot>
+                            </main>
+                            <!-- No slider until we have more content <sl-icon slot="divider" name="grip-vertical"></sl-icon> -->
+                            <aside slot="end" class="egw_fw__status" part="status">
+                                <slot name="status"><span class="placeholder">status</span></slot>
+                            </aside>
+                        </sl-split-panel>
+                    </div>` : html`
                     <main part="main" class="egw_fw__main" id="main"
                           @sl-reposition=${this.handleSlide}
                     >
