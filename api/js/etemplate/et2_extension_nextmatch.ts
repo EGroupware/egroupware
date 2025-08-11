@@ -4379,6 +4379,14 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 
 			// Create widget by type
 			let widget = null;
+			let attrs = {
+				id: cf_id
+			};
+			if(field.tab)
+			{
+				// If customfield goes on a special tab, we'll put it in its own filter group
+				attrs["data"] = "groupName:" + field.tab;
+			}
 			if(field.type == 'select' || field.type == 'select-account')
 			{
 				// Remove empty label
@@ -4386,34 +4394,36 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 				{
 					field.values.splice(field.values.findIndex((i) => i.value == ''), 1);
 				}
-				let attrs = {
-					id: cf_id,
-					emptyLabel: field.label
-				};
+				attrs["emptyLabel"] = field.label;
 				if(field.values && field.values["@"])
 				{
-					attrs.searchUrl = field.values["@"];
+					attrs["searchUrl"] = field.values["@"];
 				}
 				widget = loadWebComponent(
 					field.type == 'select-account' ? 'et2-nextmatch-header-account' : "et2-nextmatch-header-filter",
 					attrs,
-					this
+					undefined
 				);
 			}
 			else if(apps[field.type])
 			{
-				widget = loadWebComponent("et2-nextmatch-header-entry", {
-					id: cf_id,
+				widget = loadWebComponent("et2-nextmatch-header-entry", Object.assign(attrs, {
 					onlyApp: field.type,
 					placeholder: field.label
-				}, this);
+				}), undefined);
 			}
 			else
 			{
-				widget = et2_createWidget("nextmatch-sortheader", {
+				widget = et2_createWidget("nextmatch-sortheader", Object.assign(attrs, {
 					id: cf_id,
 					label: field.label
-				}, this);
+				}), this);
+			}
+			if(widget && !widget.getParent())
+			{
+				// Set parent after creation because this.getDOMNode() needs the widget to have an ID already,
+				// and loadWebComponent does not set it early enough
+				widget.setParent(this)
 			}
 
 			// If this is already attached, widget needs to be finished explicitly
