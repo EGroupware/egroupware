@@ -939,6 +939,7 @@ export class EgwFrameworkApp extends LitElement
                 <et2-filterbox
                         exportparts="filters"
                         class="egw_fw_app__filter"
+                        autoapply
                         .nextmatch=${this.nextmatch} originalwidgets="replace"
                         @change=${e => e.preventDefault()}
                 >
