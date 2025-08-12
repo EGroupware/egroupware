@@ -164,6 +164,7 @@ export class EgwFrameworkApp extends LitElement
 	get iframe() { return <HTMLIFrameElement>this.shadowRoot.querySelector("iframe");}
 
 	get filters() { return <Et2Filterbox>this.shadowRoot.querySelector(".egw_fw_app__filter");}
+	get filtersDrawer() { return <Et2Filterbox>this.shadowRoot.querySelector(".egw_fw_app__filter_drawer");}
 
 
 	protected readonly hasSlotController = new HasSlotController(<LitElement><unknown>this,
@@ -987,6 +988,7 @@ export class EgwFrameworkApp extends LitElement
                        exportparts="panel:filter__panel "
                        class="egw_fw_app__filter_drawer"
                        label=${this.egw.lang("Filters")} contained
+                       @sl-after-show=${() => this.filters?.shadowRoot?.querySelector("#search")?.focus()}
             >
                 <et2-button-icon slot="header-actions" name="selectcols"
                                  label=${this.egw.lang("Select columns")}
