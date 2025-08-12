@@ -112,6 +112,9 @@ export class EgwFrameworkApp extends LitElement
 	@property()
 	features : FeatureList = {};
 
+	@property({reflect: true})
+	rowCount : string = "";
+
 	/**
 	 * Display application in a loading state.
 	 * @type {boolean}
@@ -174,6 +177,8 @@ export class EgwFrameworkApp extends LitElement
 		super();
 		this.handleTabHide = this.handleTabHide.bind(this);
 		this.handleTabShow = this.handleTabShow.bind(this);
+
+		this.handleSearchResults = this.handleSearchResults.bind(this);
 	}
 	connectedCallback()
 	{
@@ -192,6 +197,7 @@ export class EgwFrameworkApp extends LitElement
 		});
 		this.addEventListener("load", this.handleEtemplateLoad);
 		this.addEventListener("clear", this.handleEtemplateClear);
+		this.addEventListener("et2-search-result", this.handleSearchResults);
 
 		// Work around sl-split-panel resizing to 0 when app is hidden
 		this.framework.addEventListener("sl-tab-hide", this.handleTabHide);
@@ -202,6 +208,8 @@ export class EgwFrameworkApp extends LitElement
 	{
 		super.disconnectedCallback();
 		this.removeEventListener("load", this.handleEtemplateLoad);
+		this.removeEventListener("clear", this.handleEtemplateClear);
+		this.removeEventListener("et2-search-result", this.handleSearchResults);
 		this.framework?.removeEventListener("sl-tab-hide", this.handleTabHide);
 		this.framework?.removeEventListener("sl-tab-show", this.handleTabShow);
 
@@ -687,6 +695,20 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	/**
+	 * Handle search result event from nextmatch
+	 *
+	 * @param event
+	 * @protected
+	 */
+	protected handleSearchResults(event)
+	{
+		if(event.detail?.nextmatch == this.nextmatch && !event.defaultPrevented)
+		{
+			this.rowCount = event.detail?.total ?? "";
+		}
+	}
+
 	protected async handleSideboxMenuClick(event)
 	{
 		return this.egw.open_link(event.target.dataset.link);
@@ -895,6 +917,11 @@ export class EgwFrameworkApp extends LitElement
                     ${this._applicationMenuTemplate()}
                 </sl-menu>
             </sl-dropdown>
+            ${this.rowCount === "" ? nothing : html`
+                <span part="row-count" class="egw_fw_app__row-count">
+					${this.rowCount}
+				</span>`
+            }
 		`;
 	}
 

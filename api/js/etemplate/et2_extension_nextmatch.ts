@@ -3503,6 +3503,13 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		// Bind row count
 		this.nextmatch.dataview.grid.setInvalidateCallback(function()
 		{
+			this.nextmatch.getDOMNode().dispatchEvent(new CustomEvent("et2-search-result", {
+					detail: {
+						total: this.nextmatch.dataview.grid.getTotalCount() + "",
+						nextmatch: this.nextmatch
+					}, bubbles: true
+				}
+			));
 			this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
 		}, this);
 	}
@@ -3672,28 +3679,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			.appendTo(this.count)
 			.text(settings.total + "");
 		this.count.appendTo(this.row_div);
-		if(settings.row_count_id)
-		{
-			// Where to stick the count has been passed in, but it's probably not there yet.
-			// Wait for load event since kdots will slot sub-template when etemplate fires load
-			this.getInstanceManager().widgetContainer.updateComplete.then(() =>
-			{
-				this.getInstanceManager().widgetContainer.addEventListener("load", () =>
-				{
-					window.setTimeout(() =>
-					{
-						const newCountElement = this.getInstanceManager().widgetContainer.getWidgetById(settings.row_count_id);
-						if(newCountElement)
-						{
-							this.count_total
-								.addClass("nextmatch_count")
-								.attr("aria-label", egw.lang("Row count"))
-								.appendTo(newCountElement);
-						}
-					}, 0);
-				});
-			});
-		}
 
 		// Favorites
 		this._setup_favorites(settings['favorites']);

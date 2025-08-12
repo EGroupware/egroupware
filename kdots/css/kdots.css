@@ -611,7 +611,6 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
 /*** END HEADER ***/
 /*** APPLICATION ***/
 egw-app {
-  margin-left: 0.4rem;
   --application-header-text-color: var(--sl-color-neutral-200);
   /* Nice formatting for templates slotted into header (no need to wrap contents in et2-hbox) */
   /* Application template gets full height */
@@ -633,9 +632,6 @@ egw-app et2-template[slot="main-header"]::part(base) {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-egw-app et2-template[slot="main-header"] .nextmatch_count {
-  margin-left: auto;
 }
 egw-app::part(content) {
   flex-direction: column;
