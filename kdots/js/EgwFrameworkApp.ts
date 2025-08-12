@@ -11,14 +11,12 @@ import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import type {EgwFramework, FeatureList} from "./EgwFramework";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
-import {cache} from "lit/directives/cache.js";
 import {repeat} from "lit/directives/repeat.js";
 import {until} from "lit/directives/until.js";
 import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
-import {keyed} from "lit/directives/keyed.js";
 
 /**
  * @summary Application component inside EgwFramework
@@ -131,7 +129,7 @@ export class EgwFrameworkApp extends LitElement
 	 * @return {et2_nextmatch}
 	 */
 	@property({type: Function})
-	getNextmatch : () => et2_nextmatch = () =>
+	getNextmatch : () => et2_nextmatch = () : et2_nextmatch =>
 	{
 		// Look for a nextmatch by finding the DOM node by CSS class
 		let nm = null;
@@ -143,6 +141,18 @@ export class EgwFrameworkApp extends LitElement
 			nm = template.getWidgetById(widget_id);
 		}
 		return nm;
+	}
+
+	/**
+	 * A function that provides the icon for the filter button shown in the application header.
+	 * Applications can provide their own function to change the icon based on their own status
+	 * @return {string}
+	 */
+	@property({type: Function})
+	getFilterIcon : (filterValues : { [id : string] : { value : any } }) => string = (filterValues) : string =>
+	{
+		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
+		return Object.values(filterValues).filter(v => v).length == 0 ? "filter-circle" : "filter-circle-fill"
 	}
 
 	@state()
@@ -195,7 +205,6 @@ export class EgwFrameworkApp extends LitElement
 	/** The application's content must be in an iframe instead of handled normally */
 	protected useIframe = false;
 	protected _sideboxData : any;
-	protected _cachedFilters : { [nm_id : string] : any } = {};
 
 	constructor()
 	{
@@ -949,7 +958,8 @@ export class EgwFrameworkApp extends LitElement
 			return nothing;
 		}
 		return html`
-            <et2-button-icon nosubmit name="filter-circle"
+            <et2-button-icon nosubmit
+                             name=${this.getFilterIcon(this.filters.value)}
                              label=${this.egw.lang("Filters")}
                              statustext=${this.egw.lang("Filter the list entries")}
                              @click=${() =>
@@ -967,22 +977,6 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return nothing;
 		}
-		if(typeof this._cachedFilters[this.nextmatch.id] == "undefined")
-		{
-			this._cachedFilters[this.nextmatch.id] = html`${keyed(this.nextmatch.id, html`
-                <et2-filterbox
-                        exportparts="filters"
-                        class="egw_fw_app__filter"
-                        autoapply
-                        nextmatch=${this.nextmatch.id}
-                        originalwidgets=${this.egw.preference("keep_nm_header", this.appName) || "replace"}
-                        @change=${e => e.preventDefault()}
-                >
-                    ${this.hasSlotController.test("filter") ? html`
-                        <slot name="filter"></slot>` : nothing}
-                </et2-filterbox>`)}`;
-		}
-
 		return html`
             <sl-drawer part="filter"
                        exportparts="panel:filter__panel "
@@ -995,7 +989,17 @@ export class EgwFrameworkApp extends LitElement
                                  statustext=${this.egw.lang("Select columns")}
                                  @click=${e => {this.nextmatch._selectColumnsClick(e)}} nosubmit>
                 </et2-button-icon>
-                ${cache(this._cachedFilters[this.nextmatch.id])}
+                <et2-filterbox
+                        exportparts="filters"
+                        class="egw_fw_app__filter"
+                        autoapply
+                        nextmatch=${this.nextmatch.id}
+                        originalwidgets=${this.egw.preference("keep_nm_header", this.appName) || "replace"}
+                        @change=${e => e.preventDefault()}
+                >
+                    ${this.hasSlotController.test("filter") ? html`
+                        <slot name="filter"></slot>` : nothing}
+                </et2-filterbox>
                 <et2-button slot="footer" label="Apply" nosubmit
                             @click=${e => this.filters.applyFilters()}
                 >
