@@ -348,7 +348,7 @@ export class EgwFrameworkApp extends LitElement
 				{
 					// We got some data, use it
 					const items = (<HTMLElement[]>(Array.isArray(data) ? data : [data]))
-						.filter(data => (typeof data.DOMNodeID == "string" && document.querySelector("[id='" + data.DOMNodeID + "']") == null));
+						.filter(data => (typeof data.DOMNodeID == "string"));
 
 					render(html`${repeat(items, i => i.DOMNodeID, (item) => html`
                         <div id="${item.DOMNodeID}"></div>`)}`, this);
