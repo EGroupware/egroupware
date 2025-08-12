@@ -617,6 +617,8 @@ egw-app {
   /*sidebox styling
   * same styling should apply to sl-details.favorites inside the EgwFrameworkApp.styles.ts
   */
+  /** Clean nextmatch headers **/
+  /* Hide nextmatch header, it's in the framework now */
 }
 egw-app::part(name) {
   display: flex;
@@ -664,6 +666,10 @@ egw-app et2-details.sidebox::part(header) {
 }
 egw-app et2-details.sidebox::part(base) {
   border: none;
+}
+egw-app .et2_nextmatch.et2-filterbox--loaded:not(.et2-filterbox--none) .nextmatch_header {
+  height: 0px;
+  overflow: hidden;
 }
 /* Individual application colors, should go in each app's CSS */
 body,

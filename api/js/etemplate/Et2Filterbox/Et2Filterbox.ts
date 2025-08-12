@@ -284,6 +284,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		});
 
 		this._sortFilters();
+		this._nextmatch.getDOMNode().classList.add("et2-filterbox--loaded", "et2-filterbox--" + this.originalWidgets);
 		this.requestUpdate();
 	}
 

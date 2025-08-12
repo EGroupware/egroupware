@@ -69,6 +69,16 @@ egw-app {
 
 	}
   }
+
+  /** Clean nextmatch headers **/
+  /* Hide nextmatch header, it's in the framework now */
+
+  .et2_nextmatch.et2-filterbox--loaded:not(.et2-filterbox--none) {
+	.nextmatch_header {
+	  height: 0px;
+	  overflow: hidden;
+	}
+  }
 }
 
 /* Individual application colors, should go in each app's CSS */

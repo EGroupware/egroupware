@@ -1201,7 +1201,7 @@ abstract class Framework extends Framework\Extra
 		$dr = dir(EGW_SERVER_ROOT);
 		while (($entry=$dr->read()))
 		{
-			if ($entry != '..' && !isset($GLOBALS['egw_info']['apps'][$entry]) && is_dir(EGW_SERVER_ROOT.'/'.$entry) &&
+			if($entry != '..' && is_dir(EGW_SERVER_ROOT . '/' . $entry) &&
 				file_exists($f = EGW_SERVER_ROOT . '/' . $entry .'/setup/setup.inc.php'))
 			{
 				include($f);

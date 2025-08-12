@@ -994,7 +994,7 @@ export class EgwFrameworkApp extends LitElement
                         class="egw_fw_app__filter"
                         autoapply
                         nextmatch=${this.nextmatch.id}
-                        originalwidgets=${this.egw.preference("keep_nm_header", this.appName) || "replace"}
+                        originalwidgets=${this.egw.preference("keep_nm_header", 'common') || "replace"}
                         @change=${e => e.preventDefault()}
                 >
                     ${this.hasSlotController.test("filter") ? html`
