@@ -87,7 +87,9 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	protected hasSlotController = new HasSlotController(this, "label", "help-text", "prefix", "suffix");
 	protected _nextmatch : et2_nextmatch = null;
-	protected _groups : { [name : string] : { filters : Filter[], order : number, dataId? : string } } = {};
+	protected _groups : {
+		[nextmatch_id : string] : { [name : string] : { filters : Filter[], order : number, dataId? : string } }
+	} = {};
 
 	constructor()
 	{
@@ -103,7 +105,6 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			if(!this.nextmatch && this._nextmatch)
 			{
 				this.filters = [];
-				this._groups = {};
 			}
 			if(this.nextmatch !== this._nextmatch)
 			{
@@ -158,7 +159,8 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			})
 		}
 		let entry = value;
-		Object.values(this._groups ?? {}).forEach((group) =>
+		const nm_group = this._nextmatch ? this._groups[this._nextmatch.id] : {}
+		Object.values(nm_group ?? {}).forEach((group) =>
 		{
 			if(group.dataId && typeof value[group.dataId] == "undefined")
 			{
@@ -188,6 +190,11 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			this._nextmatch = null;
 			return;
 		}
+		let root = <HTMLElement>this.getRootNode();
+		if(root instanceof ShadowRoot)
+		{
+			root = <HTMLElement>root.host;
+		}
 		// Find a matching nextmatch widget
 		// @ts-ignore getRoot & getInstanceManager do exist
 		this._nextmatch = typeof this.nextmatch == "string" ?
@@ -196,7 +203,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 							  // @ts-ignore getInstanceManager() might exist
 							  this.getInstanceManager()?.widgetContainer?.getWidgetById(this.nextmatch) ??
 							  // Find the DOMNode, but then need to find the nextmatch widget
-							  document.querySelector("[id$=" + this.nextmatch + "]").closest("et2-template").getWidgetById(this.nextmatch) :
+							  root.querySelector("[id$=" + this.nextmatch + "]").closest("et2-template").getWidgetById(this.nextmatch) :
 						  this.nextmatch;
 
 		// Found a nextmatch and there's no custom filter - autogenerate filters
@@ -210,6 +217,12 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	public async readNextmatchFilters(nextmatch : et2_nextmatch = this._nextmatch)
 	{
+		// Only read filters once
+		if(typeof this._groups[nextmatch.id] != "undefined")
+		{
+			return;
+		}
+
 		// Wait for nextmatch widgets to finish or we'll miss settings
 		let waitForWebComponents = [];
 		this._nextmatch.getChildren().forEach((w) =>
@@ -223,8 +236,11 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		});
 		await Promise.all(waitForWebComponents);
 
+		this._groups[nextmatch.id] = {};
+		const group = this._groups[nextmatch.id];
+
 		// Start with the nm header
-		this._groups[''] = {filters: [], order: 0};
+		this._groups[nextmatch.id][''] = {filters: [], order: 0};
 		// @ts-ignore header is private
 		nextmatch.header.header_div[0]
 			.querySelectorAll(".et2-input-widget")
@@ -237,9 +253,9 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 				}
 				if(filter.widget.dataset.groupOrder)
 				{
-					this._groups[''].order = parseInt(filter.dataset.groupOrder);
+					this._groups[nextmatch.id][''].order = parseInt(filter.dataset.groupOrder);
 				}
-				this._groups[''].filters.push(filter);
+				this._groups[nextmatch.id][''].filters.push(filter);
 			});
 
 		// Now for column headers
@@ -252,9 +268,9 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 				widget.getParent().instanceOf(et2_nextmatch_customfields) ?
 				widget.egw().lang('Custom fields') : widget.egw().lang('Column Filters')
 			);
-			if(typeof this._groups[groupName] == "undefined")
+			if(typeof group[groupName] == "undefined")
 			{
-				this._groups[groupName] = {
+				group[groupName] = {
 					filters: [],
 					order: parseInt(widget.dataset.groupOrder) || 0,
 					dataId: dataId
@@ -263,7 +279,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			const filter = this._adoptNextmatchWidget(widget);
 			if(filter)
 			{
-				this._groups[groupName].filters.push(filter);
+				group[groupName].filters.push(filter);
 			}
 		});
 
@@ -331,33 +347,36 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	private _sortFilters()
 	{
-		// Make sure filters are in group if they weren't already
-		if(this.filters.length > 0 && Object.keys(this._groups).length == 0)
+		Object.entries(this._groups).forEach(([nm_id, group]) =>
 		{
-			this._groups[''] = {filters: this.filters, order: 0};
-		}
-		else
-		{
-			// Convert the _groups object to an array of entries, sort them, and reconstruct the object
-			const sortedGroups = Object.entries(this._groups)
-				.map(([groupName, group]) => [groupName, {
-					filters: group.filters,
-					order: group.order
-				}])
-				.sort(([keyA, groupA], [keyB, groupB]) =>
-				{
-					// Sort by the 'order' property of the group objects
-					return groupA.order - groupB.order;
-				});
+			// Make sure filters are in group if they weren't already
+			if(this.filters.length > 0 && Object.keys(group).length == 0)
+			{
+				group[''] = {filters: this.filters, order: 0};
+			}
+			else
+			{
+				// Convert the _groups object to an array of entries, sort them, and reconstruct the object
+				const sortedGroups = Object.entries(group)
+					.map(([groupName, group]) => [groupName, {
+						filters: group.filters,
+						order: group.order
+					}])
+					.sort(([keyA, groupA], [keyB, groupB]) =>
+					{
+						// Sort by the 'order' property of the group objects
+						return groupA.order - groupB.order;
+					});
 
-			// Rebuild the object in sorted order
-			this._groups = Object.fromEntries(sortedGroups);
-		}
+				// Rebuild the object in sorted order
+				group = Object.fromEntries(sortedGroups);
+			}
 
-		// Sort the filters within each group by their order
-		Object.keys(this._groups).forEach((groupName) =>
-		{
-			this._groups[groupName]?.filters?.sort((a, b) => a.order - b.order);
+			// Sort the filters within each group by their order
+			Object.keys(group).forEach((groupName) =>
+			{
+				group[groupName]?.filters?.sort((a, b) => a.order - b.order);
+			});
 		});
 	}
 
@@ -405,7 +424,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
                 >
                     ${this.hasSlotController.test('[default]') ? html`
                         <slot></slot>` : html`
-                        ${Object.keys(this._groups ?? {}).map(groupName => this._groupTemplate(groupName, this._groups[groupName].filters))}
+                        ${Object.keys(this._groups[this._nextmatch.id] ?? {}).map(groupName => this._groupTemplate(groupName, this._groups[this._nextmatch.id][groupName].filters))}
                     `}
                 </div>
                 <slot name="suffix" part="suffix" class="filterbox__suffix"></slot>
