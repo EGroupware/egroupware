@@ -1082,6 +1082,13 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			return false;
 		}
+		// createLinks allows attaching arbitrary files, in which case content-type is NOT application/json,
+		// but the request must be detected as REST API request, it is NOT CalDAV/CardDAV!
+		if (in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT']) &&
+			preg_match('#/groupdav.php/[a-z]+/\d+/links/#', $_SERVER['REQUEST_URI']))
+		{
+			$type = 'application/json';
+		}
 		return preg_match('#application/(([^+ ;]+)\+)?json#', $type, $matches) ?
 			(empty($matches[1]) ? true : $matches[2]) : false;
 	}
