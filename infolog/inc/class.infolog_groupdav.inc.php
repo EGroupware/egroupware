@@ -118,16 +118,12 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	 */
 	private function get_infolog_filter($path, $user)
 	{
-		$infolog_types = $GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-types'];
+		$infolog_types = $GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-types'] ?? 'task';
 
 		// 'None' selected for types, make sure filter gives no results
-		if($infolog_types == '0')
+		if($infolog_types == '0' && !Api\CalDAV::isJSON())
 		{
 			return array('info_type' => '**NONE**');
-		}
-		if (!$infolog_types)
-		{
-			$infolog_types = 'task';
 		}
 		if ($path == '/infolog/')
 		{
@@ -147,8 +143,10 @@ class infolog_groupdav extends Api\CalDAV\Handler
 
 		$ret = array(
 			'filter'	=> $task_filter,
-			'info_type' => explode(',', $infolog_types),
-		);
+		// do NOT add default type-filter of "task" for REST API
+		)+(!Api\CalDAV::isJSON() ? array(
+			'infolog-types' => explode(',', $infolog_types),
+		) : []);
 		//error_log(__METHOD__."('$path', $user) returning ".array2string($ret));
 		return $ret;
 	}
