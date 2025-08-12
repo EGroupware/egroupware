@@ -1,7 +1,6 @@
 
 /*** APPLICATION ***/
 egw-app {
-  margin-left:.4rem;
   --application-header-text-color: var(--sl-color-neutral-200);
 
   &::part(name) {
@@ -20,18 +19,16 @@ egw-app {
   /* Nice formatting for templates slotted into header (no need to wrap contents in et2-hbox) */
 
   et2-template[slot="main-header"] {
-
 	&::part(base) {
 	  display: flex;
 	  flex-direction: row;
 	  align-items: center;
 	}
-
-	.nextmatch_count {
-	  margin-left: auto;
-	}
   }
 
+  &::part(row-count) {
+
+  }
   &::part(content) {
 	flex-direction: column;
 	overflow-y:hidden;
