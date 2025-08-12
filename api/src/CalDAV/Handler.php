@@ -839,7 +839,11 @@ abstract class Handler
 				($options['stream'] = fopen('php://temp', 'r+')))
 			{
 				fwrite($options['stream'], $options['content']);
-				fseek($options['stream'], 0);
+			}
+			// somehow $options['stream'] is seeked to its end (probably to fill $options['content'])
+			if (isset($options['stream']))
+			{
+				fseek($options['stream'], 0);   // seek to the start, as otherwise we end up with empty / 0 byte files
 			}
 			if (!is_resource($options['stream']) || !($link = Api\Link::attach_file($this->app, $id, [
 					'tmp_name' => $options['stream'],
