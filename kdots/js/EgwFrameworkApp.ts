@@ -11,12 +11,14 @@ import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import type {EgwFramework, FeatureList} from "./EgwFramework";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
+import {cache} from "lit/directives/cache.js";
 import {repeat} from "lit/directives/repeat.js";
 import {until} from "lit/directives/until.js";
 import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
+import {keyed} from "lit/directives/keyed.js";
 
 /**
  * @summary Application component inside EgwFramework
@@ -122,6 +124,27 @@ export class EgwFrameworkApp extends LitElement
 	@property({type: Boolean, reflect: true})
 	loading = false;
 
+	/**
+	 * A function that gets the application's nextmatch so we can generate the filter drawer.
+	 * If the application has multiple nextmatches, it can override this to return the "current" nextmatch
+	 *
+	 * @return {et2_nextmatch}
+	 */
+	@property({type: Function})
+	getNextmatch : () => et2_nextmatch = () =>
+	{
+		// Look for a nextmatch by finding the DOM node by CSS class
+		let nm = null;
+		const nm_div = this.querySelector(".et2_nextmatch");
+		if(nm_div)
+		{
+			const template = (<Et2Template>nm_div.closest("et2-template"));
+			const widget_id = nm_div.id.replace(template.getInstanceManager().uniqueId + "_", "");
+			nm = template.getWidgetById(widget_id);
+		}
+		return nm;
+	}
+
 	@state()
 	leftCollapsed = false;
 
@@ -171,6 +194,7 @@ export class EgwFrameworkApp extends LitElement
 	/** The application's content must be in an iframe instead of handled normally */
 	protected useIframe = false;
 	protected _sideboxData : any;
+	protected _cachedFilters : { [nm_id : string] : any } = {};
 
 	constructor()
 	{
@@ -548,15 +572,7 @@ export class EgwFrameworkApp extends LitElement
 
 	get nextmatch() : et2_nextmatch
 	{
-		// Look for a nextmatch by finding the DOM node by CSS class
-		let nm = null;
-		this.querySelectorAll(".et2_nextmatch").forEach((nm_div : HTMLElement) =>
-		{
-			const template = (<Et2Template>nm_div.closest("et2-template"));
-			const widget_id = nm_div.id.replace(template.getInstanceManager().uniqueId + "_", "");
-			nm = template.getWidgetById(widget_id);
-		})
-		return nm;
+		return this.getNextmatch()
 	}
 
 	private hasSideContent(side : "left" | "right")
@@ -950,6 +966,21 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return nothing;
 		}
+		if(typeof this._cachedFilters[this.nextmatch.id] == "undefined")
+		{
+			this._cachedFilters[this.nextmatch.id] = html`${keyed(this.nextmatch.id, html`
+                <et2-filterbox
+                        exportparts="filters"
+                        class="egw_fw_app__filter"
+                        autoapply
+                        nextmatch=${this.nextmatch.id}
+                        originalwidgets=${this.egw.preference("keep_nm_header", this.appName) || "replace"}
+                        @change=${e => e.preventDefault()}
+                >
+                    ${this.hasSlotController.test("filter") ? html`
+                        <slot name="filter"></slot>` : nothing}
+                </et2-filterbox>`)}`;
+		}
 
 		return html`
             <sl-drawer part="filter"
@@ -962,17 +993,7 @@ export class EgwFrameworkApp extends LitElement
                                  statustext=${this.egw.lang("Select columns")}
                                  @click=${e => {this.nextmatch._selectColumnsClick(e)}} nosubmit>
                 </et2-button-icon>
-
-                <et2-filterbox
-                        exportparts="filters"
-                        class="egw_fw_app__filter"
-                        autoapply
-                        .nextmatch=${this.nextmatch} originalwidgets="replace"
-                        @change=${e => e.preventDefault()}
-                >
-                    ${this.hasSlotController.test("filter") ? html`
-                        <slot name="filter"></slot>` : nothing}
-                </et2-filterbox>
+                ${cache(this._cachedFilters[this.nextmatch.id])}
                 <et2-button slot="footer" label="Apply" nosubmit
                             @click=${e => this.filters.applyFilters()}
                 >

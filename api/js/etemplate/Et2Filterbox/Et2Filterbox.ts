@@ -95,7 +95,6 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		this.applyFilters = this.applyFilters.bind(this);
 	}
 
-
 	willUpdate(changedProperties : Map<string, unknown>)
 	{
 		if(changedProperties.has("nextmatch"))
@@ -106,7 +105,10 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 				this.filters = [];
 				this._groups = {};
 			}
-			this._findNextmatch();
+			if(this.nextmatch !== this._nextmatch)
+			{
+				this._findNextmatch();
+			}
 		}
 		if(changedProperties.has("filters"))
 		{
@@ -193,7 +195,8 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 						  this.getRoot().getWidgetById(this.nextmatch) ??
 							  // @ts-ignore getInstanceManager() might exist
 							  this.getInstanceManager()?.widgetContainer?.getWidgetById(this.nextmatch) ??
-							  document.querySelector(this.nextmatch) :
+							  // Find the DOMNode, but then need to find the nextmatch widget
+							  document.querySelector("[id$=" + this.nextmatch + "]").closest("et2-template").getWidgetById(this.nextmatch) :
 						  this.nextmatch;
 
 		// Found a nextmatch and there's no custom filter - autogenerate filters
