@@ -977,11 +977,6 @@ export class EgwFrameworkApp extends LitElement
                     ${this._applicationMenuTemplate()}
                 </sl-menu>
             </sl-dropdown>
-            ${this.rowCount === "" ? nothing : html`
-                <span part="row-count" class="egw_fw_app__row-count">
-					${this.rowCount}
-				</span>`
-            }
 		`;
 	}
 
