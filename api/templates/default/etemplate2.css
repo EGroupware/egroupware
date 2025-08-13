@@ -2209,7 +2209,6 @@ ul[id$='favorites_popup_state'] span.filter_value {
 }
 
 .nextmatch_sortheader {
-    font-weight: bold;
     cursor: pointer;
     padding-right: var(--sl-spacing-x-large, 20px);
     background-repeat: no-repeat;
