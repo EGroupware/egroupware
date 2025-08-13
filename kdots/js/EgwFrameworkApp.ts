@@ -148,24 +148,13 @@ export class EgwFrameworkApp extends LitElement
 	 * A function that provides the icon & tooltip for the filter button shown in the application header.
 	 * Applications can provide their own function to change the icon based on their own status
 	 *
-	 * @return {icon?: string, tooltip?: string}
+	 * @return {icon: string, tooltip: string}
 	 */
 	@property({type: Function})
-	getFilterInfo : (filterValues : { [id : string] : { value : any } }) => {
-		icon? : string,
-		tooltip? : string
-	} = (filterValues) : { icon? : string, tooltip? : string } =>
+	getFilterInfo : (filterValues : { [id : string] : { value : any } }, fwApp : EgwFrameworkApp) => FilterInfo =
+		(filterValues, fwApp) : FilterInfo =>
 	{
-		const info = {icon: "filter-circle", tooltip: this.egw.lang("filter")};
-
-		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
-		const emptyFilter = (v) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
-		if(Object.values(filterValues).filter(emptyFilter).length !== 0)
-		{
-			info.icon = "filter-circle-fill";
-			info.tooltip = this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"));
-		}
-		return info;
+		return this.filterInfo(filterValues);
 	}
 
 	@state()
@@ -603,6 +592,24 @@ export class EgwFrameworkApp extends LitElement
 		return this.getNextmatch()
 	}
 
+	/**
+	 * Default implementation for getFilterInfo
+	 * Exposed so apps can use this as a base for their own getFilterInfo
+	 */
+	public filterInfo(filterValues) : FilterInfo
+	{
+		const info = {icon: "filter-circle", tooltip: this.egw.lang("filter")};
+
+		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
+		const emptyFilter = (v) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
+		if(Object.values(filterValues).filter(emptyFilter).length !== 0)
+		{
+			info.icon = "filter-circle-fill";
+			info.tooltip = this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"));
+		}
+		return info;
+	}
+
 	private hasSideContent(side : "left" | "right")
 	{
 		return this.hasSlotController.test(`${side}-header`) ||
@@ -991,7 +998,7 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return nothing;
 		}
-		const info = this.getFilterInfo(this.filters.value);
+		const info = this.getFilterInfo(this.filters.value, this);
 		return html`
             <et2-button-icon nosubmit
                              name=${info.icon}
@@ -1216,4 +1223,10 @@ type PanelInfo = {
 	hiddenWidth : number,
 	defaultWidth : number,
 	preferenceWidth : number | string
+}
+
+/* Information for the filter button */
+type FilterInfo = {
+	icon : string,
+	tooltip : string
 }
