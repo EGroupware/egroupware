@@ -27,6 +27,7 @@ import {EgwActionObject} from "../egw_action/EgwActionObject";
 import type {Et2Details} from "../etemplate/Layout/Et2Details/Et2Details";
 import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
 import {egw_globalObjectManager} from "../egw_action/egw_action";
+import type {EgwFrameworkApp} from "../../../kdots/js/EgwFrameworkApp";
 
 /**
  * Type for push-message
@@ -181,6 +182,20 @@ export abstract class EgwApp
 		this.appname = appname;
 		this.egw = egw(this.appname, _wnd || window);
 
+		// Tell framework app how to work with our nextmatches
+		let egwApp
+		if((egwApp = <EgwFrameworkApp>document.querySelector("egw-app[name=admin]")))
+		{
+			if(typeof this.getNextmatch == "function")
+			{
+				egwApp.getNextmatch = this.getNextmatch;
+			}
+			if(typeof this.getFilterInfo == "function")
+			{
+				egwApp.getFilterInfo = this.getFilterInfo;
+			}
+		}
+
 		// Initialize sidebox for non-popups.
 		// ID set server side
 		if(!this.egw.is_popup())
@@ -215,6 +230,15 @@ export abstract class EgwApp
 	 */
 	destroy(_app)
 	{
+		let egwApp = <EgwFrameworkApp>document.querySelector("egw-app[name='" + this.appname + "']");
+		if(egwApp && typeof this.getNextmatch !== "undefined" && egwApp.getNextmatch == this.getNextmatch)
+		{
+			egwApp.getNextmatch = null;
+		}
+		if(egwApp && typeof this.getFilterInfo !== "undefined" && egwApp.getFilterInfo == this.getFilterInfo)
+		{
+			egwApp.getFilterInfo = null;
+		}
 		delete this.et2;
 		if(this.sidebox)
 		{

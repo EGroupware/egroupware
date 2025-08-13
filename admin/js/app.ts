@@ -512,6 +512,11 @@ class AdminApp extends EgwApp
 		}
 	}
 
+	getNextmatch()
+	{
+		return app.admin?.tree?.value == "/groups" ? app.admin.groups : app.admin.nm;
+	}
+
 	/**
 	 * Show the group list in the main window
 	 */

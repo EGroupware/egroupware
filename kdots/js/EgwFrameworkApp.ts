@@ -145,16 +145,27 @@ export class EgwFrameworkApp extends LitElement
 	}
 
 	/**
-	 * A function that provides the icon for the filter button shown in the application header.
+	 * A function that provides the icon & tooltip for the filter button shown in the application header.
 	 * Applications can provide their own function to change the icon based on their own status
-	 * @return {string}
+	 *
+	 * @return {icon?: string, tooltip?: string}
 	 */
 	@property({type: Function})
-	getFilterIcon : (filterValues : { [id : string] : { value : any } }) => string = (filterValues) : string =>
+	getFilterInfo : (filterValues : { [id : string] : { value : any } }) => {
+		icon? : string,
+		tooltip? : string
+	} = (filterValues) : { icon? : string, tooltip? : string } =>
 	{
+		const info = {icon: "filter-circle", tooltip: this.egw.lang("filter")};
+
 		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
 		const emptyFilter = (v) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
-		return Object.values(filterValues).filter(emptyFilter).length == 0 ? "filter-circle" : "filter-circle-fill"
+		if(Object.values(filterValues).filter(emptyFilter).length !== 0)
+		{
+			info.icon = "filter-circle-fill";
+			info.tooltip = this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"));
+		}
+		return info;
 	}
 
 	@state()
@@ -980,11 +991,12 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return nothing;
 		}
+		const info = this.getFilterInfo(this.filters.value);
 		return html`
             <et2-button-icon nosubmit
-                             name=${this.getFilterIcon(this.filters.value)}
+                             name=${info.icon}
                              label=${this.egw.lang("Filters")}
-                             statustext=${this.egw.lang("Filter the list entries")}
+                             statustext=${info.tooltip}
                              @click=${() =>
                              {
                                  const filter = this.shadowRoot.querySelector("[part=filter]") ??
