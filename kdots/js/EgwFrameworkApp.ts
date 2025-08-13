@@ -598,14 +598,17 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	public filterInfo(filterValues) : FilterInfo
 	{
-		const info = {icon: "filter-circle", tooltip: this.egw.lang("filter")};
+		const info = {
+			icon: "filter-circle",
+			tooltip: this.egw.lang("Filters") + ":  " +
+				this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"))
+		};
 
 		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
 		const emptyFilter = (v) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
 		if(Object.values(filterValues).filter(emptyFilter).length !== 0)
 		{
 			info.icon = "filter-circle-fill";
-			info.tooltip = this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"));
 		}
 		return info;
 	}
@@ -1009,14 +1012,13 @@ export class EgwFrameworkApp extends LitElement
 		}
 
 		// Drawer label includes row count
-		const label = this.egw.lang("Filters") + ":  " +
-			this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"));
+		const info = this.getFilterInfo(this.filters?.value ?? {}, this);
 
 		return html`
             <sl-drawer part="filter"
                        exportparts="panel:filter__panel "
                        class="egw_fw_app__filter_drawer"
-                       label=${label} contained
+                       label=${info.tooltip} contained
                        @sl-after-show=${() => this.filters?.shadowRoot?.querySelector(".et2-input-widget")?.focus()}
             >
                 <et2-button-icon slot="header-actions" name="selectcols"
