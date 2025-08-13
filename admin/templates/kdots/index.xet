@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+	<template id="admin.index.header" template="" lang="" group="0" version="1.9.001">
+		<et2-button-icon  statustext="Add" image="add" id="add" onclick="app.admin.account({id:'add'})" noSubmit="true"></et2-button-icon>
+        <et2-button-icon image="search" statustext="Search" noSubmit="true" onclick="javascript:widget.closest('egw-app').filtersDrawer.open = !widget.closest('egw-app').filtersDrawer.open;"></et2-button-icon>
+	</template>
+	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="15%"/>
+				<column width="30"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="35%"/>
+				<column width="15%"/>
+				<column width="90"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="120"/>
+			</columns>
+			<rows>
+				<row>
+					<nextmatch-sortheader label="Login-ID" id="account_lid"/>
+					<nextmatch-sortheader label="ID" id="account_id"/>
+					<nextmatch-sortheader label="Firstname" id="account_firstname"/>
+					<nextmatch-sortheader label="Lastname" id="account_lastname"/>
+					<nextmatch-sortheader label="EMail" id="account_email"/>
+					<nextmatch-sortheader label="Primary group" id="account_primary_group"/>
+					<nextmatch-sortheader label="Expires" id="account_expires"/>
+					<nextmatch-sortheader label="Created" id="created"/>
+					<nextmatch-sortheader label="Last modified" id="modified"/>
+					<nextmatch-sortheader label="Last login" id="account_lastlogin"/>
+					<nextmatch-sortheader label="Last IP" id="account_lastloginfrom"/>
+					<nextmatch-sortheader label="Last password change" id="account_lastpwd_change"/>
+				</row>
+				<row class="$row_cont[status_class]">
+					<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
+					<et2-description  id="${row}[account_id]" noLang="1"></et2-description>
+					<et2-description  id="${row}[account_firstname]" noLang="1"></et2-description>
+					<et2-description  id="${row}[account_lastname]" noLang="1"></et2-description>
+					<et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"></et2-url-email>
+					<et2-select-account  id="${row}[account_primary_group]" readonly="true" noLang="1"></et2-select-account>
+					<et2-description  id="${row}[status]" class="adminStatus" noLang="1"></et2-description>
+					<et2-date-time  id="${row}[account_created]" readonly="true"></et2-date-time>
+					<et2-date-time  id="${row}[account_modified]" readonly="true"></et2-date-time>
+					<et2-date-time  id="${row}[account_lastlogin]" readonly="true"></et2-date-time>
+					<et2-description  id="${row}[account_lastloginfrom]" noLang="1"></et2-description>
+					<et2-date-time  id="${row}[account_lastpwd_change]" readonly="true"></et2-date-time>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.index.group" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="30%"/>
+				<column width="15%"/>
+				<column width="25%" disabled="@is_huge"/>
+				<column width="25%"/>
+			</columns>
+			<rows>
+				<row>
+					<et2-vbox>
+						<nextmatch-sortheader label="Group name" id="account_lid"/>
+						<nextmatch-sortheader label="Description" id="account_description"/>
+						<nextmatch-sortheader label="{Container} &amp; {Group name}" id="account_dn"/>
+					</et2-vbox>
+					<nextmatch-sortheader label="EMail" id="email"/>
+					<nextmatch-header label="Members" id="account_members"/>
+					<nextmatch-header label="Applications" id="apps"/>
+				</row>
+				<row class="$row_cont[status_class]">
+					<et2-vbox>
+						<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
+						<et2-description  id="${row}[account_description]" noLang="1"></et2-description>
+						<et2-description  id="${row}[container]" statustext="$row_cont[account_dn]" noLang="1"></et2-description>
+					</et2-vbox>
+					<et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis" noLang="1"></et2-url-email>
+					<et2-select-account  id="${row}[members]" readonly="true" noLang="1"></et2-select-account>
+					<et2-select-app  id="${row}[apps]" readonly="true" multiple="true"></et2-select-app>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
+        <template template="admin.index.header" slot="main-header"></template>
+        <tree slot="left" autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
+		<nextmatch id="nm" template="admin.index.rows"/>
+		<nextmatch id="groups" template="admin.index.group" class="hide"/>
+		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
+		<et2-box  id="ajax_target" height="99%" disabled="true"></et2-box>
+	</template>
+</overlay>
