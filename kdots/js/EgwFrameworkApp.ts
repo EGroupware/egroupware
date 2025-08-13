@@ -974,13 +974,6 @@ export class EgwFrameworkApp extends LitElement
                             ${this.egw.lang("Cateogries")}
                         </sl-menu-item>
                     `}
-                    ${!this.features.favorites ? nothing : html`
-                        <sl-menu-item>
-                            <sl-icon slot="prefix" name="star"></sl-icon>
-                            ${this.egw.lang("Favorites")}
-                            <et2-favorites-menu slot="submenu" application="${this.name}"></et2-favorites-menu>
-                        </sl-menu-item>`
-                    }
                     ${this._applicationMenuTemplate()}
                 </sl-menu>
             </sl-dropdown>
@@ -998,7 +991,7 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return nothing;
 		}
-		const info = this.getFilterInfo(this.filters.value, this);
+		const info = this.getFilterInfo(this.filters?.value ?? {}, this);
 		return html`
             <et2-button-icon nosubmit
                              name=${info.icon}
@@ -1019,11 +1012,16 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return nothing;
 		}
+
+		// Drawer label includes row count
+		const label = this.egw.lang("Filters") + ":  " +
+			this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"));
+
 		return html`
             <sl-drawer part="filter"
                        exportparts="panel:filter__panel "
                        class="egw_fw_app__filter_drawer"
-                       label=${this.egw.lang("Filters")} contained
+                       label=${label} contained
                        @sl-after-show=${() => this.filters?.shadowRoot?.querySelector("#search")?.focus()}
             >
                 <et2-button-icon slot="header-actions" name="selectcols"
@@ -1039,13 +1037,16 @@ export class EgwFrameworkApp extends LitElement
                         originalwidgets=${this.egw.preference("keep_nm_header", 'common') || "replace"}
                         @change=${e => e.preventDefault()}
                 >
+                    ${!this.features.favorites ? nothing : html`
+                        <sl-details class="egw_fw_app__favorites" slot="prefix"
+                                    summary=${this.egw.lang("Favorites")}
+                        >
+                            <et2-favorites-menu application=${this.name}></et2-favorites-menu>
+                        </sl-details>
+                    `}
                     ${this.hasSlotController.test("filter") ? html`
                         <slot name="filter"></slot>` : nothing}
                 </et2-filterbox>
-                <et2-button slot="footer" label="Apply" nosubmit
-                            @click=${e => this.filters.applyFilters()}
-                >
-                </et2-button>
             </sl-drawer>`;
 	}
 

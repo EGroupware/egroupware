@@ -347,6 +347,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 		const et2Widget = widget as unknown as typeof Et2InputWidget;
 		const clone = et2Widget.clone();
+		clone.removeAttribute("align");
 		et2Widget.addEventListener("change", (event) => { clone.value = et2Widget.value});
 		const filter = {
 			// @ts-ignore

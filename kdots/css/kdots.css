@@ -656,6 +656,9 @@ egw-app > div[id] > div,
 egw-app > div[id] > et2-template {
   height: 100%;
 }
+egw-app et2-favorites-menu::part(menu) {
+  border: none;
+}
 egw-app et2-details.sidebox::part(header) {
   background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
   border-radius: 1em;

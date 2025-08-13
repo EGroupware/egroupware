@@ -16,6 +16,14 @@ export default css`
 		gap: var(--gap-width);
 	}
 
+	::slotted([slot="prefix"]) {
+		padding-bottom: var(--gap-width);
+	}
+
+	::slotted([slot="suffix"]) {
+		padding-top: var(--gap-width);
+	}
+
 	@media (max-width: 800px) {
 		:host {
 			--label-width: 100%;
