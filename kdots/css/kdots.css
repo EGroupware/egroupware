@@ -629,6 +629,7 @@ egw-app::part(name) {
 }
 egw-app::part(header) {
   display: flex;
+  background-color: transparent;
 }
 egw-app et2-template[slot="main-header"]::part(base) {
   display: flex;
