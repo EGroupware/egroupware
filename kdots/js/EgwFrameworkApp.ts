@@ -6,7 +6,7 @@ import {classMap} from "lit/directives/class-map.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 
 import styles from "./EgwFrameworkApp.styles";
-import {SlSplitPanel} from "@shoelace-style/shoelace";
+import {SlDrawer, SlSplitPanel} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import type {EgwFramework, FeatureList} from "./EgwFramework";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
@@ -176,7 +176,7 @@ export class EgwFrameworkApp extends LitElement
 	get iframe() { return <HTMLIFrameElement>this.shadowRoot.querySelector("iframe");}
 
 	get filters() { return <Et2Filterbox>this.shadowRoot.querySelector(".egw_fw_app__filter");}
-	get filtersDrawer() { return <Et2Filterbox>this.shadowRoot.querySelector(".egw_fw_app__filter_drawer");}
+	get filtersDrawer() { return <SlDrawer>this.shadowRoot.querySelector(".egw_fw_app__filter_drawer");}
 
 
 	protected readonly hasSlotController = new HasSlotController(<LitElement><unknown>this,
@@ -1022,7 +1022,7 @@ export class EgwFrameworkApp extends LitElement
                        exportparts="panel:filter__panel "
                        class="egw_fw_app__filter_drawer"
                        label=${label} contained
-                       @sl-after-show=${() => this.filters?.shadowRoot?.querySelector("#search")?.focus()}
+                       @sl-after-show=${() => this.filters?.shadowRoot?.querySelector(".et2-input-widget")?.focus()}
             >
                 <et2-button-icon slot="header-actions" name="selectcols"
                                  label=${this.egw.lang("Select columns")}

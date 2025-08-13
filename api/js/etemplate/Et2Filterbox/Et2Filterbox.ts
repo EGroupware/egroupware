@@ -97,6 +97,19 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		this.applyFilters = this.applyFilters.bind(this);
 	}
 
+	connectedCallback()
+	{
+		super.connectedCallback()
+		//intercept all keydown events from reaching the nextmatch
+		document.addEventListener("keydown", this.handleKeypress, {capture: true});
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback()
+		document.removeEventListener("keydown", this.handleKeypress, {capture: true});
+	}
+
 	willUpdate(changedProperties : Map<string, unknown>)
 	{
 		if(changedProperties.has("nextmatch"))
@@ -462,6 +475,19 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
                 </div>
             </div>
 		`;
+	}
+
+	/**
+	 * Enable the filterbox to intercept keypresses from the nextmatch before they reach it
+	 * @param event
+	 * @private
+	 */
+	private handleKeypress(event)
+	{
+		if(event.key == "Escape"){
+			event.target.filtersDrawer.hide();
+		}
+		event.stopPropagation();
 	}
 }
 
