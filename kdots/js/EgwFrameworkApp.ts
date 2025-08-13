@@ -136,6 +136,7 @@ export class EgwFrameworkApp extends LitElement
 		const nm_div = this.querySelector(".et2_nextmatch");
 		if(nm_div)
 		{
+			// Found DOM node, get the widget
 			const template = (<Et2Template>nm_div.closest("et2-template"));
 			const widget_id = nm_div.id.replace(template.getInstanceManager().uniqueId + "_", "");
 			nm = template.getWidgetById(widget_id);
@@ -152,7 +153,8 @@ export class EgwFrameworkApp extends LitElement
 	getFilterIcon : (filterValues : { [id : string] : { value : any } }) => string = (filterValues) : string =>
 	{
 		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
-		return Object.values(filterValues).filter(v => v).length == 0 ? "filter-circle" : "filter-circle-fill"
+		const emptyFilter = (v) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
+		return Object.values(filterValues).filter(emptyFilter).length == 0 ? "filter-circle" : "filter-circle-fill"
 	}
 
 	@state()
@@ -213,6 +215,7 @@ export class EgwFrameworkApp extends LitElement
 		this.handleTabShow = this.handleTabShow.bind(this);
 
 		this.handleSearchResults = this.handleSearchResults.bind(this);
+		this.handleShow = this.handleShow.bind(this);
 	}
 	connectedCallback()
 	{
@@ -231,7 +234,10 @@ export class EgwFrameworkApp extends LitElement
 		});
 		this.addEventListener("load", this.handleEtemplateLoad);
 		this.addEventListener("clear", this.handleEtemplateClear);
+
+		// Listen to nextmatches
 		this.addEventListener("et2-search-result", this.handleSearchResults);
+		this.addEventListener("et2-show", this.handleShow);
 
 		// Work around sl-split-panel resizing to 0 when app is hidden
 		this.framework.addEventListener("sl-tab-hide", this.handleTabHide);
@@ -244,6 +250,7 @@ export class EgwFrameworkApp extends LitElement
 		this.removeEventListener("load", this.handleEtemplateLoad);
 		this.removeEventListener("clear", this.handleEtemplateClear);
 		this.removeEventListener("et2-search-result", this.handleSearchResults);
+		this.removeEventListener("et2-show", this.handleShow);
 		this.framework?.removeEventListener("sl-tab-hide", this.handleTabHide);
 		this.framework?.removeEventListener("sl-tab-show", this.handleTabShow);
 
@@ -635,6 +642,22 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this.filters.nextmatch = null;
 			this.requestUpdate("nextmatch");
+		}
+	}
+
+	/**
+	 * Listen for show events from children
+	 *
+	 * - Nextmatch: If a nextmatch claims to be shown, we get its row count
+	 *
+	 * @param event
+	 * @protected
+	 */
+	protected handleShow(event)
+	{
+		if(event.detail instanceof et2_nextmatch)
+		{
+			this.rowCount = event.detail.controller.getTotalCount();
 		}
 	}
 
