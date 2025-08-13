@@ -43,6 +43,14 @@
 	}
   }
 
+  /* don't add another box shadow to input fields in glassy main header otherwise it shows up twice*/
+
+  *[slot="main-header"] {
+	*::part(base), *::part(input-control), *::part(combobox) {
+	  box-shadow: none !important;
+	}
+  }
+
   /* Buttons */
   --sl-button-border-radius: 0.5rem;
   --sl-button-padding: 0.25rem 0.75rem;

@@ -20,6 +20,7 @@
   /* Large radius */
   --sl-panel-border-radius: var(--sl-border-radius-medium);
   /* Input field changes */
+  /* don't add another box shadow to input fields in glassy main header otherwise it shows up twice*/
   /* Buttons */
   --sl-button-border-radius: 0.5rem;
   --sl-button-padding: 0.25rem 0.75rem;
@@ -61,6 +62,17 @@
   box-shadow: var(--upper-tint), var(--lower-shade);
   background-color: transparent;
 }
+:root *[slot="main-header"] *::part(base),
+:host *[slot="main-header"] *::part(base),
+.kdots-glassy *[slot="main-header"] *::part(base),
+:root *[slot="main-header"] *::part(input-control),
+:host *[slot="main-header"] *::part(input-control),
+.kdots-glassy *[slot="main-header"] *::part(input-control),
+:root *[slot="main-header"] *::part(combobox),
+:host *[slot="main-header"] *::part(combobox),
+.kdots-glassy *[slot="main-header"] *::part(combobox) {
+  box-shadow: none !important;
+}
 :root et2-button::part(base),
 :host et2-button::part(base),
 .kdots-glassy et2-button::part(base),
@@ -83,4 +95,3 @@
 .kdots-glassy egw-app::part(app-header) {
   box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
 }
-/*# sourceMappingURL=glassy.css.map */
