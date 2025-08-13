@@ -398,7 +398,10 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	protected handleFilterChange(event : Event)
 	{
-
+		if(this.autoapply)
+		{
+			this.applyFilters();
+		}
 	}
 
 	protected _groupTemplate(group : string, filters : Filter[]) : TemplateResult | symbol
