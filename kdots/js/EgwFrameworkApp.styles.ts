@@ -73,7 +73,6 @@ export default css`
     }
 
     .egw_fw_app__menu > div > sl-icon-button {
-        margin-left: var(--sl-spacing-medium);
         margin-right: var(--sl-spacing-medium);
     }
 
