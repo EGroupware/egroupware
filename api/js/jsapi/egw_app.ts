@@ -180,9 +180,20 @@ export abstract class EgwApp
 				//@ts-ignore
 				egw.top.app[this.appname]._init_sidebox(sidebox);
 			}
-			else
+			else if(sidebox.length > 0)
 			{
-				this._init_sidebox(sidebox);
+				let alreadySideboxed = null;
+				for(const app of EgwApp)
+				{
+					if(app.appname == this.appname && app.sidebox && app.sidebox[0] == sidebox[0])
+					{
+						alreadySideboxed = app;
+					}
+				}
+				if(!alreadySideboxed)
+				{
+					this._init_sidebox(sidebox);
+				}
 			}
 		}
 		this.mailvelopeSyncHandlerObj = this.mailvelopeSyncHandler();
@@ -1053,6 +1064,7 @@ export abstract class EgwApp
 			let el = document.getElementById('favorite_sidebox_' + this.appname)?.getElementsByTagName('ul')[0];
 			if(el && el instanceof HTMLElement)
 			{
+				Sortable.get(el)?.destroy();
 				let sortablejs = Sortable.create(el, {
 					ghostClass: 'ui-fav-sortable-placeholder',
 					draggable: 'li:not([data-id$="add"])',
