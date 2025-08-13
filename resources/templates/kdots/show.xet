@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+    <template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
+        <grid width="100%">
+            <columns>
+                <column width="70"/>
+                <column width="50%"/>
+                <column width="50"/>
+                <column width="15%"/>
+                <column width="15%"/>
+                <column width="15%"/>
+                <column width="15%"/>
+                <column width="15%" disabled="@no_customfields"/>
+                <column width="120" disabled="@no_kanban"/>
+            </columns>
+            <rows>
+                <row class="th">
+                    <nextmatch-header label="Image" id="image"/>
+                    <et2-vbox>
+                        <nextmatch-sortheader label="Name" id="name"/>
+                        <nextmatch-sortheader label="Short description" id="short_description"/>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <nextmatch-sortheader statustext="How many of this resource are usable" label="Useable" id="useable"/>
+                        <nextmatch-sortheader statustext="How many of this resource exists" label="Quantity" id="quantity"/>
+                        <nextmatch-sortheader statustext="Is the ressource bookable?" label="Bookable" id="bookable"/>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <nextmatch-sortheader label="Category" id="cat_id"/>
+                        <et2-description  value="Administrator"></et2-description>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <nextmatch-sortheader label="Location" id="location"/>
+                        <et2-description  value="Storage information"></et2-description>
+                    </et2-vbox>
+                    <nextmatch-sortheader label="Inventory Number" id="inventory_number"/>
+                    <nextmatch-header label="Resource / Accessories"/>
+                    <nextmatch-customfields id="customfields"/>
+                    <nextmatch-header label="Kanban" id="kanban"/>
+                </row>
+                <row class="$row_cont[class]">
+                    <et2-image-expose  id="${row}[picture_thumb]" href="$row_cont[picture_original]" src="$row_cont[picture_thumb]" class="thumbnailImage"></et2-image-expose>
+                    <et2-vbox>
+                        <et2-description  id="${row}[name]" noLang="1"></et2-description>
+                        <et2-description  id="${row}[short_description]" noLang="1"></et2-description>
+                    </et2-vbox>
+                    <et2-vbox  align="left">
+                        <et2-description  align="left" id="${row}[useable]" noLang="1"></et2-description>
+                        <et2-description  align="left" id="${row}[quantity]" noLang="1"></et2-description>
+                        <et2-description  align="left" id="${row}[bookable]" noLang="1"></et2-description>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <et2-select-cat  id="{$row}[cat_id]" readonly="true" noLang="1"></et2-select-cat>
+                        <et2-select-account  id="{$row}[admin]" readonly="true" noLang="1"></et2-select-account>
+                    </et2-vbox>
+                    <et2-vbox>
+                        <et2-description  id="${row}[location]" noLang="1"></et2-description>
+                        <et2-description  id="${row}[storage_info]" noLang="1"></et2-description>
+                    </et2-vbox>
+                    <et2-description  id="${row}[inventory_number]" noLang="1"></et2-description>
+                    <et2-vbox  noLang="1">
+                        <et2-description  href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" extraLinkPopup="850x600" noLang="1"></et2-description>
+                        <grid width="100%" id="${row}[accessories]">
+                            <columns>
+                                <column/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <et2-description href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]"
+                                                     id="${row}[name]" extraLinkPopup="850x600"
+                                                     noLang="1"></et2-description>
+                                </row>
+                            </rows>
+                        </grid>
+                    </et2-vbox>
+                    <customfields-list id="$row"/>
+                    <et2-link-string entryId="${row_cont[res_id]}" application="resources"
+                                     onlyApp="kanban"></et2-link-string>
+                </row>
+            </rows>
+        </grid>
+    </template>
+    <template id="resources.show.header" template="" lang="" group="0" version="1.9.002">
+        <et2-button-icon  statustext="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;" noSubmit="true"></et2-button-icon>
+        <et2-button-icon image="search" statustext="Search" noSubmit="true" onclick="javascript:widget.closest('egw-app').filtersDrawer.open = !widget.closest('egw-app').filtersDrawer.open;"></et2-button-icon>
+    </template>
+    <template id="resources.show" template="" lang="" group="0" version="1.9.003">
+        <template template="resources.show.header" slot="main-header"></template>
+        <nextmatch id="nm" no_lang="1" template="resources.show.rows"/>
+        <et2-box  id="delete_popup" class="action_popup prompt">
+            <et2-vbox  class="prompt">
+                <et2-description  value="Delete" class="promptheader"></et2-description>
+                <et2-description  value="Delete accessories of selected resources too?"></et2-description>
+                <et2-hbox>
+                    <et2-button  label="Yes - Delete accessories too" id="delete" onclick="nm_submit_popup(this); return false;"></et2-button>
+                    <et2-button  label="No - Make them resources" id="delete_promote" onclick="nm_popup_action.id = 'delete_promote'; nm_submit_popup(this); return false;"></et2-button>
+                    <et2-button  label="Cancel" onclick="nm_hide_popup(this,'delete_popup');" noSubmit="true"></et2-button>
+                </et2-hbox>
+            </et2-vbox>
+        </et2-box>
+        <et2-box  id="restore_popup" class="action_popup prompt">
+            <et2-vbox  class="prompt">
+                <et2-description  value="Un-delete" class="promptheader"></et2-description>
+                <et2-description  value="Un-delete accessories of selected resources too?"></et2-description>
+                <et2-hbox>
+                    <et2-button  label="Yes - Un-delete accessories too" id="restore_accessories" onclick="nm_popup_action.id = 'restore_accessories';nm_submit_popup(this); return false;"></et2-button>
+                    <et2-button  label="No - Leave them" id="restore" onclick="nm_popup_action.id = 'restore'; nm_submit_popup(this); return false;"></et2-button>
+                    <et2-button  label="Cancel" onclick="nm_hide_popup(this,'restore_popup');" noSubmit="true"></et2-button>
+                </et2-hbox>
+            </et2-vbox>
+        </et2-box>
+        <styles>
+            .thumbnailImage img {
+            width: 100%;
+            max-width: 65px;
+            height: auto !important;
+            max-height: 50px;
+            }
+            .action_popup[id] {
+            position: fixed;
+            top: 200px;
+            left: 450px;
+            width: 76ex;
+            z-index: 20000;
+            display: none;
+            border-collapse:collapse;
+            border-spacing:0px
+            }
+        </styles>
+    </template>
+</overlay>
