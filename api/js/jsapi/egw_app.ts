@@ -182,22 +182,6 @@ export abstract class EgwApp
 		this.appname = appname;
 		this.egw = egw(this.appname, _wnd || window);
 
-		// Tell framework app how to work with our nextmatches
-		let egwApp
-		if((egwApp = <EgwFrameworkApp>document.querySelector("egw-app[name='" + this.appname + "']")))
-		{
-			if(typeof this.getNextmatch == "function")
-			{
-				this.getNextmatch = this.getNextmatch.bind(this);
-				egwApp.getNextmatch = this.getNextmatch;
-			}
-			if(typeof this.getFilterInfo == "function")
-			{
-				this.getFilterInfo = this.getFilterInfo.bind(this);
-				egwApp.getFilterInfo = this.getFilterInfo;
-			}
-		}
-
 		// Initialize sidebox for non-popups.
 		// ID set server side
 		if(!this.egw.is_popup())
@@ -232,7 +216,7 @@ export abstract class EgwApp
 	 */
 	destroy(_app)
 	{
-		let egwApp = <EgwFrameworkApp>document.querySelector("egw-app[name='" + this.appname + "']");
+		let egwApp = <EgwFrameworkApp>this.et2?.getInstanceManager().DOMContainer.closest("egw-app[name='" + this.appname + "']");
 		if(egwApp && typeof this.getNextmatch !== "undefined" && egwApp.getNextmatch == this.getNextmatch)
 		{
 			egwApp.getNextmatch = null;
@@ -276,6 +260,22 @@ export abstract class EgwApp
 		if(this.egw && this.egw.is_popup())
 		{
 			this._set_Window_title();
+		}
+
+		// Tell framework app how to work with our nextmatches
+		let egwApp
+		if((egwApp = <EgwFrameworkApp>et2.DOMContainer.closest("egw-app[name='" + this.appname + "']")))
+		{
+			if(typeof this.getNextmatch == "function")
+			{
+				this.getNextmatch = this.getNextmatch.bind(this);
+				egwApp.getNextmatch = this.getNextmatch;
+			}
+			if(typeof this.getFilterInfo == "function")
+			{
+				this.getFilterInfo = this.getFilterInfo.bind(this);
+				egwApp.getFilterInfo = this.getFilterInfo;
+			}
 		}
 
 		// Highlights the favorite based on initial list state
