@@ -327,6 +327,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	private template_promise : Promise<void>;
 
+	// Watch our DOM node so we can send events
+	private _DOMObserver : MutationObserver = new MutationObserver(this._handleDOMMutation.bind(this));
+
 	/**
 	 * Constructor
 	 *
@@ -365,6 +368,14 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		this.div = jQuery(document.createElement("div"))
 			.addClass("et2_nextmatch");
+
+		// Watch our own DOM node so we can send events
+		// Currently caring about visibility (via attribute or style)
+		this._DOMObserver.observe(this.div[0], {
+			attributes: true,
+			attributeFilter: ["disabled", "hidden", "style"],
+			attributeOldValue: true
+		});
 
 
 		this.header = <et2_nextmatch_header_bar>et2_createWidget("nextmatch_header_bar", {}, this);
@@ -2967,6 +2978,35 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 
+	}
+
+	_handleDOMMutation(mutations)
+	{
+		let eventType = "";
+		mutations.forEach((mutation) =>
+		{
+			switch(mutation.attributeName)
+			{
+				case "style":
+				// Style changed, but we don't get to know what.  Maybe unrelated to visibility
+				case "disabled":
+				case "hidden":
+					if(mutation.oldValue != mutation.value)
+					{
+						// Visibility changed
+						eventType = "et2-" + (this.getDOMNode().checkVisibility() ? "show" : "hide");
+					}
+					break;
+			}
+		})
+		if(eventType)
+		{
+			window.setTimeout(() =>
+			{
+				const event = new CustomEvent(eventType, {detail: this, bubbles: true});
+				this.getDOMNode().dispatchEvent(event);
+			});
+		}
 	}
 
 	// Input widget
