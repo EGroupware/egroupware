@@ -285,10 +285,20 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 		this._sortFilters();
 		this._nextmatch.getDOMNode().classList.add("et2-filterbox--loaded", "et2-filterbox--" + this.originalWidgets);
-		if(this._nextmatch.options.header_left || this._nextmatch.options.header_right || this._nextmatch.options.header_row || this._nextmatch.options.header2)
+
+		// If the nextmatch has sub-headers and we didn't grab everything from them, mark the NM so we don't hide them
+		const subHeaders = ["header_left", "header_right", "header_row", "header2"];
+		subHeaders.forEach(subHeader =>
 		{
-			this._nextmatch.getDOMNode().classList.add("et2-filterbox--has-header");
-		}
+			if(this._nextmatch.options[subHeader])
+			{
+				const subTemplate = this._nextmatch.getWidgetById(this._nextmatch.options[subHeader]);
+				if(subTemplate && subTemplate.childElementCount > 0)
+				{
+					this._nextmatch.getDOMNode().classList.add("et2-filterbox--has-header");
+				}
+			}
+		});
 		this.requestUpdate();
 	}
 
