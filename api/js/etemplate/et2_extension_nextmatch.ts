@@ -78,6 +78,7 @@ import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
 import type {LitElement} from "lit";
 import {Et2Template} from "./Et2Template/Et2Template";
 import {waitForEvent} from "./Et2Widget/event";
+import {Et2VfsUpload} from "./Et2Vfs/Et2VfsUpload";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -2848,48 +2849,48 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			to_app: split.shift(),
 			to_id: split.join('::')
 		};
+		const path = `/apps/${link_value.to_app}/${link_value.to_id}/`;
 		// Create widget and mangle to our needs
-		const link = <et2_link_to>et2_createWidget("link-to", {value: link_value}, this);
-		link.loadingFinished();
-		link.file_upload.set_drop_target(false);
+		const link = <Et2VfsUpload>loadWebComponent("et2-vfs-upload", {path: path, multiple: true}, this);
 
 		if(row.row.tr)
 		{
-			// Ignore most of the UI, just use the status indicators
+			row.row.tr.append(link);
+			// Create an element to hold the file list
 			const status = jQuery(document.createElement("div"))
+				.attr("id", "nm_upload_status_" + this.egw().uid())
 				.addClass('et2_link_to')
 				.width(row.row.tr.width())
-				.position({my: "left top", at: "left top", of: row.row.tr})
-				.append(link.status_span)
-				.append(link.file_upload.progress)
-				.appendTo(row.row.tr);
+				.css({
+					position: "fixed",
+					left: row.row.tr.offset().left,
+					top: row.row.tr.offset().top,
+					height: row.row.tr.height()
+				})
+				.appendTo(this.getInstanceManager().DOMContainer);
 
-			// Bind to link event so we can remove when done
-			link.div.on('link.et2_link_to', function(e, linked)
+			link.fileListTarget = '#' + status.attr("id");
+
+			// Bind to event so we can remove when done
+			link.addEventListener('change', (e) =>
 			{
-				if(!linked)
-				{
-					jQuery("li.success", link.file_upload.progress)
-						.removeClass('success').addClass('validation_error');
-				}
-				else
-				{
-					// Update row
-					link._parent.refresh(uid, 'edit');
-				}
+				// Update row
+				this.refresh(uid, 'update-in-place');
 				// Fade out nicely
-				status.delay(linked ? 1 : 2000)
+				status.delay(2000)
 					.fadeOut(500, function()
 					{
-						link.destroy();
+						link.remove();
 						status.remove();
 					});
-
-			});
+			}, {once: true});
 		}
 
-		// Upload and link - this triggers the upload, which triggers the link, which triggers the cleanup and refresh
-		link.file_upload.set_value(files);
+		// Upload to VFS, which triggers the cleanup and refresh when done
+		link.updateComplete.then(() =>
+		{
+			Array.from(files).forEach(file => link.addFile(file));
+		});
 	}
 
 	getDOMNode(_sender?)

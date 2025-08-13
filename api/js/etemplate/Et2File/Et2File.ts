@@ -480,7 +480,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 			console.warn("Invalid file", file);
 			return;
 		}
-		if(this.maxFiles && this.files.length >= this.maxFiles)
+		if(this.maxFiles && this.files.length >= this.maxFiles || !this.multiple && this.files.length > 0)
 		{
 			// TODO : Warn too many files
 			return;
@@ -509,7 +509,8 @@ export class Et2File extends Et2InputWidget(LitElement)
 			fileInfo.accepted = true;
 		}
 
-		this.files = this.multiple ? [...this.files, fileInfo] : [fileInfo];
+		// This can cause doubled FileInfo
+		//this.files = this.multiple ? [...this.files, fileInfo] : [fileInfo];
 		this.requestUpdate("files");
 		if(fileInfo.accepted)
 		{
