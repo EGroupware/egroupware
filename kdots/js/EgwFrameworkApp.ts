@@ -1034,15 +1034,15 @@ export class EgwFrameworkApp extends LitElement
                         originalwidgets=${this.egw.preference("keep_nm_header", 'common') || "replace"}
                         @change=${e => e.preventDefault()}
                 >
+                    ${this.hasSlotController.test("filter") ? html`
+                        <slot name="filter"></slot>` : nothing}
                     ${!this.features.favorites ? nothing : html`
-                        <sl-details class="egw_fw_app__favorites" slot="prefix"
+                        <sl-details class="egw_fw_app__favorites" open slot="suffix"
                                     summary=${this.egw.lang("Favorites")}
                         >
                             <et2-favorites-menu application=${this.name}></et2-favorites-menu>
                         </sl-details>
                     `}
-                    ${this.hasSlotController.test("filter") ? html`
-                        <slot name="filter"></slot>` : nothing}
                 </et2-filterbox>
             </sl-drawer>`;
 	}
