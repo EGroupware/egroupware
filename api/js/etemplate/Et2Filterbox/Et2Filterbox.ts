@@ -285,6 +285,10 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 		this._sortFilters();
 		this._nextmatch.getDOMNode().classList.add("et2-filterbox--loaded", "et2-filterbox--" + this.originalWidgets);
+		if(this._nextmatch.options.header_left || this._nextmatch.options.header_right || this._nextmatch.options.header_row || this._nextmatch.options.header2)
+		{
+			this._nextmatch.getDOMNode().classList.add("et2-filterbox--has-header");
+		}
 		this.requestUpdate();
 	}
 
