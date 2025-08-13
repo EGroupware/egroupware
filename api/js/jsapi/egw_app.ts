@@ -184,14 +184,16 @@ export abstract class EgwApp
 
 		// Tell framework app how to work with our nextmatches
 		let egwApp
-		if((egwApp = <EgwFrameworkApp>document.querySelector("egw-app[name=admin]")))
+		if((egwApp = <EgwFrameworkApp>document.querySelector("egw-app[name='" + this.appname + "']")))
 		{
 			if(typeof this.getNextmatch == "function")
 			{
+				this.getNextmatch = this.getNextmatch.bind(this);
 				egwApp.getNextmatch = this.getNextmatch;
 			}
 			if(typeof this.getFilterInfo == "function")
 			{
+				this.getFilterInfo = this.getFilterInfo.bind(this);
 				egwApp.getFilterInfo = this.getFilterInfo;
 			}
 		}
