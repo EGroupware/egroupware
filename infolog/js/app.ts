@@ -20,6 +20,7 @@ import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {nm_open_popup} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
+import {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
 
 /**
  * UI for Infolog
@@ -317,6 +318,19 @@ class InfologApp extends EgwApp
 		// Already handled everything here and the column change probably triggered a reload
 		// Return false to skip nm doing the filter value change
 		return false;
+	}
+
+	/**
+	 * Since infolog always has filter2 set, ignore that for determining if there are filters set
+	 *
+	 * @param filters
+	 */
+	getFilterInfo(filterValues, fwApp : EgwFrameworkApp)
+	{
+		delete filterValues.filter2;
+
+		// Use the EgwFrameworkApp's filterInfo() method to get the filter info
+		return fwApp.filterInfo(filterValues);
 	}
 
 	/**
