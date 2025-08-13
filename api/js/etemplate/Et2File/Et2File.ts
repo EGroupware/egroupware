@@ -777,6 +777,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                     <slot name="prefix"></slot>
                     <slot name="button">
                         <et2-button part="button"
+                                    expand="base:button__base"
                                     class="file__button"
                                     id="visible-button"
                                     ?disabled=${this.disabled}

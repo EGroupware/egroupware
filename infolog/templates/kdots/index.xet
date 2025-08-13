@@ -3,7 +3,7 @@
 <overlay>
     <template id="infolog.index.header" template="" lang="" group="0" version="1.9.001">
         <et2-button-icon statustext="Add" id="add" image="add" onclick="app.infolog.add_with_extras(widget,'','$cont[action]','$cont[action_id]');"></et2-button-icon>
-        <et2-button-icon image="search" statustext="Search" noSubmit="true" onclick="javascript:widget.closest('egw-app').filtersDrawer.open = !widget.closest('egw-app').filtersDrawer.open;"></et2-button-icon>
+        <template template="api.search-button"></template>
     </template>
     <template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
         <et2-hbox>

@@ -195,8 +195,7 @@
             <et2-button-icon statustext="Add a new contact" id="add" image="add"
                              onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'870','610','_blank','addressbook',null,true); return false;"
                              noSubmit="true"></et2-button-icon>
-            <et2-button-icon image="search" statustext="Search" noSubmit="true"
-                             onclick="javascript:widget.closest('egw-app').filtersDrawer.open = !widget.closest('egw-app').filtersDrawer.open;"></et2-button-icon>
+            <template template="api.search-button"></template>
             <et2-button-icon align="right" statustext="Advanced search" image="advanced-search" id="advanced-search"
                              onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.extSearch'),'870','610','_blank','addressbook',null,true); return false;"
                              noSubmit="true"></et2-button-icon>

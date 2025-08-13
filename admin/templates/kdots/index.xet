@@ -3,7 +3,7 @@
 <overlay>
 	<template id="admin.index.header" template="" lang="" group="0" version="1.9.001">
 		<et2-button-icon  statustext="Add" image="add" id="add" onclick="app.admin.account({id:'add'})" noSubmit="true"></et2-button-icon>
-        <et2-button-icon image="search" statustext="Search" noSubmit="true" onclick="javascript:widget.closest('egw-app').filtersDrawer.open = !widget.closest('egw-app').filtersDrawer.open;"></et2-button-icon>
+        <template template="api.search-button"></template>
 	</template>
 	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
