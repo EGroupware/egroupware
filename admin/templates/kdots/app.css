@@ -2,3 +2,10 @@
 #admin #admin-index_tree {
   padding: var(--sl-spacing-medium) 0;
 }
+egw-app[name="admin"] {
+  /* Hide nextmatch header, it's in the framework now */
+}
+egw-app[name="admin"] .et2_nextmatch .nextmatch_header {
+  height: 0px;
+  overflow: hidden;
+}

@@ -810,10 +810,6 @@ div.et2_nextmatch > div:not(:first-child) {
 div.et2_nextmatch th {
   font-weight: normal;
 }
-div.et2_nextmatch .nextmatch_sortheader {
-  padding-right: var(--sl-spacing-large);
-  margin-right: var(--sl-spacing-large);
-}
 div.et2_nextmatch .egwGridView_outer {
   border-collapse: collapse;
 }

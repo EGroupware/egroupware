@@ -312,12 +312,12 @@ class addressbook_ui extends addressbook_bo
 		{
 			$sel_options['filter2'] = $this->distribution_lists();
 		}
-
+// seems to no longer be used
 		// Organisation stuff is not (yet) available with ldap
-		if($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap' && Api\Header\UserAgent::mobile() == '' && empty($_GET['template']))
-		{
-			$content['nm']['header_left'] = 'addressbook.index.left';
-		}
+//		if($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap' && Api\Header\UserAgent::mobile() == '' && empty($_GET['template']))
+//		{
+//			$content['nm']['header_left'] = 'addressbook.index.left';
+//		}
 		$sel_options['filter'] = $sel_options['owner'] = $this->get_addressbooks(Acl::READ, lang('All addressbooks'));
 		$sel_options['to'] = array(
 			'to'  => 'To',

@@ -148,7 +148,7 @@
     </template>
     <template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
         <et2-split id="mailSplitter" style="--min: 30%;--max:min(70%,calc(100% - 30em));" vertical="false" primary="start">
-            <nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows.vertical" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
+            <nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows.vertical" header_right="mail.index.header_right" disable_selection_advance="true"/>
             <template id="mail.index.preview"/>
         </et2-split>
     </template>
@@ -205,11 +205,12 @@
         </grid>
     </template>
     <template id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
-        <nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows.horizontal" header_left="mail.index.add"
+        <nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows.horizontal"
                    header_right="mail.index.header_right"/>
     </template>
-    <template id="mail.index.add" template="" lang="" group="0" version="1.9.001">
-        <et2-button id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" image="add" noSubmit="true"></et2-button>
+    <template id="mail.index.header" template="" lang="" group="0" version="1.9.001">
+        <et2-button-icon id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" image="add" noSubmit="true"></et2-button-icon>
+        <et2-button-icon image="search" statustext="Search" noSubmit="true" onclick="javascript:widget.closest('egw-app').filtersDrawer.open = !widget.closest('egw-app').filtersDrawer.open;"></et2-button-icon>
     </template>
     <template id="mail.index.header_right" template="" lang="" group="0" version="1.9.001">
         <et2-details id="mail.index.vacationnotice" disabled="true" summary="on vacation" toggleOnHover="true" hoist="true" class="vacationnotice" onclick="app.mail.edit_vacation">
@@ -225,6 +226,7 @@
         </et2-hbox>
     </template>
     <template id="mail.index" template="" lang="" group="0" version="1.9.001">
+        <template template="mail.index.header" slot="main-header"></template>
         <et2-tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder"
                   onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"
                   highlighting="true" parentId="mail-tree_target" slot="left"/>

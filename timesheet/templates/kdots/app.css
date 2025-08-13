@@ -1,0 +1,8 @@
+@import "../default/app.css";
+egw-app[name="timesheet"] {
+  /* Hide nextmatch header, it's in the framework now */
+}
+egw-app[name="timesheet"] .et2_nextmatch .nextmatch_header {
+  height: 0px;
+  overflow: hidden;
+}
