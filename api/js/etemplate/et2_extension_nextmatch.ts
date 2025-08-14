@@ -765,6 +765,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		const changeEvent = new CustomEvent("et2-filter", {
+			bubbles: true,
 			detail: {
 				oldFilters: oldFilters,
 				activeFilters: this.activeFilters
