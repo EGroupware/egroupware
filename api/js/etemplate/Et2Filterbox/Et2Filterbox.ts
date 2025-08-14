@@ -485,6 +485,9 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	 */
 	private handleKeypress(event)
 	{
+		// Only intercept keypresses when filters drawer is open
+		if (!event?.target?.filtersDrawer?.open)
+			return
 		if(event.key == "Escape"){
 			event.target.filtersDrawer.hide();
 		}
