@@ -317,6 +317,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	private _adoptNextmatchWidget(widget) : Filter
 	{
+		const noReplaceClasses = ['et2-nextmatch-header-entry'];
 		const dealWithOriginal = (widget, filter) =>
 		{
 			switch(this.originalWidgets)
@@ -324,7 +325,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 				case "none":
 					break;
 				case "replace":
-					if(widget.implements(et2_INextmatchHeader))
+					if(!noReplaceClasses.includes(widget.localName) && widget.implements(et2_INextmatchHeader))
 					{
 						const replacement = document.createElement("div");
 						replacement.innerHTML = filter.label;
