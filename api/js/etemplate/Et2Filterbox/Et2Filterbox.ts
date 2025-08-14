@@ -275,7 +275,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 		// Now for column headers
 		const dataId = 'col_filter';
-		const filters = Array.from(nextmatch.getDOMNode().querySelectorAll("et2-nextmatch-header-filter, et2-nextmatch-header-account, et2-nextmatch-header-entry"));
+		const filters = Array.from(nextmatch.getDOMNode().querySelectorAll("et2-nextmatch-header-filter, et2-nextmatch-header-account, et2-nextmatch-header-entry, et2-nextmatch-header-custom"));
 		filters.forEach((widget : HTMLElement) =>
 		{
 			// Customfields get their own group
