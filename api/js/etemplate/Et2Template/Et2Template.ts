@@ -576,8 +576,13 @@ export class Et2Template extends Et2Widget(LitElement)
 				return '';
 			}
 
+			// Get theme from parent, if possible
+			const re = new RegExp("/templates/([^/]+)/");
+			const parentTheme = (this.parentElement?.closest("et2-template")?.getUrl() || "").match(re);
+			const theme = parentTheme && parentTheme[1] ? parentTheme[1] : "default";
+
 			url = this.egw().link(
-				'/' + app + "/templates/default/" + splitted.join('.') + ".xet",
+				`/${app}/templates/${theme}/` + splitted.join('.') + ".xet",
 				{download: cache_buster}
 			);
 		}

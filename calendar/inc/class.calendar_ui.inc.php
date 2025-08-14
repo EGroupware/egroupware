@@ -622,6 +622,11 @@ class calendar_ui
 			return;
 		}
 
+		// Filters
+		Etemplate::reset_request();
+		$tmpl = new Etemplate('calendar.filter');
+		$tmpl->exec('calendar_uiviews::index', $cont, $sel_options, $readonlys);
+
 		// Sidebox?
 		Etemplate::reset_request();
 		$sidebox = new Etemplate('calendar.sidebox');

@@ -1618,6 +1618,9 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
 egw-app {
   --current-day-color: var(--sl-color-amber-200, #ffffcc);
 }
+#calendar-sidebox_date {
+  flex-grow: 0;
+}
 #calendar-sidebox_date .flatpickr-day {
   color: var(--sl-color-neutral-900);
 }
@@ -1660,6 +1663,11 @@ egw-app {
   left: initial ;
   right: initial ;
   bottom: initial ;
+}
+#calendar-filter_calendar-filter::part(base) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-width);
 }
 .calendar_calEvent:not([class*=" cat_"]) {
   background-color: var(--primary-background-color);

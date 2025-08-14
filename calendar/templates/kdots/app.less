@@ -3,9 +3,15 @@
 egw-app {
   --current-day-color: var(--sl-color-amber-200, #ffffcc);
 }
-#calendar-sidebox_date .flatpickr-day{
-  color: var(--sl-color-neutral-900);
+
+#calendar-sidebox_date {
+  flex-grow: 0;
+
+  .flatpickr-day {
+	color: var(--sl-color-neutral-900);
+  }
 }
+
 #calendar-sidebox_date .flatpickr-day.today {
   background-color: var(--current-day-color);
   color: var(--sl-color-neutral-900)
@@ -47,6 +53,14 @@ egw-app {
   left: initial ;
   right: initial ;
   bottom: initial ;
+}
+
+#calendar-filter_calendar-filter {
+  &::part(base) {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-width);
+  }
 }
 
 .calendar_calEvent:not([class*=" cat_"]) {

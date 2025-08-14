@@ -220,9 +220,18 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		}
 	}
 
+	public get absoluteValue() : { to : string, from : string }
+	{
+		return this.relative ? Et2DateRange.relativeToAbsolute(this.value) : this.value;
+	}
+
 	static relativeToAbsolute(date)
 	{
 		let absolute = {from: '', to: ''};
+		if(!date)
+		{
+			return absolute;
+		}
 		let relative = Et2DateRange.relative_dates.find(e => e.value.toLowerCase() == date.toLowerCase());
 		let tempDate = new Date();
 		let today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, -tempDate.getTimezoneOffset(), 0);

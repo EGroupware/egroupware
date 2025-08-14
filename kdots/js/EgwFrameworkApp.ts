@@ -643,7 +643,7 @@ export class EgwFrameworkApp extends LitElement
 		}
 
 		// Move top level slotted components
-		const slottedWidgets = etemplate.widgetContainer.querySelectorAll(":scope > [slot]")
+		const slottedWidgets = etemplate.widgetContainer?.querySelectorAll(":scope > [slot]") ?? []
 		slottedWidgets.forEach(node => {this.appendChild(node);});
 
 		// Request update, since slotchanged events are only fired when the attribute changes and they're already set
@@ -1013,6 +1013,7 @@ export class EgwFrameworkApp extends LitElement
 
 		// Drawer label includes row count
 		const info = this.getFilterInfo(this.filters?.value ?? {}, this);
+		const hasCustomFilter = this.hasSlotController.test("filter");
 
 		return html`
             <sl-drawer part="filter"
@@ -1034,9 +1035,9 @@ export class EgwFrameworkApp extends LitElement
                         originalwidgets=${this.egw.preference("keep_nm_header", 'common') || "replace"}
                         @change=${e => e.preventDefault()}
                 >
-                    ${this.hasSlotController.test("filter") ? html`
+                    ${hasCustomFilter ? html`
                         <slot name="filter"></slot>` : nothing}
-                    ${!this.features.favorites ? nothing : html`
+                    ${!this.features.favorites || hasCustomFilter ? nothing : html`
                         <sl-details class="egw_fw_app__favorites" open slot="suffix"
                                     summary=${this.egw.lang("Favorites")}
                         >
