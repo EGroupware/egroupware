@@ -768,7 +768,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			bubbles: true,
 			detail: {
 				oldFilters: oldFilters,
-				activeFilters: this.activeFilters
+				activeFilters: this.activeFilters,
+				// Include nm widget because it's so hard to get from DOM to widget
+				nm: this
 			}
 		});
 		this.getDOMNode().dispatchEvent(changeEvent);

@@ -95,6 +95,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	{
 		super();
 		this.applyFilters = this.applyFilters.bind(this);
+		this.handleNextmatchFilter = this.handleNextmatchFilter.bind(this);
 	}
 
 	connectedCallback()
@@ -108,6 +109,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	{
 		super.disconnectedCallback()
 		document.removeEventListener("keydown", this.handleKeypress, {capture: true});
+		this._nextmatch.getDOMNode().removeEventListener("et2-filter", this.handleNextmatchFilter);
 	}
 
 	willUpdate(changedProperties : Map<string, unknown>)
@@ -313,6 +315,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			}
 		});
 		this.requestUpdate();
+		nextmatch.getDOMNode().addEventListener("et2-filter", this.handleNextmatchFilter);
 	}
 
 	private _adoptNextmatchWidget(widget) : Filter
@@ -362,10 +365,11 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		const et2Widget = widget as unknown as typeof Et2InputWidget;
 		const clone = et2Widget.clone();
 		clone.removeAttribute("align");
-		et2Widget.addEventListener("change", (event) => { clone.value = et2Widget.value});
 		const filter = {
 			// @ts-ignore
 			label: et2Widget.label || et2Widget.ariaLabel || et2Widget.placeholder || et2Widget.emptyLabel,
+			// @ts-ignore
+			name: et2Widget.id,
 			// @ts-ignore
 			widget: clone,
 			order: widget.dataset.order
@@ -435,6 +439,57 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		`;
 	}
 
+	/**
+	 * Enable the filterbox to intercept keypresses from the nextmatch before they reach it
+	 * @param event
+	 * @private
+	 */
+	private handleKeypress(event)
+	{
+		// Only intercept keypresses when filters drawer is open
+		if(!event?.target?.filtersDrawer?.open)
+		{
+			return
+		}
+		if(event.key == "Escape")
+		{
+			event.target.filtersDrawer.hide();
+		}
+		event.stopPropagation();
+	}
+
+	/**
+	 * The nextmatch filtered, update our values to match
+	 *
+	 * @param event
+	 * @private
+	 */
+	private handleNextmatchFilter(event)
+	{
+		if(!event.detail?.activeFilters)
+		{
+			return;
+		}
+		const nmGroups = this._groups[event.detail.nm.id];
+		debugger;
+		for(let nmGroupsName in nmGroups)
+		{
+			const group = nmGroups[nmGroupsName];
+			group.filters.forEach(filter =>
+			{
+				const newValue = group.dataId ? event.detail.activeFilters[group.dataId][filter.name] : event.detail.activeFilters[filter.name];
+				if(typeof newValue != "undefined")
+				{
+					filter.value = newValue;
+					if(filter.widget)
+					{
+						filter.widget.set_value(filter.value);
+					}
+				}
+			});
+		}
+	}
+
 	render()
 	{
 		const hasLabelSlot = this.hasSlotController.test('label');
@@ -476,22 +531,6 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
                 </div>
             </div>
 		`;
-	}
-
-	/**
-	 * Enable the filterbox to intercept keypresses from the nextmatch before they reach it
-	 * @param event
-	 * @private
-	 */
-	private handleKeypress(event)
-	{
-		// Only intercept keypresses when filters drawer is open
-		if (!event?.target?.filtersDrawer?.open)
-			return
-		if(event.key == "Escape"){
-			event.target.filtersDrawer.hide();
-		}
-		event.stopPropagation();
 	}
 }
 
