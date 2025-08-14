@@ -2220,13 +2220,13 @@ ul[id$='favorites_popup_state'] span.filter_value {
 }
 
 .nextmatch_sortheader.asc {
-    background-image: url(../../../node_modules/bootstrap-icons/icons/caret-up.svg);
-    background-size: 1.5em;
+    background-image: url(../../../node_modules/bootstrap-icons/icons/caret-up-fill.svg);
+    /*background-size: 1.5em;*/
 }
 
 .nextmatch_sortheader.desc {
-    background-image: url(../../../node_modules/bootstrap-icons/icons/caret-down.svg);
-    background-size: 1.5em;
+    background-image: url(../../../node_modules/bootstrap-icons/icons/caret-down-fill.svg);
+    /*background-size: 1.5em;*/
 }
 
 .nextmatch_resize_helper {

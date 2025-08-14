@@ -1645,6 +1645,9 @@ egw-app {
 #calendar-sidebox iframe {
   display: none;
 }
+#calendar-sidebox_date {
+  flex-grow: 0;
+}
 #calendar-toolbar #calendar-toolbar_app_header {
   color: inherit;
   background-color: transparent;
@@ -1662,8 +1665,8 @@ egw-app {
   background-color: var(--primary-background-color);
 }
 /* CalendarOwner needs this to round avatars */
-.kdots-glassy .et2-input-widget:not([disabled])::part(base),
-.kdots-glassy .et2-input-widget:not([disabled])::part(input-control),
-.kdots-glassy .et2-input-widget:not([disabled])::part(combobox) {
+.kdots-glassy egw-app[id="calendar"] .et2-input-widget:not([disabled])::part(base),
+.kdots-glassy egw-app[id="calendar"] .et2-input-widget:not([disabled])::part(input-control),
+.kdots-glassy egw-app[id="calendar"] .et2-input-widget:not([disabled])::part(combobox) {
   --sl-border-radius-medium: var(--sl-input-height-medium);
 }

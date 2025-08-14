@@ -60,7 +60,11 @@
 :host .et2-input-widget:not([disabled])::part(combobox),
 .kdots-glassy .et2-input-widget:not([disabled])::part(combobox) {
   box-shadow: var(--upper-tint), var(--lower-shade);
-  background-color: transparent;
+}
+:root .et2-input-widget:not([disabled])::part(listbox),
+:host .et2-input-widget:not([disabled])::part(listbox),
+.kdots-glassy .et2-input-widget:not([disabled])::part(listbox) {
+  --sl-input-background-color: var(--sl-color-neutral-0);
 }
 :root *[slot="main-header"] *::part(base),
 :host *[slot="main-header"] *::part(base),

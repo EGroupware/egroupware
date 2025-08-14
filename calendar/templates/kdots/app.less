@@ -29,6 +29,9 @@ egw-app {
 	display: none;
   }
 }
+#calendar-sidebox_date {
+  flex-grow: 0;
+}
 
 #calendar-toolbar {
   #calendar-toolbar_app_header {
@@ -51,11 +54,13 @@ egw-app {
 }
 
 /* CalendarOwner needs this to round avatars */
-.kdots-glassy {
-  .et2-input-widget {
-	&:not([disabled]) {
-	  &::part(base), &::part(input-control), &::part(combobox) {
-		--sl-border-radius-medium: var(--sl-input-height-medium);
+  .kdots-glassy {
+	egw-app[id="calendar"] {
+	.et2-input-widget {
+	  &:not([disabled]) {
+		&::part(base), &::part(input-control), &::part(combobox) {
+		  --sl-border-radius-medium: var(--sl-input-height-medium);
+		}
 	  }
 	}
   }

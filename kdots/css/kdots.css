@@ -814,7 +814,7 @@ div.et2_nextmatch .egwGridView_outer {
   border-collapse: collapse;
 }
 div.et2_nextmatch .egwGridView_outer thead > tr {
-  background-color: var(--sl-color-neutral-50);
+  background-color: var(--sl-color-neutral-200);
   border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
 }
 div.et2_nextmatch .egwGridView_outer thead > tr th {
@@ -858,6 +858,9 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   --sl-input-color-hover: var(--application-header-text-color);
   --sl-input-placeholder-color: hsl(from var(--application-header-text-color) h s l / 50%);
   color: var(--application-header-text-color);
+  /*HOVER effect on all clickable elements in the main-header*/
+  /*we also want to style the clickable elements in the whole header in the same way*/
+  /*END HOVER*/
 }
 [slot="main-header"] input::placeholder {
   color: black;
@@ -867,34 +870,17 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   color: var(--application-header-text-color);
   background-color: transparent;
 }
-[slot="main-header"] et2-button,
-[slot="main-header"] et2-button-icon,
-[slot="main-header"] et2-button-image,
-[slot="main-header"] et2-button-toggle,
-[slot="main-header"] et2-switch,
-[slot="main-header"] et2-switch-icon,
-[slot="main-header"] et2-image {
-  --indicator-color: var(--sl-color-neutral-0);
-  --sl-input-background-color: transparent;
+[slot="main-header"] .et2_clickable {
+  --sl-input-border-color: transparent;
 }
-[slot="main-header"] et2-button::part(base),
-[slot="main-header"] et2-button-icon::part(base),
-[slot="main-header"] et2-button-image::part(base),
-[slot="main-header"] et2-button-toggle::part(base),
-[slot="main-header"] et2-switch::part(base),
-[slot="main-header"] et2-switch-icon::part(base),
-[slot="main-header"] et2-image::part(base) {
-  background-color: transparent;
+[slot="main-header"] .et2_clickable::part(label) {
+  padding-inline-start: var(--sl-spacing-3x-small);
 }
-[slot="main-header"] et2-button:hover::part(base),
-[slot="main-header"] et2-button-icon:hover::part(base),
-[slot="main-header"] et2-button-image:hover::part(base),
-[slot="main-header"] et2-button-toggle:hover::part(base),
-[slot="main-header"] et2-switch:hover::part(base),
-[slot="main-header"] et2-switch-icon:hover::part(base),
-[slot="main-header"] et2-image:hover::part(base) {
-  border-color: transparent;
-  background-color: var(--sl-input-background-color-hover);
+[slot="main-header"] .et2_clickable::part(base) {
+  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+}
+[slot="main-header"] .et2_clickable:hover::part(base) {
+  border-color: var(--sl-input-border-color-hover);
 }
 [slot="main-header"] et2-toolbar {
   border-bottom-width: 0px;

@@ -38,7 +38,9 @@
 	&:not([disabled]) {
 	  &::part(base), &::part(input-control), &::part(combobox) {
 		box-shadow: var(--upper-tint), var(--lower-shade);
-		background-color: transparent;
+	  }
+	  &::part(listbox){
+		--sl-input-background-color: var(--sl-color-neutral-0);
 	  }
 	}
   }

@@ -29,7 +29,7 @@ div.et2_nextmatch {
 	border-collapse: collapse;
 
 	thead > tr {
-	  background-color: var(--sl-color-neutral-50);
+	  background-color: var(--sl-color-neutral-200);
 	  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
 
 	  th {
@@ -79,6 +79,7 @@ div.et2_nextmatch {
   --input-text-color: var(--application-header-text-color);
   --sl-input-icon-color: var(--application-header-text-color);
   --sl-input-color-hover: var(--application-header-text-color);
+  //--sl-input-border-color: transparent;
   --sl-input-placeholder-color: hsl(from var(--application-header-text-color) h s l / 50%);
   color: var(--application-header-text-color);
 
@@ -91,18 +92,21 @@ div.et2_nextmatch {
 	background-color: transparent;
   }
 
-  et2-button, et2-button-icon, et2-button-image, et2-button-toggle, et2-switch, et2-switch-icon, et2-image {
-	--indicator-color: var(--sl-color-neutral-0);
-	--sl-input-background-color: transparent;
-	&::part(base) {
-	  background-color: transparent;
+/*HOVER effect on all clickable elements in the main-header*/
+  /*we also want to style the clickable elements in the whole header in the same way*/
+  .et2_clickable {
+	--sl-input-border-color: transparent;
+	&::part(label){
+	  padding-inline-start: var(--sl-spacing-3x-small);
 	}
-
+	&::part(base) {
+	  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+	}
 	&:hover::part(base) {
-	  border-color: transparent;
-	  background-color: var(--sl-input-background-color-hover);
+	  border-color: var(--sl-input-border-color-hover);
 	}
   }
+  /*END HOVER*/
 
   et2-toolbar {
 	border-bottom-width: 0px;

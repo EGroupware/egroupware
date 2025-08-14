@@ -51,9 +51,13 @@ export default css`
         font-size: var(--sl-font-size-x-large);
     }
 
-    .egw_fw_app__header sl-icon-button::part(base), .egw_fw_app__header et2-button-icon {
+    .egw_fw_app__header sl-icon-button::part(base), 
+    .egw_fw_app__header et2-button-icon, 
+    .egw_fw_app__header et2-button-icon::part(base) {
+	    --sl-input-border-color: transparent;
         font-size: inherit;
         color: var(--application-header-text-color, var(--sl-color-neutral-0));
+        border: solid var(--sl-input-border-width) var(--sl-input-border-color);
     }
 
     .egw_fw_app__header et2-button-icon {
@@ -61,8 +65,7 @@ export default css`
     }
 
     .egw_fw_app__header sl-icon-button::part(base):hover, .egw_fw_app__header et2-button-icon::part(base):hover {
-        color: var(--application-header-text-color, var(--sl-color-neutral-0));
-        filter: brightness(70%);
+        border-color: var(--sl-input-border-color-hover);
     }
 
     .egw_fw_app__menu > div {
