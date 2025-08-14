@@ -691,6 +691,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	{
 		let changed = false;
 		let keep_selection = false;
+		const oldFilters = Object.assign({}, this.activeFilters);
 
 		// Avoid loops cause by change events
 		if(this.update_in_progress || !this.controller) return;
@@ -761,6 +762,18 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					changed = true;
 				}
 			}
+		}
+
+		const changeEvent = new CustomEvent("et2-filter", {
+			detail: {
+				oldFilters: oldFilters,
+				activeFilters: this.activeFilters
+			}
+		});
+		this.getDOMNode().dispatchEvent(changeEvent);
+		if(changeEvent.defaultPrevented)
+		{
+			return;
 		}
 
 		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
