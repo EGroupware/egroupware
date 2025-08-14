@@ -837,9 +837,14 @@ td.et2_customfield_header et2-label {
 
 /* Custom field list inside nextmatch rows gets an icon for each row */
 .et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr {
-    background-image: url('../../../node_modules/bootstrap-icons/icons/info-circle.svg');
-    background-repeat: no-repeat;
-    background-size: 1em;
+    td > *:before {
+        font-family: bootstrap-icons !important;
+        content: "\f431";
+    }
+
+    /*    background-image: url('../../../node_modules/bootstrap-icons/icons/info-circle.svg');
+        background-repeat: no-repeat;
+        background-size: 1em;*/
 }
 
 .et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr > td:first-child {
