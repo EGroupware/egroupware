@@ -52,7 +52,7 @@ class Template extends Etemplate\Widget
 	 * Get instance of template specified by name, template(-set) and version
 	 *
 	 * @param string $_name
-	 * @param string $template_set =null default try template-set from user and if not found "default"
+	 * @param string $template_set =null default tries template-set from user and if not found "default"
 	 * @param string $version =''
 	 * @param string $load_via ='' use given template to load $name
 	 * @return Template|boolean false if not found
@@ -89,7 +89,7 @@ class Template extends Etemplate\Widget
 					if($name == $parts[count($parts)-1]) return $c_template;
 				}
 			}
-			// Template not found, try again with content expansion
+			// Template isn't found, try again with content expansion
 			if (is_array(self::$request->content))
 			{
 				$expand_name = self::expand_name($name, '','','','',self::$cont);
@@ -113,7 +113,7 @@ class Template extends Etemplate\Widget
 
 		while($reader->read())
 		{
-			if ($reader->nodeType == XMLReader::ELEMENT && $reader->name == 'template')
+			if ($reader->nodeType == XMLReader::ELEMENT && in_array($reader->name, ['template', 'et2-template']))
 			{
 				$template = new Template($reader);
 				$template->rel_path = $path;
@@ -129,7 +129,7 @@ class Template extends Etemplate\Widget
 			}
 		}
 
-		// template not found in file, should never happen
+		// template isn't found in file, should never happen
 		error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found in file '$path'!");
 		return false;
 	}
@@ -140,10 +140,10 @@ class Template extends Etemplate\Widget
 	 * Get path/URL relative to EGroupware install of a template of full vfs url
 	 *
 	 * @param string $name
-	 * @param string $template_set =null default try template-set from user and if not found "default"
+	 * @param string $template_set =null default tries template-set from user and if not found "default"
 	 * @param string $version =''
 	 * @param string $load_via =''
-	 * @return string path of template xml file or null if not found
+	 * @return string path of template XML file or null if not found
 	 */
 	public static function relPath($name, $template_set=null, $version='', $load_via='')
 	{
@@ -191,7 +191,7 @@ class Template extends Etemplate\Widget
 	}
 
 	/**
-	 * Convert relative template path from relPath to an absolute path
+	 * Convert a relative template path from relPath to an absolute path
 	 *
 	 * @param string $path
 	 * @return string
@@ -206,7 +206,7 @@ class Template extends Etemplate\Widget
 	}
 
 	/**
-	 * Convert relative template path from relPath to an url incl. cache-buster modification time postfix
+	 * Convert a relative template path from relPath to an url incl. cache-buster modification time postfix
 	 *
 	 * This adds the server-side modification of eTemplates for web-components /api/etemplate.php.
 	 *
@@ -217,7 +217,7 @@ class Template extends Etemplate\Widget
 	{
 		if (empty($path))
 		{
-			return null;  // do not prefix empty path with preprocessor script, as it prevents client-side expansion
+			return null;  // do not prefix an empty path with the preprocessor script, as it prevents client-side expansion
 		}
 		return $GLOBALS['egw_info']['server']['webserver_url'].'/api/etemplate.php'.
 			($path[0] === '/' ? $path : preg_replace('#^'.self::VFS_TEMPLATE_PATH.'#', '',
@@ -232,7 +232,7 @@ class Template extends Etemplate\Widget
 	 *
 	 * @param string|callable $method_name or function($cname, $expand, $widget)
 	 * @param array $params =array('') parameter(s) first parameter has to be cname, second $expand!
-	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
+	 * @param boolean $respect_disabled false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
@@ -271,7 +271,7 @@ class Template extends Etemplate\Widget
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param array|null $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
 	public function beforeSendToClient($cname, array $expand=null)
 	{
