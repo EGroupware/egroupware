@@ -870,16 +870,24 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   color: var(--application-header-text-color);
   background-color: transparent;
 }
-[slot="main-header"] .et2_clickable {
+[slot="main-header"] .et2_clickable,
+[slot="main-header"] et2-button-icon,
+[slot="main-header"] et2-button {
   --sl-input-border-color: transparent;
 }
-[slot="main-header"] .et2_clickable::part(label) {
+[slot="main-header"] .et2_clickable::part(label),
+[slot="main-header"] et2-button-icon::part(label),
+[slot="main-header"] et2-button::part(label) {
   padding-inline-start: var(--sl-spacing-3x-small);
 }
-[slot="main-header"] .et2_clickable::part(base) {
+[slot="main-header"] .et2_clickable::part(base),
+[slot="main-header"] et2-button-icon::part(base),
+[slot="main-header"] et2-button::part(base) {
   border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 }
-[slot="main-header"] .et2_clickable:hover::part(base) {
+[slot="main-header"] .et2_clickable:hover::part(base),
+[slot="main-header"] et2-button-icon:hover::part(base),
+[slot="main-header"] et2-button:hover::part(base) {
   border-color: var(--sl-input-border-color-hover);
 }
 [slot="main-header"] et2-toolbar {
@@ -890,6 +898,7 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   color: var(--sl-color-neutral-700);
 }
 [slot="main-header"] et2-toolbar ::part(list) et2-button::part(base) {
+  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
   color: var(--sl-color-neutral-700);
 }
 [slot="main-header"] et2-toolbar ::part(list) et2-button:hover::part(base) {

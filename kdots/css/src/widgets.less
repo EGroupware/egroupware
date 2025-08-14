@@ -94,7 +94,7 @@ div.et2_nextmatch {
 
 /*HOVER effect on all clickable elements in the main-header*/
   /*we also want to style the clickable elements in the whole header in the same way*/
-  .et2_clickable {
+  .et2_clickable, et2-button-icon, et2-button {
 	--sl-input-border-color: transparent;
 	&::part(label){
 	  padding-inline-start: var(--sl-spacing-3x-small);
@@ -115,6 +115,7 @@ div.et2_nextmatch {
 	  color: var(--sl-color-neutral-700);
 
 	  et2-button::part(base) {
+		border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 		color: var(--sl-color-neutral-700);
 	  }
 
