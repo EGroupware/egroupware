@@ -109,7 +109,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	{
 		super.disconnectedCallback()
 		document.removeEventListener("keydown", this.handleKeypress, {capture: true});
-		this._nextmatch.getDOMNode().removeEventListener("et2-filter", this.handleNextmatchFilter);
+		this._nextmatch?.getDOMNode()?.removeEventListener("et2-filter", this.handleNextmatchFilter);
 	}
 
 	willUpdate(changedProperties : Map<string, unknown>)
@@ -471,7 +471,6 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			return;
 		}
 		const nmGroups = this._groups[event.detail.nm.id];
-		debugger;
 		for(let nmGroupsName in nmGroups)
 		{
 			const group = nmGroups[nmGroupsName];
