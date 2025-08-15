@@ -248,6 +248,7 @@ export default css`
         text-align: center;
         line-height: 100%;
         align-content: end;
+        
 
         *[part="image"] {
             position: relative;
@@ -262,6 +263,9 @@ export default css`
                 width: 100%;
                 border-radius: var(--sl-border-radius-circle);
                 vertical-align: bottom;
+            }
+            @supports (-moz-appearance:none) {
+                bottom: 1.5px;
             }
         }
     }
@@ -288,11 +292,16 @@ export default css`
                 var(--tab-icon-size, 32px)));
 
         *[part="image"] {
-            vertical-align: sub;
+            vertical-align: bottom;
             width: calc(
                     calc(2 * var(--tab-icon-spacing, 2px) +
                     var(--tab-icon-size, 32px)));
         }
+	    @supports (-moz-appearance:none) {
+	    	*[part="image"] {
+			    vertical-align: sub;
+            }
+	    }
     }
 
     /* needs different alignment in app_list and open_apps*/

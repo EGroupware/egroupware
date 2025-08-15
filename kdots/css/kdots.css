@@ -841,11 +841,11 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea {
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table {
   border-collapse: collapse;
 }
-div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr {
-  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
-}
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   background-color: var(--highlight-background-color);
+}
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_grid > tbody > tr {
+  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
 }
 /* Special styling for widgets in main-header */
 [slot="main-header"] {
