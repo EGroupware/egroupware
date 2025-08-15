@@ -814,11 +814,10 @@ div.et2_nextmatch .egwGridView_outer {
   border-collapse: collapse;
 }
 div.et2_nextmatch .egwGridView_outer thead > tr {
-  background-color: var(--sl-color-neutral-200);
-  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+  background-color: var(--sl-color-neutral-100);
 }
 div.et2_nextmatch .egwGridView_outer thead > tr th {
-  border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+  border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
 }
 div.et2_nextmatch .egwGridView_outer thead > tr th div.innerContainer {
   max-height: 10em;
@@ -871,27 +870,45 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   background-color: transparent;
 }
 [slot="main-header"] .et2_clickable,
-[slot="main-header"] et2-button-icon,
 [slot="main-header"] et2-button,
-[slot="main-header"] et2-button-toggle {
+[slot="main-header"] et2-button-icon,
+[slot="main-header"] et2-button-image,
+[slot="main-header"] et2-button-toggle,
+[slot="main-header"] et2-switch,
+[slot="main-header"] et2-switch-icon,
+[slot="main-header"] et2-image {
   --sl-input-border-color: transparent;
+  --indicator-color: var(--sl-color-neutral-0);
+  --sl-input-background-color: transparent;
 }
 [slot="main-header"] .et2_clickable::part(label),
-[slot="main-header"] et2-button-icon::part(label),
 [slot="main-header"] et2-button::part(label),
-[slot="main-header"] et2-button-toggle::part(label) {
-  padding-inline-start: var(--sl-spacing-3x-small);
+[slot="main-header"] et2-button-icon::part(label),
+[slot="main-header"] et2-button-image::part(label),
+[slot="main-header"] et2-button-toggle::part(label),
+[slot="main-header"] et2-switch::part(label),
+[slot="main-header"] et2-switch-icon::part(label),
+[slot="main-header"] et2-image::part(label) {
+  padding-inline-start: var(--sl-spacing-2x-small);
 }
 [slot="main-header"] .et2_clickable::part(base),
-[slot="main-header"] et2-button-icon::part(base),
 [slot="main-header"] et2-button::part(base),
-[slot="main-header"] et2-button-toggle::part(base) {
+[slot="main-header"] et2-button-icon::part(base),
+[slot="main-header"] et2-button-image::part(base),
+[slot="main-header"] et2-button-toggle::part(base),
+[slot="main-header"] et2-switch::part(base),
+[slot="main-header"] et2-switch-icon::part(base),
+[slot="main-header"] et2-image::part(base) {
   border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 }
 [slot="main-header"] .et2_clickable:hover::part(base),
-[slot="main-header"] et2-button-icon:hover::part(base),
 [slot="main-header"] et2-button:hover::part(base),
-[slot="main-header"] et2-button-toggle:hover::part(base) {
+[slot="main-header"] et2-button-icon:hover::part(base),
+[slot="main-header"] et2-button-image:hover::part(base),
+[slot="main-header"] et2-button-toggle:hover::part(base),
+[slot="main-header"] et2-switch:hover::part(base),
+[slot="main-header"] et2-switch-icon:hover::part(base),
+[slot="main-header"] et2-image:hover::part(base) {
   border-color: var(--sl-input-border-color-hover);
 }
 [slot="main-header"] et2-toolbar {
