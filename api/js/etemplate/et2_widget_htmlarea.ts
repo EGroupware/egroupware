@@ -484,6 +484,30 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			default:
 				this.mode = '';
 		}
+		if(this.egw().preference("enable_tool_execution", "aiassistant"))
+		{
+			settings['setup'] = (editor) =>
+			{
+				// See https://www.tiny.cloud/docs/tinymce/latest/custom-toolbarbuttons/
+				editor.ui.registry.addIcon("aiassistant", "<et2-image src='aiassistant/navbar'></et2-image>");
+				editor.ui.registry.addMenuButton('aiassistantPrompts', {
+					tooltip: 'AI Assistant',
+					icon: 'aiassistant',
+					fetch: (callback) =>
+					{
+						const result = egw.applyFunc("app.aiassistant.getTextareaPromptList", [this])
+						if(typeof result.then != "undefined")
+						{
+							result.then((result) => callback(result));
+						}
+						else
+						{
+							callback(result)
+						}
+					}
+				});
+			}
+		}
 
 		// take rte_toolbar into account if no mode restrictly set from template
 		if (rte_toolbar && !this.mode)
@@ -494,6 +518,11 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				let r = new RegExp(a);
 				settings['toolbar'] = settings['toolbar'].replace(r, '');
 			});
+		}
+		// TODO: This probably goes above the rte_toolbar check
+		if(this.egw().preference("enable_tool_execution", "aiassistant"))
+		{
+			settings['toolbar'] += " | aiassistantPrompts";
 		}
 		return settings;
 	}
