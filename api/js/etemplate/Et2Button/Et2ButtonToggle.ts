@@ -27,6 +27,9 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 				sl-switch {
 					font-size: inherit;
 				}
+				img[part="image"]{
+					filter: var(--image-filter);
+				}
 
 				sl-switch:not([checked]) slot[name="off"] {
 					position: relative;
@@ -34,7 +37,7 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 				opacity(0.7);
 
 					img {
-						filter: brightness(0) contrast(.3) opacity(.7);
+						filter: var(--image-filter-off, brightness(0) contrast(.3) opacity(.7));
 					}
 				}
 
