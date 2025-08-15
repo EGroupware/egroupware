@@ -4077,10 +4077,10 @@ export class CalendarApp extends EgwApp
 				}
 			})
 		};
-		_et2.DOMContainer.closest("egw-app").addEventListener("et2-filter", filterListener);
+		_et2.DOMContainer.closest("egw-app")?.addEventListener("et2-filter", filterListener);
 		_et2.DOMContainer.addEventListener("clear", () =>
 		{
-			_et2.DOMContainer.closest("egw-app").removeEventListener("et2-filter", filterListener);
+			_et2.DOMContainer.closest("egw-app")?.removeEventListener("et2-filter", filterListener);
 		});
 	}
 
