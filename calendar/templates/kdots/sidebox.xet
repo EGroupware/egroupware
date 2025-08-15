@@ -12,8 +12,8 @@ Egroupware
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 
 <overlay>
-    <template id="calendar.sidebox" slot="left">
-        <calendar-date id="date" slot="left-top" aria-labelledby="overviewHeader"></calendar-date><!-- flatpickr mini calendar view at the top -->
+    <template id="calendar.sidebox" slot="left-top">
+        <calendar-date id="date" aria-labelledby="overviewHeader"></calendar-date><!-- flatpickr mini calendar view at the top -->
         <et2-calendar-owner id="owner"
                                     onchange="app.calendar.update_state({owner: widget.getValue()}); return false;"
                             multiple="true" allowFreeEntries="false" tabindex="0"></et2-calendar-owner>
