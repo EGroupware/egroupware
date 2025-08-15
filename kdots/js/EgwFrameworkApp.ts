@@ -4,7 +4,6 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
-
 import styles from "./EgwFrameworkApp.styles";
 import {SlDrawer, SlSplitPanel} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
@@ -346,6 +345,13 @@ export class EgwFrameworkApp extends LitElement
 				{
 					return;
 				}
+				// Clear everything
+				Array.from(this.childNodes).forEach(n =>
+				{
+					etemplate2.getById(n.id)?.clear();
+					n.remove()
+				})
+
 				// Load request returns HTML.  Shove it in.
 				if(typeof data == "string" || typeof data == "object" && typeof data[0] == "string")
 				{
@@ -355,10 +361,11 @@ export class EgwFrameworkApp extends LitElement
 				{
 					// We got some data, use it
 					const items = (<HTMLElement[]>(Array.isArray(data) ? data : [data]))
-						.filter(data => (typeof data.DOMNodeID == "string"));
-
-					render(html`${repeat(items, i => i.DOMNodeID, (item) => html`
-                        <div id="${item.DOMNodeID}"></div>`)}`, this);
+						.filter(data => (typeof data.DOMNodeID == "string"))
+						.forEach(data =>
+						{
+							this.append(Object.assign(document.createElement("div"), {id: data.DOMNodeID}));
+						});
 				}
 
 				// Might have just slotted aside content, hasSlotController will requestUpdate()

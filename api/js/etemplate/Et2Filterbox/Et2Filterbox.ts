@@ -511,7 +511,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
                 >
                     ${this.hasSlotController.test('[default]') ? html`
                         <slot></slot>` : html`
-                        ${Object.keys(this._groups[this._nextmatch.id] ?? {}).map(groupName => this._groupTemplate(groupName, this._groups[this._nextmatch.id][groupName].filters))}
+                        ${Object.keys(this._groups[this._nextmatch?.id] ?? {}).map(groupName => this._groupTemplate(groupName, this._groups[this._nextmatch?.id][groupName].filters))}
                     `}
                 </div>
                 <slot name="suffix" part="suffix" class="filterbox__suffix"></slot>
