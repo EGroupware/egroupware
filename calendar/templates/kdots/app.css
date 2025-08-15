@@ -1655,6 +1655,9 @@ egw-app {
   border-color: inherit;
   align-items: center;
 }
+#calendar-toolbar #calendar-toolbar_toolbar_today {
+  min-width: 0;
+}
 #calendar-todo {
   width: 100%;
   height: 100%;

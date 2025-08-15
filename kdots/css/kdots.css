@@ -850,7 +850,7 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 /* Special styling for widgets in main-header */
 [slot="main-header"] {
   --sl-input-background-color: transparent;
-  --sl-input-background-color-hover: hsl(from var(--sl-color-neutral-100) h s l / 50%);
+  --sl-input-background-color-hover: transparent;
   --sl-input-color: var(--application-header-text-color);
   --input-text-color: var(--application-header-text-color);
   --sl-input-icon-color: var(--application-header-text-color);
@@ -891,6 +891,19 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 [slot="main-header"] et2-image::part(label) {
   padding-inline-start: var(--sl-spacing-2x-small);
 }
+[slot="main-header"] .et2_clickable::part(control),
+[slot="main-header"] et2-button::part(control),
+[slot="main-header"] et2-button-icon::part(control),
+[slot="main-header"] et2-button-image::part(control),
+[slot="main-header"] et2-button-toggle::part(control),
+[slot="main-header"] et2-switch::part(control),
+[slot="main-header"] et2-switch-icon::part(control),
+[slot="main-header"] et2-image::part(control) {
+  --indicator-color: var(--sl-color-neutral-0);
+  --sl-input-border-color: transparent;
+  --sl-input-background-color: transparent;
+  filter: brightness(0) invert(1);
+}
 [slot="main-header"] .et2_clickable::part(base),
 [slot="main-header"] et2-button::part(base),
 [slot="main-header"] et2-button-icon::part(base),
@@ -908,12 +921,40 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 [slot="main-header"] et2-button-toggle:hover::part(base),
 [slot="main-header"] et2-switch:hover::part(base),
 [slot="main-header"] et2-switch-icon:hover::part(base),
-[slot="main-header"] et2-image:hover::part(base) {
+[slot="main-header"] et2-image:hover::part(base),
+[slot="main-header"] .et2_clickable:hover::part(control),
+[slot="main-header"] et2-button:hover::part(control),
+[slot="main-header"] et2-button-icon:hover::part(control),
+[slot="main-header"] et2-button-image:hover::part(control),
+[slot="main-header"] et2-button-toggle:hover::part(control),
+[slot="main-header"] et2-switch:hover::part(control),
+[slot="main-header"] et2-switch-icon:hover::part(control),
+[slot="main-header"] et2-image:hover::part(control) {
   border-color: var(--sl-input-border-color-hover);
+}
+[slot="main-header"] et2-switch-icon {
+  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+  border-radius: var(--sl-input-border-radius-medium);
+}
+[slot="main-header"] et2-switch-icon:hover {
+  border-color: var(--sl-input-border-color-hover) !important;
+}
+[slot="main-header"] et2-button-toggle::part(control) {
+  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+  border-radius: var(--sl-input-border-radius-medium);
+}
+[slot="main-header"] et2-button-toggle:hover::part(control) {
+  border-color: var(--sl-color-neutral-400) !important;
 }
 [slot="main-header"] et2-toolbar {
   border-bottom-width: 0px;
   /* Change colors of things in list back */
+}
+[slot="main-header"] et2-toolbar sl-button-group {
+  background: none;
+}
+[slot="main-header"] et2-toolbar et2-switch-icon {
+  padding-inline: var(--sl-spacing-small);
 }
 [slot="main-header"] et2-toolbar ::part(list) {
   color: var(--sl-color-neutral-700);

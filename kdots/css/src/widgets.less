@@ -74,7 +74,7 @@ div.et2_nextmatch {
 [slot="main-header"] {
 
   --sl-input-background-color: transparent;
-  --sl-input-background-color-hover: hsl(from var(--sl-color-neutral-100) h s l / 50%);
+  --sl-input-background-color-hover: transparent;
   --sl-input-color: var(--application-header-text-color);
   --input-text-color: var(--application-header-text-color);
   --sl-input-icon-color: var(--application-header-text-color);
@@ -101,17 +101,52 @@ div.et2_nextmatch {
 	&::part(label){
 	  padding-inline-start: var(--sl-spacing-2x-small);
 	}
+
+	&::part(control) {
+	  --indicator-color: var(--sl-color-neutral-0);
+	  --sl-input-border-color: transparent;
+	  --sl-input-background-color: transparent;
+	  filter: brightness(0) invert(1);
+	}
 	&::part(base) {
 	  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 	}
-	&:hover::part(base) {
+
+	&:hover::part(base), &:hover::part(control) {
 	  border-color: var(--sl-input-border-color-hover);
 	}
+  }
+
+  et2-switch-icon {
+	border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+	border-radius: var(--sl-input-border-radius-medium);
+
+	&:hover {
+	  border-color: var(--sl-input-border-color-hover) !important;
+	}
+  }
+
+  et2-button-toggle {
+	&::part(control) {
+	  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+	  border-radius: var(--sl-input-border-radius-medium);
+	}
+
+	&:hover::part(control) {
+	  border-color: var(--sl-color-neutral-400) !important;
+	}
+
   }
   /*END HOVER*/
 
   et2-toolbar {
 	border-bottom-width: 0px;
+	//No divider in our kdots toolbar
+	sl-button-group {background:none;}
+
+	et2-switch-icon {
+	  padding-inline: var(--sl-spacing-small);
+	}
 
 	::part(list) {
 	  color: var(--sl-color-neutral-700);
