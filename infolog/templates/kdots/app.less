@@ -7,4 +7,17 @@ egw-app[name="infolog"] {
 	height: 0px;
 	overflow: hidden;
   }
+
+  et2-hbox.infolog_CompletedClmn {
+    et2-image {
+      width: 1rem;
+      *[part="image"] {
+        vertical-align: middle;
+      }
+    }
+    div.et2_progress {
+      width: 100%;
+      height: var(--sl-line-height-dense);
+    }
+  }
 }

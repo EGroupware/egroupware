@@ -6,3 +6,13 @@ egw-app[name="infolog"] .et2_nextmatch .nextmatch_header {
   height: 0px;
   overflow: hidden;
 }
+egw-app[name="infolog"] et2-hbox.infolog_CompletedClmn et2-image {
+  width: 1rem;
+}
+egw-app[name="infolog"] et2-hbox.infolog_CompletedClmn et2-image *[part="image"] {
+  vertical-align: middle;
+}
+egw-app[name="infolog"] et2-hbox.infolog_CompletedClmn div.et2_progress {
+  width: 100%;
+  height: var(--sl-line-height-dense);
+}
