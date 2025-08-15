@@ -473,7 +473,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	private _makeToggle(action, attrs : { [id : string] : string }) : Et2ButtonToggle
 	{
 		Object.assign(attrs, {
-			image: action.data.icon || action.iconUrl || ''
+			onIcon: action.data.icon || action.iconUrl || ''
 		});
 		return <Et2ButtonToggle>loadWebComponent("et2-button-toggle", attrs, this);
 	}

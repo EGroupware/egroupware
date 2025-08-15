@@ -100,7 +100,7 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 	 */
 	@property() offIcon = "x"
 
-	private get switch() : SlSwitch { return <SlSwitch>this.shadowRoot?.querySelector("sl-switch")};
+	protected get switch() : SlSwitch { return <SlSwitch>this.shadowRoot?.querySelector("sl-switch")};
 
 	private get input() { return this.switch.shadowRoot.querySelector("input");}
 

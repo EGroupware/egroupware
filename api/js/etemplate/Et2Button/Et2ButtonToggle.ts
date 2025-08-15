@@ -29,7 +29,9 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 				}
 
 				sl-switch:not([checked]) slot[name="off"] {
-					color: var(--sl-color-neutral-400);
+					position: relative;
+					color: currentColor;
+				opacity(0.7);
 
 					img {
 						filter: brightness(0) contrast(.3) opacity(.7);
@@ -38,6 +40,18 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 
 				sl-switch[checked] slot[name="on"], sl-switch:not([checked]) slot[name="off"] {
 					display: inline-block;
+				}
+
+				sl-switch:not([checked]):not(.has-off-icon) slot[name="off"]::after {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 0;
+					width: 100%;
+					height: 2px;
+					background-color: currentColor;
+					transform: rotate(-45deg) translate(0%, 50%);
+					pointer-events: none;
 				}
 
 				.label {
@@ -142,6 +156,7 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 		super();
 
 		this.handleIconChanged = this.handleIconChanged.bind(this);
+		this.mutationObserver = new MutationObserver(this.handleIconChanged);
 	}
 
 	async connectedCallback()
@@ -154,19 +169,28 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 			this.adoptIcon(<HTMLElement>this.children[0]);
 		}
 
-		await this.updateComplete;
-
-		this.mutationObserver = new MutationObserver(this.handleIconChanged);
 		this.mutationObserver.observe(this, {subtree: true, childList: true});
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.mutationObserver.disconnect();
 	}
 
 	willUpdate(changedProperties : PropertyValues<this>)
 	{
+		super.willUpdate(changedProperties);
 		if(changedProperties.has("icon") || this.icon && (!this.onIcon || this.onIcon == "check"))
 		{
 			this.onIcon = this.icon;
 			this.offIcon = this.offIcon || this.icon;
 		}
+	}
+
+	updated()
+	{
+		this.switch?.classList.toggle("has-off-icon", this.offIcon && this.offIcon != this.icon);
 	}
 
 	// Take a single element and give it the needed slots so it works
