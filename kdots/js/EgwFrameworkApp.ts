@@ -231,6 +231,12 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this.rightPanelInfo.preferenceWidth = value;
 		});
+
+		// Left panel starts hidden if we're too small
+		if(this.hasAttribute("active") && this.clientWidth < 600)
+		{
+			this.leftCollapsed = true;
+		}
 		this.addEventListener("load", this.handleEtemplateLoad);
 		this.addEventListener("clear", this.handleEtemplateClear);
 
@@ -649,9 +655,8 @@ export class EgwFrameworkApp extends LitElement
 			slottedTemplates.forEach(node => {this.appendChild(node);});
 		}
 
-		// Move top level slotted components
+		// Get top level slotted components
 		const slottedWidgets = etemplate.widgetContainer?.querySelectorAll(":scope > [slot]") ?? []
-		slottedWidgets.forEach(node => {this.appendChild(node);});
 
 		// Request update, since slotchanged events are only fired when the attribute changes and they're already set
 		if(slottedTemplates.length > 0 || slottedWidgets.length > 0 || this.nextmatch)
@@ -1178,7 +1183,17 @@ export class EgwFrameworkApp extends LitElement
             </div>
             <div class="egw_fw_app__main" part="main">
                 ${this._filterTemplate()}
-                <sl-split-panel class=${classMap({"egw_fw_app__outerSplit": true, "no-content": !hasLeftSlots})}
+                ${!this.leftCollapsed ? nothing : html`
+                    <style>
+                        --left-min: ${this.leftPanelInfo.hiddenWidth}px
+                        --left-max: ${this.leftPanelInfo.hiddenWidth}px
+                    </style>`}
+                <sl-split-panel class=${classMap({
+                    "egw_fw_app__panel": true,
+                    "egw_fw_app__outerSplit": true,
+                    "no-content": !hasLeftSlots,
+                    "egw_fw_app--panel-collapsed": this.leftCollapsed
+                })}
                                 primary="start" position-in-pixels="${leftWidth}"
                                 snap="0px 20%" snap-threshold="50"
                                 data-panel="leftPanelInfo"
@@ -1188,8 +1203,10 @@ export class EgwFrameworkApp extends LitElement
                     ${this._asideTemplate("start", "left", this.egw.lang("Sidebox"))}
                     <sl-split-panel slot="end"
                                     class=${classMap({
+                                        "egw_fw_app__panel": true,
                                         "egw_fw_app__innerSplit": true,
-                                        "no-content": !hasRightSlots
+                                        "no-content": !hasRightSlots,
+                                        "egw_fw_app--panel-collapsed": this.rightCollapsed
                                     })}
                                     primary="start"
                                     position=${rightWidth} snap="50% 80% 100%"

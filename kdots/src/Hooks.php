@@ -9,6 +9,10 @@ class Hooks
 			"none"    => "Unchanged",
 			"replace" => "Clean"
 		];
+		$popups_options = [
+			'popup_window' => 'Popup Window',
+			'same_window'  => 'Same Window'
+		];
 		$preferences = array(
 			'prefssection'   => array(
 				'type'    => 'section',
@@ -26,6 +30,12 @@ class Hooks
 				'xmlrpc'  => false,
 				'admin'   => false,
 				'default' => 'replace',
+			],
+			'open_popups_in' => [
+				'type'   => 'select',
+				'label'  => 'Open popups in',
+				'name'   => 'open_popups_in',
+				'values' => $popups_options
 			]
 		);
 

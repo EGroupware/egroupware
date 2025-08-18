@@ -1083,14 +1083,8 @@ body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
     padding: 0;
     display: flex;
     align-items: center;
-  }
-  body et2-dialog::part(title) et2-hbox,
-  body et2-dialog::part(title) et2-box {
-    flex: 1 1 100%;
-  }
-  body et2-dialog::part(title) et2-hbox ::part(base),
-  body et2-dialog::part(title) et2-box ::part(base) {
-    align-items: center;
+    /* Needs something so flex will work right */
+    min-width: 5em;
   }
   body et2-dialog::part(header-actions) {
     flex-direction: row-reverse;
@@ -1110,8 +1104,20 @@ body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
     /* Allow buttons to wrap */
     flex-wrap: wrap;
   }
+  body et2-dialog et2-hbox[slot="label"],
+  body et2-dialog et2-box[slot="label"] {
+    flex: 1 1 100%;
+  }
+  body et2-dialog et2-hbox[slot="label"]::part(base),
+  body et2-dialog et2-box[slot="label"]::part(base) {
+    align-items: center;
+  }
   body et2-dialog span[slot="label"] {
     flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-inline-end: var(--sl-spacing-small);
   }
   body et2-dialog et2-number[slot="label"] {
     display: inline-flex;

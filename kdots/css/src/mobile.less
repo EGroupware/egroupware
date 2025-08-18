@@ -97,14 +97,8 @@ body {
 		padding: 0;
 		display: flex;
 		align-items: center;
-
-		et2-hbox, et2-box {
-		  flex: 1 1 100%;
-
-		  ::part(base) {
-			align-items: center;
-		  }
-		}
+		/* Needs something so flex will work right */
+		min-width: 5em;
 	  }
 
 	  &::part(header-actions) {
@@ -130,8 +124,19 @@ body {
 		flex-wrap: wrap;
 	  }
 
+	  et2-hbox[slot="label"], et2-box[slot="label"] {
+		flex: 1 1 100%;
+
+		&::part(base) {
+		  align-items: center;
+		}
+	  }
 	  span[slot="label"] {
 		flex-shrink: 1;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-inline-end: var(--sl-spacing-small);
 	  }
 
 	  et2-number[slot="label"] {

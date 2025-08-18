@@ -136,11 +136,6 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="dialogHeadbar" >
-					<et2-box>
-						<et2-number  id="info_number" readonly="true" class="entry_id" precision="0"></et2-number>
-					</et2-box>
-				</row>
 				<row>
 					<et2-description  value="Title" for="info_subject"></et2-description>
 					<et2-textbox  statustext="a short subject for the entry" id="info_subject" class="et2_required" maxlength="255" span="5" tabindex="1"></et2-textbox>

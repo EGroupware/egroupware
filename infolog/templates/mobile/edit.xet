@@ -129,22 +129,20 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
+    <template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
+        <et2-hbox disabled="@hidebuttons" slot="label">
+            <et2-button-icon statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
+            <et2-button-icon statustext="delete this entry" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; Et2Dialog.confirm(widget,'Delete this entry','Delete');" image="delete" span="all"></et2-button-icon>
+            <et2-button-timestamp statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" image="timesheet" target="info_des"></et2-button-timestamp>
+            <et2-button-toggle label="notifications" id="no_notifications" class="notification_check" onIcon="bell-fill" offIcon="bell-slash"/>
+            <et2-number id="info_number" readonly="true" class="entry_id" precision="0"></et2-number>
+        </et2-hbox>
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
 				<column/>
 			</columns>
 			<rows>
-				<row disabled="@hidebuttons" class="dialogHeadbar" >
-					<et2-hbox  span="all" width="100%">
-						<et2-button-icon  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
-                        <et2-button-icon statustext="delete this entry" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; Et2Dialog.confirm(widget,'Delete this entry','Delete');" image="delete" span="all"></et2-button-icon>
-						<et2-button-timestamp  statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" image="timesheet" target="info_des"></et2-button-timestamp>
-                        <et2-button-toggle label="notifications" id="no_notifications" class="notification_check" onIcon="bell-fill" offIcon="bell-slash"/>
-						<et2-number  id="info_number" readonly="true" class="entry_id" precision="0"></et2-number>
-					</et2-hbox>
-				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
 					<et2-hbox  span="all" width="100%">
 						<et2-button  label="Search" id="button[search]" image="search"></et2-button>

@@ -21,6 +21,8 @@ export default css`
 
         width: 100%;
         height: 100%;
+		grid-template-columns: [start banner-start header-start footer-start main-start] 1fr [main-end header-end banner-end end];
+		grid-template-rows: [top banner] fit-content(2em) [header] fit-content(2em) [main-header] fit-content(2em) [main] 1fr [footer bottom] fit-content(2em);
     }
 
     .egw_fw__layout-default > * {
@@ -77,23 +79,12 @@ export default css`
         grid-area: footer;
     }
 
-
     @media (min-width: 600px) {
         .egw_fw__main {
             overflow: hidden;
         }
-
-        .egw_fw__layout-default {
-            grid-template-columns: [start banner-start header-start footer-start main-start] 1fr [main-end header-end banner-end end];
-            grid-template-rows: [top banner] fit-content(2em) [header] fit-content(2em) [main-header] fit-content(2em) [main] 1fr [footer bottom] fit-content(2em);
-        }
-    }
+	}
     @media (max-width: 599px) {
-        .egw_fw__layout-default {
-            grid-template-columns: [start banner-start header-start footer-start main-start] 1fr [main-end header-end banner-end end];
-            grid-template-rows: [top banner] fit-content(2em) [header] fit-content(2em) [main-header] fit-content(2em) [main] 1fr [footer bottom] fit-content(2em);
-        }
-
         ::slotted([slot="logo"]) {
             display: none;
         }

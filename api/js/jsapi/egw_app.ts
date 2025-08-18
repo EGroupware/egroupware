@@ -28,6 +28,7 @@ import type {Et2Details} from "../etemplate/Layout/Et2Details/Et2Details";
 import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
 import {egw_globalObjectManager} from "../egw_action/egw_action";
 import type {EgwFrameworkApp} from "../../../kdots/js/EgwFrameworkApp";
+import {Et2ButtonIcon} from "../etemplate/Et2Button/Et2ButtonIcon";
 
 /**
  * Type for push-message
@@ -731,56 +732,15 @@ export abstract class EgwApp
 			delete self.viewTemplate;
 			delete self.viewContainer;
 			delete self.et2_view;
-			// we need to reference back into parent context this
-			for(var v in self)
-			{
-				this[v] = self[v];
-			}
 			app = null;
 		};
 
-		// view container
-		this.viewContainer = jQuery(document.createElement('div'))
-			.addClass('et2_mobile_view')
-			.attr('id', 'popupMainDiv')
-			.appendTo('body');
-		this.viewContainer[0].style.setProperty('--application-color', 'var(--' + this.appname + '-color,var(--primary-color))');
+		const mobileViewTemplate = (_action.data.mobileViewTemplate || 'edit').split('?');
+		const templateName = mobileViewTemplate[0];
+		const templateTimestamp = mobileViewTemplate[1];
+		const templateURL = egw.webserverUrl + '/' + this.appname + '/templates/mobile/' + templateName + '.xet' + '?' + templateTimestamp;
 
-		// close button
-		var close = jQuery(document.createElement('et2-button-icon'))
-			.attr("image", "close")
-			.addClass('egw_fw_mobile_popup_close loaded')
-			.click(function()
-			{
-				destroy.call(app[self.appname]);
-				//disable selected actions after close
-				egw_globalObjectManager.setAllSelected(false);
-			})
-			.appendTo(this.viewContainer);
-		if(!noEdit)
-		{
-			// edit button
-			var edit = jQuery(document.createElement('et2-button-icon'))
-				.attr("image", "edit")
-				.addClass('mobile-view-editBtn')
-				.click(function()
-				{
-					egw.open(rowID, self.appname);
-				})
-				.appendTo(this.viewContainer);
-		}
-		// view template main container (content)
-		this.viewTemplate = jQuery(document.createElement('div'))
-			.attr('id', this.appname + '-view')
-			.addClass('et2_mobile-view-container popupMainDiv')
-			.appendTo(this.viewContainer);
-
-		var mobileViewTemplate = (_action.data.mobileViewTemplate || 'edit').split('?');
-		var templateName = mobileViewTemplate[0];
-		var templateTimestamp = mobileViewTemplate[1];
-		var templateURL = egw.webserverUrl + '/' + this.appname + '/templates/mobile/' + templateName + '.xet' + '?' + templateTimestamp;
-
-		var data = {
+		const data = {
 			'content': content,
 			'readonlys': {'__ALL__': true, 'link_to': false},
 			'currentapp': this.appname,
@@ -790,17 +750,52 @@ export abstract class EgwApp
 			'validation_errors': this.et2.getArrayMgr('validation_errors').data
 		};
 
-		// etemplate2 object for view
-		this.et2_view = new etemplate2(this.viewTemplate[0], '');
-		framework.pushState('view');
-		if(templateName)
-		{
-			this.et2_view.load(this.appname + '.' + templateName, templateURL, data, typeof et2_callback == 'function' ? et2_callback : function() {}, app);
-		}
+		// view container
+		const viewContainer = <Et2Dialog>loadWebComponent('et2-dialog', {
+			class: "et2_mobile_view egw-popup",
+			id: "popupMainDiv",
+			destroyonclose: true,
+			template: templateURL,
+			value: data
+		}, this.et2);
 
-		// define a global close function for view template
-		// in order to be able to destroy view on action
-		this.et2_view.close = destroy;
+		// We probably already have the title for the entry, but we'll get it from the server if not
+		this.egw.link_title(this.appname, rowID, true).then(title =>
+		{
+			viewContainer.prepend(Object.assign(document.createElement('span'), {
+				innerText: title,
+				slot: "label"
+			}));
+		});
+		viewContainer.append(loadWebComponent('et2-number', {
+			slot: "label", readonly: true, class: "entry_id", precision: "0", align: "right", value: rowID
+		}, this.et2));
+		viewContainer.style.setProperty('--application-color', 'var(--' + this.appname + '-color,var(--primary-color))');
+		(framework?.activeApp ? framework.activeApp : document.body).append(viewContainer);
+		this.viewContainer = jQuery(viewContainer);
+
+		// close
+		viewContainer.getComplete().then(([button, value]) =>
+		{
+			destroy.call(app[self.appname]);
+			//disable selected actions after close
+			egw_globalObjectManager.setAllSelected(false);
+		});
+		if(!noEdit)
+		{
+			// edit button
+			const edit = <Et2ButtonIcon>loadWebComponent('et2-button-icon', {
+				image: "edit",
+				class: "mobile-view-editBtn",
+				noSubmit: true,
+				slot: "header-actions"
+			}, this.et2);
+			edit.addEventListener("click", () =>
+			{
+				egw.open(rowID, self.appname);
+			});
+			viewContainer.append(edit);
+		}
 	}
 
 	/**

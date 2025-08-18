@@ -574,12 +574,29 @@ export class EgwFramework extends LitElement
 	 * @param {DOMWindow} _parentWnd parent window
 	 * @returns {DOMWindow|undefined}
 	 */
-	public openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, _parentWnd)
+	public async openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, _parentWnd)
 	{
-		const windowID = this.egw.openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
-
-		windowID.framework = this;
-		this.popups.add(windowID);
+		// @ts-ignore egw.preference() returns a Promise if you pass true for callback
+		const pref = await egw.preference("open_popups_in", "kdots", true);
+		let windowID = null;
+		if(pref == "popup_window" || pref == undefined && window.matchMedia('(max-width: 800px)').matches)
+		{
+			// openDialog doesn't take a full URL, just the menuaction part
+			const dialogURL = _url.split("menuaction=").pop();
+			const dialog = await ((this.activeApp.name == _app && typeof window.app[_app].openDialog == "function") ?
+								  window.app[_app].openDialog(dialogURL) : this.egw.openDialog(dialogURL));
+			dialog.classList.add("egw-popup");
+			// Put the dialog in the correct app so it can inherit application styles & be removed if app closes
+			(_app && this.getApp(_app) ? this.getApp(_app) : this.activeApp).append(dialog);
+			return dialog;
+		}
+		else
+		{
+			// Pass it back to egw.open
+			windowID = this.egw.openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
+			windowID.framework = this;
+			this.popups.add(windowID);
+		}
 
 		if(_returnID !== false)
 		{

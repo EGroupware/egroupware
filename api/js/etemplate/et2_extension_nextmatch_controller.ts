@@ -760,10 +760,62 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 		}
 		if(!this._widget) return;
 
-		// inform mobile framework about nm selections, need to update status of header objects on selection
-		if (egwIsMobile()) window.framework.nm_onselect_ctrl(this._widget, action, senders);
+		// for mobile need to update status of header objects on selection
+		if(egwIsMobile())
+		{
+			this.nm_onselect_ctrl(this._widget, action, senders);
+		}
 
 		this._widget.onselect.call(this._widget, action,senders);
+	}
+
+	/**
+	 * Function runs after nextmatch selection callback gets called by object manager,
+	 * which we can update status of header DOM objects (eg. action_header, favorite, ...)
+	 *
+	 * @param {object} _widget nextmatch widget
+	 * @param {object} _action action object
+	 * @param {object} _senders selected row(s) action object
+	 */
+	nm_onselect_ctrl(_widget, _action, _senders)
+	{
+		var senders = _senders ? _senders : null;
+
+		// Update action_header status (3dots)
+		_widget.header.action_header.toggle(typeof _widget.getSelection().ids != 'undefined' && _widget.getSelection().ids.length > 0);
+
+		// Update selection counter in nm header
+		if(_widget._type == 'nextmatch' && _widget.getSelection().ids.length > 0)
+		{
+			if(senders && senders[0]?.actionLinks)
+			{
+				var delete_action = null;
+				for(var i = 0; i < senders[0].actionLinks.length; i++)
+				{
+					if(senders[0].actionLinks[i].actionId == 'delete')
+					{
+						delete_action = senders[0].actionLinks[i];
+					}
+				}
+				if(delete_action && delete_action.enabled)
+				{
+					_widget.header.delete_action
+						.show()
+						.off()
+						.click(function()
+						{
+							if(delete_action)
+							{
+								delete_action.actionObj.execute(senders);
+							}
+						});
+				}
+			}
+		}
+		else
+		{
+			_widget.header.delete_action.hide();
+		}
 	}
 
 	/** -- Implementation of et2_IDataProvider -- **/

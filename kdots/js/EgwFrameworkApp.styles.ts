@@ -14,7 +14,7 @@ export default css`
         flex-direction: column;
 
         --application-color: var(--primary-background-color);
-        --left-min: 0%;
+		--left-min: 15em;
         --left-max: 20%;
     }
 
@@ -95,6 +95,10 @@ export default css`
         --min: calc(100% - var(--right-max, 50%));
     }
 
+	.egw_fw_app__panel.egw_fw_app--panel-collapsed {
+		--min: 0px;
+	}
+
     .egw_fw_app__innerSplit.no-content {
         --min: 100%;
     }
@@ -143,7 +147,10 @@ export default css`
         align-items: stretch;
         justify-content: stretch;
         overflow: hidden;
-    }
+
+		grid-template-columns: [start left] min-content [ main] 1fr [right] min-content [end];
+		grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(4em) [end];
+	}
 
     .egw_fw_app__filter_drawer [slot="header-actions"] {
         /* Fixes vertical alignment of et2-button-icon buttons in header actions */
@@ -179,10 +186,6 @@ export default css`
     }
 
     @media (min-width: 600px) {
-        .egw_fw_app__main {
-            grid-template-columns: [start left] min-content [ main] 1fr [right] min-content [end];
-            grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(4em) [end];
-        }
 
         .egw_fw_app__aside {
             overflow-y: hidden;
@@ -195,15 +198,6 @@ export default css`
             flex-direction: column;
         }
 
-        .egw_fw_app__main_content {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        ::slotted(*) {
-            flex: 1 1 auto;
-        }
-
         ::slotted(iframe) {
             width: 100%;
         }
@@ -212,8 +206,9 @@ export default css`
         sl-split-panel::part(divider) {
             display: none;
         }
-    }
 
+		--left-max: fit-content;
+    }
     @media print {
         .content {
             overflow-y: visible !important;

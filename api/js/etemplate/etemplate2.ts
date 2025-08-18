@@ -791,6 +791,9 @@ export class etemplate2
 						{
 							this.focusOnFirstInput();
 						}
+						// Move top level slotted components out so they can get slotted
+						const slottedWidgets = this._widgetContainer.querySelectorAll(":scope > [slot]") ?? []
+						slottedWidgets.forEach(node => {this._DOMContainer.parentNode.appendChild(node);});
 
 						// Now etemplate is ready for others to interact with (eg: app.js)
 						this.ready = true;
