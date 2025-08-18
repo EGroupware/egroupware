@@ -12,11 +12,10 @@ body {
 	overflow: auto;
 
 	.dialogHeadbar {
-	  height: var(--sl-spacing-3x-large);
 	  color: var(--sl-color-neutral-0);
 	  font-size: var(--sl-font-size-x-large);
 	  background-color: var(--application-color);
-	  position: fixed;
+	  //position: fixed;
 	  top: 0;
 	  left: 0;
 	  right: 0;
@@ -28,19 +27,6 @@ body {
 		right: var(--sl-spacing-medium);
 		font-weight: var(--sl-font-weight-bold);
 	  }
-	}
-
-	.egw_fw_mobile_popup_close, .mobile-view-editBtn {
-	  position: fixed;
-	  top: 0;
-	  color: var(--sl-color-neutral-0);
-	  font-size: var(--sl-font-size-2x-large);
-	  z-index: 2;
-	}
-
-	.mobile-view-editBtn {
-	  position: fixed;
-	  left: calc(2 * var(--sl-font-size-2x-large));
 	}
   }
 }
@@ -81,6 +67,14 @@ body {
 	  --width: 100%;
 
 
+	  .egw-popup {
+		display: block;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		overflow: auto;
+	  }
 	  &::part(panel) {
 		/* make dialog full screen */
 		max-width: 100%;
@@ -90,23 +84,38 @@ body {
 
 	  &::part(header) {
 		/* Set header size, color & background */
-		color: var(--sl-color-neutral-100);
-		background: var(--sl-color-primary-500);
-		height: 7ex;
+		color: var(--application-header-text-color, var(--sl-color-neutral-100));
+		background: var(--application-color, var(--sl-color-primary-500));
+		height: var(--sl-spacing-3x-large);
 		padding: 0;
-		padding-left: 1em;
 		border-radius: 0;
+		flex-direction: row-reverse;
 	  }
 
 	  &::part(title) {
-		line-height: 5ex;
+		font-size: var(--sl-font-size-x-large);
+		padding: 0;
+		display: flex;
+		align-items: center;
+
+		et2-hbox, et2-box {
+		  flex: 1 1 100%;
+
+		  ::part(base) {
+			align-items: center;
+		  }
+		}
+	  }
+
+	  &::part(header-actions) {
+		flex-direction: row-reverse;
+		font-size: var(--sl-font-size-2x-large);
+		align-items: center;
 	  }
 
 	  &::part(close-button) {
-		/* Move dialog close button up, change color */
-		position: absolute;
-		top: 0px;
-		right: 0px;
+		color: var(--application-header-text-color, var(--sl-color-neutral-100));
+		font-size: var(--sl-font-size-2x-large);
 	  }
 
 	  &::part(footer) {
@@ -119,6 +128,14 @@ body {
 
 		/* Allow buttons to wrap */
 		flex-wrap: wrap;
+	  }
+
+	  span[slot="label"] {
+		flex-shrink: 1;
+	  }
+
+	  et2-number[slot="label"] {
+		display: inline-flex;
 	  }
 
 	  et2-button[slot="footer"]:has(et2-image) {

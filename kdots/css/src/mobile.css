@@ -11,11 +11,9 @@ body #popupMainDiv.et2_mobile_view {
   overflow: auto;
 }
 body #popupMainDiv.et2_mobile_view .dialogHeadbar {
-  height: var(--sl-spacing-3x-large);
   color: var(--sl-color-neutral-0);
   font-size: var(--sl-font-size-x-large);
   background-color: var(--application-color);
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -26,18 +24,6 @@ body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
   position: absolute;
   right: var(--sl-spacing-medium);
   font-weight: var(--sl-font-weight-bold);
-}
-body #popupMainDiv.et2_mobile_view .egw_fw_mobile_popup_close,
-body #popupMainDiv.et2_mobile_view .mobile-view-editBtn {
-  position: fixed;
-  top: 0;
-  color: var(--sl-color-neutral-0);
-  font-size: var(--sl-font-size-2x-large);
-  z-index: 2;
-}
-body #popupMainDiv.et2_mobile_view .mobile-view-editBtn {
-  position: fixed;
-  left: calc(2 * var(--sl-font-size-2x-large));
 }
 @media screen and (max-width: 800px) {
   html * {
@@ -71,6 +57,14 @@ body #popupMainDiv.et2_mobile_view .mobile-view-editBtn {
   body et2-dialog {
     --width: 100%;
   }
+  body et2-dialog .egw-popup {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+  }
   body et2-dialog::part(panel) {
     /* make dialog full screen */
     max-width: 100%;
@@ -79,21 +73,35 @@ body #popupMainDiv.et2_mobile_view .mobile-view-editBtn {
   }
   body et2-dialog::part(header) {
     /* Set header size, color & background */
-    color: var(--sl-color-neutral-100);
-    background: var(--sl-color-primary-500);
-    height: 7ex;
+    color: var(--application-header-text-color, var(--sl-color-neutral-100));
+    background: var(--application-color, var(--sl-color-primary-500));
+    height: var(--sl-spacing-3x-large);
     padding: 0;
-    padding-left: 1em;
     border-radius: 0;
+    flex-direction: row-reverse;
   }
   body et2-dialog::part(title) {
-    line-height: 5ex;
+    font-size: var(--sl-font-size-x-large);
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  body et2-dialog::part(title) et2-hbox,
+  body et2-dialog::part(title) et2-box {
+    flex: 1 1 100%;
+  }
+  body et2-dialog::part(title) et2-hbox ::part(base),
+  body et2-dialog::part(title) et2-box ::part(base) {
+    align-items: center;
+  }
+  body et2-dialog::part(header-actions) {
+    flex-direction: row-reverse;
+    font-size: var(--sl-font-size-2x-large);
+    align-items: center;
   }
   body et2-dialog::part(close-button) {
-    /* Move dialog close button up, change color */
-    position: absolute;
-    top: 0px;
-    right: 0px;
+    color: var(--application-header-text-color, var(--sl-color-neutral-100));
+    font-size: var(--sl-font-size-2x-large);
   }
   body et2-dialog::part(footer) {
     order: 0;
@@ -103,6 +111,12 @@ body #popupMainDiv.et2_mobile_view .mobile-view-editBtn {
     background: #0c5da5;
     /* Allow buttons to wrap */
     flex-wrap: wrap;
+  }
+  body et2-dialog span[slot="label"] {
+    flex-shrink: 1;
+  }
+  body et2-dialog et2-number[slot="label"] {
+    display: inline-flex;
   }
   body et2-dialog et2-button[slot="footer"]:has(et2-image) {
     /* Fixed size on footer buttons */

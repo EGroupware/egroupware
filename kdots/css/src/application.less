@@ -3,6 +3,16 @@
 egw-app {
   --application-header-text-color: var(--sl-color-neutral-200);
 
+
+  /* Lock size of left menu section for small screens */
+
+  @media (max-width: 800px) {
+	--left-max: 50%;
+  }
+  @media (max-width: 600px) {
+	--left-min: 50%;
+  }
+
   &::part(name) {
 	display: flex;
 	align-items: center;
@@ -24,6 +34,14 @@ egw-app {
 	  display: flex;
 	  flex-direction: row;
 	  align-items: center;
+	}
+  }
+  /* Nice formatting for custom templates slotted into filter */
+  [slot="filter"] {
+	&::part(base) {
+	  display: flex;
+	  flex-direction: column;
+	  gap: var(--gap-width);
 	}
   }
 

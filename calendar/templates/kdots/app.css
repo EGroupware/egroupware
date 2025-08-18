@@ -1665,7 +1665,7 @@ egw-app {
   right: initial ;
   bottom: initial ;
 }
-#calendar-filter_calendar-filter::part(base) {
+[slot="filter"]::part(base) {
   display: flex;
   flex-direction: column;
   gap: var(--gap-width);
