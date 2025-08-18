@@ -189,11 +189,15 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	{
 		super.connectedCallback();
 		// Actions can't be initialized without being connected to InstanceManager
-		if(this.actions && Object.values(this.actions).length)
+		// initialize actions only after all current Updates are completed to stop it from happening multiple times
+		this.updateComplete.then((complete) =>
+		{
+		if(complete && this.actions && Object.values(this.actions).length)
 		{
 			this._initActions();
 			this._link_actions(this.actions)
 		}
+		})
 	}
 
 	disconnectedCallback()
