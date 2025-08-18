@@ -312,6 +312,11 @@ export class EgwFramework extends LitElement
 			this._tabApps[appname];
 	}
 
+	public getApp(appname : string) : EgwFrameworkApp
+	{
+		return this.querySelector("egw-app[name='" + appname + "']");
+	}
+
 	/**
 	 * Load an application into the framework
 	 *
