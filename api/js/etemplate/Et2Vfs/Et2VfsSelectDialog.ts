@@ -226,7 +226,7 @@ export class Et2VfsSelectDialog
 			this.multiple = this.mode == "open-multiple";
 		}
 
-		if(changedProperties.has("path"))
+		if(changedProperties.has("path") && this.open)
 		{
 			this.startSearch();
 		}
