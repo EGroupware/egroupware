@@ -1614,6 +1614,12 @@ body #popupMainDiv.et2_mobile_view .mobile-view-editBtn {
     height: auto;
   }
 }
+/**
+ * allow to use Api\Framework::bodyClass('scrollVertical'); to enable scrolling of body
+ */
+body.scrollVertical {
+  overflow-y: auto;
+}
 /** Theme customisations **/
 /* imported here to make fast light/dark transitions */
 :root,
