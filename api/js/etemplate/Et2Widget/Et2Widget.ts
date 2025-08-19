@@ -1764,22 +1764,34 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	{
 		_nodeName += "_ro";
 	}
-
-	// @ts-ignore
-	let widget = <Et2Widget>document.createElement(_nodeName);
-
-	if (parent && typeof widget.setParent === 'function') widget.setParent(parent);
-
-	// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
-	widget.readonly = readonly;
-
-	delete attrs.readonly;
-	widget.transformAttributes(attrs);
-
-	// Children need to be loaded
-	if(load_children)
+	let widget = null;
+	try
 	{
-		widget.loadFromXML(_template_node);
+		// @ts-ignore
+		widget = <Et2Widget>document.createElement(_nodeName);
+
+		if(parent && typeof widget.setParent === 'function')
+		{
+			widget.setParent(parent);
+		}
+
+		// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
+		widget.readonly = readonly;
+
+		delete attrs.readonly;
+		widget.transformAttributes(attrs);
+
+		// Children need to be loaded
+		if(load_children)
+		{
+			widget.loadFromXML(_template_node);
+		}
+	}
+	catch(e)
+	{
+		window.egw.debug("error", "Error loading widget " + _nodeName);
+		window.egw.debug("error", e);
+		return Object.assign(document.createElement("div"), {innerHTML: _nodeName, loadingFinished: () => {}});
 	}
 
 	return widget;
