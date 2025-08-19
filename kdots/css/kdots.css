@@ -295,7 +295,7 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
 #egw_fw_topmenu_info_items #topmenu_info_timer #timerIconRunning,
 #egw_fw_topmenu_info_items #topmenu_info_timer #timerIconPaused {
   padding-left: calc(1.6rem / 7);
-  font-size: 1.6em;
+  font-size: var(--header-icon-size);
 }
 #egw_fw_topmenu_info_items #topmenu_info_timer #timerIconRunning:has(~ div.paused) {
   display: none;
@@ -920,7 +920,7 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
   --sl-input-border-color: transparent;
   --sl-input-background-color: transparent;
   --image-filter: brightness(0) invert(1);
-  --image-filter-off: brightness(0) invert(0.5) opacity(0.7);
+  --image-filter-off: brightness(0) invert(1) opacity(0.5);
 }
 [slot="main-header"] .et2_clickable::part(base),
 [slot="main-header"] et2-button::part(base),
