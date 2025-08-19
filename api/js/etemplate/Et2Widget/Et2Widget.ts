@@ -1768,7 +1768,7 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	try
 	{
 		// @ts-ignore
-		let widget = <Et2Widget>document.createElement(_nodeName);
+		widget = <Et2Widget>document.createElement(_nodeName);
 
 		if(parent && typeof widget.setParent === 'function')
 		{
