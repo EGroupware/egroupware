@@ -144,6 +144,7 @@
     </template>
     <template id="infolog.index" template="" lang="" group="0" version="1.9.005">
         <template template="infolog.index.header" slot="main-header"></template>
+        <nextmatch id="nm" template="infolog.index.rows" header_right="infolog.index.dates" span="all"/>
         <grid width="100%" border="0" spacing="0" padding="0">
             <columns>
                 <column width="70%"/>
@@ -152,9 +153,6 @@
             <rows>
                 <row class="hideme" disabled="!@css">
                     <html id="css" span="all"/>
-                </row>
-                <row>
-                    <nextmatch id="nm" template="infolog.index.rows" header_right="infolog.index.dates" span="all"/>
                 </row>
                 <row>
                     <et2-hbox>
