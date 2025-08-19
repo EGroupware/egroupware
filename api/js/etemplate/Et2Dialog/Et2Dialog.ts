@@ -10,7 +10,7 @@
 
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, html, LitElement, render} from "lit";
+import {css, html, LitElement, nothing, render} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
 import {repeat} from "lit/directives/repeat.js";
@@ -25,6 +25,7 @@ import {SlDialog} from "@shoelace-style/shoelace";
 import {egwIsMobile} from "../../egw_action/egw_action_common";
 import {waitForEvent} from "../Et2Widget/event";
 import {property} from "lit/decorators/property.js";
+import {HasSlotController} from "../Et2Widget/slot";
 
 export interface DialogButton
 {
@@ -88,6 +89,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 * Resolve the dialog complete promise
 	 */
 	private _completeResolver : (value) => [number, Object];
+
+	// Allows us to check to see if label or content is set
+	protected readonly hasSlotController = new HasSlotController(this, '[default]', 'label');
 
 	/**
 	 * The ID of the button that was clicked.  Always one of the button constants,
@@ -832,16 +836,17 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		{
 			styles["--height"] = this.height;
 		}
-
+		const hasSlottedContent = this.hasSlotController.test("[default]");
 		return html`
+            ${hasSlottedContent ? nothing : html`
             <div class=${classMap(classes)} style="${styleMap(styles)}">
                 ${this.__template ? "" :
                   html` <img class="dialog_icon" src=${icon}/>
                   <slot>${this.message}</slot>`
                 }
 
-            </div>${this._buttonsTemplate()}`;
-
+            </div>`}
+            ${this._buttonsTemplate()}`;
 	}
 
 	_buttonsTemplate()
