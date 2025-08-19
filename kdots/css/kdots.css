@@ -837,9 +837,25 @@ div.et2_nextmatch .egwGridView_outer thead > tr th {
   border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
 }
 div.et2_nextmatch .egwGridView_outer thead > tr th div.innerContainer {
-  max-height: 10em;
+  max-height: 5em;
   overflow-x: hidden;
   overflow-y: auto;
+}
+div.et2_nextmatch .egwGridView_outer thead > tr th div.innerContainer et2-vbox span:not(.no_ellipsis) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+div.et2_nextmatch .egwGridView_outer thead > tr th div.innerContainer et2-vbox > span:only-child,
+div.et2_nextmatch .egwGridView_outer thead > tr th div.innerContainer et2-vbox > et2-description:only-child > span[part="content"] {
+  white-space: normal;
+}
+div.et2_nextmatch .egwGridView_outer thead > tr th .ellipsis* {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 div.et2_nextmatch .egwGridView_outer thead > tr th.optcol span.selectcols {
   height: 9px;

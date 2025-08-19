@@ -34,11 +34,33 @@ div.et2_nextmatch {
 
 	  th {
 		border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
-
+		//one nm header cell
 		div.innerContainer {
-		  max-height: 10em;
+		  max-height: 5em;
 		  overflow-x: hidden;
 		  overflow-y: auto;
+		  // if in vbox with more than one header do not wrap text and ellipsis
+		  et2-vbox {
+			span:not(.no_ellipsis) {
+			  white-space: nowrap;
+			  overflow: hidden;
+			  text-overflow: ellipsis;
+			  width: 100%;
+			}
+
+			& > span:only-child, & > et2-description:only-child > span[part="content"] {
+			  white-space: normal;
+			}
+		  }
+		}
+
+		.ellipsis {
+		  &* {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 100%;
+		  }
 		}
 	  }
 
