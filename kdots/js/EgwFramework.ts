@@ -561,6 +561,17 @@ export class EgwFramework extends LitElement
 		}
 	}
 
+	public callOnLogout(e)
+	{
+		for(let app in Object.values(this.applicationList))
+		{
+			if(app && typeof app.onLogout === "function")
+			{
+				app.onLogout.call(e);
+			}
+		}
+	}
+
 	/**
 	 * Open a (centered) popup window with given size and url
 	 *
@@ -1284,8 +1295,12 @@ export interface ApplicationInfo
 	/* Is the app open, and at what place in the tab list */
 	opened? : number,
 	/* Is the app currently active */
-	active? : boolean// = false
-	features : FeatureList
+	active? : boolean, // = false
+	/* Framework features - *automatically handled by framework* */
+	features : FeatureList,
+
+	/* Function called on logout */
+	callOnLogout? : Function
 }
 
 // List of features that the framework can handle in a standard way for each app
