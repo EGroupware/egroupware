@@ -953,13 +953,13 @@ export class EgwFrameworkApp extends LitElement
                              statustext=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
                              @click=${this.refresh}
             ></et2-button-icon>
-            <et2-button-icon nosubmit name="printer"
+            <et2-button-icon nosubmit name="printer" class="egw_fw_app--no_mobile"
                              label=${this.egw.lang("Print")}
                              statustext=${this.egw.lang("Print")}
                              @click=${this.framework.print}
             ></et2-button-icon>
             <sl-dropdown class="egw_fw_app__menu">
-                <div slot="trigger">${this.egw.lang("Menu")}
+                <div slot="trigger"><span class="egw_fw_app--no_mobile">${this.egw.lang("Menu")}</span>
                     <sl-icon-button name="chevron-double-down"
                                     aria-label="${this.egw.lang("Application menu")}"
                     ></sl-icon-button>

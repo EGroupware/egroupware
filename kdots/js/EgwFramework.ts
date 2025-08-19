@@ -577,15 +577,31 @@ export class EgwFramework extends LitElement
 	public async openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, _parentWnd)
 	{
 		// @ts-ignore egw.preference() returns a Promise if you pass true for callback
-		const pref = await egw.preference("open_popups_in", "kdots", true);
+		const pref = await egw.preference("open_popups_in", "common", true);
 		let windowID = null;
-		if(pref == "popup_window" || pref == undefined && window.matchMedia('(max-width: 800px)').matches)
+		if(pref == "same_window" || pref == undefined && window.matchMedia('(max-width: 800px)').matches)
 		{
 			// openDialog doesn't take a full URL, just the menuaction part
 			const dialogURL = _url.split("menuaction=").pop();
 			const dialog = await ((this.activeApp.name == _app && typeof window.app[_app].openDialog == "function") ?
 								  window.app[_app].openDialog(dialogURL) : this.egw.openDialog(dialogURL));
 			dialog.classList.add("egw-popup");
+
+			// Desired size is probably wrong, but we'll set it anyway for large screens
+			if(!window.matchMedia('(max-width: 800px)').matches)
+			{
+				if(_width)
+				{
+					dialog.shadowRoot.querySelector(".dialog__panel").style.width = _width + "px";
+				}
+				if(_height)
+				{
+					dialog.shadowRoot.querySelector(".dialog__panel").style.height = _height + "px";
+				}
+			}
+			// Listen for close
+			dialog.addEventListener("sl-request-close", () => {this.popups.close(dialog);});
+
 			// Put the dialog in the correct app so it can inherit application styles & be removed if app closes
 			(_app && this.getApp(_app) ? this.getApp(_app) : this.activeApp).append(dialog);
 			return dialog;
@@ -684,11 +700,11 @@ export class EgwFramework extends LitElement
 	 * Close popup
 	 *
 	 * @param {window} _wnd window object which suppose to be closed
-	 * @deprecated Just close it with `window.close()`
+	 * @deprecated Use `framework.popup.close()`
 	 */
 	popup_close(_wnd)
 	{
-		_wnd.close();
+		this.popups.close(_wnd)
 	}
 
 	/**

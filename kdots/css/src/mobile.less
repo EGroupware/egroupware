@@ -1,6 +1,5 @@
 body {
   #popupMainDiv.et2_mobile_view {
-	z-index: 102;
 	width: 100%;
 	height: 100%;
 	background: var(--sl-color-neutral-0);
@@ -11,23 +10,6 @@ body {
 	right: 0;
 	overflow: auto;
 
-	.dialogHeadbar {
-	  color: var(--sl-color-neutral-0);
-	  font-size: var(--sl-font-size-x-large);
-	  background-color: var(--application-color);
-	  //position: fixed;
-	  top: 0;
-	  left: 0;
-	  right: 0;
-	  z-index: 1;
-	  box-shadow: var(--sl-shadow-large);
-
-	  .entry_id {
-		position: absolute;
-		right: var(--sl-spacing-medium);
-		font-weight: var(--sl-font-weight-bold);
-	  }
-	}
   }
 }
 
@@ -39,12 +21,16 @@ body {
 
   body {
 	egw-framework#egw_fw_basecontainer {
+	  --left-side-width: 0px;
 	  /* Hide some parts */
 
 	  &::part(open-applications), &::part(status), &::part(divider) {
 		display: none;
 	  }
 
+	  &::part(main) {
+		overflow-x: hidden;
+	  }
 	  &::part(status-split) {
 		--max: 0;
 	  }
@@ -104,7 +90,7 @@ body {
 	  &::part(header-actions) {
 		flex-direction: row-reverse;
 		font-size: var(--sl-font-size-2x-large);
-		align-items: center;
+		align-content: center;
 	  }
 
 	  &::part(close-button) {
@@ -124,8 +110,30 @@ body {
 		flex-wrap: wrap;
 	  }
 
-	  et2-hbox[slot="label"], et2-box[slot="label"] {
-		flex: 1 1 100%;
+	  /* Old way of adding stuff.  Buttons should be slotted into header-actions, anything else into label */
+
+	  .dialogHeadbar {
+		color: var(--sl-color-neutral-0);
+		font-size: var(--sl-font-size-x-large);
+		background-color: var(--application-color);
+		position: fixed;
+		height: var(--sl-spacing-3x-large);
+		top: 0;
+		left: 5.5em;
+		right: 0;
+		z-index: 1;
+		overflow: hidden;
+		box-shadow: var(--sl-shadow-large);
+
+		.entry_id {
+		  position: absolute;
+		  right: var(--sl-spacing-medium);
+		  font-weight: var(--sl-font-weight-bold);
+		}
+	  }
+
+	  et2-hbox[slot="label"], et2-box[slot="label"], et2-hbox[slot="header-actions"], eg2-box[slot="header-actions"] {
+		flex: 1 1 min-content;
 
 		&::part(base) {
 		  align-items: center;
@@ -204,121 +212,16 @@ body {
 		margin-right: 0px;
 	  }
 
-	  .nextmatch_header_row, .nextmatch_header {
-		flex-direction: column;
+	  /* If there's a filterbox, hide the header */
 
-		div.header_row_right {
-		  position: absolute;
-		  display: block;
-		  top: 0;
-		  flex-direction: column;
-		}
-
-		.filtersContainer {
-		  width: 100%;
-		  margin-top: 50px;
-		  flex-direction: column;
-
-		  et2-select, et2-select-cat {
-			max-width: 100%
-		  }
-		}
-
-		background-color: background-color-egw-dark;
-
-		et2-select, et2-select-cat {
-		  display: block;
-		  width: 100%;
-		  height: @mobile-elem-height;
-		  font-size: var(--sl-font-size-large);
-		  background-size: 32px;
-		  border-left: none;
-		  border-right: none;
-		  border-radius: 0;
-		  border-bottom: none;
-		  padding-left: 10px;
-		  max-width: none;
-		  background-color: transparent;
-		}
-
-		label {
-		  display: block;
-		  width: 100%;
-		  float: left;
-		  font-size: var(--sl-font-size-large);
-
-		  select {
-			display: inline-block;
-			float: right;
-			margin: 0;
-			height: @mobile-elem-height;
-			font-size: var(--sl-font-size-large);
-		  }
-		}
-
-		et2-select-cat {
-		  height: 50px !important;
-		  width: 100% !important;
-		  margin: 0;
-		  padding-left: 0px;
-		  background: white;
-		}
-
-		et2-select-cat {
-		  a.chzn-single {
-			height: 100%;
-			border-right: none;
-			box-shadow: none;
-			background: white;
-			border-top: none;
-			border-bottom: none;
-			border-left-width: 10px;
-			border-radius: 0;
-
-			span {
-			  height: 100%;
-			  line-height: 46px;
-			  color: #26537C;
-			  font-size: var(--sl-font-size-large);
-			}
-
-			div {
-			  width: 40px;
-
-			  b {
-				background: white url(../../node_modules/bootstrap-icons/icons/caret-down-fill.svg) no-repeat center !important;
-				background-size: 16px !important;
-			  }
-			}
-		  }
+	  &.et2-filterbox--loaded {
+		.nm-mob-header, .nm_favorites_div {
+		  display: none;
 		}
 	  }
 
 	  .nextmatch_header.nm_header_hide {
 		display: none !important;
-	  }
-
-	  .nextmatch_header {
-		background-color: white;
-		padding: 0;
-		display: inline-block;
-		width: 100%;
-		border-bottom: 1px solid silver;
-		border-top: none;
-		box-shadow: 0px 1px 1px 1px silver;
-		z-index: 1;
-		position: relative;
-
-		div.et2_box_widget {
-		  display: block;
-		  height: @mobile-elem-height;
-		}
-
-		.et2_button {
-		  width: @mobile-button-width;
-		  height: @mobile-elem-height;
-		}
-
 	  }
 
 	  .egwGridView_outer {
@@ -728,40 +631,22 @@ body {
 	}
   }
 
-
-  et2-button.plus_button {
+  et2-button-icon.plus_button {
 	position: fixed !important;
 	right: 15px;
 	bottom: 15px;
-	border-radius: 50%;
-	width: 60px;
-	height: 60px;
-	background-position: center;
+	font-size: 60px;
+	line-height: 60px;
+	border-radius: var(--sl-border-radius-circle);
 	z-index: 100;
-	background-color: #0c5da5;
+	background-color: var(--primary-color, var(--sl-color-primary-500));
 	border: none;
-	background-repeat: no-repeat;
 	margin: 0;
 	padding: 0;
+	color: var(--sl-color-neutral-0);
 
 	&:hover, &:active {
 	  background-color: #0c5da5;
 	}
-
-	&::before {
-	  color: white;
-	  content: "\f64d"; // plus-lg
-	  font-size: 32px;
-	  line-height: 60px;
-	  color: #fff;
-	  text-align: center;
-	  width: 60px;
-	  font-weight: bolder;
-	  display: inline-block
-	}
-  }
-
-  et2-button.plus_button::part(base) {
-	display: none;
   }
 }

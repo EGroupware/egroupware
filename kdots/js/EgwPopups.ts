@@ -3,12 +3,13 @@
  *
  * Framework uses this to manage any popups we need to keep track of
  */
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 
 export class EgwPopups
 {
 
 	// Keep track of open popups
-	private _popups : Window[] = [];
+	private _popups : Window | Et2Dialog[] = [];
 	private _popupsGCInterval : number;
 
 	public add(windowID)
@@ -72,6 +73,19 @@ export class EgwPopups
 	public findIndex(_wnd : Window) : number | undefined
 	{
 		return this._popups.findIndex(w => w === _wnd || w.$iFrame && $iFrame[0].contentWindow === _wnd) ?? undefined;
+	}
+
+	public close(_wnd : Window | Et2Dialog)
+	{
+		if(_wnd instanceof Et2Dialog)
+		{
+			this._popups.splice(this._popups.indexOf(_wnd), 1);
+			return (<Et2Dialog>_wnd).hide();
+		}
+		else if(typeof _wnd.close === 'function')
+		{
+			_wnd.close();
+		}
 	}
 
 	/**

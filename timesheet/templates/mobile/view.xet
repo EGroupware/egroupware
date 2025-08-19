@@ -73,20 +73,17 @@
 		</grid>
 	</template>
 	<template id="timesheet.view" template="" lang="" group="0" version="1.9.002">
+        <et2-hbox slot="header-actions">
+            <et2-button-icon statustext="Saves this entry and add a new one" id="button[save_new]" image="save_new"></et2-button-icon>
+            <et2-button-icon statustext="Applies the changes made" id="button[apply]" image="apply"></et2-button-icon>
+            <et2-button-icon statustext="Delete this entry" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button-icon>
+        </et2-hbox>
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
 				<column/>
 			</columns>
 			<rows>
-				<row disabled="@hidebuttons" class="dialogHeadbar" >
-					<et2-hbox  span="all" width="100%">
-						<et2-button  statustext="Saves this entry and add a new one" id="button[save_new]" image="save_new"></et2-button>
-						<et2-button  statustext="Applies the changes made" id="button[apply]" image="apply"></et2-button>
-                        <et2-button statustext="Delete this entry" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button>
-						<et2-number  id="ts_id" readonly="true" class="entry_id" precision="0"></et2-number>
-					</et2-hbox>
-				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
 					<et2-hbox  span="all" width="100%">
 						<et2-button  label="Search" id="button[search]" image="search"></et2-button>

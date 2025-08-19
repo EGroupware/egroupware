@@ -737,14 +737,16 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		let tab = this.get_tab_info();
 		if(this.dataview)
 		{
-			const style = getComputedStyle(tab.contentDiv);
+			const style = tab && tab.contentDiv ? getComputedStyle(tab.contentDiv) : {};
+			const width = parseInt(style?.width) || this.getInstanceManager().DOMContainer.clientWidth;
+			const height = parseInt(style?.height) || this.getInstanceManager().DOMContainer.clientHeight;
 			// -# to avoid scrollbars
 			this.dataview.resize(
 				Math.min(
 					window.innerWidth - 15,
-					parseInt(style.width)
+					width
 				) - 5,
-				parseInt(style.height) - parseInt(style.paddingTop) - parseInt(style.paddingBottom) - 5
+				height - parseInt(style.paddingTop) - parseInt(style.paddingBottom) - 5
 			);
 		}
 	}

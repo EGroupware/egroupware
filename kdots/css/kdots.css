@@ -997,7 +997,6 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 }
 /*** END WIDGETS ***/
 body #popupMainDiv.et2_mobile_view {
-  z-index: 102;
   width: 100%;
   height: 100%;
   background: var(--sl-color-neutral-0);
@@ -1007,21 +1006,6 @@ body #popupMainDiv.et2_mobile_view {
   bottom: 0;
   right: 0;
   overflow: auto;
-}
-body #popupMainDiv.et2_mobile_view .dialogHeadbar {
-  color: var(--sl-color-neutral-0);
-  font-size: var(--sl-font-size-x-large);
-  background-color: var(--application-color);
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  box-shadow: var(--sl-shadow-large);
-}
-body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
-  position: absolute;
-  right: var(--sl-spacing-medium);
-  font-weight: var(--sl-font-weight-bold);
 }
 @media screen and (max-width: 800px) {
   html * {
@@ -1034,12 +1018,16 @@ body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
     /* copied from previous framework */
   }
   body egw-framework#egw_fw_basecontainer {
+    --left-side-width: 0px;
     /* Hide some parts */
   }
   body egw-framework#egw_fw_basecontainer::part(open-applications),
   body egw-framework#egw_fw_basecontainer::part(status),
   body egw-framework#egw_fw_basecontainer::part(divider) {
     display: none;
+  }
+  body egw-framework#egw_fw_basecontainer::part(main) {
+    overflow-x: hidden;
   }
   body egw-framework#egw_fw_basecontainer::part(status-split) {
     --max: 0;
@@ -1054,6 +1042,7 @@ body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
   }
   body et2-dialog {
     --width: 100%;
+    /* Old way of adding stuff.  Buttons should be slotted into header-actions, anything else into label */
   }
   body et2-dialog .egw-popup {
     display: block;
@@ -1089,7 +1078,7 @@ body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
   body et2-dialog::part(header-actions) {
     flex-direction: row-reverse;
     font-size: var(--sl-font-size-2x-large);
-    align-items: center;
+    align-content: center;
   }
   body et2-dialog::part(close-button) {
     color: var(--application-header-text-color, var(--sl-color-neutral-100));
@@ -1104,12 +1093,34 @@ body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
     /* Allow buttons to wrap */
     flex-wrap: wrap;
   }
+  body et2-dialog .dialogHeadbar {
+    color: var(--sl-color-neutral-0);
+    font-size: var(--sl-font-size-x-large);
+    background-color: var(--application-color);
+    position: fixed;
+    height: var(--sl-spacing-3x-large);
+    top: 0;
+    left: 5.5em;
+    right: 0;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: var(--sl-shadow-large);
+  }
+  body et2-dialog .dialogHeadbar .entry_id {
+    position: absolute;
+    right: var(--sl-spacing-medium);
+    font-weight: var(--sl-font-weight-bold);
+  }
   body et2-dialog et2-hbox[slot="label"],
-  body et2-dialog et2-box[slot="label"] {
-    flex: 1 1 100%;
+  body et2-dialog et2-box[slot="label"],
+  body et2-dialog et2-hbox[slot="header-actions"],
+  body et2-dialog eg2-box[slot="header-actions"] {
+    flex: 1 1 min-content;
   }
   body et2-dialog et2-hbox[slot="label"]::part(base),
-  body et2-dialog et2-box[slot="label"]::part(base) {
+  body et2-dialog et2-box[slot="label"]::part(base),
+  body et2-dialog et2-hbox[slot="header-actions"]::part(base),
+  body et2-dialog eg2-box[slot="header-actions"]::part(base) {
     align-items: center;
   }
   body et2-dialog span[slot="label"] {
@@ -1164,122 +1175,19 @@ body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
   body et2-dialog et2-dialog#timer_dialog::part(footer) {
     background-color: var(--timesheet-color);
   }
+  body .et2_nextmatch {
+    /* If there's a filterbox, hide the header */
+  }
   body .et2_nextmatch .nextmatch_sortheader {
     padding-right: 0px;
     margin-right: 0px;
   }
-  body .et2_nextmatch .nextmatch_header_row,
-  body .et2_nextmatch .nextmatch_header {
-    flex-direction: column;
-    background-color: background-color-egw-dark;
-  }
-  body .et2_nextmatch .nextmatch_header_row div.header_row_right,
-  body .et2_nextmatch .nextmatch_header div.header_row_right {
-    position: absolute;
-    display: block;
-    top: 0;
-    flex-direction: column;
-  }
-  body .et2_nextmatch .nextmatch_header_row .filtersContainer,
-  body .et2_nextmatch .nextmatch_header .filtersContainer {
-    width: 100%;
-    margin-top: 50px;
-    flex-direction: column;
-  }
-  body .et2_nextmatch .nextmatch_header_row .filtersContainer et2-select,
-  body .et2_nextmatch .nextmatch_header .filtersContainer et2-select,
-  body .et2_nextmatch .nextmatch_header_row .filtersContainer et2-select-cat,
-  body .et2_nextmatch .nextmatch_header .filtersContainer et2-select-cat {
-    max-width: 100%;
-  }
-  body .et2_nextmatch .nextmatch_header_row et2-select,
-  body .et2_nextmatch .nextmatch_header et2-select,
-  body .et2_nextmatch .nextmatch_header_row et2-select-cat,
-  body .et2_nextmatch .nextmatch_header et2-select-cat {
-    display: block;
-    width: 100%;
-    height: var(--sl-font-size-large);
-    font-size: var(--sl-font-size-large);
-    background-size: 32px;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
-    border-bottom: none;
-    padding-left: 10px;
-    max-width: none;
-    background-color: transparent;
-  }
-  body .et2_nextmatch .nextmatch_header_row label,
-  body .et2_nextmatch .nextmatch_header label {
-    display: block;
-    width: 100%;
-    float: left;
-    font-size: var(--sl-font-size-large);
-  }
-  body .et2_nextmatch .nextmatch_header_row label select,
-  body .et2_nextmatch .nextmatch_header label select {
-    display: inline-block;
-    float: right;
-    margin: 0;
-    height: var(--sl-font-size-large);
-    font-size: var(--sl-font-size-large);
-  }
-  body .et2_nextmatch .nextmatch_header_row et2-select-cat,
-  body .et2_nextmatch .nextmatch_header et2-select-cat {
-    height: 50px !important;
-    width: 100% !important;
-    margin: 0;
-    padding-left: 0px;
-    background: white;
-  }
-  body .et2_nextmatch .nextmatch_header_row et2-select-cat a.chzn-single,
-  body .et2_nextmatch .nextmatch_header et2-select-cat a.chzn-single {
-    height: 100%;
-    border-right: none;
-    box-shadow: none;
-    background: white;
-    border-top: none;
-    border-bottom: none;
-    border-left-width: 10px;
-    border-radius: 0;
-  }
-  body .et2_nextmatch .nextmatch_header_row et2-select-cat a.chzn-single span,
-  body .et2_nextmatch .nextmatch_header et2-select-cat a.chzn-single span {
-    height: 100%;
-    line-height: 46px;
-    color: #26537C;
-    font-size: var(--sl-font-size-large);
-  }
-  body .et2_nextmatch .nextmatch_header_row et2-select-cat a.chzn-single div,
-  body .et2_nextmatch .nextmatch_header et2-select-cat a.chzn-single div {
-    width: 40px;
-  }
-  body .et2_nextmatch .nextmatch_header_row et2-select-cat a.chzn-single div b,
-  body .et2_nextmatch .nextmatch_header et2-select-cat a.chzn-single div b {
-    background: white url(../../node_modules/bootstrap-icons/icons/caret-down-fill.svg) no-repeat center !important;
-    background-size: 16px !important;
+  body .et2_nextmatch.et2-filterbox--loaded .nm-mob-header,
+  body .et2_nextmatch.et2-filterbox--loaded .nm_favorites_div {
+    display: none;
   }
   body .et2_nextmatch .nextmatch_header.nm_header_hide {
     display: none !important;
-  }
-  body .et2_nextmatch .nextmatch_header {
-    background-color: white;
-    padding: 0;
-    display: inline-block;
-    width: 100%;
-    border-bottom: 1px solid silver;
-    border-top: none;
-    box-shadow: 0px 1px 1px 1px silver;
-    z-index: 1;
-    position: relative;
-  }
-  body .et2_nextmatch .nextmatch_header div.et2_box_widget {
-    display: block;
-    height: var(--sl-font-size-large);
-  }
-  body .et2_nextmatch .nextmatch_header .et2_button {
-    width: var(--sl-font-size-large);
-    height: var(--sl-font-size-large);
   }
   body .et2_nextmatch .egwGridView_outer thead tr {
     visibility: hidden;
@@ -1597,38 +1505,23 @@ body #popupMainDiv.et2_mobile_view .dialogHeadbar .entry_id {
     text-align: center;
     padding: 9px;
   }
-  et2-button.plus_button {
+  et2-button-icon.plus_button {
     position: fixed !important;
     right: 15px;
     bottom: 15px;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    background-position: center;
+    font-size: 60px;
+    line-height: 60px;
+    border-radius: var(--sl-border-radius-circle);
     z-index: 100;
-    background-color: #0c5da5;
+    background-color: var(--primary-color, var(--sl-color-primary-500));
     border: none;
-    background-repeat: no-repeat;
     margin: 0;
     padding: 0;
+    color: var(--sl-color-neutral-0);
   }
-  et2-button.plus_button:hover,
-  et2-button.plus_button:active {
+  et2-button-icon.plus_button:hover,
+  et2-button-icon.plus_button:active {
     background-color: #0c5da5;
-  }
-  et2-button.plus_button::before {
-    color: white;
-    content: "\f64d";
-    font-size: 32px;
-    line-height: 60px;
-    color: #fff;
-    text-align: center;
-    width: 60px;
-    font-weight: bolder;
-    display: inline-block;
-  }
-  et2-button.plus_button::part(base) {
-    display: none;
   }
 }
 /**

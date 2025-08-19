@@ -476,6 +476,19 @@ function send_template()
 
 		if ($template === 'mobile')
 		{
+			// Fix add button
+			$str = preg_replace_callback('#<et2-button\s(.*?")\s*/?>(</et2-button>)?#s', function (array $matches)
+			{
+				$attrs = parseAttrs($matches[1]);
+				if(str_contains($attrs['class'], 'plus_button'))
+				{
+					$attrs['image'] = 'plus-lg';
+					$attrs_string = stringAttrs($attrs);
+					return "<et2-button-icon $attrs_string></et2-button-icon>";
+				}
+				return "<et2-button $matches[1]></et2-button>";
+			},                           $str);
+
 		}
 
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
