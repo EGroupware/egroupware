@@ -137,7 +137,7 @@ EOF;
 		}
 
 		// add standard filter
-		foreach(['filter', 'filter2', 'cat_id'] as $id)
+		foreach(['cat_id', 'filter', 'filter2'] as $id)
 		{
 			if (isset($_GET[$id]))
 			{
@@ -158,32 +158,38 @@ EOF;
 		}
 
 		// get all NM filter-headers and place them in the template
-		$xet .= <<<EOF
+		if (preg_match_all('#<(et2-)?nextmatch-([^ ]+filter|filterheader) ([^>]+?)/>#s', $str, $matches, PREG_SET_ORDER))
+		{
+			$xet .= <<<EOF
 		<et2-details summary="Column Filters" open="true">
 EOF;
-		foreach(preg_match_all('#<(et2-)?nextmatch-([^ ]+filter|filterheader) ([^>]+?)/>#s', $str, $matches, PREG_SET_ORDER) ? $matches : [] as $n => $match)
-		{
-			$attrs = parseAttrs($match[3]);
-			switch($match[2])
+			foreach ($matches as $n => $match)
 			{
-				case 'header-filter':
-				case 'accountfilter':
-				case 'customfilter':
-					$label = htmlspecialchars($attrs['label'] ?? $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'], ENT_XML1, 'UTF-8');
-					$xet .= <<<EOF
+				$attrs = parseAttrs($match[3]);
+				switch ($match[2])
+				{
+					case 'header-filter':
+					case 'accountfilter':
+					case 'customfilter':
+						$label = htmlspecialchars($attrs['label'] ?? $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'], ENT_XML1, 'UTF-8');
+						$xet .= <<<EOF
 			<et2-select id="$attrs[id]" label="$label" class="et2-label-fixed"></et2-select>
 EOF;
+				}
 			}
-		}
-		$xet .= <<<EOF
+			$xet .= <<<EOF
 		</et2-details>
 EOF;
+		}
 		// favorites
-		$xet .= <<<EOF
+		if (!in_array($app, ['mail']))
+		{
+			$xet .= <<<EOF
 		<et2-details summary="Favorites" open="true">
 			<et2-favorites-menu application="$app"></et2-favorites-menu>
 		</et2-details>
 EOF;
+		}
 		$str = $xet . <<<EOF
 	</et2-template>
 </overlay>

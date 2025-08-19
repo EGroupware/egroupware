@@ -280,7 +280,7 @@ class Nextmatch extends Etemplate\Widget
 		$template_name = implode('.', $parts);
 		$app = array_shift($parts);
 		$rest = implode('.', $parts);
-		if (!Template::instance($app.'.filter'))
+		if (!($tpl=Template::instance($app.'.filter')))
 		{
 			if (($path=Template::relPath($template_name)))
 			{
@@ -301,7 +301,7 @@ class Nextmatch extends Etemplate\Widget
 			{
 				if (empty($this->attrs['no_'.$key]))
 				{
-					$url .= '&'.$key.'='.urlencode($this->attrs[$key.'_label'] ?? $label);
+					$url .= '&'.$key.'='.urlencode($this->attrs[$key.'_label'] ?? $this->attrs[$key.'_aria_label'] ?? $this->attrs[$key.'_statustext'] ?? $label);
 				}
 			}
 			foreach(['no_search', 'cat_is_select'] as $key)
@@ -314,7 +314,11 @@ class Nextmatch extends Etemplate\Widget
 		}
 		else
 		{
-			$url = Template::rel2url("$app.filter");
+			$url = Template::rel2url($tpl->rel_path);
+		}
+		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
+		{
+			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_'.$key, true);
 		}
 		self::setElementAttribute('filter-template', 'url', $url);
 	}

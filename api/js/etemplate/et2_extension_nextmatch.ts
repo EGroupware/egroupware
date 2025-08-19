@@ -3626,14 +3626,18 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			fix: !egwIsMobile(),
 			placeholder: egw.lang("Search")
 		};
-		// searchbox widget
-		this.et2_searchbox = <Et2Searchbox>loadWebComponent('et2-searchbox', searchbox_options, this);
-
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search || '';
 
-		this.et2_searchbox.set_value(settings.search || '');
-		jQuery(this.et2_searchbox.getInputNode()).attr("aria-label", egw.lang("search"));
+		// searchbox widget, if enabled
+		if (!this.nextmatch.options.no_search)
+		{
+			this.et2_searchbox = <Et2Searchbox>loadWebComponent('et2-searchbox', searchbox_options, this);
+
+			this.et2_searchbox.set_value(settings.search || '');
+			jQuery(this.et2_searchbox.getInputNode()).attr("aria-label", egw.lang("search"));
+		}
+
 		/**
 		 *  Mobile theme specific part for nm header
 		 *  nm header has very different behaivior for mobile theme and basically

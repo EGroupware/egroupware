@@ -404,13 +404,15 @@ function send_template()
 			return '<et2-nextmatch-header-' . $matches[4] . stringAttrs($attrs) . '></et2-nextmatch-header-' . $matches[4] . '>';
 		}, $str);
 
-		// add NM filter template
-		$str =  preg_replace_callback('#<nextmatch (.*)/>#', static function (array $matches)
+		// add NM filter template, if not already there (calendar adds it somehow different, independent from template containing the NM)
+		if (!preg_match('/id="filter-template"/', $str) && !in_array($app, ['calendar']))
 		{
-			$attrs = parseAttrs($matches[1]);
-			$template = str_replace('.rows', '', $attrs['template'] ?? $attrs['options']);
-			return "<et2-template id=\"filter-template\" slot=\"filter\"></et2-template>\n".$matches[0];
-		}, $str);
+			$str = preg_replace_callback('#<nextmatch (.*)/>#', static function (array $matches) {
+				$attrs = parseAttrs($matches[1]);
+				$template = str_replace('.rows', '', $attrs['template'] ?? $attrs['options']);
+				return "<et2-template id=\"filter-template\" slot=\"filter\"></et2-template>\n" . $matches[0];
+			}, $str);
+		}
 
 		// fix <(button|buttononly|timestamper).../> --> <et2-(button|image|button-timestamp) (noSubmit="true")?.../>
 		$str = preg_replace_callback('#<(button|buttononly|timestamper|button-timestamp|dropdown_button)\s(.*?)(/|></(button|buttononly|timestamper|button-timestamp|dropdown_button))>#s', function ($matches) use ($name)
