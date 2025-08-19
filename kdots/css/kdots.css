@@ -995,6 +995,21 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 [slot="main-header"] et2-toolbar [slot="list"] :hover::part(base) {
   border-color: var(--sl-input-border-color);
 }
+/*Special styling for flatpickr widget*/
+.flatpickr-calendar .flatpickr-months .flatpickr-current-month {
+  display: flex;
+  height: auto;
+}
+.flatpickr-calendar .flatpickr-months .flatpickr-current-month .flatpickr-monthDropdown-months {
+  flex: 1 1 5ch;
+  max-width: 13ch;
+}
+.flatpickr-calendar .flatpickr-months .flatpickr-current-month .numInputWrapper {
+  flex: 0 0 6ch;
+}
+.flatpickr-calendar .flatpickr-months .flatpickr-current-month .numInputWrapper .numInput {
+  padding: 0;
+}
 /*** END WIDGETS ***/
 body #popupMainDiv.et2_mobile_view {
   width: 100%;

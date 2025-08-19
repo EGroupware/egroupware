@@ -178,4 +178,24 @@ div.et2_nextmatch {
 	}
   }
 }
+
+/*Special styling for flatpickr widget*/
+.flatpickr-calendar {
+  .flatpickr-months {
+	.flatpickr-current-month {
+	  display: flex;
+	  height: auto;
+	  .flatpickr-monthDropdown-months {
+		flex: 1 1 5ch;
+		max-width: 13ch;
+	  }
+	  .numInputWrapper {
+		flex: 0 0 6ch;
+		.numInput {
+		  padding: 0;
+		}
+	  }
+	}
+  }
+}
 /*** END WIDGETS ***/
