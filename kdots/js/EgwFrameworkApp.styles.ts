@@ -198,11 +198,18 @@ export default css`
             flex-direction: column;
         }
 
+		::slotted(*) {
+			flex: 1 1 auto;
+		}
+
         ::slotted(iframe) {
             width: 100%;
         }
     }
     @media (max-width: 799px) {
+		.egw_fw_app--no_mobile {
+			display: none;
+		}
         sl-split-panel::part(divider) {
             display: none;
         }
