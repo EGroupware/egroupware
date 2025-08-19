@@ -85,6 +85,10 @@ export default css`
         grid-template-rows: subgrid;
         --min: var(--left-min, 0px);
         --max: var(--left-max, 20%);
+
+		&.no-content {
+			--min: 0px;
+		}
     }
 
     .egw_fw_app__innerSplit {
@@ -93,15 +97,15 @@ export default css`
         grid-row: start / end;
         --max: calc(100% - var(--right-min, 0px));
         --min: calc(100% - var(--right-max, 50%));
+
+		&.no-content {
+			--min: 100%;
+		}
     }
 
 	.egw_fw_app__panel.egw_fw_app--panel-collapsed {
 		--min: 0px;
 	}
-
-    .egw_fw_app__innerSplit.no-content {
-        --min: 100%;
-    }
 
     /*sl-split-panel style*/
 
