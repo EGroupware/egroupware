@@ -93,8 +93,14 @@ function send_template()
 		}
 		exit;
 	}
-	$cache = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw_cache/eT2-Filter-Cache-' .
-		$GLOBALS['egw_info']['server']['install_id'] . '-' . str_replace('/', '-', $_SERVER['PATH_INFO']) . '-' . filemtime($path);
+	// make sure to not allow path traversal or other funny business
+	if (isset($_GET['template']) && !preg_match('/^[a-z0-9.-]+$/i', $_GET['template']))
+	{
+		unset($_GET['template']);
+	}
+	$cache = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw_cache/eT2-Cache-' .
+		$GLOBALS['egw_info']['server']['install_id'] . '-'.($_GET['template'] ?? $app.'.filter').
+		'-' . str_replace('/', '-', $_SERVER['PATH_INFO']) . '-' . filemtime($path);
 	/*if (PHP_SAPI !== 'cli' && file_exists($cache) && filemtime($cache) > max(filemtime($path), filemtime(__FILE__)) &&
 		($str = file_get_contents($cache)) !== false)
 	{
@@ -102,7 +108,16 @@ function send_template()
 	}
 	else*/if(($str = file_get_contents($path)) !== false)
 	{
-		$template_id = $app.'.filter';
+		if (!empty($_GET['template']) &&
+			preg_match('#<(et2-)?template id="'.preg_quote($_GET['template'], '#').'"[^>]*>.*?</(et2-)?template>#s', $str, $matches))
+		{
+			$str = $matches[0];
+			$template_id = str_replace('.rows', '', $_GET['template'].'.filter');
+		}
+		else
+		{
+			$template_id = $app.'.filter';
+		}
 		$xet = <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">

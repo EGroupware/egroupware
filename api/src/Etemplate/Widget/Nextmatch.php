@@ -266,7 +266,7 @@ class Nextmatch extends Etemplate\Widget
 		}
 
 		// check if we have a filter-template or need to generate one
-		$template_name = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
+		$template_name = $rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
 		$parts = explode('.', $template_name);
 		// remove rows
 		if (($key = array_search('rows', $parts)))
@@ -291,7 +291,8 @@ class Nextmatch extends Etemplate\Widget
 				$template_set = 'default';
 			}
 			$url = $GLOBALS['egw_info']['server']['webserver_url']."/api/filter-template.php/$app/templates/$template_set/$rest.xet?".
-				max(filemtime(Template::rel2path("/$app/templates/$template_set/$rest.xet")), filemtime(EGW_SERVER_ROOT.'/api/filter-template.php'));
+				max(filemtime(Template::rel2path("/$app/templates/$template_set/$rest.xet")), filemtime(EGW_SERVER_ROOT.'/api/filter-template.php')).
+				"&template=$rows_template";
 
 			// add filter- and cat-labels, if set
 			foreach([
@@ -320,7 +321,7 @@ class Nextmatch extends Etemplate\Widget
 		{
 			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_'.$key, true);
 		}
-		self::setElementAttribute('filter-template', 'url', $url);
+		self::setElementAttribute(($this->id === 'nm' ? '' : $this->id.'-').'filter-template', 'url', $url);
 	}
 
 	/**
