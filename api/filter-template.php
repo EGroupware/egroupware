@@ -127,12 +127,12 @@ EOF;
 		{
 			$sort_options = implode("\n", $sort_options);
 			$xet .= <<<EOF
-		<sl-visually-hidden>
+		<et2-visually-hidden>
 			<et2-select id="order" label="Sorting" ariaLabel="Ordering" class="et2-label-fixed">
 				$sort_options
 			</et2-select>
 			<et2-button-toggle ariaLabel="Sorting" id="sort" onIcon="carret-down-fill" offIcon="carret-up-fill"></et2-button-toggle>
-		</sl-visually-hidden>
+		</et2-visually-hidden>
 EOF;
 		}
 
