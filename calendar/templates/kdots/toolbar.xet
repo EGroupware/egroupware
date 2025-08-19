@@ -17,6 +17,8 @@ Egroupware
         <template template="api.search-button"></template>
         <et2-toolbar id="toolbar">
         </et2-toolbar>
-        <et2-description id="app_header"></et2-description>
+        <et2-hbox class="app_header_wrapper">
+            <et2-description id="app_header"></et2-description>
+        </et2-hbox>
     </template>
 </overlay>

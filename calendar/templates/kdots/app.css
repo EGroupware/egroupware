@@ -1649,11 +1649,17 @@ egw-app {
 #calendar-sidebox_date {
   flex-grow: 0;
 }
+#calendar-toolbar .app_header_wrapper {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
 #calendar-toolbar #calendar-toolbar_app_header {
   color: inherit;
   background-color: transparent;
   border-color: inherit;
   align-items: center;
+  border: none;
 }
 #calendar-toolbar #calendar-toolbar_toolbar_today {
   min-width: 0;
