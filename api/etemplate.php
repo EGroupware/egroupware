@@ -371,27 +371,45 @@ function send_template()
 		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
 
 		// nextmatch headers
-		$str = preg_replace_callback('#<(nextmatch-)([^ ]+)(header|filter) ([^>]+?)/>#s', static function (array $matches)
+		$str = preg_replace_callback('#<(et2-)?(nextmatch-)([^ ]+)(header|filter|entry) ([^>]+?)/>#s', static function (array $matches)
 		{
-			$attrs = parseAttrs($matches[4]);
+			// replace all filters with NM headers, if not running via cli (as we currently don't want to remove them permanently!)
+			$replace_filters = PHP_SAPI !== 'cli';
+			$attrs = parseAttrs($matches[5]);
 
-			if ($matches[2] === 'custom')
+			if ($matches[3] === 'custom')
 			{
 				$attrs['widget_type'] = $attrs['type'];
 			}
-			if(!$matches[2] || in_array($matches[2], ['sort']) || ($matches[2] == "custom" && empty($attrs['widget_type'])))
+			if(!$matches[3] || in_array($matches[3], ['sort']) || !$replace_filters && ($matches[3] == "custom" && empty($attrs['widget_type'])))
 			{
 				return $matches[0];
 			}
 			// No longer needed & type causes problems
 			unset($attrs['type'], $attrs['tags']);
 
-			if($matches[2] === 'taglist')
+			if($matches[3] === 'taglist')
 			{
-				$matches[2] = "filter";
+				$matches[3] = "filter";
 			}
+			if ($replace_filters)
+			{
+				if (empty($attrs['label']))
+				{
+					$attrs['label'] = $attrs['ariaLabel'] ?? $attrs['emptyLabel'];
+					unset($attrs['ariaLabel'], $attrs['emptyLabel']);
+				}
+				return '<nextmatch-header '.stringAttrs($attrs).'/>';
+			}
+			return '<et2-nextmatch-header-' . $matches[4] . stringAttrs($attrs) . '></et2-nextmatch-header-' . $matches[4] . '>';
+		}, $str);
 
-			return '<et2-nextmatch-header-' . $matches[2] . stringAttrs($attrs) . '/>';
+		// add NM filter template
+		$str =  preg_replace_callback('#<nextmatch (.*)/>#', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			$template = str_replace('.rows', '', $attrs['template'] ?? $attrs['options']);
+			return "<et2-template id=\"filter-template\" slot=\"filter\"></et2-template>\n".$matches[0];
 		}, $str);
 
 		// fix <(button|buttononly|timestamper).../> --> <et2-(button|image|button-timestamp) (noSubmit="true")?.../>

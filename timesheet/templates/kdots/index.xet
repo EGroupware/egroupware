@@ -37,13 +37,13 @@
                         <columns><column width="100vw"/></columns>
                         <rows>
                             <row disabled="@pm_integration=full">
-                                <et2-nextmatch-header-filter  id="ts_project" search="false" noLang="1" emptyLabel="All projects"/>
+                                <et2-nextmatch-header-filter  id="ts_project" search="false" noLang="1" ariaLabel="Project" emptyLabel="All projects"/>
                             </row>
                             <row disabled="!@pm_integration=full">
                                 <et2-nextmatch-header-entry  id="pm_id" noLang="1" placeholder="All projects" onlyApp="projectmanager"/>
                             </row>
                             <row>
-                                <nextmatch-customfilter id="linked" options="link-entry"/>
+                                <nextmatch-customfilter id="linked" options="link-entry" ariaLabel="Linked"/>
                             </row>
                             <row>
                                 <nextmatch-sortheader label="Title" id="ts_title"/>

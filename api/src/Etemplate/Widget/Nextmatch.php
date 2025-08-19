@@ -264,6 +264,48 @@ class Nextmatch extends Etemplate\Widget
 			if (!is_array($value['action_links'])) $value['action_links'] = array();
 			$value['actions'] = self::egw_actions($value['actions'], $template_name, '', $value['action_links']);
 		}
+
+		// check if we have a filter-template or need to generate one
+		$template_name = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
+		$parts = explode('.', $template_name);
+		array_pop($parts);  // remove rows
+		$template_name = implode('.', $parts);
+		$app = array_shift($parts);
+		$rest = implode('.', $parts);
+		if (!Template::instance($app.'.filter'))
+		{
+			if (($path=Template::relPath($template_name)))
+			{
+				$template_set = explode('/', $path)[3] ?? 'default';
+			}
+			if (empty($template_set) || $template_set === 'mobile')
+			{
+				$template_set = 'default';
+			}
+			$url = $GLOBALS['egw_info']['server']['webserver_url']."/api/filter-template.php/$app/templates/$template_set/$rest.xet?".
+				max(filemtime(Template::rel2path("/$app/templates/$template_set/$rest.xet")), filemtime(EGW_SERVER_ROOT.'/api/filter-template.php'));
+
+			// add filter- and cat-labels, if set
+			foreach([
+				'filter'  => 'Filter',
+				'filter2' => '2nd Filter',
+				'cat_id'  => 'Category'] as $key => $label)
+			{
+				if (empty($this->attrs['no_'.$key]))
+				{
+					$url .= '&'.$key.'='.urlencode($this->attrs[$key.'_label'] ?? $label);
+				}
+			}
+			if (!empty($this->attrs['no_search']))
+			{
+				$url .= '&no_search=true';
+			}
+		}
+		else
+		{
+			$url = Template::rel2url("$app.filter");
+		}
+		self::setElementAttribute('filter-template', 'url', $url);
 	}
 
 	/**

@@ -48,7 +48,7 @@ export function et2_loadXMLFromURL(_url : string, _callback? : Function, _contex
 	}
 
 	// if preprocessor is missing --> add it
-	if (_url.indexOf('/etemplate.php/') === -1)
+	if (!_url.match(/\/(etemplate|filter-template).php\//))
 	{
 		const parts = _url.match(/^(.*)(\/[^/]+\/templates\/.*)$/);
 		if (parts)
