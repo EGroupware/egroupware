@@ -142,7 +142,7 @@ EOF;
 			if (isset($_GET[$id]))
 			{
 				$label = htmlspecialchars($_GET[$id], ENT_XML1, 'UTF-8');
-				if ($id === 'cat_id')
+				if ($id === 'cat_id' && empty($_GET['cat_is_select']))
 				{
 					$xet .= <<<EOF
 		<et2-select-cat id="$id" label="$label" class="et2-label-fixed"></et2-select-cat>

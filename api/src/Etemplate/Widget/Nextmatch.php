@@ -268,7 +268,15 @@ class Nextmatch extends Etemplate\Widget
 		// check if we have a filter-template or need to generate one
 		$template_name = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
 		$parts = explode('.', $template_name);
-		array_pop($parts);  // remove rows
+		// remove rows
+		if (($key = array_search('rows', $parts)))
+		{
+			$parts = array_slice($parts, 0, $key);
+		}
+		else
+		{
+			array_pop($parts);
+		}
 		$template_name = implode('.', $parts);
 		$app = array_shift($parts);
 		$rest = implode('.', $parts);
@@ -296,9 +304,12 @@ class Nextmatch extends Etemplate\Widget
 					$url .= '&'.$key.'='.urlencode($this->attrs[$key.'_label'] ?? $label);
 				}
 			}
-			if (!empty($this->attrs['no_search']))
+			foreach(['no_search', 'cat_is_select'] as $key)
 			{
-				$url .= '&no_search=true';
+				if (!empty($this->attrs[$key]))
+				{
+					$url .= '&'.$key.'=true';
+				}
 			}
 		}
 		else
