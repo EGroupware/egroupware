@@ -306,15 +306,16 @@ export class EgwFrameworkApp extends LitElement
 
 	public load(url)
 	{
+		// Clear everything
+		Array.from(this.childNodes).forEach(n =>
+		{
+			etemplate2.getById(n.id)?.clear();
+			n.remove();
+		});
 		if(!url)
 		{
-			while(this.firstChild)
-			{
-				this.removeChild(this.lastChild);
-			}
 			return;
 		}
-		this.url = url;
 		if(window.app[this.name]?.linkHandler && this.egw.window.app[this.name].linkHandler(url))
 		{
 			// app.ts linkHandler handled it.
@@ -351,12 +352,6 @@ export class EgwFrameworkApp extends LitElement
 				{
 					return;
 				}
-				// Clear everything
-				Array.from(this.childNodes).forEach(n =>
-				{
-					etemplate2.getById(n.id)?.clear();
-					n.remove()
-				})
 
 				// Load request returns HTML.  Shove it in.
 				if(typeof data == "string" || typeof data == "object" && typeof data[0] == "string")
@@ -387,7 +382,7 @@ export class EgwFrameworkApp extends LitElement
 			this.loadingPromise = new Promise((resolve, reject) =>
 			{
 				const timeout = setTimeout(() => reject(this.name + " load failed"), 5000);
-				render(this._iframeTemplate(), this);
+				this.append(this._createIframeNodes(url));
 				this.querySelector("iframe").addEventListener("load", () =>
 				{
 					clearTimeout(timeout);
@@ -453,12 +448,11 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	public refresh(_msg, _id, _type)
 	{
-		if(this.useIframe)
-		{
-			this.querySelector("iframe").contentWindow.location.reload();
-			return this.querySelector("iframe").contentWindow;
-		}
 		this.loading = true;
+		if(typeof _msg !== "string")
+		{
+			_msg = "";
+		}
 
 		// Refresh all child etemplates
 		const etemplates = {};
@@ -467,7 +461,7 @@ export class EgwFrameworkApp extends LitElement
 		{
 			etemplates[t.getInstanceManager().uniqueId] = t.getInstanceManager();
 		})
-		Object.values(etemplates).forEach((etemplate) =>
+		Object.values(etemplates).forEach((etemplate : etemplate2) =>
 		{
 			refresh_done = etemplate.refresh(_msg, this.appName, _id, _type) || refresh_done;
 		});
@@ -475,7 +469,6 @@ export class EgwFrameworkApp extends LitElement
 		// if not trigger a full app refresh
 		if(!refresh_done)
 		{
-			this.load(false);
 			this.load(this.url + (_msg ? '&msg=' + encodeURIComponent(_msg) : ''));
 		}
 		else
@@ -870,17 +863,16 @@ export class EgwFrameworkApp extends LitElement
 
 	/**
 	 * If we have to use an iframe, this is where it is made
-	 * @returns {typeof nothing | typeof nothing}
+	 *
 	 * @protected
 	 */
-	protected _iframeTemplate()
+	protected _createIframeNodes(url? : string)
 	{
 		if(!this.useIframe)
 		{
-			return nothing;
+			return null;
 		}
-		return html`
-            <iframe src="${this.url}"></iframe>`;
+		return Object.assign(document.createElement("iframe"), {src: url});
 	}
 
 	protected _asideTemplate(parentSlot, side : "left" | "right", label?)
