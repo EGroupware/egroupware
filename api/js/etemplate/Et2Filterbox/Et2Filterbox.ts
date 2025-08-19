@@ -96,6 +96,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		super();
 		this.applyFilters = this.applyFilters.bind(this);
 		this.handleNextmatchFilter = this.handleNextmatchFilter.bind(this);
+		this.handleSlotChange = this.handleSlotChange.bind(this);
 	}
 
 	connectedCallback()
@@ -103,12 +104,14 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		super.connectedCallback()
 		//intercept all keydown events from reaching the nextmatch
 		document.addEventListener("keydown", this.handleKeypress, {capture: true});
+		this.addEventListener("slotchange", this.handleSlotChange);
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback()
 		document.removeEventListener("keydown", this.handleKeypress, {capture: true});
+		this.removeEventListener("slotchange", this.handleSlotChange);
 		this._nextmatch?.getDOMNode()?.removeEventListener("et2-filter", this.handleNextmatchFilter);
 	}
 
@@ -121,7 +124,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			{
 				this.filters = [];
 			}
-			if(this.nextmatch !== this._nextmatch)
+			if(this.nextmatch && this.nextmatch !== this._nextmatch)
 			{
 				this._findNextmatch();
 			}
@@ -172,6 +175,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 					}
 				})
 			})
+			return value;
 		}
 		let entry = value;
 		const nm_group = this._nextmatch ? this._groups[this._nextmatch.id] : {}
@@ -237,6 +241,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		{
 			return;
 		}
+		this._groups[nextmatch.id] = {};
 
 		// Wait for nextmatch widgets to finish or we'll miss settings
 		let waitForWebComponents = [];
@@ -251,6 +256,11 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		});
 		await Promise.all(waitForWebComponents);
 
+		// If there's a custom template, ignore the nextmatch
+		if(this.hasSlotController.test("[default]"))
+		{
+			return;
+		}
 		this._groups[nextmatch.id] = {};
 		const group = this._groups[nextmatch.id];
 
@@ -486,6 +496,17 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 					}
 				}
 			});
+		}
+	}
+
+	private handleSlotChange(event)
+	{
+		// Got or lost a custom filter template, discard internal stuff
+		if(this._nextmatch)
+		{
+			this.filters.splice(0, this.filters.length - 1);
+			delete this._groups[this._nextmatch.id];
+			this.readNextmatchFilters(this._nextmatch)
 		}
 	}
 
