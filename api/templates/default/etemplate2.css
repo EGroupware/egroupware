@@ -2036,53 +2036,6 @@ egw-validation-feedback[type] {
     border: none;
 }
 
-.nextmatch_header_row {
-    width: 100%;
-    padding-top: 0.2em;
-    padding-bottom: 0.5em;
-    position: relative;
-    display: flex;
-    gap: 1ex;
-}
-
-.nextmatch_header .header_count {
-    padding: 0px 10px;
-    border: 1px solid rgb(212, 212, 216);   /* --sl-input-border-color */
-    text-align: center;
-    border-radius: 3px;
-    position: relative;
-    order: 99;
-    display: flex;
-    align-items: center;
-}
-
-.nextmatch_header .header_count span {
-    position: relative;
-    font-size: 12px;
-    color: gray;
-    display: contents;
-}
-
-.nextmatch_header_row .filtersContainer {
-    flex: 5 1 auto;
-}
-
-.nextmatch_header_row .search > * {
-    width: 12em;
-}
-
-.nextmatch_header_row > .filtersContainer > et2-select, .nextmatch_header_row > .filtersContainer > et2-select-cat {
-    /* Make all filters the same size.  Otherwise they'll flex for different sized values */
-    max-width: 33%;
-    width: calc(33% - 4px);
-}
-
-.nextmatch_header_row > .header_row_right {
-    order: 10;
-}
-
-.nextmatch_header_row > .header_row_right > * {
-}
 
 .et2_nextmatch .nextmatch_header {
     border: none;
@@ -2090,21 +2043,11 @@ egw-validation-feedback[type] {
     background-color: transparent;
 }
 
-.et2_nextmatch .nextmatch_header_row > div, .et2_nextmatch .nextmatch_header_row et2-template::part(base) {
-    display: inline-flex;
-    flex-direction: row;
-    gap: 1ex;
-}
-
 .et2_nextmatch .innerContainer {
 	overflow: clip;
 }
 
 /* Favorites */
-.nextmatch_header div[id$=favorite_wrapper] {
-    position: relative;
-    order: 99;
-}
 
 #nm_favorites_popup_filters .filter_id,
 #nm_favorites_popup_filters .filter_value {
@@ -2112,11 +2055,6 @@ egw-validation-feedback[type] {
     display: inline-block;
 }
 
-.nextmatch_header ul.favorites {
-    min-width: 30ex;
-    border: 1px solid silver;
-    box-shadow: 6px 6px 9px gray;
-}
 
 .ui-fav-sortable-placeholder {
     height: 24px;
@@ -2126,14 +2064,6 @@ egw-validation-feedback[type] {
     padding: 2px 5px;
 }
 
-.nextmatch_header .favorites li .ui-menu .ui-menu-item a {
-    text-indent: -22px;
-    margin-left: 21px;
-}
-
-.nextmatch_header .favorites.ui-menu li.ui-menu-item a.ui-state-hover {
-    margin-left: 20px;
-}
 
 .favorites li span.ui-state-active {
     border: none;
@@ -2692,10 +2622,6 @@ et2-toolbar et2-switch-icon:hover:not([disabled]) {
 	border-color: transparent;
 }
 
-.nextmatch_header_row et2-button::part(container) {
-	height: 18px;
-}
-
 et2-button.transparent-button {
 	border: none;
 	background: transparent;
@@ -2707,61 +2633,6 @@ et2-button.transparent-button::part(container) {
     background: none;
 }
 
-.nextmatch_header_row button,
-.nextmatch_header_row div.et2_progress {
-	border-radius: var(--sl-border-radius-medium, 3px);
-    background-color: initial;
-    border: 1px solid silver;
-	overflow: hidden;
-}
-
-/**
- * Fileupload NM header
- */
-.nextmatch_header_row div.et2_file span,
-.nextmatch_header_row div.et2_file input {
-    height: 16px;
-    top: 0;
-    margin: 0;
-    border-radius: 3px;
-    background-color: #fafafa;
-    border: 1px solid silver;
-    text-indent: 0;
-    background-position: center;
-}
-
-/**
- * Textbox in NM header
- */
-.nextmatch_header_row input.et2_textbox {
-    height: 26px;
-    border-radius: 3px;
-    background-color: #fafafa;
-    border: 1px solid silver;
-    padding: 2px 5px 2px 2px;
-}
-
-/**
- * Daterange selection in NM header
- */
-.nextmatch_header_row span.et2_date[name$=date] {
-    min-width: 14ex;
-    padding: 0;
-}
-
-.nextmatch_header_row span.et2_date[name$=date] > input.et2_date {
-    margin: 1px 4px 1px 0;
-    height: 22px;
-    min-width: 14ex;
-    padding: 0;
-    background-color: #fafafa;
-    border: 1px solid silver;
-    border-radius: 3px;
-    padding-left: 5px;
-}
-
-.nextmatch_header_row > div {
-}
 
 .et2_toolbar select {
     height: 24px;
