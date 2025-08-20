@@ -116,41 +116,6 @@
   opacity: 1;
   background-color: #e6e6e6;
 }
-/* Toolbar */
-#calendar-toolbar {
-  height: auto;
-}
-#calendar-toolbar > et2-template::part(base) {
-  display: flex;
-  align-items: center;
-}
-#calendar-toolbar #calendar-toolbar_add::part(base) {
-  border-style: hidden;
-}
-#calendar-toolbar #calendar-toolbar_add:hover::part(base) {
-  border-style: solid;
-  background-color: var(--sl-input-background-color);
-}
-#calendar-toolbar .et2_toolbar {
-  background: inherit;
-  border: none;
-}
-#calendar-toolbar .et2_searchbox input {
-  height: 14px;
-}
-#calendar-toolbar #calendar-toolbar_favorite_wrapper {
-  float: right;
-  white-space: nowrap;
-  margin-right: 5px;
-  margin-top: -4px;
-}
-#calendar-toolbar #calendar-toolbar_favorite_wrapper #calendar-toolbar_favorite_menu {
-  z-index: 40;
-  font-weight: normal;
-}
-#calendar-toolbar .et2_dropdown button.ui-state-default {
-  background: #ffffff;
-}
 /* Space for toolbar */
 #calendar-view,
 #calendar-todo,
@@ -159,9 +124,6 @@
   position: absolute;
   left: 0px;
   right: 0px;
-}
-form#calendar-toolbar > * {
-  column-gap: 1ex;
 }
 #calendar-todo {
   position: absolute;
@@ -1648,6 +1610,9 @@ egw-app {
 }
 #calendar-sidebox_date {
   flex-grow: 0;
+}
+#calendar-toolbar {
+  overflow: hidden;
 }
 #calendar-toolbar .app_header_wrapper {
   display: flex;

@@ -643,6 +643,7 @@ egw-app::part(name) {
 egw-app::part(header) {
   display: flex;
   background-color: transparent;
+  overflow: hidden;
 }
 egw-app et2-template[slot="main-header"]::part(base) {
   display: flex;
@@ -655,6 +656,7 @@ egw-app [slot="filter"]::part(base) {
   gap: var(--gap-width);
 }
 egw-app::part(content) {
+  position: relative;
   flex-direction: column;
   overflow-y: hidden;
 }

@@ -11,19 +11,11 @@
  */
 @import (reference) "../../../pixelegg/less/definitions.less";
 @import (reference) "../../../pixelegg/less/app_colors.less";
-@import (less) "../pixelegg/app.less";
+@import (less) "../kdots/app.less";
 /* tablets and smartphones  */
 @media all {
-	#calendar-toolbar {
-		height: 50px;
-		width: 100%;
-		background: #0c5da5;
-		z-index: 1;
-		#toolbar-actionlist {
-			margin-top: 4px;
-		}
-	}
-	#calendar-edit #calendar-edit_calendar-edit-details{
+
+  #calendar-edit #calendar-edit_calendar-edit-details {
 		float: none;
 		display: initial;
 	}
@@ -55,32 +47,9 @@
 	#calendar-edit #calendar-edit_whole_day {margin:0;}
 	.quantity{margin-left:5px;}
 	#popupMainDiv .et2_date.calendar_alarm_date_display {padding-left: 3px;}
-	#calendar-toolbar {background-color: @calendar-color;}
 	#calendar-view {
 		button.plus_button {
 			bottom: 15px;
-		}
-	}
-	#calendar-toolbar button#toolbar-today {
-		font-weight: bold;
-		font-size: 12pt;
-		text-align: center;
-		vertical-align: bottom;
-	}
-	#calendar-toolbar_toolbar .et2_toolbar_more {
-		width:30px;
-	}
-	#calendar-toolbar .egw_fw_ui_app_header_container {
-		background: white;
-		width: 100%;
-		display: block;
-		margin-top: 44px;
-		font-size: 10pt;
-		span{
-			display: block;
-			width:100%;
-			text-align: center;
-			font-size:10pt;
 		}
 	}
 
@@ -93,32 +62,6 @@
 		height: 45px;
 		vertical-align: top;
 		width: 100%;
-	}
-	#calendar-toolbar_app_header {height: 17px;left:0;}
-	#calendar-toolbar .egw_fw_ui_app_header_container {min-height:20px;}
-	#calendar-toolbar .et2_searchbox input{height: 42px;}
-	#calendar-toolbar {
-		.nm-mob-header {
-			width: 100%;
-			display: inline-block;
-			.ui-toolbar-menulist button {color: black;}
-			z-index: 100;
-			.et2_searchbox {
-				display: inline-block;
-				width: 50px;
-			}
-			#calendar-toolbar_toolbar{
-				display: flex;
-				padding: 0px !important;
-				min-width: 260px;
-				justify-content: flex-start;
-				#toolbar-actionlist {
-					margin-left: 0px;
-					margin-top: 0px;
-				}
-				.et2_toolbar_more {min-width: 30px;}
-			}
-		}
 	}
 	#calendar-view_header_dateIndicator {
 		display: block;

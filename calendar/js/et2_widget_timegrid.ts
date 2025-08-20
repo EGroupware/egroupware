@@ -2452,9 +2452,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		}
 
 		// Try to resize width, though animations cause problems
-		var total_width = modify_node.parent().innerWidth() - this.days.position().left;
-		// Space for todos, if there
-		total_width -= jQuery(this.getInstanceManager().DOMContainer).siblings().has(':visible').not('#calendar-toolbar').outerWidth();
+		var total_width = modify_node.innerWidth() - this.days.position().left;
 
 		const day_width = Math.floor((total_width > 0 ? total_width : modify_node.width()) / Math.max(1, this.day_widgets.length)) - 2;
 		// update day widgets

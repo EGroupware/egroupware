@@ -3649,33 +3649,10 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			this.search_box.addClass('nm-mob-header');
 			jQuery(this.div).css({display: 'inline-block'}).addClass('nm_header_hide');
 
-			//indicates appname in header
-			jQuery(document.createElement('div'))
-				.addClass('nm_appname_header')
-				.text(egw.lang(egw.app_name()))
-				.appendTo(this.search_box);
-
 			this.delete_action = jQuery(document.createElement('div'))
 				.addClass('nm_delete_action')
 				.prependTo(this.search_box);
-			// toggle header
-			// add new button
-			this.fav_span = jQuery(document.createElement('div'))
-				.addClass('nm_favorites_div')
-				.prependTo(this.search_box);
-			// toggle header menu
-			this.toggle_header = jQuery(document.createElement('button'))
-				.addClass('nm_toggle_header')
-				.click(function()
-				{
-					jQuery(self.div).toggleClass('nm_header_hide');
-					jQuery(this).toggleClass('nm_toggle_header_on');
-					window.setTimeout(function()
-					{
-						self.nextmatch.resize();
-					}, 800);
-				})
-				.prependTo(this.search_box);
+
 			// Context menu
 			this.action_header = jQuery(document.createElement('button'))
 				.addClass('nm_action_header')

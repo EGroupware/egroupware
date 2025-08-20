@@ -26,6 +26,7 @@ egw-app {
   {
 	display: flex;
 	background-color: transparent;
+	overflow: hidden;
   }
 
   /* Nice formatting for templates slotted into header (no need to wrap contents in et2-hbox) */
@@ -50,6 +51,7 @@ egw-app {
 
   }
   &::part(content) {
+	position: relative;
 	flex-direction: column;
 	overflow-y:hidden;
   }
