@@ -143,10 +143,10 @@ EOF;
 			$sort_options = implode("\n", $sort_options)."\n";
 			$xet .= <<<EOF
 		<et2-visually-hidden>
-			<et2-select id="order" label="Sorting" ariaLabel="Ordering" class="et2-label-fixed">
+			<et2-select id="sort[id]" label="Sorting" ariaLabel="Ordering" class="et2-label-fixed">
 $sort_options
 			</et2-select>
-			<et2-button-toggle ariaLabel="Sorting" id="sort" onIcon="carret-down-fill" offIcon="carret-up-fill"></et2-button-toggle>
+			<et2-button-toggle ariaLabel="Sorting" id="sort[asc]" onIcon="carret-down-fill" offIcon="carret-up-fill"></et2-button-toggle>
 		</et2-visually-hidden>
 EOF;
 		}

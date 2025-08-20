@@ -18,6 +18,8 @@ import {classMap} from "lit/directives/class-map.js";
 import {HasSlotController} from "../Et2Widget/slot";
 import {unsafeStatic} from "@open-wc/testing";
 import shoelace from "../Styles/shoelace";
+import {Et2Template} from "../Et2Template/Et2Template";
+import {et2_arrayMgr} from "../et2_core_arrayMgr";
 
 /**
  * @summary A list of filters ( from a nextmatch )
@@ -142,6 +144,12 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		if(this._nextmatch && !changeEvent.defaultPrevented)
 		{
 			this._nextmatch.applyFilters(this.value);
+
+			// Call without update so nm updates the indicator in column header
+			if(this.value["sort"])
+			{
+				this._nextmatch.sortBy(this.value["sort"].id, this.value["sort"].asc, false);
+			}
 		}
 	}
 
@@ -158,6 +166,19 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		this.applyFilters();
 	}
 
+	public set value(newValue : object)
+	{
+		// Custom content is reflected inside, not an actual child so we need to trace the slot
+		// and set the values via widget
+		if(this.hasSlotController.test('[default]'))
+		{
+			this._templateValues = newValue;
+		}
+		else
+		{
+			this._filterValues = newValue;
+		}
+	}
 	public get value()
 	{
 		const value = {};
@@ -195,6 +216,54 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			});
 		})
 		return value;
+	}
+
+	private set _templateValues(newValue : object)
+	{
+		// Use an array mgr to hande non-simple IDs
+		const mgr = new et2_arrayMgr(newValue);
+		Array.from(this.querySelectorAll('slot')).forEach((child) =>
+		{
+			// @ts-ignore
+			child.assignedElements().forEach((element : Et2Template | typeof Et2Widget) =>
+			{
+				element.iterateOver(function(child)
+				{
+					let value : string | object = '';
+					if(typeof child.set_value != "undefined" && child.id)
+					{
+						value = mgr.getEntry(child.id);
+						if(value == null)
+						{
+							value = '';
+						}
+						child.set_value(value);
+					}
+				}, newValue);
+			})
+		});
+	}
+
+	private set _filterValues(filterValues : object)
+	{
+		let entry = null;
+		const nmGroups = this._nextmatch ? this._groups[this._nextmatch.id] : {}
+		for(let nmGroupsName in nmGroups)
+		{
+			const group = nmGroups[nmGroupsName];
+			group.filters.forEach(filter =>
+			{
+				const newValue = group.dataId ? filterValues[group.dataId][filter.name] : filterValues[filter.name];
+				if(typeof newValue != "undefined")
+				{
+					filter.value = newValue;
+					if(filter.widget)
+					{
+						filter.widget.set_value(filter.value);
+					}
+				}
+			});
+		}
 	}
 
 	/**
@@ -424,29 +493,13 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		});
 	}
 
+
 	protected handleFilterChange(event : Event)
 	{
 		if(this.autoapply)
 		{
 			this.applyFilters();
 		}
-	}
-
-	protected _groupTemplate(group : string, filters : Filter[]) : TemplateResult | symbol
-	{
-		if(filters.length == 0)
-		{
-			return nothing;
-		}
-		if(!group)
-		{
-			return html`${filters.map((filter, index) => this.getFilter(filter, index))}`;
-		}
-		return html`
-            <et2-details summary=${group} open>
-                ${filters.map((filter, index) => this.getFilter(filter, index))}
-            </et2-details>
-		`;
 	}
 
 	/**
@@ -480,23 +533,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		{
 			return;
 		}
-		const nmGroups = this._groups[event.detail.nm.id];
-		for(let nmGroupsName in nmGroups)
-		{
-			const group = nmGroups[nmGroupsName];
-			group.filters.forEach(filter =>
-			{
-				const newValue = group.dataId ? event.detail.activeFilters[group.dataId][filter.name] : event.detail.activeFilters[filter.name];
-				if(typeof newValue != "undefined")
-				{
-					filter.value = newValue;
-					if(filter.widget)
-					{
-						filter.widget.set_value(filter.value);
-					}
-				}
-			});
-		}
+		this.value = event.detail.activeFilters;
 	}
 
 	private handleSlotChange(event)
@@ -508,6 +545,32 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			delete this._groups[this._nextmatch.id];
 			this.readNextmatchFilters(this._nextmatch)
 		}
+	}
+
+
+	/**
+	 * Render a group of filters inside a details element
+	 *
+	 * @param {string} group
+	 * @param {Filter[]} filters
+	 * @return {TemplateResult | symbol}
+	 * @protected
+	 */
+	protected _groupTemplate(group : string, filters : Filter[]) : TemplateResult | symbol
+	{
+		if(filters.length == 0)
+		{
+			return nothing;
+		}
+		if(!group)
+		{
+			return html`${filters.map((filter, index) => this.getFilter(filter, index))}`;
+		}
+		return html`
+            <et2-details summary=${group} open>
+                ${filters.map((filter, index) => this.getFilter(filter, index))}
+            </et2-details>
+		`;
 	}
 
 	render()
