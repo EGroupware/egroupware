@@ -226,7 +226,7 @@ class addressbook_ui extends addressbook_bo
 			Framework::message($msg ? $msg : $_GET['msg']);
 		}
 
-		$content['nm'] = Api\Cache::getSession('addressbook', str_replace('addressbook.', '', $template ?? 'index'));
+		//$content['nm'] = Api\Cache::getSession('addressbook', str_replace('addressbook.', '', $template ?? 'index'));
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
@@ -270,6 +270,8 @@ class addressbook_ui extends addressbook_bo
 				'is_parent'      => 'group_count',
 				'parent_id'      => 'parent_id',
 				'favorites'      => true,
+				'filter_aria_label' => 'Addressbook',
+				'filter2_aria_label' => 'distribution lists',
 			);
 
 			// use the state of the last session stored in the user prefs
