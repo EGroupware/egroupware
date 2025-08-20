@@ -545,6 +545,8 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			delete this._groups[this._nextmatch.id];
 			this.readNextmatchFilters(this._nextmatch)
 		}
+		// We conditionally render the default slot, so need an update
+		this.requestUpdate();
 	}
 
 
