@@ -629,7 +629,8 @@ egw-app {
 }
 @media (max-width: 600px) {
   egw-app {
-    --left-min: 50%;
+    --left-max: 100%;
+    --left-min: 100%;
   }
 }
 egw-app::part(name) {
@@ -676,17 +677,19 @@ egw-app > div[id] > et2-template {
 egw-app et2-favorites-menu::part(menu) {
   border: none;
 }
-egw-app et2-details.sidebox::part(header) {
+egw-app::part(details-header) {
   background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
-  border-radius: 1em;
   padding-block: var(--sl-spacing-3x-small);
   margin: var(--sl-spacing-medium);
   margin-bottom: 0;
   margin-left: 0;
   color: var(--application-header-text-color);
 }
-egw-app et2-details.sidebox::part(base) {
+egw-app::part(details-base) {
   border: none;
+}
+egw-app::part(content) {
+  padding: 0;
 }
 egw-app .et2_nextmatch.et2-filterbox--loaded:not(.et2-filterbox--none):not(.et2-filterbox--has-header) .nextmatch_header {
   height: 0px;

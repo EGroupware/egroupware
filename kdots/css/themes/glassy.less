@@ -79,5 +79,14 @@
 	&::part(app-header) {
 	  box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
 	}
+
+	/*sidebox styling
+  */
+	&::part(details-header) {
+	  background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
+	  border-radius: 1em;
+	  padding-block: var(--sl-spacing-3x-small);
+	  color: var(--application-header-text-color);
+	}
   }
 }

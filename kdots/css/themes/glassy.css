@@ -94,8 +94,22 @@
   box-shadow: var(--inner-shine-active), var(--top-highlight-active), var(--upper-tint-active), var(--lower-shade-active), var(--bottom-shadow-active);
   transform: scale(0.98);
 }
+:root egw-app,
+:host egw-app,
+.kdots-glassy egw-app {
+  /*sidebox styling
+  */
+}
 :root egw-app::part(app-header),
 :host egw-app::part(app-header),
 .kdots-glassy egw-app::part(app-header) {
   box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
+}
+:root egw-app::part(details-header),
+:host egw-app::part(details-header),
+.kdots-glassy egw-app::part(details-header) {
+  background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
+  border-radius: 1em;
+  padding-block: var(--sl-spacing-3x-small);
+  color: var(--application-header-text-color);
 }

@@ -10,7 +10,8 @@ egw-app {
 	--left-max: 50%;
   }
   @media (max-width: 600px) {
-	--left-min: 50%;
+	--left-max: 100%;
+	--left-min: 100%;
   }
 
   &::part(name) {
@@ -76,20 +77,19 @@ egw-app {
   /*sidebox styling
   * same styling should apply to sl-details.favorites inside the EgwFrameworkApp.styles.ts
   */
-  et2-details.sidebox{
-	&::part(header) {
-	  background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
-	  border-radius: 1em;
-	  padding-block: var(--sl-spacing-3x-small);
-	  margin: var(--sl-spacing-medium);
-	  margin-bottom: 0;
-	  margin-left:0;
-	  color: var(--application-header-text-color);
-	}
-	&::part(base) {
-	  border: none;
-
-	}
+  &::part(details-header) {
+	background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
+	padding-block: var(--sl-spacing-3x-small);
+	margin: var(--sl-spacing-medium);
+	margin-bottom: 0;
+	margin-left:0;
+	color: var(--application-header-text-color);
+  }
+  &::part(details-base) {
+	border:none
+  }
+  &::part(content) {
+	padding: 0;
   }
 
   /** Clean nextmatch headers **/

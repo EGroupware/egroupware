@@ -264,18 +264,6 @@ export default css`
 		&::part(content) {
 			padding: 0;
 		}
-
-		/*same styling should apply to et2-details.favorites inside the application.less*/
-
-		&::part(header) {
-			background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
-			border-radius: 1em;
-			padding-block: var(--sl-spacing-3x-small);
-			margin: var(--sl-spacing-medium);
-			margin-bottom: 0;
-			margin-left: 0;
-			color: var(--application-header-text-color);
-		}
 	}
 
 	et2-favorites-menu::part(menu), &::part(base) {
