@@ -3731,15 +3731,16 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			.addClass('header_row_right').appendTo(this.row_div);
 
 		// Record count
-		this.count = jQuery(document.createElement("span"))
-			.addClass("header_count ui-corner-all");
-
-		// Need to figure out how to update this as grid scrolls
-		// this.count.append("? - ? ").append(egw.lang("of")).append(" ");
-		this.count_total = jQuery(document.createElement("span"))
-			.appendTo(this.count)
-			.text(settings.total + "");
-		this.count.appendTo(this.row_div);
+		//remove header count from nm header it is in the kdots filterbox now
+		// this.count = jQuery(document.createElement("span"))
+		// 	.addClass("header_count ui-corner-all");
+		//
+		// // Need to figure out how to update this as grid scrolls
+		// // this.count.append("? - ? ").append(egw.lang("of")).append(" ");
+		// this.count_total = jQuery(document.createElement("span"))
+		// 	.appendTo(this.count)
+		// 	.text(settings.total + "");
+		// this.count.appendTo(this.row_div);
 
 		// Favorites
 		this._setup_favorites(settings['favorites']);
