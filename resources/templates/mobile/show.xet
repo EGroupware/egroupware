@@ -57,6 +57,7 @@
 		</grid>
 	</template>
 	<template id="resources.show" template="" lang="" group="0" version="1.9.003">
+		<nextmatch id="nm" no_lang="1" template="resources.show.rows"/>
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
@@ -67,9 +68,6 @@
 				</row>
 				<row>
 					<et2-description  id="plus_button_container"></et2-description>
-				</row>
-				<row>
-					<nextmatch id="nm" no_lang="1" template="resources.show.rows"/>
 				</row>
 				<row>
 					<et2-box  id="delete_popup" class="action_popup prompt">

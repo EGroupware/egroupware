@@ -48,6 +48,7 @@
 	</template>
 	<template id="infolog.index" template="" lang="" group="0" version="1.9.005">
 		<et2-button  class="plus_button" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"></et2-button>
+		<nextmatch id="nm" template="infolog.index.rows" header_left="infolog.index.dates"/>
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="70%"/>
@@ -63,9 +64,6 @@
 				<row disabled="1">
 					<template id="dates"/>
 					<template id="header_right"/>
-				</row>
-				<row>
-					<nextmatch id="nm" template="infolog.index.rows" header_left="infolog.index.dates" span="all"/>
 				</row>
 				<row>
 					<et2-hbox >

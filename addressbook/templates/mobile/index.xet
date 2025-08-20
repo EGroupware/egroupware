@@ -33,6 +33,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.index" template="" lang="" group="0" version="1.9.002">
+		<nextmatch id="nm" template="addressbook.index.rows" header_right="addressbook.index.right_add"/>
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -46,17 +47,6 @@
 				<column/>
 			</columns>
 			<rows>
-				<row disabled="!@msg">
-					<et2-description  align="center" id="msg" span="all" class="redItalic" noLang="1"></et2-description>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-				</row>
 				<row disabled="1">
 					<template align="right" id="addressbook.index.right_add"/>
 				</row>
@@ -64,9 +54,6 @@
 					<et2-hbox>
 						<et2-button  class="plus_button" size="large" statustext="Add a new contact" id="plus_button" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;" noSubmit="true"></et2-button>
 					</et2-hbox>
-				</row>
-				<row>
-					<nextmatch id="nm" template="addressbook.index.rows" header_right="addressbook.index.right_add" span="all"/>
 				</row>
 				<row class="noPrint dialogFooterToolbar" disabled="!@nm[selectcols]=/legacy_actions/">
 					<et2-button  statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"></et2-button>

@@ -46,7 +46,7 @@
 	</template>
 	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
 		<et2-description  id="plus_button_container"></et2-description>
-		<nextmatch id="nm" options="timesheet.index.rows" header_left="timesheet.index.dates"/>
+		<nextmatch id="nm" template="timesheet.index.rows" header_left="timesheet.index.dates"/>
 		<et2-button  id="add" class="plus_button" onclick="egw.open('timesheet');" noSubmit="true"></et2-button>
 	</template>
 </overlay>
