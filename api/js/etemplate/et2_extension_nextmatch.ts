@@ -3567,7 +3567,8 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 					}, bubbles: true
 				}
 			));
-			this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
+			//this no longer lives in nm header
+			//this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
 		}, this);
 	}
 
