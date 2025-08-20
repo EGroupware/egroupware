@@ -291,25 +291,28 @@ class Nextmatch extends Etemplate\Widget
 				$template_set = 'default';
 			}
 			$url = $GLOBALS['egw_info']['server']['webserver_url']."/api/filter-template.php/$app/templates/$template_set/$rest.xet?".
-				max(filemtime(Template::rel2path("/$app/templates/$template_set/$rest.xet")), filemtime(EGW_SERVER_ROOT.'/api/filter-template.php')).
-				"&template=$rows_template";
+				max(filemtime(Template::rel2path("/$app/templates/$template_set/$rest.xet")), filemtime(EGW_SERVER_ROOT.'/api/filter-template.php'));
 
-			// add filter- and cat-labels, if set
+			// pass the necessary attributes, filter- and cat-labels, if set
 			foreach([
-				'filter'  => 'Filter',
-				'filter2' => '2nd Filter',
-				'cat_id'  => 'Category'] as $key => $label)
+		        'filter'  => 'Filter',
+		        'filter2' => '2nd Filter',
+		        'cat_id'  => 'Category'] as $key => $label)
 			{
-				if (empty($this->attrs['no_'.$key]))
+				if (empty($value['no_'.$key] ?? $this->attrs['no_'.$key]))
 				{
-					$url .= '&'.$key.'='.urlencode($this->attrs[$key.'_label'] ?? $this->attrs[$key.'_aria_label'] ?? $this->attrs[$key.'_statustext'] ?? $label);
+					$url .= '&'.$key.'='.urlencode($value[$key.'_label'] ?? $this->attrs[$key.'_label'] ??
+							$value[$key.'_aria_label'] ?? $this->attrs[$key.'_aria_label'] ??
+							$value[$key.'_statustext'] ?? $this->attrs[$key.'_statustext'] ?? $label);
 				}
 			}
-			foreach(['no_search', 'cat_is_select'] as $key)
+			foreach(array_keys($this->attrs)+array_keys($value) as $key)
 			{
-				if (!empty($this->attrs[$key]))
+				if (!str_ends_with($key, '_label') && !in_array($key, ['filter', 'filter2', 'cat_id']) &&
+					preg_match('/^(filter|cat_|no_search|template)/', $key))
 				{
-					$url .= '&'.$key.'=true';
+					$val = $value[$key] ?? $this->attrs[$key];
+					$url .= '&' . $key . '=' . urlencode((string)$val);
 				}
 			}
 		}
@@ -317,6 +320,7 @@ class Nextmatch extends Etemplate\Widget
 		{
 			$url = Template::rel2url($tpl->rel_path);
 		}
+		// stop NM itself from generating search, filter(2) and cat_id widgets
 		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
 		{
 			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_'.$key, true);

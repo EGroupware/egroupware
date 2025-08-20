@@ -407,7 +407,7 @@ function send_template()
 		// add NM filter template, if not already there (calendar adds it somehow different, independent from template containing the NM)
 		if (!preg_match('/id="filter-template"/', $str) && !in_array($app, ['calendar']))
 		{
-			$str = preg_replace_callback('#<nextmatch (.*)/>#s', static function (array $matches)
+			$str = preg_replace_callback('#<nextmatch (.*?)/>#s', static function (array $matches)
 			{
 				$attrs = parseAttrs($matches[1]);
 				$prefix = $attrs['id'] === 'nm' ? '' : $attrs['id'].'-';

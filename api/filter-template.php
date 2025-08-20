@@ -140,11 +140,11 @@ EOF;
 		// ToDo: add custom-fields
 		if ($sort_options)
 		{
-			$sort_options = implode("\n", $sort_options);
+			$sort_options = implode("\n", $sort_options)."\n";
 			$xet .= <<<EOF
 		<et2-visually-hidden>
 			<et2-select id="order" label="Sorting" ariaLabel="Ordering" class="et2-label-fixed">
-				$sort_options
+$sort_options
 			</et2-select>
 			<et2-button-toggle ariaLabel="Sorting" id="sort" onIcon="carret-down-fill" offIcon="carret-up-fill"></et2-button-toggle>
 		</et2-visually-hidden>
@@ -159,38 +159,55 @@ EOF;
 				$label = htmlspecialchars($_GET[$id], ENT_XML1, 'UTF-8');
 				if ($id === 'cat_id' && empty($_GET['cat_is_select']))
 				{
-					$xet .= <<<EOF
-		<et2-select-cat id="$id" label="$label" class="et2-label-fixed"></et2-select-cat>
-EOF;
+					$widget = 'et2-select-cat';
 				}
 				else
 				{
-					$xet .= <<<EOF
-		<et2-select id="$id" label="$label" class="et2-label-fixed"></et2-select>
-EOF;
+					$widget = $_GET[$id . '_widget'] ?? 'et2-select';
 				}
+				$extra_attrs = '';
+				foreach(['no_lang', 'statustext', 'placeholder', 'onchange'] as $attr)
+				{
+					if (!empty($_GET[$id . '_' . $attr]))
+					{
+						$extra_attrs .= ' '.$attr . '="' . htmlspecialchars($_GET[$id . '_' . $attr], ENT_XML1, 'UTF-8') . '"';
+					}
+				}
+				$xet .= <<<EOF
+		<$widget id="$id" label="$label"$extra_attrs class="et2-label-fixed"></$widget>
+EOF;
 			}
 		}
 
 		// get all NM filter-headers and place them in the template
-		if (preg_match_all('#<(et2-)?nextmatch-([^ ]+filter|filterheader) ([^>]+?)/>#s', $str, $matches, PREG_SET_ORDER))
+		if (preg_match_all('#<(et2-)?nextmatch-([^ ]+) ([^>]+?)/>#s', $str, $matches, PREG_SET_ORDER) &&
+			($matches = array_filter($matches, static fn($match) => !in_array($match[2], ['header', 'sortheader']))))
 		{
 			$xet .= <<<EOF
 		<et2-details summary="Column Filters" open="true">
 EOF;
-			foreach ($matches as $n => $match)
+			foreach ($matches as $match)
 			{
 				$attrs = parseAttrs($match[3]);
+				$widget = $attrs['widgetType'] ?? 'et2-select';
 				switch ($match[2])
 				{
-					case 'header-filter':
+					case 'customfields':
+						$widget = 'customfields-filters';
+						break;
 					case 'accountfilter':
-					case 'customfilter':
-						$label = htmlspecialchars($attrs['label'] ?? $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'], ENT_XML1, 'UTF-8');
-						$xet .= <<<EOF
-			<et2-select id="$attrs[id]" label="$label" class="et2-label-fixed"></et2-select>
-EOF;
+					case 'header-account':
+						$widget = 'et2-select-account';
+						break;
 				}
+				if (!str_starts_with($widget, 'et2-') && $widget !== 'customfields-filters')
+				{
+					$widget = 'et2-'.$widget;
+				}
+				$label = htmlspecialchars($attrs['label'] ?? $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'], ENT_XML1, 'UTF-8');
+				$xet .= <<<EOF
+			<$widget id="$attrs[id]" label="$label" class="et2-label-fixed"></$widget>
+EOF;
 			}
 			$xet .= <<<EOF
 		</et2-details>
