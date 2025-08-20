@@ -837,7 +837,8 @@ div.et2_nextmatch .egwGridView_outer thead > tr th {
   border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
 }
 div.et2_nextmatch .egwGridView_outer thead > tr th div.innerContainer {
-  max-height: 5em;
+  padding-left: var(--sl-spacing-2x-small);
+  max-height: 6.5em;
   overflow-x: hidden;
   overflow-y: auto;
 }

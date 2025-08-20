@@ -2,7 +2,7 @@ import {SlTreeItem} from "@shoelace-style/shoelace";
 import {egw} from "../../jsapi/egw_global";
 import {find_select_options, SelectOption} from "../Et2Select/FindSelectOptions";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {repeat} from "lit/directives/repeat.js";
 import shoelace from "../Styles/shoelace";
 import {property} from "lit/decorators/property.js";
@@ -19,7 +19,8 @@ import {
 	EGW_AI_DRAG_OUT,
 	EGW_AO_FLAG_IS_CONTAINER
 } from "../../egw_action/egw_action_constants";
-import styles from "./Et2Tree.styles";
+import styles, {mobileCss} from "./Et2Tree.styles";
+import {egwIsMobile} from "../../egw_action/egw_action_common";
 
 export type TreeItemData = SelectOption & {
 	focused?: boolean;
@@ -290,7 +291,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		return [
 			shoelace,
 			super.styles,
-			styles
+			styles,
+			egwIsMobile()?mobileCss:css``
 		]
 	}
 

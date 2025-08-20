@@ -2,6 +2,17 @@ import {css} from 'lit';
 //this is inside the sl tree set as the color of a selected item
 //background-color: var(--sl-color-neutral-100);
 //         border-inline-start-color: var(--sl-color-primary-600);
+export const mobileCss = css`
+    ::part(expand-button) {
+        rotate: none;
+        padding: 0 var(--sl-spacing-small);
+        width: 5em;
+        height: 1.2em;
+        margin-left: -2.4em;
+        margin-right: calc(-2em + 10px);
+    }
+`
+
 export default css`
 	:host {
         --sl-color-primary-600:rgb(0, 124, 255);/*This is nextmatch selected color but with no transparency or white*/
@@ -13,11 +24,7 @@ export default css`
 /* Style expand and collapse buttons so we can use technically larger images to increase clickable surface*/
 	::part(expand-button) {
 		rotate: none;
-		padding: 0 var(--sl-spacing-small);
-        width: 5em;
-        height: 1.2em;
-        margin-left: -2.4em;
-        margin-right: calc(-2em + 10px);
+		padding: 0 var(--sl-spacing-2x-small);
 	}
 
     sl-icon[slot='collapse-icon'],sl-icon[slot='expand-icon']{
