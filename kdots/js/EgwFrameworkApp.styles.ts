@@ -189,24 +189,24 @@ export default css`
         }
     }
 
+	.egw_fw_app__aside_content, .egw_fw_app__main_content {
+		overflow-x: hidden;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+	}
+
+	::slotted(*) {
+		flex: 1 1 auto;
+	}
+
     @media (min-width: 600px) {
 
         .egw_fw_app__aside {
             overflow-y: hidden;
         }
-
-        .egw_fw_app__aside_content, .egw_fw_app__main_content {
-            overflow-x: hidden;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-		::slotted(*) {
-			flex: 1 1 auto;
-		}
-
-        ::slotted(iframe) {
+		
+		::slotted(iframe) {
             width: 100%;
         }
     }

@@ -1487,13 +1487,15 @@ body #popupMainDiv.et2_mobile_view {
   body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) * {
     color: white !important;
   }
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child {
+    position: relative;
+  }
   body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child:before {
     content: " ";
     position: absolute;
     background: #b0bfd8;
     right: 0px;
     bottom: 0px;
-    left: -8px;
     top: 0px;
     color: white;
     background-image: url(../../node_modules/bootstrap-icons/icons/check-lg.svg);
