@@ -516,11 +516,11 @@ body #popupMainDiv.et2_mobile_view {
     position: fixed !important;
     right: 15px;
     bottom: 15px;
-    font-size: 60px;
-    line-height: 60px;
+    font-size: 45px;
+    line-height: 45px;
     border-radius: var(--sl-border-radius-circle);
     z-index: 100;
-    background-color: var(--primary-color, var(--sl-color-primary-500));
+    background-color: var(--application-color, var(--primary-color, var(--sl-color-primary-500)));
     border: none;
     margin: 0;
     padding: 0;
