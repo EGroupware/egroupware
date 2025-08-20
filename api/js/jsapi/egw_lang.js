@@ -60,7 +60,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 		 */
 		lang: function(_msg, _arg1)
 		{
-			if(_msg === null)
+			if(_msg === null || _msg === undefined)
 			{
 				return '';
 			}
