@@ -191,8 +191,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		// Hold on to any server messages while the user edits
 		private _messagesHeldWhileFocused : Validator[];
 
-		protected isSlComponent = false;
-
 		// Allows us to check to see if label or help-text is set.  Override to check additional slots.
 		protected readonly hasSlotController = new HasSlotController(this, 'help-text', 'label');
 
@@ -322,10 +320,9 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.required = false;
 			this._oldValue = this.getValue();
 
-			this.isSlComponent = typeof (<any>this).handleChange === 'function';
-
 			this.et2HandleFocus = this.et2HandleFocus.bind(this);
 			this.et2HandleBlur = this.et2HandleBlur.bind(this);
+			this.handleSlChange = this.handleSlChange.bind(this);
 			this.autocomplete = 'on';
 		}
 
@@ -336,10 +333,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.classList.add("et2-input-widget");
 			this._oldChange = this._oldChange.bind(this);
 			this.node = this.getInputNode();
-			this.updateComplete.then(() =>
-			{
-				this.addEventListener(this.isSlComponent ? 'sl-change' : 'change', this._oldChange);
-			});
+			this.addEventListener("sl-change", this.handleSlChange);
+			this.addEventListener("change", this._oldChange);
 			this.addEventListener("focus", this.et2HandleFocus);
 			this.addEventListener("blur", this.et2HandleBlur);
 
@@ -368,8 +363,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		disconnectedCallback()
 		{
 			super.disconnectedCallback();
-			this.removeEventListener(this.isSlComponent ? 'sl-change' : 'change', this._oldChange);
-
+			this.removeEventListener("sl-change", this.handleSlChange);
+			this.removeEventListener("change", this._oldChange);
 			this.removeEventListener("focus", this.et2HandleFocus);
 			this.removeEventListener("blur", this.et2HandleBlur);
 
@@ -505,6 +500,24 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			{
 				this.validate();
 			});
+		}
+
+		/**
+		 * Handle sl-change event from Shoelace components and dispatch a change event so anything listening for
+		 * change events can react to it instead of having to listen for both sl-change and change.
+		 *
+		 * @param event
+		 */
+		handleSlChange(event)
+		{
+			// Only for ourselves, don't dispatch for children bubbling up
+			if(event.target === this)
+			{
+				this.updateComplete.then(() =>
+				{
+					this.dispatchEvent(new Event("change", {bubbles: true}));
+				});
+			}
 		}
 
 		set_value(new_value)
