@@ -889,6 +889,9 @@ div.mailComposeHeaderSection>table {
 }
 .sieve-title .ruleID::before {content:'#'}
 
+#mail-index_nm.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea .egwGridView_grid{
+    margin-right: -1em;
+}
 
 #mail-compose_mailaccount {max-width: 100% !important;}
 
@@ -1047,6 +1050,19 @@ et2-vbox.addresses et2-hbox::part(base) {
 .mailPreviewHeaders et2-lavatar {
 	margin-top: 3px;
 	position: absolute;
+}
+et2-searchbox#mail-index_nm_search {
+	width: 100%;
+	min-width: 5em;
+}
+et2-split#mail-index_mailSplitter:not([vertical]) .header_count {
+	margin: 0 3px 0 0;
+}
+et2-split#mail-index_mailSplitter.limitted .header_count {
+	display: none;
+}
+et2-split#mail-index_mailSplitter.squeezed .mail-index_quotabox{
+	display: none;
 }
 .expanderFirstRow {
 	position: absolute;
