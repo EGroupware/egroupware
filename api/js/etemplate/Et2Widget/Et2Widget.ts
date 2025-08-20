@@ -1170,7 +1170,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			}
 		}
 
-		iterateOver(_callback : Function, _context, _type)
+		iterateOver(_callback : Function, _context, _type?)
 		{
 			if(this.disabled)
 			{
