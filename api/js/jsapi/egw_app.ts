@@ -12,7 +12,7 @@
 
 import {etemplate2} from "../etemplate/etemplate2";
 import type {Et2Template} from "../etemplate/Et2Template/Et2Template";
-import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
+import type {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import type {IegwAppLocal} from "./egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
@@ -29,6 +29,8 @@ import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
 import {egw_globalObjectManager} from "../egw_action/egw_action";
 import type {EgwFrameworkApp} from "../../../kdots/js/EgwFrameworkApp";
 import {Et2ButtonIcon} from "../etemplate/Et2Button/Et2ButtonIcon";
+import type {Et2Widget} from "../etemplate/Et2Widget/Et2Widget";
+import type {Et2Select} from "../etemplate/Et2Select/Et2Select";
 
 /**
  * Type for push-message
@@ -175,6 +177,11 @@ export abstract class EgwApp
 	protected push_filter_fields : string[];
 
 	/**
+	 * reference to nextmatch with id="nm"
+	 */
+	nm : et2_nextmatch = null;
+
+	/**
 	 * Initialization and setup goes here, but the etemplate2 object
 	 * is not yet ready.
 	 */
@@ -182,6 +189,8 @@ export abstract class EgwApp
 	{
 		this.appname = appname;
 		this.egw = egw(this.appname, _wnd || window);
+		this.nm = null;
+		this.nmFilterChange = this.nmFilterChange.bind(this);
 
 		// Initialize sidebox for non-popups.
 		// ID set server side
@@ -250,6 +259,12 @@ export abstract class EgwApp
 		{
 			EgwApp._instances.splice(index, 1);
 		}
+
+		if (this.nm && this.nm.getDOMNode())
+		{
+			this.nm.getDOMNode().removeEventListener('et2-filter', this.nmFilterChange);
+		}
+		this.nm = null;
 	}
 
 	/**
@@ -290,8 +305,100 @@ export abstract class EgwApp
 			}
 		}
 
+		// if we have a NM widget: make it available as this.nm and install event-listener for this.nmFilterChange
+		if (!this.nm && (this.nm = this.et2.getWidgetById('nm')))
+		{
+			this.nm = this.et2.getWidgetById('nm');
+			this.nm.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
+			// update values in toolbar
+			window.setTimeout(() =>
+			{
+				this.nmFilterChange({detail: { activeFilters: this.nm.activeFilters}});
+			});
+		}
+
 		// Highlights the favorite based on initial list state
 		this.highlight_favorite();
+	}
+
+	/**
+	 * Keep filters in the application toolbar in sync with NM / callback bound on et2-filter event of NM
+	 *
+	 * @param _ev : Event
+	 */
+	nmFilterChange(_ev : Event)
+	{
+		const app_toolbar = document.querySelector('egw-app#'+this.appname+' [slot="main-header"]');
+		const activeFilters = _ev.detail?.activeFilters;
+		if (app_toolbar && activeFilters)
+		{
+			for(const attr in activeFilters)
+			{
+				switch (attr)
+				{
+					case 'col_filter':
+						for(const attr in activeFilters.col_filter)
+						{
+							let widget = app_toolbar.getWidgetById(attr);
+							if (widget && widget.value != activeFilters.col_filter[attr])
+							{
+								widget.value = activeFilters.col_filter[attr];
+							}
+						}
+						break;
+					case 'filter':
+					case 'filter2':
+					case 'cat_id':
+					case 'search':
+						this.checkNmFilterChanged(app_toolbar, attr, activeFilters[attr]);
+						break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Check if any NM filter or search in app-toolbar needs to be updated to reflect NM internal state
+	 *
+	 * @param app_toolbar
+	 * @param id
+	 * @param value
+	 */
+	checkNmFilterChanged(app_toolbar, id : string, value : string)
+	{
+		let widget = app_toolbar.getWidgetById(id);
+		if (widget && widget.value != value)
+		{
+			widget.value = value;
+		}
+	}
+
+	/**
+	 * Propagate filters in app_toolbar to NM and filter thingy
+	 *
+	 * Use as onchange on these filters (named like the ones in NM!)
+	 *
+	 * @param _ev
+	 * @param _widget
+	 */
+	changeNmFilter(_ev : Event, _widget : Et2Select|Et2Widget)
+	{
+		if (!this.nm || !_widget.id) return;
+
+		const filters = {};
+		switch(_widget.id)
+		{
+			case 'filter':
+			case 'filter2':
+			case 'cat_id':
+			case 'search':
+				filters[_widget.id] = _widget.value;
+				break;
+			default:
+				filters.col_filter = {};
+				filters.col_filter[_widget.id] = _widget.value;
+		}
+		this.nm && this.nm.applyFilters(filters);
 	}
 
 	/**

@@ -44,13 +44,6 @@ class AdminApp extends EgwApp
 	iframe : any = null;
 
 	/**
-	 * reference to nextmatch
-	 *
-	 * {et2_extension_nextmatch}
-	 */
-	nm : any = null;
-
-	/**
 	 * Reference to div to hold AJAX loadable pages
 	 *
 	 * {et2_box}
@@ -81,7 +74,6 @@ class AdminApp extends EgwApp
 	destroy(_app)
 	{
 		this.iframe = null;
-		this.nm = null;
 		this.acl_dialog = null;
 		this.tree?.destroy && this.tree.destroy();
 		this.tree?.remove && this.tree.remove();
@@ -108,7 +100,6 @@ class AdminApp extends EgwApp
 		{
 			case 'admin.index':
 				var iframe = this.iframe = this.et2.getWidgetById('iframe');
-				this.nm = this.et2.getWidgetById('nm');
 				this.groups = this.et2.getWidgetById('groups');
 				this.groups.set_disabled(true);
 				this.ajax_target = this.et2.getWidgetById('ajax_target');
