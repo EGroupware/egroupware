@@ -20,7 +20,7 @@ body #popupMainDiv.et2_mobile_view {
     /* copied from previous framework */
   }
   body egw-framework#egw_fw_basecontainer {
-    --left-side-width: 0px;
+    --left-side-width: 0px !important;
     /* Hide some parts */
   }
   body egw-framework#egw_fw_basecontainer::part(open-applications),
@@ -95,20 +95,22 @@ body #popupMainDiv.et2_mobile_view {
     /* Allow buttons to wrap */
     flex-wrap: wrap;
   }
-  body et2-dialog .dialogHeadbar {
+  body et2-dialog .dialogHeadbar:empty {
+    display: none;
+  }
+  body et2-dialog .dialogHeadbar:not(:empty) {
     color: var(--sl-color-neutral-0);
     font-size: var(--sl-font-size-x-large);
     background-color: var(--application-color);
     position: fixed;
-    height: var(--sl-spacing-3x-large);
-    top: 0;
+    height: calc(var(--sl-spacing-3x-large) - 1px);
+    top: 1px;
     left: 5.5em;
     right: 0;
     z-index: 1;
     overflow: hidden;
-    box-shadow: var(--sl-shadow-large);
   }
-  body et2-dialog .dialogHeadbar .entry_id {
+  body et2-dialog .dialogHeadbar:not(:empty) .entry_id {
     position: absolute;
     right: var(--sl-spacing-medium);
     font-weight: var(--sl-font-weight-bold);
@@ -184,6 +186,7 @@ body #popupMainDiv.et2_mobile_view {
     padding-right: 0px;
     margin-right: 0px;
   }
+  body .et2_nextmatch.et2-filterbox--loaded .nextmatch_header,
   body .et2_nextmatch.et2-filterbox--loaded .nm-mob-header,
   body .et2_nextmatch.et2-filterbox--loaded .nm_favorites_div {
     display: none;
