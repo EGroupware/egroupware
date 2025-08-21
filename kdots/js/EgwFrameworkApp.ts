@@ -558,13 +558,18 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
-	protected showSide(side)
+	protected showSide(side : "left" | "right")
 	{
 		const attribute = `${side}Collapsed`;
 		this[attribute] = false;
 		this.ignoreSplitterResize = true;
 		this[`${side}Splitter`].position = this[`${side}PanelInfo`].preferenceWidth || this[`${side}PanelInfo`].defaultWidth;
-		return this.updateComplete.then(() => this.ignoreSplitterResize = false);
+		return this.updateComplete.then(() =>
+		{
+			this.ignoreSplitterResize = false;
+			this.dispatchEvent(new CustomEvent("show",
+				{bubbles: true, composed: true, detail: {name: this.name, side: side}}));
+		});
 	}
 
 	protected hideSide(side : "left" | "right")
@@ -575,7 +580,12 @@ export class EgwFrameworkApp extends LitElement
 		this.ignoreSplitterResize = true;
 		this[`${side}Splitter`].position = this[`${side}PanelInfo`].hiddenWidth;
 		this.requestUpdate(attribute, oldValue);
-		return this.updateComplete.then(() => this.ignoreSplitterResize = false);
+		return this.updateComplete.then(() =>
+		{
+			this.ignoreSplitterResize = false
+			this.dispatchEvent(new CustomEvent("hide",
+				{bubbles: true, composed: true, detail: {name: this.name, side: side}}));
+		});
 	}
 
 	get egw()
@@ -728,7 +738,14 @@ export class EgwFrameworkApp extends LitElement
 		}
 
 		// Update collapsed
+		const oldCollapsed = this[`${panelInfo.side}Collapsed`];
 		this[`${panelInfo.side}Collapsed`] = newPosition == panelInfo.hiddenWidth;
+		if(oldCollapsed != this[`${panelInfo.side}Collapsed`])
+		{
+			this.dispatchEvent(new CustomEvent(oldCollapsed ? "show" : "hide",
+				{bubbles: true, composed: true, detail: {name: this.name, side: panelInfo.side}}
+			));
+		}
 
 		let preferenceName = panelInfo.preference;
 
@@ -822,6 +839,13 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return;
 		}
+		// Say that panels have changed
+		this.dispatchEvent(new CustomEvent(this.leftCollapsed ? "hide" : "show",
+			{bubbles: true, composed: true, detail: {name: this.name, side: this.leftPanelInfo.side}}
+		));
+		this.dispatchEvent(new CustomEvent(this.rightCollapsed ? "hide" : "show",
+			{bubbles: true, composed: true, detail: {name: this.name, side: this.rightPanelInfo.side}}
+		));
 
 		// Fix splitter if it has moved while hidden
 		if(this.rightSplitter && (this.rightSplitter.position !== this.rightPanelInfo.preferenceWidth || this.rightCollapsed && this.rightSplitter.position != this.rightPanelInfo.hiddenWidth))
@@ -1159,7 +1183,7 @@ export class EgwFrameworkApp extends LitElement
                                     label="${this.leftCollapsed ? this.egw.lang("Show left area") : this.egw?.lang("Hide left area")}"
                                     @click=${() =>
                                     {
-                                        this.leftCollapsed = !this.leftCollapsed;
+                                        this.leftCollapsed ? this.showLeft() : this.hideLeft();
                                         // Just in case they collapsed it manually, reset
                                         this.leftPanelInfo.preferenceWidth = this.leftPanelInfo.preferenceWidth || this.leftPanelInfo.defaultWidth;
                                         this.requestUpdate("leftCollapsed")

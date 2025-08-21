@@ -84,6 +84,15 @@ export default css`
             overflow: hidden;
         }
 	}
+	@media (max-width: 800px) {
+		:host(.egw_fw--left-side-collapsed) {
+			--left-side-width: 0px;
+
+			.egw_fw__header {
+				display: none;
+			}
+		}
+	}
     @media (max-width: 599px) {
         ::slotted([slot="logo"]) {
             display: none;

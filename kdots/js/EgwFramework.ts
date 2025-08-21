@@ -238,6 +238,12 @@ export class EgwFramework extends LitElement
 
 			await this.updateComplete
 
+			// Let everyone know the initial app
+			this.activeApp.updateComplete.then(() =>
+			{
+				this.showTab(this.activeApp.name);
+			});
+
 			// Listen for apps added / removed
 			this.appDOMObserver.observe(this, {childList: true});
 		});
@@ -966,6 +972,22 @@ export class EgwFramework extends LitElement
 		this.style.setProperty('--left-side-width', size + 'px');
 	}
 
+	/**
+	 * Deal with egw-app show/hide one of its side areas
+	 * We set some classes that are used with @media to make more space
+	 *
+	 * @param event
+	 * @protected
+	 */
+	protected handleApplicationShowHide(event)
+	{
+		if(event.target instanceof EgwFrameworkApp && event.detail?.side)
+		{
+			this.classList.toggle(`egw_fw--${event.detail.side}-side-open`, event.type == "show")
+			this.classList.toggle(`egw_fw--${event.detail.side}-side-collapsed`, event.type == "hide");
+		}
+	}
+
 	public setActiveApp(appname : EgwFrameworkApp | string)
 	{
 		return this.showTab(typeof appname == "string" ? appname : appname.name);
@@ -973,8 +995,8 @@ export class EgwFramework extends LitElement
 
 	public showTab(appname : string)
 	{
-		// Dispatch hide (if there is an active app) event, application an listen for it
-		this.querySelector("egw-app[active]")?.dispatchEvent(new CustomEvent("hide", {bubbles: true}));
+		// Dispatch hide (if there is an active app) event, application can listen for it
+		this.querySelector("egw-app[active]:not([name='" + appname + "'])")?.dispatchEvent(new CustomEvent("hide", {bubbles: true}));
 
 		this.querySelectorAll("egw-app").forEach(app => app.removeAttribute("active"));
 		this.applicationList.forEach(a => a.active = false);
@@ -996,14 +1018,14 @@ export class EgwFramework extends LitElement
 		}
 
 		// Update the list on the server
-		this.tabs.updateComplete.then(() =>
+		this.tabs?.updateComplete.then(() =>
 		{
 			this.updateTabs();
 		});
 		appComponent.updateComplete.then(() =>
 		{
 			// Dispatch show event, application (& nextmatch) can listen for it
-			appComponent.dispatchEvent(new CustomEvent("show", {bubbles: true}))
+			appComponent.dispatchEvent(new CustomEvent("show", {bubbles: true, composed: true}))
 		});
 
 		return appComponent.updateComplete;
@@ -1249,6 +1271,8 @@ export class EgwFramework extends LitElement
                                         aria-label="Side menu resize">
                             <main slot="start" part="main" class="egw_fw__main" id="main"
                                   @sl-reposition=${this.handleSlide}
+                                  @show=${this.handleApplicationShowHide}
+                                  @hide=${this.handleApplicationShowHide}
                             >
                                 <slot></slot>
                             </main>
@@ -1260,6 +1284,8 @@ export class EgwFramework extends LitElement
                     </div>` : html`
                     <main part="main" class="egw_fw__main" id="main"
                           @sl-reposition=${this.handleSlide}
+                          @show=${this.handleApplicationShowHide}
+                          @hide=${this.handleApplicationShowHide}
                     >
                         <slot></slot>
                     </main>`
