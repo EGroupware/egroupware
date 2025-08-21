@@ -211,7 +211,6 @@ EOF;
 					$attrs['label'] = $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'] ?? null;
 					if (empty($attrs['label'])) unset($attrs['label']);
 				}
-				$attrs['id'] = 'col_filter'.(empty($attrs['id']) ? '' : '['.$attrs['id'].']');
 				$attrs['class'] = trim(($attrs['class'] ?? '') . ' et2-label-fixed');
 				$attrs = stringAttrs($attrs);
 				$xet .= <<<EOF

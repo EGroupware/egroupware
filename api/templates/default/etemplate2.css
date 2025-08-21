@@ -815,8 +815,19 @@ et2-dialog et2-button {
 .et2_customfield_list tr td:first-child {
     width: 12%; /* this is somehow equivalent to 100px we usually have in the first column */
 }
-.et2_customfield_list.et2-label-fixed tr td:first-child {
-    width: var(--label-width, 8em);
+*[slot="filter"] et2-details#col_filters::part(content){
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-width);
+}
+*[slot="filter"] .et2_customfield_list.et2-label-fixed tr td:first-child{
+    padding: 0;
+}
+*[slot="filter"] .et2_customfield_list.et2-label-fixed tr td:first-child et2-label{
+    width: 11.5em;
+}
+*[slot="filter"] .et2_customfield_list.et2-label-fixed tr td:last-child et2-select{
+    width: 100% !important;
 }
 
 .et2_customfield_list tr td:nth-child(2) > *:not(.et2_checkbox):not(.et2_file):not(.et2_vfs_btn):not(.et2_button):not(.et2_radiobox),
