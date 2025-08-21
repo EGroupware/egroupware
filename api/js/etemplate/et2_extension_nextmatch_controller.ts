@@ -783,39 +783,6 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 
 		// Update action_header status (3dots)
 		_widget.header.action_header.toggle(typeof _widget.getSelection().ids != 'undefined' && _widget.getSelection().ids.length > 0);
-
-		// Update selection counter in nm header
-		if(_widget._type == 'nextmatch' && _widget.getSelection().ids.length > 0)
-		{
-			if(senders && senders[0]?.actionLinks)
-			{
-				var delete_action = null;
-				for(var i = 0; i < senders[0].actionLinks.length; i++)
-				{
-					if(senders[0].actionLinks[i].actionId == 'delete')
-					{
-						delete_action = senders[0].actionLinks[i];
-					}
-				}
-				if(delete_action && delete_action.enabled)
-				{
-					_widget.header.delete_action
-						.show()
-						.off()
-						.click(function()
-						{
-							if(delete_action)
-							{
-								delete_action.actionObj.execute(senders);
-							}
-						});
-				}
-			}
-		}
-		else
-		{
-			_widget.header.delete_action.hide();
-		}
 	}
 
 	/** -- Implementation of et2_IDataProvider -- **/

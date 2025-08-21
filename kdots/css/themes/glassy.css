@@ -50,20 +50,20 @@
 .kdots-glassy et2-lavatar::part(image) {
   border-radius: var(--sl-border-radius-circle);
 }
-:root .et2-input-widget:not([disabled])::part(base),
-:host .et2-input-widget:not([disabled])::part(base),
-.kdots-glassy .et2-input-widget:not([disabled])::part(base),
-:root .et2-input-widget:not([disabled])::part(input-control),
-:host .et2-input-widget:not([disabled])::part(input-control),
-.kdots-glassy .et2-input-widget:not([disabled])::part(input-control),
-:root .et2-input-widget:not([disabled])::part(combobox),
-:host .et2-input-widget:not([disabled])::part(combobox),
-.kdots-glassy .et2-input-widget:not([disabled])::part(combobox) {
+:root .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
+:host .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
+.kdots-glassy .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
+:root .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
+:host .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
+.kdots-glassy .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
+:root .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
+:host .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
+.kdots-glassy .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox) {
   box-shadow: var(--upper-tint), var(--lower-shade);
 }
-:root .et2-input-widget:not([disabled])::part(listbox),
-:host .et2-input-widget:not([disabled])::part(listbox),
-.kdots-glassy .et2-input-widget:not([disabled])::part(listbox) {
+:root .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
+:host .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
+.kdots-glassy .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox) {
   --sl-input-background-color: var(--sl-color-neutral-0);
 }
 :root *[slot="main-header"] *::part(base),
@@ -82,7 +82,10 @@
 .kdots-glassy et2-button::part(base),
 :root button::part(base),
 :host button::part(base),
-.kdots-glassy button::part(base) {
+.kdots-glassy button::part(base),
+:root .plus_button::part(base),
+:host .plus_button::part(base),
+.kdots-glassy .plus_button::part(base) {
   box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
 }
 :root et2-button:not([disabled]):active::part(base),
@@ -90,7 +93,10 @@
 .kdots-glassy et2-button:not([disabled]):active::part(base),
 :root button:not([disabled]):active::part(base),
 :host button:not([disabled]):active::part(base),
-.kdots-glassy button:not([disabled]):active::part(base) {
+.kdots-glassy button:not([disabled]):active::part(base),
+:root .plus_button:not([disabled]):active::part(base),
+:host .plus_button:not([disabled]):active::part(base),
+.kdots-glassy .plus_button:not([disabled]):active::part(base) {
   box-shadow: var(--inner-shine-active), var(--top-highlight-active), var(--upper-tint-active), var(--lower-shade-active), var(--bottom-shadow-active);
   transform: scale(0.98);
 }
@@ -112,4 +118,14 @@
   border-radius: 1em;
   padding-block: var(--sl-spacing-3x-small);
   color: var(--application-header-text-color);
+}
+et2-dialog::part(header) {
+  /* Set header size, color & background */
+  box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
+  color: var(--application-header-text-color, var(--sl-color-neutral-100));
+  background: var(--application-color, var(--sl-color-primary-500));
+  height: var(--sl-spacing-3x-large);
+}
+et2-dialog::part(close-button) {
+  color: var(--application-header-text-color, var(--sl-color-neutral-100));
 }

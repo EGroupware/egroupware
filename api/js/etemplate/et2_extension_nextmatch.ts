@@ -3649,23 +3649,24 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			this.search_box.addClass('nm-mob-header');
 			jQuery(this.div).css({display: 'inline-block'}).addClass('nm_header_hide');
 
-			this.delete_action = jQuery(document.createElement('div'))
-				.addClass('nm_delete_action')
-				.prependTo(this.search_box);
-
 			// Context menu
-			this.action_header = jQuery(document.createElement('button'))
-				.addClass('nm_action_header')
-				.hide()
-				.click(function(e)
+			const contextMenuButton = loadWebComponent("et2-button-icon", {
+				class: "nm_action_header egw_fw_app--only_mobile",
+				slot: "header-actions",
+				image: "three-dots-vertical",
+				noSubmit: true,
+				style: "display: none;",
+			}, this);
+			contextMenuButton.addEventListener("click", (e) =>
+			{
+				if(self.nextmatch.getDOMNode().getElementsByClassName('selected').length > 0)
 				{
-					if(self.nextmatch.getDOMNode().getElementsByClassName('selected').length > 0)
-					{
-						e.stopPropagation();
-						self.nextmatch.getDOMNode().getElementsByClassName('selected')[0].dispatchEvent(new CustomEvent("tapandhold", {type: 'tapandhold'}));
-					}
-				})
-				.prependTo(this.search_box);
+					e.stopPropagation();
+					self.nextmatch.getDOMNode().getElementsByClassName('selected')[0].dispatchEvent(new CustomEvent("tapandhold", {type: 'tapandhold'}));
+				}
+			});
+			this.action_header = jQuery(contextMenuButton)
+				.prependTo(this.nextmatch.getParent().getDOMNode().closest("egw-app"));
 		}
 
 		// Add category

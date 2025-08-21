@@ -26,8 +26,10 @@ import {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
  * @dependency sl-split-panel
  *
  * @slot - Main application content.  Other slots are normally hidden if they have no content
- * @slot header - Top of app, contains logo, app icons.
+ * @slot main-header - Top of app, contains logo, app icons.
+ * @slot header-actions - Top right - filter, refresh, print & menu live here
  * @slot filter - Custom filter panel content, leave empty for auto-generated filters
+ * @slot header - Top of main content
  * @slot footer - Very bottom of the main content.
  * @slot left - Optional content to the left.  Use for application navigation.
  * @slot left-header - Top of left side
@@ -40,7 +42,7 @@ import {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
  * @csspart app-header - Top bar of application, contains name, header.
  * @csspart name - Top left, holds the application name.
  * @csspart header - Top main application header, optional application toolbar goes here.
- * @csspart app-menu - Drop down pplication menu, top right
+ * @csspart app-menu - Drop down application menu, top right
  * @csspart content-header - Top of center, optional.
  * @csspart main - Main application content.
  * @csspart left - Left optional content.
@@ -1010,6 +1012,7 @@ export class EgwFrameworkApp extends LitElement
                     ${this._applicationMenuTemplate()}
                 </sl-menu>
             </sl-dropdown>
+            <slot name="header-actions"></slot>
 		`;
 	}
 
@@ -1053,6 +1056,7 @@ export class EgwFrameworkApp extends LitElement
                        @sl-after-show=${() => this.filters?.shadowRoot?.querySelector(".et2-input-widget")?.focus()}
             >
                 <et2-button-icon slot="header-actions" name="selectcols"
+                                 class="egw_fw_app--no_mobile"
                                  label=${this.egw.lang("Select columns")}
                                  statustext=${this.egw.lang("Select columns")}
                                  @click=${e => {this.nextmatch._selectColumnsClick(e)}} nosubmit>

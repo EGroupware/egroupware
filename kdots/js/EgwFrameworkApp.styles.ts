@@ -39,30 +39,30 @@ export default css`
     }
 
     .egw_fw_app__header {
-        justify-content: flex-start;
-        align-items: center;
-        justify-items: stretch;
-        flex: 1 0 2em;
-        max-height: var(--sl-font-size-3x-large);
+		justify-content: flex-start;
+		align-items: center;
+		justify-items: stretch;
+		flex: 1 0 2em;
+		max-height: var(--sl-font-size-3x-large);
 
-        background-color: var(--application-color, var(--primary-background-color));
-        color: var(--application-header-text-color);
-        --sl-input-color: var(--application-header-text-color);
-        font-size: var(--sl-font-size-x-large);
-    }
+		background-color: var(--application-color, var(--primary-background-color));
+		color: var(--application-header-text-color);
+		--sl-input-color: var(--application-header-text-color);
+		font-size: var(--sl-font-size-x-large);
 
-    .egw_fw_app__header sl-icon-button::part(base), 
-    .egw_fw_app__header et2-button-icon, 
-    .egw_fw_app__header et2-button-icon::part(base) {
-	    --sl-input-border-color: transparent;
-        font-size: inherit;
-        color: var(--application-header-text-color, var(--sl-color-neutral-0));
-        border: solid var(--sl-input-border-width) var(--sl-input-border-color);
-    }
+		sl-icon-button::part(base),
+		et2-button-icon,
+		et2-button-icon::part(base) {
+			--sl-input-border-color: transparent;
+			font-size: inherit;
+			color: var(--application-header-text-color, var(--sl-color-neutral-0));
+			border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+		}
 
-    .egw_fw_app__header et2-button-icon {
-        margin: 0 var(--sl-spacing-medium);
-    }
+		et2-button-icon {
+			margin: 0 var(--sl-spacing-medium);
+		}
+	}
 
     .egw_fw_app__header sl-icon-button::part(base):hover, .egw_fw_app__header et2-button-icon::part(base):hover {
         border-color: var(--sl-input-border-color-hover);
@@ -196,6 +196,9 @@ export default css`
 		flex-direction: column;
 	}
 
+	.egw_fw_app--only_mobile {
+		display: none;
+	}
 	::slotted(*) {
 		flex: 1 1 auto;
 	}
@@ -213,6 +216,10 @@ export default css`
     @media (max-width: 799px) {
 		.egw_fw_app--no_mobile {
 			display: none;
+		}
+
+		.egw_fw_app--only_mobile {
+			display: initial;
 		}
         sl-split-panel::part(divider) {
             display: none;

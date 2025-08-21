@@ -35,7 +35,7 @@
 
   /* Input field changes */
   .et2-input-widget {
-	&:not([disabled]) {
+	&:not([disabled]):not([slot="main-header"]):not([slot="header-actions"]) {
 	  &::part(base), &::part(input-control), &::part(combobox) {
 		box-shadow: var(--upper-tint), var(--lower-shade);
 	  }
@@ -61,7 +61,7 @@
   --sl-button-primary-hover-background-color: hsl(calc(var(--application-color-hsl) / 0.9));
   --sl-button-primary-hover-border-color: hsl(calc(var(--application-color-hsl) / 1));
 
-  et2-button, button {
+  et2-button, button, .plus_button {
 	&::part(base) {
 	  box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
 	}
@@ -88,5 +88,19 @@
 	  padding-block: var(--sl-spacing-3x-small);
 	  color: var(--application-header-text-color);
 	}
+  }
+}
+
+et2-dialog {
+  &::part(header) {
+	/* Set header size, color & background */
+	box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
+	color: var(--application-header-text-color, var(--sl-color-neutral-100));
+	background: var(--application-color, var(--sl-color-primary-500));
+	height: var(--sl-spacing-3x-large);
+  }
+
+  &::part(close-button) {
+	color: var(--application-header-text-color, var(--sl-color-neutral-100));
   }
 }
