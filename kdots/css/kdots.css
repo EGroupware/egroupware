@@ -639,6 +639,7 @@ egw-app::part(name) {
   text-wrap: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  --image-filter: brightness(0) invert(1);
 }
 egw-app::part(header) {
   display: flex;

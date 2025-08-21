@@ -347,7 +347,9 @@ a.et2_url.url {
 }
 
 /* et2-image has no shadow DOM, styles here */
-
+et2-image {
+	filter: var(--image-filter);
+}
 et2-image::slotted(img) {
 	max-height: 100%;
 	max-width: 100%;

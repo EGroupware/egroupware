@@ -23,22 +23,32 @@ export default css`
         display: flex;
     }
 
-    .egw_fw_app__name.hasHeaderContent {
-        max-width: var(--left-side-width, 20vw);
-        /* Keep the collapse icon visible */
-        min-width: 2em;
-        flex: 1 1 20vw;
-    }
+	.egw_fw_app__name {
+		height: 100%;
+		flex: 1 1 auto;
+		container: name / inline-size;
 
-    .egw_fw_app__name h2 {
-        margin: 0;
-        margin-inline-start: var(--sl-spacing-medium);
-        font-size: 1em;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
+		&.hasHeaderContent {
+			max-width: var(--left-side-width, 20vw);
+			/* Keep the collapse & app icons visible */
+			min-width: 4em;
+			flex: 1 1 20vw;
+		}
 
-    .egw_fw_app__header {
+		et2-image {
+			display: none;
+		}
+
+		h2 {
+			margin: 0;
+			margin-inline-start: var(--sl-spacing-medium);
+			font-size: 1em;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+	}
+
+	.egw_fw_app__header {
 		justify-content: flex-start;
 		align-items: center;
 		justify-items: stretch;
@@ -221,6 +231,14 @@ export default css`
 		.egw_fw_app--only_mobile {
 			display: initial;
 		}
+
+		.egw_fw_app__name h2 {
+			width: 0px;
+		}
+
+		.egw_fw_app__name et2-image {
+			display: initial;
+		}
         sl-split-panel::part(divider) {
             display: none;
         }
@@ -267,6 +285,9 @@ export default css`
         }
     }
 
+	et2-image {
+		filter: var(--image-filter);
+	}
     sl-details.favorites {
 		&::part(content) {
 			padding: 0;

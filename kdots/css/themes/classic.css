@@ -64,6 +64,11 @@
 .kdots-classic egw-app::part(details-header) {
   border-top: 4px solid var(--application-color, --sl-color-primary-500);
 }
+:root egw-app::part(name),
+:host egw-app::part(name),
+.kdots-classic egw-app::part(name) {
+  --image-filter: none;
+}
 /* System messages */
 .sl-toast-stack sl-alert::part(base) {
   border-top: 0px;

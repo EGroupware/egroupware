@@ -1195,6 +1195,7 @@ export class EgwFrameworkApp extends LitElement
                     ></sl-icon-button>`
                                    : nothing
                     }
+                    <et2-image src="${this.framework.getApplicationByName(this.name).icon}"></et2-image>
                     <h2>${this.title || this.egw?.lang(this.name) || this.name}</h2>
                 </div>
                 <header class="egw_fw_app__header" part="header">

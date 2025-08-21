@@ -46,6 +46,10 @@
 	&::part(app-header), *::part(header), &::part(details-header) {
 	  border-top: 4px solid var(--application-color, --sl-color-primary-500);
 	}
+
+	&::part(name) {
+	  --image-filter: none;
+	}
   }
 }
 
