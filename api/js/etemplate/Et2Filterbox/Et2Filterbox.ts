@@ -20,6 +20,7 @@ import {unsafeStatic} from "@open-wc/testing";
 import shoelace from "../Styles/shoelace";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
+import {et2_IInput} from "../et2_core_interfaces";
 
 /**
  * @summary A list of filters ( from a nextmatch )
@@ -239,7 +240,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 						}
 						child.set_value(value);
 					}
-				}, newValue);
+				}, newValue, et2_IInput);
 			})
 		});
 	}
