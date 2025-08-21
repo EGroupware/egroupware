@@ -1049,6 +1049,13 @@ body #popupMainDiv.et2_mobile_view {
   right: 0;
   overflow: auto;
 }
+egw-app et2-hbox[slot="label"] et2-button-toggle {
+  --indicator-color: var(--sl-color-neutral-0);
+  --image-filter-off: opacity(0.5);
+}
+egw-app et2-hbox[slot="label"] et2-button-toggle::part(control) {
+  background-color: transparent;
+}
 @media screen and (max-width: 800px) {
   html * {
     touch-action: auto;

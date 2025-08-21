@@ -34,9 +34,9 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 				sl-switch:not([checked]) slot[name="off"] {
 					position: relative;
 					color: currentColor;
-				opacity(0.7);
-
-					img {
+					
+					/*target img, and bootstrap font image*/
+					img, *::before{
 						filter: var(--image-filter-off, brightness(0) contrast(.3) opacity(.7));
 					}
 				}

@@ -12,6 +12,18 @@ body {
 
   }
 }
+egw-app{
+  //target the header bar in mobile views
+  et2-hbox[slot="label"]{
+	et2-button-toggle{
+	  --indicator-color: var(--sl-color-neutral-0);
+	  --image-filter-off: opacity(0.5);
+	  &::part(control){
+		background-color: transparent;
+	  }
+	}
+  }
+}
 
 @media screen and (max-width: 800px) {
   html * {
