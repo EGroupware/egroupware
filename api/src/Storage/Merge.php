@@ -1053,10 +1053,33 @@ abstract class Merge
 		}
 		// alternative syntax using double curly brackets (eg. {{cat_id}} instead $$cat_id$$),
 		// aggressively removing all xml-tags e.g. Word adds within placeholders
-		$content = preg_replace_callback('/{{[^}]+}}/i', function ($matches)
+		// Convert {{...}} to $$...$$, handling nested tags and preserving HTML inside IF blocks.
+		// This prevents tables and other markup from being stripped if they are part of
+		// an IF branch like {{IF ... ~ ... ~ <table>...</table>}}.
+		$content = $_content;
+		if (strpos($content, '{{') !== false)
 		{
-			return '$$' . strip_tags(substr($matches[0], 2, -2)) . '$$';
-		},                               $_content);
+			$pattern_curly = '/{{[^{}]+}}/u';
+			$guard = 0; // safety guard against pathological inputs
+			while (preg_match($pattern_curly, $content) && $guard++ < 2000)
+			{
+				$content = preg_replace_callback($pattern_curly, function ($m)
+				{
+					$inner = substr($m[0], 2, -2);
+
+					// Do NOT strip HTML for IF ... blocks – keep markup intact.
+					// Nested {{...}} inside will be converted by later iterations.
+					if (preg_match('/^\s*IF\s/i', $inner))
+					{
+						return '$$' . $inner . '$$';
+					}
+
+					// Simple placeholders / directives: strip any Word-inserted tags
+					// so {{n_fn}} corrupted by Word styling still becomes $$n_fn$$.
+					return '$$' . strip_tags($inner) . '$$';
+				}, $content);
+			}
+		}
 		// Handle escaped placeholder markers in RTF, they won't match when escaped
 		if($mimetype == 'application/rtf')
 		{
@@ -2052,7 +2075,7 @@ abstract class Merge
 		if(strpos($content, '$$IF') !== false)
 		{    //Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
 			$this->replacements = $replacements;
-			$content = preg_replace_callback('/\$\$IF ([#0-9a-z_\/-]+)~(.*)~(.*)~(.*)\$\$/imU', array($this,
+			$content = preg_replace_callback( '/\$\$IF ([#0-9a-z_\/-]+)~(.*?)~(.*?)~(.*?)\$\$/ims', array($this,
 																									  'replace_callback'), $content);
 			unset($this->replacements);
 		}
@@ -2093,21 +2116,46 @@ abstract class Merge
 	 */
 	private function replace_callback($param)
 	{
-		if(!empty($param[4]) && array_key_exists('$$' . $param[4] . '$$', $this->replacements))
+		// If THEN / ELSE are bare placeholder names, wrap them so they survive into replace()
+		if (!empty($param[4]) && array_key_exists('$$' . $param[4] . '$$', $this->replacements))
 		{
 			$param[4] = '$$' . $param[4] . '$$';
 		}
-		if(!empty($param[3]) && array_key_exists('$$' . $param[3] . '$$', $this->replacements))
+		if (!empty($param[3]) && array_key_exists('$$' . $param[3] . '$$', $this->replacements))
 		{
 			$param[3] = '$$' . $param[3] . '$$';
 		}
 
-		$pattern = '/' . preg_quote($param[2]??'', '/') . '/';
-		if(strpos($param[0], '$$IF') === 0 && (trim($param[2]) == "EMPTY" || $param[2] === ''))
+		// --- NEW: allow placeholder(s) inside the IF compare value (2nd arg) ---
+		// Examples:
+		//   {{IF city~{{billing_city}}~...~...}}
+		//   {{IF n_prefix~{{user/n_prefix}}~...~...}}
+		$compare_raw = $param[2] ?? '';
+
+		// Special-case: EMPTY (original behavior)
+		$is_empty_check = (strpos($param[0], '$$IF') === 0 && (trim($compare_raw) === 'EMPTY' || $compare_raw === ''));
+
+		if (!$is_empty_check)
 		{
-			$pattern = '/^$/';
+			// If the compare value is itself a placeholder name without $$...$$,
+			// look it up directly.
+			if (isset($this->replacements['$$' . $compare_raw . '$$']))
+			{
+				$compare_raw = $this->replacements['$$' . $compare_raw . '$$'];
+			}
+			// If the compare value contains $$placeholders$$, expand them now.
+			if (strpos($compare_raw, '$$') !== false)
+			{
+				$compare_raw = str_replace(array_keys($this->replacements), array_values($this->replacements), $compare_raw);
+			}
 		}
-		$replace = preg_match($pattern, $this->replacements['$$' . $param[1] . '$$'] ?? '') ? ($param[3]??null) : ($param[4]??null);
+
+		$pattern = $is_empty_check ? '/^$/' : '/' . preg_quote($compare_raw, '/') . '/';
+
+		$replace = preg_match(
+			$pattern,
+			$this->replacements['$$' . $param[1] . '$$'] ?? ''
+		) ? ($param[3] ?? null) : ($param[4] ?? null);
 
 		$LF = $this->line_feed;
 
