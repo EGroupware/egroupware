@@ -194,6 +194,8 @@ EOF;
 				{
 					case 'customfields':
 						$widget = 'customfields-filters';
+						$attrs['label'] = '';
+						unset($attrs['id']);
 						break;
 					case 'accountfilter':
 					case 'header-account':
@@ -204,9 +206,15 @@ EOF;
 				{
 					$widget = 'et2-'.$widget;
 				}
-				$label = htmlspecialchars($attrs['label'] ?? $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'], ENT_XML1, 'UTF-8');
+				if (!isset($attrs['label']))
+				{
+					$attrs['label'] = $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'] ?? null;
+					if (empty($attrs['label'])) unset($attrs['label']);
+				}
+				$attrs['class'] = trim(($attrs['class'] ?? '') . ' et2-label-fixed');
+				$attrs = stringAttrs($attrs);
 				$xet .= <<<EOF
-			<$widget id="$attrs[id]" label="$label" class="et2-label-fixed"></$widget>
+			<$widget $attrs></$widget>
 EOF;
 			}
 			$xet .= <<<EOF

@@ -29,6 +29,12 @@ import {LitElement} from "lit";
 import {Et2VfsSelectButton} from "./Et2Vfs/Et2VfsSelectButton";
 import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
 
+/**
+ * This class implements 4 different widgets:
+ * - customfields: input for (by default all) custom-fields
+ * - customfields-list: traditional header for custom-fields in NM showing sort- and filter-headers
+ * - customfields-filters: new widget only showing filters / select-boxes
+ */
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {
 	static readonly _attributes = {
@@ -287,7 +293,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		if(!this.options || !this.options.customfields) return;
 
 		// Already set up - avoid duplicates in nextmatch
-		if(this.getType() == 'customfields-list' && !this.isInTree() && Object.keys(this.widgets).length > 0) return;
+		if(this.getType() !== 'customfields' && !this.isInTree() && Object.keys(this.widgets).length > 0) return;
 		if(!jQuery.isEmptyObject(this.widgets)) return;
 
 		// Check for global setting changes (visibility)
@@ -301,11 +307,16 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		for(let field_name in this.options.customfields)
 		{
 			// Skip fields if we're filtering
-			if(this.getType() != 'customfields-list' && !jQuery.isEmptyObject(this.options.fields) && !this.options.fields[field_name]) continue;
+			if(this.getType() === 'customfields' && !jQuery.isEmptyObject(this.options.fields) && !this.options.fields[field_name]) continue;
 
 			const field = this.options.customfields[field_name];
-
 			let id = this.options.prefix + field_name;
+
+			// skip non-select-boxes for "customfields-filters"
+			if (this.getType() === 'customfields-filters' && !field.type.startsWith('select'))
+			{
+				continue;
+			}
 
 			// Need curlies around ID for nm row expansion
 			if(this.id == '$row')
@@ -369,6 +380,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					// Label in first column, widget in 2nd
 					const label = this.options.label || field.label || '';
 					const label_td = jQuery(document.createElement("td")).prependTo(row);
+					if (this.getType() === 'customfields-filters')
+					{
+						attrs.emptyLabel = attrs.emptyLabel || 'all';
+					}
 					if (['label','header'].indexOf(attrs.type || field.type) !== -1)
 					{
 						useLabelWidget = true;
@@ -476,7 +491,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			for(let key in data)
 			{
 				// Don't overwrite fields / customfields with global values
-				if (global_data[key] && key !== 'fields' && (key !== "customfields" || !data.customfields || !Object.keys(data.customfields).length))
+				if (global_data[key] && key !== 'fields' && (key !== 'customfields' || !data.customfields || !Object.keys(data.customfields).length))
 				{
 					data[key] = {...data[key], ...global_data[key]};
 				}
@@ -540,7 +555,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	set_label(_value : string)
 	{
 		// If we've got a field list, or all fields use normal label
-		if(this.getType() == 'customfields-list' || jQuery.isEmptyObject(this.options.fields) ||
+		if(this.getType() !== 'customfields' || jQuery.isEmptyObject(this.options.fields) ||
 			Object.keys(this.options.fields).filter(f => this.options.fields[f]).length != 1)
 		{
 			return super.set_label(_value);
@@ -796,7 +811,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	_setup_checkbox( field_name, field, attrs)
 	{
 	 	// Read-only checkbox is just text
-		if(attrs.readonly && this.getType() !== "customfields")
+		if(attrs.readonly && this.getType() !== 'customfields')
 		{
 			attrs.ro_true = field.label;
 		}
@@ -822,7 +837,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 		attrs.label = field.label;
 
-		if (this.getType() == 'customfields-list')
+		if (this.getType() !== 'customfields')
 		{
 			// No buttons in a list, it causes problems with detached nodes
 			return false;
@@ -913,7 +928,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			});
 		}
 
-		if (this.getType() == 'customfields-list')
+		if (this.getType() !== 'customfields')
 		{
 			// No special UI needed?
 			return true;
@@ -1021,7 +1036,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	 */
 	_setup_url( field_name, field, attrs)
 	{
-		if(this.getType() == 'customfields-list')
+		if(this.getType() !== 'customfields')
 		{
 			attrs.label = field.label;
 		}
@@ -1080,4 +1095,4 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 	}
 }
-et2_register_widget(et2_customfields_list, ["customfields", "customfields-list"]);
+et2_register_widget(et2_customfields_list, ["customfields", "customfields-list", "customfields-filters"]);

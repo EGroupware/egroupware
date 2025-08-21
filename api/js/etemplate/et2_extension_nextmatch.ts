@@ -4437,6 +4437,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 				// If customfield goes on a special tab, we'll put it in its own filter group
 				attrs["data"] = "groupName:" + field.tab;
 			}
+			/* We no longer generate filters (they are in an Et2FilterBox), so we can have a sortheader for all CFs
 			if(field.type == 'select' || field.type == 'select-account')
 			{
 				// Remove empty label
@@ -4462,7 +4463,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 					placeholder: field.label
 				}), undefined);
 			}
-			else
+			else*/
 			{
 				widget = et2_createWidget("nextmatch-sortheader", Object.assign(attrs, {
 					id: cf_id,
