@@ -104,6 +104,17 @@ egw-app {
 	  overflow: hidden;
 	}
   }
+
+  /** filter drawer styling**/
+
+  *[slot="filter"] et2-details {
+	&:has(> .et2_customfield_list:only-child > tbody:empty) {
+	  display: none;
+	}
+	&:has(> .et2_customfield_list:only-child:empty) {
+	  display: none;
+	}
+  }
 }
 
 /* Individual application colors, should go in each app's CSS */
