@@ -1014,6 +1014,10 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 [slot="main-header"] et2-toolbar sl-button-group {
   background: none;
 }
+[slot="main-header"] et2-toolbar et2-dropdown-button {
+  --sl-color-neutral-0: transparent;
+  --sl-color-neutral-700: var(--application-header-text-color);
+}
 [slot="main-header"] et2-toolbar et2-switch-icon {
   padding-inline: var(--sl-spacing-small);
 }
