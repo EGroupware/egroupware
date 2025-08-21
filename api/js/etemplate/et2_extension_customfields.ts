@@ -383,6 +383,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					if (this.getType() === 'customfields-filters')
 					{
 						attrs.emptyLabel = attrs.emptyLabel || 'all';
+						attrs.needed = false;
 					}
 					if (['label','header'].indexOf(attrs.type || field.type) !== -1)
 					{
