@@ -184,7 +184,7 @@ EOF;
 			($matches = array_filter($matches, static fn($match) => !in_array($match[2], ['header', 'sortheader']))))
 		{
 			$xet .= <<<EOF
-		<et2-details summary="Column Filters" open="true">
+		<et2-details summary="Column Filters" id="col_filters" open="true">
 EOF;
 			foreach ($matches as $match)
 			{
@@ -211,6 +211,7 @@ EOF;
 					$attrs['label'] = $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'] ?? null;
 					if (empty($attrs['label'])) unset($attrs['label']);
 				}
+				$attrs['id'] = 'col_filter'.(empty($attrs['id']) ? '' : '['.$attrs['id'].']');
 				$attrs['class'] = trim(($attrs['class'] ?? '') . ' et2-label-fixed');
 				$attrs = stringAttrs($attrs);
 				$xet .= <<<EOF
