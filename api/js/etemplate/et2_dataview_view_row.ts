@@ -68,7 +68,7 @@ export class et2_dataview_row extends et2_dataview_container implements et2_data
 			if (!this.expansionButton)
 			{
 				this.expansionButton = jQuery(document.createElement("span"));
-				this.expansionButton.addClass("arrow closed");
+				this.expansionButton.addClass("arrow closed bi-caret-right-fill");
 			}
 
 			// Update context
@@ -170,13 +170,13 @@ export class et2_dataview_row extends et2_dataview_container implements et2_data
 		// Set the class of the arrow
 		if (this.expansionVisible)
 		{
-			this.expansionButton.addClass("opened");
-			this.expansionButton.removeClass("closed");
+			this.expansionButton.addClass("opened bi-caret-down-fill");
+			this.expansionButton.removeClass("closed bi-caret-right-fill");
 		}
 		else
 		{
-			this.expansionButton.addClass("closed");
-			this.expansionButton.removeClass("opened");
+			this.expansionButton.addClass("closed bi-caret-right-fill");
+			this.expansionButton.removeClass("opened bi-caret-down-fill");
 		}
 
 		this.invalidate();

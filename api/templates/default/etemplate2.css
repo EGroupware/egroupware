@@ -2255,6 +2255,7 @@ ul[id$='favorites_popup_state'] span.filter_value {
     margin: 6px -12px 4px 4px;
     float: left;
     position: relative;
+    cursor: pointer;
 }
 
 /* Indent the sub-grid */
