@@ -838,9 +838,13 @@ export class EgwFramework extends LitElement
 		{
 			delete this._messages[e.target["data-hash"] ?? ""];
 		});
-		this._messages[message] = alert;
 		document.body.append(alert);
 		window.setTimeout(() => alert.toast(), 0);
+		this.egw.hashString(message).then(hash =>
+		{
+			this._messages[hash] = alert;
+			alert.dataset.hash = hash;
+		})
 
 		return alert;
 	}
@@ -1033,12 +1037,16 @@ export class EgwFramework extends LitElement
 
 	/**
 	 * I'm not sure what this does
-	 * @deprecated use app.iframe.contentWindow ?? this.egw.window;
+	 * @deprecated use app.iframe?.contentWindow ?? this.egw.window;
 	 */
 	public egw_appWindow(appname : string)
 	{
-		const app = this.loadApp(appname);
-		return app.iframe.contentWindow ?? this.egw.window;
+		if(appname)
+		{
+			const app = this.loadApp(appname);
+			return app.iframe?.contentWindow ?? this.egw.window;
+		}
+		return this.egw.window;
 	}
 
 	/**
