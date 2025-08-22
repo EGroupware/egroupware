@@ -24,6 +24,9 @@
 	position: initial;
 	top: auto;
 }
+#filemanager-index_nm et2-vfs-mime img[src$="svg"], #filemanager-index_nm et2-vfs-mime svg{
+    height: 1em !important;
+}
 
 /* Override default filter width since there's only one, and limited space left */
 #filemanager-index_nm_filter {
