@@ -12,7 +12,7 @@
 
 import {etemplate2} from "../etemplate/etemplate2";
 import type {Et2Template} from "../etemplate/Et2Template/Et2Template";
-import type {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
+import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import type {IegwAppLocal} from "./egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
@@ -20,6 +20,7 @@ import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
 import {fetchAll, nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
+import type {Et2Widget} from "../etemplate/Et2Widget/Et2Widget";
 import {loadWebComponent} from "../etemplate/Et2Widget/Et2Widget";
 import type {EgwAction} from "../egw_action/EgwAction";
 import {Et2MergeDialog} from "../etemplate/Et2Dialog/Et2MergeDialog";
@@ -29,7 +30,6 @@ import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
 import {egw_globalObjectManager} from "../egw_action/egw_action";
 import type {EgwFrameworkApp} from "../../../kdots/js/EgwFrameworkApp";
 import {Et2ButtonIcon} from "../etemplate/Et2Button/Et2ButtonIcon";
-import type {Et2Widget} from "../etemplate/Et2Widget/Et2Widget";
 import type {Et2Select} from "../etemplate/Et2Select/Et2Select";
 
 /**
