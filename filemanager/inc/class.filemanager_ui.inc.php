@@ -978,6 +978,9 @@ class filemanager_ui
 	{
 		$old_session = Api\Cache::getSession('filemanager','index');
 
+		// NM on client-side uses col_filter[dir], not path!
+		$query['path'] = $query['col_filter']['dir'] ?? $query['path'] ?? static::get_home_dir();
+
 		// do NOT store query, if hierarchical data / children are requested
 		if (!$query['csv_export'])
 		{
@@ -986,8 +989,6 @@ class filemanager_ui
 			unset($store_query['col_filter']['mime']);
 			Api\Cache::setSession('filemanager', 'index', $store_query);
 		}
-		// NM on client-side uses col_filter[dir], not path!
-		$query['path'] = $query['col_filter']['dir'] ?? $query['path'] ?? static::get_home_dir();
 
 		// Change template to match selected view
 		if($query['view'])
@@ -1169,11 +1170,11 @@ class filemanager_ui
 	{
 		if($query['searchletter'] && !empty($query['search']))
 		{
-			$namefilter = '/^'.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
+			$namefilter = '/^'.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'), preg_quote($query['search'], '/')).'/i';
 			if ($query['searchletter'] == strtolower($query['search'][0]))
 			{
-				$namefilter = '/^('.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'|'.
-					str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).')/i';
+				$namefilter = '/^('.$query['searchletter'].'.*'.str_replace(array('\\?','\\*'),array('.{1}','.*'), preg_quote($query['search'], '/')).'|'.
+					str_replace(array('\\?','\\*'),array('.{1}','.*'), preg_quote($query['search'], '/')).')/i';
 			}
 		}
 		elseif ($query['searchletter'])
@@ -1182,12 +1183,11 @@ class filemanager_ui
 		}
 		elseif(!empty($query['search']))
 		{
-			$namefilter = '/' . str_replace(array('\\?', '\\*'), array('.{1}', '.*'),
-											preg_quote($query['search'])) . '/iu';
+			$namefilter = '/' . str_replace(array('\\?', '\\*'), array('.{1}', '.*'), preg_quote($query['search'], '/')) . '/iu';
 		}
 
-		// Re-map so 'No filters' favorite ('') is depth 1
-		$filter = $query['filter'] === '' ? 1 : $query['filter'];
+		// Re-map so 'No filters' favorite ('') is depth 1, same for not set filter === null
+		$filter = (string)$query['filter'] === '' ? 1 : $query['filter'];
 
 		$maxdepth = $filter && $filter != 4 ? (int)(boolean)$filter : null;
 		if($filter == 5) $maxdepth = 2;

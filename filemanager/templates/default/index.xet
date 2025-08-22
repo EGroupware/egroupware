@@ -60,6 +60,7 @@
                         dropTarget="filemanager-index" multiple="true"
                         onchange="widget.value={}; return false;"
         ></et2-vfs-upload>
+		<template template="api.search-button"></template>
 		<et2-button  id="home" statustext="Go to your home directory" image="gohome" onclick="app.filemanager.change_dir('~',widget);" noSubmit="true"></et2-button>
 		<et2-button  id="up" statustext="Up" image="goup" onclick="app.filemanager.change_dir('..',widget);" noSubmit="true"></et2-button>
         <et2-vfs-path id="path" onchange="app.filemanager.handlePathChange" size="80" class="address"/>
