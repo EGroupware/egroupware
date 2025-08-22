@@ -513,6 +513,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			// Only for ourselves, don't dispatch for children bubbling up
 			if(event.target === this)
 			{
+				event.stopPropagation();
 				this.updateComplete.then(() =>
 				{
 					this.dispatchEvent(new Event("change", {bubbles: true}));

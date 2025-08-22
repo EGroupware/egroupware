@@ -350,9 +350,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		super.connectedCallback();
 		this.classList.add("et2-select-widget");
 		this.addEventListener("focusin", this.handleFocus);
+
+		// Remove parent sl-change listener & use our own
+		this.removeEventListener("sl-change", this.handleSlChange);
+		this.addEventListener("sl-change", this._triggerChange);
+
 		this.updateComplete.then(() =>
 		{
-			this.addEventListener("sl-change", this._triggerChange);
 			// Fixes missing empty label
 			this.select?.requestUpdate("value");
 			// Fixes incorrect opening position
@@ -392,6 +396,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		if(super._triggerChange(e))
 		{
+			e.stopPropagation();
 			this.dispatchEvent(new Event("change", {bubbles: true}));
 		}
 	}
