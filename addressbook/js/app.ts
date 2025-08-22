@@ -241,20 +241,15 @@ class AddressbookApp extends EgwApp
 	/**
 	 * Change handler for contact / org selectbox
 	 *
-	 * @param node
-	 * @param {et2_extension_nextmatch} nm
+	 * @param {Event} _ev
 	 * @param {et2_selectbox} widget
 	 */
-	change_grouped_view(node, nm, widget)
+	change_grouped_view(_ev : Event, widget)
 	{
 		let template = "addressbook.index.rows";
 		let value = {};
 
-		if(nm.activeFilters.sitemgr_display)
-		{
-			template = nm.activeFilters.sitemgr_display + '.rows';
-		}
-		else if(widget.getValue().indexOf("org_name") == 0)
+		if(widget.getValue().indexOf("org_name") == 0)
 		{
 			template = "addressbook.index.org_rows";
 		}
@@ -262,18 +257,18 @@ class AddressbookApp extends EgwApp
 		{
 			template = 'addressbook.index.duplicate_rows';
 		}
-		if(nm.activeFilters.col_filter.parent_id)
+		if(this.nm?.activeFilters.col_filter.parent_id)
 		{
 			template = widget.getValue().indexOf('duplicate') === 0 ?
 				'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
 		}
-		let promise = nm.set_template(template)
+		let promise = this.nm?.set_template(template)
 		value[widget.id] = widget.getValue();
 		if(promise)
 		{
 			promise.then(() =>
 			{
-				nm.applyFilters(value);
+				this.nm?.applyFilters(value);
 			});
 		}
 		return !promise;

@@ -24,6 +24,7 @@
                 <column width="80" disabled="@no_event_column"/>
                 <column width="120"/>
                 <column width="120" disabled="@no_account_lid_column"/>
+                <column width="120"/>
             </columns>
             <rows>
                 <row class="th">
@@ -103,6 +104,7 @@
                         <nextmatch-sortheader label="Last modified" id="contact_modified" sortmode="DESC"/>
                     </et2-vbox>
                     <nextmatch-sortheader label="Username" id="account_lid" sortmode="ASC"/>
+                    <et2-nextmatch-header-filter ariaLabel="Type" id="tid" emptyLabel="All types"/>
                 </row>
                 <row class="$row_cont[class] $row_cont[cat_id]" valign="top">
                     <et2-image align="center" label="$row_cont[type_label]" src="$row_cont[type]" noLang="1"
@@ -186,6 +188,7 @@
                         <et2-select-account id="${row}[modifier]" readonly="true"></et2-select-account>
                     </et2-vbox>
                     <et2-description id="${row}[account_lid]"></et2-description>
+                    <et2-select id="${row}[tid]" readonly="true"></et2-select>
                 </row>
             </rows>
         </grid>
@@ -196,25 +199,19 @@
                              onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'870','610','_blank','addressbook',null,true); return false;"
                              noSubmit="true"></et2-button-icon>
             <template template="api.search-button"></template>
-            <et2-button-icon align="right" statustext="Advanced search" image="advanced-search" id="advanced-search"
-                             onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.extSearch'),'870','610','_blank','addressbook',null,true); return false;"
-                             noSubmit="true"></et2-button-icon>
+            <et2-toolbar>
+                <et2-button-icon statustext="Advanced search" image="advanced-search" id="advanced-search"
+                                 onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.extSearch'),'870','610','_blank','addressbook',null,true); return false;"
+                                 noSubmit="true"></et2-button-icon>
+                <et2-select statustext="Select a view" id="grouped_view" onchange="app.addressbook.change_grouped_view" noLang="1" emptyLabel="All contacts"></et2-select>
+                <et2-select id="filter" onchange="app.addressbook.changeNmFilter" noLang="1" emptyLabel="All addressbooks" ariaLabel="Addressbook"></et2-select>
+                <et2-select-cat id="cat_id" onchange="app.addressbook.changeNmFilter" ariaLabel="Category"></et2-select-cat>
+                <et2-tree-dropdown id="filter2" ariaLabel="distribution lists" noLang="1" placeholder="Keine Verteilerliste" onchange="return app.addressbook.filter2_onchange();"></et2-tree-dropdown>
+            </et2-toolbar>
         </et2-hbox>
-    </template>
-    <!--    start of stuff that is duplicated in filters drawer -->
-    <template id="addressbook.index.row" template="" lang="" group="0" version="1.3.001">
-        <et2-select statustext="Select a view" id="grouped_view" width="12em"
-                    onchange="app.addressbook.change_grouped_view" noLang="1" emptyLabel="All contacts"></et2-select>
-    </template>
-    <template id="addressbook.index.right" template="" lang="" group="0" version="1.7.001">
-        <et2-select statustext="Select a view" id="grouped_view" width="12em"
-                    onchange="app.addressbook.change_grouped_view" noLang="1" emptyLabel="All contacts"></et2-select>
-        <et2-select align="right" id="col_filter[tid]" emptyLabel="All types"></et2-select>
-        <!--end-->
     </template>
     <template id="addressbook.index" template="" lang="" group="0" version="1.9.002">
         <template template="addressbook.index.header" slot="main-header"></template>
-        <nextmatch id="nm" template="addressbook.index.rows" span="all" header_row="addressbook.index.row"
-                   header_right="addressbook.index.right"/>
+        <nextmatch id="nm" template="addressbook.index.rows" span="all"/>
     </template>
 </overlay>
