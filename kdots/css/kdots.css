@@ -916,11 +916,13 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 [slot="main-header"] input::placeholder {
   color: black;
 }
+[slot="main-header"] et2-vfs-upload,
 [slot="main-header"] et2-file {
   --sl-color-neutral-0: transparent;
   --sl-color-neutral-700: var(--application-header-text-color);
   --sl-input-border-color: transparent;
 }
+[slot="main-header"] et2-vfs-upload .et2_label,
 [slot="main-header"] et2-file .et2_label {
   color: var(--application-header-text-color);
 }
