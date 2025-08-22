@@ -12,7 +12,7 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {LitElement, nothing, TemplateResult} from "lit";
 import {html} from "lit/static-html.js";
-import {et2_INextmatchHeader, et2_nextmatch, et2_nextmatch_customfields} from "../et2_extension_nextmatch";
+import {et2_INextmatchHeader, et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Favorites} from "../Et2Favorites/Et2Favorites";
 import {classMap} from "lit/directives/class-map.js";
 import {HasSlotController} from "../Et2Widget/slot";
@@ -21,6 +21,7 @@ import shoelace from "../Styles/shoelace";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
 import {et2_IInput} from "../et2_core_interfaces";
+import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 /**
  * @summary A list of filters ( from a nextmatch )
@@ -132,15 +133,16 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 				this._findNextmatch();
 			}
 		}
-		if(changedProperties.has("filters"))
-		{
-			this._sortFilters();
-		}
 	}
 
 	public applyFilters()
 	{
-		const changeEvent = new CustomEvent("change", {detail: this.value, bubbles: true, composed: true});
+		const changeEvent = new CustomEvent("change", {
+			detail: this.value,
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
 		this.dispatchEvent(changeEvent);
 		if(this._nextmatch && !changeEvent.defaultPrevented)
 		{
@@ -175,10 +177,6 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		{
 			this._templateValues = newValue;
 		}
-		else
-		{
-			this._filterValues = newValue;
-		}
 	}
 	public get value()
 	{
@@ -187,35 +185,19 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		// and get the values from the et2 instance
 		if(this.hasSlotController.test('[default]'))
 		{
-			Array.from(this.querySelectorAll('slot')).forEach((child) =>
+			// @ts-ignore
+			Array.from(this.querySelectorAll(':scope > *')).forEach((element : Et2Widget) =>
 			{
-				child.assignedElements().forEach((element) =>
+				if(typeof element.getInstanceManager == "function" && element.getInstanceManager())
 				{
-					if(element.getInstanceManager && element.getInstanceManager())
-					{
-						Object.assign(value, element.getInstanceManager().getValues(element));
-					}
-				})
-			})
-			return value;
-		}
-		let entry = value;
-		const nm_group = this._nextmatch ? this._groups[this._nextmatch.id] : {}
-		Object.values(nm_group ?? {}).forEach((group) =>
-		{
-			if(group.dataId && typeof value[group.dataId] == "undefined")
-			{
-				value[group.dataId] = {};
-			}
-			entry = group.dataId ? value[group.dataId] : value;
-			group.filters?.forEach((filter) =>
-			{
-				if(filter.widget.getValue() != null)
-				{
-					entry[filter.widget.id || filter.name] = filter.widget.getValue();
+					let templateValue = element.getInstanceManager().getValues(element);
+					// @ts-ignore
+					this.getPath().toReversed().forEach(p => templateValue = templateValue[p]);
+					Object.assign(value, templateValue);
 				}
 			});
-		})
+		}
+
 		return value;
 	}
 
@@ -223,48 +205,24 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	{
 		// Use an array mgr to hande non-simple IDs
 		const mgr = new et2_arrayMgr(newValue);
-		Array.from(this.querySelectorAll('slot')).forEach((child) =>
+		// @ts-ignore
+		Array.from(this.querySelectorAll(':scope > *')).forEach((element : Et2Template | typeof Et2Widget) =>
 		{
 			// @ts-ignore
-			child.assignedElements().forEach((element : Et2Template | typeof Et2Widget) =>
+			typeof element.iterateOver == "function" && element.iterateOver(function(child)
 			{
-				element.iterateOver(function(child)
+				let value : string | object = '';
+				if(typeof child.set_value != "undefined" && child.id)
 				{
-					let value : string | object = '';
-					if(typeof child.set_value != "undefined" && child.id)
+					value = mgr.getEntry(child.id);
+					if(value == null)
 					{
-						value = mgr.getEntry(child.id);
-						if(value == null)
-						{
-							value = '';
-						}
-						child.set_value(value);
+						value = '';
 					}
-				}, newValue, et2_IInput);
-			})
-		});
-	}
-
-	private set _filterValues(filterValues : object)
-	{
-		let entry = null;
-		const nmGroups = this._nextmatch ? this._groups[this._nextmatch.id] : {}
-		for(let nmGroupsName in nmGroups)
-		{
-			const group = nmGroups[nmGroupsName];
-			group.filters.forEach(filter =>
-			{
-				const newValue = group.dataId ? filterValues[group.dataId][filter.name] : filterValues[filter.name];
-				if(typeof newValue != "undefined")
-				{
-					filter.value = newValue;
-					if(filter.widget)
-					{
-						filter.widget.set_value(filter.value);
-					}
+					child.set_value(value);
 				}
-			});
-		}
+			}, newValue, et2_IInput);
+		});
 	}
 
 	/**
@@ -296,23 +254,19 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 						  this.nextmatch;
 
 		// Found a nextmatch and there's no custom filter - autogenerate filters
-		if(this._nextmatch && !this.hasSlotController.test("[default]"))
+		if(this._nextmatch)
 		{
 			// Don't bind now, nextmatch probably isn't loaded yet
 			// @ts-ignore template_promise is private, but et2_nextmatch doesn't have updateComplete()
-			(this._nextmatch.template_promise ?? Promise.resolve()).then(() => this.readNextmatchFilters(this._nextmatch));
+			(this._nextmatch.template_promise ?? Promise.resolve()).then(() => this.readNextmatchFilters());
+
+			this._nextmatch.getDOMNode().addEventListener("et2-filter", this.handleNextmatchFilter);
+			this._nextmatch.getDOMNode().classList.add("et2-filterbox--loaded");
 		}
 	}
 
-	public async readNextmatchFilters(nextmatch : et2_nextmatch = this._nextmatch)
+	public async readNextmatchFilters()
 	{
-		// Only read filters once
-		if(typeof this._groups[nextmatch.id] != "undefined")
-		{
-			return;
-		}
-		this._groups[nextmatch.id] = {};
-
 		// Wait for nextmatch widgets to finish or we'll miss settings
 		let waitForWebComponents = [];
 		this._nextmatch.getChildren().forEach((w) =>
@@ -326,60 +280,22 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		});
 		await Promise.all(waitForWebComponents);
 
-		// If there's a custom template, ignore the nextmatch
-		if(this.hasSlotController.test("[default]"))
-		{
-			return;
-		}
-		this._groups[nextmatch.id] = {};
-		const group = this._groups[nextmatch.id];
-
-		// Start with the nm header
-		this._groups[nextmatch.id][''] = {filters: [], order: 0};
 		// @ts-ignore header is private
-		nextmatch.header.header_div[0]
+		this._nextmatch.header.header_div[0]
 			.querySelectorAll(".et2-input-widget")
 			.forEach((widget : HTMLElement) =>
 			{
-				const filter = this._adoptNextmatchWidget(widget);
-				if(!filter)
-				{
-					return;
-				}
-				if(filter.widget.dataset.groupOrder)
-				{
-					this._groups[nextmatch.id][''].order = parseInt(filter.dataset.groupOrder);
-				}
-				this._groups[nextmatch.id][''].filters.push(filter);
+				this._adoptNextmatchWidget(widget);
 			});
 
 		// Now for column headers
-		const dataId = 'col_filter';
-		const filters = Array.from(nextmatch.getDOMNode().querySelectorAll("et2-nextmatch-header-filter, et2-nextmatch-header-account, et2-nextmatch-header-entry, et2-nextmatch-header-custom"));
+		const filters = Array.from(this._nextmatch.getDOMNode().querySelectorAll("et2-nextmatch-header-filter, et2-nextmatch-header-account, et2-nextmatch-header-entry, et2-nextmatch-header-custom"));
 		filters.forEach((widget : HTMLElement) =>
 		{
-			// Customfields get their own group
-			const groupName = (widget.dataset.groupName ? widget.egw().lang(widget.dataset.groupName) : null) ?? (
-				widget.getParent().instanceOf(et2_nextmatch_customfields) ?
-				widget.egw().lang('Custom fields') : widget.egw().lang('Column Filters')
-			);
-			if(typeof group[groupName] == "undefined")
-			{
-				group[groupName] = {
-					filters: [],
-					order: parseInt(widget.dataset.groupOrder) || 0,
-					dataId: dataId
-				};
-			}
-			const filter = this._adoptNextmatchWidget(widget);
-			if(filter)
-			{
-				group[groupName].filters.push(filter);
-			}
+			this._adoptNextmatchWidget(widget);
 		});
 
-		this._sortFilters();
-		this._nextmatch.getDOMNode().classList.add("et2-filterbox--loaded", "et2-filterbox--" + this.originalWidgets);
+		this._nextmatch.getDOMNode().classList.add("et2-filterbox--" + this.originalWidgets);
 
 		// If the nextmatch has sub-headers and we didn't grab everything from them, mark the NM so we don't hide them
 		const subHeaders = ["header_left", "header_right", "header_row", "header2"];
@@ -395,13 +311,12 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			}
 		});
 		this.requestUpdate();
-		nextmatch.getDOMNode().addEventListener("et2-filter", this.handleNextmatchFilter);
 	}
 
 	private _adoptNextmatchWidget(widget) : Filter
 	{
 		const noReplaceClasses = ['et2-nextmatch-header-entry'];
-		const dealWithOriginal = (widget, filter) =>
+		const dealWithOriginal = (widget) =>
 		{
 			switch(this.originalWidgets)
 			{
@@ -410,8 +325,8 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 				case "replace":
 					if(!noReplaceClasses.includes(widget.localName) && widget.implements(et2_INextmatchHeader))
 					{
-						const replacement = document.createElement("div");
-						replacement.innerHTML = filter.label;
+						const replacement = document.createElement("span");
+						replacement.innerHTML = widget.label || widget.ariaLabel || widget.placeholder || widget.emptyLabel;
 						widget.replaceWith(replacement);
 						break;
 					}
@@ -442,21 +357,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 			return;
 		}
 
-		const et2Widget = widget as unknown as typeof Et2InputWidget;
-		const clone = et2Widget.clone();
-		clone.removeAttribute("align");
-		const filter = {
-			// @ts-ignore
-			label: et2Widget.label || et2Widget.ariaLabel || et2Widget.placeholder || et2Widget.emptyLabel,
-			// @ts-ignore
-			name: et2Widget.id,
-			// @ts-ignore
-			widget: clone,
-			order: widget.dataset.order
-		};
-		this.filters.push(filter);
-		dealWithOriginal(widget, filter);
-		return filter;
+		dealWithOriginal(widget);
 	}
 
 	private _sortFilters()
@@ -499,6 +400,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	{
 		if(this.autoapply)
 		{
+			event.stopPropagation();
 			this.applyFilters();
 		}
 	}
@@ -539,43 +441,9 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	private handleSlotChange(event)
 	{
-		// Got or lost a custom filter template, discard internal stuff
-		if(this._nextmatch)
-		{
-			this.filters.splice(0, this.filters.length - 1);
-			delete this._groups[this._nextmatch.id];
-			this.readNextmatchFilters(this._nextmatch)
-		}
-		// We conditionally render the default slot, so need an update
-		this.requestUpdate();
+		// What changed?
+		debugger;
 	}
-
-
-	/**
-	 * Render a group of filters inside a details element
-	 *
-	 * @param {string} group
-	 * @param {Filter[]} filters
-	 * @return {TemplateResult | symbol}
-	 * @protected
-	 */
-	protected _groupTemplate(group : string, filters : Filter[]) : TemplateResult | symbol
-	{
-		if(filters.length == 0)
-		{
-			return nothing;
-		}
-		if(!group)
-		{
-			return html`${filters.map((filter, index) => this.getFilter(filter, index))}`;
-		}
-		return html`
-            <et2-details summary=${group} open>
-                ${filters.map((filter, index) => this.getFilter(filter, index))}
-            </et2-details>
-		`;
-	}
-
 	render()
 	{
 		const hasLabelSlot = this.hasSlotController.test('label');
@@ -596,10 +464,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
                 <div part="filters" class="filterbox__filters"
                      @change=${this.handleFilterChange}
                 >
-                    ${this.hasSlotController.test('[default]') ? html`
-                        <slot></slot>` : html`
-                        ${Object.keys(this._groups[this._nextmatch?.id] ?? {}).map(groupName => this._groupTemplate(groupName, this._groups[this._nextmatch?.id][groupName].filters))}
-                    `}
+                    <slot></slot>
                 </div>
                 <slot name="suffix" part="suffix" class="filterbox__suffix"></slot>
                 ${this._helpTextTemplate()}

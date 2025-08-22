@@ -122,7 +122,7 @@ function send_template()
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template id="$template_id" slot="filter">
+	<et2-template id="$template_id">
 EOF;
 		if (empty($_GET['no_search']))
 		{

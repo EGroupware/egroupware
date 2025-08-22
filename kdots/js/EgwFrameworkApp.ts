@@ -1061,24 +1061,8 @@ export class EgwFrameworkApp extends LitElement
                                  statustext=${this.egw.lang("Select columns")}
                                  @click=${e => {this.nextmatch._selectColumnsClick(e)}} nosubmit>
                 </et2-button-icon>
-                <et2-filterbox
-                        exportparts="filters"
-                        class="egw_fw_app__filter"
-                        autoapply
-                        nextmatch=${this.nextmatch.id}
-                        originalwidgets=${this.egw.preference("keep_nm_header", 'common') || "replace"}
-                        @change=${e => e.preventDefault()}
-                >
-                    ${hasCustomFilter ? html`
-                        <slot name="filter"></slot>` : nothing}
-                    ${!this.features.favorites || hasCustomFilter ? nothing : html`
-                        <sl-details class="egw_fw_app__favorites" open slot="suffix"
-                                    summary=${this.egw.lang("Favorites")}
-                        >
-                            <et2-favorites-menu application=${this.name}></et2-favorites-menu>
-                        </sl-details>
-                    `}
-                </et2-filterbox>
+                ${hasCustomFilter ? html`
+                    <slot name="filter"></slot>` : nothing}
             </sl-drawer>`;
 	}
 

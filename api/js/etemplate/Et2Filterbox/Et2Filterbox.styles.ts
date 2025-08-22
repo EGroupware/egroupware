@@ -10,7 +10,7 @@ export default css`
 	.filterbox {
 	}
 
-	.filterbox__filters, .filterbox__filters [summary]::part(content) {
+	.filterbox__filters, et2-template {
 		display: flex;
 		flex-direction: column;
 		gap: var(--gap-width);

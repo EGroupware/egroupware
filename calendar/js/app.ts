@@ -4064,24 +4064,7 @@ export class CalendarApp extends EgwApp
 	_setupFilterTemplate(_et2)
 	{
 		this.sidebox_hooked_templates.push(_et2.widgetContainer);
-		// Bind listener for when nm changes
-		const filterListener = (e) =>
-		{
-			const filterTemplate = etemplate2.getById('calendar-filter');
-			Object.keys(e.detail.activeFilters ?? {}).forEach(f =>
-			{
-				let widget = null;
-				if((widget = filterTemplate.widgetContainer.getWidgetById(f)))
-				{
-					widget.value = e.detail.activeFilters[f];
-				}
-			})
-		};
-		_et2.DOMContainer.closest("egw-app")?.addEventListener("et2-filter", filterListener);
-		_et2.DOMContainer.addEventListener("clear", () =>
-		{
-			_et2.DOMContainer.closest("egw-app")?.removeEventListener("et2-filter", filterListener);
-		});
+		_et2.widgetContainer.querySelector("et2-filterbox").nextmatch = CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById("nm");
 	}
 
 	/**
@@ -4149,10 +4132,7 @@ export class CalendarApp extends EgwApp
 				{
 					this.state.keywords = nm.activeFilters.search;
 				}
-				// Bind to keep search up to date
-				jQuery(nm.getWidgetById('search').getDOMNode()).on('change', function() {
-					app.calendar.state.search = jQuery('input',this).val();
-				});
+				
 				nm.set_startdate = jQuery.proxy(function(date) {
 					this.state.first = this.date.toString(new Date(date));
 				},this);

@@ -266,21 +266,25 @@ class Nextmatch extends Etemplate\Widget
 		}
 
 		// check if we have a filter-template or need to generate one
-		$template_name = $rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
-		$parts = explode('.', $template_name);
-		// remove rows
-		if (($key = array_search('rows', $parts)))
+		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
+		$template_name = $value['filter_template'] ?? $this->attrs['filter_template'];
+		if(!$template_name && !array_key_exists('filter_template', $this->attrs))
 		{
-			$parts = array_slice($parts, 0, $key);
+			$parts = explode('.', $rows_template);
+			// remove rows
+			if(($key = array_search('rows', $parts)))
+			{
+				$parts = array_slice($parts, 0, $key);
+			}
+			else
+			{
+				array_pop($parts);
+			}
+			$template_name = implode('.', $parts) . '.filter';
+			$app = array_shift($parts);
+			$rest = implode('.', $parts);
 		}
-		else
-		{
-			array_pop($parts);
-		}
-		$template_name = implode('.', $parts);
-		$app = array_shift($parts);
-		$rest = implode('.', $parts);
-		if (!($tpl=Template::instance($app.'.filter')))
+		if($template_name && !($tpl = Template::instance($template_name)))
 		{
 			if (($path=Template::relPath($template_name)))
 			{
@@ -320,12 +324,15 @@ class Nextmatch extends Etemplate\Widget
 		{
 			$url = Template::rel2url($tpl->rel_path);
 		}
+		if($template_name)
+		{
+			self::setElementAttribute($this->id, "filter_template", $url);
+		}
 		// stop NM itself from generating search, filter(2) and cat_id widgets
 		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
 		{
 			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_'.$key, true);
 		}
-		self::setElementAttribute(($this->id === 'nm' ? '' : $this->id.'-').'filter-template', 'url', $url);
 	}
 
 	/**

@@ -3,36 +3,41 @@
 
 <overlay>
     <template id="calendar.filter" slot="filter">
-        <et2-searchbox id="search" label="Search" class="et2-label-fixed" onchange="app.calendar.update_state({view:'listview',search: widget.getValue()});"></et2-searchbox>
-        <et2-date label="Start" id="startdate" class="et2-label-fixed"
-                  max="@end_date"
-                  onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());
-                  app.calendar.update_state({filter: 'custom',view: 'listview',date: widget.getValue()}); return false;"></et2-date>
-        <et2-date label="End" id="enddate" class="et2-label-fixed"
-                  min="@date"
-                  onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());
-                  app.calendar.update_state({filter: 'custom',view:'listview',end_date: widget.getValue()}); return false;"></et2-date>
-        <et2-select-cat id="cat_id" class="et2-label-fixed" placeholder="All categories"
-                        onchange="app.calendar.update_state({cat_id: widget.getValue()});"
-                        emptyLabel="All categories" multiple="true"
-        >
-        </et2-select-cat>
-        <et2-select id="status_filter" class="et2-label-fixed" onchange="app.calendar.update_state({status_filter: widget.getValue()});"
-                    noLang="true"></et2-select>
-        <et2-box disabled="!@integration">
-            <grid id="integration" disabled="!@integration" width="100%">
-                <columns>
-                    <column/>
-                </columns>
-                <rows>
-                    <row>
-                        <template id="$row_cont[template]" width="100%" content="$row_cont[app]"/>
-                    </row>
-                </rows>
-            </grid>
-        </et2-box>
-        <et2-select id="merge" class="et2-label-fixed" onchange="app.calendar.sidebox_merge"
-                    emptyLabel="Insert in document"></et2-select>
-        <iframe id="iframe" width="100%" height="100%"/>
+        <et2-filterbox autoapply="true">
+            <et2-searchbox id="search" label="Search" class="et2-label-fixed" onchange="app.calendar.update_state({view:'listview',search: widget.getValue()});"></et2-searchbox>
+            <et2-date label="Start" id="startdate" class="et2-label-fixed"
+                      max="@end_date"
+                      onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());
+                      app.calendar.update_state({filter: 'custom',view: 'listview',date: widget.getValue()}); return false;"></et2-date>
+            <et2-date label="End" id="enddate" class="et2-label-fixed"
+                      min="@date"
+                      onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());
+                      app.calendar.update_state({filter: 'custom',view:'listview',end_date: widget.getValue()}); return false;"></et2-date>
+            <et2-select-cat id="cat_id" class="et2-label-fixed" placeholder="All categories"
+                            onchange="app.calendar.update_state({cat_id: widget.getValue()});"
+                            emptyLabel="All categories" multiple="true"
+            >
+            </et2-select-cat>
+            <et2-select id="status_filter" class="et2-label-fixed" onchange="app.calendar.update_state({status_filter: widget.getValue()});"
+                        noLang="true"></et2-select>
+            <et2-box disabled="!@integration">
+                <grid id="integration" disabled="!@integration" width="100%">
+                    <columns>
+                        <column/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <template id="$row_cont[template]" width="100%" content="$row_cont[app]"/>
+                        </row>
+                    </rows>
+                </grid>
+            </et2-box>
+            <et2-select id="merge" class="et2-label-fixed" onchange="app.calendar.sidebox_merge"
+                        emptyLabel="Insert in document"></et2-select>
+            <iframe id="iframe" width="100%" height="100%"/>
+            <styles>
+                #calendar-filter_calendar-filter iframe { display: none;}
+            </styles>
+        </et2-filterbox>
     </template>
 </overlay>

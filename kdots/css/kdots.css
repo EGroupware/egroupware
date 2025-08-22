@@ -652,7 +652,12 @@ egw-app et2-template[slot="main-header"]::part(base) {
   flex-direction: row;
   align-items: center;
 }
-egw-app [slot="filter"]::part(base) {
+egw-app [slot="filter"]::part(base),
+egw-app [slot="filter"] > et2-template::part(base),
+egw-app [slot="filter"] et2-details::part(base),
+egw-app [slot="filter"]::part(content),
+egw-app [slot="filter"] > et2-template::part(content),
+egw-app [slot="filter"] et2-details::part(content) {
   display: flex;
   flex-direction: column;
   gap: var(--gap-width);

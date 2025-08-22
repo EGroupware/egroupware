@@ -104,7 +104,7 @@
 					<html id="css" span="all"/>
 				</row>
 				<row>
-					<nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.dates" span="all"/>
+                    <nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.dates" filter_template="" span="all"/>
 				</row>
 				<row>
 					<et2-hbox>

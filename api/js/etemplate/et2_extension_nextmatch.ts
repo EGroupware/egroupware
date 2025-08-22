@@ -79,6 +79,7 @@ import type {LitElement} from "lit";
 import {Et2Template} from "./Et2Template/Et2Template";
 import {waitForEvent} from "./Et2Widget/event";
 import {Et2VfsUpload} from "./Et2Vfs/Et2VfsUpload";
+import {Et2Filterbox} from "./Et2Filterbox/Et2Filterbox";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -197,6 +198,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			"type": "string",
 			"description": "Customise the nextmatch - inline, after row count in new line.  Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
 			"default": ""
+		},
+		"filter_template": {
+			"name": "Template for filters",
+			"type": "string",
+			"description": "A single template that includes all filters for the nextmatch",
+			"default": et2_no_init
 		},
 		"no_filter": {
 			"name": "No filter",
@@ -330,6 +337,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 	// Watch our DOM node so we can send events
 	private _DOMObserver : MutationObserver = new MutationObserver(this._handleDOMMutation.bind(this));
+	private _filter_template : Et2Template;
+	private _filterbox : Et2Filterbox;
 
 	/**
 	 * Constructor
@@ -771,7 +780,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				activeFilters: this.activeFilters,
 				// Include nm widget because it's so hard to get from DOM to widget
 				nm: this
-			}
+			},
+			cancelable: true
 		});
 		this.getDOMNode().dispatchEvent(changeEvent);
 		if(changeEvent.defaultPrevented)
@@ -2681,6 +2691,47 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	set_header_row2(template : string)
 	{
 		this.header._build_header("row2", template);
+	}
+
+	/**
+	 * Load the filter template & bind listeners
+	 *
+	 * @param {string | Et2Template} template
+	 */
+	set_filter_template(template : string | Et2Template)
+	{
+		if(this._filterbox)
+		{
+			this._filterbox.childNodes.forEach(n => n.remove());
+		}
+		if(!template)
+		{
+			return;
+		}
+		if(!this._filterbox)
+		{
+			this._filterbox = <Et2Filterbox><unknown>loadWebComponent("et2-filterbox", {
+				exportparts: "filters",
+				slot: "filter",
+				autoapply: true,
+				originalWidgets: this.egw().preference("keep_nm_header", 'common') || "replace"
+			}, this);
+			this._filterbox.nextmatch = this;
+			this.getInstanceManager().DOMContainer.closest("egw-app")?.append(this._filterbox);
+		}
+		let filterTemplate = null;
+		if(typeof template == "string")
+		{
+			filterTemplate = <Et2Template><unknown>loadWebComponent("et2-template", {
+				id: 'filter-template',
+				url: template
+			}, this);
+		}
+		else if(template instanceof HTMLElement)
+		{
+			filterTemplate = template;
+		}
+		this._filterbox.append(filterTemplate);
 	}
 
 	set_no_filter(bool, filter_name)

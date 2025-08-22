@@ -40,8 +40,9 @@ egw-app {
 	}
   }
   /* Nice formatting for custom templates slotted into filter */
-  [slot="filter"] {
-	&::part(base) {
+
+  [slot="filter"], [slot="filter"] > et2-template, [slot="filter"] et2-details {
+	&::part(base), &::part(content) {
 	  display: flex;
 	  flex-direction: column;
 	  gap: var(--gap-width);
