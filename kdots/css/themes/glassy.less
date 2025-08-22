@@ -13,7 +13,7 @@
   --bottom-shadow-active: inset 0 -0.125rem 0 0 rgb(255 255 255 / 0.04);
 
   /* Rounded corners */
-  --sl-border-radius-small: 0.25rem; /* Small radius */
+  --sl-border-radius-small: 1rem; /* Small radius */
   --sl-border-radius-medium: var(--sl-input-height-medium); /* Medium radius */
   --sl-border-radius-large: 1.75rem; /* Large radius */
 
@@ -39,7 +39,8 @@
 	  &::part(base), &::part(input-control), &::part(combobox) {
 		box-shadow: var(--upper-tint), var(--lower-shade);
 	  }
-	  &::part(listbox){
+
+	  &::part(listbox) {
 		--sl-input-background-color: var(--sl-color-neutral-0);
 	  }
 	}
@@ -82,6 +83,7 @@
 
 	/*sidebox styling
   */
+
 	&::part(details-header) {
 	  background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
 	  border-radius: 1em;
@@ -89,18 +91,26 @@
 	  color: var(--application-header-text-color);
 	}
   }
-}
 
-et2-dialog {
-  &::part(header) {
-	/* Set header size, color & background */
-	box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
-	color: var(--application-header-text-color, var(--sl-color-neutral-100));
-	background: var(--application-color, var(--sl-color-primary-500));
-	height: var(--sl-spacing-3x-large);
-  }
+  et2-dialog {
+	&::part(panel) {
+	  border-radius: var(--sl-panel-border-radius);
+	  border-bottom-left-radius: var(--sl-border-radius-large);
+	  border-bottom-right-radius: var(--sl-border-radius-large);
+	}
 
-  &::part(close-button) {
-	color: var(--application-header-text-color, var(--sl-color-neutral-100));
+	&::part(header) {
+	  /* Set header size, color & background */
+	  box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
+	  color: var(--application-header-text-color, var(--sl-color-neutral-100));
+	  background: var(--application-color, var(--sl-color-primary-500));
+	  height: var(--sl-spacing-3x-large);
+	  border-top-left-radius: var(--sl-panel-border-radius);
+	  border-top-right-radius: var(--sl-panel-border-radius);
+	}
+
+	&::part(close-button) {
+	  color: var(--application-header-text-color, var(--sl-color-neutral-100));
+	}
   }
 }

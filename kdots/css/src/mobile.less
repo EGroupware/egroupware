@@ -1,29 +1,3 @@
-body {
-  #popupMainDiv.et2_mobile_view {
-	width: 100%;
-	height: 100%;
-	background: var(--sl-color-neutral-0);
-	display: block;
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	overflow: auto;
-
-  }
-}
-egw-app{
-  //target the header bar in mobile views
-  et2-hbox[slot="label"]{
-	et2-button-toggle{
-	  --indicator-color: var(--sl-color-neutral-0);
-	  --image-filter-off: opacity(0.5);
-	  &::part(control){
-		background-color: transparent;
-	  }
-	}
-  }
-}
 
 @media screen and (max-width: 800px) {
   html * {
@@ -31,7 +5,7 @@ egw-app{
 	-webkit-overflow-scrolling: touch;
   }
 
-  body {
+  :root, body {
 	egw-framework#egw_fw_basecontainer {
 	  --left-side-width: 0px !important;
 	  /* Hide some parts */
@@ -78,6 +52,7 @@ egw-app{
 		max-width: 100%;
 		max-height: 100%;
 		height: 100%;
+		border-radius: 0;
 	  }
 
 	  &::part(header) {
@@ -86,7 +61,7 @@ egw-app{
 		background: var(--application-color, var(--sl-color-primary-500));
 		height: var(--sl-spacing-3x-large);
 		padding: 0;
-		border-radius: 0;
+		border-radius: 0 !important;
 		flex-direction: row-reverse;
 	  }
 

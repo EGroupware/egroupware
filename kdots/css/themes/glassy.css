@@ -12,7 +12,7 @@
   --lower-shade-active: inset 0 -1.125em 0 0 rgba(0, 0, 0, 0.02);
   --bottom-shadow-active: inset 0 -0.125rem 0 0 rgba(255, 255, 255, 0.04);
   /* Rounded corners */
-  --sl-border-radius-small: 0.25rem;
+  --sl-border-radius-small: 1rem;
   /* Small radius */
   --sl-border-radius-medium: var(--sl-input-height-medium);
   /* Medium radius */
@@ -119,13 +119,26 @@
   padding-block: var(--sl-spacing-3x-small);
   color: var(--application-header-text-color);
 }
-et2-dialog::part(header) {
+:root et2-dialog::part(panel),
+:host et2-dialog::part(panel),
+.kdots-glassy et2-dialog::part(panel) {
+  border-radius: var(--sl-panel-border-radius);
+  border-bottom-left-radius: var(--sl-border-radius-large);
+  border-bottom-right-radius: var(--sl-border-radius-large);
+}
+:root et2-dialog::part(header),
+:host et2-dialog::part(header),
+.kdots-glassy et2-dialog::part(header) {
   /* Set header size, color & background */
   box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
   color: var(--application-header-text-color, var(--sl-color-neutral-100));
   background: var(--application-color, var(--sl-color-primary-500));
   height: var(--sl-spacing-3x-large);
+  border-top-left-radius: var(--sl-panel-border-radius);
+  border-top-right-radius: var(--sl-panel-border-radius);
 }
-et2-dialog::part(close-button) {
+:root et2-dialog::part(close-button),
+:host et2-dialog::part(close-button),
+.kdots-glassy et2-dialog::part(close-button) {
   color: var(--application-header-text-color, var(--sl-color-neutral-100));
 }
