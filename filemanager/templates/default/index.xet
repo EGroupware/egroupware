@@ -50,7 +50,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.index.header_left" template="" lang="" group="0" version="1.9.002">
+	<et2-template id="filemanager.index.app-toolbar" template="" lang="" group="0" version="1.9.002">
         <!-- Anonymous view has some extras - logo & button -->
         <et2-image id="logo" disabled="!@show_refresh" hideOnReadonly="true" style="max-width: 150px"></et2-image>
         <et2-button  id="reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()"
@@ -60,26 +60,25 @@
                         dropTarget="filemanager-index" multiple="true"
                         onchange="widget.value={}; return false;"
         ></et2-vfs-upload>
-    </template>
-	<template id="filemanager.index.header_row" template="" lang="" group="0" version="1.9.002">
 		<et2-button  id="home" statustext="Go to your home directory" image="gohome" onclick="app.filemanager.change_dir('~',widget);" noSubmit="true"></et2-button>
 		<et2-button  id="up" statustext="Up" image="goup" onclick="app.filemanager.change_dir('..',widget);" noSubmit="true"></et2-button>
         <et2-vfs-path id="path" onchange="app.filemanager.handlePathChange" size="80" class="address"/>
 		<et2-button  statustext="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" noSubmit="true"></et2-button>
-	</template>
-	<template id="filemanager.index.header_right" template="" lang="" group="0" version="1.9.003">
-		<et2-dropdown-button  id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"></et2-dropdown-button>
-		<et2-button  statustext="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" noSubmit="true"></et2-button>
-		<et2-button  statustext="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" noSubmit="true"></et2-button>
-		<et2-button  statustext="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" noSubmit="true"></et2-button>
-		<!--
-		<et2-button  statustext="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" image="editpaste" noSubmit="true"></et2-button>
-		<et2-button  statustext="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" image="linkpaste" noSubmit="true"></et2-button>
-		<et2-button  statustext="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" image="mailpaste" noSubmit="true"></et2-button>
-		-->
-		<et2-button  statustext="File a file" onclick="app.filemanager.fileafile" image="upload" noSubmit="true"></et2-button>
-	</template>
+		<et2-toolbar id="toolbar">
+			<et2-dropdown-button  id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"></et2-dropdown-button>
+			<et2-button  statustext="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" noSubmit="true"></et2-button>
+			<et2-button  statustext="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" noSubmit="true"></et2-button>
+			<et2-button  statustext="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" noSubmit="true"></et2-button>
+			<!--
+			<et2-button  statustext="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" image="editpaste" noSubmit="true"></et2-button>
+			<et2-button  statustext="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" image="linkpaste" noSubmit="true"></et2-button>
+			<et2-button  statustext="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" image="mailpaste" noSubmit="true"></et2-button>
+			-->
+			<et2-button  statustext="File a file" onclick="app.filemanager.fileafile" image="upload" noSubmit="true"></et2-button>
+		</et2-toolbar>
+	</et2-template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
-        <nextmatch id="nm" class="et2_toolbar" template="filemanager.index.rows" header_left="filemanager.index.header_left" header_row="filemanager.index.header_row" header_right="filemanager.index.header_right"/>
+		<et2-template template="filemanager.index.app-toolbar" slot="main-header"></et2-template>
+        <nextmatch id="nm" template="filemanager.index.rows"/>
 	</template>
 </overlay>

@@ -408,7 +408,7 @@ class Nextmatch extends Etemplate\Widget
 		$value['num_rows'] = (int)$queriedRange['num_rows'];
 		if($value['num_rows'] == 0) $value['num_rows'] = self::INITIAL_ROWS;
 		// if app supports parent_id / hierarchy ($value['parent_id'] not empty), set parent_id as filter
-		if (($parent_id = $value['parent_id']))
+		if (($parent_id = $value['parent_id']) && !empty($queriedRange['parent_id']))
 		{
 			// Infolog at least wants 'parent_id' instead of $parent_id
 			$value['col_filter'][$parent_id] = $queriedRange['parent_id'];

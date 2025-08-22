@@ -458,6 +458,7 @@ class filemanager_ui
 				// switch recusive display off
 				if (!$content['nm']['filter']) $content['nm']['filter'] = '';
 			}
+			$content['nm']['col_filter']['dir'] = $content['nm']['path'];
 		}
 		$view = static::get_view();
 
@@ -668,6 +669,8 @@ class filemanager_ui
 		{
 			$content['initial_path_readonly'] = !Vfs::is_writable($content['nm']['path']);
 		}
+		// propagate nm[path] as nm[col_filter][dir]
+		$content['nm']['col_filter']['dir'] = $content['nm']['path'];
 
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
@@ -983,7 +986,8 @@ class filemanager_ui
 			unset($store_query['col_filter']['mime']);
 			Api\Cache::setSession('filemanager', 'index', $store_query);
 		}
-		if(!$query['path']) $query['path'] = static::get_home_dir();
+		// NM on client-side uses col_filter[dir], not path!
+		$query['path'] = $query['col_filter']['dir'] ?? $query['path'] ?? static::get_home_dir();
 
 		// Change template to match selected view
 		if($query['view'])

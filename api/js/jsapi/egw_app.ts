@@ -339,11 +339,7 @@ export abstract class EgwApp
 					case 'col_filter':
 						for(const attr in activeFilters.col_filter)
 						{
-							let widget = app_toolbar.getWidgetById(attr);
-							if (widget && widget.value != activeFilters.col_filter[attr])
-							{
-								widget.value = activeFilters.col_filter[attr];
-							}
+							this.checkNmFilterChanged(app_toolbar, attr, activeFilters.col_filter[attr]);
 						}
 						break;
 					case 'filter':

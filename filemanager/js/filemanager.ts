@@ -368,7 +368,7 @@ export class filemanagerAPP extends EgwApp
 		return path_widget ? path_widget.get_value.apply(path_widget) : null;
 	}
 
-	handlePathChange(widget)
+	handlePathChange(_ev : Event, widget)
 	{
 		if(widget.getValue() == '')
 		{
@@ -380,7 +380,28 @@ export class filemanagerAPP extends EgwApp
 			// Et2VfsUpload needs the trailing /
 			upload.path = widget.getValue() + '/';
 		}
+		this.nm && this.nm.applyFilters({col_filter: {dir: widget.getValue()}});
+
 		return true;
+	}
+
+	/**
+	 * Check if any NM filter or search in app-toolbar needs to be updated to reflect NM internal state
+	 *
+	 * Reimplement to use path instead of col_filter[dir]
+	 *
+	 * @param app_toolbar
+	 * @param id
+	 * @param value
+	 */
+	checkNmFilterChanged(app_toolbar, id : string, value : string)
+	{
+		super.checkNmFilterChanged(app_toolbar, id, value);
+
+		if (id === 'dir')
+		{
+			super.checkNmFilterChanged(app_toolbar, 'path', value);
+		}
 	}
 
 	/**
