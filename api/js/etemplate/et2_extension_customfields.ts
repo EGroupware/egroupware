@@ -611,7 +611,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		const value = {};
 		for(let field_name in this.widgets)
 		{
-			if(this.widgets[field_name].getValue && !this.widgets[field_name].options.readonly)
+			if(this.widgets[field_name].getValue && !this.widgets[field_name].readonly)
 			{
 				value[this.options.prefix + field_name] = this.widgets[field_name].getValue();
 			}
