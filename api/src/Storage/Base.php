@@ -1588,18 +1588,21 @@ class Base
 				}
 			}
 		}
-		if ($extra_cols)	// extra columns to report
+		if ($extra_cols) // extra columns to report
 		{
-			foreach(is_array($extra_cols) ? $extra_cols : explode(',',$extra_cols) as $col)
+			foreach (is_array($extra_cols) ? $extra_cols : explode(',', $extra_cols) as $col)
 			{
-				if (stripos($col,'as ')!==false) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
-				if (($db_col = array_search($col,$this->db_cols)) !== false)
-				{
-					$cols[$db_col] = $col;
+				$col = trim($col);
+
+				// If there's an alias, extract ONLY the alias (handles newlines, tabs, quotes, backticks)
+				if (preg_match('/\bas\s+([`"]?)([A-Za-z0-9_]+)\1\s*$/is', $col, $m)) {
+					$col = $m[2];
 				}
-				else
-				{
-					$cols[$col] = isset($this->db_cols[$col]) ? $this->db_cols[$col] : $col;
+
+				if (($db_col = array_search($col, $this->db_cols, true)) !== false) {
+					$cols[$db_col] = $col;
+				} else {
+					$cols[$col] = $this->db_cols[$col] ?? $col;
 				}
 			}
 		}
