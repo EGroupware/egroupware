@@ -122,6 +122,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	// In case we need to do things between file added and start of upload, we wait
 	protected _uploadPending : { [uniqueIdentifier : string] : Promise<void> } = {};
 	private _uploadDelayTimeout : number;
+	private _destroyDelayTimeout : number;
 
 	/** Files already uploaded */
 	@property({type: Object})
@@ -174,6 +175,18 @@ export class Et2File extends Et2InputWidget(LitElement)
 		this.handleFileClick = this.handleFileClick.bind(this);
 	}
 
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		// Resumable does not deal with destruction well.
+		// If we were waiting to see if this reconnected, it has, so stop the destroy timeout
+		if(this._destroyDelayTimeout)
+		{
+			window.clearTimeout(this._destroyDelayTimeout);
+		}
+	}
+
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
@@ -181,20 +194,24 @@ export class Et2File extends Et2InputWidget(LitElement)
 		{
 			window.clearTimeout(this._uploadDelayTimeout);
 		}
-		if(this.resumable)
+
+		// Resumable does not deal with destruction well.
+		// If actually destroyed it will not work again, so we'll wait a bit on destruction to see if it reconnects
+		// (widget was just moved in the DOM)
+		if(this.resumable && !this._destroyDelayTimeout)
 		{
-			this.resumable.cancel();
-			this.resumable = null;
+			this._destroyDelayTimeout = window.setTimeout(() =>
+			{
+				this.resumable.cancel();
+				this.resumable = null;
+			}, 1000);
 		}
 	}
 
-	willUpdate(changedProperties : PropertyValueMap<any>)
-	{
-		super.willUpdate(changedProperties);
 
-	}
-	firstUpdated()
+	firstUpdated(changedProperties : PropertyValueMap<any>)
 	{
+		super.firstUpdated(changedProperties)
 		this.resumable = this.createResumable();
 	}
 
@@ -347,7 +364,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 		// Actually start uploading
 		await fileItem.updateComplete;
-		const ev = new CustomEvent("et2-add", {bubbles: true, detail: file})
+		const ev = new CustomEvent("et2-add", {bubbles: true, detail: file, cancelable: true});
 		this.dispatchEvent(ev);
 
 		if(typeof this.onStart == "function")

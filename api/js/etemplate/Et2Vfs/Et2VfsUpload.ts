@@ -113,7 +113,7 @@ export class Et2VfsUpload extends Et2File
 		{
 			return superAdded(info, event);
 		}
-		// Pause uploads while we check
+		// Pause uploads while we check - superAdded() will resume
 		this.resumable.pause();
 		try
 		{

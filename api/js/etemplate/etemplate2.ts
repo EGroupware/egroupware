@@ -770,7 +770,7 @@ export class etemplate2
 				// to run.
 				setTimeout(() =>
 				{
-					this._widgetContainer.updateComplete.then(() =>
+					this._widgetContainer.updateComplete.then(async() =>
 					{
 						// Clear dirty now that it's all loaded
 						this.widgetContainer.iterateOver((_widget) =>
@@ -793,8 +793,20 @@ export class etemplate2
 							this.focusOnFirstInput();
 						}
 						// Move top level slotted components out so they can get slotted
-						const slottedWidgets = this._widgetContainer.querySelectorAll(":scope > [slot]") ?? []
-						slottedWidgets.forEach(node => {this._DOMContainer.parentNode.appendChild(node);});
+						const slottedWidgets : Et2Widget[] = Array.from(this._widgetContainer.querySelectorAll(":scope > [slot]")) ?? []
+						try
+						{
+							slottedWidgets.forEach(node => {this._DOMContainer.parentNode.appendChild(node);});
+
+							// We just reconnected some widgets so they may need a chance to re-render
+							// @ts-ignore
+							await Promise.all(slottedWidgets.map(node => {return node.updateComplete ?? new Promise.resolve();}));
+						}
+						catch(e)
+						{
+							egw.debug("error", "Error moving slotted widgets: " + e.message);
+							throw e;
+						}
 
 						// Now etemplate is ready for others to interact with (eg: app.js)
 						this.ready = true;

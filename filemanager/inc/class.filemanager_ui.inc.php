@@ -1039,6 +1039,7 @@ class filemanager_ui
 				$query['col_filter']['path'] = $query['col_filter']['path'] ? [$query['col_filter']['path']] : [];
 			}
 			$query['col_filter']['path'][] = $query['path'];
+			$query['col_filter']['dir'] = is_array($query['col_filter']['dir']) ? $query['col_filter']['dir'] : [$query['col_filter']['dir']];
 			foreach($query['col_filter']['path'] as $filter_path)
 			{
 				$query['col_filter']['dir'][] = Vfs::is_dir($filter_path) ? $filter_path : Vfs::dirname($filter_path);
