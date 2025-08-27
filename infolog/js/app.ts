@@ -80,7 +80,7 @@ class InfologApp extends EgwApp
 				// Show / hide descriptions according to details filter
 				var nm = <et2_nextmatch>this.et2.getWidgetById('nm');
 				var filter2 = <et2_selectbox> nm.getWidgetById('filter2');
-				this.show_details(filter2.get_value() == 'all',nm.getDOMNode(nm));
+				this.show_details(filter2.value == 'all', nm.getDOMNode(nm));
 				// Remove the rule added by show_details() if the template is removed
 				jQuery(_et2.DOMContainer).on('clear', jQuery.proxy(function() {egw.css(this);}, '#' + nm.getDOMNode(nm).id + ' .et2_box.infoDes'));
 
@@ -272,7 +272,7 @@ class InfologApp extends EgwApp
 		if (nm && filter2)
 		{
 			// Show / hide descriptions
-			this.show_details(filter2.get_value() === 'all', nm.getDOMNode(nm));
+			this.show_details(filter2.value === 'all', nm.getDOMNode(nm));
 		}
 
 		// Only change columns for a real user event, to avoid interfering with
@@ -286,10 +286,10 @@ class InfologApp extends EgwApp
 			nm.update_in_progress = true;
 
 			// Store selection as implicit preference
-			egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details','')+'-details-pref', filter2.get_value());
+			egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details', '') + '-details-pref', filter2.value);
 
 			// Change preference location - widget is nextmatch
-			nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details','') + (filter2.get_value() == 'all' ? '-details' :'');
+			nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details', '') + (filter2.value == 'all' ? '-details' : '');
 
 			// Load new preferences
 			var colData = nm.columns.slice();
@@ -310,7 +310,7 @@ class InfologApp extends EgwApp
 			nm.dataview.getColumnMgr().updated();
 
 			// Set the actual filter value here
-			nm.activeFilters.filter2 = filter2.get_value();
+			nm.activeFilters.filter2 = filter2.value;
 			nm.dataview.updateColumns();
 			nm.update_in_progress = in_progress;
 		}
