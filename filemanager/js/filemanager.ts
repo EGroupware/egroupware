@@ -237,13 +237,12 @@ export class filemanagerAPP extends EgwApp
 				state = JSON.parse(state);
 			}
 		}
-		let result = super.setState(state, 'filemanager.index');
+		const path = state.state?.path || "~";
 
-		if(state.state?.path && this.et2?.getWidgetById("upload"))
-		{
-			// Update file upload since changing the path programmatically doesn't fire a change event
-			this.et2.getWidgetById("upload").path = state.state.path + (state.state.path.endsWith("/") ? "" : "/");
-		}
+		// NM used to have path as a child widget, but now path is outside so we do some extra stuff
+		this.change_dir(path);
+
+		let result = super.setState(state, 'filemanager.index');
 
 		// This has to happen after the parent, changing to tile recreates
 		// nm controller
@@ -275,6 +274,10 @@ export class filemanagerAPP extends EgwApp
 		{
 			let nm = et2.widgetContainer.getWidgetById('nm');
 			state.view = nm.view;
+
+			// Path used to be a child of nm, but its outside the nm now
+			state.path = et2.widgetContainer.getWidgetById('path').value;
+			delete state.col_filter.dir;
 		}
 		return state;
 	}
