@@ -90,6 +90,7 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 
 		_find_options(val)
 		{
+			const waitList = []
 			for(let id of val)
 			{
 				// Don't add if it's already there
@@ -98,35 +99,32 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 					continue;
 				}
 
-				let account_name = null;
 				const tempLabel = id + " ..."
 				let option = <SelectOption>{value: "" + id, label: tempLabel};
 				this.account_options.push(option);
-				if(this.value && (account_name = this.egw().link_title('api-accounts', id, false)))
-				{
-					option.label = account_name;
-				}
-				else if(!account_name)
-				{
-					// Not already cached, need to fetch it
-					this.egw().link_title('api-accounts', id, true).then(title =>
-					{
-						option.label = title || '';
-						this.requestUpdate();
 
-						this.account_options.sort(this.optionSort);
-						// Directly update if it's already there
-						const slOption = this.select?.querySelector('[value="' + id + '"]');
-						if(slOption)
-						{
-							// Replace instead of changing the whole thing to preserve LitElement marker comments
-							slOption.textContent.replace(tempLabel, title);
-							this.select.requestUpdate("value");
-						}
-					});
-				}
+				waitList.push(this.egw().link_title('api-accounts', id, true).then(title =>
+				{
+					option.label = title || '';
+
+					// Directly update if it's already there
+					const slOption = this.select?.querySelector('[value="' + id + '"]');
+					if(slOption)
+					{
+						// Replace instead of changing the whole thing to preserve LitElement marker comments
+						slOption.textContent.replace(tempLabel, title);
+					}
+				}));
 			}
-			this.account_options.sort(this.optionSort);
+			Promise.all(waitList).then(() =>
+			{
+				this.account_options.sort(this.optionSort);
+				this.requestUpdate()
+				if(this.select)
+				{
+					this.select.value = super.shoelaceValue
+				}
+			});
 		}
 
 		get value()
