@@ -811,7 +811,7 @@ class AddressbookApp extends EgwApp
 	_add_new_list_prompt(owner, contacts)
 	{
 		const filter = <Et2TreeDropdown>this.et2.getWidgetById('filter2')
-		const lists = filter.select_options.find(elem => elem.value === 'lists').item;
+		const lists = filter.select_options.find(elem => elem.value === 'lists')?.item ?? filter.select_options;
 		let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
 		let callback = function(button, values) {
 			if(button == Et2Dialog.OK_BUTTON)
