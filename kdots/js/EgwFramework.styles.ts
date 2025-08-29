@@ -75,7 +75,7 @@ export default css`
         overflow-y: auto;
     }
 
-	.egw_fw__layout-default .egw_fw__main {
+	.egw_fw__layout-default > .egw_fw__main {
 		grid-area: main;
 	}
 
