@@ -227,7 +227,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 
 		this.updateComplete.then(() =>
 		{
-			this.dispatchEvent(new Event("change"));
+			this.dispatchEvent(new Event("change", {bubbles: true, composed: true}));
 		});
 		this.requestUpdate('value');
 

@@ -104,7 +104,7 @@ export class Et2LinkAppSelect extends Et2Select
 			this.value = this.egw().preference('link_app', appname || this.egw().app_name());
 		}
 		// Register to
-		this.addEventListener("sl-change", this._handleChange);
+		this.addEventListener("change", this._handleChange);
 
 		if(this.__onlyApp)
 		{
@@ -115,7 +115,7 @@ export class Et2LinkAppSelect extends Et2Select
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
-		this.removeEventListener("sl-change", this._handleChange);
+		this.removeEventListener("change", this._handleChange);
 	}
 
 	/**

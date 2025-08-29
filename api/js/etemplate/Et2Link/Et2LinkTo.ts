@@ -24,6 +24,9 @@ import {classMap} from "lit/directives/class-map.js";
 import {Et2VfsSelectDialog} from "../Et2Vfs/Et2VfsSelectDialog";
 import {Et2File} from "../Et2File/Et2File";
 import type {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
+import {property} from "lit/decorators/property.js";
+import {customElement} from "lit/decorators/custom-element.js";
+import {state} from "lit/decorators/state.js";
 
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
@@ -31,55 +34,54 @@ import type {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
  * If there is no "current entry", link information will be stored for submission instead
  * of being directly linked.
  */
+@customElement("et2-link-to")
 export class Et2LinkTo extends Et2InputWidget(LitElement)
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Hide buttons to attach files
-			 */
-			noFiles: {type: Boolean},
-			/**
-			 * Limit to just this application - hides app selection
-			 */
-			onlyApp: {type: String},
-			/**
-			 * Limit to the listed applications (comma seperated)
-			 */
-			applicationList: {type: String},
+	/**
+	 * Hide buttons to attach files
+	 */
+	@property({type: Boolean})
+	noFiles : boolean = false;
+	/**
+	 * Limit to just this application - hides app selection
+	 */
+	@property({type: String})
+	onlyApp : string = null;
+	/**
+	 * Limit to the listed applications (comma seperated)
+	 */
+	@property({type: String})
+	applicationList : string = null;
 
-			value: {type: Object}
-		}
-	}
+	@property({type: Object})
+	value : string | LinkInfo = "";
 
 	static get styles()
 	{
 		return [
 			...super.styles,
 			css`
-			:host(.can_link) #link_button {
-				display: initial;
-			}
-			#link_button {
-				display: none;
-			}
-			et2-link-entry {
-				flex: 1 1 auto;
-			}
-			.input-group__container {
-				flex: 1 1 auto;
-			}
+				[hidden] {
+					display: none;
+				}
+
+				et2-link-entry {
+					flex: 1 1 auto;
+				}
+
+				.input-group__container {
+					flex: 1 1 auto;
+				}
 
 				.form-control-input {
-				display: flex;
-				width: 100%;
-				gap: 0.5rem;
-			}
-			::slotted(.et2_file) {
-				width: 30px;
-			}
+					display: flex;
+					width: 100%;
+					gap: 0.5rem;
+				}
+
+				::slotted(.et2_file) {
+					width: 30px;
+				}
 			`
 		];
 	}
@@ -98,6 +100,11 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		};
 	}
 
+	// LinkTo has what it needs to create a link (show the button)
+	@state() canLink : boolean = false;
+	// LinkTo is working on creating a link
+	@state() loading : boolean = false;
+
 	private get fileUpload() : Et2File { return this.shadowRoot?.querySelector("et2-file");}
 	private get pasteButton() : Et2VfsSelectButton { return this.shadowRoot?.querySelector("#paste"); }
 
@@ -108,7 +115,6 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 	constructor()
 	{
 		super();
-		this.noFiles = false;
 
 		this.handleFilesUploaded = this.handleFilesUploaded.bind(this);
 		this.handleEntrySelected = this.handleEntrySelected.bind(this);
@@ -238,10 +244,13 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                             .applicationList="${this.applicationList}"
                             .readonly=${this.readonly}
                             ?disabled=${this.disabled}
-                            @sl-change=${this.handleEntrySelected}
+                            @change=${this.handleEntrySelected}
                             @sl-clear="${this.handleEntryCleared}">
             </et2-link-entry>
-            <et2-button id="link_button" label="Link" class="link" .noSubmit=${true}
+            <et2-button id="link_button" label="Link" class="link"
+                        image=${this.loading ? "loading" : nothing}
+                        ?hidden=${!this.canLink}
+                        nosubmit
                         @click=${this.handleLinkButtonClick}>
             </et2-button>
 		`;
@@ -269,6 +278,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		// If no link array was passed in, don't make the ajax call
 		if(links.length > 0)
 		{
+			this.loading = true;
 			egw.request("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link",
 				[this.value.to_app, this.value.to_id, links]).then((result) => this._link_result(result))
 
@@ -346,11 +356,9 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 	 */
 	resetAfterLink()
 	{
-		// Hide link button again
-		this.classList.remove("can_link");
-		this.link_button.image = "";
-
 		// Clear internal
+		this.loading = false;
+		this.canLink = false;
 		delete this.value.app;
 		delete this.value.id;
 
@@ -362,11 +370,16 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		this.select.value = {app: this.select.app, id: ""};
 		this.select._searchNode.clearSearch();
 		this.select._searchNode.select_options = [];
+
+		this.requestUpdate();
 	}
 
 	handleSlChange(event)
 	{
-		this.dispatchEvent(new Event("change", {bubbles: true}));
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		});
 	}
 
 	/**
@@ -377,8 +390,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 	 */
 	handleFilesUploaded(event)
 	{
-		this.classList.add("can_link");
-
+		this.canLink = true;
 		let links = [];
 
 		// Get files from file upload widget
@@ -411,8 +423,11 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 			typeof this.select.value == "object" && this.select.value.id
 		))
 		{
-			this.classList.add("can_link");
-			this.link_button.focus();
+			this.canLink = true;
+			this.updateComplete.then(() =>
+			{
+				this.link_button.focus();
+			});
 		}
 	}
 
@@ -421,12 +436,11 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 	 */
 	handleEntryCleared(event)
 	{
-		this.classList.remove("can_link");
+		this.canLink = false;
 	}
 
 	handleLinkButtonClick(event : MouseEvent)
 	{
-		this.link_button.image = "loading";
 		let link_info : LinkInfo[] = [];
 		if(this.select.value)
 		{
@@ -574,7 +588,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 
 		return html`
             <div
-                    part="form-control"
+                    part="form-control base"
                     class=${classMap({
                         'form-control': true,
                         'form-control--medium': true,
@@ -583,7 +597,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     })}
             >
                 ${labelTemplate}
-                <div part="form-control-input" class="form-control-input" @sl-change=${this.handleSlChange}>
+                <div part="form-control-input" class="form-control-input" @change=${this.handleSlChange}>
                     ${this._inputGroupBeforeTemplate()}
                     ${this._inputGroupInputTemplate()}
                 </div>
@@ -592,6 +606,3 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		`;
 	}
 }
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-link-to", Et2LinkTo);
