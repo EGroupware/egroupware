@@ -267,7 +267,7 @@ class Nextmatch extends Etemplate\Widget
 
 		// check if we have a filter-template or need to generate one
 		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
-		$template_name = $value['filter_template'] ?? $this->attrs['filter_template'];
+		$template_name = $value['filter_template'] ?? $this->attrs['filter_template'] ?? null;
 		if(!$template_name && !array_key_exists('filter_template', $this->attrs))
 		{
 			$parts = explode('.', $rows_template);
@@ -288,7 +288,9 @@ class Nextmatch extends Etemplate\Widget
 		{
 			if (($path=Template::relPath(str_replace('.filter', '', $template_name))))
 			{
-				$template_set = explode('/', $path)[3] ?? 'default';
+				// array_slice(..., -4) extracts [$app,"templates",$template_set,$template_name] independent of
+				// how templates are read: either directly from filesystem, or via vfs mount!
+				$template_set = array_slice(explode('/', $path), -4)[2] ?? 'default';
 			}
 			if (empty($template_set) || $template_set === 'mobile')
 			{
@@ -303,7 +305,7 @@ class Nextmatch extends Etemplate\Widget
 		        'filter2' => '2nd Filter',
 		        'cat_id'  => 'Category'] as $key => $label)
 			{
-				if (empty($value['no_'.$key] ?? $this->attrs['no_'.$key]))
+				if (empty($value['no_'.$key] ?? $this->attrs['no_'.$key] ?? null))
 				{
 					$url .= '&'.$key.'='.urlencode($value[$key.'_label'] ?? $this->attrs[$key.'_label'] ??
 							$value[$key.'_aria_label'] ?? $this->attrs[$key.'_aria_label'] ??
