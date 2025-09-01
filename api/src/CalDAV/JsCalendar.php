@@ -180,6 +180,10 @@ class JsCalendar extends JsBase
 						$event['category'] = self::parseCategories($value);
 						break;
 
+					case 'locations':
+						$event += self::parseLocations($value);
+						break;
+
 					case 'egroupware.org:customfields':
 						$event = array_merge($event, self::parseCustomfields($value, 'calendar', $data['timeZone']));
 						break;
@@ -888,6 +892,25 @@ class JsCalendar extends JsBase
 		}
 		// ToDo: set virtualLocations with videoconference link
 		return $locations;
+	}
+
+	/**
+	 * Return locations object
+	 *
+	 * EGroupware currently only supports a single location, so we use the first one given.
+	 *
+	 * @param array $locations
+	 * @return array
+	 */
+	protected static function parseLocations(array $locations)
+	{
+		$location = current($locations);
+
+		if (is_array($location))
+		{
+			$location = $location['name'];
+		}
+		return ['location' => $location];
 	}
 
 	/**
