@@ -1705,7 +1705,7 @@ class Link extends Link\Storage
 	 * @param string $app app-name or null to delete the whole cache
 	 * @param int|string $id id or null to delete only file_access cache of given app (keeps title cache, if app implements file_access!)
 	 */
-	private static function delete_cache($app,$id)
+	static function delete_cache($app,$id)
 	{
 		unset(self::$title_cache[$app.':'.$id]);
 		unset(self::$file_access_cache[$app.':'.$id]);
