@@ -512,6 +512,24 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		},
 
 		/**
+		 * Unset a (cached) link-title or all link-titles of an application
+		 *
+		 * @param _app
+		 * @param string|undefined _id
+		 */
+		unset_link_title: function(_app, _id)
+		{
+			if (typeof _id === 'undefined' || _id === null)
+			{
+				unset(title_cache[_app]);
+			}
+			else
+			{
+				unset(title_cache[_app][_id]);
+			}
+		},
+
+		/**
 		 * Callback to add all current title requests
 		 *
 		 * @param {object} _params of parameters, only first parameter is used

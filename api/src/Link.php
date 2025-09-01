@@ -17,6 +17,8 @@
 
 namespace EGroupware\Api;
 
+use EGroupware\Api\Json\Push;
+
 /**
  * Generalized linking between entries of EGroupware apps
  *
@@ -1707,6 +1709,9 @@ class Link extends Link\Storage
 	{
 		unset(self::$title_cache[$app.':'.$id]);
 		unset(self::$file_access_cache[$app.':'.$id]);
+
+		$push = new Push(Push::ALL);
+		$push->call('egw.unset_link_title', $app, $id);
 	}
 
 	/**
