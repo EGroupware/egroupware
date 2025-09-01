@@ -286,7 +286,7 @@ class Nextmatch extends Etemplate\Widget
 		}
 		if($template_name && !($tpl = Template::instance($template_name)))
 		{
-			if (($path=Template::relPath(str_replace('.filter', '', $template_name)))
+			if (($path=Template::relPath(str_replace('.filter', '', $template_name))))
 			{
 				$template_set = explode('/', $path)[3] ?? 'default';
 			}
