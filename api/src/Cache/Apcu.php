@@ -74,7 +74,7 @@ class Apcu extends Base implements Provider
 				case 'K':
 					$size *= 1024;
 			}
-			$size *= ini_get('apc.shm_segments');
+			$size *= ini_get('apc.shm_segments') ?: 1;  // if the entry is NOT set, ini_get reports false!
 
 			// only cache in APCu, if we have at least 32M available (default is 32M)
 			$available = $size >= 33554432;

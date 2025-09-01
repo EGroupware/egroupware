@@ -664,7 +664,7 @@ class Cache
 
 		if (!isset($providers[$level]))
 		{
-			$params = $GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)];
+			$params = $GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)] ?? null;
 			if (!isset($params) && $level == self::INSTANCE && isset(self::$default_provider))
 			{
 				$params = self::$default_provider;
