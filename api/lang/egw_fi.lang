@@ -1232,6 +1232,7 @@ show page generation time	common	fi	Näytä sivun tekemiseen kulunut aika
 show page generation time on the bottom of the page?	common	fi	Näytä sivun tekemiseen kulunut aika sivun alareunassa.
 show page generation time?	common	fi	Näytä sivun tekemiseen kulunut aika
 show password	common	fi	Näytä salasana
+show these toolbar items helptext	common	fi	Näytä nämä kohteet työkalurivillä (jos ne mahtuvat). Muut ovat käytettävissä luettelossa [⋮].
 show values	common	fi	Näytä arvot
 show/hide	common	fi	näytä/piilota sivupalkki
 showing	common	fi	Näkyvissä
@@ -1320,6 +1321,7 @@ this feature is only available in epl version.	common	fi	Tämä ominaisuus on k�
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	fi	Tämä on oma osuutesi. Testaa sitä käyttämällä anonyymiä / incognito-ikkunaa.<br>%1
 this name has been used already	common	fi	Nimi on jo käytössä!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	fi	Tämä teksti näytetään, jos syöttökenttä on tyhjä ja sillä ei ole fokusta (blur)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	fi	Tämä nollaa työkalurivin asetukset kaikille käyttäjille ja asettaa ne määritettyihin oletusasetuksiin.
 thursday	common	fi	Torstai
 tiled	common	fi	Pinottu
 time	common	fi	Aika
@@ -1341,6 +1343,7 @@ tokelau	common	fi	TOKELAU
 tonga	common	fi	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	fi	Liian monta riviä valittu.<br>Valitse kaikki tai vähemmän kuin %1 riviä
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjällä '%2', %3 IP-osoitteesta %4
+toolbar settings	common	fi	Työkalurivin asetukset
 top	common	fi	Ylälaita
 total	common	fi	Yhteensä
 total: %1 successful: %2 failed: %3 skipped: %4	common	fi	Yhteensä: %1 Onnistunut: %2 Epäonnistunut: %3 Ohitettu: %4

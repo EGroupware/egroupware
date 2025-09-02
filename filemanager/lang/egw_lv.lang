@@ -93,6 +93,7 @@ merge print open handler	filemanager	lv	Apvienot drukas atvēršanas apstrādāt
 mime type	filemanager	lv	MIME tips
 modified	filemanager	lv	Modificēts
 modified between	filemanager	lv	Modificēts starp
+mount permanently	filemanager	lv	Pastāvīga uzstādīšana
 mountpoints	filemanager	lv	Montāžas punkti
 move	filemanager	lv	pārvietot
 move to	filemanager	lv	Pārvietot Uz:
@@ -147,6 +148,8 @@ upload fields	filemanager	lv	augšupielādēt laukus
 upload files	filemanager	lv	Augšupielādēt datnes
 used space	filemanager	lv	Izmantotais apjoms
 username for webdav and smb, use $user for name of logged in user	filemanager	lv	Lietotājvārds WebDAV un SMB, izmantojiet $user kā pieteiktā lietotāja vārdu.
+vfs mounts and versioning	common	lv	VFS pievienošana un versiju veidošana
+webdavs: mount egroupware or *cloud shares	filemanager	lv	WebDAV: pievienojiet EGroupware vai *Cloud kopijas
 you do not have access to %1	filemanager	lv	Tev nav pieeja %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	lv	Jums jākļūst par superuser, lai iespējotu vai atspējotu versiju iestatīšanu mapē!
 your home dir did not exist, egroupware created a new one.	filemanager	lv	Tava Mājas direktorija neeksistēja, EGroupware izveidoja jaunu!

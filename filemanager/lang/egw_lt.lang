@@ -52,6 +52,7 @@ mail paste	filemanager	lt	Pašto įklijavimas
 merge print open handler	filemanager	lt	Sujungti spausdinti atvirą tvarkyklę
 modified	filemanager	lt	Pakeista
 modified between	filemanager	lt	Pakeista tarp
+mount permanently	filemanager	lt	Nuolatinis prijungimas
 mountpoints	filemanager	lt	Montavimo taškai
 notebookbar	filemanager	lt	Skirtukas
 open documents with collabora, if permissions are given	filemanager	lt	Atidaryti dokumentus su Collabora Online, jei suteiktos teisės
@@ -78,4 +79,6 @@ smb, webdavs and vfs require a username!	filemanager	lt	SMB, WebDAV ir VFS reika
 smb: mount samba or windows fileserver shares	filemanager	lt	SMB: prijungti Samba arba Windows failų serverio akcijas
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	lt	Dokumente gali būti tokios vietos žymės kaip {{%3}}, kurios bus pakeistos duomenimis (%1pilnas vietos žymės pavadinimų sąrašas%2).
 username for webdav and smb, use $user for name of logged in user	filemanager	lt	Vartotojo vardas WebDAV ir SMB, naudokite $user kaip prisijungusio vartotojo vardą
+vfs mounts and versioning	common	lt	VFS prijungimas ir versijų nustatymas
+webdavs: mount egroupware or *cloud shares	filemanager	lt	WebDAV: prijungti „EGroupware“ arba „*Cloud“ akcijas
 you need to become root, to enable or disable versioning on a directory!	filemanager	lt	Kad įjungtumėte arba išjungtumėte aplanko versijų nustatymą, turite tapti superuser!

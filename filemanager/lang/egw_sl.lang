@@ -201,6 +201,7 @@ modified between	filemanager	sl	Spremenjeno med
 modify all subdirectories and their content	filemanager	sl	Spremeni vse podmape in njihvo vsebino
 mount	filemanager	sl	Priklopi
 mount /etemplates to allow customizing of etemplates	filemanager	sl	Mount / etemplates, da omogočite prilagajanje eTemplates
+mount permanently	filemanager	sl	Stalna namestitev
 mountpoints	filemanager	sl	Priklopne točke
 move	filemanager	sl	Premakni
 move into folder	filemanager	sl	Premakni v mapo

@@ -1284,6 +1284,7 @@ show page generation time	common	it	Visualizza il tempo di generazione della pag
 show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina.
 show page generation time?	common	it	Mostrare tempo generazione pagina
 show password	common	it	Mostra password
+show these toolbar items helptext	common	it	Mostra questi elementi sulla barra degli strumenti (se ci stanno). Gli altri sono disponibili nell'elenco [⋮].
 show values	common	it	Mostra Valori
 show/hide	common	it	Mostra/nascondi barra laterale
 showing	common	it	Mostra
@@ -1403,6 +1404,7 @@ tokelau	common	it	TOKELAU
 tonga	common	it	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	it	Troppe righe selezionate.<br>Seleziona tutto, o meno di %1 righe
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	it	Troppi tentativi di login falliti: %1 per l'utente '%2', %3 dall'IP %4
+toolbar settings	common	it	Impostazioni della barra degli strumenti
 top	common	it	In cima
 total	common	it	Totale
 total: %1 successful: %2 failed: %3 skipped: %4	common	it	Totale: %1 A buon fine: %2 Falliti: %3 Saltati: %4

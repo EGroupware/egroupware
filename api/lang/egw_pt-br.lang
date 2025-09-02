@@ -1246,6 +1246,7 @@ show page generation time	common	pt-br	Mostrar tempo de criação da página
 show page generation time on the bottom of the page?	common	pt-br	O tempo de criação da página deve ser mostrado no rodapé.
 show page generation time?	common	pt-br	Exibir tempo de geração da página
 show password	common	pt-br	Mostrar senha
+show these toolbar items helptext	common	pt-br	Mostrar esses itens na barra de ferramentas (se couberem). Os outros estão disponíveis na lista [⋮].
 show values	common	pt-br	Mostrar valores
 show/hide	common	pt-br	Mostrar/ocultar barra lateral
 showing	common	pt-br	Exibindo
@@ -1352,6 +1353,7 @@ tokelau	common	pt-br	TOKELAU
 tonga	common	pt-br	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	pt-br	Muitas linhas selecionadas.<br>Selecione todas ou menos de %1 linhas
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pt-br	Houve tentativas em excesso de login para o usuário:: %1 para o cliente '%2', %3 a partir do endereço IP %4
+toolbar settings	common	pt-br	Configurações da barra de ferramentas
 top	common	pt-br	Topo
 total	common	pt-br	Total
 total: %1 successful: %2 failed: %3 skipped: %4	common	pt-br	Total: %1 Bem-sucedido: %2 Falha: %3 Ignorado: %4

@@ -178,6 +178,7 @@ modified	filemanager	ru	Изменено
 modified between	filemanager	ru	Изменено между
 modify all subdirectories and their content	filemanager	ru	Изменены все каталоги и их содержимое
 mount	filemanager	ru	Монтировать
+mount permanently	filemanager	ru	Монтировать постоянно
 mountpoints	filemanager	ru	Точки монтирования
 move	filemanager	ru	Переместить
 move to	filemanager	ru	Переместить в
@@ -275,6 +276,8 @@ used space	filemanager	ru	Использовано пространство
 username for webdav and smb, use $user for name of logged in user	filemanager	ru	Имя пользователя для WebDAV и SMB, используйте $user для имени вошедшего пользователя
 users and groups	filemanager	ru	Пользователи и группы
 versioning	filemanager	ru	Управление версиями
+vfs mounts and versioning	common	ru	Монтирование и версионирование VFS
+webdavs: mount egroupware or *cloud shares	filemanager	ru	WebDAV: монтирование общих ресурсов EGroupware или *Cloud
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	ru	Кому разрешено окончательно удалять файлы или старые версии файлов:
 wrong username or password!	filemanager	ru	Неправильное имя или пароль!
 you are not allowed to upload a script!	filemanager	ru	Вам НЕ разрешено загружать скрипты!

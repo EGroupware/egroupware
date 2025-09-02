@@ -116,6 +116,7 @@ mail paste	filemanager	el	Επικόλληση αλληλογραφίας
 merge print open handler	filemanager	el	Χειριστής ανοίγματος εκτύπωσης συγχώνευσης
 mime type	filemanager	el	τύπος MIME
 modified	filemanager	el	Τροποποιήθηκε
+mount permanently	filemanager	el	Μόνιμη προσάρτηση
 move	filemanager	el	Μετακίνηση
 move into folder	filemanager	el	Μετακίνηση στο φάκελο
 move to	filemanager	el	Μετακίνηση στο
@@ -178,7 +179,9 @@ upload files	filemanager	el	φόρτωση αρχείων
 used space	filemanager	el	Χώρος που χρησιμοποιείται
 username for webdav and smb, use $user for name of logged in user	filemanager	el	Όνομα χρήστη για WebDAV και SMB, χρησιμοποιήστε $user για το όνομα του συνδεδεμένου χρήστη
 versioning	filemanager	el	Λειτουργία εκδόσεων
+vfs mounts and versioning	common	el	Προσαρτήσεις VFS και έκδοση
 view link	filemanager	el	Εμφάνιση συνδέσμου
+webdavs: mount egroupware or *cloud shares	filemanager	el	WebDAV: προσάρτηση κοινοτήτων EGroupware ή *Cloud
 you do not have access to %1	filemanager	el	Δεν έχετε πρόσβαση στο %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	el	Πρέπει να γίνετε υπερχρήστης, για να ενεργοποιήσετε ή να απενεργοποιήσετε την έκδοση σε έναν φάκελο!
 your home dir did not exist, egroupware created a new one.	filemanager	el	Ο Αρχικός Κατ δεν υπήρχε, το EGroupware δημιούργησε ένα νέο.

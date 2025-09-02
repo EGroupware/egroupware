@@ -151,6 +151,7 @@ mime type	filemanager	pl	Typ MIME
 modified	filemanager	pl	Zmodyfikowany
 modified between	filemanager	pl	Zmodyfikowany pomiędzy
 modify all subdirectories and their content	filemanager	pl	Modyfikuj wszystkie podkatalogi i ich zawartość
+mount permanently	filemanager	pl	Montowanie na stałe
 mountpoints	filemanager	pl	Punkty montowania
 move	filemanager	pl	przenieś
 move to	filemanager	pl	Przenieś do
@@ -236,6 +237,8 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 used space	filemanager	pl	Wykorzystane miejsce
 username for webdav and smb, use $user for name of logged in user	filemanager	pl	Nazwa użytkownika dla WebDAV i SMB, użyj $user dla nazwy zalogowanego użytkownika
 users and groups	filemanager	pl	Użytkownicy i grupy
+vfs mounts and versioning	common	pl	Montowanie i wersjonowanie VFS
+webdavs: mount egroupware or *cloud shares	filemanager	pl	WebDAV: montowanie udziałów EGroupware lub *Cloud
 wrong username or password!	filemanager	pl	Niepoprawna nazwa użytkownika lub hasło!
 you are not allowed to upload a script!	filemanager	pl	Nie możesz załadować skryptu!
 you can only grant additional rights, you can not take rights away!	filemanager	pl	Możesz tylko dodać prawa, nie możesz ich zabrać!

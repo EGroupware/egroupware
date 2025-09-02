@@ -90,6 +90,7 @@ merge print open handler	filemanager	no	Slå sammen utskriftsåpen håndterer
 mime type	filemanager	no	MIME type
 modified	filemanager	no	Modifisert
 modified between	filemanager	no	Modifisert mellom
+mount permanently	filemanager	no	Monter permanent
 mountpoints	filemanager	no	Monteringspunkter
 move	filemanager	no	flytt
 move to	filemanager	no	Flytt til
@@ -144,5 +145,7 @@ upload fields	filemanager	no	last opp felter
 upload files	filemanager	no	Last opp filer
 used space	filemanager	no	Brukt område
 username for webdav and smb, use $user for name of logged in user	filemanager	no	Brukernavn for WebDAV og SMB, bruk $user for navnet på den påloggede brukeren
+vfs mounts and versioning	common	no	VFS-montering og versjonering
+webdavs: mount egroupware or *cloud shares	filemanager	no	WebDAV: monter EGroupware- eller *Cloud-deling
 you do not have access to %1	filemanager	no	Du har ikke adgang til %1
 your home dir did not exist, egroupware created a new one.	filemanager	no	Din hjemmemappe fantes ikke, EGroupware opprettet en ny.

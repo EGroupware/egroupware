@@ -907,6 +907,7 @@ show all categorys	common	no	Vis alle kategorier
 show page generation time	common	no	Vis sidegenereringstid
 show page generation time on the bottom of the page?	common	no	Vise sidegenereringstid på bunn av siden.
 show password	common	no	Vis passord
+show these toolbar items helptext	common	no	Vis disse elementene på verktøylinjen (hvis de passer). De andre er tilgjengelige i listen [⋮].
 show values	common	no	Vis verdier
 show/hide	common	no	Vis/skjul sidefelt
 showing	common	no	Viser
@@ -962,6 +963,7 @@ thailand	common	no	THAILAND
 the following applications require upgrades	common	no	De følgende applikasjonene trenger oppgradering
 the mail server returned	common	no	Epost tjener returnerte
 this name has been used already	common	no	Dette navnet er allerede i bruk!
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	no	Dette vil tilbakestille verktøylinjeinnstillingene for alle brukere og sette dem til konfigurerte standardinnstillinger.
 thursday	common	no	Torsdag
 time	common	no	Tid
 time zone	common	no	Tidssone
@@ -978,6 +980,7 @@ togo	common	no	TOGO
 tokelau	common	no	TOKELAU
 tonga	common	no	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	no	For mange mislykkede påloggings-forsøk: %1 av brukeren '%2', %3 på IP %4
+toolbar settings	common	no	Verktøylinjeinnstillinger
 top	common	no	Topp
 total	common	no	Total
 trinidad and tobago	common	no	TRINIDAD OG TOBAGO

@@ -183,6 +183,7 @@ modified	filemanager	nl	Gewijzigd
 modified between	filemanager	nl	Gewijzigd tussen
 modify all subdirectories and their content	filemanager	nl	Wijzig alle subdirectories en hun inhoud
 mount	filemanager	nl	Koppel
+mount permanently	filemanager	nl	Permanent monteren
 mountpoints	filemanager	nl	Koppelpunten
 move	filemanager	nl	Verplaats
 move into folder	filemanager	nl	Verplaats naar map
@@ -288,6 +289,7 @@ username for webdav and smb, use $user for name of logged in user	filemanager	nl
 users and groups	filemanager	nl	Gebruikers en groepen
 versioning	filemanager	nl	Versie beheer
 vfs mounts and versioning	common	nl	VFS laden en versie beheren
+webdavs: mount egroupware or *cloud shares	filemanager	nl	WebDAV: EGroupware of *Cloud aandelen mounten
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	nl	Wie zou er uiteindelijk bestanden en oude versies van bestanden definitief mogen verwijderen :
 wrong username or password!	filemanager	nl	Onjuiste gebruikersnaam of wachtwoord!
 you are not allowed to upload a script!	filemanager	nl	U mag GEEN script uploaden !

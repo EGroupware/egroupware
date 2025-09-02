@@ -438,7 +438,6 @@ number of resources to be booked	calendar	fr	Nombre de ressources à réserver
 number of weeks to show	calendar	fr	Nombre de semaines à afficher
 observance rule	calendar	fr	Règle d'observation
 occurence	calendar	fr	Occurence
-old fixed definition	calendar	fr	L'ancienne définition fixe
 old startdate	calendar	fr	Ancienne date de début
 olddate	calendar	fr	Date d'origine
 on %1 %2 %3 your meeting request for %4	calendar	fr	Le %1 %2 %3 votre demande de réunion pour %4
@@ -577,6 +576,7 @@ show only invitations, not yet accepted or rejected	calendar	fr	Afficher seuleme
 show only rejected events	calendar	fr	Afficher seulement les événements rejetés.
 show only tentative accepted events	calendar	fr	Afficher seulement les événements en "tentative".
 show only the date, not the year	admin	fr	Afficher uniquement la date, pas l'année
+show subscribed calendars	calendar	fr	Afficher les calendriers auxquels vous êtes abonné
 show this month	calendar	fr	Afficher ce mois
 show this week	calendar	fr	Afficher cette semaine
 show year and age	calendar	fr	Afficher l'année et l'âge

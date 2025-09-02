@@ -1300,6 +1300,7 @@ show page generation time	common	fr	Afficher le temps de génération de la page
 show page generation time on the bottom of the page?	common	fr	Afficher le temps de génération de page au fond de la page ?
 show page generation time?	common	fr	Afficher le temps de génération de la page
 show password	common	fr	Afficher le mot de passe
+show these toolbar items helptext	common	fr	Afficher ces éléments dans la barre d'outils (s'ils y tiennent). Les autres sont disponibles dans la liste [⋮].
 show values	common	fr	Montrer les valeurs
 show/hide	common	fr	Afficher/masquer la barre latérale
 showing	common	fr	Montre
@@ -1420,6 +1421,7 @@ tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	fr	Trop de lignes sélectionnées <br>Sélectionner tout ou moins de %1 lignes
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fr	Trop de tentatives de connexion infructueuses: %1 pour l'utilisateur '%2', %3 pour l'IP %4
+toolbar settings	common	fr	Paramètres de la barre d'outils
 top	common	fr	Sommet
 total	common	fr	Total
 total: %1 successful: %2 failed: %3 skipped: %4	common	fr	Total: %1 Succès: %2 Echec(s): %3 Ignoré(s): %4

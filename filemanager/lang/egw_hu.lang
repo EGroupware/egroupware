@@ -149,6 +149,7 @@ mime type	filemanager	hu	MIME típus
 modified	filemanager	hu	Módosítva
 modified between	filemanager	hu	Módosítva között
 modify all subdirectories and their content	filemanager	hu	Összes könyvtár és tartalmának módosítása.
+mount permanently	filemanager	hu	Állandóan csatlakoztatható
 mountpoints	filemanager	hu	Mountpoints
 move	filemanager	hu	Mozgat
 move to	filemanager	hu	Mozgatás ide:
@@ -228,6 +229,8 @@ updated comment for %1	filemanager	hu	%1 megjegyzése frissítve
 used space	filemanager	hu	Felhasznált terület
 username for webdav and smb, use $user for name of logged in user	filemanager	hu	Felhasználónév a WebDAV és az SMB esetében, a $user-t használja a bejelentkezett felhasználó neveként.
 users and groups	filemanager	hu	Felhasználók és csoportok
+vfs mounts and versioning	common	hu	VFS csatolás és verziókezelés
+webdavs: mount egroupware or *cloud shares	filemanager	hu	WebDAV: EGroupware vagy *Cloud megosztások csatlakoztatása
 wrong username or password!	filemanager	hu	Hibás felhasználónév vagy jelszó!
 you are not allowed to upload a script!	filemanager	hu	Végrehajtható file feltöltéséhez nincs hjogosultságod!
 you can only grant additional rights, you can not take rights away!	filemanager	hu	Jogosultságot csak hozzáadhatsz, el nem vehetsz!

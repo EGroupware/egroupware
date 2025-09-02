@@ -92,6 +92,7 @@ mail paste	filemanager	da	Mail indsæt
 merge print open handler	filemanager	da	Flet udskrivning åben handler
 mime type	filemanager	da	MIME type
 modified	filemanager	da	Modificeret
+mount permanently	filemanager	da	Permanent indbinding
 mountpoints	filemanager	da	Monteringspunkter
 move	filemanager	da	Flyt
 move to	filemanager	da	Flyt til
@@ -144,6 +145,8 @@ upload fields	filemanager	da	upload felter
 upload files	filemanager	da	Upload filer
 used space	filemanager	da	Brugt plads
 username for webdav and smb, use $user for name of logged in user	filemanager	da	Brugernavn til WebDAV og SMB, brug $user for navnet på den indloggede bruger
+vfs mounts and versioning	common	da	VFS mounts og versionering
+webdavs: mount egroupware or *cloud shares	filemanager	da	WebDAV: Monter EGroupware- eller *Cloud-aktier
 you do not have access to %1	filemanager	da	Du har ikke adgang til %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	da	Du skal være superuser for at aktivere eller deaktivere versionering af en mappe!
 your home dir did not exist, egroupware created a new one.	filemanager	da	Dit hjemme bibliotek fandtes ikke, EGroupware har oprette en ny til dig.

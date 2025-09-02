@@ -1302,6 +1302,7 @@ show page generation time	common	es-es	Mostrar el tiempo que tarda en generarse 
 show page generation time on the bottom of the page?	common	es-es	Mostrar el tiempo que tarda en generarse la página en la parte inferior de la página.
 show page generation time?	common	es-es	Mostrar el tiempo que tarda en generarse la página
 show password	common	es-es	Mostrar contraseña
+show these toolbar items helptext	common	es-es	Mostrar estos elementos en la barra de herramientas (si caben). Los demás están disponibles en la lista [⋮].
 show values	common	es-es	Mostar valores
 show/hide	common	es-es	Mostrar/ocultar barra lateral
 showing	common	es-es	Mostrando
@@ -1422,6 +1423,7 @@ tokelau	common	es-es	TOKELAU
 tonga	common	es-es	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	es-es	Demasiadas filas seleccionadas.<br />Seleccione todo, o menos de %1 filas
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	es-es	Demasiados intentos fallidos de inicio de sesión: %1 para el usuario '%2', %3 para la IP %4
+toolbar settings	common	es-es	Configuración de la barra de herramientas
 top	common	es-es	Superior
 total	common	es-es	Total
 total: %1 successful: %2 failed: %3 skipped: %4	common	es-es	Total: %1 Exitoso: %2  Falló: %3 Saltado: %4

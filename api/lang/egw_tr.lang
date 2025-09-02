@@ -229,14 +229,17 @@ saved column sizes to preferences.	common	tr	Sütun boyutlarını tercihlere kay
 search accounts	common	tr	Hesaplarý ara
 select all	common	tr	Tümünü seçin
 show password	common	tr	Şifreyi göster
+show these toolbar items helptext	common	tr	Bu öğeleri araç çubuğunda göster (uygunsa). Diğerleri [⋮] listesinde mevcuttur.
 sign up	common	tr	Kaydolun
 site configuration	common	tr	Konfigürasyon
 spreadsheets	common	tr	Elektronik Tablolar
 submit	common	tr	Gönder
 template	common	tr	Şablon
 templates	common	tr	Şablonlar
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	tr	Bu, tüm kullanıcılar için araç çubuğu tercihlerini sıfırlar ve yapılandırılmış varsayılan tercihleri ayarlar.
 title	common	tr	Baþlýk
 today	common	tr	Bugün
+toolbar settings	common	tr	Araç çubuğu ayarları
 top	common	tr	Maks
 update	common	tr	Güncelle
 url	common	tr	URL

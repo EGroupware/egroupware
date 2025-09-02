@@ -439,6 +439,7 @@ show only invitations, not yet accepted or rejected	calendar	pl	Pokaż tylko zap
 show only rejected events	calendar	pl	Pokaż tylko odrzucone zdarzenia
 show only tentative accepted events	calendar	pl	Pokaż tylko wstępnie zaakceptowane zdarzenia
 show only the date, not the year	admin	pl	Pokaż tylko datę, bez roku
+show subscribed calendars	calendar	pl	Pokaż subskrybowane kalendarze
 show this month	calendar	pl	Pokaż ten miesiąc
 show this week	calendar	pl	Pokaż ten tydzień
 show year and age	calendar	pl	Pokaż rok i wiek

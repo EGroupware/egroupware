@@ -1195,6 +1195,7 @@ show page generation time	common	pl	Wyświetl czas generowania strony
 show page generation time on the bottom of the page?	common	pl	Wyświetlać czas generowania strony w jej stopce.
 show page generation time?	common	pl	Czy pokazywać czas generowania strony
 show password	common	pl	Pokaż hasło
+show these toolbar items helptext	common	pl	Pokaż te elementy na pasku narzędzi (jeśli się mieszczą). Pozostałe są dostępne na liście [⋮].
 show values	common	pl	Pokaż wartości
 show/hide	common	pl	Pokaż/ukryj pasek boczny
 showing	common	pl	Wyświetlono
@@ -1272,6 +1273,7 @@ the mail server returned	common	pl	Serwer pocztowy zwrócił
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	pl	Istnieje już użytkownik systemowy z tą nazwą. Użytkownicy nie powinni pokrywać się nazwami z użytkownikami systemowymi.
 this name has been used already	common	pl	Ta nazwa została już użyta!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	pl	Ten tekst jest wyświetlany jeśli pole input jest puste i nie zostało wybrane
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	pl	Spowoduje to zresetowanie preferencji paska narzędzi dla wszystkich użytkowników i ustawienie ich na skonfigurowane domyślne preferencje.
 thursday	common	pl	Czwartek
 tiled	common	pl	Sąsiadujący
 time	common	pl	Czas
@@ -1294,6 +1296,7 @@ tokelau	common	pl	TOKELAU
 tonga	common	pl	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	pl	Wybrano zbyt wiele wierszy.<br>Wybierz wszystkie lub mniej niż %1 wierszy
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pl	Zbyt dużo prób nieudanego logowania (%1) dla użytkownika '%2', %3 z adresu IP %4
+toolbar settings	common	pl	Ustawienia paska narzędzi
 top	common	pl	Do góry
 total	common	pl	Ogółem
 total: %1 successful: %2 failed: %3 skipped: %4	common	pl	Total: %1 Successful: %2 Failed: %3 Skipped: %4

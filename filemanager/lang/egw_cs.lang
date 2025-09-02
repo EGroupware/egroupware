@@ -202,6 +202,7 @@ modified between	filemanager	cs	změněno mezi
 modify all subdirectories and their content	filemanager	cs	Změnit všechny podadresáře a jejich obsah
 mount	filemanager	cs	Připojení
 mount /etemplates to allow customizing of etemplates	filemanager	cs	Připojení /etemplates pro umožnění přizpůsobení šablon eTemplates
+mount permanently	filemanager	cs	Trvalá montáž
 mountpoints	filemanager	cs	Přípojné body
 move	filemanager	cs	Přesunout
 move into folder	filemanager	cs	Přesunout do složky

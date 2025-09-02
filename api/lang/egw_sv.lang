@@ -1082,6 +1082,7 @@ show page generation time	common	sv	Visa sidans genereringstid
 show page generation time on the bottom of the page?	common	sv	Visa sidans genererings tid längst ner på sidan.
 show page generation time?	common	sv	Visa sidans genereringstid
 show password	common	sv	Visa lösenord
+show these toolbar items helptext	common	sv	Visa dessa objekt på verktygsfältet (om de får plats). De övriga finns tillgängliga i listan [⋮].
 show values	common	sv	Visa värden
 show/hide	common	sv	Visa/dölj sidofältet
 showing	common	sv	Visar
@@ -1158,6 +1159,7 @@ the following applications require upgrades	common	sv	Följande applikationer be
 the mail server returned	common	sv	E-postservern returnerade
 this name has been used already	common	sv	Namnet är redan upptaget!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	sv	Denna text visas om indata fältet är tomt eller inte har fokus (oskärpa)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	sv	Detta återställer verktygsfältets inställningar för alla användare och ställer in dem på konfigurerade standardinställningar.
 thursday	common	sv	Torsdag
 tiled	common	sv	Vinklad
 time	common	sv	Tid
@@ -1177,6 +1179,7 @@ togo	common	sv	TOGO
 tokelau	common	sv	TOKELAUÖARNA
 tonga	common	sv	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sv	För många misslyckade inloggnings försök: %1 för användare '%2', %3 med IP %4
+toolbar settings	common	sv	Verktygsfältets inställningar
 top	common	sv	Överst
 total	common	sv	Summa
 trinidad and tobago	common	sv	TRINIDAD OCH TOBAGO

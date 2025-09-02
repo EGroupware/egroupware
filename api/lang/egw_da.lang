@@ -785,6 +785,7 @@ show all categorys	common	da	Vis alle kategorier
 show page generation time	common	da	Vis side generations tid
 show page generation time on the bottom of the page?	common	da	Vis side generations tiden i bunden af siden.
 show password	common	da	Vis adgangskode
+show these toolbar items helptext	common	da	Vis disse elementer på værktøjslinjen (hvis de passer). De øvrige er tilgængelige i listen [⋮].
 show/hide	common	da	Vis/skjul sidebar
 showing %1	common	da	Viser: %1
 showing %1 - %2 of %3	common	da	Viser: %1 - %2 ud af %3
@@ -834,6 +835,7 @@ the mail server returned	common	da	Postserveren retunerede
 this feature is only available in epl version.	common	da	Denne funktion er tilgængelig i EGroupware EPL-versionen.
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	da	This is your own share. To test it, use an anonymous / incognito window.<br>%1
 this name has been used already	common	da	Dette navn er allerede i brug!
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	da	Dette nulstiller værktøjslinjens indstillinger for alle brugere og indstiller dem til de konfigurerede standardindstillinger.
 thursday	common	da	Torsdag
 time	common	da	Tid
 time zone	common	da	Tidszone
@@ -848,6 +850,7 @@ togo	common	da	Togo
 tokelau	common	da	Tokelau
 tonga	common	da	Tonga
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	da	For mange fejlede forsøg på at logge ind: %1 fra brugeren '%2', %3 fra IP'en %4
+toolbar settings	common	da	Værktøjslinjens indstillinger
 top	common	da	Top
 total	common	da	Total
 total: %1 successful: %2 failed: %3 skipped: %4	common	da	Der er valgt for mange rækker Vælg alle eller færre end %1 rækker

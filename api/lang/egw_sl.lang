@@ -1279,6 +1279,7 @@ show page generation time	common	sl	Prikaži čas generiranja strani
 show page generation time on the bottom of the page?	common	sl	Pokažem čas generiranja strani na dnu.
 show page generation time?	common	sl	Prikažem čas ustvarjanja strani
 show password	common	sl	Prikaži geslo
+show these toolbar items helptext	common	sl	Prikaži te elemente na orodni vrstici (če se prilegajo). Ostali so na voljo v seznamu [⋮].
 show values	common	sl	Prikaži vrednosti
 show/hide	common	sl	prikaži/skrij stransko vrstico
 showing	common	sl	Prikazovanje
@@ -1398,6 +1399,7 @@ tokelau	common	sl	TOKELAU
 tonga	common	sl	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	sl	Izbranih je preveč vrstic.<br>Izberite vse ali manj kot %1 vrstic
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sl	Preveč neuspešnih poskusov prijave: %1 za uporabnika %2, %3 za IP %4.
+toolbar settings	common	sl	Nastavitve orodne vrstice
 top	common	sl	Na vrh
 total	common	sl	Skupaj
 total: %1 successful: %2 failed: %3 skipped: %4	common	sl	Skupaj: %1 Uspešno: %2 Neuspešno: %3 Preskočeno: %4

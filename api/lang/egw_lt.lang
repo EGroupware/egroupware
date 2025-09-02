@@ -332,14 +332,17 @@ save as zip	common	lt	Išsaugoti kaip ZIP
 saved column sizes to preferences.	common	lt	Išsaugoti stulpelių dydžius nustatymuose.
 selection of files can only be done in one folder.  %1 files unselected.	common	lt	Atrinkti failus galima tik viename aplanke. %1 failai neatrinkti.
 show password	common	lt	Rodyti slaptažodį
+show these toolbar items helptext	common	lt	Rodyti šiuos elementus įrankių juostoje (jei telpa). Kiti elementai yra prieinami sąraše [⋮].
 show/hide	common	lt	Rodyti/paslėpti šoninę juostą
 sign up	common	lt	Užsiregistruoti
 site configuration	common	lt	Programos konfigūracija
 spreadsheets	common	lt	Skaičiuoklės
 template	common	lt	Šablonas
 templates	common	lt	Šablonai
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	lt	Tai iš naujo nustatys įrankių juostos parinktis visiems vartotojams ir nustatys jas pagal konfigūruotas numatytąsias parinktis.
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lt	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
 too many rows selected.<br />select all, or less than %1 rows	common	lt	Too many rows selected.<br>Select all, or less than %1 rows
+toolbar settings	common	lt	Įrankių juostos nustatymai
 total: %1 successful: %2 failed: %3 skipped: %4	common	lt	Total: %1 Successful: %2 Failed: %3 Skipped: %4
 videos	common	lt	Vaizdo įrašai
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	lt	Sujungus įrašus į dokumentus, jie bus saugomi čia. Jei aplankas nenurodytas, jie bus saugomi jūsų namų kataloge (%1)

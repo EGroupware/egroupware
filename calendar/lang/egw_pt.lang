@@ -275,7 +275,6 @@ number of records to read (%1)	calendar	pt	Número de registos por ler (%1)
 number of resources to be booked	calendar	pt	Número de recursos a reservar
 observance rule	calendar	pt	Observação
 occurence	calendar	pt	Ocorrência
-old fixed definition	calendar	pt	Definição fixa Velho
 old startdate	calendar	pt	Data de início antiga
 on %1 %2 %3 your meeting request for %4	calendar	pt	Por %1 %2 %3 o seu pedido de reunião para %4
 on all modification, but responses	calendar	pt	Por todas as modificações, excluindo repostas
@@ -350,6 +349,7 @@ should the status of the event-participants (accept, reject, ...) be shown in br
 show %1 from %2	calendar	pt	Mostrar %1 a partir de %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	pt	Mostrar como eventos não bloqueantes durante todo o dia, bem como através do cursor do rato sobre a data.
 show list of upcoming events	calendar	pt	Exibir lista de próximos eventos
+show subscribed calendars	calendar	pt	Mostrar calendários subscritos
 show this month	calendar	pt	Exibir este mês
 show this week	calendar	pt	Exibir esta semana
 single event	calendar	pt	Evento único

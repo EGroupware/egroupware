@@ -63,6 +63,7 @@ mail paste	filemanager	ro	Lipirea corespondenței
 merge print open handler	filemanager	ro	Manipulator de deschidere a imprimării combinate
 modified	filemanager	ro	Modificat
 modified between	filemanager	ro	Modificat între
+mount permanently	filemanager	ro	Montarea permanentă
 mountpoints	filemanager	ro	Puncte de montare
 notebookbar	filemanager	ro	Tabulat
 open documents with collabora, if permissions are given	filemanager	ro	Deschideți documente cu Collabora Online, dacă sunt acordate permisiuni
@@ -90,4 +91,6 @@ smb, webdavs and vfs require a username!	filemanager	ro	SMB, WebDAV și VFS nece
 smb: mount samba or windows fileserver shares	filemanager	ro	SMB: Montarea partajelor Samba sau Windows fileserver
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ro	Documentul poate conține caractere de plasare precum {{%3}}, care vor fi înlocuite cu datele (%1lista completă de nume de caractere de plasare%2).
 username for webdav and smb, use $user for name of logged in user	filemanager	ro	Nume utilizator pentru WebDAV și SMB, utilizați $user pentru numele utilizatorului conectat
+vfs mounts and versioning	common	ro	Montarea și versionarea VFS
+webdavs: mount egroupware or *cloud shares	filemanager	ro	WebDAV: montarea partajelor EGroupware sau *Cloud
 you need to become root, to enable or disable versioning on a directory!	filemanager	ro	Trebuie să deveniți superuser, pentru a activa sau dezactiva versionarea pe un dosar!

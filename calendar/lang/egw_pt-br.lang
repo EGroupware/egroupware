@@ -463,6 +463,7 @@ show birthdays from addressbook	admin	pt-br	Exibir aniversários da Agenda
 show empty rows in planner	calendar	pt-br	Exibir linhas vazias no Organizador
 show list of upcoming events	calendar	pt-br	Exibir a lista de eventos futuros
 show only the date, not the year	admin	pt-br	Exibir apenas a data, não o ano
+show subscribed calendars	calendar	pt-br	Mostrar calendários inscritos
 show this month	calendar	pt-br	Exibir este mês
 show this week	calendar	pt-br	Exibir esta semana
 show year and age	calendar	pt-br	Ano e idade da exposição

@@ -105,6 +105,7 @@ send notifications	calendar	ro	Trimiteți notificări
 send notifications to users right now	calendar	ro	Trimiteți notificări participanților chiar acum
 show %1 from %2	calendar	ro	Afișați %1 din %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	ro	Afișează ca evenimente care nu se blochează toată ziua, precum și prin trecerea mouse-ului peste data.
+show subscribed calendars	calendar	ro	Afișează calendarele la care ești abonat
 single participant	calendar	ro	Participant unic
 sort by	calendar	ro	Sortează după
 subscribed calendar	calendar	ro	Calendar subscris

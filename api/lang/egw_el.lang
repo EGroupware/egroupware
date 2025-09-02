@@ -837,6 +837,7 @@ show page generation time	common	el	Εμφάνιση χρόνου δημιουρ
 show page generation time on the bottom of the page?	common	el	Να εμφανισθεί ο χρόνος δημιουργίας της σελίδας στο τέλος της σελίδας.
 show page generation time?	common	el	Εμφάνιση σελίδας δημιουργίας ώρας
 show password	common	el	Εμφάνιση κωδικού πρόσβασης
+show these toolbar items helptext	common	el	Εμφάνιση αυτών των στοιχείων στη γραμμή εργαλείων (εάν χωράνε). Τα υπόλοιπα είναι διαθέσιμα στη λίστα [⋮].
 show/hide	common	el	εμφάνιση/απόκρυψη πλευρικής μπάρας
 showing %1	common	el	εμφάνιση %1
 showing %1 - %2 of %3	common	el	εμφάνιση %1 - %2 από %3
@@ -891,6 +892,7 @@ the following applications require upgrades	common	el	Οι παρακάτω εφ
 the mail server returned	common	el	Ο διακομιστής email επέστρεψε
 this feature is only available in epl version.	common	el	Αυτή η λειτουργία είναι διαθέσιμη μόνο στην έκδοση EPL.
 this name has been used already	common	el	Το όνομα ήδη χρησιμοποιείται!
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	el	Αυτό θα επαναφέρει τις προτιμήσεις της γραμμής εργαλείων για όλους τους χρήστες και θα τις ορίσει στις προεπιλεγμένες ρυθμίσεις.
 thursday	common	el	Πέμπτη
 time	common	el	Ωρα
 time zone	common	el	Χρονική Ζώνη
@@ -911,6 +913,7 @@ tokelau	common	el	ΤΟΚΕΛΑΟΥ
 tonga	common	el	ΤΟΝΓΚΑ
 too many rows selected.<br />select all, or less than %1 rows	common	el	Επιλέχθηκαν πάρα πολλές γραμμές.<br>Επιλέξτε όλες ή λιγότερες από %1 γραμμές
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	el	Πολλές αποτυχημένες προσπάθειες για είσοδο: %1 από το χρήστη '%2', %3 με ΙΡ %4
+toolbar settings	common	el	Ρυθμίσεις γραμμής εργαλείων
 top	common	el	Κορυφή
 total	common	el	Σύνολο
 total: %1 successful: %2 failed: %3 skipped: %4	common	el	Σύνολο: %1 Επιτυχής: %2 Αποτυχημένη: %3 Παραλείπεται: %4

@@ -337,6 +337,7 @@ should the status of the event-participants (accept, reject, ...) be shown in br
 show %1 from %2	calendar	da	Vis %1 fra %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	da	Vis som ikke-blokerende begivenheder hele dagen samt via mouseover på datoen.
 show list of upcoming events	calendar	da	Vis liste over kommende aftaler
+show subscribed calendars	calendar	da	Vis abonnerede kalendere
 show this month	calendar	da	Vis denne måned
 show this week	calendar	da	Vis denne uge
 single event	calendar	da	Enkelt aftale

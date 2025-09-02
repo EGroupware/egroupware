@@ -648,6 +648,7 @@ show all categorys	common	et	Näita kõik kategooriad
 show page generation time	common	et	Näita lehe genereerimise aega
 show page generation time?	common	et	Näita lehe genereerimise aega
 show password	common	et	Näita parooli
+show these toolbar items helptext	common	et	Näita need elemendid tööriistaribal (kui need mahuvad). Ülejäänud on kättesaadavad loendis [⋮].
 show values	common	et	Näita Väärtusi
 show/hide	common	et	Näita/peida külgriba
 showing	common	et	Näitan
@@ -683,6 +684,7 @@ textarea	common	et	Tekstiväli
 thailand	common	et	TAI
 the following applications require upgrades	common	et	Järgmised rakendused vajavad uuendusi
 this name has been used already	common	et	See nimi on juba kasutusel!
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	et	See lähtestab tööriistariba eelistused kõigi kasutajate jaoks ja seab need konfigureeritud vaikimisi eelistustele.
 thursday	common	et	Neljapäev
 tiled	common	et	Paanidena
 time	common	et	Aeg
@@ -699,6 +701,7 @@ tokelau	common	et	TOKELAU
 tonga	common	et	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	et	Valitud on liiga palju ridu.<br>Valige kõik või vähem kui %1 rida
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	et	Liiga palju ebaõnnestunud sisselogimiskatseid: %1 kasutaja "%2" jaoks, %3 IP %4 jaoks
+toolbar settings	common	et	Tööriistariba seaded
 total	common	et	Kokku
 total: %1 successful: %2 failed: %3 skipped: %4	common	et	Kokku: %1 Edukas: %2 Ebaõnnestunud: %3 Välja jäetud: %4
 tree	common	et	Puu

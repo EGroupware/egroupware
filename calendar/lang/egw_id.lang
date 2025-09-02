@@ -319,6 +319,7 @@ set new events to private	calendar	id	Tetapkan kegiatan baru sebagai privat
 show %1 from %2	calendar	id	Tampilkan %1 dari %2
 show a calendar title	calendar	id	Tampilkan judul kalender
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	id	Tampilkan sebagai acara sepanjang hari yang tidak diblokir serta melalui mouseover pada tanggal.
+show subscribed calendars	calendar	id	Tampilkan kalender yang telah berlangganan
 show this month	calendar	id	Tampilkan bulan ini
 show this week	calendar	id	Tampilkan minggu ini
 single event	calendar	id	Kegiatan tunggal

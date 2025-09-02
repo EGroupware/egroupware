@@ -347,6 +347,7 @@ show birthdays from addressbook	admin	zh	从通讯录显示生日
 show empty rows in planner	calendar	zh	在计划中显示空白行
 show list of upcoming events	calendar	zh	显示即将到来的事件列表
 show only the date, not the year	admin	zh	只显示日期，不显示年份
+show subscribed calendars	calendar	zh	显示已订阅的日历
 show this month	calendar	zh	显示这个月
 show this week	calendar	zh	显示这一周
 single event	calendar	zh	单一事件

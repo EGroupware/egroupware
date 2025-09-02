@@ -327,6 +327,7 @@ should the status of the event-participants (accept, reject, ...) be shown in br
 show %1 from %2	calendar	no	Vis %1 fra %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	no	Vises som ikke-blokkerende arrangementer hele dagen samt via mouseover på datoen.
 show list of upcoming events	calendar	no	Vis liste av kommende oppføringer
+show subscribed calendars	calendar	no	Vis kalendere du abonnerer på
 show this month	calendar	no	Vis denne måneden
 show this week	calendar	no	Vis denne uken
 single event	calendar	no	Enkel oppføring
