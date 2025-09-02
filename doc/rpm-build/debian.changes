@@ -1,3 +1,15 @@
+egroupware-docker (23.1.20250902) hardy; urgency=low
+
+  * Mail: fixed Sieve vacation notice could not be set by admin for an other user
+  * Calendar/REST API: fixed the locations object was not parsed
+  * InfoLog/REST API: return all entries the user has access to for /infolog, not just his own ones, also fix not working search
+  * InfoLog/REST API: do NOT add default type-filter of "task" for REST API
+  * REST API: fix empty/0 byte uploads through /links/ collection
+  * REST API: fix PUT and POST requests to /links/ collection to upload files were wrongly denied (due to their content-type)
+  * Filemanager: jobs to monitore directories and create InfoLog entries from files in it
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 02 Sep 2025 09:43:22 +0200
+
 egroupware-docker (23.1.20250715) hardy; urgency=low
 
   * Api/All Apps: improved account widget searching to work with +/- and quotes
