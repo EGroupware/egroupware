@@ -837,7 +837,7 @@ export class EgwFrameworkApp extends LitElement
 	protected async handleTabShow(event)
 	{
 		// Only interested in this tab
-		if(event.detail.name !== this.name)
+		if(event.detail.name !== this.id)
 		{
 			return;
 		}
