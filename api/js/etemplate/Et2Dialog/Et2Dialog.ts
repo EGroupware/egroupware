@@ -750,7 +750,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		{
 			this.__value.content = {};
 		}
-		this._template_widget = new etemplate2(this._contentNode);
+		const templateName = this.__template.replace(/^(?:.*\/)?([^/]+)(\.xet)?(\?.*)?$/, '$1').replace(/\.xet$/, '');
+		const templateID = this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)?$/, '$2').replace(/\./g, '-');
+
+		this._template_widget = new etemplate2(this._contentNode, '', templateID);
 
 		// Fire an event so consumers can do their thing - etemplate will fire its own load event when it's done
 		if(!this.dispatchEvent(new CustomEvent("before-load", {
@@ -762,7 +765,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 			return;
 		}
 
-		this._template_widget.load(this.__template, '', this.__value || {},
+		this._template_widget.load(templateName, this.template, this.__value || {},
 				// true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
 				undefined, undefined, true)
 				.then(() =>
@@ -785,7 +788,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				});
 
 		// set template-name as id, to allow to style dialogs
-		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)?$/, '$2').replace(/\./g, '-'));
+		this._template_widget.DOMContainer.setAttribute('id', templateID);
 
 		// Look for buttons after load
 		this._template_promise.then(() => {this._adoptTemplateButtons();});
@@ -921,7 +924,8 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 			// Look for a dialog footer, which will contain several buttons and possible other widgets
 			...search_in.querySelectorAll(".dialogFooterToolbar et2-button"),
 			// Look for buttons at high level (not everywhere, otherwise we can't have other buttons in the template)
-			...search_in.querySelectorAll(":scope > et2-button, :scope > * > et2-button")
+			...search_in.querySelectorAll(":scope > et2-button, :scope > * > et2-button"),
+			...this.querySelectorAll("[slot=\"buttons\"]")
 		];
 		if(template_buttons)
 		{

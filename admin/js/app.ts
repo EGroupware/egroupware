@@ -24,6 +24,7 @@ import {EgwAction} from "../../api/js/egw_action/EgwAction";
 import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 import type {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
 import {LitElement} from "lit";
+import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 
 /**
  * UI for Admin
@@ -580,8 +581,7 @@ class AdminApp extends EgwApp
 			row_ids.push('admin::'+account_id);
 			ids.push(account_id);
 		})
-		const dialog = new Et2Dialog(this.egw);
-		let attrs = {
+		const dialog = <Et2Dialog>loadWebComponent("et2-dialog", {
 			template: this.egw.webserverUrl + "/admin/templates/default/group.run_rights.xet",
 			title: "Applications",
 			hideOnEscape: true,
@@ -613,8 +613,7 @@ class AdminApp extends EgwApp
 					return false;
 				}
 			}
-		}
-		dialog.transformAttributes(attrs);
+		}, this.et2);
 		this.et2.getInstanceManager().DOMContainer.appendChild(dialog);
 		dialog.updateComplete.then(() => {
 			dialog.eTemplate.widgetContainer.getWidgetById("apps").focus();
@@ -651,31 +650,26 @@ class AdminApp extends EgwApp
 			if(this.acl_dialog.buttons.length != buttons.length)
 			{
 				this.acl_dialog.buttons = buttons;
-
-				// This should NOT be called, but Et2Dialog doesn't support changing buttons after
-				this.acl_dialog.firstUpdated();
 			}
 
 			await this.acl_dialog.updateComplete;
 
-			const account = this.acl_dialog.querySelector("#_acl_account");
+			const account = this.acl_dialog.querySelector("#acl-edit_acl_account");
 			// Set account as multiple
 			account.multiple = true;
-			account.requestUpdate("multiple");
 
 			// Set account as hidden
 			account.parentNode.parentNode.classList.add('hideme');
 
 			// Set location as multiple
-			const location = this.acl_dialog.querySelector("#_acl_location");
+			const location = this.acl_dialog.querySelector("#acl-edit_acl_location");
 			location.multiple = true;
-			location.requestUpdate("multiple");
 		};
 
-		// Dialog gets recreated several times, customise it each time
-		document.body.addEventListener("open", setChangeAccessCustomisation);
 		this._acl_dialog({acl_account: ids}, {}, this.et2).then(async() =>
 		{
+			// Dialog gets recreated several times, customise it each time
+			setChangeAccessCustomisation();
 			await this.acl_dialog.updateComplete
 			document.body.addEventListener("close", (event) =>
 			{
@@ -797,7 +791,7 @@ class AdminApp extends EgwApp
 			app = 'preferences';
 		}
 		// Get by ID, since this.et2 isn't always the ACL list
-		var et2 = etemplate ? etemplate : etemplate2.getById('admin-acl').widgetContainer;
+		var et2 = etemplate ? etemplate : etemplate2.getById('acl-edit').widgetContainer;
 		var className = app + '_acl';
 		var acl_rights : any = {};
 		var readonlys : any = {acl: {}};
@@ -1018,8 +1012,7 @@ class AdminApp extends EgwApp
 		// Create the dialog
 		return Promise.all(wait).then(() =>
 		{
-			this.acl_dialog = new Et2Dialog(app);
-			this.acl_dialog.transformAttributes(dialog_options);
+			this.acl_dialog = loadWebComponent("et2-dialog", dialog_options, this.et2);
 			this.acl_dialog.et2 = etemplate;
 
 			document.body.appendChild(<LitElement><unknown>this.acl_dialog);
