@@ -797,7 +797,7 @@ export class EgwFramework extends LitElement
 	 * If no appname given, the id will be prefixed with current app. The discardID will be stored in local storage.
 	 * @returns {Promise<SlAlert>} SlAlert element
 	 */
-	public message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null)
+	public async message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null)
 	{
 		if(!message || typeof message != "string" || !message.trim())
 		{
@@ -809,10 +809,12 @@ export class EgwFramework extends LitElement
 			type = message.match(error_reg_exp) ? 'error' : 'success';
 		}
 
+		const hash = await this.egw.hashString(message);
+
 		// Do not add a same message twice if it's still not dismissed
-		if(typeof this._messages[message] !== "undefined")
+		if(typeof this._messages[hash] !== "undefined")
 		{
-			return this._messages[message];
+			return this._messages[hash];
 		}
 
 		// Already discarded, just stop
@@ -840,11 +842,9 @@ export class EgwFramework extends LitElement
 		});
 		document.body.append(alert);
 		window.setTimeout(() => alert.toast(), 0);
-		this.egw.hashString(message).then(hash =>
-		{
-			this._messages[hash] = alert;
-			alert.dataset.hash = hash;
-		})
+
+		this._messages[hash] = alert;
+		alert.dataset.hash = hash;
 
 		return alert;
 	}
