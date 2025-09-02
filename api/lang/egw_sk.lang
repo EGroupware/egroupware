@@ -1296,6 +1296,7 @@ show page generation time	common	sk	Ukázať čas generovania stránky
 show page generation time on the bottom of the page?	common	sk	Ukázať čas generovania stránky na jej spodku.
 show page generation time?	common	sk	Ukázať čas generovania stránky
 show password	common	sk	Ukázať heslo
+show these toolbar items helptext	common	sk	Zobraziť tieto položky na paneli nástrojov (ak sa tam zmestia). Ostatné sú k dispozícii v zozname [⋮].
 show values	common	sk	Zobraziť hodnoty
 show/hide	common	sk	Zobraziť/skryť bočný panel
 showing	common	sk	Zobrazujem
@@ -1416,6 +1417,7 @@ tokelau	common	sk	TOKELAU
 tonga	common	sk	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	sk	Vybraných príliš veľa riadkov.<br>Vyberte všetky alebo menej ako %1 riadkov
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sk	Príliš veľa neúspešných pokusov o prihlásenie: %1 na používateľa '%2', %3 na IP %4
+toolbar settings	common	sk	Nastavenia panela nástrojov
 top	common	sk	Vrch
 total	common	sk	Celkovo
 total: %1 successful: %2 failed: %3 skipped: %4	common	sk	Celkovo: %1 Úspešných: %2 Neúspešných: %3 Preskočených: %4

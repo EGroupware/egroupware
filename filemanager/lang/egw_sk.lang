@@ -201,6 +201,7 @@ modified between	filemanager	sk	Zmenené medzi
 modify all subdirectories and their content	filemanager	sk	Upraviť všetky podadresáre a ich obsah
 mount	filemanager	sk	Pripojiť
 mount /etemplates to allow customizing of etemplates	filemanager	sk	Pripojiť /etemplates a tým povoliť vlastné úpravy v eTemplates
+mount permanently	filemanager	sk	Trvalé pripojenie
 mountpoints	filemanager	sk	Prípojné body
 move	filemanager	sk	Presunúť
 move into folder	filemanager	sk	Presunúť do priečinka

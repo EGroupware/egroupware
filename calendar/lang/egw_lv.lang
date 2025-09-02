@@ -232,6 +232,7 @@ send notifications to users right now	calendar	lv	Nosūtīt paziņojumus dalībn
 show %1 from %2	calendar	lv	Rādīt %1 no %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	lv	Rādīt kā visas dienas nebloķējošus notikumus, kā arī ar peles kursoru uz datuma.
 show list of upcoming events	calendar	lv	Rādīt gaidāmo notikumu sarakstu
+show subscribed calendars	calendar	lv	Rādīt abonētos kalendārus
 single event	calendar	lv	Atsevišķs notikums
 single participant	calendar	lv	Viens dalībnieks
 sort by	calendar	lv	Atlasīt pēc

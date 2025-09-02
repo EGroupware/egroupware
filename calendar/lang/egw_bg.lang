@@ -436,7 +436,6 @@ number of resources to be booked	calendar	bg	Брой на ресурсите, �
 number of weeks to show	calendar	bg	Брой седмици, които да бъдат показани
 observance rule	calendar	bg	Правило за съблюдаване
 occurence	calendar	bg	Период на повторение
-old fixed definition	calendar	bg	Стара фиксирана дефиниция
 old startdate	calendar	bg	Стара начална дата
 olddate	calendar	bg	Оригинална дата
 on %1 %2 %3 your meeting request for %4	calendar	bg	На %1 %2 %3 заявката Ви за среща за %4
@@ -575,6 +574,7 @@ show only invitations, not yet accepted or rejected	calendar	bg	Показва �
 show only rejected events	calendar	bg	Показва само отхвърлени събития
 show only tentative accepted events	calendar	bg	Показва временно само приети събития, които подлежат на промяна
 show only the date, not the year	admin	bg	Показване само на датата, без годината
+show subscribed calendars	calendar	bg	Показване на абонираните календари
 show this month	calendar	bg	Покажи този месец
 show this week	calendar	bg	Покажи тази седмица
 show year and age	calendar	bg	Покажи година и възраст

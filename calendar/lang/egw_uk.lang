@@ -224,6 +224,7 @@ should the status of the event-participants (accept, reject, ...) be shown in br
 show %1 from %2	calendar	uk	Показати %1 з %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	uk	Показувати як події на весь день, що не блокуються, так і при наведенні миші на дату.
 show list of upcoming events	calendar	uk	Показувати перелік найближчих подій
+show subscribed calendars	calendar	uk	Показати підписні календарі
 single event	calendar	uk	Одиночна подія
 single participant	calendar	uk	Один учасник
 sort by	calendar	uk	Відсортувати по

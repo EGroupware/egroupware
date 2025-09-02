@@ -87,6 +87,7 @@ send notifications	calendar	lt	Siųsti pranešimus
 send notifications to users right now	calendar	lt	Siųsti pranešimus dalyviams dabar
 show %1 from %2	calendar	lt	Rodyti %1 iš %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	lt	Rodyti kaip visos dienos neblokuojamus įvykius, taip pat per datos žymėjimą pelės žymekliu.
+show subscribed calendars	calendar	lt	Rodyti prenumeruojamus kalendorius
 single participant	calendar	lt	Vienas dalyvis
 sort by	calendar	lt	Rūšiuoti pagal
 subscribed calendar	calendar	lt	Prenumeruojamas kalendorius

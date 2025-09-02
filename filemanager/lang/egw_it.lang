@@ -201,6 +201,7 @@ modified between	filemanager	it	Modificato tra
 modify all subdirectories and their content	filemanager	it	Modifica tutte le sottocartelle e il loro contenuto
 mount	filemanager	it	Montaggio
 mount /etemplates to allow customizing of etemplates	filemanager	it	Montare /etemplates per personalizzare gli eTemplate
+mount permanently	filemanager	it	Montare in modo permanente
 mountpoints	filemanager	it	Punti di montaggio
 move	filemanager	it	Sposta
 move into folder	filemanager	it	Sposta nella cartella

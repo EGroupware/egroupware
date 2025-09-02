@@ -429,7 +429,6 @@ number of resources to be booked	calendar	ja	予約するリソースの数
 number of weeks to show	calendar	ja	表示週数
 observance rule	calendar	ja	遵守ルール
 occurence	calendar	ja	事象
-old fixed definition	calendar	ja	Old fixed definition
 old startdate	calendar	ja	元の開始日
 olddate	calendar	ja	元の日付
 on %1 %2 %3 your meeting request for %4	calendar	ja	On %1 %2 %3 your meeting request for %4
@@ -565,6 +564,7 @@ show only invitations, not yet accepted or rejected	calendar	ja	未回答のイ�
 show only rejected events	calendar	ja	参加辞退済みイベントのみ表示
 show only tentative accepted events	calendar	ja	仮承諾済みイベントのみ表示
 show only the date, not the year	admin	ja	日付を表示（年は非表示）
+show subscribed calendars	calendar	ja	購読中のカレンダーを表示
 show this month	calendar	ja	今月を表示
 show this week	calendar	ja	今週を表示
 show year and age	calendar	ja	生年と年齢を表示

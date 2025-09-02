@@ -58,6 +58,7 @@ mail paste	filemanager	ko	메일 붙여넣기
 merge print open handler	filemanager	ko	인쇄 열기 핸들러 병합
 modified	filemanager	ko	수정됨
 modified between	filemanager	ko	수정됨
+mount permanently	filemanager	ko	영구적으로 마운트
 mountpoints	filemanager	ko	마운트 포인트
 notebookbar	filemanager	ko	탭
 open	filemanager	ko	개설
@@ -87,3 +88,5 @@ smb, webdavs and vfs require a username!	filemanager	ko	SMB, WebDAV 및 VFS에�
 smb: mount samba or windows fileserver shares	filemanager	ko	SMB: Samba 또는 Windows 파일서버 공유 마운트
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ko	문서에 데이터로 대체할 {{%3}}과 같은 자리 표시자를 포함할 수 있습니다(%1자리 표시자 이름의 전체 목록%2).
 username for webdav and smb, use $user for name of logged in user	filemanager	ko	WebDAV 및 SMB의 사용자 이름, 로그인한 사용자의 이름에 $user 사용
+vfs mounts and versioning	common	ko	VFS 마운트 및 버전 관리
+webdavs: mount egroupware or *cloud shares	filemanager	ko	WebDAV: EGroupware 또는 *Cloud 공유 마운트

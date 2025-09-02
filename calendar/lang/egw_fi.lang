@@ -399,7 +399,6 @@ number of resources to be booked	calendar	fi	Varattavien resurssien määrä
 number of weeks to show	calendar	fi	Näytettävien viikkojen määrä
 observance rule	calendar	fi	Ohjeen noudattaminen
 occurence	calendar	fi	Tapahtuma
-old fixed definition	calendar	fi	Vanha, korjattu määritelmä
 old startdate	calendar	fi	Vanha aloituspäivä
 olddate	calendar	fi	Alkuperäinen päiväys
 on %1 %2 %3 your meeting request for %4	calendar	fi	%1 %2 %3 tapaamispyyntö henkilölle %4
@@ -526,6 +525,7 @@ show only invitations, not yet accepted or rejected	calendar	fi	Näytä ainoasta
 show only rejected events	calendar	fi	Näytä ainoastaan torjutut tapahtumat
 show only tentative accepted events	calendar	fi	Näytä ainoastaan alustavasti hyväksytyt tapahtumat
 show only the date, not the year	admin	fi	Näytä ainoastaan päiväys, ei vuotta
+show subscribed calendars	calendar	fi	Näytä tilatut kalenterit
 show this month	calendar	fi	Näytä tämä kuukausi
 show this week	calendar	fi	Näytä tämä viikko
 show year and age	calendar	fi	Näytä vuosi ja ikä

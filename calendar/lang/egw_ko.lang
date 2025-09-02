@@ -285,6 +285,7 @@ should the status of the event-participants (accept, reject, ...) be shown in br
 show %1 from %2	calendar	ko	%2에서 %1 표시
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	ko	하루 종일 차단되지 않는 이벤트로 표시하거나 날짜를 마우스오버하여 표시할 수 있습니다.
 show list of upcoming events	calendar	ko	예정된 이벤트 목록 보기
+show subscribed calendars	calendar	ko	구독한 캘린더 표시
 show this month	calendar	ko	이번달보기
 show this week	calendar	ko	이번주보기
 single event	calendar	ko	단독 이벤트

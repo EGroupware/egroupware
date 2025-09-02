@@ -1280,6 +1280,7 @@ show page generation time	common	cs	Zobrazit časy generování stránek
 show page generation time on the bottom of the page?	common	cs	Přejete si zobrazit čas generování stránky na jejím zápatí.
 show page generation time?	common	cs	Zobrazit čas generovaní stránky
 show password	common	cs	Zobrazit heslo
+show these toolbar items helptext	common	cs	Zobrazit tyto položky na panelu nástrojů (pokud se tam vejdou). Ostatní jsou k dispozici v seznamu [⋮].
 show values	common	cs	Zobrazit hodnoty
 show/hide	common	cs	Zobrazit/skrýt postranní panel
 showing	common	cs	Zobrazuji
@@ -1399,6 +1400,7 @@ tokelau	common	cs	TOKELAU
 tonga	common	cs	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	cs	Příliš mnoho vybraných řádků.<br>Vyberte všechny nebo méně než %1 řádků
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	cs	Příliš mnoho neúspěšných pokusů o přihlášení: %1 pro uživatele '%2', %3 pro IP %4
+toolbar settings	common	cs	Nastavení panelu nástrojů
 top	common	cs	Horní okraj
 total	common	cs	Celkem
 total: %1 successful: %2 failed: %3 skipped: %4	common	cs	Celkem: %1 Úspěšně: %2 Neúspěšně: %3 Přeskočeno: %4

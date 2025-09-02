@@ -1187,6 +1187,7 @@ show page generation time	common	ru	Показать время генераци
 show page generation time on the bottom of the page?	common	ru	Показать время генерации страницы внизу страницы.
 show page generation time?	common	ru	Отображать время генерации страницы
 show password	common	ru	Показать пароль
+show these toolbar items helptext	common	ru	Показать эти элементы на панели инструментов (если они помещаются). Остальные доступны в списке [⋮].
 show values	common	ru	Показать Значения
 show/hide	common	ru	показать/скрыть боковую панель
 showing	common	ru	показывем
@@ -1272,6 +1273,7 @@ there already is a system-user with this name. user's should not have the same n
 they will be sub-folders in users home (%1 attribute).	common	ru	Они будут подпапкамив домашнем каталоге пользователя (%1 атрибут).
 this name has been used already	common	ru	Это имя уже используется!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	ru	этот текст появляется, если поле ввода пусто и не в фокусе (смазано)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	ru	Это сбросит настройки панели инструментов для всех пользователей и установит их в соответствии с настроенными настройками по умолчанию.
 thursday	common	ru	Четверг
 tiled	common	ru	мозаика
 time	common	ru	Время
@@ -1293,6 +1295,7 @@ togo	common	ru	Того
 tokelau	common	ru	Токелау
 tonga	common	ru	Тонга
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	ru	Слишком много попыток входа: %1 для пользователя '%2', %3 с IP адреса %4
+toolbar settings	common	ru	Настройки панели инструментов
 top	common	ru	Верх
 total	common	ru	Всего
 tree	common	ru	Дерево

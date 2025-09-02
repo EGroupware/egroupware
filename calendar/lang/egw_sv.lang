@@ -417,6 +417,7 @@ show only invitations, not yet accepted or rejected	calendar	sv	Visa bara inbjud
 show only rejected events	calendar	sv	Visa bara avböjda händelser
 show only tentative accepted events	calendar	sv	Visa bara preliminärt accepterade händelser
 show only the date, not the year	admin	sv	Visa bara datum, inte år
+show subscribed calendars	calendar	sv	Visa prenumererade kalendrar
 show this month	calendar	sv	Visa denna månad
 show this week	calendar	sv	Visa denna vecka
 show year and age	calendar	sv	Visa år och ålder

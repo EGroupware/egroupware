@@ -1058,6 +1058,7 @@ show page generation time	common	zh	显示页面的生成耗时
 show page generation time on the bottom of the page?	common	zh	是否在页面底部显示该页面生成所耗时间。
 show page generation time?	common	zh	显示页面的生成耗时
 show password	common	zh	显示密码
+show these toolbar items helptext	common	zh	在工具栏上显示这些项目（如果它们适合）。其他项目可在列表 [⋮] 中找到。
 show values	common	zh	显示数值
 showing	common	zh	显示
 showing %1	common	zh	共有%1项
@@ -1132,6 +1133,7 @@ the following applications require upgrades	common	zh	以下应用程序需要�
 the mail server returned	common	zh	退回邮件
 this name has been used already	common	zh	该名称已被使用！
 this text gets displayed if the input-field is empty and has no focus (blur)	common	zh	如果输入字段为空且没有焦点(模煳)，这些文本得以显示
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	zh	这将重置所有用户的工具栏首选项并将其设置为配置的默认首选项。
 thursday	common	zh	星期四
 tiled	common	zh	平铺
 time	common	zh	时间
@@ -1153,6 +1155,7 @@ tokelau	common	zh	托克劳群岛
 tonga	common	zh	汤加
 too many rows selected.<br />select all, or less than %1 rows	common	zh	选择的行数太多。<br>选择全部或少于 %1 行
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zh	登录失败次数过多：用户"%2" %1次，IP地址"%4" %3次
+toolbar settings	common	zh	工具栏设置
 top	common	zh	顶部
 total	common	zh	总计
 total: %1 successful: %2 failed: %3 skipped: %4	common	zh	总计：%1 成功：%2 失败：%3 跳过：%4

@@ -436,7 +436,6 @@ number of resources to be booked	calendar	sk	Počet zdrojov na rezerváciu
 number of weeks to show	calendar	sk	Počet zobrazených týždňov
 observance rule	calendar	sk	Pravidlo zachovania
 occurence	calendar	sk	Výskyt
-old fixed definition	calendar	sk	Stará pevná definícia
 old startdate	calendar	sk	Starý dátum začiatku
 olddate	calendar	sk	Pôvodný dátum
 on %1 %2 %3 your meeting request for %4	calendar	sk	%1 %2 %3 vašu požiadavku na stretnutie plánované na %4
@@ -575,6 +574,7 @@ show only invitations, not yet accepted or rejected	calendar	sk	Zobraziť iba po
 show only rejected events	calendar	sk	Zobraziť iba odmietnuté udalosti
 show only tentative accepted events	calendar	sk	Zobraziť iba predbežne prijaté udalosti
 show only the date, not the year	admin	sk	Zobraziť iba dátum, nie rok
+show subscribed calendars	calendar	sk	Zobraziť odberané kalendáre
 show this month	calendar	sk	Ukáž tento mesiac
 show this week	calendar	sk	Ukáž tento týždeň
 show year and age	calendar	sk	Ukázať rok a vek

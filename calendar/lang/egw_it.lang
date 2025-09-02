@@ -437,7 +437,6 @@ number of resources to be booked	calendar	it	Numero di risorse da prenotare
 number of weeks to show	calendar	it	Numero di settimane da mostrare
 observance rule	calendar	it	Regola da osservare
 occurence	calendar	it	Occorrenze
-old fixed definition	calendar	it	Vecchia definizione fissa
 old startdate	calendar	it	Vecchia data di partenza
 olddate	calendar	it	Data originale
 on %1 %2 %3 your meeting request for %4	calendar	it	Su %1 %2 %3  la tua richiesta di appuntamento per %4
@@ -576,6 +575,7 @@ show only invitations, not yet accepted or rejected	calendar	it	Mostra solo invi
 show only rejected events	calendar	it	Mostra solo gli eventi rifiutati
 show only tentative accepted events	calendar	it	Mostra solo gli eventi tentati accettati
 show only the date, not the year	admin	it	Mostra solo mese e giorno
+show subscribed calendars	calendar	it	Mostra i calendari sottoscritti
 show this month	calendar	it	mostra questo mese
 show this week	calendar	it	mostra questa settimana
 show year and age	calendar	it	Mostra anno e età

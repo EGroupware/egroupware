@@ -116,6 +116,7 @@ merge print open handler	filemanager	zh	合并打印打开处理程序
 mime type	filemanager	zh	MIME类型
 modified	filemanager	zh	已修改
 modified between	filemanager	zh	修改之间
+mount permanently	filemanager	zh	永久挂载
 mountpoints	filemanager	zh	安装点
 move	filemanager	zh	移动
 move to	filemanager	zh	移动到
@@ -177,6 +178,8 @@ upload fields	filemanager	zh	上传字段
 upload files	filemanager	zh	上传文件
 used space	filemanager	zh	已用空间
 username for webdav and smb, use $user for name of logged in user	filemanager	zh	WebDAV 和 SMB 的用户名，使用 $user 作为登录用户的名称
+vfs mounts and versioning	common	zh	VFS 挂载和版本控制
+webdavs: mount egroupware or *cloud shares	filemanager	zh	WebDAV：挂载 EGroupware 或 *Cloud 共享
 you do not have access to %1	filemanager	zh	您无权访问%1
 you need to become root, to enable or disable versioning on a directory!	filemanager	zh	你需要成为超级用户，以启用或禁用一个文件夹的版本管理
 you need to select some files first!	filemanager	zh	您需要首先选择某文件!

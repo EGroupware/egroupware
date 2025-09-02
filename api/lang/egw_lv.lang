@@ -916,6 +916,7 @@ show all categorys	common	lv	Rādīt visas kategorijas
 show page generation time	common	lv	Parādīt lapas ģenerēšanas laiku
 show page generation time on the bottom of the page?	common	lv	Parādīt lapas ģenerēšanas laiku lapas apakšpusē.
 show password	common	lv	Rādīt paroli
+show these toolbar items helptext	common	lv	Rādīt šos elementus rīkjoslā (ja tie tur iederas). Pārējie ir pieejami sarakstā [⋮].
 show values	common	lv	Rādīt vērtības
 show/hide	common	lv	Parādīt/noslēpt sānu joslu
 showing	common	lv	Rādīšana
@@ -977,6 +978,7 @@ the following applications require upgrades	common	lv	Sekojoša programmatūra p
 the mail server returned	common	lv	Pasta serveris atgrieza
 this name has been used already	common	lv	Šis vārds jau ir aizņemts!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	lv	šis teksts tiek attēlots, ja ievades lauks nav fokusēt(izplūdis)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	lv	Tas atiestatīs rīkjoslas iestatījumus visiem lietotājiem un iestatīs tos uz konfigurētajiem noklusējuma iestatījumiem.
 thursday	common	lv	Ceturtdiena
 time	common	lv	Laiks
 time zone	common	lv	Laika zona
@@ -997,6 +999,7 @@ tokelau	common	lv	TOKELAU
 tonga	common	lv	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	lv	Izvēlēts pārāk daudz rindu.<br>Izvēlieties visas vai mazāk par %1 rindu
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	lv	Pārāk dzudz nevieksmīgi pieslēgšanās mēģinājumi: %1 lietotājam '%2', %3 ar IP %4
+toolbar settings	common	lv	Rīkjoslas iestatījumi
 top	common	lv	Augšā
 total	common	lv	Kopā
 total: %1 successful: %2 failed: %3 skipped: %4	common	lv	Kopā: %1 Sekmīgi: %2 Neveiksmīgi: %3 Izlaisti: %4

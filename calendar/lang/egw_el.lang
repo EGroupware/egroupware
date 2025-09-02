@@ -318,7 +318,6 @@ number of resources to be booked	calendar	el	Αριθμός πόρων προς 
 number of weeks to show	calendar	el	Αριθμός εβδομάδων που θα εμφανίζονται
 observance rule	calendar	el	Κανόνας Επιτήρησης
 occurence	calendar	el	Συμβάν
-old fixed definition	calendar	el	Παλαιός σταθερός ορισμός
 old startdate	calendar	el	Παλιά ημερομηνία έναρξης
 olddate	calendar	el	Αρχική ημερομηνία
 on %1 %2 %3 your meeting request for %4	calendar	el	Στις %1 %2 %3 η αίτηση για συνάντηση για %4
@@ -414,6 +413,7 @@ show birthdays as all day non-blocking events as well as via mouseover of the da
 show birthdays as events	calendar	el	Εμφάνιση ώς γεγονότα
 show list of upcoming events	calendar	el	Παρουσιάστε τη λίστα των επερχόμενων γεγονότων
 show only the date, not the year	admin	el	Εμφάνιση μόνο της ημερομηνίας, όχι του έτους
+show subscribed calendars	calendar	el	Εμφάνιση ημερολογίων στα οποία έχετε εγγραφεί
 show this month	calendar	el	Παρουσιάστε αυτό το μήνα
 show this week	calendar	el	Παρουσιάστε αυτήν την εβδομάδα
 show year and age	calendar	el	Εμφάνιση έτους και ηλικίας

@@ -829,6 +829,7 @@ show page generation time	common	hu	Oldal megjelentítési idő mutatása
 show page generation time on the bottom of the page?	common	hu	Mutassa az oldal generálására fordított időt az oldal alján.
 show page generation time?	common	hu	Oldal generálási idő megjelenítése
 show password	common	hu	Jelszó megjelenítése
+show these toolbar items helptext	common	hu	Ezeket az elemeket jelenítsd meg az eszköztáron (ha elférnek). A többi elem a [⋮] listában érhető el.
 show/hide	common	hu	Oldalsáv megjelenítése/elrejtése
 showing %1	common	hu	%1 listázva
 showing %1 - %2 of %3	common	hu	listázva %1 - %2, össz: %3
@@ -881,6 +882,7 @@ thailand	common	hu	Thaiföld
 the following applications require upgrades	common	hu	A következő alkalmazásokat frissíteni kell
 the mail server returned	common	hu	A levelező szerver visszaküldte
 this name has been used already	common	hu	Ez a név már használatban van!
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	hu	Ezzel az összes felhasználó eszköztár-beállításait visszaállítod, és a konfigurált alapértelmezett beállításokra állítod őket.
 thursday	common	hu	Csütörtök
 tiled	common	hu	Mozaik
 time	common	hu	Idő
@@ -896,6 +898,7 @@ togo	common	hu	Togo
 tokelau	common	hu	Tokelau
 tonga	common	hu	Tonga
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	hu	Túl sok sikertelen belépési kísérlet: %1 felhasználó '%2', '%3' a következő IP címről: %4
+toolbar settings	common	hu	Eszköztár beállítások
 top	common	hu	Felül
 total	common	hu	Összesen
 trinidad and tobago	common	hu	Trinidad és Tobago

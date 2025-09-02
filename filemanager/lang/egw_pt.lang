@@ -112,6 +112,7 @@ merge print open handler	filemanager	pt	Manipulador de abertura de impressão de
 mime type	filemanager	pt	Tipo MIME
 modified	filemanager	pt	Modificado
 modified between	filemanager	pt	Modificado entre
+mount permanently	filemanager	pt	Montar permanentemente
 mountpoints	filemanager	pt	Pontos de montagem
 move	filemanager	pt	Mover
 move to	filemanager	pt	Mover para
@@ -171,6 +172,8 @@ upload fields	filemanager	pt	campos de envio de arquivos
 upload files	filemanager	pt	Enviar Arquivos
 used space	filemanager	pt	Espaço utilizado
 username for webdav and smb, use $user for name of logged in user	filemanager	pt	Nome de utilizador para WebDAV e SMB, utilizar $user para o nome do utilizador com sessão iniciada
+vfs mounts and versioning	common	pt	Montagens VFS e controlo de versões
+webdavs: mount egroupware or *cloud shares	filemanager	pt	WebDAV: montagem de partilhas EGroupware ou *Cloud
 you are not allowed to finally delete older versions and deleted files!	filemanager	pt	NÃO é permitido apagar finalmente versões mais antigas e ficheiros apagados!
 you do not have access to %1	filemanager	pt	Não tem acesso a %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	pt	Tem de se tornar superuser, para activar ou desactivar a versão numa pasta!

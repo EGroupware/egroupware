@@ -1256,6 +1256,7 @@ show page generation time	common	nl	Verlooptijd van de pagina's weergeven
 show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina.
 show page generation time?	common	nl	Verlooptijd pagina weergeven
 show password	common	nl	Rodyti slaptažodį
+show these toolbar items helptext	common	nl	Toon deze items op de werkbalk (als ze passen). De andere zijn beschikbaar in de lijst [⋮].
 show values	common	nl	Waarden weergeven
 show/hide	common	nl	Zijbalk tonen/verbergen
 showing	common	nl	Geeft weer
@@ -1371,6 +1372,7 @@ tokelau	common	nl	TOKELAU
 tonga	common	nl	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	nl	Te veel rijen geselecteerd.<br>Selecteer alles, of minder dan %1 rijen
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	nl	De veel mislukte pogingen om in te loggen: %1 voor de gebruiker '%2', %3 voor het IP %4
+toolbar settings	common	nl	Werkbalkinstellingen
 top	common	nl	Bovenzijde
 total	common	nl	Totaal
 total: %1 successful: %2 failed: %3 skipped: %4	common	nl	Totaal: %1 Geslaagd: %2 Niet gelukt: %3 Overgeslagen: %4

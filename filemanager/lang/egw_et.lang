@@ -63,6 +63,7 @@ mail paste	filemanager	et	Maili kleepimine
 merge print open handler	filemanager	et	Ühinemise printimise avatud käsitseja
 modified	filemanager	et	Muudetud
 modified between	filemanager	et	Muudetud vahel
+mount permanently	filemanager	et	Paigaldage püsivalt
 mountpoints	filemanager	et	Mountpoints
 move	filemanager	et	liiguta
 noone	filemanager	et	Mittekeegi
@@ -97,4 +98,6 @@ smb: mount samba or windows fileserver shares	filemanager	et	SMB: Samba või Win
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	et	Dokument võib sisaldada paigutusi nagu {{%3}}, mis asendatakse andmetega (%1täielik loetelu paigutuste nimedest%2).
 up	filemanager	et	üles
 username for webdav and smb, use $user for name of logged in user	filemanager	et	WebDAV ja SMB puhul kasutajanimi, kasuta $user sisselogitud kasutaja nime
+vfs mounts and versioning	common	et	VFS-ühendused ja versioonimine
+webdavs: mount egroupware or *cloud shares	filemanager	et	WebDAV: EGroupware või *Cloudi jagamiste ühendamine
 you need to become root, to enable or disable versioning on a directory!	filemanager	et	Sa pead saama superuser, et lubada või keelata kausta versioonimine!

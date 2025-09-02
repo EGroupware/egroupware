@@ -577,6 +577,7 @@ show only invitations, not yet accepted or rejected	calendar	es-es	Mostrar sólo
 show only rejected events	calendar	es-es	Mostrar sólo los eventos rechazados
 show only tentative accepted events	calendar	es-es	Mostrar sólo las tentativas de eventos aceptados
 show only the date, not the year	admin	es-es	Mostrar sólo la fecha, no el año
+show subscribed calendars	calendar	es-es	Mostrar calendarios suscritos
 show this month	calendar	es-es	Mostrar este mes
 show this week	calendar	es-es	Mostrar esta semana
 show year and age	calendar	es-es	Mostrar año y edad

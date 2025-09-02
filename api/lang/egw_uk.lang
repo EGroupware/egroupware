@@ -555,6 +555,7 @@ show all categorys	common	uk	Показати всі категорії
 show page generation time	common	uk	Показувати час генерації сторінки
 show page generation time on the bottom of the page?	common	uk	Показувати час генерації сторінки в низу сторінки.
 show password	common	uk	Показати пароль
+show these toolbar items helptext	common	uk	Показати ці елементи на панелі інструментів (якщо вони вміщаються). Інші елементи доступні в списку [⋮].
 showing %1	common	uk	видно %1
 showing %1 - %2 of %3	common	uk	видно %1 - %2 з %3
 show_more_apps	common	uk	Показати більше приложень
@@ -591,6 +592,7 @@ thailand	common	uk	ТАЇЛАНД
 the following applications require upgrades	common	uk	Наступні приложення потребують поновлення
 the mail server returned	common	uk	Поштовий сервер повернув
 this name has been used already	common	uk	Таке ім'я вже використовується!
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	uk	Це скине налаштування панелі інструментів для всіх користувачів і встановить їх на конфігуровані налаштування за замовчуванням.
 thursday	common	uk	Четвер
 time	common	uk	Час
 time zone	common	uk	Часовий пояс
@@ -603,6 +605,7 @@ today	common	uk	Сьогодні
 todays date, eg. "%1"	common	uk	Сьогоднішнє число, наприклад "%1"
 togo	common	uk	ТОГО
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	uk	Надто багато неуспішних спроб входу: %1 for the user '%2', %3 for the IP %4
+toolbar settings	common	uk	Налаштування панелі інструментів
 top	common	uk	зверху
 total	common	uk	Всього
 trinidad and tobago	common	uk	ТРІНІДАД І ТОБАГО

@@ -376,6 +376,7 @@ show birthdays from addressbook	admin	hu	Születésnapok megjelenítse a címjeg
 show empty rows in planner	calendar	hu	Üres sorok megjelenítése a Tervezőben
 show list of upcoming events	calendar	hu	Megmutatja a bejövő események listáját
 show only the date, not the year	admin	hu	Dátum megjelenítése év nélkül
+show subscribed calendars	calendar	hu	Feliratkozott naptárak megjelenítése
 show this month	calendar	hu	Hónap mutatása
 show this week	calendar	hu	Hét mutatása
 single event	calendar	hu	Egyetlen esemény

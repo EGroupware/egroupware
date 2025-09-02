@@ -201,6 +201,7 @@ modified between	filemanager	ja	変更:
 modify all subdirectories and their content	filemanager	ja	全サブフォルダおよびその内容を変更
 mount	filemanager	ja	マウント
 mount /etemplates to allow customizing of etemplates	filemanager	ja	eTemplate のカスタマイズを許可するために /etemplates をマウント
+mount permanently	filemanager	ja	永久マウント
 mountpoints	filemanager	ja	マウントポイント
 move	filemanager	ja	移動
 move into folder	filemanager	ja	フォルダに移動

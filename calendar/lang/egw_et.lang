@@ -251,6 +251,7 @@ show %1 from %2	calendar	et	Näita %1 alates %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	et	Näita kogu päeva mitteblokeerivate sündmuste kujul, samuti kuupäeva hiirega üleval hoidmise kaudu.
 show empty rows in planner	calendar	et	Näita tühju ridu Planeerijas
 show list of upcoming events	calendar	et	Näita nimekirja tulevastest sündmustest
+show subscribed calendars	calendar	et	Näita tellitud kalendrid
 show this month	calendar	et	Näita seda kuud
 show this week	calendar	et	Näita seda nädalat
 single event	calendar	et	Üksik sündmus

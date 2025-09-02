@@ -225,6 +225,7 @@ should new events created as private by default ?	calendar	tr	Yeni etkinlikler v
 show %1 from %2	calendar	tr	%2'den %1'i göster
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	tr	Tüm gün engelleme olmayan etkinlikler olarak ve tarihin üzerine fare ile gelindiğinde gösterilir.
 show list of upcoming events	calendar	tr	Yaklaşan Etkinlikleri görüntüle
+show subscribed calendars	calendar	tr	Abone olunan takvimleri göster
 single event	calendar	tr	Tek katılımcı
 sort by	calendar	tr	Göre sırala
 start date/time	calendar	tr	Başlangıç Tarih/Zaman

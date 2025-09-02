@@ -1422,6 +1422,7 @@ tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	en	Too many rows selected.<br>Select all, or less than %1 rows
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	en	Too many unsuccessful attempts to log in: %1 for the user '%2', %3 for the IP %4
+toolbar settings	common	en	Toolbar settings
 top	common	en	Top
 total	common	en	Total
 total: %1 successful: %2 failed: %3 skipped: %4	common	en	Total: %1 Successful: %2 Failed: %3 Skipped: %4

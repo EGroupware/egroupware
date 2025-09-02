@@ -438,7 +438,6 @@ number of resources to be booked	calendar	cs	Počet zdrojů, které mají být r
 number of weeks to show	calendar	cs	Kolik se má zobrazovat týdnů
 observance rule	calendar	cs	Pravidlo zachování
 occurence	calendar	cs	Výskyt
-old fixed definition	calendar	cs	Stará pevná definice
 old startdate	calendar	cs	Staré počáteční datum
 olddate	calendar	cs	Původní datum
 on %1 %2 %3 your meeting request for %4	calendar	cs	%1 %2 %3 Vás požadavek na setkání pro %4
@@ -577,6 +576,7 @@ show only invitations, not yet accepted or rejected	calendar	cs	Zobrazit jen poz
 show only rejected events	calendar	cs	Zobrazit jen odmítnuté události
 show only tentative accepted events	calendar	cs	Zobrazit jen předběžně přijaté události
 show only the date, not the year	admin	cs	Zobrazit jen datum, ne rok
+show subscribed calendars	calendar	cs	Zobrazit předplacené kalendáře
 show this month	calendar	cs	Zobrazit tento měsíc
 show this week	calendar	cs	Zobrazit tento týden
 show year and age	calendar	cs	Zobrazit rok a věk

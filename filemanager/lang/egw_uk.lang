@@ -73,6 +73,7 @@ mail paste	filemanager	uk	Вставка листа
 merge print open handler	filemanager	uk	Обробник відкритого друку об'єднати
 modified	filemanager	uk	Змінено
 modified between	filemanager	uk	Змінено між
+mount permanently	filemanager	uk	Змонтувати назавжди
 mountpoints	filemanager	uk	Точки монтування
 notebookbar	filemanager	uk	З табуляцією
 open	filemanager	uk	відкрито
@@ -102,4 +103,6 @@ smb, webdavs and vfs require a username!	filemanager	uk	SMB, WebDAV та VFS п�
 smb: mount samba or windows fileserver shares	filemanager	uk	SMB: Підключіть спільні ресурси файлового сервера Samba або Windows
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	uk	Документ може містити заповнювач типу {{%3}}, який буде замінено на дані (%1повний список назв заповнювачів%2).
 username for webdav and smb, use $user for name of logged in user	filemanager	uk	Ім'я користувача для WebDAV і SMB, використовуйте $user як ім'я користувача, що увійшов до системи
+vfs mounts and versioning	common	uk	Монтування VFS та керування версіями
+webdavs: mount egroupware or *cloud shares	filemanager	uk	WebDAV: змонтувати ресурси EGroupware або *Cloud
 you need to become root, to enable or disable versioning on a directory!	filemanager	uk	Вам необхідно стати суперкористувачем, щоб увімкнути або вимкнути версійність теки!

@@ -89,6 +89,7 @@ merge print open handler	filemanager	id	Gabungkan penangan terbuka cetak
 mime type	filemanager	id	mime type
 modified	filemanager	id	Dimodifikasi
 modified between	filemanager	id	Dimodifikasi antara
+mount permanently	filemanager	id	Memasang secara permanen
 mountpoints	filemanager	id	Titik pemasangan
 move	filemanager	id	Pindahkan
 move to	filemanager	id	Pindahkan ke
@@ -145,4 +146,6 @@ unused space	filemanager	id	Ruang tidak digunakan
 up	filemanager	id	Up
 used space	filemanager	id	Ruang digunakan
 username for webdav and smb, use $user for name of logged in user	filemanager	id	Nama pengguna untuk WebDAV dan SMB, gunakan $user untuk nama pengguna yang masuk
+vfs mounts and versioning	common	id	Pemasangan dan pembuatan versi VFS
+webdavs: mount egroupware or *cloud shares	filemanager	id	WebDAV: pasang EGroupware atau *share Cloud
 you need to become root, to enable or disable versioning on a directory!	filemanager	id	Anda perlu menjadi superuser, untuk mengaktifkan atau menonaktifkan versi pada folder!

@@ -421,7 +421,6 @@ number of resources to be booked	calendar	sl	Število virov, ki jih je treba rez
 number of weeks to show	calendar	sl	Število tednov za prikaz
 observance rule	calendar	sl	Pravilo opazovanja
 occurence	calendar	sl	Dogodek
-old fixed definition	calendar	sl	Stara določena opredelitev
 old startdate	calendar	sl	Star datum začetka
 olddate	calendar	sl	Izviren datum
 on %1 %2 %3 your meeting request for %4	calendar	sl	%1 %2 %3 vaša zahteva za srečanje za %4
@@ -553,6 +552,7 @@ show only invitations, not yet accepted or rejected	calendar	sl	Prikaži samo po
 show only rejected events	calendar	sl	Pokaži samo povabilo, ko so samo zavrnjeni dogodki
 show only tentative accepted events	calendar	sl	Prikaži samo začasno sprejete dogodke, ki še niso sprejeti ali zavrnjeni
 show only the date, not the year	admin	sl	Prikaži samo datum, brez leta
+show subscribed calendars	calendar	sl	Prikaži naročene koledarje
 show this month	calendar	sl	Prikaži ta mesec
 show this week	calendar	sl	Prikaži ta teden
 show year and age	calendar	sl	Prikaži leto in starost

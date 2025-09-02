@@ -780,6 +780,7 @@ show page generation time	common	bg	Показване на времето за 
 show page generation time on the bottom of the page?	common	bg	Да се показва ли най-отдолу времето за създаване на страниците.
 show page generation time?	common	bg	Да се показва ли времето за генериране на страниците
 show password	common	bg	Показване на парола
+show these toolbar items helptext	common	bg	Покажи тези елементи на лентата с инструменти (ако се побират). Останалите са достъпни в списъка [⋮].
 show/hide	common	bg	показване/скриване на страничната лента
 showing %1	common	bg	показване на %1
 showing %1 - %2 of %3	common	bg	показване на %1 до %2 от %3
@@ -828,6 +829,7 @@ thailand	common	bg	Тайланд
 the following applications require upgrades	common	bg	Следните приложения имат нужда от обновяване
 the mail server returned	common	bg	Пощенският сървър върна следното съобщение
 this name has been used already	common	bg	Това име вече е използвано!
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	bg	Това ще нулира настройките на лентата с инструменти за всички потребители и ще ги зададе на конфигурираните по подразбиране настройки.
 thursday	common	bg	Четвъртък
 time	common	bg	Време
 time zone	common	bg	Часови пояс
@@ -846,6 +848,7 @@ tokelau	common	bg	Токелау
 tonga	common	bg	Тонга
 too many rows selected.<br />select all, or less than %1 rows	common	bg	Избрани са твърде много редове.<br>Изберете всички или по-малко от %1 редове
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	bg	Твърде много неуспешни опита за влизане: %1 за потребител '%2', %3 от IP адрес %4
+toolbar settings	common	bg	Настройки на лентата с инструменти
 top	common	bg	Горе
 total	common	bg	общо
 total: %1 successful: %2 failed: %3 skipped: %4	common	bg	Общо: %1 Успешно: %2 Неуспешно: %3 Пропуснато: %4

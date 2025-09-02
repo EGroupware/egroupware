@@ -196,6 +196,7 @@ modified between	filemanager	bg	променян между
 modify all subdirectories and their content	filemanager	bg	Промяна на всички поддиректории и съдържанието им
 mount	filemanager	bg	Монтиране
 mount /etemplates to allow customizing of etemplates	filemanager	bg	Монтиране на /etemplates, за да позволи персонализирането им
+mount permanently	filemanager	bg	Монтиране за постоянно
 mountpoints	filemanager	bg	Точки за монтиране
 move	filemanager	bg	Преместване
 move into folder	filemanager	bg	Преместване в папка
@@ -308,7 +309,9 @@ used space	filemanager	bg	Използвано пространство
 user color indicator	filemanager	bg	Цветен индикатор на потребител
 username for webdav and smb, use $user for name of logged in user	filemanager	bg	Потребителско име за WebDAV и SMB, използвайте $user за името на влезлия потребител
 users and groups	filemanager	bg	Потребители и групи
+vfs mounts and versioning	common	bg	Монтиране на VFS и създаване на версии
 webdav link copied into clipboard	filemanager	bg	Връзката WebDAV копирана в клипборда
+webdavs: mount egroupware or *cloud shares	filemanager	bg	WebDAV: монтиране на дялове на EGroupware или *Cloud
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	bg	На кого се дава разрешение на окончателно изтриване на изтрити файлове или старите версии на файл:
 wrong username or password!	filemanager	bg	Грешно потребителско име или парола!
 you are not allowed to finally delete older versions and deleted files!	filemanager	bg	Нямате достъп до окончателно изтриване на по-стари версии и изтрити файлове!

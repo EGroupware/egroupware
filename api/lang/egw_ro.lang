@@ -172,12 +172,15 @@ repeat password	common	ro	Repetarea parolei
 saved column sizes to preferences.	common	ro	Salvat dimensiunile coloanelor în preferințe.
 selection of files can only be done in one folder.  %1 files unselected.	common	ro	Selectarea fișierelor se poate face doar într-un singur dosar. %1 fișiere neselectate.
 show password	common	ro	Afișare parolă
+show these toolbar items helptext	common	ro	Afișați aceste elemente în bara de instrumente (dacă se potrivesc). Celelalte sunt disponibile în lista [⋮].
 show/hide	common	ro	Afișați / ascundeți bara laterală
 sign up	common	ro	Înregistrare
 site configuration	common	ro	Configurația aplicației
 spreadsheets	common	ro	Foi de calcul
 template	common	ro	Șablon
 templates	common	ro	Șabloane
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	ro	Aceasta va reseta preferințele barei de instrumente pentru toți utilizatorii și le va seta la preferințele implicite configurate.
+toolbar settings	common	ro	Setări bara de instrumente
 videos	common	ro	Videoclipuri
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ro	Atunci când îmbinați intrările în documente, acestea vor fi stocate aici. Dacă nu este furnizat niciun dosar, acestea vor fi stocate în directorul dvs. personal (%1)
 your account has been updated with new data from your identity provider.	common	ro	Contul dvs. a fost actualizat cu date noi de la furnizorul dvs. de identitate.

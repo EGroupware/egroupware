@@ -436,7 +436,6 @@ number of resources to be booked	calendar	ru	Количество ресурсо
 number of weeks to show	calendar	ru	Количество отображаемых недель
 observance rule	calendar	ru	Правило Переноса
 occurence	calendar	ru	Действие
-old fixed definition	calendar	ru	Ранее исправленное опрделение
 old startdate	calendar	ru	Старая дата начала
 olddate	calendar	ru	Исходная дата
 on %1 %2 %3 your meeting request for %4	calendar	ru	На %1%2%3 ваш запрос на встречу для %4
@@ -575,6 +574,7 @@ show only invitations, not yet accepted or rejected	calendar	ru	Показыва
 show only rejected events	calendar	ru	Показать только отвергнутые события
 show only tentative accepted events	calendar	ru	Показывать только предварительно принятые события
 show only the date, not the year	admin	ru	Показывать только дату, год не показывать
+show subscribed calendars	calendar	ru	Показать подписанные календари
 show this month	calendar	ru	показать этот месяц
 show this week	calendar	ru	показать эту неделю
 show year and age	calendar	ru	Отображать год и возраст
