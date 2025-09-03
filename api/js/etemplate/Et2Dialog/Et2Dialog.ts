@@ -765,7 +765,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 			return;
 		}
 
-		this._template_widget.load(templateName, this.template, this.__value || {},
+		this._template_widget.load(templateName, this.template.includes(".xet") ? this.template : "", this.__value || {},
 				// true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
 				undefined, undefined, true)
 				.then(() =>
