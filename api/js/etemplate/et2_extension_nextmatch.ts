@@ -456,6 +456,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.dynheight.destroy();
 			this.dynheight = null;
 		}
+		if(this._filterbox)
+		{
+			this._filterbox.remove();
+			this._filterbox.nextmatch = null;
+			this._filterbox = null;
+		}
 		this.header?.destroy();
 		this.header = null;
 		this.header_left?.destroy();

@@ -15,7 +15,7 @@ import {until} from "lit/directives/until.js";
 import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
-import {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
+import type {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
 
 /**
  * @summary Application component inside EgwFramework
@@ -176,7 +176,7 @@ export class EgwFrameworkApp extends LitElement
 
 	get iframe() { return <HTMLIFrameElement>this.shadowRoot.querySelector("iframe");}
 
-	get filters() { return <Et2Filterbox>this.shadowRoot.querySelector(".egw_fw_app__filter");}
+	get filters() { return <Et2Filterbox>this.querySelector("et2-filterbox");}
 	get filtersDrawer() { return <SlDrawer>this.shadowRoot.querySelector(".egw_fw_app__filter_drawer");}
 
 
@@ -622,6 +622,9 @@ export class EgwFrameworkApp extends LitElement
 				this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"))
 		};
 
+		// Don't consider sort as a filter
+		delete filterValues.sort;
+		
 		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
 		const emptyFilter = (v) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
 		if(Object.values(filterValues).filter(emptyFilter).length !== 0)

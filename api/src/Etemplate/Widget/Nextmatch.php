@@ -284,7 +284,12 @@ class Nextmatch extends Etemplate\Widget
 			$app = array_shift($parts);
 			$rest = implode('.', $parts);
 		}
-		if($template_name && !($tpl = Template::instance($template_name)))
+		if($template_name && str_contains($template_name, '/api/filter-template.php'))
+		{
+			// Already set from a previous call, but somebody submitted
+			$url = $template_name;
+		}
+		else if($template_name && !($tpl = Template::instance($template_name)))
 		{
 			if (($path=Template::relPath(str_replace('.filter', '', $template_name))))
 			{
