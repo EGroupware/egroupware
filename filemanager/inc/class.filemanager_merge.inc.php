@@ -189,7 +189,15 @@ class filemanager_merge extends Api\Storage\Merge
 				}
 			}
 		}
-		$link = Link::mime_open($file['url'], $file['mime']);
+		try
+		{
+			$link = Link::mime_open($file['url'], $file['mime']);
+		}
+		catch (Api\Exception\AssertionFailed $e)
+		{
+			// Could not figure out what to do with it, but don't break the whole thing
+			$link = Vfs::download_url($file['url']);
+		}
 		if(is_array($link))
 		{
 			// Directories have their internal protocol in path here
