@@ -2333,6 +2333,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
 				colName = widget.id;
 				let show_custom_fields = visibility[columnMgr.columns[i].id].visible;
+				if(column_list.indexOf(colName) !== -1)
+				{
+					show_custom_fields = true;
+				}
 
 				const cf = this.columns[i].widget.options.customfields;
 				const visible = this.columns[i].widget.options.fields;
