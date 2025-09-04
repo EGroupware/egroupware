@@ -1,4 +1,4 @@
-import {css, html, LitElement, nothing, TemplateResult} from "lit";
+import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Favorite} from "./Favorite";
@@ -78,6 +78,14 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	{
 		super.disconnectedCallback();
 		document.removeEventListener("preferenceChange", this.handlePreferenceChange);
+	}
+
+	willUpdate(changedProperties : PropertyValues)
+	{
+		if(changedProperties.has("application") && this.application)
+		{
+			this._load();
+		}
 	}
 
 	private _load()
