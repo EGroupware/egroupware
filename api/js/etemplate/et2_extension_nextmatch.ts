@@ -2823,6 +2823,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		const previous = this.disabled;
 		super.set_disabled(_value);
 
+		if(this._filterbox)
+		{
+			this._filterbox.hidden = this.disabled;
+		}
 		if(previous && !_value)
 		{
 			this.resize();
