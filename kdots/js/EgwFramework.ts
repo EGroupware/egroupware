@@ -1172,7 +1172,10 @@ export class EgwFramework extends LitElement
             <sl-visually-hidden>
                 <h1>${egw.config('site_title', 'phpgwapi') || "EGroupware"}</h1>
                 <!-- Skip link -->
-                <a href="main">${this.egw.lang("Skip to content")}</a>
+                <a href="#egw-framework-main">${this.egw.lang("Skip to content")}</a>
+                ${!this.hasSlotController.test("status") ? nothing : html`
+                    <a href="#egw-framework-status">${this.egw.lang("Skip to status")}</a>
+                `}
             </sl-visually-hidden>
 		`;
 	}
@@ -1246,7 +1249,8 @@ export class EgwFramework extends LitElement
                     <div class="egw_fw__logo_apps">
                         <slot name="logo" part="logo"></slot>
                     </div>
-                    <sl-dropdown class="egw_fw__app_list" role="menu" exportparts="panel:app-list-panel">
+                    <sl-dropdown class="egw_fw__app_list" role="navigation" exportparts="panel:app-list-panel"
+                                 aria-label="${this.egw.lang("Application list")}">
                         <sl-icon-button slot="trigger" name="grid-3x3-gap"
                                         label="${this.egw.lang("Application list")}"
                                         aria-hidden="true"
@@ -1256,6 +1260,7 @@ export class EgwFramework extends LitElement
                     </sl-dropdown>
                     <div class="spacer spacer_start"></div>
                     <sl-tab-group part="open-applications" class="egw_fw__open_applications" activation="manual"
+                                  role="navigation"
                                   aria-label="${this.egw.lang("Open applications")}"
                                   @sl-tab-show=${this.handleApplicationTabShow}
                                   @sl-close=${this.handleApplicationTabClose}
@@ -1277,7 +1282,7 @@ export class EgwFramework extends LitElement
                                         disabled
                                         snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
                                         aria-label="Side menu resize">
-                            <main slot="start" part="main" class="egw_fw__main" id="main"
+                            <main slot="start" part="main" class="egw_fw__main" id="egw-framework-main"
                                   @sl-reposition=${this.handleSlide}
                                   @show=${this.handleApplicationShowHide}
                                   @hide=${this.handleApplicationShowHide}
@@ -1285,7 +1290,12 @@ export class EgwFramework extends LitElement
                                 <slot></slot>
                             </main>
                             <!-- No slider until we have more content <sl-icon slot="divider" name="grip-vertical"></sl-icon> -->
-                            <aside slot="end" class="egw_fw__status" part="status">
+                            <aside slot="end" class="egw_fw__status" part="status" role="navigation"
+                                   id="egw-framework-status"
+                            >
+                                <sl-visually-hidden>
+                                    <h2 class="egw_fw__status_title" part="status-title">${this.egw.lang("Status")}</h2>
+                                </sl-visually-hidden>
                                 <slot name="status"><span class="placeholder">status</span></slot>
                             </aside>
                         </sl-split-panel>
