@@ -968,6 +968,29 @@ abstract class Framework extends Framework\Extra
 			$app_css = $GLOBALS['egw_info']['flags']['css'];
 		}
 
+		// ToDo: add application_color as column to egw_applications table and read it from there
+		$app_css = <<<EOF
+/* Individual application colors, should go in each app's CSS */
+body, :root {
+  --addressbook-color: #003366;
+  --admin-color: #333333;
+  --bookmarks-color: #CC6633;
+  --calendar-color: #CC0033;
+  --filemanager-color: #ff9933;
+  --infolog-color: #660033;
+  --mail-color: #006699;
+  --projectmanager-color: #669999;
+  --resources-color: #003333;
+  --timesheet-color: #330066;
+  --tracker-color: #009966;
+  --wiki-color: #797979;
+  --ranking-color: #404040;
+  --default-color: #797979;
+  --kanban-color: #4663c8;
+  --smallpart-color: #303333;
+}
+EOF;
+
 		if (self::$load_default_css)
 		{
 			// For mobile user-agent we prefer mobile theme over selected one with a final fallback to theme named as template
