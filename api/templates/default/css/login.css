@@ -82,17 +82,22 @@ body select {
 #loginMainDiv .egw_message_wrapper {
   display: flex;
   max-height: 20%;
+  font-size: 2em;
   height: fit-content;
-  background: var(--sl-color-warning-50);
+  background: var(--sl-color-warning-100);
+  border-radius: var(--sl-border-radius-medium);
+  padding: var(--sl-spacing-2x-small);
 }
 #loginMainDiv .egw_message_wrapper #egw_message {
   display: flex;
+  color: var(--sl-color-neutral-900) !important;
 }
 #loginMainDiv .egw_message_wrapper #egw_message.error_message {
   color: var(--sl-color-danger);
 }
-#loginMainDiv .egw_message_wrapper #egw_message span.close {
-  background-image: url("../images/bi-save.svg");
+#loginMainDiv .egw_message_wrapper .close {
+  cursor: pointer;
+  font-size: 0.5em;
 }
 #loginMainDiv #divAppIconBar {
   display: flex;
@@ -106,6 +111,7 @@ body select {
   width: 100%;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 #loginMainDiv #centerBox form {
   padding: 1em;
@@ -188,7 +194,7 @@ div#login_footer {
   right: 0;
   width: 100%;
   height: var(--footer_height);
-  background: #4177A2;
+  background: var(--button-color);
   overflow-x: clip;
 }
 div#login_footer .apps {

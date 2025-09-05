@@ -13,6 +13,7 @@
  */
 
 :root {
+
   --footer_height: 40px;
   --text-color: var(--sl-color-neutral-50);
   --input-text-color: var(--sl-color-neutral-900);
@@ -88,19 +89,24 @@ body {
   .egw_message_wrapper {
 	display: flex;
 	max-height: 20%;
+	font-size: 2em;
 	height: fit-content;
-	background: var(--sl-color-warning-50);
+	background: var(--sl-color-warning-100);
+	border-radius: var(--sl-border-radius-medium);
+	padding: var(--sl-spacing-2x-small);
 
 	#egw_message {
 	  display: flex;
+	  color: var(--sl-color-neutral-900) !important;
 
 	  &.error_message {
 		color: var(--sl-color-danger);
 	  }
+	}
 
-	  span.close {
-		background-image: url("../images/bi-save.svg");
-	  }
+	.close {
+	  cursor: pointer;
+	  font-size: .5em;
 	}
   }
 
@@ -117,6 +123,7 @@ body {
 	width: 100%;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
 
 	form {
 	  padding: 1em;
@@ -217,7 +224,7 @@ div#login_footer {
   right: 0;
   width: 100%;
   height: var(--footer_height);
-  background: #4177A2;
+  background: var(--button-color);
   overflow-x: clip;
 
   .apps {

@@ -1,8 +1,4 @@
 <div id="loginMainDiv" style="background-image:url({background_file})" class="{stock_background_class}">
-	<div class="egw_message_wrapper">
-		<div id="egw_message" class="{cd_class}">{cd}
-		<span class="close"></span></div>
-	</div>
     <div id="divAppIconBar" style="position:relative;">
         <div id="divLogo">
 			<div class="login_logo_container">
@@ -15,6 +11,12 @@
 	    <div id="loginScreenMessage">{lang_message}</div>
     </div>
     <div id="centerBox">
+        <div class="egw_message_wrapper">
+            <div id="egw_message" class="{cd_class}">
+                {cd}
+            </div>
+            <div class="close bi-x-circle"></div>
+        </div>
         <form name="login_form" method="post" action="{login_url}">
             <div class="divLoginbox divSideboxEntry">
                 <div class="hiddenCredential">
