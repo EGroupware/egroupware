@@ -820,7 +820,7 @@ function check_fix_php_apc_ini()
 	if (extension_loaded('apc') || extension_loaded('apcu'))
 	{
 		$shm_size = ini_get('apc.shm_size');
-		$shm_segments = ini_get('apc.shm_segments');
+		$shm_segments = ini_get('apc.shm_segments') ?: 1;
 		// ancent APC (3.1.3) in Debian 6/Squezze has size in MB without a unit
 		if (($numeric_size = is_numeric($shm_size) && $shm_size <= 1048576)) $shm_size .= 'M';
 
