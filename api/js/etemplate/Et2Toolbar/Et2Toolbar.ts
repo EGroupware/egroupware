@@ -136,8 +136,10 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		if(changedProperties.has("preferenceId") || changedProperties.has("preferenceApp") || changedProperties.has("id"))
 		{
 			this.preferenceId = this.preferenceId || this.dom_id;
-			this.preferenceApp = this.preferenceApp || this.egw()?.app_name() || "";
-			this._preference = this.egw()?.preference(this.preferenceId, this.preferenceApp) || {};
+			this.preferenceApp = this.preferenceApp || (this.egw()?.app_name && this.egw()?.app_name()) || "";
+			this._preference = <{
+				[id : string] : boolean
+			}>this.egw()?.preference(this.preferenceId, this.preferenceApp) || {};
 		}
 		if(!this._actionsParsed)
 		{
@@ -709,9 +711,9 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 				label: child.id
 			};
 			// @ts-ignore
-			option.label = child.label ?? child.emptyLabel;
+			option.label = child.label || child.ariaLabel || child.statustext;
 			// @ts-ignore
-			option.icon = child.icon ?? child.image ?? child.onIcon;
+			option.icon = child.icon || child.image || child.onIcon;
 			if(!option.icon && this._actionManager)
 			{
 				// Try harder for icon, check original action
@@ -747,7 +749,8 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			},
 			callback: this.handleSettingsClose
 		}, this);
-		document.body.append(dialog);
+		// Append to app if available to get styles, otherwise to this
+		(this.closest("egw-app") ?? this).append(dialog);
 	}
 
 	protected overflowTemplate()

@@ -1,5 +1,9 @@
 The user can choose which inputs are shown. Inputs that do
-not fit are hidden. If the toolbar has an ID, the user's choice of which inputs to hide is remembered as a preference.
+not fit are hidden.
+
+If the toolbar has an ID, the user's choice of which inputs to hide is remembered as a preference.
+Widgets without an ID cannot be saved. Widgets without a label will not display properly in the dropdown or settings
+dialog.
 
 ```html:preview
 <et2-toolbar>

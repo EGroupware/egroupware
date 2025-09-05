@@ -34,6 +34,7 @@ export default css`
 		.toolbar-list {
 			display: flex;
 			flex-direction: column;
+			overflow-x: hidden;
 
 			/* Internal components in list */
 			& > * {
