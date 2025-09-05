@@ -949,27 +949,44 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
-	 * Used by template headers for including CSS in the header
+	 * Return CSS to load and define our custom web-fonts as font-family: egroupware(2) and custom font-size
 	 *
-	 * 'app_css'   - css styles from a) the menuaction's css-method and b) the $GLOBALS['egw_info']['flags']['css']
-	 * 'file_css'  - link tag of the app.css file of the current app
-	 * 'theme_css' - url of the theme css file
-	 * 'print_css' - url of the print css file
-	 *
-	 * @param array $themes_to_check
-	 * @author Dave Hall (*based* on verdilak? css inclusion code)
-	 * @return array with keys 'app_css' from the css method of the menuaction-class and 'file_css' (app.css file of the application)
+	 * @return string
 	 */
-	public function _get_css(array $themes_to_check = array())
+	public function fonts()
 	{
-		$app_css = '';
-		if (isset($GLOBALS['egw_info']['flags']['css']))
+		$css = '';
+		// custom web-font
+		foreach([
+	        'egroupware' => $GLOBALS['egw_info']['server']['font_face_url'] ?? null,
+	        'egroupware2' => $GLOBALS['egw_info']['server']['font_face_url2'] ?? null,
+        ] as $family => $url)
 		{
-			$app_css = $GLOBALS['egw_info']['flags']['css'];
+			if ($url)
+			{
+				$css .= '
+	@font-face {
+		font-family: '.$family.';
+		src: url("'.htmlspecialchars(is_array($url) ? array_shift($url) : $url).'") format("woff2");
+	}
+';
+			}
+			$textsize = (float)($GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? 12) ?: 12;
+			$css .= "
+			:root, :host, body, input {
+				font-size: {$textsize}px;
+				font-family: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+					Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+			}
+		";
 		}
+		return $css;
+	}
 
+	public function app_colors()
+	{
 		// ToDo: add application_color as column to egw_applications table and read it from there
-		$app_css = <<<EOF
+		return <<<EOF
 /* Individual application colors, should go in each app's CSS */
 body, :root {
   --addressbook-color: #003366;
@@ -990,6 +1007,32 @@ body, :root {
   --smallpart-color: #303333;
 }
 EOF;
+	}
+
+	/**
+	 * Used by template headers for including CSS in the header
+	 *
+	 * 'app_css'   - css styles from a) the menuaction's css-method and b) the $GLOBALS['egw_info']['flags']['css']
+	 * 'file_css'  - link tag of the app.css file of the current app
+	 * 'theme_css' - url of the theme css file
+	 * 'print_css' - url of the print css file
+	 *
+	 * @param array $themes_to_check
+	 * @author Dave Hall (*based* on verdilak? css inclusion code)
+	 * @return array with keys 'app_css' from the css method of the menuaction-class and 'file_css' (app.css file of the application)
+	 */
+	public function _get_css(array $themes_to_check = array())
+	{
+		// custom web-font and font-size
+		$app_css = $this->fonts();
+
+		// application colors
+		$app_css .= $this->app_colors();
+
+		if (isset($GLOBALS['egw_info']['flags']['css']))
+		{
+			$app_css .= $GLOBALS['egw_info']['flags']['css'];
+		}
 
 		if (self::$load_default_css)
 		{

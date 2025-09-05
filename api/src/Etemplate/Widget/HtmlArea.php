@@ -201,7 +201,7 @@ class HtmlArea extends Etemplate\Widget
 		$font_size = ($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'] ?? '10').
 			($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit'] ?? 'pt');
 
-		return \pixelegg_framework::web_fonts().<<<EOF
+		return $GLOBALS['egw']->framework->fonts().<<<EOF
 /**
  * Copyright (c) Tiny Technologies, Inc. All rights reserved.
  * Licensed under the LGPL or a commercial license.
