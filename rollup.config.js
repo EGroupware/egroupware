@@ -48,8 +48,8 @@ const config = {
     input: {
         // Output : Input
         // Note the .ts extension on the input - we build directly from the TypeScript when available
-        "pixelegg/js/fw_pixelegg.min": "pixelegg/js/fw_pixelegg.js",
-        "pixelegg/js/fw_mobile.min": "pixelegg/js/fw_mobile.js",
+        // "pixelegg/js/fw_pixelegg.min": "pixelegg/js/fw_pixelegg.js",
+        // "pixelegg/js/fw_mobile.min": "pixelegg/js/fw_mobile.js",
         "api/js/jsapi/egw.min": "api/js/jsapi/egw_modules.js",
         "api/js/etemplate/etemplate2": "api/js/etemplate/etemplate2.ts",
 

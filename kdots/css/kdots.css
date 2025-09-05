@@ -623,6 +623,9 @@ egw-app {
   /* Hide nextmatch header, it's in the framework now */
   /** filter drawer styling**/
 }
+egw-app div[id$='index'] {
+  overflow: auto;
+}
 @media (max-width: 800px) {
   egw-app {
     --left-max: 50%;
@@ -1041,6 +1044,8 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 }
 [slot="main-header"] et2-toolbar [slot="list"] {
   color: var(--sl-color-neutral-700);
+  --sl-input-color: var(--sl-color-neutral-700);
+  --sl-input-color-hover: var(--sl-color-neutral-700);
 }
 [slot="main-header"] et2-toolbar [slot="list"] ::part(base),
 [slot="main-header"] et2-toolbar [slot="list"]::part(base) {

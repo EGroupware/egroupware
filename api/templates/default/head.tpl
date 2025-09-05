@@ -9,7 +9,6 @@
 		<meta name="copyright" content="EGroupware GmbH http://www.egroupware.org (c) 2018" />
 		<meta name="language" content="{lang_code}" />
 		<meta name="author" content="EGroupware GmbH http://www.egroupware.org" />
-		{pngfix}
 		{meta_robots}
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
 		<link rel="shortcut icon" href="{img_shortcut}" />

@@ -1,0 +1,284 @@
+/**
+ * EGroupware: kdots template
+ *
+ * Definitions for login page
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Milan Koch <mk[at]egroupware.org>
+ * @package kdots
+ * @version $Id$
+ */
+:root {
+  --footer_height: 40px;
+  --text-color: var(--sl-color-primary-50);
+  --input-color: var(--sl-color-amber-200);
+  --button-color: var(--sl-color-primary-700);
+  --box-color: var(--sl-color-neutral-900);
+}
+.bootstrap-icons {
+  display: inline-block;
+  font-family: bootstrap-icons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -0.125em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/***
+LOGIN MAIN
+ ***/
+body {
+  overflow: auto;
+  margin: 0;
+}
+@media (max-device-width: 768px) {
+  body {
+    font-size: 2em;
+  }
+  body form {
+    flex: 1 1 auto;
+  }
+  body form input[type="checkbox"] {
+    width: 2em !important;
+    height: 2em;
+  }
+}
+body span,
+body a {
+  color: var(--text-color);
+}
+body input,
+body select {
+  color: var(--text-color);
+  background-color: var(--input-color);
+  width: 59%;
+  border: 1px outset var(--sl-color-gray-700);
+  border-radius: var(--sl-border-radius-medium);
+  padding-block: 0.5em;
+  padding-inline: 0.5em;
+  font-size: 1em;
+}
+body select {
+  width: 62%;
+}
+#loginMainDiv {
+  height: calc(100vh - var(--footer_height));
+  display: flex;
+  background-position-y: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+#loginMainDiv #login_logo {
+  max-width: 100%;
+}
+#loginMainDiv .egw_message_wrapper {
+  display: flex;
+  max-height: 20%;
+  height: fit-content;
+  background: var(--sl-color-warning-50);
+}
+#loginMainDiv .egw_message_wrapper #egw_message {
+  display: flex;
+}
+#loginMainDiv .egw_message_wrapper #egw_message.error_message {
+  color: var(--sl-color-danger);
+}
+#loginMainDiv .egw_message_wrapper #egw_message span.close {
+  background-image: url("../images/bi-save.svg");
+}
+#loginMainDiv #divAppIconBar {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+#loginMainDiv #centerBox {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+#loginMainDiv #centerBox form {
+  padding: 1em;
+}
+#loginMainDiv #centerBox .divLoginbox {
+  background: var(--box-color);
+  display: flex;
+  flex-direction: column;
+  padding: var(--sl-spacing-medium) var(--sl-spacing-x-large);
+  border-radius: var(--sl-border-radius-large);
+  gap: var(--sl-spacing-medium);
+}
+#loginMainDiv #centerBox .divLoginbox > div:not([class*="hidden"]) {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+#loginMainDiv #centerBox .divLoginbox > div:not([class*="hidden"]) > span {
+  padding-right: 1em;
+  width: 40%;
+}
+#loginMainDiv #centerBox .divLoginbox div.discovery_block input:last-child {
+  margin-bottom: 1em;
+}
+#loginMainDiv #centerBox .divLoginbox div.centered {
+  justify-content: center;
+}
+#loginMainDiv #centerBox .divLoginbox div.centered input {
+  font-weight: bold;
+  width: 100%;
+  background-color: var(--button-color);
+}
+#loginMainDiv #centerBox .divLoginbox div.remember_me_row {
+  justify-content: start;
+}
+#loginMainDiv #centerBox .divLoginbox div.remember_me_row label {
+  width: 41%;
+}
+#loginMainDiv #centerBox .divLoginbox div.remember_me_row input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+#loginMainDiv #centerBox .divLoginbox div.hiddenCredential {
+  display: contents;
+}
+#loginMainDiv #centerBox .divLoginbox div.login_button {
+  padding-top: 1em;
+}
+#loginMainDiv #centerBox .divLoginbox div.registration {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+#loginMainDiv #centerBox .divLoginbox #socialBox,
+#loginMainDiv #centerBox .divLoginbox #socialMedia {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#loginMainDiv #centerBox .divLoginbox #socialBox a img,
+#loginMainDiv #centerBox .divLoginbox #socialMedia a img {
+  height: 2.5em;
+}
+/***
+LOGIN FOOTER
+same as in pixelegg for now
+***/
+div#login_footer {
+  position: fixed;
+  bottom: 0;
+  display: inline-block;
+  right: 0;
+  width: 100%;
+  height: var(--footer_height);
+  background: #4177A2;
+  overflow-x: clip;
+}
+div#login_footer .apps {
+  display: flex;
+  justify-content: center;
+}
+div#login_footer .apps .app {
+  width: 30px;
+  height: 30px;
+  margin: 5px 1% auto 2%;
+  display: flex;
+}
+div#login_footer .apps .app:hover img.icon {
+  transform: scale(1.1);
+}
+div#login_footer .apps .app img.icon {
+  width: 30px;
+  filter: brightness(0) invert(1);
+  height: 30px;
+}
+div#login_footer .apps .app span {
+  display: none;
+}
+div#login_footer .apps .app[data-id="guacamole"] .content img.icon2-bg {
+  right: 15px;
+}
+div#login_footer .apps .tooltip {
+  display: inline-flex;
+  position: absolute;
+  text-align: left;
+  height: 34px;
+  width: 30px;
+  cursor: pointer;
+}
+div#login_footer .apps .tooltip .content {
+  min-width: 350px;
+  top: -10px;
+  left: 50%;
+  height: 190px;
+  max-height: 190px;
+  transform: translate(-50%, -100%);
+  padding: 10px 20px;
+  color: #444444;
+  background-color: #fafafa;
+  font-weight: normal;
+  font-size: 13px;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 99999999;
+  box-sizing: border-box;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.8s;
+  border: 1px solid #0d789f;
+  border-bottom: 6px solid #4177A2;
+  cursor: default;
+}
+div#login_footer .apps .tooltip .content img.icon-bg {
+  width: 35px;
+  position: absolute;
+  margin: 0 auto;
+  right: 15px;
+  top: 15px;
+}
+div#login_footer .apps .tooltip .content img.icon2-bg {
+  right: 55px;
+}
+div#login_footer .apps .tooltip .content img.icon3-bg {
+  right: 90px;
+}
+div#login_footer .apps .tooltip .content h3 {
+  height: 30px;
+  border-bottom: 1px solid #d9e4ed;
+}
+div#login_footer .apps .tooltip:hover .content {
+  visibility: visible;
+  opacity: 1;
+}
+div#login_footer .apps .tooltip:hover .content:hover {
+  visibility: visible;
+  opacity: 1;
+}
+div#login_footer .apps .tooltip .content .arrow {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: -21px;
+  height: 15px;
+}
+div#login_footer .apps .tooltip .content .arrow::after {
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background-color: #4177A2;
+}

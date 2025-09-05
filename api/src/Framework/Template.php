@@ -471,7 +471,7 @@ class Template
 			}
 			else
 			{
-				$new_root = dirname($root) . DIRECTORY_SEPARATOR . 'default';
+				$new_root = ($root) . DIRECTORY_SEPARATOR . 'default';
 				$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,2);
 			}
 		}

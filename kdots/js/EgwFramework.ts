@@ -361,6 +361,8 @@ export class EgwFramework extends LitElement
 		let appComponent = <EgwFrameworkApp>document.createElement("egw-app");
 		appComponent.setAttribute("id", appname);
 		appComponent.setAttribute("name", app.internalName || appname);
+		const style="var(--"+appname+"-color,var(--default-color))";
+		appComponent.style.setProperty("--application-color", style);
 		appComponent.url = url ?? app?.url;
 		if(app.slot)
 		{
