@@ -465,8 +465,8 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	 */
 	async init()
 	{
-		// Plain input for mobile
-		if(typeof egwIsMobile == "function" && egwIsMobile())
+		// Plain input for mobile, unless it's inline
+		if(!this.getOptions().inline && typeof egwIsMobile == "function" && egwIsMobile())
 		{
 			return;
 		}
@@ -1130,7 +1130,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		const helpTemplate = this._helpTextTemplate();
 
 		return html`
-            ${(typeof egwIsMobile != "function" || !egwIsMobile()) ? super.render() : nothing}
+            ${(this.getOptions().inline || typeof egwIsMobile != "function" || !egwIsMobile()) ? super.render() : nothing}
             <div
                     part="form-control"
                     class=${classMap({

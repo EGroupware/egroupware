@@ -42,7 +42,7 @@
 		</grid>
 	</template>
 	<template id="calendar.list" template="" lang="" group="0" version="1.9.003">
-		<nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.add" header_left="calendar.list.dates"/>
+        <nextmatch id="nm" template="calendar.list.rows" header_right="calendar.list.add" header_left="calendar.list.dates" filter_template=""/>
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 					<column width="70%"/>

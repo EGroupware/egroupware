@@ -9,10 +9,16 @@
  * @author Hadi Nategh <hn@stylite.de>
  * @package calendar
  */
-@import (reference) "../../../pixelegg/less/definitions.less";
-@import (reference) "../../../pixelegg/less/app_colors.less";
 @import (less) "../kdots/app.less";
 /* tablets and smartphones  */
+@media screen and (max-width: 800px) {
+  #calendar-toolbar {
+	// Hide toolbar add button, small screens get the corner one
+	#calendar-toolbar_add {
+	  display: none;
+	}
+  }
+}
 @media all {
 
   #calendar-edit #calendar-edit_calendar-edit-details {

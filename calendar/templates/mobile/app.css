@@ -1591,6 +1591,9 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
 egw-app {
   --current-day-color: var(--sl-color-amber-200, #ffffcc);
 }
+#calendar-sidebox_date {
+  flex-grow: 0;
+}
 #calendar-sidebox_date .flatpickr-day {
   color: var(--sl-color-neutral-900);
 }
@@ -1662,6 +1665,11 @@ egw-app {
   --sl-border-radius-medium: var(--sl-input-height-medium);
 }
 /* tablets and smartphones  */
+@media screen and (max-width: 800px) {
+  #calendar-toolbar #calendar-toolbar_add {
+    display: none;
+  }
+}
 @media all {
   #calendar-edit #calendar-edit_calendar-edit-details {
     float: none;

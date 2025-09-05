@@ -5,20 +5,24 @@ egw-app {
 }
 
 #calendar-sidebox_date {
-  .flatpickr-day {
-	color: var(--sl-color-neutral-900);
+  flex-grow: 0;
+  	.flatpickr-day {
+	  color: var(--sl-color-neutral-900);
+	}
+
+
+  .flatpickr-day.today {
+	background-color: var(--current-day-color);
+	color: var(--sl-color-neutral-900)
+  }
+
+  .flatpickr-day.selected {
+	background-color: var(--application-color);
   }
 }
 
-#calendar-sidebox_date .flatpickr-day.today {
-  background-color: var(--current-day-color);
-  color: var(--sl-color-neutral-900)
-}
-#calendar-sidebox_date .flatpickr-day.selected {
-  background-color: var(--application-color);
-}
 .calendar_calTimeGrid .calendar_calDayColHeader .calendar_calToday.et2_link.et2_clickable {
-	background-color: var(--current-day-color);
+  background-color: var(--current-day-color);
 }
 
 #calendar-view, #calendar-todo, #calendar-planner, #calendar-list {

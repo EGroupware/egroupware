@@ -137,8 +137,9 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	public applyFilters()
 	{
+		const value = this.value;
 		const changeEvent = new CustomEvent("change", {
-			detail: this.value,
+			detail: value,
 			bubbles: true,
 			composed: true,
 			cancelable: true
@@ -146,12 +147,12 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		this.dispatchEvent(changeEvent);
 		if(this._nextmatch && !changeEvent.defaultPrevented)
 		{
-			this._nextmatch.applyFilters(this.value);
+			this._nextmatch.applyFilters(value);
 
 			// Call without update so nm updates the indicator in column header
-			if(this.value["sort"])
+			if(value["sort"])
 			{
-				this._nextmatch.sortBy(this.value["sort"].id, this.value["sort"].asc, false);
+				this._nextmatch.sortBy(value["sort"].id, value["sort"].asc, false);
 			}
 		}
 	}

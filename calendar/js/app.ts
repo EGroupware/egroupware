@@ -2563,10 +2563,6 @@ export class CalendarApp extends EgwApp
 				}
 			}
 		}
-		if(this.sidebox_et2)
-		{
-			jQuery(this.sidebox_et2.getInstanceManager().DOMContainer).hide();
-		}
 
 		// Check for valid cache
 		var cachable_changes = ['date','weekend','view','days','planner_view','sortby'];
@@ -3102,7 +3098,7 @@ export class CalendarApp extends EgwApp
 								widget.set_value('');
 							}
 						}
-						else if(typeof widget.set_value == "function" && typeof state.state[widget.id] == 'undefined')
+						else if(widget.id && typeof widget.set_value == "function" && typeof state.state[widget.id] == 'undefined')
 						{
 							// No value, clear it
 							widget.set_value('');
@@ -4058,10 +4054,17 @@ export class CalendarApp extends EgwApp
 	_setupFilterTemplate(_et2)
 	{
 		this.sidebox_hooked_templates.push(_et2.widgetContainer);
+
+		// Hook the filter into the nextmatch
 		let filterbox;
-		if((filterbox = _et2.widgetContainer.querySelector("et2-filterbox")) && filterbox)
+		const listTemplate = etemplate2.getByTemplate("calendar.list")[0]?.widgetContainer;
+		if((filterbox = _et2.widgetContainer.querySelector("et2-filterbox")) && filterbox && listTemplate)
 		{
-			fitlerbox.nextmatch = CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById("nm");
+			// Wait until the list is done loading
+			listTemplate.updateComplete.then(() =>
+			{
+				filterbox.nextmatch = listTemplate.getWidgetById("nm");
+			});
 		}
 	}
 
