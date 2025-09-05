@@ -206,11 +206,15 @@ div.et2_nextmatch {
 
 	[slot="list"] {
 	  color: var(--sl-color-neutral-700);
+	  --sl-input-color: var(--sl-color-neutral-700);
 
 	  ::part(base), &::part(base) {
 		color: var(--sl-color-neutral-700);
 	  }
-
+	  ////since our placeholders also already carry a mening we should style them the same
+	  //&::part(input)::placeholder {
+		//color: var(--sl-color-neutral-700);
+	  //}
 	  :hover::part(base) {
 		border-color: var(--sl-input-border-color);
 	  }
