@@ -274,7 +274,7 @@ class Image
 		'filemanager/folder_open'	=> 'folder2-open',
 		'filemanager/gohome'	=> 'house-door',
 		'filemanager/list_row'	=> 'list',
-		'filemanager/list_tile'	=> 'grid-3x3-gap',
+		'filemanager/list_tile'	=> 'grid',
 		'filemanager/linkpaste' => 'filemanager/bi-linkpaste',
 		'filemanager/mailpaste'	=> 'envelope-check',
 		'filemanager/upload'	=> 'box-arrow-in-up',
