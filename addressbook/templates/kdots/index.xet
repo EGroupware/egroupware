@@ -194,7 +194,7 @@
         </grid>
     </template>
     <template id="addressbook.index.header" template="" lang="" group="0" version="1.7.001">
-        <et2-hbox id="main_header">
+        <et2-hbox id="main_header" width="100%">
             <et2-button-icon statustext="Add a new contact" id="add" image="add"
                              onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'870','610','_blank','addressbook',null,true); return false;"
                              noSubmit="true"></et2-button-icon>

@@ -52,8 +52,10 @@ export default css`
 		justify-content: flex-start;
 		align-items: center;
 		justify-items: stretch;
-		flex: 1 0 2em;
+		flex: 5 5 auto;
 		max-height: var(--sl-font-size-3x-large);
+		/* Needed for flex to shrink nicely */
+		min-width: 2em;
 
 		background-color: var(--application-color, var(--primary-background-color));
 		color: var(--application-header-text-color);
@@ -71,6 +73,10 @@ export default css`
 
 		et2-button-icon {
 			margin: 0 var(--sl-spacing-medium);
+		}
+
+		::slotted(*) {
+			overflow: hidden;
 		}
 	}
 

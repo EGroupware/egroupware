@@ -177,6 +177,8 @@ div.et2_nextmatch {
 
   et2-toolbar {
 	border-bottom-width: 0px;
+	flex: 1 1 auto;
+
 	//No divider in our kdots toolbar
 	sl-button-group {background:none;}
 	et2-dropdown-button{
@@ -220,6 +222,12 @@ div.et2_nextmatch {
 		border-color: var(--sl-input-border-color);
 	  }
 	}
+  }
+
+  /* Don't let search grow */
+
+  [id$="api-search-button"] {
+	flex: 0 0 min-content;
   }
 }
 

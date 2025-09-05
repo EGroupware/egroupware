@@ -61,7 +61,7 @@ export default css`
 
 		/* We don't want these to expand */
 
-		::slotted(sl-button-group), ::slotted(et2-button), ::slotted(et2-button-icon), ::slotted(et2-button-toggle), ::slotted(et2-switch), ::slotted(et2-checkbox) {
+		::slotted(sl-button-group), ::slotted(et2-button), ::slotted(et2-button-icon), ::slotted(et2-button-toggle), ::slotted(et2-switch), ::slotted(et2-checkbox), ::slotted(et2-dropdown-button) {
 			flex: 0 0 fit-content;
 			min-width: var(--sl-input-height-medium);
 		}

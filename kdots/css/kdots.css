@@ -920,6 +920,7 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
   /*HOVER effect on all clickable elements in the main-header*/
   /*we also want to style the clickable elements in the whole header in the same way*/
   /*END HOVER*/
+  /* Don't let search grow */
 }
 [slot="main-header"] input::placeholder {
   color: black;
@@ -1019,6 +1020,7 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 }
 [slot="main-header"] et2-toolbar {
   border-bottom-width: 0px;
+  flex: 1 1 auto;
   /* Change colors of things in list back */
 }
 [slot="main-header"] et2-toolbar sl-button-group {
@@ -1053,6 +1055,9 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 }
 [slot="main-header"] et2-toolbar [slot="list"] :hover::part(base) {
   border-color: var(--sl-input-border-color);
+}
+[slot="main-header"] [id$="api-search-button"] {
+  flex: 0 0 min-content;
 }
 /*Special styling for flatpickr widget*/
 .flatpickr-calendar .flatpickr-months .flatpickr-current-month {
