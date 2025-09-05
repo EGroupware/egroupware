@@ -279,12 +279,6 @@ export class CalendarApp extends EgwApp
 			case 'calendar.sidebox':
 				this.sidebox_et2 = _et2.widgetContainer;
 				this.sidebox_hooked_templates.push(this.sidebox_et2);
-				if(!_et2.DOMContainer.slot)
-				{
-					jQuery(_et2.DOMContainer).hide();
-				}
-
-				this._setup_sidebox_filters();
 
 				this.state = content.data;
 				if(typeof this.state.date == "string" && this.state.date.length == 8)
@@ -4064,7 +4058,11 @@ export class CalendarApp extends EgwApp
 	_setupFilterTemplate(_et2)
 	{
 		this.sidebox_hooked_templates.push(_et2.widgetContainer);
-		_et2.widgetContainer.querySelector("et2-filterbox").nextmatch = CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById("nm");
+		let filterbox;
+		if((filterbox = _et2.widgetContainer.querySelector("et2-filterbox")) && filterbox)
+		{
+			fitlerbox.nextmatch = CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById("nm");
+		}
 	}
 
 	/**
