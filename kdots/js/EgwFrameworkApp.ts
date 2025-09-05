@@ -1169,7 +1169,7 @@ export class EgwFrameworkApp extends LitElement
                     egw_fw_app__name: true,
                     hasHeaderContent: hasHeaderContent,
                 })} part="name">
-                    ${hasLeftSlots ? html`
+                    ${hasLeftSlots || window.matchMedia("(width < 800px)").matches ? html`
                     <sl-icon-button name="${this.leftCollapsed ? "chevron-double-right" : "chevron-double-left"}"
                                     label="${this.leftCollapsed ? this.egw.lang("Show left area") : this.egw?.lang("Hide left area")}"
                                     @click=${() =>
