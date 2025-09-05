@@ -14,7 +14,6 @@
 /* tablets and smartphones  */
 @media all {
   #filemanager-index_nm table.egwGridView_outer tbody span[id^='filemanager-index'][id$='size]'] {
-    font-size: 10pt;
     text-align: right;
   }
   #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] {
@@ -23,14 +22,7 @@
     max-width: 100%;
   }
   #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='name]'] span {
-    font-size: 12pt;
     white-space: nowrap;
-  }
-  #filemanager-index_nm table.egwGridView_outer tbody span[id^='filemanager-index'][id$='comment]'] {
-    font-size: 10pt;
-  }
-  #filemanager-index_nm table.egwGridView_outer tbody label[id^='filemanager-index'][id$='mtime]'] time {
-    font-size: 10pt;
   }
   #filemanager-index_nm .buttons {
     position: relative;
@@ -57,69 +49,6 @@
   }
   #filemanager-index_nm #filemanager-index_nm_filemanager-index-header_left::part(base) {
     width: 100%;
-  }
-  #filemanager-index_nm .nextmatch_header.nm_header_hide {
-    display: inline-block !important;
-  }
-  #filemanager-index_nm .nextmatch_header.nm_header_hide .header_row_right,
-  #filemanager-index_nm .nextmatch_header.nm_header_hide .filtersContainer,
-  #filemanager-index_nm .nextmatch_header.nm_header_hide .header_count {
-    display: none;
-  }
-  #filemanager-index_nm .nextmatch_header .nextmatch_header_row {
-    padding-bottom: 0px;
-  }
-  #filemanager-index_nm .nextmatch_header .filemanager_navigation {
-    height: auto;
-    width: 100%;
-  }
-  #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_nm_path {
-    height: 50px;
-    width: calc(100% - 90px);
-    display: inline-block;
-    border: none;
-    background: white;
-  }
-  #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_nm_path:focus {
-    outline: none;
-  }
-  #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_up {
-    width: 24px;
-    height: 100%;
-    margin-left: 22px;
-    margin-right: 22px;
-  }
-  #filemanager-index_nm .nextmatch_header div.filtersContainer {
-    margin-top: 0px;
-    border-bottom: 1px solid silver;
-  }
-  #filemanager-index_nm .nextmatch_header #filemanager-index_new_wrapper {
-    float: none;
-    width: 100%;
-    margin: 0;
-    padding-top: 5px;
-  }
-  #filemanager-index_nm .nextmatch_header #filemanager-index_new_wrapper .et2_dropdown {
-    float: none;
-    width: 100%;
-  }
-  #filemanager-index_nm .nextmatch_header #filemanager-index_new_wrapper .et2_dropdown button {
-    width: 50px;
-    margin: 0;
-    border-radius: 0;
-  }
-  #filemanager-index_nm .nextmatch_header #filemanager-index_new_wrapper .et2_dropdown button div {
-    float: none;
-  }
-  #filemanager-index_nm .nextmatch_header #filemanager-index_new_wrapper .et2_dropdown #filemanager-index_new {
-    width: calc(100% - 50px);
-  }
-  #filemanager-index_nm select#filemanager-index_filter {
-    width: 100%;
-  }
-  #filemanager-index_nm .nextmatch_header_row div.header_row_right {
-    height: auto;
-    position: relative !important;
   }
   #filemanager-index_filemanager-index-header_left .et2_file.plus_button {
     position: fixed !important;
