@@ -104,15 +104,15 @@ abstract class Framework extends Framework\Extra
 	 */
 	public static function factory()
 	{
-		// we prefer Pixelegg template, if it is available
-		if (file_exists(EGW_SERVER_ROOT.'/pixelegg') &&
+		// we prefer Kdots template, if it is available
+		if (file_exists(EGW_SERVER_ROOT.'/kdots') &&
 			(empty($GLOBALS['egw_info']['flags']['deny_mobile']) && Header\UserAgent::mobile() ||
 			$GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile' ||
 			empty($GLOBALS['egw_info']['server']['template_set'])) ||
-			// change old idots and jerryr to our standard template (pixelegg)
-			in_array($GLOBALS['egw_info']['server']['template_set'], array('idots', 'jerryr')))
+			// change old pixelegg, idots and jerryr to our new standard kdots template
+			in_array($GLOBALS['egw_info']['server']['template_set'], array('idots', 'jerryr', 'pixelegg')))
 		{
-			$GLOBALS['egw_info']['server']['template_set'] = 'pixelegg';
+			$GLOBALS['egw_info']['server']['template_set'] = 'kdots';
 		}
 		if($GLOBALS['egw_info']['user']['preferences']['common']['template_set'] !== $GLOBALS['egw_info']['server']['template_set'] &&
 			class_exists($class = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] . '_framework')
@@ -1262,7 +1262,7 @@ EOF;
 	 */
 	static function list_templates($full_data=false)
 	{
-		$list = array('pixelegg'=>null);
+		$list = array('kdots'=>null);
 		// templates packaged like apps in own directories (containing as setup/setup.inc.php file!)
 		$dr = dir(EGW_SERVER_ROOT);
 		while (($entry=$dr->read()))
