@@ -67,15 +67,15 @@
 		<et2-button  statustext="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" noSubmit="true"></et2-button>
 		<et2-toolbar id="toolbar">
 			<et2-dropdown-button  id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"></et2-dropdown-button>
-			<et2-button  statustext="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" noSubmit="true"></et2-button>
-			<et2-button  statustext="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" noSubmit="true"></et2-button>
-			<et2-button  statustext="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" noSubmit="true"></et2-button>
+            <et2-button label="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" noSubmit="true"></et2-button>
+            <et2-button label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" noSubmit="true"></et2-button>
+            <et2-button label="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" noSubmit="true"></et2-button>
 			<!--
 			<et2-button  statustext="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" image="editpaste" noSubmit="true"></et2-button>
 			<et2-button  statustext="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" image="linkpaste" noSubmit="true"></et2-button>
 			<et2-button  statustext="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" image="mailpaste" noSubmit="true"></et2-button>
 			-->
-			<et2-button  statustext="File a file" onclick="app.filemanager.fileafile" image="upload" noSubmit="true"></et2-button>
+            <et2-button label="File a file" id="file_a_file" onclick="app.filemanager.fileafile" image="upload" noSubmit="true"></et2-button>
 		</et2-toolbar>
 	</et2-template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
