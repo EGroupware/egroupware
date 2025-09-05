@@ -313,7 +313,7 @@ class Login
 	{
 		if (true||!($json = Api\Cache::getCache(Api\Cache::TREE, __CLASS__, 'egw_login_json')))
 		{
-			$json = file_get_contents('pixelegg/login/login.json');
+			$json = file_get_contents('api/templates/login/login.json');
 			// Cache the json object for a day
 			Api\Cache::setCache(Api\Cache::TREE, __CLASS__, 'egw_login_json', $json, 86400);
 		}

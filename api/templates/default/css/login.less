@@ -14,7 +14,8 @@
 
 :root {
   --footer_height: 40px;
-  --text-color: var(--sl-color-primary-50);
+  --text-color: var(--sl-color-neutral-50);
+  --input-text-color: var(--sl-color-neutral-900);
   --input-color: var(--sl-color-amber-200);
   --button-color: var(--sl-color-primary-700);
   --box-color: var(--sl-color-neutral-900);
@@ -57,7 +58,7 @@ body {
   }
 
   input, select {
-	color: var(--text-color);
+	color: var(--input-text-color);
 	background-color: var(--input-color);
 	width: 59%;
 	border: 1px outset var(--sl-color-gray-700);
@@ -78,7 +79,8 @@ body {
   background-position-y: 100%;
   flex-direction: column;
   align-items: center;
-  #login_logo{
+
+  #login_logo {
 	max-width: 100%;
   }
 
@@ -139,20 +141,23 @@ body {
 		  width: 40%;
 		}
 	  }
-	  div.discovery_block{
-		input:last-child{
+
+	  div.discovery_block {
+		input:last-child {
 		  margin-bottom: 1em;
 		}
 	  }
 
 	  div.centered {
 		justify-content: center;
+	  }
 
-		input {
-		  font-weight: bold;
-		  width: 100%;
-		  background-color: var(--button-color);
-		}
+	  input[type="submit"] {
+		font-weight: bold;
+		font-size: large;
+		width: 100%;
+		background-color: var(--button-color);
+		color: var(--text-color);
 	  }
 
 	  div.remember_me_row {
