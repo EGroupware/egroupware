@@ -3721,7 +3721,8 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				image: "three-dots-vertical",
 				noSubmit: true,
 				style: "display: none;",
-			}, this);
+				// Add to container to avoid complications with what filter does to nextmatch header
+			}, this.nextmatch.getInstanceManager().widgetContainer);
 			contextMenuButton.addEventListener("click", (e) =>
 			{
 				if(self.nextmatch.getDOMNode().getElementsByClassName('selected').length > 0)
@@ -3731,7 +3732,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				}
 			});
 			this.action_header = jQuery(contextMenuButton)
-				.prependTo(this.nextmatch.getParent().getDOMNode().closest("egw-app"));
+				.prependTo(contextMenuButton.closest("egw-app"));
 		}
 
 		// Add category
