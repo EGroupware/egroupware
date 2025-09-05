@@ -328,7 +328,11 @@ export abstract class EgwApp
 	 */
 	nmFilterChange(_ev : Event)
 	{
-		const app_toolbar = document.querySelector('egw-app#'+this.appname+' [slot="main-header"]');
+		let app_toolbar = document.querySelector('egw-app#' + this.appname + ' [slot="main-header"]');
+		if(app_toolbar && app_toolbar.localName != "et2-template")
+		{
+			app_toolbar = app_toolbar?.querySelector("et2-template");
+		}
 		const activeFilters = _ev.detail?.activeFilters;
 		if (app_toolbar && activeFilters)
 		{
