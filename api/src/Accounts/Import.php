@@ -359,18 +359,21 @@ class Import
 						}
 						elseif (($account_id = $sql_account['account_id'] = $this->accounts_sql->save($sql_account, true)) > 0)
 						{
-							// run addaccount hook to create eg. home-directory or mail account
-							// only if account-repository is already SQL, NOT for migration
-							if (($GLOBALS['egw_info']['server']['account_repository'] ?? 'sql') === 'sql')
-							{
-								Api\Hooks::process($sql_account+array(
-										'location' => 'addaccount'
-									),False,True);	// called for every app now, not only enabled ones)
-							}
 							Api\Accounts::cache_invalidate($account_id);
 
 							$this->logger("Successful created user '$account[account_lid]' (#$account[account_id]".
 								($account['account_id'] != $account_id ? " as #$account_id" : '').')', 'detail');
+
+							// run addaccount hook to create eg. home-directory or mail account
+							// only if account-repository is already SQL, NOT for migration
+							if (($GLOBALS['egw_info']['server']['account_repository'] ?? 'sql') === 'sql')
+							{
+								$hook_results = Api\Hooks::process($sql_account+array(
+										'location' => 'addaccount'
+									),False,True);	// called for every app now, not only enabled ones)
+								$this->logger("Called addaccount hook for ".json_encode($sql_account).': '.
+									json_encode($hook_results), 'detail');
+							}
 						}
 						else
 						{
@@ -415,20 +418,24 @@ class Import
 								try {
 									if ($this->accounts_sql->save($to_update) > 0)
 									{
-										// run editaccount hook to create eg. home-directory or mail account
-										// only if account-repository is already SQL, NOT for migration
-										if (($GLOBALS['egw_info']['server']['account_repository'] ?? 'sql') === 'sql')
-										{
-											Api\Hooks::process($to_update + array(
-												// if there was no email set before, call add account hook, to activate mail-account
-												'location' => empty($sql_account['account_email']) && !empty($to_update['account_email']) ?
-													'addaccount' : 'editaccount',
-											), False, True);    // called for every app now, not only enabled ones)
-										}
 										Api\Accounts::cache_invalidate($account_id);
 
 										$this->logger("Successful updated user '$account[account_lid]' (#$account_id): " .
 											json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
+
+										// run editaccount hook to create eg. home-directory or mail account
+										// only if account-repository is already SQL, NOT for migration
+										if (($GLOBALS['egw_info']['server']['account_repository'] ?? 'sql') === 'sql')
+										{
+											$hook = empty($sql_account['account_email']) && !empty($to_update['account_email']) ?
+												'addaccount' : 'editaccount';
+											$hook_results = Api\Hooks::process($to_update + array(
+												// if there was no email set before, call add account hook, to activate mail-account
+												'location' => $hook,
+											), False, True);    // called for every app now, not only enabled ones)
+											$this->logger("Called $hook hook for ".json_encode($to_update).': '.
+												json_encode($hook_results), 'detail');
+										}
 										if (!$new) $new = false;
 									}
 									else
