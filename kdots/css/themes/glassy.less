@@ -15,9 +15,9 @@
   /* Rounded corners */
   --sl-border-radius-small: 1rem; /* Small radius */
   --sl-border-radius-medium: var(--sl-input-height-medium); /* Medium radius */
-  --sl-border-radius-large: 1.75rem; /* Large radius */
+  --sl-border-radius-large: var(--sl-input-height-medium); /* Large radius */
 
-  --sl-panel-border-radius: var(--sl-border-radius-medium);
+  --sl-panel-border-radius: 1rem;
 
   et2-avatar::part(base) {
 	background-color: transparent;
@@ -55,7 +55,7 @@
   }
 
   /* Buttons */
-  --sl-button-border-radius: 0.5rem;
+  --sl-button-border-radius: var(--sl-border-radius-pill);
   --sl-button-padding: 0.25rem 0.75rem;
   --sl-button-primary-background-color: hsl(var(--application-color-hsl));
   --sl-button-primary-color: hsl(var(--sl-color-neutral-0));
@@ -64,6 +64,7 @@
 
   et2-button, button, .plus_button {
 	&::part(base) {
+	  border-radius: var(--sl-button-border-radius);
 	  box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
 	}
 
@@ -95,8 +96,6 @@
   et2-dialog {
 	&::part(panel) {
 	  border-radius: var(--sl-panel-border-radius);
-	  border-bottom-left-radius: var(--sl-border-radius-large);
-	  border-bottom-right-radius: var(--sl-border-radius-large);
 	}
 
 	&::part(header) {

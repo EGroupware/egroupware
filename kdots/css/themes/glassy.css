@@ -16,13 +16,13 @@
   /* Small radius */
   --sl-border-radius-medium: var(--sl-input-height-medium);
   /* Medium radius */
-  --sl-border-radius-large: 1.75rem;
+  --sl-border-radius-large: var(--sl-input-height-medium);
   /* Large radius */
-  --sl-panel-border-radius: var(--sl-border-radius-medium);
+  --sl-panel-border-radius: 1rem;
   /* Input field changes */
   /* don't add another box shadow to input fields in glassy main header otherwise it shows up twice*/
   /* Buttons */
-  --sl-button-border-radius: 0.5rem;
+  --sl-button-border-radius: var(--sl-border-radius-pill);
   --sl-button-padding: 0.25rem 0.75rem;
   --sl-button-primary-background-color: hsl(var(--application-color-hsl));
   --sl-button-primary-color: hsl(var(--sl-color-neutral-0));
@@ -86,6 +86,7 @@
 :root .plus_button::part(base),
 :host .plus_button::part(base),
 .kdots-glassy .plus_button::part(base) {
+  border-radius: var(--sl-button-border-radius);
   box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
 }
 :root et2-button:not([disabled]):active::part(base),
@@ -123,8 +124,6 @@
 :host et2-dialog::part(panel),
 .kdots-glassy et2-dialog::part(panel) {
   border-radius: var(--sl-panel-border-radius);
-  border-bottom-left-radius: var(--sl-border-radius-large);
-  border-bottom-right-radius: var(--sl-border-radius-large);
 }
 :root et2-dialog::part(header),
 :host et2-dialog::part(header),
