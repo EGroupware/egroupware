@@ -1525,6 +1525,12 @@ class Db
 
 		$name = trim($_name);
 
+		// do NOT name-quote SQL expressions
+		if (str_starts_with($name, 'CASE ') || str_contains($name, ' '))
+		{
+			return $_name;
+		}
+
 		if (!$this->Link_ID && !$this->connect())
 		{
 			return false;
