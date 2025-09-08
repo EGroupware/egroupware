@@ -152,7 +152,9 @@ export class EgwFrameworkApp extends LitElement
 	 * @return {icon: string, tooltip: string}
 	 */
 	@property({type: Function})
-	getFilterInfo : (filterValues : { [id : string] : { value : any } }, fwApp : EgwFrameworkApp) => FilterInfo =
+	getFilterInfo : (filterValues : {
+		[id : string] : string | { value : any }
+	}, fwApp : EgwFrameworkApp) => FilterInfo =
 		(filterValues, fwApp) : FilterInfo =>
 	{
 		return this.filterInfo(filterValues);
@@ -176,7 +178,7 @@ export class EgwFrameworkApp extends LitElement
 
 	get iframe() { return <HTMLIFrameElement>this.shadowRoot.querySelector("iframe");}
 
-	get filters() { return <Et2Filterbox>this.querySelector("et2-filterbox");}
+	get filters() { return <Et2Filterbox>this.querySelector("et2-filterbox:not([hidden],[disabled])");}
 	get filtersDrawer() { return <SlDrawer>this.shadowRoot.querySelector(".egw_fw_app__filter_drawer");}
 
 
@@ -1259,7 +1261,7 @@ type PanelInfo = {
 }
 
 /* Information for the filter button */
-type FilterInfo = {
+export type FilterInfo = {
 	icon : string,
 	tooltip : string
 }
