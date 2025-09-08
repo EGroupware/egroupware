@@ -3829,7 +3829,14 @@ class calendar_uiforms extends calendar_ui
 
 					case 'save':
 					case 'apply':
-						$content['url'] = $caldav_client->test($content['sync_type']);
+						$sel_options['calendar'] = $caldav_client->test($content['sync_type']);
+						if (is_array($sel_options['calendar']) && (empty($content['calendar']) || !isset($sel_options['calendar'][$content['calendar']])))
+						{
+							$content['show_calendar_selection'] = true;
+							break;  // user needs to select a calendar
+						}
+						$content['url'] = is_array($sel_options['calendar']) ? $content['calendar'] : $sel_options['calendar'];
+						unset($content['show_calendar_selection'], $content['calendar']);
 						$content['cat_id'] = Api\CalDAV\Sync::writeSubscription($content);
 						$async = new Api\Asyncservice();
 						$async->cancel_timer($async_id = 'cal-sync-'.$content['cat_id']);
@@ -3851,8 +3858,7 @@ class calendar_uiforms extends calendar_ui
 							Framework::refresh_opener(lang('Subscription saved.'), 'calendar');
 							Framework::window_close();
 						}
-						Framework::message($button === 'sync' ? lang('Subscription synced.') :
-							lang('Subscription saved.'), 'success');
+						Framework::message(lang('Subscription saved.'), 'success');
 						$sel_options['cat_id'][$content['cat_id']] = $content['name'];
 						break;
 

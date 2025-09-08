@@ -28,6 +28,10 @@
 						<et2-password label="Password" id="password" autocomplete="new-password"></et2-password>
 					</et2-hbox>
 				</row>
+				<row disabled="!@show_calendar_selection">
+					<et2-description for="calendar" value="Calendar"></et2-description>
+					<et2-select id="calendar" emptyLabel="Select one..." required="true"></et2-select>
+				</row>
 				<row>
 					<et2-description value="Additional participants"></et2-description>
 					<et2-select-account id="participants" multiple="true" accountType="both"></et2-select-account>

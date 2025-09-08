@@ -48,48 +48,108 @@ class Sync
 	 */
 	public function test(?string &$sync_type=null)
 	{
+		if (!parse_url($this->url, PHP_URL_SCHEME))
+		{
+			$this->url = 'https://'.$this->url;
+		}
 		// check for an ics-file with Content-Type: text/calendar
-		api($this->url, 'HEAD', '', $this->header(['Accept: text/calendar']), $response_header);
-		if (preg_match('#^text/calendar(;|$)#', $response_header['content-type']))
-		{
-			$sync_type = 'calendar-get'.(!empty($response_header['etag']) ? '-etag' : '');
-			return $this->url;
-		}
-		$xml_reader = $this->propfind(0, [
-			'resourcetype', 'supported-report-set', 'current-user-principal',
-			['ns' => Api\CalDAV::CALDAV, 'name' => 'supported-calendar-component-set'],
-			['ns' => Api\CalDAV::CALENDARSERVER, 'name' => 'getctag'],
-		], [], $response_header);
-		$reports = $resource_types = [];
-		$xml_reader->registerXPathNamespace('D', 'DAV:');
-		foreach($xml_reader->xpath('//D:resourcetype') as $type)
-		{
-			$resource_types[] = key($type->children(Api\CalDAV::CALDAV));
-		}
-		if (!in_array('calendar', $resource_types))
-		{
-			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "resourcetype 'calendar'"));
-		}
-		foreach($xml_reader->xpath('//D:report') as $report)
-		{
-			$reports[] = key($report->children(Api\CalDAV::DAV)) ?? key($report->children(Api\CalDAV::CALDAV));
-		}
-		// check if sync-collection is supported and prefer it
-		if (in_array('sync-collection', $reports))
-		{
-			$sync_type = 'sync-collection-report';
-		}
-		else
-		{
-			$sync_type = 'calendar-propfind';
-			// check getctag is supported to use calendar-query report
-			$xml_reader->registerXPathNamespace('CS', Api\CalDAV::CALENDARSERVER);
-			if ($xml_reader->xpath('//CS:getctag'))
+		try {
+			api($this->url, 'HEAD', '', $this->header(['Accept: text/calendar']), $response_header);
+			if (preg_match('#^text/calendar(;|$)#', $response_header['content-type']))
 			{
-				$sync_type .= '-ctag';
+				$sync_type = 'calendar-get'.(!empty($response_header['etag']) ? '-etag' : '');
+				return $this->url;
 			}
 		}
-		return $this->url;
+		catch (\HttpException $e) {
+			// iCloud (caldav.icloud.com) will respond with 400 Bad Request to a HEAD request --> try CalDAV
+		}
+		try {
+			$xml_reader = $this->propfind(0, [
+				'resourcetype', 'supported-report-set', 'current-user-principal', 'displayname',
+				['ns' => Api\CalDAV::CALDAV, 'name' => 'supported-calendar-component-set'],
+				['ns' => Api\CalDAV::CALDAV, 'name' => 'calendar-home-set'],
+				['ns' => Api\CalDAV::CALDAV, 'name' => 'calendar-description'],
+				['ns' => Api\CalDAV::CALENDARSERVER, 'name' => 'getctag'],
+			], [], $response_header);
+		}
+		catch (\HttpException $e) {
+			if (in_array($e->getCode(), [200, 405]) && !parse_url(rtrim($this->url, '/'), PHP_URL_PATH))
+			{
+				$this->url = rtrim($this->url, '/').'/.well-known/caldav';
+				return $this->test($sync_type);
+			}
+			throw $e;
+		}
+		if (($current_user_principal=(string)$xml_reader->response->propstat->prop->{'current-user-principal'}->href))
+		{
+			$this->url = ($current_user_principal[0] === '/'? 'https://'.parse_url($this->url, PHP_URL_HOST) : '').$current_user_principal;
+			$xml_reader = $this->propfind(0, [
+				['ns' => Api\CalDAV::CALDAV, 'name' => 'calendar-home-set'],
+			], [], $response_header);
+			// as calendar-home-set is CalDAV, we need to switch NS before AND after with children($ns)!
+			if (!($calendar_home_set=(string)$xml_reader->response->propstat->prop->children(Api\CalDAV::CALDAV)->{'calendar-home-set'}->children()->href))
+			{
+				throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "CALDAV property 'calendar-home-set'"));
+			}
+			$this->url = ($calendar_home_set[0] === '/'? 'https://'.parse_url($this->url, PHP_URL_HOST) : '').$calendar_home_set;
+			$xml_reader = $this->propfind(1, [
+				'resourcetype', 'supported-report-set', 'displayname',
+				['ns' => Api\CalDAV::CALDAV, 'name' => 'supported-calendar-component-set'],
+				['ns' => Api\CalDAV::CALDAV, 'name' => 'calendar-description'],
+				['ns' => Api\CalDAV::CALENDARSERVER, 'name' => 'getctag'],
+			], [], $response_header);
+		}
+		$urls = [];
+		foreach($xml_reader->xpath('//D:response') as $calendar)
+		{
+			$reports = $resource_types = [];
+			if (isset($calendar_home_set) && (string)$calendar->href === parse_url($this->url, PHP_URL_PATH))
+			{
+				continue;   // self-url of propfind depth 1
+			}
+			foreach ($calendar->propstat->prop->resourcetype->children(Api\CalDAV::CALDAV) as $type)
+			{
+				$resource_types[] = $type->getName();
+			}
+			if (!in_array('calendar', $resource_types))
+			{
+				if (!empty($calendar_home_set)) continue;
+				throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "resourcetype 'calendar'"));
+			}
+			// check if the collection allows VEVENT
+			$supported_calendar_component_set = $calendar->propstat->prop->children(Api\CalDAV::CALDAV)->{'supported-calendar-component-set'};
+			if ($supported_calendar_component_set &&
+				!str_contains($supported_calendar_component_set->asXML(), 'name="VEVENT"'))
+			{
+				continue;   // ignore collections not for events
+			}
+			// no idea how to get SimpleXMLElement to parse that :(
+			$xml = $calendar->propstat->prop->{'supported-report-set'}->asXML();
+			$reports = preg_match_all('#<report><([^ /]+)[^/]*/></report>#', $xml, $matches, PREG_PATTERN_ORDER) ?
+				$matches[1] : [];
+			// check if sync-collection is supported and prefer it
+			if (in_array('sync-collection', $reports))
+			{
+				$sync_type = 'sync-collection-report';
+			}
+			else
+			{
+				$sync_type = 'calendar-propfind';
+				// check getctag is supported to use calendar-query report
+				$calendar->registerXPathNamespace('CS', Api\CalDAV::CALENDARSERVER);
+				if ($calendar->xpath('//CS:getctag'))
+				{
+					$sync_type .= '-ctag';
+				}
+			}
+			if (($url = (string)$calendar->href) && $url[0] === '/')
+			{
+				$url = 'https://'.parse_url($this->url, PHP_URL_HOST).$url;
+			}
+			$urls[$url] = (string)$calendar->propstat->prop->displayname ?: basename((string)$calendar->href);
+		}
+		return count($urls) === 1 ? key($urls) : $urls;
 	}
 
 	/**
@@ -160,12 +220,26 @@ EOT, $this->header([
 			'Accept: application/xml',
 			"Depth: $depth",
 		]), $response_header);
-		if ((int)explode(' ', $response_header[0], 2)[1] !== 207 ||
-			!isset($response_header['dav']) || !in_array('calendar-access', explode(', ', $response_header['dav'])))
+		if (($code=(int)explode(' ', $response_header[0])[1]) !== 207)
 		{
-			throw new \Exception(lang('Given URL is not a CalDAV server: missing %1!', "'Dav: calendar-access' header"));
+			throw new \HttpException(lang('Given URL is not a CalDAV server: missing %1!', "HTTP status: 207 Multi-Status"),
+				$code, 'PROPFIND', $this->url, $body, $response_header, $xml);
 		}
-		return new \SimpleXMLElement($xml, 0, false, 'DAV:', false);
+		// SimpleXMLElement fails if toplevel namespace used a prefix :(
+		if (str_contains($xml, '<D:multistatus xmlns:D="DAV:">'))
+		{
+			$xml = preg_replace('#(</?)D:#', '$1',
+				str_replace('<D:multistatus xmlns:D="DAV:">', '<D:multistatus xmlns="DAV:">', $xml));
+		}
+		$simple_xml = new \SimpleXMLElement($xml);
+		$simple_xml->registerXPathNamespace('D', 'DAV:');
+		$simple_xml->registerXPathNamespace('CALDAV', Api\CalDAV::CALDAV);
+		if (!$simple_xml->response)
+		{
+			throw new \HttpException(lang('Given URL is not a CalDAV server: missing %1!', "XML response element"),
+				$code, 'PROPFIND', $this->url, $body, $response_header, $xml);
+		}
+		return $simple_xml;
 	}
 
 	/**
@@ -209,11 +283,27 @@ EOT, $this->header([
 
 		foreach($xml_reader->xpath('//D:response') as $response)
 		{
+			if ((string)$response->href === parse_url($this->url, PHP_URL_PATH))
+			{
+				continue;   // ignore self-url
+			}
 			$dav_children = $response->children(Api\CalDAV::DAV);
 			if ($yield_href_ical)
 			{
-				yield (string)$dav_children->href => (int)(string)$dav_children->propstat->status === 404 ?
-					null : (string)$dav_children->propstat->prop->children(Api\CalDAV::CALDAV)->{'calendar-data'};
+				list(, $status) = explode(' ', (string)$dav_children->propstat->status);
+				if ($status === 404)
+				{
+					yield (string)$dav_children->href => null;
+				}
+				// iCloud does not send calendar-data, even if requested
+				if (!($ical = (string)$dav_children->propstat->prop->children(Api\CalDAV::CALDAV)->{'calendar-data'}))
+				{
+					$ical = api('https://'.parse_url($this->url, PHP_URL_HOST).(string)$dav_children->href,
+						'GET', '', $this->header([
+							'Accept: text/calendar; charset=utf-8',
+						]));
+				}
+				yield (string)$dav_children->href => $ical;
 			}
 			else
 			{
