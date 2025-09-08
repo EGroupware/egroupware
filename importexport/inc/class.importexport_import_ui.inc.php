@@ -209,8 +209,10 @@ use EGroupware\Api\Etemplate;
 					}
 
 				} catch (Api\Db\Exception $db_ex) {
+					_egw_log_exception($db_ex);
 					$this->message .= lang('Database error');
 				} catch (Exception $e) {
+					_egw_log_exception($e);
 					$this->message .= $e->getMessage();
 					$this->sendUpdate(false, get_class($e), $e->getMessage());
 				}

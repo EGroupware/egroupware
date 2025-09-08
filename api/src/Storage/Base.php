@@ -1339,7 +1339,7 @@ class Base
 			unset($search_cols['search_cfs']);
 		}
 		// Concat all fields to be searched together, so the conditions operate across the whole record
-		foreach($search_cols as $key => $col)
+		foreach($search_cols as $col)
 		{
 			$col_name = $col;
 			$table = $this->table_name;
@@ -1348,12 +1348,13 @@ class Base
 				list($table,$col_name) = explode('.',$col);
 			}
 			$table_def = $table == $this->table_name ? $this->table_def : $this->db->get_table_definitions(true,$table);
-			if ($table_def['fd'][$col_name] && in_array($table_def['fd'][$col_name]['type'], $numeric_types))
+			if (isset($table_def['fd'][$col_name]) && in_array($table_def['fd'][$col_name]['type'], $numeric_types))
 			{
 				$numeric_columns[] = $col;
 				continue;
 			}
-			if ($this->db->Type == 'mysql' && $table_def['fd'][$col_name]['type'] === 'ascii' && preg_match('/[\x80-\xFF]/', $_pattern))
+			if ($this->db->Type == 'mysql' && isset($table_def['fd'][$col_name]) &&
+				$table_def['fd'][$col_name]['type'] === 'ascii' && preg_match('/[\x80-\xFF]/', $_pattern))
 			{
 				continue;	// will only give sql error
 			}
