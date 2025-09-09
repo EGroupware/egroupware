@@ -223,8 +223,8 @@ EOF;
 		</et2-details>
 EOF;
 		}
-		// favorites for every app, but ...
-		if (!in_array($app, ['mail', 'admin', 'phpbrain', 'stylite']))
+		// add favorites only if enabled in NM attribute
+		if (!empty($_GET['favorites']))
 		{
 			$xet .= <<<EOF
 		<et2-details summary="Favorites" open="true">
