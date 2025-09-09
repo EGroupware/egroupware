@@ -489,6 +489,9 @@ class mail_ui
 
 				// These must always be set, even if $content is an array
 				$content[self::$nm_index]['cat_is_select'] = true;    // Category select is just a normal selectbox
+				$content[self::$nm_index]['cat_id_aria_label'] = lang('Search');
+				$content[self::$nm_index]['filter_aria_label'] = lang('Status');
+				$content[self::$nm_index]['filter2_aria_label'] = lang('Details');
 				$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
 				$content[self::$nm_index]['actions'] = self::get_actions();
 				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid

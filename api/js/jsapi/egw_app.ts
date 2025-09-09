@@ -308,7 +308,6 @@ export abstract class EgwApp
 		// if we have a NM widget: make it available as this.nm and install event-listener for this.nmFilterChange
 		if (!this.nm && (this.nm = this.et2.getWidgetById('nm')))
 		{
-			this.nm = this.et2.getWidgetById('nm');
 			this.nm.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
 			// update values in toolbar
 			window.setTimeout(() =>

@@ -318,7 +318,7 @@ class Nextmatch extends Etemplate\Widget
 							$value[$key.'_statustext'] ?? $this->attrs[$key.'_statustext'] ?? $label);
 				}
 			}
-			foreach(array_keys($this->attrs)+array_keys($value) as $key)
+			foreach(array_keys($this->attrs+$value) as $key)
 			{
 				if (!str_ends_with($key, '_label') && !in_array($key, ['filter', 'filter2', 'cat_id']) &&
 					preg_match('/^(filter|cat_|no_search|favorites|template)/', $key))

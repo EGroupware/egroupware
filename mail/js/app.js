@@ -50,6 +50,7 @@ app.classes.mail = AppJS.extend(
 	 * et2 widget container
 	 */
 	et2: null,
+	nm: null,
 	doStatus: null,
 
 	mail_queuedFolders: [],
@@ -117,6 +118,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	init: function() {
 		this._super.apply(this,arguments);
+		// v-- from egw_app.ts, no need to port to TS
+		this.nm = null;
+		this.nmFilterChange = this.nmFilterChange.bind(this);
+		// ^-- from egw_app.ts, no need to port to TS
 		if (!this.egw.is_popup())
 			// Turn on client side, persistent cache
 			// egw.data system runs encapsulated below etemplate, so this must be
@@ -158,6 +163,15 @@ app.classes.mail = AppJS.extend(
 		this.tree_wdg = null;
 
 		delete this.et2_obj;
+
+		// v-- from egw_app.ts, no need to port to TS
+		if (this.nm && this.nm.getDOMNode())
+		{
+			this.nm.getDOMNode().removeEventListener('et2-filter', this.nmFilterChange);
+		}
+		this.nm = null;
+		// ^-- from egw_app.ts, no need to port to TS
+
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -215,6 +229,18 @@ app.classes.mail = AppJS.extend(
 				this.vacationFilterStatusChange();
 				break;
 			case 'mail.index':
+				// v-- from egw_app.ts, no need to port to TS
+				// if we have a NM widget: make it available as this.nm and install event-listener for this.nmFilterChange
+				if (!this.nm && (this.nm = this.et2.getWidgetById('nm')))
+				{
+					this.nm.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
+					// update values in toolbar
+					window.setTimeout(() =>
+					{
+						this.nmFilterChange({detail: { activeFilters: this.nm.activeFilters}});
+					});
+				}
+				// ^-- from egw_app.ts, no need to port to TS
 				var self = this;
 				jQuery('iframe#mail-index_messageIFRAME').on('load', function ()
 				{
@@ -6508,5 +6534,103 @@ app.classes.mail = AppJS.extend(
 	addressbookSelect: function()
 	{
 		this.openDialog('addressbook.addressbook_ui.index&template=addressbook.select');
+	},
+
+	/**
+	 * Show only untranslated has been clicked
+	 */
+	toggleDetails: function(_ev, _widget)
+	{
+		this.nm && this.nm.applyFilters({filter2: _widget.value ? '1' : ''});
+	},
+
+	/**
+	 * Keep filters in the application toolbar in sync with NM / callback bound on et2-filter event of NM
+	 *
+	 * Please note: copied from egw_app.ts, no need to port to TS!
+	 *
+	 * @param _ev : Event
+	 */
+	nmFilterChange: function(_ev)
+	{
+		let app_toolbar = this.et2.closest('egw-app').querySelector('[slot="main-header"]');
+		if (app_toolbar && app_toolbar.localName != "et2-template") {
+			app_toolbar = app_toolbar?.querySelector("et2-template");
+		}
+		const activeFilters = _ev.detail?.activeFilters;
+		if (app_toolbar && activeFilters) {
+			for (const attr in activeFilters) {
+				switch (attr) {
+					case 'col_filter':
+						for (const attr in activeFilters.col_filter) {
+							this.checkNmFilterChanged(app_toolbar, attr, activeFilters.col_filter[attr]);
+						}
+						break;
+					case 'filter':
+					case 'filter2':
+					case 'cat_id':
+					case 'search':
+						this.checkNmFilterChanged(app_toolbar, attr, activeFilters[attr]);
+						break;
+				}
+			}
+		}
+	},
+
+	/**
+	 * Check if any NM filter or search in app-toolbar needs to be updated to reflect NM internal state
+	 *
+	 * Please note: 1st part copied from egw_app.ts, no need to port to TS!
+	 *
+	 * @param app_toolbar
+	 * @param id
+	 * @param value
+	 */
+	checkNmFilterChanged: function(app_toolbar, id, value)
+	{
+		let widget = app_toolbar.getWidgetById(id);
+		if (widget && widget.value != value)
+		{
+			widget.value = value;
+		}
+
+		// this is mail specific, and need to go in overwritten function, if ported to TS!
+		if (id === 'filter2')
+		{
+			const details_toggle = this.et2.getWidgetById('details');
+			if (details_toggle && details_toggle.value != (value === '1')) {
+				details_toggle.value = value === '1';
+			}
+		}
+	},
+
+	/**
+	 * Propagate filters in app_toolbar to NM and filter thingy
+	 *
+	 * Use as onchange on these filters (named like the ones in NM!)
+	 *
+	 * Please note: copied from egw_app.ts, no need to port to TS!
+	 *
+	 * @param _ev
+	 * @param _widget
+	 */
+	changeNmFilter: function(_ev, _widget)
+	{
+		if (!this.nm || !_widget.id) return;
+
+		const filters = {};
+		switch(_widget.id)
+		{
+			case 'filter':
+			case 'filter2':
+			case 'cat_id':
+			case 'search':
+				filters[_widget.id] = _widget.value;
+				break;
+			default:
+				filters.col_filter = {};
+				filters.col_filter[_widget.id] = _widget.value;
+		}
+		this.nm && this.nm.applyFilters(filters);
 	}
 });
