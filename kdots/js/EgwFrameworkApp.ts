@@ -311,7 +311,7 @@ export class EgwFrameworkApp extends LitElement
 	public load(url)
 	{
 		// Clear everything
-		Array.from(this.childNodes).forEach(n =>
+		Array.from(this.children).forEach(n =>
 		{
 			etemplate2.getById(n.id)?.clear();
 			n.remove();
