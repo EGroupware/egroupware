@@ -337,7 +337,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 	// Watch our DOM node so we can send events
 	private _DOMObserver : MutationObserver = new MutationObserver(this._handleDOMMutation.bind(this));
-	private _filter_template : Et2Template;
 	private _filterbox : Et2Filterbox;
 
 	/**
@@ -2546,7 +2545,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			for(let i = this._children.length - 1; i >= 0; i--)
 			{
 				const _node = this._children[i];
-				if(_node != this.header && _node !== template)
+				if(_node != this.header && _node !== template && _node !== this._filterbox)
 				{
 					this.removeChild(_node);
 					_node.destroy();
@@ -2735,7 +2734,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			filterTemplate = <Et2Template><unknown>loadWebComponent("et2-template", {
 				id: 'filter-template',
 				url: template
-			}, this);
+			}, this._filterbox);
 		}
 		else if(template instanceof HTMLElement)
 		{
