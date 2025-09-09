@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- this template is used only by class.calendar_favorite_portlet.inc.php, and should NOT be deleted -->
+<overlay>
+	<template id="calendar.list.rows" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="40%"/>
+				<column width="20%"/>
+				<column width="20%"/>
+				<column width="120"/>
+				<column width="10%"/>
+				<column width="120"/>
+				<column width="10%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="30%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<et2-vbox>
+						<nextmatch-sortheader label="Start" id="cal_start"/>
+						<nextmatch-sortheader id="cal_end" label="End"/>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-sortheader label="Title" id="cal_title"/>
+						<nextmatch-sortheader label="Description" id="cal_description"/>
+					</et2-vbox>
+					<nextmatch-sortheader label="Title" id="cal_title"/>
+					<nextmatch-sortheader label="Description" id="cal_description"/>
+					<nextmatch-sortheader label="Recurrence" id="recure"/>
+					<nextmatch-header label="Project" id="pm_id"/>
+					<nextmatch-header label="Category" id="cat_id"/>
+					<et2-vbox>
+						<nextmatch-sortheader id="cal_owner" label="Owner" readonly="true"/>
+						<nextmatch-sortheader id="cal_location" label="Location"/>
+					</et2-vbox>
+					<nextmatch-sortheader id="cal_owner" label="Owner" readonly="true"/>
+					<nextmatch-sortheader id="cal_location" label="Location"/>
+					<et2-nextmatch-header-account  id="participant" label="Participants" emptyLabel="All"/>
+				</row>
+				<row class="row" valign="top">
+					<et2-vbox  id="start">
+						<et2-date-time  id="${row}[start]" readonly="true" class="noWrap"></et2-date-time>
+						<et2-date-time  id="${row}[end]" readonly="true" class="noWrap"></et2-date-time>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-description  id="${row}[title]" readonly="true" noLang="1" boldItalic="b"></et2-description>
+						<et2-description  id="${row}[description]" noLang="1"></et2-description>
+						<et2-description  id="${row}[recure]" noLang="1"></et2-description>
+					</et2-vbox>
+					<et2-description  id="${row}[title]"></et2-description>
+					<et2-description  id="${row}[description]" noLang="1"></et2-description>
+					<et2-description  id="${row}[recure]"></et2-description>
+					<et2-link-string  app="calendar,projectmanager" id="${row}[id]"></et2-link-string>
+					<et2-select-cat  id="${row}[category]" readonly="true"></et2-select-cat>
+					<et2-vbox>
+						<et2-select-account  class="noWrap" id="${row}[owner]" readonly="true"></et2-select-account>
+						<et2-description  id="${row}[location]" noLang="1"></et2-description>
+					</et2-vbox>
+					<et2-select-account  class="noWrap" id="${row}[owner]" readonly="true"></et2-select-account>
+					<et2-description  id="${row}[location]" noLang="1"></et2-description>
+					<html id="${row}[parts]" readonly="true" no_lang="1"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
