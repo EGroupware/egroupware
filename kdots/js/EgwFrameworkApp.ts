@@ -358,20 +358,7 @@ export class EgwFrameworkApp extends LitElement
 				}
 
 				// Load request returns HTML.  Shove it in.
-				if(typeof data == "string" || typeof data == "object" && typeof data[0] == "string")
-				{
-					render(html`${unsafeHTML((<string[]>data).join(""))}`, this);
-				}
-				else
-				{
-					// We got some data, use it
-					const items = (<HTMLElement[]>(Array.isArray(data) ? data : [data]))
-						.filter(data => (typeof data.DOMNodeID == "string"))
-						.forEach(data =>
-						{
-							this.append(Object.assign(document.createElement("div"), {id: data.DOMNodeID}));
-						});
-				}
+				render(html`${unsafeHTML((<string[]>data).join(""))}`, this);
 
 				// Might have just slotted aside content, hasSlotController will requestUpdate()
 				// but we need to do it anyway for translation
