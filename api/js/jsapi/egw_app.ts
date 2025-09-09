@@ -328,7 +328,7 @@ export abstract class EgwApp
 	 */
 	nmFilterChange(_ev : Event)
 	{
-		let app_toolbar = document.querySelector('egw-app#' + this.appname + ' [slot="main-header"]');
+		let app_toolbar = this.et2.closest('egw-app').querySelector('[slot="main-header"]');
 		if(app_toolbar && app_toolbar.localName != "et2-template")
 		{
 			app_toolbar = app_toolbar?.querySelector("et2-template");
