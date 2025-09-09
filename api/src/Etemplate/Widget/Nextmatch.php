@@ -1242,9 +1242,8 @@ class Nextmatch extends Etemplate\Widget
 			// Run on all the sub-templates
 			foreach(array('template', 'header_left', 'header_right', 'header_row') as $sub_template)
 			{
-				if (!empty($this->attrs[$sub_template]))
+				if (!empty($this->attrs[$sub_template]) && ($row_template = Template::instance($this->attrs[$sub_template])))
 				{
-					$row_template = Template::instance($this->attrs[$sub_template]);
 					$row_template->run($method_name, $params, $respect_disabled);
 				}
 			}
