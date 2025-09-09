@@ -223,8 +223,8 @@ EOF;
 		</et2-details>
 EOF;
 		}
-		// favorites
-		if (!in_array($app, ['mail']))
+		// favorites for every app, but ...
+		if (!in_array($app, ['mail', 'admin', 'phpbrain', 'stylite']))
 		{
 			$xet .= <<<EOF
 		<et2-details summary="Favorites" open="true">

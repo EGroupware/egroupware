@@ -310,7 +310,8 @@ class Nextmatch extends Etemplate\Widget
 		        'filter2' => '2nd Filter',
 		        'cat_id'  => 'Category'] as $key => $label)
 			{
-				if (empty($value['no_'.$key] ?? $this->attrs['no_'.$key] ?? null))
+				$disable_attr = $key === 'cat_id' ? 'no_cat' : 'no_'.$key;
+				if (empty($value[$disable_attr] ?? $this->attrs[$disable_attr] ?? null))
 				{
 					$url .= '&'.$key.'='.urlencode($value[$key.'_label'] ?? $this->attrs[$key.'_label'] ??
 							$value[$key.'_aria_label'] ?? $this->attrs[$key.'_aria_label'] ??

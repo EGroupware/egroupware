@@ -63,7 +63,9 @@ class admin_ui
 			'row_id' => 'account_id',
 			'default_cols' => '!account_id,created,account_lastlogin,account_lastloginfrom,account_lastpwd_change',
 			'actions' => self::user_actions(),
-			'placeholder_actions' => array('add')
+			'placeholder_actions' => array('add'),
+			'filter_aria_label' => lang('Group'),
+			'filter2_aria_label' => lang('Status'),
 		);
 		$content['groups'] = array(
 			'get_rows'            => 'admin_ui::get_groups',
