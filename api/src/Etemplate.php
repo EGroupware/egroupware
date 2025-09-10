@@ -280,7 +280,7 @@ class Etemplate extends Etemplate\Widget\Template
 						'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
 				}
 
-				$GLOBALS['egw']->framework->response->generic("data", $output_mode != 2 ? $load_array : array($content));
+				$GLOBALS['egw']->framework->response->generic("data", array($content));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+Framework::get_extra());
 				Framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
 
