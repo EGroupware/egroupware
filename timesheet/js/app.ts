@@ -19,6 +19,7 @@ import {Et2DateTimeReadonly} from "../../api/js/etemplate/Et2Date/Et2DateTimeRea
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
+import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
 
 /**
  * UI for timesheet
@@ -64,11 +65,10 @@ class TimesheetApp extends EgwApp
 	{
 		var filter = this.et2.getWidgetById('filter');
 		var dates = this.et2.getWidgetById('timesheet.index.dates');
-		let nm = this.et2.getDOMWidgetById('nm');
 		if (filter && dates)
 		{
-			dates.set_disabled(filter.get_value() !== "custom");
-			if (filter.get_value() == 0) nm.activeFilters.startdate = null;
+			dates.set_disabled(filter.value !== "custom");
+			if (filter.value == 0) this.nm.activeFilters.startdate = null;
 			if (filter.value == "custom")
 			{
 				jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
@@ -84,14 +84,13 @@ class TimesheetApp extends EgwApp
 	 */
 	filter2_change()
 	{
-		var nm = this.et2.getWidgetById('nm');
 		var filter2 = this.et2.getWidgetById('filter2');
 
-		if (nm && filter2)
+		if (this.nm && filter2)
 		{
 			egw.css("#timesheet-index span.timesheet_titleDetails","font-weight:" + (filter2.getValue() == '1' ? "bold;" : "normal;"));
 			// Show / hide descriptions
-			egw.css(".ts_description", "display:" + (filter2.getValue() == '1' ? "flex;" : "none;"));
+			egw.css(".ts_description", "display:" + (filter2.value == '1' ? "flex;" : "none;"));
 		}
 	}
 
@@ -319,6 +318,45 @@ class TimesheetApp extends EgwApp
 		});
 		// Add to DOM, dialog will auto-open
 		document.body.appendChild(dialog);
+	}
+
+	/**
+	 * Show details has been clicked
+	 */
+	toggleDetails(_ev : Event, _widget : Et2ButtonToggle)
+	{
+		this.nm && this.nm.applyFilters({filter2: _widget.value ? '1' : '0'});
+	}
+
+	/**
+	 * Check if any NM filter or search in app-toolbar needs to be updated to reflect NM internal state
+	 *
+	 * @param app_toolbar
+	 * @param id
+	 * @param value
+	 */
+	checkNmFilterChanged(app_toolbar, id : string, value : string)
+	{
+		super.checkNmFilterChanged(app_toolbar, id, value);
+
+		if (id === 'filter2')
+		{
+			const details_toggle = this.et2.getWidgetById('details');
+			if (details_toggle && details_toggle.value != (value === '1')) {
+				details_toggle.value = value === '1';
+			}
+			// if it's a real change, we also need to call this.filter2_change, with the already changed value!
+			const filter2 = this.et2.getWidgetById(id);
+			if (filter2 && filter2.value != value)
+			{
+				filter2.value = value;
+				this.filter2_change();
+			}
+		}
+		else if (id === 'filter')
+		{
+			this.filter_change();
+		}
 	}
 }
 
