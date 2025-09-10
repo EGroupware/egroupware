@@ -21,6 +21,7 @@ import {nm_open_popup} from "../../api/js/etemplate/et2_extension_nextmatch_acti
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
 import {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
+import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
 
 /**
  * UI for Infolog
@@ -267,52 +268,50 @@ class InfologApp extends EgwApp
 	 */
 	filter2_change(event, filter2)
 	{
-		let nm = filter2.getParent().getParent();
-
-		if (nm && filter2)
+		if (this.nm && filter2)
 		{
 			// Show / hide descriptions
-			this.show_details(filter2.value === 'all', nm.getDOMNode(nm));
+			this.show_details(filter2.value === 'all', this.nm.getDOMNode(this.nm));
 		}
 
 		// Only change columns for a real user event, to avoid interfering with
 		// favorites
-		if (nm && filter2 && !nm.update_in_progress)
+		if (this.nm && filter2 && !this.nm.update_in_progress)
 		{
 			// Update page - set update_in_progress to true to avoid triggering
 			// the change handler and looping if the user has a custom field
 			// column change
-			let in_progress = nm.update_in_progress;
-			nm.update_in_progress = true;
+			let in_progress = this.nm.update_in_progress;
+			this.nm.update_in_progress = true;
 
 			// Store selection as implicit preference
-			egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details', '') + '-details-pref', filter2.value);
+			egw.set_preference('infolog', this.nm.options.settings.columnselection_pref.replace('-details', '') + '-details-pref', filter2.value);
 
 			// Change preference location - widget is nextmatch
-			nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details', '') + (filter2.value == 'all' ? '-details' : '');
+			this.nm.options.settings.columnselection_pref = this.nm.options.settings.columnselection_pref.replace('-details', '') + (filter2.value == 'all' ? '-details' : '');
 
 			// Load new preferences
-			var colData = nm.columns.slice();
-			for(var i = 0; i < nm.columns.length; i++) colData[i].visible=false;
+			var colData = this.nm.columns.slice();
+			for(var i = 0; i < this.nm.columns.length; i++) colData[i].visible=false;
 
-			if(egw.preference(nm.options.settings.columnselection_pref,'infolog'))
+			if(egw.preference(this.nm.options.settings.columnselection_pref,'infolog'))
 			{
-				nm.set_columns((<String>egw.preference(nm.options.settings.columnselection_pref,'infolog')).split(','));
+				this.nm.set_columns((<String>egw.preference(this.nm.options.settings.columnselection_pref,'infolog')).split(','));
 			}
-			nm._applyUserPreferences(nm.columns, colData);
+			this.nm._applyUserPreferences(this.nm.columns, colData);
 
 			// Now apply them to columns
 			for(var i = 0; i < colData.length; i++)
 			{
-				nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width);
-				nm.dataview.getColumnMgr().columns[i].set_visibility(colData[i].visible);
+				this.nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width);
+				this.nm.dataview.getColumnMgr().columns[i].set_visibility(colData[i].visible);
 			}
-			nm.dataview.getColumnMgr().updated();
+			this.nm.dataview.getColumnMgr().updated();
 
 			// Set the actual filter value here
-			nm.activeFilters.filter2 = filter2.value;
-			nm.dataview.updateColumns();
-			nm.update_in_progress = in_progress;
+			this.nm.activeFilters.filter2 = filter2.value;
+			this.nm.dataview.updateColumns();
+			this.nm.update_in_progress = in_progress;
 		}
 
 		// Already handled everything here and the column change probably triggered a reload
@@ -871,6 +870,45 @@ class InfologApp extends EgwApp
 	blurCount(blur : boolean)
 	{
 		document.querySelector('div#infolog-index_nm.et2_nextmatch .header_count')?.classList.toggle('blur_count', blur);
+	}
+
+	/**
+	 * Show details has been clicked
+	 */
+	toggleDetails(_ev : Event, _widget : Et2ButtonToggle)
+	{
+		this.nm && this.nm.applyFilters({filter2: _widget.value ? 'all' : 'no_describtion'});
+	}
+
+	/**
+	 * Check if any NM filter or search in app-toolbar needs to be updated to reflect NM internal state
+	 *
+	 * @param app_toolbar
+	 * @param id
+	 * @param value
+	 */
+	checkNmFilterChanged(app_toolbar, id : string, value : string)
+	{
+		super.checkNmFilterChanged(app_toolbar, id, value);
+
+		if (id === 'filter2')
+		{
+			const details_toggle = this.et2.getWidgetById('details');
+			if (details_toggle && details_toggle.value != (value === 'all')) {
+				details_toggle.value = value === 'all';
+			}
+			// if it's a real change, we also need to call this.filter2_change, with the already changed value!
+			const filter2 = this.et2.getWidgetById(id);
+			if (filter2 && filter2.value != value)
+			{
+				filter2.value = value;
+				this.filter2_change(null, filter2);
+			}
+		}
+		else if (id === 'filter')
+		{
+			this.filter_change();
+		}
 	}
 }
 

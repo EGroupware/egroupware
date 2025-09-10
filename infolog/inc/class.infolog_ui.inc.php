@@ -1053,6 +1053,8 @@ class infolog_ui
 		// Allow add actions even when there's no rows
 		$values['nm']['placeholder_actions'] = array('new');
 
+		$values['nm']['filter2_aria_label'] = lang('Details');
+
 		if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['nextmatch-'.($action ? 'infolog.'.$action : 'infolog.index.rows').'-details-pref'];
 
 		// disable columns for main entry as set in the pref for details or no details

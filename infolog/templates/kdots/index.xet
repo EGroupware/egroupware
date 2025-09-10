@@ -4,6 +4,13 @@
     <template id="infolog.index.header" template="" lang="" group="0" version="1.9.001">
         <et2-button-icon statustext="Add" id="add" image="add" onclick="app.infolog.add_with_extras(widget,'','$cont[action]','$cont[action_id]');"></et2-button-icon>
         <template template="api.search-button"></template>
+        <et2-toolbar id="toolbar">
+            <et2-select id="info_type" ariaLabel="Type" emptyLabel="Type" onchange="app.infolog.changeNmFilter"/>
+            <et2-select id="info_status" ariaLabel="Status" emptyLabel="Status" onchange="app.infolog.changeNmFilter"/>
+            <et2-select id="filter" ariaLabel="Filter" onchange="app.infolog.changeNmFilter"/>
+            <et2-select-cat id="cat_id" ariaLabel="Categorie" onchange="app.infolog.changeNmFilter"/>
+            <et2-button-toggle id="details" icon="card-text" statustext="Details" onchange="app.infolog.toggleDetails"></et2-button-toggle>
+        </et2-toolbar>
     </template>
     <template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
         <et2-hbox>
@@ -30,7 +37,7 @@
                     <et2-vbox>
                         <et2-nextmatch-header-filter id="info_type" noLang="1" emptyLabel="Type"/>
                         <et2-nextmatch-header-filter id="info_status" emptyLabel="Status"></et2-nextmatch-header-filter>
-                        <nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
+                        <nextmatch-sortheader label="Completed" id="info_percent"/>
                     </et2-vbox>
                     <grid width="100%" spacing="0" padding="0">
                         <columns>
@@ -39,7 +46,7 @@
                         </columns>
                         <rows>
                             <row>
-                                <nextmatch-customfilter id="linked" options="link-entry"/>
+                                <nextmatch-customfilter id="linked" options="link-entry" ariaLabel="Linked"/>
                                 <nextmatch-sortheader align="right" label="Priority" id="info_priority" options="DESC" class="noPrint"/>
                             </row>
                             <row>
