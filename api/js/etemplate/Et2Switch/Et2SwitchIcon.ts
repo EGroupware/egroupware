@@ -177,6 +177,7 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
                     .helpText=${this.helpText}
                     @sl-change=${async(e) =>
                     {
+                        e.stopPropagation();
                         await this.updateComplete;
                         this.dispatchEvent(new Event("change", {bubbles: true}));
                     }}
