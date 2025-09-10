@@ -1,9 +1,8 @@
-import {css, html, LitElement, nothing, render, TemplateResult} from "lit";
+import {css, html, LitElement, nothing, TemplateResult} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
-import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import styles from "./EgwFrameworkApp.styles";
 import {SlDrawer, SlSplitPanel} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
@@ -358,20 +357,7 @@ export class EgwFrameworkApp extends LitElement
 				}
 
 				// Load request returns HTML.  Shove it in.
-				if(typeof data == "string" || typeof data == "object" && typeof data[0] == "string")
-				{
-					render(html`${unsafeHTML((<string[]>data).join(""))}`, this);
-				}
-				else
-				{
-					// We got some data, use it
-					const items = (<HTMLElement[]>(Array.isArray(data) ? data : [data]))
-						.filter(data => (typeof data.DOMNodeID == "string"))
-						.forEach(data =>
-						{
-							this.append(Object.assign(document.createElement("div"), {id: data.DOMNodeID}));
-						});
-				}
+				this.innerHTML = (<string[]>data).join("");
 
 				// Might have just slotted aside content, hasSlotController will requestUpdate()
 				// but we need to do it anyway for translation
@@ -461,13 +447,9 @@ export class EgwFrameworkApp extends LitElement
 		// Refresh all child etemplates
 		const etemplates = {};
 		let refresh_done = false;
-		this.querySelectorAll(":scope > div > et2-template").forEach((t : Et2Template) =>
+		this.querySelectorAll(":scope > [id]").forEach((t) =>
 		{
-			etemplates[t.getInstanceManager().uniqueId] = t.getInstanceManager();
-		})
-		Object.values(etemplates).forEach((etemplate : etemplate2) =>
-		{
-			refresh_done = etemplate.refresh(_msg, this.appName, _id, _type) || refresh_done;
+			refresh_done = etemplate2.getById(t.id)?.refresh(_msg, this.appName, _id, _type) || refresh_done;
 		});
 
 		// if not trigger a full app refresh
