@@ -132,7 +132,7 @@ EOF;
 		}
 		// get all NM sort-header and place them in filter-template
 		$sort_options = [];
-		foreach(preg_match_all('#<(et2-)?nextmatch-sortheader ([^>]+?)/>#s', $str, $matches, PREG_SET_ORDER) ? $matches : [] as $n => $match)
+		foreach(preg_match_all('#<(et2-)?nextmatch-sortheader ([^>]+?)/?>#s', $str, $matches, PREG_SET_ORDER) ? $matches : [] as $n => $match)
 		{
 			$attrs = parseAttrs($match[2]);
 			$sort_options[] = "\t\t\t\t".'<option value="'.$attrs['id'].'">'.$attrs['label'].'</option>';
@@ -180,7 +180,7 @@ EOF;
 		}
 
 		// get all NM filter-headers and place them in the template
-		if (preg_match_all('#<(et2-)?nextmatch-([^ ]+) ([^>]+?)/>#s', $str, $matches, PREG_SET_ORDER) &&
+		if (preg_match_all('#<(et2-)?nextmatch-([^ ]+) ([^>]+?)/?>#s', $str, $matches, PREG_SET_ORDER) &&
 			($matches = array_filter($matches, static fn($match) => !in_array($match[2], ['header', 'sortheader']))))
 		{
 			$xet .= <<<EOF
