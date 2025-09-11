@@ -1007,8 +1007,9 @@ class timesheet_ui extends timesheet_bo
 				'options-filter2' => array('No details','Details'),
 				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
-				'filter_onchange' => "app.timesheet.filter_change();",
-				'filter2_onchange' => "app.timesheet.filter2_change();",
+				'filter_onchange' => "app.timesheet.filter_change",
+				'filter_aria_label' => lang('Time range'),
+				'filter2_onchange' => "app.timesheet.filter2_change",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 				'filter2_aria_label' => lang('Details'),
 				'row_id'         => 'ts_id',

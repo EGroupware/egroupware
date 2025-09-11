@@ -1404,6 +1404,7 @@ this will reset toolbar preferences for all users and set them to configured def
 thursday	common	en	Thursday
 tiled	common	en	Tiled
 time	common	en	Time
+time range	common	en	Time range
 time zone	common	en	Time zone
 time zone offset	common	en	Time zone offset
 title	common	en	Title

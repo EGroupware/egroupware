@@ -2,10 +2,10 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001" >
-        <et2-hbox>
-            <et2-date label="Start" id="startdate" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
-            <et2-date label="End" id="enddate" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
-        </et2-hbox>
+        <et2-date label="Start" id="startdate" class="et2-label-fixed" style="padding-bottom: .3rem"
+            onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
+        <et2-date label="End" id="enddate" class="et2-label-fixed"
+            onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
     </template>
     <template id="timesheet.index.header" template="" lang="" group="0" version="1.7.001">
         <et2-button-icon statustext="Add" id="add" image="add" onclick="app.timesheet.add_with_extras(widget,'','$cont[action]','$cont[action_id]');" noSubmit="true"></et2-button-icon>
@@ -108,7 +108,6 @@
     </template>
     <template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
         <template template="timesheet.index.header" slot="main-header"></template>
-        <et2-template template="timesheet.index.dates" slot="filter" style="position:absolute; top:40px;"></et2-template>
         <nextmatch id="nm" template="timesheet.index.rows"/>
     </template>
 </overlay>

@@ -1403,6 +1403,7 @@ this will reset toolbar preferences for all users and set them to configured def
 thursday	common	de	Donnerstag
 tiled	common	de	Gekachelt
 time	common	de	Uhrzeit
+time range	common	de	Zeitraum
 time zone	common	de	Zeitzone
 time zone offset	common	de	Zeitzonendifferenz
 title	common	de	Titel

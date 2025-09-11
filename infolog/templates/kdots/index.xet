@@ -13,10 +13,10 @@
         </et2-toolbar>
     </template>
     <template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
-        <et2-hbox>
-            <et2-date id="startdate" label="Start" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
-            <et2-date id="enddate" label="End" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
-        </et2-hbox>
+        <et2-date id="startdate" label="Start" class="et2-label-fixed" style="padding-bottom: .3rem"
+            onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
+        <et2-date id="enddate" label="End" class="et2-label-fixed"
+            onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
     </template>
     <template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
         <grid width="100%">
@@ -151,7 +151,7 @@
     </template>
     <template id="infolog.index" template="" lang="" group="0" version="1.9.005">
         <template template="infolog.index.header" slot="main-header"></template>
-        <nextmatch id="nm" template="infolog.index.rows" header_right="infolog.index.dates" span="all"/>
+        <nextmatch id="nm" template="infolog.index.rows" span="all"/>
         <grid width="100%" border="0" spacing="0" padding="0">
             <columns>
                 <column width="70%"/>

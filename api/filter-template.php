@@ -80,7 +80,8 @@ function send_template()
 	}
 	// check for customized template in VFS
 	list(, $app, , $template, $name) = explode('/', $fspath);
-	$path = Api\Etemplate::rel2path(Api\Etemplate::relPath($app . '.' . basename($name, '.xet'), $template));
+	$name = basename($name, '.xet');
+	$path = Api\Etemplate::rel2path(Api\Etemplate::relPath($app . '.' . $name, $template));
 	if(empty($path) || !file_exists($path) || !is_readable($path))
 	{
 		if (PHP_SAPI === 'cli')
@@ -106,7 +107,7 @@ function send_template()
 	{
 		$cache_read = microtime(true);
 	}
-	else*/if(($str = file_get_contents($path)) !== false)
+	else*/if(($str=$overlay=file_get_contents($path)) !== false)
 	{
 		if (!empty($_GET['template']) &&
 			preg_match('#<(et2-)?template id="'.preg_quote($_GET['template'], '#').'"[^>]*>.*?</(et2-)?template>#s', $str, $matches))
@@ -176,6 +177,12 @@ EOF;
 				$xet .= <<<EOF
 		<$widget id="$id" label="$label"$extra_attrs class="et2-label-fixed"></$widget>
 EOF;
+				if ($id === 'filter' && preg_match('/<(et2-)?template id="'.preg_quote("$app.$name.dates", '/').'"/', $overlay))
+				{
+					$xet .= <<<EOF
+		<et2-template id="$app.$name.dates"></et2-template>
+EOF;
+				}
 			}
 		}
 

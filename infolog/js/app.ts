@@ -22,6 +22,7 @@ import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
 import {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
+import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 
 /**
  * UI for Infolog
@@ -225,35 +226,32 @@ class InfologApp extends EgwApp
 	/**
 	 * Enable or disable the date filter
 	 *
-	 * If the filter is set to something that needs dates, we enable the
-	 * header_left template.  Otherwise, it is disabled.
+	 * If the filter is set to something that needs dates, we open the
+	 * filter-box and show start- and endtime.
+	 *
+	 * @param ev
+	 * @param filter
 	 */
-	filter_change()
+	filter_change(ev : Event, filter : Et2Select)
 	{
 		if (!this.et2) return;	// ignore calls before et2_ready
-		var filter = this.et2.getWidgetById('filter');
-		var nm = this.et2.getWidgetById('nm');
-		var dates = this.et2.getWidgetById('infolog.index.dates');
-		if(nm && filter)
+		const dates = this.et2.getWidgetById('infolog.index.dates');
+		if(this.nm && filter && dates)
 		{
-			switch(filter.getValue())
+			switch(filter.value)
 			{
 				case 'bydate':
 				case 'duedate':
-
-					if (filter && dates)
+					dates.set_disabled(false);
+					const filterDrawer = filter.closest('egw-app').filtersDrawer;
+					if (filterDrawer && !filterDrawer.open)
 					{
-						dates.set_disabled(false);
-						window.setTimeout(function() {
-							jQuery(dates.getWidgetById('startdate').getDOMNode()).find('input').focus();
-						},0);
+						filterDrawer.open = true;
 					}
+					window.setTimeout(() => dates.getWidgetById('startdate').focus());
 					break;
 				default:
-					if (dates)
-					{
-						dates.set_disabled(true);
-					}
+					dates.set_disabled(true);
 					break;
 			}
 		}
@@ -907,7 +905,7 @@ class InfologApp extends EgwApp
 		}
 		else if (id === 'filter')
 		{
-			this.filter_change();
+			this.filter_change(null, this.et2.getWidgetById(id));
 		}
 	}
 }

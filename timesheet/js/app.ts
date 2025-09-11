@@ -20,6 +20,7 @@ import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
+import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 
 /**
  * UI for timesheet
@@ -59,19 +60,29 @@ class TimesheetApp extends EgwApp
 	}
 
 	/**
+	 * Enable or disable the date filter
 	 *
+	 * If the filter is set to something that needs dates, we open the
+	 * filter-box and show start- and endtime.
+	 *
+	 * @param ev
+	 * @param filter
 	 */
-	filter_change()
+	filter_change(ev : Event, filter : Et2Select)
 	{
-		var filter = this.et2.getWidgetById('filter');
-		var dates = this.et2.getWidgetById('timesheet.index.dates');
+		const dates = this.et2.getWidgetById('timesheet.index.dates');
 		if (filter && dates)
 		{
 			dates.set_disabled(filter.value !== "custom");
-			if (filter.value == 0) this.nm.activeFilters.startdate = null;
-			if (filter.value == "custom")
+			if (!filter.value) this.nm.activeFilters.startdate = null;
+			if (filter.value === "custom")
 			{
-				jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
+				const filterDrawer = filter.closest('egw-app').filtersDrawer;
+				if (filterDrawer && !filterDrawer.open)
+				{
+					filterDrawer.open = true;
+				}
+				window.setTimeout(() => dates.getWidgetById('startdate').focus());
 			}
 		}
 		return true;
@@ -81,11 +92,11 @@ class TimesheetApp extends EgwApp
 	 * show or hide the details of rows by selecting the filter2 option
 	 * either 'all' for details or 'no_description' for no details
 	 *
+	 * @param ev
+	 * @param filter2
 	 */
-	filter2_change()
+	filter2_change(ev : Event, filter2 : Et2Select)
 	{
-		var filter2 = this.et2.getWidgetById('filter2');
-
 		if (this.nm && filter2)
 		{
 			egw.css("#timesheet-index span.timesheet_titleDetails","font-weight:" + (filter2.getValue() == '1' ? "bold;" : "normal;"));
@@ -350,12 +361,12 @@ class TimesheetApp extends EgwApp
 			if (filter2 && filter2.value != value)
 			{
 				filter2.value = value;
-				this.filter2_change();
+				this.filter2_change(null, filter2);
 			}
 		}
 		else if (id === 'filter')
 		{
-			this.filter_change();
+			this.filter_change(null, this.et2.getWidgetById(id));
 		}
 	}
 }
