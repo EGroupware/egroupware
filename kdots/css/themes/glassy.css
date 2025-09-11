@@ -74,24 +74,36 @@
 .kdots-glassy *[slot="main-header"] *::part(input-control),
 :root *[slot="main-header"] *::part(combobox),
 :host *[slot="main-header"] *::part(combobox),
-.kdots-glassy *[slot="main-header"] *::part(combobox) {
+.kdots-glassy *[slot="main-header"] *::part(combobox),
+:root *[slot="main-header"] *::part(button__base),
+:host *[slot="main-header"] *::part(button__base),
+.kdots-glassy *[slot="main-header"] *::part(button__base) {
   box-shadow: none !important;
 }
-:root et2-button::part(base),
-:host et2-button::part(base),
-.kdots-glassy et2-button::part(base),
+:root .et2-button-widget::part(base),
+:host .et2-button-widget::part(base),
+.kdots-glassy .et2-button-widget::part(base),
 :root button::part(base),
 :host button::part(base),
 .kdots-glassy button::part(base),
 :root .plus_button::part(base),
 :host .plus_button::part(base),
-.kdots-glassy .plus_button::part(base) {
+.kdots-glassy .plus_button::part(base),
+:root .et2-button-widget::part(button__base),
+:host .et2-button-widget::part(button__base),
+.kdots-glassy .et2-button-widget::part(button__base),
+:root button::part(button__base),
+:host button::part(button__base),
+.kdots-glassy button::part(button__base),
+:root .plus_button::part(button__base),
+:host .plus_button::part(button__base),
+.kdots-glassy .plus_button::part(button__base) {
   border-radius: var(--sl-button-border-radius);
   box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
 }
-:root et2-button:not([disabled]):active::part(base),
-:host et2-button:not([disabled]):active::part(base),
-.kdots-glassy et2-button:not([disabled]):active::part(base),
+:root .et2-button-widget:not([disabled]):active::part(base),
+:host .et2-button-widget:not([disabled]):active::part(base),
+.kdots-glassy .et2-button-widget:not([disabled]):active::part(base),
 :root button:not([disabled]):active::part(base),
 :host button:not([disabled]):active::part(base),
 .kdots-glassy button:not([disabled]):active::part(base),

@@ -49,7 +49,7 @@
   /* don't add another box shadow to input fields in glassy main header otherwise it shows up twice*/
 
   *[slot="main-header"] {
-	*::part(base), *::part(input-control), *::part(combobox) {
+	*::part(base), *::part(input-control), *::part(combobox), *::part(button__base) {
 	  box-shadow: none !important;
 	}
   }
@@ -62,8 +62,8 @@
   --sl-button-primary-hover-background-color: hsl(calc(var(--application-color-hsl) / 0.9));
   --sl-button-primary-hover-border-color: hsl(calc(var(--application-color-hsl) / 1));
 
-  et2-button, button, .plus_button {
-	&::part(base) {
+  .et2-button-widget, button, .plus_button {
+	&::part(base), &::part(button__base) {
 	  border-radius: var(--sl-button-border-radius);
 	  box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
 	}
