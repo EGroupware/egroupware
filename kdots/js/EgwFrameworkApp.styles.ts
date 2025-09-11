@@ -70,6 +70,7 @@ export default css`
 			font-size: inherit;
 			color: var(--application-header-text-color, var(--sl-color-neutral-0));
 			border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+			border-radius: var(--sl-button-border-radius, var(--sl-border-radius-medium));
 		}
 
 		et2-button-icon {

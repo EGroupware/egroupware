@@ -185,6 +185,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 		{
 			window.clearTimeout(this._destroyDelayTimeout);
 		}
+		this.classList.add("et2-button-widget");
 	}
 
 	disconnectedCallback()
@@ -794,7 +795,7 @@ export class Et2File extends Et2InputWidget(LitElement)
                     <slot name="prefix"></slot>
                     <slot name="button">
                         <et2-button part="button"
-                                    expand="base:button__base"
+                                    exportparts="base:button__base"
                                     class="file__button"
                                     id="visible-button"
                                     ?disabled=${this.disabled}

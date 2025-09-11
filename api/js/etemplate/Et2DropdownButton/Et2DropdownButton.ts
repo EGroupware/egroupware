@@ -49,12 +49,12 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
                 Adapt shoelace color variables to what we want 
                 Maybe some logical variables from etemplate2.css here? 
                 */
-				--sl-color-primary-50: rgb(244, 246, 247);
+				--sl-color-primary-50: var(--sl-input-background-color-hover);
 				--sl-color-primary-100: var(--gray-10);
-				--sl-color-primary-300: var(--input-border-color);
+				--sl-color-primary-300: var(--sl-input-border-color-hover, var(--input-border-color));
 				--sl-color-primary-400: var(--input-border-color);
 				--sl-color-primary-600: var(--primary-background-color);
-				--sl-color-primary-700: #505050;
+				--sl-color-primary-700: var(--sl-input-color-hover);
             }
             :host(:active), :host([active]) {
             	background-color: initial;

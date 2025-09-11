@@ -46,6 +46,7 @@ export default css`
 		color: var(--input-text-color);
 
 		font-size: var(--sl-input-font-size-medium);
+		font-weight: var(--sl-font-weight-bold);
 		padding-block: 0;
 		padding-inline: var(--sl-input-spacing-medium);
 	}
@@ -112,6 +113,7 @@ export default css`
 
 	sl-breadcrumb-item::part(base) {
 		font-size: var(--sl-font-size-medium);
+		font-weight: var(--sl-font-weight-bold);
 	}
 	sl-breadcrumb-item::part(label) {
 		color: var(--input-text-color);

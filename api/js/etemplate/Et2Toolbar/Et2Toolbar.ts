@@ -761,6 +761,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
             <sl-dropdown placement="bottom-end" hoist>
                 <et2-button-icon slot="trigger"
                                  part="trigger"
+                                 exportparts="base:trigger__base"
                                  class="toolbar-list-trigger"
                                  image="three-dots-vertical" noSubmit="true"
                                  label="${this.egw().lang("More...")}"
