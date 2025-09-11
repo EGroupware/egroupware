@@ -25,6 +25,7 @@ import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 import type {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
 import {LitElement} from "lit";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
+import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 
 /**
  * UI for Admin
@@ -216,6 +217,9 @@ class AdminApp extends EgwApp
 		this.nm.set_disabled(!!_url || ajax);
 		this.groups.set_disabled(true);
 		this.ajax_target.set_disabled(!ajax);
+
+		// disable app-toolbar, if not accounts or groups (!_url) for now
+		if (_url) this.enableAppToolbar('');
 
 		if(!this.nm.disabled)
 		{
@@ -471,6 +475,7 @@ class AdminApp extends EgwApp
 			this.load();
 			var parts = _id.split('/');
 			this.nm.applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
+			this.enableAppToolbar('admin.index.header');
 		}
 		else if (_id === '/groups')
 		{
@@ -515,10 +520,22 @@ class AdminApp extends EgwApp
 	group_list()
 	{
 		this.nm.set_disabled(true);
+		this.enableAppToolbar('admin.index.group.header')
 		this.groups.set_disabled(false);
 		jQuery(this.et2.parentNode).trigger('show.et2_nextmatch');
 	}
 
+	/**
+	 * Enable application toolbar with given template name
+	 *
+	 * @param template
+	 */
+	enableAppToolbar(template : string)
+	{
+		document.querySelectorAll('egw-app#admin et2-template[slot="main-header"]').forEach((tpl : Et2Template) => {
+			tpl.set_disabled(tpl.id !== template);
+		});
+	}
 
 	/**
 	 * View, edit or delete a group callback for tree
