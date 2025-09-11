@@ -390,7 +390,8 @@ class calendar_hooks
 				'admin'   => False
 			),
 			'default-alarm'          => array(
-				'type'   => 'date-duration',//'select',
+				'type'   => 'date-duration',
+				'options'=> ['emptyNot0' => true],
 				'label'  => lang('Default alarm for regular events').' ('.lang('empty = no alarm').')',
 				'name'   => 'default-alarm',
 				'help'   => 'Alarm added automatic to new events before event start-time',
@@ -399,7 +400,8 @@ class calendar_hooks
 				'default' => '',
 			),
 			'default-alarm-wholeday' => array(
-				'type'    => 'date-duration',//'select',
+				'type'    => 'date-duration',
+				'options'=> ['emptyNot0' => true],
 				'label'   => lang('Default alarm for whole-day events') . ' (' . lang('empty = no alarm') . ')',
 				'name'    => 'default-alarm-wholeday',
 				'help'    => lang('Alarm added automatic to new events before event start-time') . ' (' . lang('Midnight') . ')',
