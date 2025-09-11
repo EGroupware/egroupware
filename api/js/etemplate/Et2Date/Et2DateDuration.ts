@@ -345,7 +345,8 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 			return "" + (this.dataFormat === 'm' ? Math.round(value) : value);
 		}
 
-		let val = this._durationNode.length ? this._durationNode[0].valueAsNumber : '';
+		let val = this._durationNode.length && this._durationNode[0].value !== '' ?
+			this._durationNode[0].valueAsNumber : '';
 		if(val === '' || isNaN(val))
 		{
 			return this.emptyNot0 ? '' : "0";
