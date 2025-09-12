@@ -1147,6 +1147,13 @@ export class EgwFrameworkApp extends LitElement
 						  this.leftPanelInfo.preferenceWidth;
 		const rightWidth = this.rightCollapsed || !hasRightSlots ? this.rightPanelInfo.hiddenWidth :
 						   this.rightPanelInfo.preferenceWidth;
+
+		// Disconnected app (about to be removed?)
+		if(!this.framework)
+		{
+			return nothing;
+		}
+
 		return html`
             <div class="egw_fw_app__header" part="app-header">
                 <div class=${classMap({
