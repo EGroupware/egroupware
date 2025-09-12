@@ -389,6 +389,7 @@ class File extends Etemplate\Widget
 			}
 
 			// create the final destination file
+			set_time_limit(0);
 			$attempt = 0;
 			$ATTEMPT_LIMIT = 5;
 			$exception = null;
