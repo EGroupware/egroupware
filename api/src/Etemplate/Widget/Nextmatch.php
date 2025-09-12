@@ -289,7 +289,7 @@ class Nextmatch extends Etemplate\Widget
 			// Already set from a previous call, but somebody submitted
 			$url = $template_name;
 		}
-		else if($template_name && !($tpl = Template::instance($template_name)))
+		else if($template_name && !($tpl = Template::instance($template_name)) && $rest)
 		{
 			if (($path=Template::relPath(str_replace('.filter', '', $template_name))))
 			{
