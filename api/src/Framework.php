@@ -1070,27 +1070,33 @@ EOF;
 				// Load these first
 				// Cascade should go:
 				//  Libs < etemplate2 < framework/theme < app < print
-				// Et2Date uses flatpickr
-				self::includeCSS('/node_modules/flatpickr/dist/themes/light.css');
 
-				// eTemplate2 - load in top so sidebox has styles too
-				self::includeCSS('/api/templates/default/etemplate2.css');
-
-				// Category styles
+				// leave some (not needed) CSS out for the login page
 				if(basename($_SERVER['PHP_SELF']) !== 'login.php')
 				{
+					// Et2Date uses flatpickr
+					self::includeCSS('/node_modules/flatpickr/dist/themes/light.css');
+
+					// eTemplate2 - load in top so sidebox has styles too
+					self::includeCSS('/api/templates/default/etemplate2.css');
+
+					// Category styles
 					Categories::css(Categories::GLOBAL_APPNAME);
 				}
 
 				self::includeCSS($theme_css);
 
-				// sending print css last, so it can overwrite anything
-				$print_css = $this->template_dir.'/print.css';
-				if(!file_exists(EGW_SERVER_ROOT.$print_css))
+				// leave some (not needed) CSS out for the login page
+				if(basename($_SERVER['PHP_SELF']) !== 'login.php')
 				{
-					$print_css = '/api/templates/default/print.css';
+					// sending print css last, so it can overwrite anything
+					$print_css = $this->template_dir . '/print.css';
+					if (!file_exists(EGW_SERVER_ROOT . $print_css))
+					{
+						$print_css = '/api/templates/default/print.css';
+					}
+					self::includeCSS($print_css);
 				}
-				self::includeCSS($print_css);
 			}
 			// search for app specific css file, so it can customize the theme
 			self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
