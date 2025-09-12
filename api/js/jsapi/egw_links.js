@@ -521,11 +521,11 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		{
 			if (typeof _id === 'undefined' || _id === null)
 			{
-				unset(title_cache[_app]);
+				delete title_cache[_app];
 			}
 			else
 			{
-				unset(title_cache[_app][_id]);
+				delete title_cache[_app][_id];
 			}
 		},
 
