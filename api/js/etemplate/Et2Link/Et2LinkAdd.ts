@@ -78,7 +78,7 @@ export class Et2LinkAdd extends Et2InputWidget(LitElement)
 
 	get application()
 	{
-		return this.value.app;
+		return this.value?.app;
 	}
 
 	get _appNode() : Et2LinkAppSelect
