@@ -324,7 +324,11 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 		{
 			this._resize_timeout = undefined;
 
-			this._savePreference();
+			if(e)
+			{
+				// Only save for real events, to avoid infinite loop from _savePreference() -> _handleMouseUp()
+				this._savePreference();
+			}
 
 			// Tell widgets that manually resize about it
 			this.iterateOver(function(_widget)

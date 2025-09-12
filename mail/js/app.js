@@ -258,8 +258,11 @@ app.classes.mail = AppJS.extend(
 				let splitter = this.et2.getWidgetById('mailSplitter');
 				if (splitter && egw.preference('previewPane', 'mail') == 'expand')
 				{
-					splitter.style.setProperty('--max','100%');
-					splitter.dock()
+					splitter.style.setProperty('--max', '100%');
+					window.setTimeout(() =>
+					{
+						splitter.dock();
+					});
 				}
 				// Set preview pane state
 				this.mail_disablePreviewArea(!this.getPreviewPaneState());
