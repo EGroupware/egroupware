@@ -47,7 +47,6 @@ export class EgwDarkmodeToggle extends LitElement
 	connectedCallback()
 	{
 		super.connectedCallback();
-		this.toggleDarkmode(this.hasAttribute("darkmode") ? this.darkmode : this._initialValue);
 		window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", this.handleDarkmodeChange);
 	}
 
@@ -82,7 +81,7 @@ export class EgwDarkmodeToggle extends LitElement
 
 	handleDarkmodeChange(e)
 	{
-		this.toggleDarkmode(e.matches ? "dark" : "light");
+		this.toggleDarkmode(e.matches);
 	}
 
 	render() : unknown

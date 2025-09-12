@@ -36,6 +36,7 @@
 <!-- BEGIN framework -->
 <egw-framework id="egw_fw_basecontainer"
 			   application-list="{application-list}"
+			   class="{sl_theme}"
 >
 	<a slot="logo" href="{logo_url}" target="_blank"><img src="{logo_header}" title="{logo_title}" alt="Site logo"/></a>
 	<div slot="header-right" id="egw_fw_topmenu_info_items">

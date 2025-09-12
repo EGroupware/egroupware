@@ -92,9 +92,17 @@ class kdots_framework extends Api\Framework\Ajax
 		self::includeJS('/kdots/js/app.min.js');
 		$data = parent::_get_header($extra);
 
-		$data['theme'] .= $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] ? 'data-darkmode="1"' : '';
+		$data['theme'] .= $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1' ? 'data-darkmode="1"' : '';
 		$data['kdots_theme'] = 'kdots-' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'];
-		unset($data['darkmode']);
+		// Set shoelace theme
+		if($GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1')
+		{
+			$data['sl_theme'] = ' sl-theme-dark ';
+		}
+		else
+		{
+			$data['sl_theme'] = ' sl-theme-light ';
+		}
 
 		if($extra['navbar-apps'])
 		{
@@ -441,7 +449,16 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	protected static function _darkmode_menu()
 	{
-		$mode = $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == 1 ? 'dark' : 'light';
+		$mode = '';
+		switch($GLOBALS['egw_info']['user']['preferences']['common']['darkmode'])
+		{
+			case '0':
+				$mode = 'dark';
+				break;
+			case '1':
+				$mode = 'light';
+				break;
+		}
 		return '<egw-darkmode-toggle title="' . lang("%1 mode", $mode) . '" class="' .
 			($mode == 'dark' ? 'darkmode_on' : '') . '"' . ($mode == 'dark' ? 'darkmode' : '') .
 			' label="' . lang('Dark mode') . '"> </egw-darkmode-toggle>';

@@ -947,8 +947,14 @@ export class EgwFramework extends LitElement
 		this.classList.toggle("sl-theme-light", !event.target.darkmode);
 		this.classList.toggle("sl-theme-dark", event.target.darkmode);
 
-		// Update preference
-		this.egw.set_preference("common", "darkmode", (event.target.darkmode ? "1" : "0"));
+		// Update preference off / on / auto
+		let pref = event.target.darkmode ? "1" : "0";
+		if(window.matchMedia(`(prefers-color-scheme: ${pref == "1" ? "dark" : "light"})`).matches)
+		{
+			// Setting to same as system, so go with auto
+			pref = "2"
+		}
+		this.egw.set_preference("common", "darkmode", pref);
 	}
 	/**
 	 * An application tab is chosen, show the app
