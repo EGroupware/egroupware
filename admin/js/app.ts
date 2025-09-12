@@ -1580,9 +1580,9 @@ class AdminApp extends EgwApp
 	 * If there is an error on server-side, resend request with an parameter allowing
 	 * cache to use different method not requiring eg. so much memory
 	 */
-	clear_cache()
+	async clear_cache()
 	{
-		let wait = this.egw.message(this.egw.lang('Clear cache and register hooks') + "\n" + this.egw.lang('Please wait...'), 'info');
+		let wait = await this.egw.message(this.egw.lang('Clear cache and register hooks') + "\n" + this.egw.lang('Please wait...'), 'info');
 
 		this.egw.request('admin.admin_hooks.ajax_clear_cache', [])
 			.then(() => {
