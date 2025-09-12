@@ -52,9 +52,28 @@ class Sync
 		{
 			$this->url = 'https://'.$this->url;
 		}
+		elseif (str_starts_with($this->url, 'webcal://'))
+		{
+			$this->url = 'https://'.substr($this->url, 9);
+		}
 		// check for an ics-file with Content-Type: text/calendar
 		try {
-			api($this->url, 'HEAD', '', $this->header(['Accept: text/calendar']), $response_header);
+			// iCloud always returns 400 Bad Request for HEAD requests
+			try {
+				// for iCloud try directly with GET, for others retry with GET on 400 Bad Request
+				$method = preg_match('#^https://[^.]+\.icloud\.com/#i', $this->url) ? 'GET' : 'HEAD';
+				api($this->url, $method, '', $this->header(['Accept: text/calendar']), $response_header);
+			}
+			catch (\HttpException $e) {
+				if ($method === 'HEAD' && $e->getCode() == 400)
+				{
+					api($this->url, 'GET', '', $this->header(['Accept: text/calendar']), $response_header);
+				}
+				else
+				{
+					throw $e;
+				}
+			}
 			if (preg_match('#^text/calendar(;|$)#', $response_header['content-type']))
 			{
 				$sync_type = 'calendar-get'.(!empty($response_header['etag']) ? '-etag' : '');
@@ -495,10 +514,27 @@ EOT, $this->header([
 		// check for an ics-file with Content-Type: text/calendar
 		if (!empty($etag))
 		{
-			api($this->url, 'HEAD', '', $this->header([
-				'Accept: text/calendar',
-				'If-None-Match: '.$etag,
-			]), $response_header);
+			try {
+				// for iCloud try directly with GET, for others retry with GET on 400 Bad Request
+				$method = preg_match('#^https://[^.]+\.icloud\.com/#i', $this->url) ? 'GET' : 'HEAD';
+				$response = api($this->url, $method, '', $this->header([
+					'Accept: text/calendar',
+					'If-None-Match: '.$etag,
+				]), $response_header);
+			}
+			catch (\HttpException $e) {
+				if ($method === 'HEAD' && $e->getCode() == 400)
+				{
+					$response = api($this->url, 'GET', '', $this->header([
+						'Accept: text/calendar',
+						'If-None-Match: '.$etag,
+					]), $response_header);
+				}
+				else
+				{
+					throw $e;
+				}
+			}
 			// check for 304 Not Modified or unchanged ETag
 			if (explode(' ', $response_header[0])[1] == 304 || $response_header['etag'] === $etag)
 			{
@@ -518,7 +554,7 @@ EOT, $this->header([
 			});
 			return true;
 		};
-		$ical_class->importVCal(api($this->url, 'GET', '', $this->header([
+		$ical_class->importVCal($response ?? api($this->url, 'GET', '', $this->header([
 			'Accept: text/calendar',
 		]), $response_header), -1, null, false, 0, '',
 			null, null, null, true);
