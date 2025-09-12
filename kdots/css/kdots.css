@@ -888,7 +888,7 @@ div.et2_nextmatch .egwGridView_outer thead > tr th.optcol span.selectcols {
   height: 9px;
   padding: 4px 14px 0 2px;
   margin-top: 4px;
-  background-image: url(../../../api/templates/default/images/selectcols.svg);
+  background-image: url(../../api/templates/default/images/selectcols.svg);
   background-repeat: no-repeat;
   background-size: 10px 10px;
   display: inline-block;
