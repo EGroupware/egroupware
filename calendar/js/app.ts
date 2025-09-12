@@ -2972,7 +2972,7 @@ export class CalendarApp extends EgwApp
 					},this,et2_calendar_timegrid);
 				}
 			}
-			else if(jQuery(view.etemplates[0].DOMContainer).is(':visible'))
+			else
 			{
 				if(typeof frameworkApp.hideRight == "function")
 				{
@@ -2982,11 +2982,14 @@ export class CalendarApp extends EgwApp
 						view.etemplates[0].resize();
 					});
 				}
-				view.etemplates[0].DOMContainer.style.width = "";
-				view.etemplates[0].widgetContainer.iterateOver(function(w)
+				if(jQuery(view.etemplates[0].DOMContainer).is(':visible'))
 				{
-					w.set_width('100%');
-				}, this, et2_calendar_timegrid);
+					view.etemplates[0].DOMContainer.style.width = "";
+					view.etemplates[0].widgetContainer.iterateOver(function(w)
+					{
+						w.set_width('100%');
+					}, this, et2_calendar_timegrid);
+				}
 			}
 
 			// List view (nextmatch) has slightly different fields
