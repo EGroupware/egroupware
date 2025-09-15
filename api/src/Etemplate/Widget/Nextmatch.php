@@ -265,6 +265,11 @@ class Nextmatch extends Etemplate\Widget
 			$value['actions'] = self::egw_actions($value['actions'], $template_name, '', $value['action_links']);
 		}
 
+		// the following code is only for NM running in the main content area, not in a popup
+		if (Api\Etemplate::$request->output_mode === 2)
+		{
+			return;
+		}
 		// check if we have a filter-template or need to generate one
 		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
 		$template_name = $value['filter_template'] ?? $this->attrs['filter_template'] ?? null;
