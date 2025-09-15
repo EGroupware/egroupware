@@ -78,7 +78,7 @@ class Ads extends Ldap
 	/**
 	 * Attribute used for email aliases
 	 */
-	const ALIAS_ATTRIBUTE = 'proxyaddress';
+	const ALIAS_ATTRIBUTE = 'proxyaddresses';
 
 	/**
 	 * constructor of the class

@@ -1430,19 +1430,20 @@ class Ldap
 			if (in_array(static::ALIAS_ATTRIBUTE, $_attributes))
 			{
 				$contact['aliases'] = [];
+				unset($entry[static::ALIAS_ATTRIBUTE]['count']);
 				switch(static::ALIAS_ATTRIBUTE)
 				{
-					case 'proxyaddress':
-						foreach($contact['proxyaddress'] ?? [] as $address)
+					case 'proxyaddresses':
+						foreach($entry['proxyaddresses'] ?? [] as $address)
 						{
-							if (preg_match('/^smtp:([^@]+@[^@]+)$/', $address, $m))
+							if (preg_match('/^smtp:([^@]+@[^@]+)$/i', $address, $m))
 							{
 								$contact['aliases'][] = strtolower($m[1]);
 							}
 						}
 						break;
 					default:
-						$contact['aliases'] = array_map('strtolower', $contact[static::ALIAS_ATTRIBUTE] ?? []);
+						$contact['aliases'] = array_map('strtolower', $entry[static::ALIAS_ATTRIBUTE] ?? []);
 						break;
 				}
 				// remove primary address, if contained in aliases
