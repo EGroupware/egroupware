@@ -679,7 +679,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			return html`
                 <input id="search" type="text" part="input"
                        class="search__input"
-                       autocomplete="do-not-autocomplete-${Date.now().toString(36)}"
+                       autocomplete="off"
                        ?disabled=${this.disabled}
                        ?readonly=${this.readonly}
                        placeholder="${this.hasFocus || this.value && this.value.length > 0 || this.disabled || this.readonly ? "" : this['placeholder']}"
