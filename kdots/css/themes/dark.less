@@ -43,5 +43,44 @@ html[data-darkmode="1"], .sl-theme-dark {
 	color: #96bcd9;
   }
 
+  /* Date widget (flatpickr dark theme)  */
+  @import (inline) "../../../node_modules/flatpickr/dist/themes/dark.css";
+
+  .flatpickr-calendar {
+	background: var(--sl-panel-background-color);
+	box-shadow: var(--sl-shadow-large);
+
+	.flatpickr-innerContainer {
+	  background: var(--sl-panel-background-color);
+	  border-bottom-color: var(--sl-panel-border-color);
+	}
+
+	.flatpickr-months {
+	  background-color: var(--sl-color-neutral-200);
+
+	  .flatpickr-month, .flatpickr-monthDropdown-months {
+		background: none;
+		color: var(--sl-color-neutral-700);
+	  }
+	}
+
+	.flatpickr-weeks, .flatpickr-days {
+	  border-left-color: var(--sl-panel-border-color);
+	}
+
+	span.flatpickr-weekday {
+	  color: var(--sl-color-neutral-500);
+	  background-color: var(--sl-color-neutral-200);
+	}
+
+	.flatpickr-time {
+	  background-color: transparent;
+	  border-color: var(--sl-panel-border-color);
+
+	  .flatpickr-calendar.hasTime & {
+		border-top: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+	  }
+	}
+  }
   /** End WIDGETS **/
 }

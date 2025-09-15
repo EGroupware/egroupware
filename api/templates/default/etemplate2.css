@@ -3841,14 +3841,14 @@ div.flatpickr-calendar .shortcut-buttons-flatpickr-buttons {
 }
 
 button.shortcut-buttons-flatpickr-button:hover {
-    background-color: #eceef1;
+	background-color: var(--sl-button-hover-background-color);
 }
 
 button.shortcut-buttons-flatpickr-button {
-    background-color: white;
+	background-color: var(--sl-button-background-color);
     width: 100%;
     height: 3em;
-    border: 1px solid #eceef1;
+	border: 1px solid var(--sl-button-border-color);
     border-top: none;
     font-weight: 700;
 }

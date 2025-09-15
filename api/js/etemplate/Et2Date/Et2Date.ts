@@ -524,6 +524,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 						}
 					}).join(' ');
 			}
+
+			// Flatpickr calendar is usually child of body, but theme is set on  so needs theme
+
 		}
 	}
 
@@ -581,6 +584,8 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		{
 			this._instance.calendarContainer?.removeAttribute("inert")
 		}];
+
+		options.theme = "dark";
 
 		return options;
 	}

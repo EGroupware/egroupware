@@ -97,11 +97,11 @@ class kdots_framework extends Api\Framework\Ajax
 		// Set shoelace theme
 		if($GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1')
 		{
-			$data['sl_theme'] = ' sl-theme-dark ';
+			$data['kdots_theme'] = ' sl-theme-dark ';
 		}
 		else
 		{
-			$data['sl_theme'] = ' sl-theme-light ';
+			$data['kdots_theme'] = ' sl-theme-light ';
 		}
 
 		if($extra['navbar-apps'])

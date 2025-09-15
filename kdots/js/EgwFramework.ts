@@ -944,8 +944,8 @@ export class EgwFramework extends LitElement
 	protected handleDarkmodeChange(event)
 	{
 		// Update CSS classes
-		this.classList.toggle("sl-theme-light", !event.target.darkmode);
-		this.classList.toggle("sl-theme-dark", event.target.darkmode);
+		this.closest("html").classList.toggle("sl-theme-light", !event.target.darkmode);
+		this.closest("html").classList.toggle("sl-theme-dark", event.target.darkmode);
 
 		// Update preference off / on / auto
 		let pref = event.target.darkmode ? "1" : "0";
