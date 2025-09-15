@@ -161,9 +161,12 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 					/* Use .et2-label-fixed class to give fixed label size */
 
-					:host(.et2-label-fixed)::part(form-control-label), :host(.et2-label-fixed) .form-control-label {
-						width: initial;
-						width: var(--label-width, 8em);
+					:host(.et2-label-fixed) {
+						&::part(form-control-label), & > *::part(form-control-label), .form-control-label {
+
+							width: initial;
+							width: var(--label-width, 8em);
+						}
 					}
 
 					:host(.et2-label-fixed)::part(form-control-help-text), :host(.et2-label-fixed) .form-control-help-text {
