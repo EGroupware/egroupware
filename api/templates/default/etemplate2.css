@@ -2058,6 +2058,35 @@ egw-validation-feedback[type] {
     background-color: transparent;
 }
 
+.nextmatch_header_row {
+	width: 100%;
+	padding-top: 0.2em;
+	padding-bottom: 0.5em;
+	position: relative;
+	display: flex;
+	gap: 1ex;
+}
+
+.nextmatch_header_row .filtersContainer {
+	flex: 5 1 auto;
+}
+
+.nextmatch_header_row > .filtersContainer > et2-select, .nextmatch_header_row > .filtersContainer > et2-select-cat {
+	/* Make all filters the same size.  Otherwise they'll flex for different sized values */
+	max-width: 33%;
+	width: calc(33% - 4px);
+}
+
+.nextmatch_header_row > .header_row_right {
+	order: 10;
+}
+
+.et2_nextmatch .nextmatch_header_row > div, .et2_nextmatch .nextmatch_header_row et2-template::part(base) {
+	display: inline-flex;
+	flex-direction: row;
+	gap: 1ex;
+}
+
 .et2_nextmatch .innerContainer {
 	overflow: clip;
 }
