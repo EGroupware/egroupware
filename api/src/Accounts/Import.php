@@ -722,7 +722,7 @@ class Import
 				$primary_attribute = $alias_attribute = 'mail';
 				break;
 			case 'ads':
-				$alias_attribute = 'proxyaddress';
+				$alias_attribute = 'proxyaddresses';
 				$primary_attribute = 'mail';
 				break;
 			case 'univention':
@@ -754,7 +754,7 @@ class Import
 					}
 					switch($alias_attribute)
 					{
-						case 'proxyaddress':
+						case 'proxyaddresses':
 							fwrite($ldif, "$alias_attribute: SMTP:$current[mailLocalAddress]\n");
 							foreach($current['mailAlternateAddress'] ?? [] as $address)
 							{
