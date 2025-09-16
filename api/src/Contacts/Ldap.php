@@ -1447,10 +1447,7 @@ class Ldap
 						break;
 				}
 				// remove primary address, if contained in aliases
-				if (($key = array_search($contact['email'], $contact['aliases'])) !== false)
-				{
-					unset($contact['aliases'][$key]);
-				}
+				$contact['aliases'] = array_values(array_diff($contact['aliases'], [$contact['email']]));
 			}
 			$contacts[] = $contact;
 		}

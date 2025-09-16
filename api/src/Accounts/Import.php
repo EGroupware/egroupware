@@ -409,7 +409,7 @@ class Import
 						{
 							if ($dry_run)
 							{
-								$this->logger("Dry-run: would updated user '$account[account_lid]' (#$account_id): " .
+								$this->logger("Dry-run: would update user '$account[account_lid]' (#$account_id): " .
 									json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
 								$new = false;
 							}
@@ -801,11 +801,16 @@ class Import
 		{
 			if ($dry_run)
 			{
-				$this->logger("Dry-run: would add aliases ".json_encode($new_aliases)." and remove ".json_encode($removed_aliases)." for '".Api\Accounts::id2name($account_id)."' #$account_id", 'detail');
+				$this->logger("Dry-run: would add aliases ".json_encode(array_values($new_aliases)).
+					" and remove ".json_encode(array_values($removed_aliases)).
+					" for '".Api\Accounts::id2name($account_id)."' #$account_id", 'detail');
 				return;
 			}
 			$mail_accounts->setUserData($account_id, $alternate_addresses, $current['mailForwardingAddress'] ?? null,
 				$current['deliveryMode'] ?? null, $current['accountStatus'] ?? 'active', $contact['email']);
+			$this->logger("Added aliases ".json_encode(array_values($new_aliases)).
+				" and removed ".json_encode(array_values($removed_aliases)).
+				" for '".Api\Accounts::id2name($account_id)."' #$account_id", 'detail');
 		}
 	}
 
