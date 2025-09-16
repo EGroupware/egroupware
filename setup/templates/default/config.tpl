@@ -553,7 +553,8 @@
       <option value="users+groups" {selected_account_import_type_users+groups}>{lang_users,_groups_and_memberships}</option>
       <option value="users+local+groups" {selected_account_import_type_users+local+groups} title="{lang_Local_groups_includes_groups_and_their_memberships_deleted_on_the_AD/LDAP_server!}">{lang_users,_groups_and_memberships,_keep_local_groups}</option>
      </select>
-     <label title="{lang_Will_import_aliases_from_multivalued_mail_or_proxyAddresses_attribute}"><input type=checkbox name="newsettings[account_import_aliases]">{lang_Import_aliases}</label>
+     <label title="{lang_Will_import_aliases_from_multivalued_mail_or_proxyAddresses_attribute}">
+        <input type=checkbox name="newsettings[account_import_aliases]" value="true" {checked_account_import_aliases_true}>{lang_Import_aliases}</label>
      (<a href="account_import.php?export_ldif=aliases" target="_blank" title="{lang_Need_to_be_applied_before_enabling} {lang_Import_aliases}!">{lang_Download_ldif_with_changes}</a>)
     </td>
    </tr>
