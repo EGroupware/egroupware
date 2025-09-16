@@ -15,7 +15,6 @@ import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import type {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
-import {waitForEvent} from "../../api/js/etemplate/Et2Widget/event";
 
 /**
  * @summary Application component inside EgwFramework
@@ -347,7 +346,7 @@ export class EgwFrameworkApp extends LitElement
 		this.loading = true;
 		if(!this.useIframe)
 		{
-			this.loadingPromise = this.egw.request(
+			return this.loadingPromise = this.egw.request(
 				this.framework.getMenuaction('ajax_exec', targetUrl, this.name),
 				[targetUrl]
 			).then((data : string | string[] | { DOMNodeID? : string } | { DOMNodeID? : string }[]) =>
@@ -363,61 +362,30 @@ export class EgwFrameworkApp extends LitElement
 				// Might have just slotted aside content, hasSlotController will requestUpdate()
 				// but we need to do it anyway for translation
 				this.requestUpdate();
-
-				// Wait for children to load
-				return this.waitForLoad(Array.from(this.querySelectorAll("[id]")));
-			})
-		}
-		else
-		{
-			this.loadingPromise = new Promise<void>((resolve, reject) =>
-			{
-				this.append(this._createIframeNodes(url));
-
-				// Might have just changed useIFrame, need to update to show that
-				this.requestUpdate();
-
-				// Wait for children to load
-				return this.waitForLoad(Array.from(this.querySelectorAll("iframe")));
-			});
-		}
-		this.loadingPromise
-			.catch((e) =>
-			{
-				debugger;
-				console.log(e)
-			})
-			.finally(() =>
+			}).finally(() =>
 			{
 				this.loading = false;
 			});
-		return this.loadingPromise
-	}
-
-	// Wait for the nodes to fire a "load" event, when all are done then we're done loading
-	protected waitForLoad(nodes : HTMLElement[]) : Promise<void>
-	{
-		let timeout = null;
-		const loadTimeoutPromise = new Promise<void>((resolve) =>
+		}
+		else
 		{
-			timeout = setTimeout(() =>
+			this.loadingPromise = new Promise((resolve, reject) =>
 			{
-				console.warn(this.name + ' loading timeout', this);
-				resolve(); // Don't reject — just proceed
-			}, 10000);
-		});
-		const loadPromises = nodes.map((node) => waitForEvent(node, "load"));
-
-		return Promise.race([
-			Promise.allSettled(loadPromises)
-				.then(() => {/* yay ... */ })
-				.finally(() =>
+				const timeout = setTimeout(() => reject(this.name + " load failed"), 5000);
+				this.append(this._createIframeNodes(url));
+				this.querySelector("iframe").addEventListener("load", () =>
 				{
-					this.loading = false;
 					clearTimeout(timeout);
-				}),
-			loadTimeoutPromise
-		]) as Promise<void>;
+					resolve()
+				}, {once: true});
+			}).finally(() =>
+			{
+				this.loading = false;
+			});
+			// Might have just changed useIFrame, need to update to show that
+			this.requestUpdate();
+			return this.loadingPromise;
+		}
 	}
 
 	public getMenuaction(_fun, _ajax_exec_url, appName = "")
