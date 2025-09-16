@@ -63,7 +63,9 @@
 		<template template="api.search-button"></template>
 		<et2-button  id="home" statustext="Go to your home directory" image="gohome" onclick="app.filemanager.change_dir('~',widget);" noSubmit="true"></et2-button>
 		<et2-button  id="up" statustext="Up" image="goup" onclick="app.filemanager.change_dir('..',widget);" noSubmit="true"></et2-button>
-        <et2-vfs-path id="path" onchange="app.filemanager.handlePathChange" size="80" class="address"/>
+        <et2-vfs-path id="path" onchange="app.filemanager.handlePathChange" size="80" class="address">
+            <et2-image src="filemanager/navbar" slot="prefix"></et2-image>
+        </et2-vfs-path>
 		<et2-button  statustext="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" noSubmit="true"></et2-button>
 		<et2-toolbar id="toolbar">
 			<et2-dropdown-button  id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"></et2-dropdown-button>

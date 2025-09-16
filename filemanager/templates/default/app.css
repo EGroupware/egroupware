@@ -24,6 +24,11 @@
 	position: initial;
 	top: auto;
 }
+
+#filemanager-index_filemanager-index-app-toolbar et2-vfs-path et2-image {
+	filter: brightness(0) invert(1);
+	width: 1.5em;
+}
 #filemanager-index_nm et2-vfs-mime img[src$="svg"], #filemanager-index_nm et2-vfs-mime svg{
     height: 1em !important;
 }
