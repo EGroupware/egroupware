@@ -806,8 +806,8 @@ class Import
 					" for '".Api\Accounts::id2name($account_id)."' #$account_id", 'detail');
 				return;
 			}
-			$mail_accounts->setUserData($account_id, $alternate_addresses, $current['mailForwardingAddress'] ?? null,
-				$current['deliveryMode'] ?? null, $current['accountStatus'] ?? 'active', $contact['email']);
+			$mail_accounts->setUserData($account_id, $alternate_addresses, $current['mailForwardingAddress'] ?? [],
+				$current['deliveryMode'] ?? null, $current['accountStatus'] ?? 'active', $contact['email'], $current['quotaLimit']);
 			$this->logger("Added aliases ".json_encode(array_values($new_aliases)).
 				" and removed ".json_encode(array_values($removed_aliases)).
 				" for '".Api\Accounts::id2name($account_id)."' #$account_id", 'detail');
