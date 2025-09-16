@@ -16,16 +16,6 @@ div#divAppbox {
 	padding: 0;
 }
 
-body {
-	background-image: none;
-	background-color: white;
-}
-
-/* otherwise it is transparent */
-#admin_iframe {
-	background-color: white;
-}
-
 /** Group list */
 @media screen {
 	#admin-index_groups div.innerContainer {
