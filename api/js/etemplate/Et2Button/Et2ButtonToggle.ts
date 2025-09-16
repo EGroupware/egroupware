@@ -191,8 +191,9 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 		}
 	}
 
-	updated()
+	updated(changedProperties : PropertyValues)
 	{
+		super.updated(changedProperties)
 		this.switch?.classList.toggle("has-off-icon", this.offIcon && this.offIcon != this.icon);
 	}
 

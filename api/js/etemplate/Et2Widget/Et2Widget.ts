@@ -237,7 +237,8 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				 */
 				statustext: {
 					type: String,
-					reflect: true
+					reflect: true,
+					noAccessor: true
 				},
 
 				/**
