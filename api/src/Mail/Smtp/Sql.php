@@ -253,6 +253,12 @@ class Sql extends Mail\Smtp
 			$account['account_email'] = $_mailLocalAddress;
 			$this->accounts->save($account);
 		}
+		// make sure the primary mail address is not set additional as alias as e.g. AD denies that for proxyAddresses attribute
+		if (($key = array_search(strtolower($_mailLocalAddress), array_map('strtolower', $_mailAlternateAddress))) !== false)
+		{
+			unset($_mailAlternateAddress[$key]);
+		}
+
 		$flags = array(
 			self::TYPE_DELIVERY => $_deliveryMode,
 			self::TYPE_ENABLED => $_accountStatus,

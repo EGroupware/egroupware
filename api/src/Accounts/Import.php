@@ -732,11 +732,12 @@ class Import
 		}
 		$mail_accounts = new Api\Mail\Smtp\Sql();
 		$current = $mail_accounts->getUserData($account_id);
+		$sql_alternate_addresses = array_map('strtolower', $current['mailAlternateAddress'] ?? []);
 		if (isset($current['mailLocalAddress']))
 		{
 			$current['mailLocalAddress'] = self::strtolower($current['mailLocalAddress']);
+			$sql_alternate_addresses = array_diff($sql_alternate_addresses, [$current['mailLocalAddress']]);
 		}
-		$sql_alternate_addresses = array_map('strtolower', $current['mailAlternateAddress'] ?? []);
 		$alternate_addresses = $contact['aliases'] ?? [];
 		$new_aliases = array_diff($alternate_addresses, $sql_alternate_addresses);
 		$removed_aliases = array_diff($sql_alternate_addresses, $alternate_addresses);
