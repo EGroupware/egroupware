@@ -1,0 +1,202 @@
+/**
+ * EGroupware - CSS Styles used by filemanager app
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$
+ */
+
+/**
+ * CSS for new eTemplate filemanager UI
+ */
+#filemanager-index_nm .et2_file {
+	width: auto;
+}
+
+/* Cancel toolbar styles removes border, just for upload button */
+#filemanager-index_nm .et2_file et2-button:not(:hover)::part(base) {
+	border-color: var(--sl-input-border-color);
+}
+
+#filemanager-index_nm .et2_file et2-button::part(label) {
+	position: initial;
+	top: auto;
+}
+
+#filemanager-index_filemanager-index-app-toolbar et2-vfs-path et2-image {
+  width: 1.5em;
+  .kdots-glassy &, .kdots-light & {
+	filter: brightness(0) invert(1);
+  }
+}
+#filemanager-index_nm et2-vfs-mime img[src$="svg"], #filemanager-index_nm et2-vfs-mime svg{
+    height: 1em !important;
+}
+
+/* Override default filter width since there's only one, and limited space left */
+#filemanager-index_nm_filter {
+    max-width: initial;
+}
+
+#filemanager-index_path {
+	flex-grow: 2;
+}
+
+#filemanager-index_filemanager-index-header_left .et2_file input {
+	width: 24px;
+}
+#filemanager-index_filemanager-index-header_left .et2_file span {
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	background-position-x: 3px;
+	background-image: url(../../../api/templates/default/images/add.svg);
+	overflow: hidden;
+	text-indent: 100px;
+}
+
+/* Let path have more space */
+#filemanager-index_filemanager-index-header_row {
+	flex: 20 1 auto;
+	min-width: 24em;
+}
+
+#filemanager-index_nm_path {
+	flex-grow: 1;
+	min-width: 0;
+}
+
+/**
+ * Tile view
+ */
+table.egwGridView_grid .tile .file_tile {
+	height: 100px;
+    width: 135px;
+	word-break: break-all;
+	overflow: hidden;
+}
+table.egwGridView_grid .tile .file_tile et2-vfs-mime {width: 4em; margin: 0 auto;}
+
+.egwGridView_grid .tile span.iconOverlayContainer {
+	display: block;
+	max-width: 140px;
+}
+.tile .file_tile img.vfsMimeIcon, .tile .file_tile et2-vfs-mime > img {
+	height: 48px;
+	width: auto;
+	display:block;
+	margin: 0 auto;
+}
+.tile .file_tile .et2_label {
+	word-wrap: break-word;
+}
+.tile .file_tile {
+	position: relative;
+}
+.tile .file_tile[data-mime^="image"] .et2_label {
+	display: none;
+}
+.tile .file_tile[data-mime^="image"]:hover .et2_label {
+	display: block;
+	position: absolute;
+	top: 10px;
+	color: white;
+	text-shadow: 2px 2px 8px black;
+	width: 100%;
+}
+.tile .file_tile[data-mime^="image"]:hover .et2_label[id*=comment] {
+	top: 30px;
+}
+#filemanager-index_nm .file_tile[data-mime^="image"] img.vfsMimeIcon, #filemanager-index_nm .file_tile[data-mime^="image"] et2-vfs-mime > img {
+  height: auto;
+  max-height: 100px;
+}
+
+/**
+ * Select file dialog
+ */
+.selectPath { font-weight: bold; width: 98% }
+
+.selectName input { width: 100%; }
+.selectMime select { width: 100%; }
+.displayNone input, input.displayNone { display: none; }
+.selectFiles div { overflow-y: auto;}
+#filemanager-select_dir {
+	height:400px;
+	overflow-y: scroll;
+	display:inline-block;
+}
+/**
+ * VFS mounts and versioning
+ */
+.filemanager_smallButton {
+	font-size: 90%;
+	margin: 0;
+}
+.filemanager_password > input {
+	min-width: 0 !important;
+}
+div.filemanager_protocols > *:before {
+	content: "• ";
+}
+.filemanager_header {
+	font-size: 120%;
+	font-weight: bold;
+}
+.filemanager_config > * {
+	margin-top: 20px;
+}
+.error{color:red; font-style:italic;}
+.createDir img {padding-right:30px;}
+#filemanager-select_apps {
+	width: 61px;
+	height: 400px;
+	margin-top: 44px;
+	display: inline-block;
+	overflow-y: scroll;
+}
+
+.mimeIcon {width:65px;}
+.previewImage {width:100%;}
+
+#filemanager-editor_file_path {
+	font-size: 11pt;
+	display: inline-block;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+
+#filemanager-editor {
+	overflow: hidden;
+}
+
+div.editInfoMarker {
+	width:5px;
+	border-radius: none;
+}
+#filemanager-index_nm .et2_file div.progress {position:absolute;}
+
+#filemanager-index_new_wrapper {
+	margin-right: 6px;
+}
+
+#filemanager-index_new_wrapper .ui-icon-triangle-1-s {
+	background-image: url(../../../api/templates/default/images/add.svg);
+	background-size: 12px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+button#filemanager-index_new img {
+	display: none;
+}
+div#filemanager-index_filemanager-index-header_right {
+	display: inline-flex;
+	gap: 1ex;
+}
+/*navbar icons in filemanager should always have the save size of 32px*/
+.egwGridView_grid et2-vfs-mime img[src*='/navbar'] {
+	width: 32px !important;
+}
