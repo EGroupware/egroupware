@@ -782,11 +782,13 @@ class Import
 				}
 				elseif (empty($contact['email']))
 				{
+					fwrite($ldif, "-\n");
 					fwrite($ldif, "add: $primary_attribute\n");
 					fwrite($ldif, "$primary_attribute: $current[mailLocalAddress]\n");
 				}
 				elseif(($contact['email'] ?? null) !== $current['mailLocalAddress'])
 				{
+					fwrite($ldif, "-\n");
 					fwrite($ldif, "replace: $primary_attribute\n");
 					fwrite($ldif, "$primary_attribute: $current[mailLocalAddress]\n");
 				}
