@@ -3797,6 +3797,7 @@ div.flatpickr-calendar .flatpickr-months .flatpickr-month {
 
 div.flatpickr-calendar .flatpickr-months {
     gap: 4px;
+	background-color: #eceef1;
 }
 
 div.flatpickr-calendar .flatpickr-current-month {
@@ -3838,13 +3839,13 @@ div.flatpickr-calendar .shortcut-buttons-flatpickr-buttons {
     display: flex;
 }
 
-button.shortcut-buttons-flatpickr-button:hover {
-	background-color: var(--sl-button-hover-background-color);
-	border-color: var(--sl-button-hover-border-color);
+div.flatpickr-calendar button.shortcut-buttons-flatpickr-button:hover, div.flatpickr-calendar .numInputWrapper:hover {
+	background-color: var(--sl-input-background-color-hover);
+	border-color: var(--sl-input-border-color-hover);
 }
 
-button.shortcut-buttons-flatpickr-button {
-	background-color: white;
+div.flatpickr-calendar button.shortcut-buttons-flatpickr-button {
+	background-color: var(--sl-input-background-color);
     width: 100%;
     height: 3em;
 	border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
