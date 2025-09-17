@@ -133,8 +133,8 @@ export class EgwFramework extends LitElement
 
 	// Check for slots having content, we won't render them if they're empty
 	protected readonly hasSlotController = new HasSlotController(<LitElement><unknown>this,
-		// Don't include status, it causes a loop
-		"banner", "footer"
+		// Don't set slot change listeners, it causes an infinite loop
+		// "status", "banner", "footer"
 	);
 
 	// Keep track of egw loaded
@@ -174,11 +174,6 @@ export class EgwFramework extends LitElement
 		}
 
 		document.body.addEventListener("egw-darkmode-change", this.handleDarkmodeChange);
-
-		// Update existence of optional slots
-		this.hasBanner = this.hasSlotController.test('banner');
-		this.hasFooter = this.hasSlotController.test('footer');
-		this.hasStatus = this.hasSlotController.test('status');
 	}
 
 	disconnectedCallback()
@@ -1232,8 +1227,12 @@ export class EgwFramework extends LitElement
 	render()
 	{
 		const iconSize = getComputedStyle(this).getPropertyValue("--icon-size");
+		// Update existence of optional slots
+		const hasBanner = this.hasSlotController.test('banner');
+		const hasFooter = this.hasSlotController.test('footer');
+		const hasStatus = this.hasSlotController.test('status');
+
 		// Snap positions need to be in pixels
-		this.hasStatus = this.hasSlotController.test('status');
 		const statusSnap = (parseInt(iconSize) + 6) + 'px';
 		const statusPosition = this.egw?.preference("statusPosition", "common") ?? parseInt(statusSnap) ?? "36";
 
@@ -1248,7 +1247,7 @@ export class EgwFramework extends LitElement
 		return html`${until(this.getEgwComplete().then(() => html`
             <div class=${classMap(classes)} part="base">
                 ${this._accessibleTopTemplate()}
-                ${this.hasBanner ? html`
+                ${hasBanner ? html`
                     <div class="egw_fw__banner" part="banner" role="banner">
                         <slot name="banner"><span class="placeholder">Banner</span></slot>
                     </div>` : nothing
@@ -1281,7 +1280,7 @@ export class EgwFramework extends LitElement
                     <slot name="header"><span class="placeholder">header</span></slot>
                     <slot name="header-right"><span class="placeholder">header-right</span></slot>
                 </header>
-                ${this.hasStatus ? html`
+                ${hasStatus ? html`
                     <div class="egw_fw__divider">
                         <sl-split-panel part="status-split" exportparts="divider" position-in-pixels="${statusPosition}"
                                         style="--divider-width: 0px;"
@@ -1316,7 +1315,7 @@ export class EgwFramework extends LitElement
                         <slot></slot>
                     </main>`
                 }
-                ${this.hasFooter ? html`
+                ${hasFooter ? html`
                     <footer class="egw_fw__footer" part="footer">
                         <slot name="footer"><span class="placeholder">footer</span></slot>
                     </footer>` : nothing
