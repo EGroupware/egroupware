@@ -99,15 +99,22 @@ div.et2_nextmatch {
 
 /* Special styling for widgets in main-header */
 [slot="main-header"] {
+  /* Only target the parts, or nested widgets will look weird */
 
   --sl-input-background-color: transparent;
   --sl-input-background-color-hover: transparent;
+  --sl-input-background-color-focus: transparent;
   --sl-input-color: var(--application-header-text-color);
   --input-text-color: var(--application-header-text-color);
   --sl-input-icon-color: var(--application-header-text-color);
   --sl-input-color-hover: var(--application-header-text-color);
   //--sl-input-border-color: transparent;
-  --sl-input-placeholder-color: hsl(from var(--application-header-text-color) h s l / 50%);
+  --sl-input-placeholder-color: var(--application-header-text-color);
+
+
+  ::part(listbox) {
+	--sl-input-background-color: var(--sl-color-neutral-0);
+  }
   color: var(--application-header-text-color);
 
   input::placeholder {
@@ -182,8 +189,10 @@ div.et2_nextmatch {
 	//No divider in our kdots toolbar
 	sl-button-group {background:none;}
 	et2-dropdown-button{
-	  --sl-color-neutral-0: transparent;
-	  --sl-color-neutral-700: var(--application-header-text-color);
+	  ::part(base) {
+		background-color: transparent;
+		color: currentColor;
+	  }
 	}
 
 	et2-switch-icon {

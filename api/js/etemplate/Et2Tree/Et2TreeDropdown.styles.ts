@@ -197,6 +197,10 @@ export default css`
 		cursor: inherit;
 	}
 
+	.tree-dropdown__search::placeholder {
+		color: var(--sl-input-placeholder-color);
+	}
+
 	.form-control--medium .tree-dropdown__search {
 		/* Input same size as tags */
 		height: calc(var(--sl-input-height-medium) * 0.8);

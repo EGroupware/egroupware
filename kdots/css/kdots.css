@@ -909,18 +909,23 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 }
 /* Special styling for widgets in main-header */
 [slot="main-header"] {
+  /* Only target the parts, or nested widgets will look weird */
   --sl-input-background-color: transparent;
   --sl-input-background-color-hover: transparent;
+  --sl-input-background-color-focus: transparent;
   --sl-input-color: var(--application-header-text-color);
   --input-text-color: var(--application-header-text-color);
   --sl-input-icon-color: var(--application-header-text-color);
   --sl-input-color-hover: var(--application-header-text-color);
-  --sl-input-placeholder-color: hsl(from var(--application-header-text-color) h s l / 50%);
+  --sl-input-placeholder-color: var(--application-header-text-color);
   color: var(--application-header-text-color);
   /*HOVER effect on all clickable elements in the main-header*/
   /*we also want to style the clickable elements in the whole header in the same way*/
   /*END HOVER*/
   /* Don't let search grow */
+}
+[slot="main-header"] ::part(listbox) {
+  --sl-input-background-color: var(--sl-color-neutral-0);
 }
 [slot="main-header"] input::placeholder {
   color: black;
@@ -1026,9 +1031,9 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 [slot="main-header"] et2-toolbar sl-button-group {
   background: none;
 }
-[slot="main-header"] et2-toolbar et2-dropdown-button {
-  --sl-color-neutral-0: transparent;
-  --sl-color-neutral-700: var(--application-header-text-color);
+[slot="main-header"] et2-toolbar et2-dropdown-button ::part(base) {
+  background-color: transparent;
+  color: currentColor;
 }
 [slot="main-header"] et2-toolbar et2-switch-icon {
   padding-inline: var(--sl-spacing-small);
