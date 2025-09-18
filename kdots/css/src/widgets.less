@@ -129,17 +129,30 @@ div.et2_nextmatch {
 	}
   }
 
-  *::part(base), *::part(button__base) {
+  *::part(base), *::part(button__base), ::part(control) {
 	color: var(--application-header-text-color);
 	background-color: transparent;
   }
 
-/*HOVER effect on all clickable elements in the main-header*/
+  et2-switch-icon::part(control) {
+	font-size: var(--sl-font-size-x-large, 20px);
+  }
+
+
+  /*HOVER effect on all clickable elements in the main-header*/
   /*we also want to style the clickable elements in the whole header in the same way*/
-  .et2_clickable, et2-button, et2-button-icon, et2-button-image, et2-button-toggle, et2-switch, et2-switch-icon, et2-image {
+
+  .et2_clickable, et2-image, .et2-input-widget:not(et2-toolbar) {
 	--sl-input-border-color: transparent;
 	--indicator-color: var(--sl-color-neutral-0);
 	--sl-input-background-color: transparent;
+
+	&::part(input):autofill, &::part(input):-webkit-autofill {
+	  /* Chrome doesn't let us style autofill background directly */
+	  transition: background-color 50000s ease-in-out 0s; /* Long transition to hide the default color change */
+	  -webkit-text-fill-color: var(--application-header-text-color);
+	  -webkit-box-shadow: 0 0 0 50px var(--sl-input-background-color) inset; /* Box shadow hides the default background color */
+	}
 	&::part(label){
 	  padding-inline-start: var(--sl-spacing-2x-small);
 	}
