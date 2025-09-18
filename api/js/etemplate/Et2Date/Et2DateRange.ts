@@ -214,8 +214,8 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			}
 			else
 			{
-				this.fromElement.value = new_value?.from?.toJSON() || "";
-				this.toElement.value = new_value?.to?.toJSON() || "";
+				this.fromElement.value = typeof new_value?.from == "string" ? new_value.from : (new_value?.from?.toJSON() || "");
+				this.toElement.value = typeof new_value?.to == "string" ? new_value.to : (new_value?.to?.toJSON() || "");
 			}
 		}
 	}
