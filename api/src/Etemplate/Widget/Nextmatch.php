@@ -271,6 +271,18 @@ class Nextmatch extends Etemplate\Widget
 			return;
 		}
 		// check if we have a filter-template or need to generate one
+		$this->autoFilter($value);
+	}
+
+	/**
+	 * Automagically generate a filter template if the application does not provide one
+	 *
+	 * @param $value
+	 * @return void
+	 * @throws \Exception
+	 */
+	protected function autoFilter($value)
+	{
 		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
 		$template_name = $value['filter_template'] ?? $this->attrs['filter_template'] ?? null;
 		if(!$template_name && !array_key_exists('filter_template', $this->attrs))
@@ -294,48 +306,52 @@ class Nextmatch extends Etemplate\Widget
 			// Already set from a previous call, but somebody submitted
 			$url = $template_name;
 		}
-		else if($template_name && !($tpl = Template::instance($template_name)) && $rest)
-		{
-			if (($path=Template::relPath(str_replace('.filter', '', $template_name))))
-			{
-				// array_slice(..., -4) extracts [$app,"templates",$template_set,$template_name] independent of
-				// how templates are read: either directly from filesystem, or via vfs mount!
-				$template_set = array_slice(explode('/', $path), -4)[2] ?? 'default';
-			}
-			if (empty($template_set) || $template_set === 'mobile')
-			{
-				$template_set = 'default';
-			}
-			$url = $GLOBALS['egw_info']['server']['webserver_url']."/api/filter-template.php/$app/templates/$template_set/$rest.xet?".
-				max(filemtime(Template::rel2path("/$app/templates/$template_set/$rest.xet")), filemtime(EGW_SERVER_ROOT.'/api/filter-template.php'));
-
-			// pass the necessary attributes, filter- and cat-labels, if set
-			foreach([
-		        'filter'  => 'Filter',
-		        'filter2' => '2nd Filter',
-		        'cat_id'  => 'Category'] as $key => $label)
-			{
-				$disable_attr = $key === 'cat_id' ? 'no_cat' : 'no_'.$key;
-				if (empty($value[$disable_attr] ?? $this->attrs[$disable_attr] ?? null))
-				{
-					$url .= '&'.$key.'='.urlencode($value[$key.'_label'] ?? $this->attrs[$key.'_label'] ??
-							$value[$key.'_aria_label'] ?? $this->attrs[$key.'_aria_label'] ??
-							$value[$key.'_statustext'] ?? $this->attrs[$key.'_statustext'] ?? $label);
-				}
-			}
-			foreach(array_keys($this->attrs+$value) as $key)
-			{
-				if (!str_ends_with($key, '_label') && !in_array($key, ['filter', 'filter2', 'cat_id']) &&
-					preg_match('/^(filter|cat_|no_search|favorites|template)/', $key))
-				{
-					$val = $value[$key] ?? $this->attrs[$key] ?? '';
-					$url .= '&' . $key . '=' . urlencode((string)$val);
-				}
-			}
-		}
 		else
 		{
-			$url = Template::rel2url($tpl->rel_path);
+			if($template_name && !($tpl = Template::instance($template_name)) && $rest)
+			{
+				if(($path = Template::relPath(str_replace('.filter', '', $template_name))))
+				{
+					// array_slice(..., -4) extracts [$app,"templates",$template_set,$template_name] independent of
+					// how templates are read: either directly from filesystem, or via vfs mount!
+					$template_set = array_slice(explode('/', $path), -4)[2] ?? 'default';
+				}
+				if(empty($template_set) || $template_set === 'mobile')
+				{
+					$template_set = 'default';
+				}
+				$url = $GLOBALS['egw_info']['server']['webserver_url'] . "/api/filter-template.php/$app/templates/$template_set/$rest.xet?" .
+					max(filemtime(Template::rel2path("/$app/templates/$template_set/$rest.xet")), filemtime(EGW_SERVER_ROOT . '/api/filter-template.php'));
+
+				// pass the necessary attributes, filter- and cat-labels, if set
+				foreach([
+							'filter'  => 'Filter',
+							'filter2' => '2nd Filter',
+							'cat_id'  => 'Category'] as $key => $label)
+				{
+					$disable_attr = $key === 'cat_id' ? 'no_cat' : 'no_' . $key;
+					if(empty($value[$disable_attr] ?? $this->attrs[$disable_attr] ?? null))
+					{
+						$url .= '&' . $key . '=' . urlencode($value[$key . '_label'] ?? $this->attrs[$key . '_label'] ??
+								$value[$key . '_aria_label'] ?? $this->attrs[$key . '_aria_label'] ??
+								$value[$key . '_statustext'] ?? $this->attrs[$key . '_statustext'] ?? $label
+							);
+					}
+				}
+				foreach(array_keys($this->attrs + $value) as $key)
+				{
+					if(!str_ends_with($key, '_label') && !in_array($key, ['filter', 'filter2', 'cat_id']) &&
+						preg_match('/^(filter|cat_|no_search|favorites|template)/', $key))
+					{
+						$val = $value[$key] ?? $this->attrs[$key] ?? '';
+						$url .= '&' . $key . '=' . urlencode((string)$val);
+					}
+				}
+			}
+			else
+			{
+				$url = Template::rel2url($tpl->rel_path);
+			}
 		}
 		if($template_name)
 		{
@@ -344,7 +360,7 @@ class Nextmatch extends Etemplate\Widget
 		// stop NM itself from generating search, filter(2) and cat_id widgets
 		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
 		{
-			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_'.$key, true);
+			Etemplate::setElementAttribute($this->id ?? 'nm', 'no_' . $key, true);
 		}
 	}
 

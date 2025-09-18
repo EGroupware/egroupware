@@ -193,6 +193,10 @@ EOF;
 			$xet .= <<<EOF
 		<et2-details summary="Column Filters" id="col_filters" open="true">
 EOF;
+
+			// Date filters
+			dateFilters($str, $xet);
+
 			foreach ($matches as $match)
 			{
 				$attrs = parseAttrs($match[3]);
@@ -356,4 +360,39 @@ function stringAttrs(array $attrs)
 	return ' '.implode(' ', array_map(static function ($name, $value) {
 		return $name . '="' . $value . '"';
 	}, array_keys($attrs), $attrs));
+}
+
+function dateFilters(&$str, &$xet)
+{
+	$dates = [];
+	$date_pattern = '/(' . implode('|', array_map('preg_quote', ['date', 'modified', 'created'])) . ')/';
+	$matches = [];
+	preg_match_all('#<(et2-)?nextmatch-sortheader ([^>]+?)/?>#s', $str, $matches, PREG_SET_ORDER);
+
+	foreach(($matches ? $matches : []) as $n => $match)
+	{
+		$attrs = parseAttrs($match[2]);
+		if(!preg_match($date_pattern, $match[0]))
+		{
+			continue;
+		}
+		$dates[] = ['label' => $attrs['label'], 'id' => $attrs['id']];
+	}
+	if(count($dates) > 0)
+	{
+		$sort_options = implode("\n", array_map(function ($option)
+		{
+			return "\t\t\t\t" . '<option value="' . $option['id'] . '">' . $option['label'] . '</option>';
+		}, $dates));
+		$xet .= <<<EOF
+<et2-vbox>
+		<et2-select id="date_filter" label="Date Filter"  class="et2-label-fixed">
+$sort_options
+		</et2-select>
+		<et2-date id="startdate" label="Start" class="et2-label-fixed"></et2-date>
+		<et2-date id="enddate" label="End" class="et2-label-fixed"></et2-date>
+<et2-vbox>
+EOF;
+
+	}
 }
