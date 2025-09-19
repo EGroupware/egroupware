@@ -544,7 +544,10 @@ class Sql
 				case 'all':
 				default:
 					$op = '';
-					$search_cols = array_diff($search_cols, ['email']);
+					if (($key = array_search('email', $search_cols, true)) !== false)
+					{
+						$search_cols[$key] = 'contact_email';
+					}
 					$storage = new Api\Storage\Base('api', $this->table, $this->db);
 					$criteria = $storage->search2criteria($query, $wildcard, $op, null, $search_cols);
 					break;
