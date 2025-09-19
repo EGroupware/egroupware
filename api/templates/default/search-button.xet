@@ -4,7 +4,7 @@
     <template id="api.search-button" template="" lang="" version="1.9.002">
         <!--et2-button image="search" label="Search" statustext="Search" noSubmit="true"
             onclick="const ea=widget.closest('egw-app'); ea.filtersDrawer.open = !ea.filtersDrawer.open; ea.filtersDrawer.open &amp;&amp; window.setTimeout(()=>ea.querySelector('et2-searchbox').focus(), 100);"></et2-button-->
-        <et2-searchbox id="search" placeholder="Search" style="width: 8em"
+        <et2-searchbox id="search" placeholder="Search" style="width: 8em" class="egw_fw_app--no_mobile"
             onchange="widget.closest('egw-app').nextmatch?.applyFilters({search: widget.value}); return false;">
             <et2-image src="search" slot="prefix"></et2-image>
         </et2-searchbox>
