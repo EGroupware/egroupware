@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
-		<et2-hbox>
-			<et2-date  id="startdate" label="Start"></et2-date>
-			<et2-date  statustext="Leave it empty for a full week" id="enddate" label="End"></et2-date>
-		</et2-hbox>
-	</template>
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%" >
 			<columns>
@@ -46,9 +40,15 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
+		<et2-date id="startdate" label="Start" class="et2-label-fixed" style="padding-bottom: .3rem"
+				  onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
+		<et2-date id="enddate" label="End" class="et2-label-fixed"
+				  onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
+	</template>
 	<template id="infolog.index" template="" lang="" group="0" version="1.9.005">
 		<et2-button  class="plus_button" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"></et2-button>
-		<nextmatch id="nm" template="infolog.index.rows" header_left="infolog.index.dates"/>
+		<nextmatch id="nm" template="infolog.index.rows"/>
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="70%"/>
