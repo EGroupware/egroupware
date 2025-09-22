@@ -945,7 +945,7 @@ class AddressbookApp extends EgwApp
 	/**
 	 * OnChange for distribution list selectbox
 	 */
-	filter2_onchange()
+	filter2_onchange(_ev : Event|undefined)
 	{
 		var filter = this.et2.getWidgetById('filter');
 		var filter2 = this.et2.getWidgetById('filter2');
@@ -968,7 +968,7 @@ class AddressbookApp extends EgwApp
 			// Don't get rows here, let applyFilters() do it
 			return false;
 		}
-		else
+		else if (_ev)
 		{
 			widget.applyFilters({
 				filter2: filter2_val
