@@ -36,9 +36,6 @@
 	}
 
 	et2-dialog {
-	  --width: 100%;
-
-
 	  .egw-popup {
 		display: block;
 		position: absolute;
@@ -48,10 +45,9 @@
 		overflow: auto;
 	  }
 	  &::part(panel) {
-		/* make dialog full screen */
+		/* allow dialog to be full screen */
 		max-width: 100%;
 		max-height: 100%;
-		height: 100%;
 		border-radius: 0;
 	  }
 
@@ -641,6 +637,21 @@
 
 	&:hover, &:active {
 	  background-color: #0c5da5;
+	}
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  et2-dialog {
+	--width: 100%;
+
+
+	&::part(panel) {
+	  /* make dialog full screen */
+	  max-width: 100%;
+	  max-height: 100%;
+	  height: 100%;
 	}
   }
 }

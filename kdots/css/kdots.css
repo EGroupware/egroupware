@@ -1114,7 +1114,6 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
   }
   :root et2-dialog,
   body et2-dialog {
-    --width: 100%;
     /* Old way of adding stuff.  Buttons should be slotted into header-actions, anything else into label */
   }
   :root et2-dialog .egw-popup,
@@ -1128,10 +1127,9 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
   }
   :root et2-dialog::part(panel),
   body et2-dialog::part(panel) {
-    /* make dialog full screen */
+    /* allow dialog to be full screen */
     max-width: 100%;
     max-height: 100%;
-    height: 100%;
     border-radius: 0;
   }
   :root et2-dialog::part(header),
@@ -1700,6 +1698,17 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
   et2-button-icon.plus_button:hover,
   et2-button-icon.plus_button:active {
     background-color: #0c5da5;
+  }
+}
+@media screen and (max-width: 600px) {
+  et2-dialog {
+    --width: 100%;
+  }
+  et2-dialog::part(panel) {
+    /* make dialog full screen */
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
   }
 }
 /**
