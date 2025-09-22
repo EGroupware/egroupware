@@ -595,6 +595,13 @@ export class EgwFrameworkApp extends LitElement
 			this.ignoreSplitterResize = false;
 			this.dispatchEvent(new CustomEvent("show",
 				{bubbles: true, composed: true, detail: {name: this.name, side: side}}));
+
+			// Tell etemplates to resize because they won't do it themselves
+			this.querySelectorAll(":scope > [id]").forEach((node) =>
+			{
+				const etemplate = etemplate2.getById(node.id);
+				etemplate && etemplate.resize(undefined);
+			});
 		});
 	}
 
@@ -611,6 +618,13 @@ export class EgwFrameworkApp extends LitElement
 			this.ignoreSplitterResize = false
 			this.dispatchEvent(new CustomEvent("hide",
 				{bubbles: true, composed: true, detail: {name: this.name, side: side}}));
+
+			// Tell etemplates to resize, because they won't do it themselves
+			this.querySelectorAll(":scope > [id]").forEach((node) =>
+			{
+				const etemplate = etemplate2.getById(node.id);
+				etemplate && etemplate.resize(undefined);
+			});
 		});
 	}
 
@@ -1007,7 +1021,7 @@ export class EgwFrameworkApp extends LitElement
             ></et2-button-icon>
             <sl-dropdown class="egw_fw_app__menu">
                 <div slot="trigger"><span class="egw_fw_app--no_mobile">${this.egw.lang("Menu")}</span>
-                    <sl-icon-button name="chevron-double-down"
+                    <et2-button-icon name="chevron-double-down"
                                     aria-label="${this.egw.lang("Application menu")}"
                     ></sl-icon-button>
                 </div>
@@ -1201,7 +1215,7 @@ export class EgwFrameworkApp extends LitElement
                     hasHeaderContent: hasHeaderContent,
                 })} part="name">
                     ${hasLeftSlots || window.matchMedia("(width < 800px)").matches ? html`
-                    <sl-icon-button name="${this.leftCollapsed ? "chevron-double-right" : "chevron-double-left"}"
+                        <et2-button-icon name="${this.leftCollapsed ? "chevron-double-right" : "chevron-double-left"}"
                                     label="${this.leftCollapsed ? this.egw.lang("Show left area") : this.egw?.lang("Hide left area")}"
                                     @click=${() =>
                                     {
@@ -1210,8 +1224,7 @@ export class EgwFrameworkApp extends LitElement
                                         this.leftPanelInfo.preferenceWidth = this.leftPanelInfo.preferenceWidth || this.leftPanelInfo.defaultWidth;
                                         this.requestUpdate("leftCollapsed")
                                     }}
-                    ></sl-icon-button>`
-                                   : nothing
+                        ></et2-button-icon>` : nothing
                     }
                     <et2-image src="${this.framework.getApplicationByName(this.name).icon}"></et2-image>
                     <h2>${this.title || this.egw?.lang(this.name) || this.name}</h2>
