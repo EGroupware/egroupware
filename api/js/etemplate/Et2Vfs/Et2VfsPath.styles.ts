@@ -28,6 +28,16 @@ export default css`
 		var(--sl-transition-fast) background-color;
 	}
 
+	:host(:hover) .form-control-input {
+		border: solid var(--sl-input-border-width) var(--sl-input-border-color-hover);
+	}
+
+	:host(:active), :host(:focus) {
+		.form-control-input {
+			border: solid var(--sl-input-border-width) var(--sl-input-border-color-focus);
+		}
+	}
+
 	.vfs-path__value-input {
 		flex: 1 1 auto;
 		min-width: 12em;
