@@ -1370,7 +1370,7 @@ class AddressbookApp extends EgwApp
 			{
 				const grouped = index.widgetContainer.getWidgetById('grouped_view');
 				const nm = index.widgetContainer.getWidgetById("nm");
-				this.change_grouped_view(grouped, nm, grouped);
+				this.change_grouped_view(null, grouped);
 			}
 
 			// Clear advanced search, which is in session and etemplate
