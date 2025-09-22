@@ -220,7 +220,9 @@ class addressbook_ui extends addressbook_bo
 			$template = $_GET['template'];
 		}
 		$preserv = array();
-		$content = array();
+		$content = array(
+			'main_header' => $_content['main_header'] ?? []
+		);
 		if($msg || $_GET['msg'])
 		{
 			Framework::message($msg ? $msg : $_GET['msg']);
