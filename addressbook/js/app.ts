@@ -968,6 +968,13 @@ class AddressbookApp extends EgwApp
 			// Don't get rows here, let applyFilters() do it
 			return false;
 		}
+		else
+		{
+			widget.applyFilters({
+				filter2: filter2_val
+			});
+			return false;
+		}
 
 		return true;
 	}
