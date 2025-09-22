@@ -977,7 +977,7 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 [slot="main-header"] .et2_clickable::part(control),
 [slot="main-header"] et2-image::part(control),
 [slot="main-header"] .et2-input-widget:not(et2-toolbar)::part(control) {
-  --indicator-color: var(--sl-color-neutral-0);
+  --indicator-color: var(--application-header-text-color);
   --sl-input-border-color: transparent;
   --sl-input-background-color: transparent;
   --image-filter: brightness(0) invert(1);
