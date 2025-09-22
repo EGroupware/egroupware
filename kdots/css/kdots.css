@@ -1099,6 +1099,10 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
   body egw-framework#egw_fw_basecontainer::part(divider) {
     display: none;
   }
+  :root egw-framework#egw_fw_basecontainer.egw_fw--left-side-collapsed::part(header),
+  body egw-framework#egw_fw_basecontainer.egw_fw--left-side-collapsed::part(header) {
+    display: none;
+  }
   :root egw-framework#egw_fw_basecontainer::part(main),
   body egw-framework#egw_fw_basecontainer::part(main) {
     overflow-x: hidden;

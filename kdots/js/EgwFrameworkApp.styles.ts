@@ -26,6 +26,7 @@ export default css`
 	.egw_fw_app__name {
 		height: 100%;
 		flex: 1 1 auto;
+		min-width: 2em;
 		container: name / inline-size;
 
 		&.hasHeaderContent {
