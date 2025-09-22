@@ -65,14 +65,14 @@
                     <et2-vbox>
                         <nextmatch-header label="Business address" id="business"/>
                         <et2-nextmatch-header-custom id="adr_one_countrycode" class="countrySelect"
-                                                     widgetType="select-country" emptyLabel="Country"/>
-                        <nextmatch-sortheader label="zip code" id="adr_one_postalcode"/>
+                            statustext="{Business address} {country}" widgetType="select-country" emptyLabel="Country"/>
+                        <nextmatch-sortheader label="zip code" id="adr_one_postalcode" statustext="{Business address} {zip code}"/>
                     </et2-vbox>
                     <et2-vbox>
                         <nextmatch-header label="Home address" id="home"/>
                         <et2-nextmatch-header-custom id="adr_two_countrycode" class="countrySelect"
-                                                     widgetType="select-country" emptyLabel="Country"/>
-                        <nextmatch-sortheader label="zip code" id="adr_two_postalcode"/>
+                            statustext="{Home address} {country}" widgetType="select-country" emptyLabel="Country"/>
+                        <nextmatch-sortheader label="zip code" id="adr_two_postalcode" statustext="{Home address} {zip code}"/>
                     </et2-vbox>
                     <et2-vbox>
                         <nextmatch-header label="Business phone" id="tel_work"/>
