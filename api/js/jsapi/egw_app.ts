@@ -333,14 +333,15 @@ export abstract class EgwApp
 			app_toolbar = app_toolbar?.querySelector("et2-template");
 		}
 		const activeFilters = _ev.detail?.activeFilters;
+		const oldFilters = _ev.detail?.oldFilters || {};
 		if (app_toolbar && activeFilters)
 		{
-			for(const attr in activeFilters)
+			for(const attr in Object.assign({}, activeFilters, oldFilters))
 			{
 				switch (attr)
 				{
 					case 'col_filter':
-						for(const attr in activeFilters.col_filter)
+						for(const attr in Object.assign({}, activeFilters.col_filter || {}, oldFilters.col_filter || {}))
 						{
 							this.checkNmFilterChanged(app_toolbar, attr, activeFilters.col_filter[attr]);
 						}
