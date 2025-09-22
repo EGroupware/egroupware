@@ -181,6 +181,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					width: 100%;
 					  background-color: var(--input-background-color);
 					z-index: var(--sl-z-index-dropdown);
+
+					  #search::part(input) {
+						  padding: 0 calc(var(--sl-input-spacing-small) - var(--sl-input-border-width) * 4);
+					  }
 				  }
 
 					:host([search]) et2-textbox::part(base), #edit, #edit:focus-visible {
