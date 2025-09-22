@@ -371,17 +371,17 @@ function send_template()
 		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
 
 		// nextmatch headers
-		$str = preg_replace_callback('#<(et2-)?(nextmatch-)([^ ]+)(header|filter|entry) ([^>]+?)/>#s', static function (array $matches)
+		$str = preg_replace_callback('#<(et2-)?(nextmatch-)(account|sort|custom|filter|taglist)?(header(-account|-custom|-filter)?|filter|entry) ([^/>]+)(/>|></et2-nextmatch-[^>]+>)#s', static function (array $matches)
 		{
 			// replace all filters with NM headers, if not running via cli (as we currently don't want to remove them permanently!)
 			$replace_filters = PHP_SAPI !== 'cli';
-			$attrs = parseAttrs($matches[5]);
+			$attrs = parseAttrs($matches[6]);
 
-			if ($matches[3] === 'custom')
+			if (($matches[3] === 'custom' || $matches[5] === '-custom'))
 			{
 				$attrs['widget_type'] = $attrs['type'];
 			}
-			if(!$matches[3] || in_array($matches[3], ['sort']) || !$replace_filters && ($matches[3] == "custom" && empty($attrs['widget_type'])))
+			if(in_array($matches[3], ['sort']) || !$replace_filters && ($matches[3] == "custom" && empty($attrs['widget_type'])))
 			{
 				return $matches[0];
 			}
@@ -399,6 +399,7 @@ function send_template()
 					$attrs['label'] = $attrs['ariaLabel'] ?? $attrs['emptyLabel'];
 					unset($attrs['ariaLabel'], $attrs['emptyLabel']);
 				}
+				unset($attrs['widget_type'], $attrs['widgetType'], $attrs['class'], $attrs['options']);
 				return '<nextmatch-header '.stringAttrs($attrs).'/>';
 			}
 			return '<et2-nextmatch-header-' . $matches[4] . stringAttrs($attrs) . '></et2-nextmatch-header-' . $matches[4] . '>';
