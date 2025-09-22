@@ -100,6 +100,7 @@ div.et2_nextmatch {
 /* Special styling for widgets in main-header */
 [slot="main-header"] {
   /* Only target the parts, or nested widgets will look weird */
+  /* Anything changed here needs to be reset for et2-toolbar [slot=list] below */
 
   --sl-input-background-color: transparent;
   --sl-input-background-color-hover: transparent;
@@ -108,7 +109,6 @@ div.et2_nextmatch {
   --input-text-color: var(--application-header-text-color);
   --sl-input-icon-color: var(--application-header-text-color);
   --sl-input-color-hover: var(--application-header-text-color);
-  //--sl-input-border-color: transparent;
   --sl-input-placeholder-color: var(--application-header-text-color);
 
 
@@ -233,9 +233,11 @@ div.et2_nextmatch {
 	  --indicator-color: var(--sl-color-neutral-700);
 	  --sl-input-color: var(--sl-color-neutral-700);
 	  --sl-input-color-hover: var(--sl-color-neutral-700);
+	  --sl-input-placeholder-color: var(--sl-color-neutral-700);
 
 	  ::part(base), &::part(base), &::part(control) {
 		color: var(--sl-color-neutral-700);
+		--sl-input-color: var(--sl-color-neutral-700);
 		--indicator-color: var(--sl-color-neutral-700);
 		--image-filter: none;
 		--image-filter-off: none;
