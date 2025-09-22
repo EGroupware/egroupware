@@ -1038,12 +1038,17 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 }
 [slot="main-header"] et2-toolbar [slot="list"] {
   color: var(--sl-color-neutral-700);
+  --indicator-color: var(--sl-color-neutral-700);
   --sl-input-color: var(--sl-color-neutral-700);
   --sl-input-color-hover: var(--sl-color-neutral-700);
 }
 [slot="main-header"] et2-toolbar [slot="list"] ::part(base),
-[slot="main-header"] et2-toolbar [slot="list"]::part(base) {
+[slot="main-header"] et2-toolbar [slot="list"]::part(base),
+[slot="main-header"] et2-toolbar [slot="list"]::part(control) {
   color: var(--sl-color-neutral-700);
+  --indicator-color: var(--sl-color-neutral-700);
+  --image-filter: none;
+  --image-filter-off: none;
 }
 [slot="main-header"] et2-toolbar [slot="list"] :hover::part(base) {
   border-color: var(--sl-input-border-color);
