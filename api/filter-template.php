@@ -136,7 +136,7 @@ EOF;
 		foreach(preg_match_all('#<(et2-)?nextmatch-sortheader ([^>]+?)/?>#s', $str, $matches, PREG_SET_ORDER) ? $matches : [] as $n => $match)
 		{
 			$attrs = parseAttrs($match[2]);
-			$sort_options[] = "\t\t\t\t".'<option value="'.$attrs['id'].'">'.$attrs['label'].'</option>';
+			$sort_options[$attrs['id']] = "\t\t\t\t".'<option value="'.$attrs['id'].'"'.(!empty($attrs['statustext']) ? ' title="'.$attrs['statustext'].'"':'').'>'.$attrs['label'].'</option>';
 		}
 		// ToDo: add custom-fields
 		if ($sort_options)
@@ -208,6 +208,11 @@ EOF;
 					case 'header-account':
 						$widget = 'et2-select-account';
 						break;
+					case 'customfilter':
+					case 'header-custom':
+						$widget = 'et2-'.($attrs['widgetType'] ?? $attrs['widget_type'] ?? $attrs['options']);
+						unset($attrs['widgetType'], $attrs['widget_type'], $attrs['options'], $attrs['class']);
+						break;
 				}
 				if (!str_starts_with($widget, 'et2-') && $widget !== 'customfields-filters')
 				{
@@ -216,6 +221,7 @@ EOF;
 				if (!isset($attrs['label']))
 				{
 					$attrs['label'] = $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'] ?? null;
+					if ($attrs['label'] === $attrs['ariaLabel']) unset($attrs['ariaLabel']);
 					if (empty($attrs['label'])) unset($attrs['label']);
 				}
 				$attrs['class'] = trim(($attrs['class'] ?? '') . ' et2-label-fixed');
