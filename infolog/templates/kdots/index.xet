@@ -9,7 +9,7 @@
             <et2-select id="info_status" ariaLabel="Status" emptyLabel="Status" onchange="app.infolog.changeNmFilter"/>
             <et2-select id="filter" ariaLabel="Filter" onchange="app.infolog.changeNmFilter"/>
             <et2-select-cat id="cat_id" ariaLabel="Categorie" onchange="app.infolog.changeNmFilter"/>
-            <et2-button-toggle id="details" icon="card-text" statustext="Details" onchange="app.infolog.toggleDetails"></et2-button-toggle>
+            <et2-button-toggle id="details" icon="card-text" label="Toggle details" statustext="Details" onchange="app.infolog.toggleDetails"></et2-button-toggle>
         </et2-toolbar>
     </template>
     <template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
