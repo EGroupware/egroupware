@@ -56,7 +56,10 @@ class Customfilter extends Widget\Transformer
 					$expanded_child->run('beforeSendToClient', array($cname, $expand));
 					$widget_type = $expanded_child->attrs['type'];
 				}
-				$this->attrs['type'] = 'et2-nextmatch-header-custom';
+				if($this->type != 'et2-nextmatch-header-custom')
+				{
+					$this->attrs['type'] = 'et2-nextmatch-header-custom';
+				}
 		}
 		$form_name = self::form_name($cname, $this->id, $expand);
 
