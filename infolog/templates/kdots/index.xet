@@ -46,7 +46,7 @@
                         </columns>
                         <rows>
                             <row>
-                                <nextmatch-customfilter id="linked" options="link-entry" ariaLabel="Linked"/>
+                                <et2-nextmatch-header-entry id="linked" ariaLabel="Linked"/>
                                 <nextmatch-sortheader align="right" label="Priority" id="info_priority" options="DESC" class="noPrint"/>
                             </row>
                             <row>
