@@ -367,7 +367,7 @@ export abstract class EgwApp
 	checkNmFilterChanged(app_toolbar, id : string, value : string)
 	{
 		let widget = app_toolbar.getWidgetById(id);
-		if (widget && widget.value != value)
+		if(widget && widget.value != value && typeof value !== "undefined")
 		{
 			widget.value = value;
 		}
