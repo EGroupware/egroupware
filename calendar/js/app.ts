@@ -2995,13 +2995,11 @@ export class CalendarApp extends EgwApp
 			// List view (nextmatch) has slightly different fields
 			if(state.state.view === 'listview')
 			{
-				state.state.startdate = state.state.date;
-				if(state.state.startdate.toJSON)
+				if(state.state.startdate?.toJSON)
 				{
 					state.state.startdate = state.state.startdate.toJSON();
 				}
-
-				if(state.state.end_date)
+				if(typeof state.state.end_date != "undefined")
 				{
 					state.state.enddate = state.state.end_date;
 				}
@@ -3009,6 +3007,26 @@ export class CalendarApp extends EgwApp
 				{
 					state.state.enddate = state.state.enddate.toJSON();
 				}
+				switch(true)
+				{
+					case state.state.startdate && state.state.enddate:
+						state.state.filter = 'custom';
+						break;
+					case state.state.startdate && !state.state.enddate:
+						state.state.filter = 'after';
+						break;
+					case !state.state.startdate && state.state.enddate:
+						state.state.filter = 'before';
+						break;
+					case this.state.view == 'week':
+						state.state.filter = "week";
+						break;
+					case this.state.view == "month":
+					default:
+						state.state.filter = "month";
+						break;
+				}
+
 				state.state.col_filter = {participant: state.state.owner};
 				state.state.search = state.state.keywords ? state.state.keywords : state.state.search;
 				delete state.state.keywords;
@@ -3053,62 +3071,7 @@ export class CalendarApp extends EgwApp
 			this._sortable();
 
 			/* Update sidebox widgets to show current value*/
-			if(this.sidebox_hooked_templates.length)
-			{
-				for(var j = 0; j < this.sidebox_hooked_templates.length; j++)
-				{
-					var sidebox = this.sidebox_hooked_templates[j];
-					// Remove any destroyed or not valid templates
-					if(!sidebox.getInstanceManager || !sidebox.getInstanceManager())
-					{
-						this.sidebox_hooked_templates.splice(j,1,0);
-						continue;
-					}
-					sidebox.iterateOver(function(widget) {
-						if(widget.id == 'view')
-						{
-							// View widget has a list of state settings, which require special handling
-							for(var i = 0; i < widget.options.select_options.length; i++)
-							{
-								var option_state = JSON.parse(widget.options.select_options[i].value) || [];
-								var match = true;
-								for(var os_key in option_state)
-								{
-									// Sometimes an optional state variable is not yet defined (sortby, days, etc)
-									match = match && (option_state[os_key] == this.state[os_key] || typeof this.state[os_key] == 'undefined');
-								}
-								if(match)
-								{
-									widget.set_value(widget.options.select_options[i].value);
-									return;
-								}
-							}
-						}
-						else if (widget.id == 'keywords')
-						{
-							widget.set_value('');
-						}
-						else if(typeof state.state[widget.id] !== 'undefined' && state.state[widget.id] != widget.getValue())
-						{
-							// Update widget.  This may trigger an infinite loop of
-							// updates, so we do it after changing this.state and set a flag
-							try
-							{
-								widget.set_value(state.state[widget.id]);
-							}
-							catch(e)
-							{
-								widget.set_value('');
-							}
-						}
-						else if(widget.id && typeof widget.set_value == "function" && typeof state.state[widget.id] == 'undefined')
-						{
-							// No value, clear it
-							widget.set_value('');
-						}
-					}, this, et2_IInput);
-				}
-			}
+			this._updateWidgets(state);
 
 			// If current state matches a favorite, highlight it
 			this.highlight_favorite();
@@ -3239,6 +3202,75 @@ export class CalendarApp extends EgwApp
 
 		// Stop the normal bubbling if this is called on click
 		return false;
+	}
+
+
+	/**
+	 * Update the associated non-view widgets in the sidebox & filterbox
+	 *
+	 * @param state
+	 */
+	_updateWidgets(state)
+	{
+		if(!this.sidebox_hooked_templates?.length)
+		{
+			return;
+		}
+
+		for(var j = 0; j < this.sidebox_hooked_templates.length; j++)
+		{
+			var sidebox = this.sidebox_hooked_templates[j];
+			// Remove any destroyed or not valid templates
+			if(!sidebox.getInstanceManager || !sidebox.getInstanceManager())
+			{
+				this.sidebox_hooked_templates.splice(j, 1, 0);
+				continue;
+			}
+			sidebox.iterateOver(function(widget)
+			{
+				if(widget.id == 'view')
+				{
+					// View widget has a list of state settings, which require special handling
+					for(var i = 0; i < widget.options.select_options.length; i++)
+					{
+						var option_state = JSON.parse(widget.options.select_options[i].value) || [];
+						var match = true;
+						for(var os_key in option_state)
+						{
+							// Sometimes an optional state variable is not yet defined (sortby, days, etc)
+							match = match && (option_state[os_key] == this.state[os_key] || typeof this.state[os_key] == 'undefined');
+						}
+						if(match)
+						{
+							widget.set_value(widget.options.select_options[i].value);
+							return;
+						}
+					}
+				}
+				else if(widget.id == 'keywords')
+				{
+					widget.set_value('');
+				}
+				else if(typeof state.state[widget.id] !== 'undefined' && state.state[widget.id] != widget.getValue())
+				{
+					// Update widget.  This may trigger an infinite loop of
+					// updates, so we do it after changing this.state and set a flag
+					try
+					{
+						widget.set_value(state.state[widget.id]);
+					}
+					catch(e)
+					{
+						widget.set_value('');
+					}
+				}
+				else if(widget.id && typeof widget.set_value == "function" && typeof state.state[widget.id] == 'undefined')
+				{
+					// No value, clear it
+					widget.set_value('');
+				}
+			}, this, et2_IInput);
+		}
 	}
 
 	/**
