@@ -1953,8 +1953,16 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		// Set as attribute or property, as appropriate.  Don't set missing attributes.
 		if(widget.getAttributeNames().indexOf(attribute) >= 0 || property.reflect && attrValue)
 		{
-			// Set as attribute (reflected in DOM)
-			widget.setAttribute(attribute, attrValue === true ? "" : attrValue);
+			switch(attribute)
+			{
+				case "class":
+					widget.classList.add(attrValue.split(" "));
+					continue;
+					break;
+				default:
+					// Set as attribute (reflected in DOM)
+					widget.setAttribute(attribute, attrValue === true ? "" : attrValue);
+			}
 		}
 		else if(attribute === 'options')
 		{
