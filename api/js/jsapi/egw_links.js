@@ -523,7 +523,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			{
 				delete title_cache[_app];
 			}
-			else
+			else if (typeof title_cache[_app] === 'object')
 			{
 				delete title_cache[_app][_id];
 			}
