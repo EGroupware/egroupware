@@ -208,6 +208,9 @@ EOF;
 					case 'header-account':
 						$widget = 'et2-select-account';
 						break;
+					case 'header-entry':
+						$widget = 'et2-link-entry';
+						break;
 					case 'customfilter':
 					case 'header-custom':
 						$widget = 'et2-'.($attrs['widgetType'] ?? $attrs['widget_type'] ?? $attrs['options']);

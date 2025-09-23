@@ -371,7 +371,7 @@ function send_template()
 		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
 
 		// nextmatch headers
-		$str = preg_replace_callback('#<(et2-)?(nextmatch-)(account|sort|custom|filter|taglist)?(header(-account|-custom|-filter)?|filter|entry) ([^/>]+)(/>|></et2-nextmatch-[^>]+>)#s', static function (array $matches)
+		$str = preg_replace_callback('#<(et2-)?(nextmatch-)(account|sort|custom|filter|taglist)?(header(-account|-custom|-filter|-entry)?|filter|entry) ([^/>]+)(/>|></et2-nextmatch-[^>]+>)#s', static function (array $matches)
 		{
 			// replace all filters with NM headers, if not running via cli (as we currently don't want to remove them permanently!)
 			$replace_filters = PHP_SAPI !== 'cli';
