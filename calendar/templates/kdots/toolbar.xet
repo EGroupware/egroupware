@@ -14,7 +14,10 @@ Egroupware
 <overlay>
     <template id="calendar.toolbar" slot="main-header">
         <et2-button id="add" image="add" class="imageOnly" statustext="add new event" onclick="app.calendar.toolbar_action(widget);" noSubmit="true"></et2-button>
-        <template template="api.search-button"></template>
+        <et2-searchbox id="search" placeholder="Search" style="width: 8em" class="egw_fw_app--no_mobile"
+                       onchange="app.calendar.update_state({view:'listview',search: widget.getValue()});">
+            <et2-image src="search" slot="prefix"></et2-image>
+        </et2-searchbox>
         <et2-toolbar id="toolbar">
         </et2-toolbar>
         <et2-hbox class="app_header_wrapper">
