@@ -380,12 +380,14 @@ class infolog_ui
 		if (!isset($query['start'])) $query['start'] = 0;
 
 		// handle action and linked filter (show only entries linked to a certain other entry)
-		$link_filters = array();
-		$links = array();
-		if ($query['col_filter']['linked'])
+		$link_filters = $links = [];
+		if (!empty($query['col_filter']['linked']))
 		{
-			$link_filters['linked'] = $query['col_filter']['linked'];
-			$links['linked'] = array();
+			if (!($link_filters['linked'] = is_string($query['col_filter']['linked']) ?
+				$query['col_filter']['linked'] : array_intersect_key($query['col_filter']['linked'], array_flip(['app', 'id']))))
+			{
+				unset($link_filters['linked']);
+			}
 			unset($query['col_filter']['linked']);
 		}
 
@@ -400,7 +402,6 @@ class infolog_ui
 		if($query['action'] && in_array($query['action'], array_keys($GLOBALS['egw_info']['apps'])) && $query['action_id'])
 		{
 			$link_filters['action'] = array('app'=>$query['action'], 'id' => $query['action_id']);
-			$links['action'] = array();
 		}
 
 		// Process links
@@ -636,8 +637,12 @@ class infolog_ui
 			else
 			{
 				// Full info
-				$app = $link['app'];
-				$id = $link['id'];
+				$app = $link['app'] ?? null;
+				$id = $link['id'] ?? null;
+			}
+			if (empty($app) || empty($id))
+			{
+				continue;
 			}
 			if(!is_array($id)) $id = explode(',',$id);
 			if (!($linked = Link::get_links_multiple($app,$id,true,'infolog','',$query['col_filter']['info_status'] == 'deleted')))
@@ -649,16 +654,16 @@ class infolog_ui
 
 			foreach($linked as $infos)
 			{
-				$links[$key] = array_merge($links[$key],$infos);
+				$links[$key] = array_merge($links[$key] ?? [], $infos);
 			}
 			$links[$key] = array_unique($links[$key]);
 			if($key == 'linked')
 			{
-				$linked = array('app' => $app, 'id' => $id, 'title' => (count($id) == 1 ? Link::title($app, $id) : lang('multiple')));
+				$linked = array('app' => $app, 'id' => $id, 'title' => (count($id) == 1 ? Link::title($app, $id[0] ?? $id) : lang('multiple')));
 			}
 		}
 
-		if($query['col_filter']['info_id'])
+		if(!empty($query['col_filter']['info_id']))
 		{
 			$links['info_id'] = $query['col_filter']['info_id'];
 		}
