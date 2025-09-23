@@ -9,29 +9,24 @@
 
 /* eslint-disable import/no-extraneous-dependencies */
 import {Et2Textbox} from "./Et2Textbox";
+import {property} from "lit/decorators/property.js";
 
 /**
  * @customElement et2-searchbox
  */
 export class Et2Searchbox extends Et2Textbox
 {
-	/** @type {any} */
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Define whether the searchbox overlays while it's open (true) or stay as solid box in front of the search button (false). Default is false.
-			 * @todo implement again
-			 */
-			overlay: Boolean,
-			/**
-			 * Define whether the searchbox should be a fix input field or flexible search button. Default is true (fix).
-			 * @todo implement again
-			 */
-			fix: Boolean,
-		};
-	}
+
+	/**
+	 * Define whether the searchbox overlays while it's open (true) or stay as solid box in front of the search button (false). Default is false.
+	 * @todo implement again
+	 */
+	@property({type: Boolean}) overlay;
+	/**
+	 * Define whether the searchbox should be a fix input field or flexible search button. Default is true (fix).
+	 * @todo implement again
+	 */
+	@property({type: Boolean}) fix;
 
 	constructor(...args : any[])
 	{
