@@ -2,22 +2,12 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.site-config" template="" lang="" group="0" version="16.1">
-		<grid border="1" width="100%">
-			<columns>
-				<column width = "120"/>
-				<column/>
-			</columns>
-			<rows>
-				<row class="dialogHeadbar" >
-					<et2-hbox  span="all" width="100%">
-						<et2-button  id="save"></et2-button>
-						<et2-button  id="cancel"></et2-button>
-					</et2-hbox>
-				</row>
-				<row>
-					<template template="@template" width="100%"/>
-				</row>
-			</rows>
-		</grid>
+        <et2-vbox height="100%">
+            <et2-hbox class="dialogHeadbar">
+                <et2-button id="save"></et2-button>
+                <et2-button id="cancel"></et2-button>
+            </et2-hbox>
+            <template template="@template"/>
+        </et2-vbox>
 	</template>
 </overlay>

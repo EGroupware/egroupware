@@ -14,7 +14,6 @@
 @media all {
   #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='status]'] {
     text-align: right;
-    font-size: 10pt;
   }
   #admin-index table.egwGridView_outer tbody .adminCol2 {
     float: right;
@@ -24,13 +23,15 @@
   }
   #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='account_lid]'] {
     font-weight: bold;
-    font-size: 12pt;
   }
   #admin-index table.egwGridView_outer tbody span[id^="admin-index"][id$='account_lastname]']::after {
     content: ",";
-    font-size: 10pt;
   }
   .globalCat_hiddenCatid {
     display: none;
+  }
+  #admin-site-config_admin-config {
+    flex: 1 1 auto;
+    overflow-y: auto;
   }
 }

@@ -10,8 +10,6 @@
  * @package admin
  * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
  */
-@import (reference) "../../../pixelegg/less/definitions.less";
-@import (reference) "../../../pixelegg/less/def_mobile.less";
 
 /* tablets and smartphones  */
 @media all {
@@ -19,7 +17,6 @@
 		table.egwGridView_outer tbody {
 			span[id^="admin-index"][id$='status]']{
 				text-align: right;
-				.mob-fontsize-n;
 			}
 			.adminCol2 {
 				float: right;
@@ -29,11 +26,9 @@
 			}
 			span[id^="admin-index"][id$='account_lid]']{
 				font-weight: bold;
-				.mob-fontsize-l;
 			}
 			span[id^="admin-index"][id$='account_lastname]']::after{
 				content:",";
-				.mob-fontsize-n;
 			}
 		}
 	}
@@ -41,4 +36,8 @@
 		display: none;
 	}
 
+  #admin-site-config_admin-config {
+	flex: 1 1 auto;
+	overflow-y: auto;
+  }
 }
