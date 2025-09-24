@@ -1956,13 +1956,13 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 			switch(attribute)
 			{
 				case "class":
-					widget.classList.add(attrValue.split(" "));
+					attrValue && widget.classList.add(attrValue.split(" "));
 					continue;
-					break;
+
 				default:
 					// Set as attribute (reflected in DOM)
 					widget.setAttribute(attribute, attrValue === true ? "" : attrValue);
-			}
+					break;			}
 		}
 		else if(attribute === 'options')
 		{
