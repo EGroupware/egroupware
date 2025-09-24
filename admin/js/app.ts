@@ -167,9 +167,9 @@ class AdminApp extends EgwApp
 			return;
 		}
 		// check for mobile framework and close the sidebox/-bar
-		if (typeof window.framework?.toggleMenu === 'function')
+		if(window.matchMedia("(max-width: 600px)").matches)
 		{
-			window.framework.toggleMenu('on');
+			this.et2.closest("egw-app")?.hideLeft();
 		}
 		var ajax : any = false;
 		if (_url)
