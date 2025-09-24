@@ -1956,7 +1956,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 			switch(attribute)
 			{
 				case "class":
-					attrValue && widget.classList.add(attrValue.split(" "));
+					attrValue && widget.classList.add(...attrValue.split(" ").filter(c => c));
 					continue;
 
 				default:
