@@ -209,7 +209,7 @@ export class EgwFramework extends LitElement
 			}
 		});
 		// Load additional tabs
-		Object.values(this._tabApps).forEach(app => this.loadApp(app.name));
+		Object.values(this._tabApps).filter(app => app.active).forEach(app => this.loadApp(app.name));
 
 		// Init timer
 		this.egw.add_timer('topmenu_info_timer');
@@ -234,7 +234,7 @@ export class EgwFramework extends LitElement
 			await this.updateComplete
 
 			// Let everyone know the initial app
-			this.activeApp.updateComplete.then(() =>
+			this.activeApp?.updateComplete.then(() =>
 			{
 				this.showTab(this.activeApp.name);
 			});
