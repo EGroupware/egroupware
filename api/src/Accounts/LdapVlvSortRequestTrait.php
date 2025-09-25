@@ -112,7 +112,7 @@ trait LdapVlvSortRequestTrait
 			];
 		}
 
-		if (!($sri = ldap_search($ds=$this->ldap_connection(), $context, $filter, $attrs, null, null, null, null, $control)))
+		if (!($sri = ldap_search($ds=$this->ldap_connection(), $context, $filter, $attrs, 0, -1, -1, LDAP_DEREF_NEVER, $control)))
 		{
 			if (($list_view_error = ldap_errno($ds) === 76))	// 76: Virtual List View error --> retry without
 			{

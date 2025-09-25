@@ -1309,11 +1309,11 @@ class Ldap
 		{
 			if ($_addressbooktype == self::ALL || $_ldapContext == $this->allContactsDN)
 			{
-				$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, null, null, null, null, $control);
+				$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, -1, -1, LDAP_DEREF_NEVER, $control);
 			}
 			else
 			{
-				$result = ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, null, null, null, null, $control);
+				$result = ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, -1, -1, LDAP_DEREF_NEVER, $control);
 			}
 			if (!$result || ($entries = ldap_get_entries($this->ds, $result)) === false)
 			{
@@ -1401,13 +1401,13 @@ class Ldap
 				$contact['jpegphoto'] = false;
 			}
 			$matches = null;
-			if(preg_match('/cn=([^,]+),'.preg_quote($this->personalContactsDN,'/').'$/i',$entry['dn'],$matches))
+			if($this->personalContactsDN && preg_match('/cn=([^,]+),'.preg_quote($this->personalContactsDN,'/').'$/i',$entry['dn'],$matches))
 			{
 				// personal addressbook
 				$contact['owner'] = $GLOBALS['egw']->accounts->name2id($matches[1],'account_lid','u');
 				$contact['private'] = 0;
 			}
-			elseif(preg_match('/cn=([^,]+),'.preg_quote($this->sharedContactsDN,'/').'$/i',$entry['dn'],$matches))
+			elseif($this->sharedContactsDN && preg_match('/cn=([^,]+),'.preg_quote($this->sharedContactsDN,'/').'$/i',$entry['dn'],$matches))
 			{
 				// group addressbook
 				$contact['owner'] = $GLOBALS['egw']->accounts->name2id($matches[1],'account_lid','g');
@@ -1646,13 +1646,13 @@ class Ldap
 		if (empty($data['givenname'][0]) && !empty($data['sn'][0]))
 		{
 			$parts = explode($data['sn'][0], $data[$cn][0]);
-			$contact['n_prefix'] = trim($parts[0]);
-			$contact['n_suffix'] = trim($parts[1]);
+			$contact['n_prefix'] = trim($parts[0]??'');
+			$contact['n_suffix'] = trim($parts[1]??'');
 		}
 		// iOS addressbook either use "givenname surname" or "surname givenname" depending on contact preference display-order
 		// in full name, so we need to check for both when trying to parse prefix, middle name and suffix form full name
-		elseif (preg_match($preg='/^(.*) *'.preg_quote($data['givenname'][0], '/').' *(.*) *'.preg_quote($data['sn'][0], '/').' *(.*)$/', $data[$cn][0], $matches) ||
-			preg_match($preg='/^(.*) *'.preg_quote($data['sn'][0], '/').'[, ]*(.*) *'.preg_quote($data['givenname'][0], '/').' *(.*)$/', $data[$cn][0], $matches))
+		elseif (preg_match($preg='/^(.*) *'.preg_quote($data['givenname'][0]??'', '/').' *(.*) *'.preg_quote($data['sn'][0], '/').' *(.*)$/', $data[$cn][0], $matches) ||
+			preg_match($preg='/^(.*) *'.preg_quote($data['sn'][0]??'', '/').'[, ]*(.*) *'.preg_quote($data['givenname'][0], '/').' *(.*)$/', $data[$cn][0], $matches))
 		{
 			list(,$contact['n_prefix'], $contact['n_middle'], $contact['n_suffix']) = $matches;
 			//error_log(__METHOD__."() preg_match('$preg', '{$data[$cn][0]}') = ".array2string($matches));
