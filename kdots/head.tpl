@@ -43,7 +43,7 @@
         {topmenu_info_items}
 	</div>
 	<!-- Currently open app -->
-	<egw-app id="{open_app_name}" name="{open_app_name}" url="{open_app_url}" active></egw-app>
+    {open_app}
 </egw-framework>
 
 
