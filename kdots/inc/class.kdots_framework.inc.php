@@ -130,7 +130,7 @@ class kdots_framework extends Api\Framework\Ajax
 			})) ?? [];
 			if($open_app)
 			{
-				$data['open_app'] = `<egw-app name="{$open_app['name']}" url="${open_app['url']}" icon="${open_app['icon']}" title="${open_app['title']}" active></egw-app>`;
+				$data['open_app'] = "<egw-app id=\"{$open_app['name']}\" name=\"{$open_app['name']}\" url=\"{$open_app['url']}\" title=\"{$open_app['title']}\" active></egw-app>";
 			}
 		}
 		if(!empty($data['open_app_name']) && !$this->sidebox_done)
