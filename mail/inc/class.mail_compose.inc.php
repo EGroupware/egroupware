@@ -284,7 +284,7 @@ class mail_compose
 			explode(',', $GLOBALS['egw_info']['user']['preferences']['mail']['toggledOnActions']);
 		foreach($toggledOnActions as $action)
 		{
-			if($actions[$action]['checkbox'])
+			if(!empty($actions[$action]['checkbox']))
 			{
 				$actions[$action]['checked'] = true;
 			}

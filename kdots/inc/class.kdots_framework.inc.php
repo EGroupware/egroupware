@@ -92,7 +92,7 @@ class kdots_framework extends Api\Framework\Ajax
 		self::includeJS('/kdots/js/app.min.js');
 		$data = parent::_get_header($extra);
 
-		$data['theme'] .= $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1' ? 'data-darkmode="1"' : '';
+		$data['theme'] = ($data['theme']??'').($GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1' ? 'data-darkmode="1"' : '');
 		$data['kdots_theme'] = 'kdots-' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'];
 		// Set shoelace theme
 		if($GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1')
@@ -104,7 +104,7 @@ class kdots_framework extends Api\Framework\Ajax
 			$data['kdots_theme'] .= ' sl-theme-light ';
 		}
 
-		if($extra['navbar-apps'])
+		if(!empty($extra['navbar-apps']))
 		{
 			// Enable / disable framework features for each app
 			// Feature name => EGw hook name
@@ -131,7 +131,7 @@ class kdots_framework extends Api\Framework\Ajax
 			$data['open_app_name'] = $open_app['name'];
 			$data['open_app_url'] = $open_app['url'];
 		}
-		if($data['open_app_name'] && !$this->sidebox_done)
+		if(!empty($data['open_app_name']) && !$this->sidebox_done)
 		{
 			$this->do_sidebox();
 			$data['setSidebox'] = htmlentities(json_encode(static::$extra['setSidebox'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');

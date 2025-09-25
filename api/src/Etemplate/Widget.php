@@ -1089,7 +1089,7 @@ class Widget
 	public function getElementAttribute($name, $attr)
 	{
 		//error_log(__METHOD__."('$name', '$attr')");
-		return self::$request->modifications[$name][$attr];
+		return self::$request->modifications[$name][$attr] ?? null;
 	}
 
 	/**

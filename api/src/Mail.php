@@ -3069,7 +3069,7 @@ class Mail
 							$child = null;
 							if (in_array('\\haschildren', array_map('strtolower', $folder['ATTRIBUTES'])))
 							{
-								foreach ($this->icServer->listSubscribedMailboxes($folder['MAILBOX'] . $folder['delimiter'], $_search, true) as $child)
+								foreach ($this->icServer->listSubscribedMailboxes($folder['MAILBOX'] . $folder['delimiter'], $_search, true) ?? [] as $child)
 								{
 									if ($child['SUBSCRIBED'])
 									{
