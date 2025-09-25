@@ -1155,7 +1155,7 @@ class mail_ui
 						if ($this->mail_bo->folderExists($i)) // only 10 entries per mailaccount.Control this on setting the buffered folders
 						{
 							$fS['profileID'] = $this->mail_bo->profileID;
-							$fS['profileName'] = $accArray[$this->mail_bo->profileID];
+							$fS['profileName'] = $accArray[$this->mail_bo->profileID] ?? null;
 							$fS['shortDisplayName'] = $i;
 							$moveactions[$moveaction] = $fS;
 							$counter ++;
@@ -1886,7 +1886,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			array_unshift($res,'mail');
 		}
 		return [
-			'app' => $res[0],
+			'app' => $res[0]??null,
 			'accountID' => $res[1]??null,
 			'profileID' => $res[2]??null,
 			'folder' => !empty($res[3]) ? base64_decode($res[3]) : null,
