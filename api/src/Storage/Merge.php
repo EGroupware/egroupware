@@ -420,7 +420,7 @@ abstract class Merge
 
 		// Add in extra cat field
 		$cats = array();
-		foreach(is_array($contact['cat_id']) ? $contact['cat_id'] : explode(',', $contact['cat_id']) as $cat_id)
+		foreach(is_array($contact['cat_id']) ? $contact['cat_id'] : (empty($contact['cat_id']) ? [] : explode(',', $contact['cat_id'])) as $cat_id)
 		{
 			if(!$cat_id)
 			{
@@ -1035,7 +1035,7 @@ abstract class Merge
 	public function &merge_string($_content, $ids, &$err, $mimetype, array $fix = null, $charset = null)
 	{
 		// performance optimization: if there's nothing looking like a placeholder, just return it without any processing
-		if (strpos($_content, '$$') === false && strpos($_content, '{{') === false &&
+		if (empty($_content) || strpos($_content, '$$') === false && strpos($_content, '{{') === false &&
 			($mimetype !== 'application/rtf' || strpos($_content, '\\{\\{') === false))
 		{
 			return $_content;
