@@ -167,7 +167,7 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 		this.activeFavorite = "";
 
 		// Skip it all if currentState is empty
-		if(Object.keys(currentState).length == 0)
+		if(!currentState || Object.keys(currentState).length == 0)
 		{
 			return;
 		}
