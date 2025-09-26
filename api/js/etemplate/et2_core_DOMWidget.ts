@@ -177,7 +177,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 		// yes, grab the DOM node and create our own.
 		if (this.getParent() && this.getParent().implements(et2_IDOMNode))
 		{
-			if(this.options.parent_node)
+			if(this.options?.parent_node)
 			{
 				this.set_parent_node(this.options.parent_node);
 			}
