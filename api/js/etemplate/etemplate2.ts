@@ -600,6 +600,10 @@ export class etemplate2
 	 */
 	async load(_name, _url, _data, _callback?, _app?, _no_et2_ready?, _open_target?)
 	{
+		if(egw.debug_level() >= 4)
+		{
+			window.performance.mark("mark_et2_load_" + _name + "_start");
+		}
 		this.ready = false;
 		let app = _app || window.app;
 		this.name = _name;	// store top-level template name to have it available in widgets
@@ -714,6 +718,11 @@ export class etemplate2
 				};
 			}
 
+
+			if(egw.debug_level() >= 4)
+			{
+				window.performance.mark("mark_et2_load_" + _name + "_template_start");
+			}
 			// Create the basic widget container and attach it to the DOM
 			this._widgetContainer = new Et2Template(egw(currentapp, egw.elemWindow(this._DOMContainer)));
 			this._widgetContainer.setInstanceManager(this);
@@ -763,6 +772,11 @@ export class etemplate2
 					{
 						console.timeStamp("loading finished, waiting for deferred");
 					}
+					if(egw.debug_level() >= 4)
+					{
+						window.performance.mark("mark_et2_load_" + _name + "_template_finished");
+						window.performance.measure("etemplate2.load(" + this.name + ") template", "mark_et2_load_" + _name + "_template_start", "mark_et2_load_" + _name + "_template_finished");
+					}
 					egw.window.console.groupEnd();
 				}
 
@@ -810,6 +824,11 @@ export class etemplate2
 
 						// Now etemplate is ready for others to interact with (eg: app.js)
 						this.ready = true;
+						if(egw.debug_level() >= 4)
+						{
+							window.performance.mark("mark_et2_load_" + _name + "_ready");
+						}
+
 
 						// Tell others about it
 						if(typeof _callback == "function")
@@ -837,22 +856,8 @@ export class etemplate2
 						// Profiling
 						if(egw.debug_level() >= 4)
 						{
-							if(console.timeEnd)
-							{
-								console.timeEnd(_name);
-							}
-							if(console.profileEnd)
-							{
-								console.profileEnd(_name);
-							}
-							const end_time = (new Date).getTime();
-							let gen_time_div = jQuery('#divGenTime_' + appname);
-							if(!gen_time_div.length)
-							{
-								gen_time_div = jQuery('.pageGenTime');
-							}
-							gen_time_div.find('.et2RenderTime').remove();
-							gen_time_div.append('<span class="et2RenderTime">' + egw.lang('eT2 rendering took %1s', '' + ((end_time - start_time) / 1000)) + '</span>');
+							window.performance.mark("mark_et2_load_" + _name + "_end");
+							window.performance.measure("etemplate2 " + this.name + " load", "mark_et2_load_" + _name + "_start", "mark_et2_load_" + _name + "_end");
 						}
 					});
 				});

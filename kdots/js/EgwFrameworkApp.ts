@@ -172,14 +172,15 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	@state() ignoreSplitterResize = false;
 
-	get leftSplitter() { return <SlSplitPanel>this.shadowRoot.querySelector(".egw_fw_app__outerSplit");}
+	get leftSplitter() { return <SlSplitPanel>this.shadowRoot?.querySelector(".egw_fw_app__outerSplit");}
 
-	get rightSplitter() { return <SlSplitPanel>this.shadowRoot.querySelector(".egw_fw_app__innerSplit");}
+	get rightSplitter() { return <SlSplitPanel>this.shadowRoot?.querySelector(".egw_fw_app__innerSplit");}
 
-	get iframe() { return <HTMLIFrameElement>this.shadowRoot.querySelector("iframe");}
+	get iframe() { return <HTMLIFrameElement>this.shadowRoot?.querySelector("iframe");}
 
 	get filters() { return <Et2Filterbox>this.querySelector("et2-filterbox:not([hidden],[disabled])");}
-	get filtersDrawer() { return <SlDrawer>this.shadowRoot.querySelector(".egw_fw_app__filter_drawer");}
+
+	get filtersDrawer() { return <SlDrawer>this.shadowRoot?.querySelector(".egw_fw_app__filter_drawer");}
 
 
 	protected readonly hasSlotController = new HasSlotController(<LitElement><unknown>this,
@@ -275,6 +276,7 @@ export class EgwFrameworkApp extends LitElement
 					const domContainer = et.DOMContainer;
 					domContainer.parentNode?.querySelector("[name='egw_iframe_autocomplete_helper']")?.remove();
 					domContainer.remove();
+					// @ts-ignore et._DOMContainer is private
 					et._DOMContainer = null;
 				}
 			});
@@ -310,6 +312,11 @@ export class EgwFrameworkApp extends LitElement
 
 	public load(url)
 	{
+		if(this.egw.debug_level() >= 4)
+		{
+			window.performance.mark("mark_egw_app_start_load_" + this.name);
+		}
+
 		// Clear everything
 		Array.from(this.children).forEach(n =>
 		{
@@ -323,6 +330,10 @@ export class EgwFrameworkApp extends LitElement
 		if(window.app[this.name]?.linkHandler && this.egw.window.app[this.name].linkHandler(url))
 		{
 			// app.ts linkHandler handled it.
+			if(this.egw.debug_level() >= 4)
+			{
+				window.performance.mark("mark_egw_app_end_load_" + this.name);
+			}
 			return;
 		}
 		let targetUrl = "";
@@ -347,11 +358,21 @@ export class EgwFrameworkApp extends LitElement
 		this.loading = true;
 		if(!this.useIframe)
 		{
+			if(this.egw.debug_level() >= 4)
+			{
+				window.performance.mark("mark_egw_app_fetch_start_" + this.name);
+			}
 			this.loadingPromise = this.egw.request(
 				this.framework.getMenuaction('ajax_exec', targetUrl, this.name),
 				[targetUrl]
 			).then((data : string | string[] | { DOMNodeID? : string } | { DOMNodeID? : string }[]) =>
 			{
+				if(this.egw.debug_level() >= 4)
+				{
+					window.performance.mark("mark_egw_app_fetch_end_" + this.name);
+					window.performance.measure("egw_app_fetch_" + this.name, "mark_egw_app_fetch_start_" + this.name, "mark_egw_app_fetch_end_" + this.name);
+					window.performance.mark("mark_egw_app_contents_start_" + this.name);
+				}
 				if(!data)
 				{
 					return;
@@ -384,6 +405,10 @@ export class EgwFrameworkApp extends LitElement
 		this.loadingPromise
 			.then(() =>
 			{
+				if(this.egw.debug_level() >= 4)
+				{
+					window.performance.mark("mark_egw_app_contents_end_" + this.name);
+				}
 				// Nextmatches that were hidden need a resize (admin, other apps seem to be fine)
 				this.querySelectorAll(":scope > [id]").forEach((node) =>
 				{
@@ -398,6 +423,12 @@ export class EgwFrameworkApp extends LitElement
 			.finally(() =>
 			{
 				this.loading = false;
+				if(this.egw.debug_level() >= 4)
+				{
+					window.performance.mark("mark_egw_app_end_load_" + this.name);
+					window.performance.measure("egw_app_contents_" + this.name, "mark_egw_app_contents_start_" + this.name, "mark_egw_app_contents_end_" + this.name);
+					window.performance.measure("egw_app_load_" + this.name, "mark_egw_app_start_load_" + this.name, "mark_egw_app_end_load_" + this.name);
+				}
 			});
 		return this.loadingPromise
 	}
@@ -630,7 +661,7 @@ export class EgwFrameworkApp extends LitElement
 
 	get egw()
 	{
-		return window.egw(this.name) ?? (<EgwFramework>this.parentElement).egw ?? null;
+		return window.egw(this.name) ?? (<EgwFramework>this.parentElement).egw ?? window.egw;
 	}
 
 	get framework() : EgwFramework
