@@ -108,7 +108,7 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 		this.loadingPromise.then(async() =>
 		{
 			await this.updateComplete;
-			this._highlightFavorite(window.app[this.application]?.getState());
+			this.highlightFavorite(window.app[this.application]?.getState());
 		});
 	}
 
