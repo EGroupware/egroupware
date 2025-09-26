@@ -57,7 +57,7 @@ class Token extends APi\Storage\Base
 	 */
 	public static function authenticate(string $user, ?string $token, array& $limits=null)
 	{
-		if (!$token && !preg_match(self::TOKEN_REGEXP, $token, $matches))
+		if (!$token || !preg_match(self::TOKEN_REGEXP, $token, $matches))
 		{
 			return null;    // not a token
 		}
