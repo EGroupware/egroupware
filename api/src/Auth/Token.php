@@ -51,13 +51,13 @@ class Token extends APi\Storage\Base
 	 * Authenticate a user with a token
 	 *
 	 * @param string $user
-	 * @param string $token must start with "token<token_id>:", or function will return null
+	 * @param ?string $token must start with "token<token_id>:", or function will return null
 	 * @param ?array& $limits on return limits of token
 	 * @return bool|null null: $token is no token, probably a password, false: invalid token, true: valid token for $user
 	 */
-	public static function authenticate(string $user, string $token, array& $limits=null)
+	public static function authenticate(string $user, ?string $token, array& $limits=null)
 	{
-		if (!preg_match(self::TOKEN_REGEXP, $token, $matches))
+		if (!$token && !preg_match(self::TOKEN_REGEXP, $token, $matches))
 		{
 			return null;    // not a token
 		}
