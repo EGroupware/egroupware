@@ -36,10 +36,10 @@
 		<et2-description  value="Mountpoints" class="filemanager_header"></et2-description>
 		<grid id="mounts" class="egwGridView_grid">
 			<columns>
+				<column width="20%"/>
 				<column/>
-				<column/>
-				<column disabled="!@@is_root"/>
-				<column disabled="!@@is_root"/>
+				<column width="10%" disabled="!@@is_root"/>
+				<column width="10%" disabled="!@@is_root"/>
 			</columns>
 			<rows>
 				<row class="th" part="header">
@@ -56,7 +56,7 @@
 							<et2-vbox  class="filemanager_protocols">
 								<et2-description  value="WebDAVs: mount EGroupware or *Cloud shares"></et2-description>
 								<et2-description  value="SMB: mount Samba or Windows fileserver shares"></et2-description>
-								<et2-description  value="{Versioning}: {Versioning requires EGroupware EPL}" href="https://www.egroupware.org/EPL" extraLinkTarget="_blank"></et2-description>
+								<et2-description  label="{Versioning}: {Versioning requires EGroupware EPL}" href="https://www.egroupware.org/EPL" extraLinkTarget="_blank"></et2-description>
 								<et2-description  value="Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem" href="https://github.com/EGroupware/egroupware/blob/master/api/src/Vfs/Filesystem/StreamWrapper.php#L20" extraLinkTarget="_blank"></et2-description>
 							</et2-vbox>
 						</groupbox>

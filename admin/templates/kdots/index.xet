@@ -98,6 +98,6 @@
 		<et2-template template="admin.index.group.header" slot="main-header" hidden="true"></et2-template>
 		<nextmatch id="groups" template="admin.index.group" class="hide"/>
 		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
-		<et2-box  id="ajax_target" height="99%" disabled="true"></et2-box>
+		<et2-box  id="ajax_target" disabled="true"></et2-box>
 	</template>
 </overlay>

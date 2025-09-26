@@ -186,6 +186,7 @@ Admin command
 */
 #admin-index_ajax_target {
     height: 100%;
+    overflow-y: auto;
 }
 
 #admin-cmds_nm {min-height: 100px;}
