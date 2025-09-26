@@ -989,7 +989,7 @@ export class EgwFrameworkApp extends LitElement
                                 @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
                                 @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
                     >
-                        <et2-favorites-menu application=${this.name}></et2-favorites-menu>
+                        <et2-favorites-menu application=${this.name} sortable></et2-favorites-menu>
                     </et2-details>
 				`;
 			}), nothing)}`;

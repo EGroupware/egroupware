@@ -5,6 +5,10 @@ import {Favorite} from "./Favorite";
 import {property} from "lit/decorators/property.js";
 import {until} from "lit/directives/until.js";
 import {repeat} from "lit/directives/repeat.js";
+import {createRef, Ref, ref} from "lit/directives/ref.js";
+import Sortable from "sortablejs/modular/sortable.complete.esm.js";
+import {SlMenu} from "@shoelace-style/shoelace";
+import {state} from "lit/decorators/state.js";
 
 /**
  * @summary A menu listing a user's favorites.  Populated from the user's preferences.
@@ -34,7 +38,12 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 
 				sl-menu-item:hover et2-image[src="trash"] {
 					display: initial;
-				}`
+				}
+
+				sl-menu-item[active] {
+					background-color: var(--highlight-background-color);
+				}
+			`
 		]
 	};
 
@@ -49,6 +58,12 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	@property()
 	noAdd : boolean = false;
 
+	@property({type: Boolean})
+	sortable : boolean = false;
+
+	@state()
+	activeFavorite : string = "";
+
 	private favorites : { [name : string] : Favorite } = {
 		'blank': {
 			name: typeof this.egw()?.lang == "function" ? this.egw().lang("No filters") : "No filters",
@@ -57,11 +72,14 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 		}
 	};
 	private loadingPromise = Promise.resolve();
+	private _sortable : Sortable;
+	private menuRef : Ref<SlMenu> = createRef();
 
 	constructor()
 	{
 		super();
 		this.handlePreferenceChange = this.handlePreferenceChange.bind(this);
+		this.handleStateChange = this.handleStateChange.bind(this);
 	}
 	connectedCallback()
 	{
@@ -72,12 +90,26 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 			this._load();
 		}
 		document.addEventListener("preferenceChange", this.handlePreferenceChange);
+		document.addEventListener("et2-filter", this.handleStateChange);
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+		this._sortable && this._sortable.el && this._sortable.destroy();
+		this._sortable = null;
 		document.removeEventListener("preferenceChange", this.handlePreferenceChange);
+		document.removeEventListener("et2-filter", this.handleStateChange);
+	}
+
+	firstUpdated(changedProperties : PropertyValues<this> | Map<PropertyKey, unknown> | undefined)
+	{
+		super.firstUpdated(changedProperties);
+		this.loadingPromise.then(async() =>
+		{
+			await this.updateComplete;
+			this._highlightFavorite(window.app[this.application]?.getState());
+		});
 	}
 
 	willUpdate(changedProperties : PropertyValues)
@@ -94,6 +126,164 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 		{
 			this.favorites = favorites;
 		});
+	}
+
+	private async _menuChanged(menu? : SlMenu)
+	{
+		if(!menu || !this.sortable)
+		{
+			if(this._sortable)
+			{
+				this._sortable.destroy();
+			}
+			return;
+		}
+		await this.updateComplete;
+		this._sortable = Sortable.create(menu, {
+			ghostClass: 'ui-fav-sortable-placeholder',
+			draggable: 'sl-menu-item:not([value="~add~"])',
+			delay: 25,
+			dataIdAttr: 'value',
+			onSort: (event) =>
+			{
+				let favSortedList = this._sortable.toArray();
+				this.egw().set_preference(this.application, 'fav_sort_pref', favSortedList);
+				this._load();
+			}
+		})
+	}
+
+	/**
+	 * Highlight the favorite that matches the given state, if any
+	 *
+	 * @param currentState
+	 * @return {Promise<void>}
+	 * @private
+	 */
+	public async highlightFavorite(currentState)
+	{
+		let best_match = null;
+		let best_count = 0;
+		this.activeFavorite = "";
+
+		// Skip it all if currentState is empty
+		if(Object.keys(currentState).length == 0)
+		{
+			return;
+		}
+
+		Object.entries(this.favorites).forEach(([name, favorite]) =>
+		{
+			// Handle old style by making it like current style
+			// @ts-ignore
+			if(favorite.filter && !favorite.state)
+			{
+				//@ts-ignore
+				favorite.state = favorite.filter;
+			}
+			let match_count = 0;
+			let extra_keys = Object.keys(favorite.state);
+
+			// Look through each key in the current state
+			for(const state_key in currentState)
+			{
+				extra_keys.splice(extra_keys.indexOf(state_key), 1);
+				if(typeof favorite.state != "undefined" && typeof currentState[state_key] != "undefined" && typeof favorite.state[state_key] != "undefined" && (currentState[state_key] == favorite.state[state_key] || !currentState[state_key] && !favorite.state[state_key]))
+				{
+					match_count++;
+				}
+				else if(state_key == "selectcols" && typeof favorite.state["selectcols"] == "undefined")
+				{
+					// Skip, not set in favorite
+				}
+				else if(typeof currentState[state_key] != "undefined" && currentState[state_key] && typeof currentState[state_key] === "object"
+					&& typeof favorite.state != "undefined" && typeof favorite.state[state_key] != "undefined" && favorite.state[state_key] && typeof favorite.state[state_key] === "object")
+				{
+					if((typeof currentState[state_key].length !== "undefined" || typeof currentState[state_key].length !== "undefined")
+						&& (currentState[state_key].length || Object.keys(currentState[state_key]).length) != (favorite.state[state_key].length || Object.keys(favorite.state[state_key]).length))
+					{
+						// State or favorite has a length, but the other does not
+						if((currentState[state_key].length === 0 || Object.keys(currentState[state_key]).length === 0) &&
+							(favorite.state[state_key].length == 0 || Object.keys(favorite.state[state_key]).length === 0))
+						{
+							// Just missing, or one is an array and the other is an object
+							continue;
+						}
+						// One has a value and the other doesn't, no match
+						return;
+					}
+					else if(currentState[state_key].length !== "undefined" && typeof favorite.state[state_key].length !== "undefined" &&
+						currentState[state_key].length === 0 && favorite.state[state_key].length === 0)
+					{
+						// Both set, but both empty
+						match_count++;
+						continue;
+					}
+					// Consider sub-objects (column filters) individually
+					for(var sub_key in currentState[state_key])
+					{
+						if(currentState[state_key][sub_key] == favorite.state[state_key][sub_key] || !currentState[state_key][sub_key] && !favorite.state[state_key][sub_key])
+						{
+							match_count++;
+						}
+						else if(currentState[state_key][sub_key] && favorite.state[state_key][sub_key] &&
+							typeof currentState[state_key][sub_key] === "object" && typeof favorite.state[state_key][sub_key] === "object")
+						{
+							// Too deep to keep going, just string compare for perfect match
+							if(JSON.stringify(currentState[state_key][sub_key]) === JSON.stringify(favorite.state[state_key][sub_key]))
+							{
+								match_count++;
+							}
+						}
+						else if(typeof currentState[state_key][sub_key] !== "undefined" && currentState[state_key][sub_key] != favorite.state[state_key][sub_key])
+						{
+							// Different values, do not match
+							return;
+						}
+					}
+				}
+				else if(typeof currentState[state_key] !== "undefined"
+					&& typeof favorite.state != "undefined" && typeof favorite.state[state_key] !== "undefined"
+					&& currentState[state_key] != favorite.state[state_key])
+				{
+					// Different values, do not match
+					return;
+				}
+			}
+			// Check for anything set that the current one does not have
+			for(var i = 0; i < extra_keys.length; i++)
+			{
+				if(favorite.state[extra_keys[i]])
+				{
+					return;
+				}
+			}
+			// Better match?  Hold on to it and keep looking
+			if(match_count > best_count)
+			{
+				best_match = name;
+				best_count = match_count;
+			}
+		});
+		if(best_match)
+		{
+			this.activeFavorite = best_match;
+		}
+	}
+
+	/**
+	 * Nextmatch filter has changed, change which favorite is highlighted
+	 *
+	 * @param e
+	 */
+	handleStateChange(e)
+	{
+		if(e && e.detail?.nm?.getInstanceManager().app == this.application)
+		{
+			// Get the full state of the app and highlight if a favourite matches
+			this.highlightFavorite(e.detail.activeFilters ?? this.getInstanceManager()?.app_obj[this.application]?.getState());
+		}
+		// Could also be a non-nm state change
 	}
 
 	handlePreferenceChange(e)
@@ -166,7 +356,9 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
                        statustext="${this.egw()?.lang("Delete") ?? "Delete"}"></et2-image>`;
 
 		return html`
-            <sl-menu-item value="${name}">
+            <sl-menu-item value="${name}"
+                          ?active=${name == this.activeFavorite}
+            >
                 ${icon}
                 ${favorite.name}
             </sl-menu-item>`;
@@ -187,6 +379,7 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
                 <sl-menu
                         part="menu"
                         @sl-select=${this.handleSelect}
+                        ${ref(this._menuChanged)}
                 >
                     ${this.label ? html`
                         <sl-menu-label>${this.label}</sl-menu-label>` : nothing}

@@ -31,6 +31,7 @@ import {egw_globalObjectManager} from "../egw_action/egw_action";
 import type {EgwFrameworkApp} from "../../../kdots/js/EgwFrameworkApp";
 import {Et2ButtonIcon} from "../etemplate/Et2Button/Et2ButtonIcon";
 import type {Et2Select} from "../etemplate/Et2Select/Et2Select";
+import {Et2FavoritesMenu} from "../etemplate/Et2Favorites/Et2FavoritesMenu";
 
 /**
  * Type for push-message
@@ -1168,58 +1169,11 @@ export abstract class EgwApp
 			this.sidebox = sidebox;
 			sidebox
 				.off()
-				// removed .on("mouse(enter|leave)" (wrapping trash icon), as it stalls delete in IE11
-				.on("click.sidebox", "div.ui-icon-trash", this, this.delete_favorite)
-				// need to install a favorite handler, as we switch original one off with .off()
-				.on('click.sidebox', 'li[data-id]', this, function(event)
-				{
-					var li = jQuery(this);
-					li.siblings().removeClass('ui-state-highlight');
-
-					var state = {};
-					var pref = egw.preference('favorite_' + this.dataset.id, self.appname);
-					if(pref)
-					{
-						// Extend, to prevent changing the preference by reference
-						jQuery.extend(true, state, pref);
-					}
-					if(this.dataset.id != 'add')
-					{
-						// check for mobile framework and close the sidebox/-bar
-						if (typeof framework.toggleMenu === 'function')
-						{
-							framework.toggleMenu('on');
-						}
-
-						event.stopImmediatePropagation();
-						self.setState.call(self, state);
-						return false;
-					}
-				})
 				.addClass("ui-helper-clearfix");
 
-			let el = document.getElementById('favorite_sidebox_' + this.appname)?.getElementsByTagName('ul')[0];
-			if(el && el instanceof HTMLElement)
-			{
-				Sortable.get(el)?.destroy();
-				let sortablejs = Sortable.create(el, {
-					ghostClass: 'ui-fav-sortable-placeholder',
-					draggable: 'li:not([data-id$="add"])',
-					delay: 25,
-					dataIdAttr: 'data-id',
-					onSort: function(event)
-					{
-						let favSortedList = sortablejs.toArray();
-						self.egw.set_preference(self.appname, 'fav_sort_pref', favSortedList);
-						self._refresh_fav_nm();
-					}
-				});
-			}
-
 			// Bind favorite de-select
-			var egw_fw = egw_getFramework();
-			if(egw_fw && egw_fw.applications[this.appname] && egw_fw.applications[this.appname].browser
-				&& egw_fw.applications[this.appname].browser.baseDiv)
+			var egw_fw = window.framework;
+			if(egw_fw && egw_fw.getApp(this.appname))
 			{
 				jQuery(egw_fw.applications[this.appname].browser.baseDiv)
 					.off('.sidebox')
@@ -1227,23 +1181,7 @@ export abstract class EgwApp
 					{
 						self.highlight_favorite();
 					});
-				egw_fw.applications[this.appname].browser.baseDiv.addEventListener("change", (e) =>
-				{
-					if(e.target.localName == "et2-favorites")
-					{
-						sidebox[0].querySelectorAll("li:not([data-id='add']) > a > div:first-child").forEach(f =>
-						{
-							f.classList.add("sideboxstar");
-							f.classList.remove('ui-icon', 'ui-heart');
-						});
-						const new_pref = sidebox[0].querySelector("li[data-id='" + e.target.preferred + "'] > a > div:first-child");
-						if(new_pref)
-						{
-							new_pref.classList.add('ui-icon', 'ui-icon-heart');
-							new_pref.classList.remove("sideboxstar");
-						}
-					}
-				})
+
 			}
 			return true;
 		}
@@ -1297,218 +1235,6 @@ export abstract class EgwApp
 	}
 
 	/**
-	 * Create the "Add new" popup dialog
-	 */
-	_create_favorite_popup(state)
-	{
-		const favorite_prefix = 'favorite_';
-
-		// Clear old, if existing
-		if(this.favorite_popup && this.favorite_popup.group)
-		{
-			this.favorite_popup.group.destroy();
-			delete this.favorite_popup;
-		}
-
-		// Add some controls if user is an admin
-		const apps = this.egw.user('apps');
-		const is_admin = (typeof apps['admin'] != "undefined");
-
-		// Setup data
-		let data = {
-			content: {
-				state: state || [],
-				current_filters: []
-			},
-			readonlys: {
-				group: !is_admin
-			}
-		};
-
-
-		// Show current set filters (more for debug than user)
-		let filter_list = [];
-		let add_to_popup = function(arr, inset = "")
-		{
-			Object.keys(arr).forEach((index) =>
-			{
-				let filter = arr[index];
-				filter_list.push({
-					label: inset + index.toString(),
-					value: (typeof filter != "object" ? "" + filter : "")
-				});
-				if(typeof filter == "object" && filter != null)
-				{
-					add_to_popup(filter, inset + "    ");
-				}
-			});
-		};
-		add_to_popup(data.content.state);
-		data.content.current_filters = filter_list;
-
-		let save_callback = async(button, value) =>
-		{
-			if(button !== Et2Dialog.OK_BUTTON)
-			{
-				return;
-			}
-
-			if(value.name)
-			{
-				// Add to the list
-				value.name = (<string>value.name).replace(/(<([^>]+)>)/ig, "");
-				let safe_name = (<string>value.name).replace(/[^A-Za-z0-9-_]/g, "_");
-				if(safe_name != value.name)
-				{
-					// Check if the label matches an existing preference, consider it an update
-					let existing = this.egw.preference(favorite_prefix + safe_name, this.appname);
-					if(existing && existing.name !== value.name)
-					{
-						// Name mis-match, this is a new favorite with the same safe name
-						safe_name += "_" + await this.egw.hashString(value.name);
-					}
-				}
-				let favorite = {
-					name: value.name,
-					group: value.group || false,
-					state: data.content.state
-				};
-
-				let favorite_pref = favorite_prefix + safe_name;
-
-				// Save to preferences
-				if(typeof value.group != "undefined" && value.group != '')
-				{
-					// Admin stuff - save preference server side
-					this.egw.jsonq('EGroupware\\Api\\Framework::ajax_set_favorite',
-						[
-							this.appname,
-							value.name,
-							"add",
-							value.group,
-							data.content.state
-						]
-					);
-				}
-				else
-				{
-					// Normal user - just save to preferences client side
-					this.egw.set_preference(this.appname, favorite_pref, favorite);
-				}
-
-				// Trigger event so widgets can update
-				document.dispatchEvent(new CustomEvent("preferenceChange", {
-					bubbles: true,
-					detail: {
-						application: this.appname,
-						preference: favorite_pref
-					}
-				}));
-
-				// Add to list immediately
-				if(this.sidebox)
-				{
-					// Remove any existing with that name
-					this.sidebox.get(0).querySelectorAll('[data-id="' + safe_name + '"]').forEach(e => e.remove());
-
-					// Create new item
-					var html = "<li data-id='" + safe_name + "' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
-					var href = 'javascript:app.' + this.appname + '.setState(' + JSON.stringify(favorite) + ');';
-					html += "<a href='" + href + "' class='ui-corner-all' tabindex='-1'>";
-					html += "<div class='" + 'sideboxstar' + "'></div>" +
-						favorite.name;
-					html += "<div class='ui-icon ui-icon-trash' title='" + this.egw.lang('Delete') + "'/>";
-					html += "</a></li>\n";
-					jQuery(html).insertBefore(jQuery('li', this.sidebox).last());
-					this._init_sidebox(this.sidebox);
-				}
-
-				// Try to update nextmatch favorites too
-				this._refresh_fav_nm();
-			}
-		};
-
-
-		// Create popup
-		this.favorite_popup = new Et2Dialog(this.egw);
-		this.favorite_popup.transformAttributes({
-			callback: save_callback,
-			title: this.egw.lang("New favorite"),
-			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
-			width: 400,
-			value: data,
-			template: this.egw.webserverUrl + '/api/templates/default/add_favorite.xet'
-		});
-		document.body.appendChild(this.favorite_popup);
-
-		return false;
-	}
-
-	/**
-	 * Delete a favorite from the list and update preferences
-	 * Registered as a handler on the delete icons
-	 *
-	 * @param {jQuery.event} event event object
-	 */
-	delete_favorite(event)
-	{
-		// Don't do the menu
-		event.stopImmediatePropagation();
-
-		var app = event.data;
-		var id = jQuery(this).parentsUntil('li').parent().attr("data-id");
-		var group = jQuery(this).parentsUntil('li').parent().attr("data-group") || '';
-		var line = jQuery('li[data-id="' + id + '"]', app.sidebox);
-		var name = line.first().text();
-		var trash = this;
-		line.addClass('loading');
-
-		// Make sure first
-		var do_delete = function(button_id)
-		{
-			if(button_id != Et2Dialog.YES_BUTTON)
-			{
-				line.removeClass('loading');
-				return;
-			}
-
-			// Hide the trash
-			jQuery(trash).hide();
-
-			// Delete preference server side
-			var request = egw.json("EGroupware\\Api\\Framework::ajax_set_favorite",
-				[app.appname, id, "delete", group, ''],
-				function(result)
-				{
-					// Got the full response from callback, which we don't want
-					if(result.type) return;
-
-					if(result && typeof result == 'boolean')
-					{
-						// Remove line from list
-						line.slideUp("slow", function() { });
-
-						app._refresh_fav_nm();
-					}
-					else
-					{
-						// Something went wrong server side
-						line.removeClass('loading').addClass('ui-state-error');
-					}
-				},
-				jQuery(trash).parentsUntil("li").parent(),
-				true,
-				jQuery(trash).parentsUntil("li").parent()
-			);
-			request.sendRequest(true);
-		};
-		Et2Dialog.show_dialog(do_delete, (egw.lang("Delete") + " " + name + "?"),
-			"Delete", null, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
-
-		return false;
-	}
-
-	/**
 	 * Mark the favorite closest matching the current state
 	 *
 	 * Closest matching takes into account not set values, so we pick the favorite
@@ -1516,112 +1242,7 @@ export abstract class EgwApp
 	 */
 	highlight_favorite()
 	{
-		if(!this.sidebox) return;
-
-		var state = this.getState();
-		var best_match : any = false;
-		var best_count = 0;
-		var self = this;
-
-		jQuery('li[data-id]', this.sidebox).removeClass('ui-state-highlight');
-
-		jQuery('li[data-id]', this.sidebox).each(function(i, href)
-		{
-			var favorite : any = {};
-			if(this.dataset.id && egw.preference('favorite_' + this.dataset.id, self.appname))
-			{
-				favorite = egw.preference('favorite_' + this.dataset.id, self.appname);
-			}
-			if(!favorite || jQuery.isEmptyObject(favorite)) return;
-
-			// Handle old style by making it like new style
-			if(favorite.filter && !favorite.state)
-			{
-				favorite.state = favorite.filter;
-			}
-
-			var match_count = 0;
-			var extra_keys = Object.keys(favorite.state);
-			for(var state_key in state)
-			{
-				extra_keys.splice(extra_keys.indexOf(state_key), 1);
-				if(typeof favorite.state != 'undefined' && typeof state[state_key] != 'undefined' && typeof favorite.state[state_key] != 'undefined' && (state[state_key] == favorite.state[state_key] || !state[state_key] && !favorite.state[state_key]))
-				{
-					match_count++;
-				}
-				else if(state_key == 'selectcols' && typeof favorite.state.selectcols == "undefined")
-				{
-					// Skip, not set in favorite
-				}
-				else if(typeof state[state_key] != 'undefined' && state[state_key] && typeof state[state_key] === 'object'
-					&& typeof favorite.state != 'undefined' && typeof favorite.state[state_key] != 'undefined' && favorite.state[state_key] && typeof favorite.state[state_key] === 'object')
-				{
-					if((typeof state[state_key].length !== 'undefined' || typeof state[state_key].length !== 'undefined')
-						&& (state[state_key].length || Object.keys(state[state_key]).length) != (favorite.state[state_key].length || Object.keys(favorite.state[state_key]).length))
-					{
-						// State or favorite has a length, but the other does not
-						if((state[state_key].length === 0 || Object.keys(state[state_key]).length === 0) &&
-							(favorite.state[state_key].length == 0 || Object.keys(favorite.state[state_key]).length === 0))
-						{
-							// Just missing, or one is an array and the other is an object
-							continue;
-						}
-						// One has a value and the other doesn't, no match
-						return;
-					}
-					else if(state[state_key].length !== 'undefined' && typeof favorite.state[state_key].length !== 'undefined' &&
-						state[state_key].length === 0 && favorite.state[state_key].length === 0)
-					{
-						// Both set, but both empty
-						match_count++;
-						continue;
-					}
-					// Consider sub-objects (column filters) individually
-					for(var sub_key in state[state_key])
-					{
-						if(state[state_key][sub_key] == favorite.state[state_key][sub_key] || !state[state_key][sub_key] && !favorite.state[state_key][sub_key])
-						{
-							match_count++;
-						}
-						else if(state[state_key][sub_key] && favorite.state[state_key][sub_key] &&
-							typeof state[state_key][sub_key] === 'object' && typeof favorite.state[state_key][sub_key] === 'object')
-						{
-							// Too deep to keep going, just string compare for perfect match
-							if(JSON.stringify(state[state_key][sub_key]) === JSON.stringify(favorite.state[state_key][sub_key]))
-							{
-								match_count++;
-							}
-						}
-						else if(typeof state[state_key][sub_key] !== 'undefined' && state[state_key][sub_key] != favorite.state[state_key][sub_key])
-						{
-							// Different values, do not match
-							return;
-						}
-					}
-				}
-				else if(typeof state[state_key] !== 'undefined'
-					&& typeof favorite.state != 'undefined' && typeof favorite.state[state_key] !== 'undefined'
-					&& state[state_key] != favorite.state[state_key])
-				{
-					// Different values, do not match
-					return;
-				}
-			}
-			// Check for anything set that the current one does not have
-			for(var i = 0; i < extra_keys.length; i++)
-			{
-				if(favorite.state[extra_keys[i]]) return;
-			}
-			if(match_count > best_count)
-			{
-				best_match = this.dataset.id;
-				best_count = match_count;
-			}
-		});
-		if(best_match)
-		{
-			jQuery('li[data-id="' + best_match + '"]', this.sidebox).addClass('ui-state-highlight');
-		}
+		this.et2.querySelectorAll("et2-favourites-menu").forEach((f : Et2FavoritesMenu) => f.highlightFavorite(this.getState()));
 	}
 
 	/**
