@@ -17,7 +17,7 @@
   --input-text-color: var(--sl-color-neutral-900);
   --input-color: var(--sl-color-neutral-50);
   --button-color: var(--sl-color-primary-700);
-  --box-color: var(--sl-color-neutral-900);
+  --box-color: var(--loginbox-custom-color, --sl-color-neutral-700);
 }
 .bootstrap-icons {
   display: inline-block;
@@ -65,18 +65,27 @@ body select {
   padding-inline: 0.5em;
   font-size: 1em;
 }
+body .et2_required input {
+  background-color: #ffffd0;
+}
 body select {
   width: 62%;
+}
+div#loginScreenMessage {
+  font-weight: bold;
+  font-size: large;
+  color: var(--text-color);
+  letter-spacing: 0.2rem;
 }
 #loginMainDiv {
   height: calc(100vh - var(--footer_height));
   display: flex;
-  background-position-y: 100%;
   background-size: cover;
   flex-direction: column;
   align-items: center;
 }
 #loginMainDiv #login_logo {
+  padding: 10% 0 5% 0;
   max-width: 100%;
 }
 #loginMainDiv .egw_message_wrapper {
@@ -86,7 +95,10 @@ body select {
   height: fit-content;
   background: var(--sl-color-warning-100);
   border-radius: var(--sl-border-radius-medium);
-  padding: var(--sl-spacing-2x-small);
+  padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
+}
+#loginMainDiv .egw_message_wrapper:has(div#egw_message:empty) {
+  display: none;
 }
 #loginMainDiv .egw_message_wrapper #egw_message {
   display: flex;

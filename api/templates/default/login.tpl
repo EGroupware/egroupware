@@ -12,9 +12,7 @@
     </div>
     <div id="centerBox">
         <div class="egw_message_wrapper">
-            <div id="egw_message" class="{cd_class}">
-                {cd}
-            </div>
+            <div id="egw_message" class="{cd_class}">{cd}</div>
             <div class="close bi-x-circle"></div>
         </div>
         <form name="login_form" method="post" action="{login_url}">

@@ -426,12 +426,12 @@ class kdots_framework extends Api\Framework\Ajax
 		$themes_to_check[] = $this->template_dir . '/css/themes/' . $theme . '.css';
 		$ret = parent::_get_css($themes_to_check);
 
-		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? '12';
+		$template_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'] ?? 'none';
+		$loginbox_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color'] ?? '#404040';
 		$ret['app_css'] .= "
-			:root, :host, body, input {
-				font-size: {$textsize}px;
-				font-family: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
-					Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+			:root, :host, body {
+				--template-custom-color: $template_custom_color;
+				--loginbox-custom-color: $loginbox_custom_color;
 			}
 		";
 		// add css file incl. cache-buster

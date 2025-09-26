@@ -61,16 +61,16 @@ $GLOBALS['settings'] = array(
 		'admin'   => False,
 		'default' => 'calendar',
 	),
-	/* not (yet) used ;)
 	'template_custom_color' => array(
 		'type' => 'color',
 		'label' => 'Custom color',
 		'no_lang' => true,
 		'name' => 'template_custom_color',
-		'help' => lang('Use eg. %1 or %2','#FF0000','orange'),
+		'help' => lang('Used instead of the application color.')."\n".lang('Use eg. %1 or %2','#FF0000','orange'),
 		'xmlrpc' => True,
 		'admin'  => False,
 	),
+	/* currently not used
 	'sidebox_custom_color' => array(
 		'type' => 'color',
 		'label' => 'Custom sidebar menu active color, defaults to above color darkened',
@@ -79,7 +79,7 @@ $GLOBALS['settings'] = array(
 		'help' => lang('Use eg. %1 or %2','#FF0000','orange'),
 		'xmlrpc' => True,
 		'admin'  => False,
-	),
+	), */
 	'loginbox_custom_color' => array(
 		'type' => 'color',
 		'label' => 'Custom login box color, defaults to above color darkened',
@@ -89,7 +89,6 @@ $GLOBALS['settings'] = array(
 		'xmlrpc' => True,
 		'admin'  => False,
 	),
-	*/
 	'navbar_format' => false,	// not used in KDots (defined in common prefs)
 	'default_app' => false,		// not used in KDots, as we can have multiple tabs open ...
 );

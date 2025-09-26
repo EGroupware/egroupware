@@ -971,15 +971,15 @@ abstract class Framework extends Framework\Extra
 	}
 ';
 			}
-			$textsize = (float)($GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? 12) ?: 12;
-			$css .= "
+		}
+		$textsize = (float)($GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? 12) ?: 12;
+		$css .= "
 			:root, :host, body, input {
 				font-size: {$textsize}px;
 				font-family: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
 					Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 			}
 		";
-		}
 		return $css;
 	}
 

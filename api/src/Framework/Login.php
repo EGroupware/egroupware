@@ -443,7 +443,7 @@ class Login
 			default:
 				if (!$code)
 				{
-					return '&nbsp;';
+					return '';
 				}
 				return htmlspecialchars($code);
 		}

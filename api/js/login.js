@@ -60,7 +60,7 @@ const login_on_ready = () => {
 			do_social([
 				{
 					"name": "EGroupware",
-					"svg": egw_webserverUrl+"/api/templates/default/images/logo164x164.svg",
+					"svg": egw_webserverUrl+"/api/templates/default/images/login_egroupware.svg",
 					"url": "https://www.egroupware.org/en",
 					"lang": { "de": "https://www.egroupware.org/de/" }
 				},
@@ -71,9 +71,9 @@ const login_on_ready = () => {
 					"lang": { "de": "https://www.egroupware.org/de/kontakt.html" }
 				},
 				{
-					"name": "Facebook",
-					"svg": egw_webserverUrl+"/api/templates/default/images/login_facebook.svg",
-					"url": "https://www.facebook.com/egroupware"
+					"name": "LinkedIn",
+					"svg": egw_webserverUrl+"/api/templates/default/images/login_linkedin.svg",
+					"url": "https://www.linkedin.com/company/egroupware-gmbh"
 				},
 				{
 					"name": "Bluesky",
