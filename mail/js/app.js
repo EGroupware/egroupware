@@ -314,7 +314,7 @@ app.classes.mail = AppJS.extend(
 				}
 				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
 				const cat_id = this.et2.getWidgetById('cat_id');
-				cat_id.value = this.nm_index.activeFilters.cat_id;	// not sure why this is necessary to get the current value
+				cat_id.value = this.nm.activeFilters.cat_id;	// not sure why this is necessary to get the current value
 				var alreadyrefreshed = this.mail_searchtype_change(null, cat_id);
 				if (!alreadyrefreshed) this.mail_callRefreshVacationNotice();
 				break;
