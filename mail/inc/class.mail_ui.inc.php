@@ -573,7 +573,7 @@ class mail_ui
 
 				$etpl = new Etemplate('mail.index');
 				//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
-				$content[self::$nm_index]['cat_id_onchange'] = "app.mail.mail_searchtype_change()";
+				$content[self::$nm_index]['cat_id_onchange'] = "app.mail.mail_searchtype_change";
 				// set the actions on tree
 				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions());
 

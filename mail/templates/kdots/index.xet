@@ -217,14 +217,16 @@
             <et2-description id="nm[vacationnotice]" class="@nm[vacationclass]"></et2-description>
             <et2-description id="nm[vacationrange]" class="@nm[vacationrangeclass]"></et2-description>
         </et2-details>
-        <et2-details id="mail.index.datefilter" class="mail-index_datefilter" summary="Date..." hoist="true" disabled="!@cat_id=bydate" open="true">
-            <et2-date id="startdate" label="Start" onchange="app.mail.mail_refreshMessageGrid(false,true);"></et2-date>
-            <et2-date id="enddate" label="End" onchange="app.mail.mail_refreshMessageGrid(false,true);"></et2-date>
-        </et2-details>
         <et2-hbox id="mail.index.quotabox" class="mail-index_quotabox">
             <progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/>
         </et2-hbox>
     </template>
+    <et2-template id="mail.index.dates" template="" lang="" group="0" version="1.9.001">
+        <et2-date id="startdate" label="Start" class="et2-label-fixed" style="padding-bottom: .3rem"
+            onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
+        <et2-date id="enddate" label="End" class="et2-label-fixed"
+            onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
+    </et2-template>
     <template id="mail.index" template="" lang="" group="0" version="1.9.001">
         <template template="mail.index.header" slot="main-header"></template>
         <et2-tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder"

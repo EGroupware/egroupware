@@ -313,7 +313,9 @@ app.classes.mail = AppJS.extend(
 					this.tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
 				}
 				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
-				var alreadyrefreshed = this.mail_searchtype_change();
+				const cat_id = this.et2.getWidgetById('cat_id');
+				cat_id.value = this.nm_index.activeFilters.cat_id;	// not sure why this is necessary to get the current value
+				var alreadyrefreshed = this.mail_searchtype_change(null, cat_id);
 				if (!alreadyrefreshed) this.mail_callRefreshVacationNotice();
 				break;
 			case 'mail.display':
@@ -1906,22 +1908,28 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * If the searchtype (cat_id) is set to something that needs dates, we enable the
 	 * header_right template.  Otherwise, it is disabled.
+	 *
+	 * @param ev : Event|undefined
+	 * @param filter : Et2Select cat_id filter
 	 */
-	mail_searchtype_change: function()
+	mail_searchtype_change: function(ev, filter)
 	{
-		var filter = this.et2.getWidgetById('cat_id');
-		var nm = this.et2.getWidgetById(this.nm_index);
-		var dates = this.et2.getWidgetById('mail.index.datefilter');
+		const nm = this.et2.getWidgetById(this.nm_index);
+		const dates = this.et2.getWidgetById('mail.index.dates');
 		if(nm && filter)
 		{
-			switch(filter.getValue())
+			switch(filter.value)
 			{
 				case 'bydate':
-
 					if (filter && dates)
 					{
 						dates.set_disabled(false);
-						if (this.et2.getWidgetById('startdate')) jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
+						const filterDrawer = filter.closest('egw-app').filtersDrawer;
+						if (ev && filterDrawer && !filterDrawer.open)
+						{
+							filterDrawer.open = true;
+						}
+						ev && window.setTimeout(() => dates.getWidgetById('startdate').focus());
 					}
 					this.mail_callRefreshVacationNotice();
 					return true;
@@ -6612,7 +6620,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * Use as onchange on these filters (named like the ones in NM!)
 	 *
-	 * Please note: copied from egw_app.ts, no need to port to TS!
+	 * Please note: copied from egw_app.ts, need to overwrite instead to call this.mail_searchtype_change() for cat_id
 	 *
 	 * @param _ev
 	 * @param _widget
@@ -6624,9 +6632,13 @@ app.classes.mail = AppJS.extend(
 		const filters = {};
 		switch(_widget.id)
 		{
+			case 'cat_id':
+				filters[_widget.id] = _widget.value;
+				// open/close date filters
+				this.mail_searchtype_change(_ev, _widget);
+				break;
 			case 'filter':
 			case 'filter2':
-			case 'cat_id':
 			case 'search':
 				filters[_widget.id] = _widget.value;
 				break;
