@@ -2709,6 +2709,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	set_filter_template(template : string | Et2Template)
 	{
+		if(this._filterbox && Array.from(this._filterbox.querySelectorAll("et2-template")).filter(t => t == template || t.url == template).length > 0)
+		{
+			// Same thing
+			return;
+		}
 		if(this._filterbox)
 		{
 			this._filterbox.childNodes.forEach(n => n.remove());
