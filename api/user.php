@@ -29,18 +29,21 @@ include '../header.inc.php';
 // release session, as we dont need it and it blocks parallel requests
 $GLOBALS['egw']->session->commit_session();
 
-// use an etag over config and link-registry
-$preferences['common'] = $GLOBALS['egw_info']['user']['preferences']['common'];
-// send users timezone offset to client-side
-$preferences['common']['timezoneoffset'] = -Api\DateTime::$user_timezone->getOffset(new Api\DateTime('now')) / 60;
-foreach(['addressbook', 'notifications', 'status', 'filemanager'] as $app)
+$preferences = [];
+foreach($GLOBALS['egw_info']['user']['preferences'] /*['addressbook', 'notifications', 'status', 'filemanager']*/ as $app => $prefs)
 {
-	if (!empty($GLOBALS['egw_info']['user']['apps'][$app]))
+	if ($app === 'common')
 	{
-		$preferences[$app] = $GLOBALS['egw_info']['user']['preferences'][$app];
+		$prefs['timezoneoffset'] = -Api\DateTime::$user_timezone->getOffset(new Api\DateTime('now')) / 60;
+		$preferences[$app] = $prefs;
+	}
+	elseif (!empty($GLOBALS['egw_info']['user']['apps'][$app]))
+	{
+		$preferences[$app] = $prefs;
 	}
 }
 $user = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
+// use an etag over preferences and user-data
 $etag = '"'.md5(json_encode($preferences).$user).'"';
 
 // headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
