@@ -418,11 +418,14 @@ class kdots_framework extends Api\Framework\Ajax
 	public function _get_css(array $themes_to_check = array())
 	{
 		static $theme_map = array(
+			'glassy'    => 'glassy',
+			'classic' => 'classic',
 			'pixelegg' => 'classic',
 			'fancy'    => 'glassy'
 		);
 		$theme = $GLOBALS['egw_info']['user']['preferences']['common']['theme'];
-		$GLOBALS['egw_info']['user']['preferences']['common']['theme'] = $theme = $theme_map[$theme] ?? $theme;
+		$GLOBALS['egw_info']['user']['preferences']['common']['theme'] = $theme = $theme_map[$theme] ??
+			(isset($this->list_themes()[$theme]) ? $theme : 'glassy');
 		$themes_to_check[] = $this->template_dir . '/css/themes/' . $theme . '.css';
 		$ret = parent::_get_css($themes_to_check);
 

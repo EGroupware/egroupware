@@ -350,5 +350,5 @@ else
 		}
 	}
 
-	$GLOBALS['egw']->framework->login_screen($extra_vars, $force_password_change);
+	$GLOBALS['egw']->framework->login_screen($extra_vars??null, $force_password_change??null);
 }

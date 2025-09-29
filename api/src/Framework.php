@@ -110,20 +110,15 @@ abstract class Framework extends Framework\Extra
 			$GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile' ||
 			empty($GLOBALS['egw_info']['server']['template_set'])) ||
 			// change old pixelegg, idots and jerryr to our new standard kdots template
-			in_array($GLOBALS['egw_info']['server']['template_set'], array('idots', 'jerryr', 'pixelegg')))
+			in_array($GLOBALS['egw_info']['server']['template_set'], array('default', 'idots', 'jdots', 'jerryr', 'pixelegg')))
 		{
 			$GLOBALS['egw_info']['server']['template_set'] = 'kdots';
 		}
-		if($GLOBALS['egw_info']['user']['preferences']['common']['template_set'] !== $GLOBALS['egw_info']['server']['template_set'] &&
+		elseif($GLOBALS['egw_info']['user']['preferences']['common']['template_set'] !== $GLOBALS['egw_info']['server']['template_set'] &&
 			class_exists($class = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] . '_framework')
 		)
 		{
 			$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
-		}
-		// then jdots aka Stylite template
-		if (file_exists(EGW_SERVER_ROOT.'/jdots') && empty($GLOBALS['egw_info']['server']['template_set']))
-		{
-			$GLOBALS['egw_info']['server']['template_set'] = 'jdots';
 		}
 		// eg. "default" is only used for login at the moment
 		if (!class_exists($class=$GLOBALS['egw_info']['server']['template_set'].'_framework'))
