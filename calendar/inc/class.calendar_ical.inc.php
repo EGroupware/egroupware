@@ -1111,10 +1111,21 @@ class calendar_ical extends calendar_boupdate
 
 		// hack to fix iCalendar exporting EXDATE|RDATE always postfixed with a Z
 		// EXDATE can have multiple values and therefore be folded into multiple lines
-		return preg_replace_callback("/^(EXDATE|RDATE);TZID=[^:]+:[0-9TZ \r\n,]+/m", static function($matches)
+		$retval = preg_replace_callback("/^(EXDATE|RDATE);TZID=[^:]+:[0-9TZ \r\n,]+/m", static function($matches)
 			{
 				return preg_replace('/([0-9 ])Z/', '$1', $matches[0]);
 			}, $retval);
+
+		// hack fix iCalendar export adding a seemingly empty line, if (wrapped) line has exactly 75 chars:
+		// ATTENDEE;CN=Yxyxy
+		//  Xyxyxyxyxyx;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;CUTYPE=INDIVIDUAL;
+		// RSVP=TRUE;X-EGROUPWARE-UID=51:mailto:Yxyxy.Xyxyxyxyxyx@eaeaeaeaeaeaeae.com
+		//  <-- here ends the line (it has one space!)
+		// ATTENDEE;CN=...
+		// not sure if this is correct, but it seems to break some iCal parser
+		$retval = str_replace("\r\n \r\n", "\r\n", $retval);
+
+		return $retval;
 	}
 
 	/**
