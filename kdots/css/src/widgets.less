@@ -110,6 +110,7 @@ div.et2_nextmatch {
   --sl-input-icon-color: var(--application-header-text-color);
   --sl-input-color-hover: var(--application-header-text-color);
   --sl-input-placeholder-color: var(--application-header-text-color);
+  --focus-background-color: hsla(from var(--application-header-text-color) h s l /0.18);
 
 
   ::part(listbox) {
@@ -127,6 +128,9 @@ div.et2_nextmatch {
 	.et2_label{
 	  color: var(--application-header-text-color);
 	}
+	&::part(button){
+	  --sl-input-border-color-hover: transparent;
+	}
   }
 
   *::part(base), *::part(button__base), ::part(control) {
@@ -138,6 +142,20 @@ div.et2_nextmatch {
 	font-size: var(--sl-font-size-x-large, 20px);
   }
 
+
+  /****
+INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
+ ****/
+
+  .et2-input-widget:focus-within {
+	--sl-input-background-color: var(--focus-background-color);
+	--sl-input-background-color-focus: var(--focus-background-color);
+	--sl-input-border-color: var(--sl-input-border-color-hover);
+	&::part(input){
+	  background-color: var(--focus-background-color);
+	}
+
+  }
 
   /*HOVER effect on all clickable elements in the main-header*/
   /*we also want to style the clickable elements in the whole header in the same way*/
@@ -153,7 +171,7 @@ div.et2_nextmatch {
 	  -webkit-text-fill-color: var(--application-header-text-color);
 	  -webkit-box-shadow: 0 0 0 50px var(--sl-input-background-color) inset; /* Box shadow hides the default background color */
 	}
-	&::part(label){
+	&[label]::part(label){
 	  padding-inline-start: var(--sl-spacing-2x-small);
 	}
 

@@ -65,6 +65,7 @@
 :host .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
 .kdots-glassy .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox) {
   --sl-input-background-color: var(--sl-color-neutral-0);
+  color: var(--sl-color-neutral-700);
 }
 :root *[slot="main-header"] *::part(base),
 :host *[slot="main-header"] *::part(base),

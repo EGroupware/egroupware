@@ -919,7 +919,11 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
   --sl-input-icon-color: var(--application-header-text-color);
   --sl-input-color-hover: var(--application-header-text-color);
   --sl-input-placeholder-color: var(--application-header-text-color);
+  --focus-background-color: hsla(from var(--application-header-text-color) h s l / 0.18);
   color: var(--application-header-text-color);
+  /****
+INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
+ ****/
   /*HOVER effect on all clickable elements in the main-header*/
   /*we also want to style the clickable elements in the whole header in the same way*/
   /*END HOVER*/
@@ -941,6 +945,10 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 [slot="main-header"] et2-file .et2_label {
   color: var(--application-header-text-color);
 }
+[slot="main-header"] et2-vfs-upload::part(button),
+[slot="main-header"] et2-file::part(button) {
+  --sl-input-border-color-hover: transparent;
+}
 [slot="main-header"] *::part(base),
 [slot="main-header"] *::part(button__base),
 [slot="main-header"] ::part(control) {
@@ -949,6 +957,14 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
 }
 [slot="main-header"] et2-switch-icon::part(control) {
   font-size: var(--sl-font-size-x-large, 20px);
+}
+[slot="main-header"] .et2-input-widget:focus-within {
+  --sl-input-background-color: var(--focus-background-color);
+  --sl-input-background-color-focus: var(--focus-background-color);
+  --sl-input-border-color: var(--sl-input-border-color-hover);
+}
+[slot="main-header"] .et2-input-widget:focus-within::part(input) {
+  background-color: var(--focus-background-color);
 }
 [slot="main-header"] .et2_clickable,
 [slot="main-header"] et2-image,
@@ -970,9 +986,9 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_g
   -webkit-box-shadow: 0 0 0 50px var(--sl-input-background-color) inset;
   /* Box shadow hides the default background color */
 }
-[slot="main-header"] .et2_clickable::part(label),
-[slot="main-header"] et2-image::part(label),
-[slot="main-header"] .et2-input-widget:not(et2-toolbar)::part(label) {
+[slot="main-header"] .et2_clickable[label]::part(label),
+[slot="main-header"] et2-image[label]::part(label),
+[slot="main-header"] .et2-input-widget:not(et2-toolbar)[label]::part(label) {
   padding-inline-start: var(--sl-spacing-2x-small);
 }
 [slot="main-header"] .et2_clickable::part(control),
