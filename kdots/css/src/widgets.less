@@ -218,8 +218,11 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 	flex: 1 1 auto;
 
 	//No divider in our kdots toolbar
-	sl-button-group {background:none;}
-	et2-dropdown-button{
+	sl-button-group {
+	  background: none;
+	}
+
+	et2-dropdown-button {
 	  ::part(base) {
 		background-color: transparent;
 		color: currentColor;
@@ -260,15 +263,30 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 		--image-filter: none;
 		--image-filter-off: none;
 	  }
+
 	  ////since our placeholders also already carry a mening we should style them the same
 	  //&::part(input)::placeholder {
-		//color: var(--sl-color-neutral-700);
+	  //color: var(--sl-color-neutral-700);
 	  //}
 	  :hover::part(base) {
 		border-color: var(--sl-input-border-color);
 	  }
 	}
   }
+	/****
+	*
+	* Make Elements in the main-header waste less space if possible
+	*
+	 ****/
+
+  	et2-toolbar *::part(base) {
+	  width: fit-content;
+	}
+
+	et2-select-cat::part(input) {
+	  flex-grow: 0;
+	}
+
 
   /* Don't let search grow */
 
