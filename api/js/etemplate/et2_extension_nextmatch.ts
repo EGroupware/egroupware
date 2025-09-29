@@ -59,7 +59,6 @@ import {et2_nextmatch_controller} from "./et2_extension_nextmatch_controller";
 import {et2_dataview} from "./et2_dataview";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_customfields_list} from "./et2_extension_customfields";
-import {et2_link_to} from "./et2_widget_link";
 import {et2_grid} from "./et2_widget_grid";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {et2_dynheight} from "./et2_widget_dynheight";
@@ -2508,7 +2507,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	set_template(template_name : string)
 	{
-		const template = <Et2Template>loadWebComponent("et2-template", {
+		if(this.egw().debug_level() >= 4)
+		{
+			window.performance.mark("mark_nextmatch_row_template_" + template_name + "_start");
+		}
+		const template = <Et2Template><unknown>loadWebComponent("et2-template", {
 			"id": template_name,
 			class: "hideme"
 		}, this);
@@ -2530,6 +2533,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// loops if the server changes the template in get_rows
 			if(this.template == template_name)
 			{
+				if(this.egw().debug_level() >= 4)
+				{
+					window.performance.mark("mark_nextmatch_row_template_" + template_name + "_end");
+				}
 				return;
 			}
 
@@ -2666,7 +2673,16 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					this.resize();
 				});
 			}
-		).finally(() => this.template_promise = null);
+		).finally(() =>
+		{
+			this.template_promise = null
+			if(this.egw().debug_level() >= 4)
+			{
+				window.performance.mark("mark_nextmatch_row_template_" + template_name + "_end");
+				window.performance.measure(`nextmatch#${this.id}.set_template(${template_name})`, "mark_nextmatch_row_template_" + template_name + "_start", "mark_nextmatch_row_template_" + template_name + "_end");
+			}
+		});
+
 		this.template_promise.widget = this;
 
 		// Explictly add template to DOM since it won't happen otherwise, and webComponents need to be in the DOM
