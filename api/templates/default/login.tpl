@@ -35,9 +35,9 @@
 					<input name="passwd" tabindex="5" value="{passwd}" type="password" size="30"  alia-label="{lang_password}"/>
                 </div>
 				<!-- BEGIN 2fa_section -->
-				<div class="{2fa_class}">
+				<div>
 					<span class="field_icons password">{lang_2fa}</span>
-					<input name="2fa_code" tabindex="6" size="30" aria-label="{lang_2fa}" title="{lang_2fa_help}" aria-description="{lang_2fa_help}"/>
+					<input class="{2fa_class}" name="2fa_code" tabindex="6" size="30" aria-label="{lang_2fa}" title="{lang_2fa_help}" aria-description="{lang_2fa_help}"/>
 				</div>
 				<!-- END 2fa_section -->
 				<!-- BEGIN remember_me_selection -->

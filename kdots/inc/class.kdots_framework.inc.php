@@ -58,7 +58,7 @@ class kdots_framework extends Api\Framework\Ajax
 			while(($file = readdir($dh)))
 			{
 				if(preg_match('/' . "\.css$" . '/i', $file) &&
-					!in_array($file, ['mobile.css', 'mobile.min.css']))
+					!in_array($file, ['dark.css', 'light.css', 'mobile.css', 'mobile.min.css']))
 				{
 					list($name) = explode('.', $file);
 					if(!isset($list[$name]))

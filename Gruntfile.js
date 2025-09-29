@@ -1,10 +1,10 @@
 /**
  * EGroupware Gruntfile.js
  *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @link https://www.egroupware.org
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Ralf Becker <rb@egroupware.org>
- * @copyright (c) 2016-21 by Ralf Becker <rb@egroupware.org>
+ * @copyright (c) 2016-25 by Ralf Becker <rb@egroupware.org>
  */
 
 /**
@@ -37,62 +37,27 @@ module.exports = function (grunt) {
 				sourceMap: true,
 				rebase: true
 			},
-			pixelegg: {
+			kdots: {
 				files: {
-					"pixelegg/css/fancy.min.css": [
+					"kdots/css/themes/glassy.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
 						"node_modules/diff2html/bundles/css/diff2html.min.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
-						"pixelegg/css/fancy.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
+						"kdots/css/themes/glassy.css",
+						"api/templates/default/print.css"
 					],
-					"pixelegg/css/icontabs.min.css": [
+					"kdots/css/themes/classic.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
 						"node_modules/diff2html/bundles/css/diff2html.min.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
-						"pixelegg/css/icontabs.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
-					],
-					"pixelegg/css/pixelegg.min.css": [
-						"node_modules/flatpickr/dist/themes/light.css",
-						"node_modules/diff2html/bundles/css/diff2html.min.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
-						"pixelegg/css/pixelegg.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
-					],
-					"pixelegg/css/mobile.min.css": [
-						"node_modules/flatpickr/dist/themes/light.css",
-						"node_modules/diff2html/bundles/css/diff2html.min.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
-						"pixelegg/css/mobile.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
-					],
-					"pixelegg/mobile/fw_mobile.min.css": [
-						"node_modules/flatpickr/dist/themes/light.css",
-						"node_modules/diff2html/bundles/css/diff2html.min.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
-						"pixelegg/mobile/fw_mobile.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
+						"kdots/css/themes/classic.css",
+						"api/templates/default/print.css"
 					]
 				}
 			}
