@@ -4,9 +4,9 @@
 <script>
 
 window.setTimeout(() => {
-    if (egw && egw.loading_prompt)
+    if (window.egw && typeof window.egw.loading_prompt === 'function')
     {
-        egw.loading_prompt('db_backup', false);
+        window.egw.loading_prompt('db_backup', false);
     }
 }, 500);
 

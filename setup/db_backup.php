@@ -170,7 +170,7 @@ if (!empty($_POST['backup']))
 }
 $setup_tpl->set_var('backup_now_button','<input type="submit" name="backup" title="'.
 	htmlspecialchars(lang("back's up your DB now, this might take a few minutes")).'" value="'.htmlspecialchars(lang('backup now')).
-	'" onclick="if (egw && egw.loading_prompt) egw.loading_prompt(\'db_backup\', true, \''.htmlspecialchars(lang('backup started, this might take a few minutes ...')).'\'); return true;" />');
+	'" onclick="if (window.egw && window.egw.loading_prompt) window.egw.loading_prompt(\'db_backup\', true, \''.htmlspecialchars(lang('backup started, this might take a few minutes ...')).'\'); return true;" />');
 $setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 	'<input type="submit" name="upload" value="'.htmlspecialchars(lang('upload backup')).'" title="'.htmlspecialchars(lang("uploads a backup to the backup-dir, from where you can restore it")).'" />');
 $setup_tpl->set_var('backup_mincount','<input type="text" name="backup_mincount" value="'.$db_backup->backup_mincount.'" size="3" maxlength="3"/>');
@@ -271,7 +271,7 @@ foreach($db_backup->index() as $file => $attrs)
 			'<input name="new_name['.$file.']" value="" size="15" /><input type="submit" name="rename['.$file.']" value="'.htmlspecialchars(lang('rename')).'" />&nbsp;'."\n".
 			'<input type="submit" name="restore['.$file.']" value="'.htmlspecialchars(lang('restore')).'" onclick="if (confirm(\''.
 				htmlspecialchars(lang('Restoring a backup will delete/replace all content in your database. Are you sure?')).
-				'\')) { if (egw && egw.loading_prompt) egw.loading_prompt(\'db_backup\', true, \''.htmlspecialchars(lang('restore started, this might take a few minutes ...')).
+				'\')) { if (window.egw && window.egw.loading_prompt) window.egw.loading_prompt(\'db_backup\', true, \''.htmlspecialchars(lang('restore started, this might take a few minutes ...')).
 				'\'); return true; } else return false;" />'),
 	));
 	$setup_tpl->parse('set_rows','set_row',true);
