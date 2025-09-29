@@ -302,6 +302,15 @@ export default css`
 		}
 	}
 
+	et2-menu-item::part(popup) {
+		border: none;
+		border-radius: var(--sl-panel-border-radius);
+	}
+
+	sl-menu {
+		border-radius: var(--sl-panel-border-radius);
+	}
+
 	et2-favorites-menu::part(menu), &::part(base) {
 		border: none;
 	}

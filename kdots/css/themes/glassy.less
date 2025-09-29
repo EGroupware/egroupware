@@ -33,6 +33,13 @@
 	}
   }
 
+  sl-popup::part(popup) {
+	border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+	border-radius: var(--sl-panel-border-radius);
+  }
+
+
+
   /* Input field changes */
   .et2-input-widget {
 	&:not([disabled]):not([slot="main-header"]):not([slot="header-actions"]) {

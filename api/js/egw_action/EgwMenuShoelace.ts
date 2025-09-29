@@ -26,35 +26,40 @@ export class EgwMenuShoelace extends LitElement
 
 				sl-menu {
 					box-shadow: var(--sl-shadow-x-large);
+					border-radius: var(--sl-panel-border-radius);
 				}
 
-				/* sl-menu-item:host overrides display */
+				/* et2-menu-item:host overrides display */
 
-				sl-menu-item[hidden], sl-divider[hidden] {
+				et2-menu-item[hidden], sl-divider[hidden] {
 					display: none !important;
 				}
 
-				sl-menu-item::part(base) {
+				et2-menu-item::part(base) {
 					height: 1.7em;
 					line-height: var(--sl-line-height-dense);
 					align-items: center;
 					padding: 0;
 				}
 
-				sl-menu-item::part(prefix) {
+				et2-menu-item::part(prefix) {
 					min-width: var(--sl-spacing-2x-large);
 				}
 
 				/* Customise checkbox menuitem */
 
-				sl-menu-item[type="checkbox"]::part(checked-icon) {
+				et2-menu-item[type="checkbox"]::part(checked-icon) {
 					visibility: hidden;
 				}
 
-				sl-menu-item[type="checkbox"]:not([checked])::part(checked-icon) {
+				et2-menu-item[type="checkbox"]:not([checked])::part(checked-icon) {
 					color: var(--sl-color-neutral-300);
 				}
 
+				et2-menu-item::part(popup) {
+					border: none;
+					border-radius: var(--sl-panel-border-radius);
+				}
 				et2-image {
 					line-height: normal;
 					width: 1.3em;
@@ -144,7 +149,7 @@ export class EgwMenuShoelace extends LitElement
 		{
 			// Causes scroll issues if we don't position
 			this.popup.popup.style = "top: 0px";
-			(<SlMenuItem>this.menu.querySelector('sl-menu-item'))?.focus();
+			(<SlMenuItem>this.menu.querySelector('et2-menu-item'))?.focus();
 		});
 	}
 
@@ -156,7 +161,7 @@ export class EgwMenuShoelace extends LitElement
 	public applyContext(_links, _selected, _target)
 	{
 		// Reset & hide all, in case some actions were not included in links
-		this.menu.querySelectorAll("sl-menu-item").forEach(i => i.disabled = i.hidden = true);
+		this.menu.querySelectorAll("et2-menu-item").forEach(i => i.disabled = i.hidden = true);
 		this.menu.querySelectorAll("sl-divider").forEach(i => i.hidden = false);
 
 		Object.keys(_links).forEach((actionId) =>
@@ -179,7 +184,7 @@ export class EgwMenuShoelace extends LitElement
 		// Hide dividers before empty sections
 		try
 		{
-			this.menu.querySelectorAll("sl-divider:not(:has( + sl-menu-item:not([hidden])))").forEach((i: SlDivider) => i.hidden = true);
+			this.menu.querySelectorAll("sl-divider:not(:has( + et2-menu-item:not([hidden])))").forEach((i : SlDivider) => i.hidden = true);
 		}catch (e)
 		{
 			console.log("It appears you are using an older browser version, please consider updating")
@@ -234,7 +239,7 @@ export class EgwMenuShoelace extends LitElement
 
 	handleCheckboxClick(event)
 	{
-		const check = event.target.closest("sl-menu-item");
+		const check = event.target.closest("et2-menu-item");
 		if(!check || check.parentElement == this)
 		{
 			return;
@@ -315,7 +320,7 @@ export class EgwMenuShoelace extends LitElement
 				// Wait for child creation
 				await childPromise;
 				// Wait for child render
-				await Promise.all((<SlMenuItem[]>Array.from(element.querySelectorAll('sl-menu-item')))
+				await Promise.all((<SlMenuItem[]>Array.from(element.querySelectorAll('et2-menu-item')))
 					.map(e => e.updateComplete));
 				// No longer loading
 				setTimeout(() =>
@@ -326,7 +331,7 @@ export class EgwMenuShoelace extends LitElement
 		};
 		const captionStyle=item.color?`color:${item.color};`:''+item.indentation?`padding-left:${item.indentation}em;`:'';
 		return html`
-            <sl-menu-item
+            <et2-menu-item
                     class=${classMap({
                         "default-item": item.default
                     })}
@@ -349,7 +354,7 @@ export class EgwMenuShoelace extends LitElement
                 ${item.children.length == 0 ? nothing : html`
                         ${until(childPromise)}
                 `}
-            </sl-menu-item>
+            </et2-menu-item>
 		`;
 	}
 

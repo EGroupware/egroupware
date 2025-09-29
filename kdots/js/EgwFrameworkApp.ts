@@ -1181,7 +1181,7 @@ export class EgwFrameworkApp extends LitElement
 			}
 		}
 		return html`
-            <sl-menu-item>
+            <et2-menu-item exportparts="popup">
                 ${menu["title"]}
                 <sl-menu slot="submenu">
                     ${repeat(menu["entries"], (entry) =>
@@ -1189,7 +1189,7 @@ export class EgwFrameworkApp extends LitElement
                         return this._applicationSubMenuItemTemplate(entry);
                     })}
                 </sl-menu>
-            </sl-menu-item>`;
+            </et2-menu-item>`;
 	}
 
 	/**
