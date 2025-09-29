@@ -1125,7 +1125,8 @@ EOF;
 		}
 		// add configuration, link-registry, images, user-data and -preferences for non-popup windows
 		// specifying etag in url to force reload, as we send expires header
-		if ($GLOBALS['egw_info']['flags']['js_link_registry'] || !isset($_GET['cd']) || isset($_GET['cd']) && $_GET['cd'] === 'popup')
+		if (basename($_SERVER['PHP_SELF']) !== 'login.php' &&
+			($GLOBALS['egw_info']['flags']['js_link_registry'] || !isset($_GET['cd']) || isset($_GET['cd']) && $_GET['cd'] === 'popup'))
 		{
 			self::includeJS('/api/config.php', array(
 				'etag' => md5(json_encode(Config::clientConfigs()).Link::json_registry()),
