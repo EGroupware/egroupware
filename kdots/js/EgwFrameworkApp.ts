@@ -1152,7 +1152,18 @@ export class EgwFrameworkApp extends LitElement
 			return nothing;
 		}
 
-		return html`${repeat(this._sideboxData, (menu) => menu['menu_name'], this._applicationMenuItemTemplate.bind(this))}`;
+		// Sub-menus call getComputedStyle() so are expensive, defer them until later
+		const menuPromise = new Promise(resolve =>
+		{
+			setTimeout(() =>
+			{
+				resolve(
+					html`${repeat(this._sideboxData, (menu) => menu['menu_name'], this._applicationMenuItemTemplate.bind(this))}`
+				);
+			});
+		});
+
+		return html`${until(menuPromise, nothing)}`;
 	}
 
 	/**
