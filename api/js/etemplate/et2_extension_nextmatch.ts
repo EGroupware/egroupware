@@ -2622,15 +2622,19 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// This triggers a cache check if visible
 			if(!this.options.settings.num_rows && this.controller)
 			{
-				if(jQuery(this.getDOMNode()).filter(":visible").length > 0)
+				// need to defer the visible check a little, as ViDoTeach course-list is not rendered otherwise
+				window.setTimeout(() =>
 				{
-					this.controller.update();
-				}
-				else
-				{
-					// Not visible, queue it up
-					this._queue_refresh([], et2_nextmatch.EDIT);
-				}
+					if (jQuery(this.getDOMNode()).filter(":visible").length > 0)
+					{
+						this.controller.update();
+					}
+					else
+					{
+						// Not visible, queue it up
+						this._queue_refresh([], et2_nextmatch.EDIT);
+					}
+				});
 			}
 
 			// Load the default sort order
