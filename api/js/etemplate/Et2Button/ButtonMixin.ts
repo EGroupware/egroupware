@@ -273,7 +273,7 @@ so we force the button images to be square*/
 		}
 
 		// Submit the form
-		if(!this.noSubmit)
+		if(!this.noSubmit && this.getInstanceManager())
 		{
 			return this.getInstanceManager().submit(this, undefined, this.noValidation);
 		}
