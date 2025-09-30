@@ -927,6 +927,11 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
   /*HOVER effect on all clickable elements in the main-header*/
   /*we also want to style the clickable elements in the whole header in the same way*/
   /*END HOVER*/
+  /****
+	*
+	* Make Elements in the main-header waste less space if possible
+	*
+	 ****/
   /* Don't let search grow */
 }
 [slot="main-header"] ::part(listbox) {
@@ -1072,6 +1077,12 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 [slot="main-header"] et2-toolbar [slot="list"] :hover::part(base) {
   border-color: var(--sl-input-border-color);
 }
+[slot="main-header"] et2-toolbar *::part(base) {
+  width: fit-content;
+}
+[slot="main-header"] et2-select-cat::part(input) {
+  flex-grow: 0;
+}
 [slot="main-header"] [id$="api-search-button"] {
   flex: 0 0 min-content;
 }
@@ -1196,7 +1207,8 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
     /*box-shadow: 0px 4px 5px 2px silver;*/
     width: 100%;
     margin-top: 0px;
-    background: #0c5da5;
+    background: var(--sl-color-primary-700);
+    color: var(--application-header-text-color, var(--sl-color-neutral-100));
     /* Allow buttons to wrap */
     flex-wrap: wrap;
   }
@@ -1285,6 +1297,7 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
     border: none;
     background: transparent;
     justify-content: center;
+    color: var(--sl-color-neutral-100);
   }
   :root et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label),
   body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label) {

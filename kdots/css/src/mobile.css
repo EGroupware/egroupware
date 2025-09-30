@@ -103,7 +103,8 @@
     /*box-shadow: 0px 4px 5px 2px silver;*/
     width: 100%;
     margin-top: 0px;
-    background: #0c5da5;
+    background: var(--sl-color-primary-700);
+    color: var(--application-header-text-color, var(--sl-color-neutral-100));
     /* Allow buttons to wrap */
     flex-wrap: wrap;
   }
@@ -192,6 +193,7 @@
     border: none;
     background: transparent;
     justify-content: center;
+    color: var(--sl-color-neutral-100);
   }
   :root et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label),
   body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label) {
