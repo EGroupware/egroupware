@@ -897,6 +897,10 @@ export class EgwFrameworkApp extends LitElement
 
 		// Stop splitter from resizing while app is not active
 		this.ignoreSplitterResize = true;
+		if(!this.rightSplitter)
+		{
+			await this.updateComplete;
+		}
 		this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
 	}
 
