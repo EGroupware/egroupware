@@ -293,17 +293,14 @@ pre {
 .mail-index_quotaDisplayNone {
 	display: none !important;
 }
-.mail-index_QuotaGreen, .mail-index_QuotaYellow, .mail-index_QuotaRed {
-	width: 5em !important;
-}
 .mail-index_QuotaGreen > div {
-	background-color: green !important;
+	background-color: var(--sl-color-green-600,green) !important;
 }
 .mail-index_QuotaYellow > div {
-	background-color: yellow !important;
+	background-color: var(--sl-color-yellow-400,yellow )!important;
 }
 .mail-index_QuotaRed > div {
-	background-color: red !important;
+	background-color: var(--sl-color-red-600,red )!important;
 }
 
 #mail-index #mail-index_nm .status_icons {
