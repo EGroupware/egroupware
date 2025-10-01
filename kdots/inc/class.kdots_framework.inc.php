@@ -429,14 +429,29 @@ class kdots_framework extends Api\Framework\Ajax
 		$themes_to_check[] = $this->template_dir . '/css/themes/' . $theme . '.css';
 		$ret = parent::_get_css($themes_to_check);
 
-		$template_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'] ?? 'none';
-		$loginbox_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color'] ?? '#404040';
-		$ret['app_css'] .= "
-			:root, :host, body {
-				--template-custom-color: $template_custom_color;
-				--loginbox-custom-color: $loginbox_custom_color;
+		$template_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'] ?? false;
+		$loginbox_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color'] ??
+			$template_custom_color ? "hsl(from red h s calc(l - 20))" : false;
+		// hsl(from $template-custom-color h s calc(l-20)
+		//only add custom color definitions to the head css if we actually have custom colors
+		if ($loginbox_custom_color || $template_custom_color)
+		{
+			$ret['app_css'] .= "
+			:root, :host, body {";
+			if ($template_custom_color)
+			{
+				$ret['app_css'] .= "
+				--template-custom-color: $template_custom_color;";
+			}
+			if ($loginbox_custom_color)
+			{
+				$ret['app_css'] .= "
+				--loginbox-custom-color: $loginbox_custom_color;";
+			}
+			$ret['app_css'] .= "
 			}
 		";
+		}
 		// add css file incl. cache-buster
 		$css_file = '/kdots/css/kdots.css';
 		$css_file .= '?' . filemtime(EGW_SERVER_ROOT.$css_file);
