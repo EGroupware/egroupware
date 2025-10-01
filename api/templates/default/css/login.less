@@ -103,6 +103,11 @@ div#loginScreenMessage {
 	&:has(div#egw_message:empty) {
 		display: none;
 	}
+	&:not(:hover){
+	  .close{
+		display: none;
+	  }
+	}
 
 	#egw_message {
 	  display: flex;
@@ -116,6 +121,10 @@ div#loginScreenMessage {
 	.close {
 	  cursor: pointer;
 	  font-size: .5em;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  width: 2em;
 	}
   }
 

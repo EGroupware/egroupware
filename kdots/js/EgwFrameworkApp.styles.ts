@@ -58,7 +58,7 @@ export default css`
 		/* Needed for flex to shrink nicely */
 		min-width: 2em;
 
-		background-color: var(--application-color, var(--primary-background-color));
+		background-color: var(--template-custom-color, var(--application-color, var(--primary-background-color)));
 		color: var(--application-header-text-color);
 		--sl-input-color: var(--application-header-text-color);
 		font-size: var(--sl-font-size-x-large);

@@ -97,6 +97,9 @@ div#loginScreenMessage {
 #loginMainDiv .egw_message_wrapper:has(div#egw_message:empty) {
   display: none;
 }
+#loginMainDiv .egw_message_wrapper:not(:hover) .close {
+  display: none;
+}
 #loginMainDiv .egw_message_wrapper #egw_message {
   display: flex;
   color: var(--sl-color-neutral-900) !important;
@@ -107,6 +110,10 @@ div#loginScreenMessage {
 #loginMainDiv .egw_message_wrapper .close {
   cursor: pointer;
   font-size: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
 }
 #loginMainDiv #divAppIconBar {
   display: flex;
