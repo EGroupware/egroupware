@@ -415,7 +415,7 @@ EOT, $this->header([
 			}
 			elseif (($event = $ical_class->read(['#sync-href' => $href])))
 			{
-				$ical_class->delete($event['id']);
+				$ical_class->delete($event['id'], 0, true, true);
 			}
 		}
 	}
@@ -495,7 +495,7 @@ EOT, $this->header([
 		// delete NOT imported $old_events
 		foreach($old_events as $old_event)
 		{
-			$ical_class->delete($old_event['id']);
+			$ical_class->delete($old_event['id'], 0, true, true);
 		}
 	}
 
@@ -562,7 +562,7 @@ EOT, $this->header([
 		// delete NOT imported $old_events
 		foreach($old_events as $old_event)
 		{
-			$ical_class->delete($old_event['id']);
+			$ical_class->delete($old_event['id'], 0, true, true);
 		}
 		$etag = $response_header['etag'];
 	}
