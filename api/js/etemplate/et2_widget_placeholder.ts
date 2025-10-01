@@ -194,7 +194,7 @@ export class et2_placeholder_select extends et2_inputWidget
 			width: ''
 		});
 		document.body.appendChild(<HTMLElement><unknown>this.dialog);
-		this.dialog.addEventListener('open', this._on_template_load.bind(this));
+		this.dialog.addEventListener('load', this._on_template_load.bind(this));
 	}
 
 	doLoadingFinished()
