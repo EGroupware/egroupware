@@ -1219,7 +1219,7 @@ export class EgwFramework extends LitElement
                     ?active=${app.active}
                     style="--application-color: var(--${app.name}-color)">
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
-                    <et2-image part="tab-icon" src="${app.icon}"></et2-image>
+                    <et2-image part="tab-icon" src="${app.icon}" inline></et2-image>
                 </sl-tooltip>
             </sl-tab>`;
 	}

@@ -21,8 +21,8 @@ export default css`
 
         width: 100%;
         height: 100%;
-		grid-template-columns: [start banner-start header-start footer-start main-start] 1fr [main-end header-end banner-end end];
-		grid-template-rows: [top banner] fit-content(2em) [header] fit-content(2em) [main-header] fit-content(2em) [main] 1fr [footer bottom] fit-content(2em);
+        grid-template-columns: [start banner-start header-start footer-start main-start] 1fr [main-end header-end banner-end end];
+        grid-template-rows: [top banner] fit-content(2em) [header] fit-content(2em) [main-header] fit-content(2em) [main] 1fr [footer bottom] fit-content(2em);
     }
 
     .egw_fw__layout-default > * {
@@ -75,9 +75,9 @@ export default css`
         overflow-y: auto;
     }
 
-	.egw_fw__layout-default > .egw_fw__main {
-		grid-area: main;
-	}
+    .egw_fw__layout-default > .egw_fw__main {
+        grid-area: main;
+    }
 
     .egw_fw__layout-default .egw_fw__footer {
         grid-area: footer;
@@ -87,16 +87,16 @@ export default css`
         .egw_fw__main {
             overflow: hidden;
         }
-	}
-	@media (max-width: 800px) {
-		:host(.egw_fw--left-side-collapsed) {
-			--left-side-width: 0px;
+    }
+    @media (max-width: 800px) {
+        :host(.egw_fw--left-side-collapsed) {
+            --left-side-width: 0px;
 
-			.egw_fw__header {
-				display: none;
-			}
-		}
-	}
+            .egw_fw__header {
+                display: none;
+            }
+        }
+    }
     @media (max-width: 599px) {
         ::slotted([slot="logo"]) {
             display: none;
@@ -211,7 +211,7 @@ export default css`
     /*make non active tabs a little transparent*/
 
     .egw_fw__open_applications sl-tab:not([active]) *[part='tab-icon'] {
-        opacity: var(--inactive-tab-opacity);
+        /* opacity: var(--inactive-tab-opacity);*/
     }
 
     /* unless you hover over one*/
@@ -268,10 +268,18 @@ export default css`
                 border-radius: var(--sl-border-radius-circle);
                 vertical-align: bottom;
             }
+
             @supports (-moz-appearance:none) {
                 bottom: 1.5px;
             }
         }
+    }
+
+    .egw_fw__open_applications et2-image:not([src*='/kdots/']) {
+        background-color: var(--sl-color-neutral-600);
+	    &:hover{
+            background-color: var(--application-color, var(--default-color, var(--sl-color-neutral-600)));
+	    }
     }
 
     /*Icons for applications that have a kdots specific icon*/
@@ -300,12 +308,19 @@ export default css`
             width: calc(
                     calc(2 * var(--tab-icon-spacing, 2px) +
                     var(--tab-icon-size, 32px)));
-        }
-	    @supports (-moz-appearance:none) {
-	    	*[part="image"] {
-			    vertical-align: sub;
+            height: auto;
+            color: var(--sl-color-neutral-700);
+
+            &:hover {
+                color: var(--application-color, var(--default-color, var(--sl-color-neutral-600)));
             }
-	    }
+        }
+
+        @supports (-moz-appearance:none) {
+            *[part="image"] {
+                vertical-align: sub;
+            }
+        }
     }
 
     /* needs different alignment in app_list and open_apps*/

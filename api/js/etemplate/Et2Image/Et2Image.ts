@@ -15,6 +15,7 @@ import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {until} from "lit/directives/until.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
+import {unsafeSVG} from "lit/directives/unsafe-svg.js";
 
 @customElement("et2-image")
 export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
@@ -153,6 +154,13 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		return this.style.height;
 	}
 
+	/**
+	 * Inline the svg image if possible
+	 * only works if there is a valid svg behind the source and it is inside our server root
+	 */
+	@property({type: Boolean})
+	inline = false
+
 	constructor()
 	{
 		super();
@@ -198,8 +206,26 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
                 ${until(svg, html`<span>...</span>`)}
             `
         }
+		//also inline our kdots specific navbar icons, so we have full control over them
+		if (ourSvg && url.match(/\/kdots\/.*navbar\.svg/) && this.inline)
+		{
+			const svg = fetch(url)
+				.then(res => res.text()
+					.then(text =>
+						{
+							const res = text.replace("svg", 'svg part="image"');
+							const svg = unsafeSVG(res)
+							return svg
+						}
+					)
+				);
+			return html`
+                ${until(svg, html`<span>...</span>`)}
+                </div>
+			`
+		}
 
-        // fallback case (no svg, web source)
+		// fallback case (no svg, web source)
 		return html`
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${url}"
