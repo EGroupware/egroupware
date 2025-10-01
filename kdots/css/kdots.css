@@ -1077,11 +1077,14 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 [slot="main-header"] et2-toolbar [slot="list"] :hover::part(base) {
   border-color: var(--sl-input-border-color);
 }
-[slot="main-header"] et2-toolbar *::part(base) {
-  width: fit-content;
-}
-[slot="main-header"] et2-select-cat::part(input) {
+[slot="main-header"] et2-toolbar * {
   flex-grow: 0;
+}
+[slot="main-header"] .et2-select-widget {
+  flex-grow: 0;
+}
+[slot="main-header"] .et2-select-widget::part(form-control) {
+  width: fit-content;
 }
 [slot="main-header"] [id$="api-search-button"] {
   flex: 0 0 min-content;

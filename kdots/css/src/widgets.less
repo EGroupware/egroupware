@@ -279,13 +279,17 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 	*
 	 ****/
 
-  	et2-toolbar *::part(base) {
-	  width: fit-content;
-	}
-
-	et2-select-cat::part(input) {
+  	et2-toolbar * {
 	  flex-grow: 0;
 	}
+
+  .et2-select-widget {
+	flex-grow: 0;
+
+	&::part(form-control) {
+	  width: fit-content;
+	}
+  }
 
 
   /* Don't let search grow */

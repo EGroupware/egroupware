@@ -81,7 +81,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 	connectedCallback()
 	{
 		super.connectedCallback();
-
+		this.classList.add("et2-select-widget")
 		// Default the application if not set
 		if(!this.application && this.getInstanceManager())
 		{

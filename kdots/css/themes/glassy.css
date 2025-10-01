@@ -150,7 +150,7 @@
   /* Set header size, color & background */
   box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
   color: var(--application-header-text-color, var(--sl-color-neutral-100));
-  background: var(--application-color, var(--sl-color-primary-500));
+  background: var(--application-color, var(--sl-color-primary-700));
   height: var(--sl-spacing-3x-large);
   border-top-left-radius: var(--sl-panel-border-radius);
   border-top-right-radius: var(--sl-panel-border-radius);

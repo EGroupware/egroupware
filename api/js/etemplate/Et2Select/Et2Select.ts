@@ -1142,7 +1142,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     class=${classMap({
                         "form-control--has-label": this.label !== ""
                     })}
-                    exportparts="form-control-label, prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option, icon"
+                    exportparts="form-control, form-control-label, prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option, icon"
                     label=${this.label}
                     placeholder=${this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : "")}
 					aria-label=${this.ariaLabel}
