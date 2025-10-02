@@ -306,7 +306,7 @@ class Base
 				$defaults['pass'] = urlencode($defaults['pass']);
 			}
 		}
-		$parts = array_merge(Vfs::parse_url($_path), Vfs::parse_url($path) ?: [], $defaults);
+		$parts = array_merge(Vfs::parse_url($_path) ?: [], Vfs::parse_url($path) ?: [], $defaults);
 		if(!$parts['host'])
 		{
 			// otherwise we get an invalid url (scheme:///path/to/something)!
