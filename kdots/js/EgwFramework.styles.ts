@@ -10,7 +10,8 @@ export default css`
         position: relative;
 
         --icon-size: 32px;
-        --icon-background-color: var(--sl-color-primary-400);
+	    --tmp: hsl(from var(--template-custom-color) h max(calc(s * 0.3),25) min(calc(l * 2),80) / 1);
+        --icon-background-color: var(--tmp,var(--sl-color-primary-400));
         --inactive-tab-opacity: 0.5;
         --header-icon-size: 1.5rem;
         --left-side-width: 200px;
@@ -208,8 +209,16 @@ export default css`
     .egw_fw__open_applications sl-tab:last-of-type {
         flex: 0 0 auto;
     }
+	
+    /*make non active tabs a little transparent if we use our colorful icons*/
+    /* unless you hover over one*/
 
-    /*make active tab colorful*/
+    .egw_fw__open_applications sl-tab:not([active]).colorful *[part='tab-icon'] {
+	    opacity: var(--inactive-tab-opacity);
+	    &:hover{
+		    opacity: 1;
+	    }
+    }
 
     .egw_fw__open_applications sl-tab::part(base) {
         padding: 0px;
@@ -266,8 +275,19 @@ export default css`
         }
     }
 /***
-coloring of app icons
+coloring of app icons with our monotone colors
  */
+    /*make non active crm view tabs a little transparent*/
+
+    .egw_fw__open_applications sl-tab:not([active]) *[part='tab-icon'][src*='/avatar.php'] {
+        opacity: var(--inactive-tab-opacity);
+    }
+
+    /* unless you hover over one*/
+
+    .egw_fw__open_applications sl-tab:not([active]):hover *[part='tab-icon'][src*='/avatar.php'] {
+        opacity: 1;
+    }
     .egw_fw__open_applications et2-image:not([src*='/kdots/']) {
         background-color: var(--icon-background-color);
 

@@ -1213,11 +1213,18 @@ export class EgwFramework extends LitElement
 
 	protected _applicationTabTemplate(app)
 	{
+		let extraStyle =""
+		let extraClass
+		if(egw.preference("keep_colorful_app_icons","common")) {
+			extraStyle = "--icon-background-color: var(--application-color);"
+			extraClass = "colorful"
+		}
 		return html`
             <sl-tab slot="nav" part="tab" panel="${app.name}" closable aria-label="${app.title}"
                     role="tab"
                     ?active=${app.active}
-                    style="--application-color: var(--${app.name}-color)">
+                    style="--application-color: var(--${app.name}-color,var(--default-color, var(--sl-color-neutral-600))); ${extraStyle}"
+            		class=${extraClass?extraClass:nothing}>
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
                     <et2-image part="tab-icon" src="${app.icon}" inline></et2-image>
                 </sl-tooltip>
