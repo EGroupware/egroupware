@@ -36,7 +36,6 @@ export class Et2LAvatar extends Et2Avatar
 	static LAVATAR_BG_COLORS : string[] = [
 		'#5a8770', '#b2b7bb', '#6fa9ab', '#f5af29',
 		'#0088b9', '#f18636', '#d93a37', '#a6b12e',
-		'#0088b9', '#f18636', '#d93a37', '#a6b12e',
 		'#5c9bbc', '#f5888d', '#9a89b5', '#407887',
 		'#9a89b5', '#5a8770', '#d33f33', '#a2b01f',
 		'#f0b126', '#0087bf', '#f18636', '#0087bf',

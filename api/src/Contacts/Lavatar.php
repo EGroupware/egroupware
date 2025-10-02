@@ -24,7 +24,6 @@ class Lavatar
 	private static $BG_COLORS = array(
 		array(90,135,112), array(178,183,187), array(111,169,171), array(245,175,41),
 		array(0,136,185), array(241,134,54), array(217,58,55), array(166,177,46),
-		array(0,136,185), array(241,134,54), array(217,58,55), array(166,177,46),
 		array(92,155,188), array(245,136,141), array(154,137,181), array(64,120,135),
 		array(154,137,181),array(90,135,112), array(211,63,51),	array(162,176,31),
 		array(240,177,38),array(0,135,191), array(241,134,54), array(0,135,191),

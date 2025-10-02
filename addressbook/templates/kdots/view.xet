@@ -10,7 +10,7 @@
             <rows>
                 <row span="all">
                     <et2-hbox>
-                        <et2-lavatar src="@photo" lname="@n_fn"></et2-lavatar>
+                        <et2-lavatar src="@photo" lname="@n_family" fname="@n_given" contactId="@id"></et2-lavatar>
                         <et2-vbox>
                             <et2-description id="n_fn" class="addressbook_sidebox_name"></et2-description>
                             <et2-description id="org_name" class="addressbook_sidebox_org"></et2-description>

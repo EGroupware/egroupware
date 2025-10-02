@@ -274,7 +274,7 @@ class addressbook_ui extends addressbook_bo
 				'favorites'      => true,
 				'filter_aria_label' => 'Addressbook',
 				'filter2_aria_label' => 'distribution lists',
-										 ), $content['main_header']['toolbar'] ?? []);
+			), $content['main_header']['toolbar'] ?? []);
 
 			// use the state of the last session stored in the user prefs
 			if (($state = @unserialize($this->prefs[str_replace('addressbook.', '', $template ?? 'index').'_state'], ['allowed_classes' => false])))
