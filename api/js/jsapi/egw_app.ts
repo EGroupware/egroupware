@@ -344,14 +344,14 @@ export abstract class EgwApp
 					case 'col_filter':
 						for(const attr in Object.assign({}, activeFilters.col_filter || {}, oldFilters.col_filter || {}))
 						{
-							this.checkNmFilterChanged(app_toolbar, attr, activeFilters.col_filter[attr]);
+							this.checkNmFilterChanged(app_toolbar, attr, activeFilters.col_filter[attr] ?? '');
 						}
 						break;
 					case 'filter':
 					case 'filter2':
 					case 'cat_id':
 					case 'search':
-						this.checkNmFilterChanged(app_toolbar, attr, activeFilters[attr]);
+						this.checkNmFilterChanged(app_toolbar, attr, activeFilters[attr] ?? '');
 						break;
 				}
 			}
@@ -368,7 +368,7 @@ export abstract class EgwApp
 	checkNmFilterChanged(app_toolbar, id : string, value : string)
 	{
 		let widget = app_toolbar.getWidgetById(id);
-		if(widget && widget.value != value && typeof value !== "undefined")
+		if(widget && widget.value != value)
 		{
 			widget.value = value;
 		}

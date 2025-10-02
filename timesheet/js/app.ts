@@ -336,7 +336,7 @@ class TimesheetApp extends EgwApp
 	 */
 	toggleDetails(_ev : Event, _widget : Et2ButtonToggle)
 	{
-		this.nm && this.nm.applyFilters({filter2: _widget.value ? '1' : '0'});
+		this.nm && this.nm.applyFilters({filter2: _widget.value ? '1' : ''});
 	}
 
 	/**

@@ -225,11 +225,11 @@ class infolog_hooks
 			$GLOBALS['egw']->preferences->save_repository();
 		}
 		$show_links = array(
+			'' => lang('no description, links or attachments'),
 			'all'    => lang('all links and attachments'),
 			'links'  => lang('only the links'),
 			'attach' => lang('only the attachments'),
 			'none'   => lang('no links or attachments'),
-				'no_describtion' => lang('no describtion, links or attachments'),
 		);
 		$show_details = array(
 			0 => lang('No'),

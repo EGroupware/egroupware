@@ -213,7 +213,7 @@ EOF;
 						break;
 					case 'customfilter':
 					case 'header-custom':
-						$widget = 'et2-'.($attrs['widgetType'] ?? $attrs['widget_type'] ?? $attrs['options']);
+						$widget = ($attrs['widgetType'] ?? $attrs['widget_type'] ?? $attrs['options']);
 						unset($attrs['widgetType'], $attrs['widget_type'], $attrs['options'], $attrs['class']);
 						break;
 				}

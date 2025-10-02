@@ -259,7 +259,7 @@ class InfologApp extends EgwApp
 
 	/**
 	 * show or hide the details of rows by selecting the filter2 option
-	 * either 'all' for details or 'no_description' for no details
+	 * either 'all' for details or '' (or 'no_describtion') for no details
 	 *
 	 * @param {Event} event Change event
 	 * @param {Et2Select} filter2 The filter widget
@@ -875,7 +875,7 @@ class InfologApp extends EgwApp
 	 */
 	toggleDetails(_ev : Event, _widget : Et2ButtonToggle)
 	{
-		this.nm && this.nm.applyFilters({filter2: _widget.value ? 'all' : 'no_describtion'});
+		this.nm && this.nm.applyFilters({filter2: _widget.value ? 'all' : ''});
 	}
 
 	/**

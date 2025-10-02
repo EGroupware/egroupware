@@ -238,7 +238,7 @@ class infolog_ui
 				$only_app = '';
 				break;
 		}
-		if(($show_links != 'none' && $show_links != 'no_describtion' ||
+		if((!in_array($show_links, ['none', 'no_describtion', '']) ||
 				$this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
 			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], $only_app, 'link_lastmod DESC', true, true, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']))))
 		{
@@ -258,7 +258,7 @@ class infolog_ui
 					continue;
 				}    // skip deleted links, but incl. them in row_mod!
 
-				if($show_links != 'none' && $show_links != 'no_describtion' &&
+				if(!in_array($show_links, ['none', 'no_describtion', '']) &&
 					$link['link_id'] != $info['info_link_id'] &&
 					($link['app'] != $action || $link['id'] != $action_id) &&
 					($show_links == 'all' || ($show_links == 'links') === ($link['app'] != Link::VFS_APPNAME)))
@@ -1030,13 +1030,12 @@ class infolog_ui
 		$values['nm']['options-filter'] = $this->filters;
 		$values['nm']['get_rows'] = 'infolog.infolog_ui.get_rows';
 		$values['nm']['add_on_top_sort_field'] = 'info_datemodified';
-		$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'], array('all',
-																					   'no_describtion')) ? array() : array(
-				'' => 'default',
-			)) + array(
-				'no_describtion' => 'no details',
-				'all'            => 'details',
-			);
+		$values['nm']['options-filter2'] = [
+				'' => 'no details',
+				'all' => 'details',
+			]+(in_array($this->prefs['show_links'], ['all', 'no_describtion', '']) ? [] : [
+				'default' => 'default',
+			]);
 
 		//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
 		$values['nm']['filter_onchange'] = "app.infolog.filter_change";

@@ -1004,13 +1004,13 @@ class timesheet_ui extends timesheet_bo
 			$content['nm'] = array(
 				'get_rows'       =>	TIMESHEET_APP.'.timesheet_ui.get_rrows',
 				'options-filter' => $date_filters,
-				'options-filter2' => array('No details','Details'),
+				'options-filter2' => array('' => 'No details','1' => 'Details'),
 				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
 				'filter_onchange' => "app.timesheet.filter_change",
 				'filter_aria_label' => lang('Time range'),
 				'filter2_onchange' => "app.timesheet.filter2_change",
-				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
+				'filter2'        => '',
 				'filter2_aria_label' => lang('Details'),
 				'row_id'         => 'ts_id',
 				'row_modified'   => 'ts_modified',

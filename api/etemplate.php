@@ -107,12 +107,12 @@ function send_template()
 	}
 	$cache = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw_cache/eT2-Cache-' .
 		$GLOBALS['egw_info']['server']['install_id'] . '-' . str_replace('/', '-', $_SERVER['PATH_INFO']) . '-' . filemtime($path);
-	if (PHP_SAPI !== 'cli' && file_exists($cache) && filemtime($cache) > max(filemtime($path), filemtime(__FILE__)) &&
+	/*if (PHP_SAPI !== 'cli' && file_exists($cache) && filemtime($cache) > max(filemtime($path), filemtime(__FILE__)) &&
 		($str = file_get_contents($cache)) !== false)
 	{
 		$cache_read = microtime(true);
 	}
-	elseif(($str = file_get_contents($path)) !== false)
+	else*/if(($str = file_get_contents($path)) !== false)
 	{
 		// replace single quote enclosing attribute values with double quotes
 		$str = preg_replace_callback("#([a-z_-]+)='([^']*)'([ />])#i", static function($matches){
@@ -371,7 +371,7 @@ function send_template()
 		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
 
 		// nextmatch headers
-		$str = preg_replace_callback('#<(et2-)?(nextmatch-)(account|sort|custom|filter|taglist)?(header(-account|-custom|-filter|-entry)?|filter|entry) ([^/>]+)(/>|></et2-nextmatch-[^>]+>)#s', static function (array $matches)
+		$str = preg_replace_callback('#<(et2-)?(nextmatch-)(account|sort|custom|filter|taglist)?(header(-account|-custom|-filter|-entry)?|filter|entry) ([^>]+)(/>|></et2-nextmatch-[^>]+>)#s', static function (array $matches)
 		{
 			// replace all filters with NM headers, if not running via cli (as we currently don't want to remove them permanently!)
 			$replace_filters = PHP_SAPI !== 'cli';
