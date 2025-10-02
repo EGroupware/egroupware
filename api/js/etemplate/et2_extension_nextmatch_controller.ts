@@ -646,6 +646,11 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 			if(i == 'sel_options')
 			{
 				var mgr = nm.getArrayMgr(i);
+				let app_toolbar = nm.getDOMNode().closest('egw-app')?.querySelector('[slot="main-header"]');
+				if(app_toolbar && app_toolbar.localName != "et2-template")
+				{
+					app_toolbar = app_toolbar?.querySelector("et2-template");
+				}
 				for(var id in _response.rows.sel_options)
 				{
 					mgr.data[id] = _response.rows.sel_options[id];
@@ -661,6 +666,13 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 					}
 					// update array mgr so select widgets in row also get refreshed options
 					nm.getParent().getArrayMgr('sel_options').data[id] = _response.rows.sel_options[id];
+					// update filterbox, app-toolbar widgets
+					[nm._filterbox?.getWidgetById(id), app_toolbar?.getWidgetById(id)].forEach(widget =>
+					{
+						if (!widget) return;
+						widget.set_select_options(_response.rows.sel_options[id]);
+						widget.value = widget.value;	// not sure why this is necessary
+					});
 				}
 			}
 			else if (i === "order" && _response.rows[i] !== nm.activeFilters.order)
