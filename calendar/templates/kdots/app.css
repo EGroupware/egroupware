@@ -1605,6 +1605,7 @@ egw-app {
 #calendar-sidebox {
   flex-grow: 0;
   width: 100%;
+  height: fit-content;
   display: block !important;
 }
 #calendar-sidebox iframe {
