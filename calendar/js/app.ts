@@ -1456,13 +1456,13 @@ export class CalendarApp extends EgwApp
 		if(widget)
 		{
 			const recur_end = widget.getRoot().getWidgetById('recur_enddate');
-			if(recur_end && recur_end.getValue && !recur_end.value)
+			if(recur_end && recur_end.getValue && !recur_end.value && !recur_end.readonly)
 			{
 				recur_end.set_min(widget.value);
 			}
 			// update recur_rdate with start (specially time) and set start as minimum
 			const recur_rdate = widget.getRoot().getWidgetById('recur_rdate');
-			if (recur_rdate)
+			if(recur_rdate && !recur_rdate.readonly)
 			{
 				recur_rdate.set_min(widget.value);
 				recur_rdate.value = widget.value;
