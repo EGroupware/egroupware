@@ -1790,18 +1790,20 @@ html,
   /*
   color token generator using #4177a2
   https://codepen.io/claviska/full/QWveRgL
+
+  make them important, otherwise the shoelace sl-light style overrides this in some cases, look for a different option?
    */
-  --sl-color-primary-50: #f8fafb;
-  --sl-color-primary-100: #e6edf3;
-  --sl-color-primary-200: #d3e0ea;
-  --sl-color-primary-300: #bfd1e0;
-  --sl-color-primary-400: #a3bdd2;
-  --sl-color-primary-500: #80a4c1;
-  --sl-color-primary-600: #5a89ae;
-  --sl-color-primary-700: #3d7099;
-  --sl-color-primary-800: #335d7e;
-  --sl-color-primary-900: #24425a;
-  --sl-color-primary-950: #162837;
+  --sl-color-primary-50: #f8fafb!important;
+  --sl-color-primary-100: #e6edf3!important;
+  --sl-color-primary-200: #d3e0ea!important;
+  --sl-color-primary-300: #bfd1e0!important;
+  --sl-color-primary-400: #a3bdd2 !important;
+  --sl-color-primary-500: #80a4c1!important;
+  --sl-color-primary-600: #5a89ae!important;
+  --sl-color-primary-700: #3d7099!important;
+  --sl-color-primary-800: #335d7e!important;
+  --sl-color-primary-900: #24425a!important;
+  --sl-color-primary-950: #162837!important;
   --sl-shadow-x-small: 0 1px 2px hsla(240, 3.8%, 46.1%, 0.24);
   --sl-shadow-small: 0 1px 2px hsla(240, 3.8%, 46.1%, 0.48);
   --sl-shadow-medium: 0 2px 4px hsla(240, 3.8%, 46.1%, 0.48);

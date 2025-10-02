@@ -10,6 +10,7 @@ export default css`
         position: relative;
 
         --icon-size: 32px;
+        --icon-background-color: var(--sl-color-primary-400);
         --inactive-tab-opacity: 0.5;
         --header-icon-size: 1.5rem;
         --left-side-width: 200px;
@@ -208,17 +209,7 @@ export default css`
         flex: 0 0 auto;
     }
 
-    /*make non active tabs a little transparent*/
-
-    .egw_fw__open_applications sl-tab:not([active]) *[part='tab-icon'] {
-        /* opacity: var(--inactive-tab-opacity);*/
-    }
-
-    /* unless you hover over one*/
-
-    .egw_fw__open_applications sl-tab:not([active]):hover *[part='tab-icon'] {
-        opacity: 1;
-    }
+    /*make active tab colorful*/
 
     .egw_fw__open_applications sl-tab::part(base) {
         padding: 0px;
@@ -274,12 +265,30 @@ export default css`
             }
         }
     }
-
+/***
+coloring of app icons
+ */
     .egw_fw__open_applications et2-image:not([src*='/kdots/']) {
-        background-color: var(--sl-color-neutral-600);
-	    &:hover{
-            background-color: var(--application-color, var(--default-color, var(--sl-color-neutral-600)));
-	    }
+        background-color: var(--icon-background-color);
+
+        &:hover {
+            background-color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
+        }
+    }
+    .egw_fw__open_applications sl-tab[active] *[part='tab-icon']:not([src*='/kdots/']) {
+        background-color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
+    }
+
+
+        .egw_fw__open_applications et2-image[src*='/kdots/'], .egw_fw__app_list et2-image[src*='/kdots/'] {
+        color: var(--icon-background-color);
+
+        &:hover{
+            color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
+        }
+    }
+    .egw_fw__open_applications sl-tab[active] *[part='tab-icon'][src*='/kdots/'] {
+	    color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
     }
 
     /*Icons for applications that have a kdots specific icon*/
@@ -309,11 +318,7 @@ export default css`
                     calc(2 * var(--tab-icon-spacing, 2px) +
                     var(--tab-icon-size, 32px)));
             height: auto;
-            color: var(--sl-color-neutral-700);
 
-            &:hover {
-                color: var(--application-color, var(--default-color, var(--sl-color-neutral-600)));
-            }
         }
 
         @supports (-moz-appearance:none) {
