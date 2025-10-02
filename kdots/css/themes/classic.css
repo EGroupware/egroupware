@@ -33,42 +33,6 @@
 	}
   }*/
 }
-:root egw-app,
-:host egw-app,
-.kdots-classic egw-app {
-  --application-header-text-color: var(--sl-color-neutral-900);
-  /* Remove big color bar, use just some border */
-}
-:root egw-app::part(app-header),
-:host egw-app::part(app-header),
-.kdots-classic egw-app::part(app-header),
-:root egw-app::part(header),
-:host egw-app::part(header),
-.kdots-classic egw-app::part(header),
-:root egw-app::part(details-header),
-:host egw-app::part(details-header),
-.kdots-classic egw-app::part(details-header),
-:root egw-app::part(close-button),
-:host egw-app::part(close-button),
-.kdots-classic egw-app::part(close-button) {
-  background-color: initial;
-}
-:root egw-app::part(app-header),
-:host egw-app::part(app-header),
-.kdots-classic egw-app::part(app-header),
-:root egw-app *::part(header),
-:host egw-app *::part(header),
-.kdots-classic egw-app *::part(header),
-:root egw-app::part(details-header),
-:host egw-app::part(details-header),
-.kdots-classic egw-app::part(details-header) {
-  border-top: 4px solid var(--application-color, --sl-color-primary-500);
-}
-:root egw-app::part(name),
-:host egw-app::part(name),
-.kdots-classic egw-app::part(name) {
-  --image-filter: none;
-}
 /* System messages */
 .sl-toast-stack sl-alert::part(base) {
   border-top: 0px;

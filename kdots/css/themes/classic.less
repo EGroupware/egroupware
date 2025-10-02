@@ -33,24 +33,6 @@
 	  filter: none;
 	}
   }*/
-
-  egw-app {
-	--application-header-text-color: var(--sl-color-neutral-900);
-
-	/* Remove big color bar, use just some border */
-
-	&::part(app-header), &::part(header), &::part(details-header), &::part(close-button) {
-	  background-color: initial;
-	}
-
-	&::part(app-header), *::part(header), &::part(details-header) {
-	  border-top: 4px solid var(--application-color, --sl-color-primary-500);
-	}
-
-	&::part(name) {
-	  --image-filter: none;
-	}
-  }
 }
 
 
