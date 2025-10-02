@@ -12,7 +12,7 @@ import {cssImage, Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlSplitPanel} from "@shoelace-style/shoelace";
 import {et2_IDOMNode, et2_IResizeable} from "../../et2_core_interfaces";
 import {et2_DOMWidget} from "../../et2_core_DOMWidget";
-import {css, html} from "lit";
+import {css, html, PropertyValues} from "lit";
 import {colorsDefStyles} from "../../Styles/colorsDefStyles";
 
 export class Et2Split extends Et2Widget(SlSplitPanel)
@@ -266,12 +266,12 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 	 * Handle changes that have to happen based on changes to properties
 	 *
 	 */
-	updated(changedProperties)
+	willUpdate(changedProperties : PropertyValues<this>)
 	{
-		super.updated(changedProperties);
+		super.willUpdate(changedProperties);
 
 		// if ID changes, check preference
-		if(changedProperties.has("id") && this.id)
+		if(changedProperties.has("id") && this.id && changedProperties.get("id") !== this.id)
 		{
 			this._loadPreference();
 		}
@@ -295,7 +295,7 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 	 */
 	handleResize(entries)
 	{
-		if(this.offsetParent !== null)
+		if(this.offsetParent !== null && this.contentRect?.width)
 		{
 			return super.handleResize(entries);
 		}
