@@ -9,6 +9,7 @@ import {createRef, Ref, ref} from "lit/directives/ref.js";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 import {SlMenu} from "@shoelace-style/shoelace";
 import {state} from "lit/decorators/state.js";
+import {app} from "../../jsapi/egw_global";
 
 /**
  * @summary A menu listing a user's favorites.  Populated from the user's preferences.
@@ -174,13 +175,9 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 
 		Object.entries(this.favorites).forEach(([name, favorite]) =>
 		{
-			// Handle old style by making it like current style
-			// @ts-ignore
-			if(favorite.filter && !favorite.state)
-			{
-				//@ts-ignore
-				favorite.state = favorite.filter;
-			}
+			const app_object = app[this.application];
+			if (app_object) favorite = app_object.fixState(favorite);
+
 			let match_count = 0;
 			let extra_keys = Object.keys(favorite.state);
 
@@ -257,6 +254,14 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 				{
 					return;
 				}
+			}
+			// match noFilter, if none is set to a non-empty value
+			if (name === 'blank')
+			{
+				match_count = !currentState.filter && !currentState.filter2 && !currentState.cat_id && !currentState.search ? 9 : 0;
+				Object.entries(currentState.col_filter).forEach(([name, value]) => {
+					if (value) match_count=0;
+				});
 			}
 			// Better match?  Hold on to it and keep looking
 			if(match_count > best_count)

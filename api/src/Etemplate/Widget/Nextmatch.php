@@ -121,27 +121,28 @@ class Nextmatch extends Etemplate\Widget
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = self::get_array(self::$request->content, $form_name, true);
 
-		$value['start'] = 0;
-		if(!array_key_exists('num_rows', $value))
-		{
-			$value['num_rows'] = self::INITIAL_ROWS;
-		}
-
-		$value['rows'] = array();
-
-		$send_value = $value;
-
 		list($app) = explode('.', $value['get_rows']);
 		if(empty($GLOBALS['egw_info']['apps'][$app]))
 		{
 			list($app) = explode('.', $this->attrs['template']);
 		}
-
 		// Check for sort preference.  We only apply this on first load, so it can be changed
-		if(array_key_exists($this->attrs['template'] . "_sort", $GLOBALS['egw_info']['user']['preferences'][$app] ?? []))
+		// First load is detected on a NOT set num_rows!
+		if((empty($send_value['sort']) || !isset($send_value['num_rows'])) &&
+			array_key_exists($this->attrs['template'] . "_sort", $GLOBALS['egw_info']['user']['preferences'][$app] ?? []))
 		{
 			$send_value['sort'] = $GLOBALS['egw_info']['user']['preferences'][$app][$this->attrs['template'] . "_sort"];
 		}
+
+		$value['start'] = 0;
+		if(!array_key_exists('num_rows', $value))
+		{
+			$value['num_rows'] = 0; //self::INITIAL_ROWS;
+		}
+
+		$value['rows'] = array();
+
+		$send_value = $value;
 
 		// Check for a favorite in URL
 		if(!empty($_GET['favorite']) && !empty($value['favorites']))

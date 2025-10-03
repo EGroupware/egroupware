@@ -684,6 +684,29 @@ export abstract class EgwApp
 	}
 
 	/**
+	 * Fix old favorite or state, can be overridden by apps
+	 *
+	 * Should always be used, before comparing or setting a stored favorite
+	 *
+	 * @param {{name: string, state: object}|string} state Object (or JSON string) for a state.
+	 *	Only state is required, and its contents are application specific.
+	 * @return {{name: string, state: object}} state Object (or JSON string) for a state.
+	 */
+	fixState(state): { name: string, state: object, group: number|false }
+	{
+		if(typeof state == "string" && (state.indexOf('{') != -1 || state === 'null'))
+		{
+			state = JSON.parse(state);
+		}
+		// Handle old style by making it like current style
+		if(state.filter && !state.state)
+		{
+			state.state = state.filter;
+		}
+		return state;
+	}
+
+	/**
 	 * Set the application's state to the given state.
 	 *
 	 * While not pretending to implement the history API, it is patterned similarly
@@ -699,14 +722,8 @@ export abstract class EgwApp
 	 */
 	setState(state, template? : string) : string | false | void
 	{
-		// State should be an object, not a string, but we'll parse
-		if(typeof state == "string")
-		{
-			if(state.indexOf('{') != -1 || state == 'null')
-			{
-				state = JSON.parse(state);
-			}
-		}
+		state = this.fixState(state);
+
 		if(typeof state != "object")
 		{
 			egw.debug('error', 'Unable to set state to %o, needs to be an object', state);
