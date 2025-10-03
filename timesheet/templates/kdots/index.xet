@@ -11,10 +11,10 @@
         <et2-button-icon statustext="Add" id="add" image="add" onclick="app.timesheet.add_with_extras(widget,'','$cont[action]','$cont[action_id]');" noSubmit="true"></et2-button-icon>
         <template template="api.search-button"></template>
         <et2-toolbar id="toolbar">
-            <et2-select-cat id="cat_id" ariaLabel="Category" onchange="app.timesheet.changeNmFilter"/>
-            <et2-select id="filter" ariaLabel="Filter" onchange="app.timesheet.changeNmFilter"/>
-            <et2-select id="ts_owner" emptyLabel="User" onchange="app.timesheet.changeNmFilter"/>
-            <et2-select id="ts_status" emptyLabel="Status" onchange="app.timesheet.changeNmFilter"/>
+            <et2-select-cat id="cat_id" label="Category" onchange="app.timesheet.changeNmFilter"/>
+            <et2-select id="filter" label="Filter" onchange="app.timesheet.changeNmFilter"/>
+            <et2-select id="ts_owner" label="User" emptyLabel="User" onchange="app.timesheet.changeNmFilter"/>
+            <et2-select id="ts_status" label="Status" emptyLabel="Status" onchange="app.timesheet.changeNmFilter"/>
             <et2-button-toggle id="details" icon="card-text" label="Toggle details" statustext="Details" onchange="app.timesheet.toggleDetails"></et2-button-toggle>
         </et2-toolbar>
     </template>
