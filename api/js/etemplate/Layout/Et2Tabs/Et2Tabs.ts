@@ -258,6 +258,11 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			// Create the new element
 			this.createElementFromNode(node);
 		}
+		this.updateComplete.then(() =>
+		{
+			// @ts-ignore show() comes from SlTabGroup
+			this.show(this.querySelector("et2-tab[active]")?.panel);
+		});
 	}
 
 	/**
