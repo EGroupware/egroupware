@@ -14,7 +14,7 @@ import {egw} from "../../jsapi/egw_global";
 registerIconLibrary('default', {
 	resolver: name =>
 	{
-		return typeof egw !== "undefined" && typeof egw.image == "function" ? (egw.image(name) ?? `${egw.webserverUrl || ""}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg`) : ''
+		return typeof egw !== "undefined" && typeof egw.image == "function" ? egw.image(name) : ''
 	},
 });
 
