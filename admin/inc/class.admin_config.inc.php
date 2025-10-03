@@ -135,7 +135,10 @@ class admin_config
 		$old = (array)$c->read_repository();
 		if ($_content['cancel'] || ($_content['save'] || $_content['apply']) && $GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
 		{
-			Api\Framework::redirect_link('/admin/index.php?ajax=true');
+			Api\Framework::redirect_link('/index.php', array(
+				'menuaction' => 'admin.admin_ui.index',
+				'ajax'       => 'true'
+			),                           'admin');
 		}
 
 		if ($_content['save'] || $_content['apply'])

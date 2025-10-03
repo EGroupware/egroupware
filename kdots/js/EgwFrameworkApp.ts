@@ -317,6 +317,17 @@ export class EgwFrameworkApp extends LitElement
 			window.performance.mark("mark_egw_app_start_load_" + this.name);
 		}
 
+		// Give application the first chance to handle the link, it might avoid a reload
+		if(window.app[this.name]?.linkHandler && this.egw.window.app[this.name].linkHandler(url))
+		{
+			// app.ts linkHandler handled it.
+			if(this.egw.debug_level() >= 4)
+			{
+				window.performance.mark("mark_egw_app_end_load_" + this.name);
+			}
+			return;
+		}
+
 		// Clear everything
 		Array.from(this.children).forEach(n =>
 		{
@@ -327,15 +338,7 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return;
 		}
-		if(window.app[this.name]?.linkHandler && this.egw.window.app[this.name].linkHandler(url))
-		{
-			// app.ts linkHandler handled it.
-			if(this.egw.debug_level() >= 4)
-			{
-				window.performance.mark("mark_egw_app_end_load_" + this.name);
-			}
-			return;
-		}
+
 		let targetUrl = "";
 		this.useIframe = true;
 		let matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*&ajax=true.*)$/);

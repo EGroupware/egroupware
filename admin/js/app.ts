@@ -454,6 +454,11 @@ class AdminApp extends EgwApp
 			this.load(_url);
 			return true;
 		}
+		else if(_url.match('menuaction=admin.admin_ui.index') && this.nm)
+		{
+			this.load();
+			return true;
+		}
 		// can not load our own index page, has to be done by framework
 		return false;
 	}
