@@ -206,8 +206,8 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
                 ${until(svg, html`<span>...</span>`)}
             `
         }
-		//also inline our kdots specific navbar icons, so we have full control over them
-		if (ourSvg && this.inline)
+		// also inline other svg like our kdots specific navbar icons, so we have full control over them
+		if (ourSvg && this.inline && url.endsWith('.svg'))
 		{
 			const svg = fetch(url)
 				.then(res => res.text()
