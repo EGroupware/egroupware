@@ -150,6 +150,17 @@ class kdots_framework extends Api\Framework\Ajax
 		{
 			$apps['status']['slot'] = 'status';
 		}
+
+		// prefer "kdots-navbar" over regular "navbar" icon
+		// allows to keep "navbar" icon colored and no inverse on a filled circle e.g. for context menus
+		$reg_exp = '#^'.preg_quote($GLOBALS['egw_info']['server']['webserver_url'], '#').'/([^/]+)/templates/[^/]+/images/navbar.svg$#';
+		foreach($apps as $app => &$data)
+		{
+			if (!empty($data['icon']) && preg_match($reg_exp, $data['icon'], $matches))
+			{
+				$data['icon'] = Image::find($data['icon_app'] ?? $app, ['kdots-navbar', 'navbar'],'');
+			}
+		}
 		return $apps;
 	}
 

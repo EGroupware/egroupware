@@ -236,7 +236,7 @@ export default css`
 
     /*Icons for open applications that do not have kdots specific icon*/
 
-    .egw_fw__open_applications et2-image:not([src*='/kdots/']), .egw_fw__app_list et2-image:not([src*='/kdots/']) {
+    .egw_fw__open_applications et2-image:not([src*='/kdots-navbar.svg']), .egw_fw__app_list et2-image:not([src*='/kdots-navbar.svg']) {
         /* Always force icons to be the same size */
         height: var(--tab-icon-size, 32px);
         min-width: calc(var(--tab-icon-size, 32px));
@@ -288,32 +288,32 @@ coloring of app icons with our monotone colors
     .egw_fw__open_applications sl-tab:not([active]):hover *[part='tab-icon'][src*='/avatar.php'] {
         opacity: 1;
     }
-    .egw_fw__open_applications et2-image:not([src*='/kdots/']) {
+    .egw_fw__open_applications et2-image:not([src*='/kdots-navbar.svg']) {
         background-color: var(--icon-background-color);
 
         &:hover {
             background-color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
         }
     }
-    .egw_fw__open_applications sl-tab[active] *[part='tab-icon']:not([src*='/kdots/']) {
+    .egw_fw__open_applications sl-tab[active] *[part='tab-icon']:not([src*='/kdots-navbar.svg']) {
         background-color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
     }
 
 
-        .egw_fw__open_applications et2-image[src*='/kdots/'], .egw_fw__app_list et2-image[src*='/kdots/'] {
+    .egw_fw__open_applications et2-image[src*='/kdots-navbar.svg'], .egw_fw__app_list et2-image[src*='/kdots-navbar.svg'] {
         color: var(--icon-background-color);
 
         &:hover{
             color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
         }
     }
-    .egw_fw__open_applications sl-tab[active] *[part='tab-icon'][src*='/kdots/'] {
+    .egw_fw__open_applications sl-tab[active] *[part='tab-icon'][src*='/kdots-navbar.svg'] {
 	    color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
     }
 
     /*Icons for applications that have a kdots specific icon*/
 
-    .egw_fw__open_applications et2-image[src*='/kdots/'], .egw_fw__app_list et2-image[src*='/kdots/'] {
+    .egw_fw__open_applications et2-image[src*='/kdots-navbar.svg'], .egw_fw__app_list et2-image[src*='/kdots-navbar.svg'] {
         /* Always force icons to be the same size */
         height: calc(
                 calc(2 * var(--tab-icon-spacing, 2px) +
@@ -338,7 +338,6 @@ coloring of app icons with our monotone colors
                     calc(2 * var(--tab-icon-spacing, 2px) +
                     var(--tab-icon-size, 32px)));
             height: auto;
-
         }
 
         @supports (-moz-appearance:none) {
@@ -350,7 +349,7 @@ coloring of app icons with our monotone colors
 
     /* needs different alignment in app_list and open_apps*/
 
-    .egw_fw__app_list et2-image[src*='/kdots/'] *[part="image"] {
+    .egw_fw__app_list et2-image[src*='/kdots-navbar.svg'] *[part="image"] {
         vertical-align: initial;
     }
 
