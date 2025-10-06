@@ -259,6 +259,7 @@ export default css`
             /*turn all app icons white*/
             filter: brightness(0) invert(1);
             width: 70%;
+            height: auto;
 
             /*keep avatar images colored*/
 
