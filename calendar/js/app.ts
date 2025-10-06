@@ -3779,7 +3779,7 @@ export class CalendarApp extends EgwApp
 		for(var i = 0; i < data.length; i++)
 		{
 			var record = this.egw.dataGetUIDdata(data[i]);
-			if(record && record.data)
+			if(record && record.data && new Date(state.first) <= new Date(record.data.end) && new Date(state.last) >= new Date(record.data.start))
 			{
 				if(typeof updated_days[record.data.date] === 'undefined')
 				{
