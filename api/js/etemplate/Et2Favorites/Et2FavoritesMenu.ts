@@ -259,7 +259,7 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 			if (name === 'blank')
 			{
 				match_count = !currentState.filter && !currentState.filter2 && !currentState.cat_id && !currentState.search ? 9 : 0;
-				Object.entries(currentState.col_filter).forEach(([name, value]) => {
+				Object.entries(currentState.col_filter || {}).forEach(([name, value]) => {
 					if (value) match_count=0;
 				});
 			}
