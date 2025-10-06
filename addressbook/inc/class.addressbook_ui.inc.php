@@ -195,7 +195,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			else
 			{
-				$grouped_view = $_content['main_header']['toolbar']['grouped_view'];
+				$grouped_view = $_content['nm']['grouped_view'];
 			}
 			$typeselection = $_content['nm']['col_filter']['tid'];
 		}
@@ -231,7 +231,7 @@ class addressbook_ui extends addressbook_bo
 		//$content['nm'] = Api\Cache::getSession('addressbook', str_replace('addressbook.', '', $template ?? 'index'));
 		if (!is_array($content['nm']))
 		{
-			$content['nm'] = array_merge(array(
+			$content['nm'] = array(
 				'get_rows'       =>	'addressbook.addressbook_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 				'bottom_too'     => false,		// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
@@ -274,7 +274,7 @@ class addressbook_ui extends addressbook_bo
 				'favorites'      => true,
 				'filter_aria_label' => 'Addressbook',
 				'filter2_aria_label' => 'distribution lists',
-			), $content['main_header']['toolbar'] ?? []);
+			);
 
 			// use the state of the last session stored in the user prefs
 			if (($state = @unserialize($this->prefs[str_replace('addressbook.', '', $template ?? 'index').'_state'], ['allowed_classes' => false])))
