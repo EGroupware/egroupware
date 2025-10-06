@@ -295,7 +295,7 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 	 */
 	handleResize(entries)
 	{
-		if(this.offsetParent !== null && this.contentRect?.width)
+		if(this.offsetParent !== null && entries[0].contentRect?.width)
 		{
 			return super.handleResize(entries);
 		}
