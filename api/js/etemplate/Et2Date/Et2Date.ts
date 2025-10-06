@@ -817,7 +817,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			// @ts-ignore
 			this._inputNode.validate && (<Et2Textbox>this._inputNode).validate();
 		}
-		this.dispatchEvent(new Event("change", {bubbles: true}));
+		this.dispatchEvent(new Event("input", {bubbles: true}));
 	}
 
 	/**
