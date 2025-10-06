@@ -242,9 +242,10 @@ class addressbook_ui extends addressbook_bo
 				'col_filter'     =>	array(),	// IO array of column-name value pairs (optional for the filterheaders)
 				//'cat_id_label' => lang('Categories'),
 				//'filter_label' => lang('Addressbook'),	// I  label for filter    (optional)
-				'filter'         =>	'',	// =All	// IO filter, if not 'no_filter' => True
+				'filter'         =>	'',	        // =All	// IO filter, if not 'no_filter' => True
 				'filter_no_lang' => True,		// I  set no_lang for filter (=dont translate the options)
-				'no_filter2'     => True,		// I  disable the 2. filter (params are the same as for filter)
+				// no longer disable filter2 by default, as it removes it from filter-box and it's wanted in most cases now (apart from some grouped views)
+				//'no_filter2'     => True,		// I  disable the 2. filter (params are the same as for filter)
 				'filter2_widget' => 'et2-tree-dropdown',
 				'filter2_placeholder' => lang('No distribution list'),
 				//'filter2_label'=>	lang('Distribution lists'),			// IO filter2, if not 'no_filter2' => True
@@ -278,6 +279,12 @@ class addressbook_ui extends addressbook_bo
 			if (($state = @unserialize($this->prefs[str_replace('addressbook.', '', $template ?? 'index').'_state'], ['allowed_classes' => false])))
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
+			}
+			// set template and value for grouped views here, in case of reload
+			if (!empty($content['nm']['grouped_view']))
+			{
+				$content['nm']['template'] = $content['nm']['grouped_view'] == 'duplicates' ? 'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
+				$content['main_header']['toolbar']['grouped_view'] = $content['nm']['grouped_view'];
 			}
 		}
 		$sel_options['cat_id'] = array('' => lang('All categories'), '0' => lang('None'));
@@ -1897,7 +1904,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			// save the state of the index in the user prefs
 			$state = serialize(array(
-				'filter'        => $query['filter'],
+				'filter'        => $query['filter'] ?? '',
 				'cat_id'        => $query['cat_id'],
 				'order'         => $query['order'],
 				'sort'		    => $query['sort'],
@@ -1921,7 +1928,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			unset($query['col_filter']['cat_id']);
 		}
-		if ($query['filter'] !== '')	// not all addressbooks
+		if ((string)$query['filter'] !== '')	// not all addressbooks
 		{
 			$query['col_filter']['owner'] = (string) (int) $query['filter'];
 
