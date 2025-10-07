@@ -1223,10 +1223,10 @@ export class EgwFrameworkApp extends LitElement
                 <sl-divider></sl-divider>`;
 		}
 		let icon : symbol | TemplateResult<1> = nothing;
-		if(typeof item["icon"] == "string" && (item["icon"].includes("://") || this.egw.image(item["icon"], this.appName)))
+		if(typeof item["icon"] == "string")
 		{
 			icon = html`
-                <et2-image src=${item["icon"]} slot="prefix"></et2-image>`;
+                <sl-icon name=${item["icon"] ?? nothing} slot="prefix"></sl-icon>`;
 		}
 		return html`
             <sl-menu-item
