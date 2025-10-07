@@ -567,10 +567,11 @@ export class EgwFramework extends LitElement
 	public tabNotification(appname : string, count : number)
 	{
 		const appInfo = this.getApplicationByName(appname);
-		if(appInfo)
+		if(!appInfo)
 		{
-			appInfo.notificationCount = count;
+			return;
 		}
+		appInfo.notificationCount = count;
 		this.requestUpdate();
 		this.updateComplete.then(() =>
 		{
