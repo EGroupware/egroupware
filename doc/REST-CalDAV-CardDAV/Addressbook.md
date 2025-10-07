@@ -86,6 +86,7 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
   - `filters[search][%23<custom-field-name>]=<custom-field-value>` filters by a custom-field value
   - `filters[<database-column>]=<value>` filters by a DB-column name and value
   > Please note: filters use the database column-names, not JSContact property-names!
+  - `filters[linked]=<app-name>:<numeric-ID>` returns all entries linked to application `<app-name>` with ID `<nummeric-ID>` e.g. "infolog:123"
 
 <details>
    <summary>Example: Getting just ETAGs and displayname of all contacts in a given AB</summary>

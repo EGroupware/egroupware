@@ -290,6 +290,18 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			if ($matches[2]) $sort = $matches[2];
 			unset($filter['order']);
 		}
+		// handle "linked" filter
+		if (isset($filter['linked']))
+		{
+			if (!preg_match('/^([a-z_]+):(\d+)$/i', $filter['linked'], $matches) ||
+				!isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]) ||
+				(int)$matches[2] <= 0)
+			{
+				throw new Api\Exception("Invalid linked-filter '$filter[linked]', should be '<app-name>:<nummeric-ID>'!", 400);
+			}
+			$filter['info_id'] = Api\Link::get_links($matches[1], $matches[2], 'infolog');
+			unset($filter['linked']);
+		}
 		$query = array(
 			'order'			=> $order,
 			'sort'			=> $sort,
