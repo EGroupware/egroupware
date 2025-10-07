@@ -517,7 +517,7 @@ class calendar_ui
 				'Custom Fields'=>Egw::link('/index.php','menuaction=admin.admin_customfields.index&appname=calendar&ajax=true'),
 				'Global Categories' =>Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar&ajax=true'),
 			);
-			$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');
+			//$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');
 		}
 		$file = [];
 		// Merge print placeholders (selectbox in etemplate)

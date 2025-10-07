@@ -98,7 +98,7 @@ class addressbook_hooks
 			}
 			else
 			{
-				display_sidebox($appname, lang('Configuration'), $file);
+				//	display_sidebox($appname, lang('Configuration'), $file);
 			}
 		}
 	}
