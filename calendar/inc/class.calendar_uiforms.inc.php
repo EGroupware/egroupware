@@ -3821,6 +3821,7 @@ class calendar_uiforms extends calendar_ui
 				switch ($button)
 				{
 					case 'sync':
+						$content['sync_token'] = '';    // do a full sync, when called manually
 						$caldav_client->sync($content['sync_token'],
 							array_intersect_key($content, array_flip(['cat_id', 'participants', 'set_private', 'non_blocking'])));
 						Api\CalDAV\Sync::writeSubscription($content);
