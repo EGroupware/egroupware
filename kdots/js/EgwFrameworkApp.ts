@@ -211,6 +211,8 @@ export class EgwFrameworkApp extends LitElement
 	/** The application's content must be in an iframe instead of handled normally */
 	protected useIframe = false;
 	protected _sideboxData : any;
+	/** We've loaded something other than our set url via load(...), on refresh go back */
+	private _offUrl : boolean = false;
 
 	constructor()
 	{
@@ -327,6 +329,9 @@ export class EgwFrameworkApp extends LitElement
 			}
 			return;
 		}
+
+		// Loaded something else, refresh will go back instead of refreshing nextmatch
+		this._offUrl = (this.url != url);
 
 		// Clear everything
 		Array.from(this.children).forEach(n =>
@@ -516,6 +521,10 @@ export class EgwFrameworkApp extends LitElement
 		if(typeof _msg !== "string")
 		{
 			_msg = "";
+		}
+		if(this._offUrl)
+		{
+			return this.load(this.url);
 		}
 
 		// Refresh all child etemplates
