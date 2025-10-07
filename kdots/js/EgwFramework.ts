@@ -564,6 +564,27 @@ export class EgwFramework extends LitElement
 		}
 	}
 
+	public tabNotification(appname : string, count : number)
+	{
+		const appInfo = this.getApplicationByName(appname);
+		if(appInfo)
+		{
+			appInfo.notificationCount = count;
+		}
+		this.requestUpdate();
+		this.updateComplete.then(() =>
+		{
+			const appTab = this.shadowRoot.querySelector(`sl-tab[panel="${appInfo.name}"]`);
+			if(!appTab)
+			{
+				return;
+			}
+			const notification = appTab.querySelector("sl-badge");
+			notification.pulse = true;
+			setTimeout(() => { notification.pulse = false;}, 2000);
+		})
+	}
+
 	public callOnLogout(e)
 	{
 		for(let app in Object.values(this.applicationList))
@@ -1211,7 +1232,7 @@ export class EgwFramework extends LitElement
             </sl-tooltip>`;
 	}
 
-	protected _applicationTabTemplate(app)
+	protected _applicationTabTemplate(app : ApplicationInfo)
 	{
 		let extraStyle =""
 		let extraClass
@@ -1228,6 +1249,8 @@ export class EgwFramework extends LitElement
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
                     <et2-image part="tab-icon" src="${app.icon}" inline></et2-image>
                 </sl-tooltip>
+                ${app.notificationCount ? html`
+                    <sl-badge part="notification" pill>${app.notificationCount}</sl-badge>` : nothing}
             </sl-tab>`;
 	}
 
@@ -1346,6 +1369,10 @@ export interface ApplicationInfo
 	icon : string
 	title : string,
 	url : string,
+
+	/* Count of notifications for the application */
+	notificationCount? : number
+
 	/* What type of application (1: normal, 5: ?) */
 	status : string,// = "1",
 	/* Application will be slotted into a specific spot in the framework, not added as a normal application */

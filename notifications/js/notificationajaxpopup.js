@@ -905,9 +905,9 @@
 			{
 				for (var app in apps)
 				{
-					if (framework?.notifyAppTab)
+					if (framework?.tabNotification)
 					{
-						framework.notifyAppTab(app, apps[app]);
+						framework.tabNotification(app, apps[app]);
 					}
 				}
 

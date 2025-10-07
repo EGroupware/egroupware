@@ -204,6 +204,7 @@ export default css`
     .egw_fw__open_applications sl-tab {
         width: auto;
         flex: 1 1 auto;
+		position: relative;
     }
 
     .egw_fw__open_applications sl-tab:last-of-type {
