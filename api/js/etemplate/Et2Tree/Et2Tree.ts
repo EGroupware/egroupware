@@ -453,10 +453,20 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		this.onselect = _handler;
 	}
 
+	/**
+	 * Set badge with given value on a tree-node
+	 *
+	 * @param _id of tree-node
+	 * @param _value
+	 */
 	public set_badge(_id: string, _value: string)
 	{
-		this.getNode(_id).badge = _value;
-		this.requestUpdate();
+		const node = this.getNode(_id);
+		if (node)
+		{
+			node.badge = _value;
+			this.requestUpdate();
+		}
 	}
 
 	/**
