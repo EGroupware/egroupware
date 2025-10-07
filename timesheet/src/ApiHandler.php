@@ -297,6 +297,16 @@ class ApiHandler extends Api\CalDAV\Handler
 					}, (array)$value);
 					$cols['ts_status'] = count($value) <= 1 ? array_pop($value) : $value;
 					break;
+				case 'linked':
+					if (!preg_match('/^([a-z_]+):(\d+)$/i', $filter['linked'], $matches) ||
+						!isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]) ||
+						(int)$matches[2] <= 0)
+					{
+						throw new Api\Exception("Invalid linked-filter '$value', should be '<app-name>:<nummeric-ID>'!", 400);
+					}
+					$cols['ts_id'] = Api\Link::get_links($matches[1], $matches[2], 'timesheet');
+					if (!$cols['ts_id']) $cols['ts_id'] = [0];  // to return nothing and not all timesheets
+					break;
 				default:
 					if ($name[0] === '#')
 					{

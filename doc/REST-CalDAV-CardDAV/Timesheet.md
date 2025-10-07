@@ -96,7 +96,8 @@ curl https://example.org/egroupware/groupdav.php/<username>/timesheet/ -H "Accep
   - `filters[search]=<pattern>` searches for `<pattern>` in the whole timesheet like the search in the GUI
   - `filters[search][%23<custom-field-name>]=<custom-field-value>` filters by a custom-field value
   - `filters[<attribute-name>]=<value>` filters by a DB-column name and value
- 
+  - `filters[linked]=<app-name>:<numeric-ID>` returns all entries linked to application `<app-name>` with ID `<nummeric-ID>` e.g. "addressbook:123"
+
 <details>
    <summary>Example: Getting just ETAGs and displayname of all timesheets of a user</summary>
    
