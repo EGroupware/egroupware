@@ -32,55 +32,20 @@ class filemanager_hooks
 		display_sidebox(self::$appname, lang('Favorites'), Framework\Favorites::list_favorites(self::$appname));
 
 		$location = is_array($args) ? $args['location'] : $args;
-		$rootpath = '/';
-		$basepath = '/home';
-		$homepath = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
-		//echo "<p>admin_prefs_sidebox_hooks::all_hooks(".print_r($args,True).") appname='$appname', location='$location'</p>\n";
-		$file_prefs    = &$GLOBALS['egw_info']['user']['preferences'][self::$appname];
+
 		if ($location == 'sidebox_menu')
 		{
-			$title = $GLOBALS['egw_info']['apps'][self::$appname]['title'] . ' '. lang('Menu');
-			$file = array();
-			// add "file a file" (upload) dialog
-			$file[] = array(
-				'text' => 'File a file',
-				'link' => "javascript:app.filemanager.fileafile()",
-				'app'  => 'api',
-				'icon' => 'upload',
-				'disableIfNoEPL' => true
-			);
-			// add selection for available views, if we have more then one
-			if (count(filemanager_ui::init_views()) > 1)
-			{
-				$index_url = Egw::link('/index.php',array('menuaction' => 'filemanager.filemanager_ui.index'),false);
-				$file[] = array(
-					'text' => Api\Html::select('filemanager_view',filemanager_ui::get_view(),filemanager_ui::$views,false,
-						' onchange="'."egw_appWindow('filemanager').location='$index_url&view='+this.value;".
-						'" style="width: 100%;"'),
-					'no_lang' => True,
-					'link' => False
-				);
-			}
-			if ($file_prefs['showhome'] != 'no')
-			{
-				$file['Your home directory'] = Egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath,'ajax'=>'true'));
-			}
-			if ($file_prefs['showusers'] != 'no')
-			{
-				$file['Users and groups'] = Egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath,'ajax'=>'true'));
-			}
-			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes')
-			{
-				$file['Basedirectory'] = Egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath,'ajax'=>'true'));
-			}
-			if (!empty($file_prefs['startfolder']))
-			{
-				$file['Startfolder']= Egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder'],'ajax'=>'true'));
-			}
-			$file['Shared files'] = Egw::link('/index.php','menuaction=filemanager.filemanager_shares.index&ajax=true');
-			$file[] = ['text'=>'--'];
-			$file['Placeholders'] = Egw::link('/index.php','menuaction=filemanager.filemanager_merge.show_replacements');
-			display_sidebox(self::$appname,$title,$file);
+			display_sidebox(self::$appname, lang('Shared files'), [
+				[
+					'icon' => 'box-arrow-in-down',
+					'link' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_shares.index&ajax=true')
+				]]);
+			display_sidebox(self::$appname, lang('Placeholders'), [
+				[
+					'text' => 'placeholders', 'icon' => 'braces',
+					'link' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_merge.show_replacements')
+				]
+			]);
 		}
 		//if ($GLOBALS['egw_info']['user']['apps']['admin']) self::admin(self::$appname);
 	}

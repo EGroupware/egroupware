@@ -34,21 +34,12 @@ class resources_hooks
 			// Magic etemplate2 favorites menu (from nextmatch widget)
 			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname, 'nextmatch-resources.show.rows-favorite'));
 
-			$title = $GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu');
-			$file = array(
-				'Resources list' => Egw::link('/index.php',array(
-				'menuaction' => 'resources.resources_ui.index',
-				'ajax' => 'true')),
-			);
-			if($this->acl->get_cats(Acl::ADD))
-			{
-				$file['Add resource'] = "javascript:egw_openWindowCentered2('".Egw::link('/index.php',array(
-						'menuaction' => 'resources.resources_ui.edit',
-						'accessory_of' => -1
-					),false)."','_blank',800,600,'yes')";
-			}
-			$file['Placeholders'] = Egw::link('/index.php','menuaction=resources.resources_merge.show_replacements');
-			display_sidebox($appname,$title,$file);
+			display_sidebox($appname, lang('Placeholders'), [
+				[
+					'text' => 'placeholders', 'icon' => 'braces',
+					'link' => Egw::link('/index.php', 'menuaction=resources.resources_merge.show_replacements')
+				]
+			]);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])

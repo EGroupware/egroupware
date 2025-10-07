@@ -484,18 +484,7 @@ class calendar_ui
 
 		$file = array('menuOpened' => true);	// menu open by default
 
-		// Target for etemplate
-		$file[] = array(
-			'no_lang' => true,
-			'text'=>'<span id="calendar-et2_target" />',
-			'link'=>false,
-			'icon' => false
-		);
-
 		$appname = 'calendar';
-		$menu_title = lang('Calendar Menu');
-		display_sidebox($appname,$menu_title,$file);
-
 		$this->sidebox_etemplate();
 
 		// resources menu hooks
@@ -523,18 +512,30 @@ class calendar_ui
 		// Merge print placeholders (selectbox in etemplate)
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
 		{
-			$file['Placeholders'] = Egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
+			display_sidebox($appname, lang('Placeholders'), [
+				[
+					'text' => 'placeholders', 'icon' => 'braces',
+					'link' => Egw::link('/index.php', 'menuaction=calendar.calendar_merge.show_replacements')
+				]
+			]);
 		}
 		// subscribed calendars
-		$file['Subscribed calendar'] = "javascript:egw_openWindowCentered2('" . Egw::link('/index.php', [
-				'menuaction' => 'calendar.calendar_uiforms.subscribe',
-			], false) . "','_blank',480,600,'yes')";
-
-		$file['Category report'] = "javascript:egw_openWindowCentered2('".
-			Egw::link('/index.php',array('menuaction'=>'calendar.calendar_category_report.index','ajax'=>true),false).
-			"','_blank',720,300,'yes')";
-
-		display_sidebox('calendar', lang('Utilities'), $file);
+		display_sidebox($appname, lang('Subscribed calendar'), [
+			[
+				'icon' => 'arrow-repeat',
+				'link' => "javascript:egw_openWindowCentered2('" .
+					Egw::link('/index.php', ['menuaction' => 'calendar.calendar_uiforms.subscribe'], false) .
+					"','_blank',480,600,'yes')"
+			]]);
+		display_sidebox($appname, lang('Category report'), [
+			[
+				'icon' => 'tag',
+				'link' => "javascript:egw_openWindowCentered2('" .
+					Egw::link('/index.php', array('menuaction' => 'calendar.calendar_category_report.index',
+												  'ajax'       => true), false) .
+					"','_blank',720,300,'yes')"
+			]
+		]);
 	}
 
 	/**

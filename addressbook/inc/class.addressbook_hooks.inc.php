@@ -49,22 +49,12 @@ class addressbook_hooks
 			// Magic etemplate2 favorites menu (from nextmatch widget)
 			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites('addressbook'));
 
-			$file = array(
-				'Addressbook list' => Egw::link('/index.php',array(
-					'menuaction' => 'addressbook.addressbook_ui.index',
-					'ajax' => 'true')),
-				array(
-					'text' => lang('Add %1',lang(Link::get_registry($appname, 'entry'))),
-					'no_lang' => true,
-					'link' => "javascript:egw.open('','$appname','add')"
-				),
-				'Advanced search' => "javascript:egw_openWindowCentered2('".
-					Egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.extSearch'),false).
-					"','_blank',870,610,'yes')",
-				['text'=>'--'],
-				'Placeholders'    => Egw::link('/index.php','menuaction=api.EGroupware\\Api\\Contacts\\Merge.show_replacements')
-			);
-			display_sidebox($appname,lang('Addressbook menu'),$file);
+			display_sidebox($appname, lang('Placeholders'), [
+				[
+					'text' => 'placeholders', 'icon' => 'braces',
+					'link' => Egw::link('/index.php', 'menuaction=api.EGroupware\\Api\\Contacts\\Merge.show_replacements')
+				]
+			]);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
