@@ -1085,7 +1085,7 @@ export class EgwFrameworkApp extends LitElement
                                 @click=${() => this.egw.show_preferences('cats', [this.name])}
                         >
                             <sl-icon slot="prefix" name="tag"></sl-icon>
-                            ${this.egw.lang("Cateogries")}
+                            ${this.egw.lang("Categories")}
                         </sl-menu-item>
                     `}
                     ${this._applicationMenuTemplate()}
