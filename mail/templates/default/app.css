@@ -1084,3 +1084,11 @@ table.et2_egw_action_ddHelper_row .innerContainer {
 tr.mailComposeJQueryCc, tr.mailComposeJQueryBcc, tr.mailComposeJQueryFolder, tr.mailComposeJQueryReplyto  {
 	display: none;
 }
+
+/**
+ * Kdots
+ */
+
+#mail #mail-index_nm\[foldertree\] {
+	padding: var(--sl-spacing-medium) 0;
+}

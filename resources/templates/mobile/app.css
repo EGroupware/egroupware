@@ -12,12 +12,8 @@
  */
 /* tablets and smartphones  */
 @media all {
-  #resources-show table.egwGridView_outer tbody div.resourcesCol2 {
-    font-size: 10pt;
-  }
   #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="name]"] {
     font-weight: bold;
-    font-size: 12pt;
   }
   #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="name]"],
   #resources-show table.egwGridView_outer tbody span[id^="resources-show_"][id$="short_description]"],

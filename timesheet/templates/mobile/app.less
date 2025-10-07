@@ -11,9 +11,6 @@
  * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
  */
 
-@import (reference) "../../../pixelegg/less/definitions.less";
-@import (reference) "../../../pixelegg/less/def_mobile.less";
-
 /* tablets and smartphones  */
 @media all {
 	#timesheet-index {
@@ -23,7 +20,7 @@
 				width: 90px;
 				white-space: nowrap;
 				text-overflow: ellipsis;
-				.mob-fontsize-n;
+				//.mob-fontsize-n;
 			}
 			tr.timesheetRow td {
 				position: relative;
@@ -31,7 +28,7 @@
 			span[id^='timesheet-index'][id$='cat_id]'] {
 				position: absolute;
 				bottom: 5px;
-				.mob-fontsize-n;
+				//.mob-fontsize-n;
 			}
 			span[id^='timesheet-index'][id$='ts_description]'] {
 				height: 19px;
@@ -39,19 +36,19 @@
 				line-height: 18px;
 				overflow: hidden;
 				text-overflow: ellipsis;
-				.mob-fontsize-n;
+				//.mob-fontsize-n;
 				color:grey;
 			}
 			span[id^='timesheet-index'][id$='ts_title]'] {
-				.mob-fontsize-l;
+				//.mob-fontsize-l;
 			}
 			div.timesheet3Col {
-				.mob-fontsize-n;
+				//.mob-fontsize-n;
 			}
 
 			label[id^='timesheet-index'][id$='ts_link]'] > span.et2_link {
 				font-weight: normal;
-				.mob-fontsize-n;
+				//.mob-fontsize-n;
 			}
 			.timesheet_titleDetails { font-weight: normal; }
 		}

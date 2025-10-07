@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="admin.index.add" template="" lang="" group="0" version="1.9.001">
-		<et2-button  label="Add" image="add" id="add" onclick="app.admin.account({id:'add'})" noSubmit="true"></et2-button>
-	</template>
 	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
@@ -84,11 +81,23 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="admin.index.header" template="" lang="" group="0" version="1.9.001">
+		<et2-button-icon  statustext="Add" image="add" id="add" onclick="app.admin.account({id:'add'})" noSubmit="true"></et2-button-icon>
+		<template template="api.search-button"></template>
+		<et2-select id="filter" ariaLabel="Group" onchange="app.timesheet.changeNmFilter"/>
+		<et2-select id="filter2" ariaLabel="Status" onchange="app.timesheet.changeNmFilter"/>
+	</template>
+	<template id="admin.index.group.header" template="" lang="" group="0" version="1.9.001">
+		<et2-button-icon  statustext="Add" image="add" id="add" onclick="app.admin.account({id:'add'})" noSubmit="true"></et2-button-icon>
+		<template template="api.search-button"></template>
+	</template>
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
+		<et2-template template="admin.index.header" slot="main-header"></et2-template>
         <tree slot="left" autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parent_node="admin_tree_target" std_images="bullet"/>
-		<nextmatch id="nm" template="admin.index.rows" header_left="admin.index.add"/>
+		<nextmatch id="nm" template="admin.index.rows"/>
+		<et2-template template="admin.index.group.header" slot="main-header" hidden="true"></et2-template>
 		<nextmatch id="groups" template="admin.index.group" class="hide"/>
 		<iframe frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"/>
-		<et2-box  id="ajax_target" height="99%" disabled="true"></et2-box>
+		<et2-box  id="ajax_target" disabled="true"></et2-box>
 	</template>
 </overlay>

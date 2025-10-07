@@ -212,3 +212,10 @@ tr.template > td * {
 td.token {
     border: 3px solid red;
 }
+
+/**
+ * Kdots
+ */
+#admin #admin-index_tree {
+    padding: var(--sl-spacing-medium) 0;
+}

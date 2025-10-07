@@ -69,28 +69,21 @@
     position: relative;
     padding-bottom: 15px;
     border-bottom: 1px solid silver;
-    font-size: 12pt;
     padding-top: 10px;
     font-weight: bold;
   }
-  body #popupMainDiv .mail-d-h1 span {
-    font-size: 12pt;
-  }
   body #popupMainDiv .mail-d-h2 {
     padding-top: 5px;
-    font-size: 10pt;
     color: grey;
   }
   body #popupMainDiv .mail-d-h2 a,
   body #popupMainDiv .mail-d-h2 span,
   body #popupMainDiv .mail-d-h2 .et2_label {
     color: grey;
-    font-size: 10pt;
   }
   body #popupMainDiv .mail-d-h2 a#mail-display_FROM > * {
     color: black;
     padding-top: 15px;
-    font-size: 12pt;
   }
   body #popupMainDiv .et2_details {
     width: 100%;
@@ -102,7 +95,6 @@
   }
   body #popupMainDiv span.et2_details_title {
     color: #26537c;
-    font-size: 10pt;
   }
   body #popupMainDiv div#mail-display_mailDisplayHeadersFrom > * {
     color: black;
@@ -129,9 +121,6 @@
   }
   body #popupMainDiv div#mail-view div > et2-vbox {
     height: 100%;
-  }
-  body #popupMainDiv div#mail-view #mail-view_subject {
-    font-size: 12pt;
   }
   body #popupMainDiv div#mail-view .mailContent {
     flex-grow: 1;
@@ -170,9 +159,6 @@
   body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders.subjectContainer td:first-child::after {
     content: '';
   }
-  body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders span {
-    font-size: 10pt;
-  }
   body #mail-compose .mailComposeHeaderSection > table tr.mailComposeHeaders .subjectContainer:first-child::after {
     content: ':';
   }
@@ -184,7 +170,6 @@
   body #mail-compose .mailComposeHeaderSection > table #mail-compose_mailaccount {
     border: none;
     box-shadow: none;
-    font-size: 10pt;
   }
   body #mail-compose .mailComposeHeaderSection > table #mail-compose_subject:focus {
     outline-color: transparent;
@@ -206,8 +191,6 @@
     padding-bottom: 8px;
   }
   #mail-index td a[id^='mail-index_'][id$='fromaddress]'] {
-    color: #373737;
-    font-size: 12pt;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -236,7 +219,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 95%;
-    font-size: 10pt;
     font-weight: normal !important;
   }
   #mail-index td label[id^='mail-index_'][id$='date]'] {
@@ -309,7 +291,6 @@
     text-overflow: ellipsis;
     padding-left: 2px;
     font-style: normal;
-    font-size: 10pt;
   }
   #mail-index .mail-index_quotabox {
     position: absolute;

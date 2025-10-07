@@ -8,12 +8,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Hadi Nategh <hn@stylite.de>
  * @package infolog
- * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
  */
 
-
-@import (reference) "../../../pixelegg/less/def_buttons.less";
-@import (reference) "../../../pixelegg/less/def_mobile.less";
 
 @media all {
 	#infolog-index_nm .gridCont_0_div_col_0.innerContainer {
@@ -27,15 +23,12 @@
 		white-space: nowrap;
 	}
 	div.infoLinksRow, div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {
-		.mob-fontsize-n;
 		max-width: 99%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap !important;
 	}
 	label[id^='infolog-index_'][id$='info_enddate]'] {
-		.mob-fontsize-n;
-
 		time {
 			float: none;
 			font-weight: normal;
@@ -43,7 +36,6 @@
 		}
 	}
 	label[id^='infolog-index_'][id$='info_startdate]']{
-		.mob-fontsize-n;
 		time {
 			float: none;
 			text-align: right;
@@ -54,7 +46,6 @@
 		white-space:nowrap;
 		max-height: 15px;
 		li{
-			.mob-fontsize-n;
 			text-align: right;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -69,7 +60,6 @@
 	.infoSubRow {
 		span[id^='infolog-index_'][id$='info_subject]'] {
 			white-space: nowrap;
-			.mob-fontsize-l;
 		}
 	}
 	label[id^='infolog-index_'][id$='info_link]']
@@ -78,7 +68,6 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 		width: 100%;
-		.mob-fontsize-n;
 		font-weight: normal;
 	}
 	infolog_rowHasSubs span.arrow,
