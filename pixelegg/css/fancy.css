@@ -3265,6 +3265,7 @@ div#popupMainDiv {
   background-color: #FFFFFF;
   background-repeat: repeat-x;
   overflow: auto;
+  max-height: 98vh;
 }
 div#popupMainDiv > * {
   margin: 0px;
