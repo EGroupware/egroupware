@@ -388,6 +388,7 @@ EOT, $this->header([
 		{
 			$event['non_blocking'] = 1;
 		}
+		$event['deleted'] = null;   // in case it's an existing event that has been deleted
 		return $event;
 	}
 
@@ -471,7 +472,7 @@ EOT, $this->header([
 		}
 		$ical_class = new \calendar_ical();
 		// fetch current events, to be able to delete the ones no longer returned
-		$old_events = $ical_class->search(['cat_id' => $modifications['cat_id'], 'enum_recuring' => false]);
+		$old_events = $ical_class->search(['category' => $modifications['cat_id'], 'enum_recuring' => false]);
 		foreach($this->profind_collection($getctag) as $href => $props)
 		{
 			if (($ical = $props['calendar-data'] ?? null))
@@ -543,7 +544,7 @@ EOT, $this->header([
 		}
 		$ical_class = new \calendar_ical();
 		// fetch current events, to be able to delete the ones no longer returned
-		$old_events = $ical_class->search(['cat_id' => $modifications['cat_id']]);
+		$old_events = $ical_class->search(['category' => $modifications['cat_id']]);
 		$ical_class->event_callback = static function(array &$event) use ($modifications, &$old_events)
 		{
 			$event = self::modify($event, $modifications);
