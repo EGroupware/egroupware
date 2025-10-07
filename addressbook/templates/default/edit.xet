@@ -35,7 +35,7 @@
             </rows>
         </grid>
     </template>
-    <template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
+    <template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003" onload="document.getElementById(form::name('email')).focus();">
         <grid width="94%">
             <columns>
                 <column width="92"/>
