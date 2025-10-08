@@ -31,7 +31,7 @@ use function Webmozart\Assert\Tests\StaticAnalysis\inArray;
  *
  * Existing apps either set $GLOBALS['egw_info']['flags']['noheader'] and call common::egw_header() and
  * (if $GLOBALS['egw_info']['flags']['nonavbar'] is true) parse_navbar() or it's done by the header.inc.php include.
- * The app's hook_sidebox then calls the public function display_sidebox().
+ * The app's hook_sidebox then calls the public function $GLOBALS['egw']->framework->sidebox().
  * And the app calls common::egw_footer().
  *
  * This are the authors (and their copyrights) of the original egw_header, egw_footer methods of the common class:

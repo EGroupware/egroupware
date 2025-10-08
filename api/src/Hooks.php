@@ -292,6 +292,6 @@ class Hooks
 			'Backup/Restore ...' => 'javascript:app.'.$appname.'.mailvelopeCreateBackupRestoreDialog();',
 			'sendToBottom' => true
 		);
-		display_sidebox($appname, lang('PGP Encryption'), $file);
+		$GLOBALS['egw']->framework->sidebox($appname, lang('PGP Encryption'), $file);
 	}
 }

@@ -61,7 +61,7 @@ class importexport_admin_prefs_sidebox_hooks
 						'ajax' => 'true'
 				),$GLOBALS['egw_info']['user']['apps']['admin'] ? 'admin' : 'preferences');
 			}
-			display_sidebox($appname,lang($appname),$file);
+			$GLOBALS['egw']->framework->sidebox($appname, lang($appname), $file);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
@@ -83,7 +83,7 @@ class importexport_admin_prefs_sidebox_hooks
 			}
 			else
 			{
-				display_sidebox($appname, lang('Configuration'), $file);
+				$GLOBALS['egw']->framework->sidebox($appname, lang('Configuration'), $file);
 			}
 		}
 	}
@@ -151,7 +151,12 @@ class importexport_admin_prefs_sidebox_hooks
 				'ajax' => 'true'
 			),$GLOBALS['egw_info']['user']['apps']['admin'] ? 'admin' : 'preferences');
 		}
-		if($file) display_sidebox($appname,lang('importexport'),$file);
+		if($file)
+		{
+			$file['icon'] = 'importexport/navbar';
+			$file['sendToBottom'] = true;
+			$GLOBALS['egw']->framework->sidebox($appname, lang('importexport'), $file);
+		}
 	}
 
 	/**

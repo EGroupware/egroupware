@@ -20,7 +20,7 @@ use EGroupware\Api;
  *
  * Favorites are generated on serverside by following code in apps sidebox hook:
  *
- * display_sidebox($appname, lang('Favorites'), Api\Framework\Favorites::favorite_list($appname));
+ * $GLOBALS['egw']->framework->sidebox($appname, lang('Favorites'), Api\Framework\Favorites::favorite_list($appname));
  *
  * Clientside code resides in:
  * - api/js/jsapi/app_base.js

@@ -32,9 +32,9 @@ class resources_hooks
 		if ($location == 'sidebox_menu')
 		{
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname, 'nextmatch-resources.show.rows-favorite'));
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname, 'nextmatch-resources.show.rows-favorite'));
 
-			display_sidebox($appname, lang('Placeholders'), [
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Placeholders'), [
 				[
 					'text' => 'placeholders', 'icon' => 'braces',
 					'link' => Egw::link('/index.php', 'menuaction=resources.resources_merge.show_replacements')
@@ -67,7 +67,7 @@ class resources_hooks
 			}
 			else
 			{
-				//	display_sidebox($appname, lang('Configuration'), $file);
+				//	$GLOBALS['egw']->framework->sidebox($appname, lang('Configuration'), $file);
 			}
 		}
 	}

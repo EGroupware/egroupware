@@ -41,16 +41,6 @@ class admin_hooks
 
 		if ($location == 'sidebox_menu')
 		{
-			// Destination div for folder tree
-			$file[] = array(
-				'no_lang' => true,
-				// Tree has about 20 leaves (or more) in it, but the sidebox starts
-				// with no content.  Set some minimum height to make sure scrolling is triggered.
-				'text' => '<div id="admin_tree_target" class="admin_tree" style="min-height:20em"/>',
-				'link' => false,
-				'icon' => false
-			);
-			display_sidebox($appname,lang('Admin'),$file);
 			return;
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
@@ -148,7 +138,7 @@ class admin_hooks
 				{
 					if (is_array($url) && $url['link']) $url = $url['link'];
 				}
-				display_sidebox($appname, lang('Configuration'), $file);
+				$GLOBALS['egw']->framework->sidebox($appname, lang('Configuration'), $file);
 			}
 		}
 	}

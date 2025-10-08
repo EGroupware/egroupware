@@ -480,7 +480,7 @@ class calendar_ui
 	function sidebox_menu()
 	{
 		// Magic etemplate2 favorites menu (from framework)
-		display_sidebox('calendar', lang('Favorites'), Framework\Favorites::list_favorites('calendar'));
+		$GLOBALS['egw']->framework->sidebox('calendar', lang('Favorites'), Framework\Favorites::list_favorites('calendar'));
 
 		$file = array('menuOpened' => true);	// menu open by default
 
@@ -496,7 +496,7 @@ class calendar_ui
 				'menuaction' => $this->view_menuaction,
 				'owner' => $this->owner,
 			));
-			display_sidebox($appname,$menu_title,$file);
+			$GLOBALS['egw']->framework->sidebox($appname,$menu_title,$file);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
@@ -512,7 +512,7 @@ class calendar_ui
 		// Merge print placeholders (selectbox in etemplate)
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
 		{
-			display_sidebox($appname, lang('Placeholders'), [
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Placeholders'), [
 				[
 					'text' => 'placeholders', 'icon' => 'braces',
 					'link' => Egw::link('/index.php', 'menuaction=calendar.calendar_merge.show_replacements')
@@ -520,14 +520,14 @@ class calendar_ui
 			]);
 		}
 		// subscribed calendars
-		display_sidebox($appname, lang('Subscribed calendar'), [
+		$GLOBALS['egw']->framework->sidebox($appname, lang('Subscribed calendar'), [
 			[
 				'icon' => 'arrow-repeat',
 				'link' => "javascript:egw_openWindowCentered2('" .
 					Egw::link('/index.php', ['menuaction' => 'calendar.calendar_uiforms.subscribe'], false) .
 					"','_blank',480,600,'yes')"
 			]]);
-		display_sidebox($appname, lang('Category report'), [
+		$GLOBALS['egw']->framework->sidebox($appname, lang('Category report'), [
 			[
 				'icon' => 'tag',
 				'link' => "javascript:egw_openWindowCentered2('" .

@@ -36,7 +36,7 @@ class addressbook_hooks
 		{
 			if ($_GET['menuaction'] == 'addressbook.addressbook_ui.view')
 			{
-				display_sidebox($appname, lang('Contact data'), array(
+				$GLOBALS['egw']->framework->sidebox($appname, lang('Contact data'), array(
 					array(
 						'text'    => '<div id="'.self::getViewDOMID($_GET['contact_id'], $_GET['crm_list']).'" class="addressbook_view_sidebox"/>',
 						'no_lang' => true,
@@ -47,9 +47,9 @@ class addressbook_hooks
 				));
 			}
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites('addressbook'));
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites('addressbook'));
 
-			display_sidebox($appname, lang('Placeholders'), [
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Placeholders'), [
 				[
 					'text' => 'placeholders', 'icon' => 'braces',
 					'link' => Egw::link('/index.php', 'menuaction=api.EGroupware\\Api\\Contacts\\Merge.show_replacements')
@@ -88,7 +88,7 @@ class addressbook_hooks
 			}
 			else
 			{
-				//	display_sidebox($appname, lang('Configuration'), $file);
+				//	$GLOBALS['egw']->framework->sidebox($appname, lang('Configuration'), $file);
 			}
 		}
 	}

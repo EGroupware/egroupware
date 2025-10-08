@@ -563,7 +563,7 @@ class mail_hooks
 			'menuaction' => 'mail.mail_ui.importMessage',
 		);
 
-		display_sidebox($appname, lang('import message'), [
+		$GLOBALS['egw']->framework->sidebox($appname, lang('import message'), [
 			[
 				'link' => "javascript:egw_openWindowCentered2('" . Egw::link('/index.php', $linkData, false) . "','importMessageDialog',600,180,'no','$appname');",
 				'icon' => 'importexport/navbar'
@@ -572,7 +572,7 @@ class mail_hooks
 		// create account wizard
 		if (self::access('createaccount'))
 		{
-			display_sidebox($appname, lang('create new account'), array(
+			$GLOBALS['egw']->framework->sidebox($appname, lang('create new account'), array(
 				[
 					'icon' => 'mail',
 					'link' => "javascript:egw_openWindowCentered2('" .
@@ -586,7 +586,7 @@ class mail_hooks
 			$file = Array(
 				'Site Configuration' => Egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
 			);
-			//display_sidebox($appname, lang('Configuration'), $file);
+			//$GLOBALS['egw']->framework->sidebox($appname, lang('Configuration'), $file);
 		}
 
 		// add pgp encryption menu at the end

@@ -29,18 +29,18 @@ class filemanager_hooks
 	static function sidebox_menu($args)
 	{
 		// Magic etemplate2 favorites menu (from nextmatch widget)
-		display_sidebox(self::$appname, lang('Favorites'), Framework\Favorites::list_favorites(self::$appname));
+		$GLOBALS['egw']->framework->sidebox(self::$appname, lang('Favorites'), Framework\Favorites::list_favorites(self::$appname));
 
 		$location = is_array($args) ? $args['location'] : $args;
 
 		if ($location == 'sidebox_menu')
 		{
-			display_sidebox(self::$appname, lang('Shared files'), [
+			$GLOBALS['egw']->framework->sidebox(self::$appname, lang('Shared files'), [
 				[
 					'icon' => 'box-arrow-in-down',
 					'link' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_shares.index&ajax=true')
 				]]);
-			display_sidebox(self::$appname, lang('Placeholders'), [
+			$GLOBALS['egw']->framework->sidebox(self::$appname, lang('Placeholders'), [
 				[
 					'text' => 'placeholders', 'icon' => 'braces',
 					'link' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_merge.show_replacements')
@@ -78,7 +78,7 @@ class filemanager_hooks
 		}
 		else
 		{
-			display_sidebox(self::$appname, lang('Configuration'), $file);
+			$GLOBALS['egw']->framework->sidebox(self::$appname, lang('Configuration'), $file);
 		}
 	}
 
