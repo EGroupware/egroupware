@@ -205,6 +205,10 @@ export default css`
         width: auto;
         flex: 1 1 auto;
 		position: relative;
+	/* notification badges styling*/
+	    *[part="notification"]::part(base){
+		    /* put specific sizing here*/
+	    }
     }
 
     .egw_fw__open_applications sl-tab:last-of-type {
@@ -267,6 +271,7 @@ export default css`
             &[src*="avatar.php"] {
                 filter: none;
                 width: 100%;
+	            max-height: 100%;
                 border-radius: var(--sl-border-radius-circle);
                 vertical-align: bottom;
             }

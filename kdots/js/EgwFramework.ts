@@ -1251,7 +1251,7 @@ export class EgwFramework extends LitElement
                     <et2-image part="tab-icon" src="${app.icon}" inline></et2-image>
                 </sl-tooltip>
                 ${app.notificationCount ? html`
-                    <sl-badge part="notification" pill>${app.notificationCount}</sl-badge>` : nothing}
+                    <sl-badge part="notification" pill variant="danger">${app.notificationCount}</sl-badge>` : nothing}
             </sl-tab>`;
 	}
 
