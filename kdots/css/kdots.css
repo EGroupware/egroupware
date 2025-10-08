@@ -658,10 +658,15 @@ egw-app et2-template[slot="main-header"]::part(base) {
 }
 egw-app [slot="filter"]::part(base),
 egw-app [slot="filter"] > et2-template::part(base),
-egw-app [slot="filter"] et2-details::part(base),
+egw-app [slot="filter"]::part(base),
 egw-app [slot="filter"]::part(content),
 egw-app [slot="filter"] > et2-template::part(content),
-egw-app [slot="filter"] et2-details::part(content) {
+egw-app [slot="filter"]::part(content) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-width);
+}
+egw-app et2-details::part(content) {
   display: flex;
   flex-direction: column;
   gap: var(--gap-width);
@@ -695,11 +700,11 @@ egw-app::part(details-header) {
   padding-block: var(--sl-spacing-3x-small);
   margin: var(--sl-spacing-medium);
   margin-bottom: 0;
-  margin-left: 0;
   color: var(--application-header-text-color);
 }
 egw-app::part(details-base) {
   border: none;
+  border-radius: 0;
 }
 egw-app::part(content) {
   padding: 0;
