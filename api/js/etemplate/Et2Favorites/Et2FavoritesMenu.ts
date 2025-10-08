@@ -36,6 +36,9 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 				et2-image[src="trash"] {
 					display: none;
 				}
+				[part="menu"]{
+					padding: 0;
+				}
 
 				sl-menu-item:hover et2-image[src="trash"] {
 					display: initial;
@@ -43,6 +46,16 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 
 				sl-menu-item[active] {
 					background-color: var(--highlight-background-color);
+				}
+				sl-menu-item::part(submenu-icon), sl-menu-item::part(checked-icon){
+					width: 0;
+				}
+                sl-menu-item::part(base){
+	                padding-block: 0;
+                }
+				
+				[slot="prefix"]:not([name="plus"]){
+					color: var(--sl-color-neutral-500);
 				}
 			`
 		]
@@ -356,14 +369,17 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 		let is_admin = (typeof this.egw()?.app == "function") && (typeof this.egw()?.app('admin') != "undefined");
 
 		//@ts-ignore option.group does not exist
-		let icon = (favorite.group !== false && !is_admin || ['blank', '~add~'].includes(name)) ? "" : html`
-            <et2-image slot="suffix" src="trash" icon @click=${this.handleDelete}
-                       statustext="${this.egw()?.lang("Delete") ?? "Delete"}"></et2-image>`;
+		let icon = (favorite.group !== false && !is_admin || ['blank', '~add~'].includes(name)) ? "" :
+			html`
+                <et2-image slot="suffix" src="trash" icon @click=${this.handleDelete}
+                           statustext="${this.egw()?.lang("Delete") ?? "Delete"}"></et2-image>
+			`;
 
 		return html`
             <sl-menu-item value="${name}"
                           ?active=${name == this.activeFavorite}
             >
+	            <sl-icon slot="prefix" name="record-fill"></sl-icon>
                 ${icon}
                 ${favorite.name}
             </sl-menu-item>`;

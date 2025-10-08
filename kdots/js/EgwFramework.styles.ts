@@ -10,8 +10,8 @@ export default css`
         position: relative;
 
         --icon-size: 32px;
-	    --tmp: hsl(from var(--template-custom-color) h max(calc(s * 0.3),25) min(calc(l * 2),80) / 1);
-        --icon-background-color: var(--tmp,var(--sl-color-primary-400));
+        --tmp: hsl(from var(--template-custom-color) h max(calc(s * 0.3), 25) min(calc(l * 2), 80) / 1);
+        --icon-background-color: var(--tmp, var(--sl-color-primary-400));
         --inactive-tab-opacity: 0.5;
         --header-icon-size: 1.5rem;
         --left-side-width: 200px;
@@ -204,25 +204,33 @@ export default css`
     .egw_fw__open_applications sl-tab {
         width: auto;
         flex: 1 1 auto;
-		position: relative;
-	/* notification badges styling*/
-	    *[part="notification"]::part(base){
-		    /* put specific sizing here*/
-	    }
+        position: relative;
+        /* notification badges styling*/
+        *[part="notification"] {
+            position: absolute;
+            bottom: 0px;
+            left: -.5em;
+            font-size: 1rem;
+            &::part(base) {
+                /* put specific sizing here*/
+	            padding: 0.15em 0.4em;
+            }
+        }
     }
 
     .egw_fw__open_applications sl-tab:last-of-type {
         flex: 0 0 auto;
     }
-	
+
     /*make non active tabs a little transparent if we use our colorful icons*/
     /* unless you hover over one*/
 
     .egw_fw__open_applications sl-tab:not([active]).colorful *[part='tab-icon'] {
-	    opacity: var(--inactive-tab-opacity);
-	    &:hover{
-		    opacity: 1;
-	    }
+        opacity: var(--inactive-tab-opacity);
+
+        &:hover {
+            opacity: 1;
+        }
     }
 
     .egw_fw__open_applications sl-tab::part(base) {
@@ -257,7 +265,7 @@ export default css`
         text-align: center;
         line-height: 100%;
         align-content: end;
-        
+
 
         *[part="image"] {
             position: relative;
@@ -271,7 +279,7 @@ export default css`
             &[src*="avatar.php"] {
                 filter: none;
                 width: 100%;
-	            max-height: 100%;
+                max-height: 100%;
                 border-radius: var(--sl-border-radius-circle);
                 vertical-align: bottom;
             }
@@ -281,9 +289,10 @@ export default css`
             }
         }
     }
-/***
-coloring of app icons with our monotone colors
- */
+
+    /***
+	coloring of app icons with our monotone colors
+	 */
     /*make non active crm view tabs a little transparent*/
 
     .egw_fw__open_applications sl-tab:not([active]) *[part='tab-icon'][src*='/avatar.php'] {
@@ -295,6 +304,7 @@ coloring of app icons with our monotone colors
     .egw_fw__open_applications sl-tab:not([active]):hover *[part='tab-icon'][src*='/avatar.php'] {
         opacity: 1;
     }
+
     .egw_fw__open_applications et2-image:not([src*='/kdots-navbar.svg']) {
         background-color: var(--icon-background-color);
 
@@ -302,6 +312,7 @@ coloring of app icons with our monotone colors
             background-color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
         }
     }
+
     .egw_fw__open_applications sl-tab[active] *[part='tab-icon']:not([src*='/kdots-navbar.svg']) {
         background-color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
     }
@@ -310,12 +321,13 @@ coloring of app icons with our monotone colors
     .egw_fw__open_applications et2-image[src*='/kdots-navbar.svg'], .egw_fw__app_list et2-image[src*='/kdots-navbar.svg'] {
         color: var(--icon-background-color);
 
-        &:hover{
+        &:hover {
             color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
         }
     }
+
     .egw_fw__open_applications sl-tab[active] *[part='tab-icon'][src*='/kdots-navbar.svg'] {
-	    color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
+        color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
     }
 
     /*Icons for applications that have a kdots specific icon*/

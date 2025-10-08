@@ -44,12 +44,17 @@ egw-app {
   }
   /* Nice formatting for custom templates slotted into filter */
 
-  [slot="filter"], [slot="filter"] > et2-template, [slot="filter"] et2-details {
+  [slot="filter"], [slot="filter"] > et2-template, [slot="filter"] {
 	&::part(base), &::part(content) {
 	  display: flex;
 	  flex-direction: column;
 	  gap: var(--gap-width);
 	}
+  }
+  et2-details::part(content) {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-width);
   }
 
   &::part(row-count) {
@@ -89,11 +94,11 @@ egw-app {
 	padding-block: var(--sl-spacing-3x-small);
 	margin: var(--sl-spacing-medium);
 	margin-bottom: 0;
-	margin-left:0;
 	color: var(--application-header-text-color);
   }
   &::part(details-base) {
-	border:none
+	border:none;
+	border-radius: 0;
   }
   &::part(content) {
 	padding: 0;
