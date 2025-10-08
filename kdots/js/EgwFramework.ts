@@ -1393,8 +1393,9 @@ export interface ApplicationInfo
 export type FeatureList = {
 	preferences? : boolean,
 	favorites? : boolean,
-	aclRights? : false,
-	categories? : false
+	aclRights? : boolean,
+	// True for the standard way, URL for custom
+	categories? : boolean | string
 }
 
 // Feature settings for app when they haven't been set / overridden with anything specific

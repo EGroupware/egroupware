@@ -121,6 +121,15 @@ class kdots_framework extends Api\Framework\Ajax
 				foreach($hooks as $feature_name => $hookname)
 				{
 					$item['features'][$feature_name] = Hooks::exists($hookname, $item['name']);
+					if($item['features'][$feature_name] && in_array($feature_name, ['categories']))
+					{
+						$value = Hooks::single($hookname, $item['name']);
+						if($value && $value !== true)
+						{
+							// Nonstandard use of standard feature complicating everything
+							$item['features'][$feature_name] = is_string($value) ? $value : static::link('/index.php', $value, $item['name']);
+						}
+					}
 				}
 			});
 			$data['application-list'] = htmlentities(json_encode($extra['navbar-apps'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');

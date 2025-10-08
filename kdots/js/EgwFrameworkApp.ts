@@ -1091,7 +1091,10 @@ export class EgwFrameworkApp extends LitElement
                     `}
                     ${!this.egw.user('apps')['preferences'] || !this.features.categories ? nothing : html`
                         <sl-menu-item
-                                @click=${() => this.egw.show_preferences('cats', [this.name])}
+                                @click=${() => this.features.categories == "1" ?
+                                               this.egw.show_preferences('cats', [this.name]) :
+                                               this.egw.open_link(<string>this.features.categories, this.name)
+                                }
                         >
                             <sl-icon slot="prefix" name="tag"></sl-icon>
                             ${this.egw.lang("Categories")}
