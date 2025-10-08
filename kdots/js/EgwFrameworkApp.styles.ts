@@ -302,7 +302,7 @@ export default css`
 		}
 	}
 
-	et2-menu-item::part(popup) {
+	sl-menu-item::part(popup) {
 		border: none;
 		border-radius: var(--sl-panel-border-radius);
 	}

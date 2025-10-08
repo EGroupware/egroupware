@@ -695,6 +695,11 @@ abstract class Ajax extends Api\Framework
 				'entries' => array(),
 				'opened' => (boolean)$file['menuOpened'],
 			);
+			if($file['icon'])
+			{
+				$current_menu['icon'] = $file['icon'];
+				unset($file['icon']);
+			}
 			foreach($file as $item_text => $item_link)
 			{
 				if ($item_text === 'menuOpened' || $item_text === 'sendToBottom' ||// flag, not menu entry
