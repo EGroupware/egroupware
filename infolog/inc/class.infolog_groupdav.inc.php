@@ -145,7 +145,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			'filter'	=> $task_filter,
 		// do NOT add default type-filter of "task" for REST API
 		)+(!Api\CalDAV::isJSON() ? array(
-			'infolog-types' => explode(',', $infolog_types),
+			'info_type' => explode(',', $infolog_types),
 		) : []);
 		//error_log(__METHOD__."('$path', $user) returning ".array2string($ret));
 		return $ret;
