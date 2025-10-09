@@ -445,15 +445,39 @@ export class EgwFrameworkApp extends LitElement
 	protected waitForLoad(nodes : HTMLElement[]) : Promise<void>
 	{
 		let timeout = null;
+		let iframePoll = [];
 		const loadTimeoutPromise = new Promise<void>((resolve) =>
 		{
 			timeout = setTimeout(() =>
 			{
 				console.warn(this.name + ' loading timeout', this);
 				resolve(); // Don't reject — just proceed
+				this.loading = false;
 			}, 10000);
 		});
-		const loadPromises = nodes.map((node) => waitForEvent(node, "load"));
+		const loadPromises = nodes.map((node) =>
+		{
+			if(node.localName == "iframe")
+			{
+				// iframes don't fire "load" by spec, so poll for contents
+				return new Promise<void>((resolve) =>
+				{
+					const interval = setInterval(() =>
+					{
+						if((<HTMLIFrameElement>node).contentDocument?.body?.innerHTML != "")
+						{
+							clearInterval(interval);
+							resolve();
+						}
+					}, 500);
+					iframePoll.push(interval);
+				});
+			}
+			else
+			{
+				return waitForEvent(node, "load")
+			}
+		});
 
 		return Promise.race([
 			Promise.allSettled(loadPromises)
@@ -462,6 +486,7 @@ export class EgwFrameworkApp extends LitElement
 				{
 					this.loading = false;
 					clearTimeout(timeout);
+					iframePoll.forEach((interval) => clearInterval(interval));
 				}),
 			loadTimeoutPromise
 		]) as Promise<void>;
