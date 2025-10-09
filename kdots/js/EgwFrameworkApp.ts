@@ -889,7 +889,7 @@ export class EgwFrameworkApp extends LitElement
 
 	protected async handleSideboxMenuClick(event)
 	{
-		return this.egw.open_link(event.target.dataset.link);
+		return this.egw.open_link(event.target.dataset.link, event.target.dataset.target, event.target.dataset.popup, event.target.dataset.app);
 	}
 
 	/**
@@ -1246,6 +1246,9 @@ export class EgwFrameworkApp extends LitElement
             <sl-menu-item
                     ?disabled=${!item["item_link"]}
                     data-link=${item["item_link"]}
+                    ?data-target=${item["target"]}
+                    ?data-popup=${item["popup"]}
+                    ?data-app=${item["app"]}
                     @click=${this.handleSideboxMenuClick}
             >
                 ${icon}
