@@ -313,6 +313,7 @@ export default css`
 
 	et2-favorites-menu::part(menu), &::part(base) {
 		border: none;
+		border-radius: initial;
 	}
 
 `

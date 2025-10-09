@@ -694,6 +694,7 @@ egw-app > div[id] > et2-template {
 }
 egw-app et2-favorites-menu::part(menu) {
   border: none;
+  border-radius: initial;
 }
 egw-app::part(details-header) {
   background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
