@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="addressbook.view" version="1.9.001" slot="left">
+    <template id="addressbook.view" version="1.9.001" slot="left-top">
         <grid class="addressbook_view" width="100%">
             <columns>
                 <column width="70"/>
