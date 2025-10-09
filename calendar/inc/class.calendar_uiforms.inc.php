@@ -2011,7 +2011,7 @@ class calendar_uiforms extends calendar_ui
 					case 'title';
 					case 'description':
 					case 'location':
-					case 'cat_id':
+					case 'category':
 					case 'priority':
 						if ($event[$name] != $value)
 						{
