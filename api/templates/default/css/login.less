@@ -42,7 +42,7 @@ body {
   @media (max-device-width: 768px) {
 	font-size: 2em;
 	form {
-	  flex: 1 1 auto;
+	  flex: 0 1 auto;
 
 	  input[type="checkbox"] {
 		width: 2em !important;
@@ -50,10 +50,19 @@ body {
 	  }
 	}
   }
+  @media (max-height: 950px){
+	.egw_message_wrapper{
+	  order: 2;
+	}
+  }
   margin: 0;
 
   span, a {
 	color: var(--text-color);
+  }
+  .et2_required:not(.hasValue){
+	background-color: var(--sl-color-warning-100, #ffffd0);
+	--sl-input-background-color:  var(--sl-color-warning-100, #ffffd0);
   }
 
   input, select {
@@ -87,6 +96,7 @@ div#loginScreenMessage {
 
   #login_logo {
 	padding: 10% 0 5% 0;
+	width: 40rem;
 	max-height: 120px;
 	max-width: 100%;
   }
@@ -96,9 +106,14 @@ div#loginScreenMessage {
 	max-height: 20%;
 	font-size: 2em;
 	height: fit-content;
-	background: var(--sl-color-warning-100);
+	background: var(--sl-color-neutral-100);
 	border-radius: var(--sl-border-radius-medium);
 	padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
+	margin-inline: 1rem ;
+	border-left: .5em solid var(--sl-color-warning-500);
+	&:has(.error_message){
+	  border-left: .5em solid var(--sl-color-danger-500);
+	}
 
 	&:has(div#egw_message:empty) {
 		display: none;
@@ -111,11 +126,7 @@ div#loginScreenMessage {
 
 	#egw_message {
 	  display: flex;
-	  color: var(--sl-color-neutral-900) !important;
-
-	  &.error_message {
-		color: var(--sl-color-danger);
-	  }
+	  color: var(--sl-color-neutral-900);
 	}
 
 	.close {
@@ -138,9 +149,9 @@ div#loginScreenMessage {
   #centerBox {
 	display: flex;
 	height: 100%;
-	width: 100%;
+	max-width: 40em;
 	justify-content: center;
-	align-items: center;
+	align-items: stretch;
 	flex-direction: column;
 
 	form {
