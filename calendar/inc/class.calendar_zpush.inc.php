@@ -1133,7 +1133,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			calendar_so::split_status($status, $quantity, $role);
 
 			$attendee = new SyncAttendee();
-			$attendee->attendeestatus = (int)self::$status2as[$status];
+			$attendee->attendeestatus = (int)(self::$status2as[$status]??null);
 			$attendee->attendeetype = (int)self::$role2as[$role];
 			if (is_numeric($uid))
 			{

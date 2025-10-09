@@ -351,7 +351,7 @@ class Contacts extends Contacts\Storage
 	 */
 	public static function private_addressbook($contact_repository, array $prefs=null)
 	{
-		return $contact_repository == 'sql' && $prefs['private_addressbook'];
+		return $contact_repository == 'sql' && !empty($prefs['private_addressbook']);
 	}
 
 	/**
