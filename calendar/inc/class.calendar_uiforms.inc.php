@@ -949,7 +949,7 @@ class calendar_uiforms extends calendar_ui
 				return $this->conflicts($event,$conflicts,$preserv);
 			}
 			// check if we should apply the changes to the exceptions
-			if (!empty($content['apply_changes_to_exceptions']))
+			if (!empty($content['apply_changes_to_exceptions']) && $content['apply_changes_to_exceptions'] !== 'false')
 			{
 				$this->apply_changes_to_exceptions($event, $messages, !empty($content['no_notifications']));
 			}
