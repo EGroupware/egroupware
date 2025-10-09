@@ -27,9 +27,13 @@
 
 #filemanager-index_filemanager-index-app-toolbar et2-vfs-path et2-image {
   width: 1.5em;
-  .kdots-glassy &, .kdots-light & {
+  .sl-theme-light &, .kdots-light & {
 	filter: brightness(0) invert(1);
   }
+  .sl-theme-dark &, .kdots-dark & {
+	filter: brightness(0) invert(1) brightness(.9);
+  }
+
 }
 #filemanager-index_nm et2-vfs-mime img[src$="svg"], #filemanager-index_nm et2-vfs-mime svg{
     height: 1em !important;
