@@ -928,6 +928,10 @@ et2-image.smime_cert_unknownemail {
 	justify-content: end;
 }
 
+#mail-compose #mail-compose_composeToolbar et2-button-toggle{
+    font-size: 20px;
+}
+
 #mail-compose tr.mailComposeHeaders .et2_selectbox,
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn,
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-sel-ctn input,
@@ -944,8 +948,7 @@ et2-image.smime_cert_unknownemail {
 	background-color: var(--sl-color-gray-150);
 }
 #mail-compose tr.mailComposeHeaders et2-dropdown et2-button:first-child::part(label){
-	padding-left: 0;
-	margin-left: -1px;
+	font-size: 1rem;
 }
 #mail-compose tr.mailComposeHeaders et2-dropdown et2-button:first-child::part(caret){
 	margin-left: auto;
