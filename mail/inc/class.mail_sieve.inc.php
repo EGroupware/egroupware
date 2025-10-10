@@ -63,6 +63,19 @@ class mail_sieve
 	var $mailConfig = array();
 
 	/**
+	 * Available rational i;ascii-numeric comparators
+	 * @var string[]
+	 */
+	public static $comparators = [
+		'lt' => '<',
+		'le' => '<=',
+		'gt' => '>',
+		'ge' => '>=',
+		'eq' => '=',
+		'ne' => '!=',
+	];
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -230,14 +243,14 @@ class mail_sieve
 	 */
 	function edit ($content=null)
 	{
+		$icServer = $this->account->imapServer();
 		//Instantiate an eTemplate object, representing sieve.edit template
 		$etmpl = new Etemplate('mail.sieve.edit');
 		$etmpl->setElementAttribute('action_folder_text','searchOptions', array('noPrefixId'=> true));
 		if (!is_array($content))
 		{
-			if ( $this->getRules($_GET['ruleID']) && isset($_GET['ruleID']))
+			if (isset($_GET['ruleID']) && $this->getRules($_GET['ruleID']))
 			{
-
 				$rules = $this->rulesByID;
 				$content= $rules;
 				$content ['ruleID'] = $_GET['ruleID'];
@@ -245,10 +258,8 @@ class mail_sieve
 				{
 					case 'folder':
 						$content['action_folder_text'] = $rules['action_arg'];
-
 						break;
 					case 'address':
-
 						$content['action_address_text'] = explode(',', $rules['action_arg']);
 						break;
 					case 'reject':
@@ -262,7 +273,6 @@ class mail_sieve
 			}
 			else // Adding new rule
 			{
-
 				$this->getRules(null);
 				$newRulePriority = count($this->rules)*2+1;
 				$newRules ['priority'] = $newRulePriority;
@@ -324,13 +334,19 @@ class mail_sieve
 						if( $newRule['keep'] )     { $newRule['flg'] += 8; }
 						if( $newRule['regexp'] )   { $newRule['flg'] += 128; }
 
+						if (!empty($newRule['field']) && $newRule['comparator'] !== 'contains' && !preg_match('/^[0-9]+/', $newRule['field_val']))
+						{
+							Etemplate::set_validation_error('field_val', lang("Has to be a positive number."));
+							break;
+						}
 						if($newRule['action'] && $this->rulesByID['priority'])
 						{
 							$this->rules[$ruleID] = $newRule;
 							$ret = $this->account->imapServer()->setRules($this->rules);
 							if (!$ret && !empty($this->account->imapServer()->error))
 							{
-								$msg .= lang("Saving the rule failed:")."<br />".$this->account->imapServer()->error."<br />";
+								$msg .= lang("Saving the rule failed:")."\n".$this->account->imapServer()->error."\n";
+								$error++;
 							}
 							else
 							{
@@ -349,13 +365,12 @@ class mail_sieve
 						$msg .= "\n".lang("Error: Could not save rule").' '.lang("No action defined!");
 						$error++;
 					}
-					Framework::refresh_opener($msg, 'mail', 'sieve');
+					Framework::refresh_opener($msg, 'mail', 'sieve', null, null, null, null, $error ? 'error' : 'success');
 					if ($button == "apply")
 					{
 						break;
 					}
-				//fall through
-
+					//fall through
 				case 'delete':
 					if ($button == "delete")
 					{
@@ -365,15 +380,14 @@ class mail_sieve
 						}
 						else
 						{
-
 							$msg = lang('rule with priority ') . $ruleID . lang(' deleted!') . lang(' And the rule with priority %1, now got the priority %2',$ruleID+1,$ruleID);
 						}
 						unset($this->rules[$ruleID]);
 						$this->rules = array_values($this->rules);
 						$this->updateScript();
+						Framework::refresh_opener($msg, 'mail', 'sieve');
 					}
-					Framework::refresh_opener($msg, 'mail', 'sieve');
-
+					// fall through
 				case 'cancel':
 					Framework::window_close();
 					exit;
@@ -393,8 +407,18 @@ class mail_sieve
 				1 => 'text',
 			),
 			'ctype' => Script::$btransform_ctype_array,
-
+			'comparator' => [
+				'contains' => lang('Contains(*)'),
+			],
 		);
+		if ($icServer->hasExtension('comparator-i;ascii-numeric'))
+		{
+			$sel_options['comparator'] += self::$comparators;
+		}
+		else
+		{
+			Etemplate::setElementAttribute('comparator', 'readonly', true);
+		}
 
 		// No forward should be applied regardless of content/rules
 		$content['no_forward'] = $this->account->acc_smtp_type !== Api\Mail\Smtp::class && !$this->account->acc_user_forward;
@@ -1004,7 +1028,7 @@ class mail_sieve
 	}
 
 	/**
-	 * Convert an script seive format rule to human readable format
+	 * Convert a script Sieve format rule to human readable format
 	 *
 	 * @param {array} $rule Array of rules
 	 * @return {string}  return the rule as a string.
@@ -1054,7 +1078,7 @@ class mail_sieve
 			{
 				$complete .= $andor;
 			}
-			$match = $this->setMatchType($rule['field_val'],$rule['regexp']);
+			$match = $this->setMatchType($rule['field_val'],$rule['regexp'],$rule['comparator']);
 			$complete .= "'" . $rule['field'] . "' " . $match . " '" . $rule['field_val'] . "'";
 			$started = 1;
 		}
@@ -1135,39 +1159,47 @@ class mail_sieve
 	 * Helper function to find the type of content
 	 *
 	 * @param {string} $matchstr string that should be compared
-	 * @param {string} $regex regular expresion as pattern to be matched
+	 * @param {string} $regex regular expression as pattern to be matched
+	 * @param {string} $comparator "contains" (default), "eq", "ne", "lt", "le", "gt" or "ge"
 	 * @return {string} return the type
 	 */
-	function setMatchType (&$matchstr, $regex = false)
+	function setMatchType (&$matchstr, $regex = false, $comparator = 'contains')
 	{
-		$match = lang('contains');
-		if (preg_match("/^\s*!/", $matchstr))
+		if (!empty($comparator) && isset(self::$comparators[$comparator]))
 		{
-			$match = lang('does not contain');
-		}
-		if (preg_match("/\*|\?/", $matchstr))
-		{
-			$match = lang('matches');
-			if (preg_match("/^\s*!/", $matchstr))
-			{
-				$match = lang('does not match');
-			}
-		}
-		if ($regex)
-		{
-			$match = lang('matches regexp');
-			if (preg_match("/^\s*!/", $matchstr))
-			{
-				$match = lang('does not match regexp');
-			}
-		}
-		if ($regex && preg_match("/^\s*\\\\!/", $matchstr))
-		{
-			$matchstr = preg_replace("/^\s*\\\\!/","!",$matchstr);
+			$match = self::$comparators[$comparator];
 		}
 		else
 		{
-			$matchstr = preg_replace("/^\s*!/","",$matchstr);
+			$match = lang('contains');
+			if (preg_match("/^\s*!/", $matchstr))
+			{
+				$match = lang('does not contain');
+			}
+			if (preg_match("/\*|\?/", $matchstr))
+			{
+				$match = lang('matches');
+				if (preg_match("/^\s*!/", $matchstr))
+				{
+					$match = lang('does not match');
+				}
+			}
+			if ($regex)
+			{
+				$match = lang('matches regexp');
+				if (preg_match("/^\s*!/", $matchstr))
+				{
+					$match = lang('does not match regexp');
+				}
+			}
+			if ($regex && preg_match("/^\s*\\\\!/", $matchstr))
+			{
+				$matchstr = preg_replace("/^\s*\\\\!/", "!", $matchstr);
+			}
+			else
+			{
+				$matchstr = preg_replace("/^\s*!/", "", $matchstr);
+			}
 		}
 		return $match;
 	}

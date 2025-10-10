@@ -110,7 +110,7 @@ class Script
 		$vacation = array();
 		$emailNotification = array(); // Added email notifications
 
-		/* next line should be the recognised encoded head. if not, the script
+		/* next line should be the recognized encoded head. if not, the script
 		 * is of an unrecognised format, and we should not overwrite it. */
 		$line1 = array_shift($lines);
 		if (!preg_match("/^# ?Mail(.*)rules for/", $line1)){
@@ -130,6 +130,26 @@ class Script
 			{
 				$line = rtrim($line);
 				switch ($matches[1]){
+					case '#PSEUDO':
+						// check if we have the new, simply JSON serialized format
+						if (str_starts_with($lines[0], '#{"rules":'))
+						{
+							try {
+								$data = json_decode(substr($lines[0],1), true, 10, JSON_THROW_ON_ERROR);
+								foreach(['rules', 'vacation', 'emailNotification'] as $key)
+								{
+									$$key = $data[$key];
+								}
+								break 2;
+							}
+							catch (\Exception $e) {
+								$this->errstr = 'retrieveRules: not valid JSON';
+								$this->so = false;
+								if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": not valid JSON");
+								return false;
+							}
+						}
+						break;
 					case "rule":
 						$bits = explode("&&",  $line);
 						$rule = array();
@@ -337,11 +357,32 @@ class Script
 										$newruletext .= 'not ';
 										$rule['field_val'] = preg_replace("/^\s*!/","",$rule['field_val']);
 								}
-								$match = ':contains';
-								if (preg_match("/\*|\?/", $rule['field_val'])) $match = ':matches';
-								if ($rule['regexp']) $match = ':regex';
+								$end = '';
+								if (empty($rule['comparator']) || $rule['comparator'] === 'contains')
+								{
+									$match = ':contains';
+									if (preg_match("/\*|\?/", $rule['field_val'])) $match = ':matches';
+									if ($rule['regexp']) $match = ':regex';
+								}
+								else
+								{
+									$match = ':value "'.$rule['comparator'].'" :comparator "i;ascii-numeric"';
+									// i;ascii-numeric only accounts for unsigned integers,
+									// negative numbers are always evaluated as positiv infinity,
+									// --> we have to check for the value starting with a minus
+									if (in_array($rule['comparator'], ['gt', 'ge']))
+									{
+										$newruletext .= 'allof (not header :matches "'.addslashes($rule['field']).'" "-*", ';
+										$end = ')';
+									}
+									elseif (in_array($rule['comparator'], ['lt', 'le']))
+									{
+										$newruletext .= 'anyof (header :matches "'.addslashes($rule['field']).'" "-*", ';
+										$end = ')';
+									}
+								}
 								$newruletext .= "header " . $match . " \"" . addslashes($rule['field']) . "\"";
-								$newruletext .= " \"" . addslashes($rule['field_val']) . "\"";
+								$newruletext .= " \"" . addslashes($rule['field_val']) . "\"".$end;
 								$started = 1;
 						}
 						if ($rule['size']) {
@@ -391,7 +432,7 @@ class Script
 				}
 				if (preg_match("/address/i",$rule['action']))
 				{
-					// forward with recipients address as envelope and header From, to avoid SPF and DKIM problems,
+					// forward with recipient address as envelope and header From, to avoid SPF and DKIM problems,
 					// if editheader Sieve extension is available (needs to be enabled for Dovecot!)
 					// From header of forwarded mail will be "'sender-address' <recipient-address>", so original sender is still visible
 					if ($connection->hasExtension('editheader'))
@@ -624,13 +665,10 @@ class Script
 			if ($this->vacation && $vacation_active) {
 				$newscripthead .= (string)$this->vacation['days'] === '0' ? ',"vacation-seconds"' : ',"vacation"';
 			}
-			if ($connection->hasExtension('body')) $newscripthead .= ",\"body\"";
-			if ($connection->hasExtension('date')) $newscripthead .= ",\"date\"";
-			if ($connection->hasExtension('relational')) $newscripthead .= ",\"relational\"";
-			if ($connection->hasExtension('variables')) $newscripthead .= ",\"variables\"";
-			if ($connection->hasExtension('imap4flags')) $newscripthead .= ",\"imap4flags\"";
-			if ($connection->hasExtension('envelope')) $newscripthead .= ",\"envelope\"";
-			if ($connection->hasExtension('editheader')) $newscripthead .= ",\"editheader\"";
+			foreach(['body','date','relational','variables','imap4flags','envelope','editheader','comparator-i;ascii-numeric'] as $extension)
+			{
+				if ($connection->hasExtension($extension)) $newscripthead .= ',"'.$extension.'"';
+			}
 
 			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"'.($connection->hasExtension('enotify')?'e':'').'notify"'.($connection->hasExtension('variables')?',"variables"':''); // Added email notifications
 			$newscripthead .= "];\n\n";
@@ -663,17 +701,24 @@ class Script
 
 		// generate the encoded script foot
 
-		$newscriptfoot = "";
+		$newscriptfoot = "##PSEUDO script start\n";
+		// only add rule to foot if status != deleted. this is how we delete a rule.
+		$this->rules = array_values(array_filter($this->rules, fn($rule) => $rule['status'] != 'DELETED'));
+		$newscriptfoot .= "#".json_encode([
+			'rules' => $this->rules,
+			'vacation' => $this->vacation,
+			'emailNotification' => $this->emailNotification,
+		])."\n";
+
+		/* old script serializing
 		$pcount = 1;
-		$newscriptfoot .= "##PSEUDO script start\n";
 		foreach ($this->rules as $rule) {
 			// only add rule to foot if status != deleted. this is how we delete a rule.
 			if ($rule['status'] != 'DELETED') {
 				$rule['action_arg'] = addslashes($rule['action_arg']);
 				// we need to handle \r\n here.
 				$rule['action_arg'] = preg_replace("/\r?\n/","\\n",$rule['action_arg']);
-				/* reset priority value. note: we only do this
-				* for compatibility with Websieve. */
+				// reset priority value. note: we only do this for compatibility with Websieve.
 				$rule['priority'] = $pcount;
 				$newscriptfoot .= "#rule&&" . $rule['priority'] . "&&" . $rule['status'] . "&&" .
 				addslashes($rule['from']) . "&&" . addslashes($rule['to']) . "&&" . addslashes($rule['subject']) . "&&" . $rule['action'] . "&&" .
@@ -709,6 +754,7 @@ class Script
 		}
 
 		$newscriptfoot .= "#mode&&basic\n";
+		*/
 
 		$newscript = $newscripthead . $newscriptbody . $newscriptfoot;
 		$this->script = $newscript;
@@ -730,6 +776,13 @@ class Script
 				throw $e;
 			}
 			$this->errstr = 'updateScript: putscript failed: ' . $e->getMessage().($e->details?': '.$e->details:'');
+			// add detail from HttpException / JMAP error
+			if (is_a($e, \HttpException::class) &&
+				preg_match('#^application/([^+]+\+)?json$#', $e->response_headers['content-type']) &&
+				($json_error = json_decode($e->response, true)) && !empty($json_error['detail']))
+			{
+				$this->errstr .= ': '.$json_error['detail'];
+			}
 			if ($regexused && !$connection->hasExtension('regex')) $this->errstr .= " REGEX is not an supported CAPABILITY";
 			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);
 			error_log(__METHOD__.__LINE__.' # ScriptName:'.$this->name.' Script:'.$newscript);
