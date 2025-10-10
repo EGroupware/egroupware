@@ -717,6 +717,16 @@ export class EgwFrameworkApp extends LitElement
 	}
 
 	/**
+	 * The app is showing the normal application view (and does not need to reset before working properly)
+	 *
+	 * @return {boolean}
+	 */
+	get isUsingAppUrl() : boolean
+	{
+		return !this._offUrl;
+	}
+
+	/**
 	 * Default implementation for getFilterInfo
 	 * Exposed so apps can use this as a base for their own getFilterInfo
 	 */
@@ -742,8 +752,17 @@ export class EgwFrameworkApp extends LitElement
 
 	private hasSideContent(side : "left" | "right")
 	{
-		return this.hasSlotController.test(`${side}-header`) ||
+		let hasContent = this.hasSlotController.test(`${side}-header`) ||
 			this.hasSlotController.test(side) || this.hasSlotController.test(`${side}-footer`);
+
+		if(side == "left" && !hasContent)
+		{
+			// Left side has an additional slot above the favourites
+			hasContent = hasContent || this.hasSlotController.test("left-top") ||
+				// Favourites work through egw_app class, so if it's not there, favourites won't work
+				this.features?.favorites && window.app[this.name];
+		}
+		return hasContent;
 	}
 
 	/**
@@ -1284,7 +1303,7 @@ export class EgwFrameworkApp extends LitElement
 
 	render()
 	{
-		const hasLeftSlots = this.hasSideContent("left") || this.features?.favorites;
+		const hasLeftSlots = this.hasSideContent("left")
 		const hasRightSlots = this.hasSideContent("right");
 		const hasHeaderContent = this.hasSlotController.test("main-header");
 
