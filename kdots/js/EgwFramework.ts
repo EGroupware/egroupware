@@ -1246,7 +1246,15 @@ export class EgwFramework extends LitElement
                     role="tab"
                     ?active=${app.active}
                     style="--application-color: var(--${app.name}-color,var(--default-color, var(--sl-color-neutral-600))); ${extraStyle}"
-            		class=${extraClass?extraClass:nothing}>
+                    class=${extraClass ? extraClass : nothing}
+                    @click=${(e) =>
+                    {
+                        if(e.currentTarget.hasAttribute("active"))
+                        {
+                            this.getApp(app.name).refresh("", "", "")
+                        }
+                    }}
+            >
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
                     <et2-image part="tab-icon" src="${app.icon}" inline></et2-image>
                 </sl-tooltip>
