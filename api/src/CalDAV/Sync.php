@@ -472,7 +472,7 @@ EOT, $this->header([
 		}
 		$ical_class = new \calendar_ical();
 		// fetch current events, to be able to delete the ones no longer returned
-		$old_events = $ical_class->search(['category' => $modifications['cat_id'], 'enum_recuring' => false]);
+		$old_events = $ical_class->search(['cat_id' => $modifications['cat_id'], 'enum_recuring' => false]);
 		foreach($this->profind_collection($getctag) as $href => $props)
 		{
 			if (($ical = $props['calendar-data'] ?? null))
@@ -496,6 +496,7 @@ EOT, $this->header([
 		// delete NOT imported $old_events
 		foreach($old_events as $old_event)
 		{
+			// make sure to NOT delete other, not synced, events
 			if (!empty($old_event['category']) && strstr(','.$old_event['category'].',', ','.$modifications['cat_id'].',') !== false)
 			{
 				$ical_class->delete($old_event['id'], 0, true, true);
@@ -547,7 +548,7 @@ EOT, $this->header([
 		}
 		$ical_class = new \calendar_ical();
 		// fetch current events, to be able to delete the ones no longer returned
-		$old_events = $ical_class->search(['category' => $modifications['cat_id']]);
+		$old_events = $ical_class->search(['cat_id' => $modifications['cat_id']]);
 		$ical_class->event_callback = static function(array &$event) use ($modifications, &$old_events)
 		{
 			$event = self::modify($event, $modifications);
@@ -564,8 +565,9 @@ EOT, $this->header([
 			null, null, null, true);
 
 		// delete NOT imported $old_events
-		foreach($old_events as $old_event)
+ 		foreach($old_events as $old_event)
 		{
+			// make sure to NOT delete other, not synced, events
 			if (!empty($old_event['category']) && strstr(','.$old_event['category'].',', ','.$modifications['cat_id'].',') !== false)
 			{
 				$ical_class->delete($old_event['id'], 0, true, true);
