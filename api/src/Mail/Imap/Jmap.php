@@ -298,6 +298,16 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * Return Jmap client
+	 *
+	 * @return Mail\Jmap
+	 */
+	public function jmapClient()
+	{
+		return $this->jmap ?? ($this->jmap = new Mail\Jmap($this->acc_imap_host, $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId));
+	}
+
+	/**
 	 * Enable push notifications for the current connection and given account_id
 	 *
 	 * @param ?int $account_id =null 0=everyone on the instance
@@ -307,7 +317,7 @@ class Jmap extends Mail\Imap
 	function enablePush(?int $account_id=null, ?string $acc_id_folder=null)
 	{
 		try {
-			$this->jmap = new Mail\Jmap($this->acc_imap_host, $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId);
+			if (!$this->jmap) $this->jmap = $this->jmapClient();
 			$client_id = $this->jmapClientId($this->acc_id, $account_id ?: $GLOBALS['egw_info']['user']['account_id'], true)['client_id'];
 			if (!array_filter($this->jmap->getPushSubscriptions()['list']??[], static function(array $pushSubscription) use ($client_id)
 			{
