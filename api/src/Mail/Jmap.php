@@ -93,7 +93,7 @@ class Jmap
 			$authorization[parse_url($this->url, PHP_URL_HOST)] = 'Authorization: Basic '.base64_encode($user.':'.$secret);
 
 			// need to bootstrap to get the JMAP accountId
-			if (empty($accountId))
+			// we need other stuff set in bootstrap e.g. the downloadUrl //if (empty($accountId))
 			{
 				$this->bootstrap(false, $accountId);
 			}
@@ -146,7 +146,7 @@ class Jmap
 			$response = $this->api($url.'/.well-known/jmap');
 		}
 		// as I can't figure out what the Stalwart URL for the session object is, I use .well-know/jmap for now
-		elseif (empty($accountId))
+		else//if (empty($accountId))
 		{
 			$response = $this->api($url.'/.well-known/jmap');
 		}
@@ -206,7 +206,7 @@ class Jmap
 	 */
 	public function jmapCall(array $methodCalls, $using='urn:ietf:params:jmap:mail', bool $emulate=true)
 	{
-		if (!$emulate)
+		if (!$emulate || count($methodCalls) === 1)
 		{
 			return $this->api($this->url, 'POST', [
 				'using' => (array)$using,
@@ -586,6 +586,10 @@ class Jmap
 				return $this->accountCapabilities;
 			case 'capabilities':
 				return $this->capabilities;
+			case 'downloadUrl':
+				return $this->downloadUrl;
+			case 'uploadUrl':
+				return $this->uploadUrl;
 			default:
 				return null;
 		}
