@@ -544,9 +544,6 @@ textarea.et2_textbox_ro {
 	box-shadow: none;
 }
 
-[search][open]::part(combobox) {
-	flex-flow: wrap;
-}
 button.et2_selectbox_expand {
     width: 16px;
     display: inline-block;

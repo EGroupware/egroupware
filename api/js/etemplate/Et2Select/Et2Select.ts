@@ -190,14 +190,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 				/* Hide icon when open */
 
-				:host([search][open]) {
-					::part(combobox) {
-						flex-flow: wrap;
-					}
+				:host([search][open]) ::part(prefix) {
+					flex-flow: wrap;
+				}
 
-					::part(icon) {
-						display: none;
-					}
+				:host([search][open])::part(icon) {
+					display: none;
 				}
 
 				/* Style for tag count if rows=1 */

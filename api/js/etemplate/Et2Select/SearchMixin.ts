@@ -139,7 +139,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 
 				  :host([search]) sl-select[open]::part(prefix), :host([allowfreeentries]) sl-select[open]::part(prefix) {
-					order: 9;
 					flex: 2 1 auto;
 					flex-wrap: wrap;
 					width: 100%;
@@ -149,11 +148,13 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 						sl-select[open]::part(display-input) {
 							display: none;
 						}
+					}
 
+					:host([search][multiple]), :host([allowfreeentries]) {
 						sl-select[open]::part(clear-button) {
 							display: none;
 						}
-
+					
 						sl-select[open]::part(expand-icon) {
 							display: none;
 						}
