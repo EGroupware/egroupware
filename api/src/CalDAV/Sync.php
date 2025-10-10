@@ -496,7 +496,10 @@ EOT, $this->header([
 		// delete NOT imported $old_events
 		foreach($old_events as $old_event)
 		{
-			$ical_class->delete($old_event['id'], 0, true, true);
+			if (!empty($old_event['category']) && strstr(','.$old_event['category'].',', ','.$modifications['cat_id'].',') !== false)
+			{
+				$ical_class->delete($old_event['id'], 0, true, true);
+			}
 		}
 	}
 
@@ -563,7 +566,10 @@ EOT, $this->header([
 		// delete NOT imported $old_events
 		foreach($old_events as $old_event)
 		{
-			$ical_class->delete($old_event['id'], 0, true, true);
+			if (!empty($old_event['category']) && strstr(','.$old_event['category'].',', ','.$modifications['cat_id'].',') !== false)
+			{
+				$ical_class->delete($old_event['id'], 0, true, true);
+			}
 		}
 		$etag = $response_header['etag'];
 	}
