@@ -460,6 +460,9 @@ class filemanager_ui
 			}
 			$content['nm']['col_filter']['dir'] = $content['nm']['path'];
 		}
+		// setting the path to display in path-widget in app-toolbar after full reload
+		$content['path'] = $content['nm']['path'];
+
 		$view = static::get_view();
 
 		call_user_func($view,$content,$msg);
@@ -521,16 +524,16 @@ class filemanager_ui
 	 */
 	function listview(array $content=null,$msg=null)
 	{
-		$tpl = $this->etemplate ? $this->etemplate : new Etemplate(static::LIST_TEMPLATE);
+		$tpl = $this->etemplate ?: new Etemplate(static::LIST_TEMPLATE);
 
 		if ($msg)
 		{
 			Framework::message($msg);
 		}
 
-		if (($content['nm']['action'] || $content['nm']['rows']) && (empty($content['button']) || !isset($content['button'])))
+		if ((!empty($content['nm']['action']) || $content['nm']['rows']) && (empty($content['button']) || !isset($content['button'])))
 		{
-			if ($content['nm']['action'])
+			if (!empty($content['nm']['action']))
 			{
 				$msg = static::action($content['nm']['action'], $content['nm']['selected'], $content['nm']['path']);
 				if ($msg)
