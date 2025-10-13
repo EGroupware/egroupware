@@ -2756,9 +2756,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		let filterTemplate = null;
 		if(typeof template == "string")
 		{
+			const is_url = template.match(/^(http|\/).*\.xet($|\?)/);
 			filterTemplate = <Et2Template><unknown>loadWebComponent("et2-template", {
 				id: 'filter-template',
-				url: template
+				template: is_url ? null : template,
+				url: is_url ? template : null,
 			}, this._filterbox);
 		}
 		else if(template instanceof HTMLElement)
