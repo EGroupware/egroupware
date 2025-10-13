@@ -496,10 +496,11 @@ EOT, $this->header([
 		// delete NOT imported $old_events
 		foreach($old_events as $old_event)
 		{
-			// make sure to NOT delete other, not synced, events
-			if (!empty($old_event['category']) && strstr(','.$old_event['category'].',', ','.$modifications['cat_id'].',') !== false)
+			// make sure to NOT delete other, not synced, events, or already deleted ones
+			if (empty($old_event['deleted']) && !empty($old_event['category']) &&
+				strstr(','.$old_event['category'].',', ','.$modifications['cat_id'].',') !== false)
 			{
-				$ical_class->delete($old_event['id'], 0, true, true);
+				$ical_class->delete($old_event['id'], 0, false, true);
 			}
 		}
 	}
@@ -567,10 +568,11 @@ EOT, $this->header([
 		// delete NOT imported $old_events
  		foreach($old_events as $old_event)
 		{
-			// make sure to NOT delete other, not synced, events
-			if (!empty($old_event['category']) && strstr(','.$old_event['category'].',', ','.$modifications['cat_id'].',') !== false)
+			// make sure to NOT delete other, not synced, events, or already deleted ones
+			if (empty($old_event['deleted']) && !empty($old_event['category']) &&
+				strstr(','.$old_event['category'].',', ','.$modifications['cat_id'].',') !== false)
 			{
-				$ical_class->delete($old_event['id'], 0, true, true);
+				$ical_class->delete($old_event['id'], 0, false, true);
 			}
 		}
 		$etag = $response_header['etag'];
