@@ -73,6 +73,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 				console.log("calling egw.image('"+_name+"', '"+_app+"') before egw.set_images() returning null");
 				return null;
 			}
+			if(!_name) return null;
 
 			if (typeof _app === 'undefined')
 			{
