@@ -833,7 +833,13 @@ export class EgwFramework extends LitElement
 		// Do not add a same message twice if it's still not dismissed
 		if(typeof this._messages[hash] !== "undefined")
 		{
-			return this._messages[hash];
+			const alert = this._messages[hash];
+			if (alert.type === type)
+			{
+				return this._messages[hash];
+			}
+			alert.hide();
+			delete this._messages[hash];
 		}
 
 		// Already discarded, just stop

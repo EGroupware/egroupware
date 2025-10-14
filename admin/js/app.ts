@@ -1911,6 +1911,22 @@ class AdminApp extends EgwApp
 			data, this.egw
 		);
 	}
+
+	/**
+	 * Show a delayed push-test message send via push from the server
+	 *
+	 * Message needs to be delayed, as the push is quicker than the error-message send in the request!
+	 *
+	 * @param message
+	 * @param type
+	 * @param delay
+	 */
+	pushTestMessage(message : string, type : "help" | "info" | "error" | "warning" | "success" | undefined, delay : number)
+	{
+		window.setTimeout(() => {
+			egw.message(message, type || 'info');
+		}, delay || 200);
+	}
 }
 
 app.classes.admin = AdminApp;
