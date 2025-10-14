@@ -1311,11 +1311,12 @@ class Sql extends Api\Storage
 	 *
 	 * @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
 	 * @param array $extra_cols =array() extra-data to be saved
+	 * @param array $where extra parameters for the where clause
 	 * @return bool false on success, errornumber on failure
 	 */
-	function save_customfields(&$data, array $extra_cols=array())
+	function save_customfields(&$data, array $extra_cols=array(), array $where=[])
 	{
-		return parent::save_customfields($data, array('contact_owner' => $data['owner'])+$extra_cols);
+		return parent::save_customfields($data, array('contact_owner' => $data['owner'])+$extra_cols, $where);
 	}
 
 	/**
