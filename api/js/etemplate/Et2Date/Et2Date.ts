@@ -782,7 +782,11 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			// Update the et2-textbox so it will fail a required validation check
 			this._inputNode.value = '';
 			this._instance.clear();
-			this.dispatchEvent(new Event("change", {bubbles: true}));
+			this.updateComplete.then(() =>
+			{
+				this.dispatchEvent(new Event("change", {bubbles: true}));
+			});
+			return;
 		}
 		let parsedDate = null
 		try
@@ -812,10 +816,18 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 					this._instance.setDate(value, true, this._instance.config.altFormat);
 				}
 			}
-			// Update the et2-textbox so it has current value for any (required) validation
-			this._inputNode.value = formattedDate;
-			// @ts-ignore
-			this._inputNode.validate && (<Et2Textbox>this._inputNode).validate();
+			if(this._inputNode.value !== formattedDate)
+			{
+				// Update the et2-textbox so it has current value for any (required) validation
+				this._inputNode.value = formattedDate;
+				// @ts-ignore
+				this._inputNode.validate && (<Et2Textbox>this._inputNode).validate();
+				this.updateComplete.then(() =>
+				{
+					this.dispatchEvent(new Event("change", {bubbles: true}));
+				});
+				return;
+			}
 		}
 		this.dispatchEvent(new Event("input", {bubbles: true}));
 	}
