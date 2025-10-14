@@ -238,7 +238,7 @@ export abstract class EgwApp
 	 */
 	destroy(_app)
 	{
-		let egwApp = <EgwFrameworkApp>this.et2?.getInstanceManager().DOMContainer.closest("egw-app[name='" + this.appname + "']");
+		let egwApp = <EgwFrameworkApp>this.et2?.getInstanceManager()?.DOMContainer.closest("egw-app[name='" + this.appname + "']");
 		if(egwApp && typeof this.getNextmatch !== "undefined" && egwApp.getNextmatch == this.getNextmatch)
 		{
 			egwApp.getNextmatch = null;
