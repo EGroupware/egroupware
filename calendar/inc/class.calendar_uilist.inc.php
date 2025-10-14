@@ -39,20 +39,6 @@ class calendar_uilist extends calendar_ui
 	 * @var mixed
 	 */
 	var $debug=false;
-	/**
-	 * Filternames
-	 *
-	 * @var array
-	 */
-	var $date_filters = array(
-		'after'  => 'After current date',
-		'before' => 'Before current date',
-		'today'  => 'Today',
-		'week'   => 'Week',
-		'month'  => 'Month',
-		'all'	=> 'All events',
-		'custom' => 'Selected range',
-	);
 
 	/**
 	 * Constructor

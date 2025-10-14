@@ -2370,8 +2370,8 @@ export class CalendarApp extends EgwApp
 		else
 		{
 			// Set the hidden inputs to the current time span & submit
-			widget.getRoot().getWidgetById('first').set_value(app.calendar.state.first);
-			widget.getRoot().getWidgetById('last').set_value(app.calendar.state.last);
+			widget.getRoot().getWidgetById('first')?.set_value(app.calendar.state.first);
+			widget.getRoot().getWidgetById('last')?.set_value(app.calendar.state.last);
 
 			let vars = {
 				menuaction: 'calendar.calendar_merge.merge_entries',
@@ -3007,24 +3007,27 @@ export class CalendarApp extends EgwApp
 				{
 					state.state.enddate = state.state.enddate.toJSON();
 				}
-				switch(true)
+				if(!state.state.filter)
 				{
-					case state.state.startdate && state.state.enddate:
-						state.state.filter = 'custom';
-						break;
-					case state.state.startdate && !state.state.enddate:
-						state.state.filter = 'after';
-						break;
-					case !state.state.startdate && state.state.enddate:
-						state.state.filter = 'before';
-						break;
-					case this.state.view == 'week':
-						state.state.filter = "week";
-						break;
-					case this.state.view == "month":
-					default:
-						state.state.filter = "month";
-						break;
+					switch(true)
+					{
+						case state.state.startdate && state.state.enddate:
+							state.state.filter = 'custom';
+							break;
+						case state.state.startdate && !state.state.enddate:
+							state.state.filter = 'after';
+							break;
+						case !state.state.startdate && state.state.enddate:
+							state.state.filter = 'before';
+							break;
+						case this.state.view == 'week':
+							state.state.filter = "week";
+							break;
+						case this.state.view == "month":
+						default:
+							state.state.filter = "month";
+							break;
+					}
 				}
 
 				state.state.col_filter = {participant: state.state.owner};

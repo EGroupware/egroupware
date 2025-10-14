@@ -4,7 +4,8 @@
 <overlay>
     <template id="calendar.filter" slot="filter">
         <et2-filterbox autoapply="true">
-            <et2-searchbox id="search" label="Search" placeholder="Search" class="et2-label-fixed" onchange="app.calendar.update_state({view:'listview',search: widget.getValue()});"></et2-searchbox>
+            <et2-searchbox id="search" label="Search" placeholder="Search" class="et2-label-fixed" onchange="app.calendar.update_state({view:'listview',search: widget.getValue()}); return false;"></et2-searchbox>
+            <et2-select id="filter" label="Date range" class="et2-label-fixed" onchange="app.calendar.update_state({view: 'listview',filter: widget.value}); return false;"></et2-select>
             <et2-date label="Start" id="startdate" class="et2-label-fixed"
                       max="@end_date"
                       clearable="true"

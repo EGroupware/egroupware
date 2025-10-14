@@ -130,6 +130,21 @@ class calendar_ui
 	var $states_to_save = array('owner','status_filter','filter','cat_id','view','sortby','planner_view','weekend');
 
 	/**
+	 * Filternames
+	 *
+	 * @var array
+	 */
+	var $date_filters = array(
+		'after'  => 'After current date',
+		'before' => 'Before current date',
+		'today'  => 'Today',
+		'week'   => 'Week',
+		'month'  => 'Month',
+		'all'    => 'All events',
+		'custom' => 'Selected range',
+	);
+
+	/**
 	 * Constructor
 	 *
 	 * @param boolean $use_boupdate use bocalupdate as parenent instead of bocal
@@ -574,6 +589,7 @@ class calendar_ui
 		$sel_options['cat_id'] = array(
 			['value' => '0', 'label' => lang('None')]
 		);
+		$sel_options['filter'] = &$this->date_filters;
 
 		// Merge print
 		try
