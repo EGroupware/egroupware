@@ -578,7 +578,10 @@ class infolog_ui
 		}
 
 		// switch cf column off, if we have no cf's
-		$rows['no_customfields'] = !$query['custom_fields'];
+		if(!$this->bo->customfields)
+		{
+			$rows['no_customfields'] = true;
+		}
 
 		$rows['no_info_owner_info_responsible'] = (
 			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
