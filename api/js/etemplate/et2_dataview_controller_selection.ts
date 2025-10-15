@@ -146,7 +146,7 @@ export class et2_dataview_selectionManager
 	{
 		for (var key in this._registeredRows)
 		{
-			this.unregisterRow(key, this._registeredRows[key].tr);
+			this.unregisterRow(key, this._registeredRows[key]?.tr);
 			delete this._registeredRows[key];
 		}
 		if(this._actionObjectManager)
@@ -208,7 +208,7 @@ export class et2_dataview_selectionManager
 		_noDelete = _noDelete ? true : false;
 
 		if (typeof this._registeredRows[_uid] !== "undefined"
-		    && this._registeredRows[_uid].tr === _tr)
+			&& this._registeredRows[_uid]?.tr === _tr)
 		{
 			this._inUpdate = true;
 
