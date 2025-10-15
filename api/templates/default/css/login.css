@@ -81,6 +81,7 @@ body select {
 }
 body select {
   width: 62%;
+  cursor: pointer;
 }
 div#loginScreenMessage {
   font-weight: bold;
@@ -185,16 +186,19 @@ div#loginScreenMessage {
   width: 100%;
   background-color: var(--button-color);
   color: var(--text-color);
+  cursor: pointer;
 }
 #loginMainDiv #centerBox .divLoginbox div.remember_me_row {
   justify-content: start;
 }
 #loginMainDiv #centerBox .divLoginbox div.remember_me_row label {
   width: 41%;
+  cursor: pointer;
 }
 #loginMainDiv #centerBox .divLoginbox div.remember_me_row input[type="checkbox"] {
   width: auto;
   margin: 0;
+  cursor: pointer;
 }
 #loginMainDiv #centerBox .divLoginbox div.hiddenCredential {
   display: contents;
