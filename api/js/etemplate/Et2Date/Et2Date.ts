@@ -1053,6 +1053,11 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 
 		const direction = parseInt(e.target.dataset.direction, 10) || 1;
 		this.increment(direction, "day", true);
+
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		});
 	}
 
 	/**
