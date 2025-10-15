@@ -32,6 +32,7 @@ import type {EgwFrameworkApp} from "../../../kdots/js/EgwFrameworkApp";
 import {Et2ButtonIcon} from "../etemplate/Et2Button/Et2ButtonIcon";
 import type {Et2Select} from "../etemplate/Et2Select/Et2Select";
 import {Et2FavoritesMenu} from "../etemplate/Et2Favorites/Et2FavoritesMenu";
+import {Favorite} from "../etemplate/Et2Favorites/Favorite";
 
 /**
  * Type for push-message
@@ -1220,7 +1221,7 @@ export abstract class EgwApp
 		// Make sure it's an object - deep copy to prevent references in sub-objects (col_filters)
 		state = {...this.getState(), ...(state || {})};
 
-		this._create_favorite_popup(state);
+		Favorite.add(this.egw, this.appname, state);
 
 		// Stop the normal bubbling if this is called on click
 		return false;

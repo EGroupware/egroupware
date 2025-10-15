@@ -163,6 +163,15 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 				let favSortedList = this._sortable.toArray();
 				this.egw().set_preference(this.application, 'fav_sort_pref', favSortedList);
 				this._load();
+				
+				// Trigger event so other widgets can update and be in sync
+				document.dispatchEvent(new CustomEvent("preferenceChange", {
+					bubbles: true,
+					detail: {
+						application: this.application,
+						preference: 'fav_sort_pref'
+					}
+				}));
 			}
 		})
 	}
