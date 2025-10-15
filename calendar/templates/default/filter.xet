@@ -10,12 +10,12 @@
                       max="@end_date"
                       clearable="true"
                       onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());
-                      app.calendar.update_state({view: 'listview',startdate: widget.getValue()}); return false;"></et2-date>
+                      app.calendar.update_state({view: 'listview',startdate: widget.getValue(),filter:''}); return false;"></et2-date>
             <et2-date label="End" id="enddate" class="et2-label-fixed"
                       min="@date"
                       clearable="true"
                       onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());
-                      app.calendar.update_state({view:'listview',end_date: widget.getValue()}); return false;"></et2-date>
+                      app.calendar.update_state({view:'listview',end_date: widget.getValue(),filter:''}); return false;"></et2-date>
             <et2-select-cat label="Categories" id="cat_id" class="et2-label-fixed" placeholder="All categories"
                             onchange="app.calendar.update_state({cat_id: widget.getValue()});"
                             emptyLabel="All categories" multiple="true"

@@ -3011,13 +3011,13 @@ export class CalendarApp extends EgwApp
 				{
 					switch(true)
 					{
-						case state.state.startdate && state.state.enddate:
+						case Boolean(state.state.startdate && state.state.enddate):
 							state.state.filter = 'custom';
 							break;
-						case state.state.startdate && !state.state.enddate:
+						case Boolean(state.state.startdate && !state.state.enddate):
 							state.state.filter = 'after';
 							break;
-						case !state.state.startdate && state.state.enddate:
+						case Boolean(!state.state.startdate && state.state.enddate):
 							state.state.filter = 'before';
 							break;
 						case this.state.view == 'week':
@@ -3029,6 +3029,11 @@ export class CalendarApp extends EgwApp
 							break;
 					}
 				}
+				else if(["month", "week"].includes(state.state.filter))
+				{
+					state.state.startdate = state.state.enddate = null;
+				}
+
 
 				state.state.col_filter = {participant: state.state.owner};
 				state.state.search = state.state.keywords ? state.state.keywords : state.state.search;
