@@ -2995,6 +2995,10 @@ export class CalendarApp extends EgwApp
 			// List view (nextmatch) has slightly different fields
 			if(state.state.view === 'listview')
 			{
+				if(state.state.filter && !state.state.startdate)
+				{
+					state.state.startdate = state.state.first;
+				}
 				if(state.state.startdate?.toJSON)
 				{
 					state.state.startdate = state.state.startdate.toJSON();
@@ -3024,7 +3028,6 @@ export class CalendarApp extends EgwApp
 							state.state.filter = "week";
 							break;
 						case this.state.view == "month":
-						default:
 							state.state.filter = "month";
 							break;
 					}
