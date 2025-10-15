@@ -91,8 +91,19 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 	@property()
 	set accountType(type : 'accounts' | 'groups' | 'both' | 'owngroups')
 	{
+		const oldValue = this.__accountType;
 		this.__accountType = type;
 		this.searchOptions.account_type = type;
+
+		if(this.isConnected && oldValue !== type)
+		{
+			// Fetch might be in progress, so wait for it to finish before re-fetching or we'll get both
+			this.fetchComplete.then(() =>
+			{
+				this.account_options.splice(0, this.account_options.length);
+				this.fetchComplete = this._getAccounts();
+			});
+		}
 
 		super.select_options = this.select_options;
 	}
