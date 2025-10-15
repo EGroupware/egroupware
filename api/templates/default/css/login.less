@@ -51,8 +51,14 @@ body {
 	}
   }
   @media (max-height: 950px){
-	.egw_message_wrapper{
+	#divAppIconBar{
 	  order: 2;
+	}
+	.egw_message_wrapper{
+	  margin-top: .5em
+	}
+	#loginMainDiv #login_logo{
+	  padding: 5% 0 10% 0
 	}
   }
   margin: 0;
@@ -93,6 +99,7 @@ div#loginScreenMessage {
   background-size: cover;
   flex-direction: column;
   align-items: center;
+  overflow: auto;
 
   #login_logo {
 	padding: 10% 0 5% 0;
@@ -110,9 +117,12 @@ div#loginScreenMessage {
 	border-radius: var(--sl-border-radius-medium);
 	padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
 	margin-inline: 1rem ;
-	border-left: .5em solid var(--sl-color-warning-500);
+	border-left: .5em solid transparent;
 	&:has(.error_message){
 	  border-left: .5em solid var(--sl-color-danger-500);
+	}
+	&:has(.warning_message){
+	  border-left: .5em solid var(--sl-color-warning-500);
 	}
 
 	&:has(div#egw_message:empty) {
