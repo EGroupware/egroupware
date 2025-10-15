@@ -451,7 +451,7 @@ class kdots_framework extends Api\Framework\Ajax
 
 		$template_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'] ?? false;
 		$loginbox_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color'] ??
-			$template_custom_color ? "hsl(from $template_custom_color h s calc(l * 0.8))" : false;
+			($template_custom_color ? "hsl(from $template_custom_color h s calc(l * 0.8))" : false);
 		// hsl(from $template-custom-color h s calc(l-20)
 		//only add custom color definitions to the head css if we actually have custom colors
 		if ($loginbox_custom_color || $template_custom_color)
