@@ -99,7 +99,7 @@ div#loginScreenMessage {
 }
 #loginMainDiv #login_logo {
   padding: 10% 0 5% 0;
-  width: 40rem;
+  max-width: 40rem;
   max-height: 120px;
   max-width: 100%;
 }

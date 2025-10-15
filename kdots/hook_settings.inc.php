@@ -85,7 +85,7 @@ $GLOBALS['settings'] = array(
 		'label' => 'Custom login box color, defaults to above color darkened',
 		'no_lang' => true,
 		'name' => 'loginbox_custom_color',
-		'help' => lang('Use eg. %1 or %2. For best results use a color not close to white','#FF0000','orange'),
+		'help' => lang('Use eg. %1 or %2','#FF0000','orange').'. '.lang('For best results use a color not close to white'),
 		'xmlrpc' => True,
 		'admin'  => False,
 	),
