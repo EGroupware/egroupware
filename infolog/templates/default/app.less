@@ -65,16 +65,16 @@ tr.infolog_rowHasParent > td:first-child {
 .egwGridView_grid .infolog_CompletedClmn {
   max-width: fit-content;
   margin-left: 10px;
+  &::part(base){
+	/* Put line break for the first column*/
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+  }
 }
 
 tr.infolog_rowHasParent > td:first-child .infolog_CompletedClmn {
   margin-left: 16px;
-}
-
-/* Put line break for the first column*/
-.egwGridView_grid .infolog_CompletedClmn::part(base) {
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 /* Right-align extra buttons in tab */
@@ -159,6 +159,7 @@ egw-app[name="infolog"] {
     }
     div.et2_progress {
       width: 100%;
-      height: var(--sl-line-height-dense);
+      height: var(--sl-line-height-dense, 0.7em);
+	  max-width: 2em;
     }
   }
