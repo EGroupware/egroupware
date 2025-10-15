@@ -37,7 +37,7 @@ tr.unseen div,
 tr.unseen span,
 tr.unseen time,
 tr.unseen a {
-	color: #003075;
+    color: var(--sl-color-sky-900);
 	font-weight: bold;
 }
 
@@ -122,7 +122,7 @@ tr.forwarded .status_img {
   font-size: 12px;
   font-weight : normal !important;
   font-family: Arial;
-  color: grey !important;
+  color: var(--sl-color-neutral-500) !important;
   overflow: hidden;
   padding-top: 5px;
 }
