@@ -206,14 +206,16 @@ export default css`
         flex: 1 1 auto;
         position: relative;
         /* notification badges styling*/
+
         *[part="notification"] {
             position: absolute;
             bottom: 0px;
             left: -.5em;
             font-size: 1rem;
+
             &::part(base) {
                 /* put specific sizing here*/
-	            padding: 0.15em 0.4em;
+                padding: 0.15em 0.4em;
             }
         }
     }
@@ -318,12 +320,12 @@ export default css`
     }
 
 
-    .egw_fw__open_applications et2-image[src*='/kdots-navbar.svg'], .egw_fw__app_list et2-image[src*='/kdots-navbar.svg'] {
+    .egw_fw__open_applications et2-image[src*='/kdots-navbar.svg'] {
         color: var(--icon-background-color);
+    }
 
-        &:hover {
-            color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
-        }
+    .egw_fw__app_list et2-image[src*='/kdots-navbar.svg'], .egw_fw__open_applications et2-image[src*='/kdots-navbar.svg']:hover {
+        color: var(--application-color, var(--default-color, var(--sl-color-primary-700)));
     }
 
     .egw_fw__open_applications sl-tab[active] *[part='tab-icon'][src*='/kdots-navbar.svg'] {

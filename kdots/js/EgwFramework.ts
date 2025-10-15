@@ -1228,7 +1228,7 @@ export class EgwFramework extends LitElement
 		return html`
             <sl-tooltip placement="bottom" role="menuitem" content="${app.title}"
                         style="--application-color: var(--${app.name}-color,var(--default-color))">
-                <et2-image src="${app.icon}" aria-label="${app.title}" noSubmit
+                <et2-image src="${app.icon}" aria-label="${app.title}" noSubmit inline
                                  helptext="${app.title}"
                                  @click=${() =>
                                  {
