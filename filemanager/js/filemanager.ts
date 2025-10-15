@@ -1371,7 +1371,13 @@ export class filemanagerAPP extends EgwApp
 					let widget = etemplate2.getById(id).widgetContainer.getWidgetById(ids[i]);
 					if (widget)
 					{
+						if (ids[i] === 'upload')
+						{
+							widget.disabled = _ro
+						} else
+						{
 						widget.set_readonly(_ro);
+						}
 					}
 				}
 			}

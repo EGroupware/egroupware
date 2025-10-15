@@ -49,7 +49,7 @@ body {
     height: 2em;
   }
 }
-@media (max-height: 950px) {
+@media (max-height: 850px) {
   body #divAppIconBar {
     order: 2;
   }
