@@ -2595,7 +2595,7 @@ abstract class Merge
 			$export_limit = self::getExportLimit();
 		}
 		return array(
-			'icon'           => 'etemplate/merge',
+			'icon'           => 'file-earmark-arrow-down',
 			'caption'        => $caption,
 			'onExecute'  => 'javaScript:app.' . $GLOBALS['egw_info']['flags']['currentapp'] . '.mergeAction',
 			// disable action if no document or export completly forbidden for non-admins
