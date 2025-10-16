@@ -252,6 +252,7 @@ pre {
 /*Keeps the scrollbar in the window in Firefox*/
 #mail-index	table.egwGridView_outer {
 	-moz-margin-end: 10px;
+	margin-right: -10px;
 }
 .mail-index_quotabox {
 	display: inline-block;
@@ -894,10 +895,6 @@ div.mailComposeHeaderSection>table {
 	vertical-align: middle;
 }
 .sieve-title .ruleID::before {content:'#'}
-
-#mail-index_nm.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea .egwGridView_grid{
-    margin-right: -1em;
-}
 
 #mail-compose_mailaccount {max-width: 100% !important;}
 
