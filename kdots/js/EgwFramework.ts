@@ -863,7 +863,7 @@ export class EgwFramework extends LitElement
 		const alert : EgwFrameworkMessage = <EgwFrameworkMessage>Object.assign(document.createElement("egw-message"), attributes);
 		alert.addEventListener("sl-hide", (e) =>
 		{
-			delete this._messages[e.target["data-hash"] ?? ""];
+			delete this._messages[(<HTMLElement>e.target).dataset.hash ?? ""];
 		});
 		document.body.append(alert);
 		window.setTimeout(() => alert.toast(), 0);
