@@ -457,6 +457,7 @@ class admin_acl
 			'order' => 'acl_appname',
 			'sort' => 'ASC',
 			'row_id' => 'id',
+			'num_rows' => 1, // Include data
 			'account_id' => $account_id,
 			'actions' => self::get_actions(),
 			'acl_rights' => Api\Hooks::process(array(

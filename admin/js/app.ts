@@ -627,7 +627,7 @@ class AdminApp extends EgwApp
 					if(button) button.disabled=true;
 					this.egw.request(
 						'admin_acl::ajax_change_acl',
-						[acl_id, button_id == "_add" ? 1 : 0, [], this.et2.getInstanceManager().etemplate_exec_id]
+						[acl_id, button_id.includes("_add") ? 1 : 0, [], this.et2.getInstanceManager().etemplate_exec_id]
 					).then((_data) => {
 						this.et2.getInstanceManager().refresh(_data.msg, this.appname,row_ids,'update');
 						dialog.close();
@@ -813,7 +813,7 @@ class AdminApp extends EgwApp
 			app = 'preferences';
 		}
 		// Get by ID, since this.et2 isn't always the ACL list
-		var et2 = etemplate ? etemplate : etemplate2.getById('acl-edit').widgetContainer;
+		var et2 = etemplate ?? etemplate2.getById('admin-acl')?.widgetContainer ?? etemplate2.getById('acl-edit')?.widgetContainer;
 		var className = app + '_acl';
 		var acl_rights : any = {};
 		var readonlys : any = {acl: {}};
@@ -1019,16 +1019,15 @@ class AdminApp extends EgwApp
 		// Handle policy documentation tab here
 		if(this.egw.user('apps').policy)
 		{
-			dialog_options['width'] = 550;
-			dialog_options['height'] = 450,
-				modifications.tabs = {
-					add_tabs: true,
-					tabs: [{
-						label: egw.lang('Documentation'),
-						template: 'policy.admin_cmd',
-						prepend: false
-					}]
-				};
+			dialog_options['height'] = 450;
+			modifications.tabs = {
+				add_tabs: true,
+				extraTabs: [{
+					label: egw.lang('Documentation'),
+					template: 'policy.admin_cmd',
+					prepend: false
+				}]
+			};
 		}
 
 		// Create the dialog
@@ -1036,6 +1035,7 @@ class AdminApp extends EgwApp
 		{
 			this.acl_dialog = loadWebComponent("et2-dialog", dialog_options, this.et2);
 			this.acl_dialog.et2 = etemplate;
+			this.acl_dialog.width = "550";
 
 			document.body.appendChild(<LitElement><unknown>this.acl_dialog);
 		});

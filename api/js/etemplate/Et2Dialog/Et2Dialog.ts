@@ -167,9 +167,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 					margin-top: 0.5em;
 				}
 
-			  .dialog_content {
-				height: var(--height, auto);
-			  }
+				::slotted(.dialog_content) {
+					height: var(--height, 100%);
+				}
 
 			  /* Non-modal dialogs don't have an overlay */
 

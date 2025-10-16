@@ -791,6 +791,11 @@ et2-dialog .dialog_icon {
     margin: 0.5em;
 }
 
+/** Make template fit dialog, lets it grow to fit the dialog */
+et2-dialog .dialog--has_template > et2-dialog {
+	height: 100%;
+}
+
 et2-dialog .dialog--has_message {
     vertical-align: middle;
     display: flex;
