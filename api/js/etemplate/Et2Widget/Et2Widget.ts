@@ -369,18 +369,6 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 				}
 			}
-			try
-			{
-				if(this._actionManager)
-				{
-					this._actionManager.remove();
-					this._actionManager = null;
-				}
-			}
-			catch(e)
-			{
-				console.log(e);
-			}
 		}
 
 
@@ -865,6 +853,19 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 					delete this._mgrs[key];
 				}
+			}
+			
+			try
+			{
+				if(this._actionManager)
+				{
+					this._actionManager.remove();
+					this._actionManager = null;
+				}
+			}
+			catch(e)
+			{
+				console.log(e);
 			}
 
 			this._parent = null;
