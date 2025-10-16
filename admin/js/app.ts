@@ -219,12 +219,15 @@ class AdminApp extends EgwApp
 		this.ajax_target.set_disabled(!ajax);
 
 		// disable app-toolbar, if not accounts or groups (!_url) for now
-		if (_url) this.enableAppToolbar('');
+		this.enableAppToolbar(!this.nm.disabled ? 'admin.index.header' : '');
 
 		if(!this.nm.disabled)
 		{
 			// If nm was just re-enabled, resize it _after_ ajax_target gets hidden
 			this.ajax_target.updateComplete.then(() => this.nm.resize())
+
+			// If user list is shown, show the toolbar
+			this.enableAppToolbar('admin.index.header');
 		}
 	}
 
