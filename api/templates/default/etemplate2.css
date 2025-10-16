@@ -1325,7 +1325,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 
 .et2_link, et2-link, et2-link-string {
     cursor: pointer;
-    color: #003075;
+    color: var(--sl-color-sky-900,#003075);
     text-decoration: none;
 }
 

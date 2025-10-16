@@ -6,7 +6,7 @@
   min-width: 45px;
 }
 .infolog_headertext {
-  color: black;
+  color: var(--sl-color-neutral-950);
   font-size: 120%;
 }
 .infolog_lpadding5 {
@@ -28,22 +28,22 @@
 }
 .normal,
 .normal_done {
-  color: black;
+  color: var(--sl-color-neutral-950);
 }
 .high {
-  color: #cc0000;
+  color: var(--sl-color-purple-700);
 }
 .high_done {
-  color: #800000;
+  color: var(--sl-color-purple-900);
 }
 .urgent {
-  color: #ff00ff;
+  color: var(--sl-color-pink-700);
 }
 .urgent_done {
-  color: #800080;
+  color: var(--sl-color-pink-900);
 }
 .infolog_overdue {
-  color: #cc0000;
+  color: var(--sl-color-pink-700);
   font-weight: bold;
 }
 .private {

@@ -5,8 +5,6 @@
  * and override as needed
  */
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
-@import "../../node_modules/@shoelace-style/shoelace/dist/themes/light.css";
-@import "../../node_modules/@shoelace-style/shoelace/dist/themes/dark.css";
 html,
 body {
   width: 100vw;
@@ -2670,10 +2668,6 @@ html[data-darkmode="1"] .dialogFooterToolbar et2-button::part(base):not(:hover),
 html[data-darkmode="1"] et2-dialog et2-button[variant='default'][slot='footer']::part(base):not(:hover),
 .sl-theme-dark et2-dialog et2-button[variant='default'][slot='footer']::part(base):not(:hover) {
   background-color: var(--sl-input-background-color);
-}
-html[data-darkmode="1"] .nextmatch_sortheader,
-.sl-theme-dark .nextmatch_sortheader {
-  color: #96bcd9;
 }
 html[data-darkmode="1"] .flatpickr-calendar,
 .sl-theme-dark .flatpickr-calendar {

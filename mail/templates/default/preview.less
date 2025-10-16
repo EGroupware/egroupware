@@ -9,36 +9,44 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+//
+// THIS PART IS TAKEN FROM @SHOELACE-STYLES
+// only copied parts here because this gets requested everytime user previews a mail
+//
 .sl-theme-dark {
   color-scheme: dark;
-  --sl-color-gray-50: hsl(240, 5.1%, 15%);
-  --sl-color-gray-100: hsl(240, 5.7%, 18.2%);
-  --sl-color-gray-200: hsl(240, 4.6%, 22%);
-  --sl-color-gray-300: hsl(240, 5%, 27.6%);
-  --sl-color-gray-400: hsl(240, 5%, 35.5%);
-  --sl-color-gray-500: hsl(240, 3.7%, 44%);
-  --sl-color-gray-600: hsl(240, 5.3%, 58%);
-  --sl-color-gray-700: hsl(240, 5.6%, 73%);
-  --sl-color-gray-800: hsl(240, 7.3%, 84%);
-  --sl-color-gray-900: hsl(240, 9.1%, 91.8%);
-  --sl-color-gray-950: hsl(0, 0%, 95%);
+
+  --sl-color-gray-50: hsl(240 5.1% 15%);
+  --sl-color-gray-100: hsl(240 5.7% 18.2%);
+  --sl-color-gray-200: hsl(240 4.6% 22%);
+  --sl-color-gray-300: hsl(240 5% 27.6%);
+  --sl-color-gray-400: hsl(240 5% 35.5%);
+  --sl-color-gray-500: hsl(240 3.7% 44%);
+  --sl-color-gray-600: hsl(240 5.3% 58%);
+  --sl-color-gray-700: hsl(240 5.6% 73%);
+  --sl-color-gray-800: hsl(240 7.3% 84%);
+  --sl-color-gray-900: hsl(240 9.1% 91.8%);
+  --sl-color-gray-950: hsl(0 0% 95%);
 }
+
 .sl-theme-light {
   color-scheme: light;
-  --sl-color-gray-50: hsl(0, 0%, 97.5%);
-  --sl-color-gray-100: hsl(240, 4.8%, 95.9%);
-  --sl-color-gray-200: hsl(240, 5.9%, 90%);
-  --sl-color-gray-300: hsl(240, 4.9%, 83.9%);
-  --sl-color-gray-400: hsl(240, 5%, 64.9%);
-  --sl-color-gray-500: hsl(240, 3.8%, 46.1%);
-  --sl-color-gray-600: hsl(240, 5.2%, 33.9%);
-  --sl-color-gray-700: hsl(240, 5.3%, 26.1%);
-  --sl-color-gray-800: hsl(240, 3.7%, 15.9%);
-  --sl-color-gray-900: hsl(240, 5.9%, 10%);
-  --sl-color-gray-950: hsl(240, 7.3%, 8%);
+
+  --sl-color-gray-50: hsl(0 0% 97.5%);
+  --sl-color-gray-100: hsl(240 4.8% 95.9%);
+  --sl-color-gray-200: hsl(240 5.9% 90%);
+  --sl-color-gray-300: hsl(240 4.9% 83.9%);
+  --sl-color-gray-400: hsl(240 5% 64.9%);
+  --sl-color-gray-500: hsl(240 3.8% 46.1%);
+  --sl-color-gray-600: hsl(240 5.2% 33.9%);
+  --sl-color-gray-700: hsl(240 5.3% 26.1%);
+  --sl-color-gray-800: hsl(240 3.7% 15.9%);
+  --sl-color-gray-900: hsl(240 5.9% 10%);
+  --sl-color-gray-950: hsl(240 7.3% 8%);
 }
-:host,
-:root {
+
+:host, :root {
   --sl-color-neutral-50: var(--sl-color-gray-50);
   --sl-color-neutral-100: var(--sl-color-gray-100);
   --sl-color-neutral-200: var(--sl-color-gray-200);
@@ -51,32 +59,36 @@
   --sl-color-neutral-900: var(--sl-color-gray-900);
   --sl-color-neutral-950: var(--sl-color-gray-950);
 }
-body,
-td,
-textarea {
+
+body, td, textarea {
   font-family: Verdana, Arial, Helvetica, sans-serif;
 }
-body,
-html {
+
+body, html {
   height: 100%;
   width: 100%;
   padding: 0px;
   margin: 0 !important;
   overflow: auto;
 }
+
 .td_display {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   color: black;
   background-color: #FFFFFF;
 }
+
+//care about darkmode if we have a text only mail
 .td_display:has(pre) {
   color: var(--sl-color-neutral-950);
   background-color: var(--sl-color-neutral-50);
 }
+
 pre {
   white-space: pre-wrap;
   width: 99%;
 }
+
 blockquote[type=cite] {
   margin: 0;
   border-left: 2px solid blue;
@@ -84,6 +96,7 @@ blockquote[type=cite] {
   margin-left: 0;
   color: blue;
 }
+
 blockquote {
   margin: 0;
   border-left: 2px solid gray;
@@ -91,24 +104,31 @@ blockquote {
   margin-left: 0;
   color: black;
 }
+
 blockquote blockquote {
   border-color: blue !important;
 }
+
 blockquote blockquote blockquote {
   border-color: purple !important;
 }
+
 blockquote blockquote blockquote blockquote {
   border-color: green !important;
 }
+
 blockquote blockquote blockquote blockquote blockquote {
   border-color: orange !important;
 }
+
 blockquote blockquote blockquote blockquote blockquote blockquote {
   border-color: gray !important;
 }
+
 #divAppboxHeader {
   display: none;
 }
+
 .mail_externalImagesMsg {
   display: block;
   position: fixed;
@@ -116,16 +136,19 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   width: 100%;
   bottom: 0px;
   left: 0px;
-  background: #ffe5a5;
-  border-top: 1px solid #8f8b8b;
-  box-shadow: #8f8b8b 0px 1px 13px 2px;
+  background: rgb(255, 229, 165);
+  border-top: 1px solid rgb(143, 139, 139);
+  box-shadow: rgb(143, 139, 139) 0px 1px 13px 2px;
 }
+
 .mail_externalImagesMsg.red {
   background: rgba(204, 0, 51, 0.8) !important;
 }
+
 .mail_externalImagesMsg.red * {
   color: white !important;
 }
+
 .mail_externalImagesMsg button {
   float: right;
   margin: 7px;
@@ -133,20 +156,23 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   background-color: transparent;
   border: none;
   font-weight: bold;
-  color: #30558c;
+  color: rgb(48, 85, 140);
   cursor: pointer;
   text-decoration: underline;
 }
+
 .mail_externalImagesMsg button:hover {
-  color: #143058;
+  color: rgb(20, 48, 88);
 }
+
 .mail_externalImagesMsg p {
   display: inline-block;
   width: 70%;
   font-size: 9pt;
   margin: 7px 7px 7px 10px;
-  color: #1f1f1f;
+  color: rgb(31, 31, 31);
 }
+
 .mail_externalImagesMsg button.closeBtn {
   float: right;
   background-image: url(../node_modules/bootstrap-icons/icons/x-lg.svg);
@@ -162,15 +188,18 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   margin: 0;
   opacity: 0.6;
 }
+
 .mail_externalImagesMsg button.closeBtn:hover {
   opacity: 1;
 }
+
 #smimePasswordRequest {
   background-image: url('../api/templates/default/images/lock.svg');
   width: 100%;
   height: 90%;
   background-repeat: space;
 }
+
 #smimePasswordRequest div.bg-style {
   height: 100%;
   top: 0;
@@ -179,6 +208,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   opacity: 0.8;
   background: white;
 }
+
 #smimePasswordRequest div {
   position: absolute;
   width: 100%;
@@ -186,6 +216,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   text-align: center;
   background: transparent;
 }
+
 #smimePasswordRequest div input[type="password"] {
   padding-left: 10px;
   height: 40px;
@@ -193,6 +224,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
+
 #smimePasswordRequest div input[type="submit"] {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
@@ -201,6 +233,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   cursor: pointer;
   height: 46px;
 }
+
 .smime-message {
   font-weigth: bold;
   font-size: 12pt;
