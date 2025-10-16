@@ -29,7 +29,7 @@
                             <et2-date-time-today class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time-today>
 						</et2-hbox>
                         <et2-hbox class="icons">
-                            <et2-description class="status_img $row_cont[class]" align="right"></et2-description>
+                            <et2-description class="status_img bi-envelope-open $row_cont[class]" align="right"></et2-description>
                             <et2-image src="$row_cont[smime]" height="16px" align="right"></et2-image>
                             <html id="${row}[attachments]" align="right"/>
 						</et2-hbox>
@@ -70,7 +70,7 @@
 				<row class="$row_cont[class]">
 					<et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
 								 lname="$row_cont[lavatar][lname]" shape="rounded"></et2-lavatar>
-					<et2-description span="1" class="status_img"></et2-description>
+					<et2-description span="1" class="status_img bi-envelope-open"></et2-description>
 					<html id="${row}[attachments]"/>
 					<et2-vbox>
 						<et2-description id="${row}[subject]" noLang="1"></et2-description>

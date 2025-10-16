@@ -37,7 +37,7 @@ tr.unseen div,
 tr.unseen span,
 tr.unseen time,
 tr.unseen a {
-    color: var(--sl-color-sky-900);
+    color: var(--sl-color-sky-800);
 	font-weight: bold;
 }
 
@@ -68,39 +68,41 @@ tr.mail.deleted  td:first-child{
 
 .status_img {
 	display: inline-block;
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
-	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-open.svg);
-	background-size: 16px 16px;
+    font-size: calc(1em + 2px);
+    color: var(--sl-color-neutral-950);
+	width: 1em;
+	height: 1em;
+}
+.status_img::before{
+    vertical-align: initial;
 }
 
-tr.deleted .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/x-lg.svg);
+tr.deleted .status_img::before {
+    content: "\f659" /*bi-x-lg*/
 }
 
-tr.unseen .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope.svg);
+tr.unseen .status_img::before {
+content: "\f32f"/*bi-envelope*/
 }
 
-tr.flagged_seen .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/flag.svg) !important;
+tr.flagged_seen .status_img::before {
+	content: "\f3cc" /*bi-flag*/
 }
 
-tr.flagged_unseen .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/flag-fill.svg) !important;
+tr.flagged_unseen .status_img::before {
+    content: "\f3cb" /*bi-flag-fill*/
 }
 
-tr.recent .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-plus.svg) !important;
+tr.recent .status_img::before {
+    content: "\f694" /*bi-envelope-plus*/
 }
 
-tr.replied .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/reply.svg) !important;
+tr.replied .status_img::before {
+    content: "\f520" /*bi-reply*/
 }
 
-tr.forwarded .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/forward.svg) !important;
+tr.forwarded .status_img::before {
+    content: "\f3dc" /*bi-forward*/
 }
 
 .subjectBold
@@ -269,7 +271,8 @@ pre {
 	width: 100%;
     height: 100%;
     position: absolute;
-    background-color: white;
+    left: -1px;
+    background-color: var(--sl-color-neutral-50);
     z-index: 10;
     display: flex;
 	flex-direction: column;
@@ -404,7 +407,6 @@ div.mail-compose_fileselector {
 #mail-index_mail-index-preview {
     overflow: hidden;
     position: relative;
-    background-color: white;
 	margin-left: 1ex;
 }
 
@@ -419,7 +421,10 @@ div.mail-compose_fileselector {
 }
 
 .previewWrapper {
-    height: 100%
+    height: 100%;
+    --sl-input-background-color-focus: transparent ;
+    --sl-input-background-color: transparent ;
+
 }
 
 .previewWrapper > * {
@@ -478,6 +483,10 @@ et2-details.details {width: 100%}
 #mail-index_toolbar {
 	height: 2.95em;
 }
+#mail-index_toolbar::part(buttons) {
+    --upper-tint: none;
+}
+
 #mail-index_previewAttachmentArea {
 	background-color:#f0f0f0;
 	max-height: 3.6em;
@@ -1094,4 +1103,5 @@ tr.mailComposeJQueryCc, tr.mailComposeJQueryBcc, tr.mailComposeJQueryFolder, tr.
 
 #mail #mail-index_nm\[foldertree\] {
 	padding: var(--sl-spacing-medium) 0;
+    flex-grow: 0;
 }

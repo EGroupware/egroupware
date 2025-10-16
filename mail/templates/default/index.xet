@@ -139,7 +139,7 @@
                         <et2-hbox class="status_icons">
                             <et2-image  src="$row_cont[smime]" height="16px"></et2-image>
                             <html id="${row}[attachments]"/>
-                            <et2-description  class="status_img $row_cont[class]"></et2-description>
+                            <et2-description  class="status_img bi-envelope-open $row_cont[class]"></et2-description>
                         </et2-hbox>
                     </et2-vbox>
                 </row>
@@ -184,7 +184,7 @@
                 <row class="$row_cont[class]">
                     <et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
                                  lname="$row_cont[lavatar][lname]" shape="rounded"></et2-lavatar>
-                    <et2-description span="1" class="status_img"></et2-description>
+                    <et2-description span="1" class="status_img bi-envelope-open"></et2-description>
                     <html id="${row}[attachments]"/>
                     <et2-vbox>
                         <et2-description id="${row}[subject]" noLang="1"></et2-description>

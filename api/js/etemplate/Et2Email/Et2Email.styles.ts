@@ -149,7 +149,7 @@ export default css`
 
 	:host([readonly]) .email .email__combobox {
 		border: none;
-		box-shadow: none;
+		box-shadow: none !important;
 		max-height: calc(var(--height, 5) * (var(--sl-input-height-medium) * 0.8))
 	}
 
