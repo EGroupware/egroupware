@@ -5,6 +5,8 @@
  * and override as needed
  */
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
+@import "../../node_modules/@shoelace-style/shoelace/dist/themes/light.css";
+@import "../../node_modules/@shoelace-style/shoelace/dist/themes/dark.css";
 html,
 body {
   width: 100vw;

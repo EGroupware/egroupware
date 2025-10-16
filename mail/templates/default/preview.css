@@ -26,6 +26,10 @@ body,html {
     color: black;
     background-color: #FFFFFF;
 }
+.td_display:has(pre) {
+    color: var(--sl-color-neutral-950);
+    background-color: var(--sl-color-neutral-50);
+}
 pre {
 	white-space: pre-wrap;
 	width: 99%;
