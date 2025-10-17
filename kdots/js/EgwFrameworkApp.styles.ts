@@ -196,9 +196,16 @@ export default css`
     }
 
     .egw_fw_app__loading {
-        text-align: center;
-        margin: auto;
-        grid-row: sub-header / footer;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		grid-row: sub-header / footer;
+		grid-column: start / end;
+		z-index: var(--sl-z-index-tooltip);
+
+		background-color: var(--sl-panel-background-color);
 
         sl-spinner {
             --track-width: 1rem;

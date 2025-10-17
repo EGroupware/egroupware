@@ -452,7 +452,6 @@ export class EgwFrameworkApp extends LitElement
 			{
 				console.warn(this.name + ' loading timeout', this);
 				resolve(); // Don't reject — just proceed
-				this.loading = false;
 			}, 10000);
 		});
 		const loadPromises = nodes.map((node) =>
@@ -484,7 +483,6 @@ export class EgwFrameworkApp extends LitElement
 				.then(() => {/* yay ... */ })
 				.finally(() =>
 				{
-					this.loading = false;
 					clearTimeout(timeout);
 					iframePoll.forEach((interval) => clearInterval(interval));
 				}),
@@ -1346,6 +1344,7 @@ export class EgwFrameworkApp extends LitElement
                     <sl-spinner></sl-spinner>`)}
             </div>
             <div class="egw_fw_app__main" part="main">
+                ${this.loading ? this._loadingTemplate() : nothing}
                 ${this._filterTemplate()}
                 ${!this.leftCollapsed ? nothing : html`
                     <style>
@@ -1378,25 +1377,22 @@ export class EgwFrameworkApp extends LitElement
                                     data-panel="rightPanelInfo"
                                     @sl-reposition=${this.handleSlide}
                     >
-                        ${this.loading ? this._loadingTemplate("start") : html`
-                            ${this.rightCollapsed ? nothing : html`
-                                <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>`
-                            }
-                            <header slot="start" class="egw_fw_app__header header" part="content-header">
-                                <slot name="header"><span class="placeholder">header</span></slot>
-                            </header>
-                            <div slot="start" class="egw_fw_app__main_content content" part="content"
-                                 aria-label="${this.name}" tabindex="0">
-                                <slot>
-                                    ${this._loadingTemplate()}
-                                    <span class="placeholder">main</span>
-                                </slot>
-                            </div>
-                            <footer slot="start" class="egw_fw_app__footer footer" part="footer">
-                                <slot name="footer"><span class="placeholder">main-footer</span></slot>
-                            </footer>
-                            ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
-                        `}
+                        ${this.rightCollapsed ? nothing : html`
+                            <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>`
+                        }
+                        <header slot="start" class="egw_fw_app__header header" part="content-header">
+                            <slot name="header"><span class="placeholder">header</span></slot>
+                        </header>
+                        <div slot="start" class="egw_fw_app__main_content content" part="content"
+                             aria-label="${this.name}" tabindex="0">
+                            <slot>
+                                <span class="placeholder">main</span>
+                            </slot>
+                        </div>
+                        <footer slot="start" class="egw_fw_app__footer footer" part="footer">
+                            <slot name="footer"><span class="placeholder">main-footer</span></slot>
+                        </footer>
+                        ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
                     </sl-split-panel>
                 </sl-split-panel>
             </div>
