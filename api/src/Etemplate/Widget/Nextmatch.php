@@ -39,7 +39,7 @@ use EGroupware\Api;
  *	'lettersearch'   => True// I  show a lettersearch
  *	'searchletter'   =>     // IO active letter of the lettersearch or false for [all]
  * 	'start'          =>		// IO position in list
- *	'num_rows'       =>     // IO number of rows to show, defaults to maxmatches from the general prefs
+ *  'num_rows'       =>     // IO number of rows to show, defaults to 0.  Set to Nextmatch::INITIAL_ROWS to send initial rows.
  * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
  * 	'search'         =>		// IO search pattern
  * 	'order'          =>		// IO name of the column to sort after (optional for the sortheaders)
