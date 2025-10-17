@@ -31,10 +31,11 @@ const l10n = [
 	'uk', 'uz', 'uz_latn', 'vn', 'zh-tw', 'zh',
 ];
 const lang = egw && egw.preference ? <string>egw.preference('lang') || "" : "";
-// only load localization, if we have one
+let localizePromise = Promise.resolve();
+// only load localization if we have one
 if (l10n.indexOf(lang) >= 0)
 {
-	import(egw.webserverUrl + "/node_modules/flatpickr/dist/l10n/" + lang + ".js").then(() =>
+	localizePromise = import(egw.webserverUrl + "/node_modules/flatpickr/dist/l10n/" + lang + ".js").then(() =>
 	{
 		// @ts-ignore
 		flatpickr.localize(flatpickr.l10ns[lang]);
@@ -436,6 +437,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	async getUpdateComplete()
 	{
 		const more = await super.getUpdateComplete();
+		await localizePromise;
 		if(this.getOptions().allowInput)
 		{
 			await this._inputNode.updateComplete;
@@ -471,10 +473,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			return;
 		}
 
-		if(this.locale)
-		{
-			//	await loadLocale(this.locale);
-		}
+		// Wait for language to be loaded
+		await localizePromise;
+
 		if(typeof this._instance === "undefined")
 		{
 			if(this.getOptions().allowInput)
