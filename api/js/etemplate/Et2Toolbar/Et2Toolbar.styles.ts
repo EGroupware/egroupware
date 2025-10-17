@@ -51,7 +51,6 @@ export default css`
 
 		::slotted(*) {
 			flex: 1 1 auto;
-			order: attr(data-order type(<number>), 99);
 			min-width: fit-content;
 		}
 
