@@ -1956,13 +1956,20 @@ abstract class Merge
 	 */
 	protected function get_app()
 	{
-		switch(get_class($this))
+		switch($class=get_class($this))
 		{
 			case 'EGroupware\Api\Contacts\Merge':
 				$app = 'addressbook';
 				break;
 			default:
-				$app = str_replace('_merge', '', get_class($this));
+				if (str_starts_with($class, 'EGroupware\\'))
+				{
+					$app = strtolower(explode('\\', $class)[1] ?? '');
+				}
+				else
+				{
+					$app = str_replace('_merge', '', $class);
+				}
 				if(!in_array($app, array_keys($GLOBALS['egw_info']['apps'] ?? [])))
 				{
 					$app = false;
