@@ -379,6 +379,7 @@ moving folders from one mailaccount to another is not supported	mail	de	Verschie
 name and domain	mail	de	Name und Domain
 name and email	mail	de	Name und E-Mail
 name of account	mail	de	Konten-Bezeichnung
+name of header, only letters, numbers and dash (-) allowed	mail	de	Name des Headers, nur Buchstaben, Zahlen und Bindestrich (-) erlaubt
 name of imap servers (space separated host or host:port)	mail	de	Name der IMAP Server (Leerzeichen getrennt Host oder Host:Port)
 never display html emails	mail	de	Niemals anzeigen
 never show	mail	de	Nie anzeigen

@@ -385,6 +385,7 @@ moving folders from one mailaccount to another is not supported	mail	en	Moving f
 name and domain	mail	en	Name and domain
 name and email	mail	en	Name and email
 name of account	mail	en	Name of account
+name of header, only letters, numbers and dash (-) allowed	mail	en	Name of header, only letters, numbers and dash (-) allowed
 name of imap servers (space separated host or host:port)	mail	en	Name of IMAP servers (space separated host or host:port)
 never display html emails	mail	en	Never display HTML emails
 never show	mail	en	Never show

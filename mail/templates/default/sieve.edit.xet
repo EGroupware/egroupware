@@ -35,7 +35,7 @@
 				<row>
 					<et2-description  value="If mail header"></et2-description>
 					<et2-hbox>
-						<et2-textbox  id="field"></et2-textbox>
+						<et2-textbox  id="field" validator="/^[A-Z0-9-]*$/i" statustext="Name of header, only letters, numbers and dash (-) allowed"></et2-textbox>
 						<et2-select id="comparator"></et2-select>
 						<et2-textbox  id="field_val"></et2-textbox>
 					</et2-hbox>
