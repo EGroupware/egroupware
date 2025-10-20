@@ -58,6 +58,16 @@ export class Et2TabsMobile extends Et2Tabs
 		return <[SlTabPanel]><unknown>[...this.querySelectorAll('et2-tab-panel')]
 	}
 
+	set value(tab)
+	{
+		super.value = tab;
+	}
+
+	get value()
+	{
+		return this.tabs.find(el => el.open)?.getAttribute("id")
+	}
+
 	syncIndicator()
 	{
 		// Don't have an indicator to sync
