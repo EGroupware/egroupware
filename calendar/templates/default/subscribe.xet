@@ -34,7 +34,7 @@
 				</row>
 				<row>
 					<et2-description value="Additional participants"></et2-description>
-					<et2-select-account id="participants" multiple="true" accountType="both"></et2-select-account>
+					<et2-calendar-owner id="participants" multiple="true"></et2-calendar-owner>
 				</row>
 				<row>
 					<et2-description value="Modify events"></et2-description>

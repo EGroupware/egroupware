@@ -74,7 +74,9 @@ class Sync
 					throw $e;
 				}
 			}
-			if (preg_match('#^text/calendar(;|$)#', $response_header['content-type']))
+			if (preg_match('#^text/calendar(;|$)#', $response_header['content-type']) ||
+				$response_header['content-type'] === 'application/octet-stream' &&
+				str_starts_with(api($this->url, 'GET', '', $this->header(['Accept: text/calendar']), $response_header), 'BEGIN:VCALENDAR'))
 			{
 				$sync_type = 'calendar-get'.(!empty($response_header['etag']) ? '-etag' : '');
 				return $this->url;
