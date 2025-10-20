@@ -143,6 +143,14 @@ class AdminApp extends EgwApp
 					this.et2.getWidgetById('splitter').dock();
 				}
 				break;
+			default:
+				const header = this.et2.getWidgetById(_name + '.header');
+				if(header && header.slot === 'main-header')
+				{
+					header.closest('egw-app')?.append(header);
+					this.enableAppToolbar(_name + '.header');
+				}
+				break;
 		}
 	}
 
