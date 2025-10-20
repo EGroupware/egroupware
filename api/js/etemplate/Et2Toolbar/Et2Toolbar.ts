@@ -524,6 +524,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			}
 		});
 
+		// Sort & check sizing
 		elements = Array.from(this.querySelectorAll(':scope > *:not([slot="prefix"]):not([slot="suffix"])'));
 		elements.sort((a : HTMLElement, b : HTMLElement) => parseInt(b.dataset.order) - parseInt(a.dataset.order));
 		elements.forEach((el : HTMLElement) =>
@@ -554,12 +555,13 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	 */
 	protected _organiseChild(child : HTMLElement)
 	{
-		if(!this.shadowRoot.querySelector(".toolbar-buttons"))
+		const buttonDiv = <HTMLElement>this.shadowRoot.querySelector(".toolbar-buttons");
+		if(!buttonDiv)
 		{
 			// Not ready yet
 			return;
 		}
-		const isOverflowed = (child.offsetWidth + child.offsetLeft) > (<HTMLElement>this.shadowRoot.querySelector(".toolbar-buttons")).offsetWidth;
+		const isOverflowed = (child.offsetWidth + child.offsetLeft - buttonDiv.offsetLeft) > buttonDiv.offsetWidth;
 		if(isOverflowed || this._preference[child.id])
 		{
 			this._isOverflowed = this._isOverflowed || isOverflowed;
@@ -702,7 +704,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	protected settingsOptions()
 	{
 		const options = [];
-		this.querySelectorAll("[id]:not([slot=\"prefix\"]):not([slot=\"suffix\"])").forEach((child : HTMLElement) =>
+		this.querySelectorAll(":scope > [id]:not([slot=\"prefix\"]):not([slot=\"suffix\"])").forEach((child : HTMLElement) =>
 		{
 			const option : SelectOption = {
 				value: child.id,
