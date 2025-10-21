@@ -238,7 +238,8 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 				{
 					last_group = document.createElement("sl-button-group");
 					last_group.dataset.group = action.group;
-					last_group.dataset.order = domChildCount + action.group;
+					const order = !action.group || isNaN(action.group) ? last_group_id + 1 : action.group;
+					last_group.dataset.order = domChildCount + order;
 					this.append(last_group);
 				}
 
@@ -525,17 +526,26 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		});
 
 		// Sort & check sizing
+		const orderSort = (a : HTMLElement, b : HTMLElement) => parseInt(a.dataset.order) - parseInt(b.dataset.order);
 		elements = Array.from(this.querySelectorAll(':scope > *:not([slot="prefix"]):not([slot="suffix"])'));
-		elements.sort((a : HTMLElement, b : HTMLElement) => parseInt(b.dataset.order) - parseInt(a.dataset.order));
+		elements.sort(orderSort);
 		elements.forEach((el : HTMLElement) =>
 		{
 			if(typeof el.dataset.group !== "undefined")
 			{
-				Array.from(el.childNodes).reverse().forEach((c : HTMLElement) => this._organiseChild(c));
+				Array.from(el.childNodes).sort(orderSort).forEach((c : HTMLElement) =>
+				{
+					this._organiseChild(c)
+					el.appendChild(c);
+				});
 			}
 			else
 			{
 				this._organiseChild(el);
+			}
+			if(el.parentNode == this)
+			{
+				this.appendChild(el);
 			}
 		});
 
