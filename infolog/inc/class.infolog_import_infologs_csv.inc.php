@@ -377,113 +377,128 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin
 	 */
 	private function action ( $_action, $_data, $record_num = 0 )
 	{
-		$result = true;
-		switch ($_action) {
-			case 'none' :
-				return true;
-			case 'update' :
-				// Only update if there are changes
-				$old = $this->boinfolog->read($_data['info_id']);
+		try
+		{
+			$result = true;
+			switch($_action)
+			{
+				case 'none' :
+					return true;
+				case 'update' :
+					// Only update if there are changes
+					$old = $this->boinfolog->read($_data['info_id']);
 
-				if(!$this->definition->plugin_options['change_owner'])
-				{
-					// Don't change addressbook of an existing contact
-					unset($_data['owner']);
-				}
-
-				// Merge to deal with fields not in import record
-				$_data = array_merge($old, $_data);
-				$changed = $this->tracking->changed_fields($_data, $old);
-				if(count($changed) == 0 && !$this->definition->plugin_options['update_timestamp'])
-				{
-					break;
-				}
-
-				// Fall through
-			case 'insert' :
-				if ( $this->dry_run )
-				{
-					//print_r($_data);
-
-					// Check for link during dry run
-					if($_data['link_custom'])
+					if(!$this->definition->plugin_options['change_owner'])
 					{
-						list($app, $app_id2) = explode(':', $_data['link_custom'],2);
-						$app_id = $this->link_by_cf($record_num, $app, $field, $app_id2);
+						// Don't change addressbook of an existing contact
+						unset($_data['owner']);
 					}
 
-					$this->results[$_action]++;
-					break;
-				}
-				else
-				{
-					$result = $this->boinfolog->write(
-						$_data, true, 2,true, 	// 2 = dont touch modification date
-						$this->definition->plugin_options['no_notification']
-					);
-					if(!$result)
+					// Merge to deal with fields not in import record
+					if(is_array($old))
 					{
-						if($result === false)
+						$_data = array_merge($old, $_data);
+					}
+					$changed = $this->tracking->changed_fields($_data, $old);
+					if(count($changed) == 0 && !$this->definition->plugin_options['update_timestamp'])
+					{
+						break;
+					}
+
+				// Fall through
+				case 'insert' :
+					if($this->dry_run)
+					{
+						//print_r($_data);
+
+						// Check for link during dry run
+						if($_data['link_custom'])
 						{
-							$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
-								$GLOBALS['egw']->accounts->id2name($_data['info_owner']),
-								lang($_action)
-							);
+							list($app, $app_id2) = explode(':', $_data['link_custom'], 2);
+							$app_id = $this->link_by_cf($record_num, $app, $field, $app_id2);
 						}
-						else
-						{
-							$this->errors[$record_num] = lang('Error: the entry has been updated since you opened it for editing!');
-						}
+
+						$this->results[$_action]++;
+						break;
 					}
 					else
 					{
-						$this->results[$_action]++;
+						$result = $this->boinfolog->write(
+							$_data, true, 2, true,    // 2 = dont touch modification date
+							$this->definition->plugin_options['no_notification']
+						);
+						if(!$result)
+						{
+							if($result === false)
+							{
+								$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
+																  $GLOBALS['egw']->accounts->id2name($_data['info_owner']),
+																  lang($_action)
+								);
+							}
+							else
+							{
+								$this->errors[$record_num] = lang('Error: the entry has been updated since you opened it for editing!');
+							}
+						}
+						else
+						{
+							$this->results[$_action]++;
+						}
+						break;
 					}
-					break;
-				}
-			default:
-				throw new Api\Exception('Unsupported action');
-		}
+				default:
+					throw new Api\Exception('Unsupported action');
+			}
 
-		// Process some additional fields
-		if(!is_numeric($result))
-		{
-			return $result;
-		}
-		$info_link_id = $_data['info_link_id'];
-		foreach(array_keys(self::$special_fields) as $field)
-		{
-			if(!$_data[$field]) continue;
-			if(strpos($field, 'link') === 0)
+			// Process some additional fields
+			if(!is_numeric($result))
 			{
-				list($app, $app_id) = explode(':', $_data[$field],2);
+				return $result;
+			}
+			$info_link_id = $_data['info_link_id'];
+			foreach(array_keys(self::$special_fields) as $field)
+			{
+				if(!$_data[$field])
+				{
+					continue;
+				}
+				if(strpos($field, 'link') === 0)
+				{
+					list($app, $app_id) = explode(':', $_data[$field], 2);
 
-				// Linking to another entry based on matching custom fields
-				if($field == 'link_custom')
+					// Linking to another entry based on matching custom fields
+					if($field == 'link_custom')
+					{
+						$app_id = $this->link_by_cf($record_num, $app, $field, $app_id);
+					}
+				}
+				else
 				{
-					$app_id = $this->link_by_cf($record_num, $app, $field, $app_id);
+					$app = $field;
+					$app_id = $_data[$field];
+				}
+				if($app && $app_id)
+				{
+					$id = $_data['info_id'] ? $_data['info_id'] : (int)$result;
+					//echo "<p>linking infolog:$id with $app:$app_id</p>\n";
+					$link_id = Link::link('infolog', $id, $app, $app_id);
+					if($link_id && !$info_link_id)
+					{
+						$to_write = array(
+							'info_id'      => $id,
+							'info_link_id' => $link_id,
+						);
+						$this->boinfolog->write($to_write, False, false, true, true);    // last true = no notifications, as no real change
+						$info_link_id = $link_id;
+					}
 				}
 			}
-			else
-			{
-				$app = $field;
-				$app_id = $_data[$field];
-			}
-			if ($app && $app_id)
-			{
-				$id = $_data['info_id'] ? $_data['info_id'] : (int)$result;
-				//echo "<p>linking infolog:$id with $app:$app_id</p>\n";
-				$link_id = Link::link('infolog',$id,$app,$app_id);
-				if ($link_id && !$info_link_id)
-				{
-					$to_write = array(
-						'info_id'      => $id,
-						'info_link_id' => $link_id,
-					);
-					$this->boinfolog->write($to_write,False,false,true,true);	// last true = no notifications, as no real change
-					$info_link_id = $link_id;
-				}
-			}
+		}
+		catch (Exception $e)
+		{
+			$this->errors[$record_num] = $e->getMessage();
+			return false;
 		}
 		return $result;
 	}

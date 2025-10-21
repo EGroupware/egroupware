@@ -156,7 +156,21 @@ use EGroupware\Api\Etemplate;
 							EGroupware\Swoolepush\Hooks::pushDisabled(true);
 
 							importexport_helper_functions::$dry_run = false;
-							$count = $plugin->import($file, $definition_obj);
+							try
+							{
+								$count = $plugin->import($file, $definition_obj);
+							}
+							catch (Exception $e)
+							{
+								$message = $e->getMessage();
+								$message .= "\n\n" . $e->getFile() . ' (' . $e->getLine() . ')';
+								// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
+								if($GLOBALS['egw_info']['server']['exception_show_trace'])
+								{
+									$message .= "\n\n" . $e->getTraceAsString();
+								}
+								$this->sendUpdate(false, $e->getMessage(), $message);
+							}
 
 							EGroupware\Swoolepush\Hooks::pushDisabled(false);
 
@@ -218,7 +232,7 @@ use EGroupware\Api\Etemplate;
 				}
 				if($file && !$content['dry-run'] && $count)
 				{
-					static::sendUpdate(100, lang('%1 records processed', $count), $this->message);
+					static::sendUpdate(100, lang('%1 records processed', $count) . ($count != $total_processed ? "\n" . lang('Some records may not have been imported') : ''), $this->message);
 				}
 			}
 			elseif($content['cancel'])

@@ -132,7 +132,7 @@ class ImportExportApp extends EgwApp
 		// Show preview
 		var preview = jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode());
 		// TD gets the class too
-		preview.parent().show();
+		preview.show();
 		jQuery('.content', preview).empty().text(this.egw.lang("Please wait..."));
 		preview
 			.removeClass("hideme")
@@ -153,7 +153,7 @@ class ImportExportApp extends EgwApp
 		const preview = jQuery(this.et2.getWidgetById("preview_box"));
 
 		// TD gets the class too
-		preview.parent().hide();
+		preview.hide();
 	}
 
 	progressUpdate(progress : ProgressUpdate)
@@ -185,9 +185,8 @@ class ImportExportApp extends EgwApp
 	{
 		const progress_box = this.et2.getDOMWidgetById("progress_box")
 		progress_box.classList.remove("hideme");
-		// Get the td too
-		progress_box.parentNode.classList.remove("hideme");
-		const preview_box = this.et2.getDOMWidgetById("preview_box").parentNode
+
+		const preview_box = this.et2.getDOMWidgetById("preview_box")
 		preview_box.classList.add("hideme");
 
 		const record = progress_box.getWidgetById("progress_record");
@@ -217,7 +216,7 @@ class ImportExportApp extends EgwApp
 	_closeProgress()
 	{
 		const progress_box = this.et2.getDOMWidgetById("progress_box")
-		progress_box.parentNode.classList.add("hideme");
+		progress_box.classList.add("hideme");
 	}
 
 	/**

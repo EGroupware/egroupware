@@ -2,14 +2,13 @@
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	width: 97%;
-	height: 95%;
+	width: calc(100vw - 2 * var(--sl-spacing-small));
+	height: calc(100vh - 2 * var(--sl-spacing-small));
 	overflow: hidden;
 	background-color: white;
 	z-index: 999;
 	display: none;
 	border: 1px solid black;
-	margin: 1.5%;
 }
 
 .import_progress {
