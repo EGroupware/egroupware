@@ -33,11 +33,12 @@
 				<row>
 					<grid id="applications" class="egwGridView_grid">
 						<columns>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
+							<column width="80"/>
+							<column width="15%"/>
+							<column width="80"/>
+							<column width="20%"/>
+							<column width="20%"/>
+							<column width="150"/>
 							<column/>
 						</columns>
 						<rows>
@@ -78,7 +79,7 @@
 		</grid>
 	</template>
 	<template id="api.about.index" template="" lang="" group="0" version="1.8.001">
-		<et2-tabbox  id="general|applications|templates|languages|changelog" tabHeight="auto">
+		<et2-tabbox  id="general|applications|templates|languages|changelog" tabHeight="auto" width="100%">
 			<tabs>
 				<tab id="changelog" label="Changelog"/>
 				<tab id="general" label="About EGroupware"/>
