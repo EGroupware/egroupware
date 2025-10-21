@@ -162,9 +162,9 @@ export class EgwFramework extends LitElement
 	connectedCallback()
 	{
 		super.connectedCallback();
-		if(this.egw.window && this.egw.window.opener == null && !this.egw.window.framework)
+		if(this.egw.window && this.egw.window.top == this.egw.window.self && !this.egw.window.framework)
 		{
-			// This works, but stops a lot else from working
+			// Set global framework reference
 			this.egw.window.framework = this;
 		}
 		if(this.egw.window?.framework && this.egw.window?.framework !== this)
