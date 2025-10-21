@@ -1108,3 +1108,14 @@ function api_upgrade23_1_011()
 	));
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.012';
 }
+
+function api_upgrade23_1_012()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_applications','app_extra',array(
+		'type' => 'ascii',
+		'meta' => 'json',
+		'precision' => '8192'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.013';
+}

@@ -32,7 +32,8 @@ $phpgw_baseline = array(
 			'app_version' => array('type' => 'ascii','precision' => '20','nullable' => False,'default' => '0.0'),
 			'app_icon' => array('type' => 'ascii','precision' => '128'),
 			'app_icon_app' => array('type' => 'ascii','precision' => '16'),
-			'app_index' => array('type' => 'ascii','precision' => '128')
+			'app_index' => array('type' => 'ascii','precision' => '128'),
+			'app_extra' => array('type' => 'ascii','meta' => 'json','precision' => '8192')
 		),
 		'pk' => array('app_id'),
 		'fk' => array(),

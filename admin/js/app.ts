@@ -1957,6 +1957,17 @@ class AdminApp extends EgwApp
 			egw.message(message, type || 'info');
 		}, delay || 200);
 	}
+
+	/**
+	 * Update application color onchange
+	 *
+	 * @param _ev
+	 * @param _widget
+	 */
+	updateAppColor(_app, _color : string)
+	{
+		egw.request('api.EGroupware\\Api\\Egw\\Applications.ajax_updateAppColor', [_app, _color]);
+	}
 }
 
 app.classes.admin = AdminApp;

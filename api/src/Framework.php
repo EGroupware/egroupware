@@ -13,6 +13,7 @@
 
 namespace EGroupware\Api;
 
+use EGroupware\Api\Egw\Applications;
 use EGroupware\Api\Framework\Bundle;
 use EGroupware\Api\Framework\IncludeMgr;
 use EGroupware\Api\Header\ContentSecurityPolicy;
@@ -959,8 +960,8 @@ abstract class Framework extends Framework\Extra
 		{
 			if ($url)
 			{
-				$css .= '
-	@font-face {
+				$css .=
+'	@font-face {
 		font-family: '.$family.';
 		src: url("'.htmlspecialchars(is_array($url) ? array_shift($url) : $url).'") format("woff2");
 	}
@@ -969,39 +970,31 @@ abstract class Framework extends Framework\Extra
 		}
 		$textsize = (float)($GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? 12) ?: 12;
 		$css .= "
-			:root, :host, body, input {
-				font-size: {$textsize}px;
-				font-family: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
-					Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-			}
-		";
+	:root, :host, body, input {
+		font-size: {$textsize}px;
+		font-family: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+			Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+	}
+\n";
 		return $css;
 	}
 
+	/**
+	 * App-colors are read by Api\Egw\Application from egw_applications table
+	 *
+	 * @return string
+	 */
 	public function app_colors()
 	{
-		// ToDo: add application_color as column to egw_applications table and read it from there
-		return <<<EOF
-/* Individual application colors, should go in each app's CSS */
-body, :root {
-  --addressbook-color: #003366;
-  --admin-color: #333333;
-  --bookmarks-color: #CC6633;
-  --calendar-color: #CC0033;
-  --filemanager-color: #ff9933;
-  --infolog-color: #660033;
-  --mail-color: #006699;
-  --projectmanager-color: #669999;
-  --resources-color: #003333;
-  --timesheet-color: #330066;
-  --tracker-color: #009966;
-  --wiki-color: #797979;
-  --ranking-color: #404040;
-  --default-color: #797979;
-  --kanban-color: #4663c8;
-  --smallpart-color: #303333;
-}
-EOF;
+		return "\tbody, :root {\n".implode("\n", array_map(function($app)
+		{
+			return "\t\t--$app[name]-color: $app[color];";
+		}, array_filter($GLOBALS['egw_info']['apps'] ?? [], function ($app)
+		{
+			return !empty($app['enabled']) &&
+				preg_match('#^[a-z_]+$#', $app['name']) &&
+				$app['color'] !== Applications::$default_app_color;
+		})))."\n\t}\n\n";
 	}
 
 	/**

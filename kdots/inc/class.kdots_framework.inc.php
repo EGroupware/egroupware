@@ -456,21 +456,16 @@ class kdots_framework extends Api\Framework\Ajax
 		//only add custom color definitions to the head css if we actually have custom colors
 		if ($loginbox_custom_color || $template_custom_color)
 		{
-			$ret['app_css'] .= "
-			:root, :host, body {";
+			$ret['app_css'] .= "\t:root, :host, body {\n";
 			if ($template_custom_color)
 			{
-				$ret['app_css'] .= "
-				--template-custom-color: $template_custom_color;";
+				$ret['app_css'] .= "\t\t--template-custom-color: $template_custom_color;\n";
 			}
 			if ($loginbox_custom_color)
 			{
-				$ret['app_css'] .= "
-				--loginbox-custom-color: $loginbox_custom_color;";
+				$ret['app_css'] .= "\t\t--loginbox-custom-color: $loginbox_custom_color;\n";
 			}
-			$ret['app_css'] .= "
-			}
-		";
+			$ret['app_css'] .= "\t}\n";
 		}
 		// add css file incl. cache-buster
 		$css_file = '/kdots/css/kdots.css';
