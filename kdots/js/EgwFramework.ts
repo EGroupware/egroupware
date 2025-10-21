@@ -800,7 +800,7 @@ export class EgwFramework extends LitElement
 	public async setSidebox(appname, sideboxData, hash)
 	{
 		const app = this.loadApp(appname);
-		app.setSidebox(sideboxData, hash);
+		app?.setSidebox(sideboxData, hash);
 	}
 
 	/**
