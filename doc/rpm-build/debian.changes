@@ -1,3 +1,22 @@
+egroupware-docker (23.1.20251021) hardy; urgency=low
+
+  * VIDOTEACH: introduce new type of video-choice question which causes a jump to one of multiple target-videos
+  * Mail/Sieve: support numeric comparison to a header e.g. "X-Spam-Score"
+  * Calendar: get subscriptions working with iCloud (caldav.icloud.com), added autodetection and calendar-selection
+  * Calendar: allow adding resources to subscribed calendars e.g. for migrating a ressource-calendar to EGroupware
+  * Calendar: subscription was not correct (un)deleting already synced events, change [Synchronize] button to ignore sync-token or etag
+  * Calendar: fix iCalendar export adding a seemingly empty line, if (wrapped) line has exactly 75 chars
+  * Calendar: fix not being able to set no default alarm in calendar preferences by setting it empty
+  * Calendar: answering NO to question "Apply changes to (future) exceptions too?" behaved like YES
+  * API/Authentication: new App-password backend to deny authentication with the real password, to force usage of tokens for CalDAV or eSync
+  * InfoLog/CalDAV: fix typo causing all types to be synchronized via CalDAV ignoring the preference what to sync
+  * Addressbook/InfoLog/Timessheet/REST-Api: new GET parameter "filters[linked]=<app-name>:<numeric-ID>" to return entries linked to given other entry
+  * LDAP/ADS: fixed account import was not activating mail-accounts
+  * LDAP/ADS: allow to import aliases from AD or LDAP, incl. download of an .ldif file to first set them in the directory
+  * Preferences: fix not working password change on mobile devices
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 21 Oct 2025 09:21:39 +0200
+
 egroupware-docker (23.1.20250902) hardy; urgency=low
 
   * Mail: fixed Sieve vacation notice could not be set by admin for an other user
