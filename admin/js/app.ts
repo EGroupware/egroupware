@@ -60,6 +60,11 @@ class AdminApp extends EgwApp
 	groups : any;
 
 	/**
+	 * 2nd NM, not accounts or groups which use this.nm or this.groups
+	 */
+	nm2 : et2_nextmatch = null;
+
+	/**
 	 * Constructor
 	 *
 	 * @memberOf app.classes.admin
@@ -80,6 +85,8 @@ class AdminApp extends EgwApp
 		this.tree?.destroy && this.tree.destroy();
 		this.tree?.remove && this.tree.remove();
 		this.tree = null;
+
+		this.nm2?.getDOMNode()?.removeEventListner('et2-filter', this.nmFilterChange);
 
 		// call parent
 		super.destroy(_app);
@@ -147,6 +154,18 @@ class AdminApp extends EgwApp
 				const header = this.et2.getWidgetById(_name + '.header');
 				if(header && header.slot === 'main-header')
 				{
+					const nm = this.et2.getWidgetById('nm');
+					if (nm && nm !== this.nm && nm !== this.nm2)
+					{
+						this.nm2?.getDOMNode()?.removeEventListner('et2-filter', this.nmFilterChange);
+						this.nm2 = nm;
+						this.nm2.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
+						// update values in toolbar
+						window.setTimeout(() =>
+						{
+							this.nmFilterChange({detail: { activeFilters: nm.activeFilters}});
+						});
+					}
 					header.closest('egw-app')?.append(header);
 					this.enableAppToolbar(_name + '.header');
 				}
@@ -536,8 +555,8 @@ class AdminApp extends EgwApp
 	group_list()
 	{
 		this.nm.set_disabled(true);
-		this.enableAppToolbar('admin.index.group.header')
 		this.groups.set_disabled(false);
+		this.enableAppToolbar('admin.index.group.header')
 		jQuery(this.et2.parentNode).trigger('show.et2_nextmatch');
 	}
 

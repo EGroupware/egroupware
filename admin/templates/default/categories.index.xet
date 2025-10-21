@@ -52,12 +52,14 @@
 		</grid>
 	</template>
     <template id="admin.categories.index.header">
-        <et2-button label="Add" id="add" disabled="!@nm[add_link]" onclick="window.open('$cont[nm][add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
-        <template template="api.search-button"></template>
-        <et2-toolbar id="toolbar">
-            <et2-select id="filter" noLang="1" emptyLabel="All categories" label="Filter"></et2-select>
-            <et2-select id="owner" emptyLabel="All" label="owner"></et2-select>
-            <et2-button-icon id="back_to_list" image="back" label="Back to list" onclick="widget.closest('egw-app').refresh(); return false;" noSubmit="true"></et2-button-icon>
+        <et2-toolbar id="cats-toolbar">
+			<et2-button label="Add" id="add" disabled="!@nm[add_link]" slot="prefix"
+				onclick="window.open('$cont[nm][add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+			<template template="api.search-button" slot="prefix"></template>
+            <et2-select id="filter" noLang="1" emptyLabel="All categories" label="Filter" onchange="app.admin.changeNmFilter"></et2-select>
+            <et2-select id="owner" emptyLabel="Owner" onchange="app.admin.changeNmFilter"></et2-select>
+            <et2-button-icon id="back_to_list" image="back" label="Back to list" slot="suffix"
+				onclick="widget.closest('egw-app').refresh(); return false;" noSubmit="true"></et2-button-icon>
         </et2-toolbar>
 	</template>
 	<template id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
