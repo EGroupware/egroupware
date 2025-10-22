@@ -1804,29 +1804,29 @@ html,
   color token generator using #4177a2
   https://codepen.io/claviska/full/QWveRgL
 
-  make them important, otherwise the shoelace sl-light style overrides this in some cases, look for a different option?
+  
    */
-  --sl-color-primary-50: hsl(204, 33%, 98%) !important;
+  --sl-color-primary-50: hsl(204, 33%, 98%);
   /* rgb(248 250 251) */
-  --sl-color-primary-100: hsl(208, 28%, 93%) !important;
+  --sl-color-primary-100: hsl(208, 28%, 93%);
   /* rgb(230 237 243) */
-  --sl-color-primary-200: hsl(208, 31%, 87%) !important;
+  --sl-color-primary-200: hsl(208, 31%, 87%);
   /* rgb(211 224 234) */
-  --sl-color-primary-300: hsl(209, 33%, 81%) !important;
+  --sl-color-primary-300: hsl(209, 33%, 81%);
   /* rgb(191 209 224) */
-  --sl-color-primary-400: hsl(210, 36%, 73%) !important;
+  --sl-color-primary-400: hsl(210, 36%, 73%);
   /* rgb(163 189 210) */
-  --sl-color-primary-500: hsl(210, 35%, 63%) !important;
+  --sl-color-primary-500: hsl(210, 35%, 63%);
   /* rgb(128 164 193) */
-  --sl-color-primary-600: hsl(210, 33%, 52%) !important;
+  --sl-color-primary-600: hsl(210, 33%, 52%);
   /* rgb(90 137 174) */
-  --sl-color-primary-700: hsl(210, 43%, 42%) !important;
+  --sl-color-primary-700: hsl(210, 43%, 42%);
   /* rgb(61 112 153) */
-  --sl-color-primary-800: hsl(210, 43%, 35%) !important;
+  --sl-color-primary-800: hsl(210, 43%, 35%);
   /* rgb(51 93 126) */
-  --sl-color-primary-900: hsl(210, 43%, 25%) !important;
+  --sl-color-primary-900: hsl(210, 43%, 25%);
   /* rgb(36 66 90) */
-  --sl-color-primary-950: hsl(210, 43%, 15%) !important;
+  --sl-color-primary-950: hsl(210, 43%, 15%);
   /* rgb(22 40 55) */
   --sl-shadow-x-small: 0 1px 2px hsla(240, 3.8%, 46.1%, 0.24);
   --sl-shadow-small: 0 1px 2px hsla(240, 3.8%, 46.1%, 0.48);
@@ -1846,17 +1846,17 @@ html[data-darkmode="1"],
 .sl-theme-dark {
   background-color: var(--sl-color-neutral-50);
   color: var(--sl-color-neutral-700);
-  --sl-color-primary-50: hsl(210, 43%, 10%) !important;
-  --sl-color-primary-100: hsl(210, 43%, 15%) !important;
-  --sl-color-primary-200: hsl(210, 43%, 20%) !important;
-  --sl-color-primary-300: hsl(210, 43%, 26%) !important;
-  --sl-color-primary-400: hsl(210, 40%, 33%) !important;
-  --sl-color-primary-500: hsl(210, 40%, 42%) !important;
-  --sl-color-primary-600: hsl(210, 38%, 53%) !important;
-  --sl-color-primary-700: hsl(210, 36%, 63%) !important;
-  --sl-color-primary-800: hsl(210, 33%, 73%) !important;
-  --sl-color-primary-900: hsl(210, 30%, 84%) !important;
-  --sl-color-primary-950: hsl(210, 25%, 94%) !important;
+  --sl-color-primary-50: hsl(210, 43%, 10%);
+  --sl-color-primary-100: hsl(210, 43%, 15%);
+  --sl-color-primary-200: hsl(210, 43%, 20%);
+  --sl-color-primary-300: hsl(210, 43%, 26%);
+  --sl-color-primary-400: hsl(210, 40%, 33%);
+  --sl-color-primary-500: hsl(210, 40%, 42%);
+  --sl-color-primary-600: hsl(210, 38%, 53%);
+  --sl-color-primary-700: hsl(210, 36%, 63%);
+  --sl-color-primary-800: hsl(210, 33%, 73%);
+  --sl-color-primary-900: hsl(210, 30%, 84%);
+  --sl-color-primary-950: hsl(210, 25%, 94%);
   /*** HEADER ***/
   /*** APPLICATION ***/
   /*** End APPLICATION ***/
