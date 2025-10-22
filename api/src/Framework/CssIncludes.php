@@ -200,6 +200,10 @@ class CssIncludes
 				return implode("\n\t", $tags);
 			}
 		}
-		throw new \InvalidArgumentException("Could find position '$where' to insert  CSS link tag!");
+		//throw new \InvalidArgumentException("Could not find position '$where' to insert  CSS link tag!");
+		// just attach it at the end, if position could not be found
+		// that's e.g. the case for displaying mail body
+		$tags[] = $tag;
+		return implode("\n\t", $tags);
 	}
 }
