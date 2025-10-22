@@ -250,6 +250,13 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
   color: var(--sl-color-neutral-600);
   font-size: var(--header-icon-size);
 }
+#egw_fw_topmenu_info_items button {
+  font-size: var(--header-icon-size);
+}
+#egw_fw_topmenu_info_items button > a > img {
+  width: 1em;
+  height: 1em;
+}
 #egw_fw_topmenu_info_items > * {
   border: none;
   background-color: transparent;
@@ -2662,6 +2669,10 @@ html[data-darkmode="1"] egw-app,
 html[data-darkmode="1"] .et2_container,
 .sl-theme-dark .et2_container {
   background-color: initial;
+}
+html[data-darkmode="1"] .egw_tooltip,
+.sl-theme-dark .egw_tooltip {
+  filter: 80%;
 }
 html[data-darkmode="1"] .dialogFooterToolbar et2-button::part(base):not(:hover),
 .sl-theme-dark .dialogFooterToolbar et2-button::part(base):not(:hover),
