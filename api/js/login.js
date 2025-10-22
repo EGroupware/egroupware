@@ -140,6 +140,11 @@ const login_on_ready = () => {
 	}
 };
 
+//cleanup darkmode session value
+// Force light mode on login
+document.documentElement.classList.add('sl-theme-light');
+document.documentElement.classList.remove('sl-theme-dark');
+document.documentElement.setAttribute('data-darkmode', '0');
 // run login_on_ready, once egw_ready is available, currently it is already available, as login.js is included in the body
 if (typeof egw_ready !== "undefined")
 {
