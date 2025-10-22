@@ -35,7 +35,7 @@ $config = array(
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro'), //'$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	*/
 	// create an extra archive for given apps
-	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'webauthn', 'kanban', 'invoices'
+	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'webauthn', 'kanban', 'invoices', 'vidopro'
 		// these apps are placed in egroupware-epl-contrib archive
 		//'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sitemgr')
 	),

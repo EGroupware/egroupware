@@ -1,18 +1,24 @@
 html[data-darkmode="1"], .sl-theme-dark {
-  background-color: black;
+  background-color: var(--sl-color-neutral-50);
   color: var(--sl-color-neutral-700);
 
-  --sl-color-primary-950: hsl(from var(--primary-color) h s calc(l + 18));
-  --sl-color-primary-900: hsl(from var(--primary-color) h s calc(l + 16));
-  --sl-color-primary-800: hsl(from var(--primary-color) h s calc(l + 12));
-  --sl-color-primary-700: hsl(from var(--primary-color) h s calc(l + 8));
-  --sl-color-primary-600: hsl(from var(--primary-color) h s calc(l + 4));
-  --sl-color-primary-500: var(--primary-color);
-  --sl-color-primary-400: hsl(from var(--primary-color) h s calc(l - 4));
-  --sl-color-primary-300: hsl(from var(--primary-color) h s calc(l - 8));
-  --sl-color-primary-200: hsl(from var(--primary-color) h s calc(l - 12));
-  --sl-color-primary-100: hsl(from var(--primary-color) h s calc(l - 16));
-  --sl-color-primary-50: hsl(from var(--primary-color) h s calc(l - 18));
+  //our strongest neutral color should not be fully black
+  //--sl-color-neutral-0: var(--sl-color-neutral-50);
+
+  --sl-color-primary-50:  hsl(210, 43%, 10%) ;
+  --sl-color-primary-100: hsl(210, 43%, 15%) ;
+  --sl-color-primary-200: hsl(210, 43%, 20%) ;
+  --sl-color-primary-300: hsl(210, 43%, 26%) ;
+  --sl-color-primary-400: hsl(210, 40%, 33%) ;
+  --sl-color-primary-500: hsl(210, 40%, 42%) ;
+  --sl-color-primary-600: hsl(210, 38%, 53%) ;
+  --sl-color-primary-700: hsl(210, 36%, 63%) ;
+  --sl-color-primary-800: hsl(210, 33%, 73%) ;
+  --sl-color-primary-900: hsl(210, 30%, 84%) ;
+  --sl-color-primary-950: hsl(210, 25%, 94%) ;
+
+
+
 
   /*** HEADER ***/
   #egw_fw_topmenu_info_items {
@@ -24,7 +30,7 @@ html[data-darkmode="1"], .sl-theme-dark {
   /*** APPLICATION ***/
 
   egw-app {
-	--application-header-text-color: var(--sl-color-neutral-700);
+	--application-header-text-color: var(--sl-color-neutral-900);
   }
 
   /*** End APPLICATION ***/
@@ -35,12 +41,12 @@ html[data-darkmode="1"], .sl-theme-dark {
   .et2_container {
 	background-color: initial;
   }
+  .egw_tooltip{
+	filter:(80%);
+  }
 
   .dialogFooterToolbar et2-button::part(base):not(:hover), et2-dialog et2-button[variant='default'][slot='footer']::part(base):not(:hover) {
 	background-color: var(--sl-input-background-color);
-  }
-  .nextmatch_sortheader {
-	color: #96bcd9;
   }
 
   /* Date widget (flatpickr dark theme)  */

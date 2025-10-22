@@ -244,14 +244,14 @@ class Token
 		if (!is_array($content) || empty($content['token']))
 		{
 			$content = [
-				'token' => self::get_nm_options(),
+				'nm' => self::get_nm_options(),
 			];
 		}
-		elseif(!empty($content['token']['action']))
+		elseif(!empty($content['nm']['action']))
 		{
 			try {
-				Api\Framework::message(self::action($content['token']['action'],
-					$content['token']['selected'], $content['token']['select_all']));
+				Api\Framework::message(self::action($content['nm']['action'],
+					$content['nm']['selected'], $content['nm']['select_all']));
 			}
 			catch (\Exception $ex) {
 				Api\Framework::message($ex->getMessage(), 'error');
@@ -260,7 +260,7 @@ class Token
 		$tmpl = new Api\Etemplate(self::APP.'.tokens');
 		$tmpl->exec(self::APP.'.'.self::class.'.index', $content, [
 			'account_id' => ['0' => lang('All users')]
-		], [], ['token' => $content['token']]);
+		], [], ['nm' => $content['nm']]);
 	}
 
 	/**

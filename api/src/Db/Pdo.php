@@ -121,9 +121,25 @@ class Pdo
 		}
 		catch(\PDOException $e)
 		{
-			unset($e);
-			// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
-			self::$pdo = new \PDO($dsn,$egw_db->User,'$egw_db->Password');
+			if ($e->getCode() == 2002)
+			{
+				unset($e);
+				$dsn = preg_replace('/host=([^;]+);/', 'host='.$egw_db->get_host(true).';', $dsn, 1);
+				try {
+					self::$pdo = new \PDO($dsn,$egw_db->User,$egw_db->Password,array(
+						\PDO::ATTR_ERRMODE=>\PDO::ERRMODE_EXCEPTION,
+					));
+				}
+				catch(\PDOException $e)
+				{
+					// handled below
+				}
+			}
+			if (isset($e)) {
+				unset($e);
+				// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
+				self::$pdo = new \PDO($dsn, $egw_db->User, '$egw_db->Password');
+			}
 		}
 		if (!empty($query))
 		{

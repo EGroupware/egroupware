@@ -17,7 +17,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<et2-nextmatch-header-account  id="account_id" emptyLabel="LoginID"/>
+					<et2-nextmatch-header-account  id="account_id" label="LoginID" emptyLabel="All"/>
 					<nextmatch-header label="Login-Status" id="sessionstatus"/>
 					<nextmatch-sortheader label="Loginid" id="loginid"/>
 					<nextmatch-sortheader label="IP" id="ip"/>
@@ -46,28 +46,16 @@
 			</rows>
 		</grid>
 	</template>
+	<et2-template id="admin.accesslog.header" template="" lang="" group="0" version="1.9.001">
+		<et2-template template="api.search-button"></et2-template>
+		<et2-select-account id="account_id" emptyLabel="LoginID" onchange="app.admin.changeNmFilter"></et2-select-account>
+	</et2-template>
 	<template id="admin.accesslog" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row disabled="!@msg">
-					<et2-description  align="center" id="msg" span="all" class="message"></et2-description>
-					<et2-description></et2-description>
-				</row>
-				<row>
-					<nextmatch id="nm" options="admin.accesslog.rows" span="all"/>
-				</row>
-				<row>
-					<et2-hbox  cellpadding="0" cellspacing="0" >
-						<et2-description  value="Percent of users that logged out" readonly="true"></et2-description>
-						<et2-number  label=": %s %" id="percent" precision="1" readonly="true"></et2-number>
-					</et2-hbox>
-				</row>
-			</rows>
-		</grid>
+		<et2-template template="admin.accesslog.header" slot="main-header"></et2-template>
+		<et2-vbox>
+			<nextmatch id="nm" options="admin.accesslog.rows" span="all"/>
+			<et2-number label="{Percent of users that logged out}: %s %" id="percent" precision="1" readonly="true"></et2-number>
+		</et2-vbox>
 		<styles>
 			.selectAllArrow { padding-right: 12px; }
 		</styles>

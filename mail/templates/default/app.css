@@ -37,7 +37,7 @@ tr.unseen div,
 tr.unseen span,
 tr.unseen time,
 tr.unseen a {
-	color: #003075;
+    color: var(--sl-color-sky-800);
 	font-weight: bold;
 }
 
@@ -68,39 +68,41 @@ tr.mail.deleted  td:first-child{
 
 .status_img {
 	display: inline-block;
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
-	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-open.svg);
-	background-size: 16px 16px;
+    font-size: calc(1em + 2px);
+    color: var(--sl-color-neutral-950);
+	width: 1em;
+	height: 1em;
+}
+.status_img::before{
+    vertical-align: initial;
 }
 
-tr.deleted .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/x-lg.svg);
+tr.deleted .status_img::before {
+    content: "\f659" /*bi-x-lg*/
 }
 
-tr.unseen .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope.svg);
+tr.unseen .status_img::before {
+content: "\f32f"/*bi-envelope*/
 }
 
-tr.flagged_seen .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/flag.svg) !important;
+tr.flagged_seen .status_img::before {
+	content: "\f3cc" /*bi-flag*/
 }
 
-tr.flagged_unseen .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/flag-fill.svg) !important;
+tr.flagged_unseen .status_img::before {
+    content: "\f3cb" /*bi-flag-fill*/
 }
 
-tr.recent .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-plus.svg) !important;
+tr.recent .status_img::before {
+    content: "\f694" /*bi-envelope-plus*/
 }
 
-tr.replied .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/reply.svg) !important;
+tr.replied .status_img::before {
+    content: "\f520" /*bi-reply*/
 }
 
-tr.forwarded .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/forward.svg) !important;
+tr.forwarded .status_img::before {
+    content: "\f3dc" /*bi-forward*/
 }
 
 .subjectBold
@@ -122,7 +124,7 @@ tr.forwarded .status_img {
   font-size: 12px;
   font-weight : normal !important;
   font-family: Arial;
-  color: grey !important;
+  color: var(--sl-color-neutral-500) !important;
   overflow: hidden;
   padding-top: 5px;
 }
@@ -250,6 +252,7 @@ pre {
 /*Keeps the scrollbar in the window in Firefox*/
 #mail-index	table.egwGridView_outer {
 	-moz-margin-end: 10px;
+	margin-right: -10px;
 }
 .mail-index_quotabox {
 	display: inline-block;
@@ -269,7 +272,8 @@ pre {
 	width: 100%;
     height: 100%;
     position: absolute;
-    background-color: white;
+    left: -1px;
+    background-color: var(--sl-color-neutral-50);
     z-index: 10;
     display: flex;
 	flex-direction: column;
@@ -404,7 +408,6 @@ div.mail-compose_fileselector {
 #mail-index_mail-index-preview {
     overflow: hidden;
     position: relative;
-    background-color: white;
 	margin-left: 1ex;
 }
 
@@ -419,7 +422,10 @@ div.mail-compose_fileselector {
 }
 
 .previewWrapper {
-    height: 100%
+    height: 100%;
+    --sl-input-background-color-focus: transparent ;
+    --sl-input-background-color: transparent ;
+
 }
 
 .previewWrapper > * {
@@ -478,6 +484,10 @@ et2-details.details {width: 100%}
 #mail-index_toolbar {
 	height: 2.95em;
 }
+#mail-index_toolbar::part(buttons) {
+    --upper-tint: none;
+}
+
 #mail-index_previewAttachmentArea {
 	background-color:#f0f0f0;
 	max-height: 3.6em;
@@ -886,10 +896,6 @@ div.mailComposeHeaderSection>table {
 }
 .sieve-title .ruleID::before {content:'#'}
 
-#mail-index_nm.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea .egwGridView_grid{
-    margin-right: -1em;
-}
-
 #mail-compose_mailaccount {max-width: 100% !important;}
 
 .header_row_right.vertical_splitter {float:left;}
@@ -928,6 +934,10 @@ et2-image.smime_cert_unknownemail {
 	justify-content: end;
 }
 
+#mail-compose #mail-compose_composeToolbar et2-button-toggle{
+    font-size: 20px;
+}
+
 #mail-compose tr.mailComposeHeaders .et2_selectbox,
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn,
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-sel-ctn input,
@@ -944,8 +954,7 @@ et2-image.smime_cert_unknownemail {
 	background-color: var(--sl-color-gray-150);
 }
 #mail-compose tr.mailComposeHeaders et2-dropdown et2-button:first-child::part(label){
-	padding-left: 0;
-	margin-left: -1px;
+	font-size: 1rem;
 }
 #mail-compose tr.mailComposeHeaders et2-dropdown et2-button:first-child::part(caret){
 	margin-left: auto;
@@ -1091,4 +1100,5 @@ tr.mailComposeJQueryCc, tr.mailComposeJQueryBcc, tr.mailComposeJQueryFolder, tr.
 
 #mail #mail-index_nm\[foldertree\] {
 	padding: var(--sl-spacing-medium) 0;
+    flex-grow: 0;
 }

@@ -558,54 +558,35 @@ class mail_hooks
 		// always show the side bar
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 		$appname = 'mail';
-		$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'];
-
-		$file=array();
-		if($GLOBALS['egw_info']['user']['preferences']['common']['template_set'] == 'pixelegg')
-		{
-			// Destination div for folder tree
-			$file[] = array(
-				'no_lang' => true,
-				'text'    => '<span id="mail-index_buttonmailcreate" class="button" />',
-				'link'    => false,
-				'icon'    => false
-			);
-			$file[] = array(
-				'no_lang' => true,
-				'text'    => '<span id="mail-tree_target" class="dtree" />',
-				'link'    => false,
-				'icon'    => false
-			);
-			// display Mail Tree
-			display_sidebox($appname, $menu_title, $file);
-		}
 
 		$linkData = array(
 			'menuaction' => 'mail.mail_ui.importMessage',
 		);
 
-		$file = array(
-			'import message' => "javascript:egw_openWindowCentered2('" . Egw::link('/index.php', $linkData, false) . "','importMessageDialog',600,180,'no','$appname');",
-		);
+		$GLOBALS['egw']->framework->sidebox($appname, lang('import message'), [
+			[
+				'link' => "javascript:egw_openWindowCentered2('" . Egw::link('/index.php', $linkData, false) . "','importMessageDialog',600,180,'no','$appname');",
+				'icon' => 'importexport/navbar'
+			]]);
 
 		// create account wizard
 		if (self::access('createaccount'))
 		{
-			$file += array(
-				'create new account' => "javascript:egw_openWindowCentered2('" .
+			$GLOBALS['egw']->framework->sidebox($appname, lang('create new account'), array(
+				[
+					'icon' => 'mail',
+					'link' => "javascript:egw_openWindowCentered2('" .
 					Egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
-					"','_blank',640,480,'yes')",
-			);
+						"','_blank',640,480,'yes')"
+				]));
 		}
-		// display Mail Menu
-		display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !Api\Header\UserAgent::mobile())
 		{
 			$file = Array(
 				'Site Configuration' => Egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
 			);
-			//display_sidebox($appname, lang('Configuration'), $file);
+			//$GLOBALS['egw']->framework->sidebox($appname, lang('Configuration'), $file);
 		}
 
 		// add pgp encryption menu at the end

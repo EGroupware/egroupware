@@ -110,7 +110,10 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 		}
 		
 		// skip empty records
-		if( count( array_unique( $this->record ) ) < 2 ) return $this->get_record( $_position );
+		if(count(array_unique($this->record)) < 2 && is_string($_position))
+		{
+			return $this->get_record($_position);
+		}
 		
 		if ( !empty( $this->conversion ) ) {
 			$this->do_conversions();

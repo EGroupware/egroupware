@@ -207,14 +207,26 @@ EOF;
 					case 'accountfilter':
 					case 'header-account':
 						$widget = 'et2-select-account';
+						if (empty($attrs['emptyLabel']) && !empty($attrs['options']))
+						{
+							$attrs['emptyLabel'] = $attrs['options'];
+							unset($attrs['options']);
+						}
 						break;
 					case 'header-entry':
 						$widget = 'et2-link-entry';
 						break;
 					case 'customfilter':
 					case 'header-custom':
-						$widget = ($attrs['widgetType'] ?? $attrs['widget_type'] ?? $attrs['options']);
+						$widget = ($attrs['widgetType'] ?? $attrs['widget_type'] ?? $attrs['options'] ?? '' ?: $attrs['type'] ?? 'et2-select');
 						unset($attrs['widgetType'], $attrs['widget_type'], $attrs['options'], $attrs['class']);
+						if ($widget !== 'records-field') break;
+						// fall-through for records-field
+					case 'records-field':
+						$attrs['label'] = $attrs['widget_options'] ?? '';
+						$attrs['emptyLabel'] = $attrs['empty_label'] ?? '';
+						unset($attrs['widgetOptions'], $attrs['widget_options'], $attrs['type'], $attrs['empty_label']);
+						$widget = 'et2-select';
 						break;
 				}
 				if (!str_starts_with($widget, 'et2-') && $widget !== 'customfields-filters')
@@ -227,7 +239,7 @@ EOF;
 					if ($attrs['label'] === $attrs['ariaLabel']) unset($attrs['ariaLabel']);
 					if (empty($attrs['label'])) unset($attrs['label']);
 				}
-				$attrs['class'] = trim(($attrs['class'] ?? '') . ' et2-label-fixed');
+				$attrs['class'] = trim(str_replace('selectboxFullWidth', '', $attrs['class'] ?? '') . ' et2-label-fixed');
 				// et2-details does NOT create a namespace therefore, we need to use "col_filter[$id]" (not for cfs without id!)
 				if (!empty($attrs['id'])) $attrs['id'] = 'col_filter['.$attrs['id'].']';
 				$attrs = stringAttrs($attrs);

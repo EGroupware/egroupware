@@ -211,6 +211,8 @@ export class EgwFrameworkApp extends LitElement
 	/** The application's content must be in an iframe instead of handled normally */
 	protected useIframe = false;
 	protected _sideboxData : any;
+	/** We've loaded something other than our set url via load(...), on refresh go back */
+	private _offUrl : boolean = false;
 
 	constructor()
 	{
@@ -328,6 +330,9 @@ export class EgwFrameworkApp extends LitElement
 			return;
 		}
 
+		// Loaded something else, refresh will go back instead of refreshing nextmatch
+		this._offUrl = (this.url != url);
+
 		// Clear everything
 		Array.from(this.children).forEach(n =>
 		{
@@ -440,6 +445,7 @@ export class EgwFrameworkApp extends LitElement
 	protected waitForLoad(nodes : HTMLElement[]) : Promise<void>
 	{
 		let timeout = null;
+		let iframePoll = [];
 		const loadTimeoutPromise = new Promise<void>((resolve) =>
 		{
 			timeout = setTimeout(() =>
@@ -448,15 +454,37 @@ export class EgwFrameworkApp extends LitElement
 				resolve(); // Don't reject — just proceed
 			}, 10000);
 		});
-		const loadPromises = nodes.map((node) => waitForEvent(node, "load"));
+		const loadPromises = nodes.map((node) =>
+		{
+			if(node.localName == "iframe")
+			{
+				// iframes don't fire "load" by spec, so poll for contents
+				return new Promise<void>((resolve) =>
+				{
+					const interval = setInterval(() =>
+					{
+						if((<HTMLIFrameElement>node).contentDocument?.body?.innerHTML != "")
+						{
+							clearInterval(interval);
+							resolve();
+						}
+					}, 500);
+					iframePoll.push(interval);
+				});
+			}
+			else
+			{
+				return waitForEvent(node, "load")
+			}
+		});
 
 		return Promise.race([
 			Promise.allSettled(loadPromises)
 				.then(() => {/* yay ... */ })
 				.finally(() =>
 				{
-					this.loading = false;
 					clearTimeout(timeout);
+					iframePoll.forEach((interval) => clearInterval(interval));
 				}),
 			loadTimeoutPromise
 		]) as Promise<void>;
@@ -516,6 +544,10 @@ export class EgwFrameworkApp extends LitElement
 		if(typeof _msg !== "string")
 		{
 			_msg = "";
+		}
+		if(this._offUrl)
+		{
+			return this.load(this.url);
 		}
 
 		// Refresh all child etemplates
@@ -683,6 +715,16 @@ export class EgwFrameworkApp extends LitElement
 	}
 
 	/**
+	 * The app is showing the normal application view (and does not need to reset before working properly)
+	 *
+	 * @return {boolean}
+	 */
+	get isUsingAppUrl() : boolean
+	{
+		return !this._offUrl;
+	}
+
+	/**
 	 * Default implementation for getFilterInfo
 	 * Exposed so apps can use this as a base for their own getFilterInfo
 	 */
@@ -708,8 +750,17 @@ export class EgwFrameworkApp extends LitElement
 
 	private hasSideContent(side : "left" | "right")
 	{
-		return this.hasSlotController.test(`${side}-header`) ||
+		let hasContent = this.hasSlotController.test(`${side}-header`) ||
 			this.hasSlotController.test(side) || this.hasSlotController.test(`${side}-footer`);
+
+		if(side == "left" && !hasContent)
+		{
+			// Left side has an additional slot above the favourites
+			hasContent = hasContent || this.hasSlotController.test("left-top") ||
+				// Favourites work through egw_app class, so if it's not there, favourites won't work
+				this.features?.favorites && window.app[this.name];
+		}
+		return hasContent;
 	}
 
 	/**
@@ -880,7 +931,7 @@ export class EgwFrameworkApp extends LitElement
 
 	protected async handleSideboxMenuClick(event)
 	{
-		return this.egw.open_link(event.target.dataset.link);
+		return this.egw.open_link(event.target.dataset.link, event.target.dataset.target, event.target.dataset.popup, event.target.dataset.app);
 	}
 
 	/**
@@ -1082,10 +1133,13 @@ export class EgwFrameworkApp extends LitElement
                     `}
                     ${!this.egw.user('apps')['preferences'] || !this.features.categories ? nothing : html`
                         <sl-menu-item
-                                @click=${() => this.egw.show_preferences('cats', [this.name])}
+                                @click=${() => this.features.categories == "1" ?
+                                               this.egw.show_preferences('cats', [this.name]) :
+                                               this.egw.open_link(<string>this.features.categories, this.name)
+                                }
                         >
                             <sl-icon slot="prefix" name="tag"></sl-icon>
-                            ${this.egw.lang("Cateogries")}
+                            ${this.egw.lang("Categories")}
                         </sl-menu-item>
                     `}
                     ${this._applicationMenuTemplate()}
@@ -1199,15 +1253,17 @@ export class EgwFrameworkApp extends LitElement
 			}
 		}
 		return html`
-            <et2-menu-item exportparts="popup">
+            <sl-menu-item exportparts="popup">
                 ${menu["title"]}
+                ${menu["icon"] ? html`
+                    <sl-icon slot="prefix" name="${menu["icon"]}"></sl-icon>` : nothing}
                 <sl-menu slot="submenu">
                     ${repeat(menu["entries"], (entry) =>
                     {
                         return this._applicationSubMenuItemTemplate(entry);
                     })}
                 </sl-menu>
-            </et2-menu-item>`;
+            </sl-menu-item>`;
 	}
 
 	/**
@@ -1223,15 +1279,18 @@ export class EgwFrameworkApp extends LitElement
                 <sl-divider></sl-divider>`;
 		}
 		let icon : symbol | TemplateResult<1> = nothing;
-		if(typeof item["icon"] == "string" && (item["icon"].includes("://") || this.egw.image(item["icon"], this.appName)))
+		if(typeof item["icon"] == "string")
 		{
 			icon = html`
-                <et2-image src=${item["icon"]} slot="prefix"></et2-image>`;
+                <sl-icon name=${item["icon"] ?? nothing} slot="prefix"></sl-icon>`;
 		}
 		return html`
             <sl-menu-item
                     ?disabled=${!item["item_link"]}
                     data-link=${item["item_link"]}
+                    ?data-target=${item["target"]}
+                    ?data-popup=${item["popup"]}
+                    ?data-app=${item["app"]}
                     @click=${this.handleSideboxMenuClick}
             >
                 ${icon}
@@ -1242,7 +1301,7 @@ export class EgwFrameworkApp extends LitElement
 
 	render()
 	{
-		const hasLeftSlots = this.hasSideContent("left") || this.features?.favorites;
+		const hasLeftSlots = this.hasSideContent("left")
 		const hasRightSlots = this.hasSideContent("right");
 		const hasHeaderContent = this.hasSlotController.test("main-header");
 
@@ -1285,6 +1344,7 @@ export class EgwFrameworkApp extends LitElement
                     <sl-spinner></sl-spinner>`)}
             </div>
             <div class="egw_fw_app__main" part="main">
+                ${this.loading ? this._loadingTemplate() : nothing}
                 ${this._filterTemplate()}
                 ${!this.leftCollapsed ? nothing : html`
                     <style>
@@ -1317,25 +1377,22 @@ export class EgwFrameworkApp extends LitElement
                                     data-panel="rightPanelInfo"
                                     @sl-reposition=${this.handleSlide}
                     >
-                        ${this.loading ? this._loadingTemplate("start") : html`
-                            ${this.rightCollapsed ? nothing : html`
-                                <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>`
-                            }
-                            <header slot="start" class="egw_fw_app__header header" part="content-header">
-                                <slot name="header"><span class="placeholder">header</span></slot>
-                            </header>
-                            <div slot="start" class="egw_fw_app__main_content content" part="content"
-                                 aria-label="${this.name}" tabindex="0">
-                                <slot>
-                                    ${this._loadingTemplate()}
-                                    <span class="placeholder">main</span>
-                                </slot>
-                            </div>
-                            <footer slot="start" class="egw_fw_app__footer footer" part="footer">
-                                <slot name="footer"><span class="placeholder">main-footer</span></slot>
-                            </footer>
-                            ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
-                        `}
+                        ${this.rightCollapsed ? nothing : html`
+                            <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>`
+                        }
+                        <header slot="start" class="egw_fw_app__header header" part="content-header">
+                            <slot name="header"><span class="placeholder">header</span></slot>
+                        </header>
+                        <div slot="start" class="egw_fw_app__main_content content" part="content"
+                             aria-label="${this.name}" tabindex="0">
+                            <slot>
+                                <span class="placeholder">main</span>
+                            </slot>
+                        </div>
+                        <footer slot="start" class="egw_fw_app__footer footer" part="footer">
+                            <slot name="footer"><span class="placeholder">main-footer</span></slot>
+                        </footer>
+                        ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
                     </sl-split-panel>
                 </sl-split-panel>
             </div>

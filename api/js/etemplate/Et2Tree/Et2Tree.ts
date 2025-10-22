@@ -1116,7 +1116,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             >
 
 
-                <et2-image src="${img ?? nothing}"></et2-image>
+                <et2-image src="${img ?? nothing}" inline></et2-image>
                 <span part="label_text" class="tree-item__label">
 					${selectOption.label ?? selectOption.text}
 				</span>

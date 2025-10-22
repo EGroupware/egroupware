@@ -29,7 +29,7 @@ import {Favorite} from "./Favorite";
  *
  * Favorites can also automatically be shown in the sidebox, using the special ID favorite_sidebox.
  * Use the following code to generate the sidebox section:
- *  display_sidebox($appname,lang('Favorites'),array(
+ *  $GLOBALS['egw']->framework->sidebox($appname,lang('Favorites'),array(
  *	array(
  *		'no_lang' => true,
  *		'text'=>'<span id="favorite_sidebox"/>',

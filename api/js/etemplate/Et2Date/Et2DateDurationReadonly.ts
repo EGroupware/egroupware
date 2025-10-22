@@ -32,6 +32,7 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 			:host {
 			border: none;
 			min-width: 2em;
+				padding-right:var(--sl-spacing-small)
 			}
 			`
 		];

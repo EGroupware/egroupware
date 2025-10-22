@@ -52,6 +52,10 @@
      this is the same as mail app color
     */
     --badge-color: #006699;
+    /* base color for nextmatch selected items
+    some different alpha value is added as needed
+    */
+    --selection-color: var(--sl-color-blue-300,rgb(153, 204, 255))
 
 }
 
@@ -272,7 +276,6 @@ div.et2_hbox > div {
  * Label widget, and labels for other widgets
  */
 .et2_label {
-    color: #101050;
     white-space: pre-wrap;
 }
 
@@ -545,9 +548,6 @@ textarea.et2_textbox_ro {
 	box-shadow: none;
 }
 
-[search][open]::part(combobox) {
-	flex-flow: wrap;
-}
 button.et2_selectbox_expand {
     width: 16px;
     display: inline-block;
@@ -789,6 +789,11 @@ et2-dialog .dialog_icon {
     width: 2em;
     font-size: 2em;
     margin: 0.5em;
+}
+
+/** Make template fit dialog, lets it grow to fit the dialog */
+et2-dialog .dialog--has_template > et2-dialog {
+	height: 100%;
 }
 
 et2-dialog .dialog--has_message {
@@ -1325,7 +1330,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 
 .et2_link, et2-link, et2-link-string {
     cursor: pointer;
-    color: #003075;
+    color: var(--sl-color-sky-900,#003075);
     text-decoration: none;
 }
 
@@ -1961,6 +1966,7 @@ table.et2_grid tbody.ui-sortable:not(.ui-sortable-disabled) > tr:not(.th) {
     position: absolute;
     width: 100%;
     height: 100%;
+    background-color: var(--sl-color-neutral-50);
 }
 
 /**
@@ -2313,11 +2319,11 @@ ul[id$='favorites_popup_state'] span.filter_value {
 	outline: none;
 }
 .et2_nextmatch .egwGridView_grid tr.focused {
-    background: rgba(153, 204, 255, 0.4) !important;
+    background: hsl(from var(--selection-color) h s l /0.6) !important;
 }
 
 .et2_nextmatch .egwGridView_grid tr.focused.selected {
-    background: rgba(153, 204, 255, 0.7) !important;
+    background: hsl(from var(--selection-color) h s l /0.7) !important;
 }
 
 /* Nextmatch tiled view */

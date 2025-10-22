@@ -51,11 +51,20 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.categories.index.add" template="" lang="" group="0" version="1.9.001">
-		<et2-button  label="Add" id="add" onclick="window.open('$cont[add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+    <template id="admin.categories.index.header">
+        <et2-toolbar id="cats-toolbar">
+			<et2-button label="Add" id="add" disabled="!@nm[add_link]" slot="prefix"
+				onclick="window.open('$cont[nm][add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+			<template template="api.search-button" slot="prefix"></template>
+            <et2-select id="filter" noLang="1" emptyLabel="All categories" label="Filter" onchange="app.admin.changeNmFilter"></et2-select>
+            <et2-select id="owner" emptyLabel="Owner" onchange="app.admin.changeNmFilter"></et2-select>
+            <et2-button-icon id="back_to_list" image="back" label="Back to list" slot="suffix"
+				onclick="widget.closest('egw-app').refresh(); return false;" noSubmit="true"></et2-button-icon>
+        </et2-toolbar>
 	</template>
 	<template id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
-		<nextmatch id="nm" options="admin.categories.index.rows" span="all" header_left="admin.categories.index.add"/>
+        <et2-template template="admin.categories.index.header" slot="main-header"></et2-template>
+        <nextmatch id="nm" template="admin.categories.index.rows" span="all"/>
 		<et2-box  class="action_popup prompt" id="owner_popup">
 			<et2-vbox>
 				<et2-description  value="Change owner" class="promptheader"></et2-description>

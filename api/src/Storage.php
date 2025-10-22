@@ -198,9 +198,11 @@ class Storage extends Storage\Base
 	 *
 	 * @param int|array $ids one ore more id's
 	 * @param array $field_names =null custom fields to read, default all
+	 * @param array $where extra parameters for the where clause
+	 * @param string $append e.g. ORDER BY clause
 	 * @return array id => $this->cf_field(name) => value
 	 */
-	function read_customfields($ids,$field_names=null)
+	function read_customfields($ids,$field_names=null, array $where=[], string $append='')
 	{
 		if (is_null($field_names)) $field_names = array_keys($this->customfields);
 
@@ -214,7 +216,7 @@ class Storage extends Storage\Base
 		foreach($this->db->select($this->extra_table,'*',array(
 			$this->extra_id => $ids,
 			$this->extra_key => $field_names,
-		),__LINE__,__FILE__,false,'',$this->app) as $row)
+		)+$where,__LINE__,__FILE__,false, $append, $this->app) as $row)
 		{
 			$entry =& $entries[$row[$this->extra_id]];
 			if (!is_array($entry)) $entry = array();
@@ -243,9 +245,10 @@ class Storage extends Storage\Base
 	*
 	* @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
 	* @param array $extra_cols =array() extra-data to be saved
+	* @param array $where extra parameters for the where clause
 	* @return bool false on success, errornumber on failure
 	*/
-	function save_customfields(&$data, array $extra_cols=array())
+	function save_customfields(&$data, array $extra_cols=array(), array $where=[])
 	{
 		$id = isset($data[$this->autoinc_id]) ? $data[$this->autoinc_id] : $data[$this->db_key_cols[$this->autoinc_id]];
 
@@ -258,7 +261,7 @@ class Storage extends Storage\Base
 			$where = array(
 				$this->extra_id    => $id,
 				$this->extra_key   => $name,
-			);
+			)+$where;
 			$is_multiple = $this->is_multiple($name);
 
 			// we explicitly need to delete fields, if value is empty or field allows multiple values or we have no unique index

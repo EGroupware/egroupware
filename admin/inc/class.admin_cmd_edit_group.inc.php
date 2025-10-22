@@ -244,7 +244,7 @@ class admin_cmd_edit_group extends admin_cmd
 		// remove values not relevant to groups
 		foreach(['old', 'set'] as $name)
 		{
-			$data[$name] = array_diff_key($data[$name], array_flip([
+			$data[$name] = array_diff_key($data[$name] ?? [], array_flip([
 				'account_pwd', 'account_status', 'account_type',
 				'account_expires', 'account_primary_group',
 				'account_lastlogin', 'account_lastloginfrom',

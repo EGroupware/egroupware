@@ -115,21 +115,13 @@ class timesheet_hooks
 		if ($location == 'sidebox_menu')
 		{
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname));
-
-			$file = array(
-				'Timesheet list' => Egw::link('/index.php',array(
-					'menuaction' => 'timesheet.timesheet_ui.index',
-					'ajax' => 'true')),
-				array(
-					'text' => lang('Add %1',lang(Link::get_registry($appname, 'entry'))),
-					'no_lang' => true,
-					'link' => "javascript:egw.open('','$appname','add')"
-				),
-			);
-			$file[] = ['text'=>'--'];
-			$file['Placeholders'] = Egw::link('/index.php','menuaction=timesheet.timesheet_merge.show_replacements');
-			display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname));
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Placeholders'), [
+				[
+					'text' => 'placeholders', 'icon' => 'braces',
+					'link' => Egw::link('/index.php', 'menuaction=timesheet.timesheet_merge.show_replacements')
+				]
+			]);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
@@ -151,7 +143,7 @@ class timesheet_hooks
 			}
 			else
 			{
-				//display_sidebox($appname, lang('Configuration'), $file);
+				//$GLOBALS['egw']->framework->sidebox($appname, lang('Configuration'), $file);
 			}
 		}
 	}

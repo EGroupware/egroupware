@@ -287,6 +287,11 @@ class addressbook_ui extends addressbook_bo
 				$content['main_header']['toolbar']['grouped_view'] = $content['nm']['grouped_view'];
 			}
 		}
+
+		// Keep toolbar values
+		$content['main_header'] = $_content['main_header'];
+		$content['nm'] = array_merge($content['nm'], $_content['main_header']['toolbar'] ?? []);
+
 		$sel_options['cat_id'] = array('' => lang('All categories'), '0' => lang('None'));
 
 		$content['nm']['placeholder_actions'] = array('add');

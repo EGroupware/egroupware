@@ -167,9 +167,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 					margin-top: 0.5em;
 				}
 
-			  .dialog_content {
-				height: var(--height, auto);
-			  }
+				::slotted(.dialog_content) {
+					height: var(--height, 100%);
+				}
 
 			  /* Non-modal dialogs don't have an overlay */
 
@@ -721,7 +721,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	updated(changedProperties)
 	{
 		super.updated(changedProperties);
-		if(changedProperties.has("template"))
+		if(changedProperties.has("template") && this.template)
 		{
 			// Wait until update is finished to avoid an error in Safari
 			super.getUpdateComplete().then(() => this._loadTemplate());
@@ -742,6 +742,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		if(this._template_widget)
 		{
 			this._template_widget.clear();
+		}
+		if(!this.__template)
+		{
+			return;
 		}
 		this._contentNode.replaceChildren();
 

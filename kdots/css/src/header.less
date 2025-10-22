@@ -2,13 +2,6 @@
 
 /** Tab notification badges **/
 
-::part(notification) {
-  position: absolute;
-  bottom: 0px;
-  left: -1em;
-  font-size: 1rem;
-}
-
 /**
 	color selection for header timer
 	 */
@@ -42,6 +35,13 @@
   align-items: center;
   color: var(--sl-color-neutral-600);
   font-size: var(--header-icon-size);
+  button{
+	font-size: var(--header-icon-size);
+	>a>img{
+	  width: 1em;
+	  height: 1em;
+	}
+  }
 
   & > * {
 	border: none;
@@ -112,7 +112,6 @@
 	  display: block;
 	  width: 100%;
 	  z-index: 2;
-	  font-size: larger;
 	}
 
 	&:hover {

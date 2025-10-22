@@ -60,6 +60,11 @@ class AdminApp extends EgwApp
 	groups : any;
 
 	/**
+	 * 2nd NM, not accounts or groups which use this.nm or this.groups
+	 */
+	nm2 : et2_nextmatch = null;
+
+	/**
 	 * Constructor
 	 *
 	 * @memberOf app.classes.admin
@@ -80,6 +85,8 @@ class AdminApp extends EgwApp
 		this.tree?.destroy && this.tree.destroy();
 		this.tree?.remove && this.tree.remove();
 		this.tree = null;
+
+		this.nm2?.getDOMNode()?.removeEventListner('et2-filter', this.nmFilterChange);
 
 		// call parent
 		super.destroy(_app);
@@ -141,6 +148,26 @@ class AdminApp extends EgwApp
 				else
 				{
 					this.et2.getWidgetById('splitter').dock();
+				}
+				break;
+			default:
+				const header = this.et2.getWidgetById(_name + '.header');
+				if(header && header.slot === 'main-header')
+				{
+					const nm = this.et2.getWidgetById('nm');
+					if (nm && nm !== this.nm && nm !== this.nm2)
+					{
+						this.nm2?.getDOMNode()?.removeEventListner('et2-filter', this.nmFilterChange);
+						this.nm2 = nm;
+						this.nm2.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
+						// update values in toolbar
+						window.setTimeout(() =>
+						{
+							this.nmFilterChange({detail: { activeFilters: nm.activeFilters}});
+						});
+					}
+					header.closest('egw-app')?.append(header);
+					this.enableAppToolbar(_name + '.header');
 				}
 				break;
 		}
@@ -219,12 +246,15 @@ class AdminApp extends EgwApp
 		this.ajax_target.set_disabled(!ajax);
 
 		// disable app-toolbar, if not accounts or groups (!_url) for now
-		if (_url) this.enableAppToolbar('');
+		this.enableAppToolbar(!this.nm.disabled ? 'admin.index.header' : '');
 
 		if(!this.nm.disabled)
 		{
 			// If nm was just re-enabled, resize it _after_ ajax_target gets hidden
 			this.ajax_target.updateComplete.then(() => this.nm.resize())
+
+			// If user list is shown, show the toolbar
+			this.enableAppToolbar('admin.index.header');
 		}
 	}
 
@@ -525,8 +555,8 @@ class AdminApp extends EgwApp
 	group_list()
 	{
 		this.nm.set_disabled(true);
-		this.enableAppToolbar('admin.index.group.header')
 		this.groups.set_disabled(false);
+		this.enableAppToolbar('admin.index.group.header')
 		jQuery(this.et2.parentNode).trigger('show.et2_nextmatch');
 	}
 
@@ -627,7 +657,7 @@ class AdminApp extends EgwApp
 					if(button) button.disabled=true;
 					this.egw.request(
 						'admin_acl::ajax_change_acl',
-						[acl_id, button_id == "_add" ? 1 : 0, [], this.et2.getInstanceManager().etemplate_exec_id]
+						[acl_id, button_id.includes("_add") ? 1 : 0, [], this.et2.getInstanceManager().etemplate_exec_id]
 					).then((_data) => {
 						this.et2.getInstanceManager().refresh(_data.msg, this.appname,row_ids,'update');
 						dialog.close();
@@ -813,7 +843,7 @@ class AdminApp extends EgwApp
 			app = 'preferences';
 		}
 		// Get by ID, since this.et2 isn't always the ACL list
-		var et2 = etemplate ? etemplate : etemplate2.getById('acl-edit').widgetContainer;
+		var et2 = etemplate ?? etemplate2.getById('admin-acl')?.widgetContainer ?? etemplate2.getById('acl-edit')?.widgetContainer;
 		var className = app + '_acl';
 		var acl_rights : any = {};
 		var readonlys : any = {acl: {}};
@@ -1019,16 +1049,15 @@ class AdminApp extends EgwApp
 		// Handle policy documentation tab here
 		if(this.egw.user('apps').policy)
 		{
-			dialog_options['width'] = 550;
-			dialog_options['height'] = 450,
-				modifications.tabs = {
-					add_tabs: true,
-					tabs: [{
-						label: egw.lang('Documentation'),
-						template: 'policy.admin_cmd',
-						prepend: false
-					}]
-				};
+			dialog_options['height'] = 450;
+			modifications.tabs = {
+				add_tabs: true,
+				extraTabs: [{
+					label: egw.lang('Documentation'),
+					template: 'policy.admin_cmd',
+					prepend: false
+				}]
+			};
 		}
 
 		// Create the dialog
@@ -1036,6 +1065,7 @@ class AdminApp extends EgwApp
 		{
 			this.acl_dialog = loadWebComponent("et2-dialog", dialog_options, this.et2);
 			this.acl_dialog.et2 = etemplate;
+			this.acl_dialog.width = "550";
 
 			document.body.appendChild(<LitElement><unknown>this.acl_dialog);
 		});
@@ -1910,6 +1940,33 @@ class AdminApp extends EgwApp
 			"admin.admin_passwordreset.ajax_reset",
 			data, this.egw
 		);
+	}
+
+	/**
+	 * Show a delayed push-test message send via push from the server
+	 *
+	 * Message needs to be delayed, as the push is quicker than the error-message send in the request!
+	 *
+	 * @param message
+	 * @param type
+	 * @param delay
+	 */
+	pushTestMessage(message : string, type : "help" | "info" | "error" | "warning" | "success" | undefined, delay : number)
+	{
+		window.setTimeout(() => {
+			egw.message(message, type || 'info');
+		}, delay || 200);
+	}
+
+	/**
+	 * Update application color onchange
+	 *
+	 * @param _ev
+	 * @param _widget
+	 */
+	updateAppColor(_app, _color : string)
+	{
+		egw.request('api.EGroupware\\Api\\Egw\\Applications.ajax_updateAppColor', [_app, _color]);
 	}
 }
 

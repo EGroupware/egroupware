@@ -16,22 +16,20 @@
 			<rows>
 				<row>
 					<nextmatch-sortheader label="ID" id="token_id"/>
-					<et2-nextmatch-header-account id="account_id" emptyLabel="User" accountType="accounts">
-                        <option value="0">All users</option>
-                    </et2-nextmatch-header-account>
+					<et2-nextmatch-header-account id="account_id" label="User" emptyLabel="All" accountType="accounts"></et2-nextmatch-header-account>
 					<nextmatch-header id="token_apps" label="Applications"/>
 					<nextmatch-sortheader label="Expiration" id="token_valid_until"/>
 					<et2-vbox>
 						<nextmatch-sortheader label="Revoked" id="token_revoked"/>
-						<et2-nextmatch-header-account emptyLabel="By" id="token_revoked_by"></et2-nextmatch-header-account>
+						<et2-nextmatch-header-account label="{Revoked} {By}" emptyLabel="All" id="token_revoked_by"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<et2-vbox>
 						<nextmatch-sortheader label="Created" id="token_created"/>
-						<et2-nextmatch-header-account emptyLabel="By" id="token_created_by"></et2-nextmatch-header-account>
+						<et2-nextmatch-header-account label="{Created} {By}" emptyLabel="All" id="token_created_by"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<et2-vbox>
 						<nextmatch-sortheader label="Updated" id="token_created"/>
-						<et2-nextmatch-header-account emptyLabel="By" id="token_created_by"></et2-nextmatch-header-account>
+						<et2-nextmatch-header-account label="{Updated} {By}" emptyLabel="All" id="token_created_by"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<nextmatch-header label="Remark" id="token_remark"/>
 				</row>
@@ -57,10 +55,18 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.tokens.add" template="" lang="" group="0" version="1.9.001">
-		<et2-button label="Add" id="add" onclick="@add_action" noSubmit="true"></et2-button>
-	</template>
+	<et2-template id="admin.tokens.header" template="" lang="" group="0" version="1.9.001">
+		<et2-toolbar id="tokens-toolbar">
+			<et2-button label="Add" id="add" onclick="@add_action" noSubmit="true" slot="prefix"></et2-button>
+			<et2-template template="api.search-button" slot="prefix"></et2-template>
+			<et2-select-account emptyLabel="User" id="account_id" onchange="app.admin.changeNmFilter"></et2-select-account>
+			<et2-select-account emptyLabel="{Revoked} {By}" id="token_revoked_by" onchange="app.admin.changeNmFilter"></et2-select-account>
+			<et2-select-account emptyLabel="{Created} {By}" id="token_created_by" onchange="app.admin.changeNmFilter"></et2-select-account>
+			<et2-select-account emptyLabel="{Updated} {By}" id="token_created_by" onchange="app.admin.changeNmFilter"></et2-select-account>
+		</et2-toolbar>
+	</et2-template>
 	<template id="admin.tokens" template="" lang="" group="0" version="1.9.001">
-		<nextmatch id="token" template="admin.tokens.rows" header_left="admin.tokens.add"/>
+		<et2-template template="admin.tokens.header" slot="main-header"></et2-template>
+		<nextmatch id="nm" template="admin.tokens.rows"/>
 	</template>
 </overlay>

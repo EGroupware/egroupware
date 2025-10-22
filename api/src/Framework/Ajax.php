@@ -695,6 +695,11 @@ abstract class Ajax extends Api\Framework
 				'entries' => array(),
 				'opened' => (boolean)$file['menuOpened'],
 			);
+			if($file['icon'])
+			{
+				$current_menu['icon'] = $file['icon'];
+				unset($file['icon']);
+			}
 			foreach($file as $item_text => $item_link)
 			{
 				if ($item_text === 'menuOpened' || $item_text === 'sendToBottom' ||// flag, not menu entry
@@ -710,10 +715,12 @@ abstract class Ajax extends Api\Framework
 				$var = array();
 				$var['icon_or_star'] = Api\Image::find('api', 'bullet');
 				$var['target'] = '';
+				$var['icon'] = 'bullet';
 				if(is_array($item_link))
 				{
 					if(isset($item_link['icon']))
 					{
+						$var['icon'] = $item_link['icon'];
 						$app = isset($item_link['app']) ? $item_link['app'] : $appname;
 						$var['icon_or_star'] = $item_link['icon'] ? Api\Image::find($app,$item_link['icon']) : False;
 					}

@@ -138,7 +138,7 @@ class timesheet_merge extends Api\Storage\Merge
 		// Set any missing custom fields, or the marker will stay
 		foreach(array_keys($this->bo->customfields) as $name)
 		{
-			if(!$array['#'.$name]) $array['#'.$name] = '';
+			if(empty($array['#'.$name])) $array['#'.$name] = '';
 		}
 
 		// Add markers

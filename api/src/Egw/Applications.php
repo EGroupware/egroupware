@@ -71,6 +71,34 @@ class Applications
 	}
 
 	/**
+	 * Default color for apps not specified below
+	 * @var string
+	 */
+	public static $default_app_color = '#797979';
+	/**
+	 * Default color for some apps
+	 * @var string[]
+	 */
+	public static $default_app_colors = [
+		'addressbook'	=> '#003366',
+		'admin'	=> '#333333',
+		'bookmarks'	=> '#CC6633',
+		'calendar'	=> '#CC0033',
+		'filemanager'	=> '#ff9933',
+		'infolog'	=> '#660033',
+		'mail'	=> '#006699',
+		'projectmanager'	=> '#669999',
+		'resources'	=> '#003333',
+		'timesheet'	=> '#330066',
+		'tracker'	=> '#009966',
+		'wiki'	=> '#797979',
+		'ranking'	=> '#404040',
+		'default'	=> '#797979',
+		'kanban'	=> '#4663c8',
+		'smallpart'	=> '#303333',
+	];
+
+	/**
 	 * Populate array with a list of installed apps
 	 *
 	 * egw_applications.app_enabled = -1 is NOT installed, but an uninstalled autoinstall app!
@@ -96,6 +124,14 @@ class Applications
 					'icon'    => $row['app_icon'],
 					'icon_app'=> $row['app_icon_app'],
 				);
+				if (!empty($row['app_extra']))
+				{
+					$apps[$row['app_name']] += json_decode($row['app_extra'],true);
+				}
+				if (empty($apps[$row['app_name']]['color']))
+				{
+					$apps[$row['app_name']]['color'] = self::$default_app_colors[$row['app_name']] ?? self::$default_app_color;
+				}
 			}
 			return $apps;
 		});
@@ -106,6 +142,37 @@ class Applications
 			{
 				$app['title'] = lang($app['title']);
 			}
+		}
+	}
+
+	/**
+	 * Update application color
+	 *
+	 * @param string $app
+	 * @param string $color
+	 * @return void
+	 * @throws Api\Db\Exception
+	 * @throws Api\Db\Exception\InvalidSql
+	 */
+	public function ajax_updateAppColor(string $app, string $color)
+	{
+		if (!empty($GLOBALS['egw_info']['user']['apps']['admin']) &&
+			isset($GLOBALS['egw_info']['user']['apps'][$app]) &&
+			preg_match('/^#[0-9a-fA-F]{6}$/', $color) &&
+			$GLOBALS['egw_info']['user']['apps'][$app]['color'] !== $color)
+		{
+			$extra = $this->db->select($this->table_name,'app_extra', [
+				'app_name' => $app,
+			], __LINE__, __FILE__)->fetchColumn();
+			$extra = $extra ? json_decode($extra,true) : [];
+			$extra['color'] = $color;
+			$this->db->update($this->table_name, [
+				'app_extra' => json_encode($extra),
+				], [
+					'app_name' => $app,
+				], __LINE__, __FILE__);
+
+			self::invalidate();
 		}
 	}
 

@@ -39,7 +39,7 @@ use EGroupware\Api;
  *	'lettersearch'   => True// I  show a lettersearch
  *	'searchletter'   =>     // IO active letter of the lettersearch or false for [all]
  * 	'start'          =>		// IO position in list
- *	'num_rows'       =>     // IO number of rows to show, defaults to maxmatches from the general prefs
+ *  'num_rows'       =>     // IO number of rows to show, defaults to 0.  Set to Nextmatch::INITIAL_ROWS to send initial rows.
  * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
  * 	'search'         =>		// IO search pattern
  * 	'order'          =>		// IO name of the column to sort after (optional for the sortheaders)
@@ -336,11 +336,17 @@ class Nextmatch extends Etemplate\Widget
 		}
 		else
 		{
-			$url = Template::rel2url($tpl->rel_path);
+			// only set url, if it is for $template_name direct, and $template_name is not inlined in index.xet
+			list($app, $rest) = explode('.', $template_name, 2);
+			if (strpos($tpl->rel_path, "/$app/templates/") !== false &&
+				strpos($tpl->rel_path, "/$rest.xet") !== false)
+			{
+				$url = Template::rel2url($tpl->rel_path);
+			}
 		}
 		if($template_name)
 		{
-			self::setElementAttribute($this->id, "filter_template", $url);
+			self::setElementAttribute($this->id, "filter_template", $url ?? $template_name);
 		}
 		// stop NM itself from generating search, filter(2) and cat_id widgets
 		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)

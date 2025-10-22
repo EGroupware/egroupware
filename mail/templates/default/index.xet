@@ -139,7 +139,7 @@
                         <et2-hbox class="status_icons">
                             <et2-image  src="$row_cont[smime]" height="16px"></et2-image>
                             <html id="${row}[attachments]"/>
-                            <et2-description  class="status_img $row_cont[class]"></et2-description>
+                            <et2-description  class="status_img bi-envelope-open $row_cont[class]"></et2-description>
                         </et2-hbox>
                     </et2-vbox>
                 </row>
@@ -148,7 +148,7 @@
     </template>
     <template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
         <et2-split id="mailSplitter" style="--min: 30%;--max:min(70%,calc(100% - 30em));" vertical="false">
-            <nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows.vertical" disable_selection_advance="true"/>
+            <nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows.vertical" disable_selection_advance="true" no_dynheight="true"/>
             <template id="mail.index.preview"/>
         </et2-split>
     </template>
@@ -184,7 +184,7 @@
                 <row class="$row_cont[class]">
                     <et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
                                  lname="$row_cont[lavatar][lname]" shape="rounded"></et2-lavatar>
-                    <et2-description span="1" class="status_img"></et2-description>
+                    <et2-description span="1" class="status_img bi-envelope-open"></et2-description>
                     <html id="${row}[attachments]"/>
                     <et2-vbox>
                         <et2-description id="${row}[subject]" noLang="1"></et2-description>
@@ -205,7 +205,7 @@
         </grid>
     </template>
     <template id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
-        <nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows.horizontal"/>
+        <nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows.horizontal" disable_selection_advance="true" no_dynheight="true"/>
     </template>
     <template id="mail.index.header" template="" lang="" group="0" version="1.9.001">
         <et2-button id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" image="add" noSubmit="true"></et2-button>

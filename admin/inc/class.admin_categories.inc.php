@@ -602,6 +602,7 @@ class admin_categories
 				$msg = '';
 			}
 		}
+		unset($content['nm']['no_filter']); // completely remove no_filter, so it shows up in the filter-template
 		$content['msg'] = $msg;
 		$content['nm']['add_link']= Framework::link('/index.php','menuaction='.$this->add_link . '&cat_id=&appname='.$appname);
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;

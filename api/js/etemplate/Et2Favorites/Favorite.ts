@@ -1,3 +1,5 @@
+import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
+
 export class Favorite
 {
 	name : string
@@ -105,5 +107,126 @@ export class Favorite
 
 		return egw.request("EGroupware\\Api\\Framework::ajax_set_favorite",
 			[app, favoriteName, "delete", "" + fav.group, '']);
+	}
+
+	static async add(egw, appname, state)
+	{
+		const dialog = await Favorite._addPopup(egw, state);
+		const [button, content] = await dialog.getComplete();
+		if(button !== Et2Dialog.OK_BUTTON)
+		{
+			return;
+		}
+		Favorite._addFavorite(egw, appname, {...content, state: {...state}});
+	}
+
+	private static async _addPopup(egw, state)
+	{
+		// Add some controls if user is an admin
+		const apps = egw.user('apps');
+		const is_admin = (typeof apps['admin'] != "undefined");
+
+		// Setup data
+		let data = {
+			content: {
+				state: state || [],
+				current_filters: []
+			},
+			readonlys: {
+				group: !is_admin
+			}
+		};
+
+
+		// Show current set filters (more for debug than user)
+		let filter_list = [];
+		let add_to_popup = function(arr, inset = "")
+		{
+			Object.keys(arr).forEach((index) =>
+			{
+				let filter = arr[index];
+				filter_list.push({
+					label: inset + index.toString(),
+					value: (typeof filter != "object" ? "" + filter : "")
+				});
+				if(typeof filter == "object" && filter != null)
+				{
+					add_to_popup(filter, inset + "    ");
+				}
+			});
+		};
+		add_to_popup(data.content.state);
+		data.content.current_filters = filter_list;
+
+		// Create popup
+		const dialog = new Et2Dialog(egw);
+		dialog.transformAttributes({
+			title: egw.lang("New favorite"),
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			width: 400,
+			value: data,
+			template: egw.webserverUrl + '/api/templates/default/add_favorite.xet'
+		});
+		document.body.appendChild(dialog);
+
+		return dialog;
+	}
+
+	private static async _addFavorite(egw, appname, value)
+	{
+		if(!value.name)
+		{
+			return;
+		}
+
+		// Add to the list
+		value.name = (<string>value.name).replace(/(<([^>]+)>)/ig, "");
+		let safe_name = (<string>value.name).replace(/[^A-Za-z0-9-_]/g, "_");
+		if(safe_name != value.name)
+		{
+			// Check if the label matches an existing preference, consider it an update
+			let existing = egw.preference(Favorite.PREFIX + safe_name, appname);
+			if(existing && existing.name !== value.name)
+			{
+				// Name mis-match, this is a new favorite with the same safe name
+				safe_name += "_" + await egw.hashString(value.name);
+			}
+		}
+		let favorite = {
+			name: value.name,
+			group: value.group || false,
+			state: value.state
+		};
+
+		let favorite_pref = Favorite.PREFIX + safe_name;
+
+		// Save to preferences
+		if(typeof value.group != "undefined" && value.group != '')
+		{
+			// Admin stuff - save preference server side
+			await egw.jsonq('EGroupware\\Api\\Framework::ajax_set_favorite',
+				[
+					appname,
+					favorite.name,
+					"add",
+					favorite.group,
+					favorite.state
+				]
+			);
+		}
+		else
+		{
+			// Normal user - just save to preferences client side
+			await egw.set_preference(appname, favorite_pref, favorite);
+		}
+
+		// Trigger event so widgets can update
+		document.dispatchEvent(new CustomEvent("preferenceChange", {
+			bubbles: true,
+			detail: {
+				application: appname,
+				preference: favorite_pref
+			}
+		}));
 	}
 }

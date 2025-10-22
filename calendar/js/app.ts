@@ -2370,8 +2370,8 @@ export class CalendarApp extends EgwApp
 		else
 		{
 			// Set the hidden inputs to the current time span & submit
-			widget.getRoot().getWidgetById('first').set_value(app.calendar.state.first);
-			widget.getRoot().getWidgetById('last').set_value(app.calendar.state.last);
+			widget.getRoot().getWidgetById('first')?.set_value(app.calendar.state.first);
+			widget.getRoot().getWidgetById('last')?.set_value(app.calendar.state.last);
 
 			let vars = {
 				menuaction: 'calendar.calendar_merge.merge_entries',
@@ -2995,6 +2995,10 @@ export class CalendarApp extends EgwApp
 			// List view (nextmatch) has slightly different fields
 			if(state.state.view === 'listview')
 			{
+				if(state.state.filter && !state.state.startdate)
+				{
+					state.state.startdate = state.state.first;
+				}
 				if(state.state.startdate?.toJSON)
 				{
 					state.state.startdate = state.state.startdate.toJSON();
@@ -3007,25 +3011,32 @@ export class CalendarApp extends EgwApp
 				{
 					state.state.enddate = state.state.enddate.toJSON();
 				}
-				switch(true)
+				if(!state.state.filter)
 				{
-					case state.state.startdate && state.state.enddate:
-						state.state.filter = 'custom';
-						break;
-					case state.state.startdate && !state.state.enddate:
-						state.state.filter = 'after';
-						break;
-					case !state.state.startdate && state.state.enddate:
-						state.state.filter = 'before';
-						break;
-					case this.state.view == 'week':
-						state.state.filter = "week";
-						break;
-					case this.state.view == "month":
-					default:
-						state.state.filter = "month";
-						break;
+					switch(true)
+					{
+						case Boolean(state.state.startdate && state.state.enddate):
+							state.state.filter = 'custom';
+							break;
+						case Boolean(state.state.startdate && !state.state.enddate):
+							state.state.filter = 'after';
+							break;
+						case Boolean(!state.state.startdate && state.state.enddate):
+							state.state.filter = 'before';
+							break;
+						case this.state.view == 'week':
+							state.state.filter = "week";
+							break;
+						case this.state.view == "month":
+							state.state.filter = "month";
+							break;
+					}
 				}
+				else if(["month", "week"].includes(state.state.filter))
+				{
+					state.state.startdate = state.state.enddate = null;
+				}
+
 
 				state.state.col_filter = {participant: state.state.owner};
 				state.state.search = state.state.keywords ? state.state.keywords : state.state.search;

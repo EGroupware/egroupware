@@ -32,6 +32,7 @@ import type {EgwFrameworkApp} from "../../../kdots/js/EgwFrameworkApp";
 import {Et2ButtonIcon} from "../etemplate/Et2Button/Et2ButtonIcon";
 import type {Et2Select} from "../etemplate/Et2Select/Et2Select";
 import {Et2FavoritesMenu} from "../etemplate/Et2Favorites/Et2FavoritesMenu";
+import {Favorite} from "../etemplate/Et2Favorites/Favorite";
 
 /**
  * Type for push-message
@@ -238,7 +239,7 @@ export abstract class EgwApp
 	 */
 	destroy(_app)
 	{
-		let egwApp = <EgwFrameworkApp>this.et2?.getInstanceManager().DOMContainer.closest("egw-app[name='" + this.appname + "']");
+		let egwApp = <EgwFrameworkApp>this.et2?.getInstanceManager()?.DOMContainer.closest("egw-app[name='" + this.appname + "']");
 		if(egwApp && typeof this.getNextmatch !== "undefined" && egwApp.getNextmatch == this.getNextmatch)
 		{
 			egwApp.getNextmatch = null;
@@ -328,7 +329,7 @@ export abstract class EgwApp
 	 */
 	nmFilterChange(_ev : Event)
 	{
-		let app_toolbar = this.et2.closest('egw-app')?.querySelector('[slot="main-header"]');
+		let app_toolbar = this.et2.closest('egw-app')?.querySelector('[slot="main-header"]:not([disabled])');
 		if(app_toolbar && app_toolbar.localName != "et2-template")
 		{
 			app_toolbar = app_toolbar?.querySelector("et2-template");
@@ -385,6 +386,13 @@ export abstract class EgwApp
 	changeNmFilter(_ev : Event, _widget : Et2Select|Et2Widget)
 	{
 		if (!this.nm || !_widget.id) return;
+		// in case we have multiple NM, we need to find the one, which belongs to the toolbar-template of _widget
+		let header = _widget.closest('et2-template');
+		if (header.id === 'api.search-button') header = header.parentNode.closest('et2-template');
+		const template_id = header.id.replace(/\.header$/, '').replace(/\./g, '-');
+		const nm = _widget.closest('egw-app').querySelector('et2-template[id$='+template_id+']')?.getWidgetById('nm') ||
+			this.groups || this.nm;	// groups is a hack to get app-toolbar for groups in admin working :(
+		if (!nm) return;
 
 		const filters = {};
 		switch(_widget.id)
@@ -399,7 +407,7 @@ export abstract class EgwApp
 				filters.col_filter = {};
 				filters.col_filter[_widget.id] = _widget.value;
 		}
-		this.nm && this.nm.applyFilters(filters);
+		nm.applyFilters(filters);
 	}
 
 	/**
@@ -1220,7 +1228,7 @@ export abstract class EgwApp
 		// Make sure it's an object - deep copy to prevent references in sub-objects (col_filters)
 		state = {...this.getState(), ...(state || {})};
 
-		this._create_favorite_popup(state);
+		Favorite.add(this.egw, this.appname, state);
 
 		// Stop the normal bubbling if this is called on click
 		return false;

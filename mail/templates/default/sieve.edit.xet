@@ -35,8 +35,8 @@
 				<row>
 					<et2-description  value="If mail header"></et2-description>
 					<et2-hbox>
-						<et2-textbox  id="field"></et2-textbox>
-						<et2-description  value="Contains(*)"></et2-description>
+						<et2-textbox  id="field" validator="/^[A-Z0-9-]*$/i" statustext="Name of header, only letters, numbers and dash (-) allowed"></et2-textbox>
+						<et2-select id="comparator"></et2-select>
 						<et2-textbox  id="field_val"></et2-textbox>
 					</et2-hbox>
 				</row>
@@ -119,7 +119,7 @@
 					</et2-hbox>
 				</row>
 				<row>
-					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="450">
+					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="430">
 						<tabs>
 							<tab id="condition" label="Condition"/>
 							<tab id="action" label="Action"/>

@@ -25,8 +25,6 @@ const login_on_ready = () => {
 	{
 		jQuery(document).ready(function()
 		{
-			// lock the device orientation in portrait view
-			if (screen.orientation && typeof screen.orientation.lock == 'function') screen.orientation.lock('portrait');
 			jQuery('.close').click(function (){
 				setTimeout(function(){jQuery('.egw_message_wrapper').slideUp("slow");},100);
 			});
@@ -140,6 +138,11 @@ const login_on_ready = () => {
 	}
 };
 
+//cleanup darkmode session value
+// Force light mode on login
+document.documentElement.classList.add('sl-theme-light');
+document.documentElement.classList.remove('sl-theme-dark');
+document.documentElement.setAttribute('data-darkmode', '0');
 // run login_on_ready, once egw_ready is available, currently it is already available, as login.js is included in the body
 if (typeof egw_ready !== "undefined")
 {

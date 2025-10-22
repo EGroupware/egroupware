@@ -31,6 +31,11 @@ class Jmap implements Connection
 	use Logic;
 
 	/**
+	 * @var Mail\Jmap
+	 */
+	protected $jmap;
+
+	/**
 	 * Constructor
 	 *
 	 * @param array|Mail\Imap\Jmap $params =[] JMAP object or params array to instantiate it
@@ -39,11 +44,11 @@ class Jmap implements Connection
 	{
 		if (is_a($params, Mail\Imap\Jmap::class))
 		{
-			$this->jmap = $params;
+			$this->jmap = $params->jmapClient();
 		}
 		else
 		{
-			$this->jmap = new Mail\Imap\Jmap($params);
+			$this->jmap = (new Mail\Imap\Jmap($params))->jmapClient();
 		}
 		$this->displayCharset	= Translation::charset();
 	}
@@ -139,11 +144,12 @@ class Jmap implements Connection
 	{
 		$scripts = [];
 		$activeScript = null;
-		foreach($list = $this->jmap->jmapCall([
-			['SieveScript/get'], [
+		$list = $this->jmap->jmapCall([
+			['SieveScript/get', [
 				'accountId' => $this->jmap->accountId,
-			], "0"
-		])[0][1]['list'] as $script)
+			], "0"],
+		])['methodResponses'][0][1]['list'];
+		foreach($list as $script)
 		{
 			$scripts[] = $script['name'];
 			if ($script['isActive'])
@@ -162,7 +168,7 @@ class Jmap implements Connection
 	 */
 	function getActive()
 	{
-		return $this->listScripts()[1] ?? throw \Exception('NO active script found');
+		return $this->listScripts()[1] ?? throw new \Exception('NO active script found');
 	}
 
 	/**
@@ -217,7 +223,7 @@ class Jmap implements Connection
 	 */
 	public function getScript($scriptname)
 	{
-		[$script] = array_filter($this->listScripts()[3], fn($script) => $script['name'] == $scriptname);
+		[$script] = array_filter($this->listScripts()[2], fn($script) => $script['name'] == $scriptname);
 		if (empty($script))
 		{
 			throw new \Exception('Script '.$scriptname.' not found');
@@ -225,6 +231,7 @@ class Jmap implements Connection
 		$url = strtr($this->jmap->downloadUrl, [
 			'{accountId}' => $this->jmap->accountId,
 			'{name}' => $scriptname,
+			'{blobId}' => $script['blobId'],
 			'{type}' => 'application/sieve',
 		]);
 		return $this->jmap->api($url);
@@ -241,7 +248,7 @@ class Jmap implements Connection
 	 */
 	public function installScript($scriptname, $script, $makeactive = false)
 	{
-		[$script] = array_filter($this->listScripts()[3], fn($script) => $script['name'] == $scriptname);
+		[$found] = array_filter($this->listScripts()[2], fn($script) => $script['name'] == $scriptname);
 
 		// upload script
 		$response = $this->jmap->api(strtr($this->jmap->uploadUrl, [
@@ -251,25 +258,49 @@ class Jmap implements Connection
 			'Content-Length' => strlen($script),
 			'Accept' => 'application/json',
 		]);
-		$op = empty($script) ? 'create' : 'update';
-		$response = $this->jmap->jmapCall([
-			['SieveScript/set', [
-				'accountId' => $this->jmap->accountId,
-					$op => [
-					'A' => [
-						'name' => $scriptname,
-						'blobId' => $response['blobId'] ?? throw new \Exception("Upload of script '$scriptname' did NOT return blobId"),
-                    ],
-				],
-			]+($makeactive ? [
-					'onSuccessActivateScript' => '#A'
-			] : []), "0"],
-		]);
-		if (empty($response[0][1]['created']['A']['name']) ||
-			$response[0][1][$op.'d']['A']['name'] !== $scriptname ||
-			$makeactive && !$response[0][1][$op.'d']['A']['isActive'])
+		if (empty($found))
 		{
-			throw new \Exception('Error uploading '.$scriptname.': '.json_encode($response));
+			$response2 = $this->jmap->jmapCall([
+				['SieveScript/set', [
+					'accountId' => $this->jmap->accountId,
+					$op='create' => [
+						'A' => [
+							'name' => $scriptname,
+							'blobId' => $response['blobId'] ?? throw new \Exception("Upload of script '$scriptname' did NOT return blobId"),
+						],
+					],
+				] + ($makeactive ? [
+					'onSuccessActivateScript' => '#A'
+				] : []), "0"],
+			]);
+			if (empty($response2['methodResponses'][0][1]['created']['A']['name']) ||
+				$response2['methodResponses'][0][1]['created']['A']['name'] !== $scriptname ||
+				$makeactive && empty($response2[0][1]['created']['A']['isActive']))
+			{
+				throw new \Exception('Error uploading '.$scriptname.': '.json_encode($response2));
+			}
+		}
+		else
+		{
+			$response2 = $this->jmap->jmapCall([
+				['SieveScript/set', [
+					'accountId' => $this->jmap->accountId,
+					$op='update' => [
+						$found['id'] => [
+							'blobId' => $response['blobId'] ?? throw new \Exception("Upload of script '$scriptname' did NOT return blobId"),
+						] + ($makeactive && !$found['isActive'] ? [
+							'isActive' => true,
+						] : []),
+					],
+				], "0"],
+			]);
+			if (empty($response2['methodResponses'][0][1]['updated'][$found['id']]['blobId']) ||
+				// the returned blobId is for some reason not the one updated, ignoring it for now
+				// $response2['methodResponses'][0][1]['updated'][$found['id']]['blobId'] !== $response['blobId'] ||
+				$makeactive && !$found['isActive'] && empty($response2['methodResponses'][0][1]['updated']['isActive']))
+			{
+				throw new \Exception('Error uploading '.$scriptname.': '.json_encode($response2));
+			}
 		}
 	}
 

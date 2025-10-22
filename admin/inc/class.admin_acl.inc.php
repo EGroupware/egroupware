@@ -457,6 +457,7 @@ class admin_acl
 			'order' => 'acl_appname',
 			'sort' => 'ASC',
 			'row_id' => 'id',
+			'num_rows' => Etemplate\Widget\Nextmatch::INITIAL_ROWS, // Include data
 			'account_id' => $account_id,
 			'actions' => self::get_actions(),
 			'acl_rights' => Api\Hooks::process(array(

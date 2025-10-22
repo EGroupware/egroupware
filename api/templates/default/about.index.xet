@@ -33,17 +33,19 @@
 				<row>
 					<grid id="applications" class="egwGridView_grid">
 						<columns>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
+							<column width="80"/>
+							<column width="15%"/>
+							<column width="80"/>
+							<column width="20%"/>
+							<column width="20%"/>
+							<column width="150"/>
 							<column/>
 						</columns>
 						<rows>
 							<row class="th">
 								<et2-description  id="applications"></et2-description>
 								<et2-description  value="name"></et2-description>
+								<et2-description value="Color"></et2-description>
 								<et2-description  value="author"></et2-description>
 								<et2-description  value="maintainer"></et2-description>
 								<et2-description  value="version"></et2-description>
@@ -52,6 +54,7 @@
 							<row class="row" valign="top">
 								<et2-appicon  align="center" src="$row_cont[app]" id="${row}[app]"></et2-appicon>
 								<et2-description  id="${row}[title]"></et2-description>
+								<et2-colorpicker id="${row}[color]" onchange="app.admin.updateAppColor('$row_cont[app]', widget.value);"></et2-colorpicker>
 								<html id="${row}[author]" no_lang="1"/>
 								<html id="${row}[maintainer]" no_lang="1"/>
 								<et2-description  id="${row}[version]" noLang="1"></et2-description>
@@ -76,7 +79,7 @@
 		</grid>
 	</template>
 	<template id="api.about.index" template="" lang="" group="0" version="1.8.001">
-		<et2-tabbox  id="general|applications|templates|languages|changelog" tabHeight="auto">
+		<et2-tabbox  id="general|applications|templates|languages|changelog" tabHeight="auto" width="100%">
 			<tabs>
 				<tab id="changelog" label="Changelog"/>
 				<tab id="general" label="About EGroupware"/>

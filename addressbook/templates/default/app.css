@@ -14,7 +14,7 @@ td.addressbook_sidebox_header {
 	vertical-align: bottom;
 }
 form[id^=addressbook-view].et2_container {
-	height: 0 !important;
+	flex: 0 0 min-content;
 }
 td.addressbook_sidebox_toolbar {
 	vertical-align: bottom;

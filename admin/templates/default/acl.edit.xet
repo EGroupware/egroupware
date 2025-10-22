@@ -42,8 +42,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.acl.edit" template="" lang="" group="0" version="1.9.001">
-		<et2-tabbox  id="tabs" class="et2_nowrap" span="all" width="100%" tabHeight="250px">
+    <template id="admin.acl.edit" template="" lang="" group="0" version="1.9.001">
+        <et2-tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tabHeight="auto">
 			<tabs>
 				<tab id="acl" label="Access" statustext="Access"/>
 			</tabs>

@@ -704,7 +704,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	{
 		let changed = false;
 		let keep_selection = false;
-		const oldFilters = Object.assign({}, this.activeFilters);
+		// Object.assign is NOT a deep clone, we need to Object.assign it's attribute-objects too!
+		const oldFilters = Object.assign({}, this.activeFilters, {
+			col_filter: Object.assign({}, this.activeFilters.col_filter),
+			sort: Object.assign({}, this.activeFilters.sort)
+		});
 
 		// Avoid loops cause by change events
 		if(this.update_in_progress || !this.controller) return;
@@ -2756,9 +2760,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		let filterTemplate = null;
 		if(typeof template == "string")
 		{
+			const is_url = template.match(/^(http|\/).*\.xet($|\?)/);
 			filterTemplate = <Et2Template><unknown>loadWebComponent("et2-template", {
 				id: 'filter-template',
-				url: template
+				template: is_url ? null : template,
+				url: is_url ? template : null,
 			}, this._filterbox);
 		}
 		else if(template instanceof HTMLElement)

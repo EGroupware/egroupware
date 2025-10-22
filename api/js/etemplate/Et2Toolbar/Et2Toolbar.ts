@@ -34,6 +34,8 @@ import {Et2Box} from "../Layout/Et2Box/Et2Box";
  *
  * @slot - Toolbar contents
  * @slot list - Toolbar contents that start hidden in the dropdown
+ * @slot prefix - Prepend content before other actions, will not be hidden automatically
+ * @slot suffix - Like prefix, but after
  *
  * @event et2-resize - Emitted when the toolbar re-lays out
  *
@@ -199,7 +201,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		let shownActionCount = domChildCount + Object.values(this._preference).filter(p => !p).length;
 
 		// Set order on any existing children
-		Array.from(this.querySelectorAll("*:not([data-order]):not([data-action-id])"))
+		Array.from(this.querySelectorAll("*:not([data-order]):not([data-action-id]):not([slot='prefix']):not([slot='suffix'])"))
 			.forEach((c, index) => c.dataset.order = index);
 
 		// Set groups on real children
@@ -236,7 +238,8 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 				{
 					last_group = document.createElement("sl-button-group");
 					last_group.dataset.group = action.group;
-					last_group.dataset.order = domChildCount + action.group;
+					const order = !action.group || isNaN(action.group) ? last_group_id + 1 : action.group;
+					last_group.dataset.order = domChildCount + order;
 					this.append(last_group);
 				}
 
@@ -499,7 +502,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	protected _organiseChildren()
 	{
 		this._isOverflowed = false;
-		let elements = Array.from(this.querySelectorAll(':scope > *'));
+		let elements = Array.from(this.querySelectorAll(':scope > *:not([slot="prefix"]):not([slot="suffix"])'));
 
 		// Reset slot so it can participate in width calculations
 		elements.forEach((el : HTMLElement) =>
@@ -522,27 +525,33 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			}
 		});
 
-		elements = Array.from(this.querySelectorAll(':scope > *'));
-		elements.sort((a : HTMLElement, b : HTMLElement) => parseInt(b.dataset.order) - parseInt(a.dataset.order));
+		// Sort & check sizing
+		const orderSort = (a : HTMLElement, b : HTMLElement) => parseInt(a.dataset.order) - parseInt(b.dataset.order);
+		elements = Array.from(this.querySelectorAll(':scope > *:not([slot="prefix"]):not([slot="suffix"])'));
+		elements.sort(orderSort);
 		elements.forEach((el : HTMLElement) =>
 		{
 			if(typeof el.dataset.group !== "undefined")
 			{
-				Array.from(el.childNodes).reverse().forEach((c : HTMLElement) => this._organiseChild(c));
+				Array.from(el.childNodes).sort(orderSort).forEach((c : HTMLElement) =>
+				{
+					this._organiseChild(c)
+					el.appendChild(c);
+				});
 			}
 			else
 			{
 				this._organiseChild(el);
+			}
+			if(el.parentNode == this)
+			{
+				this.appendChild(el);
 			}
 		});
 
 		// Move any inputs that should be in the list
 		Array.from(this.querySelectorAll(":scope > * > [slot='list']"))
 			.forEach(el => this.append(el));
-
-		// Set order directly since etemplate2.css doesn't like attr()
-		Array.from(this.querySelectorAll("[data-order]"))
-			.forEach((el : HTMLElement) => el.style.order = el.dataset.order);
 
 		// Do not trigger refresh to avoid looping
 		this.shadowRoot.querySelector(".toolbar").classList.toggle("toolbar--overflowed", this._isOverflowed);
@@ -556,12 +565,13 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	 */
 	protected _organiseChild(child : HTMLElement)
 	{
-		if(!this.shadowRoot.querySelector(".toolbar-buttons"))
+		const buttonDiv = <HTMLElement>this.shadowRoot.querySelector(".toolbar-buttons");
+		if(!buttonDiv)
 		{
 			// Not ready yet
 			return;
 		}
-		const isOverflowed = (child.offsetWidth + child.offsetLeft) > (<HTMLElement>this.shadowRoot.querySelector(".toolbar-buttons")).offsetWidth;
+		const isOverflowed = (child.offsetWidth + child.offsetLeft - buttonDiv.offsetLeft) > buttonDiv.offsetWidth;
 		if(isOverflowed || this._preference[child.id])
 		{
 			this._isOverflowed = this._isOverflowed || isOverflowed;
@@ -704,7 +714,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	protected settingsOptions()
 	{
 		const options = [];
-		this.querySelectorAll("[id]").forEach((child : HTMLElement) =>
+		this.querySelectorAll(":scope > [id]:not([slot=\"prefix\"]):not([slot=\"suffix\"])").forEach((child : HTMLElement) =>
 		{
 			const option : SelectOption = {
 				value: child.id,
@@ -770,9 +780,9 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
                 ></et2-button-icon>
                 <sl-menu part="list" class="toolbar-list">
                     <slot name="list"></slot>
-                    <sl-divider data-order="99"></sl-divider>
+                    <sl-divider></sl-divider>
                     <et2-button class="toolbar-admin-button"
-                                image="gear" data-order="99" noSubmit
+                                image="gear" noSubmit
                                 label="${this.egw().lang("settings")}"
                                 @click=${this.handleSettingsClick}
                     ></et2-button>
@@ -796,9 +806,11 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
                     @click=${this.handleClick}
                     @change=${this.handleChange}
             >
+                <slot name="prefix"></slot>
                 <div part="buttons" class="toolbar-buttons">
                     <slot></slot>
                 </div>
+                <slot name="suffix"></slot>
                 ${this.overflowTemplate()}
             </div>
 		`;

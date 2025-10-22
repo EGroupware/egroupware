@@ -15,8 +15,8 @@ export const mobileCss = css`
 
 export default css`
 	:host {
-        --sl-color-primary-600:rgb(0, 124, 255);/*This is nextmatch selected color but with no transparency or white*/
-        --sl-color-neutral-100:rgba(153, 204, 255, 0.7);/*This is nextmatch selected color*/
+        --indent-color: rgb(0, 124, 255) ;/*This is nextmatch selected color but with no transparency or white*/
+        --selected-color:var(--selection-color);/*This is nextmatch selected color*/
 		--sl-spacing-large: 1rem;
 		display: block;
 	}
@@ -76,6 +76,10 @@ export default css`
 	sl-tree-item[selected] > .tree-item__label {
 		font-weight: bold;
 	}
+    sl-tree-item[selected]::part(item){
+	    background-color: var(--selected-color);
+	    border-inline-start-color: var(--indent-color);
+    }
 
 	sl-tree-item.mailAccount > .tree-item__label {
 		font-weight: bold;

@@ -162,9 +162,9 @@ export class EgwFramework extends LitElement
 	connectedCallback()
 	{
 		super.connectedCallback();
-		if(this.egw.window && this.egw.window.opener == null && !this.egw.window.framework)
+		if(this.egw.window && this.egw.window.top == this.egw.window.self && !this.egw.window.framework)
 		{
-			// This works, but stops a lot else from working
+			// Set global framework reference
 			this.egw.window.framework = this;
 		}
 		if(this.egw.window?.framework && this.egw.window?.framework !== this)
@@ -567,10 +567,11 @@ export class EgwFramework extends LitElement
 	public tabNotification(appname : string, count : number)
 	{
 		const appInfo = this.getApplicationByName(appname);
-		if(appInfo)
+		if(!appInfo)
 		{
-			appInfo.notificationCount = count;
+			return;
 		}
+		appInfo.notificationCount = count;
 		this.requestUpdate();
 		this.updateComplete.then(() =>
 		{
@@ -799,7 +800,7 @@ export class EgwFramework extends LitElement
 	public async setSidebox(appname, sideboxData, hash)
 	{
 		const app = this.loadApp(appname);
-		app.setSidebox(sideboxData, hash);
+		app?.setSidebox(sideboxData, hash);
 	}
 
 	/**
@@ -832,7 +833,13 @@ export class EgwFramework extends LitElement
 		// Do not add a same message twice if it's still not dismissed
 		if(typeof this._messages[hash] !== "undefined")
 		{
-			return this._messages[hash];
+			const alert = this._messages[hash];
+			if (alert.type === type)
+			{
+				return this._messages[hash];
+			}
+			alert.hide();
+			delete this._messages[hash];
 		}
 
 		// Already discarded, just stop
@@ -856,7 +863,7 @@ export class EgwFramework extends LitElement
 		const alert : EgwFrameworkMessage = <EgwFrameworkMessage>Object.assign(document.createElement("egw-message"), attributes);
 		alert.addEventListener("sl-hide", (e) =>
 		{
-			delete this._messages[e.target["data-hash"] ?? ""];
+			delete this._messages[(<HTMLElement>e.target).dataset.hash ?? ""];
 		});
 		document.body.append(alert);
 		window.setTimeout(() => alert.toast(), 0);
@@ -1221,7 +1228,7 @@ export class EgwFramework extends LitElement
 		return html`
             <sl-tooltip placement="bottom" role="menuitem" content="${app.title}"
                         style="--application-color: var(--${app.name}-color,var(--default-color))">
-                <et2-image src="${app.icon}" aria-label="${app.title}" noSubmit
+                <et2-image src="${app.icon}" aria-label="${app.title}" noSubmit inline
                                  helptext="${app.title}"
                                  @click=${() =>
                                  {
@@ -1245,12 +1252,20 @@ export class EgwFramework extends LitElement
                     role="tab"
                     ?active=${app.active}
                     style="--application-color: var(--${app.name}-color,var(--default-color, var(--sl-color-neutral-600))); ${extraStyle}"
-            		class=${extraClass?extraClass:nothing}>
+                    class=${extraClass ? extraClass : nothing}
+                    @click=${(e) =>
+                    {
+                        if(e.currentTarget.hasAttribute("active"))
+                        {
+                            this.getApp(app.name).refresh("", "", "")
+                        }
+                    }}
+            >
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
                     <et2-image part="tab-icon" src="${app.icon}" inline></et2-image>
                 </sl-tooltip>
                 ${app.notificationCount ? html`
-                    <sl-badge part="notification" pill>${app.notificationCount}</sl-badge>` : nothing}
+                    <sl-badge part="notification" pill variant="danger">${app.notificationCount}</sl-badge>` : nothing}
             </sl-tab>`;
 	}
 
@@ -1392,8 +1407,9 @@ export interface ApplicationInfo
 export type FeatureList = {
 	preferences? : boolean,
 	favorites? : boolean,
-	aclRights? : false,
-	categories? : false
+	aclRights? : boolean,
+	// True for the standard way, URL for custom
+	categories? : boolean | string
 }
 
 // Feature settings for app when they haven't been set / overridden with anything specific

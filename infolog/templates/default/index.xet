@@ -2,14 +2,16 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="infolog.index.header" template="" lang="" group="0" version="1.9.001">
-        <et2-button-icon statustext="Add" id="add" image="add" onclick="app.infolog.add_with_extras(widget,'','$cont[action]','$cont[action_id]');"></et2-button-icon>
-        <template template="api.search-button"></template>
         <et2-toolbar id="toolbar">
+            <et2-button-icon statustext="Add" id="add" image="add" slot="prefix"
+                onclick="app.infolog.add_with_extras(widget,'','$cont[action]','$cont[action_id]');"></et2-button-icon>
+            <et2-template template="api.search-button" slot="prefix"></et2-template>
             <et2-select id="info_type" ariaLabel="Type" emptyLabel="Type" onchange="app.infolog.changeNmFilter"/>
             <et2-select id="info_status" ariaLabel="Status" emptyLabel="Status" onchange="app.infolog.changeNmFilter"/>
             <et2-select id="filter" ariaLabel="Filter" onchange="app.infolog.changeNmFilter"/>
             <et2-select-cat id="cat_id" ariaLabel="Categorie" onchange="app.infolog.changeNmFilter"/>
-            <et2-button-toggle id="details" icon="card-text" label="Toggle details" statustext="Details" onchange="app.infolog.toggleDetails"></et2-button-toggle>
+            <et2-button-toggle id="details" icon="card-text" statustext="Toggle details" slot="suffix"
+                onchange="app.infolog.toggleDetails"></et2-button-toggle>
         </et2-toolbar>
     </template>
     <template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">

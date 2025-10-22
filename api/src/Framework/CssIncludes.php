@@ -174,4 +174,36 @@ class CssIncludes
 
 		return $pathes;
 	}
+
+	/**
+	 * Insert a link-tag at a given position after/before one of the existing ones
+	 *
+	 * @param string $tags
+	 * @param string $tag
+	 * @param string $where
+	 * @param $after
+	 * @return string
+	 * @throws \InvalidArgumentException if $tags cant be parsed or $where is not found
+	 */
+	public static function insert(string $tags, string $tag, string $where, $after=true)
+	{
+		if (!preg_match_all('/<link [^>]+>/', $tags, $matches, PREG_PATTERN_ORDER))
+		{
+			throw new \InvalidArgumentException('Could not parse CSS link tags!');
+		}
+		foreach($tags=$matches[0] as $n => $match)
+		{
+			if (strpos($match, $where) !== false)
+			{
+				array_splice($tags, $n + ($after ? 1 : 0), 0, [$tag]);
+
+				return implode("\n\t", $tags);
+			}
+		}
+		//throw new \InvalidArgumentException("Could not find position '$where' to insert  CSS link tag!");
+		// just attach it at the end, if position could not be found
+		// that's e.g. the case for displaying mail body
+		$tags[] = $tag;
+		return implode("\n\t", $tags);
+	}
 }

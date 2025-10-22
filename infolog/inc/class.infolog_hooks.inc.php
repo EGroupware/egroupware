@@ -154,21 +154,14 @@ class infolog_hooks
 		if ($location == 'sidebox_menu')
 		{
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname, 'nextmatch-nextmatch-infolog.index.rows-favorite'));
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname, 'nextmatch-nextmatch-infolog.index.rows-favorite'));
 
-			$file = array(
-				'infolog list' => Egw::link('/index.php',array(
-					'menuaction' => 'infolog.infolog_ui.index',
-					'ajax' => 'true')),
-				array(
-					'text' => lang('Add %1',lang(Link::get_registry($appname, 'entry'))),
-					'no_lang' => true,
-					'link' => "javascript:app.infolog.add_link_sidemenu();"
-				),
-				['text'=>'--'],
-				'Placeholders' => Egw::link('/index.php','menuaction=infolog.infolog_merge.show_replacements')
-			);
-			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Placeholders'), [
+				[
+					'text' => 'placeholders', 'icon' => 'braces',
+					'link' => Egw::link('/index.php', 'menuaction=infolog.infolog_merge.show_replacements')
+				]
+			]);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !Api\Header\UserAgent::mobile())
@@ -196,7 +189,7 @@ class infolog_hooks
 			}
 			else
 			{
-				//display_sidebox($appname, lang('Configuration'), $file);
+				//$GLOBALS['egw']->framework->sidebox($appname, lang('Configuration'), $file);
 			}
 		}
 	}

@@ -121,6 +121,15 @@ class kdots_framework extends Api\Framework\Ajax
 				foreach($hooks as $feature_name => $hookname)
 				{
 					$item['features'][$feature_name] = Hooks::exists($hookname, $item['name']);
+					if($item['features'][$feature_name] && in_array($feature_name, ['categories']))
+					{
+						$value = Hooks::single($hookname, $item['name']);
+						if($value && $value !== true)
+						{
+							// Nonstandard use of standard feature complicating everything
+							$item['features'][$feature_name] = is_string($value) ? $value : static::link('/index.php', $value, $item['name']);
+						}
+					}
 				}
 			});
 			$data['application-list'] = htmlentities(json_encode($extra['navbar-apps'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');
@@ -153,7 +162,7 @@ class kdots_framework extends Api\Framework\Ajax
 
 		// prefer "kdots-navbar" over regular "navbar" icon
 		// allows to keep "navbar" icon colored and no inverse on a filled circle e.g. for context menus
-		$reg_exp = '#^'.preg_quote($GLOBALS['egw_info']['server']['webserver_url'], '#').'/([^/]+)/templates/[^/]+/images/navbar.svg$#';
+		$reg_exp = '#^'.preg_quote($GLOBALS['egw_info']['server']['webserver_url'], '#').'/([^/]+)/templates/[^/]+/images/navbar.(svg|png)$#';
 		foreach($apps as $app => &$data)
 		{
 			if (!empty($data['icon']) && preg_match($reg_exp, $data['icon'], $matches))
@@ -442,32 +451,28 @@ class kdots_framework extends Api\Framework\Ajax
 
 		$template_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'] ?? false;
 		$loginbox_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color'] ??
-			$template_custom_color ? "hsl(from $template_custom_color h s calc(l * 0.8))" : false;
+			($template_custom_color ? "hsl(from $template_custom_color h s calc(l * 0.8))" : false);
 		// hsl(from $template-custom-color h s calc(l-20)
 		//only add custom color definitions to the head css if we actually have custom colors
 		if ($loginbox_custom_color || $template_custom_color)
 		{
-			$ret['app_css'] .= "
-			:root, :host, body {";
+			$ret['app_css'] .= "\t:root, :host, body {\n";
 			if ($template_custom_color)
 			{
-				$ret['app_css'] .= "
-				--template-custom-color: $template_custom_color;";
+				$ret['app_css'] .= "\t\t--template-custom-color: $template_custom_color;\n";
 			}
 			if ($loginbox_custom_color)
 			{
-				$ret['app_css'] .= "
-				--loginbox-custom-color: $loginbox_custom_color;";
+				$ret['app_css'] .= "\t\t--loginbox-custom-color: $loginbox_custom_color;\n";
 			}
-			$ret['app_css'] .= "
-			}
-		";
+			$ret['app_css'] .= "\t}\n";
 		}
-		// add css file incl. cache-buster
+		// add css file incl. cache-buster, after Shoelace dark theme
 		$css_file = '/kdots/css/kdots.css';
 		$css_file .= '?' . filemtime(EGW_SERVER_ROOT.$css_file);
-		$ret['css_file'] = '<link rel="stylesheet" href="'.$GLOBALS['egw_info']['server']['webserver_url'].$css_file.'" type="text/css"/>'.
-			"\n".$ret['css_file'];
+		$ret['css_file'] = Api\Framework\CssIncludes::insert($ret['css_file'],
+			'<link rel="stylesheet" href="'.$GLOBALS['egw_info']['server']['webserver_url'].$css_file.'" type="text/css"/>',
+			'shoelace/dist/themes/dark.css', true);
 
 		return $ret;
 	}

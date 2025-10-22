@@ -130,6 +130,21 @@ class calendar_ui
 	var $states_to_save = array('owner','status_filter','filter','cat_id','view','sortby','planner_view','weekend');
 
 	/**
+	 * Filternames
+	 *
+	 * @var array
+	 */
+	var $date_filters = array(
+		'after'  => 'After current date',
+		'before' => 'Before current date',
+		'today'  => 'Today',
+		'week'   => 'Week',
+		'month'  => 'Month',
+		'all'    => 'All events',
+		'custom' => 'Selected range',
+	);
+
+	/**
 	 * Constructor
 	 *
 	 * @param boolean $use_boupdate use bocalupdate as parenent instead of bocal
@@ -480,22 +495,11 @@ class calendar_ui
 	function sidebox_menu()
 	{
 		// Magic etemplate2 favorites menu (from framework)
-		display_sidebox('calendar', lang('Favorites'), Framework\Favorites::list_favorites('calendar'));
+		$GLOBALS['egw']->framework->sidebox('calendar', lang('Favorites'), Framework\Favorites::list_favorites('calendar'));
 
 		$file = array('menuOpened' => true);	// menu open by default
 
-		// Target for etemplate
-		$file[] = array(
-			'no_lang' => true,
-			'text'=>'<span id="calendar-et2_target" />',
-			'link'=>false,
-			'icon' => false
-		);
-
 		$appname = 'calendar';
-		$menu_title = lang('Calendar Menu');
-		display_sidebox($appname,$menu_title,$file);
-
 		$this->sidebox_etemplate();
 
 		// resources menu hooks
@@ -507,7 +511,7 @@ class calendar_ui
 				'menuaction' => $this->view_menuaction,
 				'owner' => $this->owner,
 			));
-			display_sidebox($appname,$menu_title,$file);
+			$GLOBALS['egw']->framework->sidebox($appname,$menu_title,$file);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
@@ -523,18 +527,30 @@ class calendar_ui
 		// Merge print placeholders (selectbox in etemplate)
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
 		{
-			$file['Placeholders'] = Egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
+			$GLOBALS['egw']->framework->sidebox($appname, lang('Placeholders'), [
+				[
+					'text' => 'placeholders', 'icon' => 'braces',
+					'link' => Egw::link('/index.php', 'menuaction=calendar.calendar_merge.show_replacements')
+				]
+			]);
 		}
 		// subscribed calendars
-		$file['Subscribed calendar'] = "javascript:egw_openWindowCentered2('" . Egw::link('/index.php', [
-				'menuaction' => 'calendar.calendar_uiforms.subscribe',
-			], false) . "','_blank',480,600,'yes')";
-
-		$file['Category report'] = "javascript:egw_openWindowCentered2('".
-			Egw::link('/index.php',array('menuaction'=>'calendar.calendar_category_report.index','ajax'=>true),false).
-			"','_blank',720,300,'yes')";
-
-		display_sidebox('calendar', lang('Utilities'), $file);
+		$GLOBALS['egw']->framework->sidebox($appname, lang('Subscribed calendar'), [
+			[
+				'icon' => 'arrow-repeat',
+				'link' => "javascript:egw_openWindowCentered2('" .
+					Egw::link('/index.php', ['menuaction' => 'calendar.calendar_uiforms.subscribe'], false) .
+					"','_blank',480,600,'yes')"
+			]]);
+		$GLOBALS['egw']->framework->sidebox($appname, lang('Category report'), [
+			[
+				'icon' => 'tag',
+				'link' => "javascript:egw_openWindowCentered2('" .
+					Egw::link('/index.php', array('menuaction' => 'calendar.calendar_category_report.index',
+												  'ajax'       => true), false) .
+					"','_blank',720,300,'yes')"
+			]
+		]);
 	}
 
 	/**
@@ -573,6 +589,7 @@ class calendar_ui
 		$sel_options['cat_id'] = array(
 			['value' => '0', 'label' => lang('None')]
 		);
+		$sel_options['filter'] = &$this->date_filters;
 
 		// Merge print
 		try

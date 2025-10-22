@@ -45,7 +45,7 @@ class Hooks
 			}
 			else
 			{
-				display_sidebox($appname,lang('Preferences'),$file);
+				$GLOBALS['egw']->framework->sidebox($appname,lang('Preferences'),$file);
 			}
 		}
 	}
