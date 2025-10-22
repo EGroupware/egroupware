@@ -599,16 +599,16 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 						parent = parent[parts[i]];
 					}
 					// check if we need a not yet included app.js object --> include it now and return a Promise
-					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'undefined')
+					else if (i == 1 && parts[0] == 'app' && typeof (_context || _wnd).app.classes[parts[1]] === 'undefined')
 					{
 						return _wnd.egw_import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400|0).toString())
 							.then(() => this.applyFunc(_func, args, _context || _wnd),
 								(err) => {console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.")});
 					}
 					// check if we need a not yet instantiated app.js object --> instantiate it now
-					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'function')
+					else if (i == 1 && parts[0] == 'app' && typeof (_context || _wnd).app.classes[parts[1]] === 'function')
 					{
-						parent = parent[parts[1]] = new app.classes[parts[1]](parts[1], _wnd);
+						parent = parent[parts[1]] = new (_context || _wnd).app.classes[parts[1]](parts[1], _wnd);
 					}
 				}
 				if (typeof parent[func] == 'function')
