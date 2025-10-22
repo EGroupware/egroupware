@@ -25,8 +25,6 @@ const login_on_ready = () => {
 	{
 		jQuery(document).ready(function()
 		{
-			// lock the device orientation in portrait view
-			if (screen.orientation && typeof screen.orientation.lock == 'function') screen.orientation.lock('portrait');
 			jQuery('.close').click(function (){
 				setTimeout(function(){jQuery('.egw_message_wrapper').slideUp("slow");},100);
 			});
