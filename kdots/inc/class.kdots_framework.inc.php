@@ -467,11 +467,12 @@ class kdots_framework extends Api\Framework\Ajax
 			}
 			$ret['app_css'] .= "\t}\n";
 		}
-		// add css file incl. cache-buster
+		// add css file incl. cache-buster, after Shoelace dark theme
 		$css_file = '/kdots/css/kdots.css';
 		$css_file .= '?' . filemtime(EGW_SERVER_ROOT.$css_file);
-		$ret['css_file'] = '<link rel="stylesheet" href="'.$GLOBALS['egw_info']['server']['webserver_url'].$css_file.'" type="text/css"/>'.
-			"\n".$ret['css_file'];
+		$ret['css_file'] = Api\Framework\CssIncludes::insert($ret['css_file'],
+			'<link rel="stylesheet" href="'.$GLOBALS['egw_info']['server']['webserver_url'].$css_file.'" type="text/css"/>',
+			'shoelace/dist/themes/dark.css', true);
 
 		return $ret;
 	}
