@@ -43,6 +43,10 @@ export default css`
 		width: 1em;
 		height: 1em;
 		display: inline-block;
+		[part='image'], svg{
+			width: 1em !important;
+			height: 1em !important;
+		}
 	}
 
 	::part(label) {
