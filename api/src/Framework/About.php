@@ -171,17 +171,19 @@ EGroupware can be integrated easily into existing authentication solutions such 
 				}
 			}
 		}
-		if (!isset($setup_info[$app]) || !is_array($setup_info[$app])) return null;	// app got eg. removed in filesystem
-
-		$app_info  = array_merge($GLOBALS['egw_info']['apps'][$app], $setup_info[$app]);
+		$app_info  = array_merge($GLOBALS['egw_info']['apps'][$app], $setup_info[$app] ?? []);
 
 		// define the return array
 		$icon_app = isset($app_info['icon_app']) ? $app_info['icon_app'] : $app;
-		$icon = isset($app_info['icon']) ? $app_info['icon'] : 'navbar';
+		$icon = $app_info['icon'] ?? 'navbar';
+		if ($icon[0] !== '/' && !str_starts_with($icon, 'https://'))
+		{
+			$icon = Api\Image::find($icon_app, $icon) ?: Api\Image::find('api', 'nonav');
+		}
 		$ret = $app_info+array(
 			'app'           => $app,
 			'title'         => lang(!empty($app_info['title']) ? $app_info['title'] : $app),
-			'image'			=> Api\Image::find($icon_app, $icon) ? $icon_app.'/'.$app : 'api/nonav',
+			'image'			=> $icon,
 			'author'		=> '',
 			'maintainer'	=> '',
 			'version'		=> $app_info['version'],
@@ -198,6 +200,10 @@ EGroupware can be integrated easily into existing authentication solutions such 
 			$ret['license'] = $setup_info[$app]['license'];
 			$ret['description'] = $setup_info[$app]['description'];
 			$ret['note'] = $setup_info[$app]['note'];
+		}
+		elseif (strpos($icon, '/api/anon_images.php?'))
+		{
+			$ret['author'] = lang('openid');
 		}
 
 		return $this->_linkLicense($ret);
