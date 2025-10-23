@@ -390,28 +390,9 @@ abstract class Merge
 			$replacements['$$adr_' . $adr . '_formatted$$'] = $formatted_placeholder;
 		}
 
-		// set custom fields, should probably go to a general method all apps can use
 		// need to load all cfs for $ignore_acl=true
-		foreach($ignore_acl ? Customfields::get('addressbook', true) : $this->contacts->customfields as $name => $field)
-		{
-			$name = '#' . $name;
-			if(!array_key_exists($name, $contact) || !$contact[$name])
-			{
-				$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] = '';
-				continue;
-			}
-			// Format date cfs per user Api\Preferences
-			if($this->mimetype !== 'application/x-yaml' && $contact[$name] &&
-				($field['type'] == 'date' || $field['type'] == 'date-time'))
-			{
-				$this->date_fields[] = '#' . $name;
-				$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] = Api\DateTime::to($contact[$name], $field['type'] == 'date' ? true : '');
-			}
-			$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] =
-				// use raw data for yaml, no user-preference specific formatting
-				$this->mimetype == 'application/x-yaml' || $field['type'] == 'htmlarea' ? (string)$contact[$name] :
-					Customfields::format($field, (string)$contact[$name]);
-		}
+		$replacements = array_merge($replacements,  // array_merge as they might already be set with their raw value
+			$this->customfield_replacements($ignore_acl ? Customfields::get('addressbook', true) : $this->contacts->customfields));
 
 		if($content && strpos($content, '$$#') !== FALSE)
 		{
@@ -442,6 +423,39 @@ abstract class Merge
 		{
 			$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'categories$$'] .= $GLOBALS['egw']->categories->id2name($main, 'name')
 				. (count($cat) > 0 ? ': ' : '') . implode(', ', $cats[$main]) . "\n";
+		}
+		return $replacements;
+	}
+
+	/**
+	 * General method to return custom-fields replacements
+	 *
+	 * Date(-time) and numeric field are registered in $this->cf_link_to_expand, no need to do here.
+	 *
+	 * @param array $data video or course array
+	 * @param string $prefix =''
+	 * @param ?string& $content
+	 * @param array|string|null cfs array, appname or null
+	 * @return array
+	 */
+	protected function customfield_replacements(array $data, string $prefix='', &$content = null, $cfs=null)
+	{
+		if (is_string($cfs)) $cfs = Customfields::get($cfs);
+		if (!$cfs || !is_array($cfs)) return [];
+
+		$replacements = [];
+		foreach($cfs as $name => $field)
+		{
+			$name = '#' . $name;
+			if(!isset($data[$name]) || (string)$data[$name] === '')
+			{
+				$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] = '';
+				continue;
+			}
+			$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] =
+				// use raw data for yaml, no user-preference specific formatting
+				$this->mimetype == 'application/x-yaml' || $field['type'] == 'htmlarea' ? (string)$data[$name] :
+					Customfields::format($field, (string)$data[$name]);
 		}
 		return $replacements;
 	}
