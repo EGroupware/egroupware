@@ -1710,8 +1710,13 @@ class Link extends Link\Storage
 		unset(self::$title_cache[$app.':'.$id]);
 		unset(self::$file_access_cache[$app.':'.$id]);
 
-		$push = new Push(Push::ALL);
-		$push->call('egw.unset_link_title', $app, $id);
+		try {
+			$push = new Push(Push::ALL);
+			$push->call('egw.unset_link_title', $app, $id);
+		}
+		catch (Api\Db\Exception\InvalidSql $e) {
+			// ignore e.g. error during installation: Table 'egw_notificationpopup' doesn't exist (1146)
+		}
 	}
 
 	/**
