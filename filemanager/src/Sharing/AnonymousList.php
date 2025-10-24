@@ -56,7 +56,7 @@ class AnonymousList extends filemanager_ui
 
 		// Override and take over get_rows so we can customize
 		$content['nm']['get_rows'] = '.' . get_class($this) . '.get_rows';
-		$content['nm']['show_refresh'] = true;
+		$content['show_refresh'] = true;
 		$content['nm']['no_filter'] = true;
 		$content['nm']['favorites'] = false;
 
@@ -64,19 +64,21 @@ class AnonymousList extends filemanager_ui
 			: Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'logo');
 		if($logo)
 		{
-			$this->etemplate->setElementAttribute("nm[logo]", "src", $logo);
+			$this->etemplate->setElementAttribute("logo", "src", $logo);
 		}
 		if(!Vfs::is_writable($content['nm']['path']))
 		{
 			// share is read-only, we can just hide everything
-			$this->etemplate->setElementAttribute("nm", "header_right", '');
+			$this->etemplate->setElementAttribute("toolbar", "hidden", true);
 		}
 		else
 		{
 			// Set some unwanted buttons readonly - hide via CSS
-			$this->etemplate->setElementAttribute("nm[button][edit]", "disabled", true);
-			$this->etemplate->setElementAttribute("nm[button][symlink]", "disabled", true);
+			$this->etemplate->setElementAttribute("toolbar[button][edit]", "disabled", true);
+			$this->etemplate->setElementAttribute("toolbar[button][symlink]", "disabled", true);
 		}
+		// No framework, no slots available
+		$this->etemplate->setElementAttribute("filemanager.index.app-toolbar", "slot", "");
 
 		return parent::listview($content, $msg);
 	}

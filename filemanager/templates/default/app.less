@@ -25,15 +25,27 @@
 	top: auto;
 }
 
-#filemanager-index_filemanager-index-app-toolbar et2-vfs-path et2-image {
-  width: 1.5em;
-  .sl-theme-light &, .kdots-light & {
-	filter: brightness(0) invert(1);
-  }
-  .sl-theme-dark &, .kdots-dark & {
-	filter: brightness(0) invert(1) brightness(.9);
+#filemanager-index_filemanager-index-app-toolbar {
+  /* Anonymous view does not have egw-app wrapper, copied from kdots/application.less */
+  &[slot=""]::part(base) {
+	flex-direction: row;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
   }
 
+  et2-vfs-path et2-image {
+	width: 1.5em;
+
+	.sl-theme-light &, .kdots-light & {
+	  filter: brightness(0) invert(1);
+	}
+
+	.sl-theme-dark &, .kdots-dark & {
+	  filter: brightness(0) invert(1) brightness(.9);
+	}
+
+  }
 }
 #filemanager-index_nm et2-vfs-mime img[src$="svg"], #filemanager-index_nm et2-vfs-mime svg{
     height: 1em !important;

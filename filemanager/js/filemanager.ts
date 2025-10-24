@@ -114,6 +114,11 @@ export class filemanagerAPP extends EgwApp
 			this.changeMountScheme();
 			return;
 		}
+		if(name === 'filemanager.index' && !et2.DOMContainer.closest("egw-app"))
+		{
+			// Anonymous view - reorder the DOM nodes
+			et2.DOMContainer.parentElement.append(et2.DOMContainer);
+		}
 
 		let path_widget = this.et2.getWidgetById('path');
 		if(path_widget)	// do NOT set not found path-widgets, as uploads works on first one only!

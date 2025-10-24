@@ -21,6 +21,14 @@
   position: initial;
   top: auto;
 }
+#filemanager-index_filemanager-index-app-toolbar {
+  /* Anonymous view does not have egw-app wrapper, copied from kdots/application.less */
+}
+#filemanager-index_filemanager-index-app-toolbar[slot=""]::part(base) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 #filemanager-index_filemanager-index-app-toolbar et2-vfs-path et2-image {
   width: 1.5em;
 }
