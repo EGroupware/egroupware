@@ -992,7 +992,7 @@ abstract class Framework extends Framework\Extra
 		}, array_filter($GLOBALS['egw_info']['apps'] ?? [], function ($app)
 		{
 			return !empty($app['enabled']) &&
-				preg_match('#^[a-z_]+$#', $app['name']) &&
+				preg_match('#^[a-z0-9_]+$#i', $app['name']) &&
 				$app['color'] !== Applications::$default_app_color;
 		})))."\n\t}\n\n";
 	}
