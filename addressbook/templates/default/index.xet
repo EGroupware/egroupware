@@ -195,15 +195,15 @@
     </template>
     <template id="addressbook.index.header" template="" lang="" group="0" version="1.7.001">
         <et2-hbox id="main_header" width="100%">
-            <et2-button-icon statustext="Add a new contact" id="add" image="add"
-                             onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'870','610','_blank','addressbook',null,true); return false;"
-                             noSubmit="true"></et2-button-icon>
-            <template template="api.search-button"></template>
             <et2-toolbar id="toolbar">
+                <et2-button-icon statustext="Add a new contact" id="add" image="add" slot="prefix"
+                    onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'870','610','_blank','addressbook',null,true); return false;"
+                        noSubmit="true"></et2-button-icon>
+                <template template="api.search-button" slot="prefix"></template>
                 <et2-button statustext="Advanced search" image="advanced-search" id="advanced-search"
-                            label="Advanced search"
-                                 onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.extSearch'),'870','610','_blank','addressbook',null,true); return false;"
-                            noSubmit="true"></et2-button>
+                    label="Advanced search"
+                    onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.extSearch'),'870','610','_blank','addressbook',null,true); return false;"
+                    noSubmit="true"></et2-button>
                 <et2-select ariaLabel="Select view" statustext="Select a view" id="grouped_view" onchange="app.addressbook.change_grouped_view" noLang="1" emptyLabel="All contacts"></et2-select>
                 <et2-select id="filter" onchange="app.addressbook.changeNmFilter" noLang="1" emptyLabel="All addressbooks" ariaLabel="Addressbook"></et2-select>
                 <et2-select-cat id="cat_id" onchange="app.addressbook.changeNmFilter" ariaLabel="Category"></et2-select-cat>

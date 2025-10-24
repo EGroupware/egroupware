@@ -82,10 +82,13 @@
         </grid>
     </template>
     <template id="resources.show.header" template="" lang="" group="0" version="1.9.002">
-        <et2-button-icon  statustext="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;" noSubmit="true"></et2-button-icon>
-        <template template="api.search-button"></template>
-        <et2-select id="filter" ariaLabel="Category" noLang="true" onchange="app.resources.changeNmFilter"/>
-        <et2-select id="filter2" ariaLabel="Filter" onchange="app.resources.changeNmFilter"/>
+        <et2-toolbar id="toolbar">
+            <et2-button-icon  statustext="Add" id="add" slot="prefix"
+                onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;" noSubmit="true"></et2-button-icon>
+            <template template="api.search-button" slot="prefix"></template>
+            <et2-select id="filter" ariaLabel="Category" noLang="true" onchange="app.resources.changeNmFilter"/>
+            <et2-select id="filter2" ariaLabel="Filter" onchange="app.resources.changeNmFilter"/>
+        </et2-toolbar>
     </template>
     <template id="resources.show" template="" lang="" group="0" version="1.9.003">
         <template template="resources.show.header" slot="main-header"></template>

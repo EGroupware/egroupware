@@ -8,14 +8,16 @@
             onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
     </template>
     <template id="timesheet.index.header" template="" lang="" group="0" version="1.7.001">
-        <et2-button-icon statustext="Add" id="add" image="add" onclick="app.timesheet.add_with_extras(widget,'','$cont[action]','$cont[action_id]');" noSubmit="true"></et2-button-icon>
-        <template template="api.search-button"></template>
         <et2-toolbar id="toolbar">
+            <et2-button-icon statustext="Add" id="add" image="add" slot="prefix"
+                onclick="app.timesheet.add_with_extras(widget,'','$cont[action]','$cont[action_id]');" noSubmit="true"></et2-button-icon>
+            <template template="api.search-button" slot="prefix"></template>
             <et2-select-cat id="cat_id" label="Category" onchange="app.timesheet.changeNmFilter"/>
             <et2-select id="filter" label="Filter" onchange="app.timesheet.changeNmFilter"/>
             <et2-select id="ts_owner" label="User" emptyLabel="User" onchange="app.timesheet.changeNmFilter"/>
             <et2-select id="ts_status" label="Status" emptyLabel="Status" onchange="app.timesheet.changeNmFilter"/>
-            <et2-button-toggle id="details" icon="card-text" label="Toggle details" statustext="Details" onchange="app.timesheet.toggleDetails"></et2-button-toggle>
+            <et2-button-toggle id="details" icon="card-text" statustext="Toggle details" slot="suffix"
+                onchange="app.timesheet.toggleDetails"></et2-button-toggle>
         </et2-toolbar>
     </template>
     <template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
