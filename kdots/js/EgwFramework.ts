@@ -200,10 +200,10 @@ export class EgwFramework extends LitElement
 			}
 		});
 
-		// Load hidden apps like status, as long as they can be loaded
+		// Do NOT load hidden (status == 5) apps, but the status app
 		this.applicationList.forEach((app) =>
 		{
-			if(app.status == "5" && app.url && !app.url.match(/menuaction\=none/))
+			if(app.status == "5" && app.name === "status" && app.url && !app.url.match(/menuaction\=none/))
 			{
 				this.loadApp(app.name);
 			}
