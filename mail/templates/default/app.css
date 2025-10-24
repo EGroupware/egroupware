@@ -881,7 +881,6 @@ div.mailComposeHeaderSection>table {
 
 .mail-index-extra-iframe {
 	position: relative;
-	z-index: 999;
 	width:100%;
 	height:100%;
 }
