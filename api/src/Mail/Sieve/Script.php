@@ -140,6 +140,10 @@ class Script
 								{
 									$$key = $data[$key];
 								}
+								foreach($rules as $n => &$rule)
+								{
+									$rule['priority'] = 2*$n+1;
+								}
 								break 2;
 							}
 							catch (\Exception $e) {
@@ -704,6 +708,10 @@ class Script
 		$newscriptfoot = "##PSEUDO script start\n";
 		// only add rule to foot if status != deleted. this is how we delete a rule.
 		$this->rules = array_values(array_filter($this->rules, fn($rule) => $rule['status'] != 'DELETED'));
+		foreach($this->rules as $n => &$r)
+		{
+			$r['priority'] = 2*$n+1;
+		}
 		$newscriptfoot .= "#".json_encode([
 			'rules' => $this->rules,
 			'vacation' => $this->vacation,

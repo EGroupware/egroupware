@@ -1280,7 +1280,7 @@ class mail_sieve
 			foreach ($rows as &$row )
 			{
 				$row['rules'] = $this->buildRule($row);
-				$row['ruleID'] =(string)(($row['priority'] -1) / 2 );
+				$row['ruleID'] =(string)(($row['priority']+1) / 2 );
 				if ($row ['status'] === 'DISABLED')
 				{
 					$row['class'] = 'mail_sieve_DISABLED';
