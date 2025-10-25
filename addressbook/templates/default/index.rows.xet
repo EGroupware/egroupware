@@ -153,7 +153,7 @@
                     </et2-vbox>
                     <et2-description id="${row}[room]"></et2-description>
                     <customfields-list id="$row" class="customfields"/>
-                    <et2-link-string entryId="${row_cont[id]}" application="addressbook"
+                    <et2-link-string entryId="$row_cont[id]" application="addressbook"
                                      onlyApp="kanban"></et2-link-string>
                     <et2-textarea id="${row}[note]" readonly="true" noLang="1"></et2-textarea>
                     <et2-description id="${row}[distrib_lists]"></et2-description>

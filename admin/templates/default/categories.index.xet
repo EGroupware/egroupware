@@ -38,7 +38,7 @@
 					<et2-select-account  id="${row}[owner]" readonly="true" emptyLabel="All users" accountType="groups"></et2-select-account>
 					<et2-checkbox  align="center" id="${row}[access]" readonly="true" selectedValue="private" unselectedValue="public" ></et2-checkbox>
 					<et2-image align="center" label="{$row_cont['data']['icon']}"
-                               src="${row_cont[icon_url]}"></et2-image>
+                               src="$row_cont[icon_url]"></et2-image>
 					<et2-description  id="${row}[data][color]"></et2-description>
 					<et2-date-time  id="${row}[last_mod]" readonly="true"></et2-date-time>
 					<et2-description  align="center" id="${row}[subs]"></et2-description>

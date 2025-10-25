@@ -44,7 +44,7 @@
                     <et2-vfs-gid id="${row}[gid]" noLang="1"></et2-vfs-gid>
                     <et2-description id="${row}[comment]"></et2-description>
                     <customfields-list id="$row" class="customfields"/>
-                    <et2-link-string entryId="${row_cont[path]}" application="filemanager"
+                    <et2-link-string entryId="$row_cont[path]" application="filemanager"
                                      onlyApp="kanban"></et2-link-string>
                 </row>
 			</rows>
