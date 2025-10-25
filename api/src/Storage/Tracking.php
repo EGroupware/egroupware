@@ -321,14 +321,14 @@ abstract class Tracking
 	 * Tracks the changes in one entry $data, by comparing it with the last version in $old
 	 *
 	 * @param array $data current entry
-	 * @param array $old = null old/last state of the entry or null for a new entry
+	 * @param ?array $old = null old/last state of the entry or null for a new entry
 	 * @param int $user = null user who made the changes, default to current user
 	 * @param boolean $deleted = null can be set to true to let the tracking know the item got deleted or undeleted
-	 * @param array $changed_fields = null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param ?array $changed_fields = null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
 	 * @param boolean $skip_notification = false do NOT send any notification
 	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
 	 */
-	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null,$skip_notification=false)
+	public function track(array $data, ?array $old=null, $user=null, $deleted=null, ?array $changed_fields=null, $skip_notification=false)
 	{
 		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
 
@@ -413,12 +413,12 @@ abstract class Tracking
 	 *
 	 * @internal use only track($data,$old)
 	 * @param array $data current entry
-	 * @param array $old = null old/last state of the entry or null for a new entry
+	 * @param ?array $old = null old/last state of the entry or null for a new entry
 	 * @param boolean $deleted = null can be set to true to let the tracking know the item got deleted or undelted
-	 * @param array $changed_fields = null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param ?array $changed_fields = null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
 	 * @return int number of log-entries made
 	 */
-	protected function save_history(array $data,array $old=null,$deleted=null,array $changed_fields=null)
+	protected function save_history(array $data, ?array $old=null, $deleted=null, ?array $changed_fields=null)
 	{
 		unset($deleted);	// not used, but required by function signature
 
@@ -500,10 +500,10 @@ abstract class Tracking
 	 * Can be used to check if saving the data is really necessary or user just pressed save
 	 *
 	 * @param array $data
-	 * @param array $old = null
+	 * @param ?array $old = null
 	 * @return array of keys with different values in $data and $old
 	 */
-	public function changed_fields(array $data,array $old=null)
+	public function changed_fields(array $data, ?array $old=null)
 	{
 		if (is_null($old)) return array_keys($data);
 		$changed_fields = array();

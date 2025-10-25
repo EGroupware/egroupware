@@ -1272,11 +1272,11 @@ class Ldap
 	 *
 	 * @param array $members array with uidnumber or uid's
 	 * @param int $gid gidnumber of group to set
-	 * @param array $objectclass =null should we set the member and uniqueMember attributes (groupOf(Unique)Names|univentionGroup) (default detect it)
+	 * @param ?array $objectclass =null should we set the member and uniqueMember attributes (groupOf(Unique)Names|univentionGroup) (default detect it)
 	 * @param string $use_cn =null if set $cn is used instead $gid and the attributes are returned, not written to ldap
 	 * @return boolean/array false on failure, array or true otherwise
 	 */
-	function set_members($members, $gid, array $objectclass=null, $use_cn=null)
+	function set_members($members, $gid, ?array $objectclass=null, $use_cn=null)
 	{
 		if (!($cn = $use_cn) && !($cn = $this->id2name($gid))) return false;
 

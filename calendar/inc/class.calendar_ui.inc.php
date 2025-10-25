@@ -457,10 +457,10 @@ class calendar_ui
 	 * @param string $date which date should be used as start- and end-date, default null=$this->date
 	 * @param int $hour which hour should be used for the start, default null=$this->hour
 	 * @param int $minute start-minute
-	 * @param array $vars
+	 * @param ?array $vars
 	 * @return string the link incl. content
 	 */
-	function add_link($content,$date=null,$hour=null,$minute=0,array $vars=null)
+	function add_link($content, $date=null, $hour=null, $minute=0, ?array $vars=null)
 	{
 		$vars['menuaction'] = 'calendar.calendar_uiforms.edit';
 		$vars['date'] =  $date ? $date : $this->date;

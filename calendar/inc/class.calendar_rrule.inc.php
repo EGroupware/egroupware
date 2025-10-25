@@ -254,12 +254,12 @@ class calendar_rrule implements Iterator
 	 * @param DateTime $time start of event in it's own timezone
 	 * @param int $type self::NONE, self::DAILY, ..., self::YEARLY
 	 * @param int $interval =1 1, 2, ...
-	 * @param DateTime $enddate =null enddate or null for no enddate (in which case we user '+5 year' on $time)
+	 * @param ?DateTime $enddate =null enddate or null for no enddate (in which case we user '+5 year' on $time)
 	 * @param int $weekdays =0 self::SUNDAY=1|self::MONDAY=2|...|self::SATURDAY=64
-	 * @param DateTime[] $exceptions =null DateTime objects with exceptions
-	 * @param DateTime[] $rdates =null DateTime objects with rdates (for type self::PERIOD)
+	 * @param ?DateTime[] $exceptions =null DateTime objects with exceptions
+	 * @param ?DateTime[] $rdates =null DateTime objects with rdates (for type self::PERIOD)
 	 */
-	public function __construct(DateTime $time,$type,$interval=1,DateTime $enddate=null,$weekdays=0,array $exceptions=null,array $rdates=null)
+	public function __construct(DateTime $time, $type, $interval=1, ?DateTime $enddate=null, $weekdays=0, ?array $exceptions=null, ?array $rdates=null)
 	{
 		switch($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'])
 		{
@@ -620,10 +620,10 @@ class calendar_rrule implements Iterator
 	/**
 	 * Checks if current position is valid
 	 *
-	 * @param boolean? $use_just_date true: use just date, false|null: use also time
+	 * @param ?boolean $use_just_date true: use just date, false|null: use also time
 	 * @return boolean
 	 */
-	public function validDate(bool $use_just_date=null): bool
+	public function validDate(?bool $use_just_date=null): bool
 	{
 		if (!$this->current)
 		{

@@ -365,9 +365,9 @@ class Select extends Etemplate\Widget
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		//error_log(__METHOD__."('$cname') this->id=$this->id, this->type=$this->type, this->attrs=".array2string($this->attrs));
 		$matches = null;

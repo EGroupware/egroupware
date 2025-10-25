@@ -388,7 +388,7 @@ function getByName(SimpleXMLElement $parent, string $name) : ?SimpleXMLElement
  * @param string|null $name overwrites to use e.g. "*", default use $element['name']
  * @return void
  */
-function overwriteAttributes(array& $element, string $name=null)
+function overwriteAttributes(array& $element, ?string $name=null)
 {
 	global $overwrites;
 

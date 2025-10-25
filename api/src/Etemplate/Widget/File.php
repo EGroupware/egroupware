@@ -613,9 +613,9 @@ class File extends Etemplate\Widget
 	 * minus "some" for other transferred fields.
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 

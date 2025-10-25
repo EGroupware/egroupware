@@ -68,7 +68,7 @@ class mail_compose
 	var $composeID;
 	var $sessionData;
 
-	function __construct(int $_acc_id=null)
+	function __construct(?int $_acc_id=null)
 	{
 		$this->displayCharset   = Api\Translation::charset();
 
@@ -304,13 +304,13 @@ class mail_compose
 	/**
 	 * Compose dialog
 	 *
-	 * @var array $_content =null etemplate content array
+	 * @var ?array $_content =null etemplate content array
 	 * @var string $msg =null a possible message to be passed and displayed to the userinterface
 	 * @var string $_focusElement ='to' subject, to, body supported
 	 * @var boolean $suppressSigOnTop =false
 	 * @var boolean $isReply =false
 	 */
-	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
+	function compose(?array $_content=null, $msg=null, $_focusElement='to', $suppressSigOnTop=false, $isReply=false)
 	{
 		if ($msg) Framework::message($msg);
 
@@ -3034,7 +3034,7 @@ class mail_compose
 		return $messageUid;
 	}
 
-	function send($_formData, int $_acc_id=null)
+	function send($_formData, ?int $_acc_id=null)
 	{
 		$mail_bo	= $this->mail_bo;
 		$mail 		= new Api\Mailer($_acc_id ?: $mail_bo->profileID);

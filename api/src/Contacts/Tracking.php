@@ -139,12 +139,12 @@ class Tracking extends Api\Storage\Tracking
 	 *
 	 * @internal use only track($data,$old)
 	 * @param array $data current entry
-	 * @param array $old =null old/last state of the entry or null for a new entry
+	 * @param ?array $old =null old/last state of the entry or null for a new entry
 	 * @param boolean $deleted =null can be set to true to let the tracking know the item got deleted or undelted
-	 * @param array $changed_fields =null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param ?array $changed_fields =null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
 	 * @return int number of log-entries made
 	 */
-	protected function save_history(array $data,array $old=null,$deleted=null,array $changed_fields=null)
+	protected function save_history(array $data, ?array $old=null, $deleted=null, ?array $changed_fields=null)
 	{
 		if (is_null($changed_fields))
 		{

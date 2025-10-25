@@ -48,7 +48,7 @@ class JsBase
 	 * @return string without urn:uuid: prefix
 	 * @throws \InvalidArgumentException
 	 */
-	protected static function parseUid(string $uid=null, string $old=null, bool $generate_when_empty=false)
+	protected static function parseUid(?string $uid=null, ?string $old=null, bool $generate_when_empty=false)
 	{
 		if (empty($uid) || strlen($uid) < 12)
 		{

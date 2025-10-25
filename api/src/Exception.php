@@ -34,7 +34,7 @@ class Exception extends \Exception
 	 */
 	public $detail;
 
-	function __construct($msg=null,$code=100,\Exception $previous=null, ?string $detail=null)
+	function __construct($msg=null, $code=100, ?\Exception $previous=null, ?string $detail=null)
 	{
 		parent::__construct($msg, $code, $previous);
 

@@ -1062,7 +1062,7 @@ class Link extends Link\Storage
 	 * @param ?string $_app check only $_app, if given
 	 * @return array with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
 	 */
-	static function get_mime_info($type, string $_app=null)
+	static function get_mime_info($type, ?string $_app=null)
 	{
 		foreach($_app ? [$_app => self::$app_register[$_app] ?? []] : self::$app_register as $app => $registry)
 		{

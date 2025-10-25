@@ -93,7 +93,7 @@ class JsContact extends Api\CalDAV\JsBase
 	 * @param string $method='PUT' 'PUT', 'POST' or 'PATCH'
 	 * @return array
 	 */
-	public static function parseJsCard(string $json, array $old=[], string $content_type=null, $method='PUT')
+	public static function parseJsCard(string $json, array $old=[], ?string $content_type=null, $method='PUT')
 	{
 		try
 		{
@@ -400,7 +400,7 @@ class JsContact extends Api\CalDAV\JsBase
 	 * @param ?int $preference 1=highest, ..., 100=lowest (=null)
 	 * @return array
 	 */
-	protected static function address(array $contact, string  $type, int $preference=null)
+	protected static function address(array $contact, string  $type, ?int $preference=null)
 	{
 		$prefix = $type === 'work' ? 'adr_one_' : 'adr_two_';
 		$js2attr = self::$jsAddress2attr;
@@ -516,7 +516,7 @@ class JsContact extends Api\CalDAV\JsBase
 	 * ==> just use "name" for now and concatenate incoming data with one space
 	 * ==> add 2. street line with separator "\n" and again name
 	 *
-	 * @param string $street
+	 * @param ?string $street
 	 * @param ?string $street2=null 2. address line
 	 * @return array[] array of objects with attributes type and value
 	 */
@@ -1059,7 +1059,7 @@ class JsContact extends Api\CalDAV\JsBase
 	 * @param string[] $localications map with extra language => value pairs
 	 * @return array[] with values for keys "value", "language" and "localizations"
 	 */
-	protected static function localizedString($value, string $language=null, array $localications=[])
+	protected static function localizedString($value, ?string $language=null, array $localications=[])
 	{
 		if (empty($value) && !$localications)
 		{
@@ -1077,10 +1077,10 @@ class JsContact extends Api\CalDAV\JsBase
 	 *
 	 * We're not currently storing/allowing any localization --> they get ignored/thrown away!
 	 *
-	 * @param string $value =null
+	 * @param ?string $value =null
 	 * @return string
 	 */
-	protected static function parseString(string $value=null)
+	protected static function parseString(?string $value=null)
 	{
 		return $value;
 	}

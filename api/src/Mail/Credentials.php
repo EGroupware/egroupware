@@ -314,7 +314,7 @@ class Credentials
 	 * @param ?int $account_id ----------- " ------------
 	 * @return string|null
 	 */
-	static protected function getAccessToken(string $username, string $refresh_token, string $mailserver=null, int $acc_id=null, int $account_id=null)
+	static protected function getAccessToken(string $username, string $refresh_token, ?string $mailserver=null, ?int $acc_id=null, ?int $account_id=null)
 	{
 		return Api\Cache::getInstance(__CLASS__, 'access-token-'.$username.'-'.md5($refresh_token), static function() use ($acc_id, $account_id, $username, $refresh_token, $mailserver)
 		{
@@ -426,7 +426,7 @@ class Credentials
 	 * @param int $type self::IMAP, self::SMTP, self::ADMIN or self::SMIME
 	 * @param int $account_id if of user-account for whom credentials are
 	 * @param int $cred_id =null id of existing credentials to update
-	 * @param bool $use_system =null true: use system-secret/SYSTEM_AES, false: use user-password/USER_AES, null: determine automatic
+	 * @param ?bool $use_system =null true: use system-secret/SYSTEM_AES, false: use user-password/USER_AES, null: determine automatic
 	 * @return int cred_id
 	 */
 	public static function write($acc_id, $username, $password, $type, $account_id=0, $cred_id=null, ?bool $use_system=null)
@@ -529,7 +529,7 @@ class Credentials
 	 * @param string $password cleartext password
 	 * @param int $account_id user-account password is for
 	 * @param int& $pw_enc on return encryption used
-	 * @param bool $use_system =null true: use system-secret/SYSTEM_AES, false: use user-password/USER_AES, null: determine automatic
+	 * @param ?bool $use_system =null true: use system-secret/SYSTEM_AES, false: use user-password/USER_AES, null: determine automatic
 	 * @return string encrypted password
 	 */
 	public static function encrypt($password, $account_id, &$pw_enc, ?bool $use_system=null)
@@ -571,7 +571,7 @@ class Credentials
 	 * @param int& $pw_enc on return encryption used
 	 * @param string $key =null key/password to use, default password according to account_id
 	 * @param string $salt =null (binary) salt to use, default generate new random salt
-	 * @param bool $use_system =null true: use system-secret/SYSTEM_AES, false: use user-password/USER_AES, null: determine automatic
+	 * @param ?bool $use_system =null true: use system-secret/SYSTEM_AES, false: use user-password/USER_AES, null: determine automatic
 	 * @return string encrypted password
 	 */
 	protected static function encrypt_openssl_aes($password, $account_id, &$pw_enc, $key=null, $salt=null, ?bool $use_system=null)

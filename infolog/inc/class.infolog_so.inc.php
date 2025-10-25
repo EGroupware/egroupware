@@ -132,11 +132,11 @@ class infolog_so
 	 * @param array|int $info data or info_id of InfoLog entry
 	 * @param int $required_rights EGW_ACL_xyz anded together
 	 * @param boolean $implicit_edit =false responsible has only implicit read and add rigths, unless this is set to true
-	 * @param array $grants =null grants to use, default (null) $this->grants
+	 * @param ?array $grants =null grants to use, default (null) $this->grants
 	 * @param int $user =null user to check, default (null) $this->user
 	 * @return boolean True if access is granted else False
 	 */
-	function check_access( $info,$required_rights,$implicit_edit=false,array $grants=null,$user=null )
+	function check_access( $info, $required_rights, $implicit_edit=false, ?array $grants=null, $user=null )
 	{
 		if (is_null($grants)) $grants = $this->grants;
 		if (!$user) $user = $this->user;

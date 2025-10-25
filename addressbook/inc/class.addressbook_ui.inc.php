@@ -3142,9 +3142,9 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * CRM view
 	 *
-	 * @param array $content
+	 * @param ?array $content
 	 */
-	function view(array $content=null)
+	function view(?array $content=null)
 	{
 		// CRM list comes from content, request, or preference
 		$crm_list = $content['crm_list'] ? $content['crm_list'] :

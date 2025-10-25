@@ -534,7 +534,7 @@ abstract class Handler
 	 * @param ?string $user the user whose grants for the current user are requested, or null for all
 	 * @return array user-id => Api\Acl::ADD|Api\Acl::READ|Api\Acl::EDIT|Api\Acl::DELETE pairs
 	 */
-	public function get_grants(string $user=null)
+	public function get_grants(?string $user=null)
 	{
 		return $this->acl->get_grants($this->app, $this->app != 'addressbook');
 	}

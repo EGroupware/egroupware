@@ -161,10 +161,10 @@ class setup_cmd_header extends setup_cmd
 	 * Magic method to allow to call all methods from setup_header, as if they were our own
 	 *
 	 * @param string $method
-	 * @param array $args =null
+	 * @param ?array $args =null
 	 * @return mixed
 	 */
-	function __call($method,array $args=null)
+	function __call($method, ?array $args=null)
 	{
 		if (method_exists($this->setup_header,$method))
 		{

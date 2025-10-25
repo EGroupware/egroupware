@@ -91,10 +91,10 @@ class admin_categories
 	/**
 	 * Edit / add a category
 	 *
-	 * @param array $content = null
+	 * @param ?array $content = null
 	 * @param string $msg = ''
 	 */
-	public function edit(array $content=null,$msg='')
+	public function edit(?array $content=null,$msg='')
 	{
 		// read the session, as the global_cats param is stored with it.
 		$appname = $content['appname'] ? $content['appname'] : ($_GET['appname']?$_GET['appname']:Api\Categories::GLOBAL_APPNAME);
@@ -338,7 +338,7 @@ class admin_categories
 	 *
 	 * @return array filename => label
 	 */
-	static function get_icons(string $_icon=null)
+	static function get_icons(?string $_icon=null)
 	{
 		$stock_icon = false;
 		$icons = [];
@@ -493,10 +493,10 @@ class admin_categories
 	/**
 	 * Display the accesslog
 	 *
-	 * @param array $content = null
+	 * @param ?array $content = null
 	 * @param string $msg = ''
 	 */
-	public function index(array $content=null,$msg='')
+	public function index(?array $content=null,$msg='')
 	{
 		//_debug_array($_GET);
 		if ($this->appname != 'admin') Api\Translation::add_app('admin');	// need admin translations
@@ -653,9 +653,9 @@ class admin_categories
 	/**
 	 * Dialog to delete a category
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 */
-	public function delete(array $content=null)
+	public function delete(?array $content=null)
 	{
 		if (!is_array($content))
 		{

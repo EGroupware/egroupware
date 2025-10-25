@@ -183,9 +183,9 @@ class Contacts extends Contacts\Storage
 	 * Constructor
 	 *
 	 * @param string $contact_app ='addressbook' used for acl->get_grants()
-	 * @param Db $db =null
+	 * @param ?Db $db =null
 	 */
-	function __construct($contact_app='addressbook',Db $db=null)
+	function __construct($contact_app='addressbook', ?Db $db=null)
 	{
 		parent::__construct($contact_app,$db);
 		if ($this->log)
@@ -346,10 +346,10 @@ class Contacts extends Contacts\Storage
 	 * Used to set $this->private_addressbook for current user.
 	 *
 	 * @param string $contact_repository
-	 * @param array $prefs addressbook preferences
+	 * @param ?array $prefs addressbook preferences
 	 * @return boolean
 	 */
-	public static function private_addressbook($contact_repository, array $prefs=null)
+	public static function private_addressbook($contact_repository, ?array $prefs=null)
 	{
 		return $contact_repository == 'sql' && !empty($prefs['private_addressbook']);
 	}
@@ -2237,10 +2237,10 @@ class Contacts extends Contacts\Storage
 	 *
 	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
-	 * @param array $existing =null array of existing contact-id(s) of list, to not reread it, eg. array()
+	 * @param ?array $existing =null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
-	function add2list($contact,$list,array $existing=null)
+	function add2list($contact,$list, ?array $existing=null)
 	{
 		if (!$this->check_list($list,Acl::EDIT)) return false;
 

@@ -521,10 +521,10 @@ class calendar_boupdate extends calendar_bo
 	 * Remove participants current user has no right to invite
 	 *
 	 * @param array &$event new event
-	 * @param array $old_event =null old event with already invited participants
+	 * @param ?array $old_event =null old event with already invited participants
 	 * @return array removed participants because of missing invite grants
 	 */
-	public function remove_no_acl_invite(array &$event,array $old_event=null)
+	public function remove_no_acl_invite(array &$event, ?array $old_event=null)
 	{
 		if (!$this->require_acl_invite)
 		{
@@ -930,7 +930,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $old_event Event before the change
 	 * @param array $new_event =null Event after the change
 	 * @param int|string $user =0 User/participant who started the notify, default current user
-	 * @param array $alarm =null values for "offset", "start", etc.
+	 * @param ?array $alarm =null values for "offset", "start", etc.
 	 * @parqm boolean $ignore_prefs Ignore the user's preferences about when they want to be notified and send it
 	 * @return bool true/false
 	 */
@@ -963,7 +963,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $old_event Event before the change
 	 * @param array $new_event =null Event after the change
 	 * @param int|string $user =0 User/participant who started the notify, default current user
-	 * @param array $alarm =null values for "offset", "start", etc.
+	 * @param ?array $alarm =null values for "offset", "start", etc.
 	 * @parqm boolean $ignore_prefs Ignore the user's preferences about when they want to be notified and send it
 	 * @return bool true/false
 	 */

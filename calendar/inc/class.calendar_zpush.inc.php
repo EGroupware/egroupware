@@ -181,10 +181,10 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 *
 	 * @param string $id folder id
 	 * @param int $cutoffdate =null
-	 * @param array $not_uids =null uids NOT to return for meeting requests
+	 * @param ?array $not_uids =null uids NOT to return for meeting requests
 	 * @return array
   	 */
-	function GetMessageList($id, $cutoffdate=NULL, array $not_uids=null)
+	function GetMessageList($id, $cutoffdate=NULL, ?array $not_uids=null)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 

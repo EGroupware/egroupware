@@ -31,10 +31,10 @@ class admin_customtranslation
 	/**
 	 * Add, modify, delete custom translations
 	 *
-	 * @param array $_content =null
+	 * @param ?array $_content =null
 	 * @param string $msg =''
 	 */
-	function index(array $_content=null, $msg='')
+	function index(?array $_content=null, $msg='')
 	{
 		if (is_array($_content))
 		{

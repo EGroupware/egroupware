@@ -244,11 +244,11 @@ class Smtp
 	 * If $account is an array (with values for keys account_(id|lid|email), it does NOT call accounts class
 	 *
 	 * @param int|array $account account_id or whole account array with values for keys
-	 * @param string $domain|null domain
-	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email, uidNumber or domain/username
+	 * @param ?string $domain|null domain
+	 * @param ?string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email, uidNumber or domain/username
 	 * @return string|null null if no domain given but required by $mail_login_type
 	 */
-	static public function mailbox_address($account, string $domain=null, string $mail_login_type=null)
+	static public function mailbox_address($account, ?string $domain=null, ?string $mail_login_type=null)
 	{
 		switch($mail_login_type)
 		{

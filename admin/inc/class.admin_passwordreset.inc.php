@@ -61,10 +61,10 @@ class admin_passwordreset
 	/**
 	 * Reset passwords
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 * @param string $msg =''
 	 */
-	function index(array $content=null, $msg='')
+	function index(?array $content=null, $msg='')
 	{
 
 		// Setup if opened as a dialog

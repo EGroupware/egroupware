@@ -85,9 +85,9 @@ class Groups
 	/**
 	 * Edit / add a group
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 */
-	public function edit(array $content=null)
+	public function edit(?array $content=null)
 	{
 		$sel_options = $readonlys = array();
 		$tpl = new Etemplate('admin.group.edit');

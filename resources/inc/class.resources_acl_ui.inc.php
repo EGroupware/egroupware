@@ -156,10 +156,10 @@ class resources_acl_ui
 	/**
 	 * Edit / add a category ACL
 	 *
-	 * @param array $content = null
+	 * @param ?array $content = null
 	 * @param string $msg = ''
 	 */
-	public function edit(array $content=null,$msg='')
+	public function edit(?array $content=null, $msg='')
 	{
 		if (!$GLOBALS['egw']->acl->check('run',1,'admin'))
 		{

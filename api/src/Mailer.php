@@ -70,7 +70,7 @@ class Mailer extends Horde_Mime_Mail
 	 *	initbasic: return $this
 	 * @param int|null $called_for account_id to use as sender, default $GLOBALS[egw_info][user][account_id]
 	 */
-	function __construct($account=null, int $called_for=null)
+	function __construct($account=null, ?int $called_for=null)
 	{
 		// Horde use locale for translation of error messages
 		Preferences::setlocale(LC_MESSAGES);

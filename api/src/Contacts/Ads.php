@@ -86,7 +86,7 @@ class Ads extends Ldap
 	 * @param ?array $ldap_config =null default use from $GLOBALS['egw_info']['server']
 	 * @param ?resource $ds =null ldap connection to use
 	 */
-	function __construct(array $ldap_config=null, $ds=null)
+	function __construct(?array $ldap_config=null, $ds=null)
 	{
 		if (false) parent::__construct ();	// quiten IDE warning, we are explicitly NOT calling parent constructor!
 

@@ -121,7 +121,7 @@ class calendar_tracking extends Api\Storage\Tracking
 	 * Tracks the changes in one entry $data, by comparing it with the last version in $old
 	 * Overrides parent to reformat participants into a format parent can handle
 	 */
-	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null, $skip_notification = false)
+	public function track(array $data, ?array $old=null, $user=null, $deleted=null, ?array $changed_fields=null, $skip_notification = false)
 	{
 		// Don't try to track dates on recurring events.
 		// It won't change for the base event, and any change to the time creates an exception
@@ -182,10 +182,10 @@ class calendar_tracking extends Api\Storage\Tracking
 	 * Overridden to handle various participants options
 	 *
 	 * @param array $data
-	 * @param array $old = null
+	 * @param ?array $old = null
 	 * @return array of keys with different values in $data and $old
 	 */
-	public function changed_fields(array $data,array $old=null)
+	public function changed_fields(array $data, ?array $old=null)
 	{
 		if(is_array($data['participants']))
 		{

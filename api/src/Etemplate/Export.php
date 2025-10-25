@@ -143,13 +143,13 @@ class Export extends Widget\Nextmatch
 	 * @param array $data
 	 * @param array $fields
 	 * @param boolean $use_type=true
-	 * @param array $extra_sel_options=null
+	 * @param ?array $extra_sel_options=null
 	 * @param string $charset_out=null output charset
 	 * @param string $charset data charset
 	 * @param string $separator=';'
 	 * @return string
 	 */
-	private static function csvEncode($data, $fields, $use_type=true, array $extra_sel_options=null, $charset_out=null, $charset=null, $separator=';')
+	private static function csvEncode($data, $fields, $use_type=true, ?array $extra_sel_options=null, $charset_out=null, $charset=null, $separator=';')
 	{
 		$sel_options = Api\Etemplate::$request->sel_options;
 

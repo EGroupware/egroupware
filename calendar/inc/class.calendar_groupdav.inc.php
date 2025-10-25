@@ -126,7 +126,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param ?string $user the user whose grants for the current user are requested, or null for all
 	 * @return array user-id => Api\Acl::ADD|Api\Acl::READ|Api\Acl::EDIT|Api\Acl::DELETE pairs
 	 */
-	public function get_grants(string $user=null)
+	public function get_grants(?string $user=null)
 	{
 		// grants from all regular users
 		$grants = $this->bo->grants;
@@ -753,7 +753,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param bool|"pretty"|null $json null: iCal, false: return array with JSCalendar data, true+"pretty": return json-serialized JSCalendar
 	 * @return string|array array if $json === false
 	 */
-	private function iCal(array $event,$user=null, $method=null, $expand=false, array $events=null, $json=null)
+	private function iCal(array $event, $user=null, $method=null, $expand=false, ?array $events=null, $json=null)
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();

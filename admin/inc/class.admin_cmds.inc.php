@@ -46,9 +46,9 @@ class admin_cmds
 	/**
 	 * Showing the command history and the scheduled commands
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 */
-	static function index(array $content=null)
+	static function index(?array $content=null)
 	{
 		$tpl = new Etemplate('admin.cmds');
 
@@ -126,9 +126,9 @@ class admin_cmds
 	/**
 	 * Showing remote administration instances
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 */
-	static function remotes(array $content=null)
+	static function remotes(?array $content=null)
 	{
 		$tpl = new Etemplate('admin.remotes');
 

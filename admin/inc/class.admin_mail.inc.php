@@ -397,11 +397,11 @@ class admin_mail
 	/**
 	 * Step 2: Folder - let user select trash, sent, drafs and template folder
 	 *
-	 * @param array $content
+	 * @param ?array $content
 	 * @param string $msg =''
 	 * @param Horde_Imap_Client_Socket $imap =null
 	 */
-	public function folder(array $content, $msg='', Horde_Imap_Client_Socket $imap=null)
+	public function folder(?array $content, $msg='', ?Horde_Imap_Client_Socket $imap=null)
 	{
 		if (!empty($content['button']))
 		{
@@ -862,11 +862,11 @@ class admin_mail
 	 *
 	 * b) via mail_wizard proxy class by regular mail user to edit (acc_id GET parameter) or create new mail account
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 * @param string $msg =''
 	 * @param string $msg_type ='success'
 	 */
-	public function edit(array $content=null, $msg='', $msg_type='success')
+	public function edit(?array $content=null, $msg='', $msg_type='success')
 	{
 		// app is trying to tell something, while redirecting to wizard
 		if (empty($content) && $_GET['acc_id'] && empty($msg) && !empty( $_GET['msg']))

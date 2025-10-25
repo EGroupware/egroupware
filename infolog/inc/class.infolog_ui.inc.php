@@ -2725,10 +2725,10 @@ class infolog_ui
 	/**
 	 * imports a mail as infolog
 	 *
-	 * @param array $mailContent = null content of mail
+	 * @param ?array $mailContent = null content of mail
 	 * @return  array
 	 */
-	function mail_import(array $mailContent=null)
+	function mail_import(?array $mailContent=null)
 	{
 		// It would get called from compose as a popup with egw_data
 		if (!is_array($mailContent) && ($_GET['egw_data']))

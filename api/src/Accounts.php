@@ -206,7 +206,7 @@ class Accounts
 	 * @param array|null $account_ids account_id filter, if set
 	 * @return array|int[] array of account_id's optionally with extra "!" for $hidden === false
 	 */
-	public static function hidden2account_id(bool $hidden=null, array $account_ids=null)
+	public static function hidden2account_id(?bool $hidden=null, ?array $account_ids=null)
 	{
 		$hidden_account_ids = array_keys($GLOBALS['egw']->acl->get_all_rights('hidden', 'phpgwapi') ?: []);
 		if (empty($account_ids))
@@ -685,7 +685,7 @@ class Accounts
 	 * @param ?int $account_id account id, default current user
 	 * @return string full name of user or "#$account_id" if user not found
 	 */
-	static function username(int $account_id=null)
+	static function username(?int $account_id=null)
 	{
 		if (empty($account_id))
 		{
@@ -1614,7 +1614,7 @@ class Accounts
 	 * @param int|null $set=null to set call with total number of accounts
 	 * @return bool
 	 */
-	public function isHuge(int $total=null)
+	public function isHuge(?int $total=null)
 	{
 		if (isset($total))
 		{

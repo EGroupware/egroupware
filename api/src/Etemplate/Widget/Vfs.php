@@ -562,11 +562,11 @@ class Vfs extends File
 	 * - mime=string								(optional mime-type to limit display to given type)
 	 * - name=array|string							(optional name value to preset name field)
 	 *
-	 * @param array $content
-	 * @param array $params
+	 * @param ?array $content
+	 * @param ?array $params
 	 * @throws Api\Exception\WrongParameter
 	 */
-	public static function ajax_vfsSelect_content (array $content=null, $params = null)
+	public static function ajax_vfsSelect_content (?array $content=null, $params = null)
 	{
 		$response = Json\Response::get();
 		$readonlys = $sel_options = array();

@@ -810,9 +810,9 @@ class Preferences
 	 *
 	 * @param string $from_app
 	 * @param string $to_app
-	 * @param array $names =null array of names to copy or null for all
+	 * @param ?array $names =null array of names to copy or null for all
 	 */
-	public static function copy_preferences($from_app, $to_app, array $names=null)
+	public static function copy_preferences($from_app, $to_app, ?array $names=null)
 	{
 		//error_log(__METHOD__."('$from_app', '$to_app', ".array2string($names).')');
 		$db = isset($GLOBALS['egw_setup']->db) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;

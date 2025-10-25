@@ -55,7 +55,7 @@ class Import
 	 * 
 	 * @param callable|null $logger function($str, $level) level: "debug", "detail", "info", "error" or "fatal"
 	 */
-	public function __construct(callable $logger=null)
+	public function __construct(?callable $logger=null)
 	{
 		// if we run from setup, we need to take care of loading db and egw_info/server
 		if (isset($GLOBALS['egw_setup']))
@@ -1084,7 +1084,7 @@ class Import
 	 * @param string|null $time
 	 * @return bool true: job installed, false: job canceled, if it was already installed
 	 */
-	protected static function installAsyncJob(float $frequency=0.0, string $time=null)
+	protected static function installAsyncJob(float $frequency=0.0, ?string $time=null)
 	{
 		$async = new Api\Asyncservice();
 		$async->cancel_timer(self::ASYNC_JOB_ID);

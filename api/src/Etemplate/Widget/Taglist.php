@@ -113,7 +113,7 @@ class Taglist extends Etemplate\Widget
 	 *
 	 * Uses the mail application if available, or addressbook
 	 */
-	public static function ajax_email($search=null, array $options=null)
+	public static function ajax_email($search=null, ?array $options=null)
 	{
 		$_REQUEST['query'] = $_REQUEST['query'] ?: $search;
 		// If no mail app access, use link system -> addressbook

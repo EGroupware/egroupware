@@ -28,9 +28,9 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	 *  Make sure all the needed select options are there
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		Framework::includeJS('/calendar/js/app.min.js');
 		Framework::includeCSS('calendar', 'calendar');

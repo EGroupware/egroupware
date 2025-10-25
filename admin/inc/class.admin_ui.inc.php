@@ -39,9 +39,9 @@ class admin_ui
 	/**
 	 * New index page
 	 *
-	 * @param array $content
+	 * @param ?array $content
 	 */
-	public function index(array $content=null)
+	public function index(?array $content=null)
 	{
 		/* disable usage statistic for now, as no more backend
 		if (admin_statistics::check(false))

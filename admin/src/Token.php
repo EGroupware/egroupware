@@ -58,9 +58,9 @@ class Token
 	/**
 	 * Edit or add a token
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 */
-	public function edit(array $content=null)
+	public function edit(?array $content=null)
 	{
 		$readonlys = [];
 		if (!is_array($content))
@@ -237,9 +237,9 @@ class Token
 	/**
 	 * Index
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 */
-	public function index(array $content=null)
+	public function index(?array $content=null)
 	{
 		if (!is_array($content) || empty($content['token']))
 		{

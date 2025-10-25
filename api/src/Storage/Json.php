@@ -62,7 +62,7 @@ class Json extends Base
 	 * @param string $timestamp_type =null default null=leave them as is, 'ts'|'integer' use integer unix timestamps,
 	 *    'object' use Api\DateTime objects or 'string' use DB timestamp (Y-m-d H:i:s) string
 	 */
-	function __construct($app='', $table='', $json_column='', Api\Db $db=null, $column_prefix='', $no_clone=true, $timestamp_type='object', $column_preg=null)
+	function __construct($app='', $table='', $json_column='', ?Api\Db $db=null, $column_prefix='', $no_clone=true, $timestamp_type='object', $column_preg=null)
 	{
 		parent::__construct($app, $table, $db, $column_prefix, $no_clone, $timestamp_type);
 

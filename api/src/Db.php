@@ -267,9 +267,9 @@ class Db
 	/**
 	 * Constructor
 	 *
-	 * @param array $db_data =null values for keys 'db_name', 'db_host', 'db_port', 'db_user', 'db_pass', 'db_type', 'db_readonly'
+	 * @param ?array $db_data =null values for keys 'db_name', 'db_host', 'db_port', 'db_user', 'db_pass', 'db_type', 'db_readonly'
 	 */
-	function __construct(array $db_data=null)
+	function __construct(?array $db_data=null)
 	{
 		if (!is_null($db_data))
 		{
@@ -2191,7 +2191,7 @@ class Db
 	* @throws Db\Exception e.g. 1205: Lock timeout exceeded, if deleting rows took to long, you can use $limit to delete in multiple calls
 	* @return \ADORecordSet or false, if the query fails
 	*/
-	function delete($table, $where, $line, $file, $app=False, $table_def=False, int $limit=null)
+	function delete($table, $where, $line, $file, $app=False, $table_def=False, ?int $limit=null)
 	{
 		if (!$table_def) $table_def = $this->get_table_definitions($app,$table);
 

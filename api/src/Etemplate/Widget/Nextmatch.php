@@ -114,9 +114,9 @@ class Nextmatch extends Etemplate\Widget
 	 * Sending a first chunk of rows
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = self::get_array(self::$request->content, $form_name, true);
@@ -560,13 +560,13 @@ class Nextmatch extends Etemplate\Widget
 	 *
 	 * @param array &$value
 	 * @param array &$rows on return: rows are indexed by their row-number: $value[start], ..., $value[start]+$value[num_rows]-1
-	 * @param array &$readonlys =null
+	 * @param ?array &$readonlys =null
 	 * @param object $obj =null (internal)
 	 * @param string|array $method =null (internal)
-	 * @param Etemplate\Widget $widget =null instanciated nextmatch widget to let it's widgets transform each row
+	 * @param ?Etemplate\Widget $widget =null instanciated nextmatch widget to let it's widgets transform each row
 	 * @return int|boolean total items found of false on error ($value['get_rows'] not callable)
 	 */
-	protected static function call_get_rows(array &$value,array &$rows,array &$readonlys=null,$obj=null,$method=null, Etemplate\Widget $widget=null)
+	protected static function call_get_rows(array &$value, array &$rows, ?array &$readonlys=null, $obj=null, $method=null, ?Etemplate\Widget $widget=null)
 	{
 		if (is_null($method)) $method = $value['get_rows'];
 
@@ -859,16 +859,16 @@ class Nextmatch extends Etemplate\Widget
 	 * - string 'hint' tooltip on menu item
 	 * - string 'color' color of the caption e.g. "red" or "#ff0000"
 	 *
-	 * @param array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
+	 * @param ?array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
 	 * @param string $template_name ='' name of the template, used as default for app name of images
 	 * @param string $prefix ='' prefix for ids
 	 * @param array &$action_links =array() on return all first-level actions plus the ones with enabled='javaScript:...'
 	 * @param int $max_length =self::DEFAULT_MAX_MENU_LENGTH automatic pagination, not for first menu level!
-	 * @param array $default_attrs =null default attributes
+	 * @param ?array $default_attrs =null default attributes
 	 * @return array
 	 */
-	public static function egw_actions(array $actions=null, $template_name='', $prefix='', array &$action_links=array(),
-		$max_length=self::DEFAULT_MAX_MENU_LENGTH, array $default_attrs=null)
+	public static function egw_actions(?array $actions=null, $template_name='', $prefix='', array &$action_links=array(),
+		$max_length=self::DEFAULT_MAX_MENU_LENGTH, ?array $default_attrs=null)
 	{
 		//echo "<p>".__METHOD__."(\$actions, '$template_name', '$prefix', \$action_links, $max_length) \$actions="; _debug_array($actions);
 		$first_level = !$action_links;	// add all first level actions

@@ -61,9 +61,9 @@ class Link extends Etemplate\Widget
 	 * Set the options for the application select.
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		$attrs = $this->attrs;
 		$form_name = self::form_name($cname, $this->id, $expand);

@@ -23,12 +23,12 @@ class Avatar
 	/**
 	 * Get (cached) avatar URL for given email
 	 *
-	 * @param string $email
+	 * @param ?string $address
 	 * @param array|null &$lavatar on return values for keys "lname" and "fname"
 	 * @return string|null
 	 * @ToDo add a domain based image as fallback eg. as fallback from their website
 	 */
-	static function getAvatar(string $address=null, array &$lavatar=null)
+	static function getAvatar(?string $address=null, ?array &$lavatar=null)
 	{
 		if (empty($address))
 		{
@@ -56,14 +56,14 @@ class Avatar
 	/**
 	 * Get (L)etter avatar from given email address
 	 *
-	 * @param string $address
+	 * @param ?string $address
 	 * @return string[] with values for keys "fname" and (optional) "lname"
 	 * - "Ralf Becker <rb@egroupware.org>" --> ["fname" => "Ralf", "lname" => "Becker"]
 	 * - "'Becker, Ralf' <rb@egroupware.org> --> dito
 	 * - "ralf.becker@egroupware.org" --> dito
 	 * - "rb@egroupware.org" --> ["fname" --> "r", "lname" => "b"]
 	 */
-	static function getLavatar(string $address=null) : array
+	static function getLavatar(?string $address=null) : array
 	{
 		if (empty($address))
 		{

@@ -96,11 +96,11 @@ class DateTime extends \DateTime
 	 *
 	 * @param int|string|array|DateTime $time ='now' integer timestamp, string with date+time, DateTime object or
 	 * 	array with values for keys('year','month','day') or 'full' plus 'hour','minute' and optional 'second'
-	 * @param DateTimeZone $tz =null timezone, default user time (PHP DateTime default to server time!)
+	 * @param ?DateTimeZone $tz =null timezone, default user time (PHP DateTime default to server time!)
 	 * @param string &$type=null on return type of $time (optional)
 	 * @throws \Exception if $time can NOT be parsed
 	 */
-	public function __construct($time='now',DateTimeZone $tz=null,&$type=null)
+	public function __construct($time='now', ?DateTimeZone $tz=null, &$type=null)
 	{
 		if (is_null($tz)) $tz = self::$user_timezone;	// default user timezone
 

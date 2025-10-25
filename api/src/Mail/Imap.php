@@ -1392,10 +1392,10 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 * Proxy former felamimail bosieve methods to internal Sieve instance
 	 *
 	 * @param string $name
-	 * @param array $params
+	 * @param ?array $params
 	 * @throws Api\Exception\WrongParameter
 	 */
-	public function __call($name,array $params=null)
+	public function __call($name, ?array $params=null)
 	{
 		if ($this->debug) error_log(__METHOD__.'->'.$name.' with params:'.array2string($params));
 		switch($name)

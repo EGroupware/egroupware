@@ -272,14 +272,14 @@ class infolog_tracking extends Api\Storage\Tracking
 	 * Overrides parent to log the modified date in the history, but not to send a notification
 	 *
 	 * @param array $data current entry
-	 * @param array $old = null old/last state of the entry or null for a new entry
+	 * @param ?array $old = null old/last state of the entry or null for a new entry
 	 * @param int $user = null user who made the changes, default to current user
 	 * @param boolean $deleted = null can be set to true to let the tracking know the item got deleted or undeleted
-	 * @param array $changed_fields = null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param ?array $changed_fields = null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
 	 * @param boolean $skip_notification = false do NOT send any notification
 	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
 	 */
-	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null,$skip_notification=false)
+	public function track(array $data, ?array $old=null, $user=null, $deleted=null, ?array $changed_fields=null, $skip_notification=false)
 	{
 		//error_log(__METHOD__.__LINE__.' notify?'.($skip_notification?'no':'yes').function_backtrace());
 		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];

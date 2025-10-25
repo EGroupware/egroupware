@@ -23,9 +23,9 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	 * @param array $set =null array with all data to change
 	 * @param string $password =null password
 	 * @param boolean $run_addaccount_hook =null default run addaccount for new Api\Accounts and editaccount for existing ones
-	 * @param array $old =null array to log old values of $set
+	 * @param ?array $old =null array to log old values of $set
 	 */
-	function __construct($account, $set=null, $password=null, $run_addaccount_hook=null, array $old=null)
+	function __construct($account, $set=null, $password=null, $run_addaccount_hook=null, ?array $old=null)
 	{
 		if (!is_array($account))
 		{

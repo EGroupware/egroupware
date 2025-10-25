@@ -35,12 +35,12 @@ class admin_cmd_config extends admin_cmd
 	 * Constructor
 	 *
 	 * @param array|string $data data array or app whos config to change
-	 * @param array $set =null config data to set, value of null or "" to remove
-	 * @param array $old =null old values to record
-	 * @param array $other =null values for keys "requested", "requested_email", "comment", etc
+	 * @param ?array $set =null config data to set, value of null or "" to remove
+	 * @param ?array $old =null old values to record
+	 * @param ?array $other =null values for keys "requested", "requested_email", "comment", etc
 	 * @param boolean $store_as_api =false true: store under "phpgwapi"
 	 */
-	function __construct($data, array $set=null, array $old=null, array $other=null, $store_as_api=false)
+	function __construct($data, ?array $set=null, ?array $old=null, ?array $other=null, $store_as_api=false)
 	{
 		if (!is_array($data))
 		{

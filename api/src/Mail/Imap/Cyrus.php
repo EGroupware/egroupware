@@ -217,10 +217,10 @@ class Cyrus extends Mail\Imap
 	 * Proxy former bosieve methods to internal Mail\Sieve instance
 	 *
 	 * @param string $name
-	 * @param array $params
+	 * @param ?array $params
 	 * @throws \Exception
 	 */
-	public function __call($name,array $params=null)
+	public function __call($name, ?array $params=null)
 	{
 		switch($name)
 		{

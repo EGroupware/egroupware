@@ -751,11 +751,11 @@ class Vfs extends Vfs\Base
 	 * @param int $check mode to check: one or more or'ed together of: 4 = self::READABLE,
 	 * 	2 = self::WRITABLE, 1 = self::EXECUTABLE
 	 * @param array|boolean $stat =null stat array or false, to not query it again
-	 * @param int $user =null user used for check, if not current user (self::$user)
+	 * @param ?int $user =null user used for check, if not current user (self::$user)
 	 * @return boolean
 	 * @todo deprecated or even remove $user parameter and code
 	 */
-	static function check_access($path, $check, $stat=null, int $user=null)
+	static function check_access($path, $check, $stat=null, ?int $user=null)
 	{
 		static $vfs = null;
 
@@ -1282,7 +1282,7 @@ class Vfs extends Vfs\Base
 	 * @param ?array $stat =null stat for path, default queried by this function
 	 * @return boolean
 	 */
-	static function has_owner_rights($path,array $stat=null)
+	static function has_owner_rights($path, ?array $stat=null)
 	{
 		return (new Vfs\StreamWrapper())->has_owner_rights($path, $stat);
 	}
@@ -1733,10 +1733,10 @@ class Vfs extends Vfs\Base
 	 * Get backend specific information (data and etemplate), to integrate as tab in filemanagers settings dialog
 	 *
 	 * @param string $path
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 * @return array|boolean array with values for keys 'data','etemplate','name','label','help' or false if not supported by backend
 	 */
-	static function getExtraInfo($path,array $content=null)
+	static function getExtraInfo($path, ?array $content=null)
 	{
 		$extra = array();
 		if (($extra_info = self::_call_on_backend('extra_info',array($path,$content),true)))	// true = fail silent if backend does NOT support it

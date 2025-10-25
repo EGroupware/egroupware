@@ -87,7 +87,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 	 * @param string $method='PUT' 'PUT', 'POST' or 'PATCH'
 	 * @return array with "ts_" prefix
 	 */
-	public static function parseJsTimesheet(string $json, array $old=[], string $content_type=null, $method='PUT')
+	public static function parseJsTimesheet(string $json, array $old=[], ?string $content_type=null, $method='PUT')
 	{
 		try
 		{

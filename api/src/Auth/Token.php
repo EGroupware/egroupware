@@ -98,7 +98,7 @@ class Token extends APi\Storage\Base
 	 * @throws Api\Exception\NotFound if token_id does NOT exist
 	 * @throws Api\Db\Exception if token could not be stored
 	 */
-	public static function create(int $account_id, \DateTimeInterface $until=null, string $remark=null, array $limits=null): array
+	public static function create(int $account_id, ?\DateTimeInterface $until=null, ?string $remark=null, ?array $limits=null): array
 	{
 		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
@@ -205,7 +205,7 @@ class Token extends APi\Storage\Base
 	 * @param array|null $limits
 	 * @return array of app-names
 	 */
-	public static function limits2apps(array $limits=null): array
+	public static function limits2apps(?array $limits=null): array
 	{
 		return $limits ? array_keys(array_filter($limits)) : [];
 	}

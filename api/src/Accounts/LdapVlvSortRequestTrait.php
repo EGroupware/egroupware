@@ -77,14 +77,14 @@ trait LdapVlvSortRequestTrait
 	 * @param string $context
 	 * @param string $filter array with attribute => value pairs or filter string or empty
 	 * @param array $attrs attributes to query
-	 * @param string $order_by sql order string eg. "account_email ASC"
+	 * @param ?string $order_by sql order string eg. "account_email ASC"
 	 * @param ?int& $start on return null, if result sorted and limited by server
-	 * @param int $num_rows number of rows to return if isset($start)
+	 * @param ?int $num_rows number of rows to return if isset($start)
 	 * @param ?int $total on return total number of rows
 	 * @return array result of ldap_get_entries with key 'count' unset
 	 * @throws \Exception on error with ldap_error() as message
 	 */
-	protected function vlvSortQuery(string $context, string $filter, array $attrs, string $order_by=null, int &$start=null, int$num_rows=null, int &$total=null)
+	protected function vlvSortQuery(string $context, string $filter, array $attrs, ?string $order_by=null, ?int &$start=null, ?int $num_rows=null, ?int &$total=null)
 	{
 		// check if we require sorting and server supports it
 		$control = [];

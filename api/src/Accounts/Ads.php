@@ -324,7 +324,7 @@ class Ads
 	 * @param bool|null $user true: user, false: group, null: both
 	 * @return string
 	 */
-	public function ads_context($set_if_empty=false, bool $user=null)
+	public function ads_context($set_if_empty=false, ?bool $user=null)
 	{
 		if (empty($this->frontend->config[self::ADS_CONTEXT]))
 		{
@@ -750,10 +750,10 @@ class Ads
 	 *
 	 * @internal
 	 * @param array $data array with account-data in utf-8
-	 * @param array $old =null current data
+	 * @param ?array $old =null current data
 	 * @return int|false account_id or false on error
 	 */
-	protected function _save_group(array &$data, array $old=null)
+	protected function _save_group(array &$data, ?array $old=null)
 	{
 		//error_log(__METHOD__.'('.array2string($data).', old='.array2string($old).')');
 
@@ -831,10 +831,10 @@ class Ads
 	 *
 	 * @internal
 	 * @param array $data array with account-data in utf-8
-	 * @param array $old =null current data
+	 * @param ?array $old =null current data
 	 * @return int|false account_id or false on error
 	 */
-	protected function _save_user(array &$data, array $old=null)
+	protected function _save_user(array &$data, ?array $old=null)
 	{
 		//error_log(__METHOD__.'('.array2string($data).', old='.array2string($old).')');
 		if (!isset($data['account_fullname']) && !empty($data['account_firstname']) && !empty($data['account_lastname']))
@@ -1282,7 +1282,7 @@ class Ads
 	 * @return array account_id => account_lid or values for $attrs pairs
 	 * @throws \Exception on error
 	 */
-	protected function filter($attr_filter, $account_type=null, array $attrs=null, array $accounts=array(), $filter_expired=false, $order_by=null, &$start=null, $num_rows=null, &$total=null)
+	protected function filter($attr_filter, $account_type=null, ?array $attrs=null, array $accounts=array(), $filter_expired=false, $order_by=null, &$start=null, $num_rows=null, &$total=null)
 	{
 		if (!$attr_filter)
 		{

@@ -38,9 +38,9 @@ class Description extends Etemplate\Widget
 	 * get displayed if activate_links = ture for description widget is set.
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		if (!empty($this->attrs['activate_links']) && !empty($this->attrs['activateLinks']))
 		{

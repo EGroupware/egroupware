@@ -108,11 +108,11 @@ class mail_acl
 	/**
 	 * Edit folder ACLs of account(s)
 	 *
-	 * @param array $content = null
+	 * @param ?array $content = null
 	 * @param string $msg = ''
 	 *
 	 */
-	function edit(array $content=null ,$msg='')
+	function edit(?array $content=null ,$msg='')
 	{
 		$tmpl = new Etemplate('mail.acl');
 		if (!is_array($content))

@@ -290,10 +290,10 @@ class mail_ui
 	/**
 	 * Subscription popup window
 	 *
-	 * @param array $content
+	 * @param ?array $content
 	 * @param type $msg
 	 */
-	function subscription(array $content=null ,$msg=null)
+	function subscription(?array $content=null, $msg=null)
 	{
 		$stmpl = new Etemplate('mail.subscribe');
 
@@ -442,10 +442,10 @@ class mail_ui
 	/**
 	 * Main mail page
 	 *
-	 * @param array $content
+	 * @param ?array $content
 	 * @param string $msg
 	 */
-	function index(array $content=null,$msg=null)
+	function index(?array $content=null, $msg=null)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		try	{

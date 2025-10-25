@@ -39,9 +39,9 @@ class AjaxSelect extends Select
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		$matches = null;
 		if ($cname == '$row')	// happens eg. with custom-fields: $cname='$row', this->id='#something'
