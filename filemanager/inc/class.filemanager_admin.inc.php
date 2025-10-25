@@ -78,10 +78,10 @@ class filemanager_admin extends filemanager_ui
 	/**
 	 * Mount GUI
 	 *
-	 * @param array $content=null
+	 * @param ?array $content=null
 	 * @param string $msg=''
 	 */
-	public function index(array $content=null, $msg='', $msg_type=null)
+	public function index(?array $content=null, $msg='', $msg_type=null)
 	{
 		if (is_array($content))
 		{

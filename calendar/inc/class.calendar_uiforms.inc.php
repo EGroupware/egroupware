@@ -2190,11 +2190,11 @@ class calendar_uiforms extends calendar_ui
 	 * Display iCal meeting request for EMail app and allow to accept, tentative or reject it or a reply and allow to apply it
 	 *
 	 * @todo Handle situation when user is NOT invited, but eg. can view that mail ...
-	 * @param array $event = null; special usage if $event is array('event'=>null,'msg'=>'','useSession'=>true) we
+	 * @param ?array $event = null; special usage if $event is array('event'=>null,'msg'=>'','useSession'=>true) we
 	 * 		are called by new mail-app; and we intend to use the stuff passed on by session
 	 * @param string $msg = null
 	 */
-	function meeting(array $event=null, $msg=null)
+	function meeting(?array $event=null, $msg=null)
 	{
 		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$readonlys['button[apply]'] = true;
@@ -3088,9 +3088,9 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * Edit category ACL (admin only)
 	 *
-	 * @param array $_content
+	 * @param ?array $_content
 	 */
-	function cat_acl(array $_content=null)
+	function cat_acl(?array $_content=null)
 	{
 		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
@@ -3624,10 +3624,10 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * imports a mail as Calendar
 	 *
-	 * @param array $mailContent = null mail content
+	 * @param ?array $mailContent = null mail content
 	 * @return  array
 	 */
-	function mail_import(array $mailContent=null)
+	function mail_import(?array $mailContent=null)
 	{
 		// It would get called from compose as a popup with egw_data
 		if (!is_array($mailContent) && ($_GET['egw_data']))

@@ -98,10 +98,10 @@ class mail_sieve
 	/**
 	 * Sieve rules list
 	 *
-	 * @param {array} $content
-	 * @param {string} $msg
+	 * @param ?array $content
+	 * @param string $msg
 	 */
-	function index(array $content=null,$msg=null)
+	function index(?array $content=null, $msg=null)
 	{
 		if (!is_array($content))
 		{

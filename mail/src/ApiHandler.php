@@ -190,7 +190,7 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * @param ?int $user
 	 * @return array
 	 */
-	protected static function getVacation(Api\Mail\Imap $imap, int $user=null)
+	protected static function getVacation(Api\Mail\Imap $imap, ?int $user=null)
 	{
 		if ($GLOBALS['egw']->session->token_auth)
 		{
@@ -203,13 +203,13 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * Update vacation message/handling with JSON data given in $content
 	 *
 	 * @param int $user
-	 * @param array $content
+	 * @param string $content
 	 * @param int|null $identity
 	 * @return bool
 	 * @throws Api\Exception\AssertionFailed
 	 * @throws Api\Exception\NotFound
 	 */
-	protected static function updateVacation(int $user, string $content, int $identity=null)
+	protected static function updateVacation(int $user, string $content, ?int $identity=null)
 	{
 		$account = self::getMailAccount($user, $identity);
 		$vacation = $account->imapServer()->getVacationUser($user);
@@ -347,7 +347,7 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * @return string HTTP status
 	 * @throws \Exception on error
 	 */
-	protected static function viewEml(int $user, $content, int $acc_id=null)
+	protected static function viewEml(int $user, $content, ?int $acc_id=null)
 	{
 		if (empty($acc_id))
 		{
@@ -430,11 +430,13 @@ class ApiHandler extends Api\CalDAV\Handler
 	/**
 	 * @param array $attachments
 	 * @param string|null $attachmentType
+	 * @param string|null $expiration
+	 * @param string|null $password
 	 * @param bool $compose
 	 * @return array
-	 * @throws Api\Exception
+	 * @throws \Exception
 	 */
-	protected static function prepareAttachments(array $attachments, string $attachmentType=null, string $expiration=null, string $password=null, bool $compose=true)
+	protected static function prepareAttachments(array $attachments, ?string $attachmentType=null, ?string $expiration=null, ?string $password=null, bool $compose=true)
 	{
 		$ret = [];
 		foreach($attachments as $attachment)
@@ -608,7 +610,7 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * @return Api\Mail\Account
 	 * @throws Api\Exception\NotFound
 	 */
-	protected static function getMailAccount(int $user, int $ident_id=null) : Api\Mail\Account
+	protected static function getMailAccount(int $user, ?int $ident_id=null) : Api\Mail\Account
 	{
 		if (empty($ident_id))
 		{

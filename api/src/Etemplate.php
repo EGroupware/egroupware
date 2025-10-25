@@ -90,12 +90,12 @@ class Etemplate extends Etemplate\Widget\Template
 	 * @param string $method Methode (e.g. 'etemplate.editor.edit') to be called if form is submitted
 	 * @param array $content with content to fill the input-fields of template, eg. the text-field
 	 * 		with name 'name' gets its content from $content['name']
-	 * @param $sel_options array or arrays with the options for each select-field, keys are the
+	 * @param ?array $sel_options array or arrays with the options for each select-field, keys are the
 	 * 		field-names, eg. array('name' => array(1 => 'one',2 => 'two')) set the
 	 * 		options for field 'name'. ($content['options-name'] is possible too !!!)
-	 * @param array $readonlys with field-names as keys for fields with should be readonly
+	 * @param ?array $readonlys with field-names as keys for fields with should be readonly
 	 * 		(eg. to implement ACL grants on field-level or to remove buttons not applicable)
-	 * @param array $preserv with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $_POST['id'] for the $method-call
+	 * @param ?array $preserv with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $_POST['id'] for the $method-call
 	 * @param int $output_mode
 	 *	 0 = echo incl. navbar
 	 *	 1 = return html
@@ -105,10 +105,10 @@ class Etemplate extends Etemplate\Widget\Template
 	 *	 4 = json response
 	 *	 5 = return Request object
 	 * @param string $ignore_validation if not empty regular expression for validation-errors to ignore
-	 * @param array $changes change made in the last call if looping, only used internaly by process_exec
+	 * @param ?array $changes change made in the last call if looping, only used internaly by process_exec
 	 * @return string|Etemplate\Request html for $output_mode == 1, Etemplate\Request for $output_mode == 5, else nothing
 	 */
-	function exec($method,array $content,array $sel_options=null,array $readonlys=null,array $preserv=null,$output_mode=0,$ignore_validation='',array $changes=null)
+	function exec($method, array $content, ?array $sel_options=null, ?array $readonlys=null, ?array $preserv=null, $output_mode=0, $ignore_validation='', ?array $changes=null)
 	{
 		$hook_data = Hooks::process(
 			array('hook_location'   => 'etemplate2_before_exec') +

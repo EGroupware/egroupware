@@ -66,7 +66,7 @@ if (posix_getuid())
 
 chown_grp($path, null, $recursive);
 
-function chown_grp($path, array $stat=null, $recursive=false)
+function chown_grp($path, ?array $stat=null, $recursive=false)
 {
 	global $change;
 

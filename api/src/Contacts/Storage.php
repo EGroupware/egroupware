@@ -241,9 +241,9 @@ class Storage
 	 * Constructor
 	 *
 	 * @param string $contact_app ='addressbook' used for acl->get_grants()
-	 * @param Api\Db $db =null
+	 * @param ?Api\Db $db =null
 	 */
-	function __construct($contact_app='addressbook',Api\Db $db=null)
+	function __construct($contact_app='addressbook', ?Api\Db $db=null)
 	{
 		$this->db     = is_null($db) ? $GLOBALS['egw']->db : $db;
 
@@ -1267,10 +1267,10 @@ class Storage
 	 *
 	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
-	 * @param array $existing =null array of existing contact-id(s) of list, to not reread it, eg. array()
+	 * @param ?array $existing =null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
-	function add2list($contact,$list,array $existing=null)
+	function add2list($contact,$list, ?array $existing=null)
 	{
 		if (!method_exists($this->somain,'add2list')) return false;
 

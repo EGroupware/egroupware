@@ -51,7 +51,7 @@ class Base2 extends Base
 	 * @param boolean $no_clone =false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
 	 */
-	function __construct($app='',$table='',Api\Db $db=null,$column_prefix='',$no_clone=false)
+	function __construct($app='', $table='', ?Api\Db $db=null, $column_prefix='', $no_clone=false)
 	{
 		parent::__construct($app,$table,$db,$column_prefix,$no_clone);
 	}

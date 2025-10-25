@@ -31,13 +31,12 @@ class admin_cmd_category extends admin_cmd
 	 * Constructor
 	 *
 	 * @param array|string $data data array or app whos category to change
-	 * @param array $set =null category data to set, value of null or "" to remove
-	 * @param array $old =null old values to record
+	 * @param ?array $set =null category data to set, value of null or "" to remove
+	 * @param ?array $old =null old values to record
 	 * @param array $other =null values for keys "requested", "requested_email", "comment", etc
 	 */
-	function __construct($data, array $set=null, array $old=null, $other=null)
+	function __construct($data, ?array $set=null, ?array $old=null, $other=null)
 	{
-
 		if (!is_array($data))
 		{
 			$data = array(

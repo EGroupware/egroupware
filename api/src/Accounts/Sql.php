@@ -99,9 +99,9 @@ class Sql
 	/**
 	 * Constructor
 	 *
-	 * @param Api\Accounts $frontend reference to the frontend class, to be able to call it's methods if needed
+	 * @param ?Api\Accounts $frontend reference to the frontend class, to be able to call it's methods if needed
 	 */
-	function __construct(Api\Accounts $frontend=null)
+	function __construct(?Api\Accounts $frontend=null)
 	{
 		$this->frontend = $frontend;
 

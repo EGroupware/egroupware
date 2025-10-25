@@ -710,10 +710,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	 * @param int $user =null account_id of owner, default null
 	 * @param string $prefix =null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @param string $method='PUT' also called for POST and PATCH
-	 * @param string $content_type=null
+	 * @param ?string $content_type=null
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options, $id, $user=null, $prefix=null, string $method='PUT', string $content_type=null)
+	function put(&$options, $id, $user=null, $prefix=null, string $method='PUT', ?string $content_type=null)
 	{
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).",$id,$user)");
 
@@ -1273,7 +1273,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	 * @param ?string $user the user whose grants for the current user are requested, or null for all
 	 * @return array user-id => Api\Acl::ADD|Api\Acl::READ|Api\Acl::EDIT|Api\Acl::DELETE pairs
 	 */
-	public function get_grants(string $user=null)
+	public function get_grants(?string $user=null)
 	{
 		$grants = $this->bo->get_grants($this->bo->user);
 

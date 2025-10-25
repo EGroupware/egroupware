@@ -324,10 +324,10 @@ class Ldap
 	/**
 	 * constructor of the class
 	 *
-	 * @param array $ldap_config =null default use from $GLOBALS['egw_info']['server']
+	 * @param ?array $ldap_config =null default use from $GLOBALS['egw_info']['server']
 	 * @param resource $ds =null ldap connection to use
 	 */
-	function __construct(array $ldap_config=null, $ds=null)
+	function __construct(?array $ldap_config=null, $ds=null)
 	{
 		//$this->db_data_cols 	= $this->stock_contact_fields + $this->non_contact_fields;
 		$this->accountName 		= $GLOBALS['egw_info']['user']['account_lid'];

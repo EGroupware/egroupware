@@ -154,7 +154,7 @@ class admin_accesslog
 	 * @param string $msg =''
 	 * @param boolean $sessions_list =false
 	 */
-	function index(array $content=null, $msg='', $sessions_list=false)
+	function index(?array $content=null, $msg='', $sessions_list=false)
 	{
 
 		if (is_array($content)) $sessions_list = $content['nm']['session_list'];
@@ -373,10 +373,10 @@ class admin_accesslog
 	/**
 	 * Display session list
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 * @param string $msg =''
 	 */
-	function sessions(array $content=null, $msg='')
+	function sessions(?array $content=null, $msg='')
 	{
 		return $this->index($content, $msg, true);
 	}

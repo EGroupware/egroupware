@@ -161,10 +161,10 @@ class filemanager_shares extends filemanager_ui
 	/**
 	 * Show files shared
 	 *
-	 * @param array $content=null
+	 * @param ?array $content=null
 	 * @param string $msg=''
 	 */
-	public function index(array $content=null, $msg = null)
+	public function index(?array $content=null, $msg = null)
 	{
 		if (!is_array($content))
 		{

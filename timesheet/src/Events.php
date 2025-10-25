@@ -325,7 +325,7 @@ class Events extends Api\Storage\Base
 	 * @param ?bool $never true: never ask again, set preference, otherwise remember in session for 18h
 	 * @return void
 	 */
-	static function ajax_dontAskAgainWorkingTime(bool $never=null)
+	static function ajax_dontAskAgainWorkingTime(?bool $never=null)
 	{
 		if ($never)
 		{

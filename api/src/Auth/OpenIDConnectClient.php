@@ -179,10 +179,10 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 	 *
 	 * @param callable $success success callback, first parameter is $oidc object/this containing the access and refresh token
 	 * @param array $success_params further success callback parameters
-	 * @param callable $failure failure callback, first parameter it the exception thrown or false, if authenticate returns false
+	 * @param ?callable $failure failure callback, first parameter it the exception thrown or false, if authenticate returns false
 	 * @param array $failure_params further failure parameters
 	 */
-	public function authenticateThen(callable $success, array $success_params=[], callable $failure=null, array $failure_params=[])
+	public function authenticateThen(callable $success, array $success_params=[], ?callable $failure=null, array $failure_params=[])
 	{
 		Api\Cache::setSession(__CLASS__, 'oidc', $this);
 		Api\Cache::setSession(__CLASS__, 'authenticateThenParams', func_get_args());

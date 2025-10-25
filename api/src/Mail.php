@@ -217,7 +217,7 @@ class Mail
 	 * @param int|null $called_for =null can be set to a different account_id, to instanciate an acc_id not belonging to the current user
 	 * @return Mail
 	 */
-	public static function getInstance($_restoreSession=true, &$_profileID=0, $_validate=true, $_oldImapServerObject=false, $_reuseCache=null, int $called_for=null)
+	public static function getInstance($_restoreSession=true, &$_profileID=0, $_validate=true, $_oldImapServerObject=false, $_reuseCache=null, ?int $called_for=null)
 	{
 		//$_restoreSession=false;
 		if (!isset($_reuseCache)) $_reuseCache = $_restoreSession;
@@ -381,7 +381,7 @@ class Mail
 	 * @param int|null $called_for =null can be set to a different account_id, to instanciate an acc_id not belonging to the current user
 	 * @return int validated acc_id -> either acc_id given, or first valid one
 	 */
-	public static function validateProfileID($_acc_id=0, int $called_for=null)
+	public static function validateProfileID($_acc_id=0, ?int $called_for=null)
 	{
 		if ($_acc_id)
 		{
@@ -423,7 +423,7 @@ class Mail
 	 * @param boolean $_reuseCache = null if null it is set to the value of $_restoreSession
 	 * @param int|null $called_for =null can be set to a different account_id, to instanciate an acc_id not belonging to the current user
 	 */
-	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0, $_oldImapServerObject=false, $_reuseCache=null, int $called_for=null)
+	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0, $_oldImapServerObject=false, $_reuseCache=null, ?int $called_for=null)
 	{
 		if (!isset($_reuseCache)) $_reuseCache = $_restoreSession;
 		if (!empty($_displayCharset)) self::$displayCharset = $_displayCharset;
@@ -5009,15 +5009,15 @@ class Mail
 	 * @param int $_uid the messageuid,
 	 * @param string $_htmlOptions how to display a message, html, plain text, ...
 	 * @param string $_partID = null the partID, may be omitted
-	 * @param Horde_Mime_Part $_structure = null if given use structure for parsing
+	 * @param ?Horde_Mime_Part $_structure = null if given use structure for parsing
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @param string $_folder folder to work on
 	 * @param Horde_Mime_part& $calendar_part =null on return calendar-part or null, if there is none
-	 * @param bool $output_no_body true: if we have no "real" body, but a PDF or image, output it to display, false: return empty body
+	 * @param ?bool $output_no_body true: if we have no "real" body, but a PDF or image, output it to display, false: return empty body
 	 * @return array containing the message body, mimeType and charset
 	 */
-	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false,
-	                        $_folder = '', &$calendar_part=null, bool $output_no_body=true)
+	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, ?Horde_Mime_Part $_structure=null, $_preserveSeen = false,
+	                        $_folder = '', &$calendar_part=null, ?bool $output_no_body=true)
 	{
 		if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
 		if($_htmlOptions != '') {
@@ -5826,14 +5826,14 @@ class Mail
 	 *
 	 * @param int $_uid the messageuid,
 	 * @param string $_partID = null , the partID, may be omitted
-	 * @param Horde_Mime_Part $_structure = null if given use structure for parsing
+	 * @param ?Horde_Mime_Part $_structure = null if given use structure for parsing
 	 * @param boolean $fetchEmbeddedImages = true,
 	 * @param boolean $fetchTextCalendar = false,
 	 * @param boolean $resolveTNEF = true
 	 * @param string $_folder folder to work on
 	 * @return array  an array of information about the attachment: array of array(name, size, mimeType, partID, encoding)
 	 */
-	function getMessageAttachments($_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folder='')
+	function getMessageAttachments($_uid, $_partID=null, ?Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folder='')
 	{
 		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
@@ -6366,13 +6366,13 @@ class Mail
 	 * To get contents you use $part->getContents();
 	 *
 	 * @param int $_uid
-	 * @param Horde_Mime_Part $part
+	 * @param ?Horde_Mime_Part $part
 	 * @param boolean $_stream = false true return a stream, false a string
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @param string  $_mimetype to decide wether to try to fetch part as binary or not
 	 * @return Horde_Mime_Part
 	 */
-	public function fetchPartContents($_uid, Horde_Mime_Part $part=null, $_stream=false, $_preserveSeen=false, $_mimetype=null)
+	public function fetchPartContents($_uid, ?Horde_Mime_Part $part=null, $_stream=false, $_preserveSeen=false, $_mimetype=null)
 	{
 		if (!isset($part)) return null;//new Horde_Mime_Part;
 		$encoding = null;

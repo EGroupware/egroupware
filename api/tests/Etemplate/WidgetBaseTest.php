@@ -78,11 +78,11 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 	 *
 	 * @param Etemplate $etemplate
 	 * @param array $content
-	 * @param array $sel_options
-	 * @param array $readonlys
-	 * @param array $preserv
+	 * @param ?array $sel_options
+	 * @param ?array $readonlys
+	 * @param ?array $preserv
 	 */
-	protected function mockedExec(Etemplate $etemplate, array $content,array $sel_options=null,array $readonlys=null,array $preserv=null)
+	protected function mockedExec(Etemplate $etemplate, array $content, ?array $sel_options=null, ?array $readonlys=null, ?array $preserv=null)
 	{
 		ob_start();
 
@@ -106,12 +106,12 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 	 *
 	 * @param \EGroupware\Api\Etemplate $etemplate
 	 * @param array $content
-	 * @param array $sel_options
-	 * @param array $readonlys
-	 * @param array $preserv
+	 * @param ?array $sel_options
+	 * @param ?array $readonlys
+	 * @param ?array $preserv
 	 * @return type
 	 */
-	protected function mockedRoundTrip(\EGroupware\Api\Etemplate $etemplate, array $content,array $sel_options=null,array $readonlys=null,array $preserv=null)
+	protected function mockedRoundTrip(\EGroupware\Api\Etemplate $etemplate, array $content, ?array $sel_options=null, ?array $readonlys=null, ?array $preserv=null)
 	{
 
 		$result = $this->mockedExec($etemplate, $content, $sel_options, $readonlys, $preserv);

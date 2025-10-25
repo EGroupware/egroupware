@@ -202,9 +202,9 @@ class Session
 	/**
 	 * Constructor just loads up some defaults from cookies
 	 *
-	 * @param array $domain_names =null domain-names used in this install
+	 * @param ?array $domain_names =null domain-names used in this install
 	 */
-	function __construct(array $domain_names=null)
+	function __construct(?array $domain_names=null)
 	{
 		$this->sessionid = self::get_sessionid();
 		$this->kp3       = self::get_request('kp3');
@@ -1857,10 +1857,10 @@ class Session
 	 * @param string $domain_requested usually self::get_request('domain')
 	 * @param string &$default_domain usually $default_domain get's set eg. by sitemgr
 	 * @param string|array $server_names usually array($_SERVER['HTTP_HOST'], $_SERVER['SERVER_NAME'])
-	 * @param array $domains =null defaults to $GLOBALS['egw_domain'] from the header
+	 * @param ?array $domains =null defaults to $GLOBALS['egw_domain'] from the header
 	 * @return string $GLOBALS['egw_info']['user']['domain'] set with the domain/instance to use
 	 */
-	public static function search_instance($login,$domain_requested,&$default_domain,$server_names,array $domains=null)
+	public static function search_instance($login,$domain_requested,&$default_domain,$server_names,?array $domains=null)
 	{
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$login','$domain_requested',".array2string($default_domain).".".array2string($server_names).".".array2string($domains).")");
 

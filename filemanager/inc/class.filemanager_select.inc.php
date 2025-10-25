@@ -72,7 +72,7 @@ class filemanager_select
 	 *
 	 * @deprecated Please use et2_vfsSelect widget in client side instead
 	 */
-	function select(array $content=null)
+	function select(?array $content=null)
 	{
 		if (!is_array($content))
 		{

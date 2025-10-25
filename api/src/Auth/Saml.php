@@ -441,7 +441,7 @@ class Saml implements BackendSSO
 	 * @param array|null $config defaults to $GLOBALS['egw_info']['server']
 	 * @throws \Exception
 	 */
-	public static function refreshMetadata(array $config=null)
+	public static function refreshMetadata(?array $config=null)
 	{
 		if (!isset($config)) $config = $GLOBALS['egw_info']['server'];
 		$old_config = Api\Config::read('phpgwapi');
@@ -571,7 +571,7 @@ class Saml implements BackendSSO
 	 * @param array|null $config
 	 * @return string
 	 */
-	private static function usernameOid(array $config=null)
+	private static function usernameOid(?array $config=null)
 	{
 		if (!isset($config)) $config = $GLOBALS['egw_info']['server'];
 
@@ -599,7 +599,7 @@ class Saml implements BackendSSO
 	 * @param ?array $config default use config from $GLOBALS['egw_info']['server']
 	 * @return string[]|string|null
 	 */
-	private static function samlAttr($name, array $attrs, array $config=null)
+	private static function samlAttr($name, array $attrs, ?array $config=null)
 	{
 		if (!isset($config)) $config = $GLOBALS['egw_info']['server'];
 
@@ -658,7 +658,7 @@ class Saml implements BackendSSO
 	 * @param ?array& $auto_create_acct reference to $GLOBALS['auto_create_acct'] for not existing accounts
 	 * @param array|null $config
 	 */
-	private function checkAffiliation($username, array $attrs, array &$auto_create_acct=null, array $config=null)
+	private function checkAffiliation($username, array $attrs, ?array &$auto_create_acct=null, ?array $config=null)
 	{
 		if (!isset($config)) $config = $GLOBALS['egw_info']['server'];
 
@@ -697,10 +697,10 @@ class Saml implements BackendSSO
 	/**
 	 * Create simpleSAMLphp default configuration
 	 *
-	 * @param array $config=null default $GLOBALS['egw_info']['server']
+	 * @param ?array $config=null default $GLOBALS['egw_info']['server']
 	 * @throws Exception
 	 */
-	public static function checkDefaultConfig(array $config=null)
+	public static function checkDefaultConfig(?array $config=null)
 	{
 		if (!isset($config)) $config = $GLOBALS['egw_info']['server'];
 

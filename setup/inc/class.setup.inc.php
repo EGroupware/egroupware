@@ -481,9 +481,9 @@ class setup
 	 *
 	 * @param string $appname Application 'name' with a matching $setup_info[$appname] array slice
 	 * @param $_enable =99 set to True/False to override setup.inc.php setting
-	 * @param array $setup_info =null default use $GLOBALS['setup_info']
+	 * @param ?array $setup_info =null default use $GLOBALS['setup_info']
 	 */
-	function register_app($appname, $_enable=99, array $setup_info=null)
+	function register_app($appname, $_enable=99, ?array $setup_info=null)
 	{
 		if (!isset($setup_info)) $setup_info = $GLOBALS['setup_info'];
 
@@ -590,9 +590,9 @@ class setup
 	 * Update application info in the db
 	 *
 	 * @param string $appname	Application 'name' with a matching $setup_info[$appname] array slice
-	 * @param array $setup_info =null default use $GLOBALS['setup_info']
+	 * @param ?array $setup_info =null default use $GLOBALS['setup_info']
 	 */
-	function update_app($appname, array $setup_info=null)
+	function update_app($appname, ?array $setup_info=null)
 	{
 		if (!isset($setup_info)) $setup_info = $GLOBALS['setup_info'];
 

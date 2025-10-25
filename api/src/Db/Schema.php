@@ -95,9 +95,9 @@ class Schema
 	 * Constructor of schema-processor
 	 *
 	 * @param string $dbms type of the database: 'mysql','pgsql','mssql','maxdb'
-	 * @param Api\Db $db =null database class, if null we use $GLOBALS['egw']->db
+	 * @param ?Api\Db $db =null database class, if null we use $GLOBALS['egw']->db
 	 */
-	function __construct($dbms=False, Api\Db $db=null)
+	function __construct($dbms=False, ?Api\Db $db=null)
 	{
 	    if(is_object($db))
 		{

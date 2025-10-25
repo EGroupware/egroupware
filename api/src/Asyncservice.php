@@ -50,7 +50,7 @@ class Asyncservice
 	 *
 	 * @param ?Db $db
 	 */
-	function __construct(Db $db=null)
+	function __construct(?Db $db=null)
 	{
 		if (isset($db))
 		{

@@ -172,14 +172,14 @@ class Base
 	 *
 	 * @param string $app should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
-	 * @param Api\Db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
+	 * @param ?Api\Db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param string $column_prefix ='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 * @param boolean $no_clone =false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
 	 * @param string $timestamp_type =null default null=leave them as is, 'ts'|'integer' use integer unix timestamps,
 	 * 	'object' use Api\DateTime objects or 'string' use DB timestamp (Y-m-d H:i:s) string
 	 */
-	function __construct($app='',$table='',Api\Db $db=null,$column_prefix='',$no_clone=false,$timestamp_type=null)
+	function __construct($app='', $table='', ?Api\Db $db=null, $column_prefix='', $no_clone=false, $timestamp_type=null)
 	{
 		// ease the transition to api
 		if ($app == 'phpgwapi') $app = 'api';

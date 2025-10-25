@@ -145,11 +145,11 @@ class Customfields implements \IteratorAggregate
 	 * @param int|boolean $account =false Filter private for given account_id,
 	 *	false for current user or true for all the private fields be returned too, default current user
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
-	 * @param Api\Db $db =null reference to database to use
+	 * @param ?Api\Db $db =null reference to database to use
 	 * @param ?bool $tabs false: do NOT return cfs with explicit tab, true: only return cfs with explicit tab, null: return all
 	 * @return array with customfields
 	 */
-	public static function get($app, $account=false, $only_type2=null, Api\Db $db=null, ?bool $tabs=false)
+	public static function get($app, $account=false, $only_type2=null, ?Api\Db $db=null, ?bool $tabs=false)
 	{
 		$account_key = $account === true ? 'all' :
 				($account === false ? ($GLOBALS['egw_info']['user']['account_id']??null) :
@@ -343,10 +343,10 @@ class Customfields implements \IteratorAggregate
 	 *
 	 * @param string $own_app own appname
 	 * @param array $values new values including the custom fields
-	 * @param array $old =null old values before the update, if existing
+	 * @param ?array $old =null old values before the update, if existing
 	 * @param string $id_name ='id' name/key of the (link-)id in $values
 	 */
-	public static function update_links($own_app,array $values,array $old=null,$id_name='id')
+	public static function update_links($own_app, array $values, ?array $old=null, $id_name='id')
 	{
 		$link_types = self::get_link_types();
 

@@ -47,7 +47,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 	 * @param importexport_definition $definition
 	 * @param importexport_import_csv|null $import_csv
 	 */
-	protected function init(importexport_definition $definition, importexport_import_csv $import_csv=NULL)
+	protected function init(importexport_definition $definition, ?importexport_import_csv $import_csv=NULL)
 	{
 		// fetch the addressbook bo
 		$this->bo = new calendar_boupdate();

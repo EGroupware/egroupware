@@ -1585,11 +1585,11 @@ abstract class Framework extends Framework\Extra
 	/**
 	 * Set or return all javascript files set via validate_file, optionally clear all files
 	 *
-	 * @param array $files =null array with pathes relative to EGW_SERVER_ROOT, eg. /api/js/jquery/jquery.js
+	 * @param ?array $files =null array with pathes relative to EGW_SERVER_ROOT, eg. /api/js/jquery/jquery.js
 	 * @param boolean $clear_files =false true clear files after returning them
 	 * @return array with pathes relative to EGW_SERVER_ROOT
 	 */
-	static function js_files(array $files=null, $clear_files=false)
+	static function js_files(?array $files=null, $clear_files=false)
 	{
 		if (isset($files) && is_array($files))
 		{

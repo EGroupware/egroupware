@@ -37,7 +37,7 @@ class Ads implements Backend
 	 *
 	 * @param array|null $config
 	 */
-	function __construct(array $config=null)
+	function __construct(?array $config=null)
 	{
 		$this->config = $config;
 	}

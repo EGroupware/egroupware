@@ -865,10 +865,10 @@ class Widget
 	 *
 	 * @param string $cname basename
 	 * @param string $name name
-	 * @param array $expand =null values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand =null values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @return string complete form-name
 	 */
-	static function form_name($cname,$name,array $expand=null)
+	static function form_name($cname, $name, ?array $expand=null)
 	{
 		if ($expand && !empty($name))
 		{

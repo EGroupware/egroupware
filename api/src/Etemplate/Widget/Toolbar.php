@@ -45,9 +45,9 @@ class Toolbar extends Etemplate\Widget
 	 * Set up what we know on the server side.
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		if (!empty($GLOBALS['egw_info']['user']['apps']['admin']))
 		{

@@ -27,9 +27,9 @@ class Image extends Etemplate\Widget
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name);

@@ -29,11 +29,11 @@ class admin_cmd_customfield extends admin_cmd
 	 * Constructor
 	 *
 	 * @param array|string $data data array or app whos config to change
-	 * @param array $set =null config data to set, just customfield name & ID to remove
-	 * @param array $old =null old values to record
+	 * @param ?array $set =null config data to set, just customfield name & ID to remove
+	 * @param ?array $old =null old values to record
 	 * @param array $other =null values for keys "requested", "requested_email", "comment", etc
 	 */
-	function __construct($data, array $set=null, array $old=null, $other=null)
+	function __construct($data, ?array $set=null, ?array $old=null, $other=null)
 	{
 		if (!is_array($data))
 		{

@@ -371,10 +371,10 @@ class filemanager_ui
 	/**
 	 * Main filemanager page
 	 *
-	 * @param array $content
+	 * @param ?array $content
 	 * @param string $msg
 	 */
-	function index(array $content=null,$msg=null)
+	function index(?array $content=null, $msg=null)
 	{
 		if (!is_array($content))
 		{
@@ -519,10 +519,10 @@ class filemanager_ui
 	/**
 	 * Filemanager listview
 	 *
-	 * @param array $content
+	 * @param ?array $content
 	 * @param string $msg
 	 */
-	function listview(array $content=null,$msg=null)
+	function listview(?array $content=null, $msg=null)
 	{
 		$tpl = $this->etemplate ?: new Etemplate(static::LIST_TEMPLATE);
 
@@ -1228,10 +1228,10 @@ class filemanager_ui
 	/**
 	 * Preferences of a file/directory
 	 *
-	 * @param array $content
+	 * @param ?array $content
 	 * @param string $msg
 	 */
-	function file(array $content=null,$msg='')
+	function file(?array $content=null, $msg='')
 	{
 		$tpl = new Etemplate('filemanager.file');
 

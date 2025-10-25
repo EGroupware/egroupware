@@ -148,11 +148,11 @@ class infolog_ical extends infolog_bo
 	 * @param string $_version ='2.0' could be '1.0' too
 	 * @param string $_method ='PUBLISH'
 	 * @param string $charset ='UTF-8' encoding of the vcalendar, default UTF-8
-	 * @param Horde_Icalendar $vcal =null optional iCalendar object to add vtodo to
+	 * @param ?Horde_Icalendar $vcal =null optional iCalendar object to add vtodo to
 	 *
 	 * @return string|boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
-	function exportVTODO($task, $_version='2.0',$_method='PUBLISH', $charset='UTF-8',Horde_Icalendar $vcal=null)
+	function exportVTODO($task, $_version='2.0', $_method='PUBLISH', $charset='UTF-8', ?Horde_Icalendar $vcal=null)
 	{
 		if (is_array($task))
 		{

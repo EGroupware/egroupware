@@ -60,10 +60,10 @@ class Udm
 	/**
 	 * Constructor
 	 *
-	 * @param array $config =null config to use, default $GLOBALS['egw_info']['server']
+	 * @param ?array $config =null config to use, default $GLOBALS['egw_info']['server']
 	 * @throws Api\Exception\WrongParameter for missing LDAP config
 	 */
-	public function __construct(array $config=null)
+	public function __construct(?array $config=null)
 	{
 		$this->config = isset($config) ? $config : $GLOBALS['egw_info']['server'];
 

@@ -434,9 +434,9 @@ class admin_acl
 	/**
 	 * New index page
 	 *
-	 * @param array $_content =null
+	 * @param ?array $_content =null
 	 */
-	public function index(array $_content=null)
+	public function index(?array $_content=null)
 	{
 		unset($_content);	// not used, required by function signature
 

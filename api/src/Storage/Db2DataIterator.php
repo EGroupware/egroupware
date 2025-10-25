@@ -44,9 +44,9 @@ class Db2DataIterator implements \Iterator
 	 * Constructor
 	 *
 	 * @param Base $storage
-	 * @param \Traversable $rs
+	 * @param ?\Traversable $rs
 	 */
-	public function __construct(Base $storage, \Traversable $rs=null)
+	public function __construct(Base $storage, ?\Traversable $rs=null)
 	{
 		$this->storage = $storage;
 

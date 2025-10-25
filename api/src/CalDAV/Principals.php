@@ -85,10 +85,10 @@ class Principals extends Handler
 	 * Currently, we return all reports independent of path
 	 *
 	 * @param string $path eg. '/principals/'
-	 * @param array $reports =null
+	 * @param ?array $reports =null
 	 * @return array Api\CalDAV::mkprop('supported-report-set', ...)
 	 */
-	protected function supported_report_set($path, array $reports=null)
+	protected function supported_report_set($path, ?array $reports=null)
 	{
 		unset($path);	// not used, but required by function signature
 
@@ -1370,10 +1370,10 @@ class Principals extends Handler
 	 * @param string $type eg. 'calendar-proxy-read' or 'calendar-proxy-write'
 	 * @param array $proxys =array()
 	 * @param ?array $resource =null resource to use (to not query it multiple times from the database)
-	 *
+	 * @param bool $return_proxys =false
 	 * @return array with values for 'path' and 'props'
 	 */
-	protected function add_proxys($principal, $type, array $proxys=array(), array $resource=null, bool $return_proxys=false)
+	protected function add_proxys($principal, $type, array $proxys=array(), ?array $resource=null, bool $return_proxys=false)
 	{
 		list($app,,$what) = explode('-', $type);
 
@@ -1496,7 +1496,7 @@ class Principals extends Handler
 	 * @param ?string $prop eg. 'group-member-set', 'membership' or 'calendar-proxy-(read|write)-for'
 	 * @return array with href props
 	 */
-	protected function get_resource_proxy_groups($account, $app='resources', string $prop=null)
+	protected function get_resource_proxy_groups($account, $app='resources', ?string $prop=null)
 	{
 		$set = array();
 		if (($resources = $this->get_resources()))
@@ -1558,7 +1558,7 @@ class Principals extends Handler
 	 * @param ?string $prop eg. 'group-member-set', 'membership' or 'calendar-proxy-(read|write)-for'
 	 * @return array with href props
 	 */
-	protected function get_calendar_proxy_groups($account, $app='calendar', string $prop=null)
+	protected function get_calendar_proxy_groups($account, $app='calendar', ?string $prop=null)
 	{
 		$set = array();
 		// use enum_group_acls=false, as iCal app understands group-memberships

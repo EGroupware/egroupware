@@ -30,10 +30,10 @@ class HiddenUpload extends AnonymousList
 	 * Everything not in the upload directory is readonly, but we make it look like you can upload.
 	 * The upload directory is not shown.
 	 *
-	 * @param array $content
+	 * @param ?array $content
 	 * @param string $msg
 	 */
-	function listview(array $content=null,$msg=null)
+	function listview(?array $content=null,$msg=null)
 	{
 		$this->etemplate = $this->etemplate ? $this->etemplate : new Etemplate(static::LIST_TEMPLATE);
 

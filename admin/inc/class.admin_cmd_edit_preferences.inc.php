@@ -27,11 +27,11 @@ class admin_cmd_edit_preferences extends admin_cmd
 	 * @param string|int|array $account account name or id, or array with all parameters
 	 * @param string $type ="user" "user", "default", "forced" or "group"
 	 * @param string $app =null app-name, required if $account is no array
-	 * @param array $set =null name => value pairs to change
-	 * @param array $old =null name => value pairs of old values
+	 * @param ?array $set =null name => value pairs to change
+	 * @param ?array $old =null name => value pairs of old values
 	 * @param array $extra =array() values for keys requested(_email) or comment
 	 */
-	function __construct($account, $type=null, $app=null, array $set=null, array $old=null, array $extra=array())
+	function __construct($account, $type=null, $app=null, ?array $set=null, ?array $old=null, array $extra=array())
 	{
 		if (!is_array($account))
 		{

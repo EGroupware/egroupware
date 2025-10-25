@@ -330,7 +330,7 @@ class Jobs
 	/**
 	 * Run all jobs
 	 *
-	 * @param array $data
+	 * @param ?array $data
 	 * @return void
 	 */
 	public function asyncCallback(?array $data=null)

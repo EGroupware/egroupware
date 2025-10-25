@@ -158,10 +158,10 @@ class addressbook_bo extends Api\Contacts
 	 * Where to store public key depending on type and storage backend
 	 *
 	 * @param boolean $pgp true: PGP, false: S/Mime
-	 * @param array $contact =null contact array to pass to get_backend()
+	 * @param ?array $contact =null contact array to pass to get_backend()
 	 * @return boolean true: store as file, false: store with contact
 	 */
-	public function pubkey_use_file($pgp, array $contact=null)
+	public function pubkey_use_file($pgp, ?array $contact=null)
 	{
 		return $pgp || empty($contact) || get_class($this->get_backend($contact)) == 'EGroupware\\Api\\Contacts\\Sql';
 	}

@@ -161,11 +161,11 @@ class calendar_so
 	 *
 	 * @param int $start
 	 * @param int $end
-	 * @param array $_where =null
+	 * @param ?array $_where =null
 	 * @param boolean $deleted =false
 	 * @return string
 	 */
-	protected function cal_range_view($start, $end, array $_where=null, $deleted=false)
+	protected function cal_range_view($start, $end, ?array $_where=null, $deleted=false)
 	{
 		if (!empty($GLOBALS['egw_info']['server']['no_timerange_views']) || !$start)	// using view without start-date is slower!
 		{
@@ -191,11 +191,11 @@ class calendar_so
 	 *
 	 * @param int $start
 	 * @param int $end
-	 * @param array $_where =null
+	 * @param ?array $_where =null
 	 * @param boolean $deleted =false
 	 * @return string
 	 */
-	protected function dates_range_view($start, $end, array $_where=null, $deleted=false)
+	protected function dates_range_view($start, $end, ?array $_where=null, $deleted=false)
 	{
 		if ($GLOBALS['egw_info']['server']['no_timerange_views'] || !$start || !$end)	// using view without start- AND end-date is slower!
 		{

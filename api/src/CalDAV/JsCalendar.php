@@ -99,7 +99,7 @@ class JsCalendar extends JsBase
 	 * @param ?int $calendar_owner owner of the collection
 	 * @return array
 	 */
-	public static function parseJsEvent(string $json, array $old=[], string $content_type=null, $method='PUT', int $calendar_owner=null)
+	public static function parseJsEvent(string $json, array $old=[], ?string $content_type=null, $method='PUT', ?int $calendar_owner=null)
 	{
 		try
 		{
@@ -293,7 +293,7 @@ class JsCalendar extends JsBase
 	 * @param ?int $calendar_owner owner of the collection
 	 * @return array
 	 */
-	public static function parseJsTask(string $json, array $old=[], string $content_type=null, $method='PUT', int $calendar_owner=null)
+	public static function parseJsTask(string $json, array $old=[], ?string $content_type=null, $method='PUT', ?int $calendar_owner=null)
 	{
 		try
 		{
@@ -441,10 +441,10 @@ class JsCalendar extends JsBase
 
 	/**
 	 * @param string $progress
-	 * @param string $info_type
+	 * @param ?string $info_type
 	 * @return string known infolog status, or "not-started"
 	 */
-	protected static function parseProgress(string $progress, string $info_type=null)
+	protected static function parseProgress(string $progress, ?string $info_type=null)
 	{
 		if (!($status = array_search($progress, self::$status2progress)))
 		{
@@ -490,7 +490,7 @@ class JsCalendar extends JsBase
 	 * @param string[] $localications map with extra language => value pairs
 	 * @return array[] with values for keys "value", "language" and "localizations"
 	 */
-	protected static function localizedString($value, string $language=null, array $localications=[])
+	protected static function localizedString($value, ?string $language=null, array $localications=[])
 	{
 		if (empty($value) && !$localications)
 		{
@@ -508,10 +508,10 @@ class JsCalendar extends JsBase
 	 *
 	 * We're not currently storing/allowing any localization --> they get ignored/thrown away!
 	 *
-	 * @param string $value =null
-	 * @return string
+	 * @param ?string $value =null
+	 * @return ?string
 	 */
-	protected static function parseString(string $value=null)
+	protected static function parseString(?string $value=null)
 	{
 		return $value;
 	}
@@ -682,7 +682,7 @@ class JsCalendar extends JsBase
 	 * @return array
 	 * @todo Resources and Groups without email
 	 */
-	protected static function parseParticipants(array $participants, bool $strict=true, int $calendar_owner=null, bool $calendar=true)
+	protected static function parseParticipants(array $participants, bool $strict=true, ?int $calendar_owner=null, bool $calendar=true)
 	{
 		$parsed = [];
 
@@ -818,7 +818,7 @@ class JsCalendar extends JsBase
 	 * @param ?int $calendar_owner owner of the calendar / collection
 	 * @return array with values for info_responsible (int[]) and info_cc (comma-separated string)
 	 */
-	protected static function parseResponsible(array $participants, bool $strict=true, int $calendar_owner=null)
+	protected static function parseResponsible(array $participants, bool $strict=true, ?int $calendar_owner=null)
 	{
 		$responsible = $cc = [];
 		foreach(self::parseParticipants($participants, $strict, $calendar_owner, false) as $uid => $status)
@@ -842,7 +842,7 @@ class JsCalendar extends JsBase
 		];
 	}
 
-	protected static function jscalRoles2role(array $roles=null, string $default_role=null)
+	protected static function jscalRoles2role(?array $roles=null, ?string $default_role=null)
 	{
 		$role = $default_role ?? 'REQ-PARTICIPANT';
 		foreach($roles ?? [] as $name => $value)
@@ -1094,10 +1094,10 @@ class JsCalendar extends JsBase
 	 * Get patch from an event / recurrence compared to the master event
 	 *
 	 * @param array $event
-	 * @param array $master
+	 * @param ?array $master
 	 * @return array with modified attributes
 	 */
-	public static function getPatch(array $event, array $master=null)
+	public static function getPatch(array $event, ?array $master=null)
 	{
 		if (!$master)
 		{
@@ -1136,7 +1136,7 @@ class JsCalendar extends JsBase
 	 * @param array|null $alarms
 	 * @return array
 	 */
-	protected static function Alerts(array $alarms=null)
+	protected static function Alerts(?array $alarms=null)
 	{
 		$alerts = [];
 		foreach($alarms ?? [] as $alarm)
@@ -1163,10 +1163,11 @@ class JsCalendar extends JsBase
 	 *
 	 * @param array $data full JsCalendar object, not just alerts and useDefaultAlerts attribute
 	 * @param bool $strict true: require JsCalendar @type, false: relaxed parsing
+	 * @param ?int $calendar_owner
 	 * @return array of alerts
 	 * @throws Api\Exception
 	 */
-	protected static function parseAlerts(array $data, bool $strict=false, int $calendar_owner=null)
+	protected static function parseAlerts(array $data, bool $strict=false, ?int $calendar_owner=null)
 	{
 		$alarms = [];
 		if (!empty($data['useDefaultAlerts']))

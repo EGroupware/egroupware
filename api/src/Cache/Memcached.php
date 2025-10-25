@@ -69,11 +69,11 @@ class Memcached extends Base implements ProviderMultiple
 	 * Constructor, eg. opens the connection to the backend
 	 *
 	 * @throws Exception if connection to backend could not be established
-	 * @param array $params eg. array('localhost'[,'localhost:11211',...])
+	 * @param ?array $params eg. array('localhost'[,'localhost:11211',...])
 	 *	"timeout" in ms, "retry" on node failure 0: no retry (default), 1: retry on set/add/delete, 2: allways retry
 	 *  "prefix" prefix for keys and "consistent=1" to enable (by default disabled) consistent caching
 	 */
-	function __construct(array $params=null)
+	function __construct(?array $params=null)
 	{
 		$this->params = $params ?: array('localhost');	// some reasonable default
 

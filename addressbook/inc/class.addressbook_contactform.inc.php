@@ -30,7 +30,7 @@ class addressbook_contactform
 	/**
 	 * Shows the contactform and stores the submitted data
 	 *
-	 * @param array $content=null submitted eTemplate content
+	 * @param ?array $content=null submitted eTemplate content
 	 * @param int $addressbook=null int owner-id of addressbook to save contacts too
 	 * @param array $fields=null field-names to show
 	 * @param string $msg=null message to show after submitting the form
@@ -40,7 +40,7 @@ class addressbook_contactform
 	 * @param string $copytoreceiver=false send a copy of notification to receiver
 	 * @return string html content
 	 */
-	function display(array $content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false,$sel_options=array())
+	function display(?array $content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false,$sel_options=array())
 	{
 		return $this->display_var($content,$addressbook,$fields,$msg,$email,$tpl_name,$subject,$copytoreceiver,$sel_options);
 	}

@@ -169,12 +169,12 @@ class HtmlArea extends Etemplate\Widget
 	/**
 	 * Get font size from preferences
 	 *
-	 * @param array $prefs =null default $GLOBALS['egw_info']['user']['preferences']
+	 * @param ?array $prefs =null default $GLOBALS['egw_info']['user']['preferences']
 	 * @param string &$size =null on return just size, without unit
 	 * @param string &$unit =null on return just unit
 	 * @return string font-size including unit
 	 */
-	public static function font_size_from_prefs(array $prefs=null, &$size=null, &$unit=null)
+	public static function font_size_from_prefs(?array $prefs=null, &$size=null, &$unit=null)
 	{
 		if (is_null($prefs)) $prefs = $GLOBALS['egw_info']['user']['preferences'];
 

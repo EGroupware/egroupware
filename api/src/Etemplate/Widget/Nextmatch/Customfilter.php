@@ -27,9 +27,9 @@ class Customfilter extends Widget\Transformer
 	 * Fill type options in self::$request->sel_options to be used on the client
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		parent::beforeSendToClient($cname, $expand);
 		switch($this->attrs['type'])

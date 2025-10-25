@@ -44,10 +44,10 @@ class preferences_settings
 	/**
 	 * Edit preferences
 	 *
-	 * @param array $content =null
+	 * @param ?array $content =null
 	 * @param string $msg =''
 	 */
-	function index(array $content=null, $msg='')
+	function index(?array $content=null, $msg='')
 	{
 		$tpl = new Etemplate('preferences.settings');
 		if (!is_array($content))

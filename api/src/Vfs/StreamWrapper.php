@@ -879,10 +879,10 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	 * We define all eGW admins the owner of the group directories!
 	 *
 	 * @param string $path
-	 * @param array $stat =null stat for path, default queried by this function
+	 * @param ?array $stat =null stat for path, default queried by this function
 	 * @return boolean
 	 */
-	function has_owner_rights($path,array $stat=null)
+	function has_owner_rights($path, ?array $stat=null)
 	{
 		if (!$stat)
 		{

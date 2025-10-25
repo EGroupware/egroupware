@@ -1891,9 +1891,9 @@ class calendar_bo
 	 * generate list of user- / group-calendars or a given user
 	 *
 	 * @param int $user account_id of user to generate list for
-	 * @param array $grants =null calendar grants from user, or null to query them from acl class
+	 * @param ?array $grants =null calendar grants from user, or null to query them from acl class
 	 */
-	public static function list_calendars($user, array $grants=null)
+	public static function list_calendars($user, ?array $grants=null)
 	{
 		if (is_null($grants)) $grants = $GLOBALS['egw']->acl->get_grants('calendar', true, $user);
 

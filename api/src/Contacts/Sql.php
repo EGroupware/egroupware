@@ -67,9 +67,9 @@ class Sql extends Api\Storage
 	/**
 	 * Constructor
 	 *
-	 * @param Api\Db $db =null
+	 * @param ?Api\Db $db =null
 	 */
-	function __construct(Api\Db $db=null)
+	function __construct(?Api\Db $db=null)
 	{
 		parent::__construct('api', 'egw_addressbook', self::EXTRA_TABLE,
 			'contact_', '_name', '_value', '_id', $db);
@@ -946,10 +946,10 @@ class Sql extends Api\Storage
 	 *
 	 * @param int|array $contact contact_id(s)
 	 * @param int $list list-id
-	 * @param array $existing =null array of existing contact-id(s) of list, to not reread it, eg. array()
+	 * @param ?array $existing =null array of existing contact-id(s) of list, to not reread it, eg. array()
 	 * @return false on error
 	 */
-	function add2list($contact,$list,array $existing=null)
+	function add2list($contact,$list, ?array $existing=null)
 	{
 		if (!(int)$list || !is_array($contact) && !(int)$contact) return false;
 

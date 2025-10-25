@@ -2512,10 +2512,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param Horde_iCalendar $component
 	 * @param string $tzid timezone
 	 * @param string $principalURL ='' Used for CalDAV imports
-	 * @param Horde_Icalendar $container =null container to access attributes on container
+	 * @param ?Horde_Icalendar $container =null container to access attributes on container
 	 * @return array|boolean event array or false if $component is no Horde_Icalendar_Vevent
 	 */
-	function _ical2egw_callback(Horde_Icalendar $component, $tzid, $principalURL='', Horde_Icalendar $container=null)
+	function _ical2egw_callback(Horde_Icalendar $component, $tzid, $principalURL='', ?Horde_Icalendar $container=null)
 	{
 		//unset($component->_container); _debug_array($component);
 
@@ -2590,10 +2590,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $supportedFields	supported fields of the device
 	 * @param string $principalURL =''	Used for CalDAV imports, no longer used in favor of Api\CalDAV\Principals::url2uid()
 	 * @param string $check_component ='Horde_Icalendar_Vevent'
-	 * @param Horde_Icalendar $container =null container to access attributes on container
+	 * @param ?Horde_Icalendar $container =null container to access attributes on container
 	 * @return array|boolean			event on success, false on failure
 	 */
-	function vevent2egw($component, $version, $supportedFields, $principalURL='', $check_component='Horde_Icalendar_Vevent', Horde_Icalendar $container=null)
+	function vevent2egw($component, $version, $supportedFields, $principalURL='', $check_component='Horde_Icalendar_Vevent', ?Horde_Icalendar $container=null)
 	{
 		unset($principalURL);	// not longer used, but required in function signature
 
@@ -3377,10 +3377,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param string $charset ='UTF-8' encoding of the vcalendar, default UTF-8
 	 * @param mixed $start =null default now
 	 * @param string $method ='PUBLISH' or eg. 'REPLY'
-	 * @param array $extra =null extra attributes to add
+	 * @param ?array $extra =null extra attributes to add
 	 * 	X-CALENDARSERVER-MASK-UID can be used to not include an event specified by this uid as busy
 	 */
-	function freebusy($user,$end=null,$utc=true, $charset='UTF-8', $start=null, $method='PUBLISH', array $extra=null)
+	function freebusy($user, $end=null, $utc=true, $charset='UTF-8', $start=null, $method='PUBLISH', ?array $extra=null)
 	{
 		if (!$start) $start = time();	// default now
 		if (!$end) $end = time() + 100*DAY_s;	// default next 100 days

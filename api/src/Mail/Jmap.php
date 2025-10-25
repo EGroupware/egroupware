@@ -341,7 +341,7 @@ class Jmap
 	 * @return string[] states for keys "Mailbox" and "Email"
 	 * @throws Api\Exception
 	 */
-	public function getStates(string $folder='INBOX', string $accountId=null, ?string &$sessionState=null) : array
+	public function getStates(string $folder='INBOX', ?string $accountId=null, ?string &$sessionState=null) : array
 	{
 		$response = $this->jmapCall([
 			['Mailbox/query', ['accountId' => $accountId ?: $this->accountId, 'filter' => ['name' => $folder]], 't0'],

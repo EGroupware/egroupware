@@ -215,15 +215,15 @@ class admin_cmd_change_account_id extends admin_cmd
 	/**
 	 * Update DB with changed account ids
 	 *
-	 * @param array $ids2change from-id => to-id pairs
+	 * @param ?array $ids2change from-id => to-id pairs
 	 * @param Api\Db $db
 	 * @param string $table
 	 * @param string $column
-	 * @param array $where
+	 * @param ?array $where
 	 * @param string $type
 	 * @return int number of changed ids
 	 */
-	private static function _update_account_id(array $ids2change,Api\Db $db,$table,$column,array $where=null,$type=null)
+	private static function _update_account_id(?array $ids2change,Api\Db $db,$table,$column,?array $where=null,$type=null)
 	{
 		$update_sql = '';
 		foreach($ids2change as $from => $to)

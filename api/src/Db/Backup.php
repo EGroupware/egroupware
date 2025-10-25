@@ -193,7 +193,7 @@ class Backup
 	 * @return resource file-handle
 	 * @throws \Exception on error
 	 */
-	public function fopen_backup(string $name=null, bool $reading=false, bool $un_compress=true)
+	public function fopen_backup(?string $name=null, bool $reading=false, bool $un_compress=true)
 	{
 		if ($name && $name[0] !== '/')
 		{

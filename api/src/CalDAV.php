@@ -512,7 +512,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * @param array|null $supported_privileges =null default $this->supported_privileges
 	 * @return array with values for keys 'path' and 'props'
 	 */
-	public function add_collection($path, array $props = array(), array $privileges=array('read','read-acl','read-current-user-privilege-set'), array $supported_privileges=null)
+	public function add_collection($path, array $props = array(), array $privileges=array('read','read-acl','read-current-user-privilege-set'), ?array $supported_privileges=null)
 	{
 		// resourcetype: collection
 		$props['resourcetype'][] = self::mkprop('collection','');
@@ -528,10 +528,10 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * @param string $path
 	 * @param array $props =array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
 	 * @param array $privileges =array('read') values for current-user-privilege-set
-	 * @param array $supported_privileges =null default $this->supported_privileges
+	 * @param ?array $supported_privileges =null default $this->supported_privileges
 	 * @return array with values for keys 'path' and 'props'
 	 */
-	public function add_resource($path, array $props = array(), array $privileges=array('read','read-current-user-privilege-set'), array $supported_privileges=null)
+	public function add_resource($path, array $props = array(), array $privileges=array('read','read-current-user-privilege-set'), ?array $supported_privileges=null)
 	{
 		// props for all collections: current-user-principal and principal-collection-set
 		$props['current-user-principal'] = array(
