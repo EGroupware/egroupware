@@ -95,7 +95,7 @@
                         <et2-link-string id="${row}[filelinks]"></et2-link-string>
                     </et2-vbox>
                     <customfields-list id="$row" class="customfields" app="infolog"/>
-                    <et2-link-string entryId="${row_cont[info_id]}" application="infolog"
+                    <et2-link-string entryId="$row_cont[info_id]" application="infolog"
                                      onlyApp="kanban"></et2-link-string>
                     <et2-select-cat id="${row}[info_cat]" readonly="true"></et2-select-cat>
                     <et2-vbox>

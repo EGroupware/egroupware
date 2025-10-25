@@ -84,7 +84,7 @@
                     <et2-description id="${row}[ts_id]"></et2-description>
                     <et2-select id="${row}[ts_status]" readonly="true"></et2-select>
                     <customfields-list id="$row" readonly="true"/>
-                    <et2-link-string entryId="${row_cont[ts_id]}" application="timesheet"
+                    <et2-link-string entryId="$row_cont[ts_id]" application="timesheet"
                                      onlyApp="kanban"></et2-link-string>
                 </row>
             </rows>

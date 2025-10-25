@@ -20,7 +20,7 @@
 					<et2-nextmatch-header-account  id="owner" emptyLabel="Owner"/>
 				</row>
 				<row class="row $row_cont[class]">
-                    <et2-image src="${row_cont[type]}" onclick="app.importexport.open_definition"
+                    <et2-image src="$row_cont[type]" onclick="app.importexport.open_definition"
                                class="lr_padding button" noLang="1"></et2-image>
                     <et2-description  id="${row}[name]" class="lr_padding" noLang="1"></et2-description>
                     <et2-description  id="${row}[application]" class="lr_padding"></et2-description>

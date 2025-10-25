@@ -75,7 +75,7 @@
                         </grid>
                     </et2-vbox>
                     <customfields-list id="$row"/>
-                    <et2-link-string entryId="${row_cont[res_id]}" application="resources"
+                    <et2-link-string entryId="$row_cont[res_id]" application="resources"
                                      onlyApp="kanban"></et2-link-string>
                 </row>
 			</rows>
