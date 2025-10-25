@@ -37,6 +37,7 @@ class infolog_customfields extends admin_customfields
 	 * @var array
 	 */
 	var $group_owners;
+	var $icons;
 
 	function __construct( )
 	{
@@ -49,6 +50,7 @@ class infolog_customfields extends admin_customfields
 		$this->config_data = Api\Config::read('infolog');
 		$this->fields = &$this->bo->customfields;
 		$this->group_owners =& $this->bo->group_owners;
+		$this->icons =& $this->bo->icons;
 
 		Api\Translation::add_app('infolog');
 	}
@@ -84,6 +86,7 @@ class infolog_customfields extends admin_customfields
 		);
 		$content['content_type_options']['status']['default'] = $this->status['defaults'][$this->content_type];
 		$content['content_type_options']['group_owner'] = $this->group_owners[$this->content_type];
+		$content['content_type_options']['icon'] = $this->icons[$this->content_type];
 		$readonlys['content_types']['delete'] = isset($this->bo->stock_enums['type'][$this->content_type]);
 	}
 
@@ -231,7 +234,8 @@ class infolog_customfields extends admin_customfields
 	{
 		$old = array(
 			'status' => $this->status,
-			'group_owners' => $this->group_owners
+			'group_owners' => $this->group_owners,
+			'icons' => $this->icons,
 		);
 		$this->update_status($content);
 
@@ -242,6 +246,14 @@ class infolog_customfields extends admin_customfields
 		else
 		{
 			unset($this->group_owners[$this->content_type]);
+		}
+		if ($content['content_type_options']['icon'])
+		{
+			$this->icons[$this->content_type] = $content['content_type_options']['icon'];
+		}
+		else
+		{
+			unset($this->icons[$this->content_type]);
 		}
 		$changed = array();
 		foreach($old as $key => $value)
@@ -260,7 +272,7 @@ class infolog_customfields extends admin_customfields
 		}
 		if($changed)
 		{
-			$cmd = new admin_cmd_config('infolog',$changed, $old);
+			$cmd = new admin_cmd_config('infolog', $changed, $old);
 			$cmd->run();
 		}
 	}
@@ -276,6 +288,7 @@ class infolog_customfields extends admin_customfields
 		unset($this->status[$content['type2']]);
 		unset($this->status['defaults'][$content['type2']]);
 		unset($this->group_owners[$content['type2']]);
+		unset($this->icons[$content['type2']]);
 		$content['type2'] = key($this->content_types ?? []);
 
 		// save changes to repository

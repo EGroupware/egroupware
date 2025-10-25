@@ -178,6 +178,7 @@ class infolog_ui
 		if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 		$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 		$info['info_percent'] = (int)$info['info_percent'];
+		$info['info_icon'] = $this->bo->icons[$info['info_type']] ?? 'infolog/'.$info['info_type'];
 		$editrights = $this->bo->check_access($info, Acl::EDIT);
 		$isresposible = $this->bo->is_responsible($info);
 		if ((!($editrights || // edit rights or more then standard responsible rights
@@ -1176,10 +1177,11 @@ class infolog_ui
 		unset($types['delete']);
 		foreach($types as $type => &$data)
 		{
-			$image_exists = Api\Image::find('infolog',$type);
+			$image_exists = Api\Image::find('api', $image=$this->bo->icons[$type]) ?:
+				Api\Image::find('infolog', $image=$type);
 			$data = array(
 				'caption' => $data,
-				'icon' => $image_exists ? $type : 'infolog/navbar',
+				'icon' => $image_exists ? $image : 'infolog/navbar',
 			);
 			$types_add[$type] = $data + array(
 				'onExecute' => "javaScript:app.infolog.add_action_handler"

@@ -114,6 +114,12 @@ class infolog_bo
 	 */
 	var $group_owners=array();
 	/**
+	 * Icons for certain types read from the infolog config
+	 *
+	 * @var array
+	 */
+	var $icons=[];
+	/**
 	 * Current user
 	 *
 	 * @var int
@@ -258,6 +264,7 @@ class infolog_bo
 				//echo "types:<pre>"; print_r($this->enums['type']); echo "</pre>\n";
 			}
 			if (!empty($config_data['group_owners'])) $this->group_owners = $config_data['group_owners'];
+			if (!empty($config_data['icons'])) $this->icons = $config_data['icons'];
 
 			$this->customfields = Api\Storage\Customfields::get('infolog');
 			if ($this->customfields)

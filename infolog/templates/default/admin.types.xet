@@ -39,20 +39,20 @@
 			<template id="admin.customfields.types" content="content_types"/>
 			<grid id="content_type_options">
 				<columns>
-					<column/>
-					<column/>
+					<column width="25%"/>
 					<column/>
 				</columns>
 				<rows>
-					<row>
-						<et2-hbox  span="all">
-							<et2-description  value="Group owner for" class="header"></et2-description>
-							<et2-description  id="type" class="header"></et2-description>
-							<et2-select-account  class="infolog_lpadding5" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" emptyLabel="None" accountType="groups"></et2-select-account>
-						</et2-hbox>
+					<row class="header" disabled="!@type">
+						<et2-description value="@type" label="Group owner for"></et2-description>
+						<et2-select-account  class="infolog_lpadding5" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" emptyLabel="None" accountType="groups"></et2-select-account>
+					</row>
+					<row class="header" disabled="!@type">
+						<et2-description value="@type" label="Icon for"></et2-description>
+						<et2-select id="icon" placeholder="Search" search="true" searchUrl="preferences.preferences_categories_ui.ajax_search"></et2-select>
 					</row>
 					<row class="header">
-						<et2-description  value="Custom status for typ" id="typ" span="all"></et2-description>
+						<et2-description label="Custom status for typ" id="type" span="all"></et2-description>
 					</row>
 					<row>
 						<template id="infolog.customfields.status" content="status" span="all"/>
