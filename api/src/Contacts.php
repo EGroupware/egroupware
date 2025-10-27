@@ -1463,7 +1463,7 @@ class Contacts extends Contacts\Storage
 			arsort($values,SORT_NUMERIC);
 			$value = key($values);
 			$num = current($values);
-			if ($value && $num / (double) count($contacts) >= $this->org_common_factor)
+			if ($value && $num / (float)count($contacts) >= $this->org_common_factor)
 			{
 				if (!in_array($name,$csvs))
 				{
@@ -1474,7 +1474,7 @@ class Contacts extends Contacts\Storage
 					$org[$name] = array();
 					foreach ($values as $value => $num)
 					{
-						if ($value && $num / (double) count($contacts) >= $this->org_common_factor)
+						if ($value && $num / (float)count($contacts) >= $this->org_common_factor)
 						{
 							$org[$name][] = $value;
 						}

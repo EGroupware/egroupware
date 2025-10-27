@@ -168,7 +168,7 @@ class setup_html
 			$setup_info = $GLOBALS['setup_info'];
 		}
 		$GLOBALS['setup_tpl']->set_var('pgw_ver', $nologoutbutton ?
-			(double)$setup_info['api']['version'] :	// without login only show main version, not maintenance release
+			(float)$setup_info['api']['version'] :	// without login only show main version, not maintenance release
 			$setup_info['api']['versions']['maintenance_release']);
 
 		$GLOBALS['setup_tpl']->set_var(array(

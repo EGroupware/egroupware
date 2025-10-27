@@ -253,7 +253,7 @@ class setup_header
 			return $iv;
 		}*/
 		$size = 30;
-		srand((double)microtime()*1000000);
+		srand((float)microtime()*1000000);
 		$random_char = array(
 			'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
 			'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',

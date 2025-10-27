@@ -179,7 +179,7 @@ class JsBase
 						$value = empty($timezone) ? self::UTCDateTime($value) : self::DateTime($value, $timezone);
 						break;
 					case 'float':
-						$value = (double)$value;
+						$value = (float)$value;
 						break;
 					case 'int':
 						$value = (int)$value;
@@ -234,7 +234,7 @@ class JsBase
 						$data['value'] = self::parseDateTime($data['value'], $timeZone);
 						break;
 					case 'float':
-						$data['value'] = (double)$data['value'];
+						$data['value'] = (float)$data['value'];
 						break;
 					case 'int':
 						$data['value'] = round($data['value']);

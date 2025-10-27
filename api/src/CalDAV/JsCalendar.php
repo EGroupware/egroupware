@@ -257,7 +257,7 @@ class JsCalendar extends JsBase
 				'percentComplete' => (int)$entry['info_percent'],
 				'egroupware.org:type' => $entry['info_type'],
 				'egroupware.org:pricelist' => $entry['pl_id'] ? (int)$entry['pl_id'] : null,
-				'egroupware.org:price' => $entry['info_price'] ? (double)$entry['info_price'] : null,
+				'egroupware.org:price' => $entry['info_price'] ? (float)$entry['info_price'] : null,
 				'egroupware.org:completed' => $entry['info_datecompleted'] ?
 					self::DateTime($entry['info_datecompleted'], Api\DateTime::$user_timezone->getName()) : null,
 			] + self::Locations(['location' => $entry['info_location'] ?? null]) + [

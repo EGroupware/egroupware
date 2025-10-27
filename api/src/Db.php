@@ -1602,7 +1602,7 @@ class Db
 				return $value ? 'true' : 'false';
 			case 'float':
 			case 'decimal':
-				return (double) $value;
+				return (float)$value;
 		}
 		if (!$this->Link_ID && !$this->connect())
 		{
