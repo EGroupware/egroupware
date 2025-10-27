@@ -63,9 +63,11 @@ mark as read	notifications	de	Als gelesen markieren
 message from	notifications	de	Nachricht von
 minutes	notifications	de	Minuten
 more info	notifications	de	Mehr
+normally only the work email address is notified	notifications	de	Normal wird nur die geschäftliche EMail Adresse benachrichtigt
 notification	common	de	Benachrichtigung
 notifier	notifications	de	Benachrichtiger
 notify me by	notifications	de	Benachrichtige mich per
+notify private email address	notifications	de	Private email adresse benachrichtigen
 only used if no push server available!	admin	de	Wird nur benutzt wenn kein Push Server verfügbar!
 open notified entry	notifications	de	Eintrag öffnen
 optimize e-mails for external mail client	notifications	de	Optimiere E-Mails für externe E-Mail-Programme
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	de	Windows-Popup und E-Mail
 windows-popup backend	admin	de	Windows-Popup Schnittstelle
 windows-popup first, if that fails notify me by e-mail	notifications	de	Zuerst Win-Popup. Wenn dies fehl schlägt, benachrichtige mich per E-Mail.
 windows-popup only	notifications	de	Nur Windows-Popup
+yes, notify only private email, if existing	notifications	de	Ja, ausschließlich die private Email benachrichtigen, wenn sie existiert
+yes, notify private email too	notifications	de	Ja, auch die private EMail Adresse benachrichtigen
 yesterday	notifications	de	Gestern
 you can also use	admin	de	Sie können ebenso folgendes verwenden:
 you have %1 unread notifications	notifications	de	Sie haben %1 ungelesene Nachrichten

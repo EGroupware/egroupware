@@ -63,9 +63,11 @@ mark as read	notifications	en	Mark as read
 message from	notifications	en	Message from
 minutes	notifications	en	Minutes
 more info	notifications	en	More info
+normally only the work email address is notified	notifications	en	Normally only the work email address is notified
 notification	common	en	Notification
 notifier	notifications	en	Notifier
 notify me by	notifications	en	Notify me by
+notify private email address	notifications	en	Notify private email address
 only used if no push server available!	admin	en	Only used if no push server available!
 open notified entry	notifications	en	Open notified entry
 optimize e-mails for external mail client	notifications	en	Optimize emails for external email client
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	en	Windows popup and email
 windows-popup backend	admin	en	Windows popup backend
 windows-popup first, if that fails notify me by e-mail	notifications	en	Windows popup first, if that fails notify me by email
 windows-popup only	notifications	en	Windows popup only
+yes, notify only private email, if existing	notifications	en	Yes, notify only private email, if existing
+yes, notify private email too	notifications	en	Yes, notify private email too
 yesterday	notifications	en	Yesterday
 you can also use	admin	en	You can also use
 you have %1 unread notifications	notifications	en	You have %1 unread notifications
