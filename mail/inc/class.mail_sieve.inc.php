@@ -488,7 +488,7 @@ class mail_sieve
 		if (is_null($accountID)) $accountID = $GLOBALS['egw_info']['user']['account_id'];
 
 		$account_email =  Api\Accounts::id2name($accountID, 'account_email');
-		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(Api\Accounts::id2name($accountID));
+		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(Api\Accounts::id2name($accountID)) ?: [];
 		$allAliases = $this->account->ident_email !=''?
 				// Fix ident_email with no domain part set
 				array(Mail::fixInvalidAliasAddress($account_email, $this->account->ident_email))
@@ -578,6 +578,7 @@ class mail_sieve
 
 		$icServer = $this->account->imapServer($this->is_admin_vac ? $account_id : false);
 
+		$readonlys = $sel_options = [];
 		if ($icServer->acc_sieve_enabled)
 		{
 			$vacRules = $this->getVacation($account_id);
@@ -609,15 +610,15 @@ class mail_sieve
 					{
 						$content['forwards'] = [];
 					}
-					if (strlen(trim($vacation['text']))==0 && $this->mailConfig['default_vacation_text']) $content['text'] = $this->mailConfig['default_vacation_text'];
-					if (strlen(trim($content['text']))==0)
+					if (!trim($vacation['text']??'') && $this->mailConfig['default_vacation_text']) $content['text'] = $this->mailConfig['default_vacation_text'];
+					if (!trim($content['text']??''))
 					{
 						$content['msg'] = $msg = lang('error').': '.lang('No vacation notice text provided. Please enter a message.');
 						Framework::refresh_opener($msg, 'mail');
 					}
 					//Set default value for days new entry
-					if ((string)$content['days'] === '' || $content['days'] < 0 ||
-						!$content['days'] && !in_array('VACATION-SECONDS', $icServer->getExtensions()))
+					if ((string)($content['days'] ?? null) === '' || $content['days'] < 0 ||
+						empty($content['days']) && !in_array('VACATION-SECONDS', $icServer->getExtensions()))
 					{
 						$content['days'] = '3';
 					}

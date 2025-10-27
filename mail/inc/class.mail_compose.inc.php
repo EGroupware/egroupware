@@ -2003,13 +2003,13 @@ class mail_compose
 		//$this->sessionData['forwardedUID']=$_uid;
 		if  ($this->mailPreferences['message_forwarding'] == 'asmail') {
 			$this->sessionData['mimeType']  = $this->mailPreferences['composeOptions'];
-			if($headers['SIZE'])
+			if(!empty($headers['SIZE']))
 				$size				= $headers['SIZE'];
 			else
 				$size				= lang('unknown');
 
 			$this->addMessageAttachment($_uid, $_partID, $_folder,
-				$mail_bo->decode_header(($headers['SUBJECT']?$headers['SUBJECT']:lang('no subject'))).'.eml',
+				$mail_bo->decode_header((!empty($headers['SUBJECT'])?$headers['SUBJECT']:lang('no subject'))).'.eml',
 				'MESSAGE/RFC822', $size);
 		}
 		else
@@ -2022,7 +2022,7 @@ class mail_compose
 				if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID,null,true,false,false))) {
 					//error_log(__METHOD__.__LINE__.':'.array2string($attachments));
 					foreach($attachments as $attachment) {
-						if (!($attachment['cid'] && preg_match("/image\//",$attachment['mimeType'])) || $attachment['disposition'] == 'attachment')
+						if (!(!empty($attachment['cid']) && preg_match("/image\//",$attachment['mimeType'])) || $attachment['disposition'] == 'attachment')
 						{
 							$this->addMessageAttachment($_uid, $attachment['partID'],
 								$_folder,
@@ -2277,8 +2277,8 @@ class mail_compose
 		//$headers	= $mail_bo->getMessageHeader($_uid, $_partID, true, true, $_folder);
 		$this->sessionData['uid'] = $_uid;
 		$this->sessionData['messageFolder'] = $_folder;
-		$this->sessionData['in-reply-to'] = ($headers['IN-REPLY-TO']?$headers['IN-REPLY-TO']:$headers['MESSAGE_ID']);
-		$this->sessionData['references'] = ($headers['REFERENCES']?$headers['REFERENCES']:$headers['MESSAGE_ID']);
+		$this->sessionData['in-reply-to'] = $headers['IN-REPLY-TO'] ?? $headers['MESSAGE_ID'];
+		$this->sessionData['references'] = $headers['REFERENCES'] ?? $headers['MESSAGE_ID'];
 
 		// break reference into multiple lines if they're greater than 998 chars
 		// and remove comma seperation. Fix error serer does not support binary
@@ -2292,13 +2292,13 @@ class mail_compose
 		// thread-topic is a proprietary microsoft header and deprecated with the current version
 		// horde does not support the encoding of thread-topic, and probably will not no so in the future
 		//if ($headers['THREAD-TOPIC']) $this->sessionData['thread-topic'] = $headers['THREAD-TOPIC'];
-		if ($headers['THREAD-INDEX']) $this->sessionData['thread-index'] = $headers['THREAD-INDEX'];
-		if ($headers['LIST-ID']) $this->sessionData['list-id'] = $headers['LIST-ID'];
+		if (!empty($headers['THREAD-INDEX'])) $this->sessionData['thread-index'] = $headers['THREAD-INDEX'];
+		if (!empty($headers['LIST-ID'])) $this->sessionData['list-id'] = $headers['LIST-ID'];
 		//error_log(__METHOD__.__LINE__.' Mode:'.$_mode.':'.array2string($headers));
 		// check for Reply-To: header and use if available
 		if(!empty($headers['REPLY-TO']) && ($headers['REPLY-TO'] != $headers['FROM'])) {
 			foreach($headers['REPLY-TO'] as $val) {
-				if(!$foundAddresses[$val]) {
+				if(empty($foundAddresses[$val])) {
 					$oldTo[] = $val;
 					$foundAddresses[$val] = true;
 				}
@@ -2306,7 +2306,7 @@ class mail_compose
 			$oldToAddress	= (is_array($headers['REPLY-TO'])?$headers['REPLY-TO'][0]:$headers['REPLY-TO']);
 		} else {
 			foreach($headers['FROM'] as $val) {
-				if(!$foundAddresses[$val]) {
+				if(empty($foundAddresses[$val])) {
 					$oldTo[] = $val;
 					$foundAddresses[$val] = true;
 				}
@@ -2325,7 +2325,7 @@ class mail_compose
 					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
 						continue;
 					}
-					if(!$foundAddresses[$val]) {
+					if(empty($foundAddresses[$val])) {
 						$this->sessionData['cc'][] = $val;
 						$foundAddresses[$val] = true;
 					}
@@ -2338,7 +2338,7 @@ class mail_compose
 					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
 						continue;
 					}
-					if(!$foundAddresses[$val]) {
+					if(empty($foundAddresses[$val])) {
 						$this->sessionData['to'][] = $val;
 						$foundAddresses[$val] = true;
 					}
@@ -3540,8 +3540,8 @@ class mail_compose
 
 			foreach(array('to_infolog','to_tracker','to_calendar') as $app_key)
 			{
-				list(, $entryid) = explode(":", $_formData['to_integrate_ids'][0]) ?? null;
-				if($_formData['composeToolbar'][$app_key])
+				list(, $entryid) = explode(":", $_formData['to_integrate_ids'][0])+[null, null];
+				if (!empty($_formData['composeToolbar'][$app_key]))
 				{
 					$app_name = substr($app_key,3);
 					// Get registered hook data of the app called for integration

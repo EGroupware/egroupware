@@ -2245,7 +2245,7 @@ class Session
 		if (is_null($limit))
 		{
 			$config = Config::read('notifications');
-			if (!($popup_poll_interval  = $config['popup_poll_interval']))
+			if (!($popup_poll_interval  = $config['popup_poll_interval'] ?? null))
 			{
 				$popup_poll_interval = 60;
 			}

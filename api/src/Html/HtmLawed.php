@@ -400,10 +400,10 @@ function hl_email_tag_transform($element, $attribute_array=0)
 			if (!preg_match('/^cid:.*/',$attribute_array['src']))
 			{
 				$url = explode('/', preg_replace('/^(http|https):\/\//','',$attribute_array['src']));
-				$domains = is_array($GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains']) ?
+				$domains = is_array($GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'] ?? null) ?
 						$GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'] :
 						array();
-				if ($GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs'] != 1
+				if (($GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs']??null) != 1
 						&& !in_array($url[0], $domains) || substr($attribute_array['src'],0, 5) == 'http:')
 				{
 					//the own webserver url is not external, so it should be allowed
