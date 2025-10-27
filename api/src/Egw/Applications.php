@@ -96,6 +96,7 @@ class Applications
 		'default'	=> '#797979',
 		'kanban'	=> '#4663c8',
 		'smallpart'	=> '#303333',
+		'rocketchat' => '#f5455c'
 	];
 
 	/**
