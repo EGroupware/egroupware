@@ -51,4 +51,17 @@ $GLOBALS['settings'] = array(
 		'xmlrpc' => True,
 		'admin'  => False
 	),
+	'notify_private_email' => array(
+		'type'   => 'select',
+		'label'  => 'Notify private email address',
+		'name'   => 'notify_private_email',
+		'values' => [
+			'' => 'No',
+			'too' => 'Yes, notify private email too',
+			'only' => 'Yes, notify only private email, if existing',
+		],
+		'help'   => 'Normally only the work email address is notified',
+		'xmlrpc' => True,
+		'admin'  => False
+	)
 );

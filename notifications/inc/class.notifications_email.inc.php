@@ -110,6 +110,19 @@ class notifications_email implements notifications_iface {
 		$this->mail->ClearAddresses();
 		$this->mail->ClearAttachments();
 		$this->mail->addAddress($this->recipient->account_email, $this->recipient->account_fullname);
+		// check if we should notify the private email of an account AND the account has one
+		if (!empty($this->recipient->account_id) &&
+			($prefs = (new Api\Preferences($this->recipient->account_id))->read_repository()) &&
+			!empty($prefs['notifications']['notify_private_email']) &&
+			($account = (new Api\Contacts())->read(['account_id' => $this->recipient->account_id])) &&
+			!empty($account['email_home']))
+		{
+			if($prefs['notifications']['notify_private_email'] === 'only')
+			{
+				$this->mail->ClearAddresses();
+			}
+			$this->mail->addAddress($account['email_home'], $this->recipient->account_fullname);
+		}
 		$this->mail->addHeader('X-EGroupware-Type', 'notification-mail');
 		$this->mail->addHeader('X-EGroupware-Install', $GLOBALS['egw_info']['server']['install_id'].'@'.$GLOBALS['egw_info']['server']['default_domain']);
 		//$this->mail->AddHeader('X-EGroupware-URL', 'notification-mail');
