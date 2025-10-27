@@ -2807,14 +2807,14 @@ abstract class Merge
 	 * Merge the given IDs into the given document, saves to VFS, and returns the path
 	 *
 	 * @param array $ids
-	 * @param $pdf
+	 * @param $document
 	 * @return string|void
 	 * @throws Api\Exception\AssertionFailed
 	 * @throws Api\Exception\NotFound
 	 * @throws Api\Exception\WrongParameter
 	 * @throws Vfs\Exception\ProtectedDirectory
 	 */
-	protected function merge_entries_into_document(array $ids = [], $document)
+	protected function merge_entries_into_document(array $ids, $document)
 	{
 		if(($error = $this->check_document($document, '')))
 		{

@@ -107,8 +107,8 @@ class notifications_ajax
 		Api\Hooks::process('check_notify');
 
 		// update currentusers
-		if ($GLOBALS['egw_info']['user']['apps']['admin'] &&
-			$GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
+		if (!empty($GLOBALS['egw_info']['user']['apps']['admin']) &&
+			!empty($GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers']))
 		{
 			$this->response->jquery('#currentusers', 'text', array((string)$GLOBALS['egw']->session->session_count()));
 		}

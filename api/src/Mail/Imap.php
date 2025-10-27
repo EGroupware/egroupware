@@ -704,6 +704,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		// use Horde_Imap_Client::MBOX_ALL_SUBSCRIBED to get all mailboxes in a single imap command
 		// unfortunatly this fails for some Cyrus servers ...
 		$need_cyrus_workaround = Api\Cache::getInstance(__CLASS__, 'cyrus-workaround-'.$this->acc_imap_host);
+		$ret = [];
 		if (!$need_cyrus_workaround && ($mailboxes = $this->listMailboxes($searchstring,Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $options)))
 		{
 			//$mboxes = new Horde_Imap_Client_Mailbox_List($mailboxes);

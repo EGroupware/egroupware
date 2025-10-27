@@ -46,6 +46,7 @@ if(isset($_GET['hasupdates']) && $_GET['hasupdates'] == 'yes')
 /*
 	This is the menuaction driver for the multi-layered design
 */
+$invalid_data = false;
 if(isset($_GET['menuaction']) && preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_\\\\]+\.[A-Za-z0-9_]+$/',$_GET['menuaction']))
 {
 	list($app,$class,$method) = explode('.',$_GET['menuaction']);

@@ -755,7 +755,7 @@ class mail_hooks
 	public static function access($feature)
 	{
 		static $config=null;
-		if ($GLOBALS['egw_info']['user']['apps']['admin'])
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			return true;	// allways give admins or emailadmins all rights, even if they are in a denied group
 		}

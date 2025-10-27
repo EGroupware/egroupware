@@ -843,7 +843,7 @@ abstract class Framework extends Framework\Extra
 	protected static function _get_navbar_apps()
 	{
 		$first = key((array)$GLOBALS['egw_info']['user']['apps']);
-		if(is_array($GLOBALS['egw_info']['user']['apps']['admin']) && $first != 'admin')
+		if(is_array($GLOBALS['egw_info']['user']['apps']['admin'] ?? null) && $first != 'admin')
 		{
 			$newarray['admin'] = $GLOBALS['egw_info']['user']['apps']['admin'];
 			foreach($GLOBALS['egw_info']['user']['apps'] as $index => $value)
