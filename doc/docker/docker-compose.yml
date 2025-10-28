@@ -240,8 +240,6 @@ services:
       - MONGO_OPLOG_URL=mongodb://mongo:27017/local?replicaSet=rs0&directConnection=true
     depends_on:
       - mongo
-    ports:
-      - 127.0.0.1:3000:3000
     container_name: rocketchat
 
   mongo:
