@@ -444,7 +444,7 @@ class infolog_ui
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
 		// so we have to check that as well
 		$details = $query['filter2'] == 'all';
-		$columnselection_pref = 'nextmatch-'.($query['action'] ? 'infolog.'.$query['action'] : ($tpl && $tpl->name == $query['template'] ? $query['template'] : 'infolog.index.rows'))
+		$columnselection_pref = 'nextmatch-' . ($tpl && $tpl->name == $query['template'] ? $query['template'] : 'infolog.index.rows')
 			.($details ? '-details' : '');
 		//error_log(__METHOD__."(start=$query[start], num_rows=$query[num_rows]) query[col_filter][info_type]={$query['col_filter']['info_type']} --> query[template]=$query[template], columselection_pref=$columnselection_pref");
 
@@ -1066,8 +1066,7 @@ class infolog_ui
 		if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['nextmatch-'.($action ? 'infolog.'.$action : 'infolog.index.rows').'-details-pref'];
 
 		// disable columns for main entry as set in the pref for details or no details
-		$values['nm']['columnselection_pref'] = 'nextmatch-'.($action ? 'infolog.'.$action : 'infolog.index.rows')
-			.($values['nm']['filter2']=='all' ? '-details' : '');
+		$values['nm']['columnselection_pref'] = 'nextmatch-infolog.index.rows' . ($values['nm']['filter2'] == 'all' ? '-details' : '');
 		if ($action == 'sp')
 		{
 			$pref = $values['nm']['columnselection_pref'];
