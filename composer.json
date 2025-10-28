@@ -123,6 +123,7 @@
 		"guzzlehttp/guzzle": "^7.4.1",
 		"guzzlehttp/psr7": "^2.1.0",
 		"jumbojett/openid-connect-php": "^0.9.10",
+		"league/oauth2-server": "^7.4",
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
 		"oomphinc/composer-installers-extender": "^2.0.1",
