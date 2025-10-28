@@ -127,63 +127,11 @@ egw-app {
   }
 }
 
-/* Individual application colors, should go in each app's CSS */
+/* non-default application colors, are set server-side by Api\Framework::app_colors() in a style-tag in the header */
 body, :root {
-  // Color code for applications
-  egw-app[name="addressbook"] {
-	--application-color: var(--addressbook-color);
-  }
-
-  egw-app[name="admin"] {
-	--application-color: var(--admin-color);
-  }
-
-  egw-app[name="bookmarks"] {
-	--application-color: var(--bookmarks-color);
-  }
-
-  egw-app[name="calendar"] {
-	--application-color: var(--calendar-color);
-  }
-
-  egw-app[name="filemanager"] {
-	--application-color: var(--filemanager-color);
-  }
-
-  egw-app[name="infolog"] {
-	--application-color: var(--infolog-color);
-  }
-
-  egw-app[name="mail"] {
-	--application-color: var(--mail-color);
-  }
-
-  egw-app[name="projectmanager"] {
-	--application-color: var(--projectmanager-color);
-  }
-
-  egw-app[name="resources"] {
-	--application-color: var(--resources-color);
-  }
-
-  egw-app[name="timesheet"] {
-	--application-color: var(--timesheet-color);
-  }
-
-  egw-app[name="tracker"] {
-	--application-color: var(--tracker-color);
-  }
-
-  egw-app[name="wiki"] {
-	--application-color: var(--wiki-color);
-  }
-
-  egw-app[name="ranking"] {
-	--application-color: var(--ranking-color);
-  }
-
-  egw-app[name="smallpart"] {
-	--application-color: var(--smallpart-color);
+  // Color code for application without an individual color
+  egw-app {
+	  --application-color: var(--default-color)
   }
 }
 

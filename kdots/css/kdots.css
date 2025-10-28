@@ -725,62 +725,10 @@ egw-app *[slot="filter"] et2-details:has(> .et2_customfield_list:only-child > tb
 egw-app *[slot="filter"] et2-details:has(> .et2_customfield_list:only-child:empty) {
   display: none;
 }
-/* Individual application colors, should go in each app's CSS */
-body egw-app[name="addressbook"],
-:root egw-app[name="addressbook"] {
-  --application-color: var(--addressbook-color);
-}
-body egw-app[name="admin"],
-:root egw-app[name="admin"] {
-  --application-color: var(--admin-color);
-}
-body egw-app[name="bookmarks"],
-:root egw-app[name="bookmarks"] {
-  --application-color: var(--bookmarks-color);
-}
-body egw-app[name="calendar"],
-:root egw-app[name="calendar"] {
-  --application-color: var(--calendar-color);
-}
-body egw-app[name="filemanager"],
-:root egw-app[name="filemanager"] {
-  --application-color: var(--filemanager-color);
-}
-body egw-app[name="infolog"],
-:root egw-app[name="infolog"] {
-  --application-color: var(--infolog-color);
-}
-body egw-app[name="mail"],
-:root egw-app[name="mail"] {
-  --application-color: var(--mail-color);
-}
-body egw-app[name="projectmanager"],
-:root egw-app[name="projectmanager"] {
-  --application-color: var(--projectmanager-color);
-}
-body egw-app[name="resources"],
-:root egw-app[name="resources"] {
-  --application-color: var(--resources-color);
-}
-body egw-app[name="timesheet"],
-:root egw-app[name="timesheet"] {
-  --application-color: var(--timesheet-color);
-}
-body egw-app[name="tracker"],
-:root egw-app[name="tracker"] {
-  --application-color: var(--tracker-color);
-}
-body egw-app[name="wiki"],
-:root egw-app[name="wiki"] {
-  --application-color: var(--wiki-color);
-}
-body egw-app[name="ranking"],
-:root egw-app[name="ranking"] {
-  --application-color: var(--ranking-color);
-}
-body egw-app[name="smallpart"],
-:root egw-app[name="smallpart"] {
-  --application-color: var(--smallpart-color);
+/* non-default application colors, are set server-side by Api\Framework::app_colors() in a style-tag in the header */
+body egw-app,
+:root egw-app {
+  --application-color: var(--default-color);
 }
 /*** END APPLICATION ***/
 /*** Popup styling ***/

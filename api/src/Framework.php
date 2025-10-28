@@ -988,7 +988,10 @@ abstract class Framework extends Framework\Extra
 	{
 		return "\tbody, :root {\n".implode("\n", array_map(function($app)
 		{
-			return "\t\t--$app[name]-color: $app[color];";
+			return "\t\t--$app[name]-color: $app[color];\n".
+				"\t\tegw-app[name=\"$app[name]\"] {\n".
+				"\t\t\t--application-color: var(--$app[name]-color);\n".
+				"\t\t}";
 		}, array_filter($GLOBALS['egw_info']['apps'] ?? [], function ($app)
 		{
 			return !empty($app['enabled']) &&
