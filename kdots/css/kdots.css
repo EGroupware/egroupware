@@ -223,7 +223,6 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
 .timesheet_timer,
 #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer {
   text-align: center;
-  font-size: 20px;
   white-space: nowrap;
   color: var(--sl-color-neutral-600);
 }
@@ -1804,7 +1803,7 @@ html,
   color token generator using #4177a2
   https://codepen.io/claviska/full/QWveRgL
 
-  
+
    */
   --sl-color-primary-50: hsl(204, 33%, 98%);
   /* rgb(248 250 251) */
