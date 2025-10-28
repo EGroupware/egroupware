@@ -217,7 +217,7 @@ services:
 
   # Rocket.Chat server
   rocketchat:
-    image: rocketchat/rocket.chat:latest
+    image: quay.io/egroupware/rocket.chat:stable7
     command: >
       sh -c
         "while true; do
@@ -234,36 +234,39 @@ services:
     # - uncomment the next 2 lines about the private CA:
     # - /etc/egroupware-docker/private-ca.crt:/usr/local/share/ca-certificates/private-ca.crt:ro
     environment:
-      # - NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/private-ca.crt
-      # IMPORTANT: change ROOT_URL to your actual url eg. https://domain.com/rocketchat
-      - ROOT_URL=http://localhost/rocketchat
+      - ROOT_URL=http://localhost/
       - PORT=3000
-      - MONGO_URL=mongodb://mongo:27017/rocketchat
-      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
-    #     - HTTP_PROXY=http://proxy.domain.com
-    #     - HTTPS_PROXY=http://proxy.domain.com
+      - MONGO_URL=mongodb://mongo:27017/rocketchat?replicaSet=rs0&directConnection=true
+      - MONGO_OPLOG_URL=mongodb://mongo:27017/local?replicaSet=rs0&directConnection=true
     depends_on:
       - mongo
+    ports:
+      - 127.0.0.1:3000:3000
     container_name: rocketchat
-    # set the ip-address of your docker host AND your official DNS name so Rocket.Chat
-    # can access EGroupware without the need to go over your firewall
-    #extra_hosts:
-    #- "my.host.name:172.17.0.1"
 
-  # MongoDB for Rocket.Chat
   mongo:
-    image: mongo:5.0
+    image: mongo:7.0
     restart: unless-stopped
     volumes:
       - mongo:/data/db
       - $PWD/data/default/rocketchat/dump:/dump
-    command: mongod --oplogSize 128 --replSet rs0 -
+    command: mongod --oplogSize 128 --replSet rs0 --storageEngine=wiredTiger
     container_name: rocketchat-mongo
   # this container's job is just run the command to initialize the replica set.
   # it will run the command and remove himself (it will not stay running)
   mongo-init-replica:
-    image: mongo:5.0
-    command: 'bash -c "for i in `seq 1 30`; do mongo mongo/rocketchat --eval \"rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})\" && s=$$? && break || s=$$?; echo \"Tried $$i times. Waiting 5 secs...\"; sleep 5; done; (exit $$s)"'
+    image: mongo:7.0
+    command: >
+      bash -c
+        "for (( ; ; )); do
+          mongosh mongo/rocketchat --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              members: [ { _id: 0, host: 'localhost:27017' } ]})\" 2>&1 | grep 'MongoServerError: already initialized' &&
+          s=$$? && break || s=$$?;
+          echo \"Could not reach MongoDB. Waiting 5 secs ...\";
+          sleep 5;
+        done; (exit $$s)"
     depends_on:
       - mongo
 
