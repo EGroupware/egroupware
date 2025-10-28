@@ -354,7 +354,6 @@ class addressbook_ui extends addressbook_bo
 			//_debug_array(array('Typefilter:'=> $content['nm']['col_filter']['tid'],'Available Types:'=>$availabletypes,'action:'=>'remove invalid filter'));
 			unset($content['nm']['col_filter']['tid']);
 		}
-		if (!isset($content['nm']['col_filter']['tid'])) $content['nm']['col_filter']['tid'] = $availabletypes[0];
 		if (count($this->content_types) > 1)
 		{
 			foreach($this->content_types as $tid => $data)
