@@ -1254,7 +1254,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		{
 			// Still bound, but length is 0 - full refresh time
 			this._queued_refreshes = [];
-			return this.applyFilters();
+			return this.div.is(":visible") ? this.applyFilters() : null;
 		}
 		let types = {};
 		types[et2_nextmatch.ADD] = [];
