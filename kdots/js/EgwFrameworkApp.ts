@@ -357,12 +357,6 @@ export class EgwFrameworkApp extends LitElement
 			this.useIframe = false;
 		}
 
-		// Destroy application js
-		if(window.app[this.name] && window.app[this.name].destroy)
-		{
-			window.app[this.name].destroy();
-			delete window.app[this.name];	// really delete it, so new object get constructed and registered for push
-		}
 		this.loading = true;
 		if(!this.useIframe)
 		{
