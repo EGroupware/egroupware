@@ -14,18 +14,19 @@ import '../Et2Image/Et2Image';
 import {SlButton} from "@shoelace-style/shoelace";
 import {ButtonMixin} from "./ButtonMixin";
 import {PropertyValues} from "lit";
+import {customElement} from "lit/decorators/custom-element.js";
+import {property} from "lit/decorators/property.js";
 
-
+/**
+ * @summary Buttons represent actions that are available to the user.
+ *
+ * @slot (default)	The button’s label.
+ * @slot prefix	A presentational prefix icon or similar element.
+ * @slot suffix	A presentational suffix icon or similar element.
+ */
+@customElement('et2-button')
 export class Et2Button extends ButtonMixin(Et2InputWidget(SlButton))
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
-			label: {type: String, noAccessor: true, reflect: true}
-		}
-	}
-
 	protected firstUpdated(_changedProperties : PropertyValues)
 	{
 		super.firstUpdated(_changedProperties);
@@ -47,6 +48,7 @@ export class Et2Button extends ButtonMixin(Et2InputWidget(SlButton))
 		}
 	}
 
+	@property({type: String, noAccessor: true, reflect: true})
 	set label(new_label : string)
 	{
 		this.updateComplete.then(() =>
@@ -74,5 +76,3 @@ export class Et2Button extends ButtonMixin(Et2InputWidget(SlButton))
 		return this._labelNode?.textContent?.trim();
 	}
 }
-
-customElements.define("et2-button", Et2Button);
