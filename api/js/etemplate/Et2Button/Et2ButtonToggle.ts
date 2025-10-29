@@ -30,6 +30,9 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 				img[part="image"]{
 					filter: var(--image-filter);
 				}
+				et2-image::before{
+					vertical-align: bottom;
+				}
 
 				sl-switch:not([checked]) slot[name="off"] {
 					position: relative;
@@ -48,7 +51,7 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 				sl-switch:not([checked]):not(.has-off-icon) slot[name="off"]::after {
 					content: '';
 					position: absolute;
-					top: 50%;
+					top: 45%;
 					left: 0;
 					width: 100%;
 					height: 2px;

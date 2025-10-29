@@ -2377,7 +2377,7 @@ div.et2_progress {
     display: inline-block;
     border: 1px solid var(--sl-color-neutral-950, black);
     background-color: var(--sl-color-neutral-0, white);
-    width: 1.5em;
+    width: 2em;
     height: round(up, 0.7em, 1px);
     padding: 1px;
     text-align: left;
