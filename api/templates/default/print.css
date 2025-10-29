@@ -11,10 +11,11 @@
 	display:none;
 }
 
-#divMain,#popupMainDiv {
+#divMain,div#popupMainDiv {
 	border:none;
 	margin:0px;
 	padding:0px;
+    max-height: fit-content;
 }
 
 #tdAppbox,#divAppboxHeader,#divSubContainer,#divAppbox {
