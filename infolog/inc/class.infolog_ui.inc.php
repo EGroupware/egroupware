@@ -603,7 +603,12 @@ class infolog_ui
 			{
 				$headers[] = lang($this->filters[$query['filter']]);
 			}
-			if ($query['action'] && ($title = $query['action_title'] || is_array($query['action_id']) ?
+			if($linked && ($title = $query['action_title'] ?
+					$query['action_title'] : Link::title($linked['app'], is_array($linked['id']) ? current($linked['id']) : $linked['id'])))
+			{
+				$headers[] = $title;
+			}
+			elseif($query['action'] && ($title = $query['action_title'] || is_array($query['action_id']) ?
 				$query['action_title'] : Link::title($query['action']=='sp'?'infolog':$query['action'],$query['action_id'])))
 			{
 				$headers[] = $title;
@@ -1018,6 +1023,12 @@ class infolog_ui
 				}
 				break;
 			default:
+				if($action && in_array($action, array_keys($GLOBALS['egw_info']['apps'])) && $action_id && (!is_array($action_id) || count($action_id) == 1))
+				{
+					$values['nm']['col_filter']['linked'] = ['app' => $action,
+															 'id'  => is_array($action_id) ? current($action_id) : $action_id];
+					unset($action, $action_id);
+				}
 				// Nothing
 		}
 		$readonlys['cancel'] = $action != 'sp';
@@ -1063,7 +1074,10 @@ class infolog_ui
 
 		$values['nm']['filter2_aria_label'] = lang('Details');
 
-		if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['nextmatch-'.($action ? 'infolog.'.$action : 'infolog.index.rows').'-details-pref'];
+		if(!isset($values['nm']['filter2']))
+		{
+			$values['nm']['filter2'] = $this->prefs['nextmatch-infolog.index.rows-details-pref'];
+		}
 
 		// disable columns for main entry as set in the pref for details or no details
 		$values['nm']['columnselection_pref'] = 'nextmatch-infolog.index.rows' . ($values['nm']['filter2'] == 'all' ? '-details' : '');
