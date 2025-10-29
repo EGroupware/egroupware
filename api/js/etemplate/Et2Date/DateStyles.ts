@@ -14,6 +14,7 @@ export const dateStyles = [
 			white-space: nowrap;
 			min-width: fit-content;
 			background-color: transparent;
+			color: var(--sl-color-neutral-950);
 		}
 
 		/* Style input directly for mobile */
