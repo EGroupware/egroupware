@@ -88,7 +88,7 @@ export class Et2LinkAdd extends Et2InputWidget(LitElement)
 
 	get _buttonNode() : Et2Button
 	{
-		return this.shadowRoot.querySelector("et2-button");
+		return this.shadowRoot.querySelector("et2-button-icon");
 	}
 
 	/**
@@ -136,7 +136,7 @@ export class Et2LinkAdd extends Et2InputWidget(LitElement)
                             ?readonly=${this.readonly}
                             .value=${this.value?.app}
                     ></et2-link-apps>
-                    <et2-button
+                    <et2-button-icon
                             id=${this.id + "_add"}
                             image="add"
                             aria-label=${this.egw().lang("Add entry")}
@@ -144,7 +144,7 @@ export class Et2LinkAdd extends Et2InputWidget(LitElement)
                             ?readonly=${this.readonly}
                             noSubmit
                             @click=${this.handleButtonClick}
-                    ></et2-button>
+                    ></et2-button-icon>
                     <slot part="suffix" name="suffix"></slot>
                 </div>
             </div>
