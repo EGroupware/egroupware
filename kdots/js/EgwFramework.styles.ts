@@ -161,7 +161,7 @@ export default css`
 
     .egw_fw__header .egw_fw__app_list {
         flex: none;
-        font-size: var(--header-icon-size, var(--sl-font-size-2x-large));
+        font-size: var(--sl-font-size-2x-large);
 
         sl-icon-button::part(base) {
             padding-left: 0
