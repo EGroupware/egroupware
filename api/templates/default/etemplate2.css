@@ -357,9 +357,14 @@ et2-image::slotted(img) {
 	max-width: 100%;
 }
 
+
 et2-image[icon] {
 	height: 1.3rem;
 	font-size: 1.3rem !important;
+}
+et2-appicon > svg{
+    width: 1.3em;
+    height: 1.3em;
 }
 /**
  * Former button without background_image --> <et2-image class="et2-image-button"

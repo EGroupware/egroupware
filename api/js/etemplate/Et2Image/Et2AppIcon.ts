@@ -10,9 +10,12 @@
 
 
 import {Et2Image} from "./Et2Image";
+import {property} from "lit/decorators/property.js";
 
 export class Et2AppIcon extends Et2Image
 {
+	@property({type: Boolean})
+	kdots: boolean;
 	constructor()
 	{
 		super();
@@ -23,8 +26,12 @@ export class Et2AppIcon extends Et2Image
 	protected parse_href(_app : string) : string
 	{
 		if (!_app) _app = this.egw().app_name();
-
-		const src = (this.egw().app(_app, 'icon_app') || _app)+'/'+(this.egw().app(_app, 'icon') || 'navbar');
+		const icon = this.kdots?'kdots-navbar':'navbar'
+		if(this.kdots){
+			this.style.setProperty('color',`var(--${_app}-color)`);
+			this.inline =true;
+		}
+		const src = (this.egw().app(_app, 'icon_app') || _app)+'/'+(this.egw().app(_app, 'icon') || icon);
 
 		return super.parse_href(src);
 	}
