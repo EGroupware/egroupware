@@ -930,36 +930,26 @@ export class EgwFramework extends LitElement
 	 * Set a notification message for topmenu info item
 	 *
 	 * @param {string} _id id of topmenu info item with its prefix
+	 * @param {bool} _switch true: show, false: hide
 	 * @param {string} _message message that should be displayed
 	 * @param {string} _tooltip hint text as tooltip
 	 */
 	public topmenu_info_notify(_id, _switch, _message, _tooltip)
 	{
-		var $items = jQuery('#egw_fw_topmenu_info_items').children();
-		var prefix = "topmenu_info_";
-
-		$items.each(function(i, item)
+		const badge = document.querySelector('et2-button-icon#topmenu_info_notifications > sl-badge');
+		if (badge)
 		{
-			if(item.id == prefix + _id || item.id == _id)
+			if (_switch)
 			{
-				var $notify = jQuery(item).find('.egw_fw_topmenu_info_notify');
-				if(_switch)
-				{
-					if($notify.length == 0)
-					{
-						$notify = jQuery(document.createElement('div'))
-							.addClass('egw_fw_topmenu_info_notify')
-							.prop('title', _tooltip)
-							.appendTo(item);
-					}
-					$notify.prop('title', _tooltip).text(_message);
-				}
-				else
-				{
-					$notify.remove();
-				}
+				badge.textContent = _message;
+				badge.title = _tooltip;
+				badge.style.display = '';
 			}
-		});
+			else
+			{
+				badge.style.display = 'none';
+			}
+		}
 	}
 
 	protected getBaseUrl() {return "";}
@@ -1265,7 +1255,14 @@ export class EgwFramework extends LitElement
                     <et2-image part="tab-icon" src="${app.icon}" inline></et2-image>
                 </sl-tooltip>
                 ${app.notificationCount ? html`
-                    <sl-badge part="notification" pill variant="danger">${app.notificationCount}</sl-badge>` : nothing}
+                    <sl-badge part="notification" pill variant="danger" @click=${(e) => 
+					{
+						app.notificationCount = '';	// remove badge
+                        if (window.app.notifications.tabToggle(app.name))
+                        {
+                            e.stopImmediatePropagation();
+                        }
+                    }}>${app.notificationCount}</sl-badge>` : nothing}
             </sl-tab>`;
 	}
 
