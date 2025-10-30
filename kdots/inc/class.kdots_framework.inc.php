@@ -513,7 +513,7 @@ class kdots_framework extends Api\Framework\Ajax
 		// This should all be handled by notification app
 		$path = "../../notifications/js/Et2NotificationBell.js";
 		self::includeJS($path . '?' . filemtime(EGW_SERVER_ROOT . $path));
-		return '<div id="topmenu_info_notifications" style="position:relative; cursor:pointer"><et2-image statustext="' . lang('notifications') . '" src="bell-fill"></et2-image><sl-badge pill variant="danger" style="display: none; position:absolute; left:-1.2em; top:1.2em; font-size:.5em"></sl-badge></div>';
+		return '<div id="topmenu_info_notifications" style="position:relative; cursor:pointer"><et2-image statustext="' . lang('notifications') . '" src="bell-fill"></et2-image><sl-badge pill variant="danger" style="display: none;"></sl-badge></div>';
 	}
 
 

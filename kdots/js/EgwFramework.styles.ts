@@ -26,6 +26,11 @@ export default css`
         grid-template-columns: [start banner-start header-start footer-start main-start] 1fr [main-end header-end banner-end end];
         grid-template-rows: [top banner] fit-content(2em) [header] fit-content(2em) [main-header] fit-content(2em) [main] 1fr [footer bottom] fit-content(2em);
     }
+	/*If we inline svgs give them a default size if not otherwise specified*/
+    et2-image > svg{
+        width: 1.3rem;
+        height: 1.3rem;
+    }
 
     .egw_fw__layout-default > * {
         position: relative;

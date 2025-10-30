@@ -348,7 +348,7 @@ a.et2_url.url {
     margin-left: 0px;
 }
 
-/* et2-image has no shadow DOM, styles here */
+/* et2-image has no shadow DOM, styles here Et2Image.ts and Et2AppIcon et2-appicon*/
 et2-image {
 	filter: var(--image-filter);
 }
@@ -361,6 +361,10 @@ et2-image::slotted(img) {
 et2-image[icon] {
 	height: 1.3rem;
 	font-size: 1.3rem !important;
+}
+et2-image > svg{
+    width: 1.3rem;
+    height: 1.3rem;
 }
 et2-appicon > svg{
     width: 1.3em;
@@ -3917,4 +3921,15 @@ et2-vfs-mime img.overlay {
     height: 16px;
     width: 16px;
     z-index: 1;
+}
+/*badge on the notification bell, to look visually similar to EgwFramework.styles.ts badge on the open app icons*/
+#topmenu_info_notifications sl-badge{
+    position: absolute;
+    bottom: -.5em;
+    left: -.7em;
+    font-size: 1em;
+}
+#topmenu_info_notifications sl-badge::part(base) {
+    /* put specific sizing here*/
+    padding: 0.15em 0.4em;
 }
