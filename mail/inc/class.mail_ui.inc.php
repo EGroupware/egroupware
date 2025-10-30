@@ -852,6 +852,11 @@ class mail_ui
 			// manage folders should not affect the ability to subscribe or unsubscribe
 			// to existing folders, it should only affect add/rename/move/delete
 		}
+		// Turn off drag folder on mobile, it can conflict with context menu on Android
+		if(EGroupware\Api\Header\UserAgent::mobile())
+		{
+			unset($tree_actions['move']);
+		}
 		return $tree_actions;
 	}
 
