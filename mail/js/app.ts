@@ -21,13 +21,7 @@ import {
 	EGW_KEY_ARROW_DOWN,
 	EGW_KEY_ARROW_UP
 } from "../../api/js/egw_action/egw_action_constants";
-import {
-	egw_keycode_translation_function,
-	egw_keycode_makeValid,
-	egw_keyHandler
-} from "../../api/js/egw_action/egw_keymanager";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
-import {Et2VfsSelectButton} from "../../api/js/etemplate/Et2Vfs/Et2VfsSelectButton";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {addAttachmentPlaceholder, setPredefinedAddresses} from "./mailAppJsFunctions";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
@@ -40,7 +34,6 @@ var keepFromExpander;
  */
 class MailApp extends EgwApp
 {
-	readonly appname = 'mail';
 	/**
 	 * modified attribute in mail app to test new entries get added on top of list
 	 */
@@ -49,7 +42,6 @@ class MailApp extends EgwApp
 	/**
 	 * et2 widget container
 	 */
-	et2 : any = null;
 	nm : any = null;
 	doStatus : any = null;
 
@@ -118,7 +110,7 @@ class MailApp extends EgwApp
 	 */
 	constructor()
 	{
-		super();
+		super('mail');
 		// v-- from egw_app.ts, no need to port to TS
 		this.nm = null;
 		this.nmFilterChange = this.nmFilterChange.bind(this);
@@ -220,8 +212,8 @@ class MailApp extends EgwApp
 	 */
 	et2_ready(et2, _name)
 	{
-		// call parent; somehow this function is called more often. (twice on a display and compose) why?
-		super.disable_autorefresh.apply(this, arguments);
+		super.et2_ready(et2, _name);
+		
 		this.et2_obj = et2;
 		this.push_active = {};
 		switch (_name)
