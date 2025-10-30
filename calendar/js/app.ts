@@ -781,6 +781,15 @@ export class CalendarApp extends EgwApp
 		return false;
 	}
 
+	getFilterInfo(filterValues)
+	{
+		const info = framework?.getApp("calendar")?.filterInfo(filterValues) ?? {};
+		if(this.state.view !== "listview")
+		{
+			info.tooltip = this.egw.lang("Filter");
+		}
+		return info;
+	}
 	/**
 	 * Handle actions from the toolbar
 	 *
