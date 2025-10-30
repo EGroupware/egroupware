@@ -206,8 +206,8 @@ class HtmLawed
 		}
 
 		// User preferences
-		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'] ?? null;
+		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'] ?? null;
 
 		// Check for "blank" = just user preference span - for some reason we can't match on the entity, so approximate
 		$regex = '#^<span style="[^"]*font-family:'.$font.'; font-size:'.$font_size.'pt;[^"]*">.?</span>$#us';

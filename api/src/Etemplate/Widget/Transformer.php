@@ -96,8 +96,9 @@ abstract class Transformer extends Etemplate\Widget
 
 		//echo $this; _debug_array($unmodified); _debug_array($attrs); _debug_array(array_diff_assoc($attrs, $unmodified));
 		// compute the difference and send it to the client as modifications
+		// array_diff_assoc gives a PHP Warning "Array to string conversion" if the values are arrays!
 		$type_changed = false;
-		foreach(array_diff_assoc($attrs, $unmodified) as $attr => $val)
+		foreach(array_udiff_assoc($attrs, $unmodified, static fn($a, $b) => $a != $b) as $attr => $val)
 		{
 			switch($attr)
 			{

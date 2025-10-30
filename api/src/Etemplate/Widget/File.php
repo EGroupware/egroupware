@@ -508,7 +508,21 @@ class File extends Etemplate\Widget
 		{
 			fsync($fp);
 		}
+		$ftellSize = ftell($fp);
 		fclose($fp);
+
+		$cnt = 0;
+		do {
+			clearstatcache(true, $tmpFile);
+			$tmpSize = filesize($tmpFile);
+
+			if ($tmpSize !== $expectedSize)
+			{
+				error_log("$cnt try: Tmp file size mismatch: expected $expectedSize, ftellSize was $ftellSize and tmpSize was $tmpSize");
+				sleep(1);
+			}
+		}
+		while ($tmpSize !== $expectedSize && $cnt++ < 10);
 
 		// Move to final destination on NFS — should be atomic if same filesystem
 		$finalPath = $tmpFile . "_complete";
@@ -518,8 +532,18 @@ class File extends Etemplate\Widget
 			throw new Api\Exception("Failed to move assembled file to final location: $finalPath");
 		}
 		//error_log("Moved assembled file to $finalPath");
-		clearstatcache(true, $finalPath);
-		$actualSize = filesize($finalPath);
+		$cnt = 0;
+		do {
+			clearstatcache(true, $finalPath);
+			$actualSize = filesize($finalPath);
+
+			if ($actualSize !== $expectedSize)
+			{
+				error_log("$cnt try: Final assembled file size mismatch: expected $expectedSize, got $actualSize, ftellSize was $ftellSize and tmpSize was $tmpSize");
+				sleep(1);
+			}
+		}
+		while ($actualSize !== $expectedSize && $cnt++ < 10);
 
 		//error_log("=== Assembly complete: wrote $actualSize bytes to local temp ===");
 		if($actualSize !== $expectedSize)
