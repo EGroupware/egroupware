@@ -936,7 +936,7 @@ export class EgwFramework extends LitElement
 	 */
 	public topmenu_info_notify(_id, _switch, _message, _tooltip)
 	{
-		const badge = document.querySelector('et2-button-icon#topmenu_info_notifications > sl-badge');
+		const badge = document.querySelector('#topmenu_info_notifications > sl-badge');
 		if (badge)
 		{
 			if (_switch)
