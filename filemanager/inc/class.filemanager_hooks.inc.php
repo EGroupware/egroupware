@@ -384,7 +384,7 @@ class filemanager_hooks
 			$remap = [];
 			foreach(['from', 'to', 'path'] as $map_path)
 			{
-				if($data[$map_path])
+				if(!empty($data[$map_path]))
 				{
 					$remap[$map_path] = str_replace($path_dir, $url_dir, Vfs::parse_url($data[$map_path], PHP_URL_PATH));
 				}
@@ -424,7 +424,7 @@ class filemanager_hooks
 		}
 		foreach(['to', 'from', 'path'] as $field)
 		{
-			$eacl = Vfs::get_eacl($data[$field]);
+			$eacl = Vfs::get_eacl($data[$field] ?? null);
 			if($eacl)
 			{
 				$acl = array_merge($acl, array_column($eacl, 'owner'));

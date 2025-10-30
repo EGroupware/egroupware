@@ -470,7 +470,7 @@ class Select extends Etemplate\Widget
 					$no_lang, $this->attrs['readonly'] ?? false, self::get_array(self::$request->content, $form_name), $form_name
 				);
 				// Remove unavailable from value
-				$application = self::expand_name($this->attrs['application'], 0, 0, '', '', self::$cont);
+				$application = !empty($this->attrs['application']) ? self::expand_name($this->attrs['application'], 0, 0, '', '', self::$cont) : null;
 				if(!$application || $application === $GLOBALS['egw']->categories->app_name)
 				{
 					$categories = $GLOBALS['egw']->categories;

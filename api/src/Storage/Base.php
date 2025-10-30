@@ -1630,7 +1630,7 @@ class Base
 		}
 		$criteria = array();
 		$op = 'AND';
-		if ($query['search'])
+		if (!empty($query['search']))
 		{
 			$criteria = $query['search'];
 		}

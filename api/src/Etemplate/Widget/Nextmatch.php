@@ -590,11 +590,11 @@ class Nextmatch extends Etemplate\Widget
 			}
 			if (!empty($class))
 			{
-				if (!$app && !is_object($GLOBALS[$class]))
+				if (!$app && !is_object($GLOBALS[$class] ?? null))
 				{
 					$GLOBALS[$class] = new $class();
 				}
-				if (is_object($GLOBALS[$class]))	// use existing instance (put there by a previous CreateObject)
+				if (is_object($GLOBALS[$class] ?? null))	// use existing instance (put there by a previous CreateObject)
 				{
 					$obj = $GLOBALS[$class];
 				}

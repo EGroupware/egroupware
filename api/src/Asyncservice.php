@@ -45,6 +45,8 @@ class Asyncservice
 	 */
 	const DEFAULT_KEEP_TIME = 86400;	// 1day
 
+	public $only_fallback = false;
+
 	/**
 	 * constructor of the class
 	 *

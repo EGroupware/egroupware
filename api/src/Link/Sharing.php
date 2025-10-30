@@ -79,7 +79,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		$actions = parent::get_actions($appname, $group);
 
 		// Add in merge to mail document
-		if ($GLOBALS['egw_info']['user']['apps']['mail'] && class_exists($appname.'_merge'))
+		if (!empty($GLOBALS['egw_info']['user']['apps']['mail']) && class_exists($appname.'_merge'))
 		{
 			$documents = call_user_func(array($appname.'_merge', 'document_action'),
 				$GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'],

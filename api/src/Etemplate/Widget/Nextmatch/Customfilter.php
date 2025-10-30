@@ -32,8 +32,10 @@ class Customfilter extends Widget\Transformer
 	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		parent::beforeSendToClient($cname, $expand);
-		switch($this->attrs['type'])
+		switch($this->attrs['type'] ?? null)
 		{
+			case null:
+				break;
 			case "link-entry":
 				self::$transformation['type'] = $this->attrs['type'] = 'et2-nextmatch-header-entry';
 				break;
@@ -60,9 +62,9 @@ class Customfilter extends Widget\Transformer
 		}
 		$form_name = self::form_name($cname, $this->id, $expand);
 
-		self::setElementAttribute($form_name, 'options', trim($this->attrs['widgetOptions'] ?? $this->attrs['widget_options']) != '' ? ($this->attrs['widgetOptions'] ?? $this->attrs['widget_options']) : '');
+		self::setElementAttribute($form_name, 'options', trim($this->attrs['widgetOptions'] ?? $this->attrs['widget_options'] ?? '') != '' ? ($this->attrs['widgetOptions'] ?? $this->attrs['widget_options'] ?? '') : '');
 
-		self::setElementAttribute($form_name, 'type', $this->attrs['type']);
+		self::setElementAttribute($form_name, 'type', $this->attrs['type']??null);
 		if($widget_type)
 		{
 			self::setElementAttribute($form_name, 'widgetType', $widget_type);

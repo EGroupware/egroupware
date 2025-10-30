@@ -74,7 +74,7 @@ trait UserContextTrait
 	 */
 	protected function check_set_context($url)
 	{
-		if ($url[0] !== '/' && ($account_lid = Vfs::parse_url($url, PHP_URL_USER)))
+		if (isset($url) && $url[0] !== '/' && ($account_lid = Vfs::parse_url($url, PHP_URL_USER)))
 		{
 			$this->user = $account_lid;
 		}

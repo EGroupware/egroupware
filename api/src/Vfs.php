@@ -449,8 +449,8 @@ class Vfs extends Vfs\Base
 					if (is_dir($file) && ($options['follow'] || !is_link($file)) && (!isset($options['maxdepth']) || $options['maxdepth'] > 1))
 					{
 						$opts = $options;
-						if ($opts['mindepth']) $opts['mindepth']--;
-						if ($opts['maxdepth']) $opts['depth']++;
+						if (!empty($opts['mindepth'])) $opts['mindepth']--;
+						if (!empty($opts['maxdepth'])) $opts['depth']++;
 						unset($opts['order']);
 						unset($opts['limit']);
 						foreach(self::find($options['url']?$file:self::parse_url($file,PHP_URL_PATH),$opts,true) as $p => $s)

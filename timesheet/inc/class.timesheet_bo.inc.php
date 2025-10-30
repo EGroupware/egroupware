@@ -173,7 +173,7 @@ class timesheet_bo extends Api\Storage
 		$this->today = mktime(0,0,0,date('m',$this->now),date('d',$this->now),date('Y',$this->now));
 
 		// save us in $GLOBALS['timesheet_bo'] for ExecMethod used in hooks
-		if (!is_object($GLOBALS['timesheet_bo']))
+		if (!isset($GLOBALS['timesheet_bo']) && !is_object($GLOBALS['timesheet_bo']))
 		{
 			$GLOBALS['timesheet_bo'] =& $this;
 		}
@@ -1050,7 +1050,7 @@ class timesheet_bo extends Api\Storage
 			$data =& $this->data;
 		}
 		// get pm_id from links and ts_project: either project matching ts_project or first found project
-		if (!isset($data['pm_id']) && $data['ts_id'])
+		if (!isset($data['pm_id']) && !empty($data['ts_id']))
 		{
 			$first_pm_id = null;
 			foreach(Link::get_links('timesheet', $data['ts_id'], 'projectmanager') as $pm_id)
@@ -1066,7 +1066,7 @@ class timesheet_bo extends Api\Storage
 			}
 			if (!isset($data['pm_id']) && isset($first_pm_id)) $data['pm_id'] = $first_pm_id;
 		}
-		elseif ($data['ts_id'] && $data['pm_id'] && Link::title('projectmanager', $data['pm_id']) == $data['ts_project'])
+		elseif (!empty($data['ts_id']) && !empty($data['pm_id']) && Link::title('projectmanager', $data['pm_id']) == $data['ts_project'])
 		{
 			$data['ts_project_blur'] = $data['ts_project'];
 			$data['ts_project'] = '';

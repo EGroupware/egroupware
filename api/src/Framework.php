@@ -224,7 +224,7 @@ abstract class Framework extends Framework\Extra
 
 			// check if we have a message, in which case send it along too
 			$extra = self::get_extra();
-			if ($extra['message'])
+			if (!empty($extra['message']))
 			{
 				Json\Response::get()->apply('egw.message', $extra['message']);
 			}

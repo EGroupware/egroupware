@@ -599,7 +599,8 @@ class Base
 	 */
 	static protected function get_path($path, $only_remove_scheme = self::SCHEME)
 	{
-		if($path[0] != '/' && (!$only_remove_scheme || Vfs::parse_url($path, PHP_URL_SCHEME) == $only_remove_scheme))
+		if (!isset($path)) return null;
+		if($path[0] !== '/' && (!$only_remove_scheme || Vfs::parse_url($path, PHP_URL_SCHEME) == $only_remove_scheme))
 		{
 			$path = Vfs::parse_url($path, PHP_URL_PATH);
 		}

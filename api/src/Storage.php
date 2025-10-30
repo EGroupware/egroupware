@@ -424,7 +424,7 @@ class Storage extends Storage\Base
 	{
 		parent::get_rows($query,$rows,$readonlys,$join,$need_full_no_count,$only_keys,$extra_cols);
 
-		$selectcols = $query['selectcols'] ? (is_string($query['selectcols']) ? explode(',',$query['selectcols']) :$query['selectcols']): array();
+		$selectcols = !empty($query['selectcols']) ? (is_string($query['selectcols']) ? explode(',',$query['selectcols']) :$query['selectcols']): array();
 
 		if ($rows && $this->customfields && (!$selectcols || in_array('customfields',$selectcols)))
 		{
@@ -434,6 +434,7 @@ class Storage extends Storage\Base
 				$id2keys[$row[$this->db_key_cols[$this->autoinc_id]]] = $key;
 			}
 			// check if only certain cf's to show
+			$fields = null;
 			if (!in_array('customfields', $selectcols))
 			{
 				foreach($selectcols as $col)

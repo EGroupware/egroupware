@@ -652,10 +652,9 @@ class Widget
 		list($value, $check) = $vals = explode('=', $disabled);
 
 		// use expand_name to be able to use @ or $
-		$val = self::expand_name($value, $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
-		$check_val = self::expand_name($check, $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
-		$result = count($vals) == 1 ?
-			boolval($val) :
+		$val = self::expand_name($value, $expand['c']??null, $expand['row']??null, $expand['c_']??null, $expand['row_']??null, $expand['cont']??[]);
+		$check_val = self::expand_name($check, $expand['c']??null, $expand['row']??null, $expand['c_']??null, $expand['row_']??null, $expand['cont']??[]);
+		$result = count($vals) == 1 ? (bool)$val :
 			($check_val[0] == '/' ? preg_match($check_val, $val) : $val == $check_val);
 		if($not)
 		{
