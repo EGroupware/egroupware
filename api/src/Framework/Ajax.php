@@ -426,13 +426,19 @@ abstract class Ajax extends Api\Framework
 			   94% 74%, 97% 67%, 98% 58%);
 			background-color: #b0dccc;
 			transition: opacity 1s  cubic-bezier(0.4, 0, 1, 1);
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
+		.fl_app svg {width: 32px; height: 32px;}
 		#egw_fw_firstload .fl_apps {
 			width: 100%;
 			max-width: 400px;
 			display: block;
 			background: transparent;
 			margin: 20% auto 20px;
+			display: flex;
+			flex-wrap: wrap;
 		}
 		#egw_fw_firstload .fl_wrapper {
 			margin:auto;
@@ -467,9 +473,12 @@ abstract class Ajax extends Api\Framework
 		});
 		foreach ($apps as $app)
 		{
+			$svg = file_get_contents('../'.htmlspecialchars($app['icon']));
+			$svg = substr($svg, strpos($svg, "<svg"));
 			$appsDiv .= '<div class="fl_app '.htmlspecialchars($app['name']).'"'.
-				' style="background-image:url('.htmlspecialchars($app['icon']).');'.
-				'background-position:center;background-size:32px;display:inline-block;margin:1px;"></div>';
+				'style="color:var(--'.htmlspecialchars($app['name']). '-color,var(--default-color,#606060))">'.
+				$svg.
+				'</div> ';
 		}
 		$content .= '<div class="fl_wrapper" style="margin:auto;"><div class="fl_apps">'.$appsDiv.
 			'</div><div class="fl_progress"><div></div></div></div></div>';
