@@ -1,7 +1,7 @@
 /**
  * mail - static javaScript functions
  *
- * @link http://www.egroupware.org
+ * @link: https://www.egroupware.org
  * @author EGroupware GmbH [info@egroupware.org]
  * @copyright (c) 2013-2020 by EGroupware GmbH <info-AT-egroupware.org>
  * @package mail
@@ -11,7 +11,7 @@
 /*egw:uses
 */
 
-import {AppJS} from "../../api/js/jsapi/app_base.js";
+import {EgwApp} from "../../api/js/jsapi/egw_app";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw_getActionManager, egw_getObjectManager} from '../../api/js/egw_action/egw_action';
@@ -38,86 +38,87 @@ var keepFromExpander;
  *
  * @augments AppJS
  */
-app.classes.mail = AppJS.extend(
-	{
-	appname: 'mail',
+class MailApp extends EgwApp
+{
+	readonly appname = 'mail';
 	/**
 	 * modified attribute in mail app to test new entries get added on top of list
 	 */
-	modification_field_name: 'date',
+	modification_field_name : any = 'date';
 
 	/**
 	 * et2 widget container
 	 */
-	et2: null,
-	nm: null,
-	doStatus: null,
+	et2 : any = null;
+	nm : any = null;
+	doStatus : any = null;
 
-	mail_queuedFolders: [],
-	mail_queuedFoldersIndex: 0,
+	mail_queuedFolders : any = [];
+	mail_queuedFoldersIndex : any = 0;
 
-	mail_selectedMails: [],
-	mail_currentlyFocussed: '',
-	mail_previewAreaActive: true, // we start with the area active
+	mail_selectedMails : any = [];
+	mail_currentlyFocussed : any = '';
+	mail_previewAreaActive : any = true; // we start with the area active
 
-	nm_index: 'nm', // nm name of index
-	mail_fileSelectorWindow: null,
-	mail_isMainWindow: true,
+	nm_index : any = 'nm'; // nm name of index
+	mail_fileSelectorWindow : any = null;
+	mail_isMainWindow : any = true;
 
 	// Some state variables to track preview pre-loading
-	preview_preload: {
+	preview_preload : any = {
 		timeout: null,
 		request: null
-	},
+	}
 	/**
 	 *
 	 */
-	subscription_treeLastState : "",
+	subscription_treeLastState : "";
 
-	tree_wdg : null,
+	tree_wdg : null;
 
 	/**
 	 * abbrevations for common access rights
 	 * @array
 	 *
 	 */
-	aclCommonRights:['lrs','lprs','ilprs',	'ilprsw', 'aeiklprstwx', 'custom'],
+	aclCommonRights : any = ['lrs','lprs','ilprs',	'ilprsw', 'aeiklprstwx', 'custom'];
 	/**
 	 * Demonstrates ACL rights
 	 * @array
 	 *
 	 */
-	aclRights:['l','r','s','w','i','p','c','d','k','x','t','e','a'],
+	aclRights : any = ['l','r','s','w','i','p','c','d','k','x','t','e','a'];
 
 	/**
 	 * In order to store Intervals assigned to window
 	 * @array of setted intervals
 	 */
-	W_INTERVALS:[],
+	W_INTERVALS : any = [];
 
 	/**
 	 *
 	 * @array of setted timeouts
 	 */
-	W_TIMEOUTS: [],
+	W_TIMEOUTS : any = [];
 
 	/**
 	 * Replace http:// in external image urls with
 	 */
-	image_proxy: 'https://',
+	image_proxy : any = 'https://';
 
 	/**
 	 * stores push activated acc ids
 	 */
-	push_active: {},
+	push_active : any = {};
 
 	/**
 	 * Initialize javascript for this application
 	 *
 	 * @memberOf mail
 	 */
-	init: function() {
-		this._super.apply(this,arguments);
+	constructor()
+	{
+		super();
 		// v-- from egw_app.ts, no need to port to TS
 		this.nm = null;
 		this.nmFilterChange = this.nmFilterChange.bind(this);
@@ -138,12 +139,12 @@ app.classes.mail = AppJS.extend(
 				},
 				this
 			);
-	},
+	}
 
 	/**
 	 * Destructor
 	 */
-	destroy: function()
+	destroy()
 	{
 		// Unbind from nm refresh
 		if(this.et2 != null)
@@ -173,26 +174,26 @@ app.classes.mail = AppJS.extend(
 		// ^-- from egw_app.ts, no need to port to TS
 
 		// call parent
-		this._super.apply(this, arguments);
-	},
+		super.destroy.apply(this, arguments);
+	}
 
 	/**
 	 * Dynamic disable NM autorefresh on get_rows response depending on push support of imap-server
 	 *
 	 * @param {bool} _disable
 	 */
-	disable_autorefresh: function(_disable)
+	disable_autorefresh(_disable)
 	{
 		if (this.checkET2())
 		{
 			this.et2.getWidgetById('nm').set_disable_autorefresh(_disable);
 		}
-	},
+	}
 
 	/**
 	 * check and try to reinitialize et2 of module
 	 */
-	checkET2: function()
+	checkET2()
 	{
 		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
 		if (!this.et2) // if not defined try this in order to recover
@@ -207,7 +208,7 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		return true;
-	},
+	}
 
 	/**
 	 * This function is called when the etemplate2 object is loaded
@@ -217,10 +218,10 @@ app.classes.mail = AppJS.extend(
 	 * @param et2 etemplate2 Newly ready object
 	 * @param {string} _name template name
 	 */
-	et2_ready: function(et2, _name)
+	et2_ready(et2, _name)
 	{
 		// call parent; somehow this function is called more often. (twice on a display and compose) why?
-		this._super.apply(this, arguments);
+		super.disable_autorefresh.apply(this, arguments);
 		this.et2_obj = et2;
 		this.push_active = {};
 		switch (_name)
@@ -253,6 +254,7 @@ app.classes.mail = AppJS.extend(
 
 				// Stop list from focussing next row on keypress
 				let aom = egw_getObjectManager('mail').getObjectById('nm');
+				// @ts-ignore
 				aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
 
 				let splitter = this.et2.getWidgetById('mailSplitter');
@@ -393,7 +395,7 @@ app.classes.mail = AppJS.extend(
 
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({
-					focus:function(){
+					focus(){
 						that.compose_fieldExpander_init();
 						that.compose_fieldExpander();
 					}
@@ -498,7 +500,7 @@ app.classes.mail = AppJS.extend(
 		}
 		// set image_proxy for resolveExternalImages
 		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
-	},
+	}
 
 	/**
 	 * Handle a push notification about entry changes from the websocket
@@ -518,7 +520,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
 	 * @param {number} pushData.account_id User that caused the notification
 	 */
-	push: function(pushData)
+	push(pushData)
 	{
 		// don't care about other apps data, reimplement if your app does care eg. calendar
 		if (pushData.app !== this.appname) return;
@@ -542,7 +544,7 @@ app.classes.mail = AppJS.extend(
 		{
 			[].concat(pushData.id).forEach(uid => {
 				pushData.id = uid;
-				this._super.call(this, pushData);
+				super.				focus.call(this, pushData);
 			});
 			return;
 		}
@@ -587,14 +589,14 @@ app.classes.mail = AppJS.extend(
 					nm.refresh(pushData.id, pushData.type === 'update' ? 'update-in-place' : pushData.type, pushData.messages);
 			}
 		}
-	},
+	}
 
 	/**
 	 * Check if user want's new mail notification
 	 *
 	 * @param pushData
 	 */
-	notifyNew: function(pushData)
+	notifyNew(pushData)
 	{
 		let framework = egw_getFramework();
 		let notify = this.egw.preference('new_mail_notification', 'mail');
@@ -605,14 +607,14 @@ app.classes.mail = AppJS.extend(
 			this.egw.message(message, 'success');
 			this.egw.notification(egw.lang('new mail'), {body: message, tag: 'mail', icon: egw.image('navbar', 'mail')});
 		}
-	},
+	}
 
 	/**
 	 * Updates flags on respective rows
 	 *
 	 * @param {type} pushData
 	  */
-	pushUpdateFlags: function(pushData)
+	pushUpdateFlags(pushData)
 	{
 		// Stalwart/JMAP currently pushes just the current flags, not the ones set or unset
 		// therefore, we set all current ones and unset all not set ones
@@ -666,7 +668,7 @@ app.classes.mail = AppJS.extend(
 				this.mail_setRowClass(msg, rowClass);
 			}
 		});
-	},
+	}
 
 	/**
 	 * Observer method receives update notifications from all applications
@@ -687,7 +689,7 @@ app.classes.mail = AppJS.extend(
 	 * or null, if not triggered on server-side, which adds that info
 	 * @return {false|*} false to stop regular refresh, thought all observers are run
 	 */
-	observer: function(_msg, _app, _id, _type, _msg_type, _links)
+	observer(_msg, _app, _id, _type, _msg_type, _links)
 	{
 		switch(_app)
 		{
@@ -782,7 +784,7 @@ app.classes.mail = AppJS.extend(
 				}
 		}
 		return undefined;
-	},
+	}
 
 	/**
 	 * Callback function for dataFetch caching.
@@ -797,7 +799,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} query_context Query information from egw.dataFetch()
 	 * @returns {string|false} Cache key, or false to not cache
 	 */
-	nm_cache: function(query_context)
+	nm_cache(query_context)
 	{
 		// Only cache first chunk of rows, if no search filter
 		if((!query_context || !query_context.start) && query_context.count == 0 &&
@@ -816,7 +818,7 @@ app.classes.mail = AppJS.extend(
 			});
 		}
 		return false;
-	},
+	}
 
 	/**
 	 * nextmatch normally handles updates and selection of next row after delete, but mail is different
@@ -829,7 +831,7 @@ app.classes.mail = AppJS.extend(
 	 * @param string[] row_ids
 	 * @param string type
 	 */
-	refresh: function (nm, row_ids, type)
+	refresh(nm, row_ids, type)
 	{
 		// Note above and below rows
 		const rows = {above: null, below: null};
@@ -887,17 +889,17 @@ app.classes.mail = AppJS.extend(
 		{
 			document.body.removeEventListener("keydown", selectRemembered);
 		}, 10000);
-	},
+	}
 
 		/**
 	 * mail rebuild Action menu On nm-list
 	 *
 	 * @param _actions
 	 */
-	mail_rebuildActionsOnList: function(_actions)
+	mail_rebuildActionsOnList(_actions)
 	{
 		this.et2.getWidgetById(this.nm_index).set_actions(_actions);
-	},
+	}
 
 	/**
 	 * mail_fetchCurrentlyFocussed - implementation to decide wich mail of all the selected ones is the current
@@ -905,7 +907,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _selected array of the selected mails
 	 * @param _reset bool - tell the function to reset the global vars used
 	 */
-	mail_fetchCurrentlyFocussed: function(_selected, _reset) {
+	mail_fetchCurrentlyFocussed(_selected, _reset) {
 		// reinitialize the buffer-info on selected mails
 		if (_reset == true || typeof _selected == 'undefined')
 		{
@@ -930,7 +932,7 @@ app.classes.mail = AppJS.extend(
 		}
 		this.mail_selectedMails = _selected;
 		return this.mail_currentlyFocussed;
-	},
+	}
 
 	/**
 	 * mail_open - implementation of the open action
@@ -939,7 +941,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _senders - the representation of the elements(s) the action is to be performed on
 	 * @param _mode - you may pass the mode. if not given view is used (tryastext|tryashtml are supported)
 	 */
-	mail_open: function(_action, _senders, _mode) {
+	mail_open(_action, _senders, _mode) {
 		if (typeof _senders == 'undefined' || _senders.length==0)
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
@@ -993,7 +995,7 @@ app.classes.mail = AppJS.extend(
 			// not needed, as an explizit read flags the message as seen anyhow
 			//egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
 		}
-	},
+	}
 
 	/**
 	 * Open a single message in html mode
@@ -1001,10 +1003,10 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_openAsHtml: function(_action, _elems)
+	mail_openAsHtml(_action, _elems)
 	{
 		this.mail_open(_action, _elems,'tryashtml');
-	},
+	}
 
 	/**
 	 * Open a single message in plain text mode
@@ -1012,10 +1014,10 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_openAsText: function(_action, _elems)
+	mail_openAsText(_action, _elems)
 	{
 		this.mail_open(_action, _elems,'tryastext');
-	},
+	}
 
 	/**
 	 * Compose, reply or forward a message
@@ -1025,7 +1027,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_compose: function(_action, _elems)
+	mail_compose(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -1101,7 +1103,7 @@ app.classes.mail = AppJS.extend(
 		var compose_list = egw.getOpenWindows("mail", /^compose_/);
 		var window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
 		return egw().open('','mail','add',settings,window_name,'mail');
-	},
+	}
 
 	/**
 	 * Set content into a compose window
@@ -1119,7 +1121,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @return {boolean} Success
 	 */
-	setCompose: function(compose, content)
+	setCompose(compose, content)
 	{
 		// Get window
 		if(!compose || compose.closed) return false;
@@ -1203,14 +1205,14 @@ app.classes.mail = AppJS.extend(
 			this.compose_fieldExpander_init();
 		}
 		return success;
-	},
+	}
 
 	/**
 	 * mail_disablePreviewArea - implementation of the disablePreviewArea action
 	 *
 	 * @param _value
 	 */
-	mail_disablePreviewArea: function(_value) {
+	mail_disablePreviewArea(_value) {
 		var splitter = this.et2.getWidgetById('mailSplitter');
 		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
 		// return if there's no splitter we maybe in mobile mode
@@ -1250,14 +1252,14 @@ app.classes.mail = AppJS.extend(
 			}
 			this.mail_previewAreaActive = true;
 		}
-	},
+	}
 
 	/**
 	 * Set values for mail dispaly From,Sender,To,Cc, and Bcc
 	 * Additionally, apply expand on click feature on thier widgets
 	 *
 	 */
-	mail_display: function()
+	mail_display()
 	{
 		var dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
 		var content = this.et2.getArrayMgr('content').data;
@@ -1272,14 +1274,14 @@ app.classes.mail = AppJS.extend(
 				this.et2.getWidgetById('displayToolbar').actions = toolbaractions;
 			}
 		}
-	},
+	}
 
 	/**
 	 * Handle actions from attachments block
 	 * @param _e
 	 * @param _widget
 	 */
-	attachmentsBlockActions: function(_e, _widget)
+	attachmentsBlockActions(_e, _widget)
 	{
 		const id = _widget.id.replace('[actions]','');
 		const action = _widget.value;
@@ -1288,7 +1290,7 @@ app.classes.mail = AppJS.extend(
 			return _item.value == _widget.value
 		})?.label || "");
 		this.saveAttachmentHandler(_widget,action, id);
-	},
+	}
 
 	/**
 	 * mail_preview - implementation of the preview action
@@ -1296,7 +1298,7 @@ app.classes.mail = AppJS.extend(
 	 * @param nextmatch et2_nextmatch The widget whose row was selected
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
-	mail_preview: function(selected, nextmatch) {
+	mail_preview(selected, nextmatch) {
 		let data = {};
 		let rowId = '';
 		let sel_options = {}
@@ -1518,14 +1520,14 @@ app.classes.mail = AppJS.extend(
 			}
 			egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
 		}
-	},
+	}
 
 		/**
 		 * Show external images
 		 * @param _node
 		 * @param show True to show images, otherwise use preferences
 		 */
-		resolveExternalImages: function (_node, show = null)
+		resolveExternalImages(_node, show = null)
 	{
 		let image_proxy = this.image_proxy;
 		//Do not run resolve images if it's forced already to show them all
@@ -1669,7 +1671,7 @@ app.classes.mail = AppJS.extend(
 				.appendTo(container);
 			container.appendTo(_node.body? _node.body:_node);
 		}
-	},
+	}
 
 	/**
 	 * If a preview header is partially hidden, this is the handler for clicking the
@@ -1683,7 +1685,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {Object} widget
 	 * @param {DOMNode} button
 	 */
-	showAllHeader: function(event,widget,button) {
+	showAllHeader(event,widget,button) {
 		// Show list as a list
 		var list = jQuery(button).prev();
 	/*	if (list.length <= 0)
@@ -1697,12 +1699,12 @@ app.classes.mail = AppJS.extend(
 		jQuery('body').one('click', list, function(ev) {
 			ev.data.removeClass('visible');
 		});
-	},
+	}
 
-	mail_setMailBody: function(content) {
+	mail_setMailBody(content) {
 		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		IframeHandle.set_value('');
-	},
+	}
 
 	/**
 	 * mail_refreshFolderStatus, function to call to read the counters of a folder and apply them
@@ -1713,7 +1715,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {boolean} _refreshQuotaDisplay
 	 *
 	 */
-	mail_refreshFolderStatus: function(_nodeID,mode,_refreshGridArea,_refreshQuotaDisplay) {
+	mail_refreshFolderStatus(_nodeID,mode,_refreshGridArea,_refreshQuotaDisplay) {
 		if (typeof _nodeID != 'undefined' && typeof _nodeID[_nodeID] != 'undefined' && _nodeID[_nodeID])
 		{
 			_refreshGridArea = _nodeID[_refreshGridArea];
@@ -1750,7 +1752,7 @@ app.classes.mail = AppJS.extend(
 			}
 		} catch(e) {
 		} // ignore the error; maybe the template is not loaded yet
-	},
+	}
 
 	/**
 	 * mail_refreshQuotaDisplay, function to call to read the quota for the active server
@@ -1758,11 +1760,11 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _server
 	 *
 	 */
-	mail_refreshQuotaDisplay: function(_server)
+	mail_refreshQuotaDisplay(_server)
 	{
 		egw.json('mail.mail_ui.ajax_refreshQuotaDisplay',[_server])
 			.sendRequest(true);
-	},
+	}
 
 	/**
 	 * mail_setQuotaDisplay, function to call to read the quota for the active server
@@ -1770,7 +1772,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _data
 	 *
 	 */
-	mail_setQuotaDisplay: function(_data)
+	mail_setQuotaDisplay(_data)
 	{
 		if (!this.et2 && !this.checkET2()) return;
 
@@ -1805,7 +1807,7 @@ app.classes.mail = AppJS.extend(
 					'', buttons, Et2Dialog.WARNING_MESSAGE);
 			}
 		}
-	},
+	}
 
 	/**
 	 * mail_callRefreshVacationNotice, function to call the serverside function to refresh the vacationnotice for the active server
@@ -1813,10 +1815,10 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _server
 	 *
 	 */
-	mail_callRefreshVacationNotice: function(_server)
+	mail_callRefreshVacationNotice(_server)
 	{
 		egw.jsonq('mail_ui::ajax_refreshVacationNotice',[_server]);
-	},
+	}
 	/**
 	 * Make sure attachments have all needed data, so they can be found for
 	 * HTML5 native dragging
@@ -1824,7 +1826,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {string} mail_id Mail UID
 	 * @param {array} attachments Attachment information.
 	 */
-	register_for_drag: function(mail_id, attachments)
+	register_for_drag(mail_id, attachments)
 	{
 		// Put required info in global store
 		var data = {};
@@ -1844,7 +1846,7 @@ app.classes.mail = AppJS.extend(
 			});
 			data.name = data.filename;
 		}
-	},
+	}
 
 	/**
 	 * Display helper for dragging attachments
@@ -1853,7 +1855,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {egwActionElement[]} _elems
 	 * @returns {DOMNode}
 	 */
-	drag_attachment: function(_action, _elems)
+	drag_attachment(_action, _elems)
 	{
 		var div = jQuery(document.createElement("div"))
 			.css({
@@ -1878,7 +1880,7 @@ app.classes.mail = AppJS.extend(
 			text.append('<br />' + this.egw.lang('Hold %1 to drag files to your computer',key));
 		}
 		return div;
-	},
+	}
 
 	/**
 	 * mail_refreshVacationNotice, function to call with appropriate data to refresh the vacationnotice for the active server
@@ -1886,7 +1888,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshVacationNotice: function(_data)
+	mail_refreshVacationNotice(_data)
 	{
 		if (!this.et2 && !this.checkET2()) return;
 		if (_data == null)
@@ -1901,7 +1903,7 @@ app.classes.mail = AppJS.extend(
 			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value(_data.vacationnotice);
 			this.et2.getWidgetById(this.nm_index+'[vacationrange]').set_value(_data.vacationrange);
 		}
-	},
+	}
 
 	/**
 	 * Enable or disable the date filter
@@ -1912,7 +1914,7 @@ app.classes.mail = AppJS.extend(
 	 * @param ev : Event|undefined
 	 * @param filter : Et2Select cat_id filter
 	 */
-	mail_searchtype_change: function(ev, filter)
+	mail_searchtype_change(ev, filter)
 	{
 		const nm = this.et2.getWidgetById(this.nm_index);
 		const dates = this.et2.getWidgetById('mail.index.dates');
@@ -1943,7 +1945,7 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		return false;
-	},
+	}
 
 	/**
 	 * mail_refreshFilter2Options, function to call with appropriate data to refresh the filter2 options for the active server
@@ -1951,7 +1953,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshFilter2Options: function(_data)
+	mail_refreshFilter2Options(_data)
 	{
 		//alert('mail_refreshFilter2Options');
 		if (_data == null) return;
@@ -1966,7 +1968,7 @@ app.classes.mail = AppJS.extend(
 		}
 		if (!currentexists) filter2.set_value('');
 		filter2.set_select_options(_data);
-	},
+	}
 
 	/**
 	 * mail_refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
@@ -1974,7 +1976,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshFilterOptions: function(_data)
+	mail_refreshFilterOptions(_data)
 	{
 		//alert('mail_refreshFilterOptions');
 		if (_data == null) return;
@@ -1990,7 +1992,7 @@ app.classes.mail = AppJS.extend(
 		if (!currentexists) filter.set_value('any');
 		filter.set_select_options(_data);
 
-	},
+	}
 
 	/**
 	 * mail_refreshCatIdOptions, function to call with appropriate data to refresh the filter options for the active server
@@ -1998,7 +2000,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshCatIdOptions: function(_data)
+	mail_refreshCatIdOptions(_data)
 	{
 		//alert('mail_refreshCatIdOptions');
 		if (_data == null) return;
@@ -2014,7 +2016,7 @@ app.classes.mail = AppJS.extend(
 		if (!currentexists) filter.set_value('quick');
 		filter.set_select_options(_data);
 
-	},
+	}
 
 	/**
 	 * Queues a refreshFolderList request for 500ms. Actually this will just execute the
@@ -2022,7 +2024,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param {array} _folders description
 	 */
-	mail_queueRefreshFolderList: function(_folders)
+	mail_queueRefreshFolderList(_folders)
 	{
 		var self = this;
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
@@ -2030,7 +2032,7 @@ app.classes.mail = AppJS.extend(
 		window.setTimeout(function() {
 			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlock_tree();});
 		}, 500);
-	},
+	}
 
 	/**
 	 * mail_CheckFolderNoSelect - implementation of the mail_CheckFolderNoSelect action to control right click options on the tree
@@ -2039,7 +2041,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	mail_CheckFolderNoSelect: function(action,_senders,_currentNode) {
+	mail_CheckFolderNoSelect(action,_senders,_currentNode) {
 
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
@@ -2057,7 +2059,7 @@ app.classes.mail = AppJS.extend(
 		}
 
 		return true;
-	},
+	}
 
 	/**
 	 * Check if SpamFolder is enabled on that account
@@ -2068,14 +2070,14 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	spamfolder_enabled: function(_action,_senders,_currentNode)
+	spamfolder_enabled(_action,_senders,_currentNode)
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var acc_id = _senders[0].id.split('::')[0];
 		var node = ftree ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.spamfolder;
-	},
+	}
 
 
 	/**
@@ -2087,14 +2089,14 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	archivefolder_enabled: function(_action,_senders,_currentNode)
+	archivefolder_enabled(_action,_senders,_currentNode)
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var acc_id = _currentNode.id.split('::')[2]; // this is operating on mails
 		var node = ftree && acc_id ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.archivefolder;
-	},
+	}
 
 	/**
 	 * Check if Sieve is enabled on that account
@@ -2105,14 +2107,14 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	sieve_enabled: function(_action,_senders,_currentNode)
+	sieve_enabled(_action,_senders,_currentNode)
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var acc_id = _senders[0].id.split('::')[0];
 		var node = ftree ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.sieve;
-	},
+	}
 
 	/**
 	 * Check if ACL is enabled on that account
@@ -2124,14 +2126,14 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	acl_enabled: function(_action,_senders,_currentNode)
+	acl_enabled(_action,_senders,_currentNode)
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var inbox = _senders[0].id.split('::')[0]+'::INBOX';
 		var node = ftree ? ftree.getNode(inbox) : null;
 
 		return node && node.data && node.data.acl && this.mail_CheckFolderNoSelect(_action,_senders,_currentNode);
-	},
+	}
 
 	/**
 	 * mail_setFolderStatus, function to set the status for the visible folders
@@ -2141,7 +2143,7 @@ app.classes.mail = AppJS.extend(
 	 * type _status =
 	 * {'folderId':{displayName:String, unseenCount?:number}}
 	 */
-	mail_setFolderStatus: function(_status) {
+	mail_setFolderStatus(_status) {
 		if (!this.et2 && !this.checkET2()) return;
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		if (!ftree) return;
@@ -2159,7 +2161,7 @@ app.classes.mail = AppJS.extend(
 			ftree.set_badge(folderId,_status[folderId]);
 			//alert(i +'->'+_status[i]);
 		}
-	},
+	}
 
 	/**
 	 * mail_setLeaf, function to set the id and description for the folder given by status key
@@ -2167,7 +2169,7 @@ app.classes.mail = AppJS.extend(
 	 *		key is the original id of the leaf to change
 	 *		multiple sets can be passed to mail_setLeaf
 	 */
-	mail_setLeaf: function(_status) {
+	mail_setLeaf(_status) {
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
             var selectedNode = ftree.getSelectedItem();
 		for (var i in _status)
@@ -2184,7 +2186,7 @@ app.classes.mail = AppJS.extend(
 				nm.applyFilters();
 			}
 		}
-	},
+	}
 
 	/**
 	 * mail_removeLeaf, function to remove the leaf represented by the given ID
@@ -2192,7 +2194,7 @@ app.classes.mail = AppJS.extend(
 	 *		key is the id of the leaf to delete
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
-	mail_removeLeaf: function(_status) {
+	mail_removeLeaf(_status) {
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
@@ -2209,14 +2211,14 @@ app.classes.mail = AppJS.extend(
 				nm.applyFilters();
 			}
 		}
-	},
+	}
 
 	/**
 	 * mail_reloadNode, function to reload the leaf represented by the given ID
 	 * @param {Object.<string,string>|Object.<string,Object}}  _status
 	 *		Object with the required data (KEY id, VALUE desc), or ID => {new data}
 	 */
-	mail_reloadNode: function(_status) {
+	mail_reloadNode(_status) {
 		var ftree = this.et2?this.et2.getWidgetById(this.nm_index+'[foldertree]'):null;
 		if (!ftree) return;
 		var selectedNode = ftree.getSelectedNode();
@@ -2242,7 +2244,7 @@ app.classes.mail = AppJS.extend(
 			nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
 			nm.applyFilters();
 		}
-	},
+	}
 
 	/**
 	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
@@ -2250,7 +2252,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {boolean} _isPopup
 	 * @param {boolean} _refreshVacationNotice
 	 */
-	mail_refreshMessageGrid: function(_isPopup, _refreshVacationNotice) {
+	mail_refreshMessageGrid(_isPopup, _refreshVacationNotice) {
 		if (typeof _isPopup == 'undefined') _isPopup = false;
 		if (typeof _refreshVacationNotice == 'undefined') _refreshVacationNotice = false;
 		var nm;
@@ -2281,13 +2283,13 @@ app.classes.mail = AppJS.extend(
 		}
 		nm.applyFilters(); // this should refresh the active folder
 		if (_refreshVacationNotice) this.mail_callRefreshVacationNotice();
-	},
+	}
 
 	/**
 	 * mail_getMsg - gets the current Message
 	 * @return string
 	 */
-	mail_getMsg: function()
+	mail_getMsg()
 	{
 		var msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
@@ -2295,13 +2297,13 @@ app.classes.mail = AppJS.extend(
 			return msg_wdg.valueOf().htmlNode[0].innerHTML;
 		}
 		return "";
-	},
+	}
 
 	/**
 	 * mail_setMsg - sets a Message, with the msg container, and controls if the container is enabled/disabled
 	 * @param {string} myMsg - the message
 	 */
-	mail_setMsg: function(myMsg)
+	mail_setMsg(myMsg)
 	{
 		var msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
@@ -2309,7 +2311,7 @@ app.classes.mail = AppJS.extend(
 			msg_wdg.set_value(myMsg);
 			msg_wdg.set_disabled(myMsg.trim().length==0);
 		}
-	},
+	}
 
 	/**
 	 * Delete mails
@@ -2317,10 +2319,10 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _elems
 	 */
-	mail_delete: function(_action,_elems)
+	mail_delete(_action,_elems)
 	{
 		this.mail_checkAllSelected(_action,_elems,null,true);
-	},
+	}
 
 	/**
 	 * call Delete mails
@@ -2329,7 +2331,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {array} _elems
 	 * @param {boolean} _allMessagesChecked
 	 */
-	mail_callDelete: function(_action,_elems,_allMessagesChecked)
+	mail_callDelete(_action,_elems,_allMessagesChecked)
 	{
 		var calledFromPopup = false;
 		if (typeof _allMessagesChecked == 'undefined') _allMessagesChecked=false;
@@ -2365,12 +2367,12 @@ app.classes.mail = AppJS.extend(
 		{
 			this.et2_view.close();
 		}
-	},
+	}
 
 	/**
 	 * function to find (and reduce) unseen count from folder-name
 	 */
-	mail_reduceCounterWithoutServerRoundtrip: function()
+	mail_reduceCounterWithoutServerRoundtrip()
 	{
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		const _foldernode = ftree.getSelectedItem();
@@ -2387,12 +2389,12 @@ app.classes.mail = AppJS.extend(
 			}
 			ftree.set_badge(_foldernode.id, newcounter?.toString());
 		}
-	},
+	}
 
 	/**
 	 * Regular expression to find (and remove) unseen count from folder-name
 	 */
-	_unseen_regexp: / \([0-9]+\)$/,
+	_unseen_regexp = / \([0-9]+\)$/;
 
 	/**
 	 * mail_splitRowId
@@ -2400,7 +2402,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {string} _rowID
 	 *
 	 */
-	mail_splitRowId: function(_rowID)
+	mail_splitRowId(_rowID)
 	{
 		var res = _rowID.split('::');
 		// as a rowID is perceeded by app::, should be mail!
@@ -2410,7 +2412,7 @@ app.classes.mail = AppJS.extend(
 			res.unshift('mail');
 		}
 		return res;
-	},
+	}
 
 	/**
 	 * Delete mails - actually calls the backend function for deletion
@@ -2425,7 +2427,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _action - optional action
 	 * @param {object} _calledFromPopup
 	 */
-	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
+	mail_deleteMessages(_msg,_action,_calledFromPopup)
 	{
 		let message, ftree, _foldernode, displayname;
 		if (_calledFromPopup)
@@ -2482,14 +2484,14 @@ app.classes.mail = AppJS.extend(
 
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
 		this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
-	},
+	}
 
 	/**
 	 * Delete mails show result - called from the backend function for display of deletionmessages
 	 * takes in all arguments
 	 * @param _msg - message list
 	 */
-	mail_deleteMessagesShowResult: function(_msg)
+	mail_deleteMessagesShowResult(_msg)
 	{
 		// Update list
 
@@ -2505,7 +2507,7 @@ app.classes.mail = AppJS.extend(
 				this.egw.refresh(_msg['egw_message'], 'mail', _msg['msg'][i].replace(/mail::/, ''), 'delete');
 			}
 		}
-	},
+	}
 
 	/**
 	 * retry to Delete mails
@@ -2513,7 +2515,7 @@ app.classes.mail = AppJS.extend(
 	 * 	 reason - reason to report
 	 * 	 messageList
 	 */
-	mail_retryForcedDelete: function(responseObject)
+	mail_retryForcedDelete(responseObject)
 	{
 		// Start a full list refresh to show current data
 		const nm = this.et2.getWidgetById('nm');
@@ -2532,16 +2534,16 @@ app.classes.mail = AppJS.extend(
 		}
 		this.mail_refreshMessageGrid();
 		this.mail_preview();
-	},
+	}
 
 	/**
 	 * UnDelete mailMessages
 	 *
 	 * @param _messageList
 	 */
-	mail_undeleteMessages: function(_messageList) {
+	mail_undeleteMessages(_messageList) {
 	// setting class of row, the old style
-	},
+	}
 
 	/**
 	 * mail_emptySpam
@@ -2549,7 +2551,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} action
 	 * @param {object} _senders
 	 */
-	mail_emptySpam: function(action,_senders) {
+	mail_emptySpam(action,_senders) {
 		var server = _senders[0].id.split('::');
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
@@ -2573,7 +2575,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-	},
+	}
 
 	/**
 	 * mail_emptyTrash
@@ -2581,7 +2583,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} action
 	 * @param {object} _senders
 	 */
-	mail_emptyTrash: function(action,_senders) {
+	mail_emptyTrash(action,_senders) {
 		var server = _senders[0].id.split('::');
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
@@ -2605,7 +2607,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-	},
+	}
 
 	/**
 	 * mail_compressFolder
@@ -2614,14 +2616,14 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _senders
 	 *
 	 */
-	mail_compressFolder: function(action,_senders) {
+	mail_compressFolder(action,_senders) {
 		this.egw.message(this.egw.lang('compress folder'), 'success');
 		egw.jsonq('mail.mail_ui.ajax_compressFolder',[_senders[0].id]);
 		//	.sendRequest(true);
 		// since the json reply is using this.egw.refresh, we should not need to call refreshFolderStatus
 		// as the actions thereof are now bound to run after grid refresh
 		//this.mail_refreshFolderStatus();
-	},
+	}
 
 	/**
 	 * mail_changeProfile
@@ -2632,7 +2634,7 @@ app.classes.mail = AppJS.extend(
 	 *		folders.  False means they're already loaded in the tree, and we don't need
 	 *		them again
 	 */
-	mail_changeProfile: function(folder,_widget, getFolders) {
+	mail_changeProfile(folder,_widget, getFolders) {
 		if(typeof getFolders == 'undefined')
 		{
 			getFolders = true;
@@ -2658,7 +2660,7 @@ app.classes.mail = AppJS.extend(
             });
 
 		return true;
-	},
+	}
 
 	/**
 	 * mail_changeFolder
@@ -2666,7 +2668,7 @@ app.classes.mail = AppJS.extend(
          * @param {Et2Tree} _widget handle to the tree widget
 	 * @param {string} _previous - Previously selected node ID
 	 */
-	mail_changeFolder: function(_folder,_widget, _previous) {
+	mail_changeFolder(_folder,_widget, _previous) {
 
 		// to reset iframes to the normal status
 		this.loadIframe();
@@ -2726,7 +2728,7 @@ app.classes.mail = AppJS.extend(
 		{
 			egw.jsonq('mail.mail_ui.ajax_refreshFilters',[server[0]]);
 		}
-	},
+	}
 
 	/**
 	 * mail_checkAllSelected
@@ -2736,7 +2738,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _target
 	 * @param _confirm
 	 */
-	mail_checkAllSelected: function(_action, _elems, _target, _confirm)
+	mail_checkAllSelected(_action, _elems, _target, _confirm)
 	{
 		if (typeof _confirm == 'undefined') _confirm = false;
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
@@ -2884,7 +2886,7 @@ app.classes.mail = AppJS.extend(
 				if (_action.id.substr(0,4)=='move') this.mail_callMove(_action, _elems,_target, rvMain);
 				if (_action.id.substr(0,4)=='copy') this.mail_callCopy(_action, _elems,_target, rvMain);
 		}
-	},
+	}
 
 	/**
 	 * mail_doActionCall
@@ -2892,9 +2894,9 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _elems
 	 */
-	mail_doActionCall: function(_action, _elems)
+	mail_doActionCall(_action, _elems)
 	{
-	},
+	}
 
 	/**
 	 * mail_getActiveFilters
@@ -2902,7 +2904,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @return mixed boolean/activeFilters object
 	 */
-	mail_getActiveFilters: function(_action)
+	mail_getActiveFilters(_action)
 	{
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
@@ -2920,7 +2922,7 @@ app.classes.mail = AppJS.extend(
 			return af;
 		}
 		return false;
-	},
+	}
 
 	/**
 	 * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
@@ -2928,10 +2930,10 @@ app.classes.mail = AppJS.extend(
 	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
 	 * @param _elems
 	 */
-	mail_flag: function(_action, _elems)
+	mail_flag(_action, _elems)
 	{
 		this.mail_checkAllSelected(_action,_elems,null,true);
-	},
+	}
 
 	/**
 	 * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
@@ -2940,7 +2942,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _elems
 	 * @param _allMessagesChecked
 	 */
-	mail_callFlagMessages: function(_action, _elems, _allMessagesChecked)
+	mail_callFlagMessages(_action, _elems, _allMessagesChecked)
 	{
 		/**
 		 * vars
@@ -3091,7 +3093,7 @@ app.classes.mail = AppJS.extend(
 			if (_action.id=='read') this.mail_refreshFolderStatus(folder,'thisfolderonly',false,true);
 			return;
 		}
-	},
+	}
 
 	/**
 	 * Update changes on filtered mail rows in nm, triggers manual refresh
@@ -3100,7 +3102,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {type} _actionId action id sended by nm action
 	 * @param {type} _filters activefilters
 	 */
-	updateFilter_data: function (_uid, _actionId, _filters)
+	updateFilter_data(_uid, _actionId, _filters)
 	{
 		var uid = _uid.replace('mail::','');
 		var action = '';
@@ -3139,7 +3141,7 @@ app.classes.mail = AppJS.extend(
 		{
 			egw.refresh('','mail',uid, 'delete');
 		}
-	},
+	}
 
 	/**
 	 * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
@@ -3148,21 +3150,21 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _elems
 	 * @param {boolean} _isPopup
 	 */
-	mail_flagMessages: function(_flag, _elems,_isPopup)
+	mail_flagMessages(_flag, _elems,_isPopup)
 	{
 		egw.jsonq('mail.mail_ui.ajax_flagMessages',[_flag, _elems]);
 		//	.sendRequest(true);
-	},
+	}
 
 	/**
 	 * display header lines, or source of mail, depending on the url given
 	 *
 	 * @param _url
 	 */
-	mail_displayHeaderLines: function(_url) {
+	mail_displayHeaderLines(_url) {
 		// only used by right clickaction
 		egw.openPopup(_url, '870', '600', null, 'mail');
-	},
+	}
 
 	/**
 	 * View header of a message
@@ -3170,7 +3172,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_header: function(_action, _elems)
+	mail_header(_action, _elems)
 	{
 		if (typeof _elems == 'undefined'|| _elems.length==0)
 		{
@@ -3193,7 +3195,7 @@ app.classes.mail = AppJS.extend(
 		url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
 		url += '&id='+_elems[0].id;
 		this.mail_displayHeaderLines(url);
-	},
+	}
 
 	/**
 	 * View message source
@@ -3201,7 +3203,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_mailsource: function(_action, _elems)
+	mail_mailsource(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -3225,7 +3227,7 @@ app.classes.mail = AppJS.extend(
 		url += '&id='+_elems[0].id;
 		url += '&location=display';
 		this.mail_displayHeaderLines(url);
-	},
+	}
 
 	/**
 	 * Save a message
@@ -3233,7 +3235,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_save: function(_action, _elems)
+	mail_save(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -3268,7 +3270,7 @@ app.classes.mail = AppJS.extend(
 			a[0].dispatchEvent(evt);
 			a.remove();
 		}
-	},
+	}
 
 	/**
 	 * User clicked an address (FROM, TO, etc)
@@ -3278,10 +3280,10 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @todo seems this function is not implemented, need to be checked if it is neccessary at all
 	 */
-	address_click: function(tag_info, widget)
+	address_click(tag_info, widget)
 	{
 
-	},
+	}
 
 	/**
 	 * displayAttachment
@@ -3290,7 +3292,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {widget object} widget
 	 * @param {object} calledForCompose
 	 */
-	displayAttachment: function(tag_info, widget, calledForCompose)
+	displayAttachment(tag_info, widget, calledForCompose)
 	{
 		var mailid;
 		var attgrid;
@@ -3407,7 +3409,7 @@ app.classes.mail = AppJS.extend(
 				break;
 		}
 		egw_openWindowCentered(url,windowName,width,height);
-	},
+	}
 
 	/**
 	 * displayUploadedFile
@@ -3415,7 +3417,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} tag_info
 	 * @param {widget object} widget
 	 */
-	displayUploadedFile: function(tag_info, widget)
+	displayUploadedFile(tag_info, widget)
 	{
 		var attgrid;
 		attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
@@ -3480,17 +3482,17 @@ app.classes.mail = AppJS.extend(
 				break;
 		}
 		egw.openPopup(egw.link('/index.php', get_param), width, height, windowName);
-	},
+	}
 
 	/**
 	 * Callback function to handle vfsSave response messages
 	 *
 	 * @param {type} _data
 	 */
-	vfsSaveCallback: function (_data)
+	vfsSaveCallback(_data)
 	{
 		egw.message(_data.msg, _data.success ? "success" : "error");
-	},
+	}
 
 	/**
 	 * A handler for saving to VFS/downloading attachments
@@ -3499,7 +3501,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {type} action
 	 * @param {type} row_id
 	 */
-	saveAttachmentHandler: function (widget, action, row_id)
+	saveAttachmentHandler(widget, action, row_id)
 	{
 		var mail_id, attachments;
 
@@ -3616,7 +3618,7 @@ app.classes.mail = AppJS.extend(
 				egw.open_link(attachments[row_id].invoice_data, '_blank', '', action, true, attachments[row_id].type);
 				break;
 		}
-	},
+	}
 
 	/**
 	 * Save a message to filemanager
@@ -3624,7 +3626,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_save2fm: function(_action, _elems)
+	mail_save2fm(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -3671,7 +3673,7 @@ app.classes.mail = AppJS.extend(
 		vfs_select.updateComplete.then(() => vfs_select.click());
 		// Single use only, remove when done
 		vfs_select.addEventListener("change", () => vfs_select.remove());
-	},
+	}
 
 	/**
 	 * Integrate mail message into another app's entry
@@ -3679,7 +3681,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_integrate: function(_action, _elems)
+	mail_integrate(_action, _elems)
 	{
 		var app = _action.id;
 		var w_h = ['750','580']; // define a default wxh if there's no popup size registered
@@ -3723,7 +3725,7 @@ app.classes.mail = AppJS.extend(
 			egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 		}
 
-	},
+	}
 
    /**
 	* Checks the application entry existance and offers user
@@ -3737,7 +3739,7 @@ app.classes.mail = AppJS.extend(
 	* @param {string} _appCheckCallback registered mail_import hook method
 	* @param {function} _execCallback function to get called on dialog actions
 	*/
-	integrate_checkAppEntry: function (_title, _appName, _subject ,_url, _appCheckCallback, _execCallback)
+	integrate_checkAppEntry(_title, _appName, _subject ,_url, _appCheckCallback, _execCallback)
 	{
 	   var subject = _subject || '';
 	   var execCallback = _execCallback;
@@ -3754,7 +3756,7 @@ app.classes.mail = AppJS.extend(
 			   ];
 			   const dialog = new Et2Dialog(this.egw);
 			   dialog.transformAttributes({
-				   callback: function (_buttons, _value)
+				   callback(_buttons, _value)
 				   {
 					   if (_buttons == 'cancel')
 					   {
@@ -3782,7 +3784,7 @@ app.classes.mail = AppJS.extend(
 			   execCallback.call(this,{entryid:_entryId,url:_url});
 		   }
 	   },this,true,this).sendRequest();
-	},
+	}
 
 	/**
 	 * mail_getFormData
@@ -3791,7 +3793,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @return structured array of message ids: array(msg=>message-ids)
 	 */
-	mail_getFormData: function(_actionObjects) {
+	mail_getFormData(_actionObjects) {
 		var messages = {};
 		// if
 		if (typeof _actionObjects['msg'] != 'undefined' && _actionObjects['msg'].length>0) return _actionObjects;
@@ -3809,7 +3811,7 @@ app.classes.mail = AppJS.extend(
 		}
 
 		return messages;
-	},
+	}
 
 	/**
 	 * mail_setRowClass
@@ -3817,7 +3819,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _actionObjects the senders
 	 * @param {string} _class
 	 */
-	mail_setRowClass: function(_actionObjects,_class) {
+	mail_setRowClass(_actionObjects,_class) {
 		if (typeof _class == 'undefined') return false;
 
 		if (typeof _actionObjects['msg'] == 'undefined')
@@ -3862,7 +3864,7 @@ app.classes.mail = AppJS.extend(
 				egw.dataStoreUID(mail_uid,dataElem.data);
 			}
 		}
-	},
+	}
 
 	/**
 	 * mail_removeRowFlag
@@ -3871,7 +3873,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {action object} _actionObjects the senders, or a messages object
 	 * @param {string} _class the class to be removed
 	 */
-	mail_removeRowClass: function(_actionObjects,_class) {
+	mail_removeRowClass(_actionObjects,_class) {
 		if (typeof _class == 'undefined') return false;
 
 		if (typeof _actionObjects['msg'] == 'undefined')
@@ -3925,7 +3927,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-	},
+	}
 
 	/**
 	 * mail_move2folder - implementation of the move action from action menu
@@ -3933,9 +3935,9 @@ app.classes.mail = AppJS.extend(
 	 * @param _action _action.id holds folder target information
 	 * @param _elems - the representation of the elements to be affected
 	 */
-	mail_move2folder: function(_action, _elems) {
+	mail_move2folder(_action, _elems) {
 		this.mail_move(_action, _elems, null);
-	},
+	}
 
 	/**
 	 * mail_move - implementation of the move action from drag n drop
@@ -3944,9 +3946,9 @@ app.classes.mail = AppJS.extend(
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 */
-	mail_move: function(_action,_senders,_target) {
+	mail_move(_action,_senders,_target) {
 		this.mail_checkAllSelected(_action,_senders,_target,true);
-	},
+	}
 
 	/**
 	 * mail_move - implementation of the move action from drag n drop
@@ -3956,7 +3958,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _target - the representation of the target
 	 * @param _allMessagesChecked
 	 */
-	mail_callMove: function(_action,_senders,_target,_allMessagesChecked) {
+	mail_callMove(_action,_senders,_target,_allMessagesChecked) {
 		var target = _action.id == 'drop_move_mail' ? _target.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
@@ -4027,7 +4029,7 @@ app.classes.mail = AppJS.extend(
 					nm._set_autorefresh(nm_autorefresh);
 				}
 			});
-	},
+	}
 
 	/**
 	 * mail_copy - implementation of the move action from drag n drop
@@ -4036,9 +4038,9 @@ app.classes.mail = AppJS.extend(
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 */
-	mail_copy: function(_action,_senders,_target) {
+	mail_copy(_action,_senders,_target) {
 		this.mail_checkAllSelected(_action,_senders,_target,true);
-	},
+	}
 
 	/**
 	 * mail_callCopy - implementation of the copy action from drag n drop
@@ -4048,7 +4050,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _target - the representation of the target
 	 * @param _allMessagesChecked
 	 */
-	mail_callCopy: function(_action,_senders,_target,_allMessagesChecked) {
+	mail_callCopy(_action,_senders,_target,_allMessagesChecked) {
 		var target = _action.id == 'drop_copy_mail' ? _target.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
@@ -4061,7 +4063,7 @@ app.classes.mail = AppJS.extend(
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlock_tree();})
 			.sendRequest();
 		// Server response contains refresh
-	},
+	}
 
 	/**
 	 * mail_AddFolder - implementation of the AddFolder action of right click options on the tree
@@ -4069,7 +4071,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_AddFolder: function(_action,_senders) {
+	mail_AddFolder(_action,_senders) {
 		//action.id == 'add'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
@@ -4101,7 +4103,7 @@ app.classes.mail = AppJS.extend(
 		this.egw.lang("Enter the name for the new Folder:"),
 		this.egw.lang("Add a new Folder to %1:",OldFolderName),
 		'', buttons);
-	},
+	}
 
 	/**
 	 * mail_RenameFolder - implementation of the RenameFolder action of right click options on the tree
@@ -4109,7 +4111,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_RenameFolder: function(_action,_senders) {
+	mail_RenameFolder(_action,_senders) {
 		//action.id == 'rename'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
@@ -4141,7 +4143,7 @@ app.classes.mail = AppJS.extend(
 		this.egw.lang("Rename Folder %1 to:",OldFolderName),
 		this.egw.lang("Rename Folder %1 ?",OldFolderName),
 		OldFolderName, buttons);
-	},
+	}
 
 	/**
 	 * mail_MoveFolder - implementation of the MoveFolder action on the tree
@@ -4150,7 +4152,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {egwActionObject[]} _senders - the representation of the tree leaf to be manipulated
 	 * @param {egwActionObject} destination Drop target egwActionObject representing the destination
 	 */
-	mail_MoveFolder: function(_action,_senders,destination) {
+	mail_MoveFolder(_action,_senders,destination) {
 		if(!destination || !destination.id)
 		{
 			egw.debug('warn', "Move folder, but no target");
@@ -4191,7 +4193,7 @@ app.classes.mail = AppJS.extend(
 		};
 		Et2Dialog.show_dialog(callback, this.egw.lang('Are you sure you want to move folder %1 to folder %2?',
 			src_label, dest_label), this.egw.lang('Move folder'), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
-	},
+	}
 
 	/**
 	 * mail_DeleteFolder - implementation of the DeleteFolder action of right click options on the tree
@@ -4199,7 +4201,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_DeleteFolder: function(_action,_senders)
+	mail_DeleteFolder(_action,_senders)
 	{
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
@@ -4223,7 +4225,7 @@ app.classes.mail = AppJS.extend(
 			this.egw.lang("Do you really want to DELETE Folder %1 ?", OldFolderName) + " " + (ftree.hasChildren(_senders[0].id) ? this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost") : this.egw.lang("All messages in the folder will be lost")),
 			this.egw.lang("DELETE Folder %1 ?", OldFolderName),
 			OldFolderName, buttons);
-	},
+	}
 
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
@@ -4232,7 +4234,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _file_count
 	 * @param {string?} _path where the file is uploaded to, default current directory
 	 */
-	uploadForImport: function(_event, _file_count, _path)
+	uploadForImport(_event, _file_count, _path)
 	{
 		// path is probably not needed when uploading for file; maybe it is when from vfs
 		if(typeof _path == 'undefined')
@@ -4247,7 +4249,7 @@ app.classes.mail = AppJS.extend(
 //			request.sendRequest();//false, this._upload_callback, this);
 			this.et2_obj.submit();
 		}
-	},
+	}
 
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
@@ -4256,7 +4258,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {string} _file_count
 	 * @param {string} _path [_path=current directory] Where the file is uploaded to.
 	 */
-	uploadForCompose: function(_event, _file_count, _path)
+	uploadForCompose(_event, _file_count, _path)
 	{
 		// path is probably not needed when uploading for file; maybe it is when from vfs
 		if(typeof _path == 'undefined')
@@ -4269,12 +4271,12 @@ app.classes.mail = AppJS.extend(
 			var widget = _event.data;
 			this.et2_obj.submit();
 		}
-	},
+	}
 
 	/**
 	 * Visible attachment box in compose dialog as soon as the file starts to upload
 	 */
-	composeUploadStart: function ()
+	composeUploadStart()
 	{
 		var boxAttachment = this.et2.getWidgetById('attachments');
 		if (boxAttachment)
@@ -4283,7 +4285,7 @@ app.classes.mail = AppJS.extend(
 			if (groupbox) groupbox.set_disabled(false);
 		}
 		return true;
-	},
+	}
 
 	/**
 	* Upload for import (VFS)
@@ -4292,13 +4294,13 @@ app.classes.mail = AppJS.extend(
 	* @param {widget object} _widget
 	* @param {window object} _window
 	*/
-	vfsUploadForImport: function(_egw, _widget, _window) {
+	vfsUploadForImport(_egw, _widget, _window) {
 		if (jQuery.isEmptyObject(_widget)) return;
 		if (!jQuery.isEmptyObject(_widget.getValue()))
 		{
 			this.et2_obj.submit();
 		}
-	},
+	}
 
 	/**
 	* Upload for compose (VFS)
@@ -4307,7 +4309,7 @@ app.classes.mail = AppJS.extend(
 	* @param {widget object} _widget
 	* @param {window object} _window
 	*/
-	vfsUploadForCompose: function(_egw, _widget, _window)
+	vfsUploadForCompose(_egw, _widget, _window)
 	{
 		if (jQuery.isEmptyObject(_widget)) return;
 		if (!jQuery.isEmptyObject(_widget.getValue()))
@@ -4315,7 +4317,7 @@ app.classes.mail = AppJS.extend(
 			this.addAttachmentPlaceholder();
 			this.et2_obj.submit();
 		}
-	},
+	}
 
 	/**
 	* Submit on change (VFS)
@@ -4323,7 +4325,7 @@ app.classes.mail = AppJS.extend(
 	* @param {egw object} _egw
 	* @param {widget object} _widget
 	*/
-	submitOnChange: function(_egw, _widget)
+	submitOnChange(_egw, _widget)
 	{
 		if (!jQuery.isEmptyObject(_widget))
 		{
@@ -4340,7 +4342,7 @@ app.classes.mail = AppJS.extend(
 					}
 			}
 		}
-	},
+	}
 
 	/**
 	 * Save as Draft (VFS)
@@ -4351,7 +4353,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @return Promise
 	 */
-	saveAsDraft: function(_egw_action, _action)
+	saveAsDraft(_egw_action, _action)
 	{
 		var self = this;
 		return new Promise(function(_resolve, _reject){
@@ -4408,7 +4410,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		});
-	},
+	}
 
 	/**
 	 * Set content of drafted message with new information sent back from server
@@ -4428,7 +4430,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 *  @return boolean return true if successful otherwise false
 	 */
-	savingDraft_response: function(_responseData, _action)
+	savingDraft_response(_responseData, _action)
 	{
 		//Make sure there's a response from server otherwise shoot an error message
 		if (jQuery.isEmptyObject(_responseData))
@@ -4480,7 +4482,7 @@ app.classes.mail = AppJS.extend(
 			this.egw.message(_responseData.message, 'error');
 			return false;
 		}
-	},
+	}
 
 	/**
 	 * Focus handler for folder, address, reject textbox/taglist to automatic check associated radio button
@@ -4489,16 +4491,16 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _widget taglist
 	 *
 	 */
-	sieve_focus_radioBtn: function(_ev, _widget)
+	sieve_focus_radioBtn(_ev, _widget)
 	{
 		_widget.getRoot().getWidgetById('action').set_value(_widget.id.replace(/^action_([^_]+)_text$/, '$1'));
-	},
+	}
 
 	/**
 	 * Select all aliases
 	 *
 	 */
-	sieve_vac_all_aliases: function()
+	sieve_vac_all_aliases()
 	{
 		var aliases = [];
 		var tmp = [];
@@ -4519,13 +4521,13 @@ app.classes.mail = AppJS.extend(
 			aliases = tmp.filter(deDuplicator);
 			addr.set_value(aliases);
 		}
-	},
+	}
 
 	/**
 	 * Disable/Enable date widgets on vacation seive rules form when status is "by_date"
 	 *
 	 */
-	vacationFilterStatusChange: function()
+	vacationFilterStatusChange()
 	{
 		var status = this.et2.getWidgetById('status');
 		var s_date = this.et2.getWidgetById('start_date');
@@ -4538,7 +4540,7 @@ app.classes.mail = AppJS.extend(
 			e_date.set_disabled(status.get_value() != "by_date");
 			by_date_label.set_disabled(status.get_value() != "by_date");
 		}
-	},
+	}
 
 	/**
 	 * action - handling actions on sieve rules
@@ -4546,7 +4548,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _type - action name
 	 * @param _selected - selected row from the sieve rule list
 	 */
-	action: function(_type, _selected)
+	action(_type, _selected)
 	{
 		var  actionData ;
 		var that = this;
@@ -4591,7 +4593,7 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 
-	},
+	}
 
 	/**
 	* Send back sieve action result to server
@@ -4602,22 +4604,22 @@ app.classes.mail = AppJS.extend(
 	* @param {string} _msg message
 	*
 	*/
-	_do_action: function(_typeID, _data,_selectedID,_msg)
+	_do_action(_typeID, _data,_selectedID,_msg)
 	{
 		if (_typeID && _data)
 		{
 			var request = this.egw.json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
 			request.sendRequest();
 		}
-	},
+	}
 
 	/**
 	* Send ajax request to server to refresh the sieve grid
 	*/
-	sieve_refresh: function()
+	sieve_refresh()
 	{
 		this.et2._inst.submit();
-	},
+	}
 
 	/**
 	 * Select the right combination of the rights for radio buttons from the selected common right
@@ -4626,7 +4628,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {widget} widget common right selectBox
 	 *
 	 */
-	acl_common_rights_selector: function(event,widget)
+	acl_common_rights_selector(event,widget)
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
 		var rights = [];
@@ -4654,7 +4656,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-	},
+	}
 
 	/**
 	 *
@@ -4664,7 +4666,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {widget} widget radioButton rights
 	 *
 	 */
-	acl_common_rights: function(event, widget)
+	acl_common_rights(event, widget)
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
 		var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
@@ -4707,7 +4709,7 @@ app.classes.mail = AppJS.extend(
 		{
 			aclCommonWidget.set_value(rights);
 		}
-	},
+	}
 
 	/**
 	 * Open seive filter list
@@ -4716,7 +4718,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {sender} _senders
 	 *
 	 */
-	edit_sieve: function(_action, _senders)
+	edit_sieve(_action, _senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
 
@@ -4736,7 +4738,7 @@ app.classes.mail = AppJS.extend(
 		{
 			this.loadIframe(url);
 		}
-	},
+	}
 
 	/**
 	 * Load an url on an iframe
@@ -4746,7 +4748,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @return {boolean} return TRUE if success, and FALSE if iframe not given
 	 */
-	loadIframe: function (_url, _iFrame)
+	loadIframe(_url, _iFrame)
 	{
 		var mailSplitter = this.et2.getWidgetById('splitter');
 		var quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
@@ -4791,7 +4793,7 @@ app.classes.mail = AppJS.extend(
 			return true;
 		}
 		return false;
-	},
+	}
 
 	/**
 	 * Edit vacation message
@@ -4799,7 +4801,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {action} _action
 	 * @param {sender} _senders
 	 */
-	edit_vacation: function(_action, _senders)
+	edit_vacation(_action, _senders)
 	{
 		let acc_id;
 		if (!Array.isArray(_senders))
@@ -4813,12 +4815,12 @@ app.classes.mail = AppJS.extend(
 			acc_id = parseInt(_senders[0].id);
 		}
 		this.egw.open_link('mail.mail_sieve.editVacation&acc_id=' + acc_id, '_blank', '700x800');
-	},
+	}
 
-	subscription_refresh: function(_data)
+	subscription_refresh(_data)
 	{
 		console.log(_data);
-	},
+	}
 
 	/**
 	 * Popup the subscription dialog
@@ -4826,11 +4828,11 @@ app.classes.mail = AppJS.extend(
 	 * @param {action} _action
 	 * @param {sender} _senders
 	 */
-	edit_subscribe: function (_action,_senders)
+	edit_subscribe(_action,_senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_ui.subscription&acc_id='+acc_id, '_blank', '720x580');
-	},
+	}
 
 	/**
 	 * Subscribe selected unsubscribed folder
@@ -4838,7 +4840,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {action} _action
 	 * @param {sender} _senders
 	 */
-	subscribe_folder: function(_action,_senders)
+	subscribe_folder(_action,_senders)
 	{
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1], acc_id = mailbox[0];
@@ -4846,7 +4848,7 @@ app.classes.mail = AppJS.extend(
 		this.egw.message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
 		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true])
 			.sendRequest();
-	},
+	}
 
 	/**
 	 * Unsubscribe selected subscribed folder
@@ -4854,7 +4856,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {action} _action
 	 * @param {sender} _senders
 	 */
-	unsubscribe_folder: function(_action,_senders)
+	unsubscribe_folder(_action,_senders)
 	{
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1], acc_id = mailbox[0];
@@ -4862,7 +4864,7 @@ app.classes.mail = AppJS.extend(
 		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
 		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
 			.sendRequest();
-	},
+	}
 
 	/**
 	 * Onclick for foldertree to (un)select children
@@ -4873,7 +4875,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {et2_tree} _widget reference to tree widget
 	 * @param {PoinerEvent} _ev
 	 */
-	foldertree_subselect: function(_id, _widget, _ev)
+	foldertree_subselect(_id, _widget, _ev)
 	{
 		const node = _widget.getNode(_id);
 		// do we need to autoload the subitems first
@@ -4885,7 +4887,7 @@ app.classes.mail = AppJS.extend(
 		{
 			_widget.setSubChecked(_id, "toggle");
 		}
-	},
+	}
 
 	/**
 	 * Edit a folder acl for account(s)
@@ -4893,17 +4895,17 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	edit_acl: function(_action, _senders)
+	edit_acl(_action, _senders)
 	{
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
 		this.egw.open_link('mail.mail_acl.edit&mailbox='+ btoa(folder)+'&acc_id='+acc_id, '_blank', '640x480');
-	},
+	}
 
 	/**
 	 * Submit new selected folder back to server in order to read its acl's rights
 	 */
-	acl_folderChange: function ()
+	acl_folderChange()
 	{
 		var mailbox = this.et2.getWidgetById('mailbox');
 
@@ -4914,7 +4916,7 @@ app.classes.mail = AppJS.extend(
 				this.et2._inst.submit();
 			}
 		}
-	},
+	}
 
 	/**
 	 * Edit a mail account
@@ -4922,17 +4924,17 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	edit_account: function(_action, _senders)
+	edit_account(_action, _senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '740x670');
-	},
+	}
 
 	/**
 	 * Set expandable fields (Folder, Cc and Bcc) based on their content
 	 * - Only fields which have no content should get hidden
 	 */
-	compose_fieldExpander_init: function ()
+	compose_fieldExpander_init()
 	{
 		var widgets = {
 			cc:{
@@ -4986,7 +4988,7 @@ app.classes.mail = AppJS.extend(
 				jQuery(widgets[widget].jQClass).show();
 			}
 		}
-	},
+	}
 
 	/**
 	 * Display Folder,Cc or Bcc fields in compose popup
@@ -4995,7 +4997,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {widget object} widget clicked label (Folder, Cc or Bcc) from compose popup
 	 *
 	 */
-	compose_fieldExpander: function(event,widget)
+	compose_fieldExpander(event,widget)
 	{
 		const expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
 		for (const name in expWidgets)
@@ -5086,12 +5088,12 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-	},
+	}
 
 	/**
 	 * Lock tree so it does NOT receive any more mouse-clicks
 	 */
-	lock_tree: function()
+	lock_tree()
 	{
 		if (!document.getElementById('mail_folder_lock_div'))
 		{
@@ -5101,15 +5103,15 @@ app.classes.mail = AppJS.extend(
 				.addClass('mail_folder_lock');
 			parent.prepend(lock_div);
 		}
-	},
+	}
 
 	/**
 	 * Unlock tree so it receives again mouse-clicks after calling lock_tree()
 	 */
-	unlock_tree: function()
+	unlock_tree()
 	{
 		jQuery('#mail_folder_lock_div').remove();
-	},
+	}
 
 	/**
 	 * Called when tree opens up an account or folder
@@ -5118,7 +5120,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {et2_widget_tree} _widget
 	 * @param {Number} _hasChildren 0 - item has no child nodes, -1 - item is closed, 1 - item is opened
 	 */
-	openstart_tree: function(_id, _widget, _hasChildren)
+	openstart_tree(_id, _widget, _hasChildren)
 	{
 		if (_id.indexOf('::') == -1 &&	// it's an account, not a folder in an account
 			!_hasChildren)
@@ -5126,7 +5128,7 @@ app.classes.mail = AppJS.extend(
 			this.lock_tree();
 		}
 		return true;	// allow opening of node
-	},
+	}
 
 	/**
 	 * Called when tree opens up an account or folder
@@ -5135,14 +5137,14 @@ app.classes.mail = AppJS.extend(
 	 * @param {et2_widget_tree} _widget
 	 * @param {Number} _hasChildren 0 - item has no child nodes, -1 - item is closed, 1 - item is opened
 	 */
-	openend_tree: function(_id, _widget, _hasChildren)
+	openend_tree(_id, _widget, _hasChildren)
 	{
 		if (_id.indexOf('::') == -1 &&	// it's an account, not a folder in an account
 			_hasChildren == 1)
 		{
 			this.unlock_tree();
 		}
-	},
+	}
 
 	/**
 	 * Print a mail from list
@@ -5150,7 +5152,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_print: function(_action, _senders)
+	mail_print(_action, _senders)
 	{
 		var currentTemp = this.et2._inst.name;
 
@@ -5163,22 +5165,22 @@ app.classes.mail = AppJS.extend(
 				this.mail_display_print();
 		}
 
-	},
+	}
 
 	/**
 	 * Print a mail from compose
 	 * @param {stirng} _id id of new draft
 	 */
-	mail_compose_print:function (_id)
+	mail_compose_print(_id)
 	{
 		this.egw.open(_id,'mail','view','&print='+_id+'&mode=print');
-	},
+	}
 
 	/**
 	 * Bind special handler on print media.
 	 * -FF and IE have onafterprint event, and as Chrome does not have that event we bind afterprint function to onFocus
 	 */
-	print_for_compose: function()
+	print_for_compose()
 	{
 		var afterprint = function (){
 			egw(window).close();
@@ -5195,7 +5197,7 @@ app.classes.mail = AppJS.extend(
 		{
 			window.onafterprint = afterprint;
 		}
-	},
+	}
 
 	/**
 	 * Prepare display dialog for printing
@@ -5204,7 +5206,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {jQuery object} _iframe mail body iframe
 	 * @returns {undefined}
 	 */
-	mail_prepare_print: function(_iframe)
+	mail_prepare_print(_iframe)
 	{
 		const mainIframe = _iframe || document.body.querySelector('#mail-display_mailDisplayBodySrc');
 		let tmpPrintDiv = document.body.querySelector('#tempPrintDiv');
@@ -5239,12 +5241,12 @@ app.classes.mail = AppJS.extend(
 			mainIframe.parentNode.insertBefore(tmpPrintDiv, mainIframe.nextElementSibling);
 		}
 		tmpPrintDiv.querySelector('#divAppboxHeader')?.remove();
-	},
+	}
 
 	/**
 	 * Print a mail from Display
 	 */
-	mail_display_print: function ()
+	mail_display_print()
 	{
 		this.egw.message(this.egw.lang('Printing')+' ...', 'success');
 
@@ -5252,7 +5254,7 @@ app.classes.mail = AppJS.extend(
 		setTimeout(function(){
 			egw(window).window.print();
 		},1000);
-	},
+	}
 
 	/**
 	 * Print a mail from list
@@ -5261,10 +5263,10 @@ app.classes.mail = AppJS.extend(
 	 * @param {Object} _elems
 	 *
 	 */
-	mail_prev_print: function (_action, _elems)
+	mail_prev_print(_action, _elems)
 	{
 		this.mail_open(_action, _elems, _action.data.images ? 'print_images' : 'print');
-	},
+	}
 
 	/**
 	 * Print a mail from list
@@ -5273,17 +5275,17 @@ app.classes.mail = AppJS.extend(
 	 * @param {widget object} _widget mail account selectbox
 	 *
 	 */
-	vacation_change_account: function (_egw, _widget)
+	vacation_change_account(_egw, _widget)
 	{
 		_widget.getInstanceManager().submit();
-	},
+	}
 
 	/**
 	 * OnChange callback for recipients:
 	 * - make them draggable
 	 * - check if we have keys for recipients, if we compose an encrypted mail
 	 **/
-	recipients_onchange: function()
+	recipients_onchange()
 	{
 		// if we compose an encrypted mail, check if we have keys for new recipient
 		if (this.mailvelope_editor)
@@ -5295,12 +5297,12 @@ app.classes.mail = AppJS.extend(
 			});
 		}
 		this.set_dragging_dndCompose();
-	},
+	}
 
 	/**
 	 * Make recipients draggable
 	 */
-	set_dragging_dndCompose: function ()
+	set_dragging_dndCompose()
 	{
 		var zIndex = 100;
 		var dragItems = jQuery('div.ms-sel-item:not(div.ui-draggable)');
@@ -5327,7 +5329,7 @@ app.classes.mail = AppJS.extend(
 				 * function to act on draggable item on revert's event
 				 * @returns {Boolean} return true
 				 */
-				revert: function (){
+				revert(){
 					this.parent().find('.ms-sel-item').css('position','relative');
 					var $input = this.parent().children('input');
 					// Make sure input field not getting into second line after revert
@@ -5340,7 +5342,7 @@ app.classes.mail = AppJS.extend(
 				 * @param {type} event
 				 * @param {type} ui
 				 */
-				start:function(event, ui)
+				start(event, ui)
 				{
 					var dragItem = jQuery(this);
 					if (event.ctrlKey || event.metaKey)
@@ -5356,7 +5358,7 @@ app.classes.mail = AppJS.extend(
 				 * @param {type} event
 				 * @param {type} ui
 				 */
-				create:function(event,ui)
+				create(event,ui)
 				{
 					jQuery(this).css('css','move');
 				}
@@ -5367,7 +5369,7 @@ app.classes.mail = AppJS.extend(
 			},100);
 		}
 
-	},
+	}
 
 	/**
 	* Check sharing mode and disable not available options
@@ -5375,7 +5377,7 @@ app.classes.mail = AppJS.extend(
 	* @param {DOMNode} _node
 	* @param {et2_widget} _widget
 	*/
-	check_sharing_filemode: function(_node, _widget)
+	check_sharing_filemode(_node, _widget)
 	{
 		if (!this.et2 || this.et2.getArrayMgr('content').getEntry('no_griddata')) return;
 		if (!_widget) _widget = this.et2.getWidgetById('filemode');
@@ -5414,7 +5416,7 @@ app.classes.mail = AppJS.extend(
 			attachments.set_value({content:content.data.attachments});
 		}
 		this.addAttachmentPlaceholder();
-	},
+	}
 
 	/**
 	 * Write / update compose window title with subject
@@ -5422,7 +5424,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {DOMNode} _node
 	 * @param {et2_widget} _widget
 	 */
-	subject2title: function(_node, _widget)
+	subject2title(_node, _widget)
 	{
 		if (!_widget) _widget = this.et2.getWidgetById('subject');
 
@@ -5430,26 +5432,26 @@ app.classes.mail = AppJS.extend(
 		{
 			document.title = _widget.get_value();
 		}
-	},
+	}
 
 	/**
 	 * Clear intervals stored in W_INTERVALS which assigned to window
 	 */
-	clearIntevals: function ()
+	clearIntevals()
 	{
 		for(var i=0;i<this.W_INTERVALS.length;i++)
 		{
 			clearInterval(this.W_INTERVALS[i]);
 			delete this.W_INTERVALS[i];
 		}
-	},
+	}
 
 	/**
 	 * Window title getter function in order to set the window title
 	 *
 	 * @returns {string|undefined} window title
 	 */
-	getWindowTitle: function ()
+	getWindowTitle()
 	{
 		var widget = {};
 		switch(this.et2._inst.name)
@@ -5464,13 +5466,13 @@ app.classes.mail = AppJS.extend(
 				break;
 		}
 		return undefined;
-	},
+	}
 
 	/**
 	 *
 	 * @returns {undefined}
 	 */
-	prepareMailvelopePrint: function()
+	prepareMailvelopePrint()
 	{
 		var tempPrint = jQuery('div#tempPrintDiv');
 		var mailvelopeTopContainer = jQuery('div.mailDisplayContainer');
@@ -5487,7 +5489,7 @@ app.classes.mail = AppJS.extend(
 			tempPrint.hide();
 			mailvelopeTopContainer.addClass('mailvelopeTopContainer');
 		}
-	},
+	}
 
 	/**
 	 * Mailvelope (clientside PGP) integration:
@@ -5505,7 +5507,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {Keyring} _keyring Mailvelope keyring to use
 	 * @ToDo signatures
 	 */
-	mailvelopeDisplay: function(_keyring)
+	mailvelopeDisplay(_keyring)
 	{
 		let self = this;
 		let iframe = jQuery('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME');
@@ -5534,21 +5536,21 @@ app.classes.mail = AppJS.extend(
 		{
 			self.egw.message(_err.message, 'error');
 		});
-	},
+	}
 
 	/**
 	 * Editor object of active compose
 	 *
 	 * @var {Editor}
 	 */
-	mailvelope_editor: undefined,
+	mailvelope_editor : any = undefined;
 
 	/**
 	 * Called on compose, if mailvelope is available
 	 *
 	 * @param {Keyring} _keyring Mailvelope keyring to use
 	 */
-	mailvelopeCompose: function(_keyring)
+	mailvelopeCompose(_keyring)
 	{
 		delete this.mailvelope_editor;
 
@@ -5594,14 +5596,14 @@ app.classes.mail = AppJS.extend(
 		{
 			self.egw.message(_err.message, 'error');
 		});
-	},
+	}
 
 	/**
 	 * Switch sending PGP encrypted mail on and off
 	 *
 	 * @param {object} _action toolbar action
 	 */
-	togglePgpEncrypt: function (_action)
+	togglePgpEncrypt(_action)
 	{
 		var self = this;
 		if (_action.checked)
@@ -5658,22 +5660,22 @@ app.classes.mail = AppJS.extend(
 				this.egw.lang('Switch off encryption?'),
 				{}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, this.egw);
 		}
-	},
+	}
 
 	/**
 	 * Check if we have a key for all recipients
 	 *
 	 * @returns {Promise.<Array, Error>} Array of recipients or Error with recipients without key
 	 */
-	mailvelopeGetCheckRecipients: function()
+	mailvelopeGetCheckRecipients()
 	{
 		// collect all recipients
 		var recipients = this.et2.getWidgetById('to').get_value();
 		recipients = recipients.concat(this.et2.getWidgetById('cc').get_value());
 		recipients = recipients.concat(this.et2.getWidgetById('bcc').get_value());
 
-		return this._super.call(this, recipients);
-	},
+		return super.notifyNew.call(this, recipients);
+	}
 
 	/**
 	 * Set the relevant widget to toolbar actions and submit
@@ -5681,7 +5683,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object|boolean} _action toolbar action or boolean value to stop extra call on
 	 * compose_integrated_submit
 	 */
-	compose_submitAction: function (_action)
+	compose_submitAction(_action)
 	{
 		let wait = Promise.resolve();
 		if (_action && (wait = this.compose_integrate_submit()) && wait === true)
@@ -5713,7 +5715,7 @@ app.classes.mail = AppJS.extend(
 		{
 			this.et2._inst.submit(null, 'Please wait while sending your mail');
 		});
-	},
+	}
 
 	/**
 	 * This function runs before client submit (send) mail to server
@@ -5723,7 +5725,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @returns {Promise<void>}
 	 */
-	compose_integrate_submit: async function ()
+	async compose_integrate_submit()
 	{
 		const wait = [];
 		const integApps = ['to_tracker', 'to_infolog', 'to_calendar'];
@@ -5756,7 +5758,7 @@ app.classes.mail = AppJS.extend(
 			}
 		}
 		return Promise.all(wait);
-	},
+	}
 
 	/**
 	 * Set the selected checkbox action
@@ -5764,34 +5766,34 @@ app.classes.mail = AppJS.extend(
 	 * @param {type} _action selected toolbar action with checkbox
 	 * @returns {undefined}
 	 */
-	compose_setToggle: function (_action)
+	compose_setToggle(_action)
 	{
 		var widget = this.et2.getWidgetById (_action.id);
 		if (widget && typeof _action.checkbox != 'undefined' && _action.checkbox)
 		{
 			widget.set_value(_action.checked?"on":"off");
 		}
-	},
+	}
 
 	/**
 	 * Set the selected priority value
 	 * @param {type} _action selected action
 	 * @returns {undefined}
 	 */
-	compose_priorityChange: function (_action)
+	compose_priorityChange(_action)
 	{
 		var widget = this.et2.getWidgetById ('priority');
 		if (widget)
 		{
 			widget.set_value(_action.id);
 		}
-	},
+	}
 
 	/**
 	 * Triger relative widget via its toolbar identical action
 	 * @param {type} _action toolbar action
 	 */
-	compose_triggerWidget:function (_action)
+	compose_triggerWidget(_action)
 	{
 		var widget = this.et2.getWidgetById(_action.id);
 		if (widget)
@@ -5806,13 +5808,13 @@ app.classes.mail = AppJS.extend(
 					widget.click();
 			}
 		}
-	},
+	}
 
 	/**
 	 * Save drafted compose as eml file into VFS
 	 * @param {type} _action action
 	 */
-	compose_saveDraft2fm: function (_action)
+	compose_saveDraft2fm(_action)
 	{
 		var content = this.et2.getArrayMgr('content').data;
 		var subject = this.et2.getWidgetById('subject');
@@ -5832,7 +5834,7 @@ app.classes.mail = AppJS.extend(
 				Et2Dialog.alert('You need to save the message as draft first before to be able to save it into VFS', 'Save to filemanager', 'info');
 			});
 		}
-	},
+	}
 
 	/**
 	 * Folder Management, opens the folder magnt. dialog
@@ -5841,11 +5843,11 @@ app.classes.mail = AppJS.extend(
 	 * @param {egw action object} _action actions
 	 * @param {object} _senders selected node
 	 */
-	folderManagement: function (_action,_senders)
+	folderManagement(_action,_senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x580');
-	},
+	}
 
 	/**
 	 * Range selection for old dhtmlx tree currently NOT used
@@ -5854,7 +5856,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {type} _widget
 	 * @returns {undefined}
 	 */
-	folderMgmt_onSelect: function(_ids, _widget)
+	folderMgmt_onSelect(_ids, _widget)
 	{
 		// Flag to reset selected items
 		var resetSelection = false;
@@ -5903,14 +5905,14 @@ app.classes.mail = AppJS.extend(
 		{
 			_widget.input._unselectItems();
 		}
-	},
+	}
 
 	/**
 	 * Delete button handler
 	 * triggers longTask dialog and send delete operation url
 	 *
 	 */
-	folderMgmt_deleteBtn: function ()
+	folderMgmt_deleteBtn()
 	{
 		const tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
 		const menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
@@ -5953,7 +5955,7 @@ app.classes.mail = AppJS.extend(
 		};
 		Et2Dialog.show_dialog(callbackDialog, this.egw.lang('Are you sure you want to delete all selected folders?'), this.egw.lang('Delete folder'), {},
 			Et2Dialog.BUTTON_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, egw);
-	},
+	}
 
 	/**
 	 * Spam Actions handler
@@ -5961,7 +5963,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _action egw action
 	 * @param {object} _senders nm row
 	 */
-	spam_actions: function (_action, _senders)
+	spam_actions(_action, _senders)
 	{
 		var id,fromaddress,domain, email = '';
 		var data = {};
@@ -6003,9 +6005,9 @@ app.classes.mail = AppJS.extend(
 				egw.message(_data[0]);
 			}
 		}).sendRequest(true);
-	},
+	}
 
-	spamTitan_setActionTitle: function (_action, _sender)
+	spamTitan_setActionTitle(_action, _sender)
 	{
 		var id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
 		var email = this.egw.lang('emails');
@@ -6046,21 +6048,21 @@ app.classes.mail = AppJS.extend(
 		}
 
 		return true;
-	},
+	}
 	/**
 	 * Implement mobile view
 	 *
 	 * @param {type} _action
 	 * @param {type} _sender
 	 */
-	mobileView: function(_action, _sender)
+	mobileView(_action, _sender)
 	{
 		// row id in nm
 		var id = _sender[0].id;
 
 		var defaultActions= {
 			actions:['delete', 'forward','reply','flagged'], // default actions to display
-			check:function(_action){
+			check(_action){
 				for (var i=0;i<= this.actions.length;i++)
 				{
 					if (_action == this.actions[i]) return true;
@@ -6162,7 +6164,7 @@ app.classes.mail = AppJS.extend(
 				}
 			});
 		});
-	},
+	}
 
 	/**
 	 * Open smime certificate
@@ -6171,7 +6173,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {type} widget
 	 * @returns {undefined}
 	 */
-	smimeSigBtn: function (egw, widget)
+	smimeSigBtn(egw, widget)
 	{
 		var url = '';
 		if (this.mail_isMainWindow)
@@ -6184,19 +6186,19 @@ app.classes.mail = AppJS.extend(
 			url = this.et2.getArrayMgr("content").getEntry('smimeSigUrl');
 		}
 		window.egw.openPopup(url,'700','400');
-	},
+	}
 
 	/**
 	 * smime password dialog
 	 *
 	 * @param {string} _msg message
  	 */
-	smimePassDialog: function (_msg)
+	smimePassDialog(_msg)
 	{
 		var self = this;
 		var pass_exp = egw.preference('smime_pass_exp', 'mail');
 		const dialog = loadWebComponent("et2-dialog", {
-			callback: function(_button_id, _value)
+			callback(_button_id, _value)
 			{
 				if (_button_id == 'send' && _value)
 				{
@@ -6223,13 +6225,13 @@ app.classes.mail = AppJS.extend(
 			resizable: false
 		});
 		document.body.append(dialog);
-	},
+	}
 
 	/**
 	 * set attachments of smime message for mobile view
 	 * @param {type} _attachments
 	 */
-	set_smimeAttachmentsMobile: function (_attachments)
+	set_smimeAttachmentsMobile(_attachments)
 	{
 		var attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
 		var $attachment = jQuery('.et2_details.attachments');
@@ -6238,14 +6240,14 @@ app.classes.mail = AppJS.extend(
 			attachmentsBlock.set_value({content:_attachments});
 			$attachment.show();
 		}
-	},
+	}
 
 	/**
 	 * Set attachments of smime message
 	 *
 	 * @param {object} _attachments
 	 */
-	set_smimeAttachments:function (_attachments)
+	set_smimeAttachments(_attachments)
 	{
 		if (egwIsMobile())
 		{
@@ -6276,12 +6278,12 @@ app.classes.mail = AppJS.extend(
 			egw.dataStoreUID(data.data.uid, data.data);
 			this.mail_preview(selected, this.et2.getWidgetById('nm'));
 		}
-	},
+	}
 	/**
 	 * This function helps to trigger the Push notification immidiately.
 	 * @todo: Must be removed after socket push notification is implemented
 	 */
-	smimeAttachmentsCheckerInterval:function ()
+	smimeAttachmentsCheckerInterval()
 	{
 		var self = this;
 		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
@@ -6294,14 +6296,14 @@ app.classes.mail = AppJS.extend(
 				}
 			}).sendRequest(true);
 		},1000);
-	},
+	}
 
 	/**
 	 *
 	 * @param {object} _data smime resolved certificate data
 	 * @returns {undefined}
 	 */
-	set_smimeFlags: function (_data)
+	set_smimeFlags(_data)
 	{
 		if (!_data) return;
 		var self = this;
@@ -6351,14 +6353,14 @@ app.classes.mail = AppJS.extend(
 		jQuery(smime_encryption.getDOMNode()).off().on('click',function(){
 			self.smime_certAddToContact(data, true);
 		}).addClass('et2_clickable');
-	},
+	}
 
 	/**
 	 * Reset flags classes and click handler
 	 *
 	 * @param {jQuery Object} _nodes
 	 */
-	smime_clear_flags: function (_nodes)
+	smime_clear_flags(_nodes)
 	{
 		for(var i=0;i<_nodes.length;i++)
 		{
@@ -6366,7 +6368,7 @@ app.classes.mail = AppJS.extend(
 				'smime_cert_notverified',
 				'smime_cert_notvalid', 'smime_cert_unknownemail']);
 		}
-	},
+	}
 
 	/**
 	 * Inform user about sender's certificate and offers to add it into
@@ -6375,7 +6377,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {type} _metadata
 	 * @param {boolean} _display if set to true will only show close button
 	 */
-	smime_certAddToContact: function (_metadata, _display)
+	smime_certAddToContact(_metadata, _display)
 	{
 		if (!_metadata || _metadata.length < 1) return;
 		var self = this;
@@ -6404,7 +6406,7 @@ app.classes.mail = AppJS.extend(
 		};
 		content.class="";
 		const dialog = et2_createWidget('et2-dialog', {
-			callback: function(_button_id, _value)
+			callback(_button_id, _value)
 			{
 				if (_button_id == 'contact' && _value)
 				{
@@ -6427,7 +6429,7 @@ app.classes.mail = AppJS.extend(
 			resizable: false
 		});
 		document.body.append(dialog);
-	},
+	}
 
 	/**
 	 * get preview pane state base on selected preference.
@@ -6436,7 +6438,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @returns {Boolean} returns true for visible Pane and false for hiding
 	 */
-	getPreviewPaneState: function ()
+	getPreviewPaneState()
 	{
 		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
 		var nm = this.et2.getWidgetById(this.nm_index);
@@ -6457,7 +6459,7 @@ app.classes.mail = AppJS.extend(
 				nm.header.right_div.addClass('vertical_splitter');
 		}
 		return state;
-	},
+	}
 
 	/**
 	 * Creates a dialog for changing meesage subject
@@ -6465,7 +6467,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _action|_widget
 	 * @param {object} _sender|_content
 	 */
-	modifyMessageSubjectDialog: function (_action, _sender)
+	modifyMessageSubjectDialog(_action, _sender)
 	{
 		_sender = _sender ? _sender : [{id:this.mail_currentlyFocussed}];
 		var id = (_sender && _sender.uid) ? _sender.row_id:
@@ -6475,7 +6477,7 @@ app.classes.mail = AppJS.extend(
 
 		const dialog = et2_createWidget("et2-dialog",
 		{
-			callback: function(_button_id, _value) {
+			callback(_button_id, _value) {
 				var newSubject = null;
 				if (_value && _value.value) newSubject = _value.value;
 
@@ -6513,7 +6515,7 @@ app.classes.mail = AppJS.extend(
 			width: 500
 		});
 		document.body.append(dialog);
-	},
+	}
 
 	/**
 	 * Set predefined addresses for compose dialog
@@ -6522,7 +6524,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {type} _senders
 	 * @returns {undefined}
 	 */
-	set_predefined_addresses: setPredefinedAddresses,
+	set_predefined_addresses : any = setPredefinedAddresses;
 
 	/**
 	 * open
@@ -6539,22 +6541,22 @@ app.classes.mail = AppJS.extend(
 		{
 			window.open("mailto:" + _address.value);
 		}
-	},
+	}
 
-	addAttachmentPlaceholder: addAttachmentPlaceholder,
+	addAttachmentPlaceholder : any = addAttachmentPlaceholder;
 
-	addressbookSelect: function()
+	addressbookSelect()
 	{
 		this.openDialog('addressbook.addressbook_ui.index&template=addressbook.select');
-	},
+	}
 
 	/**
 	 * Show only untranslated has been clicked
 	 */
-	toggleDetails: function(_ev, _widget)
+	toggleDetails(_ev, _widget)
 	{
 		this.nm && this.nm.applyFilters({filter2: _widget.value ? '1' : ''});
-	},
+	}
 
 	/**
 	 * Keep filters in the application toolbar in sync with NM / callback bound on et2-filter event of NM
@@ -6563,7 +6565,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param _ev : Event
 	 */
-	nmFilterChange: function(_ev)
+	nmFilterChange(_ev)
 	{
 		let app_toolbar = this.et2.closest('egw-app').querySelector('[slot="main-header"]');
 		if (app_toolbar && app_toolbar.localName != "et2-template") {
@@ -6587,7 +6589,7 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-	},
+	}
 
 	/**
 	 * Check if any NM filter or search in app-toolbar needs to be updated to reflect NM internal state
@@ -6598,7 +6600,7 @@ app.classes.mail = AppJS.extend(
 	 * @param id
 	 * @param value
 	 */
-	checkNmFilterChanged: function(app_toolbar, id, value)
+	checkNmFilterChanged(app_toolbar, id, value)
 	{
 		let widget = app_toolbar.getWidgetById(id);
 		if (widget && widget.value != value)
@@ -6614,7 +6616,7 @@ app.classes.mail = AppJS.extend(
 				details_toggle.value = value === '1';
 			}
 		}
-	},
+	}
 
 	/**
 	 * Propagate filters in app_toolbar to NM and filter thingy
@@ -6626,7 +6628,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _ev
 	 * @param _widget
 	 */
-	changeNmFilter: function(_ev, _widget)
+	changeNmFilter(_ev, _widget)
 	{
 		if (!this.nm || !_widget.id) return;
 
@@ -6649,4 +6651,6 @@ app.classes.mail = AppJS.extend(
 		}
 		this.nm && this.nm.applyFilters(filters);
 	}
-});
+}
+
+app.classes.mail = MailApp;

@@ -55,7 +55,7 @@ export class EgwActionObject {
     private actionLinks: EgwActionLink[] = []
     iface: EgwActionObjectInterface
     readonly manager: EgwActionManager
-    readonly flags: number
+    flags: number
     data: any = null
     private readonly setSelectedCallback: any = null;
     private registeredImpls: any[] = [];
