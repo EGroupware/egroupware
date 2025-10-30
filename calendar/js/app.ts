@@ -3239,23 +3239,15 @@ export class CalendarApp extends EgwApp
 			}
 			sidebox.iterateOver(function(widget)
 			{
-				if(widget.id == 'view')
+				if(widget.id == 'filter')
 				{
-					// View widget has a list of state settings, which require special handling
-					for(var i = 0; i < widget.options.select_options.length; i++)
+					// Filter widget does not match view, but we try
+					if(widget.select_options.find(o => o.value == state.state.view) || state.state.view == 'day')
 					{
-						var option_state = JSON.parse(widget.options.select_options[i].value) || [];
-						var match = true;
-						for(var os_key in option_state)
-						{
-							// Sometimes an optional state variable is not yet defined (sortby, days, etc)
-							match = match && (option_state[os_key] == this.state[os_key] || typeof this.state[os_key] == 'undefined');
-						}
-						if(match)
-						{
-							widget.set_value(widget.options.select_options[i].value);
-							return;
-						}
+						widget.value = state.state.view == 'day' ? 'today' : state.state.view;
+						// Clear the dates too, they come from the view
+						sidebox.getWidgetById('startdate').value = ''
+						sidebox.getWidgetById('enddate').value = ''
 					}
 				}
 				else if(widget.id == 'keywords')
