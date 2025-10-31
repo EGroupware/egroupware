@@ -1243,6 +1243,7 @@ export class EgwFramework extends LitElement
                     ?active=${app.active}
                     style="--application-color: var(--${app.name}-color,var(--default-color, var(--sl-color-neutral-600))); ${extraStyle}"
                     class=${extraClass ? extraClass : nothing}
+                    @dragenter=${e => { this.setActiveApp(e.currentTarget.panel)}}
                     @click=${(e) =>
                     {
                         if(e.currentTarget.hasAttribute("active"))
