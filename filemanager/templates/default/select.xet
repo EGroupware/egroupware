@@ -2,6 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="filemanager.select" template="" lang="" group="0" version="1.9.002">
+		<html id="js"/>
 		<grid width="100%" resize_ratio="1">
 			<columns>
 				<column width="32"/>
@@ -15,10 +16,10 @@
 						</columns>
 						<rows>
 							<row disabled="!@0">
-								<et2-button  align="center" label="Favorites" id="favorites" image="favorites"></et2-button>
+								<et2-button-icon  align="center" label="Favorites" id="favorites" image="favorites"></et2-button-icon>
 							</row>
 							<row height="40">
-								<et2-button  align="center" label="$row_cont" id="${row}" image="$row_cont/navbar"></et2-button>
+								<et2-button-icon  align="center" label="$row_cont" id="${row}" image="$row_cont/navbar"></et2-button-icon>
 							</row>
 						</rows>
 					</grid>
@@ -29,13 +30,10 @@
 						<rows>
 							<row class="dialogHeader">
 								<et2-hbox>
-									<html id="js"/>
-									<et2-button  label="Up" id="button[up]" onclick="app.filemanager.change_dir('..');" image="goup"></et2-button>
-									<et2-button  label="Go to your home directory" id="button[home]" image="gohome"></et2-button>
-									<et2-box  class="selectPathContainer">
-										<vfs-name id="path" class="selectPath" onchange="1"/>
-									</et2-box>
-									<et2-button  label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir" image="button_createdir" class="createDir" roImage="createdir_disabled"></et2-button>
+									<et2-button label="Up" id="button[up]" onclick="app.filemanager.change_dir('..');" image="goup"></et2-button>
+									<et2-button label="Home" statustext="Go to your home directory" id="button[home]" image="gohome"></et2-button>
+									<et2-vfs-path id="path" onchange="1"></et2-vfs-path>
+									<et2-button label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir" image="button_createdir" class="createDir" roImage="createdir_disabled"></et2-button>
 								</et2-hbox>
 							</row>
 							<row class="selectFiles file_dir_height" resize_ratio="1">
@@ -61,18 +59,17 @@
 								<et2-select  class="selectMime" id="mime" onchange="1" emptyLabel="All files"></et2-select>
 							</row>
 							<row disabled="@no_upload">
-								<groupbox>
-									<caption label="File upload"/>
+								<et2-groupbox summary="File upload">
 									<et2-description  value="Choose a file for uploading"></et2-description>
 									<file id="file_upload"/>
-								</groupbox>
+								</et2-groupbox>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row class="dialogFooterToolbar">
 					<et2-hbox  align="right">
-						<et2-button  label="@label" id="button[ok]" image="save"></et2-button>
+						<et2-button  label="@label" id="button[ok]" image="apply"></et2-button>
 						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
