@@ -50,6 +50,7 @@ import {egw_globalObjectManager} from "../egw_action/egw_action";
  *
  * @class AppJS
  * @augments Class
+ * @deprecated DO NOT USE, use egw_app.ts instead!!!
  */
 export const AppJS = (function(){ "use strict"; return Class.extend(
 {
