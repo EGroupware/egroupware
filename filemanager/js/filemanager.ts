@@ -1405,7 +1405,13 @@ export class filemanagerAPP extends EgwApp
 			widget.getRoot().iterateOver(function(widget) {
 				if(widget.id == "path") path = widget;
 			},null, et2_textbox);
-			if (!path) path = widget.getRoot().getWidgetById("path");
+			// this is the old filemanager.select UI
+			if (!path && (path = widget.getRoot().getWidgetById("path")))
+			{
+				path.set_value(widget.value.path);
+				widget.getInstanceManager().submit();
+				return;
+			}
 			if(path)
 			{
 				path.set_value(widget.value.path);
