@@ -616,7 +616,7 @@ class Image
 	 */
 	public static function invalidate()
 	{
-		$templates = array('idots', 'jerryr', 'jdots', 'pixelegg');
+		$templates = array('idots', 'jerryr', 'jdots', 'pixelegg', 'kdots');
 		if (($template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set']) && !in_array($template_set, $templates))
 		{
 			$templates[] = $template_set;

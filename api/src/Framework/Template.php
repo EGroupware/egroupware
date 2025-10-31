@@ -600,7 +600,7 @@ class Template
 			!file_exists(EGW_SERVER_ROOT.'/'.basename($GLOBALS['egw_info']['server']['template_set']).'/inc/class.'.
 			$GLOBALS['egw_info']['server']['template_set'].'_framework.inc.php'))
 		{
-			$GLOBALS['egw_info']['server']['template_set'] = 'idots';
+			$GLOBALS['egw_info']['server']['template_set'] = 'default';
 		}
 		$tpldir         = EGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['egw_info']['server']['template_set'];
 		$tpldir_default = EGW_SERVER_ROOT . '/' . $appname . '/templates/default';
