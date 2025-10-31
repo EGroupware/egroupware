@@ -1371,6 +1371,7 @@ export class filemanagerAPP extends EgwApp
 			widget.getRoot().iterateOver(function(widget) {
 				if(widget.id == "path") path = widget;
 			},null, et2_textbox);
+			if (!path) path = widget.getRoot().getWidgetById("path");
 			if(path)
 			{
 				path.set_value(widget.value.path);
