@@ -8,9 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-*/
-
 import {EgwApp} from "../../api/js/jsapi/egw_app";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
@@ -111,10 +108,7 @@ class MailApp extends EgwApp
 	constructor()
 	{
 		super('mail');
-		// v-- from egw_app.ts, no need to port to TS
-		this.nm = null;
-		this.nmFilterChange = this.nmFilterChange.bind(this);
-		// ^-- from egw_app.ts, no need to port to TS
+
 		if (!this.egw.is_popup())
 			// Turn on client side, persistent cache
 			// egw.data system runs encapsulated below etemplate, so this must be
@@ -156,14 +150,6 @@ class MailApp extends EgwApp
 		this.tree_wdg = null;
 
 		delete this.et2_obj;
-
-		// v-- from egw_app.ts, no need to port to TS
-		if (this.nm && this.nm.getDOMNode())
-		{
-			this.nm.getDOMNode().removeEventListener('et2-filter', this.nmFilterChange);
-		}
-		this.nm = null;
-		// ^-- from egw_app.ts, no need to port to TS
 
 		// call parent
 		super.destroy.apply(this, arguments);
@@ -222,18 +208,6 @@ class MailApp extends EgwApp
 				this.vacationFilterStatusChange();
 				break;
 			case 'mail.index':
-				// v-- from egw_app.ts, no need to port to TS
-				// if we have a NM widget: make it available as this.nm and install event-listener for this.nmFilterChange
-				if (!this.nm && (this.nm = this.et2.getWidgetById('nm')))
-				{
-					this.nm.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
-					// update values in toolbar
-					window.setTimeout(() =>
-					{
-						this.nmFilterChange({detail: { activeFilters: this.nm.activeFilters}});
-					});
-				}
-				// ^-- from egw_app.ts, no need to port to TS
 				var self = this;
 				jQuery('iframe#mail-index_messageIFRAME').on('load', function ()
 				{
@@ -1981,7 +1955,7 @@ class MailApp extends EgwApp
 		{
 			if (k==current) currentexists=true;
 		}
-		if (!currentexists) filter.set_value('any');
+		if (!currentexists) filter.set_value('');
 		filter.set_select_options(_data);
 
 	}
@@ -2005,7 +1979,7 @@ class MailApp extends EgwApp
 		{
 			if (k==current) currentexists=true;
 		}
-		if (!currentexists) filter.set_value('quick');
+		if (!currentexists) filter.set_value('');
 		filter.set_select_options(_data);
 
 	}
@@ -6551,42 +6525,9 @@ class MailApp extends EgwApp
 	}
 
 	/**
-	 * Keep filters in the application toolbar in sync with NM / callback bound on et2-filter event of NM
-	 *
-	 * Please note: copied from egw_app.ts, no need to port to TS!
-	 *
-	 * @param _ev : Event
-	 */
-	nmFilterChange(_ev)
-	{
-		let app_toolbar = this.et2.closest('egw-app').querySelector('[slot="main-header"]');
-		if (app_toolbar && app_toolbar.localName != "et2-template") {
-			app_toolbar = app_toolbar?.querySelector("et2-template");
-		}
-		const activeFilters = _ev.detail?.activeFilters;
-		if (app_toolbar && activeFilters) {
-			for (const attr in activeFilters) {
-				switch (attr) {
-					case 'col_filter':
-						for (const attr in activeFilters.col_filter) {
-							this.checkNmFilterChanged(app_toolbar, attr, activeFilters.col_filter[attr]);
-						}
-						break;
-					case 'filter':
-					case 'filter2':
-					case 'cat_id':
-					case 'search':
-						this.checkNmFilterChanged(app_toolbar, attr, activeFilters[attr]);
-						break;
-				}
-			}
-		}
-	}
-
-	/**
 	 * Check if any NM filter or search in app-toolbar needs to be updated to reflect NM internal state
 	 *
-	 * Please note: 1st part copied from egw_app.ts, no need to port to TS!
+	 * Overwritten to support the details toggle.
 	 *
 	 * @param app_toolbar
 	 * @param id
@@ -6594,13 +6535,9 @@ class MailApp extends EgwApp
 	 */
 	checkNmFilterChanged(app_toolbar, id, value)
 	{
-		let widget = app_toolbar.getWidgetById(id);
-		if (widget && widget.value != value)
-		{
-			widget.value = value;
-		}
+		super.checkNmFilterChanged(app_toolbar, id, value);
 
-		// this is mail specific, and need to go in overwritten function, if ported to TS!
+		// details toggle
 		if (id === 'filter2')
 		{
 			const details_toggle = this.et2.getWidgetById('details');
@@ -6615,34 +6552,20 @@ class MailApp extends EgwApp
 	 *
 	 * Use as onchange on these filters (named like the ones in NM!)
 	 *
-	 * Please note: copied from egw_app.ts, need to overwrite instead to call this.mail_searchtype_change() for cat_id
+	 * Overwritten to call this.mail_searchtype_change() for cat_id.
 	 *
 	 * @param _ev
 	 * @param _widget
 	 */
 	changeNmFilter(_ev, _widget)
 	{
-		if (!this.nm || !_widget.id) return;
+		super.changeNmFilter(_ev, _widget);
 
-		const filters = {};
-		switch(_widget.id)
+		// open/close date filters
+		if (_widget.id === 'cat_id')
 		{
-			case 'cat_id':
-				filters[_widget.id] = _widget.value;
-				// open/close date filters
 				this.mail_searchtype_change(_ev, _widget);
-				break;
-			case 'filter':
-			case 'filter2':
-			case 'search':
-				filters[_widget.id] = _widget.value;
-				break;
-			default:
-				filters.col_filter = {};
-				filters.col_filter[_widget.id] = _widget.value;
 		}
-		this.nm && this.nm.applyFilters(filters);
 	}
 }
-
 app.classes.mail = MailApp;

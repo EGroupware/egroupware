@@ -92,7 +92,7 @@ class mail_ui
 	 * @var array
 	 */
 	var $searchTypes = array(
-		'quick'		=> 'quicksearch',	// lang('quicksearch')
+		''		=> 'quicksearch',	// lang('quicksearch')
 		'quickwithcc'=> 'quicksearch (with cc)',	// lang('quicksearch (with cc)')
 		'subject'	=> 'subject',		// lang('subject')
 		'body'		=> 'message body',	// lang('message body')
@@ -112,7 +112,7 @@ class mail_ui
 	 * @var array
 	 */
 	var $statusTypes = array(
-		'any'		=> 'any status',// lang('any status')
+		''		=> 'any status',// lang('any status')
 		'flagged'	=> 'flagged',	// lang('flagged')
 		'unseen'	=> 'unread',	// lang('unread')
 		'answered'	=> 'replied',	// lang('replied')
@@ -472,7 +472,7 @@ class mail_ui
 					{
 						// These only set on first load
 						$content[self::$nm_index] = array(
-							'filter'         => 'any',	// filter is used to choose the mailbox
+							'filter'         => '',	// filter is used to choose the mailbox
 							'lettersearch'   => false,	// I  show a lettersearch
 							'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
 							'start'          =>	0,		// IO position in list
@@ -560,7 +560,7 @@ class mail_ui
 				}
 				if (!Mail::$supportsORinQuery[$this->mail_bo->profileID])
 				{
-					unset($this->searchTypes['quick']);
+					unset($this->searchTypes['']);
 					unset($this->searchTypes['quickwithcc']);
 				}
 				$sel_options['cat_id'] = $this->searchTypes;
@@ -586,7 +586,11 @@ class mail_ui
 				//we use the category "filter" option as specifier where we want to search (quick, subject, from, to, etc. ....)
 				if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search']))
 				{
-					$content[self::$nm_index]['cat_id']=($content[self::$nm_index]['cat_id']?(!Mail::$supportsORinQuery[$this->mail_bo->profileID]&&($content[self::$nm_index]['cat_id']=='quick'||$content[self::$nm_index]['cat_id']=='quickwithcc')?'subject':$content[self::$nm_index]['cat_id']):(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject'));
+					$content[self::$nm_index]['cat_id'] = $content[self::$nm_index]['cat_id'] ?
+						(!Mail::$supportsORinQuery[$this->mail_bo->profileID] &&
+							($content[self::$nm_index]['cat_id'] == '' || $content[self::$nm_index]['cat_id'] == 'quickwithcc') ?
+								'subject' : $content[self::$nm_index]['cat_id']) :
+						(Mail::$supportsORinQuery[$this->mail_bo->profileID] ? '' : 'subject');
 				}
 
 				$content['emailTag'] = $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname';
@@ -1689,9 +1693,9 @@ class mail_ui
 			//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
 			$filter = array(
 				'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
-				'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
+				'type' => $query['cat_id'] ?: (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID] ? '' : 'subject'),
 				'string' => $query['search'],
-				'status' => 'any',
+				'status' => '',
 				//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
 			);
 			if ($query['enddate']||$query['startdate']) {
@@ -4910,7 +4914,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		if (!Mail::$supportsORinQuery[$this->mail_bo->profileID])
 		{
-			unset($this->searchTypes['quick']);
+			unset($this->searchTypes['']);
 			unset($this->searchTypes['quickwithcc']);
 		}
 		if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
@@ -5209,7 +5213,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							'filterName' => lang('subject'),
 							'type' => ($query['cat_id']?$query['cat_id']:'subject'),
 							'string' => $query['search'],
-							'status' => 'any',//this is a status change. status will be manipulated later on
+							'status' => '',//this is a status change. status will be manipulated later on
 							//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
 						);
 						if ($query['enddate']||$query['startdate']) {
@@ -5237,7 +5241,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						!($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))
 					{
 						$filter2toggle['status'] = array('un'.$_flag);
-						if ($query['filter'] && $query['filter']!='any')
+						if ($query['filter'])
 						{
 							$filter2toggle['status'][] = $query['filter'];
 						}
@@ -5253,7 +5257,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						);
 						$messageListForToggle = $_sRt['match']->ids;
 						$filter['status'] = array($_flag);
-						if ($query['filter'] && $query['filter'] !='any')
+						if ($query['filter'])
 						{
 							$filter['status'][] = $query['filter'];
 						}
@@ -5287,7 +5291,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						(in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) &&
 						($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))))
 					{
-						if ($query['filter'] && $query['filter'] !='any')
+						if ($query['filter'])
 						{
 							$filter['status'] = $query['filter'];
 							// since we toggle and we toggle by the filtered flag we must must change _flag
@@ -5416,9 +5420,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
 						$filter = array(
 							'filterName' => lang('subject'),
-							'type' => ($query['cat_id']?$query['cat_id']:'subject'),
+							'type' => $query['cat_id'] ?: 'subject',
 							'string' => $query['search'],
-							'status' => (!empty($query['filter'])?$query['filter']:'any'),
+							'status' => (string)$query['filter'],
 							//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
 						);
 						if ($query['enddate']||$query['startdate']) {
