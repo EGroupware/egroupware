@@ -248,7 +248,7 @@ class InfologApp extends EgwApp
 					{
 						filterDrawer.open = true;
 					}
-					window.setTimeout(() => dates.getWidgetById('startdate').focus());
+					window.setTimeout(() => dates.getWidgetById('col_filter[startdate]')?.focus());
 					break;
 				default:
 					dates.set_disabled(true);

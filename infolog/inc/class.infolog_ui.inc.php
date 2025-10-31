@@ -340,7 +340,7 @@ class infolog_ui
 	function get_rows(&$query,&$rows,&$readonlys)
 	{
 		//error_log(__METHOD__."() query[csv_export]=".array2string($query['csv_export']).", query[filter]=".array2string($query['filter']).", query[col_filter]=".array2string(array_diff($query['col_filter'],array('',0))).' '.function_backtrace());
-		if (!$query['csv_export'])
+		if (empty($query['csv_export']))
 		{
 			unset($query['no_actions']);
 			if (!$query['col_filter']['parent_id'] && !$query['search'] &&

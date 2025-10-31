@@ -1386,6 +1386,14 @@ class infolog_bo
 	{
 		//error_log(__METHOD__.'('.array2string($query).')');
 
+		// convert start- und enddate to TS in server-time
+		foreach(['startdate', 'enddate'] as $key)
+		{
+			if (!empty($query[$key]))
+			{
+				$query[$key] = Api\DateTime::user2server(str_replace('Z', '', $query[$key]), 'ts');
+			}
+		}
 		if($query['filter'] == 'bydate')
 		{
 			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_startdate >= '.$GLOBALS['egw']->db->quote($query['startdate']);
