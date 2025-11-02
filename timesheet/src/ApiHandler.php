@@ -3,7 +3,7 @@
  * EGroupware Timesheet: REST API
  *
  * @link https://www.egroupware.org
- * @package mail
+ * @package timesheet
  * @author Ralf Becker <rb@egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
@@ -70,7 +70,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		{
 			return false;
 		}
-		if ($id) $path = dirname($path).'/';	// carddav_name get's added anyway in the callback
+		if ($id) $path = dirname($path).'/';	// carddav_name gets added anyway in the callback
 
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id) filter=".array2string($filter));
 
@@ -129,7 +129,6 @@ class ApiHandler extends Api\CalDAV\Handler
 	{
 		//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start).", $report_not_found_multiget_ids)");
 		$starttime = microtime(true);
-		$filter_in = $filter;
 
 		// yield extra resources like the root itself
 		$yielded = 0;
@@ -144,7 +143,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			yield $resource;
 		}
 
-		if (isset($filter['order']))
+		if (!empty($filter['order']))
 		{
 			$order = $filter['order'];
 			unset($filter['order']);
@@ -647,7 +646,6 @@ class ApiHandler extends Api\CalDAV\Handler
 		$timesheet = Api\Db::strip_array_keys($this->bo->data, 'ts_');
 
 		// send necessary response headers: Location, etag, ...
-		$this->check_return_representation($options, $id, $user);
 		$this->put_response_headers($timesheet, $options['path'], $retval);
 
 		if ($this->debug > 1) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($retval));
