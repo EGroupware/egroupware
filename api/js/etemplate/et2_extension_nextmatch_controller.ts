@@ -42,7 +42,6 @@ import {
 	EGW_AO_FLAG_IS_CONTAINER
 } from "../egw_action/egw_action_constants";
 import {nm_action} from "./et2_extension_nextmatch_actions.js";
-import {egwIsMobile} from "../egw_action/egw_action_common";
 
 /**
  * @augments et2_dataview_controller
@@ -772,29 +771,17 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 		}
 		if(!this._widget) return;
 
-		// for mobile need to update status of header objects on selection
-		if(egwIsMobile())
-		{
-			this.nm_onselect_ctrl(this._widget, action, senders);
-		}
-
 		this._widget.onselect.call(this._widget, action,senders);
-	}
 
-	/**
-	 * Function runs after nextmatch selection callback gets called by object manager,
-	 * which we can update status of header DOM objects (eg. action_header, favorite, ...)
-	 *
-	 * @param {object} _widget nextmatch widget
-	 * @param {object} _action action object
-	 * @param {object} _senders selected row(s) action object
-	 */
-	nm_onselect_ctrl(_widget, _action, _senders)
-	{
-		var senders = _senders ? _senders : null;
-
-		// Update action_header status (3dots)
-		_widget.header.action_header.toggle(typeof _widget.getSelection().ids != 'undefined' && _widget.getSelection().ids.length > 0);
+		// Dispatch an event that can be listened to
+		const selection = this._selectionMgr.getSelected();
+		this._widget.getDOMNode().dispatchEvent(new CustomEvent("et2-selection-change", {
+			bubbles: true, detail: {
+				ids: selection.ids,
+				nextmatch: this._widget,
+				all: selection.all
+			}
+		}));
 	}
 
 	/** -- Implementation of et2_IDataProvider -- **/

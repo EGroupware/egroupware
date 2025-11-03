@@ -16,6 +16,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import type {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
 import {waitForEvent} from "../../api/js/etemplate/Et2Widget/event";
+import {egw_getAppObjectManager} from "../../api/js/egw_action/egw_action";
 
 /**
  * @summary Application component inside EgwFramework
@@ -171,6 +172,14 @@ export class EgwFrameworkApp extends LitElement
 	 * @type {boolean}
 	 */
 	@state() ignoreSplitterResize = false;
+
+	/**
+	 * Some child has a selection, so we want to enable the context menu button.
+	 * This is for mobile only.
+	 *
+	 * @type {boolean}
+	 */
+	@state() hasContextMenu = false;
 
 	get leftSplitter() { return <SlSplitPanel>this.shadowRoot?.querySelector(".egw_fw_app__outerSplit");}
 
@@ -758,6 +767,47 @@ export class EgwFrameworkApp extends LitElement
 	}
 
 	/**
+	 * Handle a click on the context menu button, which should only be shown for mobile
+	 *
+	 * @param event
+	 * @private
+	 */
+	private handleContextButton(event)
+	{
+		event.stopPropagation();
+
+		// Find the active thing and fire an event on it
+		let context = null;
+		let om = null;
+		if(!this.leftCollapsed)
+		{
+			// If the left is open with a tree, use that
+			const tree = <HTMLInputElement>this.querySelector("et2-tree[slot*=left]") ?? this.querySelector("[slot*=left] et2-tree");
+			if(tree && tree.value)
+			{
+				context = tree.shadowRoot.querySelector("[selected]");
+				om = tree["widget_object"];
+			}
+		}
+		om = om ?? egw_getAppObjectManager(false, this.name);
+		if(om && !context)
+		{
+			context = om.getFocusedObject()?.iface.getDOMNode()
+		}
+		if(context)
+		{
+			context.dispatchEvent(new CustomEvent("tapandhold", {
+				// type isn't an option, but needed for action system
+				//type: 'tapandhold',
+				bubbles: true,
+				composed: true,
+				cancelable: true
+			}));
+		}
+		//this.getNextmatch().getDOMNode().getElementsByClassName('selected')[0].dispatchEvent(new CustomEvent("tapandhold", {type: 'tapandhold'}));
+	}
+
+	/**
 	 * An etemplate has loaded inside
 	 * Move anything top-level that has a slot
 	 */
@@ -788,6 +838,10 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this.requestUpdate();
 		}
+
+		// Enable the context menu button if there's a nextmatch or tree in the left slot
+		const tree = <HTMLInputElement>this.querySelector("et2-tree[slot*=left]") ?? this.querySelector("[slot*=left] et2-tree");
+		this.hasContextMenu = Boolean(typeof tree !== "undefined" || this.nextmatch).valueOf();
 	}
 
 	/**
@@ -1140,6 +1194,13 @@ export class EgwFrameworkApp extends LitElement
                 </sl-menu>
             </sl-dropdown>
             <slot name="header-actions"></slot>
+            <et2-button-icon name="three-dots-vertical" class="egw_fw_app--only_mobile"
+                             nosubmit
+                             ?hidden=${!this.hasContextMenu}
+                             label=${this.egw.lang("Context menu")}
+                             statustext=${this.egw.lang("Context menu")}
+                             @click=${this.handleContextButton}
+            ></et2-button-icon>
 		`;
 	}
 

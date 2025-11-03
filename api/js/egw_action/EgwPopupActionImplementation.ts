@@ -306,9 +306,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             }
         });
         // bind a custom event tapandhold to be able to call it from nm action button
-        _node.addEventListener('tapandhold', _event => {
-            _callback(_event)
-        });
+		_node.addEventListener('tapandhold', _callback);
     }
 
     /**
@@ -378,6 +376,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         // Safari still needs the taphold to trigger contextmenu
         // Chrome has default event on touch and hold which acts like right click
         this._handleTapHold(_node, contextHandler);
+		_context.iface?.handlers['popup'].push({type: 'tapandhold', listener: contextHandler})
         if (!window.egwIsMobile())
         {
             _node.addEventListener('contextmenu', contextHandler);
@@ -592,7 +591,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         const scrollLeft = document.body.scrollLeft ? document.body.scrollLeft :
             document.documentElement.scrollLeft;
 
-        return {'posx': (event.clientX + scrollLeft), 'posy': (event.clientY + scrollTop)};
+		return {'posx': (event.clientX ?? 0 + scrollLeft), 'posy': (event.clientY ?? 0 + scrollTop)};
     };
 
     /**

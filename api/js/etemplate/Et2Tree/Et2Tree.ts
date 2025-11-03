@@ -989,6 +989,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			this.selectedNodes = event.detail.selection
 		}*/
+
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new CustomEvent("et2-selection-change", {
+				bubbles: true,
+				detail: {
+					selection: this.selectedNodes,
+					ids: this.value
+				}
+			}))
+		})
 	}
 
 	protected async finishedLazyLoading()
