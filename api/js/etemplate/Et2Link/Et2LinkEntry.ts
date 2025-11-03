@@ -17,7 +17,8 @@ import {HasSlotController} from "../Et2Widget/slot";
 /**
  * Find and select a single entry using the link system.
  *
- *
+ * @slot prefix
+ * @slot suffix
  */
 export class Et2LinkEntry extends Et2InputWidget(LitElement)
 {
@@ -371,6 +372,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
             >
                 ${labelTemplate}
                 <div part="form-control-input" class="form-control-input">
+                    <slot name="prefix"></slot>
                     <et2-link-apps
                             onlyApp=${this.onlyApp ? this.onlyApp : nothing}
                             ?appIcons=${this.appIcons}
@@ -395,6 +397,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
                             <option value=${this.__value.id}>${this.__value.title}</option>
                         ` : nothing}
                     </et2-link-search>
+                    <slot name="suffix"></slot>
                 </div>
                 ${helpTemplate}
             </div>
