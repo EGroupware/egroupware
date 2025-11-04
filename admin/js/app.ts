@@ -151,25 +151,36 @@ class AdminApp extends EgwApp
 				}
 				break;
 			default:
-				const header = this.et2.getWidgetById(_name + '.header');
-				if(header && header.slot === 'main-header')
-				{
-					const nm = this.et2.getWidgetById('nm');
-					if (nm && nm !== this.nm && nm !== this.nm2)
-					{
-						this.nm2?.getDOMNode()?.removeEventListner('et2-filter', this.nmFilterChange);
-						this.nm2 = nm;
-						this.nm2.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
-						// update values in toolbar
-						window.setTimeout(() =>
-						{
-							this.nmFilterChange({detail: { activeFilters: nm.activeFilters}});
-						});
-					}
-					header.closest('egw-app')?.append(header);
-					this.enableAppToolbar(_name + '.header');
-				}
+				this.enableAppToolbar(_et2, _name);
 				break;
+		}
+	}
+
+	/**
+	 * Enable the app-toolbar, can be called for other apps showing view in admin
+	 *
+	 * @param _et2
+	 * @param _name
+	 */
+	enableAppToolbar(_et2, _name)
+	{
+		const header = _et2.widgetContainer.getWidgetById(_name + '.header');
+		if(header && header.slot === 'main-header')
+		{
+			const nm = _et2.widgetContainer.getWidgetById('nm');
+			if (nm && nm !== this.nm && nm !== this.nm2)
+			{
+				this.nm2?.getDOMNode()?.removeEventListner('et2-filter', this.nmFilterChange);
+				this.nm2 = nm;
+				this.nm2.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
+				// update values in toolbar
+				window.setTimeout(() =>
+				{
+					this.nmFilterChange({detail: { activeFilters: nm.activeFilters}});
+				});
+			}
+			header.closest('egw-app')?.append(header);
+			this.showAppToolbar(_name + '.header');
 		}
 	}
 
@@ -246,7 +257,7 @@ class AdminApp extends EgwApp
 		this.ajax_target.set_disabled(!ajax);
 
 		// disable app-toolbar, if not accounts or groups (!_url) for now
-		this.enableAppToolbar(!this.nm.disabled ? 'admin.index.header' : '');
+		this.showAppToolbar(!this.nm.disabled ? 'admin.index.header' : '');
 
 		if(!this.nm.disabled)
 		{
@@ -254,7 +265,7 @@ class AdminApp extends EgwApp
 			this.ajax_target.updateComplete.then(() => this.nm.resize())
 
 			// If user list is shown, show the toolbar
-			this.enableAppToolbar('admin.index.header');
+			this.showAppToolbar('admin.index.header');
 		}
 	}
 
@@ -510,7 +521,7 @@ class AdminApp extends EgwApp
 			this.load();
 			var parts = _id.split('/');
 			this.nm.applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
-			this.enableAppToolbar('admin.index.header');
+			this.showAppToolbar('admin.index.header');
 		}
 		else if (_id === '/groups')
 		{
@@ -556,7 +567,7 @@ class AdminApp extends EgwApp
 	{
 		this.nm.set_disabled(true);
 		this.groups.set_disabled(false);
-		this.enableAppToolbar('admin.index.group.header')
+		this.showAppToolbar('admin.index.group.header')
 		jQuery(this.et2.parentNode).trigger('show.et2_nextmatch');
 	}
 
@@ -565,7 +576,7 @@ class AdminApp extends EgwApp
 	 *
 	 * @param template
 	 */
-	enableAppToolbar(template : string)
+	showAppToolbar(template : string)
 	{
 		document.querySelectorAll('egw-app#admin et2-template[slot="main-header"]').forEach((tpl : Et2Template) => {
 			tpl.set_disabled(tpl.id !== template);

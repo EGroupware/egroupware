@@ -88,7 +88,7 @@
 						<et2-button label="Apply" id="button[apply]"></et2-button>
 						<et2-button label="Cancel" id="button[cancel]"></et2-button>
 						<et2-checkbox label="Do not notify" id="no_notifications" statustext="Do not notify of these changes"></et2-checkbox>
-						<et2-button label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,egw.lang('Delete this entry'),'Delete')" align="right"></et2-button>
+						<et2-button label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete')" align="right"></et2-button>
 					</et2-hbox>
 				</row>
 			</rows>

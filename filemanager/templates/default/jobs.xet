@@ -43,10 +43,12 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.jobs.add" template="" lang="" group="0" version="1.9.001">
+	<template id="filemanager.jobs.header" template="" lang="" group="0" version="1.9.001">
 		<et2-button  label="Add" id="add" onclick="egw.open_link('filemanager.\\EGroupware\\Filemanager\\Jobs.edit', '_blank', '800x600')" noSubmit="true"></et2-button>
+		<!-- et2-template template="api.search-button"></et2-template -->
 	</template>
 	<template id="filemanager.jobs" template="" lang="" group="0" version="1.9.001">
-		<nextmatch id="nm" options="filemanager.jobs.rows" span="all" header_left="filemanager.jobs.add"/>
+		<et2-template template="filemanager.jobs.header" slot="main-header"></et2-template>
+		<nextmatch id="nm" template="filemanager.jobs.rows"/>
 	</template>
 </overlay>

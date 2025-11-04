@@ -109,10 +109,14 @@ export class filemanagerAPP extends EgwApp
 		// call parent
 		super.et2_ready(et2, name);
 
-		if (name === 'filemanager.admin')
+		switch (name)
 		{
-			this.changeMountScheme();
-			return;
+			case 'filemanager.admin':
+				this.changeMountScheme();
+				return;
+			case 'filemanager.jobs':
+				app.admin.enableAppToolbar(et2,name);
+				return;
 		}
 		if(name === 'filemanager.index' && !et2.DOMContainer.closest("egw-app"))
 		{
