@@ -247,12 +247,19 @@ export default css`
 			display: initial;
 		}
 
-		.egw_fw_app__name h2 {
-			width: 0px;
-		}
+		.egw_fw_app__name {
+			/* Keep the expand chevron and icon visible */
+			min-width: 5em;
 
-		.egw_fw_app__name et2-image {
-			display: initial;
+			h2 {
+				width: 0px;
+			}
+
+			et2-image {
+				display: initial;
+				width: 1em;
+				height: 1em;
+			}
 		}
         sl-split-panel::part(divider) {
             display: none;
