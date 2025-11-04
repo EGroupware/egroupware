@@ -120,9 +120,9 @@ export class MailApp extends EgwApp
 	 *
 	 * @memberOf mail
 	 */
-	constructor()
+	constructor(_app, _wnd)
 	{
-		super('mail');
+		super('mail', _wnd);
 
 		if (!this.egw.is_popup())
 			// Turn on client side, persistent cache
