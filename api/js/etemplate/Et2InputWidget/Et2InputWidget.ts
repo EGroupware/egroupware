@@ -177,7 +177,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 {
 	class Et2InputWidgetClass extends Et2Widget(superclass) implements et2_IInput, et2_IInputNode, et2_ISubmitListener
 	{
-		private __readonly : boolean;
 		private __label : string = "";
 		protected _oldValue : string | number | Object;
 		protected node : HTMLElement;
@@ -542,37 +541,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		set_readonly(new_value)
 		{
 			this.readonly = new_value;
-		}
-
-		// Deal with Lion readOnly vs etemplate readonly
-		public set readonly(new_value)
-		{
-			this.__readonly = super.__readOnly = new_value;
-			this.requestUpdate("readonly");
-		}
-
-		public get readonly()
-		{
-			return this.__readonly;
-		}
-
-		/**
-		 * Was from early days (Lion)
-		 * @deprecated
-		 * @param {boolean} new_value
-		 */
-		set readOnly(new_value)
-		{
-			this.readonly = new_value;
-		}
-
-		/**
-		 *  Lion mapping
-		 * @deprecated
-		 */
-		get readOnly()
-		{
-			return this.readonly;
 		}
 
 		/**
