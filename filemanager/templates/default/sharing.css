@@ -57,10 +57,10 @@ div.et2_nextmatch thead {
 }
 
 div.nextmatch_header {
-
+	display: none !important;
 }
 
-#filemanager-index_filemanager-index-header_left > et2-image {
+#filemanager-index_filemanager-index-app-toolbar > et2-image {
     padding: 0 1em;
 }
 

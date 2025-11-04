@@ -663,8 +663,8 @@ class filemanager_ui
 		// Set view button to match current settings
 		if ($content['nm']['view'] == 'tile')
 		{
-			$tpl->setElementAttribute('nm[button][change_view]', 'statustext', lang('List view'));
-			$tpl->setElementAttribute('nm[button][change_view]', 'image', 'list_row');
+			$tpl->setElementAttribute('button[change_view]', 'statustext', lang('List view'));
+			$tpl->setElementAttribute('button[change_view]', 'image', 'list_row');
 		}
 		// if initial load is done via GET request (idots template or share.php)
 		// get_rows cant call app.filemanager.set_readonly, so we need to do that here
