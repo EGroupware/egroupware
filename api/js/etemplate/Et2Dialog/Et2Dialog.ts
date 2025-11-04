@@ -952,6 +952,14 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				button.noSubmit = true;
 			});
 		}
+		// Start with width & height set explicitly
+		// It avoids some sizing problems in children, like tabbox with tabsize=auto
+		this.updateComplete.then(() =>
+		{
+			const style = getComputedStyle(this.shadowRoot.querySelector(".dialog__panel"));
+			(<HTMLElement>this.shadowRoot.querySelector(".dialog__panel")).style.width = style.width;
+			(<HTMLElement>this.shadowRoot.querySelector(".dialog__panel")).style.height = style.height;
+		});
 		return template_buttons;
 	}
 
