@@ -1722,6 +1722,18 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 body.scrollVertical {
   overflow-y: auto;
 }
+/** Show / hide content based on mobile / screen size **/
+.onlyMobile {
+  display: none;
+}
+@media (max-width: 799px) {
+  .noMobile {
+    display: none;
+  }
+  .onlyMobile {
+    display: initial;
+  }
+}
 /** Theme customisations **/
 /* imported here to make fast light/dark transitions */
 :root,
