@@ -1194,13 +1194,14 @@ export class EgwFrameworkApp extends LitElement
                 </sl-menu>
             </sl-dropdown>
             <slot name="header-actions"></slot>
-            <et2-button-icon name="three-dots-vertical" class="egw_fw_app--only_mobile"
-                             nosubmit
-                             ?hidden=${!this.hasContextMenu}
-                             label=${this.egw.lang("Context menu")}
-                             statustext=${this.egw.lang("Context menu")}
-                             @click=${this.handleContextButton}
-            ></et2-button-icon>
+            ${this.hasContextMenu ? html`
+                <et2-button-icon name="three-dots-vertical" class="egw_fw_app--only_mobile"
+                                 nosubmit
+                                 label=${this.egw.lang("Context menu")}
+                                 statustext=${this.egw.lang("Context menu")}
+                                 @click=${this.handleContextButton}
+                ></et2-button-icon>` : nothing
+            }
 		`;
 	}
 
