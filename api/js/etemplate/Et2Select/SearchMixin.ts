@@ -1533,6 +1533,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		 */
 		public validateFreeEntry(text) : boolean
 		{
+			if (typeof text !== "string")
+			{
+				return false;
+			}
 			let validators = [...this.validators, ...this.defaultValidators];
 			let result = validators.filter(v =>
 				v.execute(text, v.param, {node: this}),
