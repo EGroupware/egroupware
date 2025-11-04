@@ -120,7 +120,7 @@ class mail_compose
 				'caption' => 'Send',
 				'icon'	=> 'mail_send',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.compose_submitAction',
+				'onExecute' => 'javaScript:app.mail.compose.submitAction',
 				'hint' => 'Send',
 				'shortcut' => array('ctrl' => true, 'keyCode' => 83, 'caption' => 'Ctrl + S'),
 				'toolbarDefault' => true
@@ -129,7 +129,7 @@ class mail_compose
 				'caption' => 'Save',
 				'icon' => 'apply',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.saveAsDraft',
+				'onExecute' => 'javaScript:app.mail.compose.saveAsDraft',
 				'hint' => 'Save as Draft',
 				'toolbarDefault' => true
 			),
@@ -137,21 +137,21 @@ class mail_compose
 				'caption' => 'Print',
 				'icon' => 'print',
 				'group' => $group,
-				'onExecute' => 'javaScript:app.mail.saveAsDraft',
+				'onExecute' => 'javaScript:app.mail.compose.saveAsDraft',
 				'hint' => 'Save as Draft and Print'
 			),
 			'save2vfs' => array (
 				'caption' => 'Save to filemanager',
 				'icon' => 'filesave',
 				'group' => $group,
-				'onExecute' => 'javaScript:app.mail.compose_saveDraft2fm',
+				'onExecute' => 'javaScript:app.mail.compose.saveDraft2fm',
 				'hint' => 'Save the drafted message as eml file into VFS'
 			),
 			'selectFromVFSForCompose' => array(
 				'caption' => 'VFS',
 				'icon' => 'filemanager/navbar',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.compose_triggerWidget',
+				'onExecute' => 'javaScript:app.mail.compose.triggerWidget',
 				'hint' => 'Select file(s) from VFS',
 				'toolbarDefault' => true
 			),
@@ -159,7 +159,7 @@ class mail_compose
 				'caption' => 'Upload files...',
 				'icon' => 'attach',
 				'group' => $group,
-				'onExecute' => 'javaScript:app.mail.compose_triggerWidget',
+				'onExecute' => 'javaScript:app.mail.compose.triggerWidget',
 				'hint' => 'Select files to upload',
 				'toolbarDefault' => true
 			),
@@ -170,7 +170,7 @@ class mail_compose
 				'checkbox' => true,
 				'hint' => 'check to save as infolog on send',
 				'toolbarDefault' => true,
-				'onExecute' => 'javaScript:app.mail.compose_setToggle'
+				'onExecute' => 'javaScript:app.mail.compose.setToggle'
 			),
 			'to_tracker' => array(
 				'caption' => 'Tracker',
@@ -178,7 +178,7 @@ class mail_compose
 				'group' => $group,
 				'checkbox' => true,
 				'hint' => 'check to save as tracker entry on send',
-				'onExecute' => 'javaScript:app.mail.compose_setToggle',
+				'onExecute' => 'javaScript:app.mail.compose.setToggle',
 				'mail_import' => Api\Hooks::single(array('location' => 'mail_import'),'tracker'),
 			),
 			'to_calendar' => array(
@@ -187,7 +187,7 @@ class mail_compose
 				'group' => $group,
 				'checkbox' => true,
 				'hint' => 'check to save as calendar event on send',
-				'onExecute' => 'javaScript:app.mail.compose_setToggle'
+				'onExecute' => 'javaScript:app.mail.compose.setToggle'
 			),
 			'addressbook' => array(
 				'caption' => 'Addressbook',
@@ -203,7 +203,7 @@ class mail_compose
 				'group' => ++$group,
 				'checkbox' => true,
 				'hint' => 'check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)',
-				'onExecute' => 'javaScript:app.mail.compose_setToggle'
+				'onExecute' => 'javaScript:app.mail.compose.setToggle'
 			),
 			'prty' => array(
 				'caption' => 'Priority',
@@ -231,7 +231,7 @@ class mail_compose
 					'caption' => 'SMIME Sign',
 					'icon' => 'smime_sign',
 					'group' => $group,
-					'onExecute' => 'javaScript:app.mail.compose_setToggle',
+					'onExecute' => 'javaScript:app.mail.compose.setToggle',
 					'checkbox' => true,
 					'hint' => 'Sign your message with smime certificate'
 				),
@@ -239,7 +239,7 @@ class mail_compose
 					'caption' => 'SMIME Encryption',
 					'icon' => 'smime_encrypt',
 					'group' => $group,
-					'onExecute' => 'javaScript:app.mail.compose_setToggle',
+					'onExecute' => 'javaScript:app.mail.compose.setToggle',
 					'checkbox' => true,
 					'hint' => 'Encrypt your message with smime certificate'
 			)));
@@ -250,7 +250,7 @@ class mail_compose
 						'caption' => $priority,
 						'icon' => 'prio_high',
 						'default' => false,
-						'onExecute' => 'javaScript:app.mail.compose_priorityChange'
+						'onExecute' => 'javaScript:app.mail.compose.priorityChange'
 			);
 			switch ($priority)
 			{

@@ -3,9 +3,9 @@
 <overlay>
 	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
 		<et2-vbox  class="mailCompose mailComposeHeaderSection" width="100%">
-            <et2-vfs-select-dialog class="$cont[vfsNotAvailable] compose_egw_icons" title="Attach files" path="~" buttonLabel="" id="selectFromVFSForCompose" multiple="true" onchange="app.mail.vfsUploadForCompose"/>
+            <et2-vfs-select-dialog class="$cont[vfsNotAvailable] compose_egw_icons" title="Attach files" path="~" buttonLabel="" id="selectFromVFSForCompose" multiple="true" onchange="app.mail.compose.vfsUpload"/>
             <et2-hbox class="mail-compose_toolbar_assist" width="100%">
-				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple="true" progress="attachments" onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
+				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple="true" progress="attachments" onFinish="app.mail.compose.uploadFinish" onStart="app.mail.compose.uploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
 				<et2-checkbox  statustext="check to save as infolog on send" id="to_infolog" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-checkbox  statustext="check to save as tracker entry on send" id="to_tracker" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-checkbox  statustext="check to save as calendar event on send" id="to_calendar" selectedValue="on" unselectedValue="off" ></et2-checkbox>
@@ -41,7 +41,7 @@
 				<rows>
 					<row class="mailComposeHeaders mailComposeJQueryFrom" >
 						<et2-description  value="From"></et2-description>
-						<et2-select  id="mailaccount" onchange="app.mail.submitOnChange"></et2-select>
+						<et2-select  id="mailaccount" onchange="app.mail.compose.submitOnChange"></et2-select>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryReplyto">
 						<et2-description  value="Reply to"></et2-description>
@@ -56,31 +56,31 @@
 							<et2-button slot="trigger" caret="true" noSubmit="true">
 								<et2-description value="To"></et2-description>
 							</et2-button>
-							<et2-button id="from_expander" label="From" onclick="app.mail.compose_fieldExpander"></et2-button>
-							<et2-button id="cc_expander" label="Cc" onclick="app.mail.compose_fieldExpander"></et2-button>
-							<et2-button id="bcc_expander" label="Bcc" onclick="app.mail.compose_fieldExpander"></et2-button>
-							<et2-button id="replyto_expander" label="Reply to" onclick="app.mail.compose_fieldExpander"></et2-button>
-							<et2-button id="folder_expander" label="Folder" onclick="app.mail.compose_fieldExpander"></et2-button>
+							<et2-button id="from_expander" label="From" onclick="app.mail.compose.fieldExpander"></et2-button>
+							<et2-button id="cc_expander" label="Cc" onclick="app.mail.compose.fieldExpander"></et2-button>
+							<et2-button id="bcc_expander" label="Bcc" onclick="app.mail.compose.fieldExpander"></et2-button>
+							<et2-button id="replyto_expander" label="Reply to" onclick="app.mail.compose.fieldExpander"></et2-button>
+							<et2-button id="folder_expander" label="Folder" onclick="app.mail.compose.fieldExpander"></et2-button>
 						</et2-dropdown>
                         <et2-email id="to" width="100%" onclick="app.mail.address_click" autofocus="true"
-                                   onchange="app.mail.recipients_onchange"
+                                   onchange="app.mail.compose.recipientsOnChange"
                                    placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">
 						<et2-description  value="Cc"></et2-description>
                         <et2-email id="cc" width="100%" onclick="app.mail.address_click"
-                                          onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+                                          onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
                                    placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
                     </row>
                     <row class="mailComposeHeaders mailComposeJQueryBcc">
                         <et2-description value="Bcc"></et2-description>
                         <et2-email id="bcc" width="100%" onclick="app.mail.address_click"
-                                          onchange="app.mail.recipients_onchange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+                                          onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
                                    placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
                     </row>
                     <row class="mailComposeHeaders">
                         <et2-description value="Subject"></et2-description>
-                        <et2-textbox align="left" width="100%" id="subject" height="25" onchange="app.mail.subject2title"></et2-textbox>
+                        <et2-textbox align="left" width="100%" id="subject" height="25" onchange="app.mail.compose.subject2title"></et2-textbox>
 
 					</row>
 				</rows>
@@ -96,7 +96,7 @@
 			</et2-hbox>
 			<et2-vbox  class="et2_file mailUploadSection" disabled="@no_griddata">
 				<et2-vbox>
-					<et2-select  id="filemode" label="Send files as" onchange="app.mail.check_sharing_filemode"></et2-select>
+					<et2-select  id="filemode" label="Send files as" onchange="app.mail.compose.checkSharingFilemode"></et2-select>
 					<et2-date  id="expiration" label="Expiration" placeholder="EPL only" dataFormat="Y-m-d"></et2-date>
 					<et2-password  id="password" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!" placeholder="password protect"></et2-password>
 				</et2-vbox>
@@ -110,7 +110,7 @@
 					<rows>
 						<row class="row attachmentRow">
 							<et2-description  id="${row}[tmp_name]"></et2-description>
-							<et2-description  class="useEllipsis et2_link" id="${row}[name]" onclick="app.mail.displayUploadedFile" noLang="1"></et2-description>
+							<et2-description  class="useEllipsis et2_link" id="${row}[name]" onclick="app.mail.compose.displayUploadedFile" noLang="1"></et2-description>
 							<vfs-size align="right" id="${row}[size]" />
 							<et2-button-icon  id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"></et2-button-icon>
 						</row>
