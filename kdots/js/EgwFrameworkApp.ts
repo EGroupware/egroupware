@@ -367,12 +367,12 @@ export class EgwFrameworkApp extends LitElement
 		}
 
 		this.loading = true;
+		if(this.egw.debug_level() >= 4)
+		{
+			window.performance.mark("mark_egw_app_fetch_start_" + this.name);
+		}
 		if(!this.useIframe)
 		{
-			if(this.egw.debug_level() >= 4)
-			{
-				window.performance.mark("mark_egw_app_fetch_start_" + this.name);
-			}
 			this.loadingPromise = this.egw.request(
 				this.framework.getMenuaction('ajax_exec', targetUrl, this.name),
 				[targetUrl]
@@ -405,9 +405,18 @@ export class EgwFrameworkApp extends LitElement
 			this.loadingPromise = new Promise<void>((resolve, reject) =>
 			{
 				this.append(this._createIframeNodes(url));
+				if(this.egw.debug_level() >= 4)
+				{
+					window.performance.mark("mark_egw_app_fetch_end_" + this.name);
+					window.performance.measure("egw_app_fetch_" + this.name, "mark_egw_app_fetch_start_" + this.name, "mark_egw_app_fetch_end_" + this.name);
+					window.performance.mark("mark_egw_app_contents_start_" + this.name);
+				}
+				this.hideLeft();
+				this.hideRight();
 
 				// Might have just changed useIFrame, need to update to show that
 				this.requestUpdate();
+				resolve();
 
 				// Wait for children to load
 				return this.waitForLoad(Array.from(this.querySelectorAll("iframe")));
