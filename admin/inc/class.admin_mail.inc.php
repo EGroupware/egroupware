@@ -938,7 +938,6 @@ class admin_mail
 							unset($content[$n]);
 						}
 					}
-					$content['acc_sieve_enabled'] = (string)($content['acc_sieve_enabled']);
 					$content['notify_use_default'] = !$content['notify_account_id'];
 					self::fix_account_id_0($content['account_id']);
 
