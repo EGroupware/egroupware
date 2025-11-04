@@ -228,6 +228,7 @@ export default css`
 			sl-format-bytes {
 				flex: 0 0 20%;
 				text-align: right;
+				min-width: 5em;
 			}
 		}
 	}

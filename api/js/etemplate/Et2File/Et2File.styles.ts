@@ -3,6 +3,7 @@ import {css} from 'lit';
 export default css`
 	:host {
 		display: flex;
+		overflow: hidden;
 	}
 
 	:host([loading]) .file__button et2-image {
@@ -23,6 +24,8 @@ export default css`
 
 	.file__file-list {
 		width: 100%;
+		max-height: calc(100% - var(--sl-input-height-medium));
+		overflow-y: auto;
 	}
 	.file__file-list::part(popup) {
 		min-width: 25em;
