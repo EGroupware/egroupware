@@ -71,6 +71,7 @@ export default css`
 		flex-direction: column;
 		font-size: var(--sl-font-size-small);
 		min-width: 16em;
+		gap: var(--sl-spacing-small);
 	}
 
 	.file-item__label__size {
