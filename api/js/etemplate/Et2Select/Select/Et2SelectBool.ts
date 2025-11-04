@@ -21,7 +21,7 @@ export class Et2SelectBool extends Et2StaticSelectMixin(Et2Select)
 	 */
 	set value(new_value)
 	{
-		super.value = new_value ? "1" : "0";
+		super.value = new_value && new_value !== "0" && new_value !== "false" ? "1" : "0";
 	}
 }
 
