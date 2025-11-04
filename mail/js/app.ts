@@ -5041,11 +5041,11 @@ export class MailApp extends EgwApp
 	mailvelopeGetCheckRecipients()
 	{
 		// collect all recipients
-		var recipients = this.et2.getWidgetById('to').get_value();
+		let recipients = this.et2.getWidgetById('to').get_value();
 		recipients = recipients.concat(this.et2.getWidgetById('cc').get_value());
 		recipients = recipients.concat(this.et2.getWidgetById('bcc').get_value());
 
-		return super.notifyNew.call(this, recipients);
+		return super.mailvelopeGetCheckRecipients(recipients);
 	}
 
 	/**
