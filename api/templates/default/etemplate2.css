@@ -3922,11 +3922,16 @@ et2-vfs-mime img.overlay {
     z-index: 1;
 }
 /*badge on the notification bell, to look visually similar to EgwFramework.styles.ts badge on the open app icons*/
+#topmenu_info_notifications{
+    cursor: pointer;
+    display: flex;
+}
+#topmenu_info_notifications et2-image{display: contents;}
 #topmenu_info_notifications sl-badge{
     position: absolute;
     bottom: -.5em;
     left: -.7em;
-    font-size: 1em;
+    font-size: min(1em,1rem);
 }
 #topmenu_info_notifications sl-badge::part(base) {
     /* put specific sizing here*/
