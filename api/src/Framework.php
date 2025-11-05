@@ -1500,15 +1500,17 @@ abstract class Framework extends Framework\Extra
 	* @param string $url Address for the entry to link to
 	* @param string $title Text displayed for the entry
 	* @param string $target Optional, so the entry can open in a new page or popup
+	 * @param string $icon Optional, supply an icon for the entry
 	* @access public
 	* @return void
 	*/
-	public static function add_topmenu_item($id,$url,$title,$target = '')
+	public static function add_topmenu_item($id,$url,$title,$target = '',$icon = '')
 	{
 		$entry['name'] = $id;
 		$entry['url'] = $url;
 		$entry['title'] = $title;
 		$entry['target'] = $target;
+		if ($icon) $entry['icon'] = $icon;
 
 		self::$top_menu_extra[$id] = $entry;
 	}
