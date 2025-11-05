@@ -56,8 +56,10 @@ div.et2_nextmatch thead {
     display: none;
 }
 
-div.nextmatch_header {
-	display: none !important;
+#filemanager-index_nm div.nextmatch_header_row {
+	padding: 0;
+	background-color: var(--primary-color);
+	height: var(--sl-spacing-2x-small);
 }
 
 #filemanager-index_filemanager-index-app-toolbar > et2-image {
