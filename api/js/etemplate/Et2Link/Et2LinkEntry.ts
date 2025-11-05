@@ -17,8 +17,8 @@ import {HasSlotController} from "../Et2Widget/slot";
 /**
  * Find and select a single entry using the link system.
  *
- * @slot prefix
- * @slot suffix
+ * @slot prefix Used to prepend a presentational icon or similar element to the widget.
+ * @slot suffix Like prefix, but after
  */
 export class Et2LinkEntry extends Et2InputWidget(LitElement)
 {
