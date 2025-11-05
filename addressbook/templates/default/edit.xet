@@ -340,7 +340,7 @@
                 <row class="dialogHeader">
                     <et2-box  align="center">
                         <et2-hbox  disabled="@hidebuttons">
-                            <et2-avatar  id="jpegphoto" contactId="$cont[id]" src="$cont[photo]" crop="false" editable="true"></et2-avatar>
+                            <et2-avatar id="jpegphoto" image="$cont[photo]" contactId="$cont[id]" crop="false" editable="true"></et2-avatar>
                         </et2-hbox>
                     </et2-box>
                     <et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" placeholder="Name" noLang="1"></et2-textbox>
