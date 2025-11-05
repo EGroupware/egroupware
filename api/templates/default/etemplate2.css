@@ -362,10 +362,7 @@ et2-image[icon] {
 	height: 1.3rem;
 	font-size: 1.3rem !important;
 }
-et2-image > svg{
-    width: 1.3rem;
-    height: 1.3rem;
-}
+
 et2-appicon > svg{
     width: 1.3em;
     height: 1.3em;

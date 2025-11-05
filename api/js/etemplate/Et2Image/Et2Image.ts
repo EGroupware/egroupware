@@ -8,7 +8,7 @@
  * @author Nathan Gray
  */
 
-import {html, LitElement} from "lit";
+import {css, html, LitElement} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {property} from "lit/decorators/property.js";
@@ -213,7 +213,9 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 				.then(res => res.text()
 					.then(text =>
 						{
-							const res = text.replace("svg", 'svg part="image"');
+							//if we inline a svg into our et2-image we always want it the fill all the available space of the et2-image, no matter what the svg sais as its size
+							//change the size of the et2-image if you want a different size
+							const res = text.replace("<svg", '<svg part="image"').replace(/\b(width|height)=(['"])[^'"]*\2/g, '$1="100%"');
 							const svg = unsafeSVG(res)
 							return svg
 						}
