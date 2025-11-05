@@ -64,7 +64,7 @@ module.exports = function (eleventyConfig)
 	// General assets
 	eleventyConfig.addPassthroughCopy({"../../api/templates/default/images/logo.svg": "assets/images/logo.svg"});
 	eleventyConfig.addPassthroughCopy({"../../api/templates/default/etemplate2.css": "assets/styles/etemplate2.css"});
-	eleventyConfig.addPassthroughCopy({"../../pixelegg/css/monochrome.css": "assets/styles/monochrome.css"});
+	eleventyConfig.addPassthroughCopy({"../../kdots/css/kdots.css": "assets/styles/kdots.css"});
 
 	// vendor requirements
 	eleventyConfig.addPassthroughCopy({

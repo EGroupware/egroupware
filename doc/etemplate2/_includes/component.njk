@@ -1,13 +1,14 @@
 
 {% extends "default.njk" %}
 
-{# Find the component based on the `tag` front matter #}
-
-{% set component = getComponent(component.tagName) %}
 
 {% block content %}
   {# Avoid breaking if the component is not correct #}
   {% if component and component.tagName %}
+
+	{# Find all component info #}
+
+	{% set component = getComponent(component.tagName) %}
 
   {# Determine the badge variant #}
   {% if component.status == 'stable' %}
@@ -76,7 +77,13 @@
                 (default)
               {% endif %}
             </td>
-            <td>{{ slot.description | markdownInline | safe }}</td>
+            <td>
+            	{% if slot.description %}
+            		{{ slot.description | markdownInline | safe }}
+            	{% else %}
+            		Missing description
+            	{% endif %}
+            </td>
           </tr>
         {% endfor %}
       </tbody>
