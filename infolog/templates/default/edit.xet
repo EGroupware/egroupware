@@ -1,166 +1,213 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
-        <grid width="100%" overflow-y="auto">
-            <columns>
-                <column width="120"/>
+	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
+		<et2-textarea  id="info_des" noLang="1"></et2-textarea>
+		<et2-checkbox  id="clean_history"></et2-checkbox>
+	</template>
+	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
+		<grid width="100%" overflow="auto">
+			<columns>
+				<column width="99%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row" disabled="@status_only">
+					<et2-link-to  id="link_to" span="all"></et2-link-to>
+				</row>
+				<row class="th">
+					<et2-description  value="Existing links" span="all"></et2-description>
+				</row>
+				<row class="row_off" valign="top">
+					<et2-link-list  id="link_to" span="all"></et2-link-list>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
+		<grid width="100%">
+			<columns>
+                <column width="120" class="infolog_normalWrap"/>
                 <column/>
+                <column width="7em"/>
+			</columns>
+			<rows>
+				<row class="row">
+					<et2-description  value="Project"></et2-description>
+					<et2-link-entry  span="2" id="pm_id" onchange="app.infolog.submit_if_not_empty" class="infolog_projectName" onlyApp="projectmanager" placeholder="None"></et2-link-entry>
+					<et2-description></et2-description>
+				</row>
+				<row class="row">
+					<et2-description  value="Price"></et2-description>
+					<projectmanager-pricelist id="pl_id"
+                                              onchange="let option = this.select_options.find(e=>e.value == this.value) || {label:''};window.app.infolog.et2.getWidgetById('info_price').set_value(option.label.lastIndexOf('(') &lt; 0 ? '' : option.label.slice(option.label.lastIndexOf('(')+1,-1));"
+                                              emptyLabel="None" class="et2_fullWidth"/>
+					<et2-number  id="info_price"></et2-number>
+				</row>
+				<row class="row">
+					<et2-description  value="planned time" for="info_planned_time"></et2-description>
+					<et2-date-duration  span="2" id="info_planned_time" class="infolog_date_duration" displayFormat="$cont[duration_format]" hoursPerDay="$cont[hours_per_workday]"></et2-date-duration>
+					<et2-description></et2-description>
+				</row>
+				<row class="row">
+					<et2-description  value="Re-planned time" for="info_replanned_time"></et2-description>
+					<et2-date-duration  span="2" id="info_replanned_time" class="infolog_date_duration" displayFormat="$cont[duration_format]" hoursPerDay="$cont[hours_per_workday]"></et2-date-duration>
+					<et2-description></et2-description>
+				</row>
+				<row class="row" valign="top" height="60%">
+					<et2-description  statustext="Leave blank to get the used time calculated by timesheet entries" value="used time" for="info_used_time"></et2-description>
+					<et2-date-duration  span="2" id="info_used_time" class="infolog_date_duration" displayFormat="$cont[duration_format]" hoursPerDay="$cont[hours_per_workday]"></et2-date-duration>
+					<et2-description></et2-description>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
+		<historylog id="history" width="100%"/>
+	</template>
+	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+            <columns>
+                <column width="370"/>
+                <column width="40"/>
+                <column width="390"/>
             </columns>
             <rows>
-                <row>
-                    <et2-description value="Beschreibung" style="font-weight:bold" span="all"></et2-description>
-                </row>
-                <row>
-                    <et2-textarea id="info_des" noLang="1" height="8em" span="all"></et2-textarea>
-                    <et2-checkbox id="clean_history"></et2-checkbox>
-                </row>
-                <row>
-                    <et2-description value="Verantwortlich" style="font-weight:bold" span="all"></et2-description>
-                </row>
-                <row>
-                    <customfields id="#Geschaeftsfuehrung" span="2"/>
-                </row>
-                <row>
-                    <customfields id="#Projektleiter" span="2"/>
-                </row>
-                <row>
-                    <et2-select-account label="Responsible" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" multiple="1" span="all" class="et2-label-fixed" onchange="app.infolog.onchangeResponsible" placeholder="Select users or groups" noLang="1" accountType="both"></et2-select-account>
-                </row>
-                <row>
-                    <et2-description value="Category" for="info_cat"></et2-description>
-                    <et2-select-cat statustext="select a category for this entry" id="info_cat" emptyLabel="None"></et2-select-cat>
-                </row>
-                <row class="row">
-                    <et2-description value="Priority" for="info_priority"></et2-description>
-                    <et2-select statustext="select a priority for this task" id="info_priority"></et2-select>
-                </row>
-                <row>
-                    <et2-description value="planned time" for="info_planned_time"></et2-description>
-                    <et2-date-duration span="2" id="info_planned_time" class="infolog_date_duration" displayFormat="$cont[duration_format]" hoursPerDay="$cont[hours_per_workday]"></et2-date-duration>
+                <row height="20" class="th">
+                    <et2-description  value="Delegation"></et2-description>
                     <et2-description></et2-description>
+                    <et2-description  value="Details"></et2-description>
                 </row>
-                <row>
-                    <et2-description statustext="Leave blank to get the used time calculated by timesheet entries" value="used time" for="info_used_time"></et2-description>
-                    <et2-date-duration span="2" id="info_used_time" class="infolog_date_duration" displayFormat="$cont[duration_format]" hoursPerDay="$cont[hours_per_workday]"></et2-date-duration>
-                    <et2-description></et2-description>
-                </row>
-                <row>
-                    <et2-description value="Date completed" for="info_datecompleted"></et2-description>
-                    <et2-date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.statusChanged"></et2-date-time>
-                </row>
+                <row valign="top">
+                    <et2-vbox>
+                        <et2-email  id="info_cc" class="et2-label-fixed" label="CC" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
 
+                        <et2-select-account  label="Responsible" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" multiple="1" class="et2-label-fixed" onchange="app.infolog.onchangeResponsible" placeholder="Select users or groups" noLang="1" accountType="both"></et2-select-account>
+                    </et2-vbox>
+                    <et2-description></et2-description>
+                    <grid>
+                        <columns>
+                            <column width="120"/>
+                            <column width="230"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <et2-description  value="Category" for="info_cat"></et2-description>
+                                <et2-select-cat  statustext="select a category for this entry" id="info_cat" emptyLabel="None"></et2-select-cat>
+                            </row>
+                            <row>
+                                <et2-description  value="Parent"></et2-description>
+                                <et2-link-entry  id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" query="app.infolog.parent_query" onlyApp="infolog"></et2-link-entry>
+                            </row>
+                            <row class="row">
+                                <et2-description  value="Priority" for="info_priority"></et2-description>
+                                <et2-select  statustext="select a priority for this task" id="info_priority"></et2-select>
+                            </row>
+                            <row>
+                                <et2-description  value="Date completed" for="info_datecompleted"></et2-description>
+                                <et2-date-time  statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.statusChanged"></et2-date-time>
+                            </row>
+                            <row class="row">
+                                <et2-description  value="Location" for="info_location"></et2-description>
+                                <et2-textbox  id="info_location" maxlength="255"></et2-textbox>
+                            </row>
+                            <row>
+                                <et2-description  value="Private" for="info_access"></et2-description>
+                                <et2-checkbox
+ statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" selectedValue="private" unselectedValue="public" ></et2-checkbox>
+                            </row>
+                        </rows>
+                    </grid>
+                </row>
             </rows>
         </grid>
-    </template>
-    <template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
-        <grid width="100%" overflow="auto">
-            <columns>
-                <column width="99%"/>
-                <column/>
-            </columns>
-            <rows>
-                <row class="row" disabled="@status_only">
-                    <et2-link-to id="link_to" span="all"></et2-link-to>
-                </row>
-                <row class="th">
-                    <et2-description value="Existing links" span="all"></et2-description>
-                </row>
-                <row class="row_off" valign="top">
-                    <et2-link-list id="link_to" span="all"></et2-link-list>
-                </row>
-            </rows>
-        </grid>
-    </template>
-    <template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
-        <historylog id="history" width="100%"/>
-    </template>
-    <template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
-        <grid width="100%">
-            <columns>
-                <column width="100"/>
-                <column width="270"/>
-                <column width="40"/>
-                <column width="100"/>
-                <column width="250"/>
-                <column width="40"/>
-            </columns>
-            <rows>
-                <row class="dialogHeader">
-                    <et2-description value="Title" for="info_subject"></et2-description>
-                    <et2-hbox span="4">
-                        <et2-textbox statustext="a short subject for the entry" id="info_subject" class="et2_required" maxlength="255" tabindex="1"></et2-textbox>
-                    </et2-hbox>
+	</template>
+	<template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
+		<grid width="100%">
+			<columns>
+				<column width="100"/>
+				<column width="270"/>
+				<column width="40"/>
+				<column width="100"/>
+				<column width="250"/>
+				<column width="40"/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<et2-description  value="Title" for="info_subject"></et2-description>
+					<et2-hbox  span="4">
+						<et2-textbox  statustext="a short subject for the entry" id="info_subject" class="et2_required" maxlength="255" tabindex="1"></et2-textbox>
+						<et2-description  id="info_id" width="5em"></et2-description>
+					</et2-hbox>
                     <et2-appicon  src="infolog"></et2-appicon>
-                </row>
-                <row class="dialogHeader2">
-                    <customfields id="#GZ" span="2"/>
-                    <et2-description></et2-description>
-                    <et2-description value="Type" for="info_type"></et2-description>
-                    <et2-select statustext="Typ z.B. Auftrag, Anbot" id="info_type" onchange="widget.getInstanceManager().submit(null,false,true); return false;" noLang="1"></et2-select>
-                    <et2-description></et2-description>
-                </row>
-                <row class="dialogHeader3">
-                    <et2-description value="Projekt" for="pm_id"></et2-description>
-                    <et2-link-entry id="pm_id" onchange="app.infolog.loadProject" class="infolog_projectName" onlyApp="projectmanager" placeholder="None"></et2-link-entry>
-                    <et2-description></et2-description>
-                    <et2-description value="Startdate" for="info_startdate"></et2-description>
-                    <et2-date-time id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"></et2-date-time>
-                    <et2-description></et2-description>
-                </row>
-                <row class="dialogHeader3">
-                    <et2-description value="Kunde"></et2-description>
-                    <et2-link-entry id="info_contact" onlyApp="addressbook" placeholder="None"></et2-link-entry>
-                    <et2-description></et2-description>
-                    <et2-description value="Enddate" for="info_enddate"></et2-description>
-                    <et2-date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate"></et2-date-time>
-                    <et2-description></et2-description>
-                </row>
-                <row class="et2_toolbar">
-                    <et2-description id="spacer" span="5"></et2-description>
-                    <et2-hbox class="tab_toolbar">
+				</row>
+				<row class="dialogHeader2">
+					<et2-description  value="Type" for="info_type"></et2-description>
+					<et2-select  statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" onchange="widget.getInstanceManager().submit(null,false,true); return false;" noLang="1"></et2-select>
+					<et2-description></et2-description>
+					<et2-description  value="Startdate" for="info_startdate"></et2-description>
+					<et2-date-time  id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"></et2-date-time>
+					<et2-description></et2-description>
+				</row>
+				<row class="dialogHeader3">
+					<et2-description  value="Contact"></et2-description>
+					<et2-link-entry  id="info_contact" appIcons="true"></et2-link-entry>
+					<et2-description></et2-description>
+					<et2-description  value="Enddate" for="info_enddate"></et2-description>
+					<et2-date-time  statustext="til when should the ToDo or Phonecall be finished" id="info_enddate"></et2-date-time>
+					<et2-description></et2-description>
+				</row>
+				<row class="et2_toolbar">
+					<et2-description  id="spacer" span="5"></et2-description>
+					<et2-hbox  class="tab_toolbar">
 
                         <et2-button-timestamp  parentId="infolog-edit_tabs" slot="nav" statustext="Insert timestamp into description field"
-                                               id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"></et2-button-timestamp>
+							id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"></et2-button-timestamp>
+                        <et2-button-toggle parentId="infolog-edit_tabs" slot="nav" statustext="Encrypt description" id="encrypt"
+							class="infologExtraButton infologEncrypt" offIcon="lock" onIcon="unlock" onclick="app.infolog.toggleEncrypt"></et2-button-toggle>
                     </et2-hbox>
-                </row>
-                <row>
-                    <et2-tabbox id="tabs" span="all" width="100%" tabHeight="510px" cfTypeFilter="@info_type" cfPrepend="links" cfExclude="GZ,Geschaeftsfuehrung,Projektleiter">
+				</row>
+				<row>
+					<et2-tabbox  id="tabs" span="all" width="100%" tabHeight="350px" cfTypeFilter="@info_type">
                         <tabs>
-                            <tab id="description" label="Allgemein" statustext="longer textual description"/>
+                            <tab id="description" label="Description" statustext="longer textual description"/>
+                            <tab id="details" label="Details" statustext="Location, priority , ..."/>
                             <tab id="links" label="Links" statustext="Links of this entry"/>
+                            <tab id="project" label="Projectmanager" statustext="Project settings: price, times"/>
                             <tab id="history" label="History" statustext="Change history"/>
                         </tabs>
                         <tabpanels>
                             <template id="infolog.edit.description"/>
+                            <template id="infolog.edit.details"/>
                             <template id="infolog.edit.links"/>
+                            <template id="infolog.edit.project"/>
                             <template id="infolog.edit.history"/>
                         </tabpanels>
                     </et2-tabbox>
                 </row>
-                <row class="dialogOperators">
-                    <et2-description value="Status" for="info_status"></et2-description>
-                    <et2-select statustext="@status_help" id="info_status" onchange="app.infolog.statusChanged"></et2-select>
-                    <et2-description></et2-description>
-                    <et2-description value="Completed" for="info_percent"></et2-description>
-                    <et2-select-percent statustext="Percent completed" id="info_percent" onchange="app.infolog.statusChanged"></et2-select-percent>
-                    <et2-description></et2-description>
-                </row>
-                <row disabled="!@info_owner" class="dialogOperators">
-                    <et2-description value="Owner"></et2-description>
-                    <et2-hbox>
-                        <et2-select-account id="info_owner" readonly="true"></et2-select-account>
-                        <et2-date-time id="info_created" readonly="true" align="right"></et2-date-time>
-                    </et2-hbox>
-                    <et2-description></et2-description>
-                    <et2-description value="Last modified"></et2-description>
-                    <et2-hbox>
-                        <et2-select-account id="info_modifier" readonly="true"></et2-select-account>
-                        <et2-date-time id="info_datemodified" readonly="true" align="right"></et2-date-time>
-                    </et2-hbox>
-                    <et2-description></et2-description>
-                </row>
-                <row class="dialogFooterToolbar">
+				<row class="dialogOperators">
+					<et2-description  value="Status" for="info_status"></et2-description>
+					<et2-select  statustext="@status_help" id="info_status" onchange="app.infolog.statusChanged"></et2-select>
+					<et2-description></et2-description>
+					<et2-description  value="Completed" for="info_percent"></et2-description>
+					<et2-select-percent  statustext="Percent completed" id="info_percent" onchange="app.infolog.statusChanged"></et2-select-percent>
+					<et2-description></et2-description>
+				</row>
+				<row disabled="!@info_owner" class="dialogOperators">
+					<et2-description  value="Owner"></et2-description>
+					<et2-hbox>
+						<et2-select-account  id="info_owner" readonly="true"></et2-select-account>
+						<et2-date-time  id="info_created" readonly="true" align="right"></et2-date-time>
+					</et2-hbox>
+					<et2-description></et2-description>
+					<et2-description  value="Last modified"></et2-description>
+					<et2-hbox>
+						<et2-select-account  id="info_modifier" readonly="true"></et2-select-account>
+						<et2-date-time  id="info_datemodified" readonly="true" align="right"></et2-date-time>
+					</et2-hbox>
+					<et2-description></et2-description>
+				</row>
+				<row class="dialogFooterToolbar">
                     <et2-hbox  span="all">
                         <et2-button  statustext="Saves this entry" label="Save" id="button[save]" image="save"></et2-button>
                         <et2-button  statustext="Apply the changes" label="Apply" id="button[apply]" image="apply"></et2-button>
@@ -170,65 +217,7 @@
                         <et2-button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; Et2Dialog.confirm(widget,'Delete this entry','Delete');" image="delete"></et2-button>
                     </et2-hbox>
                 </row>
-            </rows>
-        </grid>
-        <styles>
-            .et2_grid.et2_customfield_list tr td:first-child et2-label {
-            width: 9em
-            }
-            .dialogHeader2 .et2_grid.et2_customfield_list tr td:first-child et2-label{
-            width: 7em
-            }
-        </styles>
-        <script>
-            // @formatter:off
-            // Load project data and set some fields
-            app.infolog.loadProject = async function loadProject(event, widget) {
-                if(!widget.value) return;
-
-                // Show activity
-                const spinner = Object.assign(document.createElement("sl-spinner"), {slot: "prefix"});
-                widget.append(spinner);
-
-                // Fetch project
-                const response = await window.fetch(egw.webserverUrl+'/groupdav.php/projectmanager/'+widget.value,
-                    {method:'GET',headers:{"Accept": "application/json"}});
-                const project = await response.json();
-
-                console.log(project);
-                const form = widget.getInstanceManager().widgetContainer;
-
-                // Copy custom fields from project to infolog
-                const cfs = project['egroupware.org:customfields']??{};
-                const cfList = ["region","Speicherort","Ordner"];
-                cfList.forEach(cf => {
-                    const target = form.getWidgetById("#"+cf)??{};
-                    target.value = cfs[cf]?.value;
-                });
-                form.getWidgetById("info_contact").value = cfs["Kunde"]?.value;
-
-                debugger;
-                // Set roles
-                const getByRole = (role) => Object.entries(project.members)
-                    .filter(member => member[1].role === role);
-                const roleMap = {"Projektmitarbeiter":"","Geschäftsführung":"#Geschaeftsfuehrung","Projektleiter":"#Projektleiter"};
-                const responsible = form.getWidgetById("info_responsible");
-                responsible.value = "";
-                for(const[roleName, infologField] of Object.entries(roleMap)) {
-                    if(infologField &amp;&amp; form.getWidgetById(infologField))
-                    {
-                        const role = getByRole(roleName).shift();
-                        form.getWidgetById(infologField).value = role ? role[0] : "";
-                    }
-                    // Also add to responsible
-                    responsible.value = responsible.value.concat(getByRole(roleName).map(u => u[0]));
-                }
-
-                // Set title
-                form.getWidgetById("info_subject").value = `${cfs["GZ"]?.value??""} - ${cfs["Projekt"]?.value??""}`;
-
-                widget.querySelectorAll('sl-spinner').forEach(n => n.remove());
-            }
-        </script>
-    </template>
+			</rows>
+		</grid>
+	</template>
 </overlay>
