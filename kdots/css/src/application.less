@@ -31,6 +31,10 @@ egw-app {
 	display: flex;
 	background-color: transparent;
 	overflow: hidden;
+  	@media (max-width: 600px) {
+	  /* Don't need to show name if things are small */
+	  min-width: initial;
+	}
   }
 
   /* Nice formatting for templates slotted into header (no need to wrap contents in et2-hbox) */

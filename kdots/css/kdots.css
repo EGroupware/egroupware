@@ -656,6 +656,12 @@ egw-app::part(header) {
   background-color: transparent;
   overflow: hidden;
 }
+@media (max-width: 600px) {
+  egw-app::part(header) {
+    /* Don't need to show name if things are small */
+    min-width: initial;
+  }
+}
 egw-app et2-template[slot="main-header"]::part(base) {
   display: flex;
   flex-direction: row;
