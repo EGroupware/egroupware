@@ -32,7 +32,7 @@ export default css`
 		&.hasHeaderContent {
 			max-width: var(--left-side-width, 20vw);
 			/* Keep the collapse & app icons visible */
-			min-width: 4em;
+			min-width: 5em;
 			flex: 1 1 20vw;
 		}
 

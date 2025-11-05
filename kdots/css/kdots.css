@@ -643,6 +643,12 @@ egw-app div[id$='index'] {
     --left-min: 100%;
   }
 }
+@media (max-width: 600px) {
+  egw-app::part(app-header) et2-image {
+    min-width: 1em;
+    flex-shrink: 0;
+  }
+}
 egw-app::part(name) {
   display: flex;
   align-items: center;
