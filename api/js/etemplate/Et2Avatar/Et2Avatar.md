@@ -82,6 +82,12 @@ found.
 <et2-avatar initials="TU" contactid="contact:6" loading="lazy"></et2-avatar>
 ```
 
+:::warning
+
+The image fetched is cached by the browser, which is often fine.   
+If it can be changed ([editable](#editable)) set `image` to something with a cachebuster.
+
+:::
 ### Editable
 
 Make avatar widget editable to be able to crop profile picture or upload a new photo
