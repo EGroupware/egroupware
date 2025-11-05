@@ -66,7 +66,7 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
  * 	2.  Make sure it's loaded (add to etemplate2.ts)
  * 	3.  In your extending Et2Select, override get tagTag() to return the custom tag name
  *
- * @slot - Reflected into listbox options. Must be <sl-option> elements. You can use <sl-divider> to group items visually.  Normally you set the options by parameter.
+ * @slot - Reflected into listbox options. Must be `sl-option` elements. You can use `sl-divider` to group items visually.  Normally you set the options by parameter.
  * @slot prefix - Used to prepend a presentational icon or similar element to the combobox.
  * @slot help-text - Text that describes how to use the input. Alternatively, you can use the `help-text` attribute.
  *
