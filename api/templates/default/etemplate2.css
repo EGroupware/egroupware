@@ -1868,12 +1868,14 @@ img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
 /**
 * Validation
 */
-.et2_required:not(.hasValue), .et2_required:not(.hasValue)::part(base), .et2_required:not(.hasValue)::part(control),
+.et2_required:not(.hasValue){
+    background-color: #ffffd0;
+}
+.et2_required:not(.hasValue)::part(base), .et2_required:not(.hasValue)::part(control),
     /* most inputs */
 [required]:not(.hasValue)::part(base),
     /* selects */
 [required]:not(.hasValue)::part(control) {
-    background-color: #ffffd0;
 	--sl-input-background-color: #ffffd0;
 }
 

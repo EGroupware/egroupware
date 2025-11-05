@@ -160,3 +160,8 @@
 .kdots-glassy et2-dialog::part(close-button) {
   color: var(--application-header-text-color, var(--sl-color-neutral-100));
 }
+:root .et2_required,
+:host .et2_required,
+.kdots-glassy .et2_required {
+  border-radius: var(--sl-input-border-radius-medium);
+}
