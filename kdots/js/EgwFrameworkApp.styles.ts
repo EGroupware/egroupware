@@ -242,27 +242,38 @@ export default css`
 		.egw_fw_app--only_mobile {
 			display: initial;
 		}
-
-		.egw_fw_app__name {
-			/* Keep the expand chevron and icon visible */
-			min-width: 5em;
-
-			h2 {
-				width: 0px;
-			}
-
-			et2-image {
-				display: initial;
-				width: 1em;
-				height: 1em;
-			}
+		.egw_fw_app__header{
+			et2-button-icon {
+				margin-inline: var(--sl-spacing-x-small);
+            }
+			.egw_fw_app__menu {
+				[slot="trigger"] {
+					margin:0;
+				}
+            }
 		}
         sl-split-panel::part(divider) {
             display: none;
         }
+        
 
 		--left-max: fit-content;
     }
+	@media (max-width: 1200px) {
+        .egw_fw_app__name {
+            /* Keep the expand chevron and icon visible */
+            min-width: 3em !important;
+	        &.hasHeaderContent {
+		        flex-basis: 8vw;
+	        }
+
+            h2 {
+                width: 0px;
+                margin: 0px !important;
+            }
+
+        }
+	}
     @media print {
         .content {
             overflow-y: visible !important;

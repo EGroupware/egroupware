@@ -731,6 +731,12 @@ egw-app .et2_nextmatch.et2-filterbox--loaded:not(.et2-filterbox--none):not(.et2-
   height: 0px;
   overflow: hidden;
 }
+egw-app .et2_nextmatch .nextmatch_header.nm_header_hide {
+  display: none !important;
+}
+egw-app .et2_nextmatch .nextmatch_header.nm_header_hide + div > table > thead {
+  display: none !important;
+}
 egw-app *[slot="filter"] et2-details:has(> .et2_customfield_list:only-child > tbody:empty) {
   display: none;
 }

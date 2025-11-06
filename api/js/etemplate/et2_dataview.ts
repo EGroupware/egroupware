@@ -400,18 +400,25 @@ export class et2_dataview
 				}
 
 				// Write the width of the header columns
-				var headerWidth = Math.max(0, (col.width - this.headerBorderWidth - subHBorder));
-				this.egw.css(".egwGridView_outer ." + col.divClass,
-					"width: " + headerWidth + "px;");
+				//Mobile can not resize the header columns anyway. Just fit them to the content
+
+				if (window.egwIsMobile())
+				{
+					this.egw.css(".egwGridView_outer ." + col.divClass, "width: fit-content;")
+				}else
+				{
+					const headerWidth = Math.max(0, (col.width - this.headerBorderWidth - subHBorder));
+					this.egw.css(".egwGridView_outer ." + col.divClass, "width: " + headerWidth + "px;");
 
 				// Write the width of the body-columns
-				var columnWidth = Math.max(0, (col.width  - this.columnBorderWidth - subBorder));
+					const columnWidth = Math.max(0, (col.width - this.columnBorderWidth - subBorder));
 				this.egw.css(".egwGridView_grid ." + col.divClass,
 					"width: " + columnWidth + "px;");
 
 				totalWidth += col.width;
 
 				first = false;
+				}
 			}
 			else
 			{
