@@ -3928,10 +3928,11 @@ et2-vfs-mime img.overlay {
 }
 #topmenu_info_notifications et2-image{display: contents;}
 #topmenu_info_notifications sl-badge{
-    position: absolute;
-    bottom: -.5em;
-    left: -.7em;
+    position: relative;
+    bottom: -.5rem;
+    left: -2rem;
     font-size: min(1em,1rem);
+    height: 1.3em;
 }
 #topmenu_info_notifications sl-badge::part(base) {
     /* put specific sizing here*/
