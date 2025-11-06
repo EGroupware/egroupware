@@ -96,11 +96,10 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	 * Indicates which actions go where
 	 *
 	 * - All actions should be stored in preference
-	 * - Actions inside menu set as true
-	 * - Actions outside menu set as false
-	 * - Actions not set need to be added
+	 * - Elements visible set as false
+	 * - Elements hidden, visible only in menu set as true
 	 */
-	private _preference : { [id : string] : boolean } = {};
+	private _preference : ToolbarPreference = {};
 	/* Hold on to actions, as we don't use action system but just use them to create inputs */
 	private _actions = {};
 	/* Actions have been parsed into inputs */
@@ -139,9 +138,17 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		{
 			this.preferenceId = this.preferenceId || this.dom_id;
 			this.preferenceApp = this.preferenceApp || (this.egw()?.app_name && this.egw()?.app_name()) || "";
-			this._preference = <{
-				[id : string] : boolean
-			}>this.egw()?.preference(this.preferenceId, this.preferenceApp) || {};
+			// Additional separate preference for mobile
+			if(typeof egwIsMobile == "function" && egwIsMobile())
+			{
+				this._preference = <ToolbarPreference>this.egw()?.preference(this.preferenceId + "_mobile", this.preferenceApp) ||
+					<ToolbarPreference>this.egw()?.preference(this.preferenceId, this.preferenceApp) || {};
+				this.preferenceId += "_mobile";
+			}
+			else
+			{
+				this._preference = <ToolbarPreference>this.egw()?.preference(this.preferenceId, this.preferenceApp) || {};
+			}
 		}
 		if(!this._actionsParsed)
 		{
@@ -830,3 +837,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		`;
 	}
 }
+
+type ToolbarPreference = {
+	[id : string] : boolean /* Element is hidden */
+};
