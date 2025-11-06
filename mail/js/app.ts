@@ -337,9 +337,8 @@ export class MailApp extends EgwApp
 
 				break;
 			case 'mail.compose':
-				var composeToolbar = this.et2.getWidgetById('composeToolbar');
-				if (composeToolbar._actionManager.getActionById('pgp') &&
-					composeToolbar._actionManager.getActionById('pgp').checked ||
+				const composeToolbar = this.et2.getWidgetById('composeToolbar');
+				if (composeToolbar?.getWidgetById('pgp')?.value ||
 					this.et2.getArrayMgr('content').data.mail_plaintext &&
 						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
 				{
@@ -422,8 +421,8 @@ export class MailApp extends EgwApp
 
 				// Set focus on To/body field
 				// depending on To field value
-				var to = this.et2.getWidgetById('to');
-				var content = this.et2.getArrayMgr('content').data;
+				const to = this.et2.getWidgetById('to');
+				const content = this.et2.getArrayMgr('content').data;
 				if (to && to.get_value() && to.get_value().length > 0)
 				{
 					if (typeof to.blur == "function")
@@ -461,8 +460,8 @@ export class MailApp extends EgwApp
 						plainText.getDOMNode().setSelectionRange(0,0);
 					}
 				}
-				var smime_sign = this.et2.getWidgetById('smime_sign');
-				var smime_encrypt = this.et2.getWidgetById('smime_encrypt');
+				const smime_sign = this.et2.getWidgetById('smime_sign');
+				const smime_encrypt = this.et2.getWidgetById('smime_encrypt');
 
 				if (composeToolbar._actionManager.getActionById('smime_sign') &&
 						composeToolbar._actionManager.getActionById('smime_encrypt'))
