@@ -502,7 +502,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	protected _organiseChildren()
 	{
 		this._isOverflowed = false;
-		let elements = Array.from(this.querySelectorAll(':scope > *:not([slot="prefix"]):not([slot="suffix"])'));
+		let elements : HTMLElement[] = Array.from(this.querySelectorAll(':scope > *:not([slot="prefix"]):not([slot="suffix"])'));
 
 		// Reset slot so it can participate in width calculations
 		elements.forEach((el : HTMLElement) =>
@@ -527,7 +527,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 
 		// Sort & check sizing
 		const orderSort = (a : HTMLElement, b : HTMLElement) => parseInt(a.dataset.order) - parseInt(b.dataset.order);
-		elements = Array.from(this.querySelectorAll(':scope > *:not([slot="prefix"]):not([slot="suffix"])'));
+		elements = <HTMLElement[]>Array.from(this.querySelectorAll(':scope > *:not([slot="prefix"]):not([slot="suffix"])'));
 		elements.sort(orderSort);
 		elements.forEach((el : HTMLElement) =>
 		{
@@ -535,17 +535,27 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			{
 				Array.from(el.childNodes).sort(orderSort).forEach((c : HTMLElement) =>
 				{
-					this._organiseChild(c)
 					el.appendChild(c);
 				});
-			}
-			else
-			{
-				this._organiseChild(el);
 			}
 			if(el.parentNode == this)
 			{
 				this.appendChild(el);
+			}
+		});
+		let overflowed = false;
+		elements.forEach((el : HTMLElement) =>
+		{
+			if(typeof el.dataset.group !== "undefined")
+			{
+				Array.from(el.childNodes).sort(orderSort).forEach((c : HTMLElement) =>
+				{
+					overflowed = this._organiseChild(c, overflowed);
+				});
+			}
+			else
+			{
+				overflowed = this._organiseChild(el, overflowed);
 			}
 		});
 
@@ -561,9 +571,10 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	 * Slot a child according to preference and available space
 	 *
 	 * @param {HTMLElement} child
+	 * @param isOverflowed Skip calculations if already known
 	 * @protected
 	 */
-	protected _organiseChild(child : HTMLElement)
+	protected _organiseChild(child : HTMLElement, isOverflowed = false)
 	{
 		const buttonDiv = <HTMLElement>this.shadowRoot.querySelector(".toolbar-buttons");
 		if(!buttonDiv)
@@ -571,7 +582,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			// Not ready yet
 			return;
 		}
-		const isOverflowed = (child.offsetWidth + child.offsetLeft - buttonDiv.offsetLeft) > buttonDiv.offsetWidth;
+		isOverflowed = isOverflowed || (child.offsetWidth + child.offsetLeft - buttonDiv.offsetLeft) > buttonDiv.offsetWidth;
 		if(isOverflowed || this._preference[child.id])
 		{
 			this._isOverflowed = this._isOverflowed || isOverflowed;
@@ -583,6 +594,8 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		}
 		// Check if input needs to go in a group (moving the other way is done in _organiseChildren()
 		this._placeInputInGroup(child);
+
+		return isOverflowed;
 	}
 
 	/**
@@ -594,7 +607,8 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	private _placeInputInGroup(child : HTMLElement)
 	{
 		let groupId = child.dataset?.groupId;
-		if(groupId && child.slot == "" && this.querySelector(`sl-button-group[data-group="${groupId}"]`))
+		const group = this.querySelector(`sl-button-group[data-group="${groupId}"]`);
+		if(groupId && child.slot == "" && group && child.parentNode != group)
 		{
 			this.querySelector(`sl-button-group[data-group="${groupId}"]`).append(child);
 		}
@@ -714,7 +728,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	protected settingsOptions()
 	{
 		const options = [];
-		this.querySelectorAll(":scope > [id]:not([slot=\"prefix\"]):not([slot=\"suffix\"])").forEach((child : HTMLElement) =>
+		this.querySelectorAll("[id]:not([slot=\"prefix\"]):not([slot=\"suffix\"])").forEach((child : HTMLElement) =>
 		{
 			const option : SelectOption = {
 				value: child.id,
