@@ -36,10 +36,6 @@ export default css`
 			flex: 1 1 20vw;
 		}
 
-		et2-image {
-			display: none;
-		}
-
 		h2 {
 			margin: 0;
 			margin-inline-start: var(--sl-spacing-medium);
