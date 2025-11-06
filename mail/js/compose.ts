@@ -35,6 +35,7 @@ export class MailCompose
 	{
 		this.app = null;
 	}
+	keepFromExpander=false;
 
 	/**
 	 * Visible attachment box in compose dialog as soon as the file starts to upload
@@ -223,7 +224,7 @@ export class MailCompose
 					&& typeof widgets[expanderBtn].widget != 'undefined'
 					&& (!widgets[widget].widget.value || !widgets[widget].widget.value.length)
 					&& actions.indexOf(expanderBtn)<0)
-				|| expanderBtn ==='from_expander' && actions.includes('from_expander') && !keepFromExpander
+				|| expanderBtn ==='from_expander' && actions.includes('from_expander') && !this.keepFromExpander
 			)
 			{
 				widgets[expanderBtn].widget?.set_disabled(false);
@@ -285,7 +286,7 @@ export class MailCompose
 					break;
 				case 'from_expander':
 					document.querySelector('.mailComposeJQueryFrom').style.display=''
-					keepFromExpander = true;
+					this.keepFromExpander = true;
 					break;
 			}
 			widget.parentElement.hide()

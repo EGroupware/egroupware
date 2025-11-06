@@ -25,7 +25,7 @@ import {egw} from "../../api/js/jsapi/egw_global";
 
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
-var keepFromExpander;
+
 /**
  * UI for mail
  *
@@ -5269,24 +5269,18 @@ export class MailApp extends EgwApp
 	mobileView(_action, _sender)
 	{
 		// row id in nm
-		var id = _sender[0].id;
+		const id = _sender[0].id;
 
-		var defaultActions= {
+		const defaultActions= {
 			actions:['delete', 'forward','reply','flagged'], // default actions to display
-			check(_action){
-				for (var i=0;i<= this.actions.length;i++)
-				{
-					if (_action == this.actions[i]) return true;
-				}
-				return false;
+			check(_action:string)
+			{
+				return this.actions.includes(_action);
 			}
 		};
 
-		var content = {};
-		var self = this;
-
 		if (id){
-			content = egw.dataGetUIDdata(id);
+			const content = egw.dataGetUIDdata(id);
 			content.data['toolbar'] = this.et2.getArrayMgr('sel_options').getEntry('toolbar');
 			if (content.data.toaddress||content.data.fromaddress)
 			{
@@ -5301,7 +5295,7 @@ export class MailApp extends EgwApp
 			}
 
 			// Set default actions
-			for(var action in content.data['toolbar'])
+			for(const action in content.data['toolbar'])
 			{
 				content.data.toolbar[action]['toolbarDefault'] = defaultActions.check(action);
 			}
@@ -5309,6 +5303,8 @@ export class MailApp extends EgwApp
 			egw.dataStoreUID(id,content.data);
 		}
 
+
+		const self = this;
 		this.viewEntry(_action, _sender, true, function(etemplate){
 			// et2 object in view
 			var et2 = etemplate.widgetContainer;
@@ -5386,10 +5382,10 @@ export class MailApp extends EgwApp
 	 */
 	smimeSigBtn(egw, widget)
 	{
-		var url = '';
+		let url = '';
 		if (this.mail_isMainWindow)
 		{
-			var content = this.egw.dataGetUIDdata(this.mail_currentlyFocussed);
+			const content = this.egw.dataGetUIDdata(this.mail_currentlyFocussed);
 			url = content.data.smimeSigUrl;
 		}
 		else
