@@ -148,7 +148,7 @@ export abstract class EgwApp
 
 	viewContainer : JQuery;
 	viewTemplate : JQuery;
-	et2_view : any;
+	et2_view : etemplate2;
 	favorite_popup : JQuery | any;
 
 	dom_id : string;
@@ -832,9 +832,11 @@ export abstract class EgwApp
 	 * @param {object} _action
 	 * @param {object} _senders
 	 * @param {boolean} _noEdit defines whether to set edit button or not default is false
-	 * @param {function} et2_callback function to run after et2 is loaded
+	 * @param {function} et2_callback function to run after et2 is loaded @deprecated wait for the returned Promise
+	 *
+	 * @return {Promise<Et2Dialog>} Resolves with the view dialog when the view is loaded
 	 */
-	viewEntry(_action, _senders, _noEdit?, et2_callback?)
+	viewEntry(_action : EgwAction, _senders : EgwActionObject[], _noEdit? : boolean, et2_callback?)
 	{
 		//full id in nm
 		var id = _senders[0].id;
@@ -896,7 +898,7 @@ export abstract class EgwApp
 		this.egw.link_title(this.appname, rowID, true).then(title =>
 		{
 			viewContainer.prepend(Object.assign(document.createElement('span'), {
-				innerText: title,
+				innerText: title || "",
 				slot: "label"
 			}));
 		});
@@ -906,6 +908,7 @@ export abstract class EgwApp
 		viewContainer.style.setProperty('--application-color', 'var(--' + this.appname + '-color,var(--primary-color))');
 		(framework?.activeApp ? framework.activeApp : document.body).append(viewContainer);
 		this.viewContainer = jQuery(viewContainer);
+		framework?.pushState('view');
 
 		// close
 		viewContainer.getComplete().then(([button, value]) =>
@@ -929,6 +932,17 @@ export abstract class EgwApp
 			});
 			viewContainer.append(edit);
 		}
+		viewContainer.updateComplete.then(() =>
+		{
+			this.et2_view = viewContainer.eTemplate;
+			if(typeof et2_callback !== "undefined")
+			{
+				egw.debug('warning', 'et2_callback is deprecated, wait for viewEntry() response instead');
+
+				et2_callback.call(app[self.appname], viewContainer.eTemplate);
+			}
+		});
+		return viewContainer.updateComplete.then(() => viewContainer);
 	}
 
 	/**
