@@ -1233,7 +1233,7 @@ export class EgwFramework extends LitElement
 	{
 		let extraStyle =""
 		let extraClass
-		if(egw.preference("keep_colorful_app_icons","common")) {
+		if(egw.preference("keep_colorful_app_icons","common") == true) {
 			extraStyle = "--icon-background-color: var(--application-color);"
 			extraClass = "colorful"
 		}
