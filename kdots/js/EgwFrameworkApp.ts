@@ -1399,7 +1399,7 @@ export class EgwFrameworkApp extends LitElement
                                     }}
                         ></et2-button-icon>` : nothing
                     }
-                    <h2>${this.title || this.egw?.lang(this.name) || this.name}</h2>
+                    <h2>${this.egw?.lang(this.name) || this.name}</h2>
                 </div>
                 <header class="egw_fw_app__header" part="header">
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
