@@ -231,7 +231,6 @@ class Storage
 	 * @var Sql
 	 */
 	var $soextra;
-	var $sodistrib_list;
 	/**
 	 * @var Api\Db
 	 */
