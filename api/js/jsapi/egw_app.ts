@@ -2171,7 +2171,14 @@ export abstract class EgwApp
 	 */
 	_share_link_callback(_data)
 	{
-		if (_data.msg || _data.share_link) window.egw_refresh(_data.msg, this.appname);
+		if(_data.msg)
+		{
+			this.egw.message(_data.msg);
+		}
+		if(_data.share_link)
+		{
+			this.et2.getInstanceManager().refresh();
+		}
 
 		var copy_link_to_clipboard = function(evt)
 		{

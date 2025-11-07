@@ -1537,9 +1537,14 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_share_link_callback(_data)
 	{
-		if(_data.msg || _data.share_link) window.egw_refresh(_data.msg, this.appname);
-		console.log("_data", _data);
-		let app = this;
+		if(_data.msg)
+		{
+			this.egw.message(_data.msg);
+		}
+		if(_data.share_link)
+		{
+			this.et2.getInstanceManager().refresh();
+		}
 		let dialog = new Et2Dialog(this.egw);
 		dialog.transformAttributes({
 			title: _data.title ? _data.title : (_data.writable || _data.action === 'shareWritableLink' ?
