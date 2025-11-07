@@ -167,7 +167,7 @@ export class MailApp extends EgwApp
 		delete this.et2_obj;
 
 		// delete compose sub-object
-		this._compose.destroy();
+		this._compose?.destroy();
 		delete this._compose;
 
 		// call parent
