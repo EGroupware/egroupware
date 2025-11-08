@@ -119,7 +119,7 @@
 		"egroupware/util": "^2.7.0",
 		"egroupware/webdav": "^0.4.0",
 		"egroupware/z-push-dev": "2.5.0.1",
-		"giggsey/libphonenumber-for-php": "^8.12",
+		"giggsey/libphonenumber-for-php": "^9.0.17",
 		"guzzlehttp/guzzle": "^7.4.1",
 		"guzzlehttp/psr7": "^2.1.0",
 		"jumbojett/openid-connect-php": "^0.9.10",
