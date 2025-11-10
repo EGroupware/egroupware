@@ -114,6 +114,7 @@ class notifications_email implements notifications_iface {
 		if (!empty($this->recipient->account_id) &&
 			($prefs = (new Api\Preferences($this->recipient->account_id))->read_repository()) &&
 			!empty($prefs['notifications']['notify_private_email']) &&
+			$prefs['notifications']['notify_private_email'] !== 'no' &&
 			($account = (new Api\Contacts())->read(['account_id' => $this->recipient->account_id])) &&
 			!empty($account['email_home']))
 		{
