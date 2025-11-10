@@ -3,6 +3,8 @@
 * http://www.23developer.com/opensource
 * http://github.com/23/resumable.js
 * Steffen Tiedemann Christensen, steffen@23company.com
+*
+* THIS FILE HAS BEEN MODIFIED FROM THE ORIGINAL VERSION
 */
 
 (function(){
@@ -232,7 +234,11 @@
       }
     };
     var onDragLeave = function(e){
-      e.currentTarget.classList.remove($.getOpt('dragOverClass'));
+		if (e.toElement !== this && e.composedPath().includes(this))
+		{
+			return;
+		}
+		e.currentTarget.classList.remove($.getOpt('dragOverClass'));
     };
     var onDragOverEnter = function(e) {
       e.preventDefault();
