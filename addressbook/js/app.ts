@@ -1349,6 +1349,8 @@ class AddressbookApp extends EgwApp
 			}
 		}
 
+		const index = etemplate2.getById('addressbook-index');
+		const grouped = index?.widgetContainer?.getWidgetById('grouped_view') ?? {};
 
 		// Redirect from view to list - parent would do this, but infolog nextmatch stops it
 		if(current_state.app && current_state.id && (typeof state.state == 'undefined' || typeof state.state.app == 'undefined'))
@@ -1394,28 +1396,28 @@ class AddressbookApp extends EgwApp
 		{
 			// Deal with grouped views that are not valid (not in list of options)
 			// by faking viewing that organisation
-			var index = etemplate2.getById('addressbook-index');
-			if(index && index.widgetContainer)
+			let options : any[];
+			if(grouped && grouped.select_options)
 			{
-				const grouped = index.widgetContainer.getWidgetById('grouped_view');
-				let options : any[];
-				if(grouped && grouped.select_options)
-				{
-					options = grouped.select_options;
-				}
-
-				// Check to see if it's not there
-				if(options && (options.find &&
-					!options.find(function(e) {return e.value === state.state.grouped_view;}) ||
-					typeof options.find === 'undefined' && !options[state.state.grouped_view]
-				))
-				{
-					const nm = index.widgetContainer.getWidgetById('nm');
-					const action = nm.controller._actionManager.getActionById('view_org');
-					const senders = [{_context: {_widget: nm}}];
-					return nm_action(action, senders, {}, {ids:[state.state.grouped_view]});
-				}
+				options = grouped.select_options;
 			}
+
+			// Check to see if it's not there
+			if(options && (options.find &&
+				!options.find(function(e) {return e.value === state.state.grouped_view;}) ||
+				typeof options.find === 'undefined' && !options[state.state.grouped_view]
+			))
+			{
+				const nm = index.widgetContainer.getWidgetById('nm');
+				const action = nm.controller._actionManager.getActionById('view_org');
+				const senders = [{_context: {_widget: nm}}];
+				return nm_action(action, senders, {}, {ids: [state.state.grouped_view]});
+			}
+			grouped.value = state.state.grouped_view;
+		}
+		else
+		{
+			grouped.value = "";
 		}
 
 		// Make sure advanced search is false if not set, this clears any
