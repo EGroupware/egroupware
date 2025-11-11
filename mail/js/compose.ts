@@ -220,12 +220,9 @@ export class MailCompose
 			// Add expander button widget to the widgets object
 			widgets[expanderBtn] = {widget:this.et2.getWidgetById(expanderBtn)};
 
-			if ((typeof widgets[widget].widget != 'undefined'
-					&& typeof widgets[expanderBtn].widget != 'undefined'
-					&& (!widgets[widget].widget.value || !widgets[widget].widget.value.length)
-					&& actions.indexOf(expanderBtn)<0)
-				|| expanderBtn ==='from_expander' && actions.includes('from_expander') && !this.keepFromExpander
-			)
+			if (widgets[widget].widget && widgets[expanderBtn].widget &&
+					(!widgets[widget].widget.value || !widgets[widget].widget.value.length) && actions.indexOf(expanderBtn) < 0 ||
+				expanderBtn === 'from_expander' && actions.includes('from_expander') && !this.keepFromExpander)
 			{
 				widgets[expanderBtn].widget?.set_disabled(false);
 				jQuery(widgets[widget].jQClass).hide();

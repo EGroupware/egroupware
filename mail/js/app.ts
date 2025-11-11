@@ -4867,7 +4867,7 @@ export class MailApp extends EgwApp
 	 * - detect Mailvelope plugin and open "egroupware" keyring (app_base.mailvelopeAvailable and _mailvelopeOpenKeyring)
 	 * - display and preview of encrypted messages (mailvelopeDisplay)
 	 * - button to toggle between regular and encrypted mail (togglePgpEncrypt)
-	 * - compose encrypted messages (mailvelopeCompose, compose_submitAction)
+	 * - compose encrypted messages (mailvelopeCompose, compose.submitAction)
 	 * - fix autosave and save as draft to store encrypted content (saveAsDraft)
 	 * - fix inline reply to encrypted message to clientside decrypt message and add signature (mailvelopeCompose)
 	 */
@@ -5336,7 +5336,7 @@ export class MailApp extends EgwApp
 			if (!content.ccaddress && !content.additionaltoaddress) $details.hide();
 
 			toolbar.readonly = false;
-			toolbar.actions = content.toolbar;
+			toolbar.actions = content.toolbar || {};
 			var toaddressdetails = self.et2_view.widgetContainer.getWidgetById('toaddressdetails');
 			if (toaddressdetails && content.additionaltoaddress)
 			{
@@ -5403,19 +5403,19 @@ export class MailApp extends EgwApp
  	 */
 	smimePassDialog(_msg)
 	{
-		var self = this;
-		var pass_exp = egw.preference('smime_pass_exp', 'mail');
+		const self = this;
+		const pass_exp = egw.preference('smime_pass_exp', 'mail');
 		const dialog = loadWebComponent("et2-dialog", {
 			callback(_button_id, _value)
 			{
 				if (_button_id == 'send' && _value)
 				{
-					var pass = self.et2.getWidgetById('smime_passphrase');
+					const pass = self.et2.getWidgetById('smime_passphrase');
 					pass.set_value(_value.value);
-					var toolbar = self.et2.getWidgetById('composeToolbar');
+					const toolbar = self.et2.getWidgetById('composeToolbar');
 					toolbar.value = 'send';
 					egw.set_preference('mail', 'smime_pass_exp', _value.pass_exp);
-					self.compose_submitAction(false);
+					self.compose.submitAction(false);
 				}
 			},
 			title: egw.lang('Request for passphrase'),
@@ -5521,8 +5521,8 @@ export class MailApp extends EgwApp
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
 		var smime_signature = et2_object.getWidgetById('smime_signature');
 		var smime_encryption = et2_object.getWidgetById('smime_encryption');
-		var mail_container = egwIsMobile()? document.getElementsByClassName('mail-d-h1').next() :
-				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer'):
+		var mail_container = egwIsMobile()? document.getElementsByClassName('mail-d-h1')[0] :
+				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer') :
 				et2_object.getWidgetById('mailPreviewContainer').getDOMNode();
 		smime_signature.set_disabled(!data.signed);
 		smime_encryption.set_disabled(!data.encrypted);
