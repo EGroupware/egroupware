@@ -691,14 +691,16 @@ class mail_sieve
 										}
 										break;
 									}
-									// schedule job to switch message on/off, if request and not already in past
 									else
 									{
+										/* no longer schedule async job, as we use an expression to switch the vacation message on only for the date-range
+										   AND there have been lost Sieve rules somehow caused by (additional) switch on/off using the async-job
+										// schedule job to switch message on/off, if request and not already in past
 										if ($newVacation['status'] == 'by_date' && $newVacation['end_date']+24*3600 > time() ||
 											$vacRules && $vacRules['vacation']['status'] == 'by_date')
 										{
 											self::setAsyncJob($newVacation);
-										}
+										}*/
 										//Reset vacationNotice cache which is used in mail_ui get_rows
 										if (isset($account_id) && $this->mail_admin)
 										{
@@ -802,10 +804,12 @@ class mail_sieve
 	/**
 	 * set the asyncjob for a timed vacation
 	 *
+	 * Not used anymore, as we use a date-expression now to use the vacation notice only during the given date-range!
+	 *
 	 * @param array $_vacation vacation to set/unset with values for 'account_id', 'acc_id' and vacation stuff
 	 * @param boolean $_reschedule do nothing but reschedule the job by 3 minutes
 	 * @return  void
-	 */
+	 *
 	static function setAsyncJob (array $_vacation, $_reschedule=false)
 	{
 		if (!($_vacation['acc_id'] > 0))
@@ -836,7 +840,7 @@ class mail_sieve
 				$async->set_timer($time, $async_id, 'mail_sieve::async_vacation', $_vacation, $_vacation['account_id']);
 			}
 		}
- 	}
+ 	}*/
 
 	/**
 	 * Callback for the async job to enable/disable the vacation message
@@ -846,6 +850,8 @@ class mail_sieve
 	 */
 	static function async_vacation(array $_vacation)
 	{
+		return;
+		/* not used anymore, see setAsyncJob
 		//error_log(__METHOD__.'('.array2string($_vacation).')');
 
 		$account = Mail\Account::read($_vacation['acc_id'], $_vacation['account_id']);
@@ -870,7 +876,7 @@ class mail_sieve
 			$ret = false;
 		}
 
-		return $ret;
+		return $ret;*/
 	}
 
 	/**
