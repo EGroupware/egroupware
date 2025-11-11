@@ -73,6 +73,13 @@
   --sl-input-background-color: var(--sl-color-neutral-0);
   color: var(--sl-color-neutral-700);
 }
+:root input,
+:host input,
+.kdots-glassy input {
+  box-shadow: var(--upper-tint), var(--lower-shade);
+  border-radius: var(--sl-input-border-radius-medium);
+  border: var(--sl-input-border-width) solid var(--sl-input-border-color);
+}
 :root *[slot="main-header"] *::part(base),
 :host *[slot="main-header"] *::part(base),
 .kdots-glassy *[slot="main-header"] *::part(base),

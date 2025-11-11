@@ -53,6 +53,12 @@
 	  }
 	}
   }
+  //plain input fields (created by eg. et2-textbox in projectmanager) also need the same styling
+  input{
+	box-shadow: var(--upper-tint), var(--lower-shade);
+	border-radius: var(--sl-input-border-radius-medium);
+	border: var(--sl-input-border-width) solid var(--sl-input-border-color);
+  }
 
   /* don't add another box shadow to input fields in glassy main header otherwise it shows up twice*/
 
