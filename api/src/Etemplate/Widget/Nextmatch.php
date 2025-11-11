@@ -721,7 +721,7 @@ class Nextmatch extends Etemplate\Widget
 	 *
 	 * This is currently only a hack to convert everything looking like a timestamp to a 'Y-m-d\TH:i:s\Z' string, fix timezone problems!
 	 *
-	 * @todo instanciate row of template and run it's beforeSendToClient
+	 * @todo instantiate row of template and run it's beforeSendToClient
 	 * @param array $row
 	 * @return array
 	 */
@@ -733,9 +733,10 @@ class Nextmatch extends Etemplate\Widget
 		{
 			if ($name[0] != '#' && in_array($name, $timestamps) && $value &&
 				(is_int($value) || is_string($value) && is_numeric($value)) &&
-				($value > 21000000 || $value < 19000000))
+				($value > 21000000 || $value < 19000000) ||
+				is_object($value) && is_a($value, 'DateTimeInterface'))
 			{
-				$value = Api\DateTime::to($value, 'Y-m-d\TH:i:s\Z');
+				$value = Api\DateTime::to($value, Api\DateTime::ET2);
 			}
 		}
 		return $row;

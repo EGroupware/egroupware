@@ -1530,6 +1530,11 @@ class calendar_boupdate extends calendar_bo
 			// invalidate the read-cache if it contains the event we store now
 			if ($event['id'] == self::$cached_event['id']) self::$cached_event = array();
 			$old_event = $this->read($event['id'], $event['recurrence'], $ignore_acl, 'server');
+			// recur_enddate is always stored with 1s less than the actual time --> add it here again
+			if ($old_event && !empty($old_event['recur_enddate']))
+			{
+				++$old_event['recur_enddate'];
+			}
 		}
 		else
 		{
@@ -1619,7 +1624,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$event['tz_id'] = calendar_timezones::tz2id($event['tzid'] = Api\DateTime::$user_timezone->getName());
 		}
-		// same with the recur exceptions and rdates
+		// same for recurrence-exceptions and -dates
 		foreach(['recur_exception', 'recur_rdates'] as $name)
 		{
 			if (!is_array($event[$name] ?? null)) continue;
@@ -1742,18 +1747,32 @@ class calendar_boupdate extends calendar_bo
 			$event['id'] = $cal_id;
 			$save_event['id'] = $cal_id;
 		}
-		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
+		// recur_enddate is inconsistent/sometimes 1s less than the actual time --> add it here again
+		if (isset($save_event['recur_enddate']) && is_int($save_event['recur_enddate']) && ($save_event['recur_enddate'] & 1))
+		{
+			++$save_event['recur_enddate'];
+		}
+		// convert all timestamps in $save_event to server-time
 		// This is done here to avoid damaging the actual event when saving, but the old event is in server-time
 		foreach ($timestamps as $ts)
 		{
 			// we convert here from user-time to timestamps in server-time!
 			if (isset($save_event[$ts])) $save_event[$ts] = $save_event[$ts] ? calendar_bo::date2ts($save_event[$ts], true) : 0;
 		}
-		foreach(['start', 'end', 'recur_enddate'] as $ts)
+		// same for recurrence-exceptions and -dates
+		foreach(['recur_exception', 'recur_rdates'] as $name)
 		{
-			if(isset($save_event[$ts]) && is_object($save_event[$ts]))
+			if (!is_array($save_event[$name] ?? null)) continue;
+			foreach ($save_event[$name] as &$date)
 			{
-				$save_event[$ts] = $save_event[$ts]->format('ts');
+				if ($save_event['whole_day'])
+				{
+					$date = $this->so->startOfDay(new Api\DateTime($date, Api\DateTime::$user_timezone))->format('server');
+				}
+				else
+				{
+					$date = $this->date2ts($date,true);
+				}
 			}
 		}
 		$tracking->track($save_event, $old_event ?: null);

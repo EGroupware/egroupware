@@ -58,6 +58,8 @@ class calendar_tracking extends Api\Storage\Tracking
 		'special'	=>	'special',
 		'recurrence'	=>	'recurrence',
 		'recur_enddate'	=>	'recur_enddate',
+		'recur_exception' => ['recur_exception'],
+		'recur_rdates'    => ['recur_rdates'],
 		'tz_id'		=>	'tz_id',
 
 		'start'		=>	'start',
@@ -87,6 +89,8 @@ class calendar_tracking extends Api\Storage\Tracking
 		'special'	=>	'special',
 		'recurrence'=>	'recurrence',
 		'recur_enddate'	=>	'recurrence enddate',
+		'recur_exception' => 'Exceptions',
+		'recur_rdates'    => 'Recurrences',
 		'tz_id'		=>	'timezone',
 
 		'start'		=>	'start',
@@ -179,7 +183,7 @@ class calendar_tracking extends Api\Storage\Tracking
 	 * Compute changes between new and old data
 	 *
 	 * Can be used to check if saving the data is really necessary or user just pressed save
-	 * Overridden to handle various participants options
+	 * Overridden to handle various participant options
 	 *
 	 * @param array $data
 	 * @param ?array $old = null
@@ -187,13 +191,13 @@ class calendar_tracking extends Api\Storage\Tracking
 	 */
 	public function changed_fields(array $data, ?array $old=null)
 	{
-		if(is_array($data['participants']))
+		if(is_array($data['participants'] ?? null))
 		{
 			$participants = $data['participants'];
 			$data['participants'] = array();
 			$data = array_merge($data, $this->alter_participants($participants));
 		}
-		if(is_array($old['participants']))
+		if(is_array($old['participants'] ?? null))
 		{
 			$participants = $old['participants'];
 			$old['participants'] = array();
