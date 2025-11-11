@@ -3175,6 +3175,8 @@ class calendar_uiforms extends calendar_ui
 				'end'		   => 'date-time',
 				'deleted'      => 'date-time',
 				'recur_enddate'=> 'date',
+				'recur_exception'=> ['date-time'],
+				'recur_rdates' => ['date-time'],
 
 				'tz_id'        => 'select-timezone',
 
@@ -3230,14 +3232,15 @@ class calendar_uiforms extends calendar_ui
 		$history = [];
 		$sel_options = [];
 		$this->setup_history($history, $sel_options);
-		foreach($data['rows'] as $index => &$row)
+		foreach($data['rows'] as &$row)
 		{
 			if($row['appname'] !== 'calendar')
 			{
 				return;
 			}
 			if  (is_string($history['history']['status-widgets'][$row['status']]) &&
-				str_contains($history['history']['status-widgets'][$row['status']], 'date'))
+				str_contains($history['history']['status-widgets'][$row['status']], 'date') ||
+				in_array($row['status'], ['recur_exception', 'recur_rdates']))
 			{
 				foreach(['old_value', 'new_value'] as $field)
 				{

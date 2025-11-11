@@ -42,6 +42,10 @@ class HistoryLog extends Etemplate\Widget
 		{
 			foreach(self::$request->content[$form_name]['status-widgets'] as $key => $type)
 			{
+				if (is_array($type) && count($type) === 1 && isset($type[0]))
+				{
+					$type = $type[0];
+				}
 				if(!is_array($type))
 				{
 					list($basetype) = explode('-',$type);

@@ -21,7 +21,10 @@ use EGroupware\Api;
 /**
  * Record history logging service
  *
- * This class need to be instantiated for EACH app, which wishes to use it!
+ * This class needs to be instantiated for EACH app, which wishes to use it!
+ *
+ * There is only an automatic encoding and decoding of DateTime values.
+ * Everything else must be scalar!
  */
 class History
 {
@@ -131,8 +134,8 @@ class History
 				'history_appname'   => $this->appname,
 				'history_owner'     => $this->user,
 				'history_status'    => $status,
-				'history_new_value' => $new_value,
-				'history_old_value' => $old_value,
+				'history_new_value' => self::encode($new_value),
+				'history_old_value' => self::encode($old_value),
 				'history_timestamp' => time(),
 				'sessionid'         => $GLOBALS['egw']->session->sessionid_access_log,
 				'share_email'       => $share_with,
@@ -154,8 +157,8 @@ class History
 				'history_appname'   => $appname,
 				'history_owner'     => (int)$user,
 				'history_status'    => $field_code,
-				'history_new_value' => $new_value,
-				'history_old_value' => $old_value,
+				'history_new_value' => self::encode($new_value),
+				'history_old_value' => self::encode($old_value),
 				'history_timestamp' => time(),
 				'sessionid'         => $GLOBALS['egw']->session->sessionid_access_log,
 				'share_email'       => $share_with,
@@ -239,9 +242,48 @@ class History
 		) as $row)
 		{
 			$row['user_ts'] = $this->db->from_timestamp($row['history_timestamp']) + 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+			$row['history_new_value'] = self::decode($row['history_new_value']);
+			$row['history_old_value'] = self::decode($row['history_old_value']);
 			$rows[] = Api\Db::strip_array_keys($row, 'history_');
 		}
 		return $rows;
+	}
+
+	/**
+	 * Encoding \DateTimeInterface objects as JSON
+	 *
+	 * @param mixed $value
+	 * @return false|mixed|string
+	 */
+	protected static function encode($value)
+	{
+		if (is_object($value) && is_a($value, 'DateTimeInterface'))
+		{
+			$value = json_encode($value);
+		}
+		return $value;
+	}
+
+	/**
+	 * Detecting encoded \DateTimeInterface values and returning them as DateTime objects again
+	 *
+	 * @param string|null $value
+	 * @return DateTime|string|null
+	 */
+	protected static function decode(?string $value)
+	{
+		if ($value && str_starts_with($value, '{"date":"') && substr($value, -1) === '}' &&
+			strpos($value, ',"timezone":"') !== false)
+		{
+			$arr = json_decode($value, true);
+
+			// convert DateTime values back
+			if (is_array($arr) && isset($arr['date']) && isset($arr['timezone']))
+			{
+				$value = new Api\DateTime($arr['date'], new \DateTimeZone($arr['timezone']));
+			}
+		}
+		return $value;
 	}
 
 	/**
@@ -327,6 +369,9 @@ class History
 			// Explode multi-part values
 			foreach(array('history_new_value', 'history_old_value') as $field)
 			{
+				// handle DateTime objects stored JSON encoded
+				$row[$field] = self::decode($row[$field]);
+
 				if(strpos($row[$field], Tracking::ONE2N_SEPERATOR) !== false)
 				{
 					$row[$field] = explode(Tracking::ONE2N_SEPERATOR, $row[$field]);

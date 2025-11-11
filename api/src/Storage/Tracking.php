@@ -571,6 +571,11 @@ abstract class Tracking
 		{
 			foreach($rows as &$row)
 			{
+				// if we only have one col and $row is no array
+				if (count($cols) === 1 && !is_array($row))
+				{
+					break;  // nothing to do here
+				}
 				$values = array();
 				foreach($cols as $col)
 				{
