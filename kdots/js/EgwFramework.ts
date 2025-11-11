@@ -814,9 +814,9 @@ export class EgwFramework extends LitElement
 	 * @param {string} _discardID unique string id (appname:id) in order to register
 	 * the message as discardable. Discardable messages offer a checkbox to never be shown again.
 	 * If no appname given, the id will be prefixed with current app. The discardID will be stored in local storage.
-	 * @returns {Promise<SlAlert>} SlAlert element
+	 * @returns {Promise<EgwFrameworkMessage>} SlAlert element
 	 */
-	public async message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null)
+	public async message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null, _window : null | Window = null) : Promise<EgwFrameworkMessage>
 	{
 		if(!message || typeof message != "string" || !message.trim())
 		{
@@ -826,6 +826,10 @@ export class EgwFramework extends LitElement
 		{
 			const error_reg_exp = new RegExp('(error|' + egw.lang('error') + ')', 'i');
 			type = message.match(error_reg_exp) ? 'error' : 'success';
+		}
+		if(!_window)
+		{
+			_window = this.egw.window;
 		}
 
 		const hash = await this.egw.hashString(message);
@@ -860,13 +864,19 @@ export class EgwFramework extends LitElement
 			delete attributes.duration;
 		}
 
-		const alert : EgwFrameworkMessage = <EgwFrameworkMessage>Object.assign(document.createElement("egw-message"), attributes);
+		const alert : EgwFrameworkMessage = <EgwFrameworkMessage>Object.assign(_window.document.createElement("egw-message"), attributes);
 		alert.addEventListener("sl-hide", (e) =>
 		{
 			delete this._messages[(<HTMLElement>e.target).dataset.hash ?? ""];
 		});
-		document.body.append(alert);
-		window.setTimeout(() => alert.toast(), 0);
+		_window.document.body.append(alert);
+
+		// Only auto-toast in the main window to avoid JS error on removal.
+		// Other windows have to call toast() themselves.
+		if(window.document.body.contains(alert))
+		{
+			window.setTimeout(() => alert.toast(), 0);
+		}
 
 		this._messages[hash] = alert;
 		alert.dataset.hash = hash;

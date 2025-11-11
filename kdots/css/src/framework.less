@@ -8,9 +8,16 @@ html, body {
   /** Messages **/
 
   .sl-toast-stack {
-	top: auto;
-	bottom: 0px;
-	width: 50rem;
+	&:not(.isPopup) {
+	  top: auto;
+	  bottom: 0px;
+	  width: 50rem;
+	}
+
+	&.isPopup {
+	  left: 50%;
+	  transform: translateX(-50%);
+	}
 
 	sl-alert et2-checkbox {
 	  padding-top: var(--sl-spacing-large);

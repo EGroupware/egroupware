@@ -73,169 +73,26 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		message: function(_msg, _type, _discardID)
 		{
-			if (framework && typeof framework.message == 'function' && _msg && typeof _msg == "string" && _msg.trim())
-			{
-				return framework.message(_msg, _type, null, true, _discardID);
-			}
-			var jQuery = _wnd.jQuery;
-			var wrapper = jQuery('.egw_message_wrapper').length > 0 ? jQuery('.egw_message_wrapper')
-				: jQuery(_wnd.document.createElement('div')).addClass('egw_message_wrapper noPrint').css('position', 'absolute');
-
-			// add popup indicator class to be able to distinguish between mainframe message or popup message
-			if (this.is_popup()) wrapper.addClass('isPopup');
-
-			if (_msg && !_type)
-			{
-				if (typeof error_reg_exp == 'undefined') error_reg_exp = new RegExp('(error|'+egw.lang('error')+')', 'i');
-
-				_type = _msg.match(error_reg_exp) ? 'error' : 'success';
-			}
-
+			let message = null;
 			// if we are NOT in a popup then call the message on top window
 			if (!this.is_popup() && _wnd !== egw.top)
 			{
-				egw(egw.top).message(_msg, _type);
-				return;
+				return egw(egw.top).message(_msg, _type);
 			}
-
-			var parent = jQuery('div#divAppboxHeader');
-			// popup has no app-header (idots) or it is hidden by onlyPrint class (jdots) --> use body
-			if (!parent.length || parent.hasClass('onlyPrint'))
+			if (framework && typeof framework.message == 'function' && _msg && typeof _msg == "string" && _msg.trim())
 			{
-				parent = jQuery('body');
+				message = framework.message(_msg, _type, null, true, _discardID, _wnd);
 			}
-
-			for (var m in alive_messages)
+			// Add popup message styling
+			if (!framework || !_wnd.document.body.contains(framework))
 			{
-				// Do not add a same message twice if it's still not dismissed
-				if (alive_messages[m] == _msg) return;
+				return message.then(m =>
+				{
+					m.toast();
+					_wnd.document.body.querySelector('.sl-toast-stack').classList.add('isPopup');
+				});
 			}
-
-			if (_msg)	// empty _msg just removes pervious message
-			{
-				// keeps alive messages
-				alive_messages.push(_msg);
-				// message index in stack
-				var msg_index = alive_messages.length-1;
-
-				// replace p and br-tags with newlines
-				_msg = _msg.replace(new_line_reg, "\n");
-				var msg_div = jQuery(_wnd.document.createElement('div'))
-					.attr('id','egw_message')
-					.text(_msg)
-					.addClass(_type+'_message')
-					.click(function(){
-						if (_type == 'success')
-						{
-							delete(alive_messages[msg_index]);
-							jQuery(msg_div).remove();
-						}
-					})
-					.prependTo(wrapper);
-				var msg_close = jQuery(_wnd.document.createElement('span'))
-					.click(function() {
-						//check if the messeage should be discarded forever
-						if (_type == 'info' && _discardID
-							&& msg_chkbox && msg_chkbox.is(':checked'))
-						{
-							var discarded = egw.getLocalStorageItem(discardAppName,'discardedMsgs');
-
-							if (!isDiscarded(_discardID))
-							{
-								if (!discarded)
-								{
-									discarded = [_discardID];
-								}
-								else
-								{
-									if (jQuery.isArray(discarded = JSON.parse(discarded))) discarded.push(_discardID);
-								}
-								egw.setLocalStorageItem(discardAppName,'discardedMsgs',JSON.stringify(discarded));
-							}
-						}
-						delete(alive_messages[msg_index]);
-						jQuery(msg_div).remove();
-					})
-					.addClass('close')
-					.appendTo(msg_div);
-				if (_type == 'success')	msg_close.hide();
-				// discard checkbox implementation
-				if (_discardID && _type === 'info')
-				{
-					var discardID = _discardID.split(':');
-					if (discardID.length<2)
-					{
-						_discardID = egw.app_name() +":"+_discardID;
-					}
-					var discardAppName = discardID.length>1? discardID[0]: egw.app_name();
-
-
-					// helper function to check if the messaege is discarded
-					var isDiscarded = function (_id)
-					{
-
-						var discarded = JSON.parse(egw.getLocalStorageItem(discardAppName,'discardedMsgs'));
-
-						if (jQuery.isArray(discarded))
-						{
-							for(var i=0; i< discarded.length; i++)
-							{
-								if (discarded[i] === _id) return true;
-							}
-						}
-						return false;
-					};
-
-					//discard div container
-					var msg_discard =jQuery(_wnd.document.createElement('div')).addClass('discard');
-
-					// checkbox
-					var msg_chkbox = jQuery(_wnd.document.createElement('input'))
-							.attr({type:"checkbox",name:"msgChkbox"})
-							.click(function(e){e.stopImmediatePropagation();})
-							.appendTo(msg_discard);
-					// Label
-					jQuery(_wnd.document.createElement('label'))
-								.text(egw.lang("Don't show this again"))
-								.css({"font-weight":"bold"})
-								.attr({for:'msgChkbox'})
-								.appendTo(msg_discard);
-
-					if (isDiscarded(_discardID)) return;
-					msg_div.append(msg_discard);
-				}
-
-				parent.prepend(wrapper);
-
-				// replace simple a href (NO other attribute, to gard agains XSS!)
-				var matches = a_href_reg.exec(_msg);
-				if (matches)
-				{
-					var parts = _msg.split(matches[0]);
-					var href = html_entity_decode(matches[1]);
-					msg_div.text(parts[0]);
-					msg_div.append(jQuery(_wnd.document.createElement('a'))
-						.attr({href: href, target: href.indexOf(egw.webserverUrl) != 0 ? '_blank' : '_self'})
-						.text(matches[2]));
-					msg_div.append(jQuery(_wnd.document.createElement('span')).text(parts[1]));
-				}
-				// center the message
-				wrapper.css('right', ((jQuery(_wnd).innerWidth()-msg_div.width())/2)+'px');
-
-				if (_type == 'success')	// clear message again after some time, if no error
-				{
-					_wnd.setTimeout(function() {
-						msg_div.remove();
-						delete(alive_messages[msg_index]);
-					}, 5000);
-				}
-			}
-			return {
-				node: msg_div,
-				message: _msg,
-				index: msg_index,
-				close: function(){msg_close.click();}
-			};
+			return message;
 		},
 
 		/**

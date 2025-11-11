@@ -15,11 +15,16 @@ body {
   /** Messages **/
   /** end messages **/
 }
-html .sl-toast-stack,
-body .sl-toast-stack {
+html .sl-toast-stack:not(.isPopup),
+body .sl-toast-stack:not(.isPopup) {
   top: auto;
   bottom: 0px;
   width: 50rem;
+}
+html .sl-toast-stack.isPopup,
+body .sl-toast-stack.isPopup {
+  left: 50%;
+  transform: translateX(-50%);
 }
 html .sl-toast-stack sl-alert et2-checkbox,
 body .sl-toast-stack sl-alert et2-checkbox {
