@@ -84,7 +84,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				message = framework.message(_msg, _type, null, true, _discardID, _wnd);
 			}
 			// Add popup message styling
-			if (!framework || !_wnd.document.body.contains(framework))
+			if (message && (!framework || !_wnd.document.body.contains(framework)))
 			{
 				return message.then(m =>
 				{
