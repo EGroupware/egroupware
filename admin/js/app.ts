@@ -1776,7 +1776,10 @@ class AdminApp extends EgwApp
 		egw.json('admin.admin_config.ajax_upload_anon_images',
 			[widget.get_value(), taglist.get_value()],
 			function(_data){
-				taglist.set_value(_data);
+				if(_data && typeof _data.type == "undefined")
+				{
+					taglist.set_value(_data);
+				}
 		}).sendRequest();
 		widget.value = {};
 	}
