@@ -1419,6 +1419,7 @@ class AddressbookApp extends EgwApp
 		{
 			grouped.value = "";
 		}
+		this.change_grouped_view(null, grouped);
 
 		// Make sure advanced search is false if not set, this clears any
 		// currently set advanced search
