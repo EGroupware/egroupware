@@ -870,18 +870,29 @@ export class EgwFramework extends LitElement
 			delete this._messages[(<HTMLElement>e.target).dataset.hash ?? ""];
 		});
 		_window.document.body.append(alert);
+		let returnPromise = alert.updateComplete.then(() => alert);
 
 		// Only auto-toast in the main window to avoid JS error on removal.
 		// Other windows have to call toast() themselves.
 		if(window.document.body.contains(alert))
 		{
-			window.setTimeout(() => alert.toast(), 0);
+			returnPromise = new Promise<EgwFrameworkMessage>(async(resolve, reject) =>
+			{
+				// Manage timing to make sure we return a message ready to use (after toast)
+				await alert.updateComplete;
+				alert.toast();
+				window.setTimeout(async() =>
+				{
+					await alert.updateComplete;
+					resolve(alert);
+				}, 0);
+			});
 		}
 
 		this._messages[hash] = alert;
 		alert.dataset.hash = hash;
 
-		return alert;
+		return returnPromise
 	}
 
 	/**
