@@ -129,17 +129,25 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		let tab = this.get_tab_info();
 		if(tab)
 		{
+			const tabs = tab.flagDiv.parentElement;
 			// Bind the action to when the tab is selected
 			const handler = (e) =>
 			{
+				if(e.detail?.name !== tab.id)
+				{
+					return;
+				}
 				if(typeof this.dataview == "undefined")
 				{
 					this.finishInit();
 				}
+				// Remove listener, we've initialized
+				tabs.removeEventListener("sl-tab-show", handler);
+
 				// TODO: Find a better way to get this to wait
 				window.setTimeout(this._resize, 10);
 			};
-			tab.flagDiv.addEventListener("click", handler);
+			tabs.addEventListener("sl-tab-show", handler);
 		}
 		else
 		{
