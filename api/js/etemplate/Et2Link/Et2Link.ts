@@ -138,6 +138,9 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 	static MISSING_TITLE = "??";
 
+	/* Leftover from when options were passed as csv */
+	static legacyOptions = ['app'];
+
 	// Title is read-only inside
 	private _title : string;
 	private _titlePromise : Promise<string>;

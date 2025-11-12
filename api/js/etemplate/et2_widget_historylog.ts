@@ -506,29 +506,11 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			{
 				// Not set
 				if(options[i] === "") continue;
-
-				const attr = widget.attributes[legacy[i]] || {};
-				let attrValue = options[i];
-
-				// If the attribute is marked as boolean, parse the
-				// expression as bool expression.
-				if (attr.type === "boolean")
-				{
-					attrValue = mgr.parseBoolExpression(attrValue);
-				}
-				else
-				{
-					attrValue = mgr.expandName(attrValue);
-				}
-				attrs[legacy[i]] = attrValue;
-				if(typeof widget['set_'+legacy[i]] === 'function')
-				{
-					widget['set_'+legacy[i]].call(widget, attrValue);
-				}
-				else
-				{
-					widget.options[legacy[i]] = attrValue;
-				}
+				attrs[legacy[i]] = options[i];
+			}
+			if(widget.transformAttributes)
+			{
+				widget.transformAttributes(attrs);
 			}
 		}
 		return widget;
