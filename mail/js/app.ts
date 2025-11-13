@@ -2359,8 +2359,8 @@ export class MailApp extends EgwApp
 	mail_reduceCounterWithoutServerRoundtrip()
 	{
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		const _foldernode = ftree.getSelectedItem();
-		let counter = _foldernode.badge;
+		const _foldernode = ftree?.getSelectedItem();
+		let counter = _foldernode?.badge;
 		let icounter = 0;
 		if (counter) icounter = parseInt(counter);
 		if (icounter>0)
