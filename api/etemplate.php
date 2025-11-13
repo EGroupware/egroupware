@@ -477,7 +477,7 @@ function send_template()
 					$attrs_string = stringAttrs($attrs);
 					return "<et2-button-icon $attrs_string></et2-button-icon>";
 				}
-				return "<et2-button $matches[1]></et2-button>";
+				return "<et2-button $matches[1]>$matches[2]";
 			},                           $str);
 
 		}
