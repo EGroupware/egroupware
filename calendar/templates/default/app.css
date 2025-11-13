@@ -1648,6 +1648,9 @@ egw-app {
   right: initial ;
   bottom: initial ;
 }
+#calendar-add_calendar-add {
+  width: min-content;
+}
 [slot="filter"]::part(base) {
   display: flex;
   flex-direction: column;
