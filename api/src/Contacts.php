@@ -1580,7 +1580,7 @@ class Contacts extends Contacts\Storage
 			{
 				foreach(array_keys($this->customfields) as $name)
 				{
-					$member['#'.$name] = $customfields[$member['id']][$name];
+					$member['#' . $name] = $customfields[$member['id']]['#' . $name];
 				}
 			}
 			$fields = 0;
