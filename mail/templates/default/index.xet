@@ -30,8 +30,7 @@
                                 <et2-vbox class="addresses">
                                     <et2-hbox>
                                         <et2-description  value="From" class="firstColumnTitle"></et2-description>
-                                        <et2-email id="additionalfromaddress" readonly="true"
-                                                   onclick="app.mail.onclickCompose"></et2-email>
+                                        <et2-email id="additionalfromaddress" readonly="true"></et2-email>
                                         <et2-date-time align="right" id="date" readonly="true"></et2-date-time>
                                     </et2-hbox>
                                     <et2-hbox disabled="!@toaddress" width="100%">
