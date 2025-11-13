@@ -287,7 +287,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		if (preg_match('/^([a-z0-9_]+)( DESC| ASC)?$/i', $filter['order'], $matches))
 		{
 			$order = $matches[1];
-			if ($matches[2]) $sort = $matches[2];
+			if ($matches[2]) $sort = trim($matches[2]);
 			unset($filter['order']);
 		}
 		// handle "linked" filter
@@ -311,7 +311,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			'search'        => $search,
 			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
 			'start'         => 0,
-			'num_rows'      => self::CHUNK_SIZE,
+			'num_rows'      => $nresults ?: self::CHUNK_SIZE,
 		);
 		$check_responsible = false;
 		if (substr($task_filter, -8) == '+deleted')
@@ -343,12 +343,6 @@ class infolog_groupdav extends Api\CalDAV\Handler
 				{
 					unset($this->requested_multiget_ids[$k]);
 				}
-				if (++$yielded && isset($nresults) && $yielded > $nresults)
-				{
-					$this->sync_collection_token = Api\DateTime::user2server($task['info_modified'], 'ts')-1;
-					$this->more_results = true;
-					return;
-				}
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($task['info_status'] == 'deleted' ||
 					// or event is reported as removed from collection, because collection owner is no longer an attendee
@@ -356,29 +350,37 @@ class infolog_groupdav extends Api\CalDAV\Handler
 						!infolog_so::is_responsible_user($task, $check_responsible))
 				{
 					yield ['path' => $path.urldecode($this->get_path($task))];
-					continue;
 				}
-				$props = array(
-					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar',	// Konqueror (3.5) dont understand it otherwise
-					'getlastmodified' => $task['info_datemodified'],
-					'displayname' => $task['info_subject'],
-				);
-				if ($calendar_data)
+				else
 				{
-					if ($is_jstask)
+					$props = array(
+						'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar',    // Konqueror (3.5) dont understand it otherwise
+						'getlastmodified' => $task['info_datemodified'],
+						'displayname' => $task['info_subject'],
+					);
+					if ($calendar_data)
 					{
-						$content = Api\CalDAV\JsCalendar::JsTask($task, false);
-						$props['getcontentlength'] = bytes(Api\CalDAV::json_encode($content, $is_jstask));
-						$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV, 'calendar-data', $content);
+						if ($is_jstask)
+						{
+							$content = Api\CalDAV\JsCalendar::JsTask($task, false);
+							$props['getcontentlength'] = bytes(Api\CalDAV::json_encode($content, $is_jstask));
+							$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV, 'calendar-data', $content);
+						}
+						else
+						{
+							$content = $handler->exportVTODO($task, '2.0', null);    // no METHOD:PUBLISH for CalDAV
+							$props['getcontentlength'] = bytes($content);
+							$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV, 'calendar-data', $content);
+						}
 					}
-					else
-					{
-						$content = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
-						$props['getcontentlength'] = bytes($content);
-						$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
-					}
+					yield $this->add_resource($path, $task, $props);
 				}
-				yield $this->add_resource($path, $task, $props);
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					$this->sync_collection_token = Api\DateTime::user2server($task['info_datemodified'], 'ts');
+					$this->more_results = true;
+					return;
+				}
 			}
 			// Please note: $query['start'] get incremented automatically by bo->search() with number of returned rows!
 			// --> we need to break here, if start is further then total
@@ -391,7 +393,11 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		$sync_collection_report =  $filter['sync-collection'];
 		if ($sync_collection_report)
 		{
-			$this->sync_collection_token = $task['date_modified'];
+			$this->sync_collection_token = Api\DateTime::user2server($task['info_datemodified'], 'ts');
+			if ($query['total'] > $yielded)
+			{
+				$this->more_results = true;
+			}
 		}
 		// report not found multiget urls
 		if (!empty($this->requested_multiget_ids))
