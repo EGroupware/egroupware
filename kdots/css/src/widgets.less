@@ -97,8 +97,8 @@ div.et2_nextmatch {
   }
 }
 
-/* Special styling for widgets in main-header */
-[slot="main-header"] {
+/* Special styling for widgets in main-header, dialog header */
+[slot="main-header"], et2-dialog > [slot="label"] {
   /* Only target the parts, or nested widgets will look weird */
   /* Anything changed here needs to be reset for et2-toolbar [slot=list] below */
 
@@ -116,19 +116,23 @@ div.et2_nextmatch {
   ::part(listbox) {
 	--sl-input-background-color: var(--sl-color-neutral-0);
   }
+
   color: var(--application-header-text-color);
 
   input::placeholder {
 	color: black;
   }
-  et2-vfs-upload, et2-file{
+
+  et2-vfs-upload, et2-file {
 	--sl-color-neutral-0: transparent;
-	--sl-color-neutral-700: var(--application-header-text-color) ;
+	--sl-color-neutral-700: var(--application-header-text-color);
 	--sl-input-border-color: transparent;
-	.et2_label{
+
+	.et2_label {
 	  color: var(--application-header-text-color);
 	}
-	&::part(button){
+
+	&::part(button) {
 	  --sl-input-border-color-hover: transparent;
 	}
   }
@@ -151,7 +155,8 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 	--sl-input-background-color: var(--focus-background-color);
 	--sl-input-background-color-focus: var(--focus-background-color);
 	--sl-input-border-color: var(--sl-input-border-color-hover);
-	&::part(input){
+
+	&::part(input) {
 	  background-color: var(--focus-background-color);
 	}
 
@@ -171,7 +176,8 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 	  -webkit-text-fill-color: var(--application-header-text-color);
 	  -webkit-box-shadow: 0 0 0 50px var(--sl-input-background-color) inset; /* Box shadow hides the default background color */
 	}
-	&[label]::part(label){
+
+	&[label]::part(label) {
 	  padding-inline-start: var(--sl-spacing-2x-small);
 	}
 
@@ -182,6 +188,7 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 	  --image-filter: brightness(0) invert(1);
 	  --image-filter-off: brightness(0) invert(1) opacity(0.5);
 	}
+
 	&::part(base) {
 	  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 	}
@@ -211,77 +218,17 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 	}
 
   }
+
   /*END HOVER*/
+  /****
+  *
+  * Make Elements in the main-header waste less space if possible
+  *
+   ****/
 
-  et2-toolbar {
-	border-bottom-width: 0px;
-	flex: 1 1 auto;
-
-	//No divider in our kdots toolbar
-	sl-button-group {
-	  background: none;
-	}
-
-	et2-dropdown-button {
-	  ::part(base) {
-		background-color: transparent;
-		color: currentColor;
-	  }
-	}
-
-	et2-switch-icon {
-	  padding-inline: var(--sl-spacing-small);
-	}
-
-	::part(list) {
-	  color: var(--sl-color-neutral-700);
-
-	  et2-button::part(base) {
-		border: solid var(--sl-input-border-width) var(--sl-input-border-color);
-		color: var(--sl-color-neutral-700);
-	  }
-
-	  et2-button:hover::part(base) {
-		color: var(--sl-color-neutral-700);
-		border-color: var(--sl-input-border-color);
-	  }
-	}
-
-	/* Change colors of things in list back */
-
-	[slot="list"] {
-	  color: var(--sl-color-neutral-700);
-	  --indicator-color: var(--sl-color-neutral-700);
-	  --sl-input-color: var(--sl-color-neutral-700);
-	  --sl-input-color-hover: var(--sl-color-neutral-700);
-	  --sl-input-placeholder-color: var(--sl-color-neutral-700);
-
-	  ::part(base), &::part(base), &::part(control) {
-		color: var(--sl-color-neutral-700);
-		--sl-input-color: var(--sl-color-neutral-700);
-		--indicator-color: var(--sl-color-neutral-700);
-		--image-filter: none;
-		--image-filter-off: none;
-	  }
-
-	  ////since our placeholders also already carry a mening we should style them the same
-	  //&::part(input)::placeholder {
-	  //color: var(--sl-color-neutral-700);
-	  //}
-	  :hover::part(base) {
-		border-color: var(--sl-input-border-color);
-	  }
-	}
+  et2-toolbar * {
+	flex-grow: 0;
   }
-	/****
-	*
-	* Make Elements in the main-header waste less space if possible
-	*
-	 ****/
-
-  	et2-toolbar * {
-	  flex-grow: 0;
-	}
 
   .et2-select-widget {
 	flex-grow: 0;
@@ -291,11 +238,70 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 	}
   }
 
-
   /* Don't let search grow */
 
   [id$="api-search-button"] {
 	flex: 0 0 min-content;
+  }
+}
+
+et2-toolbar[slot="main-header"], [slot="main-header"] et2-toolbar, et2-dialog > et2-toolbar[slot="label"], et2-dialog > [slot="label"] et2-toolbar {
+  flex: 1 1 auto;
+
+  //No divider in our kdots toolbar
+  sl-button-group {
+	background: none;
+  }
+
+  et2-dropdown-button {
+	::part(base) {
+	  background-color: transparent;
+	  color: currentColor;
+	}
+  }
+
+  et2-switch-icon {
+	padding-inline: var(--sl-spacing-small);
+  }
+
+  ::part(list), [slot="list"] {
+	color: var(--sl-color-neutral-700);
+
+	et2-button::part(base) {
+	  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+	  color: var(--sl-color-neutral-700);
+	}
+
+	et2-button:hover::part(base) {
+	  color: var(--sl-color-neutral-700);
+	  border-color: var(--sl-input-border-color);
+	}
+  }
+
+  /* Change colors of things in list back */
+
+  [slot="list"] {
+	color: var(--sl-color-neutral-700);
+	--indicator-color: var(--sl-color-neutral-700);
+	--sl-input-color: var(--sl-color-neutral-700);
+	--sl-input-color-hover: var(--sl-color-neutral-700);
+	--sl-input-placeholder-color: var(--sl-color-neutral-700);
+
+	::part(base), &::part(base), &::part(control) {
+	  color: var(--sl-color-neutral-700);
+	  --sl-input-color: var(--sl-color-neutral-700);
+	  --indicator-color: var(--sl-color-neutral-700);
+	  --image-filter: none;
+	  --image-filter-off: none;
+	}
+
+	////since our placeholders also already carry a mening we should style them the same
+	//&::part(input)::placeholder {
+	//color: var(--sl-color-neutral-700);
+	//}
+	:hover::part(base) {
+	  border-color: var(--sl-input-border-color);
+	}
   }
 }
 
