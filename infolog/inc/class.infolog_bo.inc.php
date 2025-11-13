@@ -1422,7 +1422,7 @@ class infolog_bo
 			}
 			$ret = $this->so->search($q, $no_acl);
 			$this->total = $query['total'] = $q['total'];
-			if (!isset($q['col_filter'][99]) || count($ret) >= $query['num_rows'])
+			if (!isset($q['col_filter'][99]) || is_array($ret) && count($ret) >= $query['num_rows'])
 			{
 				if (isset($q['col_filter'][99]))
 				{
