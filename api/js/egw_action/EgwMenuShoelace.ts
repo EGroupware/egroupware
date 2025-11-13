@@ -276,6 +276,17 @@ export class EgwMenuShoelace extends LitElement
 		}
 	}
 
+	/**
+	 * Open the submenu if the parent item is clicked
+	 * @param {MouseEvent} event
+	 */
+	handleParentClick(event : MouseEvent)
+	{
+		event.stopPropagation();
+		const popup = event.currentTarget.shadowRoot.querySelector('sl-popup') ?? {};
+		popup.active = !popup.active;
+	}
+
 	private itemTemplate(item : egwMenuItem)
 	{
 		if(item.caption == "-")
@@ -342,7 +353,7 @@ export class EgwMenuShoelace extends LitElement
                     ?disabled=${!item.enabled}
                     ?loading=${item.children.length > 0}
                     .value=${item}
-                    @click=${item.checkbox ? this.handleCheckboxClick : nothing}
+                    @click=${item.children?.length == 0 ? (item.checkbox ? this.handleCheckboxClick : nothing) : this.handleParentClick}
                     ${ref(updateLoading)}
             >
                 ${item.iconUrl ? html`
