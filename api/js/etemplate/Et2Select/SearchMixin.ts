@@ -1473,6 +1473,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				return true;
 			}
+			if(option.title?.toLowerCase().includes(search.toLowerCase()))
+			{
+				return true;
+			}
 			if(typeof option.value == "string")
 			{
 				return option.value.includes(search.toLowerCase());
