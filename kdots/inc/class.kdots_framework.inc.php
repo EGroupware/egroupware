@@ -488,15 +488,20 @@ class kdots_framework extends Api\Framework\Ajax
 		$mode = '';
 		switch($GLOBALS['egw_info']['user']['preferences']['common']['darkmode'])
 		{
-			case '0':
+			case '1':
 				$mode = 'dark';
 				break;
-			case '1':
+			case '0':
 				$mode = 'light';
 				break;
 		}
+		// Always auto for mobile
+		if(EGroupware\Api\Header\UserAgent::mobile())
+		{
+			$mode = '';
+		}
 		return '<egw-darkmode-toggle title="' . lang("%1 mode", $mode) . '" class="' .
-			($mode == 'dark' ? 'darkmode_on' : '') . '"' . ($mode == 'dark' ? 'darkmode' : '') .
+			($mode == 'dark' ? 'darkmode_on' : '') . '"' . ($mode != '' ? ' mode="' . $mode . '"' : '') .
 			' label="' . lang('Dark mode') . '"> </egw-darkmode-toggle>';
 	}
 

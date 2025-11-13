@@ -32,15 +32,17 @@ export class EgwDarkmodeToggle extends LitElement
 		];
 	}
 
-	@property({type: Boolean})
-	darkmode = false;
+	@property({type: String})
+	mode : 'dark' | 'light' | 'auto' = 'auto';
 
-	private _initialValue = false;
+	private _initialValue = 'auto';
 
 	constructor()
 	{
 		super();
-		this._initialValue = window.matchMedia("(prefers-color-scheme: dark)").matches;
+		this._initialValue = this.hasAttribute("mode") ?
+							 this.getAttribute("mode") :
+							 (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 		this.handleDarkmodeChange = this.handleDarkmodeChange.bind(this);
 	}
 
@@ -48,6 +50,7 @@ export class EgwDarkmodeToggle extends LitElement
 	{
 		super.connectedCallback();
 		window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", this.handleDarkmodeChange);
+		this.toggleDarkmode(this._initialValue == "dark");
 	}
 
 	disconnectedCallback()
@@ -56,13 +59,14 @@ export class EgwDarkmodeToggle extends LitElement
 		window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", this.handleDarkmodeChange);
 	}
 
-	public toggleDarkmode(force = null)
+
+	protected toggleDarkmode(force = null)
 	{
 		if(force == null)
 		{
 			force = !(document.documentElement.getAttribute("data-darkmode") == "1");
 		}
-		this.darkmode = force;
+		this.mode = force ? "dark" : "light";
 		if(force)
 		{
 			document.documentElement.setAttribute("data-darkmode", "1");
@@ -72,7 +76,7 @@ export class EgwDarkmodeToggle extends LitElement
 			document.documentElement.setAttribute("data-darkmode", "0");
 		}
 		// Set class for Shoelace
-		this.requestUpdate("darkmode")
+		this.requestUpdate("mode")
 		this.updateComplete.then(() =>
 		{
 			this.dispatchEvent(new CustomEvent("egw-darkmode-change", {bubbles: true}));
@@ -87,7 +91,7 @@ export class EgwDarkmodeToggle extends LitElement
 	render() : unknown
 	{
 		return html`
-            <sl-icon-button name="${this.darkmode ? "sun" : "moon"}"
+            <sl-icon-button name="${this.mode == "light" ? "sun" : "moon"}"
                             @click=${(e) => {this.toggleDarkmode()}}
             ></sl-icon-button>
 		`;

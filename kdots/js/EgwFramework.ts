@@ -188,6 +188,9 @@ export class EgwFramework extends LitElement
 	{
 		super.firstUpdated(_changedProperties);
 
+		// Set darkmode
+		this.setDarkmode(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
 		// Set features on any existing egw-app elements for first load
 		this.querySelectorAll("egw-app").forEach((app : EgwFrameworkApp) =>
 		{
@@ -975,15 +978,19 @@ export class EgwFramework extends LitElement
 
 	protected getBaseUrl() {return "";}
 
-	protected handleDarkmodeChange(event)
+	protected setDarkmode(mode)
 	{
 		// Update CSS classes
-		this.closest("html").classList.toggle("sl-theme-light", !event.target.darkmode);
-		this.closest("html").classList.toggle("sl-theme-dark", event.target.darkmode);
+		this.closest("html").classList.toggle("sl-theme-light", mode == "light");
+		this.closest("html").classList.toggle("sl-theme-dark", mode == "dark");
+	}
 
+	protected handleDarkmodeChange(event)
+	{
+		this.setDarkmode(event.target.mode);
 		// Update preference off / on / auto
-		let pref = event.target.darkmode ? "1" : "0";
-		if(window.matchMedia(`(prefers-color-scheme: ${pref == "1" ? "dark" : "light"})`).matches)
+		let pref = typeof event?.target?.mode != "undefined" ? (event?.target?.mode == "dark" ? "1" : "0") : null;
+		if(pref == null || window.matchMedia(`(prefers-color-scheme: ${pref == "1" ? "dark" : "light"})`).matches)
 		{
 			// Setting to same as system, so go with auto
 			pref = "2"
