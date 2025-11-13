@@ -2656,12 +2656,6 @@ et2-toolbar [slot="list"]::part(base) {
 	padding: 0 var(--sl-spacing-large);
 }
 
-et2-toolbar {
-	border-bottom-width: var(--sl-panel-border-width);
-	border-color: var(--sl-panel-border-color);
-	border-bottom-style: solid;
-}
-
 et2-toolbar :not(et2-button):not(:hover)::part(control), et2-toolbar :not(et2-button):not(:hover)::part(base) {
 	border-color: transparent;
 }
