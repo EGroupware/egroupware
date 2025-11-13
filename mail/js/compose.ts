@@ -770,8 +770,8 @@ export class MailCompose
 		{
 			var content = this.et2.getArrayMgr('content');
 			var lastDrafted = this.et2.getWidgetById('lastDrafted');
-			var folderTree = typeof opener.etemplate2.getByApplication('mail')[0] !='undefined'?
-				opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]'): null;
+			var folderTree = typeof (opener || window)?.etemplate2?.getByApplication('mail')[0] != 'undefined' ?
+				(opener || window).etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]') : null;
 			const activeFolder = folderTree ? folderTree.getSelectedNode() : null;
 			if (content)
 			{
