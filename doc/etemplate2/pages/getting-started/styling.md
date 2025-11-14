@@ -152,3 +152,8 @@ reflow from 2 columns to 1 column.
 <et2-select class="fixed-example et2-label-fixed" label="Select"></et2-select>
 <et2-select-number class="fixed-example et2-label-fixed" label="Select number from list"></et2-select-number>
 ```
+
+### Application styling
+
+See [Application Styling](https://github.com/EGroupware/egroupware/wiki/Framework#styling) for styling at the
+application level.

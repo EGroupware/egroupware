@@ -27,7 +27,7 @@ import {egw_getAppObjectManager} from "../../api/js/egw_action/egw_action";
  * @dependency sl-split-panel
  *
  * @slot - Main application content.  Other slots are normally hidden if they have no content
- * @slot main-header - Top of app, contains logo, app icons.
+ * @slot main-header - Top of app.  Contains logo, application toolbar, search box etc.
  * @slot header-actions - Top right - filter, refresh, print & menu live here
  * @slot filter - Custom filter panel content, leave empty for auto-generated filters
  * @slot header - Top of main content
