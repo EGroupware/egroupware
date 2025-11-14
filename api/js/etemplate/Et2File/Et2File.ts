@@ -662,7 +662,6 @@ export class Et2File extends Et2InputWidget(LitElement)
 
 	handleFileListChange(list)
 	{
-		debugger;
 		for(const mutation of list)
 		{
 			if(mutation.type === "childList")

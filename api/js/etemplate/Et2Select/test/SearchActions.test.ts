@@ -360,7 +360,6 @@ describe("Search results", () =>
 		// Search
 		await doSearch(element, "doesn't matter, we're faking it")
 
-		debugger;
 		// Select the first one
 		await clickOption("remote_one");
 		await element.updateComplete;

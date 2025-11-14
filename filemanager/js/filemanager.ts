@@ -217,7 +217,6 @@ export class filemanagerAPP extends EgwApp
 			{
 				console.log(subgrid);
 				let uid = pushData.id.toString().indexOf(nm.controller.dataStorePrefix) == 0 ? pushData.id : nm.controller.dataStorePrefix + "::" + pushData.id;
-				debugger;
 				nm._refresh_grid(pushData.type, subgrid, [pushData.id], uid);
 			}
 
@@ -499,7 +498,6 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_mail_link_callback(_data)
 	{
-		debugger;
 		if (_data.msg || !_data.share_link) window.egw_refresh(_data.msg, this.appname);
 
 		let params = {

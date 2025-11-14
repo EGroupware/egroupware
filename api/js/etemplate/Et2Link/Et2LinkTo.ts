@@ -516,7 +516,6 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 			values = this.value.to_id || {};
 			selectedFileInfo.forEach(info =>
 			{
-				debugger;
 				values['link:' + info.path] = {
 					app: info?.app,
 					id: info.path ?? info.id,
