@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
-        <et2-toolbar slot="label" id="composeToolbar" style="width: 100%; flex: 1 1 auto;"/>
+        <et2-toolbar slot="label" id="composeToolbar" groupChildren="true" style="width: 100%; flex: 1 1 auto;"/>
         <et2-vbox class="mailCompose mailComposeHeaderSection">
             <et2-vfs-select-dialog class="$cont[vfsNotAvailable] compose_egw_icons" title="Attach files" path="~" buttonLabel="" id="selectFromVFSForCompose" multiple="true" onchange="app.mail.compose.vfsUpload"/>
             <et2-hbox class="mail-compose_toolbar_assist" width="100%">
@@ -81,7 +81,7 @@
 				</rows>
 			</grid>
 		</et2-vbox>
-		<et2-vbox  class="mailComposeBodySection" width="99%">
+        <et2-vbox class="mailComposeBodySection">
 			<et2-hbox  disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
 				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" mode="simple"
 					imageUpload="link_to"  height="478px" width="100%" resize_ratio="0" applyDefaultFont="true"/>

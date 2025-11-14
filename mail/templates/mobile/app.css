@@ -27,119 +27,112 @@
     font-size: large !important;
   }
   /*compose dialog*/
-  body #popupMainDiv {
-    padding: 1px 8px 0 8px;
-    background: none;
+  body #mail-index_popupMainDiv,
+  body #mail-compose_popupMainDiv {
+    /* Hide entry number from display, doesn't make sense in mail */
   }
-  body #popupMainDiv .dialogHeadbar > et2-hbox {
-    overflow: hidden;
-    margin-left: 50px;
+  body #mail-index_popupMainDiv > .entry_id,
+  body #mail-compose_popupMainDiv > .entry_id {
+    display: none;
   }
-  body #popupMainDiv .et2_head_toolbar::part(trigger) {
-    color: white;
-    font-size: 2em;
-    margin-top: var(--sl-spacing-medium);
-  }
-  body #popupMainDiv .et2_head_toolbar [slot=''] {
-    color: var(--sl-color-neutral-100);
-  }
-  body #popupMainDiv #mail-compose_composeToolbar #composeToolbar-send {
-    height: 46px;
-    width: auto;
-    margin-top: 0.7px !important;
-    padding: 0 3px 0 0;
-    text-align: left;
-    font-weight: normal;
-    padding-left: 20px;
-    background-image: url(../../../node_modules/bootstrap-icons/icons/send.svg);
-    background-position: left;
-    background-repeat: no-repeat;
-    background-size: 16px 16px;
-    background-color: #fafafa;
-    color: black;
-  }
-  body #popupMainDiv #mail-compose_composeToolbar #composeToolbar-send:hover {
-    box-shadow: none;
-    background-color: none;
-  }
-  body #popupMainDiv #mail-compose_composeToolbar #composeToolbar-send:disabled {
-    background-color: none;
-  }
-  body #popupMainDiv .mail-d-h1 {
+  body #mail-index_popupMainDiv .mail-d-h1,
+  body #mail-compose_popupMainDiv .mail-d-h1 {
     position: relative;
     padding-bottom: 15px;
     border-bottom: 1px solid silver;
     padding-top: 10px;
     font-weight: bold;
   }
-  body #popupMainDiv .mail-d-h2 {
+  body #mail-index_popupMainDiv .mail-d-h2,
+  body #mail-compose_popupMainDiv .mail-d-h2 {
     padding-top: 5px;
     color: grey;
   }
-  body #popupMainDiv .mail-d-h2 a,
-  body #popupMainDiv .mail-d-h2 span,
-  body #popupMainDiv .mail-d-h2 .et2_label {
+  body #mail-index_popupMainDiv .mail-d-h2 a,
+  body #mail-compose_popupMainDiv .mail-d-h2 a,
+  body #mail-index_popupMainDiv .mail-d-h2 span,
+  body #mail-compose_popupMainDiv .mail-d-h2 span,
+  body #mail-index_popupMainDiv .mail-d-h2 .et2_label,
+  body #mail-compose_popupMainDiv .mail-d-h2 .et2_label {
     color: grey;
   }
-  body #popupMainDiv .mail-d-h2 a#mail-display_FROM > * {
+  body #mail-index_popupMainDiv .mail-d-h2 a#mail-display_FROM > *,
+  body #mail-compose_popupMainDiv .mail-d-h2 a#mail-display_FROM > * {
     color: black;
     padding-top: 15px;
   }
-  body #popupMainDiv .et2_details {
+  body #mail-index_popupMainDiv .et2_details,
+  body #mail-compose_popupMainDiv .et2_details {
     width: 100%;
     display: block;
   }
-  body #popupMainDiv .et2_details.et2_details_expanded {
+  body #mail-index_popupMainDiv .et2_details.et2_details_expanded,
+  body #mail-compose_popupMainDiv .et2_details.et2_details_expanded {
     width: 100%;
     display: block;
   }
-  body #popupMainDiv span.et2_details_title {
+  body #mail-index_popupMainDiv span.et2_details_title,
+  body #mail-compose_popupMainDiv span.et2_details_title {
     color: #26537c;
   }
-  body #popupMainDiv div#mail-display_mailDisplayHeadersFrom > * {
+  body #mail-index_popupMainDiv div#mail-display_mailDisplayHeadersFrom > *,
+  body #mail-compose_popupMainDiv div#mail-display_mailDisplayHeadersFrom > * {
     color: black;
     padding-top: 15px;
   }
-  body #popupMainDiv .mailDisplayAttachments {
+  body #mail-index_popupMainDiv .mailDisplayAttachments,
+  body #mail-compose_popupMainDiv .mailDisplayAttachments {
     position: initial;
     padding: 0;
     margin-top: 10px;
   }
-  body #popupMainDiv button[id="displayToolbar-delete"] {
+  body #mail-index_popupMainDiv button[id="displayToolbar-delete"],
+  body #mail-compose_popupMainDiv button[id="displayToolbar-delete"] {
     margin-left: 0;
   }
-  body #popupMainDiv .mailDisplay {
+  body #mail-index_popupMainDiv .mailDisplay,
+  body #mail-compose_popupMainDiv .mailDisplay {
     position: initial;
     margin-top: 20px;
   }
-  body #popupMainDiv div#mail-view > div {
+  body #mail-index_popupMainDiv div#mail-view > div,
+  body #mail-compose_popupMainDiv div#mail-view > div {
     height: 100%;
   }
-  body #popupMainDiv div#mail-view {
+  body #mail-index_popupMainDiv #view_mail-view,
+  body #mail-compose_popupMainDiv #view_mail-view {
     height: 100%;
     box-sizing: border-box;
   }
-  body #popupMainDiv div#mail-view div > et2-vbox {
-    height: 100%;
-  }
-  body #popupMainDiv div#mail-view .mailContent {
+  body #mail-index_popupMainDiv #view_mail-view .mailContent,
+  body #mail-compose_popupMainDiv #view_mail-view .mailContent {
     flex-grow: 1;
   }
-  body #popupMainDiv #mail-view_toaddressdetails {
+  body #mail-index_popupMainDiv #view_mail-view .mailContent iframe,
+  body #mail-compose_popupMainDiv #view_mail-view .mailContent iframe {
+    border-style: none;
+  }
+  body #mail-index_popupMainDiv #mail-view_toaddressdetails,
+  body #mail-compose_popupMainDiv #mail-view_toaddressdetails {
     color: #26537c;
     float: right;
   }
-  body #popupMainDiv #tempPrintDiv {
+  body #mail-index_popupMainDiv #tempPrintDiv,
+  body #mail-compose_popupMainDiv #tempPrintDiv {
     display: block;
   }
-  body #popupMainDiv #tempPrintDiv div:first-child {
+  body #mail-index_popupMainDiv #tempPrintDiv div:first-child,
+  body #mail-compose_popupMainDiv #tempPrintDiv div:first-child {
     height: auto !important;
   }
-  body #popupMainDiv #tempPrintDiv td,
-  body #popupMainDiv #tempPrintDiv textarea {
+  body #mail-index_popupMainDiv #tempPrintDiv td,
+  body #mail-compose_popupMainDiv #tempPrintDiv td,
+  body #mail-index_popupMainDiv #tempPrintDiv textarea,
+  body #mail-compose_popupMainDiv #tempPrintDiv textarea {
     font-family: Verdana, Arial, Helvetica, sans-serif;
   }
-  body #popupMainDiv #tempPrintDiv .td_display {
+  body #mail-index_popupMainDiv #tempPrintDiv .td_display,
+  body #mail-compose_popupMainDiv #tempPrintDiv .td_display {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 120%;
     color: black;
@@ -149,9 +142,13 @@
     border: none;
     box-shadow: none;
   }
+  body #mail-compose > et2-template::part(base) {
+    display: flex;
+    flex-direction: column;
+  }
   body #mail-compose .mailComposeBodySection,
   body #mail-compose .mailComposeBodySection .mailComposeBody {
-    height: calc(100% - 180px);
+    flex-grow: 1;
   }
   body #mail-compose .mailComposeHeaderSection > table {
     padding: 0;
