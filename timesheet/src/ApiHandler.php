@@ -166,8 +166,11 @@ class ApiHandler extends Api\CalDAV\Handler
 
 		$search = $filter['search'] ?? [];
 		unset($filter['search']);
+		[$sync_token, $sync_token_offset] = $filter['sync_token_offset'] ?? [0, 0];
+		unset($filter['sync_token_offset']);
+		$inital_sync_token_offset = $sync_token_offset;
 		for($chunk=0; ($timesheets =& $this->bo->search($search, '*', $order, '', '', False, 'AND',
-			[$chunk*self::CHUNK_SIZE, self::CHUNK_SIZE], $filter)); ++$chunk)
+			[$inital_sync_token_offset+$chunk*self::CHUNK_SIZE, $nresults ?: self::CHUNK_SIZE], $filter)); ++$chunk)
 		{
 			// read custom-fields
 			if ($this->bo->customfields)
@@ -190,16 +193,17 @@ class ApiHandler extends Api\CalDAV\Handler
 				$content = JsTimesheet::JsTimesheet($timesheet, false);
 				$timesheet = Api\Db::strip_array_keys($timesheet, 'ts_');
 
+				if ($sync_token != ($modified=Api\DateTime::user2server($timesheet['modified'], 'ts')))
+				{
+					$sync_token = $modified;
+					$sync_token_offset = 0;
+				}
+				$sync_token_offset++;
+
 				// remove timesheet from requested multiget ids, to be able to report not found urls
 				if (!empty($this->requested_multiget_ids) && ($k = array_search($timesheet[self::$path_attr], $this->requested_multiget_ids)) !== false)
 				{
 					unset($this->requested_multiget_ids[$k]);
-				}
-				if (++$yielded && isset($nresults) && $yielded > $nresults)
-				{
-					$this->sync_collection_token = Api\DateTime::user2server($timesheet['modified'], 'ts')-1;
-					$this->more_results = true;
-					return;
 				}
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($timesheet['status'] == \timesheet_bo::DELETED_STATUS)
@@ -207,22 +211,32 @@ class ApiHandler extends Api\CalDAV\Handler
 					yield ['path' => $path.urldecode($this->get_path($timesheet))];
 					continue;
 				}
-				$props = array(
+				$props = [
 					'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', 'application/json'),
-					'getlastmodified' => Api\DateTime::user2server($timesheet['modified']),
+					'getlastmodified' => Api\DateTime::user2server($timesheet['modified'], 'utc'),
 					'displayname' => $timesheet['title'],
-				);
-				if (true)
-				{
-					$props['getcontentlength'] = bytes(is_array($content) ? json_encode($content) : $content);
-					$props['data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'data', $content);
-				}
+					'getcontentlength' => bytes(is_array($content) ? Api\CalDAV::json_encode(json_encode($content)) : $content),
+					'data' => Api\CalDAV::mkprop('data', Api\CalDAV::isJSON() || !is_array($content) ? $content : Api\CalDAV::json_encode($content)),
+				];
 				yield $this->add_resource($path, $timesheet, $props);
+
+				if (++$yielded && isset($nresults) && $yielded >= $nresults)
+				{
+					break 2;
+				}
 			}
-			// sync-collection report --> return modified of last timesheet as sync-token
-			if ($sync_collection_report)
+			if ($this->bo->total <= $yielded+$inital_sync_token_offset)
 			{
-				$this->sync_collection_token = $timesheet['modified'];
+				break;
+			}
+		}
+		// sync-collection report --> return modified of last timesheet as sync-token
+		if ($sync_collection_report)
+		{
+			$this->sync_collection_token = $sync_token.'_'.$sync_token_offset;
+			if ($this->bo->total > $yielded+$inital_sync_token_offset)
+			{
+				$this->more_results = true;
 			}
 		}
 
@@ -467,8 +481,9 @@ class ApiHandler extends Api\CalDAV\Handler
 					if (!empty($option['data']))
 					{
 						$parts = explode('/', $option['data']);
-						$sync_token = array_pop($parts);
-						$filters[] = 'ts_modified>'.(int)$sync_token;
+						$parts = explode('/', $option['data']);
+						$filters['sync_token_offset'] = explode(self::SYNC_TOKEN_OFFSET_DELIMITER, array_pop($parts))+[null, 0];
+						$filters[] = 'ts_modified>='.(int)$filters['sync_token_offset'][0];
 						$filters['ts_status'] = 'all';	// to return deleted entries too
 					}
 					break;

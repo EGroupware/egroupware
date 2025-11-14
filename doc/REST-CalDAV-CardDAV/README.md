@@ -56,6 +56,10 @@ from the data of an `allprop` PROPFIND, allow browsing CalDAV/CardDAV tree with 
   * linking application entries to other application entries
   * attaching files to application entries
   * listing, creating and deleting links and attachments
+- [Example iterating through a huge result-set](https://github.com/EGroupware/egroupware/blob/master/doc/REST-CalDAV-CardDAV/api-client.php#L55)
+  * use empty sync-token GET parameter in first request
+  * you can use the optional nresults GET parameter to control how many results you will get
+  * if the response contains a "more-results" attribute with value true, request them with the given sync-token from the response
 
 > For the REST API you always have to send an "Accept: application/json" header and for POST & PUT requests additionally 
 > a "Content-Type: application/json" header, otherwise you talk to the CalDAV/CardDAV server and don't get the response you expect!
@@ -74,4 +78,9 @@ Following RFCs / drafts used/planned for JSON encoding of resources
 - [X] Mail
   - [ ] querying received mails
 - [X] relatedTo, links and attachments, see [links sub-collection to add attachments and links to other application-entries](Links-and-attachments.md)
+- [X] ProjectManager: only projects itself are currently supported
+  - [ ] add, update & delete project-members
+  - [ ] add, update & delete project-elements
+  - [ ] add, update & delete mile-stones
+  - [ ] add, update & delete price-lists
 - [ ] storing not native supported attributes eg. localization

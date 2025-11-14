@@ -463,8 +463,7 @@ class CalDAV extends HTTP_WebDAV_Server
 				// if nresults-limit is set respond correct
 				if (isset($nresults) && $this->accounts->total > ($_GET['start'] ?? 0)+$nresults)
 				{
-					$handler = new CalDAV\Principals('calendar', $this);
-					$handler->sync_collection_toke = '?start='.(($_GET['start'] ?? 0)+$nresults);
+					$handler = new CalDAV\Principals('calendar', $this, '?start='.(($_GET['start'] ?? 0)+$nresults));
 					$files['sync-token'] = [$handler, 'get_sync_collection_token'];
 					$files['sync-token-parameters'] = ['/', '', true];
 				}
@@ -1263,7 +1262,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			echo $prefix.$tab.'"sync-token": '.json_encode(!is_callable($files['sync-token']) ? $files['sync-token'] :
 				call_user_func_array($files['sync-token'], (array)$files['sync-token-params']), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 		}
-		echo "$nl}";
+		echo "$nl}\n";
 
 		// exit now, so WebDAV::GET does NOT add Content-Type: application/octet-stream
 		exit;
