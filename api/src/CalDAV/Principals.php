@@ -44,9 +44,11 @@ class Principals extends Handler
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
 	 * @param Api\CalDAV $caldav calling class
 	 */
-	function __construct($app, Api\CalDAV $caldav)
+	function __construct($app, Api\CalDAV $caldav, ?string $sync_token=null)
 	{
 		parent::__construct($app, $caldav);
+
+		$this->sync_token = $sync_token;
 
 		if (!isset(self::$resources)) self::$resources = new resources_bo();
 	}

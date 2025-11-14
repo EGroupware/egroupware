@@ -302,6 +302,10 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			$filter['info_id'] = Api\Link::get_links($matches[1], $matches[2], 'infolog');
 			unset($filter['linked']);
 		}
+		[$sync_token, $sync_token_offset] = $filter['sync_token_offset'] ?? [0, 0];
+		unset($filter['sync_token_offset']);
+		$inital_sync_token_offset = $sync_token_offset;
+
 		$query = array(
 			'order'			=> $order,
 			'sort'			=> $sort,
@@ -310,7 +314,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			'col_filter'	=> $filter,
 			'search'        => $search,
 			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
-			'start'         => 0,
+			'start'         => $inital_sync_token_offset,
 			'num_rows'      => $nresults ?: self::CHUNK_SIZE,
 		);
 		$check_responsible = false;
@@ -343,6 +347,14 @@ class infolog_groupdav extends Api\CalDAV\Handler
 				{
 					unset($this->requested_multiget_ids[$k]);
 				}
+
+				if ($sync_token != ($modified=Api\DateTime::user2server($task['info_datemodified'], 'ts')))
+				{
+					$sync_token = $modified;
+					$sync_token_offset = 0;
+				}
+				$sync_token_offset++;
+
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($task['info_status'] == 'deleted' ||
 					// or event is reported as removed from collection, because collection owner is no longer an attendee
@@ -355,7 +367,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 				{
 					$props = array(
 						'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar',    // Konqueror (3.5) dont understand it otherwise
-						'getlastmodified' => $task['info_datemodified'],
+						'getlastmodified' => Api\DateTime::user2server($task['info_datemodified'], 'utc'),
 						'displayname' => $task['info_subject'],
 					);
 					if ($calendar_data)
@@ -375,16 +387,14 @@ class infolog_groupdav extends Api\CalDAV\Handler
 					}
 					yield $this->add_resource($path, $task, $props);
 				}
-				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				if (++$yielded && isset($nresults) && $yielded >= $nresults)
 				{
-					$this->sync_collection_token = Api\DateTime::user2server($task['info_datemodified'], 'ts');
-					$this->more_results = true;
-					return;
+					break 2;
 				}
 			}
 			// Please note: $query['start'] get incremented automatically by bo->search() with number of returned rows!
-			// --> we need to break here, if start is further then total
-			if ($query['start'] < $query['total'])
+			// --> we need to break here, if start is further than total
+			if ($query['start'] < $this->bo->total)
 			{
 				break;
 			}
@@ -393,8 +403,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		$sync_collection_report =  $filter['sync-collection'];
 		if ($sync_collection_report)
 		{
-			$this->sync_collection_token = Api\DateTime::user2server($task['info_datemodified'], 'ts');
-			if ($query['total'] > $yielded)
+			$this->sync_collection_token = $sync_token.'_'.$sync_token_offset;
+			if ($this->bo->total > $yielded+$inital_sync_token_offset)
 			{
 				$this->more_results = true;
 			}
@@ -504,8 +514,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 					if (!empty($option['data']))
 					{
 						$parts = explode('/', $option['data']);
-						$sync_token = array_pop($parts);
-						$filters[] = 'info_datemodified>'.(int)$sync_token;
+						$filters['sync_token_offset'] = explode(self::SYNC_TOKEN_OFFSET_DELIMITER, array_pop($parts))+[null, 0];
+						$filters[] = 'info_datemodified>='.(int)$filters['sync_token_offset'][0];
 						$filters['filter'] .= '+deleted';	// to return deleted entries too
 					}
 					break;

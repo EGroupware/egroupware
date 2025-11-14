@@ -124,6 +124,11 @@ abstract class Handler
 	const REQUIRE_QUOTED_PRINTABLE_ENCODING = '/([\000-\012\013\015\016\020-\037\075])/';
 
 	/**
+	 * Delimiter between modification-time based sync-token and optional offset (to deal with multiple resources sharing the same modification-time)
+	 */
+	const SYNC_TOKEN_OFFSET_DELIMITER = '_';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
