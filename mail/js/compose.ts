@@ -11,8 +11,8 @@
 import type {MailApp} from "./app";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
-import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw} from "../../api/js/jsapi/egw_global";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 
 export class MailCompose
 {
@@ -630,7 +630,8 @@ export class MailCompose
 	 */
 	triggerWidget(_action)
 	{
-		var widget = this.et2.getWidgetById(_action.id);
+		const helpers = this.et2.querySelector(".mailComposeHeaderSection");
+		var widget = helpers.getWidgetById(_action.id);
 		if (widget)
 		{
 			switch(widget.id)
