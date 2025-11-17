@@ -846,7 +846,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			for(let i = this.getChildren().length - 1; i >= 0; i--)
 			{
 				this.getChildren()[i].destroy();
-				this.getChildren()[i] instanceof Et2WidgetClass && (<Et2WidgetClass>this.getChildren()[i]).remove();
+				(this.getChildren()[i] instanceof Et2WidgetClass || this.getChildren()[i] instanceof HTMLElement) && (<Et2WidgetClass>this.getChildren()[i]).remove();
 			}
 			this._children.splice(0, this._children.length);
 			this._legacy_children.splice(0, this._legacy_children.length);

@@ -1547,7 +1547,7 @@ export class etemplate2
 		// Check the parameters
 		const data = _response.data;
 		// window-close does NOT send data.DOMNodeID!
-		const dialog = <any>document.querySelector('et2-dialog > form' + (data.DOMNodeID ? '#' + data.DOMNodeID : '.dialog_content'))?.parentNode ??
+		const dialog = <Et2Dialog>document.querySelector('et2-dialog > form' + (data.DOMNodeID ? '#' + data.DOMNodeID : '.dialog_content'))?.parentNode ??
 			// Reloaded into same container
 			(this?.DOMContainer?.parentNode instanceof Et2Dialog ? this.DOMContainer.parentNode : undefined);
 
@@ -1630,12 +1630,15 @@ export class etemplate2
 		if(typeof data.url == "string" && typeof data.data === 'object')
 		{
 			let load : Promise<any>;
+			let et2;
+
 			// @ts-ignore
 			if(this && typeof this.load == 'function')
 			{
 				// Called from etemplate
 				// set id in case serverside returned a different template
 				this._DOMContainer.id = this.uniqueId = data.DOMNodeID;
+				et2 = this;
 
 				// @ts-ignore
 				load = this.load(data.name, data.url, data.data);
@@ -1661,7 +1664,7 @@ export class etemplate2
 					{
 						uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
 					}
-					const et2 = new etemplate2(node, data.data.menuaction, uniqueId);
+					et2 = new etemplate2(node, data.data.menuaction, uniqueId);
 					load = et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
 				}
 				else
@@ -1671,17 +1674,23 @@ export class etemplate2
 			}
 
 			// Extra handling for being loaded into a Et2Dialog
-			if(dialog)
+			if(dialog && et2 !== null)
 			{
 				load.then(() =>
 				{
 					// Move footer type buttons into dialog footer
 					const buttons = dialog._adoptTemplateButtons();
 
-					// Make sure adopted buttons are removed on clear
-					dialog.addEventListener("clear", () =>
+					dialog.addEventListener("close", () =>
 					{
+						// Make sure adopted buttons are removed on clear
 						buttons.forEach(n => n.remove());
+						// Make sure etemplate is cleared if the dialog is destroyed
+						if(dialog.destroyOnClose)
+						{
+							// @ts-ignore
+							et2?.clear();
+						}
 					});
 				});
 			}
