@@ -14,6 +14,7 @@ use EGroupware\Api;
 use EGroupware\Api\Link;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Vfs;
+use EGroupware\Rag;
 
 /**
  * This class is the BO-layer of InfoLog
@@ -1423,6 +1424,19 @@ class infolog_bo
 		}
 
 		$q = $query;
+		// semantic search
+		if (!empty($query['search']) && $query['search'][0] === '&' && class_exists($rag='EGroupware\Rag\Embedding'))
+		{
+			$rag = new $rag();
+			if (!isset($q['cols'])) $q['cols'] = ['main.*'];
+			$q['cols'][] = $rag->search(substr($query['search'], 1), 'infolog', $join).' AS distance';
+			$q['having'] = 'distance < 0.4';
+			$q['return-iterator'] = false;
+			$q['order'] = 'distance';
+			$q['sort'] = 'ASC';
+			$q['join'] = str_replace('egw_infolog.info_id', 'main.info_id', $join);
+			unset($q['search']);
+		}
 		unset($q['limit_modified_n_month']);
 		for($n = 1; $n <= self::LIMIT_MODIFIED_RETRY; $n *= 2)
 		{

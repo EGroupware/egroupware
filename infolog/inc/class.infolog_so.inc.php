@@ -814,6 +814,9 @@ class infolog_so
 	 * @param boolean $query[subs] return subs or not, if unset the user preference is used
 	 * @param int $query[num_rows] number of rows to return if $query[start] is set, default is to use the value from the general prefs
 	 * @param string|array $query[cols]=null what to query, if set the recordset / iterator get's returned
+	 * @param ?bool $query['return-iterator'] true, false, or default isset($query['cols'])
+	 * @param ?string $query['join'] additional join(s)
+	 * @param ?string $query['having'] HAVING clause
 	 * @param string $query[append]=null get's appended to sql query, eg. for GROUP BY
 	 * @param boolean $query['custom_fields']=false query custom-fields too, default not
 	 * @param boolean $no_acl =false true: ignore all acl
@@ -944,7 +947,8 @@ class infolog_so
 			$cats = $categories->return_all_children((int)$query['cat_id']);
 			$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 		}
-		$join = $distinct = '';
+		$join = $query['join'] ?? '';
+		$distinct = '';
 		if (!empty($query['query'])) $query['search'] = $query['query'];	// allow both names
 		if (!empty($query['search']))			  // we search in _from, _subject, _des and _extra_value for $query
 		{
@@ -975,6 +979,10 @@ class infolog_so
 		else
 		{
 			$query['append'] = $group_by;
+		}
+		if (!empty($query['having']))
+		{
+			$query['append'] .= ' HAVING '.$query['having'];
 		}
 		$pid = 'AND ' . $this->db->expression($this->info_table,array('info_id_parent' => ($action == 'sp' ?$query['action_id'] : 0)));
 
@@ -1039,7 +1047,7 @@ class infolog_so
 			// check if start is behind total --> loop to set start=0
 			while (isset($query['start']) && $query['start'] > $query['total']);
 
-			if (isset($query['cols']))
+			if ($query['return-iterator'] ?? isset($query['cols']))
 			{
 				return $rs;
 			}

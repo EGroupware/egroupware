@@ -1633,6 +1633,8 @@ class Db
 					return $this->Link_ID->qstr(DateTime::user2server($value,'Y-m-d H:i:s'));
 				}
 				return $this->Link_ID->DBTimeStamp($value);
+			case 'vector':
+				return 'VEC_FromText('.$this->quote(json_encode($value),'text').')';
 		}
 		if (is_array($value))
 		{
@@ -1739,7 +1741,11 @@ class Db
 				{
 					$data = implode(',', $data);
 				}
-				if (is_array($data))
+				if ($column_type === 'vector' && is_array($data))
+				{
+					$values[] = ($use_key===True ? $this->name_quote($key) . '=' : '') . $this->quote($data,$column_type,$not_null,$maxlength);
+				}
+				elseif (is_array($data))
 				{
 					$or_null = '';
 					foreach($data as $k => $v)
