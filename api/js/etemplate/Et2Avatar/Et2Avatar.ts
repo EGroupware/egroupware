@@ -326,7 +326,7 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 		document.body.appendChild(dialog);
 		dialog.updateComplete.then(() =>
 		{
-			dialog.querySelector("#avatar_edit_buttons").addEventListener("click", this._handleRotate);
+			dialog.querySelector("#_buttons").addEventListener("click", this._handleRotate);
 		});
 		return dialog;
 	}
@@ -338,7 +338,7 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 	 */
 	private __editDialogCallback(_buttons, _value)
 	{
-		let widget = document.getElementById('avatar_edit_cropper_image');
+		let widget = document.getElementById('_cropper_image');
 		switch(_buttons)
 		{
 			case 0:
@@ -358,7 +358,7 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 
 	private _handleRotate(event)
 	{
-		let widget = document.getElementById('avatar_edit_cropper_image');
+		let widget = document.getElementById('_cropper_image');
 		switch(event.target.id)
 		{
 			case 'rotate_reset':
@@ -436,7 +436,7 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 		fileWidget.loading = true;
 		reader.onload = function (e)
 		{
-			let widget = document.getElementById('avatar_edit_cropper_image');
+			let widget = document.getElementById('_cropper_image');
 			widget.image = e.target.result;
 			widget.requestUpdate("image");
 			// Wait for everything to complete
