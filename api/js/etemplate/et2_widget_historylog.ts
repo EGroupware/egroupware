@@ -72,18 +72,19 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 
 	public static readonly legacyOptions = ["status_id"];
 	protected static columns = [
-		{'id': 'user_ts', caption: 'Date', 'width': '120px', widget_type: 'et2-date-time', widget: null, nodes: null},
+		{id: 'user_ts', caption: 'Date', width: '120px', widget_type: 'et2-date-time', widget: null, nodes: null},
 		{
-			'id': 'owner',
+			id: 'owner',
 			caption: 'User',
-			'width': '150px',
+			width: '100px',
 			widget_type: 'et2-select-account_ro',
 			widget: null,
 			nodes: null
 		},
-		{'id': 'status', caption: 'Changed', 'width': '120px', widget_type: 'et2-select', widget: null, nodes: null},
-		{'id': 'new_value', caption: 'New Value', 'width': '50%', widget: null, nodes: null},
-		{'id': 'old_value', caption: 'Old Value', 'width': '50%', widget: null, nodes: null}
+		{id: 'status', caption: 'Changed', width: '160px', widget_type: 'et2-select', widget: null, nodes: null,
+			attrs: {allowFreeEntries: true}},
+		{id: 'new_value', caption: 'New Value', width: '50%', widget: null, nodes: null},
+		{id: 'old_value', caption: 'Old Value', width: '50%', widget: null, nodes: null}
 	];
 
 	static readonly TIMESTAMP = 0;
@@ -294,8 +295,11 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			if(column.widget_type)
 			{
 				// Status ID is allowed to be remapped to something else.  Only affects the widget ID though
-				let attrs = {'readonly': true, 'id': (i == et2_historylog.FIELD ? this.options.status_id : column.id)};
-				column.widget = loadWebComponent(column.widget_type, attrs, this);
+				let attrs = {
+					readonly: true,
+					id: i == et2_historylog.FIELD ? this.options.status_id : column.id,
+				};
+				column.widget = loadWebComponent(column.widget_type, Object.assign(attrs, column.attrs || {}), this);
 				column.nodes = jQuery(column.widget.getDetachedNodes());
 			}
 		}

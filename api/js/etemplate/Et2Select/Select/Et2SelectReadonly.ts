@@ -34,6 +34,12 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 		return this.__emptyLabel;
 	}
 
+	/**
+	 * If true displays the value, if that does NOT match an option
+	 */
+	@property({type: Boolean})
+	allowFreeEntries = false;
+
 	static get styles()
 	{
 		return [
@@ -266,10 +272,14 @@ li {
                         (val : string) => val, (val) =>
                 {
                     let option = (<SelectOption[]>this.select_options).find(option => option.value == val);
-                    if(!option)
+					if(!option && !this.allowFreeEntries)
                     {
                         return "";
                     }
+					if (!option)
+                    {
+						option = { label: val, value: val };
+					}
                     return this._readonlyRender(option);
                 })}
             </ul>
