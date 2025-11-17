@@ -1591,6 +1591,11 @@ class mail_ui
 	{
 		unset($readonlys);	// not used, but required by function signature
 
+		if($query['cat_id'] == '')
+		{
+			$query['cat_id'] = 'quick';
+		}
+
 		// handle possible profile change in get_rows
 		if (!empty($query['selectedFolder']))
 		{
