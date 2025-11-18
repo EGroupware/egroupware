@@ -59,25 +59,24 @@ class Tree extends Etemplate\Widget
 {
 	/**
 	 * key for id of node, has to be unique, eg. a path, nummerical id is allowed too
-	 * if of root has to be 0!
 	 */
-	const ID = 'id';
+	const ID = 'value';
 	/**
 	 * key for label of node
 	 */
-	const LABEL = 'text';
+	const LABEL = 'label';
 	/**
 	 * key for tooltip / title of node
 	 */
-	const TOOLTIP = 'tooltip';
+	const TOOLTIP = 'title';
 	/**
 	 * key for array of children (not json object: numerical keys 0, 1, ...)
 	 */
-	const CHILDREN = 'item';
+	const CHILDREN = 'children';
 	/**
 	 * key if children exist and should be autoloaded, set value to 1
 	 */
-	const AUTOLOAD_CHILDREN = 'child';
+	const AUTOLOAD_CHILDREN = 'hasChildren';
 	/**
 	 * key of relative url of leaf image or standard "app/image" string
 	 * used if node has not [AUTOLOAD_]CHILDREN set
@@ -109,7 +108,7 @@ class Tree extends Etemplate\Widget
 	const NOCHECKBOX = 'nocheckbox';
 
     /**
-     * key to add a custum class to the tree item
+	 * key to add a custom class to the tree item
      */
     const CLASS_LIST = 'class';
 

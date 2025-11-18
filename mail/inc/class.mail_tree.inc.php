@@ -12,7 +12,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Mail;
-use EGroupware\Api\Etemplate\Widget\Tree;
+use EGroupware\Mail\Tree;
 
 /**
  * Mail tree worker class
@@ -190,7 +190,10 @@ class mail_tree
 	{
 		//Init mail folders
         $tree = array(Tree::ID => $_parent ? $_parent : 0, Tree::CHILDREN => array());
-        if (!$_parent) $tree['class'] = 'mailAccount';
+		if(!$_parent)
+		{
+			$tree[TREE::CLASS_LIST] = 'mailAccount';
+		}
 		if (!isset($this->ui->mail_bo)) throw new Api\Exception\WrongUserinput(lang('Initialization of mail failed. Please use the Wizard to cope with the problem'));
 		$hDelimiter = $this->ui->mail_bo->getHierarchyDelimiter();
 
@@ -322,7 +325,7 @@ class mail_tree
 	}
 
 	/**
-	 * setOutStructure - helper function to transform the folderObjectList to dhtmlXTreeObject requirements
+	 * setOutStructure - helper function to transform the folderObjectList to Et2Tree requirements
 	 *
 	 * @param array $data data to be processed
 	 * @param array &$out, out array
@@ -375,31 +378,31 @@ class mail_tree
 				}
 				if ($break) break;
 			}
-			if ($insert['item'])
+			if($insert[Tree::CHILDREN])
 			{
-				foreach($insert['item'] as &$item)
+				foreach($insert[Tree::CHILDREN] as &$item)
 				{
-					if ($item['id'] == $parent.$component)
+					if($item[Tree::ID] == $parent . $component)
 					{
 						$insert =& $item;
 						break;
 					}
 				}
 			}
-			if ($item['id'] != $parent.$component)
+			if($item[Tree::ID] != $parent . $component)
 			{
 				if ($createMissingParents)
 				{
 					unset($item);
 					$item = array(
-						'id' => $parent.$component,
-						'text' => $component,
+						Tree::ID      => $parent . $component,
+						Tree::LABEL   => $component,
 						'im0' => self::$leafImages["folderClosed"],
 						'im1' => self::$leafImages["folderOpen"],
 						'im2' => self::$leafImages["folderClosed"],
-						'tooltip' => lang('no access')
+						Tree::TOOLTIP => lang('no access')
 					);
-					$insert['item'][] =& $item;
+					$insert[TREE::CHILDREN][] =& $item;
 					$insert =& $item;
 				}
 				else
@@ -463,7 +466,7 @@ class mail_tree
 		unset($data['folderarray']);
 		unset($data['path']);
 
-		$insert['item'][] = $data;
+		$insert[Tree::CHILDREN][] = $data;
 	}
 
 	/**
