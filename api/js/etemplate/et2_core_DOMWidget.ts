@@ -294,7 +294,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 			{
 				// Warn about it.  This slows down loading, as it requires a second pass (loadingFinished) to get the child
 				// properly added.
-				console.warn("Legacy widget " + this.getType() + "[#" + this.options.id + "] could not handle adding a child (" +
+				console.warn("Legacy widget " + this.getType() + "[#" + this.options?.id + "] could not handle adding a child (" +
 					_node.getType() + (_node.id ? "#" + _node.id : "") + ")");
 			}
 		}

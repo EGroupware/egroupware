@@ -2525,7 +2525,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Some apps send header data in 'rows', which is the wrong namespace.  Passing it into the header can trigger
 		// autorepeat in some cases, so pass just the non-numeric keys into header namespace.  Some headers also use content
 		// in the parent nm namespace, just to complicate things.
-		let rows = this.getArrayMgr("content").getEntry("rows")||{};
+		let rows = this.getArrayMgr("content")?.getEntry("rows") || {};
 		Object.keys(rows).forEach(k =>
 		{
 			if(isNaN(k))
@@ -2548,9 +2548,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 
 			// Free the grid components - they'll be re-created as the template is processed
-			this.dataview.destroy();
-			this.rowProvider.destroy();
-			this.controller.destroy();
+			this.dataview && this.dataview.destroy();
+			this.rowProvider && this.rowProvider.destroy();
+			this.controller && this.controller.destroy();
 			this.controller = null;
 
 			// Free any children from previous template
@@ -2568,7 +2568,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 			// Clear this setting if it's the same as the template, or
 			// the columns will not be loaded
-			if(this.template == this.options.settings.columnselection_pref)
+			if(this.template == this.options?.settings?.columnselection_pref)
 			{
 				this.options.settings.columnselection_pref = template_name;
 			}
@@ -3024,7 +3024,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		{
 			return this.header.div[0];
 		}
-		for(let i = 0; i < this.columns.length; i++)
+		for(let i = 0; i < this.columns?.length ?? 0; i++)
 		{
 			if(this.columns[i] && this.columns[i].widget && _sender == this.columns[i].widget)
 			{
@@ -3035,7 +3035,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Let header have a chance
 		if(_sender && _sender._parent && _sender._parent == this)
 		{
-			return this.header.getDOMNode(_sender);
+			return this.header?.getDOMNode(_sender) ?? this.div[0];
 		}
 
 		return null;
