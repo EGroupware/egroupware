@@ -158,7 +158,7 @@ class addressbook_ui extends addressbook_bo
 				elseif ($_content['nm']['action'] == 'view_org' || $_content['nm']['action'] == 'view_duplicates')
 				{
 					// grouped view via context menu
-					$_content['nm']['grouped_view'] = array_shift($_content['nm']['selected']);
+					$_content['nm']['grouped_view'] = $_content['main_header']['toolbar']['grouped_view'] = array_shift($_content['nm']['selected']);
 				}
 				else
 				{
@@ -369,7 +369,11 @@ class addressbook_ui extends addressbook_bo
 		$sel_options['grouped_view'] = $this->grouped_views;
 		if (isset($grouped_view))
 		{
-			$content['nm']['grouped_view'] = $grouped_view;
+			$content['nm']['grouped_view'] = $content['main_header']['toolbar']['grouped_view'] = $grouped_view;
+		}
+		else
+		{
+			$content['main_header']['toolbar']['grouped_view'] = $content['nm']['grouped_view'];
 		}
 
 		$content['nm']['actions'] = $this->get_actions($content['nm']['col_filter']['tid']);
