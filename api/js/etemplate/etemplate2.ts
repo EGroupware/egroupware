@@ -1550,11 +1550,14 @@ export class etemplate2
 		const dialog = <Et2Dialog>document.querySelector('et2-dialog > form' + (data.DOMNodeID ? '#' + data.DOMNodeID : '.dialog_content'))?.parentNode ??
 			// Reloaded into same container
 			(this?.DOMContainer?.parentNode instanceof Et2Dialog ? this.DOMContainer.parentNode : undefined);
+		let app = null;
 
 		if (dialog)
 		{
 			// stop dialogs from being closed on button click
 			dialog.callback = () => false;
+			// create a new app object with just constructors for our new etemplate2 object or we'll lose the existing one
+			app = {classes: window.app.classes};
 		}
 
 		// handle Api\Framework::refresh_opener()
@@ -1665,7 +1668,7 @@ export class etemplate2
 						uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
 					}
 					et2 = new etemplate2(node, data.data.menuaction, uniqueId);
-					load = et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
+					load = et2.load(data.name, data.url, data.data, null, app, null, data['fw-target']);
 				}
 				else
 				{
