@@ -35,7 +35,7 @@
             </rows>
         </grid>
     </template>
-    <template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
+    <template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003" onload="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();">
         <grid width="94%">
             <columns>
                 <column width="92"/>
