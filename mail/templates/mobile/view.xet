@@ -63,20 +63,12 @@
 
 						<grid id="attachmentsBlock" class="previewAttachmentArea egwGridView_grid">
 							<columns>
-								<column disabled="!@showtempname"/>
-								<column disabled="!@showtempname"/>
-								<column disabled="!@showtempname"/>
-								<column disabled="!@showtempname"/>
 								<column width="70%" />
 								<column width="11%" />
 								<column width="10%"/>
 							</columns>
 							<rows>
 								<row class="row attachmentRow" id="${row}">
-									<et2-description  id="${row}[attachment_number]"></et2-description>
-									<et2-description  id="${row}[partID]"></et2-description>
-									<et2-description  id="${row}[type]"></et2-description>
-									<et2-description  id="${row}[winmailFlag]"></et2-description>
 									<et2-description-expose  class="et2_link useEllipsis" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
 									<et2-description  align="right" id="${row}[size]"></et2-description>
 									<et2-dropdown-button  id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>

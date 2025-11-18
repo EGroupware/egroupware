@@ -1336,79 +1336,7 @@ export class MailApp extends EgwApp
 
 		if (data.attachmentsBlock)
 		{
-			const actions = [
-				{
-					id: 'downloadOneAsFile',
-					label: 'Download',
-					icon: 'fileexport',
-					value: 'downloadOneAsFile'
-				},
-				{
-					id: 'saveOneToVfs',
-					label: 'Save to Filemanager',
-					icon: 'filemanager/navbar',
-					value: 'saveOneToVfs'
-				},
-				{
-					id: 'saveAllToVfs',
-					label: 'Save all attachments to Filemanager',
-					icon: 'mail/save_all',
-					value: 'saveAllToVfs'
-				},
-				{
-					id: 'downloadAllToZip',
-					label: 'Save as ZIP',
-					icon: 'mail/save_zip',
-					value: 'downloadAllToZip'
-				},
-				{
-					id: 'forward',
-					label: 'Forward to',
-					icon: 'mail/forward',
-					value: 'forward'
-				}
-			];
-			const collabora = {
-				id: 'collabora',
-				label: 'Collabora',
-				icon: 'collabora/navbar',
-				value: 'collabora'
-			};
-			data.attachmentsBlockTitle = data.attachmentsBlock.length > 1 ? `+${data.attachmentsBlock.length-1}` : '';
-			sel_options.attachmentsBlock = {};
-			data.attachmentsBlock.forEach(_item =>
-			{
-				_item.actions = 'downloadOneAsFile';
-				// for some reason label needs to be set explicitly for the dropdown button. It needs more investigation.
-				_item.actionsDefaultLabel = 'Download';
-
-				if (typeof this.egw.user('apps')['collabora'] !== "undefined" && this.egw.isCollaborable(_item.type))
-				{
-					// Start with download on top, Collabora on bottom
-					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, collabora];
-
-					if (egw.preference('document_doubleclick_action', 'filemanager') === 'collabora')
-					{
-						_item.actions = 'collabora';
-						_item.actionsDefaultLabel = 'Collabora';
-						// Put Collabora on top
-						sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [collabora, ...actions];
-					}
-				}
-				// if mime-type is supported by invoices (or the EPL viewer), add it at the end
-				const invoices_app = this.egw.user('apps')['invoices'] ? 'invoices' : 'stylite';
-				if (egw.get_mime_info(_item.type, invoices_app))
-				{
-					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, {
-						id: invoices_app,
-						label: 'invoices',
-						icon: 'invoices/navbar',
-						value: invoices_app
-					}];
-				}
-			});
-
-			sel_options.attachmentsBlock.actions = actions;
+			this.setupViewAttachmentActions(data, sel_options);
 		}
 
 		if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data, sel_options:sel_options});
@@ -1506,6 +1434,82 @@ export class MailApp extends EgwApp
 		}
 	}
 
+	protected setupViewAttachmentActions(data, sel_options)
+	{
+		const actions = [
+			{
+				id: 'downloadOneAsFile',
+				label: 'Download',
+				icon: 'fileexport',
+				value: 'downloadOneAsFile'
+			},
+			{
+				id: 'saveOneToVfs',
+				label: 'Save to Filemanager',
+				icon: 'filemanager/navbar',
+				value: 'saveOneToVfs'
+			},
+			{
+				id: 'saveAllToVfs',
+				label: 'Save all attachments to Filemanager',
+				icon: 'mail/save_all',
+				value: 'saveAllToVfs'
+			},
+			{
+				id: 'downloadAllToZip',
+				label: 'Save as ZIP',
+				icon: 'mail/save_zip',
+				value: 'downloadAllToZip'
+			},
+			{
+				id: 'forward',
+				label: 'Forward to',
+				icon: 'mail/forward',
+				value: 'forward'
+			}
+		];
+		const collabora = {
+			id: 'collabora',
+			label: 'Collabora',
+			icon: 'collabora/navbar',
+			value: 'collabora'
+		};
+		data.attachmentsBlockTitle = data.attachmentsBlock.length > 1 ? `+${data.attachmentsBlock.length - 1}` : '';
+		sel_options.attachmentsBlock = {};
+		data.attachmentsBlock.forEach(_item =>
+		{
+			_item.actions = 'downloadOneAsFile';
+			// for some reason label needs to be set explicitly for the dropdown button. It needs more investigation.
+			_item.actionsDefaultLabel = 'Download';
+
+			if(typeof this.egw.user('apps')['collabora'] !== "undefined" && !egwIsMobile() && this.egw.isCollaborable(_item.type))
+			{
+				// Start with download on top, Collabora on bottom
+				sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, collabora];
+
+				if(egw.preference('document_doubleclick_action', 'filemanager') === 'collabora')
+				{
+					_item.actions = 'collabora';
+					_item.actionsDefaultLabel = 'Collabora';
+					// Put Collabora on top
+					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [collabora, ...actions];
+				}
+			}
+			// if mime-type is supported by invoices (or the EPL viewer), add it at the end
+			const invoices_app = this.egw.user('apps')['invoices'] ? 'invoices' : 'stylite';
+			if(egw.get_mime_info(_item.type, invoices_app))
+			{
+				sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, {
+					id: invoices_app,
+					label: 'invoices',
+					icon: 'invoices/navbar',
+					value: invoices_app
+				}];
+			}
+		});
+
+		sel_options.attachmentsBlock.actions = actions;
+	}
 		/**
 		 * Show external images
 		 * @param _node
@@ -5325,7 +5329,14 @@ export class MailApp extends EgwApp
 
 			if (content.attachmentsBlock.length>0 && content.attachmentsBlock[0].filename)
 			{
-				$attachment.text(self.egw.lang('%1 attachments', content.attachmentsBlock.length));
+				const sel_options = {};
+				self.setupViewAttachmentActions(content, sel_options);
+				et2.querySelector("et2-details.attachments").querySelector("[slot=summary]").innerHTML += content.attachmentsBlockTitle;
+				et2.querySelector('#view_attachmentsBlock').querySelectorAll("et2-dropdown-button").forEach(n =>
+				{
+					n.select_options = sel_options['attachmentsBlock'][n.id] ?? sel_options['attachmentsBlock']['actions'];
+					n.readonly = false;
+				});
 			}
 			else
 			{
