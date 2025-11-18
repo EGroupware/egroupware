@@ -2759,6 +2759,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}, this);
 			this._filterbox.nextmatch = this;
 			this.getInstanceManager().DOMContainer.closest("egw-app")?.append(this._filterbox);
+			// Filterbox is a child of the nextmatch, but we want it under egw-app element.
+			// Nextmatch is a legacy widget, so if we don't set this it will be moved back by doLoadingFinished().
+			this._filterbox["_parent_node"] = this._filterbox.parentElement;
 		}
 		let filterTemplate = null;
 		if(typeof template == "string")
