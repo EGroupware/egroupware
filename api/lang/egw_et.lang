@@ -251,6 +251,8 @@ description	common	et	Kirjeldus
 detail	common	et	Detail
 details	common	et	Detailselt
 directory for storing merged documents	preferences	et	Kaust ühendatud dokumentide salvestamiseks
+directory successfully created.	common	et	Kataloog loodi edukalt.
+directory with documents to insert entries	preferences	et	Kausta, kuhu lisada dokumendid
 disabled	common	et	Väljalülitatud
 discard changes	common	et	Unusta muudatused
 do you also want to delete all subcategories ?	common	et	Tahad kustutada samuti kõik alamkataloogid?
@@ -308,6 +310,7 @@ error	common	et	Viga
 error creating %1 %2 directory	common	et	Viga kausta %1 %2 tegemisel!
 error deleting %1 %2 directory	common	et	Viga kausta %1 %2 kustutamisel!
 error renaming %1 %2 directory	common	et	Viga kausta %1 %2 ümber nimetamisel!
+error while creating directory.	common	et	Kataloogi loomisel tekkis viga.
 estonia	common	et	EESTI
 ethiopia	common	et	ETIOOPIA
 everything	common	et	Kõik
@@ -318,6 +321,7 @@ example {{nelf role}} - if field role is not empty, you will get a new line with
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	et	Näide {{nenvlf roll}} - kui väli roll ei ole tühi, seatakse LF ilma väljal oleva väärtuseta
 export xml	common	et	Expordi XML
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	et	Ühendus serveriga ebaõnnestus või vigane serveri vastus. Proovi uuesti sisse logida. Kui ebaõnnestub kontakteeru Administraatoriga.
+failed to create required directory "%1"!	admin	et	Nõutud kausta „%1“ loomine ebaõnnestus!
 fax number	common	et	Faksi number
 features of the editor?	common	et	Redaktori funktsioonid
 february	common	et	Veebruar
@@ -515,6 +519,7 @@ november	common	et	November
 now	common	et	Nüüd
 october	common	et	Oktoober
 ok	common	et	OK
+old password	common	et	Vana parool
 old value	common	et	Vana Väärtus
 oman	common	et	OMAAN
 only private	common	et	Ainult privaatne
@@ -648,7 +653,6 @@ show all categorys	common	et	Näita kõik kategooriad
 show page generation time	common	et	Näita lehe genereerimise aega
 show page generation time?	common	et	Näita lehe genereerimise aega
 show password	common	et	Näita parooli
-show these toolbar items helptext	common	et	Näita need elemendid tööriistaribal (kui need mahuvad). Ülejäänud on kättesaadavad loendis [⋮].
 show values	common	et	Näita Väärtusi
 show/hide	common	et	Näita/peida külgriba
 showing	common	et	Näitan

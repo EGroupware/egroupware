@@ -80,6 +80,7 @@ admin password	admin	pl	Hasło administratora
 admin queue and history	admin	pl	Kolejka administracji i historia
 admins	admin	pl	Administratorzy
 advanced options	admin	pl	Ustawienia zaawansowane
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pl	Po ilu nieudanych próbach logowania konto powinno zostać zablokowane. Domyślnie = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pl	Po jakiej liczbie nieudanych prób zalogowania się do systemu blokować dostęp z tego adresu IP (domyślnie 3)?
 aliases	admin	pl	Aliasy
 all applications	admin	pl	Wszystkie aplikacje
@@ -128,6 +129,7 @@ bad or malformed request. server responded: %s	admin	pl	Nieprawidłowe lub źle 
 bad request: %s	admin	pl	Nieprawidłowe żądanie: %s
 bi-dir passthrough	admin	pl	Przepływ dwukierunkowy
 bi-directional	admin	pl	Dwukierunkowy
+blocking after wrong password	admin	pl	Blokowanie po podaniu nieprawidłowego hasła
 bottom	admin	pl	Na dole
 bulk changes	admin	pl	Zmiany zbiorcze
 bulk password reset	admin	pl	Zbiorcze resetowanie hasła
@@ -157,6 +159,7 @@ check items to <b>%1</b> to %2 for %3	admin	pl	Sprawdź pozycje do <b>%1</b> do 
 clear security tokens	admin	pl	Wyczyść tokeny bezpieczeństwa
 click to select a color	admin	pl	Kliknij aby wybrać kolor
 color	admin	pl	Kolor
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	pl	Adresy IP z białej listy, oddzielone przecinkami, z powyższego blokowania (:opcjonalna liczba prób)
 command scheduled to run at %1	admin	pl	Uruchomienie polecenia zaplanowane na %1
 commercial: all sorts of companies	admin	pl	Komercyjne: wszystkie rodzaje firm
 config password or md5 hash from the header.inc.php	admin	pl	Hasło konfiguracji lub hash md5 z pliku header.inc.php
@@ -704,7 +707,7 @@ view access log	admin	pl	Wyświetl dziennik dostępu
 view account	admin	pl	Wyświetl konto
 view category	admin	pl	Wyświetl kategorie
 view error log	admin	pl	Pokaż dziennik błędów
-view sessions	admin	pl	Pokaż sesje
+view sessions	admin	pl	Sesje
 view this user	admin	pl	Wyświetl użytkownika
 view user account	admin	pl	Wyświetl konto użytkownika
 virtual mail manager	admin	pl	Wirtualny Serwer Pocztowy - zarządca

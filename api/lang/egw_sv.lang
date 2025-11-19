@@ -835,6 +835,7 @@ number of rows/cols in a v/hbox, cellpadding, cellspacing	common	sv	Antal rader/
 october	common	sv	Oktober
 of	common	sv	av
 ok	common	sv	Ok
+old password	common	sv	Gammalt lösenord
 old value	common	sv	Gammalt värde
 oman	common	sv	OMAN
 on *nix systems please type: %1	common	sv	På *nix system skriv: %1
@@ -1082,7 +1083,6 @@ show page generation time	common	sv	Visa sidans genereringstid
 show page generation time on the bottom of the page?	common	sv	Visa sidans genererings tid längst ner på sidan.
 show page generation time?	common	sv	Visa sidans genereringstid
 show password	common	sv	Visa lösenord
-show these toolbar items helptext	common	sv	Visa dessa objekt på verktygsfältet (om de får plats). De övriga finns tillgängliga i listan [⋮].
 show values	common	sv	Visa värden
 show/hide	common	sv	Visa/dölj sidofältet
 showing	common	sv	Visar

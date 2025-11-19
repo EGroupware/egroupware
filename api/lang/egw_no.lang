@@ -712,6 +712,7 @@ november	common	no	November
 october	common	no	Oktober
 of	common	no	av
 ok	common	no	OK
+old password	common	no	Gammelt passord
 old value	common	no	Gammel verdi
 oman	common	no	OMAN
 on *nix systems please type: %1	common	no	På *nix systemer tast: %1
@@ -907,7 +908,6 @@ show all categorys	common	no	Vis alle kategorier
 show page generation time	common	no	Vis sidegenereringstid
 show page generation time on the bottom of the page?	common	no	Vise sidegenereringstid på bunn av siden.
 show password	common	no	Vis passord
-show these toolbar items helptext	common	no	Vis disse elementene på verktøylinjen (hvis de passer). De andre er tilgjengelige i listen [⋮].
 show values	common	no	Vis verdier
 show/hide	common	no	Vis/skjul sidefelt
 showing	common	no	Viser

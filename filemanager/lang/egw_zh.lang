@@ -107,6 +107,8 @@ hostname/ip for webdav and smb	filemanager	zh	WebDAV 和 SMB 的主机名/IP
 id	filemanager	zh	编号
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	zh	如果在此指定文件夹（完整 VFS 路径），%1 会为每个文档显示一个操作。该操作允许下载插入 %1 数据的指定文档。
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	zh	如果在此指定文件夹（完整 VFS 路径），%1 会为每个条目显示一个额外的文档图标。通过该图标可以下载指定的文档和插入的数据。
+job folder %1 does not exist or is not writable	filemanager	zh	任务文件夹 %1 不存在或不可写。
+leave empty to delete the file after attaching	filemanager	zh	留空表示在附加后删除文件
 link	filemanager	zh	链接
 list view	filemanager	zh	列表查看
 location	filemanager	zh	文件位置
@@ -119,6 +121,7 @@ modified between	filemanager	zh	修改之间
 mount permanently	filemanager	zh	永久挂载
 mountpoints	filemanager	zh	安装点
 move	filemanager	zh	移动
+move file to	filemanager	zh	将文件移动到
 move to	filemanager	zh	移动到
 moved %1 to %2	filemanager	zh	%1已移动到%2
 name of current user, all other contact fields are valid too	filemanager	zh	目前用户的名称，所有其他联系人字段也是正确的

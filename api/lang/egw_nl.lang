@@ -413,6 +413,7 @@ details	common	nl	Details
 directory	common	nl	Directory
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	nl	Directory bestaat niet, kan niet gelezen worden door de webserver of is geen relatief pad ten opzichte van de document root.
 directory for storing merged documents	preferences	nl	Map voor het opslaan van samengevoegde documenten
+directory successfully created.	common	nl	Map succesvol aangemaakt.
 directory with documents to insert entries	preferences	nl	Map met documenten om items in te voegen
 disabled	common	nl	Uitgeschakeld
 discard changes	common	nl	Wijzigingen wegdoen
@@ -509,6 +510,7 @@ error deleting %1 %2 directory	common	nl	Error tijdens het verwijderen van %1 %2
 error deleting %1!	common	nl	Fout bij het verwijderen van %1!
 error renaming %1 %2 directory	common	nl	Error tijdens het hernoemen van %1 %2 directory!
 error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
+error while creating directory.	common	nl	Fout bij het aanmaken van de map.
 error: template not found !!!	common	nl	Fout: Template niet gevonden!
 error: webserver is not allowed to write into '%1' !!!	common	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1'!
 error: while saving !!!	common	nl	Fout: tijdens het opslaan!
@@ -956,6 +958,7 @@ october	common	nl	Oktober
 of	common	nl	van
 off	common	nl	Uit
 ok	common	nl	Oké
+old password	common	nl	Oud wachtwoord
 old value	common	nl	Oude waarde
 oman	common	nl	OMAN
 on *nix systems please type: %1	common	nl	Op *nix systemen typt u: %1
@@ -1256,7 +1259,6 @@ show page generation time	common	nl	Verlooptijd van de pagina's weergeven
 show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina.
 show page generation time?	common	nl	Verlooptijd pagina weergeven
 show password	common	nl	Rodyti slaptažodį
-show these toolbar items helptext	common	nl	Toon deze items op de werkbalk (als ze passen). De andere zijn beschikbaar in de lijst [⋮].
 show values	common	nl	Waarden weergeven
 show/hide	common	nl	Zijbalk tonen/verbergen
 showing	common	nl	Geeft weer

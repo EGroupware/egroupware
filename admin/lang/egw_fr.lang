@@ -973,7 +973,7 @@ view access log	admin	fr	Afficher le journal d'accès
 view account	admin	fr	Afficher le compte
 view category	admin	fr	Afficher la catégorie
 view error log	admin	fr	Afficher le journal d'erreurs
-view sessions	admin	fr	Afficher les sessions
+view sessions	admin	fr	Sessions
 view this user	admin	fr	Afficher cet utilisateur
 view user account	admin	fr	Afficher le compte utilisateur
 virtual mail manager	admin	fr	Virtual MAIL ManaGeR

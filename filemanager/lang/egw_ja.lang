@@ -181,7 +181,9 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	ja	エクスポート時に使用する設定を指定します。
 if you specify an export definition, it will be used when you export*	filemanager	ja	エクスポート時に使用する設定を指定します。*
 inherited	filemanager	ja	継承
+job folder %1 does not exist or is not writable	filemanager	ja	ジョブフォルダ %1 が存在しないか、書き込み不可です。
 last accessed	filemanager	ja	最終アクセス日時
+leave empty to delete the file after attaching	filemanager	ja	添付後にファイルを削除する場合は空欄のままにしてください
 link	filemanager	ja	リンク
 link %1: %2	filemanager	ja	リンク %1: %2
 link into folder	filemanager	ja	フォルダにリンク
@@ -204,6 +206,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	ja	eTemplate �
 mount permanently	filemanager	ja	永久マウント
 mountpoints	filemanager	ja	マウントポイント
 move	filemanager	ja	移動
+move file to	filemanager	ja	ファイルを移動先へ
 move into folder	filemanager	ja	フォルダに移動
 move to	filemanager	ja	移動:
 moved %1 to %2	filemanager	ja	%1 を %2 に移動しました。

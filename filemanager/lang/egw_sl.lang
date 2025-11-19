@@ -181,7 +181,9 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili
 if you specify an export definition, it will be used when you export*	filemanager	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili *
 inherited	filemanager	sl	Podedovano
+job folder %1 does not exist or is not writable	filemanager	sl	Mapa z nalogami %1 ne obstaja ali ni mogoče vanjo zapisovati.
 last accessed	filemanager	sl	Zadnji dostop
+leave empty to delete the file after attaching	filemanager	sl	Pustite prazno, če želite datoteko po priložitvi izbrisati
 link	filemanager	sl	Poveži
 link %1: %2	filemanager	sl	Povezava %1: %2
 link into folder	filemanager	sl	Povezava v mapo
@@ -204,6 +206,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	sl	Mount / etem
 mount permanently	filemanager	sl	Stalna namestitev
 mountpoints	filemanager	sl	Priklopne točke
 move	filemanager	sl	Premakni
+move file to	filemanager	sl	Premakni datoteko v
 move into folder	filemanager	sl	Premakni v mapo
 move to	filemanager	sl	Premakni v
 moved %1 to %2	filemanager	sl	%1 je bilo premaknjeno v %2

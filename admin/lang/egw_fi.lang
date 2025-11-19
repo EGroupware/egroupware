@@ -84,6 +84,7 @@ admin password	admin	fi	Ylläpitäjän salasana
 admin queue and history	admin	fi	Admin Queue ja historia
 admins	admin	fi	Ylläpitäjät
 advanced options	admin	fi	Lisäasetukset
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen tili tulisi estää. Oletus = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen IP-osoite lukitaan (oletus: 3)
 aliases	admin	fi	Aliakset
 all applications	admin	fi	Kaikki sovellukset
@@ -133,6 +134,7 @@ bad or malformed request. server responded: %s	admin	fi	Väärä tai viallinen p
 bad request: %s	admin	fi	Väärä pyyntö: %s
 bi-dir passthrough	admin	fi	Kaksisuuntainen läpäisy
 bi-directional	admin	fi	Kaksisuuntainen
+blocking after wrong password	admin	fi	Estäminen väärän salasanan jälkeen
 bottom	admin	fi	Alas
 bulk changes	admin	fi	Joukkomuutokset
 bulk password reset	admin	fi	Salasanojen hallinta
@@ -168,6 +170,7 @@ check items to <b>%1</b> to %2 for %3	admin	fi	Tarkista kohteet <b>%1</b> %2 koh
 clear security tokens	admin	fi	Tyhjennä turvakoodit
 click to select a color	admin	fi	Napsauta valitaksesi värin
 color	admin	fi	Väri
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	fi	Pilkulla erotetut IP-osoitteet, jotka on lisätty edellä mainitun eston valkoiselle listalle (:valinnainen yritysten määrä)
 command scheduled to run at %1	admin	fi	Komento suoritetaan kello %1
 commercial: all sorts of companies	admin	fi	Kaupallinen: Kaikki yritykset
 connection dropped by imap server.	admin	fi	Yhteys IMAP palvelimeen katkesi.
@@ -753,7 +756,7 @@ view access log	admin	fi	Näytä käyttöloki
 view account	admin	fi	Näytä käyttäjätili
 view category	admin	fi	Näytä kategoria
 view error log	admin	fi	Näytä virheloki
-view sessions	admin	fi	Näytä istunnot
+view sessions	admin	fi	Istunnot
 view this user	admin	fi	Näytä tämä käyttäjä
 view user account	admin	fi	Näytä käyttäjätili
 virtual mail manager	admin	fi	Virtual MAIL ManaGeR

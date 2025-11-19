@@ -84,6 +84,8 @@ hostname/ip for webdav and smb	filemanager	lv	Uzņēmēja vārds/IP WebDAV un SM
 id	filemanager	lv	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	lv	Ja šeit norādāt mapi (pilnu VFS ceļu), %1 katram dokumentam tiek parādīta darbība. Šī darbība ļauj lejupielādēt norādīto dokumentu ar ievietotajiem %1 datiem.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	lv	Ja šeit norādāt mapi (pilnu VFS ceļu), %1 katram ierakstam tiek parādīta papildu dokumenta ikona. Šī ikona ļauj lejupielādēt norādīto dokumentu ar ievietotajiem datiem.
+job folder %1 does not exist or is not writable	filemanager	lv	Darba mape %1 nepastāv vai nav rakstāma.
+leave empty to delete the file after attaching	filemanager	lv	Atstājiet tukšu, lai pēc pievienošanas failu dzēstu
 link	filemanager	lv	Saite
 list view	filemanager	lv	Saraksta skats
 location	filemanager	lv	Atrašanās vieta
@@ -96,6 +98,7 @@ modified between	filemanager	lv	Modificēts starp
 mount permanently	filemanager	lv	Pastāvīga uzstādīšana
 mountpoints	filemanager	lv	Montāžas punkti
 move	filemanager	lv	pārvietot
+move file to	filemanager	lv	Pārvietot failu uz
 move to	filemanager	lv	Pārvietot Uz:
 moved %1 to %2	filemanager	lv	Pārvietoja %1 uz %2
 no files in this directory.	filemanager	lv	Šajā direktorijā datņu nav.

@@ -97,7 +97,7 @@ directory "%1" not found!	filemanager	de	Ordner "%1" NICHT gefunden!
 directory %1 already exists	filemanager	de	Ordner %1 existiert bereits
 directory %1 does not exist	filemanager	de	Ordner %1 existiert nicht
 directory not found or no permission to access it!	filemanager	de	Ordner wurde nicht gefunden oder Sie haben keine Rechte um darauf zuzugreifen!
-directory successfully created.	filemanager	de	Ordner erfolgreich angelegt
+directory successfully created.	filemanager	de	Ordner erfolgreich angelegt.
 directory with documents to insert entries	filemanager	de	Ordner mit Dokumenten zum Einfügen von Daten
 disable	filemanager	de	Ausschalten
 disable versioning for this mountpoint	filemanager	de	Versionierung für diesen Mountpoint ausschalten
@@ -190,7 +190,7 @@ job folder %1 does not exist or is not writable	filemanager	de	Job Verzeichnis %
 job saved.	filemanager	de	Job gespeichert.
 jobs	filemanager	de	Jobs
 last accessed	filemanager	de	Letzter Zugriff
-leave empty to delete the file after attaching	filemanager	de	leer lassen um die Datei nach dem Anhängen zu löschen
+leave empty to delete the file after attaching	filemanager	de	Leer lassen um die Datei nach dem Anhängen zu löschen
 link	filemanager	de	verknüpfen
 link %1: %2	filemanager	de	%1 Verknüpfung: %2
 link into folder	filemanager	de	Verknüpfung in ein Ordner

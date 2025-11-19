@@ -82,6 +82,7 @@ admin password	admin	ru	Пароль администратора
 admin queue and history	admin	ru	Администрирование очереди и истории
 admins	admin	ru	Администраторы
 advanced options	admin	ru	Расширенные настройки
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему учетная запись должна быть заблокирована. По умолчанию = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать IP-адрес (по умолчанию — 3)?
 aliases	admin	ru	Псевдонимы
 all applications	admin	ru	Все приложения
@@ -132,6 +133,7 @@ bad or malformed request. server responded: %s	admin	ru	Неверный или 
 bad request: %s	admin	ru	Неверный запрос: %s
 bi-dir passthrough	admin	ru	Двунаправленное прохождение паролей
 bi-directional	admin	ru	Двунаправленный
+blocking after wrong password	admin	ru	Блокировка после ввода неправильного пароля
 bottom	admin	ru	Низ
 bulk changes	admin	ru	Массовые изменения
 bulk password reset	admin	ru	Пакетный сброс паролей
@@ -168,6 +170,7 @@ clear cache and register hooks	admin	ru	Очистить кэш и зареги�
 clear security tokens	admin	ru	Очистить токены безопасности
 click to select a color	admin	ru	Щёлкните для выбора цвета
 color	admin	ru	Цвет
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	ru	Разделенные запятыми IP-адреса, включенные в белый список для вышеуказанной блокировки (:необязательное количество попыток)
 command scheduled to run at %1	admin	ru	Команда запланирована на запуск %1
 commercial: all sorts of companies	admin	ru	Коммерческие: все виды компаний
 config password or md5 hash from the header.inc.php	admin	ru	Пароль конфигурации или хэш md5 из header.inc.php
@@ -769,7 +772,7 @@ view access log	admin	ru	Просмотр журнала подключений
 view account	admin	ru	Просмотр учётной записи
 view category	admin	ru	Просмотр категории
 view error log	admin	ru	Просмотр журнала ошибок
-view sessions	admin	ru	Просмотр сеансов
+view sessions	admin	ru	Сессии
 view this user	admin	ru	Просмотр этого пользователя
 view user account	admin	ru	Просмотр учётной записи пользователя
 virtual mail manager	admin	ru	Менеджер Виртуальной почты

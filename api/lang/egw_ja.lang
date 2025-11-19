@@ -965,6 +965,7 @@ october	common	ja	10月
 of	common	ja	of
 off	common	ja	オフ
 ok	common	ja	OK
+old password	common	ja	古いパスワード
 old value	common	ja	古い値
 oman	common	ja	オマーン
 on *nix systems please type: %1	common	ja	UNIX系システムの場合は下記をタイプしてください: %1
@@ -1357,6 +1358,7 @@ this feature is only available in epl version.	common	ja	この機能はEGroupwa
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	ja	This is your own share. To test it, use an anonymous / incognito window.<br>%1
 this name has been used already	common	ja	同じ名前が既に使用されています!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	ja	Text gets displayed if the input field is empty and has no focus (blur)
+this will reset toolbar preferences for all users and set them to configured default prefs.	common	ja	これにより、すべてのユーザーのツールバー設定がリセットされ、設定されたデフォルト設定に設定されます。
 thursday	common	ja	木
 tiled	common	ja	タイル
 time	common	ja	時間
@@ -1379,6 +1381,7 @@ tokelau	common	ja	トケラウ
 tonga	common	ja	トンガ
 too many rows selected.<br />select all, or less than %1 rows	common	ja	選択された行が多すぎます。<br />すべて選択するか、%1 行未満を選択してください。
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	ja	試行回数の上限に達しました: %1 （ユーザ '%2'）, %3 （IPアドレス %4）
+toolbar settings	common	ja	ツールバー設定
 top	common	ja	上部
 total	common	ja	合計
 total: %1 successful: %2 failed: %3 skipped: %4	common	ja	合計: %1, 成功: %2, 失敗: %3, 省略: %4

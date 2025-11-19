@@ -863,6 +863,7 @@ october	common	pt	Outubro
 of	common	pt	de
 off	common	pt	fora
 ok	common	pt	OK
+old password	common	pt	Senha antiga
 old value	common	pt	Valor Antigo
 oman	common	pt	Omã
 on *nix systems please type: %1	common	pt	Em sistemas *nix, por favor escreva: %1
@@ -1105,7 +1106,6 @@ show page generation time	common	pt	Exibir tempo de geração da página
 show page generation time on the bottom of the page?	common	pt	Exibir tempo de geração da página no final da página.
 show page generation time?	common	pt	Exibir tempo de geração da página
 show password	common	pt	Mostrar palavra-passe
-show these toolbar items helptext	common	pt	Mostrar estes itens na barra de ferramentas (se couberem). Os outros estão disponíveis na lista [⋮].
 show values	common	pt	Exibir valores
 show/hide	common	pt	Mostrar/ocultar barra lateral
 showing	common	pt	A exibir

@@ -181,7 +181,9 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 if you specify an export definition, it will be used when you export*	filemanager	fr	Si vous spécifier un format d'export, il sera utilisé à l'export*
 inherited	filemanager	fr	hérité
+job folder %1 does not exist or is not writable	filemanager	fr	Le dossier d'emploi %1 n'existe pas ou n'est pas accessible en écriture.
 last accessed	filemanager	fr	Dernier accès
+leave empty to delete the file after attaching	filemanager	fr	Laisser vide pour supprimer le fichier après l'avoir joint
 link	filemanager	fr	Lien
 link %1: %2	filemanager	fr	Lien %1: %2
 link into folder	filemanager	fr	Lien vers le dossier
@@ -204,6 +206,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	fr	Monter /etem
 mount permanently	filemanager	fr	Montage permanent
 mountpoints	filemanager	fr	Points de montage
 move	filemanager	fr	Déplacer
+move file to	filemanager	fr	Déplacer le fichier vers
 move into folder	filemanager	fr	Déplacer vers un dossier
 move to	filemanager	fr	Déplacer dans
 moved %1 to %2	filemanager	fr	Déplacé %1 dans %2

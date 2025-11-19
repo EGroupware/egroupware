@@ -711,6 +711,7 @@ number of rows/cols in a v/hbox, cellpadding, cellspacing	common	lv	Rindu/kolonn
 october	common	lv	Oktobris
 of	common	lv	no
 ok	common	lv	OK
+old password	common	lv	Vecā parole
 old value	common	lv	Iepriekšējā vērtība
 oman	common	lv	OMĀNA
 on *nix systems please type: %1	common	lv	*nix sistēmās lūdzu rakstīt: %1
@@ -916,7 +917,6 @@ show all categorys	common	lv	Rādīt visas kategorijas
 show page generation time	common	lv	Parādīt lapas ģenerēšanas laiku
 show page generation time on the bottom of the page?	common	lv	Parādīt lapas ģenerēšanas laiku lapas apakšpusē.
 show password	common	lv	Rādīt paroli
-show these toolbar items helptext	common	lv	Rādīt šos elementus rīkjoslā (ja tie tur iederas). Pārējie ir pieejami sarakstā [⋮].
 show values	common	lv	Rādīt vērtības
 show/hide	common	lv	Parādīt/noslēpt sānu joslu
 showing	common	lv	Rādīšana

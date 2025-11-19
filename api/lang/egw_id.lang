@@ -725,6 +725,7 @@ now	common	id	Sekarang
 october	common	id	Oktober
 of	common	id	dari
 ok	common	id	OK
+old password	common	id	Kata sandi lama
 old value	common	id	Nilai Lama
 oman	common	id	OMAN
 on mouse over	common	id	On Mouse Over
@@ -916,7 +917,6 @@ show all	common	id	tampilkan semua
 show all / cancel filter	common	id	Tamplikan semua / batalkan saringan
 show all categorys	common	id	Tampilkan semua kategori
 show password	common	id	Tampilkan kata sandi
-show these toolbar items helptext	common	id	Tampilkan item-item ini di bilah alat (jika muat). Yang lainnya tersedia dalam daftar [⋮].
 show values	common	id	Tampilkan Nilai
 showing	common	id	Menampilkan
 showing %1	common	id	menampilkan %1

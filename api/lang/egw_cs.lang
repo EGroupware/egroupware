@@ -413,6 +413,7 @@ details	common	cs	Podrobnosti
 directory	common	cs	Adresář
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	cs	Adresář neexistuje, web server pro něj nemá práva ke čtení nebo není relativní ke kořenovému adresáři dokumentů!
 directory for storing merged documents	preferences	cs	Složka pro ukládání sloučených dokumentů
+directory successfully created.	common	cs	Adresář byl úspěšně vytvořen.
 directory with documents to insert entries	preferences	cs	Složka s dokumenty pro vkládání záznamů
 disabled	common	cs	Zakázano
 discard changes	common	cs	Zahodit změny
@@ -514,6 +515,7 @@ error deleting %1!	common	cs	Chyba při mazání %1!
 error enabling push	common	cs	Chyba při povolování push
 error renaming %1 %2 directory	common	cs	Chyba při přejmenování adresáře %1 %2!
 error uploading file!	filemanager	cs	Chyba při uploadu souboru!
+error while creating directory.	common	cs	Chyba při vytváření adresáře.
 error: template not found !!!	common	cs	Chyba: Šablona nebyla nalezena!
 error: webserver is not allowed to write into '%1' !!!	common	cs	Chyba: webový server nemá oprávnění k zápisu do '%1'!
 error: while saving !!!	common	cs	Chyba při ukládání!
@@ -974,6 +976,7 @@ october	common	cs	Říjen
 of	common	cs	z
 off	common	cs	Vypnout
 ok	common	cs	OK
+old password	common	cs	Staré heslo
 old value	common	cs	Stará hodnota
 oman	common	cs	OMÁN
 on *nix systems please type: %1	common	cs	Na systémech typu *nix zadejte prosím: %1
@@ -1280,7 +1283,6 @@ show page generation time	common	cs	Zobrazit časy generování stránek
 show page generation time on the bottom of the page?	common	cs	Přejete si zobrazit čas generování stránky na jejím zápatí.
 show page generation time?	common	cs	Zobrazit čas generovaní stránky
 show password	common	cs	Zobrazit heslo
-show these toolbar items helptext	common	cs	Zobrazit tyto položky na panelu nástrojů (pokud se tam vejdou). Ostatní jsou k dispozici v seznamu [⋮].
 show values	common	cs	Zobrazit hodnoty
 show/hide	common	cs	Zobrazit/skrýt postranní panel
 showing	common	cs	Zobrazuji

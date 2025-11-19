@@ -972,6 +972,7 @@ october	common	sl	Oktober
 of	common	sl	od
 off	common	sl	Off
 ok	common	sl	V redu
+old password	common	sl	Staro geslo
 old value	common	sl	Stara vrednost
 oman	common	sl	OMAN
 on *nix systems please type: %1	common	sl	Na *nix sistemih vnesite: %1
@@ -1279,7 +1280,6 @@ show page generation time	common	sl	Prikaži čas generiranja strani
 show page generation time on the bottom of the page?	common	sl	Pokažem čas generiranja strani na dnu.
 show page generation time?	common	sl	Prikažem čas ustvarjanja strani
 show password	common	sl	Prikaži geslo
-show these toolbar items helptext	common	sl	Prikaži te elemente na orodni vrstici (če se prilegajo). Ostali so na voljo v seznamu [⋮].
 show values	common	sl	Prikaži vrednosti
 show/hide	common	sl	prikaži/skrij stransko vrstico
 showing	common	sl	Prikazovanje

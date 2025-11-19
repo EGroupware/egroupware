@@ -181,7 +181,9 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 if you specify an export definition, it will be used when you export*	filemanager	it	Verrà usata quando esporti, se specifichi qui una definizione di esportazione
 inherited	filemanager	it	Ereditato
+job folder %1 does not exist or is not writable	filemanager	it	La cartella di lavoro %1 non esiste o non è scrivibile.
 last accessed	filemanager	it	Ultimoaccesso
+leave empty to delete the file after attaching	filemanager	it	Lasciare vuoto per eliminare il file dopo averlo allegato
 link	filemanager	it	Collegamento
 link %1: %2	filemanager	it	Collegamento %1: %2
 link into folder	filemanager	it	Collegamento in cartella
@@ -204,6 +206,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	it	Montare /ete
 mount permanently	filemanager	it	Montare in modo permanente
 mountpoints	filemanager	it	Punti di montaggio
 move	filemanager	it	Sposta
+move file to	filemanager	it	Sposta file in
 move into folder	filemanager	it	Sposta nella cartella
 move to	filemanager	it	Sposta in
 moved %1 to %2	filemanager	it	Ho spostato %1 in %2

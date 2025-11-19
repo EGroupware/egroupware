@@ -166,6 +166,8 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 if you specify an export definition, it will be used when you export*	filemanager	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export*
 inherited	filemanager	nl	Geërfd
+job folder %1 does not exist or is not writable	filemanager	nl	De taakmap %1 bestaat niet of is niet beschrijfbaar.
+leave empty to delete the file after attaching	filemanager	nl	Laat leeg om het bestand na het bijvoegen te verwijderen
 link	filemanager	nl	Link
 link %1: %2	filemanager	nl	Link %1: %2
 link target	filemanager	nl	Link doel
@@ -186,6 +188,7 @@ mount	filemanager	nl	Koppel
 mount permanently	filemanager	nl	Permanent monteren
 mountpoints	filemanager	nl	Koppelpunten
 move	filemanager	nl	Verplaats
+move file to	filemanager	nl	Verplaats bestand naar
 move into folder	filemanager	nl	Verplaats naar map
 move to	filemanager	nl	Verplaats naar
 moved %1 to %2	filemanager	nl	%1 verplaatst naar %2

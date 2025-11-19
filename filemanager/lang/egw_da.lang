@@ -84,6 +84,8 @@ hostname/ip for webdav and smb	filemanager	da	Værtsnavn/IP for WebDAV og SMB
 id	filemanager	da	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	da	Hvis du angiver en mappe (fuld VFS-sti) her, viser %1 en handling for hvert dokument. Denne handling gør det muligt at downloade det angivne dokument med %1-data indsat.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	da	Hvis du angiver en mappe (fuld VFS-sti) her, viser %1 et ekstra dokumentikon for hver post. Dette ikon gør det muligt at downloade det angivne dokument med de indsatte data.
+job folder %1 does not exist or is not writable	filemanager	da	Jobmappe %1 findes ikke eller kan ikke skrives til.
+leave empty to delete the file after attaching	filemanager	da	Lad feltet være tomt for at slette filen efter vedhæftning
 link	filemanager	da	Link
 list view	filemanager	da	Listevisning
 location	filemanager	da	Sti
@@ -95,6 +97,7 @@ modified	filemanager	da	Modificeret
 mount permanently	filemanager	da	Permanent indbinding
 mountpoints	filemanager	da	Monteringspunkter
 move	filemanager	da	Flyt
+move file to	filemanager	da	Flyt fil til
 move to	filemanager	da	Flyt til
 moved %1 to %2	filemanager	da	Flyttede %1 til %2
 no files in this directory.	filemanager	da	Ingen filer i dette bibliotek.

@@ -945,6 +945,7 @@ october	common	fi	Lokakuu
 of	common	fi	/
 off	common	fi	Pois
 ok	common	fi	OK
+old password	common	fi	Vanha salasana
 old value	common	fi	Vanha arvo
 oman	common	fi	OMAN
 on *nix systems please type: %1	common	fi	*nix-järjestelmissä voit kirjoittaa: %1
@@ -1232,7 +1233,6 @@ show page generation time	common	fi	Näytä sivun tekemiseen kulunut aika
 show page generation time on the bottom of the page?	common	fi	Näytä sivun tekemiseen kulunut aika sivun alareunassa.
 show page generation time?	common	fi	Näytä sivun tekemiseen kulunut aika
 show password	common	fi	Näytä salasana
-show these toolbar items helptext	common	fi	Näytä nämä kohteet työkalurivillä (jos ne mahtuvat). Muut ovat käytettävissä luettelossa [⋮].
 show values	common	fi	Näytä arvot
 show/hide	common	fi	näytä/piilota sivupalkki
 showing	common	fi	Näkyvissä

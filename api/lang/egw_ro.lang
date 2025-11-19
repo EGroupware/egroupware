@@ -145,6 +145,7 @@ new egroupware release %1 available	common	ro	Noua versiune EGroupware %1 dispon
 new password	common	ro	Parolă nouă
 no filters	common	ro	Fără filtre
 ok	common	ro	Acceptă
+old password	common	ro	Parola veche
 open	common	ro	Deschideți
 open existing contact	common	ro	Deschidere contact existent
 open the online help.	common	ro	Deschideți ajutorul online
@@ -172,7 +173,6 @@ repeat password	common	ro	Repetarea parolei
 saved column sizes to preferences.	common	ro	Salvat dimensiunile coloanelor în preferințe.
 selection of files can only be done in one folder.  %1 files unselected.	common	ro	Selectarea fișierelor se poate face doar într-un singur dosar. %1 fișiere neselectate.
 show password	common	ro	Afișare parolă
-show these toolbar items helptext	common	ro	Afișați aceste elemente în bara de instrumente (dacă se potrivesc). Celelalte sunt disponibile în lista [⋮].
 show/hide	common	ro	Afișați / ascundeți bara laterală
 sign up	common	ro	Înregistrare
 site configuration	common	ro	Configurația aplicației

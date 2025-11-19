@@ -96,6 +96,8 @@ hostname/ip for webdav and smb	filemanager	sv	Värdnamn/IP för WebDAV och SMB
 id	filemanager	sv	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	sv	Om du anger en mapp (fullständig VFS-sökväg) här, visar %1 en åtgärd för varje dokument. Den åtgärden gör det möjligt att hämta det angivna dokumentet med %1-data infogade.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sv	Om du anger en mapp (fullständig VFS-sökväg) här, visar %1 en extra dokumentikon för varje post. Med den ikonen kan du ladda ner det angivna dokumentet med de infogade uppgifterna.
+job folder %1 does not exist or is not writable	filemanager	sv	Jobbmappen %1 finns inte eller är inte skrivbar.
+leave empty to delete the file after attaching	filemanager	sv	Lämna tomt för att radera filen efter bifogning
 link	filemanager	sv	Länk
 list view	filemanager	sv	Visa lista
 location	filemanager	sv	Plats
@@ -108,6 +110,7 @@ modified between	filemanager	sv	Ändrad mellan
 mount permanently	filemanager	sv	Montera permanent
 mountpoints	filemanager	sv	Monteringspunkter
 move	filemanager	sv	Flytta
+move file to	filemanager	sv	Flytta filen till
 move to	filemanager	sv	Flytta
 moved %1 to %2	filemanager	sv	Flyttade %1 till %2
 no files in this directory.	filemanager	sv	Inga filer i katalogen

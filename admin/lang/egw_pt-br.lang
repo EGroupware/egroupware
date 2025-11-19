@@ -81,6 +81,7 @@ admin password	admin	pt-br	Senha do administrador
 admin queue and history	admin	pt-br	Lista de administradores e histórico
 admins	admin	pt-br	Administradores
 advanced options	admin	pt-br	Opções avançadas
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt-br	Após quantas tentativas malsucedidas de login uma conta deve ser bloqueada. Padrão = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pt-br	Após quantos erros de conexão, um endereço IP deverá ser bloqueado (padrão 3)
 aliases	admin	pt-br	Apelidos
 all applications	admin	pt-br	Todos aplicativos
@@ -167,6 +168,7 @@ check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %
 clear security tokens	admin	pt-br	Limpar tokens de segurança
 click to select a color	admin	pt-br	Clique para selecionar uma cor
 color	admin	pt-br	Cor
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	pt-br	Endereços IP separados por vírgulas incluídos na lista de permissões acima do bloqueio (:número opcional de tentativas)
 command scheduled to run at %1	admin	pt-br	Comando agendado para rodar às %1
 connection dropped by imap server.	admin	pt-br	Conexão interrompida pelo servidor IMAP.
 container	admin	pt-br	Contêiner
@@ -505,6 +507,7 @@ own install id	admin	pt-br	Próprio id de instalação
 own install id:	admin	pt-br	Próprio id de instalação:
 passthrough	admin	pt-br	Atravessar
 password for smtp-authentication	admin	pt-br	Senha para autenticação SMTP
+password to unlock encrypted p12	admin	pt-br	Senha para desbloquear p12 criptografado
 password updated	admin	pt-br	Senha atualizada
 path information	admin	pt-br	Informação de Path
 peer server list	admin	pt-br	Lista de servidores parceiros

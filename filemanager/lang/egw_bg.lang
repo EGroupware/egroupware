@@ -176,7 +176,9 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	bg	Ако посочите дефиниция за експортиране, тя ще се използва, когато експортирате.
 if you specify an export definition, it will be used when you export*	filemanager	bg	Ако посочите дефиниция за експортиране, тя ще се използва, когато експортирате*
 inherited	filemanager	bg	Наследени
+job folder %1 does not exist or is not writable	filemanager	bg	Папката с работни места %1 не съществува или не може да се записва.
 last accessed	filemanager	bg	Последен достъп
+leave empty to delete the file after attaching	filemanager	bg	Оставете празно, за да изтриете файла след прикачване
 link	filemanager	bg	Връзка
 link %1: %2	filemanager	bg	Връзка %1: %2
 link into folder	filemanager	bg	Връзка в папка
@@ -199,6 +201,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	bg	Монтир
 mount permanently	filemanager	bg	Монтиране за постоянно
 mountpoints	filemanager	bg	Точки за монтиране
 move	filemanager	bg	Преместване
+move file to	filemanager	bg	Преместете файла в
 move into folder	filemanager	bg	Преместване в папка
 move to	filemanager	bg	Премести в
 moved %1 to %2	filemanager	bg	%1 е преместен в %2

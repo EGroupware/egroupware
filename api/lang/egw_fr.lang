@@ -419,6 +419,7 @@ details	common	fr	Détails
 directory	common	fr	Répertoire
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fr	Ce répertoire n'existe pas, n'est pas lisible par le serveur web ou n'est pas relatif au "document root" !
 directory for storing merged documents	preferences	fr	Dossier des documents fusionnés
+directory successfully created.	common	fr	Répertoire créé avec succès.
 directory with documents to insert entries	preferences	fr	Dossier des documents où ajouter les éléments
 disabled	common	fr	Désactivé
 discard changes	common	fr	Annuler les changements
@@ -520,6 +521,7 @@ error deleting %1!	common	fr	Erreur à la suppression de %1 !
 error enabling push	common	fr	Erreur à l'activation de push
 error renaming %1 %2 directory	common	fr	Erreur au renommage du répertoire %1 %2
 error uploading file!	filemanager	fr	Erreur à l'upload du fichier !
+error while creating directory.	common	fr	Erreur lors de la création du répertoire.
 error: template not found !!!	common	fr	Erreur : Template non trouvé !
 error: webserver is not allowed to write into '%1' !!!	common	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%1' !
 error: while saving !!!	common	fr	Erreur lors de l'enregistrement !
@@ -987,6 +989,7 @@ october	common	fr	Octobre
 of	common	fr	de
 off	common	fr	Désactivé
 ok	common	fr	OK
+old password	common	fr	Ancien mot de passe
 old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
 on *nix systems please type: %1	common	fr	Sur les systèmes *nix SVP tapez: %1
@@ -1300,7 +1303,6 @@ show page generation time	common	fr	Afficher le temps de génération de la page
 show page generation time on the bottom of the page?	common	fr	Afficher le temps de génération de page au fond de la page ?
 show page generation time?	common	fr	Afficher le temps de génération de la page
 show password	common	fr	Afficher le mot de passe
-show these toolbar items helptext	common	fr	Afficher ces éléments dans la barre d'outils (s'ils y tiennent). Les autres sont disponibles dans la liste [⋮].
 show values	common	fr	Montrer les valeurs
 show/hide	common	fr	Afficher/masquer la barre latérale
 showing	common	fr	Montre

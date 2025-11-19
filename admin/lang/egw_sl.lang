@@ -88,6 +88,7 @@ admin password	admin	sl	Oskrbnikovo geslo
 admin queue and history	admin	sl	Čakalna vrsta in zgodovina
 admins	admin	sl	Oskrbniki
 advanced options	admin	sl	Napredne izbire
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sl	Po koliko neuspešnih poskusih prijave naj se račun blokira. Privzeto = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	sl	Po kolikih neuspešnih prijavah se onemogoči IP? (privzeto 3)
 aliases	admin	sl	Psevdonimi
 all acls	admin	sl	Vse ACL s
@@ -146,6 +147,7 @@ bad or malformed request. server responded: %s	admin	sl	Napačna ali napačno ob
 bad request: %s	admin	sl	Napačna zahteva: %s
 bi-dir passthrough	admin	sl	Dvosmeren prehod
 bi-directional	admin	sl	Dvosmeren
+blocking after wrong password	admin	sl	Blokiranje po napačnem geslu
 bottom	admin	sl	Dno
 bulk changes	admin	sl	Množične spremembe
 bulk password reset	admin	sl	Ponastavitev množičnega gesla
@@ -185,6 +187,7 @@ clear cache and register hooks	admin	sl	Počistite predpomnilnik in registrirajt
 clear security tokens	admin	sl	Izbriši varnostne žetone
 click to select a color	admin	sl	Izbira barve
 color	admin	sl	Barva
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	sl	Z vejico ločeni IP-naslovi, ki so na belem seznamu in niso blokirani (:neobvezno število poskusov)
 command scheduled to run at %1	admin	sl	Ukaz je predviden za zagon v %1
 commercial: all sorts of companies	admin	sl	Komercialno: vse vrste podjetij
 config password or md5 hash from the header.inc.php	admin	sl	Namestitveno geslo ali md5 hash iz header.inc.php.
@@ -865,7 +868,7 @@ view access log	admin	sl	Preglej dnevnik dostopov
 view account	admin	sl	Preglej račun
 view category	admin	sl	Preglej kategorijo
 view error log	admin	sl	Preglej evidenco napak
-view sessions	admin	sl	Preglej seje
+view sessions	admin	sl	Sej
 view this user	admin	sl	preglej tega uporabnika
 view user account	admin	sl	Preglej uporabnikov račun
 virtual mail manager	admin	sl	Virtualni upravljalec E-pošte

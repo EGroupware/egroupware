@@ -188,6 +188,7 @@ new egroupware release %1 available	common	tr	Yeni EGroupware sürümü %1 kulla
 new password	common	tr	Yeni şifre
 no filters	common	tr	Filtre yok
 ok	common	tr	Tamam
+old password	common	tr	Eski şifre
 open	common	tr	Açık
 open existing contact	common	tr	Mevcut kontağı aç
 open the online help.	common	tr	Çevrimiçi yardımı açın
@@ -229,7 +230,6 @@ saved column sizes to preferences.	common	tr	Sütun boyutlarını tercihlere kay
 search accounts	common	tr	Hesaplarý ara
 select all	common	tr	Tümünü seçin
 show password	common	tr	Şifreyi göster
-show these toolbar items helptext	common	tr	Bu öğeleri araç çubuğunda göster (uygunsa). Diğerleri [⋮] listesinde mevcuttur.
 sign up	common	tr	Kaydolun
 site configuration	common	tr	Konfigürasyon
 spreadsheets	common	tr	Elektronik Tablolar

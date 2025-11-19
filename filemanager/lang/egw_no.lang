@@ -82,6 +82,8 @@ hostname/ip for webdav and smb	filemanager	no	Vertsnavn/IP for WebDAV og SMB
 id	filemanager	no	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	no	Hvis du angir en mappe (full VFS-bane) her, viser %1 en handling for hvert dokument. Denne handlingen gjør det mulig å laste ned det angitte dokumentet med %1-dataene satt inn.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	no	Hvis du angir en mappe (full VFS-bane) her, viser %1 et ekstra dokumentikon for hver oppføring. Dette ikonet gjør det mulig å laste ned det angitte dokumentet med de innsatte dataene.
+job folder %1 does not exist or is not writable	filemanager	no	Jobb-mappen %1 eksisterer ikke eller kan ikke skrives til.
+leave empty to delete the file after attaching	filemanager	no	La feltet være tomt for å slette filen etter vedlegging
 link	filemanager	no	Lenke
 list view	filemanager	no	Listevisning
 location	filemanager	no	Lokasjon
@@ -93,6 +95,7 @@ modified between	filemanager	no	Modifisert mellom
 mount permanently	filemanager	no	Monter permanent
 mountpoints	filemanager	no	Monteringspunkter
 move	filemanager	no	flytt
+move file to	filemanager	no	Flytt filen til
 move to	filemanager	no	Flytt til
 moved %1 to %2	filemanager	no	Flyttet %1 til %2
 no files in this directory.	filemanager	no	Ingen filer i mappen
