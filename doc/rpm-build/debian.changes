@@ -1,3 +1,16 @@
+egroupware-docker (23.1.20251119) hardy; urgency=low
+
+  * Addressbook: fix not working avatar/picture upload
+  * EMail: fix printing contained only first page
+  * EMail: fix not working paste of email-addresses with uppercase letters
+  * EMail: storing mail accounts unchanged accidentally activated Sieve, even if not available
+  * InfoLog/Timesheet/REST Api: fix and document iterating through huge result-sets via sync-token
+  * Notifications: preference to also or only notify the private email address (if existing)
+  * KnowlegeBase: fix not working inserting of pictures from VFS/Filemanager
+  * All apps: fixed many PHP 8.4 Deprecated Warnings - still enough left ;)
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 19 Nov 2025 09:29:20 +0100
+
 egroupware-docker (23.1.20251021) hardy; urgency=low
 
   * VIDOTEACH: introduce new type of video-choice question which causes a jump to one of multiple target-videos
