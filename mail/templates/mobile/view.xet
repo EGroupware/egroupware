@@ -6,15 +6,11 @@
         <et2-vbox height="100%">
 			<et2-hbox  class="mailPreviewHeaders">
 				<et2-description  id="subject" readonly="true" hoverAction="app.mail.modifyMessageSubjectDialog" hoverActionTitle="Modify subject of this message"></et2-description>
-				<et2-hbox  class="mailPreviewHeaders smimeIcons">
-					<et2-image  id="smime_signature" src="smime_sign" statustext="Smime signed message" hidden="!@smime=smime_sign" align="right" width="24"></et2-image>
-					<et2-image  id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" hidden="!@smime=smime_encrypt" align="right" width="24"></et2-image>
-				</et2-hbox>
+                <et2-date-time-today id="date" readonly="true"></et2-date-time-today>
 			</et2-hbox>
 			<et2-hbox  width="100%" class="mailPreviewHeaders">
-				<et2-lavatar  contactId="email:$cont[fromaddress]" lname="$cont[fromlavatar][lname]" fname="$cont[fromlavatar][fname]" shape="rounded" size="2.75em"></et2-lavatar>
-				<et2-vbox>
-					<et2-hbox>
+				<et2-vbox width="100%">
+                    <et2-hbox class="fromBox">
 						<et2-details  class="details" toggleOnHover="true" hoist="true" toggleAlign="left">
 							<et2-email  slot="summary" id="fromaddress" readonly="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-email>
 							<et2-hbox>
@@ -34,26 +30,22 @@
 								<et2-email  id="bccaddress" readonly="true" rows="1" multiple="true" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"></et2-email>
 							</et2-hbox>
 						</et2-details>
-						<et2-date-time-today  align="right" id="date" readonly="true"></et2-date-time-today>
+                        <et2-hbox class="mailPreviewHeaders smimeIcons">
+                            <et2-image id="smime_signature" src="smime_sign" statustext="Smime signed message"
+                                       align="right" width="1.5em"></et2-image>
+                            <et2-image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message"
+                                       align="right" width="1.5em"></et2-image>
+                        </et2-hbox>
 					</et2-hbox>
 					<et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" hoist="true" class="attachments" disabled="!@attachmentsBlock">
 						<et2-hbox  slot="summary">
 							<grid class="previewAttachmentArea egwGridView_grid" >
 								<columns>
-									<column disabled="!@showtempname"/>
-									<column disabled="!@showtempname"/>
-									<column disabled="!@showtempname"/>
-									<column disabled="!@showtempname"/>
-									<column width="70%" />
-									<column width="11%" />
-									<column width="10%"/>
+									<column width="auto" />
+									<column width="auto" />
 								</columns>
 								<rows>
 									<row class="row attachmentRow">
-										<et2-description  id="attachmentsBlock[0][attachment_number]"></et2-description>
-										<et2-description  id="attachmentsBlock[0][partID]"></et2-description>
-										<et2-description  id="attachmentsBlock[0][type]"></et2-description>
-										<et2-description  id="attachmentsBlock[0][winmailFlag]"></et2-description>
 										<et2-description-expose  class="et2_link useEllipsis" id="attachmentsBlock[0][filename]" mime="@attachmentsBlock[0][type]" href="@attachmentsBlock[0][mime_url]" noLang="1" mimeData="@attachmentsBlock[0][mime_data]"></et2-description-expose>
 										<et2-description  align="right" id="attachmentsBlock[0][size]"></et2-description>
 									</row>
@@ -63,15 +55,15 @@
 
 						<grid id="attachmentsBlock" class="previewAttachmentArea egwGridView_grid">
 							<columns>
-								<column width="70%" />
-								<column width="11%" />
-								<column width="10%"/>
+								<column width="100%" />
 							</columns>
 							<rows>
 								<row class="row attachmentRow" id="${row}">
+                                    <et2-hbox>
 									<et2-description-expose  class="et2_link useEllipsis" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
-									<et2-description  align="right" id="${row}[size]"></et2-description>
-									<et2-dropdown-button  id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
+									<et2-description  align="right" id="${row}[size]" class="noMobile"></et2-description>
+									<et2-dropdown-button  id="${row}[actions]" label="$row_cont[actionsDefaultLabel]" align="right" class="download" onchange="app.mail.attachmentsBlockActions" onclick="app.mail.attachmentsBlockActions"/>
+                                    </et2-hbox>
 								</row>
 							</rows>
 						</grid>

@@ -46,7 +46,7 @@
   body #mail-index_popupMainDiv .mail-d-h2,
   body #mail-compose_popupMainDiv .mail-d-h2 {
     padding-top: 5px;
-    color: grey;
+    color: var(--sl-color-neutral-500, grey);
   }
   body #mail-index_popupMainDiv .mail-d-h2 a,
   body #mail-compose_popupMainDiv .mail-d-h2 a,
@@ -54,30 +54,20 @@
   body #mail-compose_popupMainDiv .mail-d-h2 span,
   body #mail-index_popupMainDiv .mail-d-h2 .et2_label,
   body #mail-compose_popupMainDiv .mail-d-h2 .et2_label {
-    color: grey;
+    color: var(--sl-color-neutral-500, grey);
   }
   body #mail-index_popupMainDiv .mail-d-h2 a#mail-display_FROM > *,
   body #mail-compose_popupMainDiv .mail-d-h2 a#mail-display_FROM > * {
-    color: black;
+    color: var(--sl-color-neutral-950, black);
     padding-top: 15px;
-  }
-  body #mail-index_popupMainDiv .et2_details,
-  body #mail-compose_popupMainDiv .et2_details {
-    width: 100%;
-    display: block;
-  }
-  body #mail-index_popupMainDiv .et2_details.et2_details_expanded,
-  body #mail-compose_popupMainDiv .et2_details.et2_details_expanded {
-    width: 100%;
-    display: block;
   }
   body #mail-index_popupMainDiv span.et2_details_title,
   body #mail-compose_popupMainDiv span.et2_details_title {
-    color: #26537c;
+    color: var(--sl-color-primary-700, #26537c);
   }
   body #mail-index_popupMainDiv div#mail-display_mailDisplayHeadersFrom > *,
   body #mail-compose_popupMainDiv div#mail-display_mailDisplayHeadersFrom > * {
-    color: black;
+    color: var(--sl-color-neutral-950, black);
     padding-top: 15px;
   }
   body #mail-index_popupMainDiv .mailDisplayAttachments,
@@ -114,7 +104,7 @@
   }
   body #mail-index_popupMainDiv #mail-view_toaddressdetails,
   body #mail-compose_popupMainDiv #mail-view_toaddressdetails {
-    color: #26537c;
+    color: var(--sl-color-primary-700, #26537c);
     float: right;
   }
   body #mail-index_popupMainDiv #tempPrintDiv,
@@ -135,8 +125,9 @@
   body #mail-compose_popupMainDiv #tempPrintDiv .td_display {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 120%;
-    color: black;
-    background-color: #FFFFFF;
+    color: var(--sl-color-neutral-950, #26537c);
+    background-color: var(--sl-color-neutral-0, white);
+    overflow-wrap: break-word;
   }
   body #mail-compose .cke_chrome {
     border: none;
@@ -232,11 +223,11 @@
   #mail-index tr span.unseen,
   #mail-index tr time.unseen,
   #mail-index tr a.unseen {
-    color: black !important;
+    color: var(--sl-color-neutral-950, #26537c) !important;
     font-weight: bold;
   }
   #mail-index tr span.mail.mobile_cat_col {
-    background: #F5F5F5;
+    background: var(--sl-color-gray-300, #F5F5F5);
   }
   #mail-index tr span.mail.label1.mobile_cat_col {
     background: #ff0080;
@@ -318,8 +309,67 @@
   #mail-acl_grid .row {
     border-bottom: 1px solid silver;
   }
-  .mailPreviewHeaders et2-lavatar {
-    position: inherit;
+  #view_date {
+    margin-left: var(--sl-spacing-2x-large);
+    text-align: right;
   }
+  .fromBox::part(base) {
+    align-items: center;
+  }
+  .fromBox et2-hbox {
+    padding-top: var(--sl-spacing-x-small);
+  }
+  .fromBox et2-hbox:first-of-type {
+    padding-top: 0;
+  }
+  .fromBox et2-hbox::part(base) {
+    align-items: center;
+  }
+  .fromBox et2-hbox et2-email::part(base) {
+    justify-content: start;
+  }
+  .fromBox et2-details {
+    max-width: 80vw;
+  }
+  .fromBox et2-details::part(summary-icon) {
+    padding: var(--sl-spacing-x-small);
+  }
+  .fromBox et2-details et2-email::part(base) {
+    overflow: clip;
+    padding: 0;
+    max-height: initial;
+    max-width: 70vw;
+  }
+  .attachments::part(summary-icon) {
+    padding: var(--sl-spacing-x-small);
+  }
+  .attachments::part(summary) {
+    max-width: calc(100% - 3em);
+  }
+  .attachments et2-hbox[slot="summary"] {
+    width: 100%;
+  }
+  .attachments et2-hbox[slot="summary"] table.previewAttachmentArea {
+    width: 100%;
+    table-layout: fixed;
+  }
+  .attachments et2-hbox[slot="summary"] table.previewAttachmentArea tbody > tr > td:first-child {
+    box-sizing: border-box;
+    width: 85%;
+    padding-inline-end: 1em;
+  }
+  .attachments table.previewAttachmentArea {
+    width: 100%;
+    table-layout: fixed;
+  }
+  .attachments table.previewAttachmentArea et2-description-expose [part="content"] {
+    width: 100%;
+  }
+  .attachments table.previewAttachmentArea .download {
+    max-width: fit-content;
+  }
+}
+.mailPreviewHeaders.smimeIcons {
+  justify-content: start;
 }
 /*# sourceMappingURL=app.css.map */
