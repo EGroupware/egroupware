@@ -1428,13 +1428,13 @@ class infolog_bo
 		if (!empty($query['search']) && $query['search'][0] === '&' && class_exists($rag='EGroupware\Rag\Embedding'))
 		{
 			$rag = new $rag();
+			$id_distance = $rag->search(substr($query['search'], 1), 'infolog');
 			if (!isset($q['cols'])) $q['cols'] = ['main.*'];
-			$q['cols'][] = $rag->search(substr($query['search'], 1), 'infolog', $join).' AS distance';
-			$q['having'] = 'distance < 0.4';
+			$q['cols'][] = EGroupware\Rag\Embedding::distanceById($id_distance, 'main.info_id').' AS distance';
 			$q['return-iterator'] = false;
+			$q['col_filter'][] = 'main.info_id IN ('.implode(',', array_keys($id_distance)).')';
 			$q['order'] = 'distance';
 			$q['sort'] = 'ASC';
-			$q['join'] = str_replace('egw_infolog.info_id', 'main.info_id', $join);
 			unset($q['search']);
 		}
 		unset($q['limit_modified_n_month']);
