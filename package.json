@@ -91,6 +91,7 @@
     "core-js": "^3.29.1",
     "dexie": "^3.2.4",
     "diff2html": "^3.4.48",
+    "dompurify": "^3.3.0",
     "imask": "^7.6.1",
     "lit": "^2.7.5",
     "lit-flatpickr": "^0.3.0",
