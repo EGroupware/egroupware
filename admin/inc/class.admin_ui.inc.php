@@ -568,7 +568,7 @@ class admin_ui
 					if (empty($data[Tree::LABEL])) $data[Tree::LABEL] = $text;
 					if (empty($data[Tree::ID]))
 					{
-						$data['id'] = $root.($app == 'admin' ? 'admin' : 'apps/'.$app).'/';
+						$data[Tree::ID] = $root . ($app == 'admin' ? 'admin' : 'apps/' . $app) . '/';
 						$matches = null;
 						if(preg_match_all('/(menuaction|load)=([^&\',]+)/', $data['link'], $matches))
 						{
@@ -662,6 +662,24 @@ class admin_ui
 		// make sure admin is first
 		self::$hook_data = array_merge(array('admin' => self::$hook_data['admin']), self::$hook_data);
 
+		// Fix old Tree keys
+		foreach(self::$hook_data as $app => &$data)
+		{
+			foreach($data as $key => &$item)
+			{
+				if(is_array($item))
+				{
+					if(isset($item['id']))
+					{
+						$item[Tree::ID] = $item['id'];
+					}
+					if(isset($item['text']))
+					{
+						$item[Tree::LABEL] = $item['text'];
+					}
+				}
+			}
+		}
 		return self::$hook_data;
 	}
 

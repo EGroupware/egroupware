@@ -500,7 +500,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	{
 		if(_id == undefined){debugger;}
 		// TODO: Look into this._search(), find out why it doesn't always succeed
-		return this._search(_id, this._selectOptions) ?? this.optionSearch(_id, this._selectOptions, 'id', 'item')
+		return this._search(_id, this._selectOptions) ?? this.optionSearch(_id, this._selectOptions, 'value', 'children')
 	}
 
 	/**
@@ -653,7 +653,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	{
 		let subItems =
 			(_nodeID == 0) ?
-				this._selectOptions.map(option => this.getDomNode(option.id)) ://NodeID == 0 means that we want all tree Items
+			this._selectOptions.map(option => this.getDomNode(option.value ?? option.id)) ://NodeID == 0 means that we want all tree Items
 				this.getDomNode(_nodeID).getChildrenItems();// otherwise get the subItems of the given Node
 		let oS: boolean;
 		let PoS: 0 | 1 | -1;
@@ -702,7 +702,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	public renameItem(_id, _newItemId, _label)
 	{
-		this.getNode(_id).id = _newItemId
+		this.getNode(_id).value = _newItemId
 
 		// Update action
 		// since the action ID has to = this.id, getObjectById() won't work
@@ -809,7 +809,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	hasChildren(_id)
 	{
-		return this.getNode(_id).item?.length;
+		return this.getNode(_id).child;
 	}
 
 	/**
@@ -854,7 +854,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			if (item.selected)
 			{
 				this.selectedNodes.push(item);
-				this.value.push(item.id);
+				this.value.push(item.value);
 			}
 		});
 		return true;
@@ -948,7 +948,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}
 
 		this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value[0]) : null);
-		this._currentOption = this.getNode(nodes[0].id) ?? this.optionSearch(nodes[0].id, this._selectOptions, 'id', 'item');
+		this._currentOption = this.getNode(nodes[0].id) ?? this.optionSearch(nodes[0].value ?? nodes[0].id, this._selectOptions, 'value', 'children');
 		const ids = event.detail.selection.map(i => i.id);
 		// implemented unlinked multiple
 		if(this.multiple)
@@ -982,7 +982,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
 		}
-		event.detail.previous = this._previousOption?.id;
+		event.detail.previous = this._previousOption?.value ?? this._previousOption?.id;
 		this._currentSlTreeItem = nodes[0];
 		/* implemented unlinked-multiple
 		if(this.multiple)
@@ -1066,6 +1066,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     part="item"
                     exportparts="checkbox, label, item:item-item"
                     id=${value}
+                    value="${value}"
                     title=${selectOption.tooltip ||selectOption.title || nothing}
                     class=${selectOption.class || nothing}
                     ?selected=${selected && !selectOption.unselectable}
@@ -1095,21 +1096,21 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 						this.lazyLoading = this.handleLazyLoading(selectOption).then((result) => {
                             // TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
-                            const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.id, this._selectOptions, 'id', 'item');
+                            const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.value, this._selectOptions, 'value', 'children');
                             if(!parentNode || !parentNode.item || parentNode.item.length == 0)
 							{
 								parentNode.child = false;
                                 parentNode.open = false;
                                 this.requestUpdate("lazy", "true");
 							}
-                            this.getDomNode(parentNode.id ?? parentNode.value).loading = false
+                            this.getDomNode(parentNode.value ?? parentNode.id).loading = false
                             this.requestUpdate("_selectOptions")
                         })
 
 					}
 					}
 					@sl-expand=${event => {
-						if (event.target.id === selectOption.id)
+                        if(event.target.id === selectOption.value)
 						{
 							selectOption.open = 1;
 
@@ -1117,7 +1118,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 						}
 					}}
 					@sl-collapse=${event => {
-						if (event.target.id === selectOption.id)
+                        if(event.target.id === selectOption.value)
 						{
 							selectOption.open = 0;
 
@@ -1298,7 +1299,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}
 		for (const value of data)
 		{
-			if (value.id === _id)
+			if(value.value == _id || value.id === _id)
 			{
 				res = value
 				return res
@@ -1331,7 +1332,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		for (let i = 0; i < list.length; i++)
 		{
 			const value = list[i];
-			if (value.id === _id)
+			if(value.value === _id || value.id === _id)
 			{
 				list.splice(i, 1)
 			} else if (_id.startsWith(value.id))
