@@ -16,6 +16,7 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {until} from "lit/directives/until.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {unsafeSVG} from "lit/directives/unsafe-svg.js";
+import DOMPurify from 'dompurify/dist/purify.js'
 
 @customElement("et2-image")
 export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
@@ -173,6 +174,39 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		super.connectedCallback();
 	}
 
+	/**
+	 *
+	 * takes a svg as text and does some replacement to force the inlined svgs to always have a uniform size
+	 * @param svg {string} the input text. This should be a valid <svg> file content
+	 * @param purify set to true if DOMPurify should be run on the string(default).
+	 * This might decrease performance. Only set to false, if the source can be trusted
+	 * @returns altered valid svg file content
+	 */
+
+	private transformSvg(svg: string, purify: boolean = true)
+	{
+		// 1) normalize existing width/height to 100%
+		svg = svg.replace(/\b(width|height)=(['"])[^'"]*\2/g, '$1="100%"');
+
+		// 2) add missing width
+		if (!/\bwidth\s*=/.test(svg))
+		{
+			svg = svg.replace(/<svg\b(?![^>]*\bwidth\s*=)/, '<svg width="100%" ');
+		}
+		// 3) add missing height
+		if (!/\bheight\s*=/.test(svg))
+		{
+			svg = svg.replace(/<svg\b(?![^>]*\bheight\s*=)/, '<svg height="100%" ');
+		}
+		// add part="image" for consistent styling
+		svg = svg.replace("<svg", '<svg part="image"');
+		// purify if requested
+		if (purify)
+		{
+			svg = DOMPurify.sanitize(svg);
+		}
+		return svg;
+	}
 	render()
 	{
 		const url = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
@@ -196,12 +230,14 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		// We inline them to be able to control there color etc. directly via css
 
         //only call unsafeHtml when we are inside /egroupware/
-        const ourSvg = url.startsWith(this.egw().webserverUrl + '/') //checks if source is trusted
+		// ensure a safe origin
+        //const ourSvg = url.startsWith(this.egw().webserverUrl + '/') //checks if source is trusted
+		const ourSvg = new URL(url,window.location.origin).origin === window.location.origin;
         if (ourSvg && url.match(/\/bi-.*\.svg/))
         {
             const svg = fetch(url)
                 .then(res => res.text()
-                    .then(text => unsafeHTML(text)));
+                    .then(text => unsafeSVG(text)));
             return html`
                 ${until(svg, html`<span>...</span>`)}
             `
@@ -215,7 +251,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 						{
 							//if we inline a svg into our et2-image we always want it the fill all the available space of the et2-image, no matter what the svg sais as its size
 							//change the size of the et2-image if you want a different size
-							const res = text.replace("<svg", '<svg part="image"').replace(/\b(width|height)=(['"])[^'"]*\2/g, '$1="100%"');
+							const res = this.transformSvg(text);
 							const svg = unsafeSVG(res)
 							return svg
 						}
