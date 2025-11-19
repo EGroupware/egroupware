@@ -4756,7 +4756,6 @@ export class MailApp extends EgwApp
 				window.setTimeout(function ()
 				{
 					tmpPrintDiv.innerHTML = mainIframe.contentDocument.body.innerHTML;
-					tmpPrintDiv.style.display = "initial";
 				}, 600);
 			}
 			copyContent();
