@@ -202,7 +202,6 @@ class calendar_hooks
 		if (!isset($hook_data['setup']))
 		{
 			$times = Api\Etemplate\Widget\Select::typeOptions('select-hour', '');
-			$default_cat_seloptions = Api\Etemplate\Widget\Select::typeOptions('select-cat', ',,,calendar');
 		}
 		for ($i = 2; $i <= 9; ++$i)
 		{
@@ -380,11 +379,10 @@ class calendar_hooks
 				'admin'  => False
 			),
 			'default_category'       => array(
-				'type'    => 'multiselect',
+				'type' => 'et2-select-cat',
 				'label'   => 'New event category',
 				'name'    => 'default_category',
 				'help'    => 'Category automatically added to new events',
-				'values'  => $default_cat_seloptions,
 				'default' => '',
 				'xmlrpc'  => False,
 				'admin'   => False
