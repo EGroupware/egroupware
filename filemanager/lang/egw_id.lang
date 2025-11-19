@@ -79,6 +79,8 @@ id	filemanager	id	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	id	Jika Anda menentukan folder (jalur VFS lengkap) di sini, %1 menampilkan tindakan untuk setiap dokumen. Tindakan itu memungkinkan untuk mengunduh dokumen yang ditentukan dengan data %1 yang dimasukkan.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	id	Jika Anda menentukan folder (jalur VFS lengkap) di sini, %1 menampilkan ikon dokumen tambahan untuk setiap entri. Ikon tersebut memungkinkan untuk mendownload dokumen yang ditentukan dengan data yang dimasukkan.
 inherited	filemanager	id	Inherited
+job folder %1 does not exist or is not writable	filemanager	id	Folder pekerjaan %1 tidak ada atau tidak dapat ditulis.
+leave empty to delete the file after attaching	filemanager	id	Biarkan kosong untuk menghapus file setelah melampirkan
 link	filemanager	id	Tautan
 list view	filemanager	id	Tampilan daftar
 location	filemanager	id	Lokasi
@@ -92,6 +94,7 @@ modified between	filemanager	id	Dimodifikasi antara
 mount permanently	filemanager	id	Memasang secara permanen
 mountpoints	filemanager	id	Titik pemasangan
 move	filemanager	id	Pindahkan
+move file to	filemanager	id	Pindahkan file ke
 move to	filemanager	id	Pindahkan ke
 moved %1 to %2	filemanager	id	%1 dipindahkan ke %2
 no access	filemanager	id	No access

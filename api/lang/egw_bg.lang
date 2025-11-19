@@ -259,6 +259,8 @@ details	common	bg	Детайли
 directory	common	bg	Директория
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	bg	Директорията не съществува, не е позволено четенето и от WEB сървъра или не е даден относителният път спрямо document root!
 directory for storing merged documents	preferences	bg	Папка за съхранение на обединени документи
+directory successfully created.	common	bg	Директорията е създадена успешно.
+directory with documents to insert entries	preferences	bg	Папка с документи за въвеждане на записи
 disabled	common	bg	Забранено
 djibouti	common	bg	Джибути
 do you also want to delete all subcategories ?	common	bg	Искате ли също така да изтриете и всички подкатегории?
@@ -316,12 +318,14 @@ error creating %1 %2 directory	common	bg	Грешка при създаване 
 error deleting %1 %2 directory	common	bg	Грешка при изтриване на директория %1 %2!
 error renaming %1 %2 directory	common	bg	Грешка при преименуване на директория %1 %2!
 error uploading file!	filemanager	bg	Грешка при качване на файла!
+error while creating directory.	common	bg	Грешка при създаване на директория.
 estonia	common	bg	Естония
 ethiopia	common	bg	Етиопия
 everything	common	bg	Всичко
 exact	common	bg	точно
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	bg	Пример {{LETTERPREFIX}} - Дава буквен префикс без двойни интервали, ако заглавието е празно, например
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	bg	Грешка при връзка със сървъра или невалиден отговор от него. Опитайте да влезете отново. В случай на проблем се свържете с администратора.
+failed to create required directory "%1"!	admin	bg	Не е възможно да се създаде необходимата папка „%1“!
 falkland islands (malvinas)	common	bg	Фолклендски (Малвински) острови
 faroe islands	common	bg	Фаройски острови
 fax number	common	bg	номер на факс
@@ -605,6 +609,7 @@ notify your administrator to correct this situation	common	bg	Съобщете �
 november	common	bg	Ноември
 october	common	bg	Октомври
 ok	common	bg	OK
+old password	common	bg	Стара парола
 old value	common	bg	Стара стойност
 oman	common	bg	Оман
 on *nix systems please type: %1	common	bg	На *nix системи напишете: %1
@@ -780,7 +785,6 @@ show page generation time	common	bg	Показване на времето за 
 show page generation time on the bottom of the page?	common	bg	Да се показва ли най-отдолу времето за създаване на страниците.
 show page generation time?	common	bg	Да се показва ли времето за генериране на страниците
 show password	common	bg	Показване на парола
-show these toolbar items helptext	common	bg	Покажи тези елементи на лентата с инструменти (ако се побират). Останалите са достъпни в списъка [⋮].
 show/hide	common	bg	показване/скриване на страничната лента
 showing %1	common	bg	показване на %1
 showing %1 - %2 of %3	common	bg	показване на %1 до %2 от %3

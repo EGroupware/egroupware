@@ -137,6 +137,8 @@ id	filemanager	pl	id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	pl	Jeśli określisz tutaj folder (pełną ścieżkę VFS), %1 wyświetli akcję dla każdego dokumentu. Ta akcja umożliwia pobranie określonego dokumentu z wstawionymi danymi %1.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	pl	Jeśli określisz folder (pełna ścieżka VFS), %1 wyświetli dodatkową ikonę dokumentu dla każdego wpisu. Ikona ta umożliwia pobranie określonego dokumentu z wstawionymi danymi.
 inherited	filemanager	pl	Odziedziczone
+job folder %1 does not exist or is not writable	filemanager	pl	Folder zadań %1 nie istnieje lub nie ma uprawnień do zapisu.
+leave empty to delete the file after attaching	filemanager	pl	Pozostaw puste, aby usunąć plik po załączeniu
 link	filemanager	pl	Link do zdarzenia
 link %1: %2	filemanager	pl	Link %1: %2
 link target %1 not found!	filemanager	pl	Cel linku %1 nie odnaleziony!
@@ -154,6 +156,7 @@ modify all subdirectories and their content	filemanager	pl	Modyfikuj wszystkie p
 mount permanently	filemanager	pl	Montowanie na stałe
 mountpoints	filemanager	pl	Punkty montowania
 move	filemanager	pl	przenieś
+move file to	filemanager	pl	Przenieś plik do
 move to	filemanager	pl	Przenieś do
 moved %1 to %2	filemanager	pl	Przeniesiono %1 do %2
 name of current user, all other contact fields are valid too	filemanager	pl	Nazwa aktualnego użytkownika, wszystkie pozostałe pola kontaktu są prawidłowe

@@ -818,6 +818,7 @@ number of rows/cols in a v/hbox, cellpadding, cellspacing	common	zh	V/HBox 中 r
 october	common	zh	十月
 of	common	zh	的
 ok	common	zh	确定
+old password	common	zh	旧密码
 old value	common	zh	旧值
 oman	common	zh	阿曼
 on *nix systems please type: %1	common	zh	在 *nix类系统上，请输入： %1
@@ -1058,7 +1059,6 @@ show page generation time	common	zh	显示页面的生成耗时
 show page generation time on the bottom of the page?	common	zh	是否在页面底部显示该页面生成所耗时间。
 show page generation time?	common	zh	显示页面的生成耗时
 show password	common	zh	显示密码
-show these toolbar items helptext	common	zh	在工具栏上显示这些项目（如果它们适合）。其他项目可在列表 [⋮] 中找到。
 show values	common	zh	显示数值
 showing	common	zh	显示
 showing %1	common	zh	共有%1项

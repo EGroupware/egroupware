@@ -104,6 +104,8 @@ hostname/ip for webdav and smb	filemanager	el	Όνομα κεντρικού υπ
 id	filemanager	el	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	el	Εάν καθορίσετε έναν φάκελο (πλήρης διαδρομή VFS) εδώ, το %1 εμφανίζει μια ενέργεια για κάθε έγγραφο. Αυτή η ενέργεια επιτρέπει τη λήψη του καθορισμένου εγγράφου με τα δεδομένα %1 που έχουν εισαχθεί.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	el	Εάν καθορίσετε έναν φάκελο (πλήρης διαδρομή VFS) εδώ, το %1 εμφανίζει ένα επιπλέον εικονίδιο εγγράφου για κάθε εγγραφή. Αυτό το εικονίδιο επιτρέπει τη λήψη του καθορισμένου εγγράφου με τα δεδομένα που έχουν εισαχθεί.
+job folder %1 does not exist or is not writable	filemanager	el	Ο φάκελος εργασίας %1 δεν υπάρχει ή δεν είναι εγγράψιμος
+leave empty to delete the file after attaching	filemanager	el	Αφήστε κενό για να διαγράψετε το αρχείο μετά την επισύναψη
 link	filemanager	el	Σύνδεσμος
 link %1: %2	filemanager	el	Σύνδεσμός %1: %2
 link into folder	filemanager	el	Σύνδεσμος στον φάκελο
@@ -118,6 +120,7 @@ mime type	filemanager	el	τύπος MIME
 modified	filemanager	el	Τροποποιήθηκε
 mount permanently	filemanager	el	Μόνιμη προσάρτηση
 move	filemanager	el	Μετακίνηση
+move file to	filemanager	el	Μετακίνηση αρχείου σε
 move into folder	filemanager	el	Μετακίνηση στο φάκελο
 move to	filemanager	el	Μετακίνηση στο
 moved %1 to %2	filemanager	el	Μετακινήθηκε το %1 στο %2

@@ -70,6 +70,7 @@ admin name	admin	pt	Nome do Administrador
 admin password	admin	pt	Senha do administrador
 admins	admin	pt	Administradores
 advanced options	admin	pt	Opções avançadas
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt	Após quantas tentativas malsucedidas de login uma conta deve ser bloqueada. Padrão = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pt	Um IP deve ser bloqueado após quantas tentativas de acesso sem sucesso (por omissão 3) ?
 aliases	admin	pt	Sinónimos
 all applications	admin	pt	Todas as aplicações
@@ -110,6 +111,7 @@ authentication / accounts	admin	pt	Autenticação/Contas
 auto create account records for authenticated users	admin	pt	Criar automaticamente registos da conta para utilizadores autenticados
 bi-dir passthrough	admin	pt	bi-dir passthrough
 bi-directional	admin	pt	bi-direcional
+blocking after wrong password	admin	pt	Bloqueio após senha errada
 bottom	admin	pt	Fundo
 bulk changes	admin	pt	Alterações em massa
 bulk password reset	admin	pt	Redefinição de palavra-passe em massa
@@ -133,6 +135,7 @@ check items to <b>%1</b> to %2 for %3	admin	pt	Marcar items de <b>%1</b> a %2 pa
 clear security tokens	admin	pt	Limpar tokens de segurança
 click to select a color	admin	pt	Clique aqui para seleccionar uma cor
 color	admin	pt	Cor
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	pt	Endereços IP separados por vírgulas na lista de permissões do bloqueio acima (:número opcional de tentativas)
 container	admin	pt	Contentor
 continue	admin	pt	Continuar
 could not append message:	admin	pt	Não foi possível anexar Mensagem:
@@ -563,7 +566,7 @@ view access log	admin	pt	Ver registo de acessos
 view account	admin	pt	Ver conta
 view category	admin	pt	Ver categorias
 view error log	admin	pt	Ver registo de erros
-view sessions	admin	pt	Ver sessões
+view sessions	admin	pt	Sessões
 view this user	admin	pt	Ver este utilizador
 view user account	admin	pt	Ver conta do utilizador
 virtual mail manager	admin	pt	Gestor virtual de correio electrónico

@@ -936,6 +936,7 @@ number of rows/cols in a v/hbox, cellpadding, cellspacing	common	pl	Liczba wiers
 october	common	pl	Październik
 of	common	pl	z
 ok	common	pl	OK
+old password	common	pl	Stare hasło
 old value	common	pl	Poprzednia wartość
 oman	common	pl	OMAN
 on *nix systems please type: %1	common	pl	W systemach Unixowych wpisz: %1
@@ -1195,7 +1196,6 @@ show page generation time	common	pl	Wyświetl czas generowania strony
 show page generation time on the bottom of the page?	common	pl	Wyświetlać czas generowania strony w jej stopce.
 show page generation time?	common	pl	Czy pokazywać czas generowania strony
 show password	common	pl	Pokaż hasło
-show these toolbar items helptext	common	pl	Pokaż te elementy na pasku narzędzi (jeśli się mieszczą). Pozostałe są dostępne na liście [⋮].
 show values	common	pl	Pokaż wartości
 show/hide	common	pl	Pokaż/ukryj pasek boczny
 showing	common	pl	Wyświetlono

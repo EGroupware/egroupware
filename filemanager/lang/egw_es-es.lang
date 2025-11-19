@@ -182,7 +182,9 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	es-es	Si especifica una definición de exportación, se usará al exportar
 if you specify an export definition, it will be used when you export*	filemanager	es-es	Si especifica una definición de exportación, se usará al exportar
 inherited	filemanager	es-es	heredado
+job folder %1 does not exist or is not writable	filemanager	es-es	La carpeta de trabajo %1 no existe o no se puede escribir en ella.
 last accessed	filemanager	es-es	Último accedido
+leave empty to delete the file after attaching	filemanager	es-es	Déjelo vacío para eliminar el archivo después de adjuntarlo
 link	filemanager	es-es	Enlace
 link %1: %2	filemanager	es-es	Enlace %1: %2
 link into folder	filemanager	es-es	Enlazar a carpeta
@@ -205,6 +207,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	es-es	Monta /et
 mount permanently	filemanager	es-es	Montaje permanente
 mountpoints	filemanager	es-es	Puntos de montaje
 move	filemanager	es-es	Mover
+move file to	filemanager	es-es	Mover archivo a
 move into folder	filemanager	es-es	Mover dentro de la carpeta
 move to	filemanager	es-es	Mover a
 moved %1 to %2	filemanager	es-es	Se ha movido %1 a %2

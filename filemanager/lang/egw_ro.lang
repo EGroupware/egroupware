@@ -57,6 +57,8 @@ hidden uploads	filemanager	ro	Încărcări ascunse
 hostname/ip for webdav and smb	filemanager	ro	Hostname/IP pentru WebDAV și SMB
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ro	Dacă specificați aici un folder (calea VFS completă), %1 afișează o acțiune pentru fiecare document. Acțiunea respectivă permite descărcarea documentului specificat cu datele %1 inserate.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ro	Dacă specificați aici un dosar (calea VFS completă), %1 afișează o pictogramă suplimentară a documentului pentru fiecare intrare. Această pictogramă permite descărcarea documentului specificat cu datele inserate.
+job folder %1 does not exist or is not writable	filemanager	ro	Dosarul de locuri de muncă %1 nu există sau nu poate fi scris.
+leave empty to delete the file after attaching	filemanager	ro	Lăsați câmpul gol pentru a șterge fișierul după atașare
 list view	filemanager	ro	Vizualizare listă
 lock	filemanager	ro	Blocați
 mail paste	filemanager	ro	Lipirea corespondenței
@@ -65,6 +67,7 @@ modified	filemanager	ro	Modificat
 modified between	filemanager	ro	Modificat între
 mount permanently	filemanager	ro	Montarea permanentă
 mountpoints	filemanager	ro	Puncte de montare
+move file to	filemanager	ro	Mutați fișierul în
 notebookbar	filemanager	ro	Tabulat
 open documents with collabora, if permissions are given	filemanager	ro	Deschideți documente cu Collabora Online, dacă sunt acordate permisiuni
 password for webdav and smb, use $pass for password of logged in user	filemanager	ro	Parola pentru WebDAV și SMB, utilizați $pass pentru parola utilizatorului conectat

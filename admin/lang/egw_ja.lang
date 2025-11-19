@@ -188,6 +188,7 @@ clear cache and register hooks	admin	ja	キャッシュをクリアしてフッ�
 clear security tokens	admin	ja	セキュリティトークンを消去する
 click to select a color	admin	ja	クリックして色を選択
 color	admin	ja	色
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	ja	ブロックされたユーザーアカウントとIPについて通知を受ける管理者メールアドレス（カンマ区切り）。空欄 = 通知なし。
 command scheduled to run at %1	admin	ja	コマンドは %1 で実行するようにスケジュールされています。
 commercial: all sorts of companies	admin	ja	商用: 会社
 config password or md5 hash from the header.inc.php	admin	ja	Config password or md5 hash from the header.inc.php.
@@ -867,7 +868,7 @@ view access log	admin	ja	アクセス・ログを表示
 view account	admin	ja	アカウントを表示
 view category	admin	ja	カテゴリを表示
 view error log	admin	ja	エラー・ログを表示
-view sessions	admin	ja	セッション一覧を表示
+view sessions	admin	ja	セッション
 view this user	admin	ja	このユーザを表示
 view user account	admin	ja	ユーザ・アカウントを表示
 virtual mail manager	admin	ja	Virtual MAIL ManaGeR

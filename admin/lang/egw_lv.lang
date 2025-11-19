@@ -69,6 +69,7 @@ admin name	admin	lv	Administratora vārds
 admin password	admin	lv	Administratora parole
 admins	admin	lv	Administratori
 advanced options	admin	lv	Uzlabotās iespējas
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	lv	Pēc cik neveiksmīgiem mēģinājumiem pieteikties konts jābloķē. Noklusējums = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	lv	Pēc cik neveiksmīgiem mēģinājumiem pieslēgties vajadzētu nobloķēt IP (noklusējums 3)?
 all applications	admin	lv	Visas aplikācijas
 all records and account information will be lost!	admin	lv	Visi ieraksti un konta informācija tiks pazaudēta!
@@ -127,6 +128,7 @@ check items to <b>%1</b> to %2 for %3	admin	lv	Pārbaudīt vienības <b>%1</b> t
 clear security tokens	admin	lv	Izdzēst drošības žetonus
 click to select a color	admin	lv	Noklikšķini, lai izvēlētos krāsu
 color	admin	lv	Krāsa
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	lv	Ar komatu atdalītas IP adreses, kas iekļautas baltajā sarakstā no iepriekš minētās bloķēšanas (:neobligāts mēģinājumu skaits)
 container	admin	lv	Konteiners
 continue	admin	lv	Turpināt
 country	admin	lv	Valsts
@@ -368,6 +370,7 @@ own categories	admin	lv	Pašu kategorijas
 own install id	admin	lv	Pašu instalācijas ID
 own install id:	admin	lv	Pašu instalācijas ID:
 password for smtp-authentication	admin	lv	Parole SMTP autentifikācijai
+password to unlock encrypted p12	admin	lv	Parole, lai atbloķētu šifrētu p12
 path information	admin	lv	Ceļa informācija
 peer server list	admin	lv	Vienādranga servera saraksts
 peer servers	admin	lv	Vienādranga serveri
@@ -506,7 +509,7 @@ view access log	admin	lv	Parādīt pieejas logu
 view account	admin	lv	Parādīt kontu
 view category	admin	lv	Parādīt kategoriju
 view error log	admin	lv	Parādīt kļūdas logu
-view sessions	admin	lv	Parādīt sesijas
+view sessions	admin	lv	Sesijas
 view this user	admin	lv	Parādīt šo lietotāju
 view user account	admin	lv	Parādīt lietotāja kontu
 virtual mail manager	admin	lv	VIrtuālais MAIL ManaGeR

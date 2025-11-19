@@ -35,6 +35,9 @@ active this token again	admin	ro	Activați din nou acest jeton
 add to group	admin	ro	Adăugare la grup
 add user	admin	ro	Adaugă utilizator
 add user or group	admin	ro	Adăugare utilizator sau grup
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ro	Adresele de e-mail ale administratorilor, separate prin virgulă, care vor fi notificate cu privire la conturile de utilizator și adresele IP blocate. Gol = fără notificare.
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ro	După câte încercări nereușite de conectare ar trebui blocat un cont. Implicit = 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ro	După câte încercări nereușite de conectare ar trebui blocată o adresă IP. Implicit = 15
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ro	Permiteți utilizatorului să își stocheze parola sub „Securitate și parole” pentru SingleSignOn.
 allow user to set 'remember me' token	admin	ro	Permiteți utilizatorului să seteze jetonul "Ține-mă minte"
 anonymous user (not shown in list sessions)	admin	ro	Utilizator anonim. Nu este afișat în sesiunile listei
@@ -48,6 +51,7 @@ certificate validation in days	admin	ro	Validarea certificatului în zile
 change access	admin	ro	Modificarea drepturilor de acces
 change domain of email address and aliases	admin	ro	Schimbarea domeniului adresei de e-mail și a aliasurilor
 clear security tokens	admin	ro	Ștergeți jetoanele de securitate
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	ro	Adrese IP separate prin virgulă, incluse în lista albă pentru blocarea de mai sus (:număr opțional de încercări)
 container	admin	ro	Container
 current certificate	admin	ro	Certificat curent
 custom 1	admin	ro	Personalizat 1
@@ -62,6 +66,7 @@ generate new token and display it once after saving	admin	ro	Generați un jeton 
 group hidden from non-admins	admin	ro	Grup ascuns de non-admins
 group hierarchy	admin	ro	Ierarhia grupurilor
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	ro	Câte intrări ar trebui să poată exporta non-admins. Empty = fără limită, No = fără export
+how many minutes should an account or ip be blocked (default 1) ?	admin	ro	Câte minute trebuie blocat un cont sau o adresă IP. Implicit = 30
 html/plaintext	admin	ro	HTML/Text
 if different from email address	admin	ro	Dacă este diferit de adresa de e-mail
 if disabled existing tokens immediatly stop working.	admin	ro	În cazul dezactivării, jetoanele existente încetează imediat să funcționeze.
@@ -108,6 +113,7 @@ users can define their own identities	admin	ro	Utilizatorii își pot defini pro
 users can define their own signatures	admin	ro	Utilizatorii își pot defini propriile semnături
 vacation messages with start- and end-date require an admin account to be set	admin	ro	Mesajele de vacanță cu dată de început și de sfârșit necesită un cont de administrator pentru a fi setate!
 vacation notice	admin	ro	Anunț de vacanță
+view sessions	admin	ro	Sesiuni
 who would you like to transfer records owned by the deleted user to?	admin	ro	Cui doriți să transferați înregistrările deținute de utilizatorul șters?
 xml-rpc	admin	ro	XML-RPC
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	ro	Puteți modifica hash-ul numai dacă ați setat o parolă aleatorie sau dacă utilizați în prezent parole în text clar!

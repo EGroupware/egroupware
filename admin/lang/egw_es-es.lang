@@ -973,7 +973,7 @@ view access log	admin	es-es	Ver registro de acceso
 view account	admin	es-es	Ver cuenta
 view category	admin	es-es	Ver categoría
 view error log	admin	es-es	Ver registro de errores
-view sessions	admin	es-es	Ver sesiones
+view sessions	admin	es-es	Sesiones
 view this user	admin	es-es	Ver este usuario
 view user account	admin	es-es	Ver cuenta de usuario
 virtual mail manager	admin	es-es	Gestor de correo virtual

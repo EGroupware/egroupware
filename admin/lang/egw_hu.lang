@@ -80,6 +80,7 @@ admin name	admin	hu	Adminisztrátor neve
 admin password	admin	hu	Adminisztrátor jelszava
 admins	admin	hu	Adminisztrátorok
 advanced options	admin	hu	Haladó beállítások
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	hu	Hány sikertelen bejelentkezési kísérlet után kell blokkolni a fiókot. Alapértelmezett = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az IP-cím blokkolt (alapértelmezésben 15).
 aliases	admin	hu	Álnevek
 all records and account information will be lost!	admin	hu	Minden bejegyzés és információ törlésre kerül a hozzáférési joggal kapcsolatban!
@@ -156,6 +157,7 @@ check items to <b>%1</b> to %2 for %3	admin	hu	Tételek ellenőrzése <b>%1</b> 
 clear security tokens	admin	hu	Biztonsági tokenek törlése
 click to select a color	admin	hu	Színválasztás
 color	admin	hu	Szín
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	hu	Vesszővel elválasztott IP-címek, amelyek fel vannak véve a fenti letiltás fehér listájára (:opcionális kísérletek száma)
 configuration	admin	hu	Konfiguráció
 configuration saved.	admin	hu	Konfiguráció mentve.
 connection dropped by imap server.	admin	hu	A kapcsolatot az IMAP szerver eldobta.
@@ -479,6 +481,7 @@ own install id	admin	hu	Saját telepítési azonosító
 own install id:	admin	hu	Saját telepítési azonosító:
 passthrough	admin	hu	Átmenő
 password for smtp-authentication	admin	hu	Jelszó az SMTP-azonosításhoz
+password to unlock encrypted p12	admin	hu	Jelszó a titkosított p12 feloldásához
 password updated	admin	hu	Jelszó frissítve.
 passwords	admin	hu	Jelszavak
 passwords require a minimum number of characters	admin	hu	A jelszavak minimális karakterszámot igényelnek
@@ -672,7 +675,7 @@ view access log	admin	hu	Elérési napló megtekintése
 view account	admin	hu	Azonosító megtekintése
 view category	admin	hu	Kategória megtekintése
 view error log	admin	hu	Hibanapló megtekintése
-view sessions	admin	hu	Kapcsolatok megtekintése
+view sessions	admin	hu	Munkamenetek
 view this user	admin	hu	Felhasználó megtekintése
 view user account	admin	hu	Felhasználói hozzáférés megjelenítése
 virtual mail manager	admin	hu	Virtuális MAIL ManaGeR

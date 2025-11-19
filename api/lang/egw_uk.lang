@@ -438,6 +438,7 @@ notify window	common	uk	Вікно повідомлень
 november	common	uk	Листопад
 october	common	uk	Жовтень
 ok	common	uk	OK
+old password	common	uk	Старий пароль
 old value	common	uk	Старе значення
 oman	common	uk	ОМАН
 on mouse over	common	uk	При наведенні мишки
@@ -555,7 +556,6 @@ show all categorys	common	uk	Показати всі категорії
 show page generation time	common	uk	Показувати час генерації сторінки
 show page generation time on the bottom of the page?	common	uk	Показувати час генерації сторінки в низу сторінки.
 show password	common	uk	Показати пароль
-show these toolbar items helptext	common	uk	Показати ці елементи на панелі інструментів (якщо вони вміщаються). Інші елементи доступні в списку [⋮].
 showing %1	common	uk	видно %1
 showing %1 - %2 of %3	common	uk	видно %1 - %2 з %3
 show_more_apps	common	uk	Показати більше приложень

@@ -974,6 +974,7 @@ october	common	it	Ottobre
 of	common	it	di
 off	common	it	Spento
 ok	common	it	OK
+old password	common	it	Vecchia password
 old value	common	it	Vecchio Valore
 oman	common	it	OMAN
 on *nix systems please type: %1	common	it	Sui sistemi *nix prego digita: %1
@@ -1284,7 +1285,6 @@ show page generation time	common	it	Visualizza il tempo di generazione della pag
 show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina.
 show page generation time?	common	it	Mostrare tempo generazione pagina
 show password	common	it	Mostra password
-show these toolbar items helptext	common	it	Mostra questi elementi sulla barra degli strumenti (se ci stanno). Gli altri sono disponibili nell'elenco [⋮].
 show values	common	it	Mostra Valori
 show/hide	common	it	Mostra/nascondi barra laterale
 showing	common	it	Mostra

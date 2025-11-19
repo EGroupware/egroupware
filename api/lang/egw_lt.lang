@@ -291,6 +291,7 @@ no row to swap with !!!	common	lt	Nėra eilutės, su kuria būtų galima keistis
 norway	common	lt	NORVEGIJA
 november	common	lt	Lapkritis
 october	common	lt	Spalis
+old password	common	lt	Senas slaptažodis
 oman	common	lt	OMANAS
 on *nix systems please type: %1	common	lt	*nix sistemose prašome rašyti: %1
 only private	common	lt	Tik privačius
@@ -332,7 +333,6 @@ save as zip	common	lt	Išsaugoti kaip ZIP
 saved column sizes to preferences.	common	lt	Išsaugoti stulpelių dydžius nustatymuose.
 selection of files can only be done in one folder.  %1 files unselected.	common	lt	Atrinkti failus galima tik viename aplanke. %1 failai neatrinkti.
 show password	common	lt	Rodyti slaptažodį
-show these toolbar items helptext	common	lt	Rodyti šiuos elementus įrankių juostoje (jei telpa). Kiti elementai yra prieinami sąraše [⋮].
 show/hide	common	lt	Rodyti/paslėpti šoninę juostą
 sign up	common	lt	Užsiregistruoti
 site configuration	common	lt	Programos konfigūracija

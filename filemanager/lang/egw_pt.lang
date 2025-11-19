@@ -102,6 +102,8 @@ hostname/ip for webdav and smb	filemanager	pt	Nome do anfitrião/IP para WebDAV 
 id	filemanager	pt	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	pt	Se especificar uma pasta (caminho VFS completo) aqui, %1 apresenta uma ação para cada documento. Essa ação permite descarregar o documento especificado com os dados %1 inseridos.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	pt	Se especificar uma pasta (caminho VFS completo) aqui, %1 apresenta um ícone de documento extra para cada entrada. Esse ícone permite descarregar o documento especificado com os dados inseridos.
+job folder %1 does not exist or is not writable	filemanager	pt	A pasta de trabalho %1 não existe ou não é gravável.
+leave empty to delete the file after attaching	filemanager	pt	Deixe em branco para excluir o arquivo após anexá-lo
 link	filemanager	pt	Ligação
 link target %1 not found!	filemanager	pt	Destino do link% 1 não encontrado!
 list view	filemanager	pt	Vista de lista
@@ -115,6 +117,7 @@ modified between	filemanager	pt	Modificado entre
 mount permanently	filemanager	pt	Montar permanentemente
 mountpoints	filemanager	pt	Pontos de montagem
 move	filemanager	pt	Mover
+move file to	filemanager	pt	Mover arquivo para
 move to	filemanager	pt	Mover para
 moved %1 to %2	filemanager	pt	Movido de %1 para %2
 no access	filemanager	pt	sem acesso

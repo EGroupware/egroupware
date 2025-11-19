@@ -66,6 +66,7 @@ admin password	admin	zh	管理密码
 admin queue and history	admin	zh	管理队列和历史纪录
 admins	admin	zh	管理员
 advanced options	admin	zh	高级选项
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zh	账户连续登录失败多少次后应被封禁。默认值 = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	zh	尝试登录失败多少次后，IP 将被阻止。默认 = 15
 aliases	admin	zh	别名
 all applications	admin	zh	所有应用程序
@@ -112,6 +113,7 @@ bad or malformed request. server responded: %s	admin	zh	不正确的请求。服
 bad request: %s	admin	zh	错误请求：%s
 bi-dir passthrough	admin	zh	bi-dir passthrough(双向通过)
 bi-directional	admin	zh	bi-directional(双向)
+blocking after wrong password	admin	zh	密码错误后的封禁机制
 bottom	admin	zh	底部
 bulk changes	admin	zh	批量更改
 bulk password reset	admin	zh	批量重置密码
@@ -140,6 +142,7 @@ check items to <b>%1</b> to %2 for %3	admin	zh	检查%3对%2的权限项目 <b>%
 clear security tokens	admin	zh	清除安全令牌
 click to select a color	admin	zh	点击选择一种颜色
 color	admin	zh	颜色
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	zh	通过白名单豁免上述封禁的IP地址（以逗号分隔，可选尝试次数）
 command scheduled to run at %1	admin	zh	计划命令运行在%1
 connection dropped by imap server.	admin	zh	连接被 IMAP 服务器中断。
 container	admin	zh	容器
@@ -628,7 +631,7 @@ view access log	admin	zh	查看访问日志
 view account	admin	zh	查看帐户
 view category	admin	zh	查看类别
 view error log	admin	zh	查看错误日志
-view sessions	admin	zh	查看会话
+view sessions	admin	zh	会话
 view this user	admin	zh	查看该用户
 view user account	admin	zh	查看用户帐户
 virtual mail manager	admin	zh	虚拟邮箱管理

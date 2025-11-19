@@ -63,6 +63,7 @@ admin email	admin	uk	email адміністратора
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	uk	email адреси адміністраторів (розділені комою), які будуть сповіщатися про випадки блокування (залиште порожнім, якщо сповіщень не треба)
 admin name	admin	uk	Ім'я адміністратора
 admins	admin	uk	Адміністратори
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	uk	Після скількох невдалих спроб входу обліковий запис слід заблокувати. За замовчуванням = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	uk	Після якої кількості неуспішних спроб входу IP має бути заблоковано (по замовченню 3) ?
 all records and account information will be lost!	admin	uk	Всі записи та інформація рахунку будуть втрачені!
 all users	admin	uk	Всі користувачі
@@ -114,6 +115,7 @@ change domain of email address and aliases	admin	uk	Зміна домену ад
 change login screen message	admin	uk	Змінити повідомлення основного екрану
 check ip address of all sessions	admin	uk	перевіряти ip адресу для всіх сесій
 clear security tokens	admin	uk	Очистити токени безпеки
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	uk	Розділені комами IP-адреси, що внесені до білого списку для вищезазначеного блокування (:опціональна кількість спроб)
 container	admin	uk	Контейнер
 country	admin	uk	Країна
 country selection	admin	uk	Вибір країни
@@ -424,7 +426,7 @@ view access log	admin	uk	Перегляд протоколу доступів
 view account	admin	uk	Перегляд рахунку
 view category	admin	uk	Перегляд категорії
 view error log	admin	uk	Перегляд протоколу помилок
-view sessions	admin	uk	Перегляд сесій
+view sessions	admin	uk	Сесії
 view this user	admin	uk	переглянути цього користувача
 view user account	admin	uk	Перегляд рахунку користувача
 who would you like to transfer all records owned by the deleted user to?	admin	uk	Кому передати ВСІ записи користувача, що видаляється ?

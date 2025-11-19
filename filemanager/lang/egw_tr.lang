@@ -67,6 +67,8 @@ hidden uploads	filemanager	tr	Gizli yüklemeler
 hostname/ip for webdav and smb	filemanager	tr	WebDAV ve SMB için Ana Bilgisayar Adı/IP
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	tr	Burada bir klasör (tam VFS yolu) belirtirseniz, %1 her belge için bir eylem görüntüler. Bu eylem, belirtilen belgenin %1 veri eklenmiş olarak indirilmesini sağlar.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	tr	Burada bir klasör (tam VFS yolu) belirtirseniz, %1 her giriş için ekstra bir belge simgesi görüntüler. Bu simge, belirtilen belgenin eklenen verilerle birlikte indirilmesini sağlar.
+job folder %1 does not exist or is not writable	filemanager	tr	İş klasörü %1 mevcut değil veya yazılabilir değil.
+leave empty to delete the file after attaching	filemanager	tr	Ekledikten sonra dosyayı silmek için boş bırakın
 link	filemanager	tr	Link
 list view	filemanager	tr	Liste görünümü
 location	filemanager	tr	Konum
@@ -77,6 +79,7 @@ modified	filemanager	tr	Değiştirilmiş
 modified between	filemanager	tr	Değiştirilmiş değiştirildi
 mount permanently	filemanager	tr	Kalıcı olarak monte edin
 mountpoints	filemanager	tr	Mountpoints
+move file to	filemanager	tr	Dosyayı şuraya taşıyın
 new directory	common	tr	Yeni klasör
 no preview available	filemanager	tr	Önizleme mevcut değil.
 notebookbar	filemanager	tr	Sekmeli

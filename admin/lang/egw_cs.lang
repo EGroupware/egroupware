@@ -169,6 +169,7 @@ checking push (green for success or red for failure)	admin	cs	Zkontrolujte PUSH 
 clear security tokens	admin	cs	Vymazat bezpečnostní tokeny
 click to select a color	admin	cs	Klikněte pro výběr barvy
 color	admin	cs	Barva
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	cs	IP adresy oddělené čárkami, které jsou na výše uvedeném seznamu blokování (:volitelný počet pokusů)
 command scheduled to run at %1	admin	cs	Spuštění příkazu naplánováno na %1
 commercial: all sorts of companies	admin	cs	Komerční: všechny typy společností
 config password or md5 hash from the header.inc.php	admin	cs	Heslo konfigurace nebo MD5 hash ze souboru header.inc.php
@@ -531,6 +532,7 @@ own install id	admin	cs	Vlastní instalační ID
 own install id:	admin	cs	Vlastní instalační ID:
 passthrough	admin	cs	Průchozí
 password for smtp-authentication	admin	cs	Heslo pro SMTP autentikaci
+password to unlock encrypted p12	admin	cs	Heslo pro odemčení šifrovaného p12
 password updated	admin	cs	Heslo bylo zaktualizováno.
 path information	admin	cs	Informace o cestě
 peer server list	admin	cs	Seznam peer serverů
@@ -756,7 +758,7 @@ view access log	admin	cs	Zobrazit přístupový protokol
 view account	admin	cs	Zobrazit účet
 view category	admin	cs	Zobrazit kategorii
 view error log	admin	cs	Zobrazit chybový protokol
-view sessions	admin	cs	Zobrazit relace
+view sessions	admin	cs	Relace
 view this user	admin	cs	Zobrazit uživatele
 view user account	admin	cs	Zobrazit uživatelský účet
 virtual mail manager	admin	cs	Virtuální správce pošty

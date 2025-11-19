@@ -419,6 +419,7 @@ details	common	es-es	Detalles
 directory	common	es-es	Directorio
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	es-es	¡El directorio no existe, el servidor web no lo puede leer o no es relativo a la raíz de los documentos!
 directory for storing merged documents	preferences	es-es	Carpeta para almacenar documentos combinados
+directory successfully created.	common	es-es	Directorio creado correctamente.
 directory with documents to insert entries	preferences	es-es	Carpeta con documentos para insertar entradas
 disabled	common	es-es	Deshabilitado
 discard changes	common	es-es	Descartar cambios
@@ -520,6 +521,7 @@ error deleting %1!	common	es-es	¡Error al suprimir %1!
 error enabling push	common	es-es	Error al activar push
 error renaming %1 %2 directory	common	es-es	¡Error renombrando el directorio %1 %2!
 error uploading file!	filemanager	es-es	¡Error al subir el archivo!
+error while creating directory.	common	es-es	Error al crear el directorio.
 error: template not found !!!	common	es-es	Error: ¡no se encontró la plantilla!
 error: webserver is not allowed to write into '%1' !!!	common	es-es	Error: ¡El servidor no puede escribir en '%1'!
 error: while saving !!!	common	es-es	¡Error al guardar!
@@ -988,6 +990,7 @@ october	common	es-es	Octubre
 of	common	es-es	de
 off	common	es-es	Apagado
 ok	common	es-es	Aceptar
+old password	common	es-es	Contraseña antigua
 old value	common	es-es	Valor anterior
 oman	common	es-es	OMAN
 on *nix systems please type: %1	common	es-es	En sistemas *nix, por favor, escriba: %1
@@ -1302,7 +1305,6 @@ show page generation time	common	es-es	Mostrar el tiempo que tarda en generarse 
 show page generation time on the bottom of the page?	common	es-es	Mostrar el tiempo que tarda en generarse la página en la parte inferior de la página.
 show page generation time?	common	es-es	Mostrar el tiempo que tarda en generarse la página
 show password	common	es-es	Mostrar contraseña
-show these toolbar items helptext	common	es-es	Mostrar estos elementos en la barra de herramientas (si caben). Los demás están disponibles en la lista [⋮].
 show values	common	es-es	Mostar valores
 show/hide	common	es-es	Mostrar/ocultar barra lateral
 showing	common	es-es	Mostrando

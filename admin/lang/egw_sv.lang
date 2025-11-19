@@ -70,6 +70,7 @@ admin name	admin	sv	Admin namn
 admin password	admin	sv	Admin lösenord
 admins	admin	sv	Administratörer
 advanced options	admin	sv	Avanserade alternativ
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sv	Efter hur många misslyckade inloggningsförsök ska ett konto blockeras. Standard = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	sv	Efter hur många misslyckade försök att logga in skall en IP adress blockeras (standard 3)?
 aliases	admin	sv	Alias
 all applications	admin	sv	Samtliga applikationer
@@ -111,6 +112,7 @@ bad or malformed request. server responded: %s	admin	sv	Ogiltig eller ofullstän
 bad request: %s	admin	sv	Ogiltig förfrågan: %s
 bi-dir passthrough	admin	sv	dubbelriktad genomströmmning
 bi-directional	admin	sv	dubbelriktad
+blocking after wrong password	admin	sv	Blockering efter felaktigt lösenord
 bottom	admin	sv	Nederst
 bulk changes	admin	sv	Massändringar
 bulk password reset	admin	sv	Återställning av lösenord i bulk
@@ -134,6 +136,7 @@ check items to <b>%1</b> to %2 for %3	admin	sv	Kontrollera punkterna till <b>%1<
 clear security tokens	admin	sv	Rensa säkerhetstokens
 click to select a color	admin	sv	Klicka för att välja färg
 color	admin	sv	Färg
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	sv	Kommaseparerade IP-adresser som är vitlistade från ovanstående blockering (:valfritt antal försök)
 connection dropped by imap server.	admin	sv	Anslutningen stängd av IMAP server
 container	admin	sv	Behållare
 continue	admin	sv	Fortsätt
@@ -565,7 +568,7 @@ view access log	admin	sv	Visa accesslogg
 view account	admin	sv	Visa konto
 view category	admin	sv	Visa kategori
 view error log	admin	sv	Visa fellogg
-view sessions	admin	sv	Visa sessioner
+view sessions	admin	sv	Sessioner
 view this user	admin	sv	Visa användaren
 view user account	admin	sv	Visa användarkontot
 virtual mail manager	admin	sv	Virtuell E-post administration

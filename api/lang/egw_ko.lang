@@ -332,6 +332,7 @@ notes	common	ko	기타
 november	common	ko	11월
 october	common	ko	10월
 ok	common	ko	확인
+old password	common	ko	기존 비밀번호
 old value	common	ko	이전 값
 on *nix systems please type: %1	common	ko	유닉스 기반 시스템의 경우 다음과 같이 입력하세요: %1
 on mouse over	common	ko	마우스를 올렸을때
@@ -448,7 +449,6 @@ show page generation time	common	ko	페이지 생성시간 보이기
 show page generation time on the bottom of the page?	common	ko	페이지 생성 시간을 페이지 하단에 출력하시겠습니까?
 show page generation time?	common	ko	페이지 생성시간을 출력합니까?
 show password	common	ko	비밀번호 표시
-show these toolbar items helptext	common	ko	이 항목들을 도구 모음에 표시합니다(공간이 허용되는 경우). 나머지 항목은 목록 [⋮]에서 사용할 수 있습니다.
 show/hide	common	ko	사이드바 표시/숨기기
 showing %1	common	ko	현재 %1
 showing %1 - %2 of %3	common	ko	전체 %3에서 %1 - %2

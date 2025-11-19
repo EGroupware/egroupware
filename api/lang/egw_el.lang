@@ -272,6 +272,7 @@ details	common	el	Λεπτομέρειες
 directory	common	el	Κατάλογος
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	el	Ο κατάλογος δεν υπάρχει, δεν είναι αναγνώσιμος από τον webserver ή δεν είναι σχετικός με την πορεία του εγγράφου!
 directory for storing merged documents	preferences	el	Κατάλογος για την αποθήκευση συγχωνευμένων εγγράφων
+directory successfully created.	common	el	Ο κατάλογος δημιουργήθηκε με επιτυχία.
 directory with documents to insert entries	preferences	el	Κατάλογος με έγγραφα για την εισαγωγή καταχωρήσεων
 disabled	common	el	Απενεργοποιημένο
 djibouti	common	el	ΤΣΙΜΠΟΥΤΙ
@@ -329,6 +330,7 @@ error	common	el	Σφάλμα
 error creating %1 %2 directory	common	el	Σφάλμα κατά τη δημιουργία του καταλόγου %1 %2!
 error deleting %1 %2 directory	common	el	Σφάλμα κατά τη διαγραφή του καταλόγου %1 %2!
 error renaming %1 %2 directory	common	el	Σφάλμα κατά τη μετονομασία του καταλόγου %1 %2!
+error while creating directory.	common	el	Σφάλμα κατά τη δημιουργία του καταλόγου.
 estonia	common	el	ΕΣΘΟΝΙΑ
 etemplate	common	el	eTemplate
 ethiopia	common	el	ΑΙΘΙΟΠΙΑ
@@ -337,6 +339,7 @@ exact	common	el	ακριβώς
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	el	Παράδειγμα {{LETTERPREFIX}} - Δίνει ένα γράμμα προθέματος χωρίς διπλά κενά, αν ο τίτλος είναι άδειος για παράδειγμα
 failed to change password.	common	el	Απέτυχε η αλλαγή κωδικού πρόσβασης.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	el	Αποτυχία Σύνδεσης με τον Server ή Άκυρη Απάντηση από τον Server. Προσπαθήστε να εισέλθετε ξανά. Επικοινωνήστε με τον Admin σε περίπτωση αποτυχίας.
+failed to create required directory "%1"!	admin	el	Αποτυχία δημιουργίας του απαιτούμενου φακέλου «%1»!
 falkland islands (malvinas)	common	el	ΝΗΣΟΙ ΦΩΚΛΑΝΤ (ΜΑΛΒΙΝΑΣ)
 faroe islands	common	el	ΝΗΣΟΙ ΦΕΡΟΕ
 favorites	common	el	Αγαπημένα
@@ -644,6 +647,7 @@ november	common	el	Νοέμβριος
 now	common	el	Τώρα
 october	common	el	Οκτώβριος
 ok	common	el	ΟΚ
+old password	common	el	Παλιός κωδικός πρόσβασης
 old value	common	el	Παλιά Τιμή
 oman	common	el	ΟΜΑΝ
 on *nix systems please type: %1	common	el	Σε *nix συστήματα πληκτρολογίστε: %1
@@ -837,7 +841,6 @@ show page generation time	common	el	Εμφάνιση χρόνου δημιουρ
 show page generation time on the bottom of the page?	common	el	Να εμφανισθεί ο χρόνος δημιουργίας της σελίδας στο τέλος της σελίδας.
 show page generation time?	common	el	Εμφάνιση σελίδας δημιουργίας ώρας
 show password	common	el	Εμφάνιση κωδικού πρόσβασης
-show these toolbar items helptext	common	el	Εμφάνιση αυτών των στοιχείων στη γραμμή εργαλείων (εάν χωράνε). Τα υπόλοιπα είναι διαθέσιμα στη λίστα [⋮].
 show/hide	common	el	εμφάνιση/απόκρυψη πλευρικής μπάρας
 showing %1	common	el	εμφάνιση %1
 showing %1 - %2 of %3	common	el	εμφάνιση %1 - %2 από %3

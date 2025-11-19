@@ -636,7 +636,7 @@ the entered passphrase is not correct! please try again.	mail	de	Das eingegebene
 the folder %1 's acls saved	mail	de	Die Zugriffsrechte des Ordners %1 wurden gespeichert
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	de	Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.
 the imap server need to meet certain requirements and be configured for it:	mail	de	Der IMAP Server muss verschiedene Vorraussetzungen erfüllen UND dafür konfiguriert sein:
-the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicher zu stellen, dass Sie diese E-Mail gelesen haben.Möchten Sie eine Empfangsbestätigung senden?
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicher zu stellen, dass Sie diese E-Mail gelesen haben. Möchten Sie eine Empfangsbestätigung senden?
 the mimeparser can not parse this message.	mail	de	Der MIME-Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
 then	mail	de	dann

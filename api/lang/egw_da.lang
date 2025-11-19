@@ -269,6 +269,7 @@ detail	common	da	Detalje
 details	common	da	Detaljer
 directory	common	da	Bibliotek
 directory for storing merged documents	preferences	da	Mappe til opbevaring af flettede dokumenter
+directory successfully created.	common	da	Mappe oprettet.
 directory with documents to insert entries	preferences	da	Mappe med dokumenter til at indsætte poster
 disabled	common	da	Slået fra
 djibouti	common	da	Djibouti
@@ -331,12 +332,14 @@ error	common	da	Fejl
 error creating %1 %2 directory	common	da	Fejl ved oprettelsen af biblioteket %1 %2!
 error deleting %1 %2 directory	common	da	Fejl ved sletningen af biblioteket %1 %2!
 error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1 %2!
+error while creating directory.	common	da	Fejl under oprettelse af mappe.
 estonia	common	da	Estland
 ethiopia	common	da	Etiopien
 exact	common	da	Nøjagtig
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	da	Eksempel {{LETTERPREFIX}} - Giver et bogstavpræfiks uden dobbeltmellemrum, hvis titlen er tom, f.eks.
 failed to change password.	common	da	Det lykkedes ikke at ændre adgangskoden.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	da	Kan ikke kontakte server eller ugyldigt svar fra server. Prøv at logge ind igen. Kontakt administrator i tilfælde af fejl.
+failed to create required directory "%1"!	admin	da	Det lykkedes ikke at oprette den nødvendige mappe »%1«!
 falkland islands (malvinas)	common	da	Falklands Øerne
 faroe islands	common	da	Færøerne
 fax number	common	da	Fax nummer
@@ -612,6 +615,7 @@ notify window	common	da	Notificer vindue
 november	common	da	November
 october	common	da	Oktober
 ok	common	da	OK
+old password	common	da	Gammel adgangskode
 old value	common	da	Gammel Værdi
 oman	common	da	Oman
 on *nix systems please type: %1	common	da	På *nix systemer skriver Du: %1
@@ -785,7 +789,6 @@ show all categorys	common	da	Vis alle kategorier
 show page generation time	common	da	Vis side generations tid
 show page generation time on the bottom of the page?	common	da	Vis side generations tiden i bunden af siden.
 show password	common	da	Vis adgangskode
-show these toolbar items helptext	common	da	Vis disse elementer på værktøjslinjen (hvis de passer). De øvrige er tilgængelige i listen [⋮].
 show/hide	common	da	Vis/skjul sidebar
 showing %1	common	da	Viser: %1
 showing %1 - %2 of %3	common	da	Viser: %1 - %2 ud af %3

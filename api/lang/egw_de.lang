@@ -419,6 +419,7 @@ details	common	de	Details
 directory	common	de	Ordner
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	de	Verzeichnis existiert nicht, ist nicht vom Webserver lesbar oder ist nicht entsprechend zur Dokumentroot!
 directory for storing merged documents	preferences	de	Ordner für zusammengeführte Platzhalter-Dokumente
+directory successfully created.	common	de	Ordner erfolgreich erstellt.
 directory with documents to insert entries	preferences	de	Vorlagen-Ordner für Einfügen in Dokument
 disabled	common	de	Deaktiviert
 discard changes	common	de	Verwirft Änderungen
@@ -520,6 +521,7 @@ error deleting %1!	common	de	Fehler beim Löschen von %1!
 error enabling push	common	de	Fehler beim Aktivieren von Push!
 error renaming %1 %2 directory	common	de	Fehler beim Umbenennen des Ordners %1 %2!
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
+error while creating directory.	common	de	Fehler beim Erstellen des Ordners.
 error: template not found !!!	common	de	Fehler: eTemplate nicht gefunden!
 error: webserver is not allowed to write into '%1' !!!	common	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1'!
 error: while saving !!!	common	de	Fehler: beim Speichern!
@@ -879,6 +881,7 @@ minute	common	de	Minute
 minutes	common	de	Minuten
 missing: %1	common	de	Nicht vorhanden: %1
 mo	common	de	Mo
+mode	common	de	Modus
 mode of required directory "%1" changed to %2.	admin	de	Zugriffsrechte für benötigten Ordner "%1" geändert zu %2.
 modifier	preferences	de	Geändert von
 moldova, republic of	common	de	MOLDAVIEN, REPUBLIK
@@ -988,6 +991,7 @@ october	common	de	Oktober
 of	common	de	von
 off	common	de	Keine
 ok	common	de	OK
+old password	common	de	Altes Passwort
 old value	common	de	Alter Wert
 oman	common	de	OMAN
 on *nix systems please type: %1	common	de	Auf *nix Systemen bitte %1 eingeben

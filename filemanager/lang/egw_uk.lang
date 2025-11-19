@@ -65,6 +65,8 @@ hostname/ip for webdav and smb	filemanager	uk	Ім'я хоста/IP для WebDA
 id	filemanager	uk	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	uk	Якщо ви вкажете тут теку (повний шлях до VFS), %1 покаже дію для кожного документа. Ця дія дозволяє завантажити вказаний документ із вставленими даними %1.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	uk	Якщо ви вкажете тут папку (повний шлях до VFS), %1 покаже додаткову іконку документа для кожного запису. Ця піктограма дозволяє завантажити вказаний документ зі вставленими даними.
+job folder %1 does not exist or is not writable	filemanager	uk	Папка завдань %1 не існує або не доступна для запису.
+leave empty to delete the file after attaching	filemanager	uk	Залиште поле порожнім, щоб видалити файл після додавання
 link	filemanager	uk	Посилання
 list view	filemanager	uk	Перегляд списку
 location	filemanager	uk	Місце
@@ -75,6 +77,7 @@ modified	filemanager	uk	Змінено
 modified between	filemanager	uk	Змінено між
 mount permanently	filemanager	uk	Змонтувати назавжди
 mountpoints	filemanager	uk	Точки монтування
+move file to	filemanager	uk	Перемістити файл до
 notebookbar	filemanager	uk	З табуляцією
 open	filemanager	uk	відкрито
 open documents with collabora, if permissions are given	filemanager	uk	Відкривайте документи за допомогою Collabora Online, якщо надані дозволи

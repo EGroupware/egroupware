@@ -36,6 +36,9 @@ add a group	admin	lt	Pridėti prie grupės
 add to group	admin	lt	Pridėti prie grupės
 add user	admin	lt	Pridėti naudotoją
 add user or group	admin	lt	Pridėti naudotoją arba grupę
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	lt	Admin elektroninio pašto adresai, atskirti kableliais, kuriais bus pranešama apie užblokuotas vartotojo paskyras ir IP adresus. Tuščias = pranešimas nesiunčiamas.
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	lt	Po kiek nesėkmingų prisijungimo bandymų paskyra turėtų būti užblokuota. Numatytasis = 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	lt	Po kiek nesėkmingų prisijungimo bandymų IP adresas turėtų būti užblokuotas. Numatytasis = 15
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	lt	Leisti naudotojui saugoti savo slaptažodį SingleSignOn skiltyje „Saugumas ir slaptažodžiai“.
 allow user to set 'remember me' token	admin	lt	Leisti naudotojui nustatyti žetoną "Prisiminti mane"
 anonymous user. not shown in list sessions.	admin	lt	Anoniminis naudotojas. Nerodoma sąrašo sesijose
@@ -49,6 +52,7 @@ certificate validation in days	admin	lt	Sertifikato patvirtinimas per kelias die
 change access	admin	lt	Keisti prieigos teises
 change domain of email address and aliases	admin	lt	Pakeisti el. pašto adreso domeną ir slapyvardžius
 clear security tokens	admin	lt	Išvalyti saugumo žetonus
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	lt	Kableliais atskirti IP adresai, įtraukti į baltąjį sąrašą ir neblokuojami (:pasirinktinis bandymų skaičius)
 container	admin	lt	Konteineris
 current certificate	admin	lt	Dabartinis sertifikatas
 custom 1	admin	lt	Pasirinktinis 1
@@ -63,6 +67,7 @@ generate new token and display it once after saving	admin	lt	Sugeneruoti naują 
 group hidden from non-admins	admin	lt	Grupė paslėpta nuo neadministratorių
 group hierarchy	admin	lt	Grupių hierarchija
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	lt	Kiek įrašų gali eksportuoti ne administratoriai. Tuščias = neribojama, Ne = neeksportuojama
+how many minutes should an account or ip be blocked (default 1) ?	admin	lt	Kiek minučių turėtų būti užblokuota paskyra arba IP adresas. Numatytasis = 30
 html/plaintext	admin	lt	HTML / Tekstas
 if different from email address	admin	lt	Jei skiriasi nuo el. pašto adreso
 if disabled existing tokens immediatly stop working.	admin	lt	Jei išjungti esami žetonai iš karto nustoja veikti.
@@ -109,6 +114,7 @@ users can define their own signatures	admin	lt	Vartotojai gali nustatyti savo pa
 users choice	admin	lt	Vartotojo pasirinkimas
 vacation messages with start- and end-date require an admin account to be set	admin	lt	Atostogų pranešimams su pradžios ir pabaigos data reikia nustatyti administratoriaus paskyrą!
 vacation notice	admin	lt	Pranešimas apie atostogas
+view sessions	admin	lt	Sesijos
 who would you like to transfer records owned by the deleted user to?	admin	lt	Kam norėtumėte perkelti pašalintam naudotojui priklausančius įrašus?
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	lt	Slaptažodį galite pakeisti tik tuo atveju, jei nustatėte atsitiktinį slaptažodį arba šiuo metu naudojate paprastojo teksto slaptažodžius!
 you can use wizard to fix account settings or delete account.	admin	lt	Paskyros nustatymams pataisyti arba paskyrai ištrinti galite naudoti vedlį.

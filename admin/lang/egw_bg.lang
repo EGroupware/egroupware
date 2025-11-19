@@ -92,6 +92,8 @@ admin name	admin	bg	Име на администратора
 admin password	admin	bg	Парола на администратора
 admins	admin	bg	Администратори
 advanced options	admin	bg	Разширени опции
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	bg	След колко неуспешни опита за вход акаунтът трябва да бъде блокиран. По подразбиране = 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	bg	След колко неуспешни опита за вход IP адресът трябва да бъде блокиран. По подразбиране = 15
 aliases	admin	bg	Псевдоними
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	bg	Разрешете на потребителя да съхранява паролата си в „Сигурност и пароли“ за SingleSignOn.
 allow user to set 'remember me' token	admin	bg	Позволете на потребителя да зададе токъна "Запомни ме
@@ -99,6 +101,7 @@ application passwords	admin	bg	Пароли за приложения
 apply the changes	admin	bg	Прилагане на промените
 archive: zip or tar	admin	bg	Архив: ZIP или tar
 bad login name or password.	admin	bg	Лошо име за вход или парола.
+blocking after wrong password	admin	bg	Блокиране след грешна парола
 bulk changes	admin	bg	Групови промени
 bulk password reset	admin	bg	Групово възстановяване на паролата
 can be used to show groups by container, if enabled	admin	bg	Може да се използва за показване на групи по контейнер, ако е разрешено
@@ -106,6 +109,7 @@ change access	admin	bg	Промяна на правата за достъп
 change domain of email address and aliases	admin	bg	Промяна на домейна на имейл адреса и псевдонимите
 checking push (green for success or red for failure)	admin	bg	Проверка на PUSH (зелено = ОК, червено = не е ОК)
 clear security tokens	admin	bg	Изчистване на токените за сигурност
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	bg	Разделени със запетая IP адреси, включени в белия списък от горното блокиране (:опционален брой опити)
 container	admin	bg	Контейнер
 copy of	admin	bg	Копие на
 country	admin	bg	Държава
@@ -139,6 +143,7 @@ group has been updated	common	bg	Групата е актуализирана.
 group hidden from non-admins	admin	bg	Група, скрита за неадминистратори
 group hierarchy	admin	bg	Йерархия на групите
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	bg	Колко записа трябва да могат да експортират неадминистраторите. Празно = няма ограничение, Не = няма експорт
+how many minutes should an account or ip be blocked (default 1) ?	admin	bg	За колко минути трябва да бъде блокиран акаунтът или IP адресът. По подразбиране = 30
 html/plaintext	admin	bg	HTML/текст
 if different from email address	admin	bg	Ако е различен от имейл адреса
 if disabled existing tokens immediatly stop working.	admin	bg	Ако се деактивират съществуващите токени, те незабавно спират да работят.
@@ -163,6 +168,7 @@ other security configuration	admin	bg	Друга конфигурация на �
 own categories	admin	bg	Собствени категории
 own install id	admin	bg	Собствен идентификатор на инсталацията
 own install id:	admin	bg	Идентификатор на собствена инсталация:
+password to unlock encrypted p12	admin	bg	Парола за отключване на криптиран p12
 permission denied	admin	bg	Не е позволено
 regular expression to find part to use as container	admin	bg	Редовен израз за намиране на част, която да се използва като контейнер
 requested	admin	bg	Заявена
@@ -195,6 +201,7 @@ using fallback via regular json requests	admin	bg	Използване на ре
 using native swoole push	admin	bg	Използване на native Swoole Push
 vacation messages with start- and end-date require an admin account to be set	admin	bg	Ваканционните съобщения с начална и крайна дата изискват задаване на администраторски акаунт!
 vacation notice	admin	bg	Известие за ваканция
+view sessions	admin	bg	Сесии
 who would you like to transfer records owned by the deleted user to?	admin	bg	На кого искате да прехвърлите записите, притежавани от изтрития потребител?
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	bg	Можете да промените хеша само ако сте задали случайна парола или в момента използвате пароли в обикновен текст!
 you can set an initial value, which gets incremented every time a new serial get generated	admin	bg	можете да зададете първоначална стойност, която се увеличава всеки път, когато се генерира нов сериен файл

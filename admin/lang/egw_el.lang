@@ -116,6 +116,7 @@ bad login name or password.	admin	el	Λάθος όνομα ή κωδικός π�
 bad request: %s	admin	el	Άκυρη απαίτηση: %s
 bi-dir passthrough	admin	el	ημη-κατευθυντικό πέρασμα
 bi-directional	admin	el	ημη-κατευθυντικός
+blocking after wrong password	admin	el	Αποκλεισμός μετά από λανθασμένο κωδικό πρόσβασης
 bottom	admin	el	βάση
 bulk changes	admin	el	Μαζικές αλλαγές
 bulk password reset	admin	el	Μαζική επαναφορά κωδικού πρόσβασης
@@ -139,6 +140,7 @@ check items to <b>%1</b> to %2 for %3	admin	el	Ελεγξε τα θέματα σ
 clear security tokens	admin	el	Εκκαθάριση μαρκών ασφαλείας
 click to select a color	admin	el	Κάντε κλικ για να επιλέξετε ένα χρ΄'ωμα
 color	admin	el	Χρώμα
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	el	Διευθύνσεις IP που έχουν προστεθεί στη λευκή λίστα από τον παραπάνω αποκλεισμό, διαχωρισμένες με κόμμα (:προαιρετικός αριθμός προσπαθειών)
 connection dropped by imap server.	admin	el	Έπεσε η σύνδεση από τον IMAP server.
 container	admin	el	Εμπορευματοκιβώτιο
 copy of	admin	el	Αντίγραφο του
@@ -406,6 +408,7 @@ own install id	admin	el	Δικό σας ID εγκατάστασης
 own install id:	admin	el	ID δικής σας εγκατάστασης:
 passthrough	admin	el	διέρχεται
 password for smtp-authentication	admin	el	Κωδικός για την SMTP-πιστοποίηση
+password to unlock encrypted p12	admin	el	Κωδικός πρόσβασης για το ξεκλείδωμα του κρυπτογραφημένου p12
 path information	admin	el	Πλητοφορία path
 peer server list	admin	el	Λίστα ισότιμων server
 peer servers	admin	el	Ισότιμοι server
@@ -550,7 +553,7 @@ view access log	admin	el	Εμφάνιση καταγραφής πρόσβαση�
 view account	admin	el	Εμφάνιση λογαριασμού
 view category	admin	el	Εμφάνιση κατηγορίας
 view error log	admin	el	Εμφάνιση καταγραφής λαθών
-view sessions	admin	el	Εμφάνιση περιόδων
+view sessions	admin	el	Συνεδρίες
 view this user	admin	el	εμφάνιση αυτού του χρήστη
 view user account	admin	el	Εμφάνιση λογαριασμού χρήστη
 who would you like to transfer all records owned by the deleted user to?	admin	el	Ποιός θα θέλατε να μεταφέρει ΟΛΕΣ της εγγραφές που ανήκουν στον χρήστη που διαγραφηκε;

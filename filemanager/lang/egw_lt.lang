@@ -46,6 +46,8 @@ hidden uploads	filemanager	lt	Paslėptas įkėlimas
 hostname/ip for webdav and smb	filemanager	lt	Hostname/IP WebDAV ir SMB
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	lt	Jei čia nurodysite aplanką (visą VFS kelią), %1 rodys kiekvieno dokumento veiksmą. Šis veiksmas leidžia atsisiųsti nurodytą dokumentą su įterptais %1 duomenimis.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	lt	Jei čia nurodysite aplanką (visą VFS kelią), %1 kiekvienam įrašui rodoma papildoma dokumento piktograma. Ši piktograma leidžia atsisiųsti nurodytą dokumentą su įterptais duomenimis.
+job folder %1 does not exist or is not writable	filemanager	lt	Darbo aplankas %1 neegzistuoja arba nėra įrašomas.
+leave empty to delete the file after attaching	filemanager	lt	Palikite tuščią, kad failą būtų galima ištrinti po pridėjimo.
 list view	filemanager	lt	Sąrašo rodinys
 lock	filemanager	lt	Užrakinti
 mail paste	filemanager	lt	Pašto įklijavimas
@@ -54,6 +56,7 @@ modified	filemanager	lt	Pakeista
 modified between	filemanager	lt	Pakeista tarp
 mount permanently	filemanager	lt	Nuolatinis prijungimas
 mountpoints	filemanager	lt	Montavimo taškai
+move file to	filemanager	lt	Perkelti failą į
 notebookbar	filemanager	lt	Skirtukas
 open documents with collabora, if permissions are given	filemanager	lt	Atidaryti dokumentus su Collabora Online, jei suteiktos teisės
 password for webdav and smb, use $pass for password of logged in user	filemanager	lt	WebDAV ir SMB slaptažodis, naudokite $pass prisijungusio naudotojo slaptažodį

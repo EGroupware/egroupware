@@ -135,6 +135,8 @@ id	filemanager	hu	Azonosító
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	hu	Ha itt egy mappát (teljes VFS elérési útvonal) ad meg, a %1 minden dokumentumhoz megjelenít egy műveletet. Ez a művelet lehetővé teszi a megadott dokumentum letöltését a %1 adatainak beillesztésével.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	hu	Ha itt egy mappát (teljes VFS elérési útvonal) ad meg, a %1 minden egyes bejegyzéshez megjelenít egy extra dokumentum ikont. Ez az ikon lehetővé teszi a megadott dokumentum letöltését a beillesztett adatokkal együtt.
 inherited	filemanager	hu	lemásolva
+job folder %1 does not exist or is not writable	filemanager	hu	A %1 feladathalmaz nem létezik vagy nem írható.
+leave empty to delete the file after attaching	filemanager	hu	Hagyja üresen, ha a csatolás után törölni szeretné a fájlt
 link	filemanager	hu	Link
 link %1: %2	filemanager	hu	Link %1: %2
 link target %1 not found!	filemanager	hu	Link célpontja nem található (%1)!
@@ -152,6 +154,7 @@ modify all subdirectories and their content	filemanager	hu	Összes könyvtár é
 mount permanently	filemanager	hu	Állandóan csatlakoztatható
 mountpoints	filemanager	hu	Mountpoints
 move	filemanager	hu	Mozgat
+move file to	filemanager	hu	Fájl áthelyezése
 move to	filemanager	hu	Mozgatás ide:
 moved %1 to %2	filemanager	hu	%1 mozgatása ide: %2
 no access	filemanager	hu	Nincs hozzáférés

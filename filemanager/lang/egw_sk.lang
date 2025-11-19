@@ -181,7 +181,9 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 if you specify an export definition, it will be used when you export*	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 inherited	filemanager	sk	Dedičné
+job folder %1 does not exist or is not writable	filemanager	sk	Pracovná zložka %1 neexistuje alebo nie je možné do nej zapisovať.
 last accessed	filemanager	sk	Naposledy otvorené
+leave empty to delete the file after attaching	filemanager	sk	Nechajte prázdne, ak chcete súbor po priložení odstrániť
 link	filemanager	sk	Odkaz
 link %1: %2	filemanager	sk	Odkaz %1: %2
 link into folder	filemanager	sk	Odkaz na priečinok
@@ -204,6 +206,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	sk	Pripojiť /e
 mount permanently	filemanager	sk	Trvalé pripojenie
 mountpoints	filemanager	sk	Prípojné body
 move	filemanager	sk	Presunúť
+move file to	filemanager	sk	Presunúť súbor do
 move into folder	filemanager	sk	Presunúť do priečinka
 move to	filemanager	sk	Presunúť do
 moved %1 to %2	filemanager	sk	Presunuté %1 do %2

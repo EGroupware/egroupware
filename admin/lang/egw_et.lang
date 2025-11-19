@@ -52,8 +52,11 @@ add profile	admin	et	Lisa Profiil
 add sub-category	admin	et	Lisa alam kategooria
 add to group	admin	et	Lisa gruppi
 admin email	admin	et	Admin Email
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	et	Admin e-posti aadressid, komadega eraldatud, et saada teavet blokeeritud kasutajakontode ja IP-aadresside kohta. Tühi = teavitust ei saadeta.
 admin name	admin	et	Admin Nimi
 admin password	admin	et	Admin parool
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	et	Pärast mitut ebaõnnestunud sisselogimiskatset tuleks konto blokeerida. Vaikimisi = 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	et	Pärast mitut ebaõnnestunud sisselogimiskatset tuleks IP-aadress blokeerida. Vaikimisi = 15
 all applications	admin	et	Kõik rakendused
 all users	admin	et	Kõik kasutajad
 allow anonymous access to this app	admin	et	Luba anonüümne ligipääs sellele rakendusele
@@ -80,6 +83,7 @@ are you sure you want to delete this server?	admin	et	Oled kindel, et tahad kust
 are you sure you want to kill this session ?	admin	et	Oled kindel, et tahad tappa seda sessiooni?
 authentication / accounts	admin	et	Autentimine / Kontod
 bad login name or password.	admin	et	Vale kasutajanimi või parool.
+blocking after wrong password	admin	et	Blokeerimine vale parooli sisestamise järel
 bulk changes	admin	et	Massilised muudatused
 bulk password reset	admin	et	Paroolide massiline lähtestamine
 can be used to show groups by container, if enabled	admin	et	Saab kasutada gruppide kuvamiseks konteineri järgi, kui see on lubatud
@@ -96,6 +100,7 @@ change login screen message	admin	et	Muuda pealehe sõnumit
 clear security tokens	admin	et	Turvatunnuste tühjendamine
 click to select a color	admin	et	Kliki valimaks värvi
 color	admin	et	Värv
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	et	Komadega eraldatud IP-aadressid, mis on lisatud eespool nimetatud blokeerimisest vabastatud valge nimekirja (:valikuline katsete arv)
 container	admin	et	Konteiner
 continue	admin	et	Jätka
 copy of	admin	et	Koopia
@@ -261,6 +266,7 @@ other security configuration	admin	et	Muud turvakonfiguratsioonid
 own install id	admin	et	Oma paigaldus ID
 own install id:	admin	et	Oma paigaldus ID:
 password for smtp-authentication	admin	et	Parool SMTP-audentimiseks
+password to unlock encrypted p12	admin	et	Parool krüpteeritud p12 avamiseks
 path information	admin	et	Teekonna informatsioon
 permission denied	admin	et	Õigused puuduvad
 permission denied !!!	admin	et	Õigused puuduvad!
@@ -346,7 +352,7 @@ view access log	admin	et	Vaata sisselogimise logi
 view account	admin	et	Vaata kontot
 view category	admin	et	Vaata kategooriat
 view error log	admin	et	Vaata vigade logi
-view sessions	admin	et	Vaata aktiivseid sessioone
+view sessions	admin	et	Sessioonid
 view this user	admin	et	Vaata seda kasutajat
 view user account	admin	et	Vaata kasutaja kontot
 who would you like to transfer records owned by the deleted user to?	admin	et	Kellele soovite kustutatud kasutajale kuuluvaid kirjeid üle kanda?

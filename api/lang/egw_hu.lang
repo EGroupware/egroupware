@@ -649,6 +649,7 @@ november	common	hu	November
 now	common	hu	Most
 october	common	hu	Október
 ok	common	hu	OK
+old password	common	hu	Régi jelszó
 old value	common	hu	Régi érték
 oman	common	hu	Omán
 on *nix systems please type: %1	common	hu	*nix rendszereken üsse be: %1
@@ -829,7 +830,6 @@ show page generation time	common	hu	Oldal megjelentítési idő mutatása
 show page generation time on the bottom of the page?	common	hu	Mutassa az oldal generálására fordított időt az oldal alján.
 show page generation time?	common	hu	Oldal generálási idő megjelenítése
 show password	common	hu	Jelszó megjelenítése
-show these toolbar items helptext	common	hu	Ezeket az elemeket jelenítsd meg az eszköztáron (ha elférnek). A többi elem a [⋮] listában érhető el.
 show/hide	common	hu	Oldalsáv megjelenítése/elrejtése
 showing %1	common	hu	%1 listázva
 showing %1 - %2 of %3	common	hu	listázva %1 - %2, össz: %3

@@ -74,6 +74,7 @@ admin name	admin	tr	Yönetici İsmi
 admin password	admin	tr	Yönetici şifresi
 admins	admin	tr	Yöneticiler
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	tr	Kaç tane başarısız sistem girişinden sonra bir hesap engellenecektir (varsayılan 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	tr	Kaç başarısız giriş denemesinden sonra bir IP adresi engellenmelidir. Varsayılan = 15
 all records and account information will be lost!	admin	tr	Bütün kayıtlar ve hesap bilgileri kaybedilecektir!
 all users	admin	tr	Tüm Kullanıcılar
 allow anonymous access to this app	admin	tr	Bu uygulamaya anonim girişe izin ver
@@ -131,6 +132,7 @@ check items to <b>%1</b> to %2 for %3	admin	tr	%3 ögelerini <b>%1</b>den %2'ye 
 clear security tokens	admin	tr	Güvenlik belirteçlerini temizleyin
 click to select a color	admin	tr	Renk seçmek için tıklayın
 color	admin	tr	Renk
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	tr	Yukarıdaki engellemeden beyaz listeye alınan, virgülle ayrılmış IP adresleri (:isteğe bağlı deneme sayısı)
 container	admin	tr	Konteyner
 country	admin	tr	Ülke
 country selection	admin	tr	Ülke seçimi
@@ -252,6 +254,7 @@ hostname or ip	admin	tr	Ana Bilgisayar Adı veya IP
 hour<br>(0-23)	admin	tr	Saat<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	tr	Erişim kütüklerindeki kayıtlar en fazla kaç günlük oalcaktır (varsayılan 90) ?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	tr	Yönetici olmayanlar kaç girişi dışa aktarabilmelidir. Boş = sınır yok, Hayır = dışa aktarma yok
+how many minutes should an account or ip be blocked (default 1) ?	admin	tr	Bir hesap veya IP kaç dakika engellenmelidir. Varsayılan = 30
 html/plaintext	admin	tr	HTML/metin
 icon	admin	tr	Simge
 idle	admin	tr	Boşta
@@ -453,7 +456,7 @@ view access log	admin	tr	Erişim kütüğünü görüntüle
 view account	admin	tr	Hesap görüntüle
 view category	admin	tr	Kategori görüntüle
 view error log	admin	tr	Hata kütüğünü görüntüle
-view sessions	admin	tr	Oturumları görüntüle
+view sessions	admin	tr	Oturumlar
 view this user	admin	tr	Bu kullanıcıyı görüntüle
 view user account	admin	tr	Kullanıcı hesabını görüntüle
 who would you like to transfer all records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime taşımak istesiniz?

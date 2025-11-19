@@ -191,7 +191,7 @@ change account_id	admin	de	Änderung der Konto-ID
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
 change domain of email address and aliases	admin	de	Ändert Domain von E-Mail-Adressen oder Aliase
-change login screen message	admin	de	Nachricht der Startseite ändern
+change login screen message	admin	de	Nachricht Anmeldeseite
 change owner	admin	de	Besitzer ändern
 change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	de	Ändert den Besitzer der gefundenen Dateien in /home auf den neuen Benutzer und verschiebt den Benutzerordner in /home/new-user/old-home-username.
 change password for %1	admin	de	Ändern des Passworts für %1
@@ -973,7 +973,7 @@ view access log	admin	de	Zugangsprotokoll anzeigen
 view account	admin	de	Benutzerkonto anzeigen
 view category	admin	de	Kategorie anzeigen
 view error log	admin	de	Fehlerprotokoll anzeigen
-view sessions	admin	de	Sitzungen anzeigen
+view sessions	admin	de	Sitzungen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
 virtual mail manager	admin	de	Virtual MAIL ManaGeR

@@ -986,6 +986,7 @@ october	common	sk	Október
 of	common	sk	z
 off	common	sk	Vypnúť
 ok	common	sk	OK
+old password	common	sk	Staré heslo
 old value	common	sk	Stará hodnota
 oman	common	sk	OMÁN
 on *nix systems please type: %1	common	sk	Na *NIX systémoch prosím napíšte: %1
@@ -1296,7 +1297,6 @@ show page generation time	common	sk	Ukázať čas generovania stránky
 show page generation time on the bottom of the page?	common	sk	Ukázať čas generovania stránky na jej spodku.
 show page generation time?	common	sk	Ukázať čas generovania stránky
 show password	common	sk	Ukázať heslo
-show these toolbar items helptext	common	sk	Zobraziť tieto položky na paneli nástrojov (ak sa tam zmestia). Ostatné sú k dispozícii v zozname [⋮].
 show values	common	sk	Zobraziť hodnoty
 show/hide	common	sk	Zobraziť/skryť bočný panel
 showing	common	sk	Zobrazujem

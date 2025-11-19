@@ -80,6 +80,7 @@ admin password	admin	nl	Admin wachtwoord
 admin queue and history	admin	nl	Beheerders wachtrij en historie
 admins	admin	nl	Beheerders
 advanced options	admin	nl	Geavanceerde opties
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	nl	Na hoeveel mislukte pogingen om in te loggen moet een account worden geblokkeerd. Standaard = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	nl	Na hoeveel onsuccesvolle inlogpogingen moet een IP-adres geblokkeerd worden (standaard 3)?
 aliases	admin	nl	Aliassen
 all applications	admin	nl	Alle toepassingen
@@ -127,6 +128,7 @@ bad or malformed request. server responded: %s	admin	nl	Ongeldig of slecht gefor
 bad request: %s	admin	nl	Slechte vraag: %s
 bi-dir passthrough	admin	nl	bi-directionele doorgave
 bi-directional	admin	nl	bi-directioneel
+blocking after wrong password	admin	nl	Blokkeren na verkeerd wachtwoord
 bottom	admin	nl	Onderaan
 bulk changes	admin	nl	Bulkwijzigingen
 bulk password reset	admin	nl	Bulk wachtwoord opnieuw instellen
@@ -154,6 +156,7 @@ check items to <b>%1</b> to %2 for %3	admin	nl	Controleer items van <b>%1</b> to
 clear security tokens	admin	nl	Beveiligingstoken wissen
 click to select a color	admin	nl	Klik om een kleur te kiezen
 color	admin	nl	Kleur
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	nl	Door komma's gescheiden IP-adressen die zijn opgenomen in de witte lijst voor bovenstaande blokkering (:optioneel aantal pogingen)
 command scheduled to run at %1	admin	nl	Command is gepland om om %1 uitgevoerd te worden
 connection dropped by imap server.	admin	nl	Verbinding viel uit door IMAP server
 container	admin	nl	Container
@@ -467,6 +470,7 @@ own install id	admin	nl	Eigen installatie-ID
 own install id:	admin	nl	Eigen installatie ID:
 passthrough	admin	nl	Doorgeven
 password for smtp-authentication	admin	nl	Wachtwoord voor SMTP-authenticatie
+password to unlock encrypted p12	admin	nl	Wachtwoord om versleutelde p12 te ontgrendelen
 password updated	admin	nl	Wachtwoord bijgewerkt
 path information	admin	nl	Path informatie
 peer server list	admin	nl	Peer-serverlijst
@@ -662,7 +666,7 @@ view access log	admin	nl	Toegangslog bekijken
 view account	admin	nl	Account weergegeven
 view category	admin	nl	Categorie weergeven
 view error log	admin	nl	Foutenlogboek weergeven
-view sessions	admin	nl	Sessies weergeven
+view sessions	admin	nl	Sessies
 view this user	admin	nl	Deze gebruiker weergeven
 view user account	admin	nl	Gebruikersaccount weergeven
 virtual mail manager	admin	nl	Virtual MAIL ManaGeR

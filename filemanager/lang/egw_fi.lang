@@ -158,6 +158,8 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	fi	Valitse viennin oletusasetus
 if you specify an export definition, it will be used when you export*	filemanager	fi	Valitse viennin oletusasetus
 inherited	filemanager	fi	Perityt oikeudet
+job folder %1 does not exist or is not writable	filemanager	fi	Työkansio %1 ei ole olemassa tai sitä ei voi kirjoittaa.
+leave empty to delete the file after attaching	filemanager	fi	Jätä tyhjäksi, jos haluat poistaa tiedoston liittämisen jälkeen
 link	filemanager	fi	Linkki
 link %1: %2	filemanager	fi	Linkki %1: %2
 link target	filemanager	fi	Linkkikohde
@@ -177,6 +179,7 @@ modify all subdirectories and their content	filemanager	fi	Muokkaa kaikkia alaha
 mount permanently	filemanager	fi	Kiinnitys pysyvästi
 mountpoints	filemanager	fi	Mountpoints
 move	filemanager	fi	Siirrä
+move file to	filemanager	fi	Siirrä tiedosto
 move into folder	filemanager	fi	Siirrä kansioon
 move to	filemanager	fi	Siirrä
 moved %1 to %2	filemanager	fi	%1 siirrettiin %2

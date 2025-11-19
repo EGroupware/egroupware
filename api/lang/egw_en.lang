@@ -419,6 +419,7 @@ details	common	en	Details
 directory	common	en	Folder
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the web server or is not relative to the document root!
 directory for storing merged documents	preferences	en	Folder for storing merged documents
+directory successfully created.	common	en	Directory successfully created.
 directory with documents to insert entries	preferences	en	Folder with documents to insert entries
 disabled	common	en	Disabled
 discard changes	common	en	Discard changes
@@ -520,6 +521,7 @@ error deleting %1!	common	en	Error deleting %1!
 error enabling push	common	en	Error enabling push
 error renaming %1 %2 directory	common	en	Error renaming %1 %2 folder!
 error uploading file!	filemanager	en	Error uploading file!
+error while creating directory.	common	en	Error while creating directory.
 error: template not found !!!	common	en	Error: Template not found!
 error: webserver is not allowed to write into '%1' !!!	common	en	Error: web server is not allowed to write into '%1'!
 error: while saving !!!	common	en	Error while saving!
@@ -879,6 +881,7 @@ minute	common	en	minute
 minutes	common	en	minutes
 missing: %1	common	en	Missing: %1
 mo	common	en	Mo
+mode	common	en	Mode
 mode of required directory "%1" changed to %2.	admin	en	Mode of required folder "%1" changed to %2.
 modifier	preferences	en	Modifier
 moldova, republic of	common	en	MOLDOVA, REPUBLIC OF
@@ -988,6 +991,7 @@ october	common	en	October
 of	common	en	of
 off	common	en	Off
 ok	common	en	OK
+old password	common	en	Old password
 old value	common	en	Old Value
 oman	common	en	OMAN
 on *nix systems please type: %1	common	en	On *nix systems please type: %1

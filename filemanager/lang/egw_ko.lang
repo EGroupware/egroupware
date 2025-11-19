@@ -51,6 +51,8 @@ group home quota	filemanager	ko	그룹 홈 할당량
 hostname/ip for webdav and smb	filemanager	ko	WebDAV 및 SMB용 호스트 이름/IP
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ko	여기에 폴더(전체 VFS 경로)를 지정하면 %1에서 각 문서에 대한 작업을 표시합니다. 이 작업을 통해 %1 데이터가 삽입된 지정된 문서를 다운로드할 수 있습니다.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ko	여기에 폴더(전체 VFS 경로)를 지정하면 %1은(는) 각 항목에 대해 추가 문서 아이콘을 표시합니다. 이 아이콘을 사용하면 데이터가 삽입된 지정된 문서를 다운로드할 수 있습니다.
+job folder %1 does not exist or is not writable	filemanager	ko	작업 폴더 %1이 존재하지 않거나 쓰기 권한이 없습니다.
+leave empty to delete the file after attaching	filemanager	ko	첨부 후 파일을 삭제하려면 비워 두세요
 link	filemanager	ko	링크
 list view	filemanager	ko	목록 보기
 location	filemanager	ko	장소
@@ -60,6 +62,7 @@ modified	filemanager	ko	수정됨
 modified between	filemanager	ko	수정됨
 mount permanently	filemanager	ko	영구적으로 마운트
 mountpoints	filemanager	ko	마운트 포인트
+move file to	filemanager	ko	파일을 다음 위치로 이동:
 notebookbar	filemanager	ko	탭
 open	filemanager	ko	개설
 open documents with collabora, if permissions are given	filemanager	ko	권한이 부여된 경우 콜러보라 온라인에서 문서 열기

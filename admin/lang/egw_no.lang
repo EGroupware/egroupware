@@ -63,6 +63,7 @@ admin name	admin	no	Admin Navn
 admin password	admin	no	Admin passord
 admins	admin	no	Administratorer
 advanced options	admin	no	Avanserte valg
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	no	Etter hvor mange mislykkede forsøk på å logge inn skal en konto blokkeres. Standard = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	no	Etter hvor mange mislykkede forsøk på å logge inn en IP blir sperret (standard 3)?
 aliases	admin	no	Alias
 all applications	admin	no	Samtlige programmer
@@ -98,6 +99,7 @@ authentication / accounts	admin	no	Autorisasjon / Kontoer
 auto create account records for authenticated users	admin	no	Opprett kontoer for autoriserte brukere automatisk
 bi-dir passthrough	admin	no	bi-mappe gjennomgang
 bi-directional	admin	no	bi-direksjon
+blocking after wrong password	admin	no	Blokkering etter feil passord
 bottom	admin	no	Bunn
 bulk changes	admin	no	Masseendringer
 bulk password reset	admin	no	Masse tilbakestilling av passord
@@ -121,6 +123,7 @@ check items to <b>%1</b> to %2 for %3	admin	no	Sjekk oppføringene til <b>%1</b>
 clear security tokens	admin	no	Tøm sikkerhetstokener
 click to select a color	admin	no	Trykk for å velge farge
 color	admin	no	Farge
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	no	Kommaseparerte IP-adresser som er hvitlistet fra ovennevnte blokkering (:valgfritt antall forsøk)
 container	admin	no	Beholder
 continue	admin	no	Fortsette
 country	admin	no	Land
@@ -510,7 +513,7 @@ view access log	admin	no	Vis access log
 view account	admin	no	Vis konto
 view category	admin	no	Vis kategori
 view error log	admin	no	Vis feillogg
-view sessions	admin	no	Vis sessions
+view sessions	admin	no	Sessions
 view this user	admin	no	Vis denne bruker
 view user account	admin	no	Vis brukerkonto
 virtual mail manager	admin	no	Virtuell Mail Manager

@@ -924,6 +924,7 @@ october	common	ru	Октябрь
 of	common	ru	из
 off	common	ru	Выключенный
 ok	common	ru	OK
+old password	common	ru	Старый пароль
 old value	common	ru	Старое значение
 oman	common	ru	Оман
 on *nix systems please type: %1	common	ru	В *NIX-системах пожалуйста наберите: %1
@@ -1187,7 +1188,6 @@ show page generation time	common	ru	Показать время генераци
 show page generation time on the bottom of the page?	common	ru	Показать время генерации страницы внизу страницы.
 show page generation time?	common	ru	Отображать время генерации страницы
 show password	common	ru	Показать пароль
-show these toolbar items helptext	common	ru	Показать эти элементы на панели инструментов (если они помещаются). Остальные доступны в списке [⋮].
 show values	common	ru	Показать Значения
 show/hide	common	ru	показать/скрыть боковую панель
 showing	common	ru	показывем

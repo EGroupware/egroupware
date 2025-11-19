@@ -411,6 +411,7 @@ details	common	pt-br	Detalhes
 directory	common	pt-br	Pasta
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	pt-br	Diretório não existe, não pode ser lido pelo servidor web ou não é relativo à pasta raiz!
 directory for storing merged documents	preferences	pt-br	Pasta para armazenar documentos mesclados
+directory successfully created.	common	pt-br	Diretório criado com sucesso.
 directory with documents to insert entries	preferences	pt-br	Pasta com documentos para inserir entradas
 disabled	common	pt-br	Desabilitado
 discard changes	common	pt-br	Descartar alterações
@@ -511,6 +512,7 @@ error deleting %1!	common	pt-br	Erro ao excluir %1!
 error enabling push	common	pt-br	Error enabling push
 error renaming %1 %2 directory	common	pt-br	Erro renomeando diretório %1 %2!
 error uploading file!	filemanager	pt-br	Erro carregando arquivo!
+error while creating directory.	common	pt-br	Erro ao criar o diretório.
 error: template not found !!!	common	pt-br	Erro: Modelo não encontrado!
 error: webserver is not allowed to write into '%1' !!!	common	pt-br	Erro: servidor web não possui permissão para escrever em '%1'!
 error: while saving !!!	common	pt-br	Erro salvando!
@@ -952,6 +954,7 @@ october	common	pt-br	Outubro
 of	common	pt-br	de
 off	common	pt-br	Fora
 ok	common	pt-br	OK
+old password	common	pt-br	Senha antiga
 old value	common	pt-br	Valor antigo
 oman	common	pt-br	OMÃ
 on *nix systems please type: %1	common	pt-br	Sobre sistemas *nix tipo: %1
@@ -1246,7 +1249,6 @@ show page generation time	common	pt-br	Mostrar tempo de criação da página
 show page generation time on the bottom of the page?	common	pt-br	O tempo de criação da página deve ser mostrado no rodapé.
 show page generation time?	common	pt-br	Exibir tempo de geração da página
 show password	common	pt-br	Mostrar senha
-show these toolbar items helptext	common	pt-br	Mostrar esses itens na barra de ferramentas (se couberem). Os outros estão disponíveis na lista [⋮].
 show values	common	pt-br	Mostrar valores
 show/hide	common	pt-br	Mostrar/ocultar barra lateral
 showing	common	pt-br	Exibindo

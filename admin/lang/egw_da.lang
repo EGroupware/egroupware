@@ -66,6 +66,7 @@ admin name	admin	da	Administrator navn
 admin password	admin	da	Admin adgangskode
 admins	admin	da	Administratore
 advanced options	admin	da	Avanceret indstillinger
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	da	Efter hvor mange mislykkede loginforsøg skal en konto blokeres. Standard = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en IP låses (Standard 3)?
 all groups	admin	da	Alle grupper
 all records and account information will be lost!	admin	da	Alle posteringer og konto infomationer vil gå tabt!
@@ -100,6 +101,7 @@ async services last executed	admin	da	Async services sidst eksekveret
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	da	Prøv at bruge korrekt mimetype for FTP i stedet for standard 'application/octet-stream'
 available placeholders	admin	da	Tilgængelige pladsholdere
 bi-directional	admin	da	bi-directional
+blocking after wrong password	admin	da	Blokering efter forkert adgangskode
 bottom	admin	da	Bunden
 bulk changes	admin	da	Masseændringer
 bulk password reset	admin	da	Nulstilling af adgangskode i bulk
@@ -122,6 +124,7 @@ check ip address of all sessions	admin	da	Kontrollere IP adresse for alle sessio
 clear security tokens	admin	da	Ryd sikkerhedstokens
 click to select a color	admin	da	Klik for at vælge en farve
 color	admin	da	Farve
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	da	Kommaseparerede IP-adresser, der er hvidlistet fra ovenstående blokering (:valgfrit antal forsøg)
 container	admin	da	Beholder
 copy of	admin	da	Kopi af
 country	admin	da	Land
@@ -372,6 +375,7 @@ outbound	admin	da	Udgående
 own categories	admin	da	Egne kategorier
 own install id	admin	da	Eget installations-ID
 own install id:	admin	da	Eget installations-ID:
+password to unlock encrypted p12	admin	da	Adgangskode til at låse krypteret p12 op
 peer server list	admin	da	Peer server liste
 peer servers	admin	da	Peer servere
 percent of users that logged out	admin	da	Procent af brugere der loggede ud
@@ -524,7 +528,7 @@ view access log	admin	da	Vis adgangslog
 view account	admin	da	Vis konto
 view category	admin	da	Vis kategori
 view error log	admin	da	Vis fejllog
-view sessions	admin	da	Vis sessioner
+view sessions	admin	da	Sessioner
 view this user	admin	da	Vis denne bruger
 view user account	admin	da	Vis bruger konto
 virtual mail manager	admin	da	Virtuel post håndtering

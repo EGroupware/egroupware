@@ -963,7 +963,7 @@ view access log	admin	sk	Zobraziť prístupové záznamy
 view account	admin	sk	Zobraziť účet
 view category	admin	sk	Zobraziť kategóriu
 view error log	admin	sk	Zobraziť záznam o chybách
-view sessions	admin	sk	Zobraziť relácie
+view sessions	admin	sk	Relácie
 view this user	admin	sk	Zobraziť tohto používateľa
 view user account	admin	sk	Zobraziť používateľský účet
 virtual mail manager	admin	sk	Virtuálny MAIL ManaGeR

@@ -973,7 +973,7 @@ view access log	admin	it	Visualizza Log accessi
 view account	admin	it	Visualizza account
 view category	admin	it	Visualizza categoria
 view error log	admin	it	Visualizza Log errori
-view sessions	admin	it	Visualizza sessioni
+view sessions	admin	it	Sessioni
 view this user	admin	it	visualizza questo utente
 view user account	admin	it	Visualizza account utente
 virtual mail manager	admin	it	ManaGeR MAIL Virtuale

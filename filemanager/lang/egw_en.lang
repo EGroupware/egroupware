@@ -190,7 +190,7 @@ job folder %1 does not exist or is not writable	filemanager	en	Job folder %1 doe
 job saved.	filemanager	en	Job saved.
 jobs	filemanager	en	Jobs
 last accessed	filemanager	en	Last accessed
-leave empty to delete the file after attaching	filemanager	en	leave empty to delete the file after attaching
+leave empty to delete the file after attaching	filemanager	en	Leave empty to delete the file after attaching
 link	filemanager	en	Link
 link %1: %2	filemanager	en	Link %1: %2
 link into folder	filemanager	en	Link into folder

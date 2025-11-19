@@ -161,6 +161,8 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
 if you specify an export definition, it will be used when you export*	filemanager	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
 inherited	filemanager	ru	Унаследованный
+job folder %1 does not exist or is not writable	filemanager	ru	Папка задания %1 не существует или не доступна для записи.
+leave empty to delete the file after attaching	filemanager	ru	Оставьте поле пустым, чтобы удалить файл после прикрепления.
 link	filemanager	ru	Ссылка
 link %1: %2	filemanager	ru	Ссылка %1: %2
 link target	filemanager	ru	Целевая ссылка
@@ -181,6 +183,7 @@ mount	filemanager	ru	Монтировать
 mount permanently	filemanager	ru	Монтировать постоянно
 mountpoints	filemanager	ru	Точки монтирования
 move	filemanager	ru	Переместить
+move file to	filemanager	ru	Переместить файл в
 move to	filemanager	ru	Переместить в
 moved %1 to %2	filemanager	ru	Перемещено %1 в %2
 name of current user, all other contact fields are valid too	filemanager	ru	Имя текущего пользователя, все остальные поля контакта также верны

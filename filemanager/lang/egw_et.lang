@@ -55,6 +55,8 @@ hostname/ip for webdav and smb	filemanager	et	Hostnimi/IP WebDAV ja SMB puhul
 id	filemanager	et	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	et	Kui te määrate siin kausta (täielik VFS-pada), siis %1 kuvab iga dokumendi jaoks toimingu. See tegevus võimaldab laadida alla määratud dokumendi koos sisestatud %1 andmetega.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	et	Kui te määrate siin kausta (täielik VFS-tee), kuvab %1 iga kirje jaoks lisadokumendi ikooni. See ikoon võimaldab allalaadida määratud dokumenti koos sisestatud andmetega.
+job folder %1 does not exist or is not writable	filemanager	et	Töökaust %1 ei ole olemas või ei ole kirjutatav.
+leave empty to delete the file after attaching	filemanager	et	Jäta tühjaks, et fail pärast lisamist kustutada
 link	filemanager	et	Link
 list view	filemanager	et	Nimekirja vaade
 location	filemanager	et	Asukoht
@@ -66,6 +68,7 @@ modified between	filemanager	et	Muudetud vahel
 mount permanently	filemanager	et	Paigaldage püsivalt
 mountpoints	filemanager	et	Mountpoints
 move	filemanager	et	liiguta
+move file to	filemanager	et	Liiguta fail
 noone	filemanager	et	Mittekeegi
 notebookbar	filemanager	et	Tabbed
 open	filemanager	et	avatud

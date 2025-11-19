@@ -182,7 +182,9 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	cs	Pokud zadáte definici exportu, bude použita při exportu
 if you specify an export definition, it will be used when you export*	filemanager	cs	Pokud zadáte definici exportu, bude použita při exportu
 inherited	filemanager	cs	Zděděné
+job folder %1 does not exist or is not writable	filemanager	cs	Složka úlohy %1 neexistuje nebo není zapisovatelná.
 last accessed	filemanager	cs	Poslední přístup
+leave empty to delete the file after attaching	filemanager	cs	Nechte pole prázdné, chcete-li soubor po připojení smazat
 link	filemanager	cs	Odkaz
 link %1: %2	filemanager	cs	Odkaz %1: %2
 link into folder	filemanager	cs	Odkaz do složky
@@ -205,6 +207,7 @@ mount /etemplates to allow customizing of etemplates	filemanager	cs	Připojení 
 mount permanently	filemanager	cs	Trvalá montáž
 mountpoints	filemanager	cs	Přípojné body
 move	filemanager	cs	Přesunout
+move file to	filemanager	cs	Přesunout soubor do
 move into folder	filemanager	cs	Přesunout do složky
 move to	filemanager	cs	Přesunout do
 moved %1 to %2	filemanager	cs	%1přesunuto do %2

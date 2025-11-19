@@ -75,10 +75,13 @@ add user	admin	id	Tambahkan pengguna
 add user or group	admin	id	Tambahkan pengguna atau grup
 admin dn	admin	id	Admin DN
 admin email	admin	id	Email Admin
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	id	Alamat email admin, dipisahkan dengan koma, untuk diberitahu tentang akun pengguna dan IP yang diblokir. Kosong = tidak ada pemberitahuan.
 admin name	admin	id	Nama Admin
 admin password	admin	id	Kata sandi admin
 admins	admin	id	Admins
 advanced options	admin	id	Opsi Canggih
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	id	Setelah berapa kali upaya login yang gagal, akun harus diblokir. Default = 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	id	Setelah berapa kali upaya login yang gagal, IP harus diblokir. Default = 15
 aliases	admin	id	Alias
 all applications	admin	id	Semua aplikasi
 all users	admin	id	Semua pengguna
@@ -105,6 +108,7 @@ authentication / accounts	admin	id	Otentikasi / Akoun
 bad login name or password.	admin	id	Nama atau password tidak benar.
 bi-dir passthrough	admin	id	bi-dir passthrough
 bi-directional	admin	id	bi-directional
+blocking after wrong password	admin	id	Pemblokiran setelah kata sandi salah
 bottom	admin	id	Bawah
 bulk changes	admin	id	Perubahan massal
 bulk password reset	admin	id	Pengaturan ulang kata sandi massal
@@ -130,6 +134,7 @@ children	admin	id	Anak
 clear security tokens	admin	id	Menghapus token keamanan
 click to select a color	admin	id	Klik untuk memilih warna
 color	admin	id	Warna
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	id	Alamat IP yang diizinkan (white-listed) dari pemblokiran di atas (:jumlah upaya opsional)
 container	admin	id	Wadah
 continue	admin	id	Lanjutkan
 could not open secure connection to the imap server. %s : %s.	admin	id	Tidak dapat membuka koneksi aman ke server IMAP. %s : %s.
@@ -244,6 +249,7 @@ home screen message	admin	id	Pesan layar utama
 host information	admin	id	Informasi host
 hour<br>(0-23)	admin	id	Jam<br>(0-23)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	id	Berapa banyak entri yang dapat diekspor oleh non-admin. Kosong = tidak ada batas, Tidak = tidak ada ekspor
+how many minutes should an account or ip be blocked (default 1) ?	admin	id	Berapa menit akun atau IP harus diblokir. Default = 30
 icon	admin	id	Ikon
 idle	admin	id	Menganggur
 if different from email address	admin	id	Tidak ada batasan
@@ -340,6 +346,7 @@ own install id	admin	id	ID penginstalan sendiri
 own install id:	admin	id	Memiliki ID penginstalan sendiri:
 passthrough	admin	id	Passthrough
 password for smtp-authentication	admin	id	Password for SMTP-authentication
+password to unlock encrypted p12	admin	id	Kata sandi untuk membuka kunci file p12 terenkripsi
 password updated	admin	id	Password updated
 path information	admin	id	Path information
 peer server list	admin	id	Peer server list
@@ -474,7 +481,7 @@ view access log	admin	id	Lihat log akses
 view account	admin	id	Lihat akoun
 view category	admin	id	Lihat kategori
 view error log	admin	id	Lihat log error
-view sessions	admin	id	Lihat sesi
+view sessions	admin	id	Sesi
 view this user	admin	id	lihat pengguna ini
 view user account	admin	id	Lihat akoun pengguna
 virtual mail manager	admin	id	Virtual MAIL ManaGeR

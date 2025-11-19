@@ -157,6 +157,8 @@ id	filemanager	pt-br	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	pt-br	Se você especificar uma pasta (caminho VFS completo) aqui, %1 exibirá uma ação para cada documento. Essa ação permite fazer o download do documento especificado com os dados %1 inseridos.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	pt-br	Se você especificar uma pasta (caminho VFS completo) aqui, %1 exibirá um ícone de documento extra para cada entrada. Esse ícone permite baixar o documento especificado com os dados inseridos.
 inherited	filemanager	pt-br	Herdado
+job folder %1 does not exist or is not writable	filemanager	pt-br	A pasta de trabalho %1 não existe ou não é gravável.
+leave empty to delete the file after attaching	filemanager	pt-br	Deixe em branco para excluir o arquivo após anexá-lo
 link	filemanager	pt-br	Link
 link %1: %2	filemanager	pt-br	Link %1: %2
 link target	filemanager	pt-br	Destino do link
@@ -177,6 +179,7 @@ mount	filemanager	pt-br	monte
 mount permanently	filemanager	pt-br	Montagem permanente
 mountpoints	filemanager	pt-br	Pontos de Montagem
 move	filemanager	pt-br	Mover
+move file to	filemanager	pt-br	Mover arquivo para
 move into folder	filemanager	pt-br	Mover para pasta
 move to	filemanager	pt-br	Mover para
 moved %1 to %2	filemanager	pt-br	%1 movido para %2
