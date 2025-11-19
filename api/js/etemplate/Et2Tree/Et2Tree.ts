@@ -24,8 +24,6 @@ import {egwIsMobile} from "../../egw_action/egw_action_common";
 
 export type TreeItemData = SelectOption & {
 	focused?: boolean;
-	// Has children, but they may not be provided in children (lazy loaded)
-	child: Boolean | 1,
 	data?: Object,//{sieve:true,...} or {acl:true} or other
 	//this is coming from SelectOption
 	value: string,
@@ -59,6 +57,9 @@ export type TreeItemData = SelectOption & {
 	 * @deprecated Use "children"
 	 */
 	item : object[],
+	// Has children, but they may not be provided in children (lazy loaded)
+	// @deprecated, SelectOption provides hasChildren
+	child : Boolean | 1,
 
 	tooltip: String,
 	userdata: any[]
@@ -1030,7 +1031,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		if (selectOption.open) //if item is a folder and it is opened use im1
 		{
 			img = selectOption.im1;
-		} else if (selectOption.child || selectOption.item?.length > 0)// item is a folder and closed use im2
+		}
+		else if(selectOption.hasChildren || selectOption.item?.length > 0)// item is a folder and closed use im2
 		{
 			img = selectOption.im2;
 		} else// item is a leaf use im0
@@ -1048,7 +1050,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		} else
 		{
 			lazy = (typeof selectOption.children === "undefined" || selectOption.children?.length == 0)
-				&& selectOption.child;
+				&& selectOption.hasChildren;
 		}
 		const value = selectOption.value ?? selectOption.id;
 		if(expandState && this.autoloading && lazy)

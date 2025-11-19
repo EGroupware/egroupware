@@ -54,7 +54,7 @@ class admin_hooks
 			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
 			{
 				$file['User Accounts']              = array(
-					'id' => '/accounts',
+					Api\Etemplate\Widget\Tree::ID => '/accounts',
 					'icon' => Api\Image::find('addressbook', 'accounts'),
 				);
 			}
@@ -68,9 +68,9 @@ class admin_hooks
 			if (! $GLOBALS['egw']->acl->check('group_access',1,'admin'))
 			{
 				$file['User Groups']                = array(
-					'id' => '/groups',
+					Api\Etemplate\Widget\Tree::ID                => '/groups',
 					'icon' => Api\Image::find('addressbook', 'group'),
-					'child' => 1,
+					Api\Etemplate\Widget\Tree::AUTOLOAD_CHILDREN => 1,
 				);
 			}
 
