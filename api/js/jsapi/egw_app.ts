@@ -307,6 +307,12 @@ export abstract class EgwApp
 			}
 		}
 
+		// If nextmatch changed due to submitting, we have to clean up
+		if(this.nm && this.et2.getWidgetById('nm') && this.nm != this.et2.getWidgetById('nm'))
+		{
+			this.nm.getDOMNode()?.removeEventListener('et2-filter', this.nmFilterChange);
+			this.nm = null;
+		}
 		// if we have a NM widget: make it available as this.nm and install event-listener for this.nmFilterChange
 		if (!this.nm && (this.nm = this.et2.getWidgetById('nm')))
 		{
