@@ -380,6 +380,7 @@ class calendar_hooks
 			),
 			'default_category'       => array(
 				'type' => 'et2-select-cat',
+				'attributes' => ['multiple' => true, 'application' => 'calendar'],
 				'label'   => 'New event category',
 				'name'    => 'default_category',
 				'help'    => 'Category automatically added to new events',
