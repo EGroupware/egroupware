@@ -1,4 +1,4 @@
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 800px), screen and (max-height: 600px) {
   html * {
     touch-action: auto;
     -webkit-overflow-scrolling: touch;
@@ -49,6 +49,7 @@
   }
   :root et2-dialog,
   body et2-dialog {
+    --width: 100%;
     /* Old way of adding stuff.  Buttons should be slotted into header-actions, anything else into label */
   }
   :root et2-dialog .egw-popup,
@@ -65,6 +66,9 @@
     /* allow dialog to be full screen */
     max-width: 100%;
     max-height: 100%;
+    /* require dialog to be full screen */
+    width: 100% !important;
+    height: 100% !important;
     border-radius: 0;
   }
   :root et2-dialog::part(header),
@@ -116,7 +120,6 @@
   body et2-dialog .dialogHeadbar:not(:empty) {
     color: var(--sl-color-neutral-0);
     font-size: var(--sl-font-size-x-large);
-    background-color: var(--application-color);
     position: fixed;
     height: calc(var(--sl-spacing-3x-large) - 1px);
     top: 1px;
@@ -130,6 +133,12 @@
     position: absolute;
     right: var(--sl-spacing-medium);
     font-weight: var(--sl-font-weight-bold);
+  }
+  :root et2-dialog .dialogHeadbar:not(:empty) ::part(base),
+  body et2-dialog .dialogHeadbar:not(:empty) ::part(base) {
+    box-shadow: none !important;
+    background-color: transparent;
+    --sl-input-border-color: transparent;
   }
   :root et2-dialog et2-hbox[slot="label"],
   body et2-dialog et2-hbox[slot="label"],
@@ -512,15 +521,6 @@
   body .et2_nextmatch table.egwGridView_grid tr div.h2_hbox {
     padding-bottom: 4px;
   }
-  :root .et2_nextmatch table.egwGridView_grid tr img,
-  body .et2_nextmatch table.egwGridView_grid tr img {
-    height: 12px;
-  }
-  :root .et2_nextmatch table.egwGridView_grid tr et2-image,
-  body .et2_nextmatch table.egwGridView_grid tr et2-image {
-    font-size: 12px;
-    width: 12px;
-  }
   :root .et2_nextmatch table.egwGridView_grid tbody tr.focused,
   body .et2_nextmatch table.egwGridView_grid tbody tr.focused {
     background-image: none;
@@ -553,6 +553,7 @@
     background-position: center;
     height: 99%;
     width: 99%;
+    z-index: 1;
   }
   :root .et2_nextmatch table.egwGridView_grid tbody tr:hover,
   body .et2_nextmatch table.egwGridView_grid tbody tr:hover {
@@ -619,6 +620,7 @@
     padding: 9px;
   }
   et2-button-icon.plus_button {
+    display: flex;
     position: fixed !important;
     right: 15px;
     bottom: 15px;
@@ -636,15 +638,15 @@
   et2-button-icon.plus_button:active {
     background-color: #0c5da5;
   }
-}
-@media screen and (max-width: 600px) {
-  et2-dialog {
-    --width: 100%;
+  .kdots-glassy [slot='label']::part(base),
+  .kdots-glassy [slot='label'] *::part(base),
+  .kdots-glassy [slot='label'] *::part(input-control),
+  .kdots-glassy [slot='label'] *::part(combobox),
+  .kdots-glassy [slot='label'] *::part(button__base) {
+    box-shadow: none !important;
   }
-  et2-dialog::part(panel) {
-    /* make dialog full screen */
-    max-width: 100%;
-    max-height: 100%;
-    height: 100%;
+  .egw-popup [slot='label'] et2-dropdown-button {
+    --sl-spacing-large: 0;
+    --sl-input-border-color: transparent;
   }
 }

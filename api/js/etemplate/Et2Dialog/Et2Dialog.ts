@@ -152,6 +152,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 					user-select: none;
 					overflow: hidden;
 				}
+
+				.dialog__header-actions {
+					align-content: center;
+				}
 				.dialog__close {
 					padding: 0;
 					order: 99;
