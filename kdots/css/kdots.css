@@ -1281,7 +1281,6 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
   body et2-dialog .dialogHeadbar:not(:empty) {
     color: var(--sl-color-neutral-0);
     font-size: var(--sl-font-size-x-large);
-    background-color: var(--application-color);
     position: fixed;
     height: calc(var(--sl-spacing-3x-large) - 1px);
     top: 1px;
@@ -1295,6 +1294,12 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
     position: absolute;
     right: var(--sl-spacing-medium);
     font-weight: var(--sl-font-weight-bold);
+  }
+  :root et2-dialog .dialogHeadbar:not(:empty) ::part(base),
+  body et2-dialog .dialogHeadbar:not(:empty) ::part(base) {
+    box-shadow: none !important;
+    background-color: transparent;
+    --sl-input-border-color: transparent;
   }
   :root et2-dialog et2-hbox[slot="label"],
   body et2-dialog et2-hbox[slot="label"],

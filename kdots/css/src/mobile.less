@@ -110,7 +110,6 @@
 		&:not(:empty) {
 		  color: var(--sl-color-neutral-0);
 		  font-size: var(--sl-font-size-x-large);
-		  background-color: var(--application-color);
 		  position: fixed;
 		  height: calc(var(--sl-spacing-3x-large) - 1px);
 		  top: 1px;
@@ -123,6 +122,11 @@
 			position: absolute;
 			right: var(--sl-spacing-medium);
 			font-weight: var(--sl-font-weight-bold);
+		  }
+		  ::part(base){
+			box-shadow: none !important;
+			background-color: transparent;
+			--sl-input-border-color:transparent;
 		  }
 		}
 	  }
