@@ -89,4 +89,11 @@ html[data-darkmode="1"], .sl-theme-dark {
 	}
   }
   /** End WIDGETS **/
+  /**
+  * images that look like bootstrap icons can be inverted nicely into darkmode
+  * This is deprecated, we should replace these either with et2-images or use the bootstrap icons directly
+  **/
+  img[src^='/egroupware/node_modules/bootstrap-icons/icons/']{
+	filter: invert(1);
+  }
 }
