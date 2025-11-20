@@ -601,9 +601,6 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 	position: relative;
 }
 
-.mailPreviewHeaders :first-child, .mailDisplayHeaders :first-child {
-   color: var(--sl-color-neutral-800);
-}
 .mailPreviewHeaders et2-lavatar {
 	flex: 0 0 auto;
 }
@@ -903,8 +900,8 @@ div.mailComposeHeaderSection>table {
 et2-box.smime_cert_notverified {
 	border-top: 4px solid #8dff95 !important;
 }
-et2-image.smime_cert_notverified {
-	background: #8dff95;
+et2-image.smime_cert_notverified, et2-image.smime_cert_notverified svg {
+	color: #8dff95 !important;
 }
 et2-box.smime_cert_verified {
 	border-top: 4px solid #1ab82c !important;
@@ -913,17 +910,17 @@ et2-box.smime_cert_unknownemail {
 	border-top: 4px solid #a28cff !important;
 }
 
-et2-image.smime_cert_verified {
-	background: #1ab82c;
+et2-image.smime_cert_verified, et2-image.smime_cert_verified svg {
+	color: #1ab82c !important;
 }
 et2-box.smime_cert_notvalid {
 	border-top: 4px solid #e90052 !important;
 }
-et2-image.smime_cert_notvalid {
-	background: #e90052;
+et2-image.smime_cert_notvalid, et2-image.smime_cert_notvalid svg {
+	color: #e90052 !important;
 }
-et2-image.smime_cert_unknownemail {
-	background: #a28cff;
+et2-image.smime_cert_unknownemail, et2-image.smime_cert_unknownemail svg {
+	color: #a28cff !important;
 }
 .mailPreviewHeaders.smimeIcons et2-image {
 	width: 24px;

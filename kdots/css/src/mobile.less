@@ -21,6 +21,7 @@
 	  &::part(main) {
 		overflow-x: hidden;
 	  }
+
 	  &::part(status-split) {
 		--max: 0;
 	  }
@@ -48,6 +49,7 @@
 		right: 0;
 		overflow: auto;
 	  }
+
 	  &::part(panel) {
 		/* allow dialog to be full screen */
 		max-width: 100%;
@@ -132,6 +134,7 @@
 		  align-items: center;
 		}
 	  }
+
 	  span[slot="label"] {
 		flex-shrink: 1;
 		white-space: nowrap;
@@ -519,15 +522,6 @@
 		  div.h2_hbox {
 			padding-bottom: 4px;
 		  }
-
-		  img {
-			height: 12px;
-		  }
-
-		  et2-image {
-			font-size: 12px;
-			width: 12px;
-		  }
 		}
 
 		tbody {
@@ -545,6 +539,7 @@
 			td:last-child {
 			  position: relative;
 			}
+
 			td:last-child:before {
 			  content: " ";
 			  position: absolute;
@@ -647,6 +642,20 @@
 	  background-color: #0c5da5;
 	}
   }
+
+  .kdots-glassy [slot='label'] {
+	&::part(base), *::part(base), *::part(input-control), *::part(combobox), *::part(button__base) {
+	  box-shadow: none !important;
+	}
+  }
+
+  .egw-popup [slot='label'] {
+	et2-dropdown-button {
+	  --sl-spacing-large: 0;
+	  --sl-input-border-color:transparent;
+	}
+  }
+
 }
 
 @media screen and (max-width: 600px) {

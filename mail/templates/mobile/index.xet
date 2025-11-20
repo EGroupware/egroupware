@@ -30,7 +30,7 @@
 						</et2-hbox>
                         <et2-hbox class="icons">
                             <et2-description class="status_img bi-envelope-open $row_cont[class]" align="right"></et2-description>
-                            <et2-image src="$row_cont[smime]" height="16px" align="right"></et2-image>
+                            <et2-image src="$row_cont[smime]" inline="true" class="status_img" align="right"></et2-image>
                             <html id="${row}[attachments]" align="right"/>
 						</et2-hbox>
 					</et2-vbox>
@@ -85,7 +85,7 @@
 					<et2-url-email id="${row}[toaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
 					<et2-url-email id="${row}[fromaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
 					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
-					<et2-image src="$row_cont[smime]"></et2-image>
+					<et2-image src="$row_cont[smime]" inline="true"></et2-image>
 				</row>
 			</rows>
 		</grid>

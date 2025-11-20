@@ -31,9 +31,9 @@
 							</et2-hbox>
 						</et2-details>
                         <et2-hbox class="mailPreviewHeaders smimeIcons">
-                            <et2-image id="smime_signature" src="smime_sign" statustext="Smime signed message" hidden="!@smime=smime_sign"
+                            <et2-image id="smime_signature" src="smime_sign" inline="true" statustext="Smime signed message" hidden="!@smime=smime_sign"
                                        align="right" width="1.5em"></et2-image>
-                            <et2-image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" hidden="!@smime=smime_encrypt"
+                            <et2-image id="smime_encryption" src="smime_encrypt" inline="true" statustext="Smime encrypted message" hidden="!@smime=smime_encrypt"
                                        align="right" width="1.5em"></et2-image>
                         </et2-hbox>
 					</et2-hbox>

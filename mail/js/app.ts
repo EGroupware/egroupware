@@ -5531,7 +5531,7 @@ export class MailApp extends EgwApp
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
 		var smime_signature = et2_object.getWidgetById('smime_signature');
 		var smime_encryption = et2_object.getWidgetById('smime_encryption');
-		var mail_container = egwIsMobile()? document.getElementsByClassName('mail-d-h1')[0] :
+		var mail_container = egwIsMobile()? document.getElementsByClassName('mailContent')[0] :
 				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer') :
 				et2_object.getWidgetById('mailPreviewContainer').getDOMNode();
 		smime_signature.set_disabled(!data.signed);
@@ -5597,6 +5597,10 @@ export class MailApp extends EgwApp
 	 */
 	smime_certAddToContact(_metadata, _display)
 	{
+		//do not show the dialog on mobile
+		if(egwIsMobile()){
+			return;
+		}
 		if (!_metadata || _metadata.length < 1) return;
 		var self = this;
 		var content = jQuery.extend(true, {message:_metadata.msg}, _metadata);

@@ -1677,15 +1677,6 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
   body .et2_nextmatch table.egwGridView_grid tr div.h2_hbox {
     padding-bottom: 4px;
   }
-  :root .et2_nextmatch table.egwGridView_grid tr img,
-  body .et2_nextmatch table.egwGridView_grid tr img {
-    height: 12px;
-  }
-  :root .et2_nextmatch table.egwGridView_grid tr et2-image,
-  body .et2_nextmatch table.egwGridView_grid tr et2-image {
-    font-size: 12px;
-    width: 12px;
-  }
   :root .et2_nextmatch table.egwGridView_grid tbody tr.focused,
   body .et2_nextmatch table.egwGridView_grid tbody tr.focused {
     background-image: none;
@@ -1801,6 +1792,17 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
   et2-button-icon.plus_button:hover,
   et2-button-icon.plus_button:active {
     background-color: #0c5da5;
+  }
+  .kdots-glassy [slot='label']::part(base),
+  .kdots-glassy [slot='label'] *::part(base),
+  .kdots-glassy [slot='label'] *::part(input-control),
+  .kdots-glassy [slot='label'] *::part(combobox),
+  .kdots-glassy [slot='label'] *::part(button__base) {
+    box-shadow: none !important;
+  }
+  .egw-popup [slot='label'] et2-dropdown-button {
+    --sl-spacing-large: 0;
+    --sl-input-border-color: transparent;
   }
 }
 @media screen and (max-width: 600px) {
