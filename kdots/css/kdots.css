@@ -1163,13 +1163,7 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
   padding: 0;
 }
 /*** END WIDGETS ***/
-.dialogHeadbar {
-  color: var(--application-header-text-color);
-}
-table.egwGridView_grid {
-  width: 100%;
-}
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 800px), screen and (max-height: 600px) {
   html * {
     touch-action: auto;
     -webkit-overflow-scrolling: touch;
@@ -1220,6 +1214,7 @@ table.egwGridView_grid {
   }
   :root et2-dialog,
   body et2-dialog {
+    --width: 100%;
     /* Old way of adding stuff.  Buttons should be slotted into header-actions, anything else into label */
   }
   :root et2-dialog .egw-popup,
@@ -1236,6 +1231,9 @@ table.egwGridView_grid {
     /* allow dialog to be full screen */
     max-width: 100%;
     max-height: 100%;
+    /* require dialog to be full screen */
+    width: 100% !important;
+    height: 100% !important;
     border-radius: 0;
   }
   :root et2-dialog::part(header),
@@ -1815,17 +1813,6 @@ table.egwGridView_grid {
   .egw-popup [slot='label'] et2-dropdown-button {
     --sl-spacing-large: 0;
     --sl-input-border-color: transparent;
-  }
-}
-@media screen and (max-width: 600px) {
-  et2-dialog {
-    --width: 100%;
-  }
-  et2-dialog::part(panel) {
-    /* make dialog full screen */
-    max-width: 100%;
-    max-height: 100%;
-    height: 100%;
   }
 }
 /**
