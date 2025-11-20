@@ -182,24 +182,22 @@
 		</grid>
 	</template>
 	<template id="calendar.edit" template="" lang="" group="0" version="1.9.001">
+        <et2-hbox  span="all" width="100%" slot="label">
+            <et2-button-icon  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
+            <et2-button-icon statustext="delete this entry" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete');" image="delete" span="all"></et2-button-icon>
+            <et2-button-icon  statustext="Find free timeslots where the selected participants are available for the given timespan"
+                              id="freetime" label="Freetime" onclick="app.calendar.freetime_search" image="clock-history" noSubmit="true"></et2-button-icon>
+            <et2-button-toggle ariaLabel="notifications" id="no_notifications" class="notification_check" onIcon="bell-fill" offIcon="bell-slash"/>
+            <et2-button-icon id="button[videoconference]" image="status/videoconference" noSubmit="true"
+                             onclick="app.calendar.joinVideoConference.call(window, '$cont[##videoconference]', this.getArrayMgr('content').data)"></et2-button-icon>
+            <et2-textbox type="hidden" id="delete_exceptions"></et2-textbox>
+        </et2-hbox>
 		<grid border="1" width="100%">
 			<columns>
 				<column width = "120"/>
 				<column/>
 			</columns>
 			<rows>
-				<row disabled="@hidebuttons" class="dialogHeadbar" >
-					<et2-hbox  span="all" width="100%">
-						<et2-button-icon  statustext="Apply the changes" id="button[apply]" image="apply"></et2-button-icon>
-                        <et2-button-icon statustext="delete this entry" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete');" image="delete" span="all"></et2-button-icon>
-						<et2-button-icon  statustext="Find free timeslots where the selected participants are available for the given timespan"
-							id="freetime" label="Freetime" onclick="app.calendar.freetime_search" image="clock-history" noSubmit="true"></et2-button-icon>
-                        <et2-button-toggle label="notifications" id="no_notifications" class="notification_check" onIcon="bell-fill" offIcon="bell-slash"/>
-						<et2-button-icon id="button[videoconference]" image="status/videoconference" noSubmit="true"
-							onclick="app.calendar.joinVideoConference.call(window, '$cont[##videoconference]', this.getArrayMgr('content').data)"></et2-button-icon>
-                        <et2-textbox type="hidden" id="delete_exceptions"></et2-textbox>
-					</et2-hbox>
-				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
 					<et2-hbox  span="all" width="100%">
 						<et2-button  label="Search" id="button[search]" image="search"></et2-button>

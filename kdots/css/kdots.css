@@ -1781,6 +1781,7 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
     padding: 9px;
   }
   et2-button-icon.plus_button {
+    display: flex;
     position: fixed !important;
     right: 15px;
     bottom: 15px;
