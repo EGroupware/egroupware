@@ -1416,6 +1416,10 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
   body .et2_nextmatch .egwGridView_outer thead tr {
     visibility: hidden;
   }
+  :root .et2_nextmatch .egwGridView_outer .egwGridView_grid,
+  body .et2_nextmatch .egwGridView_outer .egwGridView_grid {
+    width: 100%;
+  }
   :root .et2_nextmatch .search.searchOn input,
   body .et2_nextmatch .search.searchOn input {
     border: none;
