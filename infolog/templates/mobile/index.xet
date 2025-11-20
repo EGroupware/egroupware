@@ -24,7 +24,7 @@
 
 						</et2-box>
 					</et2-vbox>
-					<et2-vbox  class="infolog_CompletedClmn">
+					<et2-vbox  class="infolog_CompletedClmn" align="right">
 						<et2-date-time-today  id="${row}[info_startdate]" readonly="true" options=",8"></et2-date-time-today>
                         <et2-hbox>
 							<et2-hbox  class="infoType">

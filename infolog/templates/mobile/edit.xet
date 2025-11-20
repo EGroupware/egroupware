@@ -143,12 +143,6 @@
 				<column/>
 			</columns>
 			<rows>
-				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
-					<et2-hbox  span="all" width="100%">
-						<et2-button  label="Search" id="button[search]" image="search"></et2-button>
-						<et2-button  label="Cancel" id="button[cancelsearch]" image="cancel"></et2-button>
-					</et2-hbox>
-				</row>
 				<row>
 					<et2-description  value="Title" for="info_subject"></et2-description>
 					<et2-textbox  statustext="a short subject for the entry" id="info_subject" class="et2_required" maxlength="255" span="5" tabindex="1"></et2-textbox>

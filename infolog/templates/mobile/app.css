@@ -9,6 +9,202 @@
  * @author Hadi Nategh <hn@stylite.de>
  * @package infolog
  */
+/**
+ * former templates/default/app.css
+ */
+/* Minimum width for first column */
+#infolog-index.et2_container .gridCont_0_div_col_0 {
+  min-width: 45px;
+}
+.infolog_headertext {
+  color: var(--sl-color-neutral-950);
+  font-size: 120%;
+}
+.infolog_lpadding5 {
+  padding-left: 5px;
+}
+.low,
+.low_done,
+.normal,
+.normal_done,
+.high,
+.high_done,
+.urgent,
+.urgent_done {
+  font-weight: bold;
+}
+.low,
+.low_done {
+  color: #606060;
+}
+.normal,
+.normal_done {
+  color: var(--sl-color-neutral-950);
+}
+.high {
+  color: var(--sl-color-purple-700);
+}
+.high_done {
+  color: var(--sl-color-purple-900);
+}
+.urgent {
+  color: var(--sl-color-pink-700);
+}
+.urgent_done {
+  color: var(--sl-color-pink-900);
+}
+.infolog_overdue {
+  color: var(--sl-color-pink-700);
+  font-weight: bold;
+}
+.private {
+  font-style: italic;
+}
+.infolog_planned {
+  font-style: italic;
+}
+table.infolog_fullWidth {
+  width: 100%;
+}
+#infolog-edit_info_number:before {
+  content: "#";
+}
+.infolog_fixedHeight {
+  height: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.infolog_normalWrap {
+  white-space: normal;
+}
+.infolog_user_filter select {
+  width: 100px;
+}
+.inputFullWidth input {
+  width: 100%;
+}
+.infolog_image16 img {
+  height: 16px;
+}
+.infolog_responsible select {
+  width: 120px;
+}
+.infolog_date_duration select.et2_date_duration {
+  width: 69%;
+  margin-left: 2px;
+}
+tr.infolog_rowHasParent > td:first-child {
+  background-image: url(../../../node_modules/bootstrap-icons/icons/caret-up-fill.svg);
+  background-repeat: no-repeat;
+  background-size: 10px;
+  background-position: 6px 6px;
+}
+/*get <a> tags inside description in listview with no breakline*/
+.et2_nextmatch .egwGridView_grid tr td div.et2_vbox .infoDes a {
+  display: inline-table;
+}
+.infoDes {
+  max-height: var(--descHeight, 5em);
+  overflow: clip;
+}
+.infoDes:hover {
+  overflow: auto;
+}
+/* break in words if necessary for description */
+.infoDes > span {
+  overflow-wrap: break-word;
+}
+/* Spacing for parent / sub indicators */
+.egwGridView_grid .infolog_CompletedClmn {
+  max-width: fit-content;
+  margin-left: 10px;
+}
+.egwGridView_grid .infolog_CompletedClmn::part(base) {
+  /* Put line break for the first column*/
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+tr.infolog_rowHasParent > td:first-child .infolog_CompletedClmn {
+  margin-left: 16px;
+}
+/* Right-align extra buttons in tab */
+.infologExtraButton {
+  margin-left: auto;
+}
+.infologExtraButton ~ .infologExtraButton {
+  margin: 0;
+}
+div#infolog-edit_infolog-edit-description {
+  height: 100%;
+}
+div#infolog-edit_infolog-edit-description iframe {
+  height: calc(100% - 1em) !important;
+}
+#infolog-edit_info_responsible + .chzn-container .chzn-results {
+  max-height: 150px;
+}
+#infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid ul.et2_link_string li.et2_link {
+  display: inline-block;
+}
+#infolog-edit_infolog-edit-project > table {
+  table-layout: fixed;
+}
+#infolog-index #infolog-index_nm .filtersContainer {
+  width: 60%;
+}
+#infolog-index select#infolog-index_filter {
+  width: 150px;
+}
+#infolog_edit_info_responsible_chzn {
+  width: 99% !important;
+}
+#infolog-edit_clean_history {
+  display: none;
+}
+#infolog_index_cat_id_chzn {
+  min-width: auto;
+  width: 40% !important;
+}
+.header_count.blur_count > span {
+  color: transparent;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+span#infolog-index_\$\{row\}\[info_des\] {
+  flex: unset;
+}
+/**
+ * Mailvelope
+ */
+#infolog-edit_infolog-edit-description > iframe {
+  position: absolute;
+  top: -30px;
+  height: calc(100% + 50px) !important;
+  left: -15px;
+  width: calc(100% + 30px) !important;
+}
+/**
+ * Kdots:
+ */
+egw-app[name="infolog"] {
+  /* Hide nextmatch header, it's in the framework now */
+}
+egw-app[name="infolog"] .et2_nextmatch .nextmatch_header {
+  height: 0px;
+  overflow: hidden;
+}
+et2-hbox.infolog_CompletedClmn et2-image {
+  width: 1rem;
+}
+et2-hbox.infolog_CompletedClmn et2-image *[part="image"] {
+  vertical-align: middle;
+}
+et2-hbox.infolog_CompletedClmn div.et2_progress {
+  width: 100%;
+  height: var(--sl-line-height-dense, 0.7em);
+  max-width: 2em;
+}
 @media all {
   #infolog-index_nm .gridCont_0_div_col_0.innerContainer {
     min-width: auto;
@@ -85,9 +281,6 @@
   #infolog-view .et2_label.et2_label_empty * {
     padding-left: 0px;
   }
-  .infolog_CompletedClmn .infoPercent {
-    height: 23px;
-  }
   .infolog_CompletedClmn .infoType {
     padding-right: 1em;
   }
@@ -96,4 +289,21 @@
     border: none;
     filter: invert(1) brightness(2.5);
   }
+  .egwGridView_grid {
+    width: 100%;
+  }
+  .egwGridView_grid .infolog_CompletedClmn {
+    padding-right: 1em;
+  }
+  .egwGridView_grid et2-image {
+    width: 1em;
+    height: 1em;
+  }
+  .egwGridView_grid et2-image img {
+    padding: 0 !important;
+  }
+  #infolog-index_popupMainDiv egwGridView_outer {
+    width: 100%;
+  }
 }
+/*# sourceMappingURL=app.css.map */

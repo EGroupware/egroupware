@@ -9,7 +9,7 @@
  * @author Hadi Nategh <hn@stylite.de>
  * @package infolog
  */
-
+@import "../default/app";
 
 @media all {
 	#infolog-index_nm .gridCont_0_div_col_0.innerContainer {
@@ -97,9 +97,6 @@
 		}
 	}
 	.infolog_CompletedClmn {
-		.infoPercent{
-			height:23px;
-		}
 		.infoType{
 			padding-right: 1em;
 		}
@@ -111,4 +108,29 @@
 		border: none;
 		filter: invert(1) brightness(2.5);
 	}
+
+	.egwGridView_grid{
+	  width:100%;
+	  .infolog_CompletedClmn{
+		padding-right: 1em;
+	  }
+
+	  et2-image{
+		width: 1em;
+		height: 1em;
+		img{
+		  padding:0 !important;
+		}
+	  }
+	}
+
+  #infolog-index_popupMainDiv{
+	.mobile-view-editBtn{
+
+	}
+	egwGridView_outer{
+	  width: 100%;
+	}
+  }
+
 }
