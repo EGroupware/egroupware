@@ -3949,7 +3949,7 @@ export class CalendarApp extends EgwApp
 
 			var range = '';
 
-			var datefmt = egw.preference('dateformat');
+			const datefmt = egw.preference('dateformat') || 'Y/m/d';
 			var timefmt = egw.preference('timeformat') === '12' ? 'h:i a' : 'H:i';
 
 			var month_before_day = datefmt[0].toLowerCase() == 'm' ||
