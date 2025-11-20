@@ -1,4 +1,10 @@
 
+.dialogHeadbar {
+  color: var(--application-header-text-color);
+}
+table.egwGridView_grid{
+  width: 100%;
+}
 @media screen and (max-width: 800px) {
   html * {
 	touch-action: auto;
@@ -108,7 +114,7 @@
 		}
 
 		&:not(:empty) {
-		  color: var(--sl-color-neutral-0);
+		  color: var(--application-header-text-color, var(--sl-color-neutral-100));
 		  font-size: var(--sl-font-size-x-large);
 		  position: fixed;
 		  height: calc(var(--sl-spacing-3x-large) - 1px);
