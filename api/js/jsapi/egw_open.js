@@ -252,7 +252,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 					displayName: id_data['title'] + " (" + egw.lang(this.appName) + ")",
 				});
 			}
-			return this.open_link(url, target, popup, target_app, _check_popup_blocker);
+			return this.open_link(url, target, popup, target_app, _check_popup_blocker, id_data?.type);
 		},
 
 		/**
