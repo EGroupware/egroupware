@@ -255,7 +255,7 @@ class Schema
 			{
 				// only create indexes on text-columns, if (db-)specifiy options are given or FULLTEXT for mysql
 				// most DB's cant do them and give errors
-				if (in_array($aTableDef['fd'][$col]['type'],array('text','longtext')))
+				if (in_array($aTableDef['fd'][$col]['type'], array('text','longtext','vector')))
 				{
 					if (is_array($mFields))	// index over multiple columns including a text column
 					{
@@ -265,7 +265,7 @@ class Schema
 					{
 						if ($this->sType == 'mysql')
 						{
-							$options = 'FULLTEXT';
+							$options = $aTableDef['fd'][$col]['type'] === 'vector' ? 'VECTOR' : 'FULLTEXT';
 						}
 						else
 						{
@@ -1180,7 +1180,7 @@ class Schema
 					break;
 				case 'int':
 					$ado_col = 'I';
-					switch($col_data['precision'])
+					switch($col_data['precision'] ?? null)
 					{
 						case 1:
 						case 2:
@@ -1203,6 +1203,13 @@ class Schema
 					{
 						$ado_col .= ' DEFTIMESTAMP';
 						unset($col_data['default']);
+					}
+					break;
+				case 'vector':
+					$ado_col = 'V';
+					if(!empty($col_data['precision']))
+					{
+						$ado_col .= '('.$col_data['precision'].')';
 					}
 					break;
 			}
@@ -1295,6 +1302,7 @@ class Schema
 				'N'		=> 'decimal',
 				'R'		=> 'auto',
 				'L'		=> 'bool',
+				'V'		=> 'vector',
 			);
 			$definition['fd'][$name]['type'] = $ado_type2egw[$type];
 

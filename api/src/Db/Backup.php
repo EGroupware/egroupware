@@ -607,7 +607,7 @@ class Backup
 				$blobs = array();
 				foreach($this->schemas[$table]['fd'] as $col => $data)
 				{
-					if (in_array($data['type'], ['blob', 'binary']))
+					if (in_array($data['type'], ['blob', 'binary', 'vector']))
 					{
 						$blobs[] = $col;
 					}
@@ -883,6 +883,7 @@ class Backup
 					break;
 				case 'blob':
 				case 'binary':
+				case 'vector':
 					$data = base64_encode($data);
 					break;
 				case 'bool':	// we use MySQL 0, 1 in csv, not PostgreSQL 't', 'f'

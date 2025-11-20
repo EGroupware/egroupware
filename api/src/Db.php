@@ -1610,6 +1610,13 @@ class Db
 		}
 		switch($type)
 		{
+			case 'vector':
+				if (is_array($value))
+				{
+					return 'VEC_FromText('.$this->Link_ID->qStr(json_encode($value)).')';
+				}
+				// https://mariadb.com/docs/server/reference/sql-structure/vectors/vector-overview#inserting
+				return "x'".bin2hex($value)."'";
 			case 'blob':
 				switch ($this->Link_ID->blobEncodeType)
 				{
@@ -1633,14 +1640,12 @@ class Db
 					return $this->Link_ID->qstr(DateTime::user2server($value,'Y-m-d H:i:s'));
 				}
 				return $this->Link_ID->DBTimeStamp($value);
-			case 'vector':
-				return 'VEC_FromText('.$this->quote(json_encode($value),'text').')';
 		}
 		if (is_array($value))
 		{
 			$value = implode($glue,$value);
 		}
-		// timestamp given das DateTime object stored in string column, e.g. in history-log
+		// timestamp given as DateTime object stored in string column, e.g. in history-log
 		if (is_object($value) && ($value instanceof \DateTime))
 		{
 			$value = DateTime::user2server($value,'string');
