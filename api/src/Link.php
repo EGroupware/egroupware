@@ -159,14 +159,13 @@ class Link extends Link\Storage
 	 */
 	static $app_register = array(
 		'api-accounts' => array(    // user need run-rights for home
-									'app'     => 'api',
-									'name'    => 'Accounts',
-									'icon'    => 'addressbook/accounts',
-									'query'   => 'EGroupware\\Api\\Accounts::link_query',
-									'title'   => 'EGroupware\\Api\\Accounts::title',
-									'view'    => array('menuaction' => 'addressbook.addressbook_ui.view',
-													   'ajax'       => 'true'),
-									'view_id' => 'account_id'
+			'app'     => 'api',
+			'name'    => 'Accounts',
+			'icon'    => 'addressbook/accounts',
+			'query'   => 'EGroupware\\Api\\Accounts::link_query',
+			'title'   => 'EGroupware\\Api\\Accounts::title',
+			'view'    => array('menuaction' => 'addressbook.addressbook_ui.view', 'ajax' => 'true'),
+			'view_id' => 'account_id'
 		),
 		'api'          => array(
 			// handling of text or pdf files by browser in a popup window
