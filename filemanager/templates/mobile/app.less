@@ -43,15 +43,6 @@
 		}
 		#filemanager-index_filemanager-index-header_right {width:100%;}
 		#filemanager-index_tarp {display: none !important;}
-
-	  #filemanager-index_nm_filemanager-index-header_left {
-		&::part(base) {
-		  width: 100%;
-		}
-
-		height: auto;
-		order: 100;
-	  }
 	}
 	#filemanager-index_filemanager-index-header_left {
 		.et2_file.plus_button {
@@ -118,4 +109,18 @@
 
 	.previewImage img {max-width: 100%;}
 	div#filemanager-file_tabs td.eaclAccount,td.eaclRights {display: block;}
+}
+et2-vfs-path et2-image {
+  width: 1.5em;
+
+  @media screen and (orientation:landscape) {
+
+	.sl-theme-light &, .kdots-light & {
+	  filter: brightness(0) invert(1);
+	}
+
+	.sl-theme-dark &, .kdots-dark & {
+	  filter: brightness(0) invert(1) brightness(.9);
+	}
+  }
 }

@@ -461,7 +461,7 @@ class filemanager_ui
 			$content['nm']['col_filter']['dir'] = $content['nm']['path'];
 		}
 		// setting the path to display in path-widget in app-toolbar after full reload
-		$content['path'] = $content['nm']['path'];
+		$content['path'] = $content['toolbar']['path'] = $content['nm']['path'];
 
 		$view = static::get_view();
 

@@ -43,13 +43,6 @@
   #filemanager-index_nm #filemanager-index_tarp {
     display: none !important;
   }
-  #filemanager-index_nm #filemanager-index_nm_filemanager-index-header_left {
-    height: auto;
-    order: 100;
-  }
-  #filemanager-index_nm #filemanager-index_nm_filemanager-index-header_left::part(base) {
-    width: 100%;
-  }
   #filemanager-index_filemanager-index-header_left .et2_file.plus_button {
     position: fixed !important;
     right: 15px;
@@ -109,5 +102,18 @@
   div#filemanager-file_tabs td.eaclAccount,
   td.eaclRights {
     display: block;
+  }
+}
+et2-vfs-path et2-image {
+  width: 1.5em;
+}
+@media screen and (orientation: landscape) {
+  .sl-theme-light et2-vfs-path et2-image,
+  .kdots-light et2-vfs-path et2-image {
+    filter: brightness(0) invert(1);
+  }
+  .sl-theme-dark et2-vfs-path et2-image,
+  .kdots-dark et2-vfs-path et2-image {
+    filter: brightness(0) invert(1) brightness(0.9);
   }
 }

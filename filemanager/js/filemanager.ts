@@ -117,6 +117,15 @@ export class filemanagerAPP extends EgwApp
 			case 'filemanager.jobs':
 				app.admin.enableAppToolbar(et2,name);
 				return;
+			case 'filemanager.index':
+				if(egwIsMobile && egwIsMobile())
+				{
+					// Slot toolbar for landscape
+					const orientation = window.matchMedia("(orientation: landscape)");
+					orientation.addEventListener("change", this.handleOrientationChange.bind(this));
+					this.handleOrientationChange(orientation);
+				}
+				break;
 		}
 		if(name === 'filemanager.index' && !et2.DOMContainer.closest("egw-app"))
 		{
@@ -1732,5 +1741,18 @@ export class filemanagerAPP extends EgwApp
 	addJob()
 	{
 		this.openDialog('filemanager.\\EGroupware\\Filemanager\\Jobs.edit');
+	}
+
+	/**
+	 * Mobile portrait orientation is not wide enough for the path, so we put it below
+	 *
+	 * @param event
+	 */
+	handleOrientationChange(event)
+	{
+		const toolbar = this.et2.getWidgetById("toolbar");
+		toolbar.slot = event?.matches ? "main-header" : "";
+		// kdots slotting will append it to the bottom, we need top
+		toolbar.parentElement.prepend(toolbar);
 	}
 }
