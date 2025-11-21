@@ -137,6 +137,8 @@ class setup_process
 			{
 				// check if app is either installed or supports the used database
 				if (!isset($value['currentver']) && isset($value['only_db']) && (
+					is_array($value['only_db']) && isset($value['only_db'][$GLOBALS['egw_setup']->db->Type]) &&
+						version_compare($value['only_db'][$GLOBALS['egw_setup']->db->Type], $GLOBALS['egw_setup']->db->ServerInfo['version'], '>') ||
 					is_array($value['only_db']) && !in_array($GLOBALS['egw_setup']->db->Type,$value['only_db']) ||
 					!is_array($value['only_db']) && $GLOBALS['egw_setup']->db->Type != $value['only_db']))
 				{

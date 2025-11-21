@@ -720,6 +720,7 @@ class Link extends Link\Storage
 					'type'     => 'delete',
 					'app'      => $app,
 					'id'       => $id,
+					'hold_for_purge' => $hold_for_purge,
 				], null, true);
 
 				self::delete_attached($app,$id);	// deleting all attachments
