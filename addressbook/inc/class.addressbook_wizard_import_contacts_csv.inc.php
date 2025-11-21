@@ -121,6 +121,10 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 			if(!array_key_exists('change_owner', $content) && $content['plugin_options']) {
 				$content['change_owner'] = $content['plugin_options']['change_owner'];
 			}
+			if(!array_key_exists('empty_addressbook', $content) && $content['plugin_options'])
+			{
+				$content['empty_addressbook'] = $content['plugin_options']['empty_addressbook'];
+			}
 
 			$bocontacts = new Api\Contacts();
 			$sel_options['contact_owner'] = array('personal' => lang("Importer's personal")) + $bocontacts->get_addressbooks(Acl::ADD);
