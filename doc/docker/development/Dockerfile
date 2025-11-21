@@ -20,12 +20,13 @@ RUN set -e \
     && curl -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
     && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list \
 	&& apt-get update \
-	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,opcache,tidy,zip,bcmath,mbstring,ldap,curl,fpm,pgsql,gmp}" \
-    # there's (hopefully not yet) a php8.3 package for
+	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,tidy,zip,bcmath,mbstring,ldap,curl,fpm,pgsql,gmp}" \
+    # PHP 8.5 no longer has a separate OPCache extension
+    && apt-get install -y php$PHP_VERSION-opcache || true \
     && apt-get install -y php$PHP_VERSION-apcu || true \
     && apt-get install -y php$PHP_VERSION-smbclient || true \
 	# PHP 8.0 no longer has a separate json extension
-    && apt-get install -y php$PHP_VERSION-json || true \
+    # && apt-get install -y php$PHP_VERSION-json || true \
 	# fpm and php.ini settings
 	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
 		-e '/allowed_clients/d' \
