@@ -1005,14 +1005,24 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 	overflow-y: auto;
 }
 #mail-index_mail-index-header_right {gap: 1ex;}
-#mail-index_mail-index-header_right et2-details.vacationnotice {
+
+et2-dropdown.vacationnotice {
 	min-width: 8em;
 }
-#mail-index_mail-index-header_right et2-details.vacationnotice::part(base) {
-	background: #dee9f3;
-	border-color: #0f65968f;
+
+et2-dropdown.vacationnotice et2-hbox[slot=trigger]::part(base) {
+	align-items: center;
+}
+
+et2-dropdown.vacationnotice::part(panel) {
+	background: var(--sl-color-blue-100);
+	border-color: var(--sl-color-blue-200);
 	border-width: 1px;
-	height: 2.6em;
+	font-size: var(--sl-font-size-large);
+}
+
+et2-dropdown.vacationnotice > *:not([slot=trigger]) > * {
+	color: var(--sl-color-gray-900);
 }
 
 et2-hbox.mailPreviewHeaders {
