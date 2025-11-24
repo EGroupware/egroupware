@@ -165,11 +165,25 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				}
 
 				:host([rows]) ::part(tags) {
-					max-height: calc(var(--rows, 5) * (var(--sl-input-height-medium) * 0.8))
+					max-height: calc(var(--rows, 5) * (var(--sl-input-height-medium) * 0.8));
+				}
+
+				:host([rows='1']) ::part(tags) {
+					overflow-y: hidden;
 				}
 
 				:host([readonly][rows='1']) ::part(tags) {
 					overflow: hidden;
+				}
+
+				/* No wrapping if only 1 row */
+
+				:host([multiple][rows='1']) [open]::part(combobox) {
+					flex-flow: nowrap;
+				}
+
+				:host([multiple][rows='1']) [open]::part(tags) {
+					flex-basis: auto;
 				}
 
 				/* No rows set, default height limit about 5 rows */
@@ -188,14 +202,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 					display: none;
 				}
 
-				/* Hide icon when open */
-
 				:host([search][open]) ::part(prefix) {
 					flex-flow: wrap;
-				}
-
-				:host([search][open]) sl-select > [part=icon] {
-					display: none;
 				}
 
 				/* Style for tag count if rows=1 */
