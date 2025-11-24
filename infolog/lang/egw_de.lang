@@ -128,7 +128,7 @@ custom from	infolog	de	Benutzerdefinierter  Kontakt
 custom regarding	infolog	de	Benutzerdefinierter Bezug
 custom status for typ	infolog	de	Benutzerdefinierter Status für Typ
 customfields	infolog	de	Benutzerdefinierte Felder
-data exchange settings	infolog	de	Einstellungen Datenaustausch
+data exchange settings	common	de	Einstellungen Datenaustausch
 date completed	infolog	de	Erledigt am
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	de	Fertigstellungsdatum (leer lassen um es automatisch zu setzen wenn der Status erledigt oder abgerechnet ist)
 datecreated	infolog	de	Erstellt am
@@ -494,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	de	Auf was soll das 
 today	infolog	de	Heute
 todays date	infolog	de	Heutiges Datum
 todo	infolog	de	Aufgabe
+toggle details	common	de	Details umschalten
 typ	infolog	de	Typ
 typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits!
 type	infolog	de	Typ
