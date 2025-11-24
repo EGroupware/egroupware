@@ -276,7 +276,7 @@ export class et2_dataview_selectionManager
 			this._updateEntryState(this._focusedEntry,
 					egwSetBit(this._focusedEntry.state, EGW_AO_STATE_FOCUSED,
 							false));
-			this._focusedEntry.tr.removeAttribute("tabindex");
+			this._focusedEntry.tr?.removeAttribute("tabindex");
 			this._focusedEntry = null;
 		}
 		// Mark the new given uid as focused

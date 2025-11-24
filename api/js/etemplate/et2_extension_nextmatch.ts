@@ -857,7 +857,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		let wait = [];
 		this.header.iterateOver(w =>
 		{
-			if(typeof w.updateComplete != "undefined")
+			if(typeof w.updateComplete != "undefined" && w.isConnected)
 			{
 				wait.push(w.updateComplete);
 			}
