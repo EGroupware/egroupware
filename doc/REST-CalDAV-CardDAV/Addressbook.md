@@ -325,7 +325,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/6502' -H "Accept: 
             "contexts": { "work": true },
             "pref": 1
         },
-        "home": {
+        "private": {
             "@type": "Address",
             "locality": "PrivateCity",
             "country": "DEUTSCHLAND",
@@ -336,7 +336,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/6502' -H "Accept: 
                 { "@type": "StreetComponent", "type": "separator", "value": "\n" },
                 { "@type": "StreetComponent", "type": "name", "value": "PrivateStreet2" }
             ],
-            "contexts": { "home": true }
+            "contexts": { "private": true }
         }
     },
     "photos": {
@@ -369,6 +369,8 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/6502' -H "Accept: 
 > * `credential`: was `suffix`, which is still parsed, but not returned (stored in DB colum `n_suffix`)
 > * `generation`: is currently not stored separate, but stored in DB column `n_suffix`, if `credential` is not also set
 > * `separator`: is currently not stored, so the default of one space is always used
+> * `contexts`: we support the two standard contexts `work` and `private` (previously used `home` is treated as a synonym for `private`!)
+> * `home`: index/attribute-name `home` is also replaced with `private` for consistency
 </details>
 
 #### **POST** requests to collection with a `Content-Type: application/json` header add new entries in addressbook or calendar collections
@@ -509,6 +511,7 @@ EOF
 
 HTTP/1.1 204 No content
 ```
+> To unset a field or complete object with PATCH, you have to patch value null!
 </details>
 
 #### **DELETE** requests delete single resources

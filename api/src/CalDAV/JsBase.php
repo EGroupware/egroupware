@@ -366,6 +366,8 @@ class JsBase
 			$target = &$jscard;
 			foreach($parts as $n => $part)
 			{
+				// make "home" a synonym for the official context "private"
+				if ($part === 'home') $part = 'private';
 				if (!isset($target[$part]) && $n < count($parts)-1 && !$create)
 				{
 					throw new \InvalidArgumentException("Trying to patch not existing attribute with path $path!");
@@ -376,9 +378,10 @@ class JsBase
 			if (isset($value))
 			{
 				// objects need to be merged, to not unset all not given attributes
+				// use array_merge to overwrite existing values, and add (non-existing) values after existing ones
 				if (is_array($value) && !array_key_exists(0, $value) && $target)
 				{
-					$target = $value + $target;
+					$target = array_merge($target, $value);
 				}
 				else
 				{
@@ -386,13 +389,9 @@ class JsBase
 				}
 			}
 			// if we unset fields stored directly in the database, they will NOT be updated :(
-			elseif (!$n)
-			{
-				$target = null;
-			}
 			else
 			{
-				unset($parent[$part]);
+				$target = null;
 			}
 		}
 		return $jscard;

@@ -62,7 +62,7 @@ class JsContact extends Api\CalDAV\JsBase
 			'online' => self::online($contact),
 			'addresses' => array_filter([
 				'work' => self::address($contact, 'work', 1),    // as it's the more prominent in our UI
-				'home' =>  self::address($contact, 'home'),
+				'private' =>  self::address($contact, 'private'),
 			]),
 			'photos' => self::photos($contact),
 			'anniversaries' => self::anniversaries($contact),
@@ -463,16 +463,27 @@ class JsContact extends Api\CalDAV\JsBase
 	 *
 	 * As we only have a work and a home address we need to make sure to no fill one twice.
 	 *
-	 * @param array $address address-object
-	 * @param string $id index
-	 * @param ?string $last_type "work" or "home"
+	 * @param array|null $address address-object
+	 * @param string $id index "work", "private" (or "home")
+	 * @param ?string $last_type "work" or "private"
 	 * @param bool $stict true: check if objects have their proper @type attribute
 	 * @return array
 	 */
-	protected static function parseAddress(array $address, string $id, string &$last_type=null, bool $stict=true)
+	protected static function parseAddress(?array $address, string $id, string &$last_type=null, bool $stict=true)
 	{
-		$type = !isset($last_type) && (empty($address['contexts']['private']) || $id === 'work') ||
-			$last_type === 'home' ? 'work' : 'home';
+		// for the first address use private if indicated (by context or id), otherwise use work,
+		// unless work is indicated, which would then take precedence
+		if (!isset($last_type))
+		{
+			$private = !empty($address['contexts']['private']) || !empty($address['contexts']['home']) || in_array($id, ['private', 'home']);
+			$work = !empty($address['contexts']['work']) || $id === 'work';
+			$type = $private && !$work ? 'private' : 'work';
+		}
+		// the 2nd address can only be the other one
+		else
+		{
+			$type = $last_type === 'work' ? 'private' : 'work';
+		}
 		$last_type = $type;
 		$prefix = $type === 'work' ? 'adr_one_' : 'adr_two_';
 
@@ -487,7 +498,7 @@ class JsContact extends Api\CalDAV\JsBase
 			{
 				throw new \InvalidArgumentException("Invalid address object with id '$id'");
 			}
-			$contact[$prefix.$attr] = $address[$js];
+			$contact[$prefix.$attr] = $address[$js] ?? null;
 		}
 		// no country-code but a name translating to a code --> use it
 		if (empty($contact[$prefix.'countrycode']) && !empty($contact[$prefix.'countryname']) &&
@@ -644,11 +655,11 @@ class JsContact extends Api\CalDAV\JsBase
 		// check for good matches
 		foreach($phones as $id => $phone)
 		{
-			if (!$stict && is_string($phone))
+			if (!$stict && (is_string($phone) || $phone === null))
 			{
 				$phone = ['phone' => $phone];
 			}
-			if (!is_array($phone) || !is_string($phone['phone']))
+			if (!is_array($phone) || !(is_string($phone['phone']) || $phone['phone'] === null))
 			{
 				throw new \InvalidArgumentException("Invalid phone: " . json_encode($phone, self::JSON_OPTIONS_ERROR));
 			}
@@ -827,7 +838,7 @@ class JsContact extends Api\CalDAV\JsBase
 		$contact = [];
 		foreach($emails as $id => $value)
 		{
-			if (!$stict && is_string($value))
+			if (!$stict && (is_string($value) || $value === null))
 			{
 				$value = ['email' => $value];
 			}
@@ -835,15 +846,17 @@ class JsContact extends Api\CalDAV\JsBase
 			{
 				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($value, self::JSON_OPTIONS_ERROR));
 			}
-			if (!is_array($value) || !is_string($value['email']))
+			if (!is_array($value) || !(is_string($value['email']) || $value['email'] === null))
 			{
 				throw new \InvalidArgumentException("Invalid email object (requires email attribute): ".json_encode($value, self::JSON_OPTIONS_ERROR));
 			}
-			if (!isset($contact['email']) && ($id === 'work' || empty($value['contexts']['private']) || isset($contact['email_home'])))
+			// if mail is marked as "work" or NOT marked as "private" (or "home") --> store as "email" (work)
+			if ($id === 'work' || !empty($value['contexts']['work']) || empty($value['contexts']['private']) && !in_array($id, ['private', 'home']))
 			{
 				$contact['email'] = $value['email'];
 			}
-			elseif (!isset($contact['email_home']))
+			// mail is marked as "private" (or "home"), or we need to store a 2nd email address and "home" not taken
+			elseif (!isset($contact['email_home']) || in_array($id, ['private', 'home']) || !empty($value['contexts']['private']))
 			{
 				$contact['email_home'] = $value['email'];
 			}
