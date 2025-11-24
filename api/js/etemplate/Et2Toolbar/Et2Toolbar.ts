@@ -545,7 +545,8 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 					el.appendChild(c);
 				});
 			}
-			if(el.parentNode == this)
+			// Append to get correct order, unless it's open (appending will close it)
+			if(el.parentNode == this && !el.open)
 			{
 				this.appendChild(el);
 			}
