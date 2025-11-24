@@ -183,7 +183,7 @@ class timesheet_hooks
 				'label'  => 'Status of created timesheets',
 				'name'   => 'predefined_status',
 				'values' => self::$timesheet_bo->status_labels,
-				'help'   => 'Select the predefined status, when creating a new timesheet ',
+				'help'   => 'Select the predefined status, when creating a new timesheet',
 				'xmlrpc' => True,
 				'admin'  => False,
 			);
