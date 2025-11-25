@@ -1368,7 +1368,7 @@ export class EgwFramework extends LitElement
                                 <slot></slot>
                             </main>
                             <!-- No slider until we have more content <sl-icon slot="divider" name="grip-vertical"></sl-icon> -->
-                            <aside slot="end" class="egw_fw__status" part="status" role="navigation"
+                            <aside slot="end" class="egw_fw__status" part="status"
                                    id="egw-framework-status"
                             >
                                 <sl-visually-hidden>

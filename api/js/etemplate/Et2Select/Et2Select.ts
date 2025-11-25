@@ -1161,10 +1161,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                         "form-control--has-label": this.label !== ""
                     })}
                     exportparts="form-control, form-control-label, prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option, icon"
-                    label=${this.label}
+                    label=${this.label || nothing}
                     placeholder=${this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : "")}
-					aria-label=${this.ariaLabel}
-                    aria-description=${this.ariaDesciption}
+                    aria-label=${this.ariaLabel || nothing}
+                    aria-description=${this.ariaDesciption || nothing}
                     ?multiple=${this.multiple}
                     ?disabled=${this.disabled || this.readonly}
                     ?clearable=${this.clearable}
