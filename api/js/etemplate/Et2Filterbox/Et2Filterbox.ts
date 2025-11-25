@@ -10,13 +10,12 @@ import styles from "./Et2Filterbox.styles";
 import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {LitElement, nothing, TemplateResult} from "lit";
+import {LitElement, nothing} from "lit";
 import {html} from "lit/static-html.js";
 import {et2_INextmatchHeader, et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Favorites} from "../Et2Favorites/Et2Favorites";
 import {classMap} from "lit/directives/class-map.js";
 import {HasSlotController} from "../Et2Widget/slot";
-import {unsafeStatic} from "@open-wc/testing";
 import shoelace from "../Styles/shoelace";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
@@ -72,22 +71,6 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	/* When copying from a nextmatch, we can leave, delete or replace column headers with text in place of the original widgets */
 	@property({type: String})
 	originalWidgets : "none" | "delete" | "hide" | "replace" = "none";
-
-	/* Custom filter rendering function.  The first argument is the Filter, the second is the index.  The function should
-	 * return a Lit TemplateResult
-	 */
-	@property() getFilter : (filter : Filter, index : number) => TemplateResult | HTMLElement = (filter, index) =>
-	{
-		if(filter.widget)
-		{
-			filter.widget.classList.add("et2-label-fixed");
-			filter.widget.label = filter.label;
-			return <HTMLElement><unknown>filter.widget;
-		}
-		const tag = unsafeStatic(filter.type || "et2-select");
-		return html`todo filter ${index}:
-        <${tag} label=${filter.label} value=${filter.value}></${tag}>`;
-	};
 
 	protected hasSlotController = new HasSlotController(this, "label", "help-text", "prefix", "suffix");
 	protected _nextmatch : et2_nextmatch = null;
