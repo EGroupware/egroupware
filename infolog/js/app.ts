@@ -632,7 +632,7 @@ class InfologApp extends EgwApp
 		{
 			if(nm_value.col_filter && nm_value.col_filter.linked)
 			{
-				var split = nm_value.col_filter.linked.split(':') || '';
+				const split = typeof nm_value.col_filter.linked == "string" ? nm_value.col_filter.linked.split(':') || '' : [nm_value.col_filter.linked.app, nm_value.col_filter.linked.id];
 				_action = split[0] || '';
 				action_id = split[1] || '';
 			}
