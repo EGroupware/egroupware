@@ -1287,7 +1287,7 @@ export abstract class EgwApp
 	 */
 	highlight_favorite()
 	{
-		this.et2.querySelectorAll("et2-favourites-menu").forEach((f : Et2FavoritesMenu) => f.highlightFavorite(this.getState()));
+		this.et2?.querySelectorAll("et2-favorites-menu")?.forEach((f : Et2FavoritesMenu) => f.highlightFavorite(this.getState()));
 	}
 
 	/**
