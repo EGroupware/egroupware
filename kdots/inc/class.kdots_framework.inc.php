@@ -529,6 +529,6 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	protected static function _get_quick_add()
 	{
-		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" name="plus-circle" nosubmit></et2-button-icon>';
+		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" aria-label="Quick add" name="plus-circle" nosubmit></et2-button-icon>';
 	}
 }
