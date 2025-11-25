@@ -533,11 +533,19 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		});
 
 		// Sort & check sizing
+		const current = Array.from(this.querySelectorAll(":scope > *:not([slot='list']):not([slot=\"prefix\"]):not([slot=\"suffix\"])"));
+		let needReorder = false;
 		const orderSort = (a : HTMLElement, b : HTMLElement) => parseInt(a.dataset.order) - parseInt(b.dataset.order);
 		elements = <HTMLElement[]>Array.from(this.querySelectorAll(':scope > *:not([slot="prefix"]):not([slot="suffix"])'));
 		elements.sort(orderSort);
 		elements.forEach((el : HTMLElement) =>
 		{
+			if(!needReorder && current.indexOf(el) == elements.indexOf(el))
+			{
+				return;
+			}
+			needReorder = true;
+
 			if(typeof el.dataset.group !== "undefined")
 			{
 				Array.from(el.childNodes).sort(orderSort).forEach((c : HTMLElement) =>
