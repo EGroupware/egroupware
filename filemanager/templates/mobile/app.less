@@ -110,17 +110,26 @@
 	.previewImage img {max-width: 100%;}
 	div#filemanager-file_tabs td.eaclAccount,td.eaclRights {display: block;}
 }
-et2-vfs-path et2-image {
-  width: 1.5em;
 
-  @media screen and (orientation:landscape) {
+et2-vfs-path {
+  &::part(form-control-input) {
+	/* Let it get really small, so it's more likely to fit at larger font sizes */
+	min-width: 2em;
+	padding-inline: 0em;
+  }
 
-	.sl-theme-light &, .kdots-light & {
-	  filter: brightness(0) invert(1);
-	}
+  et2-image {
+	width: 0em;
 
-	.sl-theme-dark &, .kdots-dark & {
-	  filter: brightness(0) invert(1) brightness(.9);
-	}
+	@media screen and (orientation: landscape) {
+
+	  .sl-theme-light &, .kdots-light & {
+		filter: brightness(0) invert(1);
+	  }
+
+	  .sl-theme-dark &, .kdots-dark & {
+		filter: brightness(0) invert(1) brightness(.9);
+	  }
+  }
   }
 }

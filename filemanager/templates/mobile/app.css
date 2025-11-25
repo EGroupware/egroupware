@@ -104,8 +104,13 @@
     display: block;
   }
 }
+et2-vfs-path::part(form-control-input) {
+  /* Let it get really small, so it's more likely to fit at larger font sizes */
+  min-width: 2em;
+  padding-inline: 0em;
+}
 et2-vfs-path et2-image {
-  width: 1.5em;
+  width: 0em;
 }
 @media screen and (orientation: landscape) {
   .sl-theme-light et2-vfs-path et2-image,
