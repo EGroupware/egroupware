@@ -11,7 +11,7 @@
 	<meta name="copyright" content="EGroupware GmbH https://www.egroupware.org (c) 2020"/>
 	<meta name="language" content="{lang_code}"/>
 	<meta name="author" content="EGroupware GmbH https://www.egroupware.org"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0"/>
     {meta_robots}
 	<link rel="manifest" href="{webserver_url}/manifest.json"/>
 	<link rel="icon" href="{img_icon}" type="image/x-ico"/>
