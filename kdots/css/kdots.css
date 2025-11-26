@@ -814,6 +814,7 @@ div.et2_nextmatch th {
 }
 div.et2_nextmatch .egwGridView_outer {
   border-collapse: collapse;
+  width: 100%;
 }
 div.et2_nextmatch .egwGridView_outer thead > tr {
   background-color: var(--sl-color-neutral-100);
