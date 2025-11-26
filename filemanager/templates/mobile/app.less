@@ -16,6 +16,13 @@
 @media all {
 	#filemanager-index_nm {
 		table.egwGridView_outer tbody {
+		  /* Leave space for folder expansion caret */
+		  .isDir .gridCont_0_div_col_0 {
+			min-width: var(--sl-spacing-large);
+		  }
+		  .gridCont_0_div_col_1 {
+			max-width: 20%;
+		  }
 			span[id^='filemanager-index'][id$='size]']{
 				text-align: right;
 			}
@@ -112,6 +119,7 @@
 }
 
 et2-vfs-path {
+  min-width: 2em;
   &::part(form-control-input) {
 	/* Let it get really small, so it's more likely to fit at larger font sizes */
 	min-width: 2em;

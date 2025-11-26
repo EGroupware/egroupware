@@ -13,6 +13,15 @@
 @import "../default/app.css";
 /* tablets and smartphones  */
 @media all {
+  #filemanager-index_nm table.egwGridView_outer tbody {
+    /* Leave space for folder expansion caret */
+  }
+  #filemanager-index_nm table.egwGridView_outer tbody .isDir .gridCont_0_div_col_0 {
+    min-width: var(--sl-spacing-large);
+  }
+  #filemanager-index_nm table.egwGridView_outer tbody .gridCont_0_div_col_1 {
+    max-width: 20%;
+  }
   #filemanager-index_nm table.egwGridView_outer tbody span[id^='filemanager-index'][id$='size]'] {
     text-align: right;
   }
@@ -103,6 +112,9 @@
   td.eaclRights {
     display: block;
   }
+}
+et2-vfs-path {
+  min-width: 2em;
 }
 et2-vfs-path::part(form-control-input) {
   /* Let it get really small, so it's more likely to fit at larger font sizes */
