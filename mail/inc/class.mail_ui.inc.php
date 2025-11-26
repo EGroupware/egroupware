@@ -2106,16 +2106,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					substr($header['mimetype'],0,5) == 'audio' ||
 					substr($header['mimetype'],0,5) == 'video'))
 				{
-					$image = Api\Html::image('mail','attach');
+					$image = "<et2-image src='attach'></et2-image>";
 					$datarowid = $this->createRowID($_folderName,$message_uid,true);
 					$attachments = $header['attachments'];
 					if (count($attachments) == 1)
 					{
-						$image = Api\Html::image('mail','attach',$attachments[0]['name']);
+						$image = "<et2-image src='attach' statustext=\"{$attachments[0]['name']}\"></et2-image>";
 					}
 					else
 					{
-						$image = Api\Html::image('mail','attach',lang('%1 attachments',count($attachments)));
+						$statustext = lang('%1 attachments', count($attachments));
+						$image = "<et2-image src='attach' statustext=\"{$statustext}\"></et2-image>";
 					}
 					$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'],$_folderName);
 
@@ -2129,11 +2130,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				// show priority flag
 				if ($header['priority'] < 3)
 				{
-					 $image = Api\Html::image('mail','prio_high', lang('High priority'));
+					$image = "<et2-image src='prio_high' statustext=\"" . lang('High priority') . "\"></et2-image>";
 				}
 				elseif ($header['priority'] > 3)
 				{
-					$image = Api\Html::image('mail','prio_low', lang('Low priority'));
+					$image = "<et2-image src='prio_low' statustext=\"" . lang('Low priority') . "\"></et2-image>";
 				}
 				else
 				{
@@ -2143,7 +2144,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$imageflagged ='';
 				if ($header['flagged'])
 				{
-					$imageflagged = Api\Html::image('mail', 'unread_flagged_small');
+					$imageflagged = "<et2-image src='unread_flagged_small'></et2-image>";
 				}
 				$data['attachments'] = $image.$attachmentFlag.$imageflagged; // icon for attachments available
 			}
@@ -2694,7 +2695,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'mailbox'   => base64_encode($mailbox),
 					'smime_type' => $value['smime_type']
 				);
-				$attachmentHTML[$key]['link_save'] ="<a href='".Egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".Api\Html::image('mail','fileexport')."</a>";
+				$attachmentHTML[$key]['link_save'] = "<a href='" . Egw::link('/index.php', $linkData) . "' title='" . $attachmentHTML[$key]['filename'] . "'><et2-image src='fileexport'></et2-image></a>";
 
 				if (!$GLOBALS['egw_info']['user']['apps']['filemanager']) $attachmentHTML[$key]['no_vfs'] = true;
 			}

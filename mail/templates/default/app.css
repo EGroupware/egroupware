@@ -69,7 +69,6 @@ tr.mail.deleted  td:first-child{
 .status_img {
 	display: inline-block;
     font-size: calc(1em + 2px);
-    color: var(--sl-color-neutral-950);
 	width: 1em;
 	height: 1em;
 }
