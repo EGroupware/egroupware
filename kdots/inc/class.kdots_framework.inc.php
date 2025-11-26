@@ -104,6 +104,9 @@ class kdots_framework extends Api\Framework\Ajax
 			$data['kdots_theme'] .= ' sl-theme-light ';
 		}
 
+		// Dekstop / Mobile
+		$data['kdots_theme'] .= Api\Header\UserAgent::mobile() ? ' mobile ' : ' desktop ';
+
 		if(!empty($extra['navbar-apps']))
 		{
 			// Enable / disable framework features for each app

@@ -1,672 +1,675 @@
 
 @media screen and (max-width: 800px), screen and (max-height: 600px) {
-  html * {
-	touch-action: auto;
-	-webkit-overflow-scrolling: touch;
-  }
-
-  :root, body {
-	egw-framework#egw_fw_basecontainer {
-	  --left-side-width: 0px !important;
-	  /* Hide some parts */
-
-	  &::part(open-applications), &::part(status), &::part(divider) {
-		display: none;
-	  }
-
-	  &.egw_fw--left-side-collapsed::part(header) {
-		display: none;
-	  }
-
-	  &::part(main) {
-		overflow-x: hidden;
-	  }
-
-	  &::part(status-split) {
-		--max: 0;
-	  }
+  html:not(.desktop) {
+	html * {
+	  touch-action: auto;
+	  -webkit-overflow-scrolling: touch;
 	}
 
+	:root, body {
+	  egw-framework#egw_fw_basecontainer {
+		--left-side-width: 0px !important;
+		/* Hide some parts */
 
-	/* Stop pull-to-refresh on chrome*/
-	overflow-y: hidden;
-
-	button[id*="save"]:hover,
-	button[id*="apply"]:hover,
-	button[id*="copy"]:hover,
-	button[id*="edit_button[edit]"]:hover,
-	button.et2_button:hover {
-	  -webkit-box-shadow: none !important;
-	  box-shadow: none !important;
-	}
-
-	et2-dialog {
-	  --width: 100%;
-
-	  .egw-popup {
-		display: block;
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		overflow: auto;
-	  }
-
-	  &::part(panel) {
-		/* allow dialog to be full screen */
-		max-width: 100%;
-		max-height: 100%;
-		/* require dialog to be full screen */
-		width: 100% !important;
-		height: 100% !important;
-		border-radius: 0;
-	  }
-
-	  &::part(header) {
-		/* Set header size, color & background */
-		color: var(--application-header-text-color, var(--sl-color-neutral-100));
-		background: var(--application-color, var(--sl-color-primary-500));
-		height: var(--sl-spacing-3x-large);
-		padding: 0;
-		border-radius: 0 !important;
-		flex-direction: row-reverse;
-	  }
-
-	  &::part(title) {
-		font-size: var(--sl-font-size-x-large);
-		padding: 0;
-		display: flex;
-		align-items: center;
-		/* Needs something so flex will work right */
-		min-width: 5em;
-	  }
-
-	  &::part(header-actions) {
-		flex-direction: row-reverse;
-		font-size: var(--sl-font-size-2x-large);
-		align-content: center;
-	  }
-
-	  &::part(close-button) {
-		color: var(--application-header-text-color, var(--sl-color-neutral-100));
-		font-size: var(--sl-font-size-2x-large);
-	  }
-
-	  &::part(footer) {
-		order: 0;
-		/*box-shadow: 0px 4px 5px 2px silver;*/
-		width: 100%;
-		margin-top: 0px;
-
-		background: var(--sl-color-primary-700);
-		color: var(--application-header-text-color, var(--sl-color-neutral-100));
-
-		/* Allow buttons to wrap */
-		flex-wrap: wrap;
-	  }
-
-	  /* Old way of adding stuff.  Buttons should be slotted into header-actions, anything else into label */
-
-	  .dialogHeadbar {
-		&:empty {
+		&::part(open-applications), &::part(status), &::part(divider) {
 		  display: none;
 		}
 
-		&:not(:empty) {
-		  color: var(--application-header-text-color, var(--sl-color-neutral-100));
-		  font-size: var(--sl-font-size-x-large);
-		  position: fixed;
-		  height: calc(var(--sl-spacing-3x-large) - 1px);
-		  top: 1px;
-		  left: 5.5em;
-		  right: 0;
-		  z-index: 1;
-		  overflow: hidden;
-
-		  .entry_id {
-			position: absolute;
-			right: var(--sl-spacing-medium);
-			font-weight: var(--sl-font-weight-bold);
-		  }
-		  ::part(base){
-			box-shadow: none !important;
-			background-color: transparent;
-			--sl-input-border-color:transparent;
-		  }
-		}
-	  }
-
-	  et2-hbox[slot="label"], et2-box[slot="label"], et2-hbox[slot="header-actions"], eg2-box[slot="header-actions"] {
-		flex: 1 1 min-content;
-
-		&::part(base) {
-		  align-items: center;
-		}
-	  }
-
-	  span[slot="label"] {
-		flex-shrink: 1;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		padding-inline-end: var(--sl-spacing-small);
-	  }
-
-	  et2-number[slot="label"] {
-		display: inline-flex;
-	  }
-
-	  et2-button[slot="footer"]:has(et2-image) {
-		/* Fixed size on footer buttons */
-		width: 50px;
-		height: 50px;
-	  }
-
-	  et2-button[slot="footer"] {
-		et2-image {
-		  max-width: initial;
-		  left: 0;
-
-		  span {
-			padding-left: 20px;
-		  }
-		}
-	  }
-
-	  et2-button[slot="footer"][id*="cancel"] {
-		/* Hide cancel button, it will look like a duplicated bug so close to dialog close button */
-		display: none;
-	  }
-
-	  et2-button[slot="footer"]:has(et2-image)::part(base), et2-button[slot="footer"]:has(et2-image)::part(base):not(:hover), et2-button[variant=default][slot="footer"]:has(et2-image)::part(base):not(:hover) {
-		/* Have an icon - Hide button style, just show image */
-		border: none;
-		background: transparent;
-		justify-content: center;
-
-		color: var(--sl-color-neutral-100);
-	  }
-
-	  et2-button[slot="footer"]:has(et2-image)::part(label) {
-		/* Visually hide labels but leave them there for accessibility */
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip: rect(0 0 0 0);
-		flex: 0 1 auto;
-	  }
-
-	  #delete_popup {
-		position: absolute;
-		z-index: 1000000;
-		display: block;
-	  }
-
-	  #timer_dialog::part(header), et2-dialog#timer_dialog::part(footer) {
-		background-color: var(--timesheet-color);
-	  }
-	}
-
-	/* copied from previous framework */
-	@mobile-elem-height: var(--sl-font-size-large);
-	@mobile-button-width: var(--sl-font-size-large);
-	@mobile-nm-search-bg: var(--primary-color);
-
-	.et2_nextmatch {
-	  .nextmatch_sortheader {
-		padding-right: 0px;
-		margin-right: 0px;
-	  }
-
-	  /* If there's a filterbox, hide the header */
-
-	  &.et2-filterbox--loaded {
-		.nextmatch_header, .nm-mob-header, .nm_favorites_div {
+		&.egw_fw--left-side-collapsed::part(header) {
 		  display: none;
 		}
-	  }
 
-	  .nextmatch_header.nm_header_hide {
-		display: none !important;
-	  }
-
-	  .egwGridView_outer {
-		thead {
-		  tr {
-			visibility: hidden;
-
-			th {
-
-			}
-		  }
+		&::part(main) {
+		  overflow-x: hidden;
 		}
 
-		.egwGridView_grid {
-		  width: 100%;
+		&::part(status-split) {
+		  --max: 0;
 		}
 	  }
 
-	  .search.searchOn {
-		input {
-		  border: none;
-		  background: white;
-		  outline: none;
-		  position: absolute;
-		  left: 110px;
-		  width: 80%;
-		  height: @mobile-elem-height;
-		}
 
-		button[id$="search_button"] {
-		  background-image: none !important;
+	  /* Stop pull-to-refresh on chrome*/
+	  overflow-y: hidden;
 
-		  &:after {
-			content: "\2613";
-			font-weight: bold;
-			font-size: 18pt;
-		  }
-		}
+	  button[id*="save"]:hover,
+	  button[id*="apply"]:hover,
+	  button[id*="copy"]:hover,
+	  button[id*="edit_button[edit]"]:hover,
+	  button.et2_button:hover {
+		-webkit-box-shadow: none !important;
+		box-shadow: none !important;
 	  }
 
-	  .nm-mob-header {
-		background: @mobile-nm-search-bg;
-		margin-top: 0;
-		padding-left: 60px;
-		position: relative;
-		height: 50px;
-		z-index: 1;
-		display: flex;
-		border-bottom: 1px solid transparent;
+	  et2-dialog {
+		--width: 100%;
 
-		et2-button-icon {
-		  font-size: 2.3em;
-		  color: var(--sl-color-neutral-0);
-		}
-
-		button {
-		  height: @mobile-elem-height;
-		  width: @mobile-button-width;
-		  background-repeat: no-repeat;
-		  font-size: large;
-		  background-color: @mobile-nm-search-bg;
-		  border: none;
-		  margin: 0;
-		  color: white;
-		  background-size: 18px 18px;
-		  box-shadow: none;
-		  outline: none;
-		}
-
-		div.et2_searchbox {
-		  display: inline-block;
-		  width: 50px;
-		}
-
-		button.nm_toggle_header {
-		  background-image: url(../../node_modules/bootstrap-icons/icons/list-task.svg);
-		  background-position: center;
-		  background-repeat: no-repeat;
-		  width: 50px;
-		  height: 50px;
+		.egw-popup {
 		  display: block;
-		  color: var(--sl-color-neutral-0);
-
-		  &:focus {
-			outline: none;
-		  }
-
-		  order: 9;
-		  padding: 0 1em 0 1em;
-		}
-
-		button.nm_action_header {
-		  background-image: url(../../node_modules/bootstrap-icons/icons/three-dots-vertical.svg);
-		  background-position: center;
-		  background-repeat: no-repeat;
-		  border-left: 1px solid silver;
-		  border: 0;
-		  color: white;
-		  width: 50px;
-		  height: 50px;
-		  display: block;
-		  color: var(--sl-color-neutral-0);;
-
-		  &:focus {
-			outline: none;
-		  }
-
-		  order: 10;
-		  padding: 0 1em 0 1em;
-		}
-
-		button.nm_action_header.back {
-		  background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
-		  -webkit-filter: none !important;
-		  background-color: white !important;
-		}
-
-		div.nm_delete_action {
-		  background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
-		  color: var(--sl-color-neutral-0);;
-		  background-position: center;
-		  background-repeat: no-repeat;
-		  border-left: 1px solid silver;
-		  border: 0;
-		  color: black;
-		  width: 50px;
-		  height: 50px;
-		  display: inline-block;
-		  text-align: center;
-		  display: none;
-		  order: 7;
-		  padding: 0 1em 0 1em;
-		}
-
-		div.nm_favorites_div {
-		  order: 8;
-		  background-position: center;
-		  background-repeat: no-repeat;
-		  border-left: 1px solid silver;
-		  border: 0;
-		  color: white;
-		  height: 50px;
-		  display: none;
-		  float: right;
-
-		  &:focus {
-			outline: none;
-		  }
-
-		  et2-favorites {
-
-		  }
-
-		  div[name="favorite"] {
-
-			top: 0 !important;
-			outline: none;
-
-			.et2_dropdown {
-			  button:first-child {
-				display: none;
-			  }
-
-			  button:nth-child(2) {
-				background-position: center;
-				background-image: url(../../node_modules/bootstrap-icons/icons/star.svg) !important;
-				background-size: 24px 24px;
-
-				div:first-child {
-				  display: none;
-				}
-			  }
-			}
-
-			ul.favorites {
-			  height: 250px;
-			  width: 100%;
-			  left: 0px !important;
-			  box-shadow: 0px 4px 5px 2px silver;
-			  border: 1px solid silver;
-			  overflow-y: auto !important;
-
-			  li.ui-menu-item[data-id="blank"] {
-				&:before {
-				  content: '';
-				  background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
-				  background-size: 12px;
-				  background-repeat: no-repeat;
-				  width: 12px;
-				  height: 12px;
-				  display: inline-block;
-				  margin-left: 4px;
-				}
-			  }
-
-			  li.ui-menu-item:not([data-id="add"]):not([data-id="blank"]) {
-				&:before {
-				  content: '';
-				  background-image: url(../../node_modules/bootstrap-icons/icons/star.svg);
-				  background-size: 12px;
-				  background-repeat: no-repeat;
-				  width: 12px;
-				  height: 12px;
-				  display: inline-block;
-				  margin-left: 4px;
-				}
-			  }
-
-			  li.ui-menu-item {
-				white-space: nowrap;
-				text-overflow: ellipsis;
-				overflow: hidden;
-				border-bottom: 1px solid silver;
-
-				a {
-				  width: 100%;
-				  line-height: 30px;
-
-				  input {
-					display: none;
-				  }
-
-				  div.ui-icon-trash {
-					display: block;
-					padding-right: 8px;
-				  }
-				}
-			  }
-			}
-		  }
-		}
-
-		button.nm_toggle_header_on {
-		  background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
-		  -webkit-filter: none !important;
-		  background-color: white !important;
-		}
-
-		et2-searchbox {
-		  order: -1;
-		  width: -webkit-fill-available;
-		}
-
-		div.nm_appname_header {
-		  width: 100%;
-		  display: none;
 		  position: absolute;
-		  top: 0;
-		  height: 50px;
 		  left: 0;
-		  right: 0;
 		  bottom: 0;
-		  color: white;
-		  font-size: 14pt;
-		  font-weight: bold;
-		  opacity: 0.2;
-		  text-align: center;
-		  padding-top: 13px;
-		  z-index: -1;
+		  right: 0;
+		  overflow: auto;
+		}
+
+		&::part(panel) {
+		  /* allow dialog to be full screen */
+		  max-width: 100%;
+		  max-height: 100%;
+		  /* require dialog to be full screen */
+		  width: 100% !important;
+		  height: 100% !important;
+		  border-radius: 0;
+		}
+
+		&::part(header) {
+		  /* Set header size, color & background */
+		  color: var(--application-header-text-color, var(--sl-color-neutral-100));
+		  background: var(--application-color, var(--sl-color-primary-500));
+		  height: var(--sl-spacing-3x-large);
+		  padding: 0;
+		  border-radius: 0 !important;
+		  flex-direction: row-reverse;
+		}
+
+		&::part(title) {
+		  font-size: var(--sl-font-size-x-large);
+		  padding: 0;
+		  display: flex;
+		  align-items: center;
+		  /* Needs something so flex will work right */
+		  min-width: 5em;
+		}
+
+		&::part(header-actions) {
+		  flex-direction: row-reverse;
+		  font-size: var(--sl-font-size-2x-large);
+		  align-content: center;
+		}
+
+		&::part(close-button) {
+		  color: var(--application-header-text-color, var(--sl-color-neutral-100));
+		  font-size: var(--sl-font-size-2x-large);
+		}
+
+		&::part(footer) {
+		  order: 0;
+		  /*box-shadow: 0px 4px 5px 2px silver;*/
+		  width: 100%;
+		  margin-top: 0px;
+
+		  background: var(--sl-color-primary-700);
+		  color: var(--application-header-text-color, var(--sl-color-neutral-100));
+
+		  /* Allow buttons to wrap */
+		  flex-wrap: wrap;
+		}
+
+		/* Old way of adding stuff.  Buttons should be slotted into header-actions, anything else into label */
+
+		.dialogHeadbar {
+		  &:empty {
+			display: none;
+		  }
+
+		  &:not(:empty) {
+			color: var(--application-header-text-color, var(--sl-color-neutral-100));
+			font-size: var(--sl-font-size-x-large);
+			position: fixed;
+			height: calc(var(--sl-spacing-3x-large) - 1px);
+			top: 1px;
+			left: 5.5em;
+			right: 0;
+			z-index: 1;
+			overflow: hidden;
+
+			.entry_id {
+			  position: absolute;
+			  right: var(--sl-spacing-medium);
+			  font-weight: var(--sl-font-weight-bold);
+			}
+
+			::part(base) {
+			  box-shadow: none !important;
+			  background-color: transparent;
+			  --sl-input-border-color: transparent;
+			}
+		  }
+		}
+
+		et2-hbox[slot="label"], et2-box[slot="label"], et2-hbox[slot="header-actions"], eg2-box[slot="header-actions"] {
+		  flex: 1 1 min-content;
+
+		  &::part(base) {
+			align-items: center;
+		  }
+		}
+
+		span[slot="label"] {
+		  flex-shrink: 1;
+		  white-space: nowrap;
+		  overflow: hidden;
+		  text-overflow: ellipsis;
+		  padding-inline-end: var(--sl-spacing-small);
+		}
+
+		et2-number[slot="label"] {
+		  display: inline-flex;
+		}
+
+		et2-button[slot="footer"]:has(et2-image) {
+		  /* Fixed size on footer buttons */
+		  width: 50px;
+		  height: 50px;
+		}
+
+		et2-button[slot="footer"] {
+		  et2-image {
+			max-width: initial;
+			left: 0;
+
+			span {
+			  padding-left: 20px;
+			}
+		  }
+		}
+
+		et2-button[slot="footer"][id*="cancel"] {
+		  /* Hide cancel button, it will look like a duplicated bug so close to dialog close button */
+		  display: none;
+		}
+
+		et2-button[slot="footer"]:has(et2-image)::part(base), et2-button[slot="footer"]:has(et2-image)::part(base):not(:hover), et2-button[variant=default][slot="footer"]:has(et2-image)::part(base):not(:hover) {
+		  /* Have an icon - Hide button style, just show image */
+		  border: none;
+		  background: transparent;
+		  justify-content: center;
+
+		  color: var(--sl-color-neutral-100);
+		}
+
+		et2-button[slot="footer"]:has(et2-image)::part(label) {
+		  /* Visually hide labels but leave them there for accessibility */
+		  position: absolute;
+		  width: 1px;
+		  height: 1px;
+		  overflow: hidden;
+		  clip: rect(0 0 0 0);
+		  flex: 0 1 auto;
+		}
+
+		#delete_popup {
+		  position: absolute;
+		  z-index: 1000000;
+		  display: block;
+		}
+
+		#timer_dialog::part(header), et2-dialog#timer_dialog::part(footer) {
+		  background-color: var(--timesheet-color);
 		}
 	  }
 
-	  .header_row_right {
-		div[id$=favorite_wrapper] {
-		  margin: 0;
-		  top: 0 !important;
-		  height: @mobile-elem-height;
+	  /* copied from previous framework */
+	  @mobile-elem-height: var(--sl-font-size-large);
+	  @mobile-button-width: var(--sl-font-size-large);
+	  @mobile-nm-search-bg: var(--primary-color);
+
+	  .et2_nextmatch {
+		.nextmatch_sortheader {
+		  padding-right: 0px;
+		  margin-right: 0px;
 		}
 
-		height: @mobile-elem-height;
-		width: 100%;
-		padding: 0;
+		/* If there's a filterbox, hide the header */
 
-		* {
-		  float: left;
-		  max-width: 100% !important;
+		&.et2-filterbox--loaded {
+		  .nextmatch_header, .nm-mob-header, .nm_favorites_div {
+			display: none;
+		  }
 		}
 
-		.et2_dropdown {
+		.nextmatch_header.nm_header_hide {
+		  display: none !important;
+		}
+
+		.egwGridView_outer {
+		  thead {
+			tr {
+			  visibility: hidden;
+
+			  th {
+
+			  }
+			}
+		  }
+
+		  .egwGridView_grid {
+			width: 100%;
+		  }
+		}
+
+		.search.searchOn {
+		  input {
+			border: none;
+			background: white;
+			outline: none;
+			position: absolute;
+			left: 110px;
+			width: 80%;
+			height: @mobile-elem-height;
+		  }
+
+		  button[id$="search_button"] {
+			background-image: none !important;
+
+			&:after {
+			  content: "\2613";
+			  font-weight: bold;
+			  font-size: 18pt;
+			}
+		  }
+		}
+
+		.nm-mob-header {
+		  background: @mobile-nm-search-bg;
+		  margin-top: 0;
+		  padding-left: 60px;
+		  position: relative;
+		  height: 50px;
+		  z-index: 1;
+		  display: flex;
+		  border-bottom: 1px solid transparent;
+
+		  et2-button-icon {
+			font-size: 2.3em;
+			color: var(--sl-color-neutral-0);
+		  }
+
 		  button {
 			height: @mobile-elem-height;
 			width: @mobile-button-width;
+			background-repeat: no-repeat;
+			font-size: large;
+			background-color: @mobile-nm-search-bg;
+			border: none;
+			margin: 0;
+			color: white;
+			background-size: 18px 18px;
+			box-shadow: none;
+			outline: none;
+		  }
+
+		  div.et2_searchbox {
+			display: inline-block;
+			width: 50px;
+		  }
+
+		  button.nm_toggle_header {
+			background-image: url(../../node_modules/bootstrap-icons/icons/list-task.svg);
+			background-position: center;
+			background-repeat: no-repeat;
+			width: 50px;
+			height: 50px;
+			display: block;
+			color: var(--sl-color-neutral-0);
+
+			&:focus {
+			  outline: none;
+			}
+
+			order: 9;
+			padding: 0 1em 0 1em;
+		  }
+
+		  button.nm_action_header {
+			background-image: url(../../node_modules/bootstrap-icons/icons/three-dots-vertical.svg);
+			background-position: center;
+			background-repeat: no-repeat;
+			border-left: 1px solid silver;
+			border: 0;
+			color: white;
+			width: 50px;
+			height: 50px;
+			display: block;
+			color: var(--sl-color-neutral-0);;
+
+			&:focus {
+			  outline: none;
+			}
+
+			order: 10;
+			padding: 0 1em 0 1em;
+		  }
+
+		  button.nm_action_header.back {
+			background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
+			-webkit-filter: none !important;
+			background-color: white !important;
+		  }
+
+		  div.nm_delete_action {
+			background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
+			color: var(--sl-color-neutral-0);;
+			background-position: center;
+			background-repeat: no-repeat;
+			border-left: 1px solid silver;
+			border: 0;
+			color: black;
+			width: 50px;
+			height: 50px;
+			display: inline-block;
+			text-align: center;
+			display: none;
+			order: 7;
+			padding: 0 1em 0 1em;
+		  }
+
+		  div.nm_favorites_div {
+			order: 8;
+			background-position: center;
+			background-repeat: no-repeat;
+			border-left: 1px solid silver;
+			border: 0;
+			color: white;
+			height: 50px;
+			display: none;
+			float: right;
+
+			&:focus {
+			  outline: none;
+			}
+
+			et2-favorites {
+
+			}
+
+			div[name="favorite"] {
+
+			  top: 0 !important;
+			  outline: none;
+
+			  .et2_dropdown {
+				button:first-child {
+				  display: none;
+				}
+
+				button:nth-child(2) {
+				  background-position: center;
+				  background-image: url(../../node_modules/bootstrap-icons/icons/star.svg) !important;
+				  background-size: 24px 24px;
+
+				  div:first-child {
+					display: none;
+				  }
+				}
+			  }
+
+			  ul.favorites {
+				height: 250px;
+				width: 100%;
+				left: 0px !important;
+				box-shadow: 0px 4px 5px 2px silver;
+				border: 1px solid silver;
+				overflow-y: auto !important;
+
+				li.ui-menu-item[data-id="blank"] {
+				  &:before {
+					content: '';
+					background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
+					background-size: 12px;
+					background-repeat: no-repeat;
+					width: 12px;
+					height: 12px;
+					display: inline-block;
+					margin-left: 4px;
+				  }
+				}
+
+				li.ui-menu-item:not([data-id="add"]):not([data-id="blank"]) {
+				  &:before {
+					content: '';
+					background-image: url(../../node_modules/bootstrap-icons/icons/star.svg);
+					background-size: 12px;
+					background-repeat: no-repeat;
+					width: 12px;
+					height: 12px;
+					display: inline-block;
+					margin-left: 4px;
+				  }
+				}
+
+				li.ui-menu-item {
+				  white-space: nowrap;
+				  text-overflow: ellipsis;
+				  overflow: hidden;
+				  border-bottom: 1px solid silver;
+
+				  a {
+					width: 100%;
+					line-height: 30px;
+
+					input {
+					  display: none;
+					}
+
+					div.ui-icon-trash {
+					  display: block;
+					  padding-right: 8px;
+					}
+				  }
+				}
+			  }
+			}
+		  }
+
+		  button.nm_toggle_header_on {
+			background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
+			-webkit-filter: none !important;
+			background-color: white !important;
+		  }
+
+		  et2-searchbox {
+			order: -1;
+			width: -webkit-fill-available;
+		  }
+
+		  div.nm_appname_header {
+			width: 100%;
+			display: none;
+			position: absolute;
+			top: 0;
+			height: 50px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			color: white;
+			font-size: 14pt;
+			font-weight: bold;
+			opacity: 0.2;
+			text-align: center;
+			padding-top: 13px;
+			z-index: -1;
 		  }
 		}
-	  }
 
-	  .header_count {
-		margin: 0;
-		height: @mobile-elem-height;
-		font-size: var(--sl-font-size-large);
-		margin-top: -3px;
-		margin-right: 0px;
-		float: right;
-		border: none;
-		border-radius: 0;
+		.header_row_right {
+		  div[id$=favorite_wrapper] {
+			margin: 0;
+			top: 0 !important;
+			height: @mobile-elem-height;
+		  }
 
-		span {
+		  height: @mobile-elem-height;
+		  width: 100%;
+		  padding: 0;
+
+		  * {
+			float: left;
+			max-width: 100% !important;
+		  }
+
+		  .et2_dropdown {
+			button {
+			  height: @mobile-elem-height;
+			  width: @mobile-button-width;
+			}
+		  }
+		}
+
+		.header_count {
+		  margin: 0;
+		  height: @mobile-elem-height;
 		  font-size: var(--sl-font-size-large);
-		}
-	  }
+		  margin-top: -3px;
+		  margin-right: 0px;
+		  float: right;
+		  border: none;
+		  border-radius: 0;
 
-	  table.egwGridView_grid {
-		tr {
-		  div.h2_hbox {
-			padding-bottom: 4px;
+		  span {
+			font-size: var(--sl-font-size-large);
 		  }
 		}
 
-		tbody {
-		  tr.focused {
-			background-image: none;
-		  }
-
-		  tr.selected:not([class*="tile"]) {
-			background: #b0bfd8 !important;
-
-			* {
-			  color: white !important;
-			}
-
-			td:last-child {
-			  position: relative;
-			}
-
-			td:last-child:before {
-			  content: " ";
-			  position: absolute;
-			  background: #b0bfd8;
-			  right: 0px;
-			  bottom: 0px;
-			  top: 0px;
-			  color: white;
-			  background-image: url(../../node_modules/bootstrap-icons/icons/check-lg.svg);
-			  background-repeat: no-repeat;
-			  background-position: center;
-			  height: auto;
-			  background-size: 20px;
-			  background-position: center;
-			  height: 99%;
-			  width: 99%;
-			  z-index: 1;
-			}
-		  }
-
+		table.egwGridView_grid {
 		  tr {
-			&:hover {
-			  background: transparent;
-			}
-
-			td {
-			  padding: 10px 0px 10px 0px;
-
-			  .et2_label, .et2_button, .et2_link, .et2_textbox, .et2_textbox_ro,
-			  .et2_email, img {
-				padding: 8px 0px 0px 0px;
-			  }
-
-			  time.et2_label, span.mobile_cat_col {
-				padding: 0;
-			  }
-
-			  div.et2_progress {
-				margin: 0;
-			  }
+			div.h2_hbox {
+			  padding-bottom: 4px;
 			}
 		  }
 
-		  tr.swipe {
-			background-color: rgba(255, 194, 0, 1);
-			border: none;
+		  tbody {
+			tr.focused {
+			  background-image: none;
+			}
 
+			tr.selected:not([class*="tile"]) {
+			  background: #b0bfd8 !important;
+
+			  * {
+				color: white !important;
+			  }
+
+			  td:last-child {
+				position: relative;
+			  }
+
+			  td:last-child:before {
+				content: " ";
+				position: absolute;
+				background: #b0bfd8;
+				right: 0px;
+				bottom: 0px;
+				top: 0px;
+				color: white;
+				background-image: url(../../node_modules/bootstrap-icons/icons/check-lg.svg);
+				background-repeat: no-repeat;
+				background-position: center;
+				height: auto;
+				background-size: 20px;
+				background-position: center;
+				height: 99%;
+				width: 99%;
+				z-index: 1;
+			  }
+			}
+
+			tr {
+			  &:hover {
+				background: transparent;
+			  }
+
+			  td {
+				padding: 10px 0px 10px 0px;
+
+				.et2_label, .et2_button, .et2_link, .et2_textbox, .et2_textbox_ro,
+				.et2_email, img {
+				  padding: 8px 0px 0px 0px;
+				}
+
+				time.et2_label, span.mobile_cat_col {
+				  padding: 0;
+				}
+
+				div.et2_progress {
+				  margin: 0;
+				}
+			  }
+			}
+
+			tr.swipe {
+			  background-color: rgba(255, 194, 0, 1);
+			  border: none;
+
+			}
+		  }
+		}
+
+		.egwGridView_outer {
+		  width: 100%;
+
+		  thead {
+			max-height: 1px;
+			display: none;
+		  }
+
+		  thead tr th {
+			font-size: large;
+		  }
+
+		  td {
+			img {
+			  border: none;
+			}
 		  }
 		}
 	  }
 
-	  .egwGridView_outer {
-		width: 100%;
-
-		thead {
-		  max-height: 1px;
-		  display: none;
-		}
-
-		thead tr th {
-		  font-size: large;
-		}
-
-		td {
-		  img {
-			border: none;
+	  .et2_details {
+		.et2_details_toggle {
+		  &:after {
+			width: 30px;
+			height: 30px;
+			font-size: 18pt;
+			text-align: center;
+			padding: 9px;
 		  }
 		}
 	  }
 	}
 
-	.et2_details {
-	  .et2_details_toggle {
-		&:after {
-		  width: 30px;
-		  height: 30px;
-		  font-size: 18pt;
-		  text-align: center;
-		  padding: 9px;
-		}
+	et2-button-icon.plus_button {
+	  display: flex;
+	  position: fixed !important;
+	  right: 15px;
+	  bottom: 15px;
+	  font-size: 45px;
+	  line-height: 45px;
+	  border-radius: var(--sl-border-radius-circle);
+	  z-index: 100;
+	  background-color: var(--application-color, var(--primary-color, var(--sl-color-primary-500)));
+	  border: none;
+	  margin: 0;
+	  padding: 0;
+	  color: var(--sl-color-neutral-0);
+
+	  &:hover, &:active {
+		background-color: #0c5da5;
 	  }
 	}
-  }
 
-  et2-button-icon.plus_button {
-	display: flex;
-	position: fixed !important;
-	right: 15px;
-	bottom: 15px;
-	font-size: 45px;
-	line-height: 45px;
-	border-radius: var(--sl-border-radius-circle);
-	z-index: 100;
-	background-color: var(--application-color, var(--primary-color, var(--sl-color-primary-500)));
-	border: none;
-	margin: 0;
-	padding: 0;
-	color: var(--sl-color-neutral-0);
-
-	&:hover, &:active {
-	  background-color: #0c5da5;
+	.kdots-glassy [slot='label'] {
+	  &::part(base), *::part(base), *::part(input-control), *::part(combobox), *::part(button__base) {
+		box-shadow: none !important;
+	  }
 	}
-  }
 
-  .kdots-glassy [slot='label'] {
-	&::part(base), *::part(base), *::part(input-control), *::part(combobox), *::part(button__base) {
-	  box-shadow: none !important;
-	}
-  }
-
-  .egw-popup [slot='label'] {
-	et2-dropdown-button {
-	  --sl-spacing-large: 0;
-	  --sl-input-border-color:transparent;
+	.egw-popup [slot='label'] {
+	  et2-dropdown-button {
+		--sl-spacing-large: 0;
+		--sl-input-border-color: transparent;
+	  }
 	}
   }
 

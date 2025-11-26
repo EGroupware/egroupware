@@ -1,59 +1,59 @@
 @media screen and (max-width: 800px), screen and (max-height: 600px) {
-  html * {
+  html:not(.desktop) html * {
     touch-action: auto;
     -webkit-overflow-scrolling: touch;
   }
-  :root,
-  body {
+  html:not(.desktop) :root,
+  html:not(.desktop) body {
     /* Stop pull-to-refresh on chrome*/
     overflow-y: hidden;
     /* copied from previous framework */
   }
-  :root egw-framework#egw_fw_basecontainer,
-  body egw-framework#egw_fw_basecontainer {
+  html:not(.desktop) :root egw-framework#egw_fw_basecontainer,
+  html:not(.desktop) body egw-framework#egw_fw_basecontainer {
     --left-side-width: 0px !important;
     /* Hide some parts */
   }
-  :root egw-framework#egw_fw_basecontainer::part(open-applications),
-  body egw-framework#egw_fw_basecontainer::part(open-applications),
-  :root egw-framework#egw_fw_basecontainer::part(status),
-  body egw-framework#egw_fw_basecontainer::part(status),
-  :root egw-framework#egw_fw_basecontainer::part(divider),
-  body egw-framework#egw_fw_basecontainer::part(divider) {
+  html:not(.desktop) :root egw-framework#egw_fw_basecontainer::part(open-applications),
+  html:not(.desktop) body egw-framework#egw_fw_basecontainer::part(open-applications),
+  html:not(.desktop) :root egw-framework#egw_fw_basecontainer::part(status),
+  html:not(.desktop) body egw-framework#egw_fw_basecontainer::part(status),
+  html:not(.desktop) :root egw-framework#egw_fw_basecontainer::part(divider),
+  html:not(.desktop) body egw-framework#egw_fw_basecontainer::part(divider) {
     display: none;
   }
-  :root egw-framework#egw_fw_basecontainer.egw_fw--left-side-collapsed::part(header),
-  body egw-framework#egw_fw_basecontainer.egw_fw--left-side-collapsed::part(header) {
+  html:not(.desktop) :root egw-framework#egw_fw_basecontainer.egw_fw--left-side-collapsed::part(header),
+  html:not(.desktop) body egw-framework#egw_fw_basecontainer.egw_fw--left-side-collapsed::part(header) {
     display: none;
   }
-  :root egw-framework#egw_fw_basecontainer::part(main),
-  body egw-framework#egw_fw_basecontainer::part(main) {
+  html:not(.desktop) :root egw-framework#egw_fw_basecontainer::part(main),
+  html:not(.desktop) body egw-framework#egw_fw_basecontainer::part(main) {
     overflow-x: hidden;
   }
-  :root egw-framework#egw_fw_basecontainer::part(status-split),
-  body egw-framework#egw_fw_basecontainer::part(status-split) {
+  html:not(.desktop) :root egw-framework#egw_fw_basecontainer::part(status-split),
+  html:not(.desktop) body egw-framework#egw_fw_basecontainer::part(status-split) {
     --max: 0;
   }
-  :root button[id*="save"]:hover,
-  body button[id*="save"]:hover,
-  :root button[id*="apply"]:hover,
-  body button[id*="apply"]:hover,
-  :root button[id*="copy"]:hover,
-  body button[id*="copy"]:hover,
-  :root button[id*="edit_button[edit]"]:hover,
-  body button[id*="edit_button[edit]"]:hover,
-  :root button.et2_button:hover,
-  body button.et2_button:hover {
+  html:not(.desktop) :root button[id*="save"]:hover,
+  html:not(.desktop) body button[id*="save"]:hover,
+  html:not(.desktop) :root button[id*="apply"]:hover,
+  html:not(.desktop) body button[id*="apply"]:hover,
+  html:not(.desktop) :root button[id*="copy"]:hover,
+  html:not(.desktop) body button[id*="copy"]:hover,
+  html:not(.desktop) :root button[id*="edit_button[edit]"]:hover,
+  html:not(.desktop) body button[id*="edit_button[edit]"]:hover,
+  html:not(.desktop) :root button.et2_button:hover,
+  html:not(.desktop) body button.et2_button:hover {
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
   }
-  :root et2-dialog,
-  body et2-dialog {
+  html:not(.desktop) :root et2-dialog,
+  html:not(.desktop) body et2-dialog {
     --width: 100%;
     /* Old way of adding stuff.  Buttons should be slotted into header-actions, anything else into label */
   }
-  :root et2-dialog .egw-popup,
-  body et2-dialog .egw-popup {
+  html:not(.desktop) :root et2-dialog .egw-popup,
+  html:not(.desktop) body et2-dialog .egw-popup {
     display: block;
     position: absolute;
     left: 0;
@@ -61,8 +61,8 @@
     right: 0;
     overflow: auto;
   }
-  :root et2-dialog::part(panel),
-  body et2-dialog::part(panel) {
+  html:not(.desktop) :root et2-dialog::part(panel),
+  html:not(.desktop) body et2-dialog::part(panel) {
     /* allow dialog to be full screen */
     max-width: 100%;
     max-height: 100%;
@@ -71,8 +71,8 @@
     height: 100% !important;
     border-radius: 0;
   }
-  :root et2-dialog::part(header),
-  body et2-dialog::part(header) {
+  html:not(.desktop) :root et2-dialog::part(header),
+  html:not(.desktop) body et2-dialog::part(header) {
     /* Set header size, color & background */
     color: var(--application-header-text-color, var(--sl-color-neutral-100));
     background: var(--application-color, var(--sl-color-primary-500));
@@ -81,8 +81,8 @@
     border-radius: 0 !important;
     flex-direction: row-reverse;
   }
-  :root et2-dialog::part(title),
-  body et2-dialog::part(title) {
+  html:not(.desktop) :root et2-dialog::part(title),
+  html:not(.desktop) body et2-dialog::part(title) {
     font-size: var(--sl-font-size-x-large);
     padding: 0;
     display: flex;
@@ -90,19 +90,19 @@
     /* Needs something so flex will work right */
     min-width: 5em;
   }
-  :root et2-dialog::part(header-actions),
-  body et2-dialog::part(header-actions) {
+  html:not(.desktop) :root et2-dialog::part(header-actions),
+  html:not(.desktop) body et2-dialog::part(header-actions) {
     flex-direction: row-reverse;
     font-size: var(--sl-font-size-2x-large);
     align-content: center;
   }
-  :root et2-dialog::part(close-button),
-  body et2-dialog::part(close-button) {
+  html:not(.desktop) :root et2-dialog::part(close-button),
+  html:not(.desktop) body et2-dialog::part(close-button) {
     color: var(--application-header-text-color, var(--sl-color-neutral-100));
     font-size: var(--sl-font-size-2x-large);
   }
-  :root et2-dialog::part(footer),
-  body et2-dialog::part(footer) {
+  html:not(.desktop) :root et2-dialog::part(footer),
+  html:not(.desktop) body et2-dialog::part(footer) {
     order: 0;
     /*box-shadow: 0px 4px 5px 2px silver;*/
     width: 100%;
@@ -112,12 +112,12 @@
     /* Allow buttons to wrap */
     flex-wrap: wrap;
   }
-  :root et2-dialog .dialogHeadbar:empty,
-  body et2-dialog .dialogHeadbar:empty {
+  html:not(.desktop) :root et2-dialog .dialogHeadbar:empty,
+  html:not(.desktop) body et2-dialog .dialogHeadbar:empty {
     display: none;
   }
-  :root et2-dialog .dialogHeadbar:not(:empty),
-  body et2-dialog .dialogHeadbar:not(:empty) {
+  html:not(.desktop) :root et2-dialog .dialogHeadbar:not(:empty),
+  html:not(.desktop) body et2-dialog .dialogHeadbar:not(:empty) {
     color: var(--application-header-text-color, var(--sl-color-neutral-100));
     font-size: var(--sl-font-size-x-large);
     position: fixed;
@@ -128,84 +128,84 @@
     z-index: 1;
     overflow: hidden;
   }
-  :root et2-dialog .dialogHeadbar:not(:empty) .entry_id,
-  body et2-dialog .dialogHeadbar:not(:empty) .entry_id {
+  html:not(.desktop) :root et2-dialog .dialogHeadbar:not(:empty) .entry_id,
+  html:not(.desktop) body et2-dialog .dialogHeadbar:not(:empty) .entry_id {
     position: absolute;
     right: var(--sl-spacing-medium);
     font-weight: var(--sl-font-weight-bold);
   }
-  :root et2-dialog .dialogHeadbar:not(:empty) ::part(base),
-  body et2-dialog .dialogHeadbar:not(:empty) ::part(base) {
+  html:not(.desktop) :root et2-dialog .dialogHeadbar:not(:empty) ::part(base),
+  html:not(.desktop) body et2-dialog .dialogHeadbar:not(:empty) ::part(base) {
     box-shadow: none !important;
     background-color: transparent;
     --sl-input-border-color: transparent;
   }
-  :root et2-dialog et2-hbox[slot="label"],
-  body et2-dialog et2-hbox[slot="label"],
-  :root et2-dialog et2-box[slot="label"],
-  body et2-dialog et2-box[slot="label"],
-  :root et2-dialog et2-hbox[slot="header-actions"],
-  body et2-dialog et2-hbox[slot="header-actions"],
-  :root et2-dialog eg2-box[slot="header-actions"],
-  body et2-dialog eg2-box[slot="header-actions"] {
+  html:not(.desktop) :root et2-dialog et2-hbox[slot="label"],
+  html:not(.desktop) body et2-dialog et2-hbox[slot="label"],
+  html:not(.desktop) :root et2-dialog et2-box[slot="label"],
+  html:not(.desktop) body et2-dialog et2-box[slot="label"],
+  html:not(.desktop) :root et2-dialog et2-hbox[slot="header-actions"],
+  html:not(.desktop) body et2-dialog et2-hbox[slot="header-actions"],
+  html:not(.desktop) :root et2-dialog eg2-box[slot="header-actions"],
+  html:not(.desktop) body et2-dialog eg2-box[slot="header-actions"] {
     flex: 1 1 min-content;
   }
-  :root et2-dialog et2-hbox[slot="label"]::part(base),
-  body et2-dialog et2-hbox[slot="label"]::part(base),
-  :root et2-dialog et2-box[slot="label"]::part(base),
-  body et2-dialog et2-box[slot="label"]::part(base),
-  :root et2-dialog et2-hbox[slot="header-actions"]::part(base),
-  body et2-dialog et2-hbox[slot="header-actions"]::part(base),
-  :root et2-dialog eg2-box[slot="header-actions"]::part(base),
-  body et2-dialog eg2-box[slot="header-actions"]::part(base) {
+  html:not(.desktop) :root et2-dialog et2-hbox[slot="label"]::part(base),
+  html:not(.desktop) body et2-dialog et2-hbox[slot="label"]::part(base),
+  html:not(.desktop) :root et2-dialog et2-box[slot="label"]::part(base),
+  html:not(.desktop) body et2-dialog et2-box[slot="label"]::part(base),
+  html:not(.desktop) :root et2-dialog et2-hbox[slot="header-actions"]::part(base),
+  html:not(.desktop) body et2-dialog et2-hbox[slot="header-actions"]::part(base),
+  html:not(.desktop) :root et2-dialog eg2-box[slot="header-actions"]::part(base),
+  html:not(.desktop) body et2-dialog eg2-box[slot="header-actions"]::part(base) {
     align-items: center;
   }
-  :root et2-dialog span[slot="label"],
-  body et2-dialog span[slot="label"] {
+  html:not(.desktop) :root et2-dialog span[slot="label"],
+  html:not(.desktop) body et2-dialog span[slot="label"] {
     flex-shrink: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-inline-end: var(--sl-spacing-small);
   }
-  :root et2-dialog et2-number[slot="label"],
-  body et2-dialog et2-number[slot="label"] {
+  html:not(.desktop) :root et2-dialog et2-number[slot="label"],
+  html:not(.desktop) body et2-dialog et2-number[slot="label"] {
     display: inline-flex;
   }
-  :root et2-dialog et2-button[slot="footer"]:has(et2-image),
-  body et2-dialog et2-button[slot="footer"]:has(et2-image) {
+  html:not(.desktop) :root et2-dialog et2-button[slot="footer"]:has(et2-image),
+  html:not(.desktop) body et2-dialog et2-button[slot="footer"]:has(et2-image) {
     /* Fixed size on footer buttons */
     width: 50px;
     height: 50px;
   }
-  :root et2-dialog et2-button[slot="footer"] et2-image,
-  body et2-dialog et2-button[slot="footer"] et2-image {
+  html:not(.desktop) :root et2-dialog et2-button[slot="footer"] et2-image,
+  html:not(.desktop) body et2-dialog et2-button[slot="footer"] et2-image {
     max-width: initial;
     left: 0;
   }
-  :root et2-dialog et2-button[slot="footer"] et2-image span,
-  body et2-dialog et2-button[slot="footer"] et2-image span {
+  html:not(.desktop) :root et2-dialog et2-button[slot="footer"] et2-image span,
+  html:not(.desktop) body et2-dialog et2-button[slot="footer"] et2-image span {
     padding-left: 20px;
   }
-  :root et2-dialog et2-button[slot="footer"][id*="cancel"],
-  body et2-dialog et2-button[slot="footer"][id*="cancel"] {
+  html:not(.desktop) :root et2-dialog et2-button[slot="footer"][id*="cancel"],
+  html:not(.desktop) body et2-dialog et2-button[slot="footer"][id*="cancel"] {
     /* Hide cancel button, it will look like a duplicated bug so close to dialog close button */
     display: none;
   }
-  :root et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base),
-  body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base),
-  :root et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base):not(:hover),
-  body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base):not(:hover),
-  :root et2-dialog et2-button[variant=default][slot="footer"]:has(et2-image)::part(base):not(:hover),
-  body et2-dialog et2-button[variant=default][slot="footer"]:has(et2-image)::part(base):not(:hover) {
+  html:not(.desktop) :root et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base),
+  html:not(.desktop) body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base),
+  html:not(.desktop) :root et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base):not(:hover),
+  html:not(.desktop) body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(base):not(:hover),
+  html:not(.desktop) :root et2-dialog et2-button[variant=default][slot="footer"]:has(et2-image)::part(base):not(:hover),
+  html:not(.desktop) body et2-dialog et2-button[variant=default][slot="footer"]:has(et2-image)::part(base):not(:hover) {
     /* Have an icon - Hide button style, just show image */
     border: none;
     background: transparent;
     justify-content: center;
     color: var(--sl-color-neutral-100);
   }
-  :root et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label),
-  body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label) {
+  html:not(.desktop) :root et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label),
+  html:not(.desktop) body et2-dialog et2-button[slot="footer"]:has(et2-image)::part(label) {
     /* Visually hide labels but leave them there for accessibility */
     position: absolute;
     width: 1px;
@@ -214,49 +214,49 @@
     clip: rect(0 0 0 0);
     flex: 0 1 auto;
   }
-  :root et2-dialog #delete_popup,
-  body et2-dialog #delete_popup {
+  html:not(.desktop) :root et2-dialog #delete_popup,
+  html:not(.desktop) body et2-dialog #delete_popup {
     position: absolute;
     z-index: 1000000;
     display: block;
   }
-  :root et2-dialog #timer_dialog::part(header),
-  body et2-dialog #timer_dialog::part(header),
-  :root et2-dialog et2-dialog#timer_dialog::part(footer),
-  body et2-dialog et2-dialog#timer_dialog::part(footer) {
+  html:not(.desktop) :root et2-dialog #timer_dialog::part(header),
+  html:not(.desktop) body et2-dialog #timer_dialog::part(header),
+  html:not(.desktop) :root et2-dialog et2-dialog#timer_dialog::part(footer),
+  html:not(.desktop) body et2-dialog et2-dialog#timer_dialog::part(footer) {
     background-color: var(--timesheet-color);
   }
-  :root .et2_nextmatch,
-  body .et2_nextmatch {
+  html:not(.desktop) :root .et2_nextmatch,
+  html:not(.desktop) body .et2_nextmatch {
     /* If there's a filterbox, hide the header */
   }
-  :root .et2_nextmatch .nextmatch_sortheader,
-  body .et2_nextmatch .nextmatch_sortheader {
+  html:not(.desktop) :root .et2_nextmatch .nextmatch_sortheader,
+  html:not(.desktop) body .et2_nextmatch .nextmatch_sortheader {
     padding-right: 0px;
     margin-right: 0px;
   }
-  :root .et2_nextmatch.et2-filterbox--loaded .nextmatch_header,
-  body .et2_nextmatch.et2-filterbox--loaded .nextmatch_header,
-  :root .et2_nextmatch.et2-filterbox--loaded .nm-mob-header,
-  body .et2_nextmatch.et2-filterbox--loaded .nm-mob-header,
-  :root .et2_nextmatch.et2-filterbox--loaded .nm_favorites_div,
-  body .et2_nextmatch.et2-filterbox--loaded .nm_favorites_div {
+  html:not(.desktop) :root .et2_nextmatch.et2-filterbox--loaded .nextmatch_header,
+  html:not(.desktop) body .et2_nextmatch.et2-filterbox--loaded .nextmatch_header,
+  html:not(.desktop) :root .et2_nextmatch.et2-filterbox--loaded .nm-mob-header,
+  html:not(.desktop) body .et2_nextmatch.et2-filterbox--loaded .nm-mob-header,
+  html:not(.desktop) :root .et2_nextmatch.et2-filterbox--loaded .nm_favorites_div,
+  html:not(.desktop) body .et2_nextmatch.et2-filterbox--loaded .nm_favorites_div {
     display: none;
   }
-  :root .et2_nextmatch .nextmatch_header.nm_header_hide,
-  body .et2_nextmatch .nextmatch_header.nm_header_hide {
+  html:not(.desktop) :root .et2_nextmatch .nextmatch_header.nm_header_hide,
+  html:not(.desktop) body .et2_nextmatch .nextmatch_header.nm_header_hide {
     display: none !important;
   }
-  :root .et2_nextmatch .egwGridView_outer thead tr,
-  body .et2_nextmatch .egwGridView_outer thead tr {
+  html:not(.desktop) :root .et2_nextmatch .egwGridView_outer thead tr,
+  html:not(.desktop) body .et2_nextmatch .egwGridView_outer thead tr {
     visibility: hidden;
   }
-  :root .et2_nextmatch .egwGridView_outer .egwGridView_grid,
-  body .et2_nextmatch .egwGridView_outer .egwGridView_grid {
+  html:not(.desktop) :root .et2_nextmatch .egwGridView_outer .egwGridView_grid,
+  html:not(.desktop) body .et2_nextmatch .egwGridView_outer .egwGridView_grid {
     width: 100%;
   }
-  :root .et2_nextmatch .search.searchOn input,
-  body .et2_nextmatch .search.searchOn input {
+  html:not(.desktop) :root .et2_nextmatch .search.searchOn input,
+  html:not(.desktop) body .et2_nextmatch .search.searchOn input {
     border: none;
     background: white;
     outline: none;
@@ -265,18 +265,18 @@
     width: 80%;
     height: var(--sl-font-size-large);
   }
-  :root .et2_nextmatch .search.searchOn button[id$="search_button"],
-  body .et2_nextmatch .search.searchOn button[id$="search_button"] {
+  html:not(.desktop) :root .et2_nextmatch .search.searchOn button[id$="search_button"],
+  html:not(.desktop) body .et2_nextmatch .search.searchOn button[id$="search_button"] {
     background-image: none !important;
   }
-  :root .et2_nextmatch .search.searchOn button[id$="search_button"]:after,
-  body .et2_nextmatch .search.searchOn button[id$="search_button"]:after {
+  html:not(.desktop) :root .et2_nextmatch .search.searchOn button[id$="search_button"]:after,
+  html:not(.desktop) body .et2_nextmatch .search.searchOn button[id$="search_button"]:after {
     content: "\2613";
     font-weight: bold;
     font-size: 18pt;
   }
-  :root .et2_nextmatch .nm-mob-header,
-  body .et2_nextmatch .nm-mob-header {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header {
     background: var(--primary-color);
     margin-top: 0;
     padding-left: 60px;
@@ -286,13 +286,13 @@
     display: flex;
     border-bottom: 1px solid transparent;
   }
-  :root .et2_nextmatch .nm-mob-header et2-button-icon,
-  body .et2_nextmatch .nm-mob-header et2-button-icon {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header et2-button-icon,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header et2-button-icon {
     font-size: 2.3em;
     color: var(--sl-color-neutral-0);
   }
-  :root .et2_nextmatch .nm-mob-header button,
-  body .et2_nextmatch .nm-mob-header button {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header button,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header button {
     height: var(--sl-font-size-large);
     width: var(--sl-font-size-large);
     background-repeat: no-repeat;
@@ -305,13 +305,13 @@
     box-shadow: none;
     outline: none;
   }
-  :root .et2_nextmatch .nm-mob-header div.et2_searchbox,
-  body .et2_nextmatch .nm-mob-header div.et2_searchbox {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.et2_searchbox,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.et2_searchbox {
     display: inline-block;
     width: 50px;
   }
-  :root .et2_nextmatch .nm-mob-header button.nm_toggle_header,
-  body .et2_nextmatch .nm-mob-header button.nm_toggle_header {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header button.nm_toggle_header,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header button.nm_toggle_header {
     background-image: url(../../node_modules/bootstrap-icons/icons/list-task.svg);
     background-position: center;
     background-repeat: no-repeat;
@@ -322,12 +322,12 @@
     order: 9;
     padding: 0 1em 0 1em;
   }
-  :root .et2_nextmatch .nm-mob-header button.nm_toggle_header:focus,
-  body .et2_nextmatch .nm-mob-header button.nm_toggle_header:focus {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header button.nm_toggle_header:focus,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header button.nm_toggle_header:focus {
     outline: none;
   }
-  :root .et2_nextmatch .nm-mob-header button.nm_action_header,
-  body .et2_nextmatch .nm-mob-header button.nm_action_header {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header button.nm_action_header,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header button.nm_action_header {
     background-image: url(../../node_modules/bootstrap-icons/icons/three-dots-vertical.svg);
     background-position: center;
     background-repeat: no-repeat;
@@ -341,18 +341,18 @@
     order: 10;
     padding: 0 1em 0 1em;
   }
-  :root .et2_nextmatch .nm-mob-header button.nm_action_header:focus,
-  body .et2_nextmatch .nm-mob-header button.nm_action_header:focus {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header button.nm_action_header:focus,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header button.nm_action_header:focus {
     outline: none;
   }
-  :root .et2_nextmatch .nm-mob-header button.nm_action_header.back,
-  body .et2_nextmatch .nm-mob-header button.nm_action_header.back {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header button.nm_action_header.back,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header button.nm_action_header.back {
     background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
     -webkit-filter: none !important;
     background-color: white !important;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_delete_action,
-  body .et2_nextmatch .nm-mob-header div.nm_delete_action {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_delete_action,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_delete_action {
     background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
     color: var(--sl-color-neutral-0);
     background-position: center;
@@ -368,8 +368,8 @@
     order: 7;
     padding: 0 1em 0 1em;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
     order: 8;
     background-position: center;
     background-repeat: no-repeat;
@@ -380,31 +380,31 @@
     display: none;
     float: right;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div:focus,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div:focus {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div:focus,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div:focus {
     outline: none;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"],
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"],
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] {
     top: 0 !important;
     outline: none;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:first-child {
     display: none;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2),
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2),
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) {
     background-position: center;
     background-image: url(../../node_modules/bootstrap-icons/icons/star.svg) !important;
     background-size: 24px 24px;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] .et2_dropdown button:nth-child(2) div:first-child {
     display: none;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites {
     height: 250px;
     width: 100%;
     left: 0px !important;
@@ -412,8 +412,8 @@
     border: 1px solid silver;
     overflow-y: auto !important;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item[data-id="blank"]:before,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item[data-id="blank"]:before {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item[data-id="blank"]:before,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item[data-id="blank"]:before {
     content: '';
     background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
     background-size: 12px;
@@ -423,8 +423,8 @@
     display: inline-block;
     margin-left: 4px;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item:not([data-id="add"]):not([data-id="blank"]):before,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item:not([data-id="add"]):not([data-id="blank"]):before {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item:not([data-id="add"]):not([data-id="blank"]):before,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item:not([data-id="add"]):not([data-id="blank"]):before {
     content: '';
     background-image: url(../../node_modules/bootstrap-icons/icons/star.svg);
     background-size: 12px;
@@ -434,40 +434,40 @@
     display: inline-block;
     margin-left: 4px;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     border-bottom: 1px solid silver;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a {
     width: 100%;
     line-height: 30px;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a input,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a input {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a input,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a input {
     display: none;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash,
-  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item a div.ui-icon-trash {
     display: block;
     padding-right: 8px;
   }
-  :root .et2_nextmatch .nm-mob-header button.nm_toggle_header_on,
-  body .et2_nextmatch .nm-mob-header button.nm_toggle_header_on {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header button.nm_toggle_header_on,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header button.nm_toggle_header_on {
     background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
     -webkit-filter: none !important;
     background-color: white !important;
   }
-  :root .et2_nextmatch .nm-mob-header et2-searchbox,
-  body .et2_nextmatch .nm-mob-header et2-searchbox {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header et2-searchbox,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header et2-searchbox {
     order: -1;
     width: -webkit-fill-available;
   }
-  :root .et2_nextmatch .nm-mob-header div.nm_appname_header,
-  body .et2_nextmatch .nm-mob-header div.nm_appname_header {
+  html:not(.desktop) :root .et2_nextmatch .nm-mob-header div.nm_appname_header,
+  html:not(.desktop) body .et2_nextmatch .nm-mob-header div.nm_appname_header {
     width: 100%;
     display: none;
     position: absolute;
@@ -484,30 +484,30 @@
     padding-top: 13px;
     z-index: -1;
   }
-  :root .et2_nextmatch .header_row_right,
-  body .et2_nextmatch .header_row_right {
+  html:not(.desktop) :root .et2_nextmatch .header_row_right,
+  html:not(.desktop) body .et2_nextmatch .header_row_right {
     height: var(--sl-font-size-large);
     width: 100%;
     padding: 0;
   }
-  :root .et2_nextmatch .header_row_right div[id$=favorite_wrapper],
-  body .et2_nextmatch .header_row_right div[id$=favorite_wrapper] {
+  html:not(.desktop) :root .et2_nextmatch .header_row_right div[id$=favorite_wrapper],
+  html:not(.desktop) body .et2_nextmatch .header_row_right div[id$=favorite_wrapper] {
     margin: 0;
     top: 0 !important;
     height: var(--sl-font-size-large);
   }
-  :root .et2_nextmatch .header_row_right *,
-  body .et2_nextmatch .header_row_right * {
+  html:not(.desktop) :root .et2_nextmatch .header_row_right *,
+  html:not(.desktop) body .et2_nextmatch .header_row_right * {
     float: left;
     max-width: 100% !important;
   }
-  :root .et2_nextmatch .header_row_right .et2_dropdown button,
-  body .et2_nextmatch .header_row_right .et2_dropdown button {
+  html:not(.desktop) :root .et2_nextmatch .header_row_right .et2_dropdown button,
+  html:not(.desktop) body .et2_nextmatch .header_row_right .et2_dropdown button {
     height: var(--sl-font-size-large);
     width: var(--sl-font-size-large);
   }
-  :root .et2_nextmatch .header_count,
-  body .et2_nextmatch .header_count {
+  html:not(.desktop) :root .et2_nextmatch .header_count,
+  html:not(.desktop) body .et2_nextmatch .header_count {
     margin: 0;
     height: var(--sl-font-size-large);
     font-size: var(--sl-font-size-large);
@@ -517,32 +517,32 @@
     border: none;
     border-radius: 0;
   }
-  :root .et2_nextmatch .header_count span,
-  body .et2_nextmatch .header_count span {
+  html:not(.desktop) :root .et2_nextmatch .header_count span,
+  html:not(.desktop) body .et2_nextmatch .header_count span {
     font-size: var(--sl-font-size-large);
   }
-  :root .et2_nextmatch table.egwGridView_grid tr div.h2_hbox,
-  body .et2_nextmatch table.egwGridView_grid tr div.h2_hbox {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tr div.h2_hbox,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tr div.h2_hbox {
     padding-bottom: 4px;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr.focused,
-  body .et2_nextmatch table.egwGridView_grid tbody tr.focused {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr.focused,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr.focused {
     background-image: none;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]),
-  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]),
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) {
     background: #b0bfd8 !important;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) *,
-  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) * {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) *,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) * {
     color: white !important;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child,
-  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child {
     position: relative;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child:before,
-  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child:before {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child:before,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child:before {
     content: " ";
     position: absolute;
     background: #b0bfd8;
@@ -559,71 +559,71 @@
     width: 99%;
     z-index: 1;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr:hover,
-  body .et2_nextmatch table.egwGridView_grid tbody tr:hover {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr:hover,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr:hover {
     background: transparent;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td {
     padding: 10px 0px 10px 0px;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_label,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_label,
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_button,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_button,
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_link,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_link,
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox,
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox_ro,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox_ro,
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_email,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_email,
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td img,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td img {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_label,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_label,
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_button,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_button,
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_link,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_link,
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox,
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox_ro,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox_ro,
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td .et2_email,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_email,
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td img,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td img {
     padding: 8px 0px 0px 0px;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td span.mobile_cat_col {
     padding: 0;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr td div.et2_progress,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td div.et2_progress {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr td div.et2_progress,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr td div.et2_progress {
     margin: 0;
   }
-  :root .et2_nextmatch table.egwGridView_grid tbody tr.swipe,
-  body .et2_nextmatch table.egwGridView_grid tbody tr.swipe {
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tbody tr.swipe,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tbody tr.swipe {
     background-color: #ffc200;
     border: none;
   }
-  :root .et2_nextmatch .egwGridView_outer,
-  body .et2_nextmatch .egwGridView_outer {
+  html:not(.desktop) :root .et2_nextmatch .egwGridView_outer,
+  html:not(.desktop) body .et2_nextmatch .egwGridView_outer {
     width: 100%;
   }
-  :root .et2_nextmatch .egwGridView_outer thead,
-  body .et2_nextmatch .egwGridView_outer thead {
+  html:not(.desktop) :root .et2_nextmatch .egwGridView_outer thead,
+  html:not(.desktop) body .et2_nextmatch .egwGridView_outer thead {
     max-height: 1px;
     display: none;
   }
-  :root .et2_nextmatch .egwGridView_outer thead tr th,
-  body .et2_nextmatch .egwGridView_outer thead tr th {
+  html:not(.desktop) :root .et2_nextmatch .egwGridView_outer thead tr th,
+  html:not(.desktop) body .et2_nextmatch .egwGridView_outer thead tr th {
     font-size: large;
   }
-  :root .et2_nextmatch .egwGridView_outer td img,
-  body .et2_nextmatch .egwGridView_outer td img {
+  html:not(.desktop) :root .et2_nextmatch .egwGridView_outer td img,
+  html:not(.desktop) body .et2_nextmatch .egwGridView_outer td img {
     border: none;
   }
-  :root .et2_details .et2_details_toggle:after,
-  body .et2_details .et2_details_toggle:after {
+  html:not(.desktop) :root .et2_details .et2_details_toggle:after,
+  html:not(.desktop) body .et2_details .et2_details_toggle:after {
     width: 30px;
     height: 30px;
     font-size: 18pt;
     text-align: center;
     padding: 9px;
   }
-  et2-button-icon.plus_button {
+  html:not(.desktop) et2-button-icon.plus_button {
     display: flex;
     position: fixed !important;
     right: 15px;
@@ -638,18 +638,18 @@
     padding: 0;
     color: var(--sl-color-neutral-0);
   }
-  et2-button-icon.plus_button:hover,
-  et2-button-icon.plus_button:active {
+  html:not(.desktop) et2-button-icon.plus_button:hover,
+  html:not(.desktop) et2-button-icon.plus_button:active {
     background-color: #0c5da5;
   }
-  .kdots-glassy [slot='label']::part(base),
-  .kdots-glassy [slot='label'] *::part(base),
-  .kdots-glassy [slot='label'] *::part(input-control),
-  .kdots-glassy [slot='label'] *::part(combobox),
-  .kdots-glassy [slot='label'] *::part(button__base) {
+  html:not(.desktop) .kdots-glassy [slot='label']::part(base),
+  html:not(.desktop) .kdots-glassy [slot='label'] *::part(base),
+  html:not(.desktop) .kdots-glassy [slot='label'] *::part(input-control),
+  html:not(.desktop) .kdots-glassy [slot='label'] *::part(combobox),
+  html:not(.desktop) .kdots-glassy [slot='label'] *::part(button__base) {
     box-shadow: none !important;
   }
-  .egw-popup [slot='label'] et2-dropdown-button {
+  html:not(.desktop) .egw-popup [slot='label'] et2-dropdown-button {
     --sl-spacing-large: 0;
     --sl-input-border-color: transparent;
   }
