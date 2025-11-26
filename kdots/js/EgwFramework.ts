@@ -525,14 +525,14 @@ export class EgwFramework extends LitElement
 		if(app)
 		{
 			const appname = app.name + "-" + btoa(_extra.id ? _extra.id : _link).replace(/=/g, 'i');
+			// add target flag
+			_link += '&fw_target=' + appname;
 			if(this.getApplicationByName(appname)?.name)
 			{
 				this.loadApp(appname, true, _link);
 				return appname;
 			}
 
-			// add target flag
-			_link += '&fw_target=' + appname;
 			// create an actual clone of existing app object
 			let clone = {
 				icon: app.name + '/navbar',
