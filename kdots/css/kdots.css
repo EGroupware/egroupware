@@ -1412,6 +1412,10 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
   html:not(.desktop) body .et2_nextmatch .nextmatch_header.nm_header_hide {
     display: none !important;
   }
+  html:not(.desktop) :root .et2_nextmatch .egwGridView_outer,
+  html:not(.desktop) body .et2_nextmatch .egwGridView_outer {
+    width: 100%;
+  }
   html:not(.desktop) :root .et2_nextmatch .egwGridView_outer thead tr,
   html:not(.desktop) body .et2_nextmatch .egwGridView_outer thead tr {
     visibility: hidden;
@@ -1685,6 +1689,10 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
   html:not(.desktop) :root .et2_nextmatch .header_count span,
   html:not(.desktop) body .et2_nextmatch .header_count span {
     font-size: var(--sl-font-size-large);
+  }
+  html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid,
+  html:not(.desktop) body .et2_nextmatch table.egwGridView_grid {
+    width: 100%;
   }
   html:not(.desktop) :root .et2_nextmatch table.egwGridView_grid tr div.h2_hbox,
   html:not(.desktop) body .et2_nextmatch table.egwGridView_grid tr div.h2_hbox {
