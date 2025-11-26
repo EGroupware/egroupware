@@ -2143,7 +2143,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$imageflagged ='';
 				if ($header['flagged'])
 				{
-					$imageflagged = Api\Html::image('mail','unread_flagged_small', lang('Unread'));
+					$imageflagged = Api\Html::image('mail', 'unread_flagged_small');
 				}
 				$data['attachments'] = $image.$attachmentFlag.$imageflagged; // icon for attachments available
 			}
