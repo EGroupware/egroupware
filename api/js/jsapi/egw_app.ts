@@ -391,13 +391,15 @@ export abstract class EgwApp
 	 */
 	changeNmFilter(_ev : Event, _widget : Et2Select|Et2Widget)
 	{
-		if (!this.nm || !_widget.id) return;
+		if(!_widget.id)
+		{
+			return;
+		}
 		// in case we have multiple NM, we need to find the one, which belongs to the toolbar-template of _widget
 		let header = _widget.closest('et2-template');
 		if (header.id === 'api.search-button') header = header.parentNode.closest('et2-template');
 		const template_id = header.id.replace(/\.header$/, '').replace(/\./g, '-');
-		const nm = _widget.closest('egw-app').querySelector('et2-template[id$='+template_id+']')?.getWidgetById('nm') ||
-			this.groups || this.nm;	// groups is a hack to get app-toolbar for groups in admin working :(
+		const nm = _widget.closest('egw-app')?.nextmatch || this.nm;
 		if (!nm) return;
 
 		const filters = {};
