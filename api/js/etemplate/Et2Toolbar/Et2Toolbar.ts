@@ -553,10 +553,16 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 					el.appendChild(c);
 				});
 			}
-			// Append to get correct order, unless it's open (appending will close it)
-			if(el.parentNode == this && !el.open)
+			// Append to get correct order
+			const open = el.open
+			if(el.parentNode == this)
 			{
 				this.appendChild(el);
+				// Moving closes selectboxes, reopen them
+				if(open && typeof el.show == "function")
+				{
+					el.show();
+				}
 			}
 		});
 		let overflowed = false;
