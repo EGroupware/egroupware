@@ -8,7 +8,7 @@
  * @author Nathan Gray
  */
 
-import {cssImage, Et2Widget} from "../../Et2Widget/Et2Widget";
+import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlSplitPanel} from "@shoelace-style/shoelace";
 import {et2_IDOMNode, et2_IResizeable} from "../../et2_core_interfaces";
 import {et2_DOMWidget} from "../../et2_core_DOMWidget";
@@ -29,17 +29,6 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 			slot:not([name='handle'])::slotted(*) {
 				height: 100%;
 				width: 100%;
-			}
-			::slotted(.split-handle) {
-				position: absolute;
-				width: 20px;
-				height: 20px;
-				background-image: ${cssImage("splitter_vert")};
-				background-position: center;
-				background-repeat: no-repeat;
-			}
-			:host([vertical]) ::slotted(.split-handle) {
-				background-image: ${cssImage("splitter_horz")};
 			}
 			.divider {
 				background-color: var(--gray_10)

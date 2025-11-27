@@ -2022,6 +2022,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
  * @param image_name Name of the image
  * @param app_name Optional, image is from an app instead of api
  * @returns {CSSResult}
+ * @deprecated This doesn't work for the first load, as egw.image is not yet set.  Use an et2-image tag instead.
  */
 export function cssImage(image_name : string, app_name? : string)
 {

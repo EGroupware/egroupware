@@ -246,7 +246,9 @@ class kdots_framework extends Api\Framework\Ajax
 					$vars['topmenu_info_items'] .= $item;
 					break;
 				case 'timer':
-					$item='<sl-icon id="timerIconRunning" name="stopwatch"></sl-icon> <sl-icon id="timerIconPaused" name="pause-circle"></sl-icon>'.$item;
+					$stopwatch = Image::find('api', 'stopwatch');
+					$pause = Image::find('api', 'pause-circle');
+					$item = '<sl-icon id="timerIconRunning" src="' . $stopwatch . '"></sl-icon> <sl-icon id="timerIconPaused" src="' . $pause . '"></sl-icon>' . $item;
 				default:
 					$vars['topmenu_info_items'] .= '<button class="topmenu_info_item"' .
 						(is_numeric($id) ? '' : ' id="topmenu_info_' . $id . '"') . '>' . $item . "</button>\n";
@@ -409,8 +411,9 @@ class kdots_framework extends Api\Framework\Ajax
 		}
 		$id = $app_data['id'] ? $app_data['id'] : ($app_data['name'] ? $app_data['name'] : $app_data['title']);
 		$title = htmlspecialchars($alt_label ? $alt_label : $app_data['title']);
+		$src = Image::find($app_data['name'], $app_data['icon']);
 		$this->topmenu_items[] = '<sl-menu-item id="topmenu_' . $id . '" value="' . htmlspecialchars($app_data['url']) . '" title="' . $app_data['title'] . '">' .
-			"<et2-image slot='prefix' src='${app_data['icon']}'></et2-image>" .
+			"<et2-image slot='prefix' src='{$src}'></et2-image>" .
 			$title .
 			'</sl-menu-item>';
 	}
@@ -521,7 +524,8 @@ class kdots_framework extends Api\Framework\Ajax
 		// This should all be handled by notification app
 		$path = "../../notifications/js/Et2NotificationBell.js";
 		self::includeJS($path . '?' . filemtime(EGW_SERVER_ROOT . $path));
-		return '<div id="topmenu_info_notifications"><et2-image statustext="' . lang('notifications') . '" src="bell-fill"></et2-image><sl-badge pill variant="danger" style="display: none;"></sl-badge></div>';
+		$src = Api\Image::find('api', 'bell-fill');
+		return '<div id="topmenu_info_notifications"><et2-image statustext="' . lang('notifications') . '" src="' . $src . '"></et2-image><sl-badge pill variant="danger" style="display: none;"></sl-badge></div>';
 	}
 
 
@@ -532,6 +536,7 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	protected static function _get_quick_add()
 	{
-		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" aria-label="Quick add" name="plus-circle" nosubmit></et2-button-icon>';
+		$src = Api\Image::find('api', 'plus-circle');
+		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" aria-label="Quick add" src="' . $src . '" nosubmit></et2-button-icon>';
 	}
 }

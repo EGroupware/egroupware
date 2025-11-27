@@ -1,11 +1,12 @@
 import {css, html, LitElement} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
+import {until} from "lit/directives/until.js";
+import {EgwFramework} from "./EgwFramework";
 
 /**
- * @summary System message
+ * @summary Dark mode toggle button
  *
- * @dependency sl-alert
  * @dependency sl-icon
  *
  * @slot - Content
@@ -90,11 +91,12 @@ export class EgwDarkmodeToggle extends LitElement
 
 	render() : unknown
 	{
-		return html`
+		// This goes in the framework header, so we need to wait for egw.images to be loaded
+		return html`${until((<EgwFramework>this.closest('egw-framework'))?.getEgwComplete().then(() => html`
             <sl-icon-button name="${this.mode == "light" ? "sun" : "moon"}"
                             @click=${(e) => {this.toggleDarkmode()}}
             ></sl-icon-button>
-		`;
+		`), '')}`;
 	}
 
 }

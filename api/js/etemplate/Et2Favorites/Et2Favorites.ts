@@ -16,7 +16,6 @@ import {et2_INextmatchHeader, et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Image} from "../Et2Image/Et2Image";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {SlMenuItem} from "@shoelace-style/shoelace";
-import {cssImage} from "../Et2Widget/Et2Widget";
 import {Favorite} from "./Favorite";
 
 /**
@@ -60,7 +59,6 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 			  et2-image {
 				  display: block;
 				  position: relative;
-                font-size: ${egwIsMobile() ? css`4ex` : css`20px`};
 				top: -2px;
 			  }
 
@@ -74,19 +72,6 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 
 				sl-menu-item:hover et2-image[src="trash"] {
 				display: initial;
-			  }
-
-			  /* Add star icons - radio button is already in prefix */
-
-				sl-menu-item::part(base) {
-				background-image: ${cssImage("fav_filter")};
-				background-repeat: no-repeat;
-				background-size: 16px 16px;
-				background-position: 5px center;
-			  }
-
-				sl-menu-item[checked]::part(base) {
-				background-image: ${cssImage("favorites")};
 			  }
 
 				sl-menu-item:last-child::part(base) {

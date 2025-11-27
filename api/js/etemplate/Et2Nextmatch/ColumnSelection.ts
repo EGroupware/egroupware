@@ -10,7 +10,6 @@ import shoelace from "../Styles/shoelace";
 import {et2_dataview_column} from "../et2_dataview_model_columns";
 import {et2_customfields_list} from "../et2_extension_customfields";
 import Sortable from "sortablejs/modular/sortable.complete.esm";
-import {cssImage} from "../Et2Widget/Et2Widget";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {Et2Select} from "../Et2Select/Et2Select";
 
@@ -22,37 +21,48 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 			super.styles,
 			shoelace,
 			css`
-			:host {
-				max-height: inherit;
-				min-width: 35em;
-				display: flex;
-				flex-direction: column;
-				flex: 1 1 auto;
-				--icon-width: 20px;
-			}
-			sl-menu {
-				flex: 1 10 auto;
-				overflow-y: auto;
-				max-height: 50em;
-			}
-			/* Drag handle on columns (not individual custom fields or search letter) */
-			sl-menu > .select_row::part(base) {
-				padding-left: 10px;
-			}
-			sl-menu > .column::part(base) {
-				background-image: ${cssImage("splitter_vert")};
-				background-position: 3px 1.5ex;
-				background-repeat: no-repeat;
-				cursor: grab;
-			}
+				:host {
+					max-height: inherit;
+					min-width: 35em;
+					display: flex;
+					flex-direction: column;
+					flex: 1 1 auto;
+					--icon-width: 20px;
+				}
 
-			  sl-menu-item::part(label), sl-menu-item::part(submenu-icon) {
-				cursor: initial;
-			  }
-			/* Change vertical alignment of CF checkbox line to up with title, not middle */
-			.custom_fields::part(base) {
-				align-items: baseline;
-			}
+				sl-menu {
+					flex: 1 10 auto;
+					overflow-y: auto;
+					max-height: 50em;
+				}
+
+				/* Drag handle on columns (not individual custom fields or search letter) */
+
+				sl-menu > .select_row::part(base) {
+					padding-left: var(--sl-spacing-x-large);
+				}
+
+				.select_row::part(prefix) {
+					display: none;
+				}
+
+				sl-menu > .column::part(prefix) {
+					display: initial;
+					position: absolute;
+					left: 0px;
+					font-size: var(--sl-font-size-large);
+					cursor: grab;
+				}
+
+				sl-menu-item::part(label), sl-menu-item::part(submenu-icon) {
+					cursor: initial;
+				}
+
+				/* Change vertical alignment of CF checkbox line to up with title, not middle */
+
+				.custom_fields::part(base) {
+					align-items: baseline;
+				}
 			`
 		]
 	}
@@ -146,6 +156,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		}
 		return html`
             <sl-menu-item
+                    exportparts="label,prefix"
                     value="${column.id.replaceAll(" ", "___")}"
                     type="checkbox"
                     ?checked=${alwaysOn || column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
@@ -156,6 +167,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
                         custom_fields: isCustom,
                         column: column.widget
                     })}">
+                <sl-icon slot="prefix" name="grip-vertical"></sl-icon>
                 ${column.caption}
                 <!-- Custom fields get listed separately -->
                 ${isCustom ? this.customFieldsTemplate(column) : ''}
