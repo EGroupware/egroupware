@@ -341,7 +341,7 @@ export class EgwFramework extends LitElement
 			{
 				this.tabs?.show(appname);
 			}
-			if(url)
+			if(url && url != existing.url)
 			{
 				existing.load(url);
 			}
