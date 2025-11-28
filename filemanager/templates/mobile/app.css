@@ -19,6 +19,10 @@
   #filemanager-index_nm table.egwGridView_outer tbody .isDir .gridCont_0_div_col_0 {
     min-width: var(--sl-spacing-large);
   }
+  #filemanager-index_nm table.egwGridView_outer tbody .gridCont_0_div_col_1 {
+    /* A little padding after the thumbnail */
+    padding-right: var(--sl-spacing-small);
+  }
   #filemanager-index_nm table.egwGridView_outer tbody span[id^='filemanager-index'][id$='size]'] {
     text-align: right;
   }
