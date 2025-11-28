@@ -404,6 +404,7 @@ export class et2_dataview
 
 				if (window.egwIsMobile())
 				{
+					this.egw.css(".egwGridView_outer ." + col.tdClass, "width: " + col.width + "px;");
 					this.egw.css(".egwGridView_outer ." + col.divClass, "width: fit-content;")
 				}else
 				{
