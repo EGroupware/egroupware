@@ -325,7 +325,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				url = this.webserverUrl + url;
 			}
 			var mime_info = _mime_type ? this.get_mime_info(_mime_type, _target_app) : undefined;
-			if (mime_info && (mime_info.mime_url || mime_info.mime_data))
+			if (mime_info && (mime_info.mime_url || mime_info.mime_data) && !(
+				// Don't change if already set
+				_link.includes(mime_info.menuaction) && (_link.includes(mime_info.mime_url) || _link.includes(mime_info.mime_data))
+			))
 			{
 				var data = {};
 				for(var attr in mime_info)
