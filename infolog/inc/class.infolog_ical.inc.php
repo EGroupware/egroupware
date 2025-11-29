@@ -925,7 +925,7 @@ class infolog_ical extends infolog_bo
 						{
 							//error_log(__METHOD__."() taskData['##$attribute[name]'] = ".array2string($taskData['##'.$attribute['name']]));
 							$attribute['values'] = array_merge(
-								is_array($taskData['##'.$attribute['name']]) ? $taskData['##'.$attribute['name']]['values'] : (array)$taskData['##'.$attribute['name']],
+								(array)($taskData['##'.$attribute['name']]['values'] ?? $taskData['##'.$attribute['name']] ?? []),
 								$attribute['values']);
 						}
 						$taskData['##'.$attribute['name']] = $attribute['params'] || count($attribute['values']) > 1 ?
