@@ -144,7 +144,10 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 				return this.image(_name.replace(/.(png|gif|jpg)$/i,''), _app);
 			}
 			if(matches != null) tries[_app + " (matched)"]= matches;
-			egw.debug("log",'egw.image("'+_name+'", "'+_app+'") image NOT found!  Tried ', tries);
+			if(_name && _name !== "undefined")
+			{
+				egw.debug("log", 'egw.image("' + _name + '", "' + _app + '") image NOT found!  Tried ', tries);
+			}
 			return null;
 		},
 
