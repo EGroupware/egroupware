@@ -202,7 +202,7 @@ EOF;
 					case 'customfields':
 						$widget = 'customfields-filters';
 						$attrs['label'] = '';
-						unset($attrs['id']);
+						$attrs['id'] = 'col_filter';
 						break;
 					case 'accountfilter':
 					case 'header-account':
@@ -241,7 +241,10 @@ EOF;
 				}
 				$attrs['class'] = trim(str_replace('selectboxFullWidth', '', $attrs['class'] ?? '') . ' et2-label-fixed');
 				// et2-details does NOT create a namespace therefore, we need to use "col_filter[$id]" (not for cfs without id!)
-				if (!empty($attrs['id'])) $attrs['id'] = 'col_filter['.$attrs['id'].']';
+				if(!empty($attrs['id']) && $attrs['id'] !== 'col_filter')
+				{
+					$attrs['id'] = 'col_filter[' . $attrs['id'] . ']';
+				}
 				$attrs = stringAttrs($attrs);
 				$xet .= <<<EOF
 			<$widget $attrs></$widget>
