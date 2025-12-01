@@ -59,7 +59,6 @@ export class et2_arrayMgr
 		// Hold a reference to the data
 		if(typeof _data == "undefined" || !_data)
 		{
-			egw.debug("log", "No data passed to content array manager.  Probably a mismatch between template namespaces and data.");
 			_data = {};
 		}
 
