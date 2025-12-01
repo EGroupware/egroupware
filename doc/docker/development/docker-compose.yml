@@ -146,13 +146,13 @@ services:
     container_name: egroupware-nginx
     restart: always
 
-  # run an own MariaDB:10.6 (you can use EGroupware's database backup and restore to add your existing database)
+  # run an own MariaDB:11.8 (you can use EGroupware's database backup and restore to add your existing database)
   db:
-    image: mariadb:10.6
+    image: mariadb:11.8
     environment:
     #- MYSQL_ROOT=root
     - MYSQL_ROOT_PASSWORD=secret
-    #- MARIADB_AUTO_UPGRADE=true
+    - MARIADB_AUTO_UPGRADE=true
     volumes:
     #for WSL2 no $PWD/ here! otherwhise connection is denied
     - db:/var/lib/mysql
@@ -182,7 +182,7 @@ services:
   # automatic updates of all containers daily at 4am
   # see https://containrrr.github.io/watchtower for more information
   watchtower:
-    image: containrrr/watchtower
+    image: nickfedor/watchtower
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     # For automatic EPL Updates (not necessary for CE!) you need to pass docker
