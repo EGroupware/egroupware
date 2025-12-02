@@ -934,9 +934,16 @@ export abstract class EgwApp
 				noSubmit: true,
 				slot: "header-actions"
 			}, this.et2);
-			edit.addEventListener("click", () =>
+			edit.addEventListener("click", async() =>
 			{
-				egw.open(rowID, self.appname);
+				// Some feedback that it's working
+				edit.classList.add("loading");
+				edit.disabled = true;
+
+				await this.egw.open(rowID, self.appname);
+				
+				// View dialog will still grab event focus, so we need to stop it
+				viewContainer.close();
 			});
 			viewContainer.append(edit);
 		}
