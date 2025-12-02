@@ -177,7 +177,7 @@ export class Et2FileItem extends Et2Widget(LitElement)
           </span>
           <span part="label" class="file-item__label">
             <slot></slot>
-			  ${this.display == "large" ? progressBar : nothing}
+			  ${progressBar}
             ${this.size
               ? html`
                         <sl-format-bytes
@@ -187,9 +187,7 @@ export class Et2FileItem extends Et2Widget(LitElement)
                         </sl-format-bytes>`
               : ""}
 		  </span>
-          ${this.display != "large" ? html`<span
-                  class="file-item__progress-bar__container">${progressBar}</span>` : nothing}
-		</span>
+         	</span>
                 ${this.closable
                   ? html`
                             <span

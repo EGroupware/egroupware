@@ -60,7 +60,7 @@ export default css`
 	}
 
 	.file-item__progress-bar {
-		flex: 1;
+		flex: 1 1 10%;
 	}
 
 	.file-item__label {
@@ -198,7 +198,7 @@ export default css`
 
 			slot {
 				display: inline-block;
-				flex: 1 1 auto;
+				flex: 0 1 auto;
 			}
 
 			sl-format-bytes {
