@@ -139,10 +139,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			// not for popups and only for framed templates
 			if (!this.is_popup() && _wnd.framework && _wnd.framework.setWebsiteTitle)
 			{
-				var app = _app || this.app_name();
-				var title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
-
-				_wnd.framework.setWebsiteTitle.call(_wnd.framework, app, title, _header);
+				// Ignore
 				return;
 			}
 			if (_wnd.document.querySelector('div#divAppboxHeader'))
