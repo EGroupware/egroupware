@@ -86,7 +86,7 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 		// usually waits until Egw::on_shutdown();
 		Link::run_notifies();
 
-		$elements = new \projectmanager_elements_bo($this->bo);
+		$elements = new \projectmanager_elements_bo();
 		$elements->sync_all($this->pm_id);
 
 		// Make sure all elements are created
