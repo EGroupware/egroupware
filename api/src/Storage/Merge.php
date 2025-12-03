@@ -392,7 +392,8 @@ abstract class Merge
 
 		// need to load all cfs for $ignore_acl=true
 		$replacements = array_merge($replacements,  // array_merge as they might already be set with their raw value
-			$this->customfield_replacements($ignore_acl ? Customfields::get('addressbook', true) : $this->contacts->customfields));
+			$this->customfield_replacements($contact, $prefix, $content,
+				$ignore_acl ? Customfields::get('addressbook', true) : $this->contacts->customfields));
 
 		if($content && strpos($content, '$$#') !== FALSE)
 		{
@@ -435,7 +436,7 @@ abstract class Merge
 	 * @param array $data video or course array
 	 * @param string $prefix =''
 	 * @param ?string& $content
-	 * @param array|string|null cfs array, appname or null
+	 * @param array|string|null $cfs array, app-name or null
 	 * @return array
 	 */
 	protected function customfield_replacements(array $data, string $prefix='', &$content = null, $cfs=null)
