@@ -106,9 +106,9 @@ div#loginScreenMessage {
 #loginMainDiv .egw_message_wrapper {
   display: flex;
   max-height: 20%;
-  font-size: 2em;
+  font-size: large;
   height: fit-content;
-  background: var(--sl-color-neutral-100);
+  background: var(--box-color);
   border-radius: var(--sl-border-radius-medium);
   padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
   margin-inline: 1rem ;
@@ -116,6 +116,8 @@ div#loginScreenMessage {
 }
 #loginMainDiv .egw_message_wrapper:has(.error_message) {
   border-left: 0.5em solid var(--sl-color-danger-500);
+  background-color: var(--sl-color-neutral-100);
+  font-size: 2em;
 }
 #loginMainDiv .egw_message_wrapper:has(.warning_message) {
   border-left: 0.5em solid var(--sl-color-warning-500);
@@ -128,6 +130,9 @@ div#loginScreenMessage {
 }
 #loginMainDiv .egw_message_wrapper #egw_message {
   display: flex;
+  color: var(--text-color);
+}
+#loginMainDiv .egw_message_wrapper #egw_message.error_message {
   color: var(--sl-color-neutral-900);
 }
 #loginMainDiv .egw_message_wrapper .close {
@@ -275,8 +280,6 @@ div#login_footer .apps .tooltip .content {
   min-width: 350px;
   top: -10px;
   left: 50%;
-  height: 190px;
-  max-height: 190px;
   transform: translate(-50%, -100%);
   padding: 10px 20px;
   color: #444444;
@@ -335,3 +338,4 @@ div#login_footer .apps .tooltip .content .arrow::after {
   transform: translate(-50%, -50%) rotate(45deg);
   background-color: #4177A2;
 }
+/*# sourceMappingURL=login.css.map */

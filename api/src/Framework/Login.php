@@ -120,7 +120,7 @@ class Login
 					(!empty($cd_msg) && $cd_msg != '&nbsp;' && $_GET['cd'] != 1 ? "\n\n".$cd_msg : '');
 			}
 			$tmpl->set_var('cd', $cd_msg);
-			$tmpl->set_var('cd_class', isset($_GET['cd']) && $_GET['cd'] != 1 ||
+			$tmpl->set_var('cd_class', isset($_GET['cd']) && ($_GET['cd'] != 1 && $_GET['cd'] != 10) ||
 				!empty($GLOBALS['egw_info']['server']['login_message']) ? 'error_message' : '');
 
 			$last_loginid = $_COOKIE['last_loginid'];

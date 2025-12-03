@@ -112,15 +112,17 @@ div#loginScreenMessage {
   .egw_message_wrapper {
 	display: flex;
 	max-height: 20%;
-	font-size: 2em;
+	font-size: large;
 	height: fit-content;
-	background: var(--sl-color-neutral-100);
+	background: var(--box-color);
 	border-radius: var(--sl-border-radius-medium);
 	padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
 	margin-inline: 1rem ;
 	border-left: .5em solid transparent;
 	&:has(.error_message){
 	  border-left: .5em solid var(--sl-color-danger-500);
+	  background-color: var(--sl-color-neutral-100);
+	  font-size: 2em;
 	}
 	&:has(.warning_message){
 	  border-left: .5em solid var(--sl-color-warning-500);
@@ -137,7 +139,10 @@ div#loginScreenMessage {
 
 	#egw_message {
 	  display: flex;
-	  color: var(--sl-color-neutral-900);
+	  color: var(--text-color);
+	  &.error_message{
+		color: var(--sl-color-neutral-900);
+	  }
 	}
 
 	.close {
@@ -314,8 +319,6 @@ div#login_footer {
 	  min-width: 350px;
 	  top: -10px;
 	  left: 50%;
-	  height: 190px;
-	  max-height: 190px;
 	  transform: translate(-50%, -100%);
 	  padding: 10px 20px;
 	  color: #444444;
