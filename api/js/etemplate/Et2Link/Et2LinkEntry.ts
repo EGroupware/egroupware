@@ -7,6 +7,7 @@
  * @author Nathan Gray
  */
 import {css, html, LitElement, nothing} from "lit";
+import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
@@ -15,10 +16,19 @@ import {Et2Link, LinkInfo} from "./Et2Link";
 import {HasSlotController} from "../Et2Widget/slot";
 
 /**
- * Find and select a single entry using the link system.
+ * @summary Find and select a single entry using the link system.
  *
- * @slot prefix Used to prepend a presentational icon or similar element to the widget.
- * @slot suffix Like prefix, but after
+ * @slot label - The input’s label. Alternatively, you can use the label attribute.
+ * @slot prefix - Used to prepend a presentational icon or similar element to the widget.
+ * @slot suffix - Like prefix, but after
+ * @slot help-text - Text that describes how to use the input. Alternatively, you can use the help-text attribute.
+ *
+ * @csspart form-control - The form-control wrapper
+ * @csspart form-control-label - The form-control-label wrapper
+ * @csspart form-control-input - The form-control-input wrapper
+ * @csspart form-control-help-text - The form-control-help-text wrapper
+ * @csspart link-entry__app-select - The app select element
+ * @csspart link-entry__search - The search element
  */
 export class Et2LinkEntry extends Et2InputWidget(LitElement)
 {
@@ -28,11 +38,11 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 			...(Array.isArray(super.styles) ? super.styles : [super.styles]),
 			css`
 				:host {
-				display: block;
+					display: block;
 				}
 
 				:host(.hideApp) ::slotted([slot="app"]) {
-				display: none;
+					display: none;
 				}
 
 				.form-control-input {
@@ -44,46 +54,30 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
+	/**
+	 * Limit to the listed applications (comma seperated)
+	 */
+	@property({type: String})
+	applicationList : string;
 
-			value: {type: Object},
-			/**
-			 * Limit to just this application - hides app selection
-			 */
-			onlyApp: {type: String},
-			/**
-			 * Limit to the listed applications (comma seperated)
-			 */
-			applicationList: {type: String},
-			/**
-			 * Show just application icons instead of names
-			 */
-			appIcons: {type: Boolean},
-			/**
-			 * Callback before query to server.
-			 * It will be passed the request & et2_link_entry objects.  Must return true, or false to abort query.
-			 */
-			query: {type: Function},
-			/**
-			 * Callback when user selects an option.  Must return true, or false to abort normal action.
-			 */
-			select: {type: Function},
+	/**
+	 * Show just application icons instead of names
+	 */
+	@property({type: Boolean})
+	appIcons : boolean;
 
-			/**
-			 * Displayed in the search / select when no value is selected
-			 */
-			placeholder: {type: String},
+	/**
+	 * Callback before query to server.
+	 * It will be passed the request & et2_link_entry objects.  Must return true, or false to abort query.
+	 */
+	@property({type: Function})
+	query : Function;
 
-			/**
-			 * Additional search parameters that are passed to the server
-			 * when we query searchUrl
-			 */
-			searchOptions: {type: Object}
-		}
-	}
+	/**
+	 * Callback when user selects an option.  Must return true, or false to abort normal action.
+	 */
+	@property({type: Function})
+	select : Function;
 
 	/**
 	 * We only care about this value until render.  After the sub-nodes are created,
@@ -124,7 +118,10 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 		this._unbindListeners();
 	}
 
-	set onlyApp(app)
+	/**
+	 * Limit to just this application - hides app selection
+	 */
+	set onlyApp(app : string)
 	{
 		this.__onlyApp = app || "";
 
@@ -166,6 +163,11 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 		return this.__value?.app || "";
 	}
 
+	/**
+	 * Additional search parameters that are passed to the server
+	 * when we query searchUrl
+	 */
+	@property({type: Object})
 	set searchOptions(options)
 	{
 		this.updateComplete.then(() =>
@@ -194,7 +196,10 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 		return this._searchNode?.placeholder;
 	}
 
-	set placeholder(new_value)
+	/**
+	 * Displayed in the search / select when no value is selected
+	 */
+	set placeholder(new_value : string)
 	{
 		if(this._searchNode)
 		{
@@ -285,6 +290,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 		}
 	}
 
+	@property({type: Object})
 	get value() : LinkInfo | string | number
 	{
 		if(this.onlyApp)
@@ -374,6 +380,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
                 <div part="form-control-input" class="form-control-input">
                     <slot name="prefix"></slot>
                     <et2-link-apps
+                            part="link-entry__app-select"
                             onlyApp=${this.onlyApp ? this.onlyApp : nothing}
                             ?appIcons=${this.appIcons}
                             applicationList=${this.applicationList ? this.applicationList : nothing}
@@ -383,6 +390,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
                             @change=${this.handleAppChange}
                     ></et2-link-apps>
                     <et2-link-search
+                            part="link-entry__search"
                             exportparts="combobox:control"
                             ?placeholder=${this.placeholder}
                             ?required=${this.required}
