@@ -88,11 +88,11 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				return message.then(m =>
 				{
-					m.addEventListener("sl-show", () =>
+					m.toast();
+					setTimeout(() =>
 					{
 						_wnd.document.body.querySelector('.sl-toast-stack')?.classList.add('isPopup');
-					}, {once: true});
-					m.toast();
+					}, 0);
 				});
 			}
 			return message;

@@ -1563,9 +1563,14 @@ export class etemplate2
 		// handle Api\Framework::refresh_opener()
 		if(Array.isArray(data['refresh-opener']))
 		{
+			if(!data['window-close'] && window.opener && data['refresh-opener'][0])
+			{
+				// Show the message in popup
+				window.egw(window).message(data['refresh-opener'][0]);
+			}
 			if(window.opener || dialog)// && typeof window.opener.egw_refresh == 'function')
 			{
-				const egw = window.egw(dialog ? window : opener);
+				const egw = window.egw(dialog ? window : window.opener);
 				egw.refresh.apply(egw, data['refresh-opener']);
 			}
 		}
