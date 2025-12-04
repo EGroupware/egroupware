@@ -38,6 +38,7 @@
 LOGIN MAIN
  ***/
 body {
+  background-size: cover;
   overflow: auto;
   @media (max-device-width: 768px) {
 	font-size: 2em;
@@ -102,6 +103,13 @@ div#loginScreenMessage {
   align-items: center;
   overflow: auto;
 
+  #loginBackgroundImage {
+	position: absolute;
+	width: 100vw;
+	height: calc(100vh - var(--footer_height));
+	background-size: cover;
+	z-index: -1;
+  }
   #login_logo {
 	padding: 10% 0 5% 0;
 	max-width: 40rem;
@@ -122,7 +130,6 @@ div#loginScreenMessage {
 	&:has(.error_message){
 	  border-left: .5em solid var(--sl-color-danger-500);
 	  background-color: var(--sl-color-neutral-100);
-	  font-size: 2em;
 	}
 	&:has(.warning_message){
 	  border-left: .5em solid var(--sl-color-warning-500);
@@ -385,5 +392,17 @@ div#login_footer {
 		background-color: #4177A2;
 	  }
 	}
+  }
+}
+
+// styling differences between stock and custom login page image
+div#loginMainDiv.stockLoginBackground {
+  
+  #loginBackgroundImage {
+	height: 100vh;
+  }
+
+  div#login_footer {
+	background-color: transparent;
   }
 }

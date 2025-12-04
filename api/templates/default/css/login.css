@@ -34,6 +34,7 @@
 LOGIN MAIN
  ***/
 body {
+  background-size: cover;
   overflow: auto;
   margin: 0;
 }
@@ -97,6 +98,13 @@ div#loginScreenMessage {
   align-items: center;
   overflow: auto;
 }
+#loginMainDiv #loginBackgroundImage {
+  position: absolute;
+  width: 100vw;
+  height: calc(100vh - var(--footer_height));
+  background-size: cover;
+  z-index: -1;
+}
 #loginMainDiv #login_logo {
   padding: 10% 0 5% 0;
   max-width: 40rem;
@@ -117,7 +125,6 @@ div#loginScreenMessage {
 #loginMainDiv .egw_message_wrapper:has(.error_message) {
   border-left: 0.5em solid var(--sl-color-danger-500);
   background-color: var(--sl-color-neutral-100);
-  font-size: 2em;
 }
 #loginMainDiv .egw_message_wrapper:has(.warning_message) {
   border-left: 0.5em solid var(--sl-color-warning-500);
@@ -337,5 +344,11 @@ div#login_footer .apps .tooltip .content .arrow::after {
   left: 50%;
   transform: translate(-50%, -50%) rotate(45deg);
   background-color: #4177A2;
+}
+div#loginMainDiv.stockLoginBackground #loginBackgroundImage {
+  height: 100vh;
+}
+div#loginMainDiv.stockLoginBackground div#login_footer {
+  background-color: transparent;
 }
 /*# sourceMappingURL=login.css.map */

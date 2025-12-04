@@ -1,7 +1,8 @@
-<div id="loginMainDiv" style="background-image:url({background_file})" class="{stock_background_class}">
+<div id="loginMainDiv" class="{stock_background_class}">
+    <div id="loginBackgroundImage" style="background-image:url({background_file})"></div>
     <div id="divAppIconBar" style="position:relative;">
         <div id="divLogo">
-			<div class="login_logo_container">
+            <div class="login_logo_container">
 				<a href="{logo_url}" target="_blank">
                     <img src="{logo_file}" alt="{logo_title}" title="{logo_title}" id="login_logo"/>
 					<!--div style="background-image:url({logo_file})" class="login_logo" border="0" alt="{logo_title}" title="{logo_title}" ></div-->
