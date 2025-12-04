@@ -220,6 +220,9 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
   left: 10px;
   top: -2px;
 }
+iframe pre {
+  white-space: pre-wrap;
+}
 /*** HEADER ***/
 /** Tab notification badges **/
 /**
@@ -298,7 +301,7 @@ table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
   display: flex;
   align-items: center;
   padding: 0px;
-  width: calc(1.8 * var(--icon-size));
+  width: calc(calc(3 * var(--header-icon-size)) + 0.5rem);
   height: var(--header-icon-size);
   left: var(--sl-spacing-large);
   border: 1px solid var(--sl-color-neutral-600);
