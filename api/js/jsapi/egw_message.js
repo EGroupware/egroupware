@@ -79,12 +79,12 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				return egw(egw.top).message(_msg, _type);
 			}
-			if (framework && typeof framework.message == 'function' && _msg && typeof _msg == "string" && _msg.trim())
+			if (egw_getFramework() && typeof egw_getFramework().message == 'function' && _msg && typeof _msg == "string" && _msg.trim())
 			{
 				message = framework.message(_msg, _type, null, true, _discardID, _wnd);
 			}
 			// Add popup message styling
-			if (message && (!framework || !_wnd.document.body.contains(framework)))
+			if (message && (!egw_getFramework() || !_wnd.document.body.contains(framework)))
 			{
 				return message.then(m =>
 				{
