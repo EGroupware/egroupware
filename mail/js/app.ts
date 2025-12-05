@@ -5372,13 +5372,8 @@ export class MailApp extends EgwApp
 				else
 				{
 					self.resolveExternalImages(this.contentWindow.document);
-					// Use prepare print function to copy iframe content into div
-					// as we don't want to show content in iframe (scrolling problem).
-					if (jQuery(this.contentWindow.document.body).find('#smimePasswordRequest').length == 0)
-					{
-						iframe.set_disabled(true);
-						self.mail_prepare_print(this);
-					}
+					// Deal with scrolling by setting iframe size to content height
+					jQuery(this).height(this.contentWindow.document.body.scrollHeight);
 				}
 			});
 		});

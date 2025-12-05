@@ -234,10 +234,6 @@
     z-index: 99;
   }
   #mail-index .mail-index_vacation {
-    position: absolute;
-    top: 3px;
-    right: 190px;
-    width: 250px !important;
     z-index: 99;
   }
   #mail-index .mail-index_vacation div {
@@ -318,4 +314,3 @@
 .mailPreviewHeaders.smimeIcons {
   justify-content: start;
 }
-/*# sourceMappingURL=app.css.map */
