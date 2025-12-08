@@ -16,7 +16,7 @@
   --input-text-color: var(--sl-color-neutral-900);
   --input-color: var(--sl-color-neutral-50);
   --button-color: var(--sl-color-primary-700);
-  --box-color: var(--loginbox-custom-color, var(--sl-color-neutral-700));
+  --box-color: var(--loginbox-custom-color, '#COCOCO80');
 }
 .bootstrap-icons {
   display: inline-block;
@@ -351,4 +351,3 @@ div#loginMainDiv.stockLoginBackground #loginBackgroundImage {
 div#loginMainDiv.stockLoginBackground div#login_footer {
   background-color: transparent;
 }
-/*# sourceMappingURL=login.css.map */

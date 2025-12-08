@@ -531,6 +531,7 @@ class preferences_settings
 					break;
 				case 'color':
 					$setting['type'] = 'et2-colorpicker';
+					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'opacity', true);
 					break;
 				case 'date-duration':
 					if(!isset($setting['size']))
