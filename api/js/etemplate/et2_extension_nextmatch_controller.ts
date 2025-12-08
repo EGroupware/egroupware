@@ -639,9 +639,12 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 		}
 		// Readonlys
 		// Other stuff
-		for(var i in _response.rows)
+		for(let i in _response.rows)
 		{
-			if(jQuery.isNumeric(i)) continue;
+			if(Number.isInteger(i) || !i)
+			{
+				continue;
+			}
 			if(i == 'sel_options')
 			{
 				var mgr = nm.getArrayMgr(i);
