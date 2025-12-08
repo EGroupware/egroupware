@@ -101,7 +101,25 @@ class AddressbookApp extends EgwApp
 		switch (name)
 		{
 			case 'addressbook.edit':
-				var content = this.et2.getArrayMgr('content').data;
+				const content : any = this.et2.getArrayMgr('content').data;
+				// stop automatic focus on first input field n_fn / full name
+				const focus_prefix = () => {
+					document.querySelector('table.editname').style.display = 'inline';
+					this.et2.getWidgetById('n_prefix')?.focus();
+					return false;
+				};
+				// new entry --> open name popup and focus prefix
+				if (!content.id)
+				{
+					focus_prefix();
+				}
+				// existing entry --> open name popup when user starts typing
+				else
+				{
+					this.et2.getWidgetById('n_fn').addEventListener('keydown', focus_prefix);
+				}
+				this.et2.getWidgetById('n_fn').addEventListener('click', focus_prefix);
+
 				if (typeof content.showsearchbuttons == 'undefined' || !content.showsearchbuttons)
 				{
 					// Instantiate infolog JS too - wrong app, so it won't be done automatically

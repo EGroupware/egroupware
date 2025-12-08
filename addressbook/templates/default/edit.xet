@@ -343,7 +343,7 @@
                             <et2-avatar id="jpegphoto" image="$cont[photo]" contactId="$cont[id]" crop="false" editable="true"></et2-avatar>
                         </et2-hbox>
                     </et2-box>
-                    <et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" placeholder="Name" noLang="1"></et2-textbox>
+                    <et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" placeholder="Name"></et2-textbox>
                     <et2-description></et2-description>
                     <et2-description  for="org_name" value="Organisation"></et2-description>
                     <et2-textbox  id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128" tabindex="7" autocomplete="organization"></et2-textbox>
