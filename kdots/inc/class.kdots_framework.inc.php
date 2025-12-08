@@ -456,8 +456,12 @@ class kdots_framework extends Api\Framework\Ajax
 		$themes_to_check[] = $this->template_dir . '/css/themes/' . $theme . '.css';
 		$ret = parent::_get_css($themes_to_check);
 
-		$template_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'] ?? false;
+		// without any cookie set, no last user is identified and therefore no preferences, not event the default ones are loaded
+		$default_prefs = (new Api\Preferences(Api\Preferences::DEFAULT_ID))->read_repository()['common'];
+		$template_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'] ??
+			$default_prefs['template_custom_color'] ?? false;
 		$loginbox_custom_color = $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color'] ??
+			$default_prefs['loginbox_custom_color'] ??
 			($template_custom_color ? "hsl(from $template_custom_color h s calc(l * 0.8))" : '#C0C0C080');
 		// hsl(from $template-custom-color h s calc(l-20)
 		//only add custom color definitions to the head css if we actually have custom colors
