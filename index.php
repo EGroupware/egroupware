@@ -100,6 +100,12 @@ if (isset($_GET['tz']))
 		Egw::redirect_link($referer);
 	}
 }
+// Always open no_popup flagged URLs "normally" on mobile devices
+if(!empty($_GET['no_popup']) && $_GET['no_popup'] == '1' && EGroupware\Api\Header\UserAgent::mobile() && $app)
+{
+	unset($_GET['no_popup']);
+	$_GET['cd'] = 'yes';
+}
 
 if($app == 'api' && !$class && !$api_requested && !($_GET['cd'] === 'yes' && !Api\Header\UserAgent::mobile()) && $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] == 'idots')
 {

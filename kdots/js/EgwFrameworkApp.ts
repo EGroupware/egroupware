@@ -111,6 +111,9 @@ export class EgwFrameworkApp extends LitElement
 	@property()
 	url = "";
 
+	@property({attribute: 'open-once'})
+	openOnce = '';
+
 	@property()
 	features : FeatureList = {};
 
@@ -307,6 +310,11 @@ export class EgwFrameworkApp extends LitElement
 	firstUpdated()
 	{
 		this.load(this.url);
+		if(this.openOnce && this.openOnce != this.url)
+		{
+			this.framework.openPopup(this.openOnce, false, false, "", this.name, true, false, window);
+		}
+		this.openOnce = "";
 	}
 
 	protected async getUpdateComplete() : Promise<boolean>

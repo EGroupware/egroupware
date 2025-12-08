@@ -142,8 +142,15 @@ class kdots_framework extends Api\Framework\Ajax
 			})) ?? [];
 			if($open_app)
 			{
-				$url = $open_app['openOnce'] ?? $open_app['url'];
-				$data['open_app'] = "<egw-app id=\"{$open_app['name']}\" name=\"{$open_app['name']}\" url=\"{$url}\" title=\"{$open_app['title']}\" active></egw-app>";
+				// On mobile always open app with original URL, not the one from the "openOnce" parameter
+				$url = !empty(Api\Header\UserAgent::mobile()) && $_GET['cd'] == 'yes' ? $open_app['url'] : ($open_app['openOnce'] ?? $open_app['url']);
+				$data['open_app'] = "<egw-app id=\"{$open_app['name']}\" name=\"{$open_app['name']}\" url=\"{$url}\" title=\"{$open_app['title']}\" active";
+				if(!empty(Api\Header\UserAgent::mobile()) && !empty($open_app['openOnce']))
+				{
+					$once = str_replace('no_popup=1', '', $open_app['openOnce']);
+					$data['open_app'] .= " open-once=\"{$once}\"";
+				}
+				$data['open_app'] .= "></egw-app>";
 			}
 		}
 		if(!empty($data['open_app_name']) && !$this->sidebox_done)

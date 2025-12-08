@@ -622,7 +622,7 @@ export class EgwFramework extends LitElement
 		{
 			// openDialog doesn't take a full URL, just the menuaction part
 			const dialogURL = _url.split("menuaction=").pop();
-			const dialog = await ((this.activeApp.name == _app && typeof window.app[_app].openDialog == "function") ?
+			const dialog = await ((this.activeApp.name == _app && typeof window.app[_app]?.openDialog == "function") ?
 								  window.app[_app].openDialog(dialogURL) : this.egw.openDialog(dialogURL));
 			dialog.classList.add("egw-popup");
 
@@ -1410,6 +1410,9 @@ export interface ApplicationInfo
 	icon : string
 	title : string,
 	url : string,
+
+	/* Open the application, but with a non-standard URL (only once) */
+	openOnce : string,
 
 	/* Count of notifications for the application */
 	notificationCount? : number
