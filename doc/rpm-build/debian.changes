@@ -1,3 +1,13 @@
+egroupware-docker (26.0.20251208) hardy; urgency=low
+
+  * first pre-release for new major release 26
+  * major feature is the new kDots template / new overall UI
+  * the release is not yet feature-complete, missing are:
+  - new RAG application adding a fulltext index and semantic search
+  - some accessibility features, mainly improving the endless scrolling list
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 08 Dec 2025 15:06:36 +0100
+
 egroupware-docker (23.1.20251119) hardy; urgency=low
 
   * Addressbook: fix not working avatar/picture upload
