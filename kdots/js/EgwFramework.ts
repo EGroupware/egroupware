@@ -13,7 +13,6 @@ import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import {state} from "lit/decorators/state.js";
 import {EgwPopups} from "./EgwPopups";
-import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 
 /**
  * @summary Accessable, webComponent-based EGroupware framework
@@ -159,7 +158,6 @@ export class EgwFramework extends LitElement
 		this.handleAppDOMChange = this.handleAppDOMChange.bind(this);
 		this.appDOMObserver = new MutationObserver(this.handleAppDOMChange);
 		this.handleDarkmodeChange = this.handleDarkmodeChange.bind(this);
-		this.handleApplicationListShow = this.handleApplicationListShow.bind(this);
 	}
 	connectedCallback()
 	{
@@ -999,44 +997,6 @@ export class EgwFramework extends LitElement
 		}
 		this.egw.set_preference("common", "darkmode", pref);
 	}
-
-	/**
-	 * Application list is shown, make it sortable
-	 * @param event
-	 * @protected
-	 */
-	protected handleApplicationListShow(event)
-	{
-		Sortable.create(event.target, {
-			draggable: "et2-image",
-			store: {
-				set: (sortable) =>
-				{
-					const order = sortable.toArray() ?? [];
-
-					// Update locally
-					this.applicationList
-						.sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name))
-						.filter(a => a.opened !== undefined)
-						.forEach(a =>
-						{
-							a.opened = order.indexOf(a.name);
-						});
-
-					// Save to preferences (server expects comma-separated list)
-					this.egw.set_preference('common', 'user_apporder', order.join(','));
-				}
-			}
-		});
-	}
-
-	protected handleApplicationListHide(event)
-	{
-		Sortable.get(event.target).destroy();
-		// Update to get tabs in new order
-		this.requestUpdate();
-	}
-
 	/**
 	 * An application tab is chosen, show the app
 	 *
@@ -1284,15 +1244,17 @@ export class EgwFramework extends LitElement
 		}
 
 		return html`
+            <sl-tooltip placement="bottom" role="menuitem" content="${app.title}"
+                        style="--application-color: var(--${app.name}-color,var(--default-color))">
                 <et2-image src="${app.icon}" aria-label="${app.title}" noSubmit inline
-                           data-id="${app.name}"
-                           statustext="${app.title}"
+                                 helptext="${app.title}"
                                  @click=${() =>
                                  {
                                      this.loadApp(app.name, true);
                                      (<SlDropdown>this.shadowRoot.querySelector(".egw_fw__app_list")).hide();
                                  }}
-                ></et2-image>`;
+                ></et2-image>
+            </sl-tooltip>`;
 	}
 
 	protected _applicationTabTemplate(app : ApplicationInfo)
@@ -1366,10 +1328,7 @@ export class EgwFramework extends LitElement
                         <slot name="logo" part="logo"></slot>
                     </div>
                     <sl-dropdown class="egw_fw__app_list" role="navigation" exportparts="panel:app-list-panel"
-                                 aria-label="${this.egw.lang("Application list")}"
-                                 @sl-show=${this.handleApplicationListShow}
-                                 @sl-after-hide=${this.handleApplicationListHide}
-                    >
+                                 aria-label="${this.egw.lang("Application list")}">
                         <sl-icon-button slot="trigger" name="grid-3x3-gap"
                                         label="${this.egw.lang("Application list")}"
                                         aria-hidden="true"
@@ -1385,9 +1344,8 @@ export class EgwFramework extends LitElement
                                   @sl-close=${this.handleApplicationTabClose}
                     >
                         ${repeat([...this.applicationList, ...Object.values(this._tabApps)]
-                                        .filter(app => typeof app.opened !== "undefined" && !app.slot),
-                                (app) => this._applicationTabTemplate(app))
-                        }
+                                .filter(app => typeof app.opened !== "undefined" && !app.slot)
+                                .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
                     <div class="spacer spacer_end"></div>
                     <slot name="header"><span class="placeholder">header</span></slot>
