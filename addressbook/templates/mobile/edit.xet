@@ -331,7 +331,7 @@
 					</et2-box>
 				</row>
 				<row>
-					<et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" placeholder="Name" noLang="1" ></et2-textbox>
+					<et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" placeholder="Name" noLang="1" ></et2-textbox>
 				</row>
 				<row>
 					<et2-description  for="org_name" value="Organisation"></et2-description>
