@@ -355,7 +355,8 @@ class AddressbookApp extends EgwApp
 			title.then(_title =>
 			{
 				this.egw.window.framework.tabLinkHandler(url, {
-					displayName: _title,
+					displayName: this.egw.lang("CRM View"),
+					tooltip: _title,
 					icon: _params.icon || this.egw.link('/api/avatar.php', {
 						contact_id: contact_id,
 						etag: (new Date).valueOf()/86400|0	// cache for a day, better then no invalidation

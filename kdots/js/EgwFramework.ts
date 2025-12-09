@@ -1280,7 +1280,7 @@ export class EgwFramework extends LitElement
                         }
                     }}
             >
-                <sl-tooltip placement="bottom" content="${app.title}" hoist>
+                <sl-tooltip placement="bottom" content="${app.tooltip ?? app.title}" hoist>
                     <et2-image part="tab-icon" src="${app.icon}" inline></et2-image>
                 </sl-tooltip>
                 ${app.notificationCount ? html`
@@ -1416,6 +1416,9 @@ export interface ApplicationInfo
 
 	/* Count of notifications for the application */
 	notificationCount? : number
+
+	/* Tab tooltip */
+	tooltip? : string
 
 	/* What type of application (1: normal, 5: ?) */
 	status : string,// = "1",
