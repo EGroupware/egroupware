@@ -44,8 +44,8 @@ export  function et2_compilePHPExpression(_expr, _vars)
 		// Transform the generated syntaxTree into a JS string
 		var js = _php_compileJSCode(_vars, syntaxTree);
 
-		// Log the successfull compiling
-		egw.debug("log", "Compiled PHP " + _expr + " --> " + js);
+		// Log the successful compiling
+		//egw.debug("log", "Compiled PHP " + _expr + " --> " + js);
 	}
 	catch(e) {
 		// if expression does NOT compile use it literally and log a warning, but not stop execution
@@ -464,4 +464,3 @@ function _php_compileJSCode(_vars, _tree)
 	test("\\\\", "\\");
 	test("", "");
 })();*/
-
