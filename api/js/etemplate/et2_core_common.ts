@@ -99,9 +99,9 @@ export function et2_checkType(_val, _type, _attr, _widget)
 	}
 
 	function _err() {
-		var res = et2_typeDefaults[_type];
+		const res = et2_typeDefaults[_type];
 
-		if(typeof _val != "undefined" && _val)
+		if(typeof _val != "undefined" && _val && _widget?._deferred_properties?.indexOf(_attr) === false)
 		{
 			egw.debug("warn", "Widget %o: '" + _val + "' was not of specified _type '" +
 				_type + (_attr != null ? "' for attribute '" + _attr + "' " : "") +
