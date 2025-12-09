@@ -49,6 +49,7 @@ import {egw_getAppObjectManager} from "../../api/js/egw_action/egw_action";
  * @csspart left - Left optional content.
  * @csspart right - Right optional content.
  * @csspart footer - Very bottom of the main content.
+ * @csspart spinner - Loading spinner
  *
  * @cssproperty [--application-color=--primary-background-color] - Color to use for this application
  * @cssproperty [--application-header-text-color=white] - Text color in the application header
@@ -1078,7 +1079,7 @@ export class EgwFrameworkApp extends LitElement
 
 		return html`
             <div class="egw_fw_app__loading" slot=${slot || nothing}>
-                <sl-spinner></sl-spinner>
+                <sl-spinner part="spinner"></sl-spinner>
             </div>`;
 	}
 
