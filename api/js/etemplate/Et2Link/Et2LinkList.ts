@@ -622,6 +622,7 @@ export class Et2LinkList extends Et2LinkString
 		this.context.getItem("delete").set_enabled(!this.readonly);
 		this.context.getItem("delete").caption = _link_data.app === "file" ? this.egw().lang("Delete file") : this.egw().lang("Delete link");
 		this.context.data = _link_data;
+		this.context.instance?.requestUpdate();
 		this.context.showAt(_ev.pageX, _ev.pageY, true);
 		_ev.preventDefault();
 
