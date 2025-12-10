@@ -908,8 +908,14 @@ abstract class Framework extends Framework\Extra
 		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']))
 		{
 			//Sort the application array using the user_apporder array as sort index
-			self::$user_apporder =
-				unserialize($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder'], ['allowed_classes' => false]);
+			if(is_string($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']))
+			{
+				self::$user_apporder = json_php_unserialize($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']);
+			}
+			else
+			{
+				self::$user_apporder = $GLOBALS['egw_info']['user']['preferences']['common']['user_apporder'];
+			}
 			uasort($apps, __CLASS__.'::_sort_apparray');
 		}
 

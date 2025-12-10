@@ -1982,6 +1982,17 @@ class AdminApp extends EgwApp
 	{
 		egw.request('api.EGroupware\\Api\\Egw\\Applications.ajax_updateAppColor', [_app, _color]);
 	}
+
+	/**
+	 * Update application order onchange
+	 *
+	 * @param _ev
+	 * @param _widget
+	 */
+	updateAppOrder(_app, _order : string)
+	{
+		egw.request('api.EGroupware\\Api\\Egw\\Applications.ajax_updateAppOrder', [_app, _order]);
+	}
 }
 
 app.classes.admin = AdminApp;

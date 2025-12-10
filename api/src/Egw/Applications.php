@@ -177,6 +177,21 @@ class Applications
 		}
 	}
 
+	public function ajax_updateAppOrder(string $app, int $order)
+	{
+		if(!empty($GLOBALS['egw_info']['user']['apps']['admin']) &&
+			isset($GLOBALS['egw_info']['user']['apps'][$app]) &&
+			$GLOBALS['egw_info']['user']['apps'][$app]['order'] !== $order)
+		{
+			$this->db->update($this->table_name, [
+				'app_order' => (int)$order,
+			], [
+								  'app_name' => $app,
+							  ], __LINE__, __FILE__
+			);
+			self::invalidate();
+		}
+	}
 	/**
 	 * Invalidate cached apps
 	 */
