@@ -855,7 +855,8 @@ abstract class Tracking
 				$notification->set_subject($subject);
 				if ($link)
 				{
-					$notification->set_links(array($link));
+					$notification->set_links((array)$link);
+					$link = !empty($link['app']) ? $link : $link[0];
 					$notification->set_popupdata($link['app']??$this->app, $link, $link['id']??null);
 				}
 				if ($attachments && is_array($attachments))
@@ -1081,10 +1082,10 @@ abstract class Tracking
 	protected function get_notification_link($data,$old,$receiver=null)
 	{
 		unset($receiver);	// not used, but required by function signature
-
+		$links = [];
 		if (($view = Api\Link::view($this->app,$data[$this->id_field])))
 		{
-			return array(
+			$links[] = array(
 				'text' 	=> $this->get_title($data,$old),
 				'app'	=> $this->app,
 				'id'	=> $data[$this->id_field],
@@ -1092,7 +1093,23 @@ abstract class Tracking
 				'popup'	=> Api\Link::is_popup($this->app,'view'),
 			);
 		}
-		return false;
+		// Check for kanban board
+		$kanban = Api\Link::get_links($this->app, $data[$this->id_field], 'kanban');
+		foreach($kanban as $link_id => $kanban_id)
+		{
+			if(($view = Api\Link::view('kanban', $kanban_id)))
+			{
+				$links[] = array(
+					'text'  => Api\Link::title('kanban', $kanban_id),
+					'app'   => 'kanban',
+					'id'    => $kanban_id,
+					'view'  => $view,
+					'popup' => Api\Link::is_popup('kanban', 'view'),
+				);
+			}
+		}
+
+		return $links;
 	}
 
 	/**
