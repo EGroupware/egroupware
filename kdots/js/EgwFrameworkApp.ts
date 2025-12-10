@@ -144,7 +144,7 @@ export class EgwFrameworkApp extends LitElement
 		{
 			// Found DOM node, get the widget
 			const template = (<Et2Template>nm_div.closest("et2-template"));
-			const widget_id = nm_div.id.replace(template.getInstanceManager().uniqueId + "_", "");
+			const widget_id = nm_div.id.replace(template?.getInstanceManager().uniqueId + "_", "");
 			nm = template.getWidgetById(widget_id);
 		}
 		return nm;
