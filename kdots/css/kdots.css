@@ -15,6 +15,16 @@ body {
   /** Messages **/
   /** end messages **/
 }
+html .sl-toast-stack,
+body .sl-toast-stack {
+  /* Never print the messages */
+}
+@media print {
+  html .sl-toast-stack,
+  body .sl-toast-stack {
+    display: none;
+  }
+}
 html .sl-toast-stack:not(.isPopup),
 body .sl-toast-stack:not(.isPopup) {
   top: auto;

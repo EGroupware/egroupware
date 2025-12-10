@@ -8,6 +8,10 @@ html, body {
   /** Messages **/
 
   .sl-toast-stack {
+	/* Never print the messages */
+	@media print {
+	  display: none;
+	}
 	&:not(.isPopup) {
 	  top: auto;
 	  bottom: 0px;
