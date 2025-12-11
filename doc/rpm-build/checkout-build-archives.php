@@ -19,13 +19,13 @@ $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-docker',
 	'version' => '26.0',
-	'packaging' => date('Ymd'), // '20160520'
+	'packaging' => date('Ymd'), // '20251208'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
 	'last-tag' => '', // tag to generate changelog from, default latest tag of given branch
-	'checkoutdir' => '~/epl-23.1-checkout',	//realpath(__DIR__.'/../..'),
-	'egw_buildroot' => '/tmp/build_root/epl_23.1_buildroot',
-	'sourcedir' => '~/download/archives/egroupware-23.1',
+	'checkoutdir' => '~/epl-26-checkout',	//realpath(__DIR__.'/../..'),
+	'egw_buildroot' => '/tmp/build_root/epl_26_buildroot',
+	'sourcedir' => '~/download/archives/egroupware-26',
 	/* svn-config no longer used
 	'svntag' => 'tags/$version.$packaging',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
