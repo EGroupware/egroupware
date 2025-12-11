@@ -31,6 +31,10 @@ export class Et2DateTime extends Et2Date
 						flex: 1 1 auto;
 						min-width: 19ex;
 					}
+
+					input[type*=date] {
+						min-width: 14.5em;
+					}
 				}
 
 			  ::slotted(.calendar_button) {

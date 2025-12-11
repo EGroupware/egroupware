@@ -1158,7 +1158,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
                     part="form-control"
                     class=${classMap({
                         'form-control': true,
-                        'form-control--medium': true,
+                        'form-control--small': this.size === 'small',
+                        'form-control--medium': this.size === 'medium' || typeof this.size === 'undefined',
+                        'form-control--large': this.size === 'large',
                         'form-control--has-label': labelTemplate !== nothing,
                         'form-control--has-help-text': helpTemplate !== nothing
                     })}
