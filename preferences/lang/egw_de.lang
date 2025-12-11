@@ -8,6 +8,7 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	de	Das Thema definiert die Farben und Schriftarten der Benutzeroberfläche.
 access token revoked.	preferences	de	Token zurückgezogen
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde aktualisiert
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	de	Aktiviere um farbigere Anwendungsicons in den offenen Reitern anzuzeigen. Wenn nicht aktiviert werden diese in einer aufgehellten Anwendungsfarbe angezeigt
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
 applications list scroll area	preferences	de	Scroll-Button für Seitenmenü
 are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass Sie diese Kategorie löschen wollen?
@@ -29,9 +30,10 @@ color	preferences	de	Farbe
 country	preferences	de	Land
 current password	preferences	de	Aktuelles Passwort
 custom login box color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe der Anmelde-Seite, Vorgabe obige Farbe abgedunkelt
+custom login box text color, defaults to white	preferences	de	Benutzerdefinierte Farbe des Texts der Anmelde-Seite, Vorgabe weiss
 custom sidebar menu active color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe des Seitenmenü, Vorgabe obige Farbe abgedunkelt
 dark mode theme	preferences	de	Dark Mode-Thema
-data exchange settings	preferences	de	Einstellungen für den Datenaustausch
+data exchange settings	common	de	Einstellungen für den Datenaustausch
 date format	preferences	de	Datumsformat
 default	preferences	de	Vorgabe
 default font	preferences	de	Standard-Schrift
@@ -156,6 +158,7 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	de	Einstellungen
 setup two factor authentication	preferences	de	Setup 2-Faktor-Authentifizierung
 should the number of active sessions be displayed for you all the time.	preferences	de	Zeigt die Anzahl aktiver Sitzungen im Avatar-Menü an.
+show app icons in there app color	preferences	de	Zeige die Icons der Anwendung in der Farbe der Anwendung
 show helpmessages by default	preferences	de	Hilfetexte standardmäßig anzeigen
 show links between egroupware aps as	common	de	Zeige Verknüpfungen zwischen EGroupware Anwendungen als
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
@@ -191,6 +194,7 @@ uppercase letters	preferences	de	Großbuchstaben
 use default	preferences	de	Vorgabe benutzen
 use first %1 letters from username	preferences	de	Benutze die ersten %1 Buchstaben des Benutzernamens
 use initials from first and last name	preferences	de	Benutze die Initialen von Vor- und Nachnamen
+used instead of the application color.	preferences	de	Wird statt der Farbe der Anwendung benutzt.
 users choice	preferences	de	Benutzerauswahl
 what to display for an avatar, if there is no photo	preferences	de	Was soll als Avatar angezeigt werden, wenn es kein Foto gibt
 when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	de	Wenn Sie mehrere Optionen auswählen können, soll die Optionsliste geöffnet bleiben, bis Sie sie schließen, oder geschlossen werden, nachdem Sie eine Option ausgewählt haben.

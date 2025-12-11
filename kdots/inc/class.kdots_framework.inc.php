@@ -471,6 +471,8 @@ class kdots_framework extends Api\Framework\Ajax
 			$default_prefs['loginbox_custom_color'] ??
 			($template_custom_color ? "hsl(from $template_custom_color h s calc(l * 0.8))" : '#C0C0C080');
 		// hsl(from $template-custom-color h s calc(l-20)
+		$loginbox_text_color = $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_text_color'] ??
+			$default_prefs['loginbox_text_color'] ?? null;
 		//only add custom color definitions to the head css if we actually have custom colors
 		if ($loginbox_custom_color || $template_custom_color)
 		{
@@ -482,6 +484,10 @@ class kdots_framework extends Api\Framework\Ajax
 			if ($loginbox_custom_color)
 			{
 				$ret['app_css'] .= "\t\t--loginbox-custom-color: $loginbox_custom_color;\n";
+			}
+			if ($loginbox_text_color)
+			{
+				$ret['app_css'] .= "\t\t--loginbox-text-color: $loginbox_text_color;\n";
 			}
 			$ret['app_css'] .= "\t}\n";
 		}

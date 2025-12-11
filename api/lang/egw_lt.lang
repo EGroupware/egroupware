@@ -357,3 +357,4 @@ your password is about to expire in %1 days, you may change your password now	co
 your password might not match the password policy.	common	lt	Jūsų slaptažodis gali neatitikti slaptažodžių politikos.
 your session timed out, please log in again	login	lt	Jūsų sesija baigėsi, prašome prisijungti dar kartą.
 zimbabwe	common	lt	ZIMBABVĖ
+2nd factor	login	lt	2-oji saugykla

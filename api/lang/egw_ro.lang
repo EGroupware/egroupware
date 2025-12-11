@@ -192,3 +192,4 @@ your password failed the following criteria:	common	ro	Parola dumneavoastră nu 
 your password is about to expire in %1 days, you may change your password now	common	ro	Parola dumneavoastră urmează să expire în %1 zile, puteți să vă schimbați parola acum.
 your password might not match the password policy.	common	ro	Este posibil ca parola dvs. să nu corespundă politicii privind parolele.
 your session timed out, please log in again	login	ro	Sesiunea dvs. a expirat, vă rugăm să vă conectați din nou.
+2nd factor	login	ro	Al 2-lea factor

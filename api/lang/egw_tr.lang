@@ -262,3 +262,4 @@ your password failed the following criteria:	common	tr	Parolanız aşağıdaki k
 your password is about to expire in %1 days, you may change your password now	common	tr	Parolanızın süresi %1 gün içinde dolmak üzere, parolanızı şimdi değiştirebilirsiniz.
 your password might not match the password policy.	common	tr	Parolanız parola ilkesiyle eşleşmeyebilir.
 your session timed out, please log in again	login	tr	Oturumunuz zaman aşımına uğradı, lütfen tekrar giriş yapın.
+2nd factor	login	tr	2. faktör
