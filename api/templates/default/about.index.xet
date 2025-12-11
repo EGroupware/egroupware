@@ -57,7 +57,7 @@
 								<et2-image align="center" src="$row_cont[image]" id="${row}[app]"></et2-image>
 								<et2-description  id="${row}[title]"></et2-description>
 								<et2-colorpicker id="${row}[color]" onchange="app.admin.updateAppColor('$row_cont[app]', widget.value);"></et2-colorpicker>
-                                <et2-number id="${row}[order]" min="0" step="10" onchange="app.admin.updateAppOrder('$row_cont[app]', widget.value);"></et2-number>
+                                <et2-number id="${row}[order]" min="0" step="1" onchange="app.admin.updateAppOrder('$row_cont[app]', widget.value);"></et2-number>
 								<html id="${row}[author]" no_lang="1"/>
 								<html id="${row}[maintainer]" no_lang="1"/>
 								<et2-description  id="${row}[version]" noLang="1"></et2-description>
