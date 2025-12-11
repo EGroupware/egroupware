@@ -223,14 +223,13 @@
 				<row>
 					<et2-description  value="Options"></et2-description>
 					<et2-vbox>
-						<et2-checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"></et2-checkbox>
-						<et2-checkbox  statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" selectedValue="1" unselectedValue="0" roTrue=" " ></et2-checkbox>
-						<et2-checkbox  label="Private" id="public" selectedValue="0" unselectedValue="1" ></et2-checkbox>
+						<et2-checkbox statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"></et2-checkbox>
+						<et2-checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" selectedValue="1" unselectedValue="0" roTrue=" " ></et2-checkbox>
+						<et2-checkbox label="Private" id="public" selectedValue="0" unselectedValue="1" ></et2-checkbox>
+						<et2-checkbox label="Videoconference" id="videoconference" onchange="app.calendar.videoconferenceOnChange"></et2-checkbox>
+						<et2-checkbox label="Notify externals" id="participants[notify_externals]"
+							selectedValue="yes" unselectedValue="no" span="all" align="right"></et2-checkbox>
 					</et2-vbox>
-				</row>
-				<row>
-				    <et2-description  value="Video Conference"></et2-description>
-				    <et2-checkbox  id="videoconference" onchange="app.calendar.videoconferenceOnChange"></et2-checkbox>
 				</row>
 				<row>
 					<et2-description  for="location" value="Location"></et2-description>

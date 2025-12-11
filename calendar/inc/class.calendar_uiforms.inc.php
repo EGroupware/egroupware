@@ -1546,16 +1546,6 @@ class calendar_uiforms extends calendar_ui
 				'mail' => array('label' => 'Mail all participants', 'title' => 'Compose a mail to all participants after the event is saved'),
 				'sendrequest' => array('label' => 'Meetingrequest to all participants', 'title' => 'Send meetingrequest to all participants after the event is saved'),
 			),
-			'participants[notify_externals]' => [
-				'yes'            => lang('Yes').', '.lang('Notify all externals (non-users) about this event'),
-				'no'             => lang('No').', '.lang('Do NOT notify externals (non-users) about this event'),
-				'never'          => lang('Never notify externals (non-users) about events I create'),
-				'add_cancel'     => lang('Always').', '.lang('on invitation / cancellation only'),
-				'time_change_4h' => lang('Always').', '.lang('on time change of more than 4 hours too'),
-				'time_change'    => lang('Always').', '.lang('on any time change too'),
-				'modifications'  => lang('Always').', '.lang('on all modification, but responses'),
-				'responses'      => lang('Always').', '.lang('on participant responses too'),
-			],
 		);
 		unset($sel_options['status']['G']);
 		if (!is_array($event))

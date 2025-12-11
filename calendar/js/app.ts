@@ -4396,18 +4396,19 @@ export class CalendarApp extends EgwApp
 	/**
 	 * Videoconference checkbox checked
 	 */
-	public videoconferenceOnChange(event)
+	public videoconferenceOnChange(event, widget)
 	{
-		let widget = <Et2Checkbox>this.et2.getWidgetById('videoconference');
+		if (!widget) widget = <Et2Checkbox>this.et2.getWidgetById('videoconference');
 
 		if (widget && widget.get_value())
 		{
+			const et2 = widget.getRoot();
 			// notify all participants
-			(<et2_selectbox> this.et2.getWidgetById('participants[notify_externals]')).set_value('yes');
+			et2.getWidgetById('participants[notify_externals]').value = 'yes';
 
 			// add alarm for all participants 5min before videoconference
 			let start = new Date(widget.getRoot().getValueById('start'));
-			let alarms = this.et2.getArrayMgr('content').getEntry('alarm') || {};
+			let alarms = et2.getArrayMgr('content').getEntry('alarm') || {};
 			for(let alarm of alarms)
 			{
 				// Check for already existing alarm
@@ -4419,9 +4420,9 @@ export class CalendarApp extends EgwApp
 					return;
 				}
 			}
-			(<et2_selectbox> this.et2.getWidgetById('new_alarm[options]')).set_value('300');
-			(<et2_selectbox> this.et2.getWidgetById('new_alarm[owner]')).set_value('0');	// all participants
-			(<et2_button> this.et2.getWidgetById('button[add_alarm]')).click(event);
+			et2.getWidgetById('new_alarm[options]').value = '300';
+			et2.getWidgetById('new_alarm[owner]').value = '0';	// all participants
+			(<et2_button>et2.getWidgetById('button[add_alarm]')).click(event);
 		}
 	}
 

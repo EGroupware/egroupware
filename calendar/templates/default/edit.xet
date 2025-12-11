@@ -57,10 +57,7 @@
                     </et2-hbox>
                 </row>
 				<row>
-					<et2-hbox  span="all">
-						<et2-description  width="20%"></et2-description>
-						<et2-select  label="Notify externals" id="notify_externals"></et2-select>
-					</et2-hbox>
+					<et2-checkbox label="Notify externals" id="notify_externals" selectedValue="yes" unselectedValue="no" span="all" align="right"></et2-checkbox>
 				</row>
 				<row class="th thb">
 					<et2-description  value="Type"></et2-description>
