@@ -77,6 +77,10 @@ class AnonymousList extends filemanager_ui
 			$this->etemplate->setElementAttribute("toolbar[button][edit]", "disabled", true);
 			$this->etemplate->setElementAttribute("toolbar[button][symlink]", "disabled", true);
 		}
+		// No egw-app, no main-header, no filterbox
+		$this->etemplate->setElementAttribute("search", "onchange", "window.app.filemanager.changeNmFilter(null, widget); return false;");
+		$this->etemplate->setElementAttribute("nm", "filter_template", "");
+
 		// No framework, no slots available
 		$this->etemplate->setElementAttribute("filemanager.index.app-toolbar", "slot", "");
 
