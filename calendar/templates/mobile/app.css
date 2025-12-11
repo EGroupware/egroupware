@@ -1683,6 +1683,10 @@ egw-app {
   }
 }
 @media all {
+  #calendar-add_calendar-add {
+    width: 100%;
+    --label-width: 10em;
+  }
   #calendar-edit #calendar-edit_calendar-edit-details {
     float: none;
     display: initial;
@@ -1745,4 +1749,3 @@ egw-app {
     color: #707070;
   }
 }
-/*# sourceMappingURL=app.css.map */

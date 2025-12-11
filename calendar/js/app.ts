@@ -1493,12 +1493,12 @@ export class CalendarApp extends EgwApp
 	 * based on if "use end date" selected or not.
 	 *
 	 */
-	set_enddate_visibility()
+	set_enddate_visibility(ev, widget)
 	{
-		let duration = <Et2Select>this.et2.getWidgetById('duration');
-		let start = <Et2DateTime>this.et2.getWidgetById('start');
-		let end = <Et2DateTime>this.et2.getWidgetById('end');
-		let content = this.et2.getArrayMgr('content').data;
+		let duration = <Et2Select>(widget?.getRoot() ?? this.et2).getWidgetById('duration');
+		let start = <Et2DateTime>(widget?.getRoot() ?? this.et2).getWidgetById('start');
+		let end = <Et2DateTime>(widget?.getRoot() ?? this.et2).getWidgetById('end');
+		let content = (widget?.getRoot() ?? this.et2).getArrayMgr('content').data;
 
 		if(duration != null && end != null)
 		{

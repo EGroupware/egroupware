@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+    <template id="calendar.add" template="" lang="" group="0" version="19.1.000">
+        <et2-vbox>
+            <et2-textbox id="title" maxlength="255" tabindex="1" required="true" span="4" placeholder="Title"></et2-textbox>
+
+            <et2-date-time label="Start" class="et2-label-fixed" id="start" onchange="app.calendar.edit_start_change" required="true"></et2-date-time>
+            <et2-select label="Duration" class="et2-label-fixed" statustext="Duration of the meeting" id="duration" onchange="app.calendar.set_enddate_visibility" noLang="1" emptyLabel="Use end date"></et2-select>
+            <et2-date-time id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true"></et2-date-time>
+        </et2-vbox>
+        <et2-button statustext="saves the changes made" label="Save" id="button[save]" slot="footer" default="true"></et2-button>
+        <et2-button statustext="Full edit dialog" label="Edit" id="button[edit]" noValidation="true" slot="footer"></et2-button>
+        <et2-button statustext="Close the window" label="Cancel" id="button[cancel]" noValidation="true" slot="footer"></et2-button>
+        <et2-checkbox label="Always use full edit dialog" id="new_event_dialog" statustext="Always use the full edit dialog, not this little dialog" onchange="egw.set_preference('calendar',widget.id,widget.get_value() ? 'edit' : 'add');" slot="footer" align="right"></et2-checkbox>
+    </template>
+</overlay>
