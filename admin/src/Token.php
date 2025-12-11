@@ -280,7 +280,6 @@ class Token
 			'row_id'         => 'token_id',
 			'actions'        => self::get_actions(static::APP),
 			'placeholder_actions' => array('add'),
-			'add_action'       => "egw.open_link('".Api\Egw::link('/index.php', 'menuaction='.static::APP.'.'.static::class.'.edit')."','_blank','600x380')",
 		];
 	}
 

@@ -57,7 +57,7 @@
 	</template>
 	<et2-template id="admin.tokens.header" template="" lang="" group="0" version="1.9.001">
 		<et2-toolbar id="tokens-toolbar">
-			<et2-button label="Add" id="add" onclick="@add_action" noSubmit="true" slot="prefix"></et2-button>
+			<et2-button label="Add" id="add" onclick="egw.open_link('admin.EGroupware\\Admin\\Token.edit','_blank','600x380'); return false" noSubmit="true" slot="prefix"></et2-button>
 			<et2-template template="api.search-button" slot="prefix"></et2-template>
 			<et2-select-account emptyLabel="User" id="account_id" onchange="app.admin.changeNmFilter"></et2-select-account>
 			<et2-select-account emptyLabel="{Revoked} {By}" id="token_revoked_by" onchange="app.admin.changeNmFilter"></et2-select-account>
