@@ -13,8 +13,8 @@
 
 :root {
 
-  --footer_height: 40px;
-  --text-color: var(--sl-color-neutral-50);
+  --footer_height: 80px;
+  --text-color: var(--sl-color-neutral-950);
   --input-text-color: var(--sl-color-neutral-900);
   --input-color: var(--sl-color-neutral-50);
   --button-color: var(--sl-color-primary-700);
@@ -112,9 +112,8 @@ div#loginScreenMessage {
   }
   #login_logo {
 	padding: 10% 0 5% 0;
-	max-width: 40rem;
 	max-height: 120px;
-	max-width: 100%;
+	max-width: 40rem;
   }
 
   .egw_message_wrapper {
@@ -275,14 +274,16 @@ same as in pixelegg for now
 div#login_footer {
   position: fixed;
   bottom: 0;
-  display: inline-block;
   right: 0;
   width: 100%;
   height: var(--footer_height);
   background: var(--button-color);
   overflow-x: clip;
+  display: flex;
+  align-items: center;
 
   .apps {
+	flex: 1 1 auto;
 	display: flex;
 	justify-content: center;
 
