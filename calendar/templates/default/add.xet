@@ -5,9 +5,9 @@
 		<grid width="100%">
 			<columns>
 				<column width="88"/>
-				<column width="130"/>
-				<column width="88"/>
-				<column width="130"/>
+                <column width="165"/>
+                <column width="120"/>
+                <column width="150"/>
 				<column width="130"/>
 			</columns>
 			<rows>
