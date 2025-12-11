@@ -121,12 +121,13 @@ div#loginScreenMessage {
   .egw_message_wrapper {
 	display: flex;
 	max-height: 20%;
+	max-width: 24.8em;
 	font-size: 1em;
 	height: fit-content;
 	background: var(--box-color);
 	border-radius: var(--sl-border-radius-medium);
 	padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
-	margin-inline: 1rem ;
+	margin-inline: 1em ;
 	border-left: .5em solid transparent;
 	&:has(.error_message){
 	  border-left: .5em solid var(--sl-color-danger-500);
@@ -141,7 +142,7 @@ div#loginScreenMessage {
 	}
 	&:not(:hover){
 	  .close{
-		display: none;
+		visibility: hidden;
 	  }
 	}
 
