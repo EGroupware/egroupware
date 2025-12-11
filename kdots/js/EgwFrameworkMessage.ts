@@ -1,9 +1,11 @@
-import {html, LitElement, nothing, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
+import {join} from "lit/directives/join.js";
 import {property} from "lit/decorators/property.js";
 import {SlAlert} from "@shoelace-style/shoelace";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {Et2Checkbox} from "../../api/js/etemplate/Et2Checkbox/Et2Checkbox";
+import {activateLinks} from "../../api/js/etemplate/ActivateLinksDirective";
 
 /**
  * @summary System message
@@ -72,6 +74,25 @@ export class EgwFrameworkMessage extends LitElement
 	private static TYPE_MAP = {info: "success", warning: "warning", error: "danger"};
 
 	private __alert : SlAlert;
+
+	// Handle some HTML in the message, like links & newlines
+	// You can create & toast the egw-message directly for more flexibility
+	private HREF_REG = /<a href="([^"]+)">([^<]+)<\/a>/img;
+	private NEWLINE_REG = /<\/?(p|br)\s*\/?>\n?/ig;
+
+
+	public willUpdate(changedProperties : PropertyValues<this>)
+	{
+		super.willUpdate(changedProperties);
+		if(changedProperties.has("message"))
+		{
+			// Decode HTML entities in the message through textarea
+			// The browser automatically interprets and decodes the entities.
+			const textarea = document.createElement('textarea');
+			textarea.innerHTML = this.message;
+			this.message = textarea.value;
+		}
+	}
 
 	/**
 	 * Check if a message has been discarded
@@ -170,11 +191,43 @@ export class EgwFrameworkMessage extends LitElement
 		});
 	}
 
+	/* Handle newlines and links in the message */
+	private _messageTemplate(message)
+	{
+		// Convert newlines to <br> tags
+		const br2br = (str) =>
+		{
+			const split = str.split(this.NEWLINE_REG).filter(s => !["", "p", "br"].includes(s.trim()));
+			return html`${join(split, html`<br>`)}`;
+		}
+		const matches = this.HREF_REG.exec(this.message);
+		if(matches)
+		{
+			// Activate 1 anchor tag
+			const parts = this.message.split(matches[0]);
+			const href = matches[1]; //html_entity_decode(matches[1]);
+			message = html`
+                ${br2br(parts[0])}
+                <a href="${matches[1]}"
+                   target="${href.indexOf(this.egw.webserverUrl) != 0 ? '_blank' : "_self"}">${matches[2]}</a>
+                ${br2br(parts[1])}`;
+		}
+		else
+		{
+			message = html`${br2br(activateLinks(message, '_self'))}`;
+		}
+
+		return message;
+	}
+
 	render()
 	{
 		const icon = EgwFrameworkMessage.ICON_MAP[this.type] ?? "info-circle";
 		const variant = EgwFrameworkMessage.TYPE_MAP[this.type] ?? "success";
 		const duration = this.type == "success" && !this.duration ? 5000 : this.duration;
+
+		// Handle anchor links in message
+		const message = this._messageTemplate(this.message);
 
 		let discard : symbol | TemplateResult = nothing;
 		if(this.discard && EgwFrameworkMessage.isDiscarded(this.discard))
@@ -200,7 +253,8 @@ export class EgwFrameworkMessage extends LitElement
                     @sl-hide=${this.handleHide}
             >
                 <sl-icon name=${icon} slot="icon"></sl-icon>
-                <et2-description activateLinks value=${this.message}></et2-description>
+                ${message}
+                <slot></slot>
                 ${discard}
             </sl-alert>
 		`;
