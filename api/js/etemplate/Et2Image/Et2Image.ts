@@ -185,22 +185,32 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 
 	private transformSvg(svg: string, purify: boolean = true)
 	{
+		const svgTagMatch = svg.match(/<svg\b[^>]*>/i);
+		if (!svgTagMatch) return svg; // not an SVG
+		let svgTag = svgTagMatch[0];
 		// 1) normalize existing width/height to 100%
-		svg = svg.replace(/\b(width|height)=(['"])[^'"]*\2/g, '$1="100%"');
-
+		svgTag = svgTag.replace(/\b(width|height)=(['"])[^'"]*\2/g, '$1="100%"');
 		// 2) add missing width
-		if (!/\bwidth\s*=/.test(svg))
+		if (!/\bwidth=/.test(svgTag))
 		{
-			svg = svg.replace(/<svg\b(?![^>]*\bwidth\s*=)/, '<svg width="100%" ');
+			svgTag = svgTag.replace(/^<svg\b/i, '<svg width="100%"');
 		}
 		// 3) add missing height
-		if (!/\bheight\s*=/.test(svg))
+		if (!/\bheight=/.test(svgTag))
 		{
-			svg = svg.replace(/<svg\b(?![^>]*\bheight\s*=)/, '<svg height="100%" ');
+			svgTag = svgTag.replace(/^<svg\b/i, '<svg height="100%"');
 		}
+
 		// add part="image" for consistent styling
-		svg = svg.replace("<svg", '<svg part="image"');
-		// purify if requested
+		if (!/\bpart=/.test(svgTag))
+		{
+			svgTag = svgTag.replace(/^<svg\b/i, '<svg part="image"');
+		}
+
+		// Replace the original opening tag with the modified one
+		svg = svg.replace(svgTagMatch[0], svgTag);
+
+		// Purify if requested
 		if (purify)
 		{
 			svg = DOMPurify.sanitize(svg);
