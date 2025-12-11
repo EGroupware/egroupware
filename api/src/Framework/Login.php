@@ -74,7 +74,7 @@ class Login
 		}
 		else
 		{
-			$tmpl->set_var('lang_2fa',lang('2-Factor-Authentication'));
+			$tmpl->set_var('lang_2fa',lang('2nd Factor'));
 			$tmpl->set_var('lang_2fa_help', htmlspecialchars(
 				lang('If you use "2-Factor-Authentication", please enter the code here.')));
 

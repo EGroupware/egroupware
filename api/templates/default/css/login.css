@@ -11,11 +11,12 @@
  * @package kdots
  */
 :root {
-  --footer_height: 80px;
-  --text-color: var(--sl-color-neutral-950);
+  --footer_height: 70px;
+  --text-color: var(--loginbox-text-color, var(--sl-color-neutral-100));
   --input-text-color: var(--sl-color-neutral-900);
   --input-color: var(--sl-color-neutral-50);
   --button-color: var(--sl-color-primary-700);
+  --button-text-color: var(--sl-color-neutral-50);
   --box-color: var(--loginbox-custom-color, '#COCOCO80');
 }
 .bootstrap-icons {
@@ -91,6 +92,7 @@ div#loginScreenMessage {
   letter-spacing: 0.2rem;
 }
 #loginMainDiv {
+  font-size: 2em;
   height: calc(100vh - var(--footer_height));
   display: flex;
   background-size: cover;
@@ -113,7 +115,7 @@ div#loginScreenMessage {
 #loginMainDiv .egw_message_wrapper {
   display: flex;
   max-height: 20%;
-  font-size: large;
+  font-size: 1em;
   height: fit-content;
   background: var(--box-color);
   border-radius: var(--sl-border-radius-medium);
@@ -182,7 +184,6 @@ div#loginScreenMessage {
   justify-content: space-between;
 }
 #loginMainDiv #centerBox .divLoginbox > div:not([class*="hidden"]) > span {
-  padding-right: 1em;
   width: 40%;
 }
 #loginMainDiv #centerBox .divLoginbox div.discovery_block input:last-child {
@@ -193,10 +194,10 @@ div#loginScreenMessage {
 }
 #loginMainDiv #centerBox .divLoginbox input[type="submit"] {
   font-weight: bold;
-  font-size: large;
+  font-size: 1.2em;
   width: 100%;
   background-color: var(--button-color);
-  color: var(--text-color);
+  color: var(--button-text-color);
   cursor: pointer;
 }
 #loginMainDiv #centerBox .divLoginbox div.remember_me_row {
@@ -207,7 +208,8 @@ div#loginScreenMessage {
   cursor: pointer;
 }
 #loginMainDiv #centerBox .divLoginbox div.remember_me_row input[type="checkbox"] {
-  width: auto;
+  width: 1em;
+  height: 1em;
   margin: 0;
   cursor: pointer;
 }
@@ -234,11 +236,10 @@ div#loginScreenMessage {
 }
 #loginMainDiv #centerBox .divLoginbox #socialBox a img,
 #loginMainDiv #centerBox .divLoginbox #socialMedia a img {
-  height: 2.5em;
+  height: 1.5em;
 }
 /***
 LOGIN FOOTER
-same as in pixelegg for now
 ***/
 div#login_footer {
   position: fixed;
@@ -257,8 +258,6 @@ div#login_footer .apps {
   justify-content: center;
 }
 div#login_footer .apps .app {
-  width: 30px;
-  height: 30px;
   margin: 5px 1% auto 2%;
   display: flex;
 }
@@ -266,9 +265,9 @@ div#login_footer .apps .app:hover img.icon {
   transform: scale(1.1);
 }
 div#login_footer .apps .app img.icon {
-  width: 30px;
+  width: 1.5em;
   filter: brightness(0) invert(1);
-  height: 30px;
+  height: 1.5em;
 }
 div#login_footer .apps .app span {
   display: none;
