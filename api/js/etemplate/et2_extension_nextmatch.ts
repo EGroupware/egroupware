@@ -1231,7 +1231,26 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// only do it for this._queued_refreshes === [], to not install multiple event-handlers (jQuery.one() does NOT help here!)
 		if (Array.isArray(this._queued_refreshes) && !this._queued_refreshes.length)
 		{
-			jQuery(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch', this._queue_refresh_callback.bind(this));
+			const tab_info = this.get_tab_info();
+			if(tab_info)
+			{
+				// In tab
+				const handler = (e) =>
+				{
+					if(e.detail.name == tab_info.id)
+					{
+						tab_info.flagDiv.removeEventListener("sl-tab-show", handler);
+						// Wait for the tab to be done being shown
+						window.setTimeout(() => this._queue_refresh_callback());
+					}
+				};
+				tab_info?.flagDiv.parentElement.addEventListener("sl-tab-show", handler);
+			}
+			else
+			{
+				// In application
+				this.getInstanceManager().DOMContainer.parentNode.addEventListener('show', this._queue_refresh_callback.bind(this), {once: true});
+			}
 		}
 
 
