@@ -66,6 +66,9 @@ body span,
 body a {
   color: var(--text-color);
 }
+body span {
+  font-size: 1.2em;
+}
 body .et2_required:not(.hasValue) {
   background-color: var(--sl-color-warning-100, #ffffd0);
   --sl-input-background-color: var(--sl-color-warning-100, #ffffd0);
@@ -92,7 +95,6 @@ div#loginScreenMessage {
   letter-spacing: 0.2rem;
 }
 #loginMainDiv {
-  font-size: 2em;
   height: calc(100vh - var(--footer_height));
   display: flex;
   background-size: cover;
@@ -114,9 +116,10 @@ div#loginScreenMessage {
 }
 #loginMainDiv .egw_message_wrapper {
   display: flex;
+  justify-content: space-between;
   max-height: 20%;
   max-width: 24.8em;
-  font-size: 1em;
+  font-size: 1.2em;
   height: fit-content;
   background: var(--box-color);
   border-radius: var(--sl-border-radius-medium);
@@ -150,7 +153,7 @@ div#loginScreenMessage {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2em;
+  color: var(--text-color);
 }
 #loginMainDiv #divAppIconBar {
   display: flex;
@@ -237,7 +240,7 @@ div#loginScreenMessage {
 }
 #loginMainDiv #centerBox .divLoginbox #socialBox a img,
 #loginMainDiv #centerBox .divLoginbox #socialMedia a img {
-  height: 1.5em;
+  height: 2em;
 }
 /***
 LOGIN FOOTER
@@ -266,9 +269,9 @@ div#login_footer .apps .app:hover img.icon {
   transform: scale(1.1);
 }
 div#login_footer .apps .app img.icon {
-  width: 1.5em;
+  width: 2em;
   filter: brightness(0) invert(1);
-  height: 1.5em;
+  height: 2em;
 }
 div#login_footer .apps .app span {
   display: none;

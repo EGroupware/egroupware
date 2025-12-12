@@ -68,6 +68,9 @@ body {
   span, a {
 	color: var(--text-color);
   }
+  span{
+	font-size: 1.2em;
+  }
   .et2_required:not(.hasValue){
 	background-color: var(--sl-color-warning-100, #ffffd0);
 	--sl-input-background-color:  var(--sl-color-warning-100, #ffffd0);
@@ -97,7 +100,6 @@ div#loginScreenMessage {
 }
 
 #loginMainDiv {
-  font-size: 2em;
   height: calc(100vh - var(--footer_height));
   display: flex;
   background-size: cover;
@@ -120,9 +122,10 @@ div#loginScreenMessage {
 
   .egw_message_wrapper {
 	display: flex;
+	justify-content: space-between;
 	max-height: 20%;
 	max-width: 24.8em;
-	font-size: 1em;
+	font-size: 1.2em;
 	height: fit-content;
 	background: var(--box-color);
 	border-radius: var(--sl-border-radius-medium);
@@ -160,7 +163,7 @@ div#loginScreenMessage {
 	  display: flex;
 	  align-items: center;
 	  justify-content: center;
-	  width: 2em;
+	  color: var(--text-color);
 	}
   }
 
@@ -263,7 +266,7 @@ div#loginScreenMessage {
 		justify-content: space-between;
 
 		a img {
-		  height: 1.5em
+		  height: 2em
 		}
 	  }
 	}
@@ -298,9 +301,9 @@ div#login_footer {
 	  }
 
 	  img.icon {
-		width: 1.5em;
+		width: 2em;
 		filter: brightness(0) invert(1);
-		height: 1.5em;
+		height: 2em;
 	  }
 
 	  span {
