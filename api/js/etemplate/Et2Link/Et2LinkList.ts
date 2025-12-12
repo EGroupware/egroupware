@@ -488,7 +488,7 @@ export class Et2LinkList extends Et2LinkString
 				'', this.egw().lang("Comment"), this.context.data.remark || ''
 			);
 
-		});
+		}, null);
 		this.context.addItem("file_info", this.egw().lang("File information"), this.egw().image("edit"), () =>
 		{
 			let link_data = this.context.data;
@@ -503,8 +503,8 @@ export class Et2LinkList extends Et2LinkString
 				}
 				this.egw().open(url, "filemanager", "edit");
 			}
-		});
-		this.context.addItem("-", "-");
+		}, null);
+		this.context.addItem("-", "-", null, null, null);
 		this.context.addItem("save", this.egw().lang("Save as"), this.egw().image('save'), () =>
 		{
 			let link_data = this.context.data;
@@ -537,7 +537,7 @@ export class Et2LinkList extends Et2LinkString
 			}
 
 			this.egw().open(link_data, "", "view", 'download', link_data.target ? link_data.target : link_data.app, link_data.app);
-		});
+		}, null);
 		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), () =>
 		{
 			// Highlight files for nice UI indicating what will be in the zip.
@@ -550,7 +550,7 @@ export class Et2LinkList extends Et2LinkString
 				app: this.application,
 				id: this.entryId
 			});
-		});
+		}, null);
 
 		// Only allow this option if the entry has been saved, and has a real ID
 		if(this.to_id && typeof this.to_id != 'object' || this.entryId && this.application)
@@ -576,9 +576,11 @@ export class Et2LinkList extends Et2LinkString
 				// No button, just open it
 				vfs_select.click();
 				vfs_select.addEventListener("change", (e) => {vfs_select.remove()});
-			});
+			}, null);
+
+			this._createMailContextMenu();
 		}
-		this.context.addItem("-", "-");
+		this.context.addItem("-", "-", null, null, null);
 		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), () =>
 		{
 			Et2Dialog.show_dialog(
@@ -591,8 +593,53 @@ export class Et2LinkList extends Et2LinkString
 				},
 				egw.lang('Delete link?')
 			);
-		});
+		}, null);
 
+	}
+
+	/**
+	 * Add mail sharing context menu items
+	 * @param _ev
+	 * @protected
+	 */
+	private _createMailContextMenu()
+	{
+		const mail = this.context.addItem("mail", this.egw().lang("mail"), this.egw().image('mail'), null, null);
+		const mode = {
+			attach: {
+				caption: "attachment",
+				hint: "Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB"
+			},
+			link: {
+				caption: "Download link",
+				hint: "Link is appended to mail allowing recipients to download currently attached version of files"
+			},
+			share_ro: {
+				caption: "Readonly share",
+				hint: "Link is appended to mail allowing recipients to download up to date version of files"
+			},
+			share_rw: {
+				caption: "Writable share",
+				hint: "Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)"
+			},
+			shareUploadDir: {
+				caption: "Hidden upload",
+				hint: "Share as readonly, but allow uploads.  Uploads are hidden, and only accessable by those with an account"
+			}
+		};
+		Object.entries(mode).forEach(([m, mode]) =>
+		{
+			mail.addItem("mail_" + m, this.egw().lang(mode.caption),
+				m == "attach" ? "mail/attach" : 'link',
+				() =>
+				{
+					const fakeSelected = [
+						{id: "filemanager::" + this.context.data.download_url.split("webdav.php", 2).pop()}
+					];
+					this.egw().applyFunc('app.filemanager.mail', [{id: "mail_" + m}, fakeSelected])
+				}, null
+			);
+		});
 	}
 
 	protected _handleRowContext(_ev)

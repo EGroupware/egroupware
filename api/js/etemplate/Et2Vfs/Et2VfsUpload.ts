@@ -115,6 +115,7 @@ export class Et2VfsUpload extends Et2File
 		}
 		// Pause uploads while we check - superAdded() will resume
 		this.resumable.pause();
+		const add = superAdded(info, event);
 		try
 		{
 			Et2Dialog.confirm_file(
@@ -137,11 +138,20 @@ export class Et2VfsUpload extends Et2File
 					// Server provided a new name
 					info.fileName = data;
 				}
-				await superAdded(info, event);
-			})
+				await add;
+			}).catch(e =>
+			{
+				info.abort();
+				let item = this.findFileItem(info);
+				if(item)
+				{
+					item.error(e.message ?? e.toString() ?? e);
+				}
+			});
 		}
 		catch(e)
 		{
+			info.abort();
 			let item = this.findFileItem(info);
 			if(item)
 			{
