@@ -663,6 +663,7 @@ export class Et2LinkList extends Et2LinkString
 		// File info only available for existing files
 		this.context.getItem("file_info").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 		this.context.getItem("save").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
+		this.context.getItem("mail").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 		// Zip download only offered if there are at least 2 files
 		this.context.getItem("zip").set_enabled(this._link_list.length >= 2);
 		// Show delete item only if the widget is not readonly
