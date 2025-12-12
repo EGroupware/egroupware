@@ -26,7 +26,7 @@ import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Select/Et2Selec
 import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Select/Et2SelectState";
 import type {EgwAction} from "../../api/js/egw_action/EgwAction";
 import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
-import {Et2MergeDialog} from "../../api/js/etemplate/Et2Dialog/Et2MergeDialog";
+import {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {Et2TreeDropdown} from "../../api/js/etemplate/Et2Tree/Et2TreeDropdown";
 import {egw_getActionManager} from "../../api/js/egw_action/egw_action";
@@ -1278,7 +1278,7 @@ class AddressbookApp extends EgwApp
 		const dialog = this.et2?.getDOMNode()?.querySelector('et2-merge-dialog') ?? document.body.querySelector('et2-merge-dialog');
 
 		// Add additional option UI by loading a template
-		const options = <Et2MergeDialog><unknown>et2_createWidget('template', {
+		const options = <Et2Template><unknown>et2_createWidget('template', {
 			application: this.appname,
 			id: this.appname + ".mail_merge_dialog",
 		}, dialog);
@@ -1289,7 +1289,7 @@ class AddressbookApp extends EgwApp
 
 		// Get template values, add them in
 		const result = await promise;
-		result.options = {...this.et2.getInstanceManager().getValues(options), ...result.options};
+		result.options = {...options.getInstanceManager().getValues(options), ...result.options};
 
 		return result;
 	}
