@@ -392,6 +392,7 @@ abstract class Framework extends Framework\Extra
 			'version'        => $GLOBALS['egw_info']['server']['versions']['api']
 		);
 		$var['page_generation_time'] = '';
+		/* disabled for now
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
 		{
 			$times = self::get_page_generation_time();
@@ -405,7 +406,7 @@ abstract class Framework extends Framework\Extra
 					$times['session_restore_time']);
 			}
 			$var['page_generation_time'] .= '</span></div>';
-		}
+		}*/
 		if (empty($GLOBALS['egw_info']['server']['versions']['maintenance_release']))
 		{
 			$GLOBALS['egw_info']['server']['versions']['maintenance_release'] = self::api_version();

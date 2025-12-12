@@ -327,11 +327,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	json_request.prototype.handleResponse = function(data) {
 		if (data && typeof data.response != 'undefined')
 		{
+			/* disabled for now
 			if (egw.preference('show_generation_time', 'common', false) == "1")
 			{
 				var gen_time_div = jQuery('#divGenTime').length > 0 ? jQuery('#divGenTime')
 				:jQuery('<div id="divGenTime" class="pageGenTime"><span class="pageTime"></span></div>').appendTo('#egw_fw_footer');
-			}
+			}*/
 			// Load files first
 			var js_files = [];
 			for (var i = data.response.length - 1; i >= 0; --i)
@@ -351,6 +352,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				{
 					var end_time = (new Date).getTime();
 					this.handleResponse(data);
+					/* disabled for now
 					if (egw.preference('show_generation_time', 'common', false) == "1")
 					{
 						var gen_time_div = jQuery('#divGenTime');
@@ -358,7 +360,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 						var gen_time_async = jQuery('.asyncIncludeTime').length > 0 ? jQuery('.asyncIncludeTime'):
 							gen_time_div.append('<span class="asyncIncludeTime"></span>').find('.asyncIncludeTime');
 						gen_time_async.text(egw.lang('async includes took %1s', (end_time-start_time)/1000));
-					}
+					}*/
 				});
 				return;
 			}
@@ -396,6 +398,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 							try {
 								// Get a reference to the plugin
 								var plugin = handler_level[res.type][j];
+								/* disabled for now
 								if (res.type === 'et2_load')
 								{
 									if (egw.preference('show_generation_time', 'common', false) == "1")
@@ -411,7 +414,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 											}
 										}
 									}
-								}
+								}*/
 								// Call the plugin callback
 								const promise = plugin.callback.call(
 									plugin.context ? plugin.context : this.context,
