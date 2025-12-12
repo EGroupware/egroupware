@@ -1064,6 +1064,7 @@ abstract class Ajax extends Api\Framework
 		if (self::$footer_done) return;	// prevent (multiple) footers
 		self::$footer_done = true;
 
+		/* disabled for now
 		if (empty($GLOBALS['egw_info']['flags']['nofooter']))
 		{
 			if ($no_framework && !empty($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time']))
@@ -1071,8 +1072,8 @@ abstract class Ajax extends Api\Framework
 				$vars = $this->_get_footer();
 				$footer = "\n".$vars['page_generation_time']."\n";
 			}
-		}
-		return ($footer??'').
+		}*/
+		return //($footer??'').
 			($GLOBALS['egw_info']['flags']['need_footer']??'')."\n".	// eg. javascript, which need to be at the end of the page
 			"</body>\n</html>\n";
 	}
