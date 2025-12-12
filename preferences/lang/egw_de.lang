@@ -22,6 +22,7 @@ br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
 change password	preferences	de	Passwort ändern
 charset for the csv export/import	preferences	de	Zeichensatz
+clean	preferences	de	Ordentlich
 click to install	preferences	de	Klicken zum Installieren
 close after selection	preferences	de	Nach Auswahl schließen
 code is invalid	preferences	de	Der Code ist ungültig
@@ -69,6 +70,7 @@ enter code to authenticate the actions below	preferences	de	Geben Sie den Code z
 enter code to verify correct setup	preferences	de	Bitte geben sie den Code ein um die Einrichtung zu überprüfen
 enter your new password	preferences	de	Neues Passwort eingeben
 enter your old password	preferences	de	Altes Passwort eingeben
+entry list headers	preferences	de	Header der Listen
 error	preferences	de	Fehler
 failed to change password.	preferences	de	Passwortänderung fehlgeschlagen!
 failed to delete secret!	preferences	de	Löschen des Schlüssels fehlgeschlagen!
@@ -122,6 +124,7 @@ notification settings	preferences	de	Einstellungen der Benachrichtigungen
 number format	preferences	de	Format von Zahlen
 numbers	preferences	de	Zahlen
 old password and new password are the same. this is invalid. you must enter a new password	preferences	de	Altes Passwort und Neues Passwort sind gleich. Dies ist nicht erlaubt. Sie müssen ein neues Passwort vergeben.
+open popups in	preferences	de	Öffne Popups in
 or other compatible apps	preferences	de	Oder andere kompatible Apps
 p: paragraph	preferences	de	p: Absatz
 paragraph	preferences	de	Absatz
@@ -134,6 +137,7 @@ password stored	preferences	de	Passwort gespeichert.
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone.
+popup window	preferences	de	Popup Window
 popup with search	preferences	de	Pop-up mit Suche
 preferences saved.	preferences	de	Einstellungen gespeichert.
 preformatted	preferences	de	Vorformatiert
@@ -143,6 +147,7 @@ re-enter your password	preferences	de	Neues Passwort wiederholen
 reset qrcode	preferences	de	QR-Code zurücksetzen
 revoke	preferences	de	Zurückziehen
 revoke this token	preferences	de	Diese(s) Token(s) zurückziehen
+same window	preferences	de	Im Hauptfenster
 scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Code mit einer App für zeitbasierende Einmalpasswörter (TOTP - Time-based one-time password) abscannen:
 secret deleted, two factor authentication disabled.	preferences	de	Schlüssel gelöscht, die Zweifaktor Authentifizierung ist jetzt abgeschaltet.
 select additional lines in lists by	preferences	de	Zusätzliche Zeilen in Listen auswählen durch
@@ -189,6 +194,7 @@ time format	preferences	de	Zeitformat
 two factor auth	preferences	de	2-Faktor-Authentifizierung
 two factor auth enabled.	preferences	de	2-Faktor-Authentifizierung eingeschaltet.
 two factor auth is already setup.	preferences	de	2-Faktor-Authentifizierung ist bereits konfiguriert.
+unchanged	preferences	de	Unverändert wie in 23.1
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	de	Einheit für angezeigte Schriftgrößen: entweder "px" wie z.B. bei Webseiten verwendet oder "pt" wie in der Textverarbeitung üblich
 uppercase letters	preferences	de	Großbuchstaben
 use default	preferences	de	Vorgabe benutzen
