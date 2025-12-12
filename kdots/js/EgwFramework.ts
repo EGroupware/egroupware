@@ -985,6 +985,8 @@ export class EgwFramework extends LitElement
 		// Update CSS classes
 		this.closest("html").classList.toggle("sl-theme-light", mode == "light");
 		this.closest("html").classList.toggle("sl-theme-dark", mode == "dark");
+		// Keep in session for popups
+		this.egw.request("EGroupware\\Api\\Framework\\Ajax::ajax_set_darkmode_flag", [mode == "dark"]);
 	}
 
 	protected handleDarkmodeChange(event)

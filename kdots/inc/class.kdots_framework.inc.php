@@ -92,10 +92,11 @@ class kdots_framework extends Api\Framework\Ajax
 		self::includeJS('/kdots/js/app.min.js');
 		$data = parent::_get_header($extra);
 
-		$data['theme'] = ($data['theme']??'').($GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1' ? 'data-darkmode="1"' : '');
+		$data['theme'] = ($data['theme'] ?? '') . (
+			$GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1' || $data['darkmode'] ? 'data-darkmode="1"' : '');
 		$data['kdots_theme'] = 'kdots-' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'];
 		// Set shoelace theme
-		if($GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1')
+		if($GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == '1' || $data['darkmode'])
 		{
 			$data['kdots_theme'] .= ' sl-theme-dark ';
 		}
