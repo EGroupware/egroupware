@@ -498,18 +498,23 @@ class calendar_so
 			}
 		}
 
-		// participants, if a recur_date give, we read that recurance, plus the one users from the default entry with recur_date=0
-		// sorting by cal_recur_date ASC makes sure recurence status always overwrites series status
+		// participants, if a recur_date give, we read that recurrence, plus the users from the default entry with recur_date=0 / series master
 		foreach($this->db->select($this->user_table,'*',array(
 			'cal_id'      => $ids,
 			'cal_recur_date' => $recur_date,
 			"cal_status NOT IN ('X','E')",
-		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,cal_recur_date ASC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
+		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,cal_recur_date DESC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
 		{
 			// combine all participant data in uid and status values
 			$uid    = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 			$status = self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
 
+			// do NOT overwrite specific recurrence status, with the one from the master (recur_date=0)
+			// this also ensures, that only the hashed&normalized email-address in $row['cal_user_id'] is taken into account, and not also the prefixing name!
+			if (self::uidInParticipants($uid, $events[$row['cal_id']]['participants'] ?? []) !== false)
+			{
+				continue;
+			}
 			$events[$row['cal_id']]['participants'][$uid] = $status;
 			$events[$row['cal_id']]['participant_types'][$row['cal_user_type']][is_numeric($uid) ? $uid : substr($uid, 1)] = $status;
 			// make extra attendee information available eg. for iCal export (attendee used eg. in response to organizer for an account)
@@ -1168,7 +1173,7 @@ class calendar_so
 			$ids = array_unique($ids);
 
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
-			// This will always read the first entry of each recuring event too, we eliminate it later
+			// This will always read the first entry of each recurring event too, we eliminate it later
 			$recur_dates[] = 0;
 			$utcal_id_view = " (SELECT * FROM ".$this->user_table." WHERE cal_id IN (".implode(',',$ids).")".
 				($filter != 'everything' ? " AND cal_status NOT IN ('X','E')" : '').") utcalid ";
@@ -1191,7 +1196,7 @@ class calendar_so
 				{
 					foreach((array)$recur_ids[$row['cal_id']] as $i)
 					{
-						if (isset($events[$i]) && !isset($events[$i]['participants'][$uid]))
+						if (isset($events[$i]) && self::uidInParticipants($uid, $events[$i]['participants'] ?? []) === false)
 						{
 							$events[$i]['participants'][$uid] = $status;
 						}
@@ -1199,9 +1204,18 @@ class calendar_so
 				}
 
 				// set data, if recurrence is requested
-				if (isset($events[$id])) $events[$id]['participants'][$uid] = $status;
+				if (isset($events[$id]))
+				{
+					// check if uid is set with a different not normalized email
+					if (is_string($uid) && $uid[0] === 'e' &&
+						($key = self::uidInParticipants($uid, $events[$id]['participants'] ?? [])))
+					{
+						$uid = $key;
+					}
+					$events[$id]['participants'][$uid] = $status;
+				}
 			}
-			// query recurrance exceptions, if needed: enum_recuring && !daywise is used in calendar_groupdav::get_series($uid,...)
+			// query recurrence exceptions, if needed: enum_recuring && !daywise is used in calendar_groupdav::get_series($uid,...)
 			if (!$params['enum_recuring'] || !$params['daywise'])
 			{
 				foreach($this->db->select($this->dates_table, 'cal_id,cal_start,recur_exception', array(
@@ -1265,6 +1279,35 @@ class calendar_so
 		//echo "<p>socal::search\n"; _debug_array($events);
 		//error_log(__METHOD__."(,filter=".array2string($params['query']).",offset=$offset, num_rows=$num_rows) returning ".count($events)." entries".($offset!==false?" total=$this->total":'').' '.function_backtrace());
 		return $events;
+	}
+
+	/**
+	 * Check if given $uid is in participants, taken normalized email-addresses into account!
+	 *
+	 * Normalized email-addresses mean different case or a name prefixing the email are not taken into account.
+	 *
+	 * @param int|string $uid uid string or integer account_id
+	 * @param array $participants $uid => $status pairs
+	 * @return int|string|false key in participants or false
+	 */
+	public static function uidInParticipants($uid, array $participants)
+	{
+		if (!$participants) return false;
+
+		if (!is_string($uid) || $uid[0] !== 'e')
+		{
+			return isset($participants[$uid]) ? $uid : false;
+		}
+		$uid_normalized = strtolower(preg_match('/<([^<>]+)>$/', $uid, $matches) ? 'e'.$matches[1] : $uid);
+		foreach($participants as $p_uid => $status)
+		{
+			if (is_string($p_uid) && $p_uid[0] === 'e' &&
+				$uid_normalized === strtolower(preg_match('/<([^<>]+)>$/', $p_uid, $matches) ? 'e'.$matches[1] : $p_uid))
+			{
+				return $p_uid;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -2234,7 +2277,10 @@ ORDER BY cal_user_type, cal_usre_id
 		);
 		if ((int) $recur_date)
 		{
-			$where['cal_recur_date'] = $recur_date;
+			// be more tolerant with a wrong recurrence-id, allow e.g. the time to be 0:00 (as seen with old Exchange servers), but of the same day
+			//$where['cal_recur_date'] = $recur_date;
+			$recur_date = $this->db->quote($recur_date, 'int');
+			$where[] = "(cal_recur_date>=$recur_date AND ABS(cal_recur_date-$recur_date)<=86400)";
 		}
 		else
 		{
