@@ -197,7 +197,7 @@ export class EgwFrameworkMessage extends LitElement
 		// Convert newlines to <br> tags
 		const br2br = (str) =>
 		{
-			const split = str.split(this.NEWLINE_REG).filter(s => !["", "p", "br"].includes(s.trim()));
+			const split = (str ?? "").split(this.NEWLINE_REG).filter(s => !["", "p", "br"].includes(s.trim()));
 			return html`${join(split, html`<br>`)}`;
 		}
 		const matches = this.HREF_REG.exec(this.message);
@@ -214,7 +214,7 @@ export class EgwFrameworkMessage extends LitElement
 		}
 		else
 		{
-			message = html`${br2br(activateLinks(message, '_self'))}`;
+			message = html`${activateLinks(message, '_self')}`;
 		}
 
 		return message;
