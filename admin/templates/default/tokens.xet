@@ -67,6 +67,6 @@
 	</et2-template>
 	<template id="admin.tokens" template="" lang="" group="0" version="1.9.001">
 		<et2-template template="admin.tokens.header" slot="main-header"></et2-template>
-		<nextmatch id="nm" template="admin.tokens.rows"/>
+        <nextmatch id="token" template="admin.tokens.rows"/>
 	</template>
 </overlay>
