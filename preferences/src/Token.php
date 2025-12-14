@@ -47,11 +47,10 @@ class Token extends Admin\Token
 
 		return [
 			'label' =>	'Application passwords',
-			'name' => 'admin.tokens',
+			'name' => 'preferences.tokens',
 			'prepend' => false,
 			'data' => [
 				'token' => [
-					'add_action' => 'app.preferences.addToken',
 					'no_account_id' => true,
 				]+self::get_nm_options(),
 			],
