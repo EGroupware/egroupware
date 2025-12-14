@@ -500,7 +500,8 @@ class mail_compose
 		$buttonClicked = false;
 		if (!is_array($_content['composeToolbar']))
 		{
-			$_content['composeToolbar'] = empty($_content['composeToolbar']) ? [] : json_decode($_content['composeToolbar']);
+			$_content['composeToolbar'] = empty($_content['composeToolbar']) ? [] :
+				(json_decode($_content['composeToolbar']) ?? ['action' => $_content['composeToolbar']]);
 		}
 		if(($_content['composeToolbar']['action']??null) === 'send')
 		{
@@ -3278,7 +3279,8 @@ class mail_compose
 			try	{
 				if ($_formData['smime_sign'] == 'on')
 				{
-					if ($_formData['smime_passphrase'] != '') {
+					if (!empty($_formData['smime_passphrase']))
+					{
 						Api\Cache::setSession(
 							'mail',
 							'smime_passphrase',
@@ -3328,7 +3330,9 @@ class mail_compose
 		if(count((array)$this->sessionData['to']) > 0 || count((array)$this->sessionData['cc']) > 0 || count((array)$this->sessionData['bcc']) > 0) {
 			try {
 				// do no close the session before sending, if we have to store the send text for infolog or other integration in the session
-				if(!($_formData['composeToolbar']['to_infolog'] || $_formData['composeToolbar']['to_tracker'] || $_formData['composeToolbar']['to_calendar']))
+				if (empty($_formData['composeToolbar']['to_infolog']) &&
+					empty($_formData['composeToolbar']['to_tracker']) &&
+					empty($_formData['composeToolbar']['to_calendar']))
 				{
 					$GLOBALS['egw']->session->commit_session();
 				}
@@ -4037,9 +4041,9 @@ class mail_compose
 				$params['recipientsCerts'] = $AB->get_smime_keys($recipients);
 				foreach ($recipients as &$recipient)
 				{
-					if (!$params['recipientsCerts'][strtolower($recipient)]) $missingCerts []= $recipient;
+					if (empty($params['recipientsCerts'][strtolower($recipient)])) $missingCerts[] = $recipient;
 				}
-				if (is_array($missingCerts)) throw new Exception ('S/MIME Encryption failed because no certificate has been found for following addresses: '. implode ('|', $missingCerts));
+				if (!empty($missingCerts)) throw new Exception ('S/MIME Encryption failed because no certificate has been found for following addresses: '. implode ('|', $missingCerts));
 			}
 
 			return $mail->smimeEncrypt($type, $params);
