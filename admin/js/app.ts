@@ -557,7 +557,29 @@ class AdminApp extends EgwApp
 
 	getNextmatch()
 	{
-		return app.admin?.tree?.value == "/groups" ? app.admin.groups : app.admin.nm;
+		switch(app.admin?.tree?.value.toString())
+		{
+			case "/groups":
+				return app.admin.groups;
+			case "/accounts":
+			case "":
+				return app.admin.nm;
+			default:
+				if(!this.iframe?.disabled)
+				{
+					return null;
+				}
+				// Find a nextmatch in ajax_target
+				let nm = null;
+				this.ajax_target?.querySelector('et2-template')?.iterateOver(function(_widget)
+				{
+					if(!_widget.disabled)
+					{
+						nm = _widget;
+					}
+				}, this, et2_nextmatch);
+				return nm;
+		}
 	}
 
 	/**
