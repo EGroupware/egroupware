@@ -789,7 +789,7 @@ class Contacts extends Contacts\Storage
 		$photo = $this->photo_src($data['id'] ?? null,
 			// do NOT replace with self::hasPhoto($data) as it also checks file is non-empty in VFS and breaks
 			!empty($data['jpegphoto']) || (($data['files']??0) & self::FILES_BIT_PHOTO), '', $data['etag'] ?? null);
-		if($photo && (((int)$data['files'] ?? 0) & self::FILES_BIT_PHOTO))
+		if ($photo && (((int)($data['files'] ?? 0)) & self::FILES_BIT_PHOTO))
 		{
 			$data['photo'] = $photo;
 		}

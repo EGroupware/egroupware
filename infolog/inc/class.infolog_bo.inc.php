@@ -1424,19 +1424,6 @@ class infolog_bo
 		}
 
 		$q = $query;
-		// semantic search
-		if (!empty($query['search']) && $query['search'][0] === '&' && class_exists($rag='EGroupware\Rag\Embedding'))
-		{
-			$rag = new $rag();
-			$id_distance = $rag->search(substr($query['search'], 1), 'infolog');
-			if (!isset($q['cols'])) $q['cols'] = ['main.*'];
-			$q['cols'][] = EGroupware\Rag\Embedding::distanceById($id_distance, 'main.info_id').' AS distance';
-			$q['return-iterator'] = false;
-			$q['col_filter'][] = 'main.info_id IN ('.implode(',', array_keys($id_distance)).')';
-			$q['order'] = 'distance';
-			$q['sort'] = 'ASC';
-			unset($q['search']);
-		}
 		unset($q['limit_modified_n_month']);
 		for($n = 1; $n <= self::LIMIT_MODIFIED_RETRY; $n *= 2)
 		{

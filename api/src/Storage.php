@@ -541,7 +541,7 @@ class Storage extends Storage\Base
 	 *	comma seperated list or array of columns to return
 	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param string $wildcard ='' appended before and after each criteria
 	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
 	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
@@ -556,9 +556,19 @@ class Storage extends Storage\Base
 		$extra_join_added = $join && strpos($join, $this->extra_join) !== false;
 		if ($criteria && is_string($criteria))
 		{
-			$extra_join_added = true;	// we have NOT added the join, as we use a sub-query and therefore not need it
+			if (preg_match('/^#\d+$/', $criteria) ||
+				!class_exists('EGroupware\\Rag\\Embedding') ||
+				!EGroupware\Rag\Embedding::search2criteria($this->app, $criteria, $order_by, $extra_cols, $filter))
+			{
+				// legacy search
+				$extra_join_added = true;    // we have NOT added the join, as we use a sub-query and therefore not need it
 
-			$criteria = $this->search2criteria($criteria, $wildcard, $op);
+				$criteria = $this->search2criteria($criteria, $wildcard, $op);
+			}
+			else
+			{
+				$this->sanitize_order_by = false;   // no need to sanitize the generated order_by, it will only remove it
+			}
 		}
 		if ($criteria && is_array($criteria))
 		{
