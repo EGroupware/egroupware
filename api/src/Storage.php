@@ -14,6 +14,7 @@
 namespace EGroupware\Api;
 
 use EGroupware\Api\Storage\Customfields;
+use EGroupware\Rag;
 
 /**
  * Generalized SQL Storage Object with build in custom field support
@@ -558,7 +559,7 @@ class Storage extends Storage\Base
 		{
 			if (preg_match('/^#\d+$/', $criteria) ||
 				!class_exists('EGroupware\\Rag\\Embedding') ||
-				!EGroupware\Rag\Embedding::search2criteria($this->app, $criteria, $order_by, $extra_cols, $filter))
+				!Rag\Embedding::search2criteria($this->app, $criteria, $order_by, $extra_cols, $filter))
 			{
 				// legacy search
 				$extra_join_added = true;    // we have NOT added the join, as we use a sub-query and therefore not need it
