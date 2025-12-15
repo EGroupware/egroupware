@@ -1254,6 +1254,7 @@ export class EgwFrameworkApp extends LitElement
 		// Drawer label includes row count
 		const info = this.getFilterInfo(this.filters?.value ?? {}, this);
 		const hasCustomFilter = this.hasSlotController.test("filter");
+		const hasFiltersSet = info.icon == "filter-circle-fill";
 
 		return html`
             <sl-drawer part="filter"
@@ -1262,6 +1263,18 @@ export class EgwFrameworkApp extends LitElement
                        label=${info.tooltip} contained
                        @sl-after-show=${() => this.filters?.shadowRoot?.querySelector(".et2-input-widget")?.focus()}
             >
+                ${hasFiltersSet ? html`
+                    <et2-button-icon nosubmit
+                                     slot="header-actions" name="x-circle-fill"
+                                     label="${this.egw.lang("Clear filters")}"
+                                     statustext="${this.egw.lang("Clear filters")}"
+                                     @click=${e =>
+                                     {
+                                         this.filters.value = {};
+                                         this.filters.applyFilters();
+                                     }}
+                    ></et2-button-icon>` : nothing
+                }
                 <et2-button-icon slot="header-actions" name="selectcols"
                                  class="egw_fw_app--no_mobile"
                                  label=${this.egw.lang("Select columns")}
