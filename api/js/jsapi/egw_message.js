@@ -95,6 +95,26 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					}, 0);
 				});
 			}
+			else if (!message)
+			{
+				// No framework fallback
+				if (!_msg)
+				{
+					_wnd.document.querySelector('egw-message')?.remove();
+					return;
+				}
+				const alert = Object.assign(_wnd.document.createElement("egw-message"), {message: _msg, type: _type});
+				alert.addEventListener("sl-hide", (e) =>
+				{
+					delete this._messages[(e.target).dataset.hash ?? ""];
+				});
+				_wnd.document.body.append(alert);
+				message = alert.updateComplete.then(() =>
+				{
+					alert.toast();
+					return alert;
+				});
+			}
 			return message;
 		},
 
