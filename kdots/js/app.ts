@@ -71,6 +71,12 @@ if(framework)
 				}
 				window.egw.open_link(e.detail.item.value);
 			});
+			avatarMenu.querySelector("#tz")?.addEventListener("change", e =>
+			{
+				e.target.classList.add("loading");
+				framework.egw.set_preference("common", "tz", e.target.value);
+				window.setTimeout(() => {window.location.reload();}, 100);
+			});
 		}
 	});
 }

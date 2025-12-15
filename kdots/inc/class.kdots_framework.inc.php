@@ -239,6 +239,7 @@ class kdots_framework extends Api\Framework\Ajax
 				$this->_add_topmenu_item($item);
 			}
 		}
+		$this->topmenu_items[] = $this->_user_time_info();
 
 		$vars['topmenu_items'] = "<sl-menu id='egw_fw_topmenu_items'>" . implode("\n", $this->topmenu_items) . "</sl-menu>";
 		$vars['topmenu_info_items'] = '';
@@ -557,5 +558,25 @@ class kdots_framework extends Api\Framework\Ajax
 	{
 		$src = Api\Image::find('api', 'plus-circle');
 		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" aria-label="Quick add" src="' . $src . '" nosubmit></et2-button-icon>';
+	}
+
+	/**
+	 * Returns Html with user and time
+	 *
+	 * @return void
+	 */
+	protected static function _user_time_info()
+	{
+		$now = new Api\DateTime();
+		$user_info = '<span>' . lang($now->format('l')) . ' ' . $now->format(true) . '</span>';
+
+		$user_tzs = Api\DateTime::getUserTimezones();
+		if(count($user_tzs) > 1)
+		{
+			// Change handler in app.ts
+			$tz = $GLOBALS['egw_info']['user']['preferences']['common']['tz'];
+			$user_info .= "<et2-select-timezone id='tz' value='{$tz}'></et2-select-timezone>";
+		}
+		return $user_info;
 	}
 }
