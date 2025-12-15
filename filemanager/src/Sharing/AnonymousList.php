@@ -85,7 +85,7 @@ class AnonymousList extends filemanager_ui
 		$this->etemplate->setElementAttribute("filemanager.index.app-toolbar", "slot", "");
 
 		// Anonymous view doesn't always get push, so refresh after upload
-		$this->etemplate->setElementAttribute("upload", "onFinish", 'egw.refresh("","filemanager");');
+		$this->etemplate->setElementAttribute("upload", "onchange", 'ev.target.set_value(""); egw.refresh("","filemanager");');
 
 		return parent::listview($content, $msg);
 	}
