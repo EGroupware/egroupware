@@ -52,7 +52,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<et2-textarea  id="description" width="99.7%" height="250" noLang="1" resizeRatio="0"></et2-textarea>
+        <et2-textarea id="description" width="99.7%" height="10em" noLang="1" resizeRatio="0"></et2-textarea>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
 		<grid width="99%" id="participants">
@@ -66,11 +66,11 @@
                     <et2-calendar-owner id="participant" allowFreeEntries="true" empty_label="Add new participants or resource"/>
 				</row>
 				<row disabled="@no_add">
-					<et2-select  class="selectRole" id="role"></et2-select>
-					<et2-hbox>
-                        <et2-textbox  label="Quantity" type="integer" class="quantity" id="quantity" min="1"></et2-textbox>
+                    <et2-hbox colspan="all">
+                        <et2-select class="selectRole" id="role"></et2-select>
+                        <et2-number aria-label="Quantity" placeholder="Quantity" class="quantity" id="quantity" min="1" width="4em" precision="0"></et2-number>
+                        <et2-button align="center" id="add" image="add" novalidate="1"></et2-button>
                     </et2-hbox>
-					<et2-button  align="center" id="add" image="add" novalidate="1"></et2-button>
 				</row>
 				<row class="th">
 					<et2-description  value="Participants"></et2-description>
