@@ -1981,12 +1981,12 @@ ORDER BY cal_user_type, cal_usre_id
 	{
 		if (is_string($attendee) && $attendee[0] == '{' && substr($attendee, -1) == '}')
 		{
-			$user_attendee = json_decode($user_attendee, true);
+			$attendee = json_decode($attendee, true);
 		}
 		if (is_array($attendee))
 		{
-			$email = !empty($attendee['email']) ? $user_attendee['email'] :
-				(strtolower(substr($attendee['url'], 0, 7)) == 'mailto:' ? substr($user_attendee['url'], 7) : $attendee['url']);
+			$email = !empty($attendee['email']) ? $attendee['email'] :
+				(strtolower(substr($attendee['url'], 0, 7)) == 'mailto:' ? substr($attendee['url'], 7) : $attendee['url']);
 			$attendee = !empty($attendee['cn']) ? $attendee['cn'].' <'.$email.'>' : $email;
 		}
 		return $attendee;
