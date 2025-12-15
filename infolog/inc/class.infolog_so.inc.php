@@ -1047,7 +1047,7 @@ class infolog_so
 				if (is_array($cols)) $cols = implode(',',$cols);
 				$cols .= ','.$this->db->group_concat('attendees.account_id').' AS info_responsible';
 				$cols .= ','.$this->db->group_concat('attendees.info_res_attendee').' AS info_cc';
-				if (!empty($extra_cols)) $cols .= implode(',', $extra_cols);    // join relevance/distance from RAG search
+				if (!empty($extra_cols)) $cols .= ','.implode(',', $extra_cols);    // join relevance/distance from RAG search
 				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$info_customfield.' '.$sql_query.
 					$query['append'].$ordermethod,__LINE__,__FILE__,
 					(int)($query['start']??0),isset($query['start']) ? (int) $query['num_rows'] : -1,false,Api\Db::FETCH_ASSOC);
