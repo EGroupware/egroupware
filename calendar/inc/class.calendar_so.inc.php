@@ -2280,7 +2280,7 @@ ORDER BY cal_user_type, cal_usre_id
 			// be more tolerant with a wrong recurrence-id, allow e.g. the time to be 0:00 (as seen with old Exchange servers), but of the same day
 			//$where['cal_recur_date'] = $recur_date;
 			$recur_date = $this->db->quote($recur_date, 'int');
-			$where[] = "(cal_recur_date>=$recur_date AND ABS(cal_recur_date-$recur_date)<=86400)";
+			$where[] = "(cal_recur_date>=$recur_date AND ABS(cal_recur_date-$recur_date)<86400)";
 		}
 		else
 		{
@@ -2297,9 +2297,21 @@ ORDER BY cal_user_type, cal_usre_id
 			$set = array('cal_status' => $status);
 			if ($user_type == 'e' || $attendee) $set['cal_user_attendee'] = $attendee ? $attendee : $user_id;
 			if (!is_null($role) && $role != 'REQ-PARTICIPANT') $set['cal_role'] = $role;
-			$this->db->insert($this->user_table,$set,$where,__LINE__,__FILE__,'calendar');
+			$this->db->update($this->user_table, $set, $where, __LINE__, __FILE__, 'calendar');
+			// if we have to insert a new row for group-invitations, we cant do that with "cal_recur_date >= ..."
+			if (!($ret = $this->db->affected_rows()) &&
+				// we need to query and set the exact recurrence date
+				($set['cal_recur_date'] = $this->db->select($this->dates_table, 'cal_start', [
+					'cal_id' => $cal_id,
+					'cal_start >= '.$this->db->quote($recur_date, 'int') ?: time(),
+				], __LINE__, __FILE__, false, '', 'calendar')->fetchColumn()))
+			{
+				unset($where[0]);
+				$set += $where;
+				$ret = $this->db->insert($this->user_table, $set, false, __LINE__, __FILE__, 'calendar');
+			}
 			// for new or changed group-invitations, remove previously deleted members, so they show up again
-			if (($ret = $this->db->affected_rows()) && $user_type == 'u' && $user_id < 0)
+			if ($ret && $user_type == 'u' && $user_id < 0)
 			{
 				$where['cal_user_id'] = $GLOBALS['egw']->accounts->members($user_id, true);
 				$where['cal_status'] = 'X';
