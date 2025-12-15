@@ -118,7 +118,7 @@ export class Et2VfsUpload extends Et2File
 		const add = superAdded(info, event);
 		try
 		{
-			Et2Dialog.confirm_file(
+			this._uploadPending[info.uniqueIdentifier] = Et2Dialog.confirm_file(
 				this.getInstanceManager()?.etemplate_exec_id,
 				this.path,
 				info.file.name,
