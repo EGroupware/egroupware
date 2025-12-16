@@ -110,7 +110,7 @@ div#loginScreenMessage {
   #loginBackgroundImage {
 	position: absolute;
 	width: 100vw;
-	height: calc(100vh - var(--footer_height));
+	height: 100vh;
 	background-size: cover;
 	z-index: -1;
   }
@@ -282,7 +282,7 @@ div#login_footer {
   right: 0;
   width: 100%;
   height: var(--footer_height);
-  background: var(--button-color);
+  background: linear-gradient(0deg, #000000C0 30%, transparent);
   overflow-x: clip;
   display: flex;
   align-items: center;
@@ -401,11 +401,6 @@ div#login_footer {
 
 // styling differences between stock and custom login page image
 div#loginMainDiv.stockLoginBackground {
-  
-  #loginBackgroundImage {
-	height: 100vh;
-  }
-
   div#login_footer {
 	background-color: transparent;
   }
