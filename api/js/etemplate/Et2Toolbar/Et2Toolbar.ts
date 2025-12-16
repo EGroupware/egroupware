@@ -745,6 +745,9 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		}
 		action.data.event = event;
 		action.execute([]);
+		
+		// Don't block submit / close because of toolbar
+		this.resetDirty();
 	}
 
 	protected settingsOptions()
