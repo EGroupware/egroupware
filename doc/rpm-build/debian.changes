@@ -1,3 +1,31 @@
+egroupware-docker (26.0.20251216) hardy; urgency=low
+
+  * Calendar: fixed not tracked participant-changes in recurring events or recurrence-exceptions
+  * Calendar: allow slightly wrong Recurrence-ID seen with older Exchange server and ignore name-prefix or case in email-address of participant
+  * Calendar: Responsive quick-add template for mobile
+  * Calendar: change "notify externals" into a checkbox
+  * Infolog: Support filtering by custom field when the customfield column is hidden
+  * Kdots: Add timezone switcher
+  * kdots: Add clear filters button to filter drawer
+  * Kdots: Fix automatic darkmode did not apply correctly in popups
+  * Kdots: Fix messages not showing up due to TypeError: str.split is not a function
+  * Kdots: Enable anchor tags in messages in addition to links
+  * Et2VfsUpload: Fix overwrite / rename confirmation did not wait for an answer
+  * Mail: fix not working sending of s/mime encrypted or signed messages
+  * Mail: Fix missing scroll in mail
+  * Addressbook: Fix merge into document dialog errored with additional options
+  * Preferences: fix Security&passwords dialog was not showing Application passwords, Revoke tokens and WebAuthN tabs correct
+  * Preferences: Get token list working in preferences > Security & Password > Application passwords
+  * Filemanager: Fix missing anonymous upload success message and refresh
+  * Filemanager: Fix hidden upload did not upload, did not error
+  * Filemanager: Fix shared directories did not show new files after upload
+  * Filemanager: Fix anonymous list UI search, error from missing filter drawer and logo sized too small
+  * Api: Improve upload widget error display
+  * Api: Fix missing mobile date widget styling
+  * Login: remove blue bottom bar in favor of transparent to black gradient, if no stock background image is used
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 16 Dec 2025 18:03:56 +0100
+
 egroupware-docker (26.0.20251208) hardy; urgency=low
 
 * first pre-release for new major release 26
