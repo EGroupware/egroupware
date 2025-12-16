@@ -1056,4 +1056,21 @@ class Preferences
 		}
 		return $all_settings;
 	}
+
+	/**
+	 * Get an etag for user preferences
+	 */
+	public function etag()
+	{
+		return md5(json_encode(array_filter($GLOBALS['egw_info']['user']['preferences'],
+					   // Just the apps the user has access to
+					   function ($v, $k)
+					   {
+						   return $k == "common" || !empty($GLOBALS['egw_info']['user']['apps'][$k]);
+					   },                   ARRAY_FILTER_USE_BOTH
+							   )
+				   ) .
+				   $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id'])
+		);
+	}
 }

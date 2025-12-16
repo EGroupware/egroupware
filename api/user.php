@@ -44,7 +44,7 @@ foreach($GLOBALS['egw_info']['user']['preferences'] /*['addressbook', 'notificat
 }
 $user = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
 // use an etag over preferences and user-data
-$etag = '"'.md5(json_encode($preferences).$user).'"';
+$etag = '"' . $GLOBALS['egw']->preferences->etag() . '"';
 
 // headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
 Api\Session::cache_control(86400);	// cache for 1 day

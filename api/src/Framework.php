@@ -1142,8 +1142,7 @@ abstract class Framework extends Framework\Extra
 				'user' => $GLOBALS['egw_info']['user']['account_lid'],
 				'lang' => $GLOBALS['egw_info']['user']['preferences']['common']['lang'],
 				// add etag on url, so we can set an expires header
-				'etag' => md5(json_encode($GLOBALS['egw_info']['user']['preferences']['common']).
-					$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id'])),
+				'etag' => $GLOBALS['egw']->preferences->etag(),
 			));
 		}
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
