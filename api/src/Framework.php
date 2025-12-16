@@ -691,8 +691,8 @@ abstract class Framework extends Framework\Extra
 	   if( $GLOBALS['egw_info']['user']['apps']['admin'] && $GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
 	   {
 		   return [
-			   'name' => 'current_user',
-			   'title' => lang('Current users').':'.$GLOBALS['egw']->session->session_count(),
+			   'name' => 'admin',
+			   'title' => lang('Current users').': '.$GLOBALS['egw']->session->session_count(),
 			   'url' => self::link('/index.php','menuaction=admin.admin_accesslog.sessions&ajax=true'),
 			   'icon' => 'people',
 		   ];
