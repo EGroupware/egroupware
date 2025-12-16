@@ -2177,13 +2177,13 @@ class calendar_uiforms extends calendar_ui
 		}
 		elseif ($uid[0] === 'c' && ($contact = (new Api\Contacts)->read(substr($uid, 1))))
 		{
-			$email = $contact['email'] ?? $contact['email_home'];
+			$email = $contact['email'] ?? $contact['email_home'] ?? null;
 		}
-		if (!empty($email) && preg_match('/<([^>]+?)>$/', $email, $matches))
+		if (!empty($email) && preg_match('/<([^<>]+?)>$/', $email, $matches))
 		{
 			$email = $matches[1];
 		}
-		return $email;
+		return $email ?? null;
 	}
 
 	/**
@@ -2255,7 +2255,7 @@ class calendar_uiforms extends calendar_ui
 				{
 					case 'reply':
 						// first participant is the one replying (our iCal parser adds owner first!)
-						$parts = $event['participants'];
+						$parts = $event['participants'] ?? [];
 						unset($parts[$existing_event['owner']]);
 						$event['ical_sender_uid'] = key($parts);
 						$event['ical_sender_status'] = current($parts);
