@@ -567,16 +567,13 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	protected static function _user_time_info()
 	{
-		$now = new Api\DateTime();
-		$user_info = '<span>' . lang($now->format('l')) . ' ' . $now->format(true) . '</span>';
-
 		$user_tzs = Api\DateTime::getUserTimezones();
 		if(count($user_tzs) > 1)
 		{
 			// Change handler in app.ts
 			$tz = $GLOBALS['egw_info']['user']['preferences']['common']['tz'];
-			$user_info .= "<et2-select-timezone id='tz' value='{$tz}'></et2-select-timezone>";
+			return "<et2-select-timezone id='tz' value='{$tz}' style='padding: 10px 10px 2px 10px'></et2-select-timezone>";
 		}
-		return $user_info;
+		return '';
 	}
 }
