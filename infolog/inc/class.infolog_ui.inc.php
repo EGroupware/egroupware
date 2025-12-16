@@ -460,6 +460,15 @@ class infolog_ui
 		}
 		// do we need to query the cf's
 		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection));
+		// How about cf filters when customfield colum is off
+		$query['custom_fields'] = $query['custom_fields'] || (
+			count(array_filter(
+					  $query['col_filter'], function ($value, $key)
+				  {
+					  return $key[0] == '#' && !empty($value);
+				  },  ARRAY_FILTER_USE_BOTH
+				  ) > 0
+			));
 
 		$query['limit_modified_n_month'] = $this->bo->limit_modified_n_month;
 		$infos = $this->bo->search($query);
