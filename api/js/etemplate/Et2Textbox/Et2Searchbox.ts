@@ -28,6 +28,13 @@ export class Et2Searchbox extends Et2Textbox
 	 */
 	@property({type: Boolean}) fix;
 
+	/**
+	 * Fire a change event when the user stops typing instead of waiting for enter or blur.
+	 */
+	@property({type: Boolean}) autochange;
+
+	protected _searchTimeout : number;
+
 	constructor(...args : any[])
 	{
 		super(...args);
@@ -41,6 +48,14 @@ export class Et2Searchbox extends Et2Textbox
 		this.enterkeyhint = 'search';
 	}
 
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+
+		// Stop timeout timer
+		clearTimeout(this._searchTimeout);
+	}
+
 	/**
 	 * Overwritten to trigger a change/search
 	 *
@@ -48,6 +63,7 @@ export class Et2Searchbox extends Et2Textbox
 	 */
 	handleKeyDown(event: KeyboardEvent)
 	{
+		clearTimeout(this._searchTimeout);
 		const hasModifier = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
 
 		// Pressing enter when focused on an input should submit the form like a native input, but we wait a tick before
@@ -61,6 +77,14 @@ export class Et2Searchbox extends Et2Textbox
 
 			// Lose focus, which triggers change, instead of calling change handler which would trigger again when losing focus
 			this.blur();
+		}
+		// Start the search automatically if they have enough letters
+		if(this.autochange && this.value.length > 0)
+		{
+			this._searchTimeout = window.setTimeout(() =>
+			{
+				this.dispatchEvent(new Event("change"));
+			}, 500);
 		}
 	}
 }
