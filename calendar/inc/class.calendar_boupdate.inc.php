@@ -1529,7 +1529,8 @@ class calendar_boupdate extends calendar_bo
 		{
 			// invalidate the read-cache if it contains the event we store now
 			if ($event['id'] == self::$cached_event['id']) self::$cached_event = array();
-			$old_event = $this->read($event['id'], $event['recurrence'], $ignore_acl, 'server');
+			// only use recurrence for a recurring event, not e.g. for an exception, as the non-recurring event/exception is NOT found
+			$old_event = $this->read($event['id'], $event['recur_type'] ? $event['recurrence'] : 0, $ignore_acl, 'server');
 			// recur_enddate is always stored with 1s less than the actual time --> add it here again
 			if ($old_event && !empty($old_event['recur_enddate']))
 			{
@@ -1722,8 +1723,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$save_event['id'] = $cal_id;
 			// unset participants to enforce the default stati for all added recurrences
-			unset($save_event['participants']);
-			$this->set_recurrences($save_event, $set_recurrences_start);
+			$this->set_recurrences(array_diff_key($save_event, ['participants'=>true]), $set_recurrences_start);
 		}
 
 		// create links for new participants from addressbook, if configured

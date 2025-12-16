@@ -140,7 +140,7 @@ class calendar_tracking extends Api\Storage\Tracking
 		* If this is one of a recurring event, append the recur_date to the participant field so we can
 		* filter by it later.
 		*/
-		if(is_array($data['participants']))
+		if(is_array($data['participants']??null))
 		{
 			$participants = $data['participants'];
 			$data['participants'] = array();
