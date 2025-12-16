@@ -2299,13 +2299,16 @@ ORDER BY cal_user_type, cal_usre_id
 			if (!is_null($role) && $role != 'REQ-PARTICIPANT') $set['cal_role'] = $role;
 			$this->db->update($this->user_table, $set, $where, __LINE__, __FILE__, 'calendar');
 			// if we have to insert a new row for group-invitations, we cant do that with "cal_recur_date >= ..."
-			if (!($ret = $this->db->affected_rows()) &&
-				// we need to query and set the exact recurrence date
-				($set['cal_recur_date'] = $this->db->select($this->dates_table, 'cal_start', [
-					'cal_id' => $cal_id,
-					'cal_start >= '.$this->db->quote($recur_date, 'int') ?: time(),
-				], __LINE__, __FILE__, false, '', 'calendar')->fetchColumn()))
+			if (!($ret = $this->db->affected_rows()))
 			{
+				// for a recurring event, we need to query and set the exact recurrence date
+				if ($recur_date)
+				{
+					$set['cal_recur_date'] = $this->db->select($this->dates_table, 'cal_start', [
+						'cal_id' => $cal_id,
+						'cal_start >= ' . $this->db->quote($recur_date, 'int') ?: time(),
+					], __LINE__, __FILE__, false, '', 'calendar')->fetchColumn();
+				}
 				unset($where[0]);
 				$set += $where;
 				$ret = $this->db->insert($this->user_table, $set, false, __LINE__, __FILE__, 'calendar');
