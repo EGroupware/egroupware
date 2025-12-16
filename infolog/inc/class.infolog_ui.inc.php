@@ -467,8 +467,9 @@ class infolog_ui
 				  {
 					  return $key[0] == '#' && !empty($value);
 				  },  ARRAY_FILTER_USE_BOTH
-				  ) > 0
-			));
+				  )
+			) > 0
+			);
 
 		$query['limit_modified_n_month'] = $this->bo->limit_modified_n_month;
 		$infos = $this->bo->search($query);
