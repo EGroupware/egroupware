@@ -10,6 +10,7 @@ cancal?	notifications	da	Annuller?
 certification-information:	notifications	da	Certificerings-information:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	da	Tjek begge dele. Prøv først aktiv brugerdefineret konto, hvis ingen, så brug eMailAdmin-profilen.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	da	Vælg en notifikationskæde. Du vil få besked via de backends, der er inkluderet i kæden.<br>Bemærk: Hvis en notifikationskæde er markeret som "deaktiveret", tillader din administrator ikke en eller flere af de backends, der er inkluderet i kæden, og notifikationerne falder tilbage til "E-mail", mens de giver dig besked.
+choose from mailsettings used for notification	admin	da	Vælg mailindstillinger, der bruges til e-mailunderretning
 connection error.	notifications	da	Forbindelsesfejl.
 connection error. please check connection to server.	notifications	da	Forbindelsesfejl. Tjek venligst forbindelsen til serveren.
 continue to connect?	notifications	da	Fortsæt med at oprette forbindelse?
@@ -50,7 +51,11 @@ mark as read	notifications	da	Markér som læst
 message from	notifications	da	Besked fra
 minutes	notifications	da	Minutter
 more info	notifications	da	Mere info
+normally only the work email address is notified	notifications	da	Normalt underrettes kun arbejds-e-mailadressen.
+notification	common	da	Underretning
 notifier	notifications	da	Notificering
+notify me by	notifications	da	Underret mig via
+notify private email address	notifications	da	Underret privat e-mailadresse
 only used if no push server available!	admin	da	Bruges kun, hvis ingen push-server er tilgængelig!
 open notified entry	notifications	da	Åbn notificeret post
 page not found, please check serveraddress.	notifications	da	Siden blev ikke fundet, tjek venligst serveradressen.
@@ -62,6 +67,7 @@ please contact your egroupware admin.	notifications	da	Kontakt venligst din EGro
 please enter the url of your egroupware.	notifications	da	Indtast venligst URL'en til din EGroupware.
 please enter your egroupware username.	notifications	da	Indtast venligst dit EGroupware-brugernavn.
 please enter your password	notifications	da	Indtast venligst din adgangskode
+preferences for notification	notifications	da	Præferencer for underretning
 refresh notifications	notifications	da	Opdatering af meddelelser
 repeat login?	notifications	da	Gentag login?
 run application	notifications	da	Kør applikation
@@ -79,6 +85,8 @@ this egroupware notification has been sent to you by mail because your	notificat
 this month	notifications	da	Denne måned
 user:	notifications	da	Bruger:
 warning	notifications	da	Advarsel
+yes, notify only private email, if existing	notifications	da	Ja, underret kun privat e-mail, hvis den findes
+yes, notify private email too	notifications	da	Ja, underret også privat e-mail
 yesterday	notifications	da	I går
 you can also use	admin	da	Du kan også bruge
 you have %1 unread notifications	notifications	da	Du har %1 ulæste meddelelser

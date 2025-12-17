@@ -37,9 +37,13 @@ field must not be empty !!!	timesheet	bg	Полето трябва да бъде
 forgot to switch off working time?	common	bg	Забравили сте да изключите работното време?
 full: use only projectmanager	admin	bg	Пълна: използва само имена от Проект-мениджъра
 general fields:	timesheet	bg	Общи полета:
+give additional users access	timesheet	bg	Дайте достъп на допълнителни потребители
+give infolog delegation read-access to timesheets booked on them	timesheet	bg	Дайте на делегираните от InfoLog лица достъп за четене на таблиците за отчитане на работното време, които са записани за тях
 global categories	timesheet	bg	Глобални категории
 history	timesheet	bg	История
 history logging	admin	bg	Запис на история
+how to display linked timesheets	timesheet	bg	Как да се покажат свързаните таблици за отчитане на работното време
+html link to the current record	timesheet	bg	HTML линк към текущия запис
 id	timesheet	bg	ИД
 imports entries into the timesheet from a csv file.	timesheet	bg	Импортира записи в Time Sheet от CSV файл
 last modified	timesheet	bg	Последно измемение
@@ -49,7 +53,9 @@ last year	timesheet	bg	Миналата година
 leave it empty for a full week	timesheet	bg	Непопълнено - цяла седмица
 leaves without saveing	timesheet	bg	изход без запис
 length<br>rows	timesheet	bg	Дължина<br>Редове
+link title	timesheet	bg	Заглавие на връзката
 links	timesheet	bg	Връзки
+make timesheets readable by infolog delegation	timesheet	bg	Направете таблиците за отчитане на работното време четими чрез делегиране на InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	bg	макс. дължина на входа[, дължнина на вх.поле (опция)]
 mode	timesheet	bg	Режим
 modified	timesheet	bg	Редактирано
@@ -71,6 +77,7 @@ price	timesheet	bg	Цена
 project fields	timesheet	bg	Полета на проекта
 projectmanager integration	admin	bg	Интеграция с Проект-мениджъра
 quantity	timesheet	bg	Количество
+readable	timesheet	bg	Четлив
 recorded	timesheet	bg	Записано
 restore this entry	timesheet	bg	Възстановяване на този запис
 save & new	timesheet	bg	Запазване и Нов
@@ -93,6 +100,7 @@ the text displayed to the user	timesheet	bg	текстът, показван н�
 this month	timesheet	bg	Този месец
 this week	timesheet	bg	Тази седмица
 this year	timesheet	bg	Тази година
+timer	common	bg	Таймер
 timer already running or paused	common	bg	Таймерът вече работи или е спрян на пауза
 timesheet	common	bg	График
 timesheet csv export	timesheet	bg	График: експорт в CSV

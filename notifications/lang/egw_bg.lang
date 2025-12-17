@@ -9,6 +9,7 @@ cancal settings?	notifications	bg	Отменяте ли настройките?
 cancal?	notifications	bg	Отмяна?
 certification-information:	notifications	bg	Сертифициране на информация:
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	bg	Изберете верига за уведомяване. Ще бъдете уведомявани по задните краища, включени във веригата.<br>Забележка: Ако дадена верига за уведомяване е маркирана като "disabled" (изключена), вашият администратор не разрешава един или повече от задните краища, включени във веригата, уведомленията падат обратно на "Email" (електронна поща), докато ви уведомяват.
+choose from mailsettings used for notification	admin	bg	Избери настройките за имейл, използвани за уведомления по имейл
 connection error.	notifications	bg	Грешка при свързване.
 connection error. please check connection to server.	notifications	bg	Грешка при свързване. Моля, проверете връзката със сървъра.
 continue to connect?	notifications	bg	Продължавате ли да се свързвате?
@@ -46,7 +47,11 @@ mark as read	notifications	bg	Маркирайте като прочетени
 message from	notifications	bg	Съобщение от
 minutes	notifications	bg	минути
 more info	notifications	bg	Повече информация
+normally only the work email address is notified	notifications	bg	Обикновено се уведомява само служебният имейл адрес.
+notification	common	bg	Уведомяване
 notifier	notifications	bg	Уведомител
+notify me by	notifications	bg	Уведоми ме чрез
+notify private email address	notifications	bg	Уведоми частния имейл адрес
 only used if no push server available!	admin	bg	Използва се само ако няма наличен push сървър!
 open notified entry	notifications	bg	Отваряне на запис с известие
 page not found, please check serveraddress.	notifications	bg	Страницата не е намерена, моля, проверете адреса на сървъра.
@@ -72,6 +77,8 @@ this egroupware notification has been sent to you by mail because your	notificat
 this month	notifications	bg	Този месец
 user:	notifications	bg	Потребител:
 warning	notifications	bg	Внимание
+yes, notify only private email, if existing	notifications	bg	Да, уведоми само частния имейл, ако има такъв
+yes, notify private email too	notifications	bg	Да, уведоми и частния имейл
 yesterday	notifications	bg	Вчера
 you can also use	admin	bg	Можете също така да използвате
 you have %1 unread notifications	notifications	bg	Имате %1 непрочетени известия

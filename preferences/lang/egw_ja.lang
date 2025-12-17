@@ -135,7 +135,7 @@ spellchecker language	addressbook	ja	スペルチェックする言語
 store password retrievable for singlesignon	common	ja	SingleSignOnで取得可能なパスワードを保存する。
 text editor settings	preferences	ja	テキスト・エディタ設定
 text only	preferences	ja	テキストのみ
-the old password is not correct	preferences	ja	The old password is not correct!
+the old password is not correct	preferences	ja	古いパスワードが正しくありません！
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ja	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	ja	セレクト・ボックスは、全ユーザを選択子として表示します（ユーザ数が多い環境では非常に低速）。「検索機能付き」では検索ウィンドウでユーザの検索ができます。
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	ja	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.* The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.*

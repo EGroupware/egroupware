@@ -469,7 +469,7 @@ server username	admin	sv	Användarnamn för servern
 set a random password	admin	sv	Ange ett slumpmässigt lösenord
 set preference values.	admin	sv	Gör inställningar
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sv	Skall inloginsidan ha en valruta för språk (praktisk vid demosajter)?
-show access log	admin	sv	Visa Accesslogg
+show access log	admin	sv	Åtkomstlogg
 show current action	admin	sv	Visa nuvarande aktivitet
 show error log	admin	sv	Visa fellogg
 show groups in container based on	admin	sv	Visa grupper i behållaren baserat på
@@ -564,7 +564,7 @@ users can define their own signatures	admin	sv	Användare kan definiera sina egn
 users choice	admin	sv	Användares val
 vacation messages with start- and end-date require an admin account to be set	admin	sv	Semestermeddelanden med start- och slutdatum kräver ett adminkonto för att kunna ställas in!
 vacation notice	admin	sv	Meddelande om semester
-view access log	admin	sv	Visa accesslogg
+view access log	admin	sv	Åtkomstlogg
 view account	admin	sv	Visa konto
 view category	admin	sv	Visa kategori
 view error log	admin	sv	Visa fellogg

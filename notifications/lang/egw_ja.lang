@@ -63,9 +63,11 @@ mark as read	notifications	ja	既読にする
 message from	notifications	ja	送信者
 minutes	notifications	ja	分
 more info	notifications	ja	詳細情報
+normally only the work email address is notified	notifications	ja	通常は業務用メールアドレスのみに通知されます。
 notification	common	ja	通知
 notifier	notifications	ja	通知元
 notify me by	notifications	ja	通知方法
+notify private email address	notifications	ja	非公開メールアドレスに通知
 only used if no push server available!	admin	ja	プッシュサーバーがない場合のみ使用
 open notified entry	notifications	ja	通知項目を開く
 optimize e-mails for external mail client	notifications	ja	外部クライアント向けに電子メールを最適化
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	ja	Windows ポップアップと電子メ
 windows-popup backend	admin	ja	Windows ポップアップ・バックエンド
 windows-popup first, if that fails notify me by e-mail	notifications	ja	Windows ポップアップ（失敗時のみ電子メール）
 windows-popup only	notifications	ja	Windows ポップアップのみ
+yes, notify only private email, if existing	notifications	ja	はい、非公開メールアドレスが存在する場合のみ通知
+yes, notify private email too	notifications	ja	はい、非公開メールアドレスにも通知
 yesterday	notifications	ja	昨日
 you can also use	admin	ja	を使うこともできます。
 you have %1 unread notifications	notifications	ja	%1 個の未読通知があります。

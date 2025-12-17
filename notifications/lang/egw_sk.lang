@@ -63,9 +63,11 @@ mark as read	notifications	sk	Označiť ako prečítané
 message from	notifications	sk	Správa od
 minutes	notifications	sk	Minút
 more info	notifications	sk	Viac informácií
+normally only the work email address is notified	notifications	sk	Zvyčajne sa oznámenie zasiela len na pracovnú e-mailovú adresu.
 notification	common	sk	Pripomienka
 notifier	notifications	sk	Pripomína
 notify me by	notifications	sk	Pripomenúť mi pomocou
+notify private email address	notifications	sk	Oznámiť súkromnú e-mailovú adresu
 only used if no push server available!	admin	sk	Používa sa len vtedy, ak nie je k dispozícii žiadny push server!
 open notified entry	notifications	sk	Otvoriť položku s oznámeniami
 optimize e-mails for external mail client	notifications	sk	Optimizovať E-Maily pre vonkajších poštových klientov
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	sk	Vyskakovacie okno Windows a E-mail
 windows-popup backend	admin	sk	Windows vyskakovací mechanizmus
 windows-popup first, if that fails notify me by e-mail	notifications	sk	Najprv vyskakovacie okno Windows, ak sa nepodarí, použiť E-mail
 windows-popup only	notifications	sk	Iba vyskakovacie okno Windows
+yes, notify only private email, if existing	notifications	sk	Áno, oznámiť len súkromnú e-mailovú adresu, ak existuje
+yes, notify private email too	notifications	sk	Áno, oznámiť aj súkromnú e-mailovú adresu
 yesterday	notifications	sk	Včera
 you can also use	admin	sk	Môžete tiež použiť
 you have %1 unread notifications	notifications	sk	Máte %1 neprečítaných upozornení

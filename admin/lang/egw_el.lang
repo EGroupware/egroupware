@@ -463,7 +463,7 @@ server username	admin	el	Ονομα Χρήστη Server
 set a random password	admin	el	Ορίστε έναν τυχαίο κωδικό πρόσβασης
 set preference values.	admin	el	Καθορισμός τιμών προτιμίσεων
 should the login page include a language selectbox (useful for demo-sites) ?	admin	el	Θα έπρεπε η σελίδα εισόδου να περιέχει ένα κουτί επιλογής (χρήσιμο για demo-sites);
-show access log	admin	el	Εμφάνηση καταγραφής συνδέσεων
+show access log	admin	el	Αρχείο καταγραφής πρόσβασης
 show current action	admin	el	Εμφάνηση τρέχουσας ενέργειας
 show error log	admin	el	Εμφάνηση καταγραφή λαθών
 show groups in container based on	admin	el	Εμφάνιση ομάδων στο δοχείο με βάση
@@ -549,7 +549,7 @@ users can define their own signatures	admin	el	Οι χρήστες μπορού�
 users choice	admin	el	Επιλογή Χρήστη
 vacation messages with start- and end-date require an admin account to be set	admin	el	Τα μηνύματα διακοπών με ημερομηνία έναρξης και λήξης απαιτούν τον ορισμό ενός λογαριασμού διαχειριστή!
 vacation notice	admin	el	Ανακοίνωση διακοπών
-view access log	admin	el	Εμφάνιση καταγραφής πρόσβασης
+view access log	admin	el	Αρχείο καταγραφής πρόσβασης
 view account	admin	el	Εμφάνιση λογαριασμού
 view category	admin	el	Εμφάνιση κατηγορίας
 view error log	admin	el	Εμφάνιση καταγραφής λαθών

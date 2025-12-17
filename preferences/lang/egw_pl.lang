@@ -69,6 +69,7 @@ no user-selection at all	common	pl	Bez sekcji użytkownika
 note: this feature does *not* change your email password. this will	preferences	pl	Zauważ: To ustawienie nie zmieni Twojego hasła konta poczty elektronicznej. Ono tylko
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pl	Uwaga. Te polecenie NIE zmienia hasła do twojej skrzynki pocztowej! Należy to zrobić ręcznie.
 number format	preferences	pl	Format liczbowy
+old password and new password are the same. this is invalid. you must enter a new password	preferences	pl	Stare hasło i nowe hasło są takie same. Musisz wprowadzić nowe hasło!
 p: paragraph	preferences	pl	p: Paragraf
 password stored	preferences	pl	Przechowywane hasło.
 permanent time zone selection	preferences	pl	Wybór stałej strefy czasowej

@@ -297,7 +297,7 @@ if different from email address	mail	fr	Si différent de l'adresse mail
 if from contains:(*)	mail	fr	Si "de" contient :(*)
 if mail body content / attachment type	mail	fr	Si le type de corps de message ou de pièce jointe
 if mail body message type	mail	fr	Si le type de corps de message
-if mail header	mail	fr	Si l'en-tête du mail
+if mail header	mail	fr	si l'en-tête du mail
 if message size	mail	fr	Si la taille du message
 if shown, which folders should appear on the home page	mail	fr	Si affichés, quels dossiers doivent apparaître sur la page d'accueil
 if subject contains:(*)	mail	fr	Si le sujet contient :(*)
@@ -379,6 +379,7 @@ moving folders from one mailaccount to another is not supported	mail	fr	Déplace
 name and domain	mail	fr	Nom et domaine
 name and email	mail	fr	Nom et email
 name of account	mail	fr	Nom du compte
+name of header, only letters, numbers and dash (-) allowed	mail	fr	Navn på overskrift, kun bogstaver, tal og bindestreger (-) er tilladt
 name of imap servers (space separated host or host:port)	mail	fr	Nom des serveurs IMAP (hôte séparé par des espaces ou hôte:port)
 never display html emails	mail	fr	Ne jamais afficher les messages HTML
 never show	mail	fr	Ne jamais afficher

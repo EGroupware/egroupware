@@ -64,6 +64,7 @@ copy to clipboard	filemanager	sl	Kopiraj v odložišče
 could not copy %1 to %2	filemanager	sl	Ne morem kopirati %1 v %2.
 could not create %1	filemanager	sl	Ne morem ustvariti %1
 could not delete %1	filemanager	sl	Ne morem izbrisati %1
+could not install async job	filemanager	sl	Asinhrone naloge ni mogoče namestiti
 could not move %1 to %2	filemanager	sl	Ne morem prenesti %1 v %2
 could not rename %1 to %2	filemanager	sl	Ne morem preimenovati %1 v %2
 create a link	filemanager	sl	Ustvari povezavo
@@ -73,6 +74,7 @@ create folder	filemanager	sl	Ustvari mapo
 created	filemanager	sl	Ustvarjeno
 created %1,%2	filemanager	sl	Ustvarjen %1,%2
 created directory %1	filemanager	sl	Ustvarjena mapa %1
+creationdate of file	filemanager	sl	Datum ustvarjanja datoteke
 current directory	filemanager	sl	Trenutna mapa
 custom fields	filemanager	sl	Polja po meri
 cut	filemanager	sl	Izreži
@@ -120,6 +122,7 @@ error adding the acl!	filemanager	sl	Napaka pri dodajanju ACL!
 error creating symlink to target %1!	filemanager	sl	Napaka pri ustvarjanju povezave do colja %1!
 error deleting the acl entry!	filemanager	sl	Napaka pri brisanju ACL!
 error mounting %1 on %2!	filemanager	sl	Napaka pri priklapljanju %1 na %2!
+error running job	filemanager	sl	Napaka pri izvajanju naloge
 error unmounting %1!	filemanager	sl	Napaka pri odklapljanju %1!
 error uploading file!	filemanager	sl	Napaka pri nalaganju datoteke!
 error while creating directory.	filemanager	sl	Napaka pri ustvarjanju mape
@@ -181,7 +184,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili
 if you specify an export definition, it will be used when you export*	filemanager	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili *
 inherited	filemanager	sl	Podedovano
+job deleted.	filemanager	sl	Naloga izbrisana.
 job folder %1 does not exist or is not writable	filemanager	sl	Mapa z nalogami %1 ne obstaja ali ni mogoče vanjo zapisovati.
+job saved.	filemanager	sl	Naloga shranjena.
+jobs	filemanager	sl	Naloge
 last accessed	filemanager	sl	Zadnji dostop
 leave empty to delete the file after attaching	filemanager	sl	Pustite prazno, če želite datoteko po priložitvi izbrisati
 link	filemanager	sl	Poveži
@@ -263,12 +269,14 @@ save %1	filemanager	sl	Shrani %1
 save %1, and go back to file listing	filemanager	sl	Shrani %1 in se vrni na seznam datotek
 save as zip	filemanager	sl	Shrani kot Zip
 save changes	filemanager	sl	Shrani spremembe
+save job to clear error and restart it	filemanager	sl	Shranite nalogo, da izbrišete napako, in jo ponovno zaženite
 saved %1	filemanager	sl	Shranjen %1
 saving properties failed!	filemanager	sl	Shranjevanje lastnosti ni uspelo!
 saving setting for document merge failed!	filemanager	sl	Shranjevanje nastavitve za združevanje dokumentov ni uspelo!
 search for '%1'	filemanager	sl	Išči '%1'
 searchstring	filemanager	sl	Iskani niz
 select action...	filemanager	sl	Izberite dejanje ...
+select custom field	filemanager	sl	Izberite polje po meri
 select file to upload in current directory	filemanager	sl	Izberite datoteko za prenos v trenutno mapo
 select file(s) from vfs	common	sl	Izberite datoteke iz VFS
 setting for document merge saved.	filemanager	sl	Nastavitev za združitev dokumentov je shranjena.

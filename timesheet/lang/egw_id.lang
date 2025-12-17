@@ -46,9 +46,13 @@ field must not be empty !!!	timesheet	id	Field tidak boleh kosong !!!
 forgot to switch off working time?	common	id	Lupa mematikan waktu kerja?
 full: use only projectmanager	admin	id	Full: hanya menggunakan ManajerProyek
 general fields:	timesheet	id	Field Umum:
+give additional users access	timesheet	id	Berikan akses kepada pengguna tambahan
+give infolog delegation read-access to timesheets booked on them	timesheet	id	Berikan akses baca kepada delegasi InfoLog untuk lembar waktu yang dipesan pada mereka
 global categories	timesheet	id	Kategori Global
 history	timesheet	id	Riwayat
 history logging	admin	id	Catatan riwayat
+how to display linked timesheets	timesheet	id	Cara menampilkan lembar waktu yang terhubung
+html link to the current record	timesheet	id	Tautan HTML ke catatan saat ini
 id	timesheet	id	ID
 ignore	timesheet	id	Ignore
 imports entries into the timesheet from a csv file.	timesheet	id	Mengimpor entri ke dalam Lembar Waktu dari file CSV
@@ -59,7 +63,9 @@ last year	timesheet	id	Tahun lalu
 leave it empty for a full week	timesheet	id	Biarkan kosong bila seminggu penuh
 leaves without saveing	timesheet	id	tinggalkan tanpa menyimpan
 length<br>rows	timesheet	id	Length<br>Rows
+link title	timesheet	id	Judul tautan
 links	timesheet	id	Tautan
+make timesheets readable by infolog delegation	timesheet	id	Jadikan lembar waktu dapat dibaca oleh delegasi InfoLog
 mode	timesheet	id	Mode
 modified	timesheet	id	Diubah
 new ticket submitted by %1 at %2	timesheet	id	Tiket baru dikirimkan oleh %1 pada %2
@@ -84,6 +90,7 @@ price	timesheet	id	Harga
 project fields	timesheet	id	Bidang proyek
 projectmanager integration	admin	id	Terpadu dengan ManajerProyek
 quantity	timesheet	id	Quantity
+readable	timesheet	id	Dapat dibaca
 recorded	timesheet	id	Direkam
 restore this entry	timesheet	id	Kembalikan entri ini
 save & new	timesheet	id	Simpan & Bikin baru
@@ -111,6 +118,7 @@ this month	timesheet	id	Bulan ini
 this week	timesheet	id	Minggu ini
 this year	timesheet	id	Tahun ini
 ticket modified by %1 at %2	timesheet	id	Tiket diubah oleh %1 pada %2
+timer	common	id	Timer
 timer already running or paused	common	id	Pengatur waktu sudah berjalan atau dijeda
 timesheet	common	id	Lembaran Waktu
 timesheet csv export	timesheet	id	Ekspor CSV LembarWaktu

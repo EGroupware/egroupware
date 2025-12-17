@@ -88,6 +88,8 @@ forward to	mail	lt	Pirmyn į
 get acl rights failed from imap server!	mail	lt	Nepavyko gauti ACL teisių iš IMAP serverio!
 ham folder	mail	lt	Kumpio aplankas
 handling of external http images / mixed content in mails	mail	lt	Išorinių http vaizdų / mišraus turinio tvarkymas el. laiškuose
+header	mail	lt	Antraštė
+header lines	mail	lt	Antraštės eilutės
 hide from	mail	lt	Paslėpti Nuo
 high priority	mail	lt	Aukštas prioritetas
 html	mail	lt	HTML
@@ -96,6 +98,7 @@ ident name email	mail	lt	Identifikatoriaus pavadinimas [El. paštas]
 ident name organization email	mail	lt	Identifikatoriaus pavadinimas Organizacija [El. paštas]
 identity label	mail	lt	Tapatybės ženklas
 if different from email address	mail	lt	Jei skiriasi nuo el. pašto adreso
+if mail header	mail	lt	jei e-pašto antraštė
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	lt	Jei norite matyti laiško peržiūrą vienu spustelėjimu ant temos, įjunkite šią funkciją.
 imap	mail	lt	IMAP
 imap server	mail	lt	IMAP Server
@@ -150,6 +153,7 @@ moved %1 message(s) from %2 to %3	mail	lt	Perkeltas %1 pranešimas (-ai) iš %2 
 name and domain	mail	lt	Vardas ir domenas
 name and email	mail	lt	Vardas ir el. pašto adresas
 name of account	mail	lt	Sąskaitos pavadinimas
+name of header, only letters, numbers and dash (-) allowed	mail	lt	Antraštės pavadinimas, leidžiami tik raidės, skaičiai ir brūkšnelis (-)
 name of imap servers (space separated host or host:port)	mail	lt	IMAP serverių pavadinimai (tarpais atskirti host arba host:port)
 never show	mail	lt	Niekada nerodyti
 never show notification	mail	lt	Niekada nerodyti pranešimo
@@ -264,6 +268,7 @@ trash	mail	lt	Šiukšliadėžė
 trash folder	mail	lt	Aplankas šiukšliadėžė
 unconditional	mail	lt	Visada
 validate addresses on submit:	mail	lt	Patvirtinkite adresus pateikdami:
+view header lines	mail	lt	Peržiūrėti antraštės eilutes
 what to do when you delete a message	mail	lt	Ką daryti ištrynus pranešimą.
 write & delete	mail	lt	rašyti ir ištrinti
 you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.

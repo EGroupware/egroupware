@@ -19,6 +19,7 @@ copy to	filemanager	sv	Kopiera
 could not copy %1 to %2	filemanager	sv	Kunde inte kopiera %1 till %2
 could not create %1	filemanager	sv	Kunde inte skapa %1
 could not delete %1	filemanager	sv	Kunde inte radera %1
+could not install async job	filemanager	sv	Det gick inte att installera det asynkrona jobbet
 could not move %1 to %2	filemanager	sv	Kunde inte flytta %1 till %2
 could not rename %1 to %2	filemanager	sv	Kunde inte ändra namn på %1 till %2
 create file	filemanager	sv	Skapa fil
@@ -26,6 +27,7 @@ create folder	filemanager	sv	Skapa katalog
 created	filemanager	sv	Skapad
 created %1,%2	filemanager	sv	Skapade %1, %2
 created directory %1	filemanager	sv	Skapade katalogen %1
+creationdate of file	filemanager	sv	Skapandedatum för filen
 custom fields	filemanager	sv	Anpassade fält
 cut	filemanager	sv	Klipp ut
 default action on double-click	filemanager	sv	Standardåtgärd vid dubbelklick
@@ -48,6 +50,7 @@ error adding the acl!	filemanager	sv	Fel vid tillägg av ACL!
 error creating symlink to target %1!	filemanager	sv	Fel vid skapande av symlänk till målet %1!
 error deleting the acl entry!	filemanager	sv	Fel vid borttagning av ACL-posten!
 error mounting %1 on %2!	filemanager	sv	Fel vid montering av %1 på %2!
+error running job	filemanager	sv	Fel vid körning av jobbet
 error unmounting %1!	filemanager	sv	Fel vid demontering av %1!
 error uploading file!	filemanager	sv	Fel vid uppladdning av fil!
 error while creating directory.	filemanager	sv	Fel vid skapande av mapp
@@ -96,7 +99,10 @@ hostname/ip for webdav and smb	filemanager	sv	Värdnamn/IP för WebDAV och SMB
 id	filemanager	sv	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	sv	Om du anger en mapp (fullständig VFS-sökväg) här, visar %1 en åtgärd för varje dokument. Den åtgärden gör det möjligt att hämta det angivna dokumentet med %1-data infogade.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sv	Om du anger en mapp (fullständig VFS-sökväg) här, visar %1 en extra dokumentikon för varje post. Med den ikonen kan du ladda ner det angivna dokumentet med de infogade uppgifterna.
+job deleted.	filemanager	sv	Jobbet har raderats.
 job folder %1 does not exist or is not writable	filemanager	sv	Jobbmappen %1 finns inte eller är inte skrivbar.
+job saved.	filemanager	sv	Jobbet har sparats.
+jobs	filemanager	sv	Jobb
 leave empty to delete the file after attaching	filemanager	sv	Lämna tomt för att radera filen efter bifogning
 link	filemanager	sv	Länk
 list view	filemanager	sv	Visa lista
@@ -150,8 +156,10 @@ save %1	filemanager	sv	Spara %1
 save %1, and go back to file listing	filemanager	sv	Spara %1 och gå tillbaka till fillistan
 save as zip	filemanager	sv	Spara som ZIP
 save changes	filemanager	sv	Spara ändringar
+save job to clear error and restart it	filemanager	sv	Spara jobbet för att rensa felet och starta om det
 saved %1	filemanager	sv	Sparade %1
 search for '%1'	filemanager	sv	Sök efter '%1'
+select custom field	filemanager	sv	Välj anpassat fält
 show	filemanager	sv	Visa
 size	filemanager	sv	Storlek
 smb, webdavs and vfs require a username!	filemanager	sv	SMB, WebDAV och VFS kräver ett användarnamn!

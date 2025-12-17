@@ -145,7 +145,6 @@ custom url for ical with holidays for all users	calendar	bg	Персонализ
 custom_2	common	bg	Свободен / Зает
 daily	calendar	bg	Дневен
 daily tables	calendar	bg	Дневни таблици
-data exchange settings	calendar	bg	Настройки за обмен на данни
 date for the day of the week	calendar	bg	Дата за деня от седмицата
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	bg	Дата за деня от седмицата, налична за първия запис във всеки ден от седмицата или дневна таблица в избрания диапазон.
 date range	calendar	bg	Обхват на датата

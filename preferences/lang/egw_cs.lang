@@ -31,7 +31,6 @@ current password	preferences	cs	Aktuální heslo
 custom login box color, defaults to above color darkened	preferences	cs	Uživatelská barva přihlašovacího okna, přednastavená je tmavý odstín výše uvedené barvy
 custom sidebar menu active color, defaults to above color darkened	preferences	cs	Uživatelská barva postranní nabídky, přednastavená je tmavý odstín výše uvedené barvy
 dark mode theme	preferences	cs	Tmavý režim motivu
-data exchange settings	preferences	cs	Nastavení výměny dat
 date format	preferences	cs	Formát datumu
 default	preferences	cs	výchozí
 default font	preferences	cs	Výchozí písmo

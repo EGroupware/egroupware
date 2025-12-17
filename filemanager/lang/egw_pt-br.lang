@@ -51,6 +51,7 @@ copy to clipboard	filemanager	pt-br	Copiar para a área de transferência
 could not copy %1 to %2	filemanager	pt-br	Não foi possível copiar %1 para %2
 could not create %1	filemanager	pt-br	Não foi possível criar %1
 could not delete %1	filemanager	pt-br	Não foi possível remover %1
+could not install async job	filemanager	pt-br	Não foi possível instalar o trabalho assíncrono
 could not move %1 to %2	filemanager	pt-br	Não foi possível mover %1 para %2
 could not rename %1 to %2	filemanager	pt-br	Não foi possível renomear %1 para %2
 create a link	filemanager	pt-br	Criar um link
@@ -60,6 +61,7 @@ create folder	filemanager	pt-br	Criar pasta
 created	filemanager	pt-br	Criado
 created %1,%2	filemanager	pt-br	Criado %1,%2
 created directory %1	filemanager	pt-br	Criado diretório %1
+creationdate of file	filemanager	pt-br	Data de criação do arquivo
 current directory	filemanager	pt-br	Diretório atual
 custom fields	filemanager	pt-br	Campos personalizados
 cut	filemanager	pt-br	recortar
@@ -100,6 +102,7 @@ error adding the acl!	filemanager	pt-br	Erro editanto a ACL!
 error creating symlink to target %1!	filemanager	pt-br	Erro ao criar link simbólico para atingir 1%!
 error deleting the acl entry!	filemanager	pt-br	Erro removendo o registro ACL!
 error mounting %1 on %2!	filemanager	pt-br	Erro de montagem% 1 em% 2!
+error running job	filemanager	pt-br	Erro ao executar o trabalho
 error unmounting %1!	filemanager	pt-br	Erro desmontar% 1!
 error uploading file!	filemanager	pt-br	Erro carregando arquivo!
 error while creating directory.	filemanager	pt-br	Erro ao criar diretório
@@ -157,7 +160,10 @@ id	filemanager	pt-br	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	pt-br	Se você especificar uma pasta (caminho VFS completo) aqui, %1 exibirá uma ação para cada documento. Essa ação permite fazer o download do documento especificado com os dados %1 inseridos.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	pt-br	Se você especificar uma pasta (caminho VFS completo) aqui, %1 exibirá um ícone de documento extra para cada entrada. Esse ícone permite baixar o documento especificado com os dados inseridos.
 inherited	filemanager	pt-br	Herdado
+job deleted.	filemanager	pt-br	Trabalho excluído.
 job folder %1 does not exist or is not writable	filemanager	pt-br	A pasta de trabalho %1 não existe ou não é gravável.
+job saved.	filemanager	pt-br	Trabalho salvo.
+jobs	filemanager	pt-br	Trabalhos
 leave empty to delete the file after attaching	filemanager	pt-br	Deixe em branco para excluir o arquivo após anexá-lo
 link	filemanager	pt-br	Link
 link %1: %2	filemanager	pt-br	Link %1: %2
@@ -233,12 +239,14 @@ save %1	filemanager	pt-br	Salvar %1
 save %1, and go back to file listing	filemanager	pt-br	Salvar %1 e voltar à lista de arquivos
 save as zip	filemanager	pt-br	Salvar como ZIP
 save changes	filemanager	pt-br	Salvar alterações
+save job to clear error and restart it	filemanager	pt-br	Salve o trabalho para limpar o erro e reiniciá-lo
 saved %1	filemanager	pt-br	%1 salvo
 saving properties failed!	filemanager	pt-br	Falha ao salvar propriedades!
 saving setting for document merge failed!	filemanager	pt-br	Salvar configuração para documento de mesclagem falhou!
 search for '%1'	filemanager	pt-br	Procurar por '%1'
 searchstring	filemanager	pt-br	Parâmetro de pesquisa
 select action...	filemanager	pt-br	Selecionar ação...
+select custom field	filemanager	pt-br	Selecione o campo personalizado
 select file to upload in current directory	filemanager	pt-br	Selecionar arquivo para upload no diretório atual
 select file(s) from vfs	common	pt-br	Selecione o arquivo (s) a partir de VFS
 setting for document merge saved.	filemanager	pt-br	Definição para mesclar documento salvo.

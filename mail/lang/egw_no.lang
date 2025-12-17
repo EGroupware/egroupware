@@ -53,6 +53,7 @@ convert only mail to item (ignore possible attachments)	mail	no	Konverter kun e-
 copied %1 message(s) from %2 to %3	mail	no	Kopierte %1 melding(er) fra %2 til %3.
 copy to	mail	no	Kopier til
 default sorting order	mail	no	Standard sortering
+defines what to show as identity label on mail folder header	common	no	Definerer hva som skal vises som identitetsmerke på e-postmappens overskrift. Merkene refererer til feltene i e-postkontoen.
 delete folder	mail	no	Slett Mappe
 delete selected folders	mail	no	Slett valgte mapper
 deleted	mail	no	slettet
@@ -112,6 +113,7 @@ get acl rights failed from imap server!	mail	no	Få ACL-rettigheter mislyktes fr
 greater than	mail	no	Større enn
 ham folder	mail	no	Mappe for søppelpost
 handling of external http images / mixed content in mails	mail	no	Håndtering av eksterne http-bilder / blandet innhold i e-poster
+header	mail	no	Overskrift
 header lines	mail	no	Hodelinjer
 hide from	mail	no	Skjul Fra
 high priority	mail	no	Høy prioritet
@@ -168,6 +170,7 @@ moved %1 message(s) from %2 to %3	mail	no	Flyttet %1 melding(er) fra %2 til %3.
 name and domain	mail	no	Navn og domene
 name and email	mail	no	Navn og e-post
 name of account	mail	no	Navn på konto
+name of header, only letters, numbers and dash (-) allowed	mail	no	Navn på overskrift, kun bokstaver, tall og bindestrek (-) tillatt
 name of imap servers (space separated host or host:port)	mail	no	Navn på IMAP-servere (host eller host:port med mellomrom)
 never display html emails	mail	no	Vis aldri HTML e-post
 never show	mail	no	Vis aldri
@@ -285,6 +288,7 @@ unflagged	mail	no	Avflagget
 unread	mail	no	Ulest
 vacation notice	mail	no	Ferie melding
 validate addresses on submit:	mail	no	Valider adresser ved sending:
+view header lines	mail	no	Vis overskriftslinjer
 what to do when you delete a message	mail	no	Hva du skal gjøre når du sletter en melding.
 when deleting messages	mail	no	Når du sletter meldinger
 write	mail	no	Lagre

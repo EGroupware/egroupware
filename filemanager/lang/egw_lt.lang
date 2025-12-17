@@ -5,6 +5,9 @@
 %1 failed, %2 succeded	filemanager	lt	%1 nepavyko, %2 pavyko.
 %1 files unlocked.	filemanager	lt	%1 failai atrakinti.
 classic	filemanager	lt	Standartinė įrankių juosta
+could not install async job	filemanager	lt	Nepavyko įdiegti asinchroninio darbo
+creationdate of file	filemanager	lt	Failo sukūrimo data
+custom fields	filemanager	lt	Pasirinktiniai laukai
 default action on double-click	filemanager	lt	Numatytasis veiksmas dukart spustelėjus
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	lt	Numatytoji reikšmė = Ne. Nuoroda nebus rodoma, tačiau vis tiek galėsite pereiti į šią vietą arba konfigūruoti šią konkrečią vietą kaip pradžios aplanką arba aplanko nuorodą.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	lt	Nustato, kaip elgtis su dokumento failo dvigubo spustelėjimo veiksmu. Vaizdai visada atidaromi eksponuojamoje peržiūroje, o el. laiškai - su el. pašto programa. Visus kitus MIME tipus tvarko pati naršyklė.
@@ -12,6 +15,7 @@ download documents	filemanager	lt	Atsisiųsti dokumentus
 edit share	filemanager	lt	Redaguoti bendrinimą
 enter a file size, e.g. 100k, 200m or 2g	filemanager	lt	Įveskite failo dydį, pvz., 100K, 200M arba 2G
 enter your file name	filemanager	lt	Įveskite failo pavadinimą
+error running job	filemanager	lt	Klaida vykdant darbą
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	lt	Pavyzdys {{IF n_prefiksas~Mr~Sveikas ponas~Sveikas ponia}} - paieškokite lauke "n_prefix", ieškodami "Mr", jei radote, rašykite Hello Mr, kitu atveju rašykite Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	lt	Pavyzdys {{{LETTERPREFIXCUSTOM n_prefix pavadinimas n_family}} - Pavyzdys: James Miller.
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	lt	Pavyzdys {{{NELF vaidmuo}} - jei laukas role nėra tuščias, bus pateikta nauja eilutė su lauko role reikšme
@@ -46,7 +50,10 @@ hidden uploads	filemanager	lt	Paslėptas įkėlimas
 hostname/ip for webdav and smb	filemanager	lt	Hostname/IP WebDAV ir SMB
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	lt	Jei čia nurodysite aplanką (visą VFS kelią), %1 rodys kiekvieno dokumento veiksmą. Šis veiksmas leidžia atsisiųsti nurodytą dokumentą su įterptais %1 duomenimis.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	lt	Jei čia nurodysite aplanką (visą VFS kelią), %1 kiekvienam įrašui rodoma papildoma dokumento piktograma. Ši piktograma leidžia atsisiųsti nurodytą dokumentą su įterptais duomenimis.
+job deleted.	filemanager	lt	Darbas ištrintas.
 job folder %1 does not exist or is not writable	filemanager	lt	Darbo aplankas %1 neegzistuoja arba nėra įrašomas.
+job saved.	filemanager	lt	Darbas išsaugotas.
+jobs	filemanager	lt	Darbas
 leave empty to delete the file after attaching	filemanager	lt	Palikite tuščią, kad failą būtų galima ištrinti po pridėjimo.
 list view	filemanager	lt	Sąrašo rodinys
 lock	filemanager	lt	Užrakinti
@@ -78,6 +85,8 @@ rename, change permissions or ownership	filemanager	lt	Pervardyti, pakeisti teis
 renamed %1 to %2	filemanager	lt	Pervadinta %1 į %2
 renamed %1 to %2.	filemanager	lt	Pervadinta %1 į %2
 save as zip	filemanager	lt	Išsaugoti kaip ZIP
+save job to clear error and restart it	filemanager	lt	Išsaugokite darbą, kad išvalytumėte klaidą ir paleiskite jį iš naujo
+select custom field	filemanager	lt	Pasirinkite pasirinktinį lauką
 smb, webdavs and vfs require a username!	filemanager	lt	SMB, WebDAV ir VFS reikalauja naudotojo vardo!
 smb: mount samba or windows fileserver shares	filemanager	lt	SMB: prijungti Samba arba Windows failų serverio akcijas
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	lt	Dokumente gali būti tokios vietos žymės kaip {{%3}}, kurios bus pakeistos duomenimis (%1pilnas vietos žymės pavadinimų sąrašas%2).

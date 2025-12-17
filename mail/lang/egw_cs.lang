@@ -370,6 +370,7 @@ moving folders from one mailaccount to another is not supported	mail	cs	Přesouv
 name and domain	mail	cs	Jméno a doména
 name and email	mail	cs	Jméno a e-mail
 name of account	mail	cs	Název účtu
+name of header, only letters, numbers and dash (-) allowed	mail	cs	Název záhlaví, povolena jsou pouze písmena, číslice a pomlčka (-)
 name of imap servers (space separated host or host:port)	mail	cs	Název serverů IMAP (hostitel nebo hostitel:port oddělený mezerou)
 never display html emails	mail	cs	Nikdy nezobrazovat HTML e-maily
 never show	mail	cs	Nikdy nezobrazovat

@@ -587,7 +587,7 @@ server username	admin	pt-br	Usuário do servidor
 set a random password	admin	pt-br	Definir uma senha aleatória
 set preference values.	admin	pt-br	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt-br	A tela de conexão deve incluír uma caixa de seleção de idioma? (útil para sites de demonstração)
-show access log	admin	pt-br	Exibir registros de acessos
+show access log	admin	pt-br	Registro de acesso
 show current action	admin	pt-br	Exibir ação corrente
 show error log	admin	pt-br	Exibir registro de erros
 show groups in container based on	admin	pt-br	Mostrar grupos no contêiner com base em
@@ -709,7 +709,7 @@ using data from mozilla ispdb for provider %1	admin	pt-br	Usando dados da Mozill
 vacation messages with start- and end-date require an admin account to be set	admin	pt-br	As mensagens de férias com datas de início e fim exigem a configuração de uma conta de administrador!
 vacation notice	admin	pt-br	Aviso de férias
 value for column %1 is not unique!	admin	pt-br	Valor da coluna %1 não é único!
-view access log	admin	pt-br	Exibir registro de acessos
+view access log	admin	pt-br	Registro de acesso
 view account	admin	pt-br	Exibir conta
 view category	admin	pt-br	Exibir categoria
 view error log	admin	pt-br	Exibir registro de erros

@@ -65,6 +65,7 @@ copy to clipboard	filemanager	cs	Kopírovat do clipboardu
 could not copy %1 to %2	filemanager	cs	Nepodařilo se zkopírovat %1 do %2
 could not create %1	filemanager	cs	Nepodařilo se vytvořit %1
 could not delete %1	filemanager	cs	Nepodařilo se smazat %1
+could not install async job	filemanager	cs	Nelze nainstalovat asynchronní úlohu
 could not move %1 to %2	filemanager	cs	Nepodařilo se přesunout %1 do %2
 could not rename %1 to %2	filemanager	cs	Nepodařilo se přejmenovat %1 na %2
 create a link	filemanager	cs	Vytvořit odkaz
@@ -74,6 +75,7 @@ create folder	filemanager	cs	Vytvořit složku
 created	filemanager	cs	Vytvořeno
 created %1,%2	filemanager	cs	Vytvořeno %1,%2
 created directory %1	filemanager	cs	Vytvořen adresář %1
+creationdate of file	filemanager	cs	Datum vytvoření souboru
 current directory	filemanager	cs	Aktuální adresář
 custom fields	filemanager	cs	Uživatelsky definované položky
 cut	filemanager	cs	Vyjmout
@@ -121,6 +123,7 @@ error adding the acl!	filemanager	cs	Při přidávání ACL došlo k chybě!
 error creating symlink to target %1!	filemanager	cs	Chyba při vytváření symbolického odkazu na cíl %1!
 error deleting the acl entry!	filemanager	cs	Při mazání ACL záznamu došlo k chybě!
 error mounting %1 on %2!	filemanager	cs	Chyba při připojování %1 na %2!
+error running job	filemanager	cs	Chyba při spuštění úlohy
 error unmounting %1!	filemanager	cs	Chyba při odmontování %1!
 error uploading file!	filemanager	cs	Chyba při uploadu souboru!
 error while creating directory.	filemanager	cs	Chyba při vytváření složky
@@ -182,7 +185,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	cs	Pokud zadáte definici exportu, bude použita při exportu
 if you specify an export definition, it will be used when you export*	filemanager	cs	Pokud zadáte definici exportu, bude použita při exportu
 inherited	filemanager	cs	Zděděné
+job deleted.	filemanager	cs	Úloha smazána.
 job folder %1 does not exist or is not writable	filemanager	cs	Složka úlohy %1 neexistuje nebo není zapisovatelná.
+job saved.	filemanager	cs	Úloha uložena.
+jobs	filemanager	cs	Úlohy
 last accessed	filemanager	cs	Poslední přístup
 leave empty to delete the file after attaching	filemanager	cs	Nechte pole prázdné, chcete-li soubor po připojení smazat
 link	filemanager	cs	Odkaz
@@ -264,12 +270,14 @@ save %1	filemanager	cs	Uložit %1
 save %1, and go back to file listing	filemanager	cs	Uložit %1 a vrátit se zpět na seznam souborů
 save as zip	filemanager	cs	Uložit jako ZIP
 save changes	filemanager	cs	Uložit změny
+save job to clear error and restart it	filemanager	cs	Uložte úlohu, abyste chybu odstranili, a restartujte ji
 saved %1	filemanager	cs	%1 uloženo
 saving properties failed!	filemanager	cs	Uložení vlastností se nepodařilo!
 saving setting for document merge failed!	filemanager	cs	Uložení nastavení pro sloučení dokumentů se nezdařilo!
 search for '%1'	filemanager	cs	Hledat '%1'
 searchstring	filemanager	cs	Hledaný řetězec
 select action...	filemanager	cs	Vyberte akci...
+select custom field	filemanager	cs	Vyberte vlastní pole
 select file to upload in current directory	filemanager	cs	Vyberte soubor k uploadu do aktuálního adresáře
 select file(s) from vfs	common	cs	Vyberte soubory z File Manager
 setting for document merge saved.	filemanager	cs	Nastavení pro sloučení dokumentů uloženo.

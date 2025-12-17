@@ -191,7 +191,7 @@ identity	mail	ru	Идентификация
 identity label	mail	ru	Метка идентификатора
 if	mail	ru	ЕСЛИ
 if different from email address	mail	ru	Если адрес электронной почты отличается от адреса
-if mail header	mail	ru	Если заголовок письма
+if mail header	mail	ru	eсли заголовок письма
 if message size	mail	ru	Если размер сообщения
 if shown, which folders should appear on the home page	mail	ru	Если указано, какие каталоги отображать на домашней странице
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ru	Если вы хотите видеть предварительный просмотр письма при однократном щелчке на теме, включите эту функцию.
@@ -256,6 +256,7 @@ moved %1 message(s) from %2 to %3	mail	ru	Переместил %1 сообщен
 name and domain	mail	ru	Имя и домен
 name and email	mail	ru	Имя и email
 name of account	mail	ru	Имя учетной записи
+name of header, only letters, numbers and dash (-) allowed	mail	ru	Название заголовка, допускаются только буквы, цифры и дефис (-)
 name of imap servers (space separated host or host:port)	mail	ru	Имя IMAP-серверов (хост через пробел или хост:порт)
 never display html emails	mail	ru	Никогда не показывать эл. письма в формате HTML
 never show	mail	ru	Никогда не показывать

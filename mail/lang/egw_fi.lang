@@ -76,6 +76,7 @@ default sorting order	mail	fi	Oletus lajittelujärjestys
 default toolbar actions shown in mail's html editor	mail	fi	HTML-editorin työkalupalkissa sähköpostia laadittaessa käytössä olevat toiminnot
 default value for remembering s/mime passphrase in minutes	mail	fi	S/MIME-salasanan muistamisen oletusarvo minuutteina
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	fi	Määrittää, mitä näytetään yhteystietotarrana yhteystietoa lisättävän yhteystiedon kohdalla To/Kopio/Sokea kopio sähköpostia laadittaessa. Oletusarvo on etunimi sukunimi ja tyhjä tarkoittaa, että kaikki käytettävissä olevat tiedot sisällytetään.
+defines what to show as identity label on mail folder header	common	fi	Määrittää, mitä näytetään tunnisteena sähköpostikansion otsikossa. Tunnisteet viittaavat sähköpostitilin kenttiin.
 delete folder	mail	fi	Poista kansio
 delete folder %1 ?	mail	fi	Poista kansio %1?
 delete selected folders	mail	fi	Poista valitut kansiot
@@ -154,6 +155,7 @@ get acl rights failed from imap server!	mail	fi	ACL-oikeuksien hakeminen epäonn
 greater than	mail	fi	Suurempi kuin
 ham folder	mail	fi	Ham-kansio
 handling of external http images / mixed content in mails	mail	fi	Ulkoisten http-kuvien / sekasisällön käsittely sähköpostiviesteissä
+header	mail	fi	Otsikko
 header lines	mail	fi	Ylätunnisterivit
 hide from	mail	fi	Piilota Lähettäjä
 high priority	mail	fi	Korkea prioriteetti
@@ -166,7 +168,7 @@ identity	mail	fi	Identiteetti
 identity label	mail	fi	Tunnisteen etiketti
 if	mail	fi	JOS
 if different from email address	mail	fi	Jos eri kuin sähköpostiosoite
-if mail header	mail	fi	Jos postin ylätunniste
+if mail header	mail	fi	jos postin ylätunniste
 if message size	mail	fi	Jos viestin koko
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	fi	Jos haluat nähdä sähköpostin esikatselun napsauttamalla aiheen kohdalla, ota tämä käyttöön.
 imap	mail	fi	IMAP
@@ -226,6 +228,7 @@ moved %1 message(s) from %2 to %3	mail	fi	Siirrettiin %1 viesti(t) paikasta %2 p
 name and domain	mail	fi	Nimi ja verkkotunnus
 name and email	mail	fi	Nimi ja sähköpostiosoite
 name of account	mail	fi	Tilin nimi
+name of header, only letters, numbers and dash (-) allowed	mail	fi	Otsikon nimi, vain kirjaimet, numerot ja viiva (-) sallittuja
 name of imap servers (space separated host or host:port)	mail	fi	IMAP-palvelimien nimet (välilyönnillä erotettu isäntä tai isäntä:portti)
 never display html emails	mail	fi	Älä näytä HTML -sähköposteja
 never show	mail	fi	Ei koskaan näytä

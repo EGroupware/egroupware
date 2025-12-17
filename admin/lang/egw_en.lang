@@ -809,7 +809,7 @@ set preference values.	admin	en	Set preference values.
 settings	admin	en	Settings
 should exceptions contain a trace (including function arguments)	admin	en	Should exceptions contain a trace, including function arguments.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Show language select box on login page?
-show access log	admin	en	Show access log
+show access log	admin	en	Access log
 show as optional, but required once user has it setup	admin	en	Show as optional, but required once user has it setup
 show as required, but only once user has it setup	admin	en	Show as required, but only once user has it setup
 show current action	admin	en	Show current action
@@ -969,7 +969,7 @@ vacation notice	admin	en	Vacation notice
 valid for	admin	en	Valid for
 value for column %1 is not unique!	admin	en	Value for column %1 is not unique!
 vfs directory "%1" not found!	admin	en	VFS directory "%1" NOT found!
-view access log	admin	en	View access log
+view access log	admin	en	Access log
 view account	admin	en	View account
 view category	admin	en	View category
 view error log	admin	en	View error log

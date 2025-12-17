@@ -10,6 +10,7 @@ cancal?	notifications	no	Avbryt?
 certification-information:	notifications	no	Sertifiseringsinformasjon:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	no	Sjekk begge deler. Prøv først aktiv brukerdefinert konto, hvis ingen, bruk eMailAdmin-profilen.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	no	Velg en varslingskjede. Du vil bli varslet over backends som er inkludert i kjeden.<br>Merk: Hvis en varslingskjede er merket som "deaktivert", tillater ikke administratoren en eller flere av bakendene som er inkludert i kjeden, og varslene faller tilbake til "E-post" mens du varsles.
+choose from mailsettings used for notification	admin	no	Velg e-postinnstillinger som brukes for e-postvarsling
 connection error.	notifications	no	Tilkoblingsfeil.
 connection error. please check connection to server.	notifications	no	Tilkoblingsfeil. Vennligst sjekk tilkoblingen til serveren.
 continue to connect?	notifications	no	Kan du fortsette å koble til?
@@ -50,7 +51,11 @@ mark as read	notifications	no	Merk som lest
 message from	notifications	no	Melding fra
 minutes	notifications	no	Minutter
 more info	notifications	no	Mer informasjon
+normally only the work email address is notified	notifications	no	Normalt blir kun arbeids-e-postadressen varslet.
+notification	common	no	Varsling
 notifier	notifications	no	Varsler
+notify me by	notifications	no	Varsle meg via
+notify private email address	notifications	no	Varsle privat e-postadresse
 only used if no push server available!	admin	no	Brukes bare hvis ingen push-server er tilgjengelig!
 open notified entry	notifications	no	Åpne varslet oppføring
 page not found, please check serveraddress.	notifications	no	Siden ble ikke funnet, vennligst sjekk serveradressen.
@@ -62,6 +67,7 @@ please contact your egroupware admin.	notifications	no	Ta kontakt med din EGroup
 please enter the url of your egroupware.	notifications	no	Vennligst skriv inn URL-adressen til EGroupware.
 please enter your egroupware username.	notifications	no	Vennligst skriv inn ditt EGroupware-brukernavn.
 please enter your password	notifications	no	Vennligst skriv inn passordet ditt
+preferences for notification	notifications	no	Innstillinger for varsling
 repeat login?	notifications	no	Gjenta pålogging?
 run application	notifications	no	Kjør applikasjon
 save password	notifications	no	Lagre passord
@@ -78,6 +84,8 @@ this egroupware notification has been sent to you by mail because your	notificat
 this month	notifications	no	Denne måneden
 user:	notifications	no	Bruker:
 warning	notifications	no	Advarsel
+yes, notify only private email, if existing	notifications	no	Ja, varsle kun privat e-post, hvis eksisterende
+yes, notify private email too	notifications	no	Ja, varsle også privat e-post
 yesterday	notifications	no	I går
 you can also use	admin	no	Du kan også bruke
 you have %1 unread notifications	notifications	no	Du har %1 uleste varsler

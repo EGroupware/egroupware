@@ -50,6 +50,7 @@ copy to clipboard	filemanager	fi	Kopioi leikepöydälle
 could not copy %1 to %2	filemanager	fi	%1 ei voitu kopioida %2
 could not create %1	filemanager	fi	Ei voitu luoda %1
 could not delete %1	filemanager	fi	Ei voitu poistaa %1
+could not install async job	filemanager	fi	Asynkronista työtä ei voitu asentaa
 could not move %1 to %2	filemanager	fi	%1 ei voitu siirtää %2
 could not rename %1 to %2	filemanager	fi	%1 ei voitu nimetä %2
 create a link	filemanager	fi	Luo linkki
@@ -59,6 +60,7 @@ create folder	filemanager	fi	Luo kansio
 created	filemanager	fi	Luotu
 created %1,%2	filemanager	fi	Luonut %1,%2
 created directory %1	filemanager	fi	Luotiin kansio %1
+creationdate of file	filemanager	fi	Tiedoston luontipäivä
 current directory	filemanager	fi	Nykyinen hakemisto
 custom fields	filemanager	fi	Lisäkentät
 cut	filemanager	fi	Leikkaa
@@ -99,6 +101,7 @@ error adding the acl!	filemanager	fi	Virhe ACL -oikeuksia lisättäessä!
 error creating symlink to target %1!	filemanager	fi	Virhe luotaessa symlinkkiä kohteeseen %1!
 error deleting the acl entry!	filemanager	fi	Virhe ACL -oikeuksia poistettaessa!
 error mounting %1 on %2!	filemanager	fi	%1: Virhe otettaessa versiointia käyttöön!
+error running job	filemanager	fi	Virhe työn suorittamisessa
 error unmounting %1!	filemanager	fi	%1: Virhe otettaessa versiointia pois käytöstä!
 error uploading file!	filemanager	fi	Virhe ladattaessa tiedostoa!
 error while creating directory.	filemanager	fi	Virhe luotaessa hakemistoa
@@ -158,7 +161,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	fi	Valitse viennin oletusasetus
 if you specify an export definition, it will be used when you export*	filemanager	fi	Valitse viennin oletusasetus
 inherited	filemanager	fi	Perityt oikeudet
+job deleted.	filemanager	fi	Työ poistettu.
 job folder %1 does not exist or is not writable	filemanager	fi	Työkansio %1 ei ole olemassa tai sitä ei voi kirjoittaa.
+job saved.	filemanager	fi	Työ tallennettu.
+jobs	filemanager	fi	Työt
 leave empty to delete the file after attaching	filemanager	fi	Jätä tyhjäksi, jos haluat poistaa tiedoston liittämisen jälkeen
 link	filemanager	fi	Linkki
 link %1: %2	filemanager	fi	Linkki %1: %2
@@ -234,11 +240,13 @@ save %1	filemanager	fi	Tallenna %1
 save %1, and go back to file listing	filemanager	fi	Tallenna %1 ja palaa hakemistoon
 save as zip	filemanager	fi	Tallenna ZIP-muodossa
 save changes	filemanager	fi	Tallenna muutokset
+save job to clear error and restart it	filemanager	fi	Tallenna työ virheen poistamiseksi ja käynnistä se uudelleen
 saved %1	filemanager	fi	Tallennettiin %1
 saving properties failed!	filemanager	fi	Asetusten tallentaminen epäonnistui!
 search for '%1'	filemanager	fi	Hae '%1'
 searchstring	filemanager	fi	Hakumerkkijono
 select action...	filemanager	fi	Valitse toiminto...
+select custom field	filemanager	fi	Valitse mukautettu kenttä
 select file to upload in current directory	filemanager	fi	Valitse ladattava tiedosto
 show	filemanager	fi	Näytä
 show hidden files	filemanager	fi	Näytä piilotetut tiedostot

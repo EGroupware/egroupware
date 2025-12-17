@@ -10,6 +10,7 @@ cancal?	notifications	lt	Atšaukti?
 certification-information:	notifications	lt	Sertifikavimo informacija:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	lt	Pažymėkite abu. Pirmiausia pabandykite aktyvią vartotojo apibrėžtą paskyrą, jei jos nėra, naudokite "eMailAdmin" profilį.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	lt	Pasirinkite pranešimų grandinę. Jums bus pranešama per į grandinę įtrauktus galinius įrenginius.<br>Pastaba: jei pranešimų grandinė pažymėta kaip "disabled" (išjungta), jūsų administratorius neleidžia naudoti vieno ar daugiau į grandinę įtrauktų galinių galų, pranešimai grįžta į "Email" (el. paštas), o jums pranešama.
+choose from mailsettings used for notification	admin	lt	Pasirinkite elektroninio pašto pranešimams naudojamus pašto nustatymus
 connection error.	notifications	lt	Ryšio klaida.
 connection error. please check connection to server.	notifications	lt	Ryšio klaida. Patikrinkite ryšį su serveriu.
 continue to connect?	notifications	lt	Tęsti ryšį?
@@ -46,7 +47,11 @@ mail account to use for notifications	admin	lt	Pašto paskyra, kuri bus naudojam
 mark all as read	notifications	lt	Pažymėti visus kaip perskaitytus
 mark as read	notifications	lt	Pažymėti kaip perskaitytą
 more info	notifications	lt	Daugiau informacijos
+normally only the work email address is notified	notifications	lt	Paprastai pranešimas siunčiamas tik darbo elektroninio pašto adresu.
+notification	common	lt	Pranešimas
 notifier	notifications	lt	Pranešėjas
+notify me by	notifications	lt	Pranešti man
+notify private email address	notifications	lt	Pranešti privačiu elektroninio pašto adresu
 only used if no push server available!	admin	lt	Naudojama tik tuo atveju, jei nėra „push“ serverio!
 open notified entry	notifications	lt	Atidaryti įrašą su pranešimais
 page not found, please check serveraddress.	notifications	lt	Puslapis nerastas, patikrinkite serverio adresą.
@@ -58,6 +63,7 @@ please contact your egroupware admin.	notifications	lt	Kreipkitės į "EGroupwar
 please enter the url of your egroupware.	notifications	lt	Įveskite savo "EGroupware" URL adresą.
 please enter your egroupware username.	notifications	lt	Įveskite savo EGroupware vartotojo vardą.
 please enter your password	notifications	lt	Įveskite savo slaptažodį
+preferences for notification	notifications	lt	Pranešimų nustatymai
 refresh notifications	notifications	lt	Atnaujinti pranešimus
 repeat login?	notifications	lt	Kartojasi prisijungimas?
 run application	notifications	lt	Paleisti programą
@@ -72,6 +78,8 @@ the server certificate is not a valid trust center certificate!	notifications	lt
 this egroupware notification has been sent to you by mail because your	notifications	lt	Šis "EGroupware" pranešimas buvo išsiųstas jums el. paštu, nes jūsų
 this month	notifications	lt	Šį mėnesį
 user:	notifications	lt	Vartotojas:
+yes, notify only private email, if existing	notifications	lt	Taip, pranešti tik privačiu elektroniniu paštu, jei yra
+yes, notify private email too	notifications	lt	Taip, pranešti ir privačiu elektroniniu paštu
 yesterday	notifications	lt	Vakar
 you can also use	admin	lt	Taip pat galite naudoti
 you have %1 unread notifications	notifications	lt	Turite %1 neperskaitytų pranešimų

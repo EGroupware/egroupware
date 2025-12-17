@@ -63,9 +63,11 @@ mark as read	notifications	fi	Merkitse luetuksi
 message from	notifications	fi	Viesti henkilöltä:
 minutes	notifications	fi	Minuuttia
 more info	notifications	fi	Lisätietoja
+normally only the work email address is notified	notifications	fi	Normaalisti ilmoitus lähetetään vain työpaikan sähköpostiosoitteeseen.
 notification	common	fi	Huomautusviesti
 notifier	notifications	fi	Ilmoittaja
 notify me by	notifications	fi	Lähetä huomautus:
+notify private email address	notifications	fi	Ilmoita yksityiseen sähköpostiosoitteeseen
 only used if no push server available!	admin	fi	Käytetään vain, jos push-palvelinta ei ole käytettävissä!
 open notified entry	notifications	fi	Avaa ilmoitettu merkintä
 optimize e-mails for external mail client	notifications	fi	Optimoi sähköpostit ulkoista sähköpostiohjelmaa varten
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	fi	Windows-Popup ja sähköposti
 windows-popup backend	admin	fi	Windows-Popup backend
 windows-popup first, if that fails notify me by e-mail	notifications	fi	Ensin Windows-Popup, sen epäonnistuessa sähköposti
 windows-popup only	notifications	fi	Vain Windows-popup
+yes, notify only private email, if existing	notifications	fi	Kyllä, ilmoita vain yksityiseen sähköpostiosoitteeseen, jos sellainen on olemassa
+yes, notify private email too	notifications	fi	Kyllä, ilmoita myös yksityiseen sähköpostiosoitteeseen
 yesterday	notifications	fi	Eilen
 you can also use	admin	fi	Voit myös käyttää
 you have %1 unread notifications	notifications	fi	Sinulla on %1 lukematonta ilmoitusta

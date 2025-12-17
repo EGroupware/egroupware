@@ -146,7 +146,6 @@ custom url for ical with holidays for all users	calendar	en	Custom URL for iCal 
 custom_2	common	en	Free/Busy
 daily	calendar	en	Daily
 daily tables	calendar	en	Daily tables
-data exchange settings	calendar	en	Data exchange settings
 date for the day of the week	calendar	en	Date for the day of the week
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.
 date range	calendar	en	Date range

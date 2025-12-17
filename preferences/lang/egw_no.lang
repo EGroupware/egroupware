@@ -51,6 +51,7 @@ max matches per page	preferences	no	Maks. treff per side
 max number of icons in navbar	preferences	no	Maks. antall ikoner på navigasjonslinjen
 no default	preferences	no	Ingen standardverdi
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	no	Noter: Denne funksonen endrer *ikke* ditt epost passord. Dette må gjøres manuellt.
+old password and new password are the same. this is invalid. you must enter a new password	preferences	no	Gammelt passord og nytt passord er det samme. Du må skrive inn et nytt passord!
 password stored	preferences	no	Passord lagres.
 popup with search	preferences	no	Sprett-opp meny for søking
 preferences saved.	preferences	no	Innstillinger lagret.

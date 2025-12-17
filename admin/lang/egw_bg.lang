@@ -126,6 +126,7 @@ data from	admin	bg	Данни от
 day	admin	bg	Ден
 db backup and restore	admin	bg	Архивиране и възстановяване на БД
 deleted	admin	bg	Изтрит
+deny access to access log	admin	bg	Отказ на достъп до лога за достъп
 displayed length of input field (set rows=1 to limit length)	admin	bg	Показване на дължината на входното поле (задайте rows=1, за да ограничите дължината)
 egroupware version	admin	bg	Версия на EGroupware
 enable sieve	admin	bg	Активиране на Sieve
@@ -142,6 +143,7 @@ group has been deleted	common	bg	Групата е била изтрита.
 group has been updated	common	bg	Групата е актуализирана.
 group hidden from non-admins	admin	bg	Група, скрита за неадминистратори
 group hierarchy	admin	bg	Йерархия на групите
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	bg	Колко дни трябва да останат записите в лога за достъп, преди да бъдат изтрити. По подразбиране = 90
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	bg	Колко записа трябва да могат да експортират неадминистраторите. Празно = няма ограничение, Не = няма експорт
 how many minutes should an account or ip be blocked (default 1) ?	admin	bg	За колко минути трябва да бъде блокиран акаунтът или IP адресът. По подразбиране = 30
 html/plaintext	admin	bg	HTML/текст
@@ -177,6 +179,7 @@ select accounts for which the custom field should be visible	admin	bg	Избер
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	bg	Изберете приложенията, до които искате да бъде ограничен токенът, или оставете по подразбиране всички приложения.
 serial number	admin	bg	Сериен номер
 set a random password	admin	bg	Задаване на произволна парола
+show access log	admin	bg	Протокол за достъп
 show groups in container based on	admin	bg	Показване на групите в контейнера въз основа на
 smtp only: to create only an smtp account	admin	bg	Създаване на акаунт само за SMTP без IMAP
 start	admin	bg	Старт
@@ -201,6 +204,7 @@ using fallback via regular json requests	admin	bg	Използване на ре
 using native swoole push	admin	bg	Използване на native Swoole Push
 vacation messages with start- and end-date require an admin account to be set	admin	bg	Ваканционните съобщения с начална и крайна дата изискват задаване на администраторски акаунт!
 vacation notice	admin	bg	Известие за ваканция
+view access log	admin	bg	Протокол за достъп
 view sessions	admin	bg	Сесии
 who would you like to transfer records owned by the deleted user to?	admin	bg	На кого искате да прехвърлите записите, притежавани от изтрития потребител?
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	bg	Можете да промените хеша само ако сте задали случайна парола или в момента използвате пароли в обикновен текст!

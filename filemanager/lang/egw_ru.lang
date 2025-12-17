@@ -53,6 +53,7 @@ copy to clipboard	filemanager	ru	Копировать в буфер обмена
 could not copy %1 to %2	filemanager	ru	Невозможно скопировать %1 в %2
 could not create %1	filemanager	ru	Невозможно создать %1
 could not delete %1	filemanager	ru	Невозможно удалить %1
+could not install async job	filemanager	ru	Не удалось установить асинхронное задание
 could not move %1 to %2	filemanager	ru	Невозможно переместить %1 в %2
 could not rename %1 to %2	filemanager	ru	Невозможно переименовать %1 в %2
 create a link	filemanager	ru	Создать ссылку
@@ -62,6 +63,7 @@ create folder	filemanager	ru	Создать папку
 created	filemanager	ru	Создано
 created %1,%2	filemanager	ru	Создано %1, %2
 created directory %1	filemanager	ru	Создан каталог %1
+creationdate of file	filemanager	ru	Дата создания файла
 current directory	filemanager	ru	Текущий каталог
 custom fields	filemanager	ru	Пользовательские поля
 cut	filemanager	ru	Вырезать
@@ -102,6 +104,7 @@ error adding the acl!	filemanager	ru	Ошибка добавления прав 
 error creating symlink to target %1!	filemanager	ru	Ошибка создания простой ссылки на цель %1!
 error deleting the acl entry!	filemanager	ru	Ошибка уничтожения записи ACL!
 error mounting %1 on %2!	filemanager	ru	Ошибка монтирования %1 в %2!
+error running job	filemanager	ru	Ошибка при выполнении задания
 error unmounting %1!	filemanager	ru	Ошибка отмонтирования %1!
 error uploading file!	filemanager	ru	Ошибка обновления файла!
 error while creating directory.	filemanager	ru	Ошибка при создании каталога
@@ -161,7 +164,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
 if you specify an export definition, it will be used when you export*	filemanager	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
 inherited	filemanager	ru	Унаследованный
+job deleted.	filemanager	ru	Задание удалено.
 job folder %1 does not exist or is not writable	filemanager	ru	Папка задания %1 не существует или не доступна для записи.
+job saved.	filemanager	ru	Задание сохранено.
+jobs	filemanager	ru	Задания
 leave empty to delete the file after attaching	filemanager	ru	Оставьте поле пустым, чтобы удалить файл после прикрепления.
 link	filemanager	ru	Ссылка
 link %1: %2	filemanager	ru	Ссылка %1: %2
@@ -237,11 +243,13 @@ save %1	filemanager	ru	Сохранить %1
 save %1, and go back to file listing	filemanager	ru	Сохранить %1 и вернуться к списку файлов.
 save as zip	filemanager	ru	Сохранить в формате ZIP
 save changes	filemanager	ru	Сохранить изменения
+save job to clear error and restart it	filemanager	ru	Сохраните задание, чтобы удалить ошибку и перезапустить его
 saved %1	filemanager	ru	Сохранено %1
 saving properties failed!	filemanager	ru	Сохранение свойств завершилось неудачно!
 search for '%1'	filemanager	ru	Поиск %1
 searchstring	filemanager	ru	Срока поиска
 select action...	filemanager	ru	Выберите действие...
+select custom field	filemanager	ru	Выберите настраиваемое поле
 select file to upload in current directory	filemanager	ru	Выберите файл для загрузки в текущий каталог
 show	filemanager	ru	Показать
 show hidden files	filemanager	ru	Показывать скрытые файлы

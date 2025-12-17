@@ -146,7 +146,6 @@ custom url for ical with holidays for all users	calendar	fr	URL personnalisé po
 custom_2	common	fr	Libre/Occupé
 daily	calendar	fr	Journalier
 daily tables	calendar	fr	Tableaux journaliers
-data exchange settings	calendar	fr	Paramètres d'échange de données
 date for the day of the week	calendar	fr	Date pour le jour de la semaine
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	fr	Date pour le jour de la semaine, disponible pour la première entrée sur chaque jour de la semaine ou bien sur la vue journalière dans la plage sélectionnée.
 date range	calendar	fr	Plage de dates

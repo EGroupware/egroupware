@@ -24,14 +24,20 @@ exports entries from your timesheet into a csv file.	timesheet	lv	Eksportē iera
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	lv	Eksportē ierakstus no Time Sheet uz CSV failu. Iespēju cilnē var izvēlēties arī citus atdalītājus.
 field must not be empty !!!	timesheet	lv	Lauks nedīkst būt tukšs
 forgot to switch off working time?	common	lv	Aizmirsāt izslēgt darba laiku?
+give additional users access	timesheet	lv	Piešķirt piekļuvi papildu lietotājiem
+give infolog delegation read-access to timesheets booked on them	timesheet	lv	Piešķirt InfoLog deleģēšanai lasīšanas piekļuvi laika uzskaites lapām, kas reģistrētas uz tām
 global categories	timesheet	lv	Globālās kategorijas
 history	timesheet	lv	Vēsture
+how to display linked timesheets	timesheet	lv	Kā parādīt saistītās laika uzskaites lapas
+html link to the current record	timesheet	lv	HTML saite uz pašreizējo ierakstu
 id	timesheet	lv	ID
 imports entries into the timesheet from a csv file.	timesheet	lv	Importē ierakstus Time Sheet no CSV faila
 last modified	timesheet	lv	Pēdējo reizi pārveidots
 leaves without saveing	timesheet	lv	aiziet bez saglabāšanas
 length<br>rows	timesheet	lv	Garums<br>Rindas
+link title	timesheet	lv	Saiknes nosaukums
 links	timesheet	lv	Saites
+make timesheets readable by infolog delegation	timesheet	lv	Padarīt laika uzskaites lapas lasāmas ar InfoLog deleģēšanu
 max length of the input [, length of the inputfield (optional)]	timesheet	lv	ievades datu maksimālais garums[, ievades lauka garums (pēc izvēles)]
 mode	timesheet	lv	Režīms
 modified	timesheet	lv	Pārveidots
@@ -44,6 +50,7 @@ pause time	timesheet	lv	Pauzes laiks
 paused	timesheet	lv	Pauzes
 project fields	timesheet	lv	Projekta lauki
 quantity	timesheet	lv	Daudzums
+readable	timesheet	lv	Lasāms
 recorded	timesheet	lv	Ierakstīts
 restore this entry	timesheet	lv	Atjaunot šo ierakstu
 saves the changes made and leaves	timesheet	lv	saglabā izdarītās izmaiņas un aiziet
@@ -57,6 +64,7 @@ the text displayed to the user	timesheet	lv	lietotājam parādīts teksts
 this month	timesheet	lv	Šis mēnesis
 this week	timesheet	lv	Šī nedēļa
 this year	timesheet	lv	Šis gads
+timer	common	lv	Taimers
 timer already running or paused	common	lv	Taimeris jau darbojas vai ir apturēts
 timesheet csv export	timesheet	lv	Timesheet CSV eksports
 timesheet csv import	timesheet	lv	Timesheet CSV imports

@@ -198,6 +198,7 @@ group name	admin	et	Grupi Nimi
 hide php information	admin	et	Peida PHP informatsioon
 home directory	admin	et	Kodu kataloog
 host information	admin	et	Hosti informatsioon
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	et	Kui mitu päeva peaksid kanded juurdepääsuloendis säilima, enne kui need kustutatakse. Vaikimisi = 90
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	et	Kui palju kirjeid peaksid mitte-adminid saama eksportida. Tühi = piirangut ei ole, Ei = ei saa eksportida.
 how many minutes should an account or ip be blocked (default 1) ?	admin	et	Mitu minutit konto või IP blokeeritakse (vaikimisi 30)?
 how should email addresses for new users be constructed?	admin	et	Kuidas EMail aadress uute kasutajatejaoks konstrueeritakse?
@@ -296,7 +297,7 @@ server password	admin	et	Serveri Parool
 server settings	admin	et	Serveri setingud
 server username	admin	et	Serveri Kasutajanimi
 set a random password	admin	et	Määra juhuslik parool
-show access log	admin	et	Näita külastuste logi
+show access log	admin	et	Juurdepääsu logi
 show error log	admin	et	Näita vigade logi
 show groups in container based on	admin	et	Konteineri gruppide kuvamine konteineri alusel
 show phpinfo()	admin	et	Näita phpinfo()
@@ -348,7 +349,7 @@ users can define their own signatures	admin	et	Kasutajad saavad määratleda oma
 users choice	admin	et	Kasutajate Valik
 vacation messages with start- and end-date require an admin account to be set	admin	et	Puhkuseteated algus- ja lõppkuupäevaga nõuavad admini konto seadistamist!
 vacation notice	admin	et	Puhkuse teatis
-view access log	admin	et	Vaata sisselogimise logi
+view access log	admin	et	Juurdepääsu logi
 view account	admin	et	Vaata kontot
 view category	admin	et	Vaata kategooriat
 view error log	admin	et	Vaata vigade logi

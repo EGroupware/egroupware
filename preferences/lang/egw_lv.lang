@@ -25,6 +25,7 @@ enable	preferences	lv	Aktivizēt
 enter code to authenticate the actions below	preferences	lv	Ievadiet kodu, lai pārbaudītu pareizu iestatīšanu.
 enter code to verify correct setup	preferences	lv	Įveskite kodą teisingam nustatymui patikrinti
 enter your new password	preferences	lv	Ievadi jauno paroli
+enter your old password	preferences	lv	Ievadiet veco paroli
 failed to change password.	preferences	lv	Neizdevād nomainīt paroli.
 fast	preferences	lv	Ātrā
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	lv	Ātrā atjaunināšana pievieno jaunus ierakstus vienmēr saraksta augšpusē un atjaunina esošos ierakstus to vietā, ja vien saraksts nav sakārtots pēc pēdējās izmaiņas. Precīzi atjauninājumi veic pilnīgu atjaunināšanu, ja saraksts nav sakārtots pēc pēdējās izmaiņas.
@@ -49,6 +50,7 @@ make applications list scrollable with up/down scroll buttons (usefull for users
 max matches per page	preferences	lv	Maksimālo atbilstošo ierakstu skaits lapā
 max number of icons in navbar	preferences	lv	Maksimālais ikonu skaits rīku joslā
 no default	preferences	lv	Nav noklusējuma
+old password and new password are the same. this is invalid. you must enter a new password	preferences	lv	Vecā parole un jaunā parole ir vienādas. Jums ir jāievada jauna parole!
 password stored	preferences	lv	Uzglabā paroli.
 popup with search	preferences	lv	Uzsākt ar meklēšanu
 preferences saved.	preferences	lv	Saglabātas iestatījumi.
@@ -70,6 +72,7 @@ singlesignon and passwords	preferences	lv	SingleSignOn un paroles
 small paragraph	preferences	lv	Mazs fonts
 store password retrievable for singlesignon	common	lv	Uzglabāt paroli, kas iegūstama vienotajam pierakstīšanās pakalpojumam SingleSignOn.
 text only	preferences	lv	Tikai teksts
+the old password is not correct	preferences	lv	Vecā parole nav pareiza!
 the two passwords are not the same	preferences	lv	Abas paroles nav vienādas
 theme (colors/fonts) selection	preferences	lv	Tēmas(krāsu/fontu) izvēle
 this server is located in the %1 timezone	preferences	lv	Šis serveris atrodas %1laika joslā

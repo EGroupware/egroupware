@@ -98,6 +98,8 @@ from	mail	tr	Nereden
 get acl rights failed from imap server!	mail	tr	IMAP sunucusundan ACL haklarını alma başarısız oldu!
 ham folder	mail	tr	Ham klasörü
 handling of external http images / mixed content in mails	mail	tr	E-postalarda harici http görüntülerinin / karışık içeriğin işlenmesi
+header	mail	tr	Başlık
+header lines	mail	tr	Başlık satırları
 hide from	mail	tr	Kimden gizle
 high priority	mail	tr	Yüksek öncelik
 html	mail	tr	HTML
@@ -106,6 +108,7 @@ ident name email	mail	tr	Kimlik adı [E-posta]
 ident name organization email	mail	tr	Kimlik adı Organizasyon [E-posta]
 identity label	mail	tr	Kimlik etiketi
 if different from email address	mail	tr	E-posta adresinden farklıysa
+if mail header	mail	tr	e-posta başlığı ise
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	tr	Konuya tek tıklayarak bir postanın önizlemesini görmek istiyorsanız, bunu etkinleştirin.
 imap	mail	tr	IMAP
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	tr	%1 mesajının içe aktarımı başarısız oldu. Nedeniyle mesaj %2 klasörüne kaydedilemedi: %3
@@ -158,6 +161,7 @@ move to archive	mail	tr	Arşiv klasörüne taşı
 moved %1 message(s) from %2 to %3	mail	tr	%1 mesaj(lar)ını %2'den %3'e taşıdı.
 name and domain	mail	tr	İsim ve alan adı
 name of account	mail	tr	Hesap adı
+name of header, only letters, numbers and dash (-) allowed	mail	tr	Başlık adı, yalnızca harfler, rakamlar ve tire (-) kullanılabilir.
 name of imap servers (space separated host or host:port)	mail	tr	IMAP sunucularının adı (boşluk bırakılarak ayrılmış ana bilgisayar veya ana bilgisayar:bağlantı noktası)
 never show	mail	tr	Asla gösterme
 never show notification	mail	tr	Asla bildirim gösterme
@@ -294,6 +298,7 @@ trash folder	mail	tr	Çöp klasörü
 unconditional	mail	tr	Her zaman
 unsubscribe folder	mail	tr	Klasör aboneliğini iptal et
 validate addresses on submit:	mail	tr	Gönderme sırasında adresleri doğrulayın:
+view header lines	mail	tr	Başlık satırlarını görüntüle
 what to do when you delete a message	mail	tr	Bir mesajı sildiğinizde ne yapmalısınız?
 write	mail	tr	Yaz
 write & delete	mail	tr	yaz & sil

@@ -799,7 +799,7 @@ set preference values.	admin	sk	Nastaviť hodnoty.
 settings	admin	sk	Nastavenia
 should exceptions contain a trace (including function arguments)	admin	sk	Chcete, aby výnimky obsahovali trasovacie údaje (vrátane argumentov funkcií).
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sk	Chcete, aby sa na prihlasovacej stránke zobrazoval výber jazyka (vhodné pre demo-stránky)?
-show access log	admin	sk	Zobraziť prístupové záznamy
+show access log	admin	sk	Prístupový protokol
 show as optional, but required once user has it setup	admin	sk	Zobraziť ako voliteľné, ale vyžadovať akonáhle si to používateľ nastaví
 show as required, but only once user has it setup	admin	sk	Zobraziť ako voliteľné, ale vyžadovať akonáhle si to používateľ nastaví
 show current action	admin	sk	Zobraziť aktuálnu akciu
@@ -959,7 +959,7 @@ vacation notice	admin	sk	Dovolenkové upozornenie
 valid for	admin	sk	Platí pre
 value for column %1 is not unique!	admin	sk	Hodnota pre stĺpec %1 nie je jedinečná!
 vfs directory "%1" not found!	admin	sk	Adresár VFS "%1" sa NEnašiel!
-view access log	admin	sk	Zobraziť prístupové záznamy
+view access log	admin	sk	Prístupový protokol
 view account	admin	sk	Zobraziť účet
 view category	admin	sk	Zobraziť kategóriu
 view error log	admin	sk	Zobraziť záznam o chybách

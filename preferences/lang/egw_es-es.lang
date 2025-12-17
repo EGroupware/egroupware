@@ -31,7 +31,6 @@ current password	preferences	es-es	Contraseña actual
 custom login box color, defaults to above color darkened	preferences	es-es	Color del cuadro de inicio de sesión personalizado, por defecto el color anterior se oscureció
 custom sidebar menu active color, defaults to above color darkened	preferences	es-es	Color de menú de barra lateral personalizado activo, por defecto el color anterior se oscureció
 dark mode theme	preferences	es-es	Tema en modo oscuro
-data exchange settings	preferences	es-es	Opciones para intercambio de datos
 date format	preferences	es-es	Formato de la fecha
 default	preferences	es-es	Predeterminado
 default font	preferences	es-es	Tipografía predeterminada

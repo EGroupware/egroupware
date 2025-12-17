@@ -388,7 +388,7 @@ read rights (default)	infolog	de	Leserechte (Vorgabe)
 receive notifications about due entries you are responsible for	infolog	de	Benachrichtigungen über fällige Einträge für die Sie verantwortlich sind
 receive notifications about due entries you delegated	infolog	de	Benachrichtigungen über fällige Einträge die Sie delegiert haben
 receive notifications about items assigned to you	infolog	de	Benachrichtigungen über Einträge für die Sie verantwortlich sind
-receive notifications about items of type owned by groups you are part of	infolog	de	Benachrichtigungen über Einträge, deren Infolog-Typen einer Gruppe gehören, der Sie angehören.
+receive notifications about items of type owned by groups you are part of	infolog	de	Benachrichtigungen über Einträge, deren InfoLog-Typen einer Gruppe gehören, der Sie angehören.
 receive notifications about own items	infolog	de	Benachrichtigungen über eigene Einträge
 receive notifications about starting entries you are responsible for	infolog	de	Benachrichtigungen über zu startende Einträge für die Sie verantwortlich sind
 receive notifications about starting entries you delegated	infolog	de	Benachrichtigungen über zu startende Einträge die Sie delegiert haben

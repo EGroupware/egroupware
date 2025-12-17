@@ -61,6 +61,7 @@ copy to clipboard	filemanager	bg	Копиране в клипборд
 could not copy %1 to %2	filemanager	bg	Неуспешно копиране на %1 в %2
 could not create %1	filemanager	bg	Неуспешно създаване на %1
 could not delete %1	filemanager	bg	Неуспешно изтриване на %1
+could not install async job	filemanager	bg	Не може да се инсталира асинхронна задача
 could not move %1 to %2	filemanager	bg	Неуспешно преместване на %1 в %2
 could not rename %1 to %2	filemanager	bg	Неуспешно преименуване на %1 като %2
 create a link	filemanager	bg	Създаване на връзка/ линк
@@ -70,6 +71,7 @@ create folder	filemanager	bg	Създай директория
 created	filemanager	bg	създаден на
 created %1,%2	filemanager	bg	Създаден %1, %2
 created directory %1	filemanager	bg	Създадена е директория %1
+creationdate of file	filemanager	bg	Дата на създаване на файла
 current directory	filemanager	bg	Текуща директория
 custom fields	filemanager	bg	Полета по избор
 cut	filemanager	bg	преместен(и)
@@ -115,6 +117,7 @@ error adding the acl!	filemanager	bg	Грешка при добавяне на A
 error creating symlink to target %1!	filemanager	bg	Грешка при създаването на символна връзка за таргетиране на %1!
 error deleting the acl entry!	filemanager	bg	Грешка при изтриване на ACL записа
 error mounting %1 on %2!	filemanager	bg	Грешка при монтирането на %1 на %2!
+error running job	filemanager	bg	Грешка при изпълнение на задачата
 error unmounting %1!	filemanager	bg	Грешка при демонтиране на %1!
 error uploading file!	filemanager	bg	Грешка при качване на файла!
 error while creating directory.	filemanager	bg	Грешка при създаването на директория
@@ -176,7 +179,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	bg	Ако посочите дефиниция за експортиране, тя ще се използва, когато експортирате.
 if you specify an export definition, it will be used when you export*	filemanager	bg	Ако посочите дефиниция за експортиране, тя ще се използва, когато експортирате*
 inherited	filemanager	bg	Наследени
+job deleted.	filemanager	bg	Задачата е изтрита.
 job folder %1 does not exist or is not writable	filemanager	bg	Папката с работни места %1 не съществува или не може да се записва.
+job saved.	filemanager	bg	Задачата е запазена.
+jobs	filemanager	bg	Задачи
 last accessed	filemanager	bg	Последен достъп
 leave empty to delete the file after attaching	filemanager	bg	Оставете празно, за да изтриете файла след прикачване
 link	filemanager	bg	Връзка
@@ -258,12 +264,14 @@ save %1	filemanager	bg	Запази %1
 save %1, and go back to file listing	filemanager	bg	Запазва %1 и връща обратно към списъка с файлове
 save as zip	filemanager	bg	Запази като Zip
 save changes	filemanager	bg	Запази промените
+save job to clear error and restart it	filemanager	bg	Запазете задачата, за да изчистите грешката и я рестартирайте
 saved %1	filemanager	bg	%1 е записан
 saving properties failed!	filemanager	bg	Записът на свойствата е неуспешен!
 saving setting for document merge failed!	filemanager	bg	Запазването на настройката за обединяване на документи не бе успешно!
 search for '%1'	filemanager	bg	Търсене на '%1'
 searchstring	filemanager	bg	низ за търсене
 select action...	filemanager	bg	Изберете действие...
+select custom field	filemanager	bg	Изберете персонализирано поле
 select file to upload in current directory	filemanager	bg	Изберете файл за качване в текущата директория
 select file(s) from vfs	common	bg	Изберете файл(ове) от VFS
 setting for document merge saved.	filemanager	bg	Настройките за обединяване на документи са запаметени.

@@ -65,6 +65,7 @@ no default	preferences	zh	无默认值
 no user-selection at all	common	zh	无任何用户选择
 note: this feature does *not* change your email password. this will	preferences	zh	注：此特征<b>不会</b>更改您的电子邮件密码。这将
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	zh	注：此特征<b>不会</b>更改您的电子邮件密码，这将需要通过手动更改。
+old password and new password are the same. this is invalid. you must enter a new password	preferences	zh	旧密码与新密码相同。您必须输入新密码！
 p: paragraph	preferences	zh	<p> 段落
 password stored	preferences	zh	存储密码。
 popup with search	preferences	zh	弹出式搜索窗口

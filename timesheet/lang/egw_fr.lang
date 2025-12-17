@@ -58,9 +58,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	fr	Avez-vous oublié d'arrêter votre compteur de temps de travail ?
 full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets
 general fields:	timesheet	fr	Champs généraux :
+give additional users access	timesheet	fr	Donner accès à des utilisateurs supplémentaires
+give infolog delegation read-access to timesheets booked on them	timesheet	fr	Donner à la délégation InfoLog un accès en lecture aux feuilles de temps enregistrées sur celles-ci
 global categories	timesheet	fr	Catégorie globale
 history	timesheet	fr	Historique
 history logging	admin	fr	Enregistrement de l'historique
+how to display linked timesheets	timesheet	fr	Comment afficher les feuilles de temps liées
 html link to the current record	timesheet	fr	Lien HTML vers l'enregistrement courant
 id	timesheet	fr	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	fr	Si vous spécifiez ici un dossier (chemin vfs complet), %1 affiche une action pour chaque document. Cette action permet de télécharger le document correspondant avec les données %1 insérées.
@@ -80,10 +83,12 @@ last year	timesheet	fr	L'année dernière
 leave it empty for a full week	timesheet	fr	Laisser vide pour une semaine pleine
 leaves without saveing	timesheet	fr	Quitter sans enregistrer
 length<br>rows	timesheet	fr	Longueur<br>lignes
+link title	timesheet	fr	Lien vers le titre
 links	timesheet	fr	Liens
 links and attached files	timesheet	fr	Liens et fichiers attachés
 links to specified application.  example: {{links/infolog}}	timesheet	fr	Liens vers les applications spécifiés. Exemple :  {{links/infolog}}
 list of files linked to the current record	timesheet	fr	Listes des fichiers liés à l'enregistrement courant
+make timesheets readable by infolog delegation	timesheet	fr	Rendre les feuilles de temps lisibles par délégation InfoLog
 manage mapping	timesheet	fr	Gérer le mappage
 max length of the input [, length of the inputfield (optional)]	timesheet	fr	Longueur maximum de l'entrée [, longueur du champ de saisi (optionnel)]
 mode	timesheet	fr	Mode
@@ -114,6 +119,7 @@ price	timesheet	fr	Prix
 project fields	timesheet	fr	Champs du projet
 projectmanager integration	admin	fr	Intégration au Gestionnaire de projets
 quantity	timesheet	fr	Quantité
+readable	timesheet	fr	Lisible
 recorded	timesheet	fr	Enregistré
 recovered	timesheet	fr	Récupéré
 replacements for inserting entries into documents	timesheet	fr	Remplacements pour insertion d'entrées dans des documents

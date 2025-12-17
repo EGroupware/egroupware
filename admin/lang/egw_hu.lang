@@ -562,7 +562,7 @@ server username	admin	hu	Szerver felhasználónév
 set a random password	admin	hu	Véletlenszerű jelszó beállítása
 set preference values.	admin	hu	Set preference values.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	hu	A Bejelentkező képernyő tartalmazzon Nyelv választási lehetőséget (hasznos pl. a demo oldal esetén)?
-show access log	admin	hu	Hozzáférési napló megjelenítése
+show access log	admin	hu	Hozzáférési napló
 show current action	admin	hu	Jelenlegi művelet megjelenítése
 show error log	admin	hu	Hibanapló megjelenítése
 show groups in container based on	admin	hu	Csoportok megjelenítése a konténerben a következők alapján
@@ -671,7 +671,7 @@ users can define their own signatures	admin	hu	A felhasználók meghatározhatj�
 users choice	admin	hu	Felhasználói választás
 vacation messages with start- and end-date require an admin account to be set	admin	hu	A kezdő és befejező dátummal ellátott vakációs üzenetek beállításához admin fiók szükséges!
 vacation notice	admin	hu	Ünnepnapi értesítés
-view access log	admin	hu	Elérési napló megtekintése
+view access log	admin	hu	Hozzáférési napló
 view account	admin	hu	Azonosító megtekintése
 view category	admin	hu	Kategória megtekintése
 view error log	admin	hu	Hibanapló megtekintése

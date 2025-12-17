@@ -369,7 +369,7 @@ server username	admin	ko	서버 사용자이름
 set a random password	admin	ko	임의 비밀번호 설정
 set preference values.	admin	ko	환경설정 값을 결정
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ko	접속 페이지에서 언어 선택박스를 포함할까요 (데모사이트에서 유용) ?
-show access log	admin	ko	접근 기록을 보임
+show access log	admin	ko	접속 로그
 show current action	admin	ko	현재 액션을 보임
 show error log	admin	ko	에러 기록을 보임
 show groups in container based on	admin	ko	コンテナ内のグループの表示
@@ -440,7 +440,7 @@ users can define their own signatures	admin	ko	사용자가 자신의 서명을 
 users choice	admin	ko	사용자 선택
 vacation messages with start- and end-date require an admin account to be set	admin	ko	시작일과 종료일이 포함된 휴가 메시지를 보내려면 관리자 계정을 설정해야 합니다!
 vacation notice	admin	ko	휴가 알림
-view access log	admin	ko	접속 기록 보기
+view access log	admin	ko	접속 로그
 view account	admin	ko	계정 보기
 view category	admin	ko	카테고리 보기
 view error log	admin	ko	오류 기록 보기

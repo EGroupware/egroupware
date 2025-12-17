@@ -464,7 +464,7 @@ server username	admin	pt	Utilizador do servidor
 set a random password	admin	pt	Definir uma palavra-passe aleatória
 set preference values.	admin	pt	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt	A página de acesso deve incluir uma caixa de selecção de idioma (útil para sítios de demonstração)?
-show access log	admin	pt	Exibir registo de acesso
+show access log	admin	pt	Registo de acesso
 show current action	admin	pt	Exibir acção actual
 show error log	admin	pt	Exibir registo de erro
 show groups in container based on	admin	pt	Mostrar grupos no contentor com base em
@@ -562,7 +562,7 @@ users can define their own signatures	admin	pt	Os utilizadores podem definir as 
 users choice	admin	pt	Personalizar...
 vacation messages with start- and end-date require an admin account to be set	admin	pt	As mensagens de férias com datas de início e fim requerem a criação de uma conta de administrador!
 vacation notice	admin	pt	Aviso de férias
-view access log	admin	pt	Ver registo de acessos
+view access log	admin	pt	Registo de acesso
 view account	admin	pt	Ver conta
 view category	admin	pt	Ver categorias
 view error log	admin	pt	Ver registo de erros

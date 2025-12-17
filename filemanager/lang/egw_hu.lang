@@ -38,6 +38,7 @@ copy to clipboard	filemanager	hu	Vágólapra másol
 could not copy %1 to %2	filemanager	hu	%1 nem másolható ide: %2
 could not create %1	filemanager	hu	%1 nem hozható létre
 could not delete %1	filemanager	hu	%1 nem törölhető
+could not install async job	filemanager	hu	Az aszinkron feladat nem telepíthető
 could not move %1 to %2	filemanager	hu	%1 nem mozgatható át ide: %2
 could not rename %1 to %2	filemanager	hu	%1 nem nevezhető át erre: %2
 create a link	filemanager	hu	Link létrehozása
@@ -47,6 +48,7 @@ create folder	filemanager	hu	Mappa létrehozása
 created	filemanager	hu	Létrehozva
 created %1,%2	filemanager	hu	%1,%2 létrehozva
 created directory %1	filemanager	hu	%1 mappa létrehozva
+creationdate of file	filemanager	hu	A fájl létrehozásának dátuma
 current directory	filemanager	hu	aktuális mappa
 custom fields	filemanager	hu	egyedi mező
 cut	filemanager	hu	kivágás
@@ -81,6 +83,7 @@ error adding the acl!	filemanager	hu	HIba a hozzáférés létrehozása során!
 error creating symlink to target %1!	filemanager	hu	Hiba a sylink létrehozása során %1 céhoz!
 error deleting the acl entry!	filemanager	hu	Hiba a hozzáférés törlése során!
 error mounting %1 on %2!	filemanager	hu	Hiba a %1 mountolása a %2-n!
+error running job	filemanager	hu	Hiba a feladat futtatásakor
 error unmounting %1!	filemanager	hu	Hiba a %1 leválasztása!
 error uploading file!	filemanager	hu	HIba a file feltöltése során!
 error while creating directory.	filemanager	hu	Hiba a mappa létrehozásakor
@@ -135,7 +138,10 @@ id	filemanager	hu	Azonosító
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	hu	Ha itt egy mappát (teljes VFS elérési útvonal) ad meg, a %1 minden dokumentumhoz megjelenít egy műveletet. Ez a művelet lehetővé teszi a megadott dokumentum letöltését a %1 adatainak beillesztésével.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	hu	Ha itt egy mappát (teljes VFS elérési útvonal) ad meg, a %1 minden egyes bejegyzéshez megjelenít egy extra dokumentum ikont. Ez az ikon lehetővé teszi a megadott dokumentum letöltését a beillesztett adatokkal együtt.
 inherited	filemanager	hu	lemásolva
+job deleted.	filemanager	hu	Feladat törölve.
 job folder %1 does not exist or is not writable	filemanager	hu	A %1 feladathalmaz nem létezik vagy nem írható.
+job saved.	filemanager	hu	Feladat elmentve.
+jobs	filemanager	hu	Feladatok
 leave empty to delete the file after attaching	filemanager	hu	Hagyja üresen, ha a csatolás után törölni szeretné a fájlt
 link	filemanager	hu	Link
 link %1: %2	filemanager	hu	Link %1: %2
@@ -204,11 +210,13 @@ save %1	filemanager	hu	Mentés %1
 save %1, and go back to file listing	filemanager	hu	%1 mentése és visszatérés az állománylistához
 save as zip	filemanager	hu	Mentés ZIP-ként
 save changes	filemanager	hu	Változások mentése
+save job to clear error and restart it	filemanager	hu	A hiba törléséhez mentse el a feladatot, majd indítsa újra
 saved %1	filemanager	hu	%1 elmentve
 saving properties failed!	filemanager	hu	Tulajdonságok mentése nem sikerült.
 search for '%1'	filemanager	hu	%1 keresése
 searchstring	filemanager	hu	Keresett kifejezés
 select action...	filemanager	hu	Válasz akciót
+select custom field	filemanager	hu	Egyéni mező kiválasztása
 select file to upload in current directory	filemanager	hu	Válasz ki a feltöltendő filet.
 show	filemanager	hu	Mutat
 show hidden files	filemanager	hu	Rejtett fileok megjelenítése

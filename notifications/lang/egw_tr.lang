@@ -10,6 +10,7 @@ cancal?	notifications	tr	İptal mi?
 certification-information:	notifications	tr	Sertifika bilgileri:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	tr	Her ikisini de kontrol edin. Önce aktif kullanıcı tanımlı hesabı deneyin, yoksa eMailAdmin profilini kullanın.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	tr	Bir bildirim zinciri seçin. Zincire dahil olan arka uçlar üzerinden bilgilendirileceksiniz.<br>Not: Bir bildirim zinciri "devre dışı" olarak işaretlenmişse, yöneticiniz zincire dahil olan arka uçlardan birine veya daha fazlasına izin vermez, bildirimler sizi bilgilendirirken "E-posta" ya geri döner.
+choose from mailsettings used for notification	admin	tr	E-posta bildirimi için kullanılacak posta ayarlarını seçin
 connection error.	notifications	tr	Bağlantı hatası.
 connection error. please check connection to server.	notifications	tr	Bağlantı hatası. Lütfen sunucu bağlantısını kontrol edin.
 continue to connect?	notifications	tr	Bağlanmaya devam ediyor musunuz?
@@ -49,9 +50,11 @@ mark as read	notifications	tr	Okundu olarak işaretle
 message from	notifications	tr	Mesaj sahibi:
 minutes	notifications	tr	Dakika
 more info	notifications	tr	Daha fazla bilgi
+normally only the work email address is notified	notifications	tr	Normalde sadece iş e-posta adresine bildirim gönderilir.
 notification	common	tr	Bildirim
 notifier	notifications	tr	Bildirici
 notify me by	notifications	tr	Bana haber ver
+notify private email address	notifications	tr	Özel e-posta adresine bildirim gönder
 only used if no push server available!	admin	tr	Används endast om ingen push-server är tillgänglig!
 open notified entry	notifications	tr	Açık bildirimli giriş
 optimize e-mails for external mail client	notifications	tr	E-postaları harici e-posta istemcisi için optimize edin
@@ -64,6 +67,7 @@ please contact your egroupware admin.	notifications	tr	Lütfen EGroupware yönet
 please enter the url of your egroupware.	notifications	tr	Lütfen EGroupware'inizin URL'sini girin.
 please enter your egroupware username.	notifications	tr	Lütfen EGroupware kullanıcı adınızı girin.
 please enter your password	notifications	tr	Lütfen şifrenizi giriniz
+preferences for notification	notifications	tr	Bildirim tercihleri
 repeat login?	notifications	tr	Girişi tekrarlayın?
 run application	notifications	tr	Uygulamayı çalıştır
 save password	notifications	tr	Şifreyi kaydet
@@ -80,6 +84,8 @@ this month	notifications	tr	Bu ay
 user:	notifications	tr	Kullanıcı:
 warning	notifications	tr	Uyarı
 windows-popup and e-mail	notifications	tr	Windows açılır penceresi ve e-posta
+yes, notify only private email, if existing	notifications	tr	Evet, varsa sadece özel e-postaya bildirim gönder
+yes, notify private email too	notifications	tr	Evet, özel e-postaya da bildirim gönder
 yesterday	notifications	tr	Dün
 you can also use	admin	tr	Ayrıca şunları da kullanabilirsiniz
 you have %1 unread notifications	notifications	tr	%1 okunmamış bildiriminiz var

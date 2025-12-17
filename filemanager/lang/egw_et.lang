@@ -7,7 +7,9 @@
 applications	common	et	Rakendused
 classic	filemanager	et	Standardne tööriistariba
 comment	filemanager	et	Kommentaar
+could not install async job	filemanager	et	Asünkroonset tööd ei õnnestunud installida
 created	filemanager	et	Tehtud
+custom fields	filemanager	et	Kohandatud väljad
 cut	filemanager	et	Lõika
 default action on double-click	filemanager	et	Topeltklõpsu vaikimisi toiming
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	et	Vaikimisi = Ei. Linki ei kuvata, kuid teil on siiski võimalik navigeerida sellesse asukohta või konfigureerida see konkreetne asukoht algkaustaks või kausta lingiks.
@@ -19,6 +21,7 @@ edit share	filemanager	et	Redigeerige jagamist
 enable	filemanager	et	Luba
 enter a file size, e.g. 100k, 200m or 2g	filemanager	et	Sisestage faili suurus, nt 100K, 200M või 2G.
 enter your file name	filemanager	et	Sisestage faili nimi
+error running job	filemanager	et	Töö käivitamisel tekkis viga
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	et	Näide {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - otsi väljal "n_prefix", otsi "Mr", kui leitakse, kirjuta Hello Mr., muidu kirjuta Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	et	Näide {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Näide: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	et	Näide {{NELF roll}} - kui väli roll ei ole tühi, saate uue rea, kus on välja roll väärtus
@@ -55,7 +58,10 @@ hostname/ip for webdav and smb	filemanager	et	Hostnimi/IP WebDAV ja SMB puhul
 id	filemanager	et	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	et	Kui te määrate siin kausta (täielik VFS-pada), siis %1 kuvab iga dokumendi jaoks toimingu. See tegevus võimaldab laadida alla määratud dokumendi koos sisestatud %1 andmetega.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	et	Kui te määrate siin kausta (täielik VFS-tee), kuvab %1 iga kirje jaoks lisadokumendi ikooni. See ikoon võimaldab allalaadida määratud dokumenti koos sisestatud andmetega.
+job deleted.	filemanager	et	Töö kustutatud.
 job folder %1 does not exist or is not writable	filemanager	et	Töökaust %1 ei ole olemas või ei ole kirjutatav.
+job saved.	filemanager	et	Töö salvestatud.
+jobs	filemanager	et	Tööd
 leave empty to delete the file after attaching	filemanager	et	Jäta tühjaks, et fail pärast lisamist kustutada
 link	filemanager	et	Link
 list view	filemanager	et	Nimekirja vaade
@@ -94,6 +100,8 @@ rename, change permissions or ownership	filemanager	et	Ümbernimetamine, õigust
 renamed %1 to %2	filemanager	et	Ümbernimetamine %1 ümber %2-ks
 renamed %1 to %2.	filemanager	et	Ümbernimetamine %1 ümber %2-ks
 save changes	filemanager	et	Salvesta muudatused
+save job to clear error and restart it	filemanager	et	Salvestage töö, et viga kustutada ja töö uuesti käivitada
+select custom field	filemanager	et	Valige kohandatud väli
 show	filemanager	et	Näita
 size	filemanager	et	suurus
 smb, webdavs and vfs require a username!	filemanager	et	SMB, WebDAV ja VFS nõuavad kasutajanime!

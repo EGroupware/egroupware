@@ -146,7 +146,6 @@ custom url for ical with holidays for all users	calendar	es-es	URL personalizada
 custom_2	common	es-es	Disponibilidad
 daily	calendar	es-es	Diario
 daily tables	calendar	es-es	Tablas diarias
-data exchange settings	calendar	es-es	Opciones para intercambio de datos
 date for the day of the week	calendar	es-es	Fecha para el día de la semana
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	es-es	Fecha para el día de la semana, disponible para la primera entrada dentro de cada día de la semana o tabla diaria dentro del rango seleccionado.
 date range	calendar	es-es	Rango de fechas

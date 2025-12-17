@@ -10,6 +10,7 @@ cancal?	notifications	nl	Annuleren?
 certification-information:	notifications	nl	Certificeringsinformatie:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	nl	Controleer beide. Probeer eerst een door de gebruiker gedefinieerd account, als dat niet bestaat, gebruik dan het eMailAdmin-profiel.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	nl	Kies een notificatie-lijst. U wordt geinformeerd over de backends die in de lijst voorkomen.<br>Let op: Indien een notificatie-lijst is gemarkeerd als "uitgeschakeld", dan heeft uw beheerder ingesteld dat een of meer van de backends niet in de lijst mogen voorkomen. Notificatie valt dan terug op "E-mail" tijdens het aanmaken van de melding naar u.
+choose from mailsettings used for notification	admin	nl	Kies de e-mailinstellingen die worden gebruikt voor e-mailmeldingen
 common chains	notifications	nl	Gebruikelijke lijsten
 connection error.	notifications	nl	Fout in verbinding.
 connection error. please check connection to server.	notifications	nl	Fout in de verbinding. Controleer de verbinding met de server.
@@ -60,9 +61,11 @@ mark as read	notifications	nl	Als gelezen markeren
 message from	notifications	nl	Bericht van
 minutes	notifications	nl	Minuten
 more info	notifications	nl	Meer info
+normally only the work email address is notified	notifications	nl	Normaal gesproken wordt alleen het zakelijke e-mailadres op de hoogte gesteld.
 notification	common	nl	Melding
 notifier	notifications	nl	Kennisgever
 notify me by	notifications	nl	Meld mij via
+notify private email address	notifications	nl	Privé-e-mailadres op de hoogte stellen
 only used if no push server available!	admin	nl	Alleen gebruikt als er geen pushserver beschikbaar is!
 open notified entry	notifications	nl	Melding openen
 optimize e-mails for external mail client	notifications	nl	Optimaliseer E-mails voor externe mail client
@@ -94,6 +97,8 @@ this month	notifications	nl	Deze maand
 user:	notifications	nl	Gebruiker:
 warning	notifications	nl	Waarschuwing
 windows-popup backend	admin	nl	Windows-Popup backend
+yes, notify only private email, if existing	notifications	nl	Ja, alleen privé-e-mail op de hoogte stellen, indien aanwezig
+yes, notify private email too	notifications	nl	Ja, ook privé-e-mail op de hoogte stellen
 yesterday	notifications	nl	Gisteren
 you can also use	admin	nl	Je kunt ook
 you have %1 unread notifications	notifications	nl	U hebt %1 ongelezen meldingen

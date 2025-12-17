@@ -520,7 +520,7 @@ server username	admin	zh	服务器用户名
 set a random password	admin	zh	设置随机密码
 set preference values.	admin	zh	设置偏好参数。
 should the login page include a language selectbox (useful for demo-sites) ?	admin	zh	登录页需要包含语言选单吗 (有益于站点演示)？
-show access log	admin	zh	显示访问日志
+show access log	admin	zh	访问日志
 show current action	admin	zh	显示当前操作
 show error log	admin	zh	显示错误日志
 show groups in container based on	admin	zh	根据以下条件在容器中显示组
@@ -627,7 +627,7 @@ users choice	admin	zh	用户选择
 vacation messages with start- and end-date require an admin account to be set	admin	zh	带有开始和结束日期的假期信息需要管理员账户才能设置！
 vacation notice	admin	zh	放假通知
 value for column %1 is not unique!	admin	zh	栏%1的值不是唯一的！
-view access log	admin	zh	查看访问日志
+view access log	admin	zh	访问日志
 view account	admin	zh	查看帐户
 view category	admin	zh	查看类别
 view error log	admin	zh	查看错误日志

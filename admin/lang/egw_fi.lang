@@ -625,7 +625,7 @@ sessions last 30 days	admin	fi	Istunnot viimeisen kuukauden ajalta
 set a random password	admin	fi	Aseta satunnainen salasana
 set preference values.	admin	fi	Tee asetukset.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fi	Näytetäänkö kirjautumisnäytöllä kielien valintalista (käytännöllinen esittelyjä varten)?
-show access log	admin	fi	Näytä käyttöloki
+show access log	admin	fi	Käyttöoikeusloki
 show current action	admin	fi	Näytä viimeisin toimi
 show error log	admin	fi	Näytä virheloki
 show groups in container based on	admin	fi	Näyttää ryhmät säiliössä perustuen
@@ -752,7 +752,7 @@ vacation messages with start- and end-date require an admin account to be set	ad
 vacation notice	admin	fi	Lomailmoitus
 value for column %1 is not unique!	admin	fi	Sarakkeen arvo %1 ei ole ainutlaatuinen!
 vfs directory "%1" not found!	admin	fi	VFS tiedostoa "%1" ei löytynyt!
-view access log	admin	fi	Näytä käyttöloki
+view access log	admin	fi	Käyttöoikeusloki
 view account	admin	fi	Näytä käyttäjätili
 view category	admin	fi	Näytä kategoria
 view error log	admin	fi	Näytä virheloki

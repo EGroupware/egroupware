@@ -5,6 +5,9 @@
 %1 failed, %2 succeded	filemanager	ro	%1 a eșuat, %2 a reușit.
 %1 files unlocked.	filemanager	ro	%1 fișiere deblocate.
 classic	filemanager	ro	Bara de instrumente standard
+could not install async job	filemanager	ro	Nu s-a putut instala sarcina asincronă
+creationdate of file	filemanager	ro	Data creării fișierului
+custom fields	filemanager	ro	Câmpuri personalizate
 default action on double-click	filemanager	ro	Acțiune implicită la dublu clic
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	ro	Implicit = Nu. Legătura nu va fi afișată, dar aveți în continuare posibilitatea de a naviga în această locație sau de a configura această locație specială ca dosar de pornire sau legătură de dosar.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	ro	Definește modul de gestionare a acțiunii de dublu clic pe un fișier document. Imaginile se deschid întotdeauna în vizualizarea expunere și e-mailurile cu aplicația de e-mail. Toate celelalte tipuri MIME sunt gestionate de browserul propriu-zis.
@@ -17,6 +20,7 @@ error adding the acl!	filemanager	ro	Eroare la adăugarea ACL!
 error creating symlink to target %1!	filemanager	ro	Eroare la crearea unui link simbolic către ținta %1!
 error deleting the acl entry!	filemanager	ro	Eroare la ștergerea intrării ACL!
 error mounting %1 on %2!	filemanager	ro	Eroare la montarea lui %1 pe %2!
+error running job	filemanager	ro	Eroare la executarea sarcinii
 error unmounting %1!	filemanager	ro	Eroare la demontarea lui %1!
 error uploading file!	filemanager	ro	Eroare la încărcarea fișierului!
 error while creating directory.	filemanager	ro	Eroare la crearea unui dosar
@@ -57,7 +61,10 @@ hidden uploads	filemanager	ro	Încărcări ascunse
 hostname/ip for webdav and smb	filemanager	ro	Hostname/IP pentru WebDAV și SMB
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ro	Dacă specificați aici un folder (calea VFS completă), %1 afișează o acțiune pentru fiecare document. Acțiunea respectivă permite descărcarea documentului specificat cu datele %1 inserate.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ro	Dacă specificați aici un dosar (calea VFS completă), %1 afișează o pictogramă suplimentară a documentului pentru fiecare intrare. Această pictogramă permite descărcarea documentului specificat cu datele inserate.
+job deleted.	filemanager	ro	Sarcina ștersă.
 job folder %1 does not exist or is not writable	filemanager	ro	Dosarul de locuri de muncă %1 nu există sau nu poate fi scris.
+job saved.	filemanager	ro	Sarcina salvată.
+jobs	filemanager	ro	Sarcini
 leave empty to delete the file after attaching	filemanager	ro	Lăsați câmpul gol pentru a șterge fișierul după atașare
 list view	filemanager	ro	Vizualizare listă
 lock	filemanager	ro	Blocați
@@ -90,6 +97,8 @@ renamed %1 to %2	filemanager	ro	Redenumit %1 în %2
 renamed %1 to %2.	filemanager	ro	Redenumit %1 în %2
 replacements for inserting entries into documents	filemanager	ro	Înlocuitori pentru inserarea de intrări în documente
 save as zip	filemanager	ro	Salvați ca ZIP
+save job to clear error and restart it	filemanager	ro	Salvați sarcina pentru a șterge eroarea și reporniți-o
+select custom field	filemanager	ro	Selectați câmpul personalizat
 smb, webdavs and vfs require a username!	filemanager	ro	SMB, WebDAV și VFS necesită un nume de utilizator!
 smb: mount samba or windows fileserver shares	filemanager	ro	SMB: Montarea partajelor Samba sau Windows fileserver
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ro	Documentul poate conține caractere de plasare precum {{%3}}, care vor fi înlocuite cu datele (%1lista completă de nume de caractere de plasare%2).

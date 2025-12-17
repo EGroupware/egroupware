@@ -432,7 +432,7 @@ set a random password	admin	da	Indstil en tilfældig adgangskode
 set preference values.	admin	da	Sæt præference værdierne.
 settings	admin	da	Indstillinger
 should the login page include a language selectbox (useful for demo-sites) ?	admin	da	Skal loginsiden inkludere et sprog selectboks (brugbar på demo-sider)?
-show access log	admin	da	Vis adgangslog
+show access log	admin	da	Adgangslog
 show current action	admin	da	Vis nuværende handling
 show error log	admin	da	Vis fejllog
 show groups in container based on	admin	da	Vis grupper i container baseret på
@@ -524,7 +524,7 @@ users can define their own signatures	admin	da	Brugere kan definere deres egne s
 users choice	admin	da	Brugerens valg
 vacation messages with start- and end-date require an admin account to be set	admin	da	Feriebeskeder med start- og slutdato kræver en administratorkonto for at blive indstillet!
 vacation notice	admin	da	Meddelelse om ferie
-view access log	admin	da	Vis adgangslog
+view access log	admin	da	Adgangslog
 view account	admin	da	Vis konto
 view category	admin	da	Vis kategori
 view error log	admin	da	Vis fejllog

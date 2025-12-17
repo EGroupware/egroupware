@@ -20,12 +20,14 @@ copied %1 to %2	filemanager	id	%1 disalin ke %2
 copy	filemanager	id	Salin
 copy to	filemanager	id	Salin ke
 copy to clipboard	filemanager	id	Salin ke klipbord
+could not install async job	filemanager	id	Tidak dapat menginstal tugas asinkron
 create directory	filemanager	id	Bikin direktori
 create file	filemanager	id	Bikin Berkas
 create folder	filemanager	id	Bikin Folder
 created	filemanager	id	dibikin
 created %1,%2	filemanager	id	%1 dibikin,%2
 created directory %1	filemanager	id	Direktori %1 dibikin
+creationdate of file	filemanager	id	Tanggal pembuatan file
 current directory	filemanager	id	Direktori saat ini
 custom fields	filemanager	id	Custom fields
 cut	filemanager	id	cut
@@ -37,6 +39,7 @@ edit comments	filemanager	id	Edit komentar
 edit settings	filemanager	id	Edit pengaturan
 enable	filemanager	id	enable
 enter a file size, e.g. 100k, 200m or 2g	filemanager	id	Masukkan ukuran berkas, misalnya 100K, 200M atau 2G
+error running job	filemanager	id	Kesalahan saat menjalankan tugas
 everyone	filemanager	id	everyone
 excludes selected mime types	filemanager	id	Tidak termasuk jenis MIME yang dipilih
 excludes selected mime types from being opened by editor	filemanager	id	Mengecualikan jenis MIME tertentu agar tidak dibuka oleh Collabora Online.<>Jenis dokumen ini dapat dibuka di browser atau diunduh.
@@ -79,7 +82,10 @@ id	filemanager	id	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	id	Jika Anda menentukan folder (jalur VFS lengkap) di sini, %1 menampilkan tindakan untuk setiap dokumen. Tindakan itu memungkinkan untuk mengunduh dokumen yang ditentukan dengan data %1 yang dimasukkan.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	id	Jika Anda menentukan folder (jalur VFS lengkap) di sini, %1 menampilkan ikon dokumen tambahan untuk setiap entri. Ikon tersebut memungkinkan untuk mendownload dokumen yang ditentukan dengan data yang dimasukkan.
 inherited	filemanager	id	Inherited
+job deleted.	filemanager	id	Tugas dihapus.
 job folder %1 does not exist or is not writable	filemanager	id	Folder pekerjaan %1 tidak ada atau tidak dapat ditulis.
+job saved.	filemanager	id	Tugas disimpan.
+jobs	filemanager	id	Tugas
 leave empty to delete the file after attaching	filemanager	id	Biarkan kosong untuk menghapus file setelah melampirkan
 link	filemanager	id	Tautan
 list view	filemanager	id	Tampilan daftar
@@ -133,10 +139,12 @@ root	filemanager	id	root
 save %1	filemanager	id	Simpan %1
 save as zip	filemanager	id	Simpan sebagai ZIP
 save changes	filemanager	id	Simpan perubahan
+save job to clear error and restart it	filemanager	id	Simpan tugas untuk menghapus kesalahan dan memulai ulang
 saved %1	filemanager	id	%1 disimpan
 search for '%1'	filemanager	id	Mencari '%1'
 searchstring	filemanager	id	teks pencarian
 select action...	filemanager	id	Pilih tindakan...
+select custom field	filemanager	id	Pilih bidang kustom
 show	filemanager	id	Tampilkan
 size	filemanager	id	Ukuran
 smb, webdavs and vfs require a username!	filemanager	id	SMB, WebDAV, dan VFS memerlukan nama pengguna!

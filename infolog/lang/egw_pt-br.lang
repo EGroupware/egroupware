@@ -126,7 +126,6 @@ custom from	infolog	pt-br	Personalizar de
 custom regarding	infolog	pt-br	Personalizar Atenção
 custom status for typ	infolog	pt-br	Personalizar status por tipo
 customfields	infolog	pt-br	Campos Perssonalizáveis
-data exchange settings	infolog	pt-br	Configurações de troca de dados
 date completed	infolog	pt-br	Data de Finalização
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pt-br	Data de finalização (deixe em branco para ser automaticamente informada, quando o status for alterado para Completada ou Cobrada).
 datecreated	infolog	pt-br	Data da criação

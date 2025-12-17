@@ -379,6 +379,7 @@ moving folders from one mailaccount to another is not supported	mail	ja	別の�
 name and domain	mail	ja	名前とドメイン
 name and email	mail	ja	名前とメール
 name of account	mail	ja	アカウント名
+name of header, only letters, numbers and dash (-) allowed	mail	ja	ヘッダー名（英数字とハイフン（-）のみ使用可）
 name of imap servers (space separated host or host:port)	mail	ja	IMAPサーバー名（スペース区切りのホストまたはホスト：ポート）
 never display html emails	mail	ja	HTMLメールを表示しない
 never show	mail	ja	表示しない

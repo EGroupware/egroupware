@@ -24,14 +24,20 @@ existing links	timesheet	da	eksisterende links
 exports entries from your timesheet into a csv file.	timesheet	da	Eksporterer poster fra Time Sheet til en CSV-fil
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	da	Eksporterer poster fra Time Sheet til en CSV-fil. I fanen Indstillinger kan du også vælge andre separatorer.
 forgot to switch off working time?	common	da	Har du glemt at slukke for arbejdstiden?
+give additional users access	timesheet	da	Giv yderligere brugere adgang
+give infolog delegation read-access to timesheets booked on them	timesheet	da	Дайте на делегираните от InfoLog лица достъп за четене на таблиците за отчитане на работното време, които са записани за тях
 global categories	timesheet	da	Globale Kategorier
 history	timesheet	da	Historisk
+how to display linked timesheets	timesheet	da	Sådan vises linkede tidsregistreringsskemaer
+html link to the current record	timesheet	da	HTML-link til den aktuelle post
 id	timesheet	da	ID
 imports entries into the timesheet from a csv file.	timesheet	da	Importerer poster til Time Sheet fra en CSV-fil
 last modified	timesheet	da	Sidst opdateret
 leaves without saveing	timesheet	da	forlad uden at gemme
 length<br>rows	timesheet	da	Længde<br>række
+link title	timesheet	da	Link-titel
 links	timesheet	da	Links
+make timesheets readable by infolog delegation	timesheet	da	Направете таблиците за отчитане на работното време четими чрез делегиране на InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	da	maks længde af inputtet [længde af input feltet (valg frit)]
 mode	timesheet	da	Tilstand
 modified	timesheet	da	Modificeret
@@ -45,6 +51,7 @@ pause	common	da	Pause
 pause time	timesheet	da	Tid for pause
 paused	timesheet	da	Pauseret
 project fields	timesheet	da	Projekt-felter
+readable	timesheet	da	Læselig
 recorded	timesheet	da	Optaget
 restore this entry	timesheet	da	Gendan denne post
 saves the changes made	timesheet	da	gem ændringer
@@ -57,6 +64,7 @@ start-time can not be before last stop- or pause-time %1!	common	da	Starttidspun
 stop- or pause-time can not be before the start-time %1!	common	da	Stop- eller pausetidspunktet kan ikke være før starttidspunktet %1!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige
 the text displayed to the user	timesheet	da	teksten som vises til brugeren
+timer	common	da	Timer
 timer already running or paused	common	da	Timer kører allerede eller er sat på pause
 timesheet csv export	timesheet	da	Timesheet CSV-eksport
 timesheet csv import	timesheet	da	Import af CSV-fil fra Timesheet

@@ -297,7 +297,7 @@ if different from email address	mail	es-es	Si es diferente de la dirección de c
 if from contains:(*)	mail	es-es	Si de contiene: (*)
 if mail body content / attachment type	mail	es-es	Si el contenido del cuerpo del correo / el tipo de adjunto
 if mail body message type	mail	es-es	Si el tipo de mensaje del cuerpo del correo
-if mail header	mail	es-es	Si el encabezado
+if mail header	mail	es-es	si el encabezado
 if message size	mail	es-es	Si el tamaño del mensaje
 if shown, which folders should appear on the home page	mail	es-es	Si se muestran, qué carpetas deben aparecer en la página de inicio
 if subject contains:(*)	mail	es-es	Si el asunto contiene:(*)
@@ -379,6 +379,7 @@ moving folders from one mailaccount to another is not supported	mail	es-es	Mover
 name and domain	mail	es-es	Nombre y dominio
 name and email	mail	es-es	Nombre y correo electrónico
 name of account	mail	es-es	Nombre de la cuenta
+name of header, only letters, numbers and dash (-) allowed	mail	es-es	Nombre del encabezado, solo se permiten letras, números y guiones (-)
 name of imap servers (space separated host or host:port)	mail	es-es	Nombre de los servidores IMAP (host separado por espacios o host:puerto)
 never display html emails	mail	es-es	Nunca mostrar los correos en HTML
 never show	mail	es-es	Nunca mostrar

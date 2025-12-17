@@ -125,6 +125,7 @@ get acl rights failed from imap server!	mail	id	Dapatkan hak ACL gagal dari serv
 greater than	mail	id	lebih dari
 ham folder	mail	id	Folder ham
 handling of external http images / mixed content in mails	mail	id	Penanganan gambar eksternal/konten campuran dalam email
+header	mail	id	Header
 header lines	mail	id	Baris Header
 hide from	mail	id	Sembunyikan Dari
 high priority	mail	id	Prioritas tinggi
@@ -136,6 +137,7 @@ identity	mail	id	Identitas
 identity label	mail	id	Label identitas
 if	mail	id	IF
 if different from email address	mail	id	Jika berbeda dari alamat email
+if mail header	mail	id	jika header surel
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	id	Jika Anda ingin melihat pratinjau email dengan sekali klik pada subjek, aktifkan ini.
 imap	mail	id	IMAP
 imap server	mail	id	IMAP Server
@@ -192,6 +194,7 @@ moved %1 message(s) from %2 to %3	mail	id	Memindahkan %1 pesan dari %2 ke %3.
 name and domain	mail	id	Nama dan domain
 name and email	mail	id	Nama dan email
 name of account	mail	id	Nama akun
+name of header, only letters, numbers and dash (-) allowed	mail	id	Nama header, hanya huruf, angka, dan tanda hubung (-) yang diperbolehkan
 name of imap servers (space separated host or host:port)	mail	id	Nama server IMAP (host yang dipisahkan spasi atau host:port)
 never show	mail	id	Jangan tampilkan
 never show notification	mail	id	Jangan pernah tampilkan pemberitahuan
@@ -336,6 +339,7 @@ unflagged	mail	id	Tak ditandai
 unread	mail	id	Tak dibaca
 vacation notice	mail	id	Pemberitahuan liburan
 validate addresses on submit:	mail	id	Memvalidasi alamat saat mengirim:
+view header lines	mail	id	Tampilkan baris header
 what to do when you delete a message	mail	id	Apa yang harus dilakukan saat Anda menghapus pesan.
 write	mail	id	tulis
 write & delete	mail	id	tulis & hapus

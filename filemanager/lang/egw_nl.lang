@@ -55,6 +55,7 @@ copy to clipboard	filemanager	nl	Kopieer naar klembord
 could not copy %1 to %2	filemanager	nl	Kon %1 niet naar %2 kopieëren
 could not create %1	filemanager	nl	Kon %1 niet aanmaken
 could not delete %1	filemanager	nl	Kon %1 niet verwijderen
+could not install async job	filemanager	nl	Asynchrone taak kan niet worden geïnstalleerd
 could not move %1 to %2	filemanager	nl	Kon %1 niet naar %2 verplaatsen
 could not rename %1 to %2	filemanager	nl	Kon %1 niet hernoemen in %2
 create a link	filemanager	nl	Maak een verwijzing
@@ -64,6 +65,7 @@ create folder	filemanager	nl	Folder aanmaken
 created	filemanager	nl	aangemaakt
 created %1,%2	filemanager	nl	%1, %2 aangemaakt
 created directory %1	filemanager	nl	Directory %1 aangemaakt
+creationdate of file	filemanager	nl	Aanmaakdatum van bestand
 current directory	filemanager	nl	Huidige directory
 custom fields	filemanager	nl	Aangepast velden
 cut	filemanager	nl	knippen
@@ -105,6 +107,7 @@ error adding the acl!	filemanager	nl	Fout bij toevoegen van ACL!
 error creating symlink to target %1!	filemanager	nl	Fout bij het aanmaken van symlink naar dioel %1!
 error deleting the acl entry!	filemanager	nl	Fout bij verwijderen van de ACL regel!
 error mounting %1 on %2!	filemanager	nl	Fout bij koppelen %1 aan %2
+error running job	filemanager	nl	Fout bij uitvoeren van taak
 error unmounting %1!	filemanager	nl	Fout bij loskoppelen %1!
 error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
 error while creating directory.	filemanager	nl	Fout bij maken map
@@ -166,7 +169,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 if you specify an export definition, it will be used when you export*	filemanager	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export*
 inherited	filemanager	nl	Geërfd
+job deleted.	filemanager	nl	Taak verwijderd.
 job folder %1 does not exist or is not writable	filemanager	nl	De taakmap %1 bestaat niet of is niet beschrijfbaar.
+job saved.	filemanager	nl	Taak opgeslagen.
+jobs	filemanager	nl	Taken
 leave empty to delete the file after attaching	filemanager	nl	Laat leeg om het bestand na het bijvoegen te verwijderen
 link	filemanager	nl	Link
 link %1: %2	filemanager	nl	Link %1: %2
@@ -244,12 +250,14 @@ save %1	filemanager	nl	Bewaar %1
 save %1, and go back to file listing	filemanager	nl	Bewaar %1 en ga terug naar de bestandenlijst
 save as zip	filemanager	nl	Bewaar als ZIP
 save changes	filemanager	nl	Wijzigingen bewaren
+save job to clear error and restart it	filemanager	nl	Sla taak op om fout te wissen en opnieuw te starten
 saved %1	filemanager	nl	%1 is bewaard
 saving properties failed!	filemanager	nl	Opslaan van eigenschappen is mislukt!
 saving setting for document merge failed!	filemanager	nl	Bewaar instellingen voor dit dokument samenvoegen mislukt !
 search for '%1'	filemanager	nl	Zoek naar '%1'
 searchstring	filemanager	nl	zoektekst
 select action...	filemanager	nl	Kies actie...
+select custom field	filemanager	nl	Selecteer aangepast veld
 select file to upload in current directory	filemanager	nl	Selecteer bestand om in de huidige directory te uploaden
 select file(s) from vfs	common	nl	Selecteer bestand(en) van VFS
 setting for document merge saved.	filemanager	nl	Instellingen voor het samenvoegen van bestanden bewaard

@@ -153,6 +153,7 @@ get acl rights failed from imap server!	mail	sv	Få ACL-rättigheter misslyckade
 greater than	mail	sv	Större än
 ham folder	mail	sv	Ham-mappen
 handling of external http images / mixed content in mails	mail	sv	Hantering av externa http-bilder / blandat innehåll i e-postmeddelanden
+header	mail	sv	Rubrik
 header lines	mail	sv	Brevhuvud
 hide from	mail	sv	Dölj Från
 high priority	mail	sv	Hög prioritet
@@ -230,6 +231,7 @@ moving folders from one mailaccount to another is not supported	mail	sv	Flyttnin
 name and domain	mail	sv	Namn och domän
 name and email	mail	sv	Namn och e-post
 name of account	mail	sv	Namn på konto
+name of header, only letters, numbers and dash (-) allowed	mail	sv	Namn på rubrik, endast bokstäver, siffror och bindestreck (-) tillåtna
 name of imap servers (space separated host or host:port)	mail	sv	Namn på IMAP-servrar (värd eller värd:port med mellanslag)
 never display html emails	mail	sv	Visa inte HTML meddelanden
 never show	mail	sv	Visa aldrig

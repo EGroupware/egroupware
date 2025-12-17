@@ -58,9 +58,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	es-es	¿Ha olvidado desconectar el tiempo de trabajo?
 full: use only projectmanager	admin	es-es	Completo: usar sólo el Administrador de proyectos
 general fields:	timesheet	es-es	Campos generales:
+give additional users access	timesheet	es-es	Otorgar acceso a usuarios adicionales
+give infolog delegation read-access to timesheets booked on them	timesheet	es-es	Otorgar a la delegación de InfoLog acceso de lectura a las hojas de horas registradas en ellas
 global categories	timesheet	es-es	Categorías globales
 history	timesheet	es-es	Historial
 history logging	admin	es-es	Registro de historial
+how to display linked timesheets	timesheet	es-es	Cómo mostrar hojas de horas vinculadas
 html link to the current record	timesheet	es-es	Enlace HTML al registro actual
 id	timesheet	es-es	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos %1 insertados.
@@ -77,10 +80,12 @@ last year	timesheet	es-es	Último año
 leave it empty for a full week	timesheet	es-es	Dejar en blanco durante una semana completa
 leaves without saveing	timesheet	es-es	sale sin guardar
 length<br>rows	timesheet	es-es	Longitud<br>Filas
+link title	timesheet	es-es	Título del enlace
 links	timesheet	es-es	Enlaces
 links and attached files	timesheet	es-es	Enlaces y ficheros adjuntos
 links to specified application.  example: {{links/infolog}}	timesheet	es-es	Enlaces a la aplicación especificada. Ejemplo: {{links/infolog}}
 list of files linked to the current record	timesheet	es-es	Lista de ficheros vinculados al registro actual
+make timesheets readable by infolog delegation	timesheet	es-es	Hacer que las hojas de horas sean legibles mediante la delegación de InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
 mode	timesheet	es-es	Modo
 modified	timesheet	es-es	Modificado
@@ -109,6 +114,7 @@ price	timesheet	es-es	Precio
 project fields	timesheet	es-es	Campos del proyecto
 projectmanager integration	admin	es-es	Integración con el Administrador de proyectos
 quantity	timesheet	es-es	Cantidad
+readable	timesheet	es-es	Legible
 recorded	timesheet	es-es	Grabado
 replacements for inserting entries into documents	timesheet	es-es	Sustituciones para insertar entradas en los documentos
 restore this entry	timesheet	es-es	Restaurar esta entrada
@@ -143,6 +149,7 @@ this month	timesheet	es-es	Este mes
 this week	timesheet	es-es	Esta semana
 this year	timesheet	es-es	Este año
 ticket modified by %1 at %2	timesheet	es-es	Ticket modificado por %1 a las %2
+timer	common	es-es	Temporizador
 timer already running or paused	common	es-es	Temporizador ya en marcha o en pausa
 timesheet	common	es-es	Hoja de presencia
 timesheet csv export	timesheet	es-es	Exportar a CSV la hoja de presencia

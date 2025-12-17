@@ -10,6 +10,7 @@ cancal?	notifications	id	Batal?
 certification-information:	notifications	id	Informasi sertifikasi:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	id	Centang keduanya. Pertama-tama coba akun yang ditetapkan pengguna aktif, jika tidak ada, gunakan profil eMailAdmin.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	id	Pilih rantai notifikasi. Anda akan menerima notifikasi di ujung belakang yang termasuk dalam rantai tersebut.<br>Catatan: Jika rantai notifikasi ditandai sebagai "dinonaktifkan", administrator Anda tidak mengizinkan satu atau beberapa ujung belakang yang disertakan dalam rantai, notifikasi akan kembali ke "Email" saat memberi tahu Anda.
+choose from mailsettings used for notification	admin	id	Pilih pengaturan email yang digunakan untuk pemberitahuan email
 common chains	notifications	id	Common chains
 connection error.	notifications	id	Kesalahan koneksi.
 connection error. please check connection to server.	notifications	id	Kesalahan koneksi. Silakan periksa koneksi ke server.
@@ -56,8 +57,11 @@ mark as read	notifications	id	Tandai sebagai telah dibaca
 message from	notifications	id	Pesan dari
 minutes	notifications	id	Menit
 more info	notifications	id	Info lebih lanjut
+normally only the work email address is notified	notifications	id	Secara default, hanya alamat email kerja yang diberitahu.
 notification	common	id	Notifikasi
 notifier	notifications	id	Pemberi notifikasi
+notify me by	notifications	id	Beritahu saya melalui
+notify private email address	notifications	id	Beritahu alamat email pribadi
 only used if no push server available!	admin	id	Hanya digunakan jika tidak ada server push yang tersedia!
 open notified entry	notifications	id	Buka entri notifikasi
 page not found, please check serveraddress.	notifications	id	Halaman tidak ditemukan, silakan periksa alamat server.
@@ -90,6 +94,8 @@ user:	notifications	id	Pengguna:
 warning	notifications	id	Peringatan
 windows-popup backend	admin	id	Munculan popup Windows
 windows-popup only	notifications	id	Hanya Windows-Popup
+yes, notify only private email, if existing	notifications	id	Ya, beritahu hanya alamat email pribadi, jika ada
+yes, notify private email too	notifications	id	Ya, beritahu alamat email pribadi juga
 yesterday	notifications	id	Kemarin
 you can also use	admin	id	Anda juga dapat menggunakan
 you have %1 unread notifications	notifications	id	Anda memiliki %1 notifikasi yang belum dibaca

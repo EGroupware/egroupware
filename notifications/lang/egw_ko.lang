@@ -10,6 +10,7 @@ cancal?	notifications	ko	취소하시겠습니까?
 certification-information:	notifications	ko	인증 정보:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	ko	둘 다 확인합니다. 먼저 활성 사용자 정의 계정을 시도하고, 계정이 없는 경우 eMailAdmin 프로필을 사용합니다.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	ko	알림 체인을 선택합니다. 체인에 포함된 백엔드를 통해 알림을 받게 됩니다.<br>참고: 알림 체인이 "사용 안 함"으로 표시된 경우 관리자가 체인에 포함된 백엔드 중 하나 이상을 허용하지 않으면 알림을 보내는 동안 알림이 "이메일"로 되돌아갑니다.
+choose from mailsettings used for notification	admin	ko	이메일 알림에 사용할 메일 설정 선택
 connection error.	notifications	ko	연결 오류가 발생했습니다.
 connection error. please check connection to server.	notifications	ko	연결 오류입니다. 서버 연결을 확인하세요.
 continue to connect?	notifications	ko	계속 연결하시겠습니까?
@@ -49,7 +50,11 @@ mark as read	notifications	ko	읽음으로 표시
 message from	notifications	ko	메세지 발송지
 minutes	notifications	ko	분
 more info	notifications	ko	추가 정보
+normally only the work email address is notified	notifications	ko	기본적으로 업무용 이메일 주소로만 알림이 전송됩니다.
+notification	common	ko	알림
 notifier	notifications	ko	알림
+notify me by	notifications	ko	알림 수신 방법
+notify private email address	notifications	ko	개인 이메일 주소로 알림
 only used if no push server available!	admin	ko	사용 가능한 푸시 서버가 없는 경우에만 사용!
 open notified entry	notifications	ko	알림 항목 열기
 page not found, please check serveraddress.	notifications	ko	페이지를 찾을 수 없습니다. 서버 주소를 확인하세요.
@@ -61,6 +66,7 @@ please contact your egroupware admin.	notifications	ko	E그룹웨어 관리자�
 please enter the url of your egroupware.	notifications	ko	E그룹웨어의 URL을 입력하세요.
 please enter your egroupware username.	notifications	ko	E그룹웨어 사용자명을 입력하세요.
 please enter your password	notifications	ko	비밀번호를 입력하세요.
+preferences for notification	notifications	ko	알림 설정
 repeat login?	notifications	ko	로그인을 반복하시겠습니까?
 run application	notifications	ko	애플리케이션 실행
 save password	notifications	ko	비밀번호 저장
@@ -76,6 +82,8 @@ this egroupware notification has been sent to you by mail because your	notificat
 this month	notifications	ko	이번 달
 user:	notifications	ko	사용자:
 warning	notifications	ko	경고
+yes, notify only private email, if existing	notifications	ko	예, 개인 이메일만 알림 (존재할 경우)
+yes, notify private email too	notifications	ko	예, 개인 이메일에도 알림
 yesterday	notifications	ko	어제
 you can also use	admin	ko	다음을 사용할 수도 있습니다.
 you have %1 unread notifications	notifications	ko	읽지 않은 알림이 %1개 있습니다.

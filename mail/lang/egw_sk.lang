@@ -379,6 +379,7 @@ moving folders from one mailaccount to another is not supported	mail	sk	Presúva
 name and domain	mail	sk	Názov a doména
 name and email	mail	sk	Meno a e-mail
 name of account	mail	sk	Názov účtu
+name of header, only letters, numbers and dash (-) allowed	mail	sk	Názov hlavičky, povolené sú iba písmená, čísla a pomlčka (-)
 name of imap servers (space separated host or host:port)	mail	sk	Názov serverov IMAP (hostiteľ alebo hostiteľ:port oddelený medzerou)
 never display html emails	mail	sk	Nezobrazovať HTML správy
 never show	mail	sk	Nikdy nezobrazovať

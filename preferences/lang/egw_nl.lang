@@ -67,6 +67,7 @@ no default	preferences	nl	Geen standaard
 no user-selection at all	common	nl	Totaal geen gebruikersselectie
 note: this feature does *not* change your email password. this will	preferences	nl	Opmerking: Deze optie wijzigt uw email wachtwoord niet. Dit moet
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	nl	Let op: Deze optie wijzigt *niet* uw email-wachtwoord. Dit moet handmatig te gebeuren.
+old password and new password are the same. this is invalid. you must enter a new password	preferences	nl	Oud wachtwoord en nieuw wachtwoord zijn hetzelfde. U moet een nieuw wachtwoord invoeren!
 p: paragraph	preferences	nl	p: Paragraaf
 password stored	preferences	nl	Wachtwoord opslaan.
 popup with search	preferences	nl	Popupvenster met zoekfunctie

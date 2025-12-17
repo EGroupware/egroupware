@@ -57,9 +57,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	it	Avete dimenticato di disattivare l'orario di lavoro?
 full: use only projectmanager	admin	it	Pieno: usa solo Gestione Progetti
 general fields:	timesheet	it	Campi generali
+give additional users access	timesheet	it	Concedere l'accesso ad altri utenti
+give infolog delegation read-access to timesheets booked on them	timesheet	it	Concedere alla delegazione InfoLog l'accesso in lettura ai fogli presenze registrati su di essi
 global categories	timesheet	it	Categorie Globali
 history	timesheet	it	Storico
 history logging	admin	it	Registrazione dello storico
+how to display linked timesheets	timesheet	it	Come visualizzare i fogli presenze collegati
 html link to the current record	timesheet	it	Collegamento HTML al record attuale
 id	timesheet	it	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	it	Se specifichi una directory (percorso vfs completo), %1 mostrerà l'azione per ogni documento. Quella azione permette di scaricare il documento specificato con i dati %1 inseriti
@@ -78,10 +81,12 @@ last year	timesheet	it	L'anno scorso
 leave it empty for a full week	timesheet	it	Lascia vuoto per una settimana completa
 leaves without saveing	timesheet	it	esce senza salvare
 length<br>rows	timesheet	it	Lunghezza<br>Righe
+link title	timesheet	it	Titolo collegamento
 links	timesheet	it	Collegamenti
 links and attached files	timesheet	it	Collegamenti e file allegati
 links to specified application.  example: {{links/infolog}}	timesheet	it	Collegamenti alla applicazione specificata. Esempio: {{links/infolog}}
 list of files linked to the current record	timesheet	it	Elenco dei file collegati al record attuale
+make timesheets readable by infolog delegation	timesheet	it	Rendere i fogli presenze leggibili dalla delegazione InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	it	lunghezza massima del input [, length of the inputfield (optional)]
 mode	timesheet	it	Modalità
 modified	timesheet	it	Modificato
@@ -111,6 +116,7 @@ price	timesheet	it	Prezzo
 project fields	timesheet	it	Campi progetto
 projectmanager integration	admin	it	Integrazione Gestione Progetti
 quantity	timesheet	it	Quantità
+readable	timesheet	it	Leggibile
 recorded	timesheet	it	Registrato
 recovered	timesheet	it	recuperato
 replacements for inserting entries into documents	timesheet	it	Sostituzioni per inserimento voci in documenti
@@ -149,6 +155,7 @@ this month	timesheet	it	Questo mese
 this week	timesheet	it	Questa settimana
 this year	timesheet	it	Questo anno
 ticket modified by %1 at %2	timesheet	it	Ticket modificato da %1 al %2
+timer	common	it	Timer
 timer already running or paused	common	it	Timer già in funzione o in pausa
 timesheet	common	it	Foglio Ore
 timesheet csv export	timesheet	it	Esportazione folgio ore in CSV

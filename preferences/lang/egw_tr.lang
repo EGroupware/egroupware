@@ -17,6 +17,7 @@ edit custom fields	preferences	tr	Özel alanları düzenleme
 enable	preferences	tr	Etkinleştir
 enter code to authenticate the actions below	preferences	tr	Aşağıdaki eylemleri doğrulamak için kodu girin
 enter code to verify correct setup	preferences	tr	Doğru kurulumu doğrulamak için kodu girin
+enter your old password	preferences	tr	Eski şifreyi girin
 fast	preferences	tr	Hızlı
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	tr	Hızlı güncelleme, yeni girişleri her zaman listenin en üstüne ekler ve liste son değiştirilene göre sıralanmadığı sürece mevcut olanları yerinde günceller. Tam güncellemeler, liste son değiştirilene göre sıralanmamışsa tam bir yenileme yapar.
 forced preferences	preferences	tr	Zorunlu tercihler
@@ -29,6 +30,7 @@ it sets content size (text only) according to selected size.	preferences	tr	İç
 limit following groups to only create application passwords via templates	preferences	tr	Bu gruplar yalnızca şablonlar aracılığıyla oluşturulacak uygulama parolalarını kısıtlar
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	tr	SingleSignOn üzerinden oturum açmak, posta veya dosya sunucularına aktarmak için bir parola sağlamaz.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	tr	Uygulamalar listesini yukarı/aşağı kaydırma düğmeleriyle kaydırılabilir hale getirin (kaydırma tekerleği olmayan fareyle çalışan kullanıcılar için kullanışlıdır)
+old password and new password are the same. this is invalid. you must enter a new password	preferences	tr	Eski şifre ve yeni şifre aynı. Yeni bir şifre girmelisiniz!
 password stored	preferences	tr	Parola saklanır.
 preferences saved.	preferences	tr	Tercihler kaydedildi.
 reset qrcode	preferences	tr	QR kodunu sıfırlayın
@@ -39,6 +41,7 @@ show qrcode	preferences	tr	QR kodunu göster
 show qrcode to enable on an additional device.	preferences	tr	QR kodunu diğer cihazlarda ayarlamak için tekrar görüntüler
 singlesignon and passwords	preferences	tr	SingleSignOn ve parolalar
 store password retrievable for singlesignon	common	tr	SingleSignOn için alınabilen parolayı sakla
+the old password is not correct	preferences	tr	Eski şifre doğru değil!
 the two passwords are not the same	preferences	tr	İki şifre birbirinden farklı
 thousands separator is only used for displaying and not for editing numbers.	preferences	tr	Sayı biçimi, sayıların görüntülenmesi için ayarlanabilir.
 use first %1 letters from username	preferences	tr	Kullanıcı adının ilk %1 harfini kullan

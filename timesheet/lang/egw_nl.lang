@@ -50,9 +50,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	nl	Vergeten de werktijd uit te schakelen?
 full: use only projectmanager	admin	nl	Volledig: alleen de ProjectManager gebruiken
 general fields:	timesheet	nl	Algemene velden:
+give additional users access	timesheet	nl	Geef extra gebruikers toegang
+give infolog delegation read-access to timesheets booked on them	timesheet	nl	Geef InfoLog-delegatie leestoegang tot urenstaten die op hen zijn geboekt
 global categories	timesheet	nl	Algemene categoriën
 history	timesheet	nl	Historie
 history logging	admin	nl	Historie vastleggen
+how to display linked timesheets	timesheet	nl	Hoe gekoppelde urenstaten weergeven
 html link to the current record	timesheet	nl	HTML link naar huidig record
 id	timesheet	nl	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Die actie staat dan toe dat het document wordt gedownload met de data %1 toegevoegd.
@@ -68,10 +71,12 @@ last year	timesheet	nl	Vorig jaar
 leave it empty for a full week	timesheet	nl	Laat het leeg voor een volle week
 leaves without saveing	timesheet	nl	verlaat zonder opslaan
 length<br>rows	timesheet	nl	Lengte<br />Rijen
+link title	timesheet	nl	Link titel
 links	timesheet	nl	Links
 links and attached files	timesheet	nl	Link naar bijgesloten bestand
 links to specified application.  example: {{links/infolog}}	timesheet	nl	Verwijst naar een specifieke applicatie. Voorbeeld: {{links/infolog}}
 list of files linked to the current record	timesheet	nl	Lijs van bestanden gelinkt aan huidig record
+make timesheets readable by infolog delegation	timesheet	nl	Maak urenstaten leesbaar door InfoLog-delegatie
 max length of the input [, length of the inputfield (optional)]	timesheet	nl	max lengte van de invoer [, lengte van het invoerveld (optioneel)]
 mode	timesheet	nl	Modus
 modified	timesheet	nl	Gewijzigd
@@ -94,6 +99,7 @@ price	timesheet	nl	Tarief
 project fields	timesheet	nl	Projectvelden
 projectmanager integration	admin	nl	ProjectManager integratie
 quantity	timesheet	nl	Hoeveelheid
+readable	timesheet	nl	Leesbaar
 recorded	timesheet	nl	Opgenomen
 recovered	timesheet	nl	Teruggezet
 replacements for inserting entries into documents	timesheet	nl	Vervanging voor het invoeren van gegevens in documenten
@@ -123,6 +129,7 @@ this month	timesheet	nl	Deze maand
 this week	timesheet	nl	Deze week
 this year	timesheet	nl	Dit jaar
 ticket modified by %1 at %2	timesheet	nl	Melding gewijzigd door %1 op %2
+timer	common	nl	Timer
 timer already running or paused	common	nl	Timer loopt al of is gepauzeerd
 timesheet	common	nl	Urenregistratie
 timesheet csv export	timesheet	nl	Urenregistratie CSV export

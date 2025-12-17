@@ -10,6 +10,7 @@ cancal?	notifications	ro	Anulați?
 certification-information:	notifications	ro	Certificare-informații:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	ro	Bifați ambele. Încercați mai întâi un cont activ definit de utilizator, dacă nu există, utilizați profilul eMailAdmin.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	ro	Alegeți un lanț de notificare. Veți fi notificat prin intermediul back-end-urilor incluse în lanț.<br>Notă: Dacă un lanț de notificare este marcat ca fiind "disabled" (dezactivat), administratorul dvs. nu permite unul sau mai multe dintre back-end-urile incluse în lanț, notificările revin la "Email" în timp ce vă notifică.
+choose from mailsettings used for notification	admin	ro	Alegeți setările de e-mail utilizate pentru notificarea prin e-mail
 connection error.	notifications	ro	Eroare de conexiune.
 connection error. please check connection to server.	notifications	ro	Eroare de conexiune. Vă rugăm să verificați conexiunea cu serverul.
 continue to connect?	notifications	ro	Continuați să vă conectați?
@@ -46,7 +47,11 @@ mail account to use for notifications	admin	ro	Contul de poștă electronică ca
 mark all as read	notifications	ro	Marcați toate ca fiind citite
 mark as read	notifications	ro	Marcați ca citit
 more info	notifications	ro	Mai multe informații
+normally only the work email address is notified	notifications	ro	În mod normal, se notifică numai adresa de e-mail de serviciu.
+notification	common	ro	Notificare
 notifier	notifications	ro	Notifier
+notify me by	notifications	ro	Notificați-mă prin
+notify private email address	notifications	ro	Notificați adresa de e-mail privată
 only used if no push server available!	admin	ro	Utilizat numai dacă nu este disponibil niciun server push!
 open notified entry	notifications	ro	Deschideți intrarea notificată
 page not found, please check serveraddress.	notifications	ro	Pagina nu a fost găsită, vă rugăm să verificați adresa serverului.
@@ -58,6 +63,7 @@ please contact your egroupware admin.	notifications	ro	Vă rugăm să contactaț
 please enter the url of your egroupware.	notifications	ro	Vă rugăm să introduceți URL-ul EGroupware-ului dumneavoastră.
 please enter your egroupware username.	notifications	ro	Vă rugăm să introduceți numele de utilizator EGroupware.
 please enter your password	notifications	ro	Vă rugăm să introduceți parola dvs.
+preferences for notification	notifications	ro	Preferințe pentru notificare
 refresh notifications	notifications	ro	Osvežitev obvestil
 repeat login?	notifications	ro	Repetați autentificarea?
 run application	notifications	ro	Rulați aplicația
@@ -72,6 +78,8 @@ the server certificate is not a valid trust center certificate!	notifications	ro
 this egroupware notification has been sent to you by mail because your	notifications	ro	Această notificare EGroupware v-a fost trimisă prin e-mail deoarece
 this month	notifications	ro	Luna aceasta
 user:	notifications	ro	Utilizator:
+yes, notify only private email, if existing	notifications	ro	Da, notificați numai adresa de e-mail privată, dacă există
+yes, notify private email too	notifications	ro	Da, notificați și adresa de e-mail privată
 yesterday	notifications	ro	Ieri
 you can also use	admin	ro	De asemenea, puteți utiliza
 you have %1 unread notifications	notifications	ro	Aveți %1 notificări necitite

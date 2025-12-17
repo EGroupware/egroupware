@@ -69,6 +69,7 @@ default sorting order	mail	zh	默认排序
 default toolbar actions shown in mail's html editor	mail	zh	写邮件时在HTML编辑器工具栏中启用的功能
 default value for remembering s/mime passphrase in minutes	mail	zh	记忆S/MIME口令的默认值为分钟
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	zh	定义在写邮件时，在收件人/副本/盲文中添加的联系人标签显示什么。缺省值是firstname lastname，空意味着包括所有可用的东西。
+defines what to show as identity label on mail folder header	common	zh	定义在邮件文件夹标题中显示的标识标签。这些标签对应邮件账户中的字段。
 delete folder	mail	zh	删除邮件夹
 delete selected folders	mail	zh	删除选定文件夹
 deleted	mail	zh	已删除
@@ -132,6 +133,7 @@ get acl rights failed from imap server!	mail	zh	从 IMAP 服务器获取 ACL 权
 greater than	mail	zh	大于
 ham folder	mail	zh	垃圾邮件文件夹
 handling of external http images / mixed content in mails	mail	zh	处理电子邮件中的外部 http 图像/混合内容
+header	mail	zh	标题
 header lines	mail	zh	邮件头
 hide from	mail	zh	隐藏来自
 high priority	mail	zh	高优先级
@@ -202,6 +204,7 @@ moved %1 message(s) from %2 to %3	mail	zh	将 %1 信息从 %2 移到 %3。
 name and domain	mail	zh	名称和域名
 name and email	mail	zh	姓名和电子邮件
 name of account	mail	zh	账户名称
+name of header, only letters, numbers and dash (-) allowed	mail	zh	标题名称，仅允许使用字母、数字和连字符（-）
 name of imap servers (space separated host or host:port)	mail	zh	IMAP 服务器名称（空格分隔的主机或主机：端口）
 never display html emails	mail	zh	从不显示 HTML 邮件
 never show	mail	zh	从不显示

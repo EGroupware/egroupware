@@ -16,6 +16,7 @@ copy to	filemanager	lv	Kopēt Uz:
 could not copy %1 to %2	filemanager	lv	Neizdevās pārkopēt %1 uz %2
 could not create %1	filemanager	lv	Neizdevās izveidot %1
 could not delete %1	filemanager	lv	Neizdevās izdzēst %1
+could not install async job	filemanager	lv	Nevar instalēt asinhrono darbu
 could not move %1 to %2	filemanager	lv	Neizdevās pārvietot %1 uz %2
 could not rename %1 to %2	filemanager	lv	Neizdevās pārsaukt %1 par %2
 create file	filemanager	lv	Izveidot datni
@@ -23,6 +24,7 @@ create folder	filemanager	lv	Izveidot direktoriju
 created	filemanager	lv	Izveidots
 created %1,%2	filemanager	lv	Izveidots %1,%2
 created directory %1	filemanager	lv	Izveidota direktorija %1
+creationdate of file	filemanager	lv	Faila izveides datums
 custom fields	filemanager	lv	Mainīti lauki
 default action on double-click	filemanager	lv	Noklusējuma darbība pēc dubultklikšķa
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	lv	Noklusējuma iestatījums = Nē. Saite netiks parādīta, bet jūs joprojām varēsiet pārvietoties uz šo atrašanās vietu vai konfigurēt šo konkrēto atrašanās vietu kā sākuma mapi vai mapes saiti.
@@ -39,6 +41,7 @@ edit share	filemanager	lv	Rediģēt koplietojumu
 enable	filemanager	lv	Aktivizēt
 enter a file size, e.g. 100k, 200m or 2g	filemanager	lv	Ievadiet faila lielumu, piemēram, 100K, 200M vai 2G.
 enter your file name	filemanager	lv	Ievadiet faila nosaukumu
+error running job	filemanager	lv	Kļūda, izpildot darbu
 everyone	filemanager	lv	ikviens
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	lv	Piemērs {{IF n_prefikss~Mr~Sveiks kungs~Sveiks kundze}} - meklējiet laukā "n_prefix", lai atrastu "Mr", ja atrasts, ierakstiet Hello Mr., citādi ierakstiet Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	lv	Piemērs {{{LETTERPREFIXCUSTOM n_prefiksa virsraksts n_dzimene}} - Piemērs: Dr. James Miller
@@ -84,7 +87,10 @@ hostname/ip for webdav and smb	filemanager	lv	Uzņēmēja vārds/IP WebDAV un SM
 id	filemanager	lv	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	lv	Ja šeit norādāt mapi (pilnu VFS ceļu), %1 katram dokumentam tiek parādīta darbība. Šī darbība ļauj lejupielādēt norādīto dokumentu ar ievietotajiem %1 datiem.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	lv	Ja šeit norādāt mapi (pilnu VFS ceļu), %1 katram ierakstam tiek parādīta papildu dokumenta ikona. Šī ikona ļauj lejupielādēt norādīto dokumentu ar ievietotajiem datiem.
+job deleted.	filemanager	lv	Darbs dzēsts.
 job folder %1 does not exist or is not writable	filemanager	lv	Darba mape %1 nepastāv vai nav rakstāma.
+job saved.	filemanager	lv	Darbs saglabāts.
+jobs	filemanager	lv	Darbi
 leave empty to delete the file after attaching	filemanager	lv	Atstājiet tukšu, lai pēc pievienošanas failu dzēstu
 link	filemanager	lv	Saite
 list view	filemanager	lv	Saraksta skats
@@ -137,7 +143,9 @@ save %1	filemanager	lv	Saglabāt %1
 save %1, and go back to file listing	filemanager	lv	Saglabā %1 un atgriezies datņu apskatē
 save as zip	filemanager	lv	Saglabāt kā ZIP
 save changes	filemanager	lv	Saglabāt izmaiņas
+save job to clear error and restart it	filemanager	lv	Saglabājiet darbu, lai dzēstu kļūdu un restartētu to
 saved %1	filemanager	lv	Saglabāts %1
+select custom field	filemanager	lv	Izvēlieties pielāgotu lauku
 show	filemanager	lv	Parādīt
 size	filemanager	lv	Izmērs
 smb, webdavs and vfs require a username!	filemanager	lv	SMB, WebDAV un VFS prasa lietotājvārdu!
