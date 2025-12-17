@@ -1,0 +1,4 @@
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	ja	有効にすると、開いているタブでよりカラフルなアプリアイコンを表示します。無効の場合、デフォルトでカスタムカラーが薄く表示されます。
+reload %1	common	ja	%1 を再読み込み
+show app icons in there app color	kdots	ja	アプリアイコンをアプリカラーで表示
+user profile	kdots	ja	ユーザープロフィール

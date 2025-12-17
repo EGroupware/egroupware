@@ -1,0 +1,4 @@
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	fi	Aktivoi, jotta avoimissa välilehdissä näkyvät värikkäämmät sovelluskuvakkeet. Jos valinta ei ole valittuna, kuvakkeet ovat oletusarvoisesti vaaleita.
+reload %1	common	fi	Lataa uudelleen %1
+show app icons in there app color	kdots	fi	Näytä sovelluskuvakkeet sovelluksen värillä
+user profile	kdots	fi	Käyttäjäprofiili

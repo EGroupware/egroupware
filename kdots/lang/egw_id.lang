@@ -1,0 +1,4 @@
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	id	Aktifkan untuk menampilkan ikon aplikasi yang lebih berwarna di tab yang terbuka. Jika tidak dicentang, ikon akan secara default menggunakan warna kustom yang lebih terang.
+reload %1	common	id	Muat ulang %1
+show app icons in there app color	kdots	id	Tampilkan ikon aplikasi dalam warna asli aplikasi
+user profile	kdots	id	Profil pengguna

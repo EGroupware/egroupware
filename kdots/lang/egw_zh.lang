@@ -1,0 +1,4 @@
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	zh	启用后，在打开的标签页中显示更鲜艳的应用图标。若未勾选，则默认显示为自定义浅色版本。
+reload %1	common	zh	重新加载 %1
+show app icons in there app color	kdots	zh	以应用原色显示应用图标
+user profile	kdots	zh	用户资料

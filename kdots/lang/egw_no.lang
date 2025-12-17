@@ -1,0 +1,4 @@
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	no	Aktiver for å vise mer fargerike appikoner i de åpne fanene. Hvis dette ikke er merket av, blir standardinnstillingen en lysere tilpasset farge.
+reload %1	common	no	Last inn på nytt %1
+show app icons in there app color	kdots	no	Vis appikoner i appens farge
+user profile	kdots	no	Brukerprofil
