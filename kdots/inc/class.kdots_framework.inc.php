@@ -557,7 +557,7 @@ class kdots_framework extends Api\Framework\Ajax
 	protected static function _get_quick_add()
 	{
 		$src = Api\Image::find('api', 'plus-circle');
-		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" aria-label="Quick add" src="' . $src . '" nosubmit></et2-button-icon>';
+		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" src="' . $src . '" nosubmit></et2-button-icon>';
 	}
 
 	/**
