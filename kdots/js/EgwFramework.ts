@@ -244,6 +244,9 @@ export class EgwFramework extends LitElement
 				this.showTab(this.activeApp.name);
 			});
 
+			// Remove the initial loader
+			document.body.querySelector("#egw_fw_firstload").remove();
+
 			// Listen for apps added / removed
 			this.appDOMObserver.observe(this, {childList: true});
 		});
