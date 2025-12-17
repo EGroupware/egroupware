@@ -48,8 +48,8 @@
   }
 
   #topmenu_info_user_avatar {
-	width: calc(calc(2 * var(--sl-spacing-2x-small)) + var(--icon-size));
-	height: calc(calc(2 * var(--sl-spacing-2x-small)) + var(--icon-size));
+	width: calc(calc(2 * var(--tab-icon-spacing, 2px)) + var(--icon-size));
+	height: calc(calc(2 * var(--tab-icon-spacing, 2px)) + var(--icon-size));
 
 	sl-button::part(label) {
 	  padding: 0;
@@ -58,7 +58,7 @@
 	  border: none;
 	}
 	et2-avatar {
-	  --size: calc(0.6rem + var(--icon-size));
+	  --size: calc(calc(2 * var(--tab-icon-spacing, 2px)) + var(--icon-size));
 	}
 
 	&::part(base) {

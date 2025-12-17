@@ -168,7 +168,7 @@ egw-framework#egw_fw_basecontainer::part(header) {
   gap: 0;
   font-size: var(--icon-size);
   padding: 0.4rem;
-  padding-right: 1px;
+  padding-right: 3px;
 }
 egw-framework#egw_fw_basecontainer::part(app-list-panel) {
   padding: var(--sl-spacing-medium);
@@ -225,11 +225,6 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
   gap: var(--sl-spacing-medium);
   padding-left: 1em;
 }
-table.et2_grid > tbody > tr > td:last-child et2-image.iphoto {
-  position: relative;
-  left: 10px;
-  top: -2px;
-}
 iframe pre {
   white-space: pre-wrap;
 }
@@ -279,8 +274,8 @@ iframe pre {
   background-color: transparent;
 }
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar {
-  width: calc(calc(2 * var(--sl-spacing-2x-small)) + var(--icon-size));
-  height: calc(calc(2 * var(--sl-spacing-2x-small)) + var(--icon-size));
+  width: calc(calc(2 * var(--tab-icon-spacing, 2px)) + var(--icon-size));
+  height: calc(calc(2 * var(--tab-icon-spacing, 2px)) + var(--icon-size));
 }
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar sl-button::part(label) {
   padding: 0;
@@ -289,7 +284,7 @@ iframe pre {
   border: none;
 }
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar et2-avatar {
-  --size: calc(0.6rem + var(--icon-size));
+  --size: calc(calc(2 * var(--tab-icon-spacing, 2px)) + var(--icon-size));
 }
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar::part(base) {
   vertical-align: initial;
