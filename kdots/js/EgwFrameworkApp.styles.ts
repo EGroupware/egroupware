@@ -72,6 +72,11 @@ export default css`
 		et2-button-icon {
 			margin: 0 var(--sl-spacing-medium);
 		}
+        .egw_fw_app__name {
+            et2-button-icon {
+                margin: 0;
+            }
+        }
 
 		::slotted(*) {
 			overflow: hidden;

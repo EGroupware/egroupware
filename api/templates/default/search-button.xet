@@ -6,7 +6,7 @@
             onclick="const ea=widget.closest('egw-app'); ea.filtersDrawer.open = !ea.filtersDrawer.open; ea.filtersDrawer.open &amp;&amp; window.setTimeout(()=>ea.querySelector('et2-searchbox').focus(), 100);"></et2-button-->
         <et2-searchbox id="search" placeholder="Search" style="width: 8em" class="noMobile"
             onchange="window.app[widget.closest('egw-app').id]?.changeNmFilter(null, widget); return false;">
-            <et2-image src="search" slot="prefix"></et2-image>
+            <et2-image src="search" slot="prefix" style="font-size: 1.4em"></et2-image>
         </et2-searchbox>
     </template>
 </overlay>

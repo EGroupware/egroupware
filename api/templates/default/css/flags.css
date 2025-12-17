@@ -16,7 +16,11 @@ et2-select-country:not(.hasValue)::part(prefix), et2-select-country::part(emptyL
     background-repeat: no-repeat;
     height: 20px;
 }
-/* First selector is for the current value, second for the option */
+/*No country selected in dark-mode*/
+[data-darkmode="1"] et2-select-country:not(.hasValue)::part(prefix), [data-darkmode="1"] et2-select-country::part(emptyLabel){
+    filter: invert(1);
+}
+    /* First selector is for the current value, second for the option */
 et2-select-country[value="BE"]::part(prefix), et2-select-country::part(country_BE_flag) {
 	min-width: 18px
 }
