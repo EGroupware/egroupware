@@ -19,6 +19,7 @@ copy to	filemanager	el	Αντιγραφή στο
 could not copy %1 to %2	filemanager	el	Δεν μπόρεσε να αντιγραφή το %1 στο %2
 could not create %1	filemanager	el	Δεν μπόρεσε να δημιουργηθεί %1
 could not delete %1	filemanager	el	Δεν μπόρεσε να διαγραφεί %1
+could not install async job	filemanager	el	Δεν ήταν δυνατή η εγκατάσταση της ασύγχρονης εργασίας
 could not move %1 to %2	filemanager	el	Δεν μπόρεσε να μετακινηθεί το %1 στο %2
 could not rename %1 to %2	filemanager	el	Δεν μπόρεσε να μετονομασθεί το %1 σε %2
 create a link	filemanager	el	Δημιουργία ενός συνδέσμου
@@ -28,6 +29,7 @@ create folder	filemanager	el	Δημιουργία φακέλου
 created	filemanager	el	Δημιουργήθηκε
 created %1,%2	filemanager	el	Δημιουργήθηκαν %1, %2
 created directory %1	filemanager	el	Δημιουργήθηκε ο κατάλογος %1
+creationdate of file	filemanager	el	Ημερομηνία δημιουργίας αρχείου
 current directory	filemanager	el	Τρέχον κατάλογος
 custom fields	filemanager	el	Προσαρμοσμένα πεδία
 cut	filemanager	el	Αποκοπή (Cut)
@@ -51,6 +53,7 @@ edit share	filemanager	el	Επεξεργασία κοινής χρήσης
 enable	filemanager	el	Ενεργοποίηση
 enter a file size, e.g. 100k, 200m or 2g	filemanager	el	Εισάγετε ένα μέγεθος αρχείου, π.χ. 100K, 200M ή 2G
 enter your file name	filemanager	el	Καταχωρήστε το όνομα του αρχείου σας
+error running job	filemanager	el	Σφάλμα κατά την εκτέλεση της εργασίας
 everyone	filemanager	el	όλοι
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	el	Παράδειγμα {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - αναζητήστε το πεδίο "n_prefix", για το "Mr", αν βρεθεί, γράψτε Hello Mr., αλλιώς γράψτε Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	el	Παράδειγμα {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Παράδειγμα: Mr Dr. James Miller
@@ -104,7 +107,10 @@ hostname/ip for webdav and smb	filemanager	el	Όνομα κεντρικού υπ
 id	filemanager	el	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	el	Εάν καθορίσετε έναν φάκελο (πλήρης διαδρομή VFS) εδώ, το %1 εμφανίζει μια ενέργεια για κάθε έγγραφο. Αυτή η ενέργεια επιτρέπει τη λήψη του καθορισμένου εγγράφου με τα δεδομένα %1 που έχουν εισαχθεί.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	el	Εάν καθορίσετε έναν φάκελο (πλήρης διαδρομή VFS) εδώ, το %1 εμφανίζει ένα επιπλέον εικονίδιο εγγράφου για κάθε εγγραφή. Αυτό το εικονίδιο επιτρέπει τη λήψη του καθορισμένου εγγράφου με τα δεδομένα που έχουν εισαχθεί.
+job deleted.	filemanager	el	Η εργασία διαγράφηκε.
 job folder %1 does not exist or is not writable	filemanager	el	Ο φάκελος εργασίας %1 δεν υπάρχει ή δεν είναι εγγράψιμος
+job saved.	filemanager	el	Η εργασία αποθηκεύτηκε.
+jobs	filemanager	el	Εργασίες
 leave empty to delete the file after attaching	filemanager	el	Αφήστε κενό για να διαγράψετε το αρχείο μετά την επισύναψη
 link	filemanager	el	Σύνδεσμος
 link %1: %2	filemanager	el	Σύνδεσμός %1: %2
@@ -165,8 +171,10 @@ save %1	filemanager	el	Αποθήκευση %1
 save %1, and go back to file listing	filemanager	el	Αποθήκευση %1, και επιστροφή στη  σύνταξη καταλόγου
 save as zip	filemanager	el	Αποθήκευση ως ZIP
 save changes	filemanager	el	Αποθήκευση αλλαγών
+save job to clear error and restart it	filemanager	el	Αποθηκεύστε την εργασία για να διαγράψετε το σφάλμα και να την επανεκκινήσετε
 saved %1	filemanager	el	Αποθηκεύθηκε %1
 search for '%1'	filemanager	el	Αναζήτηση για '%1'
+select custom field	filemanager	el	Επιλέξτε προσαρμοσμένο πεδίο
 show	filemanager	el	Προβολή
 size	filemanager	el	Μέγεθος
 smb, webdavs and vfs require a username!	filemanager	el	Τα SMB, WebDAV και VFS απαιτούν όνομα χρήστη!

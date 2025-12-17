@@ -358,7 +358,7 @@ server url	admin	uk	URL серверу
 server username	admin	uk	ім'я користувача на сервері
 set a random password	admin	uk	Встановити випадковий пароль
 set preference values.	admin	uk	Встановити значення параметрів.
-show access log	admin	uk	Показати протокол доступу
+show access log	admin	uk	Журнал доступу
 show current action	admin	uk	Показати поточні дії
 show error log	admin	uk	Показати протокол помилок
 show groups in container based on	admin	uk	Показувати групи в контейнері на основі
@@ -422,7 +422,7 @@ users can define their own signatures	admin	uk	Користувачі можут
 users choice	admin	uk	Вибір користувача
 vacation messages with start- and end-date require an admin account to be set	admin	uk	Повідомлення про відпустку з датою початку та закінчення вимагають створення облікового запису адміністратора!
 vacation notice	admin	uk	Повідомлення про відпустку
-view access log	admin	uk	Перегляд протоколу доступів
+view access log	admin	uk	Журнал доступу
 view account	admin	uk	Перегляд рахунку
 view category	admin	uk	Перегляд категорії
 view error log	admin	uk	Перегляд протоколу помилок

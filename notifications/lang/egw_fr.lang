@@ -63,9 +63,11 @@ mark as read	notifications	fr	Marquer comme lu
 message from	notifications	fr	Message de
 minutes	notifications	fr	Minutes
 more info	notifications	fr	Plus d'info
+normally only the work email address is notified	notifications	fr	Normalement, seule l'adresse e-mail professionnelle est notifiée.
 notification	common	fr	Notification
 notifier	notifications	fr	Notificateur
 notify me by	notifications	fr	Notifier avec mon compte
+notify private email address	notifications	fr	Notifier l'adresse e-mail privée
 only used if no push server available!	admin	fr	Utilisé uniquement s'il n'y a pas de serveur push disponible !
 open notified entry	notifications	fr	Ouvrir l'entrée notifiée
 optimize e-mails for external mail client	notifications	fr	Optimizer les emails pour des clients de messagerie externes
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	fr	Popup et email Windows
 windows-popup backend	admin	fr	Backend popup Windows
 windows-popup first, if that fails notify me by e-mail	notifications	fr	Popup windows en premier, en cas d'échec, me notifier par email
 windows-popup only	notifications	fr	Popup windows seulement
+yes, notify only private email, if existing	notifications	fr	Oui, notifier uniquement l'adresse e-mail privée, si elle existe
+yes, notify private email too	notifications	fr	Oui, notifier également l'adresse e-mail privée
 yesterday	notifications	fr	Hier
 you can also use	admin	fr	Vous pouvez aussi utiliser
 you have %1 unread notifications	notifications	fr	Vous avez %1 notification(s) non lue(s)

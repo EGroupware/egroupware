@@ -2,6 +2,7 @@
 account:	notifications	pl	Konto:
 all possible notification backends	notifications	pl	Wszystkie możliwe backendy powiadomień
 are you sure you want to delete all notifications?	notifications	pl	Czy na pewno chcesz usunąć wszystkie powiadomienia?
+automatic deleted notifications older than	admin	pl	Automatyczne usuwanie powiadomień starszych niż
 browser	notifications	pl	Przeglądarka
 browser is starting.	notifications	pl	Przeglądarka się uruchamia.
 cancal settings?	notifications	pl	Anulować ustawienia?
@@ -62,9 +63,11 @@ mark as read	notifications	pl	Oznacz jako przeczytane
 message from	notifications	pl	Wiadomość od
 minutes	notifications	pl	Minuty
 more info	notifications	pl	Więcej informacji
+normally only the work email address is notified	notifications	pl	Zazwyczaj powiadomienia wysyłane są tylko na służbowy adres e-mail.
 notification	common	pl	Powiadomienie
 notifier	notifications	pl	Powiadomienie
 notify me by	notifications	pl	Powiadom mnie przez
+notify private email address	notifications	pl	Powiadom prywatny adres e-mail
 open notified entry	notifications	pl	Otwórz powiadomiony wpis
 optimize e-mails for external mail client	notifications	pl	Optymalizuj emaile dla zewnętrznego klienta poczty
 page not found, please check serveraddress.	notifications	pl	Nie znaleziono strony, sprawdź adres serwera.
@@ -101,6 +104,8 @@ windows-popup and e-mail	notifications	pl	Popup windows i email
 windows-popup backend	admin	pl	Backend Windows-popup
 windows-popup first, if that fails notify me by e-mail	notifications	pl	Najpierw popup Windows, jeśli to zawiedzie powiadom przez email
 windows-popup only	notifications	pl	Popup Windows
+yes, notify only private email, if existing	notifications	pl	Tak, powiadom tylko prywatny adres e-mail, jeśli istnieje
+yes, notify private email too	notifications	pl	Tak, powiadom również prywatny adres e-mail
 yesterday	notifications	pl	Wczoraj
 you can also use	admin	pl	Możesz również użyć
 you have %1 unread notifications	notifications	pl	Masz %1 nieprzeczytanych powiadomień

@@ -809,7 +809,7 @@ set preference values.	admin	fr	Régler les valeurs des préférences.
 settings	admin	fr	Réglages
 should exceptions contain a trace (including function arguments)	admin	fr	Les exceptions doivent-elles contenir une trace, y compris les arguments des fonctions.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fr	Est-ce que la page de login doit inclure une zone de sélection linguistique (utile aussi pour les sites de démonstration) ?
-show access log	admin	fr	Montrer les journaux d'accès
+show access log	admin	fr	Journal d'accès
 show as optional, but required once user has it setup	admin	fr	Montrer comme facultatif, mais requis une fois que l'utilisateur l'a configuré
 show as required, but only once user has it setup	admin	fr	Afficher selon les besoins, mais seulement une fois que l'utilisateur l'a configuré
 show current action	admin	fr	Afficher les actions en cours
@@ -969,7 +969,7 @@ vacation notice	admin	fr	Message d'absence
 valid for	admin	fr	Valide pour
 value for column %1 is not unique!	admin	fr	La valeur pour la colonne %1 n'est pas unique !
 vfs directory "%1" not found!	admin	fr	Répertoire VFS "%1" non trouvé !
-view access log	admin	fr	Afficher le journal d'accès
+view access log	admin	fr	Journal d'accès
 view account	admin	fr	Afficher le compte
 view category	admin	fr	Afficher la catégorie
 view error log	admin	fr	Afficher le journal d'erreurs

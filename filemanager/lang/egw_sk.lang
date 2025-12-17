@@ -64,6 +64,7 @@ copy to clipboard	filemanager	sk	Kopírovať do schránky
 could not copy %1 to %2	filemanager	sk	Nepodarilo sa skopírovať %1 do %2
 could not create %1	filemanager	sk	Nepodarilo sa vytvoriť %1
 could not delete %1	filemanager	sk	Nepodarilo sa odstrániť %1
+could not install async job	filemanager	sk	Nepodarilo sa nainštalovať asynchrónnu úlohu
 could not move %1 to %2	filemanager	sk	Nepodarilo sa presunúť %1 do %2
 could not rename %1 to %2	filemanager	sk	Nepodarilo sa premenovať %1 na %2
 create a link	filemanager	sk	Vytvoriť odkaz
@@ -73,6 +74,7 @@ create folder	filemanager	sk	Vytvoriť priečinok
 created	filemanager	sk	Vytvorené
 created %1,%2	filemanager	sk	Vytvorené %1, %2
 created directory %1	filemanager	sk	Vytvorený priečinok %1
+creationdate of file	filemanager	sk	Dátum vytvorenia súboru
 current directory	filemanager	sk	Súčasný priečinok
 custom fields	filemanager	sk	Používateľské polia
 cut	filemanager	sk	Vystrihnúť
@@ -120,6 +122,7 @@ error adding the acl!	filemanager	sk	Chyba počas pridávania ACL!
 error creating symlink to target %1!	filemanager	sk	Chyba pri vytváraní symbolického odkazu na cieľ %1!
 error deleting the acl entry!	filemanager	sk	Chyba počas odstraňovania záznamu ACL!
 error mounting %1 on %2!	filemanager	sk	Chyba počas pripájania %1 na %2!
+error running job	filemanager	sk	Chyba pri spúšťaní úlohy
 error unmounting %1!	filemanager	sk	Chyba počas odpájania %1!
 error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
 error while creating directory.	filemanager	sk	Chyba pri vytváraní priečinku
@@ -181,7 +184,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 if you specify an export definition, it will be used when you export*	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 inherited	filemanager	sk	Dedičné
+job deleted.	filemanager	sk	Úloha odstránená.
 job folder %1 does not exist or is not writable	filemanager	sk	Pracovná zložka %1 neexistuje alebo nie je možné do nej zapisovať.
+job saved.	filemanager	sk	Úloha uložená.
+jobs	filemanager	sk	Úlohy
 last accessed	filemanager	sk	Naposledy otvorené
 leave empty to delete the file after attaching	filemanager	sk	Nechajte prázdne, ak chcete súbor po priložení odstrániť
 link	filemanager	sk	Odkaz
@@ -263,12 +269,14 @@ save %1	filemanager	sk	Uložiť %1
 save %1, and go back to file listing	filemanager	sk	Uložiť %1, a vrátiť sa na zoznam súborov
 save as zip	filemanager	sk	Uložiť ako ZIP
 save changes	filemanager	sk	Uložiť zmeny
+save job to clear error and restart it	filemanager	sk	Uložte úlohu, aby sa chyba vymazala, a reštartujte ju
 saved %1	filemanager	sk	Uložené %1
 saving properties failed!	filemanager	sk	Ukladanie vlastností zlyhalo!
 saving setting for document merge failed!	filemanager	sk	Ukladanie nastavení pre zlučovanie dokumentov zlyhalo!
 search for '%1'	filemanager	sk	Hľadať '%1'
 searchstring	filemanager	sk	Hľadaný reťazec
 select action...	filemanager	sk	Vyberte akciu...
+select custom field	filemanager	sk	Vyberte vlastné pole
 select file to upload in current directory	filemanager	sk	Vyberte súbor, ktorý sa má odovzdať, v súčasnom adresári
 select file(s) from vfs	common	sk	Vyberte súbor(y) z VFS
 setting for document merge saved.	filemanager	sk	Nastavenia e zlučovanie dokumentov boli uložené.

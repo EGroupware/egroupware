@@ -57,9 +57,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	ja	作業時間をオフにするのを忘れましたか？
 full: use only projectmanager	admin	ja	Full: プロジェクト・マネージャだけを使用
 general fields:	timesheet	ja	一般項目:
+give additional users access	timesheet	ja	追加ユーザーへのアクセス権限付与
+give infolog delegation read-access to timesheets booked on them	timesheet	ja	InfoLog委任に、自身に予約されたタイムシートへの閲覧権限を付与する
 global categories	timesheet	ja	グローバルカテゴリ
 history	timesheet	ja	履歴
 history logging	admin	ja	履歴出力
+how to display linked timesheets	timesheet	ja	リンクされたタイムシートの表示方法
 html link to the current record	timesheet	ja	このレコードへのHTMLリンク
 id	timesheet	ja	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	calendar	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
@@ -78,10 +81,12 @@ last year	timesheet	ja	去年
 leave it empty for a full week	timesheet	ja	空にすると週7日間全部
 leaves without saveing	timesheet	ja	保存せずに終了
 length<br>rows	timesheet	ja	長さ<br>行
+link title	timesheet	ja	リンクタイトル
 links	timesheet	ja	リンク
 links and attached files	timesheet	ja	リンクと添付ファイル
 links to specified application.  example: {{links/infolog}}	timesheet	ja	指定されたアプリケーションへのリンク。  例: {{links/infolog}}
 list of files linked to the current record	timesheet	ja	List of files linked to the current record
+make timesheets readable by infolog delegation	timesheet	ja	InfoLog委任によるタイムシートの閲覧を可能にする
 max length of the input [, length of the inputfield (optional)]	timesheet	ja	入力の最大長 [, 入力項目の長さ (オプショナル)]
 mode	timesheet	ja	モード
 modified	timesheet	ja	変更日時
@@ -111,6 +116,7 @@ price	timesheet	ja	価格
 project fields	timesheet	ja	プロジェクト項目
 projectmanager integration	admin	ja	プロジェクト・マネージャ統合
 quantity	timesheet	ja	数量
+readable	timesheet	ja	閲覧可能
 recorded	timesheet	ja	記録済み
 recovered	timesheet	ja	復旧済み
 replacements for inserting entries into documents	timesheet	ja	ドキュメントに挿入する項目の置換
@@ -148,6 +154,7 @@ this month	timesheet	ja	今月
 this week	timesheet	ja	今週
 this year	timesheet	ja	今年
 ticket modified by %1 at %2	timesheet	ja	%1が%2にチケットを変更しました。
+timer	common	ja	タイマー
 timer already running or paused	common	ja	タイマは既に実行中または一時停止中です。
 timesheet	common	ja	タイムシート
 timesheet csv export	timesheet	ja	タイムシート CSV エクスポート

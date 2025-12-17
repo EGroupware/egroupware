@@ -146,7 +146,6 @@ custom url for ical with holidays for all users	calendar	de	Eigene URL für iCal
 custom_2	common	de	Frei / Besetzt
 daily	calendar	de	Täglich
 daily tables	calendar	de	Tabellen für tägliche Einträge
-data exchange settings	calendar	de	Einstellungen für den Datenaustausch
 date for the day of the week	calendar	de	Datum für den Tag
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	de	Tagesdatum, erste Zeile der Tagesübersicht
 date range	calendar	de	Datumsbereich
@@ -549,7 +548,7 @@ send notifications	calendar	de	Benachrichtigung senden
 send notifications to users right now	calendar	de	Jetzt eine Benachrichtigung an Benutzer senden
 series deleted	calendar	de	Serientermin wurde gelöscht
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
-setting lock time calender	admin	de	Zeitintervall für Datensatzlock (Voreinstellung beträgt eine Sekunde)
+setting lock time calender	admin	de	Zeitintervall für Datensatzsperre (Voreinstellung beträgt 1 Sekunde)
 shall the date parameter be accepted (e.g. from calendar module)?	calendar	de	Soll der Parameter Datum akzeptiert werden (z.B. vom Kalender Modul)?
 should new events created as private by default ?	calendar	de	Sollen neue Termine generell als Privat angelegt werden?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	de	Sollen nicht angemeldete Personen Ihre nicht verfügbaren Zeiten einsehen können? Sie können ein Passwort vergeben, um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegt-Zeiten sind im iCal-Format. Sie enthalten ausschließlich die Zeiten, an denen Sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegt-Zeiten ist:

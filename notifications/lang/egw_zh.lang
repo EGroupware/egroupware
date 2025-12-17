@@ -2,12 +2,14 @@
 account:	notifications	zh	账户：
 all possible notification backends	notifications	zh	所有可能的通知后台
 are you sure you want to delete all notifications?	notifications	zh	您确定要删除所有通知吗？
+automatic deleted notifications older than	admin	zh	自动删除超过以下天数的旧通知
 browser	notifications	zh	浏览器
 browser is starting.	notifications	zh	浏览器正在启动。
 cancal settings?	notifications	zh	取消设置？
 cancal?	notifications	zh	取消？
 certification-information:	notifications	zh	认证信息：
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	zh	选择通知链。您将收到通知链中包含的后端。<br>注意：如果一个通知链被标记为 "禁用"，您的管理员不允许一个或多个包含在链中的后端，通知会在通知您时退回到 "电子邮件"。
+choose from mailsettings used for notification	admin	zh	选择用于邮件通知的邮件设置
 connection error.	notifications	zh	连接错误。
 connection error. please check connection to server.	notifications	zh	连接错误。请检查服务器连接。
 continue to connect?	notifications	zh	继续连接？
@@ -51,9 +53,11 @@ mark as read	notifications	zh	标记为已读
 message from	notifications	zh	发件人
 minutes	notifications	zh	分钟
 more info	notifications	zh	更多信息
+normally only the work email address is notified	notifications	zh	通常仅通知工作邮箱地址。
 notification	common	zh	通知管理
 notifier	notifications	zh	通知
 notify me by	notifications	zh	通知我
+notify private email address	notifications	zh	通知私人邮箱地址
 open notified entry	notifications	zh	打开通知条目
 optimize e-mails for external mail client	notifications	zh	为外在邮件客户优化电子邮件
 page not found, please check serveraddress.	notifications	zh	未找到页面，请检查服务器地址。
@@ -85,6 +89,8 @@ warning	notifications	zh	警告
 windows-popup and e-mail	notifications	zh	Windows 弹出窗和邮件
 windows-popup first, if that fails notify me by e-mail	notifications	zh	首先是系统弹出窗口，如果失败则以邮件通知我
 windows-popup only	notifications	zh	仅 Windows 弹出窗
+yes, notify only private email, if existing	notifications	zh	是，仅通知私人邮箱（若存在）
+yes, notify private email too	notifications	zh	是，也通知私人邮箱
 yesterday	notifications	zh	昨天
 you can also use	admin	zh	您也可以使用
 you have %1 unread notifications	notifications	zh	您有 %1 个未读通知

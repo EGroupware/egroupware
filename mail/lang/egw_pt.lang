@@ -256,7 +256,7 @@ if different from email address	mail	pt	Se for diferente do endereço de email
 if from contains:(*)	mail	pt	Se a partir contém: (*)
 if mail body content / attachment type	mail	pt	Se o tipo de conteúdo do corpo correio / anexo
 if mail body message type	mail	pt	Se o tipo de corpo da mensagem de correio
-if mail header	mail	pt	Se cabeçalho da mensagem
+if mail header	mail	pt	se cabeçalho da mensagem
 if message size	mail	pt	Se o tamanho da mensagem
 if subject contains:(*)	mail	pt	Se assunto contém: (*)
 if to contains:(*)	mail	pt	Se a contém: (*)
@@ -329,6 +329,7 @@ moving folders from one mailaccount to another is not supported	mail	pt	Não é 
 name and domain	mail	pt	Nome e domínio
 name and email	mail	pt	Nome e correio eletrónico
 name of account	mail	pt	Nome da conta
+name of header, only letters, numbers and dash (-) allowed	mail	pt	Nome do cabeçalho, apenas letras, números e traço (-) permitidos
 name of imap servers (space separated host or host:port)	mail	pt	Nome dos servidores IMAP (anfitrião separado por espaços ou anfitrião:porta)
 never display html emails	mail	pt	Nunca apresentar mensagens HTML
 never show	mail	pt	Nunca mostrar

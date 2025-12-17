@@ -63,9 +63,11 @@ mark as read	notifications	cs	Označit jako přečtený
 message from	notifications	cs	Zpráva od
 minutes	notifications	cs	Minut
 more info	notifications	cs	Více informací
+normally only the work email address is notified	notifications	cs	bvykle se oznamuje pouze pracovní e-mailová adresa.
 notification	common	cs	Upozornění
 notifier	notifications	cs	Oznamovatel:
 notify me by	notifications	cs	Upozorni mě pomocí
+notify private email address	notifications	cs	Oznámit soukromou e-mailovou adresu
 only used if no push server available!	admin	cs	Utilisé uniquement s'il n'y a pas de serveur push disponible !
 open notified entry	notifications	cs	otevřít oznámený záznam
 optimize e-mails for external mail client	notifications	cs	Optimalizovat e-maily pro externí poštovní klienty
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	cs	Překryvná okna ve Windows a e-mail
 windows-popup backend	admin	cs	Backend Překryvná okna ve Windows
 windows-popup first, if that fails notify me by e-mail	notifications	cs	Nejprve překryvná okna ve Windows, pokud se nezdaří, upozorni mě e-mailem
 windows-popup only	notifications	cs	Jen překryvná okna ve Windows
+yes, notify only private email, if existing	notifications	cs	Ano, oznámit pouze soukromou e-mailovou adresu, pokud existuje
+yes, notify private email too	notifications	cs	Ano, oznámit také soukromou e-mailovou adresu
 yesterday	notifications	cs	Včera
 you can also use	admin	cs	Také můžete použít
 you have %1 unread notifications	notifications	cs	Máte %1 nepřečtených oznámení

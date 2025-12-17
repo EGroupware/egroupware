@@ -20,12 +20,18 @@ existing links	timesheet	ko	기존링크
 exports entries from your timesheet into a csv file.	timesheet	ko	Mengekspor entri dari Lembar Waktu ke file CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ko	작업표의 항목을 CSV 파일로 내보냅니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 forgot to switch off working time?	common	ko	근무 시간을 끄는 것을 잊으셨나요?
+give additional users access	timesheet	ko	추가 사용자에게 접근 권한 부여
+give infolog delegation read-access to timesheets booked on them	timesheet	ko	InfoLog 위임 대상자에게 해당 위임 기록된 근태 기록표에 대한 읽기 권한 부여
 global categories	timesheet	ko	전역 카테고리
 history	timesheet	ko	내역
+how to display linked timesheets	timesheet	ko	연동된 근태 기록표 표시 방법
+html link to the current record	timesheet	ko	현재 레코드에 대한 HTML 링크
 imports entries into the timesheet from a csv file.	timesheet	ko	Mengimpor entri ke dalam Lembar Waktu dari file CSV
 last modified	timesheet	ko	마지막 수정
 leaves without saveing	timesheet	ko	저장없이 나가기
+link title	timesheet	ko	연동 제목
 links	timesheet	ko	링크
+make timesheets readable by infolog delegation	timesheet	ko	InfoLog 위임으로 근태 기록표 가독성 확보
 mode	timesheet	ko	모드
 modified	timesheet	ko	변경됨
 no details	timesheet	ko	내용제외
@@ -36,6 +42,7 @@ pause time	timesheet	ko	일시 중지 시간
 paused	timesheet	ko	일시 중지됨
 price	timesheet	ko	가격
 project fields	timesheet	ko	프로젝트 필드
+readable	timesheet	ko	가독성
 recorded	timesheet	ko	기록됨
 restore this entry	timesheet	ko	이 항목 복원
 saves the changes made	timesheet	ko	변경사항 저장
@@ -48,6 +55,7 @@ start & stop timer	common	ko	시작 및 중지 타이머
 start timer	common	ko	시작 타이머
 start-time can not be before last stop- or pause-time %1!	common	ko	시작 시간이 마지막 중지 또는 일시 중지 시간 %1 이전일 수 없습니다!
 stop- or pause-time can not be before the start-time %1!	common	ko	중지 또는 일시 중지 시간이 시작 시간 %1 이전일 수 없습니다!
+timer	common	ko	타이머
 timer already running or paused	common	ko	타이머가 이미 실행 중이거나 일시 중지되었습니다.
 timesheet csv export	timesheet	ko	Ekspor CSV Lembar Waktu
 timesheet csv import	timesheet	ko	Impor CSV Lembar Waktu

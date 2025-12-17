@@ -421,7 +421,7 @@ server username	admin	lv	Servera Lietotājvārds
 set a random password	admin	lv	Izlases paroles iestatīšana
 set preference values.	admin	lv	Uzstādi izvēlētās vētības
 should the login page include a language selectbox (useful for demo-sites) ?	admin	lv	Vai autorizācijas lapā ir iekļauta valodu izvēlne (noderīgi demo-lapām)?
-show access log	admin	lv	Rādīt pieejas logu
+show access log	admin	lv	Piekļuves žurnāls
 show current action	admin	lv	Rādīt pašreizējo darbību
 show error log	admin	lv	Rādīt kļudas logu
 show groups in container based on	admin	lv	Parādīt grupas konteinerā, pamatojoties uz
@@ -505,7 +505,7 @@ users can define their own signatures	admin	lv	Lietotāji var definēt savus par
 users choice	admin	lv	LIetotāju izvēle
 vacation messages with start- and end-date require an admin account to be set	admin	lv	Brīvdienu ziņām ar sākuma un beigu datumu ir nepieciešams iestatīt administratora kontu!
 vacation notice	admin	lv	Paziņojums par atvaļinājumu
-view access log	admin	lv	Parādīt pieejas logu
+view access log	admin	lv	Piekļuves žurnāls
 view account	admin	lv	Parādīt kontu
 view category	admin	lv	Parādīt kategoriju
 view error log	admin	lv	Parādīt kļūdas logu

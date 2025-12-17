@@ -64,6 +64,7 @@ copy to clipboard	filemanager	ja	クリップボードにコピー
 could not copy %1 to %2	filemanager	ja	%1 を %2 にコピーできませんでした。
 could not create %1	filemanager	ja	%1 を作成できませんでした。
 could not delete %1	filemanager	ja	%1 を削除できませんでした。
+could not install async job	filemanager	ja	非同期ジョブのインストールに失敗しました
 could not move %1 to %2	filemanager	ja	%1 を %2 に移動できませんでした。
 could not rename %1 to %2	filemanager	ja	%1 を %2 に名称変更できませんでした。
 create a link	filemanager	ja	リンクを作成
@@ -73,6 +74,7 @@ create folder	filemanager	ja	フォルダを作成
 created	filemanager	ja	作成済み
 created %1,%2	filemanager	ja	%1,%2 を作成しました
 created directory %1	filemanager	ja	ディレクトリ %1 を作成しました
+creationdate of file	filemanager	ja	ファイルの作成日時
 current directory	filemanager	ja	カレント・ディレクトリ
 custom fields	filemanager	ja	カスタム項目
 cut	filemanager	ja	切り取る
@@ -120,6 +122,7 @@ error adding the acl!	filemanager	ja	ACL 追加中にエラー!
 error creating symlink to target %1!	filemanager	ja	%1 に対するシンボリック・リンク作成中にエラー!
 error deleting the acl entry!	filemanager	ja	ACL 項目の削除中にエラー!
 error mounting %1 on %2!	filemanager	ja	%2 に %1 をマウント中にエラー!
+error running job	filemanager	ja	ジョブ実行エラー
 error unmounting %1!	filemanager	ja	%1 をアンマウント中にエラー!
 error uploading file!	filemanager	ja	ファイルのアップロード中にエラー!
 error while creating directory.	filemanager	ja	ディレクトリの作成中にエラー
@@ -181,7 +184,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	ja	エクスポート時に使用する設定を指定します。
 if you specify an export definition, it will be used when you export*	filemanager	ja	エクスポート時に使用する設定を指定します。*
 inherited	filemanager	ja	継承
+job deleted.	filemanager	ja	ジョブが削除されました。
 job folder %1 does not exist or is not writable	filemanager	ja	ジョブフォルダ %1 が存在しないか、書き込み不可です。
+job saved.	filemanager	ja	ジョブが保存されました。
+jobs	filemanager	ja	ジョブ一覧
 last accessed	filemanager	ja	最終アクセス日時
 leave empty to delete the file after attaching	filemanager	ja	添付後にファイルを削除する場合は空欄のままにしてください
 link	filemanager	ja	リンク
@@ -262,12 +268,14 @@ save %1	filemanager	ja	%1を保存
 save %1, and go back to file listing	filemanager	ja	%1 を保存し、ファイル一覧に戻ります。
 save as zip	filemanager	ja	ZIPとして保存
 save changes	filemanager	ja	変更を保存
+save job to clear error and restart it	filemanager	ja	エラーをクリアしてジョブを再起動するには保存してください
 saved %1	filemanager	ja	%1を保存しました。
 saving properties failed!	filemanager	ja	プロパティの保存に失敗しました!
 saving setting for document merge failed!	filemanager	ja	ドキュメント・マージ設定の保存に失敗しました!
 search for '%1'	filemanager	ja	'%1'を検索
 searchstring	filemanager	ja	文字列検索
 select action...	filemanager	ja	アクションを選択...
+select custom field	filemanager	ja	カスタムフィールドを選択
 select file to upload in current directory	filemanager	ja	アップロードするファイルを選択してください。
 select file(s) from vfs	common	ja	VFSからファイルを選択
 setting for document merge saved.	filemanager	ja	ドキュメント・マージの設定を保存しました。

@@ -20,6 +20,7 @@ copy to	filemanager	pt	Copiar para
 could not copy %1 to %2	filemanager	pt	Não foi possível copiar %1 para %2
 could not create %1	filemanager	pt	Não foi possível criar %1
 could not delete %1	filemanager	pt	Não foi possível remover %1
+could not install async job	filemanager	pt	Não foi possível instalar o trabalho assíncrono
 could not move %1 to %2	filemanager	pt	Não foi possível mover %1 para %2
 could not rename %1 to %2	filemanager	pt	Não foi possível renomear %1 para %2
 create file	filemanager	pt	Criar ficheiro
@@ -27,6 +28,7 @@ create folder	filemanager	pt	Criar pasta
 created	filemanager	pt	Criado
 created %1,%2	filemanager	pt	Criado %1,%2
 created directory %1	filemanager	pt	Directoria %1 criada
+creationdate of file	filemanager	pt	Data de criação do ficheiro
 custom fields	filemanager	pt	Personalizar campos
 cut	filemanager	pt	Cortar
 default action on double-click	filemanager	pt	Ação predefinida ao fazer duplo clique
@@ -52,6 +54,7 @@ error adding the acl!	filemanager	pt	Erro ao adicionar a ACL!
 error creating symlink to target %1!	filemanager	pt	Erro ao criar uma ligação simbólica para o destino %1!
 error deleting the acl entry!	filemanager	pt	Erro ao eliminar a entrada ACL!
 error mounting %1 on %2!	filemanager	pt	Erro ao montar %1 em %2!
+error running job	filemanager	pt	Erro ao executar o trabalho
 error unmounting %1!	filemanager	pt	Erro ao desmontar %1!
 error uploading file!	filemanager	pt	O upload de arquivos de erro!
 error while creating directory.	filemanager	pt	Erro ao criar pasta
@@ -102,7 +105,10 @@ hostname/ip for webdav and smb	filemanager	pt	Nome do anfitrião/IP para WebDAV 
 id	filemanager	pt	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	pt	Se especificar uma pasta (caminho VFS completo) aqui, %1 apresenta uma ação para cada documento. Essa ação permite descarregar o documento especificado com os dados %1 inseridos.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	pt	Se especificar uma pasta (caminho VFS completo) aqui, %1 apresenta um ícone de documento extra para cada entrada. Esse ícone permite descarregar o documento especificado com os dados inseridos.
+job deleted.	filemanager	pt	Trabalho eliminado.
 job folder %1 does not exist or is not writable	filemanager	pt	A pasta de trabalho %1 não existe ou não é gravável.
+job saved.	filemanager	pt	Trabalho guardado.
+jobs	filemanager	pt	Trabalhos
 leave empty to delete the file after attaching	filemanager	pt	Deixe em branco para excluir o arquivo após anexá-lo
 link	filemanager	pt	Ligação
 link target %1 not found!	filemanager	pt	Destino do link% 1 não encontrado!
@@ -158,7 +164,9 @@ save %1	filemanager	pt	Guardar %1
 save %1, and go back to file listing	filemanager	pt	Guardar %1, e voltar à lista de ficheiros
 save as zip	filemanager	pt	Guardar como ZIP
 save changes	filemanager	pt	Guardar alterações
+save job to clear error and restart it	filemanager	pt	Guarde o trabalho para eliminar o erro e reinicie-o
 saved %1	filemanager	pt	%1 guardado
+select custom field	filemanager	pt	Selecione o campo personalizado
 select file(s) from vfs	common	pt	Selecione o arquivo (s) a partir de VFS
 show	filemanager	pt	Exibir
 size	filemanager	pt	Tamanho

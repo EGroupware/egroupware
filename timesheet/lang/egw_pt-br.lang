@@ -47,9 +47,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	pt-br	Esqueceu-se de desativar o horário de trabalho?
 full: use only projectmanager	admin	pt-br	Completo: usar apenas Gerenciador de Projetos
 general fields:	timesheet	pt-br	Campos gerais:
+give additional users access	timesheet	pt-br	Dê acesso a usuários adicionais
+give infolog delegation read-access to timesheets booked on them	timesheet	pt-br	Dê à delegação do InfoLog acesso de leitura às folhas de ponto registradas nelas
 global categories	timesheet	pt-br	Categorias Globais
 history	timesheet	pt-br	Histórico
 history logging	admin	pt-br	Registro de histórico
+how to display linked timesheets	timesheet	pt-br	Como exibir folhas de ponto vinculadas
 html link to the current record	timesheet	pt-br	Link HTML para o registro atual
 id	timesheet	pt-br	ID
 ignore	timesheet	pt-br	Ignorar
@@ -62,9 +65,11 @@ last year	timesheet	pt-br	Último ano
 leave it empty for a full week	timesheet	pt-br	Deixar vazio para uma semana inteira
 leaves without saveing	timesheet	pt-br	sair sem salvar
 length<br>rows	timesheet	pt-br	Tamanho<br>Linhas
+link title	timesheet	pt-br	Título do link
 links	timesheet	pt-br	Links
 links and attached files	timesheet	pt-br	Links e arquivos anexados
 list of files linked to the current record	timesheet	pt-br	Lista de arquivos vinculados ao registro atual
+make timesheets readable by infolog delegation	timesheet	pt-br	Torne as folhas de ponto legíveis pela delegação do InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	pt-br	tamanho máximo da entrada [, tamanho do campo de entrada (opcional)]
 mode	timesheet	pt-br	Modo
 modified	timesheet	pt-br	Modificado
@@ -88,6 +93,7 @@ price	timesheet	pt-br	Preço
 project fields	timesheet	pt-br	Campos de projeto
 projectmanager integration	admin	pt-br	Integração com Gerenciador de Projetos
 quantity	timesheet	pt-br	Quantidade
+readable	timesheet	pt-br	Legível
 recorded	timesheet	pt-br	Gravado
 replacements for inserting entries into documents	timesheet	pt-br	Substitutos para a inserção de entradas em documentos
 restore this entry	timesheet	pt-br	Restaurar esse registro
@@ -115,6 +121,7 @@ this month	timesheet	pt-br	Este mês
 this week	timesheet	pt-br	Esta semana
 this year	timesheet	pt-br	Este ano
 ticket modified by %1 at %2	timesheet	pt-br	Ticket modificado por %1 em %2
+timer	common	pt-br	Temporizador
 timer already running or paused	common	pt-br	O timer já está em execução ou pausado
 timesheet	common	pt-br	Planilha de Tempo
 timesheet csv export	timesheet	pt-br	Exportar Planilha - CSV

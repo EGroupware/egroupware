@@ -421,7 +421,7 @@ server username	admin	no	Tjener brukernavn
 set a random password	admin	no	Angi et tilfeldig passord
 set preference values.	admin	no	Sett referanseverdier
 should the login page include a language selectbox (useful for demo-sites) ?	admin	no	Skal login siden inneholde valg av språk (fint for demo-site)?
-show access log	admin	no	Vis aksesslogg
+show access log	admin	no	Tilgangslogg
 show current action	admin	no	Vis gjeldende aksjon
 show error log	admin	no	Vis feillogg
 show groups in container based on	admin	no	Vis grupper i beholderen basert på
@@ -509,7 +509,7 @@ users can define their own signatures	admin	no	Brukere kan definere sine egne si
 users choice	admin	no	Brukers valg
 vacation messages with start- and end-date require an admin account to be set	admin	no	Feriemeldinger med start- og sluttdato krever en administratorkonto for å kunne settes opp!
 vacation notice	admin	no	Varsel om ferie
-view access log	admin	no	Vis access log
+view access log	admin	no	Tilgangslogg
 view account	admin	no	Vis konto
 view category	admin	no	Vis kategori
 view error log	admin	no	Vis feillogg

@@ -46,8 +46,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	pl	Zapomniałeś wyłączyć czas pracy?
 full: use only projectmanager	admin	pl	Pełna: zezwalaj tylko na nazwy z Menadżera Projektów
 general fields:	timesheet	pl	Pola ogólne:
+give additional users access	timesheet	pl	Przyznaj dostęp dodatkowym użytkownikom
+give infolog delegation read-access to timesheets booked on them	timesheet	pl	Przyznaj delegatom InfoLog dostęp do odczytu arkuszy czasu pracy zarezerwowanych dla nich
 global categories	timesheet	pl	Kategorie globalne
 history	timesheet	pl	Historia
+how to display linked timesheets	timesheet	pl	Jak wyświetlić powiązane arkusze czasu pracy
+html link to the current record	timesheet	pl	Link HTML do bieżącego rekordu
 id	timesheet	pl	id
 ignore	timesheet	pl	Ignoruj
 insert	timesheet	pl	wstaw
@@ -58,7 +62,9 @@ last year	timesheet	pl	Ostatni rok
 leave it empty for a full week	timesheet	pl	Pozostaw pusty na cały tydzień
 leaves without saveing	timesheet	pl	Pozostaw bez zmian
 length<br>rows	timesheet	pl	Długość<br>linie
+link title	timesheet	pl	Tytuł linku
 links	timesheet	pl	Odsyłacze
+make timesheets readable by infolog delegation	timesheet	pl	Udostępnij arkusze czasu pracy delegatom InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	pl	maksymalna długość danych [,długość pola (opcjonalnie)]
 mode	timesheet	pl	Tryb
 modified	timesheet	pl	Zmodyfikowany
@@ -85,6 +91,7 @@ price	timesheet	pl	Cena
 project fields	timesheet	pl	Pola projektu
 projectmanager integration	admin	pl	Integracja z Menadżerem projektów
 quantity	timesheet	pl	Ilość
+readable	timesheet	pl	Czytelny
 recorded	timesheet	pl	Zapisano
 recovered	timesheet	pl	odzyskany
 restore this entry	timesheet	pl	Przywróć ten wpis
@@ -117,6 +124,7 @@ this month	timesheet	pl	Bieżący miesiąc
 this week	timesheet	pl	Bieżący tydzień
 this year	timesheet	pl	Bieżący rok
 ticket modified by %1 at %2	timesheet	pl	Ticket zmodyfikowany przez %1, %2
+timer	common	pl	Timer
 timer already running or paused	common	pl	Timer jest już uruchomiony lub wstrzymany
 timesheet	common	pl	Czas Pracy
 timesheet csv export	timesheet	pl	Eksport czasu pracy do pliku CSV

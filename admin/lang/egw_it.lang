@@ -809,7 +809,7 @@ set preference values.	admin	it	Imposta i valori delle preferenze.
 settings	admin	it	Impostazioni
 should exceptions contain a trace (including function arguments)	admin	it	Le eccezioni dovrebbero contenere tracce, inclusi gli argomenti delle funzioni.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	it	Includere nella pagina di login un elenco a discesa per selezionare la lingua (utile per i siti-demo)?
-show access log	admin	it	Visualizza i log di accesso
+show access log	admin	it	Registro accessi
 show as optional, but required once user has it setup	admin	it	Mostra come facoltativa, ma è necessaria una volta che l'utente l'ha configurata
 show as required, but only once user has it setup	admin	it	Mostra come obbligatorio, ma solo una volta che l'utente l'ha configurato
 show current action	admin	it	Visualizza l'azione corrente
@@ -969,7 +969,7 @@ vacation notice	admin	it	Notifica vacanze
 valid for	admin	it	Valido per
 value for column %1 is not unique!	admin	it	Il valore per la colonna %1 non è univoco!
 vfs directory "%1" not found!	admin	it	La directory VFS "%1" non è stata trovata!
-view access log	admin	it	Visualizza Log accessi
+view access log	admin	it	Registro accessi
 view account	admin	it	Visualizza account
 view category	admin	it	Visualizza categoria
 view error log	admin	it	Visualizza Log errori

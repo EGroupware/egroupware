@@ -149,6 +149,7 @@ get acl rights failed from imap server!	mail	pl	Pobieranie uprawnień ACL z serw
 greater than	mail	pl	Większe niż
 ham folder	mail	pl	Folder Ham
 handling of external http images / mixed content in mails	mail	pl	Obsługa zewnętrznych obrazów http / zawartości mieszanej w wiadomościach e-mail
+header	mail	pl	Nagłówek
 header lines	mail	pl	Linie nagłówka
 hide from	mail	pl	Ukryj Od
 high priority	mail	pl	Wysoki priorytet
@@ -223,6 +224,7 @@ moved %1 message(s) from %2 to %3	mail	pl	Przeniesiono %1 wiadomości z %2 do %3
 name and domain	mail	pl	Nazwa i domena
 name and email	mail	pl	Imię i adres e-mail
 name of account	mail	pl	Nazwa konta
+name of header, only letters, numbers and dash (-) allowed	mail	pl	Nazwa nagłówka, dozwolone są tylko litery, cyfry i myślnik (-)
 name of imap servers (space separated host or host:port)	mail	pl	Nazwa serwerów IMAP (host oddzielony spacją lub host:port)
 never display html emails	mail	pl	Nigdy nie wyświetlaj emaili HTML
 never show	mail	pl	Nigdy nie pokazuj

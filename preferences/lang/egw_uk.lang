@@ -27,6 +27,7 @@ enable	preferences	uk	Включити
 enter code to authenticate the actions below	preferences	uk	Введіть код для підтвердження дій нижче
 enter code to verify correct setup	preferences	uk	Введіть код для перевірки правильності налаштувань
 enter your new password	preferences	uk	Введіть новий пароль
+enter your old password	preferences	uk	Введіть старий пароль
 fast	preferences	uk	Швидко
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	uk	Швидке оновлення додає нові записи завжди на початку списку і оновлює існуючі на місці, якщо список не відсортовано за останніми змінами. Точне оновлення робить повне оновлення, якщо список не відсортовано за останніми змінами.
 forced preferences	preferences	uk	Форсовані параметри
@@ -53,6 +54,7 @@ max matches per page	preferences	uk	Максимальна кількість н
 max number of icons in navbar	preferences	uk	Максимальна кількість іконок в навігаційній панелі
 no default	preferences	uk	Немає замовчування
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	uk	Примітка: Ця можливість НЕ міняє Ваш email пароль. Це повинно бути зроблено вручну.
+old password and new password are the same. this is invalid. you must enter a new password	preferences	uk	Старий пароль і новий пароль збігаються. Ви повинні ввести новий пароль!
 password stored	preferences	uk	Пароль збережено.
 popup with search	preferences	uk	Вспливаюче вікно з пошуком
 preferences saved.	preferences	uk	Налаштування збережено.
@@ -75,6 +77,7 @@ show_more_apps	common	uk	Показувати більше приложень
 singlesignon and passwords	preferences	uk	SingleSignOn і паролі
 store password retrievable for singlesignon	common	uk	Зберігати пароль, який можна відновити для SingleSignOn
 text only	preferences	uk	Тільки текст
+the old password is not correct	preferences	uk	Старий пароль невірний!
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	uk	Перелік вибору показує всіх доступних користувачів (може бути дуже повільно при великих їх кількостях). Вспливаюче вікно дасть можливість шукати користувачів по імені чи групі.
 the two passwords are not the same	preferences	uk	Ці два паролі не співпадають
 theme (colors/fonts) selection	preferences	uk	Вибір теми

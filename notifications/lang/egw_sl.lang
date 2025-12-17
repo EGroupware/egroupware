@@ -63,9 +63,11 @@ mark as read	notifications	sl	Označi kot prebrano
 message from	notifications	sl	Sporočilo od
 minutes	notifications	sl	Minut
 more info	notifications	sl	Več informacij
+normally only the work email address is notified	notifications	sl	Običajno se obvesti samo službeni e-poštni naslov.
 notification	common	sl	Obvestilo
 notifier	notifications	sl	Obveščevalec
 notify me by	notifications	sl	Obvesti me
+notify private email address	notifications	sl	Obvesti zasebni e-poštni naslov
 only used if no push server available!	admin	sl	Uporablja se samo, če ni na voljo potisnega strežnika!
 open notified entry	notifications	sl	Odprti vnešeno obvestilo
 optimize e-mails for external mail client	notifications	sl	Optimizirajte e-pošto za zunanji e-poštni odjemalec
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	sl	Windows popup in e-pošta
 windows-popup backend	admin	sl	Windows popup zadnji konec
 windows-popup first, if that fails notify me by e-mail	notifications	sl	Windows popup najprej, če me ne obvesti po e-pošti
 windows-popup only	notifications	sl	Samo Windows popup
+yes, notify only private email, if existing	notifications	sl	Da, obvesti samo zasebni e-poštni naslov, če obstaja
+yes, notify private email too	notifications	sl	Da, obvesti tudi zasebni e-poštni naslov
 yesterday	notifications	sl	Včeraj
 you can also use	admin	sl	Uporabite lahko tudi
 you have %1 unread notifications	notifications	sl	Imate %1 neprebranih obvestil

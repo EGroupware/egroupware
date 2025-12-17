@@ -10,6 +10,7 @@ cancal?	notifications	el	Ακύρωση;
 certification-information:	notifications	el	Πληροφορίες πιστοποίησης:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	el	Ελέγξτε και τα δύο. Δοκιμάστε πρώτα ενεργό λογαριασμό καθορισμένο από τον χρήστη, αν δεν υπάρχει, χρησιμοποιήστε το προφίλ eMailAdmin.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	el	Επιλέξτε μια αλυσίδα ειδοποιήσεων. Θα ειδοποιηθείτε μέσω των back ends που περιλαμβάνονται στην αλυσίδα.<br>Σημείωση: Εάν μια αλυσίδα ειδοποιήσεων επισημαίνεται ως "απενεργοποιημένη", ο διαχειριστής σας δεν επιτρέπει ένα ή περισσότερα από τα back ends που περιλαμβάνονται στην αλυσίδα, οι ειδοποιήσεις επιστρέφουν στο "Email" ενώ σας ειδοποιούν.
+choose from mailsettings used for notification	admin	el	Επιλογή ρυθμίσεων αλληλογραφίας που χρησιμοποιούνται για την ειδοποίηση μέσω ηλεκτρονικού ταχυδρομείου
 connection error.	notifications	el	Σφάλμα σύνδεσης.
 connection error. please check connection to server.	notifications	el	Σφάλμα σύνδεσης. Ελέγξτε τη σύνδεση με το διακομιστή.
 continue to connect?	notifications	el	Συνεχίζετε τη σύνδεση;
@@ -49,7 +50,11 @@ mark all as read	notifications	el	Χαρακτηρίστε όλα ως αναγ�
 mark as read	notifications	el	Χαρακτηρίστε ως αναγνωσμένο
 minutes	notifications	el	Λεπτά
 more info	notifications	el	Περισσότερες πληροφορίες
+normally only the work email address is notified	notifications	el	Κανονικά, η ειδοποίηση αποστέλλεται μόνο στη διεύθυνση ηλεκτρονικού ταχυδρομείου της εργασίας.
+notification	common	el	Ειδοποίηση
 notifier	notifications	el	Ειδοποιητής
+notify me by	notifications	el	Ειδοποίηση μέσω
+notify private email address	notifications	el	Ειδοποίηση σε ιδιωτική διεύθυνση ηλεκτρονικού ταχυδρομείου
 only used if no push server available!	admin	el	Χρησιμοποιείται μόνο αν δεν υπάρχει διαθέσιμος διακομιστής push!
 open notified entry	notifications	el	Άνοιγμα ειδοποιημένης καταχώρησης
 page not found, please check serveraddress.	notifications	el	Η σελίδα δεν βρέθηκε, παρακαλούμε ελέγξτε τη διεύθυνση του διακομιστή.
@@ -61,6 +66,7 @@ please contact your egroupware admin.	notifications	el	Επικοινωνήστ�
 please enter the url of your egroupware.	notifications	el	Παρακαλούμε εισάγετε τη διεύθυνση URL του EGroupware σας.
 please enter your egroupware username.	notifications	el	Παρακαλώ εισάγετε το όνομα χρήστη του EGroupware σας.
 please enter your password	notifications	el	Παρακαλώ εισάγετε τον κωδικό πρόσβασής σας
+preferences for notification	notifications	el	Προτιμήσεις για ειδοποιήσεις
 refresh notifications	notifications	el	Ανανέωση ειδοποιήσεων
 repeat login?	notifications	el	Επανάληψη σύνδεσης;
 run application	notifications	el	Εκτέλεση της εφαρμογής
@@ -75,6 +81,8 @@ the server certificate is not a valid trust center certificate!	notifications	el
 this egroupware notification has been sent to you by mail because your	notifications	el	Αυτή η ειδοποίηση της EGroupware σας εστάλη μέσω ηλεκτρονικού ταχυδρομείου επειδή το
 this month	notifications	el	Αυτός ο μήνας
 user:	notifications	el	χρήστης:
+yes, notify only private email, if existing	notifications	el	Ναι, ειδοποίηση μόνο σε ιδιωτική διεύθυνση ηλεκτρονικού ταχυδρομείου, εάν υπάρχει
+yes, notify private email too	notifications	el	Ναι, ειδοποίηση και σε ιδιωτική διεύθυνση ηλεκτρονικού ταχυδρομείου
 yesterday	notifications	el	Χθες
 you can also use	admin	el	Μπορείτε επίσης να χρησιμοποιήσετε
 you have %1 unread notifications	notifications	el	Έχετε %1 μη αναγνωσμένες ειδοποιήσεις

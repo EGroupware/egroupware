@@ -128,7 +128,6 @@ custom from	infolog	es-es	Personalizado desde
 custom regarding	infolog	es-es	Recuerdos personales
 custom status for typ	infolog	es-es	Estado personalizado para el tipo
 customfields	infolog	es-es	Campos personalizados
-data exchange settings	infolog	es-es	Opciones para intercambio de datos
 date completed	infolog	es-es	Fecha completada
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	es-es	Fecha completada (dejar en blanco para tenerlo automático si el estado es hecho o facturado)
 datecreated	infolog	es-es	Fecha de creación

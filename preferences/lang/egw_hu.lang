@@ -61,6 +61,7 @@ max number of icons in navbar	preferences	hu	Az ikonok maximális száma a navig
 no default	preferences	hu	Nincs alapértelmezett
 no user-selection at all	common	hu	Egyáltalán nincs felhasználó választás
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	hu	Megjegyzés: az email-eknél használt jelszó ezzel nem változott meg. Ezt önnek kell megtennie.
+old password and new password are the same. this is invalid. you must enter a new password	preferences	hu	A régi és az új jelszó megegyezik. Új jelszót kell megadnia!
 p: paragraph	preferences	hu	p: Paragrafus
 password stored	preferences	hu	Tárolt jelszó.
 permanent time zone selection	preferences	hu	Állandó időzóna szelekció

@@ -368,6 +368,7 @@ moving folders from one mailaccount to another is not supported	mail	bg	Прем
 name and domain	mail	bg	Име и домейн
 name and email	mail	bg	Име и имейл
 name of account	mail	bg	Име на акаунта
+name of header, only letters, numbers and dash (-) allowed	mail	bg	Име на заглавието, допустими са само букви, цифри и тире (-)
 name of imap servers (space separated host or host:port)	mail	bg	Име на IMAP сървърите (хост или хост:порт, разделени с интервал)
 never display html emails	mail	bg	Не показва HTML съобщения
 never show	mail	bg	Никога не показвайте

@@ -37,6 +37,7 @@ limit following groups to only create application passwords via templates	prefer
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	et	SingleSignOn kaudu sisselogimine ei anna parooli edasi posti- või failiserverile.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	et	Teeb vasakpoolse küljeriba koos kerimisnupuga üles/alla keritavaks (kasulik tahvelarvutite kasutajatele).
 no default	preferences	et	Mitte vaikimisi
+old password and new password are the same. this is invalid. you must enter a new password	preferences	et	Vana parool ja uus parool on samad. Peate sisestama uue parooli!
 password stored	preferences	et	Salasõna salvestatakse.
 preferences saved.	preferences	et	Eelistused salvestatud.
 re-enter your password	preferences	et	Sisesta parool uuesti

@@ -61,6 +61,7 @@ no default	preferences	pt	Não definido por omissão
 note: this feature does *not* change your email password. this will	preferences	pt	nota: Esta funcionalidade *não* altera a sua senha de correio electrónico. Isto irá
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pt	Nota: Esta função *não* altera sua senha de correio electrónico. Deverá fazê-lo manualmente.
 notification settings	preferences	pt	Configurações de notificação
+old password and new password are the same. this is invalid. you must enter a new password	preferences	pt	A senha antiga e a nova senha são iguais. Você deve digitar uma nova senha!
 password stored	preferences	pt	Palavra-passe armazenada.
 popup with search	preferences	pt	Janela popup com pesquisa
 preferences saved.	preferences	pt	Preferências guardadas.

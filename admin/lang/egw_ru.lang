@@ -640,7 +640,7 @@ set a random password	admin	ru	Установить случайный паро�
 set preference values.	admin	ru	Установить значения настроек
 should exceptions contain a trace (including function arguments)	admin	ru	Исключения должны содержать трассировку (включая аргументы функций)?
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ru	Отображать на входной странице поле выбора языка (полезно для демо-сайта)?
-show access log	admin	ru	Показать журнал доступа
+show access log	admin	ru	Журнал доступа
 show current action	admin	ru	Показать текущее действие
 show error log	admin	ru	Показать журнал ошибок
 show groups in container based on	admin	ru	Показать группы в контейнере на основе
@@ -768,7 +768,7 @@ vacation messages with start- and end-date require an admin account to be set	ad
 vacation notice	admin	ru	Уведомление об отпуске
 value for column %1 is not unique!	admin	ru	Значение колонки %1 не уникально!
 vfs directory "%1" not found!	admin	ru	Каталог VFS "%1" не найден!
-view access log	admin	ru	Просмотр журнала подключений
+view access log	admin	ru	Журнал доступа
 view account	admin	ru	Просмотр учётной записи
 view category	admin	ru	Просмотр категории
 view error log	admin	ru	Просмотр журнала ошибок

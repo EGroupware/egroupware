@@ -10,6 +10,7 @@ cancal?	notifications	uk	Скасувати?
 certification-information:	notifications	uk	Інформація про сертифікацію:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	uk	Перевірте обидва. Спочатку спробуйте активний обліковий запис користувача, якщо такого немає, скористайтеся профілем eMailAdmin.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	uk	Виберіть ланцюжок сповіщень. Ви отримаєте сповіщення на зворотні адреси, включені в ланцюжок.<br>Примітка: Якщо ланцюжок сповіщень позначено як "вимкнений", тобто ваш адміністратор не дозволяє один або декілька бек-конекторів, включених до ланцюжка, сповіщення повертаються до "Email", а ви отримуєте сповіщення на "Email".
+choose from mailsettings used for notification	admin	uk	Виберіть налаштування пошти, що використовуються для повідомлень електронною поштою
 connection error.	notifications	uk	Помилка з'єднання.
 connection error. please check connection to server.	notifications	uk	Помилка з'єднання. Будь ласка, перевірте з'єднання з сервером.
 continue to connect?	notifications	uk	Продовжити підключення?
@@ -43,6 +44,11 @@ java desktop notification app	preferences	uk	Java додаток для спов
 last month	notifications	uk	Минулого місяця
 mail account to use for notifications	admin	uk	Поштовий акаунт для сповіщень
 minutes	notifications	uk	Протоколи
+normally only the work email address is notified	notifications	uk	Зазвичай повідомлення надсилаються тільки на робочу адресу електронної пошти.
+notification	common	uk	Повідомлення
+notifier	notifications	uk	Повідомлення
+notify me by	notifications	uk	Повідомляти мене за допомогою
+notify private email address	notifications	uk	Повідомляти на приватну адресу електронної пошти
 only used if no push server available!	admin	uk	Використовується лише за відсутності пуш-сервера!
 open notified entry	notifications	uk	Відкрити сповіщений запис
 permission	notifications	uk	Дозвіл
@@ -52,6 +58,7 @@ please contact your egroupware admin.	notifications	uk	Зверніться до
 please enter the url of your egroupware.	notifications	uk	Будь ласка, введіть URL-адресу вашого EGroupware.
 please enter your egroupware username.	notifications	uk	Будь ласка, введіть ваше ім'я користувача EGroupware.
 please enter your password	notifications	uk	Будь ласка, введіть ваш пароль
+preferences for notification	notifications	uk	Налаштування для повідомлень
 repeat login?	notifications	uk	Повторити вхід?
 run application	notifications	uk	Запустити програму
 save password	notifications	uk	Зберегти пароль
@@ -66,6 +73,8 @@ the server certificate is not a valid trust center certificate!	notifications	uk
 this egroupware notification has been sent to you by mail because your	notifications	uk	Це сповіщення EGroupware було надіслано вам електронною поштою, оскільки ваш
 this month	notifications	uk	Цього місяця
 user:	notifications	uk	Користувач:
+yes, notify only private email, if existing	notifications	uk	Так, повідомляти тільки на приватну адресу електронної пошти, якщо вона є
+yes, notify private email too	notifications	uk	Так, повідомляти також на приватну адресу електронної пошти
 yesterday	notifications	uk	Вчора
 you can also use	admin	uk	Ви також можете використовувати
 you have %1 unread notifications	notifications	uk	У вас є %1 непрочитаних сповіщень

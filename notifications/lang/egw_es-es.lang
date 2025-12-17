@@ -63,9 +63,11 @@ mark as read	notifications	es-es	Marcar como leído
 message from	notifications	es-es	Mensaje desde
 minutes	notifications	es-es	Minutos
 more info	notifications	es-es	Más Información
+normally only the work email address is notified	notifications	es-es	Normalmente solo se notifica a la dirección de correo electrónico del trabajo.
 notification	common	es-es	Notificaciones
 notifier	notifications	es-es	Notificador
 notify me by	notifications	es-es	Notificar por mí
+notify private email address	notifications	es-es	Notificar a la dirección de correo electrónico privada
 only used if no push server available!	admin	es-es	¡Solo se usa si no hay un servidor push disponible!
 open notified entry	notifications	es-es	Abrir entrada notificada
 optimize e-mails for external mail client	notifications	es-es	Optimizar correos electrónicos para cliente de correos externo
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	es-es	Ventana emergente de Windows y corr
 windows-popup backend	admin	es-es	Método ventana emergente de Windows
 windows-popup first, if that fails notify me by e-mail	notifications	es-es	Primero, ventana emergente de Windows, y si falla, notificarme por correo electrónico.
 windows-popup only	notifications	es-es	Sólo ventana emergente de Windows
+yes, notify only private email, if existing	notifications	es-es	Sí, notificar solo al correo electrónico privado, si existe
+yes, notify private email too	notifications	es-es	Sí, notificar también al correo electrónico privado
 yesterday	notifications	es-es	Ayer
 you can also use	admin	es-es	También puede utilizar
 you have %1 unread notifications	notifications	es-es	Tienes %1 notificaciones sin leer

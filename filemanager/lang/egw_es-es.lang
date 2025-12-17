@@ -65,6 +65,7 @@ copy to clipboard	filemanager	es-es	Copiar al portapapeles
 could not copy %1 to %2	filemanager	es-es	No se pudo copiar "%1" a "%2"
 could not create %1	filemanager	es-es	No se pudo crear %1
 could not delete %1	filemanager	es-es	No se pudo borrar %1
+could not install async job	filemanager	es-es	No se pudo instalar el trabajo asíncrono
 could not move %1 to %2	filemanager	es-es	No se pudo mover %1 a %2
 could not rename %1 to %2	filemanager	es-es	No se pudo renombrar %1 a %2
 create a link	filemanager	es-es	Crear un enlace
@@ -74,6 +75,7 @@ create folder	filemanager	es-es	Crear directorio
 created	filemanager	es-es	Creado
 created %1,%2	filemanager	es-es	Se ha creado %1,%2
 created directory %1	filemanager	es-es	Se ha creado el directorio %1
+creationdate of file	filemanager	es-es	Fecha de creación del archivo
 current directory	filemanager	es-es	Directorio actual
 custom fields	filemanager	es-es	Campos personalizados
 cut	filemanager	es-es	cortar
@@ -121,6 +123,7 @@ error adding the acl!	filemanager	es-es	¡Error al añadir la ACL!
 error creating symlink to target %1!	filemanager	es-es	¡Error al crear el enlace simbólico al destino %1!
 error deleting the acl entry!	filemanager	es-es	¡Error al borrar la entrada de la ACL!
 error mounting %1 on %2!	filemanager	es-es	¡Error montando %1 en %2
+error running job	filemanager	es-es	Error al ejecutar el trabajo
 error unmounting %1!	filemanager	es-es	¡Error desmontando %1!
 error uploading file!	filemanager	es-es	¡Error al subir el fichero!
 error while creating directory.	filemanager	es-es	Error al crear el directorio
@@ -182,7 +185,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	es-es	Si especifica una definición de exportación, se usará al exportar
 if you specify an export definition, it will be used when you export*	filemanager	es-es	Si especifica una definición de exportación, se usará al exportar
 inherited	filemanager	es-es	heredado
+job deleted.	filemanager	es-es	Trabajo eliminado.
 job folder %1 does not exist or is not writable	filemanager	es-es	La carpeta de trabajo %1 no existe o no se puede escribir en ella.
+job saved.	filemanager	es-es	Trabajo guardado.
+jobs	filemanager	es-es	Trabajos
 last accessed	filemanager	es-es	Último accedido
 leave empty to delete the file after attaching	filemanager	es-es	Déjelo vacío para eliminar el archivo después de adjuntarlo
 link	filemanager	es-es	Enlace
@@ -264,12 +270,14 @@ save %1	filemanager	es-es	Guardar %1
 save %1, and go back to file listing	filemanager	es-es	Guardar %1, y volver al listado
 save as zip	filemanager	es-es	Guardar como ZIP
 save changes	filemanager	es-es	Guardar cambios
+save job to clear error and restart it	filemanager	es-es	Guarde el trabajo para borrar el error y reiniciarlo
 saved %1	filemanager	es-es	Guardado %1
 saving properties failed!	filemanager	es-es	¡Fallo al guardar las propiedades!
 saving setting for document merge failed!	filemanager	es-es	¡Fallo al guardar la configuración para mezcla de documentos!
 search for '%1'	filemanager	es-es	Buscar '%1'
 searchstring	filemanager	es-es	cadena de búsqueda
 select action...	filemanager	es-es	Seleccionar acción...
+select custom field	filemanager	es-es	Seleccione el campo personalizado
 select file to upload in current directory	filemanager	es-es	Seleccionar el fichero a subir al directorio actual
 select file(s) from vfs	common	es-es	Seleccionar ficheros desde VFS
 setting for document merge saved.	filemanager	es-es	Se ha guardado la configuración para mezclar documentos.

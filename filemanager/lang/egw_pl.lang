@@ -39,6 +39,7 @@ copy to clipboard	filemanager	pl	Kopiuj do schowka
 could not copy %1 to %2	filemanager	pl	Nie można skopiować %1 do %2
 could not create %1	filemanager	pl	Nie można utworzyć %1
 could not delete %1	filemanager	pl	Nie można usunąć %1
+could not install async job	filemanager	pl	Nie można zainstalować zadania asynchronicznego
 could not move %1 to %2	filemanager	pl	Nie można przenieść %1
 could not rename %1 to %2	filemanager	pl	Nie mona zmienić nazwy %1 na %2
 create a link	filemanager	pl	Utwórz link
@@ -48,6 +49,7 @@ create folder	filemanager	pl	Utwórz katalog
 created	filemanager	pl	Utworzony
 created %1,%2	filemanager	pl	Utworzono %1, %2
 created directory %1	filemanager	pl	Utworzono katalog %1
+creationdate of file	filemanager	pl	Data utworzenia pliku
 current directory	filemanager	pl	Katalog aktualny
 custom fields	filemanager	pl	Pola użytkownika
 cut	filemanager	pl	Wytnij
@@ -82,6 +84,7 @@ error adding the acl!	filemanager	pl	Błąd przy dodawaniu ACL!
 error creating symlink to target %1!	filemanager	pl	Błąd przy tworzeniu linku do %1!
 error deleting the acl entry!	filemanager	pl	Błąd przy usuwaniu wpisu ACL!
 error mounting %1 on %2!	filemanager	pl	Błąd montażu %1 na %2!
+error running job	filemanager	pl	Błąd podczas wykonywania zadania
 error unmounting %1!	filemanager	pl	Błąd odmontowania %1!
 error uploading file!	filemanager	pl	Błąd przy ładowaniu pliku!
 error while creating directory.	filemanager	pl	Błąd podczas tworzenia folderu
@@ -137,7 +140,10 @@ id	filemanager	pl	id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	pl	Jeśli określisz tutaj folder (pełną ścieżkę VFS), %1 wyświetli akcję dla każdego dokumentu. Ta akcja umożliwia pobranie określonego dokumentu z wstawionymi danymi %1.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	pl	Jeśli określisz folder (pełna ścieżka VFS), %1 wyświetli dodatkową ikonę dokumentu dla każdego wpisu. Ikona ta umożliwia pobranie określonego dokumentu z wstawionymi danymi.
 inherited	filemanager	pl	Odziedziczone
+job deleted.	filemanager	pl	Zadanie usunięte.
 job folder %1 does not exist or is not writable	filemanager	pl	Folder zadań %1 nie istnieje lub nie ma uprawnień do zapisu.
+job saved.	filemanager	pl	Zadanie zapisane.
+jobs	filemanager	pl	Zadania
 leave empty to delete the file after attaching	filemanager	pl	Pozostaw puste, aby usunąć plik po załączeniu
 link	filemanager	pl	Link do zdarzenia
 link %1: %2	filemanager	pl	Link %1: %2
@@ -207,11 +213,13 @@ save %1	filemanager	pl	Zapisz %1
 save %1, and go back to file listing	filemanager	pl	Zapisz %1 i przejdź do listy plików
 save as zip	filemanager	pl	Zapisz jako ZIP
 save changes	filemanager	pl	Zapisz zmiany
+save job to clear error and restart it	filemanager	pl	Zapisz zadanie, aby usunąć błąd i uruchom je ponownie
 saved %1	filemanager	pl	Zapisano %1
 saving properties failed!	filemanager	pl	Błąd zapisu właściwości!
 search for '%1'	filemanager	pl	Szukaj '%1'
 searchstring	filemanager	pl	szukana fraza
 select action...	filemanager	pl	Wybierz akcję...
+select custom field	filemanager	pl	Wybierz pole niestandardowe
 select file to upload in current directory	filemanager	pl	Wybierz plik do załadowania do aktualnego katalogu
 show	filemanager	pl	Wyświetl
 show hidden files	filemanager	pl	Pokaż ukryte pliki

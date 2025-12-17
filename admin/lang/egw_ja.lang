@@ -715,7 +715,7 @@ set preference values.	admin	ja	設定
 settings	admin	ja	設定
 should exceptions contain a trace (including function arguments)	admin	ja	例外にトレースを含めるか否か（関数の引数を含む）
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ja	ログイン・ページに言語のセレクトボックスを表示
-show access log	admin	ja	アクセス・ログを表示
+show access log	admin	ja	アクセスログ
 show current action	admin	ja	アクションを表示
 show error log	admin	ja	エラー・ログを表示
 show groups in container based on	admin	ja	コンテナ内のグループの表示
@@ -864,7 +864,7 @@ vacation messages with start- and end-date require an admin account to be set	ad
 vacation notice	admin	ja	休暇案内
 value for column %1 is not unique!	admin	ja	カラム %1 の値がユニークではありません!
 vfs directory "%1" not found!	admin	ja	VFS ディレクトリ "%1" が見つかりません!
-view access log	admin	ja	アクセス・ログを表示
+view access log	admin	ja	アクセスログ
 view account	admin	ja	アカウントを表示
 view category	admin	ja	カテゴリを表示
 view error log	admin	ja	エラー・ログを表示

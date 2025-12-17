@@ -40,9 +40,13 @@ field must not be empty !!!	timesheet	hu	A mezőt ki kell tölteni!!!
 forgot to switch off working time?	common	hu	Elfelejtette kikapcsolni a munkaidőt?
 full: use only projectmanager	admin	hu	Teljes: csak a ProjectManager használata
 general fields:	timesheet	hu	Általános mezők:
+give additional users access	timesheet	hu	További felhasználók hozzáférésének biztosítása
+give infolog delegation read-access to timesheets booked on them	timesheet	hu	Az InfoLog delegációnak olvasási hozzáférés biztosítása a rájuk bejegyzett munkaidő-nyilvántartásokhoz
 global categories	timesheet	hu	Globális kategóriák
 history	timesheet	hu	Történet
 history logging	admin	hu	Történet követése (log)
+how to display linked timesheets	timesheet	hu	A kapcsolódó munkaidő-nyilvántartások megjelenítése
+html link to the current record	timesheet	hu	HTML link az aktuális rekordhoz
 id	timesheet	hu	Azonosító
 imports entries into the timesheet from a csv file.	timesheet	hu	Bejegyzések importálása a munkaidő-nyilvántartásba CSV fájlból
 last modified	timesheet	hu	Utolsó módosítás
@@ -52,7 +56,9 @@ last year	timesheet	hu	Korábbi év
 leave it empty for a full week	timesheet	hu	Teljes héthez hagyja üresen
 leaves without saveing	timesheet	hu	kilépés mentés nélkül
 length<br>rows	timesheet	hu	Sorok<br>Hossza
+link title	timesheet	hu	Link címe
 links	timesheet	hu	Hivatkozások
+make timesheets readable by infolog delegation	timesheet	hu	A munkaidő-nyilvántartások olvashatóvá tétele az InfoLog delegáció által
 max length of the input [, length of the inputfield (optional)]	timesheet	hu	a beviteli mező maximális hossza (opcionális)
 mode	timesheet	hu	Режим
 modified	timesheet	hu	Módosított
@@ -73,6 +79,7 @@ price	timesheet	hu	Ár
 project fields	timesheet	hu	Поля проекту
 projectmanager integration	admin	hu	ProjectManager integráció
 quantity	timesheet	hu	Mennyiség
+readable	timesheet	hu	Olvasható
 recorded	timesheet	hu	Felvett
 restore this entry	timesheet	hu	A bejegyzés visszaállítása
 save & new	timesheet	hu	Elment és Új
@@ -96,6 +103,7 @@ the text displayed to the user	timesheet	hu	a szöveg megjelenítve a felhaszná
 this month	timesheet	hu	Folyó hónap
 this week	timesheet	hu	Folyó hét
 this year	timesheet	hu	Folyó év
+timer	common	hu	Időzítő
 timer already running or paused	common	hu	Az időzítő már fut vagy szünetel
 timesheet	common	hu	Regiszter
 timesheet csv export	timesheet	hu	Regiszter CSV export

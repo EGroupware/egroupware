@@ -26,8 +26,12 @@ exports entries from your timesheet into a csv file.	timesheet	et	Ekspordib kand
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	et	Ekspordib kanded ajalehest CSV-faili. Valikute vahekaardil saate valida ka muid eraldajaid.
 field must not be empty !!!	timesheet	et	Väli ei tohi jääda tühjaks !!!
 forgot to switch off working time?	common	et	Unustasite tööaja välja lülitada?
+give additional users access	timesheet	et	Anna juurdepääs lisakasutajatele
+give infolog delegation read-access to timesheets booked on them	timesheet	et	Anna InfoLogi delegeerimisele lugemisõigus neile registreeritud tööaja arvestuslehtedele
 global categories	timesheet	et	Globaalsed Kategooriad
 history	timesheet	et	Ajalugu
+how to display linked timesheets	timesheet	et	Kuidas kuvada seotud tööaja arvestuslehti
+html link to the current record	timesheet	et	HTML-link praegusele kirje
 id	timesheet	et	Id
 imports entries into the timesheet from a csv file.	timesheet	et	Impordib kanded Tööajatabelisse CSV-failist.
 last modified	timesheet	et	Viimati muudetud
@@ -35,7 +39,9 @@ last month	timesheet	et	Viimane kuu
 last week	timesheet	et	Viimane nädal
 last year	timesheet	et	Viimane aasta
 leaves without saveing	timesheet	et	lahkub ilma salvestamatta
+link title	timesheet	et	Linki pealkiri
 links	timesheet	et	Lingid
+make timesheets readable by infolog delegation	timesheet	et	Maak urenstaten leesbaar door InfoLog-delegatie
 mode	timesheet	et	Režiim
 modified	timesheet	et	Muudetud
 no details	timesheet	et	mitte detailselt
@@ -49,6 +55,7 @@ permission denied!!!	timesheet	et	Ligipääs keelatud !!!
 price	timesheet	et	Hind
 project fields	timesheet	et	Projekti väljad
 quantity	timesheet	et	Kogus
+readable	timesheet	et	Loetav
 recorded	timesheet	et	Salvestatud
 restore this entry	timesheet	et	Selle kirje taastamine
 save & new	timesheet	et	Salvesta & Uus
@@ -62,6 +69,7 @@ start-time can not be before last stop- or pause-time %1!	common	et	Start-aeg ei
 starttime	timesheet	et	Startimise aeg
 starttime has to be before endtime !!!	timesheet	et	Startimise aeg on pärast lõpetamise aega !!!
 stop- or pause-time can not be before the start-time %1!	common	et	Stopp- või pausiaeg ei saa olla enne stardiaega %1!
+timer	common	et	Taimer
 timer already running or paused	common	et	Taimer juba töötab või on pausis
 timesheet csv export	timesheet	et	Tööajatabelite CSV-eksport
 timesheet csv import	timesheet	et	Timesheet CSV import

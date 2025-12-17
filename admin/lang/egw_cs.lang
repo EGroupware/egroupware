@@ -233,7 +233,7 @@ deleted	admin	cs	Smazáno
 deletes this field	admin	cs	Smaže tuto položku
 deliver extern	admin	cs	Doručit externě
 deny access	admin	cs	Zakázat přístup
-deny access to access log	admin	cs	Zablokovat přístup k přístupovému protokolu
+deny access to access log	admin	cs	Přístupový protokol
 deny access to application registery	admin	cs	Zablokovat přístup do registru aplikací
 deny access to applications	admin	cs	Zablokovat přístup k aplikacím
 deny access to asynchronous timed services	admin	cs	Zablokovat přístup k asynchonně časovaným službám
@@ -754,7 +754,7 @@ using native swoole push	admin	cs	Použití nativního Swoole Push
 vacation messages with start- and end-date require an admin account to be set	admin	cs	Zprávy o dovolené s datem začátku a konce vyžadují nastavení účtu správce!
 vacation notice	admin	cs	Oznámení o dovolené
 value for column %1 is not unique!	admin	cs	Hodnota pro sloupec %1 není unikátní!
-view access log	admin	cs	Zobrazit přístupový protokol
+view access log	admin	cs	Přístupový protokol
 view account	admin	cs	Zobrazit účet
 view category	admin	cs	Zobrazit kategorii
 view error log	admin	cs	Zobrazit chybový protokol

@@ -385,7 +385,7 @@ sessions last 30 days	admin	tr	Son 30 günlük oturumlar
 set a random password	admin	tr	Rastgele bir parola belirleyin
 set preference values.	admin	tr	Ayar değerini giriniz
 should the login page include a language selectbox (useful for demo-sites) ?	admin	tr	Sistem giriş sayfası dil seçim kutusu içerecek mi?
-show access log	admin	tr	Erişim kütüğünü göster
+show access log	admin	tr	Erişim günlüğü
 show current action	admin	tr	Şu anki eylemi göster
 show error log	admin	tr	Hata kütüğünü göster
 show groups in container based on	admin	tr	Kapsayıcıdaki grupları aşağıdakilere göre göster
@@ -452,7 +452,7 @@ users can define their own signatures	admin	tr	Kullanıcılar kendi imzalarını
 users choice	admin	tr	Kullanıcı Seçimleri
 vacation messages with start- and end-date require an admin account to be set	admin	tr	Başlangıç ve bitiş tarihi içeren tatil mesajlarının ayarlanması için bir yönetici hesabı gerekir!
 vacation notice	admin	tr	Tatil bildirimi
-view access log	admin	tr	Erişim kütüğünü görüntüle
+view access log	admin	tr	Erişim günlüğü
 view account	admin	tr	Hesap görüntüle
 view category	admin	tr	Kategori görüntüle
 view error log	admin	tr	Hata kütüğünü görüntüle

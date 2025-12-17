@@ -15,6 +15,7 @@ copy to	filemanager	no	Kopier til
 could not copy %1 to %2	filemanager	no	Kunne ikke kopiere %1 til %2
 could not create %1	filemanager	no	Kunne ikke opprette %1
 could not delete %1	filemanager	no	Kunne ikke slette %1
+could not install async job	filemanager	no	Kunne ikke installere asynkron jobb
 could not move %1 to %2	filemanager	no	Kunne ikke flytte %1 til %2
 could not rename %1 to %2	filemanager	no	Kunne ikke gi %1 nytt navn til %2
 create file	filemanager	no	Opprett fil
@@ -22,6 +23,7 @@ create folder	filemanager	no	Opprett mappe
 created	filemanager	no	Opprettet
 created %1,%2	filemanager	no	Opprettet %1, %2
 created directory %1	filemanager	no	Opprettet mappe %1
+creationdate of file	filemanager	no	Opprettelsesdato for fil
 custom fields	filemanager	no	Egendefinerte Felter
 cut	filemanager	no	Klipp ut
 default action on double-click	filemanager	no	Standardhandling ved dobbeltklikk
@@ -39,6 +41,7 @@ edit share	filemanager	no	Rediger deling
 enable	filemanager	no	muliggjør
 enter a file size, e.g. 100k, 200m or 2g	filemanager	no	Angi en filstørrelse, f.eks. 100K, 200M eller 2G.
 enter your file name	filemanager	no	Skriv inn filnavnet ditt
+error running job	filemanager	no	Feil ved kjøring av jobb
 everyone	filemanager	no	Alle
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	no	Eksempel {{IF n_prefiks~Mr~Hallo Mr.~Hallo Ms.}} - søk i feltet "n_prefix" etter "Mr", hvis funnet, skriv Hello Mr., ellers skriv Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	no	Eksempel {{LETTERPREFIXCUSTOM n_prefiks tittel n_familie}} - Eksempel: Herr Dr. James Miller
@@ -82,7 +85,10 @@ hostname/ip for webdav and smb	filemanager	no	Vertsnavn/IP for WebDAV og SMB
 id	filemanager	no	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	no	Hvis du angir en mappe (full VFS-bane) her, viser %1 en handling for hvert dokument. Denne handlingen gjør det mulig å laste ned det angitte dokumentet med %1-dataene satt inn.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	no	Hvis du angir en mappe (full VFS-bane) her, viser %1 et ekstra dokumentikon for hver oppføring. Dette ikonet gjør det mulig å laste ned det angitte dokumentet med de innsatte dataene.
+job deleted.	filemanager	no	Jobben er slettet.
 job folder %1 does not exist or is not writable	filemanager	no	Jobb-mappen %1 eksisterer ikke eller kan ikke skrives til.
+job saved.	filemanager	no	Jobben er lagret.
+jobs	filemanager	no	Jobber
 leave empty to delete the file after attaching	filemanager	no	La feltet være tomt for å slette filen etter vedlegging
 link	filemanager	no	Lenke
 list view	filemanager	no	Listevisning
@@ -134,7 +140,9 @@ save %1	filemanager	no	Lagret %1
 save %1, and go back to file listing	filemanager	no	Lagre %1, og gå tilbake til filliste
 save as zip	filemanager	no	Lagre som ZIP
 save changes	filemanager	no	Lagre endringer
+save job to clear error and restart it	filemanager	no	Lagre jobben for å fjerne feilen og starte den på nytt
 saved %1	filemanager	no	Lagret %1
+select custom field	filemanager	no	Velg tilpasset felt
 show	filemanager	no	Vis
 size	filemanager	no	Størrelse
 smb, webdavs and vfs require a username!	filemanager	no	SMB, WebDAV og VFS krever et brukernavn!

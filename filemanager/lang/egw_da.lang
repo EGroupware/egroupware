@@ -16,6 +16,7 @@ copy to	filemanager	da	Kopier til
 could not copy %1 to %2	filemanager	da	Kunne ikke kopiere %1 til %2
 could not create %1	filemanager	da	Kunne ikke oprette %1
 could not delete %1	filemanager	da	Kunne ikke slette %1
+could not install async job	filemanager	da	Kunne ikke installere asynkron job
 could not move %1 to %2	filemanager	da	Kunne ikke flytte %1 til %2
 could not rename %1 to %2	filemanager	da	Kunne ikke omdøbe %1 til %2
 create file	filemanager	da	Opret fil
@@ -23,6 +24,7 @@ create folder	filemanager	da	Opret bibliotek
 created	filemanager	da	Oprettet
 created %1,%2	filemanager	da	Oprettede %1, %2
 created directory %1	filemanager	da	Oprettede biblioteket %1
+creationdate of file	filemanager	da	Oprettelsesdato for fil
 custom fields	filemanager	da	Valgfri Felter
 default action on double-click	filemanager	da	Standardhandling ved dobbeltklik
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	da	Standard = Nej. Linket vil ikke blive vist, men du kan stadig navigere til denne placering eller konfigurere denne placering som startmappe eller mappelink.
@@ -39,6 +41,7 @@ edit share	filemanager	da	Rediger deling
 enable	filemanager	da	aktivere
 enter a file size, e.g. 100k, 200m or 2g	filemanager	da	Indtast en filstørrelse, f.eks. 100K, 200M eller 2G
 enter your file name	filemanager	da	Indtast dit filnavn
+error running job	filemanager	da	Fejl ved kørsel af job
 everyone	filemanager	da	enhver
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	da	Eksempel {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - søg i feltet "n_prefix", efter "Mr", hvis fundet, skriv Hello Mr. ellers skriv Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	da	Eksempel {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Eksempel: Hr. Dr. James Miller
@@ -84,7 +87,10 @@ hostname/ip for webdav and smb	filemanager	da	Værtsnavn/IP for WebDAV og SMB
 id	filemanager	da	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	da	Hvis du angiver en mappe (fuld VFS-sti) her, viser %1 en handling for hvert dokument. Denne handling gør det muligt at downloade det angivne dokument med %1-data indsat.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	da	Hvis du angiver en mappe (fuld VFS-sti) her, viser %1 et ekstra dokumentikon for hver post. Dette ikon gør det muligt at downloade det angivne dokument med de indsatte data.
+job deleted.	filemanager	da	Job slettet.
 job folder %1 does not exist or is not writable	filemanager	da	Jobmappe %1 findes ikke eller kan ikke skrives til.
+job saved.	filemanager	da	Job gemt.
+jobs	filemanager	da	Jobs
 leave empty to delete the file after attaching	filemanager	da	Lad feltet være tomt for at slette filen efter vedhæftning
 link	filemanager	da	Link
 list view	filemanager	da	Listevisning
@@ -133,7 +139,9 @@ replaced %1	filemanager	da	%1 erstattet
 save %1	filemanager	da	Gem %1
 save %1, and go back to file listing	filemanager	da	Gem %1, og gå tilbage til fil visning
 save changes	filemanager	da	Gem ændringer
+save job to clear error and restart it	filemanager	da	Gem job for at rydde fejlen og genstarte det
 saved %1	filemanager	da	%1 gemt
+select custom field	filemanager	da	Vælg brugerdefineret felt
 show	filemanager	da	Vis
 size	filemanager	da	Størrelse
 smb, webdavs and vfs require a username!	filemanager	da	SMB, WebDAV og VFS kræver et brugernavn!

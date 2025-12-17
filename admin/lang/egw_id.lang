@@ -176,6 +176,7 @@ deleted	admin	id	terhapus
 deletes this field	admin	id	Hapus field ini
 deliver extern	admin	id	Pengiriman eksternal
 deny access	admin	id	Deny Access
+deny access to access log	admin	id	Tolak akses ke log akses
 description can not exceed 255 characters in length !	admin	id	Panjang uraian tidak boleh melebihi 255 karakter!
 determines the order the fields are displayed	admin	id	Menentukan urutan field ditampilkan
 disable	admin	id	Nonaktifkan
@@ -248,6 +249,7 @@ home directory	admin	id	Direktori rumah
 home screen message	admin	id	Pesan layar utama
 host information	admin	id	Informasi host
 hour<br>(0-23)	admin	id	Jam<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	id	Berapa hari entri harus tetap ada di log akses sebelum dihapus. Default = 90
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	id	Berapa banyak entri yang dapat diekspor oleh non-admin. Kosong = tidak ada batas, Tidak = tidak ada ekspor
 how many minutes should an account or ip be blocked (default 1) ?	admin	id	Berapa menit akun atau IP harus diblokir. Default = 30
 icon	admin	id	Ikon
@@ -399,7 +401,7 @@ server url	admin	id	Server URL
 server username	admin	id	Server Username
 set a random password	admin	id	Mengatur kata sandi acak
 set preference values.	admin	id	Set preference values.
-show access log	admin	id	Tampilkan log akses
+show access log	admin	id	Log akses
 show current action	admin	id	Tampilkan tindakan saat ini
 show error log	admin	id	Tampilkan log error
 show groups in container based on	admin	id	Menampilkan grup dalam kontainer berdasarkan
@@ -477,7 +479,7 @@ users can define their own signatures	admin	id	Pengguna dapat menentukan tanda t
 users choice	admin	id	Pilihan Pengguna
 vacation messages with start- and end-date require an admin account to be set	admin	id	Pesan liburan dengan tanggal mulai dan berakhir memerlukan akun admin untuk ditetapkan!
 vacation notice	admin	id	Pemberitahuan liburan
-view access log	admin	id	Lihat log akses
+view access log	admin	id	Log akses
 view account	admin	id	Lihat akoun
 view category	admin	id	Lihat kategori
 view error log	admin	id	Lihat log error

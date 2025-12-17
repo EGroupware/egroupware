@@ -152,6 +152,7 @@ get acl rights failed from imap server!	mail	hu	Az ACL-jogok lekérdezése siker
 greater than	mail	hu	Nagyobb mint
 ham folder	mail	hu	Ham mappa
 handling of external http images / mixed content in mails	mail	hu	Külső http képek / vegyes tartalom kezelése e-mailekben
+header	mail	hu	Fejléc
 header lines	mail	hu	Email fejléce
 hide from	mail	hu	Elrejteni Tőle
 high priority	mail	hu	Kiemelt prioritás
@@ -222,6 +223,7 @@ moved %1 message(s) from %2 to %3	mail	hu	%1 üzenet(ek) áthelyezése %2-ből %
 name and domain	mail	hu	Név és domain
 name and email	mail	hu	Név és e-mail cím
 name of account	mail	hu	A számla neve
+name of header, only letters, numbers and dash (-) allowed	mail	hu	A fejléc neve, csak betűk, számok és kötőjel (-) használható
 name of imap servers (space separated host or host:port)	mail	hu	Az IMAP-kiszolgálók neve (szóközzel elválasztva host vagy host:port)
 never display html emails	mail	hu	Soha ne jelenítse meg a HTML formátumú emaileket
 never show	mail	hu	Soha nem jelenik meg

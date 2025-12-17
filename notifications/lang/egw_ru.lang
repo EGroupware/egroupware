@@ -63,9 +63,11 @@ mark as read	notifications	ru	Отметить как прочитанное
 message from	notifications	ru	Сообщение от
 minutes	notifications	ru	Минуты
 more info	notifications	ru	Дополнительная информация
+normally only the work email address is notified	notifications	ru	Обычно уведомления отправляются только на рабочий адрес электронной почты.
 notification	common	ru	Извещения
 notifier	notifications	ru	Уведомитель
 notify me by	notifications	ru	Уведомлять меня через
+notify private email address	notifications	ru	Уведомлять на личный адрес электронной почты
 only used if no push server available!	admin	ru	Используется только при отсутствии push-сервера!
 open notified entry	notifications	ru	Открыть запись с уведомлением
 optimize e-mails for external mail client	notifications	ru	Оптимизировать эл. письма для внешних почтовых клиентов
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	ru	Всплывающие уведомл�
 windows-popup backend	admin	ru	Всплывающее уведомление Windows обработано
 windows-popup first, if that fails notify me by e-mail	notifications	ru	Сначала всплывающие уведомления Windows, если невозможно, уведомляйте по почте
 windows-popup only	notifications	ru	Только всплывающие уведомления Windows
+yes, notify only private email, if existing	notifications	ru	Да, уведомлять только на личный адрес электронной почты, если он есть
+yes, notify private email too	notifications	ru	Да, уведомлять и на личный адрес электронной почты
 yesterday	notifications	ru	Вчера
 you can also use	admin	ru	Вы также можете использовать
 you have %1 unread notifications	notifications	ru	У вас %1 непрочитанных уведомлений

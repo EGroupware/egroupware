@@ -128,7 +128,6 @@ custom from	infolog	cs	Uživatelsky definované od
 custom regarding	infolog	cs	Uživatelsky definovaný ohled
 custom status for typ	infolog	cs	Uživatelsky definovaný stav pro typ
 customfields	infolog	cs	Uživatelsky definované položky
-data exchange settings	infolog	cs	Nastavení výměny dat
 date completed	infolog	cs	Datum ukočení
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	cs	Datum ukončení (ponechte prázdné, pokud chcete nastavit automaticky při dokončení nebo vyúčtování).
 datecreated	infolog	cs	Datum vytvoření

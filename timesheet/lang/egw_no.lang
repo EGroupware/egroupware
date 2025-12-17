@@ -30,8 +30,12 @@ existing links	timesheet	no	Eksisterende lenker
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	no	Eksporterer oppføringer fra Time Sheet til en CSV-fil. I kategorien Alternativer kan du også velge andre separatorer.
 field must not be empty !!!	timesheet	no	Feltet kan ikke være tomt!
 forgot to switch off working time?	common	no	Har du glemt å slå av arbeidstiden?
+give additional users access	timesheet	no	Gi flere brukere tilgang
+give infolog delegation read-access to timesheets booked on them	timesheet	no	Gi InfoLog-delegering lesetilgang til tidsrapporter som er registrert på dem
 global categories	timesheet	no	Globale Kategorier
 history	timesheet	no	Historikk
+how to display linked timesheets	timesheet	no	Hvordan vise koblede tidsrapporter
+html link to the current record	timesheet	no	HTML-kobling til gjeldende post
 id	timesheet	no	Id
 last modified	timesheet	no	Sist endret
 last month	timesheet	no	Siste måned
@@ -40,7 +44,9 @@ last year	timesheet	no	Siste år
 leave it empty for a full week	timesheet	no	La stå tom for en full uke
 leaves without saveing	timesheet	no	avslutt uten å lagre
 length<br>rows	timesheet	no	Lengde<br>Kolonner
+link title	timesheet	no	Koblingstittel
 links	timesheet	no	Lenker
+make timesheets readable by infolog delegation	timesheet	no	Gjør tidsrapporter lesbare ved hjelp av InfoLog-delegering
 max length of the input [, length of the inputfield (optional)]	timesheet	no	maks. lengde på innslag [,feltlengde (valgfri)]
 mode	timesheet	no	Modus
 modified	timesheet	no	Endret
@@ -57,6 +63,7 @@ permission denied!!!	timesheet	no	Adgang nektes!
 price	timesheet	no	Pris
 project fields	timesheet	no	Prosjekt-felt
 quantity	timesheet	no	Antall
+readable	timesheet	no	Lesbar
 recorded	timesheet	no	Innspilt
 restore this entry	timesheet	no	Gjenopprett denne oppføringen
 save & new	timesheet	no	Lagre og ny
@@ -76,6 +83,7 @@ the text displayed to the user	timesheet	no	teksten som vises til bruker
 this month	timesheet	no	Denne måneden
 this week	timesheet	no	Denne uken
 this year	timesheet	no	Dette året
+timer	common	no	Timer
 timer already running or paused	common	no	Timeren kjører allerede eller er satt på pause
 timesheet	common	no	Timeregistrering
 unitprice	timesheet	no	Enhetspris

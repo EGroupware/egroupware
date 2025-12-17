@@ -40,6 +40,7 @@ convert mail to item and attach its attachments to this item (standard)	mail	ko	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ko	이메일을 항목으로 변환하고 첨부 파일을 첨부하며 원시 메시지(.eml)를 첨부 파일로 추가합니다.
 convert only mail to item (ignore possible attachments)	mail	ko	이메일만 항목으로 변환(가능한 첨부 파일 무시)
 copied %1 message(s) from %2 to %3	mail	ko	%2에서 %3으로 %1 메시지를 복사했습니다.
+defines what to show as identity label on mail folder header	common	ko	이메일 폴더 헤더에 표시할 식별 라벨을 정의합니다. 라벨은 이메일 계정의 필드를 참조합니다.
 delete selected folders	mail	ko	選択したフォルダを削除する
 deleted	mail	ko	삭제됨
 do you really want to toggle flag %1 for all messages in the current view?	mail	ko	현재 보기의 모든 메시지에 대해 %1 플래그를 전환하시겠습니까?
@@ -79,6 +80,8 @@ general	admin	ko	일반
 get acl rights failed from imap server!	mail	ko	IMAP 서버에서 ACL 권한 가져오기에 실패했습니다!
 ham folder	mail	ko	햄 폴더
 handling of external http images / mixed content in mails	mail	ko	전자 메일의 외부 http 이미지/혼합 콘텐츠 처리
+header	mail	ko	헤더
+header lines	mail	ko	헤더 줄
 hide from	mail	ko	보낸 사람 숨기기
 high priority	mail	ko	높은 우선순위
 html	mail	ko	HTML
@@ -87,6 +90,7 @@ ident name email	mail	ko	아이디 이름 [이메일]
 ident name organization email	mail	ko	식별자 이름 조직 [이메일]
 identity label	mail	ko	신원 라벨
 if different from email address	mail	ko	이메일 주소와 다른 경우
+if mail header	mail	ko	이메일 헤더인 경우
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ko	제목을 한 번 클릭하여 메일 미리 보기를 보려면 이 기능을 활성화하세요.
 imap	mail	ko	IMAP
 imap server	mail	ko	IMAP Server
@@ -127,6 +131,7 @@ moved %1 message(s) from %2 to %3	mail	ko	%2에서 %3으로 %1 메시지를 이�
 name and domain	mail	ko	이름 및 도메인
 name and email	mail	ko	이름 및 이메일
 name of account	mail	ko	계정 이름
+name of header, only letters, numbers and dash (-) allowed	mail	ko	헤더 이름, 영문자, 숫자 및 대시(-)만 허용
 name of imap servers (space separated host or host:port)	mail	ko	IMAP 서버 이름(공백으로 구분된 호스트 또는 호스트:포트)
 never show	mail	ko	표시 안 함
 never show notification	mail	ko	알림 표시 안 함
@@ -231,6 +236,7 @@ trash	mail	ko	휴지통
 trash folder	mail	ko	휴지통 폴더
 unconditional	mail	ko	항상
 validate addresses on submit:	mail	ko	제출할 주소의 유효성을 검사합니다:
+view header lines	mail	ko	헤더 줄 보기
 what to do when you delete a message	mail	ko	메시지를 삭제할 때 수행할 작업입니다.
 write	mail	ko	쓰기
 write & delete	mail	ko	쓰기 및 삭제

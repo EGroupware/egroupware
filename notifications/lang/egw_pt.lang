@@ -10,6 +10,7 @@ cancal?	notifications	pt	Cancelar?
 certification-information:	notifications	pt	Informações de certificação:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	pt	Verificar ambos. Primeiro, tente uma conta ativa definida pelo utilizador; se não existir, utilize o perfil eMailAdmin.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	pt	Escolha uma cadeia de notificação. Será notificado através dos back ends incluídos na cadeia.<br>Nota: Se uma cadeia de notificação estiver marcada como "desactivada", o seu administrador não permite um ou mais dos back ends incluídos na cadeia, as notificações voltam a "E-mail" enquanto o notificam.
+choose from mailsettings used for notification	admin	pt	Escolher configurações de e-mail utilizadas para notificação por e-mail
 connection error.	notifications	pt	Erro de ligação.
 connection error. please check connection to server.	notifications	pt	Erro de ligação. Verificar a ligação ao servidor.
 continue to connect?	notifications	pt	Continuar a ligar?
@@ -17,6 +18,7 @@ cookies are required to login to this site.	notifications	pt	São necessários c
 delete all messages	notifications	pt	Eliminar todas as mensagens
 delete notifications	notifications	pt	Eliminar notificações
 delete this message	notifications	pt	Eliminar esta mensagem
+do not notify me at all	notifications	pt	Não me notificar
 domain not found, please check serveraddress.	notifications	pt	Domínio não encontrado, por favor verifique o endereço do servidor.
 egroupware login is starting, please wait.	notifications	pt	O login do EGroupware está a começar, por favor aguarde.
 egroupware logindomain:	notifications	pt	EGroupware Logindomain:
@@ -44,7 +46,11 @@ mark as read	notifications	pt	Marcar como lido
 message from	notifications	pt	Mensagem de
 minutes	notifications	pt	Minutos
 more info	notifications	pt	Mais informações
+normally only the work email address is notified	notifications	pt	Normalmente, apenas o endereço de e-mail profissional é notificado.
+notification	common	pt	Notificação
 notifier	notifications	pt	Notificador
+notify me by	notifications	pt	Notificar-me por
+notify private email address	notifications	pt	Notificar endereço de e-mail privado
 only used if no push server available!	admin	pt	Utilizado apenas se não existir um servidor push disponível!
 open notified entry	notifications	pt	Abrir a entrada notificada
 page not found, please check serveraddress.	notifications	pt	Página não encontrada, por favor verifique o endereço do servidor.
@@ -56,6 +62,7 @@ please contact your egroupware admin.	notifications	pt	Contacte o administrador 
 please enter the url of your egroupware.	notifications	pt	Introduza o URL do seu EGroupware.
 please enter your egroupware username.	notifications	pt	Introduza o seu nome de utilizador do EGroupware.
 please enter your password	notifications	pt	Introduza a sua palavra-passe
+preferences for notification	notifications	pt	Preferências para notificação
 refresh notifications	notifications	pt	Actualizar Notificações
 repeat login?	notifications	pt	Repetir o início de sessão?
 run application	notifications	pt	Executar aplicação
@@ -73,6 +80,8 @@ this egroupware notification has been sent to you by mail because your	notificat
 this month	notifications	pt	Este mês
 user:	notifications	pt	Utilizador:
 warning	notifications	pt	Aviso
+yes, notify only private email, if existing	notifications	pt	Sim, notificar apenas e-mail privado, se existir
+yes, notify private email too	notifications	pt	Sim, notificar também e-mail privado
 yesterday	notifications	pt	Ontem
 you can also use	admin	pt	Também pode utilizar
 you have %1 unread notifications	notifications	pt	Tem %1 notificações não lidas

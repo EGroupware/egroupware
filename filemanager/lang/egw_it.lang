@@ -64,6 +64,7 @@ copy to clipboard	filemanager	it	Copia negli appunti
 could not copy %1 to %2	filemanager	it	Non posso copiare %1 in %2
 could not create %1	filemanager	it	Non posso creare %1
 could not delete %1	filemanager	it	Non posso eliminare %1
+could not install async job	filemanager	it	Impossibile installare il lavoro asincrono
 could not move %1 to %2	filemanager	it	Non posso spostare %1 in %2
 could not rename %1 to %2	filemanager	it	Non posso rinominare %1 in %2
 create a link	filemanager	it	Crea un collegamento
@@ -73,6 +74,7 @@ create folder	filemanager	it	Crea cartella
 created	filemanager	it	Creato
 created %1,%2	filemanager	it	Creato %1, %2
 created directory %1	filemanager	it	Creata la cartella %1
+creationdate of file	filemanager	it	Data di creazione del file
 current directory	filemanager	it	Cartella corrente
 custom fields	filemanager	it	Campi personalizzati
 cut	filemanager	it	Taglia
@@ -120,6 +122,7 @@ error adding the acl!	filemanager	it	Errore nell'aggiunta della regola ACL!
 error creating symlink to target %1!	filemanager	it	Errore di creazione del link simbolico verso %1!
 error deleting the acl entry!	filemanager	it	Errore di eliminazione della regola ACL!
 error mounting %1 on %2!	filemanager	it	Errore nel montaggio di %1 su %2
+error running job	filemanager	it	Errore durante l'esecuzione del lavoro
 error unmounting %1!	filemanager	it	Errore nello smontaggio di %1
 error uploading file!	filemanager	it	Errore di caricamento file!
 error while creating directory.	filemanager	it	Errore di creazione della cartella
@@ -181,7 +184,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 if you specify an export definition, it will be used when you export*	filemanager	it	Verrà usata quando esporti, se specifichi qui una definizione di esportazione
 inherited	filemanager	it	Ereditato
+job deleted.	filemanager	it	Lavoro eliminato.
 job folder %1 does not exist or is not writable	filemanager	it	La cartella di lavoro %1 non esiste o non è scrivibile.
+job saved.	filemanager	it	Lavoro salvato.
+jobs	filemanager	it	Lavori
 last accessed	filemanager	it	Ultimoaccesso
 leave empty to delete the file after attaching	filemanager	it	Lasciare vuoto per eliminare il file dopo averlo allegato
 link	filemanager	it	Collegamento
@@ -263,12 +269,14 @@ save %1	filemanager	it	Salva %1
 save %1, and go back to file listing	filemanager	it	Salva %1 e torna alla lista dei file
 save as zip	filemanager	it	Salva come file compresso (ZIP)
 save changes	filemanager	it	Salva le modifiche
+save job to clear error and restart it	filemanager	it	Salva il lavoro per eliminare l'errore e riavviarlo
 saved %1	filemanager	it	Ho salvato %1
 saving properties failed!	filemanager	it	Non è stato possibile salvare le proprietà
 saving setting for document merge failed!	filemanager	it	Salvataggio delle impostazioni per la stampa unione fallito!
 search for '%1'	filemanager	it	Cerca per '%1'
 searchstring	filemanager	it	Stringa di ricerca
 select action...	filemanager	it	Scegli azione...
+select custom field	filemanager	it	Seleziona campo personalizzato
 select file to upload in current directory	filemanager	it	Seleziona il file da caricare nella cartella corrente
 select file(s) from vfs	common	it	Seleziona file dal sistema virtuale di file (VFS)
 setting for document merge saved.	filemanager	it	Impostazione stampa unione salvata.

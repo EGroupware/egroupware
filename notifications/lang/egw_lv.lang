@@ -10,6 +10,7 @@ cancal?	notifications	lv	Atcelt?
 certification-information:	notifications	lv	Sertifikācijas informācija:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	lv	Pārbaudiet abas. Vispirms izmēģiniet aktīvu lietotāja definētu kontu, ja tāda nav, izmantojiet eMailAdmin profilu.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	lv	Izvēlieties paziņojumu ķēdi. Jums tiks paziņots pa ķēdē iekļautajiem aizmugurējiem galiem.<br>Piezīme: Ja paziņojumu ķēde ir atzīmēta kā "atspējota", jūsu administrators neatļauj vienu vai vairākus ķēdē iekļautos aizmugurējos galus, paziņojumi, paziņojot jums, atgriežas pie "E-pasts".
+choose from mailsettings used for notification	admin	lv	Izvēlieties e-pasta paziņojumiem izmantojamās e-pasta iestatījumi
 connection error.	notifications	lv	Savienojuma kļūda.
 connection error. please check connection to server.	notifications	lv	Savienojuma kļūda. Lūdzu, pārbaudiet savienojumu ar serveri.
 continue to connect?	notifications	lv	Turpināt savienojumu?
@@ -50,7 +51,11 @@ mark as read	notifications	lv	Atzīmēt kā izlasītu
 message from	notifications	lv	Ziņa no
 minutes	notifications	lv	Minūtes
 more info	notifications	lv	Vairāk informācijas
+normally only the work email address is notified	notifications	lv	Parasti paziņojums tiek nosūtīts tikai uz darba e-pasta adresi.
+notification	common	lv	Paziņojums
 notifier	notifications	lv	Paziņotājs
+notify me by	notifications	lv	Paziņot man ar
+notify private email address	notifications	lv	Paziņot uz privāto e-pasta adresi
 only used if no push server available!	admin	lv	Izmanto tikai tad, ja nav pieejams push serveris!
 open notified entry	notifications	lv	Atvērt paziņojumu ierakstu
 page not found, please check serveraddress.	notifications	lv	Lapa nav atrasta, lūdzu, pārbaudiet servera adresi.
@@ -62,6 +67,7 @@ please contact your egroupware admin.	notifications	lv	Lūdzu, sazinieties ar sa
 please enter the url of your egroupware.	notifications	lv	Lūdzu, ievadiet sava EGroupware URL.
 please enter your egroupware username.	notifications	lv	Lūdzu, ievadiet savu EGroupware lietotājvārdu.
 please enter your password	notifications	lv	Lūdzu, ievadiet savu paroli
+preferences for notification	notifications	lv	Paziņojumu iestatījumi
 refresh notifications	notifications	lv	Atjaunināt paziņojumus
 repeat login?	notifications	lv	Atkārtota pieteikšanās?
 run application	notifications	lv	Palaist lietojumprogrammu
@@ -79,6 +85,8 @@ this egroupware notification has been sent to you by mail because your	notificat
 this month	notifications	lv	Šis mēnesis
 user:	notifications	lv	Lietotājs:
 warning	notifications	lv	Brīdinājums
+yes, notify only private email, if existing	notifications	lv	Jā, paziņot tikai uz privāto e-pastu, ja tāds ir
+yes, notify private email too	notifications	lv	Jā, paziņot arī uz privāto e-pastu
 yesterday	notifications	lv	Vakar
 you can also use	admin	lv	Varat arī izmantot
 you have %1 unread notifications	notifications	lv	Jums ir %1 nelasīts paziņojums

@@ -92,6 +92,8 @@ forward to	mail	ro	Înainte către
 get acl rights failed from imap server!	mail	ro	Obțineți drepturile ACL eșuate de pe serverul IMAP!
 ham folder	mail	ro	Dosarul Ham
 handling of external http images / mixed content in mails	mail	ro	Gestionarea imaginilor http externe / conținut mixt în e-mailuri
+header	mail	ro	Antet
+header lines	mail	ro	Linii antet
 hide from	mail	ro	Ascundeți De la
 high priority	mail	ro	Prioritate ridicată
 html	mail	ro	HTML
@@ -101,6 +103,7 @@ ident name organization email	mail	ro	Nume identitate Organizație [Email]
 identity	mail	ro	Identitate
 identity label	mail	ro	Etichetă identitate
 if different from email address	mail	ro	Dacă este diferită de adresa de e-mail
+if mail header	mail	ro	dacă antetul e-mailului
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ro	Se quiser ver uma visualização prévia de um e-mail clicando uma vez no assunto, ative essa opção.
 imap	mail	ro	IMAP
 imap server	mail	ro	IMAP Server
@@ -156,6 +159,7 @@ moved %1 message(s) from %2 to %3	mail	ro	A mutat %1 mesaj(e) de la %2 la %3.
 name and domain	mail	ro	Nume și domeniu
 name and email	mail	ro	Nume și e-mail
 name of account	mail	ro	Numele contului
+name of header, only letters, numbers and dash (-) allowed	mail	ro	Numele antetului, sunt permise numai litere, cifre și liniuțe (-)
 name of imap servers (space separated host or host:port)	mail	ro	Numele serverelor IMAP (gazdă separată prin spații sau gazdă:port)
 never show	mail	ro	Nu se afișează niciodată
 never show notification	mail	ro	Nu afișați niciodată notificarea
@@ -273,6 +277,7 @@ trash	mail	ro	Coș de gunoi
 trash folder	mail	ro	Dosar coș de gunoi
 unconditional	mail	ro	Întotdeauna
 validate addresses on submit:	mail	ro	Validarea adreselor la trimitere:
+view header lines	mail	ro	Vizualizați liniile antetului
 what to do when you delete a message	mail	ro	Ce trebuie să faceți atunci când ștergeți un mesaj.
 write & delete	mail	ro	scrieți & ștergeți
 you can select what info to be displayed on email tag	mail	ro	Puteți selecta ce informații să fie afișate pe eticheta de e-mail.

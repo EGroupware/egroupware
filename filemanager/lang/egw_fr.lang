@@ -64,6 +64,7 @@ copy to clipboard	filemanager	fr	Copier vers le presse-papier
 could not copy %1 to %2	filemanager	fr	N'a pas pu copier %1 vers %2
 could not create %1	filemanager	fr	N'a pas pu créér %1
 could not delete %1	filemanager	fr	N'a pas pu effacer %1
+could not install async job	filemanager	fr	Impossible d'installer la tâche asynchrone
 could not move %1 to %2	filemanager	fr	N'a pas pu déplacer %1 to %2
 could not rename %1 to %2	filemanager	fr	N'a pas pu renommer %1 to %2
 create a link	filemanager	fr	Créer un lien
@@ -73,6 +74,7 @@ create folder	filemanager	fr	Créer dossier
 created	filemanager	fr	Créé
 created %1,%2	filemanager	fr	Création de %1,%2
 created directory %1	filemanager	fr	Répertoire %1 créé
+creationdate of file	filemanager	fr	Date de création du fichier
 current directory	filemanager	fr	Répertoire courant
 custom fields	filemanager	fr	Champs personnalisés
 cut	filemanager	fr	Couper
@@ -120,6 +122,7 @@ error adding the acl!	filemanager	fr	Erreur à l'ajout de l'ACL !
 error creating symlink to target %1!	filemanager	fr	Erreur à la création du lien symbolique vers la cible %1 !
 error deleting the acl entry!	filemanager	fr	Erreur à la suppression de l'entrée ACL !
 error mounting %1 on %2!	filemanager	fr	Erreur au montage de %1 sur %2 !
+error running job	filemanager	fr	Erreur lors de l'exécution de la tâche
 error unmounting %1!	filemanager	fr	Erreur au démontage de %1
 error uploading file!	filemanager	fr	Erreur à l'upload du fichier !
 error while creating directory.	filemanager	fr	Erreur à la création du dossier
@@ -181,7 +184,10 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	filemanager	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 if you specify an export definition, it will be used when you export*	filemanager	fr	Si vous spécifier un format d'export, il sera utilisé à l'export*
 inherited	filemanager	fr	hérité
+job deleted.	filemanager	fr	Tâche supprimée.
 job folder %1 does not exist or is not writable	filemanager	fr	Le dossier d'emploi %1 n'existe pas ou n'est pas accessible en écriture.
+job saved.	filemanager	fr	Tâche enregistrée.
+jobs	filemanager	fr	Tâches
 last accessed	filemanager	fr	Dernier accès
 leave empty to delete the file after attaching	filemanager	fr	Laisser vide pour supprimer le fichier après l'avoir joint
 link	filemanager	fr	Lien
@@ -263,12 +269,14 @@ save %1	filemanager	fr	Enregistrer %1
 save %1, and go back to file listing	filemanager	fr	Enregistrer %1, et retour au listing
 save as zip	filemanager	fr	Sauvegarder en ZIP
 save changes	filemanager	fr	Enregistrer les changements
+save job to clear error and restart it	filemanager	fr	Enregistrer la tâche pour effacer l'erreur et la redémarrer
 saved %1	filemanager	fr	%1 enregistré(s)
 saving properties failed!	filemanager	fr	Echec de l'enregistrement des propriétés !
 saving setting for document merge failed!	filemanager	fr	L'enregistrement des paramètres pour la fusion de documents a échoué !
 search for '%1'	filemanager	fr	Recherche de '%1'
 searchstring	filemanager	fr	Chaine de recherche
 select action...	filemanager	fr	Sélectionner une acion...
+select custom field	filemanager	fr	Sélectionner un champ personnalisé
 select file to upload in current directory	filemanager	fr	Choisissez un fichier à télécharger dans le répertoire courant
 select file(s) from vfs	common	fr	Sélectionner des fichiers du VFS
 setting for document merge saved.	filemanager	fr	Les paramètres de la fusion de documents ont été sauvegardés.

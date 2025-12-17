@@ -119,7 +119,6 @@ custom from	infolog	bg	Форма по избор
 custom regarding	infolog	bg	По избор - относно
 custom status for typ	infolog	bg	По избор - статус за тип
 customfields	infolog	bg	Полета по избор
-data exchange settings	infolog	bg	Настройки за обмен на данни
 date completed	infolog	bg	Дата на завършване
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	bg	Дата на завършване (непопълнена се установява автоматично при статус Изпълнен или Таксуван).
 datecreated	infolog	bg	дата на създаване

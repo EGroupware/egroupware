@@ -16,7 +16,6 @@ code is required	preferences	pt-br	O código é obrigatório
 color	preferences	pt-br	Cor
 country	preferences	pt-br	País
 dark mode theme	preferences	pt-br	Tema do modo escuro
-data exchange settings	preferences	pt-br	Configurações de troca de dados
 date format	preferences	pt-br	Formato de data
 default	preferences	pt-br	padrão
 default preferences	preferences	pt-br	Preferências padrões
@@ -69,6 +68,7 @@ no user-selection at all	common	pt-br	Sem nenhuma seleção de usuário
 note: this feature does *not* change your email password. this will	preferences	pt-br	Atenção: Esta função NÃO altera sua senha de e-mail.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pt-br	Nota: Esta função <b>NÃO</b> altera sua senha de email. Você deverá fazer isto manualmente.
 notification settings	preferences	pt-br	Configurações de notificação
+old password and new password are the same. this is invalid. you must enter a new password	preferences	pt-br	A senha antiga e a nova senha são iguais. Você deve inserir uma nova senha!
 p: paragraph	preferences	pt-br	p: Parágrafo
 password stored	preferences	pt-br	Senha armazenada.
 popup with search	preferences	pt-br	Janela  instantânea com busca

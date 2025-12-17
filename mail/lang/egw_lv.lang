@@ -113,6 +113,7 @@ get acl rights failed from imap server!	mail	lv	ACL tiesību iegūšana no IMAP 
 greater than	mail	lv	lielāks nekā
 ham folder	mail	lv	Šķiņķa mape
 handling of external http images / mixed content in mails	mail	lv	Ārējo http attēlu apstrāde / jaukts saturs e-pasta ziņojumos
+header	mail	lv	Virsraksts
 header lines	mail	lv	Galvenes rindas
 hide from	mail	lv	Paslēpt No
 html	mail	lv	HTML
@@ -122,6 +123,7 @@ ident name organization email	mail	lv	Identitātes nosaukums Organizācija [E-pa
 identity label	mail	lv	Identitātes etiķete
 if	mail	lv	Ja
 if different from email address	mail	lv	Ja atšķiras no e-pasta adreses
+if mail header	mail	lv	ja e-pasta virsraksts
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	lv	Ja vēlaties skatīt e-pasta priekšskatījumu, vienreiz noklikšķinot uz temata, iespējojiet šo funkciju.
 imap	mail	lv	IMAP
 imap server	mail	lv	IMAP serveris
@@ -176,6 +178,7 @@ moved %1 message(s) from %2 to %3	mail	lv	Pārvietots %1 ziņojums(-i) no %2 uz 
 name and domain	mail	lv	Nosaukums un domēns
 name and email	mail	lv	Vārds un e-pasts
 name of account	mail	lv	Konta nosaukums
+name of header, only letters, numbers and dash (-) allowed	mail	lv	Virsraksta nosaukums, atļauti tikai burti, cipari un defise (-)
 name of imap servers (space separated host or host:port)	mail	lv	IMAP serveru nosaukums (ar atstarpi atdalīts hosts vai host:port)
 never display html emails	mail	lv	Nekas nerādīt HTML vēstules
 never show	mail	lv	Nekad nerādīt
@@ -310,6 +313,7 @@ unconditional	mail	lv	Vienmēr
 unread	mail	lv	Nelasīts
 vacation notice	mail	lv	Norāde par atrašanos atvaļinājumā
 validate addresses on submit:	mail	lv	Pārbaudiet adreses, kad nosūtāt:
+view header lines	mail	lv	Skatīt virsraksta rindas
 what to do when you delete a message	mail	lv	Ko darīt, dzēšot ziņojumu.
 when deleting messages	mail	lv	Kad dzēš vēstules
 write	mail	lv	Rakstīt

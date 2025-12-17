@@ -10,6 +10,7 @@ cancal?	notifications	sv	Avbryt?
 certification-information:	notifications	sv	Information om certifiering:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	sv	Kontrollera båda. Försök först med aktivt användardefinierat konto, om inget, använd eMailAdmin-profilen.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	sv	Välj en aviseringskedja. Du kommer att meddelas via de backends som ingår i kedjan.<br>Observera: Om en aviseringskedja är markerad som "inaktiverad" och din administratör inte tillåter en eller flera av de backends som ingår i kedjan, återgår aviseringarna till "E-post" när du får aviseringar.
+choose from mailsettings used for notification	admin	sv	Välj e-postinställningar som används för e-postmeddelanden
 connection error.	notifications	sv	Fel i anslutningen.
 connection error. please check connection to server.	notifications	sv	Fel i anslutningen. Vänligen kontrollera anslutningen till servern.
 continue to connect?	notifications	sv	Fortsätt att ansluta?
@@ -50,8 +51,11 @@ mark as read	notifications	sv	Markera som läst
 message from	notifications	sv	Meddelande från
 minutes	notifications	sv	Minuter
 more info	notifications	sv	Mer info
+normally only the work email address is notified	notifications	sv	Normalt meddelas endast arbetsadressen.
 notification	common	sv	Meddelande
 notifier	notifications	sv	Anmälare
+notify me by	notifications	sv	Meddela mig via
+notify private email address	notifications	sv	Meddela privat e-postadress
 only used if no push server available!	admin	sv	Används endast om ingen push-server är tillgänglig!
 open notified entry	notifications	sv	Öppna aviserad post
 page not found, please check serveraddress.	notifications	sv	Sidan hittades inte, kontrollera serveradressen.
@@ -63,6 +67,7 @@ please contact your egroupware admin.	notifications	sv	Kontakta administratören
 please enter the url of your egroupware.	notifications	sv	Ange webbadressen till din EGroupware.
 please enter your egroupware username.	notifications	sv	Ange ditt användarnamn för EGroupware.
 please enter your password	notifications	sv	Ange ditt lösenord
+preferences for notification	notifications	sv	Inställningar för meddelanden
 refresh notifications	notifications	sv	Uppdatera meddelanden
 repeat login?	notifications	sv	Upprepa inloggning?
 run application	notifications	sv	Kör applikation
@@ -80,6 +85,8 @@ this egroupware notification has been sent to you by mail because your	notificat
 this month	notifications	sv	Denna månad
 user:	notifications	sv	Användare:
 warning	notifications	sv	Varning
+yes, notify only private email, if existing	notifications	sv	Ja, meddela endast privat e-postadress, om sådan finns
+yes, notify private email too	notifications	sv	Ja, meddela även privat e-postadress
 yesterday	notifications	sv	Igår
 you can also use	admin	sv	Du kan också använda
 you have %1 unread notifications	notifications	sv	Du har %1 olästa meddelanden

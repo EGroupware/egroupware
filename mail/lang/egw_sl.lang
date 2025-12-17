@@ -379,6 +379,7 @@ moving folders from one mailaccount to another is not supported	mail	sl	Premikan
 name and domain	mail	sl	Ime in domena
 name and email	mail	sl	Ime in e-pošta
 name of account	mail	sl	Ime računa
+name of header, only letters, numbers and dash (-) allowed	mail	sl	Ime glave, dovoljene so samo črke, številke in pomišljaj (-)
 name of imap servers (space separated host or host:port)	mail	sl	Ime strežnikov IMAP (gostitelj ali gostitelj:vrata)
 never display html emails	mail	sl	Nikoli ne prikaži sporočil HTML
 never show	mail	sl	Nikoli ne pokaži

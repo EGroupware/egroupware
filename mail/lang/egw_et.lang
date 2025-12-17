@@ -69,6 +69,7 @@ default sorting order	mail	et	Vaikimisi sorteerimise järjekord
 default toolbar actions shown in mail's html editor	mail	et	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
 default value for remembering s/mime passphrase in minutes	mail	et	Standardværdi for hukommelse af S/MIME-passphrase i minutter
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	et	Definerer, hvad der skal vises som kontaktmærke for tilføjede kontaktpersoner i Til/Kopiere/Blind kopi, når du udarbejder en e-mail. Standard er fornavn efternavn og tom betyder, at alt tilgængeligt skal medtages.
+defines what to show as identity label on mail folder header	common	et	Määrab, mida näidata identiteedimärgina e-posti kausta pealkirjas. Märgised viitavad e-posti konto väljadele.
 delete folder	mail	et	Kustuta kaust
 delete selected folders	mail	et	Valitud kaustade kustutamine
 deleted	mail	et	kustutatud
@@ -123,6 +124,8 @@ general	admin	et	Üldine
 get acl rights failed from imap server!	mail	et	ACL-õiguste saamine IMAP-serverist ebaõnnestus!
 ham folder	mail	et	Ham kaust
 handling of external http images / mixed content in mails	mail	et	Välise http-pildi / segatud sisu käsitlemine e-kirjades
+header	mail	et	Pealkiri
+header lines	mail	et	Pealkirja read
 hide from	mail	et	Peida Alates
 high priority	mail	et	Kõrge prioriteet
 html	mail	et	HTML
@@ -132,6 +135,7 @@ ident name organization email	mail	et	Ident name Organisatsioon [Email]
 identity label	mail	et	Identiteedi silt
 if	mail	et	KUI
 if different from email address	mail	et	Kui see erineb e-posti aadressist
+if mail header	mail	et	kui e-posti pealkiri
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	et	Kui soovite näha e-kirja eelvaadet, kui klõpsate ainsa klõpsuga teemale, siis lubage see.
 imap	mail	et	IMAP
 imap server	mail	et	IMAP Server
@@ -184,6 +188,7 @@ moved %1 message(s) from %2 to %3	mail	et	Kolimisin %1 sõnumi(d) %2-st %3-sse.
 name and domain	mail	et	Nimi ja domeen
 name and email	mail	et	Nimi ja e-posti aadress
 name of account	mail	et	Konto nimi
+name of header, only letters, numbers and dash (-) allowed	mail	et	Pealkirja nimi, lubatud on ainult tähed, numbrid ja kriips (-)
 name of imap servers (space separated host or host:port)	mail	et	IMAP-serveri nimi (tühikuga eraldatud host või host:port)
 never display html emails	mail	et	Ära näita kunagi HTML emaile
 never show	mail	et	Mitte kunagi ei näidata
@@ -306,6 +311,7 @@ trash folder	mail	et	Prügikasti kaust
 unconditional	mail	et	Alati
 unread	mail	et	lugematta
 validate addresses on submit:	mail	et	Kinnitage aadressid esitamisel:
+view header lines	mail	et	Vaata pealkirja ridu
 what to do when you delete a message	mail	et	Mida teha sõnumi kustutamise korral.
 write	mail	et	Kirjuta
 write & delete	mail	et	kirjutamine ja kustutamine

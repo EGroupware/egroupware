@@ -10,6 +10,7 @@ deny following groups access to application passwords	preferences	lt	Draudimas �
 deny following groups access to preferences	admin	lt	Neleisti šioms grupėms naudotis parinktimis
 enter code to authenticate the actions below	preferences	lt	Įveskite kodą toliau nurodytiems veiksmams patvirtinti
 enter code to verify correct setup	preferences	lt	Įveskite kodą teisingam nustatymui patikrinti
+enter your old password	preferences	lt	Įveskite senąjį slaptažodį
 fast	preferences	lt	Greita
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	lt	Greitas atnaujinimas naujus įrašus prideda visada sąrašo viršuje, o esamus atnaujina vietoje, nebent sąrašas surūšiuotas pagal paskutinį pakeitimą. Tikslūs atnaujinimai atlieka visišką atnaujinimą, jei sąrašas nesurūšiuotas pagal paskutinį pakeitimą.
 forced preferences	preferences	lt	Priverstinės nuostatos
@@ -20,6 +21,7 @@ it sets content size (text only) according to selected size.	preferences	lt	Jis 
 limit following groups to only create application passwords via templates	preferences	lt	Šios grupės apriboja tik programų slaptažodžių kūrimą naudojant šablonus
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	lt	Prisijungiant per SingleSignOn, slaptažodis nėra perduodamas pašto ar failų serveriams.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	lt	Paraiškų sąrašą galima slinkti slinkimo į viršų ir į apačią mygtukais (naudinga naudotojams, dirbantiems su pele be slinkimo ratuko).
+old password and new password are the same. this is invalid. you must enter a new password	preferences	lt	Senas slaptažodis ir naujas slaptažodis yra vienodi. Turite įvesti naują slaptažodį!
 password stored	preferences	lt	Saugomas slaptažodis.
 preferences saved.	preferences	lt	Išsaugotos nuostatos.
 reset qrcode	preferences	lt	Iš naujo nustatyti QR kodą
@@ -29,6 +31,7 @@ show qrcode	preferences	lt	Rodyti QR kodą
 show qrcode to enable on an additional device.	preferences	lt	Vėl parodo QR kodą, kad jį būtų galima nustatyti kituose įrenginiuose
 singlesignon and passwords	preferences	lt	SingleSignOn ir slaptažodžiai
 store password retrievable for singlesignon	common	lt	Saugoti slaptažodį, kurį galima gauti naudojant SingleSignOn
+the old password is not correct	preferences	lt	Senas slaptažodis yra neteisingas!
 thousands separator is only used for displaying and not for editing numbers.	preferences	lt	Galima nustatyti skaičių formatą, kuriuo rodomi skaičiai.
 use first %1 letters from username	preferences	lt	Naudokite pirmąsias %1 vartotojo vardo raides
 use initials from first and last name	preferences	lt	Naudoti vardo ir pavardės inicialus

@@ -28,6 +28,7 @@ copy to clipboard	filemanager	zh	复制到剪贴板
 could not copy %1 to %2	filemanager	zh	无法将%1复制到%2
 could not create %1	filemanager	zh	无法创建%1
 could not delete %1	filemanager	zh	无法删除 %1
+could not install async job	filemanager	zh	无法安装异步任务
 could not move %1 to %2	filemanager	zh	无法将%1移动到%2
 could not rename %1 to %2	filemanager	zh	无法将%1重命名为 %2
 create file	filemanager	zh	创建文件
@@ -35,6 +36,7 @@ create folder	filemanager	zh	创建文件夹
 created	filemanager	zh	创建日期
 created %1,%2	filemanager	zh	%1，%2已创建
 created directory %1	filemanager	zh	目录%1已创建
+creationdate of file	filemanager	zh	文件创建日期
 current directory	filemanager	zh	当前目录
 custom fields	filemanager	zh	自定义字段
 cut	filemanager	zh	剪切
@@ -57,6 +59,7 @@ edit share	filemanager	zh	编辑共享
 enable	filemanager	zh	启用
 enter a file size, e.g. 100k, 200m or 2g	filemanager	zh	输入文件大小，如 100K、200M 或 2G
 enter your file name	filemanager	zh	输入文件名
+error running job	filemanager	zh	任务运行错误
 error uploading file!	filemanager	zh	上传文件错误！
 everyone	filemanager	zh	所有人
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	zh	示例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 搜索字段 "n_prefix"，查找 "Mr"，如果找到，则写入 Hello Mr.，否则写入 Hello Ms.。
@@ -107,7 +110,10 @@ hostname/ip for webdav and smb	filemanager	zh	WebDAV 和 SMB 的主机名/IP
 id	filemanager	zh	编号
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	zh	如果在此指定文件夹（完整 VFS 路径），%1 会为每个文档显示一个操作。该操作允许下载插入 %1 数据的指定文档。
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	zh	如果在此指定文件夹（完整 VFS 路径），%1 会为每个条目显示一个额外的文档图标。通过该图标可以下载指定的文档和插入的数据。
+job deleted.	filemanager	zh	任务已删除。
 job folder %1 does not exist or is not writable	filemanager	zh	任务文件夹 %1 不存在或不可写。
+job saved.	filemanager	zh	任务已保存。
+jobs	filemanager	zh	任务列表
 leave empty to delete the file after attaching	filemanager	zh	留空表示在附加后删除文件
 link	filemanager	zh	链接
 list view	filemanager	zh	列表查看
@@ -163,10 +169,12 @@ save %1	filemanager	zh	保存%1
 save %1, and go back to file listing	filemanager	zh	保存%1并返回文件列表
 save as zip	filemanager	zh	保存为 ZIP
 save changes	filemanager	zh	保存更改
+save job to clear error and restart it	filemanager	zh	保存任务以清除错误并重新启动
 saved %1	filemanager	zh	%1已保存
 search for '%1'	filemanager	zh	搜索'%1'
 searchstring	filemanager	zh	搜索字符串
 select action...	filemanager	zh	选择动作...
+select custom field	filemanager	zh	选择自定义字段
 show	filemanager	zh	显示
 size	filemanager	zh	大小
 smb, webdavs and vfs require a username!	filemanager	zh	SMB、WebDAV 和 VFS 需要用户名！

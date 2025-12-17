@@ -6,7 +6,9 @@
 applications	common	ko	응용프로그램들
 classic	filemanager	ko	표준 도구 모음
 comment	filemanager	ko	커멘트
+could not install async job	filemanager	ko	비동기 작업 설치 실패
 created	filemanager	ko	생성됨
+creationdate of file	filemanager	ko	파일 생성 날짜
 custom fields	filemanager	ko	사용자정의 필드
 default action on double-click	filemanager	ko	더블 클릭 시 기본 동작
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	ko	기본값 = 아니요. 링크는 표시되지 않지만 이 위치로 이동하거나 이 특정 위치를 시작 폴더 또는 폴더 링크로 구성할 수 있습니다.
@@ -16,6 +18,7 @@ download documents	filemanager	ko	문서 다운로드
 edit share	filemanager	ko	공유 편집
 enter a file size, e.g. 100k, 200m or 2g	filemanager	ko	파일 크기 입력(예: 100K, 200M 또는 2G)
 enter your file name	filemanager	ko	파일 이름을 입력하세요.
+error running job	filemanager	ko	작업 실행 중 오류 발생
 everyone	filemanager	ko	모두
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	ko	예시 {{IF n_접두사~미스터~안녕하세요 미스터~안녕하세요 미스터}} - "n_prefix" 필드를 검색하여 "Mr"를 찾은 경우 Hello Mr.라고 쓰고, 그렇지 않으면 Hello Ms라고 씁니다.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	ko	예 {{LETTERPREFIXCUSTOM n_접두사 제목 n_family}} - 예제: 미스터 제임스 밀러 박사
@@ -51,7 +54,10 @@ group home quota	filemanager	ko	그룹 홈 할당량
 hostname/ip for webdav and smb	filemanager	ko	WebDAV 및 SMB용 호스트 이름/IP
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ko	여기에 폴더(전체 VFS 경로)를 지정하면 %1에서 각 문서에 대한 작업을 표시합니다. 이 작업을 통해 %1 데이터가 삽입된 지정된 문서를 다운로드할 수 있습니다.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ko	여기에 폴더(전체 VFS 경로)를 지정하면 %1은(는) 각 항목에 대해 추가 문서 아이콘을 표시합니다. 이 아이콘을 사용하면 데이터가 삽입된 지정된 문서를 다운로드할 수 있습니다.
+job deleted.	filemanager	ko	작업 삭제됨.
 job folder %1 does not exist or is not writable	filemanager	ko	작업 폴더 %1이 존재하지 않거나 쓰기 권한이 없습니다.
+job saved.	filemanager	ko	작업 저장됨.
+jobs	filemanager	ko	작업들
 leave empty to delete the file after attaching	filemanager	ko	첨부 후 파일을 삭제하려면 비워 두세요
 link	filemanager	ko	링크
 list view	filemanager	ko	목록 보기
@@ -87,6 +93,8 @@ rename, change permissions or ownership	filemanager	ko	이름 바꾸기, 사용 
 renamed %1 to %2	filemanager	ko	%1의 이름을 %2로 변경했습니다.
 renamed %1 to %2.	filemanager	ko	%1의 이름을 %2로 변경했습니다.
 save as zip	filemanager	ko	ZIP으로 저장
+save job to clear error and restart it	filemanager	ko	오류 제거 후 재시작하려면 작업을 저장하세요
+select custom field	filemanager	ko	사용자 정의 필드 선택
 smb, webdavs and vfs require a username!	filemanager	ko	SMB, WebDAV 및 VFS에는 사용자 이름이 필요합니다!
 smb: mount samba or windows fileserver shares	filemanager	ko	SMB: Samba 또는 Windows 파일서버 공유 마운트
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ko	문서에 데이터로 대체할 {{%3}}과 같은 자리 표시자를 포함할 수 있습니다(%1자리 표시자 이름의 전체 목록%2).

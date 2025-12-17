@@ -62,6 +62,7 @@ no user-selection at all	common	id	Tanpa pilihan pengguna
 note: this feature does *not* change your email password. this will	preferences	id	catatan: Fitur ini *tidak" mengubah password email anda. Ini harus
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	id	catatan: Fitur ini *tidak" mengubah password email anda. Ini harus dikerjakan sendiri.
 number format	preferences	id	Format bilangan
+old password and new password are the same. this is invalid. you must enter a new password	preferences	id	Kata sandi lama dan kata sandi baru sama. Anda harus memasukkan kata sandi baru!
 p: paragraph	preferences	id	p: Paragraph
 password stored	preferences	id	Kata sandi tersimpan.
 permanent time zone selection	preferences	id	Pilihan zona-waktu tetap

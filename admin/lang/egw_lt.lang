@@ -59,6 +59,7 @@ custom 1	admin	lt	Pasirinktinis 1
 custom 2	admin	lt	Pasirinktinis 2
 custom 3	admin	lt	Pasirinktinis 3
 delete certificate	admin	lt	Ištrinti sertifikatą
+deny access to access log	admin	lt	Drausti prieigą prie prieigos žurnalo
 error revoking token!	admin	lt	Klaida atšaukti žetoną!
 error storing token!	admin	lt	Klaida saugant simbolį!
 export certificate as p12	admin	lt	Eksportuoti sertifikatą kaip p12
@@ -66,6 +67,7 @@ generate certificate	admin	lt	Generuoti sertifikatą
 generate new token and display it once after saving	admin	lt	Sugeneruoti naują simbolį ir jį vieną kartą parodyti po išsaugojimo
 group hidden from non-admins	admin	lt	Grupė paslėpta nuo neadministratorių
 group hierarchy	admin	lt	Grupių hierarchija
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	lt	Kiek dienų įrašai turi likti prieigos žurnale, kol bus ištrinti. Numatytasis nustatymas = 90
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	lt	Kiek įrašų gali eksportuoti ne administratoriai. Tuščias = neribojama, Ne = neeksportuojama
 how many minutes should an account or ip be blocked (default 1) ?	admin	lt	Kiek minučių turėtų būti užblokuota paskyra arba IP adresas. Numatytasis = 30
 html/plaintext	admin	lt	HTML / Tekstas
@@ -93,6 +95,7 @@ regular expression to find part to use as container	admin	lt	Reguliarioji išrai
 revoke this token	admin	lt	Atšaukti šį simbolį
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	lt	Pasirinkite programas, kurioms norite, kad simbolis būtų taikomas tik jums, arba palikite numatytąjį variantą - visos programos.
 set a random password	admin	lt	Nustatykite atsitiktinį slaptažodį
+show access log	admin	lt	Prieigos žurnalas
 show groups in container based on	admin	lt	Rodyti grupes konteineryje pagal
 smtp only: to create only an smtp account	admin	lt	Sukurti tik SMTP paskyrą be IMAP
 successfull, but no refresh-token received!	admin	lt	Pavyko, bet NĖRA gautas atnaujinimo žetonas!
@@ -114,6 +117,7 @@ users can define their own signatures	admin	lt	Vartotojai gali nustatyti savo pa
 users choice	admin	lt	Vartotojo pasirinkimas
 vacation messages with start- and end-date require an admin account to be set	admin	lt	Atostogų pranešimams su pradžios ir pabaigos data reikia nustatyti administratoriaus paskyrą!
 vacation notice	admin	lt	Pranešimas apie atostogas
+view access log	admin	lt	Prieigos žurnalas
 view sessions	admin	lt	Sesijos
 who would you like to transfer records owned by the deleted user to?	admin	lt	Kam norėtumėte perkelti pašalintam naudotojui priklausančius įrašus?
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	lt	Slaptažodį galite pakeisti tik tuo atveju, jei nustatėte atsitiktinį slaptažodį arba šiuo metu naudojate paprastojo teksto slaptažodžius!

@@ -98,6 +98,8 @@ from	mail	uk	Від
 get acl rights failed from imap server!	mail	uk	Не вдалося отримати права ACL від сервера IMAP!
 ham folder	mail	uk	Тека "Шинка
 handling of external http images / mixed content in mails	mail	uk	Обробка зовнішніх http-зображень / змішаного контенту в листах
+header	mail	uk	Заголовок
+header lines	mail	uk	Рядки заголовка
 hide from	mail	uk	Приховати Від
 high priority	mail	uk	Високий пріоритет
 html	mail	uk	HTML
@@ -106,6 +108,7 @@ ident name email	mail	uk	Ідентифікаційне ім'я [Електро�
 ident name organization email	mail	uk	Ідентифікаційне ім'я Організація [Електронна пошта]
 identity label	mail	uk	Ідентифікаційна етикетка
 if different from email address	mail	uk	Якщо відрізняється від адреси
+if mail header	mail	uk	якщо заголовок електронної пошти
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	uk	Якщо ви хочете переглянути попередній перегляд листа одним натисканням на тему, увімкніть цю опцію.
 imap	mail	uk	IMAP
 imap server	mail	uk	IMAP Server
@@ -161,6 +164,7 @@ moved %1 message(s) from %2 to %3	mail	uk	Переміщено %1 повідом
 name and domain	mail	uk	Ім'я та домен
 name and email	mail	uk	Ім'я та email
 name of account	mail	uk	Назва облікового запису
+name of header, only letters, numbers and dash (-) allowed	mail	uk	Назва заголовка, дозволено використовувати тільки літери, цифри та тире (-)
 name of imap servers (space separated host or host:port)	mail	uk	Назви серверів IMAP (через пробіл host або host:port)
 never show	mail	uk	Ніколи не показувати
 never show notification	mail	uk	Ніколи не показувати сповіщення
@@ -278,6 +282,7 @@ trash	mail	uk	Смітник
 trash folder	mail	uk	папка сміття
 unconditional	mail	uk	Завжди
 validate addresses on submit:	mail	uk	Підтвердити адреси після надсилання:
+view header lines	mail	uk	Переглянути рядки заголовка
 what to do when you delete a message	mail	uk	Що робити, коли ви видаляєте повідомлення.
 write	mail	uk	Записати
 write & delete	mail	uk	запис і видалення

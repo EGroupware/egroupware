@@ -60,6 +60,7 @@ no default	preferences	sv	Ingen standard
 no user-selection at all	common	sv	Inga användarval alls
 note: this feature does *not* change your email password. this will	preferences	sv	Notera: Funktionen ändrar inte ditt e-postlösenord. Detta
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sv	Notera: Funktionen ändrar *inte* ditt e-postlösenord. Detta måste göras manuellt.
+old password and new password are the same. this is invalid. you must enter a new password	preferences	sv	Gammalt lösenord och nytt lösenord är identiska. Du måste ange ett nytt lösenord!
 password stored	preferences	sv	Lösenord lagras.
 popup with search	preferences	sv	Popup med sökning
 preferences saved.	preferences	sv	Inställningar sparade.

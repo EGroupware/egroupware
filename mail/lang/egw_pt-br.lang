@@ -221,6 +221,7 @@ get acl rights failed from imap server!	mail	pt-br	Falha na obtenção de direit
 greater than	mail	pt-br	Maior que
 ham folder	mail	pt-br	Pasta de spam
 handling of external http images / mixed content in mails	mail	pt-br	Manuseio de imagens externas/conteúdo misto em e-mails
+header	mail	pt-br	Cabeçalho
 header lines	mail	pt-br	Linhas de Cabeçalho
 hide from	mail	pt-br	Ocultar De
 high	mail	pt-br	Alto
@@ -237,7 +238,7 @@ identity	mail	pt-br	Identificar
 identity label	mail	pt-br	Etiqueta de identidade
 if	mail	pt-br	SE
 if different from email address	mail	pt-br	Se for diferente do endereço de e-mail
-if mail header	mail	pt-br	Se cabeçalho de e-mail
+if mail header	mail	pt-br	se cabeçalho de e-mail
 if message size	mail	pt-br	Se tamanho da mensagem
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	pt-br	Se quiser ver uma visualização prévia de um e-mail clicando uma vez no assunto, ative essa opção.
 imap	mail	pt-br	IMAP
@@ -296,6 +297,7 @@ moved %1 message(s) from %2 to %3	mail	pt-br	Movida a(s) mensagem(ns) %1 de %2 p
 name and domain	mail	pt-br	Nome e domínio
 name and email	mail	pt-br	Nome e e-mail
 name of account	mail	pt-br	Nome da conta
+name of header, only letters, numbers and dash (-) allowed	mail	pt-br	Nome do cabeçalho, apenas letras, números e traços (-) permitidos
 name of imap servers (space separated host or host:port)	mail	pt-br	Nome dos servidores IMAP (host separado por espaço ou host:porta)
 never display html emails	mail	pt-br	Nunca mostar mensagens em HTML
 never show	mail	pt-br	Nunca mostrar

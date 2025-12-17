@@ -63,9 +63,11 @@ mark as read	notifications	it	Segna come letta
 message from	notifications	it	Messaggio da
 minutes	notifications	it	Minuti
 more info	notifications	it	Più informazioni
+normally only the work email address is notified	notifications	it	Normalmente viene notificato solo l'indirizzo e-mail di lavoro.
 notification	common	it	Notifica
 notifier	notifications	it	Chi avvisa
 notify me by	notifications	it	Avvisami da
+notify private email address	notifications	it	Notifica all'indirizzo e-mail privato
 only used if no push server available!	admin	it	Utilizzato solo se non è disponibile un server push!
 open notified entry	notifications	it	Oprire voce di notifica
 optimize e-mails for external mail client	notifications	it	Ottimizza email per client esterni
@@ -103,6 +105,8 @@ windows-popup and e-mail	notifications	it	Popup di Windows e email
 windows-popup backend	admin	it	Backend di popup di Windows
 windows-popup first, if that fails notify me by e-mail	notifications	it	Prima popup di windows, se fallisce mandami email
 windows-popup only	notifications	it	Solo popup di Windows
+yes, notify only private email, if existing	notifications	it	Sì, notifica solo all'indirizzo e-mail privato, se esistente
+yes, notify private email too	notifications	it	Sì, notifica anche all'indirizzo e-mail privato
 yesterday	notifications	it	leri
 you can also use	admin	it	Puoi anche usare
 you have %1 unread notifications	notifications	it	Hai %1 notifiche non lette

@@ -48,9 +48,13 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	cs	Zapomněli jste vypnout pracovní dobu?
 full: use only projectmanager	admin	cs	Plné: použít jen Správce projektů
 general fields:	timesheet	cs	Obecné položky:
+give additional users access	timesheet	cs	Dejte přístup dalším uživatelům
+give infolog delegation read-access to timesheets booked on them	timesheet	cs	Dejte delegátům InfoLog přístup k časovým rozvrhům, které jsou na ně rezervovány
 global categories	timesheet	cs	Globální kategorie
 history	timesheet	cs	Historie
 history logging	admin	cs	Protokolování historie
+how to display linked timesheets	timesheet	cs	Jak zobrazit propojené časové rozvrhy
+html link to the current record	timesheet	cs	HTML odkaz na aktuální záznam
 id	timesheet	cs	ID
 ignore	timesheet	cs	Ignorovat
 imports entries into the timesheet from a csv file.	timesheet	cs	Importuje záznamy do Time Sheetu ze souboru CSV
@@ -61,7 +65,9 @@ last year	timesheet	cs	Minulý rok
 leave it empty for a full week	timesheet	cs	Ponechte prázdné pro celý týden
 leaves without saveing	timesheet	cs	ukoční bez uložení
 length<br>rows	timesheet	cs	Délka<br>Řádky
+link title	timesheet	cs	Název odkazu
 links	timesheet	cs	Odkazy
+make timesheets readable by infolog delegation	timesheet	cs	Zpřístupněte časové rozvrhy delegátům InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	cs	Maximální délka vstupu [, délka vstupního pole (volitelná)]
 mode	timesheet	cs	Režim
 modified	timesheet	cs	Změměno
@@ -88,6 +94,7 @@ price	timesheet	cs	Cena
 project fields	timesheet	cs	Pole projektu
 projectmanager integration	admin	cs	Integrace se Správcem projektů
 quantity	timesheet	cs	Množství
+readable	timesheet	cs	Čitelný
 recorded	timesheet	cs	Nahrané
 restore this entry	timesheet	cs	Obnovit tento záznam
 save & new	timesheet	cs	Uložit a Nový
@@ -119,6 +126,7 @@ this month	timesheet	cs	Tento měsíc
 this week	timesheet	cs	Tento týden
 this year	timesheet	cs	Tento rok
 ticket modified by %1 at %2	timesheet	cs	Ohlášení změnil(a) %1 v %2
+timer	common	cs	Časovač
 timer already running or paused	common	cs	Časovač již běží nebo je pozastavený
 timesheet	common	cs	Pracovní výkaz
 timesheet csv export	timesheet	cs	Export pracovního výkazu do CSV

@@ -24,6 +24,7 @@ enable	preferences	bg	позволява
 enter code to authenticate the actions below	preferences	bg	Въведете кода, за да удостоверите действията по-долу
 enter code to verify correct setup	preferences	bg	Въведете кода, за да потвърдите правилната настройка
 enter your new password	preferences	bg	Въведете нова парола
+enter your old password	preferences	bg	Въведете старата парола
 fast	preferences	bg	Бърз
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	bg	Бързото актуализиране добавя нови записи винаги отгоре на списъка и актуализира съществуващите на място, освен ако списъкът не е подреден по последна промяна. Точните актуализации извършват пълно обновяване, ако списъкът не е подреден по последна промяна.
 forced preferences	preferences	bg	Принудителни предпочитания
@@ -46,6 +47,7 @@ max matches per page	preferences	bg	Максимален брой съвпаде
 max number of icons in navbar	preferences	bg	Максимален брой картинки в лентата за управление
 no default	preferences	bg	Без стойност по подразбиране
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	bg	Бележка: Това НЕ сменя паролата ви за пощата. Нейната смяна трябва да се направи по друг начин.
+old password and new password are the same. this is invalid. you must enter a new password	preferences	bg	Старата парола и новата парола са еднакви. Трябва да въведете нова парола!
 password stored	preferences	bg	Запазена парола.
 preferences saved.	preferences	bg	Запазени предпочитания.
 re-enter your password	preferences	bg	Въведете отново паролата
@@ -59,6 +61,7 @@ show qrcode to enable on an additional device.	preferences	bg	Показва о�
 singlesignon and passwords	preferences	bg	SingleSignOn и пароли
 store password retrievable for singlesignon	common	bg	Съхраняване на парола, която може да се извлича за SingleSignOn
 text only	preferences	bg	Само текст
+the old password is not correct	preferences	bg	Старата парола не е правилна!
 the two passwords are not the same	preferences	bg	Паролите не съвпадат
 theme (colors/fonts) selection	preferences	bg	Избор на тема (цветове и шрифтове)
 thousands separator is only used for displaying and not for editing numbers.	preferences	bg	Форматът на числата може да бъде зададен за показване на числата.

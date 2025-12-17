@@ -59,6 +59,7 @@ max number of icons in navbar	preferences	da	Maksimal antal ikoner i navigations
 no default	preferences	da	Ingen Standard
 no user-selection at all	common	da	Intet bruger-valg
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	da	Bemærk: Denne feature vil *ikke* ændre Din e-mails adgangskode. Dette skal gøres manuelt.
+old password and new password are the same. this is invalid. you must enter a new password	preferences	da	Den gamle og den nye adgangskode er ens. Du skal indtaste en ny adgangskode!
 password stored	preferences	da	Adgangskoden gemmes.
 popup with search	preferences	da	Popup vindue med søg
 preferences saved.	preferences	da	Indstillinger gemt.

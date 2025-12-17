@@ -580,7 +580,7 @@ set a random password	admin	pl	Ustaw losowe hasło
 set preference values.	admin	pl	Ustaw wartości preferencji
 should exceptions contain a trace (including function arguments)	admin	pl	Czy wyjątki powinny zawierać dane śledzenia wykonania (razem z argumentami funkcji)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pl	Czy strona zalogowania powinna zawiera box z wyborem języka (przydatne dla serwerów demo) ?
-show access log	admin	pl	Wyświetl dziennik dostępów
+show access log	admin	pl	Dziennik dostępu
 show current action	admin	pl	Pokaż bieżącą akcję
 show error log	admin	pl	Wśywietl dziennik błędów
 show groups in container based on	admin	pl	Pokaż grupy w kontenerze na podstawie
@@ -703,7 +703,7 @@ users choice	admin	pl	Wybór użytkownika
 vacation messages with start- and end-date require an admin account to be set	admin	pl	Wiadomości urlopowe z datą rozpoczęcia i zakończenia wymagają konta administratora!
 vacation notice	admin	pl	Powiadomienie o wakacjach
 value for column %1 is not unique!	admin	pl	Wartość dla kolumny %1 nie jest unikatowa!
-view access log	admin	pl	Wyświetl dziennik dostępu
+view access log	admin	pl	Dziennik dostępu
 view account	admin	pl	Wyświetl konto
 view category	admin	pl	Wyświetl kategorie
 view error log	admin	pl	Pokaż dziennik błędów

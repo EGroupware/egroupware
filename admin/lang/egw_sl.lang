@@ -718,7 +718,7 @@ set a random password	admin	sl	Nastavite naključno geslo
 set preference values.	admin	sl	Vnesite vrednosti nastavitev.
 should exceptions contain a trace (including function arguments)	admin	sl	Če izjeme vsebujejo sled, vključno z argumenti funkcij.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sl	Ali naj vstopna stran vsebuje možnost izbire jezika (uporabno za demo-strani) ?
-show access log	admin	sl	Pokaži evidenco dostopov
+show access log	admin	sl	Dnevnik dostopa
 show current action	admin	sl	Pokaži trenutno dejanje
 show error log	admin	sl	Pokaži seznam napak
 show groups in container based on	admin	sl	Prikaz skupin v vsebniku na podlagi
@@ -864,7 +864,7 @@ vacation messages with start- and end-date require an admin account to be set	ad
 vacation notice	admin	sl	Obvestilo o odsotnosti
 value for column %1 is not unique!	admin	sl	Vrednost za stolpec %1 ni edinstvena!
 vfs directory "%1" not found!	admin	sl	VFS imenik "%1" NI mogoče najti!
-view access log	admin	sl	Preglej dnevnik dostopov
+view access log	admin	sl	Dnevnik dostopa
 view account	admin	sl	Preglej račun
 view category	admin	sl	Preglej kategorijo
 view error log	admin	sl	Preglej evidenco napak

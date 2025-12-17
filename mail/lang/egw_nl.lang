@@ -354,6 +354,7 @@ moved %1 message(s) from %2 to %3	mail	nl	Verplaatst %1 bericht(en) van %2 naar 
 name and domain	mail	nl	Naam en domein
 name and email	mail	nl	Naam en e-mail
 name of account	mail	nl	Naam van
+name of header, only letters, numbers and dash (-) allowed	mail	nl	Naam van de koptekst, alleen letters, cijfers en streepjes (-) zijn toegestaan
 name of imap servers (space separated host or host:port)	mail	nl	Naam van IMAP-servers (host of host:poort gescheiden door spaties)
 never display html emails	mail	nl	Nooit HTML-emails weergeven
 never show	mail	nl	Nooit tonen

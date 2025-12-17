@@ -10,6 +10,7 @@ deny following groups access to application passwords	preferences	ro	Interzice a
 deny following groups access to preferences	admin	ro	Interziceți accesul următoarelor grupuri la preferințe
 enter code to authenticate the actions below	preferences	ro	Introduceți codul pentru a autentifica acțiunile de mai jos
 enter code to verify correct setup	preferences	ro	Introduceți codul pentru a verifica configurarea corectă
+enter your old password	preferences	ro	Introduceți parola veche
 fast	preferences	ro	Rapid
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	ro	Actualizarea rapidă adaugă noi intrări întotdeauna în partea de sus a listei și le actualizează pe cele existente pe loc, cu excepția cazului în care lista este ordonată după ultima modificare. Actualizările exacte fac o reîmprospătare completă, dacă lista nu este ordonată după ultima modificare.
 forced preferences	preferences	ro	Preferințe forțate
@@ -20,6 +21,7 @@ it sets content size (text only) according to selected size.	preferences	ro	Sete
 limit following groups to only create application passwords via templates	preferences	ro	Aceste grupuri restricționează doar parolele aplicațiilor pentru a fi create prin intermediul șabloanelor
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ro	Conectarea prin SingleSignOn nu oferă o parolă pentru a o transmite către serverele de e-mail sau de fișiere.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	ro	Lista de aplicații poate fi derulată cu ajutorul butoanelor de derulare sus/jos (util pentru utilizatorii care lucrează cu un mouse fără rotiță de derulare).
+old password and new password are the same. this is invalid. you must enter a new password	preferences	ro	Parola veche și parola nouă sunt identice. Trebuie să introduceți o parolă nouă!
 password stored	preferences	ro	Parolă stocată.
 preferences saved.	preferences	ro	Preferințe salvate.
 reset qrcode	preferences	ro	Resetați codul QR
@@ -29,6 +31,7 @@ show qrcode	preferences	ro	Afișează codul QR
 show qrcode to enable on an additional device.	preferences	ro	Afișează din nou codul QR pentru a-l configura pe alte dispozitive
 singlesignon and passwords	preferences	ro	SingleSignOn și parolele
 store password retrievable for singlesignon	common	ro	Stocați parola recuperabilă pentru SingleSignOn
+the old password is not correct	preferences	ro	Parola veche nu este corectă!
 thousands separator is only used for displaying and not for editing numbers.	preferences	ro	Formatul numerelor poate fi setat pentru afișarea numerelor.
 use first %1 letters from username	preferences	ro	Utilizați primele %1 litere din numele de utilizator
 use initials from first and last name	preferences	ro	Utilizați inițialele de la nume și prenume

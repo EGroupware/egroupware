@@ -146,7 +146,6 @@ custom url for ical with holidays for all users	calendar	cs	Uživatelské URL pr
 custom_2	common	cs	Volný/Zaneprázdněn
 daily	calendar	cs	Denně
 daily tables	calendar	cs	Denní tabulky
-data exchange settings	calendar	cs	Nastavení pro výměnu dat
 date for the day of the week	calendar	cs	Datum pro den v týdnu
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	cs	Číslo dne v týdnu, použitelné jako první záznam v každém dni v týdnu nebo v denních tabulkách uvnitř zvoleného rozsahu.
 date range	calendar	cs	Rozsah data

@@ -6,6 +6,8 @@
 %1 files unlocked.	filemanager	tr	%1 dosyanın kilidi açıldı.
 applications	common	tr	Uygulamalar
 classic	filemanager	tr	Standart Araç Çubuğu
+could not install async job	filemanager	tr	Asenkron iş yüklenemedi
+creationdate of file	filemanager	tr	Dosyanın oluşturulma tarihi
 custom fields	filemanager	tr	Özel Alanlar
 default action on double-click	filemanager	tr	Çift tıklamada varsayılan eylem
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	tr	Varsayılan = Hayır. Bağlantı gösterilmez, ancak yine de bu konuma gidebilir veya bu belirli konumu başlangıç klasörü veya klasör bağlantısı olarak yapılandırabilirsiniz.
@@ -22,6 +24,7 @@ error adding the acl!	filemanager	tr	ACL eklenirken hata oluştu!
 error creating symlink to target %1!	filemanager	tr	Hedef %1'e sembolik bağlantı oluşturulurken hata oluştu!
 error deleting the acl entry!	filemanager	tr	ACL girişi silinirken hata oluştu!
 error mounting %1 on %2!	filemanager	tr	%1'i %2'ye bağlarken hata oluştu!
+error running job	filemanager	tr	İş yürütülürken hata oluştu
 error unmounting %1!	filemanager	tr	%1'in montajı kaldırılırken hata oluştu!
 error uploading file!	filemanager	tr	Dosya yüklenirken hata oluştu!
 error while creating directory.	filemanager	tr	Klasör oluşturulurken hata oluştu
@@ -67,7 +70,10 @@ hidden uploads	filemanager	tr	Gizli yüklemeler
 hostname/ip for webdav and smb	filemanager	tr	WebDAV ve SMB için Ana Bilgisayar Adı/IP
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	tr	Burada bir klasör (tam VFS yolu) belirtirseniz, %1 her belge için bir eylem görüntüler. Bu eylem, belirtilen belgenin %1 veri eklenmiş olarak indirilmesini sağlar.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	tr	Burada bir klasör (tam VFS yolu) belirtirseniz, %1 her giriş için ekstra bir belge simgesi görüntüler. Bu simge, belirtilen belgenin eklenen verilerle birlikte indirilmesini sağlar.
+job deleted.	filemanager	tr	İş silindi.
 job folder %1 does not exist or is not writable	filemanager	tr	İş klasörü %1 mevcut değil veya yazılabilir değil.
+job saved.	filemanager	tr	İş kaydedildi.
+jobs	filemanager	tr	İşler
 leave empty to delete the file after attaching	filemanager	tr	Ekledikten sonra dosyayı silmek için boş bırakın
 link	filemanager	tr	Link
 list view	filemanager	tr	Liste görünümü
@@ -106,6 +112,8 @@ renamed %1 to %2	filemanager	tr	%1'in adı %2 olarak değiştirildi
 renamed %1 to %2.	filemanager	tr	%1'in adı %2 olarak değiştirildi
 replacements for inserting entries into documents	filemanager	tr	Belgelere giriş eklemek için değiştirmeler
 save as zip	filemanager	tr	ZIP olarak kaydet
+save job to clear error and restart it	filemanager	tr	Hatayı gidermek için işi kaydedin ve yeniden başlatın
+select custom field	filemanager	tr	Özel alan seçin
 smb, webdavs and vfs require a username!	filemanager	tr	SMB, WebDAV ve VFS bir kullanıcı adı gerektirir!
 smb: mount samba or windows fileserver shares	filemanager	tr	SMB: Samba veya Windows dosya sunucusu paylaşımlarını bağlayın
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	tr	Belge, verilerle değiştirilecek {{%3}} gibi yer tutucu içerebilir (%1yer tutucu adlarının tam listesi%2).

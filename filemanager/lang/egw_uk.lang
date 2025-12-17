@@ -7,6 +7,8 @@
 applications	common	uk	Приложення
 classic	filemanager	uk	Стандартна панель інструментів
 comment	filemanager	uk	Коментувати
+could not install async job	filemanager	uk	Не вдалося встановити асинхронне завдання
+creationdate of file	filemanager	uk	Дата створення файлу
 custom fields	filemanager	uk	Власні поля
 default action on double-click	filemanager	uk	Дія за замовчуванням при подвійному клацанні
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	uk	Значення за замовчуванням = Ні. Посилання не буде показано, але ви все одно зможете перейти до цього місця або налаштувати це місце як початкову папку або посилання на папку.
@@ -23,6 +25,7 @@ error adding the acl!	filemanager	uk	Помилка додавання ACL!
 error creating symlink to target %1!	filemanager	uk	Помилка створення симпосилання на ціль %1!
 error deleting the acl entry!	filemanager	uk	Помилка видалення запису ACL!
 error mounting %1 on %2!	filemanager	uk	Помилка монтування %1 на %2!
+error running job	filemanager	uk	Помилка під час виконання завдання
 error unmounting %1!	filemanager	uk	Помилка демонтажу %1!
 error uploading file!	filemanager	uk	Помилка завантаження файлу!
 error while creating directory.	filemanager	uk	Помилка під час створення теки
@@ -65,7 +68,10 @@ hostname/ip for webdav and smb	filemanager	uk	Ім'я хоста/IP для WebDA
 id	filemanager	uk	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	uk	Якщо ви вкажете тут теку (повний шлях до VFS), %1 покаже дію для кожного документа. Ця дія дозволяє завантажити вказаний документ із вставленими даними %1.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	uk	Якщо ви вкажете тут папку (повний шлях до VFS), %1 покаже додаткову іконку документа для кожного запису. Ця піктограма дозволяє завантажити вказаний документ зі вставленими даними.
+job deleted.	filemanager	uk	Завдання видалено.
 job folder %1 does not exist or is not writable	filemanager	uk	Папка завдань %1 не існує або не доступна для запису.
+job saved.	filemanager	uk	Завдання збережено.
+jobs	filemanager	uk	Завдання
 leave empty to delete the file after attaching	filemanager	uk	Залиште поле порожнім, щоб видалити файл після додавання
 link	filemanager	uk	Посилання
 list view	filemanager	uk	Перегляд списку
@@ -102,6 +108,8 @@ renamed %1 to %2	filemanager	uk	Перейменовано %1 на %2
 renamed %1 to %2.	filemanager	uk	Перейменовано %1 на %2
 replacements for inserting entries into documents	filemanager	uk	Заміни для вставки записів у документи
 save as zip	filemanager	uk	Зберегти як ZIP
+save job to clear error and restart it	filemanager	uk	Збережіть завдання, щоб очистити помилку та перезапустити його
+select custom field	filemanager	uk	Виберіть власне поле
 smb, webdavs and vfs require a username!	filemanager	uk	SMB, WebDAV та VFS потребують імені користувача!
 smb: mount samba or windows fileserver shares	filemanager	uk	SMB: Підключіть спільні ресурси файлового сервера Samba або Windows
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	uk	Документ може містити заповнювач типу {{%3}}, який буде замінено на дані (%1повний список назв заповнювачів%2).

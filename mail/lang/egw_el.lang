@@ -367,6 +367,7 @@ moving folders from one mailaccount to another is not supported	mail	el	Η με�
 name and domain	mail	el	Όνομα και τομέας
 name and email	mail	el	Όνομα και email
 name of account	mail	el	Όνομα λογαριασμού
+name of header, only letters, numbers and dash (-) allowed	mail	el	Όνομα κεφαλίδας, επιτρέπονται μόνο γράμματα, αριθμοί και παύλα (-)
 name of imap servers (space separated host or host:port)	mail	el	Όνομα διακομιστών IMAP (με διαχωρισμό κενών host ή host:port)
 never display html emails	mail	el	Να μην προβάλονται τα HTML emails
 never show	mail	el	Ποτέ μην εμφανίζετε
