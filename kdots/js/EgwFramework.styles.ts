@@ -198,10 +198,11 @@ export default css`
     }
 
     .egw_fw__open_applications::part(tabs) {
-        align-items: baseline;
+        align-items: center;
     }
 
     .egw_fw__open_applications sl-tab {
+        display: flex;
         width: auto;
         flex: 1 1 auto;
         position: relative;
@@ -238,6 +239,7 @@ export default css`
     .egw_fw__open_applications sl-tab::part(base) {
         padding: 0px;
         font-size: var(--tab-icon-size);
+        align-items: center;
     }
 
     .egw_fw__open_applications sl-tab::part(close-button) {
@@ -354,18 +356,12 @@ export default css`
                 var(--tab-icon-size, 32px)));
 
         *[part="image"] {
-            vertical-align: bottom;
             width: calc(
                     calc(2 * var(--tab-icon-spacing, 2px) +
                     var(--tab-icon-size, 32px)));
             height: auto;
         }
-
-        @supports (-moz-appearance:none) {
-            *[part="image"] {
-                vertical-align: sub;
-            }
-        }
+        
     }
 
     /* needs different alignment in app_list and open_apps*/
