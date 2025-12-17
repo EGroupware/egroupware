@@ -1328,7 +1328,7 @@ export class etemplate2
 
 		}, this, et2_IInput);
 
-		egw().debug("info", "Value", result);
+		egw().debug("log", "Value", result);
 		return result;
 	}
 
