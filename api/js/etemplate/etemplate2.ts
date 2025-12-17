@@ -506,7 +506,7 @@ export class etemplate2
 					[this._etemplate_exec_id], null, null, "keepalive").sendRequest();
 			}, this);
 
-			window.addEventListener("unload", this.destroy_session);
+			window.addEventListener("pagehide", this.destroy_session);
 		}
 		// If in a popup, remove the associated helper iframe when the popup closes
 		if(window !== egw_topWindow())
