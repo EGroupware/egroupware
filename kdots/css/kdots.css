@@ -994,7 +994,7 @@ et2-dialog > [slot="label"] .et2_clickable[label]::part(label),
 et2-dialog > [slot="label"] et2-image[label]::part(label),
 [slot="main-header"] .et2-input-widget:not(et2-toolbar)[label]::part(label),
 et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar)[label]::part(label) {
-  padding-inline-start: var(--sl-spacing-2x-small);
+  padding-inline: var(--sl-spacing-x-small);
 }
 [slot="main-header"] .et2_clickable::part(control),
 et2-dialog > [slot="label"] .et2_clickable::part(control),

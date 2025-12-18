@@ -149,6 +149,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				}
 				.dialog__title {
 					font-size: var(--sl-font-size-medium);
+					font-weight: bold;
 					user-select: none;
 					overflow: hidden;
 				}

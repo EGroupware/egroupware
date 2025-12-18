@@ -53,6 +53,8 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 					display: inline-flex;
 					flex: 1 1 auto;
 					font-size: var(--height);
+					/*add more height to the image container to allow centering*/
+					height: calc(var(--height) + 4px);
 					user-select: none;
 				}
 

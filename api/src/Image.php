@@ -199,7 +199,7 @@ class Image
 		'preferences'	=> 'gear',
 		'previous'	=> 'arrow-bar-left',
 		'print'	=> 'printer',
-		'prio_high'	=> 'arrow-up-circle',
+		'prio_high'	=> 'exclamation-diamond',
 		'prio_low'	=> 'arrow-down-circle',
 		'priority'	=> 'dash-circle',
 		'private'	=> 'key',
@@ -346,7 +346,6 @@ class Image
 		'mail/mail_replyall'	=> 'reply-all',
 		'mail/mail_send'	=> 'send',
 		'mail/notification'	=> 'bell',
-		'mail/prio_high'	=> 'exclamation-diamond',
 		'mail/prio_low'	=> 'arrow-down-square',
 		'mail/read_flagged_small'	=> 'flag',
 		//'mail/smime_encrypt'	=> 'building-lock', // old icons are better/easier to understand, need to be adapted to new BI style

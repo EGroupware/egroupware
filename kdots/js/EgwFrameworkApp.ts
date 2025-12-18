@@ -1174,7 +1174,7 @@ export class EgwFrameworkApp extends LitElement
                              statustext=${this.egw.lang("Print")}
                              @click=${this.framework.print}
             ></et2-button-icon>
-            <sl-dropdown class="egw_fw_app__menu">
+            <sl-dropdown class="egw_fw_app__menu" title="${this.egw.lang("Menu")}">
                 <div slot="trigger"><span class="egw_fw_app--no_mobile">${this.egw.lang("Menu")}</span>
                     <et2-button-icon name="chevron-double-down"
                                     aria-label="${this.egw.lang("Application menu")}"
