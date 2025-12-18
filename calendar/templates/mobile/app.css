@@ -756,8 +756,8 @@ Hide subsequent headers in week view with non-consolidated owners
   max-height: 400px;
   min-width: 25ex;
   overflow: auto;
+  /* Do not show icons in header, only tooltip */
 }
-/* Do not show icons in header, only tooltip */
 .calendar_calEventTooltip .calendar_calEventIcons {
   display: inline-block;
 }
@@ -777,6 +777,9 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 .calendar_calEventTooltip [data-videoconference] {
   cursor: pointer;
+}
+.calendar_calEventTooltip a {
+  color: #0000ee;
 }
 .calendar_calAddEvent {
   width: 100%;
@@ -1749,3 +1752,4 @@ egw-app {
     color: #707070;
   }
 }
+/*# sourceMappingURL=app.css.map */
