@@ -47,6 +47,7 @@
 2-factor authentication code required	common	de	2-Faktor-Authentifizierungs Code benötigt
 2-factor-authentication	common	de	2-Faktor-Authentifizierung
 2-factor-authentication required	common	de	2-Faktor-Authentifizierung verpflichtend
+2nd factor	login	de	2-ter Faktor
 3 minutes	common	de	3 Minuten
 30 minutes	common	de	30 Minuten
 30 seconds	common	de	30 Sekunden
@@ -1588,4 +1589,4 @@ your session timed out, please log in again	login	de	Ihre Sitzung ist abgelaufen
 your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert.
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
-zoom	common	de	Zoomen2nd factor	login	de	2. Faktor
+zoom	common	de	Zoomen

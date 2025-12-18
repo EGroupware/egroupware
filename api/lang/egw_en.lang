@@ -47,6 +47,7 @@
 2-factor authentication code required	common	en	2-Factor Authentication code required
 2-factor-authentication	common	en	2-Factor-Authentication
 2-factor-authentication required	common	en	2-Factor-Authentication required
+2nd factor	login	en	2nd factor
 3 minutes	common	en	3 minutes
 30 minutes	common	en	30 minutes
 30 seconds	common	en	30 seconds
@@ -1589,4 +1590,3 @@ your settings have been updated	common	en	Your settings have been updated.
 zambia	common	en	ZAMBIA
 zimbabwe	common	en	ZIMBABWE
 zoom	common	en	Zoom
-2nd factor	login	en	2nd factor
