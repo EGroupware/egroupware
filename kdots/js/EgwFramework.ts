@@ -1373,7 +1373,16 @@ export class EgwFramework extends LitElement
 		classes[`egw_fw__layout-${this.layout}`] = true;
 
 		return html`${until(this.getEgwComplete().then(() => html`
-            <div class=${classMap(classes)} part="base">
+            <div class=${classMap(classes)} part="base"
+                 @contextmenu=${e =>
+                 {
+                     // Prevent browser context menu
+                     if(!e.ctrlKey)
+                     {
+                         e.preventDefault();
+                     }
+                 }}
+            >
                 ${this._accessibleTopTemplate()}
                 ${hasBanner ? html`
                     <div class="egw_fw__banner" part="banner" role="banner">
