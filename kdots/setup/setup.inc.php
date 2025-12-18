@@ -9,17 +9,18 @@ use EGroupware\Kdots\Hooks;
  */
 
 $setup_info['kdots']['name'] = 'kdots';
-$setup_info['kdots']['title'] = 'Kdots WIP ';
-$setup_info['kdots']['version'] = '24.1';
+$setup_info['kdots']['title'] = 'Kdots';
+$setup_info['kdots']['version'] = '26.0';
+$setup_info['kdots']['autoinstall'] = true;    // install automatically on update
 
 $setup_info['kdots']['author'] = array(
-	array('name' => 'EGroupware GmbH', 'url' => 'http://www.egroupware.org/'),
+	array('name' => 'EGroupware GmbH', 'url' => 'https://www.egroupware.org/'),
 );
 $setup_info['kdots']['license'] = 'GPL';
 $setup_info['kdots']['maintainer'] = array(
-	array('name' => 'EGroupware GmbH', 'url' => 'http://www.egroupware.org/')
+	array('name' => 'EGroupware GmbH', 'url' => 'https://www.egroupware.org/')
 );
-$setup_info['kdots']['description'] = "WIP framework of EGroupware.";
+$setup_info['kdots']['description'] = "Kdots framework of EGroupware.";
 $setup_info['kdots']['windowed'] = true;
 
 $setup_info['kdots']['hooks']['settings_preferences'] = Hooks::class . '::common_preferences';
