@@ -56,7 +56,7 @@ class Password extends Etemplate\Widget\Textbox
 		if (!empty($value))
 		{
 			$preserv =& self::get_array(self::$request->preserv, $form_name, true);
-			$preserv = (string)$value;
+			$preserv = count_chars((string)$value, 3) == '*' ? $preserv : (string)$value;
 
 			// only send password (or hash) to client-side, if explicitly requested
 			if(!empty($value) && (!array_key_exists('viewable', $this->attrs) ||
