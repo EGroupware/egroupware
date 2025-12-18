@@ -54,8 +54,8 @@ div.addressbook_edit_general_picture img {
 	top: 70px;
 	left: 0;
 	display: none;
-	border: 2px solid black;
-	background-color: #ffffff;
+	border: 2px solid var(--sl-color-neutral-950, black);
+	background-color: var(--sl-color-neutral-0);
 	padding: 4px;
 	z-index: 1;
 }
@@ -63,8 +63,8 @@ div.addressbook_edit_general_picture img {
 .editname{
 	position: absolute;
 	display: none;
-	border: 2px solid black;
-	background-color: #ffffff;
+	border: 2px solid var(--sl-color-neutral-950, black);
+	background-color: var(--sl-color-neutral-0);
 	padding: 4px;
 	top: 55px;
 	left: 102px;
