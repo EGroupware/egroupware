@@ -67,14 +67,15 @@ class importexport_admin_prefs_sidebox_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=importexport'),
-				'Import definitions' => Egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
+				'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=importexport&ajax=true'),
+				'Import definitions' => Egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition&ajax=true'),
 				'Define imports|exports'  => Egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_definitions_ui.index',
 					'ajax' => 'true'
 				)),
 				'Schedule' => Egw::link('/index.php', array(
-					'menuaction' => 'importexport.importexport_schedule_ui.index'
+					'menuaction' => 'importexport.importexport_schedule_ui.index',
+					'ajax' => 'true'
 				)),
 			);
 			if ($location == 'admin')
