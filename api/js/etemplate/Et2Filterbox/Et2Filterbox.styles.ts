@@ -14,6 +14,7 @@ export default css`
 		display: flex;
 		flex-direction: column;
 		gap: var(--gap-width);
+		flex: 1 1 auto
 	}
 
 	::slotted([slot="prefix"]) {
