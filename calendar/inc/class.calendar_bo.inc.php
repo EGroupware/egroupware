@@ -691,7 +691,7 @@ class calendar_bo
 			}
 			if (empty($params['ignore_acl']) && ($is_private || (!$event['public'] && $filter == 'hideprivate')))
 			{
-				$this->clear_private_infos($events[$id],$params['private_allowed'] ?: $users);
+				$this->clear_private_infos($events[$id],$params['private_allowed'] ?? null ?: $users);
 			}
 		}
 
@@ -1398,9 +1398,9 @@ class calendar_bo
 		if (is_array($event) && ($needed == Acl::READ || $needed == self::ACL_FREEBUSY))
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
-			// in that case he has an implicite READ grant for that event
+			// in that case he has an implicit READ grant for that event
 			//
-			if ($event['participants'] && is_array($event['participants']))
+			if (!empty($event['participants']) && is_array($event['participants']))
 			{
 				foreach(array_keys($event['participants']) as $uid)
 				{
