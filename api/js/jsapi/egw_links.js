@@ -604,6 +604,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			const parent = typeof _parent == "string" ?  document.getElementById(_parent) : _parent;
 			const select = document.createElement('et2-select');
 			select.setAttribute('id', 'quick_add_selectbox');
+			select.setAttribute('aria-hidden', 'true');
 			// Empty label is required to clear value, but we hide it
 			select.emptyLabel = "Select";
 			select.placement = "bottom";

@@ -34,6 +34,9 @@ export class EgwDarkmodeToggle extends LitElement
 	}
 
 	@property({type: String})
+	label = "Toggle dark mode";
+
+	@property({type: String})
 	mode : 'dark' | 'light' | 'auto' = 'auto';
 
 	private _initialValue = 'auto';
@@ -94,6 +97,7 @@ export class EgwDarkmodeToggle extends LitElement
 		// This goes in the framework header, so we need to wait for egw.images to be loaded
 		return html`${until((<EgwFramework>this.closest('egw-framework'))?.getEgwComplete().then(() => html`
             <sl-icon-button name="${this.mode == "light" ? "sun" : "moon"}"
+                            label="${this.label}"
                             @click=${(e) => {this.toggleDarkmode()}}
             ></sl-icon-button>
 		`), '')}`;

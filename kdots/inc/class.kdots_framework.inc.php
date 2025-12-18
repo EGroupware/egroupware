@@ -557,7 +557,7 @@ class kdots_framework extends Api\Framework\Ajax
 	protected static function _get_quick_add()
 	{
 		$src = Api\Image::find('api', 'plus-circle');
-		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" src="' . $src . '" nosubmit></et2-button-icon>';
+		return '<et2-button-icon id="quick_add" title="' . lang('Quick add') . '" label="' . lang('Quick add') . '" src="' . $src . '" nosubmit></et2-button-icon>';
 	}
 
 	/**
@@ -572,7 +572,7 @@ class kdots_framework extends Api\Framework\Ajax
 		{
 			// Change handler in app.ts
 			$tz = $GLOBALS['egw_info']['user']['preferences']['common']['tz'];
-			return "<et2-select-timezone id='tz' value='{$tz}' style='padding: 10px 10px 2px 10px'></et2-select-timezone>";
+			return "<et2-select-timezone id='tz' value='{$tz}' label='" . lang("Select timezone") . "' style='padding: 10px 10px 2px 10px'></et2-select-timezone>";
 		}
 		return '';
 	}

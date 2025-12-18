@@ -204,10 +204,10 @@
                     label="Advanced search"
                     onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.extSearch'),'870','610','_blank','addressbook',null,true); return false;"
                     noSubmit="true"></et2-button>
-                <et2-select ariaLabel="Select view" statustext="Select a view" id="grouped_view" onchange="app.addressbook.change_grouped_view" noLang="1" emptyLabel="All contacts"></et2-select>
-                <et2-select id="filter" onchange="app.addressbook.changeNmFilter" noLang="1" emptyLabel="All addressbooks" ariaLabel="Addressbook"></et2-select>
-                <et2-select-cat id="cat_id" onchange="app.addressbook.changeNmFilter" ariaLabel="Category"></et2-select-cat>
-                <et2-tree-dropdown id="filter2" ariaLabel="distribution lists" noLang="1" placeholder="No distribution list" onchange="app.addressbook.filter2_onchange"></et2-tree-dropdown>
+                <et2-select label="Select view" statustext="Select a view" id="grouped_view" onchange="app.addressbook.change_grouped_view" noLang="1" emptyLabel="All contacts"></et2-select>
+                <et2-select id="filter" onchange="app.addressbook.changeNmFilter" noLang="1" emptyLabel="All addressbooks" label="Select addressbook"></et2-select>
+                <et2-select-cat id="cat_id" onchange="app.addressbook.changeNmFilter" label="Category"></et2-select-cat>
+                <et2-tree-dropdown id="filter2" label="distribution lists" noLang="1" placeholder="No distribution list" onchange="app.addressbook.filter2_onchange"></et2-tree-dropdown>
             </et2-toolbar>
         </et2-hbox>
     </template>
