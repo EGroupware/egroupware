@@ -1175,7 +1175,7 @@ export class EgwFrameworkApp extends LitElement
                              @click=${this.framework.print}
             ></et2-button-icon>
             <sl-dropdown class="egw_fw_app__menu" title="${this.egw.lang("Menu")}">
-                <div slot="trigger"><span class="egw_fw_app--no_mobile">${this.egw.lang("Menu")}</span>
+                <div slot="trigger">
                     <et2-button-icon name="chevron-double-down"
                                     aria-label="${this.egw.lang("Application menu")}"
                     ></sl-icon-button>
