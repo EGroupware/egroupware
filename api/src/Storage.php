@@ -557,6 +557,7 @@ class Storage extends Storage\Base
 		$extra_join_added = $join && strpos($join, $this->extra_join) !== false;
 		if ($criteria && is_string($criteria))
 		{
+			$order_by_was = $order_by;
 			if (preg_match('/^#\d+$/', $criteria) ||
 				!class_exists('EGroupware\\Rag\\Embedding') ||
 				!Rag\Embedding::search2criteria($this->app, $criteria, $order_by, $extra_cols, $filter))
@@ -566,7 +567,8 @@ class Storage extends Storage\Base
 
 				$criteria = $this->search2criteria($criteria, $wildcard, $op);
 			}
-			else
+			// check if RAG-search changed order
+			elseif ($order_by !== $order_by_was)
 			{
 				$this->sanitize_order_by = false;   // no need to sanitize the generated order_by, it will only remove it
 			}

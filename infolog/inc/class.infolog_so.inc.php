@@ -953,6 +953,7 @@ class infolog_so
 		if (!empty($query['search']))			  // we search in _from, _subject, _des and _extra_value for $query
 		{
 			$filter = $extra_cols = [];
+			$order_by = null;
 			if (preg_match('/^#\d+$/', $query['search']) ||
 				!class_exists('EGroupware\\Rag\\Embedding') ||
 				!EGroupware\Rag\Embedding::search2criteria('infolog', $query['search'], $order_by, $extra_cols, $filter))
@@ -973,7 +974,11 @@ class infolog_so
 			{
 				$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 					current($filter).')';
-				$ordermethod = 'ORDER BY '.$order_by;
+				// check if RAG-search changed order
+				if (isset($order_by))
+				{
+					$ordermethod = 'ORDER BY '.$order_by;
+				}
 			}
 		}
 		$join .= " LEFT JOIN $this->users_table ON main.info_id=$this->users_table.info_id";
