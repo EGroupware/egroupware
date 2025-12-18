@@ -1404,7 +1404,7 @@ export class EgwFrameworkApp extends LitElement
 		}
 
 		return html`
-            <div class="egw_fw_app__header" part="app-header">
+            <div class="egw_fw_app__header" part="app-header" title>
                 <div class=${classMap({
                     egw_fw_app__name: true,
                     hasHeaderContent: hasHeaderContent,
@@ -1429,7 +1429,7 @@ export class EgwFrameworkApp extends LitElement
                 ${until(this.framework?.getEgwComplete().then(() => this._rightHeaderTemplate()), html`
                     <sl-spinner></sl-spinner>`)}
             </div>
-            <div class="egw_fw_app__main" part="main">
+            <div class="egw_fw_app__main" part="main" title>
                 ${this.loading ? this._loadingTemplate() : nothing}
                 ${this._filterTemplate()}
                 ${!this.leftCollapsed ? nothing : html`
