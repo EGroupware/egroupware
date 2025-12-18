@@ -2576,12 +2576,8 @@ class infolog_ui
 			{
 				$config = Api\Config::read('infolog');
 				$prefix = lang(empty($config['sub_prefix']) ? 'Re:': $config['sub_prefix']);
+				$content['info_subject'] = $prefix . ' ' . $content['info_subject'];
 			}
-			else
-			{
-				$prefix = lang('Copy of:');
-			}
-			$content['info_subject'] = $prefix.' '.$content['info_subject'];
 		}
 		if (!$create_sub)
 		{

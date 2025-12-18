@@ -1470,7 +1470,6 @@ class timesheet_ui extends timesheet_bo
 		$original_id = $this->data['ts_id'];
 		unset($this->data['ts_id']);
 
-		$this->data['ts_title'] = lang('Copy of:') . ' ' .$this->data['ts_title'];
 		unset($this->data['ts_modified']);
 		unset($this->data['ts_modifier']);
 		$this->data['ts_owner'] = !(int)$this->data['ts_owner'] || !$this->check_acl(Acl::ADD,NULL,$this->data['ts_owner']) ? $this->user : $this->data['ts_owner'];
