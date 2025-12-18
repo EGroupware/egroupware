@@ -123,7 +123,6 @@ class AdminApp extends EgwApp
 								this.contentDocument.location.href = 'about:blank';	// stops redirect from admin/index.php
 								self.load();	// load own top-level index aka user-list
 							}
-							self._hide_navbar.call(self);
 						}
 					);
 				}
@@ -417,29 +416,6 @@ class AdminApp extends EgwApp
 		else if(pushData.app == "api-cf" && etemplate2.getByTemplate(cf_template).length == 1)
 		{
 			(<et2_nextmatch>etemplate2.getByTemplate(cf_template)[0].widgetContainer.getWidgetById("nm")).refresh(pushData.id, pushData.type);
-		}
-	}
-
-	/**
-	 * Hide navbar for idots template
-	 *
-	 * Just a hack for old idots, not neccesary for jdots
-	 */
-	_hide_navbar()
-	{
-		var document = this.iframe.getDOMNode().contentDocument;
-
-		if (!document) return;	// nothing we can do ...
-
-		// set white background, as transparent one lets account-list show through
-		document.getElementsByTagName('body')[0].style.backgroundColor = 'white';
-
-		// hide navbar elements
-		var ids2hide = ['divLogo', 'topmenu', 'divAppIconBar', 'divStatusBar', 'tdSidebox', 'divAppboxHeader'];
-		for(var i=0; i < ids2hide.length; ++i)
-		{
-			var elem = document.getElementById(ids2hide[i]);
-			if (elem) elem.style.display = 'none';
 		}
 	}
 
