@@ -141,7 +141,7 @@ export class et2_countdown extends et2_valueWidget {
 		// otherwise the execution time might be more than a second which would cause timer being delayed
 		if (alarms[Math.floor(distance/1000)] && typeof this.onAlarm == 'function')
 		{
-			console.log('alarm is called')
+			this.egw().debug("log", 'alarm is called')
 			this.onAlarm();
 		}
 

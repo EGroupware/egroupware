@@ -431,7 +431,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	 */
 	private _instanceIsReady(_editor)
 	{
-		console.log("Editor: " + _editor.id + " is now initialized.");
+		this.egw().debug("log", "Editor: " + _editor.id + " is now initialized.");
 		// try to reserve focus state as running command on editor may steal the
 		// current focus.
 		let focusedEl = jQuery(':focus');

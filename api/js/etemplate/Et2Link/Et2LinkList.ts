@@ -681,7 +681,7 @@ export class Et2LinkList extends Et2LinkString
 		let remark = this.shadowRoot.querySelector("#" + this._get_row_id(link) + " et2-link");
 		if(!remark)
 		{
-			console.warn("Could not find link to comment on", link);
+			this.egw().debug("warn", "Could not find link to comment on", link);
 			return;
 		}
 		/* // TODO

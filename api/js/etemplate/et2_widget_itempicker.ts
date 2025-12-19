@@ -112,7 +112,7 @@ export class et2_itempicker extends et2_inputWidget
 		}
 		else
 		{
-			console.log("itempicker widget: no action provided for button");
+			this.egw().debug("log", "itempicker widget: no action provided for button");
 		}
 
 		this.createInputWidget();
