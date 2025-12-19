@@ -183,6 +183,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		this._selectOptions = [];
 
 		this._optionTemplate = this._optionTemplate.bind(this);
+		this.handleItemLazyLoad = this.handleItemLazyLoad.bind(this);
 
 		this.selectedNodes = [];
 	}
@@ -394,11 +395,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			// @ts-ignore egw() exists on this
 			this._actionManager.updateActions(this.actions, this.egw().appName);
-			// @ts-ignore
-			if(this.options.default_execute)
-			{
-				this._actionManager.setDefaultExecute(this.options.default_execute);
-			}
 
 			// Put a reference to the widget into the action stuff, so we can
 			// easily get back to widget context from the action handler
@@ -919,6 +915,65 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		this.widget_object.iface.triggerEvent(typeMap[event.type] ?? event.type, event);
 	}
 
+	protected async handleItemClick(event)
+	{
+		// Don't react to expand or children
+		if(event.target.hasAttribute("slot") || !event.target?.closest("sl-tree-item"))
+		{
+			return;
+		}
+		await this.updateComplete;
+		event.target?.closest("sl-tree-item").dispatchEvent(new CustomEvent("et2-click", {
+			detail: {item: event.target?.closest("sl-tree-item")},
+			bubbles: true,
+			composed: true
+		}));
+	}
+
+	protected handleItemCollapse(event)
+	{
+		const selectOption = this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'value', 'children') ??
+			this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'id', 'item');
+		if(selectOption)
+		{
+			selectOption.open = 0;
+
+			this.requestUpdate("_selectOptions")
+		}
+	}
+
+	protected handleItemExpand(event)
+	{
+		const selectOption = this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'value', 'children') ??
+			this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'id', 'item');
+		if(selectOption)
+		{
+			selectOption.open = 1;
+		}
+	}
+
+	protected handleItemLazyLoad(event)
+	{
+		// No need for this to bubble up, we'll handle it (otherwise the parent leaf will load too)
+		event.stopPropagation();
+		const selectOption = this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'value', 'children') ??
+			this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'id', 'item');
+
+		this.lazyLoading = this.handleLazyLoading(selectOption).then((result) =>
+		{
+			// TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
+			const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.value, this._selectOptions, 'value', 'children');
+			if(!parentNode || !parentNode.item || parentNode.item.length == 0)
+			{
+				parentNode.child = false;
+				parentNode.open = false;
+				this.requestUpdate("lazy", "true");
+			}
+			this.getDomNode(parentNode.value ?? parentNode.id).loading = false
+			this.requestUpdate("_selectOptions")
+		});
+	}
+
 	/**
 	 * Handle a change in selected items
 	 *
@@ -1078,58 +1133,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     ?lazy=${lazy}
                     ?focused=${selectOption.focused || nothing}
                     draggable=${draggable}
-                    @click=${async(event) =>
-                    {
-                        // Don't react to expand or children
-                        if(event.target.hasAttribute("slot") || !event.target?.closest("sl-tree-item"))
-                        {
-                            return;
-                        }
-                        await this.updateComplete;
-                        event.target?.closest("sl-tree-item").dispatchEvent(new CustomEvent("et2-click", {
-                            detail: {item: event.target?.closest("sl-tree-item")},
-                            bubbles: true,
-                            composed: true
-                        }));
-                    }}
-                    @sl-lazy-load=${(event) => {
-                        // No need for this to bubble up, we'll handle it (otherwise the parent leaf will load too)
-                        event.stopPropagation();
-
-						this.lazyLoading = this.handleLazyLoading(selectOption).then((result) => {
-                            // TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
-                            const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.value, this._selectOptions, 'value', 'children');
-                            if(!parentNode || !parentNode.item || parentNode.item.length == 0)
-							{
-								parentNode.child = false;
-                                parentNode.open = false;
-                                this.requestUpdate("lazy", "true");
-							}
-                            this.getDomNode(parentNode.value ?? parentNode.id).loading = false
-                            this.requestUpdate("_selectOptions")
-                        })
-
-					}
-					}
-					@sl-expand=${event => {
-                        if(event.target.id === selectOption.value)
-						{
-							selectOption.open = 1;
-
-							this.requestUpdate("_selectOptions")
-						}
-					}}
-					@sl-collapse=${event => {
-                        if(event.target.id === selectOption.value)
-						{
-							selectOption.open = 0;
-
-							this.requestUpdate("_selectOptions")
-						}
-                    }}
+                    @click=${this.handleItemClick}
+                    @sl-lazy-load=${this.handleItemLazyLoad}
+                    @sl-expand=${this.handleItemExpand}
+                    @sl-collapse=${this.handleItemCollapse}
             >
-
-
                 <et2-image src="${img ?? nothing}" inline></et2-image>
                 <span part="label_text" class="tree-item__label">
 					${selectOption.label ?? selectOption.text}
