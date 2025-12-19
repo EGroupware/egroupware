@@ -403,6 +403,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		{
 			this._template_widget.clear(true);
 		}
+		this.__egw = null;
 		this.remove();
 	}
 
