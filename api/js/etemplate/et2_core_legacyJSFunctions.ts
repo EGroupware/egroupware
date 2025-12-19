@@ -65,19 +65,32 @@ export function et2_compileLegacyJS(_code, _widget, _context)
 	{
 		var parts = _code.split(".");
 		var existing_func = parts.pop();
-		var parent = _widget.egw().window;
-		for (var i = 0; i < parts.length; ++i) {
-			if (typeof parent[parts[i]] !== "undefined") {
-				parent = parent[parts[i]];
-			}
-			// Nope
-			else {
-				break;
-			}
+		const parents = [_widget.egw().window];
+		// Consider local app object first
+		if(parts[0] == "app")
+		{
+			parents.unshift({app: _widget?.getInstanceManager()?.app_obj});
 		}
-		if (typeof parent[existing_func] === "function") {
-			// Bind the object so no matter what happens, context is correct
-			return parent[existing_func].bind(parent);
+		for(let j = 0; j < parents.length; j++)
+		{
+			let parent = parents[j];
+			for(let i = 0; i < parts.length; ++i)
+			{
+				if(typeof parent[parts[i]] !== "undefined")
+				{
+					parent = parent[parts[i]];
+				}
+				// Nope
+				else
+				{
+					break;
+				}
+			}
+			if(typeof parent[existing_func] === "function")
+			{
+				// Bind the object so no matter what happens, context is correct
+				return parent[existing_func].bind(parent);
+			}
 		}
 	}
 
