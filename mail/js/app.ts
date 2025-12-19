@@ -108,11 +108,11 @@ export class MailApp extends EgwApp
 	 */
 	get compose() : MailCompose
 	{
-		if (!this._compose)
+		if(!window.app._compose)
 		{
-			this._compose = new MailCompose(this);
+			window.app._compose = new MailCompose(this);
 		}
-		return this._compose;
+		return window.app._compose;
 	}
 
 	/**
@@ -337,6 +337,7 @@ export class MailApp extends EgwApp
 
 				break;
 			case 'mail.compose':
+				this.compose.setEtemplate(this.et2);
 				const composeToolbar = this.et2.getWidgetById('composeToolbar');
 				if (composeToolbar?.getWidgetById('pgp')?.value ||
 					this.et2.getArrayMgr('content').data.mail_plaintext &&
@@ -369,13 +370,6 @@ export class MailApp extends EgwApp
 				var that = this;
 				var plainText = this.et2.getWidgetById('mail_plaintext');
 				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
-				// Set autosaving interval to 2 minutes for compose message
-				this.W_INTERVALS.push(window.setInterval(function (){
-					if (jQuery('.ms-editor-wrap').length === 0)
-					{
-						that.compose.saveAsDraft(null, 'autosaving');
-					}
-				}, 120000));
 
 				/* Control focus actions on subject to handle expanders properly.*/
 				jQuery("#mail-compose_subject").on({

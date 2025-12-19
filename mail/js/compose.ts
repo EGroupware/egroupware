@@ -17,10 +17,9 @@ import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 export class MailCompose
 {
 	protected app : MailApp;
-	get et2() : Et2Template
-	{
-		return this.app.et2;
-	}
+	private et2 : Et2Template
+	private autosaveInterval : number;
+
 	get egw() : IegwAppLocal
 	{
 		return this.app.egw;
@@ -29,13 +28,38 @@ export class MailCompose
 	constructor(mail : MailApp)
 	{
 		this.app = mail;
+
+		this.handleEtemplateClear = this.handleEtemplateClear.bind(this);
 	}
 
 	destroy()
 	{
 		this.app = null;
+		this.et2.getInstanceManager().DOMContainer.removeEventListener("clear", this.handleEtemplateClear);
+		this.et2 = null;
 	}
 	keepFromExpander=false;
+
+	setEtemplate(et2 : Et2Template)
+	{
+		this.et2 = et2;
+		this.et2.getInstanceManager().DOMContainer.addEventListener("clear", this.handleEtemplateClear, {once: true});
+
+		// Set autosaving interval to 2 minutes for compose message
+		this.autosaveInterval = window.setInterval(() =>
+		{
+			if(jQuery('.ms-editor-wrap').length === 0)
+			{
+				this.saveAsDraft(null, 'autosaving');
+			}
+		}, 120000);
+	}
+
+	private handleEtemplateClear(event)
+	{
+		this.et2 = null;
+		clearInterval(this.autosaveInterval);
+	}
 
 	/**
 	 * Visible attachment box in compose dialog as soon as the file starts to upload
@@ -683,6 +707,7 @@ export class MailCompose
 	 */
 	saveAsDraft(_egw_action, _action)
 	{
+		debugger;
 		var self = this;
 		return new Promise(function(_resolve, _reject){
 			var content = self.et2.getArrayMgr('content').data;
