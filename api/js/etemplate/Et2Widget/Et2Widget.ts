@@ -1903,7 +1903,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 					// Need row context, defer it until later
 					// Repeating rows & nextmatch will parse it again when doing the row
 					widget.deferredProperties[attribute] = attrValue;
-					console.log("Had to defer %s parsing for %o\nCan it be rewritten to avoid $row & $row_cont?", attribute, widget);
+					widget.egw().debug("info", "Had to defer %s parsing for %o\nCan it be rewritten to avoid $row & $row_cont?", attribute, widget);
 					break;
 				}
 				// We parse it into a function here so we can pass in the widget as context.
