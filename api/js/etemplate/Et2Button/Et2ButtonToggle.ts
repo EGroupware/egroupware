@@ -93,15 +93,13 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 				/* Neutral */
 
 				:host([variant=neutral]) .label {
-					background-color: var(--sl-color-neutral-600);
-					border-color: var(--sl-color-neutral-600);
-					--indicator-color: var(--sl-color-neutral-0);
+					border-color: var(--sl-input-border-color);
+					--indicator-color: var(--sl-input-color);
 				}
 
 				:host([variant=neutral]) .label:hover {
-					background-color: var(--sl-color-neutral-500);
-					border-color: var(--sl-color-neutral-500);
-					--indicator-color: var(--sl-color-neutral-0);
+					border-color: var(--sl-input-border-color);
+					--indicator-color: var(--sl-input-color);
 				}
 
 				/* Warning */
@@ -132,6 +130,26 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 					--indicator-color: var(--sl-color-neutral-0);
 				}
 
+				/* Sizes */
+
+				:host([size=small]) {
+					font-size: var(--sl-input-font-size-small);
+
+					.label {
+						width: var(--sl-input-height-small);
+						height: var(--sl-input-height-small);
+					}
+				}
+
+				:host([size=large]) {
+					font-size: var(--sl-input-font-size-large);
+
+					.label {
+						width: var(--sl-input-height-large);
+						height: var(--sl-input-height-large);
+					}
+				}
+
 			`
 		]
 	}
@@ -147,13 +165,7 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 	 * Specify the icon used when the toggle is off.  Defaults to `icon` but dimmed.
 	 * @type {string}
 	 */
-	@property() offIcon = ""
-
-	/**
-	 *
-	 * @type {string}
-	 */
-	@property() variant = "neutral"
+	@property() offIcon = "";
 
 	private mutationObserver : MutationObserver;
 
@@ -187,7 +199,7 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 	willUpdate(changedProperties : PropertyValues<this>)
 	{
 		super.willUpdate(changedProperties);
-		if(changedProperties.has("icon") || this.icon && (!this.onIcon || this.onIcon == "check"))
+		if(changedProperties.has("icon") && !this.onIcon || this.icon && (!this.onIcon || this.onIcon == "check"))
 		{
 			this.onIcon = this.icon;
 			this.offIcon = this.offIcon || this.icon;
