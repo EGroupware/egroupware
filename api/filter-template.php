@@ -126,12 +126,9 @@ function send_template()
 <overlay>
 	<et2-template id="$template_id">
 EOF;
-		if (empty($_GET['no_search']))
-		{
-			$xet .= <<<EOF
-		<et2-searchbox id="search" label="Search" class="et2-label-fixed"></et2-searchbox>
-EOF;
-		}
+		// Add searchbox
+		searchbox($xet, $app);
+
 		// get all NM sort-header and place them in filter-template
 		$sort_options = [];
 		foreach(preg_match_all('#<(et2-)?nextmatch-sortheader ([^>]+?)/?>#s', $str, $matches, PREG_SET_ORDER) ? $matches : [] as $n => $match)
@@ -382,4 +379,21 @@ function stringAttrs(array $attrs)
 	return ' '.implode(' ', array_map(static function ($name, $value) {
 		return $name . '="' . $value . '"';
 	}, array_keys($attrs), $attrs));
+}
+
+function searchbox(&$str, $app)
+{
+	if(class_exists('EGroupware\Rag\Embedding') && ($plugins = \EGroupware\Rag\Embedding::plugins($app)) && array_key_exists($app, $plugins))
+	{
+		// Use RAG search
+		$str .= <<<EOF
+			<et2-template template="rag.search"></et2-template>
+EOF;
+	}
+	else
+	{
+		$str .= <<<EOF
+	<et2-searchbox id="searchbox" class="et2-label-fixed"></et2-searchbox>
+EOF;
+	}
 }
