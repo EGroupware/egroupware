@@ -102,6 +102,14 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 	 */
 	@property() offIcon = "x"
 
+
+	/**
+	 *
+	 * @type {string}
+	 */
+	@property({reflect: true}) variant = "neutral";
+	@property({reflect: true}) size;
+
 	protected get switch() : SlSwitch { return <SlSwitch>this.shadowRoot?.querySelector("sl-switch")};
 
 	private get input() { return this.switch.shadowRoot.querySelector("input");}
@@ -171,6 +179,8 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
             <sl-switch
                     part="switch"
                     exportparts="base:switch-label control"
+                    size=${this.size}
+                    variant=${this.variant}
                     .label=${this.label}
                     .value=${live(this.value)}
                     .checked=${live(this.checked)}
