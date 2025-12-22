@@ -1,3 +1,14 @@
+egroupware-docker (23.1.20251222) hardy; urgency=low
+
+  * PHP: security update to 8.4.16
+  * Calendar: fixed not tracked participant-changes in recurring events or recurrence-exceptions
+  * Calendar: allow slightly wrong Recurrence-ID seen with older Exchange server and ignore name-prefix or case in email-address of participant
+  * Addressbook: fix focus on not editable name field: open name popup for new contacts or on keyboard for existing ones
+  * Addressbook/REST API: fix not working unset of single fields or objects with a null value, we also use now consistent "private" instead of "home"
+  * InfoLog/CalDAV: fix PHP TypeError array_merge() parameter #1 must be of type array, null given happening with Thunderbird and tasks
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 22 Dec 2025 18:49:39 +0100
+
 egroupware-docker (26.0.20251208) hardy; urgency=low
 
   * first pre-release for new major release 26
