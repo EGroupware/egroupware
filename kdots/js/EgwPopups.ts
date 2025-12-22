@@ -80,6 +80,7 @@ export class EgwPopups
 		if(_wnd instanceof Et2Dialog)
 		{
 			this._popups.splice(this._popups.indexOf(_wnd), 1);
+			_wnd.modal?.deactivate();
 			return (<Et2Dialog>_wnd).hide();
 		}
 		else if(typeof _wnd.close === 'function')

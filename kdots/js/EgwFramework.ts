@@ -648,6 +648,8 @@ export class EgwFramework extends LitElement
 
 			// Put the dialog in the correct app so it can inherit application styles & be removed if app closes
 			(_app && this.getApp(_app) ? this.getApp(_app) : this.activeApp).append(dialog);
+			// Reactivate, moving in the DOM deactivated it
+			dialog.modal && dialog.modal.activate();
 			return dialog;
 		}
 		else
