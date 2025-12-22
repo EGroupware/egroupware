@@ -274,7 +274,7 @@ class Nextmatch extends Etemplate\Widget
 		// check if we have a filter-template or need to generate one
 		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
 		$template_name = $value['filter_template'] ?? $this->attrs['filter_template'] ?? null;
-		if(!$template_name && !array_key_exists('filter_template', $this->attrs))
+		if($template_name === null && !array_key_exists('filter_template', $this->attrs))
 		{
 			$parts = explode('.', $rows_template);
 			// remove rows

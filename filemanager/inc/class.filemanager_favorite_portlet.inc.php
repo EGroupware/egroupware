@@ -37,6 +37,7 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 			'template'       => ($this->nm_settings['view'] == 'tile' ? 'filemanager.tile' : 'filemanager.home.rows' ),
 			// Filemanager needs this header, it's an important component for actions, but we reduce it to the minimum
 			'header_left'    => 'filemanager.home.header_left',
+			'filter_template' => false,
 			// Use a reduced column set for home, user can change if needed
 			'default_cols'   => 'mime,name',
 			'no_cat'         => true,
@@ -78,6 +79,10 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 	public static function get_rows(&$query, &$rows, &$readonlys)
 	{
 		$ui = new filemanager_ui();
+		if(!$query['path'])
+		{
+			$query['path'] = $ui->get_home_dir();
+		}
 		$total = $ui->get_rows($query, $rows, $readonlys);
 		// Change template to match selected view
 		if($query['view'])
