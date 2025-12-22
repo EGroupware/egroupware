@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Html\Header;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -142,14 +143,14 @@ EOF;
 		if ($sort_options)
 		{
 			$sort_options = implode("\n", $sort_options)."\n";
+			$xet .= (Api\Header\UserAgent::mobile() ? '<et2-hbox class="sort">' : '<et2-visually-hidden class="sort">');
 			$xet .= <<<EOF
-		<et2-visually-hidden>
 			<et2-select id="sort[id]" label="Sorting" ariaLabel="Ordering" class="et2-label-fixed">
 $sort_options
 			</et2-select>
-			<et2-button-toggle ariaLabel="Sorting" id="sort[asc]" onIcon="carret-down-fill" offIcon="carret-up-fill"></et2-button-toggle>
-		</et2-visually-hidden>
+			<et2-button-toggle ariaLabel="Sorting" id="sort[asc]" onIcon="caret-up-fill" offIcon="caret-down-fill" style="flex-grow: 0;"></et2-button-toggle>
 EOF;
+			$xet .= (Api\Header\UserAgent::mobile() ? '</et2-hbox>' : '</et2-visually-hidden>');
 		}
 
 		// add standard filter
@@ -264,6 +265,7 @@ EOF;
 EOF;
 		}
 		$str = $xet . <<<EOF
+		<styles>et2-hbox.sort::part(base) {  align-items: flex-end }</styles>
 	</et2-template>
 </overlay>
 EOF;
