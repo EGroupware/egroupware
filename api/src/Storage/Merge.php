@@ -126,8 +126,8 @@ abstract class Merge
 	public static $tidy_config = array(
 		'output-xml'        => true,    // Entity encoding
 		'show-body-only'    => true,
-		'output-encoding'   => 'utf-8',
-		'input-encoding'    => 'utf-8',
+		'output-encoding'   => 'utf8',
+		'input-encoding'    => 'utf8',
 		'quote-ampersand'   => false,    // Prevent double encoding
 		'quote-nbsp'        => true,    // XSLT can handle spaces easier
 		'preserve-entities' => true,
