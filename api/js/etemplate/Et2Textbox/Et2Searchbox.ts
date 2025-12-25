@@ -10,6 +10,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import {Et2Textbox} from "./Et2Textbox";
 import {property} from "lit/decorators/property.js";
+import {egw} from "../../jsapi/egw_global";
 
 /**
  * @customElement et2-searchbox
@@ -44,8 +45,8 @@ export class Et2Searchbox extends Et2Textbox
 
 		this.clearable = true;
 		this.type = 'search';
-		this.placeholder = 'search';
-		this.enterkeyhint = 'search';
+		this.placeholder = egw.lang('Search');
+		this.enterkeyhint = egw.lang('Search');
 	}
 
 	disconnectedCallback()
