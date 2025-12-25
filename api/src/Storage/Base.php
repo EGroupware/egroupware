@@ -1635,7 +1635,7 @@ class Base
 		$op = 'AND';
 		if (!empty($query['search']))
 		{
-			$criteria = $query['search'];
+			$criteria = (isset($query['search_type'])?$query['search_type'].':':'').$query['search'];
 		}
 		$rows = $this->search($criteria,$only_keys,$query['order']?$query['order'].' '.$query['sort']:'',$extra_cols,
 			'',false,$op,$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],

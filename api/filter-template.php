@@ -383,7 +383,7 @@ function stringAttrs(array $attrs)
 
 function searchbox(&$str, $app)
 {
-	if(class_exists('EGroupware\Rag\Embedding') && ($plugins = \EGroupware\Rag\Embedding::plugins($app)) && array_key_exists($app, $plugins))
+	if(class_exists('EGroupware\\Rag\\Embedding') && ($plugins = \EGroupware\Rag\Embedding::plugins($app)) && array_key_exists($app, $plugins))
 	{
 		// Use RAG search
 		$str .= <<<EOF
@@ -393,7 +393,7 @@ EOF;
 	else
 	{
 		$str .= <<<EOF
-	<et2-searchbox id="searchbox" class="et2-label-fixed"></et2-searchbox>
+	<et2-searchbox id="search" label="Search" class="et2-label-fixed"></et2-searchbox>
 EOF;
 	}
 }

@@ -2073,8 +2073,16 @@ class addressbook_ui extends addressbook_bo
 				$extracols[] = 'shared_with';
 			}
 
-			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],$id_only,
-				$order, $extracols, $wildcard,false, $op,[(int)$query['start'], (int)$query['num_rows']], $query['col_filter']);
+			if (!empty($query['advanced_search']))
+			{
+				$criteria = $query['advanced_search'];
+			}
+			else
+			{
+				$criteria = (isset($query['search_type'])?$query['search_type'].':':'').$query['search'];
+			}
+			$rows = parent::search($criteria, $id_only, $order, $extracols, $wildcard,false, $op,
+				[(int)$query['start'], (int)$query['num_rows']], $query['col_filter']);
 
 			// do we need to read the custom fields, depends on the column is enabled and customfields
 			$available_distib_lists=$this->get_lists(Acl::READ);
