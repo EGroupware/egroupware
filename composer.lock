@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "978bfd8fec3c8d47fdf8be5543017068",
+    "content-hash": "7d626ca2180b7b46f789e8aa091ade2a",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2241,6 +2241,35 @@
                 "source": "https://github.com/EGroupware/projectmanager/tree/master"
             },
             "time": "2025-04-09T20:20:55+00:00"
+        },
+        {
+            "name": "egroupware/rag",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/rag.git",
+                "reference": "62b16e6a56d8ce703527b13069274f9b71ec6d5d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/rag/zipball/62b16e6a56d8ce703527b13069274f9b71ec6d5d",
+                "reference": "62b16e6a56d8ce703527b13069274f9b71ec6d5d",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "ralf",
+                    "email": "rb@egroupware.org"
+                }
+            ],
+            "description": "A RAG system for EGroupware.",
+            "support": {
+                "source": "https://github.com/EGroupware/rag/tree/master"
+            },
+            "time": "2026-01-04T12:49:57+00:00"
         },
         {
             "name": "egroupware/registration",
