@@ -364,6 +364,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			{
 				$this->sync_collection_token = $contact['modified'];
 			}
+			if (count($contacts) === $this->bo->total)
+			{
+				break;  // otherwise phoneSearch() will never break, as it does NOT support pagination
+			}
 		}
 
 		// add accounts after contacts, if enabled and stored in different repository
