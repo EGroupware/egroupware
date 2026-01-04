@@ -2077,7 +2077,7 @@ class addressbook_ui extends addressbook_bo
 			{
 				$criteria = $query['advanced_search'];
 			}
-			else
+			elseif (!empty($query['search']))
 			{
 				$criteria = (isset($query['search_type'])?$query['search_type'].':':'').$query['search'];
 			}
