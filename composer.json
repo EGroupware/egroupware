@@ -62,7 +62,7 @@
 		}
 	},
 	"require": {
-		"php": ">=7.4,<=8.2",
+		"php": ">=7.4,<=8.5",
 		"ext-gd": "*",
 		"ext-json": "*",
 		"ext-mysqli": "*",
@@ -102,6 +102,7 @@
 		"egroupware/projectmanager": "self.version",
 		"egroupware/registration": "self.version",
 		"egroupware/rocketchat": "self.version",
+		"egroupware/rag": "self.version",
 		"egroupware/secret": "^2.1.0",
 		"egroupware/smallpart": "self.version",
 		"egroupware/smtp": "^1.10.0",

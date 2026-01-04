@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aeb34f34c149d861568ffcf304c97f77",
+    "content-hash": "978bfd8fec3c8d47fdf8be5543017068",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -363,7 +363,7 @@
             "version": "v2.3.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fengyuanchen/cropper.git",
+                "url": "git@github.com:fengyuanchen/cropper.git",
                 "reference": "30c58b29ee21010e17e58ebab165fbd84285c685"
             },
             "dist": {
@@ -381,7 +381,7 @@
             "version": "1.12.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d"
             },
             "dist": {
@@ -4384,7 +4384,7 @@
             "version": "2.0.3",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery.git",
+                "url": "https://github.com/jquery/jquery.git",
                 "reference": "f852e631ba85af7da4ad7594785e122504e7b233"
             },
             "dist": {
@@ -12756,6 +12756,7 @@
         "egroupware/news_admin": 20,
         "egroupware/openid": 20,
         "egroupware/projectmanager": 20,
+        "egroupware/rag": 20,
         "egroupware/registration": 20,
         "egroupware/rocketchat": 20,
         "egroupware/smallpart": 20,
@@ -12766,7 +12767,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4,<=8.2",
+        "php": ">=7.4,<=8.5",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
