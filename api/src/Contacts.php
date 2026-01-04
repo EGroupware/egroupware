@@ -2886,10 +2886,11 @@ class Contacts extends Contacts\Storage
 	 */
 	function &search($criteria, $only_keys = True, $order_by = '', $extra_cols = '', $wildcard = '', $empty = False, $op = 'AND', $start = false, $filter = null, $join = '', $ignore_acl = false)
 	{
-		if (is_string($criteria) && preg_match(self::PHONE_PREG, $criteria))
+		if (is_string($criteria) && preg_match(self::PHONE_PREG,
+			$search=preg_replace('/^(fulltext|rag|hybrid|legacy):/', '', $criteria)))
 		{
 			try {
-				return $this->phoneSearch($criteria, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl);
+				return $this->phoneSearch($search, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl);
 			}
 			catch (\Exception $e) {
 				// try regular search
@@ -2929,7 +2930,7 @@ class Contacts extends Contacts\Storage
 		{
 			throw new Exception\WrongParameter('Not a valid phone-number!');
 		}
-		if ($only_keys === true) $only_keys = false;
+		$only_keys = false; // we need all columns to identify the phone-number
 		$start = false;	// no pagination
 		// returns "+49 123 4567890" or "+1 123-456-7890"
 		list($country, $area, $rest) = preg_split('/[ -]/',
