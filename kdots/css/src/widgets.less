@@ -91,8 +91,25 @@ div.et2_nextmatch {
 		  background-color: var(--highlight-background-color);
 		}
 	  }
-	  table.egwGridView_grid > tbody > tr{
+
+	  table.egwGridView_grid {
+		/* Visually hidden accessible header */
+
+		thead {
+		  position: absolute;
+		  clip-path: inset(50%);
+		  height: 1px;
+		  width: 1px;
+		  margin: -1px;
+		  overflow: hidden;
+		  padding: 0;
+		  border: 0;
+		  white-space: nowrap;
+		}
+
+		tbody > tr {
 		  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+		}
 	  }
 	}
   }

@@ -1905,6 +1905,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.addChild(_row[x].widget);
 		}
 
+		// Copy view header into grid for accessibility
+		this.getDOMNode(this).querySelector(".egwGridView_grid thead")?.replaceChildren(
+			this.getDOMNode(this).querySelector(".egwGridView_outer thead tr")?.cloneNode(true)
+		);
+
 		// Create the nextmatch row provider
 		this.rowProvider = new et2_nextmatch_rowProvider(
 			this.dataview.rowProvider, this._getSubgrid, this);

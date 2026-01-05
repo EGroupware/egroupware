@@ -877,7 +877,21 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table {
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   background-color: var(--highlight-background-color);
 }
-div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_grid > tbody > tr {
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_grid {
+  /* Visually hidden accessible header */
+}
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_grid thead {
+  position: absolute;
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+}
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_grid tbody > tr {
   border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
 }
 /* Special styling for widgets in main-header, dialog header */

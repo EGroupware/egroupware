@@ -565,6 +565,9 @@ export class et2_dataview
 		// Create the grid class and pass "19" as the starting average row height
 		this.grid = new et2_dataview_grid(null, null, this.egw, this.rowProvider, 19);
 
+		// Copy view header into grid for accessibility
+		this.grid.innerTbody.before(this.thead.clone());
+
 		// Insert the grid into the DOM-Tree
 		var tr = jQuery(this.grid.getFirstNode());
 		this.containerTr.replaceWith(tr);
