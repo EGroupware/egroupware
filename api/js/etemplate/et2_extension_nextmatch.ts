@@ -1909,6 +1909,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		this.getDOMNode(this).querySelector(".egwGridView_grid thead")?.replaceChildren(
 			this.getDOMNode(this).querySelector(".egwGridView_outer thead tr")?.cloneNode(true)
 		);
+		this.getDOMNode(this).querySelectorAll(".egwGridView_grid thead tr *").forEach(n => n.removeAttribute("id"));
 
 		// Create the nextmatch row provider
 		this.rowProvider = new et2_nextmatch_rowProvider(
