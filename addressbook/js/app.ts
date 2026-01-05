@@ -1113,7 +1113,7 @@ class AddressbookApp extends EgwApp
 		if (typeof(nm) === "undefined") nm = this.et2.getWidgetById('nm');
 		if(fetchAll(selected, nm, (ids) => {
 			// fetchAll() returns just the ID, no prefix, so map it to match normal selected
-			this.addEmail(action, ids.map((num) => { return {id:'addressbook::'+num}; }), nm, add_business, add_home);
+			this.addEmail(action, ids.map((num) => { return {id:'addressbook::'+num}; }), nm, which);
 		}))
 		{
 			// Need more IDs, will use the above callback when they're ready.
@@ -1121,11 +1121,13 @@ class AddressbookApp extends EgwApp
 		}
 
 		// use checkboxes to determine which emails to add
-		if (typeof which === "undefined")
+		if (!which)
 		{
 			const business = action.getManager().getActionById('email_business').checked;
 			const home = action.getManager().getActionById('email_home').checked;
-			which = business && home ? "both" : (business ? "business" : "home");
+			which = business && home ? "both" :
+				(!business && !home ? "business-or-home" :	// none selected, pick the reasonable default
+					(business ? "business" : "home"));
 		}
 
 		// Go through selected & pull email addresses from data

@@ -814,51 +814,45 @@ class addressbook_ui extends addressbook_bo
 		}
 		//Send to email
 		$actions['email'] = array(
-				'caption' => 'Email',
-				'icon'	=> 'mail/navbar',
-				'enableClass' => 'contact_contact',
-				'hideOnDisabled' => true,
-				'group' => $group,
-				'children' => array(
-						'add_to_to' => array(
-							'caption' => lang('Add to To'),
-							'no_lang' => true,
-							'onExecute' => 'javaScript:app.addressbook.addEmail',
-
-						),
-						'add_to_cc' => array(
-							'caption' => lang('Add to Cc'),
-							'no_lang' => true,
-							'onExecute' => 'javaScript:app.addressbook.addEmail',
-
-						),
-						'add_to_bcc' => array(
-							'caption' => lang('Add to BCc'),
-							'no_lang' => true,
-							'onExecute' => 'javaScript:app.addressbook.addEmail',
-
-						),
-						'email_business' => array(
-							'caption' => lang('Business email'),
-							'no_lang' => true,
-							'checkbox' => true,
-							'group'	=> $group,
-							'onExecute' => 'javaScript:app.addressbook.mailCheckbox',
-							'checked' => $this->prefs['preferredMail']['business'],
-						),
-						'email_home' => array(
-							'caption' => lang('Home email'),
-							'no_lang' => true,
-							'checkbox' => true,
-							'group'	=> $group,
-							'onExecute' => 'javaScript:app.addressbook.mailCheckbox',
-							'checked' => $this->prefs['preferredMail']['private'],
-						),
+			'caption' => 'Email',
+			'icon'	=> 'mail/navbar',
+			'enableClass' => 'contact_contact',
+			'hideOnDisabled' => true,
+			'group' => $group,
+			'children' => array(
+				'add_to_to' => array(
+					'caption' => lang('Add to To'),
+					'no_lang' => true,
+					'onExecute' => 'javaScript:app.addressbook.addEmail',
 				),
-
-			);
-		if (!$this->prefs['preferredMail'])
-			$actions['email']['children']['email_business']['checked'] = true;
+				'add_to_cc' => array(
+					'caption' => lang('Add to Cc'),
+					'no_lang' => true,
+					'onExecute' => 'javaScript:app.addressbook.addEmail',
+				),
+				'add_to_bcc' => array(
+					'caption' => lang('Add to BCc'),
+					'no_lang' => true,
+					'onExecute' => 'javaScript:app.addressbook.addEmail',
+				),
+				'email_business' => array(
+					'caption' => lang('Business email'),
+					'no_lang' => true,
+					'checkbox' => true,
+					'group'	=> $group,
+					'onExecute' => 'javaScript:app.addressbook.mailCheckbox',
+					'checked' => $this->prefs['preferredMail']['business'] || empty($this->prefs['preferredMail']['private']),
+				),
+				'email_home' => array(
+					'caption' => lang('Home email'),
+					'no_lang' => true,
+					'checkbox' => true,
+					'group'	=> $group,
+					'onExecute' => 'javaScript:app.addressbook.mailCheckbox',
+					'checked' => $this->prefs['preferredMail']['private'],
+				),
+			),
+		);
 
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
