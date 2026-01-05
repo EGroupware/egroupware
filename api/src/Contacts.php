@@ -17,6 +17,7 @@
 namespace EGroupware\Api;
 
 use calendar_bo;  // to_do: do NOT require it, just use if there
+use EGroupware\Rag\Embedding;
 use libphonenumber\PhoneNumberUtil;
 
 /**
@@ -2895,6 +2896,12 @@ class Contacts extends Contacts\Storage
 			catch (\Exception $e) {
 				// try regular search
 			}
+		}
+		// if the pattern contains an @ use legacy search, even if RAG is enabled for addressbook
+		elseif (!empty($search) && strpos($search, '@') !== False &&
+			class_exists('EGroupware\\Rag\\Embedding') && Embedding::available('addressbook'))
+		{
+			$criteria = 'legacy:'.$search;
 		}
 		return parent::search($criteria, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl);
 	}
