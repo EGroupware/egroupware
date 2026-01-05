@@ -1292,9 +1292,11 @@ abstract class Merge
 			}
 			if($this->is_xml)
 			{
+				// Replace & with &amp; but don't touch other entities
+				$replacements = preg_replace('/&(?![a-zA-Z]+;|#\d+;|#x[0-9a-fA-F]+;)/', '&amp;', $replacements);
 				$replacements = str_replace(
-					array('&', '&amp;amp;', '<', '>', "\r"),
-					array('&amp;', '&amp;', '&lt;', '&gt;', ''),
+					array('&amp;amp;', '<', '>', "\r"),
+					array('&amp;', '&lt;', '&gt;', ''),
 					$replacements
 				);
 			}
