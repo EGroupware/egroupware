@@ -111,9 +111,11 @@ class setup_process
 		}
 		$pass['admin']    = $setup_info['admin'];
 		$pass['preferences'] = $setup_info['preferences'];
-		if (file_exists(EGW_SERVER_ROOT.'/etemplate'))
+
+		// install all apps which should be automatic installed
+		foreach(setup_cmd::check_autoinstall() as $app)
 		{
-			$pass['etemplate'] = $setup_info['etemplate'];	// helps to minimize passes, as many apps depend on it
+			$pass[$app] = $setup_info[$app];
 		}
 		$this->api_version_target = $setup_info['api']['version'];
 
