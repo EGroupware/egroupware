@@ -204,7 +204,7 @@ export default css`
 		align-items: center;
 		grid-row: sub-header / footer;
 		grid-column: start / end;
-		z-index: var(--sl-z-index-tooltip);
+		z-index: calc(var(--sl-z-index-toast) - 1);
 
 		background-color: var(--sl-panel-background-color);
 
