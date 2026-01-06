@@ -177,20 +177,44 @@ export default css`
         margin-left: -2rem;
     }
 
-    .egw_fw__app_list::part(panel) {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        background-color: var(--sl-color-neutral-0);
-        font-size: var(--icon-size);
-        border-radius: var(--icon-size);
-        position: relative;
-        top: 0.8rem;
-    }
+	.egw_fw__app_list {
+		img {
+			height: var(--icon-size);
+			width: var(--icon-size);
+		}
 
-    .egw_fw__app_list img {
-        height: var(--icon-size);
-        width: var(--icon-size);
-    }
+		&.egw_fw__app_list-style-icons {
+			&::part(panel) {
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				background-color: var(--sl-color-neutral-0);
+				font-size: var(--icon-size);
+				border-radius: var(--icon-size);
+				position: relative;
+				top: 0.8rem;
+				padding: var(--sl-spacing-medium);
+				gap: var(--sl-spacing-medium);
+			}
+		}
+
+		&.egw_fw__app_list-style-text {
+			&::part(panel) {
+				display: block;
+				border-radius: var(--sl-border-radius-large);
+				padding: 0;
+			}
+
+			sl-menu {
+				padding: var(--sl-spacing-medium);
+				border-color: transparent;
+				font-size: var(--sl-font-size-medium);
+			}
+
+			sl-menu-item::part(base) {
+				align-items: center;
+			}
+		}
+	}
 
     .egw_fw__open_applications {
         --track-width: 0px;

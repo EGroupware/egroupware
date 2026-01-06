@@ -5,6 +5,10 @@ class Hooks
 {
 	public static function common_preferences()
 	{
+		$app_list_style = [
+			'icons' => lang("app chooser icons"),
+			'text'  => lang("app chooser icons + text"),
+		];
 		$keep_nm = [
 			"none"    => lang("Unchanged"),
 			"replace" => lang("Clean"),
@@ -40,6 +44,12 @@ class Hooks
 				'xmlrpc'  => False,
 				'admin'   => False,
 			),
+			'app_chooser_style' => [
+				'type'   => 'select',
+				'label'  => 'Application chooser style',
+				'name'   => 'app_chooser_style',
+				'values' => $app_list_style,
+			],
 			'keep_nm_header' => [
 				'type'    => 'select',
 				'label'   => 'Entry list headers',

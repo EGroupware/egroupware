@@ -2,10 +2,13 @@
 activate for a list of available applications	common	en	Activate for a list of available applications
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	en	Activate to show more colorful app icons in the open tabs. If unchecked they default to custom color lightened.
 application list	common	en	Application list
+application chooser style	common	en	Application chooser style
 hide left area	common	en	Hide left area
+app chooser icons	common	en	Icons
+app chooser icons + text	common	en	Icons + text
 open applications	common	en	Open applications
 reload %1	common	en	Reload %1
-show app icons in there app color	kdots	en	Show App Icons in there app color
+show app icons in there app color	kdots	en	Show App Icons in their app color
 show left area	common	en	Show left area
 sidebox	common	en	Side menu
 skip to content	common	en	Skip to content

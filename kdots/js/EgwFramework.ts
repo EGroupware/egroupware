@@ -1289,31 +1289,73 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
+	 *  Renders the application 9-dots menu
+	 */
+	protected _applicationListTemplate()
+	{
+		const appListStyle : "icons" | "text" = <"icons" | "text">(this.egw.preference("app_chooser_style", "common")) || "icons";
+		const applicationList = html`${repeat(this.applicationList, (app) => this._applicationListAppTemplate(app, appListStyle))}`;
+		const classList = {
+			egw_fw__app_list: true
+		};
+		if(appListStyle)
+		{
+			classList["egw_fw__app_list-style-" + appListStyle] = true;
+		}
+
+		return html`
+            <sl-dropdown class=${classMap(classList)} role="navigation" exportparts="panel:app-list-panel"
+                         aria-label="${this.egw.lang("Application list")}"
+                         @sl-show=${this.handleApplicationListShow}
+                         @sl-after-hide=${this.handleApplicationListHide}
+            >
+                <sl-icon-button slot="trigger" name="grid-3x3-gap"
+                                label="${this.egw.lang("Application list")}"
+                                aria-hidden="true"
+                                aria-description="${this.egw.lang("Activate for a list of applications")}"
+                ></sl-icon-button>
+                ${appListStyle == "text" ? html`
+                    <sl-menu>${applicationList}</sl-menu>` : applicationList}
+            </sl-dropdown>`;
+	}
+
+	/**
 	 * Renders one application into the 9-dots application menu
 	 *
 	 * @param app
+	 * @param style
 	 * @returns {TemplateResult<1>}
 	 * @protected
 	 */
-	protected _applicationListAppTemplate(app)
+	protected _applicationListAppTemplate(app, style : "icons" | "text" = "icons")
 	{
 		if(app.status !== "1")
 		{
 			return nothing;
 		}
-
-		return html`
-                <et2-image src="${app.icon}" aria-label="${app.title}" noSubmit inline
-                                 helptext="${app.title}"
-								style="--application-color: var(--${app.name}-color,var(--default-color))"
-								data-id="${app.name}"
-								statustext="${app.title}"
-                                 @click=${() =>
-                                 {
-                                     this.loadApp(app.name, true);
-                                     (<SlDropdown>this.shadowRoot.querySelector(".egw_fw__app_list")).hide();
-                                 }}
+		const image = html`
+            <et2-image
+                    slot=${style == "text" ? "prefix" : nothing}
+                    src="${app.icon}" aria-label="${app.title}" noSubmit inline
+                    style="--application-color: var(--${app.name}-color,var(--default-color))"
+                    data-id="${app.name}"
+                    statustext="${app.title}"
+                    @click=${() =>
+                    {
+                        this.loadApp(app.name, true);
+                        (<SlDropdown>this.shadowRoot.querySelector(".egw_fw__app_list")).hide();
+                    }}
                 ></et2-image>`;
+		if(style == "text")
+		{
+			return html`
+                <sl-menu-item>
+                    ${image}
+                    ${app.title}
+                </sl-menu-item>
+			`;
+		}
+		return image;
 	}
 
 	protected _applicationTabTemplate(app : ApplicationInfo)
@@ -1395,17 +1437,8 @@ export class EgwFramework extends LitElement
                     <div class="egw_fw__logo_apps">
                         <slot name="logo" part="logo"></slot>
                     </div>
-                    <sl-dropdown class="egw_fw__app_list" role="navigation" exportparts="panel:app-list-panel"
-                                 aria-label="${this.egw.lang("Application list")}"
-                                 @sl-show=${this.handleApplicationListShow}
-                                 @sl-after-hide=${this.handleApplicationListHide}
-                    >
-                        <sl-icon-button slot="trigger" name="grid-3x3-gap"
-                                        label="${this.egw.lang("Application list")}"
-                                        aria-hidden="true"
-                                        aria-description="${this.egw.lang("Activate for a list of applications")}"
-                        ></sl-icon-button>
-                        ${repeat(this.applicationList, (app) => this._applicationListAppTemplate(app))}
+
+                    ${this._applicationListTemplate()}
                     </sl-dropdown>
                     <div class="spacer spacer_start"></div>
                     <sl-tab-group part="open-applications" class="egw_fw__open_applications" activation="manual"

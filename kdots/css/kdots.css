@@ -170,7 +170,7 @@ egw-framework#egw_fw_basecontainer::part(header) {
   padding: 0.4rem;
   padding-right: 3px;
 }
-egw-framework#egw_fw_basecontainer::part(app-list-panel) {
+egw-framework#egw_fw_basecontainer.egw_fw__app_list-style-icons::part(app-list-panel) {
   padding: var(--sl-spacing-medium);
   gap: var(--sl-spacing-medium);
 }
