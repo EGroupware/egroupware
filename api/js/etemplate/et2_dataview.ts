@@ -572,6 +572,9 @@ export class et2_dataview
 		var tr = jQuery(this.grid.getFirstNode());
 		this.containerTr.replaceWith(tr);
 		this.containerTr = tr;
+
+		// Hide the outer thead from assistive technologies (like screen readers)
+		this.thead.attr({"aria-hidden": true});
 	}
 
 	/* --- Code for calculating the browser/css depending widths --- */
