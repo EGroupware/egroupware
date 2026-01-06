@@ -1218,7 +1218,7 @@ class Storage
 				'type' => 'groups'
 			)) as $account_id => $group)
 			{
-				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] === '0' || !empty($group['account_email']))
+				if($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] === '0' || !empty($group['account_email']) && $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_groups_as_lists'] !== '2')
 				{
 					$lists[(string)$account_id] = Api\Accounts::format_username($group['account_lid'], '', '', $account_id);
 				}
