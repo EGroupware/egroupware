@@ -29,6 +29,41 @@ document.body.addEventListener('click', function (event)
 		else if ((link.href[0] === '/' || link.href.match(new RegExp('^' + location.protocol + '//' + location.host + '/'))) &&
 			link.href.match(/\/index.php\?/))
 		{
+			// First check link registry and just use that if we match
+			const params = (new URL(link.href)).searchParams;
+			if (params.has("menuaction"))
+			{
+				const menuaction = params.get("menuaction") || "";
+				const app = menuaction.split(".")[0] ?? "";
+				const registry = egw.link_get_registry(app) ?? {};
+				for (const key in registry)
+				{
+					const value = registry[key];
+					let type = "";
+					if (app && (typeof value === "string" && value == menuaction || value.menuaction && value.menuaction == menuaction))
+					{
+						type = key;
+						const entry_id = type + '_id';
+						if (typeof registry[entry_id] && params.has(registry[entry_id]))
+						{
+							// Pass only desired parameters
+							const extra = {};
+							params.entries().forEach(([k, v]) =>
+							{
+								if (["menuaction", "no_popup", registry[entry_id]].includes(k))
+								{
+									return;
+								}
+								extra[k] = v;
+							});
+							top.egw.open(params.get(registry[entry_id]), app, type, extra, '_self');
+							event.preventDefault();
+							return false;
+						}
+					}
+				}
+			}
+			// No link registry match, but still ours - always use a popup
 			top.egw.openPopup(link.href.replace(/([?&])no_popup=[^&]*/, '$1'), 800, 600, '_blank');
 			event.preventDefault();
 			return false;
