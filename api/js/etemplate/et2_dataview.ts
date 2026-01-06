@@ -32,6 +32,24 @@ import {egw} from "../jsapi/egw_global";
  * et2_dataview_view_grid, which can be accessed using the "grid" property of
  * this object.
  *
+ * To better support assistive technologies (like screen readers), we now clone the visible header-row of the outer table
+ * into the inner / data table and then mark the visible header-row with aria-hidden="true" to be ignored by assistive technologies:
+ *
+ * <table class="egwGridView_outer">
+ *    <thead aria-hidden="true"><!-- contains the visible and interactive header-row --></thead>
+ *    <tbody>
+ *      <tr>
+ *        <td colspan="all">
+ *          <div class="egwGridView_scrollarea">
+ *             <table class="egwGridView_grid">
+ *               <thead><!-- contains the header row for assistive technologies (like screen readers) --></thead>
+ *               <tbody><!-- contains the data rows for both --></tbody>
+ *             </table>
+ *        </td>
+ *      </tr>
+ *    </tbody>
+ * </table>
+ *
  * @augments Class
  */
 export class et2_dataview
