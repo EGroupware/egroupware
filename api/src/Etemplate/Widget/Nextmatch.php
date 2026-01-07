@@ -83,6 +83,7 @@ use EGroupware\Api;
  *					in the saved filters (eg: pm_id)
  *  'placeholder'    =>     //  I String Optional text to display in the empty row placeholder.  If not provided, it's "No matches found."
  *  'placeholder_actions' =>     //  I Array Optional list of actions allowed on the placeholder.  If not provided, it's ["add"].
+ *  'extra_attributes' => [],   // I non-standard attributes send via ajax_get_rows by an application e.g. Mails "selectedFolder"
  */
 class Nextmatch extends Etemplate\Widget
 {
@@ -1229,7 +1230,11 @@ class Nextmatch extends Etemplate\Widget
 		unset($value['nm_col_preference']);
 
 		// we should NOT pass on everything, individual widget validation is run and should add/validate their values
-		//$validated[$form_name] = $value;
+		$validated[$form_name] = array_intersect_key($value,
+			// individual attributes explicitly requested by the application
+			array_flip(array_merge($content_value['extra_attributes'] ?? [],
+			// standard NM attributes
+			['sort', 'order', 'search','cat_id', 'filter', 'filter2'])));
 	}
 
 	/**
