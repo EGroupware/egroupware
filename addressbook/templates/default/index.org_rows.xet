@@ -35,7 +35,7 @@
                     <et2-image label="$row_cont[type_label]" src="$row_cont[type]" align="center" noLang="1" defaultSrc="home"></et2-image>
 					<et2-number  id="${row}[org_count]" readonly="true" align="center" precision="0"></et2-number>
 					<et2-vbox>
-						<et2-description  id="${row}[org_name]" noLang="1"></et2-description>
+                        <et2-description id="${row}[line1]" noLang="1"></et2-description>
 						<et2-description  id="${row}[line2]" noLang="1"></et2-description>
 					</et2-vbox>
 					<et2-description  id="${row}[org_unit]" noLang="1"></et2-description>
