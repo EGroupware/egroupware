@@ -1020,8 +1020,17 @@ export class EgwFramework extends LitElement
 		}
 
 		// Make it sortable
-		Sortable.create(event.target, {
-			draggable: "et2-image",
+		let target = event.target;
+		let draggable = "et2-image";
+		const appListStyle : "icons" | "text" = <"icons" | "text">(this.egw.preference("app_chooser_style", "common")) || "icons";
+		switch(appListStyle)
+		{
+			case "text":
+				target = target.querySelector("sl-menu");
+				draggable = "sl-menu-item";
+		}
+		Sortable.create(target, {
+			draggable: draggable,
 			store: {
 				set: (sortable) =>
 				{
@@ -1350,6 +1359,7 @@ export class EgwFramework extends LitElement
 		{
 			return html`
                 <sl-menu-item
+                        data-id="${app.name}"
                         @click=${() =>
                         {
                             this.loadApp(app.name, true);
