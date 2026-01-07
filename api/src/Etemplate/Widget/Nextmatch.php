@@ -1234,7 +1234,8 @@ class Nextmatch extends Etemplate\Widget
 			// individual attributes explicitly requested by the application
 			array_flip(array_merge($content_value['extra_attributes'] ?? [],
 			// standard NM attributes
-			['sort', 'order', 'search','cat_id', 'filter', 'filter2'])));
+			['sort', 'order', 'search','cat_id', 'filter', 'filter2', $content_value['action_var'] ?? 'action',
+				'selected', 'select_all', 'checkboxes', 'searchletter'])));
 	}
 
 	/**
