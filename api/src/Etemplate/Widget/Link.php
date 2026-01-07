@@ -438,7 +438,8 @@ class Link extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 
-		if (!$this->is_readonly($cname, $form_name))
+		// must NOT run, if no $this->id given, as it would validate everything!
+		if (!$this->is_readonly($cname, $form_name) && $this->id)
 		{
 			$value = $value_in =& self::get_array($content, $form_name, false, true);
 
