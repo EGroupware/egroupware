@@ -294,6 +294,10 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 				}
 			}
 		});
+		if(this._nextmatch.options.settings.lettersearch)
+		{
+			this._nextmatch.getDOMNode().classList.add("et2-filterbox--has-lettersearch");
+		}
 		this.requestUpdate();
 	}
 

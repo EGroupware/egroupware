@@ -740,9 +740,12 @@ egw-app::part(details-base) {
 egw-app::part(content) {
   padding: 0;
 }
-egw-app .et2_nextmatch.et2-filterbox--loaded:not(.et2-filterbox--none):not(.et2-filterbox--has-header) .nextmatch_header {
+egw-app .et2_nextmatch.et2-filterbox--loaded:not(.et2-filterbox--none):not(.et2-filterbox--has-header):not(.et2-filterbox--has-lettersearch) .nextmatch_header {
   height: 0px;
   overflow: hidden;
+}
+egw-app .et2_nextmatch.et2-filterbox--loaded.et2-filterbox--has-lettersearch:not(.et2-filterbox--has-header) .nextmatch_header_row {
+  display: none;
 }
 egw-app .et2_nextmatch .nextmatch_header.nm_header_hide {
   display: none !important;
@@ -819,6 +822,20 @@ div.et2_nextmatch > div:not(:first-child) {
 }
 div.et2_nextmatch th {
   font-weight: normal;
+}
+div.et2_nextmatch .nextmatch_lettersearch {
+  background-color: var(--sl-color-neutral-100);
+}
+div.et2_nextmatch .nextmatch_lettersearch td {
+  cursor: pointer;
+  text-align: center;
+  border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
+}
+div.et2_nextmatch .nextmatch_lettersearch td:last-of-type {
+  border-right: none;
+}
+div.et2_nextmatch .nextmatch_lettersearch td.lettersearch_active {
+  font-weight: bold;
 }
 div.et2_nextmatch .egwGridView_outer {
   border-collapse: collapse;

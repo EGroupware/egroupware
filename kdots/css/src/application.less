@@ -120,11 +120,14 @@ egw-app {
   /** Clean nextmatch headers **/
   /* Hide nextmatch header, it's in the framework now */
 
-  .et2_nextmatch.et2-filterbox--loaded:not(.et2-filterbox--none):not(.et2-filterbox--has-header) {
+  .et2_nextmatch.et2-filterbox--loaded:not(.et2-filterbox--none):not(.et2-filterbox--has-header):not(.et2-filterbox--has-lettersearch) {
 	.nextmatch_header {
 	  height: 0px;
 	  overflow: hidden;
 	}
+  }
+  .et2_nextmatch.et2-filterbox--loaded.et2-filterbox--has-lettersearch:not(.et2-filterbox--has-header) {
+	.nextmatch_header_row { display: none;}
   }
   .et2_nextmatch .nextmatch_header.nm_header_hide{
 	display: none !important;
