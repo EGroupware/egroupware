@@ -1340,16 +1340,22 @@ export class EgwFramework extends LitElement
                     style="--application-color: var(--${app.name}-color,var(--default-color))"
                     data-id="${app.name}"
                     statustext="${app.title}"
-                    @click=${() =>
+                    @click=${(style==="icons")?() =>
                     {
                         this.loadApp(app.name, true);
                         (<SlDropdown>this.shadowRoot.querySelector(".egw_fw__app_list")).hide();
-                    }}
+                    }:nothing}
                 ></et2-image>`;
 		if(style == "text")
 		{
 			return html`
-                <sl-menu-item>
+                <sl-menu-item
+                        @click=${() =>
+                        {
+                            this.loadApp(app.name, true);
+                            (<SlDropdown>this.shadowRoot.querySelector(".egw_fw__app_list")).hide();
+                        }}
+                >
                     ${image}
                     ${app.title}
                 </sl-menu-item>

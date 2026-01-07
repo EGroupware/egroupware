@@ -195,6 +195,9 @@ export default css`
 				padding: var(--sl-spacing-medium);
 				gap: var(--sl-spacing-medium);
 			}
+            & > et2-image {
+                cursor: pointer;
+            }
 		}
 
 		&.egw_fw__app_list-style-text {

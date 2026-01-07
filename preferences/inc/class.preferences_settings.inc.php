@@ -212,7 +212,7 @@ class preferences_settings
 		if ($appname == 'common')
 		{
 			// none app pref names here since we can't read them via hooks
-			$keys = ['template_color', 'template_custom_color', 'sidebox_custom_color', 'keep_colorful_app_icons'];
+			$keys = ['template_color', 'template_custom_color', 'sidebox_custom_color', 'keep_colorful_app_icons','app_chooser_style'];
 			$settings = Api\Hooks::single(array(
 				'account_id'=>$GLOBALS['egw']->preferences->get_account_id(),
 				'location'=>'settings',
