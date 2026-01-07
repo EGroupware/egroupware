@@ -339,7 +339,7 @@ class Nextmatch extends Etemplate\Widget
 			$template = null;	// get_rows method requires null, not false
 		}
 
-		if (true) $value = $value_in = array_merge($value, $filters);
+		if ($filters) $value = $value_in = array_merge($value, $filters);
 
 		//error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified) parent_id=$value[parent_id], is_parent=$value[is_parent]");
 
@@ -504,7 +504,7 @@ class Nextmatch extends Etemplate\Widget
 		$request_value =& self::get_array(self::$request->content, $form_name,true);
 		$changes = $no_rows = false;
 
-		foreach(array_keys($value_in) + array_keys($value) as $key)
+		foreach(array_keys($value_in ?? []) + array_keys($value ?? []) as $key)
 		{
 			// These keys are ignored
 			if(in_array($key, array('col_filter','start','num_rows','total','order','sort')))
@@ -1228,7 +1228,8 @@ class Nextmatch extends Etemplate\Widget
 		}
 		unset($value['nm_col_preference']);
 
-		$validated[$form_name] = $value;
+		// we should NOT pass on everything, individual widget validation is run and should add/validate their values
+		//$validated[$form_name] = $value;
 	}
 
 	/**
