@@ -56,7 +56,7 @@ document.body.addEventListener('click', function (event)
 								}
 								extra[k] = v;
 							});
-							top.egw.open(params.get(registry[entry_id]), app, type, extra, '_self');
+							top.egw.open(params.get(registry[entry_id]), app, type, extra, registry[type + '_popup'] ? '_blank' : '_self');
 							event.preventDefault();
 							return false;
 						}
