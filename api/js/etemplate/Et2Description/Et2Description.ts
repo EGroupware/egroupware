@@ -33,6 +33,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 				display:flex;
 				flex-direction: row;
 				justify-content: flex-start;
+				align-items: center;
 				flex: 0 1 auto !important;
 			}
 

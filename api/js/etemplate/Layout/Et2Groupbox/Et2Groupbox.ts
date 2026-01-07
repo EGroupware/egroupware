@@ -72,7 +72,7 @@ export class Et2Groupbox extends Et2Details
                     pointer-events: none;
                     width: fit-content;
                     line-height: 0;
-                    top: -.5rem;
+                    top: -1rem;
                     left: .5rem;
                     background: var(--sl-color-neutral-0);
                 }
