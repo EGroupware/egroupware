@@ -478,7 +478,8 @@ class mail_ui
 							'start'          =>	0,		// IO position in list
 							'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
 							'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
-							'no_columnselection' => false
+							'no_columnselection' => false,
+							'extra_attributes' => ['selectedFolder'],   // I non-standard attributes send via ajax_get_rows
 						);
 					}
 //					if (Api\Header\UserAgent::mobile())
