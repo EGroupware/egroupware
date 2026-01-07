@@ -29,7 +29,6 @@ export class Et2UrlEmail extends Et2InvokerMixin(Et2Textbox)
 				::slotted([slot="suffix"]) {
 					font-size: 90% !important;
 					height: auto;
-					width: auto;
 				}
 			`,
 		];

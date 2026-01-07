@@ -66,14 +66,10 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 					align-items: center
 				}
 				::slotted([slot="suffix"]) {
-					width: 14px;
 					border: none !important;
 					background-color: transparent !important;
-					width: 1em;
-					height: 1em;
-					background-position: center right;
-					background-size: contain;
-					background-repeat: no-repeat;
+					width: 2rem;
+					margin-inline-end: var(--sl-input-spacing-medium);
 				}
 				::slotted(:disabled) {cursor: default !important;}
 				:host(:hover) ::slotted([slot="suffix"]) {
@@ -143,12 +139,10 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 				const img = this._invokerLabel ? this.egw().image(this._invokerLabel) : null;
 				if (img)
 				{
-					this._invokerNode.style.backgroundImage = 'url('+img+')';
-					this._invokerNode.innerHTML = '';
+					this._invokerNode.innerHTML = '<et2-image src='+img+'></et2-image>';
 				}
 				else
 				{
-					this._invokerNode.style.backgroundImage = 'none';
 					this._invokerNode.innerHTML = this._invokerLabel || '';
 				}
 				this._invokerNode.title = this._invokerTitle || '';
