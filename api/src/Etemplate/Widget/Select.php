@@ -661,7 +661,7 @@ class Select extends Etemplate\Widget
 			$values = array();
 			foreach($options as $index => $option)
 			{
-				if(is_array($option) && isset($option['value']))
+				if(is_array($option) && isset($option['value']) && is_scalar($option['value']))
 				{
 					$values[$option['value']] = $option['label'];
 				}
