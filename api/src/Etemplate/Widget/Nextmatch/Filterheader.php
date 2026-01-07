@@ -22,4 +22,4 @@ class Filterheader extends Widget\Taglist
 {
 }
 
-Widget::registerWidget(__NAMESPACE__.'\\Filterheader', array('nextmatch-filterheader'));
+Widget::registerWidget(__NAMESPACE__.'\\Filterheader', array('nextmatch-filterheader', 'et2-nextmatch-header-filter'));
