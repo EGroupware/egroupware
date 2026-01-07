@@ -270,6 +270,7 @@ class addressbook_ui extends addressbook_bo
 				'is_parent'      => 'group_count',
 				'parent_id'      => 'parent_id',
 				'favorites'      => true,
+				'extra_attributes' => ['grouped_view'],
 			);
 
 			// use the state of the last session stored in the user prefs
