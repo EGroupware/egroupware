@@ -33,4 +33,4 @@ class Accountfilter extends Widget\Taglist
 		$this->attrs['type'] = 'select-account';
 	}
 }
-Widget::registerWidget(__NAMESPACE__.'\\Accountfilter', array('nextmatch-accountfilter'));
+Widget::registerWidget(__NAMESPACE__.'\\Accountfilter', array('nextmatch-accountfilter', 'et2-nextmatch-header-account'));

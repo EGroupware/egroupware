@@ -403,7 +403,8 @@ class filemanager_ui
 					'row_modified' => 'mtime',
 					'parent_id'    => 'dir',
 					'is_parent'    => 'is_dir',
-					'favorites'    => true
+					'favorites'    => true,
+					'extra_attributes' => ['col_filter[dir]'],
 				);
 				$content['nm']['path'] = static::get_home_dir();
 			}

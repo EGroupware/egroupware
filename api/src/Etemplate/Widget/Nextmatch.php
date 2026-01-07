@@ -1230,12 +1230,37 @@ class Nextmatch extends Etemplate\Widget
 		unset($value['nm_col_preference']);
 
 		// we should NOT pass on everything, individual widget validation is run and should add/validate their values
-		$validated[$form_name] = array_intersect_key($value,
+		foreach(
 			// individual attributes explicitly requested by the application
-			array_flip(array_merge($content_value['extra_attributes'] ?? [],
+			array_merge($content_value['extra_attributes'] ?? [],
 			// standard NM attributes
 			['sort', 'order', 'search','cat_id', 'filter', 'filter2', $content_value['action_var'] ?? 'action',
-				'selected', 'select_all', 'checkboxes', 'searchletter'])));
+				'selected', 'select_all', 'checkboxes', 'searchletter', 'startdate', 'enddate', 'col_filter']) as $attr)
+		{
+			// do NOT copy the whole col_filter, as it might have integer keys passed into SQL queries verbatim
+			// --> filter out all integer keys
+			if ($attr === 'col_filter')
+			{
+				if (!isset($validated[$form_name][$attr])) $validated[$form_name][$attr] = [];
+				// and use += to not overwrite regular validated filters
+				$validated[$form_name][$attr] += array_filter($value[$attr], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
+			}
+			// regular attribute
+			elseif (substr($attr, -1) !== ']')
+			{
+				if (isset($value[$attr]))
+				{
+					$validated[$form_name][$attr] = $value[$attr];
+				}
+			}
+			// e.g. "col_filter[dir]"
+			elseif (($val = self::get_array($value, $attr)) !== null)
+			{
+				if (!isset($validated[$form_name])) $validated[$form_name] = [];
+				$validate =& self::get_array($validated[$form_name], $attr, true);
+				$validate = $val;
+			}
+		}
 	}
 
 	/**
