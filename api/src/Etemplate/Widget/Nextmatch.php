@@ -299,6 +299,16 @@ class Nextmatch extends Etemplate\Widget
 			$value = ($value) ? array($value) : array();
 		}
 
+		// filter out numerical indexes, which are treated as SQL fragments and are not necessary to process filters/select-boxes
+		if (!empty($filters['col_filter']))
+		{
+			$filters['col_filter'] = array_filter($filters['col_filter'], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
+		}
+		// remove non-string search patterns not used in UI
+		if (empty($filters['search']) || !is_string($filters['search']))
+		{
+			unset($filters['search']);
+		}
 		// Validate filters
 		if (($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
