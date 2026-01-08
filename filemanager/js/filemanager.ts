@@ -552,15 +552,15 @@ export class filemanagerAPP extends EgwApp
 			{
 				app.filemanager._upload_callback(_data);
 
-				// Remove successful after a delay
+				// Remove successful
+				const widgetValue = widget.getValue();
+				const value = {};
+				widget.value = widgetValue;
 				for(var file in _data.uploaded)
 				{
-					if(!_data.uploaded[file].confirm || _data.uploaded[file].confirmed)
-					{
-						// Remove that file from file widget...
-						widget.remove_file(_data.uploaded[file].name);
-					}
+					delete widgetValue[file];
 				}
+				widget.value = widgetValue;
 				opener.egw_refresh('','filemanager',null,null,'filemanager');
 			}, app.filemanager, true, this
 		).sendRequest(true);
