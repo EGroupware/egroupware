@@ -1,10 +1,10 @@
-import {css, html, LitElement, nothing, TemplateResult} from "lit";
+import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
 import styles from "./EgwFrameworkApp.styles";
-import {SlDrawer, SlSplitPanel} from "@shoelace-style/shoelace";
+import {SlDrawer, SlSplitPanel, SlTooltip} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import type {EgwFramework, FeatureList} from "./EgwFramework";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
@@ -316,6 +316,32 @@ export class EgwFrameworkApp extends LitElement
 			this.framework.openPopup(this.openOnce, false, false, "", this.name, true, false, window);
 		}
 		this.openOnce = "";
+	}
+
+	protected updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		// rowCount changed, show as tooltip for a few seconds
+		if(changedProperties.has("rowCount"))
+		{
+			this.updateComplete.then(() =>
+			{
+				const tooltip = <SlTooltip>this.shadowRoot.querySelector('.egw_fw_app__filter_info_tooltip');
+				if(tooltip)
+				{
+					tooltip.open = true;
+					setTimeout(() =>
+					{
+						const tooltip = <SlTooltip>this.shadowRoot.querySelector('.egw_fw_app__filter_info_tooltip');
+						if(tooltip)
+						{
+							tooltip.open = false;
+						}
+					}, 3000);
+				}
+			});
+		}
 	}
 
 	protected async getUpdateComplete() : Promise<boolean>
@@ -1225,23 +1251,40 @@ export class EgwFrameworkApp extends LitElement
 
 	protected _filterButtonTemplate()
 	{
-		if(!this.nextmatch && !this.hasSlotController.test("filter"))
+		if(!this.nextmatch)
 		{
 			return nothing;
 		}
 		const info = this.getFilterInfo(this.filters?.value ?? {}, this);
+		let button : symbol | TemplateResult = nothing;
+		if(this.hasSlotController.test("filter"))
+		{
+			button = html`
+                <et2-button-icon nosubmit
+                                 name=${info.icon}
+                                 label=${this.egw.lang("Filters")}
+                                 statustext=${info.tooltip}
+                                 @click=${() =>
+                                 {
+                                     const filter = this.shadowRoot.querySelector("[part=filter]") ??
+                                             this.querySelector("et2-filterbox").parentElement;
+                                     filter.open = !filter.open;
+                                 }}
+                ></et2-button-icon>`;
+		}
+
+		// Need hoist to get correct placement
 		return html`
-            <et2-button-icon nosubmit
-                             name=${info.icon}
-                             label=${this.egw.lang("Filters")}
-                             statustext=${info.tooltip}
-                             @click=${() =>
-                             {
-                                 const filter = this.shadowRoot.querySelector("[part=filter]") ??
-                                         this.querySelector("et2-filterbox").parentElement;
-                                 filter.open = !filter.open;
-                             }}
-            ></et2-button-icon>`;
+            <sl-tooltip content=${info.tooltip}
+                        trigger="manual"
+                        class="egw_fw_app__filter_info_tooltip"
+                        placement="top"
+                        distance="0"
+                        hoist
+            >
+                ${button}
+            </sl-tooltip>
+		`
 	}
 
 	protected _filterTemplate()

@@ -78,6 +78,13 @@ export default css`
             }
         }
 
+		/* Row count tooltip */
+
+		.egw_fw_app__filter_info_tooltip {
+			--sl-tooltip-background-color: var(--application-color, var(--sl-tooltip-background-color));
+			--sl-tooltip-padding: var(--sl-spacing-x-small);
+		}
+
 		::slotted(*) {
 			overflow: hidden;
 		}
