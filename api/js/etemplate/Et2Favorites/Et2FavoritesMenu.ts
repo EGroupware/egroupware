@@ -419,7 +419,7 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
                         <sl-menu-item value=${Favorite.ADD_VALUE}
                                       @sl-select=${this.handleAdd}
                         >
-                            <sl-icon name="plus" slot="prefix"></sl-icon>
+                            <sl-icon name="plus-circle" slot="prefix"></sl-icon>
                             ${this.egw().lang("Add current")}
                         </sl-menu-item>`
                     }
