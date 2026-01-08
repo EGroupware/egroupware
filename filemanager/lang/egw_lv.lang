@@ -29,13 +29,14 @@ custom fields	filemanager	lv	Mainīti lauki
 default action on double-click	filemanager	lv	Noklusējuma darbība pēc dubultklikšķa
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	lv	Noklusējuma iestatījums = Nē. Saite netiks parādīta, bet jūs joprojām varēsiet pārvietoties uz šo atrašanās vietu vai konfigurēt šo konkrēto atrašanās vietu kā sākuma mapi vai mapes saiti.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	lv	Nosaka, kā apstrādāt dubultklikšķa darbību uz dokumenta faila. Attēli vienmēr tiek atvērti ekspozīcijas skatā un e-pasta ziņojumos ar e-pasta lietojumprogrammu. Visus pārējos MIME tipus apstrādā pats pārlūks.
+defines how to open a merge print document	filemanager	lv	Kas notiek ar dokumentiem pēc to aizpildīšanas?<br><br><b>Ja ir pieejams Collabora Online</b>, šos dokumentus var atvērt (un turpināt apstrādāt) tieši pārlūkprogrammā ar Collabora Online. <br><br> <b>Ja Collabora Online nav pieejams</b>, aizpildītais dokuments tiek piedāvāts lejupielādei.<br><br>Vairāk informācijas par Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office EGroupware</a>
 deleted %1	filemanager	lv	Izdzēsa %1
 directory	filemanager	lv	Direktorija
 directory %1 already exists	filemanager	lv	Direktorija %1 jau pastāv
 directory %1 does not exist	filemanager	lv	Direktorija %1 nepastāv
 disable	filemanager	lv	Deaktivizēt
 download	filemanager	lv	Lejupielādēt
-download documents	filemanager	lv	Dokumentu lejupielāde
+download documents	filemanager	lv	Lejupielādēt dokumentus
 edit comments	filemanager	lv	Rediģēt komentārus
 edit share	filemanager	lv	Rediģēt koplietojumu
 enable	filemanager	lv	Aktivizēt

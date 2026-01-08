@@ -4,6 +4,7 @@
 3 years ago	timesheet	pt-br	3 anos atrás
 all projects	timesheet	pt-br	Todos projetos
 applies the changes	timesheet	pt-br	aplicar as alterações
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	pt-br	Aplique a ação em toda a consulta, NÃO apenas nas folhas de ponto exibidas!
 ask to start and stop working time with session	timesheet	pt-br	Pedir para iniciar e parar o tempo de trabalho com a sessão
 both: allow to use projectmanager and free project-names	admin	pt-br	Ambos: permitir usar Gerenciador de Projetos e nomes de projetos livres
 by	timesheet	pt-br	por
@@ -48,7 +49,7 @@ forgot to switch off working time?	common	pt-br	Esqueceu-se de desativar o horá
 full: use only projectmanager	admin	pt-br	Completo: usar apenas Gerenciador de Projetos
 general fields:	timesheet	pt-br	Campos gerais:
 give additional users access	timesheet	pt-br	Dê acesso a usuários adicionais
-give infolog delegation read-access to timesheets booked on them	timesheet	pt-br	Dê à delegação do InfoLog acesso de leitura às folhas de ponto registradas nelas
+give infolog delegation read-access to timesheets booked on them	timesheet	pt-br	Dê à delegação do InfoLog acesso de leitura às folhas de ponto registradas nelas.
 global categories	timesheet	pt-br	Categorias Globais
 history	timesheet	pt-br	Histórico
 history logging	admin	pt-br	Registro de histórico

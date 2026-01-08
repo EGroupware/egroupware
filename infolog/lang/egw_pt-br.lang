@@ -228,6 +228,7 @@ history logging and deleting of items	infolog	pt-br	Registro de histórico e rem
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	pt-br	Quantas linhas de descrição devem estar diretamente visíveis. Outras linhas estão disponíveis por meio de uma barra de rolagem.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	pt-br	Qual deve ser a largura da área de descrição. Esse valor é numérico, por exemplo, 60.
 html link to the current record	infolog	pt-br	Link HTML para o registro atual
+icon for	infolog	pt-br	Ícone para
 id	infolog	pt-br	ID
 id#	infolog	pt-br	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	pt-br	Se um tipo tem um grupo-proprietário, todas as entradas deste tipo terão como dono o grupo informado e não o usuário que as criou!
@@ -268,10 +269,12 @@ invalid status for entry type %1.	infolog	pt-br	Status inválido para o tipo de 
 label<br>helptext	infolog	pt-br	Etiqueta<br>Texto para ajuda
 last changed	infolog	pt-br	Última alteração
 last modified	infolog	pt-br	Última modificação
+leave blank to get the used time calculated by timesheet entries	infolog	pt-br	Deixe em branco para obter o tempo utilizado calculado pelas entradas da Folha de Horas
 leave it empty	infolog	pt-br	Deixe em branco
 leave it empty for a full week	infolog	pt-br	Deixar vazio para uma semana inteira
 leave without saveing the entry	infolog	pt-br	Sair sem salvar o registro
 leaves without saveing	infolog	pt-br	Sair sem salvar
+limit list to last n month, if ordering by last-modified and not searching.	admin	pt-br	Limite a lista aos últimos N meses, se ordenar por última modificação e não estiver a pesquisar.
 limit number of description lines (default 5, 0 for no limit)	infolog	pt-br	Limite do número de linhas de descrição. Padrão = 5, 0 = sem limite.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	pt-br	Limitar a largura da coluna de descrição. Só entra em vigor se o limite de linhas estiver definido. 0 = sem limite.
 link	infolog	pt-br	Link
@@ -487,6 +490,7 @@ to what should the startdate of new entries be set.	infolog	pt-br	Para que data 
 today	infolog	pt-br	Para Hoje
 todays date	infolog	pt-br	Data de hoje
 todo	infolog	pt-br	Pendências
+toggle details	common	pt-br	Alternar detalhes
 typ	infolog	pt-br	Tipo
 typ '%1' already exists !!!	infolog	pt-br	O tipo '%1' já existe!
 type	infolog	pt-br	Tipo

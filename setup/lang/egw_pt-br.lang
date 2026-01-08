@@ -83,9 +83,12 @@ backup '%1' deleted	setup	pt-br	Backup '%1' removido
 backup '%1' renamed to '%2'	setup	pt-br	Backup '%1' renomeado para '%2'
 backup '%1' restored	setup	pt-br	Backup '%1' restaurado
 backup and restore	setup	pt-br	Backup e Restauração
+backup directory %1 mounted as %2	setup	pt-br	Diretório de backup %1 montado como %2
 backup failed	setup	pt-br	Backup falhou
 backup files (needs ziparchive)	setup	pt-br	Backup de dados dos arquivos do EGroupware (diretório de arquivos) <br>(requer PHP ZipArchive)
 backup finished	setup	pt-br	Backup terminou
+backup housekeeping	setup	pt-br	Backups com um nome padrão podem ser limpos automaticamente. Renomeie os arquivos de backup para excluí-los da limpeza.
+backup min count	setup	pt-br	Número mínimo de backups
 backup now	setup	pt-br	Fazer backup agora
 backup sets	setup	pt-br	Configurações de backup
 backup skipped!	setup	pt-br	Backup ignorado!
@@ -252,7 +255,7 @@ error searching "dn=%1" for "%2"!	setup	pt-br	Erro ao pesquisar "DN=%1" para "%2
 error uploading your backup!	setup	pt-br	Erro ao fazer upload de seu backup!
 every	setup	pt-br	Todos os
 export has been completed!	setup	pt-br	Exportação foi completada!
-failed to mount backup directory!	setup	pt-br	Falha ao montar o diretório de backup!
+failed to mount backup directory!	setup	pt-br	Falha ao montar o diretório Backup!
 failed updating user "%1" dn="%2"!	setup	pt-br	Falha ao atualizar o usuário "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	pt-br	Falha gravando o arquivo de configuração header.inc.php. Cheque as permissões!
 fallback authentication	setup	pt-br	Autenticação de fallback
@@ -369,6 +372,7 @@ modifications have been completed!	setup	pt-br	As modificações foram completad
 modified	setup	pt-br	Modificado
 modify	setup	pt-br	Modificar
 month	setup	pt-br	Mês
+mount backup directory to %1	setup	pt-br	Montar o diretório backup em %1
 name of database	setup	pt-br	Nome da base de dados
 name of db user egroupware uses to connect	setup	pt-br	Nome do usuário da base de dados que o EGroupware deve usar para conexão
 never	setup	pt-br	Nunca
@@ -610,6 +614,7 @@ virtual mail manager (login-name includes domain)	setup	pt-br	Gerenciador de e-m
 warning!	setup	pt-br	Aviso!
 we can proceed	setup	pt-br	Podemos prosseguir
 we could not determine the version of %1, please make sure it is at least %2	setup	pt-br	Não foi possível determinar a versão de %1. Por favor, certifique-se que seja, ao menos, %2.
+we strongly recommend to run a db backup before running the import!	setup	pt-br	Recomendamos enfaticamente executar um backup do banco de dados ANTES de executar a importação!
 we will automatically update your tables/records to %1	setup	pt-br	As tabelas/registros serão automaticamente atualizadas para %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pt-br	Nós iremos executar neste momento uma série de testes que poderão levar alguns minutos. Clique noa link abaixo para prosseguir.
 welcome to the egroupware installation	setup	pt-br	Bem-vindo(a) à instalação do EGroupware

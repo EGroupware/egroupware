@@ -66,6 +66,7 @@ back to main list	infolog	id	Kembali ke daftar utama
 billed	infolog	id	Ditagihkan
 both	infolog	id	Kedua
 call	infolog	id	Panggilan
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	id	Dapat digunakan untuk menampilkan jenis InfoLog tambahan di kalender atau membatasinya untuk menampilkan, misalnya, hanya tugas.
 can not return an exact number of rows and therefore hides the count.	admin	id	Tidak dapat mengembalikan jumlah baris yang tepat dan oleh karena itu menyembunyikan hitungan.
 cancel	infolog	id	Batal
 cancelled	infolog	id	Dibatalkan
@@ -205,6 +206,7 @@ history logging and deleting of items	infolog	id	Riwayat catatan dan penghapusan
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	id	Berapa banyak baris deskripsi yang harus terlihat secara langsung. Baris lebih lanjut tersedia melalui bilah gulir.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	id	Seberapa lebar area deskripsi seharusnya. Nilai ini berupa angka, misalnya 60.
 html link to the current record	infolog	id	Tautan HTML ke rekaman saat ini
+icon for	infolog	id	Ikon untuk
 id	infolog	id	ID
 id#	infolog	id	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	id	Jika sebuah tipe memiliki pemilik grup, semua entri dari tipe tersebut akan dimiliki oleh grup tersebut dan BUKAN pengguna yang membuatnya!
@@ -384,6 +386,7 @@ set status to done	infolog	id	Tetapkan status menjadi selesai
 set status to done for all entries	infolog	id	Tetapkan status menjadi selesai untuk semua entri
 sets the status of this entry and its subs to done	infolog	id	Tetapkan status entri ini dan sub-entrinya menjadi selesai
 sets the status of this entry to done	infolog	id	Mengatur status entri ini menjadi selesai
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	id	Apakah daftar InfoLog harus menampilkan persentase selesai hanya untuk status sedang berlangsung atau dua ikon terpisah.
 show a x if content equals this compare value, otherwise show nothing	infolog	id	Tampilkan X jika konten sama dengan nilai perbandingan ini, jika tidak, tidak menunjukkan apa-apa
 show full usernames	infolog	id	Tampilkan Nama lengkap pengguna
 show in the infolog list	infolog	id	Tampilkan pada daftar InfoLog
@@ -421,6 +424,7 @@ to what should the startdate of new entries be set.	infolog	id	Untuk apa tanggal
 today	infolog	id	Hari ini
 todays date	infolog	id	Tanggal sekarang
 todo	infolog	id	ToDo
+toggle details	common	id	Tampilkan detail
 typ	infolog	id	Tipe
 typ '%1' already exists !!!	infolog	id	Tipe '%1' telah ada!
 type	infolog	id	Tipe
@@ -437,6 +441,7 @@ urgency	infolog	id	Urgency
 urgent	infolog	id	Mendesak
 use all	infolog	id	Gunakan semua
 use custom notification message	infolog	id	Gunakan pesan pemberitahuan khusus
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	id	Gunakan tag ini untuk label alamat. Letakkan konten yang ingin diulang di antara dua tag.
 used time	infolog	id	Waktu yang dihabiskan
 view parent	infolog	id	Lihat leluhur
 view parent with children	infolog	id	Melihat orang tua dengan anak-anak

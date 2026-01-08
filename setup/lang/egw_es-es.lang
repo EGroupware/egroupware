@@ -323,7 +323,7 @@ error searching "dn=%1" for "%2"!	setup	es-es	¡Error al buscar "DN=%1" para "%2
 error uploading your backup!	setup	es-es	Error al cargar la copia de seguridad
 every	setup	es-es	Cada
 export has been completed!	setup	es-es	¡La exportación se ha completado!
-failed to mount backup directory!	setup	es-es	Fallo el montar el directorio de backup
+failed to mount backup directory!	setup	es-es	¡Fallo el montar el directorio de backup!
 failed updating user "%1" dn="%2"!	setup	es-es	¡Error al actualizar el usuario "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	es-es	Fallo al escribir el fichero de configuración header.inc.php. ¡Compruebe los permisos!
 fallback authentication	setup	es-es	Autenticación Fallback

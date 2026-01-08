@@ -1,4 +1,13 @@
+backup '%1' deleted	setup	lt	Atsarginė kopija '%1' ištrinta.
+backup '%1' renamed to '%2'	setup	lt	Atsarginė kopija '%1' pervadinta į '%2'.
+backup '%1' restored	setup	lt	Atsarginė kopija '%1' atkurta.
+backup directory %1 mounted as %2	setup	lt	Atsarginės kopijos katalogas %1 prijungtas kaip %2
+backup failed	setup	lt	Atsarginės kopijos kūrimas nepavyko.
 backup files (needs ziparchive)	setup	lt	EGroupware failų (failų katalogo) duomenų atsarginė kopija <br>(reikia PHP ZipArchive)
+backup finished	setup	lt	Atsarginės kopijos kūrimas baigtas.
+backup housekeeping	setup	lt	Atsarginės kopijos su standartiniu pavadinimu gali būti automatiškai išvalytos. Pervardykite atsarginių kopijų failus, kad jie nebūtų išvalyti.
+backup min count	setup	lt	Minimalus atsarginių kopijų skaičius
+backup started, this might take a few minutes ...	setup	lt	Atsarginės kopijos kūrimas pradėtas, tai gali užtrukti keletą minučių...
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	lt	Įtraukti failus (failų katalogą) į duomenų atsarginę kopiją.<br>(Gali būti generuojamas didelis duomenų kiekis ir nutraukiama daug failų, dokumentacija: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	lt	Išjungti tik tada, jei jūsų AD turi problemų su VLV valdikliais IR gali grąžinti visus naudotojus viena užklausa!
 disable vlv controls	setup	lt	Išjungti VLV valdiklius
@@ -12,6 +21,7 @@ failed writing configuration file header.inc.php, check the permissions !!!	setu
 fallback authentication	setup	lt	Atsarginis autentiškumo nustatymas
 mail account of %1 migrated	setup	lt	Perkelta %1 pašto paskyra.
 min backup count	setup	lt	Didžiausias saugomų atsarginių kopijų skaičius (nulis: visos)
+mount backup directory to %1	setup	lt	Prijunkite atsarginės kopijos katalogą prie %1
 openidconnect login	setup	lt	OpenIDConnect prisijungimas
 optional, if only authentication and anonymous search is enabled	setup	lt	neprivaloma, jei įjungta tik autentifikacija IR anoniminė paieška.
 or leave empty and select openidconnect as authentication type above for single sign on	setup	lt	arba palikite tuščią ir pirmiau pasirinkite "OpenID Connect" kaip autentifikavimo tipą, jei norite prisijungti vienu prisijungimu
@@ -30,5 +40,6 @@ replace username and email	setup	lt	Pakeiskite vartotojo vardą ir el. pašto ad
 replace username and keep email	setup	lt	Pakeisti vartotojo vardą ir palikti el. paštą
 required to change passwords	setup	lt	reikalaujama pakeisti slaptažodžius
 requires "reset password" privilege, to change passwords!	setup	lt	Norint pakeisti slaptažodžius, reikia "Reset Password" privilegijos!
+we strongly recommend to run a db backup before running the import!	setup	lt	Prieš importuojant duomenis, primygtinai rekomenduojame atlikti duomenų bazės atsarginę kopiją!
 you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	lt	Šį apribojimą galite apeiti prijungdami atsarginės kopijos katalogą prie „EGroupware“ failų tvarkyklės ir įkeldami iš ten.
 you need to select your current charset!	setup	lt	Reikia pasirinkti esamą charset!

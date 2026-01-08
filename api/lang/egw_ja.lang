@@ -46,7 +46,8 @@
 15 minutes	common	ja	15 分
 2-factor authentication code required	common	ja	2ファクタ認証コードが必要
 2-factor-authentication	common	ja	2要素認証
-2-factor-authentication required	common	ja	2ファクター認証が必要
+2-factor-authentication required	common	ja	第二要素が必要です。
+2nd factor	login	ja	第 2 の要因
 3 minutes	common	ja	3分
 30 minutes	common	ja	30 分
 30 seconds	common	ja	30 秒
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	ja	選択されたアプリ�
 add a new multi-column index	common	ja	マルチカラム・インデックスを追加
 add category	common	ja	カテゴリを追加
 add column	common	ja	カラムを追加
-add current	common	ja	現在のフィルターを追加
+add current	common	ja	お気に入りとして表示
 add index	common	ja	インデックスを追加
 add new	common	ja	新規追加
 add shortcut	common	ja	ショートカットを追加

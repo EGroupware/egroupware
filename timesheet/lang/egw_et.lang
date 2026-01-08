@@ -1,5 +1,6 @@
 --> enter new name	timesheet	et	--> Sisesta uus nimi
 all projects	timesheet	et	Kõik projektid
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	et	Rakenda tegevust kogu päringule, MITTE ainult kuvatud tööaja arvestustele!
 ask to start and stop working time with session	timesheet	et	Küsi, et alustada ja lõpetada tööaeg koos seansiga
 category for 'working time'	admin	et	Kategooria 'Tööaeg'
 change owner when updating	timesheet	et	Omaniku muutmine uuendamisel
@@ -27,10 +28,10 @@ exports entries from your timesheet into a csv file. csv means 'comma separated 
 field must not be empty !!!	timesheet	et	Väli ei tohi jääda tühjaks !!!
 forgot to switch off working time?	common	et	Unustasite tööaja välja lülitada?
 give additional users access	timesheet	et	Anna juurdepääs lisakasutajatele
-give infolog delegation read-access to timesheets booked on them	timesheet	et	Anna InfoLogi delegeerimisele lugemisõigus neile registreeritud tööaja arvestuslehtedele
+give infolog delegation read-access to timesheets booked on them	timesheet	et	Anna InfoLogi delegeerimisele lugemisõigus neile registreeritud tööaja arvestuslehtedele.
 global categories	timesheet	et	Globaalsed Kategooriad
 history	timesheet	et	Ajalugu
-how to display linked timesheets	timesheet	et	Kuidas kuvada seotud tööaja arvestuslehti
+how to display linked timesheets	timesheet	et	Kuidas kuvada seotud tööaja arvestuslehti?
 html link to the current record	timesheet	et	HTML-link praegusele kirje
 id	timesheet	et	Id
 imports entries into the timesheet from a csv file.	timesheet	et	Impordib kanded Tööajatabelisse CSV-failist.

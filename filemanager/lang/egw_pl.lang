@@ -57,6 +57,7 @@ cut to clipboard	filemanager	pl	Wytnij do schowka
 default action on double-click	filemanager	pl	Domyślna akcja po dwukrotnym kliknięciu
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	pl	Domyślne zachowanie to NIE. Link nie będzie wyświetlany, ale możesz przejść do tej lokalizacji i skonfigurować tą lokację jako folder startowy lub link do folderu.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	pl	Określa sposób obsługi dwukrotnego kliknięcia pliku dokumentu. Obrazy są zawsze otwierane w widoku ekspozycji, a wiadomości e-mail za pomocą aplikacji e-mail. Wszystkie inne typy MIME są obsługiwane przez samą przeglądarkę.
+defines how to open a merge print document	filemanager	pl	Co powinno się stać z dokumentami po ich wypełnieniu?<br><br><b>Jeśli Collabora Online jest dostępna</b>, dokumenty te można otworzyć (i dalej przetwarzać) bezpośrednio w przeglądarce za pomocą Collabora Online. <br><br> <b>Bez Collabora Online</b> wypełniony dokument jest oferowany do pobrania.<br><br>Więcej informacji o Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office w EGroupware</a>
 delete this file or directory	filemanager	pl	Usuń ten plik lub katalog
 deleted %1	filemanager	pl	Skasowano %1
 directories sorted in	filemanager	pl	Katalogi przechowywane w
@@ -69,7 +70,7 @@ display and modification of content	filemanager	pl	Wyświetlanie i modyfikacja z
 display of content	filemanager	pl	Wyświetlanie zawartości
 do you want to overwrite the existing file %1?	filemanager	pl	Czy chcesz nadpisać istniejący plik %1?
 download	filemanager	pl	Pobierz
-download documents	filemanager	pl	Pobieranie dokumentów
+download documents	filemanager	pl	Pobierz dokumenty
 edit comments	filemanager	pl	Edycja komentarza
 edit settings	filemanager	pl	Edytuj ustawienia
 edit share	filemanager	pl	Edytuj udział

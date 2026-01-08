@@ -46,7 +46,8 @@
 15 minutes	common	nl	15 minuten
 2-factor authentication code required	common	nl	2-Factor-Authenticatie code vereist
 2-factor-authentication	common	nl	2-factor-authenticatie
-2-factor-authentication required	common	nl	2-Factor-Authenticatie vereist
+2-factor-authentication required	common	nl	Tweede factor vereist.
+2nd factor	login	nl	2e factor
 3 minutes	common	nl	3 minuten
 30 minutes	common	nl	30 minuten
 30 seconds	common	nl	30 seconden
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	nl	Voeg een nieuw record toe 
 add a new multi-column index	common	nl	Een nieuwe multi-column index toevoegen
 add category	common	nl	Categorie toevoegen
 add column	common	nl	Kolom toevoegen
-add current	common	nl	Voeg huidige toe
+add current	common	nl	Bekijken als favoriet
 add index	common	nl	Index toevoegen
 add new	common	nl	Nieuwe toevoegen
 add shortcut	common	nl	Snelkoppeling toevoegen

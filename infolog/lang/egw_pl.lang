@@ -225,6 +225,7 @@ history logging and deleting of items	infolog	pl	Rejestrowanie historii i usuwan
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	pl	Ile wierszy opisu powinno być bezpośrednio widocznych. Dalsze wiersze są dostępne za pomocą paska przewijania.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	pl	Jak szeroki powinien być obszar opisu. Ta wartość jest numeryczna, np. 60.
 html link to the current record	infolog	pl	Łącze HTML do bieżącego rekordu
+icon for	infolog	pl	Ikona dla
 id	infolog	pl	ID
 id#	infolog	pl	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	pl	Jeżeli typ ma właściciela grupowego, wszystkie zadania tego typu będą własnością określonej grupy ZAMIAST użytkownika, który je utworzył!
@@ -264,10 +265,12 @@ invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infol
 label<br>helptext	infolog	pl	Etykieta<br>Tekst pomocy
 last changed	infolog	pl	Ostatnia zmiana
 last modified	infolog	pl	Ostatnio modyfikowany
+leave blank to get the used time calculated by timesheet entries	infolog	pl	Pozostaw puste pole, aby czas pracy został obliczony na podstawie wpisów w arkuszu czasu pracy
 leave it empty	infolog	pl	Zostaw puste
 leave it empty for a full week	infolog	pl	Pozostaw pusty na cały tydzień
 leave without saveing the entry	infolog	pl	Cofnij bez zapisywania wpisu
 leaves without saveing	infolog	pl	Cofnij bez zapisywania
+limit list to last n month, if ordering by last-modified and not searching.	admin	pl	Ogranicz listę do ostatnich N miesięcy, jeśli sortujesz według daty ostatniej modyfikacji i nie wyszukujesz.
 limit number of description lines (default 5, 0 for no limit)	infolog	pl	Ograniczenie liczby linii opisu. Domyślnie = 5, 0 = brak limitu.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	pl	Ograniczenie szerokości kolumny opisu. Działa tylko wtedy, gdy ustawiony jest limit wierszy. 0 = brak limitu.
 link	infolog	pl	Podłącz
@@ -476,6 +479,7 @@ to what should the startdate of new entries be set.	infolog	pl	Jaką wartość u
 today	infolog	pl	Dzisiaj
 todays date	infolog	pl	Dzisiejsza data
 todo	infolog	pl	Do zrobienia
+toggle details	common	pl	Przełącz szczegóły
 typ	infolog	pl	Typ
 typ '%1' already exists !!!	infolog	pl	Typ %1 już istnieje!
 type	infolog	pl	Typ

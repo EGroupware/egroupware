@@ -43,7 +43,7 @@ deny following groups access to acl (grant access)	admin	en	Deny following group
 deny following groups access to application passwords	preferences	en	Deny following groups access to application passwords
 deny following groups access to edit categories	admin	en	Deny following groups access to edit categories
 deny following groups access to preferences	admin	en	Deny following groups access to preferences
-deny following groups access to security popup	admin	en	Deny following groups access to security popup
+deny following groups access to security popup	admin	en	Deny following groups access to security pop-up
 description can not exceed 255 characters in length !	preferences	en	Description can not exceed 255 characters in length!
 disable	preferences	en	Disable
 disable two factor auth	preferences	en	Disable Two Factor Auth
@@ -55,13 +55,9 @@ edit custom fields	preferences	en	Edit custom fields
 enable	preferences	en	Enable
 enable drag and drop functionality (experimental)	preferences	en	Drag and drop
 enable menubar	preferences	en	Enable menubar
-enable selectbox dropdown resizing for ie (experimental)	preferences	en	Select box drop down menu resizing
 enable/disable menubar from top of the editor.	preferences	en	Enable/Disable menubar from top of the editor.
 enabled features in toolbar	preferences	en	Enabled features in toolbar
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	en	Enables or disables drag and drop functions in all applications. If the browser does not support drag and drop, it will be disabled automatically.
-enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables select box drop down menu resizing for IE in all applications. If the browser is not an IE, the option will not apply.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE, the option will not apply. This feature is experimental at the moment.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	en	Encrypted LDAP connection is required to change passwords, but it is not configured in your installation.
 enter code to authenticate the actions below	preferences	en	Enter code to authenticate the actions below
 enter code to verify correct setup	preferences	en	Enter code to verify correct setup
@@ -120,6 +116,7 @@ notification settings	preferences	en	Notification settings
 number format	preferences	en	Number format
 numbers	preferences	en	numbers
 old password and new password are the same. this is invalid. you must enter a new password	preferences	en	Old password and new password are the same. You must enter a new password!
+open popups in	preferences	en	Open pop-ups in
 or other compatible apps	preferences	en	Or other compatible apps
 p: paragraph	preferences	en	p: Paragraph
 paragraph	preferences	en	Paragraph
@@ -132,7 +129,8 @@ password stored	preferences	en	Password stored.
 permanent time zone selection	preferences	en	Permanent time zone
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	en	Select time zones to switch between. Switch is NOT shown, if less than two time zones are selected.
 please select your timezone.	preferences	en	Select your time zone.
-popup with search	preferences	en	Popup with search
+popup window	preferences	en	Pop-up Window
+popup with search	preferences	en	Pop-up with search
 preferences saved.	preferences	en	Preferences saved.
 preformatted	preferences	en	Preformatted
 pt: points (1/72 inch)	preferences	en	pt: points (1/72 inch)
@@ -174,9 +172,8 @@ store password retrievable for singlesignon	common	en	Store password retrievable
 text editor settings	preferences	en	Text editor settings
 text only	preferences	en	Text only
 the old password is not correct	preferences	en	The old password is not correct!
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be slow on big installs with many users). The popup can search users by name or group.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The selectbox shows all available users (can be slow on big installs with many users). The popup can search users by name or group. The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	en	The selectbox shows all available users (can be slow on big installs with many users). The popup can search users by name or group.* The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.*
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be slow on big installs with many users). The pop-up can search users by name or group.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The selectbox shows all available users (can be slow on big installs with many users). The pop-up can search users by name or group. The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
 the two passwords are not the same	preferences	en	The two passwords are not the same!
 theme (colors/fonts) selection	preferences	en	Theme

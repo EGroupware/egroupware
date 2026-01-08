@@ -55,9 +55,12 @@ backup '%1' deleted	setup	lv	Dublējums "%1"izdzēsts
 backup '%1' renamed to '%2'	setup	lv	Dublējums "%1" pārsaukts par "%2"
 backup '%1' restored	setup	lv	Dublējums "%1" atjaunots
 backup and restore	setup	lv	Dublēt un atjaunot
+backup directory %1 mounted as %2	setup	lv	Dublējuma katalogs %1 pievienots kā %2
 backup failed	setup	lv	Dublēšana neizdevās
 backup files (needs ziparchive)	setup	lv	EGroupware failu (failu direktorija) datu dublējums <br>(nepieciešams PHP ZipArchive)
 backup finished	setup	lv	Dublēšana pabeigta
+backup housekeeping	setup	lv	Dublējumus ar standarta nosaukumu var automātiski izdzēst. Pārdēvējiet dublējuma failus, lai izslēgtu tos no izdzēšanas.
+backup min count	setup	lv	Minimālais dublējumu skaits
 backup now	setup	lv	Dublēt tagad
 backup started, this might take a few minutes ...	setup	lv	Dublēšana sākusies, tas var aizņemt dažas minūtes ...
 because it depends upon	setup	lv	Tāpēc tas atgarīgs no
@@ -249,6 +252,7 @@ modifications have been completed!	setup	lv	Modifikācijas pabeigtas!
 modified	setup	lv	Pārveidots
 modify	setup	lv	Modificēt
 month	setup	lv	Mēnesis
+mount backup directory to %1	setup	lv	Pievienot dublējuma direktoriju %1
 name of database	setup	lv	Datubāzes nosaukums
 name of db user egroupware uses to connect	setup	lv	DB lietotāja vārds, ko EGroupware lieto, lai pieslēgtos
 never	setup	lv	Nekad
@@ -423,6 +427,7 @@ view	setup	lv	Rādīt
 virtual mail manager (login-name includes domain)	setup	lv	Virtuālais pastapārvaldnieks (pieteikšanās vārds iekļauj domēnu)
 warning!	setup	lv	Brīdinājums!
 we can proceed	setup	lv	Mēs varam turpināt
+we strongly recommend to run a db backup before running the import!	setup	lv	Mēs stingri iesakām veikt datu bāzes dublējumu PIRMS importēšanas!
 we will automatically update your tables/records to %1	setup	lv	Mēs automatiski atjauninām tavu tabulu/ierakstus uz %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	lv	Mēs palaidīsim dažus testus, kas var prasīt dažas minūtes laika. Noklikšķini uz saites, lai turpinātu
 welcome to the egroupware installation	setup	lv	Laipni lūdzam EGroupware instalēšanā

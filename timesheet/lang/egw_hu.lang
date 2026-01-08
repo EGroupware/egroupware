@@ -4,6 +4,7 @@
 3 years ago	timesheet	hu	3 évvel korábban
 all projects	timesheet	hu	Összes projekt
 applies the changes	timesheet	hu	változások végrehajtása
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	hu	Alkalmazza a műveletet az egész lekérdezésre, NEM csak a megjelenített munkaidő-nyilvántartásokra!
 ask to start and stop working time with session	timesheet	hu	Kérje a munkaidő indítását és leállítását a munkamenettel
 both: allow to use projectmanager and free project-names	admin	hu	Mindkettő: lehetővé teszi a ProjectManager és a szabad projekt nevek használatát
 by	timesheet	hu	by
@@ -41,11 +42,11 @@ forgot to switch off working time?	common	hu	Elfelejtette kikapcsolni a munkaid�
 full: use only projectmanager	admin	hu	Teljes: csak a ProjectManager használata
 general fields:	timesheet	hu	Általános mezők:
 give additional users access	timesheet	hu	További felhasználók hozzáférésének biztosítása
-give infolog delegation read-access to timesheets booked on them	timesheet	hu	Az InfoLog delegációnak olvasási hozzáférés biztosítása a rájuk bejegyzett munkaidő-nyilvántartásokhoz
+give infolog delegation read-access to timesheets booked on them	timesheet	hu	Az InfoLog delegációnak olvasási hozzáférés biztosítása a rájuk bejegyzett munkaidő-nyilvántartásokhoz.
 global categories	timesheet	hu	Globális kategóriák
 history	timesheet	hu	Történet
 history logging	admin	hu	Történet követése (log)
-how to display linked timesheets	timesheet	hu	A kapcsolódó munkaidő-nyilvántartások megjelenítése
+how to display linked timesheets	timesheet	hu	A kapcsolódó munkaidő-nyilvántartások megjelenítése?
 html link to the current record	timesheet	hu	HTML link az aktuális rekordhoz
 id	timesheet	hu	Azonosító
 imports entries into the timesheet from a csv file.	timesheet	hu	Bejegyzések importálása a munkaidő-nyilvántartásba CSV fájlból

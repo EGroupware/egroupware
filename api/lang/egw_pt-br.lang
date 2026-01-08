@@ -46,7 +46,8 @@
 15 minutes	common	pt-br	15 minutos
 2-factor authentication code required	common	pt-br	Código de autenticação de 2 fatores necessário
 2-factor-authentication	common	pt-br	2-Fator-Autenticação
-2-factor-authentication required	common	pt-br	2-Fator-Autenticação necessária
+2-factor-authentication required	common	pt-br	Segundo fator necessário.
+2nd factor	login	pt-br	Segundo fator
 3 minutes	common	pt-br	3 minutos
 30 minutes	common	pt-br	30 minutos
 30 seconds	common	pt-br	30 segundos
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	pt-br	Adicionar um novo regis
 add a new multi-column index	common	pt-br	Adicionar um index de novas multi-colunas
 add category	common	pt-br	Adicionar categoria
 add column	common	pt-br	Adicionar Coluna
-add current	common	pt-br	Adicionar atual
+add current	common	pt-br	Ver como favorito
 add index	common	pt-br	Adicionar Index
 add new	common	pt-br	Adicionar novo
 add shortcut	common	pt-br	Adicionar tecla de atalho

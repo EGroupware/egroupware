@@ -32,7 +32,8 @@
 15 minutes	common	lv	15 minūtes
 2-factor authentication code required	common	lv	Nepieciešams 2 faktoru autentifikācijas kods
 2-factor-authentication	common	lv	Autentifikācija ar 2 faktoriem
-2-factor-authentication required	common	lv	Nepieciešama 2 faktoru autentifikācija
+2-factor-authentication required	common	lv	Nepieciešams otrais faktors.
+2nd factor	login	lv	2. faktors
 3 minutes	common	lv	3 minūtes
 30 minutes	common	lv	30 minūtes
 30 seconds	common	lv	30 sekundes
@@ -65,7 +66,7 @@ add a new entry of the selected application	common	lv	Pievienot atzīmetas aplik
 add a new multi-column index	common	lv	Pievienot jaunu daudzkolonnu priekšmetu rādītāju
 add category	common	lv	Pievienot kategoriju
 add column	common	lv	Pievienot kolonnu
-add current	common	lv	Pašreizējais skatījums kā iecienītākais
+add current	common	lv	Skatīt kā iecienīto
 add index	common	lv	Pievienot indeksu
 add new	common	lv	Pievienot jaunu
 add sub	common	lv	Pievienot apakškategoriju

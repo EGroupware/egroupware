@@ -201,7 +201,6 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	ca	Llista desplegable obligatòria
 forward also to	admin	ca	Reenviar també a
 forward email's to	admin	ca	Reenviar correus a
-forward emails to	admin	ca	reenviar correu a
 forward only	admin	ca	Només reenviar
 full name	admin	ca	Nom complet
 general	admin	ca	General
@@ -402,7 +401,6 @@ the api requires an upgrade	admin	ca	L'API necessita actualitzacions
 the groups must include the primary group	admin	ca	Els grups han d'incloure el grup principal
 the login and password can not be the same	admin	ca	El nom d'usuari i la contrasenya NO poden ser iguals
 the loginid can not be more then 8 characters	admin	ca	El nom d'usuari no pot ser més gran de 8 caràcters
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	ca	el nom utilitzat internament (<= 20 caràcters), si el canvies fas que les dades existents siguin inaccessibles.
 the testjob sends you a mail everytime it is called.	admin	ca	El treball de prova us envia un correu cada vegada que s'executa
 the text displayed to the user	admin	ca	el text mostrat a l'usuari
 the two passwords are not the same	admin	ca	Les dues contrasenyes no són iguals
@@ -450,7 +448,6 @@ view error log	admin	ca	Veure registre d'errors
 view sessions	admin	ca	Veure sessions
 view this user	admin	ca	Veure aquest usuari
 view user account	admin	ca	Veure compte d'usuari
-virtual mail manager	admin	ca	Gestor de correu virtual
 who would you like to transfer all records owned by the deleted user to?	admin	ca	A qui voleu transferir TOTS els registres que pertanyen a l'usuari esborrat?
 xml-rpc	admin	ca	XML-RPC
 you have entered an invalid expiration date	admin	ca	Heu introduït una data de caducitat incorrecta

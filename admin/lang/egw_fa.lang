@@ -194,7 +194,6 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	fa	جعبه انتخاب اجباری
 forward also to	admin	fa	همچنین ارسال به
 forward email's to	admin	fa	ارسال نامه ها به
-forward emails to	admin	fa	پیش سوی رایانامه به
 forward only	admin	fa	فقط ارسال به
 full name	admin	fa	نام کامل
 general	admin	fa	عمومی
@@ -383,7 +382,6 @@ the groups must include the primary group	admin	fa	گروهها باید شام�
 the login and password can not be the same	admin	fa	شناسه ورود و گذرواژه نمی توانند مثل هم باشند
 the loginid can not be more then 8 characters	admin	fa	شناسه ورود نمی تواند بیشتر از 8 حرف باشد
 the mimeparser can not parse this message.	admin	fa	تشخیص دهنده نوع فایل قادر به تشخیص این پیام نیست
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	fa	نامی که داخلی استفاده می شود(کمتر از ۲۰ کاراکتر)، تغییر آن ممکن است باعث شود که اطلاعات غیر قابل دسترس شون
 the testjob sends you a mail everytime it is called.	admin	fa	کارآزمایشی برای شما نامه می فرستد هروقت که فراخوانی شود
 the text displayed to the user	admin	fa	متنی که به کاربر نمایش داده می شود
 the two passwords are not the same	admin	fa	گذرواژه های وارد شده مثل هم نیستند

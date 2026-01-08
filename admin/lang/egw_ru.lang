@@ -89,7 +89,7 @@ all applications	admin	ru	Все приложения
 all records and account information will be lost!	admin	ru	Все записи и информация по учётной записи будут утеряны!
 all users	admin	ru	Все пользователи
 allow anonymous access to this app	admin	ru	Разрешить анонимный доступ к данному приложению
-allow remote administration from following install id's (comma separated)	admin	ru	Разрешить удалённое администрирование со следующих идентификаторов установки (разделённых запятыми)
+allow remote administration from following install id's (comma separated)	admin	ru	Разрешить удалённое администрирование со следующих идентификаторов установки (разделённых запятыми).
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ru	Разрешите пользователю хранить свой пароль в разделе «Безопасность и пароли» для SingleSignOn.
 allow user to set 'remember me' token	admin	ru	Разрешить пользователю устанавливать токен "Запомнить меня"
 alternate email address	admin	ru	Добавочный адрес эл. почты
@@ -112,7 +112,8 @@ applications run rights updated.	admin	ru	Права на запуск прил�
 applies the changes	admin	ru	Применять изменения
 apply the changes	admin	ru	Применить изменения
 archive: zip or tar	admin	ru	Архив: ZIP или tar
-are you sure you want to delete the application %1 ?	admin	ru	Вы уверены, что хотите удалить приложение %1 ?
+are you sure you want to %1 mail for selected accounts?	admin	ru	Вы уверены, что хотите отправить %1 письмо для выбранных учетных записей?
+are you sure you want to delete the application %1 ?	admin	ru	Вы уверены, что хотите удалить приложение %1?
 are you sure you want to delete this account ?	admin	ru	Уверены, что хотите удалить эту учётную запись?
 are you sure you want to delete this application ?	admin	ru	Уверены, что хотите удалить это приложение?
 are you sure you want to delete this category ?	common	ru	Уверены, что хотите удалить эту категорию?
@@ -121,13 +122,13 @@ are you sure you want to delete this group ?	admin	ru	Уверены, что х�
 are you sure you want to delete this server?	admin	ru	Уверены, что хотите удалить этот сервер?
 are you sure you want to kill this session ?	admin	ru	Уверены, что хотите прервать этот сеанс?
 async services last executed	admin	ru	Асинхронные сервисы, исполнявшиеся последними
-asynchronous timed services	admin	ru	Асинхронные сервисы по таймеру
+asynchronous timed services	admin	ru	Асинхронная служба
 asyncservices not yet installed or other error (%1) !!!	admin	ru	Асинхронные сервисы ещё не установлены, или другая ошибка (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ru	Попытка использовать правильный тип mime для FTP вместо 'application/octet-stream' по умолчанию
 authentication / accounts	admin	ru	Идентификация / учётные записи
 auto create account records for authenticated users	admin	ru	Автоматическое создание записей для идентифицированных пользователей
 available placeholders	admin	ru	Доступные заместители
-backup directory %1 mounted as %2	admin	ru	Backup каталог %1 смонтирован как %2
+backup directory %1 mounted as %2	admin	ru	Каталог резервного копирования %1 смонтирован как %2
 bad login name or password.	admin	ru	Неверное имя пользователя или пароль.
 bad or malformed request. server responded: %s	admin	ru	Неверный или нераспознанный запрос. Ответ Сервера: %s
 bad request: %s	admin	ru	Неверный запрос: %s
@@ -161,12 +162,13 @@ change owner	admin	ru	Сменить владельца
 change password for %1	admin	ru	Сменить пароль на %1
 change password hash to	admin	ru	Сменить хэш пароля на
 changed password hash for %1 to %2.	admin	ru	Хэш пароля изменён с %1 на %2
+changelog and versions	admin	ru	Журнал изменений и версии
 check acl for entries of not (longer) existing accounts	admin	ru	Проверить права доступа (ACL) для данных (более) не существующих учётных записей
 check categories for not (longer) existing accounts	admin	ru	Проверить категории для (более) не существующих учётных записей
 check ip address of all sessions	admin	ru	Проверить IP-адреса всех сеансов
 check items to <b>%1</b> to %2 for %3	admin	ru	Проверить элементы <b>%1</b> и %2 для %3
 children	admin	ru	Дочерние
-clear cache and register hooks	admin	ru	Очистить кэш и зарегистрировать хуки
+clear cache and register hooks	admin	ru	Очистить кэш/зарегистрировать хуки
 clear security tokens	admin	ru	Очистить токены безопасности
 click to select a color	admin	ru	Щёлкните для выбора цвета
 color	admin	ru	Цвет
@@ -204,7 +206,7 @@ cyrus imap server	admin	ru	IMAP сервер Cyrus
 data	admin	ru	Дата
 day	admin	ru	День
 day of week<br>(0-6, 0=sun)	admin	ru	День недели<br>(0-6, 0=Вск)
-db backup and restore	admin	ru	Резервное копирование и восстановление БД
+db backup and restore	admin	ru	Резервное копирование
 deactivate	admin	ru	Деактивировать
 default	admin	ru	по умолчанию
 default file system space per user	admin	ru	Объём свободного места, выделяемого в системе на пользователя (по умолчанию)
@@ -233,9 +235,9 @@ deny access	admin	ru	Отменить доступ
 deny access to access log	admin	ru	Закрыть доступ к журналу доступа
 deny access to application registery	admin	ru	Закрыть доступ к реестру приложений
 deny access to applications	admin	ru	Закрыть доступ к приложениям
-deny access to asynchronous timed services	admin	ru	Закрыть доступ к асинхронным сервисам по времени
+deny access to asynchronous timed services	admin	ru	Запретить доступ к асинхронной службе
 deny access to current sessions	admin	ru	Закрыть доступ к текущим сеансам
-deny access to db backup and restore	admin	ru	Закрыть доступ к резервной копии БД и восстановлению
+deny access to db backup and restore	admin	ru	Запретить доступ к резервному копированию
 deny access to error log	admin	ru	Закрыть доступ к журналу ошибок
 deny access to global categories	admin	ru	Закрыть доступ к общим категориям
 deny access to groups	admin	ru	Закрыть доступ к группам
@@ -340,7 +342,7 @@ exports groups into a csv file.	admin	ru	Экспорт групп в файл C
 exports users into a csv file.	admin	ru	Экспорт пользователей в файл CSV
 failed to change password for account "%1"!	admin	ru	Сбой смены пароля учётной записи "%1"!
 failed to change password.	admin	ru	Ошибка при смене пароля
-failed to mount backup directory!	admin	ru	Сбой монтирования backup-каталога!
+failed to mount backup directory!	admin	ru	Не удалось смонтировать каталог резервной копии!
 fallback (after each pageview)	admin	ru	Назад (после каждой страницы)
 false	admin	ru	Неверно
 field '%1' already exists !!!	admin	ru	Поле '%1' уже существует!
@@ -355,7 +357,6 @@ force selectbox	admin	ru	Принудительно список выбора
 force users to change their password regularily?(empty for no,number for after that number of days	admin	ru	Предписать пользователям менять пароли регулярно (пусто – отмена; число – указывает, через столько дней пароль должен будет меняться)
 forward also to	admin	ru	Переслать также в
 forward email's to	admin	ru	Переслать письма в
-forward emails to	admin	ru	Перенаправить почту на
 forward only	admin	ru	Только переслать
 full name	admin	ru	Полное имя
 general	admin	ru	Общие
@@ -492,7 +493,7 @@ mode	admin	ru	Режим
 modified	admin	ru	Изменено
 month	admin	ru	Месяц
 more secure	admin	ru	Более безопасно
-mount backup directory to %1	admin	ru	Монтировать backup-каталог в %1
+mount backup directory to %1	admin	ru	Смонтировать каталог резервной копии в %1
 must change password upon next login	admin	ru	При следующем входе в систему необходимо сменить пароль
 name must not be empty !!!	admin	ru	Имя не может быть пустым!
 name of organisation	admin	ru	Название организации
@@ -590,8 +591,8 @@ re-enter password	admin	ru	Введите пароль ещё раз
 read this list of methods.	admin	ru	Читать этот список методов
 register application hooks	admin	ru	Зарегистрировать хуки приложения
 regular expression to find part to use as container	admin	ru	Регулярное выражение для поиска части, используемой в качестве контейнера
-remote administration instances	admin	ru	Экземпляры системы, администрируемые удалённо
-remote administration need to be enabled in the remote instance under admin > site configuration!	admin	ru	Удалённое администрирование должно быть включено в соответствующем пункте меню администрируемой удаленно системы: <b>Администратор > Конфигурация сайта</b>!
+remote administration instances	admin	ru	Удаленное администрирование
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	ru	Удалённое администрирование должно быть включено в соответствующем пункте меню администрируемой удаленно системы: Администратор > Конфигурация сайта!
 remote instance saved	admin	ru	Удалённая запись сохранена
 remove	admin	ru	Удалить
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	ru	Удаление группового доступа может создать проблемы для данных этой категории. Вы уверены? Пользователи этих групп могут потерять доступ:
@@ -602,7 +603,7 @@ revoke this token	admin	ru	Отмените этот токен
 rights	admin	ru	Права
 rows	admin	ru	Ряды
 rpm or debian package	admin	ru	Пакеты RPM или Debian
-run asynchronous services	admin	ru	Запустить асинхронные сервисы
+run asynchronous services	admin	ru	Запустить асинхронную службу
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	ru	Невозможно сохранить сообщение %1 . Не могу сохранить сообщение в папку %2 по причине: %3
 save the category	admin	ru	Записать категорию
 save the category and return back to the list	admin	ru	Записать категорию и вернуться назад к списку
@@ -688,7 +689,6 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	ru	Логин и пароль не могут быть одинаковы
 the loginid can not be more then 8 characters	admin	ru	Логин не должен превышать 8 символов
 the mimeparser can not parse this message.	admin	ru	Обработчик MIME не может обработать это сообщение.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	ru	Внутреннее имя (<= 20 символов), изменение сделает существующие данные недоступными
 the testjob sends you a mail everytime it is called.	admin	ru	Тестовое задание посылает почтовое сообщение при каждом старте
 the text displayed to the user	admin	ru	Текст, показываемый пользователю
 the two passwords are not the same	admin	ru	Два пароля не совпадают
@@ -775,7 +775,6 @@ view error log	admin	ru	Просмотр журнала ошибок
 view sessions	admin	ru	Сессии
 view this user	admin	ru	Просмотр этого пользователя
 view user account	admin	ru	Просмотр учётной записи пользователя
-virtual mail manager	admin	ru	Менеджер Виртуальной почты
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	ru	Установить число дней для уведомления пользователей о принудительной смене пароля. Пусто = не информировать
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	ru	Информация запрашивается только для изучения распространённости EGroupware в мире
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	ru	Мы не храним никаких персональных данных

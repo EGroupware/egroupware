@@ -12,6 +12,7 @@ always show them	infolog	lt	Visada juos rodyti
 application mail expected but got: %1	infolog	lt	Paraiškos el. pašto laukiama, bet gauta: %1
 archived too	infolog	lt	Taip pat archyvuota
 automatically check 'do not notify' for these types	infolog	lt	Automatiškai pažymėti "Nepranešti" šiems tipams
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	lt	Gali būti naudojama, norint kalendoriuje rodyti daugiau InfoLog tipų arba apriboti, pvz., rodyti tik užduotis.
 can not return an exact number of rows and therefore hides the count.	admin	lt	Negali grąžinti tikslaus eilučių skaičiaus, todėl paslepia skaičių.
 change	infolog	lt	Keisti
 change responsible	infolog	lt	Atsakingas už pokytį
@@ -88,6 +89,7 @@ history logging and deleting of items	infolog	lt	Istorijos registravimas ir elem
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	lt	Kiek aprašymo eilučių turėtų būti tiesiogiai matoma. Daugiau eilučių galima matyti per slinkties juostą.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	lt	Kokio pločio turėtų būti aprašymo sritis. Ši reikšmė yra skaitinė, pvz., 60.
 html link to the current record	infolog	lt	HTML nuoroda į esamą įrašą
+icon for	infolog	lt	Piktograma
 id	infolog	lt	ID
 id#	infolog	lt	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	lt	Jei tipas turi grupės savininką, visi to tipo įrašai priklausys nurodytai grupei, o NE jį sukūrusiam naudotojui!
@@ -126,6 +128,7 @@ insert timestamp into description field	infolog	lt	Laiko žymos įterpimas į ap
 invalid filename	infolog	lt	Netinkamas failo pavadinimas.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	lt	Netinkamas savininko ID: %1. Vietoj jo naudokite %2.
 invalid status for entry type %1.	infolog	lt	Netinkama įrašo tipo %1 būsena.
+leave blank to get the used time calculated by timesheet entries	infolog	lt	Palikite tuščią, kad naudojamas laikas būtų apskaičiuotas pagal laiko apskaitos lentelės įrašus
 leave it empty	infolog	lt	Palikite tuščią
 leave it empty for a full week	infolog	lt	Palikite jį tuščią visai savaitei
 length	infolog	lt	Ilgis
@@ -147,6 +150,8 @@ pattern for search in projects	infolog	lt	Paieškos projektuose šablonas
 performance optimization for huge infolog tables	admin	lt	Didžiulių InfoLog lentelių našumo optimizavimas
 permissions error - %1 could not %2	infolog	lt	Leidimų klaida - %1 negalėjo %2
 prefix for sub-entries (default: re:)	infolog	lt	Subįrašų priešdėlis (numatytoji reikšmė: Re:)
+price	infolog	lt	Kaina
+pricelist	infolog	lt	Kainoraštis
 print this infolog	infolog	lt	Spausdinti šį informacinį žurnalą
 printing...	infolog	lt	Spausdinti ...
 project id	infolog	lt	Projekto ID
@@ -170,6 +175,7 @@ schedule appointment	infolog	lt	Suplanuoti susitikimą
 second parameter for preg_replace	infolog	lt	Antrasis preg_replace parametras
 select a price	infolog	lt	Pasirinkite kainą
 select a project	infolog	lt	Pasirinkite projektą
+select multiple contacts for a further action	infolog	lt	Pasirinkite kelis kontaktus tolesniems veiksmams
 select new category	infolog	lt	Pasirinkite naują kategoriją
 select users or groups	infolog	lt	Pasirinkite naudotojus arba grupes
 selected calendars	infolog	lt	Pasirinkti kalendoriai
@@ -178,6 +184,7 @@ sender	infolog	lt	Siuntėjas
 set status to done	infolog	lt	Nustatyti būseną į Atlikta
 set status to done for all entries	infolog	lt	Nustatyti visų įrašų būseną į baigta
 sets the status of this entry to done	infolog	lt	Nustato šio įrašo būseną į atlikta
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	lt	Ar InfoLog sąraše turėtų būti rodomas tik vykdomo statuso užbaigtumo procentas ar dvi atskiros piktogramos.
 show a x if content equals this compare value, otherwise show nothing	infolog	lt	Rodyti X, jei turinys lygus šiai lyginamajai vertei, priešingu atveju nerodoma nieko
 show full usernames	infolog	lt	Rodyti visus naudotojų vardus
 show in the infolog list	infolog	lt	Rodyti InfoLog sąraše
@@ -201,12 +208,14 @@ tag to mark positions for address labels	infolog	lt	Žyma, skirta adresų etike�
 tasks of	infolog	lt	Užduotys
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	lt	Dokumente gali būti tokios pakaitinės žymos kaip {{%1}}, kurios bus pakeistos duomenimis.
 to all linked contacts	infolog	lt	Prie visų susietų kontaktų
+toggle details	common	lt	Perjungti detales
 type of field	infolog	lt	Lauko tipas
 type of the log-entry: note, phonecall or todo	infolog	lt	Informacijos žurnalo įrašo tipas
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	lt	Nepavyksta susieti su %3 pagal pasirinktinį lauką "%1": "%4". %2 atitinka.
 unknown type: %1	infolog	lt	Nežinomas tipas: %1
 unlinked from %1	infolog	lt	Nesusieta su %1
 use custom notification message	infolog	lt	Naudokite pasirinktinį pranešimo pranešimą
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	lt	Naudokite šią žymę adresų etiketėms. Norimą pakartoti turinį įdėkite tarp dviejų žymų.
 view parent with children	infolog	lt	Peržiūrėti tėvus su vaikais
 which implicit acl rights should the responsible get	infolog	lt	Kokias numanomas ACL teises turėtų gauti atsakingas asmuo
 which participants should be preselected when scheduling an appointment.	infolog	lt	Kurie dalyviai turėtų būti iš anksto pasirinkti planuojant susitikimą.

@@ -1,4 +1,5 @@
 applies the changes	timesheet	da	udfør ændringerne
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	da	Anvend handlingen på hele forespørgslen, IKKE kun de viste timesedler!
 ask to start and stop working time with session	timesheet	da	Bed om at starte og stoppe arbejdstid med session
 by	timesheet	da	af
 category for 'working time'	admin	da	Kategori for 'Arbejdstid'
@@ -25,7 +26,7 @@ exports entries from your timesheet into a csv file.	timesheet	da	Eksporterer po
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	da	Eksporterer poster fra Time Sheet til en CSV-fil. I fanen Indstillinger kan du også vælge andre separatorer.
 forgot to switch off working time?	common	da	Har du glemt at slukke for arbejdstiden?
 give additional users access	timesheet	da	Giv yderligere brugere adgang
-give infolog delegation read-access to timesheets booked on them	timesheet	da	Дайте на делегираните от InfoLog лица достъп за четене на таблиците за отчитане на работното време, които са записани за тях
+give infolog delegation read-access to timesheets booked on them	timesheet	da	Giv InfoLog-delegationen læseadgang til de timesedler, der er bogført på dem.
 global categories	timesheet	da	Globale Kategorier
 history	timesheet	da	Historisk
 how to display linked timesheets	timesheet	da	Sådan vises linkede tidsregistreringsskemaer

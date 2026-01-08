@@ -426,7 +426,6 @@ force selectbox	admin	km	បង្ខំជ្រើសរើសប្រអប�
 force users to change their password regularily?(empty for no,number for after that number of days	admin	km	កំណត់ការផ្លាស់ប្តូរពាក្យសម្ងាត់ដោយបង្ខំម្តងហើយម្តងទៀត។ កំណត់ចំនួនថ្ងៃ។ ទទេ = ទេ។
 forward also to	admin	km	បញ្ជូនបន្តទៅ
 forward email's to	admin	km	បញ្ជូនបន្តអ៊ីមែលទៅ
-forward emails to	admin	km	បញ្ជូនបន្តអ៊ីមែលទៅ
 forward only	admin	km	ទៅមុខតែប៉ុណ្ណោះ
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	km	បញ្ជូនបន្តបិទតែប្រអប់សំបុត្រ IMAP / ការរក្សាទុកសំបុត្រ ហើយគ្រាន់តែបញ្ជូនបន្តទៅអាសយដ្ឋានដែលបានផ្តល់ឱ្យ។
 full name	admin	km	ឈ្មោះ​ពេញ
@@ -703,7 +702,6 @@ register application hooks	admin	km	ចុះឈ្មោះភ្ជាប់�
 reject passwords containing part of username or full name (3 or more characters long)	admin	km	បដិសេធ​ពាក្យ​សម្ងាត់​ដែល​មាន​ផ្នែក​នៃ​ឈ្មោះ​អ្នក​ប្រើ​ឬ​ឈ្មោះ​ពេញ (3 ឬ​ច្រើន​តួអក្សរ​វែង)
 relay access checked	admin	km	បានពិនិត្យការចូលប្រើបញ្ជូនត
 remote administration instances	admin	km	ករណីរដ្ឋបាលពីចម្ងាយ
-remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	km	ការគ្រប់គ្រងពីចម្ងាយចាំបាច់ត្រូវបើកនៅក្នុងឧទាហរណ៍ពីចម្ងាយនៅក្រោមអ្នកគ្រប់គ្រង > ការកំណត់រចនាសម្ព័ន្ធគេហទំព័រ!
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	km	ការគ្រប់គ្រងពីចម្ងាយចាំបាច់ត្រូវបើកនៅក្នុងឧទាហរណ៍ពីចម្ងាយនៅក្រោមអ្នកគ្រប់គ្រង > ការកំណត់រចនាសម្ព័ន្ធគេហទំព័រ!
 remote instance saved	admin	km	បានរក្សាទុកឧទាហរណ៍ពីចម្ងាយ។
 remove	admin	km	ដកចេញ
@@ -823,8 +821,6 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	km	ការចូល និងពាក្យសម្ងាត់មិនអាចដូចគ្នាបានទេ។
 the loginid can not be more then 8 characters	admin	km	លេខសម្គាល់ចូលមិនអាចលើសពី 8 តួអក្សរទេ។
 the mimeparser can not parse this message.	admin	km	mimeparser មិនអាចញែកសារនេះបានទេ។
-the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	km	ឈ្មោះដែលបានប្រើខាងក្នុង (<= 20 តួអក្សរ) ការផ្លាស់ប្តូរវាធ្វើឱ្យទិន្នន័យដែលមានស្រាប់មិនអាចប្រើបាន
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	km	ឈ្មោះដែលបានប្រើនៅខាងក្នុង <= 20 តួអក្សរ ការផ្លាស់ប្តូរវាធ្វើឱ្យទិន្នន័យដែលមានស្រាប់មិនអាចប្រើបាន។
 the testjob sends you a mail everytime it is called.	admin	km	TestJob ផ្ញើសំបុត្រទៅអ្នករាល់ពេលដែលវាត្រូវបានហៅ។
 the text displayed to the user	admin	km	អត្ថបទបង្ហាញដល់អ្នកប្រើប្រាស់
 the two passwords are not the same	admin	km	ពាក្យសម្ងាត់មិនដូចគ្នាទេ។
@@ -918,7 +914,6 @@ view error log	admin	km	មើលកំណត់ហេតុកំហុស
 view sessions	admin	km	មើលវគ្គ
 view this user	admin	km	មើលអ្នកប្រើប្រាស់នេះ។
 view user account	admin	km	មើលគណនីអ្នកប្រើប្រាស់
-virtual mail manager	admin	km	ម៉ែលនិម្មិត ManaGeR
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	km	កំណត់ចំនួនថ្ងៃដើម្បីជូនដំណឹងដល់អ្នកប្រើប្រាស់ជាមុនអំពីការផ្លាស់ប្តូរពាក្យសម្ងាត់ដោយបង្ខំនាពេលខាងមុខ។ ទទេ = គ្មានព័ត៌មាន
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	km	ព័ត៌មានត្រូវបានសួរដើម្បីទទួលបានទិដ្ឋភាពទូទៅអំពីការប្រើប្រាស់ EGroupware ទូទាំងពិភពលោក។
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	km	យើងមិនរក្សាទុកទិន្នន័យណាមួយទាក់ទងនឹងអត្តសញ្ញាណរបស់អ្នកទេ។

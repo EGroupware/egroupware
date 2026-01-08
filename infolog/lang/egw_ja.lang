@@ -230,6 +230,7 @@ history logging and deleting of items	infolog	ja	履歴出力と項目の削除
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	ja	詳細説明の最大表示行数を指定します。表示しきれない分はスクロールして表示することができます。
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	ja	詳細説明の幅を文字数で指定します。（例: 60）
 html link to the current record	infolog	ja	このレコードへの HTML リンク
+icon for	infolog	ja	アイコン
 id	infolog	ja	ID
 id#	infolog	ja	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ja	タイプにグループ所有者が定義されている場合、タイプの全項目はそのグループ所有となります（作成者は所有者になりません）!
@@ -493,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	ja	新規項目の�
 today	infolog	ja	今日
 todays date	infolog	ja	今日の日付
 todo	infolog	ja	ToDo
+toggle details	common	ja	詳細を表示/非表示
 typ	infolog	ja	タイプ
 typ '%1' already exists !!!	infolog	ja	タイプ '%1' は既に存在します!
 type	infolog	ja	タイプ

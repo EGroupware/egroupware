@@ -65,6 +65,7 @@ all applications	admin	ko	모든 응용프로그램
 all records and account information will be lost!	admin	ko	이 계정의 자료와 정보가 삭제됩니다.
 all users	admin	ko	모든 사용자
 allow anonymous access to this app	admin	ko	이 응용프로그램에 익명 연결 허용
+allow remote administration from following install id's (comma separated)	admin	ko	다음 설치 ID(쉼표로 구분)로부터 원격 관리를 허용합니다.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ko	SingleSignOnの'Security & Passwords'にパスワードを保存できるようにする。
 allow user to set 'remember me' token	admin	ko	사용자가 ‘나를 기억해’ 토큰을 설정하도록 허용하기
 anonymous user	admin	ko	익명 사용자
@@ -77,6 +78,7 @@ application title	admin	ko	응용프로그램 제목
 applications	admin	ko	응용프로그램들
 applications list	admin	ko	응용프로그램 목록
 apply the changes	admin	ko	변경사항 적용
+are you sure you want to %1 mail for selected accounts?	admin	ko	선택한 계정에 대해 %1 메일을 삭제하시겠습니까?
 are you sure you want to delete the application %1 ?	admin	ko	%1 응용프로그램을 정말 삭제하시겠습니까?
 are you sure you want to delete this account ?	admin	ko	이 계정을 정말 삭제하시겠습니까 ?
 are you sure you want to delete this application ?	admin	ko	이 응용프로그램을 정말 삭제하시겠습니까?
@@ -86,11 +88,12 @@ are you sure you want to delete this group ?	admin	ko	이 그룹을 정말 삭�
 are you sure you want to delete this server?	admin	ko	이 서버를 정말 삭제하시겠습니까?
 are you sure you want to kill this session ?	admin	ko	이 세션을 정말 종료시키시겠습니까 ?
 async services last executed	admin	ko	비동기 서비스 최종 실행됨
-asynchronous timed services	admin	ko	비동기예약 서비스
+asynchronous timed services	admin	ko	비동기 서비스 실행
 asyncservices not yet installed or other error (%1) !!!	admin	ko	비동기서비스 가 아직 설치 되지 않았거나 다른 오류 (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ko	기본 'application/octet-stream' 대신에 현재 mimetype으로 FTP 사용을 시도합니다
 authentication / accounts	admin	ko	인증 / 계정
 auto create account records for authenticated users	admin	ko	인증된 사용자용 자동 생성 계정 레코드
+backup directory %1 mounted as %2	admin	ko	백업 디렉터리 %1이 %2로 마운트되었습니다
 bi-dir passthrough	admin	ko	양방향 통과 (bi-dir passthrough)
 bi-directional	admin	ko	양방향( bi-directional )
 blocking after wrong password	admin	ko	잘못된 비밀번호로 차단하기
@@ -112,8 +115,10 @@ change acl rights	admin	ko	ACL 권한 변경
 change config settings	admin	ko	구성 설정 변경
 change domain of email address and aliases	admin	ko	이메일 주소 및 별칭의 도메인 변경
 change login screen message	admin	ko	주 화면 메세지 변경
+changelog and versions	admin	ko	변경 내역 및 버전
 check ip address of all sessions	admin	ko	모든 세션에 ip 주소 확인
 check items to <b>%1</b> to %2 for %3	admin	ko	%3의 항목을 <b>%1</b>에서 %2로 체크
+clear cache and register hooks	admin	ko	캐시/레지스터 후크 지우기
 clear security tokens	admin	ko	보안 토큰 지우기
 click to select a color	admin	ko	클릭해서 색깔을 선택
 color	admin	ko	색
@@ -134,6 +139,7 @@ custom fields	admin	ko	사용자정의 필드
 data	admin	ko	데이터
 day	admin	ko	날
 day of week<br>(0-6, 0=sun)	admin	ko	주의 일수<br>(0-6, 0=일요일)
+db backup and restore	admin	ko	백업
 default	admin	ko	기본
 default file system space per user	admin	ko	유저 당 기본 파일시스템 용량
 default file system space per user/group ?	admin	ko	유저/그룹 당 기본 파일시스템 용량?
@@ -156,8 +162,9 @@ deny access	admin	ko	접근 금지
 deny access to access log	admin	ko	거부된 접근을 접근 로그로
 deny access to application registery	admin	ko	거부된 접근을 응용프로그램 레지스트리로
 deny access to applications	admin	ko	거부된 접근을 응용프로그램으로
-deny access to asynchronous timed services	admin	ko	거부된 접근을 비동기예약 서비스로
+deny access to asynchronous timed services	admin	ko	비동기 서비스에 대한 액세스 거부
 deny access to current sessions	admin	ko	거부된 접근을 현재 세션으로
+deny access to db backup and restore	admin	ko	백업에 대한 액세스 거부
 deny access to error log	admin	ko	거부된 접근을 에러 로그로
 deny access to global categories	admin	ko	거부된 접근을 전역 카테고리로
 deny access to groups	admin	ko	거부된 접근을 그룹으로
@@ -185,6 +192,7 @@ edit this group	admin	ko	이 그룹을 편집
 edit this user	admin	ko	이 유저를 편집
 edit user	admin	ko	사용자 편집
 edit user account	admin	ko	사용자 계정을 편집
+egroupware version	admin	ko	EGroupware 버전
 enable debug-messages	admin	ko	디버그-메세지를 활성화
 enter a description for the category	admin	ko	카테고리의 설명을 입력하세요
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	ko	응용프로그램의 세션 암호화에 사용할 텍스트 입력<br>(mcrypt 필요)
@@ -214,6 +222,7 @@ event details follow	admin	ko	다음은 이벤트-설명
 expires	admin	ko	만료
 export certificate as p12	admin	ko	인증서를 P12로 내보내기
 failed to change password.	admin	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
+failed to mount backup directory!	admin	ko	백업 디렉터리를 마운트하지 못했습니다!
 fallback (after each pageview)	admin	ko	폴백 (각 페이지보기 이후)
 false	admin	ko	거짓
 file space	admin	ko	파일 용량
@@ -300,6 +309,7 @@ minute	admin	ko	분
 mode	admin	ko	모드
 modified	admin	ko	변경됨
 month	admin	ko	월
+mount backup directory to %1	admin	ko	백업 디렉터리를 %1에 마운트하십시오
 name must not be empty !!!	admin	ko	이름을 입력하세요
 new group name	admin	ko	새 그룹 이름
 new name	admin	ko	새 이름
@@ -328,6 +338,7 @@ percent of users that logged out	admin	ko	퍼센트의 사용자가 접속해지
 permission denied	admin	ko	접근권한이 없습니다
 permissions	admin	ko	권한
 permissions this group has	admin	ko	이 그룹이 가진 권한
+php version	admin	ko	PHP 버전
 phpinfo	admin	ko	PHP 정보
 please enter a name	admin	ko	이름을 입력하세요
 please enter a name for that server !	admin	ko	서버의 이름을 입력하세요!
@@ -339,7 +350,10 @@ re-enter password	admin	ko	비밀번호 재입력
 read this list of methods.	admin	ko	이 메소드 목록 읽기
 register application hooks	admin	ko	응용프로그램 훅(hooks) 등록
 regular expression to find part to use as container	admin	ko	コンテナとして使用する部分を見つけるための正規表現
+remote administration instances	admin	ko	원격 관리
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	ko	원격 인스턴스에서 원격 관리는 [관리 > 사이트 구성]에서 활성화해야 합니다!
 remove	admin	ko	삭제
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	ko	그룹에 대한 접근 권한을 제거하면 이 카테고리의 데이터에 문제가 발생할 수 있습니다. 정말 삭제하시겠습니까? 다음 그룹의 사용자는 더 이상 접근 권한이 없을 수 있습니다:
 revoke this token	admin	ko	이 토큰 해지하기
 rows	admin	ko	줄
 run asynchronous services	admin	ko	비동기 서비스 실행

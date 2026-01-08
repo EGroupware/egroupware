@@ -46,7 +46,8 @@
 15 minutes	common	en	15 minutes
 2-factor authentication code required	common	en	2-Factor Authentication code required
 2-factor-authentication	common	en	2-Factor-Authentication
-2-factor-authentication required	common	en	2-Factor-Authentication required
+2-factor-authentication required	common	en	Second factor required.
+2nd factor	login	en	2nd factor
 3 minutes	common	en	3 minutes
 30 minutes	common	en	30 minutes
 30 seconds	common	en	30 seconds
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	en	Add a new entry of the sel
 add a new multi-column index	common	en	Add a new multi-column index
 add category	common	en	Add category
 add column	common	en	Add column
-add current	common	en	Current view as favourite
+add current	common	en	View as favourite
 add index	common	en	Add index
 add new	common	en	Add new
 add shortcut	common	en	Add shortcut

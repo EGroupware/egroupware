@@ -219,6 +219,7 @@ history logging and deleting of items	infolog	hu	Történet követése (log) és
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	hu	Mennyi leírás sor legyen látható? További sorokat a csúszka használatával lehet megtekinteni.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	hu	Milyen széles legyen a leírási terület. Ez az érték numerikus, pl. 60.
 html link to the current record	infolog	hu	HTML-link az aktuális rekordhoz
+icon for	infolog	hu	Ikon a
 id	infolog	hu	Azonosító
 id#	infolog	hu	Azonosító#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	hu	Ha egy típusnak van csoport tulajdonosa, akkor az ezzel a típussal létrehozott bejegyzések tulajdonosa a megadott CSOPORT és nem az a felhasználó, aki létrehozta!
@@ -265,6 +266,7 @@ leave it empty	infolog	hu	Hagyja üresen
 leave it empty for a full week	infolog	hu	Teljes héthez hagyja üresen
 leave without saveing the entry	infolog	hu	Kilépés mentés nélkül
 leaves without saveing	infolog	hu	Kilépés mentés nélkül
+limit list to last n month, if ordering by last-modified and not searching.	admin	hu	Korlátozza a listát az utolsó N hónapra, ha a legutóbbi módosítás szerint rendez, és nem keres.
 limit number of description lines (default 5, 0 for no limit)	infolog	hu	A leírás sorainak felső határa (5 alapértelmezésben, 0 korlátlan számú sorhoz).
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	hu	A leíró oszlop szélességének korlátozása. Csak akkor érvényes, ha a sorok korlátozása be van állítva. 0 = nincs korlátozás.
 link	infolog	hu	Hivatkozás
@@ -480,6 +482,7 @@ to what should the startdate of new entries be set.	infolog	hu	Új bejegyzés es
 today	infolog	hu	Ma
 todays date	infolog	hu	Mai dátum
 todo	infolog	hu	Tennivalók
+toggle details	common	hu	Részletek megjelenítése
 typ	infolog	hu	Típus
 typ '%1' already exists !!!	infolog	hu	'%1' típus már létezik!
 type	infolog	hu	Típus
@@ -496,6 +499,7 @@ urgency	infolog	hu	Sürgősség
 urgent	infolog	hu	Sürgős
 use all	infolog	hu	Használja az összeset
 use custom notification message	infolog	hu	Egyéni értesítési üzenet használata
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	hu	Használja ezt a címkét címcímkékhez. Helyezze a megismételni kívánt tartalmat két címke közé.
 used time	infolog	hu	Felhasznált idő
 values for selectbox	infolog	hu	Éktékek a kiválasztódoboznak
 view all subs of this entry	infolog	hu	Bejegyzés összes albejegyzésének a megtekintése

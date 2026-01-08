@@ -12,8 +12,9 @@ custom fields	filemanager	tr	Özel Alanlar
 default action on double-click	filemanager	tr	Çift tıklamada varsayılan eylem
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	tr	Varsayılan = Hayır. Bağlantı gösterilmez, ancak yine de bu konuma gidebilir veya bu belirli konumu başlangıç klasörü veya klasör bağlantısı olarak yapılandırabilirsiniz.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	tr	Bir belge dosyası üzerinde çift tıklama eyleminin nasıl işleneceğini tanımlar. Görüntüler her zaman expose-view'da ve e-postalar e-posta uygulamasıyla açılır. Diğer tüm MIME türleri tarayıcının kendisi tarafından ele alınır.
+defines how to open a merge print document	filemanager	tr	Belgeler doldurulduktan sonra ne yapılmalıdır?<br><br><b>Collabora Online kullanılabilir durumdaysa</b>, bu belgeler Collabora Online ile doğrudan tarayıcıda açılabilir (ve daha fazla işlenebilir). <br><br> <b>Collabora Online yoksa</b>, doldurulmuş belge indirilmek üzere sunulur.<br><br>Collabora Online hakkında daha fazla bilgi:<br> <a href="https://www.egroupware.org/online-office" target="_blank">EGroupware'de Collabora Online Office</a>
 disable	filemanager	tr	Engelle
-download	filemanager	tr	İndirmek için
+download	filemanager	tr	İndir
 download documents	filemanager	tr	Belgeleri indirin
 edit share	filemanager	tr	Paylaşımı düzenle
 enable	filemanager	tr	Etkinleştir

@@ -66,6 +66,7 @@ back to main list	infolog	da	Tilbage til hoved listen
 billed	infolog	da	Fakturerede projekter
 both	infolog	da	Begge
 call	infolog	da	Ring
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	da	Kan bruges til at vise yderligere InfoLog-typer i kalenderen eller begrænse den til f.eks. kun at vise opgaver.
 can not return an exact number of rows and therefore hides the count.	admin	da	Kan ikke returnere et nøjagtigt antal rækker og skjuler derfor antallet.
 cancel	infolog	da	Annuller
 categories	infolog	da	Kategorier
@@ -208,6 +209,7 @@ history logging and deleting of items	infolog	da	Historiklogning og sletning af 
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	da	Hvor mange beskrivelseslinjer, der skal være direkte synlige. Yderligere linjer er tilgængelige via en rullebjælke.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	da	Hvor bredt skal beskrivelsesområdet være. Denne værdi er numerisk, f.eks. 60.
 html link to the current record	infolog	da	HTML-link til den aktuelle post
+icon for	infolog	da	Ikon for
 id	infolog	da	ID
 id#	infolog	da	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	da	Hvis en type har en gruppeejer, vil alle poster af den type blive ejet af den givne gruppe og IKKE af den bruger, der oprettede den!
@@ -337,6 +339,8 @@ phonecall	infolog	da	Telefon besked
 planned	infolog	da	Planlagt
 planned time	infolog	da	Planlagt tid
 prefix for sub-entries (default: re:)	infolog	da	Præfiks til underposter (standard: Re:)
+price	infolog	da	Pris
+pricelist	infolog	da	Prisliste
 print this infolog	infolog	da	Udskriv denne InfoLog
 printing...	infolog	da	Udskrivning ...
 priority	infolog	da	Prioritet
@@ -441,6 +445,7 @@ to all linked contacts	infolog	da	Til alle tilknyttede kontakter
 to many might exceed your execution-time-limit	infolog	da	For mange vil måske overstige din eksekvere tid begrænsning
 today	infolog	da	I dag
 todo	infolog	da	Opgaver
+toggle details	common	da	Skift detaljer
 typ	infolog	da	Type
 typ '%1' already exists !!!	infolog	da	Type '%1' eksistere allerede
 type	infolog	da	Type
@@ -458,6 +463,7 @@ urgent	infolog	da	Haster
 use all	infolog	da	Brug alle
 use custom notification message	infolog	da	Brug brugerdefineret meddelelsesbesked
 use field from csv if possible	infolog	da	Brug felt fra CSV, hvis det er muligt
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	da	Brug dette tag til adresselabels. Placer det indhold, du vil gentage, mellem to tags.
 used time	infolog	da	Brugt tid
 values for selectbox	infolog	da	Værdier for selectboks
 view all subs of this entry	infolog	da	Vis alle underkategorier for denne postering

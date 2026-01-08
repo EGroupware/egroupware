@@ -230,6 +230,7 @@ history logging and deleting of items	infolog	es-es	Registro histórico y borrad
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	es-es	Cuántas líneas de descripción deben estar visibles directamente. Las líneas siguientes se ven mediante una barra de desplazamiento.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	es-es	Ancho deseado del área de descripción. Este valor es numérico y se interpreta como em; 60 funciona razonablemente bien.
 html link to the current record	infolog	es-es	Enlace HTML al registro actual
+icon for	infolog	es-es	Icono para
 id	infolog	es-es	ID
 id#	infolog	es-es	ID nº
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	es-es	¡Si un tipo tiene un propietario para el grupo, todas las entradas de ese tipo pertenecerán al grupo y NO al usuario que las creó!
@@ -493,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	es-es	A qué valor e
 today	infolog	es-es	Hoy
 todays date	infolog	es-es	Fecha de hoy
 todo	infolog	es-es	Tareas pendientes
+toggle details	common	es-es	Alternar detalles
 typ	infolog	es-es	Tipo
 typ '%1' already exists !!!	infolog	es-es	¡El tipo '%1' ya existe!
 type	infolog	es-es	Tipo

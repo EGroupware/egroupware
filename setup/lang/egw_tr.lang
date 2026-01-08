@@ -6,7 +6,16 @@ application title	setup	tr	Uygulama Başlığı
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	tr	FTP için 'application/octet-stream' yerine doğru MIME type kullanınız.
 authentication / accounts	setup	tr	Doğrulama / Hesaplar
 auto create account records for authenticated users	setup	tr	Giriş yapan kullanıcılar için kayıt tut.
+backup '%1' deleted	setup	tr	Yedekleme ‘%1’ silindi.
+backup '%1' renamed to '%2'	setup	tr	Yedekleme ‘%1’ '%2' olarak yeniden adlandırıldı.
+backup '%1' restored	setup	tr	Yedekleme ‘%1’ geri yüklendi.
+backup directory %1 mounted as %2	setup	tr	Yedekleme dizini %1, %2 olarak bağlandı.
+backup failed	setup	tr	Yedekleme başarısız oldu.
 backup files (needs ziparchive)	setup	tr	EGroupware dosyalarının veri yedeklemesi (dosyalar dizini) <br>(PHP ZipArchive gerektirir)
+backup finished	setup	tr	Yedekleme tamamlandı.
+backup housekeeping	setup	tr	Standart ada sahip yedeklemeler otomatik olarak temizlenebilir. Yedekleme dosyalarını temizlemeden hariç tutmak için yeniden adlandırın.
+backup min count	setup	tr	Minimum yedekleme sayısı
+backup started, this might take a few minutes ...	setup	tr	Yedekleme başladı, bu işlem birkaç dakika sürebilir ...
 bottom	setup	tr	Taban
 cancel	setup	tr	Iptal
 check ip address of all sessions	setup	tr	Bütün oturumların IP'leri kontrol et
@@ -49,10 +58,12 @@ ldap root password	setup	tr	LDAP yönetici şifresi
 ldap rootdn	setup	tr	LDAP root DN
 mail account of %1 migrated	setup	tr	%1'in posta hesabı taşındı.
 maximum account id (e.g. 65535 or 1000000)	setup	tr	Meksimum hesap ID'si (ör: 65535 ya da 1000000)
+min backup count	setup	tr	Saklanan maksimum yedekleme sayısı (sıfır: tümü)
 minimum account id (e.g. 500 or 100, etc.)	setup	tr	Minimum hesap ID'si (ör 500 ya da 100)
 minute	setup	tr	Dakika
 modified	setup	tr	Değiştirilmiş
 month	setup	tr	Ay
+mount backup directory to %1	setup	tr	Yedekleme dizini %1'e bağlan
 new	setup	tr	Yeni
 next run	setup	tr	Sıradaki çalıştırma
 no algorithms available	setup	tr	Mevcut hiç algoritma yok
@@ -88,6 +99,7 @@ use pure html compliant code (not fully working yet)	setup	tr	Saf HTML uyumlu ko
 user for smtp-authentication (leave it empty if no auth required)	setup	tr	SMTP doğrulaması için kullanılacak kullanıcı (Doğrulama gerekmiyorsa boş bırakınız)
 users choice	setup	tr	Kullanıcı Seçimleri
 version	setup	tr	Sürüm
+we strongly recommend to run a db backup before running the import!	setup	tr	İçe aktarmayı çalıştırmadan ÖNCE bir veritabanı yedeklemesi yapmanızı şiddetle tavsiye ederiz!
 would you like to show each application's upgrade status ?	setup	tr	Her uygulamanın güncelleme durumunu görüntülemek ister misiniz?
 write	setup	tr	Yaz
 you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	tr	Yedekleme dizinini EGroupware dosya yöneticisine bağlayarak ve oradan yükleyerek bu sınırı aşabilirsiniz.

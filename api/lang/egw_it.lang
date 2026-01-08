@@ -46,7 +46,8 @@
 15 minutes	common	it	15 minuti
 2-factor authentication code required	common	it	È richiesto un codice di autenticazione a 2 fattori
 2-factor-authentication	common	it	Autenticazione a 2 fattori
-2-factor-authentication required	common	it	Autenticazione a 2 fattori richiesta
+2-factor-authentication required	common	it	Secondo fattore richiesto.
+2nd factor	login	it	2° Fattore
 3 minutes	common	it	3 minuti
 30 minutes	common	it	30 minuti
 30 seconds	common	it	30 secondi
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	it	Aggiungi una nuova voce de
 add a new multi-column index	common	it	Aggiungi un nuovo indice multi-colonna
 add category	common	it	Aggiungi categoria
 add column	common	it	Aggiungi Colonna
-add current	common	it	Aggiungi attuale
+add current	common	it	Mostra come preferito
 add index	common	it	Aggiungi Indice
 add new	common	it	Aggiungi nuova
 add shortcut	common	it	Aggiungi scorciatoia

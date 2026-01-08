@@ -84,9 +84,12 @@ backup '%1' deleted	setup	nl	Backup '%1' verwijderd
 backup '%1' renamed to '%2'	setup	nl	Backup '%1' hernoemd in '%2'
 backup '%1' restored	setup	nl	Backup '%1' teruggezet
 backup and restore	setup	nl	Backup en herstel
+backup directory %1 mounted as %2	setup	nl	Back-upmap %1 gekoppeld als %2
 backup failed	setup	nl	Backup is mislukt
 backup files (needs ziparchive)	setup	nl	Gegevensback-up van de EGroupware-bestanden (bestandsmap) <br>(PHP ZipArchive vereist)
 backup finished	setup	nl	Backup voltooid
+backup housekeeping	setup	nl	Back-ups met een standaardnaam kunnen automatisch worden opgeschoond. Hernoem back-upbestanden om ze uit te sluiten van opschoning.
+backup min count	setup	nl	Minimum aantal back-ups
 backup now	setup	nl	Backup nu
 backup sets	setup	nl	Backup sets
 backup skipped!	setup	nl	Backup overgeslagen!
@@ -259,7 +262,7 @@ error searching "dn=%1" for "%2"!	setup	nl	Fout bij het zoeken naar "DN=%1" voor
 error uploading your backup!	setup	nl	Fout bij het uploaden van uw back-up!
 every	setup	nl	Elke
 export has been completed!	setup	nl	Export is voltooid!
-failed to mount backup directory!	setup	nl	Koppeling van back-upmap mislukt!
+failed to mount backup directory!	setup	nl	Kan back-upmap niet koppelen!
 failed updating user "%1" dn="%2"!	setup	nl	Fout bij het updaten van gebruiker "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	nl	Fout tijdens schrijven van het configuratiebestand header.inc.php, controleer de rechten!
 fallback authentication	setup	nl	Fallback Authenticatie
@@ -378,6 +381,7 @@ modifications have been completed!	setup	nl	Aanpassingen zijn voltooid!
 modified	setup	nl	Gewijzigd
 modify	setup	nl	Aanpassen
 month	setup	nl	Maand
+mount backup directory to %1	setup	nl	Koppel back-upmap aan %1
 name of database	setup	nl	Naam van de database
 name of db user egroupware uses to connect	setup	nl	Naam van de db gebruiker die EGroupware gebruikt om verbinding te maken
 never	setup	nl	Nooit
@@ -628,6 +632,7 @@ virtual mail manager (login-name includes domain)	setup	nl	Virtuele mail beheerd
 warning!	setup	nl	Waarschuwing!
 we can proceed	setup	nl	We kunnen doorgaan
 we could not determine the version of %1, please make sure it is at least %2	setup	nl	We konden de versie van %1 niet bepalen, controleer svp dat het minstens %2 is
+we strongly recommend to run a db backup before running the import!	setup	nl	We raden ten zeerste aan om een DB-back-up uit te voeren VOORDAT u de import uitvoert!
 we will automatically update your tables/records to %1	setup	nl	We zullen automatisch uw tabellen/records bijwerken naar %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	nl	We zullen nu een serie testen uitvoeren die een paar minuten in beslag kunnen nemen. Klik op de link hieronder om door te gaan.
 welcome to the egroupware installation	setup	nl	Welkom bij de EGroupware installatieprocedure

@@ -37,9 +37,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	fi	Muokkaa lisäkenttiä
 enable	preferences	fi	Ota käyttöön
 enable drag and drop functionality (experimental)	preferences	fi	Drag & Drop
-enable selectbox dropdown resizing for ie (experimental)	preferences	fi	Ota käyttöön valintalaatikon pudotusvalikon koonmääritys toiminto IE:lle.
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	fi	Ota käyttöön / pois käytöstä 'drag and drop' toiminto kaikissa sovelluksissa. Jos selain ei tue toimintoa, se otetaan pois käytöstä automaattisesti.
-enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	fi	Ota käyttöön valintalaatikon pudotusvalikon koonmääritys toiminto kaikissa sovelluksissa IE:lle. Jos selain ei ole IE, toiminto otetaan pois käytöstä automaattisesti.
 enter code to authenticate the actions below	preferences	fi	Syötä koodi alla olevien toimintojen todentamiseksi
 enter code to verify correct setup	preferences	fi	Syötä koodi oikeiden asetusten tarkistamiseksi
 enter your new password	preferences	fi	Anna uusi salasana

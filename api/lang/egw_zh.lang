@@ -30,8 +30,9 @@
 13 (ntp)	admin	zh	13 (NTP)
 15 minutes	common	zh	15分钟
 2-factor authentication code required	common	zh	需要双因素验证码
-2-factor-authentication	common	zh	2-Factor-Authentication
-2-factor-authentication required	common	zh	需要双因素认证
+2-factor-authentication	common	zh	双因素验证
+2-factor-authentication required	common	zh	需要第二个验证因素。
+2nd factor	login	zh	第二个因素
 3 minutes	common	zh	3分钟
 30 minutes	common	zh	30分钟
 30 seconds	common	zh	30秒
@@ -66,7 +67,7 @@ add a new entry of the selected application	common	zh	在选择的应用程序�
 add a new multi-column index	common	zh	添加新的多列索引
 add category	common	zh	添加类别
 add column	common	zh	添加列
-add current	common	zh	当前视图为最爱
+add current	common	zh	设为收藏夹
 add index	common	zh	添加索引
 add new	common	zh	新增
 add shortcut	common	zh	添加快捷键
@@ -567,7 +568,7 @@ iceland	common	zh	冰岛
 id	common	zh	编号
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	zh	为了(暂时)移除一个 field/cell，如果字段被禁用则会显示一个空白 table-cell
 if there are some images in the background folder you can choose the one you would like to see.	common	zh	如果背景文件夹中有一些图片的话，您可以选择其中的一个您希望的。
-if you use "2-factor-authentication", please enter the code here.	common	zh	如果你使用 "2-Factor-Authentication"，请在此输入代码。
+if you use "2-factor-authentication", please enter the code here.	common	zh	若您使用“双因素验证”，请在此处输入验证码。
 image	common	zh	图片
 image directory relative to document root (use / !), example:	common	zh	相对文档根目录的图片目录(使用：/)，例如：
 image url	common	zh	图片网址
@@ -607,7 +608,7 @@ install	common	zh	安装
 install egroupware as mail-handler?	common	zh	安装 EGroupware 作为邮件处理程序？
 integer	common	zh	整数
 international	common	zh	国际
-invalid 2-factor authentication code	common	zh	无效的2-Factor Authentication代码
+invalid 2-factor authentication code	common	zh	无效的双因素验证码
 invalid email	common	zh	无效电子邮件
 invalid filename	common	zh	文件名不正确
 invalid ip address	common	zh	IP地址无效

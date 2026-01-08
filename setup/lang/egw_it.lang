@@ -423,6 +423,7 @@ version	setup	it	Versione
 version mismatch	setup	it	Incompatibilità versione
 view	setup	it	Vedi
 warning!	setup	it	Attenzione!
+we strongly recommend to run a db backup before running the import!	setup	it	Si consiglia vivamente di eseguire un backup del database PRIMA di eseguire l'importazione!
 we will automatically update your tables/records to %1	setup	it	Aggiornerò automaticamente le tue tabelle/dati alla %1
 would you like to show each application's upgrade status ?	setup	it	Vuoi che venga mostrato lo stato di aggiornamento di ogni applicazione?
 write	setup	it	Scrivi

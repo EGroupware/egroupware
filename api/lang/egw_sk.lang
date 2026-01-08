@@ -46,7 +46,8 @@
 15 minutes	common	sk	15 minút
 2-factor authentication code required	common	sk	Vyžaduje sa 2-faktorový overovací kód
 2-factor-authentication	common	sk	2-faktorová autentifikácia
-2-factor-authentication required	common	sk	Vyžaduje sa 2-faktorové overenie
+2-factor-authentication required	common	sk	Je potrebný druhý faktor.
+2nd factor	login	sk	Druhý faktor
 3 minutes	common	sk	3 minúty
 30 minutes	common	sk	30 minút
 30 seconds	common	sk	30 sekúnd
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	sk	Pridať novú položku vyb
 add a new multi-column index	common	sk	Pridať nový viacstĺpcový index
 add category	common	sk	Pridať kategóriu
 add column	common	sk	Pridať Stĺpec
-add current	common	sk	Pridať súčasné
+add current	common	sk	Zobraziť ako obľúbené
 add index	common	sk	Pridať Index
 add new	common	sk	Pridať nový
 add shortcut	common	sk	Pridať skratku

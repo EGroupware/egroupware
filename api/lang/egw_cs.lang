@@ -46,7 +46,8 @@
 15 minutes	common	cs	15 minut
 2-factor authentication code required	common	cs	Vyžaduje se dvoufaktorový ověřovací kód
 2-factor-authentication	common	cs	Ověřování pomocí 2 faktorů
-2-factor-authentication required	common	cs	Vyžaduje se dvoufaktorové ověřování
+2-factor-authentication required	common	cs	Druhý faktor je nutný.
+2nd factor	login	cs	2. úložiště
 3 minutes	common	cs	3 minuty
 30 minutes	common	cs	30 minut
 30 seconds	common	cs	30 vteřin
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	cs	Přidat nový záznam vybr
 add a new multi-column index	common	cs	Přidat nový vicesloupcový index
 add category	common	cs	Přidat kategorii
 add column	common	cs	Přidat sloupec
-add current	common	cs	Uložit aktuální pohled
+add current	common	cs	Zobrazit jako oblíbené
 add index	common	cs	Přidat index
 add new	common	cs	Přidat nový
 add shortcut	common	cs	Přidat zástupce

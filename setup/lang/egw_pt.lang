@@ -61,9 +61,12 @@ backup '%1' deleted	setup	pt	Cópia de segurança '%1' eliminada
 backup '%1' renamed to '%2'	setup	pt	Cópia de segurança '%1' renomeada para '%2'
 backup '%1' restored	setup	pt	Cópia de segurança '%1' reposta
 backup and restore	setup	pt	Fazer cópia de segurança e repor
+backup directory %1 mounted as %2	setup	pt	Diretório de backup %1 montado como %2
 backup failed	setup	pt	Cópia de segurança falhou
 backup files (needs ziparchive)	setup	pt	Cópia de segurança dos dados dos ficheiros do EGroupware (diretório de ficheiros) <br>(requer PHP ZipArchive)
 backup finished	setup	pt	Cópia de segurança concluída
+backup housekeeping	setup	pt	Backups com um nome padrão podem ser limpos automaticamente. Renomeie os ficheiros de backup para excluí-los da limpeza.
+backup min count	setup	pt	Número mínimo de backups
 backup now	setup	pt	Fazer cópia de segurança agora
 backup sets	setup	pt	Definições da cópia de segurança
 backup started, this might take a few minutes ...	setup	pt	A cópia de segurança começou. Pode demorar alguns minutos ...
@@ -191,7 +194,7 @@ error searching "dn=%1" for "%2"!	setup	pt	Erro ao procurar "DN=%1" para "%2"!
 error uploading your backup!	setup	pt	Erro ao carregar a sua cópia de segurança!
 every	setup	pt	Todos os
 export has been completed!	setup	pt	A exportação foi concluída!
-failed to mount backup directory!	setup	pt	Falha ao montar o diretório de cópia de segurança!
+failed to mount backup directory!	setup	pt	Falha ao montar o diretório Backup!
 failed updating user "%1" dn="%2"!	setup	pt	Falha ao atualizar o utilizador "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	pt	Falha ao escrever o ficheiro de configuração header.inc.php, verifique as permissões!
 fallback authentication	setup	pt	Autenticação de recurso
@@ -285,6 +288,7 @@ modifications have been completed!	setup	pt	As modificações foram concluídas!
 modified	setup	pt	Modificado
 modify	setup	pt	Modificar
 month	setup	pt	Mês
+mount backup directory to %1	setup	pt	Montar diretório de backup em %1
 name of database	setup	pt	Nome da base de dados
 name of db user egroupware uses to connect	setup	pt	Nome do utilizador da base de dados que o EGroupware utiliza para aceder
 never	setup	pt	Nunca
@@ -479,6 +483,7 @@ view	setup	pt	Visualizar
 virtual mail manager (login-name includes domain)	setup	pt	Gestor virtual de correio electrónico (nome de acesso inclui domínio)
 warning!	setup	pt	Aviso!
 we can proceed	setup	pt	Podemos continuar ...
+we strongly recommend to run a db backup before running the import!	setup	pt	Recomendamos fortemente executar um backup do banco de dados ANTES de executar a importação!
 we will automatically update your tables/records to %1	setup	pt	As tabelas/registos serão automaticamente actualizados para %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pt	Iremos executar um conjunto de testes, que pode demorar alguns minutos. Clique na ligação para continuar.
 welcome to the egroupware installation	setup	pt	Bem-vindo à instalação do EGroupware

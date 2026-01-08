@@ -98,7 +98,7 @@ all groups	admin	ja	全グループ
 all records and account information will be lost!	admin	ja	すべてのレコードとアカウント情報が失われます。
 all users	admin	ja	全てのユーザ
 allow anonymous access to this app	admin	ja	このアプリケーションに対する匿名ユーザのアクセスを許可
-allow remote administration from following install id's (comma separated)	admin	ja	リモート管理を許可するインストール ID（コンマ区切りで複数指定可）
+allow remote administration from following install id's (comma separated)	admin	ja	以下のインストールIDからのリモート管理を許可します（カンマ区切り）。
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ja	SingleSignOnの'Security & Passwords'にパスワードを保存できるようにする。
 allow user to set 'remember me' token	admin	ja	ユーザが「Remember me」トークンを設定できるようにする
 allow users to change forwards	admin	ja	ユーザによるフォワードの変更を許可する
@@ -126,6 +126,7 @@ applications run rights updated.	admin	ja	アプリケーション実行権限�
 applies the changes	admin	ja	変更を適用しました。
 apply the changes	admin	ja	変更を適用
 archive: zip or tar	admin	ja	アーカイブ: ZIP または tar
+are you sure you want to %1 mail for selected accounts?	admin	ja	選択したアカウントの%1メールを削除してもよろしいですか？
 are you sure you want to delete the application %1 ?	admin	ja	アプリケーション %1 を削除してよろしいですか？
 are you sure you want to delete this account ?	admin	ja	このアカウントを削除してよろしいですか？
 are you sure you want to delete this application ?	admin	ja	このアプリケーションを削除してよろしいですか？
@@ -135,7 +136,7 @@ are you sure you want to delete this group ?	admin	ja	このグループを削�
 are you sure you want to delete this server?	admin	ja	このサーバを削除してよろしいですか。
 are you sure you want to kill this session ?	admin	ja	このセッションを切断してよろしいですか。
 async services last executed	admin	ja	非同期サービスの最終実行日時
-asynchronous timed services	admin	ja	非同期スケジュール済みサービス
+asynchronous timed services	admin	ja	非同期サービス
 asyncservices not yet installed or other error (%1) !!!	admin	ja	Async services not yet installed or other error (%1) !
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ja	FTP のMIMEタイプで   'application/octet-stream'   の代わりに<br />正しいタイプを使う
 attributes	admin	ja	属性
@@ -184,7 +185,7 @@ check categories for not (longer) existing accounts	admin	ja	Check categories fo
 check ip address of all sessions	admin	ja	全てのセッションで IP アドレスのチェックを行う
 check items to <b>%1</b> to %2 for %3	admin	ja	%3(%2)に対する <b>%1</b> の項目をチェックしてください
 children	admin	ja	子孫
-clear cache and register hooks	admin	ja	キャッシュをクリアしてフックを再登録
+clear cache and register hooks	admin	ja	キャッシュをクリアする/フックを登録する
 clear security tokens	admin	ja	セキュリティトークンを消去する
 click to select a color	admin	ja	クリックして色を選択
 color	admin	ja	色
@@ -227,7 +228,7 @@ data	admin	ja	データ
 data from	admin	ja	データの取得元
 day	admin	ja	日
 day of week<br>(0-6, 0=sun)	admin	ja	曜日<br>(0-6, 0=日曜日)
-db backup and restore	admin	ja	DB バックアップ/復元
+db backup and restore	admin	ja	バックアップ
 deactivate	admin	ja	無効化
 debug	admin	ja	デバッグ
 default	admin	ja	既定
@@ -260,9 +261,9 @@ deny access	admin	ja	アクセスを拒否
 deny access to access log	admin	ja	アクセス・ログへのアクセスを拒否
 deny access to application registery	admin	ja	アプリケーション・レジストリへのアクセスを拒否
 deny access to applications	admin	ja	アプリケーションに対するアクセスを拒否
-deny access to asynchronous timed services	admin	ja	Deny access to asynchronous timed services
+deny access to asynchronous timed services	admin	ja	非同期サービスへのアクセスを拒否する
 deny access to current sessions	admin	ja	セッションへのアクセスを拒否
-deny access to db backup and restore	admin	ja	DB バックアップ/復元へのアクセスを拒否
+deny access to db backup and restore	admin	ja	バックアップへのアクセスを拒否します
 deny access to error log	admin	ja	エラー・ログへのアクセスを拒否
 deny access to global categories	admin	ja	グローバルカテゴリへのアクセスを拒否
 deny access to groups	admin	ja	グループへのアクセスを拒否
@@ -396,7 +397,6 @@ force selectbox	admin	ja	セレクトボックス
 force users to change their password regularily?(empty for no,number for after that number of days	admin	ja	強制的にパスワードを更新する間隔（日）。空欄で無効化
 forward also to	admin	ja	Forward also to
 forward email's to	admin	ja	メールを転送 転送先:
-forward emails to	admin	ja	メールを転送 転送先:
 forward only	admin	ja	Forward only
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	ja	Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.
 full name	admin	ja	氏名
@@ -661,11 +661,11 @@ register application hooks	admin	ja	Register application hooks
 regular expression to find part to use as container	admin	ja	コンテナとして使用する部分を見つけるための正規表現
 reject passwords containing part of username or full name (3 or more characters long)	admin	ja	ユーザ名の一部または全部を含むパスワードを拒否(3文字以上）
 relay access checked	admin	ja	Relay access checked
-remote administration instances	admin	ja	リモート管理インスタンス
-remote administration need to be enabled in the remote instance under admin > site configuration!	admin	ja	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
+remote administration instances	admin	ja	リモート管理
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	ja	リモート管理は、リモートインスタンスの「管理」＞「サイト設定」で有効にする必要があります！
 remote instance saved	admin	ja	リモート・インスタンスを保存しました
 remove	admin	ja	削除
-removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	ja	Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	ja	グループのアクセス権を削除すると、このカテゴリのデータに問題が発生する可能性があります。本当に削除しますか？以下のグループのユーザーはアクセスできなくなる可能性があります：
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	ja	Renaming user 'anonymous' will break file sharing and Collabora Online Office!
 requested	admin	ja	リクエスト済み
 required pear class mail/mimedecode.php not found.	admin	ja	Required PEAR class Mail/mimeDecode.php not found.
@@ -675,7 +675,7 @@ rights	admin	ja	権限
 rows	admin	ja	行
 rpm or debian package	admin	ja	RPM または Debian パッケージ
 run	admin	ja	実行
-run asynchronous services	admin	ja	非同期サービスの実行
+run asynchronous services	admin	ja	非同期サービスを実行する
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	ja	Save of message %1 failed. Could not save message to folder %2 due to: %3
 save the category	admin	ja	カテゴリを保存
 save the category and return back to the list	admin	ja	変更を保存して一覧に戻ります。
@@ -773,7 +773,6 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	ja	ログインIDとパスワードが同じです。
 the loginid can not be more then 8 characters	admin	ja	The login ID can not be more than 8 characters.
 the mimeparser can not parse this message.	admin	ja	MIME パーサはこのメッセージを解析できません。
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	ja	内部名（20文字以下）。これを変更すると既存のデータが利用できなくなります
 the testjob sends you a mail everytime it is called.	admin	ja	テスト・ジョブは実行される度にあなた宛てのメールを送信します。
 the text displayed to the user	admin	ja	ユーザに表示されるテキスト
 the two passwords are not the same	admin	ja	パスワードが一致しません。
@@ -871,7 +870,6 @@ view error log	admin	ja	エラー・ログを表示
 view sessions	admin	ja	セッション
 view this user	admin	ja	このユーザを表示
 view user account	admin	ja	ユーザ・アカウントを表示
-virtual mail manager	admin	ja	Virtual MAIL ManaGeR
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	ja	強制パスワード変更日の何日前にユーザに通知するか。空欄で通知無し。
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	ja	送信される情報は、全世界でのEGroupwareの利用概観を得るためにのみ使用されます。
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	ja	個人・団体を特定し得るデータについては一切保存しません。

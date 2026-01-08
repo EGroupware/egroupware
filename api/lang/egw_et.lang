@@ -19,7 +19,8 @@
 15 minutes	common	et	15 minutit
 2-factor authentication code required	common	et	Vajalik 2-faktoorse autentimise kood
 2-factor-authentication	common	et	2-faktoriline autentimine
-2-factor-authentication required	common	et	2-teguriga autentimine nõutav
+2-factor-authentication required	common	et	Teine vajalik tegur.
+2nd factor	login	et	2. tegur
 3 minutes	common	et	3 minutit
 30 minutes	common	et	30 minutit
 30 seconds	common	et	30 sekundit
@@ -45,7 +46,7 @@ add	common	et	Lisa
 add %1 category for	common	et	Lisa %1 kategooria
 add a new contact	common	et	Lisa uus kontakt
 add category	common	et	Lisa Kategooria
-add current	common	et	Praegune vaade kui lemmik
+add current	common	et	Vaata lemmikuna
 add new	common	et	Lisa uus
 add shortcut	common	et	Lisa Kiirklahv
 add sub	common	et	Lisa alam

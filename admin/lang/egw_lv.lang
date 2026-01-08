@@ -75,6 +75,7 @@ all applications	admin	lv	Visas aplikācijas
 all records and account information will be lost!	admin	lv	Visi ieraksti un konta informācija tiks pazaudēta!
 all users	admin	lv	Visi lietotāji
 allow anonymous access to this app	admin	lv	Atļaut nezināmajam lietotājam piekļūt šai aplikācijai
+allow remote administration from following install id's (comma separated)	admin	lv	Atļaut attālo administrēšanu no šādiem instalācijas ID, atdalot ar komatu.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	lv	Ļaujiet lietotājam saglabāt savu paroli sadaļā “Drošība un paroles” vienotai pieejai SingleSignOn.
 allow user to set 'remember me' token	admin	lv	Atļaut lietotājam iestatīt žetonu "Atcerēties mani
 alternate email address	admin	lv	Alternatīvas e-pasta adreses
@@ -89,7 +90,8 @@ applications	admin	lv	Aplikācijas
 applications list	admin	lv	Aplikāciju saraksts
 applies the changes	admin	lv	Apstiprināt izmaiņas
 apply the changes	admin	lv	Lietot izmaiņas
-are you sure you want to delete the application %1 ?	admin	lv	Vai esi pārliecināts, ka vēlies dzēst  aplikāciju %1 ?
+are you sure you want to %1 mail for selected accounts?	admin	lv	Vai tiešām vēlaties %1 sūtīt izvēlētajiem kontiem?
+are you sure you want to delete the application %1 ?	admin	lv	Vai esi pārliecināts, ka vēlies dzēst  aplikāciju %1?
 are you sure you want to delete this account ?	admin	lv	Esi pārliecināts, ka vēlies dzēst šo kontu?
 are you sure you want to delete this application ?	admin	lv	Esi pārliecināts, ka vēlies dzēst šo aplikāciju?
 are you sure you want to delete this category ?	common	lv	Esi pārliecināts, ka vēlies dzēst šo kategoriju?
@@ -98,11 +100,12 @@ are you sure you want to delete this group ?	admin	lv	Esi pārliecināts, ka vē
 are you sure you want to delete this server?	admin	lv	Esi pārliecināts, ka vēlies dzēst šo  serveri?
 are you sure you want to kill this session ?	admin	lv	Esi pārliecināts, ka vēlies izbeigt šo sesiju?
 async services last executed	admin	lv	Asinhronā režīma pēdējie lietotie pakalpojumi
-asynchronous timed services	admin	lv	Asinhronā režīma regulēšanas pakalpojumi
+asynchronous timed services	admin	lv	Asinhronais pakalpojums
 asyncservices not yet installed or other error (%1) !!!	admin	lv	Asinhronie pakalpojumi vēl nav uzstādīti vai cita kļuda (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	lv	Mēģināt lietot pareizu FTP MIMEtype noklusējuma 'application/octet-stream' vietā
 authentication / accounts	admin	lv	Autentifikācija/Konti
 auto create account records for authenticated users	admin	lv	Automātiski veidot konta ierakstus apstiprinātiem lietotājiem
+backup directory %1 mounted as %2	admin	lv	Dublējuma direktorija %1 pievienota kā %2
 bi-directional	admin	lv	divpusējs
 blocking after wrong password	admin	lv	Bloķēšana pēc nepareizas paroles
 bottom	admin	lv	Augšā
@@ -123,8 +126,10 @@ change acl rights	admin	lv	Mainīt ACL tiesības
 change config settings	admin	lv	Mainīt konfigurācijas iestatījumus
 change domain of email address and aliases	admin	lv	E-pasta adreses un aizstājvārdu domēna maiņa
 change login screen message	admin	lv	Mainīt galvenā loga ziņojumu
+changelog and versions	admin	lv	Izmaiņu žurnāls un versijas
 check ip address of all sessions	admin	lv	Pārbaudīt IP adresi visām sesijām
 check items to <b>%1</b> to %2 for %3	admin	lv	Pārbaudīt vienības <b>%1</b> to %2 for %3
+clear cache and register hooks	admin	lv	Tīrīt kešatmiņu / reģistrēt āķus
 clear security tokens	admin	lv	Izdzēst drošības žetonus
 click to select a color	admin	lv	Noklikšķini, lai izvēlētos krāsu
 color	admin	lv	Krāsa
@@ -146,7 +151,7 @@ cyrus imap server	admin	lv	Cyrus IMAP serveris
 data	admin	lv	Dati
 day	admin	lv	Diena
 day of week<br>(0-6, 0=sun)	admin	lv	Nedēļas diena <br>(0-6, 0=SV)
-db backup and restore	admin	lv	DV dublējums un atjaunināšana
+db backup and restore	admin	lv	Dublējums
 default	admin	lv	Noklusējums
 default file system space per user	admin	lv	Noklusētā disku apjoma vērtība lietotājam
 default file system space per user/group ?	admin	lv	Noklusētā disku apjoma vērtība lietotājam/grupai?
@@ -169,8 +174,9 @@ deny access	admin	lv	Liegt pieeju
 deny access to access log	admin	lv	Liegt pieeju piekļuves logam
 deny access to application registery	admin	lv	Liegt pieeju aplikācijas reģistrēšanai
 deny access to applications	admin	lv	Liegt pieeju aplikācijām
-deny access to asynchronous timed services	admin	lv	Liegt pieeju asinhronā režīma regulēšanas pakalpojumiem
+deny access to asynchronous timed services	admin	lv	Aizliegt piekļuvi asinhronajam pakalpojumam
 deny access to current sessions	admin	lv	Liegt pieeju tagadējām sesijām
+deny access to db backup and restore	admin	lv	Aizliegt piekļuvi dublējumam
 deny access to error log	admin	lv	Liegt pieeju kļūdas paziņojuma logam
 deny access to global categories	admin	lv	Liegt pieeju vispārējām kategorijām
 deny access to groups	admin	lv	Liegt pieeju grupām
@@ -203,6 +209,7 @@ edit this group	admin	lv	Rediģēt  šo grupu
 edit this user	admin	lv	Rediģēt  šo lietotāju
 edit user	admin	lv	Rediģēt  lietotāju
 edit user account	admin	lv	Rediģēt lietotāja kontu
+egroupware version	admin	lv	EGroupware versija
 email account active	admin	lv	E-pasta konts aktīvs
 email address	admin	lv	E-pasta adrese
 enable	admin	lv	Aktivizēt
@@ -237,6 +244,7 @@ error: %1 not found or other error !!!	admin	lv	Kļūda: %1 nav atrasts vai cita
 expires	admin	lv	Beigas
 export certificate as p12	admin	lv	Eksportēt sertifikātu kā p12
 failed to change password.	admin	lv	Neizdevād nomainīt paroli.
+failed to mount backup directory!	admin	lv	Neizdevās pievienot dublējuma direktoriju!
 fallback (after each pageview)	admin	lv	Atkāpšanās (pēc katras lapas apskates)
 false	admin	lv	Nepatiess
 file space	admin	lv	Failu kartotēkas lielums
@@ -339,6 +347,7 @@ minute	admin	lv	Minūte
 mode	admin	lv	Režīms
 modified	admin	lv	Pārveidots
 month	admin	lv	Mēnesis
+mount backup directory to %1	admin	lv	Pievienot dublējuma direktoriju %1
 name must not be empty !!!	admin	lv	Nosaukums nedrīkst būt tukšs
 name of organisation	admin	lv	Organizācijas nosaukums
 new group name	admin	lv	Jaunais grupas nosaukums
@@ -379,6 +388,7 @@ permission denied	admin	lv	Atļauja liegta
 permission denied !!!	admin	lv	Atļauja liegta!
 permissions	admin	lv	Atļaujas
 permissions this group has	admin	lv	Šīs grupas atļaujas
+php version	admin	lv	PHP versija
 phpinfo	admin	lv	PHP informācija
 please enter a name	admin	lv	Lūdzu ievadi vārdu
 please enter a name for that server !	admin	lv	Lūzdu ievadi servera vārdu
@@ -390,10 +400,13 @@ profile name	admin	lv	Profila vārds
 re-enter password	admin	lv	Atkārtoti ievadi paroli
 read this list of methods.	admin	lv	Izlasi šo metožu sarakstu
 regular expression to find part to use as container	admin	lv	Regulārā izteiksme, lai atrastu daļu, ko izmantot kā konteineru
+remote administration instances	admin	lv	Attālā administrēšana
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	lv	Attālā administrēšana jāaktivizē attālajā instancē sadaļā Admin > Site configuration!
 remove	admin	lv	Pārvietot
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	lv	Piekļuves atcelšana grupām var radīt problēmas ar datiem šajā kategorijā. Vai esat pārliecināts? Lietotāji šajās grupās vairs nevarēs piekļūt:
 revoke this token	admin	lv	Atcelt šo žetonu
 rows	admin	lv	Rindas
-run asynchronous services	admin	lv	Palaist asinhronos pakalpojumus
+run asynchronous services	admin	lv	Palaist asinhrono pakalpojumu
 save the category	admin	lv	Saglabāt kategoriju
 save the category and return back to the list	admin	lv	Saglabāt kategoriju un atgriezties uz sarakstu
 saves the changes made and leaves	admin	lv	Saglabā izdarītās izmaiņas un aiziet
@@ -512,7 +525,6 @@ view error log	admin	lv	Parādīt kļūdas logu
 view sessions	admin	lv	Sesijas
 view this user	admin	lv	Parādīt šo lietotāju
 view user account	admin	lv	Parādīt lietotāja kontu
-virtual mail manager	admin	lv	VIrtuālais MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	lv	Kam tu vēlies pārsūtīt izdzēstā lietotāja AAL ierakstus?
 who would you like to transfer records owned by the deleted user to?	admin	lv	Kam vēlaties nodot ierakstus, kas pieder dzēstajam lietotājam?
 xml-rpc	admin	lv	XML-RPC

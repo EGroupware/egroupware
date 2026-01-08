@@ -66,6 +66,7 @@ back to main list	infolog	zh	返回主列表
 billed	infolog	zh	付费
 both	infolog	zh	都
 call	infolog	zh	已致电
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	zh	可用于在日历中显示更多信息日志类型，或限定仅显示任务等内容。
 can not return an exact number of rows and therefore hides the count.	admin	zh	无法返回准确的行数，因此隐藏了计数。
 cancel	infolog	zh	取消
 categories	infolog	zh	类别
@@ -201,6 +202,7 @@ history logging and deleting of items	infolog	zh	历史记录和项目删除
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	zh	应直接显示多少行说明。更多行可通过滚动条显示。
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	zh	描述区域的宽度。该值为数值，例如 60。
 html link to the current record	infolog	zh	当前记录的 HTML 链接
+icon for	infolog	zh	图标用于
 id	infolog	zh	代号
 id#	infolog	zh	代号#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	zh	如果一个类型有一个组所有者，则该类型的所有条目都将由给定的组所有，而不是由创建它的用户所有！
@@ -381,6 +383,7 @@ set status to done for all entries	infolog	zh	将所有条目的状态设置为�
 sets the status of this entry to done	infolog	zh	将此条目设置为已完成
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	zh	浏览事项时是否显示子事项? 无论该选项如何设定, 用户总可以经由父事项来查看子事项.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	zh	在记事薄中显示姓名还是登录名.
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	zh	信息日志列表应仅显示“进行中”状态的完成百分比，还是使用两个独立图标？
 should this entry only be visible to you and people you grant privat access via the acl	infolog	zh	是否仅所有者本人及其授权的用户可以访问该事项?
 show a x if content equals this compare value, otherwise show nothing	infolog	zh	如果内容等于该比较值，则显示 X，否则不显示任何内容
 show full usernames	infolog	zh	显示完整的用户名
@@ -419,6 +422,7 @@ to all linked contacts	infolog	zh	对所有链接的联系人
 to many might exceed your execution-time-limit	infolog	zh	to many might exceed your execution-time-limit
 today	infolog	zh	按日查看
 todo	infolog	zh	任务
+toggle details	common	zh	切换详细信息
 typ	infolog	zh	类型
 typ '%1' already exists !!!	infolog	zh	类型'%1'已存在!!!
 type	infolog	zh	类型

@@ -24,7 +24,8 @@
 15 minutes	common	da	15 minutter
 2-factor authentication code required	common	da	Kode til 2-faktor-autentifikation påkrævet
 2-factor-authentication	common	da	2-faktor-autentificering
-2-factor-authentication required	common	da	2-Factor-autentificering påkrævet
+2-factor-authentication required	common	da	Anden faktor kræves.
+2nd factor	login	da	2. faktor
 3 minutes	common	da	3 minutter
 30 minutes	common	da	30 minutter
 30 seconds	common	da	30 sekunder
@@ -52,7 +53,7 @@ add	common	da	Tilføj
 add %1	common	da	Tilføj %1
 add %1 category for	common	da	Tilføj kategorien %1 for
 add category	common	da	Tilføj kategori
-add current	common	da	Nuværende visning som favorit
+add current	common	da	Vis som favorit
 add new	common	da	Tilføj ny
 add shortcut	common	da	Tilføj forkortelse
 add sub	common	da	Tilføj underkategori

@@ -230,6 +230,7 @@ history logging and deleting of items	infolog	it	Registrazione dello storico e d
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	it	Quante righe di descrizione dovranno essere visibili direttamente. Righe ulteriori sono disponibili tramite una barra di scorrimento.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	it	Quanto deve essere larga l'area di descrizione. Valore numerico p.es. 60.
 html link to the current record	infolog	it	Collegamento ipertestuale al record attuale
+icon for	infolog	it	Icona per
 id	infolog	it	ID
 id#	infolog	it	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	it	Se un tipo di schede ha come proprietario un gruppo, tutte le voci di quel tipo saranno di quel gruppo e NON dell'utente che le ha create!
@@ -493,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	it	A quando deve ess
 today	infolog	it	Oggi
 todays date	infolog	it	Data odierna
 todo	infolog	it	ToDo
+toggle details	common	it	Attiva/disattiva dettagli
 typ	infolog	it	Tipo
 typ '%1' already exists !!!	infolog	it	Il tipo '%1' esiste già!
 type	infolog	it	Tipo

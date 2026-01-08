@@ -4,6 +4,7 @@
 3 years ago	timesheet	zh	三年前
 all projects	timesheet	zh	所有项目
 applies the changes	timesheet	zh	应用更改
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	zh	操作需作用于整个查询，而非仅显示的工时表！
 ask to start and stop working time with session	timesheet	zh	要求通过会话开始和停止工作时间
 both: allow to use projectmanager and free project-names	admin	zh	两者：使用项目管理和自选项目名称
 by	timesheet	zh	由
@@ -39,8 +40,11 @@ field must not be empty !!!	timesheet	zh	字段不得为空！
 forgot to switch off working time?	common	zh	忘记关闭工作时间？
 full: use only projectmanager	admin	zh	完全：只使用项目管理
 general fields:	timesheet	zh	通用字段：
+give additional users access	timesheet	zh	授予其他用户访问权限
+give infolog delegation read-access to timesheets booked on them	timesheet	zh	授予InfoLog委托人对其预订的工时表的读取权限。
 global categories	timesheet	zh	全局分类
 history	timesheet	zh	历史记录
+how to display linked timesheets	timesheet	zh	如何显示关联工时表？
 id	timesheet	zh	编号
 last modified	timesheet	zh	最近修改
 last month	timesheet	zh	上个月
@@ -49,7 +53,9 @@ last year	timesheet	zh	去年
 leave it empty for a full week	timesheet	zh	留空表示整个星期
 leaves without saveing	timesheet	zh	不保存
 length<br>rows	timesheet	zh	字段长度<br>字段行数
+link title	timesheet	zh	链接标题
 links	timesheet	zh	链接
+make timesheets readable by infolog delegation	timesheet	zh	使工时表可被InfoLog代表读取
 max length of the input [, length of the inputfield (optional)]	timesheet	zh	输入的最大长度 [, 输入字段的长度 (可选)]
 mode	timesheet	zh	模式
 modified	timesheet	zh	修改

@@ -148,7 +148,7 @@ are you sure you want to delete this group ?	admin	de	Sind Sie sicher, dass Sie 
 are you sure you want to delete this server?	admin	de	Sind sie sicher, dass sie diesen Server löschen möchten?
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, dass Sie diese Session beenden möchten?
 async services last executed	admin	de	Asynchroner Dienst zuletzt ausgeführt
-asynchronous timed services	admin	de	Asynchroner zeitgesteuerter Dienst
+asynchronous timed services	admin	de	Asynchroner Dienst
 asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst ist noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Es wird versucht, den richtigen MIME-typ für FTP zu verwenden, statt dem Vorgabewert "application/octet-stream".
 attributes	admin	de	Einstellungen
@@ -205,7 +205,7 @@ check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überpr�
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 checking push (green for success or red for failure)	admin	de	Überprüfung von PUSH (grün = i.O., rot für n.i.O.)
 children	admin	de	Kinder
-clear cache and register hooks	admin	de	Cache löschen und Hooks registrieren
+clear cache and register hooks	admin	de	Cache löschen/Hooks registrieren
 clear credentials	admin	de	Anmeldeinformationen löschen
 clear mail credentials	admin	de	E-Mail-Anmeldeinformationen löschen
 clear security tokens	admin	de	Sicherheits-Tokens löschen
@@ -264,7 +264,7 @@ data	admin	de	Daten
 data from	admin	de	Daten von
 day	admin	de	Tag
 day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
-db backup and restore	admin	de	DB Datensicherung und Wiederherstellung
+db backup and restore	admin	de	Datensicherung
 deactivate	admin	de	Deaktivieren
 deactivated	admin	de	deaktiviert
 debug	admin	de	Fehler suchen
@@ -301,9 +301,9 @@ deny access	admin	de	Zugriff verweigern
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
 deny access to application registery	admin	de	Zugriff auf Anwendungsdatenbank verbieten
 deny access to applications	admin	de	Zugriff auf Anwendungen verbieten
-deny access to asynchronous timed services	admin	de	Zugriff auf asynchroner zeitgesteuerter Dienst verbieten
+deny access to asynchronous timed services	admin	de	Zugriff auf asynchronen Dienst verweigern
 deny access to current sessions	admin	de	Zugriff auf aktuelle Sitzungen verbieten
-deny access to db backup and restore	admin	de	Zugriff auf DB Datensicherung und Wiederherstellung verbieten
+deny access to db backup and restore	admin	de	Zugriff auf Datensicherung verbieten
 deny access to error log	admin	de	Zugriff auf Fehlerprotokoll verbieten
 deny access to global categories	admin	de	Zugriff auf globalen Kategorien verbieten
 deny access to groups	admin	de	Zugriff auf Benutzergruppen verbieten
@@ -394,7 +394,7 @@ enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Se
 enter the title for your site	admin	de	Titel der EGroupware-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware-Applikationen verwendet werden können.<br>Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	VFS-Pfad an, in dem Bilder oder Symbole abgelegt und von EGroupware-Applikationen verwendet werden können. Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein:
 enter your default mail domain ( from: user@domain )	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your default mail domain (from: user@domain)	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your http proxy server	admin	de	HTTP-Proxy-Server
@@ -453,7 +453,6 @@ force selectbox	admin	de	Auswahl erzwingen
 force users to change their password regularily?(empty for no,number for after that number of days	admin	de	Erzwinge das Ändern von Passwörtern durch den Benutzer nach X Tagen. (leer für nein, eine positive Zahl für alle X Tage)
 forward also to	admin	de	Zusätzlich weiterleiten
 forward email's to	admin	de	E-Mails weiterleiten an
-forward emails to	admin	de	E-Mails weiterleiten an
 forward only	admin	de	Nur weiterleiten
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	de	Nur weiterleiten schaltet das Postfach / das Speichern der E-Mails aus und leitet diese an die angegebene Adresse weiter.
 full name	admin	de	Vollständiger Name
@@ -739,8 +738,7 @@ regular expression to find part to use as container	admin	de	Regulärer Ausdruck
 reject passwords containing part of username or full name (3 or more characters long)	admin	de	Passwörter zurückweisen die einen Teil des Benutzernamen oder vollständigen Namens beinhalten (3 oder mehr Zeichen lang)
 relay access checked	admin	de	Nicht angemeldetes Senden überprüft
 remark	admin	de	Bemerkung
-remote administration instances	admin	de	Remote Administrations Instanzen
-remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden!
+remote administration instances	admin	de	Remote Administration
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden!
 remote instance saved	admin	de	Remote Instanz gespeichert.
 remove	admin	de	Entfernen
@@ -758,7 +756,7 @@ rights	admin	de	Rechte
 rows	admin	de	Zeilen
 rpm or debian package	admin	de	RPM oder deb Pakete
 run	admin	de	Ausführen
-run asynchronous services	admin	de	Asynchrone Dienste ausführen
+run asynchronous services	admin	de	Asynchronen Dienst ausführen
 run rights for applications	admin	de	Ausführungsrechte für Anwendungen
 samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	de	SameSite Cookie Attribute (Cookie übertragen, wenn die Adressleiste des Browsers eine andere Domain anzeigt)
 save as default	admin	de	Als Vorgabe speichern
@@ -808,7 +806,7 @@ set a random password	admin	de	Setze ein zufälliges Passwort
 set preference values.	admin	de	Einstellungswert wurde geändert.
 settings	admin	de	Einstellungen
 should exceptions contain a trace (including function arguments)	admin	de	Sollen Ausnahmefehler eine Rückverfolgung enthalten (einschl. Funktionsargumente).
-should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten?
+should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl enthalten?
 show access log	admin	de	Zugangsprotokoll
 show as optional, but required once user has it setup	admin	de	Als optional anzeigen, aber erforderlich wenn der Benutzer sie eingerichtet hat
 show as required, but only once user has it setup	admin	de	Als benötigt anzeigen, aber nur benötigt, wenn Benutzer sie eingerichtet hat
@@ -870,8 +868,6 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	de	Benutzername und Passwort dürfen nicht identisch sein.
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nicht länger als 8 Zeichen sein.
 the mimeparser can not parse this message.	admin	de	Der MIME-Parser versteht diese Nachricht nicht.
-the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzter Name (<= 20 Buchstaben), Veränderungen machen existierende Daten unerreichbar
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzter Name (<= 20 Buchstaben), Veränderungen machen existierende Daten unerreichbar.
 the testjob sends you a mail everytime it is called.	admin	de	Der Test-Job sendet Ihnen jedes mal eine E-Mail wenn er aufgerufen wird.
 the text displayed to the user	admin	de	Für den Benutzer angezeigter Text
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
@@ -976,7 +972,6 @@ view error log	admin	de	Fehlerprotokoll anzeigen
 view sessions	admin	de	Sitzungen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
-virtual mail manager	admin	de	Virtual MAIL ManaGeR
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	de	Benutzer warnen, dass Ihr Passwort in X Tagen abläuft? Der Wert hier gibt an, ab wie viel Tagen vorher die Benutzer einmal pro Sitzung gewarnt werden. Die hier eingetragene Zahl sollte kleiner sein, als der Wert der für das Erzwingen des Änderns von Passwörtern alle Y Tage verwendet wird. Diese Option ist nur wirksam, wenn das Erzwingen von Passwortänderungen alle Y Tage aktiviert ist. (leer für nein, eine positive Zahl für Warnung ab X Tagen bevor das Passwort abläuft)
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	de	Wir erheben diese Daten zu ausschliesslich statistischen Zwecken, um einen Überblick über den weltweiten Einsatz von EGroupware zu gewinnen.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	de	Wir speichern keine Herkunftsdaten oder Informationen, die einen Rückschluss auf Ihre Identität ermöglichen würden.

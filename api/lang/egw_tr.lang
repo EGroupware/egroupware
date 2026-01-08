@@ -14,7 +14,8 @@
 15 minutes	common	tr	15 dakika
 2-factor authentication code required	common	tr	2 Faktörlü Kimlik Doğrulama kodu gerekli
 2-factor-authentication	common	tr	2 Faktörlü Kimlik Doğrulama
-2-factor-authentication required	common	tr	2 Faktörlü Kimlik Doğrulama gerekli
+2-factor-authentication required	common	tr	İkinci faktör gereklidir.
+2nd factor	login	tr	2. faktör
 3 minutes	common	tr	3 dakika
 30 minutes	common	tr	30 dakika
 30 seconds	common	tr	30 saniye
@@ -30,7 +31,7 @@ action	common	tr	Eylem
 actions	common	tr	Eylemler
 add	common	tr	Ekle
 add a new contact	common	tr	Yeni bir kişi ekleyin
-add current	common	tr	Favori olarak mevcut görünüm
+add current	common	tr	Favori olarak görüntüle
 add to clipboard	common	tr	Panoya ekle
 add user to responsibles	groupdav	tr	Kullanıcıyı sorumlulara ekle
 add user to responsibles, removing evtl. previous category user	groupdav	tr	Sorumluya kullanıcı ekleyin, muhtemelen önceki kategori kullanıcılarını kaldırın

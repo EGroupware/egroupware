@@ -105,8 +105,8 @@ display of content	filemanager	fr	Affichage de contenu
 do you want more information about epl subscription?	common	fr	Souhaitez-vous plus d'information sur l'abonnement EPL ?
 do you want to overwrite existing file %1 in directory %2?	filemanager	fr	Souhaitez vous écraser le fichier existant %1 dans le répertoire %2 ?
 do you want to overwrite the existing file %1?	filemanager	fr	Voulez-vous écraser le fichier existant %1 ?
-download	filemanager	fr	Downloader
-download documents	filemanager	fr	downloader les documents
+download	filemanager	fr	Télécharger
+download documents	filemanager	fr	Télécharger les documents
 edit comments	filemanager	fr	Modifier les commentaires
 edit settings	filemanager	fr	Modifier les paramètres
 edit share	filemanager	fr	Modifier le partage

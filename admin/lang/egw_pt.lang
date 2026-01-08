@@ -77,6 +77,7 @@ all applications	admin	pt	Todas as aplicações
 all records and account information will be lost!	admin	pt	Todos registos e dados de contas serão perdidos!
 all users	admin	pt	Todos os utilizadores
 allow anonymous access to this app	admin	pt	Permitir acesso anónimo a esta aplicação
+allow remote administration from following install id's (comma separated)	admin	pt	Permita a administração remota a partir dos seguintes IDs de instalação, separados por vírgulas.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	pt	Permitir que o utilizador guarde a sua palavra-passe em 'Segurança e palavras-passe' para SingleSignOn.
 allow user to set 'remember me' token	admin	pt	Permitir ao utilizador definir o token "Lembrar-me"
 alternate email address	admin	pt	Endereço de correio electrónico alternativo
@@ -95,20 +96,22 @@ applications	admin	pt	Aplicações
 applications list	admin	pt	Lista de aplicações
 applies the changes	admin	pt	Aplicar as alterações
 apply the changes	admin	pt	Aplicar alterações
-are you sure you want to delete the application %1 ?	admin	pt	Tem a certeza de que deseja eliminar a aplicação %1 ?
-are you sure you want to delete this account ?	admin	pt	Tem certeza de que deseja eliminar esta conta ?
-are you sure you want to delete this application ?	admin	pt	Tem certeza de que deseja eliminar esta aplicação ?
-are you sure you want to delete this category ?	common	pt	Tem certeza de que deseja eliminar esta categoria ?
-are you sure you want to delete this global category ?	admin	pt	Tem a certeza de que deseja eliminar esta categoria geral ?
-are you sure you want to delete this group ?	admin	pt	Você tem certeza de que deseja eliminar este grupo ?
-are you sure you want to delete this server?	admin	pt	Tem certeza de que deseja eliminar este servidor ?
-are you sure you want to kill this session ?	admin	pt	Você tem certeza de que deseja terminar esta sessão ?
+are you sure you want to %1 mail for selected accounts?	admin	pt	Tem a certeza de que deseja enviar %1 e-mails para as contas selecionadas?
+are you sure you want to delete the application %1 ?	admin	pt	Tem a certeza de que deseja eliminar a aplicação %1?
+are you sure you want to delete this account ?	admin	pt	Tem certeza de que deseja eliminar esta conta?
+are you sure you want to delete this application ?	admin	pt	Tem certeza de que deseja eliminar esta aplicação?
+are you sure you want to delete this category ?	common	pt	Tem certeza de que deseja eliminar esta categoria?
+are you sure you want to delete this global category ?	admin	pt	Tem a certeza de que deseja eliminar esta categoria geral?
+are you sure you want to delete this group ?	admin	pt	Você tem certeza de que deseja eliminar este grupo?
+are you sure you want to delete this server?	admin	pt	Tem certeza de que deseja eliminar este servidor?
+are you sure you want to kill this session ?	admin	pt	Você tem certeza de que deseja terminar esta sessão?
 async services last executed	admin	pt	Últimos serviços assíncronos executados
-asynchronous timed services	admin	pt	Serviços assíncronos agendados
+asynchronous timed services	admin	pt	Serviço assíncrono
 asyncservices not yet installed or other error (%1) !!!	admin	pt	serviços assíncronos por instalar ou outro erro (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt	Tentativa de utilizar o mimetype correcto para FTP em vez da 'aplicação/octet-stream' por omissão
 authentication / accounts	admin	pt	Autenticação/Contas
 auto create account records for authenticated users	admin	pt	Criar automaticamente registos da conta para utilizadores autenticados
+backup directory %1 mounted as %2	admin	pt	Diretório de backup %1 montado como %2
 bi-dir passthrough	admin	pt	bi-dir passthrough
 bi-directional	admin	pt	bi-direcional
 blocking after wrong password	admin	pt	Bloqueio após senha errada
@@ -130,8 +133,10 @@ change acl rights	admin	pt	Alterar direitos de ACL
 change config settings	admin	pt	Alterar configurações
 change domain of email address and aliases	admin	pt	Alterar o domínio do endereço de correio eletrónico e aliases
 change login screen message	admin	pt	Alterar mensagem da página inicial
+changelog and versions	admin	pt	Registo de alterações e versões
 check ip address of all sessions	admin	pt	Verificar endereço IP de todas as sessões
 check items to <b>%1</b> to %2 for %3	admin	pt	Marcar items de <b>%1</b> a %2 para %3
+clear cache and register hooks	admin	pt	Limpar cache/registar ganchos
 clear security tokens	admin	pt	Limpar tokens de segurança
 click to select a color	admin	pt	Clique aqui para seleccionar uma cor
 color	admin	pt	Cor
@@ -155,7 +160,7 @@ cyrus imap server	admin	pt	Servidor IMAP Cyrus
 data	admin	pt	Dados
 day	admin	pt	Dia
 day of week<br>(0-6, 0=sun)	admin	pt	Dia da semana<br>(0-6, 0=Dom)
-db backup and restore	admin	pt	Cópia de segurança e reposição da base de dados
+db backup and restore	admin	pt	Backup
 default	admin	pt	Por omissão
 default file system space per user	admin	pt	Espaço em disco por utilizador (por omissão)
 default file system space per user/group ?	admin	pt	Espaço em disco por utilizador/grupo por omissão?
@@ -179,9 +184,9 @@ deny access	admin	pt	Negar acesso
 deny access to access log	admin	pt	Negar acesso ao registo de acessos
 deny access to application registery	admin	pt	Negar acesso ao registo de aplicações
 deny access to applications	admin	pt	Negar acesso às aplicações
-deny access to asynchronous timed services	admin	pt	Negar acesso a serviços assíncronos agendados
+deny access to asynchronous timed services	admin	pt	Negar acesso ao serviço assíncrono
 deny access to current sessions	admin	pt	Negar acesso às sessões actuais
-deny access to db backup and restore	admin	pt	Negar acesso à cópia de segurança e reposição de bases de dados
+deny access to db backup and restore	admin	pt	Negar acesso ao Backup
 deny access to error log	admin	pt	Negar acesso ao registo de erros
 deny access to global categories	admin	pt	Negar acesso às categorias gerais
 deny access to groups	admin	pt	Negar acesso aos grupos
@@ -217,6 +222,7 @@ edit this group	admin	pt	Editar este grupo
 edit this user	admin	pt	Editar este utilizador
 edit user	admin	pt	Editar utilizador
 edit user account	admin	pt	Editar conta de utilizador
+egroupware version	admin	pt	Versão do EGroupware
 email account active	admin	pt	Conta de correio electrónico activa
 email address	admin	pt	Endereço de correio electrónico
 enable	admin	pt	Activar
@@ -256,6 +262,7 @@ exists	admin	pt	Existe
 expires	admin	pt	Expira
 export certificate as p12	admin	pt	Exportar certificado como p12
 failed to change password.	admin	pt	Não foi possível alterar a senha.
+failed to mount backup directory!	admin	pt	Falha ao montar o diretório Backup!
 fallback (after each pageview)	admin	pt	Fallback (depois de cada visualização de página)
 false	admin	pt	Falso
 field '%1' already exists !!!	admin	pt	O campo '%1' já existe!
@@ -267,7 +274,6 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	pt	Forçar caixa de selecção
 forward also to	admin	pt	Reencaminhar também para
 forward email's to	admin	pt	Reencaminhar mensagens para
-forward emails to	admin	pt	Reencaminhar mensagens para
 forward only	admin	pt	Reencaminhar apenas
 full name	admin	pt	Nome completo
 general	admin	pt	Geral
@@ -369,6 +375,7 @@ minute	admin	pt	Minuto
 mode	admin	pt	Modo
 modified	admin	pt	Modificado
 month	admin	pt	Mês
+mount backup directory to %1	admin	pt	Montar diretório de backup em %1
 name must not be empty !!!	admin	pt	O campo do nome não pode ficar vazio!
 name of organisation	admin	pt	Nome da empresa
 new group name	admin	pt	Nome do novo Grupo
@@ -413,6 +420,7 @@ permission denied !!!	admin	pt	Permissão negada!
 permission denied!!!	admin	pt	Permissão negada!
 permissions	admin	pt	Permissões
 permissions this group has	admin	pt	Permissões do grupo
+php version	admin	pt	Versão do PHP
 phpinfo	admin	pt	Informações do PHP
 please enter a name	admin	pt	Por favor, insira um nome
 please enter a name for that server !	admin	pt	Por favor, insira um nome para esse servidor!
@@ -431,11 +439,14 @@ re-enter password	admin	pt	Re-insira a senha
 read this list of methods.	admin	pt	Ler esta lista de métodos
 register application hooks	admin	pt	Registar pontos de entrada de aplicações
 regular expression to find part to use as container	admin	pt	Expressão regular para encontrar a parte a utilizar como contentor
+remote administration instances	admin	pt	Administração remota
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	pt	A administração remota precisa ser ativada na instância remota em Admin > Configuração do site!
 remove	admin	pt	Remover
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	pt	Remover o acesso de grupos pode causar problemas para os dados nesta categoria. Tem a certeza? Os utilizadores desses grupos podem perder o acesso:
 required pear class mail/mimedecode.php not found.	admin	pt	Classe PEAR requeridos Correio/mimeDecode.php não encontrado.
 revoke this token	admin	pt	Revogar este token
 rows	admin	pt	Linhas
-run asynchronous services	admin	pt	Executar serviços assíncronos
+run asynchronous services	admin	pt	Executar serviço assíncrono
 save the category	admin	pt	Guardar a categoria
 save the category and return back to the list	admin	pt	Guardar a categoria e voltar à lista
 saves the changes made and leaves	admin	pt	Guarda as alterações e deixa
@@ -503,7 +514,6 @@ the groups must include the primary group	admin	pt	Os grupos têm de incluir o g
 the login and password can not be the same	admin	pt	O nome de utilizador e a senha não podem ser iguais
 the loginid can not be more then 8 characters	admin	pt	O nome de utilizador não pode ter mais de 8 caracteres
 the mimeparser can not parse this message.	admin	pt	O mimeparser não pode analisar estas mensagem.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	pt	O nome utilizado internamente (<= 20 caracteres), alterá-lo torna os dados existentes indisponíveis
 the testjob sends you a mail everytime it is called.	admin	pt	O "trabalho de teste" envia-lhe uma mensagem sempre que for chamado.
 the text displayed to the user	admin	pt	O texto apresentado ao utilizador
 the two passwords are not the same	admin	pt	As senhas não coincidem
@@ -569,7 +579,6 @@ view error log	admin	pt	Ver registo de erros
 view sessions	admin	pt	Sessões
 view this user	admin	pt	Ver este utilizador
 view user account	admin	pt	Ver conta do utilizador
-virtual mail manager	admin	pt	Gestor virtual de correio electrónico
 who would you like to transfer all records owned by the deleted user to?	admin	pt	Para quem deseja transferir TODOS os registos do utilizador eliminado ?
 who would you like to transfer records owned by the deleted user to?	admin	pt	Para quem gostaria de transferir os registos pertencentes ao utilizador eliminado?
 xml-rpc	admin	pt	XML-RPC

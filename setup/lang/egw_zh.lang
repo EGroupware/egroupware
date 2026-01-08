@@ -78,9 +78,12 @@ backup '%1' deleted	setup	zh	删除备份 '%1'
 backup '%1' renamed to '%2'	setup	zh	备份 '%1' 重命名为 '%2'
 backup '%1' restored	setup	zh	还原备份 '%1'
 backup and restore	setup	zh	备份与还原
+backup directory %1 mounted as %2	setup	zh	备份目录 %1 已挂载为 %2
 backup failed	setup	zh	备份失败
 backup files (needs ziparchive)	setup	zh	EGroupware 文件（文件目录）的数据备份 <br>（需要 PHP ZipArchive）
 backup finished	setup	zh	备份完成
+backup housekeeping	setup	zh	标准命名的备份文件可自动清理。重命名备份文件可将其排除在清理范围之外。
+backup min count	setup	zh	最小备份数量
 backup now	setup	zh	现在备份
 backup sets	setup	zh	备份集
 backup skipped!	setup	zh	略过备份！
@@ -346,6 +349,7 @@ mcrypt mode (default cbc)	setup	zh	Mcrypt 模式 (默认是 CBC)
 mcrypt settings (requires mcrypt php extension)	setup	zh	Mcrypt 配置 (要求 mcrypt 以 PHP 为扩展名)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	zh	memory_limit(最大可用内存)设为小于%1：EGroupware有部分应用程序会使用超过默认值8M的内存，特别是无法预期的错误。
 migration between egroupware account repositories	setup	zh	在 EGroupware 帐户储存库之间迁移
+min backup count	setup	zh	保留备份文件的最大数量（零：全部保留）
 minimum account id (e.g. 500 or 100, etc.)	setup	zh	帐户 ID 最小值 (如：500 or 100，等)
 minute	setup	zh	分
 missing or uncomplete mailserver configuration	setup	zh	缺少或未完成邮件服务器设置
@@ -353,6 +357,7 @@ modifications have been completed!	setup	zh	修改完成！
 modified	setup	zh	修改
 modify	setup	zh	修改
 month	setup	zh	月
+mount backup directory to %1	setup	zh	将备份目录挂载到 %1
 name of database	setup	zh	数据库名
 name of db user egroupware uses to connect	setup	zh	EGroupware 连接的数据库用户名
 never	setup	zh	永不
@@ -585,6 +590,7 @@ virtual mail manager (login-name includes domain)	setup	zh	虚拟邮件管理器
 warning!	setup	zh	警告!
 we can proceed	setup	zh	可以继续
 we could not determine the version of %1, please make sure it is at least %2	setup	zh	我们不可能确定版本的%1，请确定它是至少%2
+we strongly recommend to run a db backup before running the import!	setup	zh	强烈建议在执行导入操作前运行数据库备份！
 we will automatically update your tables/records to %1	setup	zh	将自动将您的数据表/纪录自动升级到%1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	zh	我们现在将进行一系列的测试，这可能需要几分钟时间。点击以下链接继续。
 welcome to the egroupware installation	setup	zh	欢迎使用 EGroupware

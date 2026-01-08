@@ -49,7 +49,7 @@ forgot to switch off working time?	common	cs	Zapomněli jste vypnout pracovní d
 full: use only projectmanager	admin	cs	Plné: použít jen Správce projektů
 general fields:	timesheet	cs	Obecné položky:
 give additional users access	timesheet	cs	Dejte přístup dalším uživatelům
-give infolog delegation read-access to timesheets booked on them	timesheet	cs	Dejte delegátům InfoLog přístup k časovým rozvrhům, které jsou na ně rezervovány
+give infolog delegation read-access to timesheets booked on them	timesheet	cs	Dejte delegátům InfoLog přístup k časovým rozvrhům, které jsou na ně rezervovány.
 global categories	timesheet	cs	Globální kategorie
 history	timesheet	cs	Historie
 history logging	admin	cs	Protokolování historie

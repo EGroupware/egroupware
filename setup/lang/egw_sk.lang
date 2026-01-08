@@ -307,7 +307,7 @@ error searching "dn=%1" for "%2"!	setup	sk	Chyba pri hľadaní "%2" v "DN=%1"!
 error uploading your backup!	setup	sk	Nepodarilo sa pripojiť adresár zálohy!
 every	setup	sk	Každý
 export has been completed!	setup	sk	Export bol dokončený!
-failed to mount backup directory!	setup	sk	Pripojenie zálohovacieho priečinka zlyhalo!
+failed to mount backup directory!	setup	sk	Nepodarilo sa primontovať zálohovací priečinok!
 failed updating user "%1" dn="%2"!	setup	sk	Nepodarilo sa aktualizovať používateľa  "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	sk	Zápis do konfiguračného súboru header.inc.php sa NEPODARIL, skontrolujte prístupové práva!
 fallback authentication	setup	sk	Náhradné overovanie

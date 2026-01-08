@@ -21,7 +21,8 @@
 15 minutes	common	hu	15 perc
 2-factor authentication code required	common	hu	2-faktoros hitelesítési kód szükséges
 2-factor-authentication	common	hu	2-faktoros hitelesítés
-2-factor-authentication required	common	hu	2-Faktoros hitelesítés szükséges
+2-factor-authentication required	common	hu	Második tényező szükséges.
+2nd factor	login	hu	2. tároló
 3 minutes	common	hu	3 perc
 30 minutes	common	hu	30 perc
 30 seconds	common	hu	30 másodperc
@@ -49,7 +50,7 @@ add %1 category for	common	hu	%1 kategória hozzáadása
 add a new contact	common	hu	Új kapcsolat hozzáadása
 add category	common	hu	Kategória hozzáadása
 add column	common	hu	Oszlop hozzáadása
-add current	common	hu	Jelenlegi nézet, mint kedvenc
+add current	common	hu	Képet kedvencként megjelölni
 add index	common	hu	Index hozzáadása
 add new	common	hu	Új hozzáadása
 add shortcut	common	hu	Gyorsbillentyű hozzáadása

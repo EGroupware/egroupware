@@ -230,6 +230,7 @@ history logging and deleting of items	infolog	fi	Historia ja poistettujen merkin
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	fi	Kuinka monta riviä kuvaustekstiä on näkyvillä. Loput rivit ovat näkyvillä scroll barissa.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	fi	Merkitse kuvauskentän leveys numeerisena arvona esim. 60.
 html link to the current record	infolog	fi	HTML-linkki nykyiseen tietueeseen
+icon for	infolog	fi	Kuvake
 id	infolog	fi	ID
 id#	infolog	fi	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	fi	Jos tyypin omistaa ryhmä, kaikki tapahtumat/merkinnät omistaa ryhmä, EI käyttäjä joka loi sen!
@@ -493,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	fi	Mikä alkamispäi
 today	infolog	fi	Tänään
 todays date	infolog	fi	Päivämäärä
 todo	infolog	fi	Tehtävä
+toggle details	common	fi	Vaihda yksityiskohdat
 typ	infolog	fi	Tyyppi
 typ '%1' already exists !!!	infolog	fi	Tyyppi %1 on jo olemassa!
 type	infolog	fi	Tyyppi

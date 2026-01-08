@@ -231,6 +231,7 @@ history logging and deleting of items	infolog	de	Protokollierung der Historie un
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein. Zusätzliche Zeilen können über einen Rollbalken erreicht werden.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	de	Wie breit darf das Beschreibungsfeld sein. Sie können hier einen nummerischen Wert eintragen
 html link to the current record	infolog	de	HTML-Link zum aktuellen Datensatz
+icon for	infolog	de	Symbol für
 id	infolog	de	ID
 id#	infolog	de	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!

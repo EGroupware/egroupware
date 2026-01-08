@@ -146,7 +146,7 @@ are you sure you want to delete this group ?	admin	sk	Naozaj chcete odstrániť 
 are you sure you want to delete this server?	admin	sk	Naozaj chcete odstrániť tento server?
 are you sure you want to kill this session ?	admin	sk	Naozaj chcete ukončiť túto reláciu?
 async services last executed	admin	sk	Asynchrónne služby naposledy spustené
-asynchronous timed services	admin	sk	Asynchrónne časované služby
+asynchronous timed services	admin	sk	Asynchrónna služba
 asyncservices not yet installed or other error (%1) !!!	admin	sk	Asyncslužby zatiaľ nie sú nainštalované, alebo iná chyba (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sk	Pokúsiť sa použiť korektný MIME typ pre FTP namiesto predvoleného 'application/octet-stream'.
 attributes	admin	sk	Atribúty
@@ -201,6 +201,7 @@ check ip address of all sessions	admin	sk	Skontrolovať IP adresu všetkých rel
 check items to <b>%1</b> to %2 for %3	admin	sk	Skontrolovať položky po <b>%1</b> po %2 pre %3
 checking push (green for success or red for failure)	admin	sk	Kontrolujem PUSH (zelená=úspech, červená=chyba)
 children	admin	sk	Deti
+clear cache and register hooks	admin	sk	Vymazať cache/registrovať háčiky
 clear credentials	admin	sk	Odstrániť prihlasovacie údaje
 clear mail credentials	admin	sk	Odstrániť prihlasovacie údaje pre mail
 clear security tokens	admin	sk	Vyčistič bezpečnostné tokeny
@@ -258,7 +259,7 @@ data	admin	sk	Údaje
 data from	admin	sk	Koho údaje
 day	admin	sk	Deň
 day of week<br>(0-6, 0=sun)	admin	sk	Deň v týždni<br>(0-6, 0=Ned)
-db backup and restore	admin	sk	Záloha a obnova databáz
+db backup and restore	admin	sk	Záloha
 deactivate	admin	sk	Deaktivovať
 deactivated	admin	sk	deaktivované
 debug	admin	sk	Ladenie
@@ -294,9 +295,9 @@ deny access	admin	sk	Zakáž prístup
 deny access to access log	admin	sk	Zakáž prístup do prístupových záznamov
 deny access to application registery	admin	sk	Zakáž prístup do registrov aplikácie
 deny access to applications	admin	sk	Zakáž prístup do aplikácií
-deny access to asynchronous timed services	admin	sk	Zakáž prístup do asynchrónnych časovaných služieb
+deny access to asynchronous timed services	admin	sk	Odmietnuť prístup k asynchrónnej službe
 deny access to current sessions	admin	sk	Zakáž prístup do aktuálnych relácií
-deny access to db backup and restore	admin	sk	Zakáž prístup k zálohe a obnove databáz
+deny access to db backup and restore	admin	sk	Odmietnuť prístup k zálohe
 deny access to error log	admin	sk	Zakáž prístup do chybových záznamov
 deny access to global categories	admin	sk	Zakáž prístup do globálnych kategórií
 deny access to groups	admin	sk	Zakáž prístup do skupín
@@ -446,7 +447,6 @@ force selectbox	admin	sk	Vynútiť ponuku pre výber
 force users to change their password regularily?(empty for no,number for after that number of days	admin	sk	Vynútiť pravidelnú obmenu hesla? (prázdne=nie, číslo určuje po koľkých dňoch)
 forward also to	admin	sk	Tiež preposlať (komu)
 forward email's to	admin	sk	Preposlať emaily (komu)
-forward emails to	admin	sk	Preposlať správy (komu)
 forward only	admin	sk	Preposlať iba
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	sk	Preposielanie iba vypne IMAP schránku / ukladanie správ a jednoducho ich prepošle na uvedenú adresu.
 full name	admin	sk	Plné meno
@@ -730,8 +730,7 @@ regular expression to find part to use as container	admin	sk	Regulárny výraz n
 reject passwords containing part of username or full name (3 or more characters long)	admin	sk	Odmietnuť heslá ktoré obsahujú časti plného alebo používateľského mena (v dĺžke 3 a viac znakov)
 relay access checked	admin	sk	Relačný prístup bol skontrolovaný
 remark	admin	sk	Poznámka
-remote administration instances	admin	sk	Vzdialené správcovské inštancie
-remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	sk	Vzdialená správa sa dá používať len ak je zapnutá vo vzdialenej relácii pod stránkou Správca > Nastavenia stránky!
+remote administration instances	admin	sk	Vzdialená správa
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	sk	Vzdialená správa musí byť najprv zapnutá pre vzdialenú inštanciu pod Správca > Nastavenia stránky!
 remote instance saved	admin	sk	Vzdialená inštancia bola uložená.
 remove	admin	sk	Odstrániť
@@ -749,7 +748,7 @@ rights	admin	sk	Oprávnenia
 rows	admin	sk	Riadky
 rpm or debian package	admin	sk	RPM alebo balíček deb
 run	admin	sk	Spustiť
-run asynchronous services	admin	sk	Spustiť asynchrónne služby
+run asynchronous services	admin	sk	Spustiť asynchrónnu službu
 run rights for applications	admin	sk	Práva spustenia aplikácií
 save as default	admin	sk	Uložiť ako predvolené
 save changes	admin	sk	Uložiť zmeny
@@ -860,8 +859,6 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	sk	Prihlasovacie meno a heslo sa nesmú zhodovať.
 the loginid can not be more then 8 characters	admin	sk	Prihlasovacie ID nesmie presahovať 8 znakov.
 the mimeparser can not parse this message.	admin	sk	Analyzátor MIME nedokázal spracovať túto správu.
-the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	sk	Vnútorne používané meno (nanajvýš 20 znakov), jeho zmena zneprístupní existujúce údaje
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	sk	Vnútorne používané meno (nanajvýš 20 znakov), jeho zmena zneprístupní existujúce údaje.
 the testjob sends you a mail everytime it is called.	admin	sk	Testovacia úloha vám pošle správu, kedykoľvek sa spustí.
 the text displayed to the user	admin	sk	Text zobrazený používateľovi
 the two passwords are not the same	admin	sk	Heslá sa nezhodujú
@@ -966,7 +963,6 @@ view error log	admin	sk	Zobraziť záznam o chybách
 view sessions	admin	sk	Relácie
 view this user	admin	sk	Zobraziť tohto používateľa
 view user account	admin	sk	Zobraziť používateľský účet
-virtual mail manager	admin	sk	Virtuálny MAIL ManaGeR
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	sk	Nastavte počet dní, koľko vopred sa majú používatelia upozorňovať na vynútenú obmenu hesla. Prázdne = bez informácie
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	sk	Prosíme vás o tieto údaje čisto na štatistické účely, aby sme získali celkový prehľad o celosvetovom používaní EGroupware.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	sk	Neukladáme si žiadne údaje ohľadom vašej identity.

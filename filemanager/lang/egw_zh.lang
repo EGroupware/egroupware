@@ -44,6 +44,7 @@ cut to clipboard	filemanager	zh	剪切到剪贴板
 default action on double-click	filemanager	zh	双击时的默认操作
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	zh	不会显示链接，但仍可导航至此位置，或将此特定位置配置为起始文件夹或文件夹链接。
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	zh	定义如何处理双击文档文件的操作。图片总是在曝光视图中打开，电子邮件则通过电子邮件应用程序打开。所有其他 MIME 类型均由浏览器自行处理。
+defines how to open a merge print document	filemanager	zh	文档填写完成后应如何处理？<br><br><b>若启用Collabora Online</b>，这些文档可直接在浏览器中通过Collabora Online打开（并进行后续处理）。<br><br> <b>若未启用Collabora Online</b>，系统将提供已填写文档的下载选项。<br><br>Collabora Online详细信息：<br> <a href="https://www.egroupware.org/online-office" target="_blank">EGroupware中的Collabora Online办公套件</a>
 deleted %1	filemanager	zh	%1已删除
 directory	filemanager	zh	目录
 directory %1 already exists	filemanager	zh	目录%1已存在

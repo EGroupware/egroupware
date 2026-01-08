@@ -39,9 +39,17 @@ add user or group	admin	lt	Pridėti naudotoją arba grupę
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	lt	Admin elektroninio pašto adresai, atskirti kableliais, kuriais bus pranešama apie užblokuotas vartotojo paskyras ir IP adresus. Tuščias = pranešimas nesiunčiamas.
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	lt	Po kiek nesėkmingų prisijungimo bandymų paskyra turėtų būti užblokuota. Numatytasis = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	lt	Po kiek nesėkmingų prisijungimo bandymų IP adresas turėtų būti užblokuotas. Numatytasis = 15
+allow remote administration from following install id's (comma separated)	admin	lt	Leisti nuotolinį administravimą iš šių diegimo ID, atskirtų kableliais.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	lt	Leisti naudotojui saugoti savo slaptažodį SingleSignOn skiltyje „Saugumas ir slaptažodžiai“.
 allow user to set 'remember me' token	admin	lt	Leisti naudotojui nustatyti žetoną "Prisiminti mane"
 anonymous user. not shown in list sessions.	admin	lt	Anoniminis naudotojas. Nerodoma sąrašo sesijose
+are you sure you want to %1 mail for selected accounts?	admin	lt	Ar tikrai norite %1 paštu išrinktoms paskyroms?
+are you sure you want to delete this account ?	admin	lt	Ar tikrai norite ištrinti šią paskyrą?
+are you sure you want to delete this category ?	common	lt	Ar tikrai norite ištrinti šią kategoriją?
+are you sure you want to delete this global category ?	admin	lt	Ar tikrai norite ištrinti šią bendrą kategoriją?
+are you sure you want to delete this group ?	admin	lt	Ar tikrai norite ištrinti šią grupę?
+asynchronous timed services	admin	lt	Asinchroninė paslauga
+backup directory %1 mounted as %2	admin	lt	Atsarginės kopijos katalogas %1 prijungtas kaip %2
 blocking after wrong password	admin	lt	Blokavimas po neteisingo slaptažodžio
 bulk changes	admin	lt	Masiniai pakeitimai
 bulk password reset	admin	lt	Masinis slaptažodžio keitimas
@@ -51,6 +59,8 @@ certificate details	admin	lt	Sertifikato informacija
 certificate validation in days	admin	lt	Sertifikato patvirtinimas per kelias dienas
 change access	admin	lt	Keisti prieigos teises
 change domain of email address and aliases	admin	lt	Pakeisti el. pašto adreso domeną ir slapyvardžius
+changelog and versions	admin	lt	Keitimų sąrašas ir versijos
+clear cache and register hooks	admin	lt	Išvalyti talpyklą/registruoti kabliukus
 clear security tokens	admin	lt	Išvalyti saugumo žetonus
 comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	lt	Kableliais atskirti IP adresai, įtraukti į baltąjį sąrašą ir neblokuojami (:pasirinktinis bandymų skaičius)
 container	admin	lt	Konteineris
@@ -58,11 +68,16 @@ current certificate	admin	lt	Dabartinis sertifikatas
 custom 1	admin	lt	Pasirinktinis 1
 custom 2	admin	lt	Pasirinktinis 2
 custom 3	admin	lt	Pasirinktinis 3
+db backup and restore	admin	lt	Atsarginė kopija
 delete certificate	admin	lt	Ištrinti sertifikatą
 deny access to access log	admin	lt	Drausti prieigą prie prieigos žurnalo
+deny access to asynchronous timed services	admin	lt	Atsisakyti prieigos prie asinchroninės paslaugos
+deny access to db backup and restore	admin	lt	Atsisakyti prieigos prie atsarginės kopijos
+egroupware version	admin	lt	EGroupware versija
 error revoking token!	admin	lt	Klaida atšaukti žetoną!
 error storing token!	admin	lt	Klaida saugant simbolį!
 export certificate as p12	admin	lt	Eksportuoti sertifikatą kaip p12
+failed to mount backup directory!	admin	lt	Nepavyko prijungti atsarginės kopijos katalogo!
 generate certificate	admin	lt	Generuoti sertifikatą
 generate new token and display it once after saving	admin	lt	Sugeneruoti naują simbolį ir jį vieną kartą parodyti po išsaugojimo
 group hidden from non-admins	admin	lt	Grupė paslėpta nuo neadministratorių
@@ -80,6 +95,7 @@ last updated	admin	lt	Paskutinį kartą atnaujinta
 leave empty for no quota	admin	lt	Palikite tuščią, jei kvotos nėra
 leave empty to use oauth, if supported	admin	lt	Palikite tuščią, jei norite naudoti OAuth, jei palaikoma
 lifetime of 'remember me' token	admin	lt	Ženklo „Prisiminti mane“ gyvavimo trukmė
+mount backup directory to %1	admin	lt	Prijunkite atsarginės kopijos katalogą prie %1
 no limit	admin	lt	Nėra ribos
 oauth authentiction	admin	lt	OAuth autentiškumo nustatymas
 offer to installing egroupware as mail-handler	admin	lt	Pasiūlymas įdiegti EGroupware kaip pašto tvarkytuvą
@@ -91,8 +107,13 @@ other security configuration	admin	lt	Kita saugumo konfigūracija
 own categories	admin	lt	Savos kategorijos
 own install id	admin	lt	Nuosavas diegimo ID
 own install id:	admin	lt	Nuosavas diegimo ID:
+php version	admin	lt	PHP versija
 regular expression to find part to use as container	admin	lt	Reguliarioji išraiška daliai, kurią galima naudoti kaip konteinerį, rasti
+remote administration instances	admin	lt	Nuotolinis administravimas
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	lt	Nuotolinis administravimas turi būti įjungtas nuotolinėje instancėje, esančioje Admin > Site configuration!
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	lt	Grupės prieigos pašalinimas gali sukelti problemų su šios kategorijos duomenimis. Ar tikrai norite tai padaryti? Šių grupių vartotojai gali netekti prieigos:
 revoke this token	admin	lt	Atšaukti šį simbolį
+run asynchronous services	admin	lt	Vykdyti asinchroninę paslaugą
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	lt	Pasirinkite programas, kurioms norite, kad simbolis būtų taikomas tik jums, arba palikite numatytąjį variantą - visos programos.
 set a random password	admin	lt	Nustatykite atsitiktinį slaptažodį
 show access log	admin	lt	Prieigos žurnalas

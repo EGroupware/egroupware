@@ -46,7 +46,8 @@
 15 minutes	common	fr	15 Minutes
 2-factor authentication code required	common	fr	Code d'uthentication à double facteur requis
 2-factor-authentication	common	fr	Authentication à double facteur
-2-factor-authentication required	common	fr	Authentication à double facteur requise
+2-factor-authentication required	common	fr	Deuxième facteur requis.
+2nd factor	login	fr	2e facteur
 3 minutes	common	fr	3 minutes
 30 minutes	common	fr	30 Minutes
 30 seconds	common	fr	30 Secondes
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	fr	Ajouter une nouvelle entr�
 add a new multi-column index	common	fr	Ajouter un nouvel index multi-colonnes
 add category	common	fr	Ajouter catégorie
 add column	common	fr	Ajouter une colonne
-add current	common	fr	Ajouter la sélection
+add current	common	fr	Afficher comme favori
 add index	common	fr	Ajouter un index
 add new	common	fr	Ajouter un nouveau
 add shortcut	common	fr	Ajouter raccourci

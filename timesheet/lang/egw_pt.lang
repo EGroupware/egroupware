@@ -3,6 +3,7 @@
 3 years ago	timesheet	pt	Há 3 anos atrás
 all projects	timesheet	pt	Todos os projetos
 applies the changes	timesheet	pt	Aplicar as alterações
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	pt	Aplique a ação em toda a consulta, NÃO apenas nas folhas de ponto exibidas!
 ask to start and stop working time with session	timesheet	pt	Pedir para iniciar e parar o tempo de trabalho com a sessão
 by	timesheet	pt	por
 category for 'working time'	admin	pt	Categoria para 'Tempo de trabalho'
@@ -39,9 +40,12 @@ exports entries from your timesheet into a csv file. csv means 'comma separated 
 field must not be empty !!!	timesheet	pt	O campo não pode estar vazio !!!
 forgot to switch off working time?	common	pt	Esqueceu-se de desligar o tempo de trabalho?
 general fields:	timesheet	pt	Campos gerais:
+give additional users access	timesheet	pt	Conceda acesso a utilizadores adicionais
+give infolog delegation read-access to timesheets booked on them	timesheet	pt	Conceda à delegação do InfoLog acesso de leitura às folhas de ponto registadas nelas.
 global categories	timesheet	pt	Categorias gerais
 history	timesheet	pt	Histórico
 history logging	admin	pt	Logging História
+how to display linked timesheets	timesheet	pt	Como exibir folhas de ponto vinculadas?
 html link to the current record	timesheet	pt	Link HTML para o registro atual
 id	timesheet	pt	ID
 insert	timesheet	pt	Inserir
@@ -52,6 +56,7 @@ last year	timesheet	pt	Último ano
 leave it empty for a full week	timesheet	pt	Deixar vário para uma semana interira
 leaves without saveing	timesheet	pt	Continua sem guardar
 length<br>rows	timesheet	pt	Altura<br>Linhas
+link title	timesheet	pt	Título da ligação
 links	timesheet	pt	Ligações
 links and attached files	timesheet	pt	Links e arquivos anexados
 list of files linked to the current record	timesheet	pt	Lista de arquivos vinculados ao registro atual

@@ -46,7 +46,8 @@
 15 minutes	common	pl	15 minut
 2-factor authentication code required	common	pl	Wymagany kod uwierzytelniania 2-factor
 2-factor-authentication	common	pl	2-Factor-Autentykacja
-2-factor-authentication required	common	pl	Wymagane uwierzytelnienie 2-faktor
+2-factor-authentication required	common	pl	Wymagany drugi czynnik.
+2nd factor	login	pl	2. czynnik
 3 minutes	common	pl	3 minuty
 30 minutes	common	pl	30 minut
 30 seconds	common	pl	30 sekund
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	pl	Dodaj nowy wpis dla wybran
 add a new multi-column index	common	pl	Dodaj nowy indeks wielokolumnowy
 add category	common	pl	Dodaj kategorię
 add column	common	pl	Dodaj kolumnę
-add current	common	pl	Dodaj bieżący widok
+add current	common	pl	Wyświetl jako ulubione
 add index	common	pl	Dodaj indeks
 add new	common	pl	Dodaj nowy
 add shortcut	common	pl	Dodaj skrót

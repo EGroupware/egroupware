@@ -31,10 +31,12 @@ creationdate of file	filemanager	id	Tanggal pembuatan file
 current directory	filemanager	id	Direktori saat ini
 custom fields	filemanager	id	Custom fields
 cut	filemanager	id	cut
+defines how to open a merge print document	filemanager	id	Apa yang harus dilakukan dengan dokumen setelah diisi?<br><br><b>Jika Collabora Online tersedia</b>, dokumen-dokumen ini dapat dibuka (dan diproses lebih lanjut) langsung di browser menggunakan Collabora Online. <br><br> <b>Tanpa Collabora Online</b>, dokumen yang telah diisi ditawarkan untuk diunduh.<br><br>Informasi lebih lanjut tentang Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office di EGroupware</a>
 deleted %1	filemanager	id	Menghapus %1
 directory	filemanager	id	Direktori
 disable	filemanager	id	Disable
 download	filemanager	id	Unduh
+download documents	filemanager	id	Unduh dokumen
 edit comments	filemanager	id	Edit komentar
 edit settings	filemanager	id	Edit pengaturan
 enable	filemanager	id	enable

@@ -47,11 +47,11 @@ forgot to switch off working time?	common	id	Lupa mematikan waktu kerja?
 full: use only projectmanager	admin	id	Full: hanya menggunakan ManajerProyek
 general fields:	timesheet	id	Field Umum:
 give additional users access	timesheet	id	Berikan akses kepada pengguna tambahan
-give infolog delegation read-access to timesheets booked on them	timesheet	id	Berikan akses baca kepada delegasi InfoLog untuk lembar waktu yang dipesan pada mereka
+give infolog delegation read-access to timesheets booked on them	timesheet	id	Berikan akses baca kepada delegasi InfoLog untuk lembar waktu yang dipesan pada mereka.
 global categories	timesheet	id	Kategori Global
 history	timesheet	id	Riwayat
 history logging	admin	id	Catatan riwayat
-how to display linked timesheets	timesheet	id	Cara menampilkan lembar waktu yang terhubung
+how to display linked timesheets	timesheet	id	Cara menampilkan lembar waktu yang terhubung?
 html link to the current record	timesheet	id	Tautan HTML ke catatan saat ini
 id	timesheet	id	ID
 ignore	timesheet	id	Ignore

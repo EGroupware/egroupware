@@ -43,7 +43,8 @@
 15 minutes	common	id	15 menit
 2-factor authentication code required	common	id	Diperlukan kode Autentikasi 2 Faktor
 2-factor-authentication	common	id	2 Faktor Autentikasi
-2-factor-authentication required	common	id	Diperlukan Autentikasi 2 Faktor
+2-factor-authentication required	common	id	Faktor kedua diperlukan.
+2nd factor	login	id	Faktor kedua
 3 minutes	common	id	3 menit
 30 minutes	common	id	30 menit
 30 seconds	common	id	30 detik
@@ -79,7 +80,7 @@ add %1 category for	common	id	Tambah %1 kategori untuk
 add a new contact	common	id	Tambah kontak baru
 add category	common	id	Tambah kategori
 add column	common	id	Tambah kolom
-add current	common	id	Tampilan saat ini sebagai favorit
+add current	common	id	Tampilkan sebagai Favorit
 add index	common	id	Tambah indeks
 add new	common	id	Tambah baru
 add shortcut	common	id	Tambah Shortcut
@@ -526,6 +527,7 @@ install	common	id	Instal
 install egroupware as mail-handler?	common	id	Menginstal EGroupware sebagai penangan surat?
 integer	common	id	Integer
 international	common	id	Internasional
+invalid 2-factor authentication code	common	id	Kode otentikasi dua faktor tidak valid.
 invalid email	common	id	Email tidak valid
 invalid filename	common	id	Nama berkas salah.
 invalid ip address	common	id	Alamat IP salah.

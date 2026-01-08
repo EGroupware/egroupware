@@ -1,4 +1,5 @@
 applies the changes	timesheet	uk	Застосувати зміни
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	uk	Застосувати дію до всього запиту, а НЕ тільки до показаних табелів обліку робочого часу!
 ask to start and stop working time with session	timesheet	uk	Запит на початок та завершення робочого часу з сесією
 category for 'working time'	admin	uk	Категорія для 'Робочого часу'
 change owner when updating	timesheet	uk	Змінити власника при оновленні
@@ -19,12 +20,18 @@ error storing working time	timesheet	uk	Помилка збереження ро
 existing links	timesheet	uk	Існуючі посилання
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	uk	Експортує записи з Табеля обліку робочого часу в CSV-файл. На вкладці Параметри ви також можете вибрати інші роздільники.
 forgot to switch off working time?	common	uk	Забули вимкнути робочий час?
+give additional users access	timesheet	uk	Надайте доступ додатковим користувачам
+give infolog delegation read-access to timesheets booked on them	timesheet	uk	Надайте делегату InfoLog доступ для читання до табелів обліку робочого часу, заброньованих на них.
 global categories	timesheet	uk	Глобальні категорії
+how to display linked timesheets	timesheet	uk	Як відобразити пов'язані табелі обліку робочого часу?
 id	timesheet	uk	Id
 last modified	timesheet	uk	Востаннє змінено
 leaves without saveing	timesheet	uk	вийти без збереження
 length<br>rows	timesheet	uk	Довжина<br>Рядки
+link title	timesheet	uk	Назва посилання
 links	timesheet	uk	Посилання
+list of files linked to the current record	timesheet	uk	Список файлів, пов'язаних з поточним записом
+make timesheets readable by infolog delegation	timesheet	uk	Зробіть табелі обліку робочого часу доступними для читання делегату InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	uk	максимальна довжина вводу[, видима довжина поля вводу (необов'язково)]
 mode	timesheet	uk	Режим
 modified	timesheet	uk	Змінено
@@ -44,6 +51,7 @@ start & stop timer	common	uk	Таймер запуску та зупинки
 start timer	common	uk	Таймер запуску
 start-time can not be before last stop- or pause-time %1!	common	uk	Час запуску не може бути раніше часу останньої зупинки або паузи %1!
 stop- or pause-time can not be before the start-time %1!	common	uk	Час зупинки або паузи не може бути раніше часу запуску %1!
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	uk	Ім'я, що використовується внутрішньо, <= 20 символів, його зміна робить існуючі дані недоступними
 the text displayed to the user	timesheet	uk	текст, що показуються користувачу
 this month	timesheet	uk	Поточний місяць
 this week	timesheet	uk	Поточний тиждень

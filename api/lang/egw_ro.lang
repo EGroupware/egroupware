@@ -14,7 +14,8 @@
 15 minutes	common	ro	15 minute
 2-factor authentication code required	common	ro	Cod de autentificare cu 2 factori necesar
 2-factor-authentication	common	ro	Autentificare cu 2 factori
-2-factor-authentication required	common	ro	2-Factor-Autentificare necesară
+2-factor-authentication required	common	ro	Al doilea factor necesar.
+2nd factor	login	ro	Al 2-lea factor
 3 minutes	common	ro	3 minute
 30 minutes	common	ro	30 de minute
 30 seconds	common	ro	30 de secunde
@@ -22,7 +23,7 @@
 5 seconds	common	ro	5 secunde
 abort	common	ro	Abandonați
 about egroupware	common	ro	Despre EGroupware
-add current	common	ro	Vizualizarea curentă ca favorită
+add current	common	ro	Vizualizare ca favorit
 add to clipboard	common	ro	Adaugă în clipboard
 add user to responsibles	groupdav	ro	Adăugați utilizatorul la responsabilități
 add user to responsibles, removing evtl. previous category user	groupdav	ro	Adăugați un utilizator la responsabili, eventual eliminați utilizatorii din categoria anterioară

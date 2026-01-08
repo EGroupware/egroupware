@@ -14,9 +14,10 @@
 1 week	common	ko	1週間
 13 (ntp)	admin	ko	13 (ntp)
 15 minutes	common	ko	15分
-2-factor authentication code required	common	ko	2要素認証コードが必要
+2-factor authentication code required	common	ko	두 번째 요소가 필요합니다.
 2-factor-authentication	common	ko	2ファクター認証
 2-factor-authentication required	common	ko	2要素認証が必要
+2nd factor	login	ko	두 번째 요소
 3 minutes	common	ko	3分
 30 minutes	common	ko	30分
 30 seconds	common	ko	30秒
@@ -38,6 +39,7 @@ active	common	ko	활성화
 add	common	ko	추가
 add a new contact	common	ko	새 연락처 추가
 add category	common	ko	카테고리 추가
+add current	common	ko	보기 즐겨찾기
 add sub	common	ko	하위 추가
 add user to responsibles	groupdav	ko	책임에 사용자 추가
 add user to responsibles, removing evtl. previous category user	groupdav	ko	사용자를 책임에 추가하고 이전 카테고리 사용자를 제거할 수 있습니다.
@@ -227,6 +229,7 @@ home screen	common	ko	기본 화면
 hours	common	ko	시간
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ko	최상위 페이지의 네비게이션 바에서 몇개의 아이콘이 보이길 원하나요. 여분의 아이콘은 가장 네비게이션바의 가장 오른쪽 아이콘의 풀다운 메뉴안으로 들어갑니다.
 html links to any entries linked to the current record, excluding attached files	common	ko	첨부 파일을 제외한 현재 레코드에 연결된 모든 항목에 대한 HTML 링크입니다.
+if you use "2-factor-authentication", please enter the code here.	common	ko	“2단계 인증”을 사용 중이라면, 여기에 코드를 입력해 주세요.
 image url	common	ko	그림 URL
 images	common	ko	이미지
 import	common	ko	가져오기
@@ -237,6 +240,7 @@ insert row before	common	ko	앞에 열 넣기
 install	common	ko	설치
 install egroupware as mail-handler?	common	ko	메일 핸들러로 E그룹웨어를 설치하시겠습니까?
 international	common	ko	국제
+invalid 2-factor authentication code	common	ko	유효하지 않은 2단계 인증 코드
 invalid email	common	ko	잘못된 이메일
 invalid filename	common	ko	잘못된 파일명
 invalid ip address	common	ko	잘못된 IP주소

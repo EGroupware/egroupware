@@ -96,9 +96,12 @@ backup '%1' deleted	setup	sl	Arhiv '%1' zbrisan
 backup '%1' renamed to '%2'	setup	sl	Arhiv '%1' preimenovan v '%2'
 backup '%1' restored	setup	sl	Arhiv '%1' obnovljen
 backup and restore	setup	sl	Arhiviranje in obnavljanje
+backup directory %1 mounted as %2	setup	sl	Mapa varnostnih kopij %1 je priključena kot %2
 backup failed	setup	sl	Arhiviranje je spodletelo
 backup files (needs ziparchive)	setup	sl	Varnostno kopiranje podatkov datotek EGroupware (imenik datotek) <br>(zahteva PHP ZipArchive)
 backup finished	setup	sl	Arhiviranje dokončano
+backup housekeeping	setup	sl	Varnostne kopije s standardnim imenom se lahko samodejno počistijo. Preimenujte datoteke varnostnih kopij, da jih izključite iz čiščenja.
+backup min count	setup	sl	Minimalno število varnostnih kopij
 backup now	setup	sl	Arhiviraj takoj
 backup sets	setup	sl	Arhivski nizi
 backup skipped!	setup	sl	Arhiv izpuščen!
@@ -274,7 +277,7 @@ error searching "dn=%1" for "%2"!	setup	sl	Napaka pri iskanju "DN=%1" za "%2"!
 error uploading your backup!	setup	sl	Napaka pri nalaganju varnostne kopije!
 every	setup	sl	Vsako
 export has been completed!	setup	sl	Izvoz končan!
-failed to mount backup directory!	setup	sl	Ni uspelo namestiti imenika za varnostne kopije!
+failed to mount backup directory!	setup	sl	Namestitev imenika varnostne kopije ni uspela!
 failed updating user "%1" dn="%2"!	setup	sl	Ni uspelo posodobiti uporabnika "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	sl	Napaka pri zapisovanju konfiguracijske datoteke header.inc.php. Preverite pravice.
 fallback authentication	setup	sl	Rezervna avtentikacija
@@ -394,6 +397,7 @@ modifications have been completed!	setup	sl	Spremembe so končane.
 modified	setup	sl	Spremenjeno
 modify	setup	sl	Spremeni
 month	setup	sl	Mesec
+mount backup directory to %1	setup	sl	Namesti imenik varnostne kopije v %1
 name of database	setup	sl	Ime podatkovne baze
 name of db user egroupware uses to connect	setup	sl	Uporabniško ime za dostop do podatkovne baze
 never	setup	sl	Nikoli

@@ -46,7 +46,8 @@
 15 minutes	common	ru	15 минут
 2-factor authentication code required	common	ru	Требуется код 2-факторной аутентификации
 2-factor-authentication	common	ru	Двухфакторная аутентификация
-2-factor-authentication required	common	ru	Требуется 2-факторная аутентификация
+2-factor-authentication required	common	ru	Требуется второй фактор.
+2nd factor	login	ru	2-й фактор
 3 minutes	common	ru	3 минуты
 30 minutes	common	ru	30 минут
 30 seconds	common	ru	30 секунд
@@ -84,7 +85,7 @@ add a new entry of the selected application	common	ru	Добавить нову�
 add a new multi-column index	common	ru	Добавить новый многоколоночный индекс
 add category	common	ru	Добавить категорию
 add column	common	ru	Добавить колонку
-add current	common	ru	Текущее представление как избранное
+add current	common	ru	Просмотр как избранное
 add index	common	ru	Добавить индекс
 add new	common	ru	Добавить новый
 add shortcut	common	ru	Добавить ярлык

@@ -19,7 +19,8 @@
 15 minutes	common	lt	15 minučių
 2-factor authentication code required	common	lt	Reikalingas 2 veiksnių autentifikavimo kodas
 2-factor-authentication	common	lt	2 veiksnių autentiškumo patvirtinimas
-2-factor-authentication required	common	lt	Reikalingas 2 veiksnių autentiškumo nustatymas
+2-factor-authentication required	common	lt	Reikalingas antrasis veiksnys.
+2nd factor	login	lt	2-oji saugykla
 3 minutes	common	lt	3 minutės
 30 minutes	common	lt	30 minučių
 30 seconds	common	lt	30 sekundžių
@@ -32,7 +33,7 @@ about %1	common	lt	%1 - apie
 about egroupware	common	lt	Apie EGroupware
 access	common	lt	Prieiga
 access not permitted	common	lt	Prieiga negalima.
-add current	common	lt	Dabartinis vaizdas kaip mėgstamiausias
+add current	common	lt	Peržiūrėti kaip mėgstamą
 add to clipboard	common	lt	Pridėti į iškarpinę
 add user to responsibles	groupdav	lt	Pridėti naudotoją prie atsakingų asmenų
 add user to responsibles, removing evtl. previous category user	groupdav	lt	Pridėti naudotoją prie atsakingų, galbūt pašalinti ankstesnės kategorijos naudotojus

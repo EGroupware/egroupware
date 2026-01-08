@@ -18,7 +18,16 @@ are you sure?	setup	bg	СИГУРНИ ЛИ СТЕ?
 available version	setup	bg	Налични версии
 back to the previous screen	setup	bg	Предишен екран
 back to user login	setup	bg	Потребителския вход
+backup '%1' deleted	setup	bg	Резервно копие „%1“ изтрито.
+backup '%1' renamed to '%2'	setup	bg	Резервно копие „%1“ преименувано на „%2“.
+backup '%1' restored	setup	bg	Резервно копие „%1“ възстановено.
+backup directory %1 mounted as %2	setup	bg	Архивна директория %1 монтирана като %2
+backup failed	setup	bg	Резервното копиране се провали.
 backup files (needs ziparchive)	setup	bg	Архивиране на данни на файловете на EGroupware (директория с файлове) <br>(изисква PHP ZipArchive)
+backup finished	setup	bg	Резервното копиране приключи.
+backup housekeeping	setup	bg	Архивите със стандартно име могат да бъдат изтривани автоматично. Преименувайте архивите, за да ги изключите от изтриването.
+backup min count	setup	bg	Минимален брой архиви
+backup started, this might take a few minutes ...	setup	bg	Резервното копиране започна, това може да отнеме няколко минути...
 because an application it depends upon was upgraded	setup	bg	защото приложение, от което зависи, е обновено
 because it depends upon	setup	bg	защото зависи от
 because it was manually disabled	setup	bg	защото е ръчно отменено
@@ -56,7 +65,7 @@ error searching "dn=%1" for "%2"!	setup	bg	Грешка при търсенет�
 error uploading your backup!	setup	bg	Грешка при качване на резервно копие!
 every	setup	bg	Всеки
 export has been completed!	setup	bg	Експортът е завършен!
-failed to mount backup directory!	setup	bg	Неуспешно монтиране на директорията за резервно копие!
+failed to mount backup directory!	setup	bg	Неуспешно монтиране на директорията за архивиране!
 failed updating user "%1" dn="%2"!	setup	bg	Неуспешно актуализиране на потребител "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	bg	Неуспешно записване на конфигурационния файл header.inc.php, проверете разрешенията!
 fallback authentication	setup	bg	Резервна автентификация
@@ -82,6 +91,7 @@ may be broken	setup	bg	може да е повредено
 min backup count	setup	bg	Максимален брой запазени резервни копия (нула: всички)
 modified	setup	bg	Редактирано
 modify	setup	bg	Промяна
+mount backup directory to %1	setup	bg	Монтирайте директорията за архивиране в %1
 name of database	setup	bg	Име на базата данни
 never	setup	bg	никога
 new	setup	bg	Нов
@@ -143,6 +153,7 @@ version	setup	bg	версия
 version mismatch	setup	bg	Разминаване във версиите
 view	setup	bg	Преглед
 warning!	setup	bg	Внимание
+we strongly recommend to run a db backup before running the import!	setup	bg	Препоръчваме да направите архивиране на базата данни ПРЕДИ да стартирате импорта!
 welcome to the egroupware installation	setup	bg	Добре дошли в инсталацията на EGroupware
 writable by the webserver	setup	bg	с права за запис от уеб-сървъра
 yes	setup	bg	Да

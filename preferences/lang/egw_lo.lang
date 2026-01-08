@@ -20,9 +20,7 @@ div	preferences	lo	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	lo	ທ່ານມັກຮູບແບບເວລາ 24 ຊົ່ວໂມງ ຫຼື 12 ຊົ່ວໂມງ
 edit custom fields	preferences	lo	ແກ້ໄຂຟີລທີ່ກໍານົດເອງ
 enable drag and drop functionality (experimental)	preferences	lo	ເປີດໃຊ້ງານຟັງຊັນຈັບມາໃສ່
-enable selectbox dropdown resizing for ie (experimental)	preferences	lo	ເປີດໃຊ້ງານການປັບຂະໜາດຊ່ອງເລືອກ-ແບບເມນູເລື່ອນລົງສຳຫຼັບ IE (ທົດລອງ)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	lo	ເປີດ ຫຼື ປິດໃຊ້ງານຟັງຊັນຈັບມາໃສໃນທຸກແອບພຼີຊັນ. ຖ້າໜ້າຕ່າງບໍ່ສະໜັບສະໜູນການຈັບມາໃສ່, ຈະປິດອັດຕະໂນມັດ. ຄຸນລັກສະນະມີການທົດລອງໃນຕອນນີ້
-enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	lo	ເປີດ ຫຼື ປິດໃຊ້ງານການປັບຂະໜາດຊ່ອງເລືອກ-ເມນູແບບເລື່ອນລົງສຳຫຼັບ IE ໃນທຸກແອບພຼິເຄຊັນ. ຖ້າໜ້າຕ່າງບໍ່ແມ່ນ IE, ຕົວເລືອກຈະນໍາໃຊ້ບໍ່ໄດ້. ຄຸນລັກສະນະມີການທົດລອງໃນຕອນນີ້
 enter your new password	preferences	lo	ໃສ່ລະຫັດຜ່ານໃໝ່ຂອງທ່ານ
 enter your old password	preferences	lo	ໃສ່ລະຫັດຜ່ານເກົ່າຂອງທ່ານ
 failed to change password.	preferences	lo	ການປ່ຽນລະຫັດລົ້ມເຫຼວ. ກະລຸນາຕິດຕໍ່ຜູ້ເບິ່ງແຍງລະບົບຂອງທ່ານ

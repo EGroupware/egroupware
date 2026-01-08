@@ -46,7 +46,8 @@
 15 minutes	common	sl	15 Minut
 2-factor authentication code required	common	sl	Zahtevana je koda 2-faktorske avtentikacije
 2-factor-authentication	common	sl	2-faktorska avtentikacija
-2-factor-authentication required	common	sl	Zahtevana je 2-faktorska avtentikacija
+2-factor-authentication required	common	sl	Potreben je drugi dejavnik.
+2nd factor	login	sl	2. skladišče
 3 minutes	common	sl	3 minute
 30 minutes	common	sl	30 Minut
 30 seconds	common	sl	30 sekund
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	sl	Dodaj nov vnos v izbrano a
 add a new multi-column index	common	sl	Dodaj novo kazalo z več stolpci
 add category	common	sl	Dodaj kategorijo
 add column	common	sl	Dodaj stolpec
-add current	common	sl	Dodaj trenutnega
+add current	common	sl	Poglej kot priljubljeno
 add index	common	sl	Dodaj kazalo
 add new	common	sl	Dodaj novo
 add shortcut	common	sl	Dodaj bližnjico

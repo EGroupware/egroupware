@@ -46,7 +46,8 @@
 15 minutes	common	fi	15 minuuttia
 2-factor authentication code required	common	fi	2-tekijätodennuskoodi vaaditaan
 2-factor-authentication	common	fi	2-tekijä-tunnistus
-2-factor-authentication required	common	fi	2-tekijätodennus vaaditaan
+2-factor-authentication required	common	fi	Toinen tekijä vaaditaan.
+2nd factor	login	fi	2. tallennustila
 3 minutes	common	fi	3 minuuttia
 30 minutes	common	fi	30 minuuttia
 30 seconds	common	fi	30 sekuntia
@@ -86,7 +87,7 @@ add a new entry of the selected application	common	fi	Lisää uusi merkintä sov
 add a new multi-column index	common	fi	Lisää uusi monisarakkeen indeksi
 add category	common	fi	Lisää kategoria
 add column	common	fi	Lisää sarake
-add current	common	fi	Nykyinen näkymä suosikkina
+add current	common	fi	Näytä suosikkina
 add index	common	fi	Lisää indeksi
 add new	common	fi	Lisää uusi
 add shortcut	common	fi	Lisää pikakuvake

@@ -36,7 +36,8 @@
 15 minutes	common	sv	15 minuter
 2-factor authentication code required	common	sv	Kod för 2-faktorsautentisering krävs
 2-factor-authentication	common	sv	2-faktorsautentisering
-2-factor-authentication required	common	sv	2-Faktor-autentisering krävs
+2-factor-authentication required	common	sv	Andra faktorn krävs.
+2nd factor	login	sv	2:a faktor
 3 minutes	common	sv	3 minuter
 30 minutes	common	sv	30 minuter
 30 seconds	common	sv	30 sekunder
@@ -76,7 +77,7 @@ add a new entry of the selected application	common	sv	Skapa ny post av vald appl
 add a new multi-column index	common	sv	Skapa multikolumn index
 add category	common	sv	Lägg till kategori
 add column	common	sv	Infoga kolumn
-add current	common	sv	Nuvarande vy som favorit
+add current	common	sv	Visa som favorit
 add index	common	sv	Skapa index
 add new	common	sv	Skapa ny
 add shortcut	common	sv	Lägg till genväg

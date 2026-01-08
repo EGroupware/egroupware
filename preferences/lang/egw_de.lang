@@ -55,13 +55,9 @@ edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
 enable	preferences	de	Aktivieren
 enable drag and drop functionality (experimental)	preferences	de	Drag-and-Drop einschalten (experimentell)
 enable menubar	preferences	de	Menüleiste aktivieren
-enable selectbox dropdown resizing for ie (experimental)	preferences	de	Aktiviere Selectbox-Drop-Down-Menue Grössenanpassung für IE (experimentell)
 enable/disable menubar from top of the editor.	preferences	de	Aktivieren/Deaktivieren der Menüleiste am oberen Rand des Editors.
 enabled features in toolbar	preferences	de	Aktivierte Funktionen in der Symbolleiste
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	de	Schaltet drag-and-drop in allen Anwendungen ein. Wenn vom Browser nicht unterstützt, wird es automatisch ausgeschaltet. Ist im Moment noch experimentell.
-enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Hier können die die Funktion aktiveren oder deaktivieren, die es Ihnen im Internet Explorer ermöglicht Auswahl Boxen automatisch auf Ihre wirkliche Größe (bei langen Texten) zu erweitern. Falls Sie einen anderen Browser verwenden, hat dies keine Auswirkungen. Diese Funktion ist noch in der Erprobung.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menue Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist, wird diese Option ignoriert. Diese Option ist im Moment noch experimentell.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menu Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist,wird diese Option ignoriert.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	de	Eine verschlüsselte LDAP Verbindung ist erforderlich um Passwörter zu ändern, aber in Ihre Installation nicht konfiguriert.
 enter code to authenticate the actions below	preferences	de	Geben Sie den Code zur Authentifizierung der folgenden Aktionen ein
 enter code to verify correct setup	preferences	de	Bitte geben sie den Code ein um die Einrichtung zu überprüfen
@@ -120,6 +116,7 @@ notification settings	preferences	de	Einstellungen der Benachrichtigungen
 number format	preferences	de	Format von Zahlen
 numbers	preferences	de	Zahlen
 old password and new password are the same. this is invalid. you must enter a new password	preferences	de	Altes Passwort und Neues Passwort sind gleich. Dies ist nicht erlaubt. Sie müssen ein neues Passwort vergeben.
+open popups in	preferences	de	Öffne Pop-ups in
 or other compatible apps	preferences	de	Oder andere kompatible Apps
 p: paragraph	preferences	de	p: Absatz
 paragraph	preferences	de	Absatz
@@ -132,6 +129,7 @@ password stored	preferences	de	Passwort gespeichert.
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone.
+popup window	preferences	de	Pop-up-Fenster
 popup with search	preferences	de	Pop-up mit Suche
 preferences saved.	preferences	de	Einstellungen gespeichert.
 preformatted	preferences	de	Vorformatiert
@@ -176,7 +174,6 @@ text only	preferences	de	Nur Text
 the old password is not correct	preferences	de	Das alte Passwort ist nicht korrekt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Pop-up ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Pop-up ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann. Die beiden letzten Optionen begrenzen die Sichtbarkeit von Benutzern. Aus diesem Grund sollten diese erzwungen werden, werden aber nicht auf Administratoren angewendet.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Pop-up ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann. Die beiden letzten Optionen begrenzen die Sichtbarkeit von Benutzern. Aus diesem Grund sollten diese erzwungen werden, werden aber nicht auf Administratoren angewendet.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	de	Die beiden letzten Optionen beschränken die Sichtbarkeit von anderen Benutzern. Daher sollten sie erzwungen werden und treffen NICHT auf Administratoren zu.
 the two passwords are not the same	preferences	de	Die beiden Passworte sind nicht identisch
 theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schriften)

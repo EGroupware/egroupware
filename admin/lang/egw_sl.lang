@@ -134,7 +134,7 @@ are you sure you want to delete this group ?	admin	sl	Ste prepričani, da želit
 are you sure you want to delete this server?	admin	sl	Ste prepričani, da želite izbrisati ta strežnik?
 are you sure you want to kill this session ?	admin	sl	Ste prepričani, da želite prekiniti to sejo?
 async services last executed	admin	sl	Zadnja izvedena asinhrona storitev
-asynchronous timed services	admin	sl	Asinhrono regulirane storitve
+asynchronous timed services	admin	sl	Asinhrona storitev
 asyncservices not yet installed or other error (%1) !!!	admin	sl	asinhrona storitev še ni nameščena ali druga napaka (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sl	Poskušaj uporabiti pravilen MIME tip za FTP, namesto privzetega 'application/octet-stream'
 attributes	admin	sl	Lastnosti
@@ -183,7 +183,7 @@ check categories for not (longer) existing accounts	admin	sl	Preverite kategorij
 check ip address of all sessions	admin	sl	Preveri naslov IP vseh sej
 check items to <b>%1</b> to %2 for %3	admin	sl	Preveri elemente do <b>%1</b> do %2 za %3
 children	admin	sl	Podrejeni
-clear cache and register hooks	admin	sl	Počistite predpomnilnik in registrirajte priključke
+clear cache and register hooks	admin	sl	Izbriši predpomnilnik/registriraj kljuke
 clear security tokens	admin	sl	Izbriši varnostne žetone
 click to select a color	admin	sl	Izbira barve
 color	admin	sl	Barva
@@ -227,7 +227,7 @@ data	admin	sl	Podatki
 data from	admin	sl	Podatki iz
 day	admin	sl	Dan
 day of week<br>(0-6, 0=sun)	admin	sl	Dan v tednu <br>(0-6, 0=nedelja)
-db backup and restore	admin	sl	Arhiviranje podatkovne baze
+db backup and restore	admin	sl	Varnostna kopija
 deactivate	admin	sl	Deaktiviraj
 deactivated	admin	sl	deaktivirano
 debug	admin	sl	Odpravi napako
@@ -262,9 +262,9 @@ deny access	admin	sl	prepreči dostop
 deny access to access log	admin	sl	Prepreči dostop do dnevnika dostopov
 deny access to application registery	admin	sl	Prepreči dostop do registra aplikacij
 deny access to applications	admin	sl	Prepreči dostop do aplikacij
-deny access to asynchronous timed services	admin	sl	Prepreči dostop do asinhrono reguliranih storitev
+deny access to asynchronous timed services	admin	sl	Zavrni dostop do asinhrone storitve
 deny access to current sessions	admin	sl	Prepreči dostop do trenutnih sej
-deny access to db backup and restore	admin	sl	Prepreči dostop do arhiviranja podatkovne baze
+deny access to db backup and restore	admin	sl	Zavrni dostop do varnostne kopije
 deny access to error log	admin	sl	Prepreči dostop do seznama napak
 deny access to global categories	admin	sl	Prepreči dostop do globalnih kategorij
 deny access to groups	admin	sl	Prepreči dostop do skupin
@@ -383,7 +383,7 @@ exports users into a csv file.	admin	sl	Izvozi uporabnike v datoteko CSV.
 failed to change password for account "%1"!	admin	sl	Gesla za račun "%1" ni bilo mogoče spremeniti!
 failed to change password.	admin	sl	Napaka pri spreminjanju gesla.
 failed to delete account!	admin	sl	Ni uspelo izbrisati računa!
-failed to mount backup directory!	admin	sl	Mape za varnostno kopiranje ni bilo mogoče namestiti!
+failed to mount backup directory!	admin	sl	Namestitev imenika varnostne kopije ni uspela!
 failed to save user!	admin	sl	Uporabnika ni bilo mogoče shraniti!
 failed to upload %1	admin	sl	Nalaganja %1 ni bilo mogoče naložiti
 fallback (after each pageview)	admin	sl	Rezervni (po prikazu vsake strani)
@@ -402,7 +402,6 @@ force selectbox	admin	sl	Vsili izbiro
 force users to change their password regularily?(empty for no,number for after that number of days	admin	sl	Nastavite ponavljajoče se prisilno geslo. Nastavite število dni. Prazen = Ne
 forward also to	admin	sl	Posreduj tudi
 forward email's to	admin	sl	Posreduj sporočila k
-forward emails to	admin	sl	Posreduj sporočila
 forward only	admin	sl	Samo posreduj
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	sl	Posredovanje samo onemogoči poštni predal IMAP / shranjevanje pošte in jih samo posreduje na določen naslov.
 full name	admin	sl	Polno ime
@@ -558,7 +557,7 @@ mode	admin	sl	Način
 modified	admin	sl	Spremenjeno
 month	admin	sl	Mesec
 more secure	admin	sl	Bolj varno
-mount backup directory to %1	admin	sl	Namesti rezervni imenik v %1
+mount backup directory to %1	admin	sl	Namesti imenik varnostne kopije v %1
 must change password upon next login	admin	sl	Ob naslednji prijavi morate spremeniti geslo
 name must not be empty !!!	admin	sl	Ime ne sme biti prazno!
 name of organisation	admin	sl	Ime organizacije
@@ -665,7 +664,7 @@ register application hooks	admin	sl	Registrirajte zanke aplikacij
 regular expression to find part to use as container	admin	sl	Regularni izraz za iskanje dela, ki se uporabi kot vsebnik
 reject passwords containing part of username or full name (3 or more characters long)	admin	sl	Zavrni gesla, ki vsebujejo del uporabniškega imena ali polnega imena (3 ali več znakov)
 relay access checked	admin	sl	Preverjen dostop
-remote administration instances	admin	sl	Oddaljena skrbnikova instanca
+remote administration instances	admin	sl	Oddaljeno upravljanje
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	sl	V oddaljenem skrbništvu mora biti omogočeno oddaljeno upravljanje v razdelku Admin> Konfiguracija spletnega mesta!
 remote instance saved	admin	sl	Oddaljena instanca shranjena
 remove	admin	sl	Odstrani
@@ -679,7 +678,7 @@ rights	admin	sl	Pravice
 rows	admin	sl	Vrstice
 rpm or debian package	admin	sl	RPM ali paket Debian
 run	admin	sl	zagon
-run asynchronous services	admin	sl	Poženi asinhrone storitve
+run asynchronous services	admin	sl	Zaženi asinhrono storitev
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	sl	Shranjevanje sporočila %1 ni uspelo. Sporočila ni bilo mogoče shraniti v mapo %2 zaradi: %3
 save the category	admin	sl	Shrani to kategorijo
 save the category and return back to the list	admin	sl	Shrani kategorijo in se vrni na seznam
@@ -775,7 +774,6 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	sl	Uporabniško ime in geslo ne smeta biti enaka.
 the loginid can not be more then 8 characters	admin	sl	Uporabniško ime ne sme biti daljše od 8 znakov.
 the mimeparser can not parse this message.	admin	sl	Mimeparser ne more prebrati tega sporočila.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	sl	Ime, uporabljeno interno (<= 20 znakov). Če ga spremenite, obstoječi podatki ne bodo več na voljo.
 the testjob sends you a mail everytime it is called.	admin	sl	Testna naloga "TestJob" vam pošlje E-pošto vedno, ko se zažene.
 the text displayed to the user	admin	sl	Besedilo, ki se prikaže uporabniku
 the two passwords are not the same	admin	sl	Gesli se ne ujemata.
@@ -871,7 +869,6 @@ view error log	admin	sl	Preglej evidenco napak
 view sessions	admin	sl	Sej
 view this user	admin	sl	preglej tega uporabnika
 view user account	admin	sl	Preglej uporabnikov račun
-virtual mail manager	admin	sl	Virtualni upravljalec E-pošte
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	sl	Določite število dni, v katerih lahko vnaprej obvestite uporabnike o prihajajoči spremembi prisilnega gesla. Prazen = Ni podatkov
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	sl	Informacije se zahtevajo le, da dobite pregled o uporabi EGroupware po vsem svetu.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	sl	Ne shranjujemo podatkov o vaši identiteti.

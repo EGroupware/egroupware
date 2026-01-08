@@ -19,7 +19,8 @@
 15 minutes	common	el	15 λεπτά
 2-factor authentication code required	common	el	Απαιτείται κωδικός ελέγχου ταυτότητας 2 παραγόντων
 2-factor-authentication	common	el	Πιστοποίηση 2 παραγόντων
-2-factor-authentication required	common	el	Απαιτείται έλεγχος ταυτότητας 2 παραγόντων
+2-factor-authentication required	common	el	Δεύτερος απαιτούμενος παράγοντας.
+2nd factor	login	el	2ος παράγοντας
 3 minutes	common	el	3 λεπτά
 30 minutes	common	el	30 λεπτά
 30 seconds	common	el	30 δευτερόλεπτα
@@ -46,7 +47,7 @@ add	common	el	Προσθήκη
 add %1 category for	common	el	Προσθήκη κατηγορίας %1 για
 add a new contact	common	el	Προσθέστε μία νέα επαφή
 add category	common	el	Προσθήκη κατηγορίας
-add current	common	el	Τρέχουσα άποψη ως αγαπημένη
+add current	common	el	Προβολή ως αγαπημένο
 add shortcut	common	el	Προσθήκη Συντόμευσης
 add sub	common	el	Προσθήκη υπo
 add user to responsibles	groupdav	el	Προσθήκη χρήστη στους υπεύθυνους
