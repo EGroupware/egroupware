@@ -1,3 +1,12 @@
+egroupware-docker (23.1.20260108) hardy; urgency=low
+
+  * SECURITY and Maintenance Release: strong recommendation to update to this release (or 26.0.20260108) immediately
+  * Addressbook: Hide group distribution list from email search results when group has an email & hiding groups without email address
+  * Addressbook/CardDAV/REST: fix not working search for phone-numbers (you need at least 9 digits!)
+  * Invoices: allow setting or importing non-integer position identifier (BT-126) e.g. 1.1, 1.2, 1.3, 2.1 instead of 1, 2, 3, 4
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 08 Jan 2026 10:37:53 +0100
+
 egroupware-docker (23.1.20251222) hardy; urgency=low
 
   * PHP: security update to 8.4.16
