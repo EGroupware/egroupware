@@ -41,8 +41,8 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === 
 	header("HTTP/1.1 304 Not Modified");
 	exit;
 }
-
-$content = Api\Etemplate\Widget\HtmlArea::contentCss();
+$use_darkmode=$_GET['darkmode']==='1';
+$content = Api\Etemplate\Widget\HtmlArea::contentCss($use_darkmode);
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content
 if (in_array('gzip', explode(',',$_SERVER['HTTP_ACCEPT_ENCODING'])) && function_exists('gzencode'))

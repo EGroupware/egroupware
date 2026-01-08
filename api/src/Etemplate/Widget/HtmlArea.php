@@ -195,11 +195,25 @@ class HtmlArea extends Etemplate\Widget
 	 *
 	 * @return string
 	 */
-	public static function contentCss()
+	public static function contentCss($_dark=false)
 	{
+		$dark = $_dark;
+
 		$font_family = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'] ?? 'arial, helvetica, sans-serif';
 		$font_size = ($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'] ?? '10').
 			($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit'] ?? 'pt');
+		$gray_ccc = $dark ? '#6d737b' : '#ccc';
+		$gray_999 = $dark ? '#8a8f97' : '#999';
+		$gray_e8e8e8 = $dark ? '#6d737b' : '#e8e8e8';
+		$darkCSS = $dark?"
+body {
+	background-color: #2f3742;
+	color: #dfe0e4;
+}
+a {
+    color: #4099ff;
+}
+":'';
 
 		return $GLOBALS['egw']->framework->fonts().<<<EOF
 /**
@@ -241,35 +255,35 @@ table[border]:not([border="0"]):not([style*="border-style"]) td {
    and no inline css */
 table[border]:not([border="0"]):not([style*="border-color"]) th,
 table[border]:not([border="0"]):not([style*="border-color"]) td {
-  border-color: #ccc;
+  border-color: $gray_ccc;
 }
 figure {
   display: table;
   margin: 1rem auto;
 }
 figure figcaption {
-  color: #999;
+  color: $gray_999;
   display: block;
   margin-top: 0.25rem;
   text-align: center;
 }
 hr {
-  border-color: #ccc;
+  border-color: $gray_ccc;
   border-style: solid;
   border-width: 1px 0 0 0;
 }
 code {
-  background-color: #e8e8e8;
+  background-color: $gray_e8e8e8;
   border-radius: 3px;
   padding: 0.1rem 0.2rem;
 }
 .mce-content-body:not([dir=rtl]) blockquote {
-  border-left: 2px solid #ccc;
+  border-left: 2px solid $gray_ccc;
   margin-left: 0;
   padding-left: 10px;
 }
 .mce-content-body[dir=rtl] blockquote {
-  border-right: 2px solid #ccc;
+  border-right: 2px solid $gray_ccc;
   margin-right: 0;
   padding-right: 10px;
 }
@@ -291,6 +305,7 @@ div:not([style*="font-size"]),li:not([style*="font-size"]),p:not([style*="font-s
 	td:not([style*="font-size"]),th:not([style*="font-size"]) {
 	font-size: $font_size;
 }
+$darkCSS
 EOF;
 	}
 }

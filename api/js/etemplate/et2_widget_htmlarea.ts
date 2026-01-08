@@ -225,7 +225,13 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				'&request_id='+this.getInstanceManager().etemplate_exec_id+'&type=htmlarea';
 		}
 		// default settings for initialization
+		let darkmode= document?.querySelector('html')?.attributes['data-darkmode']?.value
+		let contentCss = egw.webserverUrl+'/api/tinymce.php?darkmode='+darkmode+"&"+	// use the 3 prefs as cache-buster
+			btoa(egw.preference('rte_font', 'common')+'::'+
+				egw.preference('rte_font_size', 'common')+'::'+
+				egw.preference('rte_font_unit', 'common'))
 		let settings : any = {
+			skin: darkmode==='1'?"oxide-dark":"oxide",
 			base_url: egw.webserverUrl + '/vendor/tinymce/tinymce',
 			target: this.htmlNode[0],
 			body_id: this.dom_id + '_htmlarea',
@@ -286,10 +292,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				"EGroupware=egroupware,arial,helvetica,sans-serif;"+
 				"EGroupware Bold=egroupware2,arial black,avant garde",
 			fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
-			content_css: egw.webserverUrl+'/api/tinymce.php?'+	// use the 3 prefs as cache-buster
-				btoa(egw.preference('rte_font', 'common')+'::'+
-					egw.preference('rte_font_size', 'common')+'::'+
-					egw.preference('rte_font_unit', 'common')),
+			content_css: contentCss,
 		};
 		let rte_formatblock = <string>(egw.preference('rte_formatblock', 'common') || 'p');
 		if (rte_formatblock === 'customparagraph')
