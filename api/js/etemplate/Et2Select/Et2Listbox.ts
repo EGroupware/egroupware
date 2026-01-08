@@ -60,6 +60,10 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 				height: calc(var(--rows, 5) * 1.9rem);
 				overflow-y: auto;
 			}
+				sl-menu-item::part(label){
+					display: flex;
+					align-items: center;
+				}
 			`
 		];
 	}
