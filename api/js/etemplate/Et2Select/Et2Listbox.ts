@@ -33,6 +33,12 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 			::slotted(img), img {
 				vertical-align: middle;
 			}
+				et2-image[part="icon"]{
+				}
+                et2-image[part="icon"][slot="prefix"]{
+                    width: var(--icon-width);
+	                font-size: var(--icon-width);
+                }
 			
 			.menu {
 				/* Get rid of padding before/after options */
@@ -132,7 +138,7 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		let icon = option.icon ? html`
-            <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
+            <et2-image slot="prefix" part="icon"
                        src="${option.icon}"></et2-image>` : "";
 
 		let checked = this.__value == null ?
