@@ -907,7 +907,7 @@ class AddressbookApp extends EgwApp
 	{
 		let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
 		const filter = <Et2TreeDropdown>this.et2.getWidgetById('filter2')
-		const lists = (filter.select_options.find(elem => elem.value === 'lists') ?? {}).item;
+		const lists = filter.select_options.find(elem => elem.value === 'lists')?.children ?? {};
 		const selectedID = filter.getValue() || 0;
 		const value = lists.find(distributionList => distributionList.value == selectedID);
 		const self =this;
@@ -930,9 +930,9 @@ class AddressbookApp extends EgwApp
 				egw.json('addressbook.addressbook_ui.ajax_set_list', [selectedID, values.name, values.owner],
 					function (result)
 					{
-						value.text = values.name;
-						filter.value = selectedID
-						filter.requestUpdate()
+						value.label = values.name;
+						filter.value = selectedID;
+						filter.requestUpdate("select_options");
 						filter.updateComplete.then(() =>
 							{
 								filter.dispatchEvent(new Event("change", {bubbles: true}));
@@ -950,7 +950,7 @@ class AddressbookApp extends EgwApp
 			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
 				content: {
-					name: value.text || value.label,
+					name: value.label || value.text,
 					owner: data.owner
 				},
 				sel_options: {
