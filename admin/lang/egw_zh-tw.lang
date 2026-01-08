@@ -221,7 +221,6 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	zh-tw	固定勾選方塊
 forward also to	emailadmin	zh-tw	同時轉寄到
 forward email's to	emailadmin	zh-tw	轉寄信件到
-forward emails to	admin	zh-tw	轉寄信件到
 forward only	emailadmin	zh-tw	轉寄
 full name	admin	zh-tw	全名
 general	admin	zh-tw	一般
@@ -446,7 +445,6 @@ the imap server does not appear to support the authentication method selected. p
 the login and password can not be the same	admin	zh-tw	使用者密碼不可和使用者代碼相同
 the loginid can not be more then 8 characters	admin	zh-tw	登入帳號不能超過8個字元
 the mimeparser can not parse this message.	emailadmin	zh-tw	mime 解析程式無法處理這封郵件
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	zh-tw	內部名稱（小於 20 個字元），修改這個項目將可能造成現有資料無法讀取
 the testjob sends you a mail everytime it is called.	admin	zh-tw	測試工作每次執行都會傳送一個電子郵件訊息給您。
 the text displayed to the user	admin	zh-tw	顯示的文字
 the two passwords are not the same	admin	zh-tw	請確認兩次都輸入同樣的密碼
@@ -500,7 +498,6 @@ view error log	admin	zh-tw	列出錯誤記錄
 view sessions	admin	zh-tw	列出連線
 view this user	admin	zh-tw	查看該使用者
 view user account	admin	zh-tw	瀏覽使用者帳號
-virtual mail manager	emailadmin	zh-tw	虛擬郵件管理者
 who would you like to transfer all records owned by the deleted user to?	admin	zh-tw	您希望將被移除使用者的資料轉移給誰？
 xml-rpc	admin	zh-tw	XML-RPC
 you have entered an invalid expiration date	admin	zh-tw	您輸入了一個錯誤的、過期的日期

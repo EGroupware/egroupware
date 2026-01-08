@@ -60,11 +60,11 @@ forgot to switch off working time?	common	en	Forgot to switch off working time?
 full: use only projectmanager	admin	en	Full: use only Project Manager
 general fields:	timesheet	en	General fields:
 give additional users access	timesheet	en	Give additional users access
-give infolog delegation read-access to timesheets booked on them	timesheet	en	Give InfoLog delegation read-access to timesheets booked on them
+give infolog delegation read-access to timesheets booked on them	timesheet	en	Give InfoLog delegation read-access to timesheets booked on them.
 global categories	timesheet	en	Global categories
 history	timesheet	en	History
 history logging	admin	en	History logging
-how to display linked timesheets	timesheet	en	How to display linked timesheets
+how to display linked timesheets	timesheet	en	How to display linked timesheets?
 html link to the current record	timesheet	en	HTML link to the current record
 id	timesheet	en	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	en	If you specify a directory (full VFS path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.

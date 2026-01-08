@@ -116,6 +116,7 @@ applies the changes	admin	pt-br	Aplicar as alterações
 apply changes	admin	pt-br	Aplicar alterações
 apply the changes	admin	pt-br	Aplicar as alterações
 archive: zip or tar	admin	pt-br	Arquivo: ZIP ou tar
+are you sure you want to %1 mail for selected accounts?	admin	pt-br	Tem certeza de que deseja enviar %1 e-mails para as contas selecionadas?
 are you sure you want to delete the application %1 ?	admin	pt-br	Você tem certeza que deseja remover o aplicativo %1?
 are you sure you want to delete this account ?	admin	pt-br	Você tem certeza que deseja remover esta conta?
 are you sure you want to delete this application ?	admin	pt-br	Você tem certeza que deseja remover este aplicativo?
@@ -125,7 +126,7 @@ are you sure you want to delete this group ?	admin	pt-br	Você tem certeza que d
 are you sure you want to delete this server?	admin	pt-br	Você tem certeza que deseja remover este servidor?
 are you sure you want to kill this session ?	admin	pt-br	Você tem certeza que deseja terminar esta seção?
 async services last executed	admin	pt-br	Última execução dos Serviços Assíncronos
-asynchronous timed services	admin	pt-br	Serviços Assíncronos agendados
+asynchronous timed services	admin	pt-br	Serviço assíncrono
 asyncservices not yet installed or other error (%1) !!!	admin	pt-br	Serviços assíncronos ainda não instalados ou outro erro (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt-br	Tentar usar mimetype correto para FTP ao invés do padrão 'application/octet-stream'.
 authentication / accounts	admin	pt-br	Autenticação / Contas
@@ -162,9 +163,11 @@ change config settings	admin	pt-br	Mudar parâmetros de configuração
 change domain of email address and aliases	admin	pt-br	Alterar o domínio do endereço de e-mail e aliases
 change login screen message	admin	pt-br	Alterar mensagem da tela principal
 change password for %1	admin	pt-br	Alterar senha para %1
+changelog and versions	admin	pt-br	Registro de alterações e versões
 check acl for entries of not (longer) existing accounts	admin	pt-br	Verificar registros ACL para contas não mais existentes.
 check ip address of all sessions	admin	pt-br	Verificar endereço IP de todas sessões
 check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %2 para %3
+clear cache and register hooks	admin	pt-br	Limpar cache/registrar ganchos
 clear security tokens	admin	pt-br	Limpar tokens de segurança
 click to select a color	admin	pt-br	Clique para selecionar uma cor
 color	admin	pt-br	Cor
@@ -202,7 +205,7 @@ cyrus imap server	admin	pt-br	Servidor Cyrus IMAP
 data	admin	pt-br	Dados
 day	admin	pt-br	Dia
 day of week<br>(0-6, 0=sun)	admin	pt-br	Dia da Semana<br>(0-6, 0=Dom)
-db backup and restore	admin	pt-br	Backup e Restauração do DB
+db backup and restore	admin	pt-br	Backup
 default	admin	pt-br	Padrão
 default file system space per user	admin	pt-br	Espaço em disco padrão por usuário?
 default file system space per user/group ?	admin	pt-br	Espaço em disco padrão por usuário/grupo?
@@ -229,9 +232,9 @@ deny access	admin	pt-br	Negar acesso
 deny access to access log	admin	pt-br	Negar acesso ao registro de acessos
 deny access to application registery	admin	pt-br	Negar acesso ao registro de aplicativos
 deny access to applications	admin	pt-br	Negar acesso aos aplicativos
-deny access to asynchronous timed services	admin	pt-br	Negar acesso aos Serviços Assícronos agendados
+deny access to asynchronous timed services	admin	pt-br	Negar acesso ao serviço assíncrono
 deny access to current sessions	admin	pt-br	Negar acesso às sessões atuais
-deny access to db backup and restore	admin	pt-br	Negar acesso ao backup e restauração do DB
+deny access to db backup and restore	admin	pt-br	Negar acesso ao Backup
 deny access to error log	admin	pt-br	Negar acesso ao regsitro de erros
 deny access to global categories	admin	pt-br	Negar acesso as categorias globais
 deny access to groups	admin	pt-br	Negar acesso aos grupos
@@ -330,6 +333,7 @@ export certificate as p12	admin	pt-br	Exportar certificado como p12
 exports groups into a csv file.	admin	pt-br	Exportação de grupos em um arquivo CSV.
 failed to change password.	admin	pt-br	Erro ao moudar a senha.
 failed to delete account!	admin	pt-br	Falha ao excluir conta!
+failed to mount backup directory!	admin	pt-br	Falha ao montar o diretório Backup!
 fallback (after each pageview)	admin	pt-br	Recuperar (após cada página visualizada).
 false	admin	pt-br	Falso
 field '%1' already exists !!!	admin	pt-br	Campo '%1' já existe!
@@ -343,7 +347,6 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	pt-br	Forçar Caixa de seleção
 forward also to	admin	pt-br	Encaminhar também para
 forward email's to	admin	pt-br	Encaminhar mensagens para
-forward emails to	admin	pt-br	Encaminhar e-mails para
 forward only	admin	pt-br	Encaminhar somente
 full name	admin	pt-br	Nome Completo
 general	admin	pt-br	Geral
@@ -468,6 +471,7 @@ mode	admin	pt-br	Modo
 modified	admin	pt-br	Modificado
 month	admin	pt-br	Mês
 more secure	admin	pt-br	Mais seguro
+mount backup directory to %1	admin	pt-br	Montar o diretório backup em %1
 name must not be empty !!!	admin	pt-br	Nome não pode estar vazio!
 name of organisation	admin	pt-br	Nome da organização
 name of tab to create and show field in	admin	pt-br	Nome da guia para criar e exibir o campo
@@ -518,6 +522,7 @@ permission denied !!!	admin	pt-br	Permissão negada!
 permission denied!!!	admin	pt-br	Permissão negada!
 permissions	admin	pt-br	Permissões
 permissions this group has	admin	pt-br	Permissões do grupo
+php version	admin	pt-br	Versão do PHP
 phpinfo	admin	pt-br	Informações do PHP
 please enter a name	admin	pt-br	Por favor digite um nome
 please enter a name for that server !	admin	pt-br	Por favor digite um nome para este servidor!
@@ -544,10 +549,11 @@ read this list of methods.	admin	pt-br	Ler esta lista de métodos.
 register application hooks	admin	pt-br	Registrar configurações das aplicações
 regular expression to find part to use as container	admin	pt-br	Expressão regular para encontrar a parte a ser usada como contêiner
 relay access checked	admin	pt-br	Acesso Relé verificado
-remote administration instances	admin	pt-br	Instâncias de administração remotas
+remote administration instances	admin	pt-br	Administração remota
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	pt-br	Administração remota deve ser habilitada na instância remoda em Administrador > Configuração do Servidor!
 remote instance saved	admin	pt-br	Instância remota salva.
 remove	admin	pt-br	Remover
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	pt-br	Remover o acesso de grupos pode causar problemas para os dados nesta categoria. Tem certeza? Os usuários desses grupos podem perder o acesso:
 required pear class mail/mimedecode.php not found.	admin	pt-br	Classe PEAR requeridos Correio / mimeDecode.php não encontrado.
 reset filter	admin	pt-br	Reiniciar filtro
 revoke this token	admin	pt-br	Revogar esse token
@@ -635,7 +641,6 @@ the imap server does not appear to support the authentication method selected. p
 the login and password can not be the same	admin	pt-br	O login e a senha não podem ser iguais.
 the loginid can not be more then 8 characters	admin	pt-br	O código de usuário não pode ter mais de 8 caracteres.
 the mimeparser can not parse this message.	admin	pt-br	O MIMEparser não pode analisar essa mensagem.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	pt-br	o nome usado internamente (<= 20 caracteres), alterando-o fará dados existentes ficarem inacessíveis.
 the testjob sends you a mail everytime it is called.	admin	pt-br	O TestJob lhe envia um email sempre que é executado.
 the text displayed to the user	admin	pt-br	O texto exibido para o usuário
 the two passwords are not the same	admin	pt-br	As senhas não conferem
@@ -716,7 +721,6 @@ view error log	admin	pt-br	Exibir registro de erros
 view sessions	admin	pt-br	Exibir sessões
 view this user	admin	pt-br	Exibir este usuário
 view user account	admin	pt-br	Exibir conta de usuário
-virtual mail manager	admin	pt-br	Virtual MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	pt-br	Para quem você deseja transferir todas as entradas do usuário removido?
 who would you like to transfer records owned by the deleted user to?	admin	pt-br	Para quem você gostaria de transferir os registros pertencentes ao usuário excluído?
 wrong account type: %1 is no %2 !!!	admin	pt-br	Tipo de conta errado: %1 NÃO é %2!

@@ -62,6 +62,7 @@ back to main list	infolog	uk	Вернутись до основного спис
 billed	infolog	uk	Нараховано
 both	infolog	uk	обидва
 call	infolog	uk	дзвінок
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	uk	Може використовуватися для відображення додаткових типів InfoLog у календарі або обмеження відображення, наприклад, тільки завдань.
 can not return an exact number of rows and therefore hides the count.	admin	uk	Не може повернути точну кількість рядків і тому приховує підрахунок.
 cancel	infolog	uk	Закінчити
 categories	infolog	uk	Категорії
@@ -183,6 +184,7 @@ history logging and deleting of items	infolog	uk	Ведення журналу �
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	uk	Скільки рядків опису повинно бути безпосередньо видимим. Інші рядки доступні через смугу прокрутки.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	uk	Наскільки широкою має бути область опису. Це числове значення, наприклад, 60.
 html link to the current record	infolog	uk	HTML-посилання на поточний запис
+icon for	infolog	uk	Піктограма для
 id	infolog	uk	ID
 id#	infolog	uk	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	uk	Якщо тип має власника групи, всі записи цього типу будуть належати цій групі, а НЕ користувачеві, який його створив!
@@ -216,8 +218,10 @@ invalid filename	infolog	uk	невірне ім'я файлу.
 label<br>helptext	infolog	uk	Мітка<br>Пояснючий текст
 last changed	infolog	uk	Востаннє змінено
 last modified	infolog	uk	Востаннє змінено
+leave blank to get the used time calculated by timesheet entries	infolog	uk	Залиште поле порожнім, щоб час використання розраховувався за записами в табелі обліку робочого часу
 leave without saveing the entry	infolog	uk	вийти без збереження запису
 leaves without saveing	infolog	uk	вийти без збереження
+limit list to last n month, if ordering by last-modified and not searching.	admin	uk	Обмежте список останніми N місяцями, якщо сортуєте за датою останнього редагування і не виконуєте пошук.
 limit number of description lines (default 5, 0 for no limit)	infolog	uk	Обмежити кількість рядків опису. За замовчуванням = 5, 0 = без обмежень.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	uk	Обмеження ширини стовпця опису. Впливає лише якщо встановлено обмеження на кількість рядків. 0 = без обмежень.
 link	infolog	uk	Посилання
@@ -288,6 +292,8 @@ phone	infolog	uk	Телефонний дзвінок
 phone/email	infolog	uk	Телефон/Email
 phonecall	infolog	uk	Телефонний дзвінок
 prefix for sub-entries (default: re:)	infolog	uk	Префікс для підзаписів (за замовчуванням: Re:)
+price	infolog	uk	Ціна
+pricelist	infolog	uk	Прайс-лист
 print this infolog	infolog	uk	Надрукувати цей інфолог
 printing...	infolog	uk	Друк ...
 priority	infolog	uk	Пріоритет
@@ -330,6 +336,7 @@ select a responsible user: a person you want to delegate this task	infolog	uk	в
 select a typ to edit it's status-values or delete it	infolog	uk	виберіть тип для редагування його статусів або видалення
 select an app to search in	infolog	uk	Виберіть приложення в якому шукати
 select an entry to link with	infolog	uk	Виберіть запис для Посилання
+select multiple contacts for a further action	infolog	uk	Виберіть кілька контактів для подальших дій
 select new category	infolog	uk	Вибрати нову категорію
 select users or groups	infolog	uk	Вибрати користувачів або групи
 selected calendars	infolog	uk	Вибрані календарі
@@ -340,6 +347,7 @@ set status to done for all entries	infolog	uk	Встановити статус 
 sets the status of this entry to done	infolog	uk	Встановлює статус цього запису як виконаний
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	uk	Чи повинні Записки показувати Під-завдання, -дзвінки, -нотатки у нормальному вигляді. Ви завжди можете переглянути їх через "батька".
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	uk	Чи повиннні Записки використовувати повні імена (Ім'я та Прізвище) чи тільки Ім'я входу.
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	uk	Чи повинен список InfoLog показувати відсоток виконання тільки для статусу «у процесі» або дві окремі іконки.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	uk	Чи повинее цей запис бути видимим тільки Вам та людям, яким Ви надали доступ за допомогою ACL
 show a x if content equals this compare value, otherwise show nothing	infolog	uk	Показати X, якщо вміст дорівнює порівнянному значенню, інакше нічого не показувати
 show full usernames	infolog	uk	Показувати повні імена
@@ -381,6 +389,7 @@ to all linked contacts	infolog	uk	До всіх пов'язаних контак
 to many might exceed your execution-time-limit	infolog	uk	надто багато може перевищити Ваш ліміт часу
 today	infolog	uk	Сьогодні
 todo	infolog	uk	Завдання
+toggle details	common	uk	Перемикати деталі
 typ	infolog	uk	Тип
 typ '%1' already exists !!!	infolog	uk	Тип '%1' вже існує!
 type	infolog	uk	Тип
@@ -395,6 +404,7 @@ upcoming	infolog	uk	майбутні
 urgency	infolog	uk	терміновість
 urgent	infolog	uk	терміновий
 use custom notification message	infolog	uk	Використовувати кастомне повідомлення
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	uk	Використовуйте цей тег для адресних етикеток. Розмістіть вміст, який потрібно повторити, між двома тегами.
 values for selectbox	infolog	uk	Значення для selectbox
 view all subs of this entry	infolog	uk	Переглянути всі підзаписи цього запису
 view other subs	infolog	uk	переглянути інші підзаписи

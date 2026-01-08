@@ -29,10 +29,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	pl	Edytuj pola użytkownika
 enable	preferences	pl	włącz
 enable drag and drop functionality (experimental)	preferences	pl	Włącz funkcjonalność przeciągnij i upuść (eksperymentalne)
-enable selectbox dropdown resizing for ie (experimental)	preferences	pl	Aktywuj skalowanie pola rozwijanego dla IE
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	pl	Włącza obsługę przeciągnij i upuść we wszystkich aplikacjach. Jeśli przeglądarka tego nie wspiera zostanie automatycznie wyłączone. To funkcja eksperymentalna.
-enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	pl	Aktywuj lub deaktywuj skalowanie pola rozwijanego dla IE we wszystkich aplikacjach. Jeśli przeglądarką  nie jest IE, opcja nie zadziała. To funkcja eksperymentalna.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	pl	Aktywuj lub deaktywuj skalowanie pola wyboru dla IE we wszystkich aplikacjach. Jeśli przeglądarką  nie jest IE, opcja nie zadziała. To funkcja eksperymentalna.
 enter code to authenticate the actions below	preferences	pl	Wprowadź kod, aby uwierzytelnić poniższe działania
 enter code to verify correct setup	preferences	pl	Wprowadź kod, aby zweryfikować poprawność konfiguracji
 enter your new password	preferences	pl	Wprowadź nowe hasło

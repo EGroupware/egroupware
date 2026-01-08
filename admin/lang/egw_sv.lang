@@ -77,6 +77,7 @@ all applications	admin	sv	Samtliga applikationer
 all records and account information will be lost!	admin	sv	Alla förteckningar och användarinformation kommer att försvinna!
 all users	admin	sv	Alla användare
 allow anonymous access to this app	admin	sv	Tillåt anonym åtkomst till applikationen
+allow remote administration from following install id's (comma separated)	admin	sv	Tillåt fjärradministration från följande installations-ID:n, separerade med kommatecken.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	sv	Tillåt användaren att lagra sitt lösenord under ”Säkerhet & lösenord” för SingleSignOn.
 allow user to set 'remember me' token	admin	sv	Tillåt användaren att ställa in ”Kom ihåg mig”-token
 alternate email address	admin	sv	Alternerande e-post adress
@@ -93,7 +94,8 @@ applications	admin	sv	Applikationer
 applications list	admin	sv	Applikationslista
 applies the changes	admin	sv	Sparar ändringar
 apply the changes	admin	sv	Spara ändringar
-are you sure you want to delete the application %1 ?	admin	sv	Vill du verkligen radera applikationen %1 ?
+are you sure you want to %1 mail for selected accounts?	admin	sv	Är du säker på att du vill %1-maila för valda konton?
+are you sure you want to delete the application %1 ?	admin	sv	Vill du verkligen radera applikationen %1?
 are you sure you want to delete this account ?	admin	sv	Vill du verkligen radera kontot?
 are you sure you want to delete this application ?	admin	sv	Vill du verkligen radera applikationen?
 are you sure you want to delete this category ?	common	sv	Vill du verkligen radera kategorin?
@@ -102,11 +104,12 @@ are you sure you want to delete this group ?	admin	sv	Vill du verkligen radera g
 are you sure you want to delete this server?	admin	sv	Vill du verkligen radera servern?
 are you sure you want to kill this session ?	admin	sv	Vill du verkligen avsluta sessionen?
 async services last executed	admin	sv	Asynkrona tjänster senast körda
-asynchronous timed services	admin	sv	Asynkrona tidsbundna tjänster
+asynchronous timed services	admin	sv	Asynkron tjänst
 asyncservices not yet installed or other error (%1) !!!	admin	sv	Asynkrona tjänster är inte installerade ännu eller annat fel (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sv	Försök att använda korrekt mime-typ istället för standard 'application/octet-stream'
 authentication / accounts	admin	sv	Autentisering / Konton
 auto create account records for authenticated users	admin	sv	Skapa kontoposter automatiskt för autentiserade användare
+backup directory %1 mounted as %2	admin	sv	Säkerhetskopieringskatalogen %1 monterad som %2
 bad login name or password.	admin	sv	Ogiltigt användarna eller lösenord
 bad or malformed request. server responded: %s	admin	sv	Ogiltig eller ofullständig förfrågan. Server svarade: %s
 bad request: %s	admin	sv	Ogiltig förfrågan: %s
@@ -131,8 +134,10 @@ change acl rights	admin	sv	Ändra ACL behörigheter
 change config settings	admin	sv	Ändra inställningar
 change domain of email address and aliases	admin	sv	Ändra domän för e-postadress och alias
 change login screen message	admin	sv	Ändra Startsidans meddelande
+changelog and versions	admin	sv	Ändringslogg och versioner
 check ip address of all sessions	admin	sv	Kontrollera IP adress på alla sessioner
 check items to <b>%1</b> to %2 for %3	admin	sv	Kontrollera punkterna till <b>%1</b> till %2 för %3
+clear cache and register hooks	admin	sv	Rensa cache/registerkrokar
 clear security tokens	admin	sv	Rensa säkerhetstokens
 click to select a color	admin	sv	Klicka för att välja färg
 color	admin	sv	Färg
@@ -158,7 +163,7 @@ cyrus imap server	admin	sv	Cyrus IMAP Server
 data	admin	sv	Data
 day	admin	sv	Dag
 day of week<br>(0-6, 0=sun)	admin	sv	Veckodag<br>(0-6, 0=Sön)
-db backup and restore	admin	sv	Backup och återställning av databas
+db backup and restore	admin	sv	Säkerhetskopiering
 default	admin	sv	Standard
 default file system space per user	admin	sv	Standardstorlek på lagringsutrymme per användare
 default file system space per user/group ?	admin	sv	Standardstorlek på lagringsutrymme per användare/grupp
@@ -182,9 +187,9 @@ deny access	admin	sv	Neka åtkomst
 deny access to access log	admin	sv	Neka åtkomst till accesslogg
 deny access to application registery	admin	sv	Neka åtkomst till applikations register
 deny access to applications	admin	sv	Neka åtkomst till applikationer
-deny access to asynchronous timed services	admin	sv	Neka åtkomst till asynkrona tidsbundna tjänster
+deny access to asynchronous timed services	admin	sv	Neka åtkomst till asynkron tjänst
 deny access to current sessions	admin	sv	Neka åtkomst till aktiva sessioner
-deny access to db backup and restore	admin	sv	Neka åtkomst till backup och återställning av databas
+deny access to db backup and restore	admin	sv	Neka åtkomst till säkerhetskopiering
 deny access to error log	admin	sv	Neka åtkomst till felloggen
 deny access to global categories	admin	sv	Neka åtkomst till globala kategorier
 deny access to groups	admin	sv	Neka åtkomst till grupper
@@ -218,6 +223,7 @@ edit this group	admin	sv	Ändra denna grupp
 edit this user	admin	sv	Ändra denna användare
 edit user	admin	sv	Ändra användare
 edit user account	admin	sv	Ändra användarkonto
+egroupware version	admin	sv	EGroupware-version
 email account active	admin	sv	Aktivt e-post konto
 email address	admin	sv	E-post adress
 enable	admin	sv	Aktivera
@@ -260,6 +266,7 @@ event details follow	admin	sv	Händelse detaljer följer
 expires	admin	sv	Förfaller
 export certificate as p12	admin	sv	Exportera certifikat som p12
 failed to change password.	admin	sv	Kunde inte ändra lösenordet.
+failed to mount backup directory!	admin	sv	Det gick inte att montera säkerhetskopieringskatalogen!
 fallback (after each pageview)	admin	sv	fallback (efter varje sidvisning)
 false	admin	sv	Falskt
 field '%1' already exists !!!	admin	sv	Fält '%1' finns redan!
@@ -270,7 +277,6 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	sv	Tvinga valruta
 forward also to	admin	sv	Vidarebefodra även till
 forward email's to	admin	sv	Vidarebefodra e-post till
-forward emails to	admin	sv	Vidarebefodra e-post till
 forward only	admin	sv	Vidarebefodra endast
 full name	admin	sv	Fullständigt namn
 general	admin	sv	Allmänt
@@ -372,6 +378,7 @@ minute	admin	sv	Minut
 mode	admin	sv	Läge
 modified	admin	sv	Ändrad
 month	admin	sv	Månad
+mount backup directory to %1	admin	sv	Montera säkerhetskopieringskatalogen till %1
 name must not be empty !!!	admin	sv	Namnet får inte vara tomt!
 name of organisation	admin	sv	Organisations namn
 new group name	admin	sv	Nytt gruppnamn
@@ -419,6 +426,7 @@ permission denied !!!	admin	sv	Åtkomst nekas
 permission denied!!!	admin	sv	Åtkomst nekad!
 permissions	admin	sv	Behörigheter
 permissions this group has	admin	sv	Tillåtna applikationer för gruppen
+php version	admin	sv	PHP-version
 phpinfo	admin	sv	PHP information
 please enter a name	admin	sv	Ange ett namn
 please enter a name for that server !	admin	sv	Ange ett namn för servern
@@ -437,11 +445,14 @@ re-enter password	admin	sv	Skriv in lösenord igen
 read this list of methods.	admin	sv	Läst denna lista över metoder
 register application hooks	admin	sv	Registera applikationskopplingar
 regular expression to find part to use as container	admin	sv	Reguljärt uttryck för att hitta en del som ska användas som behållare
+remote administration instances	admin	sv	Fjärradministration
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	sv	Fjärradministration måste aktiveras i fjärrinstansen under Admin > Webbplatskonfiguration!
 remove	admin	sv	Radera
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	sv	Att ta bort åtkomst för grupper kan orsaka problem för data i denna kategori. Är du säker? Användare i dessa grupper kanske inte längre har åtkomst:
 requested	admin	sv	Begärt
 revoke this token	admin	sv	Återkalla denna token
 rows	admin	sv	Rader
-run asynchronous services	admin	sv	Kör asynkrona tjänster
+run asynchronous services	admin	sv	Kör asynkron tjänst
 save the category	admin	sv	Spara kategorin
 save the category and return back to the list	admin	sv	Spara kategorin och återgå till listan
 saves the changes made and leaves	admin	sv	Sparar ändringar och avslutar
@@ -507,7 +518,6 @@ the imap server does not appear to support the authentication method selected. p
 the login and password can not be the same	admin	sv	Användarnamn och lösenord kan inte vara lika
 the loginid can not be more then 8 characters	admin	sv	Inloggnings ID kan inte vara längre än 8 tecken
 the mimeparser can not parse this message.	admin	sv	MIME-tolken kunde inte tolka meddelandet
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	sv	det interna namnet (<= 20 tecken), att ändra det gör existerande data otillgängligt
 the testjob sends you a mail everytime it is called.	admin	sv	Testjobbet skickar ett e-post varje gång det anropas
 the text displayed to the user	admin	sv	Texten som visas för användaren
 the two passwords are not the same	admin	sv	Lösenorden är inte identiska
@@ -571,7 +581,6 @@ view error log	admin	sv	Visa fellogg
 view sessions	admin	sv	Sessioner
 view this user	admin	sv	Visa användaren
 view user account	admin	sv	Visa användarkontot
-virtual mail manager	admin	sv	Virtuell E-post administration
 who would you like to transfer all records owned by the deleted user to?	admin	sv	Till vem vill du föra över SAMTLIGA poster som ägs av den raderade användaren?
 who would you like to transfer records owned by the deleted user to?	admin	sv	Кому вы хотите передать записи, принадлежащие удаленному пользователю?
 xml-rpc	admin	sv	XML-RPC

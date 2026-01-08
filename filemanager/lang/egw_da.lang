@@ -29,13 +29,14 @@ custom fields	filemanager	da	Valgfri Felter
 default action on double-click	filemanager	da	Standardhandling ved dobbeltklik
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	da	Standard = Nej. Linket vil ikke blive vist, men du kan stadig navigere til denne placering eller konfigurere denne placering som startmappe eller mappelink.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	da	Definerer, hvordan dobbeltklik på en dokumentfil skal håndteres. Billeder åbnes altid i expose-view og e-mails med e-mailprogrammet. Alle andre MIME-typer håndteres af browseren selv.
+defines how to open a merge print document	filemanager	da	Hvad skal der ske med dokumenterne, når de er udfyldt?<br><br><b>Hvis Collabora Online er tilgængeligt</b>, kan disse dokumenter åbnes (og viderebehandles) direkte i browseren med Collabora Online. <br><br> <b>Uden Collabora Online</b> tilbydes det udfyldte dokument til download.<br><br>Mere information om Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office i EGroupware</a>
 deleted %1	filemanager	da	Slettede %1
 directory	filemanager	da	Bibliotek
 directory %1 already exists	filemanager	da	Biblioteket %1 findes eksistere allerede
 directory %1 does not exist	filemanager	da	Biblioteket %1 eksistere ikke
 disable	filemanager	da	Deaktivere
 download	filemanager	da	Hent
-download documents	filemanager	da	Download dokumenter
+download documents	filemanager	da	Hent dokumenter
 edit comments	filemanager	da	Redigér kommentar
 edit share	filemanager	da	Rediger deling
 enable	filemanager	da	aktivere

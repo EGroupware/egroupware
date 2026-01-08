@@ -3,6 +3,7 @@
 2 years ago	timesheet	sv	2 år tidigare
 3 years ago	timesheet	sv	3 år tidigare
 applies the changes	timesheet	sv	Sparar ändringar
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	sv	Tillämpa åtgärden på hela frågan, INTE bara de visade tidrapporterna!
 ask to start and stop working time with session	timesheet	sv	Be att få starta och stoppa arbetstiden med session
 by	timesheet	sv	av
 category for 'working time'	admin	sv	Kategori för 'Arbetstid'
@@ -34,8 +35,11 @@ existing links	timesheet	sv	Nuvarande länkar
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	sv	Exporterar poster från Time Sheet till en CSV-fil. I fliken Alternativ kan du även välja andra separatorer.
 field must not be empty !!!	timesheet	sv	Fältet kan inte vara tomt
 forgot to switch off working time?	common	sv	Har du glömt att stänga av arbetstiden?
+give additional users access	timesheet	sv	Ge ytterligare användare åtkomst
+give infolog delegation read-access to timesheets booked on them	timesheet	sv	Ge InfoLog-delegationen läsbehörighet till de tidrapporter som bokats på dem.
 global categories	timesheet	sv	Globala kategorier
 history	timesheet	sv	Historik
+how to display linked timesheets	timesheet	sv	Hur visar man länkade tidrapporter?
 id	timesheet	sv	ID
 last modified	timesheet	sv	Senast ändrad
 last month	timesheet	sv	Förra månaden
@@ -43,7 +47,9 @@ last week	timesheet	sv	Förra veckan
 last year	timesheet	sv	Förra året
 leaves without saveing	timesheet	sv	lämnas utan att sparas
 length<br>rows	timesheet	sv	Längd<br>Rader
+link title	timesheet	sv	Länka titel
 links	timesheet	sv	Länkar
+make timesheets readable by infolog delegation	timesheet	sv	Gör tidrapporter läsbara för InfoLog-delegationen
 max length of the input [, length of the inputfield (optional)]	timesheet	sv	max indata längd[, Indatafälts längd (option)]
 mode	timesheet	sv	Läget
 modified	timesheet	sv	Ändrad

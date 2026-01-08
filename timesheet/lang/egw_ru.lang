@@ -57,9 +57,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	ru	Забыли выключить рабочее время?
 full: use only projectmanager	admin	ru	Полный: использовать только Управление проектами
 general fields:	timesheet	ru	Общие поля:
+give additional users access	timesheet	ru	Предоставить доступ дополнительным пользователям
+give infolog delegation read-access to timesheets booked on them	timesheet	ru	Предоставить делегатам InfoLog доступ на чтение к табелям учета рабочего времени, заведенным на них.
 global categories	timesheet	ru	Общие категории
 history	timesheet	ru	История
 history logging	admin	ru	История записей
+how to display linked timesheets	timesheet	ru	Как отобразить связанные табели учета рабочего времени?
 html link to the current record	timesheet	ru	HTML-ссылка на запись
 id	timesheet	ru	ID Идентификатор
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	ru	Если здесь указать каталог с полным путем, %1 покажет действие для каждого документа. Действие позволит загрузить указанный документ с %1 вставленными данными.
@@ -78,10 +81,12 @@ last year	timesheet	ru	Прошлый год
 leave it empty for a full week	timesheet	ru	Оставьте незаполненным для всей недели
 leaves without saveing	timesheet	ru	Оставить без сохранения
 length<br>rows	timesheet	ru	Длина<br>Ряды
+link title	timesheet	ru	Название ссылки
 links	timesheet	ru	Ссылки
 links and attached files	timesheet	ru	Ссылки и прикреплённые файлы
 links to specified application.  example: {{links/infolog}}	timesheet	ru	Ссылки на указанное приложение. Пример: {{links/infolog}}
 list of files linked to the current record	timesheet	ru	Список файлов, связанных с текущей записью
+make timesheets readable by infolog delegation	timesheet	ru	Сделать табели учета рабочего времени доступными для чтения делегату InfoLog
 max length of the input [, length of the inputfield (optional)]	timesheet	ru	Максимальная длина ввода  [, длина поля ввода (дополнительно)]
 mode	timesheet	ru	Режим
 modified	timesheet	ru	Изменено

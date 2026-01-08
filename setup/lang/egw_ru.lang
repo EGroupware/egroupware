@@ -282,7 +282,7 @@ error searching "dn=%1" for "%2"!	setup	ru	Ошибка при поиске "DN=
 error uploading your backup!	setup	ru	Ошибка при загрузке резервной копии!
 every	setup	ru	Каждый
 export has been completed!	setup	ru	Экспорт завершен!
-failed to mount backup directory!	setup	ru	Невозможно подключение Backup каталога!
+failed to mount backup directory!	setup	ru	Не удалось смонтировать каталог резервной копии!
 failed updating user "%1" dn="%2"!	setup	ru	Не удалось обновить пользователя "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	ru	Ошибка записи файла конфигурации header.inc.php, проверьте возможность доступа!
 fallback authentication	setup	ru	Обратная аутентификация
@@ -406,7 +406,7 @@ modifications have been completed!	setup	ru	Изменения завершен�
 modified	setup	ru	Изменено
 modify	setup	ru	Изменить
 month	setup	ru	месяц
-mount backup directory to %1	setup	ru	Подключить backup каталог в %1
+mount backup directory to %1	setup	ru	Смонтировать каталог резервной копии в %1
 name of database	setup	ru	Имя базы данных
 name of db user egroupware uses to connect	setup	ru	Имя пользователя БД используемое EGroupware для подключения
 never	setup	ru	никогда
@@ -672,6 +672,7 @@ virtual mail manager (login-name includes domain)	setup	ru	Виртуальны�
 warning!	setup	ru	Внимание!
 we can proceed	setup	ru	Мы можем приступать
 we could not determine the version of %1, please make sure it is at least %2	setup	ru	Мы не можем определить версию %1, пожалуйста удостоверьтесь что она как минимум %2
+we strongly recommend to run a db backup before running the import!	setup	ru	Мы настоятельно рекомендуем выполнить резервное копирование базы данных ПЕРЕД запуском импорта!
 we will automatically update your tables/records to %1	setup	ru	Мы автоматически обновим ваши таблицы и записи на %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ru	Сейчас будет запущен ряд тестов, которые могут занять некоторое время. Нажмите на ссылку внизу для продолжения.
 welcome to the egroupware installation	setup	ru	Добро пожаловать в установку EGroupware

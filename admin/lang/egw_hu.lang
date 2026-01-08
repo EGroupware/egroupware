@@ -86,6 +86,7 @@ aliases	admin	hu	Álnevek
 all records and account information will be lost!	admin	hu	Minden bejegyzés és információ törlésre kerül a hozzáférési joggal kapcsolatban!
 all users	admin	hu	Összes felhasználó
 allow anonymous access to this app	admin	hu	Engedélyezi az anonim hozzáféréseket ehhez az alkalmazáshoz
+allow remote administration from following install id's (comma separated)	admin	hu	Engedélyezze a távoli felügyeletet a következő telepítési azonosítókból, vesszővel elválasztva.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	hu	Engedélyezze a felhasználónak, hogy jelszavát a 'Biztonság és jelszavak' alatt tárolja a SingleSignOn-hoz.
 allow user to set 'remember me' token	admin	hu	Engedélyezi a felhasználó számára az „Emlékezz rám” token beállítását
 alternate email address	admin	hu	Alternatív emailcím
@@ -108,6 +109,7 @@ applications run rights updated.	admin	hu	Modul futási jogok modosítva.
 applies the changes	admin	hu	Változások végrehajtása
 apply the changes	admin	hu	Változások elfogadása
 archive: zip or tar	admin	hu	Archívum: ZIP vagy tar
+are you sure you want to %1 mail for selected accounts?	admin	hu	Biztosan törölni szeretné a kiválasztott fiókok %1 leveleit?
 are you sure you want to delete the application %1 ?	admin	hu	Valóban törlésre kerüljön ez az alkalmazás: %1?
 are you sure you want to delete this account ?	admin	hu	Biztosan törölésre kerüljön ez az azonosító?
 are you sure you want to delete this application ?	admin	hu	Biztosan törölésre kerüljön ez az alkalmazás?
@@ -117,12 +119,13 @@ are you sure you want to delete this group ?	admin	hu	Biztosan törölni akarja 
 are you sure you want to delete this server?	admin	hu	Biztosan törlésre kerüljön ez a szolgáltatás?
 are you sure you want to kill this session ?	admin	hu	Biztosan ki akarja tiltani ezt a hozzáférést?
 async services last executed	admin	hu	Feladat ütemező utolsó futása
-asynchronous timed services	admin	hu	Feladat ütemező szolgáltatás
+asynchronous timed services	admin	hu	Aszinkron szolgáltatás
 asyncservices not yet installed or other error (%1) !!!	admin	hu	Feladat ütemező szolgáltatás nincs még telepítve vagy egyéb hiba fordult elő (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	hu	FTP esetén próbálja használni a megfelelő MIME típust az alapértelmezett 'application/octet-stream' helyett.
 authentication / accounts	admin	hu	Azonosítás / Azonosítók
 auto create account records for authenticated users	admin	hu	Hitelesített felhasználóknak automatikus hozzáférés generálása.
 available placeholders	admin	hu	Elérhető helytartók
+backup directory %1 mounted as %2	admin	hu	A biztonsági mentés könyvtár %1 csatlakoztatva a %2 helyre.
 bad login name or password.	admin	hu	Hibás belépési név vagy jelszó.
 bad or malformed request. server responded: %s	admin	hu	Hibás kérés. Szerver válasza: %s
 bad request: %s	admin	hu	Hibás kérés: %s
@@ -152,8 +155,10 @@ change config settings	admin	hu	Beállítások megváltoztatása
 change domain of email address and aliases	admin	hu	Az e-mail cím és az aliasok domainjének módosítása
 change login screen message	admin	hu	Főképernyőn megjelenő üzenet változtatása
 change password for %1	admin	hu	Jelszó módosítása %1-hez
+changelog and versions	admin	hu	Változásnapló és verziók
 check ip address of all sessions	admin	hu	Összes session IP cím ellenőrzése
 check items to <b>%1</b> to %2 for %3	admin	hu	Tételek ellenőrzése <b>%1</b> to %2 for %3
+clear cache and register hooks	admin	hu	Cache törlése/hookok regisztrálása
 clear security tokens	admin	hu	Biztonsági tokenek törlése
 click to select a color	admin	hu	Színválasztás
 color	admin	hu	Szín
@@ -197,7 +202,7 @@ data	admin	hu	Adat
 data from	admin	hu	A következő adatok
 day	admin	hu	Nap
 day of week<br>(0-6, 0=sun)	admin	hu	A hét napja<br>(0-6, 0=Vasárnap)
-db backup and restore	admin	hu	Adatbázis mentés és helyreállítás
+db backup and restore	admin	hu	Biztonsági mentés
 default	admin	hu	Alapértelmezett
 default file system space per user	admin	hu	Az alapértelmezett fájlrendszerméret felhasználónként
 default file system space per user/group ?	admin	hu	Az alapértelmezett fájlrendszerméret felhasználónként?
@@ -223,9 +228,9 @@ deny access	admin	hu	Hozzáférés megtagadása
 deny access to access log	admin	hu	A hozzáférési naplóhoz történő hozzáférés tiltása
 deny access to application registery	admin	hu	Alkalmazás nyilvántartáshoz történő hozzáfárás tiltása
 deny access to applications	admin	hu	Az alkalmazásokhoz történő hozzáférés tiltása
-deny access to asynchronous timed services	admin	hu	Feladat ütemezőhöz történő hozzáfárás tiltása
+deny access to asynchronous timed services	admin	hu	Az aszinkron szolgáltatáshoz való hozzáférés megtagadása
 deny access to current sessions	admin	hu	Aktuális session-ökhoz történő hozzáfárás tiltása
-deny access to db backup and restore	admin	hu	Adatbázis mentés/helyreállításhoz történő hozzáfárás tiltása
+deny access to db backup and restore	admin	hu	Hozzáférés megtagadása a biztonsági mentéshez
 deny access to error log	admin	hu	A hibanaplóhoz történő hozzáférés tiltása
 deny access to global categories	admin	hu	Az általános kategóriákhoz történő hozzáférés tiltása
 deny access to groups	admin	hu	A csoportokhoz történő hozzáférés tiltása
@@ -265,6 +270,7 @@ edit this user	admin	hu	Felhasználó szerkesztése
 edit user	admin	hu	Felhasználó szerkesztése
 edit user account	admin	hu	Felhasználói azonosító szerkesztése
 egroupware directory	admin	hu	EGroupware könyvtár
+egroupware version	admin	hu	EGroupware verzió
 email account active	admin	hu	Email azonosító aktív
 email address	admin	hu	Email cím
 email settings	common	hu	Email beállítások
@@ -316,6 +322,7 @@ export certificate as p12	admin	hu	Tanúsítvány exportálása p12 formátumban
 exports groups into a csv file.	admin	hu	Csoportok exportálása CSV-fájlba.
 exports users into a csv file.	admin	hu	Felhasználók exportálása CSV fájlba.
 failed to change password.	admin	hu	Sikertelen jelszó változtatás.
+failed to mount backup directory!	admin	hu	A biztonsági másolat könyvtár csatlakoztatása nem sikerült!
 fallback (after each pageview)	admin	hu	Visszatérés (minden oldalnézet után)
 field '%1' already exists !!!	admin	hu	'%1' mező már létezik!
 file space	admin	hu	Fájl space
@@ -327,7 +334,6 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	hu	Kényszerített selectbox
 forward also to	admin	hu	Továbbítsd ide is
 forward email's to	admin	hu	Email továbbítása ide
-forward emails to	admin	hu	Email továbbítása ide
 forward only	admin	hu	Továbbítás csak ide
 full name	admin	hu	Teljes Neve
 general	admin	hu	Általános
@@ -441,6 +447,7 @@ mode	admin	hu	Mód
 modified	admin	hu	Módosított
 month	admin	hu	Hónap
 more secure	admin	hu	Biztonságosabb
+mount backup directory to %1	admin	hu	Csatlakoztassa a biztonsági másolat könyvtárat a %1 helyre
 name must not be empty !!!	admin	hu	Név nem lehet üres!
 name of organisation	admin	hu	Szervezet neve
 name of tab to create and show field in	admin	hu	A mező létrehozására és megjelenítésére szolgáló lap neve
@@ -520,13 +527,16 @@ re-enter password	admin	hu	Jelszó újra
 read this list of methods.	admin	hu	Eljárás lista olvasása.
 register application hooks	admin	hu	Regisztrálja az alkalmazás visszacsatolást
 regular expression to find part to use as container	admin	hu	Szabályos kifejezés a konténerként használandó rész kereséséhez
+remote administration instances	admin	hu	Távoli felügyelet
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	hu	A távoli felügyeletet a távoli példányban az Admin > Site configuration (Admin > Webhely konfiguráció) menüpontban kell engedélyezni!
 remove	admin	hu	Eltávolítás
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	hu	A csoportok hozzáférésének eltávolítása problémákat okozhat a kategória adataiban. Biztosan törölni szeretné? A következő csoportok tagjai többé nem férhetnek hozzá:
 reset filter	admin	hu	Szűrö törlése
 revoke this token	admin	hu	A token visszavonása
 rights	admin	hu	Hozzáférés
 rows	admin	hu	Sorok
 rpm or debian package	admin	hu	RPM vagy deb csomag
-run asynchronous services	admin	hu	Feladat ütemező futtatása
+run asynchronous services	admin	hu	Aszinkron szolgáltatás futtatása
 run rights for applications	admin	hu	Az alkalmazások futtatási jogai
 save changes	admin	hu	Változások mentése
 save the category	admin	hu	Kategória mentése.
@@ -604,7 +614,6 @@ the imap server does not appear to support the authentication method selected. p
 the login and password can not be the same	admin	hu	A felhasználónév és a jelszó nem egyezhet meg.
 the loginid can not be more then 8 characters	admin	hu	A bejelentkezési név nem lehet több, mint 8 karakter.
 the mimeparser can not parse this message.	admin	hu	A MIME feldolgozó nem tudta feldolgozni ezt az üzenetet.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	hu	A nevet a rendszer használja (<=20 karakter), megváltozása esetén a létező adatok elérhetetlenekké válnak.
 the testjob sends you a mail everytime it is called.	admin	hu	A TesztFeladat levelet küld önnek, minden egyes lefutása alkalmával.
 the text displayed to the user	admin	hu	A szöveg megjelenítve a felhasználónak
 the two passwords are not the same	admin	hu	A két jelszó nem egyezik
@@ -678,7 +687,6 @@ view error log	admin	hu	Hibanapló megtekintése
 view sessions	admin	hu	Munkamenetek
 view this user	admin	hu	Felhasználó megtekintése
 view user account	admin	hu	Felhasználói hozzáférés megjelenítése
-virtual mail manager	admin	hu	Virtuális MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	hu	Melyik felhasználónak másoljam át az Összes bejegyzést, ami a törölt felhasználóhoz tartozott?
 who would you like to transfer records owned by the deleted user to?	admin	hu	Kinek szeretné átadni a törölt felhasználó tulajdonában lévő rekordokat?
 wrong admin-account or -password !!!	admin	hu	Érvénytelen adminisztrátor felhasználó vagy jelszó!

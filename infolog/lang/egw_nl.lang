@@ -219,6 +219,7 @@ history logging and deleting of items	infolog	nl	Historie vastleggen en verwijde
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	nl	Hoeveel beschrijvingsregels moeten direct zichtbaar zijn. Meer regels zijn beschikbaar via een schuifbalk.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	nl	Hoe breed moet het beschrijvingsgebied zijn. Deze waarde is numeriek, bijv. 60.
 html link to the current record	infolog	nl	HTML link naar huidig record
+icon for	infolog	nl	Pictogram voor
 id	infolog	nl	ID
 id#	infolog	nl	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	nl	Indien een type een groepseigenaar heeft wordt alle invoer van dat type eigendom van de betreffende groep en NIET de gebruiker die ze heeft aangemaakt!
@@ -482,6 +483,7 @@ to what should the startdate of new entries be set.	infolog	nl	Waarop moet de st
 today	infolog	nl	Vandaag
 todays date	infolog	nl	Datum van vandaag
 todo	infolog	nl	Taak
+toggle details	common	nl	Details weergeven
 typ	infolog	nl	Type
 typ '%1' already exists !!!	infolog	nl	Type '%1' bestaat al!
 type	infolog	nl	Type

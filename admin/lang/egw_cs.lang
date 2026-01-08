@@ -115,6 +115,7 @@ applies the changes	admin	cs	Použije změny
 apply changes	admin	cs	Použít změny
 apply the changes	admin	cs	Použít změny
 archive: zip or tar	admin	cs	Archiv: ZIP nebo tar
+are you sure you want to %1 mail for selected accounts?	admin	cs	Opravdu chcete odeslat %1 e-mailů vybraným účtům?
 are you sure you want to delete the application %1 ?	admin	cs	Určitě chcete smazat aplikaci %1?
 are you sure you want to delete this account ?	admin	cs	Určitě chcete smazat tento účet?
 are you sure you want to delete this application ?	admin	cs	Určitě chcete smazat tuto aplikaci?
@@ -124,7 +125,7 @@ are you sure you want to delete this group ?	admin	cs	Určitě chcete smazat tut
 are you sure you want to delete this server?	admin	cs	Určitě chcete smazat tento server?
 are you sure you want to kill this session ?	admin	cs	Určitě chcete ukončit tuto relaci?
 async services last executed	admin	cs	Asynchronní služby naposledy spuštěny
-asynchronous timed services	admin	cs	Asynchornně časované služby
+asynchronous timed services	admin	cs	Asynchronní služba
 asyncservices not yet installed or other error (%1) !!!	admin	cs	Asynchronní služby nebyly dosud nainstalovány nebo jiná chyba (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	cs	Pokuste se použít správný MIME typ pro FTP místo výchozího 'application/octet-stream'.
 authentication / accounts	admin	cs	Autentikace | Účty
@@ -162,10 +163,12 @@ change config settings	admin	cs	Změnít konfigurační nastavení
 change domain of email address and aliases	admin	cs	Změna domény e-mailové adresy a aliasů
 change login screen message	admin	cs	Změnit zprávu na hlavní obrazovce
 change password for %1	admin	cs	Změnit heslo pro %1
+changelog and versions	admin	cs	Seznam změn a verze
 check acl for entries of not (longer) existing accounts	admin	cs	Zkontrolovat ACL zda neobsahují záznamy již zrušených účtů.
 check ip address of all sessions	admin	cs	Kontrolovat IP adresy všech relací
 check items to <b>%1</b> to %2 for %3	admin	cs	Zkontrolovat položky k <b>%1</b> do %2 pro %3
 checking push (green for success or red for failure)	admin	cs	Zkontrolujte PUSH (zelená = OK, červená - není OK)
+clear cache and register hooks	admin	cs	Vymazat cache/registrovat háčky
 clear security tokens	admin	cs	Vymazat bezpečnostní tokeny
 click to select a color	admin	cs	Klikněte pro výběr barvy
 color	admin	cs	Barva
@@ -209,7 +212,7 @@ data	admin	cs	Data
 data from	admin	cs	Data z
 day	admin	cs	Den
 day of week<br>(0-6, 0=sun)	admin	cs	Den týdne <br>(0-6, 0=Ne)
-db backup and restore	admin	cs	Záloha a obnova databáze
+db backup and restore	admin	cs	Záloha
 default	admin	cs	Výchozí
 default file system space per user	admin	cs	Výchozí kapacita na souborovém systému na uživatele
 default file system space per user/group ?	admin	cs	Výchozí kapacita na souborovém systému na uživatele/skupinu?
@@ -236,9 +239,9 @@ deny access	admin	cs	Zakázat přístup
 deny access to access log	admin	cs	Přístupový protokol
 deny access to application registery	admin	cs	Zablokovat přístup do registru aplikací
 deny access to applications	admin	cs	Zablokovat přístup k aplikacím
-deny access to asynchronous timed services	admin	cs	Zablokovat přístup k asynchonně časovaným službám
+deny access to asynchronous timed services	admin	cs	Odepřít přístup k asynchronní službě
 deny access to current sessions	admin	cs	Zablokovat přístup k aktuálním relacím
-deny access to db backup and restore	admin	cs	Zablokovat přístup k záloze a obnově databáze
+deny access to db backup and restore	admin	cs	Odepřít přístup k záloze
 deny access to error log	admin	cs	Zablokovat přístup k chybovém protokolu
 deny access to global categories	admin	cs	Zablokovat přístup ke globálním kategoriím
 deny access to groups	admin	cs	Zablokovat přístup ke skupinám
@@ -333,6 +336,7 @@ event details follow	admin	cs	Následují detaily události
 expires	admin	cs	Vyprší
 export certificate as p12	admin	cs	Export certifikátu jako p12
 failed to change password.	admin	cs	Nepodařilo se změnit heslo.
+failed to mount backup directory!	admin	cs	Nepodařilo se připojit adresář zálohy!
 fallback (after each pageview)	admin	cs	Náhradní režim (po každém zobrazení stránky).
 false	admin	cs	Ne
 field '%1' already exists !!!	admin	cs	Položka '%1' již existuje!
@@ -345,7 +349,6 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	cs	Vynuit rozbalovací nabídku
 forward also to	admin	cs	Přeposlat také na
 forward email's to	admin	cs	Přeposílat e-maily na
-forward emails to	admin	cs	Přeposlat e-maily na
 forward only	admin	cs	Jen přeposlat
 full name	admin	cs	Celé jméno
 general	admin	cs	Obecné
@@ -485,6 +488,7 @@ mode	admin	cs	Režim
 modified	admin	cs	Změměno
 month	admin	cs	Měsíc
 more secure	admin	cs	Bezpečnější
+mount backup directory to %1	admin	cs	Připojit adresář zálohy do %1
 name must not be empty !!!	admin	cs	Název nemůže být prázdný!
 name of organisation	admin	cs	Název organizace
 name of tab to create and show field in	admin	cs	Název karty, na které se pole vytvoří a zobrazí
@@ -571,10 +575,11 @@ re-enter password	admin	cs	Zadejte heslo znovu
 read this list of methods.	admin	cs	Načíst seznam metod.
 register application hooks	admin	cs	Registrovat aplikace
 regular expression to find part to use as container	admin	cs	Regulární výraz pro vyhledání části, která má být použita jako kontejner
-remote administration instances	admin	cs	Instance vzdálené administrace
+remote administration instances	admin	cs	Vzdálená správa
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	cs	Vzdálená administrace musí být povolena na vzdálené instanci pod položkou Administrátor > Konfigurace webu!
 remote instance saved	admin	cs	Vzdálená instance uložena.
 remove	admin	cs	Odstranit
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	cs	Odebrání přístupu skupinám může způsobit problémy s daty v této kategorii. Opravdu chcete pokračovat? Uživatelé v těchto skupinách již nemusí mít přístup:
 requested	admin	cs	Požadovaný
 requires 'openid / oauth2 server' app.	admin	cs	Vyžaduje aplikaci "OpenID / OAuth2 Server".
 reset filter	admin	cs	Vyresetovat filtr
@@ -673,7 +678,6 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	cs	Přihlašovací jméno a heslo se nesmí shodovat.
 the loginid can not be more then 8 characters	admin	cs	Přihlašovací id nesmí být delší než osm znaků.
 the mimeparser can not parse this message.	admin	cs	Mimeparser nemůže zpracovat tuto zprávu.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	cs	Název používaný interně (<= 20 znaků), je změna způsobí nedostupnost stávajících dat.
 the testjob sends you a mail everytime it is called.	admin	cs	Testovací úloha Vám pošle e-mail při každém spuštění.
 the text displayed to the user	admin	cs	Text zobrazený uživateli
 the two passwords are not the same	admin	cs	Zadaná hesla se neshodují
@@ -761,7 +765,6 @@ view error log	admin	cs	Zobrazit chybový protokol
 view sessions	admin	cs	Relace
 view this user	admin	cs	Zobrazit uživatele
 view user account	admin	cs	Zobrazit uživatelský účet
-virtual mail manager	admin	cs	Virtuální správce pošty
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	cs	Tyto údaje poptáváme jen pro statistické účely, abychom získali obecný přehled o používání EGroupware ve světě.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	cs	Neuchováváme žádné údaje o Vaší identitě.
 who would you like to transfer all records owned by the deleted user to?	admin	cs	Komu chcete přesunout VŠECHNY záznamy vlastněné smazaným uživatelem?

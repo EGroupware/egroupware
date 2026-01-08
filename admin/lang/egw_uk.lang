@@ -68,6 +68,7 @@ after how many unsuccessful attempts to login, an ip should be blocked (default 
 all records and account information will be lost!	admin	uk	Всі записи та інформація рахунку будуть втрачені!
 all users	admin	uk	Всі користувачі
 allow anonymous access to this app	admin	uk	Дозволити анонімний доступ до цього приложення
+allow remote administration from following install id's (comma separated)	admin	uk	Aşağıdaki kurulum kimliklerinden uzaktan yönetimi izin verin, virgülle ayırın.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	uk	Дозволити користувачеві зберігати свій пароль у розділі «Безпека та паролі» для SingleSignOn.
 allow user to set 'remember me' token	admin	uk	Дозволити користувачеві встановлювати токен "Запам'ятати мене
 anonymous user	admin	uk	Анонімний користувач
@@ -80,6 +81,7 @@ application title	admin	uk	Найменування приложення
 applications	admin	uk	Приложення
 applications list	admin	uk	Перелік приложень
 applies the changes	admin	uk	Застосувати зміни
+are you sure you want to %1 mail for selected accounts?	admin	uk	Ви впевнені, що хочете надіслати %1 листа для вибраних облікових записів?
 are you sure you want to delete the application %1 ?	admin	uk	Ви дійсно хочете видалити приложення %1 ?
 are you sure you want to delete this account ?	admin	uk	Ви дійсно хочете видалити цей рахунок?
 are you sure you want to delete this application ?	admin	uk	Ви дійсно хочете видалити це приложення?
@@ -89,11 +91,12 @@ are you sure you want to delete this group ?	admin	uk	Ви дійсно хоче
 are you sure you want to delete this server?	admin	uk	Ви дійсно хочете видалити цей сервер?
 are you sure you want to kill this session ?	admin	uk	Ви дійсно хочете закрити цю сесію?
 async services last executed	admin	uk	Останні виконані асинхронні сервіси
-asynchronous timed services	admin	uk	Асинхронні сервіси
+asynchronous timed services	admin	uk	Асинхронна служба
 asyncservices not yet installed or other error (%1) !!!	admin	uk	Асинхроні сервіси ще не встановлено або інша помилка (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	uk	Спроба використати вірний MIME-тип для FTP замість типового 'application/octet-stream'
 authentication / accounts	admin	uk	Аутентифікація / Рахунки
 auto create account records for authenticated users	admin	uk	Створювати автоматично записи рахунків для аутентифікованих користувачів
+backup directory %1 mounted as %2	admin	uk	Каталог резервної копії %1 підключено як %2
 blocking after wrong password	admin	uk	Блокування після неправильного пароля
 bottom	admin	uk	низ
 bulk changes	admin	uk	Масові зміни
@@ -113,7 +116,9 @@ change acl rights	admin	uk	Змінити ACL права
 change config settings	admin	uk	Змінити конфігураційні установки
 change domain of email address and aliases	admin	uk	Зміна домену адреси електронної пошти та псевдонімів
 change login screen message	admin	uk	Змінити повідомлення основного екрану
+changelog and versions	admin	uk	Журнал змін та версії
 check ip address of all sessions	admin	uk	перевіряти ip адресу для всіх сесій
+clear cache and register hooks	admin	uk	Очистити кеш/зареєструвати хуки
 clear security tokens	admin	uk	Очистити токени безпеки
 comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	uk	Розділені комами IP-адреси, що внесені до білого списку для вищезазначеного блокування (:опціональна кількість спроб)
 container	admin	uk	Контейнер
@@ -130,6 +135,7 @@ custom fields	admin	uk	Власні поля
 data	admin	uk	Число
 day	admin	uk	День
 day of week<br>(0-6, 0=sun)	admin	uk	День тиждня (0-6, 0=Неділя)
+db backup and restore	admin	uk	Резервна копія
 default	admin	uk	По замовченню
 default file system space per user	admin	uk	Обсяг файлової системи для користувача по замовченню
 default file system space per user/group ?	admin	uk	Обсяг файлової системи для користувача/групи по замовченню
@@ -151,8 +157,9 @@ deletes this field	admin	uk	видаляє це поле
 deny access to access log	admin	uk	Заборонити доступ до протоколу доступу
 deny access to application registery	admin	uk	Заборонити доступ до регістру приложень
 deny access to applications	admin	uk	Заборонити доступ до приложень
-deny access to asynchronous timed services	admin	uk	Заборонити доступ до асинхронних сервісів
+deny access to asynchronous timed services	admin	uk	Заборонити доступ до асинхронної служби
 deny access to current sessions	admin	uk	Заборонити доступ до поточних сесій
+deny access to db backup and restore	admin	uk	Відмовити в доступі до резервної копії
 deny access to error log	admin	uk	Заборонити доступ до протоколу помилок
 deny access to global categories	admin	uk	Заборонити доступ до глобальних категорій
 deny access to groups	admin	uk	Заборонити доступ до груп
@@ -181,6 +188,7 @@ edit this group	admin	uk	Редагувати цю групу
 edit this user	admin	uk	Редагувати цього користувача
 edit user	admin	uk	Редагувати користувача
 edit user account	admin	uk	Редагувати рахунок користувача
+egroupware version	admin	uk	Версія EGroupware
 enable	admin	uk	Включити
 enable debug-messages	admin	uk	Дозволити відладочні повідомлення
 enter a description for the category	admin	uk	введіть опис категорії
@@ -207,6 +215,7 @@ error: %1 not found or other error !!!	admin	uk	Помилка: %1 не знай
 event details follow	admin	uk	Подробиці події
 expires	admin	uk	Обмежено
 export certificate as p12	admin	uk	Експортувати сертифікат як p12
+failed to mount backup directory!	admin	uk	Не вдалося підключити каталог резервної копії!
 file space	admin	uk	Розмір файлу
 file space must be an integer	admin	uk	Розмір файлу має бути цілим числом
 force selectbox	admin	uk	Форсувати Selectbox
@@ -285,6 +294,7 @@ minute	admin	uk	Хвилина
 mode	admin	uk	Режим
 modified	admin	uk	Змінено
 month	admin	uk	Місяць
+mount backup directory to %1	admin	uk	Підключити каталог резервної копії до %1
 name must not be empty !!!	admin	uk	Назва повинна бути непорожнім
 new group name	admin	uk	Назва нової групи
 new name	admin	uk	нова назва
@@ -320,6 +330,7 @@ percent of users that logged out	admin	uk	Процент користувачі�
 permission denied	admin	uk	Заборонено
 permissions	admin	uk	Дозволи
 permissions this group has	admin	uk	Ця група має дозволи
+php version	admin	uk	Версія PHP
 phpinfo	admin	uk	Інформація PHP
 please enter a name	admin	uk	Будь ласка, введіть ім'я
 please enter a name for that server !	admin	uk	Будь ласка, введіть назву серверу!
@@ -330,9 +341,12 @@ primary group	admin	uk	первинна група
 re-enter password	admin	uk	Перевведіть пароль
 read this list of methods.	admin	uk	Прочитати цей перелік методів
 regular expression to find part to use as container	admin	uk	Регулярний вираз для пошуку частини для використання в якості контейнера
+remote administration instances	admin	uk	Uzaktan yönetim
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	uk	Uzaktan yönetim, Admin > Site configuration altında uzaktan örnekte etkinleştirilmelidir!
 remove	admin	uk	Видалити
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	uk	Видалення доступу для груп може спричинити проблеми з даними в цій категорії. Ви впевнені? Користувачі в цих групах можуть втратити доступ:
 revoke this token	admin	uk	Відкликати цей токен
-run asynchronous services	admin	uk	Виконувати асинхронні сервіси
+run asynchronous services	admin	uk	Запустити асинхронну службу
 save the category	admin	uk	зберегти категорію
 save the category and return back to the list	admin	uk	зберегти категорію та повернутись до переліку
 saves the changes made and leaves	admin	uk	зберігає зроблені зміни та виходить

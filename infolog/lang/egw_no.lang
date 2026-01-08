@@ -67,6 +67,7 @@ back to main list	infolog	no	Tilbake til hovedliste
 billed	infolog	no	Fakturert
 both	infolog	no	Begge
 call	infolog	no	Ring
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	no	Kan brukes til å vise flere InfoLog-typer i kalenderen eller begrense den til å vise f.eks. bare oppgaver.
 can not return an exact number of rows and therefore hides the count.	admin	no	Kan ikke returnere et eksakt antall rader og skjuler derfor antallet.
 cancel	infolog	no	Avbryt
 cancelled	infolog	no	Kansellert
@@ -216,6 +217,7 @@ history logging and deleting of items	infolog	no	Historikklogging og sletting av
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	no	Hvor mange beskrivelseslinjer som skal være direkte synlige. Flere linjer er tilgjengelige via en rullefelt.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	no	Hvor bredt skal beskrivelsesområdet være. Denne verdien er numerisk, f.eks. 60.
 html link to the current record	infolog	no	HTML-lenke til den aktuelle posten
+icon for	infolog	no	Ikon for
 id	infolog	no	ID
 id#	infolog	no	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	no	Hvis en type har en gruppeeier, vil alle oppføringer av den typen eies av den gitte gruppen og IKKE av brukeren som opprettet den!
@@ -253,6 +255,7 @@ invalid status for entry type %1.	infolog	no	Ugyldig status for oppføringstype 
 label<br>helptext	infolog	no	Etikett<br>Hjelpetekst
 last changed	infolog	no	Sist endret
 last modified	infolog	no	Sist endret
+leave blank to get the used time calculated by timesheet entries	infolog	no	La feltet stå tomt for å få beregnet brukstiden ut fra timelisteoppføringene.
 leave it empty	infolog	no	La stå tom
 leave it empty for a full week	infolog	no	La stå tom for en full uke
 leave without saveing the entry	infolog	no	Avslutt uten å lagre innslaget
@@ -412,6 +415,7 @@ sets the status of this entry to done	infolog	no	Setter status for denne oppfør
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	no	Skal InfoLog vise under-oppgaver, -oppkall eller -notater som normalvisning eller ikke. Du kan alltids nå underoppgavene via hovedoppgavene.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	no	Skal InfoLog viser lenkene til andre programmer og/eller filtilknytningene i InfoLoglisten (Normal visning når du starter InfoLog).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	no	Skal InfoLog vise fulle navn (fornavn og etternavn) eller kun pålogingsnavn.
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	no	Skal InfoLog-listen vise prosentandel fullført bare for status pågående eller to separate ikoner.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	no	Skal dette innslaget vises kun til deg selv og personer du gir access vha. tilgangslister (ACL)
 show a column for used and planned times in the list.	infolog	no	Vis en kolonne for brukte og planlagte tider i listen
 show a x if content equals this compare value, otherwise show nothing	infolog	no	Vis et X hvis innholdet er lik denne sammenligningsverdien, ellers vises ingenting
@@ -459,6 +463,7 @@ to what should the startdate of new entries be set.	infolog	no	Hva skal startdat
 today	infolog	no	Idag
 todays date	infolog	no	Dagens dato
 todo	infolog	no	Gjøremål
+toggle details	common	no	Veksle detaljer
 typ	infolog	no	Type
 typ '%1' already exists !!!	infolog	no	Typen '%1' eksisterer allerede!
 type	infolog	no	Type
@@ -475,6 +480,7 @@ urgency	infolog	no	Nødvendighet
 urgent	infolog	no	Haster
 use all	infolog	no	Bruk alle
 use custom notification message	infolog	no	Bruk egendefinert varslingsmelding
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	no	Bruk denne taggen for adresselapper. Plasser innholdet du vil gjenta mellom to tagger.
 used time	infolog	no	Brukt tid
 values for selectbox	infolog	no	Verdier for valgboksene
 view all subs of this entry	infolog	no	Viser alle subs for dette innslaget

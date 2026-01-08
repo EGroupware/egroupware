@@ -38,9 +38,18 @@ add user or group	admin	ro	Adăugare utilizator sau grup
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ro	Adresele de e-mail ale administratorilor, separate prin virgulă, care vor fi notificate cu privire la conturile de utilizator și adresele IP blocate. Gol = fără notificare.
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ro	După câte încercări nereușite de conectare ar trebui blocat un cont. Implicit = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ro	După câte încercări nereușite de conectare ar trebui blocată o adresă IP. Implicit = 15
+allow remote administration from following install id's (comma separated)	admin	ro	Permiteți administrarea la distanță din următoarele ID-uri de instalare, separate prin virgulă.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ro	Permiteți utilizatorului să își stocheze parola sub „Securitate și parole” pentru SingleSignOn.
 allow user to set 'remember me' token	admin	ro	Permiteți utilizatorului să seteze jetonul "Ține-mă minte"
 anonymous user (not shown in list sessions)	admin	ro	Utilizator anonim. Nu este afișat în sesiunile listei
+are you sure you want to %1 mail for selected accounts?	admin	ro	Sunteți sigur că doriți să %1 mail pentru conturile selectate?
+are you sure you want to delete the application %1 ?	admin	ro	Sunteți sigur că doriți să ștergeți aplicația %1?
+are you sure you want to delete this account ?	admin	ro	Sunteți sigur că doriți să ștergeți acest cont?
+are you sure you want to delete this category ?	common	ro	Sunteți sigur că doriți să ștergeți această categorie?
+are you sure you want to delete this global category ?	admin	ro	Sunteți sigur că doriți să ștergeți această categorie globală?
+are you sure you want to delete this group ?	admin	ro	Sunteți sigur că doriți să ștergeți acest grup?
+asynchronous timed services	admin	ro	Serviciu asincron
+backup directory %1 mounted as %2	admin	ro	Directorul copie de rezervă %1 montat ca %2
 blocking after wrong password	admin	ro	Blocare după o parolă greșită
 bulk changes	admin	ro	Modificări în masă
 bulk password reset	admin	ro	Resetare în masă a parolei
@@ -50,6 +59,8 @@ certificate details	admin	ro	Detalii certificat
 certificate validation in days	admin	ro	Validarea certificatului în zile
 change access	admin	ro	Modificarea drepturilor de acces
 change domain of email address and aliases	admin	ro	Schimbarea domeniului adresei de e-mail și a aliasurilor
+changelog and versions	admin	ro	Istoric modificări și versiuni
+clear cache and register hooks	admin	ro	Ștergeți memoria cache/înregistrați hook-uri
 clear security tokens	admin	ro	Ștergeți jetoanele de securitate
 comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	ro	Adrese IP separate prin virgulă, incluse în lista albă pentru blocarea de mai sus (:număr opțional de încercări)
 container	admin	ro	Container
@@ -57,11 +68,16 @@ current certificate	admin	ro	Certificat curent
 custom 1	admin	ro	Personalizat 1
 custom 2	admin	ro	Personalizat 2
 custom 3	admin	ro	Personalizat 3
+db backup and restore	admin	ro	Copie de rezervă
 delete certificate	admin	ro	Ștergeți certificatul
 deny access to access log	admin	ro	Refuză accesul la jurnalul de acces
+deny access to asynchronous timed services	admin	ro	Refuză accesul la serviciul asincron
+deny access to db backup and restore	admin	ro	Refuzați accesul la Copie de rezervă
+egroupware version	admin	ro	Versiunea EGroupware
 error revoking token!	admin	ro	Eroare revocare token!
 error storing token!	admin	ro	Eroare la stocarea token-ului!
 export certificate as p12	admin	ro	Exportați certificatul ca p12
+failed to mount backup directory!	admin	ro	Nu s-a putut monta directorul Backup!
 generate certificate	admin	ro	Generarea certificatului
 generate new token and display it once after saving	admin	ro	Generați un jeton nou și afișați-l o dată după salvare
 group hidden from non-admins	admin	ro	Grup ascuns de non-admins
@@ -79,6 +95,7 @@ last updated	admin	ro	Ultima actualizare
 leave empty for no quota	admin	ro	Lăsați gol pentru nici o cotă
 leave empty to use oauth, if supported	admin	ro	Lăsați gol pentru a utiliza OAuth, dacă este acceptat
 lifetime of 'remember me' token	admin	ro	Durata de viață a jetonului "Remember me"
+mount backup directory to %1	admin	ro	Montează directorul backup în %1
 no limit	admin	ro	Fără limită
 oauth authentiction	admin	ro	Autentificare OAuth
 offer to installing egroupware as mail-handler	admin	ro	Ofertă pentru instalarea EGroupware ca mail-handler
@@ -90,8 +107,13 @@ other security configuration	admin	ro	Alte configurații de securitate
 own categories	admin	ro	Categorii proprii
 own install id	admin	ro	Propria instalare ID
 own install id:	admin	ro	Propria instalare ID:
+php version	admin	ro	Versiunea PHP
 regular expression to find part to use as container	admin	ro	Expresie regulată pentru a găsi partea care urmează să fie utilizată ca container
+remote administration instances	admin	ro	Administrare la distanță
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	ro	Administrarea la distanță trebuie activată în instanța la distanță din Admin > Configurare site!
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	ro	Eliminarea accesului pentru grupuri poate cauza probleme pentru datele din această categorie. Sunteți sigur? Utilizatorii din aceste grupuri ar putea să nu mai aibă acces:
 revoke this token	admin	ro	Revocați acest jeton
+run asynchronous services	admin	ro	Execută serviciul asincron
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	ro	Selectați aplicațiile la care doriți ca tokenul să fie limitat sau lăsați valoarea implicită de toate aplicațiile.
 set a random password	admin	ro	Setați o parolă aleatorie
 show access log	admin	ro	Jurnal de acces

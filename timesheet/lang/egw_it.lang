@@ -58,11 +58,11 @@ forgot to switch off working time?	common	it	Avete dimenticato di disattivare l'
 full: use only projectmanager	admin	it	Pieno: usa solo Gestione Progetti
 general fields:	timesheet	it	Campi generali
 give additional users access	timesheet	it	Concedere l'accesso ad altri utenti
-give infolog delegation read-access to timesheets booked on them	timesheet	it	Concedere alla delegazione InfoLog l'accesso in lettura ai fogli presenze registrati su di essi
+give infolog delegation read-access to timesheets booked on them	timesheet	it	Concedere alla delegazione InfoLog l'accesso in lettura ai fogli presenze registrati su di essi.
 global categories	timesheet	it	Categorie Globali
 history	timesheet	it	Storico
 history logging	admin	it	Registrazione dello storico
-how to display linked timesheets	timesheet	it	Come visualizzare i fogli presenze collegati
+how to display linked timesheets	timesheet	it	Come visualizzare i fogli presenze collegati?
 html link to the current record	timesheet	it	Collegamento HTML al record attuale
 id	timesheet	it	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	it	Se specifichi una directory (percorso vfs completo), %1 mostrerà l'azione per ogni documento. Quella azione permette di scaricare il documento specificato con i dati %1 inseriti
@@ -149,7 +149,7 @@ sum %1:	timesheet	it	Somma %1:
 tag to mark positions for address labels	timesheet	it	Tagga per marcare le posizioni per le etichette di indirizzo
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	it	Il documento può contenere variabili metasintattiche come {{%3}}, da rimpiazzare con i dati (%1elenco completo delle variabili metasintattiche%2)
 the following document-types are supported:	timesheet	it	I seguenti tipi di documenti sono supportati:
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	it	il nome usato internamente (<= 20 caratteri), cambiarlo rende i dati esistenti indisponibili
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	it	Il nome usato internamente (<= 20 caratteri), cambiarlo rende i dati esistenti indisponibili
 the text displayed to the user	timesheet	it	il testo mostrato all'utente
 this month	timesheet	it	Questo mese
 this week	timesheet	it	Questa settimana

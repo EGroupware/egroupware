@@ -23,7 +23,16 @@ authentication / accounts	setup	ja	認証/アカウント情報
 auto create account records for authenticated users	setup	ja	認証したユーザ情報を自動的に作成する
 auto-created user accounts expire	setup	ja	自動作成したユーザの有効期限
 available version	setup	ja	利用可能なバージョン
+backup '%1' deleted	setup	ja	バックアップ '%1' が削除されました。
+backup '%1' renamed to '%2'	setup	ja	バックアップ '%1' が '%2' に名前変更されました。
+backup '%1' restored	setup	ja	バックアップ '%1' が復元されました。
+backup directory %1 mounted as %2	setup	ja	バックアップディレクトリ %1 が %2 としてマウントされました
+backup failed	setup	ja	バックアップに失敗しました。
 backup files (needs ziparchive)	setup	ja	EGroupwareファイル(filesディレクトリ)のデータバックアップ<br>(PHP ZipArchiveが必要)
+backup finished	setup	ja	バックアップが完了しました。
+backup housekeeping	setup	ja	標準名が付いたバックアップは自動的にクリーンアップされます。クリーンアップ対象から除外するには、バックアップファイルの名前を変更してください。
+backup min count	setup	ja	最小バックアップ数
+backup started, this might take a few minutes ...	setup	ja	バックアップが開始されました。数分かかる場合があります...
 because it depends upon	setup	ja	理由は次のとおりです
 because it is not a user application, or access is controlled via acl	setup	ja	ユーザのアプリケーションでないか、ACL によってアクセス制限しています。
 because it requires manual table installation, <br />or the table definition was incorrect	setup	ja	手動でテーブルをインストールする必要があるか、<br>テーブル定義が正しくありません。
@@ -116,6 +125,7 @@ mcrypt mode (default cbc)	setup	ja	Mcryptモード(デフォルト:CBC)
 mcrypt settings (requires mcrypt php extension)	setup	ja	Mcrypt 設定情報(McryptはPHPの拡張が必要)
 minimum account id (e.g. 500 or 100, etc.)	setup	ja	最小ユーザID   (例： 500 や 100 など)
 month	setup	ja	月
+mount backup directory to %1	setup	ja	バックアップ・ディレクトリとして %1 をマウント
 never	setup	ja	無期限
 new	setup	ja	新規作成
 no	setup	ja	いいえ
@@ -204,6 +214,7 @@ user	setup	ja	ユーザ
 users choice	setup	ja	ユーザ選択
 version	setup	ja	バージョン
 version mismatch	setup	ja	バージョンの不一致
+we strongly recommend to run a db backup before running the import!	setup	ja	インポートを実行する前に、DBのバックアップを実行することを強く推奨します！
 we will automatically update your tables/records to %1	setup	ja	セットアップは、%1 用のテーブルやデータに自動アップグレードします。
 would you like egroupware to cache the phpgw info array ?	setup	ja	EGroupware のキャッシュにphpgw info 配列を利用する
 would you like egroupware to check for a new version<br />when admins login ?	setup	ja	管理者でログイン時、EGroupwareのバージョンチェックを行う

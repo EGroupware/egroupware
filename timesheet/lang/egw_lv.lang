@@ -1,4 +1,5 @@
 applies the changes	timesheet	lv	apstiprināt izmaiņas
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	lv	Piemērojiet darbību visam vaicājumam, NE tikai parādītajām darba laika uzskaites lapām!
 ask to start and stop working time with session	timesheet	lv	Jautājiet, lai sāktu un pārtrauktu darba laiku ar sesiju
 category for 'working time'	admin	lv	Kategorija “Darba laiks
 change owner when updating	timesheet	lv	Īpašnieka maiņa, veicot atjaunināšanu
@@ -25,10 +26,10 @@ exports entries from your timesheet into a csv file. csv means 'comma separated 
 field must not be empty !!!	timesheet	lv	Lauks nedīkst būt tukšs
 forgot to switch off working time?	common	lv	Aizmirsāt izslēgt darba laiku?
 give additional users access	timesheet	lv	Piešķirt piekļuvi papildu lietotājiem
-give infolog delegation read-access to timesheets booked on them	timesheet	lv	Piešķirt InfoLog deleģēšanai lasīšanas piekļuvi laika uzskaites lapām, kas reģistrētas uz tām
+give infolog delegation read-access to timesheets booked on them	timesheet	lv	Piešķirt InfoLog deleģēšanai lasīšanas piekļuvi laika uzskaites lapām, kas reģistrētas uz tām.
 global categories	timesheet	lv	Globālās kategorijas
 history	timesheet	lv	Vēsture
-how to display linked timesheets	timesheet	lv	Kā parādīt saistītās laika uzskaites lapas
+how to display linked timesheets	timesheet	lv	Kā parādīt saistītās laika uzskaites lapas?
 html link to the current record	timesheet	lv	HTML saite uz pašreizējo ierakstu
 id	timesheet	lv	ID
 imports entries into the timesheet from a csv file.	timesheet	lv	Importē ierakstus Time Sheet no CSV faila

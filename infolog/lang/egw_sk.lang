@@ -230,6 +230,7 @@ history logging and deleting of items	infolog	sk	Zaznamenávať históriu a odst
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	sk	Koľko riadkov z popisu má byť priamo viditeľných? Ďalšie riadky budú dostupné cez posuvník.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	sk	Aká široká má byť oblasť popisu. Hodnota je číselná, napr. 60.
 html link to the current record	infolog	sk	HTML odkaz na aktuálny záznam
+icon for	infolog	sk	Ikona pre
 id	infolog	sk	ID
 id#	infolog	sk	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sk	Ak tento typ MÁ skupinového vlastníka, všetky záznamy tohto typu bude vlastniť zadaná skupina a NIE používateľ, ktorý záznam vytvoril!
@@ -493,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	sk	Ako má byť nast
 today	infolog	sk	Dnes
 todays date	infolog	sk	Dnešný dátum
 todo	infolog	sk	Úloha
+toggle details	common	sk	Prepnúť podrobnosti
 typ	infolog	sk	Typ
 typ '%1' already exists !!!	infolog	sk	Typ '%1' už existuje!
 type	infolog	sk	Typ

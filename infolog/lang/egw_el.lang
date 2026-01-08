@@ -69,6 +69,7 @@ back to main list	infolog	el	Πίσω στη βασική λίστα
 billed	infolog	el	χρεώθηκε
 both	infolog	el	και οι δύο
 call	infolog	el	κλήση
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	el	Μπορεί να χρησιμοποιηθεί για να εμφανίσει περαιτέρω τύπους InfoLog στο ημερολόγιο ή να το περιορίσει ώστε να εμφανίζει π.χ. μόνο εργασίες.
 can not return an exact number of rows and therefore hides the count.	admin	el	Δεν μπορεί να επιστρέψει ακριβή αριθμό γραμμών και επομένως αποκρύπτει τον αριθμό.
 cancel	infolog	el	Ακύρωση
 cancelled	infolog	el	ακυρώθηκε
@@ -213,6 +214,7 @@ history logging	infolog	el	Ιστορικό εισόδων
 history logging and deleting of items	infolog	el	Ιστορικό εισόδων και διαγραφών αντικειμένων
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	el	Πόσες γραμμές περιγραφής πρέπει να είναι άμεσα ορατές. Περαιτέρω γραμμές είναι διαθέσιμες μέσω μιας γραμμής κύλισης.
 html link to the current record	infolog	el	Σύνδεσμος HTML προς την τρέχουσα εγγραφή
+icon for	infolog	el	Εικονίδιο για
 id	infolog	el	ID
 id#	infolog	el	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	el	Αν ο τύπος έχει έναν ιδιοκτήτη ομάδας, όλες οι καταχωρήσεις αυτού του τύπου θα ανήκουν στη συγκεριμένη ομάδα και ΟΧΙ στο χρήστη που το δημιούργησε!
@@ -473,6 +475,7 @@ to what should the startdate of new entries be set.	infolog	el	Σε τι πρέ�
 today	infolog	el	Σήμερα
 todays date	infolog	el	σημερινή ημερομηνία
 todo	infolog	el	Εργασίες
+toggle details	common	el	Εναλλαγή λεπτομερειών
 typ	infolog	el	Τύπος
 typ '%1' already exists !!!	infolog	el	Ο τύπος '%1' υπάρχει ήδη
 type	infolog	el	Τύπος
@@ -491,6 +494,7 @@ use all	infolog	el	Χρήση όλων
 use custom notification message	infolog	el	Χρήση προσαρμοσμένου μηνύματος ειδοποίησης
 use field from csv if possible	infolog	el	Χρήση πεδίου από CSV, εάν είναι δυνατόν
 use search results	infolog	el	Χρήση αποτελεσμάτων αναζήτησης
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	el	Χρησιμοποιήστε αυτήν την ετικέτα για ετικέτες διευθύνσεων. Τοποθετήστε το περιεχόμενο που θέλετε να επαναλάβετε μεταξύ δύο ετικετών.
 used time	infolog	el	χρησιμοποιημένος χρόνος
 values for selectbox	infolog	el	Αξίες του επιλεγμένου κουτιού
 view all subs of this entry	infolog	el	Εμφάνιση όλων των υποκατηγοριών αυτής της καταχώρησης

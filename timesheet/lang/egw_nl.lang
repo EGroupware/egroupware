@@ -4,6 +4,7 @@
 3 years ago	timesheet	nl	3 jaar geleden
 all projects	timesheet	nl	Alle projecten
 applies the changes	timesheet	nl	past de wijzigingen toe
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	nl	Pas de actie toe op de hele query, NIET alleen op de weergegeven urenstaten!
 ask to start and stop working time with session	timesheet	nl	Vraag om werktijd te starten en te stoppen met sessie
 both: allow to use projectmanager and free project-names	admin	nl	Beiden: accepteer het gebruik van ProjectManager en zelfgekozen projectnamen
 by	timesheet	nl	door
@@ -14,7 +15,7 @@ comment by %1 at %2:	timesheet	nl	Commentaar door %1 op %2:
 create a single 'working time' timesheet per	timesheet	nl	Maak een enkel 'Werktijd' timesheet per
 create new links	timesheet	nl	Creëer nieuwe links
 creates a new field	timesheet	nl	creëert een nieuw veld
-creating new entry	timesheet	nl	een nieuw item aanmaken
+creating new entry	timesheet	nl	Een nieuw item aanmaken
 custom fields	timesheet	nl	Aangepast velden
 default document to insert entries	timesheet	nl	Standaard dokument voor het invoegen van gegevens
 delete this status	timesheet	nl	Verwijder deze status
@@ -51,11 +52,11 @@ forgot to switch off working time?	common	nl	Vergeten de werktijd uit te schakel
 full: use only projectmanager	admin	nl	Volledig: alleen de ProjectManager gebruiken
 general fields:	timesheet	nl	Algemene velden:
 give additional users access	timesheet	nl	Geef extra gebruikers toegang
-give infolog delegation read-access to timesheets booked on them	timesheet	nl	Geef InfoLog-delegatie leestoegang tot urenstaten die op hen zijn geboekt
+give infolog delegation read-access to timesheets booked on them	timesheet	nl	Geef InfoLog-delegatie leestoegang tot urenstaten die op hen zijn geboekt.
 global categories	timesheet	nl	Algemene categoriën
 history	timesheet	nl	Historie
 history logging	admin	nl	Historie vastleggen
-how to display linked timesheets	timesheet	nl	Hoe gekoppelde urenstaten weergeven
+how to display linked timesheets	timesheet	nl	Hoe gekoppelde urenstaten weergeven?
 html link to the current record	timesheet	nl	HTML link naar huidig record
 id	timesheet	nl	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Die actie staat dan toe dat het document wordt gedownload met de data %1 toegevoegd.
@@ -123,7 +124,7 @@ sum %1:	timesheet	nl	Sommeer %1:
 tag to mark positions for address labels	timesheet	nl	Tag voor markering tbv adreslabels
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
 the following document-types are supported:	timesheet	nl	De volgende document types worden ondersteund :
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	nl	de intern gebruikte naam (<= 20 tekens), wijziging maakt bestaande gegevens onbereikbaar
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	nl	De intern gebruikte naam (<= 20 tekens), wijziging maakt bestaande gegevens onbereikbaar
 the text displayed to the user	timesheet	nl	de tekst die aan de gebruiker getoond wordt
 this month	timesheet	nl	Deze maand
 this week	timesheet	nl	Deze week

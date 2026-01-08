@@ -70,6 +70,7 @@ all applications	admin	no	Samtlige programmer
 all records and account information will be lost!	admin	no	All historie og brukerinformasjon vil gå tapt!
 all users	admin	no	Alle brukere
 allow anonymous access to this app	admin	no	Tillat anonym tilgang til denne applikasjonen
+allow remote administration from following install id's (comma separated)	admin	no	Tillat fjernadministrasjon fra følgende installasjons-ID-er, atskilt med komma.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	no	Tillat brukeren å lagre passordet sitt under «Sikkerhet og passord» for SingleSignOn.
 allow user to set 'remember me' token	admin	no	Tillat brukeren å angi «Husk meg»-token
 alternate email address	admin	no	Alternativ e-mailadresse
@@ -83,7 +84,8 @@ application title	admin	no	Applikasjonstittel
 applications	admin	no	Applikasjoner
 applications list	admin	no	Applikasjoneliste
 apply the changes	admin	no	Oppdater endringene
-are you sure you want to delete the application %1 ?	admin	no	Er du sikker på at du vil slette applikasjon %1 ?
+are you sure you want to %1 mail for selected accounts?	admin	no	Er du sikker på at du vil %1-sende e-post for valgte kontoer?
+are you sure you want to delete the application %1 ?	admin	no	Er du sikker på at du vil slette applikasjon %1?
 are you sure you want to delete this account ?	admin	no	Er du sikker på at du vil slette denne kontoen?
 are you sure you want to delete this application ?	admin	no	Er du sikker på at du vil slette denne applikasjonen?
 are you sure you want to delete this category ?	common	no	Er du sikker på at du vil slette denne kategorien?
@@ -92,11 +94,12 @@ are you sure you want to delete this group ?	admin	no	Er du sikker på du vil sl
 are you sure you want to delete this server?	admin	no	Er du sikker på at du vil slette denne tjeneren?
 are you sure you want to kill this session ?	admin	no	Er du sikker på at du vil avslutte denne sesjonen?
 async services last executed	admin	no	Asynkron tjeneste sist utført
-asynchronous timed services	admin	no	Asynkrone tidsinnstilte tjenester
+asynchronous timed services	admin	no	Asynkron tjeneste
 asyncservices not yet installed or other error (%1) !!!	admin	no	Asynkrone tjenester er ikke installert, eller annen feil er oppstått (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	no	Forsøk å bruke korrekt MIMEtype for FTP istedenfor standard 'application/octet-stream'
 authentication / accounts	admin	no	Autorisasjon / Kontoer
 auto create account records for authenticated users	admin	no	Opprett kontoer for autoriserte brukere automatisk
+backup directory %1 mounted as %2	admin	no	Sikkerhetskopikatalogen %1 montert som %2
 bi-dir passthrough	admin	no	bi-mappe gjennomgang
 bi-directional	admin	no	bi-direksjon
 blocking after wrong password	admin	no	Blokkering etter feil passord
@@ -118,8 +121,10 @@ change acl rights	admin	no	Endre ACL rettigheter
 change config settings	admin	no	Endre innstillinger for konfigurasjon
 change domain of email address and aliases	admin	no	Endre domenet til e-postadressen og aliasene
 change login screen message	admin	no	Endre melding på hovedside
+changelog and versions	admin	no	Endringslogg og versjoner
 check ip address of all sessions	admin	no	Sjekk alle sesjoners IP-adresse
 check items to <b>%1</b> to %2 for %3	admin	no	Sjekk oppføringene til <b>%1</b> til %2 for %3
+clear cache and register hooks	admin	no	Tøm cache/registrer kroker
 clear security tokens	admin	no	Tøm sikkerhetstokener
 click to select a color	admin	no	Trykk for å velge farge
 color	admin	no	Farge
@@ -141,7 +146,7 @@ cyrus imap server	admin	no	Cyrus IMAP tjener
 data	admin	no	Data
 day	admin	no	Dag
 day of week<br>(0-6, 0=sun)	admin	no	Ukedag<br>(0-6, 0=Søn)
-db backup and restore	admin	no	DB backup og restore
+db backup and restore	admin	no	Sikkerhetskopi
 default	admin	no	Standard
 default file system space per user	admin	no	Standard størrelse på filsystem per bruker
 default file system space per user/group ?	admin	no	Standrad størrelse på filsystem per bruker/gruppe?
@@ -165,9 +170,9 @@ deny access	admin	no	Nekte adgang
 deny access to access log	admin	no	Nekt tilgang til tilgangslogg
 deny access to application registery	admin	no	Nekt tilgang til applikasjonsregister
 deny access to applications	admin	no	Nekt tilgang til applikasjoner
-deny access to asynchronous timed services	admin	no	Nekt tilgang til asynkrone tidsstyrte tjenester
+deny access to asynchronous timed services	admin	no	Nekt tilgang til asynkron tjeneste
 deny access to current sessions	admin	no	Nekt tilgang til nåværende sesjoner
-deny access to db backup and restore	admin	no	Nekt tilgang til DB backup og restore
+deny access to db backup and restore	admin	no	Nekt tilgang til sikkerhetskopi
 deny access to error log	admin	no	Nekt tilgang til feillogg
 deny access to global categories	admin	no	Nekt tilgang til globale kategorier
 deny access to groups	admin	no	Nekt tilgang til grupper
@@ -200,6 +205,7 @@ edit this group	admin	no	Rediger denne gruppen
 edit this user	admin	no	Rediger denne brukeren
 edit user	admin	no	Rediger bruker
 edit user account	admin	no	Rediger brukerkonto
+egroupware version	admin	no	EGroupware-versjon
 email account active	admin	no	E-mailkonto aktiv
 email address	admin	no	E-mailadresse
 enable	admin	no	Muliggjør
@@ -236,6 +242,7 @@ event details follow	admin	no	Hendelses Detaljer Følger
 expires	admin	no	Går ut
 export certificate as p12	admin	no	Eksporter sertifikat som p12
 failed to change password.	admin	no	Passordet kunne ikke endres.
+failed to mount backup directory!	admin	no	Kunne ikke montere sikkerhetskopikatalogen!
 fallback (after each pageview)	admin	no	Tilbakefall (etter hver sidevisning)
 false	admin	no	Falsk
 file space	admin	no	Filstørrelse
@@ -339,6 +346,7 @@ minute	admin	no	Minutt
 mode	admin	no	Modus
 modified	admin	no	Endret
 month	admin	no	Måned
+mount backup directory to %1	admin	no	Monter sikkerhetskopikatalogen til %1
 name must not be empty !!!	admin	no	Navn kan ikke være tomt!
 name of organisation	admin	no	Navn på organisasjon
 new group name	admin	no	Nytt gruppe navn
@@ -373,6 +381,7 @@ permission denied !!!	admin	no	Adgang nektet!
 permission denied!!!	admin	no	Adgang nektes!
 permissions	admin	no	Tillatelser
 permissions this group has	admin	no	Tillatelser denne gruppen har
+php version	admin	no	PHP-versjon
 phpinfo	admin	no	PHP informasjon
 please enter a name	admin	no	Vennligst angi en navn
 please enter a name for that server !	admin	no	Vennligst angi et navn for den tjeneren!
@@ -390,10 +399,13 @@ re-enter password	admin	no	Skriv inn passord igjen
 read this list of methods.	admin	no	Les denne listen av metoder.
 register application hooks	admin	no	Registrer program hooks
 regular expression to find part to use as container	admin	no	Regulært uttrykk for å finne en del som skal brukes som container
+remote administration instances	admin	no	Fjernadministrasjon
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	no	Fjernadministrasjon må aktiveres i den eksterne instansen under Admin > Nettstedskonfigurasjon!
 remove	admin	no	Fjern
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	no	Fjerning av tilgang for grupper kan forårsake problemer for data i denne kategorien. Er du sikker? Brukere i disse gruppene vil kanskje ikke lenger ha tilgang:
 revoke this token	admin	no	Tilbakekall dette token
 rows	admin	no	Rader
-run asynchronous services	admin	no	Kjør asonkrone serviser
+run asynchronous services	admin	no	Kjør asynkron tjeneste
 save the category	admin	no	Lagre kategorien
 save the category and return back to the list	admin	no	Lagre kategorien og returner til listen
 saves the changes made and leaves	admin	no	Lagrer endringene og lukker
@@ -456,7 +468,6 @@ the api requires an upgrade	admin	no	API trenger en oppgradering
 the groups must include the primary group	admin	no	Gruppen må inkludere primærgruppen
 the login and password can not be the same	admin	no	Loging og passord kan ikke være det samme
 the loginid can not be more then 8 characters	admin	no	Brukernavn kan ikke være mer enn 8 karakterer
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	no	navnet benyttet intertnt(<= 20 kar.), endring gjør eksisterende data utilgjengelige.
 the testjob sends you a mail everytime it is called.	admin	no	Testjobben sender deg en mail hver gang den kalles.
 the text displayed to the user	admin	no	Teksten som vises til bruker
 the two passwords are not the same	admin	no	Passordene er ikke de sammme
@@ -516,7 +527,6 @@ view error log	admin	no	Vis feillogg
 view sessions	admin	no	Sessions
 view this user	admin	no	Vis denne bruker
 view user account	admin	no	Vis brukerkonto
-virtual mail manager	admin	no	Virtuell Mail Manager
 who would you like to transfer all records owned by the deleted user to?	admin	no	Til hvem ønsker du å overføre alle poster tilhørende den slettede bruker?
 who would you like to transfer records owned by the deleted user to?	admin	no	Hvem ønsker du å overføre poster som eies av den slettede brukeren til?
 xml-rpc	admin	no	XML-RPC

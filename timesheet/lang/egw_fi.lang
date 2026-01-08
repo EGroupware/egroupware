@@ -7,7 +7,7 @@
 all projects	timesheet	fi	Kaikki projektit
 and its members	timesheet	fi	ja sen jäsenet
 applies the changes	timesheet	fi	Lisää muutokset
-apply the action on the whole query, not only the shown timesheets!!!	timesheet	fi	Lisää muutokset kaikkiin valttuihin, EI vain näkyvissä oleviin!!
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	fi	Käytä toimintoa koko kyselyyn, EI vain näkyviin aikatauluihin!
 ask to start and stop working time with session	timesheet	fi	Pyydä aloittamaan ja lopettamaan työaika istunnolla
 both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinnan ja vapaiden projektinimien käyttö
 by	timesheet	fi	Henkilö:
@@ -57,9 +57,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	fi	Unohditko kytkeä työajan pois päältä?
 full: use only projectmanager	admin	fi	Täysi: käytä vain projektinhallintaa
 general fields:	timesheet	fi	Yleiset kentät
+give additional users access	timesheet	fi	Anna lisäkäyttäjille käyttöoikeus
+give infolog delegation read-access to timesheets booked on them	timesheet	fi	Anna InfoLog-delegaatiolle lukuoikeus niille varattuihin tuntilomakkeisiin.
 global categories	timesheet	fi	Yleiset kategoriat
 history	timesheet	fi	Historia
 history logging	admin	fi	Historialoki
+how to display linked timesheets	timesheet	fi	Kuinka näyttää linkitetyt tuntilomakkeet?
 id	timesheet	fi	ID
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
 if you specify an export definition, it will be used when you export	timesheet	fi	Valitse viennin oletusasetus
@@ -76,10 +79,12 @@ last year	timesheet	fi	Viime vuonna
 leave it empty for a full week	timesheet	fi	Jätä tyhjäksi, jos koko viikko
 leaves without saveing	timesheet	fi	Poistuu tallentamatta
 length<br>rows	timesheet	fi	Pituus Rivit
+link title	timesheet	fi	Linkin otsikko
 links	timesheet	fi	Linkit
 links and attached files	timesheet	fi	Linkit ja liitetyt tiedostot
 links to specified application.  example: {{links/infolog}}	timesheet	fi	Linkki määriteltyyn sovellukseen. Esim. {{links/infolog}}
 list of files linked to the current record	timesheet	fi	Lista liitetyistä tiedostoista
+make timesheets readable by infolog delegation	timesheet	fi	Tee tuntilomakkeet luettaviksi InfoLog-delegaatiolle
 max length of the input [, length of the inputfield (optional)]	timesheet	fi	Maksimipituus merkinnälle. [, merkintäkentän pituus (valinnainen)]
 mode	timesheet	fi	Tila
 modified	timesheet	fi	Muokattu
@@ -154,7 +159,7 @@ timesheet modified by %1 at %2	timesheet	fi	Merkintää muokannut %1, %2
 timesheet status-%1 '%2' added.	timesheet	fi	Tila %1 '%2' lisätty.
 timesheet-%1 '%2' updated.	timesheet	fi	Merkintä %1 '%2' päivitetty.
 timesheet-%1 deleted.	timesheet	fi	Merkintä %1 poistettu.
-titles of any entries linked to the current record, excluding attached files	timesheet	fi	Linkitettyjen tietueiden otsikot/aiheet, poissulkien liitetyt tiedostot.
+titles of any entries linked to the current record, excluding attached files	timesheet	fi	Linkitettyjen tietueiden otsikot/aiheet, poissulkien liitetyt tiedostot
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	fi	'%1' ei voitu muuttaa tili IDksi. Käytetty sen sijaan (%2) %3
 unitprice	timesheet	fi	Yksikköhinta
 use field from csv if possible	timesheet	fi	Käytä kenttää CSV:stä, jos mahdollista

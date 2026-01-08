@@ -14,8 +14,9 @@ cut	filemanager	et	Lõika
 default action on double-click	filemanager	et	Topeltklõpsu vaikimisi toiming
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	et	Vaikimisi = Ei. Linki ei kuvata, kuid teil on siiski võimalik navigeerida sellesse asukohta või konfigureerida see konkreetne asukoht algkaustaks või kausta lingiks.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	et	Määrab, kuidas käsitleda dokumendi faili topeltklõpsu tegevust. Pildid avatakse alati eksponeerimisvaates ja e-kirjad e-kirjarakendusega. Kõiki teisi MIME-tüüpe käsitleb brauser ise.
+defines how to open a merge print document	filemanager	et	Mis peaks juhtuma dokumentidega pärast nende täitmist?<br><br><b>Kui Collabora Online on saadaval</b>, saab neid dokumente avada (ja edasi töödelda) otse brauseris Collabora Online'i abil. <br><br> <b>Kui Collabora Online pole saadaval</b>, pakutakse täidetud dokument allalaadimiseks.<br><br>Lisateave Collabora Online'i kohta:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office EGroupware'is</a>
 disable	filemanager	et	Keela
-download	filemanager	et	Lae alla
+download	filemanager	et	Allalaadimine
 download documents	filemanager	et	Dokumentide allalaadimine
 edit share	filemanager	et	Redigeerige jagamist
 enable	filemanager	et	Luba

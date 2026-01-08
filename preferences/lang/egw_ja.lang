@@ -43,11 +43,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	ja	カスタム項目編集
 enable	preferences	ja	有効
 enable drag and drop functionality (experimental)	preferences	ja	ドラッグ&ドロップ
-enable selectbox dropdown resizing for ie (experimental)	preferences	ja	Select box drop down menu resizing
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	ja	Enables or disables drag and drop functions in all applications. If the browser does not support drag and drop, it will be disabled automatically.
-enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	ja	Enables or disables select box drop down menu resizing for IE in all applications. If the browser is not an IE, the option will not apply.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	ja	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	ja	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE, the option will not apply. This feature is experimental at the moment.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	ja	Encrypted LDAP connection is required to change passwords, but it is not configured in your installation.
 enter code to authenticate the actions below	preferences	ja	以下のアクションを認証するためにコードを入力
 enter code to verify correct setup	preferences	ja	正しいセットアップを確認するためにコードを入力
@@ -138,7 +134,6 @@ text only	preferences	ja	テキストのみ
 the old password is not correct	preferences	ja	古いパスワードが正しくありません！
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ja	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	ja	セレクト・ボックスは、全ユーザを選択子として表示します（ユーザ数が多い環境では非常に低速）。「検索機能付き」では検索ウィンドウでユーザの検索ができます。
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	ja	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.* The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.*
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	ja	The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
 the two passwords are not the same	preferences	ja	2個のパスワードが一致しません!
 theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択

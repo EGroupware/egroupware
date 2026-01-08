@@ -77,9 +77,12 @@ backup '%1' deleted	setup	sv	Backup %1 raderad
 backup '%1' renamed to '%2'	setup	sv	Backup %1 omdöpt till %2
 backup '%1' restored	setup	sv	Backup %1 återläst
 backup and restore	setup	sv	Backup och återläsning
+backup directory %1 mounted as %2	setup	sv	Säkerhetskopieringskatalogen %1 monterad som %2
 backup failed	setup	sv	Backup misslyckades
 backup files (needs ziparchive)	setup	sv	Datasäkerhetskopiering av EGroupware-filerna (filkatalogen) <br>(kräver PHP ZipArchive)
 backup finished	setup	sv	Backup färdig
+backup housekeeping	setup	sv	Säkerhetskopior med ett standardnamn kan rensas automatiskt. Byt namn på säkerhetskopieringsfilerna för att undanta dem från rensningen.
+backup min count	setup	sv	Minsta antal säkerhetskopior
 backup now	setup	sv	Backa upp nu
 backup sets	setup	sv	Backup-set
 backup skipped!	setup	sv	Backup ignorerad
@@ -350,6 +353,7 @@ modifications have been completed!	setup	sv	Ändringarna genomförda
 modified	setup	sv	Ändrad
 modify	setup	sv	Ändra
 month	setup	sv	Månad
+mount backup directory to %1	setup	sv	Montera säkerhetskopieringskatalogen till %1
 name of database	setup	sv	Databasnamn
 name of db user egroupware uses to connect	setup	sv	Namnet på det användarkonto EGroupware skall använda för att ansluta till databasen
 never	setup	sv	Aldrig
@@ -577,6 +581,7 @@ view	setup	sv	Visa
 virtual mail manager (login-name includes domain)	setup	sv	Virtuell e-posthantering (inloggningsnamn inkluderar domänen)
 warning!	setup	sv	Varning!
 we can proceed	setup	sv	Vi kan forstätta
+we strongly recommend to run a db backup before running the import!	setup	sv	Vi rekommenderar starkt att du kör en DB-säkerhetskopiering INNAN du kör importen!
 we will automatically update your tables/records to %1	setup	sv	Vi kommer automatiskt att uppdatera dina tabeller/poster till %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	sv	Vi kör nu ett antal teste vilket kan ta några minuter. Klicka på länken nedan för att fortsätta
 welcome to the egroupware installation	setup	sv	Välkommen till installation av EGroupware

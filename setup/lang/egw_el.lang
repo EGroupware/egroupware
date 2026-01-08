@@ -6,7 +6,16 @@ application title	setup	el	Τίτλος εφαρμογής
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	el	Επιχειρήθηκε να χρησημοοιηθεί σωστή ομοιοτυπία αντι του προκαθορισμένου 'εφαρμογή/octet-stream'
 authentication / accounts	setup	el	Ποιστοποίηση / λογαριασμοί
 auto create account records for authenticated users	setup	el	Αυτόματη δημιουργία εγραφών λογαριασμού για ποιστοποιημένους χρήστες
+backup '%1' deleted	setup	el	Διαγραφή αντιγράφου ασφαλείας '%1'.
+backup '%1' renamed to '%2'	setup	el	Μετονομασία αντιγράφου ασφαλείας '%1' σε '%2'.
+backup '%1' restored	setup	el	Επαναφορά αντιγράφου ασφαλείας '%1'.
+backup directory %1 mounted as %2	setup	el	Κατάλογος Backup %1 τοποθετημένος ως %2
+backup failed	setup	el	Αποτυχία δημιουργίας αντιγράφου ασφαλείας.
 backup files (needs ziparchive)	setup	el	Δημιουργία αντιγράφου ασφαλείας δεδομένων των αρχείων EGroupware (κατάλογος αρχείων) <br>(απαιτεί PHP ZipArchive)
+backup finished	setup	el	Ολοκλήρωση δημιουργίας αντιγράφου ασφαλείας.
+backup housekeeping	setup	el	Τα αντίγραφα ασφαλείας με τυπικό όνομα μπορούν να καθαριστούν αυτόματα. Μετονομάστε τα αρχεία αντιγράφων ασφαλείας για να τα εξαιρέσετε από τον καθαρισμό.
+backup min count	setup	el	Ελάχιστος αριθμός αντιγράφων ασφαλείας
+backup started, this might take a few minutes ...	setup	el	Έναρξη δημιουργίας αντιγράφου ασφαλείας, η διαδικασία μπορεί να διαρκέσει μερικά λεπτά...
 check ip address of all sessions	setup	el	Ελεγξε τις διευθύνσεις IP από όλα τα sessions
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	el	Συμπεριλάβετε αρχεία (κατάλογος αρχείων) στο αντίγραφο ασφαλείας δεδομένων.<br>(Μπορεί να δημιουργήσει μεγάλο όγκο δεδομένων και να διακόψει με πολλά αρχεία, τεκμηρίωση: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 completed	setup	el	Ολοκληρώθηκε
@@ -33,7 +42,7 @@ error searching "dn=%1" for "%2"!	setup	el	Σφάλμα αναζήτησης "DN
 error uploading your backup!	setup	el	Σφάλμα μεταφόρτωσης του αντιγράφου ασφαλείας σας!
 every	setup	el	Κάθε
 export has been completed!	setup	el	Εξαγωγή έχει ολοκληρωθεί!
-failed to mount backup directory!	setup	el	Απέτυχε η προσάρτηση του καταλόγου αντιγράφων ασφαλείας!
+failed to mount backup directory!	setup	el	Αποτυχία προσάρτησης του καταλόγου Backup!
 failed updating user "%1" dn="%2"!	setup	el	Απέτυχε η ενημέρωση του χρήστη "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	el	Απέτυχε η εγγραφή του αρχείου ρυθμίσεων header.inc.php, ελέγξτε τα δικαιώματα!
 fallback authentication	setup	el	Επαναληπτικός έλεγχος ταυτότητας
@@ -59,6 +68,7 @@ min backup count	setup	el	Μέγιστος αριθμός διατηρούμεν
 minimum account id (e.g. 500 or 100, etc.)	setup	el	Μίνιμουμ id λογαριασμού (π.χ. 500 ή 100, κ.λ.π)
 modified	setup	el	Τροποποιήθηκε
 month	setup	el	Μήνας
+mount backup directory to %1	setup	el	Προσάρτηση του καταλόγου backup στο %1
 new	setup	el	Νέο
 next run	setup	el	Επόμενη ενέργεια
 no algorithms available	setup	el	δεν υπάρχουν διαθέσιμοι αλγόριθμοι
@@ -99,6 +109,7 @@ two weeks	setup	el	δύο εβδομάδες
 use cookies to pass sessionid	setup	el	Χρησημοποίηση cookies για να περάσεις την session ID
 use pure html compliant code (not fully working yet)	setup	el	Χρήση κανονικού συμβατού HTML κώδικα (δέν παίζει σωστά ακόμα)
 user for smtp-authentication (leave it empty if no auth required)	setup	el	Χρήστης για την SMTP-πιστοποίηση (να μείνει κενό αν δεν χρειάζεται πιστοποίηση)
+we strongly recommend to run a db backup before running the import!	setup	el	Συνιστούμε ανεπιφύλακτα να εκτελέσετε ένα αντίγραφο ασφαλείας της βάσης δεδομένων ΠΡΙΝ εκτελέσετε την εισαγωγή!
 would you like to show each application's upgrade status ?	setup	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής;
 write	setup	el	Γραφή
 you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	el	Μπορείτε να παρακάμψετε αυτό το όριο, τοποθετώντας τον κατάλογο των αντιγράφων ασφαλείας στον διαχειριστή αρχείων EGroupware και ανεβάζοντας το αρχείο από εκεί.

@@ -95,11 +95,18 @@ advanced options	admin	bg	Разширени опции
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	bg	След колко неуспешни опита за вход акаунтът трябва да бъде блокиран. По подразбиране = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	bg	След колко неуспешни опита за вход IP адресът трябва да бъде блокиран. По подразбиране = 15
 aliases	admin	bg	Псевдоними
+allow remote administration from following install id's (comma separated)	admin	bg	Разрешете дистанционно администриране от следните инсталационни ID-та, разделени със запетая.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	bg	Разрешете на потребителя да съхранява паролата си в „Сигурност и пароли“ за SingleSignOn.
 allow user to set 'remember me' token	admin	bg	Позволете на потребителя да зададе токъна "Запомни ме
 application passwords	admin	bg	Пароли за приложения
 apply the changes	admin	bg	Прилагане на промените
 archive: zip or tar	admin	bg	Архив: ZIP или tar
+are you sure you want to %1 mail for selected accounts?	admin	bg	Сигурен ли сте, че искате да изпратите %1 имейла за избраните акаунти?
+are you sure you want to delete this account ?	admin	bg	Сигурен ли сте, че искате да изтриете този акаунт?
+are you sure you want to delete this category ?	common	bg	Сигурен ли сте, че искате да изтриете тази категория?
+are you sure you want to delete this group ?	admin	bg	Сигурен ли сте, че искате да изтриете тази група?
+asynchronous timed services	admin	bg	Асинхронна услуга
+backup directory %1 mounted as %2	admin	bg	Директорията за резервно копие %1 е монтирана като %2
 bad login name or password.	admin	bg	Лошо име за вход или парола.
 blocking after wrong password	admin	bg	Блокиране след грешна парола
 bulk changes	admin	bg	Групови промени
@@ -107,7 +114,9 @@ bulk password reset	admin	bg	Групово възстановяване на п
 can be used to show groups by container, if enabled	admin	bg	Може да се използва за показване на групи по контейнер, ако е разрешено
 change access	admin	bg	Промяна на правата за достъп
 change domain of email address and aliases	admin	bg	Промяна на домейна на имейл адреса и псевдонимите
+changelog and versions	admin	bg	Списък с промените и версиите
 checking push (green for success or red for failure)	admin	bg	Проверка на PUSH (зелено = ОК, червено = не е ОК)
+clear cache and register hooks	admin	bg	Изчисти кеш/регистрирай куки
 clear security tokens	admin	bg	Изчистване на токените за сигурност
 comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	bg	Разделени със запетая IP адреси, включени в белия списък от горното блокиране (:опционален брой опити)
 container	admin	bg	Контейнер
@@ -124,9 +133,11 @@ custom fields tab	admin	bg	Таб Потребителски полета
 data	admin	bg	Данни
 data from	admin	bg	Данни от
 day	admin	bg	Ден
-db backup and restore	admin	bg	Архивиране и възстановяване на БД
+db backup and restore	admin	bg	Резервно копие
 deleted	admin	bg	Изтрит
 deny access to access log	admin	bg	Отказ на достъп до лога за достъп
+deny access to asynchronous timed services	admin	bg	Отказ на достъп до асинхронна услуга
+deny access to db backup and restore	admin	bg	Отказ на достъп до резервно копие
 displayed length of input field (set rows=1 to limit length)	admin	bg	Показване на дължината на входното поле (задайте rows=1, за да ограничите дължината)
 egroupware version	admin	bg	Версия на EGroupware
 enable sieve	admin	bg	Активиране на Sieve
@@ -136,6 +147,7 @@ error revoking token!	admin	bg	Грешка при отнемане на ток�
 error storing token!	admin	bg	Грешка при съхраняване на токена!
 event details follow	admin	bg	Следват подробности за събитието
 exists	admin	bg	Съществува
+failed to mount backup directory!	admin	bg	Монтирането на директорията за резервно копие не бе успешно!
 generate new token and display it once after saving	admin	bg	Генерирайте нов токен и го покажете веднъж след запазване
 global categories	common	bg	Глобални категории
 group has been added	common	bg	Групата е добавена.
@@ -157,6 +169,7 @@ lifetime of 'remember me' token	admin	bg	Живот на токена "Запо�
 manage mapping	admin	bg	Управление на съответствията
 modified	admin	bg	Редактирано
 month	admin	bg	Месец
+mount backup directory to %1	admin	bg	Монтиране на директорията за резервно копие към %1
 name of tab to create and show field in	admin	bg	Име на раздела, в който се създава и показва полето
 no limit	admin	bg	Без ограничение
 no matches found	admin	bg	Не са открити съвпадения
@@ -172,9 +185,14 @@ own install id	admin	bg	Собствен идентификатор на инс�
 own install id:	admin	bg	Идентификатор на собствена инсталация:
 password to unlock encrypted p12	admin	bg	Парола за отключване на криптиран p12
 permission denied	admin	bg	Не е позволено
+php version	admin	bg	Версия на PHP
 regular expression to find part to use as container	admin	bg	Редовен израз за намиране на част, която да се използва като контейнер
+remote administration instances	admin	bg	Дистанционно администриране
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	bg	Дистанционното администриране трябва да бъде активирано в дистанционния инстанс под Admin > Site configuration!
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	bg	Премахването на достъпа за групи може да причини проблеми с данните в тази категория. Сигурен ли сте? Потребителите в тези групи може да нямат повече достъп:
 requested	admin	bg	Заявена
 revoke this token	admin	bg	Отмяна на този токън
+run asynchronous services	admin	bg	Изпълнение на асинхронни услуги
 select accounts for which the custom field should be visible	admin	bg	Изберете сметки, за които потребителското поле трябва да бъде само за четене.
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	bg	Изберете приложенията, до които искате да бъде ограничен токенът, или оставете по подразбиране всички приложения.
 serial number	admin	bg	Сериен номер

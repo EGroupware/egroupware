@@ -225,6 +225,7 @@ history logging and deleting of items	infolog	pt	Logging história e exclusão d
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	pt	Quantas linhas de descrição devem ser diretamente visíveis. Estão disponíveis mais linhas através de uma barra de deslocação.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	pt	Qual deve ser a largura da área de descrição. Este valor é numérico, por exemplo, 60.
 html link to the current record	infolog	pt	Link HTML para o registro atual
+icon for	infolog	pt	Ícone para
 id	infolog	pt	ID
 id#	infolog	pt	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	pt	Se um tipo tiver um proprietário de grupo, todas as entradas desse tipo serão propriedade do grupo em causa e NÃO do utilizador que o criou!
@@ -487,6 +488,7 @@ to what should the startdate of new entries be set.	infolog	pt	Definição da da
 today	infolog	pt	Hoje
 todays date	infolog	pt	Data de hoje
 todo	infolog	pt	Tarefas
+toggle details	common	pt	Alternar detalhes
 typ	infolog	pt	Tipo
 typ '%1' already exists !!!	infolog	pt	Tipo '%1' já existe!
 type	infolog	pt	Tipo

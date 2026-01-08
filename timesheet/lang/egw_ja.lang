@@ -58,11 +58,11 @@ forgot to switch off working time?	common	ja	作業時間をオフにするの�
 full: use only projectmanager	admin	ja	Full: プロジェクト・マネージャだけを使用
 general fields:	timesheet	ja	一般項目:
 give additional users access	timesheet	ja	追加ユーザーへのアクセス権限付与
-give infolog delegation read-access to timesheets booked on them	timesheet	ja	InfoLog委任に、自身に予約されたタイムシートへの閲覧権限を付与する
+give infolog delegation read-access to timesheets booked on them	timesheet	ja	InfoLog委任に、自身に予約されたタイムシートへの閲覧権限を付与する。
 global categories	timesheet	ja	グローバルカテゴリ
 history	timesheet	ja	履歴
 history logging	admin	ja	履歴出力
-how to display linked timesheets	timesheet	ja	リンクされたタイムシートの表示方法
+how to display linked timesheets	timesheet	ja	リンクされたタイムシートの表示方法？
 html link to the current record	timesheet	ja	このレコードへのHTMLリンク
 id	timesheet	ja	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	calendar	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
@@ -85,7 +85,7 @@ link title	timesheet	ja	リンクタイトル
 links	timesheet	ja	リンク
 links and attached files	timesheet	ja	リンクと添付ファイル
 links to specified application.  example: {{links/infolog}}	timesheet	ja	指定されたアプリケーションへのリンク。  例: {{links/infolog}}
-list of files linked to the current record	timesheet	ja	List of files linked to the current record
+list of files linked to the current record	timesheet	ja	現在のレコードにリンクされているファイルの一覧
 make timesheets readable by infolog delegation	timesheet	ja	InfoLog委任によるタイムシートの閲覧を可能にする
 max length of the input [, length of the inputfield (optional)]	timesheet	ja	入力の最大長 [, 入力項目の長さ (オプショナル)]
 mode	timesheet	ja	モード

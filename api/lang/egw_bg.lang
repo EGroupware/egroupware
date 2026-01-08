@@ -21,7 +21,8 @@
 15 minutes	common	bg	15 минути
 2-factor authentication code required	common	bg	Изисква се код за двуфакторно удостоверяване
 2-factor-authentication	common	bg	Удостоверяване с 2 фактора
-2-factor-authentication required	common	bg	Изисква се удостоверяване с 2 фактора
+2-factor-authentication required	common	bg	Втори фактор, необходим.
+2nd factor	login	bg	2-ри фактор
 3 minutes	common	bg	3 минути
 30 minutes	common	bg	30 минути
 30 seconds	common	bg	30 секунди
@@ -49,7 +50,7 @@ add	common	bg	Добави
 add %1 category for	common	bg	Добави %1 категория за
 add a new contact	common	bg	Добавяне на контакт
 add category	common	bg	Добави категория
-add current	common	bg	Текущ изглед като любим
+add current	common	bg	Изглед като фаворит
 add shortcut	common	bg	Добави пряк път
 add sub	common	bg	Добави подкатегория
 add to clipboard	common	bg	Добавяне в клипборда
@@ -952,4 +953,3 @@ your settings have been updated	common	bg	Настройките ви са об�
 zambia	common	bg	Замбия
 zimbabwe	common	bg	Зимбабве
 zoom	common	bg	Увеличаване/намаляне
-2nd factor	login	bg	2-ри фактор

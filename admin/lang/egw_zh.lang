@@ -73,7 +73,7 @@ all applications	admin	zh	所有应用程序
 all records and account information will be lost!	admin	zh	所有的记录和账户信息都将丢失！
 all users	admin	zh	所有用户
 allow anonymous access to this app	admin	zh	允许匿名用户访问此应用程序
-allow remote administration from following install id's (comma separated)	admin	zh	允许从以下的安装 ID (逗号分隔) 进行远程管理
+allow remote administration from following install id's (comma separated)	admin	zh	允许从以下的安装 ID (逗号分隔) 进行远程管理。
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	zh	允许用户在单点登录的 “安全与密码 ”下存储密码。
 allow user to set 'remember me' token	admin	zh	允许用户设置 “记住我 ”令牌
 alternate email address	admin	zh	候选邮箱地址
@@ -94,6 +94,7 @@ applications list	admin	zh	应用程序列表
 applications run rights updated.	admin	zh	应用程序运行权限已更新。
 applies the changes	admin	zh	应用更改
 apply the changes	admin	zh	应用修改
+are you sure you want to %1 mail for selected accounts?	admin	zh	您确定要为选定账户发送 %1 封邮件吗？
 are you sure you want to delete the application %1 ?	admin	zh	确定要删除应用程序%1吗？
 are you sure you want to delete this account ?	admin	zh	确定要删除该账户吗？
 are you sure you want to delete this application ?	admin	zh	确定要删除该应用程序吗？
@@ -103,11 +104,12 @@ are you sure you want to delete this group ?	admin	zh	确定要删除该组吗�
 are you sure you want to delete this server?	admin	zh	确定要删除该服务器吗？
 are you sure you want to kill this session ?	admin	zh	确定要中止该会话吗？
 async services last executed	admin	zh	异步服务最近已执行过
-asynchronous timed services	admin	zh	异步定时服务
+asynchronous timed services	admin	zh	异步服务
 asyncservices not yet installed or other error (%1) !!!	admin	zh	异步服务尚未安装或其他错误(%1)！
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zh	在FTP中尝试使用正确的MIME type来替代默认的'application/otect-stream'
 authentication / accounts	admin	zh	认证/账户
 auto create account records for authenticated users	admin	zh	自动为已通过身份验证的用户创建帐户记录
+backup directory %1 mounted as %2	admin	zh	备份目录 %1 已挂载为 %2
 bad login name or password.	admin	zh	错误登录名和密码。
 bad or malformed request. server responded: %s	admin	zh	不正确的请求。服务器或应：%s
 bad request: %s	admin	zh	错误请求：%s
@@ -136,9 +138,11 @@ change config settings	admin	zh	更改配置设定
 change domain of email address and aliases	admin	zh	更改电子邮件地址和别名的域名
 change login screen message	admin	zh	更改主页面信息
 change password for %1	admin	zh	更改%1的密码
+changelog and versions	admin	zh	变更日志与版本
 check acl for entries of not (longer) existing accounts	admin	zh	检查 ACL (长期)不是现有的帐户条目
 check ip address of all sessions	admin	zh	检查所有 sessions 的 IP 地址
 check items to <b>%1</b> to %2 for %3	admin	zh	检查%3对%2的权限项目 <b>%1</b>
+clear cache and register hooks	admin	zh	清除缓存/注册钩子
 clear security tokens	admin	zh	清除安全令牌
 click to select a color	admin	zh	点击选择一种颜色
 color	admin	zh	颜色
@@ -169,7 +173,7 @@ cyrus imap server	admin	zh	Cyrus IMAP 服务器
 data	admin	zh	数据
 day	admin	zh	日
 day of week<br>(0-6, 0=sun)	admin	zh	星期(0-6,0=日)
-db backup and restore	admin	zh	数据库备份与恢复
+db backup and restore	admin	zh	备份
 default	admin	zh	默认
 default file system space per user	admin	zh	每个用户的默认文件系统空间
 default file system space per user/group ?	admin	zh	每一用户/组的默认文件系统空间？
@@ -195,9 +199,9 @@ deny access	admin	zh	拒绝访问
 deny access to access log	admin	zh	拒绝对访问日志的访问
 deny access to application registery	admin	zh	拒绝访问应用程序注册
 deny access to applications	admin	zh	拒绝对应用程序的访问
-deny access to asynchronous timed services	admin	zh	拒绝访问异步定时服务器
+deny access to asynchronous timed services	admin	zh	拒绝访问异步服务
 deny access to current sessions	admin	zh	拒绝对当前会话的访问
-deny access to db backup and restore	admin	zh	拒绝访问数据库备份与恢复
+deny access to db backup and restore	admin	zh	拒绝访问备份
 deny access to error log	admin	zh	拒绝对错误日志的访问
 deny access to global categories	admin	zh	拒绝对全局类别的访问
 deny access to groups	admin	zh	拒绝对用户组的访问
@@ -233,6 +237,7 @@ edit this user	admin	zh	编辑该用户
 edit user	admin	zh	编辑用户
 edit user account	admin	zh	编辑用户账户
 egroupware directory	admin	zh	EGroupware 目录
+egroupware version	admin	zh	EGroupware版本
 either install id and config password needed or the remote hash!	admin	zh	必须输入安装ID和设置密码或远程散列标记 (hash)！
 email account active	admin	zh	邮箱帐户激活
 email address	admin	zh	邮箱地址
@@ -284,6 +289,7 @@ event details follow	admin	zh	事件细节
 expires	admin	zh	期限
 export certificate as p12	admin	zh	以 p12 格式导出证书
 failed to change password.	admin	zh	更改密码失败。请联系系统管理员。
+failed to mount backup directory!	admin	zh	挂载备份目录失败！
 fallback (after each pageview)	admin	zh	后退 (在每个页面请求后)
 false	admin	zh	错误的
 field '%1' already exists !!!	admin	zh	字段域 '%1' 已经存在！
@@ -294,7 +300,6 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	zh	复选框
 forward also to	admin	zh	同时转发到
 forward email's to	admin	zh	转发邮件到
-forward emails to	admin	zh	转发邮件到
 forward only	admin	zh	转发
 full name	admin	zh	姓名
 general	admin	zh	通用
@@ -408,6 +413,7 @@ mode	admin	zh	模式
 modified	admin	zh	修改
 month	admin	zh	月
 more secure	admin	zh	更安全
+mount backup directory to %1	admin	zh	将备份目录挂载到 %1
 name must not be empty !!!	admin	zh	名称不能为空！
 name of organisation	admin	zh	组织名称
 new group name	admin	zh	新建组名称
@@ -482,10 +488,11 @@ re-enter password	admin	zh	重新输入密码
 read this list of methods.	admin	zh	读取这一方法列表。
 register application hooks	admin	zh	注册应用程序挂接
 regular expression to find part to use as container	admin	zh	正则表达式查找用作容器的部分
-remote administration instances	admin	zh	远程管理实例
+remote administration instances	admin	zh	远程管理
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	zh	远程管理需要在系<b>统管理 -->站点配置</b>中启用远程实例!
 remote instance saved	admin	zh	远程实例已保存
 remove	admin	zh	移除
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	zh	移除组访问权限可能导致此类别数据出现问题。确定吗？以下组中的用户可能失去访问权限：
 requested	admin	zh	请求
 revoke this token	admin	zh	撤销此令牌
 rows	admin	zh	行
@@ -561,7 +568,6 @@ the imap server does not appear to support the authentication method selected. p
 the login and password can not be the same	admin	zh	登录名不能与密码相同
 the loginid can not be more then 8 characters	admin	zh	Login-ID长度不能大于8个字符
 the mimeparser can not parse this message.	admin	zh	MIME 解析器不能解析这个邮件。
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	zh	使用的名称在内 (<= 20 个字符)，修改现有的无效数据
 the testjob sends you a mail everytime it is called.	admin	zh	测试任务将在每次启动时向您发送电子邮件.
 the text displayed to the user	admin	zh	向用户显示的文本
 the two passwords are not the same	admin	zh	两次输入的密码不同
@@ -634,7 +640,6 @@ view error log	admin	zh	查看错误日志
 view sessions	admin	zh	会话
 view this user	admin	zh	查看该用户
 view user account	admin	zh	查看用户帐户
-virtual mail manager	admin	zh	虚拟邮箱管理
 who would you like to transfer all records owned by the deleted user to?	admin	zh	需要把被删除用户的所有记录转移给谁？
 who would you like to transfer records owned by the deleted user to?	admin	zh	您想将已删除用户的记录转给谁？
 wrong account type: %1 is no %2 !!!	admin	zh	错误的帐户类型：%1没有%2！

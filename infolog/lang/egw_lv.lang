@@ -51,6 +51,7 @@ automatically check 'do not notify' for these types	infolog	lv	Automātiski atz�
 back to main list	infolog	lv	Atpakaļ uz galveno sarakstu
 both	infolog	lv	Abi
 call	infolog	lv	Izsaukt
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	lv	Var izmantot, lai kalendārā parādītu papildu InfoLog tipus vai ierobežotu to, lai parādītu, piemēram, tikai uzdevumus.
 can not return an exact number of rows and therefore hides the count.	admin	lv	Nevar atgriezt precīzu rindu skaitu, tāpēc slēpj skaitli.
 cancel	infolog	lv	Atcelt
 categories	infolog	lv	Kategorijas
@@ -190,6 +191,7 @@ history logging and deleting of items	infolog	lv	Vēstures reģistrēšana un el
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	lv	Cik daudzām apraksta rindām jābūt tieši redzamām. Papildu rindas ir pieejamas, izmantojot ritināšanas joslu.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	lv	Cik platai jābūt apraksta jomai. Šī vērtība ir skaitliska, piemēram, 60.
 html link to the current record	infolog	lv	HTML saite uz pašreizējo ierakstu
+icon for	infolog	lv	Ikona
 id	infolog	lv	ID
 id#	infolog	lv	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	lv	Ja tipam ir grupas īpašnieks, visi šī tipa ieraksti piederēs attiecīgajai grupai, nevis lietotājam, kas to izveidojis!
@@ -314,6 +316,8 @@ phone/email	infolog	lv	Telefons/e-pasts
 phonecall	infolog	lv	Telefona zvans
 planned	infolog	lv	Plānots
 prefix for sub-entries (default: re:)	infolog	lv	Prefikss apakšpozīcijām (pēc noklusējuma: Re:)
+price	infolog	lv	Cena
+pricelist	infolog	lv	Cenrādis
 priority	infolog	lv	Prioritāte
 private	infolog	lv	Privāts
 project	infolog	lv	Projekts
@@ -371,6 +375,7 @@ sender	infolog	lv	Sūtītājs
 set status to done	infolog	lv	Iestatīt statusu uz pabeigts
 set status to done for all entries	infolog	lv	Visiem ierakstiem iestatīt statusu uz pabeigts
 sets the status of this entry to done	infolog	lv	Iestatīts šī ieraksta statuss uz izdarīts
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	lv	Vai InfoLog sarakstā jāparāda izpildes procents tikai statusam “notiek” vai divas atsevišķas ikonas.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	lv	Ierakstam vajadzētu būt redzamam tikai tev un cilvēkiem, kuriem piešķirtas īpašas pieejas tiesības ACL
 show a x if content equals this compare value, otherwise show nothing	infolog	lv	Rādīt X, ja saturs ir vienāds ar šo salīdzināšanas vērtību, pretējā gadījumā nerādīt neko
 show full usernames	infolog	lv	Rādīt pilnos lietotājvārdus
@@ -410,6 +415,7 @@ to all linked contacts	infolog	lv	Visiem piesaistītajiem kontaktiem
 to many might exceed your execution-time-limit	infolog	lv	Pārāk daudz, var pārsniegt izpildes laika limitu
 today	infolog	lv	Šodien
 todo	infolog	lv	Jādara
+toggle details	common	lv	Pārslēgt informāciju
 typ	infolog	lv	Tips
 typ '%1' already exists !!!	infolog	lv	Tips "%1"jau eksistē
 type	infolog	lv	Tips
@@ -425,6 +431,7 @@ upcoming	infolog	lv	Lenākošs
 urgency	infolog	lv	Nepieciešamība
 urgent	infolog	lv	Nepieciešams
 use custom notification message	infolog	lv	Izmantot pielāgotu paziņojuma ziņojumu
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	lv	Izmantojiet šo tagu adreses uzlīmēm. Ievietojiet saturu, kuru vēlaties atkārtot, starp diviem tagiem.
 values for selectbox	infolog	lv	Izvēles lodziņa vērtības
 view all subs of this entry	infolog	lv	Rādīt apakškategoriju šim ierakstam
 view other subs	infolog	lv	Rādīt citas apakškategorijas

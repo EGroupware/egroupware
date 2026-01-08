@@ -230,6 +230,7 @@ history logging and deleting of items	infolog	fr	Enregistrement de l'historique 
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	fr	Combien de lignes de descriptions devraient être directement visibles. Les lignes supplémentaires sont disponibles via une barre de défilement.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	fr	Quelle largeur devrait avoir la zone de description. Cette valeur est numérique, par ex 60.
 html link to the current record	infolog	fr	Lien HTML vers l'enregistrement courant
+icon for	infolog	fr	Icône pour
 id	infolog	fr	ID
 id#	infolog	fr	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	fr	Si un type a un propriétaire de groupe, toutes les entrées de ce type appartiendront à ce groupe, et NON à l'utilisateur qui l'a créé !
@@ -493,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	fr	A quoi devrait ê
 today	infolog	fr	Aujourd'hui
 todays date	infolog	fr	Date du jour
 todo	infolog	fr	Tâche
+toggle details	common	fr	Afficher les détails
 typ	infolog	fr	Type
 typ '%1' already exists !!!	infolog	fr	Le type '%1' existe déjà !
 type	infolog	fr	Type

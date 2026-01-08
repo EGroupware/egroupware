@@ -1,3 +1,4 @@
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	ko	표시된 타임시트뿐만 아니라 전체 쿼리에 대해 작업을 적용하세요!
 ask to start and stop working time with session	timesheet	ko	세션으로 근무 시간 시작 및 중지 요청하기
 category for 'working time'	admin	ko	'근무 시간' 카테고리
 change owner when updating	timesheet	ko	업데이트 시 소유자 변경
@@ -21,7 +22,7 @@ exports entries from your timesheet into a csv file.	timesheet	ko	Mengekspor ent
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ko	작업표의 항목을 CSV 파일로 내보냅니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 forgot to switch off working time?	common	ko	근무 시간을 끄는 것을 잊으셨나요?
 give additional users access	timesheet	ko	추가 사용자에게 접근 권한 부여
-give infolog delegation read-access to timesheets booked on them	timesheet	ko	InfoLog 위임 대상자에게 해당 위임 기록된 근태 기록표에 대한 읽기 권한 부여
+give infolog delegation read-access to timesheets booked on them	timesheet	ko	InfoLog 위임 대상자에게 해당 위임 기록된 근태 기록표에 대한 읽기 권한 부여.
 global categories	timesheet	ko	전역 카테고리
 history	timesheet	ko	내역
 how to display linked timesheets	timesheet	ko	연동된 근태 기록표 표시 방법

@@ -2,6 +2,7 @@
 2 years ago	timesheet	bg	преди 2 години
 3 years ago	timesheet	bg	преди 3 години
 all projects	timesheet	bg	Всички проекти
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	bg	Приложете действието върху цялото запитване, НЕ само върху показаните времеви разписания!
 ask to start and stop working time with session	timesheet	bg	Попитайте за започване и спиране на работното време със сесията
 both: allow to use projectmanager and free project-names	admin	bg	Позволява използване на имена на проекти, както от Проект-мениджъра, така и собствени
 by	timesheet	bg	от
@@ -38,7 +39,7 @@ forgot to switch off working time?	common	bg	Забравили сте да из
 full: use only projectmanager	admin	bg	Пълна: използва само имена от Проект-мениджъра
 general fields:	timesheet	bg	Общи полета:
 give additional users access	timesheet	bg	Дайте достъп на допълнителни потребители
-give infolog delegation read-access to timesheets booked on them	timesheet	bg	Дайте на делегираните от InfoLog лица достъп за четене на таблиците за отчитане на работното време, които са записани за тях
+give infolog delegation read-access to timesheets booked on them	timesheet	bg	Дайте на делегираните от InfoLog лица достъп за четене на таблиците за отчитане на работното време, които са записани за тях.
 global categories	timesheet	bg	Глобални категории
 history	timesheet	bg	История
 history logging	admin	bg	Запис на история

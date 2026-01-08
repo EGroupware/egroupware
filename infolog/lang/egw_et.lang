@@ -65,6 +65,7 @@ back to main list	infolog	et	Tagasi pealisti
 billed	infolog	et	Makstud
 both	infolog	et	Mõlemad
 call	infolog	et	Helista
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	et	Võib kasutada kalendris täiendavate InfoLog-tüüpide kuvamiseks või piirata näiteks ainult ülesannete kuvamisega.
 can not return an exact number of rows and therefore hides the count.	admin	et	Ei saa tagastada ridade täpset arvu ja seetõttu peidab loendi.
 cancel	infolog	et	Tühista
 cancelled	infolog	et	Tühistatud
@@ -189,6 +190,7 @@ history logging and deleting of items	infolog	et	Ajaloo logimine ja objektide ku
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	et	Mitu kirjelduse rida peaks olema otseselt nähtav. Täiendavad read on kättesaadavad kerimisriba kaudu.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	et	Kui lai peaks kirjeldusala olema. See väärtus on numbriline, nt 60.
 html link to the current record	infolog	et	HTML-link praegusele kirjele
+icon for	infolog	et	Ikoon
 id	infolog	et	ID
 id#	infolog	et	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	et	Kui tüübil on grupi omanik, siis kuuluvad kõik selle tüübi kirjed antud grupile, mitte selle loojale!
@@ -296,6 +298,7 @@ planned	infolog	et	Kavandatud
 planned time	infolog	et	Kavandatud aeg
 prefix for sub-entries (default: re:)	infolog	et	Alamrubriikide eesliide (vaikimisi: Re:)
 price	infolog	et	Hind
+pricelist	infolog	et	Hinnakiri
 print this infolog	infolog	et	Trükkida see InfoLog
 printing...	infolog	et	Trükkimine ...
 priority	infolog	et	Prioriteet
@@ -326,6 +329,7 @@ second parameter for preg_replace	infolog	et	Teine parameeter preg_replace jaoks
 select	infolog	et	Märgi
 select a price	infolog	et	Vali hind
 select a project	infolog	et	Vali Projekt
+select multiple contacts for a further action	infolog	et	Valige mitu kontakti täiendava tegevuse jaoks.
 select new category	infolog	et	Valige uus kategooria
 select users or groups	infolog	et	Valige kasutajad või rühmad
 selected calendars	infolog	et	Valitud kalendrid
@@ -334,6 +338,7 @@ sender	infolog	et	Saatja
 set status to done	infolog	et	Seadistage staatus valmis
 set status to done for all entries	infolog	et	Määrake kõigi kirjete staatuseks "valmis"
 sets the status of this entry to done	infolog	et	Seadistab selle kirje staatuse valmis
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	et	Kas InfoLog-nimekiri peaks näitama protsenti valmisolekust ainult staatuse „käimas” puhul või kahe eraldi ikooniga.
 show a x if content equals this compare value, otherwise show nothing	infolog	et	Näita X, kui sisu on võrdne selle võrdlusväärtusega, muidu ei näita midagi
 show full usernames	infolog	et	Täielike kasutajanimede kuvamine
 show in the infolog list	infolog	et	Näita InfoLog listis
@@ -359,6 +364,7 @@ tag to mark positions for address labels	infolog	et	Silt aadressimärkide posits
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	et	Dokument võib sisaldada paigutussätteid nagu {{%1}}, mis asendatakse andmetega.
 to all linked contacts	infolog	et	Kõigile lingitud kontaktidele
 today	infolog	et	Täna
+toggle details	common	et	Vaata üksikasju
 typ	infolog	et	Tüüp
 typ '%1' already exists !!!	infolog	et	Tüüp '%1' eksisteerib juba!
 type	infolog	et	Tüüp
@@ -372,6 +378,7 @@ upcoming	infolog	et	Kavandatav
 urgency	infolog	et	Kiireloomulisus
 urgent	infolog	et	Kiire
 use custom notification message	infolog	et	Kasutage kohandatud teavitussõnumit
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	et	Kasutage seda sildit aadressisiltide jaoks. Paigutage kordust vajav sisu kahe sildi vahele.
 used time	infolog	et	Kasutauud aeg
 view other subs	infolog	et	Näita teisi alam
 view parent	infolog	et	Näita ülem

@@ -50,13 +50,9 @@ edit custom fields	preferences	km	កែសម្រួលវាលផ្ទា�
 enable	preferences	km	បើក
 enable drag and drop functionality (experimental)	preferences	km	អូសហើយទម្លាក់
 enable menubar	preferences	km	បើករបារម៉ឺនុយ
-enable selectbox dropdown resizing for ie (experimental)	preferences	km	ជ្រើសរើសប្រអប់ទម្លាក់ចុះនៃម៉ឺនុយដែលផ្លាស់ប្តូរទំហំ
 enable/disable menubar from top of the editor.	preferences	km	បើក / បិទរបារម៉ឺនុយពីកំពូលនៃកម្មវិធីនិពន្ធ។
 enabled features in toolbar	preferences	km	បានបើកមុខងារនៅក្នុងរបារឧបករណ៍
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	km	បើក ឬបិទមុខងារអូស និងទម្លាក់ក្នុងកម្មវិធីទាំងអស់។ ប្រសិនបើកម្មវិធីរុករកមិនគាំទ្រការអូស និងទម្លាក់ វានឹងបិទដោយស្វ័យប្រវត្តិ។
-enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	km	បើក ឬបិទការជ្រើសប្រអប់ទម្លាក់ចុះម៉ឺនុយដែលផ្លាស់ប្តូរទំហំសម្រាប់ IE នៅក្នុងកម្មវិធីទាំងអស់។ ប្រសិនបើកម្មវិធីរុករកមិនមែនជា IE នោះជម្រើសនឹងមិនអនុវត្តទេ។
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	km	បើក ឬបិទការប្តូរទំហំប្រអប់ទម្លាក់ចុះសម្រាប់ IE នៅក្នុងកម្មវិធីទាំងអស់។ ប្រសិនបើកម្មវិធីរុករកមិនមែនជា IE នោះជម្រើសនឹងមិនអនុវត្តទេ។ មុខងារ​នេះ​គឺ​ជា​ការ​ពិសោធន៍​នៅ​ពេល​នេះ។
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	km	បើក ឬបិទការប្តូរទំហំប្រអប់ទម្លាក់ចុះសម្រាប់ IE នៅក្នុងកម្មវិធីទាំងអស់។ ប្រសិនបើកម្មវិធីរុករកមិនមែនជា IE នោះជម្រើសនឹងមិនអនុវត្តទេ។ មុខងារ​នេះ​គឺ​ជា​ការ​ពិសោធន៍​នៅ​ពេល​នេះ។
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	km	ការភ្ជាប់ LDAP ដែលបានអ៊ិនគ្រីបគឺតម្រូវឱ្យផ្លាស់ប្តូរពាក្យសម្ងាត់ ប៉ុន្តែវាមិនត្រូវបានកំណត់រចនាសម្ព័ន្ធនៅក្នុងការដំឡើងរបស់អ្នកទេ។
 enter code to verify correct setup	preferences	km	បញ្ចូលលេខកូដដើម្បីផ្ទៀងផ្ទាត់ការដំឡើងត្រឹមត្រូវ។
 enter your new password	preferences	km	បញ្ចូលពាក្យសម្ងាត់ថ្មី។
@@ -161,7 +157,6 @@ text only	preferences	km	អត្ថបទតែប៉ុណ្ណោះ
 the old password is not correct	preferences	km	ពាក្យ​សម្ងាត់​ចាស់​មិន​ត្រឹមត្រូវ!
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	km	ប្រអប់ជ្រើសរើសបង្ហាញអ្នកប្រើប្រាស់ដែលមានទាំងអស់ (អាចយឺតណាស់នៅពេលដំឡើងធំជាមួយអ្នកប្រើប្រាស់ជាច្រើន)។ ផ្ទាំងលេចឡើងអាចស្វែងរកអ្នកប្រើប្រាស់តាមឈ្មោះ ឬក្រុម។
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	km	ប្រអប់ជ្រើសរើសបង្ហាញអ្នកប្រើប្រាស់ដែលមានទាំងអស់ (អាចយឺតណាស់នៅពេលដំឡើងធំជាមួយអ្នកប្រើប្រាស់ជាច្រើន)។ ផ្ទាំងលេចឡើងអាចស្វែងរកអ្នកប្រើប្រាស់តាមឈ្មោះ ឬក្រុម។ ជម្រើសចុងក្រោយទាំងពីរកំណត់លទ្ធភាពមើលឃើញរបស់អ្នកប្រើប្រាស់ផ្សេងទៀត។ ដូច្នេះ​ពួកគេ​គួរតែ​បង្ខំ និង​មិន​អនុវត្ត​ចំពោះ​អ្នកគ្រប់គ្រង​។
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	km	ប្រអប់ជ្រើសរើសបង្ហាញអ្នកប្រើប្រាស់ដែលមានទាំងអស់ (អាចយឺតណាស់នៅពេលដំឡើងធំជាមួយអ្នកប្រើប្រាស់ជាច្រើន)។ ផ្ទាំងលេចឡើងអាចស្វែងរកអ្នកប្រើប្រាស់តាមឈ្មោះ ឬក្រុម។* ជម្រើសចុងក្រោយពីរកំណត់ការមើលឃើញរបស់អ្នកប្រើប្រាស់ផ្សេងទៀត។ ដូច្នេះពួកគេគួរតែត្រូវបានបង្ខំ ហើយមិនអនុវត្តចំពោះអ្នកគ្រប់គ្រង។*
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	km	ជម្រើសចុងក្រោយទាំងពីរកំណត់លទ្ធភាពមើលឃើញរបស់អ្នកប្រើប្រាស់ផ្សេងទៀត។ ដូច្នេះពួកគេគួរតែត្រូវបានបង្ខំ និងអនុវត្តមិនចំពោះអ្នកគ្រប់គ្រង។
 the two passwords are not the same	preferences	km	លេខសម្ងាត់ទាំងពីរមិនដូចគ្នាទេ!
 theme (colors/fonts) selection	preferences	km	ស្បែក

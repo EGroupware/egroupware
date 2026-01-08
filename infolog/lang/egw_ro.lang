@@ -34,6 +34,7 @@ always show them	infolog	ro	Afișați-le întotdeauna
 application mail expected but got: %1	infolog	ro	E-mail de cerere așteptat, dar primit: %1
 archived too	infolog	ro	Arhivat și el
 automatically check 'do not notify' for these types	infolog	ro	Bifați automat "Do not notify" pentru aceste tipuri de cereri
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	ro	Poate fi utilizat pentru a afișa alte tipuri de InfoLog în calendar sau pentru a limita afișarea, de exemplu, numai la sarcini.
 can not return an exact number of rows and therefore hides the count.	admin	ro	Nu poate returna un număr exact de rânduri și, prin urmare, ascunde numărul.
 change	infolog	ro	Modificare
 change responsible	infolog	ro	Schimbare responsabilă
@@ -114,6 +115,7 @@ history logging and deleting of items	infolog	ro	Înregistrarea istoricului și 
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	ro	Câte linii de descriere trebuie să fie direct vizibile. Liniile suplimentare sunt disponibile prin intermediul unei bare de derulare.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	ro	Cât de largă trebuie să fie zona de descriere. Această valoare este numerică, de exemplu, 60.
 html link to the current record	infolog	ro	Legătură HTML către înregistrarea curentă
+icon for	infolog	ro	Pictogramă pentru
 id	infolog	ro	ID
 id#	infolog	ro	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ro	Dacă un tip are un proprietar de grup, toate intrările din acel tip vor fi deținute de grupul dat și NU de utilizatorul care l-a creat!
@@ -132,6 +134,8 @@ infolog encryption requires epl subscription	infolog	ro	Criptarea InfoLog necesi
 infolog ical export	infolog	ro	Export InfoLog iCal
 infolog ical import	infolog	ro	Import InfoLog iCal
 insert timestamp into description field	infolog	ro	Inserarea datei și a orei în câmpul de descriere
+leave blank to get the used time calculated by timesheet entries	infolog	ro	Lăsați necompletat pentru a calcula timpul utilizat pe baza înregistrărilor din foaia de pontaj
+limit list to last n month, if ordering by last-modified and not searching.	admin	ro	Limitați lista la ultimele N luni, dacă ordonați după ultima modificare și nu efectuați căutare.
 limit number of description lines (default 5, 0 for no limit)	infolog	ro	Limitarea numărului de linii de descriere. Valoarea implicită = 5, 0 = fără limită.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ro	Limitarea lățimii coloanei de descriere. Eficientă numai dacă este setată limita de linii. 0 = fără limită.
 linked to %1	infolog	ro	Legat de %1
@@ -163,6 +167,8 @@ pattern for search in projects	infolog	ro	Model de căutare în proiecte
 performance optimization for huge infolog tables	admin	ro	Optimizarea performanței pentru tabelele InfoLog uriașe
 permissions error - %1 could not %2	infolog	ro	Eroare de permisiune - %1 nu a putut %2
 prefix for sub-entries (default: re:)	infolog	ro	Prefix pentru subînscrieri (implicit: Re:)
+price	infolog	ro	Preț
+pricelist	infolog	ro	Lista de prețuri
 primary link	infolog	ro	Legătură primară
 print this infolog	infolog	ro	Tipăriți acest InfoLog
 printing...	infolog	ro	Imprimarea ...
@@ -188,6 +194,7 @@ schedule appointment	infolog	ro	Programare programare
 second parameter for preg_replace	infolog	ro	Al doilea parametru pentru preg_replace
 select a price	infolog	ro	Selectați un preț
 select a project	infolog	ro	Selectați un proiect
+select multiple contacts for a further action	infolog	ro	Selectați mai multe contacte pentru o acțiune ulterioară.
 select new category	infolog	ro	Selectați o nouă categorie
 select users or groups	infolog	ro	Selectați utilizatori sau grupuri
 selected calendars	infolog	ro	Calendare selectate
@@ -196,6 +203,7 @@ sender	infolog	ro	Expeditor
 set status to done	infolog	ro	Setați statusul pe făcut
 set status to done for all entries	infolog	ro	Setați statusul la făcut pentru toate intrările
 sets the status of this entry to done	infolog	ro	Setează statusul acestei intrări la făcut pentru toate intrările
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	ro	Utilizați această etichetă pentru etichetele de adresă. Plasați conținutul pe care doriți să îl repetați între două etichete.
 show a x if content equals this compare value, otherwise show nothing	infolog	ro	Afișează un X dacă conținutul este egal cu această valoare de comparație, altfel nu afișează nimic
 show full usernames	infolog	ro	Afișați numele de utilizator complet
 show last modified	infolog	ro	Afișează ultima modificare
@@ -218,6 +226,7 @@ tasks of	infolog	ro	Sarcini de
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ro	Documentul poate conține caractere de subsol, cum ar fi {{%1}}, care vor fi înlocuite cu datele.
 the following document-types are supported:	infolog	ro	Sunt acceptate următoarele tipuri de documente:
 to all linked contacts	infolog	ro	La toate contactele legate
+toggle details	common	ro	Comutați detaliile
 type of field	infolog	ro	Tipul de câmp
 type of the log-entry: note, phonecall or todo	infolog	ro	Tipul de intrare în InfoLog
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	ro	Nu se poate face legătura cu %3 prin câmpul personalizat "%1": "%4". %2 se potrivește.

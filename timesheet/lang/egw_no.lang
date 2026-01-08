@@ -1,6 +1,7 @@
 2 month ago	timesheet	no	2 måneder siden
 2 years ago	timesheet	no	2 år siden
 3 years ago	timesheet	no	3 år siden
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	no	Bruk handlingen på hele spørringen, IKKE bare de viste timelistene!
 ask to start and stop working time with session	timesheet	no	Be om å starte og stoppe arbeidstid med økt
 by	timesheet	no	av
 category for 'working time'	admin	no	Kategori for 'Arbeidstid'
@@ -31,10 +32,10 @@ exports entries from your timesheet into a csv file. csv means 'comma separated 
 field must not be empty !!!	timesheet	no	Feltet kan ikke være tomt!
 forgot to switch off working time?	common	no	Har du glemt å slå av arbeidstiden?
 give additional users access	timesheet	no	Gi flere brukere tilgang
-give infolog delegation read-access to timesheets booked on them	timesheet	no	Gi InfoLog-delegering lesetilgang til tidsrapporter som er registrert på dem
+give infolog delegation read-access to timesheets booked on them	timesheet	no	Gi InfoLog-delegering lesetilgang til tidsrapporter som er registrert på dem.
 global categories	timesheet	no	Globale Kategorier
 history	timesheet	no	Historikk
-how to display linked timesheets	timesheet	no	Hvordan vise koblede tidsrapporter
+how to display linked timesheets	timesheet	no	Hvordan vise koblede tidsrapporter?
 html link to the current record	timesheet	no	HTML-kobling til gjeldende post
 id	timesheet	no	Id
 last modified	timesheet	no	Sist endret

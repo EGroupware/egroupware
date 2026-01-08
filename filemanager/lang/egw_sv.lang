@@ -33,12 +33,13 @@ cut	filemanager	sv	Klipp ut
 default action on double-click	filemanager	sv	Standardåtgärd vid dubbelklick
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sv	Standard = Nej. Länken visas inte, men du kan fortfarande navigera till denna plats eller konfigurera just denna plats som startmapp eller mapplänk.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	sv	Definierar hur dubbelklick på en dokumentfil ska hanteras. Bilder öppnas alltid i exponeringsvyn och e-postmeddelanden skickas med e-postprogrammet. Alla andra MIME-typer hanteras av webbläsaren själv.
+defines how to open a merge print document	filemanager	sv	Vad ska hända med dokumenten efter att de har fyllts i?<br><br><b>Om Collabora Online är tillgängligt</b> kan dessa dokument öppnas (och bearbetas vidare) direkt i webbläsaren med Collabora Online. <br><br> <b>Utan Collabora Online</b> erbjuds ifyllda dokument för nedladdning.<br><br>Mer information om Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office i EGroupware</a>
 deleted %1	filemanager	sv	Raderade %1
 directory	filemanager	sv	Katalog
 directory %1 already exists	filemanager	sv	Katalogen %1 finns redan
 directory %1 does not exist	filemanager	sv	Katalogen %1 finns inte
 disable	filemanager	sv	Inaktivera
-download	filemanager	sv	Ladda ned
+download	filemanager	sv	Ladda ner
 download documents	filemanager	sv	Ladda ner dokument
 edit comments	filemanager	sv	Ändra kommentar
 edit share	filemanager	sv	Redigera delning

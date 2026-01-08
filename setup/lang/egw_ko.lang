@@ -46,7 +46,16 @@ auto-created user accounts expire	setup	ko	자동생성된 사용자 계정 만�
 available version	setup	ko	가능한 버전
 back to the previous screen	setup	ko	이전 화면으로 돌아가기
 back to user login	setup	ko	사용자 접속으로 돌아가기
+backup '%1' deleted	setup	ko	백업 '%1'이(가) 삭제되었습니다.
+backup '%1' renamed to '%2'	setup	ko	백업 ‘%1'이(가) ’%2'로 이름이 변경되었습니다.
+backup '%1' restored	setup	ko	백업 '%1'이(가) 복원되었습니다.
+backup directory %1 mounted as %2	setup	ko	백업 디렉터리 %1이 %2로 마운트됨
+backup failed	setup	ko	백업이 실패했습니다.
 backup files (needs ziparchive)	setup	ko	이그룹웨어 파일(파일 디렉토리)의 데이터 백업 <br>(PHP ZipArchive 필요)
+backup finished	setup	ko	백업이 완료되었습니다.
+backup housekeeping	setup	ko	표준 이름의 백업 파일은 자동으로 정리될 수 있습니다. 정리 대상에서 제외하려면 백업 파일 이름을 변경하십시오.
+backup min count	setup	ko	최소 백업 횟수
+backup started, this might take a few minutes ...	setup	ko	백업이 시작되었습니다. 몇 분 정도 걸릴 수 있습니다...
 because an application it depends upon was upgraded	setup	ko	응용프로그램이 업그레이드 되었는지 여부에 달려있음
 because it depends upon	setup	ko	의존성때문에
 because it is not a user application, or access is controlled via acl	setup	ko	사용자 응용프로그램이 아니기때문에, 접근 제어는 ACL을 통해서
@@ -234,6 +243,7 @@ modifications have been completed!	setup	ko	변경이 완료되었습니다!
 modified	setup	ko	변경됨
 modify	setup	ko	변경
 month	setup	ko	월
+mount backup directory to %1	setup	ko	백업 디렉터리를 %1에 마운트하십시오
 name of database	setup	ko	데이터베이스 이름
 name of db user egroupware uses to connect	setup	ko	EGroupware가 사용할 DB 사용자 이름
 never	setup	ko	절대
@@ -404,6 +414,7 @@ version mismatch	setup	ko	버전이 일치하지 않음
 view	setup	ko	보기
 warning!	setup	ko	경고!
 we can proceed	setup	ko	진행 가능
+we strongly recommend to run a db backup before running the import!	setup	ko	가져오기 실행 전 반드시 DB 백업을 수행하시기 바랍니다!
 we will automatically update your tables/records to %1	setup	ko	귀하의 테이블/레코드들을 자동으로 %1로 변환합니다.
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ko	연속적인 테스트를 수행합니다, 몇분정도 걸릴수 있습니다. 계속하려면 링크를 클릭하세요
 welcome to the egroupware installation	setup	ko	EGroupware 설치를 환영합니다

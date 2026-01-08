@@ -11,6 +11,8 @@ custom fields	filemanager	lt	Pasirinktiniai laukai
 default action on double-click	filemanager	lt	Numatytasis veiksmas dukart spustelėjus
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	lt	Numatytoji reikšmė = Ne. Nuoroda nebus rodoma, tačiau vis tiek galėsite pereiti į šią vietą arba konfigūruoti šią konkrečią vietą kaip pradžios aplanką arba aplanko nuorodą.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	lt	Nustato, kaip elgtis su dokumento failo dvigubo spustelėjimo veiksmu. Vaizdai visada atidaromi eksponuojamoje peržiūroje, o el. laiškai - su el. pašto programa. Visus kitus MIME tipus tvarko pati naršyklė.
+defines how to open a merge print document	filemanager	lt	Kas turėtų nutikti su dokumentais po to, kai jie užpildyti?<br><br><b>Jei yra prieinama Collabora Online</b>, šiuos dokumentus galima atidaryti (ir toliau apdoroti) tiesiogiai naršyklėje naudojant Collabora Online. <br><br> <b>Jei „Collabora Online“ nėra</b>, užpildytas dokumentas siūlomas atsisiųsti.<br><br>Daugiau informacijos apie „Collabora Online“:<br> <a href="https://www.egroupware.org/online-office" target="_blank">„Collabora Online Office“ „EGroupware“</a>
+download	filemanager	lt	Atsisiųsti
 download documents	filemanager	lt	Atsisiųsti dokumentus
 edit share	filemanager	lt	Redaguoti bendrinimą
 enter a file size, e.g. 100k, 200m or 2g	filemanager	lt	Įveskite failo dydį, pvz., 100K, 200M arba 2G

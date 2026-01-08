@@ -6,7 +6,16 @@ admins	setup	da	Administratore
 all users	setup	da	Alle brugere
 application title	setup	da	Applikation titel
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	da	Prøv at bruge korrekt mimetype for FTP i stedet for standard 'application/octet-stream'
+backup '%1' deleted	setup	da	Sikkerhedskopi '%1' slettet.
+backup '%1' renamed to '%2'	setup	da	Sikkerhedskopi '%1' omdøbt til '%2'.
+backup '%1' restored	setup	da	Sikkerhedskopi '%1' gendannet.
+backup directory %1 mounted as %2	setup	da	Sikkerhedskopimappe %1 monteret som %2
+backup failed	setup	da	Sikkerhedskopiering mislykkedes.
 backup files (needs ziparchive)	setup	da	Sikkerhedskopiering af EGroupware-filer (filkatalog) <br>(kræver PHP ZipArchive)
+backup finished	setup	da	Sikkerhedskopiering afsluttet.
+backup housekeeping	setup	da	Sikkerhedskopier med et standardnavn kan ryddes automatisk. Omdøb sikkerhedskopifiler for at udelukke dem fra oprydning.
+backup min count	setup	da	Minimum antal sikkerhedskopier
+backup started, this might take a few minutes ...	setup	da	Sikkerhedskopiering startet, dette kan tage et par minutter ...
 check ip address of all sessions	setup	da	Kontrollere IP adresse for alle sessioner
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	da	Inkluder filer (filkatalog) i databackupen.<br>(Kan generere store mængder data og afbryde med mange filer, dokumentation: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 configuration	setup	da	Konfiguration
@@ -31,7 +40,7 @@ error searching "dn=%1" for "%2"!	setup	da	Fejl ved søgning i "DN=%1" efter "%2
 error uploading your backup!	setup	da	Fejl ved upload af din backup!
 every	setup	da	Hver eneste
 export has been completed!	setup	da	Eksporten er afsluttet!
-failed to mount backup directory!	setup	da	Kunne ikke montere backup-biblioteket!
+failed to mount backup directory!	setup	da	Det lykkedes ikke at montere Backup-mappen!
 failed updating user "%1" dn="%2"!	setup	da	Opdatering af bruger "%1" DN="%2" mislykkedes!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	da	Kunne ikke skrive konfigurationsfilen header.inc.php, tjek tilladelserne!
 fallback authentication	setup	da	Fallback-godkendelse
@@ -57,6 +66,7 @@ minimum account id (e.g. 500 or 100, etc.)	setup	da	Minimum konto id (f.eks 500 
 minute	setup	da	Minut
 modified	setup	da	Modificeret
 month	setup	da	Måned
+mount backup directory to %1	setup	da	Monter backup-mappen til %1
 new	setup	da	Ny
 next run	setup	da	Næste kørsel
 no algorithms available	setup	da	Ingen algoritmer tilgængelig
@@ -95,6 +105,7 @@ size	setup	da	Størrelse
 two weeks	setup	da	To uger
 use cookies to pass sessionid	setup	da	Brug cookies som sessionid
 use pure html compliant code (not fully working yet)	setup	da	Brug ren HTML godkendt kode (virker ikke 100% endnu)
+we strongly recommend to run a db backup before running the import!	setup	da	Vi anbefaler kraftigt at køre en DB-sikkerhedskopi, FØR importen køres!
 would you like to show each application's upgrade status ?	setup	da	Vil du gerne have vist hver applikations opgraderings status?
 write	setup	da	Skriv
 you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	da	Du kan omgå denne grænse ved at montere backup-biblioteket i EGroupware-filhåndteringen og uploade derfra.

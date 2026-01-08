@@ -78,6 +78,7 @@ after how many unsuccessful attempts to login, an ip should be blocked (default 
 all records and account information will be lost!	admin	tr	Bütün kayıtlar ve hesap bilgileri kaybedilecektir!
 all users	admin	tr	Tüm Kullanıcılar
 allow anonymous access to this app	admin	tr	Bu uygulamaya anonim girişe izin ver
+allow remote administration from following install id's (comma separated)	admin	tr	Aşağıdaki kurulum kimliklerinden uzaktan yönetimi izin verin, virgülle ayırın.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	tr	Kullanıcının parolasını SingleSignOn için 'Güvenlik ve Parolalar' altında saklamasına izin verin.
 allow user to set 'remember me' token	admin	tr	Kullanıcının ‘Beni hatırla’ belirtecini ayarlamasına izin ver
 anonymous user	admin	tr	Anonim kullanıcı
@@ -89,6 +90,7 @@ application name	admin	tr	Uygulama Adı
 application title	admin	tr	Uygulama Başlığı
 applications	admin	tr	Uygulamalar
 applications list	admin	tr	Uygulama Listesi
+are you sure you want to %1 mail for selected accounts?	admin	tr	Seçilen hesaplar için %1 postasını silmek istediğinizden emin misiniz?
 are you sure you want to delete the application %1 ?	admin	tr	%1 isimli uygulamayı silmek istediğinize emin misiniz?
 are you sure you want to delete this account ?	admin	tr	Bu hesabı silmek istediğinize emin misiniz?
 are you sure you want to delete this application ?	admin	tr	Bu uygulamayı silmek istediğinize emin misiniz?
@@ -98,13 +100,14 @@ are you sure you want to delete this group ?	admin	tr	Bu grubu silmek istediğin
 are you sure you want to delete this server?	admin	tr	Bu sunucuyu silmek istediğinize emin misiniz?
 are you sure you want to kill this session ?	admin	tr	Bu oturumu silmek istediğinize emin misiniz?
 async services last executed	admin	tr	Son çalıştırılan asenkron servisler
-asynchronous timed services	admin	tr	Asenkron zamanlı servisler
+asynchronous timed services	admin	tr	Asenkron hizmet
 asyncservices not yet installed or other error (%1) !!!	admin	tr	Asenkron servisler kurulu değil ya da başka hata (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	tr	FTP için 'application/octet-stream' yerine doğru MIMEtype kullanınız.
 authentication	admin	tr	Kimlik Doğrulama
 authentication / accounts	admin	tr	Doğrulama / Hesaplar
 auto create account records for authenticated users	admin	tr	Giriş yapan kullanıcılar için kayıt tut.
 available placeholders	admin	tr	Mevcut yer tutucular
+backup directory %1 mounted as %2	admin	tr	Yedekleme dizini %1, %2 olarak bağlandı
 bi-dir passthrough	admin	tr	çift-yön içiçe
 bi-directional	admin	tr	çift yönlü
 blocking after wrong password	admin	tr	Yanlış şifre sonrası engelleme
@@ -127,8 +130,10 @@ change acl rights	admin	tr	ACL haklarını değiştir
 change config settings	admin	tr	Sistem ayarlarını değiştir
 change domain of email address and aliases	admin	tr	E-posta adresi ve takma adların etki alanını değiştirme
 change login screen message	admin	tr	Ana ekran mesajını değiştir
+changelog and versions	admin	tr	Değişiklik günlüğü ve sürümler
 check ip address of all sessions	admin	tr	Bütün oturumların IP'leri kontrol et
 check items to <b>%1</b> to %2 for %3	admin	tr	%3 ögelerini <b>%1</b>den %2'ye kadar seç
+clear cache and register hooks	admin	tr	Önbelleği temizle/kayıt kancalarını temizle
 clear security tokens	admin	tr	Güvenlik belirteçlerini temizleyin
 click to select a color	admin	tr	Renk seçmek için tıklayın
 color	admin	tr	Renk
@@ -146,6 +151,7 @@ custom fields	admin	tr	Özel Alanlar
 data	admin	tr	Veri
 day	admin	tr	Gün
 day of week<br>(0-6, 0=sun)	admin	tr	Haftanın günü<br>(0-6, 0=Pazar)
+db backup and restore	admin	tr	Yedekleme
 default	admin	tr	Varsayılan
 default file system space per user	admin	tr	(Varsayılan) Kullanıcı disk alanı
 default file system space per user/group ?	admin	tr	(Varsayılan) Kullanıcı/Grup disk alanı?
@@ -167,8 +173,9 @@ deny access	admin	tr	Erişimi reddet
 deny access to access log	admin	tr	Erişim kayıtlarına erişmi engelle
 deny access to application registery	admin	tr	Uygulama Kütüğüne erişimi engelle
 deny access to applications	admin	tr	Uygulamalara erişimi engelle
-deny access to asynchronous timed services	admin	tr	Asenkron zamanlı servislere erişimi engelle
+deny access to asynchronous timed services	admin	tr	Asenkron hizmete erişimi reddet
 deny access to current sessions	admin	tr	Etkin oturumlara erişimi engelle
+deny access to db backup and restore	admin	tr	Yedeklemeye erişimi reddet
 deny access to error log	admin	tr	Hata kütüğüne erişimi engelle
 deny access to global categories	admin	tr	Genel kategorilere erişimi engelle
 deny access to groups	admin	tr	Gruplara erişimi engelle
@@ -197,6 +204,7 @@ edit this group	admin	tr	Bu grubu düzenle
 edit this user	admin	tr	Bu kullanıcıyı düzenle
 edit user	admin	tr	Kullanıcı düzenle
 edit user account	admin	tr	Kullanıcı hesabı düzenle
+egroupware version	admin	tr	EGroupware sürümü
 enable	admin	tr	Etkinleştir
 enable debug-messages	admin	tr	Hata ayıklama mesajlarını etkinleştir
 enter a description for the category	admin	tr	Kategori için açıklama giriniz
@@ -226,6 +234,7 @@ error: %1 not found or other error !!!	admin	tr	Hata: %1 bulunamıyor ya da baş
 event details follow	admin	tr	Etkinlik Detayları Ektedir
 expires	admin	tr	Sona Eriyor
 export certificate as p12	admin	tr	Sertifikayı p12 olarak dışa aktarın
+failed to mount backup directory!	admin	tr	Yedekleme dizini bağlanamadı!
 fallback (after each pageview)	admin	tr	Fallback (her sayfa görüntülemeden sonra)
 file space	admin	tr	Dosya Kotası
 file space must be an integer	admin	tr	Dosya Kotası tam sayı olmalıdır
@@ -310,6 +319,7 @@ minute	admin	tr	Dakika
 mode	admin	tr	Tip
 modified	admin	tr	Değiştirilmiş
 month	admin	tr	Ay
+mount backup directory to %1	admin	tr	Yedekleme dizini %1'e bağlan
 new group name	admin	tr	Yeni grup adı
 new password [ leave blank for no change ]	admin	tr	Yeni şifre (Değişiklik yapmak istemiyorsanız boş bırakınız)
 next run	admin	tr	Sıradaki çalıştırma
@@ -345,6 +355,7 @@ percent of users that logged out	admin	tr	Sistemden çıkış yapan kullanıcı 
 permission denied	admin	tr	İzin verilmedi
 permissions	admin	tr	Ayarlar
 permissions this group has	admin	tr	Bu grubun sahip olduğu haklar
+php version	admin	tr	PHP sürümü
 phpinfo	admin	tr	PHP bilgisi
 please enter a name	admin	tr	Litfen bir isim giriniz
 please enter a name for that server !	admin	tr	Lütfen sunucu için bir isim giriniz
@@ -356,9 +367,12 @@ re-enter password	admin	tr	Şifreyi yeniden giriniz
 read this list of methods.	admin	tr	Method listesini oku
 register application hooks	admin	tr	Uygulama bağlantılarını kaydet
 regular expression to find part to use as container	admin	tr	Kapsayıcı olarak kullanılacak parçayı bulmak için düzenli ifade
+remote administration instances	admin	tr	Uzaktan yönetim
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	tr	Uzaktan yönetim, Admin > Site configuration altında uzaktan örnekte etkinleştirilmelidir!
 remove	admin	tr	Kaldır
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	tr	Grupların erişimini kaldırmak, bu kategorideki verilerde sorunlara neden olabilir. Emin misiniz? Bu gruplardaki kullanıcılar artık erişime sahip olmayabilir:
 revoke this token	admin	tr	Bu belirteci iptal edin
-run asynchronous services	admin	tr	Asenkron servisleri çalıştır
+run asynchronous services	admin	tr	Asenkron hizmeti çalıştır
 save the category	admin	tr	Kategoriyi kaydet
 save the category and return back to the list	admin	tr	Kategoriyi kaydet ve listeye geri dön
 search categories	admin	tr	Kategorileri ara

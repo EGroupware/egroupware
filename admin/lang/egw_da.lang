@@ -72,6 +72,7 @@ all groups	admin	da	Alle grupper
 all records and account information will be lost!	admin	da	Alle posteringer og konto infomationer vil gå tabt!
 all users	admin	da	Alle brugere
 allow anonymous access to this app	admin	da	Tillad anonym adgang til denne applikation
+allow remote administration from following install id's (comma separated)	admin	da	Tillad fjernadministration fra følgende installations-ID'er, adskilt med komma.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	da	Giv brugeren mulighed for at gemme sin adgangskode under 'Sikkerhed og adgangskoder' til SingleSignOn.
 allow user to set 'remember me' token	admin	da	Tillad brugeren at indstille »Husk mig«-token
 alternate email address	admin	da	Alternativ e-mail adresse
@@ -89,6 +90,7 @@ applications	admin	da	Applikationer
 applications list	admin	da	Applikation liste
 applies the changes	admin	da	Udfør ændringerne
 apply the changes	admin	da	Acceptér ændringerne
+are you sure you want to %1 mail for selected accounts?	admin	da	Er du sikker på, at du vil %1 mail for valgte konti?
 are you sure you want to delete the application %1 ?	admin	da	Er du sikker på du vil slette applikationen %1?
 are you sure you want to delete this account ?	admin	da	Er du sikker på du vil slette denne konto?
 are you sure you want to delete this application ?	admin	da	Er du sikker på du vil slette denne applikation?
@@ -98,8 +100,10 @@ are you sure you want to delete this group ?	admin	da	Er du sikker på du vil sl
 are you sure you want to delete this server?	admin	da	Er du sikker på du vil slette denne server?
 are you sure you want to kill this session ?	admin	da	Er du sikker på du vil afbryde denne session?
 async services last executed	admin	da	Async services sidst eksekveret
+asynchronous timed services	admin	da	Asynkron tjeneste
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	da	Prøv at bruge korrekt mimetype for FTP i stedet for standard 'application/octet-stream'
 available placeholders	admin	da	Tilgængelige pladsholdere
+backup directory %1 mounted as %2	admin	da	Sikkerhedskopieringsmappe %1 monteret som %2
 bi-directional	admin	da	bi-directional
 blocking after wrong password	admin	da	Blokering efter forkert adgangskode
 bottom	admin	da	Bunden
@@ -120,7 +124,9 @@ change acl rights	admin	da	Ændre ACL-rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
 change domain of email address and aliases	admin	da	Skift domæne for e-mailadresse og aliasser
 change login screen message	admin	da	Ændre startside besked
+changelog and versions	admin	da	Ændringslog og versioner
 check ip address of all sessions	admin	da	Kontrollere IP adresse for alle sessioner
+clear cache and register hooks	admin	da	Ryd cache/register hooks
 clear security tokens	admin	da	Ryd sikkerhedstokens
 click to select a color	admin	da	Klik for at vælge en farve
 color	admin	da	Farve
@@ -145,6 +151,7 @@ cyrus imap server	admin	da	Cyrus IMAP Server
 data	admin	da	Data
 day	admin	da	Dag
 day of week<br>(0-6, 0=sun)	admin	da	Ugedag<br>(0-6, 0=Søn)
+db backup and restore	admin	da	Sikkerhedskopiering
 default	admin	da	Standart
 default file system space per user	admin	da	Standard system plads pr bruger
 default file system space per user/group ?	admin	da	Standard system plads pr bruger/gruppe?
@@ -167,7 +174,9 @@ deliver extern	admin	da	Lever ekstern
 deny access to access log	admin	da	Nægt adgang til adgangslog
 deny access to application registery	admin	da	Nægt adgang til applikation registering
 deny access to applications	admin	da	Nægt adgang til applikationer
+deny access to asynchronous timed services	admin	da	Nægt adgang til asynkron tjeneste
 deny access to current sessions	admin	da	Nægt adgang til nuværende sessions
+deny access to db backup and restore	admin	da	Nægt adgang til sikkerhedskopiering
 deny access to error log	admin	da	Nægt adgang til fejllog
 deny access to global categories	admin	da	Nægt adgang til globale kategorier
 deny access to groups	admin	da	Nægt adgang til grupper
@@ -201,6 +210,7 @@ edit this group	admin	da	Redigér denne gruppe
 edit this user	admin	da	Redigér denne bruger
 edit user	admin	da	Redigér bruger
 edit user account	admin	da	Redigér bruger konto
+egroupware version	admin	da	Ændringslog og versioner
 email account active	admin	da	E-mail konto aktiv
 email address	admin	da	E-mail adresse
 enable	admin	da	Aktivere
@@ -237,6 +247,7 @@ event details follow	admin	da	Hændelses detajler følger
 expires	admin	da	Udløber
 export certificate as p12	admin	da	Eksportér certifikat som p12
 failed to change password.	admin	da	Det lykkedes ikke at ændre adgangskoden.
+failed to mount backup directory!	admin	da	Det lykkedes ikke at montere Backup-mappen!
 file space	admin	da	Fil plads
 file space must be an integer	admin	da	Fil plads skal være et helt tal
 for the times above	admin	da	For tider over
@@ -340,7 +351,7 @@ minute	admin	da	Minut
 mode	admin	da	Mode
 modified	admin	da	Modificeret
 month	admin	da	Måned
-mount backup directory to %1	admin	da	Monter backup-biblioteket på %1
+mount backup directory to %1	admin	da	Monter backup-mappen til %1
 must change password upon next login	admin	da	Skal ændre adgangskode ved næste login
 name must not be empty !!!	admin	da	Navn må ikke være tomt!
 name of organisation	admin	da	Navn på organisation
@@ -382,6 +393,7 @@ percent of users that logged out	admin	da	Procent af brugere der loggede ud
 permission denied	admin	da	Adgang nægtet
 permissions	admin	da	Rettigheder
 permissions this group has	admin	da	Rettigheder denne gruppe har
+php version	admin	da	PHP-version
 phpinfo	admin	da	PHP information
 please enter a name	admin	da	Indtast venligst et navn
 please enter a name for that server !	admin	da	Indtast venligst et navn for den server!
@@ -397,10 +409,14 @@ quota settings	admin	da	Quota indstillinger
 re-enter password	admin	da	Genindtast adgangskode
 read this list of methods.	admin	da	Læs denne liste over metoder.
 regular expression to find part to use as container	admin	da	Regulært udtryk til at finde en del, der skal bruges som container
+remote administration instances	admin	da	Fjernadministration
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	da	Fjernadministration skal aktiveres i den eksterne instans under Admin > Webstedskonfiguration!
 remove	admin	da	Fjern
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	da	Fjernelse af adgang for grupper kan forårsage problemer for data i denne kategori. Er du sikker? Brugere i disse grupper har muligvis ikke længere adgang:
 requires 'openid / oauth2 server' app.	admin	da	Kræver appen 'OpenID / OAuth2 Server'.
 revoke this token	admin	da	Tilbagekald dette token
 rows	admin	da	Rækker
+run asynchronous services	admin	da	Kør asynkrone tjenester
 save the category	admin	da	Gem kategorien.
 save the category and return back to the list	admin	da	Gem kategorien og vend tilbage til listen.
 saves the changes made and leaves	admin	da	Gem ændringerne og afslut.
@@ -470,7 +486,6 @@ the api requires an upgrade	admin	da	API'en behøver en opgradering
 the groups must include the primary group	admin	da	Grupperne skal indeholde en primær gruppe.
 the login and password can not be the same	admin	da	Brugernavn og adgangskode kan ikke være ens.
 the loginid can not be more then 8 characters	admin	da	LoginID kan ikke være længere end 8 tegn.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige.
 the text displayed to the user	admin	da	Teksten som vises til brugeren
 the two passwords are not the same	admin	da	De to adgangskoder er ikke ens
 the users bellow are still members of group %1	admin	da	Brugerene nedenfor er stadig medlem af gruppen %1
@@ -531,7 +546,6 @@ view error log	admin	da	Vis fejllog
 view sessions	admin	da	Sessioner
 view this user	admin	da	Vis denne bruger
 view user account	admin	da	Vis bruger konto
-virtual mail manager	admin	da	Virtuel post håndtering
 who would you like to transfer all records owned by the deleted user to?	admin	da	Hvem vil du overføre ALLE posteringer ejet af den slettede bruger til?
 who would you like to transfer records owned by the deleted user to?	admin	da	Hvem vil du gerne overføre poster, der ejes af den slettede bruger, til?
 xml-rpc	admin	da	XML-RPC

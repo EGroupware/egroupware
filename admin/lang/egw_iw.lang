@@ -371,7 +371,6 @@ the api requires an upgrade	admin	iw	זקוק לעדכון API-ה
 the groups must include the primary group	admin	iw	הקבוצות חייבות לכלול את הקבוצה הראשית
 the login and password can not be the same	admin	iw	שם הכניסה והסיסמא חייבים להיות שונים זה מזה
 the loginid can not be more then 8 characters	admin	iw	אורך זיהוי הכניסה עד 8 תווים
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	iw	השם לשימוש פנימי (>=20 תווים), אם משנים אותו אין יותר גישה לנתונים הקיימים
 the testjob sends you a mail everytime it is called.	admin	iw	עבודת הניסיון שולח לך דואר בכל פעם שהיא נקראת
 the text displayed to the user	admin	iw	הטקסט להציג למשתמש
 the two passwords are not the same	admin	iw	שני הסיסמאות אינם זהים
@@ -415,7 +414,6 @@ view error log	admin	iw	הצג יומן שגיאות
 view sessions	admin	iw	הצג מושבים
 view this user	admin	iw	הצג משתמש זה
 view user account	admin	iw	הצג חשבון משתמש
-virtual mail manager	admin	iw	מלהל דואר וירטואלי
 who would you like to transfer all records owned by the deleted user to?	admin	iw	?אל מי ברצונך להעביר את כל הרשומות של המשתמש הנמחק
 you have entered an invalid expiration date	admin	iw	ציינת תאריך פוגה לא חוקי
 you must add at least 1 permission or group to this account	admin	iw	עליך לציין לפחות הרשאה אחת או קבוצה אחת לחשבון זה

@@ -148,7 +148,7 @@ are you sure you want to delete this group ?	admin	es-es	¿Está seguro de que q
 are you sure you want to delete this server?	admin	es-es	¿Está seguro de que quiere borrar este servidor?
 are you sure you want to kill this session ?	admin	es-es	¿Está seguro de que quiere matar esta sesión?
 async services last executed	admin	es-es	Últimos servicios asíncronos ejecutados
-asynchronous timed services	admin	es-es	Servicios asíncronos programados
+asynchronous timed services	admin	es-es	Servicio asíncrono
 asyncservices not yet installed or other error (%1) !!!	admin	es-es	¡Los servicios asíncronos todavía no están instalados, u otro error (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	es-es	Intentar usar el tipo MIME correcto para FTP en vez de 'application/octet-stream'.
 attributes	admin	es-es	Atributos Atributos
@@ -205,7 +205,7 @@ check ip address of all sessions	admin	es-es	Comprobar la IP de todas las sesion
 check items to <b>%1</b> to %2 for %3	admin	es-es	Seleccionar los elementos para <b>%1</b> a %2 para %3
 checking push (green for success or red for failure)	admin	es-es	Comprobar PUSH (verde = OK, rojo para no OK)
 children	admin	es-es	Hijos
-clear cache and register hooks	admin	es-es	Limpiar la caché y registrar los hooks
+clear cache and register hooks	admin	es-es	Borrar caché/ganchos de registro
 clear credentials	admin	es-es	Credenciales claras
 clear mail credentials	admin	es-es	Borrar credenciales de correo
 clear security tokens	admin	es-es	Borrar tokens de seguridad
@@ -264,7 +264,7 @@ data	admin	es-es	Datos
 data from	admin	es-es	Datos de
 day	admin	es-es	Día
 day of week<br>(0-6, 0=sun)	admin	es-es	Día de la semana<br>(0-6, 0=Dom)
-db backup and restore	admin	es-es	Copia de seguridad y restauración de la base de datos
+db backup and restore	admin	es-es	Copia de seguridad
 deactivate	admin	es-es	Desactivar
 deactivated	admin	es-es	desactivado
 debug	admin	es-es	Depurar
@@ -301,9 +301,9 @@ deny access	admin	es-es	Denegar acceso
 deny access to access log	admin	es-es	Denegar acceso al registro de accesos
 deny access to application registery	admin	es-es	Denegar acceso al registro de aplicaciones
 deny access to applications	admin	es-es	Denegar acceso a aplicaciones
-deny access to asynchronous timed services	admin	es-es	Denegar acceso a los servicios asíncronos programados
+deny access to asynchronous timed services	admin	es-es	Denegar el acceso al servicio asíncrono
 deny access to current sessions	admin	es-es	Denegar acceso a las sesiones actuales
-deny access to db backup and restore	admin	es-es	Denegar acceso a copia y restauración de la base de datos
+deny access to db backup and restore	admin	es-es	Denegar acceso a la copia de seguridad
 deny access to error log	admin	es-es	Denegar acceso al registro de errores
 deny access to global categories	admin	es-es	Denegar acceso a las categorías globales
 deny access to groups	admin	es-es	Denegar acceso a grupos
@@ -453,7 +453,6 @@ force selectbox	admin	es-es	Forzar cuadro de selección
 force users to change their password regularily?(empty for no,number for after that number of days	admin	es-es	¿Forzar a que los usuarios cambien su contraseña regularmente (en blanco es no, o un número para ese número de días)?
 forward also to	admin	es-es	Reenviar también a
 forward email's to	admin	es-es	Reenviar correos-e a
-forward emails to	admin	es-es	Reenviar correos-e a
 forward only	admin	es-es	Solo reenviar
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	es-es	Reenviar solo deshabilita el buzón IMAP / almacenamiento de correos y solo los reenvía a la dirección dada.
 full name	admin	es-es	Nombre completo
@@ -739,8 +738,7 @@ regular expression to find part to use as container	admin	es-es	Expresión regul
 reject passwords containing part of username or full name (3 or more characters long)	admin	es-es	Rechazar las contraseñas que contengan parte del nombre o el nombre completo (con 3 o más caracteres de longitud)
 relay access checked	admin	es-es	Acceso de retransmisión comprobado
 remark	admin	es-es	Observación
-remote administration instances	admin	es-es	Instancias de administración remota
-remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	es-es	¡La administración remota debe habilitarse en la instancia remota en Admin> Configuración del sitio!
+remote administration instances	admin	es-es	Administración remota
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	es-es	¡La administración remota necesita estar activada en la instancia remota en Administración > Configuración del sitio!
 remote instance saved	admin	es-es	Se ha guardado la instancia remota.
 remove	admin	es-es	Borrar
@@ -758,7 +756,7 @@ rights	admin	es-es	Derechos
 rows	admin	es-es	Filas
 rpm or debian package	admin	es-es	Paquete RPM o deb
 run	admin	es-es	ejecutar
-run asynchronous services	admin	es-es	Ejecutar servicios asíncronos
+run asynchronous services	admin	es-es	Ejecutar servicio asíncrono
 run rights for applications	admin	es-es	Derechos de ejecución para aplicaciones
 samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	es-es	Atributo de cookie SameSite (enviar cookie si la barra de direcciones del navegador muestra un dominio diferente)
 save as default	admin	es-es	Guardar por defecto
@@ -870,8 +868,6 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	es-es	El usuario y la contraseña NO pueden ser iguales.
 the loginid can not be more then 8 characters	admin	es-es	El nombre de usuario no puede superar 8 caracteres.
 the mimeparser can not parse this message.	admin	es-es	El intérprete mime no puede interpretar este mensaje.
-the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	es-es	El nombre utilizado internamente (<= 20 caracteres), cambiarlo hace que los datos existentes no estén disponibles
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	es-es	el nombre usado internamente (<= 20 caracteres). Si se cambia, los datos ya no están disponibles.
 the testjob sends you a mail everytime it is called.	admin	es-es	El trabajo de prueba le envía un correo cada vez que se ejecuta.
 the text displayed to the user	admin	es-es	El texto mostrado al usuario
 the two passwords are not the same	admin	es-es	Las dos contraseñas no son iguales
@@ -976,7 +972,6 @@ view error log	admin	es-es	Ver registro de errores
 view sessions	admin	es-es	Sesiones
 view this user	admin	es-es	Ver este usuario
 view user account	admin	es-es	Ver cuenta de usuario
-virtual mail manager	admin	es-es	Gestor de correo virtual
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	es-es	Establecer el número de días para informar a los usuarios por adelantado sobre el próximo cambio forzado de contraseña. Vacío = sin información
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	es-es	Solicitamos los datos para mejorar nuestro perfil en la prensa y para obtener una mejor comprensión del usuario base de EGroupware y sus necesidades.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	es-es	Esperamos que comprenda la importancia de esta estadística voluntaria y no denegarla a la ligera.

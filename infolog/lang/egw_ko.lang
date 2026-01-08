@@ -33,6 +33,7 @@ automatically check 'do not notify' for these types	infolog	ko	다음 유형에 
 back to main list	infolog	ko	메인 목록으로 돌아가기
 both	infolog	ko	모두
 call	infolog	ko	통화
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	ko	캘린더에 추가 InfoLog 유형을 표시하거나 작업만 표시하도록 제한하는 데 사용할 수 있습니다.
 can not return an exact number of rows and therefore hides the count.	admin	ko	정확한 행 수를 반환할 수 없으므로 개수를 숨깁니다.
 cancel	infolog	ko	취소
 cancelled	infolog	ko	취소됨
@@ -171,6 +172,7 @@ history logging and deleting of items	infolog	ko	항목의 히스토리 로깅 �
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	ko	직접 표시할 설명 줄의 수입니다. 스크롤 막대를 통해 추가 줄을 사용할 수 있습니다.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	ko	설명 영역의 너비. 이 값은 숫자입니다(예: 60).
 html link to the current record	infolog	ko	현재 레코드에 대한 HTML 링크
+icon for	infolog	ko	아이콘
 id	infolog	ko	ID
 id#	infolog	ko	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ko	유형에 그룹 소유자가 있는 경우, 해당 유형의 모든 항목은 해당 항목을 만든 사용자가 아닌 해당 그룹이 소유하게 됩니다!
@@ -291,6 +293,7 @@ planned	infolog	ko	기획
 planned time	infolog	ko	기획기간
 prefix for sub-entries (default: re:)	infolog	ko	하위 항목의 접두사(기본값: Re:)
 price	infolog	ko	가격
+pricelist	infolog	ko	가격 목록
 priority	infolog	ko	중요도
 private	infolog	ko	개인
 project	infolog	ko	프로젝트
@@ -332,6 +335,7 @@ select a priority for this task	infolog	ko	이 엔트리의 중요도를 선택�
 select a project	infolog	ko	프로젝트를 선택하세요
 select a responsible user: a person you want to delegate this task	infolog	ko	응답자를 선택하세요 (이업무를 위임할 사람)
 select a typ to edit it's status-values or delete it	infolog	ko	유형을 선택하여 상태 값을 편집하거나 삭제합니다.
+select multiple contacts for a further action	infolog	ko	추가 작업을 위해 여러 연락처를 선택하세요
 select new category	infolog	ko	새 카테고리 선택
 select to filter by owner	infolog	ko	소유자에 따른 정렬
 select to filter by responsible	infolog	ko	응답에 따른 정렬
@@ -342,6 +346,7 @@ sender	infolog	ko	발신자
 set status to done	infolog	ko	상태를 완료로 설정
 set status to done for all entries	infolog	ko	모든 항목의 상태를 완료로 설정
 sets the status of this entry to done	infolog	ko	이 항목의 상태를 완료로 설정합니다.
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	ko	InfoLog 목록에 진행 중인 상태에 대해서만 완료율을 표시할지, 아니면 두 개의 별도 아이콘을 표시할지 선택하세요.
 show a x if content equals this compare value, otherwise show nothing	infolog	ko	콘텐츠가 이 비교 값과 같으면 X를 표시하고, 그렇지 않으면 아무것도 표시하지 않습니다.
 show full usernames	infolog	ko	긴 사용자명 표기
 show in the infolog list	infolog	ko	인포로그 목록에 표기
@@ -379,6 +384,7 @@ to many might exceed your execution-time-limit	infolog	ko	너무 많을 경우 �
 today	infolog	ko	오늘
 todays date	infolog	ko	오늘 일자
 todo	infolog	ko	할일
+toggle details	common	ko	상세 정보 표시/숨기기
 typ	infolog	ko	형식
 typ '%1' already exists !!!	infolog	ko	%1 형식은 이미 있습니다.
 type	infolog	ko	형식
@@ -392,6 +398,7 @@ upcoming	infolog	ko	예정
 urgency	infolog	ko	긴급
 urgent	infolog	ko	긴급
 use custom notification message	infolog	ko	사용자 지정 알림 메시지 사용
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	ko	주소 라벨에 이 태그를 사용하세요. 반복할 내용을 두 태그 사이에 배치하세요.
 used time	infolog	ko	사용한 시간
 view all subs of this entry	infolog	ko	이 엔트리의 모든 하위보기
 view other subs	infolog	ko	다른 하위보기

@@ -6,7 +6,16 @@ application title	setup	uk	Найменування приложення
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	uk	Спроба використати вірний MIME-тип для FTP замість типового 'application/octet-stream'
 authentication / accounts	setup	uk	Аутентифікація / Рахунки
 auto create account records for authenticated users	setup	uk	Створювати автоматично записи рахунків для аутентифікованих користувачів
+backup '%1' deleted	setup	uk	Резервна копія '%1' видалена.
+backup '%1' renamed to '%2'	setup	uk	Резервна копія '%1' перейменована на '%2'.
+backup '%1' restored	setup	uk	Резервна копія '%1' відновлена.
+backup directory %1 mounted as %2	setup	uk	Каталог резервних копій %1 підключений як %2
+backup failed	setup	uk	Резервне копіювання не вдалося.
 backup files (needs ziparchive)	setup	uk	Резервне копіювання даних файлів EGroupware (каталог файлів) <br>(потрібен PHP ZipArchive)
+backup finished	setup	uk	Резервне копіювання завершено.
+backup housekeeping	setup	uk	Резервні копії зі стандартним іменем можуть бути автоматично видалені. Перейменуйте файли резервних копій, щоб виключити їх з очищення.
+backup min count	setup	uk	Мінімальна кількість резервних копій
+backup started, this might take a few minutes ...	setup	uk	Резервне копіювання розпочато, це може зайняти кілька хвилин...
 bottom	setup	uk	низ
 check ip address of all sessions	setup	uk	перевіряти ip адресу для всіх сесій
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	uk	Включити файли (каталог файлів) до резервної копії даних.<br>(Може створювати великі обсяги даних і перериватися при великій кількості файлів, документації: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
@@ -47,10 +56,12 @@ ldap root password	setup	uk	root пароль LDAP
 ldap rootdn	setup	uk	LDAP root DN
 mail account of %1 migrated	setup	uk	Поштовий акаунт %1 перенесено.
 maximum account id (e.g. 65535 or 1000000)	setup	uk	Максимальний ідентифікатор рахунку (тобто 65535 або 1000000)
+min backup count	setup	uk	Максимальна кількість збережених резервних копій (нуль: усі)
 minimum account id (e.g. 500 or 100, etc.)	setup	uk	Мінімальний ідентифікатор рахунку (тобто 65535 або 1000000)
 minute	setup	uk	Хвилина
 modified	setup	uk	Змінено
 month	setup	uk	Місяць
+mount backup directory to %1	setup	uk	Підключити каталог резервної копії до %1
 next run	setup	uk	Наступний запуск
 no algorithms available	setup	uk	Немає алгоритмів
 no modes available	setup	uk	Немає режимів
@@ -79,6 +90,7 @@ show 'powered by' logo on	setup	uk	Показувати логотип 'Powered 
 top	setup	uk	зверху
 use cookies to pass sessionid	setup	uk	Використовувати куки для передачі ідентифікатора сесії
 use pure html compliant code (not fully working yet)	setup	uk	Використовувати чистий HTML код (ще не повністю працює)
+we strongly recommend to run a db backup before running the import!	setup	uk	Настійно рекомендуємо виконати резервне копіювання бази даних ПЕРЕД імпортом!
 would you like to show each application's upgrade status ?	setup	uk	Чи показувати стан поновлення кожного приложення?
 write	setup	uk	Записати
 you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	uk	Ви можете обійти це обмеження, змонтувавши каталог резервної копії у файловий менеджер EGroupware і завантаживши його звідти.

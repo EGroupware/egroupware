@@ -7,7 +7,7 @@
 all projects	timesheet	sk	Všetky projekty
 and its members	timesheet	sk	a jeho členovia
 applies the changes	timesheet	sk	Uplatní zmeny
-apply the action on the whole query, not only the shown timesheets!!!	timesheet	sk	Vykonať akciu pre celý dopyt, NIE len pre zobrazené harmonogramy!!!
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	sk	Vykonať akciu pre celý dopyt, NIE len pre zobrazené harmonogramy!
 ask to start and stop working time with session	timesheet	sk	Opýtať sa na začiatok a koniec pracovného času počas relácie EGW
 both: allow to use projectmanager and free project-names	admin	sk	Obidvoje: povoliť používanie Projektovníka a voľné názvy projektov
 by	timesheet	sk	(kým)
@@ -58,9 +58,12 @@ for serial letter use this tag. put the content, you want to repeat between two 
 forgot to switch off working time?	common	sk	Zabudli ste vypnúť pracovný čas?
 full: use only projectmanager	admin	sk	Plné: použiť iba Projektovník
 general fields:	timesheet	sk	Všeobecné polia:
+give additional users access	timesheet	sk	Udeľte prístup ďalším používateľom
+give infolog delegation read-access to timesheets booked on them	timesheet	sk	Udeľte delegácii InfoLog prístup na čítanie k časovým výkazom, ktoré sú na nich zaznamenané.
 global categories	timesheet	sk	Globálne kategórie
 history	timesheet	sk	História
 history logging	admin	sk	Zaznamenávanie histórie
+how to display linked timesheets	timesheet	sk	Ako zobraziť prepojené časové výkazy?
 html link to the current record	timesheet	sk	HTML odkaz na aktuálny záznam
 id	timesheet	sk	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	sk	Ak tu určíte adresár (plná cesta VFS), %1 zobrazí akciu pre každý dokument. Táto akcia umožňuje stiahnuť vybraný dokument s vloženými údajmi %1.
@@ -80,10 +83,12 @@ last year	timesheet	sk	Posledný rok
 leave it empty for a full week	timesheet	sk	Ponechajte prázdne ak chcete plný týždeň
 leaves without saveing	timesheet	sk	uzavrieť bez uloženia zmien
 length<br>rows	timesheet	sk	Dĺžka<br>Riadkov
+link title	timesheet	sk	Názov prepojenia
 links	timesheet	sk	Odkazy
 links and attached files	timesheet	sk	Odkazy a priložené súbory
 links to specified application.  example: {{links/infolog}}	timesheet	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}
 list of files linked to the current record	timesheet	sk	Zoznam súborov priložených k súčasnému záznamu
+make timesheets readable by infolog delegation	timesheet	sk	Umožnite delegácii InfoLog čítať časové výkazy
 manage mapping	timesheet	sk	Spravovať mapovanie
 max length of the input [, length of the inputfield (optional)]	timesheet	sk	Maximálna dĺžka vstupu [, dĺžka vstupného poľa (voliteľné)]
 mode	timesheet	sk	Režim

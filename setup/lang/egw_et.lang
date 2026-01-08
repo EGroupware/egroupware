@@ -31,9 +31,12 @@ backup '%1' deleted	setup	et	Tagavarakoopia '%1' kustutatud
 backup '%1' renamed to '%2'	setup	et	Tagavarakoopia '%1' on ümber nimetatud '%2'
 backup '%1' restored	setup	et	Tagavarakoopia '%1' taastatud
 backup and restore	setup	et	Tagavarakoopia ja taastamine
+backup directory %1 mounted as %2	setup	et	Varukoopia kataloog %1 on ühendatud kui %2
 backup failed	setup	et	Tagavarakoopia ebaõnnestus
 backup files (needs ziparchive)	setup	et	EGroupware failide (failide kataloog) <br>(nõuab PHP ZipArchive'i) andmete varundamist.
 backup finished	setup	et	Tagavarakoopia tehtud
+backup housekeeping	setup	et	Standardse nimega varukoopiaid saab automaatselt kustutada. Nimetage varukoopiafailid ümber, et need kustutamisest välja jätta.
+backup min count	setup	et	Minimaalne varukoopiate arv
 backup now	setup	et	Tee tagavarakoopia nüüd
 backup started, this might take a few minutes ...	setup	et	Tagavarakoopia tegemine alustatud. see võib võtta mõne minuti ...
 because it is not a user application, or access is controlled via acl	setup	et	Sellepärast, et see pole kasutaja rakendus, või ligipääs on kontrollitud ACL abil
@@ -103,7 +106,7 @@ error searching "dn=%1" for "%2"!	setup	et	Viga otsingus "DN=%1" jaoks "%2"!
 error uploading your backup!	setup	et	Viga varukoopia üleslaadimisel!
 every	setup	et	Iga
 export has been completed!	setup	et	Eksportimine on lõpetatud!
-failed to mount backup directory!	setup	et	Varukoopia kataloogi ühendamine ebaõnnestus!
+failed to mount backup directory!	setup	et	Varunduskataloogi ühendamine ebaõnnestus!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	et	Ebaõnnestus konfig faili header.inc.php kirjutamine, kontrolli õigusi!
 fallback authentication	setup	et	Tagasitõendamine
 file	setup	et	FAIL
@@ -153,6 +156,7 @@ min backup count	setup	et	Säilitatavate varukoopiate maksimaalne arv (null: kõ
 modified	setup	et	Muudetud
 modify	setup	et	Muuda
 month	setup	et	Kuu
+mount backup directory to %1	setup	et	Ühenda varunduskataloog %1
 name of database	setup	et	Andmebaasi nimi
 never	setup	et	Mittekunagi
 new	setup	et	Uus
@@ -252,6 +256,7 @@ user for smtp-authentication (leave it empty if no auth required)	setup	et	Kasut
 usernames are casesensitive	setup	et	Kasutajanimed on tõusutundlikud
 users choice	setup	et	Kasutajate Valik
 version	setup	et	Versioon
+we strongly recommend to run a db backup before running the import!	setup	et	Soovitame tungivalt teha andmebaasi varukoopia ENNE importimist!
 write	setup	et	Kirjuta
 year	setup	et	Aasta
 yes	setup	et	Jah

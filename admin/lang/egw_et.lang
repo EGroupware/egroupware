@@ -60,6 +60,7 @@ after how many unsuccessful attempts to login, an ip should be blocked (default 
 all applications	admin	et	Kõik rakendused
 all users	admin	et	Kõik kasutajad
 allow anonymous access to this app	admin	et	Luba anonüümne ligipääs sellele rakendusele
+allow remote administration from following install id's (comma separated)	admin	et	Luba kaughaldus järgmistelt installi ID-delt, komadega eraldatuna.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	et	Lubage kasutajal salvestada oma parool SingleSignOn'i jaoks jaotises „Turvalisus ja paroolid“.
 allow user to set 'remember me' token	admin	et	Luba kasutajal määrata „Mäleta mind“ märgis
 alternate email address	admin	et	Alternatiivne email aadress
@@ -73,6 +74,7 @@ application title	admin	et	Rakenduse pealkiri
 applications	admin	et	Rakendused
 applications list	admin	et	Rakenduste nimekiri
 apply the changes	admin	et	Rakenda uuendused
+are you sure you want to %1 mail for selected accounts?	admin	et	Kas soovite kindlasti %1 valitud kontodele saadetud kirju kustutada?
 are you sure you want to delete the application %1 ?	admin	et	Oled kindel, et soovid kustutada seda rakendust %1?
 are you sure you want to delete this account ?	admin	et	Oled kindel, et tahad kustutada seda kontot?
 are you sure you want to delete this application ?	admin	et	Oled kindel, et soovid kustutada seda rakendust?
@@ -81,7 +83,9 @@ are you sure you want to delete this global category ?	admin	et	Oled kindel, et 
 are you sure you want to delete this group ?	admin	et	Oled kindel, et tahad kustutada seda gruppi?
 are you sure you want to delete this server?	admin	et	Oled kindel, et tahad kustutada seda serverit?
 are you sure you want to kill this session ?	admin	et	Oled kindel, et tahad tappa seda sessiooni?
+asynchronous timed services	admin	et	Asünkroonne teenus
 authentication / accounts	admin	et	Autentimine / Kontod
+backup directory %1 mounted as %2	admin	et	Varunduskataloog %1 ühendatud kui %2
 bad login name or password.	admin	et	Vale kasutajanimi või parool.
 blocking after wrong password	admin	et	Blokeerimine vale parooli sisestamise järel
 bulk changes	admin	et	Massilised muudatused
@@ -97,6 +101,8 @@ change access	admin	et	Juurdepääsuõiguste muutmine
 change acl rights	admin	et	Muuda ACL Õigusi
 change domain of email address and aliases	admin	et	E-posti aadressi domeeni ja varjunimede muutmine
 change login screen message	admin	et	Muuda pealehe sõnumit
+changelog and versions	admin	et	Muudatuste ajalugu ja versioonid
+clear cache and register hooks	admin	et	Puhasta vahemälu/registri konksud
 clear security tokens	admin	et	Turvatunnuste tühjendamine
 click to select a color	admin	et	Kliki valimaks värvi
 color	admin	et	Värv
@@ -118,7 +124,7 @@ custom egroupware web font as woff2 file	admin	et	Kohandatud EGroupware veebifon
 custom fields tab	admin	et	Kohandatud väljade vahekaart
 cyrus imap server	admin	et	Cyrus IMAP Server
 day	admin	et	Päev
-db backup and restore	admin	et	DB tagavara ja taastamine
+db backup and restore	admin	et	Varundus
 default	admin	et	Vaikimisi
 delete account	admin	et	Kustuta konto
 delete application	admin	et	Kustuta rakendus
@@ -134,8 +140,9 @@ deny access	admin	et	Keela Ligipääs
 deny access to access log	admin	et	Keela ligipääs külastus logile
 deny access to application registery	admin	et	Keela ligipääs rakenduse registrile
 deny access to applications	admin	et	Keela ligipääs rakendustele
+deny access to asynchronous timed services	admin	et	Keelata juurdepääs asünkroonsele teenusele
 deny access to current sessions	admin	et	Keela ligipääs kehtivatele sessioonidele
-deny access to db backup and restore	admin	et	Keela ligipääs DB tagavara ja taaste-le
+deny access to db backup and restore	admin	et	Keelata juurdepääs varundusele
 deny access to error log	admin	et	Keela ligipääs vea logile
 deny access to global categories	admin	et	Keela ligipääs globaalsetele gategooriatele
 deny access to groups	admin	et	Keela ligipääs gruppidele
@@ -162,6 +169,7 @@ edit this user	admin	et	Muuda seda kasutajat
 edit user	admin	et	Muuda kasutajat
 edit user account	admin	et	Muuda kasutaja kontot
 egroupware directory	admin	et	EGroupware kaust
+egroupware version	admin	et	EGroupware versioon
 email account active	admin	et	Email konto aktiivne
 email address	admin	et	Email aadress
 email settings	common	et	Email setingud
@@ -183,6 +191,7 @@ error storing token!	admin	et	Viga sümboli salvestamisel!
 error: %1 not found or other error !!!	admin	et	Viga: %1 ei leitud või muu viga!
 expires	admin	et	Aegub
 export certificate as p12	admin	et	Sertifikaadi eksportimine p12 kujul
+failed to mount backup directory!	admin	et	Varunduskataloogi ühendamine ebaõnnestus!
 field '%1' already exists !!!	admin	et	Väli '%1' eksisteerib juba!
 full name	admin	et	Täis nimi
 general	admin	et	Üldine
@@ -243,6 +252,7 @@ mail settings	admin	et	Mail setingud
 minute	admin	et	Mi
 modified	admin	et	Muudetud
 month	admin	et	Kuu
+mount backup directory to %1	admin	et	Ühenda varunduskataloog %1
 name must not be empty !!!	admin	et	Nimi ei tohi olla tühi!
 name of tab to create and show field in	admin	et	Välja loomise ja kuvamise vahekaardi nimi
 new group name	admin	et	Uus grupi nimi
@@ -273,6 +283,7 @@ permission denied	admin	et	Õigused puuduvad
 permission denied !!!	admin	et	Õigused puuduvad!
 permission denied!!!	admin	et	Ligipääs keelatud!
 permissions	admin	et	Õigused
+php version	admin	et	PHP versioon
 phpinfo	admin	et	PHP informatsioon
 please enter a name	admin	et	Palun sisesta nimi
 please select	admin	et	Palun Vali
@@ -280,8 +291,12 @@ port	admin	et	Port
 primary group	admin	et	Primaarne Grupp
 re-enter password	admin	et	Sisesta parool uuesti
 regular expression to find part to use as container	admin	et	Regulaarväljend konteinerina kasutatava osa leidmiseks
+remote administration instances	admin	et	Kaughaldus
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	et	Kaughaldus tuleb lubada kauginstantsis Admin > Site configuration (Haldus > Saidi konfiguratsioon) all!
 remove	admin	et	Eemalda
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	et	Gruppide juurdepääsu eemaldamine võib põhjustada probleeme selle kategooria andmetega. Kas olete kindel? Nende gruppide kasutajad ei pruugi enam juurdepääsu omada:
 revoke this token	admin	et	Selle sümboli tühistamine
+run asynchronous services	admin	et	Käivitada asünkroonne teenus
 search categories	admin	et	Otsi kategooriaid
 search groups	admin	et	Otsi gruppe
 security	admin	et	Turvalisus

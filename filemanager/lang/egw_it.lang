@@ -83,7 +83,7 @@ default action on double-click	filemanager	it	Azione predefinita al doppio click
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	it	Predefinito: No. Il collegamento non verrà mostrato, ma potrai comunque raggiungere questo percorso, oppure configurarlo come cartella di avvio o collegamento a cartella.
 default document to insert entries	filemanager	it	Documento predefinito per l'inserimento
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	it	Definisce come gestire di doppio-click su un file. Le immagini sono sempre aperte in modalità visualizzazione e le email con l'applicazione E-Mail. Tutti gli altri file sono gestiti dal browser come oggetti MIME-type.
-defines how to open a merge print document	filemanager	it	Definisce il modo di apertura di un documento per la stampa unione
+defines how to open a merge print document	filemanager	it	Cosa succede ai documenti dopo che sono stati compilati?<br><br><b>Se Collabora Online è disponibile</b>, questi documenti possono essere aperti (e ulteriormente elaborati) direttamente nel browser con Collabora Online. <br><br> <b>Senza Collabora Online</b>, il documento compilato viene offerto per il download.<br><br>Maggiori informazioni su Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
 delete all older versions and deleted files older then %s days	filemanager	it	Eliminare tutte le versioni passate e le cartelle più vecchie di %s giorni
 delete these files or directories?	filemanager	it	Eliminare i file o le cartelle?
 delete these shares?	filemanager	it	Eliminare queste condivisioni?
@@ -105,7 +105,7 @@ display of content	filemanager	it	Visualizzazione del contenuto
 do you want more information about epl subscription?	common	it	Si vorrebbero ricevere maggiori informazioni circa la sottoscrizione a EPL?
 do you want to overwrite existing file %1 in directory %2?	filemanager	it	Vuoi sovrascrivere il file esistente %1 nella cartella %2?
 do you want to overwrite the existing file %1?	filemanager	it	Vuoi sovrascrivere il file esistente?
-download	filemanager	it	Download
+download	filemanager	it	Scarica
 download documents	filemanager	it	Scarica documenti
 edit comments	filemanager	it	Modifica commenti
 edit settings	filemanager	it	Modifica le impostazioni

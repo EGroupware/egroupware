@@ -230,6 +230,7 @@ history logging and deleting of items	infolog	cs	Protokolování historie a maz�
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	cs	Kolik řádek popisu má být vidět přímo. Ostatní řádky budou dostupné přes posouvací lištu.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	cs	Šířka pole pro popis, hodnota je číslo, např. 60.
 html link to the current record	infolog	cs	HTML odkaz na aktuální záznam
+icon for	infolog	cs	Ikona pro
 id	infolog	cs	ID
 id#	infolog	cs	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	cs	Pokud má typ skupinového vlastníka, všechny položky toho typu bude vlastnit daná skupina, nikoli uživatel, který je vytvořil!
@@ -493,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	cs	Na jakou hodnotu 
 today	infolog	cs	Dnes
 todays date	infolog	cs	Dnešní datum
 todo	infolog	cs	Úkol
+toggle details	common	cs	Přepnout podrobnosti
 typ	infolog	cs	Typ
 typ '%1' already exists !!!	infolog	cs	Typ '%1' už existuje!
 type	infolog	cs	Typ

@@ -1,11 +1,12 @@
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	lt	Taikyti veiksmą visam užklausimui, NE tik rodomoms darbo laiko apskaitos lentelėms!
 creates a new field	timesheet	lt	Kuriamas naujas laukas
 do you want to associate it with the selected %1 entry?	common	lt	Ar norite jį susieti su pasirinktu %1 įrašu?
 error storing working time	timesheet	lt	Klaida saugant darbo laiką
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	lt	Eksportuokite įrašus iš darbo laiko apskaitos žiniaraščio į CSV failą. Skirtuke Parinktys taip pat galite pasirinkti kitus skirtukus.
 forgot to switch off working time?	common	lt	Pamiršote išjungti darbo laiką?
 give additional users access	timesheet	lt	Suteikti prieigą papildomiems vartotojams
-give infolog delegation read-access to timesheets booked on them	timesheet	lt	Suteikti InfoLog delegacijai skaitymo prieigą prie jų užregistruotų darbo laiko apskaitos lapų
-how to display linked timesheets	timesheet	lt	Kaip rodyti susietus darbo laiko apskaitos lapus
+give infolog delegation read-access to timesheets booked on them	timesheet	lt	Suteikti InfoLog delegacijai skaitymo prieigą prie jų užregistruotų darbo laiko apskaitos lapų.
+how to display linked timesheets	timesheet	lt	Kaip rodyti susietus darbo laiko apskaitos lapus?
 html link to the current record	timesheet	lt	HTML nuoroda į esamą įrašą
 link title	timesheet	lt	Nuorodos pavadinimas
 make timesheets readable by infolog delegation	timesheet	lt	Padaryti darbo laiko apskaitos lapus skaitomiems InfoLog delegacijai
@@ -24,6 +25,7 @@ start & stop timer	common	lt	Paleidimo ir sustabdymo laikmatis
 start timer	common	lt	Paleisti laikmatį
 start-time can not be before last stop- or pause-time %1!	common	lt	Pradžios laikas negali būti ankstesnis už paskutinį sustabdymo arba pauzės laiką %1!
 stop- or pause-time can not be before the start-time %1!	common	lt	Sustabdymo arba pauzės laikas negali būti ankstesnis už pradžios laiką %1!
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	lt	Viduje naudojamas pavadinimas, <= 20 simbolių, pakeitus jį esami duomenys taps neprieinami
 timer	common	lt	Laikmatis
 timer already running or paused	common	lt	Laikmatis jau paleistas arba sustabdytas
 use field from csv if possible	timesheet	lt	Jei įmanoma, naudokite lauką iš CSV

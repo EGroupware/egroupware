@@ -230,6 +230,7 @@ history logging and deleting of items	infolog	sv	Historikloggning och radering a
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	sv	Hur många beskrivningsrader som ska vara direkt synliga. Ytterligare rader är tillgängliga via en rullningslist.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	sv	Hur brett ska beskrivningsområdet vara. Detta värde är numeriskt, t.ex. 60.
 html link to the current record	infolog	sv	HTML-länk till aktuell post
+icon for	infolog	sv	Ikon för
 id	infolog	sv	ID
 id#	infolog	sv	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sv	Om en typ har en gruppägare kommer alla poster av den typen att ägas av den givna gruppen och INTE av användaren som skapade den!
@@ -493,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	sv	Till vilket start
 today	infolog	sv	Idag
 todays date	infolog	sv	Dagens datum
 todo	infolog	sv	Uppgift
+toggle details	common	sv	Visa detaljer
 typ	infolog	sv	Typ
 typ '%1' already exists !!!	infolog	sv	Typ '%1' finns redan!
 type	infolog	sv	Typ

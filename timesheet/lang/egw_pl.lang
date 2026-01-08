@@ -47,10 +47,10 @@ forgot to switch off working time?	common	pl	Zapomniałeś wyłączyć czas prac
 full: use only projectmanager	admin	pl	Pełna: zezwalaj tylko na nazwy z Menadżera Projektów
 general fields:	timesheet	pl	Pola ogólne:
 give additional users access	timesheet	pl	Przyznaj dostęp dodatkowym użytkownikom
-give infolog delegation read-access to timesheets booked on them	timesheet	pl	Przyznaj delegatom InfoLog dostęp do odczytu arkuszy czasu pracy zarezerwowanych dla nich
+give infolog delegation read-access to timesheets booked on them	timesheet	pl	Przyznaj delegatom InfoLog dostęp do odczytu arkuszy czasu pracy zarezerwowanych dla nich.
 global categories	timesheet	pl	Kategorie globalne
 history	timesheet	pl	Historia
-how to display linked timesheets	timesheet	pl	Jak wyświetlić powiązane arkusze czasu pracy
+how to display linked timesheets	timesheet	pl	Jak wyświetlić powiązane arkusze czasu pracy?
 html link to the current record	timesheet	pl	Link HTML do bieżącego rekordu
 id	timesheet	pl	id
 ignore	timesheet	pl	Ignoruj

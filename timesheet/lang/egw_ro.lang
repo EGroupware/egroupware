@@ -1,3 +1,4 @@
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	ro	Aplicați acțiunea asupra întregii interogări, NU doar asupra fișelor de pontaj afișate!
 ask to start and stop working time with session	timesheet	ro	Cereți să începeți și să opriți timpul de lucru cu sesiune
 category for 'working time'	admin	ro	Categorie pentru 'Timp de lucru'
 change owner when updating	timesheet	ro	Schimbarea proprietarului la actualizare
@@ -9,7 +10,12 @@ do you want to stop your working time?	common	ro	Doriți să vă opriți timpul 
 error storing working time	timesheet	ro	Eroare la memorarea timpului de lucru
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ro	Exportă intrările din Time Sheet într-un fișier CSV. În fila Opțiuni puteți alege și alți separatori.
 forgot to switch off working time?	common	ro	Ați uitat să dezactivați timpul de lucru?
+give additional users access	timesheet	ro	Acordați acces utilizatorilor suplimentari
+give infolog delegation read-access to timesheets booked on them	timesheet	ro	Acordați delegației InfoLog acces de citire la foile de pontaj înregistrate pe acestea.
+how to display linked timesheets	timesheet	ro	Cum se afișează foile de pontaj legate?
 id	timesheet	ro	ID
+link title	timesheet	ro	Titlu legătură
+make timesheets readable by infolog delegation	timesheet	ro	Faceți foile de pontaj citibile de către delegația InfoLog
 mode	timesheet	ro	Mod
 overwrite time	common	ro	Timp de suprascriere
 overwriting start or stop time	timesheet	ro	Suprascrierea orei de pornire sau de oprire
@@ -24,6 +30,7 @@ start & stop timer	common	ro	Start & stop timer
 start timer	common	ro	Start timer
 start-time can not be before last stop- or pause-time %1!	common	ro	Timpul de pornire nu poate fi înainte de ultimul timp de oprire sau pauză %1!
 stop- or pause-time can not be before the start-time %1!	common	ro	Timpul de oprire sau pauză nu poate fi înainte de timpul de pornire %1!
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	ro	Numele utilizat intern, <= 20 caractere, modificarea acestuia face ca datele existente să nu mai fie disponibile
 timer already running or paused	common	ro	Cronometru deja în funcțiune sau în pauză
 use field from csv if possible	timesheet	ro	Utilizați câmpul din CSV, dacă este posibil
 what should be done with unknown values?	timesheet	ro	Ce trebuie făcut cu valorile necunoscute?

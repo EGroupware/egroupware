@@ -11,7 +11,9 @@ custom fields	filemanager	ro	Câmpuri personalizate
 default action on double-click	filemanager	ro	Acțiune implicită la dublu clic
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	ro	Implicit = Nu. Legătura nu va fi afișată, dar aveți în continuare posibilitatea de a naviga în această locație sau de a configura această locație specială ca dosar de pornire sau legătură de dosar.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	ro	Definește modul de gestionare a acțiunii de dublu clic pe un fișier document. Imaginile se deschid întotdeauna în vizualizarea expunere și e-mailurile cu aplicația de e-mail. Toate celelalte tipuri MIME sunt gestionate de browserul propriu-zis.
-download documents	filemanager	ro	Descărcarea documentelor
+defines how to open a merge print document	filemanager	ro	Ce se întâmplă cu documentele după ce au fost completate?<br><br><b>Dacă Collabora Online este disponibil</b>, aceste documente pot fi deschise (și prelucrate în continuare) direct în browser cu Collabora Online. <br><br> <b>Fără Collabora Online</b>, documentul completat este disponibil pentru descărcare.<br><br>Mai multe informații despre Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office în EGroupware</a>
+download	filemanager	ro	Descărcați
+download documents	filemanager	ro	Descărcați documente
 edit share	filemanager	ro	Editare partaj
 enter a file size, e.g. 100k, 200m or 2g	filemanager	ro	Introduceți o dimensiune a fișierului, de exemplu, 100K, 200M sau 2G
 enter the complete vfs path to specify your desired start folder.	filemanager	ro	Introduceți calea VFS completă pentru a specifica dosarul de pornire

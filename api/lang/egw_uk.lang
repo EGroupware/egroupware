@@ -17,7 +17,8 @@
 15 minutes	common	uk	15 хвилин
 2-factor authentication code required	common	uk	Потрібен код 2-факторної автентифікації
 2-factor-authentication	common	uk	2-факторна аутентифікація
-2-factor-authentication required	common	uk	Потрібна 2-факторна автентифікація
+2-factor-authentication required	common	uk	Потрібен другий фактор.
+2nd factor	login	uk	2-й фактор
 3 minutes	common	uk	3 хвилини
 30 minutes	common	uk	30 хвилин
 30 seconds	common	uk	30 секунд
@@ -41,7 +42,7 @@ active	common	uk	Активний
 add	common	uk	Добавити
 add %1 category for	common	uk	Додати категорію %1 для
 add category	common	uk	Додати категорію
-add current	common	uk	Поточний перегляд у вибраному
+add current	common	uk	Переглянути як улюблене
 add sub	common	uk	Додати підкатегорію
 add to clipboard	common	uk	Додати в буфер обміну
 add user to responsibles	groupdav	uk	Додати користувача до відповідальних
@@ -675,4 +676,3 @@ your session timed out, please log in again	login	uk	Термін дії ваш�
 your settings have been updated	common	uk	Параметри поновлено
 zambia	common	uk	ЗАМБІЯ
 zimbabwe	common	uk	ЗІМБАБВЕ
-2nd factor	login	uk	2-й фактор

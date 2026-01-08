@@ -376,7 +376,6 @@ the api requires an upgrade	admin	hr	The API requires an upgrade
 the groups must include the primary group	admin	hr	grupe moraju sadržavati primarne grupe
 the login and password can not be the same	admin	hr	Korisničko ime i zaporka nesmiju biti isti
 the loginid can not be more then 8 characters	admin	hr	The loginid can not be more then 8 characters
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	hr	ime upotrebljavano interno (<= 20 znakova), mijenjanjem postoječe podatke činite nedostupnima
 the testjob sends you a mail everytime it is called.	admin	hr	The TestJob sends you a mail everytime it is called.
 the text displayed to the user	admin	hr	Tekst prikazan korisniku
 the two passwords are not the same	admin	hr	Dvije unesene zaporke nisu iste
@@ -422,7 +421,6 @@ view error log	admin	hr	Prikaži zapis liste grešaka
 view sessions	admin	hr	View sessions
 view this user	admin	hr	Prikaži ovog korisnika
 view user account	admin	hr	Prikaži korisničke račune
-virtual mail manager	admin	hr	Virtual MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	hr	Kome bi željeli prenjeti SVE zapise koje je imao obrisani korisnik?
 xml-rpc	admin	hr	XML-RPC
 you have entered an invalid expiration date	admin	hr	You have entered an invalid expiration date

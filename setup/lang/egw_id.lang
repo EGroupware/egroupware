@@ -20,12 +20,18 @@ are you sure?	setup	id	ANDA YAKIN?
 authentication / accounts	setup	id	Otentikasi / Akoun
 authentification mode:	setup	id	Authentification mode:
 available version	setup	id	Available Version
+backup '%1' deleted	setup	id	Cadangan ‘%1’ dihapus.
+backup '%1' renamed to '%2'	setup	id	Cadangan ‘%1’ diganti namanya menjadi ‘%2’.
+backup '%1' restored	setup	id	Cadangan ‘%1’ dipulihkan.
+backup directory %1 mounted as %2	setup	id	Direktori Backup %1 dipasang sebagai %2
 backup failed	setup	id	Backup failed
 backup finished	setup	id	backup finished
 backup housekeeping	setup	id	Backups with a standard name can be cleaned up automatically. Rename backup files to exclude them from cleanup.
+backup min count	setup	id	Jumlah minimum cadangan
 backup now	setup	id	backup now
 backup sets	setup	id	backup sets
 backup skipped!	setup	id	Backup skipped!
+backup started, this might take a few minutes ...	setup	id	Cadangan dimulai, ini mungkin memakan waktu beberapa menit ...
 bottom	setup	id	bottom
 ca certificate	setup	id	CA certificate
 cancel	setup	id	Batal
@@ -132,6 +138,7 @@ minute	setup	id	menit
 modified	setup	id	Diubah
 modify	setup	id	Modify
 month	setup	id	bulan
+mount backup directory to %1	setup	id	Pasang direktori cadangan ke %1
 never	setup	id	never
 new	setup	id	Baru
 next run	setup	id	next run
@@ -230,6 +237,7 @@ version mismatch	setup	id	Versi Tidak Sesuai
 view	setup	id	View
 virtual filesystem	setup	id	Virtual filesystem
 warning!	setup	id	Peringatan!
+we strongly recommend to run a db backup before running the import!	setup	id	Kami sangat menyarankan untuk menjalankan cadangan DB SEBELUM menjalankan impor!
 world readable	setup	id	world readable
 world writable	setup	id	world writable
 write	setup	id	Tulis

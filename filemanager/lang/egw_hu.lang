@@ -56,6 +56,7 @@ cut to clipboard	filemanager	hu	Kivágás a vágólapra
 default action on double-click	filemanager	hu	Alapértelmezett művelet dupla kattintásra
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	hu	Alapértelmezett beállítás NEM. A link nem lesz megjelenítve, de beléphetsz erre a helyre vagy beállíthatod alapértelmezett kezdeti mappának.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	hu	Meghatározza, hogyan kezelje a dokumentumfájlok dupla kattintási műveletét. A képek mindig az expozíciós nézetben nyílnak meg, és az e-mailek az e-mail alkalmazással. Minden más MIME-típust maga a böngésző kezel.
+defines how to open a merge print document	filemanager	hu	Mi történik a dokumentumokkal, miután kitöltötték őket?<br><br><b>Ha a Collabora Online elérhető</b>, ezeket a dokumentumokat közvetlenül a böngészőben lehet megnyitni (és tovább feldolgozni) a Collabora Online segítségével. <br><br> <b>Collabora Online nélkül</b> a kitöltött dokumentum letöltésre kerül. <br><br>További információk a Collabora Online-ról: <br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office az EGroupware-ben</a>
 delete this file or directory	filemanager	hu	Kijelölt file vagy mappa törlése.
 deleted %1	filemanager	hu	%1 törölve
 directories sorted in	filemanager	hu	Mappák tárolva a
@@ -67,7 +68,7 @@ disable	filemanager	hu	Letilt
 display and modification of content	filemanager	hu	A tartalom megjelenítése és módosítása
 display of content	filemanager	hu	A tartalom megjelenítése
 do you want to overwrite the existing file %1?	filemanager	hu	Felülírod a létező %1 filet?
-download	filemanager	hu	Letölt
+download	filemanager	hu	Letöltés
 download documents	filemanager	hu	Dokumentumok letöltése
 edit comments	filemanager	hu	Megjegyzés szerkesztése
 edit settings	filemanager	hu	Beállítások módosítása

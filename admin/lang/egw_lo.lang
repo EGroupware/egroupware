@@ -227,7 +227,6 @@ for the times above	admin	lo	ສໍາລັບເວລາຂ້າງຕົ້
 for the times below (empty values count as '*', all empty = every minute)	admin	lo	ສໍາລັບເວລາຂ້າງລຸ່ມນີ້(ຄ່າເປົ່າຫວ່າງໃຫ້ນັບເປັນ '*', ຄ່າເປົ່າຫວ່າງທັງໝົດ=ທຸກໆນາທີ)
 force selectbox	admin	lo	ຕ້ອງເລືອກເອົາ
 forward also to	admin	lo	ສົ່ງຕໍ່ໄປຫາ
-forward emails to	admin	lo	ສົ່ງເມລໃຫ້ນີ້ໃຫ້ຄົນອື່ນຕໍ່
 forward only	admin	lo	ສົ່ງຕໍ່ເທົ່ານັ້ນ
 general	admin	lo	ທົ່ວໄປ
 global categories	common	lo	ໝວດທົ່ວໄປ
@@ -448,7 +447,6 @@ the groups must include the primary group	admin	lo	ກຸ່ມຕ້ອງລ�
 the install id of an instance can be found under admin > site configuration	admin	lo	ລະຫັດການຕິດຕັ້ງຂອງ instance ສາມາດຊອກໄດ້ທີ່  Admin > Site configuration
 the login and password can not be the same	admin	lo	ລະຫັດຜ່ານ ແລະ ຊື່ບໍ່ສາມາດຄືກັນໄດ້
 the loginid can not be more then 8 characters	admin	lo	ລະຫັດການເຂົ້າລະບົບບໍ່ສາມາດຫຼາຍກວ່າ8ຕົວອັກສອນ
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	lo	ຊື່ທີ່ໃຊ້(<=20ຕົວອັກສອນ), ຖ້າມີການປ່ຽນແປງຂໍ້ມູນທີ່ມີຢູ່ຈະເຮັດໃຫ້ໃຊ້ບໍ່ໄດ້
 the testjob sends you a mail everytime it is called.	admin	lo	ການທົດສອບຈະສົ່ງເມລທຸກໆສິ່ງທີ່ໄດ້ຮ້ອງໃຊ້
 the text displayed to the user	admin	lo	ຂໍ້ຄວາມທີ່ສະແດງໄປຫາຜູ້ໃຊ້
 the two passwords are not the same	admin	lo	ລະຫັດຜ່ານທັງ2ບໍ່ກົງກັນ

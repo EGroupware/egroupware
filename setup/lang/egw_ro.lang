@@ -1,4 +1,13 @@
+backup '%1' deleted	setup	ro	Copia de rezervă '%1' a fost ștersă.
+backup '%1' renamed to '%2'	setup	ro	Copia de rezervă '%1' a fost redenumită '%2'.
+backup '%1' restored	setup	ro	Copia de rezervă '%1' a fost restaurată.
+backup directory %1 mounted as %2	setup	ro	Directorul de backup %1 montat ca %2
+backup failed	setup	ro	Copia de rezervă a eșuat.
 backup files (needs ziparchive)	setup	ro	Kopia zapasowa danych plików EGroupware (katalog files) <br>(wymaga PHP ZipArchive)
+backup finished	setup	ro	Copia de rezervă a fost finalizată.
+backup housekeeping	setup	ro	Backupurile cu un nume standard pot fi curățate automat. Redenumiți fișierele de backup pentru a le exclude din curățare.
+backup min count	setup	ro	Număr minim de backupuri
+backup started, this might take a few minutes ...	setup	ro	Copia de rezervă a fost pornită, acest proces poate dura câteva minute...
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	ro	Uwzględnij pliki (katalog plików) w kopii zapasowej danych.<br>(Może generować duże ilości danych i przerwać z wieloma plikami, dokumentacja: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
 disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	ro	Dezactivați numai dacă AD-ul dvs. are probleme cu controalele VLV ȘI poate returna toți utilizatorii într-o singură interogare!
 disable vlv controls	setup	ro	Dezactivați controalele VLV
@@ -6,11 +15,13 @@ error searching "dn=%1" for "%2"!	setup	ro	Eroare la căutarea "DN=%1" pentru "%
 error uploading your backup!	setup	ro	Eroare la încărcarea copiei de rezervă!
 every	setup	ro	Fiecare
 export has been completed!	setup	ro	Exportul a fost finalizat!
-failed to mount backup directory!	setup	ro	A eșuat montarea directorului Backup!
+failed to mount backup directory!	setup	ro	Nu s-a putut monta directorul Backup!
 failed updating user "%1" dn="%2"!	setup	ro	A eșuat actualizarea utilizatorului "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	ro	A eșuat la scrierea fișierului de configurare header.inc.php, verificați permisiunile!
 fallback authentication	setup	ro	Autentificare de rezervă
 mail account of %1 migrated	setup	ro	Konto pocztowe %1 zmigrowane.
+min backup count	setup	ro	Numărul maxim de copii de rezervă păstrate (zero: toate)
+mount backup directory to %1	setup	ro	Montează directorul backup în %1
 openidconnect login	setup	ro	Conectare OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	ro	opcional, se apenas a autenticação E a pesquisa anônima estiverem ativadas
 or leave empty and select openidconnect as authentication type above for single sign on	setup	ro	ou deixe em branco e selecione OpenID Connect como tipo de autenticação acima para logon único
@@ -29,5 +40,6 @@ replace username and email	setup	ro	Înlocuiți numele de utilizator și adresa 
 replace username and keep email	setup	ro	Înlocuiește numele de utilizator și păstrează adresa de e-mail
 required to change passwords	setup	ro	Necesar pentru a schimba parolele
 requires "reset password" privilege, to change passwords!	setup	ro	Necesită privilegiul "Reset Password", pentru a schimba parolele!
+we strongly recommend to run a db backup before running the import!	setup	ro	Recomandăm insistent să efectuați un backup al bazei de date ÎNAINTE de a rula importul!
 you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	ro	Puteți ocoli această limită, montând directorul de backup în managerul de fișiere EGroupware și încărcând de acolo.
 you need to select your current charset!	setup	ro	Trebuie să selectați setul de caractere curent!

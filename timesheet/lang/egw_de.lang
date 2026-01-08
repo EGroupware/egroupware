@@ -60,11 +60,11 @@ forgot to switch off working time?	common	de	Haben Sie vergessen Ihre Arbeitszei
 full: use only projectmanager	admin	de	Komplett: verwende nur Projektmanager
 general fields:	timesheet	de	Das Löschen von Einträgen verhindern
 give additional users access	timesheet	de	Erlaube zusätzlichen Benutzer Zugriff
-give infolog delegation read-access to timesheets booked on them	timesheet	de	Gewähre InfoLog Verantwortlichen Leserechte zu Stundenzetteln die darauf gebucht sind
+give infolog delegation read-access to timesheets booked on them	timesheet	de	Gewähre InfoLog Verantwortlichen Leserechte zu Stundenzetteln die darauf gebucht sind.
 global categories	timesheet	de	Globale Kategorien
 history	timesheet	de	Historie
 history logging	admin	de	Protokollierung der Historie
-how to display linked timesheets	timesheet	de	Wie sollen verknüpfte Stundenzettel angezeigt werden
+how to display linked timesheets	timesheet	de	Wie sollen verknüpfte Stundenzettel angezeigt werden?
 html link to the current record	timesheet	de	HTML-Verknüpfung zum aktuellen Eintrag
 id	timesheet	de	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	de	Wenn Sie hier den Ordner (vollständiger Pfad im virtuellen Dateisystem VFS) angeben, zeigt %1 eine Aktion für jedes Dokument. Diese Aktion erlaubt es das angegebene Dokument herunterzuladen mit den %1 Daten eingefügt.
@@ -187,7 +187,7 @@ working time	common	de	Arbeitszeit
 working time and timer	timesheet	de	Arbeitszeit und Zeitnehmer
 working time from %1	timesheet	de	Arbeitszeit vom %1
 working time of %1 hours stored	timesheet	de	Arbeitszeit von %1 Stunden gespeichert
-would you like to be asked, to start and stop working time, when login in or off	timesheet	de	Wollen Sie gefragt werden die Arbeitszeit to starten oder stoppen, wenn Sie sich an- oder abmelden?
+would you like to be asked, to start and stop working time, when login in or off	timesheet	de	Wollen Sie gefragt werden die Arbeitszeit zu starten oder stoppen, wenn Sie sich an- oder abmelden?
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren dürfen gelöschte Einträge endgültig löschen
 yes, users can purge their deleted items	admin	de	Ja, Benutzer dürfen ihre gelöschten Einträge endgültig löschen
 yesterday	timesheet	de	Gestern

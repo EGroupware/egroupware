@@ -86,6 +86,7 @@ backup '%1' deleted	setup	fi	varmuuskopio '%1' poistettu
 backup '%1' renamed to '%2'	setup	fi	varmuuskopio '%1' nimetty '%2'
 backup '%1' restored	setup	fi	varmuuskopio '%1' palautettu
 backup and restore	setup	fi	varmuuskopiointi ja palautus
+backup directory %1 mounted as %2	setup	fi	Varmuuskopiointihakemisto %1 asennettu nimellä %2
 backup failed	setup	fi	Varmuuskopiointi epäonnistui
 backup files (needs ziparchive)	setup	fi	EGroupwaren tiedostojen (tiedostohakemisto) varmuuskopiointi <br>(vaatii PHP ZipArchive).
 backup finished	setup	fi	Varmuuskopiointi päättynyt
@@ -355,6 +356,7 @@ modifications have been completed!	setup	fi	Muutokset on suoritettu loppuun!
 modified	setup	fi	Muokattu
 modify	setup	fi	Muokkaa
 month	setup	fi	kuukausi
+mount backup directory to %1	setup	fi	Asenna varmuuskopiohakemisto osoitteeseen %1
 name of database	setup	fi	Tietokannan nimi
 name of db user egroupware uses to connect	setup	fi	Tietokantakäyttäjä, jota EGroupware käyttää
 never	setup	fi	Ei koskaan
@@ -550,6 +552,7 @@ version mismatch	setup	fi	Versioristiriita
 view	setup	fi	Näytä
 warning!	setup	fi	Varoitus!
 we can proceed	setup	fi	Voidaan jatkaa
+we strongly recommend to run a db backup before running the import!	setup	fi	Suosittelemme vahvasti suorittamaan tietokannan varmuuskopioinnin ENNEN tuonnin suorittamista!
 we will automatically update your tables/records to %1	setup	fi	Taulut/tietueet päivitetään versioon %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	fi	Seuraavaksi ajetaan muutamia testejä, joiden suorittaminen voi viedä joitakin minuutteja. Napsauta allaolevaa linkkiä jatkaaksesi.
 welcome to the egroupware installation	setup	fi	Tervetuloa EGroupwaren asennukseen

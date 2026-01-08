@@ -13,6 +13,7 @@ custom fields	filemanager	uk	Власні поля
 default action on double-click	filemanager	uk	Дія за замовчуванням при подвійному клацанні
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	uk	Значення за замовчуванням = Ні. Посилання не буде показано, але ви все одно зможете перейти до цього місця або налаштувати це місце як початкову папку або посилання на папку.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	uk	Визначає спосіб обробки подвійного клацання на файлі документа. Зображення завжди відкриваються у вікні перегляду та листів у поштовому додатку. Всі інші MIME-типи обробляються браузером самостійно.
+defines how to open a merge print document	filemanager	uk	Що має статися з документами після їх заповнення?<br><br><b>Якщо доступний Collabora Online</b>, ці документи можна відкрити (і далі обробляти) безпосередньо в браузері за допомогою Collabora Online. <br><br> <b>Без Collabora Online</b> заповнений документ пропонується для завантаження.<br><br>Більше інформації про Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office в EGroupware</a>
 disable	filemanager	uk	Відключити
 download	filemanager	uk	Загрузити
 download documents	filemanager	uk	Завантажити документи

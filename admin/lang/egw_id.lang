@@ -85,6 +85,7 @@ after how many unsuccessful attempts to login, an ip should be blocked (default 
 aliases	admin	id	Alias
 all applications	admin	id	Semua aplikasi
 all users	admin	id	Semua pengguna
+allow remote administration from following install id's (comma separated)	admin	id	Izinkan administrasi jarak jauh dari ID instalasi berikut, dipisahkan dengan koma.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	id	Izinkan pengguna untuk menyimpan kata sandinya di bawah 'Keamanan & Kata Sandi' untuk SingleSignOn.
 allow user to set 'remember me' token	admin	id	Izinkan pengguna untuk mengatur token 'Ingat saya'
 alternate email address	admin	id	Alamat email pengganti
@@ -102,9 +103,14 @@ applications	admin	id	Aplikasi
 applications list	admin	id	Daftar Aplikasi
 applies the changes	admin	id	Terapkan perubahan
 apply the changes	admin	id	Terapkan perubahan
+are you sure you want to %1 mail for selected accounts?	admin	id	Apakah Anda yakin ingin menghapus %1 email untuk akun yang dipilih?
+are you sure you want to delete this account ?	admin	id	Apakah Anda yakin ingin menghapus akun ini?
 are you sure you want to delete this category ?	common	id	Anda yakin ingin menghapus kategori ini?
-asynchronous timed services	admin	id	Asynchronous timed services
+are you sure you want to delete this global category ?	admin	id	Apakah Anda yakin ingin menghapus kategori global ini?
+are you sure you want to delete this group ?	admin	id	Apakah Anda yakin ingin menghapus grup ini?
+asynchronous timed services	admin	id	Layanan asinkron
 authentication / accounts	admin	id	Otentikasi / Akoun
+backup directory %1 mounted as %2	admin	id	Direktori cadangan %1 dipasang sebagai %2
 bad login name or password.	admin	id	Nama atau password tidak benar.
 bi-dir passthrough	admin	id	bi-dir passthrough
 bi-directional	admin	id	bi-directional
@@ -130,7 +136,9 @@ change acl rights	admin	id	Ubah Hak-hak ACL
 change config settings	admin	id	Ubah seting konfigurasi
 change domain of email address and aliases	admin	id	Mengubah domain alamat email dan alias
 change login screen message	admin	id	Ubah pesan pada layar utama
+changelog and versions	admin	id	Riwayat Perubahan dan Versi
 children	admin	id	Anak
+clear cache and register hooks	admin	id	Hapus cache/daftarkan hook
 clear security tokens	admin	id	Menghapus token keamanan
 click to select a color	admin	id	Klik untuk memilih warna
 color	admin	id	Warna
@@ -155,6 +163,7 @@ cyrus imap server	admin	id	Server Cyrus IMAP
 data	admin	id	Data
 day	admin	id	Hari
 day of week<br>(0-6, 0=sun)	admin	id	Hari-hari<br>(0-6, 0=Min)
+db backup and restore	admin	id	Cadangan
 default	admin	id	Bawaan
 deinstall crontab	admin	id	Deinstall crontab
 delete account	admin	id	Hapus akoun
@@ -177,6 +186,8 @@ deletes this field	admin	id	Hapus field ini
 deliver extern	admin	id	Pengiriman eksternal
 deny access	admin	id	Deny Access
 deny access to access log	admin	id	Tolak akses ke log akses
+deny access to asynchronous timed services	admin	id	Tolak akses ke layanan asinkron
+deny access to db backup and restore	admin	id	Tolak akses ke Cadangan
 description can not exceed 255 characters in length !	admin	id	Panjang uraian tidak boleh melebihi 255 karakter!
 determines the order the fields are displayed	admin	id	Menentukan urutan field ditampilkan
 disable	admin	id	Nonaktifkan
@@ -223,6 +234,7 @@ event details follow	admin	id	Berikut adalah detil Kegiatan
 expires	admin	id	Kadaluarsa
 export certificate as p12	admin	id	Ekspor sertifikat sebagai p12
 failed to change password.	admin	id	Gagal mengubah password.
+failed to mount backup directory!	admin	id	Gagal memasang direktori Cadangan!
 false	admin	id	Salah
 file space	admin	id	Ruang file
 filtered by account	admin	id	Saringan menurut Akoun
@@ -321,6 +333,7 @@ mode	admin	id	Mode
 modified	admin	id	Diubah
 month	admin	id	Bulan
 more secure	admin	id	Lebih aman
+mount backup directory to %1	admin	id	Pasang direktori cadangan ke %1
 name of organisation	admin	id	Nama Organisasi
 new group name	admin	id	Nama kelompok baru
 new name	admin	id	Nama baru
@@ -374,12 +387,16 @@ quota settings	admin	id	Pengaturan Kuota
 quota size in mbyte	admin	id	Ukuran kuota dalam MByte
 re-enter password	admin	id	Masukan-ulang password
 regular expression to find part to use as container	admin	id	Ekspresi reguler untuk menemukan bagian yang akan digunakan sebagai kontainer
+remote administration instances	admin	id	Administrasi jarak jauh
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	id	Administrasi jarak jauh harus diaktifkan di instans jarak jauh di bawah Admin > Konfigurasi Situs!
 remove	admin	id	Buang
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	id	Menghapus akses untuk grup dapat menyebabkan masalah pada data dalam kategori ini. Apakah Anda yakin? Pengguna dalam grup ini mungkin tidak lagi memiliki akses:
 requested	admin	id	Diminta
 reset filter	admin	id	Ulangi penyaringan
 revoke this token	admin	id	Cabut token ini
 rights	admin	id	Hak
 rows	admin	id	Rows
+run asynchronous services	admin	id	Jalankan layanan asinkron
 save the category	admin	id	Simpan kategori ini
 saves the changes made and leaves	admin	id	Simpan perubahan dan tinggalkan
 saves this entry	admin	id	Simpan entri ini
@@ -486,7 +503,6 @@ view error log	admin	id	Lihat log error
 view sessions	admin	id	Sesi
 view this user	admin	id	lihat pengguna ini
 view user account	admin	id	Lihat akoun pengguna
-virtual mail manager	admin	id	Virtual MAIL ManaGeR
 who would you like to transfer records owned by the deleted user to?	admin	id	Kepada siapa Anda ingin mentransfer catatan yang dimiliki oleh pengguna yang dihapus?
 xml-rpc	admin	id	XML-RPC
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	id	Anda hanya dapat mengubah hash, jika Anda menetapkan kata sandi acak atau saat ini menggunakan kata sandi teks biasa!

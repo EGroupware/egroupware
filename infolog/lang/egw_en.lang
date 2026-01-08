@@ -231,6 +231,7 @@ history logging and deleting of items	infolog	en	History logging and deleting of
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	en	How wide should the description area be. This value is numeric e.g. 60.
 html link to the current record	infolog	en	HTML link to the current record
+icon for	infolog	en	Icon for
 id	infolog	en	ID
 id#	infolog	en	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!

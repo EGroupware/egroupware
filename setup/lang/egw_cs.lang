@@ -323,7 +323,7 @@ error searching "dn=%1" for "%2"!	setup	cs	Chyba při hledání "DN=%1" pro "%2"
 error uploading your backup!	setup	cs	Chyba při nahrávání zálohy!
 every	setup	cs	Každý
 export has been completed!	setup	cs	Export byl dokončen!
-failed to mount backup directory!	setup	cs	Připojení složky se zálohami selhalo!
+failed to mount backup directory!	setup	cs	Nepodařilo se připojit adresář zálohy!
 failed updating user "%1" dn="%2"!	setup	cs	Nepodařilo se aktualizovat uživatele "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	cs	Zápis konfiguračního souboru header.inc.php se nezdařil, zkontrolujte oprávnění!
 fallback authentication	setup	cs	Náhradní ověřování
@@ -463,7 +463,7 @@ modifications have been completed!	setup	cs	Změny byly dokončeny!
 modified	setup	cs	Změněno
 modify	setup	cs	Změnit
 month	setup	cs	Měsíc
-mount backup directory to %1	setup	cs	Složka zálohy byla připojena jako %1
+mount backup directory to %1	setup	cs	Připojit adresář zálohy do %1
 name for service provider	setup	cs	Název pro poskytovatele služeb
 name of database	setup	cs	Název databáze
 name of db user egroupware uses to connect	setup	cs	Jméno databaz. uživatele, kterým se EGroupware připojuje
@@ -750,6 +750,7 @@ virtual mail manager (login-name includes domain)	setup	cs	Virtuální správce 
 warning!	setup	cs	Varování!
 we can proceed	setup	cs	Můžeme pokračovat
 we could not determine the version of %1, please make sure it is at least %2	setup	cs	Nedokážeme určit verzi %1, prosím ujistěte se, že se jedná minimálně o verzi %2
+we strongly recommend to run a db backup before running the import!	setup	cs	Důrazně doporučujeme provést zálohu databáze PŘED spuštěním importu!
 we will automatically update your tables/records to %1	setup	cs	Automaticky zaktualizujeme Vaše tabulky/záznamy na %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	cs	Nyní spustíme sérii testů, které mohou trvat několik minut. Pro pokračování klikněte na odkaz níže.
 welcome to the egroupware installation	setup	cs	Vítejte v instalaci EGroupware

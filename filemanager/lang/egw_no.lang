@@ -29,6 +29,7 @@ cut	filemanager	no	Klipp ut
 default action on double-click	filemanager	no	Standardhandling ved dobbeltklikk
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	no	Standard = Nei. Koblingen vises ikke, men du kan fortsatt navigere til denne plasseringen eller konfigurere denne plasseringen som startmappe eller mappekobling.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	no	Definerer hvordan dobbeltklikk på en dokumentfil skal håndteres. Bilder åpnes alltid i eksponeringsvisningen og e-poster med e-postprogrammet. Alle andre MIME-typer håndteres av nettleseren selv.
+defines how to open a merge print document	filemanager	no	Hva skal skje med dokumentene etter at de er fylt ut?<br><br><b>Hvis Collabora Online er tilgjengelig</b>, kan disse dokumentene åpnes (og viderebehandles) direkte i nettleseren med Collabora Online. <br><br> <b>Uten Collabora Online</b> blir utfylte dokumenter tilbudt for nedlasting.<br><br>Mer informasjon om Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office i EGroupware</a>
 deleted %1	filemanager	no	Slettet %1
 directory	filemanager	no	Mappe
 directory %1 already exists	filemanager	no	Mappe %1 finnes allerede

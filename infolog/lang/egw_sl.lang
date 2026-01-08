@@ -230,6 +230,7 @@ history logging and deleting of items	infolog	sl	Beleenje zgodovine in brisanje 
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	sl	Koliko opisnih vrstic mora biti neposredno vidnih. Dodatne vrstice so na voljo v vrstici za pomikanje.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	sl	Kako široko bi bilo treba opisno območje. Ta vrednost je številka, npr. 60.
 html link to the current record	infolog	sl	Povezava HTML s trenutnim zapisom
+icon for	infolog	sl	Ikona za
 id	infolog	sl	Šifra
 id#	infolog	sl	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sl	Če ima vrsta skupinskega lastnika, bo lastnik vseh vnosov te vrste dana skupina in NE uporabnik, ki jo je ustvaril!
@@ -493,6 +494,7 @@ to what should the startdate of new entries be set.	infolog	sl	Na kaj naj bo nas
 today	infolog	sl	Danes
 todays date	infolog	sl	Današnji datum
 todo	infolog	sl	Opravila
+toggle details	common	sl	Preklopi podrobnosti
 typ	infolog	sl	Tip
 typ '%1' already exists !!!	infolog	sl	Tip '%1' že obstaja!
 type	infolog	sl	Tip
