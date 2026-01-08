@@ -46,9 +46,10 @@ class Hooks
 			),
 			'app_chooser_style' => [
 				'type'   => 'select',
-				'label'  => 'Application chooser style',
+				'label'  => lang('Application chooser style'),
 				'name'   => 'app_chooser_style',
 				'values' => $app_list_style,
+				'help'   => lang("should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons")
 			],
 			'keep_nm_header' => [
 				'type'    => 'select',

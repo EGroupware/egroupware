@@ -1,4 +1,6 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	de	Aktivieren Sie diese Option, um farbige App-Symbole in den geöffneten Registerkarten anzuzeigen. Wenn diese Option deaktiviert ist, werden standardmäßig angepasste, aufgehellte Farben verwendet.
+application chooser style	common	de	Stil der Anwendungsauswahl
 reload %1	common	de	%1 neu laden
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	common	de	Soll die Anwendunsauswahl nur Icons oder auch den Anwendungsnamen enthalten. Z.B. für Benutzer, die mit den Icons noch nicht vertraut sind.
 show app icons in there app color	kdots	de	App-Symbole in der App-Farbe anzeigen
 user profile	kdots	de	Benutzerprofil
