@@ -8,7 +8,7 @@ application list	common	en	Application list
 hide left area	common	en	Hide left area
 open applications	common	en	Open applications
 reload %1	common	en	Reload %1
-should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	common	en	should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	en	should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons
 show app icons in there app color	kdots	en	Show App Icons in their app color
 show left area	common	en	Show left area
 sidebox	common	en	Side menu
