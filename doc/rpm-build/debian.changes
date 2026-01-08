@@ -1,3 +1,27 @@
+egroupware-docker (26.0.20260108) hardy; urgency=low
+
+  * 3rd 26.x pre-release including new RAG application
+  * RAG: fulltext index, semantic search and UI to search all apps [requiring MariaDB 11.8!](https://github.com/EGroupware/rag/blob/master/README.md#requirements-and-installation)
+  * Kdots: Fix nextmatch letter filter was not shown
+  * Kdots: Stop app loader covering error messages
+  * Kdots: Add preference to show application names beside icons in app chooser
+  * Kdots: Fix opening 2 dialogs did not focus the second one
+  * Kdots: Block browser context menu
+  * Addressbook: Change how organisation contacts are shown from "Organisation / Organisation" to "Contact Name / Organisation"
+  * Addressbook: Hide group distribution list from email search results when group has an email & hiding groups without email address
+  * Addressbook/CardDAV/REST: fix not working search for phone-numbers (you need at least 9 digits!)
+  * Api: Fix disabled table cells were breaking nextmatch header
+  * Api: If app supports RAG search, use RAG's search template
+  * Api: Sort filter for mobile 
+  * Calendar: replaced img tags with et2-image, to support coloring(darkmode)
+  * Filemanager: Fix home portlet opened with errors 
+  * Invoices: allow setting or importing non-integer position identifier (BT-126) e.g. 1.1, 1.2, 1.3, 2.1 instead of 1, 2, 3, 4
+  * Projectmanager: Fix import preview to make sure project members list is not an array
+  * Status: Fix BigBlueButton meeting couldn't be entered by moderators
+  * Tracker: Fix completion value was missing in merge or custom notification
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 08 Jan 2026 09:31:14 +0100
+
 egroupware-docker (26.0.20251216) hardy; urgency=low
 
   * Calendar: fixed not tracked participant-changes in recurring events or recurrence-exceptions
