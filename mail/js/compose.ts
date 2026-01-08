@@ -707,7 +707,6 @@ export class MailCompose
 	 */
 	saveAsDraft(_egw_action, _action)
 	{
-		debugger;
 		var self = this;
 		return new Promise(function(_resolve, _reject){
 			var content = self.et2.getArrayMgr('content').data;

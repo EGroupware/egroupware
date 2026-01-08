@@ -215,7 +215,14 @@ export default css`
 
 			sl-menu-item::part(base) {
 				align-items: center;
+                font-size: var(--sl-font-size-large);
+                gap: var(--sl-spacing-2x-small);
 			}
+            sl-menu-item{
+                &::part(checked-icon), &::part(submenu-icon) {
+                    display: none;
+                }
+            }
 		}
 	}
 
