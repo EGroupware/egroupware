@@ -1243,7 +1243,7 @@ class Nextmatch extends Etemplate\Widget
 			{
 				if (!isset($validated[$form_name][$attr])) $validated[$form_name][$attr] = [];
 				// and use += to not overwrite regular validated filters
-				$validated[$form_name][$attr] += array_filter($value[$attr], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
+				$validated[$form_name][$attr] += array_filter($value[$attr]??[], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
 			}
 			// regular attribute
 			elseif (substr($attr, -1) !== ']')
