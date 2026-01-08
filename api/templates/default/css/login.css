@@ -245,13 +245,15 @@ div#loginScreenMessage {
 /***
 LOGIN FOOTER
 ***/
+#loginMainDiv:not(.stockLoginBackground) #login_footer {
+  background: linear-gradient(0deg, #000000C0 30%, transparent);
+}
 div#login_footer {
   position: fixed;
   bottom: 0;
   right: 0;
   width: 100%;
   height: var(--footer_height);
-  background: linear-gradient(0deg, #000000C0 30%, transparent);
   overflow-x: clip;
   display: flex;
   align-items: center;
@@ -352,3 +354,4 @@ div#login_footer .apps .tooltip .content .arrow::after {
 div#loginMainDiv.stockLoginBackground div#login_footer {
   background-color: transparent;
 }
+/*# sourceMappingURL=login.css.map */
