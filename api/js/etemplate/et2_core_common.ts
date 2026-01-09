@@ -499,8 +499,8 @@ export function et2_csvSplit(_str : string, _num? : number, _delimiter? : string
  */
 export function et2_activateLinks(_content)
 {
-	var _match = false;
-	var arr = [];
+	let _match = false;
+	let arr = [];
 
 	function _splitPush(_matches, _proc)
 	{
@@ -539,18 +539,20 @@ export function et2_activateLinks(_content)
 		}
 	}
 
-	var mail_regExp = /(mailto:)?([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i;
+	const mail_regExp = /(mailto:)?([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i;
 
-	//  First match things beginning with http:// (or other protocols)
-	var protocol = '(http:\\/\\/|(ftp:\\/\\/|https:\\/\\/))';	// only http:// gets removed, other protocolls are shown
-	var domain = '([\\w-]+\\.[\\w-.]+)';
-	var subdir = '([\\w\\-\\.,@?^=%&;:\\/~\\+#]*[\\w\\-\\@?^=%&\\/~\\+#])?';
-	var http_regExp = new RegExp(protocol + domain + subdir, 'i');
+	const protocol = '(http:\\/\\/|(ftp:\\/\\/|https:\\/\\/))';	// only http:// gets removed, other protocolls are shown
+	const domain = '([\\w-]+\\.[\\w-.]+)';
+	const subdir = '([\\w\\-\\.,@?^=%&;:\\/~\\+#]*[\\w\\-\\@?^=%&\\/~\\+#])?';
 
-	//  Now match things beginning with www.
-	var domain = 'www(\\.[\\w-.]+)';
-	var subdir = '([\\w\\-\\.,@?^=%&:\\/~\\+#]*[\\w\\-\\@?^=%&\\/~\\+#])?';
-	var www_regExp = new RegExp(domain + subdir, 'i');
+	// first match Markdown style links: [text](url)
+	const markdown_regExp = new RegExp('\\[([^\\]]+)\\]\\(('+protocol+domain+subdir+')\\)', 'i');
+
+	// then things beginning with http:// (or other protocols)
+	const http_regExp = new RegExp(protocol + domain + subdir, 'i');
+
+	// at last match things beginning with www.
+	const www_regExp = new RegExp('www(\\.[\\w-.]+)' + subdir, 'i');
 
 	do {
 		_match = false;
@@ -561,6 +563,14 @@ export function et2_activateLinks(_content)
 		{
 			break;
 		}
+
+		// Create hrefs for markdown style links (must run first!)
+		_splitPush(_content.match(markdown_regExp), function(_matches) {
+			arr.push({
+				"href": _matches[2],
+				"text": _matches[1]
+			});
+		});
 
 		// No need make emailaddress spam-save, as it gets dynamically created
 		_splitPush(_content.match(mail_regExp), function(_matches) {
