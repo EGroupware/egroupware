@@ -177,7 +177,7 @@ export const StaticOptions = new class StaticOptionsType
 			// pending, wait for it
 			const promise = cache.then((response) =>
 			{
-				cache = cache_owner[cache_id] = response.response[0].data || undefined;
+				cache = cache_owner[cache_id] = response?.response[0].data || undefined;
 
 				if (return_promise) return cache;
 
