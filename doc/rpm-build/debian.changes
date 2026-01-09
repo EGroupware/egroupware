@@ -1,6 +1,7 @@
 egroupware-docker (23.1.20260108) hardy; urgency=low
 
   * SECURITY and Maintenance Release: strong recommendation to update to this release (or 26.0.20260108) immediately
+  * Many thanks to [Łukasz Rybak](https://github.com/lukasz-rybak) who found and reported the vulnerability (CVE-2026-22243)
   * Addressbook: Hide group distribution list from email search results when group has an email & hiding groups without email address
   * Addressbook/CardDAV/REST: fix not working search for phone-numbers (you need at least 9 digits!)
   * Invoices: allow setting or importing non-integer position identifier (BT-126) e.g. 1.1, 1.2, 1.3, 2.1 instead of 1, 2, 3, 4
