@@ -1,5 +1,7 @@
 egroupware-docker (26.0.20260108) hardy; urgency=low
 
+  * SECURITY and Maintenance Release: strong recommendation to update to this release (or 23.1.20260108) immediately
+  * Many thanks to [Łukasz Rybak](https://github.com/lukasz-rybak) who found and reported the vulnerability (CVE-2026-22243)
   * 3rd 26.x pre-release including new RAG application
   * RAG: fulltext index, semantic search and UI to search all apps [requiring MariaDB 11.8!](https://github.com/EGroupware/rag/blob/master/README.md#requirements-and-installation)
   * Kdots: Fix nextmatch letter filter was not shown
