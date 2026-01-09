@@ -954,8 +954,7 @@ class infolog_so
 		{
 			$filter = $extra_cols = [];
 			$order_by = null;
-			if (preg_match('/^#\d+$/', $query['search']) ||
-				!class_exists('EGroupware\\Rag\\Embedding') ||
+			if (!class_exists('EGroupware\\Rag\\Embedding') ||
 				!EGroupware\Rag\Embedding::search2criteria('infolog', $query['search'], $order_by, $extra_cols, $filter))
 			{
 				// legacy search
