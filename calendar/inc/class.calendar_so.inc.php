@@ -2299,7 +2299,10 @@ ORDER BY cal_user_type, cal_usre_id
 			if (!is_null($role) && $role != 'REQ-PARTICIPANT') $set['cal_role'] = $role;
 			$this->db->update($this->user_table, $set, $where, __LINE__, __FILE__, 'calendar');
 			// if we have to insert a new row for group-invitations, we cant do that with "cal_recur_date >= ..."
-			if (!($ret = $this->db->affected_rows()))
+			if (!($ret = $this->db->affected_rows()) &&
+				// no affected rows can also mean, that the status is already set,
+				// in which case we would get an SQL error when trying to insert it again :(
+				!$this->db->select($this->user_table, 'COUNT(*)', $where, __LINE__, __FILE__, false, '', 'calendar')->fetchColumn())
 			{
 				// for a recurring event, we need to query and set the exact recurrence date
 				if ($recur_date)
