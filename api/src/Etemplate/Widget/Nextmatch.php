@@ -1248,9 +1248,9 @@ class Nextmatch extends Etemplate\Widget
 			// regular attribute
 			elseif (substr($attr, -1) !== ']')
 			{
-				if (isset($value[$attr]))
+				if (array_key_exists($attr, $value) || $attr === 'search')  // otherwise a removed search is not propagated
 				{
-					$validated[$form_name][$attr] = $value[$attr];
+					$validated[$form_name][$attr] = $value[$attr] ?? null;
 				}
 			}
 			// e.g. "col_filter[dir]"
