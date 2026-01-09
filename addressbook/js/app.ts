@@ -907,7 +907,7 @@ class AddressbookApp extends EgwApp
 	{
 		let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
 		const filter = <Et2TreeDropdown>this.et2.getWidgetById('filter2')
-		const lists = filter.select_options.find(elem => elem.value === 'lists')?.children ?? {};
+		const lists = filter.select_options.find(elem => elem.value === 'lists')?.item ?? {};
 		const selectedID = filter.getValue() || 0;
 		const value = lists.find(distributionList => distributionList.value == selectedID);
 		const self =this;
