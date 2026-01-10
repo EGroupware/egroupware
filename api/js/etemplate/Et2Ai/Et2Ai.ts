@@ -1,0 +1,518 @@
+import {html, LitElement, TemplateResult} from 'lit';
+import {state} from "lit/decorators/state.js";
+import {customElement, property} from 'lit/decorators.js';
+import {AiAssistantController} from "./AiAssistantController";
+import styles from "./Et2Ai.styles";
+import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {unsafeHTML} from "lit/directives/unsafe-html.js";
+
+// etemplate2 helper (globally available)
+declare const etemplate2 : {
+	getValues : (node : HTMLElement) => Record<string, any>;
+};
+
+export interface AiPrompt
+{
+	id : string;
+	label : string;
+	action? : Function | {
+		/* Et2 ID, CSS selector or keyword
+		*
+		* self:     the slotted widget (default)
+		* subject:  sibling summary/subject field
+		* label:    label/name field
+		*/
+		target? : string;
+		/* How to deal with existing content in the target.  Default replace*/
+		mode? : "replace" | "append" | "prepend";
+	};
+}
+
+export const simplePrompts : AiPrompt[] = [
+	{id: 'aiassist.summarize', label: 'Summarize text'},
+	{id: "aiassist.generate_subject", label: "Generate a subject", action: {target: "subject"}},
+	{id: 'aiassist.formal', label: 'Make more formal'},
+	{id: 'aiassist.grammar', label: 'Fix grammar & spelling'},
+	{id: 'aiassist.concise', label: 'Make concise'}
+];
+
+@customElement('et2-ai')
+export class Et2Ai extends Et2Widget(LitElement)
+{
+	static get styles()
+	{
+		return [
+			super.styles,
+			styles
+		];
+	}
+
+	@property({attribute: false})
+	prompts : AiPrompt[] = simplePrompts;
+
+	/* Specify a custom server endpoint for AI queries */
+	@property({attribute: false, type: String})
+	endpoint? : string;
+
+	/* Use different context instead of child value */
+	@property({type: Function})
+	getContent = () => this._getOriginalValue();
+
+	/* Use a custom target for applying the response */
+	@property({type: Function})
+	resolveTarget = (prompt? : AiPrompt) => this._findApplyTarget(prompt);
+
+	/* Current selected prompt */
+	@state() activePrompt : AiPrompt;
+	/* Max height for showing the result */
+	@state() maxResultHeight = 0;
+
+	/* Flag for if user has no access */
+	private noAiAssistant = false;
+	private ai = new AiAssistantController(this);
+	private targetResizeObserver : ResizeObserver;
+
+	constructor()
+	{
+		super();
+		this.clearResult = this.clearResult.bind(this);
+	}
+
+	disconnectedCallback()
+	{
+		this.targetResizeObserver?.disconnect();
+		super.disconnectedCallback();
+	}
+
+	protected firstUpdated()
+	{
+		this.noAiAssistant = typeof (this.egw().user("apps") ?? {})["aiassistant"] == "undefined";
+		const slot = this.shadowRoot?.querySelector('slot');
+		slot?.addEventListener('slotchange', () => this.handleSlotChange());
+
+		this.handleSlotChange();
+
+		// Deal with dropdown positioning trouble due to how we're using it
+		const dropdown = this.shadowRoot?.querySelector('sl-dropdown') as any;
+		const trigger = this.querySelector("[slot='trigger']") ?? this.shadowRoot?.querySelector("slot[name='trigger']");
+		dropdown?.addEventListener('sl-after-show', () =>
+		{
+			requestAnimationFrame(() =>
+			{
+				dropdown.reposition?.()
+			});
+		});
+	}
+
+
+	/**
+	 * User chose a prompt from the list
+	 *
+	 * @param event
+	 */
+	protected handlePromptSelect(event : CustomEvent)
+	{
+		const id = event.detail.item.value as string;
+		this.activePrompt = this.prompts.find(p => p.id === id);
+		if(!prompt)
+		{
+			return;
+		}
+
+		const originalValue = this.getContent();
+
+		this.dispatchEvent(new CustomEvent('et2-ai-start', {
+			detail: {
+				prompt: this.activePrompt,
+				originalValue,
+				target: this.resolveTarget(this.activePrompt)
+			},
+			bubbles: true,
+			composed: true
+		}));
+
+		this.ai.run(this.activePrompt.id, originalValue, this.endpoint)
+			.then(() =>
+			{
+				if(this.ai.status === 'success')
+				{
+					this.dispatchEvent(new CustomEvent('et2-ai-success', {
+						detail: {
+							prompt: this.activePrompt,
+							result: this.ai.result,
+							target: this.resolveTarget(this.activePrompt)
+						},
+						bubbles: true,
+						composed: true
+					}));
+				}
+			})
+			.catch(() =>
+			{
+				this.dispatchEvent(new CustomEvent('et2-ai-error', {
+					detail: {
+						prompt: this.activePrompt,
+						error: this.ai.error,
+						target: this.resolveTarget(this.activePrompt)
+					},
+					bubbles: true,
+					composed: true
+				}));
+			});
+	}
+
+	protected handleSlotChange()
+	{
+		this.targetResizeObserver?.disconnect();
+
+		const target = this._findSlottedTarget();
+		if(!target)
+		{
+			return;
+		}
+
+		this.targetResizeObserver = new ResizeObserver(entries =>
+		{
+			for(const entry of entries)
+			{
+				this.maxResultHeight = Math.max(
+					entry.contentRect.height,
+					80 // minimum usable height
+				);
+			}
+		});
+
+		this.targetResizeObserver.observe(target);
+	}
+
+	protected _applyResult()
+	{
+		let value = this.ai.result;
+		const target = this.resolveTarget(this.activePrompt) as any;
+		const prompt = this.activePrompt;
+
+		const event = new CustomEvent('et2-ai-apply', {
+			detail: {
+				prompt: this.activePrompt,
+				result: value,
+				target
+			},
+			bubbles: true,
+			composed: true
+		});
+		this.dispatchEvent(event);
+		this.ai.status = "idle";
+		this.activePrompt = null;
+
+		if(event.defaultPrevented)
+		{
+			return;
+		}
+
+		// Prompt has an actual function to deal with it
+		if(typeof prompt.action == "function")
+		{
+			return prompt.action.apply(target, value);
+		}
+
+		// Handle internally by setting value
+		switch(typeof value == "string" && (prompt.action?.mode ?? "replace"))
+		{
+			case "prepend":
+				value = value + target.value ?? "";
+				break;
+			case "append":
+				value = target.value ?? "" + value;
+				break;
+		}
+		if(target)
+		{
+			if(typeof target.setValue === 'function')
+			{
+				target.setValue(value);
+			}
+			else if('value' in target)
+			{
+				target.value = value;
+			}
+		}
+	}
+
+	public clearResult()
+	{
+		this.activePrompt = null;
+		this.ai.status = "idle";
+	}
+
+	/**
+	 * Figure out the target
+	 * @return {HTMLElement | null}
+	 * @protected
+	 */
+	protected _findApplyTarget(prompt? : AiPrompt) : HTMLElement | null
+	{
+		if(typeof prompt?.action !== "object" || typeof prompt?.action?.target !== "string")
+		{
+			return null;
+		}
+
+		// Target from prompt
+		const targetSpec = prompt?.action?.target;
+		if(targetSpec)
+		{
+			if(targetSpec === "self")
+			{
+				return this._findSlottedTarget();
+			}
+
+			if(["subject", "label"].includes(targetSpec))
+			{
+				return this._findSemanticTarget(targetSpec);
+			}
+
+			// explicit et2 ID or selector
+			return this.getWidgetById(targetSpec) ??
+				this.getInstanceManager()?.getWidgetById(targetSpec) ??
+				(this.getRootNode() as unknown as ParentNode).querySelector(targetSpec);
+		}
+
+		// Default
+		return this._findSlottedTarget();
+	}
+
+	/**
+	 * Find the target if it's the slotted child
+	 *
+	 * @return {HTMLElement | null}
+	 * @protected
+	 */
+	protected _findSlottedTarget() : HTMLElement | null
+	{
+		const slot = this.shadowRoot?.querySelector('slot');
+		const nodes = slot?.assignedElements({flatten: true}) ?? [];
+		return (nodes[0] as HTMLElement) ?? null;
+	}
+
+	/**
+	 * Try to figure out what the prompt target keywords are referring to
+	 *
+	 * @param {string} type
+	 * @return {HTMLElement | null}
+	 * @protected
+	 */
+	protected _findSemanticTarget(type : string) : HTMLElement | null
+	{
+		const candidates = {
+			subject: ['subject', 'summary', 'title'],
+			label: ['label']
+		}[type] ?? [];
+
+		for(const name of candidates)
+		{
+			const el = ((this.getInstanceManager()?.DOMContainer ?? this.getRootNode() as unknown) as ParentNode)
+				.querySelector(`[id*="${name}"]`);
+			if(el)
+			{
+				return el as HTMLElement;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Figure out if the response is plain text or has more
+	 */
+	protected _isHtmlContent(value : string) : boolean
+	{
+		// Must contain an element tag
+		return /<\/?[a-z][\s\S]*>/i.test(value);
+	}
+
+	/**
+	 * Figure out the value to give for the purpose of prompting
+	 *
+	 * @return {string}
+	 * @protected
+	 */
+	protected _getOriginalValue() : string
+	{
+		const el = this._findSlottedTarget() as any;
+		if(!el)
+		{
+			return '';
+		}
+
+		if(typeof el.getValue === 'function')
+		{
+			return el.getValue();
+		}
+
+		if('value' in el)
+		{
+			return String(el.value ?? '');
+		}
+
+		try
+		{
+			if(typeof etemplate2?.getValues === 'function')
+			{
+				const values = etemplate2.getValues(el);
+				if(values && Object.keys(values).length)
+				{
+					return JSON.stringify(values, null, 2);
+				}
+			}
+		}
+		catch
+		{
+			// ignore
+		}
+
+		// Target is iframe
+		if(el instanceof HTMLIFrameElement)
+		{
+			try
+			{
+				const doc = el.contentDocument || el.contentWindow?.document;
+				if(!doc)
+				{
+					return '';
+				}
+
+				// Visible text content
+				return doc.body?.textContent?.trim() ?? '';
+			}
+			catch
+			{
+				// Cross-origin iframe means no access
+				return '';
+			}
+		}
+
+		return el.textContent?.trim() ?? '';
+	}
+
+
+	/**
+	 * Render the different helpers based on status
+	 *
+	 * @return {TemplateResult | null}
+	 * @protected
+	 */
+	protected _renderStatus() : TemplateResult | null
+	{
+		switch(this.ai.status)
+		{
+			case 'loading':
+				return this._loadingTemplate();
+
+			case 'success':
+				return this._resultTemplate();
+
+			case 'error':
+				return this._errorTemplate();
+
+			default:
+				return null;
+		}
+	}
+
+	/**
+	 * Template for the loading state
+	 *
+	 * @protected
+	 */
+	protected _loadingTemplate() : TemplateResult
+	{
+		return html`
+            <sl-card part="result loader" class="et2-ai-loader">
+                <span slot="header">${this.activePrompt.label}</span>
+                <et2-button-icon slot="header" name="close" noSubmit @click=${this.clearResult}></et2-button-icon>
+                <sl-spinner part="spinner" class="et2-ai-loading"></sl-spinner>
+            </sl-card>`;
+	}
+
+	/**
+	 * Template for the success state
+	 *
+	 * @protected
+	 */
+	protected _resultTemplate() : TemplateResult
+	{
+		const result = this.ai.result ?? '';
+		const isHtml = typeof result === 'string' && this._isHtmlContent(result);
+
+		return html`
+            <sl-card part="result" class="et2-ai-result">
+                <span slot="header">${this.activePrompt?.label}</span>
+                <et2-button-icon
+                        slot="header"
+                        name="close"
+                        noSubmit
+                        @click=${this.clearResult}>
+                </et2-button-icon>
+
+                <div
+                        part="result-content"
+                        class="et2-ai-result-content ${isHtml ? 'html' : 'text'}"
+                >
+                    ${isHtml
+                      ? unsafeHTML(<string>result)
+                      : result
+                    }
+                </div>
+
+                <sl-button
+                        slot="footer"
+                        @click=${this._applyResult}
+                        part="apply-button">
+                    ${this.egw().lang("Apply")}
+                </sl-button>
+            </sl-card>
+		`;
+	}
+
+
+	/**
+	 * Template for the error state
+	 *
+	 * @protected
+	 */
+	protected _errorTemplate() : TemplateResult
+	{
+		return html`
+            <sl-alert variant="danger" part="result error" class="et2-ai-error"
+                      open
+                      closable
+                      @sl-after-hide=${this.clearResult}
+            >
+                ${this.ai.error}
+            </sl-alert>
+		`;
+	}
+
+	protected render() : TemplateResult
+	{
+
+		return html`
+            <div class="et2-ai form-control" part="base" style="--max-result-height: ${this.maxResultHeight}px;">
+                ${this._renderStatus()}
+                <slot></slot>
+                <sl-dropdown class="et2-ai-dropdown" part="dropdown" placement="bottom-end" hoist no-flip>
+                    <et2-button-icon slot="trigger" name="aiassistant/navbar"
+                                     noSubmit></et2-button-icon>
+                    <sl-menu @sl-select=${this.handlePromptSelect} part="menu">
+                        ${this.noAiAssistant ?
+                          html`
+                              <sl-menu-item>${this.egw().lang("EPL Only")}</sl-menu-item>` :
+                          this.prompts.map(p => html`
+                              <sl-menu-item value=${p.id} part="menu-item">${p.label}</sl-menu-item>
+                          `)
+                        }
+                    </sl-menu>
+                </sl-dropdown>
+            </div>
+		`;
+	}
+}
