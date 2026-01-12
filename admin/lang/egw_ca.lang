@@ -97,7 +97,7 @@ custom fields	admin	ca	Camps personalitzats
 cyrus imap server	admin	ca	Servidor IMAP Cyrus
 data	admin	ca	Dades
 day	admin	ca	Dia
-day of week<br>(0-6, 0=sun)	admin	ca	Dia de la setmana<br>(0-6, 0=Diu)
+day of week<br>(0-6, 0=sun)	admin	ca	Dia de la setmana\n(0-6, 0=Diu)
 db backup and restore	admin	ca	BBDD de còpia de seguretat i recuperació
 default	admin	ca	predeterminada
 default file system space per user	admin	ca	Espai per defecte al sistema d'arxius per usuari
@@ -164,13 +164,13 @@ enable	admin	ca	Habilitar
 enable debug-messages	admin	ca	Activar missatges de depuració
 enable sieve	admin	ca	Activar Sieve
 enter a description for the category	admin	ca	Introduïu una descripció per a aquesta categoria
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	ca	Introduïu un text aleatori per al xifratge <br> de la sessió (requereix mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	ca	Introduïu un text aleatori per al xifratge \n de la sessió (requereix mcrypt)
 enter the background color for the login page	admin	ca	Introduïu el color de fons per a la pàgina d'inici de sessió
 enter the background color for the site title	admin	ca	Introduïu el color de fons per el títol del lloc
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ca	Introduïu el camí complet per als fitxers temporals.<br>Exemples: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	ca	Introduïu el camí complet per als fitxers d'usuaris i grups.<br>Exemples: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ca	Introduïu el camí complet per als fitxers temporals.\nExemples: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	ca	Introduïu el camí complet per als fitxers d'usuaris i grups.\nExemples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	ca	Introduïu el nom complet de l'ordinador on s'executa aquest servidor
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Introduïu la URL del vostre EGroupware.<br>Exemple: http://www.domini.com/egroupware   o   /egroupware<br><b>Sense barra al final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Introduïu la URL del vostre EGroupware.\nExemple: http://www.domini.com/egroupware   o   /egroupware\n<b>Sense barra al final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	ca	Introduïu la cadena de recerca. Per a mostrar totes les entrades, deixeu buit aquest camp i premeu el botó ENVIAR altra vegada.
 enter the site password for peer servers	admin	ca	Introduïu la contrasenya del lloc per a servidors parells
 enter the site username for peer servers	admin	ca	Introduïu el nom d'usuari del lloc per a servidors parells
@@ -216,7 +216,7 @@ hide php information	admin	ca	Amagar informació de PHP
 home directory	admin	ca	Directori principal
 home screen message	admin	ca	Missatge de la Pantalla Principal
 host information	admin	ca	Informació del servidor
-hour<br>(0-23)	admin	ca	Hora<br>(0-23)
+hour<br>(0-23)	admin	ca	Hora\n(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ca	Quants dies han d'estar les entrades al registre d'accés, abans d'esborrar-les? (per defecte, 90)
 how many minutes should an account or ip be blocked (default 1) ?	admin	ca	Quants minuts ha d'estar bloquejat un compte o una adreça IP? (per defecte, 30)
 how should email addresses for new users be constructed?	admin	ca	Com han de ser construides les adreces e-mail per a nous usuaris?
@@ -266,7 +266,7 @@ leave the category untouched and return back to the list	admin	ca	deixar la cate
 leave the group untouched and return back to the list	admin	ca	Deixar el grup intacte i tornar a la llista
 leave without saveing the entry	admin	ca	Sortir sense desar l'entrada
 leaves without saveing	admin	ca	Sortir sense desar
-length<br>rows	admin	ca	Longitud<br>Files
+length<br>rows	admin	ca	Longitud\nFiles
 list config settings	admin	ca	Llista de les opcions de configuració
 list current sessions	admin	ca	Llista de les sessions actuals
 list of current users	admin	ca	Llista d'usuaris presents

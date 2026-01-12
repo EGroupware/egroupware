@@ -146,7 +146,7 @@ are you sure you want to delete this group ?	admin	sk	Naozaj chcete odstrániť 
 are you sure you want to delete this server?	admin	sk	Naozaj chcete odstrániť tento server?
 are you sure you want to kill this session ?	admin	sk	Naozaj chcete ukončiť túto reláciu?
 async services last executed	admin	sk	Asynchrónne služby naposledy spustené
-asynchronous timed services	admin	sk	Asynchrónna služba
+asynchronous timed services	admin	sk	Asynchrónne časované služby
 asyncservices not yet installed or other error (%1) !!!	admin	sk	Asyncslužby zatiaľ nie sú nainštalované, alebo iná chyba (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sk	Pokúsiť sa použiť korektný MIME typ pre FTP namiesto predvoleného 'application/octet-stream'.
 attributes	admin	sk	Atribúty
@@ -201,7 +201,6 @@ check ip address of all sessions	admin	sk	Skontrolovať IP adresu všetkých rel
 check items to <b>%1</b> to %2 for %3	admin	sk	Skontrolovať položky po <b>%1</b> po %2 pre %3
 checking push (green for success or red for failure)	admin	sk	Kontrolujem PUSH (zelená=úspech, červená=chyba)
 children	admin	sk	Deti
-clear cache and register hooks	admin	sk	Vymazať cache/registrovať háčiky
 clear credentials	admin	sk	Odstrániť prihlasovacie údaje
 clear mail credentials	admin	sk	Odstrániť prihlasovacie údaje pre mail
 clear security tokens	admin	sk	Vyčistič bezpečnostné tokeny
@@ -258,8 +257,8 @@ cyrus imap server	admin	sk	Cyrus IMAP Server
 data	admin	sk	Údaje
 data from	admin	sk	Koho údaje
 day	admin	sk	Deň
-day of week<br>(0-6, 0=sun)	admin	sk	Deň v týždni<br>(0-6, 0=Ned)
-db backup and restore	admin	sk	Záloha
+day of week<br>(0-6, 0=sun)	admin	sk	Deň v týždni\n(0-6, 0=Ned)
+db backup and restore	admin	sk	Záloha a obnova databáz
 deactivate	admin	sk	Deaktivovať
 deactivated	admin	sk	deaktivované
 debug	admin	sk	Ladenie
@@ -295,9 +294,9 @@ deny access	admin	sk	Zakáž prístup
 deny access to access log	admin	sk	Zakáž prístup do prístupových záznamov
 deny access to application registery	admin	sk	Zakáž prístup do registrov aplikácie
 deny access to applications	admin	sk	Zakáž prístup do aplikácií
-deny access to asynchronous timed services	admin	sk	Odmietnuť prístup k asynchrónnej službe
+deny access to asynchronous timed services	admin	sk	Zakáž prístup do asynchrónnych časovaných služieb
 deny access to current sessions	admin	sk	Zakáž prístup do aktuálnych relácií
-deny access to db backup and restore	admin	sk	Odmietnuť prístup k zálohe
+deny access to db backup and restore	admin	sk	Zakáž prístup k zálohe a obnove databáz
 deny access to error log	admin	sk	Zakáž prístup do chybových záznamov
 deny access to global categories	admin	sk	Zakáž prístup do globálnych kategórií
 deny access to groups	admin	sk	Zakáž prístup do skupín
@@ -373,15 +372,15 @@ encryption	admin	sk	Šifrovanie
 encryption settings	admin	sk	Nastavenia šifrovania
 enter a description for the category	admin	sk	Zadajte opis tejto kategórie
 enter a passphrase if you would like to protect your private key by password.	admin	sk	Ak chcete chrániť svoj súkromný kľúč heslom, zadajte ho sem.
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	sk	Zadajte náhodný text pre app_session <br>kryptovanie (vyžaduje mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	sk	Zadajte náhodný text pre app_session \nkryptovanie (vyžaduje mcrypt)
 enter the background color for the login page	admin	sk	Zadajte farbu pozadia prihlasovacej stránky
 enter the background color for the site title	admin	sk	Zadajte farbu pozadia nadpisu stránky
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sk	Zadajte úplnú cestu pre dočasné súbory.<br>Príklady: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sk	Zadajte úplnú cestu pre dočasné súbory.<br>Príklady: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.<br>Príklady: /files, E:\FILES
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.<br>Príklady: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sk	Zadajte úplnú cestu pre dočasné súbory.\nPríklady: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sk	Zadajte úplnú cestu pre dočasné súbory.\nPríklady: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.\nPríklady: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.\nPríklady: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sk	Zadajte názov stroja (hostname) na ktorom beží tento server
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte URL adresu pre EGroupware.<br>Príklad: https://egw.domain.com/egroupware alebo /egroupware<br><b>Bez ukončovacieho lomítka</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte URL adresu pre EGroupware.\nPríklad: https://egw.domain.com/egroupware alebo /egroupware\n<b>Bez ukončovacieho lomítka</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sk	Zadajte reťazec pre vyhľadávanie. Pre zobrazenie všetkých záznamov, vyčistite toto pole a stlačte znovu tlačítko ODOSLAŤ
 enter the site password for peer servers	admin	sk	Zadajte heslo stránky pre peer servre
 enter the site username for peer servers	admin	sk	Zadajte používateľské meno stránky pre peer servre
@@ -480,7 +479,7 @@ home directory	admin	sk	Domovský adresár
 home screen message	admin	sk	Text správy hlavnej stránky
 host information	admin	sk	Informácie o serveri
 hostname or ip	admin	sk	Názov stroja alebo IP
-hour<br>(0-23)	admin	sk	Hodina<br>(0-23)
+hour<br>(0-23)	admin	sk	Hodina\n(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	sk	Aké veľké majú byť náhľady pre odkazované obrázky (maximum v pixeloch)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sk	Koľko dní má záznam ostávať v Prístupových Záznamoch než sa zmaže. (predvolené: 90)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	sk	Koľko záznamov majú povolené exportovať používatelia, ktorí nie sú správcami. (prázdne = bez obmedzení, no = žiaden export)
@@ -574,7 +573,7 @@ leave unchanged	admin	sk	Ponechať bez zmeny
 leave without saveing the entry	admin	sk	Odísť bez uloženia tejto položky
 leaves without saveing	admin	sk	Odísť bez uloženia
 length	admin	sk	Dĺžka
-length<br>rows	admin	sk	Dĺžka/<br>Riadkov
+length<br>rows	admin	sk	Dĺžka/\nRiadkov
 lifetime of 'remember me' token	admin	sk	Životnosť tokenu 'Zapamätaj si ma'
 limit global category to members of a certain group	admin	sk	Obmedziť globálnu kategóriu na členov konkrétnej skupiny.
 limit to members of	admin	sk	Obmedziť na členov skupiny
@@ -730,7 +729,7 @@ regular expression to find part to use as container	admin	sk	Regulárny výraz n
 reject passwords containing part of username or full name (3 or more characters long)	admin	sk	Odmietnuť heslá ktoré obsahujú časti plného alebo používateľského mena (v dĺžke 3 a viac znakov)
 relay access checked	admin	sk	Relačný prístup bol skontrolovaný
 remark	admin	sk	Poznámka
-remote administration instances	admin	sk	Vzdialená správa
+remote administration instances	admin	sk	Vzdialené správcovské inštancie
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	sk	Vzdialená správa musí byť najprv zapnutá pre vzdialenú inštanciu pod Správca > Nastavenia stránky!
 remote instance saved	admin	sk	Vzdialená inštancia bola uložená.
 remove	admin	sk	Odstrániť
@@ -748,7 +747,7 @@ rights	admin	sk	Oprávnenia
 rows	admin	sk	Riadky
 rpm or debian package	admin	sk	RPM alebo balíček deb
 run	admin	sk	Spustiť
-run asynchronous services	admin	sk	Spustiť asynchrónnu službu
+run asynchronous services	admin	sk	Spustiť asynchrónne služby
 run rights for applications	admin	sk	Práva spustenia aplikácií
 save as default	admin	sk	Uložiť ako predvolené
 save changes	admin	sk	Uložiť zmeny

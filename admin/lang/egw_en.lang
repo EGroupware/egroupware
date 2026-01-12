@@ -168,7 +168,7 @@ bottom	admin	en	Bottom
 bulk changes	admin	en	Bulk changes
 bulk password reset	admin	en	Bulk password reset
 by	admin	en	By
-by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	en	By selecting a user or group you effectively delete the mail account for all other users!<br>Are you really sure you want to do that?
+by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	en	By selecting a user or group you effectively delete the mail account for all other users!\nAre you really sure you want to do that?
 calculate next run	admin	en	Calculate next run
 calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizon in days. Default = 1000.
 can be used to show groups by container, if enabled	admin	en	Can be used to show groups by container, if enabled
@@ -263,7 +263,7 @@ cyrus imap server	admin	en	Cyrus IMAP server
 data	admin	en	Data
 data from	admin	en	Data from
 day	admin	en	Day
-day of week<br>(0-6, 0=sun)	admin	en	Day of week<br>(0-6, 0=Sun)
+day of week<br>(0-6, 0=sun)	admin	en	Day of week\n(0-6, 0=Sun)
 db backup and restore	admin	en	Backup
 deactivate	admin	en	Deactivate
 deactivated	admin	en	deactivated
@@ -379,22 +379,22 @@ encryption	admin	en	Encryption
 encryption settings	admin	en	Encryption settings
 enter a description for the category	admin	en	Enter a description for the category
 enter a passphrase if you would like to protect your private key by password.	admin	en	Enter a passphrase if you would like to protect your private key by password.
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	en	Enter some random text for app_session <br>encryption, requires mcrypt
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	en	Enter some random text for app_session \nencryption, requires mcrypt
 enter the background color for the login page	admin	en	Enter the background colour for the login page
 enter the background color for the site title	admin	en	Enter the background colour for the site title
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	en	Enter the full path for temporary files.\nExamples: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	en	Enter the full path for temporary files.\nExamples: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	en	Enter the full path for users and group files.\nExamples: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	en	Enter the full path for users and group files.\nExamples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	en	Enter the host name of the machine on which this server is running
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.\nExample: https://egw.domain.com/egroupware or /egroupware\n<b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	en	Enter the search string. To show all entries, empty this field and press the SUBMIT button again
 enter the site password for peer servers	admin	en	Enter the site password for peer servers
 enter the site username for peer servers	admin	en	Enter the site username for peer servers
 enter the title for your site	admin	en	Enter the title for site
 enter the title of your logo	admin	en	Enter the title of logo
 enter the url where your logo should link to	admin	en	Enter the URL where the logo should link to
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.<br>The path MUST start with / and be readable by all users
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.\nThe path MUST start with / and be readable by all users
 enter your default mail domain ( from: user@domain )	admin	en	Enter your default mail domain (from: user@domain)
 enter your default mail domain (from: user@domain)	admin	en	Enter your default mail domain from: user@domain
 enter your http proxy server	admin	en	Enter your HTTP proxy server
@@ -487,7 +487,7 @@ home directory	admin	en	Home directory
 home screen message	admin	en	Home screen message
 host information	admin	en	Host information
 hostname or ip	admin	en	Hostname or IP
-hour<br>(0-23)	admin	en	Hour<br>(0-23)
+hour<br>(0-23)	admin	en	Hour\n(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	en	Maximum pixel size of thumbnails for linked images
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	en	How many days should entries remain in the access log before they get deleted. Default = 90
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	en	How many entries should non-admins be able to export. Empty = no limit, no = no export
@@ -581,7 +581,7 @@ leave unchanged	admin	en	Leave unchanged
 leave without saveing the entry	admin	en	Leave without saving the entry
 leaves without saveing	admin	en	Leaves without saving
 length	admin	en	Length
-length<br>rows	admin	en	Length<br>Rows
+length<br>rows	admin	en	Length\nRows
 lifetime of 'remember me' token	admin	en	Lifetime of 'Remember me' token
 limit global category to members of a certain group	admin	en	Limit global category to members of a certain group.
 limit to members of	admin	en	Limit to members of
@@ -879,7 +879,7 @@ this application requires an upgrade	admin	en	This application requires an upgra
 this category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
 this controls exports and merging.	admin	en	This controls exports and merge prints.
 this is a mail account for all users!	admin	en	This is a mail account for ALL users!
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!<br>Account will be deleted for ALL users!<br>Are you really sure you want to do that?
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!\n\nAccount will be deleted for ALL users!\n\nAre you really sure you want to do that?
 this php has no imap support compiled in!!	admin	en	This PHP has no IMAP support compiled in!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	en	Timeout for application session data in seconds. Default 86400 = 1 day
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for sessions in seconds. Default 14400 = 4 hours

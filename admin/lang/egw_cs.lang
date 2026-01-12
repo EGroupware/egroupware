@@ -115,7 +115,6 @@ applies the changes	admin	cs	Použije změny
 apply changes	admin	cs	Použít změny
 apply the changes	admin	cs	Použít změny
 archive: zip or tar	admin	cs	Archiv: ZIP nebo tar
-are you sure you want to %1 mail for selected accounts?	admin	cs	Opravdu chcete odeslat %1 e-mailů vybraným účtům?
 are you sure you want to delete the application %1 ?	admin	cs	Určitě chcete smazat aplikaci %1?
 are you sure you want to delete this account ?	admin	cs	Určitě chcete smazat tento účet?
 are you sure you want to delete this application ?	admin	cs	Určitě chcete smazat tuto aplikaci?
@@ -125,7 +124,7 @@ are you sure you want to delete this group ?	admin	cs	Určitě chcete smazat tut
 are you sure you want to delete this server?	admin	cs	Určitě chcete smazat tento server?
 are you sure you want to kill this session ?	admin	cs	Určitě chcete ukončit tuto relaci?
 async services last executed	admin	cs	Asynchronní služby naposledy spuštěny
-asynchronous timed services	admin	cs	Asynchronní služba
+asynchronous timed services	admin	cs	Asynchornně časované služby
 asyncservices not yet installed or other error (%1) !!!	admin	cs	Asynchronní služby nebyly dosud nainstalovány nebo jiná chyba (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	cs	Pokuste se použít správný MIME typ pro FTP místo výchozího 'application/octet-stream'.
 authentication / accounts	admin	cs	Autentikace | Účty
@@ -163,12 +162,10 @@ change config settings	admin	cs	Změnít konfigurační nastavení
 change domain of email address and aliases	admin	cs	Změna domény e-mailové adresy a aliasů
 change login screen message	admin	cs	Změnit zprávu na hlavní obrazovce
 change password for %1	admin	cs	Změnit heslo pro %1
-changelog and versions	admin	cs	Seznam změn a verze
 check acl for entries of not (longer) existing accounts	admin	cs	Zkontrolovat ACL zda neobsahují záznamy již zrušených účtů.
 check ip address of all sessions	admin	cs	Kontrolovat IP adresy všech relací
 check items to <b>%1</b> to %2 for %3	admin	cs	Zkontrolovat položky k <b>%1</b> do %2 pro %3
 checking push (green for success or red for failure)	admin	cs	Zkontrolujte PUSH (zelená = OK, červená - není OK)
-clear cache and register hooks	admin	cs	Vymazat cache/registrovat háčky
 clear security tokens	admin	cs	Vymazat bezpečnostní tokeny
 click to select a color	admin	cs	Klikněte pro výběr barvy
 color	admin	cs	Barva
@@ -211,8 +208,8 @@ cyrus imap server	admin	cs	Cyrus IMAP Server
 data	admin	cs	Data
 data from	admin	cs	Data z
 day	admin	cs	Den
-day of week<br>(0-6, 0=sun)	admin	cs	Den týdne <br>(0-6, 0=Ne)
-db backup and restore	admin	cs	Záloha
+day of week<br>(0-6, 0=sun)	admin	cs	Den týdne \n(0-6, 0=Ne)
+db backup and restore	admin	cs	Záloha a obnova databáze
 default	admin	cs	Výchozí
 default file system space per user	admin	cs	Výchozí kapacita na souborovém systému na uživatele
 default file system space per user/group ?	admin	cs	Výchozí kapacita na souborovém systému na uživatele/skupinu?
@@ -239,9 +236,9 @@ deny access	admin	cs	Zakázat přístup
 deny access to access log	admin	cs	Přístupový protokol
 deny access to application registery	admin	cs	Zablokovat přístup do registru aplikací
 deny access to applications	admin	cs	Zablokovat přístup k aplikacím
-deny access to asynchronous timed services	admin	cs	Odepřít přístup k asynchronní službě
+deny access to asynchronous timed services	admin	cs	Zablokovat přístup k asynchonně časovaným službám
 deny access to current sessions	admin	cs	Zablokovat přístup k aktuálním relacím
-deny access to db backup and restore	admin	cs	Odepřít přístup k záloze
+deny access to db backup and restore	admin	cs	Zablokovat přístup k záloze a obnově databáze
 deny access to error log	admin	cs	Zablokovat přístup k chybovém protokolu
 deny access to global categories	admin	cs	Zablokovat přístup ke globálním kategoriím
 deny access to groups	admin	cs	Zablokovat přístup ke skupinám
@@ -296,13 +293,13 @@ enable spellcheck in rich text editor	admin	cs	Povolit kontrolu pravopisu v rich
 encrypted connection	admin	cs	Šifrované připojení
 encryption settings	admin	cs	Nastavení šifrování
 enter a description for the category	admin	cs	Zadejte popis pro kategorii
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	cs	Zadejte náhodný text pro šifrování<br>aplikační relace (vyžaduje mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	cs	Zadejte náhodný text pro šifrování\naplikační relace (vyžaduje mcrypt)
 enter the background color for the login page	admin	cs	Zadejte barvu pozadí pro přihlašovací stránku
 enter the background color for the site title	admin	cs	Zadejte barvu pozadí pro titulek webu
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	cs	Zadejte celou cestu k dočasným souborům.<br>Například: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	cs	Zadejte celou cestu k souborům uživatelů a skupin.<br>Například: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	cs	Zadejte celou cestu k dočasným souborům.\nNapříklad: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	cs	Zadejte celou cestu k souborům uživatelů a skupin.\nNapříklad: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	cs	Zadejte DNS jméno stroje, na kterém server běží
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	cs	Zadejte umístění URL EGroupware.<br>Příklad: https://egw.domain.com/egroupware nebo /egroupware<br><b>Bez koncového lomítka</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	cs	Zadejte umístění URL EGroupware.\nPříklad: https://egw.domain.com/egroupware nebo /egroupware\n<b>Bez koncového lomítka</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	cs	Zadejte vyhledávací řetězec. Pro zobrazení všech záznamů ponechte pole prázdné a znovu stiskněte tlačítko Odeslat
 enter the site password for peer servers	admin	cs	Zadejte heslo webu pro peer servery
 enter the site username for peer servers	admin	cs	Zadejte uživatelské jméno webu pro peer servery
@@ -336,7 +333,6 @@ event details follow	admin	cs	Následují detaily události
 expires	admin	cs	Vyprší
 export certificate as p12	admin	cs	Export certifikátu jako p12
 failed to change password.	admin	cs	Nepodařilo se změnit heslo.
-failed to mount backup directory!	admin	cs	Nepodařilo se připojit adresář zálohy!
 fallback (after each pageview)	admin	cs	Náhradní režim (po každém zobrazení stránky).
 false	admin	cs	Ne
 field '%1' already exists !!!	admin	cs	Položka '%1' již existuje!
@@ -373,7 +369,7 @@ hide php information	admin	cs	Skrýt PHP informace
 home directory	admin	cs	Domovský adresář
 home screen message	admin	cs	Zpráva na hlavní obrazovce
 host information	admin	cs	Informace o serveru (host)
-hour<br>(0-23)	admin	cs	Hodina<br>(0-23)
+hour<br>(0-23)	admin	cs	Hodina\n(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	cs	Jaká by měla být maximální velikost náhledů k odkazovaným obrázkům (v pixelech)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	cs	Kolik dní mají záznamy zůstat v přístupovém protokolu, než budou smazány (výchozí 90)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	cs	Kolik položek smí uživatelé bez práv administrátora exportovat (prázdné = bez omezení, ne = žádný export)
@@ -455,7 +451,7 @@ leave unchanged	admin	cs	Ponechat beze změny
 leave without saveing the entry	admin	cs	Ukončit bez uložení záznamu
 leaves without saveing	admin	cs	Ukončí bez ukládání
 length	admin	cs	Délka
-length<br>rows	admin	cs	Délka<br>Řádky
+length<br>rows	admin	cs	Délka\nŘádky
 lifetime of 'remember me' token	admin	cs	Životnost tokenu "Zapamatuj si mě"
 list config settings	admin	cs	Zobrazit konfigurační nastavení
 list current sessions	admin	cs	Zobrazit aktuální relace
@@ -488,7 +484,6 @@ mode	admin	cs	Režim
 modified	admin	cs	Změměno
 month	admin	cs	Měsíc
 more secure	admin	cs	Bezpečnější
-mount backup directory to %1	admin	cs	Připojit adresář zálohy do %1
 name must not be empty !!!	admin	cs	Název nemůže být prázdný!
 name of organisation	admin	cs	Název organizace
 name of tab to create and show field in	admin	cs	Název karty, na které se pole vytvoří a zobrazí
@@ -575,11 +570,10 @@ re-enter password	admin	cs	Zadejte heslo znovu
 read this list of methods.	admin	cs	Načíst seznam metod.
 register application hooks	admin	cs	Registrovat aplikace
 regular expression to find part to use as container	admin	cs	Regulární výraz pro vyhledání části, která má být použita jako kontejner
-remote administration instances	admin	cs	Vzdálená správa
+remote administration instances	admin	cs	Instance vzdálené administrace
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	cs	Vzdálená administrace musí být povolena na vzdálené instanci pod položkou Administrátor > Konfigurace webu!
 remote instance saved	admin	cs	Vzdálená instance uložena.
 remove	admin	cs	Odstranit
-removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	cs	Odebrání přístupu skupinám může způsobit problémy s daty v této kategorii. Opravdu chcete pokračovat? Uživatelé v těchto skupinách již nemusí mít přístup:
 requested	admin	cs	Požadovaný
 requires 'openid / oauth2 server' app.	admin	cs	Vyžaduje aplikaci "OpenID / OAuth2 Server".
 reset filter	admin	cs	Vyresetovat filtr

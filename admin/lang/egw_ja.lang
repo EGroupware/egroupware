@@ -98,7 +98,7 @@ all groups	admin	ja	全グループ
 all records and account information will be lost!	admin	ja	すべてのレコードとアカウント情報が失われます。
 all users	admin	ja	全てのユーザ
 allow anonymous access to this app	admin	ja	このアプリケーションに対する匿名ユーザのアクセスを許可
-allow remote administration from following install id's (comma separated)	admin	ja	以下のインストールIDからのリモート管理を許可します（カンマ区切り）。
+allow remote administration from following install id's (comma separated)	admin	ja	リモート管理を許可するインストール ID（コンマ区切りで複数指定可）
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ja	SingleSignOnの'Security & Passwords'にパスワードを保存できるようにする。
 allow user to set 'remember me' token	admin	ja	ユーザが「Remember me」トークンを設定できるようにする
 allow users to change forwards	admin	ja	ユーザによるフォワードの変更を許可する
@@ -126,7 +126,6 @@ applications run rights updated.	admin	ja	アプリケーション実行権限�
 applies the changes	admin	ja	変更を適用しました。
 apply the changes	admin	ja	変更を適用
 archive: zip or tar	admin	ja	アーカイブ: ZIP または tar
-are you sure you want to %1 mail for selected accounts?	admin	ja	選択したアカウントの%1メールを削除してもよろしいですか？
 are you sure you want to delete the application %1 ?	admin	ja	アプリケーション %1 を削除してよろしいですか？
 are you sure you want to delete this account ?	admin	ja	このアカウントを削除してよろしいですか？
 are you sure you want to delete this application ?	admin	ja	このアプリケーションを削除してよろしいですか？
@@ -136,7 +135,7 @@ are you sure you want to delete this group ?	admin	ja	このグループを削�
 are you sure you want to delete this server?	admin	ja	このサーバを削除してよろしいですか。
 are you sure you want to kill this session ?	admin	ja	このセッションを切断してよろしいですか。
 async services last executed	admin	ja	非同期サービスの最終実行日時
-asynchronous timed services	admin	ja	非同期サービス
+asynchronous timed services	admin	ja	非同期スケジュール済みサービス
 asyncservices not yet installed or other error (%1) !!!	admin	ja	Async services not yet installed or other error (%1) !
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ja	FTP のMIMEタイプで   'application/octet-stream'   の代わりに<br />正しいタイプを使う
 attributes	admin	ja	属性
@@ -185,7 +184,7 @@ check categories for not (longer) existing accounts	admin	ja	Check categories fo
 check ip address of all sessions	admin	ja	全てのセッションで IP アドレスのチェックを行う
 check items to <b>%1</b> to %2 for %3	admin	ja	%3(%2)に対する <b>%1</b> の項目をチェックしてください
 children	admin	ja	子孫
-clear cache and register hooks	admin	ja	キャッシュをクリアする/フックを登録する
+clear cache and register hooks	admin	ja	キャッシュをクリアしてフックを再登録
 clear security tokens	admin	ja	セキュリティトークンを消去する
 click to select a color	admin	ja	クリックして色を選択
 color	admin	ja	色
@@ -227,8 +226,8 @@ cyrus imap server	admin	ja	Cyrus IMAP サーバー
 data	admin	ja	データ
 data from	admin	ja	データの取得元
 day	admin	ja	日
-day of week<br>(0-6, 0=sun)	admin	ja	曜日<br>(0-6, 0=日曜日)
-db backup and restore	admin	ja	バックアップ
+day of week<br>(0-6, 0=sun)	admin	ja	曜日\n(0-6, 0=日曜日)
+db backup and restore	admin	ja	DB バックアップ/復元
 deactivate	admin	ja	無効化
 debug	admin	ja	デバッグ
 default	admin	ja	既定
@@ -261,9 +260,9 @@ deny access	admin	ja	アクセスを拒否
 deny access to access log	admin	ja	アクセス・ログへのアクセスを拒否
 deny access to application registery	admin	ja	アプリケーション・レジストリへのアクセスを拒否
 deny access to applications	admin	ja	アプリケーションに対するアクセスを拒否
-deny access to asynchronous timed services	admin	ja	非同期サービスへのアクセスを拒否する
+deny access to asynchronous timed services	admin	ja	Deny access to asynchronous timed services
 deny access to current sessions	admin	ja	セッションへのアクセスを拒否
-deny access to db backup and restore	admin	ja	バックアップへのアクセスを拒否します
+deny access to db backup and restore	admin	ja	DB バックアップ/復元へのアクセスを拒否
 deny access to error log	admin	ja	エラー・ログへのアクセスを拒否
 deny access to global categories	admin	ja	グローバルカテゴリへのアクセスを拒否
 deny access to groups	admin	ja	グループへのアクセスを拒否
@@ -329,15 +328,15 @@ enable spellcheck in rich text editor	admin	ja	リッチ・テキスト・エデ
 encrypted connection	admin	ja	暗号化接続
 encryption settings	admin	ja	暗号化設定
 enter a description for the category	admin	ja	カテゴリの説明を入力してください
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	ja	Enter some random text for app_session <br>encryption, requires mcrypt
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	ja	Enter some random text for app_session \nencryption, requires mcrypt
 enter the background color for the login page	admin	ja	Enter the background color for the login page
 enter the background color for the site title	admin	ja	Enter the background color for the site title
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	ja	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ja	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	ja	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	ja	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	ja	Enter the full path for temporary files.\nExamples: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ja	Enter the full path for temporary files.\nExamples: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	ja	Enter the full path for users and group files.\nExamples: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	ja	Enter the full path for users and group files.\nExamples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	ja	EGroupware が動作するホスト名
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ja	EGroupware の URL を入力してください。<br>例: https://egw.domain.com/egroupware<br><b>最後にスラッシュ文字（/）を付けないこと</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ja	EGroupware の URL を入力してください。\n例: https://egw.domain.com/egroupware\n<b>最後にスラッシュ文字（/）を付けないこと</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	ja	Enter the search string. To show all entries, empty this field and press the SUBMIT button again
 enter the site password for peer servers	admin	ja	ピア・サーバのパスワードを入力してください
 enter the site username for peer servers	admin	ja	ピア・サーバのユーザ名を入力してください
@@ -430,7 +429,7 @@ home directory	admin	ja	ホーム・ディレクトリ
 home screen message	admin	ja	メイン画面メッセージ
 host information	admin	ja	ホスト情報
 hostname or ip	admin	ja	Hostname or IP
-hour<br>(0-23)	admin	ja	時<br>(0-23)
+hour<br>(0-23)	admin	ja	時\n(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	ja	リンク画像のサムネイルの最大サイズ（ピクセル）
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ja	アクセス履歴を残す期間（既定=90日）
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	ja	非管理者ユーザがエクスポートできる最大件数（空欄=無制限, 「いいえ」=エクスポート不可）
@@ -515,7 +514,7 @@ leave unchanged	admin	ja	変更しない
 leave without saveing the entry	admin	ja	保存せずに終了
 leaves without saveing	admin	ja	保存せずに終了
 length	admin	ja	長さ
-length<br>rows	admin	ja	長さ<br>行
+length<br>rows	admin	ja	長さ\n行
 lifetime of 'remember me' token	admin	ja	Remember me' トークンの有効期間
 limit global category to members of a certain group	admin	ja	Limit global category to members of a certain group.
 limit to members of	admin	ja	Limit to members of
@@ -661,11 +660,11 @@ register application hooks	admin	ja	Register application hooks
 regular expression to find part to use as container	admin	ja	コンテナとして使用する部分を見つけるための正規表現
 reject passwords containing part of username or full name (3 or more characters long)	admin	ja	ユーザ名の一部または全部を含むパスワードを拒否(3文字以上）
 relay access checked	admin	ja	Relay access checked
-remote administration instances	admin	ja	リモート管理
-remote administration need to be enabled in the remote instance under admin > site configuration!	admin	ja	リモート管理は、リモートインスタンスの「管理」＞「サイト設定」で有効にする必要があります！
+remote administration instances	admin	ja	リモート管理インスタンス
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	ja	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote instance saved	admin	ja	リモート・インスタンスを保存しました
 remove	admin	ja	削除
-removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	ja	グループのアクセス権を削除すると、このカテゴリのデータに問題が発生する可能性があります。本当に削除しますか？以下のグループのユーザーはアクセスできなくなる可能性があります：
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	ja	Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	ja	Renaming user 'anonymous' will break file sharing and Collabora Online Office!
 requested	admin	ja	リクエスト済み
 required pear class mail/mimedecode.php not found.	admin	ja	Required PEAR class Mail/mimeDecode.php not found.
@@ -675,7 +674,7 @@ rights	admin	ja	権限
 rows	admin	ja	行
 rpm or debian package	admin	ja	RPM または Debian パッケージ
 run	admin	ja	実行
-run asynchronous services	admin	ja	非同期サービスを実行する
+run asynchronous services	admin	ja	非同期サービスの実行
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	ja	Save of message %1 failed. Could not save message to folder %2 due to: %3
 save the category	admin	ja	カテゴリを保存
 save the category and return back to the list	admin	ja	変更を保存して一覧に戻ります。

@@ -240,7 +240,7 @@ cyrus imap server	admin	km	ម៉ាស៊ីនមេ Cyrus IMAP
 data	admin	km	ទិន្នន័យ
 data from	admin	km	ទិន្នន័យពី
 day	admin	km	ថ្ងៃ
-day of week<br>(0-6, 0=sun)	admin	km	ថ្ងៃនៃសប្តាហ៍<br>(0-6, 0=ព្រះអាទិត្យ)
+day of week<br>(0-6, 0=sun)	admin	km	ថ្ងៃនៃសប្តាហ៍\n(0-6, 0=ព្រះអាទិត្យ)
 db backup and restore	admin	km	ការបម្រុងទុកនិងស្តារ DB
 deactivate	admin	km	អសកម្ម
 deactivated	admin	km	បិទដំណើរការ
@@ -356,22 +356,22 @@ encryption	admin	km	ការអ៊ិនគ្រីប
 encryption settings	admin	km	ការកំណត់ការអ៊ិនគ្រីប
 enter a description for the category	admin	km	បញ្ចូលការពិពណ៌នាសម្រាប់ប្រភេទ
 enter a passphrase if you would like to protect your private key by password.	admin	km	បញ្ចូលឃ្លាសម្ងាត់ប្រសិនបើអ្នកចង់ការពារសោឯកជនរបស់អ្នកដោយពាក្យសម្ងាត់។
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	km	បញ្ចូលអត្ថបទចៃដន្យមួយចំនួនសម្រាប់ការអ៊ិនគ្រីប app_session <br> ទាមទារ mcrypt
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	km	បញ្ចូលអត្ថបទចៃដន្យមួយចំនួនសម្រាប់ការអ៊ិនគ្រីប app_session \n ទាមទារ mcrypt
 enter the background color for the login page	admin	km	បញ្ចូលពណ៌ផ្ទៃខាងក្រោយសម្រាប់ទំព័រចូល
 enter the background color for the site title	admin	km	បញ្ចូលពណ៌ផ្ទៃខាងក្រោយសម្រាប់ចំណងជើងគេហទំព័រ
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។<br>ឧទាហរណ៍៖ /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។<br>ឧទាហរណ៍៖ /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។<br>ឧទាហរណ៍៖ /files, E:\FILES
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។<br>ឧទាហរណ៍៖ /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។\nឧទាហរណ៍៖ /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។\nឧទាហរណ៍៖ /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។\nឧទាហរណ៍៖ /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។\nឧទាហរណ៍៖ /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	km	បញ្ចូលឈ្មោះម៉ាស៊ីនរបស់ម៉ាស៊ីនដែលម៉ាស៊ីនមេនេះកំពុងដំណើរការ
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	km	បញ្ចូលទីតាំងនៃ URL របស់ EGroupware។<br>ឧទាហរណ៍៖ http://www.domain.com/egroupware ឬ /egroupware<br><b>គ្មានសញ្ញាបន្តបន្ទាប់</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	km	បញ្ចូលទីតាំងនៃ URL របស់ EGroupware។\nឧទាហរណ៍៖ http://www.domain.com/egroupware ឬ /egroupware\n<b>គ្មានសញ្ញាបន្តបន្ទាប់</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	km	បញ្ចូលខ្សែអក្សរស្វែងរក។ ដើម្បីបង្ហាញធាតុទាំងអស់ សូមលុបវាលនេះ ហើយចុចប៊ូតុង បញ្ជូនម្តងទៀត
 enter the site password for peer servers	admin	km	បញ្ចូលពាក្យសម្ងាត់គេហទំព័រសម្រាប់ម៉ាស៊ីនមេ
 enter the site username for peer servers	admin	km	បញ្ចូលឈ្មោះអ្នកប្រើប្រាស់គេហទំព័រសម្រាប់ម៉ាស៊ីនមេ
 enter the title for your site	admin	km	បញ្ចូលចំណងជើងសម្រាប់គេហទំព័រ
 enter the title of your logo	admin	km	បញ្ចូលចំណងជើងនៃនិមិត្តសញ្ញា
 enter the url where your logo should link to	admin	km	បញ្ចូល URL ដែលនិមិត្តសញ្ញាគួរភ្ជាប់ទៅ
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	km	បញ្ចូលផ្លូវ VFS ដែលរូបភាព រូបតំណាង ឬនិមិត្តសញ្ញាបន្ថែមអាចត្រូវបានដាក់ និងរកឃើញដោយកម្មវិធីរបស់ EGroupware។<br>ផ្លូវត្រូវតែចាប់ផ្តើមដោយ / និងអាចអានបានដោយអ្នកប្រើប្រាស់ទាំងអស់
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	km	បញ្ចូលផ្លូវ VFS ដែលរូបភាព រូបតំណាង ឬនិមិត្តសញ្ញាបន្ថែមអាចត្រូវបានដាក់ និងរកឃើញដោយកម្មវិធីរបស់ EGroupware។\nផ្លូវត្រូវតែចាប់ផ្តើមដោយ / និងអាចអានបានដោយអ្នកប្រើប្រាស់ទាំងអស់
 enter your default mail domain ( from: user@domain )	admin	km	បញ្ចូលដែនសំបុត្រលំនាំដើមរបស់អ្នក (ពី៖ user@domain)
 enter your default mail domain (from: user@domain)	admin	km	បញ្ចូលដែនសំបុត្រលំនាំដើមរបស់អ្នកពី៖ user@domain
 enter your http proxy server	admin	km	បញ្ចូលម៉ាស៊ីនមេប្រូកស៊ី HTTP របស់អ្នក។
@@ -457,7 +457,7 @@ home directory	admin	km	ថតផ្ទះ
 home screen message	admin	km	សារអេក្រង់ដើម
 host information	admin	km	ព័ត៌មានម្ចាស់ផ្ទះ
 hostname or ip	admin	km	ឈ្មោះម៉ាស៊ីន ឬ IP
-hour<br>(0-23)	admin	km	ម៉ោង<br>(0-23)
+hour<br>(0-23)	admin	km	ម៉ោង\n(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	km	ទំហំភីកសែលអតិបរមានៃរូបភាពតូចៗសម្រាប់រូបភាពដែលបានភ្ជាប់។
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	km	តើ​ធាតុ​គួរ​នៅ​សល់​ប៉ុន្មាន​ថ្ងៃ​ក្នុង​កំណត់​ហេតុ​ចូល​ដំណើរ​ការ​មុន​ពេល​គេ​លុប។ លំនាំដើម = 90
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	km	តើចំនួនធាតុដែលមិនមែនជាអ្នកគ្រប់គ្រងគួរអាចនាំចេញបានប៉ុន្មាន។ ទទេ = គ្មានដែនកំណត់ គ្មាន = គ្មានការនាំចេញ
@@ -548,7 +548,7 @@ leave unchanged	admin	km	ទុកឱ្យមិនផ្លាស់ប្ត�
 leave without saveing the entry	admin	km	ចាកចេញដោយមិនរក្សាទុកការចូល
 leaves without saveing	admin	km	ស្លឹកដោយមិនរក្សាទុក
 length	admin	km	ប្រវែង
-length<br>rows	admin	km	ប្រវែង<br>ជួរដេក
+length<br>rows	admin	km	ប្រវែង\nជួរដេក
 lifetime of 'remember me' token	admin	km	អាយុកាលនៃនិមិត្តសញ្ញា 'ចងចាំខ្ញុំ'
 limit global category to members of a certain group	admin	km	ដាក់កម្រិតប្រភេទសកលចំពោះសមាជិកនៃក្រុមជាក់លាក់មួយ។
 limit to members of	admin	km	កំណត់ចំពោះសមាជិកនៃ

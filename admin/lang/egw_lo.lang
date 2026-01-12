@@ -118,7 +118,7 @@ custom fields	admin	lo	ກໍານົດ fields
 cyrus imap server	admin	lo	Cyrus IMAP Server
 data	admin	lo	ຂໍ້ມູນ
 day	admin	lo	ມື້
-day of week<br>(0-6, 0=sun)	admin	lo	ມື້້ນັ້ນຂອງອາທິດ<br>(0-6, 0=Sun)
+day of week<br>(0-6, 0=sun)	admin	lo	ມື້້ນັ້ນຂອງອາທິດ\n(0-6, 0=Sun)
 db backup and restore	admin	lo	DB backup and restore
 default	admin	lo	ຄ່າເລີ່ມຕົ້ນ
 default file system space per user	admin	lo	ຄ່າເລີ່ມຕົ້ນຂອງພື້ນທີ່ສໍາລັບ 1 ຜູ້ໃຊ້
@@ -185,13 +185,13 @@ email address	admin	lo	ທີ່ຢູ່ email
 enable debug-messages	admin	lo	ເປິດການໃຊ້ debug-messages
 enable spellcheck in rich text editor	admin	lo	ເປິດການໃຊ້ການກວດແກ້ຄໍໍາສັບ?
 enter a description for the category	admin	lo	ພິມຄໍາອະທິບາຍສໍາລັບໝວດໝູ່
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	lo	ພິມຄໍາສັບແບບສຸ່ມສໍາລັບ app-session <br> encryption (requires mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	lo	ພິມຄໍາສັບແບບສຸ່ມສໍາລັບ app-session \n encryption (requires mcrypt)
 enter the background color for the login page	admin	lo	ພິມສີພື້ນສໍາລັບໜ້າເຂົ້າສູ່ລະບົບ
 enter the background color for the site title	admin	lo	ພິມສີພື້ນສໍາລັບ ຫົວຂໍ້ຂອງເວບ
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	lo	ພິມພາດເກັບຟາຍຊົ່ວຄາວສໍາລັບ. <br> ຕົວຢ່າງ: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	lo	ຕື່ມພາດເກັບຟາຍສໍາລັບຜູ້ໃຊ້ ແລະ ກຸ່ມ. <br> ຕົວຢ່າງ: /files, E:\FILE
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	lo	ພິມພາດເກັບຟາຍຊົ່ວຄາວສໍາລັບ. \n ຕົວຢ່າງ: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	lo	ຕື່ມພາດເກັບຟາຍສໍາລັບຜູ້ໃຊ້ ແລະ ກຸ່ມ. \n ຕົວຢ່າງ: /files, E:\FILE
 enter the hostname of the machine on which this server is running	admin	lo	ພິມ ຊື່ໂຮສ ຂອງເຄື່ອງ ເຊີບເວີ້ ທີ່ກໍາລັງໃຊ້ຢູ່
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lo	ພິມບ່ອນທີ່ຈັດເກັບຂອງ EGroupware's URL.<br> ຕົວຢ່າງ: http://www.domain.com/egroupware   ຫຼື   /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lo	ພິມບ່ອນທີ່ຈັດເກັບຂອງ EGroupware's URL.\n ຕົວຢ່າງ: http://www.domain.com/egroupware   ຫຼື   /egroupware\n<b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	lo	ພິມຂໍ້ຄວາມຄົ້ນຫາ. ເພື່ອສະແດງທຸ່ກລາຍການທີ່ມີ,ພື້ນທີ່ນີ້ເປົ່າວ່າງໃຫ້ກົດປຸ່ມນໍາສະເໜີອີກຄັ້ງ
 enter the site password for peer servers	admin	lo	ພິມລະຫັດຜ່ານສໍາລັບ peer servers
 enter the site username for peer servers	admin	lo	ພິມຊື່ສໍາລັບ peer ເຊີບເວີ້
@@ -245,7 +245,7 @@ hide php information	admin	lo	ເຊື່ອງຂໍ້ມູນ PHP
 home directory	admin	lo	Home directory
 home screen message	admin	lo	ຂໍ້ຄວາມໜ້າຈໍຫຼັກ
 host information	admin	lo	ຂໍ້ມູນ ໂຮສ
-hour<br>(0-23)	admin	lo	ຊົ່ວໂມງ<br>(0-23)
+hour<br>(0-23)	admin	lo	ຊົ່ວໂມງ\n(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	lo	ຂາດໜາດຮູບທີ່ເຊື່ອມຕໍ່ຄວນຈະເປັນຂະໜາດໃຫຍ່ເທົ່າໃດ(pixels ສູງສຸດ)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	lo	ຄວນໃຊ້ເວລາຈັກມື້ເພື່ອຈະຢູ່ໃນລ໋ອກຟາຍຂອງລະບົບ, ກ່ອນທີ່ຈະຖືກລຶບ(ຄ່າເລີ່ມຕົ້ນ 90 ມື້)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	lo	ຫຼາຍວິທີທີ່ບໍມີຜູ້ຄຸ້ມຄອງລະບົບກໍ່ສາມາດສົ່ງອອກ  (empty = no limit, no = no export) ມີຈັກວິທິໃນການເຂົ້າ
@@ -293,7 +293,7 @@ leave the category untouched and return back to the list	admin	lo	ອອກຈ�
 leave the group untouched and return back to the list	admin	lo	ອອກຈາກໝກຸ່ມ ແລະ ກັບຄືນລາຍການ
 leave without saveing the entry	admin	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກການເຂົ້າ
 leaves without saveing	admin	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກ
-length<br>rows	admin	lo	ຄວາມຍາວ <br> ແຖວ
+length<br>rows	admin	lo	ຄວາມຍາວ \n ແຖວ
 list config settings	admin	lo	ລາຍການຕັ້ງຄ່າ config
 list current sessions	admin	lo	ລາຍການ session ໃນປັດຈຸບັນ
 list of current users	admin	lo	ລາຍຊື່ຜູ້ໃຊ້ໃນປັດຈຸບັນ

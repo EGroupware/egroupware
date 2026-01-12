@@ -75,7 +75,7 @@ change acl rights	admin	iw	שינוי הרשאות ברשימות גישה
 change config settings	admin	iw	שינוי הגדרות קונפיגורציה
 change login screen message	admin	iw	שינוי המסר במסך הראשי
 check ip address of all sessions	admin	iw	של כל המושבים IP בדוק כתובות
-check items to <b>%1</b> to %2 for %3	admin	iw	בדוק פריטים <br>ל%1</br>  ל%2 עבור %3
+check items to <b>%1</b> to %2 for %3	admin	iw	בדוק פריטים \nל%1</br>  ל%2 עבור %3
 click to select a color	admin	iw	הקלק לבחירת צבע
 color	admin	iw	צבע
 continue	admin	iw	המשך
@@ -89,7 +89,7 @@ custom fields	admin	iw	שדות מותאמים אישית
 cyrus imap server	admin	iw	Cyrus IMAP שרת
 data	admin	iw	מידע
 day	admin	iw	יום
-day of week<br>(0-6, 0=sun)	admin	iw	היום בשבוע<br>(0-6, 0=יום ראשון)
+day of week<br>(0-6, 0=sun)	admin	iw	היום בשבוע\n(0-6, 0=יום ראשון)
 default	admin	iw	ברירת מחדל
 default file system space per user	admin	iw	מקום המחדלי במערכת הקבצים עבור כל משתמש
 default file system space per user/group ?	admin	iw	הקצאת מקום מחדלי במערכת הקבצים לכל משתמש/קבוצה?
@@ -152,13 +152,13 @@ enable	admin	iw	אפשר
 enable debug-messages	admin	iw	לפעילים debug הפוך הודעות
 enable sieve	admin	iw	Sieve אישפור
 enter a description for the category	admin	iw	ציין תיאור לקטגוריה זו
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	iw	הקלד טקסט אקראי עבור הצפנת<br>
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	iw	הקלד טקסט אקראי עבור הצפנת\n
 enter the background color for the login page	admin	iw	ציין את צבע הרקע של עמוד הכניסה
 enter the background color for the site title	admin	iw	ציין את תבע הרקע של כותרת האתר
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	iw	הקלד את המסלול המלא אל הקבצים הזמניים<br>
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	iw	הקלד את המסלול המלא אל קבצי משתמשים וקבוצות<br>
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	iw	הקלד את המסלול המלא אל הקבצים הזמניים\n
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	iw	הקלד את המסלול המלא אל קבצי משתמשים וקבוצות\n
 enter the hostname of the machine on which this server is running	admin	iw	הקלד את שם המחשב בו שרת זה רץ
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	EGroupware של URL-הקלד את ה<br>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	EGroupware של URL-הקלד את ה\n
 enter the search string. to show all entries, empty this field and press the submit button again	admin	iw	ציין את צחרוזת החיפוש. להציג את כל הרשומות, רוקן שדה זה ולחץ שוב על כפתור הגש
 enter the site password for peer servers	admin	iw	הקלד את סיסמת האתר עבור שרתי חבר
 enter the site username for peer servers	admin	iw	הקלד את שם המשתמש האתר עבור שרתי חבר
@@ -201,7 +201,7 @@ hide php information	admin	iw	php הסתר נתוני
 home directory	admin	iw	מחיצת בית
 home screen message	admin	iw	מסר של מסך הראשי
 host information	admin	iw	מידע על השרת
-hour<br>(0-23)	admin	iw	שעה<br>(0-23)
+hour<br>(0-23)	admin	iw	שעה\n(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	iw	(כמה ימים יש להשאיר רשומות ביומן הגישה עד שמוחקים אותן (ברירת מחדל: 90
 how many minutes should an account or ip be blocked (default 1) ?	admin	iw	(ברירת מחדל: 30) IP כמה דקות יש לחסום חשבון או כתובת
 icon	admin	iw	צלמית
@@ -247,7 +247,7 @@ leave the category untouched and return back to the list	admin	iw	אל תגע ב
 leave the group untouched and return back to the list	admin	iw	אל תיגע בקבוצו וחזור את הרשימה
 leave without saveing the entry	admin	iw	צא בלי לשמור את הרשומה
 leaves without saveing	admin	iw	יוצא בלי לשמור
-length<br>rows	admin	iw	אורך<br>שורות
+length<br>rows	admin	iw	אורך\nשורות
 list config settings	admin	iw	הצג הגדרות קונפיגורציה
 list current sessions	admin	iw	הצג משתמשים נוכחיים
 list of current users	admin	iw	רשימת המשתמשים הנוכחיים

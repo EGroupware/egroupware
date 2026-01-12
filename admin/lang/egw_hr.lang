@@ -89,7 +89,7 @@ custom fields	admin	hr	Proizvoljno Polje
 cyrus imap server	admin	hr	Cyrus IMAP Server
 data	admin	hr	Podaci
 day	admin	hr	Dan
-day of week<br>(0-6, 0=sun)	admin	hr	Dan u tjednu<br>(0-6, 0=Ned)
+day of week<br>(0-6, 0=sun)	admin	hr	Dan u tjednu\n(0-6, 0=Ned)
 default	admin	hr	default
 default file system space per user	admin	hr	Početno postavljeni prostor za datoteke po korisniku
 default file system space per user/group ?	admin	hr	Početno postavljeni prostor za datoteke po korisniku/grupe?
@@ -152,13 +152,13 @@ enable	admin	hr	Omogući
 enable debug-messages	admin	hr	Omogući poruke za ispravljanje pogrešaka
 enable sieve	admin	hr	enable Sieve
 enter a description for the category	admin	hr	unesite opis z akategoriju
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	hr	Enter some random text for app_session <br>encryption (requires mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	hr	Enter some random text for app_session \nencryption (requires mcrypt)
 enter the background color for the login page	admin	hr	Unesite pozadinsku boju stranice za prijavu
 enter the background color for the site title	admin	hr	Unesite pozadinsku boju naslova stranica
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	hr	Unesite punu stazu za privremene datoteke.<br>Primjeri: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	hr	Unesite punu stazu za korisnike i datoteke grupa.<br>Primjeri: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	hr	Unesite punu stazu za privremene datoteke.\nPrimjeri: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	hr	Unesite punu stazu za korisnike i datoteke grupa.\nPrimjeri: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	hr	Unesite hostname poslužitelja na kojem se ova apiljacija izvršava
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Unesite lokaciju EGroupware-ovog URL-a: http://www.domain.com/egroupware &nbsp; ili &nbsp; /egroupware<br><b>Bez kose crte</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Unesite lokaciju EGroupware-ovog URL-a: http://www.domain.com/egroupware &nbsp; ili &nbsp; /egroupware\n<b>Bez kose crte</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	hr	Unesite niz znakova za pretraživanje. Radi prikazivanja svih zapisa, ispraznite ovo polje i ponovo kliknite na POŠALJI.
 enter the site password for peer servers	admin	hr	Unesite zaporku za peer poslužitelje
 enter the site username for peer servers	admin	hr	Unesite korisničko ime za peer poslužitelje
@@ -201,7 +201,7 @@ hide php information	admin	hr	sakrij php informacije
 home directory	admin	hr	Home directory
 home screen message	admin	hr	Poruka glavnog ekrana
 host information	admin	hr	Informacije poslužitelja
-hour<br>(0-23)	admin	hr	Sat<br>(0-23)
+hour<br>(0-23)	admin	hr	Sat\n(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	hr	Koliko dana bi zapisi trebali biti sačuvani u zapisu pristupa, prije brisanja (početno postavljeno 90) ?
 how many minutes should an account or ip be blocked (default 1) ?	admin	hr	Koliko minuta bi korisnički račun ili IP trebali biti blokirani (početno postavljeno 30) ?
 icon	admin	hr	Ikona
@@ -249,7 +249,7 @@ leave the category untouched and return back to the list	admin	hr	ostavi kategor
 leave the group untouched and return back to the list	admin	hr	Ostavi kategoriju nedirnutu i varti se na listu
 leave without saveing the entry	admin	hr	napusti bez spremanja zapisa
 leaves without saveing	admin	hr	napusti bez spremanja
-length<br>rows	admin	hr	Duljina<br>Retci
+length<br>rows	admin	hr	Duljina\nRetci
 list config settings	admin	hr	Prikaži postavke konfiguracije
 list current sessions	admin	hr	Prikaži trenutne sessions
 list of current users	admin	hr	Lista trenutnih korisnika

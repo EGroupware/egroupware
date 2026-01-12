@@ -148,7 +148,7 @@ are you sure you want to delete this group ?	admin	fr	Etes-vous sûr de vouloir 
 are you sure you want to delete this server?	admin	fr	Etes-vous sûr de vouloir supprimer ce serveur ?
 are you sure you want to kill this session ?	admin	fr	Etes-vous sûr de vouloir tuer cette session ?
 async services last executed	admin	fr	Dernière exécution des services asynchrones
-asynchronous timed services	admin	fr	Service asynchrone
+asynchronous timed services	admin	fr	Services asynchrones
 asyncservices not yet installed or other error (%1) !!!	admin	fr	services asynchrones pas encore installés ou autre erreur (%1) !
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fr	Tentative d'utiliser le type MIME correct pour ftp à la place de celui par défaut 'application/octet-stream'.
 attributes	admin	fr	Attributs
@@ -168,7 +168,7 @@ bottom	admin	fr	Bas
 bulk changes	admin	fr	Changements en bloc
 bulk password reset	admin	fr	Reset des mots de passe
 by	admin	fr	Par
-by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	fr	En sélectionnant un utilisateur ou un groupe, vous effacez le compte mail pour tous les autres utilisateurs!<br>Êtes-vous sûrs de vouloir le faire ?
+by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	fr	En sélectionnant un utilisateur ou un groupe, vous effacez le compte mail pour tous les autres utilisateurs!\nÊtes-vous sûrs de vouloir le faire ?
 calculate next run	admin	fr	Calculer la prochaine exécution
 calendar recurrence horizont in days (default 1000)	admin	fr	Horizon de la récurrence des calendrier en jours. Défaut = 1000.
 can be used to show groups by container, if enabled	admin	fr	Peut être utilisé pour afficher les groupes par conteneur, si l'option est activée.
@@ -205,7 +205,7 @@ check ip address of all sessions	admin	fr	Vérifier l'adresse IP de toutes les s
 check items to <b>%1</b> to %2 for %3	admin	fr	Vérifier les objets vers <b>%1</b> à %2 pour %3
 checking push (green for success or red for failure)	admin	fr	Vérifier PUSH (vert = OK, rouge pour pas OK)
 children	admin	fr	Enfants
-clear cache and register hooks	admin	fr	Effacer le cache/les hooks du registre
+clear cache and register hooks	admin	fr	Vider le cache et enregistrer les hooks
 clear credentials	admin	fr	Oublier les accès
 clear mail credentials	admin	fr	Oublier les accès email
 clear security tokens	admin	fr	Oublier les jetons de sécurité
@@ -263,8 +263,8 @@ cyrus imap server	admin	fr	Serveur Cyrus IMAP
 data	admin	fr	Données
 data from	admin	fr	Données de
 day	admin	fr	Jour
-day of week<br>(0-6, 0=sun)	admin	fr	Jour de la semaine<br>(0-6, 0=Dim)
-db backup and restore	admin	fr	Sauvegarde
+day of week<br>(0-6, 0=sun)	admin	fr	Jour de la semaine\n(0-6, 0=Dim)
+db backup and restore	admin	fr	Sauvegarde et restauration de la DB
 deactivate	admin	fr	Désactiver
 deactivated	admin	fr	désactivé
 debug	admin	fr	Debug
@@ -301,9 +301,9 @@ deny access	admin	fr	Refuser l'accès
 deny access to access log	admin	fr	Refuser l'accès au log d'accès
 deny access to application registery	admin	fr	Refuser l'accès à l'enregistrement d'applications
 deny access to applications	admin	fr	Refuser l'accès aux applications
-deny access to asynchronous timed services	admin	fr	Refuser l'accès au service asynchrone
+deny access to asynchronous timed services	admin	fr	Refuser l'accès aux services asynchrones
 deny access to current sessions	admin	fr	Refuser l'accès aux sessions actives
-deny access to db backup and restore	admin	fr	Refuser l'accès à la sauvegarde
+deny access to db backup and restore	admin	fr	Refuser l'accès à Sauvegarde et restauration de la DB
 deny access to error log	admin	fr	Refuser l'accès à la log d'erreurs
 deny access to global categories	admin	fr	Refuser l'accès aux catégories globales
 deny access to groups	admin	fr	Refuser l'accès aux groupes
@@ -379,15 +379,15 @@ encryption	admin	fr	Chiffrement
 encryption settings	admin	fr	Paramètres de chiffrement
 enter a description for the category	admin	fr	Entrez une description pour la catégorie
 enter a passphrase if you would like to protect your private key by password.	admin	fr	Entrez un mot de passe si vous souhaitez protéger votre clé privée par mot de passe.
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	fr	Entrez un texte au hasard pour le <br>chiffrement de l'app_session (nécessite mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	fr	Entrez un texte au hasard pour le \nchiffrement de l'app_session (nécessite mcrypt)
 enter the background color for the login page	admin	fr	Entrez la couleur de fond pour la page de connexion
 enter the background color for the site title	admin	fr	Entrez la couleur de fond pour le titre du site
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, c:\temp
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, c:\temp
-enter the full path for users and group files.<br>examples: /files, e:files	admin	fr	Entrez le chemin complet pour les fichiers de utilisateurs et groupes.<br>Exemples: /files, e:\files
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	fr	Entrez le chemin complet pour les fichiers de utilisateurs et groupes.<br>Exemples: /files, e:\files
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fr	Entrez le chemin complet pour les fichiers temporaires.\nExemples: /tmp, c:\temp
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fr	Entrez le chemin complet pour les fichiers temporaires.\nExemples: /tmp, c:\temp
+enter the full path for users and group files.<br>examples: /files, e:files	admin	fr	Entrez le chemin complet pour les fichiers de utilisateurs et groupes.\nExemples: /files, e:\files
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	fr	Entrez le chemin complet pour les fichiers de utilisateurs et groupes.\nExemples: /files, e:\files
 enter the hostname of the machine on which this server is running	admin	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrez l'emplacement de l'URL EGroupware.<br>Exemple: https://egw.domaine.com/egroupware ou /egroupware<br><b>Pas de division (/) à la fin</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrez l'emplacement de l'URL EGroupware.\nExemple: https://egw.domaine.com/egroupware ou /egroupware\n<b>Pas de division (/) à la fin</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	fr	Entrez la chaîne de recherche. Pour montrer toutes les entrées, videz ce champ et recliquez sur le bouton SOUMETTRE
 enter the site password for peer servers	admin	fr	Entrez le mot de passe du site pour les serveurs pairs
 enter the site username for peer servers	admin	fr	Entrez le nom d'utilisateur du site pour les serveurs pairs
@@ -487,7 +487,7 @@ home directory	admin	fr	Répertoire maison
 home screen message	admin	fr	Message de l'écran principal
 host information	admin	fr	Informations sur l'hôte
 hostname or ip	admin	fr	Serveur hôte ou IP
-hour<br>(0-23)	admin	fr	Heure<br>(0-23)
+hour<br>(0-23)	admin	fr	Heure\n(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	fr	Taille maximale en pixels des vignettes pour les images liées
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fr	Pendant combien de jours les entrées doivent-elles rester dans la log d'accès avant d'être effacées (90 par défaut)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	fr	Combien d'entrées les non-admins peuvent-ils exporter. Vide = pas de limite, Non = pas d'export
@@ -581,7 +581,7 @@ leave unchanged	admin	fr	Laisser inchangé
 leave without saveing the entry	admin	fr	Quitter sans enregistrer l'entrée
 leaves without saveing	admin	fr	Quitter sans enregistrer
 length	admin	fr	Longueur
-length<br>rows	admin	fr	Longueur<br>lignes
+length<br>rows	admin	fr	Longueur\nlignes
 lifetime of 'remember me' token	admin	fr	Durée de vie du jeton "Se souvenir de moi"
 limit global category to members of a certain group	admin	fr	Limiter la catégorie globale au membre d'un certain groupe.
 limit to members of	admin	fr	Limiter aux membres de
@@ -738,7 +738,7 @@ regular expression to find part to use as container	admin	fr	Expression réguli�
 reject passwords containing part of username or full name (3 or more characters long)	admin	fr	Rejeter les mots de passe contenant une partie du nom complet ou du login (3 caractères ou plus)
 relay access checked	admin	fr	Accès au relais vérifié
 remark	admin	fr	Remarque
-remote administration instances	admin	fr	Administration à distance
+remote administration instances	admin	fr	Instances administrées à distance
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	fr	Administration à distance doit être activé dans l'instance à distance sous Admin > Configuration du site !
 remote instance saved	admin	fr	Instance distante enregistrée.
 remove	admin	fr	Supprimer
@@ -756,7 +756,7 @@ rights	admin	fr	Droits
 rows	admin	fr	Lignes
 rpm or debian package	admin	fr	Paquet RPM ou deb
 run	admin	fr	exécuter
-run asynchronous services	admin	fr	Exécuter le service asynchrone
+run asynchronous services	admin	fr	Exécuter les Services asynchrones
 run rights for applications	admin	fr	Exécuter les permissions pour ls applications
 samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	fr	Attribut de cookie SameSite (envoie un cookie si la barre d'adresse du navigateur montre un domaine différent)
 save as default	admin	fr	Sauvegarder comme défaut
@@ -879,7 +879,7 @@ this application requires an upgrade	admin	fr	Cette application nécessite une m
 this category is currently being used by applications as a parent category	admin	fr	Cette catégorie est actuellement utilisée par des applications comme une catégorie parente.
 this controls exports and merging.	admin	fr	Ceci contrôle les exports et les fusion d'impressions.
 this is a mail account for all users!	admin	fr	Ceci est un compte mail pour TOUS les utilisateurs !
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	fr	Ce n'est PAS un compte de messagerie personnel!<br>Le compte sera supprimé pour TOUS les utilisateurs!<br>Vous êtes vraiment sûr de vouloir faire ça ?
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	fr	Ce n'est PAS un compte de messagerie personnel!\nLe compte sera supprimé pour TOUS les utilisateurs!\nVous êtes vraiment sûr de vouloir faire ça ?
 this php has no imap support compiled in!!	admin	fr	Ce PHP n'est pas compilé avec le support de l'IMAP !
 timeout for application session data in seconds (default 86400 = 1 day)	admin	fr	Expiration pour les données session de l'application en secondes (par défaut 86400 = 1 jour)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fr	Expiration pour les sessions en secondes (par défaut 14400 = 4 heures)

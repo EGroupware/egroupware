@@ -95,7 +95,7 @@ crontab only (recomended)	admin	fa	فقط crontab (پیشنهاد میشود)
 custom fields	admin	fa	فیلدهای سفارشی
 data	admin	fa	داده
 day	admin	fa	روز
-day of week<br>(0-6, 0=sun)	admin	fa	روز هفته <br>(0-6, 0=یکشنبه)
+day of week<br>(0-6, 0=sun)	admin	fa	روز هفته \n(0-6, 0=یکشنبه)
 db backup and restore	admin	fa	پشتیبانی و برگرداندن پایگاه داده
 default	admin	fa	پیش فرض
 default file system space per user	admin	fa	فضای پیش فرض سیستم برای هر کاربر
@@ -164,7 +164,7 @@ encryption settings	admin	fa	تنظیمات رمز نگاری
 enter a description for the category	admin	fa	یک توصیف برای این دسته وارد کنید
 enter the background color for the login page	admin	fa	رنگ زمینه برای صفحه ورود را وارد کنید
 enter the background color for the site title	admin	fa	رنگ زمینه برای عنوان سایت را وارد کنید
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fa	مسیر کامل پرونده های موقت را وارد کنید.<br>برای مثال: tmp, C:\TEMP/
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fa	مسیر کامل پرونده های موقت را وارد کنید.\nبرای مثال: tmp, C:\TEMP/
 enter the hostname of the machine on which this server is running	admin	fa	نام میزبانی که این کارگزار روی آن اجرا می شود را وارد کنید
 enter the site password for peer servers	admin	fa	گذرواژه سایت برای کارگزار کمکی را وارد کنید
 enter the site username for peer servers	admin	fa	نام کاربری سایت برای کارگزار کمکی را وارد کنید
@@ -210,7 +210,7 @@ hide php information	admin	fa	پنهان سازی اطلاعات php
 home directory	admin	fa	پوشه خانه
 home screen message	admin	fa	پیام صفحه اصلی
 host information	admin	fa	اطلاعات میزبان
-hour<br>(0-23)	admin	fa	ساعت <br>(0-23)
+hour<br>(0-23)	admin	fa	ساعت \n(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fa	اطلاعات چند روز قبل از حذف ثبت دسترسی باید نگهداری شوند:(پیش فرض ۹۰)؟
 how many minutes should an account or ip be blocked (default 1) ?	admin	fa	چند دقیقه باید یک IP قفل باشد؟ (پیش فرض 30 دقیقه)
 icon	admin	fa	نمایه
@@ -251,7 +251,7 @@ leave the category untouched and return back to the list	admin	fa	دسته ، د
 leave the group untouched and return back to the list	admin	fa	گروه را دست نخورده بگذار و به فهرست برگرد
 leave without saveing the entry	admin	fa	بدون ذخیره کردن ورودی رها کنید
 leaves without saveing	admin	fa	ترک بدون ذخیره
-length<br>rows	admin	fa	طول <br> سطور
+length<br>rows	admin	fa	طول \n سطور
 list config settings	admin	fa	فهرست تنظیمات پیکربندی
 list current sessions	admin	fa	فهرست نشستهای جاری
 list of current users	admin	fa	فهرست کاربران جاری
