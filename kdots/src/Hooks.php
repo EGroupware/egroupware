@@ -51,6 +51,7 @@ class Hooks
 				'values' => $app_list_style,
 				'help'   => lang("should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons")
 			],
+			/* disable for now, as it seems to have no effect, because pre-processor removed the filters
 			'keep_nm_header' => [
 				'type'    => 'select',
 				'label'   => 'Entry list headers',
@@ -60,7 +61,7 @@ class Hooks
 				'xmlrpc'  => false,
 				'admin'   => false,
 				'default' => 'replace',
-			],
+			],*/
 			'open_popups_in' => [
 				'type'   => 'select',
 				'label'  => 'Open popups in',

@@ -236,16 +236,6 @@ class preferences_hooks
 				'admin'   => False,
 				'default' => '0'
 			),
-			'audio_effect'          => array(
-				'type'    => 'select',
-				'label'   => 'Audio effect',
-				'name'    => 'audio_effect',
-				'values'  => array('0' => lang('Disable'), '1' => lang('Enable')),
-				'help'    => 'Audio effect enables|disables sound effects used in the theme',
-				'xmlrpc'  => True,
-				'admin'   => False,
-				'default' => '0',
-			),
 			'navbar_format'         => array(
 				'type'    => 'select',
 				'label'   => 'Show navigation bar as',
@@ -255,16 +245,6 @@ class preferences_hooks
 				'xmlrpc'  => True,
 				'admin'   => False,
 				'default' => 'icons_and_text',
-			),
-			'link_list_format'      => array(
-				'type'   => 'select',
-				'label'  => 'Show links between eGroupWare aps as',
-				'name'   => 'link_list_format',
-				'values' => $link_list_format,
-				'help'   => 'You can show the linked entries with icons only, icons with app-name or both.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 'icons',
 			),
 			'select_multiple_close' => array(
 				'type'    => 'select',
