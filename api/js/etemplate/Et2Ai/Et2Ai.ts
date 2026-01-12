@@ -36,6 +36,38 @@ export const simplePrompts : AiPrompt[] = [
 	{id: 'aiassist.concise', label: 'Make concise'}
 ];
 
+/**
+ * @summary AI Assistant widget to process content of slotted elements
+ * @since 26.1
+ *
+ * @dependency sl-card
+ * @dependency sl-dropdown
+ * @dependency sl-menu
+ * @dependency sl-spinner
+ * @dependency sl-alert
+ * @dependency et2-button-icon
+ *
+ * @slot - The default slot where the target widget (e.g. et2-textarea, et2-vbox, iframe) is placed.
+ * @slot trigger - Custom trigger element for the AI menu. Defaults to an AI assistant icon button.
+ *
+ * @event et2-ai-start - Emitted when an AI process begins.
+ * @event et2-ai-success - Emitted when the AI process completes successfully.
+ * @event et2-ai-error - Emitted when the AI process fails.
+ * @event et2-ai-apply - Emitted when the user clicks 'Apply' to insert the result into the target.
+ *
+ * @csspart base - The component's internal wrapper.
+ * @csspart result - The sl-card containing the AI result or loader.
+ * @csspart loader - Specific part for the result card when in loading state.
+ * @csspart spinner - The loading spinner.
+ * @csspart result-content - The container for the returned AI text/HTML.
+ * @csspart apply-button - The button used to apply the result.
+ * @csspart dropdown - The Shoelace dropdown containing prompts.
+ * @csspart menu - The menu inside the dropdown.
+ * @csspart menu-item - Individual prompt items in the menu.
+ * @csspart error - The sl-alert shown on failure.
+ *
+ * @cssproperty --max-result-height - Automatically calculated based on the slotted element's height to ensure the result card fits.
+ */
 @customElement('et2-ai')
 export class Et2Ai extends Et2Widget(LitElement)
 {
@@ -67,26 +99,29 @@ export class Et2Ai extends Et2Widget(LitElement)
 	/* Max height for showing the result */
 	@state() maxResultHeight = 0;
 
-	/* Flag for if user has no access */
-	private noAiAssistant = false;
-	private ai = new AiAssistantController(this);
+	/* Flag for if the user has no access */
+	private noAiAssistant : boolean = true;
+	private ai;
 	private targetResizeObserver : ResizeObserver;
 
 	constructor()
 	{
 		super();
 		this.clearResult = this.clearResult.bind(this);
+		this.ai = new AiAssistantController(this);
 	}
 
 	disconnectedCallback()
 	{
 		this.targetResizeObserver?.disconnect();
+		this.targetResizeObserver = undefined;
 		super.disconnectedCallback();
 	}
 
-	protected firstUpdated()
+	protected async firstUpdated()
 	{
-		this.noAiAssistant = typeof (this.egw().user("apps") ?? {})["aiassistant"] == "undefined";
+		const apiOK = await this.ai.testAPI();
+		this.noAiAssistant = apiOK == false || typeof (this.egw().user("apps") ?? {})["aiassistant"] == "undefined";
 		const slot = this.shadowRoot?.querySelector('slot');
 		slot?.addEventListener('slotchange', () => this.handleSlotChange());
 
@@ -114,7 +149,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		const id = event.detail.item.value as string;
 		this.activePrompt = this.prompts.find(p => p.id === id);
-		if(!prompt)
+		if(!this.activePrompt)
 		{
 			return;
 		}
@@ -212,18 +247,23 @@ export class Et2Ai extends Et2Widget(LitElement)
 		// Prompt has an actual function to deal with it
 		if(typeof prompt.action == "function")
 		{
-			return prompt.action.apply(target, value);
+			return prompt.action.call(this, value);
 		}
 
 		// Handle internally by setting value
-		switch(typeof value == "string" && (prompt.action?.mode ?? "replace"))
+		// Prepend/append to existing value for string responses
+		if(typeof value == "string")
 		{
-			case "prepend":
-				value = value + target.value ?? "";
-				break;
-			case "append":
-				value = target.value ?? "" + value;
-				break;
+			value = value.trim();
+			switch(prompt.action?.mode ?? "replace")
+			{
+				case "prepend":
+					value = value + (target.value ?? "");
+					break;
+				case "append":
+					value = (target.value ?? "") + value;
+					break;
+			}
 		}
 		if(target)
 		{
@@ -427,7 +467,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		return html`
             <sl-card part="result loader" class="et2-ai-loader">
-                <span slot="header">${this.activePrompt.label}</span>
+                <span slot="header">${this.activePrompt?.label}</span>
                 <et2-button-icon slot="header" name="close" noSubmit @click=${this.clearResult}></et2-button-icon>
                 <sl-spinner part="spinner" class="et2-ai-loading"></sl-spinner>
             </sl-card>`;
@@ -456,10 +496,9 @@ export class Et2Ai extends Et2Widget(LitElement)
                 <div
                         part="result-content"
                         class="et2-ai-result-content ${isHtml ? 'html' : 'text'}"
-                >
-                    ${isHtml
+                >${isHtml
                       ? unsafeHTML(<string>result)
-                      : result
+                      : result.trim()
                     }
                 </div>
 
@@ -494,22 +533,28 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 	protected render() : TemplateResult
 	{
+		// No AI for some reason, show just content
+		if(this.noAiAssistant)
+		{
+			return html`
+                <slot></slot>`;
+		}
 
 		return html`
             <div class="et2-ai form-control" part="base" style="--max-result-height: ${this.maxResultHeight}px;">
                 ${this._renderStatus()}
                 <slot></slot>
-                <sl-dropdown class="et2-ai-dropdown" part="dropdown" placement="bottom-end" hoist no-flip>
-                    <et2-button-icon slot="trigger" name="aiassistant/navbar"
-                                     noSubmit></et2-button-icon>
+                <sl-dropdown class="et2-ai-dropdown" part="dropdown" placement="bottom-end" hoist no-flip
+                             ?disabled=${this.disabled}
+                >
+                    <slot name="trigger" slot="trigger">
+                        <et2-button-icon slot="trigger" name="aiassistant/navbar"
+                                         noSubmit></et2-button-icon>
+                    </slot>
                     <sl-menu @sl-select=${this.handlePromptSelect} part="menu">
-                        ${this.noAiAssistant ?
-                          html`
-                              <sl-menu-item>${this.egw().lang("EPL Only")}</sl-menu-item>` :
-                          this.prompts.map(p => html`
+                        ${this.prompts.map(p => html`
                               <sl-menu-item value=${p.id} part="menu-item">${p.label}</sl-menu-item>
-                          `)
-                        }
+                        `)}
                     </sl-menu>
                 </sl-dropdown>
             </div>
