@@ -168,7 +168,7 @@ bottom	admin	de	Unten
 bulk changes	admin	de	Massenänderungen
 bulk password reset	admin	de	Rücksetzen Passwörter
 by	admin	de	Von
-by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	de	Durch die Auswahl eines Benutzer oder Gruppe löschen Sie das Mailkonto für alle anderen Benutzer!<br>Sind Sie wirklich sicher, dass Sie das wollen?
+by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	de	Durch die Auswahl eines Benutzer oder Gruppe löschen Sie das Mailkonto für alle anderen Benutzer!\nSind Sie wirklich sicher, dass Sie das wollen?
 calculate next run	admin	de	Nächste Ausführung berechnen
 calendar recurrence horizont in days (default 1000)	admin	de	Kalender Wiederholungs-Bereich in Tagen (Vorgabe sind 1000)
 can be used to show groups by container, if enabled	admin	de	Kann benutzt werden um Gruppen in Containern anzuzeigen, wenn eingeschaltet
@@ -263,7 +263,7 @@ cyrus imap server	admin	de	Cyrus IMAP-Server
 data	admin	de	Daten
 data from	admin	de	Daten von
 day	admin	de	Tag
-day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
+day of week<br>(0-6, 0=sun)	admin	de	Wochentag\n(0-6, 0=Sonntag)
 db backup and restore	admin	de	Datensicherung
 deactivate	admin	de	Deaktivieren
 deactivated	admin	de	deaktiviert
@@ -379,15 +379,15 @@ encryption	admin	de	Verschlüsselung
 encryption settings	admin	de	Verschlüsselungseinstellungen
 enter a description for the category	admin	de	Geben Sie eine Beschreibung für diese Kategorie ein
 enter a passphrase if you would like to protect your private key by password.	admin	de	Bitte geben Sie ein Passphrase ein, wenn Sie Ihren privaten Schlüssel mit einem Passwort sichern wollen.
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (benötigt mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session\nVerschlüsselung (benötigt mcrypt)
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
 enter the background color for the site title	admin	de	Hintergrundfarbe für den Titel der Installation
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.<br>Beispiel: /files, E:\Files
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.<br>Beispiel: /files, E:\Files
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Vollständiger Pfad für temporäre Dateien.\nBeispiel: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.\nBeispiel: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.\nBeispiel: /files, E:\Files
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.\nBeispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur EGroupware-Installation.<br>Beispiel: https://egw.domain.com/egroupware or /egroupware<br><b>keinen nachfolgenden Slash /</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur EGroupware-Installation.\nBeispiel: https://egw.domain.com/egroupware or /egroupware\n<b>keinen nachfolgenden Slash /</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen geben Sie keinen Begriff ein und drücken Sie den Suchen-Knopf noch einmal
 enter the site password for peer servers	admin	de	Site-Passwort für Peer-Server
 enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Server
@@ -487,7 +487,7 @@ home directory	admin	de	Benutzerverzeichnis
 home screen message	admin	de	Nachricht der Startseite
 host information	admin	de	Host-Information
 hostname or ip	admin	de	Hostname oder IP
-hour<br>(0-23)	admin	de	Stunde<br>(0-23)
+hour<br>(0-23)	admin	de	Stunde\n(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	de	Wie gross sollen Thumbnails für verknüpfte Bilder sein (Maximum in Bildpunkten)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	de	Wie viele Einträge sollen Nicht-Administratoren exportieren können (leer = kein Limit, Nein = kein Export)
@@ -581,7 +581,7 @@ leave unchanged	admin	de	Unverändert lassen
 leave without saveing the entry	admin	de	Beendet ohne den Eintrag zu speichern
 leaves without saveing	admin	de	Beendet ohne zu speichern
 length	admin	de	Länge
-length<br>rows	admin	de	Länge<br>Zeilen
+length<br>rows	admin	de	Länge\nZeilen
 lifetime of 'remember me' token	admin	de	Gültigkeit des "An mich erinnern" Token
 limit global category to members of a certain group	admin	de	Beschränkt die global Kategorie auf der Mitglieder einer bestimmten Gruppe.
 limit to members of	admin	de	Beschränken auf Mitglieder von
@@ -879,7 +879,7 @@ this application requires an upgrade	admin	de	Diese Anwendung benötigt ein Upgr
 this category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenwärtig als übergeordnete Kategorie benutzt.
 this controls exports and merging.	admin	de	Steuert den Export und den Merge Print von Dokumenten/E-Mails.
 this is a mail account for all users!	admin	de	Das ist ein Mail-Konto für ALLE Benutzer!
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!<br>Das Konto wird für ALLE Benutzer gelöscht!<br>Sind Sie wirklich sicher, dass Sie das wollen?
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!\n\nDas Konto wird für ALLE Benutzer gelöscht!\n\nSind Sie wirklich sicher, dass Sie das wollen?
 this php has no imap support compiled in!!	admin	de	Dieses PHP hat keine IMAP Unterstützung!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)

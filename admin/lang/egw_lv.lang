@@ -75,7 +75,6 @@ all applications	admin	lv	Visas aplikācijas
 all records and account information will be lost!	admin	lv	Visi ieraksti un konta informācija tiks pazaudēta!
 all users	admin	lv	Visi lietotāji
 allow anonymous access to this app	admin	lv	Atļaut nezināmajam lietotājam piekļūt šai aplikācijai
-allow remote administration from following install id's (comma separated)	admin	lv	Atļaut attālo administrēšanu no šādiem instalācijas ID, atdalot ar komatu.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	lv	Ļaujiet lietotājam saglabāt savu paroli sadaļā “Drošība un paroles” vienotai pieejai SingleSignOn.
 allow user to set 'remember me' token	admin	lv	Atļaut lietotājam iestatīt žetonu "Atcerēties mani
 alternate email address	admin	lv	Alternatīvas e-pasta adreses
@@ -90,8 +89,7 @@ applications	admin	lv	Aplikācijas
 applications list	admin	lv	Aplikāciju saraksts
 applies the changes	admin	lv	Apstiprināt izmaiņas
 apply the changes	admin	lv	Lietot izmaiņas
-are you sure you want to %1 mail for selected accounts?	admin	lv	Vai tiešām vēlaties %1 sūtīt izvēlētajiem kontiem?
-are you sure you want to delete the application %1 ?	admin	lv	Vai esi pārliecināts, ka vēlies dzēst  aplikāciju %1?
+are you sure you want to delete the application %1 ?	admin	lv	Vai esi pārliecināts, ka vēlies dzēst  aplikāciju %1 ?
 are you sure you want to delete this account ?	admin	lv	Esi pārliecināts, ka vēlies dzēst šo kontu?
 are you sure you want to delete this application ?	admin	lv	Esi pārliecināts, ka vēlies dzēst šo aplikāciju?
 are you sure you want to delete this category ?	common	lv	Esi pārliecināts, ka vēlies dzēst šo kategoriju?
@@ -100,12 +98,11 @@ are you sure you want to delete this group ?	admin	lv	Esi pārliecināts, ka vē
 are you sure you want to delete this server?	admin	lv	Esi pārliecināts, ka vēlies dzēst šo  serveri?
 are you sure you want to kill this session ?	admin	lv	Esi pārliecināts, ka vēlies izbeigt šo sesiju?
 async services last executed	admin	lv	Asinhronā režīma pēdējie lietotie pakalpojumi
-asynchronous timed services	admin	lv	Asinhronais pakalpojums
+asynchronous timed services	admin	lv	Asinhronā režīma regulēšanas pakalpojumi
 asyncservices not yet installed or other error (%1) !!!	admin	lv	Asinhronie pakalpojumi vēl nav uzstādīti vai cita kļuda (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	lv	Mēģināt lietot pareizu FTP MIMEtype noklusējuma 'application/octet-stream' vietā
 authentication / accounts	admin	lv	Autentifikācija/Konti
 auto create account records for authenticated users	admin	lv	Automātiski veidot konta ierakstus apstiprinātiem lietotājiem
-backup directory %1 mounted as %2	admin	lv	Dublējuma direktorija %1 pievienota kā %2
 bi-directional	admin	lv	divpusējs
 blocking after wrong password	admin	lv	Bloķēšana pēc nepareizas paroles
 bottom	admin	lv	Augšā
@@ -126,10 +123,8 @@ change acl rights	admin	lv	Mainīt ACL tiesības
 change config settings	admin	lv	Mainīt konfigurācijas iestatījumus
 change domain of email address and aliases	admin	lv	E-pasta adreses un aizstājvārdu domēna maiņa
 change login screen message	admin	lv	Mainīt galvenā loga ziņojumu
-changelog and versions	admin	lv	Izmaiņu žurnāls un versijas
 check ip address of all sessions	admin	lv	Pārbaudīt IP adresi visām sesijām
 check items to <b>%1</b> to %2 for %3	admin	lv	Pārbaudīt vienības <b>%1</b> to %2 for %3
-clear cache and register hooks	admin	lv	Tīrīt kešatmiņu / reģistrēt āķus
 clear security tokens	admin	lv	Izdzēst drošības žetonus
 click to select a color	admin	lv	Noklikšķini, lai izvēlētos krāsu
 color	admin	lv	Krāsa
@@ -150,8 +145,8 @@ custom fields	admin	lv	Mainīti lauki
 cyrus imap server	admin	lv	Cyrus IMAP serveris
 data	admin	lv	Dati
 day	admin	lv	Diena
-day of week<br>(0-6, 0=sun)	admin	lv	Nedēļas diena <br>(0-6, 0=SV)
-db backup and restore	admin	lv	Dublējums
+day of week<br>(0-6, 0=sun)	admin	lv	Nedēļas diena \n(0-6, 0=SV)
+db backup and restore	admin	lv	DV dublējums un atjaunināšana
 default	admin	lv	Noklusējums
 default file system space per user	admin	lv	Noklusētā disku apjoma vērtība lietotājam
 default file system space per user/group ?	admin	lv	Noklusētā disku apjoma vērtība lietotājam/grupai?
@@ -174,9 +169,8 @@ deny access	admin	lv	Liegt pieeju
 deny access to access log	admin	lv	Liegt pieeju piekļuves logam
 deny access to application registery	admin	lv	Liegt pieeju aplikācijas reģistrēšanai
 deny access to applications	admin	lv	Liegt pieeju aplikācijām
-deny access to asynchronous timed services	admin	lv	Aizliegt piekļuvi asinhronajam pakalpojumam
+deny access to asynchronous timed services	admin	lv	Liegt pieeju asinhronā režīma regulēšanas pakalpojumiem
 deny access to current sessions	admin	lv	Liegt pieeju tagadējām sesijām
-deny access to db backup and restore	admin	lv	Aizliegt piekļuvi dublējumam
 deny access to error log	admin	lv	Liegt pieeju kļūdas paziņojuma logam
 deny access to global categories	admin	lv	Liegt pieeju vispārējām kategorijām
 deny access to groups	admin	lv	Liegt pieeju grupām
@@ -209,7 +203,6 @@ edit this group	admin	lv	Rediģēt  šo grupu
 edit this user	admin	lv	Rediģēt  šo lietotāju
 edit user	admin	lv	Rediģēt  lietotāju
 edit user account	admin	lv	Rediģēt lietotāja kontu
-egroupware version	admin	lv	EGroupware versija
 email account active	admin	lv	E-pasta konts aktīvs
 email address	admin	lv	E-pasta adrese
 enable	admin	lv	Aktivizēt
@@ -219,10 +212,10 @@ enter a description for the category	admin	lv	Ievadi kategorijas aprakstu
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	lv	Ievadi nelielu nejauši izvēlētu tekstu aplikāciju sesijai <b>šifrēšana(pieprasa mcrypt)
 enter the background color for the login page	admin	lv	Ievadi fona krāsu pieteikuma lapai
 enter the background color for the site title	admin	lv	Ievadi fona krāsu lapas nosaukumam
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	lv	Norādi pilno ceļu uz īslaicīgajām datnēm.<br>Piemēri:/tmp,C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	lv	Ievadi pilno ceļu lietotāju un grupu datnēm.<br>Piemēri: /files,E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	lv	Norādi pilno ceļu uz īslaicīgajām datnēm.\nPiemēri:/tmp,C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	lv	Ievadi pilno ceļu lietotāju un grupu datnēm.\nPiemēri: /files,E:\FILES
 enter the hostname of the machine on which this server is running	admin	lv	Ievadi hostdatora vārdu uz kura ir palaists šis serveris
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: https://egw.domain.com/egroupware   or   /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: https://egw.domain.com/egroupware   or   /egroupware\n<b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	lv	Ievadi meklēšanas stringu. Lai parādītu visus ierakstus, atbrīvo šo lauku un nospied SUBMIT pogu vēlreiz
 enter the site password for peer servers	admin	lv	Ievadi vietnes paroli vienādranga serveriem
 enter the site username for peer servers	admin	lv	Ievadi vietnes lietotājvārdu vienādranga serveriem
@@ -244,7 +237,6 @@ error: %1 not found or other error !!!	admin	lv	Kļūda: %1 nav atrasts vai cita
 expires	admin	lv	Beigas
 export certificate as p12	admin	lv	Eksportēt sertifikātu kā p12
 failed to change password.	admin	lv	Neizdevād nomainīt paroli.
-failed to mount backup directory!	admin	lv	Neizdevās pievienot dublējuma direktoriju!
 fallback (after each pageview)	admin	lv	Atkāpšanās (pēc katras lapas apskates)
 false	admin	lv	Nepatiess
 file space	admin	lv	Failu kartotēkas lielums
@@ -272,7 +264,7 @@ hide php information	admin	lv	Noslēpt PHP informāciju
 home directory	admin	lv	Mājas direktorija
 home screen message	admin	lv	Galvenā loga ziņojums
 host information	admin	lv	Host informācija
-hour<br>(0-23)	admin	lv	Stundas <br>(0-23)
+hour<br>(0-23)	admin	lv	Stundas \n(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	lv	Cik dienu vajadzētu saglabāt iesniegtos datus piekļuves loga, pirms tie tiek izdzēsti (noklusējums 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	lv	Cik daudz ierakstu var eksportēt personas, kas nav administratori. Tukšs = nav ierobežojuma, Nē = nav eksporta
 how many minutes should an account or ip be blocked (default 1) ?	admin	lv	Cik minūtes vajadzētu bloķēt kontu vai IP (noklusējums 30)?
@@ -325,7 +317,7 @@ leave the category untouched and return back to the list	admin	lv	Atstāt katego
 leave the group untouched and return back to the list	admin	lv	Atstāt grupu neskartu un atgriezties pie saraksta
 leave without saveing the entry	admin	lv	Aiziet, nesaglabājot ierakstu
 leaves without saveing	admin	lv	Aiziet bez saglabāšanas
-length<br>rows	admin	lv	Garums<br>Rindas
+length<br>rows	admin	lv	Garums\nRindas
 lifetime of 'remember me' token	admin	lv	Atcerēties mani" žetona darbības laiks
 list config settings	admin	lv	Uzskaitīt konfigurācijas uzstādījumus
 list current sessions	admin	lv	Uzskaitīt esošās sesijas
@@ -347,7 +339,6 @@ minute	admin	lv	Minūte
 mode	admin	lv	Režīms
 modified	admin	lv	Pārveidots
 month	admin	lv	Mēnesis
-mount backup directory to %1	admin	lv	Pievienot dublējuma direktoriju %1
 name must not be empty !!!	admin	lv	Nosaukums nedrīkst būt tukšs
 name of organisation	admin	lv	Organizācijas nosaukums
 new group name	admin	lv	Jaunais grupas nosaukums
@@ -388,7 +379,6 @@ permission denied	admin	lv	Atļauja liegta
 permission denied !!!	admin	lv	Atļauja liegta!
 permissions	admin	lv	Atļaujas
 permissions this group has	admin	lv	Šīs grupas atļaujas
-php version	admin	lv	PHP versija
 phpinfo	admin	lv	PHP informācija
 please enter a name	admin	lv	Lūdzu ievadi vārdu
 please enter a name for that server !	admin	lv	Lūzdu ievadi servera vārdu
@@ -400,13 +390,10 @@ profile name	admin	lv	Profila vārds
 re-enter password	admin	lv	Atkārtoti ievadi paroli
 read this list of methods.	admin	lv	Izlasi šo metožu sarakstu
 regular expression to find part to use as container	admin	lv	Regulārā izteiksme, lai atrastu daļu, ko izmantot kā konteineru
-remote administration instances	admin	lv	Attālā administrēšana
-remote administration need to be enabled in the remote instance under admin > site configuration!	admin	lv	Attālā administrēšana jāaktivizē attālajā instancē sadaļā Admin > Site configuration!
 remove	admin	lv	Pārvietot
-removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	lv	Piekļuves atcelšana grupām var radīt problēmas ar datiem šajā kategorijā. Vai esat pārliecināts? Lietotāji šajās grupās vairs nevarēs piekļūt:
 revoke this token	admin	lv	Atcelt šo žetonu
 rows	admin	lv	Rindas
-run asynchronous services	admin	lv	Palaist asinhrono pakalpojumu
+run asynchronous services	admin	lv	Palaist asinhronos pakalpojumus
 save the category	admin	lv	Saglabāt kategoriju
 save the category and return back to the list	admin	lv	Saglabāt kategoriju un atgriezties uz sarakstu
 saves the changes made and leaves	admin	lv	Saglabā izdarītās izmaiņas un aiziet

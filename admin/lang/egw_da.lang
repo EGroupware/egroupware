@@ -72,7 +72,6 @@ all groups	admin	da	Alle grupper
 all records and account information will be lost!	admin	da	Alle posteringer og konto infomationer vil gå tabt!
 all users	admin	da	Alle brugere
 allow anonymous access to this app	admin	da	Tillad anonym adgang til denne applikation
-allow remote administration from following install id's (comma separated)	admin	da	Tillad fjernadministration fra følgende installations-ID'er, adskilt med komma.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	da	Giv brugeren mulighed for at gemme sin adgangskode under 'Sikkerhed og adgangskoder' til SingleSignOn.
 allow user to set 'remember me' token	admin	da	Tillad brugeren at indstille »Husk mig«-token
 alternate email address	admin	da	Alternativ e-mail adresse
@@ -90,7 +89,6 @@ applications	admin	da	Applikationer
 applications list	admin	da	Applikation liste
 applies the changes	admin	da	Udfør ændringerne
 apply the changes	admin	da	Acceptér ændringerne
-are you sure you want to %1 mail for selected accounts?	admin	da	Er du sikker på, at du vil %1 mail for valgte konti?
 are you sure you want to delete the application %1 ?	admin	da	Er du sikker på du vil slette applikationen %1?
 are you sure you want to delete this account ?	admin	da	Er du sikker på du vil slette denne konto?
 are you sure you want to delete this application ?	admin	da	Er du sikker på du vil slette denne applikation?
@@ -100,10 +98,8 @@ are you sure you want to delete this group ?	admin	da	Er du sikker på du vil sl
 are you sure you want to delete this server?	admin	da	Er du sikker på du vil slette denne server?
 are you sure you want to kill this session ?	admin	da	Er du sikker på du vil afbryde denne session?
 async services last executed	admin	da	Async services sidst eksekveret
-asynchronous timed services	admin	da	Asynkron tjeneste
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	da	Prøv at bruge korrekt mimetype for FTP i stedet for standard 'application/octet-stream'
 available placeholders	admin	da	Tilgængelige pladsholdere
-backup directory %1 mounted as %2	admin	da	Sikkerhedskopieringsmappe %1 monteret som %2
 bi-directional	admin	da	bi-directional
 blocking after wrong password	admin	da	Blokering efter forkert adgangskode
 bottom	admin	da	Bunden
@@ -124,9 +120,7 @@ change acl rights	admin	da	Ændre ACL-rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
 change domain of email address and aliases	admin	da	Skift domæne for e-mailadresse og aliasser
 change login screen message	admin	da	Ændre startside besked
-changelog and versions	admin	da	Ændringslog og versioner
 check ip address of all sessions	admin	da	Kontrollere IP adresse for alle sessioner
-clear cache and register hooks	admin	da	Ryd cache/register hooks
 clear security tokens	admin	da	Ryd sikkerhedstokens
 click to select a color	admin	da	Klik for at vælge en farve
 color	admin	da	Farve
@@ -150,8 +144,7 @@ custom fields tab	admin	da	Fanen brugerdefinerede felter
 cyrus imap server	admin	da	Cyrus IMAP Server
 data	admin	da	Data
 day	admin	da	Dag
-day of week<br>(0-6, 0=sun)	admin	da	Ugedag<br>(0-6, 0=Søn)
-db backup and restore	admin	da	Sikkerhedskopiering
+day of week<br>(0-6, 0=sun)	admin	da	Ugedag\n(0-6, 0=Søn)
 default	admin	da	Standart
 default file system space per user	admin	da	Standard system plads pr bruger
 default file system space per user/group ?	admin	da	Standard system plads pr bruger/gruppe?
@@ -174,9 +167,7 @@ deliver extern	admin	da	Lever ekstern
 deny access to access log	admin	da	Nægt adgang til adgangslog
 deny access to application registery	admin	da	Nægt adgang til applikation registering
 deny access to applications	admin	da	Nægt adgang til applikationer
-deny access to asynchronous timed services	admin	da	Nægt adgang til asynkron tjeneste
 deny access to current sessions	admin	da	Nægt adgang til nuværende sessions
-deny access to db backup and restore	admin	da	Nægt adgang til sikkerhedskopiering
 deny access to error log	admin	da	Nægt adgang til fejllog
 deny access to global categories	admin	da	Nægt adgang til globale kategorier
 deny access to groups	admin	da	Nægt adgang til grupper
@@ -210,22 +201,21 @@ edit this group	admin	da	Redigér denne gruppe
 edit this user	admin	da	Redigér denne bruger
 edit user	admin	da	Redigér bruger
 edit user account	admin	da	Redigér bruger konto
-egroupware version	admin	da	Ændringslog og versioner
 email account active	admin	da	E-mail konto aktiv
 email address	admin	da	E-mail adresse
 enable	admin	da	Aktivere
 enable debug-messages	admin	da	Aktivere debug-beskeder.
 enable sieve	admin	da	Aktiver Sieve
 enter a description for the category	admin	da	Indtast en beskrivelse for kategorien
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	da	Indtast noget forskelligt tekst til app_session<br>kryptering (kræver mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	da	Indtast noget forskelligt tekst til app_session\nkryptering (kræver mcrypt)
 enter the background color for the login page	admin	da	Indtast baggrundsfarven for login siden
 enter the background color for the site title	admin	da	Indtast baggrundsfarven for side titlen
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	da	Indtast den fuldstændige sti til midlertidige filer.<br>Eksempel: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	da	Indtast den fuldstændige sti til midlertidige filer.<br>Eksempel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	da	Indtast den fuldstændige sti til brugere og grupper.<br>Eksempel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	da	Indtast den fuldstændige sti til brugere og grupper.<br>Eksempel: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	da	Indtast den fuldstændige sti til midlertidige filer.\nEksempel: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	da	Indtast den fuldstændige sti til midlertidige filer.\nEksempel: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	da	Indtast den fuldstændige sti til brugere og grupper.\nEksempel: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	da	Indtast den fuldstændige sti til brugere og grupper.\nEksempel: /tmp, C:\TEMP
 enter the hostname of the machine on which this server is running	admin	da	Indtast hostnavnet for computeren på hvor denne serveren kører
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast placeringen af EGroupware's URL.<br>Eksempel: http://www.domæne.dk/egroupware eller /egroupware<br><b>Ingen efterfølgende skråstreg</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast placeringen af EGroupware's URL.\nEksempel: http://www.domæne.dk/egroupware eller /egroupware\n<b>Ingen efterfølgende skråstreg</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	da	Indtast søg streng. For at vise alt, tøm dette felt og tryk SEND knappen igen
 enter the site password for peer servers	admin	da	Indtast site adgangskoden for peer serverene
 enter the site username for peer servers	admin	da	Indtast site brugernavnet for peer serverene
@@ -247,7 +237,6 @@ event details follow	admin	da	Hændelses detajler følger
 expires	admin	da	Udløber
 export certificate as p12	admin	da	Eksportér certifikat som p12
 failed to change password.	admin	da	Det lykkedes ikke at ændre adgangskoden.
-failed to mount backup directory!	admin	da	Det lykkedes ikke at montere Backup-mappen!
 file space	admin	da	Fil plads
 file space must be an integer	admin	da	Fil plads skal være et helt tal
 for the times above	admin	da	For tider over
@@ -274,7 +263,7 @@ hide php information	admin	da	Gem PHP information
 home directory	admin	da	Hjemme mappe
 home screen message	admin	da	Startside besked
 host information	admin	da	Host information
-hour<br>(0-23)	admin	da	Timer<br>(0-23)
+hour<br>(0-23)	admin	da	Timer\n(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	da	Hvor mange dage skal en notits blive i adgangsloggen, før den slettes (standard 90)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	da	Hvor mange poster skal ikke-administratorer kunne eksportere? Tom = ingen grænse, Nej = ingen eksport
 how many minutes should an account or ip be blocked (default 1) ?	admin	da	Hvor mange minutter skal en konto eller IP låses (standard 30)
@@ -329,7 +318,7 @@ leave the category untouched and return back to the list	admin	da	Efterlad kateg
 leave the group untouched and return back to the list	admin	da	Efterlad gruppen urørt og vend tilbage til listen
 leave without saveing the entry	admin	da	Forlad uden at gemme indtastningen
 leaves without saveing	admin	da	Forlad uden at gemme
-length<br>rows	admin	da	Længde<br>række
+length<br>rows	admin	da	Længde\nrække
 lifetime of 'remember me' token	admin	da	Levetid for ›Husk mig‹-token
 list config settings	admin	da	Vis konfigurations indstillinger
 list current sessions	admin	da	Vis nuværende sessions
@@ -351,7 +340,7 @@ minute	admin	da	Minut
 mode	admin	da	Mode
 modified	admin	da	Modificeret
 month	admin	da	Måned
-mount backup directory to %1	admin	da	Monter backup-mappen til %1
+mount backup directory to %1	admin	da	Monter backup-biblioteket på %1
 must change password upon next login	admin	da	Skal ændre adgangskode ved næste login
 name must not be empty !!!	admin	da	Navn må ikke være tomt!
 name of organisation	admin	da	Navn på organisation
@@ -393,7 +382,6 @@ percent of users that logged out	admin	da	Procent af brugere der loggede ud
 permission denied	admin	da	Adgang nægtet
 permissions	admin	da	Rettigheder
 permissions this group has	admin	da	Rettigheder denne gruppe har
-php version	admin	da	PHP-version
 phpinfo	admin	da	PHP information
 please enter a name	admin	da	Indtast venligst et navn
 please enter a name for that server !	admin	da	Indtast venligst et navn for den server!
@@ -409,14 +397,10 @@ quota settings	admin	da	Quota indstillinger
 re-enter password	admin	da	Genindtast adgangskode
 read this list of methods.	admin	da	Læs denne liste over metoder.
 regular expression to find part to use as container	admin	da	Regulært udtryk til at finde en del, der skal bruges som container
-remote administration instances	admin	da	Fjernadministration
-remote administration need to be enabled in the remote instance under admin > site configuration!	admin	da	Fjernadministration skal aktiveres i den eksterne instans under Admin > Webstedskonfiguration!
 remove	admin	da	Fjern
-removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	da	Fjernelse af adgang for grupper kan forårsage problemer for data i denne kategori. Er du sikker? Brugere i disse grupper har muligvis ikke længere adgang:
 requires 'openid / oauth2 server' app.	admin	da	Kræver appen 'OpenID / OAuth2 Server'.
 revoke this token	admin	da	Tilbagekald dette token
 rows	admin	da	Rækker
-run asynchronous services	admin	da	Kør asynkrone tjenester
 save the category	admin	da	Gem kategorien.
 save the category and return back to the list	admin	da	Gem kategorien og vend tilbage til listen.
 saves the changes made and leaves	admin	da	Gem ændringerne og afslut.

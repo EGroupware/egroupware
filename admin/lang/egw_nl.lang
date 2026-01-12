@@ -87,7 +87,7 @@ all applications	admin	nl	Alle toepassingen
 all records and account information will be lost!	admin	nl	Alle records en gebruikersinformatie zal verloren gaan!
 all users	admin	nl	Alle gebruikers
 allow anonymous access to this app	admin	nl	Geef anonieme gebruikers toegang tot deze toepassing
-allow remote administration from following install id's (comma separated)	admin	nl	Sta beheer of afstand toe vanaf de volgende installatie IDs (komma gescheiden).
+allow remote administration from following install id's (comma separated)	admin	nl	Sta beheer of afstand toe vanaf de volgende installatie IDs (komma gescheiden)
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	nl	Sta de gebruiker toe om zijn wachtwoord op te slaan onder 'Beveiliging & wachtwoorden' voor SingleSignOn.
 allow user to set 'remember me' token	admin	nl	Gebruiker toestaan om ‘Onthoud mij’ token in te stellen
 alternate email address	admin	nl	Alternatief emailadres
@@ -109,7 +109,6 @@ applications list	admin	nl	Toepassingenlijst
 applications run rights updated.	admin	nl	Toepassings executie rechten bijgewerkt.
 applies the changes	admin	nl	Past de wijzigingen toe
 apply the changes	admin	nl	Wijzigingen doorvoeren
-are you sure you want to %1 mail for selected accounts?	admin	nl	Weet u zeker dat u %1 e-mails voor geselecteerde accounts wilt verwijderen?
 are you sure you want to delete the application %1 ?	admin	nl	Weet u zeker dat de toepassing %1 wilt verwijderen?
 are you sure you want to delete this account ?	admin	nl	Weet u zeker dat u deze gebruiker wilt verwijderen?
 are you sure you want to delete this application ?	admin	nl	Weet u zeker dat u deze toepassing wilt verwijderen?
@@ -119,12 +118,11 @@ are you sure you want to delete this group ?	admin	nl	Weet u zeker dat u deze gr
 are you sure you want to delete this server?	admin	nl	Weet u zeker dat u deze server wilt
 are you sure you want to kill this session ?	admin	nl	Weet u zeker dat u deze sessie wilt verwijderen?
 async services last executed	admin	nl	Laatst uitgevoerde asynchrone dienst
-asynchronous timed services	admin	nl	Asynchrone service
+asynchronous timed services	admin	nl	Asynchrone tijdsgemeten diensten
 asyncservices not yet installed or other error (%1) !!!	admin	nl	Asynchrone services zijn nog niet geïnstalleerd of er is een andere fout opgetreden (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	nl	Het juiste MIME-type proberen te gebruiken in plaats van de standaard 'application/octet-stream'
 authentication / accounts	admin	nl	Authenticatie / Accounts
 auto create account records for authenticated users	admin	nl	Automatisch accounts aanmaken for geauthenticeerde gebruikers
-backup directory %1 mounted as %2	admin	nl	Back-upmap %1 gekoppeld als %2
 bad login name or password.	admin	nl	Ongeldige login of paswoord
 bad or malformed request. server responded: %s	admin	nl	Ongeldig of slecht geformuleerde aanvraag. Server reageerde: %s
 bad request: %s	admin	nl	Slechte vraag: %s
@@ -152,11 +150,9 @@ change config settings	admin	nl	Bewerk configuratieinstellingen
 change domain of email address and aliases	admin	nl	Domein van e-mailadres en aliassen wijzigen
 change login screen message	admin	nl	Bericht op start- of loginpagina wijzigen
 change password for %1	admin	nl	Wijzig wachtwoord voor %1
-changelog and versions	admin	nl	Wijzigingslogboek en versies
 check acl for entries of not (longer) existing accounts	admin	nl	Controle ACL voor records van niet (meer) bestaande accounts
 check ip address of all sessions	admin	nl	Controleer IP-adressen van alle sessies
 check items to <b>%1</b> to %2 for %3	admin	nl	Controleer items van <b>%1</b> tot %2 van %3
-clear cache and register hooks	admin	nl	Cache wissen/registratiehaken
 clear security tokens	admin	nl	Beveiligingstoken wissen
 click to select a color	admin	nl	Klik om een kleur te kiezen
 color	admin	nl	Kleur
@@ -189,7 +185,7 @@ cyrus imap server	admin	nl	Cyrus IMAP-server
 data	admin	nl	Data
 day	admin	nl	Dag
 day of week<br>(0-6, 0=sun)	admin	nl	Dag van de week <br />(0-6, 0=Zondag)
-db backup and restore	admin	nl	Back-up
+db backup and restore	admin	nl	DB backup en restore
 default	admin	nl	Standaard
 default file system space per user	admin	nl	Standaard bestandssysteemruimte per gebruiker
 default file system space per user/group ?	admin	nl	Standaard bestandssysteemruimte per gebruiker/groep
@@ -214,9 +210,9 @@ deny access	admin	nl	Toegang weigeren
 deny access to access log	admin	nl	Toegang tot toegangslogboek weigeren
 deny access to application registery	admin	nl	Toegang tot toepassingsregister weigeren
 deny access to applications	admin	nl	Toegang tot toepassingen weigeren
-deny access to asynchronous timed services	admin	nl	Toegang tot asynchrone service weigeren
+deny access to asynchronous timed services	admin	nl	Toegang tot asynchrone tijdsgemeten services weigeren
 deny access to current sessions	admin	nl	Toegang tot huidige sessies weigeren
-deny access to db backup and restore	admin	nl	Toegang tot back-up weigeren
+deny access to db backup and restore	admin	nl	Toegang tot DB backup en restore weigeren
 deny access to error log	admin	nl	Toegang tot foutenlogboek weigeren
 deny access to global categories	admin	nl	Toegang tot algemene categorieën weigeren
 deny access to groups	admin	nl	Toegang tot groepen weigeren
@@ -253,7 +249,6 @@ edit this user	admin	nl	Deze gebruiker bewerken
 edit user	admin	nl	Gebruiker bewerken
 edit user account	admin	nl	Gebruikersaccount bewerken
 egroupware directory	admin	nl	EGroupware directory
-egroupware version	admin	nl	EGroupware-versie
 either install id and config password needed or the remote hash!	admin	nl	Of installatie ID met configuratie wachtwoord is nodig of het remote hash!
 email account active	admin	nl	Emailaccount actief
 email address	admin	nl	Emailadres
@@ -309,7 +304,6 @@ exists	admin	nl	Bestaat
 expires	admin	nl	Verloopt
 export certificate as p12	admin	nl	Certificaat exporteren als p12
 failed to change password.	admin	nl	Wachtwoord kan niet worden gewijzigd.
-failed to mount backup directory!	admin	nl	Kan back-upmap niet koppelen!
 fallback (after each pageview)	admin	nl	Terugval (na iedere paginaweergave)
 false	admin	nl	Onwaar
 field '%1' already exists !!!	admin	nl	Veld '%1' bestaat al !
@@ -437,7 +431,6 @@ mode	admin	nl	Modus
 modified	admin	nl	Gewijzigd
 month	admin	nl	Maand
 more secure	admin	nl	Veiliger
-mount backup directory to %1	admin	nl	Koppel back-upmap aan %1
 name must not be empty !!!	admin	nl	Naam mag niet leeg zijn !!!
 name of organisation	admin	nl	Naam van de Organisatie
 new group name	admin	nl	Nieuwe groepsnaam
@@ -487,7 +480,6 @@ permission denied !!!	admin	nl	Toestemming geweigerd!
 permission denied!!!	admin	nl	Toegang geweigerd!
 permissions	admin	nl	Toestemmingen
 permissions this group has	admin	nl	Toestemmingen van deze groep
-php version	admin	nl	PHP-versie
 phpinfo	admin	nl	PHP informatie
 please enter a name	admin	nl	Voer a.u.b. een naam in!
 please enter a name for that server !	admin	nl	Voer a.u.b. een naam in voor die server!
@@ -518,7 +510,6 @@ remote administration instances	admin	nl	Afstandbeheer  instanties
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	nl	Afstandbeheer moet ingeschakeld zijn in de afstand instantie onder Admin -> Site configuratie!
 remote instance saved	admin	nl	Afstandbeheer instantie opgeslagen
 remove	admin	nl	Verwijderen
-removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	nl	Het verwijderen van toegang voor groepen kan problemen veroorzaken voor gegevens in deze categorie. Weet u het zeker? Gebruikers in deze groepen hebben mogelijk geen toegang meer:
 required pear class mail/mimedecode.php not found.	admin	nl	PEAR benodigd, class MAIL/mimeDecode.php niet gevonden
 reset filter	admin	nl	Filter opnieuw instellen
 revoke this token	admin	nl	Trek dit token in

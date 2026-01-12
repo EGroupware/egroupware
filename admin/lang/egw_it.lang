@@ -148,7 +148,7 @@ are you sure you want to delete this group ?	admin	it	Vuoi davvero eliminare que
 are you sure you want to delete this server?	admin	it	Vuoi davvero eliminare questo server?
 are you sure you want to kill this session ?	admin	it	Vuoi davvero terminare questa sessione?
 async services last executed	admin	it	Ultima esecuzione dello Schedulatore
-asynchronous timed services	admin	it	Servizio asincrono
+asynchronous timed services	admin	it	Schedulatore
 asyncservices not yet installed or other error (%1) !!!	admin	it	Schedulatore non ancora installato o altro errore (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	it	Cerca di usare il mimetype corretto per l'FTP invece di quello di predefinito 'application/octet-stream'.
 attributes	admin	it	Attributi
@@ -168,7 +168,7 @@ bottom	admin	it	In fondo
 bulk changes	admin	it	Modifiche in blocco
 bulk password reset	admin	it	Reimpostazione massiva password
 by	admin	it	Da
-by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	it	Selezionando un utente o un gruppo si elimina di fatto l'account di posta di tutti gli altri utenti!<br>Si è davvero sicuri di volerlo fare?
+by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	it	Selezionando un utente o un gruppo si elimina di fatto l'account di posta di tutti gli altri utenti!\nSi è davvero sicuri di volerlo fare?
 calculate next run	admin	it	Calcola prossima esecuzione
 calendar recurrence horizont in days (default 1000)	admin	it	L'orizzonte di ricorrenza dell'agenda espresso in giorni. Valore predefinito = 1000.
 can be used to show groups by container, if enabled	admin	it	Può essere usato per mostrare i gruppi per contenitore, se abilitato.
@@ -205,7 +205,7 @@ check ip address of all sessions	admin	it	Controlla l'indirizzo IP di tutte le s
 check items to <b>%1</b> to %2 for %3	admin	it	Controlla voci a <b>%1</b> a %2 per %3
 checking push (green for success or red for failure)	admin	it	Controllare PUSH (verde = OK, rosso per non OK)
 children	admin	it	Figli
-clear cache and register hooks	admin	it	Cancella cache/registra hook
+clear cache and register hooks	admin	it	Pulisci la memoria temporanea e registra gli agganci
 clear credentials	admin	it	Elimina credenziali
 clear mail credentials	admin	it	Elimina credenziali email
 clear security tokens	admin	it	Elimina token di sicurezza
@@ -263,8 +263,8 @@ cyrus imap server	admin	it	Server IMAP Cyrus
 data	admin	it	Dati
 data from	admin	it	Dati da
 day	admin	it	Giorno
-day of week<br>(0-6, 0=sun)	admin	it	Giorno della settimana<br>(0-6, 0=Dom)
-db backup and restore	admin	it	Backup
+day of week<br>(0-6, 0=sun)	admin	it	Giorno della settimana\n(0-6, 0=Dom)
+db backup and restore	admin	it	Backup e ripristino DB
 deactivate	admin	it	Disattiva
 deactivated	admin	it	Disattivato
 debug	admin	it	Correggi errori
@@ -301,9 +301,9 @@ deny access	admin	it	Nega accesso
 deny access to access log	admin	it	Nega l'accesso ai log di accesso
 deny access to application registery	admin	it	Nega l'accesso alla registrazione applicazioni
 deny access to applications	admin	it	Nega l'accesso alle applicazioni
-deny access to asynchronous timed services	admin	it	Negare l'accesso al servizio asincrono
+deny access to asynchronous timed services	admin	it	Nega l'accesso allo Schedulatore
 deny access to current sessions	admin	it	Nega l'accesso alla sessione corrente
-deny access to db backup and restore	admin	it	Negare l'accesso al backup
+deny access to db backup and restore	admin	it	Nega accesso a backup e ripristino DB
 deny access to error log	admin	it	Nega l'accesso all'error log
 deny access to global categories	admin	it	Nega l'accesso alle categorie globali
 deny access to groups	admin	it	Nega l'accesso ai gruppi
@@ -382,19 +382,19 @@ enter a passphrase if you would like to protect your private key by password.	ad
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	it	Inserisci del testo casuale per la cifratura di app_session (richiede mcrypt)
 enter the background color for the login page	admin	it	Inserisci il colore di background per la pagina di login
 enter the background color for the site title	admin	it	Inserisci il colore di background per il titolo del sito
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	it	Inserisci il percorso completo per i file temporanei.\nEsempio: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	it	Inserisci il percorso completo per i file temporanei.\nEsempio: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.\nEsempio: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.\nEsempio: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	it	Inserisci l'hostname della macchina su cui sta girando questo server
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci la locazione dell'URL di EGroupware.<br>Esempio: https://egw.domain.com/egroupware o /egroupware<br><b>senza slash finale</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci la locazione dell'URL di EGroupware.\nEsempio: https://egw.domain.com/egroupware o /egroupware\n<b>senza slash finale</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	it	Inserisci la stringa di ricerca. Per vedere tutta la lista, svuota il campo e premi ancora il pulsante INVIA
 enter the site password for peer servers	admin	it	Inserisci la password per i peer server
 enter the site username for peer servers	admin	it	Inserisci il nome utente per i peer server
 enter the title for your site	admin	it	Inserisci il titolo per il tuo sito
 enter the title of your logo	admin	it	Inserisci il titolo del tuo logo
 enter the url where your logo should link to	admin	it	Inserisci l'url a cui punterà il tuo logo
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	it	Inserisci il percorso VFS dove immagini, icone e logo aggiuntivi potranno essere memorizzati e localizzati dalle applicazioni di EGroupware.<br>Il percorso DEVE iniziare con / ed essere leggibile da parte di tutti gli utenti
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	it	Inserisci il percorso VFS dove immagini, icone e logo aggiuntivi potranno essere memorizzati e localizzati dalle applicazioni di EGroupware.\nIl percorso DEVE iniziare con / ed essere leggibile da parte di tutti gli utenti
 enter your default mail domain ( from: user@domain )	admin	it	Inserisci il dominio predefinito per l'email (Da: utente@dominio )
 enter your default mail domain (from: user@domain)	admin	it	Inserisci il tuo dominio di posta predefinito (da: utente@dominio)
 enter your http proxy server	admin	it	Inserire il proxy HTTP
@@ -487,7 +487,7 @@ home directory	admin	it	Cartella Personale
 home screen message	admin	it	Messaggio nella schermata principale
 host information	admin	it	Informazioni host
 hostname or ip	admin	it	Nome del computer o indirizzo IP
-hour<br>(0-23)	admin	it	Ore<br>(0-23)
+hour<br>(0-23)	admin	it	Ore\n(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	it	Dimensione massima in pixel delle miniature per le immagini collegate
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	it	Quanti giorni le voci rimangono nel log di accesso prima che vengano cancellate (predefinito 90)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	it	Quante voci possono esportare gli utenti semplici. Vuoto = nessun limite, No = nessuna esportazione consentita
@@ -581,7 +581,7 @@ leave unchanged	admin	it	Lascia inalterato
 leave without saveing the entry	admin	it	Esci senza salvare la voce
 leaves without saveing	admin	it	Esce senza salvare
 length	admin	it	Lunghezza
-length<br>rows	admin	it	Lunghezza<br>Righe
+length<br>rows	admin	it	Lunghezza\nRighe
 lifetime of 'remember me' token	admin	it	Tempo di validità per "Ricordami"
 limit global category to members of a certain group	admin	it	Limita la categoria globale ai soli membri di un certo gruppo.
 limit to members of	admin	it	Limita ai membri di
@@ -738,7 +738,7 @@ regular expression to find part to use as container	admin	it	Espressione regolar
 reject passwords containing part of username or full name (3 or more characters long)	admin	it	Rifiuta password che contengono parte del nome utente o il nome e cognome (3 o più caratteri di lunghezza)
 relay access checked	admin	it	Accesso Relay verificato
 remark	admin	it	Osservazione
-remote administration instances	admin	it	Amministrazione remota
+remote administration instances	admin	it	Istanze di amministrazione remota
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	it	L'amministrazione remota deve essere abilitata nella istanza remota sotto Admin > Configurazione per tutto il sito!
 remote instance saved	admin	it	Istanza remota salvata
 remove	admin	it	Rimuovi
@@ -756,7 +756,7 @@ rights	admin	it	Diritti
 rows	admin	it	Righe
 rpm or debian package	admin	it	Pacchetto RPM o deb
 run	admin	it	esegui
-run asynchronous services	admin	it	Eseguire il servizio asincrono
+run asynchronous services	admin	it	Esegui lo Schedulatore
 run rights for applications	admin	it	Diritti di esecuzione per le applicazioni
 samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	it	Attributo cookie SameSite (invia il cookie se la barra degli indirizzi del browser mostra un dominio diverso)
 save as default	admin	it	Salva come predefinito
@@ -879,7 +879,7 @@ this application requires an upgrade	admin	it	Questa applicazione ha bisogno di 
 this category is currently being used by applications as a parent category	admin	it	Questa categoria è attualmente utilizzata dalle applicazioni come categoria padre.
 this controls exports and merging.	admin	it	Questo controlla le esportazioni e le stampe unione.
 this is a mail account for all users!	admin	it	Questo è un account di posta per TUTTI gli utenti!
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	it	Questo non è un account personale di email!<br>L'account verrà cancellato per TUTTI gli utenti!<br>Confermi?
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	it	Questo non è un account personale di email!\nL'account verrà cancellato per TUTTI gli utenti!\nConfermi?
 this php has no imap support compiled in!!	admin	it	PHP non è stato compilato con supporto IMAP!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	it	Timeout per i dati della sessione di un'applicazione in secondi (predefinito 86400 = 1 giorno)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	it	Timeout per la sessione in secondi (predefinito 14400 = 4 ore)

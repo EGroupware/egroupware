@@ -75,7 +75,7 @@ creates a new field	admin	eu	Fitxategi berri bat sortu
 custom fields	admin	eu	Pertsonalizatu eremua
 data	admin	eu	Datuak
 day	admin	eu	Eguna
-day of week<br>(0-6, 0=sun)	admin	eu	Asteko eguna <br>(0-6=Iga)
+day of week<br>(0-6, 0=sun)	admin	eu	Asteko eguna \n(0-6=Iga)
 default	admin	eu	Lehenetsia
 default file system space per user	admin	eu	Lehenetsitako gunea fitxategien sisteman erabiltzailearengatik
 default file system space per user/group ?	admin	eu	Lehenetsitako gunea fitxategien sisteman erabiltzaile edo taldearengatik?
@@ -164,7 +164,7 @@ hide php information	admin	eu	PHP informazioa ezkutatu
 home directory	admin	eu	Direktorio pertsonala
 home screen message	admin	eu	Pantaila nagusiko mezua
 host information	admin	eu	Ostalariaren informazioa
-hour<br>(0-23)	admin	eu	Ordua<br>(0-23)
+hour<br>(0-23)	admin	eu	Ordua\n(0-23)
 icon	admin	eu	Ikonoa
 idle	admin	eu	Inaktibo
 imap server	admin	eu	IMAP Zerbitzaria
@@ -192,7 +192,7 @@ leave the category untouched and return back to the list	admin	eu	kategoria dago
 leave the group untouched and return back to the list	admin	eu	Taldea dagoen moduan utzi eta zerrendara itzuli
 leave without saveing the entry	admin	eu	sarrera gorde gabe utzi
 leaves without saveing	admin	eu	gorde gabe irten
-length<br>rows	admin	eu	Luzera<br>Errenkadak
+length<br>rows	admin	eu	Luzera\nErrenkadak
 list config settings	admin	eu	Konfigurazio aukeren zerrenda
 list current sessions	admin	eu	Momentuko saioen zerrenda
 list of current users	admin	eu	momentuko erabiltzaileen zerrenda
