@@ -5,6 +5,7 @@ import {AiAssistantController} from "./AiAssistantController";
 import styles from "./Et2Ai.styles";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
+import {Et2SelectLang} from "../Et2Select/Select/Et2SelectLang";
 
 // etemplate2 helper (globally available)
 declare const etemplate2 : {
@@ -33,7 +34,8 @@ export const simplePrompts : AiPrompt[] = [
 	{id: "aiassist.generate_subject", label: "Generate a subject", action: {target: "subject"}},
 	{id: 'aiassist.formal', label: 'Make more formal'},
 	{id: 'aiassist.grammar', label: 'Fix grammar & spelling'},
-	{id: 'aiassist.concise', label: 'Make concise'}
+	{id: 'aiassist.concise', label: 'Make concise'},
+	{id: 'aiassist.translate', label: "Translate"}
 ];
 
 /**
@@ -108,6 +110,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		super();
 		this.clearResult = this.clearResult.bind(this);
+		this._promptTemplate = this._promptTemplate.bind(this);
 		this.ai = new AiAssistantController(this);
 	}
 
@@ -193,7 +196,37 @@ export class Et2Ai extends Et2Widget(LitElement)
 					bubbles: true,
 					composed: true
 				}));
+			})
+			.finally(() =>
+			{
+				this.dispatchEvent(new CustomEvent('et2-ai-stop', {
+					detail: {
+						prompt: this.activePrompt,
+						error: this.ai.error,
+						target: this.resolveTarget(this.activePrompt)
+					},
+					bubbles: true,
+					composed: true
+				}));
 			});
+	}
+
+	protected handleLangSelect(event : CustomEvent)
+	{
+		const select : Et2SelectLang = event.target as unknown as Et2SelectLang;
+		const lang = select.value;
+		const id = select.dom_id;
+		// @ts-ignore
+		this.shadowRoot.querySelector("sl-dropdown").open = false;
+		select.value = "";
+
+		this.addEventListener("et2-ai-start", (e : CustomEvent) => {e.detail.prompt.id += "-" + lang}, {once: true});
+		this.addEventListener("et2-ai-stop", (e : CustomEvent) => {e.detail.prompt.id = id}, {once: true});
+		this.handlePromptSelect(new CustomEvent('select', {
+			detail: {
+				item: {value: id}
+			}
+		}));
 	}
 
 	protected handleSlotChange()
@@ -531,6 +564,22 @@ export class Et2Ai extends Et2Widget(LitElement)
 		`;
 	}
 
+	protected _promptTemplate(prompt : AiPrompt) : TemplateResult
+	{
+		if(prompt.id == "aiassist.translate")
+		{
+			return html`
+                <et2-select-lang id=${prompt.id}
+                                 emptyLabel=${this.egw().lang(prompt.label)}
+                                 @change=${this.handleLangSelect}
+                ></et2-select-lang>
+			`;
+		}
+		return html`
+            <sl-menu-item value=${prompt.id} part="menu-item">${this.egw().lang(prompt.label)}</sl-menu-item>
+		`;
+	}
+
 	protected render() : TemplateResult
 	{
 		// No AI for some reason, show just content
@@ -552,9 +601,7 @@ export class Et2Ai extends Et2Widget(LitElement)
                                          noSubmit></et2-button-icon>
                     </slot>
                     <sl-menu @sl-select=${this.handlePromptSelect} part="menu">
-                        ${this.prompts.map(p => html`
-                              <sl-menu-item value=${p.id} part="menu-item">${p.label}</sl-menu-item>
-                        `)}
+                        ${this.prompts.map(this._promptTemplate)}
                     </sl-menu>
                 </sl-dropdown>
             </div>
