@@ -1191,11 +1191,18 @@ class CalDAV extends HTTP_WebDAV_Server
 			}
 		}
 
-		// client want data filtered
+		// client wants data filtered
 		if (isset($_GET['filters']))
 		{
 			// make sure to NOT pass in integer keys, as they are no valid filters and some apps might interpret them as SQL fragments
-			$propfind_options['filters'] = array_filter($_GET['filters']??[], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
+			$propfind_options['filters'] = array_filter($_GET['filters']??[],
+				static fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
+
+			if (isset($propfind_options['filters']['search']) && is_array($propfind_options['filters']['search']))
+			{
+				$propfind_options['filters']['search'] = array_filter($propfind_options['filters']['search'],
+					static fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
+			}
 		}
 
 		// properties to NOT get the default address-data for addressbook-collections and "all" for the rest
