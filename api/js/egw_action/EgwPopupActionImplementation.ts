@@ -715,7 +715,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             let os_clipboard_caption = "";
 			if(this._context?.event)
 			{
-				os_clipboard_caption = this._context.event.target.innerText.trim().replaceAll("\n", " ");
+				os_clipboard_caption = (this._context.innerText || this._context.event.target.innerText).trim().replaceAll("\n", " ");
                 clipboard_action.set_caption(window.egw.lang('Copy "%1"', os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
                 clipboard_action.data.target = this._context.target;
             }
