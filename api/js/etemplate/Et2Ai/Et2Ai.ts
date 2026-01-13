@@ -324,11 +324,6 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 */
 	protected _findApplyTarget(prompt? : AiPrompt) : HTMLElement | null
 	{
-		if(typeof prompt?.action !== "object" || typeof prompt?.action?.target !== "string")
-		{
-			return null;
-		}
-
 		// Target from prompt
 		const targetSpec = prompt?.action?.target;
 		if(targetSpec)
