@@ -32,6 +32,9 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 		// to avoid automatic conversion - we want to export link title, not date-time
 		$this->export_fields['last_date'] = lang('Last date');
 		$this->export_fields['next_date'] = lang('Next date');
+
+		// Add in distribution lists
+		$this->export_fields['distrib_lists'] = lang('Distribution Lists');
 	}
 
 	/**
