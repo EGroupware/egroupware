@@ -176,7 +176,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				::slotted(.dialog_content) {
 					height: var(--height, 100%);
 				}
-                ::slotted(.dialog_content:not(.dialog--has_template)) {
+                ::slotted(.dialog_content:not(.dialog--has_template):not(form.et2_container)) {
                     white-space: pre-wrap;
                 }
 
