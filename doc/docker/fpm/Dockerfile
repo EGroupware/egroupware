@@ -22,10 +22,12 @@ RUN set -e \
 	&& apt-get install -y software-properties-common \
 	&& LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php \
 	&& apt-get update \
-	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,opcache,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp,memcached}" \
+	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp,memcached}" \
 	# php8.*-apcu recommends (not needed) php-apcu-bc, which cause PHP 7.4 to be installed :(
     && apt-get install --no-install-recommends -y php$PHP_VERSION-apcu \
 	&& bash -c "[[ $PHP_VERSION =~ ^8\..* ]] || apt-get install -y php$PHP_VERSION-json" \
+	# PHP 8.5 does NOT have a separate OpCache extension anymore, it is always bundeled
+	&& apt-get install -y php$PHP_VERSION-opcache || true \
 	# fpm and php.ini settings
 	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
 		-e '/allowed_clients/d' \
@@ -73,7 +75,8 @@ else \
 	RESULT=$?; \
 fi; \
 rm composer-setup.php; \
-exit $RESULT' \
+exit $RESULT'
+RUN set -e \
 	&& cd /usr/share \
     # not all dependencies already allow PHP 8.x, thought what we use from them works
     && bash -c "[[ $PHP_VERSION  =~ ^8\..* ]]" && COMPOSER_EXTRA=--ignore-platform-reqs || true \

@@ -3,7 +3,7 @@
 
 cd $(dirname $0)
 
-DEFAULT_PHP_VERSION=8.4
+DEFAULT_PHP_VERSION=8.5
 PHP_VERSION=$DEFAULT_PHP_VERSION
 BASE=ubuntu:24.04
 # which architectures to build for multi-platform images, if buildx is available on a Docker desktop or newer Docker installation
@@ -20,6 +20,10 @@ DEFAULT=$(git branch|grep ^*|cut -c3-)
 TAG=${1:-$DEFAULT}
 VERSION=${2:-$TAG}
 BRANCH=$(echo $VERSION|sed 's/\..*$//')
+[ $BRANCH = "23" ] && {
+  BRANCH=23.1
+  DEFAULT_PHP_VERSION=8.4
+}
 [ $VERSION = $BRANCH ] && VERSION="dev-$BRANCH"
 
 [ $VERSION = "dev-$DEFAULT" ] && (
