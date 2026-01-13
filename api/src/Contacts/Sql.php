@@ -614,6 +614,10 @@ class Sql extends Api\Storage
 				$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
 			}
 		}
+		else
+		{
+			$extra_cols[] = 'NULL AS account_lid';
+		}
 		if ($join || ($criteria && is_string($criteria)) || ($criteria && is_array($criteria) && $order_by))	// search also adds a join for custom fields!
 		{
 			switch(gettype($only_keys))
