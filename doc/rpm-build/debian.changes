@@ -1,3 +1,18 @@
+egroupware-docker (26.0.20260113) hardy; urgency=low
+
+  * SECURITY and Maintenance Release: strong recommendation to update to this release (or 23.1.20260113) immediately
+  * Addressbook: Fix renaming distribution list
+  * Admin/Mail: fix warning about not-a-personal-account was still displayed after changing to a personal one
+  * Calendar/CalDAV: fix SQL error if event was accepted without changing the status (e.g. accepted twice)
+  * Filemanager: Fix file a file kept files after uploading them leading to incorrect overwrite prompt
+  * Kdots: Show new row count in tooltip when row count changes
+  * Mail: tinymce editor now also uses darkmode (if opened while egw is in darkmode)
+  * RAG: do NOT execute notify-all hook, if RAG is not installed
+  * RAG/Tracker/InfoLog: fix not found entry by id
+  * Search: fix not able to remove search, even if it's no longer displayed in search-box
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 13 Jan 2026 09:14:55 +0100
+
 egroupware-docker (26.0.20260108) hardy; urgency=low
 
   * SECURITY and Maintenance Release: strong recommendation to update to this release (or 23.1.20260108) immediately
