@@ -67,4 +67,18 @@ export default css`
 			white-space: pre-wrap;
 		}
 	}
+
+	@media screen and (max-width: 600px) {
+		slot[name="trigger"] > *, ::slotted([slot="trigger"]) {
+			position: absolute;
+			top: calc(-0.5 * var(--sl-spacing-2x-large));
+			
+			/* This works well for the current icon */
+			left: calc(-1 * var(--sl-spacing-2x-large));
+		}
+
+		::slotted([slot="trigger"]) {
+			left: calc(-0.5 * var(--sl-spacing-2x-large));
+		}
+	}
 `;

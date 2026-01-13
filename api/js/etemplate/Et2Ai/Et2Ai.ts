@@ -393,8 +393,31 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 */
 	protected _isHtmlContent(value : string) : boolean
 	{
-		// Must contain an element tag
-		return /<\/?[a-z][\s\S]*>/i.test(value);
+		if(!value || typeof value !== "string")
+		{
+			return false;
+		}
+		// Must start with a tag
+		if(!value.startsWith("<"))
+		{
+			return false;
+		}
+
+		// Must end with a tag
+		if(!value.endsWith(">"))
+		{
+			return false;
+		}
+
+		const tpl = document.createElement("template");
+		tpl.innerHTML = value.trim();
+
+		// Look for actual element nodes, not just text
+		const hasElements = Array.from(tpl.content.childNodes).some(
+			node => node.nodeType === Node.ELEMENT_NODE
+		);
+
+		return hasElements;
 	}
 
 	/**
