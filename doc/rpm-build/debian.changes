@@ -1,3 +1,14 @@
+egroupware-docker (23.1.20260113) hardy; urgency=low
+
+  * SECURITY and Maintenance Release: strong recommendation to update to this release (or 26.0.20260113) immediately
+  * Addressbook: Fix renaming distribution list
+  * Admin/Mail: fix warning about not-a-personal-account was still displayed after changing to a personal one
+  * Calendar/CalDAV: fix SQL error if event was accepted without changing the status (e.g. accepted twice)
+  * Filemanager: Fix file a file kept files after uploading them leading to incorrect overwrite prompt
+  * Search: fix not able to remove search, even if it's no longer displayed in search-box
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 13 Jan 2026 08:23:25 +0100
+
 egroupware-docker (23.1.20260108) hardy; urgency=low
 
   * SECURITY and Maintenance Release: strong recommendation to update to this release (or 26.0.20260108) immediately
