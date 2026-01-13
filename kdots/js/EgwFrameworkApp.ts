@@ -1278,7 +1278,7 @@ export class EgwFrameworkApp extends LitElement
             <sl-tooltip content=${info.tooltip}
                         trigger="manual"
                         class="egw_fw_app__filter_info_tooltip"
-                        placement="top"
+                        placement="bottom"
                         distance="0"
                         hoist
             >

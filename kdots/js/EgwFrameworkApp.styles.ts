@@ -83,6 +83,7 @@ export default css`
 		.egw_fw_app__filter_info_tooltip {
 			--sl-tooltip-background-color: var(--application-color, var(--sl-tooltip-background-color));
 			--sl-tooltip-padding: var(--sl-spacing-x-small);
+			--sl-tooltip-color: var(--application-header-text-color, var(--sl-color-neutral-0));
 		}
 
 		::slotted(*) {
