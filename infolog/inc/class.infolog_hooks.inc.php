@@ -437,7 +437,7 @@ class infolog_hooks
 			'label'  => 'Do not notify',
 			'name'   => 'no_notification_types',
 			'help'   => "Automatically check 'Do not notify' for these types",
-			'values' => $info->enums['type'],
+			'values' => $info->enums['type'] + [['value' => '~actions~', 'label' => 'List actions', 'icon' => 'list']],
 			'default'=> array(),	// None
 		);
 

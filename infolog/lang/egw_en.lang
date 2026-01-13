@@ -289,6 +289,7 @@ links and attached files	infolog	en	Links and attached files
 links of this entry	infolog	en	Links of this entry
 links to specified application.  example: {{links/infolog}}	infolog	en	Links to specified application. Example: {{links/infolog}}
 links wrapped in an href tag with download link	infolog	en	Links wrapped in an HREF tag with download link
+list actions	infolog	en	List actions
 list all categories	infolog	en	List all categories
 list of files linked to the current record	infolog	en	List of files linked to the current record
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	en	Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)
