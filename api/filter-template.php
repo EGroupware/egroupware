@@ -142,7 +142,7 @@ EOF;
 			$sort_options = implode("\n", $sort_options)."\n";
 			$xet .= (Api\Header\UserAgent::mobile() ? '<et2-hbox class="sort">' : '<et2-visually-hidden class="sort">');
 			$xet .= <<<EOF
-			<et2-select id="sort[id]" label="Sorting" ariaLabel="Ordering" class="et2-label-fixed">
+			<et2-select id="sort[id]" label="Sorting" ariaLabel="Ordering" class="et2-label-fixed" value="{$attrs['id']}">
 $sort_options
 			</et2-select>
 			<et2-button-toggle ariaLabel="Sorting" id="sort[asc]" onIcon="caret-up-fill" offIcon="caret-down-fill" style="flex-grow: 0;"></et2-button-toggle>
