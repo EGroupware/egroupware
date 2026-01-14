@@ -39,9 +39,7 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 					border: none;
 					width: 100%;
 				}
-				.input:hover:not(.input--disabled) .input__control {
-					color: var(--input-text-color, inherit);
-				}
+				
 				`,
 		];
 	}
