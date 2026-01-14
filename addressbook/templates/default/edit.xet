@@ -226,7 +226,7 @@
                            set_value="tel_fax_home" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_two_locality" value="city"></et2-description>
                     <et2-hbox  class="city_state_postcode">
-                        <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="24%" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
+                        <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="5em" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
                         <et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" tabindex="36" autocomplete="section-two address-level2"></et2-textbox>
                     </et2-hbox>
                     <et2-description></et2-description>
