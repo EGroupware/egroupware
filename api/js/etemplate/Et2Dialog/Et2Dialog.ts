@@ -858,9 +858,12 @@ export class Et2Dialog extends Et2Widget(SlDialog)
             ${hasSlottedContent ? nothing : html`
             <div class=${classMap(classes)} style="${styleMap(styles)}">
                 ${this.__template ? "" :
-                  html` <img class="dialog_icon" src=${icon}/>
-                  <slot>${this.message}</slot>`
-                }
+                  html`
+                      <et2-image class="dialog_icon" src=${icon}></et2-image>
+                      <div class="messageDiv" style="display: flex; align-items: center">
+                         <span> ${this.message}</span>
+                      </div>`
+			}
 
             </div>`}
             ${this._buttonsTemplate()}`;

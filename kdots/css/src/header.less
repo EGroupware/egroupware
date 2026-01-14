@@ -237,7 +237,7 @@
 
 	.egwpopup_time_label {
 	  width: 100%;
-	  color: var(sl-color-neutral-50);
+	  color: var(--sl-color-neutral-50);
 	  text-align: center;
 	  font-style: italic;
 	  opacity: 0.5;
@@ -251,10 +251,8 @@
 	  float: right;
 	  width: 24px;
 	  height: 24px;
-	  background-repeat: no-repeat;
-	  background-position: center;
-	  background-size: 12px;
 	  font-size: 12px;
+	  margin: 6px;
 	  cursor: pointer;
 	  color: var(--sl-color-neutral-950);
 	  &:before {
@@ -279,10 +277,10 @@
 	  height: auto;
 	  overflow: hidden;
 	  padding: 10px;
-	  background-color: #fafafa;
+	  background-color: var(--sl-color-neutral-50);
 	  margin-bottom: 5px;
 
-	  &:hover {
+	  &:not(.egwpopup_expanded):hover {
 		background-color: rgba(103, 159, 210, 0.2);
 	  }
 
@@ -312,10 +310,8 @@
 		  float: right;
 		  width: 24px;
 		  height: 24px;
-		  background-image: url(../../node_modules/bootstrap-icons/icons/search.svg);
-		  background-repeat: no-repeat;
-		  background-position: center;
-		  background-size: 12px;
+		  font-size: 12px;
+		  margin: 6px;
 		  cursor: pointer;
 		}
 
@@ -326,21 +322,21 @@
 
 	  .egwpopup_actions_container {
 		text-align: center;
-	  }
 
-	  .egwpopup_actions_container > button {
-		height: 24px;
-		width: 80px;
-		border: none;
-		background: #e6e6e6;
-		background-size: 16px;
-		background-position: 12px center;
-		background-repeat: no-repeat;
-		padding-left: 26px;
+		& > button {
+		  height: 24px;
+		  width: 80px;
+		  border: none;
+		  background: var(--sl-color-neutral-200);
+		  cursor: pointer;
+		  &::before{
+			vertical-align: text-top;
+			padding-right: 4px;
+		  }
+		}
 	  }
-
 	  .egwpopup_message_more_info {
-		color: #767676;
+		color: var(--sl-color-neutral-400);
 		padding-top: 5px;
 		padding-bottom: 5px;
 	  }
@@ -356,12 +352,8 @@
 	  height: ~"calc(100% - 130px)";
 	  left: 20vw;
 	  width: 60vw;
-	  box-shadow: 0 0 40px #666;
+	  box-shadow: 0 0 40px var(--sl-color-neutral-500);
 	  overflow: auto;
-
-	  &:hover {
-		background-color: #fafafa;
-	  }
 
 	  .egwpopup_message_inner_container {
 		height: ~"calc(100% - 62px)";
@@ -418,7 +410,7 @@
 	  .egwpopup_mark {
 		cursor: auto;
 		background: none;
-		border-color: #666c6e;
+		border-color: var(--sl-color-neutral-300);
 	  }
 	}
 

@@ -431,7 +431,7 @@ iframe pre {
 }
 #egwpopup #egwpopup_list .egwpopup_time_label {
   width: 100%;
-  color: var(sl-color-neutral-50);
+  color: var(--sl-color-neutral-50);
   text-align: center;
   font-style: italic;
   opacity: 0.5;
@@ -444,10 +444,8 @@ iframe pre {
   float: right;
   width: 24px;
   height: 24px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 12px;
   font-size: 12px;
+  margin: 6px;
   cursor: pointer;
   color: var(--sl-color-neutral-950);
 }
@@ -470,10 +468,10 @@ iframe pre {
   height: auto;
   overflow: hidden;
   padding: 10px;
-  background-color: #fafafa;
+  background-color: var(--sl-color-neutral-50);
   margin-bottom: 5px;
 }
-#egwpopup #egwpopup_list .egwpopup_message:hover {
+#egwpopup #egwpopup_list .egwpopup_message:not(.egwpopup_expanded):hover {
   background-color: rgba(103, 159, 210, 0.2);
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container {
@@ -499,10 +497,8 @@ iframe pre {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../../node_modules/bootstrap-icons/icons/search.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 12px;
+  font-size: 12px;
+  margin: 6px;
   cursor: pointer;
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_collapse {
@@ -515,14 +511,15 @@ iframe pre {
   height: 24px;
   width: 80px;
   border: none;
-  background: #e6e6e6;
-  background-size: 16px;
-  background-position: 12px center;
-  background-repeat: no-repeat;
-  padding-left: 26px;
+  background: var(--sl-color-neutral-200);
+  cursor: pointer;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_actions_container > button::before {
+  vertical-align: text-top;
+  padding-right: 4px;
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_more_info {
-  color: #767676;
+  color: var(--sl-color-neutral-400);
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -536,11 +533,8 @@ iframe pre {
   height: calc(100% - 130px);
   left: 20vw;
   width: 60vw;
-  box-shadow: 0 0 40px #666;
+  box-shadow: 0 0 40px var(--sl-color-neutral-500);
   overflow: auto;
-}
-#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded:hover {
-  background-color: #fafafa;
 }
 #egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_inner_container {
   height: calc(100% - 62px);
@@ -589,7 +583,7 @@ iframe pre {
 #egwpopup #egwpopup_list .egwpopup_message_seen .egwpopup_mark {
   cursor: auto;
   background: none;
-  border-color: #666c6e;
+  border-color: var(--sl-color-neutral-300);
 }
 #egwpopup #egwpopup_list .egwpopup_message_clone {
   border: 2px dashed silver;
@@ -2837,8 +2831,8 @@ html[data-darkmode="1"] .flatpickr-calendar .flatpickr-time,
 .flatpickr-calendar.hasTime .sl-theme-dark .flatpickr-calendar .flatpickr-time {
   border-top: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
 }
-html[data-darkmode="1"] img[src^='/egroupware/node_modules/bootstrap-icons/icons/'],
-.sl-theme-dark img[src^='/egroupware/node_modules/bootstrap-icons/icons/'] {
+html[data-darkmode="1"] img[src*='/node_modules/bootstrap-icons/icons/'],
+.sl-theme-dark img[src*='/node_modules/bootstrap-icons/icons/'] {
   filter: invert(1);
 }
 /** End theme customisations **/

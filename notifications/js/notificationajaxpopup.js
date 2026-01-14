@@ -292,6 +292,7 @@
 					// OPEN entry button
 					$open_entry = jQuery(document.createElement('span'))
 							.addClass('egwpopup_message_open')
+						.addClass('bi-search')//add serach icon here via bootstrap class instead of bg image in css
 							.attr('title',egw.lang('open notified entry'))
 							.click(jQuery.proxy(this.open_entry, this,[$message]))
 							.prependTo($top_toolbar);
@@ -349,11 +350,15 @@
 					for(var action in notifymessages[id].data.actions)
 					{
 						var func = new Function(notifymessages[id].data.actions[action].onExecute);
+
+						const bootstrap = egw?.image(notifymessages[id].data.actions[action].icon,notifymessages[id].data.app)?.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
+						if (bootstrap){}
 						jQuery(document.createElement('button'))
-								.addClass('et2_button')
-								.css({'background-image':'url('+egw.image(notifymessages[id].data.actions[action].icon,notifymessages[id].data.app)+')'})
-								.text(notifymessages[id].data.actions[action].caption)
-								.click(jQuery.proxy(func, this, [$message]))
+							.addClass('et2_button')
+							.addClass(bootstrap?'bi-'+bootstrap[1]:'')
+							.css(bootstrap?{}:{'background-image':'url('+egw.image(notifymessages[id].data.actions[action].icon,notifymessages[id].data.app)+')'})
+							.text(notifymessages[id].data.actions[action].caption)
+							.click(jQuery.proxy(func, this, [$message]))
 								.prependTo($actions_container);
 					}
 					$actions_container.appendTo($message);
