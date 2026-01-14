@@ -88,7 +88,7 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 		}
 		if(this.stateChangeContext)
 		{
-			const target = this.tree.shadowRoot.querySelector("[id='" + this.stateChangeContext.id + "']");
+			const target = this.tree.shadowRoot.querySelector("[id='" + CSS.escape(this.stateChangeContext.id) + "']");
 
 			if(target && egwBitIsSet(_state, EGW_AO_STATE_FOCUSED))
 			{

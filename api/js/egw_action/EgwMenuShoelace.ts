@@ -168,7 +168,9 @@ export class EgwMenuShoelace extends LitElement
 		{
 			// Take the last one if there's more than one with the same ID as a work-around to automatic drag actions getting added twice
 			// in different places in some cases (nextmatch_controller vs EgwPopupActionImplementation)
-			const menuItem = <SlMenuItem>Array.from(this.shadowRoot.querySelectorAll("[data-action-id='" + actionId + "']")).pop();
+			const menuItem = <SlMenuItem>Array.from(this.shadowRoot.querySelectorAll(
+				"[data-action-id='" + CSS.escape(actionId) + "']"))
+				.pop();
 			if(!menuItem)
 			{
 				return;
