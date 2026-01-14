@@ -616,7 +616,10 @@ class Sql extends Api\Storage
 		}
 		else
 		{
+			if (!(in_array('account_lid', $extra_cols)))
+			{
 			$extra_cols[] = 'NULL AS account_lid';
+			}
 		}
 		if ($join || ($criteria && is_string($criteria)) || ($criteria && is_array($criteria) && $order_by))	// search also adds a join for custom fields!
 		{
