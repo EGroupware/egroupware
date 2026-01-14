@@ -26,7 +26,7 @@ import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Select/Et2Selec
 import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Select/Et2SelectState";
 import type {EgwAction} from "../../api/js/egw_action/EgwAction";
 import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
-import {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
+import {Et2MergeDialog} from "../../api/js/etemplate/Et2Dialog/Et2MergeDialog";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {Et2TreeDropdown} from "../../api/js/etemplate/Et2Tree/Et2TreeDropdown";
 import {egw_getActionManager} from "../../api/js/egw_action/egw_action";
@@ -259,15 +259,20 @@ class AddressbookApp extends EgwApp
 	/**
 	 * Change handler for contact / org selectbox
 	 *
-	 * @param {Event} _ev
+	 * @param node
+	 * @param {et2_extension_nextmatch} nm
 	 * @param {et2_selectbox} widget
 	 */
-	change_grouped_view(_ev : Event, widget)
+	change_grouped_view(node, nm, widget)
 	{
 		let template = "addressbook.index.rows";
 		let value = {};
 
-		if(widget.getValue().indexOf("org_name") == 0)
+		if(nm.activeFilters.sitemgr_display)
+		{
+			template = nm.activeFilters.sitemgr_display + '.rows';
+		}
+		else if(widget.getValue().indexOf("org_name") == 0)
 		{
 			template = "addressbook.index.org_rows";
 		}
@@ -275,18 +280,18 @@ class AddressbookApp extends EgwApp
 		{
 			template = 'addressbook.index.duplicate_rows';
 		}
-		if(this.nm?.activeFilters.col_filter.parent_id)
+		if(nm.activeFilters.col_filter.parent_id)
 		{
 			template = widget.getValue().indexOf('duplicate') === 0 ?
 				'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
 		}
-		let promise = this.nm?.set_template(template)
+		let promise = nm.set_template(template)
 		value[widget.id] = widget.getValue();
 		if(promise)
 		{
 			promise.then(() =>
 			{
-				this.nm?.applyFilters(value);
+				nm.applyFilters(value);
 			});
 		}
 		return !promise;
@@ -355,8 +360,7 @@ class AddressbookApp extends EgwApp
 			title.then(_title =>
 			{
 				this.egw.window.framework.tabLinkHandler(url, {
-					displayName: this.egw.lang("CRM View"),
-					tooltip: _title,
+					displayName: _title,
 					icon: _params.icon || this.egw.link('/api/avatar.php', {
 						contact_id: contact_id,
 						etag: (new Date).valueOf()/86400|0	// cache for a day, better then no invalidation
@@ -903,8 +907,7 @@ class AddressbookApp extends EgwApp
 	{
 		let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
 		const filter = <Et2TreeDropdown>this.et2.getWidgetById('filter2')
-		const lists = filter.select_options.find(elem => elem.value === 'lists')?.item ??
-			filter.select_options ?? [];
+		const lists = filter.select_options.find(elem => elem.value === 'lists')?.item ?? {};
 		const selectedID = filter.getValue() || 0;
 		const value = lists.find(distributionList => distributionList.value == selectedID);
 		const self =this;
@@ -965,7 +968,7 @@ class AddressbookApp extends EgwApp
 	/**
 	 * OnChange for distribution list selectbox
 	 */
-	filter2_onchange(_ev : Event|undefined)
+	filter2_onchange()
 	{
 		var filter = this.et2.getWidgetById('filter');
 		var filter2 = this.et2.getWidgetById('filter2');
@@ -986,13 +989,6 @@ class AddressbookApp extends EgwApp
 				filter2: filter2_val
 			});
 			// Don't get rows here, let applyFilters() do it
-			return false;
-		}
-		else if (_ev)
-		{
-			widget.applyFilters({
-				filter2: filter2_val
-			});
 			return false;
 		}
 
@@ -1281,7 +1277,7 @@ class AddressbookApp extends EgwApp
 		const dialog = this.et2?.getDOMNode()?.querySelector('et2-merge-dialog') ?? document.body.querySelector('et2-merge-dialog');
 
 		// Add additional option UI by loading a template
-		const options = <Et2Template><unknown>et2_createWidget('template', {
+		const options = <Et2MergeDialog><unknown>et2_createWidget('template', {
 			application: this.appname,
 			id: this.appname + ".mail_merge_dialog",
 		}, dialog);
@@ -1292,7 +1288,7 @@ class AddressbookApp extends EgwApp
 
 		// Get template values, add them in
 		const result = await promise;
-		result.options = {...options.getInstanceManager().getValues(options), ...result.options};
+		result.options = {...this.et2.getInstanceManager().getValues(options), ...result.options};
 
 		return result;
 	}
@@ -1371,8 +1367,6 @@ class AddressbookApp extends EgwApp
 			}
 		}
 
-		const index = etemplate2.getById('addressbook-index');
-		const grouped = index?.widgetContainer?.getWidgetById('grouped_view') ?? {};
 
 		// Redirect from view to list - parent would do this, but infolog nextmatch stops it
 		if(current_state.app && current_state.id && (typeof state.state == 'undefined' || typeof state.state.app == 'undefined'))
@@ -1394,7 +1388,7 @@ class AddressbookApp extends EgwApp
 			{
 				const grouped = index.widgetContainer.getWidgetById('grouped_view');
 				const nm = index.widgetContainer.getWidgetById("nm");
-				this.change_grouped_view(null, grouped);
+				this.change_grouped_view(grouped, nm, grouped);
 			}
 
 			// Clear advanced search, which is in session and etemplate
@@ -1418,30 +1412,29 @@ class AddressbookApp extends EgwApp
 		{
 			// Deal with grouped views that are not valid (not in list of options)
 			// by faking viewing that organisation
-			let options : any[];
-			if(grouped && grouped.select_options)
+			var index = etemplate2.getById('addressbook-index');
+			if(index && index.widgetContainer)
 			{
-				options = grouped.select_options;
-			}
+				const grouped = index.widgetContainer.getWidgetById('grouped_view');
+				let options : any[];
+				if(grouped && grouped.select_options)
+				{
+					options = grouped.select_options;
+				}
 
-			// Check to see if it's not there
-			if(options && (options.find &&
-				!options.find(function(e) {return e.value === state.state.grouped_view;}) ||
-				typeof options.find === 'undefined' && !options[state.state.grouped_view]
-			))
-			{
-				const nm = index.widgetContainer.getWidgetById('nm');
-				const action = nm.controller._actionManager.getActionById('view_org');
-				const senders = [{_context: {_widget: nm}}];
-				return nm_action(action, senders, {}, {ids: [state.state.grouped_view]});
+				// Check to see if it's not there
+				if(options && (options.find &&
+					!options.find(function(e) {return e.value === state.state.grouped_view;}) ||
+					typeof options.find === 'undefined' && !options[state.state.grouped_view]
+				))
+				{
+					const nm = index.widgetContainer.getWidgetById('nm');
+					const action = nm.controller._actionManager.getActionById('view_org');
+					const senders = [{_context: {_widget: nm}}];
+					return nm_action(action, senders, {}, {ids:[state.state.grouped_view]});
+				}
 			}
-			grouped.value = state.state.grouped_view;
 		}
-		else
-		{
-			grouped.value = "";
-		}
-		this.change_grouped_view(null, grouped);
 
 		// Make sure advanced search is false if not set, this clears any
 		// currently set advanced search
