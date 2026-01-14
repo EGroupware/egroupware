@@ -1272,7 +1272,9 @@ class infolog_ui
 			'no_notifications' => array(
 				'caption' => 'Do not notify',
 				'checkbox' => true,
-				'checked' => str_contains($this->prefs['no_notification_types'], '~actions~'),
+				'checked' => str_contains(is_array($this->prefs['no_notification_types']) ?
+											  implode(',', $this->prefs['no_notification_types']) : (string)$this->prefs['no_notification_types'], '~actions~'
+				),
 				'confirm_mass_selection' => "You are going to change %1 entries: Are you sure you want to send notifications about this change?",
 				'hint' => 'Do not notify of these changes',
 				'group' => $group,
