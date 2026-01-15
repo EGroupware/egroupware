@@ -107,7 +107,7 @@ class importexport_definitions_ui
 			}
 			elseif(($button = array_search('pressed',$content['nm']['rows'])) !== false)
 			{
-				$selected = $content['nm']['rows']['selected'];
+				$selected = $content['nm']['selected'];
 				if(count($selected) < 1 || !is_array($selected)) exit();
 				switch ($button)
 				{
