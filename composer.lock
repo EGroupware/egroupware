@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d626ca2180b7b46f789e8aa091ade2a",
+    "content-hash": "49660c62209504e86afb05bf8fc72d90",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1110,6 +1110,40 @@
                 "source": "https://github.com/ADOdb/ADOdb"
             },
             "time": "2025-11-21T07:08:42+00:00"
+        },
+        {
+            "name": "egroupware/aitools",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/aitools.git",
+                "reference": "b39da62788c0fdb9713ddf355c2c0541f9373a63"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/aitools/zipball/b39da62788c0fdb9713ddf355c2c0541f9373a63",
+                "reference": "b39da62788c0fdb9713ddf355c2c0541f9373a63",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "egroupware-app",
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "amir",
+                    "email": "amir@egroupware.org"
+                },
+                {
+                    "name": "ralf",
+                    "email": "rb@egroupware.org"
+                }
+            ],
+            "description": "AI Tools for EGroupware.",
+            "support": {
+                "issues": "https://github.com/EGroupware/aitools/issues",
+                "source": "https://github.com/EGroupware/aitools/tree/master"
+            },
+            "time": "2026-01-15T14:38:34+00:00"
         },
         {
             "name": "egroupware/bookmarks",
@@ -12780,6 +12814,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "egroupware/activesync": 20,
+        "egroupware/aitools": 20,
         "egroupware/bookmarks": 20,
         "egroupware/collabora": 20,
         "egroupware/news_admin": 20,
