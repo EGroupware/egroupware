@@ -2,7 +2,9 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<et2-textarea  id="description" cols="70"></et2-textarea>
+        <et2-ai class="calendar-edit_description">
+            <et2-textarea id="description" cols="70"></et2-textarea>
+        </et2-ai>
 		<et2-hbox  disabled="@no_add_alarm" height="35">
 			<et2-button  label="Add new alarm" id="button[add_alarm]" image="add"></et2-button>
 			<et2-select  statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"></et2-select>
