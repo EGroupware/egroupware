@@ -62,8 +62,13 @@ class Ai extends Etemplate\Widget
 			{
 				return false;
 			}
-			return AiTools\Bo::test_api_connection();
-		}, [],3600);
+			try {
+				return AiTools\Bo::test_api_connection();
+			}
+			catch (\Exception $e) {
+				return false;
+			}
+		}, [], 7200);
 	}
 
 	/**
