@@ -2659,6 +2659,10 @@ et2-toolbar [slot="list"]::part(base) {
 et2-toolbar :not(et2-button):not(:hover)::part(control), et2-toolbar :not(et2-button):not(:hover)::part(base) {
 	border-color: transparent;
 }
+/*unset style above for elements in main header*/
+[slot="main-header"] et2-toolbar :not(et2-button):not(:hover)::part(control), et2-toolbar :not(et2-button):not(:hover)::part(base) {
+    border-color: var(--sl-input-border-color);
+}
 
 et2-toolbar et2-switch-icon::part(control) {
 	font-size: var(--sl-font-size-x-large, 20px);

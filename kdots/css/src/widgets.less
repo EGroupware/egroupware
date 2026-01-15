@@ -202,6 +202,23 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
   /*HOVER effect on all clickable elements in the main-header*/
   /*we also want to style the clickable elements in the whole header in the same way*/
 
+  .et2-input-widget {
+	--sl-input-border-color-hover: var(--application-header-text-color);
+
+	&.et2-textbox-widget, &.et2-select-widget {
+	  --sl-input-border-color: var(--sl-color-neutral-400);
+	  padding-inline: var(--sl-spacing-2x-small);
+	}
+  }
+
+  et2-tree-dropdown {
+	&::part(control) {
+	  --sl-input-border-color: var(--sl-color-neutral-400);
+	}
+
+	padding-inline: var(--sl-spacing-2x-small);
+  }
+
   .et2_clickable, et2-image, .et2-input-widget:not(et2-toolbar) {
 	--sl-input-border-color: transparent;
 	--indicator-color: var(--sl-color-neutral-0);
@@ -220,7 +237,6 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 
 	&::part(control) {
 	  --indicator-color: var(--application-header-text-color);
-	  --sl-input-border-color: transparent;
 	  --sl-input-background-color: transparent;
 	  --image-filter: brightness(0) invert(1);
 	  --image-filter-off: brightness(0) invert(1) opacity(0.5);
@@ -248,10 +264,6 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 	&::part(control) {
 	  border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 	  border-radius: var(--sl-input-border-radius-medium);
-	}
-
-	&:hover::part(control) {
-	  border-color: var(--sl-color-neutral-400) !important;
 	}
 
   }

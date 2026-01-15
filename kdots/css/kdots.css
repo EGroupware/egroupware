@@ -986,6 +986,25 @@ et2-dialog > [slot="label"] .et2-input-widget:focus-within {
 et2-dialog > [slot="label"] .et2-input-widget:focus-within::part(input) {
   background-color: var(--focus-background-color);
 }
+[slot="main-header"] .et2-input-widget,
+et2-dialog > [slot="label"] .et2-input-widget {
+  --sl-input-border-color-hover: var(--application-header-text-color);
+}
+[slot="main-header"] .et2-input-widget.et2-textbox-widget,
+et2-dialog > [slot="label"] .et2-input-widget.et2-textbox-widget,
+[slot="main-header"] .et2-input-widget.et2-select-widget,
+et2-dialog > [slot="label"] .et2-input-widget.et2-select-widget {
+  --sl-input-border-color: var(--sl-color-neutral-400);
+  padding-inline: var(--sl-spacing-2x-small);
+}
+[slot="main-header"] et2-tree-dropdown,
+et2-dialog > [slot="label"] et2-tree-dropdown {
+  padding-inline: var(--sl-spacing-2x-small);
+}
+[slot="main-header"] et2-tree-dropdown::part(control),
+et2-dialog > [slot="label"] et2-tree-dropdown::part(control) {
+  --sl-input-border-color: var(--sl-color-neutral-400);
+}
 [slot="main-header"] .et2_clickable,
 et2-dialog > [slot="label"] .et2_clickable,
 [slot="main-header"] et2-image,
@@ -1030,7 +1049,6 @@ et2-dialog > [slot="label"] et2-image::part(control),
 [slot="main-header"] .et2-input-widget:not(et2-toolbar)::part(control),
 et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar)::part(control) {
   --indicator-color: var(--application-header-text-color);
-  --sl-input-border-color: transparent;
   --sl-input-background-color: transparent;
   --image-filter: brightness(0) invert(1);
   --image-filter-off: brightness(0) invert(1) opacity(0.5);
@@ -1070,10 +1088,6 @@ et2-dialog > [slot="label"] et2-switch-icon:hover {
 et2-dialog > [slot="label"] et2-button-toggle::part(control) {
   border: solid var(--sl-input-border-width) var(--sl-input-border-color);
   border-radius: var(--sl-input-border-radius-medium);
-}
-[slot="main-header"] et2-button-toggle:hover::part(control),
-et2-dialog > [slot="label"] et2-button-toggle:hover::part(control) {
-  border-color: var(--sl-color-neutral-400) !important;
 }
 [slot="main-header"] et2-toolbar *,
 et2-dialog > [slot="label"] et2-toolbar * {
