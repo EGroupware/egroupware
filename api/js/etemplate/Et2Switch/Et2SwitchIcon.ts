@@ -74,7 +74,16 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 
 				sl-switch[checked] slot[name="on"], sl-switch:not([checked]) slot[name="off"] {
 					color: var(--indicator-color, inherit);
+					et2-image{
+						filter: var(--image-filter)
+					}
 				}
+				
+                sl-switch[checked] slot[name="off"], sl-switch:not([checked]) slot[name="on"]{
+	                et2-image{
+		                filter: var(--image-filter-off)
+                    }
+                }
 
 				sl-switch::part(label), sl-switch::part(form-control) {
 					display: flex;
