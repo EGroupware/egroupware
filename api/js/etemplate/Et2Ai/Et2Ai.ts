@@ -86,7 +86,17 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 	/* Specify a custom server endpoint for AI queries */
 	@property({attribute: false, type: String})
-	endpoint? : string;
+	set endpoint(_val)
+	{
+		if (_val && this.ai)
+		{
+			this.ai.endpoint = _val;
+		}
+	}
+	get endpoint() : string
+	{
+		return this.ai?.endpoint;
+	}
 
 	/* Use different context instead of child value */
 	@property({type: Function})
@@ -111,7 +121,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		super();
 		this.clearResult = this.clearResult.bind(this);
 		this._promptTemplate = this._promptTemplate.bind(this);
-		this.ai = new AiAssistantController(this);
+		this.ai = new AiAssistantController(this, this.endpoint);
 	}
 
 	disconnectedCallback()
@@ -123,8 +133,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 	protected async firstUpdated()
 	{
-		const apiOK = await this.ai.testAPI();
-		this.noAiAssistant = apiOK == false || typeof (this.egw().user("apps") ?? {})["aiassistant"] == "undefined";
+		this.noAiAssistant = !this.endpoint;
 		const slot = this.shadowRoot?.querySelector('slot');
 		slot?.addEventListener('slotchange', () => this.handleSlotChange());
 
