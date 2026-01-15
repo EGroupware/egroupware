@@ -2800,9 +2800,17 @@ html[data-darkmode="1"] .flatpickr-calendar .flatpickr-innerContainer,
   background: var(--sl-panel-background-color);
   border-bottom-color: var(--sl-panel-border-color);
 }
+html[data-darkmode="1"] .flatpickr-calendar .flatpickr-innerContainer .flatpickr-weekdays,
+.sl-theme-dark .flatpickr-calendar .flatpickr-innerContainer .flatpickr-weekdays {
+  background: var(--sl-color-neutral-200);
+}
 html[data-darkmode="1"] .flatpickr-calendar .flatpickr-months,
 .sl-theme-dark .flatpickr-calendar .flatpickr-months {
   background-color: var(--sl-color-neutral-200);
+}
+html[data-darkmode="1"] .flatpickr-calendar .flatpickr-months .flatpickr-current-month .numInputWrapper,
+.sl-theme-dark .flatpickr-calendar .flatpickr-months .flatpickr-current-month .numInputWrapper {
+  background-color: var(--sl-color-neutral-50);
 }
 html[data-darkmode="1"] .flatpickr-calendar .flatpickr-months .flatpickr-month,
 .sl-theme-dark .flatpickr-calendar .flatpickr-months .flatpickr-month,
@@ -2815,11 +2823,12 @@ html[data-darkmode="1"] .flatpickr-calendar .flatpickr-weeks,
 .sl-theme-dark .flatpickr-calendar .flatpickr-weeks,
 html[data-darkmode="1"] .flatpickr-calendar .flatpickr-days,
 .sl-theme-dark .flatpickr-calendar .flatpickr-days {
-  border-left-color: var(--sl-panel-border-color);
+  border-color: var(--sl-panel-border-color);
+  border-right: none;
 }
 html[data-darkmode="1"] .flatpickr-calendar span.flatpickr-weekday,
 .sl-theme-dark .flatpickr-calendar span.flatpickr-weekday {
-  color: var(--sl-color-neutral-500);
+  color: var(--sl-color-neutral-700);
   background-color: var(--sl-color-neutral-200);
 }
 html[data-darkmode="1"] .flatpickr-calendar .flatpickr-time,

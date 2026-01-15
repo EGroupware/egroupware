@@ -59,10 +59,19 @@ html[data-darkmode="1"], .sl-theme-dark {
 	.flatpickr-innerContainer {
 	  background: var(--sl-panel-background-color);
 	  border-bottom-color: var(--sl-panel-border-color);
+	  .flatpickr-weekdays{
+		background: var(--sl-color-neutral-200);
+	  }
 	}
 
 	.flatpickr-months {
 	  background-color: var(--sl-color-neutral-200);
+
+	  .flatpickr-current-month{
+		.numInputWrapper{
+		  background-color: var(--sl-color-neutral-50);
+		}
+	  }
 
 	  .flatpickr-month, .flatpickr-monthDropdown-months {
 		background: none;
@@ -71,11 +80,12 @@ html[data-darkmode="1"], .sl-theme-dark {
 	}
 
 	.flatpickr-weeks, .flatpickr-days {
-	  border-left-color: var(--sl-panel-border-color);
+	  border-color: var(--sl-panel-border-color);
+	  border-right: none;
 	}
 
 	span.flatpickr-weekday {
-	  color: var(--sl-color-neutral-500);
+	  color: var(--sl-color-neutral-700);
 	  background-color: var(--sl-color-neutral-200);
 	}
 
