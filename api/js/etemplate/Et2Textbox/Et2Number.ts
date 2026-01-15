@@ -56,7 +56,8 @@ export class Et2Number extends Et2Textbox
 				}
 
 				:host([step]) .input--medium .input__control {
-					padding-right: 0px;
+					padding-left: 0px;
+					flex-shrink: 0;
 				}
 
 				.form-control-input {
