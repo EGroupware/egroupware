@@ -107,12 +107,12 @@ function send_template()
 	}
 	$cache = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw_cache/eT2-Cache-' .
 		$GLOBALS['egw_info']['server']['install_id'] . '-' . str_replace('/', '-', $_SERVER['PATH_INFO']) . '-' . filemtime($path);
-	/*if (PHP_SAPI !== 'cli' && file_exists($cache) && filemtime($cache) > max(filemtime($path), filemtime(__FILE__)) &&
+	if (PHP_SAPI !== 'cli' && file_exists($cache) && filemtime($cache) > max(filemtime($path), filemtime(__FILE__)) &&
 		($str = file_get_contents($cache)) !== false)
 	{
 		$cache_read = microtime(true);
 	}
-	else*/if(($str = file_get_contents($path)) !== false)
+	elseif(($str = file_get_contents($path)) !== false)
 	{
 		// replace single quote enclosing attribute values with double quotes
 		$str = preg_replace_callback("#([a-z_-]+)='([^']*)'([ />])#i", static function($matches){
@@ -481,9 +481,19 @@ function send_template()
 					return "<et2-button-icon $attrs_string></et2-button-icon>";
 				}
 				return "<et2-button $matches[1]>$matches[2]";
-			},                           $str);
-
+			}, $str);
 		}
+
+		// wrap et2-textarea in et2-ai, if not already done or noAiTools attribute is set truish
+		$str = preg_replace_callback('#(<et2-ai[^>]*>\n?)?\s*<et2-textarea\s(.*?)\s*></et2-textarea>#s', function ($matches)
+		{
+			$noAiTools = parseAttrs($matches[2])['noAiTools'] ?? 'false';
+			if (!empty($matches[1]) || $noAiTools && $noAiTools !== 'false')
+			{
+				return $matches[0];
+			}
+			return "<et2-ai>$matches[0]</et2-ai>";
+		}, $str);
 
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 

@@ -52,9 +52,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-        <et2-ai>
-            <et2-textarea id="description" width="99.7%" height="10em" noLang="1" resizeRatio="0"></et2-textarea>
-        </et2-ai>
+        <et2-textarea id="description" width="99.7%" height="10em" noLang="1" resizeRatio="0"></et2-textarea>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
 		<grid width="99%" id="participants">
