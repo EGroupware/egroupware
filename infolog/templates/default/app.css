@@ -121,6 +121,8 @@ tr.infolog_rowHasParent > td:first-child .infolog_CompletedClmn {
 /* Right-align extra buttons in tab */
 .infologExtraButton {
   margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 .infologExtraButton ~ .infologExtraButton {
   margin: 0;
