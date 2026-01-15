@@ -289,7 +289,7 @@ links and attached files	infolog	de	Verknüpfungen und Dateianhänge
 links of this entry	infolog	de	Verknüpfungen dieses Eintrags
 links to specified application.  example: {{links/infolog}}	infolog	de	Verknüpfungen zu bestimmten Anwendungen. Beispiel: {{links/infolog}}
 links wrapped in an href tag with download link	infolog	de	Verknüpfungen in einem Anker Tag (HREF) mit einem Download-Link
-list actions	infolog	de	Aktionen auf der Liste
+list actions	infolog	de	Liste mit Aktionen
 list all categories	infolog	de	Alle Kategorien anzeigen
 list of files linked to the current record	infolog	de	Liste der Dateien die mit dem aktuellen Datensatz verknüpft sind
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	de	Benutzerdefinierte Felder in Liste laden, wenn nach einem der folgenden InfoLog-Typen gefiltert wird (z. B. für ein type-spezifisches Listen-Template)
