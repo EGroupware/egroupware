@@ -107,6 +107,12 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			type: 'boolean',
 			default: false,
 			description: 'Add default font and size as style attribute to the markup. Also ensures all non-block elements are wrapped in p.'
+		},
+		endpoint: {
+			name: 'Endpoint for AI Tools',
+			type: 'string',
+			default: '',
+			description: 'The endpoint for AI Tools, if set enabled the menu',
 		}
 	};
 
@@ -487,18 +493,18 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			default:
 				this.mode = '';
 		}
-		if(this.egw().preference("enable_tool_execution", "aiassistant"))
+		if(this.egw().app('aitools') && this.options.endpoint)
 		{
 			settings['setup'] = (editor) =>
 			{
 				// See https://www.tiny.cloud/docs/tinymce/latest/custom-toolbarbuttons/
-				editor.ui.registry.addIcon("aiassistant", "<et2-image src='aiassistant/navbar'></et2-image>");
-				editor.ui.registry.addMenuButton('aiassistantPrompts', {
-					tooltip: 'AI Assistant',
-					icon: 'aiassistant',
+				editor.ui.registry.addIcon("aitools", "<et2-image src='aitools/navbar'></et2-image>");
+				editor.ui.registry.addMenuButton('aitoolsPrompts', {
+					tooltip: 'AI Tools',
+					icon: 'aitools',
 					fetch: (callback) =>
 					{
-						const result = egw.applyFunc("app.aiassistant.getTextareaPromptList", [this])
+						const result = egw.applyFunc("app.aitools.getTextareaPromptList", [this])
 						if(typeof result.then != "undefined")
 						{
 							result.then((result) => callback(result));
@@ -523,9 +529,9 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			});
 		}
 		// TODO: This probably goes above the rte_toolbar check
-		if(this.egw().preference("enable_tool_execution", "aiassistant"))
+		if(this.egw().app("aitools") && this.options.endpoint)
 		{
-			settings['toolbar'] += " | aiassistantPrompts";
+			settings['toolbar'] += " | aitoolsPrompts";
 		}
 		return settings;
 	}

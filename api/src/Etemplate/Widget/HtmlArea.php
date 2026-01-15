@@ -135,6 +135,22 @@ class HtmlArea extends Etemplate\Widget
 		return $toolbar_selOptions;
 	}
 
+
+	/**
+	 * Disable Ai Widget own UI, if no model is defined
+	 *
+	 * @param string $cname
+	 */
+	public function beforeSendToClient($cname)
+	{
+		$form_name = self::form_name($cname, $this->id);
+
+		if (Ai::enabled())
+		{
+			self::setElementAttribute($form_name, 'endpoint', Ai::class.'::ajaxApi');
+		}
+	}
+
 	/**
 	 * Validate input
 	 *
