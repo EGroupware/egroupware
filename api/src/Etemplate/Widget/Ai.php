@@ -13,7 +13,7 @@ namespace EGroupware\Api\Etemplate\Widget;
 
 use EGroupware\Api;
 use EGroupware\Api\Etemplate;
-use EGroupware\AIAssistant;
+use EGroupware\AiTools;
 
 /**
  * eTemplate AI widget offers text-tools for wrapped widgets
@@ -39,7 +39,7 @@ class Ai extends Etemplate\Widget
 	/**
 	 * App to check for run rights
 	 */
-	const PROVIDER_APP = 'aiassistant';
+	const PROVIDER_APP = 'aitools';
 
 	/**
 	 * Check and cache, if AI texttools are available / configured and enabled for the user
@@ -51,14 +51,14 @@ class Ai extends Etemplate\Widget
 		{
 			return false;
 		}
-		Api\Cache::unsetInstance(self::PROVIDER_APP, 'configured');
+		//Api\Cache::unsetInstance(self::PROVIDER_APP, 'configured');
 		return Api\Cache::getInstance(self::PROVIDER_APP, 'configured', static function ()
 		{
-			if (!class_exists('EGroupware\\AIAssistant\\Bo'))
+			if (!class_exists('EGroupware\\AiTools\\Bo'))
 			{
 				return false;
 			}
-			return AIAssistant\Bo::test_api_connection();
+			return AiTools\Bo::test_api_connection();
 		}, [],3600);
 	}
 
@@ -71,8 +71,8 @@ class Ai extends Etemplate\Widget
 	 */
 	public static function ajaxApi(string $action, ...$params)
 	{
-		$ui = new AIAssistant\Ui();
-		$ui->ajax_api($action, ...$params);
+		$bo = new AiTools\Bo();
+		$bo->ajax_api($action, ...$params);
 	}
 }
 Etemplate\Widget::registerWidget(Ai::class, 'et2-ai');

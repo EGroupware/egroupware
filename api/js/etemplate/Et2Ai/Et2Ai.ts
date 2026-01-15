@@ -624,8 +624,7 @@ export class Et2Ai extends Et2Widget(LitElement)
                              ?disabled=${this.disabled}
                 >
                     <slot name="trigger" slot="trigger">
-                        <et2-button-icon slot="trigger" name="aiassistant/navbar"
-                                         noSubmit></et2-button-icon>
+                        <et2-button-icon slot="trigger" name="aitools/navbar" noSubmit></et2-button-icon>
                     </slot>
                     <sl-menu @sl-select=${this.handlePromptSelect} part="menu">
                         ${this.prompts.map(this._promptTemplate)}
