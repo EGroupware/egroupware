@@ -36,7 +36,7 @@ export default css`
 		--padding: var(--sl-spacing-small);
 
 		&::part(base) {
-			max-height: min(var(--max-result-height),);
+			max-height: var(--max-result-height);
 		}
 
 		&::part(header) {

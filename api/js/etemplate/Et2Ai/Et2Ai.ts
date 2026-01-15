@@ -1,4 +1,4 @@
-import {html, LitElement, TemplateResult} from 'lit';
+import {html, LitElement, nothing, TemplateResult} from 'lit';
 import {state} from "lit/decorators/state.js";
 import {customElement, property} from 'lit/decorators.js';
 import {AiAssistantController} from "./AiAssistantController";
@@ -180,12 +180,13 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 
 		const originalValue = this.getContent();
+		const target = this.resolveTarget(this.activePrompt);
 
 		this.dispatchEvent(new CustomEvent('et2-ai-start', {
 			detail: {
 				prompt: this.activePrompt,
 				originalValue,
-				target: this.resolveTarget(this.activePrompt)
+				target: target
 			},
 			bubbles: true,
 			composed: true
@@ -200,7 +201,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 						detail: {
 							prompt: this.activePrompt,
 							result: this.ai.result,
-							target: this.resolveTarget(this.activePrompt)
+							target: target
 						},
 						bubbles: true,
 						composed: true
@@ -213,7 +214,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 					detail: {
 						prompt: this.activePrompt,
 						error: this.ai.error,
-						target: this.resolveTarget(this.activePrompt)
+						target: target
 					},
 					bubbles: true,
 					composed: true
@@ -225,7 +226,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 					detail: {
 						prompt: this.activePrompt,
 						error: this.ai.error,
-						target: this.resolveTarget(this.activePrompt)
+						target: target
 					},
 					bubbles: true,
 					composed: true
@@ -456,6 +457,24 @@ export class Et2Ai extends Et2Widget(LitElement)
 			return '';
 		}
 
+		// Iframe
+		if(el instanceof HTMLIFrameElement)
+		{
+			try
+			{
+				const doc = el.contentDocument;
+				if(doc)
+				{
+					return doc.body.innerHTML;
+				}
+			}
+			catch(e)
+			{
+				// Cross-origin iframe – fall through to fallback
+			}
+		}
+
+		// Widgets with a value
 		if(typeof el.getValue === 'function')
 		{
 			return el.getValue();
@@ -466,6 +485,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 			return String(el.value ?? '');
 		}
 
+		// See if we can get values from Etemplate
 		try
 		{
 			if(typeof etemplate2?.getValues === 'function')
@@ -482,30 +502,51 @@ export class Et2Ai extends Et2Widget(LitElement)
 			// ignore
 		}
 
-		// Target is iframe
-		if(el instanceof HTMLIFrameElement)
-		{
-			try
-			{
-				const doc = el.contentDocument || el.contentWindow?.document;
-				if(!doc)
-				{
-					return '';
-				}
 
-				// Visible text content
-				return doc.body?.textContent?.trim() ?? '';
-			}
-			catch
-			{
-				// Cross-origin iframe means no access
-				return '';
-			}
-		}
 
 		return el.textContent?.trim() ?? '';
 	}
 
+
+	/**
+	 * Figure out if the element can take a response
+	 *
+	 * @param {HTMLElement} target
+	 * @return {boolean}
+	 * @protected
+	 */
+	protected _canApplyResult(target = this.resolveTarget(this.activePrompt)) : boolean
+	{
+		if(!target)
+		{
+			return false;
+		}
+
+		// Iframes are always read-only for us
+		if(target instanceof HTMLIFrameElement)
+		{
+			return false;
+		}
+
+		// Contenteditable elements
+		if((target as HTMLElement).isContentEditable)
+		{
+			return true;
+		}
+
+		// et2 widgets with value API
+		const et2 = target as any;
+		if(typeof et2.set_value === "function")
+		{
+			return !target.readonly && !target.disabled;
+		}
+		if("value" in et2)
+		{
+			return !target.readonly && !target.disabled;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Render the different helpers based on status
@@ -574,13 +615,13 @@ export class Et2Ai extends Et2Widget(LitElement)
                       : result.trim()
                     }
                 </div>
-
-                <sl-button
+                ${this._canApplyResult() ? html`
+                    <sl-button part="apply-button"
                         slot="footer"
                         @click=${this._applyResult}
-                        part="apply-button">
+                    >
                     ${this.egw().lang("Apply")}
-                </sl-button>
+                    </sl-button>` : nothing}
             </sl-card>
 		`;
 	}

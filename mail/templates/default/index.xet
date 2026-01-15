@@ -105,7 +105,9 @@
             </rows>
         </grid>
         <et2-box id="mailPreviewContainer">
-            <iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
+            <et2-ai>
+                <iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
+            </et2-ai>
         </et2-box>
     </template>
     <template id="mail.index.rows.vertical" template="" lang="" group="0" version="1.9.001">
