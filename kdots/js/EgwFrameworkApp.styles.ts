@@ -96,10 +96,11 @@ export default css`
     }
 
     .egw_fw_app__menu > div {
-        margin-left: var(--sl-spacing-medium);
-        margin-right: var(--sl-spacing-medium);
         display: flex;
         align-items: center;
+        et2-button-icon{
+            margin-right:0;
+        }
     }
 
     .egw_fw_app__menu > div > sl-icon-button {

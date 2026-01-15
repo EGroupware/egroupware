@@ -164,7 +164,8 @@ export default css`
         font-size: var(--sl-font-size-2x-large);
 
         sl-icon-button::part(base) {
-            padding-left: 0
+            position: relative;
+            right: var(--sl-spacing-x-small);
         }
     }
 
