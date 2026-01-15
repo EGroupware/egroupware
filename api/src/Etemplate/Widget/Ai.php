@@ -21,6 +21,10 @@ use EGroupware\AiTools;
 class Ai extends Etemplate\Widget
 {
 
+
+	// Make settings available globally
+	const GLOBAL_VALS = '~ai~';
+
 	/**
 	 * Disable Ai Widget own UI, if no model is defined
 	 *
@@ -30,9 +34,9 @@ class Ai extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
-		if (self::enabled())
+		if(self::enabled())
 		{
-			self::setElementAttribute($form_name, 'endpoint', self::class.'::ajaxApi');
+			self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'endpoint', self::class . '::ajaxApi');
 		}
 	}
 

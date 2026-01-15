@@ -92,6 +92,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			this.ai.endpoint = _val;
 		}
+		this.noAiAssistant = !_val;
 	}
 	get endpoint() : string
 	{
@@ -122,6 +123,18 @@ export class Et2Ai extends Et2Widget(LitElement)
 		this.clearResult = this.clearResult.bind(this);
 		this._promptTemplate = this._promptTemplate.bind(this);
 		this.ai = new AiAssistantController(this, this.endpoint);
+	}
+
+	transformAttributes(attrs)
+	{
+		// Check for global settings
+		const global_data = this.getArrayMgr("modifications").getRoot().getEntry('~ai~', true);
+		if(global_data)
+		{
+			// Specific attributes override global
+			Object.assign(attrs, global_data, attrs);
+		}
+		super.transformAttributes(attrs);
 	}
 
 	disconnectedCallback()
