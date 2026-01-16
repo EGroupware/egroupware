@@ -839,8 +839,8 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 			$value = tidy_repair_string($value, array(
 				'indent'          => true,
 				'show-body-only'  => true,
-				'output-encoding' => 'utf-8',
-				'input-encoding'  => 'utf-8',
+				'output-encoding' => 'utf8',
+				'input-encoding'  => 'utf8',
 				'input-xml'       => true,
 				'output-xml'      => true,
 				'wrap'            => 0,
