@@ -36,13 +36,14 @@ export default css`
 		width: 100%;
 		overflow: hidden;
 		top: 0;
+		left: 7px; /* Not sure where this comes from, but without this the left side is cut off and there's too much space to the right*/
 		z-index: var(--sl-z-index-dialog);
-		/* box-shadow only below, not on the sides to avoid weird bleed on the sides */
-		box-shadow: 0 1em 6px -6px hsla(240, 3.8%, 46.1%, 0.52);
+		box-shadow: var(--sl-shadow-large);
 		--padding: var(--sl-spacing-small);
 
 		&::part(base) {
 			max-height: var(--max-result-height);
+			--border-color: var(--aitools-color);
 		}
 
 		&::part(header) {
