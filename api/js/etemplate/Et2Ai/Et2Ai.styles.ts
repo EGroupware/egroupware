@@ -22,7 +22,10 @@ export default css`
 		right: 0px;
 
 		et2-button-icon {
-			font-size: var(--sl-font-size-2x-large);
+			font-size: calc(var(--sl-font-size-large) * 1.5);
+			position: relative;
+			top: calc(var(--sl-font-size-large) * -.5);
+			right: calc(var(--sl-font-size-large) * -.4);
 		}
 	}
 
