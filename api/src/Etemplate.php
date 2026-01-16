@@ -188,7 +188,7 @@ class Etemplate extends Etemplate\Widget\Template
 
 		// compile required translations translations
 		$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
-		$langRequire = array('common' => array(), 'etemplate' => array());	// keep that order
+		$langRequire = ['common' => []];	// keep that order
 		foreach(Translation::$loaded_apps as $l_app => $lang)
 		{
 			if (!in_array($l_app, array($currentapp, 'custom')))

@@ -37,6 +37,8 @@ class Ai extends Etemplate\Widget
 		if(self::enabled())
 		{
 			self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'endpoint', self::class . '::ajaxApi');
+
+			Api\Translation::add_app(self::PROVIDER_APP);
 		}
 	}
 

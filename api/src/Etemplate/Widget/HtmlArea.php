@@ -148,6 +148,8 @@ class HtmlArea extends Etemplate\Widget
 		if (Ai::enabled())
 		{
 			self::setElementAttribute($form_name, 'endpoint', Ai::class.'::ajaxApi');
+
+			Api\Translation::add_app(Ai::PROVIDER_APP);
 		}
 	}
 
