@@ -20,7 +20,8 @@ export interface AiPrompt
 	actions? : AiAction[];
 }
 
-export type AiAction = Function | {
+export type AiAction = { label? : string, handler : Function, target? : never, mode? : never } | {
+	label? : string;
 	/* Et2 ID, CSS selector or keyword
 	*
 	* self:     the slotted widget (default)
@@ -30,7 +31,16 @@ export type AiAction = Function | {
 	target? : string;
 	/* How to deal with existing content in the target.  Default replace*/
 	mode? : "replace" | "append" | "prepend";
+
+	handler? : never;
 };
+
+/* Actions for all prompt responses, unless otherwise set */
+const defaultActions : AiAction[] = [
+	{label: "apply", target: "self", mode: "replace"},
+	{label: "Insert before", target: "self", mode: "prepend"},
+	{label: "Insert after", target: "self", mode: "append"}
+];
 
 export const simplePrompts : AiPrompt[] = [
 	{id: 'aiassist.summarize', label: 'Summarize text'},
@@ -54,6 +64,7 @@ export const simplePrompts : AiPrompt[] = [
  *
  * @slot - The default slot where the target widget (e.g. et2-textarea, et2-vbox, iframe) is placed.
  * @slot trigger - Custom trigger element for the AI menu. Defaults to an AI assistant icon button.
+ * @slot actions - Additional actions to be shown in the response header
  *
  * @event et2-ai-start - Emitted when an AI process begins.
  * @event et2-ai-success - Emitted when the AI process completes successfully.
@@ -117,7 +128,9 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 	/* Flag for if the user has no access */
 	private noAiAssistant : boolean = true;
-	private ai;
+	/* AiAssistantController instance to manage the actual communication */
+	private readonly ai : AiAssistantController;
+	/* Watch children to keep our size up to date */
 	private targetResizeObserver : ResizeObserver;
 
 	constructor()
@@ -159,7 +172,6 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 		// Deal with dropdown positioning trouble due to how we're using it
 		const dropdown = this.shadowRoot?.querySelector('sl-dropdown') as any;
-		const trigger = this.querySelector("[slot='trigger']") ?? this.shadowRoot?.querySelector("slot[name='trigger']");
 		dropdown?.addEventListener('sl-after-show', () =>
 		{
 			requestAnimationFrame(() =>
@@ -300,12 +312,10 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 
 		// Prompt has an actual function to deal with it
-		if(typeof action == "function")
+		if(typeof action?.handler === "function")
 		{
-			return action.call(this, value);
+			return action.handler.call(this, value);
 		}
-
-		const actionTarget = action.target ? this._findApplyTarget(action) : target;
 
 		// Handle internally by setting value
 		// Prepend/append to existing value for string responses
@@ -316,22 +326,22 @@ export class Et2Ai extends Et2Widget(LitElement)
 			switch(action?.mode ?? "replace")
 			{
 				case "prepend":
-					actionValue = actionValue + (actionTarget.value ?? "");
+					actionValue = actionValue + "\n\n" + (target.value ?? "");
 					break;
 				case "append":
-					actionValue = (actionTarget.value ?? "") + actionValue;
+					actionValue = (target.value ?? "") + "\n\n" + actionValue;
 					break;
 			}
 		}
-		if(actionTarget)
+		if(target)
 		{
-			if(typeof actionTarget.setValue === 'function')
+			if(typeof target.setValue === 'function')
 			{
-				actionTarget.setValue(actionValue);
+				target.setValue(actionValue);
 			}
-			else if('value' in actionTarget)
+			else if('value' in target)
 			{
-				actionTarget.value = actionValue;
+				target.value = actionValue;
 			}
 		}
 	}
@@ -381,7 +391,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 */
 	protected _findSlottedTarget() : HTMLElement | null
 	{
-		const slot = this.shadowRoot?.querySelector('slot');
+		const slot : HTMLSlotElement = this.shadowRoot?.querySelector("slot:not([name])");
 		const nodes = slot?.assignedElements({flatten: true}) ?? [];
 		return (nodes[0] as HTMLElement) ?? null;
 	}
@@ -438,11 +448,9 @@ export class Et2Ai extends Et2Widget(LitElement)
 		tpl.innerHTML = value.trim();
 
 		// Look for actual element nodes, not just text
-		const hasElements = Array.from(tpl.content.childNodes).some(
+		return Array.from(tpl.content.childNodes).some(
 			node => node.nodeType === Node.ELEMENT_NODE
 		);
-
-		return hasElements;
 	}
 
 	/**
@@ -517,7 +525,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 * @return {boolean}
 	 * @protected
 	 */
-	protected _canApplyResult(target = this.resolveTarget(this.activePrompt.actions[0])) : boolean
+	protected _canApplyResult(target : HTMLElement = this.resolveTarget(this.activePrompt.actions[0])) : boolean
 	{
 		if(!target)
 		{
@@ -598,18 +606,19 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		const result = this.ai.result ?? '';
 		const isHtml = typeof result === 'string' && this._isHtmlContent(result);
-		const actions = this.activePrompt.actions || [{target: "self", mode: "replace"}];
+		const actions = this.activePrompt.actions || defaultActions;
 
 		return html`
             <sl-card part="result" class="et2-ai-result">
                 <span slot="header">${this.activePrompt?.label}</span>
                 <et2-hbox slot="header">
+                    <slot name="actions"></slot>
                     <sl-copy-button label="${this.egw().lang('Copy to clipboard')}" value=${result}></sl-copy-button>
-                <et2-button-icon
-                        name="close"
-                        noSubmit
-                        @click=${this.clearResult}>
-                </et2-button-icon>
+                    <et2-button-icon
+                            name="close"
+                            noSubmit
+                            @click=${this.clearResult}>
+                    </et2-button-icon>
                 </et2-hbox>
 
                 <div
@@ -617,10 +626,13 @@ export class Et2Ai extends Et2Widget(LitElement)
                         class="et2-ai-result-content ${isHtml ? 'html' : 'text'}"
                 >${isHtml
                       ? unsafeHTML(<string>result)
-                      : result.trim()
+                      : result.toString().trim()
                     }
                 </div>
-                ${map(actions, this._actionButtonTemplate)}
+                <et2-hbox slot="footer">
+                    ${map(actions, this._actionButtonTemplate)}
+                    <et2-button @click=${this.clearResult}>${this.egw().lang("cancel")}</et2-button>
+                </et2-hbox>
             </sl-card>
 		`;
 	}
@@ -631,13 +643,15 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			return nothing;
 		}
+
+		let label = this.egw().lang(action.label ?? "Apply");
+
 		return html`
-            <sl-button part="apply-button"
-                       slot="footer"
-                       @click=${(e) => this._applyResult(action)}
+            <et2-button part="apply-button"
+                        @click=${() => this._applyResult(action)}
             >
-                ${this.egw().lang("Apply")}
-            </sl-button>`
+                ${label}
+            </et2-button>`
 	}
 
 	/**
