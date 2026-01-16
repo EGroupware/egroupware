@@ -363,6 +363,11 @@ class Customfields extends Transformer
 				break;
 
 			case 'text':
+				if (!empty($field['rows']))
+				{
+					$widget->attrs['rows'] = $field['rows'];
+					$widget->attrs['type'] = 'et2-textarea';
+				}
 				break;
 			case 'passwd':
 				// Defaults for a customfield are different than a regular password field

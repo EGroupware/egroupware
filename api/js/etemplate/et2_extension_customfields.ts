@@ -452,6 +452,13 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 						wc.updateComplete.then(() =>
 						{
 							this.widgets[field_name] = wc;
+							// wrap textarea CFs with et2-ai
+							if (type === 'textarea')
+							{
+								const ai = <LitElement>loadWebComponent('et2-ai', {}, this);
+								wc.parentNode.insertBefore(ai, wc);
+								ai.appendChild(wc);
+							}
 						})
 					}
 				}
