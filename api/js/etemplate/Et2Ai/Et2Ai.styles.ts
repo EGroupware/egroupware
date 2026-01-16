@@ -3,6 +3,7 @@ import {css} from 'lit';
 export default css`
 	:host {
 		position: relative;
+		--aitools-color: var(--sl-color-blue-500);
 	}
 
 	.et2-ai {
@@ -36,6 +37,8 @@ export default css`
 		overflow: hidden;
 		top: 0;
 		z-index: var(--sl-z-index-dialog);
+		/* box-shadow only below, not on the sides to avoid weird bleed on the sides */
+		box-shadow: 0 1em 6px -6px hsla(240, 3.8%, 46.1%, 0.52);
 		--padding: var(--sl-spacing-small);
 
 		&::part(base) {
@@ -55,6 +58,10 @@ export default css`
 			flex: 1 1 auto;
 		}
 
+		et2-hbox[slot="header"] {
+			flex-grow: 0
+		}
+		
 		et2-button-icon[name="close"] {
 			margin-left: auto;
 			flex: 0 0;

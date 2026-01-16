@@ -6,6 +6,7 @@ import styles from "./Et2Ai.styles";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {Et2SelectLang} from "../Et2Select/Select/Et2SelectLang";
+import {map} from "lit/directives/map.js";
 
 // etemplate2 helper (globally available)
 declare const etemplate2 : {
@@ -16,22 +17,24 @@ export interface AiPrompt
 {
 	id : string;
 	label : string;
-	action? : Function | {
-		/* Et2 ID, CSS selector or keyword
-		*
-		* self:     the slotted widget (default)
-		* subject:  sibling summary/subject field
-		* label:    label/name field
-		*/
-		target? : string;
-		/* How to deal with existing content in the target.  Default replace*/
-		mode? : "replace" | "append" | "prepend";
-	};
+	actions? : AiAction[];
 }
+
+export type AiAction = Function | {
+	/* Et2 ID, CSS selector or keyword
+	*
+	* self:     the slotted widget (default)
+	* subject:  sibling summary/subject field
+	* label:    label/name field
+	*/
+	target? : string;
+	/* How to deal with existing content in the target.  Default replace*/
+	mode? : "replace" | "append" | "prepend";
+};
 
 export const simplePrompts : AiPrompt[] = [
 	{id: 'aiassist.summarize', label: 'Summarize text'},
-	{id: "aiassist.generate_subject", label: "Generate a subject", action: {target: "subject"}},
+	{id: "aiassist.generate_subject", label: "Generate a subject", actions: [{target: "subject"}]},
 	{id: 'aiassist.formal', label: 'Make more formal'},
 	{id: 'aiassist.grammar', label: 'Fix grammar & spelling'},
 	{id: 'aiassist.concise', label: 'Make concise'},
@@ -105,7 +108,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 	/* Use a custom target for applying the response */
 	@property({type: Function})
-	resolveTarget = (prompt? : AiPrompt) => this._findApplyTarget(prompt);
+	resolveTarget = (action? : AiAction, prompt? : AiPrompt) => this._findApplyTarget(action);
 
 	/* Current selected prompt */
 	@state() activePrompt : AiPrompt;
@@ -122,6 +125,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 		super();
 		this.clearResult = this.clearResult.bind(this);
 		this._promptTemplate = this._promptTemplate.bind(this);
+		this._actionButtonTemplate = this._actionButtonTemplate.bind(this);
+
 		this.ai = new AiAssistantController(this, this.endpoint);
 	}
 
@@ -180,13 +185,11 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 
 		const originalValue = this.getContent();
-		const target = this.resolveTarget(this.activePrompt);
 
 		this.dispatchEvent(new CustomEvent('et2-ai-start', {
 			detail: {
 				prompt: this.activePrompt,
-				originalValue,
-				target: target
+				originalValue
 			},
 			bubbles: true,
 			composed: true
@@ -200,8 +203,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 					this.dispatchEvent(new CustomEvent('et2-ai-success', {
 						detail: {
 							prompt: this.activePrompt,
-							result: this.ai.result,
-							target: target
+							result: this.ai.result
 						},
 						bubbles: true,
 						composed: true
@@ -213,8 +215,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 				this.dispatchEvent(new CustomEvent('et2-ai-error', {
 					detail: {
 						prompt: this.activePrompt,
-						error: this.ai.error,
-						target: target
+						error: this.ai.error
 					},
 					bubbles: true,
 					composed: true
@@ -225,8 +226,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 				this.dispatchEvent(new CustomEvent('et2-ai-stop', {
 					detail: {
 						prompt: this.activePrompt,
-						error: this.ai.error,
-						target: target
+						error: this.ai.error
 					},
 					bubbles: true,
 					composed: true
@@ -241,7 +241,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		const id = select.dom_id;
 		// @ts-ignore
 		this.shadowRoot.querySelector("sl-dropdown").open = false;
-		select.value = "";
+		(select as unknown as HTMLInputElement).value = "";
 
 		this.addEventListener("et2-ai-start", (e : CustomEvent) => {e.detail.prompt.id += "-" + lang}, {once: true});
 		this.addEventListener("et2-ai-stop", (e : CustomEvent) => {e.detail.prompt.id = id}, {once: true});
@@ -276,11 +276,10 @@ export class Et2Ai extends Et2Widget(LitElement)
 		this.targetResizeObserver.observe(target);
 	}
 
-	protected _applyResult()
+	protected _applyResult(action = this.activePrompt?.actions[0])
 	{
 		let value = this.ai.result;
-		const target = this.resolveTarget(this.activePrompt) as any;
-		const prompt = this.activePrompt;
+		const target = this.resolveTarget(action, this.activePrompt) as any;
 
 		const event = new CustomEvent('et2-ai-apply', {
 			detail: {
@@ -301,35 +300,38 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 
 		// Prompt has an actual function to deal with it
-		if(typeof prompt.action == "function")
+		if(typeof action == "function")
 		{
-			return prompt.action.call(this, value);
+			return action.call(this, value);
 		}
+
+		const actionTarget = action.target ? this._findApplyTarget(action) : target;
 
 		// Handle internally by setting value
 		// Prepend/append to existing value for string responses
-		if(typeof value == "string")
+		let actionValue = value;
+		if(typeof actionValue == "string")
 		{
-			value = value.trim();
-			switch(prompt.action?.mode ?? "replace")
+			actionValue = actionValue.trim();
+			switch(action?.mode ?? "replace")
 			{
 				case "prepend":
-					value = value + (target.value ?? "");
+					actionValue = actionValue + (actionTarget.value ?? "");
 					break;
 				case "append":
-					value = (target.value ?? "") + value;
+					actionValue = (actionTarget.value ?? "") + actionValue;
 					break;
 			}
 		}
-		if(target)
+		if(actionTarget)
 		{
-			if(typeof target.setValue === 'function')
+			if(typeof actionTarget.setValue === 'function')
 			{
-				target.setValue(value);
+				actionTarget.setValue(actionValue);
 			}
-			else if('value' in target)
+			else if('value' in actionTarget)
 			{
-				target.value = value;
+				actionTarget.value = actionValue;
 			}
 		}
 	}
@@ -345,10 +347,10 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 * @return {HTMLElement | null}
 	 * @protected
 	 */
-	protected _findApplyTarget(prompt? : AiPrompt) : HTMLElement | null
+	protected _findApplyTarget(action? : AiAction) : HTMLElement | null
 	{
-		// Target from prompt
-		const targetSpec = prompt?.action?.target;
+		const targetSpec = typeof action === 'object' ? action?.target : undefined;
+
 		if(targetSpec)
 		{
 			if(targetSpec === "self")
@@ -515,7 +517,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 * @return {boolean}
 	 * @protected
 	 */
-	protected _canApplyResult(target = this.resolveTarget(this.activePrompt)) : boolean
+	protected _canApplyResult(target = this.resolveTarget(this.activePrompt.actions[0])) : boolean
 	{
 		if(!target)
 		{
@@ -596,16 +598,19 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		const result = this.ai.result ?? '';
 		const isHtml = typeof result === 'string' && this._isHtmlContent(result);
+		const actions = this.activePrompt.actions || [{target: "self", mode: "replace"}];
 
 		return html`
             <sl-card part="result" class="et2-ai-result">
                 <span slot="header">${this.activePrompt?.label}</span>
+                <et2-hbox slot="header">
+                    <sl-copy-button label="${this.egw().lang('Copy to clipboard')}" value=${result}></sl-copy-button>
                 <et2-button-icon
-                        slot="header"
                         name="close"
                         noSubmit
                         @click=${this.clearResult}>
                 </et2-button-icon>
+                </et2-hbox>
 
                 <div
                         part="result-content"
@@ -615,17 +620,25 @@ export class Et2Ai extends Et2Widget(LitElement)
                       : result.trim()
                     }
                 </div>
-                ${this._canApplyResult() ? html`
-                    <sl-button part="apply-button"
-                        slot="footer"
-                        @click=${this._applyResult}
-                    >
-                    ${this.egw().lang("Apply")}
-                    </sl-button>` : nothing}
+                ${map(actions, this._actionButtonTemplate)}
             </sl-card>
 		`;
 	}
 
+	protected _actionButtonTemplate(action : AiAction) : TemplateResult | symbol
+	{
+		if(!this._canApplyResult(this.resolveTarget(action)))
+		{
+			return nothing;
+		}
+		return html`
+            <sl-button part="apply-button"
+                       slot="footer"
+                       @click=${(e) => this._applyResult(action)}
+            >
+                ${this.egw().lang("Apply")}
+            </sl-button>`
+	}
 
 	/**
 	 * Template for the error state
