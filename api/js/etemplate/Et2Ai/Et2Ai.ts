@@ -7,6 +7,8 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {Et2SelectLang} from "../Et2Select/Select/Et2SelectLang";
 import {map} from "lit/directives/map.js";
+import {et2_htmlarea} from "../et2_widget_htmlarea";
+import {classMap} from "lit/directives/class-map.js";
 
 // etemplate2 helper (globally available)
 declare const etemplate2 : {
@@ -18,6 +20,8 @@ export interface AiPrompt
 	id : string;
 	label : string;
 	actions? : AiAction[];
+	/* Nested prompts will be shown as sub-arrays */
+	children? : AiPrompt[];
 }
 
 export type AiAction = { label? : string, handler : Function, target? : never, mode? : never } | {
@@ -49,6 +53,12 @@ export const simplePrompts : AiPrompt[] = [
 	{id: 'aiassist.grammar', label: 'Fix grammar & spelling'},
 	{id: 'aiassist.concise', label: 'Make concise'},
 	{id: 'aiassist.translate', label: "Translate"}
+];
+
+export const generatePrompts : AiPrompt[] = [
+	{id: "aiassist.generate_reply", label: "Professional reply"},
+	{id: "aiassist.meeting_followup", label: "Meeting follow-up"},
+	{id: "aiassist.thank_you", label: "Thank you note"}
 ];
 
 /**
@@ -132,6 +142,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 	private readonly ai : AiAssistantController;
 	/* Watch children to keep our size up to date */
 	private targetResizeObserver : ResizeObserver;
+	/* HTMLArea needs special handling */
+	private _htmlAreaTarget : et2_htmlarea;
 
 	constructor()
 	{
@@ -181,6 +193,19 @@ export class Et2Ai extends Et2Widget(LitElement)
 		});
 	}
 
+	/**
+	 * Overridden to deal with grabbing legacy HTML Editor before it initializes
+	 * @param {Promise<any>[]} promises
+	 * @protected
+	 */
+	protected loadingFinished(promises : Promise<any>[])
+	{
+		if(this.getChildren()[0] instanceof et2_htmlarea)
+		{
+			this._adoptHTMLAreaTarget(<et2_htmlarea>this.getChildren()[0]);
+		}
+		super.loadingFinished(promises);
+	}
 
 	/**
 	 * User chose a prompt from the list
@@ -190,7 +215,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	protected handlePromptSelect(event : CustomEvent)
 	{
 		const id = event.detail.item.value as string;
-		this.activePrompt = this.prompts.find(p => p.id === id);
+		this.activePrompt = this._findPrompt(id, this.prompts);
 		if(!this.activePrompt)
 		{
 			return;
@@ -264,16 +289,22 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}));
 	}
 
-	protected handleSlotChange()
+	protected async handleSlotChange()
 	{
 		this.targetResizeObserver?.disconnect();
 
-		const target = this._findSlottedTarget();
+		let target = this._findSlottedTarget();
 		if(!target)
 		{
 			return;
 		}
-
+		if(this.getChildren()[0] instanceof et2_htmlarea)
+		{
+			target = await this.getChildren()[0].tinymce.then((e) =>
+			{
+				return e[0].editorContainer;
+			});
+		}
 		this.targetResizeObserver = new ResizeObserver(entries =>
 		{
 			for(const entry of entries)
@@ -323,21 +354,22 @@ export class Et2Ai extends Et2Widget(LitElement)
 		if(typeof actionValue == "string")
 		{
 			actionValue = actionValue.trim();
+			const currentValue = (typeof target.getValue == "function" ? target.getValue() : target.value) ?? ""
 			switch(action?.mode ?? "replace")
 			{
 				case "prepend":
-					actionValue = actionValue + "\n\n" + (target.value ?? "");
+					actionValue = actionValue + "\n\n" + (currentValue ?? "");
 					break;
 				case "append":
-					actionValue = (target.value ?? "") + "\n\n" + actionValue;
+					actionValue = (currentValue ?? "") + "\n\n" + actionValue;
 					break;
 			}
 		}
 		if(target)
 		{
-			if(typeof target.setValue === 'function')
+			if(typeof target.set_value === 'function')
 			{
-				target.setValue(actionValue);
+				target.set_value(actionValue);
 			}
 			else if('value' in target)
 			{
@@ -350,6 +382,33 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		this.activePrompt = null;
 		this.ai.status = "idle";
+	}
+
+	/**
+	 * Recursively find a prompt by ID
+	 *
+	 * @param {string} id
+	 * @param {AiPrompt[]} prompts
+	 * @protected
+	 */
+	protected _findPrompt(id : string, prompts : AiPrompt[]) : AiPrompt | null
+	{
+		for(const prompt of prompts)
+		{
+			if(prompt.id === id)
+			{
+				return prompt;
+			}
+			if(prompt.children?.length)
+			{
+				const found = this._findPrompt(id, prompt.children);
+				if(found)
+				{
+					return found;
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -391,6 +450,11 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 */
 	protected _findSlottedTarget() : HTMLElement | null
 	{
+		if(this._htmlAreaTarget)
+		{
+			// @ts-ignore
+			return this._htmlAreaTarget;
+		}
 		const slot : HTMLSlotElement = this.shadowRoot?.querySelector("slot:not([name])");
 		const nodes = slot?.assignedElements({flatten: true}) ?? [];
 		return (nodes[0] as HTMLElement) ?? null;
@@ -421,6 +485,61 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 
 		return null;
+	}
+
+	/**
+	 * Adopt an HTMLArea element and add Ai bits to it
+	 */
+	protected _adoptHTMLAreaTarget(target : et2_htmlarea)
+	{
+		this._htmlAreaTarget = target;
+
+		// Add generation prompts
+		if(this.prompts == simplePrompts)
+		{
+			this.prompts.push({label: this.egw().lang("Generate"), children: generatePrompts});
+		}
+		const actions = this.prompts.map(p => this._promptToTinyMenu(p));
+		// @ts-ignore
+		const originalExtended = target._extendedSettings.bind(target);
+		const setup = (editor) =>
+		{
+			// @ts-ignore
+			const original = originalExtended();
+			typeof original['setup'] == "function" && original['setup'](editor);
+
+			// Add prompts as menu actions
+			editor.ui.registry.addMenuButton('aitoolsPrompts', {
+				tooltip: this.egw().lang('AI Tools'),
+				icon: 'aitools',
+				fetch: (callback) =>
+				{
+					callback(actions);
+				}
+			});
+		};
+		// @ts-ignore monkey patching with no restore
+		target._extendedSettings = () =>
+		{
+			return Object.assign(originalExtended(), {
+				height: "100%",
+				setup: setup
+			});
+		}
+	}
+
+	protected _promptToTinyMenu(prompt : AiPrompt)
+	{
+		const menuItem = {
+			type: (typeof prompt.children == "undefined" ? "menuitem" : "nestedmenuitem"),
+			text: this.egw().lang(prompt.label),
+			onAction: () => this.handlePromptSelect(new CustomEvent("select", {detail: {item: {value: prompt.id}}}))
+		};
+		if(typeof prompt.children != "undefined")
+		{
+			menuItem["getSubmenuItems"] = () => prompt.children.map(p => this._promptToTinyMenu(p));
+		}
+		return menuItem;
 	}
 
 	/**
@@ -674,17 +793,22 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 	protected _promptTemplate(prompt : AiPrompt) : TemplateResult
 	{
+		let label : string | TemplateResult = this.egw().lang(prompt.label);
 		if(prompt.id == "aiassist.translate")
 		{
 			return html`
                 <et2-select-lang id=${prompt.id}
-                                 emptyLabel=${this.egw().lang(prompt.label)}
+                                 emptyLabel=${label}
                                  @change=${this.handleLangSelect}
                 ></et2-select-lang>
 			`;
 		}
+		if(!prompt.id && prompt.children)
+		{
+			label = html`${label}${map(prompt.children, this._promptTemplate)}`;
+		}
 		return html`
-            <sl-menu-item value=${prompt.id} part="menu-item">${this.egw().lang(prompt.label)}</sl-menu-item>
+            <sl-menu-item value=${prompt.id} part="menu-item">${label}</sl-menu-item>
 		`;
 	}
 
@@ -698,7 +822,13 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 
 		return html`
-            <div class="et2-ai form-control" part="base" style="--max-result-height: ${this.maxResultHeight}px;">
+            <div class=${classMap({
+                "et2-ai": true,
+                "et2-ai--has-html-target": this._htmlAreaTarget !== undefined,
+                "form-control": true
+            })}
+                 part="base" style="--max-result-height: ${this.maxResultHeight}px;"
+            >
                 ${this._renderStatus()}
                 <slot></slot>
                 <sl-dropdown class="et2-ai-dropdown" part="dropdown" placement="bottom-end" hoist no-flip

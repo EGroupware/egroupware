@@ -92,4 +92,22 @@ export default css`
 			left: calc(-0.5 * var(--sl-spacing-2x-large));
 		}
 	}
+
+	/* Special stuff for when we wrap an htmlarea */
+
+	.et2-ai--has-html-target {
+		::slotted(.tox) {
+			height: 100%;
+		}
+
+		/* We hide the normal dropdown, activate it through toolbar */
+
+		.et2-ai-dropdown {
+			display: none;
+		}
+
+		sl-card, sl-alert {
+			left: 0px; /* Extra space not needed for html target*/
+		}
+	}
 `;
