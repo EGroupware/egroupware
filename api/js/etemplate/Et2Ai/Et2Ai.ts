@@ -5,10 +5,10 @@ import {AiAssistantController} from "./AiAssistantController";
 import styles from "./Et2Ai.styles";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
-import {Et2SelectLang} from "../Et2Select/Select/Et2SelectLang";
 import {map} from "lit/directives/map.js";
 import {et2_htmlarea} from "../et2_widget_htmlarea";
 import {classMap} from "lit/directives/class-map.js";
+import {Et2SelectWidgets, StaticOptions} from "../Et2Select/StaticOptions";
 
 // etemplate2 helper (globally available)
 declare const etemplate2 : {
@@ -52,7 +52,7 @@ export const simplePrompts : AiPrompt[] = [
 	{id: 'aiassist.formal', label: 'Make more formal'},
 	{id: 'aiassist.grammar', label: 'Fix grammar & spelling'},
 	{id: 'aiassist.concise', label: 'Make concise'},
-	{id: 'aiassist.translate', label: "Translate"}
+	{id: 'aiassist.translate', label: "Translate", children: []}
 ];
 
 export const generatePrompts : AiPrompt[] = [
@@ -164,6 +164,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 			// Specific attributes override global
 			Object.assign(attrs, global_data, attrs);
 		}
+		// Add translation languages
+		this._addTranslations();
 		super.transformAttributes(attrs);
 	}
 
@@ -208,6 +210,38 @@ export class Et2Ai extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Add translation options from preferences
+	 *
+	 * @return {Promise<void>}
+	 * @private
+	 */
+	private async _addTranslations()
+	{
+		const translation = this._findPrompt("aiassist.translate", this.prompts);
+		if(translation.children.length)
+		{
+			return;
+		}
+		// Get languages without duplicates
+		const languages : string[] = [...new Set([
+			<string>this.egw().preference("lang", "common"),
+			...((<string>this.egw().preference("languages", "aitools")).split(",") || ["en", "de", "fr", "es-es", "it"])
+		])];
+		// Need the language names for labels, but that might take a bit
+		const labels = await StaticOptions.lang((this as unknown as Et2SelectWidgets), []);
+		if(translation.children.length == 0)
+		{
+			languages.forEach(lang =>
+			{
+				translation.children.push({
+					id: `${translation.id}-${lang}`,
+					label: (labels.find(o => o.value == lang)?.label ?? lang)
+				});
+			});
+		}
+	}
+
+	/**
 	 * User chose a prompt from the list
 	 *
 	 * @param event
@@ -216,7 +250,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		const id = event.detail.item.value as string;
 		this.activePrompt = this._findPrompt(id, this.prompts);
-		if(!this.activePrompt)
+		// No action on parents, just leaves
+		if(!this.activePrompt || this.activePrompt.children?.length)
 		{
 			return;
 		}
@@ -269,24 +304,6 @@ export class Et2Ai extends Et2Widget(LitElement)
 					composed: true
 				}));
 			});
-	}
-
-	protected handleLangSelect(event : CustomEvent)
-	{
-		const select : Et2SelectLang = event.target as unknown as Et2SelectLang;
-		const lang = select.value;
-		const id = select.dom_id;
-		// @ts-ignore
-		this.shadowRoot.querySelector("sl-dropdown").open = false;
-		(select as unknown as HTMLInputElement).value = "";
-
-		this.addEventListener("et2-ai-start", (e : CustomEvent) => {e.detail.prompt.id += "-" + lang}, {once: true});
-		this.addEventListener("et2-ai-stop", (e : CustomEvent) => {e.detail.prompt.id = id}, {once: true});
-		this.handlePromptSelect(new CustomEvent('select', {
-			detail: {
-				item: {value: id}
-			}
-		}));
 	}
 
 	protected async handleSlotChange()
@@ -497,9 +514,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 		// Add generation prompts
 		if(this.prompts == simplePrompts)
 		{
-			this.prompts.push({label: this.egw().lang("Generate"), children: generatePrompts});
+			this.prompts.push({id: 'generate', label: this.egw().lang("Generate"), children: generatePrompts});
 		}
-		const actions = this.prompts.map(p => this._promptToTinyMenu(p));
 		// @ts-ignore
 		const originalExtended = target._extendedSettings.bind(target);
 		const setup = (editor) =>
@@ -517,7 +533,11 @@ export class Et2Ai extends Et2Widget(LitElement)
 				icon: 'aitools',
 				fetch: (callback) =>
 				{
-					callback(actions);
+					// Make sure we have translations in
+					this._addTranslations().then(() =>
+					{
+						callback(this.prompts.map(p => this._promptToTinyMenu(p)));
+					})
 				}
 			});
 		};
@@ -797,21 +817,19 @@ export class Et2Ai extends Et2Widget(LitElement)
 	protected _promptTemplate(prompt : AiPrompt) : TemplateResult
 	{
 		let label : string | TemplateResult = this.egw().lang(prompt.label);
-		if(prompt.id == "aiassist.translate")
+		if(prompt.children)
 		{
-			return html`
-                <et2-select-lang id=${prompt.id}
-                                 emptyLabel=${label}
-                                 @change=${this.handleLangSelect}
-                ></et2-select-lang>
-			`;
-		}
-		if(!prompt.id && prompt.children)
-		{
-			label = html`${label}${map(prompt.children, this._promptTemplate)}`;
+			label = html`${label}
+            <sl-menu slot="submenu">
+                ${map(prompt.children, this._promptTemplate)}
+            </sl-menu>`;
 		}
 		return html`
-            <sl-menu-item value=${prompt.id} part="menu-item">${label}</sl-menu-item>
+            <sl-menu-item
+                    value=${prompt.id}
+                    part="menu-item"
+            >${label}
+            </sl-menu-item>
 		`;
 	}
 
