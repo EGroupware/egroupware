@@ -1110,7 +1110,7 @@ export class etemplate2
 					clearTimeout(timeout_id);
 					if(warning_message)
 					{
-						warning_message.close();
+						warning_message.then((message) => message.close());
 					}
 				});
 			}
