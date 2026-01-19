@@ -504,10 +504,13 @@ export class Et2Ai extends Et2Widget(LitElement)
 		const originalExtended = target._extendedSettings.bind(target);
 		const setup = (editor) =>
 		{
+			// Run original _extendedSettings()
 			// @ts-ignore
 			const original = originalExtended();
 			typeof original['setup'] == "function" && original['setup'](editor);
 
+			// See https://www.tiny.cloud/docs/tinymce/latest/custom-toolbarbuttons/
+			editor.ui.registry.addIcon("aitools", "<et2-image src='aitools/navbar'></et2-image>");
 			// Add prompts as menu actions
 			editor.ui.registry.addMenuButton('aitoolsPrompts', {
 				tooltip: this.egw().lang('AI Tools'),

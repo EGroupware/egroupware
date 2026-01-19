@@ -25,7 +25,6 @@ import "../../../vendor/tinymce/tinymce/tinymce.min.js";
 import {etemplate2} from "./etemplate2";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2VfsSelectDialog} from "./Et2Vfs/Et2VfsSelectDialog";
-import {AIToolsApp} from "../../../aitools/js/app";
 
 /**
  * @augments et2_inputWidget
@@ -493,24 +492,6 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				break;
 			default:
 				this.mode = '';
-		}
-		if(this.egw().app('aitools') && this.options.endpoint)
-		{
-			settings['setup'] = (editor) =>
-			{
-				// See https://www.tiny.cloud/docs/tinymce/latest/custom-toolbarbuttons/
-				editor.ui.registry.addIcon("aitools", "<et2-image src='aitools/navbar'></et2-image>");
-				editor.ui.registry.addMenuButton('aitoolsPrompts', {
-					tooltip: this.egw().lang('AI Tools'),
-					icon: 'aitools',
-					fetch: (callback) =>
-					{
-						const aitools = new AIToolsApp('aitools', window);
-						aitools.egw = this.egw();	// otherwise we won't get the necessary translations
-						callback(aitools.getTextareaPromptList(this));
-					}
-				});
-			}
 		}
 
 		// take rte_toolbar into account if no mode restrictly set from template
