@@ -1919,42 +1919,49 @@ abstract class Merge
 		{
 			if(isset($cfs[$field]))
 			{
-				if(in_array($cfs[$field]['type'], array_keys($GLOBALS['egw_info']['apps'])))
+				// Select-account can be multiple
+				$is_multiple = str_starts_with($cfs[$field]['type'], 'select') && (int)$cfs[$field]['rows'] > 1;
+				$replaced = [];
+				foreach($is_multiple ? explode(',', $values['#' . $field]) : [$values['#' . $field]] as $value)
 				{
-					$field_app = $cfs[$field]['type'];
-				}
-				else
-				{
-					if($cfs[$field]['type'] == 'api-accounts' || $cfs[$field]['type'] == 'select-account')
+					if(in_array($cfs[$field]['type'], array_keys($GLOBALS['egw_info']['apps'])))
 					{
-						// Special case for api-accounts -> contact
-						$field_app = 'addressbook';
-						$account = $GLOBALS['egw']->accounts->read($values['#' . $field]);
-						$app_replacements[$field] = $this->contact_replacements($account['person_id']);
+						$field_app = $cfs[$field]['type'];
 					}
 					else
 					{
-						if(($list = explode('-', $cfs[$field]['type'])) && in_array($list[0], array_keys($GLOBALS['egw_info']['apps'])))
+						if($cfs[$field]['type'] == 'api-accounts' || $cfs[$field]['type'] == 'select-account')
 						{
-							// Sub-type - use app
-							$field_app = $list[0];
+							// Special case for api-accounts -> contact
+							$field_app = 'addressbook';
+							$account = $GLOBALS['egw']->accounts->read($value);
+							$app_replacements[$field] = $this->contact_replacements($account['person_id']);
 						}
 						else
 						{
-							continue;
+							if(($list = explode('-', $cfs[$field]['type'])) && in_array($list[0], array_keys($GLOBALS['egw_info']['apps'])))
+							{
+								// Sub-type - use app
+								$field_app = $list[0];
+							}
+							else
+							{
+								continue;
+							}
 						}
 					}
-				}
 
-				// Get replacements for that application
-				if(!isset($app_replacements[$field]))
-				{
-					// If we send the real content it can result in infinite loop of lookups
-					// so we send only the used fields
-					$content = $expand_sub_cfs[$field] ?? $matches[0][$index];
-					$app_replacements[$field] = $this->get_app_replacements($field_app, $values['#' . $field], $content);
+					// Get replacements for that application
+					if(!isset($app_replacements[$field]))
+					{
+						// If we send the real content it can result in infinite loop of lookups
+						// so we send only the used fields
+						$content = $expand_sub_cfs[$field] ?? $matches[0][$index];
+						$app_replacements[$field] = $this->get_app_replacements($field_app, $value, $content);
+					}
+					$replaced[] = $app_replacements[$field]['$$' . $sub[$index] . '$$'] ?? '';
 				}
-				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$' . $sub[$index] . '$$'] ?? '';
+				$replacements[$placeholders[$index]] = join(', ', $replaced) ?? '';
 			}
 			else
 			{
