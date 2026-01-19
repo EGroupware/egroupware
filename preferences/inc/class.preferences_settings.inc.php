@@ -102,7 +102,7 @@ class preferences_settings
 						$attribute = $type == 'group' ? 'user' : $type;
 
 						$require_reload = self::fetchRequireToReload($appname, $type);
-						$old_values = array_intersect_key($GLOBALS['egw_info']['user']['preferences'][$appname], array_flip($require_reload));
+					$old_values = array_intersect_key((array)$GLOBALS['egw_info']['user']['preferences'][$appname], array_flip($require_reload));
 
 						if (!($msg=$this->process_array($GLOBALS['egw']->preferences->$attribute, $prefs, $content['types'], $appname, $attribute, $content)))
 						{
