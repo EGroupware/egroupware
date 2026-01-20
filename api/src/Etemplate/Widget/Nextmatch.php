@@ -1328,7 +1328,7 @@ class Nextmatch extends Etemplate\Widget
 		{
 			// do NOT copy the whole col_filter, as it might have integer keys passed into SQL queries verbatim
 			// --> filter out all integer keys
-			if ($attr === 'col_filter')
+			if ($attr === 'col_filter' || $attr === 'advanced_search' || $attr === 'search' && is_array($value[$attr] ?? null))
 			{
 				if (!isset($validated[$form_name][$attr])) $validated[$form_name][$attr] = [];
 				// and use += to not overwrite regular validated filters

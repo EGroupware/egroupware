@@ -273,7 +273,7 @@ class addressbook_ui extends addressbook_bo
 				'favorites'      => true,
 				'filter_aria_label' => 'Addressbook',
 				'filter2_aria_label' => 'distribution lists',
-				'extra_attributes' => ['grouped_view'],
+				'extra_attributes' => ['grouped_view', 'advanced_search'],
 			);
 
 			// use the state of the last session stored in the user prefs
