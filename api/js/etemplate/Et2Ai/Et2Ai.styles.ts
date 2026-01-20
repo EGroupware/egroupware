@@ -2,13 +2,14 @@ import {css} from 'lit';
 
 export default css`
 	:host {
-		position: relative;
 		--aitools-color: var(--sl-color-blue-500);
 	}
 
 	.et2-ai {
 		width: 100%;
 		height: 100%;
+		display: block;
+		position: relative;
 		--max-result-height: 3em;
 
 		&:hover .et2-ai-dropdown {
