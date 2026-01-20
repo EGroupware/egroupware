@@ -224,8 +224,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 		// Get languages without duplicates
 		const languages : string[] = [...new Set([
-			<string>this.egw().preference("lang", "common"),
-			...((<string>this.egw().preference("languages", "aitools")).split(",") || ["en", "de", "fr", "es-es", "it"])
+			<string>this.egw().preference("lang", "common") ?? "en",
+			...((<string>this.egw().preference("languages", "aitools") ?? "").split(",") || ["en", "de", "fr", "es-es", "it"])
 		])];
 		// Need the language names for labels, but that might take a bit
 		const labels = await StaticOptions.lang((this as unknown as Et2SelectWidgets), []);
