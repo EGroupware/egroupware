@@ -446,8 +446,14 @@ class importexport_export_ui {
 	 */
 	public function download($_tmpfname = '') {
 		$tmpfname = $_tmpfname ? $_tmpfname : $_GET['_filename'];
-		$tmpfname = $GLOBALS['egw_info']['server']['temp_dir'] .'/'. $tmpfname;
-		if (!is_readable($tmpfname)) die();
+		$tmpfname = $GLOBALS['egw_info']['server']['temp_dir'] . DIRECTORY_SEPARATOR . $tmpfname;
+
+		// windows adds ".tmp" file suffix; so check for that too
+		if (realpath($tmpfname) === FALSE) {
+			$tmpfname = realpath($tmpfname . ".tmp");
+		}
+
+		if ($tmpfname === FALSE || !is_readable($tmpfname)) die();
 
 		$appname = $_GET['_appname'];
 		$nicefname = $_GET['filename'] ? $_GET['filename'] : 'egw_export_'.$appname.'-'.date('Y-m-d');
