@@ -2390,10 +2390,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		}
 		else
 		{
-			var height = jQuery(this.getInstanceManager().DOMContainer).parent().innerHeight();
-
-			// Allow for toolbar
-			height -= jQuery('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
+			var height = jQuery(this.getInstanceManager().DOMContainer).innerHeight();
 		}
 
 		this.options.height = Math.floor(height / rowCount);
@@ -2403,8 +2400,17 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 
 		// Calculate how much space is needed, and
 		// if too small be bigger
-		var needed = ((this.day_end - this.day_start) /
-			(this.options.granularity / 60) * parseInt(this.div.css('line-height'))) +
+		let lineHeight = parseInt(this.div.css("line-height"));
+		if(isNaN(lineHeight))
+		{
+			const tester = document.createElement("span");
+			tester.style = "line-height:inherit;min-height:1em;display:none;";
+			this.div.append(tester);
+			lineHeight = parseInt(jQuery(tester).height());
+			tester.remove();
+		}
+		const needed = ((this.day_end - this.day_start) /
+				(this.options.granularity / 60) * lineHeight) +
 			this.gridHeader.outerHeight();
 		var too_small = needed > this.options.height && this.options.granularity != 0;
 
