@@ -45,17 +45,37 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 			...super.styles,
 			shoelace,
 			cropperStyles,
+			//set absolute position on edit icons so it does not interfere with flex positioning of initials
 			css`
-				:host::part(edit) {
-					visibility: hidden;
-					border-radius: 50%;
-					margin: -4px;
-					z-index: 1;
-				}
-				
-				:host(:hover)::part(edit) {
-					visibility: visible;
-				}
+                [part='edit'] {
+                    visibility: hidden;
+                    border-radius: 50%;
+                    margin: -4px;
+                    z-index: 1;
+                    color: var(--sl-color-neutral-950)
+                }
+
+                div[part='initials'] {
+                    & ~ .edit {
+                        position: absolute;
+                        right: 2rem;
+                    }
+
+                    & ~ .delete {
+                        position: absolute;
+                        left: 2rem;
+                    }
+                }
+
+                :host(:hover)::part(edit) {
+                    visibility: visible;
+                }
+
+                /* if we fall back to an sl-icon give it a visible color*/
+
+                sl-icon {
+                    color: var(--sl-color-neutral-950)
+                }
 			`
 		];
 	}
@@ -265,10 +285,12 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 		this._editBtn = document.createElement('et2-button-icon');
 		this._editBtn.setAttribute('image', 'pencil');
 		this._editBtn.setAttribute('part', 'edit');
+		this._editBtn.classList.add('edit');
 		this._editBtn.noSubmit = true;
 		this._delBtn = <Et2Button>document.createElement('et2-button-icon');
 		this._delBtn.setAttribute('image', 'delete');
 		this._delBtn.setAttribute('part', 'edit');
+		this._delBtn.classList.add('delete');
 		this._delBtn.noSubmit = true;
 		this._baseNode.append(this._editBtn);
 		this._baseNode.append(this._delBtn);

@@ -340,7 +340,7 @@
                 <row class="dialogHeader">
                     <et2-box  align="center">
                         <et2-hbox  disabled="@hidebuttons">
-                            <et2-avatar id="jpegphoto" image="$cont[photo]" contactId="$cont[id]" crop="false" editable="true"></et2-avatar>
+                            <et2-lavatar id="jpegphoto" image="$cont[photo]" contactId="$cont[id]" crop="false" editable="true"></et2-lavatar>
                         </et2-hbox>
                     </et2-box>
                     <et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" placeholder="Name"></et2-textbox>
