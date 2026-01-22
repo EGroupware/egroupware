@@ -194,8 +194,7 @@ class filemanager_ui
 				'onExecute'       => 'javaScript:app.filemanager.force_download',
 				'disableClass'    => 'isDir',
 				'enabled'         => 'javaScript:app.filemanager.is_multiple_allowed',
-				'shortcut'        => array('ctrl'    => true, 'shift' => true, 'keyCode' => 83,
-										   'caption' => 'Ctrl + Shift + S'),
+				'shortcut'        => Etemplate\KeyManager::shortcut(Etemplate\KeyManager::S,true,true),
 			),
 			'saveaszip' => array(
 				'caption'         => lang('Save as ZIP'),
@@ -203,8 +202,7 @@ class filemanager_ui
 				'allowOnMultiple' => true,
 				'icon'            => 'save_zip',
 				'postSubmit'      => true,
-				'shortcut'        => array('ctrl'    => true, 'shift' => true, 'keyCode' => 90,
-										   'caption' => 'Ctrl + Shift + Z'),
+				'shortcut'        => Etemplate\KeyManager::shortcut(Etemplate\KeyManager::Z,true,true),
 			),
 			'egw_paste' => array(
 				'enabled' => false,

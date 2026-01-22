@@ -363,7 +363,7 @@ class admin_accesslog
 			'shortcut' => array(
 				'keyCode'	=>	65, // A
 				'ctrl'		=>	true,
-				'caption'	=> lang('Ctrl').'+A'
+				'caption'	=> Etemplate\KeyManager::shortcut_caption(Etemplate\KeyManager::A,false,true)
 			),
 			'group' => $group++,
 		);

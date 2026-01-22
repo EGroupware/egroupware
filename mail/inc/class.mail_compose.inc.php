@@ -122,7 +122,7 @@ class mail_compose
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose.submitAction',
 				'hint' => 'Send',
-				'shortcut' => array('ctrl' => true, 'keyCode' => 83, 'caption' => 'Ctrl + S'),
+				'shortcut' => Etemplate\KeyManager::shortcut(Etemplate\KeyManager::S,false,true),
 				'toolbarDefault' => true
 			),
 			'button[saveAsDraft]' => array(

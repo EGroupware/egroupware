@@ -1021,11 +1021,7 @@ class Nextmatch extends Etemplate\Widget
 					//'checkbox' => true,
 					'hint' => 'Select all entries',
 					'enabled' => true,
-					'shortcut' => array(
-						'keyCode'	=>	65, // A
-						'ctrl'		=>	true,
-						'caption'	=> lang('Ctrl').'+A'
-					),
+					'shortcut' => Etemplate\KeyManager::shortcut(Etemplate\KeyManager::A,false,true),
 					'group' => $action['group'],
 				);
 				$action_links[] = $prefix.'select_all';

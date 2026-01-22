@@ -1232,7 +1232,7 @@ class mail_ui
 						'icon' => 'mail_replyall',
 						'onExecute' => 'javaScript:app.mail.mail_compose',
 						'allowOnMultiple' => false,
-						'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 65, 'caption' => 'Ctrl + Shift + A'),
+						'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 65, 'caption' => KeyManager::shortcut_caption(KeyManager::A,true,true)),
 						'toolbarDefault' => true,
 					],
 					'reply_attachments' => [
@@ -1255,7 +1255,7 @@ class mail_ui
 						'hint' => 'forward inline',
 						'onExecute' => 'javaScript:app.mail.mail_compose',
 						'allowOnMultiple' => false,
-						'shortcut' => array('ctrl' => true, 'keyCode' => 70, 'caption' => 'Ctrl + F'),
+						'shortcut' => array('ctrl' => true, 'keyCode' => 70, 'caption' => KeyManager::shortcut_caption(KeyManager::F,false,true)),
 						'toolbarDefault' => true
 					),
 					'forwardasattach' => array(
@@ -1283,7 +1283,7 @@ class mail_ui
 				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.modifyMessageSubjectDialog',
 				'allowOnMultiple' => false,
-				'shortcut' =>  array('ctrl' => true, 'keyCode' => 77, 'caption' => 'Ctrl + M'),
+				'shortcut' =>  array('ctrl' => true, 'keyCode' => 77, 'caption' => KeyManager::shortcut_caption(KeyManager::M,false,true)),
 			)
 		);
 		$macounter=0;
