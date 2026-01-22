@@ -510,6 +510,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	protected _adoptHTMLAreaTarget(target : et2_htmlarea)
 	{
 		this._htmlAreaTarget = target;
+		this.classList.add("et2-ai--has-html-target");
 
 		// Add generation prompts
 		if(this.prompts == simplePrompts)

@@ -96,11 +96,11 @@ export default css`
 
 	/* Special stuff for when we wrap an htmlarea */
 
-	.et2-ai--has-html-target {
-		::slotted(.tox) {
-			height: 100%;
-		}
+	.tox, ::slotted(.tox) {
+		height: 100%;
+	}
 
+	.et2-ai--has-html-target {
 		/* We hide the normal dropdown, activate it through toolbar */
 
 		.et2-ai-dropdown {
