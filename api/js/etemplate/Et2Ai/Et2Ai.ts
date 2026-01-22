@@ -511,7 +511,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		// Turn off autosizing
 		target.options.resize_ratio = "0";
-		target.options.height = "100%";
+		target.options.height = "";
 
 		// If et2_htmlarea is in ascii mode, don't do anything else
 		if((target?.mode ?? target.options.mode) == "ascii")

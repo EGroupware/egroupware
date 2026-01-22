@@ -8,8 +8,8 @@ export default css`
 	.et2-ai {
 		width: 100%;
 		height: 100%;
-		display: block;
 		position: relative;
+		align-items: stretch;
 		--max-result-height: 3em;
 
 		&:hover .et2-ai-dropdown {
