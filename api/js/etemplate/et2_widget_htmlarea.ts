@@ -325,7 +325,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			{
 				const activeElement = document.activeElement;
 				self.editor.formatter.toggle(rte_formatblock);
-				jQuery(self.editor.editorContainer).height(self.options.height);
+				jQuery(self.editor.editorContainer).height(settings.height ?? self.options.height);
 				jQuery(self.editor.iframeElement.contentWindow.document).on('dragenter', function(){
 					if (jQuery('#dragover-tinymce').length < 1) jQuery("<style id='dragover-tinymce'>.dragover:after {height:calc(100% - "+jQuery(this).height()+"px) !important;}</style>").appendTo('head');
 				});
@@ -503,11 +503,6 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				let r = new RegExp(a);
 				settings['toolbar'] = settings['toolbar'].replace(r, '');
 			});
-		}
-		// TODO: This probably goes above the rte_toolbar check
-		if(this.egw().app("aitools") && this.options.endpoint)
-		{
-			settings['toolbar'] += " | aitoolsPrompts";
 		}
 		return settings;
 	}

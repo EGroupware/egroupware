@@ -97,7 +97,7 @@ export default css`
 	/* Special stuff for when we wrap an htmlarea */
 
 	.tox, ::slotted(.tox) {
-		height: 100%;
+		height: 100% !important;
 	}
 
 	.et2-ai--has-html-target {

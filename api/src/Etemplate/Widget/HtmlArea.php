@@ -145,12 +145,9 @@ class HtmlArea extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
-		if (Ai::enabled())
-		{
-			self::setElementAttribute($form_name, 'endpoint', Ai::class.'::ajaxApi');
-
-			Api\Translation::add_app(Ai::PROVIDER_APP);
-		}
+		// Blindly turn on AI tools without regard to parent node
+		$ai = new Ai('<et2-ai>');
+		$ai->beforeSendToClient($cname);
 	}
 
 	/**

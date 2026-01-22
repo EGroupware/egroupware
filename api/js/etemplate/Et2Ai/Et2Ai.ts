@@ -106,7 +106,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	}
 
 	@property({attribute: false})
-	prompts : AiPrompt[] = simplePrompts;
+	prompts : AiPrompt[] = Object.assign([], simplePrompts);
 
 	/* Specify a custom server endpoint for AI queries */
 	@property({attribute: false, type: String})
@@ -315,9 +315,9 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		if(this.getChildren()[0] instanceof et2_htmlarea)
+		if(this._htmlAreaTarget)
 		{
-			target = await this.getChildren()[0].tinymce.then((e) =>
+			target = await this._htmlAreaTarget.tinymce.then((e) =>
 			{
 				return e[0].editorContainer;
 			});
@@ -509,11 +509,21 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 */
 	protected _adoptHTMLAreaTarget(target : et2_htmlarea)
 	{
+		// Turn off autosizing
+		target.options.resize_ratio = "0";
+		target.options.height = "100%";
+
+		// If et2_htmlarea is in ascii mode, don't do anything else
+		if((target?.mode ?? target.options.mode) == "ascii")
+		{
+			return;
+		}
+
 		this._htmlAreaTarget = target;
 		this.classList.add("et2-ai--has-html-target");
 
 		// Add generation prompts
-		if(this.prompts == simplePrompts)
+		if(!this._findPrompt("generate", this.prompts))
 		{
 			this.prompts.push({id: 'generate', label: this.egw().lang("Generate"), children: generatePrompts});
 		}
@@ -545,8 +555,10 @@ export class Et2Ai extends Et2Widget(LitElement)
 		// @ts-ignore monkey patching with no restore
 		target._extendedSettings = () =>
 		{
-			return Object.assign(originalExtended(), {
+			const original = originalExtended();
+			return Object.assign(original, {
 				height: "100%",
+				toolbar: (original.toolbar || "") + " | aitoolsPrompts",
 				setup: setup
 			});
 		}
