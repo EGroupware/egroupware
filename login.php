@@ -297,21 +297,16 @@ else
 			}
 		}
 	}
-	// show login screen
-	if(isset($_COOKIE['last_loginid']))
-	{
-		$prefs = new Api\Preferences($GLOBALS['egw']->accounts->name2id($_COOKIE['last_loginid']));
+	// show login screen with preferences of the last logged in user or the default preferences
+	$prefs = new Api\Preferences((isset($_COOKIE['last_loginid']) ?
+		$GLOBALS['egw']->accounts->name2id($_COOKIE['last_loginid']) : 0) ?: Api\Preferences::DEFAULT_ID);
+	$GLOBALS['egw_info']['user']['preferences'] = $prefs->read_repository();
 
-		if($prefs->account_id)
-		{
-			$GLOBALS['egw_info']['user']['preferences'] = $prefs->read_repository();
-		}
-	}
-	if ($_GET['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$_GET['lang']))
+	if (isset($_GET['lang']) && preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$_GET['lang']))
 	{
 		$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $_GET['lang'];
 	}
-	elseif(!isset($_COOKIE['last_loginid']) || !$prefs->account_id)
+	elseif(!isset($_COOKIE['last_loginid']) || $prefs->account_id == Api\Preferences::DEFAULT_ID)
 	{
 		// If the lastloginid cookies isn't set, we will default to the first language,
 		// the users browser accepts.

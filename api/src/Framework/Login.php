@@ -175,7 +175,7 @@ class Login
 
 		if($config_reg['enable_registration'])
 		{
-			$lang = $_GET['lang'] ? $_GET['lang'] : $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+			$lang = $_GET['lang'] ?? $GLOBALS['egw_info']['user']['preferences']['common']['lang'] ?? 'en';
 			if ($config_reg['register_link'])
 			{
 				$reg_link='<a  class="signup" href="'. $this->framework->link('/registration/index.php','lang_code='.$lang). '&cd=no">'.lang('Sign up').'</a>';
