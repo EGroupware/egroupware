@@ -1,7 +1,7 @@
-import {html, LitElement, nothing, TemplateResult} from 'lit';
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
 import {state} from "lit/decorators/state.js";
 import {customElement, property} from 'lit/decorators.js';
-import {AiAssistantController} from "./AiAssistantController";
+import {AiAssistantController, AiStatus} from "./AiAssistantController";
 import styles from "./Et2Ai.styles";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
@@ -145,6 +145,11 @@ export class Et2Ai extends Et2Widget(LitElement)
 	/* HTMLArea needs special handling */
 	private _htmlAreaTarget : et2_htmlarea;
 
+	/* For faking progress bar */
+	private _progressTimer : number | null = null;
+	private _progressValue = 0;
+	private _lastAiStatus : AiStatus | null = null;
+
 	constructor()
 	{
 		super();
@@ -174,6 +179,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		this.targetResizeObserver?.disconnect();
 		this.targetResizeObserver = undefined;
 		super.disconnectedCallback();
+		this._stopProgress();
 	}
 
 	protected async firstUpdated()
@@ -193,6 +199,24 @@ export class Et2Ai extends Et2Widget(LitElement)
 				dropdown.reposition?.()
 			});
 		});
+	}
+
+	protected updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+		const status = this.ai?.status;
+		if(status && status !== this._lastAiStatus)
+		{
+			this._lastAiStatus = status;
+			if(status === 'loading')
+			{
+				this._startProgress();
+			}
+			else
+			{
+				this._stopProgress();
+			}
+		}
 	}
 
 	/**
@@ -714,6 +738,54 @@ export class Et2Ai extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Start the timer that updates progress bar
+	 * @private
+	 */
+	private _startProgress()
+	{
+		this._stopProgress();
+
+		this._progressValue = 0;
+		const start = performance.now();
+		const duration = 60_000; // 60s, it will timeout after that
+
+		this._progressTimer = window.setInterval(() =>
+		{
+			const elapsed = performance.now() - start;
+			const progress = Math.min(100, (elapsed / duration) * 100);
+
+			// Set internal variable for consistency if we re-render
+			this._progressValue = progress;
+
+			// Directly update for speed
+			const progressbar = this.shadowRoot.querySelector("sl-progress-bar")
+			progressbar?.setAttribute("value", progress.toString());
+			progressbar.indeterminate = false;
+
+			if(progress >= 100)
+			{
+				this._stopProgress();
+			}
+		}, 250); // smooth but cheap
+	}
+
+	/**
+	 * Stop the timer that updates the progress bar
+	 * @private
+	 */
+	private _stopProgress()
+	{
+		if(this._progressTimer !== null)
+		{
+			clearInterval(this._progressTimer);
+			this._progressTimer = null;
+		}
+
+		this._progressValue = 0;
+		this.requestUpdate();
+	}
+
+	/**
 	 * Render the different helpers based on status
 	 *
 	 * @return {TemplateResult | null}
@@ -748,7 +820,10 @@ export class Et2Ai extends Et2Widget(LitElement)
             <sl-card part="result loader" class="et2-ai-loader">
                 <span slot="header">${this.activePrompt?.label}</span>
                 <et2-button-icon slot="header" name="close" noSubmit @click=${this.clearResult}></et2-button-icon>
-                <sl-spinner part="spinner" class="et2-ai-loading"></sl-spinner>
+                <sl-progress-bar part="spinner" class="et2-ai-loading"
+                                 label=${this.egw().lang("AI Progress")}
+                                 ?value=${this._progressValue}
+                ></sl-progress-bar>
             </sl-card>`;
 	}
 
