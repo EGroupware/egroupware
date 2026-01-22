@@ -485,7 +485,7 @@ function send_template()
 		}
 
 		// wrap et2-textarea and htmlarea in et2-ai, if not already done or noAiTools attribute is set truish
-		$str = preg_replace_callback('#(<et2-ai[^>]*>\n?)?\s*<(et2-textarea|htmlarea)\s(.*?)\s*/?>(</et2-textarea>)?#s', function ($matches)
+		$str = preg_replace_callback('#(<et2-ai[^>]*>\n?)?\s*<(et2-textarea|htmlarea)\s(.*?)\s*/?>(</\2>)?#s', function ($matches)
 		{
 			$noAiTools = parseAttrs($matches[3])['noAiTools'] ?? 'false';
 			if (!empty($matches[1]) || $noAiTools && $noAiTools !== 'false')
