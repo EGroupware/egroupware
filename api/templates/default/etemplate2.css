@@ -819,6 +819,13 @@ et2-dialog et2-button {
 .et2_customfield_list {
     width: 100%;
 }
+/*make table inside the grid also obey the max-height of the parent even on bigger font-sizes*/
+th table.et2_grid.et2_customfield_list{
+    display: block;
+    max-height: 6.5em;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 /*number in custom field list should be left aligned instead of usual right alignment*/
 .et2_customfield_list et2-number_ro span{
     text-align: start;

@@ -101,7 +101,8 @@ tr.replied .status_img::before {
 }
 
 tr.forwarded .status_img::before {
-    content: "\f3dc" /*bi-forward*/
+	content: "\f520"; /*bi-reply*/
+	transform: scaleX(-1);
 }
 
 .subjectBold
@@ -311,7 +312,7 @@ pre {
 }
 
 #mail-index #mail-index_nm .status_icons et2-image {
-	width: 1em;
+	font-size: calc(1em + 2px);
 }
 /*
  influence the tree display and scrolling behavior

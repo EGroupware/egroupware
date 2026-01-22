@@ -83,6 +83,7 @@ body select {
   padding-block: 0.5em;
   padding-inline: 0.5em;
   font-size: 1em;
+  text-indent: initial;
 }
 body select {
   width: 62%;
@@ -124,7 +125,7 @@ div#loginScreenMessage {
   background: var(--box-color);
   border-radius: var(--sl-border-radius-medium);
   padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
-  margin-inline: 1em ;
+  margin-inline: 1rem ;
   border-left: 0.5em solid transparent;
 }
 #loginMainDiv .egw_message_wrapper:has(.error_message) {
@@ -170,7 +171,7 @@ div#loginScreenMessage {
   flex-direction: column;
 }
 #loginMainDiv #centerBox form {
-  padding: 1em;
+  padding: 1rem;
 }
 #loginMainDiv #centerBox .divLoginbox {
   background: var(--box-color);

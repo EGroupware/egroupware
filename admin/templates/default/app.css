@@ -219,3 +219,6 @@ td.token {
 #admin #admin-index_tree {
     padding: var(--sl-spacing-medium) 0;
 }
+#admin #admin-index_ajax_target {
+    padding-inline: var(--sl-spacing-2x-small);
+}
