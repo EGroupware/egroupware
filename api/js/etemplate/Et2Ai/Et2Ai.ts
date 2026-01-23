@@ -343,8 +343,13 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			target = await this._htmlAreaTarget.tinymce.then((e) =>
 			{
-				return e[0].editorContainer;
+				return e[0]?.editorContainer ?? this._htmlAreaTarget.editor?.editorContainer;
 			});
+			if(!target)
+			{
+				// The editor is not ready, but the Promise is done.  Poll I guess.
+				return this.updateComplete.then(() => window.setTimeout(() => this.handleSlotChange(), 1000));
+			}
 		}
 		this.targetResizeObserver = new ResizeObserver(entries =>
 		{
@@ -709,6 +714,10 @@ export class Et2Ai extends Et2Widget(LitElement)
 		if(!el)
 		{
 			return '';
+		}
+		if(el instanceof et2_htmlarea)
+		{
+			return el.editor.selection.getContent({format: "html"});
 		}
 
 		// Iframe (htmlarea, rich text, etc)
