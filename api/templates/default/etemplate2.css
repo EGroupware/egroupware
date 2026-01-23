@@ -3902,7 +3902,7 @@ div.flatpickr-calendar button.shortcut-buttons-flatpickr-button {
 
 /* Minimum height for editor */
 .tox.tox-tinymce {
-	min-height: 8em;
+	min-height: 10em;
 }
 
 /* Right-align "As PDF" checkbox in merge dialog */
