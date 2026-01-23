@@ -1,3 +1,18 @@
+egroupware-docker (26.0.20260123) hardy; urgency=low
+
+  * 26.x pre-release: now feature complete, please test
+  * AiTools: new app allowing to transform or translate textfields via AI (need configuration!)
+  * Loginpage: use default or forced preferences if no last_loginid cookie exists
+  * Addressbook: Add distribution lists to available export columns
+  * Addressbook: fixed after security release not working advanced search
+  * Calendar: Fix week height calculation did not switch scroll modes in kdots
+  * Infolog: Add "List actions" to Do not notify type options to turn off notifications from context menu actions
+  * Mail: fix issue with folders containing special chars
+  * Kanban: Fix kanban board edit allowed all apps instead of just the ones that will work
+  * RAG: allow installation for all MariaDB/MySQL versions, but do NOT fail, if egw_rag/vector table is not existing
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 23 Jan 2026 07:26:53 +0100
+
 egroupware-docker (26.0.20260113) hardy; urgency=low
 
   * SECURITY and Maintenance Release: strong recommendation to update to this release (or 23.1.20260113) immediately
