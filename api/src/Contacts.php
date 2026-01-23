@@ -918,7 +918,7 @@ class Contacts extends Contacts\Storage
 	* @param array &$contact contact array from etemplate::exec
 	* @param boolean $ignore_acl =false should the acl be checked or not
 	* @param boolean $touch_modified =true should modified/r be updated
-	* @return int/string/boolean id on success, false on failure, the error-message is in $this->error
+	* @return int|string|boolean id on success, false on failure, the error-message is in $this->error
 	*/
 	function save(&$contact, $ignore_acl=false, $touch_modified=true)
 	{
@@ -1059,7 +1059,7 @@ class Contacts extends Contacts\Storage
 			}
 		}
 
-		if(!($this->error = parent::save($to_write)))
+		if(!($this->error = $this->backendSave($to_write)))
 		{
 			$contact['id'] = $to_write['id'];
 			$contact['uid'] = $to_write['uid'];
@@ -1123,6 +1123,17 @@ class Contacts extends Contacts\Storage
 		}
 
 		return $this->error ? false : $contact['id'];
+	}
+
+	/**
+	 * Call backend for saving the contact (no ACL checks, no hooks called!)
+	 *
+	 * @param array $to_write
+	 * @return bool|int|string false on success, errornumber or -message on failure
+	 */
+	public function backendSave(array &$to_write)
+	{
+		return parent::save($to_write);
 	}
 
 	/**
@@ -2896,12 +2907,6 @@ class Contacts extends Contacts\Storage
 			catch (\Exception $e) {
 				// try regular search
 			}
-		}
-		// if the pattern contains an @ use legacy search, even if RAG is enabled for addressbook
-		elseif (!empty($search) && strpos($search, '@') !== False &&
-			class_exists('EGroupware\\Rag\\Embedding') && Embedding::available('addressbook'))
-		{
-			$criteria = 'legacy:'.$search;
 		}
 		return parent::search($criteria, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl);
 	}
