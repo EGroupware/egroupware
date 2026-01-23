@@ -465,6 +465,18 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				else if(typeof et2_registry[type] !== 'undefined')
 				{
 					this.widgets[field_name] = et2_createWidget(type, attrs, this);
+					// Wrap Ai tools around htmlarea
+					if(type == "htmlarea" && !attrs.noAiTools)
+					{
+						const legacy = this.widgets[field_name]
+						// @ts-ignore
+						const ai = <Et2Widget>loadWebComponent('et2-ai', {}, this);
+						// AI has to come before htmlarea in children list
+						this.insertChild(ai, 0);
+						cf[0].append(ai);
+						ai._parent_node = cf[0];
+						ai.addChild(legacy);
+					}
 				}
 			}
 
