@@ -24,7 +24,16 @@ export class AiAssistantController implements ReactiveController
 		this.endpoint = _endpoint;
 	}
 
-	async run(prompt : string, context : string, endpoint? : string, action : string = "process_prompt")
+	/**
+	 * Executes the prompt with specified content, optionally with a specified endpoint or action.
+	 *
+	 * @param {string} promptId - The id for the prompt which is kept on the server
+	 * @param {string} content - The content to be processed
+	 * @param {string} [endpoint] - An optional endpoint to override the default endpoint for the request.
+	 * @param {string} [action="process_prompt"] - The action to be performed, default "process_prompt".
+	 * @return {Promise<void>} A promise that resolves when the process is complete.
+	 */
+	async run(promptId : string, content : string, endpoint? : string, action : string = "process_prompt")
 	{
 		// Abort any in-flight request
 		if(this.request?.abort)
@@ -51,7 +60,7 @@ export class AiAssistantController implements ReactiveController
 			// @ts-ignore
 			const req = (this.host.egw() ?? egw).request(
 				endpoint || this.endpoint,
-				[action, prompt, context]
+				[action, promptId, content]
 			);
 
 			this.request = req;

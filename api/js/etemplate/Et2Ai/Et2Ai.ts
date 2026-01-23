@@ -1,6 +1,6 @@
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {state} from "lit/decorators/state.js";
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property} from "lit/decorators.js";
 import {AiAssistantController, AiStatus} from "./AiAssistantController";
 import styles from "./Et2Ai.styles";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
@@ -47,12 +47,12 @@ const defaultActions : AiAction[] = [
 ];
 
 export const simplePrompts : AiPrompt[] = [
-	{id: 'aiassist.summarize', label: 'Summarize text'},
+	{id: "aiassist.summarize", label: "Summarize text"},
 	{id: "aiassist.generate_subject", label: "Generate a subject", actions: [{target: "subject"}]},
-	{id: 'aiassist.formal', label: 'Make more formal'},
-	{id: 'aiassist.grammar', label: 'Fix grammar & spelling'},
-	{id: 'aiassist.concise', label: 'Make concise'},
-	{id: 'aiassist.translate', label: "Translate", children: []}
+	{id: "aiassist.formal", label: "Make more formal"},
+	{id: "aiassist.grammar", label: "Fix grammar & spelling"},
+	{id: "aiassist.concise", label: "Make concise"},
+	{id: "aiassist.translate", label: "Translate", children: []}
 ];
 
 export const generatePrompts : AiPrompt[] = [
@@ -79,7 +79,7 @@ export const generatePrompts : AiPrompt[] = [
  * @event et2-ai-start - Emitted when an AI process begins.
  * @event et2-ai-success - Emitted when the AI process completes successfully.
  * @event et2-ai-error - Emitted when the AI process fails.
- * @event et2-ai-apply - Emitted when the user clicks 'Apply' to insert the result into the target.
+ * @event et2-ai-apply - Emitted when the user clicks "Apply" to insert the result into the target.
  *
  * @csspart base - The component's internal wrapper.
  * @csspart result - The sl-card containing the AI result or loader.
@@ -94,7 +94,7 @@ export const generatePrompts : AiPrompt[] = [
  *
  * @cssproperty --max-result-height - Automatically calculated based on the slotted element's height to ensure the result card fits.
  */
-@customElement('et2-ai')
+@customElement("et2-ai")
 export class Et2Ai extends Et2Widget(LitElement)
 {
 	static get styles()
@@ -123,9 +123,9 @@ export class Et2Ai extends Et2Widget(LitElement)
 		return this.ai?.endpoint;
 	}
 
-	/* Use different context instead of child value */
+	/* Use different content instead of child value */
 	@property({type: Function})
-	getContent = () => this._getOriginalValue();
+	getContent = () => this._getSelectedText() || this._getOriginalValue();
 
 	/* Use a custom target for applying the response */
 	@property({type: Function})
@@ -163,7 +163,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	transformAttributes(attrs)
 	{
 		// Check for global settings
-		const global_data = this.getArrayMgr("modifications").getRoot().getEntry('~ai~', true);
+		const global_data = this.getArrayMgr("modifications").getRoot().getEntry("~ai~", true);
 		if(global_data)
 		{
 			// Specific attributes override global
@@ -185,14 +185,14 @@ export class Et2Ai extends Et2Widget(LitElement)
 	protected async firstUpdated()
 	{
 		this.noAiAssistant = !this.endpoint;
-		const slot = this.shadowRoot?.querySelector('slot');
-		slot?.addEventListener('slotchange', () => this.handleSlotChange());
+		const slot = this.shadowRoot?.querySelector("slot");
+		slot?.addEventListener("slotchange", () => this.handleSlotChange());
 
 		this.handleSlotChange();
 
 		// Deal with dropdown positioning trouble due to how we're using it
-		const dropdown = this.shadowRoot?.querySelector('sl-dropdown') as any;
-		dropdown?.addEventListener('sl-after-show', () =>
+		const dropdown = this.shadowRoot?.querySelector("sl-dropdown") as any;
+		dropdown?.addEventListener("sl-after-show", () =>
 		{
 			requestAnimationFrame(() =>
 			{
@@ -208,7 +208,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		if(status && status !== this._lastAiStatus)
 		{
 			this._lastAiStatus = status;
-			if(status === 'loading')
+			if(status === "loading")
 			{
 				this._startProgress();
 			}
@@ -282,7 +282,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 		const originalValue = this.getContent();
 
-		this.dispatchEvent(new CustomEvent('et2-ai-start', {
+		this.dispatchEvent(new CustomEvent("et2-ai-start", {
 			detail: {
 				prompt: this.activePrompt,
 				originalValue
@@ -294,9 +294,9 @@ export class Et2Ai extends Et2Widget(LitElement)
 		this.ai.run(this.activePrompt.id, originalValue, this.endpoint)
 			.then(() =>
 			{
-				if(this.ai.status === 'success')
+				if(this.ai.status === "success")
 				{
-					this.dispatchEvent(new CustomEvent('et2-ai-success', {
+					this.dispatchEvent(new CustomEvent("et2-ai-success", {
 						detail: {
 							prompt: this.activePrompt,
 							result: this.ai.result
@@ -308,7 +308,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 			})
 			.catch(() =>
 			{
-				this.dispatchEvent(new CustomEvent('et2-ai-error', {
+				this.dispatchEvent(new CustomEvent("et2-ai-error", {
 					detail: {
 						prompt: this.activePrompt,
 						error: this.ai.error
@@ -319,7 +319,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 			})
 			.finally(() =>
 			{
-				this.dispatchEvent(new CustomEvent('et2-ai-stop', {
+				this.dispatchEvent(new CustomEvent("et2-ai-stop", {
 					detail: {
 						prompt: this.activePrompt,
 						error: this.ai.error
@@ -365,7 +365,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		let value = this.ai.result;
 		const target = this.resolveTarget(action, this.activePrompt) as any;
 
-		const event = new CustomEvent('et2-ai-apply', {
+		const event = new CustomEvent("et2-ai-apply", {
 			detail: {
 				prompt: this.activePrompt,
 				result: value,
@@ -408,11 +408,11 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 		if(target)
 		{
-			if(typeof target.set_value === 'function')
+			if(typeof target.set_value === "function")
 			{
 				target.set_value(actionValue);
 			}
-			else if('value' in target)
+			else if("value" in target)
 			{
 				target.value = actionValue;
 			}
@@ -459,7 +459,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 */
 	protected _findApplyTarget(action? : AiAction) : HTMLElement | null
 	{
-		const targetSpec = typeof action === 'object' ? action?.target : undefined;
+		const targetSpec = typeof action === "object" ? action?.target : undefined;
 
 		if(targetSpec)
 		{
@@ -511,8 +511,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 	protected _findSemanticTarget(type : string) : HTMLElement | null
 	{
 		const candidates = {
-			subject: ['subject', 'summary', 'title'],
-			label: ['label']
+			subject: ["subject", "summary", "title"],
+			label: ["label"]
 		}[type] ?? [];
 
 		for(const name of candidates)
@@ -549,7 +549,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		// Add generation prompts
 		if(!this._findPrompt("generate", this.prompts))
 		{
-			this.prompts.push({id: 'generate', label: this.egw().lang("Generate"), children: generatePrompts});
+			this.prompts.push({id: "generate", label: this.egw().lang("Generate"), children: generatePrompts});
 		}
 		// @ts-ignore
 		const originalExtended = target._extendedSettings.bind(target);
@@ -558,14 +558,14 @@ export class Et2Ai extends Et2Widget(LitElement)
 			// Run original _extendedSettings()
 			// @ts-ignore
 			const original = originalExtended();
-			typeof original['setup'] == "function" && original['setup'](editor);
+			typeof original["setup"] == "function" && original["setup"](editor);
 
 			// See https://www.tiny.cloud/docs/tinymce/latest/custom-toolbarbuttons/
 			editor.ui.registry.addIcon("aitools", "<et2-image src='aitools/navbar'></et2-image>");
 			// Add prompts as menu actions
-			editor.ui.registry.addMenuButton('aitoolsPrompts', {
-				tooltip: this.egw().lang('AI Tools'),
-				icon: 'aitools',
+			editor.ui.registry.addMenuButton("aitoolsPrompts", {
+				tooltip: this.egw().lang("AI Tools"),
+				icon: "aitools",
 				fetch: (callback) =>
 				{
 					// Make sure we have translations in
@@ -664,12 +664,12 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 
 		// Widgets with a value
-		if(typeof el.getValue === 'function')
+		if(typeof el.getValue === "function")
 		{
 			return el.getValue();
 		}
 
-		if('value' in el)
+		if("value" in el)
 		{
 			return String(el.value ?? '');
 		}
@@ -677,7 +677,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		// See if we can get values from Etemplate
 		try
 		{
-			if(typeof etemplate2?.getValues === 'function')
+			if(typeof etemplate2?.getValues === "function")
 			{
 				const values = etemplate2.getValues(el);
 				if(values && Object.keys(values).length)
@@ -696,6 +696,73 @@ export class Et2Ai extends Et2Widget(LitElement)
 		return el.textContent?.trim() ?? '';
 	}
 
+
+	/**
+	 * Get selected text inside the resolved / slotted target only
+	 *
+	 * @return {string}
+	 * @protected
+	 */
+	protected _getSelectedText() : string
+	{
+		const el = this._findSlottedTarget() as any;
+		if(!el)
+		{
+			return '';
+		}
+
+		// Iframe (htmlarea, rich text, etc)
+		if(el instanceof HTMLIFrameElement)
+		{
+			try
+			{
+				const doc = el.contentDocument;
+				const sel = doc?.getSelection();
+				if(sel && sel.rangeCount > 0)
+				{
+					return sel.toString().trim();
+				}
+			}
+			catch(e)
+			{
+				// Cross-origin iframe or inaccessible
+				return '';
+			}
+			return '';
+		}
+
+		// Inputs / textareas
+		if(typeof el.selectionStart === "number" && typeof el.selectionEnd === "number")
+		{
+			const start = el.selectionStart;
+			const end = el.selectionEnd;
+			if(start !== end)
+			{
+				return String(el.value ?? '').substring(start, end).trim();
+			}
+			return '';
+		}
+
+		// Generic DOM selection (scoped to target element)
+		const sel = window.getSelection();
+		if(!sel || sel.rangeCount === 0)
+		{
+			return '';
+		}
+
+		const range = sel.getRangeAt(0);
+		const container = range.commonAncestorContainer;
+
+		// Only accept selection if it lives inside our target
+		if(el.contains(container.nodeType === Node.ELEMENT_NODE
+					   ? container
+					   : container.parentElement))
+		{
+			return sel.toString().trim();
+		}
+
+		return '';
+	}
 
 	/**
 	 * Figure out if the element can take a response
@@ -795,13 +862,13 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		switch(this.ai.status)
 		{
-			case 'loading':
+			case "loading":
 				return this._loadingTemplate();
 
-			case 'success':
+			case "success":
 				return this._resultTemplate();
 
-			case 'error':
+			case "error":
 				return this._errorTemplate();
 
 			default:
@@ -835,7 +902,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	protected _resultTemplate() : TemplateResult
 	{
 		const result = this.ai.result ?? '';
-		const isHtml = typeof result === 'string' && this._isHtmlContent(result);
+		const isHtml = typeof result === "string" && this._isHtmlContent(result);
 		const actions = this.activePrompt.actions || defaultActions;
 
 		return html`
@@ -843,7 +910,7 @@ export class Et2Ai extends Et2Widget(LitElement)
                 <span slot="header">${this.activePrompt?.label}</span>
                 <et2-hbox slot="header">
                     <slot name="actions"></slot>
-                    <sl-copy-button label="${this.egw().lang('Copy to clipboard')}" value=${result}></sl-copy-button>
+                    <sl-copy-button label=${this.egw().lang("Copy to clipboard")} value=${result}></sl-copy-button>
                     <et2-button-icon
                             name="close"
                             noSubmit
@@ -853,7 +920,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 
                 <div
                         part="result-content"
-                        class="et2-ai-result-content ${isHtml ? 'html' : 'text'}"
+                        class="et2-ai-result-content ${isHtml ? "html" : "text"}"
                 >${isHtml
                       ? unsafeHTML(<string>result)
                       : result.toString().trim()
