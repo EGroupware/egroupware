@@ -75,6 +75,18 @@ export default css`
 	}
 
 	.et2-ai-result {
+		.et2-ai-translation {
+			display: flex;
+			align-items: center;
+
+			> * {
+				flex-grow: 0;
+			}
+
+			et2-image {
+				margin: 0 var(--sl-spacing-medium);
+			}
+		}
 		.et2-ai-result-content.text {
 			white-space: pre-wrap;
 		}

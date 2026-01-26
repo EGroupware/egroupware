@@ -12,8 +12,18 @@ export class AiAssistantController implements ReactiveController
 
 	status : AiStatus = "idle";
 	result : string | Object = "";
+	data : any = null;
 	error = "";
 	endpoint : string = "";
+	/**
+	 * Additional options to pass to the API
+	 */
+	options : any = {};
+
+	/**
+	 * Whether the content being sent is HTML / XML / markup
+	 */
+	isHTML : boolean = false;
 
 	private request? : Promise<any> & { abort? : () => void };
 
@@ -59,13 +69,14 @@ export class AiAssistantController implements ReactiveController
 		{
 			// @ts-ignore
 			const req = (this.host.egw() ?? egw).request(
-				endpoint || this.endpoint,
-				[action, promptId, content]
+				(endpoint || this.endpoint) + (this.isHTML ? '&is_html=1' : ''),
+				[action, promptId, content, this.options]
 			);
 
 			this.request = req;
 			const result = await req;
 			this.result = result.result ?? "";
+			this.data = result;
 			this.error = result.error ?? "";
 			this.status = result.success ? "success" : "error";
 		}

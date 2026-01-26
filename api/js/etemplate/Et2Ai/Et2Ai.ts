@@ -9,6 +9,8 @@ import {map} from "lit/directives/map.js";
 import {et2_htmlarea} from "../et2_widget_htmlarea";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2SelectWidgets, StaticOptions} from "../Et2Select/StaticOptions";
+import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {until} from "lit/directives/until.js";
 
 // etemplate2 helper (globally available)
 declare const etemplate2 : {
@@ -242,10 +244,32 @@ export class Et2Ai extends Et2Widget(LitElement)
 	private async _addTranslations()
 	{
 		const translation = this._findPrompt("aiassist.translate", this.prompts);
-		if(translation.children.length)
+		if(!translation || translation.children.length)
 		{
 			return;
 		}
+
+		const labels = await this._getLanguageLabels();
+
+		if(translation.children.length == 0)
+		{
+			labels.forEach(lang =>
+			{
+				translation.children.push({
+					id: `${translation.id}-${lang.value}`,
+					label: lang.label
+				});
+			});
+		}
+	}
+
+	/**
+	 * Get language labels for AI translation
+	 *
+	 * @protected
+	 */
+	protected async _getLanguageLabels() : Promise<SelectOption[]>
+	{
 		// Get languages without duplicates
 		const languages : string[] = [...new Set([
 			<string>this.egw().preference("lang", "common") ?? "en",
@@ -253,16 +277,11 @@ export class Et2Ai extends Et2Widget(LitElement)
 		])];
 		// Need the language names for labels, but that might take a bit
 		const labels = await StaticOptions.lang((this as unknown as Et2SelectWidgets), []);
-		if(translation.children.length == 0)
-		{
-			languages.forEach(lang =>
-			{
-				translation.children.push({
-					id: `${translation.id}-${lang}`,
-					label: (labels.find(o => o.value == lang)?.label ?? lang)
-				});
-			});
-		}
+
+		return languages.map(lang => ({
+			value: lang,
+			label: (labels.find(o => o.value == lang)?.label ?? lang)
+		}));
 	}
 
 	/**
@@ -279,8 +298,20 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		return this.askAi();
+	}
+
+	/**
+	 * Run the currently selected prompt and apply the result
+	 *
+	 * @return {Promise<void>}
+	 * @protected
+	 */
+	protected async askAi()
+	{
 
 		const originalValue = this.getContent();
+		this.ai.isHTML = this._isHtmlContent(originalValue);
 
 		this.dispatchEvent(new CustomEvent("et2-ai-start", {
 			detail: {
@@ -291,7 +322,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 			composed: true
 		}));
 
-		this.ai.run(this.activePrompt.id, originalValue, this.endpoint)
+		return this.ai.run(this.activePrompt.id, originalValue, this.endpoint)
 			.then(() =>
 			{
 				if(this.ai.status === "success")
@@ -548,6 +579,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 			return;
 		}
 
+		this.ai.isHTML = true;
 		this._htmlAreaTarget = target;
 		this.classList.add("et2-ai--has-html-target");
 
@@ -616,20 +648,21 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			return false;
 		}
+		const trimmed = value.trim();
 		// Must start with a tag
-		if(!value.startsWith("<"))
+		if(!trimmed.startsWith("<"))
 		{
 			return false;
 		}
 
 		// Must end with a tag
-		if(!value.endsWith(">"))
+		if(!trimmed.endsWith(">"))
 		{
 			return false;
 		}
 
 		const tpl = document.createElement("template");
-		tpl.innerHTML = value.trim();
+		tpl.innerHTML = trimmed;
 
 		// Look for actual element nodes, not just text
 		return Array.from(tpl.content.childNodes).some(
@@ -911,12 +944,17 @@ export class Et2Ai extends Et2Widget(LitElement)
 	protected _resultTemplate() : TemplateResult
 	{
 		const result = this.ai.result ?? '';
-		const isHtml = typeof result === "string" && this._isHtmlContent(result);
+		const isHtml = typeof result === "string" && this.ai.isHTML;
 		const actions = this.activePrompt.actions || defaultActions;
 
 		return html`
             <sl-card part="result" class="et2-ai-result">
-                <span slot="header">${this.activePrompt?.label}</span>
+                <span slot="header">
+					${this.activePrompt.id.includes("translate") ?
+                      until(this._translationTemplate(), this.activePrompt?.label) :
+                      this.activePrompt?.label
+                    }
+				</span>
                 <et2-hbox slot="header">
                     <slot name="actions"></slot>
                     <sl-copy-button label=${this.egw().lang("Copy to clipboard")} value=${result}></sl-copy-button>
@@ -958,6 +996,39 @@ export class Et2Ai extends Et2Widget(LitElement)
             >
                 ${label}
             </et2-button>`
+	}
+
+	protected async _translationTemplate() : Promise<TemplateResult | typeof nothing>
+	{
+		const targetLang = this.activePrompt.label;
+		const sourceLang = this.ai.data?.source_lang;
+		let template : symbol | TemplateResult = nothing;
+		if(sourceLang)
+		{
+			const labels = await this._getLanguageLabels();
+			template = html`
+                <div class="et2-ai-translation">
+                    <et2-select
+                            aria-label=${this.egw().lang("source language")}
+                            .select_options=${labels}
+                            value=${sourceLang}
+                            @change=${async(e) =>
+                            {
+                                // Set the source language explicitly
+                                this.ai.options.source_lang = e.target.value;
+                                await this.askAi();
+                                delete this.ai.data?.source_lang;
+                            }}
+                    ></et2-select>
+                    <et2-image src="arrow-right" aria-hidden></et2-image>
+                    ${targetLang}
+                </div>`;
+		}
+		else
+		{
+			template = html`${targetLang}`;
+		}
+		return template;
 	}
 
 	/**
