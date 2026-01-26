@@ -76,6 +76,7 @@
 		"bigbluebutton/bigbluebutton-api-php": "^2.0",
 		"bower-asset/cropper": "2.3.*",
 		"bower-asset/jquery": "^1.12.4",
+		"deeplcom/deepl-php": "^1.4",
 		"defuse/php-encryption": "^2.4",
 		"egroupware/activesync": "self.version",
 		"egroupware/adodb-php": "^5.22.7.5",
