@@ -38,6 +38,7 @@ describe("AiAssistantController", () =>
 		requestStub.resolves({success: true, result: ""});
 
 		const controller = new AiAssistantController(host);
+		controller.endpoint = "test";
 
 		assert.isTrue(
 			(host.addController as sinon.SinonSpy).calledWith(controller),
@@ -54,6 +55,7 @@ describe("AiAssistantController", () =>
 		});
 
 		const controller = new AiAssistantController(host);
+		controller.endpoint = "test";
 
 		await controller.run("prompt", "context");
 
@@ -72,6 +74,7 @@ describe("AiAssistantController", () =>
 		});
 
 		const controller = new AiAssistantController(host);
+		controller.endpoint = "test";
 
 		await controller.run("prompt", "context");
 
@@ -84,6 +87,7 @@ describe("AiAssistantController", () =>
 		requestStub.rejects(new Error("API not configured"));
 
 		const controller = new AiAssistantController(host);
+		controller.endpoint = "test";
 
 		await controller.run("prompt", "context");
 
@@ -96,6 +100,7 @@ describe("AiAssistantController", () =>
 		requestStub.rejects({name: "AbortError"});
 
 		const controller = new AiAssistantController(host);
+		controller.endpoint = "test";
 
 		await controller.run("prompt", "context");
 
@@ -114,6 +119,7 @@ describe("AiAssistantController", () =>
 			.onSecondCall().resolves({success: true, result: ""});
 
 		const controller = new AiAssistantController(host);
+		controller.endpoint = "test";
 
 		controller.run("first", "");
 		await controller.run("second", "");
@@ -121,7 +127,7 @@ describe("AiAssistantController", () =>
 		assert.isTrue(abortSpy.calledOnce, "Previous request should be aborted");
 	});
 
-	it("testAPI sets unavailable when test fails", async() =>
+	it("AiAssistantController sets unavailable when endpoint is missing", async() =>
 	{
 		requestStub.resolves({
 			success: false,
@@ -130,27 +136,10 @@ describe("AiAssistantController", () =>
 		});
 
 		const controller = new AiAssistantController(host);
-		await controller.testAPI(true);
+		await controller.run("test", "");
 
 		assert.equal(AiAssistantController.API_OK, false);
 		assert.equal(controller.status, "unavailable");
-	});
-
-	it("testAPI caches API_OK result", async() =>
-	{
-		requestStub.resolves({
-			success: true,
-			result: "",
-			error: ""
-		});
-
-		const controller = new AiAssistantController(host);
-		const first = await controller.testAPI(true);
-		const second = await controller.testAPI();
-
-		assert.isTrue(first);
-		assert.isTrue(second);
-		assert.equal(requestStub.callCount, 1, "API should only be tested once");
 	});
 
 	it("aborts request on hostDisconnected", async() =>
@@ -162,6 +151,7 @@ describe("AiAssistantController", () =>
 		requestStub.returns(req);
 
 		const controller = new AiAssistantController(host);
+		controller.endpoint = "test";
 		controller.run("prompt", "");
 
 		controller.hostDisconnected();
