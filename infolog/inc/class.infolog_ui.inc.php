@@ -1037,7 +1037,6 @@ class infolog_ui
 				{
 					$values['nm']['col_filter']['linked'] = ['app' => $action,
 															 'id'  => is_array($action_id) ? current($action_id) : $action_id];
-					unset($action, $action_id);
 				}
 				// Nothing
 		}
