@@ -6,7 +6,7 @@ import styles from "./Et2Ai.styles";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {map} from "lit/directives/map.js";
-import {et2_htmlarea} from "../et2_widget_htmlarea";
+import type {et2_htmlarea} from "../et2_widget_htmlarea";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2SelectWidgets, StaticOptions} from "../Et2Select/StaticOptions";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
@@ -228,7 +228,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 */
 	protected loadingFinished(promises : Promise<any>[])
 	{
-		if(this.getChildren()[0] instanceof et2_htmlarea)
+		// Use constructor to check for legacy et2_htmlarea without importing it
+		if(this.getChildren()[0]?.constructor?.name === "et2_htmlarea")
 		{
 			this._adoptHTMLAreaTarget(<et2_htmlarea>this.getChildren()[0]);
 		}
@@ -396,7 +397,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		this.targetResizeObserver.observe(target);
 	}
 
-	protected _applyResult(action = this.activePrompt?.actions[0])
+	protected _applyResult(action = this.activePrompt?.actions?.[0])
 	{
 		let value = this.ai.result;
 		const target = this.resolveTarget(action, this.activePrompt) as any;
@@ -408,16 +409,16 @@ export class Et2Ai extends Et2Widget(LitElement)
 				target
 			},
 			bubbles: true,
-			composed: true
+			composed: true,
+			cancelable: true
 		});
 		this.dispatchEvent(event);
-		this.ai.status = "idle";
-		this.activePrompt = null;
 
 		if(event.defaultPrevented)
 		{
 			return;
 		}
+		queueMicrotask(() => this.clearResult());
 
 		// Prompt has an actual function to deal with it
 		if(typeof action?.handler === "function")
@@ -748,7 +749,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			return '';
 		}
-		if(el instanceof et2_htmlarea)
+		if(el && el.editor && typeof el.editor?.selection?.getContent == "function")
 		{
 			return el.editor.selection.getContent({format: "html"});
 		}
@@ -891,7 +892,6 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 
 		this._progressValue = 0;
-		this.requestUpdate();
 	}
 
 	/**

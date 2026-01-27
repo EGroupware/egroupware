@@ -1,7 +1,6 @@
 import {assert, fixture, html, oneEvent} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {Et2Ai} from "../Et2Ai";
-import {AiAssistantController} from "../AiAssistantController";
 
 window.egw = {
 	ajaxUrl: () => "",
@@ -18,9 +17,7 @@ describe("Et2AI widget basics", () =>
 
 	beforeEach(() =>
 	{
-		// Assume API works unless explicitly testing it
-		testAPIStub = sinon.stub(AiAssistantController.prototype, "testAPI")
-			.resolves(true);
+
 	});
 
 	afterEach(() =>
@@ -51,8 +48,6 @@ describe("Et2AI widget basics", () =>
 	{
 		it("renders only slot content when AI is unavailable", async() =>
 		{
-			testAPIStub.resolves(false);
-
 			const el = await createEl();
 			const slot = el.shadowRoot!.querySelector("slot");
 
@@ -87,9 +82,6 @@ describe("Et2AI applying results", () =>
 
 	beforeEach(async() =>
 	{
-		sinon.stub(AiAssistantController.prototype, "testAPI")
-			.resolves(true);
-
 		el = await fixture<Et2Ai>(html`
             <et2-ai>
                 <input value="Existing"/>
@@ -98,6 +90,7 @@ describe("Et2AI applying results", () =>
 		await el.updateComplete;
 
 		// Fake a successful AI response
+		(el as any).ai.endpoint = "test";
 		(el as any).ai.result = "AI result";
 		(el as any).ai.status = "success";
 	});
@@ -118,11 +111,13 @@ describe("Et2AI applying results", () =>
 		assert.equal(e.detail.result, "AI result");
 	});
 
-	it("resets activePrompt and AI status", () =>
+	it("resets activePrompt and AI status", async() =>
 	{
 		el.activePrompt = {id: "x", label: "Test"};
 
 		el["_applyResult"]();
+
+		await el.updateComplete;
 
 		assert.isNull(el.activePrompt);
 		assert.equal((el as any).ai.status, "idle");
@@ -148,7 +143,7 @@ describe("Et2AI applying results", () =>
 		el.activePrompt = {
 			id: "x",
 			label: "Test",
-			action: fn
+			actions: [{handler: fn}]
 		};
 
 		el["_applyResult"]();
@@ -164,7 +159,7 @@ describe("Et2AI applying results", () =>
 		el.activePrompt = {
 			id: "x",
 			label: "Test",
-			action: {target: "self"}
+			actions: [{target: "self"}]
 		};
 
 		el["_applyResult"]();
@@ -179,7 +174,7 @@ describe("Et2AI applying results", () =>
 		el.activePrompt = {
 			id: "x",
 			label: "Test",
-			action: {target: "self", mode: "prepend"}
+			actions: [{target: "self", mode: "prepend"}]
 		};
 
 		el["_applyResult"]();
@@ -194,7 +189,7 @@ describe("Et2AI applying results", () =>
 		el.activePrompt = {
 			id: "x",
 			label: "Test",
-			action: {target: "self", mode: "append"}
+			actions: [{target: "self", mode: "append"}]
 		};
 
 		el["_applyResult"]();
