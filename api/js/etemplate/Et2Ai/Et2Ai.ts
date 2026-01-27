@@ -565,7 +565,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		target.options.height = "";
 
 		// If et2_htmlarea is in ascii mode, don't do anything else
-		if((target?.mode ?? target.options.mode) == "ascii")
+		if((target?.mode ?? target.options.mode) == "ascii" || this.noAiAssistant)
 		{
 			return;
 		}
