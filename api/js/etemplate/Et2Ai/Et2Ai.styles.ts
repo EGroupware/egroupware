@@ -3,10 +3,13 @@ import {css} from 'lit';
 export default css`
 	:host {
 		--aitools-color: var(--sl-color-blue-500);
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
 	.et2-ai {
-		width: 100%;
+		width: 99%;
 		height: 100%;
 		position: relative;
 		align-items: stretch;
@@ -37,7 +40,6 @@ export default css`
 		width: 100%;
 		overflow: hidden;
 		top: 0;
-		left: 7px; /* Not sure where this comes from, but without this the left side is cut off and there's too much space to the right*/
 		z-index: var(--sl-z-index-dialog);
 		box-shadow: var(--sl-shadow-large);
 		--padding: var(--sl-spacing-small);

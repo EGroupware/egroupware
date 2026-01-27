@@ -191,16 +191,6 @@ export class Et2Ai extends Et2Widget(LitElement)
 		slot?.addEventListener("slotchange", () => this.handleSlotChange());
 
 		this.handleSlotChange();
-
-		// Deal with dropdown positioning trouble due to how we're using it
-		const dropdown = this.shadowRoot?.querySelector("sl-dropdown") as any;
-		dropdown?.addEventListener("sl-after-show", () =>
-		{
-			requestAnimationFrame(() =>
-			{
-				dropdown.reposition?.()
-			});
-		});
 	}
 
 	protected updated(changedProperties : PropertyValues)
@@ -1087,16 +1077,18 @@ export class Et2Ai extends Et2Widget(LitElement)
             >
                 ${this._renderStatus()}
                 <slot></slot>
-                <sl-dropdown class="et2-ai-dropdown" part="dropdown" placement="bottom-end" hoist no-flip
+                <div class="et2-ai-dropdown">
+                    <sl-dropdown part="dropdown" placement="bottom-end" hoist no-flip
                              ?disabled=${this.disabled}
-                >
-                    <slot name="trigger" slot="trigger">
-                        <et2-button-icon slot="trigger" name="aitools/navbar" noSubmit></et2-button-icon>
-                    </slot>
-                    <sl-menu @sl-select=${this.handlePromptSelect} part="menu">
-                        ${this.prompts.map(this._promptTemplate)}
-                    </sl-menu>
-                </sl-dropdown>
+                    >
+                        <slot name="trigger" slot="trigger">
+                            <et2-button-icon slot="trigger" name="aitools/navbar" noSubmit></et2-button-icon>
+                        </slot>
+                        <sl-menu @sl-select=${this.handlePromptSelect} part="menu">
+                            ${this.prompts.map(this._promptTemplate)}
+                        </sl-menu>
+                    </sl-dropdown>
+                </div>
             </div>
 		`;
 	}
