@@ -169,7 +169,7 @@
                     <customfields-list id="$row" class="customfields"/>
                     <et2-link-string entryId="$row_cont[id]" application="addressbook"
                                      onlyApp="kanban"></et2-link-string>
-                    <et2-textarea id="${row}[note]" readonly="true" noLang="1"></et2-textarea>
+                    <et2-textarea id="${row}[note]" readonly="true" noLang="1" noAiTools="true"></et2-textarea>
                     <et2-description id="${row}[distrib_lists]"></et2-description>
                     <et2-vbox>
                         <et2-select-account id="${row}[owner]" readonly="true"></et2-select-account>
