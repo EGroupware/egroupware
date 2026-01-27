@@ -581,13 +581,14 @@ abstract class Ajax extends Api\Framework
 
 		//Set the sidebox content
 		$sidebox = $this->get_sidebox($app);
+		$target = $_REQUEST['fw_target'] ?? $app;
 		$md5 = md5(json_encode($sidebox));
 
-		if ($md5_session[$app] !== $md5)
+		if($md5_session[$target] !== $md5)
 		{
 			//error_log(__METHOD__."() header changed md5_session[$app]!=='$md5' --> setting it on self::\$extra[setSidebox]");
-			$md5_session[$app] = $md5;	// update md5 in session
-			self::$extra['setSidebox'] = array($app, $sidebox, $md5);
+			$md5_session[$target] = $md5;    // update md5 in session
+			self::$extra['setSidebox'] = array($target, $sidebox, $md5);
 		}
 		//else error_log(__METHOD__."() md5_session[$app]==='$md5' --> nothing to do");
 	}
