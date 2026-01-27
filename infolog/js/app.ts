@@ -640,7 +640,7 @@ class InfologApp extends EgwApp
 		var extras = {
 			type: _type || nm_value.col_filter.info_type || "task",
 			cat_id: nm_value.cat_id || "",
-			action: nm_value.action || _action || "",
+			action: nm_value.action || _action || nm.settings.action || "",
 			// egw_link can handle arrays; but server is expecting CSV
 			action_id: typeof action_id.join != "undefined" ? action_id.join(',') : action_id
 		};
