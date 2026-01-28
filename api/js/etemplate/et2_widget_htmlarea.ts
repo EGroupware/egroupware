@@ -523,7 +523,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		this.editor = null;
 		this.tinymce = null;
 		this.tinymce_container = null;
-		this.htmlNode.remove();
+		this.htmlNode?.remove();
 		this.htmlNode = null;
 		super.destroy();
 	}

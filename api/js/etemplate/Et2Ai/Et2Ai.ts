@@ -363,7 +363,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		}
 		if(this._htmlAreaTarget)
 		{
-			target = await this._htmlAreaTarget.tinymce.then((e) =>
+			target = await this._htmlAreaTarget.tinymce?.then((e) =>
 			{
 				return e[0]?.editorContainer ?? this._htmlAreaTarget.editor?.editorContainer;
 			});
