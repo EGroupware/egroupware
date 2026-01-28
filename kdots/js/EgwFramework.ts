@@ -326,6 +326,12 @@ export class EgwFramework extends LitElement
 		return this.querySelector("egw-app[name='" + appname + "']");
 	}
 
+	public get openApplications() : ApplicationInfo[]
+	{
+		return [...this.applicationList, ...Object.values(this._tabApps)]
+			.filter(app => typeof app.opened !== "undefined" && !app.slot);
+	}
+
 	/**
 	 * Load an application into the framework
 	 *
@@ -1263,8 +1269,9 @@ export class EgwFramework extends LitElement
 			}
 			appList.push(obj);
 		};
-		[...this.applicationList, ...Object.values(this._tabApps)]
-			.filter(app => typeof app.opened !== "undefined" && app.status !== "5").forEach((app : ApplicationInfo) =>
+		this.openApplications
+			.filter(app => app.status !== "5")
+			.forEach((app : ApplicationInfo) =>
 		{
 			assembleApp(app);
 		});
@@ -1462,10 +1469,7 @@ export class EgwFramework extends LitElement
                                   @sl-tab-show=${this.handleApplicationTabShow}
                                   @sl-close=${this.handleApplicationTabClose}
                     >
-                        ${repeat([...this.applicationList, ...Object.values(this._tabApps)]
-                                        .filter(app => typeof app.opened !== "undefined" && !app.slot),
-                                (app) => this._applicationTabTemplate(app))
-                        }
+                        ${repeat(this.openApplications, (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
                     <div class="spacer spacer_end"></div>
                     <slot name="header"><span class="placeholder">header</span></slot>

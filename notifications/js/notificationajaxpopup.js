@@ -921,6 +921,10 @@
 			}
 			else
 			{
+				framework?.openApplications?.forEach((app) =>
+				{
+					framework.tabNotification(app.name, 0);
+				});
 				framework?.topmenu_info_notify('notifications', false);
 			}
 			return counter;
