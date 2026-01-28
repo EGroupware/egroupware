@@ -142,6 +142,7 @@ export class Et2HBox extends Et2Box
 			css`
             :host > div {
             	flex-direction: row;
+	            gap: var(--gap ,var(--sl-spacing-2x-small));
 			}`
 		];
 	}
