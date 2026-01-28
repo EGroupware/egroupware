@@ -223,4 +223,12 @@ div#filemanager-index_filemanager-index-header_right {
 .egwGridView_grid et2-vfs-mime img[src*='/navbar'] {
   width: 32px !important;
 }
+[slot="main-header"] et2-toolbar et2-vfs-path[slot="list"] {
+  --input-text-color: initial;
+  /*reset input text color so it is always visible in the dropdown */
+}
+[slot="main-header"] et2-toolbar et2-dropdown-button[slot="list"] {
+  --sl-input-border-color: var(--sl-color-neutral-400);
+  --sl-input-border-color-hover: var(--sl-color-neutral-700);
+}
 /*# sourceMappingURL=app.css.map */
