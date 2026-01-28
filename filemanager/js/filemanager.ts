@@ -22,6 +22,7 @@ import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
 import {MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
 import {egwAction} from "../../api/js/egw_action/egw_action";
+import type {Et2VfsUpload} from "../../api/js/etemplate/Et2Vfs/Et2VfsUpload";
 
 /**
  * UI for filemanager
@@ -1337,23 +1338,21 @@ export class filemanagerAPP extends EgwApp
 		let data = egw.dataGetUIDdata(row_uid);
 		files = files || window.event.dataTransfer.files;
 
-		let path = typeof data != 'undefined' && data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
-		let widget = this.et2.getWidgetById('upload');
+		const path = typeof data != 'undefined' && data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
+		const widget = <Et2VfsUpload>this.et2.getWidgetById('upload');
+		const oldPath = widget.path;
 
-		// Override finish to specify a potentially different path
-		let old_onfinishone = widget.options.onFinishOne;
-		let old_onfinish = widget.options.onFinish;
+		// Set target sub-directory
+		widget.path = path + '/';
 
-		widget.options.onFinishOne = function(_event, _file_count) {
-			self.upload(_event, _file_count, path);
-		};
+		// Restore original path when finished
+		widget.addEventListener("change", (e) =>
+		{
+			widget.path = oldPath;
+		}, {once: true});
 
-		widget.options.onFinish = function() {
-			widget.options.onFinish = old_onfinish;
-			widget.options.onFinishOne = old_onfinishone;
-		};
 		// This triggers the upload
-		widget.set_value(files);
+		Object.values(files).forEach((file : File) => widget.addFile(file));
 
 		// Return false to prevent the link
 		return false;
