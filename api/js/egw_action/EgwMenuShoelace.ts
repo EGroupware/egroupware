@@ -55,11 +55,7 @@ export class EgwMenuShoelace extends LitElement
 				et2-menu-item[type="checkbox"]:not([checked])::part(checked-icon) {
 					color: var(--sl-color-neutral-300);
 				}
-
-				et2-menu-item::part(popup) {
-					border: none;
-					border-radius: var(--sl-panel-border-radius);
-				}
+				
 				et2-image {
 					line-height: normal;
 					width: 1.3em;

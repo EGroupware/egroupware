@@ -1050,11 +1050,11 @@ export class Et2Ai extends Et2Widget(LitElement)
             </sl-menu>`;
 		}
 		return html`
-            <sl-menu-item
+            <et2-menu-item
                     value=${prompt.id}
                     part="menu-item"
             >${label}
-            </sl-menu-item>
+            </et2-menu-item>
 		`;
 	}
 
