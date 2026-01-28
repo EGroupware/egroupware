@@ -36,10 +36,16 @@ class Ai extends Etemplate\Widget
 
 		if(($enabled = self::enabled()))
 		{
-			self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'enabled', $enabled);
-			self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'endpoint', self::class . '::ajaxApi');
-
 			Api\Translation::add_app(self::PROVIDER_APP);
+			if($enabled == 2)
+			{
+				// Only translations, no general prompts
+				self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'prompts', ["#translate"]);
+			}
+		}
+		else
+		{
+			self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'disabled', true);
 		}
 	}
 

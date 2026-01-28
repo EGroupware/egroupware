@@ -8,6 +8,12 @@ export default css`
 		height: 100%;
 	}
 
+	/* Stay visible or else slotted content will hide too */
+
+	:host([disabled]) {
+		display: block;
+	}
+
 	.et2-ai {
 		width: 99%;
 		height: 100%;

@@ -107,7 +107,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 		];
 	}
 
-	@property({attribute: false})
+	/* Either an array of AiPrompts, or use "#simple", "#generate", "#translate" to specify predefined prompts */
+	@property({attribute: false, type: Object})
 	prompts : AiPrompt[] = Object.assign([], simplePrompts);
 
 	/* Specify a custom server endpoint for AI queries */
@@ -118,7 +119,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			this.ai.endpoint = _val;
 		}
-		this.noAiAssistant = !_val;
+		this.disabled = !_val;
 	}
 	get endpoint() : string
 	{
@@ -133,13 +134,15 @@ export class Et2Ai extends Et2Widget(LitElement)
 	@property({type: Function})
 	resolveTarget = (action? : AiAction, prompt? : AiPrompt) => this._findApplyTarget(action);
 
+	/* Disable the AI assistant, including the trigger button */
+	@property({type: Boolean, reflect: true})
+	disabled : boolean = false;
+
 	/* Current selected prompt */
 	@state() activePrompt : AiPrompt;
 	/* Max height for showing the result */
 	@state() maxResultHeight = 0;
 
-	/* Flag for if the user has no access */
-	private noAiAssistant : boolean = true;
 	/* AiAssistantController instance to manage the actual communication */
 	private readonly ai : AiAssistantController;
 	/* Watch children to keep our size up to date */
@@ -162,6 +165,10 @@ export class Et2Ai extends Et2Widget(LitElement)
 		this.ai = new AiAssistantController(this, this.endpoint);
 	}
 
+	/**
+	 * Etemplate loading from template
+	 * @param attrs
+	 */
 	transformAttributes(attrs)
 	{
 		// Check for global settings
@@ -171,6 +178,35 @@ export class Et2Ai extends Et2Widget(LitElement)
 			// Specific attributes override global
 			Object.assign(attrs, global_data, attrs);
 		}
+
+		// Expand prompt shortcuts
+		if(typeof attrs.prompts !== "undefined")
+		{
+			["#simple", "#generate", "#translate"].forEach(shortcut =>
+			{
+				let prompt : AiPrompt[] = [];
+				switch(shortcut)
+				{
+					case "#simple":
+						prompt = simplePrompts;
+						break;
+					case "#generate":
+						prompt = generatePrompts;
+						break;
+					case "#translate":
+						prompt = [this._findPrompt("aiassist.translate", simplePrompts)];
+				}
+				if(typeof attrs.prompts === "string" && attrs.prompts == shortcut)
+				{
+					attrs.prompts = [...prompt];
+				}
+				else if(Array.isArray(attrs.prompts) && attrs.prompts.includes(shortcut))
+				{
+					attrs.prompts.splice(attrs.prompts.indexOf(shortcut), 1, ...prompt);
+				}
+			});
+		}
+
 		// Add translation languages
 		this._addTranslations();
 		super.transformAttributes(attrs);
@@ -186,7 +222,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 	protected async firstUpdated()
 	{
-		this.noAiAssistant = !this.endpoint;
+		this.disabled = this.disabled || !this.ai.endpoint;
 		const slot = this.shadowRoot?.querySelector("slot");
 		slot?.addEventListener("slotchange", () => this.handleSlotChange());
 
@@ -565,7 +601,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		target.options.height = "";
 
 		// If et2_htmlarea is in ascii mode, don't do anything else
-		if((target?.mode ?? target.options.mode) == "ascii" || this.noAiAssistant)
+		if((target?.mode ?? target.options.mode) == "ascii" || this.disabled)
 		{
 			return;
 		}
@@ -827,11 +863,11 @@ export class Et2Ai extends Et2Widget(LitElement)
 		const et2 = target as any;
 		if(typeof et2.set_value === "function")
 		{
-			return !target.readonly && !target.disabled;
+			return !et2.readonly && !et2.disabled;
 		}
 		if("value" in et2)
 		{
-			return !target.readonly && !target.disabled;
+			return !et2.readonly && !et2.disabled;
 		}
 
 		return false;
@@ -1061,7 +1097,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	protected render() : TemplateResult
 	{
 		// No AI for some reason, show just content (with wrapper & styles for proper sizing)
-		if(this.noAiAssistant)
+		if(this.disabled)
 		{
 			return html`
                 <div class="et2-ai form-control">
@@ -1080,9 +1116,7 @@ export class Et2Ai extends Et2Widget(LitElement)
                 ${this._renderStatus()}
                 <slot></slot>
                 <div class="et2-ai-dropdown">
-                    <sl-dropdown part="dropdown" placement="bottom-end" hoist no-flip
-                             ?disabled=${this.disabled}
-                    >
+                    <sl-dropdown part="dropdown" placement="bottom-end" hoist no-flip>
                         <slot name="trigger" slot="trigger">
                             <et2-button-icon slot="trigger" name="aitools/navbar" noSubmit></et2-button-icon>
                         </slot>

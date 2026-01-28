@@ -14,7 +14,7 @@ export class AiAssistantController implements ReactiveController
 	result : string | Object = "";
 	data : any = null;
 	error = "";
-	endpoint : string = "";
+	endpoint : string = "EGroupware\Api\Etemplate\Widget\Ai::ajaxApi";
 	/**
 	 * Additional options to pass to the API
 	 */
@@ -31,7 +31,10 @@ export class AiAssistantController implements ReactiveController
 	{
 		this.host = host;
 		host.addController(this);
-		this.endpoint = _endpoint;
+		if(_endpoint)
+		{
+			this.endpoint = _endpoint;
+		}
 	}
 
 	/**
