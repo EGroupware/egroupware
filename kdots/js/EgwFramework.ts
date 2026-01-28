@@ -594,8 +594,11 @@ export class EgwFramework extends LitElement
 				return;
 			}
 			const notification = appTab.querySelector("sl-badge");
-			notification.pulse = true;
-			setTimeout(() => { notification.pulse = false;}, 2000);
+			if(notification)
+			{
+				notification.pulse = true;
+				setTimeout(() => { notification.pulse = false;}, 2000);
+			}
 		})
 	}
 
