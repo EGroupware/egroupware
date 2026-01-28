@@ -1060,11 +1060,13 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 	protected render() : TemplateResult
 	{
-		// No AI for some reason, show just content
+		// No AI for some reason, show just content (with wrapper & styles for proper sizing)
 		if(this.noAiAssistant)
 		{
 			return html`
-                <slot></slot>`;
+                <div class="et2-ai form-control">
+                    <slot></slot>
+                </div>`;
 		}
 
 		return html`
