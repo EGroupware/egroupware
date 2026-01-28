@@ -35,6 +35,7 @@ export default css`
 			display: flex;
 			flex-direction: column;
 			overflow-x: hidden;
+			--input-text-color:initial; /*reset input text color so it is always visible in the dropdown */
 
 			/* Internal components in list */
 			& > * {

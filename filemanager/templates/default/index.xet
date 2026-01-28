@@ -52,22 +52,23 @@
 	</template>
 	<et2-template id="filemanager.index.app-toolbar" template="" lang="" group="0" version="1.9.002">
         <!-- Anonymous view has some extras - logo & button -->
-        <et2-image id="logo" disabled="!@show_refresh" hideOnReadonly="true" style="max-width: 150px"></et2-image>
-        <et2-button  id="reload" label="Reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()"
-			disabled="!@show_refresh" hideOnReadonly="true" image="reload" noSubmit="true"></et2-button>
-        <et2-vfs-upload label="Upload" statustext="Select file to upload in current directory" id="upload" class="et2_toolbar_hasCaption"
-                        path="$cont[nm][path]/"
-                        dropTarget="filemanager-index" multiple="true"
-                        onchange="widget.updateComplete.then(() => {window.setTimeout(()=>{widget.value={};}, 1000)});"
-        ></et2-vfs-upload>
-		<template template="api.search-button"></template>
-		<et2-button  id="home" label="Go to your home directory" statustext="Go to your home directory" image="gohome" onclick="app.filemanager.change_dir('~',widget);" noSubmit="true"></et2-button>
-		<et2-button  id="up" label="Up" statustext="Up" image="goup" onclick="app.filemanager.change_dir('..',widget);" noSubmit="true"></et2-button>
-        <et2-vfs-path id="path" onchange="app.filemanager.handlePathChange" size="80" class="address">
-            <et2-image src="filemanager/navbar" slot="prefix"></et2-image>
-        </et2-vfs-path>
-		<et2-button  label="Tile view" statustext="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" noSubmit="true"></et2-button>
 		<et2-toolbar id="toolbar">
+			<et2-image id="logo" disabled="!@show_refresh" hideOnReadonly="true" style="max-width: 150px"></et2-image>
+			<et2-button  id="reload" label="Reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()"
+				disabled="!@show_refresh" hideOnReadonly="true" image="reload" noSubmit="true"></et2-button>
+			<et2-vfs-upload label="Upload" statustext="Select file to upload in current directory" id="upload" class="et2_toolbar_hasCaption toolbar--needsCaption"
+							path="$cont[nm][path]/"
+							dropTarget="filemanager-index" multiple="true"
+							onchange="widget.updateComplete.then(() => {window.setTimeout(()=>{widget.value={};}, 1000)});"
+			></et2-vfs-upload>
+			<template template="api.search-button"></template>
+			<et2-button  id="home" label="Go to your home directory" statustext="Go to your home directory" image="gohome" onclick="app.filemanager.change_dir('~',widget);" noSubmit="true"></et2-button>
+			<et2-button  id="up" label="Up" statustext="Up" image="goup" onclick="app.filemanager.change_dir('..',widget);" noSubmit="true"></et2-button>
+			<et2-vfs-path id="path" onchange="app.filemanager.handlePathChange" size="80" class="address">
+				<et2-image src="filemanager/navbar" slot="prefix"></et2-image>
+			</et2-vfs-path>
+			<et2-button  label="Tile view" statustext="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" image="list_tile" noSubmit="true"></et2-button>
+
 			<et2-dropdown-button  id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"></et2-dropdown-button>
             <et2-button label="Rename, change permissions or ownership" statustext="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" noSubmit="true"></et2-button>
             <et2-button label="Create directory" statustext="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" noSubmit="true"></et2-button>

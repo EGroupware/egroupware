@@ -223,11 +223,4 @@ div#filemanager-index_filemanager-index-header_right {
 .egwGridView_grid et2-vfs-mime img[src*='/navbar'] {
   width: 32px !important;
 }
-#filemanager-index_filemanager-index-app-toolbar et2-button::part(label) {
-  position: absolute;
-  top: 10em;
-}
-#filemanager-index_filemanager-index-app-toolbar et2-button::part(base) {
-  padding-inline: var(--sl-spacing-2x-small);
-}
 /*# sourceMappingURL=app.css.map */

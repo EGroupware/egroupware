@@ -217,13 +217,3 @@ div#filemanager-index_filemanager-index-header_right {
 .egwGridView_grid et2-vfs-mime img[src*='/navbar'] {
 	width: 32px !important;
 }
-//hide the labels inside the toolbar. Do not remove them since we need them for accessibility
-#filemanager-index_filemanager-index-app-toolbar et2-button{
-  &::part(label){
-	position: absolute;
-	top:10em;
-  }
-  &::part(base){
-	padding-inline: var(--sl-spacing-2x-small);
-  }
-}
