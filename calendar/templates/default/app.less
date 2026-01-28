@@ -1651,15 +1651,17 @@ egw-app {
 	  color: var(--sl-color-neutral-900);
 	}
 
+  .flatpickr-day.selected {
+    background-color: hsl(from var(--current-day-color) h s l /.5);
+  }
 
   .flatpickr-day.today {
+    border-color: var(--current-day-color);
 	background-color: var(--current-day-color);
 	color: var(--sl-color-neutral-900)
   }
 
-  .flatpickr-day.selected {
-	background-color: var(--application-color);
-  }
+
 }
 
 

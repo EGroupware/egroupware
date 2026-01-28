@@ -1609,12 +1609,13 @@ egw-app {
 #calendar-sidebox_date .flatpickr-day {
   color: var(--sl-color-neutral-900);
 }
+#calendar-sidebox_date .flatpickr-day.selected {
+  background-color: hsl(from var(--current-day-color) h s l / 0.5);
+}
 #calendar-sidebox_date .flatpickr-day.today {
+  border-color: var(--current-day-color);
   background-color: var(--current-day-color);
   color: var(--sl-color-neutral-900);
-}
-#calendar-sidebox_date .flatpickr-day.selected {
-  background-color: var(--application-color);
 }
 #calendar-view,
 #calendar-todo,
@@ -1750,3 +1751,4 @@ egw-app {
     color: #707070;
   }
 }
+/*# sourceMappingURL=app.css.map */
