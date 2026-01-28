@@ -430,11 +430,10 @@ export class EgwFramework extends LitElement
 		this.closeTab(applicationInfo.name);
 
 		// Remove app component from DOM
-		const appComponent = this.querySelector(`egw-app#${applicationInfo.name}`);
+		const appComponent = <EgwFrameworkApp>this.querySelector(`egw-app#${applicationInfo.name}`);
 		if(appComponent)
 		{
 			appComponent.remove();
-			appComponent.hasSlotController = null;
 		}
 	}
 
@@ -1536,7 +1535,7 @@ export interface ApplicationInfo
 	openOnce : string,
 
 	/* Count of notifications for the application */
-	notificationCount? : number
+	notificationCount? : number | ""
 
 	/* Tab tooltip */
 	tooltip? : string

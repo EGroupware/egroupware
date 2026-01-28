@@ -278,6 +278,7 @@ export class EgwFrameworkApp extends LitElement
 		this.removeEventListener("et2-show", this.handleShow);
 		this.framework?.removeEventListener("sl-tab-hide", this.handleTabHide);
 		this.framework?.removeEventListener("sl-tab-show", this.handleTabShow);
+		(this.hasSlotController as any) = null;
 
 		try
 		{
