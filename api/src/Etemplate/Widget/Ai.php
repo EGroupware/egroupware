@@ -34,8 +34,9 @@ class Ai extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
-		if(self::enabled())
+		if(($enabled = self::enabled()))
 		{
+			self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'enabled', $enabled);
 			self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'endpoint', self::class . '::ajaxApi');
 
 			Api\Translation::add_app(self::PROVIDER_APP);
@@ -49,27 +50,33 @@ class Ai extends Etemplate\Widget
 
 	/**
 	 * Check and cache, if AI texttools are available / configured and enabled for the user
+	 *
+	 * @return int 0: NOT enabled, 1: fully enabled, 2: only translations / DeepL supported options
 	 */
-	public static function enabled() : bool
+	public static function enabled() : int
 	{
 		// user has no run-rights for the provider
 		if (empty($GLOBALS['egw_info']['user']['apps'][self::PROVIDER_APP]))
 		{
-			return false;
+			return 0;
 		}
 		//Api\Cache::unsetInstance(self::PROVIDER_APP, 'configured');
 		return Api\Cache::getInstance(self::PROVIDER_APP, 'configured', static function ()
 		{
 			if (!class_exists('EGroupware\\AiTools\\Bo'))
 			{
-				return false;
+				return 0;
 			}
 			try {
-				return AiTools\Bo::test_api_connection();
+				return (int)AiTools\Bo::test_api_connection();
 			}
 			catch (\Exception $e) {
-				return false;
+				try {
+					return AiTools\Bo::deeplTargetLanguages() ? 2 : 0;
+				}
+				catch (\Exception $e) {}
 			}
+			return 0;
 		}, [], 7200);
 	}
 
@@ -82,6 +89,10 @@ class Ai extends Etemplate\Widget
 	 */
 	public static function ajaxApi(string $action, ...$params)
 	{
+		if (empty($GLOBALS['egw_info']['user']['apps'][self::PROVIDER_APP]))
+		{
+			throw new Api\Exception\NoPermission\App();
+		}
 		$bo = new AiTools\Bo();
 		$bo->ajax_api($action, ...$params);
 	}
