@@ -114,3 +114,13 @@ et2-button#addressbook-index_nm_advanced-search {
 }
 .smime_section_border {border-top: 1px solid #e5e5e5;}
 .smime_section_border> * {padding-top: 10px;}
+
+/*Limit height of nm rows introduce scrollbars on customfields and notes*/
+.et2_customfield_list.customfields{
+	table-layout: fixed;
+}
+.et2_customfield_list.customfields tbody, #addressbook-index_nm_0\[note\] span[part='content']{
+	display: block;
+	max-height: 10em;
+	overflow: hidden auto;
+}
