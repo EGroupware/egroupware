@@ -36,13 +36,14 @@
 
   et2-vfs-path et2-image {
 	width: 1.5em;
-
+  }
+  et2-vfs-path:not([slot="list"]) et2-image {
 	.sl-theme-light &, .kdots-light & {
-	  filter: brightness(0) invert(1);
+	  --image-filter: brightness(0) invert(1);
 	}
 
 	.sl-theme-dark &, .kdots-dark & {
-	  filter: brightness(0) invert(1) brightness(.9);
+	  --image-filter: brightness(0) invert(1) brightness(.9);
 	}
 
   }
