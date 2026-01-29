@@ -391,7 +391,7 @@ export class EgwFrameworkApp extends LitElement
 
 		let targetUrl = "";
 		this.useIframe = true;
-		let matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*&ajax=true.*)$/);
+		let matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*[&?]ajax=[^&]+.*)/);
 		if(matches)
 		{
 			// Matches[1] contains the menuaction which should be executed - replace
