@@ -108,6 +108,9 @@ div.et2_nextmatch {
 		border-collapse: collapse;
 		tr.selected {
 		  background-color: var(--highlight-background-color) !important;
+		  &.focused{
+			background-color: hsl(from var(--selection-color) h s l / .7) !important;
+		  }
 		}
 	  }
 

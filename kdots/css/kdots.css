@@ -890,6 +890,9 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table {
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
   background-color: var(--highlight-background-color) !important;
 }
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected.focused {
+  background-color: hsl(from var(--selection-color) h s l / 0.7) !important;
+}
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_grid {
   /* Visually hidden accessible header */
 }
