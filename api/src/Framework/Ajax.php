@@ -473,7 +473,8 @@ abstract class Ajax extends Api\Framework
 		});
 		foreach ($apps as $app)
 		{
-			$svg = file_get_contents('../'.htmlspecialchars($app['icon']));
+			$parts=explode($GLOBALS['egw_info']['server']['webserver_url'],$app['icon']);
+			$svg = file_get_contents(EGW_SERVER_ROOT.array_pop($parts));
 			$svg = substr($svg, strpos($svg, "<svg"));
 			$appsDiv .= '<div class="fl_app '.htmlspecialchars($app['name']).'"'.
 				'style="color:var(--'.htmlspecialchars($app['name']). '-color,var(--default-color,#606060))">'.
