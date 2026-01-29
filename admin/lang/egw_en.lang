@@ -749,6 +749,7 @@ required pear class mail/mimedecode.php not found.	admin	en	Required PEAR class 
 required to embed egroupware via iframe eg. for lti	admin	en	required to embed EGroupware via iframe eg. for LTI
 requires 'openid / oauth2 server' app.	admin	en	Requires 'OpenID / OAuth2 Server' app.
 reset filter	admin	en	Reset filter
+retention period for history-log (in years)	admin	en	Retention period for history-log (in years)
 revoke	admin	en	Revoke
 revoke this token	admin	en	Revoke this token
 revoked	admin	en	Revoked

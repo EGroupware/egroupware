@@ -40,6 +40,10 @@
 					<et2-textbox  id="newsettings[vfs_image_dir]"></et2-textbox>
 				</row>
 				<row>
+					<et2-description  value="Retention period for history-log (in years)" label="%s:"></et2-description>
+					<et2-number id="newsettings[history_retention]" min="0" max="20" step="1" placeholder="unlimited"></et2-number>
+				</row>
+				<row>
 					<et2-description  value="Log user-agent and action of changes in history-log of entries" label="%s:"></et2-description>
 					<et2-select  id="newsettings[log_user_agent_action]">
 						<option value="">No</option>
