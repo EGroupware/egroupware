@@ -473,13 +473,29 @@ abstract class Ajax extends Api\Framework
 		});
 		foreach ($apps as $app)
 		{
-			$parts=explode($GLOBALS['egw_info']['server']['webserver_url'],$app['icon']);
-			$svg = file_get_contents(EGW_SERVER_ROOT.array_pop($parts));
-			$svg = substr($svg, strpos($svg, "<svg"));
-			$appsDiv .= '<div class="fl_app '.htmlspecialchars($app['name']).'"'.
-				'style="color:var(--'.htmlspecialchars($app['name']). '-color,var(--default-color,#606060))">'.
-				$svg.
-				'</div> ';
+			$parts = explode($GLOBALS['egw_info']['server']['webserver_url'], $app['icon']);
+			if (str_starts_with($path = array_pop($parts), '/api/anon_images.php'))
+			{
+				$path = $GLOBALS['egw_info']['server']['files_dir'].'/anon-images'.substr($path, 20);
+			}
+			else
+			{
+				$path = EGW_SERVER_ROOT.$path;
+			}
+			$appsDiv .= '<div class="fl_app ' . htmlspecialchars($app['name']) . '"';
+			if (str_ends_with($path, '.svg') &&
+				($svg = file_get_contents($path)) !== false &&
+				($pos = strpos($svg, '<svg')) !== false)
+			{
+				$appsDiv .= ' style="color:var(--' . htmlspecialchars($app['name']) . '-color,var(--default-color,#606060))">' .
+					substr($svg, $pos);
+			}
+			else
+			{
+				$appsDiv .= ' style="background-image:url('.htmlspecialchars($app['icon']).'); '.
+					'background-position:center;background-size:32px;display:inline-block;margin:1px;">';
+			}
+			$appsDiv .= '</div>';
 		}
 		$content .= '<div class="fl_wrapper" style="margin:auto;"><div class="fl_apps">'.$appsDiv.
 			'</div><div class="fl_progress"><div></div></div></div></div>';
