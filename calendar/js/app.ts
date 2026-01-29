@@ -717,14 +717,19 @@ export class CalendarApp extends EgwApp
 			if(!view && q.view || q.view != view && view == 'index') view = q.view;
 
 			// No specific view requested, looks like a reload from framework
-			if(this.sidebox_et2 && typeof view === 'undefined')
+			if(typeof view === 'undefined' && this.state?.view)
 			{
+				// View etemplate not loaded
+				if(typeof CalendarApp.views[this.state.view].etemplates[0] == 'string')
+				{
+					return false;
+				}
 				this._clear_cache();
 				this.setState({state: this.state});
 				return false;
 			}
 
-			if (this.sidebox_et2 && typeof CalendarApp.views[view] == 'undefined' && view != 'index')
+			if(this.sidebox_et2 && view && typeof CalendarApp.views[view] == 'undefined' && view != 'index')
 			{
 				if(q.owner)
 				{
