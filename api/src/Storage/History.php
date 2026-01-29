@@ -141,6 +141,32 @@ class History
 				'share_email'       => $share_with,
 			),                false, __LINE__, __FILE__);
 		}
+		$this->doRetention();
+	}
+
+	/**
+	 * Remove history entries past their retention period
+	 *
+	 * Take care to not block the table for too long by only deleting 2000 entries per run.
+	 *
+	 * @return void
+	 * @throws Api\Db\Exception
+	 * @throws Api\Db\Exception\InvalidSql
+	 * @return ?int number of deleted rows, or null if no retention-period is configured
+	 */
+	protected function doRetention() : ?int
+	{
+		if (!empty($GLOBALS['egw_info']['server']['history_retention']))
+		{
+			$cut_off_date = ((int)date('Y')-$GLOBALS['egw_info']['server']['history_retention']).'-01-01';
+
+			$this->db->query('DELETE FROM '.self::TABLE.
+				' WHERE history_timestamp < '.$this->db->quote($cut_off_date).
+				' ORDER BY history_timestamp LIMIT 5000',
+				__LINE__, __FILE__);
+
+			return $this->db->affected_rows();
+		}
 	}
 
 	/**
@@ -148,22 +174,7 @@ class History
 	 */
 	public static function static_add($appname, $id, $user, $field_code, $new_value, $old_value = '')
 	{
-		if($new_value != $old_value)
-		{
-			$share_with = static::get_share_with($appname, $id);
-
-			$GLOBALS['egw']->db->insert(self::TABLE, array(
-				'history_record_id' => $id,
-				'history_appname'   => $appname,
-				'history_owner'     => (int)$user,
-				'history_status'    => $field_code,
-				'history_new_value' => self::encode($new_value),
-				'history_old_value' => self::encode($old_value),
-				'history_timestamp' => time(),
-				'sessionid'         => $GLOBALS['egw']->session->sessionid_access_log,
-				'share_email'       => $share_with,
-			),                          false, __LINE__, __FILE__);
-		}
+		(new self($appname, $user))->add($field_code, $id, $new_value, $old_value);
 	}
 
 	/**
