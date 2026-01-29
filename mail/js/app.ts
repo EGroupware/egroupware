@@ -522,7 +522,7 @@ export class MailApp extends EgwApp
 		{
 			[].concat(pushData.id).forEach(uid => {
 				pushData.id = uid;
-				super.				focus.call(this, pushData);
+				this.push(pushData);
 			});
 			return;
 		}
