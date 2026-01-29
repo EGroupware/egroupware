@@ -81,7 +81,7 @@ export default css`
 		/* Row count tooltip */
 
 		.egw_fw_app__filter_info_tooltip {
-			--sl-tooltip-background-color: var(--application-color, var(--sl-tooltip-background-color));
+			--sl-tooltip-background-color: var(--template-custom-color, var(--application-color, var(--sl-tooltip-background-color)));
 			--sl-tooltip-padding: var(--sl-spacing-x-small);
 			--sl-tooltip-color: var(--application-header-text-color, var(--sl-color-neutral-0));
 		}
@@ -220,7 +220,7 @@ export default css`
         sl-spinner {
             --track-width: 1rem;
             font-size: 10rem;
-            --indicator-color: var(--application-color, var(--primary-background-color, var(--sl-color-primary-600)));
+            --indicator-color: var(--template-custom-color, var(--application-color, var(--primary-background-color, var(--sl-color-primary-600))));
         }
     }
 

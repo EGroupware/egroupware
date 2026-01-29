@@ -722,7 +722,7 @@ egw-app et2-favorites-menu::part(menu) {
   border-radius: initial;
 }
 egw-app::part(details-header) {
-  background-color: var(--application-color, var(--sl-color-primary-800, lightblue));
+  background-color: var(--template-custom-color, var(--application-color, var(--sl-color-primary-800, lightblue)));
   padding-block: var(--sl-spacing-3x-small);
   margin: var(--sl-spacing-medium);
   margin-bottom: 0;
@@ -1290,7 +1290,7 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
   html:not(.desktop) body et2-dialog::part(header) {
     /* Set header size, color & background */
     color: var(--application-header-text-color, var(--sl-color-neutral-100));
-    background: var(--application-color, var(--sl-color-primary-500));
+    background: var(--template-custom-color, var(--application-color, var(--sl-color-primary-500)));
     height: var(--sl-spacing-3x-large);
     padding: 0;
     border-radius: 0 !important;
@@ -1855,7 +1855,7 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
     line-height: 45px;
     border-radius: var(--sl-border-radius-circle);
     z-index: 100;
-    background-color: var(--application-color, var(--primary-color, var(--sl-color-primary-500)));
+    background-color: var(--template-custom-color, var(--application-color, var(--primary-color, var(--sl-color-primary-500))));
     border: none;
     margin: 0;
     padding: 0;

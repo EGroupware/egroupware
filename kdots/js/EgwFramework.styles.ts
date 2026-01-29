@@ -281,9 +281,10 @@ export default css`
         visibility: hidden;
         margin: 0;
         position: relative;
-        bottom: 1.5em;
-        right: .6em;
+        bottom: calc(var(--tab-icon-size) * 0.4);
+        right: calc(var(--tab-icon-size) * 0.2);
         color: var(--sl-color-neutral-900);
+        font-size: calc(var(--tab-icon-size) * 0.4);
     }
 
     /*Icons for open applications that do not have kdots specific icon*/
