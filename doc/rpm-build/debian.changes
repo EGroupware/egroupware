@@ -1,3 +1,23 @@
+egroupware-docker (26.1.20260130) hardy; urgency=low
+
+  * 26.x PreRelease of final release planned for Monday Februar 9th, please test :)
+  * Addressbook: limit how much a nm row grows in height for long notes or lots of customfields.
+  * Addressbook: Fix notes missing from list by disabling aitools in rows
+  * Admin: allow specifying a retention period for the history log in years, default none
+  * AiTools: use deepl.com for translations, if configured
+  * AiTools: if user has selected part of the content, pass only that content to the AI
+  * Calendar: Fix edit dialog from external link to an event could not be closed with Cancel button
+  * Kdots: Use --template-custom-color instead of --application-color (if set) in more places than just the header background. e.g. sidebox header or filter row count
+  * Filemanager: Fix drag file onto folder did not upload the file
+  * Mail: fix push handling for deleting a mail
+  * Infolog: Fix CRM view for a contact could lose the contact, showing wrong infologs
+  * Infolog: Fix adding infolog from CRM view did not link contacts
+  * RAG: if the search pattern contains an @ character automatic switch fulltext to NATURAL LANGUAGE MODE
+  * RAG: fixed nothing found if search pattern contains a non-ascii char like e.g. a German umlaut
+  * Tracker: enlarge summary to 255 characters
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 30 Jan 2026 12:58:52 +0100
+
 egroupware-docker (26.0.20260123) hardy; urgency=low
 
   * 26.x pre-release: now feature complete, please test
