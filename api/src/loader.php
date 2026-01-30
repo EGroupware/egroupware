@@ -22,7 +22,7 @@ use EGroupware\Api;
 
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 
-$egw_min_php_version = '8.0';
+$egw_min_php_version = '8.2';
 if (!function_exists('version_compare') || version_compare(PHP_VERSION,$egw_min_php_version) < 0)
 {
 	die("EGroupware requires PHP $egw_min_php_version or greater.<br />Please contact your System Administrator to upgrade PHP!");
