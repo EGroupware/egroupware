@@ -651,8 +651,18 @@ export class EgwFramework extends LitElement
 					dialog.shadowRoot.querySelector(".dialog__panel").style.height = _height + "px";
 				}
 			}
-			// Listen for close
-			dialog.addEventListener("sl-request-close", () => {this.popups.close(dialog);});
+
+			// Listen for close - wait for updateComplete to allow etemplate a chance to bind first if it needs
+			dialog.updateComplete.then(() =>
+			{
+				dialog.addEventListener("sl-request-close", (e) =>
+				{
+					if(!e.defaultPrevented)
+					{
+						this.popups.close(dialog);
+					}
+				});
+			});
 
 			// Put the dialog in the correct app so it can inherit application styles & be removed if app closes
 			(_app && this.getApp(_app) ? this.getApp(_app) : this.activeApp).append(dialog);
