@@ -234,6 +234,7 @@ function timesheet_upgrade22_1()
 {
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '23.1';
 }
+
 function timesheet_upgrade23_1()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_timesheet','ts_paused',array(
@@ -256,4 +257,14 @@ function timesheet_upgrade23_1_001()
 	));
 
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '23.1.002';
+}
+
+/**
+ * Bump version to 26.1
+ *
+ * @return string
+ */
+function timesheet_upgrade23_1_002()
+{
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '26.1';
 }

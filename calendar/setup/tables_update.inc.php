@@ -2841,3 +2841,13 @@ function calendar_upgrade23_1()
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '23.1.001';
 }
+
+/**
+ * Bump version to 26.1
+ *
+ * @return string
+ */
+function calendar_upgrade23_1_001()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '26.1';
+}

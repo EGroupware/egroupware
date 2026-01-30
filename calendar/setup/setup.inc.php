@@ -9,7 +9,7 @@
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '23.1.001';
+$setup_info['calendar']['version'] = '26.1';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index&ajax=true';
@@ -52,5 +52,5 @@ $setup_info['calendar']['hooks']['etemplate2_history_get_rows'] = 'calendar.cale
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('23.1')
+	 'versions' => Array('26.1')
 );

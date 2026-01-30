@@ -14,7 +14,7 @@ if (!defined('NOTIFICATION_APP'))
 }
 
 $setup_info[NOTIFICATION_APP]['name']      = NOTIFICATION_APP;
-$setup_info[NOTIFICATION_APP]['version']   = '23.1.002';
+$setup_info[NOTIFICATION_APP]['version']   = '26.1';
 $setup_info[NOTIFICATION_APP]['app_order'] = 1;
 $setup_info[NOTIFICATION_APP]['tables']    = array('egw_notificationpopup');
 $setup_info[NOTIFICATION_APP]['enable']    = 2;
@@ -38,6 +38,5 @@ $setup_info[NOTIFICATION_APP]['hooks']['config'] = 'notifications.notifications.
 /* Dependencies for this app to work */
 $setup_info[NOTIFICATION_APP]['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('23.1')
+	 'versions' => Array('26.1')
 );
-

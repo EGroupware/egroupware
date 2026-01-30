@@ -1151,3 +1151,13 @@ function infolog_upgrade21_1()
 {
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '23.1';
 }
+
+/**
+ * Bump version to 26.1
+ *
+ * @return string
+ */
+function infolog_upgrade23_1()
+{
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '26.1';
+}

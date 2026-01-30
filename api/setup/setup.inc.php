@@ -11,7 +11,7 @@
 /* Basic information about this app */
 $setup_info['api']['name']      = 'api';
 $setup_info['api']['title']     = 'EGroupware API';
-$setup_info['api']['version'] = '23.1.013';
+$setup_info['api']['version'] = '26.1';
 $setup_info['api']['versions']['current_header'] = '1.29';
 // maintenance release in sync with changelog in doc/rpm-build/debian.changes
 $setup_info['api']['versions']['maintenance_release'] = '26.0.20260123';
@@ -129,7 +129,7 @@ $setup_info['api']['check_install'] = array(
 
 // CalDAV / CardDAV Sync
 $setup_info['groupdav']['name']      = 'groupdav';
-$setup_info['groupdav']['version']   = '23.1';
+$setup_info['groupdav']['version']   = '26.1';
 $setup_info['groupdav']['enable']    = 2;
 $setup_info['groupdav']['app_order'] = 1;
 $setup_info['groupdav']['icon']      = 'groupdav';
@@ -141,6 +141,3 @@ $setup_info['groupdav']['author'] = $setup_info['groupdav']['maintainer'] = arra
 $setup_info['groupdav']['license'] = 'GPL';
 $setup_info['groupdav']['hooks']['preferences']	= 'EGroupware\\Api\\CalDAV\\Hooks::menus';
 $setup_info['groupdav']['hooks']['settings']	= 'EGroupware\\Api\\CalDAV\\Hooks::settings';
-
-
-

@@ -448,6 +448,7 @@ function resources_upgrade21_1()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '23.1';
 }
+
 function resources_upgrade23_1()
 {
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_resources_extra','extra_name',array(
@@ -460,3 +461,12 @@ function resources_upgrade23_1()
 	return $GLOBALS['setup_info']['resources']['currentver'] = '23.1.001';
 }
 
+/**
+ * Bump version to 26.1
+ *
+ * @return string
+ */
+function resources_upgrade23_1_001()
+{
+	return $GLOBALS['setup_info']['resources']['currentver'] = '26.1';
+}

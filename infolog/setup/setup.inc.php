@@ -11,7 +11,7 @@
  */
 
 $setup_info['infolog']['name']      = 'infolog';
-$setup_info['infolog']['version']   = '23.1';
+$setup_info['infolog']['version']   = '26.1';
 $setup_info['infolog']['app_order'] = 5;
 $setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra','egw_infolog_users');
 $setup_info['infolog']['enable']    = 1;
@@ -63,5 +63,5 @@ $setup_info['infolog']['hooks']['etemplate2_history_get_rows'] = 'infolog.infolo
 // Dependencies for this app to work
 $setup_info['infolog']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('23.1')
+	'versions' => Array('26.1')
 );
