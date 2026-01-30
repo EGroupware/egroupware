@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e59e0fec5936fa76267466f70da0ea65",
+    "content-hash": "212f49afbfbd35cb1a41f29fbaec4011",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1065,22 +1065,21 @@
         },
         {
             "name": "egroupware/activesync",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "995bb155c855ebd1a919dcd0b3c09372978e2278"
+                "reference": "8b35918a593b0c4489530c4b3550b3a4c77765e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/995bb155c855ebd1a919dcd0b3c09372978e2278",
-                "reference": "995bb155c855ebd1a919dcd0b3c09372978e2278",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/8b35918a593b0c4489530c4b3550b3a4c77765e6",
+                "reference": "8b35918a593b0c4489530c4b3550b3a4c77765e6",
                 "shasum": ""
             },
             "require": {
                 "egroupware/z-push-dev": "^2.5"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1103,9 +1102,9 @@
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/activesync/tree/master"
+                "source": "https://github.com/EGroupware/activesync/tree/26.1.20260130"
             },
-            "time": "2025-05-05T07:37:41+00:00"
+            "time": "2026-01-30T11:05:36+00:00"
         },
         {
             "name": "egroupware/adodb-php",
@@ -1170,19 +1169,21 @@
         },
         {
             "name": "egroupware/aitools",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/aitools.git",
-                "reference": "b39da62788c0fdb9713ddf355c2c0541f9373a63"
+                "reference": "d6f5a83a9f975b0a0947486afd827cc4286f6838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/aitools/zipball/b39da62788c0fdb9713ddf355c2c0541f9373a63",
-                "reference": "b39da62788c0fdb9713ddf355c2c0541f9373a63",
+                "url": "https://api.github.com/repos/EGroupware/aitools/zipball/d6f5a83a9f975b0a0947486afd827cc4286f6838",
+                "reference": "d6f5a83a9f975b0a0947486afd827cc4286f6838",
                 "shasum": ""
             },
-            "default-branch": true,
+            "require": {
+                "deeplcom/deepl-php": "^1.4"
+            },
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "authors": [
@@ -1198,25 +1199,24 @@
             "description": "AI Tools for EGroupware.",
             "support": {
                 "issues": "https://github.com/EGroupware/aitools/issues",
-                "source": "https://github.com/EGroupware/aitools/tree/master"
+                "source": "https://github.com/EGroupware/aitools/tree/26.1.20260130"
             },
-            "time": "2026-01-15T14:38:34+00:00"
+            "time": "2026-01-30T11:15:55+00:00"
         },
         {
             "name": "egroupware/bookmarks",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "de8883028fd7f86de07768b85a7348a0120b4104"
+                "reference": "444f3f83c09dbd8116535cf8e0c7d0be4e7035c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/de8883028fd7f86de07768b85a7348a0120b4104",
-                "reference": "de8883028fd7f86de07768b85a7348a0120b4104",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/444f3f83c09dbd8116535cf8e0c7d0be4e7035c0",
+                "reference": "444f3f83c09dbd8116535cf8e0c7d0be4e7035c0",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1231,25 +1231,24 @@
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/bookmarks/tree/master"
+                "source": "https://github.com/EGroupware/bookmarks/tree/26.1.20260130"
             },
-            "time": "2024-12-09T21:56:33+00:00"
+            "time": "2026-01-30T11:05:36+00:00"
         },
         {
             "name": "egroupware/collabora",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "c5b716a8741e65e004e82552cd2bc9eba05c4da2"
+                "reference": "5a8b6c794370a9bdb759946fc122de600cbcd89d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/c5b716a8741e65e004e82552cd2bc9eba05c4da2",
-                "reference": "c5b716a8741e65e004e82552cd2bc9eba05c4da2",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/5a8b6c794370a9bdb759946fc122de600cbcd89d",
+                "reference": "5a8b6c794370a9bdb759946fc122de600cbcd89d",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1272,9 +1271,9 @@
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/collabora/tree/master"
+                "source": "https://github.com/EGroupware/collabora/tree/26.1.20260130"
             },
-            "time": "2025-03-31T22:48:21+00:00"
+            "time": "2026-01-30T11:05:36+00:00"
         },
         {
             "name": "egroupware/compress",
@@ -2149,19 +2148,18 @@
         },
         {
             "name": "egroupware/news_admin",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "660d3e6245d3883d4682a26c08e45520246c7fd4"
+                "reference": "2ccd885776c630525900c7f63b79dca39405f75e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/660d3e6245d3883d4682a26c08e45520246c7fd4",
-                "reference": "660d3e6245d3883d4682a26c08e45520246c7fd4",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/2ccd885776c630525900c7f63b79dca39405f75e",
+                "reference": "2ccd885776c630525900c7f63b79dca39405f75e",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2176,9 +2174,9 @@
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/news_admin/tree/master"
+                "source": "https://github.com/EGroupware/news_admin/tree/26.1.20260130"
             },
-            "time": "2024-08-24T11:43:17+00:00"
+            "time": "2026-01-30T11:05:35+00:00"
         },
         {
             "name": "egroupware/nls",
@@ -2238,16 +2236,16 @@
         },
         {
             "name": "egroupware/openid",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "277c68353470ff8ec39218f11ad7d07c7ffcebac"
+                "reference": "bdea3d4cdc6a50aa603fdc3e370bd2d31d0cb6d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/277c68353470ff8ec39218f11ad7d07c7ffcebac",
-                "reference": "277c68353470ff8ec39218f11ad7d07c7ffcebac",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/bdea3d4cdc6a50aa603fdc3e370bd2d31d0cb6d4",
+                "reference": "bdea3d4cdc6a50aa603fdc3e370bd2d31d0cb6d4",
                 "shasum": ""
             },
             "require": {
@@ -2265,7 +2263,6 @@
                 "psr/http-message": "^1.0",
                 "zendframework/zend-diactoros": "^1.0"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -2285,28 +2282,27 @@
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/openid/tree/master"
+                "source": "https://github.com/EGroupware/openid/tree/26.1.20260130"
             },
-            "time": "2025-03-07T14:34:14+00:00"
+            "time": "2026-01-30T11:05:37+00:00"
         },
         {
             "name": "egroupware/projectmanager",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "0a190059e299d16199a7fcb4d7645948ec138d2f"
+                "reference": "0a31416cd3dc036c4d60d349b1458dff58e2e9a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/0a190059e299d16199a7fcb4d7645948ec138d2f",
-                "reference": "0a190059e299d16199a7fcb4d7645948ec138d2f",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/0a31416cd3dc036c4d60d349b1458dff58e2e9a2",
+                "reference": "0a31416cd3dc036c4d60d349b1458dff58e2e9a2",
                 "shasum": ""
             },
             "require": {
                 "npm-asset/dhtmlx-gantt": "~6.2"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2329,25 +2325,24 @@
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/projectmanager/tree/master"
+                "source": "https://github.com/EGroupware/projectmanager/tree/26.1.20260130"
             },
-            "time": "2025-04-09T20:20:55+00:00"
+            "time": "2026-01-30T11:05:35+00:00"
         },
         {
             "name": "egroupware/rag",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rag.git",
-                "reference": "62b16e6a56d8ce703527b13069274f9b71ec6d5d"
+                "reference": "f617f1f2d83aebb828fd6704759cbe5a883a6dae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rag/zipball/62b16e6a56d8ce703527b13069274f9b71ec6d5d",
-                "reference": "62b16e6a56d8ce703527b13069274f9b71ec6d5d",
+                "url": "https://api.github.com/repos/EGroupware/rag/zipball/f617f1f2d83aebb828fd6704759cbe5a883a6dae",
+                "reference": "f617f1f2d83aebb828fd6704759cbe5a883a6dae",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "authors": [
@@ -2358,25 +2353,24 @@
             ],
             "description": "A RAG system for EGroupware.",
             "support": {
-                "source": "https://github.com/EGroupware/rag/tree/master"
+                "source": "https://github.com/EGroupware/rag/tree/26.1.20260130"
             },
-            "time": "2026-01-04T12:49:57+00:00"
+            "time": "2026-01-30T11:15:55+00:00"
         },
         {
             "name": "egroupware/registration",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "6d6ee2347b8476f94ebaa7f872735f3b8714fb02"
+                "reference": "bea038aa082a172654adba823b2d8dc5c8383b59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/6d6ee2347b8476f94ebaa7f872735f3b8714fb02",
-                "reference": "6d6ee2347b8476f94ebaa7f872735f3b8714fb02",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/bea038aa082a172654adba823b2d8dc5c8383b59",
+                "reference": "bea038aa082a172654adba823b2d8dc5c8383b59",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2408,25 +2402,24 @@
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/registration/tree/master"
+                "source": "https://github.com/EGroupware/registration/tree/26.1.20260130"
             },
-            "time": "2024-09-30T06:13:41+00:00"
+            "time": "2026-01-30T11:05:35+00:00"
         },
         {
             "name": "egroupware/rocketchat",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "33a88bb3550eb1d7b67bde0890457fd24bc005aa"
+                "reference": "8e4aa77586b99e004527e6bf1af00eb6a2c2646a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/33a88bb3550eb1d7b67bde0890457fd24bc005aa",
-                "reference": "33a88bb3550eb1d7b67bde0890457fd24bc005aa",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/8e4aa77586b99e004527e6bf1af00eb6a2c2646a",
+                "reference": "8e4aa77586b99e004527e6bf1af00eb6a2c2646a",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2449,9 +2442,9 @@
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/rocketchat/tree/master"
+                "source": "https://github.com/EGroupware/rocketchat/tree/26.1.20260130"
             },
-            "time": "2025-01-12T09:35:51+00:00"
+            "time": "2026-01-30T11:05:35+00:00"
         },
         {
             "name": "egroupware/secret",
@@ -2512,22 +2505,21 @@
         },
         {
             "name": "egroupware/smallpart",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "0787d9636d12a6ad20df371ff8f71dfd3627abde"
+                "reference": "067dbc74722cdf7bacee8155cbd73f186ca8c1f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/0787d9636d12a6ad20df371ff8f71dfd3627abde",
-                "reference": "0787d9636d12a6ad20df371ff8f71dfd3627abde",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/067dbc74722cdf7bacee8155cbd73f186ca8c1f1",
+                "reference": "067dbc74722cdf7bacee8155cbd73f186ca8c1f1",
                 "shasum": ""
             },
             "require": {
                 "celtic/lti": "^4.4.1"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -2555,9 +2547,9 @@
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
             "support": {
-                "source": "https://github.com/EGroupware/smallpart/tree/master"
+                "source": "https://github.com/EGroupware/smallpart/tree/26.1.20260130"
             },
-            "time": "2025-04-25T07:51:32+00:00"
+            "time": "2026-01-30T11:05:36+00:00"
         },
         {
             "name": "egroupware/smtp",
@@ -2666,22 +2658,21 @@
         },
         {
             "name": "egroupware/status",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "0a9734d7be91638900cf34bd42b35f0ac0045ab1"
+                "reference": "200842ba3ab2147435bf96dceeed0a7361ca9ca3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/0a9734d7be91638900cf34bd42b35f0ac0045ab1",
-                "reference": "0a9734d7be91638900cf34bd42b35f0ac0045ab1",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/200842ba3ab2147435bf96dceeed0a7361ca9ca3",
+                "reference": "200842ba3ab2147435bf96dceeed0a7361ca9ca3",
                 "shasum": ""
             },
             "require": {
                 "lcobucci/jwt": "^3.1"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2704,9 +2695,9 @@
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/status/tree/master"
+                "source": "https://github.com/EGroupware/status/tree/26.1.20260130"
             },
-            "time": "2025-05-06T08:15:00+00:00"
+            "time": "2026-01-30T11:05:37+00:00"
         },
         {
             "name": "egroupware/stream-filter",
@@ -2874,16 +2865,16 @@
         },
         {
             "name": "egroupware/swoolepush",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
-                "reference": "c99765ad4281ebf1581cde06615ebaebdc6a7659"
+                "reference": "a1c185793f8f83bce478174b91c56aed664c6f5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/c99765ad4281ebf1581cde06615ebaebdc6a7659",
-                "reference": "c99765ad4281ebf1581cde06615ebaebdc6a7659",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/a1c185793f8f83bce478174b91c56aed664c6f5e",
+                "reference": "a1c185793f8f83bce478174b91c56aed664c6f5e",
                 "shasum": ""
             },
             "require": {
@@ -2904,7 +2895,6 @@
             "require-dev": {
                 "eaglewu/swoole-ide-helper": "dev-english"
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -2924,9 +2914,9 @@
             "description": "EGroupware push server using Swoole",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/swoolepush/tree/master"
+                "source": "https://github.com/EGroupware/swoolepush/tree/26.1.20260130"
             },
-            "time": "2024-11-25T17:46:14+00:00"
+            "time": "2026-01-30T11:05:35+00:00"
         },
         {
             "name": "egroupware/text-diff",
@@ -3036,19 +3026,18 @@
         },
         {
             "name": "egroupware/tracker",
-            "version": "dev-master",
+            "version": "26.1.20260130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "7598352fbad41e508ecca40af9742b8d85b28ed5"
+                "reference": "e1175aec73c48355fe0397208473ea64bd3a1339"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/7598352fbad41e508ecca40af9742b8d85b28ed5",
-                "reference": "7598352fbad41e508ecca40af9742b8d85b28ed5",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/e1175aec73c48355fe0397208473ea64bd3a1339",
+                "reference": "e1175aec73c48355fe0397208473ea64bd3a1339",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3071,9 +3060,9 @@
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/tracker/tree/master"
+                "source": "https://github.com/EGroupware/tracker/tree/26.1.20260130"
             },
-            "time": "2025-04-22T16:53:06+00:00"
+            "time": "2026-01-30T11:05:37+00:00"
         },
         {
             "name": "egroupware/translation",
@@ -12916,22 +12905,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "egroupware/activesync": 20,
-        "egroupware/aitools": 20,
-        "egroupware/bookmarks": 20,
-        "egroupware/collabora": 20,
-        "egroupware/news_admin": 20,
-        "egroupware/openid": 20,
-        "egroupware/projectmanager": 20,
-        "egroupware/rag": 20,
-        "egroupware/registration": 20,
-        "egroupware/rocketchat": 20,
-        "egroupware/smallpart": 20,
-        "egroupware/status": 20,
-        "egroupware/swoolepush": 20,
-        "egroupware/tracker": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
