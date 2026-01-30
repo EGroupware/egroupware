@@ -86,6 +86,22 @@ export class Et2Textarea extends Et2InputWidget(SlTextarea)
 		{
 			this.style.height = this.__height;
 		}
+		this.addEventListener("keyup", this.handleKeyUp);
+	}
+
+	disconnectedCallback()
+	{
+		this.removeEventListener("keyup", this.handleKeyUp);
+	}
+
+	/** Stop keypresses from bubbling unless there's a modifier key */
+	handleKeyUp(event : KeyboardEvent)
+	{
+		if(event.altKey || event.ctrlKey || event.metaKey || event.shiftKey)
+		{
+			return;
+		}
+		event.stopPropagation();
 	}
 
 	/**
