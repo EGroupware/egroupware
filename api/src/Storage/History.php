@@ -167,6 +167,7 @@ class History
 
 			return $this->db->affected_rows();
 		}
+		return null;
 	}
 
 	/**
