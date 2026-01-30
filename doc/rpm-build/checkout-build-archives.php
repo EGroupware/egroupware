@@ -303,7 +303,7 @@ function get_last_git_tag()
 	}
 	chdir($config['checkoutdir']);
 
-	$cmd = $config['git'].' tag -l '.escapeshellarg($config['version'].'.*');
+	$cmd = $config['git'].' tag -l '.escapeshellarg((int)$config['version'].'.*');
 	$output = null;
 	run_cmd($cmd, $output);
 	array_shift($output);
