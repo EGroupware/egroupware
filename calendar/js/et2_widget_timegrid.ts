@@ -2167,7 +2167,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				{
 					date.setUTCMinutes(end.minute);
 				}
-				if(!timegrid.drag_create.event && date.toJSON() != start.date.toJSON())
+				if(!timegrid.drag_create.event && (!date || date.toJSON() != start.date.toJSON()))
 				{
 					timegrid._drag_create_start(start);
 					// Create the event immediately
