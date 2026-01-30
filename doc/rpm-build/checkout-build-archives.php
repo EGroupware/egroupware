@@ -18,9 +18,9 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-docker',
-	'version' => '26.0',
+	'version' => '26.'.(int)date('m'),
 	'packaging' => date('Ymd'), // '20251208'
-	'branch'  => 'master',        // checked out branch
+	'branch'  => '26',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
 	'last-tag' => '', // tag to generate changelog from, default latest tag of given branch
 	'checkoutdir' => '~/epl-26-checkout',	//realpath(__DIR__.'/../..'),
