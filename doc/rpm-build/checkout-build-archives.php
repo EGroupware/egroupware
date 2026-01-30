@@ -18,7 +18,7 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-docker',
-	'version' => '26.0',
+	'version' => date('y').'.'.(int)date('m'),
 	'packaging' => date('Ymd'), // '20251208'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
@@ -303,7 +303,7 @@ function get_last_git_tag()
 	}
 	chdir($config['checkoutdir']);
 
-	$cmd = $config['git'].' tag -l '.escapeshellarg($config['version'].'.*');
+	$cmd = $config['git'].' tag -l '.escapeshellarg((int)$config['version'].'.*');
 	$output = null;
 	run_cmd($cmd, $output);
 	array_shift($output);
