@@ -19,8 +19,8 @@ Egroupware
 			</columns>
 			<rows>
 				<row class="view_row">
-					<calendar-timegrid id="${row}" 
-						onchange="var state = {}; if(widget.options.start_date == widget.options.end_date) state.view = 'day'; app.calendar.update_state(state);"
+                    <calendar-timegrid id="${row}"
+                                       onchange="if(!widget.options) return; let state = {}; if(widget.options.start_date == widget.options.end_date) state.view = 'day'; app.calendar.update_state(state);"
 						onevent_change="app.calendar.event_change"
 					>
 					</calendar-timegrid>

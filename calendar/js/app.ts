@@ -1019,10 +1019,17 @@ export class CalendarApp extends EgwApp
 				let state = app.calendar.getState();
 				if (state && typeof state.owner !== 'undefined')
 				{
-					let sortedArr = sortablejs.toArray();
+					let sortedArr = [];
+					Object.values(event.to.children).forEach((c : HTMLElement) =>
+					{
+						if(c.dataset.owner)
+						{
+							sortedArr.push(c.dataset.owner);
+						}
+					});
 					// No duplicates, no empties
 					sortedArr = sortedArr.filter(function(value, index, self) {
-						return value !== '' && self.indexOf(value) === index && !isNaN(value);
+						return value !== '' && self.indexOf(value) === index;
 					});
 
 					let parent = null;
