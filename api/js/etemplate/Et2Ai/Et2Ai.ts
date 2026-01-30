@@ -119,7 +119,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			this.ai.endpoint = _val;
 		}
-		this.disabled = !_val;
+		this.uiDisabled = !_val;
 	}
 	get endpoint() : string
 	{
@@ -134,9 +134,9 @@ export class Et2Ai extends Et2Widget(LitElement)
 	@property({type: Function})
 	resolveTarget = (action? : AiAction, prompt? : AiPrompt) => this._findApplyTarget(action);
 
-	/* Disable the AI assistant, including the trigger button */
+	/* Disable the AI assistant UI, including the trigger button */
 	@property({type: Boolean, reflect: true})
-	disabled : boolean = false;
+	uiDisabled : boolean = false;
 
 	/* Current selected prompt */
 	@state() activePrompt : AiPrompt;
@@ -222,7 +222,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 	protected async firstUpdated()
 	{
-		this.disabled = this.disabled || !this.ai.endpoint;
+		this.uiDisabled = this.uiDisabled || !this.ai.endpoint;
 		const slot = this.shadowRoot?.querySelector("slot");
 		slot?.addEventListener("slotchange", () => this.handleSlotChange());
 
@@ -601,7 +601,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		target.options.height = "";
 
 		// If et2_htmlarea is in ascii mode, don't do anything else
-		if((target?.mode ?? target.options.mode) == "ascii" || this.disabled)
+		if((target?.mode ?? target.options.mode) == "ascii" || this.uiDisabled)
 		{
 			return;
 		}
@@ -1097,7 +1097,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	protected render() : TemplateResult
 	{
 		// No AI for some reason, show just content (with wrapper & styles for proper sizing)
-		if(this.disabled)
+		if(this.uiDisabled)
 		{
 			return html`
                 <div class="et2-ai form-control">

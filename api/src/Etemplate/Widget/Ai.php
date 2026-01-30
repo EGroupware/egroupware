@@ -45,7 +45,7 @@ class Ai extends Etemplate\Widget
 		}
 		else
 		{
-			self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'disabled', true);
+			self::setElementAttribute($this->id ?: self::GLOBAL_VALS, 'uiDisabled', true);
 		}
 	}
 
