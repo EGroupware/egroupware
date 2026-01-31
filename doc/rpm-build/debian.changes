@@ -1,3 +1,12 @@
+egroupware-docker (23.1.20260131) hardy; urgency=low
+
+  * probably last 23.1 maintenance release, final 26.x release planned for Februar 9th
+  * Addressbook: fixed after security release not working advanced search
+  * Calendar: Fix reordering resources removed them from list of selected calendars
+  * some more minor fixes, see [changelog](https://github.com/EGroupware/egroupware/compare/23.1.20260113...23.1.20260131)
+
+ -- Ralf Becker <rb@egroupware.org>  Sat, 31 Jan 2026 19:20:29 +0100
+
 egroupware-docker (23.1.20260113) hardy; urgency=low
 
   * SECURITY and Maintenance Release: strong recommendation to update to this release (or 26.0.20260113) immediately
