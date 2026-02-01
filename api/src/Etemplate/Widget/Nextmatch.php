@@ -1319,7 +1319,7 @@ class Nextmatch extends Etemplate\Widget
 			// individual attributes explicitly requested by the application
 			array_merge($content_value['extra_attributes'] ?? [],
 			// standard NM attributes
-			['sort', 'order', 'search','cat_id', 'filter', 'filter2', $content_value['action_var'] ?? 'action',
+			['sort', 'order', 'search', 'search_type', 'cat_id', 'filter', 'filter2', $content_value['action_var'] ?? 'action',
 				'selected', 'select_all', 'checkboxes', 'searchletter', 'startdate', 'enddate', 'col_filter']) as $attr)
 		{
 			// do NOT copy the whole col_filter, as it might have integer keys passed into SQL queries verbatim
