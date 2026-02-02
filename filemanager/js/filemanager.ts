@@ -301,6 +301,21 @@ export class filemanagerAPP extends EgwApp
 	}
 
 	/**
+	 * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
+	 *
+	 * @param {String} _url
+	 * @return {boolean|string} true, if linkHandler took care of link, false for default processing or url to navigate to
+	 */
+	linkHandler(url)
+	{
+		const query = new URLSearchParams(decodeURI(url).split("?")[1]);
+		if(query && query.has("path") && this.change_dir(query.get("path")) === undefined)
+		{
+			return true;
+		}
+	}
+
+	/**
 	 * Check grants to see if we can quickly tell if this entry is not for us
 	 *
 	 * Overridden to check current user and their memberships against pushData.acl, which is a list of account IDs
