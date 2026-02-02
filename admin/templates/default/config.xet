@@ -40,6 +40,16 @@
 					<et2-textbox  id="newsettings[vfs_image_dir]"></et2-textbox>
 				</row>
 				<row>
+					<et2-description  value="Offer to installing EGroupware as mail-handler" label="%s:"></et2-description>
+					<et2-select  id="newsettings[install_mailto_handler]">
+						<option value="">Yes - {Default}</option>
+						<option value="disabled">{No}</option>
+					</et2-select>
+				</row>
+				<row>
+					<et2-description  value="History-Log" span="all" class="subHeader"></et2-description>
+				</row>
+				<row>
 					<et2-description  value="Retention period for history-log (in years)" label="%s:"></et2-description>
 					<et2-number id="newsettings[history_retention]" min="0" max="20" step="1" placeholder="unlimited"></et2-number>
 				</row>
@@ -48,13 +58,6 @@
 					<et2-select  id="newsettings[log_user_agent_action]">
 						<option value="">No</option>
 						<option value="True">Yes</option>
-					</et2-select>
-				</row>
-				<row>
-					<et2-description  value="Offer to installing EGroupware as mail-handler" label="%s:"></et2-description>
-					<et2-select  id="newsettings[install_mailto_handler]">
-						<option value="">Yes - {Default}</option>
-						<option value="disabled">{No}</option>
 					</et2-select>
 				</row>
 				<row>

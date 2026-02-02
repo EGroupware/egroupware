@@ -329,9 +329,9 @@ class setup_process
 		}
 		$current_config['install_id'] = md5($_SERVER['HTTP_HOST'].microtime(true).$GLOBALS['egw_setup']->ConfigDomain);
 
-		$current_config['postpone_statistics_submit'] = time() + 2 * 30 * 86400;	// ask user in 2 month from now, when he has something to report
+		$current_config['history_retention'] = 2;   // set a default of 2 years
 
-		// use securest password hash by default
+		// use most secure password hash by default
 		require_once EGW_SERVER_ROOT.'/setup/inc/hook_config.inc.php';	// for sql_passwdhashes, to get securest available password hash
 		$securest = null;
 		sql_passwdhashes(array(), true, $securest);
