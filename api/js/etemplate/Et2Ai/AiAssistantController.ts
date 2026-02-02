@@ -78,10 +78,10 @@ export class AiAssistantController implements ReactiveController
 
 			this.request = req;
 			const result = await req;
-			this.result = result.result ?? "";
+			this.result = result?.result ?? "";
 			this.data = result;
-			this.error = result.error ?? "";
-			this.status = result.success ? "success" : "error";
+			this.error = result?.error ?? "No Response";
+			this.status = result?.success ? "success" : "error";
 		}
 		catch(err)
 		{
