@@ -3,7 +3,7 @@
 REPO=egroupware
 IMAGE=development
 BASE=node:20-bookworm-slim
-RECOMMENDED_PHP_VERSION=8.4
+RECOMMENDED_PHP_VERSION=8.5
 PLATFORMS=linux/amd64,linux/arm64/v8
 
 PHP_VERSION=${1:-$RECOMMENDED_PHP_VERSION}

@@ -49,7 +49,7 @@ docker pull $BASE
 if docker buildx 2>&1 >/dev/null
 then
   # buildx available --> build a multi-platform image and push it for all tags
-  docker buildx build --push --no-cache --platform $PLATFORMS --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/egroupware:$TAG $extra_tags .
+  docker buildx build --push --platform $PLATFORMS --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/egroupware:$TAG $extra_tags .
 else
   # no buildx, eg. on dev only builds amd64!
   docker build --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/egroupware:$TAG . && {
