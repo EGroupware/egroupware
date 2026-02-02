@@ -351,8 +351,8 @@ export class EgwFrameworkApp extends LitElement
 		await Promise.allSettled([
 			this.loadingPromise,
 			customElements.whenDefined("sl-split-panel"),
-			this.leftSplitter.updateComplete,
-			this.rightSplitter.updateComplete
+			this.leftSplitter?.updateComplete,
+			this.rightSplitter?.updateComplete
 		]);
 		return result
 	}
@@ -798,13 +798,13 @@ export class EgwFrameworkApp extends LitElement
 
 	private hasSideContent(side : "left" | "right")
 	{
-		let hasContent = this.hasSlotController.test(`${side}-header`) ||
-			this.hasSlotController.test(side) || this.hasSlotController.test(`${side}-footer`);
+		let hasContent = this.hasSlotController?.test(`${side}-header`) ||
+			this.hasSlotController?.test(side) || this.hasSlotController?.test(`${side}-footer`);
 
 		if(side == "left" && !hasContent)
 		{
 			// Left side has an additional slot above the favourites
-			hasContent = hasContent || this.hasSlotController.test("left-top") ||
+			hasContent = hasContent || this.hasSlotController?.test("left-top") ||
 				// Favourites work through egw_app class, so if it's not there, favourites won't work
 				this.features?.favorites && window.app[this.name];
 		}
@@ -1432,9 +1432,9 @@ export class EgwFrameworkApp extends LitElement
 
 	render()
 	{
-		const hasLeftSlots = this.hasSideContent("left")
+		const hasLeftSlots = this.hasSideContent("left");
 		const hasRightSlots = this.hasSideContent("right");
-		const hasHeaderContent = this.hasSlotController.test("main-header");
+		const hasHeaderContent = this.hasSlotController?.test("main-header");
 
 		const leftWidth = this.leftCollapsed || !hasLeftSlots ? this.leftPanelInfo.hiddenWidth :
 						  this.leftPanelInfo.preferenceWidth;
