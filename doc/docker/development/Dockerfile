@@ -5,10 +5,10 @@
 ################################################################################
 ARG ARCH=
 FROM ${ARCH}node:20-bookworm-slim
-MAINTAINER rb@egroupware.org
+LABEL maintainer="rb@egroupware.org"
 
 ARG VERSION=dev-master
-ARG PHP_VERSION=8.4
+ARG PHP_VERSION=8.5
 
 # keeping build-arg in environment for entrypoint.sh
 ENV VERSION=$VERSION
