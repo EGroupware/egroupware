@@ -352,7 +352,7 @@ export class EgwFramework extends LitElement
 			{
 				this.tabs?.show(appname);
 			}
-			if(url && url != existing.url)
+			if(url)
 			{
 				existing.load(url);
 			}
@@ -650,6 +650,11 @@ export class EgwFramework extends LitElement
 				{
 					dialog.shadowRoot.querySelector(".dialog__panel").style.height = _height + "px";
 				}
+			}
+			if(!dialog || !dialog.updateComplete)
+			{
+				this.egw.debug("warn", `openPopup(${_url},...) did not return a dialog`, dialog);
+				return;
 			}
 
 			// Listen for close - wait for updateComplete to allow etemplate a chance to bind first if it needs
