@@ -73,7 +73,7 @@ attachments	mail	sk	Prílohy
 attachments, ...	mail	sk	prílohy, ...
 authentication	mail	sk	Overenie
 available personal email-accounts/profiles	mail	sk	Dostupné osobné e-mailové účty/profily
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sk	Upozorňujeme, že pridaním všetkých vybraných súborov v režime %1 sa zmenia aj všetky existujúce prílohy v zozname na režim %2.<br>Chcete pokračovať?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sk	Upozorňujeme, že pridaním všetkých vybraných súborov v režime %1 sa zmenia aj všetky existujúce prílohy v zozname na režim %2.\nChcete pokračovať?
 be aware that all attachments will be sent as %1!	mail	sk	Upozornenie: všetky prílohy budú odoslané ako %1!
 before reply, visible during compose	mail	sk	Pred odpoveď, viditeľné počas písania
 blacklisted mails are marked as spam	mail	sk	E-maily na čiernej listine sa označia ako Spam
@@ -347,7 +347,7 @@ mailaccount	mail	sk	Mailový účet
 mailinglist	mail	sk	Poštový zoznam
 mails	common	sk	Správy
 mails can be copied to that folder via context menu, if folder is configured.	mail	sk	Správy sa dajú kopírovať do toho priečinku cez kontextovú ponuku, ak je nastavený priečinok.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sk	Poštový server oznámil:<br><br>%1<br><br>Chcete pokračovať v odstraňovaní vybraných správ (v tom prípade kliknite na OK)?<br>Ak nie, prosím skúste vyprázdniť Odpadkový kôš pred vykonaním ďalších krokov. (v tom prípade kliknite na Cancel)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sk	Poštový server oznámil:\n\n%1\n\nChcete pokračovať v odstraňovaní vybraných správ (v tom prípade kliknite na OK)?\nAk nie, prosím skúste vyprázdniť Odpadkový kôš pred vykonaním ďalších krokov. (v tom prípade kliknite na Cancel)
 mark all as read	mail	sk	Označiť všetko za prečítané
 mark all messages in folder as read	mail	sk	Označiť všetky správy v priečinku ako prečítané
 mark as deleted	mail	sk	Označiť ako odstránené
@@ -552,7 +552,7 @@ select files to upload	mail	sk	Vyberte súbory ktoré sa priložia k správe
 select mail addresses from addressbook	mail	sk	Vyberte e-mailovú adresu (adresy) z adresára
 select multiple	mail	sk	Vyberte viacero
 select or insert email address	mail	sk	Vyberte alebo vložte e-mailovú adresu
-selected	mail	sk	vybrané
+selected	mail	sk	vybrané.
 selected date range (with quicksearch)	mail	sk	Vybraný rozsah dátumov (pomocou rýchleho vyhľadania)
 send a reject message:	mail	sk	Poslať správu o odmietnutí:
 send files as	mail	sk	Poslať súbor ako
@@ -626,7 +626,6 @@ switch off encryption?	mail	sk	Vypnúť šifrovanie?
 template folder	mail	sk	Priečinok Šablóny
 templates folder	mail	sk	Priečinok šablón
 test connection	mail	sk	Testovať aktívne pripojenie
-test connection and display basic information about the selected profile	mail	sk	Testovať pripojenie a zobraziť základné informácie o vybranom profile
 text	mail	sk	Text
 text mode	mail	sk	Textový režim
 text/plain	mail	sk	Čistý text
@@ -652,7 +651,7 @@ trash folder	mail	sk	Priečinok Odpadkový kôš
 trust servers seen / unseen info	mail	sk	Dôverovať príznaku servera o prečítaní/neprečítaní správy
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	sk	Dôverovať serveru pri zisťovaní stavu priečinka. Ak vyberiete NIE, sami si pohľadáme a spočítame neprečítané správy
 trying to recover from session data	mail	sk	Pokušam sa obnoviť z údajov relácie
-turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	sk	Vypnúť vodorovnú čiaru medzi podpisom a napísanou správou (toto nie je v súlade s RFC).<br>Ak používate šablóny, táto možnosť sa uplatní len na textovú časť správy.
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	sk	Vypnúť vodorovnú čiaru medzi podpisom a napísanou správou (toto nie je v súlade s RFC).\nAk používate šablóny, táto možnosť sa uplatní len na textovú časť správy.
 unable to fetch vacation!	mail	sk	Nepodarilo sa zistiť údaje o neprítomnosti!
 unconditional	mail	sk	Vždy
 undelete	mail	sk	Obnoviť odstránené
@@ -708,4 +707,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	sk	Musíte najprv vybrať niektoré priečinky (kliknutím na ne)!
 you will loose current message body, unless you save it to your clipboard!	mail	sk	Stratíte celé telo správy, ledaže by ste si ho uložili do schránky!
 you've got new mail	mail	sk	Máte novú správu
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sk	Váš zostávajúci priestor v rámci kvóty %1 je príliš malý, nemusí sa Vám podariť odoslať alebo prijať ďalšie správy.<br>Skúste použiť funkciu Vyprázdniť odpadkový kôš a Vyprázdniť priečinok Spam, možno získate nejaký priestor.<br>Ak to nepomôže, skúste požiadať správcu o pridelenie väčšej kvóty.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sk	Váš zostávajúci priestor v rámci kvóty %1 je príliš malý, nemusí sa Vám podariť odoslať alebo prijať ďalšie správy.\nSkúste použiť funkciu Vyprázdniť odpadkový kôš a Vyprázdniť priečinok Spam, možno získate nejaký priestor.\nAk to nepomôže, skúste požiadať správcu o pridelenie väčšej kvóty.

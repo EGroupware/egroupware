@@ -35,7 +35,7 @@ attach users vcard at compose to every new mail	mail	pl	Dołączanie wizytówki 
 attachment has been saved successfully.	mail	pl	Załącznik został pomyślnie zapisany.
 attachments	mail	pl	Załączniki
 attachments, ...	mail	pl	załączniki, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pl	Należy pamiętać, że dodanie wszystkich wybranych plików w trybie %1 spowoduje również zmianę wszystkich istniejących załączników na liście w tryb %2.<br>Czy chcesz kontynuować?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pl	Należy pamiętać, że dodanie wszystkich wybranych plików w trybie %1 spowoduje również zmianę wszystkich istniejących załączników na liście w tryb %2.\nCzy chcesz kontynuować?
 be aware that all attachments will be sent as %1!	mail	pl	Pamiętaj, że wszystkie załączniki zostaną wysłane w trybie %1!
 by date	mail	pl	Według daty
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pl	Domyślnie "http://" jest po prostu zastępowane przez "https://". Możesz skonfigurować 'https://proxy.egroupware.org/', aby ładować również obrazy dostępne tylko przez http.
@@ -97,6 +97,7 @@ don't use trash	mail	pl	Nie używaj Kosza
 draft	mail	pl	Szkic
 draft folder	mail	pl	Folder szkiców
 drafts	mail	pl	Szkice
+drafts folder	mail	pl	Folder Szkice
 edit account	mail	pl	Edytuj konto użytkownika
 edit vacation settings	mail	pl	Edytuj ustawienia autorespondera
 email address	mail	pl	Adres e-mail
@@ -206,7 +207,7 @@ mailaccount	mail	pl	Konto pocztowe
 mailinglist	mail	pl	Lista mailingowa
 mails	common	pl	Poczta
 mails can be copied to that folder via context menu, if folder is configured.	mail	pl	Wiadomości można kopiować do tego folderu za pomocą menu kontekstowego, jeśli folder jest skonfigurowany.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pl	Serwer pocztowy zgłosił:<br><br>%1<br><br>Czy chcesz kontynuować, usuwając wybrane wiadomości natychmiast (kliknij ok)?<br>Jeśli nie, spróbuj opróżnić folder śmieci przed kontynuowaniem. (kliknij anuluj)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pl	Serwer pocztowy zgłosił:\n\n%1\n\nCzy chcesz kontynuować, usuwając wybrane wiadomości natychmiast (kliknij ok)?\nJeśli nie, spróbuj opróżnić folder śmieci przed kontynuowaniem. (kliknij anuluj)
 mark all as read	mail	pl	Zaznacz wszystko jako przeczytane
 mark all messages in folder as read	mail	pl	Zaznacz wszystkie wiadomości w folderze jako przeczytane
 mark as deleted	mail	pl	Zaznacz jako usunietą
@@ -216,6 +217,7 @@ message body	mail	pl	Wiadomość
 message learned as spam and moved to spam folder	mail	pl	Wiadomość została rozpoznana jako spam i przeniesiona do folderu spamu
 modify subject	mail	pl	Zmień temat
 modify subject of this message	mail	pl	Zmień temat tej wiadomości
+move selected mails to archive	mail	pl	Przenieś wybrane wiadomości e-mail do archiwum
 move selected to	mail	pl	Przenieś wiadomości do
 move to	mail	pl	Przenieś do
 move to archive	mail	pl	Przenieś do folderu archiwum
@@ -311,6 +313,7 @@ s/mime encryption failed because no certificate has been found for sender addres
 save all	mail	pl	Zapisz wszystko
 save all attachments to filemanager	mail	pl	Zapisz wszystkie załączniki do menadżera plików
 save as draft	mail	pl	Zapisz jako szkic
+save as draft and print	mail	pl	Zapisz jako szkic i wydrukuj
 save as infolog	mail	pl	Zapisz jako zadanie Dziennika InfoLog
 save as infolog on send	mail	pl	Sprawdź przycisk, aby utworzyć jako InfoLog po wysłaniu
 save as tracker on send	mail	pl	Zaznacz przycisk, aby utworzyć jako bilet po wysłaniu
@@ -326,6 +329,7 @@ select an existing entry in order to append mail content to it	mail	pl	Wybierz i
 select an item to read	mail	pl	Wybierz element do przeczytania
 select mail addresses from addressbook	mail	pl	Wybierz adres(y) e-mail z książki adresowej
 select or insert email address	mail	pl	Wybierz lub wstaw adres e-mail
+selected	mail	pl	wybrane.
 selected date range (with quicksearch)	mail	pl	Zakres dat (z szybkim wyszukiwaniem)
 send message and move to send folder (if configured)	mail	pl	Wyślij wiadomość i przenieś do folderu wysyłania (jeśli skonfigurowano)
 send message pgp encrypted: requires keys from all recipients!	mail	pl	Wysyłanie wiadomości zaszyfrowanych PGP: wymaga kluczy od wszystkich odbiorców!
@@ -388,6 +392,7 @@ vacation notice	mail	pl	Powiadomienie urlopowe
 vacation notice is active	mail	pl	Powiadomienie urlopowe jest aktywne
 vacation start-date must be before the end-date!	mail	pl	Start Urlopu musi być wcześniejszy niż jego koniec
 validate addresses on submit:	mail	pl	Weryfikacja adresów przy wysyłaniu:
+validate selected addresses on submit:	mail	pl	Sprawdź poprawność wybranych adresów podczas wysyłania:
 view header lines	mail	pl	Pokaż linie nagłówka
 what to do when you delete a message	mail	pl	Co zrobić po usunięciu wiadomości.
 when deleting messages	mail	pl	Gdy usuwasz wiadomość
@@ -407,4 +412,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	pl	Musisz najpierw wybrać niektóre foldery (klikając na nie)!
 you will loose current message body, unless you save it to your clipboard!	mail	pl	Utracisz aktualną treść wiadomości, chyba że zapiszesz ją w schowku!
 you've got new mail	mail	pl	Masz nową pocztę
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pl	Twój pozostały limit %1 jest zbyt niski, możesz nie być w stanie wysyłać/odbierać kolejnych wiadomości e-mail.<br>Chociaż wyczyszczenie wiadomości e-mail w koszu lub folderze śmieci może pomóc odzyskać trochę wolnego miejsca.<br>Jeśli to nie pomogło, poproś administratora o zwiększenie limitu.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pl	Twój pozostały limit %1 jest zbyt niski, możesz nie być w stanie wysyłać/odbierać kolejnych wiadomości e-mail.\nChociaż wyczyszczenie wiadomości e-mail w koszu lub folderze śmieci może pomóc odzyskać trochę wolnego miejsca.\nJeśli to nie pomogło, poproś administratora o zwiększenie limitu.

@@ -40,7 +40,7 @@ attach users vcard at compose to every new mail	mail	fi	Liitä käyttäjän vCar
 attachment has been saved successfully.	mail	fi	Liite on tallennettu onnistuneesti.
 attachments	mail	fi	Liitteet
 attachments, ...	mail	fi	liitetiedostot, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	fi	Huomaa, että kun kaikki valitut tiedostot lisätään %1-tilaan, myös kaikki luettelossa olevat liitetiedostot muutetaan %2-tilaan.<br>Haluatko jatkaa?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	fi	Huomaa, että kun kaikki valitut tiedostot lisätään %1-tilaan, myös kaikki luettelossa olevat liitetiedostot muutetaan %2-tilaan.\nHaluatko jatkaa?
 be aware that all attachments will be sent as %1!	mail	fi	Huomaa, että kaikki liitetiedostot lähetetään muodossa %1!
 by date	mail	fi	Päivämäärän mukaan
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	fi	Oletusarvoisesti "http://" korvataan vain "https://". Voit vapaasti määrittää 'https://proxy.egroupware.org/' lataamaan myös kuvia, jotka ovat saatavilla vain http:n kautta.
@@ -107,6 +107,7 @@ don't use trash	mail	fi	Älä käytä Roskakori -kansiota
 draft	mail	fi	Luonnos
 draft folder	mail	fi	Luonnokset -kansio
 drafts	mail	fi	Luonnokset
+drafts folder	mail	fi	Luonnokset-kansio
 edit account	mail	fi	Muokkaa käyttäjätiliä
 edit vacation settings	mail	fi	Muokkaa lomavastaaja-asetuksia
 email address	mail	fi	Sähköpostiosoite
@@ -212,7 +213,7 @@ mailaccount	mail	fi	Sähköpostitili
 mailinglist	mail	fi	Postituslista
 mails	common	fi	Sähköpostit
 mails can be copied to that folder via context menu, if folder is configured.	mail	fi	Sähköpostit voidaan kopioida kyseiseen kansioon kontekstivalikon kautta, jos kansio on määritetty.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	fi	Postipalvelin ilmoitti:<br><br>%1<br><br>Tahdotko jatkaa poistamalla valitut viestit välittömästi (napsauta ok)?<br>Jos et, yritä tyhjentää roskapostikansio ennen kuin jatkat. (napsauta peruuta)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	fi	Postipalvelin ilmoitti:\n\n%1\n\nTahdotko jatkaa poistamalla valitut viestit välittömästi (napsauta ok)?\nJos et, yritä tyhjentää roskapostikansio ennen kuin jatkat. (napsauta peruuta)
 mark all as read	mail	fi	Merkitse kaikki luetuiksi
 mark all messages in folder as read	mail	fi	Merkitse kaikki kansiossa olevat viestit luetuiksi
 mark as deleted	mail	fi	Merkitse poistetuksi
@@ -221,6 +222,7 @@ matches regexp	mail	fi	Täsmäävät merkkijonoon
 message learned as spam and moved to spam folder	mail	fi	Viesti tunnistettiin roskapostiksi ja siirrettiin roskapostikansioon
 modify subject	mail	fi	Aiheen muuttaminen
 modify subject of this message	mail	fi	Muokkaa tämän viestin aihetta
+move selected mails to archive	mail	fi	Siirrä valitut sähköpostit arkistoon
 move selected to	mail	fi	Siirrä valittu osoitteeseen
 move to	mail	fi	Siirrä osoitteeseen
 move to trash	mail	fi	Siirrä roskakoriin
@@ -315,6 +317,7 @@ s/mime encryption failed because no certificate has been found for sender addres
 save all	mail	fi	Tallenna kaikki
 save all attachments to filemanager	mail	fi	Tallenna kaikki liitetiedostot tiedostonhallintaan
 save as draft	mail	fi	Tallenna luonnoksena
+save as draft and print	mail	fi	Tallenna luonnoksena ja tulosta
 save as infolog	mail	fi	Tallenna InfoLogina
 save as infolog on send	mail	fi	Tarkista painike, jolla luodaan InfoLog lähetyksen jälkeen
 save as ticket	mail	fi	Tallenna reklamaationa
@@ -333,6 +336,7 @@ select an existing entry in order to append mail content to it	mail	fi	Valitse o
 select an item to read	mail	fi	Valitse kohde luettavaksi
 select mail addresses from addressbook	mail	fi	Valitse sähköpostiosoite(t) osoitekirjasta
 select or insert email address	mail	fi	Valitse tai lisää sähköpostiosoite
+selected	mail	fi	valittu.
 selected date range (with quicksearch)	mail	fi	Valittu päivämääräväli (pikahaun avulla)
 send message and move to send folder (if configured)	mail	fi	Lähetä viesti ja siirrä se lähetyskansioon (jos määritetty)
 send message pgp encrypted: requires keys from all recipients!	mail	fi	Lähetä viesti PGP-salattuna: vaatii kaikkien vastaanottajien avaimet!
@@ -395,6 +399,7 @@ vacation notice	mail	fi	Lomavastaaja
 vacation notice is active	mail	fi	Lomavastaaja on käytössä
 vacation start-date must be before the end-date!	mail	fi	Lomavastaajan aloituspäivän pitää olla ennen loppumispäivää!
 validate addresses on submit:	mail	fi	Vahvista osoitteet lähetettäessä:
+validate selected addresses on submit:	mail	fi	Vahvista valitut osoitteet lähetettäessä:
 view header lines	mail	fi	Näytä ylätunnisterivit
 what to do when you delete a message	mail	fi	Mitä tehdä, kun poistat viestin.
 when deleting messages	mail	fi	Kun poistetaan viestejä
@@ -414,4 +419,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	fi	Sinun on ensin valittava joitakin kansioita (klikkaamalla niitä)!
 you will loose current message body, unless you save it to your clipboard!	mail	fi	Menetät nykyisen viestin rungon, ellet tallenna sitä leikepöydälle!
 you've got new mail	mail	fi	Sinulle on uusi sähköposti
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	fi	Jäljellä oleva kiintiö %1 on liian pieni, et ehkä pysty lähettämään/vastaanottamaan lisää sähköposteja.<br>Vaikka sähköpostien siivoaminen roskakoriin tai roskapostikansioon saattaa auttaa sinua saamaan hieman vapaata tilaa takaisin.<br>Jos tämä ei auttanut, pyydä ylläpitäjältäsi lisää kiintiötä.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	fi	Jäljellä oleva kiintiö %1 on liian pieni, et ehkä pysty lähettämään/vastaanottamaan lisää sähköposteja.\nVaikka sähköpostien siivoaminen roskakoriin tai roskapostikansioon saattaa auttaa sinua saamaan hieman vapaata tilaa takaisin.\nJos tämä ei auttanut, pyydä ylläpitäjältäsi lisää kiintiötä.

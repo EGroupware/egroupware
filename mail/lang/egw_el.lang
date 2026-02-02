@@ -72,7 +72,7 @@ attachments	mail	el	Συνημμένα
 attachments, ...	mail	el	συνημμένα, ...
 authentication	mail	el	Αυθεντικοποίηση
 available personal email-accounts/profiles	mail	el	διαθέσιμοι προσωπικοί λογαριασμοί ηλεκτρονικού ταχυδρομείου/προφίλ
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	el	Λάβετε υπόψη ότι με την προσθήκη όλων των επιλεγμένων αρχείων ως λειτουργία %1, θα αλλάξει και όλα τα υπάρχοντα συνημμένα στη λίστα σε λειτουργία %2.<br><br>Θέλετε να συνεχίσετε;
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	el	Λάβετε υπόψη ότι με την προσθήκη όλων των επιλεγμένων αρχείων ως λειτουργία %1, θα αλλάξει και όλα τα υπάρχοντα συνημμένα στη λίστα σε λειτουργία %2.\n\nΘέλετε να συνεχίσετε;
 be aware that all attachments will be sent as %1!	mail	el	Λάβετε υπόψη σας πως όλα τα συνημμένα θα σταλούν ως %1!
 before reply, visible during compose	mail	el	Πριν από την απάντηση. Θα εμφανίζεται κατά την διάρκεια της σύνταξης του μηνύματος
 blacklisted mails are marked as spam	mail	el	Μηνύματα που βρίσκονται στη μαύρη λίστα μαρκάρονται ως ανεπίκλητα μηνύματα (spam)
@@ -338,7 +338,7 @@ mailaccount	mail	el	Λογαριασμός αλληλογραφίας
 mailinglist	mail	el	Λίστα αλληλογραφίας
 mails	common	el	Μηνύματα
 mails can be copied to that folder via context menu, if folder is configured.	mail	el	Τα μηνύματα μπορούν να αντιγραφούν σε αυτόν το φάκελο μέσω του μενού περιβάλλοντος, εάν έχει ρυθμιστεί ο φάκελος.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	el	Ο διακομιστής αλληλογραφίας ανέφερε:<br><br>%1<br><br>Θέλετε να προχωρήσετε με την άμεση διαγραφή των επιλεγμένων μηνυμάτων (κάντε κλικ στο ok);<br>Αν όχι, προσπαθήστε να αδειάσετε το φάκελο απορριμμάτων πριν συνεχίσετε. (κάντε κλικ στο Cancel)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	el	Ο διακομιστής αλληλογραφίας ανέφερε:\n\n%1\n\nΘέλετε να προχωρήσετε με την άμεση διαγραφή των επιλεγμένων μηνυμάτων (κάντε κλικ στο ok);\nΑν όχι, προσπαθήστε να αδειάσετε το φάκελο απορριμμάτων πριν συνεχίσετε. (κάντε κλικ στο Cancel)
 mark all as read	mail	el	Χαρακτηρισμός όλων ως αναγνωσμένων
 mark all messages in folder as read	mail	el	Χαρακτηρισμός όλων των μηνυμάτων στο φάκελο ως αναγνωσμένα
 mark as deleted	mail	el	Σημείωση ως διαγραμένο
@@ -523,7 +523,7 @@ select files to upload	mail	el	Επιλογή αρχείων για αναφόρ
 select mail addresses from addressbook	mail	el	Επιλέξτε διεύθυνση(ες) ηλεκτρονικού ταχυδρομείου από το βιβλίο διευθύνσεων
 select multiple	mail	el	Επιλογή πολλαπλών
 select or insert email address	mail	el	Επιλογή ή εισαγωγή διεύθυνσης ηλεκτρονικού ταχυδρομείου
-selected	mail	el	επιλεγμένο
+selected	mail	el	επιλεγμένο.
 selected date range (with quicksearch)	mail	el	Επιλεγμένο διάστημα ημερομηνιών (με γρήγορη αναζήτηση)
 send a reject message:	mail	el	Αποστολή ενός μηνύματος απόρριψης:
 send files as	mail	el	Αποστολή αρχείου ως
@@ -645,4 +645,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	el	Πρέπει πρώτα να επιλέξετε ορισμένους φακέλους (κάνοντας κλικ πάνω τους)!
 you will loose current message body, unless you save it to your clipboard!	mail	el	Θα χάσετε το τρέχον σώμα του μηνύματος, εκτός αν το αποθηκεύσετε στο πρόχειρο!
 you've got new mail	mail	el	Έχετε νέο μήνυμα
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	el	Η εναπομείνασα ποσόστωση %1 είναι πολύ χαμηλή, ενδέχεται να μην μπορείτε να στείλετε/λήψετε περαιτέρω μηνύματα ηλεκτρονικού ταχυδρομείου.<br>Αν και ο καθαρισμός των μηνυμάτων ηλεκτρονικού ταχυδρομείου στα σκουπίδια ή στο φάκελο ανεπιθύμητης αλληλογραφίας μπορεί να σας βοηθήσει να αποκτήσετε ξανά ελεύθερο χώρο.<br>Αν αυτό δεν βοήθησε, ζητήστε από το διαχειριστή σας περισσότερη ποσόστωση.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	el	Η εναπομείνασα ποσόστωση %1 είναι πολύ χαμηλή, ενδέχεται να μην μπορείτε να στείλετε/λήψετε περαιτέρω μηνύματα ηλεκτρονικού ταχυδρομείου.\nΑν και ο καθαρισμός των μηνυμάτων ηλεκτρονικού ταχυδρομείου στα σκουπίδια ή στο φάκελο ανεπιθύμητης αλληλογραφίας μπορεί να σας βοηθήσει να αποκτήσετε ξανά ελεύθερο χώρο.\nΑν αυτό δεν βοήθησε, ζητήστε από το διαχειριστή σας περισσότερη ποσόστωση.

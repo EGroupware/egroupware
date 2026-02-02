@@ -27,7 +27,7 @@ attach files	mail	ro	Atașați fișiere
 attach users vcard at compose to every new mail	mail	ro	Atașarea vCard-ului utilizatorului la fiecare e-mail nou în momentul compunerii.
 attachment has been saved successfully.	mail	ro	Atașamentul a fost salvat cu succes.
 attachments, ...	mail	ro	atașamente, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ro	Fiți atenți, prin adăugarea tuturor fișierelor selectate în modul %1, se vor schimba și toate atașamentele existente în listă în modul %2.<br>Doriți să continuați?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ro	Fiți atenți, prin adăugarea tuturor fișierelor selectate în modul %1, se vor schimba și toate atașamentele existente în listă în modul %2.\nDoriți să continuați?
 be aware that all attachments will be sent as %1!	mail	ro	Rețineți că toate atașamentele vor fi trimise în modul %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ro	În mod implicit, "http://" este înlocuit cu "https://". Nu ezitați să.
 caching of flags	mail	ro	Memorarea în cache a steagurilor
@@ -62,6 +62,11 @@ do you really want to toggle label %1 for all messages in the current view?	mail
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ro	Doriți să vi se ceară confirmarea înainte de a atașa mesajele selectate la un nou e-mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	ro	Doriți să vi se ceară confirmare înainte de a muta mesajele selectate într-un alt dosar?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	ro	Doriți să împiedicați editarea/configurarea notificării prin e-mail la alte adrese de e-mail în cazul în care sosesc e-mailuri(, chiar dacă Sieve este activat)?
+don't use draft folder	mail	ro	Nu utilizați dosarul Schițe
+draft	mail	ro	Schiță
+draft folder	mail	ro	Dosar Schițe
+drafts	mail	ro	Schițe
+drafts folder	mail	ro	Dosar Schițe
 email address	mail	ro	Adresa de e-mail
 email notification update failed! you need to set an email address!	mail	ro	Actualizarea notificării prin e-mail a eșuat! Trebuie să setați o adresă de e-mail!
 emailaddress	admin	ro	Adresa de e-mail
@@ -70,6 +75,7 @@ emails in whitelisted domains are not marked as spam	mail	ro	Emailurile din dome
 enable	mail	ro	Activați
 enabled	mail	ro	Activat
 encrypt your message with smime certificate	mail	ro	Criptați mesajul cu certificat S/MIME
+error: could not save message as draft	mail	ro	Eroare: Nu s-a putut salva mesajul ca schiță
 every %1. day	mail	ro	La fiecare %1. zi
 everyone	mail	ro	Toată lumea
 examine namespace to retrieve folders in others and shared	mail	ro	Examinați spațiul de nume pentru a prelua folderele din altele și partajate
@@ -145,13 +151,14 @@ mailaccount	mail	ro	Contul de poștă
 mailinglist	mail	ro	Listă de corespondență
 mails	common	ro	Mesaje
 mails can be copied to that folder via context menu, if folder is configured.	mail	ro	Mesajele pot fi copiate în acest dosar prin intermediul meniului contextual, dacă dosarul este configurat.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ro	Mailserver a raportat:<br><br>%1<br><br>Doriți să continuați prin ștergerea imediată a mesajelor selectate (faceți clic pe OK)?<br>Dacă nu, încercați să goliți dosarul de gunoi înainte de a continua. (faceți clic pe anulare)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ro	Mailserver a raportat:\n\n%1\n\nDoriți să continuați prin ștergerea imediată a mesajelor selectate (faceți clic pe OK)?\nDacă nu, încercați să goliți dosarul de gunoi înainte de a continua. (faceți clic pe anulare)
 mark all as read	mail	ro	Marcați toate ca fiind citite
 mark all messages in folder as read	mail	ro	Marcați toate mesajele din dosar ca fiind citite
 mark as deleted	mail	ro	Marcați ca fiind șterse
 message learned as spam and moved to spam folder	mail	ro	Mesaj identificat ca spam și mutat în dosarul spam
 modify subject	mail	ro	Modificați subiectul
 modify subject of this message	mail	ro	Modificați subiectul acestui mesaj
+move selected mails to archive	mail	ro	Mută e-mailurile selectate în arhivă
 move selected to	mail	ro	Mutați selectat la
 move to	mail	ro	Mutarea la
 move to archive	mail	ro	Mutarea în folderul de arhivă
@@ -220,6 +227,8 @@ required pear class mail/mimedecode.php not found.	mail	ro	Clasa necesară PEAR 
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ro	Necesar de dezactivat dacă folosiți Dovecot cu steaguri private văzute pe folderul partajat sau de utilizator!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	ro	Criptarea S/MIME a eșuat deoarece nu a fost găsit niciun certificat pentru adresa expeditorului: %1
 save all attachments to filemanager	mail	ro	Salvați toate atașamentele în filemanager
+save as draft	mail	ro	Salvați ca schiță
+save as draft and print	mail	ro	Salvați ca schiță și imprimați
 save as infolog on send	mail	ro	Bifați butonul pentru a crea ca InfoLog după trimitere
 save as tracker on send	mail	ro	Bifați butonul pentru a crea un bilet după expediere
 save the drafted message as eml file into vfs	mail	ro	Salvați mesajul redactat ca fișier eml în Managerul de fișiere
@@ -232,6 +241,7 @@ select an existing entry in order to append mail content to it	mail	ro	Selectaț
 select an item to read	mail	ro	Selectați un element pentru a citi
 select mail addresses from addressbook	mail	ro	Selectați adresa (adresele) de e-mail din agendă
 select or insert email address	mail	ro	Selectați sau introduceți adresa de e-mail
+selected	mail	ro	selectat.
 selected date range (with quicksearch)	mail	ro	Interval de date selectat (cu căutare rapidă)
 send message and move to send folder (if configured)	mail	ro	Trimiterea mesajului și mutarea în dosarul de trimitere (dacă este configurat)
 send message pgp encrypted: requires keys from all recipients!	mail	ro	Trimiteți mesajul criptat PGP: necesită chei de la toți destinatarii!
@@ -277,6 +287,7 @@ trash	mail	ro	Coș de gunoi
 trash folder	mail	ro	Dosar coș de gunoi
 unconditional	mail	ro	Întotdeauna
 validate addresses on submit:	mail	ro	Validarea adreselor la trimitere:
+validate selected addresses on submit:	mail	ro	Validează adresele selectate la trimitere:
 view header lines	mail	ro	Vizualizați liniile antetului
 what to do when you delete a message	mail	ro	Ce trebuie să faceți atunci când ștergeți un mesaj.
 write & delete	mail	ro	scrieți & ștergeți
@@ -289,4 +300,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	ro	Trebuie să selectați mai întâi unele dosare (făcând clic pe ele)!
 you will loose current message body, unless you save it to your clipboard!	mail	ro	Veți pierde corpul actual al mesajului, dacă nu îl salvați în clipboard!
 you've got new mail	mail	ro	Ați primit un mesaj nou
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ro	Cota rămasă de %1 este prea mică, este posibil să nu mai puteți trimite/recepționa alte e-mailuri.<br>Deși curățarea e-mailurilor din coșul de gunoi sau din dosarul nedorit vă poate ajuta să recuperați spațiu liber.<br>Dacă nu v-a ajutat, vă rugăm să cereți administratorului dvs. mai multă cotă.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ro	Cota rămasă de %1 este prea mică, este posibil să nu mai puteți trimite/recepționa alte e-mailuri.\nDeși curățarea e-mailurilor din coșul de gunoi sau din dosarul nedorit vă poate ajuta să recuperați spațiu liber.\nDacă nu v-a ajutat, vă rugăm să cereți administratorului dvs. mai multă cotă.

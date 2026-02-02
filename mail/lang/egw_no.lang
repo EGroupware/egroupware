@@ -26,7 +26,7 @@ attach users vcard at compose to every new mail	mail	no	Legg ved brukerens vCard
 attachment has been saved successfully.	mail	no	Vedlegg har blitt lagret.
 attachments	mail	no	Vedlegg
 attachments, ...	mail	no	vedlegg, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	no	Vær oppmerksom på at hvis du legger til alle valgte filer i %1-modus, endres også alle eksisterende vedlegg i listen til %2-modus.<br>Vil du fortsette?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	no	Vær oppmerksom på at hvis du legger til alle valgte filer i %1-modus, endres også alle eksisterende vedlegg i listen til %2-modus.\nVil du fortsette?
 be aware that all attachments will be sent as %1!	mail	no	Vær oppmerksom på at alle vedlegg vil bli sendt som %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	no	Som standard erstattes 'http://' bare med 'https://'. Konfigurer gjerne 'https://proxy.egroupware.org/' til også å laste inn bilder som bare er tilgjengelige via http.
 caching of flags	mail	no	Bufring av flagg
@@ -69,8 +69,13 @@ do you want to prevent the editing/setup of notification by mail to other emaila
 does not contain	mail	no	inneholder ikke
 does not match	mail	no	stemmer ikke
 does not match regexp	mail	no	stemmer ikke med regexp
+don't use draft folder	mail	no	Ikke bruk utkast-mappen
 don't use sent	mail	no	Ikke bruk Sendt
 don't use trash	mail	no	Ikke bruk Søppelkurv
+draft	mail	no	Utkast
+draft folder	mail	no	Utkast-mappe
+drafts	mail	no	Utkast
+drafts folder	mail	no	Utkast-mappe
 edit account	mail	no	Rediger konto
 edit vacation settings	mail	no	Redigere ferieinnstillinger
 email address	mail	no	E-postadresse
@@ -82,6 +87,7 @@ empty trash	mail	no	Tøm søppelkurv
 enable	mail	no	Aktivere
 enabled	mail	no	Aktivert
 encrypt your message with smime certificate	mail	no	Krypter meldingen din med S/MIME-sertifikat
+error: could not save message as draft	mail	no	Feil: Kunne ikke lagre meldingen som utkast
 event details follow	mail	no	Hendelsesdetaljer følger
 every %1. day	mail	no	Hver %1. dag
 everyone	mail	no	Alle
@@ -157,11 +163,12 @@ low priority	mail	no	Lav prioritet
 mail probably has no text-body	mail	no	Mailen har sannsynligvis ingen tekst
 mail settings	mail	no	Epost innstillinger
 mails can be copied to that folder via context menu, if folder is configured.	mail	no	E-postmeldinger kan kopieres til denne mappen via kontekstmenyen hvis mappen er konfigurert.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	no	Mailserver rapporterte:<br><br>%1<br><br>Vil du fortsette med å slette de valgte meldingene umiddelbart (klikk ok)?<br>Hvis ikke, kan du prøve å tømme papirkurven før du fortsetter. (klikk på Avbryt)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	no	Mailserver rapporterte:\n\n%1\n\nVil du fortsette med å slette de valgte meldingene umiddelbart (klikk ok)?\nHvis ikke, kan du prøve å tømme papirkurven før du fortsetter. (klikk på Avbryt)
 mark as deleted	mail	no	Merk som slettet
 matches	mail	no	treff
 matches regexp	mail	no	treffer regexp
 message learned as spam and moved to spam folder	mail	no	Melding oppdaget som søppelpost og flyttet til søppelpostmappen
+move selected mails to archive	mail	no	Flytt valgte e-poster til arkiv
 move selected to	mail	no	Flytt valgt til
 move to	mail	no	Flytt til
 move to archive	mail	no	Flytt til arkivmappe
@@ -232,6 +239,8 @@ required pear class mail/mimedecode.php not found.	mail	no	Påkrevd PEAR-klasse 
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	no	Påkrevd å deaktivere hvis du bruker Dovecot med private seen-flagg på delt mappe eller brukermappe!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	no	S/MIME-kryptering mislyktes fordi det ikke ble funnet noe sertifikat for avsenderadressen: %1
 save all	mail	no	Lagre alle
+save as draft	mail	no	Lagre som utkast
+save as draft and print	mail	no	Lagre som utkast og skriv ut
 save as infolog on send	mail	no	Kryss av for knappen for å opprette som InfoLog etter sending
 save as tracker on send	mail	no	Kryss av for at meldingen skal opprettes som ticket etter sending
 save the drafted message as eml file into vfs	mail	no	Lagre den utarbeidede meldingen som eml-fil i Filbehandling
@@ -244,6 +253,7 @@ select all	mail	no	Velg alle
 select an existing entry in order to append mail content to it	mail	no	Velg en eksisterende oppføring for å legge til e-postinnhold i den.
 select mail addresses from addressbook	mail	no	Velg e-postadresse(r) fra adresseboken
 select or insert email address	mail	no	Velg eller sett inn e-postadresse
+selected	mail	no	valgt.
 selected date range (with quicksearch)	mail	no	Valgt datointervall (med hurtigsøk)
 send message and move to send folder (if configured)	mail	no	Send melding og flytt til sendemappe (hvis konfigurert)
 send message pgp encrypted: requires keys from all recipients!	mail	no	Send meldingen PGP-kryptert: krever nøkler fra alle mottakere!
@@ -288,6 +298,7 @@ unflagged	mail	no	Avflagget
 unread	mail	no	Ulest
 vacation notice	mail	no	Ferie melding
 validate addresses on submit:	mail	no	Valider adresser ved sending:
+validate selected addresses on submit:	mail	no	Bekreft valgte adresser ved sending:
 view header lines	mail	no	Vis overskriftslinjer
 what to do when you delete a message	mail	no	Hva du skal gjøre når du sletter en melding.
 when deleting messages	mail	no	Når du sletter meldinger
@@ -303,4 +314,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	no	Du må velge noen mapper først (ved å klikke på dem)!
 you will loose current message body, unless you save it to your clipboard!	mail	no	Prarasite esamą žinutės tekstą, nebent išsaugosite jį iškarpinėje!
 you've got new mail	mail	no	Du har fått ny e-post
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	no	Jūsų likusi kvota %1 yra per maža, galite nebegalėti siųsti / gauti daugiau laiškų.<br>Nors išvalę laiškus iš šiukšlių ar nepageidaujamų laiškų aplanko galite atgauti šiek tiek laisvos vietos.<br>Jei tai nepadėjo, paprašykite administratoriaus suteikti daugiau kvotos.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	no	Jūsų likusi kvota %1 yra per maža, galite nebegalėti siųsti / gauti daugiau laiškų.\nNors išvalę laiškus iš šiukšlių ar nepageidaujamų laiškų aplanko galite atgauti šiek tiek laisvos vietos.\nJei tai nepadėjo, paprašykite administratoriaus suteikti daugiau kvotos.

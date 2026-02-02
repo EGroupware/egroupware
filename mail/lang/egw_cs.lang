@@ -168,7 +168,6 @@ does not contain	mail	cs	neobsahuje
 does not exist on imap server.	mail	cs	neexistuje na IMAP serveru.
 does not match	mail	cs	neshoduje se s
 does not match regexp	mail	cs	neshoduje se s regulárním výrazem
-don't use draft folder	mail	cs	Nepoužívat složku Rozepsané
 don't use sent	mail	cs	Nepoužívat Odeslané
 don't use template folder	mail	cs	Nepoužívat složku šablon
 don't use trash	mail	cs	Nepoužívat Koš
@@ -338,7 +337,7 @@ mailaccount	mail	cs	E-mailový účet
 mailinglist	mail	cs	Rozesílací seznam
 mails	common	cs	E-maily
 mails can be copied to that folder via context menu, if folder is configured.	mail	cs	Pokud je složka nakonfigurována, lze do ní maily kopírovat pomocí kontextové nabídky.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	cs	E-mailový server odpověděl:<br><br>%1<br><br>Chcete pokračovat okamžitým smazáním vybraných e-mailů (klikněte na tlačítko OK)?<br>Pokud ne, před pokračováním se pokuste vyprázdnit složku se smazanými zprávami (klikněte na tlačítko Zrušit).
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	cs	E-mailový server odpověděl:\n\n%1\n\nChcete pokračovat okamžitým smazáním vybraných e-mailů (klikněte na tlačítko OK)?\nPokud ne, před pokračováním se pokuste vyprázdnit složku se smazanými zprávami (klikněte na tlačítko Zrušit).
 mark all as read	mail	cs	Označit jako přečtené
 mark all messages in folder as read	mail	cs	Označit všechny zprávy ve složce jako přečtené
 mark as deleted	mail	cs	Označit jako smazané
@@ -361,7 +360,7 @@ modify subject of this message	mail	cs	Upravit předmět této zprávy
 move	mail	cs	Přesunout
 move folder	mail	cs	Přesunout složku
 move selected mails to archive	mail	cs	Přesunout vybrané zprávy do archivu
-move selected to	mail	cs	Přesunout vybrané (kam)
+move selected to	mail	cs	Přesunout vybrané do
 move to	mail	cs	Přesunout do
 move to archive	mail	cs	Přesunout do archivu
 move to trash	mail	cs	Přesunout do koše
@@ -539,7 +538,7 @@ select files to upload	mail	cs	Vyberte soubory pro nahrání
 select mail addresses from addressbook	mail	cs	Vyberte e-mailovou adresu (adresy) z adresáře
 select multiple	mail	cs	Vyberte více
 select or insert email address	mail	cs	Vyberte nebo vložte e-mailovou adresu
-selected	mail	cs	Vybráno
+selected	mail	cs	vybráno.
 selected date range (with quicksearch)	mail	cs	Zvolený rozsah datumu (pro rychlé hledání)
 send a reject message:	mail	cs	Odeslat odmítnutí:
 send files as	mail	cs	Odeslat soubor jako
@@ -613,7 +612,6 @@ switch off encryption?	mail	cs	Vypnout šifrování?
 template folder	mail	cs	Složka šablon
 templates folder	mail	cs	Složka pro šablony
 test connection	mail	cs	Test připojení
-test connection and display basic information about the selected profile	mail	cs	Test připojení a zobrazení základních informací o vybraném profilu
 text	mail	cs	Text
 text mode	mail	cs	Textový režim
 text/plain	mail	cs	Prostý text
@@ -639,7 +637,7 @@ trash folder	mail	cs	Koš
 trust servers seen / unseen info	mail	cs	Zabezpečení serveru pro informace o přečtených / nepřečtených zprávách
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	cs	Zabezpečení serveru při přijímání stavu složky. Pokud zvolíte Ne, budou vyhledány pouze nepřečtené zprávy.
 trying to recover from session data	mail	cs	Pokouším se obnovit data
-turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	cs	Nezobrazovat vodorovnou čáru mezi podpisem a textem zprávy (což neodpovídá RFC).<br>Pokud používáte šablony, tato volba bude aplikována pouze na textovou část zprávy.
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	cs	Nezobrazovat vodorovnou čáru mezi podpisem a textem zprávy (což neodpovídá RFC).\nPokud používáte šablony, tato volba bude aplikována pouze na textovou část zprávy.
 unable to fetch vacation!	mail	cs	Není možné získat automatickou odpověď
 unconditional	mail	cs	Vždy
 undelete	mail	cs	Obnovit
@@ -694,4 +692,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	cs	Nejprve je třeba vybrat některé složky (kliknutím na ně)!
 you will loose current message body, unless you save it to your clipboard!	mail	cs	Vlastní obsah zprávy (tělo) bude ztracen, nezkopírujete-li si jej do schránky!
 you've got new mail	mail	cs	Přišel Vám nový e-mail
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	cs	Vaše zbývající kvóta %1 je příliš nízká, možná nebudete moci odesílat/přijímat další e-maily.<br>I když vyčištění e-mailů v koši nebo složce nevyžádané pošty by vám mohlo pomoci získat zpět nějaké volné místo.<br>Pokud to nepomohlo, požádejte prosím svého správce o navýšení kvóty.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	cs	Vaše zbývající kvóta %1 je příliš nízká, možná nebudete moci odesílat/přijímat další e-maily.\nI když vyčištění e-mailů v koši nebo složce nevyžádané pošty by vám mohlo pomoci získat zpět nějaké volné místo.\nPokud to nepomohlo, požádejte prosím svého správce o navýšení kvóty.

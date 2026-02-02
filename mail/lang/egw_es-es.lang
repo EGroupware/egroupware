@@ -73,7 +73,7 @@ attachments	mail	es-es	Adjuntos
 attachments, ...	mail	es-es	Adjuntos, ...
 authentication	mail	es-es	Autenticación
 available personal email-accounts/profiles	mail	es-es	Cuentas de correo-e/perfiles personales disponibles
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	es-es	Tenga en cuenta que al añadir todos los archivos seleccionados como modo %1, también cambiará todos los adjuntos existentes en la lista al modo %2.<br>¿Desea continuar?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	es-es	Tenga en cuenta que al añadir todos los archivos seleccionados como modo %1, también cambiará todos los adjuntos existentes en la lista al modo %2.\n¿Desea continuar?
 be aware that all attachments will be sent as %1!	mail	es-es	¡Tenga en cuenta que todos los archivos adjuntos se enviarán como %1!
 before reply, visible during compose	mail	es-es	Antes de la respuesta, visible durante la composición
 blacklisted mails are marked as spam	mail	es-es	Los mensajes en la lista negra están marcados como spam
@@ -552,7 +552,7 @@ select files to upload	mail	es-es	Seleccionar archivos para subir
 select mail addresses from addressbook	mail	es-es	Seleccione la(s) dirección(es) de correo electrónico de la libreta de direcciones
 select multiple	mail	es-es	Seleccionar varios
 select or insert email address	mail	es-es	Seleccionar o insertar la dirección de correo electrónico
-selected	mail	es-es	seleccionado
+selected	mail	es-es	seleccionado.
 selected date range (with quicksearch)	mail	es-es	Rango de fechas seleccionado (con búsqueda rápida)
 send a reject message:	mail	es-es	Enviar un mensaje de rechazo:
 send files as	mail	es-es	Enviar archivos como
@@ -626,7 +626,6 @@ switch off encryption?	mail	es-es	¿Desea desactivar el cifrado?
 template folder	mail	es-es	Carpeta de plantillas
 templates folder	mail	es-es	Carpeta de plantillas
 test connection	mail	es-es	Conexión de prueba
-test connection and display basic information about the selected profile	mail	es-es	Probar conexión y mostrar información básica sobre el perfil seleccionado
 text	mail	es-es	Texto
 text mode	mail	es-es	Modo texto
 text/plain	mail	es-es	Texto
@@ -652,7 +651,7 @@ trash folder	mail	es-es	Carpeta Papelera
 trust servers seen / unseen info	mail	es-es	servidores de confianza información VISTA / NO VISTA
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	es-es	Confiar en el servidor al recuperar el estado de la carpeta. si selecciona no, buscaremos los mensajes NO VISTADOS y los contaremos nosotros mismos.
 trying to recover from session data	mail	es-es	Intentar recuperar los datos de la sesión
-turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	es-es	Desactivar la línea horizontal entre la firma y el mensaje compuesto (esto no está de acuerdo con RFC).<br>Si utiliza plantillas, esta opción sólo se aplica a la parte de texto del mensaje.
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	es-es	Desactivar la línea horizontal entre la firma y el mensaje compuesto (esto no está de acuerdo con RFC).\nSi utiliza plantillas, esta opción sólo se aplica a la parte de texto del mensaje.
 unable to fetch vacation!	mail	es-es	¡No se pueden recuperar las vacaciones!
 unconditional	mail	es-es	Siempre
 undelete	mail	es-es	Deshacer
@@ -708,4 +707,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	es-es	Primero debe seleccionar algunas carpetas (haciendo clic sobre ellas).
 you will loose current message body, unless you save it to your clipboard!	mail	es-es	¡Usted perderá el cuerpo del mensaje actual, a menos que lo guarde en su portapapeles!
 you've got new mail	mail	es-es	Tiene correo nuevo
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	es-es	Su cuota restante %1 es demasiado baja, es posible que no pueda enviar/recibir correos-e adicionales.<br>Aunque la limpieza de correos electrónicos en la papelera o en la carpeta basura podría ayudarle a recuperar el espacio libre.<br>Si eso no ayuda, solicite más cuota a su administrador.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	es-es	Su cuota restante %1 es demasiado baja, es posible que no pueda enviar/recibir correos-e adicionales.\nAunque la limpieza de correos electrónicos en la papelera o en la carpeta basura podría ayudarle a recuperar el espacio libre.\nSi eso no ayuda, solicite más cuota a su administrador.

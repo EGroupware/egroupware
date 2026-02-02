@@ -73,7 +73,7 @@ attachments	mail	de	Dateien
 attachments, ...	mail	de	Anhänge, ...
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	de	Wenn Sie alle ausgewählten Dateien als %1-Modus hinzufügen, werden auch alle in der Liste vorhandenen Anhänge in den %2-Modus geändert.<br>Wollen Sie fortfahren?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	de	Wenn Sie alle ausgewählten Dateien als %1-Modus hinzufügen, werden auch alle in der Liste vorhandenen Anhänge in den %2-Modus geändert.\nWollen Sie fortfahren?
 be aware that all attachments will be sent as %1!	mail	de	Beachten Sie, dass alle Anhänge als %1 gesendet werden!
 before reply, visible during compose	mail	de	Über dem zitierten Text, sichtbar während der Bearbeitung
 blacklisted mails are marked as spam	mail	de	E-Mail-Adressen, die in die Blacklist eingetragen werden, werden als Spam markiert
@@ -321,7 +321,7 @@ inbox	mail	de	Posteingang
 information to show on email tag	mail	de	Informationsanzeige auf dem E-Mail-Tag
 initialization of mail failed. please use the wizard to cope with the problem.	mail	de	Die Initializierung des Mail-Moduls ist fehlgeschlagen. Bitte benutzen Sie den Konfigurationsassistenten um die Konfiguration zu korrigieren.
 inline	mail	de	Weiterleiten
-insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten).<br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten).\nDie Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden
 job	mail	de	Dienstlich
 junk	mail	de	Spam
 junk folder	mail	de	Ordner für Spam-Nachrichten
@@ -347,7 +347,7 @@ mailaccount	mail	de	Mailkonto
 mailinglist	mail	de	Mailingliste
 mails	common	de	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	de	Mails können per Kontextmenü in diesen Ordner kopiert werden, wenn er konfiguriert ist.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	de	Der Mail-Server meldete:<br><br>%1 <br><br>Wollen Sie fortfahren und die ausgewählten Mails direkt löschen (OK klicken)?<br>Wenn nicht, bitte den Mülleimer leeren und es noch einmal versuchen. (Abbruch klicken)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	de	Der Mail-Server meldete:\n\n%1 \n\nWollen Sie fortfahren und die ausgewählten Mails direkt löschen (OK klicken)?\nWenn nicht, bitte den Mülleimer leeren und es noch einmal versuchen. (Abbruch klicken)
 mark all as read	mail	de	Alle als Gelesen markieren
 mark all messages in folder as read	mail	de	Alle Nachrichten in diesem Ordner als Gelesen markieren
 mark as deleted	mail	de	Als Gelöscht markieren
@@ -404,7 +404,7 @@ no sneak preview in list	mail	de	Ohne Kurzvorschau
 no subject given!	mail	de	Kein Betreff angegeben!
 no subject supplied	mail	de	Kein Betreff angegeben
 no text body supplied, check attachments for message text	mail	de	Keine Text vorhanden, bitte sehen Sie sich die Anlagen dieser E-Mail an
-no vacation notice text provided. please enter a message.	mail	de	Kein Nachrichtentext vorhanden.<br>Sie müssen einen Nachrichtentext eingeben um Ihre Abwesenheitsnotiz speichern (ändern, aktivieren oder deaktivieren) zu können.
+no vacation notice text provided. please enter a message.	mail	de	Kein Nachrichtentext vorhanden.\nSie müssen einen Nachrichtentext eingeben um Ihre Abwesenheitsnotiz speichern (ändern, aktivieren oder deaktivieren) zu können.
 no valid %1 folder configured!	mail	de	Kein gültiger %1 Ordner eingestellt!
 non	mail	de	Kein
 none, create all	mail	de	keine, erstellt alle
@@ -529,7 +529,7 @@ save attachments	mail	de	Anhänge speichern
 save email	mail	de	E-Mail speichern
 save message to disk	mail	de	Nachricht speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
-save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf im EGroupware Dateimanager ab.
+save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf im EGroupware Dateimanager ab
 save to disk	mail	de	Speichern unter
 save to filemanager	mail	de	Im Dateimanager speichern
 save:	mail	de	Speichern
@@ -552,7 +552,7 @@ select files to upload	mail	de	Dateien anhängen
 select mail addresses from addressbook	mail	de	E-Mail-Adresse(n) aus dem Adressbuch auswählen
 select multiple	mail	de	Mehrfachauswahl
 select or insert email address	mail	de	Wählen oder fügen Sie eine E-Mail-Adresse ein
-selected	mail	de	ausgewählt
+selected	mail	de	ausgewählt.
 selected date range (with quicksearch)	mail	de	Datumsbereich (mit Schnellsuche)
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
 send files as	mail	de	Dateien versenden als
@@ -587,7 +587,7 @@ show test connection section and control the level of info displayed??	mail	de	S
 show them this time only	mail	de	Einmalig externe Inhalte anzeigen
 show vertical	mail	de	Vertikal anzeigen (3-Spalten-Ansicht)
 show vertical with all columns	mail	de	Vertikal mit Einzelspalten anzeigen
-show/hide preview pane in mail list view	mail	de	Definiert das Fensterlaout bzw. die Vorschau einer ausgewählten E-Mail.<br><br><b>Vertikal anzeigen (3-Spalten-Ansicht):</b><br>Mailkonten (Seitenleiste), E-Mail-Kopfzeilen und die Vorschau werden in 3 Spalten vertikal nebeneinander angezeigt.<br><b>Vertikal mit Einzelspalten anzeigen:</b><br>3-Spalte-Ansicht, jedoch mit allen Spalten in der Kopfzeilen-Spalte. Benötigt deutlich mehr horizontalen Platz!<br><b>Horizontal anzeigen:</b><br>Die Vorschau wird unter der Kopfzeilen-Liste angezeigt.<br><b>Horizontal anzeigen, ausblenden wenn nichts ausgewählt:</b><br>Horizontale Anzeige, jedoch wird das Vorschaufenster ausgeblendet wenn keine E-Mail ausgewählt ist.<br>Macht die Anzeige unruhiger, zeigt aber mehr Zeilen an.<br><b>Nie anzeigen:</b><br>Eine Vorschau wird niemals angezeigt. Eine E-Mail muss zum Lesen in einem neuen Fenster geöffnet werden.
+show/hide preview pane in mail list view	mail	de	Definiert das Fensterlaout bzw. die Vorschau einer ausgewählten E-Mail.\n\n<b>Vertikal anzeigen (3-Spalten-Ansicht):</b>\nMailkonten (Seitenleiste), E-Mail-Kopfzeilen und die Vorschau werden in 3 Spalten vertikal nebeneinander angezeigt.\n<b>Vertikal mit Einzelspalten anzeigen:</b>\n3-Spalte-Ansicht, jedoch mit allen Spalten in der Kopfzeilen-Spalte. Benötigt deutlich mehr horizontalen Platz!\n<b>Horizontal anzeigen:</b>\nDie Vorschau wird unter der Kopfzeilen-Liste angezeigt.\n<b>Horizontal anzeigen, ausblenden wenn nichts ausgewählt:</b>\nHorizontale Anzeige, jedoch wird das Vorschaufenster ausgeblendet wenn keine E-Mail ausgewählt ist.\nMacht die Anzeige unruhiger, zeigt aber mehr Zeilen an.\n<b>Nie anzeigen:</b>\nEine Vorschau wird niemals angezeigt. Eine E-Mail muss zum Lesen in einem neuen Fenster geöffnet werden.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	de	Zeigt für kurze Zeit eine sichtbare Benachrichtigung einschließlich Absender, Betreff und Kurzvorschau der E-Mail.
 sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
@@ -626,7 +626,6 @@ switch off encryption?	mail	de	Verschlüsselung ausschalten?
 template folder	mail	de	Vorlagen Ordner
 templates folder	mail	de	Ordner für Vorlage Nachrichten
 test connection	mail	de	Verbindungstest
-test connection and display basic information about the selected profile	mail	de	Teste Verbindung und zeige Basisinformationen zum ausgewählten (aktiven) Profil
 text	mail	de	Text
 text mode	mail	de	Text-Modus
 text/plain	mail	de	Text
@@ -708,4 +707,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	de	Sie müssen zuerst einige Ordner auswählen (in dem Sie diese anklicken)!
 you will loose current message body, unless you save it to your clipboard!	mail	de	Sie werden Ihren aktuellen Nachrichtentext verlieren, sofern Sie ihn nicht in der Zwischenablage speichern!
 you've got new mail	mail	de	Sie haben neue E-Mails
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	de	Ihre restliche Quota %1 ist zu niedrig. damit können Sie u.U. weder Mails senden noch empfangen!<br>Bitte ggf. Papierkorb und Spam-Ordner leeren, um Platz zu schaffen.<br>Wenn das nicht ausreicht, fragen Sie bitte Ihren Administrator nach einer höheren Quota für ihr Postfach.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	de	Ihre restliche Quota %1 ist zu niedrig. damit können Sie u.U. weder Mails senden noch empfangen!\nBitte ggf. Papierkorb und Spam-Ordner leeren, um Platz zu schaffen.\nWenn das nicht ausreicht, fragen Sie bitte Ihren Administrator nach einer höheren Quota für ihr Postfach.

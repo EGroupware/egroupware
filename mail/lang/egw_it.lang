@@ -552,7 +552,7 @@ select files to upload	mail	it	Seleziona file da caricare
 select mail addresses from addressbook	mail	it	Selezionare l'indirizzo o gli indirizzi e-mail dalla rubrica
 select multiple	mail	it	Selezione multipla
 select or insert email address	mail	it	Selezionare o inserire l'indirizzo e-mail
-selected	mail	it	selezionato
+selected	mail	it	selezionato.
 selected date range (with quicksearch)	mail	it	Selezionare intervallo di date
 send a reject message:	mail	it	Invia un messaggio di rigetto:
 send files as	mail	it	Invia i file come
@@ -626,7 +626,6 @@ switch off encryption?	mail	it	Disabilitare la cifratura?
 template folder	mail	it	Cartella dei modelli
 templates folder	mail	it	Cartella modelli
 test connection	mail	it	Prova connessione attiva
-test connection and display basic information about the selected profile	mail	it	Prova connessione e mostra informazioni di base sul profilo selezionato
 text	mail	it	Testo
 text mode	mail	it	Modalità testo
 text/plain	mail	it	Testo
@@ -652,7 +651,7 @@ trash folder	mail	it	Cartella del cestino
 trust servers seen / unseen info	mail	it	fidarsi delle informazioni visto/non visto del server
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	it	Fidarsi del server quando si rileva lo stato delle cartelle. Se impostato su "no" verranno cercati i messaggi non visti e calcolati autonomamente.
 trying to recover from session data	mail	it	Prova di recupero dai dati di sessione
-turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	it	Rimuovi la linea orizzontale fra firma e messaggio in composizione (in discaccordo con RFC). <br> Se usi i template, questa opzione verrà applicata solo sulla parte testuale del messaggio.
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	it	Rimuovi la linea orizzontale fra firma e messaggio in composizione (in discaccordo con RFC). \n Se usi i template, questa opzione verrà applicata solo sulla parte testuale del messaggio.
 unable to fetch vacation!	mail	it	Impossibile trovare l'autorisponditore delle ferie!
 unconditional	mail	it	Sempre
 undelete	mail	it	Annulla eliminazione
@@ -708,4 +707,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	it	È necessario selezionare prima alcune cartelle (facendo clic su di esse)!
 you will loose current message body, unless you save it to your clipboard!	mail	it	Il corpo del messaggio attuale verrà perso, a meno che non venga salvato negli appunti!
 you've got new mail	mail	it	C'è nuova posta
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	it	La quota rimanente% 1 è troppo bassa, potresti non essere in grado di inviare/ricevere ulteriori email.<br>Ripulire i messaggi di posta elettronica nel cestino o nella cartella della posta indesiderata potrebbe aiutarti a recuperare spazio.<br>Se ciò non è stato di aiuto , chiedi al tuo amministratore di aumentare la quota disponibile.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	it	La quota rimanente% 1 è troppo bassa, potresti non essere in grado di inviare/ricevere ulteriori email.\nRipulire i messaggi di posta elettronica nel cestino o nella cartella della posta indesiderata potrebbe aiutarti a recuperare spazio.\nSe ciò non è stato di aiuto , chiedi al tuo amministratore di aumentare la quota disponibile.
