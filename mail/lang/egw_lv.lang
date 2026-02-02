@@ -73,8 +73,13 @@ do you want to be asked for confirmation before moving selected messages to anot
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	lv	Vai jūs vēlaties novērst rediģēšanu/iestatīšanu, ja e-pastā tiek saņemti paziņojumi uz citām e-pasta adresēm, ja e-pasts pienāk(, pat ja ir iespējota Sieve)?
 does not contain	mail	lv	nesatur
 does not match	mail	lv	neatbilst
+don't use draft folder	mail	lv	Nelietot izstrādājumu mapi
 don't use sent	mail	lv	Nelieto nosūtīts
 don't use trash	mail	lv	Nelieto atkritui
+draft	mail	lv	Izstrādājums
+draft folder	mail	lv	Izstrādājumu mape
+drafts	mail	lv	Izstrādājumi
+drafts folder	mail	lv	Izstrādājumu mape
 edit account	mail	lv	Rediģēt kontu
 email address	mail	lv	E-pasta adrese
 email notification update failed! you need to set an email address!	mail	lv	E-pasta paziņojumu atjaunināšana neizdevās! Jums ir jāiestata e-pasta adrese!
@@ -85,6 +90,7 @@ empty trash	mail	lv	atbrīvot atkritumus
 enable	mail	lv	Ieslēgt
 enabled	mail	lv	Ieslēgts
 encrypt your message with smime certificate	mail	lv	Šifrējiet ziņu ar S/MIME sertifikātu
+error: could not save message as draft	mail	lv	Kļūda: Nevar saglabāt ziņojumu kā izstrādājumu
 everyone	mail	lv	Visi
 examine namespace to retrieve folders in others and shared	mail	lv	Pārbaudīt nosaukumu telpu, lai iegūtu mapes citos un koplietojamajos
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	lv	Izslēgt pielikumus, kuru izmērs pārsniedz norādīto, no automātiskas saglabāšanas kā melnrakstu (MB)
@@ -171,6 +177,7 @@ mark as deleted	mail	lv	Atzīmēt kā izdzēstu
 message learned as spam and moved to spam folder	mail	lv	Ziņa tika uztverta kā surogātpasts un pārvietota uz surogātpasta mapi
 modify subject	mail	lv	Mainīt tematu
 modify subject of this message	mail	lv	Mainīt šī ziņojuma tematu
+move selected mails to archive	mail	lv	Pārvietot izvēlētos e-pastus uz arhīvu
 move selected to	mail	lv	Pārvietot atlasītās uz
 move to	mail	lv	Pārvietot atlasītās uz
 move to trash	mail	lv	Pārvietot uz atkritumiem
@@ -251,6 +258,8 @@ required to disable if you use dovecot with private seen flags on shared or user
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	lv	S/MIME Šifrēšana neizdevās, jo sūtītāja adresei nav atrasts sertifikāts: %1
 save all	mail	lv	Saglabāt visus
 save all attachments to filemanager	mail	lv	Saglabāt visus pielikumus failu pārvaldniekā
+save as draft	mail	lv	Saglabāt kā izstrādājumu
+save as draft and print	mail	lv	Saglabāt kā izstrādājumu un izdrukāt
 save as infolog on send	mail	lv	Atzīmējiet pogu pēc nosūtīšanas izveidot kā InfoLog
 save as tracker on send	mail	lv	Atzīmējiet pogu pēc nosūtīšanas izveidot kā biļeti
 save the drafted message as eml file into vfs	mail	lv	Saglabājiet sagatavoto ziņojumu kā eml failu failu failu pārvaldītājā
@@ -264,6 +273,7 @@ select an existing entry in order to append mail content to it	mail	lv	Izvēliet
 select an item to read	mail	lv	Izvēlieties elementu, lai izlasītu
 select mail addresses from addressbook	mail	lv	Izvēlieties e-pasta adresi(-es) no adrešu grāmatas
 select or insert email address	mail	lv	Izvēlieties vai ievietojiet e-pasta adresi
+selected	mail	lv	izvēlēts.
 selected date range (with quicksearch)	mail	lv	Izvēlētais datuma diapazo
 send message and move to send folder (if configured)	mail	lv	Nosūtīt ziņu un pārvietot uz nosūtīšanas mapi (ja konfigurēts)
 send message pgp encrypted: requires keys from all recipients!	mail	lv	Nosūtīt ziņu šifrētu ar PGP: nepieciešamas atslēgas no visiem saņēmējiem!
@@ -313,6 +323,7 @@ unconditional	mail	lv	Vienmēr
 unread	mail	lv	Nelasīts
 vacation notice	mail	lv	Norāde par atrašanos atvaļinājumā
 validate addresses on submit:	mail	lv	Pārbaudiet adreses, kad nosūtāt:
+validate selected addresses on submit:	mail	lv	Apstiprināt izvēlētos adreses pēc nosūtīšanas:
 view header lines	mail	lv	Skatīt virsraksta rindas
 what to do when you delete a message	mail	lv	Ko darīt, dzēšot ziņojumu.
 when deleting messages	mail	lv	Kad dzēš vēstules
@@ -328,4 +339,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	lv	Vispirms ir jāizvēlas dažas mapes (noklikšķinot uz tām)!
 you will loose current message body, unless you save it to your clipboard!	mail	lv	Jūs pazaudēsiet pašreizējā ziņojuma tekstu, ja vien jūs to nesaglabāsiet savā starpliktuvē!
 you've got new mail	mail	lv	Jums ir jauns e-pasts
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	lv	Jūsu atlikusī kvota %1 ir pārāk maza, iespējams, jūs nevarēsiet sūtīt/saņemt turpmākos e-pastus.<br>Lai gan e-pastu notīrīšana miskastē vai mēstuļu mapē varētu palīdzēt jums atgūt nedaudz brīvas vietas.<br>Ja tas nepalīdzēja, lūdzu, lūdziet administratoram piešķirt lielāku kvotu.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	lv	Jūsu atlikusī kvota %1 ir pārāk maza, iespējams, jūs nevarēsiet sūtīt/saņemt turpmākos e-pastus.\nLai gan e-pastu notīrīšana miskastē vai mēstuļu mapē varētu palīdzēt jums atgūt nedaudz brīvas vietas.\nJa tas nepalīdzēja, lūdzu, lūdziet administratoram piešķirt lielāku kvotu.

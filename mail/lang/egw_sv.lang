@@ -36,7 +36,7 @@ attach vcard	mail	sv	Bifoga vCard
 attachment has been saved successfully.	mail	sv	Bilagan har sparats framgångsrikt.
 attachments	mail	sv	Bilagor
 attachments, ...	mail	sv	bilagor, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sv	Tänk på att om du lägger till alla valda filer i %1-läge kommer även alla befintliga bilagor i listan att ändras till %2-läge.<br>Vill du fortsätta?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sv	Tänk på att om du lägger till alla valda filer i %1-läge kommer även alla befintliga bilagor i listan att ändras till %2-läge.\nVill du fortsätta?
 be aware that all attachments will be sent as %1!	mail	sv	Tänk på att alla bilagor kommer att skickas som %1!
 before reply, visible during compose	mail	sv	Före svar, synlig under skrivning
 by date	mail	sv	Enligt datum
@@ -121,6 +121,7 @@ empty trash	mail	sv	Töm Borttaget
 enable	mail	sv	Aktivera
 enabled	mail	sv	Aktiverad
 encrypt your message with smime certificate	mail	sv	Kryptera ditt meddelande med S/MIME-certifikat
+error: could not save message as draft	mail	sv	Fel: Det gick inte att spara meddelandet som utkast
 event details follow	mail	sv	Händelse detaljer följer
 every %1. day	mail	sv	Varje %1. dag
 everyone	mail	sv	Alla
@@ -210,7 +211,7 @@ mailaccount	mail	sv	E-postkonto
 mailinglist	mail	sv	Utskickslista
 mails	common	sv	E-post
 mails can be copied to that folder via context menu, if folder is configured.	mail	sv	E-postmeddelanden kan kopieras till den mappen via snabbmenyn, om mappen är konfigurerad.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sv	Mailservern rapporterade:<br><br>%1<br><br>Vill du fortsätta med att radera de valda meddelandena omedelbart (klicka ok)?<br>Om inte, försök att tömma din skräppostmapp innan du fortsätter. (klicka på Avbryt)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sv	Mailservern rapporterade:\n\n%1\n\nVill du fortsätta med att radera de valda meddelandena omedelbart (klicka ok)?\nOm inte, försök att tömma din skräppostmapp innan du fortsätter. (klicka på Avbryt)
 mark all as read	mail	sv	Markera alla som lästa
 mark all messages in folder as read	mail	sv	Markera alla meddelanden i mappen som lästa
 mark as deleted	mail	sv	Markera som raderad
@@ -314,6 +315,7 @@ rights	mail	sv	Rättigheter
 save all	mail	sv	Spara alla
 save all attachments to filemanager	mail	sv	Spara alla bilagor i filhanteraren
 save as draft	mail	sv	Spara som utkast
+save as draft and print	mail	sv	Spara som utkast och skriv ut
 save as infolog	mail	sv	Spara som InfoLog
 save as infolog on send	mail	sv	Kontrollera knappen för att skapa som InfoLog efter att ha skickat
 save as tracker on send	mail	sv	Markera knappen för att skapa ett ärende efter sändning
@@ -332,6 +334,7 @@ select an existing entry in order to append mail content to it	mail	sv	Välj en 
 select an item to read	mail	sv	Välj en artikel att läsa
 select mail addresses from addressbook	mail	sv	Välj e-postadress(er) från adressboken
 select or insert email address	mail	sv	Välj eller infoga e-postadress
+selected	mail	sv	valda.
 selected date range (with quicksearch)	mail	sv	Valt datumintervall (med snabbsökning)
 send message and move to send folder (if configured)	mail	sv	Skicka meddelande och flytta till mappen Skicka (om konfigurerat)
 send message pgp encrypted: requires keys from all recipients!	mail	sv	Skicka meddelandet PGP-krypterat: kräver nycklar från alla mottagare!
@@ -389,6 +392,7 @@ unflagged	mail	sv	Oflaggad
 unread	mail	sv	Oläst
 vacation notice	mail	sv	Frånvaro meddelande
 validate addresses on submit:	mail	sv	Validera adresser när du skickar:
+validate selected addresses on submit:	mail	sv	Validera valda adresser vid inlämning:
 view header lines	mail	sv	Visa brevhuvudet
 what to do when you delete a message	mail	sv	Vad du ska göra när du tar bort ett meddelande.
 when deleting messages	mail	sv	Vid meddelande radering
@@ -404,4 +408,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	sv	Du måste välja några mappar först (genom att klicka på dem)!
 you will loose current message body, unless you save it to your clipboard!	mail	sv	Du kommer att förlora den aktuella meddelandetexten om du inte sparar den i Urklipp!
 you've got new mail	mail	sv	Du har fått ny e-post
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sv	Din återstående kvot %1 är för låg, du kanske inte kan skicka/ta emot fler e-postmeddelanden.<br>Även om du rensar bort e-postmeddelanden i papperskorgen kan det hjälpa dig att få tillbaka lite ledigt utrymme.<br>Om det inte hjälpte kan du be din administratör om mer kvot.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sv	Din återstående kvot %1 är för låg, du kanske inte kan skicka/ta emot fler e-postmeddelanden.\nÄven om du rensar bort e-postmeddelanden i papperskorgen kan det hjälpa dig att få tillbaka lite ledigt utrymme.\nOm det inte hjälpte kan du be din administratör om mer kvot.

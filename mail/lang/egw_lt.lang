@@ -26,7 +26,7 @@ attach files	mail	lt	Pridėti failus
 attach users vcard at compose to every new mail	mail	lt	Pridėti naudotojų vCard prie kiekvieno naujo laiško sudarymo metu
 attachment has been saved successfully.	mail	lt	Priedas sėkmingai išsaugotas.
 attachments, ...	mail	lt	Priedai, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	lt	Atkreipkite dėmesį, kad pridedant visus pasirinktus failus kaip %1 režimą, taip pat bus pakeisti visi sąraše esami priedai į %2 režimą.<br>Ar norite tęsti?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	lt	Atkreipkite dėmesį, kad pridedant visus pasirinktus failus kaip %1 režimą, taip pat bus pakeisti visi sąraše esami priedai į %2 režimą.\nAr norite tęsti?
 be aware that all attachments will be sent as %1!	mail	lt	Žinokite, kad visi priedai bus išsiųsti kaip %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	lt	Pagal numatytuosius nustatymus "http://" tiesiog pakeičiama "https://". Galite laisvai konfigūruoti 'https://proxy.egroupware.org/', kad taip pat būtų įkeliami vaizdai, prieinami tik per http.
 caching of flags	mail	lt	Vėliavų spartinimas
@@ -61,6 +61,11 @@ do you really want to toggle label %1 for all messages in the current view?	mail
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	lt	Ar norite, kad prieš prisegant pasirinktus pranešimus prie naujo el. pašto būtų prašoma patvirtinimo?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	lt	Ar norite, kad prieš perkeliant pasirinktus laiškus į kitą aplanką būtų prašoma patvirtinimo?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	lt	Ar norite neleisti redaguoti ir (arba) nustatyti pranešimo el. paštu kitiems el. pašto adresams, jei gaunami el. laiškai(, net jei „Sieve“ įjungtas)?
+don't use draft folder	mail	lt	Nenaudoti juodraščių aplanko
+draft	mail	lt	Juodraštis
+draft folder	mail	lt	Juodraščių aplankas
+drafts	mail	lt	Juodraščiai
+drafts folder	mail	lt	Juodraščių aplankas
 email address	mail	lt	El. pašto adresas
 email notification update failed! you need to set an email address!	mail	lt	Pranešimų el. paštu atnaujinimas nepavyko! Reikia nustatyti el. pašto adresą!
 emailaddress	admin	lt	El. pašto adresas
@@ -69,6 +74,7 @@ emails in whitelisted domains are not marked as spam	mail	lt	Į baltąjį sąra�
 enable	mail	lt	Įjungti
 enabled	mail	lt	Įjungta
 encrypt your message with smime certificate	mail	lt	Užšifruokite pranešimą naudodami S/MIME sertifikatą
+error: could not save message as draft	mail	lt	Klaida: Nepavyko išsaugoti pranešimo kaip juodraščio
 everyone	mail	lt	Visi
 examine namespace to retrieve folders in others and shared	mail	lt	Išnagrinėti vardų sritį, kad gautumėte aplankus kituose ir bendrintuose
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	lt	Neįtraukti priedų, kurių dydis didesnis nei nurodytas, į automatinį išsaugojimą kaip juodraštį (MB)
@@ -140,13 +146,14 @@ mailaccount	mail	lt	Pašto paskyra
 mailinglist	mail	lt	Pašto sąrašas
 mails	common	lt	Laiškai
 mails can be copied to that folder via context menu, if folder is configured.	mail	lt	Jei aplankas sukonfigūruotas, laiškus į šį aplanką galima nukopijuoti per kontekstinį meniu.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	lt	Pašto serveris pranešė:<br><br>%1<br><br>Ar norite tęsti iš karto ištrindami pasirinktus pranešimus (spauskite "ok")?<br>Jei ne, prieš tęsdami pabandykite ištuštinti šiukšlių aplanką. (spustelėkite atšaukti)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	lt	Pašto serveris pranešė:\n\n%1\n\nAr norite tęsti iš karto ištrindami pasirinktus pranešimus (spauskite "ok")?\nJei ne, prieš tęsdami pabandykite ištuštinti šiukšlių aplanką. (spustelėkite atšaukti)
 mark all as read	mail	lt	Pažymėti visus kaip perskaitytus
 mark all messages in folder as read	mail	lt	Pažymėti visus aplanke esančius pranešimus kaip perskaitytus
 mark as deleted	mail	lt	Pažymėti kaip ištrintus
 message learned as spam and moved to spam folder	mail	lt	Pranešimas išaiškintas kaip šlamštas ir perkeltas į šlamšto aplanką
 modify subject	mail	lt	Pakeisti temą
 modify subject of this message	mail	lt	Pakeiskite šio pranešimo temą
+move selected mails to archive	mail	lt	Perkelti pasirinktus laiškus į archyvą
 move selected to	mail	lt	Pasirinktas perkėlimas į
 move to	mail	lt	Perkelti į
 moved %1 message(s) from %2 to %3	mail	lt	Perkeltas %1 pranešimas (-ai) iš %2 į %3.
@@ -213,6 +220,8 @@ required pear class mail/mimedecode.php not found.	mail	lt	Reikalinga PEAR klas�
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	lt	Būtina išjungti, jei naudojate Dovecot su private seen vėliavėlėmis bendrajame arba naudotojo aplanke!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	lt	S/MIME šifravimas nepavyko, nes siuntėjo adresui nerasta sertifikato: %1
 save all attachments to filemanager	mail	lt	Įrašyti visus priedus į failų tvarkyklę
+save as draft	mail	lt	Išsaugoti kaip juodraštį
+save as draft and print	mail	lt	Išsaugoti kaip juodraštį ir spausdinti
 save as infolog on send	mail	lt	Pažymėti mygtuką, kad po išsiuntimo būtų sukurtas kaip InfoLog
 save as tracker on send	mail	lt	Pažymėkite mygtuką, kad po išsiuntimo būtų sukurtas kaip bilietas
 save the drafted message as eml file into vfs	mail	lt	Išsaugokite parengtą pranešimą kaip eml failą failų tvarkyklėje
@@ -225,6 +234,7 @@ select an existing entry in order to append mail content to it	mail	lt	Pasirinki
 select an item to read	mail	lt	Pasirinkite elementą, kurį norite perskaityti
 select mail addresses from addressbook	mail	lt	Pasirinkite el. pašto adresą (-us) iš adresų knygos
 select or insert email address	mail	lt	Pasirinkite arba įterpkite el. pašto adresą
+selected	mail	lt	pasirinkta.
 selected date range (with quicksearch)	mail	lt	Pasirinktas datos intervalas (naudojant greitąją paiešką)
 send message and move to send folder (if configured)	mail	lt	Siųsti žinutę ir perkelti į siuntimo aplanką (jei sukonfigūruota)
 send message pgp encrypted: requires keys from all recipients!	mail	lt	Siųsti žinutę užšifruotą PGP: reikia visų gavėjų raktų!
@@ -268,6 +278,7 @@ trash	mail	lt	Šiukšliadėžė
 trash folder	mail	lt	Aplankas šiukšliadėžė
 unconditional	mail	lt	Visada
 validate addresses on submit:	mail	lt	Patvirtinkite adresus pateikdami:
+validate selected addresses on submit:	mail	lt	Patvirtinti pasirinktus adresus pateikiant:
 view header lines	mail	lt	Peržiūrėti antraštės eilutes
 what to do when you delete a message	mail	lt	Ką daryti ištrynus pranešimą.
 write & delete	mail	lt	rašyti ir ištrinti
@@ -280,4 +291,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	lt	Pirmiausia turite pasirinkti kai kuriuos aplankus (spustelėdami ant jų)!
 you will loose current message body, unless you save it to your clipboard!	mail	lt	Prarasite esamą žinutės tekstą, nebent išsaugosite jį iškarpinėje!
 you've got new mail	mail	lt	Gavote naują laišką
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	lt	Jūsų likusi kvota %1 yra per maža, galite nebegalėti siųsti / gauti daugiau laiškų.<br>Nors išvalę laiškus iš šiukšlių ar nepageidaujamų laiškų aplanko galite atgauti šiek tiek laisvos vietos.<br>Jei tai nepadėjo, paprašykite administratoriaus suteikti daugiau kvotos.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	lt	Jūsų likusi kvota %1 yra per maža, galite nebegalėti siųsti / gauti daugiau laiškų.\nNors išvalę laiškus iš šiukšlių ar nepageidaujamų laiškų aplanko galite atgauti šiek tiek laisvos vietos.\nJei tai nepadėjo, paprašykite administratoriaus suteikti daugiau kvotos.

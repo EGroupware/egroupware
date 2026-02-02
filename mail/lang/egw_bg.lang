@@ -177,7 +177,6 @@ does not contain	mail	bg	не съдържа
 does not exist on imap server.	mail	bg	не съществува на IMAP сървъра.
 does not match	mail	bg	не съвпада с
 does not match regexp	mail	bg	не съвпада с рег. израз
-don't use draft folder	mail	bg	Не използвай "Чернови"
 don't use sent	mail	bg	Не използвай "Изпратени"
 don't use template folder	mail	bg	Не използвай папка "Шаблони"
 don't use trash	mail	bg	Не използвай "Кошче"
@@ -347,7 +346,7 @@ mailaccount	mail	bg	Пощенски акаунт
 mailinglist	mail	bg	Пощенски списък
 mails	common	bg	Поща
 mails can be copied to that folder via context menu, if folder is configured.	mail	bg	Писмата могат да бъдат копирани в тази папка чрез контекстното меню, ако папката е конфигурирана.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	bg	Пощенският сървър съобщи:<br><br>%1<br><br>Искате ли да продължите с изтриване на избраните съобщения незабавно (щракнете върху ОК)?\nАко не, моля, опитайте се да изпразните папката за боклук, преди да продължите. (щракнете върху отмени)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	bg	Пощенският сървър съобщи:\n\n%1\n\nИскате ли да продължите с изтриване на избраните съобщения незабавно (щракнете върху ОК)?\nАко не, моля, опитайте се да изпразните папката за боклук, преди да продължите. (щракнете върху отмени)
 mark all as read	mail	bg	Маркирайте всички като прочетени
 mark all messages in folder as read	mail	bg	Маркиране на всички съобщения в папката като прочетени
 mark as deleted	mail	bg	Маркирай като изтрито
@@ -360,6 +359,7 @@ message send successfully.	mail	bg	Съобщението е изпратено 
 message verified successfully.	mail	bg	Съобщението е проверено успешно.
 modify subject	mail	bg	Променете темата
 modify subject of this message	mail	bg	Променете темата на това съобщение
+move selected mails to archive	mail	bg	Премести избраните имейли в архива
 move selected to	mail	bg	премести избраните в
 move to	mail	bg	премести избраните в
 move to trash	mail	bg	Премести в Кошчето
@@ -455,6 +455,7 @@ required to disable if you use dovecot with private seen flags on shared or user
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	bg	S/MIME Криптирането е неуспешно, тъй като не е намерен сертификат за адреса на подателя: %1
 save all attachments to filemanager	mail	bg	Запазете всички във Файлов мениджър
 save as draft	mail	bg	запис като чернова
+save as draft and print	mail	bg	Запазете като чернова и отпечатайте
 save as infolog	mail	bg	запис в Дневника
 save as infolog on send	mail	bg	Запазване като InfoLog при изпращане
 save message to disk	mail	bg	запис на съобщението на диска
@@ -469,6 +470,7 @@ select an existing entry in order to append mail content to it	mail	bg	Избе�
 select an item to read	mail	bg	Изберете елемент, който да прочетете
 select mail addresses from addressbook	mail	bg	Изберете пощенски адреси от адресната книга
 select or insert email address	mail	bg	Изберете или вмъкнете имейл адрес
+selected	mail	bg	избрани.
 selected date range (with quicksearch)	mail	bg	Избран диапазон от дати (с бързо търсене)
 send message and move to send folder (if configured)	mail	bg	Изпращане на съобщение и преместване в папката за изпращане (ако е конфигурирано)
 send message pgp encrypted: requires keys from all recipients!	mail	bg	Изпращане на съобщение, криптирано с PGP: изисква ключове от всички получатели!
@@ -545,4 +547,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	bg	Трябва първо да изберете някои папки (като щракнете върху тях)!
 you will loose current message body, unless you save it to your clipboard!	mail	bg	Ще загубите текущото тяло на съобщението, освен ако не го запазите в клипборда си!
 you've got new mail	mail	bg	Получили сте нов имейл
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	bg	Оставащата ви квота %1 е твърде ниска, може да не сте в състояние да изпращате/получавате по-нататъшни имейли.<br>Въпреки че почистването на имейли в кошчето или папката с нежелани съобщения може да ви помогне да си върнете малко свободно място.<br>Ако това не е помогнало, моля, помолете администратора си за повече квота.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	bg	Оставащата ви квота %1 е твърде ниска, може да не сте в състояние да изпращате/получавате по-нататъшни имейли.\nВъпреки че почистването на имейли в кошчето или папката с нежелани съобщения може да ви помогне да си върнете малко свободно място.\nАко това не е помогнало, моля, помолете администратора си за повече квота.

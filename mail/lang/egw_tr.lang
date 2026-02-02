@@ -27,7 +27,7 @@ attach files	mail	tr	Dosya ekleme
 attach users vcard at compose to every new mail	mail	tr	Her yeni postaya oluşturma sırasında kullanıcıların vCard'ını ekleyin.
 attachment has been saved successfully.	mail	tr	Ek başarıyla kaydedildi.
 attachments, ...	mail	tr	ekler, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	tr	Seçilen tüm dosyaları %1 modu olarak eklediğinizde, listedeki mevcut tüm ekleri de %2 moduna değiştireceğinizi unutmayın.<br>Devam etmek ister misiniz?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	tr	Seçilen tüm dosyaları %1 modu olarak eklediğinizde, listedeki mevcut tüm ekleri de %2 moduna değiştireceğinizi unutmayın.\nDevam etmek ister misiniz?
 be aware that all attachments will be sent as %1!	mail	tr	Tüm eklerin %1 olarak gönderileceğini unutmayın!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	tr	Varsayılan olarak 'http://' sadece 'https://' ile değiştirilir. 'https://proxy.egroupware.org/' adresini yalnızca http üzerinden kullanılabilen resimleri de yükleyecek şekilde yapılandırmaktan çekinmeyin.
 caching of flags	mail	tr	Bayrakların önbelleğe alınması
@@ -64,6 +64,11 @@ do you really want to toggle label %1 for all messages in the current view?	mail
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	tr	Seçilen iletileri yeni e-postaya eklemeden önce sizden onay istenmesini istiyor musunuz?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	tr	Seçili mesajları başka bir klasöre taşımadan önce sizden onay istenmesini istiyor musunuz?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	tr	E-postalar geldiğinde diğer e-posta adreslerine e-posta ile bildirim düzenlenmesini/kurulumunu engellemek istiyor musunuz( Sieve etkin olsa bile)?
+don't use draft folder	mail	tr	Taslak klasörünü kullanma
+draft	mail	tr	Taslak
+draft folder	mail	tr	Taslak Klasörü
+drafts	mail	tr	Taslaklar
+drafts folder	mail	tr	Taslaklar Klasörü
 edit account	mail	tr	Hesap düzenle
 email address	mail	tr	E-posta adresi
 email notification update failed! you need to set an email address!	mail	tr	E-posta bildirimi güncellemesi başarısız oldu! Bir e-posta adresi belirlemeniz gerekiyor!
@@ -73,6 +78,7 @@ emails in whitelisted domains are not marked as spam	mail	tr	Beyaz listedeki ala
 enable	mail	tr	Etkinleştir
 enabled	mail	tr	Etkin
 encrypt your message with smime certificate	mail	tr	Mesajınızı S/MIME sertifikası ile şifreleyin
+error: could not save message as draft	mail	tr	Hata: Mesaj taslak olarak kaydedilemedi
 event details follow	mail	tr	Etkinlik Detayları Ektedir
 every %1. day	mail	tr	Her %1. günde
 everyone	mail	tr	Herkes
@@ -148,13 +154,14 @@ mailaccount	mail	tr	Posta hesabı
 mailinglist	mail	tr	Posta listesi
 mails	common	tr	Postalar
 mails can be copied to that folder via context menu, if folder is configured.	mail	tr	Klasör yapılandırılmışsa, postalar içerik menüsü aracılığıyla bu klasöre kopyalanabilir.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	tr	Posta sunucusu rapor etti:<br><br>%1<br><br>Seçili mesajları hemen silerek devam etmek istiyor musunuz (tamam'a tıklayın)?<br>Eğer istemiyorsanız, lütfen devam etmeden önce çöp klasörünüzü boşaltmayı deneyin. (iptal'e tıklayın)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	tr	Posta sunucusu rapor etti:\n\n%1\n\nSeçili mesajları hemen silerek devam etmek istiyor musunuz (tamam'a tıklayın)?\nEğer istemiyorsanız, lütfen devam etmeden önce çöp klasörünüzü boşaltmayı deneyin. (iptal'e tıklayın)
 mark all as read	mail	tr	Hepsini okundu olarak işaretle
 mark all messages in folder as read	mail	tr	Klasördeki tüm iletileri okundu olarak işaretle
 mark as deleted	mail	tr	Silindi olarak işaretle
 message learned as spam and moved to spam folder	mail	tr	Mesaj spam olarak öğrenildi ve spam klasörüne taşındı
 modify subject	mail	tr	Konuyu değiştir
 modify subject of this message	mail	tr	Bu mesajın konusunu değiştirin
+move selected mails to archive	mail	tr	Seçilen e-postaları arşive taşı
 move selected to	mail	tr	Seçileni şuraya taşı
 move to	mail	tr	Şuraya git
 move to archive	mail	tr	Arşiv klasörüne taşı
@@ -231,6 +238,7 @@ resend after how many days?	mail	tr	Kaç gün sonra tekrar gönderin?
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	tr	Gönderen adresi için sertifika bulunamadığından S/MIME Şifreleme başarısız oldu: %1
 save all attachments to filemanager	mail	tr	Tüm ekleri filemanager'a kaydet
 save as draft	mail	tr	Taslak olarak kaydet
+save as draft and print	mail	tr	Taslak olarak kaydet ve yazdır
 save as infolog	mail	tr	InfoLog olarak kaydet
 save as infolog on send	mail	tr	Gönderdikten sonra InfoLog olarak oluşturmak için düğmeyi işaretleyin
 save as ticket	mail	tr	Gönderdikten sonra bilet olarak oluşturmak için düğmeyi işaretleyin
@@ -246,6 +254,7 @@ select an existing entry in order to append mail content to it	mail	tr	Posta iç
 select an item to read	mail	tr	Okumak için bir öğe seçin
 select mail addresses from addressbook	mail	tr	Adres defterinden e-posta adres(ler)ini seçin
 select or insert email address	mail	tr	E-posta adresini seçin veya ekleyin
+selected	mail	tr	seçildi.
 selected date range (with quicksearch)	mail	tr	Seçilen tarih aralığı (hızlı arama ile)
 send message and move to send folder (if configured)	mail	tr	Mesaj gönderme ve gönderme klasörüne taşıma (yapılandırılmışsa)
 send message pgp encrypted: requires keys from all recipients!	mail	tr	PGP şifreli mesaj gönderme: tüm alıcıların anahtarlarını gerektirir!
@@ -298,6 +307,7 @@ trash folder	mail	tr	Çöp klasörü
 unconditional	mail	tr	Her zaman
 unsubscribe folder	mail	tr	Klasör aboneliğini iptal et
 validate addresses on submit:	mail	tr	Gönderme sırasında adresleri doğrulayın:
+validate selected addresses on submit:	mail	tr	Gönderirken seçilen adresleri doğrula:
 view header lines	mail	tr	Başlık satırlarını görüntüle
 what to do when you delete a message	mail	tr	Bir mesajı sildiğinizde ne yapmalısınız?
 write	mail	tr	Yaz
@@ -310,4 +320,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	tr	Önce bazı klasörleri seçmeniz gerekir (üzerlerine tıklayarak)!
 you will loose current message body, unless you save it to your clipboard!	mail	tr	Panoya kaydetmediğiniz sürece mevcut mesaj gövdesini kaybedeceksiniz!
 you've got new mail	mail	tr	Yeni e-posta aldınız
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	tr	Kalan %1 kotanız çok düşük, daha fazla e-posta gönderip alamayabilirsiniz.<br>Çöp kutusundaki veya önemsiz klasördeki e-postaları temizlemek biraz boş alan kazanmanıza yardımcı olabilir.<br>Bu işe yaramadıysa, lütfen yöneticinizden daha fazla kota isteyin.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	tr	Kalan %1 kotanız çok düşük, daha fazla e-posta gönderip alamayabilirsiniz.\nÇöp kutusundaki veya önemsiz klasördeki e-postaları temizlemek biraz boş alan kazanmanıza yardımcı olabilir.\nBu işe yaramadıysa, lütfen yöneticinizden daha fazla kota isteyin.

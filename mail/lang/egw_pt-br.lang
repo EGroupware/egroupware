@@ -55,7 +55,7 @@ attachments	mail	pt-br	Anexos
 attachments, ...	mail	pt-br	anexos, ...
 authentication	mail	pt-br	Autenticação
 available personal email-accounts/profiles	mail	pt-br	E-mail-Accounts/Profiles pessoais disponíveis
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pt-br	Esteja ciente de que, ao adicionar todos os arquivos selecionados no modo %1, ele também alterará todos os anexos existentes na lista para o modo %2.<br>Deseja prosseguir?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pt-br	Esteja ciente de que, ao adicionar todos os arquivos selecionados no modo %1, ele também alterará todos os anexos existentes na lista para o modo %2.\nDeseja prosseguir?
 be aware that all attachments will be sent as %1!	mail	pt-br	Esteja ciente de que todos os anexos serão enviados como %1!
 before reply, visible during compose	mail	pt-br	Antes da resposta, visível durante a composição
 but check shared folders	mail	pt-br	mas verifique as pastas compartilhadas
@@ -281,7 +281,7 @@ mailaccount	mail	pt-br	Conta de correio
 mailinglist	mail	pt-br	Lista de correio
 mails	common	pt-br	Correios
 mails can be copied to that folder via context menu, if folder is configured.	mail	pt-br	Os e-mails podem ser copiados para essa pasta por meio do menu de contexto, se a pasta estiver configurada.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pt-br	Mailserver reported:<br><br>%1<br><br>Deseja prosseguir com a exclusão imediata das mensagens selecionadas (clique em ok)?<br>Se não, tente esvaziar a pasta de lixo antes de continuar. (clique em cancelar)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pt-br	Mailserver reported:\n\n%1\n\nDeseja prosseguir com a exclusão imediata das mensagens selecionadas (clique em ok)?\nSe não, tente esvaziar a pasta de lixo antes de continuar. (clique em cancelar)
 mark all as read	mail	pt-br	Marcar tudo como lido
 mark all messages in folder as read	mail	pt-br	Marcar todas as mensagens em pasta como lidas
 mark as deleted	mail	pt-br	Marcar como excluído
@@ -290,6 +290,7 @@ matches regexp	mail	pt-br	coincidentes com a expressão
 message learned as spam and moved to spam folder	mail	pt-br	Mensagem identificada como spam e movida para a pasta de spam
 modify subject	mail	pt-br	Modificar o assunto
 modify subject of this message	mail	pt-br	Modificar o assunto desta mensagem
+move selected mails to archive	mail	pt-br	Mover e-mails selecionados para o arquivo
 move selected to	mail	pt-br	Mover selecionados para
 move to	mail	pt-br	Mover selecionados para
 move to trash	mail	pt-br	Mover para a lixeira
@@ -386,6 +387,7 @@ required to disable if you use dovecot with private seen flags on shared or user
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	pt-br	A criptografia S/MIME falhou porque nenhum certificado foi encontrado para o endereço do remetente: %1
 save all attachments to filemanager	mail	pt-br	Salvar todos os anexos para o gerenciador de arquivos
 save as draft	mail	pt-br	Salvar como rascunho
+save as draft and print	mail	pt-br	Salve como rascunho e imprima
 save as infolog	mail	pt-br	Salvar como InfoLog
 save as infolog on send	mail	pt-br	Verificar o botão para criar como InfoLog após o envio
 save as tracker on send	mail	pt-br	Marque o botão para criar um tíquete após o envio
@@ -402,6 +404,7 @@ select an item to read	mail	pt-br	Selecione um item para ler
 select file(s) from vfs	mail	pt-br	Selecione o(s) arquivo(s) no Gerenciador de Arquivos do EGroupware
 select mail addresses from addressbook	mail	pt-br	Selecione o(s) endereço(s) de e-mail do catálogo de endereços
 select or insert email address	mail	pt-br	Selecione ou insira um endereço de e-mail
+selected	mail	pt-br	selecionado.
 selected date range (with quicksearch)	mail	pt-br	Intervalo de datas selecionado (com pesquisa rápida)
 send message and move to send folder (if configured)	mail	pt-br	Enviar mensagem e mover para a pasta de envio (se configurado)
 send message pgp encrypted: requires keys from all recipients!	mail	pt-br	Enviar mensagem criptografada por PGP: requer chaves de todos os destinatários!
@@ -467,6 +470,7 @@ vacation notice	mail	pt-br	Notícia de ausência
 vacation notice is active	mail	pt-br	Notícia de ausência está ativa
 vacation start-date must be before the end-date!	mail	pt-br	Data inicial de ausência deve ser ANTERIOR à data final!
 validate addresses on submit:	mail	pt-br	Valide os endereços ao enviá-los:
+validate selected addresses on submit:	mail	pt-br	Validar endereços selecionados ao enviar:
 view header lines	mail	pt-br	Exibir linhas de cabeçalho
 what to do when you delete a message	mail	pt-br	O que fazer quando você exclui uma mensagem.
 when deleting messages	mail	pt-br	Ao remover mensagens
@@ -482,4 +486,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	pt-br	Você precisa selecionar algumas pastas primeiro (clicando nelas)!
 you will loose current message body, unless you save it to your clipboard!	mail	pt-br	Você perderá o corpo da mensagem atual, a menos que o salve na área de transferência!
 you've got new mail	mail	pt-br	Você tem um novo e-mail
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pt-br	Sua cota restante %1 está muito baixa, talvez você não consiga enviar/receber mais e-mails.<br>Embora a limpeza de e-mails na lixeira ou na pasta de lixo eletrônico possa ajudá-lo a recuperar algum espaço livre.<br>Se isso não ajudar, peça mais cota ao administrador.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pt-br	Sua cota restante %1 está muito baixa, talvez você não consiga enviar/receber mais e-mails.\nEmbora a limpeza de e-mails na lixeira ou na pasta de lixo eletrônico possa ajudá-lo a recuperar algum espaço livre.\nSe isso não ajudar, peça mais cota ao administrador.

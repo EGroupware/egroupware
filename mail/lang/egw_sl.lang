@@ -73,7 +73,7 @@ attachments	mail	sl	Priponke
 attachments, ...	mail	sl	priponke, ...
 authentication	mail	sl	Autentifikacija
 available personal email-accounts/profiles	mail	sl	razpoložljivi osebni računi EMail-a / Profili
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sl	Zavedajte se, da se z dodajanjem vseh izbranih datotek v način %1 v način %2 spremenijo tudi vse obstoječe priponke na seznamu.<br>Ali želite nadaljevati?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sl	Zavedajte se, da se z dodajanjem vseh izbranih datotek v način %1 v način %2 spremenijo tudi vse obstoječe priponke na seznamu.\nAli želite nadaljevati?
 be aware that all attachments will be sent as %1!	mail	sl	Zavedajte se, da bodo vse priloge poslane v načinu %1!
 before reply, visible during compose	mail	sl	Pred odgovorom, ki je viden med sestavljanjem
 blacklisted mails are marked as spam	mail	sl	Črna pošta je označena kot vsiljena pošta
@@ -347,7 +347,7 @@ mailaccount	mail	sl	E-poštni račun
 mailinglist	mail	sl	Poštni seznam
 mails	common	sl	E-pošta
 mails can be copied to that folder via context menu, if folder is configured.	mail	sl	E-poštna sporočila lahko kopirate v to mapo prek kontekstnega menija, če je mapa konfigurirana.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sl	Mailserver poroča:<br><br>%1<br><br>Želite nadaljevati tako, da takoj izbrišete izbrana sporočila (kliknite OK)?<br>Če ne, prosimo, poskusite izprazniti svojo mapo pred nadaljevanjem. (kliknite prekliči)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sl	Mailserver poroča:\n\n%1\n\nŽelite nadaljevati tako, da takoj izbrišete izbrana sporočila (kliknite OK)?\nČe ne, prosimo, poskusite izprazniti svojo mapo pred nadaljevanjem. (kliknite prekliči)
 mark all as read	mail	sl	Označi vse kot prebrano
 mark all messages in folder as read	mail	sl	Označite vsa sporočila v mapi kot prebrana
 mark as deleted	mail	sl	Označi kot izbrisano
@@ -552,7 +552,7 @@ select files to upload	mail	sl	Izberite datoteke za nalaganje
 select mail addresses from addressbook	mail	sl	Izberite e-poštne naslove iz imenika
 select multiple	mail	sl	Izberite več
 select or insert email address	mail	sl	Izberite ali vstavite e-poštni naslov
-selected	mail	sl	izbran
+selected	mail	sl	izbran.
 selected date range (with quicksearch)	mail	sl	Izbrano časovno obdobje (s hitrim iskanjem)
 send a reject message:	mail	sl	Pošiljanje zavrnjenega sporočila:
 send files as	mail	sl	Pošiljanje datotek kot
@@ -626,7 +626,6 @@ switch off encryption?	mail	sl	Izklopite šifriranje?
 template folder	mail	sl	Mapa s predlogami
 templates folder	mail	sl	Predloge mape
 test connection	mail	sl	Preskusna povezava
-test connection and display basic information about the selected profile	mail	sl	Test Povezava in prikaz osnovnih informacij o izbranem profilu
 text	mail	sl	Besedilo
 text mode	mail	sl	Način besedila
 text/plain	mail	sl	Navadno besedilo
@@ -652,7 +651,7 @@ trash folder	mail	sl	Mapa Koš
 trust servers seen / unseen info	mail	sl	zaupni strežniki SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	sl	Za pridobitev statusa mape zaupajte strežniku. če izberete ne, bomo poiskali sporočila UNSEEN in jih šteli sami.
 trying to recover from session data	mail	sl	Poskus obnovitve iz podatkov o seji
-turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	sl	Izklopite vodoravno črto med podpisom in sestavljenim sporočilom (to ni v skladu z RFC).<br>Če uporabljate predloge, se ta možnost uporablja samo za besedilni del sporočila.
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	sl	Izklopite vodoravno črto med podpisom in sestavljenim sporočilom (to ni v skladu z RFC).\nČe uporabljate predloge, se ta možnost uporablja samo za besedilni del sporočila.
 unable to fetch vacation!	mail	sl	Ni mogoče pridobiti počitnic!
 unconditional	mail	sl	Vedno
 undelete	mail	sl	Obnovi
@@ -708,4 +707,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	sl	Najprej morate izbrati nekaj map (s klikom nanje)!
 you will loose current message body, unless you save it to your clipboard!	mail	sl	Izgubili boste trenutno telo sporočila, razen če ga shranite v odložišče!
 you've got new mail	mail	sl	Imate novo pošto
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sl	Preostala kvota %1 je prenizka, morda ne boste mogli pošiljati/prejemati nadaljnjih e-poštnih sporočil.<br>Čeprav lahko čiščenje e-poštnih sporočil v smetnjak ali v neželeni mapi pomaga, da dobite nekaj prostega prostora nazaj.<br>Če to ni pomagalo , vprašajte svojega skrbnika za več kvot.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sl	Preostala kvota %1 je prenizka, morda ne boste mogli pošiljati/prejemati nadaljnjih e-poštnih sporočil.\nČeprav lahko čiščenje e-poštnih sporočil v smetnjak ali v neželeni mapi pomaga, da dobite nekaj prostega prostora nazaj.\nČe to ni pomagalo , vprašajte svojega skrbnika za več kvot.

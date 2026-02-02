@@ -48,6 +48,11 @@ do you really want to toggle label %1 for all messages in the current view?	mail
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ko	선택한 메시지를 새 전자 메일에 첨부하기 전에 확인 메시지를 표시하시겠습니까?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	ko	선택한 메시지를 다른 폴더로 옮기기 전에 확인 메시지를 표시하시겠습니까?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	ko	다른 이메일 주소로 이메일이 도착할 경우('체'가 활성화된 경우에도) 이메일로 알림을 수정/설정하지 못하도록 하시겠습니까?
+don't use draft folder	mail	ko	초안 폴더 사용 안 함
+draft	mail	ko	초안
+draft folder	mail	ko	초안 폴더
+drafts	mail	ko	초안
+drafts folder	mail	ko	초안 폴더
 edit account	mail	ko	계정 편집
 email address	mail	ko	이메일 주소
 email notification update failed! you need to set an email address!	mail	ko	이메일 알림 업데이트에 실패했습니다! 이메일 주소를 설정해야 합니다!
@@ -57,6 +62,7 @@ emails in whitelisted domains are not marked as spam	mail	ko	화이트리스트 
 enable	mail	ko	사용
 enabled	mail	ko	사용
 encrypt your message with smime certificate	mail	ko	S/MIME 인증서로 메시지 암호화
+error: could not save message as draft	mail	ko	오류: 메시지를 초안으로 저장할 수 없습니다
 event details follow	mail	ko	이벤트 세부 정보는 다음과 같습니다
 everyone	mail	ko	모두
 examine namespace to retrieve folders in others and shared	mail	ko	네임스페이스를 검사하여 다른 폴더 및 공유 폴더를 검색합니다
@@ -125,6 +131,7 @@ mail settings	mail	ko	메일 설정
 mails can be copied to that folder via context menu, if folder is configured.	mail	ko	폴더가 구성된 경우 상황에 맞는 메뉴를 통해 해당 폴더로 메일을 복사할 수 있습니다.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ko	메일 서버가 보고했습니다:\n%1 \n선택한 메시지를 즉시 삭제하여 계속 진행하시겠습니까(확인 클릭)\n그렇지 않은 경우 계속하기 전에 휴지통 폴더를 비우십시오. (취소 클릭)
 message learned as spam and moved to spam folder	mail	ko	메시지가 스팸으로 인식되어 스팸 폴더로 이동되었습니다
+move selected mails to archive	mail	ko	선택한 이메일을 보관함으로 이동
 move selected to	mail	ko	선택한 위치로 이동
 move to	mail	ko	다음으로 이동
 moved %1 message(s) from %2 to %3	mail	ko	%2에서 %3으로 %1 메시지를 이동했습니다.
@@ -188,6 +195,8 @@ request for passphrase	mail	ko	암호 요청
 required pear class mail/mimedecode.php not found.	mail	ko	필수 PEAR 클래스 Mail/mimeDecode.php를 찾을 수 없습니다.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ko	공유 폴더 또는 사용자 폴더에서 비공개로 표시됨 플래그와 함께 도브콧을 사용하는 경우 비활성화하는 데 필요합니다!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	ko	보낸 사람 주소에 대한 인증서를 찾을 수 없으므로 S/MIME 암호화에 실패했습니다: %1
+save as draft	mail	ko	초안으로 저장
+save as draft and print	mail	ko	초안으로 저장 후 인쇄
 save as infolog on send	mail	ko	전송 후 인포로그로 생성하려면 체크 버튼 선택
 save as tracker on send	mail	ko	전송 후 티켓으로 생성하려면 체크 버튼
 save the drafted message as eml file into vfs	mail	ko	초안 작성된 메시지를 파일 관리자에 EML 파일로 저장합니다.
@@ -201,6 +210,7 @@ select an existing entry in order to append mail content to it	mail	ko	메일 �
 select an item to read	mail	ko	읽을 항목을 선택하세요.
 select mail addresses from addressbook	mail	ko	주소록에서 이메일 주소 선택
 select or insert email address	mail	ko	이메일 주소를 선택하거나 입력하세요
+selected	mail	ko	선택됨.
 selected date range (with quicksearch)	mail	ko	선택한 날짜 범위(빠른 검색 사용)
 send message and move to send folder (if configured)	mail	ko	메시지 보내기 및 보내기 폴더로 이동(설정된 경우)
 send message pgp encrypted: requires keys from all recipients!	mail	ko	메시지 보내기 PGP 암호화: 모든 수신자의 키가 필요합니다!
@@ -236,6 +246,7 @@ trash	mail	ko	휴지통
 trash folder	mail	ko	휴지통 폴더
 unconditional	mail	ko	항상
 validate addresses on submit:	mail	ko	제출할 주소의 유효성을 검사합니다:
+validate selected addresses on submit:	mail	ko	제출 시 선택한 주소 확인:
 view header lines	mail	ko	헤더 줄 보기
 what to do when you delete a message	mail	ko	메시지를 삭제할 때 수행할 작업입니다.
 write	mail	ko	쓰기

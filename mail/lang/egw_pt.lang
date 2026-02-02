@@ -25,7 +25,7 @@ after reply, visible during compose	mail	pt	Após resposta, visível durante a c
 aliases+forwards	mail	pt	Pseudónimos+Avanços
 all adresses:	mail	pt	Todos os Endereços:
 all available info	admin	pt	odas as informações disponíveis
-all messages in the folder will be lost	mail	pt	<br>Todas as mensagens da pasta serão perdidas
+all messages in the folder will be lost	mail	pt	\nTodas as mensagens da pasta serão perdidas
 all my email addresses	mail	pt	todos os meus endereços de correio eletrónico
 all of	mail	pt	todos de
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	pt	Todas as subpastas também serão eliminadas e todas as mensagens em todas as pastas afectadas serão perdidas
@@ -55,7 +55,7 @@ attachments	mail	pt	Anexos
 attachments, ...	mail	pt	anexos, ...
 authentication	mail	pt	Autenticação
 available personal email-accounts/profiles	mail	pt	EMail-Accounts/Profiles pessoais disponíveis
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pt	Tenha em atenção que, ao adicionar todos os ficheiros seleccionados como modo %1, também irá alterar todos os anexos existentes na lista para o modo %2.<br>Gostaria de continuar?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pt	Tenha em atenção que, ao adicionar todos os ficheiros seleccionados como modo %1, também irá alterar todos os anexos existentes na lista para o modo %2.\nGostaria de continuar?
 be aware that all attachments will be sent as %1!	mail	pt	Tenha em atenção que todos os anexos serão enviados como %1!
 but check shared folders	mail	pt	mas verifique as pastas compartilhadas
 by date	mail	pt	Por data
@@ -305,7 +305,7 @@ mailaccount	mail	pt	Mailaccount
 mailinglist	mail	pt	Mailinglist
 mails	common	pt	Correio
 mails can be copied to that folder via context menu, if folder is configured.	mail	pt	Os e-mails podem ser copiados para essa pasta através do menu de contexto, se a pasta estiver configurada.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pt	O servidor de correio informou:<br><br>%1<br><br>Deseja prosseguir com a eliminação imediata das mensagens seleccionadas (clique em ok)?<br>Em caso negativo, tente esvaziar a pasta de lixo antes de continuar. (clique em cancelar)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pt	O servidor de correio informou:\n\n%1\n\nDeseja prosseguir com a eliminação imediata das mensagens seleccionadas (clique em ok)?\nEm caso negativo, tente esvaziar a pasta de lixo antes de continuar. (clique em cancelar)
 mark all as read	mail	pt	Marcar tudo como lido
 mark all messages in folder as read	mail	pt	Marcar todas as mensagens em pasta como lidas
 mark as deleted	mail	pt	Marcar como apagada
@@ -321,6 +321,7 @@ message send successfully.	mail	pt	Mensagem enviar com êxito.
 modify subject	mail	pt	Modificar o assunto
 modify subject of this message	mail	pt	Modificar o assunto desta mensagem
 move folder	mail	pt	Mover pasta
+move selected mails to archive	mail	pt	Mover e-mails selecionados para arquivo
 move selected to	mail	pt	Mover mensagens seleccionadas para
 move to	mail	pt	Mover-se para
 move to trash	mail	pt	Mover para o lixo
@@ -481,7 +482,7 @@ select file to import into folder	mail	pt	Selecione o arquivo para importar para
 select file(s) from vfs	mail	pt	Selecione o arquivo (s) a partir de VFS
 select mail addresses from addressbook	mail	pt	Selecione o(s) endereço(s) de correio eletrónico do livro de endereços
 select or insert email address	mail	pt	Seleccionar ou inserir endereço de e-mail
-selected	mail	pt	selecionado
+selected	mail	pt	selecionado.
 selected date range (with quicksearch)	mail	pt	Intervalo de datas selecionado (com pesquisa rápida)
 send a reject message:	mail	pt	Enviar uma mensagem de rejeitar:
 send message and move to send folder (if configured)	mail	pt	Enviar mensagem e mover para a pasta de envio (se configurado)
@@ -608,4 +609,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	pt	É necessário selecionar primeiro algumas pastas (clicando nelas)!
 you will loose current message body, unless you save it to your clipboard!	mail	pt	Perderá o corpo da mensagem atual, a menos que o guarde na sua área de transferência!
 you've got new mail	mail	pt	Você tem novas mensagens
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pt	A sua quota restante %1 é demasiado baixa, pelo que poderá não conseguir enviar/receber mais mensagens de correio eletrónico.<br>Embora a limpeza de mensagens de correio eletrónico no lixo ou na pasta de lixo eletrónico possa ajudá-lo a recuperar algum espaço livre.<br>Se isso não ajudar, peça mais quota ao seu administrador.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pt	A sua quota restante %1 é demasiado baixa, pelo que poderá não conseguir enviar/receber mais mensagens de correio eletrónico.\nEmbora a limpeza de mensagens de correio eletrónico no lixo ou na pasta de lixo eletrónico possa ajudá-lo a recuperar algum espaço livre.\nSe isso não ajudar, peça mais quota ao seu administrador.

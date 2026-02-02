@@ -88,9 +88,13 @@ do you want to be asked for confirmation before attaching selected messages to n
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	et	Kas soovite, et enne valitud sõnumite teisaldamist teise kausta küsitakse kinnitust?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	et	Kas soovite vältida e-posti aadresside muutmist/seadistamist, kui saabuvad e-kirjad(, isegi kui Sieve on lubatud)?
 does not contain	mail	et	ei sisalda
+don't use draft folder	mail	et	Ärge kasutage kavandite kausta
 don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
 draft	mail	et	Eelnõu
+draft folder	mail	et	Kavandite kaust
+drafts	mail	et	Kavandid
+drafts folder	mail	et	Kavandid-kaust
 edit account	mail	et	Muuda kontot
 email address	mail	et	E-posti aadress
 email notification update failed! you need to set an email address!	mail	et	E-posti teavitamise ajakohastamine ebaõnnestus! Te peate määrama e-posti aadressi!
@@ -101,6 +105,7 @@ empty trash	mail	et	tühjenda prügi
 enable	mail	et	Luba
 enabled	mail	et	Lubatud
 encrypt your message with smime certificate	mail	et	Krüpteerige oma sõnum S/MIME sertifikaadiga
+error: could not save message as draft	mail	et	Viga: Sõnumit ei saanud salvestada kavandina
 every %1. day	mail	et	Iga %1. päev
 examine namespace to retrieve folders in others and shared	mail	et	Uurige nimeruumi, et otsida kaustu teistes ja jagatud
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	et	Suuremate manuste väljajätmine antud suurusest suuremate manuste automaatsest salvestamisest eelnõuna (MB)
@@ -181,6 +186,7 @@ mark as deleted	mail	et	Märgi kui kustutatud
 message learned as spam and moved to spam folder	mail	et	Sõnum õpiti rämpspostiks ja viidi rämpsposti kausta
 modify subject	mail	et	Muuda teemat
 modify subject of this message	mail	et	Muuda selle sõnumi teemat
+move selected mails to archive	mail	et	Liiguta valitud e-kirjad arhiivi
 move selected to	mail	et	Liigutage valitud aadressile
 move to	mail	et	Liiguta aadressile
 move to trash	mail	et	Liiguta trash-i
@@ -253,6 +259,8 @@ required pear class mail/mimedecode.php not found.	mail	et	Vajalikku PEAR klassi
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	et	Vajalik keelata, kui kasutate Dovecot'i koos privaatse nähtud lipuga jagatud või kasutaja kausta!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	et	S/MIME krüpteerimine ebaõnnestus, sest saatja aadressi jaoks ei leitud sertifikaati: %1
 save all attachments to filemanager	mail	et	Salvesta kõik manused failihaldurisse
+save as draft	mail	et	Salvestage kavandina
+save as draft and print	mail	et	Salvestage kavandina ja printige
 save as infolog on send	mail	et	Salvesta infoLogina saatmisel
 save the drafted message as eml file into vfs	mail	et	Salvesta koostatud sõnum eml-failina failihaldurisse
 saving of message %1 failed. destination folder %2 does not exist.	mail	et	Sõnumi %1 salvestamine ebaõnnestus. Sihtkaust %2 ei ole olemas.
@@ -265,6 +273,7 @@ select an existing entry in order to append mail content to it	mail	et	Valige ol
 select an item to read	mail	et	Valige kirje lugemiseks
 select mail addresses from addressbook	mail	et	Valige e-posti aadress(id) aadressiraamatust
 select or insert email address	mail	et	Valige või sisestage e-posti aadress
+selected	mail	et	valitud.
 selected date range (with quicksearch)	mail	et	Valitud kuupäevavahemik (kiirotsinguga)
 send message and move to send folder (if configured)	mail	et	Sõnumi saatmine ja liigutamine saatekausta (kui see on konfigureeritud)
 send message pgp encrypted: requires keys from all recipients!	mail	et	Sõnumi saatmine PGP-krüpteeritult: nõuab kõigi vastuvõtjate võtmeid!
@@ -311,6 +320,7 @@ trash folder	mail	et	Prügikasti kaust
 unconditional	mail	et	Alati
 unread	mail	et	lugematta
 validate addresses on submit:	mail	et	Kinnitage aadressid esitamisel:
+validate selected addresses on submit:	mail	et	Kinnita valitud aadressid saatmisel:
 view header lines	mail	et	Vaata pealkirja ridu
 what to do when you delete a message	mail	et	Mida teha sõnumi kustutamise korral.
 write	mail	et	Kirjuta
@@ -324,4 +334,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	et	Te peate esmalt valima mõned kaustad (klõpsates nendele)!
 you will loose current message body, unless you save it to your clipboard!	mail	et	Te kaotate praeguse sõnumi teksti, kui te ei salvesta seda lõikelauale!
 you've got new mail	mail	et	Teil on uus e-kiri
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	et	Teie järelejäänud kvoot %1 on liiga väike, te ei saa enam e-kirju saata/vastuvõtta.<br>Kuigi kirjade koristamine prügikastis või rämpskaustas võib aidata teil vaba ruumi tagasi saada.<br>Kui see ei aidanud, paluge administraatoril suurendada kvooti.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	et	Teie järelejäänud kvoot %1 on liiga väike, te ei saa enam e-kirju saata/vastuvõtta.\nKuigi kirjade koristamine prügikastis või rämpskaustas võib aidata teil vaba ruumi tagasi saada.\nKui see ei aidanud, paluge administraatoril suurendada kvooti.

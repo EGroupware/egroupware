@@ -74,7 +74,7 @@ attachments	mail	en	Attachments
 attachments, ...	mail	en	attachments, ...
 authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	en	Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well.<br>Would you like to proceed?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	en	Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well.\nWould you like to proceed?
 be aware that all attachments will be sent as %1!	mail	en	Be aware that all attachments will be sent as %1!
 before reply, visible during compose	mail	en	Before reply, visible during compose
 blacklisted mails are marked as spam	mail	en	Blacklisted emails are marked as spam
@@ -353,7 +353,7 @@ mailaccount	mail	en	Mail account
 mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
 mails can be copied to that folder via context menu, if folder is configured.	mail	en	Emails can be copied to that folder via context menu, if folder is configured.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mail server reported:<br><br>%1<br><br>Do you want to proceed by deleting the selected messages immediately (click OK)?<br>If not, please try to empty your trashfolder before continuing. (click Cancel)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mail server reported:\n\n%1\n\nDo you want to proceed by deleting the selected messages immediately (click OK)?\nIf not, please try to empty your trashfolder before continuing. (click Cancel)
 mark all as read	mail	en	Mark all as read
 mark all messages in folder as read	mail	en	Mark all messages in folder as read
 mark as deleted	mail	en	Mark as deleted
@@ -563,7 +563,7 @@ select files to upload	mail	en	Select files to upload
 select mail addresses from addressbook	mail	en	Select email address(es) from addressbook
 select multiple	mail	en	Select multiple
 select or insert email address	mail	en	Select or insert email address
-selected	mail	en	selected
+selected	mail	en	selected.
 selected date range (with quicksearch)	mail	en	Selected date range (with quicksearch)
 send a reject message:	mail	en	Send a reject message:
 send files as	mail	en	Send files as
@@ -637,7 +637,6 @@ switch off encryption?	mail	en	Switch off encryption?
 template folder	mail	en	Template Folder
 templates folder	mail	en	Templates Folder
 test connection	mail	en	Test connection
-test connection and display basic information about the selected profile	mail	en	Test connection and display basic information about the selected profile
 text	mail	en	Text
 text mode	mail	en	Text mode
 text/plain	mail	en	Text
@@ -663,7 +662,7 @@ trash folder	mail	en	Trash folder
 trust servers seen / unseen info	mail	en	Trust servers SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves.
 trying to recover from session data	mail	en	Trying to recover from session data
-turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message.<br>If you use templates, this option is only applied to the text part of the message.
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message.\nIf you use templates, this option is only applied to the text part of the message.
 unable to fetch vacation!	mail	en	Unable to fetch vacation!
 unconditional	mail	en	Unconditional
 undelete	mail	en	Undelete
@@ -720,4 +719,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	en	You need to select some folders first (by clicking on them)!
 you will loose current message body, unless you save it to your clipboard!	mail	en	You will loose current message body, unless you save it to your clipboard!
 you've got new mail	mail	en	You've got new email
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	en	Your remaining quota %1 is too low, you may not be able to send/receive further emails.<br>Although cleaning up emails in trash or junk folder might help you to get some free space back.<br>If that didn't help, please ask your administrator for more quota.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	en	Your remaining quota %1 is too low, you may not be able to send/receive further emails.\nAlthough cleaning up emails in trash or junk folder might help you to get some free space back.\nIf that didn't help, please ask your administrator for more quota.

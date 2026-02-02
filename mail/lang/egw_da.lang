@@ -112,6 +112,7 @@ empty trash	mail	da	Tøm skraldespanden
 enable	mail	da	Aktivere
 enabled	mail	da	Aktiveret
 encrypt your message with smime certificate	mail	da	Cifrar su mensaje con certificado S/MIME
+error: could not save message as draft	mail	da	Fejl: Kunne ikke gemme meddelelse som udkast
 event details follow	mail	da	Hændelses detajler følger
 every %1. day	mail	da	Every %1. day
 everyone	mail	da	Enhver
@@ -203,6 +204,7 @@ message verified successfully but the signer’s certificate could not be verifi
 message verified successfully.	mail	da	Besked bekræftet med succes.
 modify subject	mail	da	Ændre emne
 modify subject of this message	mail	da	Ændre emnet for denne meddelelse
+move selected mails to archive	mail	da	Flyt valgte e-mails til arkiv
 move selected to	mail	da	Flyt valgte til
 move to	mail	da	Flyt til
 move to trash	mail	da	Flyt til skraldespanden
@@ -281,6 +283,8 @@ required to disable if you use dovecot with private seen flags on shared or user
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	da	S/MIME-kryptering mislykkedes, fordi der ikke blev fundet et certifikat til afsenderadressen: %1
 save all	mail	da	Gem alle
 save all attachments to filemanager	mail	da	Gem alle vedhæftede filer i filemanager
+save as draft	mail	da	Gem som udkast
+save as draft and print	mail	da	Gem som udkast og udskriv
 save as infolog on send	mail	da	Gem som InfoLog ved afsendelse
 save the drafted message as eml file into vfs	mail	da	Gem den udarbejdede besked som eml-fil i Filhåndtering
 saving of message %1 failed. destination folder %2 does not exist.	mail	da	Gemning af besked %1 mislykkedes. Destinationsmappen %2 findes ikke.
@@ -293,6 +297,7 @@ select an existing entry in order to append mail content to it	mail	da	Vælg en 
 select an item to read	mail	da	Vælg et element at læse
 select mail addresses from addressbook	mail	da	Vælg e-mail-adresse(r) fra adressebog
 select or insert email address	mail	da	Vælg eller indsæt e-mail-adresse
+selected	mail	da	valgt.
 selected date range (with quicksearch)	mail	da	Valgt datointerval (med hurtigsøgning)
 send message and move to send folder (if configured)	mail	da	Send besked og flyt til sendemappe (hvis konfigureret)
 send message pgp encrypted: requires keys from all recipients!	mail	da	Send beskeden PGP-krypteret: kræver nøgler fra alle modtagere!
@@ -343,6 +348,7 @@ unconditional	mail	da	Altid
 unflagged	mail	da	Flag ikke sat
 unread	mail	da	ulæst
 validate addresses on submit:	mail	da	Valider adresserne, når du sender:
+validate selected addresses on submit:	mail	da	Bekræft valgte adresser ved afsendelse:
 view header lines	mail	da	Vis overskriftslinjer
 what to do when you delete a message	mail	da	Hvad man skal gøre, når man sletter en besked.
 when deleting messages	mail	da	Når meddelser slettes
@@ -358,4 +364,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	da	You need to select some folders first (by clicking on them)!
 you will loose current message body, unless you save it to your clipboard!	mail	da	Du vil miste den aktuelle meddelelsestekst, medmindre du gemmer den i udklipsholderen!
 you've got new mail	mail	da	Du har fået en ny e-mail
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	da	Din resterende kvote %1 er for lav, du kan muligvis ikke sende/modtage flere e-mails.<br>Selvom oprydning af e-mails i papirkurven eller junk-mappen måske kan hjælpe dig med at få noget ledig plads tilbage.<br>Hvis det ikke hjalp, kan du bede din administrator om mere kvote.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	da	Din resterende kvote %1 er for lav, du kan muligvis ikke sende/modtage flere e-mails.\nSelvom oprydning af e-mails i papirkurven eller junk-mappen måske kan hjælpe dig med at få noget ledig plads tilbage.\nHvis det ikke hjalp, kan du bede din administrator om mere kvote.

@@ -32,7 +32,7 @@ attach users vcard at compose to every new mail	mail	id	Lampirkan vCard pengguna
 attachment has been saved successfully.	mail	id	Lampiran telah berhasil disimpan.
 attachments	mail	id	Lampiran
 attachments, ...	mail	id	lampiran, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	id	Perlu diketahui bahwa dengan menambahkan semua file yang dipilih sebagai mode %1, ini juga akan mengubah semua lampiran yang ada dalam daftar menjadi mode %2.<br><br>Apakah Anda ingin melanjutkan?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	id	Perlu diketahui bahwa dengan menambahkan semua file yang dipilih sebagai mode %1, ini juga akan mengubah semua lampiran yang ada dalam daftar menjadi mode %2.\n\nApakah Anda ingin melanjutkan?
 be aware that all attachments will be sent as %1!	mail	id	Ketahuilah bahwa semua lampiran akan dikirim sebagai %1!
 by date	mail	id	menurut tanggal
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	id	Secara default, 'http://' hanya diganti dengan 'https://'. Jangan ragu untuk mengonfigurasi 'https://proxy.egroupware.org/' untuk juga memuat gambar yang hanya tersedia melalui http.
@@ -79,8 +79,11 @@ do you really want to toggle label %1 for all messages in the current view?	mail
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	id	Apakah Anda ingin dimintai konfirmasi sebelum melampirkan pesan yang dipilih ke email baru?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	id	Apakah Anda ingin dimintai konfirmasi sebelum memindahkan pesan yang dipilih ke folder lain?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	id	Apakah Anda ingin mencegah pengeditan/pengaturan notifikasi melalui email ke alamat email lain jika ada email yang masuk (meskipun Sieve diaktifkan)?
+don't use draft folder	mail	id	Jangan gunakan folder draf
+draft	mail	id	Draf
 draft folder	mail	id	Folder Konsep
 drafts	mail	id	Draf
+drafts folder	mail	id	Folder Draf
 edit account	mail	id	Edit akoun
 email address	mail	id	Alamat email
 email notification update failed! you need to set an email address!	mail	id	Pembaruan pemberitahuan email gagal! Anda perlu mengatur alamat email!
@@ -93,6 +96,7 @@ enabled	mail	id	Diaktifkan
 encrypt your message with smime certificate	mail	id	Mengenkripsi pesan Anda dengan sertifikat S/MIME
 error saving %1!	mail	id	Error menyimpan %1!
 error:	mail	id	Error:
+error: could not save message as draft	mail	id	Kesalahan: Tidak dapat menyimpan pesan sebagai draf
 event details follow	mail	id	Berikut adalah detil Kegiatan
 everyone	mail	id	Semua orang
 examine namespace to retrieve folders in others and shared	mail	id	Periksa ruang nama untuk mengambil folder di folder lain dan dibagikan
@@ -179,7 +183,7 @@ mailaccount	mail	id	Akun surat
 mailinglist	mail	id	Milis
 mails	common	id	Surat
 mails can be copied to that folder via context menu, if folder is configured.	mail	id	Pesan dapat disalin ke folder tersebut melalui menu konteks, jika folder dikonfigurasi.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	id	Mailserver melaporkan:<br><br>%1<br><br>Apakah Anda ingin melanjutkan dengan segera menghapus pesan yang dipilih (klik OK)?<br>Jika tidak, cobalah mengosongkan folder sampah sebelum melanjutkan. (klik batal)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	id	Mailserver melaporkan:\n\n%1\n\nApakah Anda ingin melanjutkan dengan segera menghapus pesan yang dipilih (klik OK)?\nJika tidak, cobalah mengosongkan folder sampah sebelum melanjutkan. (klik batal)
 mark all as read	mail	id	Tandai semua sebagai telah dibaca
 mark all messages in folder as read	mail	id	Tandai semua pesan dalam folder sebagai telah dibaca
 mark as deleted	mail	id	Tandai sbg terhapus
@@ -188,6 +192,7 @@ matches regexp	mail	id	cocok regexp
 message learned as spam and moved to spam folder	mail	id	Pesan diketahui sebagai spam dan dipindahkan ke folder spam
 modify subject	mail	id	Ubah subjek
 modify subject of this message	mail	id	Ubah subjek pesan ini
+move selected mails to archive	mail	id	Pindahkan surel terpilih ke arsip
 move selected to	mail	id	Pindahkan yang dipilih ke
 move to	mail	id	Pindahkan ke
 moved %1 message(s) from %2 to %3	mail	id	Memindahkan %1 pesan dari %2 ke %3.
@@ -271,6 +276,7 @@ s/mime encryption failed because no certificate has been found for sender addres
 save all	mail	id	Simpan semuanya
 save all attachments to filemanager	mail	id	Simpan semua lampiran ke filemanager
 save as draft	mail	id	Simpan sbg draft
+save as draft and print	mail	id	Simpan sebagai draf dan cetak
 save as infolog	mail	id	Simpan sbg infolog
 save as infolog on send	mail	id	Centang tombol untuk membuat sebagai InfoLog setelah mengirim
 save as tracker on send	mail	id	Centang tombol untuk membuat sebagai tiket setelah mengirim
@@ -285,6 +291,7 @@ select an existing entry in order to append mail content to it	mail	id	Pilih ent
 select an item to read	mail	id	Pilih item yang akan dibaca
 select mail addresses from addressbook	mail	id	Pilih alamat email dari buku alamat
 select or insert email address	mail	id	Pilih atau masukkan alamat email
+selected	mail	id	terpilih.
 selected date range (with quicksearch)	mail	id	Rentang tanggal yang dipilih (dengan pencarian cepat)
 send message and move to send folder (if configured)	mail	id	Kirim pesan dan pindahkan ke folder kirim (jika dikonfigurasi)
 send message pgp encrypted: requires keys from all recipients!	mail	id	Kirim pesan terenkripsi PGP: memerlukan kunci dari semua penerima!
@@ -339,6 +346,7 @@ unflagged	mail	id	Tak ditandai
 unread	mail	id	Tak dibaca
 vacation notice	mail	id	Pemberitahuan liburan
 validate addresses on submit:	mail	id	Memvalidasi alamat saat mengirim:
+validate selected addresses on submit:	mail	id	Verifikasi alamat terpilih saat mengirim:
 view header lines	mail	id	Tampilkan baris header
 what to do when you delete a message	mail	id	Apa yang harus dilakukan saat Anda menghapus pesan.
 write	mail	id	tulis

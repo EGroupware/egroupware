@@ -167,7 +167,6 @@ does not contain	mail	km	មិនមាន
 does not exist on imap server.	mail	km	មិនមាននៅលើម៉ាស៊ីនមេ IMAP ទេ។
 does not match	mail	km	មិនត្រូវគ្នា។
 does not match regexp	mail	km	មិនត្រូវគ្នានឹង regexp
-don't use draft folder	mail	km	កុំប្រើថតព្រាង
 don't use sent	mail	km	កុំប្រើ Sent
 don't use template folder	mail	km	កុំប្រើថតពុម្ព
 don't use trash	mail	km	កុំប្រើធុងសំរាម
@@ -589,7 +588,6 @@ switch off encryption?	mail	km	បិទការអ៊ិនគ្រីប?
 template folder	mail	km	ថតពុម្ព
 templates folder	mail	km	ថតពុម្ព
 test connection	mail	km	ការភ្ជាប់សាកល្បង
-test connection and display basic information about the selected profile	mail	km	សាកល្បងការតភ្ជាប់ និងបង្ហាញព័ត៌មានមូលដ្ឋានអំពីទម្រង់ដែលបានជ្រើសរើស
 text	mail	km	អត្ថបទ
 text mode	mail	km	របៀបអត្ថបទ
 text/plain	mail	km	អត្ថបទ/ធម្មតា។
@@ -615,7 +613,7 @@ trash folder	mail	km	ធុងសំរាម
 trust servers seen / unseen info	mail	km	ម៉ាស៊ីនមេទុកចិត្ត SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	km	ជឿជាក់លើម៉ាស៊ីនមេ នៅពេលទាញយកស្ថានភាពថត។ ប្រសិនបើអ្នកជ្រើសរើសទេ យើងនឹងស្វែងរកសារ UNSEEN ហើយរាប់វាដោយខ្លួនឯង។
 trying to recover from session data	mail	km	កំពុងព្យាយាមងើបឡើងវិញពីទិន្នន័យសម័យ
-turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	km	បិទ​បន្ទាត់​ផ្តេក​រវាង​ហត្ថលេខា និង​សារ​ដែល​បាន​តែង (នេះ​មិន​យោង​ទៅ​តាម RFC)។<br>ប្រសិន​បើ​អ្នក​ប្រើ​ពុម្ព ជម្រើស​នេះ​ត្រូវ​បាន​អនុវត្ត​ចំពោះ​ផ្នែក​អត្ថបទ​នៃ​សារ​ប៉ុណ្ណោះ។
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	km	បិទ​បន្ទាត់​ផ្តេក​រវាង​ហត្ថលេខា និង​សារ​ដែល​បាន​តែង (នេះ​មិន​យោង​ទៅ​តាម RFC)។\nប្រសិន​បើ​អ្នក​ប្រើ​ពុម្ព ជម្រើស​នេះ​ត្រូវ​បាន​អនុវត្ត​ចំពោះ​ផ្នែក​អត្ថបទ​នៃ​សារ​ប៉ុណ្ណោះ។
 unable to fetch vacation!	mail	km	មិនអាចទៅយកវិស្សមកាលបានទេ!
 undelete	mail	km	លុប
 unflagged	mail	km	មិនទាន់ដាក់ទង់

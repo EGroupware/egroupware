@@ -35,7 +35,7 @@ attach users vcard at compose to every new mail	mail	hu	A felhasználók vCard-j
 attachment has been saved successfully.	mail	hu	A csatolás sikeresen mentésre került.
 attachments	mail	hu	Mellékletek
 attachments, ...	mail	hu	mellékletek, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	hu	Figyeljen arra, hogy az összes kiválasztott fájl %1 módban történő hozzáadásával a listában lévő összes meglévő mellékletet is %2 módra változtatja.<br>Szeretné folytatni?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	hu	Figyeljen arra, hogy az összes kiválasztott fájl %1 módban történő hozzáadásával a listában lévő összes meglévő mellékletet is %2 módra változtatja.\nSzeretné folytatni?
 be aware that all attachments will be sent as %1!	mail	hu	Vegye figyelembe, hogy az összes mellékletet %1 módban küldi el!
 by date	mail	hu	Dátum szerint
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	hu	Alapértelmezés szerint a "http://" helyébe a "https://" lép. Nyugodtan konfigurálhatja a 'https://proxy.egroupware.org/'-t úgy, hogy csak http-n keresztül elérhető képeket is betöltsön.
@@ -102,6 +102,7 @@ download attachments	mail	hu	Letöltés mellékletek
 draft	mail	hu	Vázlat
 draft folder	mail	hu	Vázlat mappa
 drafts	mail	hu	Piszkozatok
+drafts folder	mail	hu	Vázlatok mappa
 edit account	mail	hu	Azonosító szerkesztése
 edit vacation settings	mail	hu	Szabadság beállítások szerkesztése
 email address	mail	hu	E-Mail cím
@@ -206,7 +207,7 @@ mailaccount	mail	hu	Mail fiók
 mailinglist	mail	hu	Levelezési lista
 mails	common	hu	Mailek
 mails can be copied to that folder via context menu, if folder is configured.	mail	hu	A levelek a kontextusmenüben másolhatók ebbe a mappába, ha a mappa be van állítva.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	hu	Mailserver jelentette:<br><br>%1<br><br>Kívánja folytatni a kiválasztott üzenetek azonnali törlését (kattintson az ok gombra)?<br>Ha nem, kérjük, próbálja meg kiüríteni a szemétmappát, mielőtt folytatja. (kattintson a törlés gombra)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	hu	Mailserver jelentette:\n\n%1\n\nKívánja folytatni a kiválasztott üzenetek azonnali törlését (kattintson az ok gombra)?\nHa nem, kérjük, próbálja meg kiüríteni a szemétmappát, mielőtt folytatja. (kattintson a törlés gombra)
 mark all as read	mail	hu	Mindent olvasottnak jelölni
 mark all messages in folder as read	mail	hu	A mappa összes üzenetének olvasottként való megjelölése
 mark as deleted	mail	hu	Törlésre megjelöl
@@ -215,6 +216,7 @@ matches regexp	mail	hu	reguláris kifejezés egyezése
 message learned as spam and moved to spam folder	mail	hu	Az üzenetet spamnek tanulták és a spam mappába helyezték át
 modify subject	mail	hu	Tárgy módosítása
 modify subject of this message	mail	hu	Az üzenet tárgyának módosítása
+move selected mails to archive	mail	hu	A kiválasztott e-mailek áthelyezése az archívumba
 move selected to	mail	hu	Kijelöltek mozgatása
 move to	mail	hu	Kijelöltek mozgatása
 move to archive	mail	hu	Áthelyezés az archív mappába
@@ -308,6 +310,7 @@ required to disable if you use dovecot with private seen flags on shared or user
 save all	mail	hu	Összes mentése
 save all attachments to filemanager	mail	hu	Minden melléklet mentése a fájlkezelőbe
 save as draft	mail	hu	Mentés vázlatként
+save as draft and print	mail	hu	Mentés vázlatként és nyomtatás
 save as infolog	mail	hu	Mentés InfoLog-ként
 save as infolog on send	mail	hu	Ellenőrizze a gombot az InfoLog létrehozásához küldés után
 save as tracker on send	mail	hu	Ellenőrizze a gombot, hogy a küldés után jegyként hozza létre
@@ -323,6 +326,7 @@ select an existing entry in order to append mail content to it	mail	hu	Válasszo
 select an item to read	mail	hu	Válasszon ki egy elemet az olvasáshoz
 select mail addresses from addressbook	mail	hu	e-mail címtől Válassza ki az e-mail cím(eke)t a címjegyzékből
 select or insert email address	mail	hu	E-mail cím kiválasztása vagy beillesztése
+selected	mail	hu	kiválasztva.
 selected date range (with quicksearch)	mail	hu	Kiválasztott dátumtartomány (gyorskereséssel)
 send message and move to send folder (if configured)	mail	hu	Üzenet küldése és áthelyezése a küldési mappába (ha konfigurálva van)
 send message pgp encrypted: requires keys from all recipients!	mail	hu	Üzenet küldése PGP titkosítással: minden címzettől kulcsot igényel!
@@ -383,6 +387,7 @@ vacation notice	mail	hu	Szabadság értesítés
 vacation notice is active	mail	hu	Szabadság értesítő aktív
 vacation start-date must be before the end-date!	mail	hu	Szabadság kezdete korábban legyen mint a vége!
 validate addresses on submit:	mail	hu	Érvényesítse a címeket az elküldéskor:
+validate selected addresses on submit:	mail	hu	A kiválasztott címek érvényesítése elküldéskor:
 view header lines	mail	hu	Fejléc tartalom megjelenítése
 what to do when you delete a message	mail	hu	Mi a teendő, ha töröl egy üzenetet.
 when deleting messages	mail	hu	Üzenet törlése esetén
@@ -400,4 +405,4 @@ you need to save the message as draft first before to be able to save it into vf
 you need to select some folders first (by clicking on them)!	mail	hu	Először ki kell jelölnie néhány mappát (kattintással)!
 you will loose current message body, unless you save it to your clipboard!	mail	hu	Elveszíti az aktuális üzenettörzset, hacsak nem menti el a vágólapra!
 you've got new mail	mail	hu	Új levelek érkeztek
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	hu	A fennmaradó kvóta %1 túl alacsony, ezért lehet, hogy nem tud további e-maileket küldeni/venni.<br>Bár a szemétben vagy a levélszemét mappában lévő e-mailek kitakarítása segíthet, hogy visszanyerjen egy kis szabad helyet.<br>Ha ez nem segített, kérjen több kvótát a rendszergazdától.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	hu	A fennmaradó kvóta %1 túl alacsony, ezért lehet, hogy nem tud további e-maileket küldeni/venni.\nBár a szemétben vagy a levélszemét mappában lévő e-mailek kitakarítása segíthet, hogy visszanyerjen egy kis szabad helyet.\nHa ez nem segített, kérjen több kvótát a rendszergazdától.
