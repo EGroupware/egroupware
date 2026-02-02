@@ -172,6 +172,14 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 	}
 
 	/**
+	 * Always return false as a toolbar is never dirty
+	 */
+	isDirty()
+	{
+		return false;
+	}
+
+	/**
 	 * Overridden from parent because toolbar can turn actions into buttons
 	 *
 	 * @param {EgwAction[] | {[p : string] : object}} actions
