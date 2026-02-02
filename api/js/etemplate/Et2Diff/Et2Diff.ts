@@ -65,6 +65,13 @@ export class Et2Diff extends Et2InputWidget(LitElement)
 		];
 	}
 
+	/**
+	 * Always return false as a et2-diff is never dirty
+	 */
+	isDirty()
+	{
+		return false;
+	}
 
 	private readonly diff_options : Diff2HtmlConfig = {
 		matching: "words",
