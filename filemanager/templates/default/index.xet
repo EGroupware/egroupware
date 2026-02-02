@@ -57,7 +57,7 @@
 			<et2-button  id="reload" label="Reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()"
 				disabled="!@show_refresh" hideOnReadonly="true" image="reload" noSubmit="true"></et2-button>
 			<et2-vfs-upload label="Upload" statustext="Select file to upload in current directory" id="upload" class="et2_toolbar_hasCaption toolbar--needsCaption"
-							path="$cont[nm][path]/"
+                            path="{$cont[path]}/"
 							dropTarget="filemanager-index" multiple="true"
 							onchange="widget.updateComplete.then(() => {window.setTimeout(()=>{widget.value={};}, 1000)});"
 			></et2-vfs-upload>
