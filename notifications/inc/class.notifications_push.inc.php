@@ -100,14 +100,21 @@ class notifications_push implements Json\PushBackend
 
 		foreach((array)$account_id as $id)
 		{
-			self::$db->insert(self::TABLE, array(
-				'account_id'  => $id,
-				'notify_type' => self::TYPE,
-				'notify_message' => json_encode(array(
-					'method' => $key,
-					'data' => $data,
-				)),
-			), false, __LINE__, __FILE__, self::APP);
+			try
+			{
+				self::$db->insert(self::TABLE, array(
+					'account_id' => $id,
+					'notify_type' => self::TYPE,
+					'notify_message' => json_encode(array(
+						'method' => $key,
+						'data' => $data,
+					)),
+				), false, __LINE__, __FILE__, self::APP);
+			}
+			catch (Api\Db\Exception\InvalidSql $e) {
+				_egw_log_exception();
+				return;  // no need to continue trying
+			}
 		}
 
 		// cache the highest id, to not poll database
