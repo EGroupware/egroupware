@@ -189,7 +189,10 @@ class AnonymousList extends filemanager_ui
 	private function hideToolbarParts($parts)
 	{
 		foreach ($parts as $part){
-			$this->etemplate->setElementAttribute("toolbar".$part, "hidden", true);
+			if($this->etemplate->getElementAttribute("toolbar" . $part, "hidden") === null)
+			{
+				$this->etemplate->setElementAttribute("toolbar" . $part, "hidden", true);
+			}
 		}
 	}
 }
