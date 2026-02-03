@@ -64,21 +64,22 @@ class AnonymousList extends filemanager_ui
 			: Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'logo');
 		if($logo)
 		{
-			$this->etemplate->setElementAttribute("logo", "src", $logo);
+			$this->etemplate->setElementAttribute("toolbar[logo]", "src", $logo);
 		}
 		if(!Vfs::is_writable($content['nm']['path']))//read-only share
 		{
-			$hidden=["[upload]","[button][edit]","[button][createdir]","[button][symlink]","[file_a_file]"];//new already gets hidden
+			$hidden=["[upload]","[new]","[button][edit]","[button][createdir]","[button][symlink]","[file_a_file]"];//new already gets hidden
 			// share is read-only, we can just hide everything
 			//even in read-only we do not want to hide everything
 			$this->hideToolbarParts($hidden);
 		}
-		else //writable share
+		else //if(writable share)
 		{
 			$hidden=["[button][edit]","[button][symlink]","[file_a_file]"];
 			// Set some unwanted buttons readonly - hide via CSS
 			$this->hideToolbarParts($hidden);
 		}
+		//else if(hidden upload)
 //		always make reload available
 		$this->etemplate->setElementAttribute("toolbar[reload]","disabled", false);
 		// No egw-app, no main-header, no filterbox
