@@ -66,26 +66,30 @@ class AnonymousList extends filemanager_ui
 		{
 			$this->etemplate->setElementAttribute("logo", "src", $logo);
 		}
-		if(!Vfs::is_writable($content['nm']['path']))
+		if(!Vfs::is_writable($content['nm']['path']))//read-only share
 		{
+			$hidden=["[upload]","[button][edit]","[button][createdir]","[button][symlink]","[file_a_file]"];//new already gets hidden
 			// share is read-only, we can just hide everything
-			$this->etemplate->setElementAttribute("toolbar", "hidden", true);
+			//even in read-only we do not want to hide everything
+			$this->hideToolbarParts($hidden);
 		}
-		else
+		else //writable share
 		{
+			$hidden=["[button][edit]","[button][symlink]","[file_a_file]"];
 			// Set some unwanted buttons readonly - hide via CSS
-			$this->etemplate->setElementAttribute("toolbar[button][edit]", "disabled", true);
-			$this->etemplate->setElementAttribute("toolbar[button][symlink]", "disabled", true);
+			$this->hideToolbarParts($hidden);
 		}
+//		always make reload available
+		$this->etemplate->setElementAttribute("toolbar[reload]","disabled", false);
 		// No egw-app, no main-header, no filterbox
-		$this->etemplate->setElementAttribute("search", "onchange", "window.app.filemanager.changeNmFilter(null, widget); return false;");
+		$this->etemplate->setElementAttribute("toolbar[search]", "onchange", "window.app.filemanager.changeNmFilter(null, widget); return false;");
 		$this->etemplate->setElementAttribute("nm", "filter_template", "");
 
 		// No framework, no slots available
 		$this->etemplate->setElementAttribute("filemanager.index.app-toolbar", "slot", "");
 
 		// Anonymous view doesn't always get push, so refresh after upload
-		$this->etemplate->setElementAttribute("upload", "onchange", 'ev.target.set_value(""); egw.refresh("","filemanager");');
+		$this->etemplate->setElementAttribute("toolbar[upload]", "onchange", 'ev.target.set_value(""); egw.refresh("","filemanager");');
 
 		return parent::listview($content, $msg);
 	}
@@ -180,5 +184,11 @@ class AnonymousList extends filemanager_ui
 		$total = parent::get_rows($query, $rows);
 
 		return $total;
+	}
+	private function hideToolbarParts($parts)
+	{
+		foreach ($parts as $part){
+			$this->etemplate->setElementAttribute("toolbar".$part, "hidden", true);
+		}
 	}
 }
