@@ -112,7 +112,7 @@ class notifications_push implements Json\PushBackend
 				), false, __LINE__, __FILE__, self::APP);
 			}
 			catch (Api\Db\Exception\InvalidSql $e) {
-				_egw_log_exception();
+				_egw_log_exception($e);
 				return;  // no need to continue trying
 			}
 		}
