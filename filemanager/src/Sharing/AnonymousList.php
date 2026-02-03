@@ -169,10 +169,10 @@ class AnonymousList extends filemanager_ui
 		$query['filter'] = '';
 
 		// Check for navigating outside share, redirect back to share
-		if (!empty($query['path']) && (!Vfs::stat($query['path'], false) || !Vfs::is_dir($query['path']) || !Vfs::check_access($query['path'], Vfs::READABLE)))
+		if(!empty($query['col_filter']['dir']) && (!Vfs::stat($query['col_filter']['dir'], false) || !Vfs::is_dir($query['col_filter']['dir']) || !Vfs::check_access($query['col_filter']['dir'], Vfs::READABLE)))
 		{
 			// only redirect, if it would be to some other location, gives redirect-loop otherwise
-			if ($query['path'] != ($path = static::get_home_dir()))
+			if($query['col_filter']['dir'] != ($path = static::get_home_dir()))
 			{
 				// we will leave here, since we are not allowed, go back to root
 				// TODO: Give message about it, redirect to home dir
