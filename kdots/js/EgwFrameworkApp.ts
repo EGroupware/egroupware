@@ -1048,7 +1048,10 @@ export class EgwFrameworkApp extends LitElement
 		{
 			await this.updateComplete;
 		}
-		this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
+		if(this.rightSplitter)
+		{
+			this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
+		}
 	}
 
 	/**
