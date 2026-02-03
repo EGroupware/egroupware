@@ -1,3 +1,20 @@
+egroupware-docker (26.2.20260203) hardy; urgency=low
+
+  * 26-pre-release, final release planned for Februar 9th, please test
+  * AiTools: fix error when trying to activate anything caused by wrongly escaped endpoint attribute
+  * Calendar: fix reordering resources removed them from list of selected calendars
+  * Filemanager: fix hidden upload share did not show upload button
+  * Filemanager: fix invalid path check in anonymous shares
+  * Filemanager: add linkHandler() to avoid reload when just changing directory
+  * Filemanager: fix upload directory was not changed when filemanager was called from another app
+  * History: contained et2-diff should never be dirty / trigger a dirty warning
+  * Kdots: add dirty check to etemplates opened into dialogs, blocking close of dialog if etemplate is dirty
+  * Mail: remove dirty warning of (toolbar in) mail display
+  * RAG: fixed not working switch search-type temporary in filter-box
+  * RAG: automatic switch to legacy search when using an asterisk at the beginning of word in the search pattern
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 03 Feb 2026 19:54:57 +0100
+
 egroupware-docker (26.1.20260130) hardy; urgency=low
 
   * 26.x PreRelease of final release planned for Monday Februar 9th, please test :)
