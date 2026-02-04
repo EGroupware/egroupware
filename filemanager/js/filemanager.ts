@@ -23,6 +23,7 @@ import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
 import {MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
 import {egwAction} from "../../api/js/egw_action/egw_action";
 import type {Et2VfsUpload} from "../../api/js/etemplate/Et2Vfs/Et2VfsUpload";
+import {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
 
 /**
  * UI for filemanager
@@ -132,6 +133,16 @@ export class filemanagerAPP extends EgwApp
 		{
 			// Anonymous view - reorder the DOM nodes
 			et2.DOMContainer.parentElement.append(et2.DOMContainer);
+			const button_widget: Et2Button = document?.querySelector("#filemanager-index_toolbar_button\\[change_view\\]")
+			if (button_widget)
+			{
+				const view: string = et2.app_obj?.filemanager?.nm?.view || et2_nextmatch_controller.VIEW_TILE
+				button_widget.image = egw.image("list_" + (view == et2_nextmatch_controller.VIEW_ROW ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW));
+				//@ts-ignore statustext inherited from et2-widget
+				button_widget.statustext = this.egw.lang(view === et2_nextmatch_controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
+
+			}
+
 		}
 
 		let path_widget = this.et2.getWidgetById('path');
