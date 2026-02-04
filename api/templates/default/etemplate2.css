@@ -2453,7 +2453,7 @@ table.egwGridView_outer thead tr th.noResize:hover {
 /**
  * New entry (via push)
  */
-.et2_nextmatch .new_entry {
+.et2_nextmatch tr.new_entry.unseen {
     animation-name: new_entry_pulse, new_entry_clear;
     animation-duration: 5s;
     animation-delay: 0s, 180s;
