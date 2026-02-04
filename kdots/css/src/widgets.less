@@ -222,7 +222,7 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 	padding-inline: var(--sl-spacing-2x-small);
   }
 
-  .et2_clickable, et2-image, .et2-input-widget:not(et2-toolbar) {
+  .et2_clickable, et2-image, .et2-input-widget:not(et2-toolbar):not(et2-link-add) {
 	--sl-input-border-color: transparent;
 	--indicator-color: var(--sl-color-neutral-0);
 	--sl-input-background-color: transparent;
@@ -251,6 +251,12 @@ INPUT FIELDS GET SOME BACKGROUND WHEN FOCUSED
 
 	&:hover::part(base), &:hover::part(control) {
 	  border-color: var(--sl-input-border-color-hover);
+	}
+  }
+  et2-link-add.et2-input-widget{
+	--sl-input-border-color: var(--sl-color-neutral-400);
+	&::part(listbox){
+	  background: var(--sl-color-neutral-0);
 	}
   }
 

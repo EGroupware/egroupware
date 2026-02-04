@@ -31,7 +31,15 @@ export class Et2LinkAdd extends Et2InputWidget(LitElement)
 					flex: 1 1 auto;
 					position: relative;
 					max-width: 100%;
-			}
+                    border: solid var(--sl-input-border-width) var(--sl-input-border-color);
+                    border-radius: var(--sl-input-border-radius-medium);
+                    &:hover{
+                        border-color: var(--sl-input-border-color-hover);
+                    }
+				}
+				et2-link-apps::part(combobox){
+					border:none;
+				}
 			`
 		];
 	}
@@ -132,6 +140,7 @@ export class Et2LinkAdd extends Et2InputWidget(LitElement)
                     <et2-link-apps
                             onlyApp=${this.application || nothing}
                             applicationList=${this.applicationList || nothing}
+                            exportparts="listbox"
                             ?disabled=${this.disabled}
                             ?readonly=${this.readonly}
                             .value=${this.value?.app}
