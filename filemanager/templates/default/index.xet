@@ -53,7 +53,7 @@
 	<et2-template id="filemanager.index.app-toolbar" template="" lang="" group="0" version="1.9.002">
         <!-- Anonymous view has some extras - logo & button -->
 		<et2-toolbar id="toolbar">
-			<et2-image id="logo" disabled="!@show_refresh" hideOnReadonly="true" style="max-width: 150px"></et2-image>
+			<et2-image id="logo" disabled="!@show_refresh" hideOnReadonly="true"></et2-image>
 			<et2-button  id="reload" label="Reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()"
 				disabled="!@show_refresh" hideOnReadonly="true" image="reload" noSubmit="true"></et2-button>
 			<et2-vfs-upload label="Upload" statustext="Select file to upload in current directory" id="upload" class="et2_toolbar_hasCaption toolbar--needsCaption"

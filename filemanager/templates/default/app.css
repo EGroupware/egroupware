@@ -231,4 +231,24 @@ div#filemanager-index_filemanager-index-header_right {
   --sl-input-border-color: var(--sl-color-neutral-400);
   --sl-input-border-color-hover: var(--sl-color-neutral-700);
 }
+#popupMainDiv > #filemanager-index_filemanager-index-app-toolbar[slot=''] {
+  padding: var(--sl-spacing-small);
+}
+#popupMainDiv > #filemanager-index_filemanager-index-app-toolbar[slot=''] et2-toolbar #filemanager-index_toolbar_logo {
+  max-width: calc(var(--sl-input-height-medium) * 3);
+  max-height: var(--sl-input-height-medium);
+  min-width: var(--sl-input-height-medium);
+}
+#popupMainDiv > #filemanager-index_filemanager-index-app-toolbar[slot=''] et2-toolbar #filemanager-index_toolbar_logo [part="image"] {
+  max-height: inherit;
+}
+#popupMainDiv > #filemanager-index_filemanager-index-app-toolbar[slot=''] et2-toolbar::part(buttons) {
+  gap: var(--sl-spacing-small);
+}
+#popupMainDiv > #filemanager-index_filemanager-index-app-toolbar[slot=''] et2-toolbar et2-button::part(base) {
+  border-color: var(--sl-input-border-color);
+}
+#popupMainDiv > #filemanager-index_filemanager-index-app-toolbar[slot=''] et2-toolbar et2-vfs-path et2-image {
+  --image-filter: none;
+}
 /*# sourceMappingURL=app.css.map */
