@@ -1012,8 +1012,8 @@ et2-dialog > [slot="label"] et2-tree-dropdown::part(control) {
 et2-dialog > [slot="label"] .et2_clickable,
 [slot="main-header"] et2-image,
 et2-dialog > [slot="label"] et2-image,
-[slot="main-header"] .et2-input-widget:not(et2-toolbar),
-et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar) {
+[slot="main-header"] .et2-input-widget:not(et2-toolbar):not(et2-link-add),
+et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):not(et2-link-add) {
   --sl-input-border-color: transparent;
   --indicator-color: var(--sl-color-neutral-0);
   --sl-input-background-color: transparent;
@@ -1022,14 +1022,14 @@ et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar) {
 et2-dialog > [slot="label"] .et2_clickable::part(input):autofill,
 [slot="main-header"] et2-image::part(input):autofill,
 et2-dialog > [slot="label"] et2-image::part(input):autofill,
-[slot="main-header"] .et2-input-widget:not(et2-toolbar)::part(input):autofill,
-et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar)::part(input):autofill,
+[slot="main-header"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)::part(input):autofill,
+et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)::part(input):autofill,
 [slot="main-header"] .et2_clickable::part(input):-webkit-autofill,
 et2-dialog > [slot="label"] .et2_clickable::part(input):-webkit-autofill,
 [slot="main-header"] et2-image::part(input):-webkit-autofill,
 et2-dialog > [slot="label"] et2-image::part(input):-webkit-autofill,
-[slot="main-header"] .et2-input-widget:not(et2-toolbar)::part(input):-webkit-autofill,
-et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar)::part(input):-webkit-autofill {
+[slot="main-header"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)::part(input):-webkit-autofill,
+et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)::part(input):-webkit-autofill {
   /* Chrome doesn't let us style autofill background directly */
   transition: background-color 50000s ease-in-out 0s;
   /* Long transition to hide the default color change */
@@ -1041,16 +1041,16 @@ et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar)::part(input):-web
 et2-dialog > [slot="label"] .et2_clickable[label]::part(label),
 [slot="main-header"] et2-image[label]::part(label),
 et2-dialog > [slot="label"] et2-image[label]::part(label),
-[slot="main-header"] .et2-input-widget:not(et2-toolbar)[label]::part(label),
-et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar)[label]::part(label) {
+[slot="main-header"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)[label]::part(label),
+et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)[label]::part(label) {
   padding-inline: var(--sl-spacing-x-small);
 }
 [slot="main-header"] .et2_clickable::part(control),
 et2-dialog > [slot="label"] .et2_clickable::part(control),
 [slot="main-header"] et2-image::part(control),
 et2-dialog > [slot="label"] et2-image::part(control),
-[slot="main-header"] .et2-input-widget:not(et2-toolbar)::part(control),
-et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar)::part(control) {
+[slot="main-header"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)::part(control),
+et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)::part(control) {
   --indicator-color: var(--application-header-text-color);
   --sl-input-background-color: transparent;
   --image-filter: brightness(0) invert(1);
@@ -1060,23 +1060,31 @@ et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar)::part(control) {
 et2-dialog > [slot="label"] .et2_clickable::part(base),
 [slot="main-header"] et2-image::part(base),
 et2-dialog > [slot="label"] et2-image::part(base),
-[slot="main-header"] .et2-input-widget:not(et2-toolbar)::part(base),
-et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar)::part(base) {
+[slot="main-header"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)::part(base),
+et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):not(et2-link-add)::part(base) {
   border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 }
 [slot="main-header"] .et2_clickable:hover::part(base),
 et2-dialog > [slot="label"] .et2_clickable:hover::part(base),
 [slot="main-header"] et2-image:hover::part(base),
 et2-dialog > [slot="label"] et2-image:hover::part(base),
-[slot="main-header"] .et2-input-widget:not(et2-toolbar):hover::part(base),
-et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):hover::part(base),
+[slot="main-header"] .et2-input-widget:not(et2-toolbar):not(et2-link-add):hover::part(base),
+et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):not(et2-link-add):hover::part(base),
 [slot="main-header"] .et2_clickable:hover::part(control),
 et2-dialog > [slot="label"] .et2_clickable:hover::part(control),
 [slot="main-header"] et2-image:hover::part(control),
 et2-dialog > [slot="label"] et2-image:hover::part(control),
-[slot="main-header"] .et2-input-widget:not(et2-toolbar):hover::part(control),
-et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):hover::part(control) {
+[slot="main-header"] .et2-input-widget:not(et2-toolbar):not(et2-link-add):hover::part(control),
+et2-dialog > [slot="label"] .et2-input-widget:not(et2-toolbar):not(et2-link-add):hover::part(control) {
   border-color: var(--sl-input-border-color-hover);
+}
+[slot="main-header"] et2-link-add.et2-input-widget,
+et2-dialog > [slot="label"] et2-link-add.et2-input-widget {
+  --sl-input-border-color: var(--sl-color-neutral-400);
+}
+[slot="main-header"] et2-link-add.et2-input-widget::part(listbox),
+et2-dialog > [slot="label"] et2-link-add.et2-input-widget::part(listbox) {
+  background: var(--sl-color-neutral-0);
 }
 [slot="main-header"] et2-switch-icon,
 et2-dialog > [slot="label"] et2-switch-icon {
