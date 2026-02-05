@@ -267,6 +267,7 @@ class preferences_hooks
 				'admin'  => False,
 				'forced' => '1',
 			),
+			/*  TODO: Implement this preference for current nextmatch, was for previous
 			'select_mode'           => array(
 				'type'    => 'select',
 				'label'   => 'Select additional lines in lists by',
@@ -280,6 +281,7 @@ class preferences_hooks
 				'admin'   => False,
 				'default' => 'EGW_SELECTMODE_DEFAULT',
 			),
+			*/
 			'account_selection'     => array(
 				'type'     => 'select',
 				'label'    => 'How do you like to select accounts',
