@@ -458,16 +458,18 @@ export class Et2Ai extends Et2Widget(LitElement)
 		if(typeof actionValue == "string")
 		{
 			actionValue = actionValue.trim();
-			const currentValue = (typeof target.getValue == "function" ? target.getValue() : target.value) ?? ""
+			const originalValue = (typeof target.getValue == "function" ? target.getValue() : target.value) ?? ""
+			const aiContent = this.getContent();
 			switch(action?.mode ?? "replace")
 			{
 				case "prepend":
-					actionValue = actionValue + "\n\n" + (currentValue ?? "");
+					actionValue = actionValue + "\n\n" + (aiContent ?? "");
 					break;
 				case "append":
-					actionValue = (currentValue ?? "") + "\n\n" + actionValue;
+					actionValue = (aiContent ?? "") + "\n\n" + actionValue;
 					break;
 			}
+			actionValue = originalValue.replace(aiContent, actionValue)
 		}
 		if(target)
 		{
