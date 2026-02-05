@@ -62,6 +62,7 @@ export class et2_dataview_selectionManager
 	private _inUpdate: boolean;
 	private _total: number;
 	private _children: any[];
+	private _intersection : IntersectionObserver;
 
 	/**
 	 * Constructor
@@ -112,6 +113,12 @@ export class et2_dataview_selectionManager
 
 		// Callback for when the selection changes
 		this.select_callback = null;
+
+		// Observer for focus off screen
+		this._handleIntersect = this._handleIntersect.bind(this);
+		this._intersection = new IntersectionObserver(this._handleIntersect, {
+			root: this._context?._grid?.scrollarea?.get(0)
+		});
 	}
 
 	destroy( )
@@ -140,6 +147,7 @@ export class et2_dataview_selectionManager
 		this._queryRangeCallback = null;
 		this._actionObjectManager = null;
 		this._context = null;
+		this._intersection.disconnect();
 	}
 
 	clear( )
@@ -273,6 +281,10 @@ export class et2_dataview_selectionManager
 		// Reset the state of the currently focused entry
 		if (this._focusedEntry)
 		{
+			if(this._focusedEntry.tr)
+			{
+				this._intersection.unobserve(this._focusedEntry.tr);
+			}
 			this._updateEntryState(this._focusedEntry,
 					egwSetBit(this._focusedEntry.state, EGW_AO_STATE_FOCUSED,
 							false));
@@ -287,8 +299,9 @@ export class et2_dataview_selectionManager
 			if(this._focusedEntry && this._focusedEntry.tr)
 			{
 				this._focusedEntry.tr.setAttribute("tabindex", "0");
-				this._focusedEntry.tr.focus();
-				this._focusedEntry.tr.scrollIntoViewIfNeeded && this._focusedEntry.tr.scrollIntoViewIfNeeded();
+				this._focusedEntry.tr.focus({preventScroll: true});
+				// Use IntersectionObserver to check if the row is out of view
+				this._intersection.observe(this._focusedEntry.tr);
 			}
 			this._updateEntryState(entry,
 					egwSetBit(entry.state, EGW_AO_STATE_FOCUSED, true));
@@ -579,6 +592,23 @@ export class et2_dataview_selectionManager
 		}
 
 		return this._registeredRows[_uid];
+	}
+
+	/**
+	 * Check if focused row is out of view, scroll into view if needed
+	 *
+	 * @param entries
+	 */
+	_handleIntersect(entries)
+	{
+		entries.forEach((e) =>
+		{
+			this._intersection.unobserve(e.target);
+			if(e.target == this._focusedEntry?.tr && e.intersectionRatio < .8)
+			{
+				this._focusedEntry.tr.scrollIntoView({block: "nearest"});
+			}
+		});
 	}
 
 	_handleSelect( _uid, _entry, _shift, _ctrl)
