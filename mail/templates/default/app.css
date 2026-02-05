@@ -313,6 +313,7 @@ pre {
 
 #mail-index #mail-index_nm .status_icons et2-image {
 	font-size: calc(1em + 2px);
+	height: calc(1em + 2px);
 }
 /*
  influence the tree display and scrolling behavior
