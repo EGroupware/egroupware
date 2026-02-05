@@ -173,6 +173,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 	private _actionManager: EgwAction;
 	widget_object: EgwActionObject;
+	/***
+	 * If you alter the pictures used as expand/collapse icons
+	 * you need to increase this number to cache bust Browser-caching
+	 ***/
+	static svgVersion="1.1";
 
 	private get _tree() { return this.shadowRoot.querySelector('sl-tree') ?? null};
 
@@ -1188,8 +1193,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     @dragleave=${(event) => {this.handleDragEvent(event);}}
 					@drop=${(event) => {this.handleDragEvent(event);}}
             >
-				<sl-icon src="${this.egw().image("bi-chevron-right")}" slot="expand-icon"></sl-icon>
-				<sl-icon src="${this.egw().image("bi-chevron-down")}" slot="collapse-icon"></sl-icon>
+				<sl-icon src="${this.egw().image("bi-chevron-right")}?v=${Et2Tree.svgVersion}" slot="expand-icon"></sl-icon>
+				<sl-icon src="${this.egw().image("bi-chevron-down")}?v=${Et2Tree.svgVersion}" slot="collapse-icon"></sl-icon>
                 <slot></slot>
                 ${repeat(this._selectOptions, (o) => o.value, this._optionTemplate)}
             </sl-tree>
