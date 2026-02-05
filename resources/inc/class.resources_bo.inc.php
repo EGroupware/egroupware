@@ -385,7 +385,7 @@ class resources_bo
 		// Update link title
 		Link::notify_update('resources',$resource['res_id'], $resource);
 		// save links
-		if(is_array($resource['link_to']['to_id']))
+		if(!empty($resource['link_to']['to_id']) && is_array($resource['link_to']['to_id']))
 		{
 			Link::link('resources',$resource['res_id'],$resource['link_to']['to_id']);
 		}
