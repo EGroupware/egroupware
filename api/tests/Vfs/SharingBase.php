@@ -400,6 +400,7 @@ class SharingBase extends LoggedInTest
 			file_put_contents(Vfs::PREFIX.$file, $content) !== FALSE,
 			'Unable to write test file "' . Vfs::PREFIX . $file .'" - check file permissions for CLI user'
 		);
+		$this->assertEquals($content, file_get_contents(Vfs::PREFIX . $file), "Unable to write test file (empty)");
 
 		// Subdirectory
 		$files[] = $dir = $path.'sub_dir/';
@@ -682,12 +683,13 @@ class SharingBase extends LoggedInTest
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
 		// Setting this lets us debug the request too
-		$cookie = 'XDEBUG_SESSION=PHPSTORM';
+		$cookies = ['XDEBUG_SESSION' => 'PHPSTORM'];
 		if($keep_session)
 		{
-			 $cookie .= ';'.Api\Session::EGW_SESSION_NAME."={$GLOBALS['egw']->session->sessionid};kp3={$GLOBALS['egw']->session->kp3}";
+			$cookies[Api\Session::EGW_SESSION_NAME] = $GLOBALS['egw']->session->sessionid;
+			$cookies['kp3'] = $GLOBALS['egw']->session->kp3;
 		}
-		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+		$this->addCookies($curl, $cookies);
 		$html = curl_exec($curl);
 		if($_curl == null)
 		{
@@ -718,8 +720,45 @@ class SharingBase extends LoggedInTest
 		$this->assertNotNull($form, "Didn't find template in response");
 		$data = json_decode($form->getAttribute('data-etemplate'), true);
 
+		$rows = $data['data']['content']['nm']['rows'];
+		if(count($rows) == 0)
+		{
+			// NM did not send initial rows
+		}
 		return $form;
 	}
+
+	private function addCookies($curl, $cookies)
+	{
+		// Read cookies from cURL
+		$existing = curl_getinfo($curl, CURLINFO_COOKIELIST) ?: [];
+
+		$cookieMap = [];
+
+		// Parse cookies
+		foreach($existing as $line)
+		{
+			// domain \t flag \t path \t secure \t expiry \t name \t value
+			$parts = explode("\t", $line);
+			if(count($parts) >= 7)
+			{
+				$cookieMap[$parts[5]] = $parts[6];
+			}
+		}
+
+		// Merge (new cookies override old)
+		$cookieMap = array_merge($cookieMap, $cookies);
+
+		// Rebuild Cookie header
+		$cookieHeader = '';
+		foreach($cookieMap as $name => $value)
+		{
+			$cookieHeader .= "$name=$value; ";
+		}
+
+		curl_setopt($curl, CURLOPT_COOKIE, rtrim($cookieHeader, '; '));
+	}
+
 
 	protected function setup_info()
 	{

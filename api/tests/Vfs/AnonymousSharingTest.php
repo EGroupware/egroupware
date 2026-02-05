@@ -43,7 +43,7 @@ class AnonymousSharingTest extends SharingBase
 		// First, create the files to be shared
 		$this->files[] = $dir;
 		Vfs::mkdir($dir);
-		$this->files += $this->addFiles($dir);
+		$this->files = array_merge($this->files, $this->addFiles($dir));
 
 
 		// Create and use link
@@ -104,8 +104,8 @@ class AnonymousSharingTest extends SharingBase
 		$SECOND_CONTENT = "This is the second share\n";
 		$dir_1_files = $this->addFiles($dir1, $FIRST_CONTENT);
 		$dir_2_files = $this->addFiles($dir2, $SECOND_CONTENT);
-		$this->files += $dir_1_files;
-		$this->files += $dir_2_files;
+		$this->files = array_merge($this->files, $dir_1_files);
+		$this->files = array_merge($this->files, $dir_2_files);
 
 		// Now log out
 		Vfs::clearstatcache();
@@ -132,6 +132,7 @@ class AnonymousSharingTest extends SharingBase
 		$form = $this->getShare($link, $data, false, $curl);
 		$this->assertNotNull($form, "Could not read the share link");
 		$rows = $data['data']['content']['nm']['rows'];
+		$this->assertNotEmpty($rows, "Share $link has no files");
 
 		// Check content
 		$result = array_filter($rows, function ($v)
