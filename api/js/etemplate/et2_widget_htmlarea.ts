@@ -192,9 +192,14 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_htmlarea._attributes, _child || {}));
 		this.editor = null; // TinyMce editor instance
 		this.supportedWidgetClasses = []; // Allow no child widgets
-		this.htmlNode = jQuery(document.createElement(this.options.readonly ? "div" : "textarea"))
-			.addClass('et2_textbox_ro');
-		if(this.options.height)
+		if (this.options.readonly)
+		{
+			this.htmlNode = jQuery(document.createElement("div")).addClass('et2_textbox_ro')
+		} else
+		{
+			this.htmlNode = jQuery(document.createElement("textarea"))
+		}
+		if (this.options.height)
 		{
 			this.htmlNode.css('height', this.options.height);
 		}
