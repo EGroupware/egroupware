@@ -824,10 +824,8 @@ export class Et2Ai extends Et2Widget(LitElement)
 		const range = sel.getRangeAt(0);
 		const container = range.commonAncestorContainer;
 
-		// Only accept selection if it lives inside our target
-		if(el.contains(container.nodeType === Node.ELEMENT_NODE
-					   ? container
-					   : container.parentElement))
+		// Only accept selection if it lives inside
+		if(this.contains(container))
 		{
 			return sel.toString().trim();
 		}
@@ -1114,6 +1112,7 @@ export class Et2Ai extends Et2Widget(LitElement)
                 "form-control": true
             })}
                  part="base" style="--max-result-height: ${this.maxResultHeight}px;"
+                 @blur=${this.handleFocusout}
             >
                 ${this._renderStatus()}
                 <slot></slot>
