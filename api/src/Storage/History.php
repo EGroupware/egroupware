@@ -156,16 +156,18 @@ class History
 	 */
 	protected function doRetention() : ?int
 	{
-		if (!empty($GLOBALS['egw_info']['server']['history_retention']))
+		static $once=0;
+		if (!empty($GLOBALS['egw_info']['server']['history_retention']) && !$once++)
 		{
-			$cut_off_date = ((int)date('Y')-$GLOBALS['egw_info']['server']['history_retention']).'-01-01';
+			Api\Egw::on_shutdown(function()
+			{
+				$cut_off_date = ((int)date('Y') - $GLOBALS['egw_info']['server']['history_retention']) . '-01-01';
 
-			$this->db->query('DELETE FROM '.self::TABLE.
-				' WHERE history_timestamp < '.$this->db->quote($cut_off_date).
-				' ORDER BY history_timestamp LIMIT 5000',
-				__LINE__, __FILE__);
-
-			return $this->db->affected_rows();
+				$this->db->query('DELETE FROM ' . self::TABLE .
+					' WHERE history_timestamp < ' . $this->db->quote($cut_off_date) .
+					' ORDER BY history_timestamp LIMIT 5000',
+					__LINE__, __FILE__);
+			});
 		}
 		return null;
 	}
