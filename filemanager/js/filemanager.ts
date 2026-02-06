@@ -270,6 +270,11 @@ export class filemanagerAPP extends EgwApp
 
 		// NM used to have path as a child widget, but now path is outside so we do some extra stuff
 		this.change_dir(path);
+		if(state.state?.path)
+		{
+			state.state.col_filter ??= {};
+			state.state.col_filter.path = path;
+		}
 
 		let result = super.setState(state, 'filemanager.index');
 
