@@ -1018,9 +1018,9 @@ class filemanager_ui
 				{
 					// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
 					// an appropriate message
+					Framework::message(lang('The requested path %1 is not available.', Vfs::decodePath($query['path'])), 'warning');
 					Egw::redirect_link('/index.php', array('menuaction' => 'filemanager.filemanager_ui.index',
 							'path' => $new_path,
-							'msg' => lang('The requested path %1 is not available.', Vfs::decodePath($query['path'])),
 							'ajax' => 'true'
 					));
 					break;
