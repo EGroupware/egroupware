@@ -962,9 +962,9 @@ class infolog_ui
 		}
 		if (!$action)
 		{
-			$action = is_array($values) && $values['action'] ? $values['action'] : $_REQUEST['action'];
-			$action_id = is_array($values) && $values['action_id'] ? $values['action_id'] : $_REQUEST['action_id'];
-			$action_title = is_array($values) && $values['action_title'] ? $values['action_title'] : $_REQUEST['action_title'];
+			$action = is_array($values) && $values['action'] ? $values['action'] : ($_REQUEST['action'] ?? null);
+			$action_id = is_array($values) && $values['action_id'] ? $values['action_id'] : ($_REQUEST['action_id'] ?? null);
+			$action_title = is_array($values) && $values['action_title'] ? $values['action_title'] : ($_REQUEST['action_title'] ?? null);
 		}
 		//echo "<p>".__METHOD__."(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
 		if (!is_array($values))
@@ -977,7 +977,7 @@ class infolog_ui
 				$action_id = 0;
 				$action_title = '';
 			}
-			if($_GET['ajax'] === 'true')
+			if(!empty($_GET['ajax']))
 			{
 				$nm['action'] = '';
 				$nm['action_id'] = 0;
@@ -1008,8 +1008,10 @@ class infolog_ui
 			$action_title = $values['action_title'] = $action ? $action_title : $nm['action_title'];
 			$action = $values['action'] = $action ? $action : $nm['action'];
 		}
-		if($_GET['search']) $values['nm']['search'] = $_GET['search'];
-
+		if(isset($_GET['search']))
+		{
+			$values['nm']['search'] = $_GET['search'];
+		}
 		if ($values['nm']['add'])
 		{
 			$values['add'] = $values['nm']['add'];
@@ -1778,7 +1780,7 @@ class infolog_ui
 	function close($values=0,$_referer='',$closesingle=false,$skip_notification = false)
 	{
 		//echo "<p>".__METHOD__."($values,$referer,$closeall)</p>\n";
-		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
+		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ?: $_GET['info_id'] ?? null));
 		$referer = is_array($values) ? $values['referer'] : $_referer;
 
 		if ($info_id)
@@ -1828,7 +1830,7 @@ class infolog_ui
 	 */
 	function delete($values=0,$_referer='',$called_by='',$skip_notification=False)
 	{
-		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
+		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ?: $_GET['info_id'] ?? null));
 		$referer = is_array($values) ? $values['referer'] : $_referer;
 
 		if (!is_array($values) && $info_id > 0 && !$this->bo->anzSubs($info_id))	// entries without subs get confirmed by javascript
@@ -1991,7 +1993,9 @@ class infolog_ui
 					{
 						$GLOBALS['egw']->preferences->add('infolog','preferred_type',$content['info_type']);
 						$GLOBALS['egw']->preferences->save_repository(false,'user',false);
-						$content['msg'] = lang('InfoLog entry saved');
+						// for copy do NOT show saved message, as we only save to be sure to not lose anything
+						// it's confusing the user, and we show a copied message later
+						$content['msg'] = $action === 'copy' ? null : lang('InfoLog entry saved');
 						Framework::refresh_opener($content['msg'],'infolog',$info_id,$operation);
 					}
 					$content['tabs'] = $active_tab;
@@ -2089,15 +2093,15 @@ class infolog_ui
 		else	// new call via GET
 		{
 			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
-			$action    = $action    ? $action    : $_REQUEST['action'];
-			$action_id = $action_id ? $action_id : $_REQUEST['action_id'];
-			$info_id   = $content   ? $content   : $_REQUEST['info_id'];
-			$type      = $type      ? $type      : $_REQUEST['type'];
-			$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
+			$action    = $action    ?: $_REQUEST['action'] ?? null;
+			$action_id = $action_id ?: $_REQUEST['action_id'] ?? null;
+			$info_id   = $content   ?: $_REQUEST['info_id'] ?? null;
+			$type      = $type      ?: $_REQUEST['type'] ?? null;
+			$referer   = $referer !== '' ? $referer : ($_GET['referer'] ??
 				Api\Header\Referer::get('/index.php?menuaction=infolog.infolog_ui.index'));
 			if (strpos($referer, 'msg=') !== false) $referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
-			$no_popup  = $_GET['no_popup'];
-			$print = (int) $_REQUEST['print'];
+			$no_popup  = $_GET['no_popup'] ?? false;
+			$print = (int)($_REQUEST['print'] ?? 0);
 			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
 			if (($content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id )) === false)
@@ -2109,11 +2113,11 @@ class infolog_ui
 				$content['info_cat'] = $this->prefs['cat_add_default'];
 				$content['info_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
 			}
-			if (is_numeric($_REQUEST['cat_id']))
+			if (is_numeric($_REQUEST['cat_id'] ?? null))
 			{
 				$content['info_cat'] = (int)$_REQUEST['cat_id'];
 			}
-			if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);	// dont allow HTML!
+			if (!empty($_GET['msg'])) $content['msg'] = strip_tags($_GET['msg']);	// dont allow HTML!
 
 			switch($this->prefs['set_start'])
 			{
@@ -2167,7 +2171,7 @@ class infolog_ui
 					if ($action == 'sp')	// for sub-entries use type or category, like for new entries
 					{
 						if ($type) $content['info_type'] = $type;
-						if (is_numeric($_REQUEST['cat_id'])) $content['info_cat'] = (int) $_REQUEST['cat_id'];
+						if (is_numeric($_REQUEST['cat_id'] ?? null)) $content['info_cat'] = (int)$_REQUEST['cat_id'];
 					}
 					unset($action);	// it get stored in $content and will cause an other copy after [apply]
 					break;
@@ -2215,7 +2219,10 @@ class infolog_ui
 						break;	// normal edit
 					}
 				case 'new':		// new entry, set some defaults, if not set by infolog_set hook
-					if (empty($content['info_startdate'])) $content['info_startdate'] = (int) $_GET['startdate'] ? (int) $_GET['startdate'] : $set_startdate;
+					if (empty($content['info_startdate']))
+					{
+						$content['info_startdate'] = isset($_GET['startdate']) && (int)$_GET['startdate'] ? (int)$_GET['startdate'] : $set_startdate;
+					}
 					if (empty($content['info_priority'])) $content['info_priority'] = 1; // normal
 					$content['info_owner'] = $this->user;
 					if ($type != '' && empty($content['info_type']))
@@ -2583,7 +2590,7 @@ class infolog_ui
 		}
 		if (!$create_sub)
 		{
-			$content['msg'] .= ($content['msg']?"\n":'').lang('%1 copied - the copy can now be edited', lang(Link::get_registry('infolog','entry')));
+			$content['msg'] = lang('%1 copied - the copy can now be edited', lang(Link::get_registry('infolog','entry')));
 		}
 	}
 
@@ -2760,7 +2767,7 @@ class infolog_ui
 	function mail_import(?array $mailContent=null)
 	{
 		// It would get called from compose as a popup with egw_data
-		if (!is_array($mailContent) && ($_GET['egw_data']))
+		if (!is_array($mailContent) && !empty($_GET['egw_data']))
 		{
 			// get the mail raw data
 			Link::get_data ($_GET['egw_data']);
