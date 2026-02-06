@@ -1814,6 +1814,12 @@ export class etemplate2
 				egw.debug('warn', "Tried to call assign on an un-loaded etemplate", res.data);
 				return false;
 			}
+			if(res.data.id == null)
+			{
+				// No widget specified
+				egw.debug('warn', "Tried to call assign without widget ID", res.data);
+				return false;
+			}
 			const widget = this._widgetContainer.getWidgetById(res.data.id);
 			if(widget)
 			{
