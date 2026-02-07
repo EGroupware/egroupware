@@ -1,3 +1,17 @@
+egroupware-docker (26.2.20260207) hardy; urgency=low
+
+  * last 26.x pre-release, probably identical to final release planned for Monday 9th Februar
+  * Api: fix selected nextmatch row jumping to middle of screen
+  * AiTools: fix entire et2-textarea value was used instead of selected text
+  * Filemanager: fix favourites with columns would lose the current path
+  * Filemanager: fix unavailable path warning was not shown
+  * Filemanager: anonymous view: toolbar styling
+  * Filemanager: anonymous view: change_view button now reflects the first state of the nm (usually tile view by default)
+  * Mail: fix folder-tree icons where tiny sometimes
+  * Projectmanager: fix quick add in element list header did not open the entry with the correct project ID
+
+ -- Ralf Becker <rb@egroupware.org>  Sat, 07 Feb 2026 16:11:46 +0100
+
 egroupware-docker (26.2.20260203) hardy; urgency=low
 
   * 26-pre-release, final release planned for Februar 9th, please test
