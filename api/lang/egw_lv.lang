@@ -207,6 +207,7 @@ choose the parent category	common	lv	Izvēlies tēva kategoriju
 christmas island	common	lv	ZIEMASSVĒTKU SALA
 class	common	lv	Klase
 clear	common	lv	Nodzēst
+clear filters	common	lv	Dzēst filtrus
 clear form	common	lv	Nodzēst formu
 click	common	lv	Klikšķini
 click here to attach the file	common	lv	Uzklišķini šeit, ja vēlies pievienot datni
@@ -224,6 +225,7 @@ collection empty.	common	lv	Kolekcija ir tukša.
 collection listing	common	lv	Kolekcijas saraksts
 colombia	common	lv	KOLUMBIJA
 colour	common	lv	Krāsa
+column filters	common	lv	Kolonnu filtri
 columnname	common	lv	Kolonnas nosaukums
 columns to print	common	lv	Drukājamas kolonnas
 command ⌘	common	lv	Komanda ⌘
@@ -351,7 +353,7 @@ end time	common	lv	Beigu laiks
 enter '' for an empty default, nothing mean no default	common	lv	Ievadi " tukšam noklusējumam, tukšums nozīmē, ka nav noklusējuma
 enter a search pattern	common	lv	Ievadi meklēšanas paraugu
 enter filename to upload and attach, use [browse...] to search for it	common	lv	Ievadi datnes nosaukumu, ko ielādēt un pievienot, lieto [Browse...] lai to sameklētu
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: https://egw.domain.com/egroupware or /egroupware\n<b>No trailing slash</b>
 enter the new version number here (> old_version), empty for no update-file	common	lv	Ievadi jaunās versijas numuru šeit (>vecā versija), atstāj tukšu, lai neielādētu datni
 enter the new version number here (has to be > old_version)	common	lv	Ievadi jaunās versijas numuru šeit (jābūt>vecā_versija)
 enter your passphrase	common	lv	Ievadiet savu piekļuves frāzi
@@ -632,6 +634,7 @@ mexico	common	lv	MEKSIKA
 micronesia, federated states of	common	lv	MIKRONĒZIJAS FEDERATĪVĀS VALSTIS
 minute	common	lv	Minūte
 minutes	common	lv	minūtes
+mode	common	lv	Režīms
 moldova, republic of	common	lv	MOLDOVAS REPUBLIKA
 monaco	common	lv	MONAKO
 monday	common	lv	Pirmdiena
@@ -998,7 +1001,7 @@ todays date, eg. "%1"	common	lv	Šodienas datums, piemēram, "%1"
 togo	common	lv	TOGO
 tokelau	common	lv	TOKELAU
 tonga	common	lv	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	lv	Izvēlēts pārāk daudz rindu.<br>Izvēlieties visas vai mazāk par %1 rindu
+too many rows selected.<br />select all, or less than %1 rows	common	lv	Izvēlēts pārāk daudz rindu.\nIzvēlieties visas vai mazāk par %1 rindu
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	lv	Pārāk dzudz nevieksmīgi pieslēgšanās mēģinājumi: %1 lietotājam '%2', %3 ar IP %4
 toolbar settings	common	lv	Rīkjoslas iestatījumi
 top	common	lv	Augšā
@@ -1094,7 +1097,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	lv	Jūsu pārlūkprogramma nav atjaunināta (saderīga ar JavaScript ES6), tāpēc dažas funkcijas var nedarboties.
 your code is incorrect !!!	common	lv	Kods ir nepareizs!
 your key has been restored successfully.	common	lv	Jūsu atslēga ir veiksmīgi atjaunota.
-your message could <b>not</b> be sent!<br>	common	lv	Jūsu ziņa <b>netika</b>nosūtita!<br>
+your message could <b>not</b> be sent!<br>	common	lv	Jūsu ziņa <b>netika</b>nosūtita!\n
 your message has been sent	common	lv	Jūsu ziņa tika nosūtīta.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	lv	Jūsu parolei nav nepieciešamās %1 rakstzīmju klases stipruma un minimālā garuma %2 rakstzīmju.
 your password does not have required strength:	common	lv	Jūsu parolei nav nepieciešamās stiprības:

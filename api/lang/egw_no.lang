@@ -226,6 +226,7 @@ christmas island	common	no	CHRISTMAS ISLAND
 class	common	no	Class
 class, valign	common	no	Class, Valign
 clear	common	no	Tøm
+clear filters	common	no	Fjern filtre
 clear form	common	no	Tøm skjema
 click	common	no	Klikk
 click here to attach the file	common	no	Klikk her for å legge til filen
@@ -243,6 +244,7 @@ code	common	no	Kode
 collection empty.	common	no	Samlingen er tom.
 collection listing	common	no	Liste over samlinger
 colombia	common	no	COLOMBIA
+column filters	common	no	Kolonnefiltre
 column...	common	no	Kolonne ...
 columnname	common	no	Kolonnenavn
 columns to print	common	no	Kolonner som skal skrives ut
@@ -275,11 +277,12 @@ custom fields	common	no	Egendefinerte felt
 cut	common	no	Klipp ut
 cyprus	common	no	KYPROS
 czech republic	common	no	TSJEKKIA
+dark mode	common	no	Mørk modus
 date	common	no	Dato
 date + time	common	no	Dato + Tid
 date due	common	no	Dato Ferdig
 date+time	common	no	Dato+Tid
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	no	Datetime port.<br>Hvis port 13 brukes, vennligst påse at brannmur-reglene er riktige før du oppdaterer denne siden.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	no	Datetime port.\nHvis port 13 brukes, vennligst påse at brannmur-reglene er riktige før du oppdaterer denne siden.\n(Port: 13 / Host: 129.6.15.28)
 day	common	no	Dag
 days	common	no	dager
 db-tools	common	no	DB-Verktøy
@@ -365,7 +368,7 @@ enabled	common	no	Påslått
 end date	common	no	Sluttdato
 end time	common	no	Slutt tidspunkt
 enter a search pattern	common	no	Registrer en søkestreng
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Skriv inn EGroupwares Internett adresse (URL).<br> F.eks: https://egw.domain.com/egroupware or /egroupware<br><b>Ingen avsluttende skråstrek</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Skriv inn EGroupwares Internett adresse (URL).\n F.eks: https://egw.domain.com/egroupware or /egroupware\n<b>Ingen avsluttende skråstrek</b>
 enter your passphrase	common	no	Skriv inn passordfrasen din
 entry has been deleted sucessfully	common	no	Innslaget ble slettet.
 entry saved	common	no	Registrering lagret
@@ -589,6 +592,7 @@ liberia	common	no	LIBERIA
 libyan arab jamahiriya	common	no	LIBYA
 license	common	no	Lisens
 liechtenstein	common	no	LIECHTENSTEIN
+light mode	common	no	Lys modus
 link	common	no	Lenke
 link to each entry	common	no	Lenke til hver oppføring
 linklist	common	no	Lenkeliste
@@ -643,6 +647,7 @@ micronesia, federated states of	common	no	MIKRONESIA
 middle	common	no	Midten
 minute	common	no	Minutt
 minutes	common	no	minutter
+mode	common	no	Modus
 moldova, republic of	common	no	MOLDOVA
 monaco	common	no	MONACO
 monday	common	no	Mandag
@@ -688,6 +693,7 @@ no - cancel	common	no	Nei - Avbryt
 no entries found, try again ...	common	no	Ingen treff prøv igjen ...
 no file	common	no	Ingen fil
 no filename given or selected via browse...	common	no	Intet filnavn angitt eller valgt ved gjennomsyn
+no filters	common	no	Ingen filtre
 no history for this record	common	no	Ingen historie for denne posten
 no matches found	common	no	Ingen treff funnet
 no subject	common	no	Ingen Overskrift
@@ -1072,7 +1078,7 @@ you need to add the webserver user '%1' to the group '%2'.	common	no	Du må meld
 your account has been updated with new data from your identity provider.	common	no	Kontoen din er oppdatert med nye data fra identitetsleverandøren din.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	no	Hvis nettleseren din ikke er oppdatert (JavaScript ES6-kompatibel), kan det hende at noen av funksjonene ikke fungerer.
 your key has been restored successfully.	common	no	Nøkkelen din har blitt gjenopprettet.
-your message could <b>not</b> be sent!<br>	common	no	Meldingen kunne <b>ikke</b> sendes!<br>
+your message could <b>not</b> be sent!<br>	common	no	Meldingen kunne <b>ikke</b> sendes!\n
 your message has been sent	common	no	Din melding har blitt sent.
 your search returned %1 matchs	common	no	Ditt søk gav %1 treff
 your search returned 1 match	common	no	Ditt søk gav 1 treff

@@ -277,6 +277,7 @@ christmas island	common	ja	クリスマス初等
 class	common	ja	クラス
 class, valign	common	ja	クラス, valign
 clear	common	ja	クリア
+clear filters	common	ja	フィルターをクリア
 clear form	common	ja	フォームをクリア
 clear window	common	ja	ウィンドウをクリア
 click	common	ja	クリック
@@ -300,6 +301,7 @@ collection empty.	common	ja	コレクションは空です。
 collection listing	common	ja	コード
 colombia	common	ja	コロンビア
 colour	common	ja	カラー
+column filters	common	ja	列フィルター
 column...	common	ja	カラム...
 columnname	common	ja	カラム名
 columns to print	common	ja	印刷するカラム
@@ -362,7 +364,7 @@ date	common	ja	日付
 date + time	common	ja	日付＋時間
 date due	common	ja	期限日
 date+time	common	ja	日時
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ja	Date time port.<br>If using port 13, set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28).
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ja	Date time port.\nIf using port 13, set firewall rules appropriately before submitting this page.\n(Port: 13 / Host: 129.6.15.28).
 day	common	ja	日
 days	common	ja	日
 db ensures that every row has a unique value in that column	common	ja	DB ensures that every row has a unique value in that column
@@ -490,7 +492,7 @@ end time	common	ja	終了時刻
 enter '' for an empty default, nothing mean no default	common	ja	Enter '' for an empty default, nothing means no default
 enter a search pattern	common	ja	検索パターンを入力
 enter filename to upload and attach, use [browse...] to search for it	common	ja	Enter file name to upload and attach, use [Browse...] to search for it
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ja	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ja	Enter the location of EGroupware's URL.\nExample: http://www.domain.com/egroupware or /egroupware\n<b>No trailing slash</b>
 enter the new version number here (> old_version), empty for no update-file	common	ja	Enter new version number, > old_version, empty for no update file
 enter the new version number here (has to be > old_version)	common	ja	Enter new version number, has to be > old_version
 enter your file name	common	ja	ファイル名を入力
@@ -779,8 +781,8 @@ liberia	common	ja	リベリア
 license	common	ja	ライセンス
 liechtenstein	common	ja	リヒテンシュタイン
 light mode	common	ja	ライトモード
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	ja	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ja	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	ja	Line %1: '%2'\n<b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ja	Line %1: '%2'\n<b>csv data does not match column-count of table %3 ==> ignored</b>
 link	common	ja	リンク
 link is appended to mail allowing recipients to download currently attached version of files	common	ja	Link is appended to mail allowing recipients to download currently attached version of files
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	ja	Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)
@@ -858,6 +860,7 @@ minute	common	ja	分
 minutes	common	ja	分
 missing: %1	common	ja	不足: %1
 mo	common	ja	月
+mode	common	ja	モード
 mode of required directory "%1" changed to %2.	admin	ja	ディレクトリ "%1" のモードを %2 に変更しました。
 modifier	preferences	ja	モディファイア
 moldova, republic of	common	ja	モルドバ
@@ -1142,7 +1145,7 @@ san marino	common	ja	サンマリノ
 sao tome and principe	common	ja	サントメ・プリンシペ
 saturday	common	ja	土
 saudi arabia	common	ja	サウジアラビア
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	ja	Savant2 version differs from Savant2 wrapper. <br/>This version: %1 <br/>Savants version: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	ja	Savant2 version differs from Savant2 wrapper. \nThis version: %1 \nSavants version: %2
 save	common	ja	保存
 save all	common	ja	全て保存
 save as	common	ja	名前を付けて保存
@@ -1356,7 +1359,7 @@ the mail server returned	common	ja	メール・サーバーの応答:
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	ja	同じ名前が既にシステムに存在します。別の名前を指定してください。
 they will be sub-folders in users home (%1 attribute).	common	ja	選択されたアドレス帳は、ユーザ・ホームのサブ・フォルダとなります（%1 属性）。
 this feature is only available in epl version.	common	ja	この機能はEGroupware EPLバージョンで利用可能です。
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	ja	This is your own share. To test it, use an anonymous / incognito window.<br>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	ja	This is your own share. To test it, use an anonymous / incognito window.\n%1
 this name has been used already	common	ja	同じ名前が既に使用されています!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	ja	Text gets displayed if the input field is empty and has no focus (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	ja	これにより、すべてのユーザーのツールバー設定がリセットされ、設定されたデフォルト設定に設定されます。
@@ -1523,7 +1526,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	ja	お使いのブラウザが最新ではない場合（JavaScript ES6対応）、一部の機能が動作しない可能性があります。
 your code is incorrect !!!	common	ja	コードが不正です!!!
 your key has been restored successfully.	common	ja	キーを復元しました。
-your message could <b>not</b> be sent!<br>	common	ja	メッセージは<b>送信されませんでした</b>!<br>
+your message could <b>not</b> be sent!<br>	common	ja	メッセージは<b>送信されませんでした</b>!\n
 your message has been sent	common	ja	メッセージを送信しました。
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	ja	パスワードが、必要な強度条件を満たしていません（文字クラス: %1, 最低文字数: %2 文字）。
 your password does not have required strength:	common	ja	パスワードが、必要な強度条件を満たしていません:

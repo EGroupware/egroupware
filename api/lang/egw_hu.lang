@@ -196,6 +196,7 @@ christmas island	common	hu	Karácsony szigetek
 class	common	hu	Osztály
 class, valign	common	hu	Class, Valign
 clear	common	hu	Töröl
+clear filters	common	hu	Szűrők törlése
 clear form	common	hu	Lap törlése
 click	common	hu	Kattintás
 click here to create the link	common	hu	Hivatkozás létrehozásához kattintson ide
@@ -212,6 +213,7 @@ collection empty.	common	hu	Gyűjtemény üres.
 collection listing	common	hu	Gyűjtemény listázása
 colombia	common	hu	Kolumbia
 colour	common	hu	Színes
+column filters	common	hu	Oszlopszűrők
 columns to print	common	hu	Nyomtatandó oszlopok
 command ⌘	common	hu	Parancs ⌘
 comment	common	hu	Hozzászólás
@@ -257,7 +259,7 @@ date	common	hu	Dátum
 date + time	common	hu	Dátum + Idő
 date due	common	hu	Határidő
 date+time	common	hu	Dátum+Idő
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hu	Időszerver port.<br>A 13-as port használatához a tűzfalat ki kell nyitni, mielőtt ez az oldal elküldésre kerülne.<br>
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hu	Időszerver port.\nA 13-as port használatához a tűzfalat ki kell nyitni, mielőtt ez az oldal elküldésre kerülne.\n
 day	common	hu	Nap
 days	common	hu	napok
 december	common	hu	December
@@ -326,7 +328,7 @@ emails	common	hu	E-mailek
 enabled	common	hu	Engedélyezve
 end date	common	hu	Befejezés dátuma
 end time	common	hu	Befejezés ideje
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hu	Kérem adja meg az EGroupware URL helyét.<br>Például: https://egw.domain.com/eroupware vagy /egroupware<br><b>Lezáró / jel nélkül!<b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hu	Kérem adja meg az EGroupware URL helyét.\nPéldául: https://egw.domain.com/eroupware vagy /egroupware\n<b>Lezáró / jel nélkül!<b>
 enter your passphrase	common	hu	Adja meg a jelszavát
 entry has been deleted sucessfully	common	hu	Bejegyzés törölve
 entry not found!	common	hu	Bejegyzés nem létezik!
@@ -527,8 +529,8 @@ libyan arab jamahiriya	common	hu	Líbia
 license	common	hu	Licensz
 liechtenstein	common	hu	Liechtenstein
 light mode	common	hu	Világos mód
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	hu	A sor %1: '%2'<br><b>csv adat nem tartalmazza ##last-check-run## a tábla %3 ==> figyelmen kívül hagyva</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	hu	%1 sor: '%2'<br><b>a csv adatok nem egyeznek a(z) %3 táblázat oszlopszámaival ==> kihagyva</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	hu	A sor %1: '%2'\n<b>csv adat nem tartalmazza ##last-check-run## a tábla %3 ==> figyelmen kívül hagyva</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	hu	%1 sor: '%2'\n<b>a csv adatok nem egyeznek a(z) %3 táblázat oszlopszámaival ==> kihagyva</b>
 link	common	hu	Hivatkozás
 link target %1 not found!	common	hu	Link célpontja nem található (%1)!
 link to each entry	common	hu	Link az egyes bejegyzésekhez
@@ -582,6 +584,7 @@ mexico	common	hu	Mexikó
 micronesia, federated states of	common	hu	Mikronézia
 minute	common	hu	Perc
 minutes	common	hu	Percek
+mode	common	hu	Mód
 moldova, republic of	common	hu	Moldova
 monaco	common	hu	Monaco
 monday	common	hu	Hétfő
@@ -780,7 +783,7 @@ san marino	common	hu	San Marino
 sao tome and principe	common	hu	Sao Tomé és Príncipe
 saturday	common	hu	Szombat
 saudi arabia	common	hu	Szaúd Arábia
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	hu	A Savant2 verziója és wrappere különbözik. <br>Ez a verzió: %1 <br>Savant verzió: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	hu	A Savant2 verziója és wrappere különbözik. \nEz a verzió: %1 \nSavant verzió: %2
 save	common	hu	Elment
 save all	common	hu	Összes mentése
 save as pdf	common	hu	Mentés PDF-ként
@@ -984,7 +987,7 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your account has been updated with new data from your identity provider.	common	hu	A fiókját frissítették a személyazonossági szolgáltatójától kapott új adatokkal.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	hu	Böngészője nem naprakész (JavaScript ES6 kompatibilis), előfordulhat, hogy egyes funkciók nem működnek.
 your key has been restored successfully.	common	hu	A kulcsát sikeresen helyreállítottuk.
-your message could <b>not</b> be sent!<br>	common	hu	Az üzenet <b>nem<b> került elküldésre!<br>
+your message could <b>not</b> be sent!<br>	common	hu	Az üzenet <b>nem<b> került elküldésre!\n
 your message has been sent	common	hu	Üzenet elküldve.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	hu	A jelszava nem rendelkezik az előírt %1 karakterosztályok erősségével és %2 karakter minimális hosszával.
 your password does not have required strength:	common	hu	A jelszava nem rendelkezik az előírt erősséggel:

@@ -229,6 +229,7 @@ christmas island	common	id	KEPULAUAN NATAL
 class	common	id	Class
 class, valign	common	id	Class, Valign
 clear	common	id	Bersihkan
+clear filters	common	id	Hapus filter
 clear form	common	id	Kosongkan Form
 click	common	id	Klik
 click here to attach the file	common	id	Klik disini untuk melampirkan berkas
@@ -247,6 +248,7 @@ collection empty.	common	id	Koleksi kosong.
 collection listing	common	id	Daftar Koleksi
 colombia	common	id	KOLOMBIA
 colour	common	id	Warna
+column filters	common	id	Filter kolom
 column...	common	id	Kolom ...
 columnname	common	id	Nama Kolom
 columns to print	common	id	Kolom yang akan dicetak
@@ -643,6 +645,7 @@ middle	common	id	Middle
 minute	common	id	Menit
 minutes	common	id	Menit
 missing: %1	common	id	Hilang: %1
+mode	common	id	Mode
 moldova, republic of	common	id	REPUBLIK MOLDOVA
 monaco	common	id	MONACO
 monday	common	id	Senin
@@ -1071,7 +1074,7 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your account has been updated with new data from your identity provider.	common	id	Akun Anda telah diperbarui dengan data baru dari penyedia identitas Anda.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	id	Browser Anda tidak mutakhir (kompatibel dengan JavaScript ES6), Anda mungkin mengalami beberapa fitur yang tidak berfungsi.
 your key has been restored successfully.	common	id	Kunci Anda telah berhasil dipulihkan.
-your message could <b>not</b> be sent!<br>	common	id	Pesan anda <b>tidak</b> dapat dikirimkan!<br>
+your message could <b>not</b> be sent!<br>	common	id	Pesan anda <b>tidak</b> dapat dikirimkan!\n
 your message has been sent	common	id	Pesan telah terkirim.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	id	Kata sandi Anda tidak memiliki kekuatan yang disyaratkan yaitu kelas karakter %1 dan panjang minimum %2 karakter.
 your password does not have required strength:	common	id	Kata sandi Anda tidak memiliki kekuatan yang disyaratkan:

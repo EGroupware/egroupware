@@ -132,6 +132,7 @@ choose the category	common	uk	Виберіть категорію
 choose the default filename for merged documents.	preferences	uk	Виберіть ім'я файлу за замовчуванням для об'єднаних документів.
 choose the parent category	common	uk	Виберіть вищестоячу категорію
 clear	common	uk	Очистити
+clear filters	common	uk	Очистити фільтри
 clear form	common	uk	Очистити форму
 click	common	uk	Натискати
 click here to create the link	common	uk	натисніть тут для створення Посилання
@@ -145,6 +146,7 @@ collection empty.	common	uk	Колекція порожня.
 collection listing	common	uk	Список колекцій
 colombia	common	uk	КОЛУМБІЯ
 colour	common	uk	Колір
+column filters	common	uk	Фільтри стовпців
 columns to print	common	uk	Стовпці для друку
 command ⌘	common	uk	Команда ⌘
 comment	common	uk	Коментувати
@@ -178,7 +180,7 @@ date	common	uk	Число
 date + time	common	uk	Дата + Час
 date due	common	uk	Очікуване число
 date+time	common	uk	Дата+Час
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	uk	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	uk	Datetime port.\nIf using port 13, please set firewall rules appropriately before submitting this page.\n(Port: 13 / Host: 129.6.15.28)
 day	common	uk	День
 days	common	uk	Дні
 december	common	uk	Грудень
@@ -227,7 +229,7 @@ emails	common	uk	Електронні листи
 enabled	common	uk	Ввімкнено
 end date	common	uk	Кінцева дата
 end time	common	uk	Кінцевий час
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL EGroupware.<br>наприклад: https://egw.domain.com/egroupware або /egroupware<br><b>Без / в кінці</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL EGroupware.\nнаприклад: https://egw.domain.com/egroupware або /egroupware\n<b>Без / в кінці</b>
 enter your passphrase	common	uk	Введіть свою парольну фразу
 entry has been deleted sucessfully	common	uk	Запис видалено успішно
 entry updated sucessfully	common	uk	Запис змінено успішно.
@@ -394,6 +396,7 @@ message	common	uk	Повідомлення
 mexico	common	uk	МЕКСІКА
 minute	common	uk	Хвилина
 minutes	common	uk	хвилини
+mode	common	uk	Режим
 monday	common	uk	Понеділок
 mongolia	common	uk	МОНГОЛІЯ
 month	common	uk	Місяць
@@ -663,7 +666,7 @@ you have successfully logged out	common	uk	Ви успішно вийшли.
 your account has been updated with new data from your identity provider.	common	uk	Ваш обліковий запис було оновлено новими даними від вашого постачальника ідентифікаційних даних.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	uk	Ваш браузер застарілий (не сумісний з JavaScript ES6), деякі функції можуть не працювати.
 your key has been restored successfully.	common	uk	Ваш ключ успішно відновлено.
-your message could <b>not</b> be sent!<br>	common	uk	Ваше повідомлення <b>не може</b> бути відіслано!<br>
+your message could <b>not</b> be sent!<br>	common	uk	Ваше повідомлення <b>не може</b> бути відіслано!\n
 your message has been sent	common	uk	Ваше повідомлення відіслано.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	uk	Ваш пароль не має необхідної надійності %1 класів символів та мінімальної довжини %2 символів.
 your password does not have required strength:	common	uk	Ваш пароль не має необхідної надійності:

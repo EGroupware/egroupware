@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	es-es	¡%1 configurando "%2" =%3 no permite el acceso a través de http!
 %1 to sync	groupdav	es-es	%1 para sincronizar
 %1, duplicate id	common	es-es	%1, ID duplicado
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	es-es	%1Elegir otro directorio%2<br>o dar a %3 permiso de escritura para el servidor web.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	es-es	%1Elegir otro directorio%2\no dar a %3 permiso de escritura para el servidor web.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1EGroupware%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4.
 %s disabled	common	es-es	%s desactivado
 %s needed	common	es-es	%s es necesario
@@ -284,6 +284,7 @@ christmas island	common	es-es	CHRISTMAS ISLAND
 class	common	es-es	Class
 class, valign	common	es-es	Class, Valign
 clear	common	es-es	Limpiar
+clear filters	common	es-es	Borrar filtros
 clear form	common	es-es	Limpiar formulario
 clear window	common	es-es	Limpiar ventana
 click	common	es-es	Al pulsar
@@ -307,6 +308,7 @@ collection empty.	common	es-es	La colección está vacía
 collection listing	common	es-es	Listado de colecciones
 colombia	common	es-es	COLOMBIA
 colour	common	es-es	Color
+column filters	common	es-es	Filtros de columna
 column...	common	es-es	Columna ...
 columnname	common	es-es	Nombre de la columna
 columns to print	common	es-es	Columnas a imprimir
@@ -371,7 +373,7 @@ date	common	es-es	Fecha
 date + time	common	es-es	Fecha + hora
 date due	common	es-es	Fecha límite
 date+time	common	es-es	Fecha+hora
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-es	Puerto de fecha.<br>Si usa el puerto 13, por favor, configure adecuadamente las reglas del cortafuegos antes de enviar esta página.<br>
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-es	Puerto de fecha.\nSi usa el puerto 13, por favor, configure adecuadamente las reglas del cortafuegos antes de enviar esta página.\n
 day	common	es-es	Día
 days	common	es-es	Días
 db ensures that every row has a unique value in that column	common	es-es	La base de datos se asegura de que cada fila tiene un valor único en esa columna
@@ -500,7 +502,7 @@ end time	common	es-es	Hora de finalización
 enter '' for an empty default, nothing mean no default	common	es-es	Introduzca '' para un valor predeterminado vacío. Si se deja en blanco, no hay valor predeterminado
 enter a search pattern	common	es-es	Introduzca un patrón de búsqueda
 enter filename to upload and attach, use [browse...] to search for it	common	es-es	Ingrese el nombre del archivo para cargar y adjuntar, use [Examinar...] para buscarlo
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de EGroupware. <br>Ejemplo: https://egw.dominio.com/egroupware   o   /egroupware<br><b>Sin barra al final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de EGroupware. \nEjemplo: https://egw.dominio.com/egroupware   o   /egroupware\n<b>Sin barra al final</b>
 enter the new version number here (> old_version), empty for no update-file	common	es-es	Ingrese el número de versión nuevo, > old_version, vacío para ningún archivo de actualización
 enter the new version number here (has to be > old_version)	common	es-es	Introduzca el nuevo número de versión aquí (tiene que ser mayor que la versión anterior)
 enter your file name	common	es-es	Ingrese su nombre de archivo
@@ -801,8 +803,8 @@ libyan arab jamahiriya	common	es-es	LIBYAN ARAB JAMAHIRIYA
 license	common	es-es	Licencia
 liechtenstein	common	es-es	LIECHTENSTEIN
 light mode	common	es-es	Modo claro
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'<br><b>los datos csv contienen ##last-check-run## de la tabla %3 ==> ignorado</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'<br><b>los datos csv no coinciden con el número de columnas de la tabla %3 ==> ignorado</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'\n<b>los datos csv contienen ##last-check-run## de la tabla %3 ==> ignorado</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'\n<b>los datos csv no coinciden con el número de columnas de la tabla %3 ==> ignorado</b>
 link	common	es-es	Enlace
 link is appended to mail allowing recipients to download currently attached version of files	common	es-es	El enlace se adjunta al correo-e, lo que permite a los destinatarios descargar la versión adjunta de los archivos
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	es-es	El enlace se adjunta al correo-e, lo que permite a los destinatarios descargar o modificar la versión actualizada de los archivos (solo EPL)
@@ -1179,7 +1181,7 @@ san marino	common	es-es	SAN MARINO
 sao tome and principe	common	es-es	SAO TOME AND PRINCIPE
 saturday	common	es-es	Sábado
 saudi arabia	common	es-es	ARABIA SAUDI
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	es-es	La versión de Savant2 difiere del wrapper Savant2. <br/>Esta versión: %1 <br>Versión de Savant: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	es-es	La versión de Savant2 difiere del wrapper Savant2. \nEsta versión: %1 \nVersión de Savant: %2
 save	common	es-es	Grabar
 save all	common	es-es	Guardar todo
 save as	common	es-es	Guardar como
@@ -1392,7 +1394,7 @@ textarea	common	es-es	Area de texto
 th	common	es-es	Th
 thailand	common	es-es	TAILANDIA
 the backup key has been deleted.	common	es-es	La clave de respaldo se ha suprimido.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	es-es	El bloqueador de ventanas emergentes del navegador está activado. Haga clic en el botón Aceptar para ver la ventana emergente.<br>Si no desea ver este mensaje la próxima vez, permita que el bloqueador de ventanas emergentes de su navegador abra ventanas emergentes desde %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	es-es	El bloqueador de ventanas emergentes del navegador está activado. Haga clic en el botón Aceptar para ver la ventana emergente.\nSi no desea ver este mensaje la próxima vez, permita que el bloqueador de ventanas emergentes de su navegador abra ventanas emergentes desde %1
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
 the following applications require upgrades	common	es-es	Las siguientes aplicaciones requieren actualizaciones
 the following document-types are supported:	preferences	es-es	Los siguientes tipos de documentos están soportados:
@@ -1400,7 +1402,7 @@ the mail server returned	common	es-es	El servidor de correo devolvió
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	es-es	Ya hay un usuario de sistema con este nombre. Los usuarios no deben tener el mismo nombre que un usuario de sistema.
 they will be sub-folders in users home (%1 attribute).	common	es-es	Serán subcarpetas en la página de inicio de los usuarios (atributo %1).
 this feature is only available in epl version.	common	es-es	Esta función está disponible en la versión EPL de EGroupware.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	es-es	This is your own share. To test it, use an anonymous / incognito window.<br/>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	es-es	This is your own share. To test it, use an anonymous / incognito window.\n%1
 this name has been used already	common	es-es	¡Este nombre ya ha sido usado!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	es-es	Este texto se muestra si el campo de entrada está vacío y no tiene foco (borroso)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	es-es	Esto restablecerá las preferencias de la barra de herramientas para todos los usuarios y los establecerá en las preferencias predeterminadas configuradas.
@@ -1573,7 +1575,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	es-es	Su navegador no está actualizado (compatible con JavaScript ES6), es posible que algunas de las funciones no funcionen.
 your code is incorrect !!!	common	es-es	¡Código es incorrecto!
 your key has been restored successfully.	common	es-es	Su clave ha sido restaurada con éxito.
-your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se pudo enviar<br>
+your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se pudo enviar\n
 your message has been sent	common	es-es	Su mensaje ha sido enviado
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	es-es	Su contraseña no tiene una fuerza requerida de %1 clases de caracteres y una longitud mínima de %2 caracteres.
 your password does not have required strength:	common	es-es	Su contraseña no tiene la fortaleza necesaria:

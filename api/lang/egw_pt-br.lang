@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	pt-br	A configuração %1 "%2" = %3 não permite o acesso via http!
 %1 to sync	groupdav	pt-br	1% para sincronizar
 %1, duplicate id	common	pt-br	%1, ID duplicada
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br>ou dê ao servidor web permissão de escrita em %3
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2\nou dê ao servidor web permissão de escrita em %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1EGroupware%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
 %s disabled	common	pt-br	%s inativo
 %s needed	common	pt-br	%s necessário
@@ -276,6 +276,7 @@ christmas island	common	pt-br	CHRISTMAS ISLAND
 class	common	pt-br	Class
 class, valign	common	pt-br	Class, Valign
 clear	common	pt-br	Limpar
+clear filters	common	pt-br	Vymazat filtry
 clear form	common	pt-br	Limpar Formulário
 clear window	common	pt-br	Limpar janela
 click	common	pt-br	Clique
@@ -299,6 +300,7 @@ collection empty.	common	pt-br	Coleção vazio.
 collection listing	common	pt-br	Lista Coleção
 colombia	common	pt-br	COLÔMBIA
 colour	common	pt-br	Cor
+column filters	common	pt-br	Filtry sloupců
 column...	common	pt-br	Coluna ...
 columnname	common	pt-br	Nome da Coluna
 columns to print	common	pt-br	Colunas para impressão
@@ -363,7 +365,7 @@ date	common	pt-br	Data
 date + time	common	pt-br	Data + Horário
 date due	common	pt-br	Até data
 date+time	common	pt-br	Data+Horário
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt-br	Porta da Data e hora.<br>Quando usar a porta 13, por favor configure os filtros do firewall antes de submeter as alterações.<br>(Porta: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt-br	Porta da Data e hora.\nQuando usar a porta 13, por favor configure os filtros do firewall antes de submeter as alterações.\n(Porta: 13 / Host: 129.6.15.28)
 day	common	pt-br	Dia
 days	common	pt-br	Dias
 db ensures that every row has a unique value in that column	common	pt-br	O Bando de Dados assegura que cada linha tenha um valor original nessa coluna
@@ -491,7 +493,7 @@ end time	common	pt-br	Hora do término
 enter '' for an empty default, nothing mean no default	common	pt-br	Informe '' para campos vazios, nada não significa padrão algum
 enter a search pattern	common	pt-br	Informe um teste padrão para a busca
 enter filename to upload and attach, use [browse...] to search for it	common	pt-br	Informe o nome do arquivo para envio e anexe, use [Localizar...] para procurar por ele
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Informe a localização da Extranet em um URL .<br>Exemplo: https://egw.seudomínio.com.br/egroupware ou /egroupware<br><b>Não finalize com uma BARRA</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Informe a localização da Extranet em um URL .\nExemplo: https://egw.seudomínio.com.br/egroupware ou /egroupware\n<b>Não finalize com uma BARRA</b>
 enter the new version number here (> old_version), empty for no update-file	common	pt-br	Informe o número da nova versão aqui (> old_version), deixe vazio para não atualizar o arquivo
 enter the new version number here (has to be > old_version)	common	pt-br	Informe o número da nova versão aqui (tem que ser > old_version)
 enter your file name	common	pt-br	Digite o nome do arquivo
@@ -773,7 +775,7 @@ libyan arab jamahiriya	common	pt-br	LÍBIA
 license	common	pt-br	Licença
 liechtenstein	common	pt-br	LIECHTENSTEIN
 light mode	common	pt-br	Modo leve
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt-br	Linha %1: '%2'<br><b>dados csv não combinam com a quantidade de coluna da tabela %3 ==> ignorada</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt-br	Linha %1: '%2'\n<b>dados csv não combinam com a quantidade de coluna da tabela %3 ==> ignorada</b>
 link	common	pt-br	Link
 link is appended to mail allowing recipients to download currently attached version of files	common	pt-br	O link é anexado ao e-mail, permitindo que os destinatários façam o download da versão atual dos arquivos anexados
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	pt-br	O link é anexado ao e-mail, permitindo que os destinatários façam download ou modifiquem a versão atualizada dos arquivos (somente EPL)
@@ -847,6 +849,7 @@ middle	common	pt-br	Meio
 minute	common	pt-br	Minuto
 minutes	common	pt-br	Minutos
 missing: %1	common	pt-br	Faltando: %1
+mode	common	pt-br	Režim
 mode of required directory "%1" changed to %2.	admin	pt-br	O modo da pasta necessária "%1" foi alterado para %2.
 modifier	preferences	pt-br	Modifier
 moldova, republic of	common	pt-br	MOLDÁVIA
@@ -1131,7 +1134,7 @@ san marino	common	pt-br	SAN MARINO
 sao tome and principe	common	pt-br	SÃO TOME AND PRINCIPE
 saturday	common	pt-br	Sábado
 saudi arabia	common	pt-br	ARÁBIA SAUDITA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt-br	Versão do Savant2 difere do validador Savant2.<br> Esta versão: %1 <br> Versão do Savant: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt-br	Versão do Savant2 difere do validador Savant2.\n Esta versão: %1 \n Versão do Savant: %2
 save	common	pt-br	Salvar
 save all	common	pt-br	Salvar tudo
 save as	common	pt-br	Salvar como
@@ -1354,7 +1357,7 @@ todays date, eg. "%1"	common	pt-br	Data de hoje, ex. "%1"
 togo	common	pt-br	TOGO
 tokelau	common	pt-br	TOKELAU
 tonga	common	pt-br	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	pt-br	Muitas linhas selecionadas.<br>Selecione todas ou menos de %1 linhas
+too many rows selected.<br />select all, or less than %1 rows	common	pt-br	Muitas linhas selecionadas.\nSelecione todas ou menos de %1 linhas
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pt-br	Houve tentativas em excesso de login para o usuário:: %1 para o cliente '%2', %3 a partir do endereço IP %4
 toolbar settings	common	pt-br	Configurações da barra de ferramentas
 top	common	pt-br	Topo
@@ -1487,7 +1490,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	pt-br	Seu navegador não está atualizado (compatível com JavaScript ES6); alguns dos recursos podem não estar funcionando.
 your code is incorrect !!!	common	pt-br	O código está incorreto!
 your key has been restored successfully.	common	pt-br	Sua chave foi restaurada com sucesso.
-your message could <b>not</b> be sent!<br>	common	pt-br	<b>Não</b> foi possível enviar sua mensagem!<br>
+your message could <b>not</b> be sent!<br>	common	pt-br	<b>Não</b> foi possível enviar sua mensagem!\n
 your message has been sent	common	pt-br	Sua mensagem foi enviada.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	pt-br	Sua senha não requer força de %1 classes de caracteres e comprimento mínimo de %2 caracteres.
 your password does not have required strength:	common	pt-br	Sua senha não ter exigido a força:

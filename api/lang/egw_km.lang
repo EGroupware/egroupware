@@ -360,7 +360,7 @@ database error!	common	km	កំហុសមូលដ្ឋានទិន្ន
 date	common	km	កាលបរិច្ឆេទ
 date due	common	km	កាលបរិច្ឆេទ​កំណត់
 date+time	common	km	កាលបរិច្ឆេទ + ពេលវេលា
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	km	ច្រកពេលវេលាកាលបរិច្ឆេទ។<br>ប្រសិនបើប្រើច្រក 13 សូមកំណត់ច្បាប់ជញ្ជាំងភ្លើងឱ្យបានត្រឹមត្រូវមុនពេលបញ្ជូនទំព័រនេះ។<br>(ច្រក: 13 / ម៉ាស៊ីន: 129.6.15.28) ។
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	km	ច្រកពេលវេលាកាលបរិច្ឆេទ។\nប្រសិនបើប្រើច្រក 13 សូមកំណត់ច្បាប់ជញ្ជាំងភ្លើងឱ្យបានត្រឹមត្រូវមុនពេលបញ្ជូនទំព័រនេះ។\n(ច្រក: 13 / ម៉ាស៊ីន: 129.6.15.28) ។
 day	common	km	ថ្ងៃ
 days	common	km	ថ្ងៃ
 db ensures that every row has a unique value in that column	common	km	DB ធានាថារាល់ជួរនីមួយៗមានតម្លៃពិសេសនៅក្នុងជួរនោះ។
@@ -485,7 +485,7 @@ end time	common	km	ពេលវេលាបញ្ចប់
 enter '' for an empty default, nothing mean no default	common	km	បញ្ចូល '' សម្រាប់លំនាំដើមទទេ គ្មានអ្វីមានន័យថាគ្មានលំនាំដើមទេ។
 enter a search pattern	common	km	បញ្ចូលលំនាំស្វែងរក
 enter filename to upload and attach, use [browse...] to search for it	common	km	បញ្ចូលឈ្មោះឯកសារដើម្បីអាប់ឡូត និងភ្ជាប់ ប្រើ [Browse...] ដើម្បីស្វែងរកវា។
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	km	បញ្ចូលទីតាំងនៃ URL របស់ EGroupware។<br>ឧទាហរណ៍៖ http://www.domain.com/egroupware ឬ /egroupware<br><b>គ្មានសញ្ញាបន្តបន្ទាប់</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	km	បញ្ចូលទីតាំងនៃ URL របស់ EGroupware។\nឧទាហរណ៍៖ http://www.domain.com/egroupware ឬ /egroupware\n<b>គ្មានសញ្ញាបន្តបន្ទាប់</b>
 enter the new version number here (> old_version), empty for no update-file	common	km	បញ្ចូលលេខកំណែថ្មី > old_version ទទេសម្រាប់គ្មានឯកសារធ្វើបច្ចុប្បន្នភាព
 enter the new version number here (has to be > old_version)	common	km	បញ្ចូលលេខកំណែថ្មី ត្រូវតែជា > old_version
 enter your file name	common	km	បញ្ចូលឈ្មោះឯកសាររបស់អ្នក
@@ -776,8 +776,8 @@ libyan arab jamahiriya	common	km	លីប៊ីយ៉ាន អារ៉ាប 
 license	common	km	អាជ្ញាប័ណ្ណ
 liechtenstein	common	km	លីកតេនស្ទីន
 light mode	common	km	របៀបពន្លឺ
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	km	បន្ទាត់ %1៖ '%2'<br><b>ទិន្នន័យ csv មាន ##last-check-run## នៃតារាង %3 ==> មិនអើពើ</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	km	បន្ទាត់ %1៖ '%2'<br><b>ទិន្នន័យ csv មិនត្រូវគ្នានឹងចំនួនជួរឈរនៃតារាង %3 ==> មិនអើពើ</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	km	បន្ទាត់ %1៖ '%2'\n<b>ទិន្នន័យ csv មាន ##last-check-run## នៃតារាង %3 ==> មិនអើពើ</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	km	បន្ទាត់ %1៖ '%2'\n<b>ទិន្នន័យ csv មិនត្រូវគ្នានឹងចំនួនជួរឈរនៃតារាង %3 ==> មិនអើពើ</b>
 link	common	km	តំណភ្ជាប់
 link is appended to mail allowing recipients to download currently attached version of files	common	km	តំណត្រូវបានបន្ថែមទៅសំបុត្រដែលអនុញ្ញាតឱ្យអ្នកទទួលទាញយកឯកសារដែលភ្ជាប់មកជាមួយកំណែបច្ចុប្បន្ន
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	km	តំណត្រូវបានបន្ថែមទៅសំបុត្រដែលអនុញ្ញាតឱ្យអ្នកទទួលទាញយក ឬកែប្រែកំណែចុងក្រោយនៃឯកសារ (EPL តែប៉ុណ្ណោះ)
@@ -1139,7 +1139,7 @@ san marino	common	km	សាន ម៉ារីណូ
 sao tome and principe	common	km	SAO TOME និង PRINCIPE
 saturday	common	km	ថ្ងៃសៅរ៍
 saudi arabia	common	km	អារ៉ាប៊ីសាអូឌីត
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	km	កំណែ Savant2 ខុសពី Savant2 wrapper ។ <br/>កំណែនេះ៖ %1 <br/>កំណែ Savants៖ %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	km	កំណែ Savant2 ខុសពី Savant2 wrapper ។ \nកំណែនេះ៖ %1 \nកំណែ Savants៖ %2
 save	common	km	រក្សាទុក
 save all	common	km	រក្សាទុកទាំងអស់។
 save as	common	km	រក្សាទុក​ជា
@@ -1357,7 +1357,7 @@ the mail server returned	common	km	ម៉ាស៊ីនមេបានត្រ
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	km	មានអ្នកប្រើប្រាស់ប្រព័ន្ធដែលមានឈ្មោះនេះរួចហើយ។ សូមជ្រើសរើសឈ្មោះផ្សេងទៀត។
 they will be sub-folders in users home (%1 attribute).	common	km	ពួកវានឹងជាថតរងនៅក្នុងផ្ទះអ្នកប្រើប្រាស់ (គុណលក្ខណៈ%1)។
 this feature is only available in epl version.	common	km	មុខងារនេះមាននៅក្នុងកំណែ EPL ប៉ុណ្ណោះ។
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	km	នេះជាចំណែកផ្ទាល់ខ្លួនរបស់អ្នក។ ដើម្បីសាកល្បងវា សូមប្រើបង្អួចអនាមិក / អនាមិក។<br/>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	km	នេះជាចំណែកផ្ទាល់ខ្លួនរបស់អ្នក។ ដើម្បីសាកល្បងវា សូមប្រើបង្អួចអនាមិក / អនាមិក។\n%1
 this name has been used already	common	km	ឈ្មោះ​នេះ​ត្រូវ​បាន​គេ​ប្រើ​ហើយ!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	km	អត្ថបទត្រូវបានបង្ហាញ ប្រសិនបើវាលបញ្ចូលទទេ ហើយគ្មានការផ្តោតអារម្មណ៍ (ព្រិល)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	km	វា​នឹង​កំណត់​ចំណូលចិត្ត​របារ​ឧបករណ៍​ឡើងវិញ​សម្រាប់​អ្នក​ប្រើ​ទាំងអស់ ហើយ​កំណត់​ពួកវា​ឱ្យ​កំណត់​រចនាសម្ព័ន្ធ prefs លំនាំដើម។
@@ -1524,7 +1524,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	km	កម្មវិធីរុករកតាមអ៊ីនធឺណិតរបស់អ្នកមិនទាន់សម័យទេ (JavaScript ES6 ដែលត្រូវគ្នា) អ្នកអាចជួបប្រទះនឹងមុខងារមួយចំនួនដែលមិនដំណើរការ។
 your code is incorrect !!!	common	km	លេខកូដមិនត្រឹមត្រូវ!
 your key has been restored successfully.	common	km	សោរបស់អ្នកត្រូវបានស្ដារឡើងវិញដោយជោគជ័យ។
-your message could <b>not</b> be sent!<br>	common	km	សាររបស់អ្នក<b>មិនអាច</b>ផ្ញើបានទេ!<br>
+your message could <b>not</b> be sent!<br>	common	km	សាររបស់អ្នក<b>មិនអាច</b>ផ្ញើបានទេ!\n
 your message has been sent	common	km	សាររបស់អ្នកត្រូវបានផ្ញើ។
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	km	ពាក្យ​សម្ងាត់​របស់​អ្នក​មិន​តម្រូវ​ឱ្យ​មាន​កម្រិត​តួអក្សរ %1 និង​ប្រវែង​អប្បបរមា​នៃ %2 តួអក្សរ​ទេ។
 your password does not have required strength:	common	km	ពាក្យសម្ងាត់របស់អ្នកមិនមានកម្លាំងខ្លាំងទេ៖

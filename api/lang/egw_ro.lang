@@ -54,6 +54,7 @@ changes that you made may not be saved.	common	ro	Este posibil ca modificările 
 charset	common	ro	Set de caractere
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	ro	Verificați dacă există valori goale în declarațiile IF. Exemplu {{IF url~EMPTY~~~Website:}}} - Dacă url nu este gol, scrie "Website:"
 choose the default filename for merged documents.	preferences	ro	Alegeți numele de fișier implicit pentru documentele fuzionate.
+clear filters	common	ro	Șterge filtrele
 click here to resume your egroupware session.	common	ro	Faceți clic pentru a vă relua sesiunea EGroupware.
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	ro	Clienții care nu indică în mod explicit o limită se limitează la acest număr de zile. O limită prea mare poate cauza probleme cu unii clienți.
 clipboard contents	common	ro	Conținutul clipboard-ului
@@ -61,6 +62,7 @@ code	common	ro	Cod
 collection empty.	common	ro	Colecția este goală.
 collection listing	common	ro	Listarea colecției
 colour	common	ro	Culoare
+column filters	common	ro	Filtre coloană
 columns to print	common	ro	Coloane de tipărit
 command ⌘	common	ro	Comandă ⌘
 copy	common	ro	Copiați
@@ -98,6 +100,7 @@ example {{nelf role}} - if field role is not empty, you will get a new line with
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	ro	Exemplu {{nenvlf role}} - dacă rolul câmpului nu este gol, se stabilește un LF fără nicio valoare a câmpului
 file a file	common	ro	Stocați un fișier
 fileupload	common	ro	Încărcarea fișierelor
+filter	common	ro	Filtru
 formatted business address	common	ro	Adresa de afaceri formatată
 formatted private address	common	ro	Adresa privată formatată
 formatted text (html)	common	ro	Text formatat (HTML)
@@ -123,6 +126,7 @@ invalid 2-factor authentication code	common	ro	Código de autenticação de 2 fa
 invalid email	common	ro	E-mail invalid
 invalid or expired 'remember me' token	common	ro	Ficha "lembre-se de mim" inválida ou vencida
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	ro	É recomendável armazenar sua chave pública no Addressbook, para que outros usuários possam escrever seus e-mails criptografados.
+license	common	ro	Licență
 light mode	common	ro	Mod deschis
 link to each entry	common	ro	Link către fiecare intrare
 load more links ...	common	ro	Încărcați mai multe link-uri ...
@@ -137,6 +141,7 @@ merge & send	common	ro	Fuzionați și trimiteți
 merge individually	common	ro	Fuzionați individual
 merge options	common	ro	Opțiuni de fuzionare
 merged document filename	preferences	ro	Numele fișierului documentului fuzionat
+mode	common	ro	Mod
 more	common	ro	Mai mult
 move	common	ro	Mutați
 moved %1 children from directory fs_id=%2 to %3	admin	ro	A mutat %1 copii din folderul fs_id=%2 în %3

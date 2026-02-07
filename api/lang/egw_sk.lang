@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	sk	%1nastavenie "%2" = %3 neumožňuje prístup cez http!
 %1 to sync	groupdav	sk	%1 na synchronizáciu
 %1, duplicate id	common	sk	%1, duplicitné ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	sk	%1Vyberte iný adresár%2<br>alebo nastavte pre webserver právo zápisu do %3.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	sk	%1Vyberte iný adresár%2\nalebo nastavte pre webserver právo zápisu do %3.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1EGroupware%2 je viacpoužívateľský, webovo orientovaný grupvérový balík napísaný v %3PHP%4.
 %s disabled	common	sk	%s je vypnuté
 %s needed	common	sk	%s je potrebné
@@ -283,6 +283,7 @@ christmas island	common	sk	VIANOČNÉ OSTROVY
 class	common	sk	Trieda
 class, valign	common	sk	trieda, V-zarovnanie
 clear	common	sk	Vyčistiť
+clear filters	common	sk	Vymazať filtre
 clear form	common	sk	Vyčistiť formulár
 clear window	common	sk	Vyčistiť okno
 click	common	sk	Klik
@@ -306,6 +307,7 @@ collection empty.	common	sk	Výber je prázdny.
 collection listing	common	sk	Výpis výberu
 colombia	common	sk	KOLUMBIA
 colour	common	sk	Farba
+column filters	common	sk	Filtry stĺpcov
 column...	common	sk	Stĺpec ...
 columnname	common	sk	Názov stĺpca
 columns to print	common	sk	Stĺpce určené pre tlač
@@ -370,7 +372,7 @@ date	common	sk	Dátum
 date + time	common	sk	Dátum + čas
 date due	common	sk	Termín do
 date+time	common	sk	Dátum+Čas
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sk	Port pre dátum/čas.<br>Ak používate port 13, prosím nastavte korektne filtrovacie pravidlá na firewall-e ešte predtým, než potvrdíte túto stránku.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sk	Port pre dátum/čas.\nAk používate port 13, prosím nastavte korektne filtrovacie pravidlá na firewall-e ešte predtým, než potvrdíte túto stránku.\n(Port: 13 / Host: 129.6.15.28)
 day	common	sk	Deň
 days	common	sk	Dni
 db ensures that every row has a unique value in that column	common	sk	DB zabezpečuje, aby mal každý riadok svoju jedinečnú hodnotu v tomto stĺpci
@@ -498,7 +500,7 @@ end time	common	sk	Čas ukončenia
 enter '' for an empty default, nothing mean no default	common	sk	Vložte '' pre prázdnu predvolenú hodnotu; prázdne znamená: bez predvolenej hodnoty
 enter a search pattern	common	sk	Zadajte hľadaný výraz
 enter filename to upload and attach, use [browse...] to search for it	common	sk	Zadajte názov súboru, ktorý chcete priložiť, prípadne použite tlačítko "Prehľadávať"
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre EGroupware.<br>Príklad: https://egw.domain.com/egroupware alebo /egroupware<br><b>Bez ukončovacieho lomítka</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre EGroupware.\nPríklad: https://egw.domain.com/egroupware alebo /egroupware\n<b>Bez ukončovacieho lomítka</b>
 enter the new version number here (> old_version), empty for no update-file	common	sk	Zadajte sem nové číslo verzie (> stará verzia), prázdne znamená: bez aktualizácie súboru
 enter the new version number here (has to be > old_version)	common	sk	Zadajte sem nové číslo verzie (musí byť > stará verzia)
 enter your file name	common	sk	Zadajte názov súboru
@@ -798,8 +800,8 @@ libyan arab jamahiriya	common	sk	LÍBIA
 license	common	sk	Licencia
 liechtenstein	common	sk	LICHTENŠTAJNSKO
 light mode	common	sk	Svetlý režim
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><b>csv dáta obsahujú ##last-check-run## tabuľky %3 ==> ignorované</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><b>csv dáta nesúhlasia s počtom stĺpcov tabuľky %3 ==> ignorované</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'\n<b>csv dáta obsahujú ##last-check-run## tabuľky %3 ==> ignorované</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'\n<b>csv dáta nesúhlasia s počtom stĺpcov tabuľky %3 ==> ignorované</b>
 link	common	sk	Odkaz
 link is appended to mail allowing recipients to download currently attached version of files	common	sk	K správe je pripojený odkaz, ktorý umožňuje adresátom stiahnuť si aktuálne priloženú verziu súborov
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	sk	K správe je pripojený odkaz, ktorý umožňuje adresátom stiahnuť alebo zmeniť aktuálne verzie súborov (len EPL)
@@ -879,6 +881,7 @@ minute	common	sk	Minúta
 minutes	common	sk	Minút
 missing: %1	common	sk	Chýba: %1
 mo	common	sk	Po
+mode	common	sk	Režim
 mode of required directory "%1" changed to %2.	admin	sk	Režim požadovaného priečinka "%1" zmenený na %2.
 modifier	preferences	sk	Upravil
 moldova, republic of	common	sk	MOLDAVSKÁ REPUBLIKA
@@ -1171,7 +1174,7 @@ san marino	common	sk	SAN MARINO
 sao tome and principe	common	sk	SVÄTÝ TOMÁŠ A PRINCOV OSTROV
 saturday	common	sk	Sobota
 saudi arabia	common	sk	SAUDSKÁ ARÁBIA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sk	Verzia Savant2 sa líši od wrappera Savant2.<br>Táto verzia: %1<br>Verzia Savant: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sk	Verzia Savant2 sa líši od wrappera Savant2.\nTáto verzia: %1\nVerzia Savant: %2
 save	common	sk	Uložiť
 save all	common	sk	Uložiť všetko
 save as	common	sk	Uložiť ako
@@ -1384,7 +1387,7 @@ textarea	common	sk	Oblasť textu
 th	common	sk	Št
 thailand	common	sk	THAJSKO
 the backup key has been deleted.	common	sk	Zálohový kľúč bol odstránený.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	sk	Je aktívne blokovanie vyskakovacích okien na strane prehliadača. Ak chcete vidieť okno, prosím kliknite na tlačítko OK.<br>Ak si nabudúce neželáte vidieť túto správu, povoľte vášmu prehliadaču výnimku v blokovaní vyskakovacích okien pre %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	sk	Je aktívne blokovanie vyskakovacích okien na strane prehliadača. Ak chcete vidieť okno, prosím kliknite na tlačítko OK.\nAk si nabudúce neželáte vidieť túto správu, povoľte vášmu prehliadaču výnimku v blokovaní vyskakovacích okien pre %1
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	sk	Dokument môže obsahovať premennú, napr. {{%3}} ktorá sa nahradí údajmi (%1úplný zoznam názvov premenných%2).
 the following applications require upgrades	common	sk	Nasledujúce aplikácie vyžadujú aktualizáciu
 the following document-types are supported:	preferences	sk	Podporované sú nasledovné typy dokumentov:
@@ -1392,7 +1395,7 @@ the mail server returned	common	sk	Poštový server vrátil
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	sk	Systémový používateľ s takýmto menom už existuje. Používatelia nemôžu mať rovnaké meno ako systémoví používatelia.
 they will be sub-folders in users home (%1 attribute).	common	sk	Budú pod-priečinkami v používateľovom domovskom priečinku (%1 atribút).
 this feature is only available in epl version.	common	sk	Táto funkcia je k dispozícii len vo verzii EPL.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	sk	Toto je Vaše vlastné zdieľanie. Môžete ho odskúšať v anonymnom resp. inkognito okne prehliadača.<br>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	sk	Toto je Vaše vlastné zdieľanie. Môžete ho odskúšať v anonymnom resp. inkognito okne prehliadača.\n%1
 this name has been used already	common	sk	Toto meno sa už používa!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	sk	Text sa zobrazí keď je vstupné pole prázdne a nemá fokus (rozmazanie)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	sk	Týmto sa vymažú nastavenia panelu nástrojov pre všetkých používateľov a obnovia sa predvolené nastavenia.
@@ -1416,7 +1419,7 @@ todays date, eg. "%1"	common	sk	Dnešný dátum, napr. "%1"
 togo	common	sk	TOGO
 tokelau	common	sk	TOKELAU
 tonga	common	sk	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	sk	Vybraných príliš veľa riadkov.<br>Vyberte všetky alebo menej ako %1 riadkov
+too many rows selected.<br />select all, or less than %1 rows	common	sk	Vybraných príliš veľa riadkov.\nVyberte všetky alebo menej ako %1 riadkov
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sk	Príliš veľa neúspešných pokusov o prihlásenie: %1 na používateľa '%2', %3 na IP %4
 toolbar settings	common	sk	Nastavenia panela nástrojov
 top	common	sk	Vrch
@@ -1565,7 +1568,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	sk	Váš internetový prehliadač je zastaralý (z hľadiska kompatibility JavaScript ES6), môžete naraziť na problémy s niektorými funkciami.
 your code is incorrect !!!	common	sk	Váš kód je chybný!
 your key has been restored successfully.	common	sk	Váš kľúč bol úspešne obnovený.
-your message could <b>not</b> be sent!<br>	common	sk	Vašu správu sa <b>nepodarilo</b> odoslať!<br>
+your message could <b>not</b> be sent!<br>	common	sk	Vašu správu sa <b>nepodarilo</b> odoslať!\n
 your message has been sent	common	sk	Vaša správa bola odoslaná.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	sk	Vaše heslo nedosahuje požadovanú silu: %1 tried znakov a minimálna dĺžka %2 znakov.
 your password does not have required strength:	common	sk	Vaše heslo nedosahuje požadovanú silu:

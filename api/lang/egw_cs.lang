@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	cs	%1 nastavení "%2" = %3 nedovoluje přístup přes http protokol!
 %1 to sync	groupdav	cs	%1 k synchronizaci
 %1, duplicate id	common	cs	%1, duplikace ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	cs	%1Zvolte jiný adresář%2<br>nebo nastavte práva na %3 tak, aby do něj mohl zapisovat webový server.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	cs	%1Zvolte jiný adresář%2\nnebo nastavte práva na %3 tak, aby do něj mohl zapisovat webový server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	cs	%1EGroupware%2 je víceuživatelský groupware postavený na webových technologiích napsaný v jazyce %3PHP%4.
 %s disabled	common	cs	%s zablokováno
 %s needed	common	cs	%s zapotřebí
@@ -278,6 +278,7 @@ christmas island	common	cs	VÁNOČNÍ OSTROV
 class	common	cs	Class
 class, valign	common	cs	Class, Valign
 clear	common	cs	Vymazat
+clear filters	common	cs	Vymazat filtry
 clear form	common	cs	Vymazat od
 clear window	common	cs	Smazat okno
 click	common	cs	Kliknout
@@ -301,6 +302,7 @@ collection empty.	common	cs	Prázdná kolekce.
 collection listing	common	cs	Výpis kolekce
 colombia	common	cs	KOLUMBIE
 colour	common	cs	Barva
+column filters	common	cs	Filtry sloupců
 column...	common	cs	Sloupec ...
 columnname	common	cs	Jméno sloupce
 columns to print	common	cs	Tisknuté sloupce
@@ -365,7 +367,7 @@ date	common	cs	Datum
 date + time	common	cs	Datum + čas
 date due	common	cs	Do data
 date+time	common	cs	Datum a čas
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	cs	Port pro datum a čas.<br>Pokud používáte port 13, nastavte prosím příslušná pravidla na firewallu dříve, než odešlete tuto stránku.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	cs	Port pro datum a čas.\nPokud používáte port 13, nastavte prosím příslušná pravidla na firewallu dříve, než odešlete tuto stránku.\n(Port: 13 / Host: 129.6.15.28)
 day	common	cs	Den
 days	common	cs	Dny
 db ensures that every row has a unique value in that column	common	cs	Databáze zajišťuje, že každý řádek má v tomto sloupci unikátní hodnotu
@@ -494,7 +496,7 @@ end time	common	cs	Čas ukončení
 enter '' for an empty default, nothing mean no default	common	cs	Zadejte '' pro prázdnou hodnotu jako výchozí, nic znamená bez výchozí hodnoty
 enter a search pattern	common	cs	Zadejte hledaný výraz
 enter filename to upload and attach, use [browse...] to search for it	common	cs	Zadejte název souboru, který chcete uploadovat a připojit, použijte [Procházet] pro vyhledání souboru
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	cs	Zadejte umístění URL EGroupware.<br>Příklad: https://egw.domain.com/egroupware nebo /egroupware<br><b>Bez koncového lomítka</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	cs	Zadejte umístění URL EGroupware.\nPříklad: https://egw.domain.com/egroupware nebo /egroupware\n<b>Bez koncového lomítka</b>
 enter the new version number here (> old_version), empty for no update-file	common	cs	Sem zadejte číslo nové verze (> stará_verze), ponechte prázdné pokud nechcete aktualizovat soubor
 enter the new version number here (has to be > old_version)	common	cs	Sem zadejte číslo nové verze (musí být > stará_verze)
 enter your file name	common	cs	Zadejte název souboru
@@ -789,8 +791,8 @@ libyan arab jamahiriya	common	cs	LIBYE
 license	common	cs	Licence
 liechtenstein	common	cs	LICHTENŠTEJNSKO
 light mode	common	cs	Světlý režim
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'<br><b>csv data neobsahují ##last-check-run## tabulky %3 ==> ignorován</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'<br><b>csv data neodpovídají počtu sloupců v tabulce %3 ==> ignorován</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'\n<b>csv data neobsahují ##last-check-run## tabulky %3 ==> ignorován</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'\n<b>csv data neodpovídají počtu sloupců v tabulce %3 ==> ignorován</b>
 link	common	cs	Odkaz
 link is appended to mail allowing recipients to download currently attached version of files	common	cs	Odkaz připojený k e-mailu dovoluje příjemcům stáhnout verzi souboru, která je aktuální v tomto okamžiku
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	cs	Odkaz připojený k e-mailu dovoluje uživatelům stáhnout nebo aktualizovat verzi souboru (pouze pro předplatitele EPL)
@@ -869,6 +871,7 @@ minute	common	cs	Minuta
 minutes	common	cs	Minuty
 missing: %1	common	cs	Chybí: %1
 mo	common	cs	Po
+mode	common	cs	Režim
 mode of required directory "%1" changed to %2.	admin	cs	Režim vyžadované složky ˇ%1" byl změněn na %2.
 modifier	preferences	cs	Změnil
 moldova, republic of	common	cs	MOLDAVSKO
@@ -1158,7 +1161,7 @@ san marino	common	cs	SAN MARINO
 sao tome and principe	common	cs	SVATÝ TOMÁŠ
 saturday	common	cs	Sobota
 saudi arabia	common	cs	SAÚDSKÁ ARÁBIE
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	cs	Verze Savant2 se liší od verze Savant2 wrapperu. <br>Tato verze: %1 <br>Verze Savantu: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	cs	Verze Savant2 se liší od verze Savant2 wrapperu. \nTato verze: %1 \nVerze Savantu: %2
 save	common	cs	Uložit
 save all	common	cs	Uložit vše
 save as	common	cs	Uložit jako
@@ -1377,7 +1380,7 @@ the mail server returned	common	cs	Poštovní server odpověděl
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	cs	Systémový uživatel tohoto jména již existuje. Uživatelé by neměli mít stejná jména jako systémoví uživatelé.
 they will be sub-folders in users home (%1 attribute).	common	cs	Budou to podsložky v domovských složkách (atribut %1).
 this feature is only available in epl version.	common	cs	Tato funkce je dostupná ve verzi EGroupware EPL.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	cs	Toto je váš vlastní podíl. Chcete-li to otestovat, použijte anonymní / inkognito okno.<br>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	cs	Toto je váš vlastní podíl. Chcete-li to otestovat, použijte anonymní / inkognito okno.\n%1
 this name has been used already	common	cs	Takové jméno již bylo použito!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	cs	Tento text se zobrazí, pokud je vstupní pole prázdné a nemá fokus
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	cs	Tím se obnoví předvolby panelu nástrojů pro všechny uživatele a nastaví se na nakonfigurované výchozí předvolby.
@@ -1401,7 +1404,7 @@ todays date, eg. "%1"	common	cs	Dnešní datum, např. "%1"
 togo	common	cs	TOGO
 tokelau	common	cs	TOKELAU
 tonga	common	cs	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	cs	Příliš mnoho vybraných řádků.<br>Vyberte všechny nebo méně než %1 řádků
+too many rows selected.<br />select all, or less than %1 rows	common	cs	Příliš mnoho vybraných řádků.\nVyberte všechny nebo méně než %1 řádků
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	cs	Příliš mnoho neúspěšných pokusů o přihlášení: %1 pro uživatele '%2', %3 pro IP %4
 toolbar settings	common	cs	Nastavení panelu nástrojů
 top	common	cs	Horní okraj
@@ -1549,7 +1552,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	cs	Váš prohlížeč není aktuální (kompatibilní s JavaScript ES6), některé funkce mohou být nefunkční.
 your code is incorrect !!!	common	cs	Kód není správný!
 your key has been restored successfully.	common	cs	Váš klíč byl v pořádku obnoven.
-your message could <b>not</b> be sent!<br>	common	cs	Vaše zpráva <b>nemůže</b> být odeslána!<br>
+your message could <b>not</b> be sent!<br>	common	cs	Vaše zpráva <b>nemůže</b> být odeslána!\n
 your message has been sent	common	cs	Vaše zpráva byla odeslána.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	cs	Vaše heslo nesplňuje stanovené požadavky %1 typů znaků a minimální délku %2 znaků.
 your password does not have required strength:	common	cs	Vaše heslo nesplňuje stanovené požadavky:

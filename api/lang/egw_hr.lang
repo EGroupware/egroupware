@@ -184,7 +184,7 @@ czech republic	common	hr	CZECH REPUBLIC
 date	common	hr	Datum
 date due	common	hr	Date Due
 date+time	common	hr	Date+Time
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hr	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hr	Datetime port.\nIf using port 13, please set firewall rules appropriately before submitting this page.\n(Port: 13 / Host: 129.6.15.28)
 day	common	hr	Day
 days	common	hr	dana
 db ensures that every row has a unique value in that column	common	hr	DB ensures that every row has a unique value in that column
@@ -257,7 +257,7 @@ end time	common	hr	End time
 enter '' for an empty default, nothing mean no default	common	hr	enter '' for an empty default, nothing mean no default
 enter a search pattern	common	hr	Enter a search pattern
 enter filename to upload and attach, use [browse...] to search for it	common	hr	Enter filename to upload and attach, use [Browse...] to search for it
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Enter the location of EGroupware's URL.\nExample: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware\n<b>No trailing slash</b>
 enter the new version number here (> old_version), empty for no update-file	common	hr	enter the new version number here (> old_version), empty for no update-file
 enter the new version number here (has to be > old_version)	common	hr	enter the new version number here (has to be > old_version)
 entry has been deleted sucessfully	common	hr	Entry has been deleted sucessfully
@@ -872,7 +872,7 @@ you have selected an invalid date	common	hr	You have selected an invalid date !
 you have selected an invalid main category	common	hr	You have selected an invalid main category !
 you have successfully logged out	common	hr	Uspješno ste se odjavili
 you need to add the webserver user '%1' to the group '%2'.	common	hr	You need to add the webserver user '%1' to the group '%2'.
-your message could <b>not</b> be sent!<br>	common	hr	Your message could <b>not</b> be sent!<br>
+your message could <b>not</b> be sent!<br>	common	hr	Your message could <b>not</b> be sent!\n
 your message has been sent	common	hr	Vaša poruka je poslana
 your search returned %1 matchs	common	hr	your search returned %1 matches
 your search returned 1 match	common	hr	Vaša pretraga je vratila 1 rezultat

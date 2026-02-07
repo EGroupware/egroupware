@@ -284,6 +284,7 @@ christmas island	common	fr	ILE NOEL
 class	common	fr	Class
 class, valign	common	fr	Class, Valign
 clear	common	fr	Effacer
+clear filters	common	fr	Effacer les filtres
 clear form	common	fr	Effacer le formulaire
 clear window	common	fr	Fermer la fenêtre
 click	common	fr	Cliquer
@@ -307,6 +308,7 @@ collection empty.	common	fr	Collection vide
 collection listing	common	fr	Liste de collection
 colombia	common	fr	COLOMBIE
 colour	common	fr	Couleur
+column filters	common	fr	Filtres de colonne
 column...	common	fr	Colonne...
 columnname	common	fr	Nom de colonne
 columns to print	common	fr	Colonnes à imprimer
@@ -371,7 +373,7 @@ date	common	fr	Date
 date + time	common	fr	Date + Heure
 date due	common	fr	Date butoire
 date+time	common	fr	Date+Heure
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.<br>Si vous utilisez le port 13, adaptez svp les règles de votre pare-feu avant de soumettre cette page.<br>(Port: 13 / Hôte: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.\nSi vous utilisez le port 13, adaptez svp les règles de votre pare-feu avant de soumettre cette page.\n(Port: 13 / Hôte: 129.6.15.28)
 day	common	fr	Jour
 days	common	fr	Jours
 db ensures that every row has a unique value in that column	common	fr	La base de données s'assure que chaque ligne a une valeur unique dans cette colonne
@@ -500,7 +502,7 @@ end time	common	fr	Heure de fin
 enter '' for an empty default, nothing mean no default	common	fr	Entrez '' pour une valeur par défaut vide, rien signifie pas de valeur par défaut
 enter a search pattern	common	fr	Entrez une chaîne de recherche
 enter filename to upload and attach, use [browse...] to search for it	common	fr	Entrez un nom de fichier à uploader et attacher, utilisez [naviguer...] pour le rechercher
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´EGroupware.<br>Exemple: https://egw.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´EGroupware.\nExemple: https://egw.domain.com/egroupware   ou   /egroupware\n<b>Pas de slash final</b>
 enter the new version number here (> old_version), empty for no update-file	common	fr	Entrez le nouveau numéro de version ici (> ancienne_version), vide pour aucun fichier de mise à jour
 enter the new version number here (has to be > old_version)	common	fr	Entrez le nouveau numéro de version ici (doit être > à la vieille_version)
 enter your file name	common	fr	Entrer le nom du fichier
@@ -801,8 +803,8 @@ libyan arab jamahiriya	common	fr	LIBYE
 license	common	fr	Licence
 liechtenstein	common	fr	LIECHTENSTEIN
 light mode	common	fr	Mode clair
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'<br><b>Les données csv contiennent ##last-check-run## de la table %3 ==> ignoré</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'<br><b>Les données csv ne correspondent pas au nombre de colonnes de la table %3 ==> ignoré</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'\n<b>Les données csv contiennent ##last-check-run## de la table %3 ==> ignoré</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'\n<b>Les données csv ne correspondent pas au nombre de colonnes de la table %3 ==> ignoré</b>
 link	common	fr	Lien
 link is appended to mail allowing recipients to download currently attached version of files	common	fr	Le lien est ajouté au mail permettant aux destinataires de télécharger la version courante des fichiers
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	fr	Le lien est ajouté au mail permettant aux destinataires de télécharger ou modifier la version à jour des fichiers (EPL seulement)
@@ -1398,7 +1400,7 @@ the mail server returned	common	fr	Le serveur email a renvoyé
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	fr	Il y a déjà un utilisateur système avec ce nom. Veuillez choisir un autre nom.
 they will be sub-folders in users home (%1 attribute).	common	fr	Il y aura des sous-répertoires dans les répertoires personnels (home) (attribut %1).
 this feature is only available in epl version.	common	fr	Cette fonctionnalité est disponible dans la version EGroupware EPL.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	fr	C'est votre propre partage. Pour le tester, utilisez une fenêtre anonyme / privée.<br/>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	fr	C'est votre propre partage. Pour le tester, utilisez une fenêtre anonyme / privée.\n%1
 this name has been used already	common	fr	Ce nom est déjà utilisé !
 this text gets displayed if the input-field is empty and has no focus (blur)	common	fr	ce texte s'affiche si le champ de saisie est vide et n'a pas le focus (flou)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	fr	Ceci va mettre à zéro les préférences de barre d'outil de tous les utilisateurs vers les préférences par défaut.
@@ -1422,7 +1424,7 @@ todays date, eg. "%1"	common	fr	Date d'aujourd'hui, p.ex. "%1"
 togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	fr	Trop de lignes sélectionnées <br>Sélectionner tout ou moins de %1 lignes
+too many rows selected.<br />select all, or less than %1 rows	common	fr	Trop de lignes sélectionnées \nSélectionner tout ou moins de %1 lignes
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fr	Trop de tentatives de connexion infructueuses: %1 pour l'utilisateur '%2', %3 pour l'IP %4
 toolbar settings	common	fr	Paramètres de la barre d'outils
 top	common	fr	Sommet
@@ -1571,7 +1573,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	fr	Votre navigateur n'est pas à jour (compatible JavaScript ES6), certaines fonctions ne fonctionneront pas.
 your code is incorrect !!!	common	fr	Ce code est incorrect !
 your key has been restored successfully.	common	fr	Votre clé a été restaurée avec succès.
-your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé !<br>
+your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé !\n
 your message has been sent	common	fr	Votre message a été envoyé.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	fr	Votre mot de passe n'a pas la complexité de %1 types de caractères et la longueur minimale de %2 caractères.
 your password does not have required strength:	common	fr	Votre mot de passe n'a pas la complexité requise :

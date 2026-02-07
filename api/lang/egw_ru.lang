@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	ru	%1 настройка "%2" = %3 запрещает доступ по http!
 %1 to sync	groupdav	ru	%1 синхронизировать
 %1, duplicate id	common	ru	%1, дублирующий идентификатор
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br>или дайте веб-серверу права на запись в %3
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2\nили дайте веб-серверу права на запись в %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1EGroupware%2 - многопользовательская, web-ориентированная среда коллективной работы, написанная на %3PHP%4.
 %s disabled	common	ru	%s отключен
 %s needed	common	ru	нужен %s
@@ -271,6 +271,7 @@ christmas island	common	ru	О-в Рождества
 class	common	ru	Класс
 class, valign	common	ru	класс, Выравнивание по вертикали
 clear	common	ru	Очистить
+clear filters	common	ru	Очистить фильтры
 clear form	common	ru	Очистить Форму
 clear window	common	ru	Очистить окно
 click	common	ru	Щелкнуть
@@ -294,6 +295,7 @@ collection empty.	common	ru	коллекция пуста.
 collection listing	common	ru	список коллекций
 colombia	common	ru	Колумбия
 colour	common	ru	Цвет
+column filters	common	ru	Фильтры столбцов
 column...	common	ru	Столбец ...
 columnname	common	ru	ИмяСтолбца
 columns to print	common	ru	Столбцы для печати
@@ -478,7 +480,7 @@ end time	common	ru	Время окончания
 enter '' for an empty default, nothing mean no default	common	ru	ввести '' для пустого значения по-умолчанию, ничего обозначает без значения по-умолчанию
 enter a search pattern	common	ru	Введите шаблон поиска
 enter filename to upload and attach, use [browse...] to search for it	common	ru	Введите имя файла для загрузки и прикрепления, используйте [Обзор] чтобы его найти
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Введите адрес Вашего сервера EGroupware.<br>Например: https://egw.domain.com/egroupware или /egroupware<br><b>Без слэша на конце</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Введите адрес Вашего сервера EGroupware.\nНапример: https://egw.domain.com/egroupware или /egroupware\n<b>Без слэша на конце</b>
 enter the new version number here (> old_version), empty for no update-file	common	ru	введите здесь новый номер версии (больше прежнего номера), не заполнять если не изменять файл
 enter the new version number here (has to be > old_version)	common	ru	введите здесь новый номер версии (должен быть больше прежнего номера)
 enter your passphrase	common	ru	Введите парольную фразу
@@ -754,8 +756,8 @@ libyan arab jamahiriya	common	ru	Ливия
 license	common	ru	Лицензия
 liechtenstein	common	ru	Лихтенштейн
 light mode	common	ru	Светлый режим
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	ru	Строка %1: '%2'<br><b>csv данных действительно содержит ##запуск последней проверки##таблицы %3 ==> игнорируется</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ru	Строка %1: '%2'<br><b>данных CSV не соответствует количеству столбцов таблицы %3 ==> игнорируется</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	ru	Строка %1: '%2'\n<b>csv данных действительно содержит ##запуск последней проверки##таблицы %3 ==> игнорируется</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ru	Строка %1: '%2'\n<b>данных CSV не соответствует количеству столбцов таблицы %3 ==> игнорируется</b>
 link	common	ru	Ссылка
 link target %1 not found!	common	ru	Целевая ссылка %1 не найдена!
 link to each entry	common	ru	Ссылка на каждую запись
@@ -826,6 +828,7 @@ middle	common	ru	Середина
 minute	common	ru	Минута
 minutes	common	ru	Минут(а,ы)
 missing: %1	common	ru	Пропущено: %1
+mode	common	ru	Режим
 modifier	preferences	ru	Изменено (кем)
 moldova, republic of	common	ru	Молдавия
 monaco	common	ru	Монако
@@ -1084,7 +1087,7 @@ san marino	common	ru	Сан-Марино
 sao tome and principe	common	ru	Сан-Томе и Принсипи
 saturday	common	ru	Суббота
 saudi arabia	common	ru	Саудовская Аравия
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	ru	Версия Savant2 отличается от оболочки Savant2. <br/>Эта версия: %1 <br/>Версия Savant: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	ru	Версия Savant2 отличается от оболочки Savant2. \nЭта версия: %1 \nВерсия Savant: %2
 save	common	ru	Сохранить
 save all	common	ru	Сохранить всё
 save as	common	ru	Сохранить как
@@ -1414,7 +1417,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	ru	Ваш браузер не обновлен (совместим с JavaScript ES6), поэтому некоторые функции могут не работать.
 your code is incorrect !!!	common	ru	Код неправильный!
 your key has been restored successfully.	common	ru	Ваш ключ был успешно восстановлен.
-your message could <b>not</b> be sent!<br>	common	ru	Ваше сообщение <b>не может</b> быть отправлено !<br>
+your message could <b>not</b> be sent!<br>	common	ru	Ваше сообщение <b>не может</b> быть отправлено !\n
 your message has been sent	common	ru	Ваше сообщение отправлено.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	ru	Ваш пароль не имеет требуемой силы %1 класса символов и минимальной длины %2 символов.
 your password does not have required strength:	common	ru	Ваш пароль не имеет требуемой силы:

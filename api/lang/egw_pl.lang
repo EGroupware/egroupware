@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	pl	%1 ustawienie "%2" = %3 uniemożliwia dostęp przez http!
 %1 to sync	groupdav	pl	%1 do synchronizacji
 %1, duplicate id	common	pl	%1, duplikat ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	pl	%1Wybierz inny katalog%2<br>lub uczyń %3 dostępny do zapisu dla serwera WWW.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	pl	%1Wybierz inny katalog%2\nlub uczyń %3 dostępny do zapisu dla serwera WWW.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pl	%1EGroupware%2 jest pakietem oprogramowania do pracy grupowej dla wielu użytkowników, działającym w środowisku internetowym / intranetowym i napisanym w %3PHP%4.
 %s disabled	common	pl	%s wyłączono
 %s needed	common	pl	%s wymagane
@@ -277,6 +277,7 @@ christmas island	common	pl	WYSPA BOŻEGO NARODZENIA
 class	common	pl	Class
 class, valign	common	pl	Class, Valign
 clear	common	pl	Wyczyść
+clear filters	common	pl	Wyczyść filtry
 clear form	common	pl	Wyczyść formularz
 clear window	common	pl	Wyczyść okno
 click	common	pl	Kliknij
@@ -300,6 +301,7 @@ collection empty.	common	pl	Kolekcja pusta.
 collection listing	common	pl	Zawartość kolekcji
 colombia	common	pl	KOLUMBIA
 colour	common	pl	Kolor
+column filters	common	pl	Filtry kolumn
 column...	common	pl	Kolumna ...
 columnname	common	pl	Nazwa kolumny
 columns to print	common	pl	Kolumny do wydrukowania
@@ -364,7 +366,7 @@ date	common	pl	Data
 date + time	common	pl	Data + Czas
 date due	common	pl	Data wymagalności
 date+time	common	pl	Data+Czas
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pl	Port datetime.<br>Jeżeli używasz portu 13, ustaw odpowiednio reguły firewall-a przed zaakceptowaniem tej zmiany.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pl	Port datetime.\nJeżeli używasz portu 13, ustaw odpowiednio reguły firewall-a przed zaakceptowaniem tej zmiany.\n(Port: 13 / Host: 129.6.15.28)
 day	common	pl	Dzień
 days	common	pl	dni
 db ensures that every row has a unique value in that column	common	pl	DBMS (baza danych) zapewnia, że każdy wiersz będzie posiadał unikalną wartość w tej kolumnie
@@ -490,7 +492,7 @@ end time	common	pl	Czas końcowy
 enter '' for an empty default, nothing mean no default	common	pl	Wprowadź ciąg '' dla pustej wartości domyślnej, jeżeli nic nie wpiszesz
 enter a search pattern	common	pl	Podaje wzorzec wyszukiwania
 enter filename to upload and attach, use [browse...] to search for it	common	pl	Podaj nazwę pliku do załadowania i dołączenia, użyj [Przeglądaj...] aby go wyszukać
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj adres URL pakietu EGroupware.<br>Przykład: http://www.twojadomena.pl/egroupware lub /egroupware<br><b>Bez końcowego ciacha</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj adres URL pakietu EGroupware.\nPrzykład: http://www.twojadomena.pl/egroupware lub /egroupware\n<b>Bez końcowego ciacha</b>
 enter the new version number here (> old_version), empty for no update-file	common	pl	Podaj nowy numer wersji (musi być większy niż aktualny), pusta wartość jeżeli nie chcesz aktualizować pliku
 enter the new version number here (has to be > old_version)	common	pl	Podaj nowy numer wersji (musi być większy niż aktualny)
 enter your file name	common	pl	Wprowadź nazwę pliku
@@ -777,8 +779,8 @@ libyan arab jamahiriya	common	pl	LIBIA
 license	common	pl	Licencja
 liechtenstein	common	pl	LIECHTENSTEIN
 light mode	common	pl	Tryb jasny
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br><b>dane CSV zawiera ###last-check-run## dla tabeli %3 ==> ZIGNOROWANO</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br><b>dane CSV mają złą liczbę kolumn dla tabeli %3 ==> ZIGNOROWANO</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'\n<b>dane CSV zawiera ###last-check-run## dla tabeli %3 ==> ZIGNOROWANO</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'\n<b>dane CSV mają złą liczbę kolumn dla tabeli %3 ==> ZIGNOROWANO</b>
 link	common	pl	Odnośnik
 link target %1 not found!	common	pl	Cel linku %1 nie odnaleziony!
 link to each entry	common	pl	Link do każdego wpisu
@@ -840,6 +842,7 @@ micronesia, federated states of	common	pl	MIKRONEZJA
 middle	common	pl	Wyśrodkowany
 minute	common	pl	Minuta
 minutes	common	pl	minuty
+mode	common	pl	Tryb
 moldova, republic of	common	pl	MOŁDAWIA
 monaco	common	pl	MONAKO
 monday	common	pl	Poniedziałek
@@ -1093,7 +1096,7 @@ san marino	common	pl	SAN MARINO
 sao tome and principe	common	pl	SAO TOME AND PRINCIPE
 saturday	common	pl	Sobota
 saudi arabia	common	pl	ARABIA SAUDYJSKA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pl	Wersja Savant2 różni się od wersji wrappera. <br>Twoja wersja: %1 <br> Wersja Savant2: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pl	Wersja Savant2 różni się od wersji wrappera. \nTwoja wersja: %1 \n Wersja Savant2: %2
 save	common	pl	Zachowaj
 save all	common	pl	Zapisz wszystko
 save as	common	pl	Zapisz jako
@@ -1295,7 +1298,7 @@ todays date, eg. "%1"	common	pl	Dzisiajsza data, np. "%1"
 togo	common	pl	TOGO
 tokelau	common	pl	TOKELAU
 tonga	common	pl	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	pl	Wybrano zbyt wiele wierszy.<br>Wybierz wszystkie lub mniej niż %1 wierszy
+too many rows selected.<br />select all, or less than %1 rows	common	pl	Wybrano zbyt wiele wierszy.\nWybierz wszystkie lub mniej niż %1 wierszy
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pl	Zbyt dużo prób nieudanego logowania (%1) dla użytkownika '%2', %3 z adresu IP %4
 toolbar settings	common	pl	Ustawienia paska narzędzi
 top	common	pl	Do góry
@@ -1425,7 +1428,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	pl	Twoja przeglądarka nie jest aktualna (zgodna z JavaScript ES6), niektóre funkcje mogą nie działać.
 your code is incorrect !!!	common	pl	Kod jest nieprawidłowy!
 your key has been restored successfully.	common	pl	Klucz został pomyślnie przywrócony.
-your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomość <b>nie</b> została wysłana!<br>
+your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomość <b>nie</b> została wysłana!\n
 your message has been sent	common	pl	Wiadomość została wysłana.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	pl	Twoje hasło nie ma wymaganej siły klas znaków %1 i minimalnej długości %2 znaków.
 your password does not have required strength:	common	pl	Twoje hasło nie ma wymaganej siły:

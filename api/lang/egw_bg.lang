@@ -182,6 +182,7 @@ choose the default filename for merged documents.	preferences	bg	Изберет�
 choose the parent category	common	bg	Изберете 'родителска' категория
 christmas island	common	bg	Великденски острови
 clear	common	bg	Изчистване
+clear filters	common	bg	Изчисти филтри
 clear form	common	bg	Изчистване на формата
 click	common	bg	Кликнете
 click here to create the link	common	bg	кликнете тук за създаване на връзката
@@ -198,6 +199,7 @@ collection empty.	common	bg	Колекцията е празна.
 collection listing	common	bg	Списък на колекцията
 colombia	common	bg	Колумбия
 colour	common	bg	Цвят
+column filters	common	bg	Филтри за колони
 columns to print	common	bg	Колони за отпечатване
 command ⌘	common	bg	Команда ⌘
 comment	common	bg	Коментар
@@ -242,7 +244,7 @@ date	common	bg	Дата
 date + time	common	bg	Дата + час
 date due	common	bg	Краен срок
 date+time	common	bg	Дата+час
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	bg	Порт за Datetime.<br>Ако използвате порт 13, моля настройте правилата на firewall-а правилно преди изпращане на тази страница.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	bg	Порт за Datetime.\nАко използвате порт 13, моля настройте правилата на firewall-а правилно преди изпращане на тази страница.\n(Port: 13 / Host: 129.6.15.28)
 days	common	bg	дни
 december	common	bg	Декември
 default	common	bg	по подразбиране
@@ -306,7 +308,7 @@ emails	common	bg	Електронни писма
 enabled	common	bg	Разрешено
 end date	common	bg	Крайна дата
 end time	common	bg	Краен час
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	bg	Въведете URL на EGroupware.<br>Пример: http://www.domain.com/egroupware или /egroupware<br><b>Да не завършва с "/"</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	bg	Въведете URL на EGroupware.\nПример: http://www.domain.com/egroupware или /egroupware\n<b>Да не завършва с "/"</b>
 enter your passphrase	common	bg	Въведете паролата си
 entry has been deleted sucessfully	common	bg	Записът беше изтрит успешно
 entry not found!	common	bg	Записът не е намерен!
@@ -490,8 +492,8 @@ libyan arab jamahiriya	common	bg	Либийска Арабска Джамахи�
 license	common	bg	Лиценз
 liechtenstein	common	bg	Лихтенщайн
 light mode	common	bg	Светъл режим
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv съдържат ##last-check-run## на таблица %3 ==> игнориран</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv не съвпадат с броя на колоните в таблицата %3 ==> игнориран</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'\n<b>данните в csv съдържат ##last-check-run## на таблица %3 ==> игнориран</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'\n<b>данните в csv не съвпадат с броя на колоните в таблицата %3 ==> игнориран</b>
 link	common	bg	Връзка
 link to each entry	common	bg	Връзка към всеки запис
 list	common	bg	Списък
@@ -543,6 +545,7 @@ mexico	common	bg	Мексико
 micronesia, federated states of	common	bg	Микронезия
 minute	common	bg	минута
 minutes	common	bg	минути
+mode	common	bg	Режим
 moldova, republic of	common	bg	Молдовска Република
 monaco	common	bg	Монако
 monday	common	bg	Понеделник
@@ -851,7 +854,7 @@ todays date, eg. "%1"	common	bg	днешна дата, напр. "%1"
 togo	common	bg	Того
 tokelau	common	bg	Токелау
 tonga	common	bg	Тонга
-too many rows selected.<br />select all, or less than %1 rows	common	bg	Избрани са твърде много редове.<br>Изберете всички или по-малко от %1 редове
+too many rows selected.<br />select all, or less than %1 rows	common	bg	Избрани са твърде много редове.\nИзберете всички или по-малко от %1 редове
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	bg	Твърде много неуспешни опита за влизане: %1 за потребител '%2', %3 от IP адрес %4
 toolbar settings	common	bg	Настройки на лентата с инструменти
 top	common	bg	Горе
@@ -939,7 +942,7 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your account has been updated with new data from your identity provider.	common	bg	Teie kontot on uuendatud teie identiteedipakkuja uute andmetega.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	bg	Teie brauser ei ole ajakohane (JavaScript ES6-ga ühilduv), mõned funktsioonid ei pruugi toimida.
 your key has been restored successfully.	common	bg	Teie võti on edukalt taastatud.
-your message could <b>not</b> be sent!<br>	common	bg	Писмото ви <b>не може</b> да бъде изпратено!<br>
+your message could <b>not</b> be sent!<br>	common	bg	Писмото ви <b>не може</b> да бъде изпратено!\n
 your message has been sent	common	bg	Писмото ви беше изпратено.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	bg	Вашата парола няма необходимата сила от класове символи %1 и минимална дължина от %2 символа.
 your password does not have required strength:	common	bg	Вашата парола не притежава необходимата сила:

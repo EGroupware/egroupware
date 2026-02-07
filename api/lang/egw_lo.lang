@@ -173,7 +173,7 @@ database error	common	lo	ຖານຂໍ້ມູນມີປັນຫາ
 database error!	common	lo	ຖານຂໍ້ມູນມີປັນຫາ!
 date	common	lo	ວັນທີ
 date due	common	lo	ຮອດມື້ທີ່ກໍານົດ
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	lo	ພອດວັນທີ ແລະ ເວລາ. <br>ຖ້າໃຊ້ພອດ 13, ກະລຸນາຕັ້ງກົດການຄ່າປ້ອງກັນ(firewall)ໃຫ້ເໝາະສົມ ກ່ອນຈະຢືນຢັນໜ້ານີ້<br>(ພອດ: 13 / ໂຮສ:129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	lo	ພອດວັນທີ ແລະ ເວລາ. \nຖ້າໃຊ້ພອດ 13, ກະລຸນາຕັ້ງກົດການຄ່າປ້ອງກັນ(firewall)ໃຫ້ເໝາະສົມ ກ່ອນຈະຢືນຢັນໜ້ານີ້\n(ພອດ: 13 / ໂຮສ:129.6.15.28)
 day	common	lo	ມື້
 days	common	lo	ວັນ
 december	common	lo	ທັນວາ
@@ -224,7 +224,7 @@ email-address of the user, eg. "%1"	common	lo	ທີ່ຢູ່ອີເມລ�
 enabled	common	lo	ເປີດໃຊ້ງານ
 end date	common	lo	ມື້ສຸດທ້າຍ
 end time	common	lo	ເວລາສຸດທ້່າຍ
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lo	ຕື່ມURL EGroupware.<br>ເຊັ່ນ:http://www.domain.com/egroupware ຫຼື /egroupware<br><b>ບໍ່ຕໍ່ທ້າຍດ້ວຍ'/'</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lo	ຕື່ມURL EGroupware.\nເຊັ່ນ:http://www.domain.com/egroupware ຫຼື /egroupware\n<b>ບໍ່ຕໍ່ທ້າຍດ້ວຍ'/'</b>
 entry has been deleted sucessfully	common	lo	ການບັນທຶກຖືກລຶມແລ້ວ
 entry not found!	common	lo	ບໍ່ພົບການບັນທຶກ!
 entry updated sucessfully	common	lo	ບັນທຶກປັບປຸງແລ້ວ
@@ -381,8 +381,8 @@ liberia	common	lo	LIBERIA
 libyan arab jamahiriya	common	lo	LIBYAN ARAB JAMAHIRIYA
 license	common	lo	ການອະນຸຍາດ
 liechtenstein	common	lo	LIECHTENSTEIN
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	lo	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	lo	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	lo	Line %1: '%2'\n<b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	lo	Line %1: '%2'\n<b>csv data does not match column-count of table %3 ==> ignored</b>
 link	common	lo	ເຊື່ອມຕໍ່ໄປທີ່ເຫດການ
 link target %1 not found!	common	lo	ບໍ່ພົບເປົ້າໝາຍການເຊື່ອມຕໍ່ %1
 list	common	lo	ລາຍການ
@@ -580,7 +580,7 @@ san marino	common	lo	SAN MARINO
 sao tome and principe	common	lo	SAO TOME AND PRINCIPE
 saturday	common	lo	ວັນເສົາ
 saudi arabia	common	lo	SAUDI ARABIA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	lo	Savant2 version differs from Savant2 wrapper. <br/>This version: %1 <br/>Savants version: %3
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	lo	Savant2 version differs from Savant2 wrapper. \nThis version: %1 \nSavants version: %3
 save	common	lo	ບັນທຶກ
 search	common	lo	ຄົ້ນຫາ
 search %1 '%2'	common	lo	ຄົ້ນຫາ %1 '%2'
@@ -752,7 +752,7 @@ you have successfully logged out	common	lo	ທ່ານໄດ້ອອກຈາ�
 you need to %1set your timezone preference%2.	common	lo	ທ່ານຈະຕ້ອງ %1 ຕັ້ງຄ່າເຂດເວລາຂອງທ່ານເປັນ %2
 you need to add the webserver user '%1' to the group '%2'.	common	lo	ທ່ານຕ້ອງເພີ່ມ '%1' ຜູ້ໃຊ້ເວບເຊີເວີ້ເປັນກຸ່ມ'%2'
 you need to be an egroupware administrator to access this functionality!	common	lo	ທ່ານຈະຕ້ອງເປັນຜູ້ເບິ່ງແຍງລະບົບເພື່ອເຂົ້າໄປເຖິງຟັງຊັນ EGroupware ນີ້
-your message could <b>not</b> be sent!<br>	common	lo	ຂໍ້ຄວາມຂອງເຈົ້າໄດ້<b>ບໍ່</b>ສົ່ງ!<br>
+your message could <b>not</b> be sent!<br>	common	lo	ຂໍ້ຄວາມຂອງເຈົ້າໄດ້<b>ບໍ່</b>ສົ່ງ!\n
 your message has been sent	common	lo	ສົ່ງຂໍ້ຄວາມຂອງທ່ານແລ້ວ
 your search returned %1 matchs	common	lo	ການຄົ້ນຫາຂອງທ່່ານມີ %1 ອັນທີ່ກົງກັນ
 your search returned 1 match	common	lo	ການຄົ້ນຫາຂອງທ່່ານມີ 1 ອັນທີ່ກົງກັນ

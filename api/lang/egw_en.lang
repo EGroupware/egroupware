@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	en	%1 setting "%2" = %3 disallows access via http!
 %1 to sync	groupdav	en	%1 to sync
 %1, duplicate id	common	en	%1, duplicate ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other folder%2<br>or make %3 writable by web server.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other folder%2\nor make %3 writable by web server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 %s disabled	common	en	%s disabled
 %s needed	common	en	%s needed
@@ -284,6 +284,7 @@ christmas island	common	en	CHRISTMAS ISLAND
 class	common	en	Class
 class, valign	common	en	Class, Valign
 clear	common	en	Clear
+clear filters	common	en	Clear filters
 clear form	common	en	Clear form
 clear window	common	en	Clear window
 click	common	en	Click
@@ -307,6 +308,7 @@ collection empty.	common	en	Collection empty.
 collection listing	common	en	Collection listing
 colombia	common	en	COLOMBIA
 colour	common	en	Colour
+column filters	common	en	Column Filters
 column...	common	en	Column ...
 columnname	common	en	Column name
 columns to print	common	en	Columns to print
@@ -371,7 +373,7 @@ date	common	en	Date
 date + time	common	en	Date + time
 date due	common	en	Due date
 date+time	common	en	Date+Time
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.<br>If using port 13, set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28).
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.\nIf using port 13, set firewall rules appropriately before submitting this page.\n(Port: 13 / Host: 129.6.15.28).
 day	common	en	day
 days	common	en	days
 db ensures that every row has a unique value in that column	common	en	DB ensures that every row has a unique value in that column
@@ -500,7 +502,7 @@ end time	common	en	End time
 enter '' for an empty default, nothing mean no default	common	en	Enter '' for an empty default, nothing means no default
 enter a search pattern	common	en	Enter a search pattern
 enter filename to upload and attach, use [browse...] to search for it	common	en	Enter file name to upload and attach, use [Browse ...] to search for it
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.\nExample: https://egw.domain.com/egroupware or /egroupware\n<b>No trailing slash</b>
 enter the new version number here (> old_version), empty for no update-file	common	en	Enter new version number, > old_version, empty for no update file
 enter the new version number here (has to be > old_version)	common	en	Enter new version number, has to be > old_version
 enter your file name	common	en	Enter your file name
@@ -801,8 +803,8 @@ libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
 license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
 light mode	common	en	Light mode
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	en	Line %1: '%2'\n<b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	en	Line %1: '%2'\n<b>csv data does not match column-count of table %3 ==> ignored</b>
 link	common	en	Link
 link is appended to mail allowing recipients to download currently attached version of files	common	en	Link is appended to mail allowing recipients to download currently attached version of files
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	en	Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)
@@ -1180,7 +1182,7 @@ san marino	common	en	SAN MARINO
 sao tome and principe	common	en	SAO TOME AND PRINCIPE
 saturday	common	en	Saturday
 saudi arabia	common	en	SAUDI ARABIA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	en	Savant2 version differs from Savant2 wrapper. <br>This version: %1 <br>Savants version: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	en	Savant2 version differs from Savant2 wrapper. \nThis version: %1 \nSavants version: %2
 save	common	en	Save
 save all	common	en	Save all
 save as	common	en	Save as
@@ -1402,7 +1404,7 @@ the mail server returned	common	en	The mail server returned
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system user with this name. Please, select another name.
 they will be sub-folders in users home (%1 attribute).	common	en	They will be sub-folders in users home (%1 attribute).
 this feature is only available in epl version.	common	en	This feature is available in EGroupware EPL version.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	en	This is your own share. To test it, use an anonymous / incognito window.<br>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	en	This is your own share. To test it, use an anonymous / incognito window.\n%1
 this name has been used already	common	en	This name has been used already!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	en	Text gets displayed if the input field is empty and has no focus (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	en	This will reset toolbar preferences for all users and set them to configured default prefs.
@@ -1427,7 +1429,7 @@ todays date, eg. "%1"	common	en	Todays date, eg. "%1"
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	en	Too many rows selected.<br>Select all, or less than %1 rows
+too many rows selected.<br />select all, or less than %1 rows	common	en	Too many rows selected.\nSelect all, or less than %1 rows
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	en	Too many unsuccessful attempts to log in: %1 for the user '%2', %3 for the IP %4
 toolbar settings	common	en	Toolbar settings
 top	common	en	Top
@@ -1576,7 +1578,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	en	Your browser is not up-to-date (JavaScript ES6 compatible), you may experience some of the features not working.
 your code is incorrect !!!	common	en	Code is incorrect!
 your key has been restored successfully.	common	en	Your key has been restored successfully.
-your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
+your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!\n
 your message has been sent	common	en	Your message has been sent.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	en	Your password does not have required strength of %1 character classes and minimum length of %2 characters.
 your password does not have required strength:	common	en	Your password does not have required strength:

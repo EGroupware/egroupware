@@ -243,7 +243,7 @@ czech republic	common	zh-tw	捷克共和國
 date	common	zh-tw	日期
 date due	common	zh-tw	到期日期
 date+time	common	zh-tw	日期+時間
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zh-tw	時間服務埠。<br>如果使用13埠，在送出之前記得檢查您的防火牆設定。<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zh-tw	時間服務埠。\n如果使用13埠，在送出之前記得檢查您的防火牆設定。\n(Port: 13 / Host: 129.6.15.28)
 day	common	zh-tw	天
 days	common	zh-tw	天
 db ensures that every row has a unique value in that column	common	zh-tw	在那個欄位中資料庫能夠確保每一列可以有一個不重複的數值
@@ -334,7 +334,7 @@ end time	common	zh-tw	結束時間
 enter '' for an empty default, nothing mean no default	common	zh-tw	沒有意味著沒有預設值，輸入 '' 代表
 enter a search pattern	common	zh-tw	輸入搜尋條件
 enter filename to upload and attach, use [browse...] to search for it	common	zh-tw	輸入上傳與附加檔案的名稱，使用[瀏覽...]來選取
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh-tw	輸入EGroupware的網址<br>例如：http://www.domain.com/egroupware   或   /egroupware<br><b>最後面不要有斜線</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh-tw	輸入EGroupware的網址\n例如：http://www.domain.com/egroupware   或   /egroupware\n<b>最後面不要有斜線</b>
 enter the new version number here (> old_version), empty for no update-file	common	zh-tw	輸入新的版本編號(大於舊版)，空白表示沒有更新
 enter the new version number here (has to be > old_version)	common	zh-tw	輸入新的版本編號(必須大於舊版)
 entry has been deleted sucessfully	common	zh-tw	資料已成功移除
@@ -558,7 +558,7 @@ liberia	common	zh-tw	賴比瑞亞
 libyan arab jamahiriya	common	zh-tw	LIBYAN ARAB JAMAHIRIYA
 license	common	zh-tw	版權
 liechtenstein	common	zh-tw	列支敦士敦
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	zh-tw	第 %1 行：'%2'<br><b>csv 資料欄位數量與資料表 %3 不同 ==> 略過</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	zh-tw	第 %1 行：'%2'\n<b>csv 資料欄位數量與資料表 %3 不同 ==> 略過</b>
 link	common	zh-tw	連結
 linkapps	common	zh-tw	連結模組
 linkentry	common	zh-tw	連結資料
@@ -814,7 +814,7 @@ san marino	common	zh-tw	SAN MARINO
 sao tome and principe	common	zh-tw	SAO TOME AND PRINCIPE
 saturday	common	zh-tw	星期六
 saudi arabia	common	zh-tw	SAUDI ARABIA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	zh-tw	Savant2 與解析器版本不同 <br/>程式版本：%1 <br/>Savants 版本： %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	zh-tw	Savant2 與解析器版本不同 \n程式版本：%1 \nSavants 版本： %2
 save	common	zh-tw	儲存
 save all	common	zh-tw	儲存全部
 save selected columns as default preference for all users.	common	zh-tw	儲存選擇的欄位為所有使用者的預設值。
@@ -1088,7 +1088,7 @@ you have selected an invalid date	common	zh-tw	您選擇了不合法的日期！
 you have selected an invalid main category	common	zh-tw	您選擇了錯誤的分類！
 you have successfully logged out	common	zh-tw	您已經成功登出了
 you need to add the webserver user '%1' to the group '%2'.	common	zh-tw	您必須將網站伺服器使用者 '%1' 新增到群組 '%2'
-your message could <b>not</b> be sent!<br>	common	zh-tw	您的訊息<b>無法</b>送出！<br>
+your message could <b>not</b> be sent!<br>	common	zh-tw	您的訊息<b>無法</b>送出！\n
 your message has been sent	common	zh-tw	您的訊息已經送出
 your search returned %1 matchs	common	zh-tw	搜尋到 %1 筆資料
 your search returned 1 match	common	zh-tw	搜尋到 1 筆資料
