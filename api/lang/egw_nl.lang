@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	nl	%1 instelling "%2" = %3 blokkeert toegang via http!
 %1 to sync	groupdav	nl	%1 om te synchroniseren
 %1, duplicate id	common	nl	%1, duplicaat ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	nl	%1Kies een andere map%2<br>of maak %3 schrijfbaar voor de webserver
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	nl	%1Kies een andere map%2\nof maak %3 schrijfbaar voor de webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1EGroupware%2 is een multi-user, web-gebaseerde groupware suite, geschreven in %3PHP%4.
 %s disabled	common	nl	%s uitgeschakeld
 %s needed	common	nl	%s nodig
@@ -278,6 +278,7 @@ christmas island	common	nl	CHRISTMASEILAND
 class	common	nl	Klasse
 class, valign	common	nl	Class, Valign
 clear	common	nl	Wissen
+clear filters	common	nl	Filters wissen
 clear form	common	nl	Formulier wissen
 clear window	common	nl	Wis Scherm
 click	common	nl	Klik
@@ -301,6 +302,7 @@ collection empty.	common	nl	Verzameling leeg.
 collection listing	common	nl	Verzameling overzicht
 colombia	common	nl	COLOMBIA
 colour	common	nl	Kleur
+column filters	common	nl	Kolomfilters
 column...	common	nl	Kolom ...
 columnname	common	nl	Kolomnaam
 columns to print	common	nl	Kolommen om af te drukken
@@ -365,7 +367,7 @@ date	common	nl	Datum
 date + time	common	nl	Datum + Tijd
 date due	common	nl	Einddatum
 date+time	common	nl	Datum+Tijd
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	Datetime poort<br>Indien poort 13 gebruikt wordt, pas dan s.v.p. de firewall regels eerst aan voordat u deze pagina verzendt.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	Datetime poort\nIndien poort 13 gebruikt wordt, pas dan s.v.p. de firewall regels eerst aan voordat u deze pagina verzendt.\n(Port: 13 / Host: 129.6.15.28)
 day	common	nl	Dag
 days	common	nl	dagen
 db ensures that every row has a unique value in that column	common	nl	Database zorgt ervoor dat elk record een unieke waarde heeft in deze kolom
@@ -493,7 +495,7 @@ end time	common	nl	Eindtijd
 enter '' for an empty default, nothing mean no default	common	nl	Vul '' in voor een lege standaardwaarde, niets ingevuld betekent "geen standaardwaarde"
 enter a search pattern	common	nl	Geef een zoekpatroon
 enter filename to upload and attach, use [browse...] to search for it	common	nl	Vul de bestandsnaam in die geupload en bijgevoegd moet worden, gebruik (Bladeren...] om het bestand op te zoeken
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Vul de lokatie van de EGroupware URL in.<br>Voorbeeld: https://egw.domeinnaam.nl/egroupware of /egroupware.<br><b>Geen afsluitende slash toevoegen</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Vul de lokatie van de EGroupware URL in.\nVoorbeeld: https://egw.domeinnaam.nl/egroupware of /egroupware.\n<b>Geen afsluitende slash toevoegen</b>
 enter the new version number here (> old_version), empty for no update-file	common	nl	Vul het nieuwe versienummer hierin (> old_version), leeg voor "geen update bestand"
 enter the new version number here (has to be > old_version)	common	nl	Vul het nieuwe versienummer hier in (moet > old_version zijn)
 enter your file name	common	nl	Voer uw bestandsnaam in
@@ -781,8 +783,8 @@ libyan arab jamahiriya	common	nl	LIBIË
 license	common	nl	Licentie
 liechtenstein	common	nl	LIECHTENSTEIN
 light mode	common	nl	Lichte modus
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br><b>csv gegevens bevat ##last-check-run## van tabel %3 ==> overgeslagen</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br><b>csv gegevens klopt niet met het aantal kolommen van tabel %3 ==> genegeerd</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'\n<b>csv gegevens bevat ##last-check-run## van tabel %3 ==> overgeslagen</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'\n<b>csv gegevens klopt niet met het aantal kolommen van tabel %3 ==> genegeerd</b>
 link	common	nl	Link
 link target %1 not found!	common	nl	Link doel %1 niet gevonden!
 link title of current record	common	nl	Link titel van huidig record
@@ -1134,7 +1136,7 @@ san marino	common	nl	SAN MARINO
 sao tome and principe	common	nl	SAO TOMÉ AND PRINCIPE
 saturday	common	nl	Zaterdag
 saudi arabia	common	nl	SAUDI ARABIË
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	nl	Savant2 versie verschilt van Savant2 wrapper.<br>Deze versie: %1<br>Savants versie: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	nl	Savant2 versie verschilt van Savant2 wrapper.\nDeze versie: %1\nSavants versie: %2
 save	common	nl	Opslaan
 save all	common	nl	Bewaar alle
 save as	common	nl	Bewaar als
@@ -1349,7 +1351,7 @@ the mail server returned	common	nl	De mailserver gaf als reactie
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	nl	Er is al een systeem gebruiker met deze naam. Selecteer svp een andere naam.
 they will be sub-folders in users home (%1 attribute).	common	nl	Zij zullen onderliggende mappen zijn in gebruikers home (%1 attribuut).
 this feature is only available in epl version.	common	nl	Deze functie is alleen beschikbaar in de EPL-versie.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	nl	This is your own share. To test it, use an anonymous / incognito window.<br>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	nl	This is your own share. To test it, use an anonymous / incognito window.\n%1
 this name has been used already	common	nl	Deze naam is reeds in gebruik!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	nl	Tekst wordt getoond als het invoerveld lees is en niet de focus heeft (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	nl	Hiermee worden de werkbalkvoorkeuren voor alle gebruikers gereset en ingesteld op de geconfigureerde standaardvoorkeuren.
@@ -1373,7 +1375,7 @@ todays date, eg. "%1"	common	nl	Datum vandaag, bijv. "%1"
 togo	common	nl	TOGO
 tokelau	common	nl	TOKELAU
 tonga	common	nl	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	nl	Te veel rijen geselecteerd.<br>Selecteer alles, of minder dan %1 rijen
+too many rows selected.<br />select all, or less than %1 rows	common	nl	Te veel rijen geselecteerd.\nSelecteer alles, of minder dan %1 rijen
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	nl	De veel mislukte pogingen om in te loggen: %1 voor de gebruiker '%2', %3 voor het IP %4
 toolbar settings	common	nl	Werkbalkinstellingen
 top	common	nl	Bovenzijde
@@ -1514,7 +1516,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	nl	Uw browser is niet up-to-date (JavaScript ES6 compatibel), het kan zijn dat sommige functies niet werken.
 your code is incorrect !!!	common	nl	Code is onjuist!
 your key has been restored successfully.	common	nl	Uw sleutel is succesvol hersteld.
-your message could <b>not</b> be sent!<br>	common	nl	Uw bericht kon <b>niet</b> worden verzonden!<br>
+your message could <b>not</b> be sent!<br>	common	nl	Uw bericht kon <b>niet</b> worden verzonden!\n
 your message has been sent	common	nl	Uw bericht is verzonden.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	nl	Uw wachtwoord heeft niet de juiste sterkte van %1 van de karakter klassen en een minimum lengte van %2 karakters.
 your password does not have required strength:	common	nl	Uw wachtwoord is net sterk genoeg conform hetgeen is vereist:

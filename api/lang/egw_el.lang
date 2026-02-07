@@ -2,7 +2,7 @@
 %1 email(s) added into %2	common	el	%1 email(s) που προστέθηκαν στο %2
 %1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver!
 %1 more %2 selected ...	common	el	%1 περισσότερα %2 επιλεγμένα ...
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br>ή κάντε %3 εγγράψιμο από τον webserver.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2\nή κάντε %3 εγγράψιμο από τον webserver.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1EGroupware%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
 '%1' copied to clipboard	common	el	'%1' αντιγράφεται στο πρόχειρο
 '%1' does not match the required pattern '%2'	common	el	Το '%1' δεν ταιριάζει με το απαιτούμενο μοτίβο ('%2')
@@ -184,6 +184,7 @@ christmas island	common	el	ΝΗΣΟΙ ΧΡΙΣΤΟΥΓΕΝΝΩΝ
 class	common	el	Class
 class, valign	common	el	Vlass, Valign
 clear	common	el	Εκκαθάριση
+clear filters	common	el	Καθαρισμός φίλτρων
 clear form	common	el	Εκκαθάριση Φόρμας
 click	common	el	Κάντε κλικ
 click here to create the link	common	el	κάντε κλικ εδώ για τη δημιουργία συνδέσμου
@@ -200,6 +201,7 @@ collection empty.	common	el	Συλλογή κενή.
 collection listing	common	el	Λίστα συλλογής
 colombia	common	el	ΚΟΛΟΜΒΙΑ
 colour	common	el	Χρώμα
+column filters	common	el	Φίλτρα στηλών
 columns to print	common	el	Στήλες για εκτύπωση
 command ⌘	common	el	Εντολή ⌘
 comment	common	el	Σχόλιο
@@ -250,7 +252,7 @@ date	common	el	Ημερομηνία
 date + time	common	el	Ημερομηνία + Ώρα
 date due	common	el	Ημερομηνία ολοκλήρωσης
 date+time	common	el	Ημερομηνία+Ώρα
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	el	Datetime port.<br> Aν χρησιμοποιείται τη θύρα 13, παρακαλώ ορίστε καταλλήλως τους κανόνες του firewall πριν υποβάλετε αυτή τη σελίδα.<br>(Port: 13 / Host: 129.6.15.28).
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	el	Datetime port.\n Aν χρησιμοποιείται τη θύρα 13, παρακαλώ ορίστε καταλλήλως τους κανόνες του firewall πριν υποβάλετε αυτή τη σελίδα.\n(Port: 13 / Host: 129.6.15.28).
 day	common	el	Ημέρα
 days	common	el	ημέρες
 december	common	el	Δεκέμβριος
@@ -320,7 +322,7 @@ enabled	common	el	Ενεργοποιημένο
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	el	Ενεργοποιεί την καταγραφή της κίνησης CalDAV/CardDAV για τη διάγνωση προβλημάτων με συσκευές.
 end date	common	el	Ημερομηνία παράδοσης
 end time	common	el	Ώρα παράδοσης
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του EGroupware URL.<br>Παράδειγμα: https://egw.domain.com/egroupware or /egroupware<br><b>Χωρίς δεξιά παύλα στο τέλος</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του EGroupware URL.\nΠαράδειγμα: https://egw.domain.com/egroupware or /egroupware\n<b>Χωρίς δεξιά παύλα στο τέλος</b>
 enter your passphrase	common	el	Εισάγετε τη συνθηματική σας φράση
 enter your password	common	el	Εισάγετε τον κωδικό πρόσβασής σας
 entry has been deleted sucessfully	common	el	Η καταχώρηση διαγράφηκε επιτυχώς
@@ -518,7 +520,7 @@ libyan arab jamahiriya	common	el	ΛΙΒΥΚΑ ΑΡΑΒΙΚΑ ΕΜΙΡΑΤΑ
 license	common	el	Αδεια
 liechtenstein	common	el	ΛΙΧΤΕΝΣΤΑΪΝ
 light mode	common	el	Φωτεινή λειτουργία
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	el	Γραμμή 1: '%2'<br>csv δεδομένα δεν αντιστοιχούν με τη στήλη-αρίθμηση τραπεζιού %3 ==>αγνοήθηκε</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	el	Γραμμή 1: '%2'\ncsv δεδομένα δεν αντιστοιχούν με τη στήλη-αρίθμηση τραπεζιού %3 ==>αγνοήθηκε</b>
 link	common	el	Σύνδεσμος
 link is appended to mail allowing recipients to download currently attached version of files	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία επιτρέποντας στους παραλήπτες να κατεβάσουν την τρέχουσα επισυναπτόμενη έκδοση των αρχείων
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία που επιτρέπει στους παραλήπτες να κατεβάζουν ή να τροποποιούν την ενημερωμένη έκδοση των αρχείων (μόνο EPL)
@@ -575,6 +577,7 @@ mexico	common	el	ΜΕΞΙΚΟ
 micronesia, federated states of	common	el	ΜΙΚΡΟΝΗΣΙΑ
 minute	common	el	λεπτό
 minutes	common	el	Λεπτά
+mode	common	el	Λειτουργία
 moldova, republic of	common	el	ΜΟΛΔΑΒΙΑ
 monaco	common	el	ΜΟΝΑΚΟ
 monday	common	el	Δευτέρα
@@ -779,7 +782,7 @@ san marino	common	el	ΣΑΝ ΜΑΡΙΝΟ
 sao tome and principe	common	el	ΣΑΟ ΤΟΜΕ & ΠΡΙΝΣΙΠΕ
 saturday	common	el	Σάββατο
 saudi arabia	common	el	ΣΑΟΥΔΙΚΗ ΑΡΑΒΙΑ
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	el	Savant2 έκδοση διαφέρει από Savant2 περιτύλιγμα.<br>Αυτή η έκδοση: %1<br>Έκδοση Savant: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	el	Savant2 έκδοση διαφέρει από Savant2 περιτύλιγμα.\nΑυτή η έκδοση: %1\nΈκδοση Savant: %2
 save	common	el	Αποθήκευση
 save all	common	el	Αποθήκευση όλων
 save as	common	el	Αποθήκευση ως
@@ -915,7 +918,7 @@ todays date, eg. "%1"	common	el	σημερινή ημερομηνία, π.χ. "%
 togo	common	el	ΤΟΓΚΟ
 tokelau	common	el	ΤΟΚΕΛΑΟΥ
 tonga	common	el	ΤΟΝΓΚΑ
-too many rows selected.<br />select all, or less than %1 rows	common	el	Επιλέχθηκαν πάρα πολλές γραμμές.<br>Επιλέξτε όλες ή λιγότερες από %1 γραμμές
+too many rows selected.<br />select all, or less than %1 rows	common	el	Επιλέχθηκαν πάρα πολλές γραμμές.\nΕπιλέξτε όλες ή λιγότερες από %1 γραμμές
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	el	Πολλές αποτυχημένες προσπάθειες για είσοδο: %1 από το χρήστη '%2', %3 με ΙΡ %4
 toolbar settings	common	el	Ρυθμίσεις γραμμής εργαλείων
 top	common	el	Κορυφή
@@ -1006,7 +1009,7 @@ you need to install mailvelope plugin available for chrome and firefox from www.
 your account has been updated with new data from your identity provider.	common	el	Ο λογαριασμός σας έχει ενημερωθεί με νέα δεδομένα από τον πάροχο της ταυτότητάς σας.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	el	Το πρόγραμμα περιήγησής σας δεν είναι ενημερωμένο (συμβατό με JavaScript ES6), ενδέχεται να παρατηρήσετε ότι ορισμένες από τις λειτουργίες δεν λειτουργούν.
 your key has been restored successfully.	common	el	Το κλειδί σας έχει αποκατασταθεί με επιτυχία.
-your message could <b>not</b> be sent!<br>	common	el	Το μήνυμά σας <b>δεν</b> μπόρεσε να σταλεί!<br>
+your message could <b>not</b> be sent!<br>	common	el	Το μήνυμά σας <b>δεν</b> μπόρεσε να σταλεί!\n
 your message has been sent	common	el	To μήνυμά σας εστάλει.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	el	Ο κωδικός πρόσβασής σας δεν έχει την απαιτούμενη ισχύ των κατηγοριών χαρακτήρων %1 και το ελάχιστο μήκος των χαρακτήρων %2.
 your password does not have required strength:	common	el	Ο κωδικός πρόσβασής σας δεν έχει την απαιτούμενη ισχύ:

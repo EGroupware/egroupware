@@ -4,7 +4,7 @@
 %1 email(s) added into %2	common	da	%1 e-mail(e) tilføjet til %2
 %1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af web server!
 %1 more %2 selected ...	common	da	%1 flere %2 valgt ...
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br>eller gør %3 skrivbar for web server.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2\neller gør %3 skrivbar for web server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1EGroupware%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
 '%1' copied to clipboard	common	da	'%1' kopieret til udklipsholderen
 '%1' does not match the required pattern '%2'	common	da	'%1' matcher ikke det krævede mønster ('%2')
@@ -188,6 +188,7 @@ choose the default filename for merged documents.	preferences	da	Vælg standardf
 choose the parent category	common	da	Vælg ovenstående kategori
 christmas island	common	da	Juleøen
 clear	common	da	Slet
+clear filters	common	da	Ryd filtre
 clear form	common	da	Slet formular
 click	common	da	Klik
 click here to create the link	common	da	Clik her for at oprette linket
@@ -204,6 +205,7 @@ collection empty.	common	da	Samlingen er tom.
 collection listing	common	da	Liste over samlinger
 colombia	common	da	Columbia
 colour	common	da	Farve
+column filters	common	da	Kolonnefiltre
 columns to print	common	da	Kolonner til udskrivning
 command ⌘	common	da	Kommando ⌘
 comment	common	da	Kommentar
@@ -248,7 +250,7 @@ date	common	da	Dato
 date + time	common	da	Dato + klokkeslæt
 date due	common	da	Skal være færdig
 date+time	common	da	Dato+klokkeslæt
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.<br>Hvis port 13 bruges, åben venligst din firewall før denne side gemmes.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.\nHvis port 13 bruges, åben venligst din firewall før denne side gemmes.\n(Port: 13 / Host: 129.6.15.28)
 day	common	da	Dag
 days	common	da	dage
 december	common	da	December
@@ -321,7 +323,7 @@ enabled	common	da	Slået til
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	da	Muliggør logning af CalDAV/CardDAV-trafik for at diagnosticere problemer med enheder.
 end date	common	da	Slutdato
 end time	common	da	Sluttid
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Enter the location of EGroupware's URL.\nExample: https://egw.domain.com/egroupware or /egroupware\n<b>No trailing slash</b>
 enter your passphrase	common	da	Indtast din adgangskode
 enter your password	common	da	Indtast din adgangskode
 entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
@@ -548,6 +550,7 @@ mexico	common	da	Mexico
 micronesia, federated states of	common	da	Mikronesien, Den Føderale Stat
 minute	common	da	Minut
 minutes	common	da	Minutter
+mode	common	da	Tilstand
 moldova, republic of	common	da	Moldova, Republikken
 monaco	common	da	Monaco
 monday	common	da	Mandag
@@ -837,7 +840,7 @@ the following applications require upgrades	common	da	Følgende applikationer sk
 the following document-types are supported:	preferences	da	Følgende dokumenttyper understøttes:
 the mail server returned	common	da	Postserveren retunerede
 this feature is only available in epl version.	common	da	Denne funktion er tilgængelig i EGroupware EPL-versionen.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	da	This is your own share. To test it, use an anonymous / incognito window.<br>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	da	This is your own share. To test it, use an anonymous / incognito window.\n%1
 this name has been used already	common	da	Dette navn er allerede i brug!
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	da	Dette nulstiller værktøjslinjens indstillinger for alle brugere og indstiller dem til de konfigurerede standardindstillinger.
 thursday	common	da	Torsdag
@@ -931,7 +934,7 @@ you have successfully logged out	common	da	Du har logget ud.
 your account has been updated with new data from your identity provider.	common	da	Din konto er blevet opdateret med nye data fra din identitetsudbyder.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	da	Din browser er ikke opdateret (JavaScript ES6-kompatibel), du kan opleve, at nogle af funktionerne ikke virker.
 your key has been restored successfully.	common	da	Din nøgle er blevet gendannet med succes.
-your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b> sendes!<br>
+your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b> sendes!\n
 your message has been sent	common	da	Din besked er afsendt.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	da	Din adgangskode har ikke den krævede styrke på %1 tegnklasser og en minimumslængde på %2 tegn.
 your password does not have required strength:	common	da	Din adgangskode har ikke den krævede styrke:

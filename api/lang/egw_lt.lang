@@ -99,6 +99,7 @@ check for empty values in if statements.  example {{if url~empty~~website:}} - i
 chile	common	lt	ČILĖ
 china	common	lt	KINIJA
 choose the default filename for merged documents.	preferences	lt	Pasirinkite numatytąjį sujungtų dokumentų failo pavadinimą.
+clear filters	common	lt	Išvalyti filtrus
 click here to resume your egroupware session.	common	lt	Spustelėkite , jei norite tęsti EGroupware seansą.
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	lt	Klientams, kurie aiškiai nenurodo limito, suteikiama tik tiek dienų. Dėl per didelio limito kai kuriems klientams gali kilti problemų.
 clipboard contents	common	lt	Prisegtuko turinys
@@ -107,6 +108,7 @@ collection empty.	common	lt	Rinkinys tuščias.
 collection listing	common	lt	Kolekcijos sąrašas
 colombia	common	lt	KOLUMBIJA
 colour	common	lt	Spalva
+column filters	common	lt	Stulpelių filtrai
 columns to print	common	lt	Spausdintini stulpeliai
 command ⌘	common	lt	Komanda ⌘
 copy	common	lt	Kopijuoti
@@ -236,6 +238,7 @@ last name	common	lt	Pavardė
 lastname	common	lt	Pavardė
 latvia	common	lt	LATVIJA
 liberia	common	lt	LIBERIJA
+license	common	lt	Licencijos
 light mode	common	lt	Šviesus režimas
 link to each entry	common	lt	Nuoroda į kiekvieną įrašą
 lithuania	common	lt	LIETUVA
@@ -261,6 +264,7 @@ merge options	common	lt	Sujungimo parinktys
 merged document filename	preferences	lt	Sujungto dokumento failo pavadinimas
 mexico	common	lt	MEKSIKA
 minute	common	lt	minutė
+mode	common	lt	Režimas
 monaco	common	lt	MONAKAS
 monday	common	lt	Pirmadienis
 mongolia	common	lt	MONGOLIJA
@@ -342,7 +346,7 @@ template	common	lt	Šablonas
 templates	common	lt	Šablonai
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	lt	Tai iš naujo nustatys įrankių juostos parinktis visiems vartotojams ir nustatys jas pagal konfigūruotas numatytąsias parinktis.
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lt	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
-too many rows selected.<br />select all, or less than %1 rows	common	lt	Too many rows selected.<br>Select all, or less than %1 rows
+too many rows selected.<br />select all, or less than %1 rows	common	lt	Too many rows selected.\nSelect all, or less than %1 rows
 toolbar settings	common	lt	Įrankių juostos nustatymai
 total: %1 successful: %2 failed: %3 skipped: %4	common	lt	Total: %1 Successful: %2 Failed: %3 Skipped: %4
 videos	common	lt	Vaizdo įrašai

@@ -124,7 +124,7 @@ cyprus	common	vi	CYPRUS
 czech republic	common	vi	CZECH REPUBLIC
 date	common	vi	Ngày
 date due	common	vi	Ngày &#273;&#7871;n h&#7841;n
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	vi	C&#7893;ng Datetime.<br>N&#7871;u dùng c&#7893;ng 13, vui lòng thi&#7871;t l&#7853;p các ch&#7871; &#273;&#7897; t&#432;&#7901;ng l&#7917;a tr&#432;&#7899;c khi g&#7917;i trang này.<br>(C&#7893;ng: 13 / &#272;&#7883;a ch&#7881; c&#7893;ng: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	vi	C&#7893;ng Datetime.\nN&#7871;u dùng c&#7893;ng 13, vui lòng thi&#7871;t l&#7853;p các ch&#7871; &#273;&#7897; t&#432;&#7901;ng l&#7917;a tr&#432;&#7899;c khi g&#7917;i trang này.\n(C&#7893;ng: 13 / &#272;&#7883;a ch&#7881; c&#7893;ng: 129.6.15.28)
 days	common	vi	ngày
 december	common	vi	Tháng M&#432;&#7901;i Hai
 default category	common	vi	Nhóm m&#7863;c &#273;&#7883;nh
@@ -163,7 +163,7 @@ email-address of the user, eg. "%1"	common	vi	&#273;&#7883;a ch&#7881; email c&#
 enabled	common	vi	&#272;&#432;&#7907;c b&#7853;t
 end date	common	vi	Ngày k&#7871;t thúc
 end time	common	vi	Gi&#7901; k&#7871;t thúc
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	vi	Nh&#7853;p vào URL c&#7911;a EGroupware.<br>Ví d&#7909;: http://www.domain.com/egroupware   ho&#7863;c   /egroupware<br><b>Không có d&#7845;u slash &#7903; phía sau</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	vi	Nh&#7853;p vào URL c&#7911;a EGroupware.\nVí d&#7909;: http://www.domain.com/egroupware   ho&#7863;c   /egroupware\n<b>Không có d&#7845;u slash &#7903; phía sau</b>
 entry has been deleted sucessfully	common	vi	&#272;ã xóa xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
 entry updated sucessfully	common	vi	C&#7853;p nh&#7853;t xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
 equatorial guinea	common	vi	EQUATORIAL GUINEA
@@ -583,7 +583,7 @@ you have selected an invalid date	common	vi	B&#7841;n &#273;ã ch&#7885;n m&#789
 you have selected an invalid main category	common	vi	B&#7841;n &#273;ã ch&#7885;n nhóm chính không h&#7907;p l&#7879; !
 you have successfully logged out	common	vi	B&#7841;n &#273;ã thoát ra ngoài h&#7879; th&#7889;ng
 you need to add the webserver user '%1' to the group '%2'.	common	vi	B&#7841;n c&#7847;n thêm tên &#273;&#259;ng nh&#7853;p máy ch&#7911; Web '%1' vào trong nhóm '%2'.
-your message could <b>not</b> be sent!<br>	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n <b>không th&#7875;</b> &#273;&#432;&#7907;c g&#7917;i &#273;i!<br>
+your message could <b>not</b> be sent!<br>	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n <b>không th&#7875;</b> &#273;&#432;&#7907;c g&#7917;i &#273;i!\n
 your message has been sent	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n &#273;ã &#273;&#432;&#7907;c g&#7917;i &#273;i
 your search returned %1 matchs	common	vi	tác v&#7909; tìm ki&#7871;m c&#7911;a b&#7841;n tìm th&#7845;y %1 k&#7871;t qu&#7843;
 your search returned 1 match	common	vi	tác v&#7909; tìm ki&#7871;m c&#7911;a b&#7841;n tìm th&#7845;y 1 k&#7871;t qu&#7843;

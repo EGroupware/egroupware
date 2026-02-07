@@ -8,7 +8,7 @@
 %1 is not executable by the webserver !!!	common	sv	%1 är inte exekverbar av webbservern!
 %1 more %2 selected ...	common	sv	%1 fler %2 valda ...
 %1 more...	common	sv	%1 mer ...
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br> eller gör %3 skrivbar för webbservern.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2\n eller gör %3 skrivbar för webbservern.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1EGroupware%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
 %s disabled	common	sv	%s Inaktiverad
 %s needed	common	sv	%s Krävs
@@ -246,6 +246,7 @@ christmas island	common	sv	JULÖN
 class	common	sv	Klass
 class, valign	common	sv	Klass, Valign
 clear	common	sv	Rensa
+clear filters	common	sv	Rensa filter
 clear form	common	sv	Rensa formulär
 click	common	sv	Klicka
 click here to attach the file	common	sv	Bifoga fil
@@ -266,6 +267,7 @@ collection empty.	common	sv	Samlingen är tom.
 collection listing	common	sv	Lista över samlingar
 colombia	common	sv	COLOMBIA
 colour	common	sv	Färg
+column filters	common	sv	Kolumnfilter
 column...	common	sv	Kolumn ...
 columnname	common	sv	Kolumn namn
 columns to print	common	sv	Kolumner att skriva ut
@@ -324,7 +326,7 @@ date	common	sv	Datum
 date + time	common	sv	Datum + Tid
 date due	common	sv	Förfallodatum
 date+time	common	sv	Datum+Tid
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sv	Datumtid port.<br>Om port 13, uppdatera brandväggen rätt innan du skickar med denna sida.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sv	Datumtid port.\nOm port 13, uppdatera brandväggen rätt innan du skickar med denna sida.\n(Port: 13 / Host: 129.6.15.28)
 day	common	sv	Dag
 days	common	sv	Dagar
 db ensures that every row has a unique value in that column	common	sv	Databasen försäkrar att varje rad har ett unikt värde i kolumnen
@@ -427,7 +429,7 @@ end time	common	sv	Sluttid
 enter '' for an empty default, nothing mean no default	common	sv	Ange '' för tom standard, tomt betyder ingen standard
 enter a search pattern	common	sv	Ange sökord
 enter filename to upload and attach, use [browse...] to search for it	common	sv	Använd [Bläddra...] för att söka efter fil
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till EGroupware's URL.<br>Example: https://egw.domain.com/egroupware eller /egroupware<br><b>Utan efterföljande snedstreck</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till EGroupware's URL.\nExample: https://egw.domain.com/egroupware eller /egroupware\n<b>Utan efterföljande snedstreck</b>
 enter the new version number here (> old_version), empty for no update-file	common	sv	Ange nytt högre versionsnummer, tomt för ingen uppdateringsfil
 enter the new version number here (has to be > old_version)	common	sv	Ange nytt högre versionsnummer
 enter your passphrase	common	sv	Ange din lösenfras
@@ -682,7 +684,7 @@ libyan arab jamahiriya	common	sv	LIBYEN
 license	common	sv	Licens
 liechtenstein	common	sv	LIECHTENSTEIN
 light mode	common	sv	Ljust läge
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sv	Rad %1: '%2'<br><b>CSV data motsvarar inte antalet kolumner i tabellen %3 ==> ignoreras</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sv	Rad %1: '%2'\n<b>CSV data motsvarar inte antalet kolumner i tabellen %3 ==> ignoreras</b>
 link	common	sv	Länk
 link to each entry	common	sv	Länk till varje post
 linkapps	common	sv	LinkApps
@@ -746,6 +748,7 @@ micronesia, federated states of	common	sv	MIKRONESIEN
 middle	common	sv	Mitten
 minute	common	sv	Minut
 minutes	common	sv	Minuter
+mode	common	sv	Läge
 moldova, republic of	common	sv	MOLDOVIEN
 monaco	common	sv	MONACO
 monday	common	sv	Måndag
@@ -985,7 +988,7 @@ san marino	common	sv	SAN MARINO
 sao tome and principe	common	sv	SAO TOME OCH PRINCIPE
 saturday	common	sv	Lördag
 saudi arabia	common	sv	SAUDI ARABIEN
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sv	Savant2 version skiljer sig mot Savant2 wrapper. <br>Denna version: %1 <br>Savants version: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sv	Savant2 version skiljer sig mot Savant2 wrapper. \nDenna version: %1 \nSavants version: %2
 save	common	sv	Spara
 save all	common	sv	Spara alla
 save as	common	sv	Spara som
@@ -1293,7 +1296,7 @@ you need to select some entries first!	common	sv	Du måste först välja några 
 your account has been updated with new data from your identity provider.	common	sv	Ditt konto har uppdaterats med nya uppgifter från din identitetsleverantör.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	sv	Din webbläsare är inte uppdaterad (JavaScript ES6-kompatibel), du kan uppleva att vissa av funktionerna inte fungerar.
 your key has been restored successfully.	common	sv	Din nyckel har återställts framgångsrikt.
-your message could <b>not</b> be sent!<br>	common	sv	Meddelandet <b>inte</b> skickat<br>
+your message could <b>not</b> be sent!<br>	common	sv	Meddelandet <b>inte</b> skickat\n
 your message has been sent	common	sv	Meddelandet skickat.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	sv	Lösenordet har inte den styrka som krävs av %1 teckenklasser och den minsta längden av %2 tecken.
 your password does not have required strength:	common	sv	Ditt lösenord har inte den styrka som krävs:

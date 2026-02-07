@@ -5,7 +5,7 @@
 %1 etemplates found	common	zh	找到 %1 个模板
 %1 is not executable by the webserver !!!	common	zh	Web 服务器无法执行%1！
 %1 more %2 selected ...	common	zh	选择了 %1 更多 %2 ...
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	zh	%1选择另一个目录%2<br>或使得 Web 服务器可以写入%3。
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	zh	%1选择另一个目录%2\n或使得 Web 服务器可以写入%3。
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1EGroupware%2 是一个多用户、基于 Web 的以 %3PHP%4 为基础开发的工作组套件。
 %s disabled	common	zh	%s 已禁用
 %s needed	common	zh	需要 %s
@@ -233,6 +233,7 @@ christmas island	common	zh	圣诞岛
 class	common	zh	类
 class, valign	common	zh	类，垂直对齐
 clear	common	zh	清除
+clear filters	common	zh	清除筛选器
 clear form	common	zh	清除表单
 click	common	zh	点击
 click here to attach the file	common	zh	点击以附加文件
@@ -254,6 +255,7 @@ collection empty.	common	zh	收藏为空。
 collection listing	common	zh	收藏列表
 colombia	common	zh	哥伦比亚
 colour	common	zh	颜色
+column filters	common	zh	列筛选器
 column...	common	zh	列 ...
 columnname	common	zh	列_名称
 columns to print	common	zh	要打印的列
@@ -313,7 +315,7 @@ date	common	zh	日期
 date + time	common	zh	日期 + 时间
 date due	common	zh	到期日
 date+time	common	zh	日期+时间
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zh	日期时间端口。<br>如果使用端口13，请在提交前设置适当的防火墙规则。<br>(端口：13/主机：129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zh	日期时间端口。\n如果使用端口13，请在提交前设置适当的防火墙规则。\n(端口：13/主机：129.6.15.28)
 day	common	zh	天
 days	common	zh	天
 db ensures that every row has a unique value in that column	common	zh	在该列中数据库确保每一行有一个不重复的值
@@ -417,7 +419,7 @@ end time	common	zh	终止时间
 enter '' for an empty default, nothing mean no default	common	zh	对于空的默认值，输入'' 意味着没有任何的默认
 enter a search pattern	common	zh	输入搜索条件
 enter filename to upload and attach, use [browse...] to search for it	common	zh	输入上传文件与附件的文件名，使用[浏览...]对其搜索
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	输入EGroupware 网址。<br>例如：http://www.domain.com/egroupware 或 /egroupware<br><b>结尾无斜线</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	输入EGroupware 网址。\n例如：http://www.domain.com/egroupware 或 /egroupware\n<b>结尾无斜线</b>
 enter the new version number here (> old_version), empty for no update-file	common	zh	输入新的版本号(大于旧版本)，空白表示没有更新
 enter the new version number here (has to be > old_version)	common	zh	输入新的版本号(必须大于旧版本)
 enter your passphrase	common	zh	输入密码
@@ -665,7 +667,7 @@ libyan arab jamahiriya	common	zh	利比亚
 license	common	zh	许可证
 liechtenstein	common	zh	列支敦士登
 light mode	common	zh	浅色模式
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	zh	第%1行：'%2'<br><b>csv 数据与数据表%3栏数不匹配 ==> 忽略</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	zh	第%1行：'%2'\n<b>csv 数据与数据表%3栏数不匹配 ==> 忽略</b>
 link	common	zh	链接
 link to each entry	common	zh	链接到每个条目
 linkapps	common	zh	链接应用程序
@@ -724,6 +726,7 @@ micronesia, federated states of	common	zh	密克罗尼西亚联邦
 middle	common	zh	中间
 minute	common	zh	分
 minutes	common	zh	分
+mode	common	zh	模式
 modifier	preferences	zh	修改人
 moldova, republic of	common	zh	摩尔多瓦共和国
 monaco	common	zh	摩纳哥
@@ -969,7 +972,7 @@ san marino	common	zh	圣马力诺
 sao tome and principe	common	zh	圣多美和普林西比
 saturday	common	zh	星期六
 saudi arabia	common	zh	沙特阿拉伯
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	zh	Savant2 版本不同于 Savant2 wrapper。<br/>这个版本：%1 <br/>Savants 版本：%2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	zh	Savant2 版本不同于 Savant2 wrapper。\n这个版本：%1 \nSavants 版本：%2
 save	common	zh	保存
 save all	common	zh	保存所有
 save as pdf	common	zh	保存为 PDF
@@ -1154,7 +1157,7 @@ todays date, eg. "%1"	common	zh	当前日期，例如："%1"
 togo	common	zh	多哥
 tokelau	common	zh	托克劳群岛
 tonga	common	zh	汤加
-too many rows selected.<br />select all, or less than %1 rows	common	zh	选择的行数太多。<br>选择全部或少于 %1 行
+too many rows selected.<br />select all, or less than %1 rows	common	zh	选择的行数太多。\n选择全部或少于 %1 行
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zh	登录失败次数过多：用户"%2" %1次，IP地址"%4" %3次
 toolbar settings	common	zh	工具栏设置
 top	common	zh	顶部
@@ -1265,7 +1268,7 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your account has been updated with new data from your identity provider.	common	zh	您的账户已使用身份供应商提供的新数据进行了更新。
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	zh	您的浏览器不是最新版本（与 JavaScript ES6 兼容），您可能会遇到某些功能无法使用的情况。
 your key has been restored successfully.	common	zh	您的密钥已成功恢复。
-your message could <b>not</b> be sent!<br>	common	zh	您的邮件<b>无法</b>发送！<br>
+your message could <b>not</b> be sent!<br>	common	zh	您的邮件<b>无法</b>发送！\n
 your message has been sent	common	zh	您的邮件已发送。
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	zh	您的密码没有达到要求的强度%1和最小长度%2的字符数。
 your password does not have required strength:	common	zh	您的密码没有达到要求的强度:

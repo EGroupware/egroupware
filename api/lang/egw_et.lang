@@ -2,7 +2,7 @@
 %1 email(s) added into %2	common	et	%1 email(id) lisatud %2-sse
 %1 is not executable by the webserver !!!	common	et	%1 pole veebiserverijaoks käivitatav!
 %1 more %2 selected ...	common	et	%1 rohkem %2 valitud ...
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2<br>või tee %3 veebiserverijaoks kirjutatavaks.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2\nvõi tee %3 veebiserverijaoks kirjutatavaks.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	et	%1EGroupware%2 on multi-kasutaja, veebipõhine grupitöö vahend mis on kirjutatud %3PHP%4.
 '%1' copied to clipboard	common	et	'%1' kopeeritud lõikelauale
 '%1' does not match the required pattern '%2'	common	et	'%1' ei vasta nõutavale mustrile ('%2')
@@ -180,6 +180,7 @@ christmas island	common	et	Jõulusaar
 class	common	et	Class
 class, valign	common	et	Class, Valign
 clear	common	et	Puhasta
+clear filters	common	et	Filtrite tühistamine
 clear form	common	et	Puhasta vorm
 click	common	et	Vajuta
 click here to create the link	common	et	Vajuta siia tegemaks Link
@@ -188,6 +189,7 @@ click here to start the search	common	et	Vajuta siia alustamaks otsingut
 close	common	et	Sule
 colombia	common	et	KOLUMBIA
 colour	common	et	Värv
+column filters	common	et	Veergude filtrid
 comment	common	et	Kommentaar
 common preferences	common	et	Üldised eelistused
 comoros	common	et	KOMOORID
@@ -704,7 +706,7 @@ todays date, eg. "%1"	common	et	Tänane kuupäev, nt "%1"
 togo	common	et	TOGO
 tokelau	common	et	TOKELAU
 tonga	common	et	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	et	Valitud on liiga palju ridu.<br>Valige kõik või vähem kui %1 rida
+too many rows selected.<br />select all, or less than %1 rows	common	et	Valitud on liiga palju ridu.\nValige kõik või vähem kui %1 rida
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	et	Liiga palju ebaõnnestunud sisselogimiskatseid: %1 kasutaja "%2" jaoks, %3 IP %4 jaoks
 toolbar settings	common	et	Tööriistariba seaded
 total	common	et	Kokku

@@ -11,7 +11,7 @@
 %1 more %2 selected ...	common	pt	%1 mais %2 seleccionados ...
 %1 more...	common	pt	% Mais 1 ...
 %1 not implemented for %2!	common	pt	% 1 não implementado para% 2!
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt	%1Escolha outra directoria%2<br>ou torne %3 editável pelo servidor Web.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt	%1Escolha outra directoria%2\nou torne %3 editável pelo servidor Web.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt	O %1EGroupware%2 é uma ferramenta Web groupware criada em %3PHP%4, para ser utilizada por vários utilizadores em simultâneo.
 %s disabled	common	pt	%s desactivados
 %s needed	common	pt	%s necessários
@@ -256,6 +256,7 @@ christmas island	common	pt	Ilha Natal
 class	common	pt	Classe
 class, valign	common	pt	Class, Valign
 clear	common	pt	Cancelar
+clear filters	common	pt	Limpar filtros
 clear form	common	pt	Limpar Formulário
 click	common	pt	Clicar
 click here to attach the file	common	pt	Clique aqui para anexar o ficheiro
@@ -276,6 +277,7 @@ collection empty.	common	pt	Coleção vazia.
 collection listing	common	pt	Listagem da coleção
 colombia	common	pt	Colômbia
 colour	common	pt	Cor
+column filters	common	pt	Filtros de coluna
 column...	common	pt	Coluna ...
 columnname	common	pt	Nome da coluna
 columns to print	common	pt	Colunas a imprimir
@@ -334,7 +336,7 @@ date	common	pt	Data
 date + time	common	pt	Data + Hora
 date due	common	pt	Até
 date+time	common	pt	Data+Hora
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt	Porto Datetime.<br>Se utilizar o porto 13, por favor configure as regras da firewall apropriadamente antes de enviar esta página.<br>(Porto: 13 / Servidor: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt	Porto Datetime.\nSe utilizar o porto 13, por favor configure as regras da firewall apropriadamente antes de enviar esta página.\n(Porto: 13 / Servidor: 129.6.15.28)
 day	common	pt	Dia
 days	common	pt	Dias
 db ensures that every row has a unique value in that column	common	pt	A base de dados assegura que cada linha tenha um valor único naquela coluna
@@ -438,7 +440,7 @@ end time	common	pt	Hora de fim
 enter '' for an empty default, nothing mean no default	common	pt	Insira " para uma definição por omissão vazia. Nada significa sem definição por omissão
 enter a search pattern	common	pt	Insira um padrão de pesquisa
 enter filename to upload and attach, use [browse...] to search for it	common	pt	Insira um nome de ficheiro a enviar e anexar, utilize [Navegar...] para o pesquisar
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a localização da URL do EGroupware.<br>Exemplo: https://egw.domain.com/egroupware ou /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a localização da URL do EGroupware.\nExemplo: https://egw.domain.com/egroupware ou /egroupware\n<b>Sem a barra final</b>
 enter the new version number here (> old_version), empty for no update-file	common	pt	Insira o número da nova versão aqui (> versão antiga). Deixe vazio para não actualizar ficheiro
 enter the new version number here (has to be > old_version)	common	pt	Insira o número da nova versão aqui (tem de ser maior do que a versão antiga)
 enter your passphrase	common	pt	Introduza a sua frase-chave
@@ -701,7 +703,7 @@ libyan arab jamahiriya	common	pt	Líbia
 license	common	pt	Licença
 liechtenstein	common	pt	Liechtenstein
 light mode	common	pt	Modo de luz
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt	Linha %1:'%2'<br><b>dados csv não coincidem com o número de colunas da tabela %3 ==> ignorado</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt	Linha %1:'%2'\n<b>dados csv não coincidem com o número de colunas da tabela %3 ==> ignorado</b>
 link	common	pt	Ligação
 link target %1 not found!	common	pt	Destino do link% 1 não encontrado!
 link to each entry	common	pt	Ligação a cada entrada
@@ -768,6 +770,7 @@ minute	common	pt	Minuto
 minutes	common	pt	Minutos
 missing: %1	common	pt	Falta: 1%
 mo	common	pt	Mo
+mode	common	pt	Modo
 modifier	preferences	pt	Modifier
 moldova, republic of	common	pt	Moldávia, República da
 monaco	common	pt	Mónaco
@@ -1010,7 +1013,7 @@ san marino	common	pt	San Marino
 sao tome and principe	common	pt	São Tomé e Príncipe
 saturday	common	pt	Sábado
 saudi arabia	common	pt	Arábia Saudita
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt	A versão Savant2 é diferente da Savant2 wrapper.<br>Esta versão: %1<br>Versão Savant2: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt	A versão Savant2 é diferente da Savant2 wrapper.\nEsta versão: %1\nVersão Savant2: %2
 save	common	pt	Guardar
 save all	common	pt	Salve todo
 save as	common	pt	Salvar como
@@ -1205,7 +1208,7 @@ todays date, eg. "%1"	common	pt	Data de hoje, ex: "%1"
 togo	common	pt	Togo
 tokelau	common	pt	Toquelau
 tonga	common	pt	Tonga
-too many rows selected.<br />select all, or less than %1 rows	common	pt	Demasiadas linhas seleccionadas.<br>Selecionar todas ou menos de %1 linhas
+too many rows selected.<br />select all, or less than %1 rows	common	pt	Demasiadas linhas seleccionadas.\nSelecionar todas ou menos de %1 linhas
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pt	Demasiadas tentativas de acesso sem sucesso: %1 para o utilizador '%2', %3 para o IP %4
 toolbar settings	common	pt	Configurações da barra de ferramentas
 top	common	pt	Topo
@@ -1320,7 +1323,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	pt	O seu browser não está atualizado (compatível com JavaScript ES6), pelo que algumas das funcionalidades podem não funcionar.
 your code is incorrect !!!	common	pt	Código é incorreto!
 your key has been restored successfully.	common	pt	A sua chave foi restaurada com êxito.
-your message could <b>not</b> be sent!<br>	common	pt	<b>Não</b> foi possível enviar sua mensagem!<br>
+your message could <b>not</b> be sent!<br>	common	pt	<b>Não</b> foi possível enviar sua mensagem!\n
 your message has been sent	common	pt	A sua mensagem foi enviada
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	pt	A sua palavra-passe não requer força de %1 classes de caracteres e comprimento mínimo de %2 caracteres.
 your password does not have required strength:	common	pt	A sua palavra-passe não tem a força necessária:

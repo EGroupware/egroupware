@@ -99,6 +99,7 @@ choose the category	common	ko	분류를 선택하세요
 choose the default filename for merged documents.	preferences	ko	병합된 문서의 기본 파일명을 선택합니다.
 choose the parent category	common	ko	상위 분류를 선택하세요
 clear	common	ko	초기화
+clear filters	common	ko	필터 지우기
 clear form	common	ko	초기화
 click here to create the link	common	ko	새 링크를 생성하려면 클릭하세요
 click here to resume your egroupware session.	common	ko	E그룹웨어 세션을 다시 시작하려면 클릭합니다.
@@ -109,6 +110,7 @@ close	common	ko	닫기
 code	common	ko	코드
 collection empty.	common	ko	컬렉션이 비어 있습니다.
 collection listing	common	ko	컬렉션 목록
+column filters	common	ko	열 필터
 columns to print	common	ko	인쇄할 열
 command ⌘	common	ko	명령 ⌘
 comment	common	ko	커멘트
@@ -123,6 +125,7 @@ current	common	ko	현재
 current users	common	ko	현재 사용자
 custom	common	ko	사용자정의
 custom fields	common	ko	사용자정의 필드
+dark mode	common	ko	다크 모드
 date	common	ko	날짜
 date + time	common	ko	날짜 + 시간
 date due	common	ko	만기일
@@ -172,7 +175,7 @@ emails	common	ko	이메일
 enabled	common	ko	활성화됨
 end date	common	ko	종료일
 end time	common	ko	종료시간
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	EGroupware의 URL 위치를 입력해주세요<BR>예제: http://www.domain.com/egroupware 혹은 /egroupware<br><b>마지막에 / (슬래시)를 붙이지 마세요</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	EGroupware의 URL 위치를 입력해주세요<BR>예제: http://www.domain.com/egroupware 혹은 /egroupware\n<b>마지막에 / (슬래시)를 붙이지 마세요</b>
 enter your passphrase	common	ko	비밀번호 입력
 entry has been deleted sucessfully	common	ko	데이터가 성공적으로 삭제되었습니다.
 entry updated sucessfully	common	ko	데이터가 성공적으로 수정되었습니다.
@@ -267,6 +270,8 @@ last name	common	ko	성
 last page	common	ko	끝 페이지로
 lastname	common	ko	성
 left	common	ko	왼쪽
+license	common	ko	라이선스
+light mode	common	ko	라이트 모드
 link	common	ko	링크
 link to each entry	common	ko	各エントリーへのリンク
 list members	common	ko	멤버 목록
@@ -296,6 +301,7 @@ merged document filename	preferences	ko	병합된 문서 파일명
 message	common	ko	메세지
 minute	common	ko	분
 minutes	common	ko	분
+mode	common	ko	모드
 monday	common	ko	월요일
 month	common	ko	월
 more	common	ko	검색조건 추가

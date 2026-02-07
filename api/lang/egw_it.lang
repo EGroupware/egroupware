@@ -278,6 +278,7 @@ christmas island	common	it	ISOLA DI NATALE
 class	common	it	Class
 class, valign	common	it	Class, Valign
 clear	common	it	Pulisci
+clear filters	common	it	Cancella filtri
 clear form	common	it	Svuota il modulo
 clear window	common	it	Pulisci finestra
 click	common	it	Clicca
@@ -301,6 +302,7 @@ collection empty.	common	it	Collezione vuota.
 collection listing	common	it	Elenco collezione
 colombia	common	it	COLOMBIA
 colour	common	it	Colore
+column filters	common	it	Filtri colonna
 column...	common	it	Colonna ...
 columnname	common	it	Nome colonna
 columns to print	common	it	Colonne da stampare
@@ -365,7 +367,7 @@ date	common	it	Data
 date + time	common	it	Data + Ora
 date due	common	it	Data richiesta
 date+time	common	it	Data+Ora
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Porta data e ora.<br>Se utilizzi la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Porta data e ora.\nSe utilizzi la porta 13, imposta correttamente il firewall prima di confermare questa pagina.\n(Port: 13 / Host: 129.6.15.28)
 day	common	it	Giorno
 days	common	it	giorni
 db ensures that every row has a unique value in that column	common	it	DB assicura che ogni riga abbia un unico valore in quella colonna
@@ -493,7 +495,7 @@ end time	common	it	Ora Fine
 enter '' for an empty default, nothing mean no default	common	it	Inserisci '' per un predefinito vuoto, niente significa nessun predefinito
 enter a search pattern	common	it	Inserisci una stringa di ricerca
 enter filename to upload and attach, use [browse...] to search for it	common	it	Enter filename to upload and attach, use [Browse...] to search for it
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di EGroupware.<br>Esempio: https://egw.domain.com/egroupware   or   /egroupware<br><b>Senza la barra finale</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di EGroupware.\nEsempio: https://egw.domain.com/egroupware   or   /egroupware\n<b>Senza la barra finale</b>
 enter the new version number here (> old_version), empty for no update-file	common	it	Inserire il numero della nuova versione, > old_version, vuoto per nessun file di aggiornamento
 enter the new version number here (has to be > old_version)	common	it	Inserisci il numero della nuova versione qui (deve essere > old_version)
 enter your file name	common	it	Inserisci il nome del file
@@ -787,8 +789,8 @@ libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
 license	common	it	Licenza
 liechtenstein	common	it	LIECHTENSTEIN
 light mode	common	it	Modalità luce
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	it	Riga %1: '%2'<br><b> dati csv contengono ##last-check-run## della tabella %3 ==> ignorato</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	it	Linea %1: '%2'<br><b>dati csv non corrisponde al numero colonne della tabella %3 ==> ignorato</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	it	Riga %1: '%2'\n<b> dati csv contengono ##last-check-run## della tabella %3 ==> ignorato</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	it	Linea %1: '%2'\n<b>dati csv non corrisponde al numero colonne della tabella %3 ==> ignorato</b>
 link	common	it	Link
 link is appended to mail allowing recipients to download currently attached version of files	common	it	Il collegamento viene allegato all'email permettendo ai destinatari di scaricare la versione dei file allegata corrente
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	it	Il collegamento viene allegato all'email permettendo ai destinatari di scaricare o modificare versioni aggiornate dei file (solo EPL)
@@ -867,6 +869,7 @@ minute	common	it	Minuto
 minutes	common	it	Minuti
 missing: %1	common	it	Mancante: %1
 mo	common	it	Mo
+mode	common	it	Modalità
 mode of required directory "%1" changed to %2.	admin	it	Permessi della directory richiesta "%1" modificati in %2
 modifier	preferences	it	Modificatore
 moldova, republic of	common	it	MOLDAVIA, REPUBBLICA DELLA
@@ -1159,7 +1162,7 @@ san marino	common	it	SAN MARINO
 sao tome and principe	common	it	SAO TOME E PRINCIPE
 saturday	common	it	Sabato
 saudi arabia	common	it	ARABIA SAUDITA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	it	La versione Savant2 è diversa dal wrapper Savant2. <br>Questa versione: %1<br> Versione di Savant: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	it	La versione Savant2 è diversa dal wrapper Savant2. \nQuesta versione: %1\n Versione di Savant: %2
 save	common	it	Salva
 save all	common	it	Salva tutti
 save as	common	it	Salva con nome
@@ -1371,7 +1374,7 @@ textarea	common	it	Area di Testo
 th	common	it	Th
 thailand	common	it	TAILANDIA
 the backup key has been deleted.	common	it	La chiave di backup è stata eliminata.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	it	Il blocco dei popup del browser è attivo. Cliccare su OK per visualizzarlo.<br>Per evitare la visualizzione in futuro di questo messaggio, permettere la apertura di popup nel browser da %1.
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	it	Il blocco dei popup del browser è attivo. Cliccare su OK per visualizzarlo.\nPer evitare la visualizzione in futuro di questo messaggio, permettere la apertura di popup nel browser da %1.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	it	Il documento può contenere variabili metasintattiche come {{%3}}, da rimpiazzare con i dati (%1elenco completo delle variabili metasintattiche%2)
 the following applications require upgrades	common	it	Le seguenti applicazioni richiedono un aggiornamento
 the following document-types are supported:	preferences	it	I seguenti tipi di documenti sono supportati:
@@ -1379,7 +1382,7 @@ the mail server returned	common	it	Il mail server ha risposto
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	it	C'è già un sistema con questo nome. Per favore usane un altro.
 they will be sub-folders in users home (%1 attribute).	common	it	Saranno sottocartelle nella home dell'utente (attributo %1)
 this feature is only available in epl version.	common	it	Questa funzionalità è disponibile nella versione EPL di EGroupware.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	it	This is your own share. To test it, use an anonymous / incognito window.<br>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	it	This is your own share. To test it, use an anonymous / incognito window.\n%1
 this name has been used already	common	it	Questo nome è già stato usato!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	it	This text gets displayed if the input-field is empty and has no focus (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	it	In questo modo si ripristinano le preferenze della barra degli strumenti per tutti gli utenti e si impostano quelle predefinite.
@@ -1403,7 +1406,7 @@ todays date, eg. "%1"	common	it	Data di oggi, es. "%1"
 togo	common	it	TOGO
 tokelau	common	it	TOKELAU
 tonga	common	it	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	it	Troppe righe selezionate.<br>Seleziona tutto, o meno di %1 righe
+too many rows selected.<br />select all, or less than %1 rows	common	it	Troppe righe selezionate.\nSeleziona tutto, o meno di %1 righe
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	it	Troppi tentativi di login falliti: %1 per l'utente '%2', %3 dall'IP %4
 toolbar settings	common	it	Impostazioni della barra degli strumenti
 top	common	it	In cima
@@ -1552,7 +1555,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	it	Se il vostro browser non è aggiornato (compatibile con JavaScript ES6), è possibile che alcune funzioni non funzionino.
 your code is incorrect !!!	common	it	Codice errato!
 your key has been restored successfully.	common	it	La chiave è stata ripristinata con successo.
-your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>
+your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!\n
 your message has been sent	common	it	Il tuo messaggio è stato inviato.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	it	La tua password non è sufficientemente sicura. Deve contenere %1 classi di caratteri e avere lunghezza minima di %2 caratteri.
 your password does not have required strength:	common	it	La tua password non è sufficientemente efficace:

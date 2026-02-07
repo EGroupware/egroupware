@@ -71,6 +71,7 @@ changes that you made may not be saved.	common	tr	Yaptığınız değişiklikler
 charset	common	tr	Karakter kümesi
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	tr	IF deyimlerinde boş değerleri kontrol edin. Örnek {{IF url~EMPTY~~Web Sitesi:}} - Eğer url boş değilse, "Web sitesi:" yazar
 choose the default filename for merged documents.	preferences	tr	Birleştirilen belgeler için varsayılan dosya adını seçin.
+clear filters	common	tr	Filtreleri temizle
 click here to resume your egroupware session.	common	tr	EGroupware oturumunuza devam etmek için tıklayın.
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	tr	Açıkça bir limit belirtmeyen müşteriler bu kadar günle sınırlandırılır. Çok yüksek bir limit bazı istemcilerde sorunlara neden olabilir.
 clipboard contents	common	tr	Pano içeriği
@@ -78,6 +79,7 @@ code	common	tr	Kod
 collection empty.	common	tr	Koleksiyon boş.
 collection listing	common	tr	Koleksiyon listesi
 colour	common	tr	Renk
+column filters	common	tr	Sütun Filtreleri
 columns to print	common	tr	Yazdırılacak sütunlar
 command ⌘	common	tr	Komut ⌘
 company	common	tr	Şirket
@@ -117,7 +119,7 @@ egroupware security update %1 needs to be installed!	common	tr	EGroupware güven
 egroupware version	common	tr	EGroupware sürümü
 emails	common	tr	E-postalar
 enabled	common	tr	Etkin
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.\nÖrnek: https://egw.domain.com/egroupware yada /egroupware\n<b>Sonda bölü iþareti kullanmayýnýz.</b>
 enter your passphrase	common	tr	Parolanızı girin
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
@@ -127,6 +129,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 fax number	common	tr	Fax No
 file a file	common	tr	Bir dosya saklayın
 fileupload	common	tr	Dosya yükleme
+filter	common	tr	Filtre
 force selectbox	common	tr	Seçimn kurusunu mecburi tut
 formatted business address	common	tr	Biçimlendirilmiş iş adresi
 formatted private address	common	tr	Biçimlendirilmiş özel adres
@@ -160,6 +163,7 @@ invalid 2-factor authentication code	common	tr	Geçersiz 2 Faktörlü Kimlik Do�
 invalid email	common	tr	Geçersiz e-posta
 invalid or expired 'remember me' token	common	tr	Geçersiz veya süresi dolmuş 'beni hatırla' belirteci
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	tr	Açık anahtarınızı Adres Defteri'nde saklamanız önerilir, böylece diğer kullanıcılar size şifreli postalar yazabilir.
+license	common	tr	Lisans
 light mode	common	tr	Işık modu
 link to each entry	common	tr	Her girişe bağlantı
 load	common	tr	Yükle
@@ -179,6 +183,7 @@ merge options	common	tr	Birleştirme seçenekleri
 merged document filename	preferences	tr	Birleştirilmiş belge dosya adı
 message	common	tr	Mesaj
 minute	common	tr	Dakika
+mode	common	tr	Mod
 more	common	tr	Daha fazla
 move	common	tr	Hareket
 moved %1 children from directory fs_id=%2 to %3	admin	tr	fs_id=%2 klasöründeki %1 çocuk %3 klasörüne taşındı

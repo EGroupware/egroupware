@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	sl	% 1 nastavitev "%2" =%3 onemogoča dostop prek http!
 %1 to sync	groupdav	sl	%1 sinhronizirati
 %1, duplicate id	common	sl	%1, podvojena ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	sl	%1Izberite drugo mapo%2<br> ali nastavite, da bo %3 zapisljiva za spletni strežnik.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	sl	%1Izberite drugo mapo%2\n ali nastavite, da bo %3 zapisljiva za spletni strežnik.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sl	%1EGroupware%2 je večuporabniški, spletno osnovani paket za skupinsko delo, napisan v %3PHP%4-ju.
 %s disabled	common	sl	%s onemogočenih
 %s needed	common	sl	%s potrebnih
@@ -278,6 +278,7 @@ christmas island	common	sl	BOŽIČNI OTOK
 class	common	sl	Class
 class, valign	common	sl	Class, Valign
 clear	common	sl	Izprazni
+clear filters	common	sl	Počisti filtre
 clear form	common	sl	Izprazni formo
 clear window	common	sl	Izbriši okno
 click	common	sl	Klikni
@@ -301,6 +302,7 @@ collection empty.	common	sl	Zbiranje prazno.
 collection listing	common	sl	Zbirni seznam
 colombia	common	sl	KOLUMBIJA
 colour	common	sl	Barva
+column filters	common	sl	Filtri stolpcev
 column...	common	sl	Stolpec ...
 columnname	common	sl	Ime stolpca
 columns to print	common	sl	Stolpci za tiskanje
@@ -365,7 +367,7 @@ date	common	sl	Datum
 date + time	common	sl	Datum + Čas
 date due	common	sl	Rok
 date+time	common	sl	Datum+Čas
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sl	Vrata za datum in čas. Če uporabljate vrata 13, nastavite ustrezne parametre požarnega zidu preden potrdite to stran.<br> (Vrata: 13/ Strežnik: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sl	Vrata za datum in čas. Če uporabljate vrata 13, nastavite ustrezne parametre požarnega zidu preden potrdite to stran.\n (Vrata: 13/ Strežnik: 129.6.15.28)
 day	common	sl	Dan
 days	common	sl	Dnevi
 db ensures that every row has a unique value in that column	common	sl	Podatkovna baza zagotovi, da ima vsaka vrstica svojo vrednost v tem stolpcu
@@ -493,7 +495,7 @@ end time	common	sl	Končni čas
 enter '' for an empty default, nothing mean no default	common	sl	Vnesite '' za prazno privzeto vrednost, brez vnosa pomeni, da privzete vrednosti ni
 enter a search pattern	common	sl	Vnesite iskalni niz
 enter filename to upload and attach, use [browse...] to search for it	common	sl	Vnesite ime datoteke za prenos v strežnik in priponko, uporabite [Poišči...], da jo izberete
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL EGroupware. Primer: https://egw.domain.com/egroupware ali /egroupware<br><b>Brez zaključne poševnice!</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL EGroupware. Primer: https://egw.domain.com/egroupware ali /egroupware\n<b>Brez zaključne poševnice!</b>
 enter the new version number here (> old_version), empty for no update-file	common	sl	Sem vnesite novo številko različice (> stara_različica), prazno za ne-obnovo datoteke
 enter the new version number here (has to be > old_version)	common	sl	Sem vnesite novo številko različice (mora biti > stara_različica)
 enter your file name	common	sl	Vnesite ime datoteke
@@ -787,8 +789,8 @@ libyan arab jamahiriya	common	sl	LIBIJA
 license	common	sl	Licenca
 liechtenstein	common	sl	LICHTENSTEIN
 light mode	common	sl	Svetli način
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	sl	Vrstica %1: '%2'<br><b>Podatki csv vsebujejo ## zadnje preverjanje delovanja ## tabele %3 ==> prezrto</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sl	Vrstica %1: '%2'<br><b>CSV podatki se ne ujemajo s številom stolpcev v tabeli %3==>zavrnjen</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	sl	Vrstica %1: '%2'\n<b>Podatki csv vsebujejo ## zadnje preverjanje delovanja ## tabele %3 ==> prezrto</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sl	Vrstica %1: '%2'\n<b>CSV podatki se ne ujemajo s številom stolpcev v tabeli %3==>zavrnjen</b>
 link	common	sl	Povezava
 link is appended to mail allowing recipients to download currently attached version of files	common	sl	Povezava je dodana pošti, ki prejemnikom omogoča prenos trenutne različice datotek
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	sl	Povezava je dodana pošti, ki prejemnikom omogoča, da prenesejo ali spremenijo najnovejšo različico datotek (samo EPL)
@@ -865,6 +867,7 @@ minute	common	sl	Minuta
 minutes	common	sl	Minute
 missing: %1	common	sl	Manjka: %1
 mo	common	sl	Na
+mode	common	sl	Način
 mode of required directory "%1" changed to %2.	admin	sl	Način zahtevanega imenika "%1" je spremenjen v %2.
 modifier	preferences	sl	Modifikator
 moldova, republic of	common	sl	MOLDAVIJA
@@ -1155,7 +1158,7 @@ san marino	common	sl	SAN MARINO
 sao tome and principe	common	sl	SAO TOME IN PRINCIPE
 saturday	common	sl	Sobota
 saudi arabia	common	sl	SAVDSKA ARABIJA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sl	Različica Savant2 se razlikuje od ovojnice Savant2.<br>Ta različica: %1<br>Različica Savant: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sl	Različica Savant2 se razlikuje od ovojnice Savant2.\nTa različica: %1\nRazličica Savant: %2
 save	common	sl	Shrani
 save all	common	sl	Shrani vse
 save as	common	sl	Shrani kot
@@ -1366,7 +1369,7 @@ textarea	common	sl	Besedilno polje
 th	common	sl	Ta
 thailand	common	sl	TAJSKA
 the backup key has been deleted.	common	sl	Ključ varnostne kopije je bil izbrisan.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	sl	Vključen je blokator pojavnih oken brskalnika. Prosimo, kliknite gumb »OK«, da se prikaže pojavno okno.<br>Če ne želite, da se to sporočilo prikaže naslednjič, omogočite pojavu pojavnih oken v brskalniku, da odpre pojavne oken od %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	sl	Vključen je blokator pojavnih oken brskalnika. Prosimo, kliknite gumb »OK«, da se prikaže pojavno okno.\nČe ne želite, da se to sporočilo prikaže naslednjič, omogočite pojavu pojavnih oken v brskalniku, da odpre pojavne oken od %1
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	sl	Dokument lahko vsebuje vsebnika kot {{%3}}, ki jo je treba zamenjati s podatki. %1 Celoten seznam imen imenika %2.
 the following applications require upgrades	common	sl	Naslednje aplikacije je potrebno nadgraditi
 the following document-types are supported:	preferences	sl	Podprte so naslednje vrste dokumentov:
@@ -1374,7 +1377,7 @@ the mail server returned	common	sl	Poštni strežnik je vrnil
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	sl	Obstaja že sistemski uporabnik s tem imenom. Izberite drugo ime.
 they will be sub-folders in users home (%1 attribute).	common	sl	V domovih uporabnikov bodo podmape (atribut %1).
 this feature is only available in epl version.	common	sl	Ta funkcija je na voljo samo v različici EPL.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	sl	To je vaš lastni delež. Če ga želite preizkusiti, uporabite anonimno okno/okno brez beleženja zgodovine.<br>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	sl	To je vaš lastni delež. Če ga želite preizkusiti, uporabite anonimno okno/okno brez beleženja zgodovine.\n%1
 this name has been used already	common	sl	To ime je že uporabljeno!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	sl	To besedilo je prikazano, če je vnosno polje prazno in neoznačeno (zamegljeno)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	sl	To ponastavi nastavitve orodne vrstice za vse uporabnike in jih nastavi na konfigurirane privzete nastavitve.
@@ -1398,7 +1401,7 @@ todays date, eg. "%1"	common	sl	Današnji datum, npr. "%1"
 togo	common	sl	TOGO
 tokelau	common	sl	TOKELAU
 tonga	common	sl	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	sl	Izbranih je preveč vrstic.<br>Izberite vse ali manj kot %1 vrstic
+too many rows selected.<br />select all, or less than %1 rows	common	sl	Izbranih je preveč vrstic.\nIzberite vse ali manj kot %1 vrstic
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sl	Preveč neuspešnih poskusov prijave: %1 za uporabnika %2, %3 za IP %4.
 toolbar settings	common	sl	Nastavitve orodne vrstice
 top	common	sl	Na vrh
@@ -1547,7 +1550,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	sl	Vaš brskalnik ni posodobljen (združljiv z JavaScript ES6), zato nekatere funkcije morda ne bodo delovale.
 your code is incorrect !!!	common	sl	Koda ni pravilna!
 your key has been restored successfully.	common	sl	Vaš ključ je bil uspešno obnovljen.
-your message could <b>not</b> be sent!<br>	common	sl	Vaše sporočilo <b>NI<b> bilo poslano! <br>
+your message could <b>not</b> be sent!<br>	common	sl	Vaše sporočilo <b>NI<b> bilo poslano! \n
 your message has been sent	common	sl	Vaše sporočilo je bilo poslano.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	sl	Vaše geslo nima zahtevane moči razredov znakov %1 in najmanjše dolžine %2 znakov.
 your password does not have required strength:	common	sl	Vaše geslo nima potrebne moči:

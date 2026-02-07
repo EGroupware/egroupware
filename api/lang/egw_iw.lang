@@ -195,7 +195,7 @@ end time	common	iw	שעת סיום
 enter '' for an empty default, nothing mean no default	common	iw	הקש '' עבור ברירת מחדל ריקה, כלום משמעותו - ללא ברירת מחדל
 enter a search pattern	common	iw	ציין תבנית לחיפוס
 enter filename to upload and attach, use [browse...] to search for it	common	iw	ציין שם קובץ להעלות ולצרף, השתמש ב-[עיון] לחיפוש
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	EGroupware של URL-הקלד את ה<br>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	EGroupware של URL-הקלד את ה\n
 enter the new version number here (> old_version), empty for no update-file	common	iw	ציין את מספר הגירסה החדשה כאן (> הגירסה הישנה), השאר ריק אם אין קובץ מעודכן
 enter the new version number here (has to be > old_version)	common	iw	(ציין כאן את מספר הגירסה החדשה (חייב להיות > מספר הגירסה הישנה
 entry has been deleted sucessfully	common	iw	הרשומה נמחקה בהצלחה
@@ -271,7 +271,7 @@ home screen	common	iw	מסך ראשי
 horizontal rule	common	iw	חוק אופקי
 hour	common	iw	שעה
 hours	common	iw	שעות
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	iw	?(כמה צלמיות יש להציג בפס הניווט (בראש העמוד<br>
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	iw	?(כמה צלמיות יש להציג בפס הניווט (בראש העמוד\n
 id	common	iw	זיהוי
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	iw	אם השדה מבוטל תא ריק מוצג כדי להסיר (זמנית) את השדה/תא
 image	common	iw	תמונה
@@ -314,7 +314,7 @@ keywords	common	iw	מלות מפתח
 label	common	iw	תווית
 lang	common	iw	שפה
 language	common	iw	שפה
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	iw	עבור עברית) עבור תבניות תלויות שפה 'iw' :הקיצור של השפה (לדוגמא<br>
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	iw	עבור עברית) עבור תבניות תלויות שפה 'iw' :הקיצור של השפה (לדוגמא\n
 last	common	iw	אחרון
 last modified	common	iw	שונה לאחרונה
 last name	common	iw	שם משפחה
@@ -356,7 +356,7 @@ name of other table where column is a key from	common	iw	שם הטבלה בה ע
 name of table to add	common	iw	שם הטבלה להוסיף
 name of the etemplate, should be in form application.function[.subtemplate]	common	iw	[צריך להיות בצורה יישום.פונקציה[.תת-תבנית ,eTemplate-שם ה
 name of the user, eg. "%1"	common	iw	שם המשתמש, לדוגמא "%1"
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	iw	חייב להיות ייחודי בטבלה, ואסור להשתמש במילות מפתח של <br>
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	iw	חייב להיות ייחודי בטבלה, ואסור להשתמש במילות מפתח של \n
 never	common	iw	לעולם לא
 new	common	iw	חדש
 new entry added sucessfully	common	iw	רשומה חדשה נוספה בהצלחה

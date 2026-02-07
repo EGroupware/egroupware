@@ -211,7 +211,7 @@ czech republic	common	ca	REPÚBLICA TXECA
 date	common	ca	Data
 date due	common	ca	Data límit
 date+time	common	ca	Fecha + hora
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ca	Port de data.<br>Si useu el port 13, si us plau, configureu acuradament les regles del tallafocs abans d'enviar aquesta plana.<br>
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ca	Port de data.\nSi useu el port 13, si us plau, configureu acuradament les regles del tallafocs abans d'enviar aquesta plana.\n
 day	common	ca	Día
 days	common	ca	dies
 db ensures that every row has a unique value in that column	common	ca	La base de datos se asegura de que cada fila tiene un valor único en esa columna
@@ -293,7 +293,7 @@ end time	common	ca	Hora de finalització
 enter '' for an empty default, nothing mean no default	common	ca	Introduzca '' para un valor predeterminado vacío. Si se deja en blanco, no hay valor predeterminado
 enter a search pattern	common	ca	Introduzca un patrón de búsqueda
 enter filename to upload and attach, use [browse...] to search for it	common	ca	Introduzca el nombre del fichero para subir y adjuntar. Use [Examinar...] Para buscarlo
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Entreu l'adreça URL d'EGroupware.<br>Exemple: http://www.domini.com/egroupware   o bé   /egroupware<br><b>Sense barra final!!</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Entreu l'adreça URL d'EGroupware.\nExemple: http://www.domini.com/egroupware   o bé   /egroupware\n<b>Sense barra final!!</b>
 enter the new version number here (> old_version), empty for no update-file	common	ca	Introduzca el nuevo número de versión aquí (mayor que versión anterior), vacío para no usar fichero de actualización
 enter the new version number here (has to be > old_version)	common	ca	Introduzca el nuevo número de versión aquí (tiene que ser mayor que la versión anterior)
 entry has been deleted sucessfully	common	ca	Entrada esborrada correctament
@@ -498,7 +498,7 @@ liberia	common	ca	LIBÈRIA
 libyan arab jamahiriya	common	ca	LIBIA (LYBIAN ARAB JAMAHIRIYA)
 license	common	ca	Llicència
 liechtenstein	common	ca	LIECHTENSTEIN
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ca	Línia %1: '%2'<br><b>les dades csv no coincideixen amb el número de columnes de la taula %3 ==> ignorat</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ca	Línia %1: '%2'\n<b>les dades csv no coincideixen amb el número de columnes de la taula %3 ==> ignorat</b>
 link	common	ca	Enlace
 linklist	common	ca	Lista de enlaces
 linkstring	common	ca	Cadena de enlaces
@@ -733,7 +733,7 @@ san marino	common	ca	SAN MARINO
 sao tome and principe	common	ca	SAO TOME I PRINCIPE
 saturday	common	ca	Dissabte
 saudi arabia	common	ca	ARÀBIA SAUDÍ
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	ca	Problema de versions de Savant2. <br/>Aquesta versió: %1 <br/>Versió Savants: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	ca	Problema de versions de Savant2. \nAquesta versió: %1 \nVersió Savants: %2
 save	common	ca	Desar
 save all	common	ca	Desar tot
 save the etemplate under the above keys (name, ...), change them for a saveas	common	ca	guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
@@ -976,7 +976,7 @@ you have selected an invalid main category	common	ca	Heu triat una categoria pri
 you have successfully logged out	common	ca	Desconnexió correcta
 you need to add the webserver user '%1' to the group '%2'.	common	ca	Necessiteu afegir l'usuari '%1' del servidor web al grup '%2'.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	ca	Heu triat obrir l'aplicació EGroupware: 1%, però no teniu permís per accedir a aquesta aplicació.
-your message could <b>not</b> be sent!<br>	common	ca	El missatge <b>no</b> s'ha pogut enviar!<br>
+your message could <b>not</b> be sent!<br>	common	ca	El missatge <b>no</b> s'ha pogut enviar!\n
 your message has been sent	common	ca	Missatge enviat
 your search returned %1 matchs	common	ca	la recerca ha tornat %1 resultats
 your search returned 1 match	common	ca	la recerca ha tornat 1 resultat

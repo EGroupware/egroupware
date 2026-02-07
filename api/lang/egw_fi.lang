@@ -15,7 +15,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	fi	%1 asetus "%2" = %3 estää pääsyn http:n kautta!
 %1 to sync	groupdav	fi	Synkronoitava %1
 %1, duplicate id	common	fi	%1, kaksoistunnus
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	fi	%1Valitse muu hakemisto%2<br>tai salli veb palvelimelle kirjoitusoikeudet: %3.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	fi	%1Valitse muu hakemisto%2\ntai salli veb palvelimelle kirjoitusoikeudet: %3.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fi	%1EGroupware%2 on %3PHP%4 kielellä kirjoitettu monen käyttäjän työryhmäohjelmisto.
 %s disabled	common	fi	%s ei käytössä
 %s needed	common	fi	%s tarvitaan
@@ -278,6 +278,7 @@ christmas island	common	fi	JOULUSAARI
 class	common	fi	Class
 class, valign	common	fi	Class, Valign
 clear	common	fi	Tyhjennä
+clear filters	common	fi	Tyhjennä suodattimet
 clear form	common	fi	Tyhjennä lomake
 clear window	common	fi	Tyhjennä ikkuna
 click	common	fi	Napsauta
@@ -301,6 +302,7 @@ collection empty.	common	fi	Kokoelma tyhjä.
 collection listing	common	fi	Kokoelman luettelointi
 colombia	common	fi	KOLUMBIA
 colour	common	fi	Väri
+column filters	common	fi	Sarakesuodattimet
 column...	common	fi	Sarake ...
 columnname	common	fi	Sarakkeen nimi
 columns to print	common	fi	Tulostettavat sarakkeet
@@ -365,7 +367,7 @@ date	common	fi	Päiväys
 date + time	common	fi	Päivämäärä ja aika
 date due	common	fi	Eräpäivä
 date+time	common	fi	Päivämäärä ja aika
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fi	Date time-portti.<br>Jos käytät porttia 13, määrittele palomuuriasetukset oikein, ennen kuin lähetät tämän lomakkeen tiedot.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fi	Date time-portti.\nJos käytät porttia 13, määrittele palomuuriasetukset oikein, ennen kuin lähetät tämän lomakkeen tiedot.\n(Port: 13 / Host: 129.6.15.28)
 day	common	fi	Päivä
 days	common	fi	Päivää
 db ensures that every row has a unique value in that column	common	fi	DB varmistaa että jokaisella rivillä on ainutlaatuinen arvo sarakkeessa
@@ -488,7 +490,7 @@ end time	common	fi	Loppumisaika
 enter '' for an empty default, nothing mean no default	common	fi	Syötä '' määritelläksesi tyhjä arvo, tyhjä=ei oletusarvoa
 enter a search pattern	common	fi	Syötä haun kaava
 enter filename to upload and attach, use [browse...] to search for it	common	fi	Anna ladattavan ja liitettävän tiedoston nimi, käytä [Selaa...] löytääksesi tiedosto
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna EGroupwaren URL.<br>Esimerkki: https://egw.domain.com/egroupware tai /egroupware<br>(<b>Ei kauttaviivaa loppuun</b>)
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna EGroupwaren URL.\nEsimerkki: https://egw.domain.com/egroupware tai /egroupware\n(<b>Ei kauttaviivaa loppuun</b>)
 enter the new version number here (> old_version), empty for no update-file	common	fi	Anna uusi versio numero (>vanha_versio), tyhjä jos ei ole päivitettävää tiedostoa
 enter the new version number here (has to be > old_version)	common	fi	Anna uusi versio numero (täytyy olla > vanha_versio)
 enter your file name	common	fi	Anna tiedostonimi
@@ -773,8 +775,8 @@ libyan arab jamahiriya	common	fi	LIBYAN ARAB JAMAHIRIYA
 license	common	fi	Lisenssi
 liechtenstein	common	fi	LICHTENSTEIN
 light mode	common	fi	Vaalea tila
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'<br><b>csv tiedot sisältävät ##last-check-run## taulukon %3 ==> ohita</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'<br><b>csv tiedot eivät täsmää taulukon laskettuihin sarakkeisiin %3 ==> ohita</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'\n<b>csv tiedot sisältävät ##last-check-run## taulukon %3 ==> ohita</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'\n<b>csv tiedot eivät täsmää taulukon laskettuihin sarakkeisiin %3 ==> ohita</b>
 link	common	fi	Linkki
 link is appended to mail allowing recipients to download currently attached version of files	common	fi	Linkki liitetään sähköpostiviestiin, jolloin vastaanottajat voivat ladata liitteenä olevan version tiedostoista
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	fi	Linkki liitetään sähköpostiviestiin, jonka avulla vastaanottajat voivat ladata tai muokata tiedostojen ajantasaista versiota (vain EPL)
@@ -850,6 +852,7 @@ middle	common	fi	Keskellä
 minute	common	fi	Minuutti
 minutes	common	fi	Minuuttia
 missing: %1	common	fi	Puuttuva: %1
+mode	common	fi	Tila
 modifier	preferences	fi	Muokkaaja
 moldova, republic of	common	fi	MOLDOVAN TASAVALTA
 monaco	common	fi	MONACO
@@ -1113,7 +1116,7 @@ san marino	common	fi	SAN MARINO
 sao tome and principe	common	fi	SAO TOME JA PRINCIPE
 saturday	common	fi	Lauantai
 saudi arabia	common	fi	SAUDI ARABIA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	fi	Savant2 versio eroaa Savant2 wrapperista.<br>Tämä versio: %1 <br>Savantin versio: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	fi	Savant2 versio eroaa Savant2 wrapperista.\nTämä versio: %1 \nSavantin versio: %2
 save	common	fi	Tallenna
 save all	common	fi	Tallenna kaikki
 save as	common	fi	Tallenna nimellä
@@ -1312,14 +1315,14 @@ text color:	common	fi	Tekstin väri:
 textarea	common	fi	Tekstialue
 thailand	common	fi	THAIMAA
 the backup key has been deleted.	common	fi	Varmistusavain on poistettu.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	fi	The browser popup blocker is on. Please click on ok button to see the pop-up.<br>If you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	fi	The browser popup blocker is on. Please click on ok button to see the pop-up.\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	fi	Tiedosto voi sisältää merkintöjä kuten {{%3}}, mihin syötetään haluttu tieto. %1Lista mahdollisista merkinnöistä%2.
 the following applications require upgrades	common	fi	Seuraavat sovellukset tarvitsevat päivityksen
 the following document-types are supported:	preferences	fi	Seuraavat tiedostotyypit ovat tuettuja:
 the mail server returned	common	fi	Sähköpostipalvelin palautti
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	fi	Käyttäjänimi on jo käytössä. Valitse toinen nimi.
 this feature is only available in epl version.	common	fi	Tämä ominaisuus on käytettävissä vain EGroupware EPL -versiossa.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	fi	Tämä on oma osuutesi. Testaa sitä käyttämällä anonyymiä / incognito-ikkunaa.<br>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	fi	Tämä on oma osuutesi. Testaa sitä käyttämällä anonyymiä / incognito-ikkunaa.\n%1
 this name has been used already	common	fi	Nimi on jo käytössä!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	fi	Tämä teksti näytetään, jos syöttökenttä on tyhjä ja sillä ei ole fokusta (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	fi	Tämä nollaa työkalurivin asetukset kaikille käyttäjille ja asettaa ne määritettyihin oletusasetuksiin.
@@ -1342,7 +1345,7 @@ todays date, eg. "%1"	common	fi	Tämä päivämäärä, esim. "%1"
 togo	common	fi	TOGO
 tokelau	common	fi	TOKELAU
 tonga	common	fi	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	fi	Liian monta riviä valittu.<br>Valitse kaikki tai vähemmän kuin %1 riviä
+too many rows selected.<br />select all, or less than %1 rows	common	fi	Liian monta riviä valittu.\nValitse kaikki tai vähemmän kuin %1 riviä
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjällä '%2', %3 IP-osoitteesta %4
 toolbar settings	common	fi	Työkalurivin asetukset
 top	common	fi	Ylälaita
@@ -1472,7 +1475,7 @@ your account has been updated with new data from your identity provider.	common	
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	fi	Selaimesi ei ole ajan tasalla (JavaScript ES6 -yhteensopiva), joten jotkin ominaisuudet eivät ehkä toimi.
 your code is incorrect !!!	common	fi	Virheellinen koodi!
 your key has been restored successfully.	common	fi	Avaimesi on palautettu onnistuneesti.
-your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!<br>
+your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!\n
 your message has been sent	common	fi	Viesti on lähetetty.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	fi	Salasanallasi ei ole vaadittua %1 merkkiluokan vahvuutta ja %2 merkin vähimmäispituutta.
 your password does not have required strength:	common	fi	Salasanallasi ei ole vaadittua vahvuutta:
