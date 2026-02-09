@@ -1,3 +1,11 @@
+egroupware-docker (26.2.20260209) hardy; urgency=low
+
+  * Final 26.x release 26.2.20260209 :)
+  * To update install the new egroupware-docker-26 package Linux package for your distro
+  * AiTools: target language was not send in prompt to AI (DeepL worked as no prompt)
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 09 Feb 2026 15:30:08 +0100
+
 egroupware-docker (26.2.20260207) hardy; urgency=low
 
   * last 26.x pre-release, probably identical to final release planned for Monday 9th Februar
