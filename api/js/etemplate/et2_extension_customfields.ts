@@ -313,7 +313,8 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			let id = this.options.prefix + field_name;
 
 			// skip non-select-boxes for "customfields-filters"
-			if (this.getType() === 'customfields-filters' && !field.type.startsWith('select'))
+			if (this.getType() === 'customfields-filters' && !(field.type.startsWith('select') ||
+				field.type !== 'filemanager' && typeof apps[field.type] !== 'undefined'))
 			{
 				continue;
 			}
