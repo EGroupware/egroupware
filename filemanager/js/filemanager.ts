@@ -269,12 +269,16 @@ export class filemanagerAPP extends EgwApp
 		const path = state.state?.path || "~";
 
 		// NM used to have path as a child widget, but now path is outside so we do some extra stuff
+		const nm_update = this.nm.update_in_progress;
+		this.nm.update_in_progress = true;
 		this.change_dir(path);
 		if(state.state?.path)
 		{
 			state.state.col_filter ??= {};
-			state.state.col_filter.path = path;
+			// Client side uses dir, not path
+			state.state.col_filter.dir = path;
 		}
+		this.nm.update_in_progress = nm_update;
 
 		let result = super.setState(state, 'filemanager.index');
 
