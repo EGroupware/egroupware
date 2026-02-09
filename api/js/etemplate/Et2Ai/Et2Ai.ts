@@ -459,7 +459,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			actionValue = actionValue.trim();
 			const originalValue = (typeof target.getValue == "function" ? target.getValue() : target.value) ?? ""
-			const aiContent = this.getContent();
+			const aiContent = action.target == "self" ? this.getContent() : originalValue;
 			switch(action?.mode ?? "replace")
 			{
 				case "prepend":
