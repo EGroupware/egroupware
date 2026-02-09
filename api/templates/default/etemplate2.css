@@ -845,7 +845,8 @@ th table.et2_grid.et2_customfield_list{
 *[slot="filter"] .et2_customfield_list.et2-label-fixed tr td:first-child et2-label{
     width: 11.5em;
 }
-*[slot="filter"] .et2_customfield_list.et2-label-fixed tr td:last-child et2-select{
+*[slot="filter"] .et2_customfield_list.et2-label-fixed tr td:last-child *
+{
     width: 100% !important;
 }
 
