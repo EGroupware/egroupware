@@ -110,7 +110,7 @@ class filemanager_shares extends filemanager_ui
 			{
 				$row['type'] = $row['share_writable'] ? Sharing::WRITABLE : Sharing::READONLY;
 			}
-			$row['share_passwd'] = (boolean)$row['share_passwd'];
+			$row['share_passwd'] = (bool)$row['share_passwd'];
 			if ($row['share_with']) $row['share_with'] = preg_replace('/,([^ ])/', ', $1', $row['share_with']);
 
 			foreach(['share_created','share_last_accessed'] as $date_field)

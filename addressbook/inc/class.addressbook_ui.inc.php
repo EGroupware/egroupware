@@ -2602,7 +2602,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$content = array();
 			$contact_id = $_GET['contact_id'] ? $_GET['contact_id'] : ((int)$_GET['account_id'] ? 'account:'.(int)$_GET['account_id'] : 0);
-			$view = (boolean)$_GET['view'];
+			$view = (bool)$_GET['view'];
 			// new contact --> set some defaults
 			if ($contact_id && is_array($content = $this->read($contact_id)))
 			{
@@ -3709,7 +3709,7 @@ class addressbook_ui extends addressbook_bo
 		else
 		{
 			$errors = null;
-			$updated = parent::set_all_fileas($_GET['type'],(boolean)$_GET['all'],$errors,true);	// true = ignore Acl
+			$updated = parent::set_all_fileas($_GET['type'],(bool)$_GET['all'],$errors,true);	// true = ignore Acl
 			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
 		echo $GLOBALS['egw']->framework->footer();

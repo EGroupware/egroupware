@@ -2733,13 +2733,13 @@ abstract class Merge
 		}
 		foreach(['pdf', 'individual', 'link', 'download', 'open_email'] as $option)
 		{
-			$$option = is_null($options) || empty($options) ? (boolean)$_REQUEST['options'][$option] : (boolean)$options[$option];
+			$$option = is_null($options) || empty($options) ? (bool)$_REQUEST['options'][$option] : (bool)$options[$option];
 		}
 		$app = (is_null($options) ? $_REQUEST['options']['app'] : $options['app']) ?? $GLOBALS['egw_info']['flags']['currentapp'];
 
 		if(is_null($return))
 		{
-			$return = (boolean)$_REQUEST['return'];
+			$return = (bool)$_REQUEST['return'];
 		}
 
 		$id_group = $individual ? $ids : [$ids];

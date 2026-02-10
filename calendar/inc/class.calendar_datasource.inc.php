@@ -163,7 +163,7 @@ class calendar_datasource extends datasource
 			if ($status == 'active' && $entry['deleted'])
 			{
 				$entry['deleted'] = null;
-				return (boolean)$bo->update($entry, true);
+				return (bool)$bo->update($entry, true);
 			}
 		}
 		return false;

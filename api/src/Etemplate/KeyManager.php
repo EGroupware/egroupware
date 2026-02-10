@@ -155,9 +155,9 @@ class KeyManager
 	{
 		return array(
 			"keyCode" => $keyCode,
-			"shift" => (boolean)$shift,
-			"ctrl" => (boolean)$ctrl,
-			"alt" => (boolean)$alt,
+			"shift" => (bool)$shift,
+			"ctrl" => (bool)$ctrl,
+			"alt" => (bool)$alt,
 			"caption" => self::shortcut_caption($keyCode, $shift, $ctrl, $alt)
 		);
 	}

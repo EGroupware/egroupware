@@ -358,8 +358,8 @@ class admin_customfields
 		{
 			die(lang('Error! No appname found'));
 		}
-		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || !empty($content['use_private']);
-		$this->use_readonly = !isset($_GET['use_readonly']) || (boolean)$_GET['use_readonly'] || !empty($content['use_readonly']);
+		$this->use_private = !isset($_GET['use_private']) || (bool)$_GET['use_private'] || !empty($content['use_private']);
+		$this->use_readonly = !isset($_GET['use_readonly']) || (bool)$_GET['use_readonly'] || !empty($content['use_readonly']);
 
 		// Read fields, constructor doesn't always know appname
 		$this->fields = Api\Storage\Customfields::get($this->appname,true, null, null, null);

@@ -648,7 +648,7 @@ abstract class Ajax extends Api\Framework
 	 */
 	public function sidebox($appname,$menu_title,$file,$type=null)
 	{
-		if (!isset($file['menuOpened'])) $file['menuOpened'] = (boolean)$this->sidebox_menu_opened;
+		if (!isset($file['menuOpened'])) $file['menuOpened'] = (bool)$this->sidebox_menu_opened;
 		//error_log(__METHOD__."('$appname', '$menu_title', file[menuOpened]=$file[menuOpened], ...) this->sidebox_menu_opened=$this->sidebox_menu_opened");
 		$this->sidebox_menu_opened = false;
 
@@ -720,7 +720,7 @@ abstract class Ajax extends Api\Framework
 				'menu_name' => md5($menu_name),	// can contain Api\Html tags and javascript!
 				'title' => $menu_name,
 				'entries' => array(),
-				'opened' => (boolean)$file['menuOpened'],
+				'opened' => (bool)$file['menuOpened'],
 			);
 			if($file['icon'])
 			{

@@ -353,7 +353,7 @@ class Vfs extends Vfs\Base
 		$type = $options['type'] ?? null;	// 'd', 'f' or 'F'
 		$dirs_last = !empty($options['depth']);	// put content of dirs before the dir itself
 		// show dirs on top by default, if no recursive listing (allways disabled if $type specified, as unnecessary)
-		$dirsontop = !$type && (isset($options['dirsontop']) ? (boolean)$options['dirsontop'] : isset($options['maxdepth'])&&$options['maxdepth']>0);
+		$dirsontop = !$type && (isset($options['dirsontop']) ? (bool)$options['dirsontop'] : isset($options['maxdepth'])&&$options['maxdepth']>0);
 		if ($dirsontop) $options['need_mime'] = true;	// otherwise dirsontop can NOT work
 
 		// process some of the options (need to be done only once)
@@ -1583,7 +1583,7 @@ class Vfs extends Vfs\Base
 
 		if ($update)	// Lock Update
 		{
-			if (($ret = (boolean)($row = self::$db->select(self::LOCK_TABLE,array('lock_owner','lock_exclusive','lock_write'),array(
+			if (($ret = (bool)($row = self::$db->select(self::LOCK_TABLE,array('lock_owner','lock_exclusive','lock_write'),array(
 				'lock_path' => $path,
 				'lock_token' => $token,
 			),__LINE__,__FILE__)->fetch())))

@@ -138,7 +138,7 @@ class Taglist extends Etemplate\Widget
 		$results = ['results' => []];
 		$start = 0;
 		$categories = new Api\Categories('', $options['application'] ?: '');
-		foreach($categories->return_sorted_array($start, (int)$options['num_rows'], $search, 'ASC', 'cat_name', (boolean)$options['globalCategories'], false) as $cat)
+		foreach($categories->return_sorted_array($start, (int)$options['num_rows'], $search, 'ASC', 'cat_name', (bool)$options['globalCategories'], false) as $cat)
 		{
 			$results['results'][] = Tree::formatCategory($cat, $categories);
 		}

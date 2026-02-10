@@ -905,7 +905,7 @@ abstract class admin_cmd
 	{
 		if (is_bool($value) || is_int($value))
 		{
-			return (boolean)$value;
+			return (bool)$value;
 		}
 		if (is_null($value) || (string)$value === '')
 		{

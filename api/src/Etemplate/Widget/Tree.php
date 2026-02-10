@@ -212,7 +212,7 @@ class Tree extends Etemplate\Widget
 	 */
 	public static function in_cats($id, array $cats)
 	{
-		return (boolean)array_filter($cats, function($cat) use($id)
+		return (bool)array_filter($cats, function($cat) use($id)
 		{
 			return is_array($cat) && ($cat['value'] == $id || (
 					!empty($cat['children']) && is_array($cat['children']) && static::in_cats($id, $cat['children'])

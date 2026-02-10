@@ -586,7 +586,7 @@ class Etemplate extends Etemplate\Widget\Template
 
 		$this->dom_id = isset($_GET['fw_target']) ?	$name.'-'.$_GET['fw_target'] : $name;
 
-		return (boolean)$this->rel_path;
+		return (bool)$this->rel_path;
 	}
 
 	/**

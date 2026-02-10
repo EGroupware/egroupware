@@ -692,7 +692,7 @@ class admin_categories
 			$refresh_app = $this->appname == 'preferences' ? $content['appname'] : $this->appname;
 			foreach($content['cat_id'] as $cat_id)
 			{
-				if ($cats->check_perms(Acl::DELETE, $cat_id, (boolean)$GLOBALS['egw_info']['user']['apps']['admin']))
+				if ($cats->check_perms(Acl::DELETE, $cat_id, (bool)$GLOBALS['egw_info']['user']['apps']['admin']))
 				{
 					$cmd = new admin_cmd_delete_category(
 							$cat_id,
@@ -805,7 +805,7 @@ class admin_categories
 				$action_msg = lang('deleted');
 				foreach($checked as $id)
 				{
-					if($cats->check_perms(Acl::DELETE, $id, (boolean)$GLOBALS['egw_info']['user']['apps']['admin']))
+					if($cats->check_perms(Acl::DELETE, $id, (bool)$GLOBALS['egw_info']['user']['apps']['admin']))
 					{
 						$cmd = new admin_cmd_delete_category($id, $settings == 'sub');
 						$cmd->run();

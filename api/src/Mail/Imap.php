@@ -172,7 +172,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		}
 		$this->params = $params;
 		$this->isAdminConnection = $_adminConnection;
-		$this->enableSieve = (boolean)$this->params['acc_sieve_enabled'];
+		$this->enableSieve = (bool)$this->params['acc_sieve_enabled'];
 		$this->loginType = $this->params['acc_imap_logintype'] ?? null;
 		$this->domainName = $this->params['acc_domain'] ?? null;
 
@@ -339,7 +339,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 				return $this->params['acc_id'];
 
 			case 'enableSieve':
-				return (boolean)$this->params['acc_sieve_enabled'];
+				return (bool)$this->params['acc_sieve_enabled'];
 
 			default:
 				// allow readonly access to all class attributes

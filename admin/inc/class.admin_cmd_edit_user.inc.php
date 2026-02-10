@@ -91,7 +91,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		{
 			throw new Api\Exception\WrongUserinput(lang('The two passwords are not the same'), 12);
 		}
-		$expires = self::_parse_expired($data['account_expires'],(boolean)$this->account);
+		$expires = self::_parse_expired($data['account_expires'],(bool)$this->account);
 		if ($expires === 0)	// deactivated
 		{
 			$data['account_expires'] = -1;
@@ -169,7 +169,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 			throw new Api\Db\Exception(lang("Error saving account!"),11);
 		}
 		// make new account_id available to caller
-		$update = (boolean)$this->account;
+		$update = (bool)$this->account;
 		if (!$this->account) $this->account = $data['account_id'];
 
 		if ($data['account_groups'])
