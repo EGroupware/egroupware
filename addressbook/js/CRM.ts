@@ -177,6 +177,12 @@ export class CRMView extends EgwApp
 
 		// Override the push handler
 		this._override_push(app_obj);
+
+		// Override default search change handler, which doesn't find CRM
+		app_obj.et2.getWidgetById("search").onchange = (e, widget) =>
+		{
+			this.changeNmFilter(e, widget)
+		};
 	}
 
 	/**
