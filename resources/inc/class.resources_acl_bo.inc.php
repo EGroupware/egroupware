@@ -83,7 +83,7 @@ class resources_acl_bo
 	*/
 	function get_cats($perm_type,$parent_id=0)
 	{
-		$cats = $this->egw_cats->return_sorted_array(0,false,'','','',true,$parent_id);
+		$cats = $this->egw_cats->return_sorted_array(0,false,'','','','all_no_acl',$parent_id);
 		#_debug_array($cats);
 		if (!is_array($cats)) $cats = array();
 		$perm_cats = array();
