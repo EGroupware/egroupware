@@ -127,7 +127,7 @@ function send_template()
 	<et2-template id="$template_id">
 EOF;
 		// Add searchbox
-		searchbox($xet, $app);
+		searchbox($xet, $app, $_SERVER['PATH_INFO']);
 
 		// get all NM sort-header and place them in filter-template
 		$sort_options = [];
@@ -381,9 +381,13 @@ function stringAttrs(array $attrs)
 	}, array_keys($attrs), $attrs));
 }
 
-function searchbox(&$str, $app)
+function searchbox(&$str, $app, $path)
 {
-	if(class_exists('EGroupware\\Rag\\Embedding') && ($plugins = \EGroupware\Rag\Embedding::plugins($app)) && array_key_exists($app, $plugins))
+	if (class_exists('EGroupware\\Rag\\Embedding') &&
+		($plugins = \EGroupware\Rag\Embedding::plugins($app)) &&
+		array_key_exists($app, $plugins) &&
+		// exceptions supporting RAG, but not with all (sub-)templates
+		!preg_match('#^/projectmanager/templates/[^/]+/(elements|pricelist).list.xet#', $path))
 	{
 		// Use RAG search
 		$str .= <<<EOF
