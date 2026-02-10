@@ -236,7 +236,7 @@ class Groups
 				'title'   => lang($app),
 				'action'  => $acl_action,
 				'popup'   => $popup,
-				'run'     => (int)(boolean)$run_rights[$app],
+				'run'     => (int)(bool)$run_rights[$app],
 			);
 			if ($run_rights[$app]) $content['old_run'][] = $app;
 			$readonlys['apps']['button['.$app.']'] = !$acl_action;

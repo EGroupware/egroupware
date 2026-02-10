@@ -218,7 +218,7 @@ class admin_account
 				case 'anonymous':
 				case 'hidden':
 				case 'mustchangepassword':
-					$account[$a_name] = (boolean)$content[$c_name];
+					$account[$a_name] = (bool)$content[$c_name];
 					break;
 
 				default:

@@ -1192,7 +1192,7 @@ class filemanager_ui
 		// Re-map so 'No filters' favorite ('') is depth 1, same for not set filter === null
 		$filter = (string)$query['filter'] === '' ? 1 : $query['filter'];
 
-		$maxdepth = $filter && $filter != 4 ? (int)(boolean)$filter : null;
+		$maxdepth = $filter && $filter != 4 ? (int)(bool)$filter : null;
 		if($filter == 5) $maxdepth = 2;
 		$n = 0;
 		$vfs_options = array(

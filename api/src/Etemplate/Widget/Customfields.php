@@ -184,7 +184,7 @@ class Customfields extends Transformer
 		foreach((array)$fields as $key => $field)
 		{
 			// remove private or non-private cf's, if only one kind should be displayed
-			if ((string)$use_private !== '' && (boolean)$field['private'] != (boolean)$use_private)
+			if ((string)$use_private !== '' && (bool)$field['private'] != (bool)$use_private)
 			{
 				unset($fields[$key]);
 			}
@@ -504,7 +504,7 @@ class Customfields extends Transformer
 				$field_settings = $customfields[$fname = substr($field, strlen($this->attrs['prefix']))] ?? null;
 
 				if(!isset($field_settings) || (string)$use_private !== '' &&    // are only (non-)private fields requested
-					(boolean)$field_settings['private'] != ($use_private != '0'))
+					(bool)$field_settings['private'] != ($use_private != '0'))
 				{
 					continue;
 				}

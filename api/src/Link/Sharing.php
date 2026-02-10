@@ -104,7 +104,7 @@ class Sharing extends \EGroupware\Api\Sharing
 				$document['allowOnMultiple'] = true;
 				$document['onExecute'] = "javaScript:app.$appname.share_merge";
 			}
-			$documents['enabled'] = (boolean)$documents['children'] && !!($GLOBALS['egw_info']['user']['apps']['stylite']) ?
+			$documents['enabled'] = (bool)$documents['children'] && !!($GLOBALS['egw_info']['user']['apps']['stylite']) ?
 					"javaScript:app.$appname.is_share_enabled" : false;
 			$actions['share']['children']['shareDocuments'] = $documents;
 		}
@@ -130,7 +130,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		{
 			\EGroupware\Api\Link::init_static();
 		}
-		return (boolean) \EGroupware\Api\Link::title($app, $id);
+		return (bool) \EGroupware\Api\Link::title($app, $id);
 	}
 
 }

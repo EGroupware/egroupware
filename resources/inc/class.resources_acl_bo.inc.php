@@ -190,7 +190,7 @@ class resources_acl_bo
 		}
 		//echo "<p>".__METHOD__."($cat_id,$right) = ".self::$permissions[$cat_id]." & $right = ".(self::$permissions[$cat_id] & $right)."</p>\n";
 
-		return (boolean) (self::$permissions[$cat_id] & $right);
+		return (bool) (self::$permissions[$cat_id] & $right);
 	}
 
 	/**

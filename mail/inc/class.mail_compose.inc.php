@@ -3736,7 +3736,7 @@ class mail_compose
 		//error_log(__METHOD__. "request from seachAddress " . $_REQUEST['query']);
 		if (!is_int($_searchStringLength)) $_searchStringLength = 2;
 		$_searchString = trim($_REQUEST['query']);
-		$include_lists = (boolean)$_REQUEST['include_lists'];
+		$include_lists = (bool)$_REQUEST['include_lists'];
 
 		$contacts_obj = new Api\Contacts();
 		$results = array();

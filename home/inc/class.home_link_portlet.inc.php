@@ -64,7 +64,7 @@ class home_link_portlet extends home_portlet
 
 			// Reload to get the latest title
 			// TODO: This is a performance hit, it would be good to do this less
-			$need_reload |= (boolean)$context['entry']['id'];
+			$need_reload |= (bool)$context['entry']['id'];
 		}
 		$this->context = $context;
 	}

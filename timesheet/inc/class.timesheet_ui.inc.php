@@ -1143,7 +1143,7 @@ class timesheet_ui extends timesheet_bo
 				'group' => $group,
 				'children' => $this->get_status_labels(),
 				'prefix' => 'to_status_',
-				'enabled' => (boolean)$this->get_status_labels(),
+				'enabled' => (bool)$this->get_status_labels(),
 				'onExecute' => 'javaScript:app.timesheet.ajax_action',
 			),
 		);

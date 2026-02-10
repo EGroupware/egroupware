@@ -778,7 +778,7 @@ class Nextmatch extends Etemplate\Widget
 				if (!empty($row[$is_parent]))	// if app supports parent_id / hierarchy, set parent_id and is_parent
 				{
 					$row['is_parent'] = isset($is_parent_value) ?
-						$row[$is_parent] == $is_parent_value : (boolean)$row[$is_parent];
+						$row[$is_parent] == $is_parent_value : (bool)$row[$is_parent];
 					$row['parent_id'] = $row[$parent_id] ?? null;	// seems NOT used on client!
 				}
 				// run beforeSendToClient methods of widgets in row on row-data
@@ -1170,7 +1170,7 @@ class Nextmatch extends Etemplate\Widget
 		return array(
 			'caption' => $caption,
 			'children' => $cat_actions,
-			'enabled' => (boolean)$cat_actions,
+			'enabled' => (bool)$cat_actions,
 			'group' => $group,
 			'prefix' => $prefix,
 		);

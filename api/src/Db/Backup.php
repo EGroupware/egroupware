@@ -316,7 +316,7 @@ class Backup
 
 		if (!is_null($backupFiles))
 		{
-			Api\Config::save_value('backup_files',$this->backup_files=(boolean)$backupFiles,'phpgwapi');
+			Api\Config::save_value('backup_files',$this->backup_files=(bool)$backupFiles,'phpgwapi');
 		}
 	}
 

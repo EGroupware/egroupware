@@ -1253,11 +1253,11 @@ class HTTP_WebDAV_Server
 		static $compression = null;
 		if (isset($set))
 		{
-			ini_set('zlib.output_compression', $compression=(boolean)$set);
+			ini_set('zlib.output_compression', $compression=(bool)$set);
 		}
 		elseif (!isset($compression))
 		{
-			$compression = (boolean)ini_get('zlib.output_compression');
+			$compression = (bool)ini_get('zlib.output_compression');
 		}
 		//error_log(__METHOD__."(".array2string($set).") returning ".array2string($compression));
 		return $compression;
