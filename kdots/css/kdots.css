@@ -1181,7 +1181,7 @@ et2-dialog > [slot="label"] et2-toolbar [slot="list"] {
   color: var(--sl-color-neutral-700);
   --indicator-color: var(--sl-color-neutral-700);
   --sl-input-color: var(--sl-color-neutral-700);
-  --sl-input-color-hover: var(--sl-color-neutral-700);
+  --sl-input-color-hover: var(--sl-color-primary-800);
   --sl-input-placeholder-color: var(--sl-color-neutral-700);
 }
 et2-toolbar[slot="main-header"] [slot="list"] ::part(base),
@@ -1207,6 +1207,10 @@ et2-toolbar[slot="main-header"] [slot="list"] :hover::part(base),
 et2-dialog > et2-toolbar[slot="label"] [slot="list"] :hover::part(base),
 et2-dialog > [slot="label"] et2-toolbar [slot="list"] :hover::part(base) {
   border-color: var(--sl-input-border-color);
+}
+et2-toolbar[slot="main-header"]::part(list),
+[slot="main-header"] et2-toolbar::part(list) {
+  --sl-input-color-hover: var(--sl-color-primary-700);
 }
 /*Special styling for flatpickr widget*/
 .flatpickr-calendar .flatpickr-months .flatpickr-current-month {

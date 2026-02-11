@@ -342,7 +342,7 @@ et2-toolbar[slot="main-header"], [slot="main-header"] et2-toolbar, et2-dialog > 
 	color: var(--sl-color-neutral-700);
 	--indicator-color: var(--sl-color-neutral-700);
 	--sl-input-color: var(--sl-color-neutral-700);
-	--sl-input-color-hover: var(--sl-color-neutral-700);
+	--sl-input-color-hover: var(--sl-color-primary-800);
 	--sl-input-placeholder-color: var(--sl-color-neutral-700);
 
 	::part(base), &::part(base), &::part(control) {
@@ -360,6 +360,11 @@ et2-toolbar[slot="main-header"], [slot="main-header"] et2-toolbar, et2-dialog > 
 	:hover::part(base) {
 	  border-color: var(--sl-input-border-color);
 	}
+  }
+}
+et2-toolbar[slot="main-header"], [slot="main-header"] et2-toolbar{
+  &::part(list){
+	--sl-input-color-hover: var(--sl-color-primary-700);
   }
 }
 
