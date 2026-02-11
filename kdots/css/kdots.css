@@ -2801,6 +2801,10 @@ html[data-darkmode="1"] egw-app,
 .sl-theme-dark egw-app {
   --application-header-text-color: var(--sl-color-neutral-900);
 }
+html[data-darkmode="1"] et2-toolbar,
+.sl-theme-dark et2-toolbar {
+  --sl-color-neutral-0: var(--sl-color-neutral-50);
+}
 html[data-darkmode="1"] .et2_container,
 .sl-theme-dark .et2_container {
   background-color: initial;

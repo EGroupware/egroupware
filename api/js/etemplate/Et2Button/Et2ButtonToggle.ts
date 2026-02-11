@@ -188,6 +188,7 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 		}
 
 		this.mutationObserver.observe(this, {subtree: true, childList: true});
+		this.classList.add("et2-button-widget");
 	}
 
 	disconnectedCallback()

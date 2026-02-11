@@ -41,7 +41,7 @@
 
 
   /* Input field changes */
-  .et2-input-widget {
+  .et2-input-widget:not(.et2-button-widget) {
 	&:not([disabled]):not([slot="main-header"]):not([slot="header-actions"]) {
 	  &::part(base), &::part(input-control), &::part(combobox) {
 		box-shadow: var(--upper-tint), var(--lower-shade);
@@ -76,7 +76,8 @@
   --sl-button-primary-hover-background-color: hsl(calc(var(--application-color-hsl) / 0.9));
   --sl-button-primary-hover-border-color: hsl(calc(var(--application-color-hsl) / 1));
 
-  .et2-button-widget, button, .plus_button {
+  // box shadow inside the toolbar lists just looks bad. Exclude it there
+  .et2-button-widget:not([slot='list']), button, .plus_button {
 	&::part(base), &::part(button__base) {
 	  border-radius: var(--sl-button-border-radius);
 	  box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
