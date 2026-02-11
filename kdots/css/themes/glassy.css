@@ -56,20 +56,20 @@
   border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
   border-radius: var(--sl-panel-border-radius);
 }
-:root .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
-:host .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
-.kdots-glassy .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
-:root .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
-:host .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
-.kdots-glassy .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
-:root .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
-:host .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
-.kdots-glassy .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox) {
+:root .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
+:host .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
+.kdots-glassy .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
+:root .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
+:host .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
+.kdots-glassy .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
+:root .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
+:host .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
+.kdots-glassy .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox) {
   box-shadow: var(--upper-tint), var(--lower-shade);
 }
-:root .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
-:host .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
-.kdots-glassy .et2-input-widget:not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox) {
+:root .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
+:host .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
+.kdots-glassy .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox) {
   --sl-input-background-color: var(--sl-color-neutral-0);
   color: var(--sl-color-neutral-700);
 }
@@ -94,18 +94,18 @@
 .kdots-glassy *[slot="main-header"] *::part(button__base) {
   box-shadow: none !important;
 }
-:root .et2-button-widget::part(base),
-:host .et2-button-widget::part(base),
-.kdots-glassy .et2-button-widget::part(base),
+:root .et2-button-widget:not([slot='list'])::part(base),
+:host .et2-button-widget:not([slot='list'])::part(base),
+.kdots-glassy .et2-button-widget:not([slot='list'])::part(base),
 :root button::part(base),
 :host button::part(base),
 .kdots-glassy button::part(base),
 :root .plus_button::part(base),
 :host .plus_button::part(base),
 .kdots-glassy .plus_button::part(base),
-:root .et2-button-widget::part(button__base),
-:host .et2-button-widget::part(button__base),
-.kdots-glassy .et2-button-widget::part(button__base),
+:root .et2-button-widget:not([slot='list'])::part(button__base),
+:host .et2-button-widget:not([slot='list'])::part(button__base),
+.kdots-glassy .et2-button-widget:not([slot='list'])::part(button__base),
 :root button::part(button__base),
 :host button::part(button__base),
 .kdots-glassy button::part(button__base),
@@ -115,9 +115,9 @@
   border-radius: var(--sl-button-border-radius);
   box-shadow: var(--inner-shine), var(--top-highlight), var(--upper-tint), var(--lower-shade), var(--bottom-shadow);
 }
-:root .et2-button-widget:not([disabled]):active::part(base),
-:host .et2-button-widget:not([disabled]):active::part(base),
-.kdots-glassy .et2-button-widget:not([disabled]):active::part(base),
+:root .et2-button-widget:not([slot='list']):not([disabled]):active::part(base),
+:host .et2-button-widget:not([slot='list']):not([disabled]):active::part(base),
+.kdots-glassy .et2-button-widget:not([slot='list']):not([disabled]):active::part(base),
 :root button:not([disabled]):active::part(base),
 :host button:not([disabled]):active::part(base),
 .kdots-glassy button:not([disabled]):active::part(base),

@@ -108,7 +108,7 @@ so we force the button images to be square*/
 			}
 			/* Make hover border match other widgets (select) */
 			.button--standard.button--default:hover:not(.button--disabled) {
-				background-color: var(--sl-color-gray-150);
+				background-color: var(--sl-color-gray-200);
 				border-color: var(--sl-input-border-color-hover);
 				color: var(--sl-input-color-hover);
 			}
@@ -147,7 +147,7 @@ so we force the button images to be square*/
 			}
 			.button--standard.button--primary:hover:not(.button--disabled),
 			.button--standard.button--primary.button--checked:not(.button--disabled) {
-				background-color: var(--sl-color-gray-150);
+				background-color: var(--sl-color-gray-200);
 				border-color: var(--sl-color-gray-600);
 				color: initial;
 			}
