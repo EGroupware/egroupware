@@ -145,9 +145,6 @@
 				</row>
 				<row>
 					<et2-textarea  id="info_des" statustext="enter a textual description of the log-entry" span="all" class="description" readonly="true" noLang="1"></et2-textarea>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
-					<et2-description></et2-description>
 				</row>
 				<row>
 					<et2-description></et2-description>
