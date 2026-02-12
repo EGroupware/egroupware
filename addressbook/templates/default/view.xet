@@ -23,38 +23,42 @@
                     <et2-description span="2" value="Phone numbers" class="addressbook_sidebox_header"></et2-description>
                 </row>
                 <row>
-                    <et2-description for="tel_work" value="Business"></et2-description>
-                    <et2-url-phone id="tel_work" readonly="true"></et2-url-phone>
+                        <et2-description for="tel_work" value="Business" statustext="Business"></et2-description>
+                        <et2-url-phone id="tel_work" readonly="true"></et2-url-phone>
                 </row>
                 <row>
-                    <et2-description for="tel_cell" value="Mobile phone"></et2-description>
-                    <et2-url-phone id="tel_cell" readonly="true"></et2-url-phone>
+                        <et2-description for="tel_cell" value="Mobile phone" statustext="Mobile phone"
+></et2-description>
+                        <et2-url-phone id="tel_cell" readonly="true"></et2-url-phone>
                 </row>
                 <row>
-                    <et2-description for="tel_home" value="Private"></et2-description>
-                    <et2-url-phone id="tel_home" readonly="true"></et2-url-phone>
+                        <et2-description for="tel_home" value="Private" statustext="Private"
+></et2-description>
+                        <et2-url-phone id="tel_home" readonly="true"></et2-url-phone>
                 </row>
                 <row>
-                    <et2-description for="tel_fax" value="Fax"></et2-description>
-                    <et2-url-phone id="tel_fax" readonly="true"></et2-url-phone>
+                        <et2-description for="tel_fax" value="Fax" statustext="Fax"
+></et2-description>
+                        <et2-url-phone id="tel_fax" readonly="true"></et2-url-phone>
                 </row>
                 <row>
                     <et2-description span="2" value="EMail &amp; Internet" class="addressbook_sidebox_header"></et2-description>
                 </row>
                 <row>
-                    <et2-description for="email" value="EMail"></et2-description>
-                    <et2-url-email id="email" readonly="true"></et2-url-email>
+                        <et2-description for="email" value="EMail" statustext="EMail"
+></et2-description>
+                        <et2-url-email id="email" readonly="true"></et2-url-email>
                 </row>
                 <row>
-                    <et2-description for="url" value="URL"></et2-description>
-                    <et2-url id="url" readonly="true"></et2-url>
+                        <et2-description for="url" value="URL" statustext="URL"
+></et2-description>
+                        <et2-url id="url" readonly="true"></et2-url>
                 </row>
                 <row class="toolbox">
                     <et2-hbox>
-                        <et2-button id="button[edit]" label="open" image="edit" onclick="app.addressbook.view_actions"></et2-button>
-                        <et2-button id="button[copy]" label="copy" image="copy" onclick="app.addressbook.view_actions"></et2-button>
-                        <et2-button id="button[close]" statustext="close" readonly="false" image="close" onclick="app.addressbook.view_actions"></et2-button>
-                        <et2-button id="button[delete]" label="delete" image="delete" onclick="app.addressbook.view_actions" noSubmit="true"></et2-button>
+                        <et2-button-icon id="button[edit]" label="open" image="edit" onclick="app.addressbook.view_actions"></et2-button-icon>
+                        <et2-button-icon id="button[copy]" label="copy" image="copy" onclick="app.addressbook.view_actions"></et2-button-icon>
+                        <et2-button-icon id="button[close]" statustext="close" readonly="false" image="close" onclick="app.addressbook.view_actions"></et2-button-icon>
                     </et2-hbox>
                 </row>
             </rows>

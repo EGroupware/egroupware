@@ -69,7 +69,7 @@
                            set_value="tel_assistent" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_one_locality" value="city"></et2-description>
                     <et2-hbox  class="city_state_postcode">
-                        <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="24%" maxlength="64" autocomplete="postal-code"></et2-textbox>
+                        <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="5em" maxlength="64" autocomplete="postal-code"></et2-textbox>
                         <et2-textbox  statustext="City" id="adr_one_locality" tabindex="14" maxlength="64" autocomplete="address-level2"></et2-textbox>
                     </et2-hbox>
                 </row>
@@ -98,7 +98,7 @@
                     <et2-hbox>
                         <et2-textbox  statustext="City" id="adr_one_locality" maxlength="64" tabindex="13" autocomplete="address-level2"></et2-textbox>
                         <et2-select-state  statustext="State" id="adr_one_region" tabindex="14" allowFreeEntries="true" width="130" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
-                        <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" maxlength="64" tabindex="15" autocomplete="postal-code"></et2-textbox>
+                        <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" width="5em" maxlength="64" tabindex="15" autocomplete="postal-code"></et2-textbox>
                     </et2-hbox>
                 </row>
                 <row disabled="!@addr_format=city_state_postcode">
@@ -257,7 +257,7 @@
                     <et2-hbox>
                         <et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" autocomplete="section-two address-level2"></et2-textbox>
                         <et2-select-state  statustext="State" id="adr_two_region" allowFreeEntries="true" width="130" autocomplete="section-two address-level1" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
-                        <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
+                        <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" width="5em" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
                     </et2-hbox>
                     <et2-description></et2-description>
                 </row>

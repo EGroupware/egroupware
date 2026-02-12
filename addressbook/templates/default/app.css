@@ -16,17 +16,6 @@ td.addressbook_sidebox_header {
 form[id^=addressbook-view].et2_container {
 	flex: 0 0 min-content;
 }
-td.addressbook_sidebox_toolbar {
-	vertical-align: bottom;
-	height: 32px;
-}
-
-.addressbook_view_sidebox img.photo {
-	width: 68px;
-	padding-right: 3px;
-	height: auto;
-	vertical-align: bottom;
-}
 div.addressbook_view_sidebox .toolbox button{
 	vertical-align: middle;
 }
@@ -34,9 +23,23 @@ div.addressbook_view_sidebox img[id$='_button[delete]'] {
 	float: right;
 	margin-top: 9px;
 }
-/**
- * new addressbook.edit
- */
+.addressbook_view .toolbox et2-hbox::part(base){
+	flex-wrap: wrap;
+	font-size: 1.5em;
+	justify-content: space-around;
+}
+
+.addressbook_view .description--content {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+/*.addressbook_view*/
+
+
+	/**
+     * new addressbook.edit
+     */
 #addressbook-edit.et2_container {
 }
 div.addressbook_edit_general_picture {
