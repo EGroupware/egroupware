@@ -631,7 +631,7 @@ export class EgwFramework extends LitElement
 		// @ts-ignore egw.preference() returns a Promise if you pass true for callback
 		const pref = await egw.preference("open_popups_in", "common", true);
 		let windowID = null;
-		if(pref == "same_window" || pref == undefined && window.matchMedia('(max-width: 800px)').matches)
+		if(pref == "same_window" || window.matchMedia('(max-width: 800px)').matches)
 		{
 			// openDialog doesn't take a full URL, just the menuaction part
 			const dialogURL = _url.split("menuaction=").pop();
