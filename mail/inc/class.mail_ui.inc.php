@@ -2188,8 +2188,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$data["size"] = $header['size']; /// size
 
 			$data["class"] = implode(' ', $css_styles);
+			$data["icon"]="bug-fill";
 			//translate style-classes back to flags
 			$data['flags'] = Array();
+			$icon_options = Array();
 			if ($header['seen']) $data["flags"]['read'] = 'read';
 			foreach ($css_styles as &$flag) {
 				if ($flag!='mail')
@@ -2201,8 +2203,27 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					elseif ($flag=='label5') {$data["flags"]['label5'] = 'label5';}
 					elseif ($flag=='unseen') {unset($data["flags"]['read']);}
 					else $data["flags"][$flag] = $flag;
+
+					//translate style classes to what icon we want to display
+					// unread mail should be blue circle
+					if($flag=='deleted') $icon_options[]='mail_deleted';
+					elseif($flag=='unseen') $icon_options[]='mail_unseen';
+					elseif($flag=='flagged_seen') $icon_options[]='mail_flagged_seen';
+					elseif($flag=='flagged_unseen') $icon_options[]='mail_flagged_unseen';
+					elseif($flag=='recent') $icon_options[]='mail_recent';
+					elseif($flag=='replied') $icon_options[]='mail_replied';
+					elseif($flag=='forwarded') $icon_options[]='mail_forwarded';
 				}
 			}
+			// take precedence of icons into account
+			if(in_array("mail_forwarded", $icon_options)) $data['status_icon']='mail_forward';
+			elseif(in_array("mail_replied", $icon_options)) $data['status_icon']='mail_reply';
+			elseif(in_array("mail_recent", $icon_options)) $data['status_icon']='mail_recent';
+			elseif(in_array("mail_flagged_unseen", $icon_options)) $data['status_icon']='mail_flagged_unseen';
+			elseif(in_array("mail_flagged_seen", $icon_options)) $data['status_icon']='mail_flagged_seen';
+			elseif(in_array("mail_unseen", $icon_options)) $data['status_icon']='mail_unseen';
+			elseif(in_array("mail_deleted", $icon_options)) $data['status_icon']='mail_deleted';
+
 			if ($header['disposition-notification-to']) $data['dispositionnotificationto'] = $header['disposition-notification-to'];
 			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
 			$data['attachmentsBlock'] = $imageHTMLBlock;
