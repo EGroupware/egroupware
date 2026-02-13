@@ -914,6 +914,9 @@ body egw-app,
 [layout="edit"] et2-appicon {
   flex-grow: 0;
 }
+[layout="edit"] et2-tabbox {
+  min-height: 20em;
+}
 /*** Popup styling ***/
 .popupMainDiv {
   /* This would make things simpler for sizing, but causes problems with etemplate.resize() and dialogs with grids
