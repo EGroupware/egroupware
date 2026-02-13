@@ -4,6 +4,8 @@
   height: 100%;
    */
   padding: 0 var(--sl-spacing-small);
+  overflow: hidden;
+  height: 100%;
 
   .dialogHeader, .dialogFooter, .dialogFooterToolbar {
 	// Set border a little thicker & darker
@@ -13,6 +15,15 @@
 
   .dialogHeader {
 	border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+
+	&::part(base) {
+	  align-items: center;
+	}
+  }
+
+  .et2_container {
+	overflow-x: hidden;
+	overflow-y: auto;
   }
 
   /* Specific to override etemplate2 */

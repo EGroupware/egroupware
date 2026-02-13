@@ -760,12 +760,168 @@ body egw-app,
   --application-color: var(--default-color);
 }
 /*** END APPLICATION ***/
+[layout="stack"] {
+  /* Default: children do NOT grow */
+  /* Opt-in growth */
+}
+[layout="stack"]::part(base) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+[layout="stack"] :scope > * {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+[layout="stack"] [grow],
+[layout="stack"] et2-tabbox {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+/* Common grid base */
+/* Common rules for column layout, may be extended with
+ *  .layout-grid-base(~'[layout="layout-name"]');
+ */
+/* Common rules for 2 columns, may be extended */
+/* Base container */
+[layout="2-column"]::part(base) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: min-content;
+  align-content: start;
+  row-gap: var(--sl-spacing-small);
+  column-gap: var(--sl-spacing-large, 1rem);
+  height: 100%;
+  min-height: 0;
+}
+/* Responsive: collapse to 1 column on small screens */
+@container (max-width: 600px) {
+  [layout="2-column"]::part(base) {
+    grid-template-columns: 1fr;
+  }
+}
+/* var() is not fully supported yet */
+@container (max-width: var(--collapse-width, 600px)) {
+  [layout="2-column"]::part(base) {
+    grid-template-columns: 1fr;
+  }
+}
+[layout="2-column"] {
+  height: 100%;
+  container-type: inline-size;
+  overflow-y: auto;
+  /* ---------- FULL-WIDTH ROWS ---------- */
+  /* ---------- REST-WIDTH ROWS ---------- */
+  /* ---------- DEFAULT COLUMN FLOW ---------- */
+  /* ---------- VERTICAL GROW ---------- */
+  /* ---------- WIDGET CHANGES ---------- */
+  /* Grow row sizing is set by Et2LayoutController strategy to target the actual grow row */
+}
+[layout="2-column"] [full],
+[layout="2-column"] [span="all"],
+[layout="2-column"] et2-tabbox {
+  grid-column: 1 / -1;
+}
+[layout="2-column"] [span="end"],
+[layout="2-column"] [span="*"] {
+  grid-column-end: -1;
+}
+[layout="2-column"] * {
+  min-height: 0;
+}
+[layout="2-column"] [grow],
+[layout="2-column"] et2-tabbox {
+  align-self: stretch;
+}
+/* This is mostly example / placeholder to see what we can do */
+[layout="absolute"] {
+  position: relative;
+  /*
+   * Example semantic hooks:
+   * <et2-widget x="10" y="20">
+   * Controller may later translate these to CSS vars.
+   */
+}
+[layout="absolute"] ::slotted(*) {
+  position: absolute;
+}
+[layout="absolute"] ::slotted([x]) {
+  left: attr(x px);
+}
+[layout="absolute"] ::slotted([y]) {
+  top: attr(y px);
+}
+/* Base container */
+[layout="edit"]::part(base) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: min-content;
+  align-content: start;
+  row-gap: var(--sl-spacing-small);
+  column-gap: var(--sl-spacing-large, 1rem);
+  height: 100%;
+  min-height: 0;
+}
+/* Responsive: collapse to 1 column on small screens */
+@container (max-width: 600px) {
+  [layout="edit"]::part(base) {
+    grid-template-columns: 1fr;
+  }
+}
+/* var() is not fully supported yet */
+@container (max-width: var(--collapse-width, 600px)) {
+  [layout="edit"]::part(base) {
+    grid-template-columns: 1fr;
+  }
+}
+[layout="edit"] {
+  height: 100%;
+  container-type: inline-size;
+  overflow-y: auto;
+  /* ---------- FULL-WIDTH ROWS ---------- */
+  /* ---------- REST-WIDTH ROWS ---------- */
+  /* ---------- DEFAULT COLUMN FLOW ---------- */
+  /* ---------- VERTICAL GROW ---------- */
+  /* ---------- WIDGET CHANGES ---------- */
+  /* Grow row sizing is set by Et2LayoutController strategy to target the actual grow row */
+}
+[layout="edit"] [full],
+[layout="edit"] [span="all"],
+[layout="edit"] et2-tabbox {
+  grid-column: 1 / -1;
+}
+[layout="edit"] [span="end"],
+[layout="edit"] [span="*"] {
+  grid-column-end: -1;
+}
+[layout="edit"] * {
+  min-height: 0;
+}
+[layout="edit"] [grow],
+[layout="edit"] et2-tabbox {
+  align-self: stretch;
+}
+[layout="edit"] {
+  /* Specific rules for edit layout */
+}
+[layout="edit"] [class*="header"],
+[layout="edit"] [class*="footer"],
+[layout="edit"] [class*="Header"],
+[layout="edit"] [class*="Footer"] {
+  /* Header / footer are automatically full width */
+  grid-column: 1 / -1;
+}
+[layout="edit"] et2-appicon {
+  flex-grow: 0;
+}
 /*** Popup styling ***/
 .popupMainDiv {
   /* This would make things simpler for sizing, but causes problems with etemplate.resize() and dialogs with grids
   height: 100%;
    */
   padding: 0 var(--sl-spacing-small);
+  overflow: hidden;
+  height: 100%;
   /* Specific to override etemplate2 */
 }
 .popupMainDiv .dialogHeader,
@@ -776,6 +932,13 @@ body egw-app,
 }
 .popupMainDiv .dialogHeader {
   border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+}
+.popupMainDiv .dialogHeader::part(base) {
+  align-items: center;
+}
+.popupMainDiv .et2_container {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .popupMainDiv table.et2_grid > tbody > tr.dialogFooterToolbar > td {
   padding-top: var(--sl-spacing-small);

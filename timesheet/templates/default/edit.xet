@@ -1,60 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
-		<grid width="100%" >
-			<columns>
-				<column width="100"/>
-				<column width="185"/>
-				<column width="30"/>
-				<column width="92" disabled="@ts_viewtype"/>
-				<column width="105" disabled="@ts_viewtype"/>
-				<column width="30"/>
-				<column width="50"/>
-			</columns>
-			<rows>
-				<row>
-					<et2-description  value="Project" for="ts_project"></et2-description>
-					<et2-hbox  disabled="@pm_integration=none">
-						<et2-link-entry  id="pm_id" onchange="app.timesheet.pm_id_changed" width="99%" onlyApp="projectmanager" placeholder="None"></et2-link-entry>
+    <template id="timesheet.edit.general" layout="2-column">
+
+        <et2-hbox disabled="@pm_integration=none" span="all">
+            <et2-link-entry id="pm_id" label="Project" onchange="app.timesheet.pm_id_changed" onlyApp="projectmanager" placeholder="None"></et2-link-entry>
 					</et2-hbox>
-					<et2-description></et2-description>
 					<et2-hbox  disabled="@pm_integration=full" span="all">
-						<et2-textbox  id="ts_project" maxlength="80" placeholder="@ts_project_blur"></et2-textbox>
+                        <et2-textbox id="ts_project" maxlength="80" placeholder="@ts_project_blur"></et2-textbox>
 					</et2-hbox>
-				</row>
-				<row disabled="@ts_viewtype">
-					<et2-description  value="Unitprice" for="ts_unitprice"></et2-description>
+        <et2-box disabled="@ts_viewtype" span="all">
 					<et2-hbox  disabled="@pm_integration=none" >
 						<projectmanager-pricelist id="pl_id" class="et2_fullWidth"
+                                                  label="Unitprice"
                                                   onchange="let option = this.select_options.find(e=>e.value == this.value) || {label:''};window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(option.label.lastIndexOf('(') &lt; 0 ? '' : option.label.slice(option.label.lastIndexOf('(')+1,-1));"
                                                   emptyLabel="None"/>
 					</et2-hbox>
-					<et2-description></et2-description>
 					<et2-hbox  disabled="@pm_integration=none">
 						<et2-number  id="ts_unitprice" span="all"></et2-number>
 					</et2-hbox>
-				</row>
-				<row class="row" disabled="!@ts_viewtype">
-					<et2-description  value="comment"></et2-description>
-                    <et2-textarea id="ts_description_short" rows="5" cols="50"></et2-textarea>
-                 </row>
-                <row class="row" disabled="@ts_viewtype">
-                    <et2-description value="Quantity" for="ts_quantity"></et2-description>
-                    <et2-number statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
+        </et2-box>
+        <et2-box disabled="!@ts_viewtype" span="all">
+            <et2-textarea label="comment" id="ts_description_short" rows="5" cols="50"></et2-textarea>
+        </et2-box>
+        <et2-box disabled="@ts_viewtype">
+            <et2-number label="Quantity" statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
 					<et2-description></et2-description>
 					<et2-date-duration label="Pause time" id="ts_paused" displayFormat="hm" span="all"></et2-date-duration>
-				</row>
-				<row class="row" disabled="@ts_viewtype">
-					<et2-description value="Category" for="cat_id"></et2-description>
-					<et2-select-cat span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
-				</row>
-				<row class="row" disabled="@ts_viewtype">
-					<et2-description value="Readable" for="ts_readable"></et2-description>
-					<et2-select-account span="all" id="ts_readable" emptyLabel="Give additional users access" multiple="true"></et2-select-account>
-				</row>
-            </rows>
-		</grid>
+        </et2-box>
+        <et2-box disabled="@ts_viewtype" span="all">
+            <et2-select-cat label="Category" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
+        </et2-box>
+        <et2-box disabled="@ts_viewtype" span="all">
+            <et2-select-account label="Readable" id="ts_readable" emptyLabel="Give additional users access" multiple="true"></et2-select-account>
+        </et2-box>
 	</template>
 	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
 		<et2-textarea  id="ts_description" rows="9" cols="70"></et2-textarea>
@@ -113,41 +92,21 @@
 	<template id="timesheet.edit.events.change" template="" lang="" group="0" version="1.7.002">
 		<et2-date-time  id="time" required="true"/>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%">
-			<columns>
-				<column width="100"/>
-				<column width="185"/>
-				<column width="30"/>
-				<column width="100"/>
-				<column width="105"/>
-				<column width="30"/>
-				<column width="30"/>
-			</columns>
-			<rows>
-				<row disabled="@ts_viewtype" class="dialogHeader">
-					<et2-description  value="Title" for="ts_title"></et2-description>
-					<et2-textbox  id="ts_title" maxlength="255" class="et2_required" tabindex="1" span="4" placeholder="@ts_title_blur"></et2-textbox>
-					<et2-number  id="ts_id" readonly="true" precision="0"></et2-number>
-					<et2-appicon  src="timesheet"></et2-appicon>
-				</row>
-				<row class="dialogHeader2">
-					<et2-description  value="Date" for="ts_start"></et2-description>
-					<et2-date  id="ts_start" required="1"></et2-date>
-					<et2-description></et2-description>
-					<et2-description  value="Starttime"></et2-description>
-					<et2-date-timeonly id="start_time" freeMinuteEntry="true"></et2-date-timeonly>
-				</row>
-				<row class="row dialogHeader3">
-                    <et2-description value="Duration" for="ts_duration"></et2-description>
-                    <et2-date-duration id="ts_duration" displayFormat="hm"
+    <et2-template id="timesheet.edit" layout="edit" class="et2-label-fixed">
+        <et2-hbox full="true" exportparts="base" disabled="@ts_viewtype" class="dialogHeader">
+            <et2-textbox label="Title" id="ts_title" maxlength="255" class="et2_required" tabindex="1" span="4" placeholder="@ts_title_blur"></et2-textbox>
+            <et2-number id="ts_id" readonly="true" precision="0"></et2-number>
+            <et2-appicon src="timesheet"></et2-appicon>
+        </et2-hbox>
+
+        <et2-date label="Date" id="ts_start" required="1"></et2-date>
+        <et2-date-timeonly label="Starttime" id="start_time" freeMinuteEntry="true"></et2-date-timeonly>
+
+        <et2-date-duration label="Duration" id="ts_duration" displayFormat="hm"
                                        onchange="app.timesheet.update_quantity"></et2-date-duration>
-                    <et2-description></et2-description>
-                    <et2-description value="or endtime" class="et2_noWrap"></et2-description>
-                    <et2-date-timeonly id="end_time" freeMinuteEntry="true"></et2-date-timeonly>
-                </row>
-				<row>
-					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="225">
+        <et2-date-timeonly label="or endtime" id="end_time" freeMinuteEntry="true"></et2-date-timeonly>
+
+        <et2-tabbox id="tabs" tabHeight="auto">
 						<tabs>
 							<tab id="notes" label="Description"/>
 							<tab id="general" label="Details"/>
@@ -163,26 +122,19 @@
 							<template id="timesheet.edit.events"/>
 						</tabpanels>
 					</et2-tabbox>
-				</row>
-				<row class="dialogOperators">
-					<et2-description  value="User" for="ts_owner"></et2-description>
-					<et2-select  id="ts_owner" span="2" noLang="1"></et2-select>
-					<et2-description  value="Status" disabled="@no_ts_status"></et2-description>
-					<et2-select  span="3" statustext="select a status of the timesheet" id="ts_status" disabled="@no_ts_status" emptyLabel="please select"></et2-select>
-				</row>
-				<row class="dialogOperators">
-					<et2-description  value="Last modified"></et2-description>
+
+        <et2-select label="User" id="ts_owner" span="2" noLang="1"></et2-select>
+        <et2-select label="Status" span="3" statustext="select a status of the timesheet" id="ts_status" disabled="@no_ts_status" emptyLabel="please select"></et2-select>
+
+        <et2-description value="Last modified"></et2-description>
 					<et2-hbox  span="3">
 						<et2-select-account  id="ts_modifier" readonly="true"></et2-select-account>
 						<et2-date-time  id="ts_modified" readonly="true" align="left" disabled="!@ts_modified"></et2-date-time>
 					</et2-hbox>
-					<et2-hbox>
-						<et2-description  value="Created"></et2-description>
-						<et2-date-time  id="ts_created" readonly="true" align="left"></et2-date-time>
-					</et2-hbox>
-				</row>
-				<row class="dialogFooterToolbar">
-					<et2-hbox  orient="0" span="all">
+        <et2-date-time label="Created" id="ts_created" readonly="true" align="left"></et2-date-time>
+
+
+        <et2-hbox class="dialogFooterToolbar">
 						<et2-hbox>
 							<et2-button  hideOnReadonly="true" statustext="Edit this entry" label="Edit" id="button[edit]" image="edit"></et2-button>
 							<et2-button  hideOnReadonly="true" statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]" image="save_new"></et2-button>
@@ -194,8 +146,5 @@
                         <et2-button hideOnReadonly="true" align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button>
 						<et2-button  hideOnReadonly="true" align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]" image="undelete"></et2-button>
 					</et2-hbox>
-				</row>
-			</rows>
-		</grid>
-	</template>
+    </et2-template>
 </overlay>

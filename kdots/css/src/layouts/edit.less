@@ -1,0 +1,17 @@
+@import "./grid-base.less";
+
+/* Base container */
+.layout-grid-base(~'[layout="edit"]');
+
+[layout="edit"] {
+  /* Specific rules for edit layout */
+
+  [class*="header"], [class*="footer"], [class*="Header"], [class*="Footer"] {
+	/* Header / footer are automatically full width */
+	grid-column: 1 / -1;
+  }
+
+  et2-appicon {
+	flex-grow: 0;
+  }
+}
