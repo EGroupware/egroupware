@@ -1,0 +1,21 @@
+[layout="stack"] {
+  &::part(base) {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+  }
+
+  /* Default: children do NOT grow */
+
+  :scope > * {
+	flex: 0 0 auto;
+	min-height: 0;
+  }
+
+  /* Opt-in growth */
+
+  [grow], et2-tabbox {
+	flex: 1 1 auto;
+	min-height: 0;
+  }
+}

@@ -1,0 +1,23 @@
+/* This is mostly example / placeholder to see what we can do */
+
+[layout="absolute"] {
+  position: relative;
+
+  ::slotted(*) {
+	position: absolute;
+  }
+
+  /*
+   * Example semantic hooks:
+   * <et2-widget x="10" y="20">
+   * Controller may later translate these to CSS vars.
+   */
+
+  ::slotted([x]) {
+	left: attr(x px);
+  }
+
+  ::slotted([y]) {
+	top: attr(y px);
+  }
+}

@@ -18,6 +18,7 @@ import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {until} from "lit/directives/until.js";
 import {classMap} from "lit/directives/class-map.js";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {Et2LayoutController, Et2LayoutHost, Et2LayoutName} from "../Layout/Et2LayoutController/Et2LayoutController";
 
 // @ts-ignore
 /**
@@ -30,7 +31,7 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
  * @csspart loader - Displayed while the template contents are being loaded
  */
 @customElement("et2-template")
-export class Et2Template extends Et2Widget(LitElement)
+export class Et2Template extends Et2Widget(LitElement) implements Et2LayoutHost
 {
 
 	static get styles()
@@ -38,7 +39,8 @@ export class Et2Template extends Et2Widget(LitElement)
 		return [
 			shoelace,
 			super.styles,
-			styles
+			styles,
+			Et2LayoutController.styles,
 		];
 	}
 
@@ -65,6 +67,9 @@ export class Et2Template extends Et2Widget(LitElement)
 	@property({type: Function})
 	onload : Function;
 
+	@property({reflect: true})
+	layout : Et2LayoutName = "stack";
+
 	/**
 	 * Cache of known templates
 	 * @type {{[name : string] : Element}}
@@ -76,6 +81,9 @@ export class Et2Template extends Et2Widget(LitElement)
 
 	// Internal flag to indicate loading is in progress, since we can't monitor a promise
 	private __isLoading = false;
+
+	// Handles layout
+	private _layout = new Et2LayoutController(<Et2LayoutHost><unknown>this);
 
 
 	constructor(egw? : IegwAppLocal)
