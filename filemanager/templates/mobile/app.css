@@ -53,7 +53,7 @@
   #filemanager-index_nm #filemanager-index_tarp {
     display: none !important;
   }
-  #filemanager-index_filemanager-index-header_left .et2_file.plus_button {
+  #filemanager-index_filemanager-index et2-vfs-upload.plus_button {
     position: fixed !important;
     right: 15px;
     bottom: 15px;
@@ -66,27 +66,32 @@
     padding: 0;
     border: none;
   }
-  #filemanager-index_filemanager-index-header_left .et2_file.plus_button .et2_file_span::part(base) {
+  #filemanager-index_filemanager-index et2-vfs-upload.plus_button et2-button-icon {
+    position: relative !important;
+    right: initial;
+    bottom: initial;
+  }
+  #filemanager-index_filemanager-index et2-vfs-upload.plus_button .et2_file_span::part(base) {
     width: 50px;
     height: 50px;
     border: none;
     background: none;
   }
-  #filemanager-index_filemanager-index-header_left .et2_file.plus_button .et2_file_span::part(prefix) {
+  #filemanager-index_filemanager-index et2-vfs-upload.plus_button .et2_file_span::part(prefix) {
     display: none;
   }
-  #filemanager-index_filemanager-index-header_left .et2_file.plus_button .et2_file_upload {
+  #filemanager-index_filemanager-index et2-vfs-upload.plus_button .et2_file_upload {
     width: 60px;
     height: 60px;
     top: 0;
   }
-  #filemanager-index_filemanager-index-header_left .et2_file.plus_button div.progress {
+  #filemanager-index_filemanager-index et2-vfs-upload.plus_button div.progress {
     position: fixed;
     left: 0;
     top: 0px;
     width: 93%;
   }
-  #filemanager-index_filemanager-index-header_left et2-image.plus_button {
+  #filemanager-index_filemanager-index et2-image.plus_button {
     position: fixed !important;
     right: 15px;
     bottom: 15px;
@@ -102,7 +107,7 @@
     pointer-events: none;
     background-color: transparent;
   }
-  #filemanager-index_filemanager-index-header_left et2-image.plus_button::before {
+  #filemanager-index_filemanager-index et2-image.plus_button::before {
     content: "\f64d";
     font-family: bootstrap-icons !important;
   }

@@ -53,8 +53,9 @@
 		#filemanager-index_filemanager-index-header_right {width:100%;}
 		#filemanager-index_tarp {display: none !important;}
 	}
-	#filemanager-index_filemanager-index-header_left {
-		.et2_file.plus_button {
+
+  #filemanager-index_filemanager-index {
+	et2-vfs-upload.plus_button {
 			position: fixed !important;
 			right: 15px;
 			bottom: 15px;
@@ -67,6 +68,12 @@
 			margin: 0;
 			padding: 0;
 			border: none;
+
+	  et2-button-icon {
+		position: relative !important;
+		right: initial;
+		bottom: initial;
+	  }
 
 			.et2_file_span::part(base){
 				width:50px;

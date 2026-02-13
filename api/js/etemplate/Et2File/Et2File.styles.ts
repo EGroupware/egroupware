@@ -24,6 +24,7 @@ export default css`
 
 	.file__file-list {
 		width: 100%;
+		max-width: calc(100vw - var(--sl-spacing-large));
 		max-height: calc(100% - var(--sl-input-height-medium));
 		overflow-y: auto;
 	}
