@@ -1,8 +1,10 @@
-textarea
-{
-	font-family: monospace, sans-serif;
-	font-size: 110%;
-}
+//textarea
+//{
+//	font-family: monospace, sans-serif;
+//	font-size: 110%;
+//}
+
+
 
 .defaultProfile { color:#000000; font-weight:bold !important; }
 
@@ -13,17 +15,42 @@ textarea
 .quoted4 { color:#000099; }
 .quoted5 { color:#bb6600; }
 
-tr.mail div {
-	cursor: default;
-	white-space: nowrap;
+//tr.mail div {
+//	cursor: default;
+//	white-space: nowrap;
+//}
+
+@labels: {
+	label1: #ff0080;
+	label2: #ff8000;
+	label3: #008000;
+	label4: #0000ff;
+	label5: #8000ff;
+	flagged: #ff0000;
+};
+
+tr.mail {
+	td:first-child {
+		border-left: 6px solid transparent;
+	}
+
+	each(@labels, {
+		&.@{key} td:first-child {
+			border-left-color: @value !important;
+		}
+	});
+
+	&.deleted td:first-child {
+		border-left-color: silver;
+		text-decoration: line-through;
+	}
 }
-tr.mail td:first-child {
-	border-left: 6px solid white;
-}
-tr.mail a {
-	cursor: pointer;
-	white-space: nowrap;
-}
+
+
+//tr.mail a {
+//	cursor: pointer;
+//	white-space: nowrap;
+//}
 
 /**
 	No styling on recent, sometimes recent & unseen are cleared seperately causing confusion when the row doesn't change
@@ -33,37 +60,13 @@ tr.recent span,
 tr.recent time,
 tr.recent a,
  */
-tr.unseen div,
-tr.unseen span,
-tr.unseen time,
-tr.unseen a {
-    color: var(--sl-color-sky-800);
+tr.unseen div
+	//tr.unseen span,
+	//tr.unseen time,
+	//tr.unseen a
+{
+	color: var(--sl-color-neutral-950);
 	font-weight: bold;
-}
-
-tr.mail.label1 td:first-child{
-	border-left:6px solid #ff0080 !important;
-}
-tr.mail.label2 td:first-child{
-	border-left:6px solid  #ff8000 !important;
-}
-tr.mail.label3 td:first-child{
-	border-left:6px solid  #008000 !important;
-}
-tr.mail.label4 td:first-child{
-	border-left: 6px solid #0000ff !important;
-}
-tr.mail.label5 td:first-child{
-	border-left: 6px solid #8000ff !important;
-}
-
-tr.mail.flagged td:first-child{
-	border-left: 6px solid #ff0000 !important;
-}
-
-tr.mail.deleted  td:first-child{
-	border-left: 6px solid silver;
-	text-decoration : line-through;
 }
 
 .status_img {
@@ -76,57 +79,97 @@ tr.mail.deleted  td:first-child{
     vertical-align: initial;
 }
 
-tr.deleted .status_img::before {
-    content: "\f659" /*bi-x-lg*/
+
+tr.unseen .status_img {
+	color: var(--mail-color)
 }
 
-tr.unseen .status_img::before {
-content: "\f32f"/*bi-envelope*/
+@keyframes unreadGlow {
+	0% {
+		opacity: 1;
+	}
+	40% {
+		opacity: 0.6;
+	}
+	60% {
+		opacity: 0.6;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
-tr.flagged_seen .status_img::before {
-	content: "\f3cc" /*bi-flag*/
+tr.unseen.recent .status_img {
+	animation: unreadGlow 5s ease-in-out 10 forwards;
 }
 
-tr.flagged_unseen .status_img::before {
-    content: "\f3cb" /*bi-flag-fill*/
-}
 
-tr.recent .status_img::before {
-    content: "\f694" /*bi-envelope-plus*/
-}
+//tr.deleted .status_img::before {
+//    content: "\f659" /*bi-x-lg*/
+//}
+//
+//tr.unseen .status_img::before {
+//content: "\f32f"/*bi-envelope*/
+//}
+//
+//tr.flagged_seen .status_img::before {
+//	content: "\f3cc" /*bi-flag*/
+//}
+//
+//tr.flagged_unseen .status_img::before {
+//    content: "\f3cb" /*bi-flag-fill*/
+//}
+//
+//tr.recent .status_img::before {
+//    content: "\f694" /*bi-envelope-plus*/
+//}
+//
+//tr.replied .status_img::before {
+//    content: "\f520" /*bi-reply*/
+//}
+//
+//tr.forwarded .status_img::before {
+//	content: "\f520"; /*bi-reply*/
+//	transform: scaleX(-1);
+//}
 
-tr.replied .status_img::before {
-    content: "\f520" /*bi-reply*/
-}
+//.subjectBold
+//{
+//	font-size: 12px;
+//	font-weight : bold;
+//	font-family : Arial;
+//}
+//
+//.subject
+//{
+//	font-size: 12px;
+//	font-family : Arial;
+//}
+tr.mail {
+	et2-vbox { //this contains from address, subject and preview
+		&::part(base) {
+			gap: var(--sl-spacing-2x-small);
+			padding-block: var(--sl-spacing-2x-small);
+		}
 
-tr.forwarded .status_img::before {
-	content: "\f520"; /*bi-reply*/
-	transform: scaleX(-1);
-}
+		span.description--content {
+			max-height: 2lh;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 
-.subjectBold
-{
-	font-size: 12px;
-	font-weight : bold;
-	font-family : Arial;
-}
-
-.subject
-{
-	font-size: 12px;
-	font-family : Arial;
-}
-
-.bodypreview {
-  white-space: nowrap;
-  max-height: 18px;
-  font-size: 12px;
-  font-weight : normal !important;
-  font-family: Arial;
-  color: var(--sl-color-neutral-500) !important;
-  overflow: hidden;
-  padding-top: 5px;
+		.bodypreview {
+			white-space: nowrap;
+			font-size: 1em;
+			font-weight: normal !important;
+			color: var(--sl-color-neutral-600) !important;
+			overflow: hidden;
+		}
+		et2-lavatar{
+			display: flex;
+			align-items: center;
+		}
+	}
 }
 
 TR.sieveRowActive
