@@ -65,8 +65,11 @@ tr.unseen div
 	//tr.unseen time,
 	//tr.unseen a
 {
-	color: var(--sl-color-neutral-950);
 	font-weight: bold;
+}
+
+tr.unseen et2-date-time_ro {
+	font-weight: normal;
 }
 
 .status_img {
@@ -80,8 +83,13 @@ tr.unseen div
 }
 
 
-tr.unseen .status_img {
-	color: var(--mail-color)
+tr.unseen .status_img.bi-circle-fill {
+	color: var(--mail-color);
+	display: block !important;
+}
+
+tr:not(.unseen) .status_img.bi-circle-fill {
+	display: none;
 }
 
 @keyframes unreadGlow {
@@ -145,17 +153,38 @@ tr.unseen.recent .status_img {
 //	font-size: 12px;
 //	font-family : Arial;
 //}
+//This is needed to get ellipses working
+et2-vbox, et2-hbox {
+	&, &::part(base), et2-description {
+		min-width: 0;
+	}
+}
 tr.mail {
 	et2-vbox { //this contains from address, subject and preview
+		font-size: 1em;
+		color: var(--sl-color-neutral-950);
+
 		&::part(base) {
 			gap: var(--sl-spacing-2x-small);
 			padding-block: var(--sl-spacing-2x-small);
 		}
 
+
 		span.description--content {
 			max-height: 2lh;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			line-clamp: 2;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+		}
+
+		et2-description[id*="subject"] {
+			span.description--content {
+				max-height: 1lh;
+				white-space: nowrap;
+			}
 		}
 
 		.bodypreview {
@@ -165,10 +194,10 @@ tr.mail {
 			color: var(--sl-color-neutral-600) !important;
 			overflow: hidden;
 		}
-		et2-lavatar{
-			display: flex;
-			align-items: center;
-		}
+	}
+	et2-lavatar{
+		display: flex;
+		align-items: center;
 	}
 }
 
