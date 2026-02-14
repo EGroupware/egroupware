@@ -51,8 +51,10 @@ tr.recent time,
 tr.recent a,
  */
 tr.unseen div {
-  color: var(--sl-color-neutral-950);
   font-weight: bold;
+}
+tr.unseen et2-date-time_ro {
+  font-weight: normal;
 }
 .status_img {
   display: inline-block;
@@ -63,8 +65,12 @@ tr.unseen div {
 .status_img::before {
   vertical-align: initial;
 }
-tr.unseen .status_img {
+tr.unseen .status_img.bi-circle-fill {
   color: var(--mail-color);
+  display: block !important;
+}
+tr:not(.unseen) .status_img.bi-circle-fill {
+  display: none;
 }
 @keyframes unreadGlow {
   0% {
@@ -83,6 +89,18 @@ tr.unseen .status_img {
 tr.unseen.recent .status_img {
   animation: unreadGlow 5s ease-in-out 10 forwards;
 }
+et2-vbox,
+et2-hbox,
+et2-vbox::part(base),
+et2-hbox::part(base),
+et2-vbox et2-description,
+et2-hbox et2-description {
+  min-width: 0;
+}
+tr.mail et2-vbox {
+  font-size: 1em;
+  color: var(--sl-color-neutral-950);
+}
 tr.mail et2-vbox::part(base) {
   gap: var(--sl-spacing-2x-small);
   padding-block: var(--sl-spacing-2x-small);
@@ -91,6 +109,14 @@ tr.mail et2-vbox span.description--content {
   max-height: 2lh;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-clamp: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+tr.mail et2-vbox et2-description[id*="subject"] span.description--content {
+  max-height: 1lh;
+  white-space: nowrap;
 }
 tr.mail et2-vbox .bodypreview {
   white-space: nowrap;
@@ -99,7 +125,7 @@ tr.mail et2-vbox .bodypreview {
   color: var(--sl-color-neutral-600) !important;
   overflow: hidden;
 }
-tr.mail et2-vbox et2-lavatar {
+tr.mail et2-lavatar {
   display: flex;
   align-items: center;
 }
