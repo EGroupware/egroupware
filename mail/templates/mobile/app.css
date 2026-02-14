@@ -168,79 +168,23 @@
   body #mail-compose .dialogHeadbar {
     z-index: 2;
   }
-  #mail-index {
-    margin-right: 0px;
-  }
-  #mail-index span.et2_date_ro.et2_label {
-    font-size: 9px;
+  #mail-index table {
+    table-layout: fixed;
   }
   #mail-index td {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding: 0;
   }
-  #mail-index td a[id^='mail-index_'][id$='fromaddress]'] {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 95%;
-    display: inline-block;
-  }
-  #mail-index td .icons et2-image {
-    padding: initial;
-  }
-  #mail-index td .icons et2-image img {
-    padding: initial;
-    height: initial;
-  }
-  #mail-index td span[id^='mail-index_'][id$='attachments]'] {
-    margin-left: auto;
-    order: 1;
-    text-align: initial;
-  }
-  #mail-index td span[id^='mail-index_'][id$='attachments]'] img {
-    width: 16px;
-    height: 16px;
-    padding: initial;
-  }
-  #mail-index td et2-description[id^='mail-index_'][id$='subject]'] {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 95%;
-    font-weight: normal !important;
-  }
-  #mail-index td label[id^='mail-index_'][id$='date]'] {
-    padding-top: 0;
-  }
-  #mail-index tr {
-    height: 55px;
-  }
-  #mail-index tr div.recent,
-  #mail-index tr span.recent,
-  #mail-index tr time.recent,
-  #mail-index tr a.recent,
-  #mail-index tr div.unseen,
-  #mail-index tr span.unseen,
-  #mail-index tr time.unseen,
-  #mail-index tr a.unseen {
-    color: var(--sl-color-neutral-950, #26537c) !important;
-    font-weight: bold;
-  }
-  #mail-index .mail-index_quotabox {
-    position: absolute;
-    top: 8px;
-    right: 74px;
-    width: 200px !important;
-    z-index: 99;
+  #mail-index tr.mail div.innerContainer,
+  #mail-index tr.mail et2-description {
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
   #mail-index .mail-index_vacation {
     z-index: 99;
   }
   #mail-index .mail-index_vacation div {
     text-align: center;
-  }
-  #mail-index #mail-index_nm div.search {
-    margin-top: 3px;
   }
   #mail-index_buttonmailcreate {
     display: none;
@@ -314,3 +258,4 @@
 .mailPreviewHeaders.smimeIcons {
   justify-content: start;
 }
+/*# sourceMappingURL=app.css.map */

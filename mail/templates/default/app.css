@@ -53,7 +53,9 @@ tr.recent a,
 tr.unseen div {
   font-weight: bold;
 }
-tr.unseen et2-date-time_ro {
+tr.unseen et2-date-time_ro,
+tr.unseen et2-date-time-today,
+tr.unseen [id$="[date]"] {
   font-weight: normal;
 }
 .status_img {
