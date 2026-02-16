@@ -1334,6 +1334,7 @@ class Schema
 					// text or blob's need to be nullable for most databases
 					$column->not_null = false;
 					break;
+				case 'V':
 				case 'F':
 					$definition['fd'][$name]['precision'] = $column->max_length;
 					break;
