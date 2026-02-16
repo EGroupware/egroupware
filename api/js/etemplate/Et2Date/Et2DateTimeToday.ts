@@ -38,10 +38,11 @@ export class Et2DateTimeToday extends Et2DateReadonly
 		{
 			display = formatTime(date);
 		}
-		// Before today - just the date
+		// Before today - just the date with 2-digit year and time as tooltip
 		else
 		{
-			display = formatDate(date);
+			display = formatDate(date).replace(/20(\d{2})/, '$1');
+			this.statustext = formatTime(date);
 		}
 		return display;
 	}
