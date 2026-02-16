@@ -1,3 +1,26 @@
+egroupware-docker (26.2.20260216) hardy; urgency=low
+
+  * API: fix context menu copy used the whole row instead of the target widget
+  * Addressbook: restyle crm-view sidebox and fix postcode size
+  * CRM: fix search did not change filter
+  * Filemanager: fix uploads on mobile did not always open file selection
+  * Filemanager: file list lost the current path after submitting
+  * Filemanager: fix 2 favourites with different paths could lose current path
+  * Mail: restyling of the mail list.
+  * Invoices: fix error Unsupported operand types: array + float when copying an invoice
+  * Projectmanager: fix missing link app in element list toolbar's add element
+  * Projectmanager: fix print view description row
+  * Projectmanager: fix projectelement dialog sizing blocked footer buttons
+  * RAG: new preference defaulting addressbook search to legacy and fix deleting from RAG indexes
+  * RAG: fulltext index only returns matches with at least 5% of the relevance of the top match
+  * RAG: stay with fulltext search in NATURAL LANGUAGE MODE, if pattern ends with a dash
+  * RAG: fix wrongly namespaced InvalidSQL exception causing deletes to fail, if egw_rag table is not installed
+  * RAG/Backup: dimensions of vector / embeddings were not backed up and therefore restore failed
+  * Resources: setting group-owners on resource categories no longer limit the visibility of them and their resources, only the ACL does
+  * Status: scrolling did not work
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 16 Feb 2026 12:28:31 +0100
+
 egroupware-docker (26.2.20260209) hardy; urgency=low
 
   * Final 26.x release 26.2.20260209 :)
