@@ -1412,7 +1412,7 @@ class mail_ui
 						'caption' => 'Header',
 						'hint' => 'View header lines',
 						'group' => $group,
-						'icon' => 'kmmsgread',
+						'icon' => 'code-square',
 						'onExecute' => 'javaScript:app.mail.mail_header',
 						'allowOnMultiple' => false,
 					),
