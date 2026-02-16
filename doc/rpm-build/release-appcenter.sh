@@ -3,7 +3,7 @@
 # To update univention-appcenter-control run:
 # curl https://provider-portal.software-univention.de/appcenter-selfservice/univention-appcenter-control > ~/bin/univention-appcenter-control
 
-version=23.1
+version="$(date +%y).$(date +%m|sed 's/0//')"
 packaging=`date +%Y%m%d`
 # default is now Docker!
 postfix=''
@@ -38,7 +38,7 @@ done
 
 #echo "version=$version, packaging=$packaging, postfix=$postfix, debug=$debug"
 
-[ ! -f ~/download/archives/egroupware-$version/egroupware-docker-$version.$packaging.tar.bz2 ] && {
+[ ! -f ~/download/archives/egroupware-$(echo $version|cut -d. -f1)/egroupware-docker-$version.$packaging.tar.bz2 ] && {
 	echo "No $version.$packaging packages found!"
 	echo "You probably need to use --packaging <date>"
 	exit 1
