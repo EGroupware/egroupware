@@ -78,7 +78,7 @@
 										 noLang="1"></et2-description>
 					</et2-vbox>
 					<et2-hbox>
-						<et2-date-time align="center" id="${row}[date]" readonly="true"></et2-date-time>
+						<et2-date-time-today align="center" id="${row}[date]" readonly="true"></et2-date-time-today>
 					</et2-hbox>
 					<et2-date-time-today id="${row}[modified]" readonly="true"></et2-date-time-today>
 					<et2-url-email id="${row}[address]" readonly="true" emailDisplay="preference"></et2-url-email>
