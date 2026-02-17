@@ -84,7 +84,7 @@ class Url extends Etemplate\Widget
 				$url_valid = true;
 				switch($this->type)
 				{
-					case 'url':
+					case 'et2-url':
 						$this->attrs['preg'] = self::URL_PREG;
 						if($this->attrs['allowPath'] ?? $this->attrs['allow_path'])
 						{
@@ -121,7 +121,7 @@ class Url extends Etemplate\Widget
 							return;
 						}
 						break;
-					case 'url-email':
+					case 'et2-url-email':
 						// some automatic cleaning: unicode variation selectors, zero width space
 						$value = preg_replace('/[\x{FE00}-\x{FE0F}\x{200B}]/u', '', $value);
 						$this->attrs['preg'] = self::EMAIL_PREG;
