@@ -607,6 +607,11 @@ abstract class Ajax extends Api\Framework
 			$md5_session[$target] = $md5;    // update md5 in session
 			self::$extra['setSidebox'] = array($target, $sidebox, $md5);
 		}
+		elseif(Api\Json\Request::isJSONRequest())
+		{
+			// Requested after initial load via JSON, send it
+			Api\Json\Response::get()->apply('framework.setSidebox', array($target, $sidebox, $md5));
+		}
 		//else error_log(__METHOD__."() md5_session[$app]==='$md5' --> nothing to do");
 	}
 
