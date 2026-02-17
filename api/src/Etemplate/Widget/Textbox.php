@@ -115,12 +115,13 @@ class Textbox extends Etemplate\Widget
 		{
 			if (!isset($this->attrs['validator']))
 			{
-				switch($this->attrs['type'])
+				switch($this->attrs['precision'] === '0' ? 'int' : $this->attrs['type'])
 				{
 					case 'int':
 					case 'integer':
 						$this->attrs['validator'] = '/^-?[0-9]*$/';
 						break;
+					case 'et2-number':
 					case 'float':
 						$this->attrs['validator'] = '/^-?[0-9]*[,.]?[0-9]*$/';
 						break;
@@ -157,7 +158,7 @@ class Textbox extends Etemplate\Widget
 						break;
 				}
 			}
-			elseif ($this->attrs['type'] == 'integer' || $this->attrs['type'] == 'float')	// cast int and float and check range
+			elseif($this->attrs['type'] == 'integer' || $this->attrs['type'] == 'float' || $this->attrs['type'] == 'et2-number')    // cast int and float and check range
 			{
 				if ((string)$value !== '' || $this->required)	// empty values are Ok if needed is not set
 				{
