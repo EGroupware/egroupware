@@ -1081,7 +1081,10 @@ export class EgwFrameworkApp extends LitElement
 			await this.updateComplete;
 			window.setTimeout(() =>
 			{
-				this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
+				if(this.rightSplitter)
+				{
+					this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
+				}
 				this.ignoreSplitterResize = false;
 			}, 0);
 		}
