@@ -105,6 +105,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 
 		// Get test event
 		$event = $old_event = $this->get_event();
+		$event['owner'] = $old_event['owner'] = $this->account_id;
 		$event['participants'] = $old_event['participants'] = $participant;
 
 		// Forward 1 hour
@@ -116,7 +117,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 			'account' => $this->account_id,
 			'pref' => 'user',
 			'app' => 'calendar',
-			'set' => array('reset_stati' => 'startday', 'reset_resource_status', 'startday')
+			'set' => array('reset_stati' => 'startday', 'reset_resource_status' => 'startday')
 		);
 		$pref_command = new \admin_cmd_edit_preferences($pref);
 		$pref_command->run();
@@ -133,7 +134,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 				// Current user, no change
 				$this->assertEquals($participant[$id], $status, "Participant $id was changed");
 			}
-			if(is_int($id) || str_starts_with($id, 'c'))
+			else if(is_int($id) || str_starts_with($id, 'c') || str_starts_with($id, 'r'))
 			{
 				// Users & resources respect preference, in this case no change
 				$this->assertEquals($participant[$id], $status, "Participant $id was changed");
