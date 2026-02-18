@@ -335,7 +335,7 @@ class SharingBase extends LoggedInTest
 			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
 		}
 		$url = Filesystem\StreamWrapper::SCHEME.'://default'. $fs_path.
-				'?user='.$GLOBALS['egw_info']['user']['account_id'].'&group=Default&mode=775';
+			'?user=' . $GLOBALS['egw_info']['user']['account_id'] . '&group=Default&mode=770';
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
 		Vfs::$is_root = $backup;
 
