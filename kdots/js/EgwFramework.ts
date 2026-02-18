@@ -174,6 +174,11 @@ export class EgwFramework extends LitElement
 			// Override framework setSidebox, use arrow function to force context
 			this.egw.framework.setSidebox = (applicationName, sideboxData, hash?) => this.setSidebox(applicationName, sideboxData, hash);
 		}
+		//disable the link on the logo if the url is set to none
+		if (['http://none','none','https://none'].includes(this.querySelector('[slot="logo"]')?.getAttribute('href')))
+		{
+			this.querySelector('[slot="logo"]')?.removeAttribute('href');
+		}
 
 		document.body.addEventListener("egw-darkmode-change", this.handleDarkmodeChange);
 	}
