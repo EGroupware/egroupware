@@ -366,7 +366,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		$path = Vfs::decodePath(Vfs::parse_url($url,PHP_URL_PATH));
 
 		// check access rights (file need to exist and directory need to be writable
-		if (!file_exists($path) || is_dir($path) || !($dir = Vfs::dirname($url)) || !Vfs::check_access($dir,Vfs::WRITABLE))
+		if(!file_exists($path) || !is_link($path) && is_dir($path) || !($dir = Vfs::dirname($url)) || !Vfs::check_access($dir, Vfs::WRITABLE))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
 			return false;	// no permission or file does not exist

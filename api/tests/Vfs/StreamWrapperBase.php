@@ -124,11 +124,20 @@ abstract class StreamWrapperBase extends LoggedInTest
 		{
 			if(Vfs::is_dir($file) && !Vfs::is_link(($file)))
 			{
+				$files = array_diff(scandir(Vfs::PREFIX . $file), array('.', '..'));
+				foreach($files as $dir_file)
+				{
+					Vfs::unlink($file . '/' . $dir_file);
+				}
 				Vfs::rmdir($file);
 			}
 			else
 			{
 				Vfs::unlink($file);
+			}
+			if(Vfs::file_exists($file))
+			{
+				$this->addWarning("Could not remove $file (it's still there)");
 			}
 		}
 
@@ -368,14 +377,14 @@ abstract class StreamWrapperBase extends LoggedInTest
 		// Try to remove if it's there already
 		if(Vfs::is_dir($test_base_dir))
 		{
-			Vfs::rmdir($test_base_dir);
+			$this->assertTrue(Vfs::rmdir($test_base_dir), "Could not remove existing test directory '$test_base_dir'");
 		}
 		$this->assertTrue(
 			Vfs::mkdir($test_base_dir),
 			"Could not create base test directory '$test_base_dir', delete it if it's there already."
 		);
 		$this->assertTrue(
-			Vfs::mkdir($source_dir),
+			Vfs::mkdir($source_dir, null, true),
 			"Could not create source directory '$source_dir'"
 		);
 
@@ -570,8 +579,8 @@ abstract class StreamWrapperBase extends LoggedInTest
 		{
 			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
 		}
-		$url = Filesystem\StreamWrapper::SCHEME.'://default'. $fs_path.
-				'?user='.$GLOBALS['egw_info']['user']['account_id'].'&group=Default&mode=775';
+		$url = Filesystem\StreamWrapper::SCHEME . '://default' . $fs_path .
+			'?user=' . Api\Accounts::id2name($GLOBALS['EGW_USER'], 'account_id') . '&group=Default&mode=770';
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
 		Vfs::$is_root = $backup;
 
