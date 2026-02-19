@@ -661,62 +661,45 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				}
 			}
 
-			const pref_name = "mail_add_address_new_popup";
-			const new_dialog_pref = egw.preference(pref_name, "common");
-
-			if (popups.length == 0 || new_dialog_pref == "new")
+			 const pref_name = "mail_add_address_new_popup";
+			 const new_dialog_pref = egw.preference(pref_name, "common");
+			//If there is no popup just open a new entry instantly
+			if (popups.length == 0)
 			{
 				return openUp(_app, _extra);
 			}
-			if (new_dialog_pref == "add" && popups.length == 1)
-			{
-				try
-				{
-					popups[0].app[_app][_method](popups[0], _content);
-				}
-				catch (e)
-				{
-					window.setTimeout(function ()
-					{
-						openUp(_app, _extra);
-					});
-				}
-				return;
-			}
 
-			var buttons = [
+			const buttons = [
 				{label: this.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
 				{label: this.lang("Cancel"), id: "cancel"}
 			];
 
 			// Fill dialog options
-			var c = [];
-			for (var i = 0; i < popups.length; i++)
+			const options = [];
+			for (let i = 0; i < popups.length; i++)
 			{
-				c.push({label: popups[i].document.title || this.lang(_app), index: i});
+				options.push({label: popups[i].document.title || this.lang(_app), index: i});
 			}
-			c.push({label: this.lang("New %1", egw.link_get_registry(_app, "entry")), index: "new"});
+			options.push({label: this.lang("New %1", egw.link_get_registry(_app, "entry")), index: "new"});
 
 			// Set initial value
 			switch (new_dialog_pref)
 			{
 				case "new":
-					c.index = "new";
+					options.index = "new";
 					break;
 				default:
 				case "add":
-					c.index = 0;
+					options.index = 0;
 					break;
 			}
 			let dialog = new Et2Dialog(this.app_name());
 			dialog.transformAttributes({
 				callback: function (_button_id, _value)
 				{
-					if (_value.remember)
-					{
-						// Remember and do not ask again (if they chose new)
-						egw.set_preference("common", pref_name, _value.remember && _value.grid.index == "new" ? "new" : "add");
-					}
+					//Always remember what was chosen, as preselection for next time
+					egw.set_preference("common", pref_name, _value.grid.index == "new" ? "new" : "add");
+
 					if (_value && _value.grid)
 					{
 						switch (_button_id)
@@ -734,7 +717,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				},
 				title: this.lang("Select an opened dialog"),
 				buttons: buttons,
-				value: {content: {grid: c}},
+				value: {content: {grid: options}},
 				template: this.webserverUrl + '/api/templates/default/promptOpenedDialog.xet?1',
 				resizable: false
 			});
