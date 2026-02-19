@@ -91,6 +91,8 @@ class AnonymousSharingTest extends SharingBase
 	 */
 	public function testTwoShares()
 	{
+		// This may fail if your egw file location is different between command line and nginx
+
 		// TEST SETUP
 		// Create shares
 		$dir1 = Vfs::get_home_dir() . '/share1/';

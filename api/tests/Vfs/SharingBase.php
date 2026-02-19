@@ -239,6 +239,7 @@ class SharingBase extends LoggedInTest
 			$stat = Vfs::stat($file);
 			echo "\t".Vfs::int2mode($stat['mode'])."\t$file\n";
 		}
+		$this->assertTrue(file_exists(Vfs::PREFIX . $file), "$file does not exist");
 
 		// All the test files have something in them
 		if(!Vfs::is_dir($file))
@@ -264,7 +265,10 @@ class SharingBase extends LoggedInTest
 				$this->assertTrue(Vfs::is_writable($file), $file . ' was not writable');
 				if(!Vfs::is_dir($file))
 				{
+					$content = file_get_contents(Vfs::PREFIX . $file);
 					$this->assertNotFalse(file_put_contents(Vfs::PREFIX.$file, 'Writable check'));
+					// Put it back
+					file_put_contents(Vfs::PREFIX . $file, $content);
 				}
 				break;
 		}
@@ -356,12 +360,16 @@ class SharingBase extends LoggedInTest
 		// Vfs breaks if path has trailing /
 		if(substr($path, -1) == '/') $path = substr($path, 0, -1);
 
+		$this->assertNotFalse(realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount'), "Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
 
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
 
 		// I guess merge needs the dir in SQLFS first
-		if(!Vfs::is_dir($dir)) Vfs::mkdir($path);
+		if(!Vfs::is_dir($path))
+		{
+			Vfs::mkdir($path);
+		}
 		Vfs::chmod($path, 0750);
 		Vfs::chown($path, $GLOBALS['egw_info']['user']['account_id']);
 
