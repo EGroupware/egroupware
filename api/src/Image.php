@@ -368,6 +368,7 @@ class Image
 		'projectmanager/download'	=> 'download',
 		'projectmanager/milestone'	=> 'check2-circle',
 		'projectmanager/pricelist'	=> 'currency-euro',
+		'projectmanager/ignored'	=> 'ban',
 		'status/videoconference'	=> 'camera-video',
 		'status/videoconference_call'	=> 'camera-video',
 		'status/videoconference_join'	=> 'node-plus',
