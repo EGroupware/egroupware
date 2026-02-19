@@ -94,7 +94,7 @@
 	</template>
     <et2-template id="timesheet.edit" layout="edit" class="et2-label-fixed">
         <et2-hbox full="true" exportparts="base" disabled="@ts_viewtype" class="dialogHeader">
-            <et2-textbox label="Title" id="ts_title" maxlength="255" class="et2_required" tabindex="1" span="4" placeholder="@ts_title_blur"></et2-textbox>
+            <et2-textbox label="Title" id="ts_title" maxlength="255" class="et2_required et2-label-fixed" tabindex="1" span="4" placeholder="@ts_title_blur"></et2-textbox>
             <et2-number id="ts_id" readonly="true" precision="0"></et2-number>
             <et2-appicon src="timesheet"></et2-appicon>
         </et2-hbox>
