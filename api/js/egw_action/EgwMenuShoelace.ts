@@ -222,6 +222,9 @@ export class EgwMenuShoelace extends LitElement
 				// Update our internal data
 				item.data.checked = item.checked = event.detail.item.checked;
 
+				//execute the action
+				item.onClick?.call(event.detail.item, item, event);
+
 				// Update image of a checkbox item to be toggle on or off
 				// this happens by requesting an update because item.checked has changed
 				event.detail.item.querySelector('et2-image').src = item.checked ? "toggle-on" : "toggle-off";
