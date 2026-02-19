@@ -3307,7 +3307,7 @@ class addressbook_ui extends addressbook_bo
 			$content['link_to']['show_deleted'] = true;
 		}
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(Acl::DELETE,$content);
-		$readonlys['button[edit]'] = !$this->check_perms(Acl::EDIT,$content);
+		$readonlys['button[edit]'] = false;
 
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
