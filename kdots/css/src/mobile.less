@@ -676,3 +676,23 @@
   }
 
 }
+//always style the plus button to be there on mobile devices, no matter their dimensions
+html:not(.desktop) et2-button-icon.plus_button {
+	display: flex;
+	position: fixed !important;
+	right: 15px;
+	bottom: 15px;
+	font-size: 45px;
+	line-height: 45px;
+	border-radius: var(--sl-border-radius-circle);
+	z-index: 100;
+	background-color: var(--template-custom-color, var(--application-color, var(--primary-color, var(--sl-color-primary-500))));
+	border: none;
+	margin: 0;
+	padding: 0;
+	color: var(--sl-color-neutral-0);
+
+	&:hover, &:active {
+		background-color: #0c5da5;
+	}
+}
