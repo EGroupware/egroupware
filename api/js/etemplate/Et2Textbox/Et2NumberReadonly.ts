@@ -35,6 +35,14 @@ export class Et2NumberReadonly extends Et2TextboxReadonly
 	@property({type: Number})
 	precision;
 
+	/**
+	 * Allow higher precision (more decimal places) than the precision property if the value has them instead of discarding them.
+	 *
+	 * @type {boolean}
+	 */
+	@property({type: Boolean, attribute: false})
+	allowHigherPrecision = false;
+
 	set_value(val)
 	{
 		if(val === null)
@@ -43,9 +51,16 @@ export class Et2NumberReadonly extends Et2TextboxReadonly
 		}
 		else if("" + val !== "")
 		{
+			// If we're allowing higher precision, do that
+			let precision = this.precision;
+			if(this.allowHigherPrecision)
+			{
+				let parts = ("" + val).split(".");
+				precision = Math.max(precision, parts[1]?.length ?? 0);
+			}
 			// use decimal separator from user prefs
 			const format = this.egw().preference('number_format') ?? ".";
-			val = formatNumber(parseFloat(val), format[0], format[1], this.precision);
+			val = formatNumber(parseFloat(val), format[0], format[1], precision);
 		}
 
 		// can not call super.set_value(), as it does not call the setter for value
