@@ -16,6 +16,5 @@
                 </row>
             </rows>
         </grid>
-        <et2-checkbox id="remember" label="Remember and do not ask again" slot="footer" align="right"></et2-checkbox>
     </template>
 </overlay>
