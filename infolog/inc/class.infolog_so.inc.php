@@ -915,17 +915,20 @@ class infolog_so
 							break;
 					}
 				}
-				if ($col[0] == '#' &&  $query['custom_fields'] && $data)
+				if($col[0] == '#' && $data)
 				{
 					$filtermethod .= " AND main.info_id IN (SELECT DISTINCT info_id FROM $this->extra_table WHERE ";
 					$custom_fields = Api\Storage\Customfields::get('infolog');
 
-					if($custom_fields[substr($col,1)]['type'] == 'select' && $custom_fields[substr($col,1)]['rows'] > 1)
+					if($custom_fields[substr($col, 1)]['type'] == 'select')
 					{
 						// Multi-select - any entry with the filter value selected matches
 						$filtermethod .= $this->db->expression($this->extra_table, array(
-							'info_extra_name' => substr($col,1),
-							$this->db->concat("','",'info_extra_value',"','").' '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%,'.$data.',%'),
+								'info_extra_name' => substr($col, 1),
+								'(' . implode(' OR ', array_map(function ($v)
+								{
+									return "INSTR(CONCAT(',', info_extra_value, ','), CONCAT(',', " . $this->db->quote($v) . ", ',')) > 0";
+								}, is_array($data) ? $data : explode(',', $data))) . ')',
 						)).')';
 					}
 					else

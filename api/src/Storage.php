@@ -504,6 +504,29 @@ class Storage extends Storage\Base
 		return $sql.')';
 	}
 
+
+	/**
+	 * Return SQL fragment to match "select" type custom-fields for given $values.  Complete values only, no partial matches.
+	 *
+	 * To be AND-ed to customfield JOIN query
+	 *
+	 * @param $table
+	 * @param $customfield_name
+	 * @param array|string $values
+	 * @param string $op
+	 * @return string
+	 */
+	public function cf_multimatch(string $table, string $customfield_name, array|string $values, $op = 'OR')
+	{
+		return "( {$table}.{$this->extra_key} = " . $this->db->quote($customfield_name) . ' AND  (' .
+			implode(" $op ", array_map(function ($v) use ($table)
+			{
+				return "INSTR(CONCAT(',', {$table}.{$this->extra_value}, ','), CONCAT(',', " . $this->db->quote($v) . ", ',')) > 0";
+			}, is_array($values) ? $values : explode(',', $values))) .
+
+			'))';
+	}
+
 	/**
 	 * searches db for rows matching searchcriteria
 	 *
@@ -622,7 +645,7 @@ class Storage extends Storage\Base
 					if ($op != 'AND')
 					{
 						$name = substr($name, 1);
-						if (($negate = $criteria[$name][0] === '!'))
+						if(is_string($val) && ($negate = $criteria[$name][0] === '!'))
 						{
 							$val = substr($val,1);
 						}
@@ -769,17 +792,16 @@ class Storage extends Storage\Base
 						{
 							$sql_filter = 'extra_filter.'.$this->extra_value.'!='.$this->db->quote(substr($val,1));
 						}
-						else	// using Db::expression to allow to use array() with possible values or NULL
+						else
 						{
-							if($this->customfields[$cf_name]['type'] == 'select' &&
-								$this->customfields[$cf_name]['rows'] > 1)
+							if($this->customfields[$cf_name]['type'] == 'select')
 							{
-								// Multi-select - any entry with the filter value selected matches
-								$sql_filter = str_replace($this->extra_value,'extra_filter.'.
-									$this->extra_value,$this->db->expression($this->extra_table,array(
-										$this->db->concat("','",$this->extra_value,"','").' '.$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%,'.$val.',%')
-									))
-								);
+								// Multi-select - any entry with one of the filter values selected matches
+								$sql_filter = $this->cf_multimatch("extra_filter$extra_filter", $cf_name, $val);
+								$join .= str_replace('extra_filter', 'extra_filter' . $extra_filter, $this->extra_join_filter) . ' AND ' . $sql_filter;
+								$extra_filter++;
+								unset($filter[$name]);
+								continue;
 							}
 							elseif ($this->customfields[$cf_name]['type'] == 'text')
 							{
