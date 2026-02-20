@@ -88,7 +88,6 @@ class SharingBackendTest extends SharingBase
 		$dir = Vfs::get_home_dir() . '/filesystem/';
 
 		// Mount filesystem directory
-		if(Vfs::is_dir($dir)) Vfs::remove($dir);
 		$this->mountFilesystem($dir);
 		$this->assertTrue(Vfs::is_writable($dir), "Unable to write to '$dir' as expected");
 
@@ -108,7 +107,6 @@ class SharingBackendTest extends SharingBase
 		$dir = Vfs::get_home_dir() . '/filesystem/';
 
 		// Mount filesystem directory
-		if(Vfs::is_dir($dir)) Vfs::remove($dir);
 		$this->mountFilesystem($dir);
 		$this->assertTrue(Vfs::is_writable($dir), "Unable to write to '$dir' as expected");
 
