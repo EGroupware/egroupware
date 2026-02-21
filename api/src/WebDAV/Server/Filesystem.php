@@ -175,7 +175,7 @@ class HTTP_WebDAV_Server_Filesystem extends HTTP_WebDAV_Server
 
             if ($handle) {
                 // ok, now get all its contents
-                while ($filename = readdir($handle)) {
+				while (($filename = readdir($handle)) !== false) {
                     if ($filename != "." && $filename != "..") {
                         $files["files"][] = $this->fileinfo($options["path"].$filename);
                     }
