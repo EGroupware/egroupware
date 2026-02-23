@@ -107,7 +107,7 @@ backup '%1' restored	setup	en	Backup '%1' restored.
 backup and restore	setup	en	Backup and restore
 backup directory %1 mounted as %2	setup	en	Backup directory %1 mounted as %2
 backup failed	setup	en	Backup failed.
-backup files (needs ziparchive)	setup	en	Data backup of the EGroupware files (files directory) <br>(requires PHP ZipArchive)
+backup files (needs ziparchive)	setup	en	Data backup of the EGroupware files (files directory) \n(requires PHP ZipArchive)
 backup finished	setup	en	Backup finished.
 backup housekeeping	setup	en	Backups with a standard name can be cleaned up automatically. Rename backup files to exclude them from cleanup.
 backup min count	setup	en	Minimum number of backups
@@ -119,14 +119,14 @@ base dn "%1" not found!	setup	en	Base DN "%1" NOT found!
 because an application it depends upon was upgraded	setup	en	Because an application it depends upon was upgraded
 because it depends upon	setup	en	Because it depends upon
 because it is not a user application, or access is controlled via acl	setup	en	Because it is not a user application, or access is controlled via ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	en	Because it requires manual table installation, <br>or the table definition was incorrect
+because it requires manual table installation, <br />or the table definition was incorrect	setup	en	Because it requires manual table installation, \nor the table definition was incorrect
 because it was manually disabled	setup	en	Because it was manually disabled
 because its sources are missing	setup	en	Because its sources are missing
 because of a failed upgrade or install	setup	en	Because of a failed upgrade or install
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	en	Because of a failed upgrade, or the database is newer than the installed version of this app
 because the enable flag for this app is set to 0, or is undefined	setup	en	Because the enable flag for this app is set to 0, or is undefined
 bottom	setup	en	Bottom
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	en	It is <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><b>These automated scripts can easily destroy your data.</b>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	en	It is <u>highly recommend backing up</u> your tables in case the script causes damage to your data.\n<b>These automated scripts can easily destroy your data.</b>
 by redirecting to https	setup	en	By redirecting to https
 by rewriting links to https (allows eg. sitemgr to run on http)	setup	en	By rewriting links to https (allows eg. SiteMgr to run on http)
 ca certificate	setup	en	CA certificate
@@ -139,9 +139,9 @@ can not create dn %1!	setup	en	Can not create DN %1!
 can not instancate accounts object for %1	setup	en	Can NOT instancate accounts object for %1
 can only be change via setup!	setup	en	Can only be change via Setup!
 cancel	setup	en	Cancel
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can %1 or %2 the file.
-cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	en	CAS server host name:<br>example: sso-cas.univ-rennes1.fr
-cas server port:<br />example: 443	setup	en	CAS server port:<br>Example: 443
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.\n Instead you can %1 or %2 the file.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	en	CAS server host name:\nexample: sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	en	CAS server port:\nExample: 443
 cas server uri:	setup	en	CAS server URI:
 certificate (pem or ca):	setup	en	Certificate (PEM or CA):
 certificate metadata is signed with	setup	en	Certificate Metadata is signed with
@@ -152,7 +152,7 @@ charsets used by the different languages	setup	en	Charsets used by the different
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	en	Check can only be performed, if called via a web server, as the user-ID/-name of the web server is not known.
 check installation	setup	en	Check installation
 check ip address of all sessions	setup	en	Check IP address of all sessions
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	en	Include files (files directory) in the data backup.<br>(Can generate large amounts of data and abort with many files, documentation: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup einer EGroupware</a>)
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	en	Include files (files directory) in the data backup.\n(Can generate large amounts of data and abort with many files, documentation: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup einer EGroupware</a>)
 checking dependencies: %1 packages are installed in the required version.	setup	en	Checking dependencies: %1 packages are installed in the required version.
 checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is loaded or loadable
 checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file permissions of %1 for %2 %3: %4
@@ -188,6 +188,7 @@ configure now	setup	en	Configure now
 confirm to delete this backup?	setup	en	Confirm to delete this backup?
 contain	setup	en	Contain
 context to create users	setup	en	Context to create users
+context to search users	setup	en	Context to search users
 continue	setup	en	Continue
 continue to the header admin	setup	en	Continue to the Header Admin
 convert	setup	en	Convert
@@ -212,7 +213,7 @@ creation of %1 in %2 failed !!!	setup	en	Creation of %1 in %2 failed!
 current configuration:	setup	en	Current configuration:
 current system-charset	setup	en	Current system charset
 current version	setup	en	Current version
-currently installed languages: %1 <br />	setup	en	Currently installed languages: %1<br>
+currently installed languages: %1 <br />	setup	en	Currently installed languages: %1\n
 custom attribute	setup	en	custom attribute
 custom handler: %1	setup	en	Custom handler: %1
 custom oid	setup	en	custom OID
@@ -224,7 +225,7 @@ database is version %1 and up to date.	setup	en	Database is version %1 and up to
 database successfully converted from '%1' to '%2'	setup	en	Database successfully converted from '%1' to '%2'
 datebase %1 droped.	setup	en	Database %1 dropped.
 day	setup	en	Day
-day of week<br />(0-6, 0=sunday)	setup	en	Day of week<br>(0 - 6, 0 = sunday)
+day of week<br />(0-6, 0=sunday)	setup	en	Day of week\n(0 - 6, 0 = sunday)
 db backup and restore	setup	en	DB backup and restore
 db host	setup	en	DB host
 db name	setup	en	DB name
@@ -271,6 +272,7 @@ domain-name	setup	en	Domain name
 don't change, if you already stored files! you will loose them!	setup	en	Don't change, if you already stored files! You will loose them!
 dont touch my data	setup	en	Don't touch my data
 download	setup	en	Download
+download ldif with changes	setup	en	Download ldif with changes
 dry-run (only show what would happen)	setup	en	Dry-run (only show what would happen)
 easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	en	Easiest way under win2008r2 is to add role "Active Directory Certificate Services" and reboot.
 edit current configuration	setup	en	Edit current configuration
@@ -298,14 +300,14 @@ enable logging of authentication to files-directory	setup	en	Enable logging of a
 enable mcrypt	setup	en	Enable Mcrypt
 enforce ssl (allows to specify just a path above)	setup	en	Enforce SSL (allows to specify just a path above)
 enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	en	Enter some random text for app_session<br>encryption (requires mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:files	setup	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
-enter the full path to the backup directory.<br />if empty: files directory	setup	en	Enter the full path to the backup directory.<br>if empty: files directory
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	en	Enter some random text for app_session\nencryption (requires mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	en	Enter the full path for temporary files.\nExamples: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	en	Enter the full path for temporary files.\nExamples: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:files	setup	en	Enter the full path for users and group files.\nExamples: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	en	Enter the full path for users and group files.\nExamples: /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	en	Enter the full path to the backup directory.\nif empty: files directory
 enter the hostname of the machine on which this server is running	setup	en	Enter the host name of the machine on which this server is running
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	en	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	en	Enter the location of EGroupware's URL.\nExample: http://www.domain.com/egroupware or /egroupware\n<b>No trailing slash</b>
 enter the site password for peer servers	setup	en	Enter the site password for peer servers
 enter the site username for peer servers	setup	en	Enter the site username for peer servers
 enter the title for your site	setup	en	Enter the title for your site
@@ -392,6 +394,7 @@ if you running this the first time, don't forget to manualy %1 !!!	setup	en	If y
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	en	If you use only languages of the same charset (eg. western european ones) you don't need to set a system charset!
 image type selection order	setup	en	Image type selection order
 imap: admin user,password,emailadmin_imap(|_cyrus|_dovecot)	setup	en	IMAP: Admin user,Password,emailadmin_imap(|_cyrus|_dovecot)
+import aliases	setup	en	Import aliases
 import has been completed!	setup	en	Import has been completed!
 include_path need to contain "." - the current directory	setup	en	include_path need to contain "." - the current directory
 incremental import	setup	en	Incremental import
@@ -434,6 +437,7 @@ ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP Root DN
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	en	LDAP search filter for accounts, default: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	en	Leave empty to keep current.
+leave empty to use context above	setup	en	leave empty to use context above
 leave empty to use default	setup	en	leave empty to use default
 limit access	setup	en	Limit access
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	en	Limit access to setup to the following addresses, networks or host names (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
@@ -605,7 +609,7 @@ save this text as contents of your header.inc.php	setup	en	Save this text as con
 schedule	setup	en	Schedule
 scheduled backups	setup	en	Scheduled backups
 securest	setup	en	Most secure
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><b>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</b>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.\nIf you do not enter a version, only the baseline tables will be installed for the app.\n<b>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</b>
 select one...	setup	en	Select one ...
 select the default applications to which your users will have access	setup	en	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	en	Select the desired action(s) from the available choices
@@ -704,15 +708,15 @@ the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	Th
 the xmlreader extension is required by egroupware in several applications.	setup	en	The xmlreader extension is required by EGroupware in several applications.
 the xsl extension is need in merge-print for processing html and office documents.	setup	en	The XSL extension is need in merge-print for processing HTML and office documents.
 the zip extension is required for merge-print with office documents.	setup	en	The zip extension is required for merge-print with office documents.
-there was a problem trying to connect to your ldap server. <br />	setup	en	There was a problem trying to connect to your LDAP server.<br>
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br>please check your LDAP server configuration
+there was a problem trying to connect to your ldap server. <br />	setup	en	There was a problem trying to connect to your LDAP server.\n
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. \nplease check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the web servers document-root!
 this might take a while, please wait ...	setup	en	This might take a while, please wait ...
 this program lets you backup your database, schedule a backup or restore it.	setup	en	This program lets you backup your database, schedule a backup or restore it.
 this program will convert your database to a new system-charset.	setup	en	This program will convert your database to a new system charset.
 this program will help you upgrade or install different languages for egroupware	setup	en	This program will help you upgrade or install different languages for EGroupware
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	en	This should be around 30 bytes in length.<br>Note: The default has been randomly generated.
-this stage is completed<br />	setup	en	This stage is completed<br>
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	en	This should be around 30 bytes in length.\nNote: The default has been randomly generated.
+this stage is completed<br />	setup	en	This stage is completed\n
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	en	This will create a first user in EGroupware or reset password and admin rights of an exiting user
 to a version it does not know about	setup	en	To a version it does not know about
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	en	To allow password authentication add the following line to your pg_hba.conf (above all others) AND restart PostgreSQL:
@@ -733,6 +737,7 @@ unknown option '%1' !!!	setup	en	Unknown option '%1'!
 update finished.	setup	en	Update finished.
 update necessary.	setup	en	Update necessary.
 update of %1 in %2 failed !!!	setup	en	Update of %1 in %2 failed!
+update the account in the source (requires write rights!)	setup	en	Update the account in the source (requires write rights!)
 upgrade	setup	en	Upgrade
 upgrade all	setup	en	Upgrade all
 upgraded	setup	en	Upgraded.
@@ -763,7 +768,7 @@ usernames are casesensitive	setup	en	User names are case sensitive
 users choice	setup	en	Users choice
 users, groups and memberships	setup	en	users, groups and memberships
 users, groups and memberships, keep local groups	setup	en	users, groups and memberships, keep local groups
-usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	en	Usually more annoying.<br>Admins can use Admin >> Manage accounts or groups to give access to further apps.
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	en	Usually more annoying.\nAdmins can use Admin >> Manage accounts or groups to give access to further apps.
 utf-8 (unicode)	setup	en	UTF-8 (Unicode)
 validation errors	setup	en	Validation errors
 version	setup	en	Version
@@ -780,15 +785,17 @@ we will now run a series of tests, which may take a few minutes.  click the link
 weekly	setup	en	weekly
 welcome to the egroupware installation	setup	en	Welcome to the EGroupware installation
 what to do in egroupware if an user get deleted?	setup	en	What to do in EGroupware if an user get deleted?
+what to do, if an account get modified in egroupware?	setup	en	What to do, if an account get modified in EGroupware?
 what to import?	setup	en	What to import?
 where should egroupware store file content	setup	en	Where should EGroupware store file content
 which database type do you want to use with egroupware?	setup	en	Which database type do you want to use with EGroupware?
 will be downloaded once, unless changed.	setup	en	Will be downloaded once, unless changed.
+will import aliases from multivalued mail or proxyaddresses attribute	setup	en	Will import aliases from multivalued mail or proxyAddresses attribute
 with	setup	en	with
 world readable	setup	en	World readable
 world writable	setup	en	World writable
 would you like egroupware to cache the phpgw info array ?	setup	en	Would you like EGroupware to cache the phpgw info array?
-would you like egroupware to check for a new version<br />when admins login ?	setup	en	Would you like EGroupware to check for a new version<br>when admins login?
+would you like egroupware to check for a new version<br />when admins login ?	setup	en	Would you like EGroupware to check for a new version\nwhen admins login?
 would you like to show each application's upgrade status ?	setup	en	Would you like to show each application's upgrade status?
 writable by the webserver	setup	en	Writable by the web server
 write	setup	en	Write
@@ -796,12 +803,12 @@ wrong credentials to access the header.inc.php file!	setup	en	Wrong credentials 
 year	setup	en	Year
 yes	setup	en	Yes
 yes, with lowercase usernames	setup	en	Yes, with lower case user names
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of EGroupware.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP<br>It its recommend that you upgrade to a new version.<br>Older version of PHP might not run EGroupware correctly, if at all.<br><br>Please upgrade to at least version %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of EGroupware.\nThese versions are no longer supported, and there is no upgrade path for them in setup.\n You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) \nand then upgrade from there with the current version.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP\nIt its recommend that you upgrade to a new version.\nOlder version of PHP might not run EGroupware correctly, if at all.\n\nPlease upgrade to at least version %1
 you appear to be running version %1 of egroupware	setup	en	You appear to be running version %1 of EGroupware
 you appear to have %1 support.	setup	en	You appear to have %1 support
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
-you are ready for this stage, but this stage is not yet written.<br />	setup	en	You are ready for this stage, but this stage is not yet written.<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	en	You are ready for this stage, but this stage is not yet written.\n
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	en	You are using PHP version %1. EGroupware now requires %2 or later, recommended is PHP %3.
 you can install it by running:	setup	en	You can install it by running:
 you can specify multiple idp on separate lines.	setup	en	You can specify multiple IdP on separate lines.
@@ -811,10 +818,10 @@ you didn't enter a config password for domain %1	setup	en	You didn't enter a con
 you didn't enter a config username for domain %1	setup	en	You didn't enter a config username for domain %1
 you didn't enter a header admin password	setup	en	You didn't enter a header admin password
 you didn't enter a header admin username	setup	en	You didn't enter a header admin username
-you do not have any languages installed. please install one now <br />	setup	en	You do not have any languages installed. Please install now <br>
+you do not have any languages installed. please install one now <br />	setup	en	You do not have any languages installed. Please install now \n
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	en	You don't have JPGraph version %1 or higher installed! It is needed from Project Manager for Gantt Charts.
 you dont have tnef or ytnef installed! it is needed to decode winmail.dat attachments in felamimail.	setup	en	You don't have tnef or ytnef installed! It is needed to decode winmail.dat attachments in eMail.
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	en	You have not created your header.inc.php yet!<br> You can create it now.
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	en	You have not created your header.inc.php yet!\n You can create it now.
 you have successfully logged out	setup	en	You have successfully logged out.
 you must enter a username for the admin	setup	en	You must enter a username for the admin.
 you must save and run an inital import, before the periodic import will start	setup	en	You must save AND run an inital import, before the periodic import will start
@@ -837,7 +844,7 @@ your egroupware api is current	setup	en	Your EGroupware API is current
 your files directory '%1' %2	setup	en	Your files directory '%1' %2
 your header admin password is not set. please set it now!	setup	en	Your header admin password is NOT set. Please set it now!
 your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgrading.
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br><b> class="msg">WARNING!</b><br><b>MAKE BACKUPS!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.\n<b> class="msg">WARNING!</b>\n<b>MAKE BACKUPS!</b>
 your installed version of %1 is %2, required is at least %3, please run:	setup	en	Your installed version of %1 is %2, required is at least %3, please run:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	en	Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see GanttCharts in projects.
 your tables are current	setup	en	Your tables are current

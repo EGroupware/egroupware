@@ -369,7 +369,8 @@ class Import
 							if (($GLOBALS['egw_info']['server']['account_repository'] ?? 'sql') === 'sql')
 							{
 								$hook_results = Api\Hooks::process($sql_account+array(
-										'location' => 'addaccount'
+										'location' => 'addaccount',
+										'caller_method' => __METHOD__,
 									),False,True);	// called for every app now, not only enabled ones)
 								$this->logger("Called addaccount hook for ".json_encode($sql_account).': '.
 									json_encode($hook_results), 'detail');
@@ -432,6 +433,7 @@ class Import
 											$hook_results = Api\Hooks::process($to_update + array(
 												// if there was no email set before, call add account hook, to activate mail-account
 												'location' => $hook,
+												'caller_method' => __METHOD__,
 											), False, True);    // called for every app now, not only enabled ones)
 											$this->logger("Called $hook hook for ".json_encode($to_update).': '.
 												json_encode($hook_results), 'detail');
@@ -902,7 +904,8 @@ class Import
 				{
 					// run addgroup hook to create e.g. home-directory or mail account
 					Api\Hooks::process($group+array(
-							'location' => 'addgroup'
+							'location' => 'addgroup',
+							'caller_method' => __METHOD__,
 						),False,True);	// called for every app now, not only enabled ones)
 					Api\Accounts::cache_invalidate($sql_id);
 
@@ -940,6 +943,7 @@ class Import
 					{
 						Api\Hooks::process($to_update+array(
 								'location' => 'editgroup',
+								'caller_method' => __METHOD__,
 								'old_name' => $sql_group['account_lid'],
 							),False,True);	// called for every app now, not only enabled ones)
 						Api\Accounts::cache_invalidate($sql_id);
@@ -1317,5 +1321,69 @@ class Import
 			$strtolower = function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower';
 		}
 		return $strtolower($str);
+	}
+
+	/**
+	 * Hook gets called if an account (or it's contact-data) is modified in EGroupware
+	 *
+	 * If configured account_import_update_source, it will update / write back the changes to the source (AD or LDAP) of the import.
+	 *
+	 * @param array $data array with value for key "location" ("addaccount", "editaccount", "editaccountcontact") and other data
+	 * @return void
+	 */
+	public static function hookEditAccount(array $data)
+	{
+		$config = Api\Config::read('phpgwapi');
+		if (empty($config['account_import_source']) ||
+			empty($config['account_import_update_source']) ||
+			empty($data['account_id']) ||
+			// do NOT try to store again, if called by import itself!
+			!empty($data['caller_method']) && str_starts_with($data['caller_method'], __CLASS__))
+		{
+			return; // nothing to do
+		}
+		switch ($data['location'])
+		{
+			case 'addaccount':
+				$new_account_id = $data['account_id'];
+				unset($data['account_id']);
+				// fall through
+			case 'editaccount':
+				$accounts = self::accountsFactory($config['account_import_source']);
+				$account = array_filter($data, fn($key) => !in_array($key, ['location']), ARRAY_FILTER_USE_KEY);
+				if (!$accounts->backend->save($account))
+				{
+					throw new \Exception('Error updating account in '.$config['account_import_source']);
+				}
+				// need to store UUID and DN from AD/LDAP (we leave the account_id for now, as the import don't mind if they match, or not)
+				if (isset($new_account_id) &&
+					($account_id = $accounts->backend->name2id($account['account_lid'])) &&
+					($account = $accounts->backend->read($account_id)))
+				{
+					/** var Api\Db */
+					$db = $GLOBALS['egw']->db;
+					$db->update(Api\Accounts\Sql::TABLE, array_intersect_key($account, array_flip(['account_dn', 'account_uuid', /*'account_id'*/])), [
+						'account_id' => $new_account_id,
+					], __LINE__, __FILE__);
+					$db->update('egw_addressbook', [
+						'contact_uid' => $account['account_uuid'],
+						//'account_id' => $account['account_id'],
+					], [
+						'account_id' => $new_account_id,
+					], __LINE__, __FILE__);
+					Api\Accounts::cache_invalidate($new_account_id);
+				}
+				break;
+
+			case 'editaccountcontact':
+				$contacts = self::contactsFactory($config['account_import_source']);
+				// id is the uid for LDAP or ADS!
+				$contact = ['id' => $data['uid']]+ array_filter($data, fn($key) => !in_array($key, ['location']), ARRAY_FILTER_USE_KEY);
+				if (($error = $contacts->backendSave($contact)))
+				{
+					throw new \Exception('Error updating contact-data of account in '.$config['account_import_source'].': '.$error);
+				}
+				break;
+		}
 	}
 }

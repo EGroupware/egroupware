@@ -434,7 +434,7 @@
    </tr>
    <tr class="row_on">
      <td>
-     	{lang_Context_to_create_users}: ({lang_leave_empty_to_use_default})<br/>
+     	{lang_Context_to_search_users}: ({lang_leave_empty_to_use_default})<br/>
      	{lang_eg._"CN=Users,DC=domain,DC=com"_for_ADS_domain_"domain.com"}<br/>
      </td>
      <td><input name="newsettings[ads_context]" value="{value_ads_context}" size="80" /></td>
@@ -461,6 +461,12 @@
    <tr class="row_on">
      <td><b>{lang_Attributes_for_new_users}</b><br/></td>
      <td>{lang_use_%u_for_username,_leave_empty_to_no_set}</td>
+   </tr>
+   <tr class="row_on">
+     <td>
+     	{lang_Context_to_create_users}: ({lang_leave_empty_to_use_context_above})
+     </td>
+     <td><input name="newsettings[ads_create_context]" value="{value_ads_create_context}" size="80" /></td>
    </tr>
    <tr class="row_off">
      <td>profilePath</td>
@@ -546,7 +552,7 @@
      <td><input name="newsettings[account_import_dn_regexp]" value="{value_account_import_dn_regexp}" placeholder="/OU=(One|Two),DC=example,DC=org$/i" size="80" /></td>
    </tr>
    <tr class="row_off">
-    <td>{lang_What_to_import?}:</td>
+    <td>{lang_What_to_import?}</td>
     <td>
      <select name="newsettings[account_import_type]">
       <option value="users" {selected_account_import_type_users}>{lang_just_users}</option>
@@ -559,7 +565,7 @@
     </td>
    </tr>
    <tr class="row_on">
-    <td>{lang_What_to_do_in_EGroupware_if_an_user_get_deleted?}:</td>
+    <td>{lang_What_to_do_in_EGroupware_if_an_user_get_deleted?}</td>
     <td>
      <select name="newsettings[account_import_delete]">
       <option value="yes" {selected_account_import_delete_yes}>{lang_Delete_user_AND_his_data}</option>
@@ -570,7 +576,14 @@
     </td>
    </tr>
    <tr class="row_off">
-    <td>{lang_How_frequent_should_the_import_run?}:</td>
+     <td>{lang_What_to_do,_if_an_account_get_modified_in_EGroupware?}</td>
+     <td><label>
+       <input type=checkbox name="newsettings[account_import_update_source]" value="true" {checked_account_import_update_source_true}>
+       {lang_Update_the_account_in_the_source_(requires_write_rights!)}
+     </label></td>
+   </tr>
+   <tr class="row_on">
+    <td>{lang_How_frequent_should_the_import_run?}</td>
     <td>
      {lang_Every}
      <input type="number" name="newsettings[account_import_frequency]" style="width: 3em" value="{value_account_import_frequency}" step="0.1"/>
@@ -584,7 +597,7 @@
      <br/>{lang_logs_to}: {value_files_dir}/setup/account-import.log
     </td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_You_must_save_AND_run_an_inital_import,_before_the_periodic_import_will_start}:</td>
     <td>
       <button onclick="window.open('account_import.php?initial=true'+(document.getElementById('import_dry_run')?.checked?'&dry_run=true':''), '_blank')">{lang_Initial_import}</button>
@@ -594,7 +607,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td colspan="2">&nbsp;</td>
    </tr>
 

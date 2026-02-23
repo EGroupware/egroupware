@@ -107,7 +107,7 @@ backup '%1' restored	setup	de	Datensicherung '%1' zurückgesichert
 backup and restore	setup	de	Datensicherung und Wiederherstellung
 backup directory %1 mounted as %2	setup	de	Datensicherungsverzeichnis %1 unter %2 gemounted
 backup failed	setup	de	Datensicherung fehlgeschlagen
-backup files (needs ziparchive)	setup	de	Datensicherung der EGroupware-Dateien (Files Verzeichnis) <br>(benötigt PHP ZipArchive)
+backup files (needs ziparchive)	setup	de	Datensicherung der EGroupware-Dateien (Files Verzeichnis) \n(benötigt PHP ZipArchive)
 backup finished	setup	de	Datensicherung beendet
 backup housekeeping	setup	de	Backups mit Standard-Namen können automatisch aufgeräumt werden. Umbenannte Backup-Dateien werden nie aufgeräumt.
 backup min count	setup	de	Min. Anzahl der Backups
@@ -152,7 +152,7 @@ charsets used by the different languages	setup	de	Zeichensätze die von den vers
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	de	Dieser Test kann nur durchgeführt werden, wenn der Aufruf über den Webserver erfolgt, da Benutzer-ID und -Name des Webservers nicht bekannt sind.
 check installation	setup	de	Installation überprüfen
 check ip address of all sessions	setup	de	IP-Adresse bei allen Sessions überprüfen
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	de	Dateien (Files-Verzeichnis) mit in die Datensicherung aufnehmen.<br>(Kann große Datenmengen erzeugen und bei vielen Dateien abbrechen, Doku: <a href="https://help.egroupware.org/t/backup-einer-egroupware/76069" target="_blank">Backup einer EGroupware</a>)
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	de	Dateien (Files-Verzeichnis) mit in die Datensicherung aufnehmen.\n(Kann große Datenmengen erzeugen und bei vielen Dateien abbrechen, Doku: <a href="https://help.egroupware.org/t/backup-einer-egroupware/76069" target="_blank">Backup einer EGroupware</a>)
 checking dependencies: %1 packages are installed in the required version.	setup	de	Überprüfe Abhängigkeiten: %1 Pakete sind in der benötigten Version installiert.
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsrechte von %1 für %2 %3: %4
@@ -188,6 +188,7 @@ configure now	setup	de	Jetzt konfigurieren
 confirm to delete this backup?	setup	de	Bestätigen Sie diese Datensicherung zu löschen?
 contain	setup	de	Enthält
 context to create users	setup	de	Kontext um Benutzer anzulegen
+context to search users	setup	de	Kontext um Benutzer zu suchen
 continue	setup	de	Weiter
 continue to the header admin	setup	de	Weiter zur Headerverwaltung
 convert	setup	de	Konvertieren
@@ -212,7 +213,7 @@ creation of %1 in %2 failed !!!	setup	de	Anlegen von %1 in %2 fehlgeschlagen!
 current configuration:	setup	de	Aktuelle Konfiguration:
 current system-charset	setup	de	Aktueller Systemzeichensatz
 current version	setup	de	Gegenwärtige Version
-currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br>
+currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 \n
 custom attribute	setup	de	Benutzerdefiniertes Attribute
 custom handler: %1	setup	de	Eigener Sitzunghandler: %1
 custom oid	setup	de	Benutzerdefinierte OID
@@ -224,7 +225,7 @@ database is version %1 and up to date.	setup	de	Datenbank ist Version %1 und akt
 database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von "%1" nach "%2" konvertiert
 datebase %1 droped.	setup	de	Datenbank %1 gelöscht.
 day	setup	de	Tag
-day of week<br />(0-6, 0=sunday)	setup	de	Wochentag<br>(0-6, 0=Sonntag)
+day of week<br />(0-6, 0=sunday)	setup	de	Wochentag\n(0-6, 0=Sonntag)
 db backup and restore	setup	de	DB Datensicherung und Wiederherstellung
 db host	setup	de	Datenbank-Host
 db name	setup	de	Datenbank-Name
@@ -256,7 +257,7 @@ disable only if your ad has problems with vlv controls and can return all users 
 disable vlv controls	setup	de	VLV Kontrollen abschalten
 distribution-lists too	setup	de	auch Verteilerlisten
 do not check for deleted user	setup	de	Nicht auf gelöschte Benutzer prüfen
-do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen Sie eine permanente Datenbankverbindung verwenden?<br>(höhere Performance, braucht aber mehr Ressourcen)
+do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen Sie eine permanente Datenbankverbindung verwenden?\n(höhere Performance, braucht aber mehr Ressourcen)
 do you want to manage homedirectory and loginshell attributes?	setup	de	Wollen Sie Benutzerverzeichnisse und Login-Shell Attribute verwalten?
 documentation	setup	de	Dokumentation
 does not exist	setup	de	Existiert nicht
@@ -271,6 +272,7 @@ domain-name	setup	de	Domainname
 don't change, if you already stored files! you will loose them!	setup	de	Nicht ändern, wenn Sie bereits Dateien gespeichert haben! Sie werden Sie verlieren!
 dont touch my data	setup	de	Meine Daten nicht verändern
 download	setup	de	Herunterladen
+download ldif with changes	setup	de	LDIF Änderungen herunterladen
 dry-run (only show what would happen)	setup	de	Testlauf (zeige nur an was gemacht würde)
 easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	de	Unter Win2008r2 geht das am einfachsten durch hinzufügen der Rolle "Active Directory-Zertifikatsdienste" und neu starten.
 edit current configuration	setup	de	Gegenwärtige Konfiguration überarbeiten
@@ -298,14 +300,14 @@ enable logging of authentication to files-directory	setup	de	Aktiviere Logging d
 enable mcrypt	setup	de	MCrypt einschalten
 enforce ssl (allows to specify just a path above)	setup	de	Erzwinge SSL (erlaubt darüber nur einen Pfad anzugeben)
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung<br>(benötigt mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
-enter the full path to the backup directory.<br />if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br>Wenn leer: Dateiverzeichnis
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung\n(benötigt mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	de	Vollständiger Pfad für temporäre Dateien.\nBeispiel: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.\nBeispiel: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.\nBeispiel: /files, E:\Files
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.\nBeispiel: /files, E:\Files
+enter the full path to the backup directory.<br />if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.\nWenn leer: Dateiverzeichnis
 enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	de	URL zur EGroupware Installation.<br>Beispiel: https://egw.domain.com/egroupware   or   /egroupware<br><b>Keinen nachfolgenden Slash /</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	de	URL zur EGroupware Installation.\nBeispiel: https://egw.domain.com/egroupware   or   /egroupware\n<b>Keinen nachfolgenden Slash /</b>
 enter the site password for peer servers	setup	de	Site Passwort für Peer Server
 enter the site username for peer servers	setup	de	Site Benutzername für Peer Server
 enter the title for your site	setup	de	Titel der EGroupware-Installation
@@ -392,6 +394,7 @@ if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	de	Wenn Sie nur Sprachen des gleichen Zeichensatzes (z.B. westeuropäische) benützen, brauchen Sie keinen Systemzeichensatz zu setzten!
 image type selection order	setup	de	Auswahlreihenfolge der Bilddateitypen
 imap: admin user,password,emailadmin_imap(|_cyrus|_dovecot)	setup	de	IMAP: Adminuser,Passwort,emailadmin_imap(|_cyrus|_dovecot)
+import aliases	setup	de	Aliase importieren
 import has been completed!	setup	de	Import ist beendet!
 include_path need to contain "." - the current directory	setup	de	include_path muss "." - das aktuelle Verzeichnis - enthalten
 incremental import	setup	de	Inkrementeller Import
@@ -434,6 +437,7 @@ ldap root password	setup	de	LDAP root Passwort
 ldap rootdn	setup	de	LDAP Root DN
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	de	LDAP Suchfilter für Benutzerkonten, Vorgabe "(uid=%user)", %domain=EGw Domain
 leave empty to keep current.	setup	de	Leer lassen um das existierende Password zu behalten.
+leave empty to use context above	setup	de	leer lassen um den Kontext darüber zu benutzern
 leave empty to use default	setup	de	leer lassen um Standard zu benutzen
 limit access	setup	de	Zugang beschränken
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	de	Zugang zu Setup auf die folgenden IP Adressen, Netzwerke oder Hostnamen beschränken (z.B. 127.0.0.1,10.1.1,myhost.dnydns.org)
@@ -704,15 +708,15 @@ the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	Di
 the xmlreader extension is required by egroupware in several applications.	setup	de	Die xmlreader PHP Erweiterung wird in EGroupware von vielen Anwendungen benötigt.
 the xsl extension is need in merge-print for processing html and office documents.	setup	de	Die XSL Erweiterung wird benötigt im Sammeldruck für das Bearbeiten von HTML und Office Dokumenten.
 the zip extension is required for merge-print with office documents.	setup	de	Die PHP Erweiterung zip ist für den Sammeldruck von Office Dateien zwingend erforderlich.
-there was a problem trying to connect to your ldap server. <br />	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br>
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br>Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
+there was a problem trying to connect to your ldap server. <br />	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.\n
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.\nBitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss außerhalb des Wurzelverzeichnisses (document root) des Webservers sein!
 this might take a while, please wait ...	setup	de	Dieser Test braucht einige Zeit, bitte warten ...
 this program lets you backup your database, schedule a backup or restore it.	setup	de	Mit diesem Programm können Sie Ihre Datenbank sichern, eine regelmäßige Datensicherung planen oder eine Datensicherung wiederherstellen.
 this program will convert your database to a new system-charset.	setup	de	Dieses Programm wird Ihre Datenbank in einen neuen Systemzeichensatz konvertieren.
 this program will help you upgrade or install different languages for egroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedener Sprachen für EGroupware behilflich sein
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	de	Das sollte ungefähr 30 Zeichen lang sein<br>Hinweis: Die Vorgabe wurde zufällig erzeugt.
-this stage is completed<br />	setup	de	Dieser Schritt ist abgeschlossen<br>
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	de	Das sollte ungefähr 30 Zeichen lang sein\nHinweis: Die Vorgabe wurde zufällig erzeugt.
+this stage is completed<br />	setup	de	Dieser Schritt ist abgeschlossen\n
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	de	Anlegen eines ersten EGroupware-Benutzers oder rücksetzen von Passwort und Administratorrechten eines existierenden Benutzers.
 to a version it does not know about	setup	de	Auf eine Version von der nichts bekannt ist
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	de	Um Passwort Authentifizierung zu verwenden, folgende Zeile (vor allen anderen) in ihre pg_hba.conf einfügen UND PostgreSQL neu starten
@@ -733,6 +737,7 @@ unknown option '%1' !!!	setup	de	Unbekannte Option '%1'!
 update finished.	setup	de	Aktualisierung beendet.
 update necessary.	setup	de	Update notwendig.
 update of %1 in %2 failed !!!	setup	de	Update von %1 auf %2 fehlgeschlagen!
+update the account in the source (requires write rights!)	setup	de	Aktualisiere das Konto in der Quelle (benötigt Schreibrechte!)
 upgrade	setup	de	Aktualisieren
 upgrade all	setup	de	Alle Aktualisieren
 upgraded	setup	de	Aktualisiert
@@ -763,7 +768,7 @@ usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Gr
 users choice	setup	de	Benutzerauswahl
 users, groups and memberships	setup	de	Benutzer, Gruppen und Mitgliedschaften
 users, groups and memberships, keep local groups	setup	de	Benutzer, Gruppen und Mitgliedschaften, erlaube lokale Gruppen
-usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	de	Normalerweise mehr ärgerlich als nützlich<br>
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	de	Normalerweise mehr ärgerlich als nützlich\n
 utf-8 (unicode)	setup	de	UTF-8 (Unicode)
 validation errors	setup	de	Fehler bei der Prüfung der Eingaben
 version	setup	de	Version
@@ -780,15 +785,17 @@ we will now run a series of tests, which may take a few minutes.  click the link
 weekly	setup	de	wöchentlich
 welcome to the egroupware installation	setup	de	Herzlich willkommen zur EGroupware Installation
 what to do in egroupware if an user get deleted?	setup	de	Was soll in EGroupware gemacht werden, wenn ein Benutzer gelöscht wurde?
+what to do, if an account get modified in egroupware?	setup	de	Was soll passieren, wenn ein Konto in EGroupware geändert wird?
 what to import?	setup	de	Was soll importiert werden?
 where should egroupware store file content	setup	de	Wo soll EGroupware Dateien speichern?
 which database type do you want to use with egroupware?	setup	de	Welchen Datenbanktyp wollen Sie mit EGroupware verwenden?
 will be downloaded once, unless changed.	setup	de	Wird einmalig heruntergeladen, außer bei Änderung.
+will import aliases from multivalued mail or proxyaddresses attribute	setup	de	Importiert Aliase vom mehrwertigen mail oder proxyAddresses Attribute
 with	setup	de	mit
 world readable	setup	de	Lesbar von jedem (world readable)
 world writable	setup	de	Schreibbar von jedem (world writeable)
 would you like egroupware to cache the phpgw info array ?	setup	de	Soll EGroupware das phpgw info Array cachen?
-would you like egroupware to check for a new version<br />when admins login ?	setup	de	Soll EGroupware nach neuen Versionen suchen,<br> wenn sich ein Administrator anmeldet?
+would you like egroupware to check for a new version<br />when admins login ?	setup	de	Soll EGroupware nach neuen Versionen suchen,\n wenn sich ein Administrator anmeldet?
 would you like to show each application's upgrade status ?	setup	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden?
 writable by the webserver	setup	de	Beschreibbar durch den Webserver
 write	setup	de	Schreiben
@@ -796,12 +803,12 @@ wrong credentials to access the header.inc.php file!	setup	de	Falsche Zugangsdat
 year	setup	de	Jahr
 yes	setup	de	Ja
 yes, with lowercase usernames	setup	de	Ja, mit kleingeschriebenen Benutzernamen
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von EGroupware benutzen.<br>Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für Sie im Einrichtung-Programm.<br>Sie möchten vielleicht erst auf
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	de	Es sieht so aus, als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>Ältere PHP-Versionen könnten EGroupware (wenn überhaupt) nicht korrekt ausführen. <br /><br>Bitte aktualisieren Sie mindestens auf Version %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von EGroupware benutzen.\nDiese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für Sie im Einrichtung-Programm.\nSie möchten vielleicht erst auf
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	de	Es sieht so aus, als ob Sie eine alte PHP-Version benutzen\nEs ist notwendig auf eine neue Version zu aktualisieren.\nÄltere PHP-Versionen könnten EGroupware (wenn überhaupt) nicht korrekt ausführen. <br />\nBitte aktualisieren Sie mindestens auf Version %1
 you appear to be running version %1 of egroupware	setup	de	Es sieht so aus, als benutzen Sie Version %1 von EGroupware
 you appear to have %1 support.	setup	de	Sie scheinen %1 Unterstützung zu haben.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
-you are ready for this stage, but this stage is not yet written.<br />	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.\n
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	de	Sie benutzen die PHP-Version %1. EGroupware benötigt mindestens die Version %2, empfohlen ist PHP %3.
 you can install it by running:	setup	de	Installation durch ausführen von:
 you can specify multiple idp on separate lines.	setup	de	Sie können mehrere IdP in separaten Zeilen angeben.
@@ -811,10 +818,10 @@ you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwor
 you didn't enter a config username for domain %1	setup	de	Sie haben keinen Benutzernamen für die Domain %1 angegeben
 you didn't enter a header admin password	setup	de	Sie haben kein Passwort für die Headerverwaltung eingegeben
 you didn't enter a header admin username	setup	de	Sie haben keinen Benutzernamen für die Headerverwaltung eingegeben
-you do not have any languages installed. please install one now <br />	setup	de	Sie installierten noch keine Sprache. bitte installieren Sie nun eine. <br>
+you do not have any languages installed. please install one now <br />	setup	de	Sie installierten noch keine Sprache. bitte installieren Sie nun eine. \n
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	de	Sie haben keine JPGraph Version %1 oder höher installiert! Diese wird vom Projektmanager für Gantt-Charts benötigt.
 you dont have tnef or ytnef installed! it is needed to decode winmail.dat attachments in felamimail.	setup	de	Sie haben weder tnef noch ytnef installiert! Es wird benötigt, um winmail.dat Anhänge im E-Mail-Modul zu decodieren.
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!<br>Sie können sie jetzt anlegen.
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!\nSie können sie jetzt anlegen.
 you have successfully logged out	setup	de	Sie haben sich erfolgreich abgemeldet.
 you must enter a username for the admin	setup	de	Sie müssen einen Benutzernamen für den Administrator eingeben!
 you must save and run an inital import, before the periodic import will start	setup	de	Sie müssen erst speichern UND den Initialen Import ausführen, bevor der periodische Import startet
@@ -837,7 +844,7 @@ your egroupware api is current	setup	de	Ihre EGroupware API ist aktuell
 your files directory '%1' %2	setup	de	Ihr Dateiverzeichnis '%1' %2
 your header admin password is not set. please set it now!	setup	de	Ihr Headerverwaltungspasswort wurde NICHT gesetzt. Bitte setzen Sie es jetzt!
 your header.inc.php needs upgrading.	setup	de	Ihre header.inc.php muss aktualisiert werden.
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	de	Ihre header.inc.php muss aktualisiert werden.<br><blink><b class="msg">WARNUNG!</b></blink><br><b>MACHEN SIE EINE SICHERUNG!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	de	Ihre header.inc.php muss aktualisiert werden.\n<blink><b class="msg">WARNUNG!</b></blink>\n<b>MACHEN SIE EINE SICHERUNG!</b>
 your installed version of %1 is %2, required is at least %3, please run:	setup	de	Ihre installierte Version von %1 ist %2, benötigt wir mindestens %3, bitte führen Sie folgenden Befehl aus:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	de	Ihre PHP Installation hat nicht die benötigte GD Unterstützung. Die Anwendung Projekte benötigen die GD Bibliothek in der Version 1.8 um Ganttcharts anzeigen zu können.
 your tables are current	setup	de	Ihre Tabellen sind aktuell

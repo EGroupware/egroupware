@@ -668,7 +668,17 @@ class Ldap
 				}
 				elseif($isUpdate && array_key_exists($egwFieldName, $data))
 				{
-					$ldapContact[$ldapFieldName] = array();
+					/* PHP 8.5 seems to require single valued attributes NOT to be set to an empty array or null to delete
+					// not sure this is correct, or just an error in the new validation code
+					if (in_array($ldapFieldName, ['personaltitle', 'middlename', 'generationqualifier',
+						'company', 'department', 'title', 'streetaddress', 'l']))
+					{
+						$ldapContact[$ldapFieldName] = "";
+					}
+					else*/
+					{
+						$ldapContact[$ldapFieldName] = array();
+					}
 				}
 				//error_log(__METHOD__."() ".__LINE__." objectclass=$objectclass, data['$egwFieldName']=".array2string($data[$egwFieldName])." --> ldapContact['$ldapFieldName']=".array2string($ldapContact[$ldapFieldName]));
 			}
@@ -1498,7 +1508,7 @@ class Ldap
 	 * check if $baseDN exists. If not create it
 	 *
 	 * @param string $baseDN cn=xxx,ou=yyy,ou=contacts,$this->allContactsDN
-	 * @return boolean/string false on success or string with error-message
+	 * @return boolean|string false on success or string with error-message
 	 */
 	function _check_create_dn($baseDN)
 	{

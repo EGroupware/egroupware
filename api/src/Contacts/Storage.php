@@ -542,14 +542,15 @@ class Storage
 	* saves contact data including custom fields
 	*
 	* @param array &$contact contact data from etemplate::exec
-	* @return bool false on success, errornumber on failure
+	* @return bool|int false on success, errornumber on failure
 	*/
 	function save(&$contact)
 	{
 		// save mainfields
 		if (!empty($contact['id']) && $this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
 			($this->contact_repository == 'sql' && !is_numeric($contact['id']) ||
-			    $this->contact_repository == 'ldap' && is_numeric($contact['id'])))
+			    $this->contact_repository == 'ldap' && is_numeric($contact['id']) ||
+					!empty($contact['account_id'])))
 		{
 			$this->so_accounts->data = $this->data2db($contact);
 			$error_nr = $this->so_accounts->save();
