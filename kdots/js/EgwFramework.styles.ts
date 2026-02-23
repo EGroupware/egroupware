@@ -126,6 +126,10 @@ export default css`
             height: auto;
         }
 
+		.egw_fw_base {
+			display: block;
+		}
+
         .egw_fw__main {
             overflow: auto;
         }

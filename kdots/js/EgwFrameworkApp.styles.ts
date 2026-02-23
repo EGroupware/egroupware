@@ -289,11 +289,12 @@ export default css`
         }
 	}
     @media print {
+		scrollbar-width: none;
         .content {
             overflow-y: visible !important;
         }
 
-        .egw_fw_app__header > *:not(.egw_fw_app__name) {
+		.egw_fw_app__header {
             display: none;
         }
 
@@ -305,6 +306,8 @@ export default css`
         /* Show all content */
         .egw_fw_app__main {
             overflow: auto !important;
+			height: auto !important;
+			scrollbar-width: none;
 
             /* Hide spitter icons */
 
