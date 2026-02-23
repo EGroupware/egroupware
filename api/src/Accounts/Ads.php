@@ -313,6 +313,10 @@ class Ads
 
 	const DOMAIN_USERS_GROUP = 513;
 	const ADS_CONTEXT = 'ads_context';
+	/**
+	 * If set, context to create new users
+	 */
+	const ADS_CREATE_CONTEXT = 'ads_create_context';
 	const ADS_GROUP_CONTEXT = 'ads_group_context';
 
 	/**
@@ -321,11 +325,15 @@ class Ads
 	 * Can be set via server-config "ads_context" and "ads_group_context", otherwise baseDN is used
 	 *
 	 * @param boolean $set_if_empty =false true set from DN of "Domain Users" group #
-	 * @param bool|null $user true: user, false: group, null: both
+	 * @param "create"|bool|null $user "create": use context for new users, if set, true: user, false: group, null: both
 	 * @return string
 	 */
-	public function ads_context($set_if_empty=false, ?bool $user=null)
+	public function ads_context($set_if_empty=false, $user=null)
 	{
+		if ($user === 'create' && !empty($this->frontend->config[self::ADS_CREATE_CONTEXT]))
+		{
+			return $this->frontend->config[self::ADS_CREATE_CONTEXT];
+		}
 		if (empty($this->frontend->config[self::ADS_CONTEXT]))
 		{
 			if ($set_if_empty && ($dn = $this->id2name(-self::DOMAIN_USERS_GROUP, 'account_dn')))
@@ -352,7 +360,7 @@ class Ads
 			return $this->frontend->config[self::ADS_GROUP_CONTEXT];
 		}
 		// if we have a user-context and no group-context, use it
-		if (empty($this->frontend->config[self::ADS_GROUP_CONTEXT]) && !empty($this->frontend->config[self::ADS_CONTEXT]))
+		if (($user === true || empty($this->frontend->config[self::ADS_GROUP_CONTEXT])) && !empty($this->frontend->config[self::ADS_CONTEXT]))
 		{
 			return $this->frontend->config[self::ADS_CONTEXT];
 		}
@@ -378,14 +386,14 @@ class Ads
 	/**
 	 * Get container for new user and group objects
 	 *
-	 * Can be set via server-config "ads_context" and "ads_group", otherwise parent of DN from "Domain Users" is used
+	 * Can be set via server-config "ads_context_create", "ads_context" and "ads_group", otherwise parent of DN from "Domain Users" is used
 	 *
 	 * @param bool $user true: user, false: group, null: both
 	 * @return string
 	 */
 	protected function _get_container(bool $user)
 	{
-		$context = $this->ads_context(true, $user);
+		$context = $this->ads_context(true, $user ? 'create' : false);
 		$base = $this->adldap->getBaseDn();
 		$matches = null;
 		if (!preg_match('/^(.*),'.preg_quote($base, '/').'$/i', $context, $matches))
@@ -506,6 +514,7 @@ class Ads
 		$is_group = $data['account_id'] < 0 || $data['account_type'] === 'g';
 		$data = Api\Translation::convert($data, Api\Translation::charset(), 'utf-8');
 
+		$old = null;
 		if ($data['account_id'] && !($old = $this->read($data['account_id'])))
 		{
 			error_log(__METHOD__.'('.array2string($data).") account NOT found!");
@@ -953,7 +962,7 @@ class Ads
 					case 'account_lastpwd_change':
 						// Samba4 does not understand -1 for current time, but Win2008r2 only allows to set -1 (beside 0)
 						// call Api\Auth\Ads::setLastPwdChange with true to get correct modification for both
-						$ldap = array_merge($ldap, Api\Auth\Ads::setLastPwdChange($data['account_lid'], null, $data[$egw], true));
+						$ldap = array_merge($ldap, (new Api\Auth\Ads($this->frontend->config))->setLastPwdChange($data['account_lid'], null, $data[$egw], true));
 						break;
 					default:
 						$attributes[$adldap] = $data[$egw];
@@ -1733,7 +1742,7 @@ class adLDAPUsers extends \adLDAPUsers
 		// now password can be added to still disabled account
 		if (array_key_exists("password",$attributes))
 		{
-			if (!$this->setPassword($dn, $attributes['password'])) return false;
+			if (!$this->setPassword($dn, $attributes['password'])) ;//return false;
 
 			// now account can be enabled
 			if ($attributes["enabled"])
