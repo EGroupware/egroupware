@@ -57,7 +57,7 @@ $setup_info['api']['tables'][]  = 'egw_tokens';
 
 // hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
 $setup_info['api']['hooks']['addaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::addAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount', 'EGroupware\\Api\\Accounts\\Import::hookEditAccount');
-$setup_info['api']['hooks']['deleteaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::deleteAccount', 'EGroupware\\Api\\Mail\\Hooks::deleteaccount');
+$setup_info['api']['hooks']['deleteaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::deleteAccount', 'EGroupware\\Api\\Mail\\Hooks::deleteaccount', 'EGroupware\\Api\\Accounts\\Import::hookEditAccount');
 $setup_info['api']['hooks']['editaccount'] = array('EGroupware\\Api\\Vfs\\Hooks::editAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount', 'EGroupware\\Api\\Accounts\\Import::hookEditAccount');
 $setup_info['api']['hooks']['editaccountcontact'] = 'EGroupware\\Api\\Accounts\\Import::hookEditAccount';
 $setup_info['api']['hooks']['addgroup'] = 'EGroupware\\Api\\Vfs\\Hooks::addGroup';

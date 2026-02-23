@@ -495,6 +495,27 @@ function send_template()
 			return "<et2-ai>$matches[0]</et2-ai>";
 		}, $str);
 
+		/* legacy grid: removing width and replacing numerical with in column-tags with en
+		$str = preg_replace_callback('#<grid *([^>]+?)>(.*?)</grid>#ms', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			preg_match_all('#<column([^>]*)/>#', $matches[2], $columns, PREG_SET_ORDER);
+			foreach($columns as &$column)
+			{
+				$col_attrs = parseAttrs($column[1]);
+				if (is_numeric($col_attrs['width']))
+				{
+					$col_attrs['width'] = ($col_attrs['width']/5.0).'en';
+				}
+				$column = '<column'.stringAttrs($col_attrs).'/>';
+			}
+			$columns = implode("\n\t\t\t\t", $columns);
+			unset($attrs['width']);
+			return '<grid'.stringAttrs($attrs).'>'.
+				preg_replace('#<columns>.*?</columns>#sm', "<columns>\n\t\t\t\t$columns\n\t\t\t</columns>", $matches[2]).
+				"\n\t\t</grid>";
+		}, $str);*/
+
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 
 		// eTemplate marked as legacy --> replace only some widgets (eg. requiring jQueryUI) with web-components
