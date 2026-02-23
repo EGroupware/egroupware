@@ -228,6 +228,12 @@ egw-framework#egw_fw_basecontainer .egw_fw_ui_sidemenu_entry_header {
 iframe pre {
   white-space: pre-wrap;
 }
+@media print {
+  body {
+    overflow: initial;
+    height: initial;
+  }
+}
 /*** HEADER ***/
 /** Tab notification badges **/
 /**

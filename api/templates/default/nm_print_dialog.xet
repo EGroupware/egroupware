@@ -8,9 +8,9 @@
             <et2-hbox>
                 <et2-number id="row_count" label="How many rows to print" precision="0"></et2-number>
                 <et2-box>
-                    <et2-description value="Print orientation"/>
-                    <et2-switch id="orientation" label="Print orientation" toggleOn="Portrait" toggleOff="Landscape"
-                                class="et2SlideSwitch"></et2-switch>
+                    <et2-switch-icon id="orientation" label="Print orientation" toggleOn="Portrait" toggleOff="Landscape"
+                                     offIcon="file-text" onIcon="card-text"
+                                     class="et2SlideSwitch"></et2-switch-icon>
                 </et2-box>
             </et2-hbox>
         </et2-vbox>

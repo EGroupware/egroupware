@@ -2236,6 +2236,13 @@ ul[id$='favorites_popup_state'] span.filter_value {
 }
 
 @media print {
+	.et2_container {
+		height: auto;
+	}
+
+	.et2_nextmatch {
+		height: auto;
+	}
     /** Keeps rows from breaking */
     .et2_nextmatch .egwGridView_grid > tbody > tr {
         display: block;
@@ -3018,6 +3025,10 @@ span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
 	height: 28px;
 	top: 0;
 	color: transparent;
+}
+
+.et2SlideSwitch::part(control) {
+	font-size: var(--sl-font-size-2x-large, 20px);
 }
 
 .et2SlideSwitch[checked] .label .on, .et2SlideSwitch:not([checked]) .label .off {
