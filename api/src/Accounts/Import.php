@@ -1328,7 +1328,8 @@ class Import
 	 *
 	 * If configured account_import_update_source, it will update / write back the changes to the source (AD or LDAP) of the import.
 	 *
-	 * @param array $data array with value for key "location" ("addaccount", "editaccount", "editaccountcontact") and other data
+	 * @todo implementation for groups (currently only account-changes can propagated back to AD/LDAP)
+	 * @param array $data array with value for key "location" ("addaccount", "editaccount", "editaccountcontact", "deleteaccount") and other data
 	 * @return void
 	 */
 	public static function hookEditAccount(array $data)
@@ -1351,6 +1352,12 @@ class Import
 			case 'editaccount':
 				$accounts = self::accountsFactory($config['account_import_source']);
 				$account = array_filter($data, fn($key) => !in_array($key, ['location']), ARRAY_FILTER_USE_KEY);
+				// check if one tries to save a former local account --> treat it like creating a new one in AD/LDAP
+				if (!isset($new_account_id) && !Api\Accounts::getInstance()->id2name($account['account_id'], 'account_uuid'))
+				{
+					$new_account_id = $account['account_id'];
+					unset($account['account_id']);
+				}
 				if (!$accounts->backend->save($account))
 				{
 					throw new \Exception('Error updating account in '.$config['account_import_source']);
@@ -1382,6 +1389,14 @@ class Import
 				if (($error = $contacts->backendSave($contact)))
 				{
 					throw new \Exception('Error updating contact-data of account in '.$config['account_import_source'].': '.$error);
+				}
+				break;
+
+			case 'deleteaccount':
+				$accounts = self::accountsFactory($config['account_import_source']);
+				if (($account_id = $accounts->backend->name2id($data['account_lid'])))
+				{
+					$accounts->backend->delete($account_id);
 				}
 				break;
 		}
