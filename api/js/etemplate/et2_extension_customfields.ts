@@ -386,6 +386,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 						attrs.emptyLabel = attrs.emptyLabel || 'all';
 						attrs.needed = false;
 						attrs.multiple = true;
+						delete attrs.rows;
 					}
 					if (['label','header'].indexOf(attrs.type || field.type) !== -1)
 					{
