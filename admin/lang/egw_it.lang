@@ -610,7 +610,6 @@ manage mapping	admin	it	Gestisci la mappatura
 manager	admin	it	Manager
 manual entry	admin	it	Inserimento manuale
 maximum account id (e.g. 65535 or 1000000)	admin	it	ID massimo per l'account (es. 65535 or 100000, etc.)
-maximum entries in click path history	admin	it	Voci massime cliccando nella history dei path
 mb used	admin	it	MB utilizzati
 members	admin	it	Membri
 message has been updated	admin	it	Il messaggio è stato aggiornato
@@ -640,7 +639,6 @@ no encryption	admin	it	Nessuna cifratura
 no forwarding email address	admin	it	Nessun indirizzo email di inoltro
 no jobs in the database !!!	admin	it	Nessun job nel database!
 no limit	admin	it	Nessun limite
-no login history exists for this user	admin	it	Non esiste una cronologia di login per questo utente!
 no matches found	admin	it	Nessuna corrispondenza trovata!
 no message returned.	admin	it	Nessun messaggio ricevuto
 no modes available	admin	it	Nessuna modalità disponibile!
@@ -749,6 +747,7 @@ required pear class mail/mimedecode.php not found.	admin	it	Non è stata trovata
 required to embed egroupware via iframe eg. for lti	admin	it	richiesto per incorporare EGroupware tramite iframe, ad esempio per LTI
 requires 'openid / oauth2 server' app.	admin	it	Richiede l'app 'OpenID / OAuth2 Server'
 reset filter	admin	it	Reimposta filtro
+retention period for history-log (in years)	admin	it	Periodo di conservazione della cronologia (in anni)
 revoke	admin	it	Revocare
 revoke this token	admin	it	Revoca questo token
 revoked	admin	it	Revocato

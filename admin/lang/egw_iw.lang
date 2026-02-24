@@ -260,7 +260,6 @@ loginid	admin	iw	זיהוי כניסה
 mail settings	admin	iw	הגדרות דואר
 manager	admin	iw	מנהל
 maximum account id (e.g. 65535 or 1000000)	admin	iw	(זיהוי חשבון מירבי (לדוגמא: 65535 או 10000000
-maximum entries in click path history	admin	iw	כמות הרשומות המירבי בהסטוריה של הקלקות
 message has been updated	admin	iw	המסר עודכן
 method	admin	iw	מטודה
 minimum account id (e.g. 500 or 100, etc.)	admin	iw	(זיהוי חשבון מיזערי (למשל 500 או 100 וכדומה
@@ -278,7 +277,6 @@ no algorithms available	admin	iw	אין אלגוריטמים זמינים
 no alternate email address	admin	iw	אין כתובת דואר אלקטרוני חלופי
 no forwarding email address	admin	iw	אין כתובת להעברת דואר אלקטרוני
 no jobs in the database !!!	admin	iw	!אין עבודות בבסיס הנתונים
-no login history exists for this user	admin	iw	לא קיימת הסטוריה של כניסות של משתמש זה
 no matches found	admin	iw	לא נמצאו התאמות
 no modes available	admin	iw	אין מצבים זמינים
 no permission to add groups	admin	iw	אין הרשאה להוסיף קבוצות

@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	sk	Aktivujte túto funkciu, aby sa v otvorených kartách zobrazovali farebnejšie ikony aplikácií. Ak nie je táto funkcia aktivovaná, ikony sa automaticky zobrazia v predvolenej svetlej farbe.
+app chooser icons	common	sk	Ikony
+app chooser icons + text	common	sk	Ikony + Text
+application chooser style	common	sk	Štýl výberu aplikácií
 reload %1	common	sk	Načítať %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	sk	Má výber aplikácií obsahovať iba ikony alebo aj názvy aplikácií, napr. ak používatelia nie sú s ikonami oboznámení?
 show app icons in there app color	kdots	sk	Zobraziť ikony aplikácií v ich farbe
 user profile	kdots	sk	Profil používateľa

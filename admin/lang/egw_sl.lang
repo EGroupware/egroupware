@@ -546,7 +546,6 @@ manage mapping	admin	sl	Upravljaj mapiranje
 manager	admin	sl	Upravitelj
 manual entry	admin	sl	Ročni vnos
 maximum account id (e.g. 65535 or 1000000)	admin	sl	Najvišji ID računa (npr. 65535 ali 1000000)
-maximum entries in click path history	admin	sl	Največ vnosov v zgodovino klikanja
 mb used	admin	sl	Uporabljeno MB
 members	admin	sl	Člani
 message has been updated	admin	sl	sporočilo je bilo spremenjeno
@@ -574,7 +573,6 @@ no encryption	admin	sl	Brez šifriranja
 no forwarding email address	admin	sl	Ni E-naslova za posredovanje
 no jobs in the database !!!	admin	sl	Ni nalog v podatkovni bazi!
 no limit	admin	sl	Brez omejitve
-no login history exists for this user	admin	sl	Ni zgodovine prijav tega uporabnika.
 no matches found	admin	sl	Ni najdenih zadetkov
 no message returned.	admin	sl	Ni vrnjenega sporočila.
 no modes available	admin	sl	Ni razpoložljivih načinov
@@ -673,6 +671,7 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	sl	Zahtevano
 required pear class mail/mimedecode.php not found.	admin	sl	Zahtevani PEAR razred Pošta / mimeDecode.php ni mogoče najti.
 reset filter	admin	sl	Ponastavi filter
+retention period for history-log (in years)	admin	sl	Obdobje hrambe zgodovine (v letih)
 revoke this token	admin	sl	Preklic tega žetona
 rights	admin	sl	Pravice
 rows	admin	sl	Vrstice

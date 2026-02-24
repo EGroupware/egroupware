@@ -58,6 +58,7 @@ admin email	admin	ko	관리자 이메일
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ko	블럭되면 알림 메일 발송될 관리자 이메일 주소들 (컴마구분,비어있으면 안알림)
 admin name	admin	ko	관리자 이름
 admin password	admin	ko	관리자 암호
+admin queue and history	admin	ko	관리자 대기열 및 기록
 admins	admin	ko	관리자
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ko	로그인 실패 횟수(계정 기준)가 몇 회 이후 차단될지. 기본값 = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ko	접속 시도할때 몇번 실패하면 IP를 막겠습니까? ( 기본 3번 )
@@ -283,6 +284,7 @@ lifetime of 'remember me' token	admin	ko	'나를 기억해' 토큰의 수명
 list config settings	admin	ko	구성 설정 목록
 list current sessions	admin	ko	현재 세션 목록
 list of current users	admin	ko	현재 사용자 목록
+log user-agent and action of changes in history-log of entries	admin	ko	사용자 에이전트 및 변경 작업 기록을 항목의 변경 내역 로그에 기록
 login history	admin	ko	접속 기록
 login message	admin	ko	접속 메세지
 login screen	admin	ko	접속 화면
@@ -292,7 +294,6 @@ loginid	admin	ko	접속ID
 mail settings	admin	ko	메일 설정
 manager	admin	ko	관리자
 maximum account id (e.g. 65535 or 1000000)	admin	ko	최대 계정ID  (예 65535 나 1000000)
-maximum entries in click path history	admin	ko	경로 기록의 최대 항목
 message has been updated	admin	ko	메세지가 갱신되었습니다
 method	admin	ko	메소드
 minimum account id (e.g. 500 or 100, etc.)	admin	ko	최소 계정ID (예 500 나 100, 기타.)
@@ -308,7 +309,6 @@ next run	admin	ko	다음 실행
 no algorithms available	admin	ko	어떠한 알고리즘도 가능하지 않습니다.
 no jobs in the database !!!	admin	ko	데이터베이스에 어떠한 작업도 없습니다 !
 no limit	admin	ko	제한 없음
-no login history exists for this user	admin	ko	이 사용자의 접속 기록은 없습니다
 no matches found	admin	ko	일치하는 것을 찾을수 없습니다
 no modes available	admin	ko	가능한 모드(mode)가 없습니다
 no permission to add groups	admin	ko	그룹을 추가할 권한이 없습니다
@@ -340,6 +340,7 @@ read this list of methods.	admin	ko	이 메소드 목록 읽기
 register application hooks	admin	ko	응용프로그램 훅(hooks) 등록
 regular expression to find part to use as container	admin	ko	コンテナとして使用する部分を見つけるための正規表現
 remove	admin	ko	삭제
+retention period for history-log (in years)	admin	ko	변경 내역 로그 보존 기간 (년 단위)
 revoke this token	admin	ko	이 토큰 해지하기
 rows	admin	ko	줄
 run asynchronous services	admin	ko	비동기 서비스 실행

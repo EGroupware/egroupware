@@ -610,7 +610,6 @@ manage mapping	admin	en	Manage mapping
 manager	admin	en	Manager
 manual entry	admin	en	Manual entry
 maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account ID, e.g. 65535 or 1000000
-maximum entries in click path history	admin	en	Maximum entries in click path history
 mb used	admin	en	MB used
 members	admin	en	Members
 message has been updated	admin	en	Message has been updated
@@ -640,7 +639,6 @@ no encryption	admin	en	No encryption
 no forwarding email address	admin	en	No forwarding email address
 no jobs in the database !!!	admin	en	No jobs in the database!
 no limit	admin	en	No limit
-no login history exists for this user	admin	en	No login history exists for this user!
 no matches found	admin	en	No matches found!
 no message returned.	admin	en	No message returned
 no modes available	admin	en	No modes available!

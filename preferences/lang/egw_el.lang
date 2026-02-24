@@ -1,4 +1,5 @@
 %1 - preferences	preferences	el	%1 - Προτιμήσεις
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	el	Ενεργοποιήστε για να εμφανίσετε πιο πολύχρωμα εικονίδια εφαρμογών στις ανοιχτές καρτέλες. Εάν δεν είναι επιλεγμένο, η προεπιλογή είναι το προσαρμοσμένο χρώμα με ελαφριά απόχρωση.
 applications list scroll area	preferences	el	Κουμπί κύλισης για το πλευρικό μενού
 are you sure you want to delete this category ?	preferences	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την κατηγορία;
 are you sure?	preferences	el	Είστε σίγουροι;
@@ -33,12 +34,16 @@ limit following groups to only create application passwords via templates	prefer
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	el	Η σύνδεση μέσω SingleSignOn δεν παρέχει κωδικό πρόσβασης για να τον μεταβιβάσετε σε διακομιστές αλληλογραφίας ή αρχείων.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	el	Κάνει την πλευρική γραμμή στα αριστερά με το κουμπί κύλισης να μπορεί να μετακινηθεί προς τα πάνω/κάτω (χρήσιμο για χρήστες σε tablet).
 old password and new password are the same. this is invalid. you must enter a new password	preferences	el	Ο παλιός κωδικός πρόσβασης και ο νέος κωδικός πρόσβασης είναι ίδιοι. Πρέπει να εισαγάγετε έναν νέο κωδικό πρόσβασης!
+open popups in	preferences	el	Άνοιγμα αναδυόμενων παραθύρων σε
 password stored	preferences	el	Ο κωδικός πρόσβασης αποθηκεύεται.
+popup window	preferences	el	Αναδυόμενο παράθυρο
 preferences saved.	preferences	el	Αποθήκευση προτιμήσεων.
 reset qrcode	preferences	el	Επαναφορά κωδικού QR
+same window	preferences	el	Στο κύριο παράθυρο
 scan qrcode with a time-based one-time password (totp) app:	preferences	el	Σάρωση κωδικού QR με εφαρμογή TOTP (Time-based one-time password):
 selectbox	preferences	el	Κουτί επιλογής
 set content size	preferences	el	Ορισμός μεγέθους περιεχομένου
+show app icons in there app color	preferences	el	Εμφάνιση εικονιδίων εφαρμογών στο χρώμα της εφαρμογής
 show qrcode	preferences	el	Εμφάνιση κωδικού QR
 show qrcode to enable on an additional device.	preferences	el	Εμφανίζει ξανά τον κωδικό QR για να τον ρυθμίσετε σε άλλες συσκευές
 singlesignon and passwords	preferences	el	SingleSignOn και κωδικοί πρόσβασης

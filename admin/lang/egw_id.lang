@@ -78,6 +78,7 @@ admin email	admin	id	Email Admin
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	id	Alamat email admin, dipisahkan dengan koma, untuk diberitahu tentang akun pengguna dan IP yang diblokir. Kosong = tidak ada pemberitahuan.
 admin name	admin	id	Nama Admin
 admin password	admin	id	Kata sandi admin
+admin queue and history	admin	id	Antrian admin dan riwayat
 admins	admin	id	Admins
 advanced options	admin	id	Opsi Canggih
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	id	Setelah berapa kali upaya login yang gagal, akun harus diblokir. Default = 3
@@ -300,6 +301,7 @@ limit to members of	admin	id	Terbatas untuk anggota dari
 list config settings	admin	id	Daftar pengaturan konfigurasi
 list current sessions	admin	id	Daftar sesi sekarang
 list of current users	admin	id	Daftar pengguna sekarang
+log user-agent and action of changes in history-log of entries	admin	id	Catat user-agent dan tindakan perubahan dalam riwayat log entri
 logged out	admin	id	Keluar
 login history	admin	id	Riwayat Login
 login message	admin	id	Login message
@@ -377,6 +379,7 @@ regular expression to find part to use as container	admin	id	Ekspresi reguler un
 remove	admin	id	Buang
 requested	admin	id	Diminta
 reset filter	admin	id	Ulangi penyaringan
+retention period for history-log (in years)	admin	id	Periode penyimpanan riwayat log (dalam tahun)
 revoke this token	admin	id	Cabut token ini
 rights	admin	id	Hak
 rows	admin	id	Rows

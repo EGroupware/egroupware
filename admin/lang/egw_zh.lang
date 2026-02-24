@@ -386,6 +386,7 @@ lifetime of 'remember me' token	admin	zh	记住我 "令牌的有效期
 list config settings	admin	zh	配置的设置列表
 list current sessions	admin	zh	当前会话列表
 list of current users	admin	zh	当前用户列表
+log user-agent and action of changes in history-log of entries	admin	zh	在历史记录条目中记录用户代理和操作变更
 login history	admin	zh	登录历史记录
 login message	admin	zh	更改登录页面信息
 login screen	admin	zh	登录页面
@@ -397,7 +398,6 @@ main email-address	admin	zh	主要信箱
 manage mapping	admin	zh	管理匹配
 manager	admin	zh	管理器
 maximum account id (e.g. 65535 or 1000000)	admin	zh	最大帐户 id 数 (例如：65535 或 1000000)
-maximum entries in click path history	admin	zh	在点击路径历史记录中的最大条目数
 members	admin	zh	成员
 message has been updated	admin	zh	信息已更新
 method	admin	zh	方法
@@ -420,7 +420,6 @@ no encryption	admin	zh	未加密
 no forwarding email address	admin	zh	没有转发邮件地址
 no jobs in the database !!!	admin	zh	没有任务在数据库中！
 no limit	admin	zh	无限制
-no login history exists for this user	admin	zh	没有该用户登录的历史记录
 no matches found	admin	zh	未找到匹配
 no message returned.	admin	zh	无返回消息。
 no modes available	admin	zh	无可用模式
@@ -486,6 +485,7 @@ remote administration need to be enabled in the remote instance under admin > si
 remote instance saved	admin	zh	远程实例已保存
 remove	admin	zh	移除
 requested	admin	zh	请求
+retention period for history-log (in years)	admin	zh	历史记录保留期限（以年计）
 revoke this token	admin	zh	撤销此令牌
 rows	admin	zh	行
 run asynchronous services	admin	zh	运行异步服务

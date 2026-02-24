@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	ca	Una plantilla defineix l'aparença d'EGroupware i conté icones per a cada aplicació.
 a theme defines the colors and fonts used by the template.	preferences	ca	Un tema defineix els colors i les fonts tipogràfiques que fa servir la plantilla.
 acl grants have been updated	preferences	ca	Permisos de LCA actualitzats
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ca	Qualsevol llistat en EGroupware mostrarà aquest número d'entrades o línies per plana.<br>Una quantitat elevada ralentitza la plana, massa poques poden no ser prou informació.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ca	Qualsevol llistat en EGroupware mostrarà aquest número d'entrades o línies per plana.\nUna quantitat elevada ralentitza la plana, massa poques poden no ser prou informació.
 are you sure you want to delete this category ?	preferences	ca	Esteu segurs d'esborrar aquesta categoria ?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	ca	Canvia la contrasenya d'un usuari quan li passes la contrassenya antiga i la nova. Retorna CERT si tot va bé, FALS en cas d'error.
 color	preferences	ca	Color
@@ -29,7 +29,7 @@ help off	preferences	ca	Sense ajuda
 hours	preferences	ca	hores
 how do you like to display accounts	preferences	ca	Com voleu veure els comptes
 how do you like to select accounts	preferences	ca	Com voleu seleccionar els comptes
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	ca	Quantes hores de diferència teniu respecte a la zona horària del servidor.<br>Si esteu a la mateixa zona horària, seleccioneu 0 hores; si no seleccioneu el valor respecte la vostra hora i data local.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	ca	Quantes hores de diferència teniu respecte a la zona horària del servidor.\nSi esteu a la mateixa zona horària, seleccioneu 0 hores; si no seleccioneu el valor respecte la vostra hora i data local.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	ca	Quantes icones es poden mostrar a la barra de navegació a la part superior de la plana. Les   icones restants es disposaràn en un menu emergent, que s'activa amb la darrera icona de la dreta de la barra de navegació.
 how should egroupware display dates for you.	preferences	ca	Com voleu que EGroupware mostri les dates.
 icon	preferences	ca	Icona
@@ -47,7 +47,7 @@ note: this feature does *not* change your email password. this will need to be d
 popup with search	preferences	ca	Finestra emergent amb recerca
 re-enter your password	preferences	ca	Torneu a entrar la vostra contrasenya
 select one	preferences	ca	Trieu-ne un
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ca	Trieu l'idioma de missatges i text a EGroupware.<br>Alguns idiomes potser no tenen tots els missatges traduits, en aquest cas la resta la podeu veure en Anglès.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ca	Trieu l'idioma de missatges i text a EGroupware.\nAlguns idiomes potser no tenen tots els missatges traduits, en aquest cas la resta la podeu veure en Anglès.
 selectbox	preferences	ca	Llista desplegable
 selectbox with groupmembers	common	ca	Llista desplegable amb membres del grup
 selectbox with primary group and search	preferences	ca	Llista desplegable amb grup primari i cerca

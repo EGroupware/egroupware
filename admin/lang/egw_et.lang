@@ -55,6 +55,7 @@ admin email	admin	et	Admin Email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	et	Admin e-posti aadressid, komadega eraldatud, et saada teavet blokeeritud kasutajakontode ja IP-aadresside kohta. Tühi = teavitust ei saadeta.
 admin name	admin	et	Admin Nimi
 admin password	admin	et	Admin parool
+admin queue and history	admin	et	Haldaja järjekord ja ajalugu
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	et	Pärast mitut ebaõnnestunud sisselogimiskatset tuleks konto blokeerida. Vaikimisi = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	et	Pärast mitut ebaõnnestunud sisselogimiskatset tuleks IP-aadress blokeerida. Vaikimisi = 15
 all applications	admin	et	Kõik rakendused
@@ -233,6 +234,7 @@ leaves without saveing	admin	et	Lahkub ilma salvestamata
 lifetime of 'remember me' token	admin	et	Mäletamistähise kehtivusaeg
 list current sessions	admin	et	Nimekiri hetke sessioonidest
 list of current users	admin	et	Nimekiri hetke kasutajatest
+log user-agent and action of changes in history-log of entries	admin	et	Logi kasutajaagent ja muudatuste tegevused ajaloo-logis
 login history	admin	et	Sisselogimise ajalugu
 login message	admin	et	Sisselogimise teade
 login screen	admin	et	Sisselogimise aken
@@ -251,7 +253,6 @@ new password [ leave blank for no change ]	admin	et	Uus parool (Jäta tühjaks k
 no alternate email address	admin	et	Pole alternatiivset email aadressi
 no encryption	admin	et	Ilna krüpteeringutta
 no limit	admin	et	Piirangut ei ole
-no login history exists for this user	admin	et	Pole sisselogimise ajalugu sellel kasutajal
 no matches found	admin	et	Sobivaid ei leitud!
 no permission to add groups	admin	et	Pole õigusi gruppide lisamiseks!
 no permission to add users	admin	et	Pole õigusi kasutajate lisamiseks!
@@ -281,6 +282,7 @@ primary group	admin	et	Primaarne Grupp
 re-enter password	admin	et	Sisesta parool uuesti
 regular expression to find part to use as container	admin	et	Regulaarväljend konteinerina kasutatava osa leidmiseks
 remove	admin	et	Eemalda
+retention period for history-log (in years)	admin	et	Ajaloo-logi säilitamise periood (aastates)
 revoke this token	admin	et	Selle sümboli tühistamine
 search categories	admin	et	Otsi kategooriaid
 search groups	admin	et	Otsi gruppe

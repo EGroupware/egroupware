@@ -1,4 +1,5 @@
 %1 - preferences	preferences	lt	%1 - Nustatymai
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	lt	Aktyvuokite, kad atidarytuose skirtukuose būtų rodomos spalvingesnės programų piktogramos. Jei nepažymėta, jos bus rodomos numatyta šviesia spalva.
 applications list scroll area	preferences	lt	Šoninio meniu slinkimo mygtukas
 are you sure you want to delete this category ?	preferences	lt	Ar tikrai norite ištrinti šią kategoriją?
 are you sure?	preferences	lt	Ar tikrai?
@@ -22,11 +23,15 @@ limit following groups to only create application passwords via templates	prefer
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	lt	Prisijungiant per SingleSignOn, slaptažodis nėra perduodamas pašto ar failų serveriams.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	lt	Paraiškų sąrašą galima slinkti slinkimo į viršų ir į apačią mygtukais (naudinga naudotojams, dirbantiems su pele be slinkimo ratuko).
 old password and new password are the same. this is invalid. you must enter a new password	preferences	lt	Senas slaptažodis ir naujas slaptažodis yra vienodi. Turite įvesti naują slaptažodį!
+open popups in	preferences	lt	Atidaryti iškylančius langus
 password stored	preferences	lt	Saugomas slaptažodis.
+popup window	preferences	lt	Iškylančiame lange
 preferences saved.	preferences	lt	Išsaugotos nuostatos.
 reset qrcode	preferences	lt	Iš naujo nustatyti QR kodą
+same window	preferences	lt	Pagrindiniame lange
 scan qrcode with a time-based one-time password (totp) app:	preferences	lt	Nuskaitykite QR kodą su TOTP (Time-based one-time password) programa:
 set content size	preferences	lt	Nustatyti turinio dydį
+show app icons in there app color	preferences	lt	Rodyti programų piktogramas programos spalva
 show qrcode	preferences	lt	Rodyti QR kodą
 show qrcode to enable on an additional device.	preferences	lt	Vėl parodo QR kodą, kad jį būtų galima nustatyti kituose įrenginiuose
 singlesignon and passwords	preferences	lt	SingleSignOn ir slaptažodžiai

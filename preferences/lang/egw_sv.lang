@@ -5,7 +5,8 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	sv	En mall specificerar utformningen av EGroupware och dess ikoner
 a theme defines the colors and fonts used by the template.	preferences	sv	Ett tema specificerar färger och fonter som används av en mall.
 acl grants have been updated	preferences	sv	Behörighetslistan (ACL) har uppdaterats
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sv	Alla listor i EGroupware kommer att visa såhär många rader.<br>För många rader gör att det blir långsamt, för få och du förlorar överblicken.
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	sv	Aktivera för att visa mer färgglada appikoner i de öppna flikarna. Om alternativet är avmarkerat visas de som standard i en ljusare anpassad färg.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sv	Alla listor i EGroupware kommer att visa såhär många rader.\nFör många rader gör att det blir långsamt, för få och du förlorar överblicken.
 applications list scroll area	preferences	sv	Skrollknapp för sidomenyn
 are you sure you want to delete this category ?	preferences	sv	Vill du verkligen radera kategorin?
 are you sure?	preferences	sv	Är du säker på det?
@@ -39,7 +40,7 @@ help off	preferences	sv	Hjälp av
 hours	preferences	sv	timmar
 how do you like to display accounts	preferences	sv	Hur vill du se konton
 how do you like to select accounts	preferences	sv	Hur vill du välja konton
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sv	Hur många timmar för eller efter är du den tidzon där servern befinner sig?<br>Om du är i samma tidzon välj 0 timmar eller välj lokalt datum och tid.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sv	Hur många timmar för eller efter är du den tidzon där servern befinner sig?\nOm du är i samma tidzon välj 0 timmar eller välj lokalt datum och tid.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	sv	Antal ikoner som visas i navigerings listen? Ikoner utöver dessa visas i en rullgardins lista som hämtas via ikonen längst till höger.
 how should egroupware display dates for you.	preferences	sv	Hur skall EGroupware visa datum
 how to update lists	preferences	sv	Hur man uppdaterar listor
@@ -61,11 +62,14 @@ no user-selection at all	common	sv	Inga användarval alls
 note: this feature does *not* change your email password. this will	preferences	sv	Notera: Funktionen ändrar inte ditt e-postlösenord. Detta
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sv	Notera: Funktionen ändrar *inte* ditt e-postlösenord. Detta måste göras manuellt.
 old password and new password are the same. this is invalid. you must enter a new password	preferences	sv	Gammalt lösenord och nytt lösenord är identiska. Du måste ange ett nytt lösenord!
+open popups in	preferences	sv	Öppna popup-fönster i
 password stored	preferences	sv	Lösenord lagras.
+popup window	preferences	sv	Popup-fönster
 popup with search	preferences	sv	Popup med sökning
 preferences saved.	preferences	sv	Inställningar sparade.
 re-enter your password	preferences	sv	Bekräfta lösenordet
 reset qrcode	preferences	sv	Återställ QR-kod
+same window	preferences	sv	I huvudfönstret
 scan qrcode with a time-based one-time password (totp) app:	preferences	sv	Skanna QR-kod med en TOTP-app (Time-based one-time password):
 select one	preferences	sv	Välj en
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sv	Välj språk för menyer och dialoger. Alla är språk är inte kompletta och kan därför visa enstaka engelska menyer och dialoger.
@@ -75,6 +79,7 @@ selectbox with primary group and search	preferences	sv	Valruta med primärgrupp 
 set content size	preferences	sv	Ställ in innehållsstorlek
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	sv	Av säkerhets skäl bör du inte visa ditt användarnamn för andra.
 should the number of active sessions be displayed for you all the time.	preferences	sv	Visa alltid antal aktiva sessioner?
+show app icons in there app color	preferences	sv	Visa appikoner i appens färg
 show helpmessages by default	preferences	sv	Visa alltid hjälpmeddelanden?
 show navigation bar as	preferences	sv	Visa navigeringslisten som
 show number of current users	preferences	sv	Visa antal aktiva användare

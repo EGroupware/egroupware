@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	da	Aktiver for at vise mere farverige app-ikoner i de åbne faner. Hvis denne indstilling ikke er markeret, vises de som standard i en lysere brugerdefineret farve.
+app chooser icons	common	da	Ikoner
+app chooser icons + text	common	da	Ikoner + Tekst
+application chooser style	common	da	App-vælgerstil
 reload %1	common	da	Genindlæs %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	da	Skal app-vælgeren kun indeholde ikoner eller også appens navn, f.eks. hvis brugerne ikke er fortrolige med ikonerne?
 show app icons in there app color	kdots	da	Vis app-ikoner i deres app-farve
 user profile	kdots	da	Brugerprofil

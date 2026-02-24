@@ -5,7 +5,8 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	hu	A sablon meghatároz egy elrendezést az EGroupware számára, ami tartalmazza az alkalmazások ikonjait is.
 a theme defines the colors and fonts used by the template.	preferences	hu	Egy téma definiálja a színeket és betűtípusokat amiket a sablon használ.
 acl grants have been updated	preferences	hu	ACL engedélyek frissítése megtörtént
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Bármilyen lista az EGroupware-ben ennyi bejegyzést vagy sort fog oldalanként megmutatni.<br>A túl nagy szám lelassítja a megjelenítést, a túl kevés az átláthatóságot csökkenti. Ön dönt.
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	hu	Aktiválja, hogy színesebb alkalmazásikonok jelenjenek meg a megnyitott lapokban. Ha nincs bejelölve, akkor alapértelmezés szerint a testreszabott szín világosabb lesz.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Bármilyen lista az EGroupware-ben ennyi bejegyzést vagy sort fog oldalanként megmutatni.\nA túl nagy szám lelassítja a megjelenítést, a túl kevés az átláthatóságot csökkenti. Ön dönt.
 applications list scroll area	preferences	hu	Gördítő gomb az oldalsó menühöz
 are you sure you want to delete this category ?	preferences	hu	Biztosan törölni kívánja ezt a kategóriát?
 are you sure?	preferences	hu	Biztos?
@@ -41,7 +42,7 @@ help off	preferences	hu	Segítség kikapcsolása
 hours	preferences	hu	órák
 how do you like to display accounts	preferences	hu	Hogyan szeretné megjeleníteni a hozzáféréseket
 how do you like to select accounts	preferences	hu	Hogyan szeretné kiválasztani a hozzáféréseket
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	hu	Hány órával van előrébb vagy hátrébb a szerver időzónájánál.<br>Ha ugyanabban az időzónában van mint a szerver, válasszon 0 órát, egyébként válassza a helyi dátumot és időt.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	hu	Hány órával van előrébb vagy hátrébb a szerver időzónájánál.\nHa ugyanabban az időzónában van mint a szerver, válasszon 0 órát, egyébként válassza a helyi dátumot és időt.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	hu	Hány darab ikon jelenjen meg a navigációs panelen a lap tetején. További ikonok a legördülő menübe kerülnek és a navigációs panel jobb oldalán érhetők el.
 how should egroupware display dates for you.	preferences	hu	Az EGroupware hogyan jelenítse meg a dátumokat?
 how to update lists	preferences	hu	A listák frissítése
@@ -62,18 +63,21 @@ no default	preferences	hu	Nincs alapértelmezett
 no user-selection at all	common	hu	Egyáltalán nincs felhasználó választás
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	hu	Megjegyzés: az email-eknél használt jelszó ezzel nem változott meg. Ezt önnek kell megtennie.
 old password and new password are the same. this is invalid. you must enter a new password	preferences	hu	A régi és az új jelszó megegyezik. Új jelszót kell megadnia!
+open popups in	preferences	hu	Pop-up ablakok megnyitása
 p: paragraph	preferences	hu	p: Paragrafus
 password stored	preferences	hu	Tárolt jelszó.
 permanent time zone selection	preferences	hu	Állandó időzóna szelekció
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	hu	Kérlek válassz időzónát amelyek között váltani szeretnél. A változtatási lehetőség nem lesz feltüntetve ha kevesebb mint két időzóna lett kiválasztva.
 please select your timezone.	preferences	hu	Kérlek válassz időzónát.
+popup window	preferences	hu	Pop-up ablakban
 popup with search	preferences	hu	Felugró ablak kereséssel
 preferences saved.	preferences	hu	Preferenciák mentése.
 re-enter your password	preferences	hu	Jelszó megerősítése
 reset qrcode	preferences	hu	QR-kód visszaállítása
+same window	preferences	hu	Főablakban
 scan qrcode with a time-based one-time password (totp) app:	preferences	hu	QR-kód beolvasása TOTP (Time-based one-time password) alkalmazással:
 select one	preferences	hu	Válasszon egyet
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	hu	Válassza ki a szövegek és üzenetek nyelvét.<br>Néhány nyelv nem tartalmaz minden üzenetet az ön nyelvére lefordítva, ebben az esetben angolul fog megjelenni az üzenet. Fordítási észrevételeit/javaslatait az előfordulás pontos helyének megjelölésével és a szöveg pontos idézésével küldje el a http://www.osbusiness.hu címre!
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	hu	Válassza ki a szövegek és üzenetek nyelvét.\nNéhány nyelv nem tartalmaz minden üzenetet az ön nyelvére lefordítva, ebben az esetben angolul fog megjelenni az üzenet. Fordítási észrevételeit/javaslatait az előfordulás pontos helyének megjelölésével és a szöveg pontos idézésével küldje el a http://www.osbusiness.hu címre!
 select the language of the spellchecker integrated into the rich text editor.	preferences	hu	Válaszd ki a szövegszerkesztőbe integrált helyesírás-ellenőrzőt.
 selectbox	preferences	hu	Kiválasztó doboz
 selectbox with groupmembers	common	hu	Kiválasztó doboz csoporttagokkal
@@ -81,6 +85,7 @@ selectbox with primary group and search	preferences	hu	Kiválasztó doboz az els
 set content size	preferences	hu	Tartalomméret beállítása
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	hu	Tetszése szerint állítsa be. Biztonsági okokból nem szerencsés, ha a felhasználói neve nyilvánosságra kerül.
 should the number of active sessions be displayed for you all the time.	preferences	hu	Az aktív kapcsolatok számának állandó megjelenítése (egyszerre hányan használják a rendszert).
+show app icons in there app color	preferences	hu	Alkalmazásikonok megjelenítése az alkalmazás színében
 show helpmessages by default	preferences	hu	Segítség megjelenítése alapértelmezésben
 show links between egroupware aps as	common	hu	Az EGroupware alkalmazások közötti linkeket mutassa
 show navigation bar as	preferences	hu	Mutassa a navigációs panelt mint

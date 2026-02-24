@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	el	Ενεργοποιήστε για να εμφανίσετε πιο πολύχρωμα εικονίδια εφαρμογών στις ανοιχτές καρτέλες. Εάν δεν είναι επιλεγμένο, η προεπιλογή είναι προσαρμοσμένο χρώμα με ελαφριά απόχρωση.
+app chooser icons	common	el	Εικονίδια
+app chooser icons + text	common	el	Εικονίδια + Κείμενο
+application chooser style	common	el	Στυλ επιλογής εφαρμογών
 reload %1	common	el	Επαναφόρτωση %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	el	Η επιλογή εφαρμογών πρέπει να περιέχει μόνο εικονίδια ή και το όνομα της εφαρμογής, π.χ. αν οι χρήστες δεν είναι εξοικειωμένοι με τα εικονίδια.
 show app icons in there app color	kdots	el	Εμφάνιση εικονιδίων εφαρμογών στο χρώμα της εφαρμογής
 user profile	kdots	el	Προφίλ χρήστη

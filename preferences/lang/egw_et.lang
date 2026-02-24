@@ -1,4 +1,5 @@
 %1 - preferences	preferences	et	%1 - Eelistused
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	et	Aktiveeri, et avatud vahekaartidel kuvataks värvikamad rakenduse ikoonid. Kui valik on märkimata, kuvatakse ikoonid vaikimisi heledamates värvides.
 applications list scroll area	preferences	et	Külgmise menüü kerimisnuppu
 are you sure you want to delete this category ?	preferences	et	Oled kindel, et tahad kustutada kategooriat ?
 are you sure?	preferences	et	Oled sa kindel?
@@ -38,12 +39,16 @@ logging in via singlesignon does not provide a password to pass it on to mail- o
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	et	Teeb vasakpoolse küljeriba koos kerimisnupuga üles/alla keritavaks (kasulik tahvelarvutite kasutajatele).
 no default	preferences	et	Mitte vaikimisi
 old password and new password are the same. this is invalid. you must enter a new password	preferences	et	Vana parool ja uus parool on samad. Peate sisestama uue parooli!
+open popups in	preferences	et	Ava hüpikaknad
 password stored	preferences	et	Salasõna salvestatakse.
+popup window	preferences	et	Hüpikaknas
 preferences saved.	preferences	et	Eelistused salvestatud.
 re-enter your password	preferences	et	Sisesta parool uuesti
 reset qrcode	preferences	et	QR-koodi lähtestamine
+same window	preferences	et	Peaknas
 scan qrcode with a time-based one-time password (totp) app:	preferences	et	Skaneeri QR-koodi TOTP (Time-based one-time password) rakendusega:
 set content size	preferences	et	Sisu suuruse määramine
+show app icons in there app color	preferences	et	Näita rakenduse ikoone rakenduse värvides
 show qrcode	preferences	et	Näita QR-koodi
 show qrcode to enable on an additional device.	preferences	et	Kuvab QR-koodi uuesti, et seadistada see teistes seadmetes
 show_more_apps	common	et	Näita rohkem programme

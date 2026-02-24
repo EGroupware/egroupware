@@ -610,7 +610,6 @@ manage mapping	admin	fr	Gestion des correspondances
 manager	admin	fr	Gestionnaire
 manual entry	admin	fr	Entrée manuelle
 maximum account id (e.g. 65535 or 1000000)	admin	fr	Numéro de compte maximum (p.e. 65535 ou 1000000)
-maximum entries in click path history	admin	fr	Nombre maximal d'entrées dans l'historique des clics sur les liens
 mb used	admin	fr	MB utilisés
 members	admin	fr	Membres
 message has been updated	admin	fr	Le message a été mis à jour
@@ -640,7 +639,6 @@ no encryption	admin	fr	Pas de chiffrement
 no forwarding email address	admin	fr	Pas d'adresse email de transfert
 no jobs in the database !!!	admin	fr	Pas de travaux dans la base de données !
 no limit	admin	fr	Pas de limite
-no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur !
 no matches found	admin	fr	Aucune occurrence trouvée !
 no message returned.	admin	fr	Aucun message n'est retourné
 no modes available	admin	fr	Pas de modes disponibles !
@@ -749,6 +747,7 @@ required pear class mail/mimedecode.php not found.	admin	fr	Classe PEAR class Ma
 required to embed egroupware via iframe eg. for lti	admin	fr	nécessaire pour intégrer EGroupware via un iframe, par exemple pour le LTI
 requires 'openid / oauth2 server' app.	admin	fr	Nécessite l'application 'OpenID / OAuth2 Server'.
 reset filter	admin	fr	Réinitialiser le filtre
+retention period for history-log (in years)	admin	fr	Période de conservation des historiques (en années)
 revoke	admin	fr	Révoquer
 revoke this token	admin	fr	Révoquer ce token
 revoked	admin	fr	Révoqué

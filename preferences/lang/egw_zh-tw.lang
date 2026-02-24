@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	zh-tw	樣版定義了EGroupware的版面配置與應用程式圖示
 a theme defines the colors and fonts used by the template.	preferences	zh-tw	佈景定義了樣板的顏色與字型
 acl grants have been updated	preferences	zh-tw	ACL 授權已經更新
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zh-tw	任何 EGroupware 的列表都會顯示每頁的資料數或行數<br>當資料筆數過多時您可以先做預覽
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zh-tw	任何 EGroupware 的列表都會顯示每頁的資料數或行數\n當資料筆數過多時您可以先做預覽
 are you sure you want to delete this category ?	preferences	zh-tw	您確定要刪除這個分類？
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	zh-tw	修改一個使用者的密碼必須輸入原有以及新的密碼，成功時會傳回 TRUE ，失敗則為 FALSE 。
 color	preferences	zh-tw	顏色
@@ -27,7 +27,7 @@ help off	preferences	zh-tw	關閉求助訊息
 hours	preferences	zh-tw	小時
 how do you like to display accounts	preferences	zh-tw	您喜歡如何顯示帳號？
 how do you like to select accounts	preferences	zh-tw	您喜歡如何選取帳號？
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	zh-tw	您跟伺服器所在位置的時差<br>如果您跟伺服器在同一個時區請輸入0，或是輸入符合您需求的時區
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	zh-tw	您跟伺服器所在位置的時差\n如果您跟伺服器在同一個時區請輸入0，或是輸入符合您需求的時區
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	zh-tw	導覽列每次要顯示多少個圖示，其他圖示會顯示在一個下拉式選單中。
 how should egroupware display dates for you.	preferences	zh-tw	您希望egroupWare如何顯示日期格式
 icon	preferences	zh-tw	圖示
@@ -45,7 +45,7 @@ note: this feature does *not* change your email password. this will need to be d
 popup with search	preferences	zh-tw	跳出搜尋
 re-enter your password	preferences	zh-tw	重新輸入您的密碼
 select one	preferences	zh-tw	請選擇
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh-tw	選擇EGroupware的語言<br>部分語言尚未完成翻譯，您會看到英文的敘述
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh-tw	選擇EGroupware的語言\n部分語言尚未完成翻譯，您會看到英文的敘述
 selectbox	preferences	zh-tw	下拉選單
 selectbox with groupmembers	common	zh-tw	群組成員的下拉選單
 selectbox with primary group and search	preferences	zh-tw	主要群組與搜尋的下拉選單

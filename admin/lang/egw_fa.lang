@@ -265,7 +265,6 @@ mail settings	admin	fa	تنظیمات نامه
 main email-address	admin	fa	نشانی رایانامه اصلی
 manager	admin	fa	مدیر
 maximum account id (e.g. 65535 or 1000000)	admin	fa	حداکثر شناسه حساب (مثلا:65535 یا 1000000)
-maximum entries in click path history	admin	fa	حداکثر ورودیها در مسیر تاریخچه
 members	admin	fa	اعضا
 message has been updated	admin	fa	پیام بهنگام شد
 method	admin	fa	روش
@@ -284,7 +283,6 @@ no algorithms available	admin	fa	الگوریتمی موجود نیست
 no alternate email address	admin	fa	بدون نشانی نامه الکترونیکی دیگر
 no forwarding email address	admin	fa	بدون نشانی نامه الکترونیکی ارسال به دیگری
 no jobs in the database !!!	admin	fa	کاری در پایگاه داده نیست!!!
-no login history exists for this user	admin	fa	تاریخچه ورودی برای این کاربر نیست
 no matches found	admin	fa	هیچ موردی یافت نشد
 no modes available	admin	fa	هیچ سبکی موجود نیست
 no permission to add groups	admin	fa	مجوزی برای افزودن گروهها نیست

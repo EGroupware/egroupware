@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	lt	Aktyvuokite, kad atidarytuose skirtukuose būtų rodomos spalvingesnės programų piktogramos. Jei nepažymėta, jos bus rodomos numatyta šviesia spalva.
+app chooser icons	common	lt	Piktogramos
+app chooser icons + text	common	lt	Piktogramos + Tekstas
+application chooser style	common	lt	Programų pasirinkimo stilius
 reload %1	common	lt	Perkrauti %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	lt	Ar programų pasirinkimo lange turėtų būti tik piktogramos, ar taip pat ir programų pavadinimai, pvz., jei vartotojai nėra susipažinę su piktogramomis.
 show app icons in there app color	kdots	lt	Rodyti programų piktogramas programos spalva
 user profile	kdots	lt	Vartotojo profilis

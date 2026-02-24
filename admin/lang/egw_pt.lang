@@ -68,6 +68,7 @@ admin email	admin	pt	Endereço de correio electrónico do Administrador
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pt	Endereços de correio electrónico de administradores (separados por vírgula) a avisar sobre o bloqueamento (deixar vazio para não avisar)
 admin name	admin	pt	Nome do Administrador
 admin password	admin	pt	Senha do administrador
+admin queue and history	admin	pt	Fila de administração e histórico
 admins	admin	pt	Administradores
 advanced options	admin	pt	Opções avançadas
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt	Após quantas tentativas malsucedidas de login uma conta deve ser bloqueada. Padrão = 3
@@ -348,6 +349,7 @@ lifetime of 'remember me' token	admin	pt	Tempo de vida do token "Lembrar-me"
 list config settings	admin	pt	Listar configurações
 list current sessions	admin	pt	Listar sessões actuais
 list of current users	admin	pt	Lista de utilizadores ligados
+log user-agent and action of changes in history-log of entries	admin	pt	Registar o agente do utilizador e a ação das alterações no histórico de entradas
 login history	admin	pt	Histórico de acessos
 login message	admin	pt	Mensagem de entrada
 login screen	admin	pt	Ecrã de acesso
@@ -359,7 +361,6 @@ main email-address	admin	pt	Endereço de correio electrónico principal
 manage mapping	admin	pt	Gerenciar mapeamento
 manager	admin	pt	Gestor
 maximum account id (e.g. 65535 or 1000000)	admin	pt	ID máximo para contas (Exemplo: 65535 ou 1000000)
-maximum entries in click path history	admin	pt	Número máximo de registos ao clicar no histórico
 members	admin	pt	Membros
 message has been updated	admin	pt	Mensagem foi atualizada
 method	admin	pt	Método
@@ -379,7 +380,6 @@ no alternate email address	admin	pt	Sem endereço de correio electrónico altern
 no forwarding email address	admin	pt	Sem endereço de correio electrónico para reencaminhamento
 no jobs in the database !!!	admin	pt	Nenhum trabalho na base de dados!
 no limit	admin	pt	Sem limite
-no login history exists for this user	admin	pt	Não existe histórico de acessos para este utilizador
 no matches found	admin	pt	Nenhuma ocorrência encontrada
 no modes available	admin	pt	Nenhum modo disponível
 no permission to add groups	admin	pt	Sem permissão para adicionar grupos
@@ -432,6 +432,7 @@ register application hooks	admin	pt	Registar pontos de entrada de aplicações
 regular expression to find part to use as container	admin	pt	Expressão regular para encontrar a parte a utilizar como contentor
 remove	admin	pt	Remover
 required pear class mail/mimedecode.php not found.	admin	pt	Classe PEAR requeridos Correio/mimeDecode.php não encontrado.
+retention period for history-log (in years)	admin	pt	Período de retenção do histórico (em anos)
 revoke this token	admin	pt	Revogar este token
 rows	admin	pt	Linhas
 run asynchronous services	admin	pt	Executar serviços assíncronos

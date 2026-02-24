@@ -61,6 +61,7 @@ admin email	admin	no	Admin E-post
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	no	Admin e-post adresser (komma-separert) som blir varslet om blokkering (ingen varsler hvis tom)
 admin name	admin	no	Admin Navn
 admin password	admin	no	Admin passord
+admin queue and history	admin	no	Administratorkø og historikk
 admins	admin	no	Administratorer
 advanced options	admin	no	Avanserte valg
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	no	Etter hvor mange mislykkede forsøk på å logge inn skal en konto blokkeres. Standard = 3
@@ -321,6 +322,7 @@ lifetime of 'remember me' token	admin	no	Levetid for «Husk meg»-token
 list config settings	admin	no	Vis konfigurasjonsinnstillinger
 list current sessions	admin	no	Vis nåverende sesjoner
 list of current users	admin	no	Liste over brukere
+log user-agent and action of changes in history-log of entries	admin	no	Logg brukeragent og endringer i historikkloggen for oppføringer
 login history	admin	no	Login historie
 login message	admin	no	Login melding
 login screen	admin	no	Login side
@@ -350,7 +352,6 @@ no alternate email address	admin	no	Ingen alternativ e-mailadresse
 no forwarding email address	admin	no	Ingen e-mailadresse for videresending
 no jobs in the database !!!	admin	no	Ingen jobber i databasen
 no limit	admin	no	Ingen grense
-no login history exists for this user	admin	no	Ingen login historikk for denne brukeren
 no matches found	admin	no	Ingen treff funnet
 no modes available	admin	no	Ingen modus tilgjengelig
 no permission to add groups	admin	no	Ikke tilgang til å legge til grupper
@@ -391,6 +392,7 @@ read this list of methods.	admin	no	Les denne listen av metoder.
 register application hooks	admin	no	Registrer program hooks
 regular expression to find part to use as container	admin	no	Regulært uttrykk for å finne en del som skal brukes som container
 remove	admin	no	Fjern
+retention period for history-log (in years)	admin	no	Oppbevaringsperiode for historikkloggen (i år)
 revoke this token	admin	no	Tilbakekall dette token
 rows	admin	no	Rader
 run asynchronous services	admin	no	Kjør asonkrone serviser

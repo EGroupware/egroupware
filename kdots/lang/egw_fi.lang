@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	fi	Aktivoi, jotta avoimissa välilehdissä näkyvät värikkäämmät sovelluskuvakkeet. Jos valinta ei ole valittuna, kuvakkeet ovat oletusarvoisesti vaaleita.
+app chooser icons	common	fi	Kuvakkeet
+app chooser icons + text	common	fi	Kuvakkeet + Teksti
+application chooser style	common	fi	Sovelluksen valitsimen tyyli
 reload %1	common	fi	Lataa uudelleen %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	fi	Pitäisikö sovelluksen valitsimessa olla vain kuvakkeet vai myös sovelluksen nimi, esimerkiksi jos käyttäjät eivät tunne kuvakkeita?
 show app icons in there app color	kdots	fi	Näytä sovelluskuvakkeet sovelluksen värillä
 user profile	kdots	fi	Käyttäjäprofiili

@@ -262,7 +262,6 @@ loginid	admin	hr	LoginID
 mail settings	admin	hr	Mail settings
 manager	admin	hr	Upravitelj
 maximum account id (e.g. 65535 or 1000000)	admin	hr	Najveći indetitet korisničkog računa (npr. 65535 ili 1000000)
-maximum entries in click path history	admin	hr	Maximum entries in click path history
 message has been updated	admin	hr	poruka je obnovljena
 method	admin	hr	Metoda
 minimum account id (e.g. 500 or 100, etc.)	admin	hr	Najmanji indetitet korisničkog računa (inp. 500 ili 100, itd.)
@@ -280,7 +279,6 @@ no algorithms available	admin	hr	no algorithms available
 no alternate email address	admin	hr	no alternate email address
 no forwarding email address	admin	hr	no forwarding email address
 no jobs in the database !!!	admin	hr	Nema poslova u bazi podataka!!!
-no login history exists for this user	admin	hr	Za ovog korisnika ne postoji povijest prijava
 no matches found	admin	hr	Nisam našao podudarnosti
 no modes available	admin	hr	no modes available
 no permission to add groups	admin	hr	nemate dozvolu za dodati grupu

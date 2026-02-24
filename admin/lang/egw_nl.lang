@@ -410,6 +410,7 @@ lifetime of 'remember me' token	admin	nl	Levensduur van ‘Onthoud mij’ token
 list config settings	admin	nl	Configuratie-instellingen weergeven
 list current sessions	admin	nl	Huidige sessies weergeven
 list of current users	admin	nl	Lijst van huidige gebruikers
+log user-agent and action of changes in history-log of entries	admin	nl	Log user-agent en actie van wijzigingen in geschiedenislogboek van vermeldingen
 login history	admin	nl	Login geschiedenis
 login message	admin	nl	Loginbericht
 login screen	admin	nl	Loginpagina
@@ -421,7 +422,6 @@ main email-address	admin	nl	Hoofd emailadres
 manage mapping	admin	nl	Beheer de mappings
 manager	admin	nl	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	nl	Max. account id (bijv. 65535 of 100000)
-maximum entries in click path history	admin	nl	Max. aantal records in klikpad-historie
 members	admin	nl	Deelnemers
 message has been updated	admin	nl	Bericht is bijgewerkt
 method	admin	nl	Methode
@@ -443,7 +443,6 @@ no encryption	admin	nl	Geen versleuteling
 no forwarding email address	admin	nl	Geen emailadres om naar door te sturen
 no jobs in the database !!!	admin	nl	Geen taken in DB
 no limit	admin	nl	Geen limiet
-no login history exists for this user	admin	nl	Er is geen loginhistorie aanwezig voor deze gebruiker
 no matches found	admin	nl	Geen overeenkomsten gevonden
 no message returned.	admin	nl	Geen bericht teruggekomen.
 no modes available	admin	nl	Geen modi beschikbaar
@@ -512,6 +511,7 @@ remote instance saved	admin	nl	Afstandbeheer instantie opgeslagen
 remove	admin	nl	Verwijderen
 required pear class mail/mimedecode.php not found.	admin	nl	PEAR benodigd, class MAIL/mimeDecode.php niet gevonden
 reset filter	admin	nl	Filter opnieuw instellen
+retention period for history-log (in years)	admin	nl	Bewaartermijn voor geschiedenislogboek (in jaren)
 revoke this token	admin	nl	Trek dit token in
 rights	admin	nl	Rechten
 rows	admin	nl	Rijen

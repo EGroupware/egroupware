@@ -36,6 +36,7 @@ add to group	admin	ro	Adăugare la grup
 add user	admin	ro	Adaugă utilizator
 add user or group	admin	ro	Adăugare utilizator sau grup
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ro	Adresele de e-mail ale administratorilor, separate prin virgulă, care vor fi notificate cu privire la conturile de utilizator și adresele IP blocate. Gol = fără notificare.
+admin queue and history	admin	ro	Coada de așteptare și istoricul administratorului
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ro	După câte încercări nereușite de conectare ar trebui blocat un cont. Implicit = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ro	După câte încercări nereușite de conectare ar trebui blocată o adresă IP. Implicit = 15
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ro	Permiteți utilizatorului să își stocheze parola sub „Securitate și parole” pentru SingleSignOn.
@@ -79,6 +80,8 @@ last updated	admin	ro	Ultima actualizare
 leave empty for no quota	admin	ro	Lăsați gol pentru nici o cotă
 leave empty to use oauth, if supported	admin	ro	Lăsați gol pentru a utiliza OAuth, dacă este acceptat
 lifetime of 'remember me' token	admin	ro	Durata de viață a jetonului "Remember me"
+log user-agent and action of changes in history-log of entries	admin	ro	Înregistrarea agentului utilizatorului și a acțiunilor modificate în istoricul înregistrărilor
+login history	admin	ro	Istoricul autentificărilor
 no limit	admin	ro	Fără limită
 oauth authentiction	admin	ro	Autentificare OAuth
 offer to installing egroupware as mail-handler	admin	ro	Ofertă pentru instalarea EGroupware ca mail-handler
@@ -91,6 +94,7 @@ own categories	admin	ro	Categorii proprii
 own install id	admin	ro	Propria instalare ID
 own install id:	admin	ro	Propria instalare ID:
 regular expression to find part to use as container	admin	ro	Expresie regulată pentru a găsi partea care urmează să fie utilizată ca container
+retention period for history-log (in years)	admin	ro	Perioada de păstrare a istoricului (în ani)
 revoke this token	admin	ro	Revocați acest jeton
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	ro	Selectați aplicațiile la care doriți ca tokenul să fie limitat sau lăsați valoarea implicită de toate aplicațiile.
 set a random password	admin	ro	Setați o parolă aleatorie

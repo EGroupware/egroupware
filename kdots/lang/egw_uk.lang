@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	uk	Açık sekmelerde daha renkli uygulama simgeleri göstermek için etkinleştirin. İşaretlenmezse, varsayılan olarak özel renkler açılır.
+app chooser icons	common	uk	Іконки
+app chooser icons + text	common	uk	Іконки + Текст
+application chooser style	common	uk	Стиль вибору додатків
 reload %1	common	uk	Yeniden yükle %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	uk	Чи повинен вибір додатків містити тільки іконки, чи також назву додатка, наприклад, якщо користувачі не знайомі з іконками.
 show app icons in there app color	kdots	uk	Uygulama simgelerini uygulama renginde göster
 user profile	kdots	uk	Профіль користувача

@@ -610,7 +610,6 @@ manage mapping	admin	de	Feldzuordnung verwalten
 manager	admin	de	Manager
 manual entry	admin	de	Manuelle Eingabe
 maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum für Benutzer-ID (z.B. 65535 oder 1000000)
-maximum entries in click path history	admin	de	Max. Anzahl Einträge in der Click-Path-Historie
 mb used	admin	de	MB belegt
 members	admin	de	Mitglieder
 message has been updated	admin	de	Nachricht wurde geändert.
@@ -640,7 +639,6 @@ no encryption	admin	de	Keine Verschlüsselung
 no forwarding email address	admin	de	Keine Weiterleitungsadresse definiert
 no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank!
 no limit	admin	de	Kein Limit
-no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet!
 no matches found	admin	de	Keine Übereinstimmungen gefunden
 no message returned.	admin	de	Keine Nachricht zurückgeliefert.
 no modes available	admin	de	Kein Modus verfügbar!

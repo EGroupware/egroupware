@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	ru	Активируйте, чтобы отображать более красочные значки приложений в открытых вкладках. Если флажок не установлен, по умолчанию используется светлый пользовательский цвет.
+app chooser icons	common	ru	Значки
+app chooser icons + text	common	ru	Значки + текст
+application chooser style	common	ru	Стиль выбора приложений
 reload %1	common	ru	Перезагрузить %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	ru	Должен ли выбор приложений содержать только значки или также названия приложений, например, если пользователи не знакомы со значками.
 show app icons in there app color	kdots	ru	Показать значки приложений в цвете приложения
 user profile	kdots	ru	Профиль пользователя

@@ -9,10 +9,7 @@ a theme defines the colors and fonts used by the template.	preferences	de	Das Th
 access token revoked.	preferences	de	Token zurückgezogen
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde aktualisiert
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	de	Aktiviere um farbigere Anwendungsicons in den offenen Reitern anzuzeigen. Wenn nicht aktiviert werden diese in einer aufgehellten Anwendungsfarbe angezeigt
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
-app chooser icons	preferences	de	Anwendungsauswahl: Icons
-app chooser icons + text	preferences	de	Anwendungsauswahl: Icons + Text
-application chooser style	preferences	de	Art der Anwendungsauswahl
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.\nZu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
 applications list scroll area	preferences	de	Scroll-Button für Seitenmenü
 are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass Sie diese Kategorie löschen wollen?
 are you sure?	preferences	de	Sind Sie sicher?
@@ -90,7 +87,7 @@ holding ctrl/cmd key and click on the line	preferences	de	Halten der Strg/Cmd Ta
 hours	preferences	de	Stunden
 how do you like to display accounts	preferences	de	Wie sollen Benutzer angezeigt werden
 how do you like to select accounts	preferences	de	Wie sollen Benutzer ausgewählt werden
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wie viele Stunden beträgt die Abweichung Ihrer Zeitzone von der Zeitzone des Servers?<br> Wenn Sie sich in derselben Zeitzone befinden, wählen Sie 0 Stunden, sonst wählen Sie Ihre lokalen Datum-/Zeiteinstellungen
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wie viele Stunden beträgt die Abweichung Ihrer Zeitzone von der Zeitzone des Servers?\n Wenn Sie sich in derselben Zeitzone befinden, wählen Sie 0 Stunden, sonst wählen Sie Ihre lokalen Datum-/Zeiteinstellungen
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	de	Wie viele Icons sollen in der Navigationsleiste am Kopf der Seite angezeigt werden. Zusätzliche Icons erscheinen in einem Pulldown-Menü, das über ein Icon ganz rechts in der Navigation aufgerufen wird.
 how many toolbar buttons are available	preferences	de	Wie viele Buttons sind in der Symbolleiste verfügbar
 how should egroupware display dates for you.	preferences	de	Wie soll EGroupware das Datum für Sie anzeigen?
@@ -151,7 +148,7 @@ scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Co
 secret deleted, two factor authentication disabled.	preferences	de	Schlüssel gelöscht, die Zweifaktor Authentifizierung ist jetzt abgeschaltet.
 select additional lines in lists by	preferences	de	Zusätzliche Zeilen in Listen auswählen durch
 select one	preferences	de	Bitte wählen
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der EGroupware.<br>Manche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der EGroupware.\nManche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
 select the language of the spellchecker integrated into the rich text editor.	preferences	de	Sprache der integrierten Rechtschreibprüfung des Editors.
 selectbox	preferences	de	Auswahlfeld
 selectbox with groupmembers	common	de	Auswahlbox mit Gruppenmitgliedern

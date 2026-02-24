@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	ko	활성화하면 열린 탭에서 더 다채로운 앱 아이콘을 표시합니다. 선택 해제 시 기본적으로 밝게 조정된 사용자 지정 색상으로 표시됩니다.
+app chooser icons	common	ko	아이콘
+app chooser icons + text	common	ko	아이콘 + 텍스트
+application chooser style	common	ko	애플리케이션 선택기 스타일
 reload %1	common	ko	%1 재로드
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	ko	애플리케이션 선택기에 아이콘만 포함해야 할까요, 아니면 사용자가 아이콘에 익숙하지 않은 경우를 대비해 애플리케이션 이름도 함께 표시해야 할까요?
 show app icons in there app color	kdots	ko	앱 아이콘을 해당 앱 색상으로 표시
 user profile	kdots	ko	사용자 프로필

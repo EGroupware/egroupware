@@ -204,7 +204,6 @@ login time	admin	eu	Saio hasierarako sarrera ordua
 mail settings	admin	eu	Posta elektronikoaren konfigurazioa
 main email-address	admin	eu	Helbide elektroniko nagusia
 manager	admin	eu	Administratzailea
-maximum entries in click path history	admin	eu	Historian egon daitezkeen sarrera kopuru maximoa
 members	admin	eu	Kideak
 message has been updated	admin	eu	mezua eguneratua izan da
 method	admin	eu	Metodoa
@@ -220,7 +219,6 @@ next run	admin	eu	Hurrengo exekutaketa
 no algorithms available	admin	eu	ez dago algoritmorik eskuragarri
 no alternate email address	admin	eu	ez da ordezko helbide elektronikorik
 no jobs in the database !!!	admin	eu	Ez dago lanik datu basean
-no login history exists for this user	admin	eu	Ez dago sarrera erregistrorik erabiltzaile honentzeko
 no matches found	admin	eu	Ez dago emaitzik
 no message returned.	admin	eu	Ez da mezurik itzuli
 no modes available	admin	eu	ez dago modurik eskuragarri

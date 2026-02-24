@@ -577,7 +577,6 @@ manage mapping	admin	km	គ្រប់គ្រងការធ្វើផែ�
 manager	admin	km	អ្នកគ្រប់គ្រង
 manual entry	admin	km	ការចូលដោយដៃ
 maximum account id (e.g. 65535 or 1000000)	admin	km	លេខសម្គាល់គណនីអតិបរមា ឧទាហរណ៍ 65535 ឬ 1000000
-maximum entries in click path history	admin	km	ធាតុអតិបរមានៅក្នុងប្រវត្តិផ្លូវចុច
 mb used	admin	km	MB បានប្រើ
 members	admin	km	សមាជិក
 message has been updated	admin	km	សារត្រូវបានធ្វើបច្ចុប្បន្នភាព
@@ -605,7 +604,6 @@ no default account found!	admin	km	រកមិនឃើញគណនីលំន
 no encryption	admin	km	គ្មានការអ៊ិនគ្រីបទេ។
 no forwarding email address	admin	km	មិនមានអាសយដ្ឋានអ៊ីមែលបញ្ជូនបន្តទេ។
 no jobs in the database !!!	admin	km	មិនមានការងារនៅក្នុងមូលដ្ឋានទិន្នន័យទេ!
-no login history exists for this user	admin	km	មិនមានប្រវត្តិចូលសម្រាប់អ្នកប្រើប្រាស់នេះទេ!
 no matches found	admin	km	រកមិនឃើញការប្រកួតទេ!
 no message returned.	admin	km	គ្មានសារត្រឡប់មកវិញទេ។
 no modes available	admin	km	គ្មាន​ម៉ូដ​ដែល​អាច​ប្រើ​បាន!

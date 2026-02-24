@@ -71,6 +71,7 @@ admin email	admin	el	Email διαχειριστή
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	el	Ηλεκτρονική διεύθυνση (email) διαχειριστή (διαχωρισμένο με κόμμα) ο οποίος θα ειδοποιηθεί για το κλείδωμα (κενό για να μην ειδοποιηθεί)
 admin name	admin	el	Ονομα διαχειρηστή
 admin password	admin	el	Κωδικός πρόσβασης διαχειριστή
+admin queue and history	admin	el	Ουρά διαχειριστή και ιστορικό
 admins	admin	el	Διαχειριστές
 advanced options	admin	el	επιλογές για προχωρημένους
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	el	Μετά από πόσες ανεπιτυχείς προσπάθειες σύνδεσης ένας λογαριασμός θα πρέπει να μπλοκαριστεί. Προεπιλογή = 3
@@ -351,6 +352,7 @@ lifetime of 'remember me' token	admin	el	Διάρκεια ζωής του δια
 list config settings	admin	el	Λίστα διαμόρφωσης ρυθμίσεων
 list current sessions	admin	el	Λίστα τρέχωντων περιόδων
 list of current users	admin	el	λίστα απο τρέχων χρήστες
+log user-agent and action of changes in history-log of entries	admin	el	Καταγραφή του user-agent και των αλλαγών στο ιστορικό καταγραφής των εγγραφών
 login history	admin	el	Ιστορικό Εισόδου
 login message	admin	el	Μήνυμα εισόδου
 login screen	admin	el	Οθόνη εισόδου
@@ -361,7 +363,6 @@ mail settings	admin	el	Ρυθμίσεις μηνυμάτων
 main email-address	admin	el	Κύρια Διεύθυνση Email
 manager	admin	el	Διαχειριστής
 maximum account id (e.g. 65535 or 1000000)	admin	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
-maximum entries in click path history	admin	el	Μέγιστος αριθμός εισόδων στο click path ιστορικό
 message has been updated	admin	el	το μήνυμα έχει ενημερωθεί
 method	admin	el	Μέθοδος
 minimum account id (e.g. 500 or 100, etc.)	admin	el	Μίνιμουμ id λογαριασμού (π.χ. 500 ή 100, κ.λ.π)
@@ -381,7 +382,6 @@ no alternate email address	admin	el	δεν υπάρχει εναλλακτική
 no encryption	admin	el	Καμία κρυπτογράφηση
 no jobs in the database !!!	admin	el	Δέν υπάρχουν ενέργειες στην βάση δεδομένων!
 no limit	admin	el	Κανένα όριο
-no login history exists for this user	admin	el	Δεν υπάρχει ιστορικό εισόδου γι'αυτόν τον χρήστη!
 no matches found	admin	el	Δέν βρέθηκαν όμοια!
 no message returned.	admin	el	Δεν επεστράφη κάποιο μήνυμα
 no modes available	admin	el	δεν υπάρχουν διαθέσιμες modes!
@@ -431,6 +431,7 @@ read this list of methods.	admin	el	Διαβάστε αυτή τη λίστα α
 register application hooks	admin	el	Καταχώρηση hook της εφαρμογής
 regular expression to find part to use as container	admin	el	Κανονική έκφραση για την εύρεση μέρους που θα χρησιμοποιηθεί ως περιέκτης
 remove	admin	el	Aφαίρεση
+retention period for history-log (in years)	admin	el	Περίοδος διατήρησης του ιστορικού καταγραφής (σε έτη)
 revoke this token	admin	el	Ανάκληση αυτού του συμβόλου
 rows	admin	el	Γραμμές
 run asynchronous services	admin	el	Τρέξτε Ασύνχρονες υπηρεσίες
