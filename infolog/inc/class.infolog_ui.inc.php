@@ -1064,6 +1064,7 @@ class infolog_ui
 			]);
 
 		// Settings needed for proper client-side loading
+		$values['nm']['template'] = 'infolog.index.rows';
 		$values['nm']['actions'] = $this->get_actions($values['nm']);
 		$values['nm']['row_id'] = 'info_id';
 		$values['nm']['row_modified'] = 'row_mod';
