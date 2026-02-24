@@ -1,3 +1,22 @@
+egroupware-docker (26.2.20260224) hardy; urgency=low
+
+  * SECURITY and maintenance release: everyone is strongly adviced to update to this release, or 23.1.20260224
+  * Addressbook: do not disable contact edit button in CRM view
+  * Api: fix printing
+  * Api: remove "Remember and do not ask again" checkbox for adding new entries(e.g. mail addresses) to a popup
+  * Api: fix Number & Url webComponents did not fully validate server-side
+  * Api: entering "none" as the link, the logo points to, disables the link
+  * Api: fix re-opening an application did not send the menu data
+  * Api: fix implicit sort preference was no longer applied
+  * Mail: show either the time for today or the date with a time-tooltip, also show the date with only a 2-digit year
+  * Invoices: fix SQL error (Illegal mix of collations) when searching / entering a position with a non-ascii character (like a German umlaut)
+  * RAG: fix wrong condition causing only deleted calendar entries to be indexed
+  * Timesheet: timesheet showed wrong time (minutes) when stopping the project-specific timer
+  * Tracker: fix lists of ticket is empty after new login under some conditions
+  * AD/LDAP Import: new option to write changes made in EGroupware back to AD/LDAP (disabled by default)
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 24 Feb 2026 15:29:58 +0100
+
 egroupware-docker (26.2.20260216) hardy; urgency=low
 
   * API: fix context menu copy used the whole row instead of the target widget
