@@ -105,7 +105,7 @@ class importexport_definitions_ui
 				$content['nm']['action'] = 'delete';
 				$content['nm']['selected'] = array_keys($content['nm']['rows']['delete'],'pressed');
 			}
-			elseif(($button = array_search('pressed',$content['nm']['rows'])) !== false)
+			elseif(($button = array_search('pressed',$content['nm']['rows'] ?? [])) !== false)
 			{
 				$selected = $content['nm']['selected'];
 				if(count($selected) < 1 || !is_array($selected)) exit();
@@ -121,9 +121,9 @@ class importexport_definitions_ui
 						break;
 				}
 			}
-			if ($content['nm']['action'])
+			if (!empty($content['nm']['action']))
 			{
-				if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
+				if (empty($content['nm']['selected']) && empty($content['nm']['select_all']))
 				{
 					$msg = lang('You need to select some entries first!');
 				}
