@@ -1,6 +1,6 @@
 egroupware-docker (23.1.20260224) hardy; urgency=low
 
-  * SECURITY and maintenance release: everyone is strongly adviced to update to this release, of 26.2.20260224
+  * SECURITY and maintenance release: everyone is strongly adviced to update to this release, or 26.2.20260224
   * Admin: allow specifying a retention period for the history log in years, default none
   * Timesheet: timesheet showed wrong time (minutes) when stopping the project-specific timer
 
