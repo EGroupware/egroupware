@@ -103,7 +103,7 @@ class timesheet_ui extends timesheet_bo
 				$this->data['events'] = array_merge($this->data['events'], array_values($pending));
 				$start = $this->data['events'][0]['tse_time'];
 				$this->data['ts_start'] = $start;
-				$this->data['start_time'] = Api\DateTime::server2user($start, 'H:s');
+				$this->data['start_time'] = Api\DateTime::server2user($start, 'H:i');
 				$this->data['end_time'] = '';
 				$this->data['ts_duration'] = (int)$this->data['ts_duration'] + round($time / 60); // minutes
 				$this->data['ts_quantity'] = (float)$this->data['ts_quantity'] + $this->data['ts_duration'] / 60.0; // hours
