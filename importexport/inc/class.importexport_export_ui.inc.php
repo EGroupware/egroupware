@@ -448,7 +448,7 @@ class importexport_export_ui {
 	{
 		$tmpfname = $_tmpfname ?: $_GET['_filename'];
 		// guard against path traversal
-		if (basename($tmpfname) !== $_tmpfname) die();
+		if (basename($tmpfname) !== $tmpfname) die();
 		$tmpfname = $GLOBALS['egw_info']['server']['temp_dir'] .'/'. $tmpfname;
 		if (!is_readable($tmpfname)) die();
 
