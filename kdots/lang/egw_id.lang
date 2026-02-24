@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	id	Aktifkan untuk menampilkan ikon aplikasi yang lebih berwarna di tab yang terbuka. Jika tidak dicentang, ikon akan secara default menggunakan warna kustom yang lebih terang.
+app chooser icons	common	id	Ikon
+app chooser icons + text	common	id	Ikon + Teks
+application chooser style	common	id	Gaya pemilih aplikasi
 reload %1	common	id	Muat ulang %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	id	Apakah pemilih aplikasi hanya berisi ikon atau juga nama aplikasi, misalnya jika pengguna tidak familiar dengan ikon-ikon tersebut.
 show app icons in there app color	kdots	id	Tampilkan ikon aplikasi dalam warna asli aplikasi
 user profile	kdots	id	Profil pengguna

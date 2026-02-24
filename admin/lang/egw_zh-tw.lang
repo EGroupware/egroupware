@@ -35,14 +35,14 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	zh-tw	管理者名稱
 admin password	emailadmin	zh-tw	管理密碼
 admins	admin	zh-tw	系統管理
-advanced options	admin	zh-tw	進階選項
+advanced options	emailadmin	zh-tw	進階選項
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	zh-tw	登入失敗幾次之後要鎖定IP位址(預設三次)？
 aliases	admin	zh-tw	對齊
 all applications	admin	zh-tw	所有的應用程式
 all records and account information will be lost!	admin	zh-tw	所有的帳號資料及紀錄將會消失！
 all users	admin	zh-tw	所有使用者
 allow anonymous access to this app	admin	zh-tw	允許匿名使用者存取此應用程式
-alternate email address	admin	zh-tw	替代郵件位址
+alternate email address	emailadmin	zh-tw	替代郵件位址
 anonymous user	admin	zh-tw	匿名使用者
 anonymous user (not shown in list sessions)	admin	zh-tw	匿名用戶(上線列表中不顯示)
 anonymous user does not exist!	admin	zh-tw	匿名用戶不存在！
@@ -104,7 +104,7 @@ created	admin	zh-tw	建立日期
 creates a new field	admin	zh-tw	建立新欄位
 crontab only (recomended)	admin	zh-tw	僅crontab  (建議)
 custom fields	admin	zh-tw	自訂欄位
-cyrus imap server	admin	zh-tw	Cyrus IMAP伺服器
+cyrus imap server	emailadmin	zh-tw	Cyrus IMAP伺服器
 data	admin	zh-tw	資料
 day	admin	zh-tw	日
 day of week<br>(0-6, 0=sun)	admin	zh-tw	星期幾\n(0-6, 0=星期日)
@@ -156,7 +156,7 @@ domainname	emailadmin	zh-tw	網域名稱
 down	admin	zh-tw	下
 edit account	admin	zh-tw	編輯帳號
 edit application	admin	zh-tw	編輯應用程式
-edit email settings	admin	zh-tw	編輯郵件設定
+edit email settings	emailadmin	zh-tw	編輯郵件設定
 edit global category	admin	zh-tw	編輯全區分類
 edit global category for %1	admin	zh-tw	編輯全域分類 %1
 edit group	admin	zh-tw	編輯群組
@@ -169,8 +169,8 @@ edit this user	admin	zh-tw	編輯這個使用者
 edit user	admin	zh-tw	編輯使用者
 edit user account	admin	zh-tw	編輯使用者帳號
 egroupware directory	admin	zh-tw	EGroupware 資料夾
-email account active	admin	zh-tw	郵件帳號啟用
-email address	admin	zh-tw	郵件位址
+email account active	emailadmin	zh-tw	郵件帳號啟用
+email address	emailadmin	zh-tw	郵件位址
 email settings	common	zh-tw	郵件設定
 emailadmin	emailadmin	zh-tw	郵件管理
 enable	admin	zh-tw	啟用
@@ -219,9 +219,9 @@ file space must be an integer	admin	zh-tw	檔案空間必須是整數
 for the times above	admin	zh-tw	次數上限
 for the times below (empty values count as '*', all empty = every minute)	admin	zh-tw	下面的次數(空白視為"*"，全部空白等於每一分鐘)
 force selectbox	admin	zh-tw	固定勾選方塊
-forward also to	admin	zh-tw	同時轉寄到
+forward also to	emailadmin	zh-tw	同時轉寄到
 forward email's to	emailadmin	zh-tw	轉寄信件到
-forward only	admin	zh-tw	轉寄
+forward only	emailadmin	zh-tw	轉寄
 full name	admin	zh-tw	全名
 general	admin	zh-tw	一般
 global categories	common	zh-tw	全區分類
@@ -255,7 +255,7 @@ imap server hostname or ip address	emailadmin	zh-tw	IMAP伺服器的主機名稱
 imap server logintyp	emailadmin	zh-tw	IMAP伺服器登入類型
 imap server name	emailadmin	zh-tw	IMAP伺服器名稱
 imap server port	emailadmin	zh-tw	IMAP伺服器連接埠
-in mbyte	admin	zh-tw	以MB顯示
+in mbyte	emailadmin	zh-tw	以MB顯示
 inbound	admin	zh-tw	聚集
 initial	admin	zh-tw	初始的
 install crontab	admin	zh-tw	安裝排定的工作
@@ -286,7 +286,7 @@ ldap server admin dn	emailadmin	zh-tw	LDAP 伺服器管理者 DN
 ldap server admin password	emailadmin	zh-tw	LDAP 伺服器管理者密碼
 ldap server hostname or ip address	emailadmin	zh-tw	LDAP 伺服器主機名稱或是IP位址
 ldap settings	emailadmin	zh-tw	LDAP 設定
-leave empty for no quota	admin	zh-tw	不填入任何資料表示無限制
+leave empty for no quota	emailadmin	zh-tw	不填入任何資料表示無限制
 leave the category untouched and return back to the list	admin	zh-tw	保留類別原樣並且回到列表
 leave the group untouched and return back to the list	admin	zh-tw	保留群組員樣並且回到列表
 leave without saveing the entry	admin	zh-tw	離開並且不要儲存這個事件
@@ -306,7 +306,6 @@ main email-address	admin	zh-tw	主要信箱
 manage mapping	admin	zh-tw	管理對應
 manager	admin	zh-tw	管理者
 maximum account id (e.g. 65535 or 1000000)	admin	zh-tw	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
-maximum entries in click path history	admin	zh-tw	點選紀錄的最大項目數
 members	admin	zh-tw	成員
 message has been updated	admin	zh-tw	訊息已經更新
 method	admin	zh-tw	方法
@@ -323,11 +322,10 @@ new name	admin	zh-tw	新名稱
 new password [ leave blank for no change ]	admin	zh-tw	新的密碼（空白時不更動）
 next run	admin	zh-tw	下次執行
 no algorithms available	admin	zh-tw	沒有任何可以使用的演算法
-no alternate email address	admin	zh-tw	沒有可替換的郵件位址
+no alternate email address	emailadmin	zh-tw	沒有可替換的郵件位址
 no encryption	emailadmin	zh-tw	沒有加密
 no forwarding email address	emailadmin	zh-tw	沒有轉寄郵件位址
 no jobs in the database !!!	admin	zh-tw	資料庫中沒有任何工作！
-no login history exists for this user	admin	zh-tw	這個使用者沒有登入的紀錄
 no matches found	admin	zh-tw	沒有找到符合的資料
 no message returned.	emailadmin	zh-tw	沒有訊息回應。
 no modes available	admin	zh-tw	沒有可用的模式
@@ -340,7 +338,7 @@ note: ssl available only if php is compiled with curl support	admin	zh-tw	注意
 number of row for a multiline inputfield or line of a multi-select-box	admin	zh-tw	多行輸入的行數或是多重選擇區塊的行數
 one month	admin	zh-tw	一個月
 one week	admin	zh-tw	一星期
-order	admin	zh-tw	順序
+order	emailadmin	zh-tw	順序
 organisation	emailadmin	zh-tw	組織
 outbound	admin	zh-tw	登出
 passthrough	admin	zh-tw	傳送到
@@ -365,19 +363,19 @@ plesk mail script '%1' not found !!!	emailadmin	zh-tw	找不到 Plesk 郵件指�
 plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	zh-tw	Plesk 要求密碼至少必須有 5 個字元而且不能包含帳號名稱 --> 密碼沒有設定！
 plesk smtp-server (qmail)	emailadmin	zh-tw	Plesk SMTP伺服器 (Qmail)
 port	emailadmin	zh-tw	連接埠
-postfix with ldap	admin	zh-tw	使用LDAP與 Postfix
+postfix with ldap	emailadmin	zh-tw	使用LDAP與 Postfix
 preferences	admin	zh-tw	喜好設定
 primary group	admin	zh-tw	主要群組
 profile access rights	emailadmin	zh-tw	存取資料權限
 profile list	emailadmin	zh-tw	資料清單
 profile name	emailadmin	zh-tw	資料名稱
-qmaildotmode	admin	zh-tw	qmaildotmode
-quota settings	admin	zh-tw	配額設定
-quota size in mbyte	admin	zh-tw	配額大小（MB）
+qmaildotmode	emailadmin	zh-tw	qmaildotmode
+quota settings	emailadmin	zh-tw	配額設定
+quota size in mbyte	emailadmin	zh-tw	配額大小（MB）
 re-enter password	admin	zh-tw	再次輸入密碼
 read this list of methods.	admin	zh-tw	讀取這個方法的列表
 register application hooks	admin	zh-tw	註冊應用程式
-remove	admin	zh-tw	移除
+remove	emailadmin	zh-tw	移除
 rows	admin	zh-tw	列
 run asynchronous services	admin	zh-tw	執行非同步服務
 save the category	admin	zh-tw	儲存類別
@@ -428,9 +426,9 @@ sorry, the above users are still a member of the group %1	admin	zh-tw	抱歉，�
 sorry, the follow users are still a member of the group %1	admin	zh-tw	很抱歉，下列使用者仍然屬於群組 %1
 sort the entries	admin	zh-tw	排序
 ssl	admin	zh-tw	ssl
-standard	admin	zh-tw	標準
-standard imap server	admin	zh-tw	標準IMAP伺服器
-standard smtp-server	admin	zh-tw	標準SMTP伺服器
+standard	emailadmin	zh-tw	標準
+standard imap server	emailadmin	zh-tw	標準IMAP伺服器
+standard smtp-server	emailadmin	zh-tw	標準SMTP伺服器
 start	admin	zh-tw	開始
 start testjob!	admin	zh-tw	啟動測試任務!
 submit changes	admin	zh-tw	送出更新資料

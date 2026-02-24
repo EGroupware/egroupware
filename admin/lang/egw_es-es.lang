@@ -610,7 +610,6 @@ manage mapping	admin	es-es	Gestión de mapeos
 manager	admin	es-es	Administrador
 manual entry	admin	es-es	Entrada manual
 maximum account id (e.g. 65535 or 1000000)	admin	es-es	ID máximo de cuenta (ej. 65535 o 1000000)
-maximum entries in click path history	admin	es-es	Número máximo de entradas en la ruta del historial de pulsar con el ratón
 mb used	admin	es-es	MB usados
 members	admin	es-es	Miembros
 message has been updated	admin	es-es	El mensaje ha sido actualizado
@@ -640,7 +639,6 @@ no encryption	admin	es-es	Sin cifrar
 no forwarding email address	admin	es-es	Sin dirección de correo para reenviar
 no jobs in the database !!!	admin	es-es	¡No hay trabajos en la base de datos!
 no limit	admin	es-es	Sin límite
-no login history exists for this user	admin	es-es	¡No existen registros de acceso para este usuario!
 no matches found	admin	es-es	¡No se encontraron resultados!
 no message returned.	admin	es-es	No se devolvió ningún mensaje
 no modes available	admin	es-es	¡No hay modos disponibles!
@@ -749,6 +747,7 @@ required pear class mail/mimedecode.php not found.	admin	es-es	No se ha encontra
 required to embed egroupware via iframe eg. for lti	admin	es-es	necesario para incrustar EGroupware a través de iframe, por ejemplo, para LTI
 requires 'openid / oauth2 server' app.	admin	es-es	Requiere la aplicación 'OpenID / OAuth2 Server'.
 reset filter	admin	es-es	Restablecer filtro
+retention period for history-log (in years)	admin	es-es	Período de retención del registro histórico (en años)
 revoke	admin	es-es	Revocar
 revoke this token	admin	es-es	Revocar este token
 revoked	admin	es-es	Revocado

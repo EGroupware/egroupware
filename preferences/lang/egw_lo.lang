@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	lo	ຕົວແບບກໍານົດຮູບແບບຂອງຕາຕະລາງເວລາ ແລະ ຈະມີໄອຄ໋ອນສໍາຫຼັບແຕ່ລະໂປຼແກຼມ
 a theme defines the colors and fonts used by the template.	preferences	lo	ຊຸດຮູບແບບກໍາໜົດສີ ແລະ ແບບອັກສອນໂດຍໃຊ້ຕົວແບບ
 acl grants have been updated	preferences	lo	ACLອະນຸຍາດໄດ້ຮັບການປັບປຸງ
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	lo	ໃນລາຍການຕາຕະລາງເວລາຈະສະແດງຈໍານວນແຖວຕໍ່ໜ້າໜຶ່ງ. <br> ຫຼຸດລົງຫຼາຍເກີນໄປ
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	lo	ໃນລາຍການຕາຕະລາງເວລາຈະສະແດງຈໍານວນແຖວຕໍ່ໜ້າໜຶ່ງ. \n ຫຼຸດລົງຫຼາຍເກີນໄປ
 are you sure you want to delete this category ?	preferences	lo	ທ່ານແນ່ໃຈບໍ່ຕ້ອງການລຶບໝວດນີ້?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	lo	ປ່ຽນລະຫັດຜ່ານຂອງຜູ້ໃຊ້ໂດຍການສົ່ງລະຫັດເກົ່າ ແລະ ໃສ່ລະຫັດໃໝ່. ສົ່ງຄ່າຄືນ TRUE ໃນຄວາມສໍາເລັດ,  FALSE ໃນຄວາມລົ້ມເຫຼວ
 color	preferences	lo	ສີ
@@ -29,7 +29,7 @@ help off	preferences	lo	ປິດຄວາມຊ່ວຍເຫຼືອ
 hours	preferences	lo	ຊົ່ວໂມງ
 how do you like to display accounts	preferences	lo	ທ່ານຕ້ອງການສະແດງບັນຊີບໍ່?
 how do you like to select accounts	preferences	lo	ທ່ານຕ້ອງການເລືອກບັນຊີບໍ່?
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	lo	ເວລາຂອງທ່ານໄວຫຼືຊ້າກ່ວາເວລາຂອງເຊີບເວີ້ຈັກຊົ່ວໂມງ.<br> ຖ້າທ່ານຢູ່ໃນເຂດເວລາດຽວກັບເຊີບເວີ້ໃຫ້ເລືອກ 0 ຊົ່ວໂມງ, ຖ້າບໍ່ແມ່ນໃຫ້ເລືອກສະຖານທີ່ວັນແລະເວລາຂອງທ່ານ
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	lo	ເວລາຂອງທ່ານໄວຫຼືຊ້າກ່ວາເວລາຂອງເຊີບເວີ້ຈັກຊົ່ວໂມງ.\n ຖ້າທ່ານຢູ່ໃນເຂດເວລາດຽວກັບເຊີບເວີ້ໃຫ້ເລືອກ 0 ຊົ່ວໂມງ, ຖ້າບໍ່ແມ່ນໃຫ້ເລືອກສະຖານທີ່ວັນແລະເວລາຂອງທ່ານ
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	lo	ຈະມີໄອຄ໋ອນຫຼາຍເທົ່າໃດໃນຊ່ອງຕົວເລືອກຕົ້ນໆຂອງໜ້າ. ໄອຄ໋ອນອື່ນຈະຢູ່ທີ່ເມນູເລື່ອນລົງ, ສາມາດຮ້ອງໃຊ້ດ້ວຍໄອຄ໋ອນທີ່ຢູ່ຂວາສຸດໃນຊ່ອງຕົວເລືອກ.
 icon	preferences	lo	ໄອຄ໋ອນ
 icons and text	preferences	lo	ໄອຄ໋ອນ ແລະ ເນື້ອຫາ
@@ -50,7 +50,7 @@ please select your timezone.	preferences	lo	ກະລຸນາເລືອກເ
 popup with search	preferences	lo	Popup ສໍາລັບການຄົ້ນຫາ
 re-enter your password	preferences	lo	ໃສ່ລະຫັດຜ່ານໃໝ່ຊໍ້າຄືນອີກ
 select one	preferences	lo	ເລືອກ
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	lo	ເລືອກພາສາຂອງຂໍ້ຄວາມ ແລະ ຂໍ້ຄວາມພາຍໃນຕາຕະລາງເວລາ. <br> ບາງພາສາອາດຈະບໍ່ມີຂໍ້ຄວາມທັງໝົດ, ໃນກໍລະນີນັ້ນທ່ານຈະເຫັນຂໍ້ຄວາມເປັນພາສາອັງກິດ
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	lo	ເລືອກພາສາຂອງຂໍ້ຄວາມ ແລະ ຂໍ້ຄວາມພາຍໃນຕາຕະລາງເວລາ. \n ບາງພາສາອາດຈະບໍ່ມີຂໍ້ຄວາມທັງໝົດ, ໃນກໍລະນີນັ້ນທ່ານຈະເຫັນຂໍ້ຄວາມເປັນພາສາອັງກິດ
 select the language of the spellchecker integrated into the rich text editor.	preferences	lo	ເລືອກພາສາຂອງຕົວກວດສອບສະກົດຄຳຢູ່ໃນການແກ້ໄຂຂໍ້ຄວາມທີ່ສົມບູນ
 selectbox	preferences	lo	ຊ່ອງສໍາລັບເລືອກ
 selectbox with groupmembers	common	lo	ຊ່ອງເລືອກສະມະຊິກກຸ່ມ

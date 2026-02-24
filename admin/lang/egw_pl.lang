@@ -424,6 +424,7 @@ lifetime of 'remember me' token	admin	pl	Okres ważności tokenu "Zapamiętaj mn
 list config settings	admin	pl	Wyświetl ustawienia
 list current sessions	admin	pl	Wyświetl listę aktualnych sesji
 list of current users	admin	pl	Lista bieżących użytkowników
+log user-agent and action of changes in history-log of entries	admin	pl	Rejestrowanie agenta użytkownika i działań związanych ze zmianami w dzienniku historii wpisów
 logged out	admin	pl	Wylogowany
 login history	admin	pl	Historia logowania
 login message	admin	pl	Wiadomość przy logowaniu do systemu
@@ -439,7 +440,6 @@ main email-address	admin	pl	Główny adres mailowy
 manage mapping	admin	pl	Zarządzaj mapowaniem
 manager	admin	pl	Menedżer
 maximum account id (e.g. 65535 or 1000000)	admin	pl	Maksymalny ID konta (np: 65535 lub 100000)
-maximum entries in click path history	admin	pl	Maksymlna ilość zapamiętanych kliknięć
 members	admin	pl	Członkowie
 message has been updated	admin	pl	Zaktualizowano wiadomość
 method	admin	pl	Metoda
@@ -462,7 +462,6 @@ no encryption	admin	pl	Brak szyfrowania
 no forwarding email address	admin	pl	Brak adresu poczty przesyłanej
 no jobs in the database !!!	admin	pl	Nie ma jobs w bazie
 no limit	admin	pl	Bez limitu
-no login history exists for this user	admin	pl	Nie ma historii logowania dla tego użytkownika
 no matches found	admin	pl	Nie znaleziono zgodnych
 no message returned.	admin	pl	Nie otrzymano wiadomości.
 no modes available	admin	pl	Brak trybów
@@ -540,6 +539,7 @@ remote instance saved	admin	pl	Zdalna instancja zapisana
 remove	admin	pl	Usuń
 requested	admin	pl	Żądany
 reset filter	admin	pl	Resetuj filtr
+retention period for history-log (in years)	admin	pl	Okres przechowywania dziennika historii (w latach)
 revoke this token	admin	pl	Cofnij ten token
 rights	admin	pl	Prawa
 rows	admin	pl	Wiersze

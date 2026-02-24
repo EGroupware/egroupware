@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	cs	Aktivujte tuto možnost, aby se v otevřených záložkách zobrazovaly barevnější ikony aplikací. Pokud není zaškrtnuto, budou ikony automaticky nastaveny na světlejší barvu.
+app chooser icons	common	cs	Ikony
+app chooser icons + text	common	cs	Ikony + Text
+application chooser style	common	cs	Styl výběru aplikací
 reload %1	common	cs	Načíst znovu %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	cs	Měl by výběr aplikací obsahovat pouze ikony, nebo také názvy aplikací, např. pro případ, že uživatelé nejsou s ikonami obeznámeni?
 show app icons in there app color	kdots	cs	Zobrazit ikony aplikací v barvě aplikace
 user profile	kdots	cs	Profil uživatele

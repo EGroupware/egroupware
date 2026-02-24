@@ -8,7 +8,8 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	fr	Un thème définit les couleurs et polices utilisées par le modèle.
 access token revoked.	preferences	fr	Jeton d'accès révoqué.
 acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans EGroupware affichera ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	fr	Actívalo para mostrar iconos de aplicaciones más coloridos en las pestañas abiertas. Si no está marcado, se mostrarán por defecto en un color personalizado más claro.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans EGroupware affichera ce nombre d'entrées ou de lignes par page.\nUne valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
 applications list scroll area	preferences	fr	Zone de scroll pour la liste des applications
 are you sure you want to delete this category ?	preferences	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
 are you sure?	preferences	fr	Êtes-vous sûr ?
@@ -16,7 +17,7 @@ audio effect	preferences	fr	Effet audio
 audio effect enables|disables sound effects used in the theme	preferences	fr	Effets Audio : active|désactive les effets sonores utilisés dans le thème
 automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
 automatically start with this font size	preferences	fr	Démarrer automatiquement avec cette taille de police
-automatically start with this format block. small paragraph adds less line space between new lines.	preferences	fr	Démarrer automatiquement avec ce format de bloc.<br/><b>Petit paragraphe</b> ce qui ajoute moins d'espace entre les nouvelles lignes.
+automatically start with this format block. small paragraph adds less line space between new lines.	preferences	fr	Démarrer automatiquement avec ce format de bloc.\n<b>Petit paragraphe</b> ce qui ajoute moins d'espace entre les nouvelles lignes.
 br	preferences	fr	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fr	Change un mot de passe en fournissant l'ancien et le nouveau mot de passe. Retourne TRUE en cas de réussite, FALSE en cas d'échec.
 change password	preferences	fr	Changer votre mot de passe
@@ -82,7 +83,7 @@ holding ctrl/cmd key and click on the line	preferences	fr	garder la touche ctrl/
 hours	preferences	fr	Heures
 how do you like to display accounts	preferences	fr	Comment souhaitez-vous afficher les comptes
 how do you like to select accounts	preferences	fr	Comment souhaitez-vous sélectionner les comptes
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	fr	Combien d'heures en plus ou en moins vous séparent du fuseau horaire du serveur.<br>Si vous êtes dans le même fuseau horaire que le serveur, choisissez 0 heure, sinon choisissez votre date et heure locales.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	fr	Combien d'heures en plus ou en moins vous séparent du fuseau horaire du serveur.\nSi vous êtes dans le même fuseau horaire que le serveur, choisissez 0 heure, sinon choisissez votre date et heure locales.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	fr	Combien d'icônes devraient-ils apparaître dans la barre de navigation en haut de page. Les icônes excédentaires iront dans un menu déroulant, appelé par l'icône située tout à droite de la barre de navigation.
 how many toolbar buttons are available	preferences	fr	Combien de boutons sont disponibles dans la barre d'outils ?
 how should egroupware display dates for you.	preferences	fr	Choisir le format d'affichage des dates
@@ -115,6 +116,7 @@ notification settings	preferences	fr	Paramètres de notification
 number format	preferences	fr	Format de nombre
 numbers	preferences	fr	nombres
 old password and new password are the same. this is invalid. you must enter a new password	preferences	fr	L'ancien mot de masse est identique au nouveau. Vous devez entrer un nouveau mot de passe !
+open popups in	preferences	fr	Abrir ventanas emergentes en
 or other compatible apps	preferences	fr	Ou autre application compatible
 p: paragraph	preferences	fr	p: Paragraphe
 paragraph	preferences	fr	Paragraphe
@@ -127,6 +129,7 @@ password stored	preferences	fr	Mot de passe stocké.
 permanent time zone selection	preferences	fr	Fuseau horaire permanent
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fr	Sélectionner les fuseaux horaires
 please select your timezone.	preferences	fr	Sélectionnez votre fuseau horaire.
+popup window	preferences	fr	Ventana emergente
 popup with search	preferences	fr	Ouvre une fenêtre Popup avec la recherche
 preferences saved.	preferences	fr	Préférences enregistrées.
 preformatted	preferences	fr	Préformaté
@@ -136,11 +139,12 @@ re-enter your password	preferences	fr	Ré-entrez votre mot de passe
 reset qrcode	preferences	fr	Réinitialise le code QR
 revoke	preferences	fr	Révoquer
 revoke this token	preferences	fr	Révoquer ce jeton
+same window	preferences	fr	En la ventana principal
 scan qrcode with a time-based one-time password (totp) app:	preferences	fr	Scanne le code QR avec une application TOTP (Time-based one-time password) :
 secret deleted, two factor authentication disabled.	preferences	fr	Clé secrète supprimée, authentification à double facteur désactivée.
 select additional lines in lists by	preferences	fr	Sélectionner des lignes supplémentaires dans les listes en
 select one	preferences	fr	Choisissez un(e)
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans EGroupware.<br>Certaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans EGroupware.\nCertaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
 select the language of the spellchecker integrated into the rich text editor.	preferences	fr	Sélectionner la langue du correcteur orthographique intégré à l'éditeur de texte.
 selectbox	preferences	fr	Boîte de sélection
 selectbox with groupmembers	common	fr	Boîte de sélection avec membres du groupe
@@ -151,6 +155,7 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	fr	Paramètres
 setup two factor authentication	preferences	fr	Configurer l'authentification à double facteur
 should the number of active sessions be displayed for you all the time.	preferences	fr	Le nombre de sessions actives doit-il vous être affiché en permanence?
+show app icons in there app color	preferences	fr	Mostrar iconos de aplicaciones en el color de la aplicación
 show helpmessages by default	preferences	fr	Afficher les messages d'aide par défaut.
 show links between egroupware aps as	common	fr	Icônes et liens d'application
 show navigation bar as	preferences	fr	Afficher la barre de navigation comme

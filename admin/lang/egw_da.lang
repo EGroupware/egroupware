@@ -64,6 +64,7 @@ admin email	admin	da	Administrator e-mail
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	da	Administrator e-mail adresser (komma separeret) som skal have besked omkring blokeringen (tom for ingen).
 admin name	admin	da	Administrator navn
 admin password	admin	da	Admin adgangskode
+admin queue and history	admin	da	Adminkø og historik
 admins	admin	da	Administratore
 advanced options	admin	da	Avanceret indstillinger
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	da	Efter hvor mange mislykkede loginforsøg skal en konto blokeres. Standard = 3
@@ -323,6 +324,7 @@ lifetime of 'remember me' token	admin	da	Levetid for ›Husk mig‹-token
 list config settings	admin	da	Vis konfigurations indstillinger
 list current sessions	admin	da	Vis nuværende sessions
 list of current users	admin	da	Vis alle nuværende brugere
+log user-agent and action of changes in history-log of entries	admin	da	Log brugeragent og handlinger i historikloggen for poster
 login history	admin	da	Login historie
 login message	admin	da	Login besked
 login screen	admin	da	Login skærm
@@ -332,7 +334,6 @@ loginid	admin	da	LoginID
 mail settings	admin	da	Post indstillinger
 manager	admin	da	Håndtering
 maximum account id (e.g. 65535 or 1000000)	admin	da	Maksimum konto id (f.eks. 65535 eller 10000000)
-maximum entries in click path history	admin	da	Maksimum antal i klik sti historie
 message has been updated	admin	da	Beskeden er opdateret
 method	admin	da	Metode
 minimum account id (e.g. 500 or 100, etc.)	admin	da	Minimum konto ID (f.eks 500 eller 100, osv.)
@@ -355,7 +356,6 @@ no alternate email address	admin	da	Ingen alternativ e-mail adresse
 no forwarding email address	admin	da	Ingen viderestillet e-mail adresse
 no jobs in the database !!!	admin	da	Ingen jobs i databasen!
 no limit	admin	da	Ingen grænse
-no login history exists for this user	admin	da	Nogen login historie findes for denne bruger!
 no matches found	admin	da	Ingen resultater fundet!
 no permission to add groups	admin	da	Ingen rettigheder til at tilføje grupper!
 no permission to add users	admin	da	Ingen rettigheder til at tilføje brugere!
@@ -399,6 +399,7 @@ read this list of methods.	admin	da	Læs denne liste over metoder.
 regular expression to find part to use as container	admin	da	Regulært udtryk til at finde en del, der skal bruges som container
 remove	admin	da	Fjern
 requires 'openid / oauth2 server' app.	admin	da	Kræver appen 'OpenID / OAuth2 Server'.
+retention period for history-log (in years)	admin	da	Opbevaringsperiode for historikloggen (i år)
 revoke this token	admin	da	Tilbagekald dette token
 rows	admin	da	Rækker
 save the category	admin	da	Gem kategorien.

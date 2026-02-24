@@ -68,6 +68,7 @@ admin email	admin	sv	Admin e-postadress
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sv	Administrativa e-postadresser (komma-separerad) som skall notifieras om blockeringen. (lämna tom om ingen notifiering skall ske)
 admin name	admin	sv	Admin namn
 admin password	admin	sv	Admin lösenord
+admin queue and history	admin	sv	Administratörskö och historik
 admins	admin	sv	Administratörer
 advanced options	admin	sv	Avanserade alternativ
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sv	Efter hur många misslyckade inloggningsförsök ska ett konto blockeras. Standard = 3
@@ -352,6 +353,7 @@ lifetime of 'remember me' token	admin	sv	Livstid för ”Kom ihåg mig”-token
 list config settings	admin	sv	Lista konfigurations inställningar
 list current sessions	admin	sv	Lista aktiva sessioner
 list of current users	admin	sv	Lista över aktiva användare
+log user-agent and action of changes in history-log of entries	admin	sv	Logga användaragent och åtgärder i historikloggen för poster
 login history	admin	sv	Inloggningshistorik
 login message	admin	sv	Inloggningsmeddelande
 login screen	admin	sv	Inloggningssida
@@ -362,7 +364,6 @@ mail settings	admin	sv	E-post alternativ
 main email-address	admin	sv	Standard e-postadress
 manager	admin	sv	Hanterare
 maximum account id (e.g. 65535 or 1000000)	admin	sv	Högsta konto ID (ex. 65535 eller 1000000)
-maximum entries in click path history	admin	sv	Maximalt antal poster i klick historik
 members	admin	sv	Medlemmar
 message has been updated	admin	sv	Meddelandet har uppdaterats
 method	admin	sv	Metod
@@ -383,7 +384,6 @@ no encryption	admin	sv	Ingen kryptering
 no forwarding email address	admin	sv	Ingen e-post vidarebefodrings adress
 no jobs in the database !!!	admin	sv	Inga jobb i databasen!
 no limit	admin	sv	Ingen gräns
-no login history exists for this user	admin	sv	Inloggningshistorik saknas för användaren
 no matches found	admin	sv	Inga träffar
 no message returned.	admin	sv	Inget svar meddelandes
 no modes available	admin	sv	Inga lägen tillgängliga
@@ -438,6 +438,7 @@ register application hooks	admin	sv	Registera applikationskopplingar
 regular expression to find part to use as container	admin	sv	Reguljärt uttryck för att hitta en del som ska användas som behållare
 remove	admin	sv	Radera
 requested	admin	sv	Begärt
+retention period for history-log (in years)	admin	sv	Lagringstid för historikloggen (i år)
 revoke this token	admin	sv	Återkalla denna token
 rows	admin	sv	Rader
 run asynchronous services	admin	sv	Kör asynkrona tjänster

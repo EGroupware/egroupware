@@ -311,7 +311,6 @@ mail settings	admin	lo	ຕັ້ງຄ່າ mail
 main email-address	admin	lo	ທີ່ຢູ່ email ຫຼັກ
 manager	admin	lo	ຜູ້ຈັດການ
 maximum account id (e.g. 65535 or 1000000)	admin	lo	ຈໍານວນ ID ບັບຊີສູງສຸດ(ເຊັ່ນ: 65535 ຫຼື 1000000)
-maximum entries in click path history	admin	lo	ຄ່າສູງສຸດຂອງປະຫວັດພາດເກັບຟາຍທີ່ໄດ້ກົດ
 message has been updated	admin	lo	ຂໍ້ຄວາມໄດ້ຮັບການປັບປຸງແລ້ວ
 method	admin	lo	Method
 minimum account id (e.g. 500 or 100, etc.)	admin	lo	ຈໍານວນ ID ບັບຊີ ຕໍ່າສຸດ(ເຊັ່ນ: 500 ຫຼື 100, ...)
@@ -328,7 +327,6 @@ next run	admin	lo	ດໍາເນີນການຂັ້ນຕໍ່ໄປ
 no algorithms available	admin	lo	ບໍ່ມີຂັ້ນຕອນໃດໃຊ້ໄດ້
 no alternate email address	admin	lo	ບໍ່ມີ email ສະຫຼັບກັນ
 no jobs in the database !!!	admin	lo	ບໍ່ມີ jobs ໃນຖານຂໍ້ມູນ
-no login history exists for this user	admin	lo	ບໍ່ມີປະຫວັດການເຂົ້າລະບົບຂອງຜູ້ໃຊ້ນີ້
 no matches found	admin	lo	ບໍ່ພົບລາຍການທີ່ກົງກັນ
 no modes available	admin	lo	ບໍ່ມີ modes ທີ່ໃຊ້ໄດ້
 no permission to add groups	admin	lo	ບໍ່ມີສິດເພີ່ມກຸ່ມ

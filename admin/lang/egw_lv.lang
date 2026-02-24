@@ -67,6 +67,7 @@ admin email	admin	lv	Administratora e-pasts
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	lv	Administratora e-pasta adreses(atdalītas ar komatu), lai tiktu informēts par bloķēšanu(atstāt tukšu, lai nesaņemtu paziņojumu)
 admin name	admin	lv	Administratora vārds
 admin password	admin	lv	Administratora parole
+admin queue and history	admin	lv	Administratora rinda un vēsture
 admins	admin	lv	Administratori
 advanced options	admin	lv	Uzlabotās iespējas
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	lv	Pēc cik neveiksmīgiem mēģinājumiem pieteikties konts jābloķē. Noklusējums = 3
@@ -322,6 +323,7 @@ lifetime of 'remember me' token	admin	lv	Atcerēties mani" žetona darbības lai
 list config settings	admin	lv	Uzskaitīt konfigurācijas uzstādījumus
 list current sessions	admin	lv	Uzskaitīt esošās sesijas
 list of current users	admin	lv	Uzskaitīt esošos lietotājus
+log user-agent and action of changes in history-log of entries	admin	lv	Lietotāja aģenta un darbību reģistrēšana ierakstu vēstures žurnālā
 login history	admin	lv	Autorizāciju vēsture
 login message	admin	lv	Autorizācijas ziņojums
 login screen	admin	lv	Autorizācijas logs
@@ -350,7 +352,6 @@ no alternate email address	admin	lv	Nav alternatīvas e-pasta adreses
 no forwarding email address	admin	lv	Nav pārsūtāmās e-pasta adreses
 no jobs in the database !!!	admin	lv	Datubāzē uzdevumu nav!
 no limit	admin	lv	Nav ierobežojuma
-no login history exists for this user	admin	lv	Šim lietotājam nav autorizāciju vētures
 no matches found	admin	lv	Nav atbilstošu ierakstu
 no modes available	admin	lv	Nav pieejamu režīmu
 no permission to add groups	admin	lv	Nav atļaujas, lai pievienotu grupas
@@ -391,6 +392,7 @@ re-enter password	admin	lv	Atkārtoti ievadi paroli
 read this list of methods.	admin	lv	Izlasi šo metožu sarakstu
 regular expression to find part to use as container	admin	lv	Regulārā izteiksme, lai atrastu daļu, ko izmantot kā konteineru
 remove	admin	lv	Pārvietot
+retention period for history-log (in years)	admin	lv	Vēstures žurnāla glabāšanas periods (gados)
 revoke this token	admin	lv	Atcelt šo žetonu
 rows	admin	lv	Rindas
 run asynchronous services	admin	lv	Palaist asinhronos pakalpojumus

@@ -8,7 +8,8 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	cs	Téma definuje barvy a fonty použité šablonou.
 access token revoked.	preferences	cs	Přístupový token byl zrušen.
 acl grants have been updated	preferences	cs	ACL práva byla aktualizována
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	cs	Každý výpis v eGroupWaru zobrazí tento počet položek na stránku.<br>Příliš velká hodnota zpomalí zobrazování stránky, příliš malá Vám znesnadní přehled.
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	cs	Aktivujte tuto možnost, aby se v otevřených záložkách zobrazovaly barevnější ikony aplikací. Pokud není tato možnost zaškrtnuta, ikony se zobrazují ve výchozí světlé barvě.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	cs	Každý výpis v eGroupWaru zobrazí tento počet položek na stránku.\nPříliš velká hodnota zpomalí zobrazování stránky, příliš malá Vám znesnadní přehled.
 applications list scroll area	preferences	cs	Rolovací plocha seznamu aplikací
 are you sure you want to delete this category ?	preferences	cs	Určitě chcete smazat tuto kategorii ?
 are you sure?	preferences	cs	Určitě?
@@ -16,7 +17,7 @@ audio effect	preferences	cs	Zvukové efekty
 audio effect enables|disables sound effects used in the theme	preferences	cs	Povolí, nebo zakáže použití zvukových efektů použitých v tématu.
 automatically start with this font	preferences	cs	Automaticky začínat s tímto typem písma
 automatically start with this font size	preferences	cs	Automaticky začínat s touto velikostí písma
-automatically start with this format block. small paragraph adds less line space between new lines.	preferences	cs	Automatically start with this format block.<br/><b>Small Paragraph</b> adds less line space between new lines.
+automatically start with this format block. small paragraph adds less line space between new lines.	preferences	cs	Automatically start with this format block.\n<b>Small Paragraph</b> adds less line space between new lines.
 br	preferences	cs	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	cs	Mění uživatelské heslo po zadání starého a nového hesla. Vrací TRUE je-li vše v pořádku, FALSE při chybě.
 change password	preferences	cs	Změna hesla
@@ -82,7 +83,7 @@ holding ctrl/cmd key and click on the line	preferences	cs	stisknutím a držení
 hours	preferences	cs	Hodiny
 how do you like to display accounts	preferences	cs	Zobrazení účtů
 how do you like to select accounts	preferences	cs	Výběr účtů
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	cs	O kolik hodin dopředu nebo dozadu je posunuto Vaše časové pásmo vůči časovému pásmu serveru?<br>Pokud jste ve stejném časovém pásmu, vyberte 0 hodin, v opačném případě zvolte Váše lokální datum a čas.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	cs	O kolik hodin dopředu nebo dozadu je posunuto Vaše časové pásmo vůči časovému pásmu serveru?\nPokud jste ve stejném časovém pásmu, vyberte 0 hodin, v opačném případě zvolte Váše lokální datum a čas.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	cs	Kolik ikon se má zobrazovat v navigační liště (v záhlaví stránky). Další ikony se přesunou do roletového menu, které zobrazíte kliknutím na symbol na pravé straně lišty.
 how many toolbar buttons are available	preferences	cs	Kolik bude viditelných tlačítek v nástrojové liště
 how should egroupware display dates for you.	preferences	cs	Jak má EGroupware zobrazovat datumy.
@@ -115,6 +116,7 @@ notification settings	preferences	cs	Nastavení upozornění
 number format	preferences	cs	Formát čísel
 numbers	preferences	cs	čísla
 old password and new password are the same. this is invalid. you must enter a new password	preferences	cs	Původní a nové heslo jsou stejné. Musíte zadat nové heslo!
+open popups in	preferences	cs	Otevřít vyskakovací okna v
 or other compatible apps	preferences	cs	Nebo jiné kompatibilní aplikace
 p: paragraph	preferences	cs	p: Odstavec
 paragraph	preferences	cs	Odstavec
@@ -127,6 +129,7 @@ password stored	preferences	cs	Heslo se ukládá.
 permanent time zone selection	preferences	cs	Trvalá volba časové zóny
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	cs	Vyberte prosím časové zóny, mezi kterými chcete mít možnost rychle přepínat. Přepínač se nezobrazuje, pokud nejsou vybrány alespoň dvě zóny.
 please select your timezone.	preferences	cs	Vyberte prosím svou časovou zónu.
+popup window	preferences	cs	Vyskakovacím okně
 popup with search	preferences	cs	Překryvné okno s hledáním
 preferences saved.	preferences	cs	Předvolby byly uloženy.
 preformatted	preferences	cs	Předformátovaný
@@ -136,11 +139,12 @@ re-enter your password	preferences	cs	Zadejte znovu své heslo
 reset qrcode	preferences	cs	Obnovení QR kódu
 revoke	preferences	cs	Odvolat
 revoke this token	preferences	cs	Odvolat tento token
+same window	preferences	cs	V hlavním okně
 scan qrcode with a time-based one-time password (totp) app:	preferences	cs	Skenování QR kódu pomocí aplikace TOTP (Time-based one-time password):
 secret deleted, two factor authentication disabled.	preferences	cs	Vymazání tajemství, dvoufaktorové ověřování zakázáno.
 select additional lines in lists by	preferences	cs	Další řádky v seznamu vybrat
 select one	preferences	cs	Vybrat jeden
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	cs	Vyberte jazyk pro texty a hlášky v eGroupWaru.<br>Některé jazyky nemusí obsahovat překlad všech hlášek, v takovém případě se zobrazí anglický originál.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	cs	Vyberte jazyk pro texty a hlášky v eGroupWaru.\nNěkteré jazyky nemusí obsahovat překlad všech hlášek, v takovém případě se zobrazí anglický originál.
 select the language of the spellchecker integrated into the rich text editor.	preferences	cs	Vyberte jazyk pro kontrolu pravopisu v richtext editoru.
 selectbox	preferences	cs	Rozbalovací nabídka
 selectbox with groupmembers	common	cs	Rozbalovací nabídka se členy skupiny
@@ -151,6 +155,7 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	cs	Nastavení
 setup two factor authentication	preferences	cs	Nastavení dvoufaktorového ověřování
 should the number of active sessions be displayed for you all the time.	preferences	cs	Chcete neustále zobrazovat počet aktivních relací?
+show app icons in there app color	preferences	cs	Zobrazit ikony aplikací v barvě aplikace
 show helpmessages by default	preferences	cs	Standardně zobrazovat pomocné texty
 show links between egroupware aps as	common	cs	Zobrazovat odkazy mezi EGroupware aplikacemi jako
 show navigation bar as	preferences	cs	Zobrazovat navigační lištu jako

@@ -4,6 +4,7 @@
 24 hour	preferences	bg	24-часово време
 a theme defines the colors and fonts used by the template.	preferences	bg	Темата задава използваните цветве и шрифтове.
 acl grants have been updated	preferences	bg	Правата за достъп бяха обновени
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	bg	Активирайте, за да покажете по-цветни икони на приложенията в отворените раздели. Ако не е отбелязано, по подразбиране се използват по-светли персонализирани цветове.
 applications list scroll area	preferences	bg	Бутон за превъртане на страничното меню
 are you sure you want to delete this category ?	preferences	bg	Наистина ли искате да изтриете тази категория?
 are you sure?	preferences	bg	Сигурни ли сте?
@@ -48,13 +49,17 @@ max number of icons in navbar	preferences	bg	Максимален брой ка�
 no default	preferences	bg	Без стойност по подразбиране
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	bg	Бележка: Това НЕ сменя паролата ви за пощата. Нейната смяна трябва да се направи по друг начин.
 old password and new password are the same. this is invalid. you must enter a new password	preferences	bg	Старата парола и новата парола са еднакви. Трябва да въведете нова парола!
+open popups in	preferences	bg	Отваряне на изскачащи прозорци в
 password stored	preferences	bg	Запазена парола.
+popup window	preferences	bg	Изскачащ прозорец
 preferences saved.	preferences	bg	Запазени предпочитания.
 re-enter your password	preferences	bg	Въведете отново паролата
 reset qrcode	preferences	bg	Нулиране на QR кода
+same window	preferences	bg	В главния прозорец
 scan qrcode with a time-based one-time password (totp) app:	preferences	bg	Сканиране на QR кода с приложение TOTP (Time-based one-time password):
 select one	preferences	bg	Изберете
 set content size	preferences	bg	Задаване на размера на съдържанието
+show app icons in there app color	preferences	bg	Показване на иконите на приложенията в цвета на приложението
 show number of current users	preferences	bg	Показване на броя включени в момента потребители
 show qrcode	preferences	bg	Показване на QR код
 show qrcode to enable on an additional device.	preferences	bg	Показва отново QR кода, за да го настроите на други устройства

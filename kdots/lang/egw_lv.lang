@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	lv	Aktivizējiet, lai atvērtās cilnēs parādītu krāsainākas lietotņu ikonas. Ja šī opcija nav atzīmēta, tās noklusējuma krāsa ir gaišāka.
+app chooser icons	common	lv	Ikona
+app chooser icons + text	common	lv	Ikona + Teksts
+application chooser style	common	lv	Lietotņu izvēlnes stils
 reload %1	common	lv	Pārlādēt %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	lv	Vai lietotņu izvēlnei jāietver tikai ikonas vai arī lietotnes nosaukums, piemēram, ja lietotāji nav pazīstami ar ikonām.
 show app icons in there app color	kdots	lv	Parādīt lietotņu ikonas lietotņu krāsā
 user profile	kdots	lv	Lietotāja profils

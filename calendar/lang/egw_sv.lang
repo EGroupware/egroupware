@@ -121,7 +121,7 @@ days	calendar	sv	Dagar
 days of the week for a weekly repeated event	calendar	sv	Dagar för veckovis återkommande händelse
 days repeated	calendar	sv	Återkommande dagar
 dayview	calendar	sv	Dag
-default alarm added for yourself or all participants	calendar	sv	Larmet sätts automatiskt in för nya möten.<br>För dig själv eller för alla deltagare.
+default alarm added for yourself or all participants	calendar	sv	Larmet sätts automatiskt in för nya möten.\nFör dig själv eller för alla deltagare.
 default appointment length (in minutes)	calendar	sv	Mötens standard längd (i minuter)
 default calendar filter	calendar	sv	Kalenderns standard filter
 default calendar view	calendar	sv	Kalenderns standard vy
@@ -141,10 +141,10 @@ display status of events	calendar	sv	Visa händelse status
 displayed view	calendar	sv	Visad vy
 do not include events of group members	calendar	sv	Inkludera inte evenemang för gruppmedlemmar
 do you want a weekview with or without weekend?	calendar	sv	Vill du se veckovy med eller utan veckoslut?
-do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	sv	Vill du mottaga meddelande om nya eller ändrade möten? Du får bekräftelse på dina egna ändringar.<br>Du kan begränsa meddelandena till vissa ändringar. Varje objekt inkluderar alla meddelande typer listade ovan den. Alla ändringar inkluderar titel ändring, beskrivning, deltagare men inte deltagares svar. Om ägaren till en händelse begär meddelande får han/hon deltagarnas svar som accepterar eller tackar nej till.
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	sv	Vill du mottaga meddelande om nya eller ändrade möten? Du får bekräftelse på dina egna ändringar.\nDu kan begränsa meddelandena till vissa ändringar. Varje objekt inkluderar alla meddelande typer listade ovan den. Alla ändringar inkluderar titel ändring, beskrivning, deltagare men inte deltagares svar. Om ägaren till en händelse begär meddelande får han/hon deltagarnas svar som accepterar eller tackar nej till.
 do you want to delete this subscription incl. the synced events?	calendar	sv	Vill du ta bort denna prenumeration inklusive de synkroniserade händelserna?
 do you want to edit this event as an exception or the whole series?	calendar	sv	Vill du ändra denna förekomst som ett undantag eller hela serien?
-do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sv	Vill du få regelbunden summering av dina möten via e-post?<br>Summeringen skickas till din standard e-postadress på morgonen eller på måndagar för vecko summering.<br>Skickas bara när du har planerade händelser för dagen eller veckan.
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sv	Vill du få regelbunden summering av dina möten via e-post?\nSummeringen skickas till din standard e-postadress på morgonen eller på måndagar för vecko summering.\nSkickas bara när du har planerade händelser för dagen eller veckan.
 does not show event to other users, unless they have a private grant	calendar	sv	Visar INTE evenemanget för andra användare, såvida de inte har ett privat anslag
 download	calendar	sv	Ladda ner
 download this event as ical	calendar	sv	Ladda ner händelsen som iCal
@@ -454,7 +454,7 @@ the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	sv	Avsändaren "%1" är INTE deltagaren som svarar "%2", fortsätt med försiktighet!
 this day is shown as first day in the week or month view.	calendar	sv	Dagen visas som första dagen i vecka och månads vy.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sv	Detta definierar slutet på dagen. Händelser efter denna tid visas nedanför Dag vy.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sv	Definierar början på dagen. Händelser före denna tid visas ovanför Dag vy.<br>Denna tid används som standard start tid för nya händelser.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sv	Definierar början på dagen. Händelser före denna tid visas ovanför Dag vy.\nDenna tid används som standard start tid för nya händelser.
 this entry is currently opened by %1!	calendar	sv	Denna post har redan öppnats av %1.
 this entry is opened by user:	calendar	sv	Denna post har öppnats inom den inställda tidsintervall av användare:
 this event is part of a series	calendar	sv	Denna händelse är del av en serie
@@ -462,7 +462,7 @@ this group that is preselected when you enter the planner. you can change it in 
 this is a single recurrence of a recurring event.	calendar	sv	Detta är en enstaka upprepning av en återkommande händelse.
 this message is sent for canceled or deleted events.	calendar	sv	Meddelandet skickas för avbrutna eller raderad händelser.
 this message is sent for modified or moved events.	calendar	sv	Meddelandet skickas för ändrade eller flyttade händelser.
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	sv	Meddelandet skickas till deltagare i händelser du äger, som har begärt meddelande om nya händelser.<br>Du kan använda variabler som ersätts med data ur händelse posten. Första raden är ämnet i meddelandet.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	sv	Meddelandet skickas till deltagare i händelser du äger, som har begärt meddelande om nya händelser.\nDu kan använda variabler som ersätts med data ur händelse posten. Första raden är ämnet i meddelandet.
 this message is sent to uninvited participants.	calendar	sv	Meddelandet skickas till avbokade deltagare
 this message is sent when you accept, tentative accept or reject an event.	calendar	sv	Meddelandet skickas när du accepterat, preliminärt accepterat, eller tackat nej till händelse.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	sv	Meddelandet skickas när du aktiverat ett larm för vissa händelser. Inkludera all information du kan behöva.

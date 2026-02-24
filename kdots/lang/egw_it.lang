@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	it	Attiva per visualizzare icone delle app più colorate nelle schede aperte. Se deselezionato, il colore predefinito è quello personalizzato schiarito.
+app chooser icons	common	it	Icone
+app chooser icons + text	common	it	Icone + Testo
+application chooser style	common	it	Stile del selettore di applicazioni
 reload %1	common	it	Ricarica %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	it	Il selettore di applicazioni dovrebbe contenere solo icone o anche il nome dell'applicazione, ad esempio se gli utenti non hanno familiarità con le icone?
 show app icons in there app color	kdots	it	Mostra le icone delle app nel loro colore originale
 user profile	kdots	it	Profilo utente

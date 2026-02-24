@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	sv	Aktivera för att visa mer färgglada appikoner i de öppna flikarna. Om alternativet inte är markerat visas standardfärgen ljusare.
+app chooser icons	common	sv	Ikoner
+app chooser icons + text	common	sv	Ikoner + Text
+application chooser style	common	sv	Applikationsväljarens utseende
 reload %1	common	sv	Ladda om %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	sv	Ska applikationsväljaren endast innehålla ikoner eller även applikationens namn, t.ex. om användarna inte är bekanta med ikonerna?
 show app icons in there app color	kdots	sv	Visa appikoner i appens färg
 user profile	kdots	sv	Användarprofil

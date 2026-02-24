@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	tr	Açık sekmelerde daha renkli uygulama simgeleri göstermek için etkinleştirin. İşaretlenmezse, varsayılan olarak özel renkler açılır.
+app chooser icons	common	tr	Simgeler
+app chooser icons + text	common	tr	Simgeler + Metin
+application chooser style	common	tr	Uygulama seçici stili
 reload %1	common	tr	Yeniden yükle %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	tr	Uygulama seçici sadece simgeler içermeli mi, yoksa kullanıcılar simgelere aşina değilse uygulama adını da içermeli mi?
 show app icons in there app color	kdots	tr	Uygulama simgelerini uygulama renginde göster
 user profile	kdots	tr	Kullanıcı profili

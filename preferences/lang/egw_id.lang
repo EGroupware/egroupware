@@ -5,7 +5,8 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	id	Templat menentukan tata-letak EGroupware dan mengandung ikon untuk setiap aplikasi.
 a theme defines the colors and fonts used by the template.	preferences	id	Tema menentukan warna dan huruf yang digunakan pada templat.
 acl grants have been updated	preferences	id	Ijin ACL telah dikinikan
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	id	Setiap daftar pada EGroupware akan menampilkan sejumlah entri atau baris per halaman.<br>Terlalu banyak akan memperlambat, terlalu sedikit akan mengurangi penampilan.
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	id	Aktifkan untuk menampilkan ikon aplikasi yang lebih berwarna di tab yang terbuka. Jika tidak dicentang, ikon akan default ke warna kustom yang lebih terang.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	id	Setiap daftar pada EGroupware akan menampilkan sejumlah entri atau baris per halaman.\nTerlalu banyak akan memperlambat, terlalu sedikit akan mengurangi penampilan.
 applications list scroll area	preferences	id	Tombol gulir untuk menu samping
 are you sure you want to delete this category ?	preferences	id	Anda yakin ingin menghapus kategori ini?
 are you sure?	preferences	id	Apakah Anda yakin?
@@ -63,20 +64,24 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	id	catatan: Fitur ini *tidak" mengubah password email anda. Ini harus dikerjakan sendiri.
 number format	preferences	id	Format bilangan
 old password and new password are the same. this is invalid. you must enter a new password	preferences	id	Kata sandi lama dan kata sandi baru sama. Anda harus memasukkan kata sandi baru!
+open popups in	preferences	id	Buka pop-up di
 p: paragraph	preferences	id	p: Paragraph
 password stored	preferences	id	Kata sandi tersimpan.
 permanent time zone selection	preferences	id	Pilihan zona-waktu tetap
 please select your timezone.	preferences	id	Pilih zonawaktu anda.
+popup window	preferences	id	Jendela Pop-up
 popup with search	preferences	id	Popup dengan pencarian
 preferences saved.	preferences	id	Preferensi disimpan.
 re-enter your password	preferences	id	Ulangi masukan password
 reset qrcode	preferences	id	Mengatur ulang kode QR
+same window	preferences	id	Di jendela utama
 scan qrcode with a time-based one-time password (totp) app:	preferences	id	Memindai kode QR dengan Aplikasi TOTP (Time-based one-time password):
 select one	preferences	id	Pilih satu
 selectbox	preferences	id	Kotak pilihan
 selectbox with groupmembers	common	id	Kotak pilihan dengan anggota kelompok
 selectbox with primary group and search	preferences	id	Kotak pilihan dengan pencarian kelompok utama
 set content size	preferences	id	Mengatur ukuran konten
+show app icons in there app color	preferences	id	Tampilkan ikon aplikasi dalam warna aplikasi
 show helpmessages by default	preferences	id	Tampilkan pesan bantuan menurut bawaan
 show links between egroupware aps as	common	id	Tampilkan tautan antar aplikasi EGroupware sebagai
 show navigation bar as	preferences	id	Tampilkan baris navigasi sebagai

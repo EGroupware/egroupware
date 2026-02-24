@@ -601,7 +601,6 @@ manage mapping	admin	sk	Správa mapovania
 manager	admin	sk	Správca
 manual entry	admin	sk	Ručná položka
 maximum account id (e.g. 65535 or 1000000)	admin	sk	Maximálne ID účtu (napr. 65535 alebo 1000000)
-maximum entries in click path history	admin	sk	Maximálny počet záznamov v histórii kliknutí
 mb used	admin	sk	Použitých MB
 members	admin	sk	Členovia
 message has been updated	admin	sk	Správa bola upravená
@@ -631,7 +630,6 @@ no encryption	admin	sk	Bez šifrovania
 no forwarding email address	admin	sk	Bez emailovej adresy pre preposielanie
 no jobs in the database !!!	admin	sk	V databáze nie sú žiadne úlohy!
 no limit	admin	sk	Žiadny limit
-no login history exists for this user	admin	sk	Pre používateľa neexistuje žiadna história prihlásení!
 no matches found	admin	sk	Nenašlo sa!
 no message returned.	admin	sk	Žiadne správy sa nevrátili
 no modes available	admin	sk	žiadne režimy nie sú dostupné!
@@ -740,6 +738,7 @@ required pear class mail/mimedecode.php not found.	admin	sk	Nenašla sa požadov
 required to embed egroupware via iframe eg. for lti	admin	sk	vyžaduje sa pre vnorenie EGroupware pomocou iframe, napr. pre LTI
 requires 'openid / oauth2 server' app.	admin	sk	Vyžaduje aplikáciu 'OpenID / OAuth2 Server'.
 reset filter	admin	sk	Vynulovať filter
+retention period for history-log (in years)	admin	sk	Doba uchovávania protokolu histórie (v rokoch)
 revoke	admin	sk	Odvolať
 revoke this token	admin	sk	Odvolať tento token
 revoked	admin	sk	Odvolaný

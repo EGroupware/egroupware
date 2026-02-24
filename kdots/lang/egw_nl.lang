@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	nl	Activeer deze optie om meer kleurrijke app-pictogrammen weer te geven in de geopende tabbladen. Als deze optie niet is aangevinkt, worden standaard aangepaste lichtere kleuren weergegeven.
+app chooser icons	common	nl	Pictogrammen
+app chooser icons + text	common	nl	Pictogrammen + Tekst
+application chooser style	common	nl	Stijl van de applicatiekiezer
 reload %1	common	nl	Herladen %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	nl	Moet de applicatiekiezer alleen pictogrammen bevatten of ook de naam van de applicatie, bijvoorbeeld als gebruikers niet bekend zijn met de pictogrammen?
 show app icons in there app color	kdots	nl	App-pictogrammen weergeven in de kleur van de app
 user profile	kdots	nl	Gebruikersprofiel

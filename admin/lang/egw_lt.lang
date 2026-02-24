@@ -37,6 +37,7 @@ add to group	admin	lt	Pridėti prie grupės
 add user	admin	lt	Pridėti naudotoją
 add user or group	admin	lt	Pridėti naudotoją arba grupę
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	lt	Admin elektroninio pašto adresai, atskirti kableliais, kuriais bus pranešama apie užblokuotas vartotojo paskyras ir IP adresus. Tuščias = pranešimas nesiunčiamas.
+admin queue and history	admin	lt	Administratoriaus eilė ir istorija
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	lt	Po kiek nesėkmingų prisijungimo bandymų paskyra turėtų būti užblokuota. Numatytasis = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	lt	Po kiek nesėkmingų prisijungimo bandymų IP adresas turėtų būti užblokuotas. Numatytasis = 15
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	lt	Leisti naudotojui saugoti savo slaptažodį SingleSignOn skiltyje „Saugumas ir slaptažodžiai“.
@@ -80,6 +81,8 @@ last updated	admin	lt	Paskutinį kartą atnaujinta
 leave empty for no quota	admin	lt	Palikite tuščią, jei kvotos nėra
 leave empty to use oauth, if supported	admin	lt	Palikite tuščią, jei norite naudoti OAuth, jei palaikoma
 lifetime of 'remember me' token	admin	lt	Ženklo „Prisiminti mane“ gyvavimo trukmė
+log user-agent and action of changes in history-log of entries	admin	lt	Vartotojo agento ir veiksmų pokyčių registravimas įrašų istorijos žurnale
+login history	admin	lt	Prisijungimų istorija
 no limit	admin	lt	Nėra ribos
 oauth authentiction	admin	lt	OAuth autentiškumo nustatymas
 offer to installing egroupware as mail-handler	admin	lt	Pasiūlymas įdiegti EGroupware kaip pašto tvarkytuvą
@@ -92,6 +95,7 @@ own categories	admin	lt	Savos kategorijos
 own install id	admin	lt	Nuosavas diegimo ID
 own install id:	admin	lt	Nuosavas diegimo ID:
 regular expression to find part to use as container	admin	lt	Reguliarioji išraiška daliai, kurią galima naudoti kaip konteinerį, rasti
+retention period for history-log (in years)	admin	lt	Istorijos žurnalo saugojimo laikotarpis (metais)
 revoke this token	admin	lt	Atšaukti šį simbolį
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	lt	Pasirinkite programas, kurioms norite, kad simbolis būtų taikomas tik jums, arba palikite numatytąjį variantą - visos programos.
 set a random password	admin	lt	Nustatykite atsitiktinį slaptažodį

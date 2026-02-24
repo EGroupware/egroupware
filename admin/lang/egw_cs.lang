@@ -456,6 +456,7 @@ lifetime of 'remember me' token	admin	cs	Životnost tokenu "Zapamatuj si mě"
 list config settings	admin	cs	Zobrazit konfigurační nastavení
 list current sessions	admin	cs	Zobrazit aktuální relace
 list of current users	admin	cs	Seznam aktuálních uživatelů
+log user-agent and action of changes in history-log of entries	admin	cs	Zaznamenávání uživatelského agenta a akcí změn v historii záznamů
 logged out	admin	cs	Odhlášen(a)
 login history	admin	cs	Historie přihlášení
 login message	admin	cs	Přihlašovací zpráva
@@ -474,7 +475,6 @@ manage mapping	admin	cs	Spravovat mapování
 manager	admin	cs	Správce
 manual entry	admin	cs	Ruční zadávání
 maximum account id (e.g. 65535 or 1000000)	admin	cs	Maximální id účtu (např. 65535 nebo 1000000)
-maximum entries in click path history	admin	cs	Maximální počet záznamů v historii kliknutí
 members	admin	cs	Členové
 message has been updated	admin	cs	Zpráva byla aktualizována
 method	admin	cs	Metoda
@@ -498,7 +498,6 @@ no encryption	admin	cs	Bez šifrování
 no forwarding email address	admin	cs	Bez e-mailové adresy pro přeposílání
 no jobs in the database !!!	admin	cs	Žádné úlohy v databázi!
 no limit	admin	cs	Bez omezení
-no login history exists for this user	admin	cs	Pro tohoto uživatele neexistuje historie přihlášení!
 no matches found	admin	cs	Nenalezeny žádné záznamy!
 no message returned.	admin	cs	Žádná zpráva se nevrátila
 no modes available	admin	cs	Žádné režimy nejsou k dispozici!
@@ -577,6 +576,7 @@ remove	admin	cs	Odstranit
 requested	admin	cs	Požadovaný
 requires 'openid / oauth2 server' app.	admin	cs	Vyžaduje aplikaci "OpenID / OAuth2 Server".
 reset filter	admin	cs	Vyresetovat filtr
+retention period for history-log (in years)	admin	cs	Doba uchovávání historie (v letech)
 revoke this token	admin	cs	Odvolání tohoto tokenu
 rights	admin	cs	Práva
 rows	admin	cs	Ŕádky

@@ -81,8 +81,8 @@ deleted	calendar	zh-tw	刪除了
 display status of events	calendar	zh-tw	顯示事件的狀態
 displayed view	calendar	zh-tw	檢視方式
 do you want a weekview with or without weekend?	calendar	zh-tw	您是否希望週曆包含週末？
-do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	zh-tw	您希望系統在約會新增或是修改時主動提醒您嗎？您也會收到包括您自己更新的通知。<br>您可以限制系統只提醒確定的修改。每個項目包含它以上的清單。所有的修改包括標題、描述、參與者的改變，但是不包括參與者的回應。如果事件的擁有者要求任何提醒，他會收到參與者接受或是拒絕的回應。
-do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zh-tw	您希望定期透過電子郵件收到系統自動寄出的約會通知概要嗎？<br>這個概要會在每天早上寄出每日概要或是每個星期一寄出每週概要。<br>它只會在那一天或是那一週有約會時寄出。
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	zh-tw	您希望系統在約會新增或是修改時主動提醒您嗎？您也會收到包括您自己更新的通知。\n您可以限制系統只提醒確定的修改。每個項目包含它以上的清單。所有的修改包括標題、描述、參與者的改變，但是不包括參與者的回應。如果事件的擁有者要求任何提醒，他會收到參與者接受或是拒絕的回應。
+do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zh-tw	您希望定期透過電子郵件收到系統自動寄出的約會通知概要嗎？\n這個概要會在每天早上寄出每日概要或是每個星期一寄出每週概要。\n它只會在那一天或是那一週有約會時寄出。
 download	calendar	zh-tw	下載
 download this event as ical	calendar	zh-tw	下載這個事件的 iCal 格式檔案
 duration	calendar	zh-tw	期間
@@ -281,11 +281,11 @@ tentative	calendar	zh-tw	暫定
 test import (show importable records <u>only</u> in browser)	calendar	zh-tw	測試匯入(<u>只有</u>在瀏覽器中顯示可以匯入的紀錄)
 this day is shown as first day in the week or month view.	calendar	zh-tw	這一天會在週或是月行事曆中第一個顯示
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	zh-tw	這定義了每日行事曆的結束，在這個時間之後的事件會顯示在日行事曆下面。
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	zh-tw	這定義了每日行事曆的開始，在這個時間之前的事件會顯示在日行事曆上面。<br>這個時間也會是新增事件的預設開始時間。
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	zh-tw	這定義了每日行事曆的開始，在這個時間之前的事件會顯示在日行事曆上面。\n這個時間也會是新增事件的預設開始時間。
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	zh-tw	這個群組是當您進入計畫管理時預設的群組，您可以在事後修改。
 this message is sent for canceled or deleted events.	calendar	zh-tw	這個訊息是因為事件的取消或刪除
 this message is sent for modified or moved events.	calendar	zh-tw	這個訊息是因為事件的修改或移動
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	zh-tw	這個訊息會送給您所擁有的所有事件中有設定提醒功能的參與人。<br>您可以使用事件資料的替代值。第一行是郵件的標題。
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	zh-tw	這個訊息會送給您所擁有的所有事件中有設定提醒功能的參與人。\n您可以使用事件資料的替代值。第一行是郵件的標題。
 this message is sent to uninvited participants.	calendar	zh-tw	這個訊息會送給拒絕參與的人
 this message is sent when you accept, tentative accept or reject an event.	calendar	zh-tw	這個訊息會在您同意、暫時同意或是拒絕一個事件後寄出，
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	zh-tw	這個訊息會在您設定事件警示時寄出，包含一些您或需需要的訊息。

@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	zh	启用后，在打开的标签页中显示更鲜艳的应用图标。若未勾选，则默认显示为自定义浅色版本。
+app chooser icons	common	zh	图标
+app chooser icons + text	common	zh	图标 + 文本
+application chooser style	common	zh	应用程序选择器样式
 reload %1	common	zh	重新加载 %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	zh	应用程序选择器应仅包含图标，还是也应包含应用程序名称？例如当用户不熟悉图标时。
 show app icons in there app color	kdots	zh	以应用原色显示应用图标
 user profile	kdots	zh	用户资料

@@ -78,6 +78,7 @@ admin email	admin	hu	Admin email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	hu	Ezek az adminisztrátori emailcímek (vesszével elválasztva) lesznek értesítve a blokkolt IP-címekről és azonosítókról (üresen hagyva nem lesz értesítés).
 admin name	admin	hu	Adminisztrátor neve
 admin password	admin	hu	Adminisztrátor jelszava
+admin queue and history	admin	hu	Adminisztrátori sor és előzmények
 admins	admin	hu	Adminisztrátorok
 advanced options	admin	hu	Haladó beállítások
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	hu	Hány sikertelen bejelentkezési kísérlet után kell blokkolni a fiókot. Alapértelmezett = 3
@@ -420,6 +421,7 @@ lifetime of 'remember me' token	admin	hu	Az „Emlékezz rám” token élettart
 list config settings	admin	hu	Konfigurációs beállítások listája
 list current sessions	admin	hu	Jelenlegi session-ök listája
 list of current users	admin	hu	Jelenlegi felhasználók listája
+log user-agent and action of changes in history-log of entries	admin	hu	A felhasználói ügynök és a változások naplózása a bejegyzések történeti naplójában
 login history	admin	hu	Bejelentkezések története
 login message	admin	hu	Bejelentkezési üzenet
 login screen	admin	hu	Bejelentkezési képernyő
@@ -430,7 +432,6 @@ mail settings	admin	hu	Levelezési beállítások
 main email-address	admin	hu	Fő emailcím
 manager	admin	hu	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
-maximum entries in click path history	admin	hu	Útvonal látogatottság bejegyzések maximális száma
 members	admin	hu	Résztvevők
 message has been updated	admin	hu	Az üzenet frissítve
 method	admin	hu	Metódus
@@ -454,7 +455,6 @@ no encryption	admin	hu	Titkosítás nélkül
 no forwarding email address	admin	hu	Nincs továbbküldési email cím
 no jobs in the database !!!	admin	hu	Nem található feladat az adatbázisban!
 no limit	admin	hu	Nincs korlátozás
-no login history exists for this user	admin	hu	Ehhez a felhasználóhoz nem található belépési történet!
 no matches found	admin	hu	Nincs egyezés!
 no message returned.	admin	hu	Nincs visszaadott üzenet
 no modes available	admin	hu	Nincs elérhetó mód!
@@ -521,6 +521,7 @@ register application hooks	admin	hu	Regisztrálja az alkalmazás visszacsatolás
 regular expression to find part to use as container	admin	hu	Szabályos kifejezés a konténerként használandó rész kereséséhez
 remove	admin	hu	Eltávolítás
 reset filter	admin	hu	Szűrö törlése
+retention period for history-log (in years)	admin	hu	A történeti napló megőrzési ideje (években)
 revoke this token	admin	hu	A token visszavonása
 rights	admin	hu	Hozzáférés
 rows	admin	hu	Sorok

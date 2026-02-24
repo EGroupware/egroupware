@@ -464,6 +464,7 @@ limit to members of	admin	ru	Ограничить участниками
 list config settings	admin	ru	Список установок конфигурации
 list current sessions	admin	ru	Пролистать текущие сеансы
 list of current users	admin	ru	Список текущих пользователей
+log user-agent and action of changes in history-log of entries	admin	ru	Регистрация пользовательского агента и действий по изменению в журнале истории записей
 logged out	admin	ru	Отключено
 login history	admin	ru	История подключений
 login message	admin	ru	Сообщение сеанса
@@ -480,7 +481,6 @@ main email-address	admin	ru	Основной адрес электронной �
 manage mapping	admin	ru	Управлять сопоставлением
 manager	admin	ru	Менеджер
 maximum account id (e.g. 65535 or 1000000)	admin	ru	Максимальный идентификатор учётной записи (например: 65535 или 1000000)
-maximum entries in click path history	admin	ru	Максимальное количество записей в истории пути кликов
 mb used	admin	ru	Испоьлзуется MB
 members	admin	ru	Участники
 message has been updated	admin	ru	Сообщение обновлено
@@ -507,7 +507,6 @@ no encryption	admin	ru	Без шифрования
 no forwarding email address	admin	ru	Нет адреса перенаправления
 no jobs in the database !!!	admin	ru	Нет заданий в базе данных!
 no limit	admin	ru	Нет лимита
-no login history exists for this user	admin	ru	Для данного пользователя история подключений не существует
 no matches found	admin	ru	Совпадений не найдено
 no message returned.	admin	ru	Нет ответа
 no modes available	admin	ru	Нет доступных режимов!
@@ -597,6 +596,7 @@ removing access for groups may cause problems for data in this category.  are yo
 requested	admin	ru	Запрошен
 required pear class mail/mimedecode.php not found.	admin	ru	Необходимый PEAR class Mail / mimeDecode.php не найден.
 reset filter	admin	ru	Очистить фильтр
+retention period for history-log (in years)	admin	ru	Срок хранения журнала истории (в годах)
 revoke this token	admin	ru	Отмените этот токен
 rights	admin	ru	Права
 rows	admin	ru	Ряды

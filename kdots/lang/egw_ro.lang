@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	ro	Activați pentru a afișa pictograme mai colorate ale aplicațiilor în filele deschise. Dacă nu este bifată, se vor afișa implicit culori personalizate mai deschise.
+app chooser icons	common	ro	Pictograme
+app chooser icons + text	common	ro	Pictograme + Text
+application chooser style	common	ro	Stilul selectorului de aplicații
 reload %1	common	ro	Reîncărcați %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	ro	Selectorul de aplicații ar trebui să conțină doar pictograme sau și numele aplicației, de exemplu în cazul în care utilizatorii nu sunt familiarizați cu pictogramele?
 show app icons in there app color	kdots	ro	Afișați pictogramele aplicațiilor în culorile aplicațiilor respective
 user profile	kdots	ro	Profilul utilizatorului

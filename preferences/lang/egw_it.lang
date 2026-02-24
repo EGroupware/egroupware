@@ -8,7 +8,8 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	it	Un Tema definisce i colori e i tipi di carattere usati dal template.
 access token revoked.	preferences	it	Token di accesso revocato.
 acl grants have been updated	preferences	it	Le autorizzazioni ACL sono state aggiornate
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	it	Ogni lista in EGroupware visualizzerà questo numero di voci o di linee per pagina.<br>Un numero elevato rallenta la visualizzazione della pagina, troppo poche ti costringono ad un lavoro aggiuntivo.
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	it	Attiva per mostrare icone delle app più colorate nelle schede aperte. Se deselezionato, il colore predefinito è quello personalizzato schiarito.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	it	Ogni lista in EGroupware visualizzerà questo numero di voci o di linee per pagina.\nUn numero elevato rallenta la visualizzazione della pagina, troppo poche ti costringono ad un lavoro aggiuntivo.
 applications list scroll area	preferences	it	Area di scorrimento dell'elenco delle applicazioni
 are you sure you want to delete this category ?	preferences	it	Sei sicuro di voler eliminare questa categoria?
 are you sure?	preferences	it	Sei sicuro?
@@ -16,7 +17,7 @@ audio effect	preferences	it	Avviso sonoro
 audio effect enables|disables sound effects used in the theme	preferences	it	L'impostazione dell'effetto sonoro abilita/disabilita i suoni usati nel tema
 automatically start with this font	preferences	it	Comincia automaticamente con questo font
 automatically start with this font size	preferences	it	Comincia automaticamente con questa dimensione font
-automatically start with this format block. small paragraph adds less line space between new lines.	preferences	it	Inizia automaticamente con questo blocco di formato.<br/><b>Small Paragraph</b> aggiunge meno spazio tra le nuove righe.
+automatically start with this format block. small paragraph adds less line space between new lines.	preferences	it	Inizia automaticamente con questo blocco di formato.\n<b>Small Paragraph</b> aggiunge meno spazio tra le nuove righe.
 br	preferences	it	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	it	Modifica la password di un utente passando la vecchia e nuova password. Restituisce TRUE se ha successo, FALSE se fallisce.
 change password	preferences	it	Cambia password
@@ -82,7 +83,7 @@ holding ctrl/cmd key and click on the line	preferences	it	premere Ctrl/Cmd e cli
 hours	preferences	it	ore
 how do you like to display accounts	preferences	it	Come vuoi visualizzare gli account
 how do you like to select accounts	preferences	it	Come vuoi selezionare gli account
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	it	Quante ora è avanti o indietro il fuso orario del tuo server.<br>Se stai usando il fuso orario del server seleziona 0 altrimenti seleziona il tuo fuso orario locale.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	it	Quante ora è avanti o indietro il fuso orario del tuo server.\nSe stai usando il fuso orario del server seleziona 0 altrimenti seleziona il tuo fuso orario locale.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	it	Quante icone devono essere visualizzare nella barra di navigazione in cima alla pagina. Le altre icone saranno nel menu a discesa richiamabile dall'icona all'estrema destra della barra di navigazione.
 how many toolbar buttons are available	preferences	it	Quanti pulsanti dell barra degli strumenti sono disponibili
 how should egroupware display dates for you.	preferences	it	Come EGroupware deve visualizzare le date.
@@ -115,6 +116,7 @@ notification settings	preferences	it	Impostazioni di notifica
 number format	preferences	it	Formato numero
 numbers	preferences	it	numeri
 old password and new password are the same. this is invalid. you must enter a new password	preferences	it	La vecchia e la nuova password coincidono. Devi inserire una password nuova!
+open popups in	preferences	it	Apri pop-up in
 or other compatible apps	preferences	it	Oppure altre app compatibili
 p: paragraph	preferences	it	p: Paragrafo
 paragraph	preferences	it	Paragrafo
@@ -127,6 +129,7 @@ password stored	preferences	it	Password memorizzata.
 permanent time zone selection	preferences	it	Fuso orario permanente
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	it	Seleziona i fusi orari fra cui selezionare. Non verrebbe visualizzato un menù di scelta se almeno due fusi orari non fossero selezionati.
 please select your timezone.	preferences	it	Seleziona il fuso orario
+popup window	preferences	it	Finestra pop-up
 popup with search	preferences	it	Popup con ricerca
 preferences saved.	preferences	it	Preferenze salvate
 preformatted	preferences	it	Preformattato
@@ -136,11 +139,12 @@ re-enter your password	preferences	it	Reinserisci la password
 reset qrcode	preferences	it	Resetta il codice QR
 revoke	preferences	it	Revoca
 revoke this token	preferences	it	Revoca questo token
+same window	preferences	it	Nella finestra principale
 scan qrcode with a time-based one-time password (totp) app:	preferences	it	Scansiona il codice QR con un'app TOTP (Time-based one-time password):
 secret deleted, two factor authentication disabled.	preferences	it	Codice segreto eliminato, la autenticazione a due fattori è stata disabilitata.
 select additional lines in lists by	preferences	it	Selezionare righe aggiuntive nelle lista con
 select one	preferences	it	Seleziona uno
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	it	Seleziona la lingua dei testi e dei messaggi di EGroupware.<br>Alcune lingue non contengono tutti i messaggi, in quel caso rimarranno in inglese.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	it	Seleziona la lingua dei testi e dei messaggi di EGroupware.\nAlcune lingue non contengono tutti i messaggi, in quel caso rimarranno in inglese.
 select the language of the spellchecker integrated into the rich text editor.	preferences	it	Selezionare la lingua del correttore ortografico integrato nell'editor avanzato
 selectbox	preferences	it	Casella di selezione
 selectbox with groupmembers	common	it	Selezionare il box con i membri del gruppo
@@ -151,6 +155,7 @@ set this to your convenience. for security reasons, you might not want to show y
 settings	preferences	it	Impostazioni
 setup two factor authentication	preferences	it	Imposta autenticazione a due fattori
 should the number of active sessions be displayed for you all the time.	preferences	it	Il numero di sessioni attive sarà sempre visualizzato per te.
+show app icons in there app color	preferences	it	Mostra icone app nel colore dell'app
 show helpmessages by default	preferences	it	Per default visualizza i messaggi di aiuto
 show links between egroupware aps as	common	it	Icone applicazioni e link
 show navigation bar as	preferences	it	Mostra la barra di navigazione come

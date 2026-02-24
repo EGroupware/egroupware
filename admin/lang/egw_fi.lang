@@ -457,6 +457,7 @@ limit to members of	admin	fi	Rajoita ryhmän jäsenille
 list config settings	admin	fi	Näytä asetukset
 list current sessions	admin	fi	Näytä istunnot
 list of current users	admin	fi	Nykyiset käyttäjät
+log user-agent and action of changes in history-log of entries	admin	fi	Käyttäjäagentin ja muutosten kirjaaminen merkintöjen historiatiedostoon
 logged out	admin	fi	Uloskirjautunut
 login history	admin	fi	Kirjautumisten historia
 login message	admin	fi	Kirjautumisviesti
@@ -472,7 +473,6 @@ main email-address	admin	fi	Pääsähköpostiosoite
 manage mapping	admin	fi	Valitse kentät
 manager	admin	fi	Hallinnoija
 maximum account id (e.g. 65535 or 1000000)	admin	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
-maximum entries in click path history	admin	fi	Navigointihistorian maksimikoko
 mb used	admin	fi	MB käytetty
 members	admin	fi	Jäsenet
 message has been updated	admin	fi	Viesti päivitetty
@@ -500,7 +500,6 @@ no encryption	admin	fi	Ei suojausta
 no forwarding email address	admin	fi	Välityksen sähköpostiosoitetta ei löytynyt
 no jobs in the database !!!	admin	fi	Tietokannassa ei ole töitä!
 no limit	admin	fi	Ei rajoitusta
-no login history exists for this user	admin	fi	Käyttäjällä ei ole kirjautumishistoriaa!
 no matches found	admin	fi	Yhtään kohdetta ei löytynyt!
 no message returned.	admin	fi	Viestiä ei palautettu
 no modes available	admin	fi	Tiloja ei käytettävissä!
@@ -582,6 +581,7 @@ regular expression to find part to use as container	admin	fi	Säännöllinen lau
 remove	admin	fi	Poista
 requested	admin	fi	Vaadittu
 reset filter	admin	fi	Poista suodatin
+retention period for history-log (in years)	admin	fi	Historiatiedoston säilytysaika (vuosina)
 revoke this token	admin	fi	Tämän merkin peruuttaminen
 rights	admin	fi	ACL -oikeudet
 rows	admin	fi	Rivit

@@ -15,7 +15,7 @@ audio effect	preferences	km	បែបផែនសំឡេង
 audio effect enables|disables sound effects used in the theme	preferences	km	បែបផែនសំឡេងបើក|បិទបែបផែនសំឡេងដែលប្រើក្នុងរូបរាង
 automatically start with this font	preferences	km	ចាប់ផ្តើមដោយស្វ័យប្រវត្តិជាមួយនឹងពុម្ពអក្សរនេះ។
 automatically start with this font size	preferences	km	ចាប់ផ្តើមដោយស្វ័យប្រវត្តិជាមួយនឹងទំហំពុម្ពអក្សរនេះ។
-automatically start with this format block. small paragraph adds less line space between new lines.	preferences	km	ចាប់ផ្តើមដោយស្វ័យប្រវត្តិជាមួយនឹងប្លុកទម្រង់នេះ។<br/><b>កថាខណ្ឌតូច</b> បន្ថែមចន្លោះបន្ទាត់តិចជាងរវាងបន្ទាត់ថ្មី។
+automatically start with this format block. small paragraph adds less line space between new lines.	preferences	km	ចាប់ផ្តើមដោយស្វ័យប្រវត្តិជាមួយនឹងប្លុកទម្រង់នេះ។\n<b>កថាខណ្ឌតូច</b> បន្ថែមចន្លោះបន្ទាត់តិចជាងរវាងបន្ទាត់ថ្មី។
 br	preferences	km	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	km	ផ្លាស់ប្តូរពាក្យសម្ងាត់អ្នកប្រើប្រាស់ដោយឆ្លងកាត់ពាក្យសម្ងាត់ចាស់ និងថ្មី។ ត្រឡប់ TRUE លើភាពជោគជ័យ FALSE លើការបរាជ័យ។
 change password	preferences	km	ផ្លាស់ប្តូរពាក្យសម្ងាត់
@@ -77,7 +77,7 @@ holding ctrl/cmd key and click on the line	preferences	km	សង្កត់គ�
 hours	preferences	km	ម៉ោង
 how do you like to display accounts	preferences	km	ការបង្ហាញគណនី
 how do you like to select accounts	preferences	km	ជ្រើសរើសគណនី
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	km	តើ​អ្នក​នៅ​ខាង​មុខ ឬ​បន្ទាប់​ពី​តំបន់​ម៉ោង​របស់​ម៉ាស៊ីនមេ​ប៉ុន្មាន​ម៉ោង?<br>ប្រសិន​បើ​អ្នក​នៅ​ក្នុង​តំបន់​ម៉ោង​ដូច​គ្នា​ដែល​ម៉ាស៊ីន​មេ​ជ្រើស 0 ម៉ោង ផ្សេង​ទៀត​ជ្រើស​កាល​បរិច្ឆេទ​និង​ម៉ោង​ក្នុង​មូលដ្ឋាន​របស់​អ្នក។
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	km	តើ​អ្នក​នៅ​ខាង​មុខ ឬ​បន្ទាប់​ពី​តំបន់​ម៉ោង​របស់​ម៉ាស៊ីនមេ​ប៉ុន្មាន​ម៉ោង?\nប្រសិន​បើ​អ្នក​នៅ​ក្នុង​តំបន់​ម៉ោង​ដូច​គ្នា​ដែល​ម៉ាស៊ីន​មេ​ជ្រើស 0 ម៉ោង ផ្សេង​ទៀត​ជ្រើស​កាល​បរិច្ឆេទ​និង​ម៉ោង​ក្នុង​មូលដ្ឋាន​របស់​អ្នក។
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	km	តើរូបតំណាងប៉ុន្មានគួរត្រូវបានបង្ហាញនៅក្នុងរបាររុករកនៅផ្នែកខាងលើនៃទំព័រ។ រូបតំណាងបន្ថែមចូលទៅក្នុងម៉ឺនុយទាញចុះក្រោម អាចហៅបានដោយរូបតំណាងនៅជ្រុងខាងស្តាំនៃរបាររុករក។
 how many toolbar buttons are available	preferences	km	តើមានប៊ូតុងរបារឧបករណ៍ប៉ុន្មាន
 how should egroupware display dates for you.	preferences	km	ជ្រើសរើសទម្រង់កាលបរិច្ឆេទដែលបង្ហាញ

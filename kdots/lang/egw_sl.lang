@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	sl	Aktivirajte, da se v odprtih zavihkih prikažejo bolj barvite ikone aplikacij. Če ni označeno, se privzeto prikažejo v svetlejši barvi.
+app chooser icons	common	sl	Ikone
+app chooser icons + text	common	sl	Ikone + besedilo
+application chooser style	common	sl	Slog izbirnika aplikacij
 reload %1	common	sl	Ponovno naloži %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	sl	Ali naj izbirnik aplikacij vsebuje samo ikone ali tudi imena aplikacij, npr. če uporabniki niso seznanjeni z ikonami.
 show app icons in there app color	kdots	sl	Prikaži ikone aplikacij v barvi aplikacije
 user profile	kdots	sl	Profil uporabnika

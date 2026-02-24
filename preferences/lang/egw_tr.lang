@@ -1,4 +1,5 @@
 %1 - preferences	preferences	tr	%1 - Tercihler
+activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	tr	Etkinleştirerek açık sekmelerde daha renkli uygulama simgeleri göster. İşaretlenmezse, varsayılan olarak özel renkler açılır.
 applications list scroll area	preferences	tr	Yan menü için kaydırma düğmesi
 are you sure you want to delete this category ?	preferences	tr	Bu kategoriyi silmek istediğinize emin misiniz?
 are you sure?	preferences	tr	Emin misiniz?
@@ -31,12 +32,16 @@ limit following groups to only create application passwords via templates	prefer
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	tr	SingleSignOn üzerinden oturum açmak, posta veya dosya sunucularına aktarmak için bir parola sağlamaz.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	tr	Uygulamalar listesini yukarı/aşağı kaydırma düğmeleriyle kaydırılabilir hale getirin (kaydırma tekerleği olmayan fareyle çalışan kullanıcılar için kullanışlıdır)
 old password and new password are the same. this is invalid. you must enter a new password	preferences	tr	Eski şifre ve yeni şifre aynı. Yeni bir şifre girmelisiniz!
+open popups in	preferences	tr	Pop-up'ları şurada aç
 password stored	preferences	tr	Parola saklanır.
+popup window	preferences	tr	Pop-up Penceresi
 preferences saved.	preferences	tr	Tercihler kaydedildi.
 reset qrcode	preferences	tr	QR kodunu sıfırlayın
+same window	preferences	tr	Ana pencerede
 scan qrcode with a time-based one-time password (totp) app:	preferences	tr	QR kodunu bir TOTP (Time-based one-time password) Uygulaması ile tarayın:
 selectbox	preferences	tr	Seçim kutusu
 set content size	preferences	tr	İçerik boyutunu ayarla
+show app icons in there app color	preferences	tr	Uygulama Simgelerini uygulama renginde göster
 show qrcode	preferences	tr	QR kodunu göster
 show qrcode to enable on an additional device.	preferences	tr	QR kodunu diğer cihazlarda ayarlamak için tekrar görüntüler
 singlesignon and passwords	preferences	tr	SingleSignOn ve parolalar

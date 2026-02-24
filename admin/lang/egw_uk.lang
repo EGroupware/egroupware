@@ -62,6 +62,7 @@ add user or group	admin	uk	Додати користувача або групу
 admin email	admin	uk	email адміністратора
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	uk	email адреси адміністраторів (розділені комою), які будуть сповіщатися про випадки блокування (залиште порожнім, якщо сповіщень не треба)
 admin name	admin	uk	Ім'я адміністратора
+admin queue and history	admin	uk	Черга адміністратора та історія
 admins	admin	uk	Адміністратори
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	uk	Після скількох невдалих спроб входу обліковий запис слід заблокувати. За замовчуванням = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	uk	Після якої кількості неуспішних спроб входу IP має бути заблоковано (по замовченню 3) ?
@@ -269,6 +270,7 @@ lifetime of 'remember me' token	admin	uk	Термін дії токена "За�
 list config settings	admin	uk	Перелік конфігураційних установок
 list current sessions	admin	uk	Перелік поточних сесій
 list of current users	admin	uk	Перелік поточних користувачів
+log user-agent and action of changes in history-log of entries	admin	uk	Реєстрація користувача-агента та дій змін в історії записів
 login history	admin	uk	Історія входів
 login message	admin	uk	Повідомлення при вході
 login screen	admin	uk	Екран входу
@@ -277,7 +279,6 @@ login time	admin	uk	Час входу
 loginid	admin	uk	ID входу
 manager	admin	uk	Керівник
 maximum account id (e.g. 65535 or 1000000)	admin	uk	Максимальний ідентифікатор рахунку (тобто 65535 або 1000000)
-maximum entries in click path history	admin	uk	Максимальна кількість записів у історії переходів
 message has been updated	admin	uk	Повідомлення змінено
 method	admin	uk	Метод
 minimum account id (e.g. 500 or 100, etc.)	admin	uk	Мінімальний ідентифікатор рахунку (тобто 65535 або 1000000)
@@ -293,7 +294,6 @@ next run	admin	uk	Наступний запуск
 no algorithms available	admin	uk	Немає алгоритмів
 no jobs in the database !!!	admin	uk	В базі немає завдань
 no limit	admin	uk	Без обмежень
-no login history exists for this user	admin	uk	Для користувача немає історії входів
 no matches found	admin	uk	Відповідностей не знайдено
 no modes available	admin	uk	Немає режимів
 no permission to add groups	admin	uk	Дозвіл на створення груп не надано
@@ -331,6 +331,7 @@ re-enter password	admin	uk	Перевведіть пароль
 read this list of methods.	admin	uk	Прочитати цей перелік методів
 regular expression to find part to use as container	admin	uk	Регулярний вираз для пошуку частини для використання в якості контейнера
 remove	admin	uk	Видалити
+retention period for history-log (in years)	admin	uk	Термін зберігання історії (в роках)
 revoke this token	admin	uk	Відкликати цей токен
 run asynchronous services	admin	uk	Виконувати асинхронні сервіси
 save the category	admin	uk	зберегти категорію

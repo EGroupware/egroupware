@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	et	Aktiveerige, et avatud vahekaartidel kuvataks värvikamad rakenduse ikoonid. Kui valik on märkimata, on vaikimisi valitud heledam kohandatud värv.
+app chooser icons	common	et	Ikoonid
+app chooser icons + text	common	et	Ikoonid + tekst
+application chooser style	common	et	Rakenduste valija stiil
 reload %1	common	et	Laadi uuesti %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	et	Kas rakenduste valija peaks sisaldama ainult ikoone või ka rakenduse nime, näiteks juhul, kui kasutajad ei tunne ikoone.
 show app icons in there app color	kdots	et	Kuva rakenduse ikoonid rakenduse värvides
 user profile	kdots	et	Kasutaja profiil

@@ -540,7 +540,6 @@ manage mapping	admin	ja	マッピング管理
 manager	admin	ja	管理者
 manual entry	admin	ja	マニュアル設定
 maximum account id (e.g. 65535 or 1000000)	admin	ja	最大アカウントID（例: 65536 や 1000000 等）
-maximum entries in click path history	admin	ja	Maximum entries in click path history
 mb used	admin	ja	MB 使用中
 members	admin	ja	メンバー
 message has been updated	admin	ja	メッセージを更新しました。
@@ -569,7 +568,6 @@ no encryption	admin	ja	暗号化無し
 no forwarding email address	admin	ja	転送先アドレスがありません
 no jobs in the database !!!	admin	ja	No jobs in the database!
 no limit	admin	ja	制限なし
-no login history exists for this user	admin	ja	No login history exists for this user!
 no matches found	admin	ja	一致が見つかりません。
 no message returned.	admin	ja	No message returned
 no modes available	admin	ja	No modes available!
@@ -669,6 +667,7 @@ renaming user 'anonymous' will break file sharing and collabora online office!	a
 requested	admin	ja	リクエスト済み
 required pear class mail/mimedecode.php not found.	admin	ja	Required PEAR class Mail/mimeDecode.php not found.
 reset filter	admin	ja	フィルターをリセット
+retention period for history-log (in years)	admin	ja	履歴ログの保持期間（年単位）
 revoke this token	admin	ja	トークンの失効
 rights	admin	ja	権限
 rows	admin	ja	行

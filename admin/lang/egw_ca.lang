@@ -280,7 +280,6 @@ mail settings	admin	ca	Configuració del correu
 main email-address	admin	ca	Adreça de Correu Principal
 manager	admin	ca	Gestor
 maximum account id (e.g. 65535 or 1000000)	admin	ca	Màxim id de compte (ex. 65535 o 1000000)
-maximum entries in click path history	admin	ca	Nombre màxim d'entrades a l'historial de pulsacions de rutes
 members	admin	ca	Membres
 message has been updated	admin	ca	el missatge s'ha actualitzat
 method	admin	ca	Mètode
@@ -300,7 +299,6 @@ no algorithms available	admin	ca	no hi ha algorismes disponibles
 no alternate email address	admin	ca	sense adreça de correu alternativa
 no forwarding email address	admin	ca	sense adreça de correu per a reenviar
 no jobs in the database !!!	admin	ca	No hi ha treballs a la base de dades!!
-no login history exists for this user	admin	ca	No hi ha registres de connexió per a aquest usuari
 no matches found	admin	ca	Sense resultats
 no modes available	admin	ca	no hi ha modes disponibles
 no permission to add groups	admin	ca	no teniu permís per a afegir grups

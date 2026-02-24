@@ -3,6 +3,6 @@ app chooser icons	common	de	Auswahl über Icons
 app chooser icons + text	common	de	Auswahl über Icons & Text
 application chooser style	common	de	Stil der Anwendungsauswahl
 reload %1	common	de	%1 neu laden
-should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	de	Soll die Anwendunsauswahl nur Icons oder auch den Anwendungsnamen enthalten. Z.B. für Benutzer, die mit den Icons noch nicht vertraut sind.
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	de	Soll die Anwendungsauswahl nur Icons oder auch den Anwendungsnamen enthalten. Z.B. für Benutzer, die mit den Icons noch nicht vertraut sind.
 show app icons in there app color	kdots	de	App-Symbole in der App-Farbe anzeigen
 user profile	kdots	de	Benutzerprofil

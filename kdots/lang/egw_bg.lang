@@ -1,4 +1,8 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	bg	Активирайте, за да покажете по-цветни икони на приложенията в отворените раздели. Ако не е отбелязано, по подразбиране се използват по-светли персонализирани цветове.
+app chooser icons	common	bg	Икони
+app chooser icons + text	common	bg	Икони + текст
+application chooser style	common	bg	Стил на избора на приложение
 reload %1	common	bg	Презареждане %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	bg	Трябва ли изборът на приложение да съдържа само икони или и името на приложението, например ако потребителите не са запознати с иконите.
 show app icons in there app color	kdots	bg	Показване на икони на приложенията в техния цвят
 user profile	kdots	bg	Потребителски профил
