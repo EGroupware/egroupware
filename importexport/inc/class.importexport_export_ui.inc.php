@@ -441,16 +441,19 @@ class importexport_export_ui {
 	/**
 	 * downloads file to client and deletes it.
 	 *
-	 * @param sting $_tmpfname
-	 * @todo we need a suffix atibute in plugins e.g. .csv
+	 * @param string $_tmpfname
+	 * @todo we need a suffix attribute in plugins e.g. .csv
 	 */
-	public function download($_tmpfname = '') {
-		$tmpfname = $_tmpfname ? $_tmpfname : $_GET['_filename'];
+	public function download($_tmpfname = '')
+	{
+		$tmpfname = $_tmpfname ?: $_GET['_filename'];
+		// guard against path traversal
+		if (basename($tmpfname) !== $_tmpfname) die();
 		$tmpfname = $GLOBALS['egw_info']['server']['temp_dir'] .'/'. $tmpfname;
 		if (!is_readable($tmpfname)) die();
 
-		$appname = $_GET['_appname'];
-		$nicefname = $_GET['filename'] ? $_GET['filename'] : 'egw_export_'.$appname.'-'.date('Y-m-d');
+		$appname = basename($_GET['_appname']);
+		$nicefname = basename($_GET['filename'] ?? 'egw_export_'.$appname.'-'.date('Y-m-d'));
 
 		// FIRST: switch off zlib.output_compression, as this would limit downloads in size to memory_limit
 		ini_set('zlib.output_compression',0);
@@ -460,8 +463,8 @@ class importexport_export_ui {
 		// Get charset
 		$charset = Api\Cache::getSession('importexport', $tmpfname);
 
-		Api\Header\Content::type($nicefname.'.'.$_GET['_suffix'],
-			($_GET['_type'] ? $_GET['_type'] : 'application/text') . ($charset ? '; charset='.$charset : ''),
+		Api\Header\Content::type($nicefname.'.'.basename($_GET['_suffix']??''),
+			basename($_GET['_type'] ?? 'text/plain') . ($charset ? '; charset='.$charset : ''),
 			filesize($tmpfname));
 
 		readfile($tmpfname);
