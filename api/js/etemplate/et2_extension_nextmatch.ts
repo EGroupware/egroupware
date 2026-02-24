@@ -74,7 +74,6 @@ import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2AccountFilterHeader} from "./Et2Nextmatch/Headers/AccountFilterHeader";
 import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
-import type {LitElement} from "lit";
 import {Et2Template} from "./Et2Template/Et2Template";
 import {waitForEvent} from "./Et2Widget/event";
 import {Et2VfsUpload} from "./Et2Vfs/Et2VfsUpload";
@@ -3383,9 +3382,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 								nm.print.row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
 								egw.css(nm.print.row_selector, 'display: none');
 
+								// NM Grid needs these to size & draw the rows
 								// No scrollbar in print view
 								jQuery('.egwGridView_scrollarea', nm.div).css('overflow-y', 'hidden');
-								// Show it all
+								// Try to show it all
 								jQuery('.egwGridView_scrollarea', nm.div).css('height', 'auto');
 
 								// Grid (& widgets) need to redraw before it can be printed, so wait
@@ -3396,6 +3396,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 									const promises = nodeListArray.map(node => node.updateComplete);
 									Promise.all(promises).finally(() =>
 									{
+										// Make sure all rows are visible
+										jQuery('.egwGridView_scrollarea', this.div)
+											.css('overflow-y', '')
+											.css('min-height', (nm.controller._grid.getAverageHeight() * rows) + 'px')
+											.css('padding-bottom', rows + 'em');
+
 										// Should be OK to print now
 										dialog.close().then(() => resolve());
 									});
@@ -3412,16 +3418,16 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				{
 					// Don't need more rows, limit to requested and finish
 
-					// Show it all
-					jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
+					// Try to show it all
+					jQuery('.egwGridView_scrollarea', this.div)
+						.css('overflow-y', '')
+						.css('padding-bottom', rows + 'em');
 
 					// Use CSS to hide all but the requested rows
 					// Prevents us from showing more than requested, if actual height was less than average
 					this.print.row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
 					egw.css(this.print.row_selector, 'display: none');
 
-					// No scrollbar in print view
-					jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
 					// Give dialog a chance to close, or it will be in the print
 					printDialog.close().then(() => resolve());
 				}
@@ -3495,8 +3501,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		delete this.print.orientation_style;
 
 		// Put scrollbar back
-		jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', '');
-
+		jQuery('.egwGridView_scrollarea', this.div)
+			.css('overflow-y', '')
+			.css('height', '')
+			.css('min-height', '')
+			.css('padding-bottom', '');
 		// Correct size of grid, and trigger resize to fix it
 		this.controller._grid.setScrollHeight(this.print.old_height);
 		delete this.print.old_height;

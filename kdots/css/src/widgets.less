@@ -48,6 +48,9 @@ div.et2_nextmatch {
 	border-collapse: collapse;
 	width: 100%;
 
+	@media print {
+	  height: auto !important;
+	}
 	thead > tr {
 	  background-color: var(--sl-color-neutral-100);
 	  //border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-500);
@@ -104,6 +107,11 @@ div.et2_nextmatch {
 	.egwGridView_scrollarea {
 	  overflow-x: hidden;
 	  overflow-y: auto;
+
+	  @media print {
+		height: auto !important;
+		padding-bottom: 10em;
+	  }
 	  table {
 		border-collapse: collapse;
 		tr.selected {

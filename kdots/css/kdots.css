@@ -843,6 +843,11 @@ div.et2_nextmatch .egwGridView_outer {
   border-collapse: collapse;
   width: 100%;
 }
+@media print {
+  div.et2_nextmatch .egwGridView_outer {
+    height: auto !important;
+  }
+}
 div.et2_nextmatch .egwGridView_outer thead > tr {
   background-color: var(--sl-color-neutral-100);
 }
@@ -889,6 +894,12 @@ div.et2_nextmatch .egwGridView_outer thead > tr th.optcol span.selectcols {
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea {
   overflow-x: hidden;
   overflow-y: auto;
+}
+@media print {
+  div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea {
+    height: auto !important;
+    padding-bottom: 10em;
+  }
 }
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table {
   border-collapse: collapse;
