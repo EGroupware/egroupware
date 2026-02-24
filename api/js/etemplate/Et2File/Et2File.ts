@@ -159,7 +159,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 	get list() : HTMLElement
 	{
 		return this.fileListTarget ?
-			   this.parentNode.querySelector(this.fileListTarget) ?? this.egw().window.document.querySelector(this.fileListTarget) ?? this.getRoot()?.getWidgetById(this.fileListTarget)?.getDOMNode() :
+			   this.parentNode?.querySelector(this.fileListTarget) ?? this.egw().window.document.querySelector(this.fileListTarget) ?? this.getRoot()?.getWidgetById(this.fileListTarget)?.getDOMNode() :
 			   this.shadowRoot?.querySelector("slot[name='list']");
 	}
 
