@@ -246,7 +246,9 @@ export default css`
         flex: 1 1 auto;
         position: relative;
         /* notification badges styling*/
-
+        &:first-child{
+            margin-left: 0.4rem;
+        }
         *[part="notification"] {
             position: absolute;
             bottom: 0px;
