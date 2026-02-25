@@ -229,6 +229,7 @@ iframe pre {
   white-space: pre-wrap;
 }
 @media print {
+  html,
   body {
     overflow: initial;
     height: initial;
