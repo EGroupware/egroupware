@@ -138,6 +138,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 				::part(tags) {
 					max-width: 100%;
+					padding: var(--sl-spacing-2x-small); 
 				}
 
 				.select__label {
