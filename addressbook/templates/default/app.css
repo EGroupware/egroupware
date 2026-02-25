@@ -15,6 +15,7 @@ td.addressbook_sidebox_header {
 }
 form[id^=addressbook-view].et2_container {
 	flex: 0 0 min-content;
+	padding: var(--sl-spacing-x-small, 0.25rem) var(--sl-spacing-x-small, 0.25rem) 0 var(--sl-spacing-medium, 0.25rem);
 }
 div.addressbook_view_sidebox .toolbox button{
 	vertical-align: middle;
