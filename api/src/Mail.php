@@ -5330,7 +5330,8 @@ class Mail
 					// only break long words within the wordboundaries,
 					// but it may destroy links, so we check for href and dont do it if we find one
 					// we check for any html within the word, because we do not want to break html by accident
-					if($cnt > $allowedLength && stripos($v,'href=')===false && stripos($v,'onclick=')===false && $cnt == strlen(html_entity_decode($v)))
+					//do not break apart links like https://...
+					if($cnt > $allowedLength && stripos($v,'https://')===false && stripos($v,'href=')===false && stripos($v,'onclick=')===false && $cnt == strlen(html_entity_decode($v)))
 					{
 						$v=wordwrap($v, $allowedLength, $cut, true);
 					}
