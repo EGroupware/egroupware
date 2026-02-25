@@ -3382,15 +3382,24 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 								nm.print.row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
 								egw.css(nm.print.row_selector, 'display: none');
 
-								// NM Grid needs these to size & draw the rows
-								// No scrollbar in print view
-								jQuery('.egwGridView_scrollarea', nm.div).css('overflow-y', 'hidden');
-								// Try to show it all
-								jQuery('.egwGridView_scrollarea', nm.div).css('height', 'auto');
-
 								// Grid (& widgets) need to redraw before it can be printed, so wait
-								window.setTimeout(function()
+								const timer = window.setInterval(function()
 								{
+									// Wait until there are enough rows in the grid
+									if(nm.controller._grid.scrollarea.get(0).querySelectorAll("tr").length < rows)
+									{
+										return;
+									}
+									// Wait more for rows still loading
+									if(nm.controller._grid.tr.get(0).querySelectorAll(".loading").length > 0)
+									{
+										return;
+									}
+									window.clearInterval(timer);
+
+									// Try to show it all
+									jQuery('.egwGridView_scrollarea', nm.div).css('height', 'auto');
+									nm.controller._grid.doInvalidate = false;
 									// et2-link-string are the worst for taking a while
 									const nodeListArray : LitElement[] = Array.from(nm.div[0].querySelectorAll("et2-link-string"));
 									const promises = nodeListArray.map(node => node.updateComplete);
@@ -3400,7 +3409,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 										jQuery('.egwGridView_scrollarea', this.div)
 											.css('overflow-y', '')
 											.css('min-height', (nm.controller._grid.getAverageHeight() * rows) + 'px')
-											.css('padding-bottom', rows + 'em');
+											// 20% (100/5) padding added to make sure there's enough space for page headers
+											.css('padding-bottom', (nm.controller._grid.getAverageHeight() * rows / 5) + 'px');
 
 										// Should be OK to print now
 										dialog.close().then(() => resolve());
@@ -3412,7 +3422,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						count += 200;
 					}
 					while(count < rows);
-					nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (rows + 1));
+					// Set a large height to make sure all rows get added
+					nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * 2 * (rows + 1));
 				}
 				else
 				{
@@ -3421,7 +3432,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					// Try to show it all
 					jQuery('.egwGridView_scrollarea', this.div)
 						.css('overflow-y', '')
-						.css('padding-bottom', rows + 'em');
 
 					// Use CSS to hide all but the requested rows
 					// Prevents us from showing more than requested, if actual height was less than average
@@ -3507,6 +3517,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			.css('min-height', '')
 			.css('padding-bottom', '');
 		// Correct size of grid, and trigger resize to fix it
+		this.controller._grid.doInvalidate = true;
 		this.controller._grid.setScrollHeight(this.print.old_height);
 		delete this.print.old_height;
 
