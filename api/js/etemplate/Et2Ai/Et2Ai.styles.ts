@@ -98,6 +98,7 @@ export default css`
 		.et2-ai-result-content.text {
 			white-space: pre-wrap;
 		}
+		
 	}
 
 	@media screen and (max-width: 600px) {
@@ -118,6 +119,10 @@ export default css`
 
 	.tox, ::slotted(.tox) {
 		height: 100% !important;
+	}
+	/* When we wrap a textarea make it use our font*/
+	::slotted(textarea) {
+		font-family: inherit;
 	}
 
 	.et2-ai--has-html-target {
