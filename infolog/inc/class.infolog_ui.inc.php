@@ -2681,7 +2681,6 @@ class infolog_ui
 		// add customfields to field list
 		foreach(Api\Storage\Customfields::get('infolog') as $name => $data)
 		{
-			$fields['#' . $name] = $data['label'];
 			$excludefields['#'.$name] = $data['label'];
 		}
 		$sub_excludefields = $excludefields;
