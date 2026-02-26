@@ -92,7 +92,7 @@ export class Favorite
 		if(typeof window.app[app] != 'undefined')
 		{
 			//@ts-ignore TS doesn't know about window.app
-			window.app[app].setState(fav);
+			window.app[app].setState(egw.deepExtend({},fav));
 		}
 	}
 
