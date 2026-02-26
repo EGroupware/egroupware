@@ -902,6 +902,12 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	protected handleFilterButtonClick(event)
+	{
+		const filter = event.target.getRootNode().host.filtersDrawer;
+		filter.open = !filter.open;
+	}
+
 	/**
 	 * Listen for show events from children
 	 *
@@ -1271,12 +1277,7 @@ export class EgwFrameworkApp extends LitElement
                                  name=${info.icon}
                                  label=${this.egw.lang("Filters")}
                                  statustext=${info.tooltip}
-                                 @click=${() =>
-                                 {
-                                     const filter = this.shadowRoot.querySelector("[part=filter]") ??
-                                             this.querySelector("et2-filterbox").parentElement;
-                                     filter.open = !filter.open;
-                                 }}
+                                 @click=${this.handleFilterButtonClick}
                 ></et2-button-icon>`;
 		}
 
