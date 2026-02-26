@@ -307,7 +307,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		for(let field_name in this.options.customfields)
 		{
 			// Skip fields if we're filtering
-			if(this.getType() === 'customfields' && !jQuery.isEmptyObject(this.options.fields) && !this.options.fields[field_name]) continue;
+			if(Object.keys(this.options.fields).length > 0 && !this.options.fields[field_name])
+			{
+				continue;
+			}
 
 			const field = this.options.customfields[field_name];
 			let id = this.options.prefix + field_name;
@@ -484,7 +487,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			}
 
 			// Field is not to be shown
-			if(!this.options.fields || jQuery.isEmptyObject(this.options.fields) || this.options.fields[field_name] == true)
+			if(!this.options.fields || Object.keys(this.options.fields).length == 0 || this.options.fields[field_name] == true)
 			{
 				jQuery(this.rows[field_name]).show();
 			}
