@@ -42,7 +42,7 @@
     "esbuild-plugin-replace": "^1.4.0",
     "get-port": "^7.0.0",
     "globby": "^14.0.1",
-    "grunt": "^1.5.3",
+    "grunt": "^1.6.1",
     "grunt-contrib-cssmin": "^2.2.1",
     "jsdom": "^22.1.0",
     "lunr": "^2.3.9",
