@@ -1063,6 +1063,15 @@ class infolog_ui
 				'default' => 'default',
 			]);
 
+		// Settings needed for proper client-side loading
+		$values['nm']['template'] = 'infolog.index.rows';
+		$values['nm']['actions'] = $this->get_actions($values['nm']);
+		$values['nm']['row_id'] = 'info_id';
+		$values['nm']['row_modified'] = 'row_mod';
+		$values['nm']['parent_id'] = 'info_id_parent';
+		$values['nm']['is_parent'] = 'info_anz_subs';
+		$values['nm']['action_var'] = 'multi_action';    // as 'action' is already used in infolog
+
 		//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
 		$values['nm']['filter_onchange'] = "app.infolog.filter_change";
 
@@ -2672,6 +2681,7 @@ class infolog_ui
 		// add customfields to field list
 		foreach(Api\Storage\Customfields::get('infolog') as $name => $data)
 		{
+			$fields['#' . $name] = $data['label'];
 			$excludefields['#'.$name] = $data['label'];
 		}
 		$sub_excludefields = $excludefields;
