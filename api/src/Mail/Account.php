@@ -351,7 +351,7 @@ class Account implements \ArrayAccess
 		}
 		$this->params += array_fill_keys(self::$user_data, null);	// make sure all keys exist now
 
-		return ($data ?? []) + ($smtp_data ?? []);
+		return ($data ?? [] ?: []) + ($smtp_data ?? []);
 	}
 
 	/**
