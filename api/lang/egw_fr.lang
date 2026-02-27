@@ -667,7 +667,7 @@ height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@da
 height of the table in % or pixels for the table-tag and (optional) div	common	fr	Hauteur de la table en % ou pixels pour le tag de la table et div (optionnel)
 height, disabled	common	fr	Hauteur, désactivé
 help	common	fr	Aide
-high	common	fr	Haut
+high	common	fr	Remonter
 highest	common	fr	Plus haut
 history	common	fr	Historique
 history log	common	fr	Historique
@@ -948,7 +948,8 @@ no default set	common	fr	Aucun défaut défini
 no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
 no file	common	fr	Pas de fichier
 no filename given or selected via browse...	common	fr	Pas de nom de fichier donné ou sélectionnée avec le navigateur ...
-no filters	common	fr	Pas de filtre
+no filter  common  fr Aucun filtre
+no filters	common	fr	Aucun filtre
 no history for this record	common	fr	Pas d'historique pour cet enregistrement
 no key for recipient:	common	fr	Pas de clé pour le destinataire :
 no matches found	common	fr	Aucune occurrence trouvée.
@@ -1423,6 +1424,7 @@ to start the search	common	fr	Pour démarrer la recherche
 today	common	fr	Aujourd'hui
 todays date, eg. "%1"	common	fr	Date d'aujourd'hui, p.ex. "%1"
 togo	common	fr	TOGO
+toggle unread  common  fr  Afficher/Masquer les non lus
 tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
 too many rows selected.<br />select all, or less than %1 rows	common	fr	Trop de lignes sélectionnées \nSélectionner tout ou moins de %1 lignes
@@ -1463,11 +1465,11 @@ update	common	fr	Mettre à jour
 update a single entry by passing the fields.	common	fr	Mettre à jour une entrée unique  en passant les champs.
 update from version '%s' to	common	fr	Mettre à jour depuis la Version '%s' vers
 updating your account with new data from your identity provider failed!	common	fr	Échec de la mise à jour de votre compte avec les nouvelles données de votre fournisseur d'identité !
-upload	common	fr	Uploader
+upload	common	fr	Déposer un fichier
 upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire de dépôt n'existe pas ou le serveur web ne peut pas y écrire.
-upload file(s) from filemanager...	common	fr	Uploader des fichiers depuis le gestionnaire de fichiers ...
-upload new photo	common	fr	Uploader une nouvelle photo
-upload requires the directory to be writable by the webserver!	common	fr	L'upload nécessite que le répertoire soit en écriture sur le serveur web !
+upload file(s) from filemanager...	common	fr	Déposer des fichiers depuis le gestionnaire de fichiers ...
+upload new photo	common	fr	Charger une nouvelle photo
+upload requires the directory to be writable by the webserver!	common	fr	Le dépôt de fichier nécessite que le répertoire soit en écriture sur le serveur web !
 uppercase letters	common	fr	lettres majuscules
 url	common	fr	Url
 url of current record	common	fr	URL de l'enregistrement courant
