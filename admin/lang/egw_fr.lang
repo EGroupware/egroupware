@@ -92,7 +92,7 @@ admin email	admin	fr	Email de l'administrateur
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fr	Adresses email (séparées par des virgules) des administrateurs à prévenir en cas de blocage d'un compte ou d'une ip (vide pour aucune notification).
 admin name	admin	fr	Nom de l'administrateur
 admin password	admin	fr	Mot de passe administrateur
-admin queue and history	admin	fr	Adminstration des files et historiques
+admin queue and history	admin	fr	Historique des actions admin
 admins	admin	fr	Administrateurs
 advanced options	admin	fr	Options avancées
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué. (3 par défaut)
