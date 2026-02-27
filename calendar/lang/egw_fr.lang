@@ -660,7 +660,7 @@ to many might exceed your execution-time-limit	calendar	fr	Trop pourrait excéde
 to-firstname	calendar	fr	Au prénom
 to-fullname	calendar	fr	Au nom complet
 to-lastname	calendar	fr	Au nom de famille
-toggle weekend	calendar	fr	Basculer vers le week-end
+toggle weekend	calendar	fr	Afficher/Masquer le week-end
 tomorrow	calendar	fr	Demain
 translation	calendar	fr	Traduction
 tue	calendar	fr	Ma
