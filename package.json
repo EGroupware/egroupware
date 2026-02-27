@@ -55,6 +55,7 @@
     "ora": "^7.0.1",
     "prettier": "^3.0.3",
     "prismjs": "^1.29.0",
+    "recursive-copy": "^2.0.14",
     "rimraf": "^3.0.2",
     "rollup": "^2.79.1",
     "sinon": "^18.0.0",
