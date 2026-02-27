@@ -1,8 +1,19 @@
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	fr	Activez cette option pour afficher des icônes d'application plus colorées dans les onglets ouverts. Si cette option n'est pas cochée, les icônes s'affichent par défaut dans une couleur personnalisée plus claire.
-app chooser icons	common	fr	Icônes
-app chooser icons + text	common	fr	Icônes + Texte
+active application tab  common  fr  
+allows to set a default or force the active application tab for new logins.  common  fr  Permet de définir ou forcer une application à s'ouvrir par défaut au démarrage de la session.
+allows to set a default or force the open application tabs.  common  fr  Permet de définir ou forcer des applications à afficher dans la barre de sélection des applications.
+app chooser icons  common	fr	Icônes
+app chooser icons + text  common	fr	Icônes + Texte
 application chooser style	common	fr	Style du sélecteur d'applications
-reload %1	common	fr	Recharger %1
-should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	fr	Le sélecteur d'applications doit-il contenir uniquement des icônes ou également le nom de l'application, par exemple si les utilisateurs ne connaissent pas bien les icônes ?
-show app icons in there app color	kdots	fr	Afficher les icônes d'application dans leur couleur d'application
-user profile	kdots	fr	Profil utilisateur
+custom color  common  fr  Couleur unique pour tous les menus d'applications
+custom login box colour, defaults to white  common  fr  Couleur du bloc de connexion de la page principale. Blanche par défaut.
+in main window  common  fr  Avec des fenêtres modales intégrées
+no  common  fr  Non
+open application tabs  common  fr  Liste des applications à ouvrir par défaut
+open pop-ups in  common  fr  Comment ouvrir les nouvelles fenêtres ?
+pop-up window  common  fr  Avec des popups
+reload %1	common	fr	Actualiser %1
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	common  fr  Le sélecteur d'applications doit-il contenir uniquement des icônes ou également le nom de l'application, par exemple si les utilisateurs ne connaissent pas bien la correspondance des icônes avec les application 
+show app icons in there app color	common  fr  Afficher les icônes d'application dans leur couleur d'application
+user profile  common  fr	Profil utilisateur
+yes  common  fr  Oui
