@@ -1,13 +1,23 @@
-import {css, html, LitElement} from "lit";
+import type {TemplateResult} from "lit";
+import {html, LitElement, nothing} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
+import {state} from "lit/decorators/state.js";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import type {Et2Filterbox} from "../../Et2Filterbox/Et2Filterbox";
-import type {SlDrawer} from "@shoelace-style/shoelace";
+import type {et2_nextmatch} from "../../et2_extension_nextmatch";
+import type {Et2Template} from "../../Et2Template/Et2Template";
+import {etemplate2} from "../../etemplate2";
+import {waitForEvent} from "../../Et2Widget/event";
+import styles from "./Et2AppBox.styles";
+
+type FilterInfo = {
+	icon : string,
+	tooltip : string
+};
 
 /**
- * @summary Minimal application box layout for etemplate templates
- *
+ * @summary Minimal application layout component for inside etemplate templates
  * @deprecated Use `egw-app` / `EgwFrameworkApp` for complete framework behavior.
  *
  * @slot - Main application content.
@@ -27,102 +37,150 @@ import type {SlDrawer} from "@shoelace-style/shoelace";
 @customElement("et2-app-box")
 export class Et2AppBox extends Et2Widget(LitElement)
 {
-	static styles = css`
-		:host {
-			display: block;
-			height: 100%;
-		}
+	static get styles()
+	{
+		return [
+			...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
+			styles
+		];
+	}
 
-		.et2_appbox {
-			display: flex;
-			flex-direction: column;
-			height: 100%;
-			min-height: 0;
-		}
+	/**
+	 * Application name.  Must be the internal name of an application, used for preferences & settings
+	 */
+	@property({reflect: true})
+	name = "Application name";
 
-		.et2_appbox__header {
-			display: grid;
-			grid-template-columns: minmax(0, 1fr) auto;
-			gap: var(--sl-spacing-x-small, 0.25rem);
-			align-items: center;
-		}
-
-		.et2_appbox__body {
-			display: grid;
-			grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
-			flex: 1 1 auto;
-			min-height: 0;
-		}
-
-		.et2_appbox__filter {
-			position: relative;
-			z-index: 0;
-			min-height: 0;
-		}
-
-		.et2_appbox__filter slot[name="filter"]::slotted(*) {
-			inset: auto !important;
-			display: block;
-			max-width: 100%;
-		}
-
-		.et2_appbox__side {
-			min-width: 0;
-		}
-
-		.et2_appbox__center {
-			display: flex;
-			flex-direction: column;
-			min-width: 0;
-			min-height: 0;
-		}
-
-		.et2_appbox__content {
-			flex: 1 1 auto;
-			min-height: 0;
-		}
-	`;
-
+	/**
+	 * URL to load.
+	 */
 	@property()
-	name = "";
+	url = "";
 
+	/**
+	 * Current number of rows or records being shown.
+	 */
 	@property({reflect: true})
 	rowCount = "";
 
 	/**
-	 * Function property to access framework
+	 * Component is currently loading.
+	 */
+	@property({type: Boolean, reflect: true})
+	loading = false;
+
+	/**
+	 * Used to specify how this component can find the framework.
 	 */
 	@property({type: Function})
 	getFramework = () => this.closest("egw-framework");
 
 	/**
-	 * A function that provides icon + tooltip for the filter button.
+	 * Used to specify how this component can find its current / active nextmatch.
 	 */
 	@property({type: Function})
-	getFilterInfo = (filterValues : { [id : string] : string | { value : any } }, _fwApp : Et2AppBox) : FilterInfo =>
+	getNextmatch : () => et2_nextmatch = () : et2_nextmatch =>
+	{
+		let nm = null;
+		const nmDiv = this.querySelector(".et2_nextmatch");
+		if(nmDiv)
+		{
+			const template = <Et2Template>nmDiv.closest("et2-template");
+			const widgetId = nmDiv.id.replace(template?.getInstanceManager().uniqueId + "_", "");
+			nm = template.getWidgetById(widgetId);
+		}
+		return nm;
+	};
+
+	/**
+	 * Information for filter button and filter drawer header.
+	 */
+	@property({type: Function})
+	getFilterInfo = (filterValues : { [id : string] : any }, _app : Et2AppBox) : FilterInfo =>
 	{
 		return this.filterInfo(filterValues);
 	};
+
+	@state()
+	protected loadingPromise : Promise<void> = Promise.resolve();
+
+	protected useIframe = false;
+
+	constructor()
+	{
+		super();
+		this.handleEtemplateLoad = this.handleEtemplateLoad.bind(this);
+		this.handleEtemplateClear = this.handleEtemplateClear.bind(this);
+		this.handleSearchResults = this.handleSearchResults.bind(this);
+		this.handleShow = this.handleShow.bind(this);
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		this.addEventListener("load", this.handleEtemplateLoad);
+		this.addEventListener("clear", this.handleEtemplateClear);
+		this.addEventListener("et2-search-result", this.handleSearchResults);
+		this.addEventListener("et2-show", this.handleShow);
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.removeEventListener("load", this.handleEtemplateLoad);
+		this.removeEventListener("clear", this.handleEtemplateClear);
+		this.removeEventListener("et2-search-result", this.handleSearchResults);
+		this.removeEventListener("et2-show", this.handleShow);
+	}
+
+	firstUpdated()
+	{
+		this.load(this.url);
+	}
+
+	protected async getUpdateComplete() : Promise<boolean>
+	{
+		const result = await super.getUpdateComplete();
+		await Promise.allSettled([
+			this.loadingPromise
+		]);
+		return result
+	}
+
+	get framework() : any
+	{
+		return this.getFramework();
+	}
+
+	get appName() : string
+	{
+		return this.name;
+	}
+
+	get nextmatch() : et2_nextmatch
+	{
+		return this.getNextmatch();
+	}
 
 	get filters() : Et2Filterbox
 	{
 		return <Et2Filterbox>this.querySelector("et2-filterbox:not([hidden],[disabled])");
 	}
 
-	get filtersDrawer() : SlDrawer
+	get filtersDrawer() : any
 	{
-		return <SlDrawer>this.shadowRoot?.querySelector(".egw_fw_app__filter_drawer");
+		return this.shadowRoot?.querySelector(".egw_fw_app__filter_drawer");
 	}
 
 	public filterInfo(filterValues : { [id : string] : any } = {}) : FilterInfo
 	{
 		const info : FilterInfo = {
 			icon: "filter-circle",
-			tooltip: this.egw().lang("Filters")
+			tooltip: this.egw().lang("Filters") + ": " + (this.rowCount || "0")
 		};
 
 		// Don't consider sort as a filter.
-		delete filterValues["sort"];
+		delete filterValues.sort;
 
 		const emptyFilter = (v : any) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
 		if(Object.values(filterValues).filter(emptyFilter).length !== 0)
@@ -132,8 +190,240 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		return info;
 	}
 
-	protected _filterButtonTemplate()
+	public load(url : string)
 	{
+		if(window.app[this.name]?.linkHandler && this.egw().window.app[this.name].linkHandler(url))
+		{
+			return;
+		}
+
+		Array.from(this.children).forEach(n =>
+		{
+			etemplate2.getById((<HTMLElement>n).id)?.clear();
+			n.remove();
+		});
+		if(!url)
+		{
+			return;
+		}
+
+		let targetUrl = "";
+		this.useIframe = true;
+		const matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*[&?]ajax=[^&]+.*)/);
+		if(matches)
+		{
+			targetUrl = "index.php?menuaction=" + matches[1];
+			this.useIframe = false;
+		}
+
+		this.loading = true;
+		if(!this.useIframe)
+		{
+			this.loadingPromise = this.egw().request(
+				this.framework.getMenuaction("ajax_exec", targetUrl, this.name),
+				[targetUrl]
+			).then((data : string | string[]) =>
+			{
+				if(!data)
+				{
+					return;
+				}
+				// Can't have nested form elements, use a div
+				this.innerHTML = (<string[]>data).join("").replace('form', 'div');
+				this.requestUpdate();
+				return this.waitForLoad(Array.from(this.querySelectorAll("[id]")) as HTMLElement[]);
+			}) as Promise<void>;
+		}
+		else
+		{
+			this.loadingPromise = new Promise<void>((resolve) =>
+			{
+				this.append(this._createIframeNodes(url));
+				this.requestUpdate();
+				resolve();
+				return this.waitForLoad(Array.from(this.querySelectorAll("iframe")) as HTMLElement[]);
+			});
+		}
+
+		this.loadingPromise.finally(() =>
+		{
+			this.loading = false;
+		});
+		return this.loadingPromise;
+	}
+
+	protected waitForLoad(nodes : HTMLElement[]) : Promise<void>
+	{
+		let timeout = null;
+		const loadTimeoutPromise = new Promise<void>((resolve) =>
+		{
+			timeout = setTimeout(() =>
+			{
+				console.warn(this.name + " loading timeout", this);
+				resolve();
+			}, 10000);
+		});
+		const loadPromises = nodes.map((node) =>
+		{
+			if(node.localName === "iframe")
+			{
+				return new Promise<void>((resolve) =>
+				{
+					const interval = setInterval(() =>
+					{
+						if((<HTMLIFrameElement>node).contentDocument?.body?.innerHTML !== "")
+						{
+							clearInterval(interval);
+							resolve();
+						}
+					}, 500);
+				});
+			}
+			return waitForEvent(node, "load") as Promise<void>;
+		});
+
+		return Promise.race([
+			Promise.allSettled(loadPromises).finally(() => clearTimeout(timeout)).then(() => undefined),
+			loadTimeoutPromise
+		]);
+	}
+
+	public refresh(_msg, _id, _type)
+	{
+		this.loading = true;
+		if(typeof _msg !== "string")
+		{
+			_msg = "";
+		}
+
+		let refreshDone = false;
+		this.querySelectorAll(":scope > [id]").forEach((t : HTMLElement) =>
+		{
+			refreshDone = etemplate2.getById(t.id)?.refresh(_msg, this.appName, _id, _type) || refreshDone;
+		});
+
+		if(!refreshDone)
+		{
+			this.load(this.url + (_msg ? "&msg=" + encodeURIComponent(_msg) : ""));
+		}
+		else
+		{
+			this.loading = false;
+		}
+	}
+
+	public setSidebox(_sideboxData, _hash?)
+	{
+		// Intentionally ignored in Et2AppBox.
+	}
+
+	public showLeft()
+	{
+		return Promise.resolve();
+	}
+
+	public hideLeft()
+	{
+		return Promise.resolve();
+	}
+
+	public showRight()
+	{
+		return Promise.resolve();
+	}
+
+	public hideRight()
+	{
+		return Promise.resolve();
+	}
+
+	protected handleEtemplateLoad(event)
+	{
+		const etemplate = etemplate2.getById(event.target.id);
+		if(!etemplate || !event.composedPath().includes(this))
+		{
+			return;
+		}
+
+		const slottedTemplates = etemplate.DOMContainer.querySelectorAll(":scope > [slot]");
+		if(slottedTemplates.length == 1 && etemplate.DOMContainer.childElementCount == 1)
+		{
+			etemplate.DOMContainer.slot = (<HTMLElement>slottedTemplates[0]).slot;
+		}
+		else
+		{
+			slottedTemplates.forEach(node => {this.appendChild(node);});
+		}
+		if(slottedTemplates.length > 0 || this.nextmatch)
+		{
+			this.requestUpdate();
+		}
+	}
+
+	protected handleEtemplateClear(event)
+	{
+		if(this.nextmatch && this.nextmatch.getInstanceManager().DOMContainer === event.target)
+		{
+			if(this.filters)
+			{
+				this.filters.nextmatch = null;
+			}
+			this.requestUpdate("nextmatch");
+		}
+	}
+
+	protected handleShow(event)
+	{
+		const detail = event.detail;
+		if(detail?.controller?.getTotalCount)
+		{
+			this.rowCount = detail.controller.getTotalCount();
+		}
+	}
+
+	protected handleSearchResults(event)
+	{
+		if(event.detail?.nextmatch == this.nextmatch && !event.defaultPrevented)
+		{
+			this.rowCount = event.detail?.total ?? "";
+		}
+	}
+
+	protected _createIframeNodes(url? : string)
+	{
+		if(!this.useIframe)
+		{
+			return null;
+		}
+		return Object.assign(document.createElement("iframe"), {src: url});
+	}
+
+	protected _loadingTemplate()
+	{
+		if(this.useIframe)
+		{
+			return nothing;
+		}
+		return html`
+            <div class="egw_fw_app__loading">
+                <sl-spinner part="spinner"></sl-spinner>
+            </div>`;
+	}
+
+	protected _toggleFilterDrawer()
+	{
+		if(this.filtersDrawer)
+		{
+			this.filtersDrawer.open = !this.filtersDrawer.open;
+		}
+	}
+
+	protected _filterButtonTemplate() : TemplateResult | symbol
+	{
+		if(!this.nextmatch && !this.querySelector("[slot='filter']"))
+		{
+			return nothing;
+		}
 		const info = this.getFilterInfo(this.filters?.value ?? {}, this);
 		return html`
             <et2-button-icon nosubmit
@@ -145,12 +435,31 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		`;
 	}
 
-	protected _toggleFilterDrawer()
+	protected _rightHeaderTemplate()
 	{
-		if(this.filtersDrawer)
-		{
-			this.filtersDrawer.open = !this.filtersDrawer.open;
-		}
+		return html`
+            ${this._filterButtonTemplate()}
+            <et2-button-icon nosubmit name="arrow-clockwise"
+                             label=${this.egw().lang("Reload %1", this.egw().lang(this.name))}
+                             statustext=${this.egw().lang("Reload %1", this.egw().lang(this.name))}
+                             @click=${() => this.refresh("", undefined, undefined)}
+            ></et2-button-icon>
+            <slot name="header-actions"></slot>
+		`;
+	}
+
+	protected _filterTemplate()
+	{
+		const info = this.getFilterInfo(this.filters?.value ?? {}, this);
+		return html`
+            <sl-drawer part="filter"
+                       exportparts="panel:filter__panel"
+                       class="egw_fw_app__filter_drawer"
+                       label=${info.tooltip}
+                       contained>
+                <slot name="filter"></slot>
+            </sl-drawer>
+		`;
 	}
 
 	render()
@@ -161,15 +470,10 @@ export class Et2AppBox extends Et2Widget(LitElement)
                     <header part="header">
                         <slot name="main-header"></slot>
                     </header>
-                    <div part="name">
-                        ${this._filterButtonTemplate()}
-                        <slot name="header-actions"></slot>
-                    </div>
+                    <div part="name">${this._rightHeaderTemplate()}</div>
                 </div>
-                <sl-drawer class="et2_appbox__filter egw_fw_app__filter_drawer" part="filter"
-                           exportparts="panel:filter__panel">
-                    <slot name="filter"></slot>
-                </sl-drawer>
+                ${this.loading ? this._loadingTemplate() : nothing}
+                ${this._filterTemplate()}
                 <div class="et2_appbox__body" part="main">
                     <aside class="et2_appbox__side" part="left">
                         <header part="content-header">
@@ -211,9 +515,4 @@ export class Et2AppBox extends Et2Widget(LitElement)
             </div>
 		`;
 	}
-}
-
-export type FilterInfo = {
-	icon : string,
-	tooltip : string
 }
