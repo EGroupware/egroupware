@@ -61,7 +61,7 @@ abort	common	fr	Annuler
 about	common	fr	A propos de
 about %1	common	fr	A propos de %1
 about egroupware	common	fr	A propos d'EGroupware
-access	common	fr	Accès
+access	common	fr	Gérer les droits d'accès 
 access not permitted	common	fr	Accès non permis
 accesskey	common	fr	Clé d'accès
 accesskeys can also be specified with an & in the label (eg. &name)	common	fr	Les clés d'accès peuvent être spécifiées avec un & dans le label (p.ex. &Nom)
@@ -1282,6 +1282,7 @@ set these columns as the default	common	fr	Définir ces colonnes par défaut
 set user as only responsible user, but keeping groups	groupdav	fr	Définir l'utilisateur comme l'unique responsable, mais garder les groupes
 set user as only responsible, removing all existing responsibles	groupdav	fr	Définir l'utilisateur comme l'unique responsable, et supprimer les autres responsables existant
 sets today as date	common	fr	Fixe la date à aujourd'hui
+settings  common  fr  Paramètres
 settings saved.	common	fr	Paramètres enregistrés.
 setup	common	fr	Setup
 setup main menu	common	fr	Menu principal du Setup
