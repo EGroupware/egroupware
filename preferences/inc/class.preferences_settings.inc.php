@@ -523,6 +523,7 @@ class preferences_settings
 					$setting['type'] = 'et2-select-tab';
 					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'allowFreeEntries', true);
 					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiple', $old_type === 'select-tabs');
+					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'placeholder', self::defaultLabel($type));
 					break;
 				case 'select-cat':  // using application=$appname and global=true
 					$setting['type'] = 'et2-select-cat';
@@ -567,7 +568,7 @@ class preferences_settings
 				{
 					Select::fix_encoded_options($setting['values'], true);
 
-					if ($old_type != 'multiselect' && $old_type != 'notify' && $old_type != 'et2-tree-dropdown')
+					if (!in_array($old_type, ['multiselect', 'notify', 'et2-tree-dropdown', 'select-tabs']))
 					{
 						if($type === 'forced')
 						{
