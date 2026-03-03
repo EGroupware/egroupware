@@ -20,6 +20,14 @@ export default css`
 		align-items: center;
 		color: var(--application-header-text-color);
 		background-color: var(--application-color);
+
+		header {
+			flex: 5 5 auto;
+		}
+
+		div {
+			display: flex;
+		}
 	}
 
 	.et2_appbox__body {

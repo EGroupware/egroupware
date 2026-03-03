@@ -73,7 +73,7 @@ export class Et2AppBox extends Et2Widget(LitElement)
 	 * Used to specify how this component can find the framework.
 	 */
 	@property({type: Function})
-	getFramework = () => this.closest("egw-framework");
+	getFramework = () => this.closest("egw-framework") ?? this.egw()?.window['framework'];
 
 	/**
 	 * Used to specify how this component can find its current / active nextmatch.
@@ -103,8 +103,6 @@ export class Et2AppBox extends Et2Widget(LitElement)
 
 	@state()
 	protected loadingPromise : Promise<void> = Promise.resolve();
-
-	protected useIframe = false;
 
 	constructor()
 	{
@@ -208,20 +206,21 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		}
 
 		let targetUrl = "";
-		this.useIframe = true;
 		const matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*[&?]ajax=[^&]+.*)/);
 		if(matches)
 		{
 			targetUrl = "index.php?menuaction=" + matches[1];
-			this.useIframe = false;
+		}
+		else
+		{
+			// ONLY loading vioa ajax.  If you want an iframe just use that since iframe contents can't be slotted
+			this.egw().debug("warn", "Invalid URL: " + url, this);
 		}
 
 		this.loading = true;
-		if(!this.useIframe)
-		{
-			this.loadingPromise = this.egw().request(
+		this.loadingPromise = this.egw().request(
 				this.framework.getMenuaction("ajax_exec", targetUrl, this.name),
-				[targetUrl]
+			[targetUrl, true]
 			).then((data : string | string[]) =>
 			{
 				if(!data)
@@ -233,17 +232,6 @@ export class Et2AppBox extends Et2Widget(LitElement)
 				this.requestUpdate();
 				return this.waitForLoad(Array.from(this.querySelectorAll("[id]")) as HTMLElement[]);
 			}) as Promise<void>;
-		}
-		else
-		{
-			this.loadingPromise = new Promise<void>((resolve) =>
-			{
-				this.append(this._createIframeNodes(url));
-				this.requestUpdate();
-				resolve();
-				return this.waitForLoad(Array.from(this.querySelectorAll("iframe")) as HTMLElement[]);
-			});
-		}
 
 		this.loadingPromise.finally(() =>
 		{
@@ -265,20 +253,6 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		});
 		const loadPromises = nodes.map((node) =>
 		{
-			if(node.localName === "iframe")
-			{
-				return new Promise<void>((resolve) =>
-				{
-					const interval = setInterval(() =>
-					{
-						if((<HTMLIFrameElement>node).contentDocument?.body?.innerHTML !== "")
-						{
-							clearInterval(interval);
-							resolve();
-						}
-					}, 500);
-				});
-			}
 			return waitForEvent(node, "load") as Promise<void>;
 		});
 
@@ -389,21 +363,8 @@ export class Et2AppBox extends Et2Widget(LitElement)
 		}
 	}
 
-	protected _createIframeNodes(url? : string)
-	{
-		if(!this.useIframe)
-		{
-			return null;
-		}
-		return Object.assign(document.createElement("iframe"), {src: url});
-	}
-
 	protected _loadingTemplate()
 	{
-		if(this.useIframe)
-		{
-			return nothing;
-		}
 		return html`
             <div class="egw_fw_app__loading">
                 <sl-spinner part="spinner"></sl-spinner>
