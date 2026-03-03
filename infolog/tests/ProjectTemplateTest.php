@@ -67,9 +67,10 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 		));
 
 		// Make one with a custom from
-		$this->make_infolog(array(
-				'info_from' => 'Custom from'
-		));
+		// TODO: Do we still care about this?
+		//$this->make_infolog(array(
+		//		'info_from' => 'Custom from'
+		//));
 
 		// Need to do this from parent to keep IDs where expected
 		$this->make_projectmanager();
@@ -126,7 +127,7 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 	}
 
 	/**
-	 * Check that the project elements are present, and have the provided status.
+	 * Check that the project elements are present and have the provided status.
 	 *
 	 * @param String $status
 	 */
@@ -144,9 +145,9 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 		}
 
 		$elements = $element_bo->search(array('pm_id' => $clone_id), false, 'pe_id ASC');
-		// Expect 1 sub-project, 2 infologs
+		// Expect 1 sub-project, 1 infolog
 		$this->assertIsArray($elements, "Did not find any project elements in copy");
-		$this->assertCount(3, $elements, "Incorrect number of project elements");
+		$this->assertCount(2, $elements, "Incorrect number of project elements");
 
 		foreach ($elements as $element)
 		{

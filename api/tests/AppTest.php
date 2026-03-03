@@ -59,7 +59,9 @@ abstract class AppTest extends LoggedInTest
 		}
 		$bo_object->tracking = $this->getMockBuilder($tracker_class)
 			->disableOriginalConstructor()
-			->setMethods(['track'])
+			->onlyMethods(['track'])
 			->getMock($bo_object);
+		$bo_object->tracking->method('track')
+			->willReturn(true);
 	}
 }
