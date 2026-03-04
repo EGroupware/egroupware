@@ -111,6 +111,89 @@ module.exports = function (eleventyConfig)
 		return absolute ? new URL(value, eleventyConfig.globalData.baseUrl).toString() : value;
 	});
 
+	const buildClassesImplementingMarkdown = (interfaceName) =>
+	{
+		const safeInterfaceName = String(interfaceName || '').trim();
+		if(!safeInterfaceName)
+		{
+			return '_No interface name provided._';
+		}
+
+		const sourceRoot = path.resolve('../../api/js/etemplate');
+		const results = [];
+		const escapedInterfaceName = safeInterfaceName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+		function walk(dir)
+		{
+			for(const entry of fs.readdirSync(dir, {withFileTypes: true}))
+			{
+				const entryPath = path.join(dir, entry.name);
+				if(entry.isDirectory())
+				{
+					walk(entryPath);
+					continue;
+				}
+				if(!entry.isFile() || !entry.name.endsWith('.ts') || entry.name.endsWith('.test.ts'))
+				{
+					continue;
+				}
+
+				const content = fs.readFileSync(entryPath, 'utf8');
+				const regex = new RegExp(`export\\s+class\\s+(\\w+)[^{]*\\bimplements\\b[^{]*\\b${escapedInterfaceName}\\b`, 'gm');
+				let match;
+				while((match = regex.exec(content)) !== null)
+				{
+					results.push({
+						className: match[1]
+					});
+				}
+			}
+		}
+
+		walk(sourceRoot);
+		results.sort((a, b) => a.className.localeCompare(b.className));
+
+		if(results.length === 0)
+		{
+			return `_No classes implementing \`${safeInterfaceName}\` were found._`;
+		}
+
+		let output = '';
+		for(const className of [...new Set(results.map(result => result.className))])
+		{
+			const component = allComponents.find(c => c.name === className && c.tagName);
+			if(component)
+			{
+				output += `- [\`${className}\`](/components/${component.tagName})\n`;
+			}
+			else
+			{
+				output += `- \`${className}\`\n`;
+			}
+		}
+		return output;
+	};
+
+	// Includes raw markdown from a repo-relative path so docs can share a single source file.
+	eleventyConfig.addNunjucksGlobal('includeRepoFile', filePath =>
+	{
+		const absolutePath = path.resolve(filePath);
+		let content = fs.readFileSync(absolutePath, 'utf8');
+		content = content.replace(/\{\{\s*classesImplementing\(\s*["']([A-Za-z0-9_$]+)["']\s*\)\s*(\|\s*safe)?\s*\}\}/g, (_match, interfaceName) =>
+			buildClassesImplementingMarkdown(interfaceName)
+		);
+		content = content.replace(/\{\{\s*CLASSES_IMPLEMENTING:([A-Za-z0-9_$]+)\s*\}\}/g, (_match, interfaceName) =>
+			buildClassesImplementingMarkdown(interfaceName)
+		);
+		content = content.replace(/\{\{\s*LAYOUT_HOST_WIDGETS\s*\}\}/g, buildClassesImplementingMarkdown('Et2LayoutHost'));
+		return content;
+	});
+
+	// Build-time list of classes implementing a specific interface.
+	eleventyConfig.addNunjucksGlobal('classesImplementing', interfaceName => buildClassesImplementingMarkdown(interfaceName));
+	// Backward-compatible alias.
+	eleventyConfig.addNunjucksGlobal('layoutHostWidgets', () => buildClassesImplementingMarkdown('Et2LayoutHost'));
+
 	// Fetches a specific component's metadata
 	eleventyConfig.addNunjucksGlobal('getComponent', tagName =>
 	{
