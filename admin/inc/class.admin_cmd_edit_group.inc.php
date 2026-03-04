@@ -257,7 +257,7 @@ class admin_cmd_edit_group extends admin_cmd
 		foreach($data['set'] as $name => $value)
 		{
 			if ($data['old'][$name] == $value ||
-				is_array($value) && sort($value) && sort($data['old'][$name]) && $value == $data['old'][$name])
+				is_array($value) && sort($value) && is_array($data['old'][$name]) && sort($data['old'][$name]) && $value == $data['old'][$name])
 			{
 				unset($data['old'][$name], $data['set'][$name]);
 			}
