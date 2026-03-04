@@ -387,11 +387,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				// No mime type registered, set target properly based on browsing environment
 
-				//do not open pdfs on mobile, since we can not really get back when mobile browser calls _wnd.open(url,'_self') with a pdf
+				//do not open pdfs on mobile, since we can not really get back when mobile browser calls _wnd.open(url,'_self') with a pdf, instantly download instead
 				if (egwIsMobile() && mime_info && mime_info.ext === 'pdf'){
-					//url+='&mode=save'
-					//TODO maybe we want to trigger a download instead?
-					//etemplate2.download(url)
+					url+='&mode=save'
+					window.etemplate2.prototype.download(url)
 					return
 				}
 				if (_target == '_browser')
