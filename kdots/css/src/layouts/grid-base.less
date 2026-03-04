@@ -6,7 +6,8 @@
 .layout-grid-base(@host-selector) {
   @{host-selector}::part(base) {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	/* Auto-collapse to one column once a column would get too narrow */
+	grid-template-columns: repeat(auto-fit, minmax(var(--column-min-width, 26rem), 1fr));
 	grid-auto-rows: min-content;
 	align-content: start;
 	row-gap: var(--sl-spacing-small);
@@ -16,16 +17,62 @@
 	min-height: 0;
   }
 
-  /* Responsive: collapse to 1 column on small screens */
+  /* One-column mode: keep label/input stacking consistent for all widgets */
+  @container (max-width: calc(var(--column-min-width, 26rem) * 2 + var(--sl-spacing-large, 1rem))) {
+	@{host-selector} *::part(form-control-label) {
+	  width: 100%;
+	  flex-basis: 100%;
+	  margin-right: 0;
+	}
+
+	@{host-selector} *::part(form-control-input) {
+	  flex-basis: 100%;
+	}
+
+	@{host-selector} *::part(form-control-help-text) {
+	  left: 0;
+	}
+  }
+
+  /* Responsive fallback: collapse to 1 column on small screens */
+  /* var() is not fully supported yet */
   @container (max-width: 600px) {
 	@{host-selector}::part(base) {
 	  grid-template-columns: 1fr;
+	}
+
+	@{host-selector} *::part(form-control-label) {
+	  width: 100%;
+	  flex-basis: 100%;
+	  margin-right: 0;
+	}
+
+	@{host-selector} *::part(form-control-input) {
+	  flex-basis: 100%;
+	}
+
+	@{host-selector} *::part(form-control-help-text) {
+	  left: 0;
 	}
   }
   /* var() is not fully supported yet */
   @container (max-width: var(--collapse-width, 600px)) {
 	@{host-selector}::part(base) {
 	  grid-template-columns: 1fr;
+	}
+
+	@{host-selector} *::part(form-control-label) {
+	  width: 100%;
+	  flex-basis: 100%;
+	  margin-right: 0;
+	}
+
+	@{host-selector} *::part(form-control-input) {
+	  flex-basis: 100%;
+	}
+
+	@{host-selector} *::part(form-control-help-text) {
+	  left: 0;
 	}
   }
 
