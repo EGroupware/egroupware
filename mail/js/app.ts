@@ -3412,7 +3412,7 @@ export class MailApp extends EgwApp
 	 */
 	saveAttachmentHandler(widget, action, row_id)
 	{
-		var mail_id, attachments;
+		let mail_id, attachments,attachment;
 
 		if (this.mail_isMainWindow)
 		{
@@ -3481,18 +3481,18 @@ export class MailApp extends EgwApp
 
 			case 'downloadOneAsFile':
 			case 'downloadAllToZip':
-				var attachment = attachments[row_id];
-				var url = window.egw_webserverUrl+'/index.php?';
-				url += jQuery.param({
+				attachment = attachments[row_id];
+				let url = window.egw_webserverUrl+'/index.php?';
+				url += new URLSearchParams({
 					menuaction: action === 'downloadOneAsFile' ?
 						'mail.mail_ui.getAttachment' : 'mail.mail_ui.download_zip',
 					mode: 'save',
-					id: mail_id,
+					id: attachment.mail_id,
 					part: attachment.partID,
 					is_winmail: attachment.winmailFlag,
-					smime_type: (attachment.smime_type ? attachment.smime_type : '')
-				});
-				this.et2._inst.download(url);
+					smime_type: attachment.smime_type ?? ''
+				}).toString();
+				window.etemplate2.prototype.download(url);
 				break;
 			case 'forward':
 				// Give some UI feedback, this might take a second
