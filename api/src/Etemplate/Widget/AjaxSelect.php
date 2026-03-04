@@ -12,6 +12,8 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
+require_once './Select.inc.php';
+
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
