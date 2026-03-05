@@ -410,6 +410,8 @@ div.mail-compose_fileselector {
 }
 .previewWrapper {
   height: 100%;
+}
+.previewWrapper .addresses {
   --sl-input-background-color-focus: transparent;
   --sl-input-background-color: transparent;
 }
