@@ -44,7 +44,7 @@
     "globby": "^14.0.1",
     "grunt": "^1.6.1",
     "grunt-contrib-cssmin": "^2.2.1",
-    "jsdom": "^22.1.0",
+    "jsdom": "^28.1.0",
     "lunr": "^2.3.9",
     "markdown-it": "^14.1.1",
     "markdown-it-container": "^3.0.0",
