@@ -309,7 +309,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			for(let i = 0; i < searchFields.length; i++)
 			{
 				let field = searchFields[i];
-				if(option[field]?.toLowerCase().includes(searchString))
+				if(option[field]?.toLowerCase().includes(searchString) || this.egw().lang(option[field]).includes(searchString))
 				{
 					return true;
 				}
