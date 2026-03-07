@@ -57,7 +57,7 @@ all participants	calendar	fr	Tous les participants
 allow booking requests from any user when creating events?	calendar	fr	Autoriser n'importe quel utilisateur à créer des demande de réservation ?
 allow party crashers with email that match the following regular expression	calendar	fr	Autorisez les organisateurs de fêtes à envoyer des courriels qui correspondent à l'expression régulière suivante
 allow users to prevent change notifications ('do not notify')	calendar	fr	Autoriser les utilisateurs à empêcher le changement des notifications "Ne pas notifier"
-allow-repeat  calendar  fr  cercle fléché
+arrow-repeat  calendar  fr  cercle fléché
 allows to edit the event again	calendar	fr	Autorise la réédition de l'événement
 always	calendar	fr	Toujours
 always use full edit dialog	calendar	fr	Toujours utiliser la boîte de dialogue complète
