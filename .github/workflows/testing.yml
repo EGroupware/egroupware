@@ -94,8 +94,29 @@ jobs:
             config | sed -n '/egroupware:/,/db:/p'
 
           echo "== Container checks =="
-          $COMPOSE exec -T egroupware sh -lc 'pwd; ls -la /var/www | sed -n "1,80p"; ls -la /var/www/admin | sed -n "1,80p"'
-          $COMPOSE exec -T egroupware test -f /var/www/admin/admin-cli.php && echo "admin-cli present in container" || echo "admin-cli missing in container"
+          $COMPOSE exec -T egroupware sh -lc 'pwd; ls -la /var/www | sed -n "1,80p"; ls -la /var/www/admin | sed -n "1,80p" || true; ls -la /var/www/egroupware/admin | sed -n "1,80p" || true'
+          $COMPOSE exec -T egroupware sh -lc 'test -f /var/www/admin/admin-cli.php && echo "admin-cli in /var/www" || true; test -f /var/www/egroupware/admin/admin-cli.php && echo "admin-cli in /var/www/egroupware" || true'
+
+      - name: Detect app root in container
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+
+          APP_DIR="$(
+            $COMPOSE exec -T egroupware sh -lc '
+              if [ -f /var/www/admin/admin-cli.php ]; then
+                echo /var/www
+              elif [ -f /var/www/egroupware/admin/admin-cli.php ]; then
+                echo /var/www/egroupware
+              else
+                exit 1
+              fi
+            '
+          )"
+          echo "EGW_SRC_DIR=$APP_DIR" >> "$GITHUB_ENV"
+          echo "Detected EGW_SRC_DIR=$APP_DIR"
 
       - name: Configure phpunit test user
         run: |
@@ -130,8 +151,8 @@ jobs:
             fi
           done
 
-          $COMPOSE exec -T egroupware bash -c \
-            "cd \"$EGW_SRC_DIR\" && php admin/admin-cli.php --edit-user \"sysop,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid\""
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
+            --edit-user "sysop,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
 
       - name: Run PHPUnit
         run: |
@@ -139,7 +160,7 @@ jobs:
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          $COMPOSE exec -T egroupware bash -c "cd \"$EGW_SRC_DIR\" && php vendor/bin/phpunit --configuration doc/phpunit.xml"
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php vendor/bin/phpunit --configuration doc/phpunit.xml
 
       - name: Dump container logs
         if: always()
