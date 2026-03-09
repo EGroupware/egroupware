@@ -10,7 +10,7 @@ jobs:
     env:
       EGW_DB_ROOT_PW: ciroot
       COMPOSE_PROJECT_NAME: egwci
-      EGW_SRC_DIR: /var/www
+      EGW_SRC_DIR: /var/www/egroupware
 
     steps:
       - uses: actions/checkout@v4
