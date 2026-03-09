@@ -75,6 +75,28 @@ jobs:
 
           $COMPOSE exec -T egroupware ln -sf /var/lib/egroupware/header.inc.php "$EGW_SRC_DIR/header.inc.php"
 
+      - name: Debug admin-cli path mapping
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+
+          echo "== Host checks =="
+          pwd
+          ls -la "$GITHUB_WORKSPACE/sources/admin/admin-cli.php" || true
+          ls -la "$GITHUB_WORKSPACE/sources/admin" | sed -n '1,80p' || true
+
+          echo "== Compose resolved mounts (egroupware service) =="
+          docker compose --project-directory "$GITHUB_WORKSPACE/sources" \
+            -f "$GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml" \
+            -f "$GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml" \
+            config | sed -n '/egroupware:/,/db:/p'
+
+          echo "== Container checks =="
+          $COMPOSE exec -T egroupware sh -lc 'pwd; ls -la /var/www | sed -n "1,80p"; ls -la /var/www/admin | sed -n "1,80p"'
+          $COMPOSE exec -T egroupware test -f /var/www/admin/admin-cli.php && echo "admin-cli present in container" || echo "admin-cli missing in container"
+
       - name: Configure phpunit test user
         run: |
           set -euo pipefail
