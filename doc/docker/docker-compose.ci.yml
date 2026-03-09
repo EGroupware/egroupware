@@ -6,13 +6,13 @@ services:
     container_name: egwci-egroupware
     restart: "no"
     ports: [ ]
-      #volumes:
+    volumes:
       # Use the checked-out git sources
-      #- .:/var/www
+      - ../..:/var/www
       # Current directory
       #- ${PWD}:/var/www
-      #- ./data:/var/lib/egroupware
-    #- ./sessions:/var/lib/php/sessions
+      - ../../data:/var/lib/egroupware
+      - ../../sessions:/var/lib/php/sessions
 
   db:
     # Override name to avoid potential conflicts with dev containers
