@@ -101,9 +101,11 @@ class AnonymousSharingTest extends SharingBase
 		$dir2 = Vfs::get_home_dir() . '/share2/';
 		$link2 = $this->setupShare($dir2);
 
-		// Add some files so we can tell the shares apart apart
+		// Add some files so we can tell the shares apart
 		$FIRST_CONTENT = "This is the first share\n";
 		$SECOND_CONTENT = "This is the second share\n";
+		$this->files[] = Vfs::touch($dir1 . '/share1.txt') ?: $dir1 . '/share1.txt';
+		$this->files[] = Vfs::touch($dir2 . '/share2.txt') ?: $dir2 . '/share2.txt';
 		$dir_1_files = $this->addFiles($dir1, $FIRST_CONTENT);
 		$dir_2_files = $this->addFiles($dir2, $SECOND_CONTENT);
 		$this->files = array_merge($this->files, $dir_1_files);
