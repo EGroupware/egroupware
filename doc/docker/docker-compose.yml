@@ -1,4 +1,3 @@
-version: '3'
 volumes:
   # data directory: here are the files stored (/var/lib/egroupware by default)
   data:
