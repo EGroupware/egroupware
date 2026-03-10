@@ -2851,3 +2851,25 @@ function calendar_upgrade23_1_001()
 {
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '26.1';
 }
+
+/**
+ * Deleted egw_history_log rows for tz_id and participants with empty / not set new value
+ * @return string
+ * @throws Api\Db\Exception
+ * @throws Api\Db\Exception\InvalidSql
+ */
+function calendar_upgrade26_1()
+{
+	/** @var Api\Db $db */
+	$db = $GLOBALS['egw_setup']->db;
+	foreach(['tz_id', 'participants'] as $name)
+	{
+		do {
+			$db->query('DELETE FROM egw_history_log WHERE '.
+				"history_appname='calendar' AND history_status=".$db->quote($name)." AND history_new_value=''".
+				' LIMIT 1000000');  // delete max 1 million in one go, to not run into max_statement_time limit
+		}
+		while ($db->affected_rows());
+	}
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '26.1.001';
+}
