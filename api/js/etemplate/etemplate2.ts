@@ -1135,6 +1135,14 @@ export class etemplate2
 				if(invalid_widgets.length && !(invalid_widgets[0] instanceof et2_widget))
 				{
 					// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
+					const scroll = (w) =>
+					{
+						// scroll the widget into view
+						if(typeof w.scrollIntoView === 'function')
+						{
+							w.scrollIntoView();
+						}
+					}
 					let tmpWidget = invalid_widgets[0];
 					while(tmpWidget.getParent() && tmpWidget.getType() !== 'ET2-TABBOX')
 					{
@@ -1144,11 +1152,11 @@ export class etemplate2
 					if(tmpWidget.getType() === 'ET2-TABBOX')
 					{
 						(<Et2Tabs><unknown>tmpWidget).activateTab(invalid_widgets[0]);
+						(<Et2Tabs><unknown>tmpWidget).updateComplete.then(() => scroll(invalid_widgets[0]));
 					}
-					// scroll the widget into view
-					if(typeof tmpWidget.scrollIntoView === 'function')
+					else
 					{
-						tmpWidget.scrollIntoView();
+						scroll(invalid_widgets[0]);
 					}
 				}
 				else
