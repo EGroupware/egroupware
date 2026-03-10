@@ -133,7 +133,7 @@
 		"pear/auth_sasl": "*",
 		"pear/log": "*",
 		"pear/pear": "*",
-		"pear/xml_feed_parser": "^1.0.5",
+		"egroupware/xml_feed_parser": "^1.0.5",
 		"phpseclib/phpseclib": "^3.0.34",
 		"pragmarx/google2fa-qrcode": "^1.0",
 		"robrichards/xmlseclibs": "^3.1.1",
