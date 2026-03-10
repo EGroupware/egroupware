@@ -57,6 +57,7 @@ all participants	calendar	fr	Tous les participants
 allow booking requests from any user when creating events?	calendar	fr	Autoriser n'importe quel utilisateur à créer des demande de réservation ?
 allow party crashers with email that match the following regular expression	calendar	fr	Autorisez les organisateurs de fêtes à envoyer des courriels qui correspondent à l'expression régulière suivante
 allow users to prevent change notifications ('do not notify')	calendar	fr	Autoriser les utilisateurs à empêcher le changement des notifications "Ne pas notifier"
+allow-repeat  calendar  fr  cercle fléché
 allows to edit the event again	calendar	fr	Autorise la réédition de l'événement
 always	calendar	fr	Toujours
 always use full edit dialog	calendar	fr	Toujours utiliser la boîte de dialogue complète
@@ -216,7 +217,7 @@ email address migration	calendar	fr	Migration des adresses électroniques
 empty = no alarm	calendar	fr	vide = aucune alarme
 empty for all	calendar	fr	Vide pour tous
 empty target calendar before importing	calendar	fr	Vider le calendrier cible avant l'import
-end	calendar	fr	Fin
+end  calendar	fr	Fin
 end date/time	calendar	fr	Date/Heure de fin
 enddate	calendar	fr	Date de fin
 enddate / -time of the meeting, eg. for more then one day	calendar	fr	Date/heure de fin de la réunion, c'est-à-dire pour plus d'une journée
@@ -575,7 +576,7 @@ show only invitations, not yet accepted or rejected	calendar	fr	Afficher seuleme
 show only rejected events	calendar	fr	Afficher seulement les événements rejetés.
 show only tentative accepted events	calendar	fr	Afficher seulement les événements en "tentative".
 show only the date, not the year	admin	fr	Afficher uniquement la date, pas l'année
-show subscribed calendars	calendar	fr	Afficher les calendriers auxquels vous êtes abonné
+show subscribed calendars	calendar	fr	Afficher les calendrier(s) externe(s) synchronisé(s)
 show this month	calendar	fr	Afficher ce mois
 show this week	calendar	fr	Afficher cette semaine
 show year and age	calendar	fr	Afficher l'année et l'âge
@@ -597,7 +598,7 @@ status for all future scheduled days changed	calendar	fr	Le statut de tous les j
 status for this particular day changed	calendar	fr	Le statut de ce jour précis a été modifié.
 status of participants set to unknown because of missing category rights	calendar	fr	Le statut des participants a été mis à "pas de réponse" pour cause de manque de droit sur la catégorie
 submit to repository	calendar	fr	Soumettre au Dépôt
-subscribed calendar	calendar	fr	Calendrier souscrit
+subscribed calendar	calendar	fr	Calendrier(s) externe(s) synchronisé(s)
 subscription incl. the synced events deleted.	calendar	fr	Abonnement ainsi que les événements synchronisés supprimés.
 subscription saved.	calendar	fr	Abonnement sauvegardé.
 subscription synced.	calendar	fr	Abonnement synchronisé.

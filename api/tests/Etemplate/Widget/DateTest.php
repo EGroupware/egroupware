@@ -47,7 +47,6 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		DateTime::setUserPrefs(static::$usertime->getName());
 		date_default_timezone_set(static::$server_tz);
 
-		unset($GLOBALS['egw']);
 		parent::tearDownAfterClass();
 	}
 

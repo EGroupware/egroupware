@@ -1598,12 +1598,17 @@ abstract class Merge
 						$replacements[$raw_placeholder] = $replacements[$this->prefix("", $fieldname, '$')];
 						$replacements[$this->prefix("", $fieldname, '$')] = self::number_format($replacements[$raw_placeholder], 2, $this->mimetype);
 
-						// Check for decimal places formatter
+						// Check for decimal places formatter, just a colon shows 2 or, if necessary, up to 4 non-zero digits
 						$format_matches = [];
-						preg_match_all("\$($fieldname):(?<decimals>[\d])\$", $content, $format_matches);
+						preg_match_all("\$($fieldname):(?<decimals>[\d]*)\$", $content, $format_matches);
 						foreach($format_matches['decimals'] as $decimal)
 						{
-							$replacements[$this->prefix("", $fieldname . ':' . $decimal, '$')] = self::number_format($replacements[$raw_placeholder], $decimal, $this->mimetype);
+							if (($digits=$decimal) === '')
+							{
+								$sub_digits = substr(self::number_format($replacements[$raw_placeholder],4), -2);
+								$digits = $sub_digits === '00' ? 2 : ($sub_digits[1] ? 4 : 3);
+							}
+							$replacements[$this->prefix("", $fieldname . ':' . $decimal, '$')] = self::number_format($replacements[$raw_placeholder], $digits, $this->mimetype);
 						}
 					}
 				}

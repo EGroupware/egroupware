@@ -45,7 +45,7 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 
 	public function testSymlinkFromFolder($test_file = ''): void
 	{
-		// Pass a file inside the mountpoint.  It doesn't need to exists
+		// Pass a file inside the mountpoint.  It doesn't need to exist
 		parent::testSymlinkFromFolder(static::$mountpoint . '/test');
 	}
 

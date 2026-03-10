@@ -14,7 +14,6 @@
 
 namespace EGroupware\Api\Mail;
 
-use EGroupware\Api;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use EGroupware\Api\Mail\Credentials;
@@ -34,25 +33,27 @@ class CredentialsTest extends TestCase
 	{
 		$mail_password = 'RälfÜber12345678sdddfd';
 		$account_id = $GLOBALS['egw_info']['user']['account_id'] = 1;
-		Api\Cache::setSession('phpgwapi', 'password', base64_encode('HMqUHxzMBjjvXppV'));
+		$key = 'HMqUHxzMBjjvXppV';
+		$this->setSessionPassword($key);
 
 		// test encryption with fixed salt
 		$pw_encrypted = 'IaaBeu6LiIa+iFBnHYroXA==4lp30Z4B20OdUYnFrxM3lo4b+bsf5wQITdyM1eMP6PM=';
-		$pw_enc = null;
+		$pw_enc = Credentials::USER_AES;
 		$this->assertEquals($pw_encrypted, self::callProtectedMethod('encrypt_openssl_aes', __NAMESPACE__.'\\Credentials',
-			array($mail_password, $account_id, &$pw_enc, null, base64_decode(substr($pw_encrypted, 0, Credentials::SALT_LEN64)))),
+			array($mail_password, $account_id, &$pw_enc, $key, base64_decode(substr($pw_encrypted, 0, Credentials::SALT_LEN64)))),
 			'AES encrypt with fixed salt');
 
 		// test encryption&descryption with random salt
-		$pw_encrypted_rs = self::callProtectedMethod('encrypt', __NAMESPACE__.'\\Credentials',
-			array($mail_password, $account_id, &$pw_enc));
+		$pw_enc = Credentials::USER_AES;
+		$pw_encrypted_rs = self::callProtectedMethod('encrypt_openssl_aes', __NAMESPACE__.'\\Credentials',
+			array($mail_password, $account_id, &$pw_enc, $key));
 		$row = array(
 			'account_id' => $account_id,
 			'cred_password' => $pw_encrypted_rs,
 			'cred_pw_enc' => $pw_enc,
 		);
 		$this->assertEquals($mail_password, self::callProtectedMethod('decrypt', __NAMESPACE__.'\\Credentials',
-			array($row)), 'AES decrypt with random salt');
+			array($row, $key)), 'AES decrypt with random salt');
 	}
 
 	/**
@@ -62,7 +63,7 @@ class CredentialsTest extends TestCase
 	{
 		$mail_password = 'RälfÜber12345678sdddfd';
 		$account_id = $GLOBALS['egw_info']['user']['account_id'] = 1;
-		Api\Cache::setSession('phpgwapi', 'password', base64_encode('HMqUHxzMBjjvXppV'));
+		$this->setSessionPassword('HMqUHxzMBjjvXppV');
 		$pw_encrypted = 'Y7QwLIqS6MP61hS8/e4i0wCdtpQP6kZ2';
 
 		// if mycrypt is available check encrypting too
@@ -82,8 +83,19 @@ class CredentialsTest extends TestCase
 			'cred_password' => $pw_encrypted,
 			'cred_pw_enc' => $pw_enc,
 		);
-		$this->assertEquals($mail_password, self::callProtectedMethod('decrypt', __NAMESPACE__.'\\Credentials',
-			array($row)), 'tripledes decryption with openssl');
+		try
+		{
+			$password = self::callProtectedMethod('decrypt', __NAMESPACE__ . '\\Credentials', array($row));
+		}
+		catch (\EGroupware\Api\Exception\WrongParameter|\EGroupware\Api\Exception\AssertionFailed $e)
+		{
+			if(!check_load_extension('mcrypt'))
+			{
+				$this->markTestSkipped('tripledes decryption fallback needs mcrypt when OpenSSL 3DES is unavailable');
+			}
+			throw $e;
+		}
+		$this->assertEquals($mail_password, $password, 'tripledes decryption with openssl');
 
 		if (check_load_extension('mcrypt'))
 		{
@@ -99,5 +111,12 @@ class CredentialsTest extends TestCase
 		$method->setAccessible(true);
 		$obj = new $classname();
 		return $method->invokeArgs($obj, $params);
+	}
+
+	protected function setSessionPassword(string $password): void
+	{
+		$GLOBALS['egw'] ??= new \stdClass();
+		$GLOBALS['egw']->session ??= new \stdClass();
+		$GLOBALS['egw']->session->passwd = $password;
 	}
 }

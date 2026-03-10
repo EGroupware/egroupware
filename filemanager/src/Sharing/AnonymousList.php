@@ -10,6 +10,7 @@
  */
 namespace EGroupware\Filemanager\Sharing;
 
+use EGroupware\Api\Etemplate\Widget\Nextmatch;
 use \filemanager_ui;
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
@@ -59,6 +60,7 @@ class AnonymousList extends filemanager_ui
 		$content['show_refresh'] = true;
 		$content['nm']['no_filter'] = true;
 		$content['nm']['favorites'] = false;
+		$content['nm']['num_rows'] = Nextmatch::INITIAL_ROWS;
 
 		$logo = !empty($GLOBALS['egw_info']['server']['login_logo_header']) ? Api\Framework::get_login_logo_or_bg_url('login_logo_header', 'logo')
 			: Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'logo');

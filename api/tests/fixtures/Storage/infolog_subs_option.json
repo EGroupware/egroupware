@@ -1,0 +1,3 @@
+{
+    "View Subs": "egw_open('','infolog','list',{action:'sp',action_id:widget.getRoot().getArrayMgr('content').getEntry('info_id')},'infolog','infolog');"
+}

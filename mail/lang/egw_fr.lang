@@ -100,8 +100,8 @@ check to save as tracker entry on send	mail	fr	cocher pour sauvegarder comme Tra
 checking admin credentials failed	mail	fr	La vérification des informations d'identification de l'administrateur a échoué
 choose file	mail	fr	Sélectionner un fichier
 common acl	mail	fr	ACL communs
-compose	mail	fr	Composer
-compose as new	mail	fr	Composer comme nouveau
+compose	mail	fr	Nouveau message
+compose as new	mail	fr	Dupliquer comme un nouveau message
 compress folder	mail	fr	Compresser le dossier
 condition	mail	fr	Condition
 configuration settings	mail	fr	Paramètres de configuration
@@ -122,7 +122,7 @@ copied %1 message(s) from %2 to %3	mail	fr	Copie de %1 message(s) de %2 à %3.
 copy to	mail	fr	Copier vers
 could not append message:	mail	fr	Impossible d'ajouter au message:
 could not save the acl because some names are empty	mail	fr	Echec à l'enregistrement de l'ACL certains noms sont vides
-create new account	mail	fr	Créer un nouveau compte
+create new account	mail	fr	Connecter une autre boite mail
 cross account forward attachment is not allowed!	mail	fr	La pièce jointe du compte croisé n'est pas autorisée !
 current folder	mail	fr	Dossier actif
 current subject	mail	fr	Sujet actuel
@@ -138,9 +138,9 @@ delete folder	mail	fr	Supprimer le dossier
 delete folder %1 ?	mail	fr	Supprimer le dossier %1 ?
 delete selected folders	mail	fr	Supprimer les dossiers sélectionnés
 delete this acl	mail	fr	Supprimer cet ACL
-deleted	mail	fr	supprimé
+deleted	mail	fr	Supprimé
 deleted %1 messages in %2	mail	fr	Supprimer %1 messages dans %2.
-deleted!	mail	fr	supprimé !
+deleted!	mail	fr	Supprimé !
 deleting %1 folders in progress ...	mail	fr	Suppression de %1 dossier(s) en cours ...
 deleting folders	mail	fr	Suppression de dossier
 deny certain groups access to following features	mail	fr	Refuser à certains groupes l'accès aux fonctions suivantes
@@ -400,7 +400,7 @@ no plain text part found	mail	fr	Aucune section texte plein trouvée
 no recipient address given!	mail	fr	Il n'a pas d'adresse de destinataire
 no send folder set in preferences	mail	fr	Aucun dossier "Envoyés" défini dans les préférences
 no signature	mail	fr	Pas de signature !
-no sneak preview in list	mail	fr	Masquer la prévisualisation
+no sneak preview in list	mail	fr	Masquer la prévisualisation des messages
 no subject given!	mail	fr	Votre message n'a pas de sujet !
 no subject supplied	mail	fr	pas de sujet
 no text body supplied, check attachments for message text	mail	fr	Aucun texte entré, veuillez vérifier les pièces jointes pour un message texte
@@ -513,7 +513,7 @@ rights	mail	fr	Droits
 rule priority position	mail	fr	Position des règles
 rule with priority	mail	fr	règle avec la priorité
 rules	mail	fr	Règles
-s/mime encryption failed because no certificate has been found for sender address: %1	mail	fr	Le cryptage S/MIME a échoué car aucun certificat n'a été trouvé pour l'adresse de l'expéditeur : %1
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	fr	Le chiffrage S/MIME a échoué car aucun certificat n'a été trouvé pour l'adresse de l'expéditeur : %1
 save all	mail	fr	Enregistrer tout
 save all attachments to filemanager	mail	fr	Enregistrer toutes les pièces jointes vers le gestionnaire de fichiers
 save as calendar	mail	fr	Enregistrer dans le Calendrier
@@ -557,7 +557,7 @@ selected date range (with quicksearch)	mail	fr	Plage de dates (recherche rapide)
 send a reject message:	mail	fr	Envoyer un message de rejet
 send files as	mail	fr	Envoyer les fichiers comme
 send message and move to send folder (if configured)	mail	fr	Envoyer le message et le déplacer vers le dossier des messages envoyés
-send message pgp encrypted: requires keys from all recipients!	mail	fr	Envoi d'un message crypté PGP : les clés de tous les destinataires sont nécessaires !
+send message pgp encrypted: requires keys from all recipients!	mail	fr	Envoi d'un message chiffré PGP : les clés de tous les destinataires sont nécessaires !
 send only a vacation notice, do not store message in inbox	mail	fr	Envoyer uniquement un avis de vacances, ne PAS stocker le message dans INBOX
 send vacation notice and store message in inbox	mail	fr	Envoyer un avis de vacances et stocker le message dans INBOX
 sender	mail	fr	Emetteur
@@ -571,6 +571,7 @@ set / remove labels	mail	fr	Etiquettes
 set flags	mail	fr	Marquer l'e-mail comme
 set it as default:	mail	fr	Définir par défaut :
 set predefined values for compose...	mail	fr	Définir les valeurs prédéfinies pour la composition ...
+settings  mail  fr  Paramètres
 should new messages show up on the home page	mail	fr	Est-ce que les nouveaux messages doivent apparaître sur la page d'accueil
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	fr	La signature doit-elle être insérée après (standard) ou avant une réponse ou un transfert, et doit-elle être visible et modifiable pendant la rédaction.
 show	mail	fr	Afficher
@@ -602,7 +603,7 @@ signed by	mail	fr	Signé par
 smime encrypted message	mail	fr	Message crypté S/MIME
 smime signed message	mail	fr	Message signé S/MIME
 smtp	mail	fr	SMTP
-sneak preview in list	mail	fr	Masquer la prévisualisation
+sneak preview in list	mail	fr	Prévisualisation des messages
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	fr	Certains clients ne parviennent pas à détecter le jeu de caractères correct si les lignes fluides sont activées.
 sort order	mail	fr	Ordre de tri
 source	mail	fr	Source

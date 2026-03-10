@@ -1,0 +1,181 @@
+name: EGroupware PHPUnit CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    env:
+      EGW_DB_ROOT_PW: ciroot
+      COMPOSE_PROJECT_NAME: egwci
+      EGW_CI_ROOT: ${{ github.workspace }}/sources
+      EGW_CI_DOCKER_DIR: ${{ github.workspace }}/sources/doc/docker
+      EGW_SRC_DIR: /var/www
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          path: sources
+
+      - name: Prepare compose project layout
+        run: |
+          set -euo pipefail
+          mkdir -p "$GITHUB_WORKSPACE/sources/doc/docker/data" "$GITHUB_WORKSPACE/sources/doc/docker/sessions"
+          rm -f "$GITHUB_WORKSPACE/sources/doc/docker/data/header.inc.php"
+
+      - name: Install PHP dependencies in sources
+        run: |
+          set -euo pipefail
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v "$GITHUB_WORKSPACE/sources":/app -w /app \
+            composer install --no-interaction --ignore-platform-reqs --dev
+
+      - name: Start CI containers
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+          $COMPOSE up -d --force-recreate db egroupware
+
+      - name: Wait for install
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+
+          MAX_WAIT=60
+          WAIT_INTERVAL=5
+          ELAPSED=0
+          SUCCESS_MSG="EGroupware successful installed"
+
+          echo "Waiting for database to be ready..."
+          until $COMPOSE exec -T db mysqladmin ping -h "db" --silent; do
+            echo "  ... waiting for DB"
+            sleep "$WAIT_INTERVAL"
+          done
+
+          echo "Waiting for EGroupware installation log message..."
+          until $COMPOSE logs egroupware | grep -q "$SUCCESS_MSG"; do
+            if [ "$ELAPSED" -ge "$MAX_WAIT" ]; then
+              echo "::error::Timed out waiting for EGroupware installation"
+              echo "==== egroupware logs ===="
+              $COMPOSE logs egroupware || true
+              echo "==== database logs ===="
+              $COMPOSE logs db || true
+              exit 1
+            fi
+
+            sleep "$WAIT_INTERVAL"
+            ELAPSED=$((ELAPSED + WAIT_INTERVAL))
+            echo "  ... still waiting (${ELAPSED}s)"
+          done
+
+          $COMPOSE exec -T egroupware ln -sf /var/lib/egroupware/header.inc.php "$EGW_SRC_DIR/header.inc.php"
+
+      - name: Debug admin-cli path mapping
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+
+          echo "== Host checks =="
+          pwd
+          ls -la "$GITHUB_WORKSPACE/sources/admin/admin-cli.php" || true
+          ls -la "$GITHUB_WORKSPACE/sources/admin" | sed -n '1,80p' || true
+
+          echo "== Compose resolved mounts (egroupware service) =="
+          docker compose --project-directory "$GITHUB_WORKSPACE/sources" \
+            -f "$GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml" \
+            -f "$GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml" \
+            config | sed -n '/egroupware:/,/db:/p'
+
+          echo "== Container checks =="
+          $COMPOSE exec -T egroupware sh -lc 'pwd; ls -la /var/www | sed -n "1,80p"; ls -la /var/www/admin | sed -n "1,80p" || true; ls -la /var/www/egroupware/admin | sed -n "1,80p" || true'
+          $COMPOSE exec -T egroupware sh -lc 'test -f /var/www/admin/admin-cli.php && echo "admin-cli in /var/www" || true; test -f /var/www/egroupware/admin/admin-cli.php && echo "admin-cli in /var/www/egroupware" || true'
+
+      - name: Detect app root in container
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+
+          APP_DIR="$(
+            $COMPOSE exec -T egroupware sh -lc '
+              if [ -f /var/www/admin/admin-cli.php ]; then
+                echo /var/www
+              elif [ -f /var/www/egroupware/admin/admin-cli.php ]; then
+                echo /var/www/egroupware
+              else
+                exit 1
+              fi
+            '
+          )"
+          echo "EGW_SRC_DIR=$APP_DIR" >> "$GITHUB_ENV"
+          echo "Detected EGW_SRC_DIR=$APP_DIR"
+
+      - name: Configure phpunit test user
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+
+          SYSOP_PASS="$(
+            $COMPOSE logs egroupware |
+              awk '
+                /EGroupware username: sysop/ {found=1; next}
+                found && /password:/ {
+                  sub(/^[^:]*:[[:space:]]*/, "", $0)
+                  print
+                  exit
+                }
+              '
+          )"
+
+          EGW_TEST_USER="$(
+            sed -n 's/.*<var name="EGW_USER" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
+          )"
+          EGW_TEST_PASS="$(
+            sed -n 's/.*<var name="EGW_PASSWORD" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
+          )"
+
+          for v in SYSOP_PASS EGW_TEST_USER EGW_TEST_PASS; do
+            if [ -z "${!v}" ]; then
+              echo "::error::Missing $v"
+              exit 1
+            fi
+          done
+
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
+            --edit-user "sysop,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
+
+      - name: Run PHPUnit
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php vendor/bin/phpunit --configuration doc/phpunit.xml
+
+      - name: Dump container logs
+        if: always()
+        run: |
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+          $COMPOSE logs egroupware db || true
+
+      - name: Tear down
+        if: always()
+        run: |
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+          $COMPOSE down -v --remove-orphans

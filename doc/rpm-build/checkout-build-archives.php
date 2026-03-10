@@ -18,7 +18,7 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-docker',
-	'version' => '26.'.(int)date('m'),
+	'version' => date('y').'.'.(int)date('m'),
 	'packaging' => date('Ymd'), // '20251208'
 	'branch'  => '26',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag

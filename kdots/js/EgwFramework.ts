@@ -837,6 +837,12 @@ export class EgwFramework extends LitElement
 
 	public async setSidebox(appname, sideboxData, hash)
 	{
+		// No sidebox & no existing app: early exit to avoid creating the app
+		if(!sideboxData && !this.querySelector(`egw-app[id="${appname}"]`))
+		{
+			return;
+		}
+
 		const app = this.loadApp(appname);
 		app?.setSidebox(sideboxData, hash);
 	}

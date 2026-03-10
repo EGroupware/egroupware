@@ -13,6 +13,7 @@
 
 namespace EGroupware\Api\Json;
 
+use EGroupware\Api\Etemplate\Widget;
 use ReflectionMethod;
 use EGroupware\Api;
 
@@ -208,3 +209,6 @@ class Request
 
 	}
 }
+
+// Scan for widget classes and cache for 1 hour
+Widget::scanForWidgets();

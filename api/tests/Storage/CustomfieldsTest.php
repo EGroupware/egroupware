@@ -14,11 +14,13 @@ namespace EGroupware\Api\Storage;
 
 require_once __DIR__ . '/../LoggedInTest.php';
 use EGroupware\Api\LoggedInTest as LoggedInTest;
+use EGroupware\Api\Vfs;
 
 class CustomfieldsTest extends LoggedInTest
 {
 	const APP = 'test';
 	protected $customfields = null;
+	private $mounts = array();
 
 	protected $simple_field = array(
 		'app'     => self::APP,
@@ -44,6 +46,11 @@ class CustomfieldsTest extends LoggedInTest
 			unset($fields[$field_name]);
 		}
 		Customfields::save(self::APP, $fields);
+
+		foreach($this->mounts as $mount)
+		{
+			Vfs::umount($mount);
+		}
 		parent::tearDown();
 	}
 
@@ -192,8 +199,11 @@ class CustomfieldsTest extends LoggedInTest
 	 */
 	public function testGetOptionsFromGoodFile($expected, $file)
 	{
+		// Mount the fixtures
+		$this->mountFilesystem(realpath(__DIR__ . '/../fixtures/Storage/'), '/api/tests');
+
 		// Load
-		$options = Customfields::get_options_from_file('api/tests/fixtures/Storage/' . $file);
+		$options = Customfields::get_options_from_file('/api/tests/' . $file);
 
 		// Check
 		$this->assertIsArray($options);
@@ -235,10 +245,10 @@ class CustomfieldsTest extends LoggedInTest
 					  'Χ' =>	'χ	Chi',
 					  'Ψ' =>	'ψ	Psi',
 					  'Ω' =>	'ω	Omega'
-				  ), 'greek_options.php'),
+				  ), 'greek_options.json'),
 			array(array(
 					  'View Subs' => "egw_open('','infolog','list',{action:'sp',action_id:widget.getRoot().getArrayMgr('content').getEntry('info_id')},'infolog','infolog');"
-				  ), 'infolog_subs_option.php')
+				  ), 'infolog_subs_option.json')
 		);
 	}
 
@@ -317,5 +327,26 @@ class CustomfieldsTest extends LoggedInTest
 			$this->markTestSkipped('Need more than one user to check private');
 		}
 		return $other_account;
+	}
+
+
+	protected function mountFilesystem($fs_path, $vfs_path)
+	{
+		$backup = Vfs::$is_root;
+		Vfs::$is_root = true;
+		$fs_path = realpath($fs_path);
+		if(!file_exists($fs_path))
+		{
+			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
+		}
+
+		$url = \EGroupware\Api\Vfs\Filesystem\StreamWrapper::SCHEME . '://default' . $fs_path;
+		$this->assertTrue(Vfs::mount($url, $vfs_path), "Unable to mount $url to $vfs_path");
+		Vfs::$is_root = $backup;
+
+		$this->mounts[] = $vfs_path;
+		Vfs::clearstatcache();
+		Vfs::init_static();
+		Vfs\StreamWrapper::init_static();
 	}
 }

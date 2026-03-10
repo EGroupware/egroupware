@@ -239,6 +239,7 @@ class SharingBase extends LoggedInTest
 			$stat = Vfs::stat($file);
 			echo "\t".Vfs::int2mode($stat['mode'])."\t$file\n";
 		}
+		$this->assertTrue(file_exists(Vfs::PREFIX . $file), "$file does not exist");
 
 		// All the test files have something in them
 		if(!Vfs::is_dir($file))
@@ -264,7 +265,10 @@ class SharingBase extends LoggedInTest
 				$this->assertTrue(Vfs::is_writable($file), $file . ' was not writable');
 				if(!Vfs::is_dir($file))
 				{
+					$content = file_get_contents(Vfs::PREFIX . $file);
 					$this->assertNotFalse(file_put_contents(Vfs::PREFIX.$file, 'Writable check'));
+					// Put it back
+					file_put_contents(Vfs::PREFIX . $file, $content);
 				}
 				break;
 		}
@@ -335,7 +339,7 @@ class SharingBase extends LoggedInTest
 			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
 		}
 		$url = Filesystem\StreamWrapper::SCHEME.'://default'. $fs_path.
-				'?user='.$GLOBALS['egw_info']['user']['account_id'].'&group=Default&mode=775';
+			'?user=' . $GLOBALS['egw_info']['user']['account_id'] . '&group=Default&mode=770';
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
 		Vfs::$is_root = $backup;
 
@@ -356,12 +360,16 @@ class SharingBase extends LoggedInTest
 		// Vfs breaks if path has trailing /
 		if(substr($path, -1) == '/') $path = substr($path, 0, -1);
 
+		$this->assertNotFalse(realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount'), "Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
 
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
 
 		// I guess merge needs the dir in SQLFS first
-		if(!Vfs::is_dir($dir)) Vfs::mkdir($path);
+		if(!Vfs::is_dir($path))
+		{
+			Vfs::mkdir($path);
+		}
 		Vfs::chmod($path, 0750);
 		Vfs::chown($path, $GLOBALS['egw_info']['user']['account_id']);
 
@@ -400,6 +408,7 @@ class SharingBase extends LoggedInTest
 			file_put_contents(Vfs::PREFIX.$file, $content) !== FALSE,
 			'Unable to write test file "' . Vfs::PREFIX . $file .'" - check file permissions for CLI user'
 		);
+		$this->assertEquals($content, file_get_contents(Vfs::PREFIX . $file), "Unable to write test file (empty)");
 
 		// Subdirectory
 		$files[] = $dir = $path.'sub_dir/';
@@ -682,12 +691,13 @@ class SharingBase extends LoggedInTest
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
 		// Setting this lets us debug the request too
-		$cookie = 'XDEBUG_SESSION=PHPSTORM';
+		$cookies = ['XDEBUG_SESSION' => 'PHPSTORM'];
 		if($keep_session)
 		{
-			 $cookie .= ';'.Api\Session::EGW_SESSION_NAME."={$GLOBALS['egw']->session->sessionid};kp3={$GLOBALS['egw']->session->kp3}";
+			$cookies[Api\Session::EGW_SESSION_NAME] = $GLOBALS['egw']->session->sessionid;
+			$cookies['kp3'] = $GLOBALS['egw']->session->kp3;
 		}
-		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+		$this->addCookies($curl, $cookies);
 		$html = curl_exec($curl);
 		if($_curl == null)
 		{
@@ -718,8 +728,45 @@ class SharingBase extends LoggedInTest
 		$this->assertNotNull($form, "Didn't find template in response");
 		$data = json_decode($form->getAttribute('data-etemplate'), true);
 
+		$rows = $data['data']['content']['nm']['rows'];
+		if(count($rows) == 0)
+		{
+			// NM did not send initial rows
+		}
 		return $form;
 	}
+
+	private function addCookies($curl, $cookies)
+	{
+		// Read cookies from cURL
+		$existing = curl_getinfo($curl, CURLINFO_COOKIELIST) ?: [];
+
+		$cookieMap = [];
+
+		// Parse cookies
+		foreach($existing as $line)
+		{
+			// domain \t flag \t path \t secure \t expiry \t name \t value
+			$parts = explode("\t", $line);
+			if(count($parts) >= 7)
+			{
+				$cookieMap[$parts[5]] = $parts[6];
+			}
+		}
+
+		// Merge (new cookies override old)
+		$cookieMap = array_merge($cookieMap, $cookies);
+
+		// Rebuild Cookie header
+		$cookieHeader = '';
+		foreach($cookieMap as $name => $value)
+		{
+			$cookieHeader .= "$name=$value; ";
+		}
+
+		curl_setopt($curl, CURLOPT_COOKIE, rtrim($cookieHeader, '; '));
+	}
+
 
 	protected function setup_info()
 	{

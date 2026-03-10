@@ -85,10 +85,9 @@ class SharingBackendTest extends SharingBase
 	public function testFilesystemReadonly()
 	{
 		// Don't add to files list or it deletes the folder from filesystem
-		$dir = '/filesystem/';
+		$dir = Vfs::get_home_dir() . '/filesystem/';
 
 		// Mount filesystem directory
-		if(Vfs::is_dir($dir)) Vfs::remove($dir);
 		$this->mountFilesystem($dir);
 		$this->assertTrue(Vfs::is_writable($dir), "Unable to write to '$dir' as expected");
 
@@ -105,10 +104,9 @@ class SharingBackendTest extends SharingBase
 	public function testFilesystemWritable()
 	{
 		// Don't add to files list or it deletes the folder from filesystem
-		$dir = '/filesystem/';
+		$dir = Vfs::get_home_dir() . '/filesystem/';
 
 		// Mount filesystem directory
-		if(Vfs::is_dir($dir)) Vfs::remove($dir);
 		$this->mountFilesystem($dir);
 		$this->assertTrue(Vfs::is_writable($dir), "Unable to write to '$dir' as expected");
 

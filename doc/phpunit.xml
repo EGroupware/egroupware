@@ -16,14 +16,14 @@
         </testsuite>
         <testsuite name="Etemplate">
             <file>../api/tests/EtemplateTest.php</file>
-            <directory>../api/Etemplate/tests/</directory>
-            <directory>../api/Etemplate/Widget/tests/</directory>
+            <directory>../api/tests/Etemplate/</directory>
         </testsuite>
 		<testsuite name="Apps">
 			<!-- Apps with test directory -->
 			<directory>../*/tests/</directory>
 
 			<exclude>../api</exclude>
+            <exclude>../invoices</exclude>
 		</testsuite>
     </testsuites>
 </phpunit>
