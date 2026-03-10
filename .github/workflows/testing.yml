@@ -10,7 +10,9 @@ jobs:
     env:
       EGW_DB_ROOT_PW: ciroot
       COMPOSE_PROJECT_NAME: egwci
-      EGW_SRC_DIR: /var/www/egroupware
+      EGW_CI_ROOT: ${{ github.workspace }}/sources
+      EGW_CI_DOCKER_DIR: ${{ github.workspace }}/sources/doc/docker
+      EGW_SRC_DIR: /var/www
 
     steps:
       - uses: actions/checkout@v4

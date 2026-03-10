@@ -8,11 +8,11 @@ services:
     ports: [ ]
     volumes:
       # Use the checked-out git sources
-      - ../..:/var/www
+      - ${EGW_CI_ROOT:-../..}:/var/www
       # Current directory
       #- ${PWD}:/var/www
-      - ../../data:/var/lib/egroupware
-      - ../../sessions:/var/lib/php/sessions
+      - ${EGW_CI_DOCKER_DIR:-../../doc/docker}/data:/var/lib/egroupware
+      - ${EGW_CI_DOCKER_DIR:-../../doc/docker}/sessions:/var/lib/php/sessions
 
   db:
     # Override name to avoid potential conflicts with dev containers
