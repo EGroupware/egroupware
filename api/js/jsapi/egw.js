@@ -352,6 +352,10 @@ window.app = {classes: {}};
 			var scrollWidth = document.body.scrollWidth - document.body.clientWidth;
 			var scrollHeight = document.body.scrollHeight - w.height;
 			if (scrollWidth > 0 && scrollWidth + egw_getWindowOuterWidth() < screen.availWidth) delta_width = -scrollWidth;
+			if (scrollHeight > 0 && scrollHeight + egw_getWindowOuterHeight() < screen.availHeight)
+			{
+				delta_height = -scrollHeight;
+			}
 
 			if (delta_height && egw_getWindowOuterHeight() >= egw.availHeight())
 			{
