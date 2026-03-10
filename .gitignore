@@ -12,6 +12,7 @@
 *.patch
 *.log
 /activesync/
+/aitools/
 /archive/
 /authors.txt
 /authors.xml
@@ -27,6 +28,7 @@
 chunks/
 /groups/
 /header.inc.php
+/invoices/
 /jdots/
 /kanban/
 /licenses/
@@ -40,9 +42,11 @@ chunks/
 /phpgwapi/
 /polls/
 /projectmanager/
+/rag/
 /ranking/
 /records/
 /registration/
+/rocketchat/
 /sambaadmin/
 /sitemgr/
 /stylite/
@@ -51,6 +55,7 @@ chunks/
 /tracker/
 /usage/
 /vendor/
+/vidopro/
 /wiki/
 .idea/
 addressbook/carddav/
@@ -60,7 +65,6 @@ cockroach-data/
 messenger/
 policy/
 profitbricks/
-rocketchat/
 status/
 smallpart/
 swoolepush/
