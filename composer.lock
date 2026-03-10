@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e59e0fec5936fa76267466f70da0ea65",
+    "content-hash": "c6a2e5eb02d72dcc741bf2271bcd09d8",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3302,6 +3302,57 @@
             "time": "2023-01-03T21:13:18+00:00"
         },
         {
+            "name": "egroupware/xml_feed_parser",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/XML_Feed_Parser.git",
+                "reference": "89bd71c59e14655b6e679a37b72b8df15d1ba7ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/XML_Feed_Parser/zipball/89bd71c59e14655b6e679a37b72b8df15d1ba7ea",
+                "reference": "89bd71c59e14655b6e679a37b72b8df15d1ba7ea",
+                "shasum": ""
+            },
+            "require": {
+                "pear/log": "*",
+                "pear/pear_exception": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "suggest": {
+                "ext-tidy": "May require the tidy PHP extension"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "XML": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "LGPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "James Stewart",
+                    "email": "james@jystewart.net",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/XML_Feed_Parser",
+            "support": {
+                "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=XML_Feed_Parser",
+                "source": "https://github.com/pear/XML_Feed_Parser"
+            },
+            "time": "2026-03-10T08:02:29+00:00"
+        },
+        {
             "name": "egroupware/z-push-dev",
             "version": "2.5.0.1",
             "source": {
@@ -5132,57 +5183,6 @@
                 "source": "https://github.com/pear/Structures_Graph"
             },
             "time": "2024-06-02T15:12:16+00:00"
-        },
-        {
-            "name": "pear/xml_feed_parser",
-            "version": "v1.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pear/XML_Feed_Parser.git",
-                "reference": "d8ad454742acba786738b39cbcc7c10f7b57adbe"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pear/XML_Feed_Parser/zipball/d8ad454742acba786738b39cbcc7c10f7b57adbe",
-                "reference": "d8ad454742acba786738b39cbcc7c10f7b57adbe",
-                "shasum": ""
-            },
-            "require": {
-                "pear/log": "*",
-                "pear/pear_exception": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "suggest": {
-                "ext-tidy": "May require the tidy PHP extension"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "XML": "./"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "./"
-            ],
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "James Stewart",
-                    "email": "james@jystewart.net",
-                    "role": "Lead"
-                }
-            ],
-            "description": "More info available on: http://pear.php.net/package/XML_Feed_Parser",
-            "support": {
-                "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=XML_Feed_Parser",
-                "source": "https://github.com/pear/XML_Feed_Parser"
-            },
-            "time": "2019-02-11T14:09:14+00:00"
         },
         {
             "name": "pear/xml_util",
