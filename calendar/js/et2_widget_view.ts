@@ -81,6 +81,12 @@ export class et2_calendar_view extends et2_valueWidget
 	}
 
 	destroy() {
+		// Delete all old objects
+		this._actionObject?.clear && this._actionObject.clear();
+		this._actionObject?.unregisterActions && this._actionObject.unregisterActions();
+		this._actionObject?.remove && this._actionObject.remove();
+		this._actionObject = null;
+
 		super.destroy();
 
 		// Stop the invalidate timer
