@@ -203,7 +203,17 @@ class calendar_tracking extends Api\Storage\Tracking
 			$old['participants'] = array();
 			$old = array_merge($old, $this->alter_participants($participants));
 		}
-		return parent::changed_fields($data,$old);
+		$changed = parent::changed_fields($data,$old);
+
+		// do NOT report tz_id or participants, if not set in new data
+		foreach(['tz_id', 'participants'] as $field)
+		{
+			if (!isset($data[$field]) && ($key = array_search($field, $changed)) !== false)
+			{
+				unset($changed[$key]);
+			}
+		}
+		return $changed;
 	}
 
 	/**
