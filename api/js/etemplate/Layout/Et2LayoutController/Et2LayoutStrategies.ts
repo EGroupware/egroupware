@@ -196,7 +196,10 @@ export const twoColumnLayoutStrategy : Et2LayoutStrategy = {
 		{
 			children.forEach((child) =>
 			{
-				child.classList.add("et2-label-fixed");
+				if(child.hasAttribute("label") || child["label"] != "")
+				{
+					child.classList.add("et2-label-fixed");
+				}
 			});
 		}
 

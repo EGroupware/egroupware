@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="timesheet.edit.general" layout="2-column">
-
+    <template id="timesheet.edit.general" layout="2-column" style="--column-min-width:34em;">
         <et2-hbox disabled="@pm_integration=none" span="all">
-            <et2-link-entry id="pm_id" label="Project" onchange="app.timesheet.pm_id_changed" onlyApp="projectmanager" placeholder="None"></et2-link-entry>
-					</et2-hbox>
-					<et2-hbox  disabled="@pm_integration=full" span="all">
-                        <et2-textbox id="ts_project" maxlength="80" placeholder="@ts_project_blur"></et2-textbox>
-					</et2-hbox>
+            <et2-link-entry id="pm_id" label="Project" class="et2-label-fixed" onchange="app.timesheet.pm_id_changed" onlyApp="projectmanager" placeholder="None"></et2-link-entry>
+        </et2-hbox>
+        <et2-hbox disabled="@pm_integration=full" span="all">
+            <et2-textbox id="ts_project" maxlength="80" class="et2-label-fixed" placeholder="@ts_project_blur"></et2-textbox>
+        </et2-hbox>
         <et2-box disabled="@ts_viewtype" span="all">
-					<et2-hbox  disabled="@pm_integration=none" >
-						<projectmanager-pricelist id="pl_id" class="et2_fullWidth"
-                                                  label="Unitprice"
-                                                  onchange="let option = this.select_options.find(e=>e.value == this.value) || {label:''};window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(option.label.lastIndexOf('(') &lt; 0 ? '' : option.label.slice(option.label.lastIndexOf('(')+1,-1));"
-                                                  emptyLabel="None"/>
-					</et2-hbox>
-					<et2-hbox  disabled="@pm_integration=none">
-						<et2-number  id="ts_unitprice" span="all"></et2-number>
-					</et2-hbox>
+            <et2-hbox disabled="@pm_integration=none">
+                <projectmanager-pricelist id="pl_id"
+                                          label="Unitprice" class="et2-label-fixed"
+                                          onchange="let option = this.select_options.find(e=>e.value == this.value) || {label:''};window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(option.label.lastIndexOf('(') &lt; 0 ? '' : option.label.slice(option.label.lastIndexOf('(')+1,-1));"
+                                          emptyLabel="None"/>
+                <et2-number id="ts_unitprice" span="all"></et2-number>
+            </et2-hbox>
         </et2-box>
         <et2-box disabled="!@ts_viewtype" span="all">
-            <et2-textarea label="comment" id="ts_description_short" rows="5" cols="50"></et2-textarea>
+            <et2-textarea label="comment" class="et2-label-fixed" id="ts_description_short" rows="5" cols="50"></et2-textarea>
         </et2-box>
         <et2-box disabled="@ts_viewtype">
-            <et2-number label="Quantity" statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
-					<et2-description></et2-description>
-					<et2-date-duration label="Pause time" id="ts_paused" displayFormat="hm" span="all"></et2-date-duration>
+            <et2-number label="Quantity" class="et2-label-fixed" statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
+            <et2-date-duration label="Pause time" id="ts_paused" displayFormat="hm" span="all"></et2-date-duration>
         </et2-box>
         <et2-box disabled="@ts_viewtype" span="all">
-            <et2-select-cat label="Category" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
+            <et2-select-cat label="Category" id="cat_id" class="et2-label-fixed" application="timesheet" emptyLabel="None"></et2-select-cat>
         </et2-box>
         <et2-box disabled="@ts_viewtype" span="all">
-            <et2-select-account label="Readable" id="ts_readable" emptyLabel="Give additional users access" multiple="true"></et2-select-account>
+            <et2-select-account label="Readable" id="ts_readable" class="et2-label-fixed" emptyLabel="Give additional users access" multiple="true"></et2-select-account>
         </et2-box>
 	</template>
 	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
@@ -93,7 +89,7 @@
 		<et2-date-time  id="time" required="true"/>
 	</template>
     <et2-template id="timesheet.edit" layout="edit" class="et2-label-fixed">
-        <et2-hbox full="true" exportparts="base" disabled="@ts_viewtype" class="dialogHeader">
+        <et2-hbox exportparts="base" disabled="@ts_viewtype" class="dialogHeader">
             <et2-textbox label="Title" id="ts_title" maxlength="255" class="et2_required et2-label-fixed" tabindex="1" span="4" placeholder="@ts_title_blur"></et2-textbox>
             <et2-number id="ts_id" readonly="true" precision="0"></et2-number>
             <et2-appicon src="timesheet"></et2-appicon>

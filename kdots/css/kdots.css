@@ -772,6 +772,7 @@ body egw-app,
   /* Opt-in growth */
 }
 [layout="stack"]::part(base) {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -791,7 +792,9 @@ body egw-app,
  */
 /* Common rules for 2 columns, may be extended */
 /* Base container */
+/* Used when the grid layout has to collapse down to one column */
 [layout="2-column"]::part(base) {
+  position: relative;
   display: grid;
   /* Auto-collapse to one column once a column would get too narrow */
   grid-template-columns: repeat(auto-fit, minmax(var(--column-min-width, 26rem), 1fr));
@@ -804,6 +807,12 @@ body egw-app,
 }
 /* One-column mode: keep label/input stacking consistent for all widgets */
 @container (max-width: calc(var(--column-min-width, 26rem) * 2 + var(--sl-spacing-large, 1rem))) {
+  [layout="2-column"]::part(base) {
+    grid-template-columns: 1fr;
+  }
+  [layout="2-column"] *.et2-label-fixed::part(form-control) {
+    flex-wrap: wrap;
+  }
   [layout="2-column"] *::part(form-control-label) {
     width: 100%;
     flex-basis: 100%;
@@ -815,13 +824,20 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
+  [layout="2-column"] et2-hbox::part(base) {
+    align-items: flex-end;
+  }
 }
 /* Responsive fallback: collapse to 1 column on small screens */
-/* var() is not fully supported yet */
+/* var() is not fully supported yet, so this is the fallback */
 @container (max-width: 600px) {
   [layout="2-column"]::part(base) {
     grid-template-columns: 1fr;
   }
+  [layout="2-column"] *.et2-label-fixed::part(form-control) {
+    flex-wrap: wrap;
+  }
   [layout="2-column"] *::part(form-control-label) {
     width: 100%;
     flex-basis: 100%;
@@ -832,6 +848,10 @@ body egw-app,
   }
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
+  }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
+  [layout="2-column"] et2-hbox::part(base) {
+    align-items: flex-end;
   }
 }
 /* var() is not fully supported yet */
@@ -839,6 +859,9 @@ body egw-app,
   [layout="2-column"]::part(base) {
     grid-template-columns: 1fr;
   }
+  [layout="2-column"] *.et2-label-fixed::part(form-control) {
+    flex-wrap: wrap;
+  }
   [layout="2-column"] *::part(form-control-label) {
     width: 100%;
     flex-basis: 100%;
@@ -850,11 +873,22 @@ body egw-app,
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
+  [layout="2-column"] et2-hbox::part(base) {
+    align-items: flex-end;
+  }
+}
+@container (min-width: var(--collapse-width, 600px)) {
+  /* Do not allow fixed width labels to wrap normally*/
+  *.et2-label-fixed::part(form-control) {
+    flex-wrap: nowrap;
+  }
 }
 [layout="2-column"] {
   height: 100%;
   container-type: inline-size;
   overflow-y: auto;
+  overflow-x: hidden;
   /* ---------- FULL-WIDTH ROWS ---------- */
   /* ---------- REST-WIDTH ROWS ---------- */
   /* ---------- DEFAULT COLUMN FLOW ---------- */
@@ -897,7 +931,9 @@ body egw-app,
   top: attr(y px);
 }
 /* Base container */
+/* Used when the grid layout has to collapse down to one column */
 [layout="edit"]::part(base) {
+  position: relative;
   display: grid;
   /* Auto-collapse to one column once a column would get too narrow */
   grid-template-columns: repeat(auto-fit, minmax(var(--column-min-width, 26rem), 1fr));
@@ -910,6 +946,12 @@ body egw-app,
 }
 /* One-column mode: keep label/input stacking consistent for all widgets */
 @container (max-width: calc(var(--column-min-width, 26rem) * 2 + var(--sl-spacing-large, 1rem))) {
+  [layout="edit"]::part(base) {
+    grid-template-columns: 1fr;
+  }
+  [layout="edit"] *.et2-label-fixed::part(form-control) {
+    flex-wrap: wrap;
+  }
   [layout="edit"] *::part(form-control-label) {
     width: 100%;
     flex-basis: 100%;
@@ -921,13 +963,20 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
+  [layout="edit"] et2-hbox::part(base) {
+    align-items: flex-end;
+  }
 }
 /* Responsive fallback: collapse to 1 column on small screens */
-/* var() is not fully supported yet */
+/* var() is not fully supported yet, so this is the fallback */
 @container (max-width: 600px) {
   [layout="edit"]::part(base) {
     grid-template-columns: 1fr;
   }
+  [layout="edit"] *.et2-label-fixed::part(form-control) {
+    flex-wrap: wrap;
+  }
   [layout="edit"] *::part(form-control-label) {
     width: 100%;
     flex-basis: 100%;
@@ -938,6 +987,10 @@ body egw-app,
   }
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
+  }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
+  [layout="edit"] et2-hbox::part(base) {
+    align-items: flex-end;
   }
 }
 /* var() is not fully supported yet */
@@ -945,6 +998,9 @@ body egw-app,
   [layout="edit"]::part(base) {
     grid-template-columns: 1fr;
   }
+  [layout="edit"] *.et2-label-fixed::part(form-control) {
+    flex-wrap: wrap;
+  }
   [layout="edit"] *::part(form-control-label) {
     width: 100%;
     flex-basis: 100%;
@@ -956,11 +1012,22 @@ body egw-app,
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
   }
+  /* When titles break, we want to align widgets at the bottom of the hbox */
+  [layout="edit"] et2-hbox::part(base) {
+    align-items: flex-end;
+  }
+}
+@container (min-width: var(--collapse-width, 600px)) {
+  /* Do not allow fixed width labels to wrap normally*/
+  *.et2-label-fixed::part(form-control) {
+    flex-wrap: nowrap;
+  }
 }
 [layout="edit"] {
   height: 100%;
   container-type: inline-size;
   overflow-y: auto;
+  overflow-x: hidden;
   /* ---------- FULL-WIDTH ROWS ---------- */
   /* ---------- REST-WIDTH ROWS ---------- */
   /* ---------- DEFAULT COLUMN FLOW ---------- */

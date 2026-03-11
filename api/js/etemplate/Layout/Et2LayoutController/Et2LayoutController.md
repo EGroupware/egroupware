@@ -18,7 +18,9 @@ Any widget that implements `Et2LayoutHost` ( {{ classesImplementing("Et2LayoutHo
 ### `--column-min-width`
 
 - Default: `26rem`
-- Used by `2-column` and `edit` to determine minimum column width before collapsing.
+- Used by `2-column` and `edit` to determine minimum column width before collapsing to 1 column.
+- `--column-min-width` and `--label-width` together determine
+  when the label / widget break point is reached.
 
 Example:
 
@@ -30,7 +32,7 @@ et2-template[layout="edit"] {
 
 ### `--collapse-width`
 
-- Default fallback: `600px`
+- Default: `600px`
 - Fallback container-query collapse point for narrower or legacy behavior.
 
 Example:
