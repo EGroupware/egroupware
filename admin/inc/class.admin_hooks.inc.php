@@ -46,95 +46,95 @@ class admin_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 
-			if (! $GLOBALS['egw']->acl->check('site_config_acce',1,'admin'))
+			if (!$GLOBALS['egw']->acl->check('site_config_acce', 1, 'admin'))
 			{
-				$file['Site Configuration']         = Egw::link('/index.php','menuaction=admin.admin_config.index&appname=admin&ajax=true');
+				$file['Site Configuration'] = Egw::link('/index.php', 'menuaction=admin.admin_config.index&appname=admin&ajax=true');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
+			if (!$GLOBALS['egw']->acl->check('account_access', 1, 'admin'))
 			{
-				$file['User Accounts']              = array(
+				$file['User Accounts'] = array(
 					Api\Etemplate\Widget\Tree::ID => '/accounts',
 					'icon' => Api\Image::find('addressbook', 'accounts'),
 				);
 			}
 
-			if (! $GLOBALS['egw']->acl->check('account_access',16,'admin'))
+			if (!$GLOBALS['egw']->acl->check('account_access', 16, 'admin'))
 			{
-				$file['Bulk changes']        = Egw::link('/index.php','menuaction=admin.admin_passwordreset.index&ajax=true');
-				$file['Application passwords']      = Egw::link('/index.php', 'menuaction=admin.EGroupware\\Admin\\Token.index&ajax=true');
+				$file['Bulk changes'] = Egw::link('/index.php', 'menuaction=admin.admin_passwordreset.index&ajax=true');
+				$file['Application passwords'] = Egw::link('/index.php', 'menuaction=admin.EGroupware\\Admin\\Token.index&ajax=true');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('group_access',1,'admin'))
+			if (!$GLOBALS['egw']->acl->check('group_access', 1, 'admin'))
 			{
-				$file['User Groups']                = array(
-					Api\Etemplate\Widget\Tree::ID                => '/groups',
+				$file['User Groups'] = array(
+					Api\Etemplate\Widget\Tree::ID => '/groups',
 					'icon' => Api\Image::find('addressbook', 'group'),
 					Api\Etemplate\Widget\Tree::AUTOLOAD_CHILDREN => 1,
 				);
 			}
 
-			if (! $GLOBALS['egw']->acl->check('global_categorie',1,'admin'))
+			if (!$GLOBALS['egw']->acl->check('global_categorie', 1, 'admin'))
 			{
-				$file['Global Categories']          = Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=phpgw&ajax=true');
+				$file['Global Categories'] = Egw::link('/index.php', 'menuaction=admin.admin_categories.index&appname=phpgw&ajax=true');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('mainscreen_messa',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_messa',2,'admin'))
+			if (!$GLOBALS['egw']->acl->check('mainscreen_messa', 1, 'admin') || !$GLOBALS['egw']->acl->check('mainscreen_messa', 2, 'admin'))
 			{
-				$file['Change Login Screen Message'] = Egw::link('/index.php','menuaction=admin.admin_messages.index');
+				$file['Change Login Screen Message'] = Egw::link('/index.php', 'menuaction=admin.admin_messages.index');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('current_sessions',1,'admin'))
+			if (!$GLOBALS['egw']->acl->check('current_sessions', 1, 'admin'))
 			{
-				$file['View Sessions'] = Egw::link('/index.php','menuaction=admin.admin_accesslog.sessions&ajax=true');
+				$file['View Sessions'] = Egw::link('/index.php', 'menuaction=admin.admin_accesslog.sessions&ajax=true');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('access_log_acces',1,'admin'))
+			if (!$GLOBALS['egw']->acl->check('access_log_acces', 1, 'admin'))
 			{
-				$file['View Access Log'] = Egw::link('/index.php','menuaction=admin.admin_accesslog.index&ajax=true');
+				$file['View Access Log'] = Egw::link('/index.php', 'menuaction=admin.admin_accesslog.index&ajax=true');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
+			if (!$GLOBALS['egw']->acl->check('applications_acc', 16, 'admin'))
 			{
 				$file['Clear cache and register hooks'] = array(
 					'no_lang' => true,
 					'link' => "javascript:app.admin.clear_cache();",
-				 );
+				);
 			}
 
-			if (! $GLOBALS['egw']->acl->check('asyncservice_acc',1,'admin'))
+			if (!$GLOBALS['egw']->acl->check('asyncservice_acc', 1, 'admin'))
 			{
-				$file['Asynchronous timed services'] = Egw::link('/index.php','menuaction=admin.admin_asyncservice.index');
+				$file['Asynchronous timed services'] = Egw::link('/index.php', 'menuaction=admin.admin_asyncservice.index');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('db_backup_access',1,'admin'))
+			if (!$GLOBALS['egw']->acl->check('db_backup_access', 1, 'admin'))
 			{
-				$file['DB backup and restore'] = Egw::link('/index.php','menuaction=admin.admin_db_backup.index');
+				$file['DB backup and restore'] = Egw::link('/index.php', 'menuaction=admin.admin_db_backup.index');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('info_access',1,'admin'))
+			if (!$GLOBALS['egw']->acl->check('info_access', 1, 'admin'))
 			{
-				$file['phpInfo']         = "javascript:egw.openPopup('" . Egw::link('/admin/phpinfo.php','',false) . "',960,600,'phpinfoWindow')";
+				$file['phpInfo'] = "javascript:egw.openPopup('" . Egw::link('/admin/phpinfo.php', '', false) . "',960,600,'phpinfoWindow')";
 			}
-			if (file_exists(EGW_SERVER_ROOT.'/swoolepush/test.php'))
+			if (file_exists(EGW_SERVER_ROOT . '/swoolepush/test.php'))
 			{
-				$file['Test Push']       = Egw::link('/swoolepush/test.php');
+				$file['Test Push'] = Egw::link('/swoolepush/test.php');
 			}
-			$file['Admin queue and history'] = Egw::link('/index.php','menuaction=admin.admin_cmds.index&ajax=true');
-			$file['Remote administration instances'] = Egw::link('/index.php','menuaction=admin.admin_cmds.remotes&ajax=true');
-			$file['Custom translation'] = Egw::link('/index.php','menuaction=admin.admin_customtranslation.index');
-			$file['Changelog and versions'] = Egw::link('/index.php','menuaction=api.EGroupware\\Api\\Framework\\About.index&ajax=true');
+			$file['Admin queue and history'] = Egw::link('/index.php', 'menuaction=admin.admin_cmds.index&ajax=true');
+			$file['Remote administration instances'] = Egw::link('/index.php', 'menuaction=admin.admin_cmds.remotes&ajax=true');
+			$file['Custom translation'] = Egw::link('/index.php', 'menuaction=admin.admin_customtranslation.index');
+			$file['Changelog and versions'] = Egw::link('/index.php', 'menuaction=api.EGroupware\\Api\\Framework\\About.index&ajax=true');
 
 			// disable usage statistic for now, as no more backend
 			//$file['Submit statistic information'] = Egw::link('/index.php','menuaction=admin.admin_statistics.submit');
 
 			if ($location == 'admin')
 			{
-				display_section($appname,$file);
+				display_section($appname, $file);
 			}
 			else
 			{
-				foreach($file as &$url)
+				foreach ($file as &$url)
 				{
 					if (is_array($url) && $url['link']) $url = $url['link'];
 				}
@@ -148,7 +148,7 @@ class admin_hooks
 	 */
 	function ajax_clear_cache()
 	{
-		if ($GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
+		if ($GLOBALS['egw']->acl->check('applications_acc', 16, 'admin'))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
@@ -156,9 +156,9 @@ class admin_hooks
 
 		Api\Image::invalidate();
 
-		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// Egw object in setup is limited
+		if (method_exists($GLOBALS['egw'], 'invalidate_session_cache'))    // Egw object in setup is limited
 		{
-			$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
+			$GLOBALS['egw']->invalidate_session_cache();    // in case with cache the egw_info array in the session
 		}
 		// allow apps to hook into "Admin >> Clear cache and register hooks"
 		Api\Hooks::process('clear_cache', array(), true);
@@ -188,37 +188,37 @@ class admin_hooks
 			'icon' => 'password',
 			'onExecute' => 'javaScript:app.admin.clear_credentials_handler',
 			'confirm' => 'Clear credentials',
-			'children' => array (
-				'clear_2fa' => array (
-					'caption'		  => 'Clear security tokens',
-					'icon'			  => 'password',
+			'children' => array(
+				'clear_2fa' => array(
+					'caption' => 'Clear security tokens',
+					'icon' => 'password',
 					'allowOnMultiple' => true
 				),
-				'clear_mail' => array (
-					'caption'		  => 'Clear mail credentials',
-					'icon'			  => 'mail',
+				'clear_mail' => array(
+					'caption' => 'Clear mail credentials',
+					'icon' => 'mail',
 					'allowOnMultiple' => true
 				)
 			)
 		);
 
-		if (!$GLOBALS['egw']->acl->check('current_sessions',1,'admin'))	// no rights to view
+		if (!$GLOBALS['egw']->acl->check('current_sessions', 1, 'admin'))    // no rights to view
 		{
 			$actions[] = array(
 				'description' => 'Login History',
-				'url'         => '/index.php',
-				'extradata'   => 'menuaction=admin.admin_accesslog.index',
-				'icon'        => 'timesheet',
+				'url' => '/index.php',
+				'extradata' => 'menuaction=admin.admin_accesslog.index',
+				'icon' => 'timesheet',
 			);
 		}
 
-		if (!$GLOBALS['egw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
+		if (!$GLOBALS['egw']->acl->check('account_access', 64, 'admin'))    // no rights to set ACL-rights
 		{
 			$actions[] = array(
 				'description' => 'Deny access',
-				'url'         => '/index.php',
-				'extradata'   => 'menuaction=admin.admin_denyaccess.list_apps',
-				'icon'        => 'cancel',
+				'url' => '/index.php',
+				'extradata' => 'menuaction=admin.admin_denyaccess.list_apps',
+				'icon' => 'cancel',
 			);
 		}
 
@@ -226,31 +226,31 @@ class admin_hooks
 		// we could add a deny check as for other admin functionality
 		{
 			$actions[] = array(
-				'id'      => 'mail_account',
+				'id' => 'mail_account',
 				'caption' => 'mail account',
-				'url'     => 'menuaction=admin.admin_mail.edit&account_id=$id',
-				'popup'   => '720x700',
-				'icon'    => 'mail/navbar',
+				'url' => 'menuaction=admin.admin_mail.edit&account_id=$id',
+				'popup' => '720x700',
+				'icon' => 'mail/navbar',
 			);
 
 			$emailadmin = Api\Mail\Account::get_default();
 			if ($emailadmin->acc_smtp_type && $emailadmin->acc_smtp_type !== 'EGroupware\Api\Mail\Smtp')
 			{
-				$actions[] = array (
-					'id'       => 'mail_activeAccounts',
-					'caption'  => '(de)activate mail accounts',
-					'icon'    => 'mail/navbar',
-					'children' => array (
-						'active' => array (
-							'caption'		  => 'activate',
-							'onExecute'	  	  => 'javaScript:app.admin.emailadminActiveAccounts',
-							'icon'			  => 'check',
+				$actions[] = array(
+					'id' => 'mail_activeAccounts',
+					'caption' => '(de)activate mail accounts',
+					'icon' => 'mail/navbar',
+					'children' => array(
+						'active' => array(
+							'caption' => 'activate',
+							'onExecute' => 'javaScript:app.admin.emailadminActiveAccounts',
+							'icon' => 'check',
 							'allowOnMultiple' => true
 						),
-						'inactive' => array (
-							'caption'		  => 'deactivate',
-							'onExecute'		  => 'javaScript:app.admin.emailadminActiveAccounts',
-							'icon'			  => 'bullet',
+						'inactive' => array(
+							'caption' => 'deactivate',
+							'onExecute' => 'javaScript:app.admin.emailadminActiveAccounts',
+							'icon' => 'bullet',
 							'allowOnMultiple' => true
 						)
 					)
@@ -274,5 +274,42 @@ class admin_hooks
 			$ret['fw_mobile_app_list'] = Api\Framework\Ajax::DEFAULT_MOBILE_APPS;
 		}
 		return $ret;
+	}
+
+	/**
+	 * Hook called for config validation
+	 *
+	 * @param array $data
+	 * @return ?string with error-message or NULL on success
+	 */
+	public static function configValidate($data)
+	{
+		//error_log(__FUNCTION__.'() vfs_image_dir='.array2string($vfs_image_dir).' was '.array2string($GLOBALS['egw_info']['server']['vfs_image_dir']));
+		if (!empty($data['vfs_image_dir']))
+		{
+			if (!Api\Vfs::file_exists($data['vfs_image_dir']) || !Api\Vfs::is_dir($data['vfs_image_dir']))
+			{
+				return lang('VFS directory "%1" NOT found!', $data['vfs_image_dir']);
+			}
+		}
+		if ($data['vfs_image_dir'] !== $GLOBALS['egw_info']['server']['vfs_image_dir'] ?? '')
+		{
+			Api\Image::invalidate();
+
+			// Set the global now, or the old value will get re-loaded
+			$GLOBALS['egw_info']['server']['vfs_image_dir'] = $data['vfs_image_dir'];
+		}
+		// normalize lists
+		sort($data['fw_mobile_app_list']);
+		$default_list = explode(',', Api\Framework\Ajax::DEFAULT_MOBILE_APPS);
+		sort($default_list);
+
+		if ($data['fw_mobile_app_list'] === $default_list)
+		{
+			Api\Egw::on_shutdown(static function()
+			{
+				Api\Config::save_value('fw_mobile_app_list', null, 'phpgwapi');
+			});
+		}
 	}
 }
