@@ -37,7 +37,7 @@
 				</row>
 				<row>
 					<et2-description  value="Enter the VFS-Path where additional images, icons or logos can be placed (and found by EGroupwares applications). The path MUST start with /,and be readable by all users" label="%s:"></et2-description>
-					<et2-textbox  id="newsettings[vfs_image_dir]"></et2-textbox>
+					<et2-vfs-path id="newsettings[vfs_image_dir]"></et2-vfs-path>
 				</row>
 				<row>
 					<et2-description  value="Offer to installing EGroupware as mail-handler" label="%s:"></et2-description>
