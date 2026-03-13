@@ -13,7 +13,6 @@
 				<column width="80"/>
 				<column/>
 				<column width="30"/>
-				<column width="1%"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -26,7 +25,6 @@
 					<nextmatch-header label="Color" id="color"/>
 					<nextmatch-sortheader label="Modified" id="last_mod"/>
 					<nextmatch-header align="center" label="Children" id="subs"/>
-					<nextmatch-header label="Actions" id="legacy_actions"/>
 				</row>
 				<row class="$row_cont[id] $row_cont[class]">
 					<et2-hbox  cellpadding="0" cellspacing="0" >
@@ -42,19 +40,14 @@
 					<et2-description  id="${row}[data][color]"></et2-description>
 					<et2-date-time  id="${row}[last_mod]" readonly="true"></et2-date-time>
 					<et2-description  align="center" id="${row}[subs]"></et2-description>
-					<et2-hbox  cellpadding="0" cellspacing="0" >
-						<et2-button  label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=$cont[edit_link]&amp;cat_id=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" image="edit" noSubmit="true"></et2-button>
-						<et2-button  label="Add sub" id="add[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=$cont[edit_link]&amp;parent=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" image="new" noSubmit="true"></et2-button>
-						<et2-button  statustext="Delete this category" label="Delete" id="delete[$row_cont[id]]" onclick="document.getElementById('exec[delete][cat_id]').value='$row_cont[id]'; set_style_by_class('tr','confirmSubs','visibility','$row_cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block'); return false;" image="delete" class="leftPad5" noSubmit="true"></et2-button>
-					</et2-hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
     <template id="admin.categories.index.header">
         <et2-toolbar id="cats-toolbar">
-			<et2-button label="Add" id="add" disabled="!@nm[add_link]" slot="prefix"
-				onclick="window.open('$cont[nm][add_link]','_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+            <et2-button label="Add" id="add" slot="prefix"
+                        onclick="egw.open_link(widget.getRoot().getArrayMgr('content').getEntry('add_link'),'_blank','600x380'); return false;" noSubmit="true"></et2-button>
 			<template template="api.search-button" slot="prefix"></template>
             <et2-select id="filter" noLang="1" emptyLabel="All categories" label="Filter" onchange="app.admin.changeNmFilter"></et2-select>
             <et2-select id="owner" emptyLabel="Owner" onchange="app.admin.changeNmFilter"></et2-select>
