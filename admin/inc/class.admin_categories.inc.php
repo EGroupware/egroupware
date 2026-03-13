@@ -538,7 +538,8 @@ class admin_categories
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'no_search'      => !self::$acl_search,
 					'row_id'         => 'id',
-					'dataStorePrefix' => 'categories' // Avoid conflict with user list when in admin
+					'dataStorePrefix'     => 'categories', // Avoid conflict with user list when in admin
+					'placeholder_actions' => ['add']
 				);
 				$content['nm']['filter'] = $this->appname == 'admin'?Api\Categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
 			}
@@ -604,7 +605,7 @@ class admin_categories
 		}
 		unset($content['nm']['no_filter']); // completely remove no_filter, so it shows up in the filter-template
 		$content['msg'] = $msg;
-		$content['nm']['add_link']= Framework::link('/index.php','menuaction='.$this->add_link . '&cat_id=&appname='.$appname);
+		$content['add_link'] = Framework::link('/index.php', 'menuaction=' . $this->add_link . '&cat_id=&appname=' . $appname);
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
 		$content['owner'] = '';
 

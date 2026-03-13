@@ -88,7 +88,7 @@ class AdminApp extends EgwApp
 		this.tree = null;
 		this.accounts = null;
 
-		this.nm2?.getDOMNode()?.removeEventListner('et2-filter', this.nmFilterChange);
+		this.nm2?.getDOMNode()?.removeEventListener('et2-filter', this.nmFilterChange);
 
 		// call parent
 		super.destroy(_app);
@@ -259,7 +259,10 @@ class AdminApp extends EgwApp
 		{
 			this.egw.app_header('');
 			// blank iframe, to not keep something running there
-			this.iframe.getDOMNode().contentDocument.location.href = 'about:blank';
+			if(this.iframe && this.iframe.getDOMNode())
+			{
+				this.iframe.getDOMNode().contentDocument.location.href = 'about:blank';
+			}
 		}
 		this.iframe.set_disabled(!_url || ajax);
 		this.nm.set_disabled(!!_url || ajax);
