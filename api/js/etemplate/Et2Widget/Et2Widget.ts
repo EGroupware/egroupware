@@ -357,13 +357,13 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			this.removeEventListener("click", this._handleClick);
 
 			// Delete all actions
-			if(this.getInstanceManager() && this.getInstanceManager().app)
+			if(this.id && this.getInstanceManager() && this.getInstanceManager().app)
 			{
 				try
 				{
 					let objectManager = egw_getAppObjectManager(false, this.getInstanceManager().app);
 					let widget_object = objectManager?.getObjectById(this.id);
-					if(widget_object)
+					if(widget_object && (widget_object.manager == this._actionManager || !this._actionManager))
 					{
 						widget_object.unregisterActions();
 						widget_object.clear();
