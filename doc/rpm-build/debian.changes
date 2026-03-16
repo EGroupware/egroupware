@@ -1,3 +1,32 @@
+egroupware-docker (26.3.20260316) hardy; urgency=low
+
+  * Admin: Fix categories Add button & placeholder ("No matches found") context menu add
+  * Api: Fix popup resize did not make popups larger
+  * Api: Fix customfields field filtering was still creating DOM nodes in some cases
+  * Api: Fix widgets with validation errors could require scrolling to find them
+  * Api: Fix multiple anonymous shares could conflict with the last opened blocking the earlier ones
+  * Api: Include translations when searching in local select options
+  * Api: Allow application entry customfields into the filter drawer
+  * Api: Avoid type error from edit group command if old value is not an array
+  * Api: Fix customfields field filtering was still creating DOM nodes in some cases
+  * Api: Fix printing large lists could cut off the last rows
+  * Calendar: fix highlighting of active favorite
+  * Calendar: delete unnecessary rows for timezone and participants, accounting for a huge amount of the history-log
+  * Calendar: Fix actions did not get fully cleaned up on destroy
+  * Mail: fix downloading attachment for mail on mobile
+  * Infolog: Fix context menu action 'close' did not close entry
+  * Infolog: Allow customfields to be configured as editable by responsible users as well
+  * InfoLog: was ignoring the search-type set in the filterbox and always use fulltext by default
+  * Invoices: add construction invoice types
+  * Invoices: position level surcharges or discounts incl. new placeholder {{PositionAllowances}}
+  * Invoices: document level surcharges and discounts
+  * Invoices: separate config to allow arbitrary invoice dates (off by default)
+  * kDots: fix open-tabs or active-tab preference to show "Users choice" as placeholder and not extra value
+  * Timesheet: timesheet showed wrong time (minutes) when stopping the project-specific timer
+  * ViDoTeach: Fix Add & edit material -> Live feedback session gave error
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 16 Mar 2026 14:08:17 +0100
+
 egroupware-docker (26.2.20260224) hardy; urgency=low
 
   * SECURITY and maintenance release: everyone is strongly adviced to update to this release, or 23.1.20260224
