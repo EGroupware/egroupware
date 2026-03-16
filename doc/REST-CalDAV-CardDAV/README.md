@@ -52,8 +52,9 @@ from the data of an `allprop` PROPFIND, allow browsing CalDAV/CardDAV tree with 
   * view and reply to eml files and 
   * vacation handling
 - [Timesheet](Timesheet.md)
-- [ViDoTeach](https://github.com/EGroupware/smallpart/blob/master/doc/RESP-API.md)
-- [ProjectManager](https://github.com/EGroupware/projectmanager/blob/master/doc/RESP-API.md)
+- [ViDoTeach](https://github.com/EGroupware/smallpart/blob/master/doc/REST-API.md)
+- [ProjectManager](https://github.com/EGroupware/projectmanager/blob/master/doc/REST-API.md)
+- [Invoices](Invoices.md) (EPL only)
 - [Links and attachments](Links-and-attachments.md)
   * linking application entries to other application entries
   * attaching files to application entries
