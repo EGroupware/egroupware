@@ -971,7 +971,7 @@ class infolog_bo
 				}
 			}
 		}
-		if (isset($this->group_owners[$values['info_type']]))
+		if(isset($this->group_owners[$values['info_type']]) && !$status_only)
 		{
 			$values['info_owner'] = $this->group_owners[$values['info_type']];
 			if (!$ignore_acl && !($this->grants[$this->group_owners[$values['info_type']]] & Acl::EDIT))
