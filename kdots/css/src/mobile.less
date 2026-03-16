@@ -53,6 +53,9 @@
 		  overflow: auto;
 		}
 
+		&::part(base) {
+		  z-index: calc(var(--sl-z-index-dialog) - 1);
+		}
 		&::part(panel) {
 		  /* allow dialog to be full screen */
 		  max-width: 100%;
