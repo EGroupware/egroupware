@@ -3416,7 +3416,7 @@ export class MailApp extends EgwApp
 
 		if (this.mail_isMainWindow)
 		{
-			mail_id = this.mail_currentlyFocussed;
+			mail_id = this.mail_currentlyFocussed || app.mail.mail_currentlyFocussed;
 			var p = widget.getParent();
 			attachments = p.getArrayMgr("content").data;
 		}
@@ -3445,7 +3445,7 @@ export class MailApp extends EgwApp
 					buttonLabel: this.egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
 					title: this.egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
 					filename: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
-				}, this.et2);
+				}, this.et2 ?? app.mail.et2);
 				// Serious violation of type - methodId is a string
 				// Set it to an array here bypassing normal checking
 				vfs_select.methodId = ids.length > 1 ? {ids: ids, action: 'attachment'} : {ids: ids[0], action: 'attachment'},
