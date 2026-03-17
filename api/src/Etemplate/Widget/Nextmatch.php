@@ -1330,6 +1330,11 @@ class Nextmatch extends Etemplate\Widget
 				// and use += to not overwrite regular validated filters
 				$validated[$form_name][$attr] += array_filter($value[$attr]??null?:[], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
 			}
+			// start- and enddate need to use date-widget validation to use the correct user-timezone
+			elseif ($attr === 'startdate' || $attr === 'enddate')
+			{
+				(new Date("<et2-datetime id=\"$attr\"></et2-datetime>"))->validate($form_name, [], [$form_name => $value], $validated);
+			}
 			// regular attribute
 			elseif (substr($attr, -1) !== ']')
 			{
