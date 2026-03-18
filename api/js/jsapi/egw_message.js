@@ -269,7 +269,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 			// if we have a framework template, let it deal with refresh, unless it returns a DOMwindow for us to refresh
 			if (win.framework && win.framework.refresh &&
-				!(win = win.framework.refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)))
+				!(win = win.framework.refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)) || !win.location)
 			{
 				return;
 			}
