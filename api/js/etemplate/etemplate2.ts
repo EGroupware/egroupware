@@ -349,6 +349,9 @@ export class etemplate2
 	{
 		this.DOMContainer.dispatchEvent(new Event("clear", {bubbles: true}));
 
+		// Clear any messages if this is a popup
+		document.body.querySelectorAll(".isPopup sl-alert").forEach(m => m.hide());
+
 		// Remove any handlers on window (resize)
 		if(this.uniqueId)
 		{
