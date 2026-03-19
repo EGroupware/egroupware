@@ -173,6 +173,14 @@ jobs:
             $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php -r 'include "/var/lib/egroupware/header.inc.php"; echo $GLOBALS["egw_domain"]["default"]["config_passwd"] ?? "";'
           )"
           if [ -z "$CONFIG_USER" ] || [ -z "$CONFIG_PASS" ]; then
+            CONFIG_USER="$(
+              $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php -r 'include "/var/lib/egroupware/header.inc.php"; echo $GLOBALS["egw_info"]["server"]["header_admin_user"] ?? "";'
+            )"
+            CONFIG_PASS="$(
+              $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php -r 'include "/var/lib/egroupware/header.inc.php"; echo $GLOBALS["egw_info"]["server"]["header_admin_password"] ?? "";'
+            )"
+          fi
+          if [ -z "$CONFIG_USER" ] || [ -z "$CONFIG_PASS" ]; then
             echo "::error::Missing setup credentials in header.inc.php"
             exit 1
           fi
