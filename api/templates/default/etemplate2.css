@@ -1876,7 +1876,7 @@ img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
 /**
 * Validation
 */
-.et2_required:not(.hasValue){
+.et2_required:not(.hasValue):not(:defined), .et2_required:defined:not(.hasValue)::part(form-control-input) {
     background-color: #ffffd0;
 }
 .et2_required:not(.hasValue)::part(base), .et2_required:not(.hasValue)::part(control),
