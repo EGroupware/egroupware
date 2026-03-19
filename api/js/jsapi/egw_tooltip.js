@@ -1,3 +1,4 @@
+/* jshint esversion: 11 */
 /**
  * EGroupware clientside API object
  *
@@ -25,24 +26,23 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 {
 	"use strict";
 
-	const tooltipped = [];
+	const tooltipped = new Set();
 	let tooltip_div = null;
 	let current_elem = null;
-	_wnd.addEventListener("pagehide", () =>
-	{
-		tooltipped.forEach(node =>
+	_wnd.addEventListener("pagehide", () => {
+		[...tooltipped].forEach(node =>
 		{
 			egw.tooltipUnbind(node);
 		});
-		tooltipped.splice(0, tooltipped.length);
-		if (tooltip_div && tooltip_div.off)
-		{
+		tooltipped.clear();
+
+		if (tooltip_div) {
 			tooltip_div.off();
+			tooltip_div.remove();
 			tooltip_div = null;
 		}
 		return null;
-	})
-
+	});
 
 	const time_delta = 100;
 	let show_delta = 0;
@@ -59,12 +59,22 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	};
 
 	/**
+	 * We might not get an actual DOMNode, but we want to work on the actual DOMNodes not e.g. a jquery Object
+	 */
+	function getActualNode(_elem)
+	{
+		return _elem instanceof Node ? _elem : (typeof _elem.get === "function" ? _elem.get(0) : _elem);
+	}
+
+	/**
 	 * Removes the tooltip_div from the DOM if it does exist.
 	 */
 	function hide()
 	{
-		if (tooltip_div != null)
+		if (tooltip_div)
 		{
+			tooltip_div.off();
+		    tooltip_div.remove();
 			tooltip_div = null;
 		}
 		_wnd.document.querySelectorAll("body > .egw_tooltip").forEach(t => t.remove());
@@ -147,7 +157,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 		else
 		{
-			tooltip_div.text(_html)
+			tooltip_div.text(_html);
 		}
 		tooltip_div.addClass("egw_tooltip");
 		jQuery(_wnd.document.body).append(tooltip_div);
@@ -164,7 +174,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 */
 	function showTooltipTimeout(node, event, options)
 	{
-		if (current_elem != null)
+		if (current_elem)
 		{
 			show_delta += time_delta;
 			if (show_delta < show_delay)
@@ -193,20 +203,21 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		tooltipBind: function(_elem, _html, _isHtml, _options) {
 
 			var options = {...optionsDefault, ...(_options||{})};
-			const elem = _elem instanceof Node ? _elem : (typeof _elem.get == "function" ? _elem.get(0) : _elem);
-			tooltipped.push(elem);
-			_elem = jQuery(_elem);
+			const elem = getActualNode(_elem);
+			const jq_elem = jQuery(_elem);
+			tooltipped.add(elem);
+			jq_elem.off('.tooltip');
 			if (_html && !egwIsMobile())
 			{
-				_elem.bind('mouseenter.tooltip', function(e) {
-					if (_elem != current_elem)
+				jq_elem.on('mouseenter.tooltip', function(e) {
+					if (elem !== current_elem)
 					{
 						//Prepare the tooltip
 						prepare(_html, _isHtml, options);
 
 						// Set the current element the mouse is over and
 						// initialize the position variables
-						current_elem = _elem;
+						current_elem = elem;
 						show_delta = 0;
 						x = e.clientX;
 						y = e.clientY;
@@ -218,7 +229,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					return false;
 				});
 
-				_elem.bind('mouseleave.tooltip', function(e) {
+				jq_elem.on('mouseleave.tooltip', function(e) {
 					current_elem = null;
 					show_delta = 0;
 					if (options.close.call(this, e, tooltip_div)) return;
@@ -228,7 +239,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					}
 				});
 
-				_elem.bind('mousemove.tooltip', function(e) {
+				jq_elem.on('mousemove.tooltip', function(e) {
 					//Calculate the distance the mouse took since the last call of mousemove
 					var dx = x - e.clientX;
 					var dy = y - e.clientY;
@@ -253,15 +264,16 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * removed. _elem has to be a jQuery node.
 		 */
 		tooltipUnbind: function(_elem) {
-			_elem = jQuery(_elem);
-			if (current_elem == _elem) {
+			const elem = getActualNode(_elem);
+			const jq_elem = jQuery(_elem);
+			if (current_elem === elem) {
 				hide();
 				current_elem = null;
 			}
 
 			// Unbind all "tooltip" events from the given element
-			_elem.unbind('.tooltip');
-			tooltipped.splice(tooltipped.indexOf(_elem), 1);
+			jq_elem.off('.tooltip');
+			tooltipped.delete(elem);
 		},
 
 		tooltipDestroy: function () {
@@ -269,6 +281,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				tooltip_div.fadeOut(100);
 				tooltip_div.remove();
+				tooltip_div = null;
 			}
 		},
 
