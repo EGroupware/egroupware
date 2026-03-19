@@ -21,6 +21,7 @@ import {repeat} from "lit/directives/repeat.js";
 import {classMap} from "lit/directives/class-map.js";
 import {state} from "lit/decorators/state.js";
 import {customElement} from "lit/decorators/custom-element.js";
+import { egw } from "../../jsapi/egw_global";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElement))
@@ -340,6 +341,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	protected get dropdown() { return this.select; }
 
+  private boundTooltips:Set<HTMLElement>=new Set()
+
 	constructor()
 	{
 		super();
@@ -383,12 +386,27 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			// requestUpdate("value") above means we need to check tags again
 			this.select?.updateComplete.then(() => {this.checkTagOverflow(); });
+
+      //bind tooltips on each of the sl-option elements if there is a title set for the option (via sel_options in php mostly)
+      //in render we set the correct translation as our aria-label so we can use that here
+      this.select?.getAllOptions()?.forEach((option: HTMLElement) => {
+        if (option.ariaLabel && !this.boundTooltips.has(option)) {
+          egw(window).tooltipBind(option, option.ariaLabel, false);
+          this.boundTooltips.add(option);
+        }
+      });
 		});
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+
+    for (const boundTooltipsKey of this.boundTooltips)
+    {
+        egw(window).tooltipUnbind(boundTooltipsKey);
+    }
+    this.boundTooltips.clear()
 
 		this.removeEventListener("focusin", this.handleFocus);
 		this.removeEventListener("sl-change", this._triggerChange);
@@ -1016,13 +1034,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		const value = (<string>option.value).replaceAll(" ", "___");
-		const classes = option.class ? Object.fromEntries((option.class).trim().split(" ").map(k => [k, true])) : {};
+		const classes = option.class ?
+      Object.fromEntries((option.class).trim().split(" ").map(k => [k, true])) : {};
 		return html`
             <sl-option
                     part="option"
                     exportparts="prefix:tag__prefix, suffix:tag__suffix"
                     value="${value}"
-                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                    aria-label="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                     class=${classMap({
                         "match": this.searchEnabled && (option.isMatch || false),
                         "no-match": this.searchEnabled && option.isMatch == false,
@@ -1190,7 +1209,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 <slot name="prefix" slot="prefix"></slot>
                 <slot></slot>
             </sl-select>
-            <div slot="helpText">${this._helpTextTemplate()}</div>
+            <div slot="help-text">${this._helpTextTemplate()}</div>
 		`;
 	}
 }
