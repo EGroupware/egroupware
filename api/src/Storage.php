@@ -567,11 +567,11 @@ class Storage extends Storage\Base
 	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard ='' appended before and after each criteria
 	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param array $filter =[] if set (!=[]]) col-data pairs, to be and-ed (!) into the query without wildcards
 	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
 	 *	"LEFT JOIN table2 ON (x=y AND z=o)", Note: there's no quoting done on $join, you are responsible for it!!!
 	 */
-	protected function process_search(&$criteria, &$only_keys=True, &$order_by='', &$extra_cols='', &$wildcard='', &$op='AND', &$filter=null, &$join='')
+	protected function process_search(&$criteria, &$only_keys = True, &$order_by = '', &$extra_cols = '', &$wildcard = '', &$op = 'AND', &$filter = [], &$join = '')
 	{
 		if ($only_keys === false)
 		{
@@ -749,7 +749,7 @@ class Storage extends Storage\Base
 			}
 		}
 		// check if we filter by a custom field
-		if (is_array($filter))
+		if(is_array($filter) && count($filter))
 		{
 			$_cfnames = array_keys($this->customfields);
 			$extra_filter = null;
