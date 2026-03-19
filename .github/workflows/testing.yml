@@ -32,6 +32,7 @@ jobs:
           docker run --rm --user "$(id -u):$(id -g)" \
             -v "$GITHUB_WORKSPACE/sources":/app -w /app \
             composer install --no-interaction --ignore-platform-reqs --dev
+          php "$GITHUB_WORKSPACE/sources/install-cli.php" --git pull
 
       - name: Start CI containers
         run: |
