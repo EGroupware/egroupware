@@ -54,9 +54,18 @@ jobs:
           SUCCESS_MSG="EGroupware successful installed"
 
           echo "Waiting for database to be ready..."
-          until $COMPOSE exec -T db mariadb-admin ping -h "db" --silent; do
+          until $COMPOSE exec -T db mariadb-admin ping -h "db" --silent --user=root --password="$EGW_DB_ROOT_PW"; do
+            if [ "$ELAPSED" -ge "$MAX_WAIT" ]; then
+              echo "::error::Timed out waiting for EGroupware installation"
+              echo "==== egroupware logs ===="
+              $COMPOSE logs egroupware || true
+              echo "==== database logs ===="
+              $COMPOSE logs db || true
+              exit 1
+            fi
             echo "  ... waiting for DB"
             sleep "$WAIT_INTERVAL"
+            ELAPSED=$((ELAPSED + WAIT_INTERVAL))
           done
 
           echo "Waiting for EGroupware installation log message..."
