@@ -805,6 +805,14 @@ body egw-app,
   height: 100%;
   min-height: 0;
 }
+[layout="2-column"] {
+  /* Do not allow fixed width labels to wrap normally*/
+}
+[layout="2-column"] *.et2-label-fixed::part(form-control),
+[layout="2-column"] et2-box > .et2-label-fixed::part(form-control),
+[layout="2-column"] et2-hbox > .et2-label-fixed::part(form-control) {
+  flex-wrap: nowrap;
+}
 /* One-column mode: keep label/input stacking consistent for all widgets */
 @container (max-width: calc(var(--column-min-width, 26rem) * 2 + var(--sl-spacing-large, 1rem))) {
   [layout="2-column"]::part(base) {
@@ -876,12 +884,6 @@ body egw-app,
   /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
-  }
-}
-@container (min-width: var(--collapse-width, 600px)) {
-  /* Do not allow fixed width labels to wrap normally*/
-  *.et2-label-fixed::part(form-control) {
-    flex-wrap: nowrap;
   }
 }
 [layout="2-column"] {
@@ -944,6 +946,14 @@ body egw-app,
   height: 100%;
   min-height: 0;
 }
+[layout="edit"] {
+  /* Do not allow fixed width labels to wrap normally*/
+}
+[layout="edit"] *.et2-label-fixed::part(form-control),
+[layout="edit"] et2-box > .et2-label-fixed::part(form-control),
+[layout="edit"] et2-hbox > .et2-label-fixed::part(form-control) {
+  flex-wrap: nowrap;
+}
 /* One-column mode: keep label/input stacking consistent for all widgets */
 @container (max-width: calc(var(--column-min-width, 26rem) * 2 + var(--sl-spacing-large, 1rem))) {
   [layout="edit"]::part(base) {
@@ -1015,12 +1025,6 @@ body egw-app,
   /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
-  }
-}
-@container (min-width: var(--collapse-width, 600px)) {
-  /* Do not allow fixed width labels to wrap normally*/
-  *.et2-label-fixed::part(form-control) {
-    flex-wrap: nowrap;
   }
 }
 [layout="edit"] {
