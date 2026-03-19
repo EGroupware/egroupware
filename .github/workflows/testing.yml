@@ -54,7 +54,7 @@ jobs:
           SUCCESS_MSG="EGroupware successful installed"
 
           echo "Waiting for database to be ready..."
-          until $COMPOSE exec -T db mysqladmin ping -h "db" --silent; do
+          until $COMPOSE exec -T db mariadb-admin ping -h "db" --silent; do
             echo "  ... waiting for DB"
             sleep "$WAIT_INTERVAL"
           done
