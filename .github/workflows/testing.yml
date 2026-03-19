@@ -130,7 +130,7 @@ jobs:
           echo "EGW_SRC_DIR=$APP_DIR" >> "$GITHUB_ENV"
           echo "Detected EGW_SRC_DIR=$APP_DIR"
 
-      - name: Configure phpunit test user
+      - name: Configure for phpunit test (apps, user)
         run: |
           set -euo pipefail
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
@@ -165,6 +165,8 @@ jobs:
 
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
             --edit-user "sysop,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
+          # Ensure test app is installed for tests that rely on its schema.
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php --update default,sysop,"$SYSOP_PASS",no,test
 
       - name: Run PHPUnit
         run: |
@@ -172,8 +174,6 @@ jobs:
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          # Ensure test app is installed for tests that rely on its schema.
-          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php --update default,sysop,"$SYSOP_PASS",no,test
           # Run tests
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php vendor/bin/phpunit --configuration doc/phpunit.xml
 
