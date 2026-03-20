@@ -1905,6 +1905,8 @@ class addressbook_ui extends addressbook_bo
 			{
 				$query['searchletter'] = '';		// reset lettersearch if viewing the contacts of one group (org or duplicates)
 			}
+			// do NOT allow col_filter[tid] to be NULL, as it show all contacts incl. deleted ones, which is not wanted in the UI
+			$query['col_filter']['tid'] ??= '';
 			// save the state of the index in the user prefs
 			$state = serialize(array(
 				'filter'        => $query['filter'] ?? '',
