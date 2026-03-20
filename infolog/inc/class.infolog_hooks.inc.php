@@ -249,6 +249,16 @@ class infolog_hooks
 				'admin'  => False,
 				'default'=> '',
 			),
+			'crmDetails' => array(
+				'type'   => 'select',
+				'label'  => 'Always use details for CRM',
+				'name'   => 'crmDetails',
+				'values' => array(
+					''           => 'Same as infolog list',
+					'details'    => 'Always use details for CRM',
+					'no-details' => 'Always use no details for CRM',
+				)
+			),
 			/* disabled until we have a home app again
 			'homeShowEvents' => array(
 				'type'   => 'select',

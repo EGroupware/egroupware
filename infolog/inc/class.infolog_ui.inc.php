@@ -1102,6 +1102,11 @@ class infolog_ui
 		{
 			$values['nm']['filter2'] = $this->prefs['nextmatch-infolog.index.rows-details-pref'];
 		}
+		// CRM view details preference
+		if($called_as && $this->prefs['crmDetails'])
+		{
+			$values['nm']['filter2'] = $this->prefs['crmDetails'] == 'details' ? 'all' : '';
+		}
 
 		// disable columns for main entry as set in the pref for details or no details
 		$values['nm']['columnselection_pref'] = 'nextmatch-infolog.index.rows' . ($values['nm']['filter2'] == 'all' ? '-details' : '');
