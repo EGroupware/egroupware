@@ -253,8 +253,9 @@ class infolog_hooks
 				'type'   => 'select',
 				'label'  => 'Always use details for CRM',
 				'name'   => 'crmDetails',
+				'help'   => 'Select if CRM view should use the same value for (no) details like Infolog or always no or details',
 				'values' => array(
-					''           => 'Same as infolog list',
+					'list' => 'Same as infolog list',
 					'details'    => 'Always use details for CRM',
 					'no-details' => 'Always use no details for CRM',
 				)

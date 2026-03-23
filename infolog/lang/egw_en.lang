@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	en	Allow to save entries
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	Allows to set the status of an entry, e.g. set a ToDo to done if it's finished. Values depend on entry type.
 alternatives	infolog	en	Alternatives
 always show them	infolog	en	Always show them
+always use details for crm	infolog	en	Always use details for CRM
+always use no details for crm	infolog	en	Always use no details for CRM
 application mail expected but got: %1	infolog	en	Application email expected but got: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	en	Apply the action on the whole query, NOT only the shown entries!
 apply the changes	infolog	en	Apply the changes
@@ -413,6 +415,7 @@ responsible user, priority	infolog	en	Responsible user, priority
 returns a list / search for records.	infolog	en	Returns a list / search for records.
 rights for the responsible	infolog	en	Rights for the responsible
 rows	infolog	en	Rows
+same as infolog list	infolog	en	Same as Infolog list
 same day	infolog	en	Same day
 save	infolog	en	Save
 saves the changes made and leaves	infolog	en	Saves the changes and leaves
@@ -430,6 +433,7 @@ select a responsible user: a person you want to delegate this task	infolog	en	Se
 select a typ to edit it's status-values or delete it	infolog	en	Select a type to edit it's status values or delete it
 select an app to search in	infolog	en	Select application to search in
 select an entry to link with	infolog	en	Select an entry to link with
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	en	Select if CRM view should use the same value for (no) details like Infolog or always no or details
 select multiple contacts for a further action	infolog	en	Select multiple contacts for a further action
 select new category	infolog	en	Select new category
 select to filter by owner	infolog	en	Select to filter by owner
