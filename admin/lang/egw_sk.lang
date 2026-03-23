@@ -654,7 +654,7 @@ number of sessions / egroupware logins in the last 30 days	admin	sk	Počet relá
 number of users	admin	sk	Počet používateľov
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	sk	Očíslovať aplikácie zaradom. Ak nie sú očíslované zaradom, zoradenie aplikácií môže fungovať chybne. Táto akcia nezmení poradie aplikácií.
 nummeric account id	admin	sk	Číselné ID účtu
-oauth authentiction	admin	sk	Overovanie OAuth
+oauth authentication'	admin	sk	Overovanie OAuth
 offer to installing egroupware as mail-handler	admin	sk	Ponuka inštalácie EGroupware ako mail-handler
 official egroupware usage statistic	admin	sk	Oficiálna štatistika používania EGroupware
 one day	admin	sk	Jeden deň
@@ -842,7 +842,7 @@ submit to egroupware.org	admin	sk	Odoslať do egroupware.org
 subtype	admin	sk	Podtyp
 success	admin	sk	Úspešne
 successful connected to %1 server%2.	admin	sk	Pripojenie na %1 server %2 bolo úspešne nadviazané.
-successfull, but no refresh-token received!	admin	sk	Úspech, ale NEdostali sme obnovovací token!
+successful, but no refresh-token received!	admin	sk	Úspech, ale NEdostali sme obnovovací token!
 switch back to standard identity to save account.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie účtu.
 switch back to standard identity to save other account data.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie údajov účtu.
 switch it off, if users are randomly thrown out	admin	sk	Vypnite to, ak sú používatelia náhodne odpájaní

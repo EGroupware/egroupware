@@ -518,7 +518,7 @@ number of row for a multiline inputfield or line of a multi-select-box	admin	fi	
 number of sessions / egroupware logins in the last 30 days	admin	fi	Istuntojen / sisäänkirjautumisien määrä kuukauden ajalta
 number of users	admin	fi	Käyttäjien lukumäärä
 nummeric account id	admin	fi	Numeerinen käyttäjätilin ID
-oauth authentiction	admin	fi	OAuth-todennus
+oauth authentication'	admin	fi	OAuth-todennus
 offer to installing egroupware as mail-handler	admin	fi	Tarjous EGroupware asentamisesta sähköpostin käsittelijäksi
 official egroupware usage statistic	admin	fi	Virallinen EGroupwaren käyttötilasto
 one day	admin	fi	Yksi päivä
@@ -659,7 +659,7 @@ submit statistic information	admin	fi	Lähetä esitetty tieto
 submit the search string	admin	fi	Hae merkkijonoa
 subtype	admin	fi	Alamuoto
 success	admin	fi	Onnistunut
-successfull, but no refresh-token received!	admin	fi	Onnistui, mutta EI päivitystunnistetta vastaanotettu!
+successful, but no refresh-token received!	admin	fi	Onnistui, mutta EI päivitystunnistetta vastaanotettu!
 switch it off, if users are randomly thrown out	admin	fi	Ota pois käytöstä, jos käyttäjät ovat satunnaisesti hylätty
 that loginid has already been taken	admin	fi	Käyttäjätunnus on jo käytössä.
 the api is current	admin	fi	API on ajan tasalla

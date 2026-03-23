@@ -389,7 +389,7 @@ start	admin	ko	시작
 start testjob!	admin	ko	테스트작업(TestJob) 시작
 submit changes	admin	ko	변경된것을 보냄(Submit)
 submit the search string	admin	ko	검색 문자열 보냄
-successfull, but no refresh-token received!	admin	ko	성공했지만 새로고침 토큰이 수신되지 않았습니다!
+successful, but no refresh-token received!	admin	ko	성공했지만 새로고침 토큰이 수신되지 않았습니다!
 that loginid has already been taken	admin	ko	이 접속ID는 이미 사용중입니다
 the api is current	admin	ko	API는 현재버전
 the api requires an upgrade	admin	ko	API의 업그레이드가 필요

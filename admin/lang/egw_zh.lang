@@ -430,7 +430,7 @@ no plain text part found	admin	zh	未找到纯文本部分
 no supported imap authentication method could be found.	admin	zh	无支持 IMAP 认证的方法可以找到。
 note: ssl available only if php is compiled with curl support	admin	zh	注意：只有当php编译与curl支时，SSL有效
 number of row for a multiline inputfield or line of a multi-select-box	admin	zh	多行输入字段的列数或多选框的行数
-oauth authentiction	admin	zh	OAuth认证
+oauth authentication'	admin	zh	OAuth认证
 offer to installing egroupware as mail-handler	admin	zh	提供安装EGroupware作为邮件处理程序
 one day	admin	zh	一天
 one hour	admin	zh	一小时
@@ -550,7 +550,7 @@ start testjob!	admin	zh	启动测试任务！
 submit changes	admin	zh	提交更改
 submit the search string	admin	zh	提交查找字符串
 subtype	admin	zh	子类型
-successfull, but no refresh-token received!	admin	zh	成功，但未收到刷新令牌！
+successful, but no refresh-token received!	admin	zh	成功，但未收到刷新令牌！
 switch it off, if users are randomly thrown out	admin	zh	如果用户任意地退出，请将它关闭
 that loginid has already been taken	admin	zh	该登录名已被使用
 the api is current	admin	zh	当前 API

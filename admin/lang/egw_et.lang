@@ -257,7 +257,7 @@ no matches found	admin	et	Sobivaid ei leitud!
 no permission to add groups	admin	et	Pole õigusi gruppide lisamiseks!
 no permission to add users	admin	et	Pole õigusi kasutajate lisamiseks!
 no permission to create groups	admin	et	Pole õigusi gruppide tegemiseks!
-oauth authentiction	admin	et	OAuth autentimine
+oauth authentication'	admin	et	OAuth autentimine
 offer to installing egroupware as mail-handler	admin	et	Pakkumine EGroupware'i paigaldamiseks posti käitlejana
 one day	admin	et	Üks päev
 one hour	admin	et	Üks tund
@@ -315,7 +315,7 @@ sorry, that group name has already been taken.	admin	et	Vabandust, see grupinimi
 ssl	admin	et	SSL
 start	admin	et	Start
 submit changes	admin	et	Salvesta Muudatused
-successfull, but no refresh-token received!	admin	et	Edukalt, kuid värskendustokenit ei ole saadud!
+successful, but no refresh-token received!	admin	et	Edukalt, kuid värskendustokenit ei ole saadud!
 that loginid has already been taken	admin	et	See logimis-ID on juba võetud.
 the api is current	admin	et	API on kaasaegne
 the api requires an upgrade	admin	et	API vajab uuendamist

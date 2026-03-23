@@ -590,7 +590,7 @@ number of sessions / egroupware logins in the last 30 days	admin	ja	Number of se
 number of users	admin	ja	ユーザ数
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	ja	Number the applications serially. If they are not numbered serially, sorting the applications could work wrong. This will not change the application's order.
 nummeric account id	admin	ja	アカウント IDの数値
-oauth authentiction	admin	ja	OAuth Authentiction
+oauth authentication'	admin	ja	oauth authentication'
 offer to installing egroupware as mail-handler	admin	ja	メールハンドラとしてEGroupwareをインストールすることを提案する。
 official egroupware usage statistic	admin	ja	公式 EGroupware 使用量統計
 one day	admin	ja	1日
@@ -757,7 +757,7 @@ submit to egroupware.org	admin	ja	egroupware.org に送信
 subtype	admin	ja	サブ・タイプ
 success	admin	ja	成功
 successful connected to %1 server%2.	admin	ja	%1 サーバー %2 に接続しました。
-successfull, but no refresh-token received!	admin	ja	成功しましたが、リフレッシュ・トークンを受信していません！
+successful, but no refresh-token received!	admin	ja	成功しましたが、リフレッシュ・トークンを受信していません！
 switch back to standard identity to save account.	admin	ja	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	ja	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	ja	ユーザがランダムに強制ログアウトしてしまう場合は無効にしてください

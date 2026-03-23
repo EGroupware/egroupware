@@ -83,7 +83,7 @@ lifetime of 'remember me' token	admin	ro	Durata de viață a jetonului "Remember
 log user-agent and action of changes in history-log of entries	admin	ro	Înregistrarea agentului utilizatorului și a acțiunilor modificate în istoricul înregistrărilor
 login history	admin	ro	Istoricul autentificărilor
 no limit	admin	ro	Fără limită
-oauth authentiction	admin	ro	Autentificare OAuth
+oauth authentication'	admin	ro	Autentificare OAuth
 offer to installing egroupware as mail-handler	admin	ro	Ofertă pentru instalarea EGroupware ca mail-handler
 one day	admin	ro	O zi
 one hour	admin	ro	O oră
@@ -103,7 +103,7 @@ show groups in container based on	admin	ro	Afișarea grupurilor în container pe
 smtp only: to create only an smtp account	admin	ro	Creați cont numai SMTP fără IMAP
 soap	admin	ro	SOAP
 ssl	admin	ro	SSL
-successfull, but no refresh-token received!	admin	ro	Reușită, dar NU s-a primit niciun refresh-token!
+successful, but no refresh-token received!	admin	ro	Reușită, dar NU s-a primit niciun refresh-token!
 token created.	admin	ro	Token creat.
 token not found!	admin	ro	Token-ul nu a fost găsit!
 token revoked.	admin	ro	Token revocat.

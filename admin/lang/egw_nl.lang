@@ -453,7 +453,7 @@ no plain text part found	admin	nl	Geen platte tekst onderdeel gevonden
 no supported imap authentication method could be found.	admin	nl	Geen ondersteunde IMAP authenticatiemethode kon gevonden worden.
 note: ssl available only if php is compiled with curl support	admin	nl	Let op: SSL is alleen beschikbaar als PHP is gecompileerd met Curl ondersteuning.
 number of row for a multiline inputfield or line of a multi-select-box	admin	nl	Aantal rijen voor een meer-regelig invoerveld of regel in een meervoudige selectie veld
-oauth authentiction	admin	nl	OAuth authenticatie
+oauth authentication'	admin	nl	OAuth authenticatie
 offer to installing egroupware as mail-handler	admin	nl	Aanbod voor installatie van EGroupware als mail-handler
 one day	admin	nl	1 dag
 one hour	admin	nl	1 uur
@@ -579,7 +579,7 @@ start testjob!	admin	nl	Testtaak starten
 submit changes	admin	nl	Wijzigingen toepassen
 submit the search string	admin	nl	Verzend de zoekopdracht
 subtype	admin	nl	Subtype
-successfull, but no refresh-token received!	admin	nl	Succesvol, maar GEEN refresh-token ontvangen!
+successful, but no refresh-token received!	admin	nl	Succesvol, maar GEEN refresh-token ontvangen!
 switch it off, if users are randomly thrown out	admin	nl	Schakel het uit, wanneer gebruiker willekeurig eruit gegooid worden
 that loginid has already been taken	admin	nl	Die loginnaam is reeds in gebruik!
 the api is current	admin	nl	De API is actueel.

@@ -388,7 +388,7 @@ no permission to create groups	admin	pt	Sem permissão para criar grupos
 no plain text part found	admin	pt	Nenhuma parte de texto simples encontrado
 note: ssl available only if php is compiled with curl support	admin	pt	Nota: SSL disponível apenas se o PHP estiver compilado com suporte Curl.
 number of row for a multiline inputfield or line of a multi-select-box	admin	pt	Número de linhas para um campo multi-linha ou linhas de uma caixa de selecção múltipla.
-oauth authentiction	admin	pt	Autenticação OAuth
+oauth authentication'	admin	pt	Autenticação OAuth
 offer to installing egroupware as mail-handler	admin	pt	Oferta de instalação de EGroupware como correio
 one day	admin	pt	Um dia
 one hour	admin	pt	Uma hora
@@ -495,7 +495,7 @@ start testjob!	admin	pt	Iniciar trabalho de teste!
 submit changes	admin	pt	Enviar alterações
 submit the search string	admin	pt	Enviar termo de pesquisa
 subtype	admin	pt	Subtipo
-successfull, but no refresh-token received!	admin	pt	Bem sucedido, mas NÃO foi recebido nenhum token de atualização!
+successful, but no refresh-token received!	admin	pt	Bem sucedido, mas NÃO foi recebido nenhum token de atualização!
 that loginid has already been taken	admin	pt	Esse nome de utilizador já existe
 the api is current	admin	pt	A base (API) do EGroupware está actualizada
 the api requires an upgrade	admin	pt	A base (API) do EGroupware precisa ser actualizada

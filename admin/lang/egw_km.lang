@@ -628,7 +628,7 @@ number of sessions / egroupware logins in the last 30 days	admin	km	ចំនួ
 number of users	admin	km	ចំនួនអ្នកប្រើប្រាស់
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	km	ដាក់លេខកម្មវិធីជាស៊េរី។ ប្រសិនបើ​ពួកវា​មិន​ត្រូវ​បាន​ដាក់​លេខ​ជា​ស៊េរី ការ​តម្រៀប​កម្មវិធី​អាច​ដំណើរការ​ខុស។ វានឹងមិនផ្លាស់ប្តូរលំដាប់នៃកម្មវិធីនោះទេ។
 nummeric account id	admin	km	លេខសម្គាល់គណនី
-oauth authentiction	admin	km	ការផ្ទៀងផ្ទាត់ OAuth
+oauth authentication'	admin	km	ការផ្ទៀងផ្ទាត់ OAuth
 offer to installing egroupware as mail-handler	admin	km	ផ្តល់ជូនការដំឡើង EGroupware ជាអ្នកដោះស្រាយសំបុត្រ
 official egroupware usage statistic	admin	km	ស្ថិតិប្រើប្រាស់ EGroupware ផ្លូវការ
 one day	admin	km	មួយថ្ងៃ
@@ -804,7 +804,7 @@ submit to egroupware.org	admin	km	ដាក់ស្នើទៅ egroupware.org
 subtype	admin	km	ប្រភេទរង
 success	admin	km	ជោគជ័យ
 successful connected to %1 server%2.	admin	km	បានភ្ជាប់ទៅ%1 server%2 ដោយជោគជ័យ។
-successfull, but no refresh-token received!	admin	km	ជោគជ័យ ប៉ុន្តែ​មិន​បាន​ទទួល​ថូខឹន​ថ្មី​ទេ!
+successful, but no refresh-token received!	admin	km	ជោគជ័យ ប៉ុន្តែ​មិន​បាន​ទទួល​ថូខឹន​ថ្មី​ទេ!
 switch back to standard identity to save account.	admin	km	ប្តូរទៅអត្តសញ្ញាណស្តង់ដារវិញ ដើម្បីរក្សាទុកគណនី។
 switch back to standard identity to save other account data.	admin	km	ប្តូរទៅអត្តសញ្ញាណស្តង់ដារវិញ ដើម្បីរក្សាទុកទិន្នន័យគណនីផ្សេងទៀត។
 switch it off, if users are randomly thrown out	admin	km	បិទវា ប្រសិនបើអ្នកប្រើប្រាស់ត្រូវបានចេញដោយចៃដន្យ
