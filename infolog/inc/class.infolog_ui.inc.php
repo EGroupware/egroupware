@@ -1103,7 +1103,7 @@ class infolog_ui
 			$values['nm']['filter2'] = $this->prefs['nextmatch-infolog.index.rows-details-pref'];
 		}
 		// CRM view details preference
-		if($called_as && $this->prefs['crmDetails'])
+		if($called_as && $this->prefs['crmDetails'] && $this->prefs['crmDetails'] !== 'list')
 		{
 			$values['nm']['filter2'] = $this->prefs['crmDetails'] == 'details' ? 'all' : '';
 		}
