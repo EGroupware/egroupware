@@ -1179,6 +1179,11 @@ class mail_compose
 		{
 			$content['mailidentity'] = $presetSig = (strtolower($_REQUEST['signature']) == 'no' ? -2 : -1);
 		}
+		else
+		{
+			// Apply identity preference
+			$content['mailidentity'] = $this->get_preferred_identity($acc);
+		}
 
 		$disableRuler = false;
 		//_debug_array(($presetSig ? $presetSig : $content['mailidentity']));
@@ -4088,5 +4093,50 @@ class mail_compose
 			$mail_bo->closeConnection();
 		}
 		return $this->sessionData['attachments'];
+	}
+
+	/**
+	 * Get the identity to use according to defaultIdentity preference
+	 *
+	 * "default" = "use default signature from mail account" (if the email account is valid for multiple users or a group, this is always stored in the database egw_ea_identities with account_id=0, if the email account is a personal one, it's the one with the lowest ident_id
+	 * "personal"="use first personal signature from mail account" - so if the user has 3 different additional signatures, we always use the one with the lowest ident_id
+	 *
+	 * @param $account
+	 * @return int|void
+	 */
+	private function get_preferred_identity(&$account)
+	{
+		if(!$this->mailPreferences['defaultIdentity'] || $this->mailPreferences['defaultIdentity'] == 'last-used')
+		{
+			return;
+		}
+		// no SMTP only accounts as identities
+		if(!$account->is_imap(false))
+		{
+			return;
+		}
+
+		$default = $personal = null;
+		$identities = [];
+
+		if(!$default && $account->acc_id == 0)
+		{
+			$default = $account;
+		}
+
+		foreach($account->identities($account->acc_id) as $ident_id => $identity)
+		{
+			$identities[] = $ident_id;
+		}
+		sort($identities, SORT_NUMERIC);
+		if($identities)
+		{
+			$default = $identities[0];
+		}
+		if(count($identities) > 1)
+		{
+			$personal = $identities[1];
+		}
+		return $this->mailPreferences['defaultIdentity'] == 'default' ? $default : ($personal ?: $default);
 	}
 }
