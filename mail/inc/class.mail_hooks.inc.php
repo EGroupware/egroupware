@@ -256,6 +256,17 @@ class mail_hooks
 				'xmlrpc' => False,
 				'admin'  => False
 			),
+			'defaultIdentity' => array(
+				'type'   => 'select',
+				'label'  => 'Default Identity',
+				'help'   => 'Which mail account do you want to start with',
+				'name'   => 'defaultIdentity',
+				'values' => array(
+					'last-used' => lang('Last used'),
+					'default'   => lang('Default'),
+					'personal'  => lang('Personal'),
+				)
+			),
 			'htmlOptions' => array(
 				'type'   => 'select',
 				'label'  => 'display of html emails',
