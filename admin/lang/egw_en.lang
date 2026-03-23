@@ -663,7 +663,7 @@ number of sessions / egroupware logins in the last 30 days	admin	en	Number of se
 number of users	admin	en	Number of users
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	en	Number the applications serially. If they are not numbered serially, sorting the applications could work wrong. This will not change the application's order.
 nummeric account id	admin	en	Numeric account ID
-oauth authentiction	admin	en	OAuth Authentiction
+oauth authentication'	admin	en	oauth authentication'
 offer to installing egroupware as mail-handler	admin	en	Offer to installing EGroupware as mail-handler
 official egroupware usage statistic	admin	en	Official EGroupware usage statistic
 one day	admin	en	One day
@@ -852,7 +852,7 @@ submit to egroupware.org	admin	en	Submit to egroupware.org
 subtype	admin	en	Sub type
 success	admin	en	Success
 successful connected to %1 server%2.	admin	en	Successful connected to %1 server%2.
-successfull, but no refresh-token received!	admin	en	Successfull, but NO refresh-token received!
+successful, but no refresh-token received!	admin	en	Successful, but NO refresh-token received!
 switch back to standard identity to save account.	admin	en	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	en	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	en	Switch it off, if users are randomly logged out

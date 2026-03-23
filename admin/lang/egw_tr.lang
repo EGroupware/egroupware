@@ -323,7 +323,7 @@ no permission to add groups	admin	tr	Grup eklemek için izin yok
 no permission to add users	admin	tr	Kullanıcı eklemek için izin yok
 no permission to create groups	admin	tr	Grup eklemek için izin yok
 note: ssl available only if php is compiled with curl support	admin	tr	Not: SSL desteğinin olması için PHP'nin Curl desteği ile derlenmiş olması gerekir.
-oauth authentiction	admin	tr	OAuth Kimlik Doğrulaması
+oauth authentication'	admin	tr	OAuth Kimlik Doğrulaması
 offer to installing egroupware as mail-handler	admin	tr	EGroupware'i posta işleyicisi olarak yükleme teklifi
 one day	admin	tr	Bir gün
 one hour	admin	tr	Bir saat
@@ -404,7 +404,7 @@ standard	admin	tr	Standart
 start testjob!	admin	tr	Test görevini başlat!
 submit changes	admin	tr	Değişiklikleri gönder!
 submit the search string	admin	tr	Arama kriterini gönder
-successfull, but no refresh-token received!	admin	tr	Başarılı, ancak yenileme belirteci alınmadı!
+successful, but no refresh-token received!	admin	tr	Başarılı, ancak yenileme belirteci alınmadı!
 that loginid has already been taken	admin	tr	Bu kullanıcı adı kullanımda
 the api is current	admin	tr	API güncel
 the api requires an upgrade	admin	tr	API güncelleme gerektiriyor

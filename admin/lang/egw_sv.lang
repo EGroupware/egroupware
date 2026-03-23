@@ -394,7 +394,7 @@ no plain text part found	admin	sv	Hittade inget textfält
 no supported imap authentication method could be found.	admin	sv	Kunde inte hitta supporterad IMAP autentiserings metod
 note: ssl available only if php is compiled with curl support	admin	sv	Not: SSL är bara tillgängligt om PHP kompilerats med stöd för Curl
 number of row for a multiline inputfield or line of a multi-select-box	admin	sv	Antal rader för flerraders indatafält eller flervalsruta
-oauth authentiction	admin	sv	OAuth-autentisering
+oauth authentication'	admin	sv	OAuth-autentisering
 offer to installing egroupware as mail-handler	admin	sv	Erbjudande om att installera EGroupware som e-posthanterare
 one day	admin	sv	En dag
 one hour	admin	sv	En timme
@@ -498,7 +498,7 @@ start testjob!	admin	sv	Starta testjobb!
 submit changes	admin	sv	Verkställ förändring
 submit the search string	admin	sv	Verkställ sökning
 subtype	admin	sv	Undertyp
-successfull, but no refresh-token received!	admin	sv	Framgångsrikt, men INGEN refresh-token mottagen!
+successful, but no refresh-token received!	admin	sv	Framgångsrikt, men INGEN refresh-token mottagen!
 that loginid has already been taken	admin	sv	Detta inloggnings ID är redan upptaget
 the api is current	admin	sv	API är aktuellt
 the api requires an upgrade	admin	sv	API behöver uppgraderas

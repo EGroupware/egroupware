@@ -465,7 +465,7 @@ no plain text part found	admin	hu	Nem található egyszerű szöveges tartalom
 no supported imap authentication method could be found.	admin	hu	Nem található támogatott IMAP hitelesítés.
 note: ssl available only if php is compiled with curl support	admin	hu	Megjegyzés: SSL csak akkor érhető el, ha a PHP Curl támogatással lett lefordítva.
 number of row for a multiline inputfield or line of a multi-select-box	admin	hu	Sorok száma a többsoros beviteli mező, vagy egy kiválasztó lista esetén (ilyen 'magas' lesz a doboz/szerkesztő mező)
-oauth authentiction	admin	hu	OAuth hitelesítés
+oauth authentication'	admin	hu	OAuth hitelesítés
 offer to installing egroupware as mail-handler	admin	hu	Ajánlat az EGroupware telepítésére levélkezelőként
 one day	admin	hu	Egy nap
 one hour	admin	hu	Egy óra
@@ -594,7 +594,7 @@ start testjob!	admin	hu	TesztFeladat indítása!
 submit changes	admin	hu	Változások elküldése
 submit the search string	admin	hu	Keresési szöveg elküldése
 subtype	admin	hu	Altípus
-successfull, but no refresh-token received!	admin	hu	Sikeres, de NEM érkezett frissítési token!
+successful, but no refresh-token received!	admin	hu	Sikeres, de NEM érkezett frissítési token!
 switch it off, if users are randomly thrown out	admin	hu	Kapcsolja ki, a felhasználókat véletlenszerűen kidobja a rendszer
 that loginid has already been taken	admin	hu	Ez a felhasználónév már foglalt.
 the api is current	admin	hu	Az API nem igényel frissítést

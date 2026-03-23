@@ -595,7 +595,7 @@ number of sessions / egroupware logins in the last 30 days	admin	sl	Število sej
 number of users	admin	sl	Število uporabnikov
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	sl	Serijsko pošljite programe. Če niso serijsko oštevilčene, lahko razvrščanje aplikacij napačno deluje. To ne bo spremenilo naročila aplikacije.
 nummeric account id	admin	sl	Številčni ID računa
-oauth authentiction	admin	sl	Preverjanje pristnosti OAuth
+oauth authentication'	admin	sl	Preverjanje pristnosti OAuth
 offer to installing egroupware as mail-handler	admin	sl	Ponudba za namestitev EGroupware kot poštnega strežnika
 official egroupware usage statistic	admin	sl	Uradna statistika uporabe skupine EGroupware
 one day	admin	sl	Nekega dne
@@ -759,7 +759,7 @@ submit to egroupware.org	admin	sl	Pošlji na egroupware.org
 subtype	admin	sl	Podtip
 success	admin	sl	Uspeh
 successful connected to %1 server%2.	admin	sl	Uspešno priključen na %1 strežnik %2.
-successfull, but no refresh-token received!	admin	sl	Uspešno, vendar ni bil prejet noben žeton za osvežitev!
+successful, but no refresh-token received!	admin	sl	Uspešno, vendar ni bil prejet noben žeton za osvežitev!
 switch back to standard identity to save account.	admin	sl	Preklopite nazaj na standardno identiteto, da shranite račun.
 switch back to standard identity to save other account data.	admin	sl	Preklopite nazaj na standardno identiteto, da shranite druge podatke o računu.
 switch it off, if users are randomly thrown out	admin	sl	Izključite, če se uporabnike izloči naključno

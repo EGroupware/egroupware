@@ -358,7 +358,7 @@ no permission to add groups	admin	lv	Nav atļaujas, lai pievienotu grupas
 no permission to add users	admin	lv	Nav atļaujas, lai pievienotu lietotājus
 no permission to create groups	admin	lv	Nav atļaujas, lai izveidotu grupas
 note: ssl available only if php is compiled with curl support	admin	lv	Piezīme: SSL pieejams tikai tad, ja PHP ir ar Curl atbalstu
-oauth authentiction	admin	lv	OAuth autentifikācija
+oauth authentication'	admin	lv	OAuth autentifikācija
 offer to installing egroupware as mail-handler	admin	lv	Piedāvājums instalēt EGroupware kā pasta apstrādātāju
 one day	admin	lv	Viena diena
 one hour	admin	lv	Viena stunda
@@ -450,7 +450,7 @@ standard smtp-server	admin	lv	Standarta SMTP serveris
 start testjob!	admin	lv	Sākt testa darbu!
 submit changes	admin	lv	Apstiprināt Izmaiņas
 submit the search string	admin	lv	Apstiprināt meklēšamas stringu
-successfull, but no refresh-token received!	admin	lv	Veiksmīgi, bet nav saņemts atsvaidzināšanas žetons!
+successful, but no refresh-token received!	admin	lv	Veiksmīgi, bet nav saņemts atsvaidzināšanas žetons!
 that loginid has already been taken	admin	lv	Šāds autorizācijas ID jau ir aizņemts
 the api is current	admin	lv	Patreizējais API
 the api requires an upgrade	admin	lv	API pieprasa jauninājumus
