@@ -91,6 +91,58 @@ jobs:
 
           $COMPOSE exec -T egroupware ln -sf /var/lib/egroupware/header.inc.php "$EGW_SRC_DIR/header.inc.php"
 
+      - name: Extract install credentials
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+
+          # Get sysop admin user from install log
+          SYSOP_USER="sysop"
+          SYSOP_PASS="$(
+            $COMPOSE logs egroupware |
+              awk '
+                /EGroupware username: sysop/ {found=1; next}
+                found && /password:/ {
+                  sub(/^[^:]*:[[:space:]]*/, "", $0)
+                  print
+                  exit
+                }
+              '
+          )"
+
+          # Get setup user/password from install log.
+          CONFIG_USER="$(
+            $COMPOSE logs egroupware |
+              awk '
+                /Setup username:/ {sub(/.*Setup username:[[:space:]]*/, "", $0); print; exit}
+              '
+          )"
+          CONFIG_PASS="$(
+            $COMPOSE logs egroupware |
+              awk '
+                /Setup username:/ {found=1; next}
+                found && /password:/ {
+                  sub(/^[^:]*:[[:space:]]*/, "", $0)
+                  print
+                  exit
+                }
+              '
+          )"
+          for v in SYSOP_USER SYSOP_PASS CONFIG_USER CONFIG_PASS; do
+            if [ -z "${!v}" ]; then
+              echo "::error::Missing $v"
+              exit 1
+            fi
+          done
+          {
+            echo "SYSOP_USER=$SYSOP_USER"
+            echo "SYSOP_PASS=$SYSOP_PASS"
+            echo "EGW_CONFIG_USER=$CONFIG_USER"
+            echo "EGW_CONFIG_PASSWD=$CONFIG_PASS"
+          } >> "$GITHUB_ENV"
+
       - name: Debug admin-cli path mapping
         run: |
           set -euo pipefail
@@ -141,20 +193,6 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
 
-          # Get sysop admin user from install log
-          SYSOP_USER="sysop"
-          SYSOP_PASS="$(
-            $COMPOSE logs egroupware |
-              awk '
-                /EGroupware username: sysop/ {found=1; next}
-                found && /password:/ {
-                  sub(/^[^:]*:[[:space:]]*/, "", $0)
-                  print
-                  exit
-                }
-              '
-          )"
-
           # Get test user from phpunit.xml
           EGW_TEST_USER="$(
             sed -n 's/.*<var name="EGW_USER" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
@@ -176,33 +214,6 @@ jobs:
 
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
             --edit-user "$SYSOP_USER,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
-          
-          # Get setup user/password from install log.
-          CONFIG_USER="$(
-            $COMPOSE logs egroupware |
-              awk '
-                /Setup username:/ {sub(/.*Setup username:[[:space:]]*/, "", $0); print; exit}
-              '
-          )"
-          CONFIG_PASS="$(
-            $COMPOSE logs egroupware |
-              awk '
-                /Setup username:/ {found=1; next}
-                found && /password:/ {
-                  sub(/^[^:]*:[[:space:]]*/, "", $0)
-                  print
-                  exit
-                }
-              '
-          )"
-          if [ -z "$CONFIG_USER" ] || [ -z "$CONFIG_PASS" ]; then
-            echo "::error::Missing setup credentials in install log"
-            exit 1
-          fi
-          {
-            echo "EGW_CONFIG_USER=$CONFIG_USER"
-            echo "EGW_CONFIG_PASSWD=$CONFIG_PASS"
-          } >> "$GITHUB_ENV"
 
       - name: Install fixture test app
         run: |
@@ -217,13 +228,21 @@ jobs:
             -w "$EGW_SRC_DIR" egroupware sh -lc '
             if [ -d api/tests/fixtures/apps/test ]; then
               ln -sfn api/tests/fixtures/apps/test test
+              set +e
               php doc/rpm-build/post_install.php --install-update-app test
+              rc=$?
+              set -e
+              echo "post_install exit code: $rc"
             fi
           '
           echo "== Source dir listing: $EGW_SRC_DIR =="
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc 'ls -la | sed -n "1,200p"; ls -la api/tests/fixtures/apps | sed -n "1,200p"'
           echo "== DB table check: egw_test =="
-          $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SHOW TABLES LIKE 'egw_test';" || true
+          $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SELECT * FROM egw_applications WHERE app_name='test'\\G" || true
+          if ! $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SHOW TABLES LIKE 'egw_test%';" | grep -q "egw_test"; then
+            echo "::error::egw_test table not found after test app install"
+            exit 1
+          fi
 
       - name: Run PHPUnit
         run: |
