@@ -3235,6 +3235,10 @@ span.et2_egw_action_ddHelper_itemsCnt {
 .blueimp-gallery > .slides > .slide-prev, .blueimp-gallery > .slides > .slide.active, .blueimp-gallery > .slides > .slide-next {
     visibility: visible;
 }
+
+.blueimp-gallery:not(.blueimp-gallery-display) {
+	display: none;
+}
 /* Paginating with nextmatch */
 .blueimp-gallery-controls > .indicator.paginating {
     border-bottom: 2px solid rgba(255, 255, 255, 0.5);
