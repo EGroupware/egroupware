@@ -203,17 +203,25 @@ jobs:
             echo "EGW_CONFIG_USER=$CONFIG_USER"
             echo "EGW_CONFIG_PASSWD=$CONFIG_PASS"
           } >> "$GITHUB_ENV"
-          
+
+      - name: Install fixture test app
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
           # Ensure fixture test app is linked and installed before tests
           $COMPOSE exec -T \
-            -e EGW_CONFIG_USER="$CONFIG_USER" \
-            -e EGW_CONFIG_PASSWD="$CONFIG_PASS" \
+            -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
+            -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
             -w "$EGW_SRC_DIR" egroupware sh -lc '
             if [ -d api/tests/fixtures/apps/test ]; then
               ln -sfn api/tests/fixtures/apps/test test
               php doc/rpm-build/post_install.php --install-update-app test
             fi
           '
+          echo "== Source dir listing: $EGW_SRC_DIR =="
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc 'ls -la | sed -n "1,200p"; ls -la api/tests/fixtures/apps | sed -n "1,200p"'
           echo "== DB table check: egw_test =="
           $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SHOW TABLES LIKE 'egw_test';" || true
 
