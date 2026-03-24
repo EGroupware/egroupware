@@ -54,6 +54,7 @@ from the data of an `allprop` PROPFIND, allow browsing CalDAV/CardDAV tree with 
 - [Timesheet](Timesheet.md)
 - [ViDoTeach](https://github.com/EGroupware/smallpart/blob/master/doc/REST-API.md)
 - [ProjectManager](https://github.com/EGroupware/projectmanager/blob/master/doc/REST-API.md)
+- [RAG](https://github.com/EGroupware/rag/blob/master/doc/REST-API.md)
 - [Invoices](Invoices.md) (EPL only)
 - [Links and attachments](Links-and-attachments.md)
   * linking application entries to other application entries
