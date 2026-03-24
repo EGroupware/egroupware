@@ -5,6 +5,9 @@
  * and override as needed
  */
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
+@import "../../node_modules/blueimp-gallery/css/blueimp-gallery.css";
+@import "../../node_modules/blueimp-gallery/css/blueimp-gallery-indicator.css";
+@import "../../node_modules/blueimp-gallery/css/blueimp-gallery-video.css";
 html,
 body {
   width: 100vw;
@@ -1249,6 +1252,10 @@ et2-toolbar[slot="main-header"]::part(list),
 }
 .flatpickr-calendar .flatpickr-months .flatpickr-current-month .numInputWrapper .numInput {
   padding: 0;
+}
+/* Blueimp gallery */
+.blueimp-gallery:not(.blueimp-gallery-display) {
+  display: none;
 }
 /*** END WIDGETS ***/
 html:not(.desktop) html * {
