@@ -13,6 +13,10 @@ jobs:
       EGW_CI_ROOT: ${{ github.workspace }}/sources
       EGW_CI_DOCKER_DIR: ${{ github.workspace }}/sources/doc/docker
       EGW_SRC_DIR: /var/www
+      EGW_CONFIG_USER: ""
+      EGW_CONFIG_PASSWD: ""
+      SYSOP_USER: ""
+      SYSOP_PASS: ""
 
     steps:
       - uses: actions/checkout@v4
@@ -202,8 +206,8 @@ jobs:
           
           # Ensure fixture test app is linked and installed before tests
           $COMPOSE exec -T \
-            -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
-            -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
+            -e EGW_CONFIG_USER="$CONFIG_USER" \
+            -e EGW_CONFIG_PASSWD="$CONFIG_PASS" \
             -w "$EGW_SRC_DIR" egroupware sh -lc '
             if [ -d api/tests/fixtures/apps/test ]; then
               ln -sfn api/tests/fixtures/apps/test test
@@ -217,6 +221,14 @@ jobs:
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+          EGW_CONFIG_USER="${EGW_CONFIG_USER:-}"
+          EGW_CONFIG_PASSWD="${EGW_CONFIG_PASSWD:-}"
+          for v in EGW_CONFIG_USER EGW_CONFIG_PASSWD; do
+            if [ -z "${!v}" ]; then
+              echo "::error::Missing $v"
+              exit 1
+            fi
+          done
 
           # Run tests
           $COMPOSE exec -T \
