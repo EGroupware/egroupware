@@ -165,13 +165,14 @@ jobs:
 
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
             --edit-user "sysop,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
+          
           # Ensure test app is installed for tests that rely on it. Use default domain config_user/passwd first.
           HEADER_FILE="$EGW_SRC_DIR/header.inc.php"
           CONFIG_USER="$(
-            $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc "sed -n \"/\\\\$GLOBALS\\\\['egw_domain'\\\\]\\\\['default'\\\\]/,/^[[:space:]]*\\\\);/p\" \"$HEADER_FILE\" | sed -n \"s/.*'config_user'[^']*'\\\\([^']*\\\\)'.*/\\\\1/p\" | head -n 1"
+            $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc "sed -n \"s/.*'config_user'[^']*'\\\\([^']*\\\\)'.*/\\\\1/p\" | head -n 1"
           )"
           CONFIG_PASS="$(
-            $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc "sed -n \"/\\\\$GLOBALS\\\\['egw_domain'\\\\]\\\\['default'\\\\]/,/^[[:space:]]*\\\\);/p\" \"$HEADER_FILE\" | sed -n \"s/.*'config_passwd'[^']*'\\\\([^']*\\\\)'.*/\\\\1/p\" | head -n 1"
+            $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc "sed -n \"s/.*'config_passwd'[^']*'\\\\([^']*\\\\)'.*/\\\\1/p\" | head -n 1"
           )"
           if [ -z "$CONFIG_USER" ] || [ -z "$CONFIG_PASS" ]; then
             HEADER_USER="$(
@@ -183,7 +184,7 @@ jobs:
             CONFIG_USER="${CONFIG_USER:-$HEADER_USER}"
             CONFIG_PASS="${CONFIG_PASS:-$HEADER_PASS}"
           fi
-          echo "Setup config user from $HEADER_FILE: ${CONFIG_USER:-<missing>}"
+          echo "Setup config user from $HEADER_FILE: ${CONFIG_USER:-<missing>}:${CONFIG_PASS:-<missing>}"
           if [ -z "$CONFIG_USER" ] || [ -z "$CONFIG_PASS" ]; then
             echo "::error::Missing config credentials in header.inc.php"
             exit 1
