@@ -212,10 +212,10 @@ jobs:
             if [ -d api/tests/fixtures/apps/test ]; then
               ln -sfn api/tests/fixtures/apps/test test
               php doc/rpm-build/post_install.php --install-update-app test
-              echo "== DB table check: egw_test =="
-              mariadb -h "$EGW_DB_HOST" -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SHOW TABLES LIKE 'egw_test';" || true
             fi
           '
+          echo "== DB table check: egw_test =="
+          $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SHOW TABLES LIKE 'egw_test';" || true
 
       - name: Run PHPUnit
         run: |
