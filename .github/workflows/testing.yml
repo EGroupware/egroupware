@@ -199,6 +199,17 @@ jobs:
             echo "EGW_CONFIG_USER=$CONFIG_USER"
             echo "EGW_CONFIG_PASSWD=$CONFIG_PASS"
           } >> "$GITHUB_ENV"
+          
+          # Ensure fixture test app is linked and installed before tests
+          $COMPOSE exec -T \
+            -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
+            -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
+            -w "$EGW_SRC_DIR" egroupware sh -lc '
+            if [ -d api/tests/fixtures/apps/test ]; then
+              ln -sfn api/tests/fixtures/apps/test test
+              php doc/rpm-build/post_install.php --install-update-app test
+            fi
+          '
 
       - name: Run PHPUnit
         run: |
@@ -206,6 +217,7 @@ jobs:
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+
           # Run tests
           $COMPOSE exec -T \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
