@@ -137,6 +137,8 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
 
+          # Get sysop admin user from install log
+          SYSOP_USER="sysop"
           SYSOP_PASS="$(
             $COMPOSE logs egroupware |
               awk '
@@ -149,6 +151,7 @@ jobs:
               '
           )"
 
+          # Get test user from phpunit.xml
           EGW_TEST_USER="$(
             sed -n 's/.*<var name="EGW_USER" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
           )"
@@ -156,17 +159,21 @@ jobs:
             sed -n 's/.*<var name="EGW_PASSWORD" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
           )"
 
-          for v in SYSOP_PASS EGW_TEST_USER EGW_TEST_PASS; do
+          for v in SYSOP_USER SYSOP_PASS EGW_TEST_USER EGW_TEST_PASS; do
             if [ -z "${!v}" ]; then
               echo "::error::Missing $v"
               exit 1
             fi
           done
+          {
+            echo "SYSOP_USER=$SYSOP_USER"
+            echo "SYSOP_PASS=$SYSOP_PASS"
+          } >> "$GITHUB_ENV"
 
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
-            --edit-user "sysop,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
+            --edit-user "$SYSOP_USER,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
           
-          # Ensure test app is installed for tests that rely on it. Use setup user/password from install log.
+          # Get setup user/password from install log.
           CONFIG_USER="$(
             $COMPOSE logs egroupware |
               awk '
@@ -184,12 +191,14 @@ jobs:
                 }
               '
           )"
-          echo "Setup config user from install log: ${CONFIG_USER:-<missing>}:${CONFIG_PASS}"
           if [ -z "$CONFIG_USER" ] || [ -z "$CONFIG_PASS" ]; then
             echo "::error::Missing setup credentials in install log"
             exit 1
           fi
-          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php --update default,"$CONFIG_USER","$CONFIG_PASS",no,test
+          {
+            echo "EGW_CONFIG_USER=$CONFIG_USER"
+            echo "EGW_CONFIG_PASSWD=$CONFIG_PASS"
+          } >> "$GITHUB_ENV"
 
       - name: Run PHPUnit
         run: |
@@ -198,7 +207,11 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
           # Run tests
-          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php vendor/bin/phpunit --configuration doc/phpunit.xml
+          $COMPOSE exec -T \
+            -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
+            -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
+            -w "$EGW_SRC_DIR" egroupware \
+            php vendor/bin/phpunit --configuration doc/phpunit.xml
 
       - name: Dump container logs
         if: always()
