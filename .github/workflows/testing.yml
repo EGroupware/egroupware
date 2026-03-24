@@ -166,27 +166,27 @@ jobs:
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
             --edit-user "sysop,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
           
-          # Ensure test app is installed for tests that rely on it. Use default domain config_user/passwd first.
-          HEADER_FILE="$EGW_SRC_DIR/header.inc.php"
+          # Ensure test app is installed for tests that rely on it. Use setup user/password from install log.
           CONFIG_USER="$(
-            $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc "sed -n \"s/.*'config_user'[^']*'\\\\([^']*\\\\)'.*/\\\\1/p\" | head -n 1"
+            $COMPOSE logs egroupware |
+              awk '
+                /Setup username:/ {sub(/.*Setup username:[[:space:]]*/, "", $0); print; exit}
+              '
           )"
           CONFIG_PASS="$(
-            $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc "sed -n \"s/.*'config_passwd'[^']*'\\\\([^']*\\\\)'.*/\\\\1/p\" | head -n 1"
+            $COMPOSE logs egroupware |
+              awk '
+                /Setup username:/ {found=1; next}
+                found && /password:/ {
+                  sub(/^[^:]*:[[:space:]]*/, "", $0)
+                  print
+                  exit
+                }
+              '
           )"
+          echo "Setup config user from install log: ${CONFIG_USER:-<missing>}:${CONFIG_PASS}"
           if [ -z "$CONFIG_USER" ] || [ -z "$CONFIG_PASS" ]; then
-            HEADER_USER="$(
-              $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc "sed -n \"s/.*header_admin_user'] = '\\\\([^']*\\\\)'.*/\\\\1/p\" \"$HEADER_FILE\" | head -n 1"
-            )"
-            HEADER_PASS="$(
-              $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc "sed -n \"s/.*header_admin_password'] = '\\\\([^']*\\\\)'.*/\\\\1/p\" \"$HEADER_FILE\" | head -n 1"
-            )"
-            CONFIG_USER="${CONFIG_USER:-$HEADER_USER}"
-            CONFIG_PASS="${CONFIG_PASS:-$HEADER_PASS}"
-          fi
-          echo "Setup config user from $HEADER_FILE: ${CONFIG_USER:-<missing>}:${CONFIG_PASS:-<missing>}"
-          if [ -z "$CONFIG_USER" ] || [ -z "$CONFIG_PASS" ]; then
-            echo "::error::Missing config credentials in header.inc.php"
+            echo "::error::Missing setup credentials in install log"
             exit 1
           fi
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php --update default,"$CONFIG_USER","$CONFIG_PASS",no,test
