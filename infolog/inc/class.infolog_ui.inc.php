@@ -2476,6 +2476,7 @@ class infolog_ui
 		if (!empty($GLOBALS['egw_info']['user']['apps']['stylite']) && empty($GLOBALS['egw_info']['server']['disable_pgp_encryption']))
 		{
 			$content['encryption_ts'] = filemtime(EGW_SERVER_ROOT.'/stylite/js/app.js');
+			$content['encrypt'] = false;
 		}
 		elseif (!empty($GLOBALS['egw_info']['server']['disable_pgp_encryption']))
 		{
