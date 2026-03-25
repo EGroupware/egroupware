@@ -1182,7 +1182,7 @@ class mail_compose
 		else
 		{
 			// Apply identity preference
-			$content['mailidentity'] = $this->get_preferred_identity($acc);
+			$content['mailidentity'] = $this->get_preferred_identity($acc) ?? $content['mailidentity'];
 		}
 
 		$disableRuler = false;
