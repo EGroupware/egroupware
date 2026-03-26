@@ -229,7 +229,7 @@ jobs:
             if [ -d api/tests/fixtures/apps/test ]; then
               ln -sfn api/tests/fixtures/apps/test test
               set +e
-              php setup/setup-cli.php --update default,"$EGW_CONFIG_USER","$EGW_CONFIG_PASSWD",no,test
+              php setup/setup-cli.php --update default,$EGW_CONFIG_USER,$EGW_CONFIG_PASSWD,no,test
               rc=$?
               set -e
               echo "setup-cli exit code: $rc"
