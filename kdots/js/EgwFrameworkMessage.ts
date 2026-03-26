@@ -27,7 +27,7 @@ export class EgwFrameworkMessage extends LitElement
 	 * @type {  "help" | "info" | "error" | "warning" | "success"}
 	 */
 	@property()
-	type : "help" | "info" | "error" | "warning" | "success" = "success";
+	type: "help" | "info" | "error" | "warning" | "success" = "success";
 
 	/**
 	 * Message
@@ -35,7 +35,7 @@ export class EgwFrameworkMessage extends LitElement
 	 * @type {string}
 	 */
 	@property()
-	message : string = "";
+	message: string = "";
 	/**
 	 * Enables a close button that allows the user to dismiss the message
 	 * @type {boolean}
@@ -49,7 +49,7 @@ export class EgwFrameworkMessage extends LitElement
 	 * @type {number}
 	 */
 	@property()
-	duration : number = null;
+	duration: number = null;
 
 	/**
 	 * Unique string id (appname:id) in order to register the message as discardable.
@@ -59,7 +59,7 @@ export class EgwFrameworkMessage extends LitElement
 	 * @type {string}
 	 */
 	@property()
-	discard : string = "";
+	discard: string = "";
 
 	// Map types to icons
 	private static ICON_MAP = {
@@ -73,18 +73,18 @@ export class EgwFrameworkMessage extends LitElement
 	// Map our message types to shoelace variants
 	private static TYPE_MAP = {info: "success", warning: "warning", error: "danger"};
 
-	private __alert : SlAlert;
+	private __alert: SlAlert;
 
 	// Handle some HTML in the message, like links & newlines
 	// You can create & toast the egw-message directly for more flexibility
 	private HREF_REG = /<a href="([^"]+)">([^<]+)<\/a>/img;
-	private NEWLINE_REG = /<\/?(p|br)\s*\/?>\n?/ig;
+	private NEWLINE_REG = /<\/?(?:p|br)\s*\/?>|\n+/ig;
 
 
-	public willUpdate(changedProperties : PropertyValues<this>)
+	public willUpdate(changedProperties: PropertyValues<this>)
 	{
 		super.willUpdate(changedProperties);
-		if(changedProperties.has("message"))
+		if (changedProperties.has("message"))
 		{
 			// Decode HTML entities in the message through textarea
 			// The browser automatically interprets and decodes the entities.
@@ -99,13 +99,13 @@ export class EgwFrameworkMessage extends LitElement
 	 * @param {string} discardId
 	 * @returns {boolean}
 	 */
-	public static isDiscarded(discardId : string) : boolean
+	public static isDiscarded(discardId: string): boolean
 	{
 		let discardAppName = "";
-		if(discardId)
+		if (discardId)
 		{
 			let discardID = discardId.split(':');
-			if(discardID.length < 2)
+			if (discardID.length < 2)
 			{
 				discardId = window.egw.app_name() + ":" + discardID.pop();
 			}
@@ -113,7 +113,7 @@ export class EgwFrameworkMessage extends LitElement
 		}
 
 		const discarded = JSON.parse(window.egw.getLocalStorageItem(discardAppName, 'discardedMsgs'));
-		if(Array.isArray(discarded))
+		if (Array.isArray(discarded))
 		{
 			return discarded.includes(discardId);
 		}
@@ -126,7 +126,7 @@ export class EgwFrameworkMessage extends LitElement
 	 *
 	 * @returns {Promise<void>}
 	 */
-	public toast() : Promise<void>
+	public toast(): Promise<void>
 	{
 		this.__alert = this.alert;
 		this.updateComplete.then(() =>
@@ -140,7 +140,7 @@ export class EgwFrameworkMessage extends LitElement
 	 * Show the message
 	 * @returns {() => Promise<void>}
 	 */
-	public show() : () => Promise<void>
+	public show(): () => Promise<void>
 	{
 		return this.alert.show;
 	}
@@ -149,19 +149,22 @@ export class EgwFrameworkMessage extends LitElement
 	 * Hide the message
 	 * @returns {Promise<void>}
 	 */
-	public hide() : Promise<void>
+	public hide(): Promise<void>
 	{
 		return this.alert.hide();
 	}
 
-	public close() : Promise<void>
+	public close(): Promise<void>
 	{
 		return this.hide();
 	}
 
-	get alert() : SlAlert { return this.shadowRoot?.querySelector("sl-alert") as SlAlert ?? this.__alert; }
+	get alert(): SlAlert
+	{
+		return this.shadowRoot?.querySelector("sl-alert") as SlAlert ?? this.__alert;
+	}
 
-	get egw() : typeof egw
+	get egw(): typeof egw
 	{
 		return window.egw
 	}
@@ -170,15 +173,14 @@ export class EgwFrameworkMessage extends LitElement
 	{
 		// Store user's discard choice, if it was offered
 		const check = <Et2Checkbox>this.alert.querySelector("#discard");
-		if(this.discard && check && check.value && !EgwFrameworkMessage.isDiscarded(this.discard))
+		if (this.discard && check && check.value && !EgwFrameworkMessage.isDiscarded(this.discard))
 		{
 			const discardAppName = this.discard.split(":").shift();
-			let discarded : string | string[] = this.egw.getLocalStorageItem(discardAppName, 'discardedMsgs');
-			if(!discarded)
+			let discarded: string | string[] = this.egw.getLocalStorageItem(discardAppName, 'discardedMsgs');
+			if (!discarded)
 			{
 				discarded = [this.discard];
-			}
-			else
+			} else
 			{
 				discarded = <string[]>JSON.parse(discarded)
 				discarded.push(this.discard);
@@ -192,32 +194,35 @@ export class EgwFrameworkMessage extends LitElement
 	}
 
 	/* Handle newlines and links in the message */
-	private _messageTemplate(message)
+	private _messageTemplate(_message: string)
 	{
+		let returnTemplate: TemplateResult;
 		// Convert newlines to <br> tags
 		const br2br = (str) =>
 		{
-			const split = (str ?? "").split(this.NEWLINE_REG).filter(s => !["", "p", "br"].includes(s.trim()));
+			const split = (str ?? "").split(this.NEWLINE_REG).filter((s: string) => s.trim() !== "");
 			return html`${join(split, html`<br>`)}`;
 		}
-		const matches = this.HREF_REG.exec(this.message);
-		if(matches)
+		const matches = this.HREF_REG.exec(_message);
+		if (matches)
 		{
 			// Activate 1 anchor tag
-			const parts = this.message.split(matches[0]);
+			const parts = _message.split(matches[0]);
 			const href = matches[1]; //html_entity_decode(matches[1]);
-			message = html`
+			returnTemplate = html`
                 ${br2br(parts[0])}
                 <a href="${matches[1]}"
                    target="${href.indexOf(this.egw.webserverUrl) != 0 ? '_blank' : "_self"}">${matches[2]}</a>
                 ${br2br(parts[1])}`;
-		}
-		else
+		} else
 		{
-			message = html`${activateLinks(message, '_self')}`;
+			const parts = _message.split(this.NEWLINE_REG)
+				.filter((s: string) => s.trim() !== "")
+				.map((s: string) => activateLinks(s, '_self'));
+			returnTemplate = html`${join(parts, html`<br>`)}`;
 		}
 
-		return message;
+		return returnTemplate;
 	}
 
 	render()
@@ -229,13 +234,12 @@ export class EgwFrameworkMessage extends LitElement
 		// Handle anchor links in message
 		const message = this._messageTemplate(this.message);
 
-		let discard : symbol | TemplateResult = nothing;
-		if(this.discard && EgwFrameworkMessage.isDiscarded(this.discard))
+		let discard: symbol | TemplateResult = nothing;
+		if (this.discard && EgwFrameworkMessage.isDiscarded(this.discard))
 		{
 			// Don't show discarded messages
 			return nothing;
-		}
-		else if(this.discard)
+		} else if (this.discard)
 		{
 			discard = html`
                 <et2-checkbox
