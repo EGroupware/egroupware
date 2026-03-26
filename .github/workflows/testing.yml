@@ -260,6 +260,8 @@ jobs:
 
           # Run tests
           $COMPOSE exec -T \
+            -e HTTP_HOST=localhost \
+            -e HTTP_X_FORWARDED_PROTO=http \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
             -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
             -w "$EGW_SRC_DIR" egroupware \
