@@ -86,7 +86,7 @@ class Url extends Etemplate\Widget
 				{
 					case 'et2-url':
 						$this->attrs['preg'] = self::URL_PREG;
-						if($this->attrs['allowPath'] ?? $this->attrs['allow_path'])
+						if($this->attrs['allowPath'])
 						{
 							$url_valid = $value[0] === '/';
 
@@ -98,7 +98,7 @@ class Url extends Etemplate\Widget
 						{
 							$value = 'http://'.$value;
 						}
-						if($url_valid && !$this->attrs['allow_path'])
+						if($url_valid && !$this->attrs['allowPath'] || !$url_valid && $this->attrs['allowPath'])
 						{
 							$url_valid = filter_var($value, FILTER_VALIDATE_URL) ||
 								// Remove intl chars & check again, but if it passes we'll keep the original
