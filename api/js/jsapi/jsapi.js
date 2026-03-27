@@ -145,7 +145,8 @@ window.egw_appWindowOpen = function(_app, _url)
 	if (typeof _url == "undefined") {
 		_url = "about:blank";
 	}
-	egw_getFramework().linkHandler(_url, _app);
+	const fw = egw_getFramework();
+	fw ? fw.linkHandler(_url, _app) : window.location.replace(_url);
 }
 
 /**
