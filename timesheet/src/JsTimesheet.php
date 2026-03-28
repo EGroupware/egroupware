@@ -128,7 +128,8 @@ class JsTimesheet extends Api\CalDAV\JsBase
 						break;
 
 					case 'duration':
-						$timesheet['ts_duration'] = self::parseInt($value);
+						$timesheet['ts_duration'] = is_numeric($value) ? self::parseInt($value) :
+							round(self::parseSignedDuration($value, true) / 60);
 						// set default quantity, if none explicitly given
 						if (!isset($timesheet['ts_quantity']))
 						{

@@ -495,4 +495,29 @@ class JsBase
 
 		return $date->format(self::DATETIME_FORMAT);
 	}
+
+	/**
+	 * Parse a signed duration
+	 *
+	 * @param string $duration
+	 * @param bool $return_secs true: return seconds as integer, false/default: return \DateInterval
+	 * @return \DateInterval|int
+	 * @throws \Exception
+	 */
+	protected static function parseSignedDuration(string $duration, bool $return_secs=false)
+	{
+		if (empty($duration) || !preg_match('/^(-)?P(\d+W)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/', $duration))
+		{
+			throw new \InvalidArgumentException("Invalid or missing duration: ".json_encode($duration));
+		}
+		$interval = new \DateInterval($duration);
+
+		if ($return_secs)
+		{
+			$reference = new \DateTimeImmutable('now');
+			$endtime = $reference->add($interval);
+			return $endtime->getTimestamp() - $reference->getTimestamp();
+		}
+		return $interval;
+	}
 }
