@@ -487,12 +487,19 @@ function send_template()
 		// wrap et2-textarea and htmlarea in et2-ai, if not already done or noAiTools attribute is set truish
 		$str = preg_replace_callback('#(<et2-ai[^>]*>\n?)?\s*<(et2-textarea|htmlarea)\s(.*?)\s*/?>(</\2>)?#s', function ($matches)
 		{
-			$noAiTools = parseAttrs($matches[3])['noAiTools'] ?? 'false';
+			$attrs = parseAttrs($matches[3]);
+			$noAiTools = $attrs['noAiTools'] ?? 'false';
 			if (!empty($matches[1]) || $noAiTools && $noAiTools !== 'false')
 			{
 				return $matches[0];
 			}
-			return "<et2-ai>$matches[0]</et2-ai>";
+			if($attrs['span'])
+			{
+				// Move span to et2-ai
+				$span = ' span="' . $attrs['span'] . '"';
+				unset($attrs['span']);
+			}
+			return "<et2-ai{$span}>$matches[0]</et2-ai>";
 		}, $str);
 
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
