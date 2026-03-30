@@ -670,6 +670,8 @@ export class EgwFramework extends LitElement
 				return;
 			}
 
+			this.popups.add(dialog);
+
 			// Listen for close - wait for updateComplete to allow etemplate a chance to bind first if it needs
 			dialog.updateComplete.then(() =>
 			{
@@ -782,7 +784,7 @@ export class EgwFramework extends LitElement
 	 * Close popup
 	 *
 	 * @param {window} _wnd window object which suppose to be closed
-	 * @deprecated Use `framework.popup.close()`
+	 * @deprecated Use `framework.popups.close()`
 	 */
 	popup_close(_wnd)
 	{
