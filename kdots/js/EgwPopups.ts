@@ -9,10 +9,10 @@ export class EgwPopups
 {
 
 	// Keep track of open popups
-	private _popups : Window | Et2Dialog[] = [];
+	private _popups : Array<Window | Et2Dialog> = [];
 	private _popupsGCInterval : number;
 
-	public add(windowID)
+	public add(windowID : Window | Et2Dialog)
 	{
 		this._popups.push(windowID);
 		if(!this._popupsGCInterval)
@@ -32,12 +32,17 @@ export class EgwPopups
 	 */
 	public get(_app : string, param : RegExp | Object) : Window[]
 	{
-		const popups = [];
+		const popups : Window[] = [];
 		for(let i = 0; i < this._popups.length; i++)
 		{
-			if(!this._popups[i].closed && this._popups[i].egw_appName == _app)
+			const popup = this._popups[i];
+			if(popup instanceof Et2Dialog)
 			{
-				popups.push(this._popups[i]);
+				continue;
+			}
+			if(!popup.closed && popup.egw_appName == _app)
+			{
+				popups.push(popup);
 			}
 		}
 		if(param)
@@ -72,7 +77,7 @@ export class EgwPopups
 	 */
 	public findIndex(_wnd : Window) : number | undefined
 	{
-		return this._popups.findIndex(w => w === _wnd || w.$iFrame && $iFrame[0].contentWindow === _wnd) ?? undefined;
+		return this._popups.findIndex(w => !(w instanceof Et2Dialog) && (w === _wnd || w.$iFrame && w.$iFrame[0].contentWindow === _wnd)) ?? undefined;
 	}
 
 	public close(_wnd : Window | Et2Dialog)
@@ -83,7 +88,7 @@ export class EgwPopups
 			_wnd.modal?.deactivate();
 			return (<Et2Dialog>_wnd).hide();
 		}
-		else if(typeof _wnd.close === 'function')
+		else if(typeof _wnd?.close === 'function')
 		{
 			_wnd.close();
 		}
@@ -98,7 +103,8 @@ export class EgwPopups
 		let i = this._popups.length;
 		while(i--)
 		{
-			if(this._popups[i].closed)
+			const popup = this._popups[i];
+			if(!(popup instanceof Et2Dialog) && popup.closed)
 			{
 				this._popups.splice(i, 1);
 			}
