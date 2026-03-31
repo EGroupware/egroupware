@@ -106,7 +106,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 									event.options.statustext_html = true;
 									event.set_statustext(event._tooltip());
 									// Rebind with options
-									event.egw().tooltipUnbind(event._tooltipElem);
+									event.egw().tooltipUnbind(event._tooltipElem?.get(0) ?? event.getDOMNode());
 									event.egw().tooltipBind(event.getTooltipElement(), event.statustext, event.options.statustext_html, {hideonhover: false});
 									if(event.statustext)
 									{
