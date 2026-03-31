@@ -1,7 +1,10 @@
-name: EGroupware PHPUnit CI
+name: EGroupware Testing
 
 on:
   pull_request:
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
@@ -19,24 +22,13 @@ jobs:
       SYSOP_PASS: ""
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-          path: sources
+      - uses: ./.github/actions/checkout-php-deps
 
       - name: Prepare compose project layout
         run: |
           set -euo pipefail
           mkdir -p "$GITHUB_WORKSPACE/sources/doc/docker/data" "$GITHUB_WORKSPACE/sources/doc/docker/sessions"
           rm -f "$GITHUB_WORKSPACE/sources/doc/docker/data/header.inc.php"
-
-      - name: Install PHP dependencies in sources
-        run: |
-          set -euo pipefail
-          docker run --rm --user "$(id -u):$(id -g)" \
-            -v "$GITHUB_WORKSPACE/sources":/app -w /app \
-            composer install --no-interaction --ignore-platform-reqs --dev
-          php "$GITHUB_WORKSPACE/sources/install-cli.php" --git pull
 
       - name: Start CI containers
         run: |
@@ -61,20 +53,6 @@ jobs:
             fi
             php -m | grep -i tidy
           '
-
-      - name: Report PHP extensions
-        run: |
-          set -euo pipefail
-          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          $COMPOSE exec -T egroupware sh -lc '
-            php -v
-            php --ini
-            php -r "var_dump(PHP_BINARY, extension_loaded(\"xsl\"), extension_loaded(\"dom\"), extension_loaded(\"tidy\"));"
-            php --ri tidy | sed -n "1,120p"
-          '
-
       - name: Wait for install
         run: |
           set -euo pipefail
@@ -315,3 +293,22 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
           $COMPOSE down -v --remove-orphans
+
+  jstest:
+    if: false # temporarily disabled
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run jstest
+        run: npm run jstest
