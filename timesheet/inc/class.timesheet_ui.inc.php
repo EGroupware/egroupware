@@ -35,12 +35,6 @@ class timesheet_ui extends timesheet_bo
 	 */
 	var $pm_integration;
 
-	/**
-	 * TimeSheet view type: 'short' or 'normal'
-	 *
-	 * @var string
-	 */
-	var $ts_viewtype;
 
 	/**
 	 * Constructor
@@ -51,7 +45,6 @@ class timesheet_ui extends timesheet_bo
 		parent::__construct();
 
 		$this->pm_integration = $this->config_data['pm_integration'];
-		$this->ts_viewtype = $this->config_data['ts_viewtype'];
 	}
 
 	function view()
@@ -154,10 +147,6 @@ class timesheet_ui extends timesheet_bo
 					$msg = lang('only Admin can edit this status');
 				}
 			}
-			if ($this->ts_viewtype == 'short')
-			{
-				$content['ts_description'] = $content['ts_description_short'];
-			}
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
 			if (isset($content['start_time']))		// start-time specified
 			{
@@ -216,7 +205,7 @@ class timesheet_ui extends timesheet_bo
 				case 'save':
 				case 'save_new':
 				case 'apply':
-					if (($this->data['ts_quantity'] === '' || $this->ts_viewtype == 'short') && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
+					if ($this->data['ts_quantity'] === '' && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
 					{
 						// We need to keep the actual value of ts_quantity when we are storing it, as it is used in price calculation
 						// and rounding it causes miscalculation on prices
@@ -229,13 +218,6 @@ class timesheet_ui extends timesheet_bo
 					if ($this->data['ts_duration'] < 0)
 					{
 						$etpl->set_validation_error('start_time',lang('Starttime has to be before endtime !!!'));
-					}
-					// set ts_title to ts_project if short viewtype (title is not editable)
-					if($this->ts_viewtype == 'short')
-					{
-						$this->data['ts_title'] = $this->data['ts_project'] = $this->data['pm_id'] ?
-								Link::title('projectmanager', $this->data['pm_id']) :
-								$this->data['ts_project'];
 					}
 					if (!$this->data['ts_title'])
 					{
@@ -528,15 +510,6 @@ class timesheet_ui extends timesheet_bo
 			$etpl->set_cell_attribute('pl_id','disabled',true);
 		}
 
-		if($this->ts_viewtype == 'short')
-		{
-			$content['ts_viewtype'] = $readonlys['tabs']['notes'] = true;
-			$content['ts_description_short'] = $content['ts_description'];
-			if(!$content['pm_id'] && $this->pm_integration != 'full' && $content['ts_project'])
-			{
-				$etpl->setElementAttribute('pm_id','blur',$content['ts_project']);
-			}
-		}
 		if (!$this->customfields) $readonlys['tabs']['customfields'] = true;	// suppress tab if there are not customfields
 		if (!$this->data['ts_id']) $readonlys['tabs']['history']    = true;   //suppress history for the first loading without ID
 
@@ -628,7 +601,6 @@ class timesheet_ui extends timesheet_bo
 		$query = $query_in;	// keep the original query
 		$query['enddate'] = $end_date;
 
-		if($this->ts_viewtype == 'short') $query_in['options-selectcols'] = array('ts_quantity'=>false,'ts_unitprice'=>false,'ts_total'=>false);
 		if ($query['no_status']) $query_in['options-selectcols']['ts_status'] = false;
 
 		//_debug_array($query['col_filter']);
@@ -910,8 +882,8 @@ class timesheet_ui extends timesheet_bo
 		$rows += $this->summary;
 
 		$rows['pm_integration'] = $this->pm_integration;
-		$rows['ts_viewtype'] =  $rows['no_ts_quantity'] =  $rows['no_ts_unitprice'] =  $rows['no_ts_total'] = $this->ts_viewtype == 'short';
-		if(!$rows['ts_viewtype'] && $query['selectcols'])
+		$rows['no_ts_quantity'] = $rows['no_ts_unitprice'] = $rows['no_ts_total'] = false;
+		if($query['selectcols'])
 		{
 			#_debug_array($query['selectcols']);
 			if(!is_array($query['selectcols'])){

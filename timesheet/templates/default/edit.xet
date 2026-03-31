@@ -7,8 +7,8 @@
 				<column width="100"/>
 				<column width="185"/>
 				<column width="30"/>
-				<column width="92" disabled="@ts_viewtype"/>
-				<column width="105" disabled="@ts_viewtype"/>
+				<column width="92"/>
+				<column width="105"/>
 				<column width="30"/>
 				<column width="50"/>
 			</columns>
@@ -23,7 +23,7 @@
 						<et2-textbox  id="ts_project" maxlength="80" placeholder="@ts_project_blur"></et2-textbox>
 					</et2-hbox>
 				</row>
-				<row disabled="@ts_viewtype">
+				<row>
 					<et2-description  value="Unitprice" for="ts_unitprice"></et2-description>
 					<et2-hbox  disabled="@pm_integration=none" >
 						<projectmanager-pricelist id="pl_id" class="et2_fullWidth"
@@ -35,21 +35,17 @@
 						<et2-number  id="ts_unitprice" span="all"></et2-number>
 					</et2-hbox>
 				</row>
-				<row class="row" disabled="!@ts_viewtype">
-					<et2-description  value="comment"></et2-description>
-                    <et2-textarea id="ts_description_short" rows="5" cols="50"></et2-textarea>
-                 </row>
-                <row class="row" disabled="@ts_viewtype">
+                <row class="row">
                     <et2-description value="Quantity" for="ts_quantity"></et2-description>
                     <et2-number statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
 					<et2-description></et2-description>
 					<et2-date-duration label="Pause time" id="ts_paused" displayFormat="hm" span="all"></et2-date-duration>
 				</row>
-				<row class="row" disabled="@ts_viewtype">
+				<row class="row">
 					<et2-description value="Category" for="cat_id"></et2-description>
 					<et2-select-cat span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
 				</row>
-				<row class="row" disabled="@ts_viewtype">
+				<row class="row">
 					<et2-description value="Readable" for="ts_readable"></et2-description>
 					<et2-select-account span="all" id="ts_readable" emptyLabel="Give additional users access" multiple="true"></et2-select-account>
 				</row>
@@ -125,7 +121,7 @@
 				<column width="30"/>
 			</columns>
 			<rows>
-				<row disabled="@ts_viewtype" class="dialogHeader">
+				<row class="dialogHeader">
 					<et2-description  value="Title" for="ts_title"></et2-description>
 					<et2-textbox  id="ts_title" maxlength="255" class="et2_required" tabindex="1" span="4" placeholder="@ts_title_blur"></et2-textbox>
 					<et2-number  id="ts_id" readonly="true" precision="0"></et2-number>
