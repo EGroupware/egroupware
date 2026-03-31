@@ -75,36 +75,39 @@ jobs:
             php --ri tidy | sed -n "1,120p"
           '
 
-      - name: Report tidy output for merge inputs
+      - name: Report tidy output for merge input debugging
         run: |
           set -euo pipefail
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
           $COMPOSE exec -T egroupware sh -lc '
-            php -r '"'"'
-$cfg = [
-  "output-xml" => true,
-  "show-body-only" => true,
-  "output-encoding" => "utf8",
-  "input-encoding" => "utf8",
-  "quote-ampersand" => false,
-  "quote-nbsp" => true,
-  "preserve-entities" => true,
-  "wrap" => 0,
-];
-$inputs = [
-  "Special -> characters <- & stuff",
-  "<b>Contains<br /> HTML</b>",
-  "<q>Contains HTML that will be stripped</q>",
-];
-$tidy = new tidy();
-foreach ($inputs as $s) {
-  $clean = $tidy->repairString($s, $cfg, "utf8");
-  echo "IN: $s\n";
-  echo "TIDY: $clean\n";
-}
-'"'"'
+            cat <<'"'"'PHP'"'"' > /tmp/egw_tidy_probe.php
+            <?php
+            $cfg = [
+              "output-xml" => true,
+              "show-body-only" => true,
+              "output-encoding" => "utf8",
+              "input-encoding" => "utf8",
+              "quote-ampersand" => false,
+              "quote-nbsp" => true,
+              "preserve-entities" => true,
+              "wrap" => 0,
+            ];
+            $inputs = [
+              "Special -> characters <- & stuff",
+              "<b>Contains<br /> HTML</b>",
+              "<q>Contains HTML that will be stripped</q>",
+            ];
+            $tidy = new tidy();
+            foreach ($inputs as $s) {
+              $clean = $tidy->repairString($s, $cfg, "utf8");
+              echo "IN: $s\n";
+              echo "TIDY: $clean\n";
+            }
+            ?>
+            PHP
+            php /tmp/egw_tidy_probe.php
           '
 
       - name: Wait for install
