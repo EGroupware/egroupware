@@ -124,9 +124,9 @@ class notifications_push implements Json\PushBackend
 	}
 
 	/**
-	 * Delete max. 10000 rows at a time
+	 * Delete max. 5000 rows at a time
 	 */
-	const DELETE_CHUNK_SIZE = 10000;
+	const DELETE_CHUNK_SIZE = 5000;
 	/**
 	 * Delete push messages older than our heartbeat-limit (poll frequency of notifications)
 	 */
