@@ -1,0 +1,25 @@
+name: Checkout and install PHP dependencies
+description: Checkout repository (with submodules) and install PHP dependencies in sources.
+
+inputs:
+  sources-path:
+    description: Relative path where sources are checked out.
+    required: false
+    default: sources
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+        path: ${{ inputs.sources-path }}
+
+    - name: Install PHP dependencies in sources
+      shell: bash
+      run: |
+        set -euo pipefail
+        docker run --rm --user "$(id -u):$(id -g)" \
+          -v "${{ github.workspace }}/${{ inputs.sources-path }}":/app -w /app \
+          composer install --no-interaction --ignore-platform-reqs --dev
+        php "${{ github.workspace }}/${{ inputs.sources-path }}/install-cli.php" --git pull
