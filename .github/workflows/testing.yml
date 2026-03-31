@@ -23,7 +23,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/checkout-php-deps
+        with:
+          submodules: true
+          path: sources
+      - uses: ./sources/.github/actions/checkout-php-deps
 
       - name: Prepare compose project layout
         run: |

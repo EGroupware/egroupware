@@ -1,5 +1,5 @@
-name: Checkout and install PHP dependencies
-description: Checkout repository (with submodules) and install PHP dependencies in sources.
+name: Install PHP dependencies
+description: Install PHP dependencies in sources (repository must already be checked out).
 
 inputs:
   sources-path:
