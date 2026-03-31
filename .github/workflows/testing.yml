@@ -46,6 +46,14 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
           $COMPOSE up -d --force-recreate db egroupware
 
+      - name: Install PHP extensions
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+          $COMPOSE exec -T egroupware sh -lc 'apt-get update && apt-get install -y php-tidy'
+
       - name: Wait for install
         run: |
           set -euo pipefail
