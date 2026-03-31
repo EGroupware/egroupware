@@ -47,7 +47,6 @@ class MergeTest extends LoggedInTest
 	/**
 	 * With no parsing into an HTML file, we expect the same
 	 * @dataProvider textToHTMLProvider
-	 * @requires extension tidy
 	 */
 	public function testTextToHtml($testText, $expectedText)
 	{
