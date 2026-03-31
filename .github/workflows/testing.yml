@@ -62,6 +62,19 @@ jobs:
             php -m | grep -i tidy
           '
 
+      - name: Report PHP extensions
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+          $COMPOSE exec -T egroupware sh -lc '
+            php -v
+            php --ini
+            php -r "var_dump(PHP_BINARY, extension_loaded(\"xsl\"), extension_loaded(\"dom\"), extension_loaded(\"tidy\"));"
+            php --ri tidy | sed -n "1,120p"
+          '
+
       - name: Wait for install
         run: |
           set -euo pipefail
