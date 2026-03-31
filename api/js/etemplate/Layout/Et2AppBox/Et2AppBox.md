@@ -48,7 +48,7 @@ class filemanager_appbox extends filemanager_ui
 {
     public static function get_view()
     {
-        return array(new filemanager_appboxtest(), 'listview');
+        return array(new filemanager_appbox(), 'listview');
     }
     function listview(array $content = null, $msg = null)
     {

@@ -11,7 +11,7 @@ Following schema is used for JSON encoding of timesheets
 * `title`: string
 * `description`: string (multiple lines)
 * `start`: UTCDateTime e.g. `2020-02-03T14:35:37Z`
-* `duration`: integer in minutes
+* `duration`: integer in minutes or iCal duration e.g. "PT1H30M"
 * `quantity`: double
 * `paused`: integer pause time(s) in minutes
 * `project`: string

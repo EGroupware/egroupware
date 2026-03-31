@@ -33,6 +33,22 @@ type FilterInfo = {
  * @slot right - Optional content on the right for application details.
  * @slot right-header - Top of right side.
  * @slot right-footer - Bottom of right side.
+ *
+ * @csspart app-header - Wrapper for the top header area.
+ * @csspart header - Header container for the main header slot.
+ * @csspart name - Right side header area containing actions.
+ * @csspart main - Wrapper for the body area containing sidebars and content.
+ * @csspart left - Left sidebar container.
+ * @csspart right - Right sidebar container.
+ * @csspart content-header - Header area for left, center, and right sections.
+ * @csspart content - Main content container.
+ * @csspart footer - Footer container for the main content.
+ * @csspart filter - Filter drawer wrapper.
+ * @csspart filter__panel - The filter drawer panel element.
+ * @csspart spinner - Loading spinner element.
+ *
+ * @cssproperty --application-color - Background color for the main header.
+ * @cssproperty --application-header-text-color - Text color for the main header.
  */
 @customElement("et2-app-box")
 export class Et2AppBox extends Et2Widget(LitElement)

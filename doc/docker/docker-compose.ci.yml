@@ -1,0 +1,52 @@
+# Docker overrides for testing
+
+services:
+  egroupware:
+    # Override name to avoid potential conflicts with dev containers
+    container_name: egwci-egroupware
+    restart: "no"
+    ports: [ ]
+    volumes:
+      # Use the checked-out git sources
+      - ${EGW_CI_ROOT:-../..}:/var/www
+      # Current directory
+      #- ${PWD}:/var/www
+      - ${EGW_CI_DOCKER_DIR:-../../doc/docker}/data:/var/lib/egroupware
+      - ${EGW_CI_DOCKER_DIR:-../../doc/docker}/sessions:/var/lib/php/sessions
+
+  db:
+    # Override name to avoid potential conflicts with dev containers
+    container_name: egwci-egroupware-db
+    restart: "no"
+
+  nginx:
+    deploy:
+      replicas: 0
+
+  push:
+    deploy:
+      replicas: 0
+
+  collabora-key:
+    deploy:
+      replicas: 0
+
+  collabora-init:
+    deploy:
+      replicas: 0
+
+  rocketchat:
+    deploy:
+      replicas: 0
+
+  mongo:
+    deploy:
+      replicas: 0
+
+  mongo-init-replica:
+    deploy:
+      replicas: 0
+
+  watchtower:
+    deploy:
+      replicas: 0

@@ -777,9 +777,8 @@ class Etemplate extends Etemplate\Widget\Template
 	 * @param boolean $readonly =true
 	 * @return string
 	 */
-	static public function number_format($number,$num_decimal_places=2,$readonly=true)
+	static public function number_format($number, $num_decimal_places = 2, $readonly = true, $dec_separator = null, $thousands_separator = null)
 	{
-		static $dec_separator=null,$thousands_separator=null;
 		if (is_null($dec_separator))
 		{
 			$dec_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0];

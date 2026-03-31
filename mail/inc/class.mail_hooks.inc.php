@@ -256,6 +256,17 @@ class mail_hooks
 				'xmlrpc' => False,
 				'admin'  => False
 			),
+			'defaultIdentity' => array(
+				'type'   => 'select',
+				'label'  => 'Default identity for compose',
+				'help'   => 'Which mail identity (signature) do you want to start with. For personal we always use the first personal signature.',
+				'name'   => 'defaultIdentity',
+				'values' => array(
+					'last-used' => lang('Last used signature'),
+					'default'   => lang('Default signature'),
+					'personal'  => lang('Personal signature'),
+				)
+			),
 			'htmlOptions' => array(
 				'type'   => 'select',
 				'label'  => 'display of html emails',

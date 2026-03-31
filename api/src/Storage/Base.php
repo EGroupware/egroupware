@@ -864,7 +864,7 @@ class Base
 		{
 			$query = $this->parse_search($criteria, $wildcard, $empty, $op);
 		}
-		if (is_array($filter))
+		if(is_array($filter) && count($filter))
 		{
 			$db_filter = array();
 			$data2db_filter = $this->data2db($filter);

@@ -1580,7 +1580,7 @@ class admin_mail
 		}
 		if (empty($content['acc_oauth_refresh_token'] = $oidc->getRefreshToken()))
 		{
-			$content['output'] .= lang('OAuth Authentiction').': '.lang('Successfull, but NO refresh-token received!');
+			$content['output'] .= lang('OAuth Authentication').': '.lang('Successful, but NO refresh-token received!');
 			$content['connected'] = false;
 		}
 		$content['acc_oauth_access_token'] = $oidc->getAccessToken();

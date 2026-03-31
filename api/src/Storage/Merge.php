@@ -1450,7 +1450,15 @@ abstract class Merge
 			{
 				if(($value = $replacements['$$' . $field . '$$'] ?? null))
 				{
-					$time = Api\DateTime::createFromFormat('+' . Api\DateTime::$user_dateformat . '*' . Api\DateTime::$user_timeformat . '*', $value);
+					if (is_a($value, '\DateTime'))
+					{
+						$time = $value;
+					}
+					else
+					{
+						$time = Api\DateTime::createFromFormat('+' . Api\DateTime::$user_dateformat . '*' . Api\DateTime::$user_timeformat . '*', $value) ?:
+							new Api\DateTime($value, Api\DateTime::$user_timezone);
+					}
 					$replacements['$$' . $field . '/date$$'] = $time ? $time->format(Api\DateTime::$user_dateformat) : '';
 					$replacements['$$' . $field . '/time$$'] = $time ? $time->format(Api\DateTime::$user_timeformat) : '';
 				}
@@ -1597,19 +1605,24 @@ abstract class Merge
 					{
 						$replacements[$raw_placeholder] = $replacements[$this->prefix("", $fieldname, '$')];
 						$replacements[$this->prefix("", $fieldname, '$')] = self::number_format($replacements[$raw_placeholder], 2, $this->mimetype);
+					}
 
-						// Check for decimal places formatter, just a colon shows 2 or, if necessary, up to 4 non-zero digits
-						$format_matches = [];
-						preg_match_all("\$($fieldname):(?<decimals>[\d]*)\$", $content, $format_matches);
-						foreach($format_matches['decimals'] as $decimal)
+					// Check for decimal places formatter, just a colon shows 2 or, if necessary, up to 4 non-zero digits
+					$format_matches = [];
+					preg_match_all("\$($fieldname):(?<decimals>[\d]*)(?<dec>[,\.]?)(?<thousands>[,\.]?)\$", $content, $format_matches);
+					foreach($format_matches['decimals'] as $idx => $decimal)
+					{
+						if(($digits = $decimal) === '')
 						{
-							if (($digits=$decimal) === '')
-							{
-								$sub_digits = substr(self::number_format($replacements[$raw_placeholder],4), -2);
-								$digits = $sub_digits === '00' ? 2 : ($sub_digits[1] ? 4 : 3);
-							}
-							$replacements[$this->prefix("", $fieldname . ':' . $decimal, '$')] = self::number_format($replacements[$raw_placeholder], $digits, $this->mimetype);
+							$sub_digits = substr(self::number_format($replacements[$raw_placeholder], 4), -2);
+							$digits = $sub_digits === '00' ? 2 : ($sub_digits[1] ? 4 : 3);
 						}
+						$dec = $format_matches['dec'][$idx] ?: null;
+						$thousands = $format_matches['thousands'][$idx] ?: null;
+						$replacements[$this->prefix("", $fieldname . ':' . $decimal . $dec . $thousands, '$')] = self::number_format(
+							$replacements[$raw_placeholder], $digits, $this->mimetype,
+							$dec, $thousands
+						);
 					}
 				}
 				$this->format_spreadsheet_numbers($content, $names, $mimetype . $mso_application_progid);
@@ -1621,7 +1634,24 @@ abstract class Merge
 				$names = array();
 				foreach((array)$this->date_fields as $fieldname)
 				{
+					if(!array_key_exists($this->prefix("", $fieldname, '$'), $replacements))
+					{
+						continue;
+					}
 					$names[] = $fieldname;
+
+					$raw_placeholder = $this->prefix("", $fieldname . '_-raw-', '$');
+					if(!array_key_exists($raw_placeholder, $replacements))
+					{
+						$replacements[$raw_placeholder] = $replacements[$this->prefix("", $fieldname, '$')];
+					}
+					// Check for format
+					$format_matches = [];
+					preg_match_all("\$($fieldname):(?<format>[a-zA-Z\-\. ,]*)\$", $content, $format_matches);
+					foreach($format_matches['format'] as $format)
+					{
+						$replacements[$this->prefix("", $fieldname . ':' . $format, '$')] = Api\DateTime::to($replacements[$raw_placeholder], $format);
+					}
 				}
 				$this->format_spreadsheet_dates($content, $names, $replacements, $mimetype . $mso_application_progid);
 			}
@@ -3229,7 +3259,7 @@ abstract class Merge
 	 * @param string $_mimetype =''
 	 * @return string
 	 */
-	static public function number_format($number, $num_decimal_places = 2, $_mimetype = '')
+	static public function number_format($number, $num_decimal_places = 2, $_mimetype = '', $decimal_separator = '.', $thousands_separator = '')
 	{
 		if(is_null($number) || (string)$number === '')
 		{
@@ -3242,7 +3272,7 @@ abstract class Merge
 			case 'application/vnd.oasis.opendocument.spreadsheet': // OO.o spreadsheet
 				return number_format(str_replace(' ', '', $number), $num_decimal_places, '.', '');
 		}
-		return Api\Etemplate::number_format($number, $num_decimal_places);
+		return Api\Etemplate::number_format($number, $num_decimal_places, true, $decimal_separator, $thousands_separator);
 	}
 
 	/**

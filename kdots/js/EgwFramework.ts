@@ -3,7 +3,6 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
-import {until} from "lit/directives/until.js";
 import "@shoelace-style/shoelace/dist/components/split-panel/split-panel.js";
 import styles from "./EgwFramework.styles";
 import {egw} from "../../api/js/jsapi/egw_global";
@@ -139,7 +138,8 @@ export class EgwFramework extends LitElement
 	);
 
 	// Keep track of egw loaded
-	private _egwLoaded = Promise.resolve();
+	@state()
+	private _egwLoaded = false;
 
 	private get tabs() : SlTabGroup { return this.shadowRoot.querySelector("sl-tab-group");}
 
@@ -288,11 +288,19 @@ export class EgwFramework extends LitElement
 	 */
 	getEgwComplete()
 	{
-		if(typeof this.egw.window['egw_ready'] !== "undefined")
+		if(this._egwLoaded)
 		{
-			this._egwLoaded = this.egw.window['egw_ready'];
+			return Promise.resolve();
 		}
-		return this._egwLoaded;
+		const ready = this.egw.window['egw_ready'];
+		if(typeof ready !== "undefined")
+		{
+			return ready.then(() =>
+			{
+				this._egwLoaded = true;
+			});
+		}
+		return Promise.resolve();
 	}
 
 	/**
@@ -590,7 +598,7 @@ export class EgwFramework extends LitElement
 			return;
 		}
 		appInfo.notificationCount = count;
-		this.requestUpdate();
+		this.requestUpdate("applicationList");
 		this.updateComplete.then(() =>
 		{
 			const appTab = this.shadowRoot.querySelector(`sl-tab[panel="${appInfo.name}"]`);
@@ -661,6 +669,8 @@ export class EgwFramework extends LitElement
 				this.egw.debug("warn", `openPopup(${_url},...) did not return a dialog`, dialog);
 				return;
 			}
+
+			this.popups.add(dialog);
 
 			// Listen for close - wait for updateComplete to allow etemplate a chance to bind first if it needs
 			dialog.updateComplete.then(() =>
@@ -774,7 +784,7 @@ export class EgwFramework extends LitElement
 	 * Close popup
 	 *
 	 * @param {window} _wnd window object which suppose to be closed
-	 * @deprecated Use `framework.popup.close()`
+	 * @deprecated Use `framework.popups.close()`
 	 */
 	popup_close(_wnd)
 	{
@@ -1095,7 +1105,7 @@ export class EgwFramework extends LitElement
 		{
 			sortable.destroy();
 			// Update to get tabs in new order
-			this.requestUpdate();
+			this.requestUpdate("applicationList");
 		}
 	}
 
@@ -1449,6 +1459,12 @@ export class EgwFramework extends LitElement
 
 	render()
 	{
+		if(!this._egwLoaded)
+		{
+			return html`<span>Loading...</span>
+            <slot></slot>`;
+		}
+
 		const iconSize = getComputedStyle(this).getPropertyValue("--icon-size");
 		// Update existence of optional slots
 		const hasBanner = this.hasSlotController.test('banner');
@@ -1467,7 +1483,7 @@ export class EgwFramework extends LitElement
 		}
 		classes[`egw_fw__layout-${this.layout}`] = true;
 
-		return html`${until(this.getEgwComplete().then(() => html`
+		return html`
             <div class=${classMap(classes)} part="base"
                  @contextmenu=${e =>
                  {
@@ -1545,8 +1561,7 @@ export class EgwFramework extends LitElement
                     </footer>` : nothing
                 }
             </div>
-		`), html`<span>Loading...</span>
-        <slot></slot>`)}`;
+		`;
 	}
 }
 

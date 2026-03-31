@@ -629,8 +629,9 @@ export class CalendarApp extends EgwApp
 		{
 			this._grants = egw.grants(this.appname);
 		}
-		// Filter what's allowed down to those we care about
-		let filtered = Object.keys(this._grants).filter(account => this.state.owner.indexOf(account) >= 0);
+		// Filter what we care about to what's allowed.
+		// Non-calendar IDs are allowed unconditionally here since they're not in grants
+		const filtered = this.state.owner.filter(o => !Number.isInteger(o) || Number.isInteger(o) && typeof this._grants[o] !== "undefined");
 
 		// Check if we're interested in displaying by owner / participant
 		let owner_check = et2_calendar_event.owner_check(

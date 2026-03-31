@@ -18,22 +18,18 @@
 						<et2-textbox  id="ts_project" maxlength="80" placeholder="@ts_project_blur"></et2-textbox>
 					</et2-hbox>
 				</row>
-				<row disabled="@ts_viewtype">
+				<row>
 					<et2-description  value="Unitprice" for="ts_unitprice"></et2-description>
 					<et2-hbox  disabled="@pm_integration=none" >
 						<et2-number  id="ts_unitprice" span="all" width="30%"></et2-number>
 						<projectmanager-pricelist id="pl_id" width="70%" onchange="window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1));" options="None"/>
 					</et2-hbox>
 				</row>
-				<row class="row" disabled="!@ts_viewtype">
-					<et2-description  value="comment"></et2-description>
-					<et2-textarea  id="ts_description_short" rows="5" cols="50"></et2-textarea>
-				</row>
-				<row class="row" disabled="@ts_viewtype">
+				<row class="row">
 					<et2-description  value="Quantity" for="ts_quantity"></et2-description>
 					<et2-number  statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
 				</row>
-				<row class="row" disabled="@ts_viewtype">
+				<row class="row">
 					<et2-description  value="Category" for="cat_id"></et2-description>
 					<et2-select-cat  span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
 				</row>
@@ -105,7 +101,7 @@
 						<et2-button  label="Cancel" id="button[cancelsearch]" image="cancel"></et2-button>
 					</et2-hbox>
 				</row>
-				<row disabled="@ts_viewtype">
+				<row>
 					<et2-description  value="Title"></et2-description>
 					<et2-textbox  id="ts_title" maxlength="255" class="et2_required" tabindex="1" placeholder="@ts_title_blur"></et2-textbox>
 				</row>

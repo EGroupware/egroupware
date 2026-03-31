@@ -663,7 +663,7 @@ number of sessions / egroupware logins in the last 30 days	admin	it	Numero di se
 number of users	admin	it	Numero di utenti
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	it	Enumerazione seriale delle applicazioni. Se non sono enumerate serialmente, l'ordinamento potrebbe funzionare male. Ciò non modificherà l'ordine effettivo delle applicazioni.
 nummeric account id	admin	it	ID Account numerico
-oauth authentiction	admin	it	Autenticazione OAuth
+oauth authentication'	admin	it	Autenticazione OAuth
 offer to installing egroupware as mail-handler	admin	it	Offerta per l'installazione di EGroupware come mail-handler
 official egroupware usage statistic	admin	it	Statistica ufficiale di utilizzo di EGroupware
 one day	admin	it	Un giorno
@@ -852,7 +852,7 @@ submit to egroupware.org	admin	it	Invia a egroupware.org
 subtype	admin	it	Sottotipo
 success	admin	it	Successo
 successful connected to %1 server%2.	admin	it	Connessione avvenuta con success a %1 server %2.
-successfull, but no refresh-token received!	admin	it	Successo, ma nessun refresh-token ricevuto!
+successful, but no refresh-token received!	admin	it	Successo, ma nessun refresh-token ricevuto!
 switch back to standard identity to save account.	admin	it	Ritornare all'identità standard per conservare l'account.
 switch back to standard identity to save other account data.	admin	it	Ritornare all'identità standard per conservare gli altri dati dell'account.
 switch it off, if users are randomly thrown out	admin	it	Spegnilo in caso di logout casuali degli utenti

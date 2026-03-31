@@ -633,7 +633,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			$timesheet['ts_owner'] = $old['owner'];
 			$timesheet['ts_created'] = $old['created'];
 		}
-		else
+		elseif (!isset($timesheet['ts_owner']) || !$this->check_access(Api\Acl::EDIT, $timesheet))
 		{
 			// only set owner, if user is explicitly specified in URL (check via prefix, NOT for /addressbook/) or sync-all-in-one!)
 			if ($prefix && $user)

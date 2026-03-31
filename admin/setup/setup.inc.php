@@ -33,6 +33,7 @@ $setup_info['admin']['hooks']['admin'] = 'admin_hooks::all_hooks';
 $setup_info['admin']['hooks']['sidebox_menu'] = 'admin_hooks::all_hooks';
 $setup_info['admin']['hooks']['edit_user'] = 'admin_hooks::edit_user';
 $setup_info['admin']['hooks']['config'] = 'admin_hooks::config';
+$setup_info['admin']['hooks']['config_validate'] = 'admin_hooks::configValidate';
 $setup_info['admin']['hooks']['edit_group'] = \EGroupware\Admin\Groups::class.'::edit_group';
 
 // add account tab to addressbook.edit

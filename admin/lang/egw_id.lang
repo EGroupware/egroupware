@@ -334,7 +334,7 @@ no limit	admin	id	Tidak ada batasan
 no matches found	admin	id	Tidak ditemukan kecocokan!
 no modes available	admin	id	Tidak ada mode yang tersedia!
 number of row for a multiline inputfield or line of a multi-select-box	admin	id	Jumlah baris untuk bidang input multi-baris atau baris dari kotak multi-pilihan
-oauth authentiction	admin	id	Otentikasi OAuth
+oauth authentication'	admin	id	Otentikasi OAuth
 offer to installing egroupware as mail-handler	admin	id	Menawarkan untuk menginstal EGroupware sebagai penangan email
 one day	admin	id	Satu hari
 one hour	admin	id	Satu jam
@@ -435,7 +435,7 @@ submit statistic information	admin	id	Submit statistic information
 submit to egroupware.org	admin	id	Submit to egroupware.org
 subtype	admin	id	Subtype
 success	admin	id	Sukses
-successfull, but no refresh-token received!	admin	id	Berhasil, tetapi TIDAK ada token penyegaran yang diterima!
+successful, but no refresh-token received!	admin	id	Berhasil, tetapi TIDAK ada token penyegaran yang diterima!
 the api is current	admin	id	API saat ini
 the two passwords are not the same	admin	id	Kedua password tidak sama
 the users bellow are still members of group %1	admin	id	Pengguna berikut ini masih menjadi anggota kelompok %1

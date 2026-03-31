@@ -60,6 +60,10 @@ html:not(.desktop) body et2-dialog .egw-popup {
   right: 0;
   overflow: auto;
 }
+html:not(.desktop) :root et2-dialog::part(base),
+html:not(.desktop) body et2-dialog::part(base) {
+  z-index: calc(var(--sl-z-index-dialog) - 1);
+}
 html:not(.desktop) :root et2-dialog::part(panel),
 html:not(.desktop) body et2-dialog::part(panel) {
   /* allow dialog to be full screen */

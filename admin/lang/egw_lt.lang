@@ -84,7 +84,7 @@ lifetime of 'remember me' token	admin	lt	Ženklo „Prisiminti mane“ gyvavimo 
 log user-agent and action of changes in history-log of entries	admin	lt	Vartotojo agento ir veiksmų pokyčių registravimas įrašų istorijos žurnale
 login history	admin	lt	Prisijungimų istorija
 no limit	admin	lt	Nėra ribos
-oauth authentiction	admin	lt	OAuth autentiškumo nustatymas
+oauth authentication'	admin	lt	OAuth autentiškumo nustatymas
 offer to installing egroupware as mail-handler	admin	lt	Pasiūlymas įdiegti EGroupware kaip pašto tvarkytuvą
 one day	admin	lt	Vieną dieną
 one hour	admin	lt	Viena valanda
@@ -102,7 +102,7 @@ set a random password	admin	lt	Nustatykite atsitiktinį slaptažodį
 show access log	admin	lt	Prieigos žurnalas
 show groups in container based on	admin	lt	Rodyti grupes konteineryje pagal
 smtp only: to create only an smtp account	admin	lt	Sukurti tik SMTP paskyrą be IMAP
-successfull, but no refresh-token received!	admin	lt	Pavyko, bet NĖRA gautas atnaujinimo žetonas!
+successful, but no refresh-token received!	admin	lt	Pavyko, bet NĖRA gautas atnaujinimo žetonas!
 token created.	admin	lt	Ženklas sukurtas.
 token not found!	admin	lt	Ženklas nerastas!
 token revoked.	admin	lt	Ženklas atšauktas.

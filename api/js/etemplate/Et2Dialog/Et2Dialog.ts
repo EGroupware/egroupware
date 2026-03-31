@@ -374,13 +374,13 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.addEventListener('sl-request-close', event =>
 		{
 			// Prevent close on clicking somewhere else
-			if(this.isModal && event.detail.source === 'overlay')
+			if(this.isModal && event.detail?.source === 'overlay')
 			{
 				event.preventDefault();
 				return;
 			}
 			// Prevent close on escape
-			if(!this.hideOnEscape && event.detail.source === 'keyboard')
+			if(!this.hideOnEscape && event.detail?.source === 'keyboard')
 			{
 				event.preventDefault();
 				return;
@@ -961,6 +961,13 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				button.setAttribute("slot", "footer");
 				this.appendChild(button);
 			});
+
+			// Grab cancel
+			template_buttons.filter(b => b.id.includes("cancel") || b.classList.contains("button_cancel") || b.classList.contains("cancel"))
+				.forEach(b =>
+				{
+					b.addEventListener("click", () => this.dispatchEvent(new CustomEvent('sl-request-close')));
+				})
 			this.requestUpdate();
 		}
 		// do NOT submit dialog, if it has no etemplate_exec_id, it only gives and error on server-side

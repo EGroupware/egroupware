@@ -173,6 +173,15 @@ export class EgwMenuShoelace extends LitElement
 			}
 			menuItem.disabled = !_links[actionId].enabled;
 			menuItem.hidden = !_links[actionId].visible;
+			if(!menuItem.disabled || !menuItem.hidden)
+			{
+				// Make sure the parents are visible too
+				for(let parent = menuItem.parentElement; parent && parent !== this; parent = parent.parentElement)
+				{
+					parent.hidden = false;
+					parent.disabled = false
+				}
+			}
 			if(menuItem.type == "checkbox")
 			{
 				menuItem.checked = _links[actionId].actionObj.checked ?? false;

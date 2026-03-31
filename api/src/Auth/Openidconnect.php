@@ -25,12 +25,38 @@ class Openidconnect implements BackendSSO
 	 */
 	public function __construct()
 	{
-		$this->client = new OpenIDConnectClient($GLOBALS['egw_info']['server']['oic_provider'],
-			$GLOBALS['egw_info']['server']['oic_client_id'],
-			$GLOBALS['egw_info']['server']['oic_client_secret']);
+
+		$this->client = $this->checkSetCommon($GLOBALS['egw_info']['server']['oic_provider']) ?:
+			new OpenIDConnectClient($GLOBALS['egw_info']['server']['oic_provider'],
+				$GLOBALS['egw_info']['server']['oic_client_id'],
+				$GLOBALS['egw_info']['server']['oic_client_secret']);
 
 		// add scopes we are processing ('openid' is added automatic)
 		$this->client->addScope(['email', 'profile']);
+	}
+
+	/**
+	 * Check for common providers like Microsoft and Google
+	 *
+	 * If that's the case we use our Api\Auth\OpenIDConnectClient instead of Jumbojett\OpenIDConnectClient direct.
+	 * That way we automatically get all the quirks of these providers handled, including our client-id, -secret
+	 * and the redirect via https://proxy.egroupware.org/oauth back to the instance.
+	 *
+	 * @param string $_provider
+	 * @return OpenIDConnectClient|null
+	 */
+	protected function checkSetCommon(string $_provider) : ?OpenIDConnectClient
+	{
+		$host = parse_url($_provider, PHP_URL_HOST);
+
+		foreach(Api\Auth\OpenIDConnectClient::$oauth_domain_regexps as [$imap, $smtp, $provider, $client, $secret, $scopes, $extra, $server_regexp])
+		{
+			if (stripos($provider, $host) !== false)
+			{
+				return Api\Auth\OpenIDConnectClient::byDomain($provider, $imap); // use the providers IMAP to match
+			}
+		}
+		return null;
 	}
 
 	/**

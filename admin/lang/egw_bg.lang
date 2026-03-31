@@ -163,7 +163,7 @@ month	admin	bg	Месец
 name of tab to create and show field in	admin	bg	Име на раздела, в който се създава и показва полето
 no limit	admin	bg	Без ограничение
 no matches found	admin	bg	Не са открити съвпадения
-oauth authentiction	admin	bg	Удостоверяване на OAuth
+oauth authentication'	admin	bg	Удостоверяване на OAuth
 offer to installing egroupware as mail-handler	admin	bg	Оферта за инсталиране на EGroupware като mail-handler
 one day	admin	bg	Един ден
 one hour	admin	bg	Един час
@@ -187,7 +187,7 @@ show access log	admin	bg	Протокол за достъп
 show groups in container based on	admin	bg	Показване на групите в контейнера въз основа на
 smtp only: to create only an smtp account	admin	bg	Създаване на акаунт само за SMTP без IMAP
 start	admin	bg	Старт
-successfull, but no refresh-token received!	admin	bg	Успешно, но НЕ е получен токен за обновяване!
+successful, but no refresh-token received!	admin	bg	Успешно, но НЕ е получен токен за обновяване!
 token created.	admin	bg	Създаден е токен.
 token not found!	admin	bg	Токенът не е намерен!
 token revoked.	admin	bg	Токенът е отнет.

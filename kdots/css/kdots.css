@@ -5,6 +5,9 @@
  * and override as needed
  */
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
+@import "../../node_modules/blueimp-gallery/css/blueimp-gallery.css";
+@import "../../node_modules/blueimp-gallery/css/blueimp-gallery-indicator.css";
+@import "../../node_modules/blueimp-gallery/css/blueimp-gallery-video.css";
 html,
 body {
   width: 100vw;
@@ -1122,6 +1125,11 @@ body egw-app,
   background-size: contain;
   background-image: url(../../node_modules/bootstrap-icons/icons/question-circle.svg);
 }
+lt-card.lt-card,
+lt-card.lt-card * {
+  background-image: none;
+  background-size: initial;
+}
 /* Get nextmatch sizing more nicely without messing with dynheight */
 div.et2_nextmatch {
   display: flex;
@@ -1558,6 +1566,10 @@ et2-toolbar[slot="main-header"]::part(list),
 .flatpickr-calendar .flatpickr-months .flatpickr-current-month .numInputWrapper .numInput {
   padding: 0;
 }
+/* Blueimp gallery */
+.blueimp-gallery:not(.blueimp-gallery-display) {
+  display: none;
+}
 /*** END WIDGETS ***/
 html:not(.desktop) html * {
   touch-action: auto;
@@ -1620,6 +1632,10 @@ html:not(.desktop) body et2-dialog .egw-popup {
   bottom: 0;
   right: 0;
   overflow: auto;
+}
+html:not(.desktop) :root et2-dialog::part(base),
+html:not(.desktop) body et2-dialog::part(base) {
+  z-index: calc(var(--sl-z-index-dialog) - 1);
 }
 html:not(.desktop) :root et2-dialog::part(panel),
 html:not(.desktop) body et2-dialog::part(panel) {

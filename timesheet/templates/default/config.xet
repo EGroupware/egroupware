@@ -17,13 +17,6 @@
 					</et2-select>
 				</row>
 				<row>
-					<et2-description  value="Mode" label="%s:"></et2-description>
-					<et2-select  id="newsettings[ts_viewtype]">
-						<option value="normal">Regular</option>
-						<option value="short">Simple</option>
-					</et2-select>
-				</row>
-				<row>
 					<et2-description  value="Show a quantity sum (eg. to sum up negative overtime)" label="%s:"></et2-description>
 					<et2-select  id="newsettings[quantity_sum]">
 						<option value="">No</option>

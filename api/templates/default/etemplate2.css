@@ -1876,7 +1876,7 @@ img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
 /**
 * Validation
 */
-.et2_required:not(.hasValue){
+.et2_required:not(.hasValue):not(:defined), .et2_required:defined:not(.hasValue)::part(form-control-input) {
     background-color: #ffffd0;
 }
 .et2_required:not(.hasValue)::part(base), .et2_required:not(.hasValue)::part(control),
@@ -3234,6 +3234,10 @@ span.et2_egw_action_ddHelper_itemsCnt {
  */
 .blueimp-gallery > .slides > .slide-prev, .blueimp-gallery > .slides > .slide.active, .blueimp-gallery > .slides > .slide-next {
     visibility: visible;
+}
+
+.blueimp-gallery:not(.blueimp-gallery-display) {
+	display: none;
 }
 /* Paginating with nextmatch */
 .blueimp-gallery-controls > .indicator.paginating {

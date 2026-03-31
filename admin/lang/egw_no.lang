@@ -451,7 +451,7 @@ start	admin	no	Start
 start testjob!	admin	no	Start testjobb!
 submit changes	admin	no	Bekreft endringene
 submit the search string	admin	no	Bekreft søkestrengen
-successfull, but no refresh-token received!	admin	no	Vellykket, men INGEN refresh-token mottatt!
+successful, but no refresh-token received!	admin	no	Vellykket, men INGEN refresh-token mottatt!
 that loginid has already been taken	admin	no	Den loginID er opptatt
 the api is current	admin	no	API er gjeldende
 the api requires an upgrade	admin	no	API trenger en oppgradering

@@ -6,6 +6,14 @@
   background-size: contain;
   background-image: url(../../node_modules/bootstrap-icons/icons/question-circle.svg);
 }
+// https://addons.mozilla.org/de/firefox/addon/languagetool has a lot of not defined custom elements
+// we do not want to make those visible so we revert our styling for undefined widget
+lt-card.lt-card{
+	&,*{
+		background-image: none;
+		background-size: initial;
+	}
+}
 
 /* Get nextmatch sizing more nicely without messing with dynheight */
 div.et2_nextmatch {
@@ -395,4 +403,13 @@ et2-toolbar[slot="main-header"], [slot="main-header"] et2-toolbar{
 	}
   }
 }
+
+/* Blueimp gallery */
+@import "../../node_modules/blueimp-gallery/css/blueimp-gallery.css";
+@import "../../node_modules/blueimp-gallery/css/blueimp-gallery-indicator.css";
+@import "../../node_modules/blueimp-gallery/css/blueimp-gallery-video.css";
+.blueimp-gallery:not(.blueimp-gallery-display) {
+  display: none;
+}
+
 /*** END WIDGETS ***/

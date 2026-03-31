@@ -153,7 +153,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		if(!$GLOBALS['egw_info']['user']['account_lid'] || $GLOBALS['egw_info']['user']['account_lid'] == 'anonymous')
 		{
 			// Do not mount to root or it will be overwritten if they open another share
-			$share['share_root'] = '/' . Vfs::basename($share['share_path']);
+			$share['share_root'] = '/' . Vfs::basename(trim($share['share_path'], '/'));
 		}
 
 

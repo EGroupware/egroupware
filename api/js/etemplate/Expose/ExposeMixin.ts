@@ -135,9 +135,6 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 			if(document.body.querySelector('#blueimp-gallery') == null)
 			{
-				this.egw().includeCSS(egw.webserverUrl + "/node_modules/blueimp-gallery/css/blueimp-gallery.css");
-				this.egw().includeCSS(egw.webserverUrl + "/node_modules/blueimp-gallery/css/blueimp-gallery-indicator.css");
-				this.egw().includeCSS(egw.webserverUrl + "/node_modules/blueimp-gallery/css/blueimp-gallery-video.css");
 				// Create Gallery DOM structure
 				render(this._galleryTemplate(), document.body);
 			}

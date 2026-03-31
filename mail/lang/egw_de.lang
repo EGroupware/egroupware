@@ -128,6 +128,8 @@ current folder	mail	de	Aktueller Ordner
 current subject	mail	de	Aktueller Betreff
 currently:	mail	de	Aktuell:
 deactive	mail	de	Deaktiviert
+default identity for compose	mail	de	Standard Identität zum Verfassen
+default signature	mail	de	Allgemeine Standard Signatur
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus
 default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktionen in der HTML-Editor-Symbolleiste beim E-Mail verfassen
 default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
@@ -329,6 +331,7 @@ keep a copy	mail	de	Eine Kopie behalten
 keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht im Posteingang behalten
 kilobytes	mail	de	Kilobyte
 later	mail	de	Später
+last used signature	mail	de	zuletzt genutzte Signatur
 learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein Spam) lernen fehlgeschlagen, da %1
 learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
 less than	mail	de	kleiner als
@@ -434,6 +437,7 @@ original message	mail	de	Ursprüngliche Nachricht
 outbox	mail	de	Postausgang
 password protect	mail	de	Passwort geschützt
 permission denied	mail	de	Zugriff verweigert
+personal signature	mail	de	Persönliche Signatur
 please configure access to an existing individual imap account.	mail	de	Konfigurieren Sie hier den Zugang zu einem existierenden IMAP-Postfach.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	de	Bitte konfigurieren Sie Ihr S/MIME-Zertifikat auf der Registerkarte "Verschlüsselung" im Dialogfeld "Konto bearbeiten".
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	de	Bitte kontaktieren Sie Ihren Administrator um sicherzustellen dass ihr Server serverseitige Filterregeln unterstützt und wie diese in EGroupware für Ihr aktives Konto (%1) mit der ID %2 erlaubt werden.
@@ -688,6 +692,7 @@ when saving messages as item of a different app	mail	de	Wählen Sie das Format z
 when sending messages	mail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mail-Ordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse)
 which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mail-Ordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	de	Mit welcher Identität (Signatur) sollen neue E-Mails verfasst werden? Bei persönlichen Signaturen wird immer die erste Signatur herangezogen.
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten
 whitelisted mails are not marked as spam	mail	de	E-Mail-Adressen auf der Domain-Whitelist, werden nicht als Spam markiert
 whole message	mail	de	gesamte Nachricht

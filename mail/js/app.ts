@@ -22,6 +22,7 @@ import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {MailCompose} from "./compose";
 import {egw} from "../../api/js/jsapi/egw_global";
+import { Et2Details } from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
 
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
@@ -221,13 +222,13 @@ export class MailApp extends EgwApp
 		
 		this.et2_obj = et2;
 		this.push_active = {};
+    const self = this;
 		switch (_name)
 		{
 			case 'mail.sieve.vacation':
 				this.vacationFilterStatusChange();
 				break;
 			case 'mail.index':
-				var self = this;
 				jQuery('iframe#mail-index_messageIFRAME').on('load', function ()
 				{
 					// decrypt preview body if mailvelope is available
@@ -260,7 +261,6 @@ export class MailApp extends EgwApp
 				// Bind to nextmatch refresh to update folder status
 				if (nm != null && (typeof jQuery._data(nm).events == 'undefined' || typeof jQuery._data(nm).events.refresh == 'undefined'))
 				{
-					var self = this;
 					jQuery(nm).on('refresh', (_event, _widget, _row_id, _type) =>
 					{
 						if (!self.push_active[_widget.settings.foldertree.split("::")[0]])
@@ -306,7 +306,6 @@ export class MailApp extends EgwApp
 				if (!alreadyrefreshed) this.mail_callRefreshVacationNotice();
 				break;
 			case 'mail.display':
-				var self = this;
 				// Prepare display dialog for printing
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
@@ -893,14 +892,14 @@ export class MailApp extends EgwApp
 			{
 				// Request updated data, if possible
 				if (this.mail_currentlyFocussed!='') egw.dataRefreshUID(this.mail_currentlyFocussed);
-				for(var k = 0; k < this.mail_selectedMails.length; k++) egw.dataRefreshUID(this.mail_selectedMails[k]);
+				for(let k = 0; k < this.mail_selectedMails.length; k++) egw.dataRefreshUID(this.mail_selectedMails[k]);
 				//nm.refresh(this.mail_selectedMails,'delete');
 			}
 			this.mail_selectedMails = [];
 			this.mail_currentlyFocussed = '';
 			return '';
 		}
-		for(var k = 0; k < _selected.length; k++)
+		for(let k = 0; k < _selected.length; k++)
 		{
 			if (jQuery.inArray(_selected[k],this.mail_selectedMails)==-1)
 			{
@@ -924,14 +923,14 @@ export class MailApp extends EgwApp
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
-				var _senders = [];
+				_senders = [];
 				_senders.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
 			if ((typeof _senders == 'undefined' || _senders.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
-					var _senders = [];
+					_senders = [];
 					_senders.push({id:this.mail_currentlyFocussed});
 				}
 			}
@@ -1011,14 +1010,14 @@ export class MailApp extends EgwApp
 		{
 			if (this.et2 && this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
-				var _elems = [];
+				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
 			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
-					var _elems = [];
+					_elems = [];
 					_elems.push({id:this.mail_currentlyFocussed});
 				}
 			}
@@ -1346,7 +1345,7 @@ export class MailApp extends EgwApp
 					attachmentsBlock.set_value({content:[]});
 					attachmentsBlock.set_class('previewAttachmentArea noContent mail_DisplayNone');
 				}
-				var IframeHandle = this.et2.getWidgetById('messageIFRAME');
+				const IframeHandle = this.et2.getWidgetById('messageIFRAME');
 				if(IframeHandle) IframeHandle.set_src('about:blank');
 				this.mail_disablePreviewArea(true);
 			}
@@ -1356,7 +1355,7 @@ export class MailApp extends EgwApp
 		else if (!egwIsMobile() && previewPane !='hide')
 		{
 			// Blank first, so we don't show previous email while loading
-			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
+			const IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src('about:blank');
 
 			this.smime_clear_flags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
@@ -1813,9 +1812,9 @@ export class MailApp extends EgwApp
 		// Put required info in global store
 		var data = {};
 		if (!attachments) return;
-		for (var i = 0; i < attachments.length; i++)
+		for (let i = 0; i < attachments.length; i++)
 		{
-			var data = attachments[i] || {};
+			data = attachments[i] || {};
 			if(!data.filename || !data.type) continue;
 
 			// Add required info
@@ -2322,14 +2321,14 @@ export class MailApp extends EgwApp
 			calledFromPopup = true;
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
-				var _elems = [];
+				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
 			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
-					var _elems = [];
+					_elems = [];
 					_elems.push({id:this.mail_currentlyFocussed});
 				}
 			}
@@ -2996,8 +2995,8 @@ export class MailApp extends EgwApp
 			//old style, only available for undelete and unlabel (no toggle)
 			if ( _action.id=='unlabel') // this means all labels should be removed
 			{
-				var labels = ['label1','label2','label3','label4','label5'];
-				for (var i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
+				const labels = ['label1','label2','label3','label4','label5'];
+				for (let i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
 				this.mail_flagMessages(_action.id,data);
 			}
 			else
@@ -3160,20 +3159,20 @@ export class MailApp extends EgwApp
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
-				var _elems = [];
+				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
 			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
-					var _elems = [];
+					_elems = [];
 					_elems.push({id:this.mail_currentlyFocussed});
 				}
 			}
 		}
 		//alert('mail_header('+_elems[0].id+')');
-		var url = window.egw_webserverUrl+'/index.php?';
+		let url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
 		url += '&id='+_elems[0].id;
 		this.mail_displayHeaderLines(url);
@@ -3191,14 +3190,14 @@ export class MailApp extends EgwApp
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
-				var _elems = [];
+				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
 			if ((typeof _elems == 'undefined'|| _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
-					var _elems = [];
+					_elems = [];
 					_elems.push({id:this.mail_currentlyFocussed});
 				}
 			}
@@ -3223,14 +3222,14 @@ export class MailApp extends EgwApp
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
-				var _elems = [];
+				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
 			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
-					var _elems = [];
+					_elems = [];
 					_elems.push({id:this.mail_currentlyFocussed});
 				}
 			}
@@ -3416,8 +3415,8 @@ export class MailApp extends EgwApp
 
 		if (this.mail_isMainWindow)
 		{
-			mail_id = this.mail_currentlyFocussed;
-			var p = widget.getParent();
+			mail_id = this.mail_currentlyFocussed || app.mail.mail_currentlyFocussed;
+			const p = widget.getParent();
 			attachments = p.getArrayMgr("content").data;
 		}
 		else
@@ -3430,13 +3429,13 @@ export class MailApp extends EgwApp
 		{
 			case 'saveOneToVfs':
 			case 'saveAllToVfs':
-				var ids = [];
+				const ids = [];
 				attachments = action === 'saveOneToVfs' ? [attachments[row_id]] : attachments;
-				for (var i=0;i<attachments.length;i++)
+				for (const attachment of attachments)
 				{
-					if (attachments[i] != null)
+					if (attachment != null)
 					{
-						ids.push(mail_id+'::'+attachments[i].partID+'::'+attachments[i].winmailFlag+'::'+attachments[i].filename);
+						ids.push(mail_id+'::'+attachment.partID+'::'+attachment.winmailFlag+'::'+attachment.filename);
 					}
 				}
 				let vfs_select = loadWebComponent('et2-vfs-select', {
@@ -3445,7 +3444,7 @@ export class MailApp extends EgwApp
 					buttonLabel: this.egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
 					title: this.egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
 					filename: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
-				}, this.et2);
+				}, this.et2 ?? app.mail.et2);
 				// Serious violation of type - methodId is a string
 				// Set it to an array here bypassing normal checking
 				vfs_select.methodId = ids.length > 1 ? {ids: ids, action: 'attachment'} : {ids: ids[0], action: 'attachment'},
@@ -3541,30 +3540,30 @@ export class MailApp extends EgwApp
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
-				var _elems = [];
+				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
 			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
-					var _elems = [];
+					_elems = [];
 					_elems.push({id:this.mail_currentlyFocussed});
 				}
 			}
 		}
 		var ids = [], names = [];
-		for (var i in _elems)
+		for (const i in _elems)
 		{
-			var _id = _elems[i].id;
-			var dataElem = egw.dataGetUIDdata(_id);
-			var subject = dataElem? dataElem.data.subject: _elems[i].subject;
+			const _id = _elems[i].id;
+			const dataElem = egw.dataGetUIDdata(_id);
+			let subject = dataElem? dataElem.data.subject: _elems[i].subject;
 			if (this.egw.is_popup() && this.et2._inst.name == 'mail.display')
 			{
 				subject = this.et2.getArrayMgr('content').getEntry('mail_displaysubject');
 			}
 			// Replace these now, they really cause problems later
-			var filename = subject ? subject.replace(/[\f\n\t\v\x0b\:*#?<>%"\/\\\?]/g,"_") : 'unknown';
+			const filename = subject ? subject.replace(/[\f\n\t\v\x0b\:*#?<>%"\/\\\?]/g,"_") : 'unknown';
 			ids.push(_id);
 			names.push(filename+'.eml');
 		}
@@ -3592,8 +3591,8 @@ export class MailApp extends EgwApp
 	 */
 	mail_integrate(_action, _elems)
 	{
-		var app = _action.id;
-		var w_h = ['750','580']; // define a default wxh if there's no popup size registered
+		const app = _action.id;
+		let w_h = ['750','580']; // define a default wxh if there's no popup size registered
 
 		if (typeof _action.data != 'undefined' )
 		{
@@ -3605,14 +3604,14 @@ export class MailApp extends EgwApp
 		{
 			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
-				var _elems = [];
+				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
 			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
 			{
 				if (this.mail_currentlyFocussed)
 				{
-					var _elems = [];
+					_elems = [];
 					_elems.push({id:this.mail_currentlyFocussed});
 				}
 			}
@@ -3733,12 +3732,12 @@ export class MailApp extends EgwApp
 
 		if (typeof _actionObjects['msg'] == 'undefined')
 		{
-			for (var i = 0; i < _actionObjects.length; i++)
+			for (let i = 0; i < _actionObjects.length; i++)
 			{
 				// Check that the ID & interface is there.  Paste is missing iface.
 				if (_actionObjects[i].id.length>0 && _actionObjects[i].iface)
 				{
-					var dataElem = jQuery(_actionObjects[i].iface.getDOMNode());
+					const dataElem = jQuery(_actionObjects[i].iface.getDOMNode());
 					dataElem.addClass(_class);
 
 				}
@@ -3746,12 +3745,12 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
-			for (var i = 0; i < _actionObjects['msg'].length; i++)
+			for (let i = 0; i < _actionObjects['msg'].length; i++)
 			{
-				var mail_uid = _actionObjects['msg'][i];
+				const mail_uid = _actionObjects['msg'][i];
 
 				// Get the record from data cache
-				var dataElem = egw.dataGetUIDdata(mail_uid);
+				const dataElem = egw.dataGetUIDdata(mail_uid);
 				if(dataElem == null || typeof dataElem == undefined)
 				{
 					// Unknown ID, nothing to update
@@ -3787,11 +3786,11 @@ export class MailApp extends EgwApp
 
 		if (typeof _actionObjects['msg'] == 'undefined')
 		{
-			for (var i = 0; i < _actionObjects.length; i++)
+			for (let i = 0; i < _actionObjects.length; i++)
 			{
 				if (_actionObjects[i].id.length>0)
 				{
-					var dataElem = jQuery(_actionObjects[i].iface.getDOMNode());
+					const dataElem = jQuery(_actionObjects[i].iface.getDOMNode());
 					dataElem.removeClass(_class);
 
 				}
@@ -3799,12 +3798,12 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
-			for (var i = 0; i < _actionObjects['msg'].length; i++)
+			for (let i = 0; i < _actionObjects['msg'].length; i++)
 			{
-				var mail_uid = _actionObjects['msg'][i];
+				const mail_uid = _actionObjects['msg'][i];
 
 				// Get the record from data cache
-				var dataElem = egw.dataGetUIDdata(mail_uid);
+				const dataElem = egw.dataGetUIDdata(mail_uid);
 				if(dataElem == null || typeof dataElem == undefined)
 				{
 					// Unknown ID, nothing to update
@@ -3812,11 +3811,11 @@ export class MailApp extends EgwApp
 				}
 
 				// Update class
-				var classes = dataElem.data['class'] || "";
+				let classes = dataElem.data['class'] || "";
 				classes = classes.split(' ');
 				if(classes.indexOf(_class) >= 0)
 				{
-					for(var c in classes)
+					for(const c in classes)
 					{
 						classes.splice(classes.indexOf(_class),1);
 						if (classes.indexOf(_class) < 0) break;
@@ -4366,7 +4365,7 @@ export class MailApp extends EgwApp
 		var virtualDelete = ['e','t','x'];
 		var virtualCreate = ['k','x'];
 
-		for (var i=0;i<this.aclRights.length;i++)
+		for (let i=0;i<this.aclRights.length;i++)
 		{
 			var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
 			if (selectedBox == rowId+'[acl_c]' && virtualCreate.indexOf(this.aclRights[i])>-1)
@@ -4383,7 +4382,7 @@ export class MailApp extends EgwApp
 				rights += this.aclRights[i];
 		}
 
-		for (var i=0;i<this.aclCommonRights.length;i++)
+		for (let i=0;i<this.aclCommonRights.length;i++)
 		{
 			if (rights.split("").sort().toString() == this.aclCommonRights[i].split("").sort().toString())
 				rights = this.aclCommonRights[i];
@@ -5305,17 +5304,15 @@ export class MailApp extends EgwApp
 		const self = this;
 		this.viewEntry(_action, _sender, true, function(etemplate){
 			// et2 object in view
-			var et2 = etemplate.widgetContainer;
+			const et2 = etemplate.widgetContainer;
 			// iframe to load message
-			var iframe = et2.getWidgetById('iframe');
+			const iframe = et2.getWidgetById('iframe');
 			// toolbar widget
-			var toolbar = et2.getWidgetById('toolbar');
+			const toolbar = et2.getWidgetById('toolbar');
 			// attachments details title DOM node
-			var $attachment = jQuery('.attachments span.et2_details_title');
-			// details DOM
-			var $details = jQuery('.et2_details.details');
+			const attachment:Et2Details = document.querySelector('.attachments');
 			// Content
-			var content = et2.getArrayMgr('content').data;
+			const content = et2.getArrayMgr('content').data;
 
 			// set the current selected row
 			et2.mail_currentlyFocussed = id;
@@ -5333,22 +5330,13 @@ export class MailApp extends EgwApp
 			}
 			else
 			{
-				// disable attachments area if there's no attachments
-				$attachment.parent().hide();
+				// disable attachments area if there are no attachments
+				attachment.set_disabled(true);
 			}
-			// disable the detials if there's no details
-			if (!content.ccaddress && !content.additionaltoaddress) $details.hide();
 
 			toolbar.readonly = false;
 			toolbar.actions = content.toolbar || {};
-			var toaddressdetails = self.et2_view.widgetContainer.getWidgetById('toaddressdetails');
-			if (toaddressdetails && content.additionaltoaddress)
-			{
-				toaddressdetails.set_value('... ' +content.additionaltoaddress.length + egw.lang(' more'));
-				jQuery(toaddressdetails.getDOMNode()).off().on('click', function(){
-					$details.find('.et2_details_toggle').click();
-				});
-			}
+
 
 			// Request email body from server
 			iframe.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:id}));

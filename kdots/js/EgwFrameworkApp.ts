@@ -617,6 +617,12 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	private _refresh()
+	{
+		// @ts-ignore
+		return this.egw.refresh("", this.name, null, null, this.name);
+	}
+
 	public async print()
 	{
 
@@ -1206,7 +1212,7 @@ export class EgwFrameworkApp extends LitElement
             <et2-button-icon nosubmit name="arrow-clockwise"
                              label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
                              statustext=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
-                             @click=${this.refresh}
+                             @click=${this._refresh}
             ></et2-button-icon>
             <et2-button-icon nosubmit name="printer" class="egw_fw_app--no_mobile"
                              label=${this.egw.lang("Print")}

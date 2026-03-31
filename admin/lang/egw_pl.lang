@@ -476,7 +476,7 @@ number of active users	admin	pl	Liczba aktywnych użytkowników
 number of row for a multiline inputfield or line of a multi-select-box	admin	pl	Ilość linii dla danych obszaru tekstu albo ilość linii dla listy wielokrotnego wyboru
 number of sessions / egroupware logins in the last 30 days	admin	pl	Liczba sesji EGroupware w ostatnich 30 dniach
 number of users	admin	pl	Liczba użytkowników
-oauth authentiction	admin	pl	Uwierzytelnianie OAuth
+oauth authentication'	admin	pl	Uwierzytelnianie OAuth
 offer to installing egroupware as mail-handler	admin	pl	Oferta na instalację EGroupware jako mail-handler
 official egroupware usage statistic	admin	pl	Oficjalna statystyka użytkowania EGroupware
 one day	admin	pl	Jeden dzień
@@ -614,7 +614,7 @@ submit the search string	admin	pl	Wyślij tekst zapytania
 submit to egroupware.org	admin	pl	Prześlij do egroupware.org
 subtype	admin	pl	Pod-typ
 success	admin	pl	Sukces
-successfull, but no refresh-token received!	admin	pl	Pomyślnie, ale NIE otrzymano tokena odświeżania!
+successful, but no refresh-token received!	admin	pl	Pomyślnie, ale NIE otrzymano tokena odświeżania!
 switch it off, if users are randomly thrown out	admin	pl	Wyłącz to, jeżeli użytkownicy są wyrzucani losowo
 that loginid has already been taken	admin	pl	Taki login już istnieje
 the api is current	admin	pl	Wersja API jest aktualna

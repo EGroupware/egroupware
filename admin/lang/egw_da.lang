@@ -362,7 +362,7 @@ no permission to add users	admin	da	Ingen rettigheder til at tilføje brugere!
 no permission to create groups	admin	da	Ingen rettigheder til at oprette grupper!
 note: ssl available only if php is compiled with curl support	admin	da	Note: SSL er kun tilgængelig hvis PHP er kompileret med Curl understøttelse).
 number of row for a multiline inputfield or line of a multi-select-box	admin	da	Antal af rækker for et multi-linie felt eller linier i en multi-select box
-oauth authentiction	admin	da	OAuth-godkendelse
+oauth authentication'	admin	da	OAuth-godkendelse
 offer to installing egroupware as mail-handler	admin	da	Tilbud om installation af EGroupware som mail-handler
 one day	admin	da	En dag
 one hour	admin	da	En time
@@ -464,7 +464,7 @@ start	admin	da	Start
 start testjob!	admin	da	Start testjob
 submit changes	admin	da	Gem ændringerne
 submit the search string	admin	da	Send søgningen
-successfull, but no refresh-token received!	admin	da	Vellykket, men INGEN refresh-token modtaget!
+successful, but no refresh-token received!	admin	da	Vellykket, men INGEN refresh-token modtaget!
 that loginid has already been taken	admin	da	Det loginid er allerede brugt
 the api is current	admin	da	API'en er den nyeste version
 the api requires an upgrade	admin	da	API'en behøver en opgradering

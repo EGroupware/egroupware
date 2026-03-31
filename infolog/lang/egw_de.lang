@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	de	Erlaubt speichern von
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, z.B. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab).
 alternatives	infolog	de	Alternativen
 always show them	infolog	de	Immer anzeigen
+always use details for crm	infolog	de	Nutze immer Details in der CRM Ansicht
+always use no details for crm	infolog	de	Nutze immer keine Details in der CRM Ansicht
 application mail expected but got: %1	infolog	de	Mail-Applikation erwartet aber %1 erhalten
 apply the action on the whole query, not only the shown entries!!!	infolog	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur auf die angezeigten Datensätze!
 apply the changes	infolog	de	Übernimmt die Änderungen
@@ -413,6 +415,7 @@ responsible user, priority	infolog	de	Verantwortlicher, Priorität
 returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen
 rights for the responsible	infolog	de	Rechte für den Verantwortlichen
 rows	infolog	de	Zeilen
+same as infolog list	infolog	de	Nutze CRM Ansicht identisch zu Infolog
 same day	infolog	de	Gleichen Tag
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	Speichert die Änderungen und beendet
@@ -430,6 +433,7 @@ select a responsible user: a person you want to delegate this task	infolog	de	Ve
 select a typ to edit it's status-values or delete it	infolog	de	Einen Type auswählen um seine Statuswerte zu ändern oder ihn zu löschen
 select an app to search in	infolog	de	Eine Anwendung zum Durchsuchen auswählen
 select an entry to link with	infolog	de	Einen Eintrag zum Verknüpfen auswählen
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	de	Soll sich die Anzeige der CRM Ansicht nach Infolog richten oder immer (keine) Details anzeigen.
 select multiple contacts for a further action	infolog	de	Wählen Sie mehrere Kontakte für eine weitere Aktion aus
 select new category	infolog	de	Wählen Sie eine Kategorie
 select to filter by owner	infolog	de	Besitzer zum Filtern auswählen

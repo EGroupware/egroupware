@@ -150,7 +150,7 @@ class SharingACLTest extends SharingBase
 
 		$data = array();
 		$form = $this->getShare($link, $data, true);
-		$this->assertNotNull($form, "Could not read the share link");
+		$this->assertNotNull($form, "Could not read the share link '$link'");
 		$rows = array_values($data['data']['content']['nm']['rows']);
 
 		$post_mount_vfs = Vfs::mount();

@@ -490,7 +490,7 @@ no plain text part found	admin	pt-br	Nenhuma parte de texto simples encontrado
 no supported imap authentication method could be found.	admin	pt-br	Nenhum método de autenticação IMAP suportado pôde ser encontrado.
 note: ssl available only if php is compiled with curl support	admin	pt-br	Nota: O SSL estará disponível somente se o PHP houver sido compilado com suporte a Curl.
 number of row for a multiline inputfield or line of a multi-select-box	admin	pt-br	Número de linhas para um campo de entrada ou linhas para uma caixa de seleção
-oauth authentiction	admin	pt-br	OAuth Authentiction
+oauth authentication'	admin	pt-br	oauth authentication'
 offer to installing egroupware as mail-handler	admin	pt-br	Oferta para instalação de EGroupware como correio
 one day	admin	pt-br	Um dia
 one hour	admin	pt-br	Uma hora
@@ -623,7 +623,7 @@ submit changes	admin	pt-br	Enviar alterações
 submit the search string	admin	pt-br	Enviar expressão de busca
 subtype	admin	pt-br	Sub tipo
 successful connected to %1 server%2.	admin	pt-br	Successful ligado ao %1servidor%2.
-successfull, but no refresh-token received!	admin	pt-br	Bem-sucedido, mas NENHUM token de atualização foi recebido!
+successful, but no refresh-token received!	admin	pt-br	Bem-sucedido, mas NENHUM token de atualização foi recebido!
 switch back to standard identity to save account.	admin	pt-br	Volte para a identidade padrão para salvar conta.
 switch it off, if users are randomly thrown out	admin	pt-br	Desabilite, se usuários estiverem, aleatoriamente, sendo desconectados
 that loginid has already been taken	admin	pt-br	Este código de usuário já existe.

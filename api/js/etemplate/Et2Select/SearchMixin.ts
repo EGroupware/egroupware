@@ -1469,11 +1469,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				return false;
 			}
-			if(option.label?.toLowerCase().includes(search.toLowerCase()))
+			if(option.label?.toLowerCase().includes(search.toLowerCase()) || this.egw().lang(option.label).toLowerCase().includes(search.toLowerCase()))
 			{
 				return true;
 			}
-			if(option.title?.toLowerCase().includes(search.toLowerCase()))
+			if(option.title?.toLowerCase().includes(search.toLowerCase()) || this.egw().lang(option.title).toLowerCase().includes(search.toLowerCase()))
 			{
 				return true;
 			}

@@ -512,7 +512,7 @@ number of active users	admin	cs	Počet aktivních uživatelů
 number of row for a multiline inputfield or line of a multi-select-box	admin	cs	Počet řádků ve víceřádkovém vstupním poli nebo ve výběrovém okně
 number of sessions / egroupware logins in the last 30 days	admin	cs	Počet relací / Přihlášení do EGroupware během posledních 30 dní
 number of users	admin	cs	Počet uživatelů
-oauth authentiction	admin	cs	Ověřování OAuth
+oauth authentication'	admin	cs	Ověřování OAuth
 offer to installing egroupware as mail-handler	admin	cs	Nabídka instalace EGroupware jako mail-handleru
 official egroupware usage statistic	admin	cs	Oficiální statistiky využití EGroupware
 one day	admin	cs	Jeden den
@@ -660,7 +660,7 @@ submit the search string	admin	cs	Odeslat hledaný řetězec
 submit to egroupware.org	admin	cs	Odeslat na egroupware.org
 subtype	admin	cs	Podtyp
 success	admin	cs	Podařilo se
-successfull, but no refresh-token received!	admin	cs	Úspěšně, ale NEPŘIJATÝ token pro obnovení!
+successful, but no refresh-token received!	admin	cs	Úspěšně, ale NEPŘIJATÝ token pro obnovení!
 switch it off, if users are randomly thrown out	admin	cs	Vypněte, pokud jsou uživatelé náhodně vyhazováni
 that loginid has already been taken	admin	cs	Takové přihlašovací id už bylo použito.
 the api is current	admin	cs	API je aktuální
