@@ -22,6 +22,7 @@ jobs:
       SYSOP_PASS: ""
 
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/checkout-php-deps
 
       - name: Prepare compose project layout
