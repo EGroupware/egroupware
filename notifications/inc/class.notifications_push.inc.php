@@ -124,9 +124,9 @@ class notifications_push implements Json\PushBackend
 	}
 
 	/**
-	 * Delete max. 5000 rows at a time
+	 * Delete max. 2000 rows at a time to not exceed Galera max writeset size
 	 */
-	const DELETE_CHUNK_SIZE = 5000;
+	const DELETE_CHUNK_SIZE = 2000;
 	/**
 	 * Delete push messages older than our heartbeat-limit (poll frequency of notifications)
 	 */
