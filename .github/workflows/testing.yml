@@ -268,10 +268,6 @@ jobs:
               echo "setup-cli exit code: $rc"
             fi
           '
-          echo "== Source dir listing: $EGW_SRC_DIR =="
-          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware sh -lc 'ls -la test | sed -n "1,200p"; ls -la api/tests/fixtures/apps/test | sed -n "1,200p"'
-          echo "== DB table check: egw_test =="
-          $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SELECT * FROM egw_applications\\G" | tee /dev/stderr || true
           if ! $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SHOW TABLES LIKE 'egw_test%';" | grep -q "egw_test"; then
             echo "egw_test table not found after test app install, some tests will be skipped"
           fi
