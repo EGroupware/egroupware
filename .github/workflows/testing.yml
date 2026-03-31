@@ -52,7 +52,15 @@ jobs:
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          $COMPOSE exec -T egroupware sh -lc 'apt-get update && apt-get install -y php-tidy'
+          $COMPOSE exec -T egroupware sh -lc '
+            set -e
+            php_version="$(php -r "echo PHP_MAJOR_VERSION . \".\" . PHP_MINOR_VERSION;")"
+            apt-get update
+            if ! apt-get install -y "php${php_version}-tidy"; then
+              apt-get install -y php-tidy
+            fi
+            php -m | grep -i tidy
+          '
 
       - name: Wait for install
         run: |

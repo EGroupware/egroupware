@@ -47,13 +47,10 @@ class MergeTest extends LoggedInTest
 	/**
 	 * With no parsing into an HTML file, we expect the same
 	 * @dataProvider textToHTMLProvider
+	 * @requires extension tidy
 	 */
 	public function testTextToHtml($testText, $expectedText)
 	{
-		if(!extension_loaded('tidy'))
-		{
-			$this->markTestSkipped('ext-tidy not available');
-		}
 		$errors = [];
 		$this->merge->setReplacements(['$$replacement$$' => $testText]);
 		$result = $this->merge->merge_string(self::SIMPLE_TARGET, [1], $errors, "text/html");
