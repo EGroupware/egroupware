@@ -658,7 +658,11 @@ class SharingBase extends LoggedInTest
 						)
 				)
 		);
-		$headers = get_headers($link, false, $context);
+		$headers = @get_headers($link, false, $context);
+		if(!$headers || !isset($headers[0]))
+		{
+			$this->markTestSkipped("No webserver response for share link '$link'");
+		}
 		$this->assertEquals('200', substr($headers[0], 9, 3), 'Did not find the file, got ' . $headers[0]);
 
 		$indexed_headers = array();
@@ -713,6 +717,9 @@ class SharingBase extends LoggedInTest
 		}
 		$this->addCookies($curl, $cookies);
 		$html = curl_exec($curl);
+		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		$curl_errno = curl_errno($curl);
+		$curl_error = curl_error($curl);
 		if($_curl == null)
 		{
 			curl_close($curl);
@@ -723,6 +730,10 @@ class SharingBase extends LoggedInTest
 			// No response - could mean something is terribly wrong, or it could
 			// mean we're running on Travis with no webserver to answer the
 			// request
+			if($http_code === 0)
+			{
+				$this->markTestSkipped("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
+			}
 			return;
 		}
 
