@@ -1522,6 +1522,7 @@ export class EgwFramework extends LitElement
                 </header>
                 ${hasStatus ? html`
                     <div class="egw_fw__divider">
+                            <!-- No panel until we have more content.  Size fixed by ID in EgwFramework.styles.ts
                         <sl-split-panel part="status-split" exportparts="divider" position-in-pixels="${statusPosition}"
                                         style="--divider-width: 0px;"
                                         primary="end"
@@ -1530,22 +1531,33 @@ export class EgwFramework extends LitElement
                                         snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
                                         aria-label="Side menu resize">
                             <main slot="start" part="main" class="egw_fw__main" id="egw-framework-main"
+						-->
+                        <main part="main" class="egw_fw__main" id="egw-framework-main">
+                                <!--
                                   @sl-reposition=${this.handleSlide}
                                   @show=${this.handleApplicationShowHide}
                                   @hide=${this.handleApplicationShowHide}
-                            >
+                                  >
+                                  -->
                                 <slot></slot>
                             </main>
-                            <!-- No slider until we have more content <sl-icon slot="divider" name="grip-vertical"></sl-icon> -->
-                            <aside slot="end" class="egw_fw__status" part="status"
+                        <!-- No slider until we have more content 
+						<sl-icon slot="divider" name="grip-vertical"></sl-icon>
+						<aside slot="end" class="egw_fw__status" part="status"
+							   id="egw-framework-status"
+						>
+						 -->
+                        <aside class="egw_fw__status" part="status"
                                    id="egw-framework-status"
-                            >
+                        >
                                 <sl-visually-hidden>
                                     <h2 class="egw_fw__status_title" part="status-title">${this.egw.lang("Status")}</h2>
                                 </sl-visually-hidden>
                                 <slot name="status"><span class="placeholder">status</span></slot>
                             </aside>
-                        </sl-split-panel>
+                        <!--
+						</sl-split-panel>
+						-->
                     </div>` : html`
                     <main part="main" class="egw_fw__main" id="main"
                           @sl-reposition=${this.handleSlide}
