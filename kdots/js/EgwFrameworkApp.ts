@@ -235,8 +235,12 @@ export class EgwFrameworkApp extends LitElement
 
 		this.handleSearchResults = this.handleSearchResults.bind(this);
 		this.handleShow = this.handleShow.bind(this);
+	}
+	connectedCallback()
+	{
+		super.connectedCallback();
 
-		// Get size preferences
+		// Get size preferences now that this.appName is set
 		// @ts-ignore preference() takes _callback = true
 		this.egw.preference(this.leftPanelInfo.preference, this.appName, true).then((value) =>
 		{
@@ -247,10 +251,6 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this.rightPanelInfo.preferenceWidth = value;
 		});
-	}
-	connectedCallback()
-	{
-		super.connectedCallback();
 
 		// Left panel starts hidden if we're too small
 		if(this.hasAttribute("active") && this.clientWidth < 600)
@@ -812,7 +812,7 @@ export class EgwFrameworkApp extends LitElement
 			// Left side has an additional slot above the favourites
 			hasContent = hasContent || this.hasSlotController?.test("left-top") ||
 				// Favourites work through egw_app class, so if it's not there, favourites won't work
-				this.features?.favorites && window.app[this.name];
+				this.features?.favorites && typeof window.app[this.name] !== "undefined";
 		}
 		return hasContent;
 	}
