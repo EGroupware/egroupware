@@ -85,6 +85,16 @@ export default css`
         grid-area: footer;
     }
 
+	/* Fixed size for main / status area until we're ready to add more content to status */
+
+	#egw-framework-status {
+		flex: 0 0 calc(var(--icon-size) + var(--sl-spacing-2x-small));
+	}
+
+	#egw-framework-main {
+		flex-grow: 1;
+	}
+
     @media (min-width: 600px) {
         .egw_fw__main {
             overflow: hidden;
