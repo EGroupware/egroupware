@@ -269,10 +269,6 @@ export class et2_dataview_container extends ClassWithInterfaces implements et2_d
 		{
 			this._height = 0;
 
-			// Setting this before measuring height helps with issues getting the
-			// wrong height due to margins & collapsed borders
-			this.tr.css('display','block');
-
 			// Increment the height value for each visible container node
 			for (let i = 0; i < this._nodes.length; i++)
 			{
@@ -281,7 +277,6 @@ export class et2_dataview_container extends ClassWithInterfaces implements et2_d
 					this._height += et2_dataview_container._nodeHeight(this._nodes[i][0]);
 				}
 			}
-			this.tr.css('display','');
 		}
 
 		return ( this._height === -1 ) ? 0 : this._height;

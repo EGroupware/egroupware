@@ -431,10 +431,9 @@ export class et2_dataview
 
 				// Write the width of the body-columns
 					const columnWidth = Math.max(0, (col.width - this.columnBorderWidth - subBorder));
-				this.egw.css(".egwGridView_grid ." + col.divClass,
-					"width: " + columnWidth + "px;");
+					this.egw.css(".egwGridView_grid ." + col.divClass, "width: " + columnWidth + "px;");
 
-				totalWidth += col.width;
+					totalWidth += columnWidth;
 
 				first = false;
 				}
@@ -443,6 +442,19 @@ export class et2_dataview
 			{
 				this.egw.css("." + col.tdClass, "display: none;");
 			}
+		}
+		if(this.table.width() > this.table.closest("et2-template").width())
+		{
+			totalWidth = this.table.closest("et2-template").width();
+			this.columns.forEach(col =>
+			{
+				this.egw.css(".egwGridView_outer ." + col.tdClass);
+			});
+			window.setTimeout(() =>
+			{
+				// 20 is magic
+				this.resize(totalWidth - 20, this.height);
+			});
 		}
 
 		// Add the full row and spacer class

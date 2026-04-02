@@ -235,10 +235,6 @@ export class EgwFrameworkApp extends LitElement
 
 		this.handleSearchResults = this.handleSearchResults.bind(this);
 		this.handleShow = this.handleShow.bind(this);
-	}
-	connectedCallback()
-	{
-		super.connectedCallback();
 
 		// Get size preferences
 		// @ts-ignore preference() takes _callback = true
@@ -251,6 +247,10 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this.rightPanelInfo.preferenceWidth = value;
 		});
+	}
+	connectedCallback()
+	{
+		super.connectedCallback();
 
 		// Left panel starts hidden if we're too small
 		if(this.hasAttribute("active") && this.clientWidth < 600)
