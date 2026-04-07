@@ -1273,7 +1273,7 @@ abstract class Merge
 					$repeats = '';
 					if(isset($callback))
 					{
-						for($n = 0; ($row_replacements = $this->$callback($plugin, $id, $n, $repeat)); ++$n)
+						for($r = 0; ($row_replacements = $this->$callback($plugin, $id, $r, $repeat)); ++$r)
 						{
 							if($this->is_xml)
 							{
