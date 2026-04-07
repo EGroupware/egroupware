@@ -867,8 +867,11 @@ class infolog_ical extends infolog_bo
 						$taskData['info_subject'] = str_replace("\r\n", "\n", $attribute['value']);
 						break;
 
-					case 'RELATED-TO':
-						$taskData['info_id_parent'] = $this->getParentID($attribute['value']);
+					case 'RELATED-TO':  // in case there is more than one relation, the one with RELTYPE=PARENT is used
+						if (!isset($taskData['info_id_parent']) || ($attribute['params']['RELTYPE']??null) === 'PARENT')
+						{
+							$taskData['info_id_parent'] = $this->getParentID($attribute['value']);
+						}
 						break;
 
 					case 'CATEGORIES':
