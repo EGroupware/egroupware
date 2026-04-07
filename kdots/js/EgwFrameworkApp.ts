@@ -1088,18 +1088,32 @@ export class EgwFrameworkApp extends LitElement
 		));
 
 		// Fix splitter if it has moved while hidden
-		if(this.rightSplitter && (this.rightSplitter.position !== this.rightPanelInfo.preferenceWidth || this.rightCollapsed && this.rightSplitter.position != this.rightPanelInfo.hiddenWidth))
+		const resetPanel = async(splitter : SlSplitPanel) =>
 		{
-			await this.updateComplete;
-			window.setTimeout(() =>
+			if(!splitter)
 			{
-				if(this.rightSplitter)
+				return;
+			}
+			const panelInfo = this[splitter.dataset.panel] || {};
+			const collapsed = `${panelInfo.side}Collapsed`;
+			if(splitter.position !== panelInfo.preferenceWidth || this[collapsed] && splitter.position != panelInfo.hiddenWidth)
+			{
+				await this.updateComplete;
+				window.setTimeout(() =>
 				{
-					this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
-				}
-				this.ignoreSplitterResize = false;
-			}, 0);
+					if(splitter && panelInfo.side == "right")
+					{
+						splitter.position = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth);
+					}
+					else if(splitter && panelInfo.side == "left")
+					{
+						splitter.positionInPixels = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth);
+					}
+					this.ignoreSplitterResize = false;
+				}, 0);
+			}
 		}
+		[this.rightSplitter, this.leftSplitter].forEach(splitter => void resetPanel(splitter));
 	}
 
 	protected handleAppMenuClick(event)
