@@ -22,7 +22,7 @@ import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {MailCompose} from "./compose";
 import {egw} from "../../api/js/jsapi/egw_global";
-import { Et2Details } from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
+import {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
 
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
@@ -4625,14 +4625,7 @@ export class MailApp extends EgwApp
 	 */
 	lock_tree()
 	{
-		if (!document.getElementById('mail_folder_lock_div'))
-		{
-			var parent = document.querySelector('#mail-index_nm\\[foldertree\\]');
-			var lock_div = jQuery(document.createElement('div'));
-			lock_div.attr('id', 'mail_folder_lock_div')
-				.addClass('mail_folder_lock');
-			parent.prepend(lock_div);
-		}
+		// No-op.  Tree could be set disabled or readonly, but those were not implemented.
 	}
 
 	/**
@@ -4640,7 +4633,7 @@ export class MailApp extends EgwApp
 	 */
 	unlock_tree()
 	{
-		jQuery('#mail_folder_lock_div').remove();
+		// No-op, see lock_tree()
 	}
 
 	/**
