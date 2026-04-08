@@ -1,4 +1,4 @@
-import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
@@ -65,41 +65,7 @@ export class EgwFrameworkApp extends LitElement
 	static get styles()
 	{
 		return [
-			styles,
-
-			// TEMP STUFF
-			css`
-				:host .placeholder {
-					display: none;
-				}
-
-				:host(.placeholder) .placeholder {
-					display: block;
-					--placeholder-background-color: #e97234;
-				}
-				.placeholder {
-					width: 100%;
-					font-size: 200%;
-					text-align: center;
-					background-color: var(--placeholder-background-color);
-				}
-
-				.placeholder:after, .placeholder:before {
-					content: " ⌖ ";
-				}
-
-				:host(.placeholder) [class*="left"] .placeholder {
-					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(.5, .5, 1, .1));
-				}
-
-				:host(.placeholder) [class*="right"] .placeholder {
-					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(.5, 1, .5, .1));
-				}
-
-				:host(.placeholder) [class*="footer"] .placeholder {
-					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(1, 1, 1, .05));
-				}
-			`
+			styles
 		];
 	}
 
@@ -1167,14 +1133,14 @@ export class EgwFrameworkApp extends LitElement
 		return html`
             <aside slot="${parentSlot}" part="${side}" class=${asideClassMap} aria-label="${label}">
                 <div class="egw_fw_app__aside_header header">
-                    <slot name="${side}-header"><span class="placeholder">${side}-header</span></slot>
+                    <slot name="${side}-header"></slot>
                 </div>
                 <div class="egw_fw_app__aside_content content">
                     ${side == "left" ? this._leftMenuTemplate() : nothing}
-                    <slot name="${side}"><span class="placeholder">${side}</span></slot>
+                    <slot name="${side}"></slot>
                 </div>
                 <div class="egw_fw_app__aside_footer footer">
-                    <slot name="${side}-footer"><span class="placeholder">${side}-footer</span></slot>
+                    <slot name="${side}-footer"></slot>
                 </div>
             </aside>`;
 	}
@@ -1372,8 +1338,9 @@ export class EgwFrameworkApp extends LitElement
 		}
 
 		// Sub-menus call getComputedStyle() so are expensive, defer them until later
-		const menuPromise = new Promise(resolve =>
+		const menuPromise = new Promise(async resolve =>
 		{
+			await this.loadingPromise;
 			setTimeout(() =>
 			{
 				resolve(
@@ -1495,7 +1462,7 @@ export class EgwFrameworkApp extends LitElement
                     <h2>${this.title || this.egw?.lang(this.name) || this.name}</h2>
                 </div>
                 <header class="egw_fw_app__header" part="header">
-                    <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
+                    <slot name="main-header"></slot>
                 </header>
                 ${until(this.framework?.getEgwComplete().then(() => this._rightHeaderTemplate()), html`
                     <sl-spinner></sl-spinner>`)}
@@ -1538,16 +1505,14 @@ export class EgwFrameworkApp extends LitElement
                             <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>`
                         }
                         <header slot="start" class="egw_fw_app__header header" part="content-header">
-                            <slot name="header"><span class="placeholder">header</span></slot>
+                            <slot name="header"></slot>
                         </header>
                         <div slot="start" class="egw_fw_app__main_content content" part="content"
                              aria-label="${this.name}" tabindex="0">
-                            <slot>
-                                <span class="placeholder">main</span>
-                            </slot>
+                            <slot></slot>
                         </div>
                         <footer slot="start" class="egw_fw_app__footer footer" part="footer">
-                            <slot name="footer"><span class="placeholder">main-footer</span></slot>
+                            <slot name="footer"></slot>
                         </footer>
                         ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
                     </sl-split-panel>

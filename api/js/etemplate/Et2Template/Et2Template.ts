@@ -14,7 +14,7 @@ import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {et2_loadXMLFromURL} from "../et2_core_xml";
 import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
-import type {IegwAppLocal} from "../../jsapi/egw_global";
+import {egw, IegwAppLocal} from "../../jsapi/egw_global";
 import {until} from "lit/directives/until.js";
 import {classMap} from "lit/directives/class-map.js";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
@@ -32,6 +32,7 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
 @customElement("et2-template")
 export class Et2Template extends Et2Widget(LitElement)
 {
+	private _renderTarget : DocumentFragment | null = null;
 
 	static get styles()
 	{
@@ -314,7 +315,7 @@ export class Et2Template extends Et2Widget(LitElement)
 			this.setArrayMgr("modifications", this.getArrayMgr("modifications").openPerspective(this, newModifications));
 		}
 		this.__isLoading = true;
-		this.loading = new Promise(async(resolve, reject) =>
+		this.loading = <Promise<void>>new Promise(async(resolve, reject) =>
 		{
 			// No template, no point in continuing
 			if(!(this.template || this.id))
@@ -323,7 +324,13 @@ export class Et2Template extends Et2Widget(LitElement)
 				resolve();
 				return;
 			}
-			
+
+			const templateName = (this.template || this.id);
+			if(egw.debug_level() >= 4)
+			{
+				window.performance.mark("mark_et2-template.load " + templateName + " start");
+			}
+
 			// Get template XML
 			let xml : Element;
 			try
@@ -360,8 +367,17 @@ export class Et2Template extends Et2Widget(LitElement)
 				if (this.id) delete attrs["id"];
 				this.transformAttributes(attrs);
 
-				// Load children into template
-				this.loadFromXML(xml);
+				// Build children off-DOM, then append once to avoid repeated live layout work
+				this._renderTarget = document.createDocumentFragment();
+				try
+				{
+					this.loadFromXML(xml);
+					this.append(this._renderTarget);
+				}
+				finally
+				{
+					this._renderTarget = null;
+				}
 			}
 			else
 			{
@@ -376,6 +392,12 @@ export class Et2Template extends Et2Widget(LitElement)
 
 			// Resolve promise, this.updateComplete now resolved
 			resolve();
+
+			if(egw.debug_level() >= 4)
+			{
+				window.performance.mark("mark_et2-template.load " + templateName + " end");
+				window.performance.measure(`et2-template load ${templateName}`, "mark_et2-template.load " + templateName + " start", "mark_et2-template.load " + templateName + " end")
+			}
 
 			// Yield to give anything else a chance to run
 			setTimeout(() =>
@@ -539,12 +561,47 @@ export class Et2Template extends Et2Widget(LitElement)
 	{
 		// Clear
 		while(this.firstChild) this.removeChild(this.lastChild);
+		this._renderTarget?.replaceChildren();
+	}
+
+	addChild(child : any)
+	{
+		if(!this._renderTarget)
+		{
+			return super.addChild(child);
+		}
+		if(this.getChildren().indexOf(child) >= 0)
+		{
+			return;
+		}
+		if(child instanceof HTMLElement)
+		{
+			this._renderTarget.append(child);
+		}
+		else
+		{
+			child._parent = this;
+			let child_node = null;
+			try
+			{
+				child_node = typeof child.getDOMNode !== "undefined" ? child.getDOMNode(child) : null;
+			}
+			catch(e)
+			{
+				// Child did not give up its DOM node nicely but errored instead
+			}
+			if(child_node && child_node !== this)
+			{
+				this._renderTarget.append(child_node);
+			}
+		}
+		this.getChildren().push(child);
 	}
 
 	loadFailed(reason? : any)
 	{
 		const message = (this.templateName) + " @ " + this.getUrl() + (reason ? " \n" + reason : "");
-		render(this.errorTemplate(message), this);
+		render(this.errorTemplate(message), <HTMLElement><unknown>this);
 		this.egw().debug("warn", "Loading failed: " + message);
 	}
 

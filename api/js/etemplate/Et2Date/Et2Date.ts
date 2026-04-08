@@ -409,6 +409,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		this._handleInputChange = this._handleInputChange.bind(this);
 		this._onReady = this._onReady.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
+		this.init = this.init.bind(this);
 	}
 
 
@@ -417,16 +418,16 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		super.connectedCallback();
 		this._updateValueOnChange = this._updateValueOnChange.bind(this);
 		this._handleShortcutButtonClick = this._handleShortcutButtonClick.bind(this);
-
-		this.updateComplete.then(() =>
-		{
-			this.init();
-		});
+		// Most date widgets start hidden; defer Flatpickr construction until first interaction.
+		this.addEventListener("focusin", this.init, {once: true});
+		this.addEventListener("pointerdown", this.init, {once: true});
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+		this.removeEventListener("focusin", this.init);
+		this.removeEventListener("pointerdown", this.init);
 		this._inputNode?.removeEventListener('change', this._onChange);
 		delete this._inputElement?.flatpickr;
 		this.findInputField()?.removeEventListener("input", this._handleInputChange);
