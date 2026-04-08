@@ -1,3 +1,39 @@
+egroupware-docker (26.4.20260408) hardy; urgency=low
+
+  * Api: improve nextmatch column sizing to reduce hiding of column select button & scrollbar
+  * Api: fix using url widget 'allowPath' attribute did not allow URLs
+  * Api: could not redirect without framework
+  * Api: allow /n in egw.message() to create multiline message in kdots
+  * Api: merge into document now supports {{placeholder:format}} style formatting for dates & numbers
+  * Api: Et2Select can now have a different egw-tooltip on each selectOption instead of showing the egw-tooltip for the selectbox
+  * Api: fix blueimp gallery did not work in popups after reload
+  * Calendar: fix push events for resources were not added
+  * Calendar: fix planner view with larger date spans did not layout day headers correctly
+  * Infolog: stop mailvelope from incorrectly warning to decrypt when saving
+  * Infolog: new preference to always open CRM view with details / no details
+  * Infolog: fix type group owner was blocking responsible from being able to edit their allowed fields
+  * Invoices: AI based import of scans from receipts and invoices or non-ZugFerd PDF invoices
+  * Invoices: allow positions without quantity and price as headings to structure the PDF (not exported to the XML!)
+  * Invoices: adding ability to write offers, from them order confirmations and finally invoices
+  * Invoices: added a [REST API for invoices](https://github.com/EGroupware/egroupware/blob/6ee37895741a67e075f1c5ad7066bb53eebdeceb/doc/REST-CalDAV-CardDAV/Invoices.md)
+  * Kanban: edit board > Listen tab did not properly display listen conditions
+  * Kanban: remove blank space in context menu when an app has no kanban boards
+  * Kanban: further limits on allowed apps for board and when adding entries
+  * Kdots: fixed size for status, fully remove the currently disabled panel
+  * Kdots: fix update flashes loading causing repaint
+  * Kdots: make sure popups (filemanager, etc.) are not hidden in mobile
+  * Mail: fix tooltip for sub folders was not displayed correctly
+  * Mail: new preference to specify which identity/signature should be used
+  * Mail: fix mobile save attachment to filemanager did nothing or showed 'Profile change failed' error
+  * Projectmanager: fix clicking on a project link opened pm in list view instead of element view
+  * RAG: building the RAG was stalled due a problem in the addressbook plugin, also fixed empty app-list to disable/enable apps for the RAG
+  * Smallpart: fix subcategory filter
+  * Timesheet: remove 'simple' mode
+  * Timesheet/REST API: fix not being able to set owner and additional allow iCal duration format for duration (e.g. "PT1H30M")
+  * PHP: update to PHP 8.5.4
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 08 Apr 2026 15:47:55 +0200
+
 egroupware-docker (26.3.20260316) hardy; urgency=low
 
   * Admin: Fix categories Add button & placeholder ("No matches found") context menu add
