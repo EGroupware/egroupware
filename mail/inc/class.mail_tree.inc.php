@@ -229,7 +229,7 @@ class mail_tree
 						Tree::AUTOLOAD_CHILDREN => $_allInOneGo?false:self::nodeHasChildren($node),
 						Tree::CHILDREN =>array(),
 						Tree::LABEL => $nodeData['text'],
-                        Tree::TOOLTIP => $nodeData['tooltip'] != $nodeData['text'] ? $nodeData['tooltip'] : '',
+                        Tree::TOOLTIP => $nodeData['tooltip']?? '',
 						Tree::IMAGE_LEAF => self::$leafImages['folderLeaf'],
 						Tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderOpen'],
 						Tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClosed'],
