@@ -717,10 +717,10 @@ class Widget
 
 			$er = error_reporting(0);
 			try {
-				eval('$name = "' . str_replace('"', '\\"', $name) . '";');
+				eval('$name = "' . strtr($name, ['"' => '\\"', '`' => '']) . '";');
 			}
 			catch(\Throwable $e) {
-				error_log(__METHOD__."() eval('\$name = \"".str_replace('"', '\\"', $name) . "\";)");
+				error_log(__METHOD__."() eval('\$name = \"".strtr($name, ['"' => '\\"', '`' => '']) . "\";)");
 				_egw_log_exception($e);
 			}
 			error_reporting($er);
