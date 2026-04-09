@@ -34,9 +34,9 @@ export default css`
 
 		et2-button-icon {
 			font-size: calc(var(--sl-font-size-large) * 1.5);
-			position: relative;
-			top: calc(var(--sl-font-size-large) * -.5);
-			right: calc(var(--sl-font-size-large) * -.4);
+			&::part(base) {
+				padding: 1px;
+            }
 		}
 	}
 
