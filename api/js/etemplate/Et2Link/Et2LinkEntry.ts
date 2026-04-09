@@ -49,6 +49,13 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 					display: flex;
 					gap: 0.5rem;
 				}
+				
+				et2-link-apps {
+					flex: 1 1 auto;
+					&::part(icon){
+						margin-inline-end: 0;
+					}
+				}
 
 			`
 		];
