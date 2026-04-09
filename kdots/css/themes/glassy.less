@@ -41,7 +41,7 @@
 
 
   /* Input field changes */
-  .et2-input-widget:not(.et2-button-widget) {
+  .et2-input-widget:not(:focus-within):not(.et2-button-widget) {
 	&:not([disabled]):not([slot="main-header"]):not([slot="header-actions"]) {
 	  &::part(base), &::part(input-control), &::part(combobox) {
 		box-shadow: var(--upper-tint), var(--lower-shade);

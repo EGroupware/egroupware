@@ -56,20 +56,20 @@
   border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
   border-radius: var(--sl-panel-border-radius);
 }
-:root .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
-:host .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
-.kdots-glassy .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
-:root .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
-:host .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
-.kdots-glassy .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
-:root .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
-:host .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
-.kdots-glassy .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox) {
+:root .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
+:host .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
+.kdots-glassy .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(base),
+:root .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
+:host .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
+.kdots-glassy .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(input-control),
+:root .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
+:host .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox),
+.kdots-glassy .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(combobox) {
   box-shadow: var(--upper-tint), var(--lower-shade);
 }
-:root .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
-:host .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
-.kdots-glassy .et2-input-widget:not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox) {
+:root .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
+:host .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox),
+.kdots-glassy .et2-input-widget:not(:focus-within):not(.et2-button-widget):not([disabled]):not([slot="main-header"]):not([slot="header-actions"])::part(listbox) {
   --sl-input-background-color: var(--sl-color-neutral-0);
   color: var(--sl-color-neutral-700);
 }
