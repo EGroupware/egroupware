@@ -7,7 +7,6 @@
 * @author Nathan Gray
 * @author Andreas Stöckel
 * @package etemplate
-* @version $Id$
 */
 
 use EGroupware\Api;
@@ -17,9 +16,11 @@ use EGroupware\Api\Vfs;
 $GLOBALS['egw_info']['flags'] = array(
 	'currentapp'	=>	get_app(),
 	'noheader'	=>	true,
-	'nonavbar'	=>	true
+	'nonavbar'	=>	true,
+	// do NOT redirect to login page, as it would create a storm of requests
+	'autocreate_session_callback' => static function() { http_response_code(401); exit; },
 );
-include ('../header.inc.php');
+require('../header.inc.php');
 
 // strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
 if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() && $_GET)
@@ -63,16 +64,19 @@ function get_app()
 	}
 	elseif (isset($_GET['path']))
 	{
-		@list(, $apps, $app) = explode('/', $_GET['path']);
+		[, $apps, $app] = explode('/', $_GET['path'], 4)+[null,null,null];
 		if ($apps !== 'apps')
 		{
 			$app = 'filemanager';
 		}
 	}
 
-	if (!preg_match('/^[a-z0-9_-]+$/i',$app))
+	// just to prevent someone doing nasty things
+	if (!isset($app) || !preg_match('/^[a-z0-9_-]+$/i',$app))
 	{
-		die('Stop');	// just to prevent someone doing nasty things
+		error_log('Bad request '.$_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI']);
+		http_response_code(400);
+		exit;
 	}
 
 	return $app;
@@ -83,7 +87,7 @@ function get_app()
  */
 function get_maxsize()
 {
-	$preset = !($GLOBALS['egw_info']['server']['link_list_thumbnail'] > 0) ? 64 :
+	$preset = !(($GLOBALS['egw_info']['server']['link_list_thumbnail']??null) > 0) ? 64 :
 		$GLOBALS['egw_info']['server']['link_list_thumbnail'];
 
 	// Another maximum size may be passed if thumbnails are turned on
