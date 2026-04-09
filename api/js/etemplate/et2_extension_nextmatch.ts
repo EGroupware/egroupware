@@ -2615,9 +2615,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		const parse = function(template)
 		{
 			if(this.egw().debug_level() >= 4)
-		{
-			window.performance.mark("mark_nextmatch_row_template_parse" + template_name + "_start");
-		}
+			{
+				window.performance.mark("mark_nextmatch_row_template_parse" + template_name + "_start");
+			}
 			// Keep the name of the template, as we'll free up the widget after parsing
 			this.template = template_name;
 
@@ -2692,7 +2692,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		this.template_promise = template.updateComplete.then(() =>
 			{
 				parse.call(this, template);
-				window.performance.measure("et2_nm.parse " + template_name, "mark_nextmatch_row_template_parse" + template_name + "_start", "mark_nextmatch_row_template_parse" + template_name + "_end");
+
+				if(this.egw().debug_level() >= 4)
+				{
+					window.performance.measure("et2_nm.parse " + template_name, "mark_nextmatch_row_template_parse" + template_name + "_start", "mark_nextmatch_row_template_parse" + template_name + "_end");
+				}
 
 				if(!this.dynheight && !this.options.no_dynheight)
 				{
