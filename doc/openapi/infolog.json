@@ -1,0 +1,332 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware InfoLog API",
+    "version": "1.0.0",
+    "description": "API for managing tasks in the EGroupware InfoLog."
+  },
+  "servers": [
+    {
+      "url": "{base_url}",
+      "description": "EGroupware instance base URL",
+      "variables": {
+        "base_url": {
+          "default": "https://your-egroupware-instance.com",
+          "description": "The base URL of your EGroupware installation"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/infolog/": {
+      "get": {
+        "summary": "List tasks",
+        "operationId": "listTasks",
+        "description": "Retrieves a list of tasks from the user's InfoLog. Results are drawn from the 'responses' map in the EGroupware API response and are capped by the limit parameter.",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "Filter tasks by status. When omitted, all statuses are returned.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "needs-action",
+                "in-process",
+                "completed",
+                "cancelled"
+              ],
+              "example": "needs-action"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of tasks to return. Defaults to 50.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 50,
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of tasks. Returns an empty array if no tasks match.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Task"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                },
+                "examples": {
+                  "taskList": {
+                    "summary": "Successful response with tasks",
+                    "value": [
+                      {
+                        "id": "task-001",
+                        "title": "Review Q3 report",
+                        "description": "Check figures and add commentary",
+                        "due": "2025-01-31 23:59:59",
+                        "status": "needs-action"
+                      },
+                      {
+                        "id": "task-002",
+                        "title": "Send invoice",
+                        "description": null,
+                        "due": null,
+                        "status": "in-process"
+                      }
+                    ]
+                  },
+                  "emptyList": {
+                    "summary": "No tasks found",
+                    "value": []
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a task",
+        "operationId": "createTask",
+        "description": "Creates a new task in the user's personal InfoLog. Status defaults to 'needs-action'. If a due date is provided, the time is set to 23:59:59 of that day.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskRequest"
+              },
+              "examples": {
+                "minimalTask": {
+                  "summary": "Title only",
+                  "value": {
+                    "title": "Review Q3 report",
+                    "status": "needs-action"
+                  }
+                },
+                "fullTask": {
+                  "summary": "All fields provided",
+                  "value": {
+                    "title": "Review Q3 report",
+                    "status": "needs-action",
+                    "description": "Check figures and add commentary before the board meeting",
+                    "due": "2025-01-31 23:59:59"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTaskSuccess"
+                },
+                "example": {
+                  "status": "success",
+                  "message": "Task 'Review Q3 report' was created successfully in your InfoLog. It is due on 2025-01-31.",
+                  "created_task_details": {
+                    "title": "Review Q3 report",
+                    "status": "needs-action",
+                    "description": "Check figures and add commentary",
+                    "due": "2025-01-31 23:59:59"
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Task created (alternate success from some EGroupware versions).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTaskSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid or missing required fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Authentication using EGroupware username and password (or app password)."
+      }
+    },
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "description": "A task record as parsed from the EGroupware InfoLog API response.",
+        "properties": {
+          "id": {
+            "type": ["string", "null"],
+            "description": "Unique identifier of the task. Falls back to 'uid' if 'id' is absent.",
+            "example": "task-001"
+          },
+          "title": {
+            "type": ["string", "null"],
+            "description": "Title/subject of the task.",
+            "example": "Review Q3 report"
+          },
+          "description": {
+            "type": ["string", "null"],
+            "description": "Detailed description or notes for the task.",
+            "example": "Check figures and add commentary"
+          },
+          "due": {
+            "type": ["string", "null"],
+            "description": "Due date and time of the task in 'YYYY-MM-DD HH:MM:SS' format. Null if not set.",
+            "example": "2025-01-31 23:59:59"
+          },
+          "status": {
+            "type": ["string", "null"],
+            "description": "Current status of the task.",
+            "enum": ["needs-action", "in-process", "completed", "cancelled", null],
+            "example": "needs-action"
+          }
+        }
+      },
+      "CreateTaskRequest": {
+        "type": "object",
+        "required": ["title", "status"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title/subject of the task.",
+            "example": "Review Q3 report"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the task. Always set to 'needs-action' for newly created tasks.",
+            "enum": ["needs-action", "in-process", "completed", "cancelled"],
+            "default": "needs-action"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional detailed description or notes for the task.",
+            "example": "Check figures and add commentary before the board meeting"
+          },
+          "due": {
+            "type": "string",
+            "description": "Optional due date and time. Always formatted as 'YYYY-MM-DD 23:59:59' — the time component is fixed to end-of-day when only a date is provided by the caller.",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2} 23:59:59$",
+            "example": "2025-01-31 23:59:59"
+          }
+        }
+      },
+      "CreateTaskSuccess": {
+        "type": "object",
+        "required": ["status", "message", "created_task_details"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"],
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable confirmation message, including due date when provided.",
+            "example": "Task 'Review Q3 report' was created successfully in your InfoLog. It is due on 2025-01-31."
+          },
+          "created_task_details": {
+            "$ref": "#/components/schemas/CreateTaskRequest"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"],
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error description.",
+            "example": "API Error: 401 - Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,421 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware Calendar API",
+    "version": "1.0.0",
+    "description": "API for managing events in the EGroupware personal calendar."
+  },
+  "servers": [
+    {
+      "url": "{base_url}",
+      "description": "EGroupware instance base URL",
+      "variables": {
+        "base_url": {
+          "default": "https://your-egroupware-instance.com",
+          "description": "The base URL of your EGroupware installation"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/calendar/": {
+      "get": {
+        "summary": "List calendar events",
+        "operationId": "listEvents",
+        "description": "Retrieves and lists events from the user's personal EGroupware calendar within a specified date range.",
+        "parameters": [
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": true,
+            "description": "Start of the date range filter (ISO 8601 date format: YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2025-01-01"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": true,
+            "description": "End of the date range filter (ISO 8601 date format: YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2025-01-31"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of calendar events within the specified date range.",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CalendarEvent"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                },
+                "examples": {
+                  "successList": {
+                    "summary": "Successful event list",
+                    "value": [
+                      {
+                        "uid": "abc123@egroupware",
+                        "title": "Team Sync",
+                        "start": "2025-01-15T10:00:00",
+                        "duration": "PT60M",
+                        "description": "Weekly team standup",
+                        "location": "Conference Room A",
+                        "status": "confirmed",
+                        "priority": 5
+                      }
+                    ]
+                  },
+                  "emptyList": {
+                    "summary": "No events found",
+                    "value": []
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a calendar event",
+        "operationId": "createEvent",
+        "description": "Schedules a new event in the user's personal EGroupware calendar.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventRequest"
+              },
+              "examples": {
+                "basicEvent": {
+                  "summary": "Simple event with required fields only",
+                  "value": {
+                    "title": "Project Kickoff",
+                    "start": "2025-01-20T09:00:00",
+                    "duration": "PT60M",
+                    "timeZone": "Europe/Berlin",
+                    "status": "confirmed",
+                    "priority": 5,
+                    "privacy": "public"
+                  }
+                },
+                "fullEvent": {
+                  "summary": "Full event with optional fields",
+                  "value": {
+                    "title": "Client Meeting",
+                    "start": "2025-01-22T14:00:00",
+                    "duration": "PT90M",
+                    "timeZone": "Europe/Berlin",
+                    "status": "confirmed",
+                    "priority": 3,
+                    "privacy": "public",
+                    "description": "Quarterly review with key client",
+                    "locations": {
+                      "loc-1": {
+                        "@type": "Location",
+                        "name": "Main Office, Berlin"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "description": "Response preference. Use 'return=representation' to get the created resource back.",
+            "schema": {
+              "type": "string",
+              "enum": ["return=representation", "return=minimal"],
+              "default": "return=representation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "status": "success",
+                  "message": "Event 'Project Kickoff' created successfully at 2025-01-20T09:00:00."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Event created (alternate success response from some EGroupware versions).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid payload or missing required fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Authentication using EGroupware username and password (or app password)."
+      }
+    },
+    "schemas": {
+      "Location": {
+        "type": "object",
+        "required": ["@type", "name"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Location"],
+            "description": "JMAP/JSCalendar type identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name of the location.",
+            "example": "Conference Room A"
+          }
+        }
+      },
+      "CreateEventRequest": {
+        "type": "object",
+        "required": ["title", "start", "duration", "timeZone", "status", "priority", "privacy"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title/subject of the event.",
+            "example": "Team Sync"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Event start date and time in ISO 8601 format.",
+            "example": "2025-01-20T09:00:00"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Event duration in ISO 8601 duration format (e.g. PT60M for 60 minutes).",
+            "pattern": "^PT\\d+M$",
+            "example": "PT60M"
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "IANA timezone identifier.",
+            "default": "Europe/Berlin",
+            "example": "Europe/Berlin"
+          },
+          "status": {
+            "type": "string",
+            "description": "Confirmation status of the event.",
+            "enum": ["confirmed", "tentative", "cancelled"],
+            "default": "confirmed"
+          },
+          "priority": {
+            "type": "integer",
+            "description": "Event priority (1 = highest, 9 = lowest, 5 = normal).",
+            "minimum": 1,
+            "maximum": 9,
+            "default": 5,
+            "example": 5
+          },
+          "privacy": {
+            "type": "string",
+            "description": "Visibility of the event.",
+            "enum": ["public", "private", "secret"],
+            "default": "public"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional detailed description or notes for the event.",
+            "example": "Quarterly review meeting"
+          },
+          "locations": {
+            "type": "object",
+            "description": "Optional map of location identifiers to Location objects.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Location"
+            },
+            "example": {
+              "loc-1": {
+                "@type": "Location",
+                "name": "Conference Room A"
+              }
+            }
+          }
+        }
+      },
+      "CalendarEvent": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "Unique identifier of the event.",
+            "example": "abc123@egroupware"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title/subject of the event.",
+            "example": "Team Sync"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Event start date and time.",
+            "example": "2025-01-15T10:00:00"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Event duration in ISO 8601 duration format.",
+            "example": "PT60M"
+          },
+          "description": {
+            "type": ["string", "null"],
+            "description": "Optional event description.",
+            "example": "Weekly team standup"
+          },
+          "location": {
+            "type": ["string", "null"],
+            "description": "Name of the event location, extracted from the locations map.",
+            "example": "Conference Room A"
+          },
+          "status": {
+            "type": "string",
+            "description": "Confirmation status of the event.",
+            "enum": ["confirmed", "tentative", "cancelled"],
+            "example": "confirmed"
+          },
+          "priority": {
+            "type": ["integer", "null"],
+            "description": "Event priority (1 = highest, 9 = lowest, 5 = normal).",
+            "minimum": 1,
+            "maximum": 9,
+            "example": 5
+          }
+        }
+      },
+      "SuccessResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"],
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable confirmation message.",
+            "example": "Event 'Team Sync' created successfully at 2025-01-15T10:00:00."
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"],
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error description.",
+            "example": "API Error: 401 - Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}

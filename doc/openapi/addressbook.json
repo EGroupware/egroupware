@@ -1,0 +1,541 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware Addressbook API",
+    "version": "1.0.0",
+    "description": "API for managing contacts in the EGroupware address book via CardDAV."
+  },
+  "servers": [
+    {
+      "url": "{base_url}",
+      "description": "EGroupware instance base URL",
+      "variables": {
+        "base_url": {
+          "default": "https://your-egroupware-instance.com",
+          "description": "The base URL of your EGroupware installation"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/addressbook/": {
+      "post": {
+        "summary": "Create a contact",
+        "operationId": "createContact",
+        "description": "Adds a new contact to the EGroupware address book.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContactRequest"
+              },
+              "examples": {
+                "minimalContact": {
+                  "summary": "Required fields only",
+                  "value": {
+                    "fullName": "Jane Doe",
+                    "name/given": "Jane",
+                    "name/surname": "Doe",
+                    "emails/work": "jane.doe@example.com"
+                  }
+                },
+                "fullContact": {
+                  "summary": "All fields provided",
+                  "value": {
+                    "fullName": "Jane Doe",
+                    "name/given": "Jane",
+                    "name/surname": "Doe",
+                    "emails/work": "jane.doe@example.com",
+                    "organizations/org/name": "Acme GmbH",
+                    "phones/tel_work": "+49 351 1234567",
+                    "addresses/work/street": "Hauptstraße 1, 01069 Dresden",
+                    "notes/note": "Met at tech conference 2024"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateContactSuccess"
+                },
+                "example": {
+                  "status": "success",
+                  "message": "Contact created successfully.",
+                  "contact_details": {
+                    "fullName": "Jane Doe",
+                    "name/given": "Jane",
+                    "name/surname": "Doe",
+                    "emails/work": "jane.doe@example.com",
+                    "organizations/org/name": "Acme GmbH",
+                    "phones/tel_work": "+49 351 1234567"
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Contact created (alternate success from some EGroupware versions).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateContactSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid or missing required fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all contacts (paginated)",
+        "operationId": "getAllContacts",
+        "description": "Retrieves contacts from the EGroupware address book via CardDAV PROPFIND with server-side pagination. Maximum of 15 contacts per request.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of contacts to return. Capped at 15.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15,
+              "default": 10
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "description": "Number of contacts to skip for pagination. Must be non-negative.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of contacts retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllContactsSuccess"
+                },
+                "examples": {
+                  "firstPage": {
+                    "summary": "First page of results",
+                    "value": {
+                      "status": "success",
+                      "message": "Retrieved 10 contact(s) from address book (page 1).",
+                      "total_contacts": 42,
+                      "returned_contacts": 10,
+                      "offset": 0,
+                      "limit": 10,
+                      "has_more": true,
+                      "next_offset": 10,
+                      "contacts": [
+                        {
+                          "name": "Jane Doe",
+                          "email": "jane.doe@example.com",
+                          "phone": "+49 351 1234567",
+                          "organization": "Acme GmbH",
+                          "address": "Hauptstraße 1, Dresden"
+                        }
+                      ]
+                    }
+                  },
+                  "lastPage": {
+                    "summary": "Last page — no more results",
+                    "value": {
+                      "status": "success",
+                      "message": "Retrieved 2 contact(s) from address book (page 5).",
+                      "total_contacts": 42,
+                      "returned_contacts": 2,
+                      "offset": 40,
+                      "limit": 10,
+                      "has_more": false,
+                      "next_offset": null,
+                      "contacts": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/addressbook/search": {
+      "get": {
+        "summary": "Search contacts",
+        "operationId": "searchContacts",
+        "description": "Searches through all contacts in the EGroupware address book via CardDAV PROPFIND and applies local full-text filtering across name, email, phone, organization, and address fields.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "description": "Search string matched case-insensitively against all contact fields (name, email, phone, organization, address).",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "example": "acme"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search completed. Returns matching contacts (may be empty if none found).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchContactsSuccess"
+                },
+                "examples": {
+                  "found": {
+                    "summary": "Contacts found",
+                    "value": {
+                      "status": "success",
+                      "found": true,
+                      "message": "Found 2 contact(s) matching 'acme' (searched through 42 total contacts).",
+                      "total_searched": 42,
+                      "contacts": [
+                        {
+                          "name": "Jane Doe",
+                          "email": "jane.doe@acme.com",
+                          "phone": "+49 351 1234567",
+                          "organization": "Acme GmbH",
+                          "address": "Hauptstraße 1, Dresden"
+                        }
+                      ]
+                    }
+                  },
+                  "notFound": {
+                    "summary": "No contacts found",
+                    "value": {
+                      "status": "success",
+                      "found": false,
+                      "message": "No contacts found matching 'xyz' (searched through 42 total contacts).",
+                      "total_searched": 42,
+                      "contacts": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Authentication using EGroupware username and password (or app password)."
+      }
+    },
+    "schemas": {
+      "CreateContactRequest": {
+        "type": "object",
+        "required": [
+          "fullName",
+          "name/given",
+          "name/surname",
+          "emails/work"
+        ],
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "Full display name of the contact.",
+            "example": "Jane Doe"
+          },
+          "name/given": {
+            "type": "string",
+            "description": "First (given) name, derived from the first token of fullName.",
+            "example": "Jane"
+          },
+          "name/surname": {
+            "type": "string",
+            "description": "Last (family) name — all tokens after the first in fullName. Empty string if single-word name.",
+            "example": "Doe"
+          },
+          "emails/work": {
+            "type": "string",
+            "format": "email",
+            "description": "Work email address of the contact.",
+            "example": "jane.doe@example.com"
+          },
+          "organizations/org/name": {
+            "type": "string",
+            "description": "Company or organization name (optional).",
+            "example": "Acme GmbH"
+          },
+          "phones/tel_work": {
+            "type": "string",
+            "description": "Work phone number (optional).",
+            "example": "+49 351 1234567"
+          },
+          "addresses/work/street": {
+            "type": "string",
+            "description": "Work street address (optional). Treated as a single free-text field.",
+            "example": "Hauptstraße 1, 01069 Dresden"
+          },
+          "notes/note": {
+            "type": "string",
+            "description": "Free-text notes about the contact (optional).",
+            "example": "Met at Berlin tech conference 2024"
+          }
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "description": "A contact record as parsed from a vCard (CardDAV response).",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Full display name (FN field from vCard).",
+            "example": "Jane Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "Primary email address. Empty string if not present.",
+            "example": "jane.doe@example.com"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Primary phone number. Empty string if not present.",
+            "example": "+49 351 1234567"
+          },
+          "organization": {
+            "type": "string",
+            "description": "Organization name (first value of ORG field). Empty string if not present.",
+            "example": "Acme GmbH"
+          },
+          "address": {
+            "type": "string",
+            "description": "Formatted address as 'street, city'. Empty string if not present.",
+            "example": "Hauptstraße 1, Dresden"
+          }
+        }
+      },
+      "CreateContactSuccess": {
+        "type": "object",
+        "required": ["status", "message", "contact_details"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"],
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "example": "Contact created successfully."
+          },
+          "contact_details": {
+            "$ref": "#/components/schemas/CreateContactRequest"
+          }
+        }
+      },
+      "GetAllContactsSuccess": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "total_contacts",
+          "returned_contacts",
+          "offset",
+          "limit",
+          "has_more",
+          "next_offset",
+          "contacts"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"],
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "example": "Retrieved 10 contact(s) from address book (page 1)."
+          },
+          "total_contacts": {
+            "type": "integer",
+            "description": "Total number of contacts in the address book.",
+            "example": 42
+          },
+          "returned_contacts": {
+            "type": "integer",
+            "description": "Number of contacts returned in this response.",
+            "example": 10
+          },
+          "offset": {
+            "type": "integer",
+            "description": "The offset used for this request.",
+            "example": 0
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The limit used for this request (max 15).",
+            "example": 10
+          },
+          "has_more": {
+            "type": "boolean",
+            "description": "Whether more contacts exist beyond this page.",
+            "example": true
+          },
+          "next_offset": {
+            "type": ["integer", "null"],
+            "description": "Offset to use to fetch the next page. Null if this is the last page.",
+            "example": 10
+          },
+          "contacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Contact"
+            }
+          }
+        }
+      },
+      "SearchContactsSuccess": {
+        "type": "object",
+        "required": ["status", "found", "message", "total_searched", "contacts"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"],
+            "example": "success"
+          },
+          "found": {
+            "type": "boolean",
+            "description": "True if at least one contact matched the query.",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable summary of the search result.",
+            "example": "Found 2 contact(s) matching 'acme' (searched through 42 total contacts)."
+          },
+          "total_searched": {
+            "type": "integer",
+            "description": "Total number of contacts searched across the entire address book.",
+            "example": 42
+          },
+          "contacts": {
+            "type": "array",
+            "description": "Contacts matching the search query.",
+            "items": {
+              "$ref": "#/components/schemas/Contact"
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"],
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error description.",
+            "example": "Failed to retrieve contacts. Server responded with status 401."
+          },
+          "details": {
+            "type": "string",
+            "description": "Raw error body from the upstream server, if available.",
+            "example": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}
