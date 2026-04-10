@@ -73,6 +73,11 @@ class Session
 	const EGW_SESSION_NAME = 'sessionid';
 
 	/**
+	 * Name of domain cookie
+	 */
+	const EGW_DOMAIN_NAME = 'egw_domain';
+
+	/**
 	 * Name of cookie with remember me token
 	 */
 	const REMEMBER_ME_COOKIE = 'eGW_remember';
@@ -714,7 +719,7 @@ class Session
 				{
 					self::egw_setcookie(self::EGW_SESSION_NAME, $this->sessionid);
 					self::egw_setcookie('kp3', $this->kp3);
-					self::egw_setcookie('domain', $this->account_domain);
+					self::egw_setcookie(self::EGW_DOMAIN_NAME, $this->account_domain);
 				}
 				if ($GLOBALS['egw_info']['server']['usecookies'] && !$no_session || isset($_COOKIE['last_loginid']))
 				{
@@ -1320,9 +1325,11 @@ class Session
 	 */
 	static function get_request($name)
 	{
-		return isset($_REQUEST[$name]) ? $_REQUEST[$name] :
-			(isset($_COOKIE[$name]) ? $_COOKIE[$name] :
-			(isset($_COOKIE[$name=ucfirst($name)]) ? $_COOKIE[$name] : null));
+		if ($name === 'domain' && ($value = self::get_request(self::EGW_DOMAIN_NAME)))
+		{
+			return $value;
+		}
+		return $_REQUEST[$name] ?? $_COOKIE[$name] ?? $_COOKIE[ucfirst($name)] ?? null;
 	}
 
 	/**
@@ -1491,7 +1498,8 @@ class Session
 			if (self::ERROR_LOG_DEBUG) error_log("--> Session::verify($sessionid) SUCCESS, but NO required cookies set --> setting them now");
 			self::egw_setcookie(self::EGW_SESSION_NAME,$this->sessionid);
 			self::egw_setcookie('kp3',$this->kp3);
-			self::egw_setcookie('domain',$this->account_domain);
+			error_log($_SERVER['HTTP_USER_AGENT']);
+			self::egw_setcookie(self::EGW_DOMAIN_NAME,$this->account_domain);
 		}
 
 		if (self::ERROR_LOG_DEBUG) error_log("--> Session::verify($sessionid) SUCCESS");
