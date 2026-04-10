@@ -21,12 +21,15 @@
 
 use EGroupware\Api;
 
-$GLOBALS['egw_info'] = [
-	'flags' => [
-		'currentapp' => 'login',
-	],
-];
-require_once('../../header.inc.php');
+if (empty($GLOBALS['egw_info']))
+{
+	$GLOBALS['egw_info'] = [
+		'flags' => [
+			'currentapp' => 'login',
+		],
+	];
+	require_once('../../header.inc.php');
+}
 
 $json = [
 	"openapi" => "3.1.0",
@@ -63,6 +66,7 @@ $json = [
 				"description" => "HTTP Bearer Token Authentication for API access with and OpenIDConnect/OAuth access token."
 			]
 		],
+		"parameters" => [], // parameters are added from separate app-specific JSON-files below
 		"schemas" => [],    // schemas are added from separate app-specific JSON-files below
 	],
 ];
@@ -73,6 +77,7 @@ foreach(scandir(__DIR__) as $file)
 	{
 		$app_json = json_decode(file_get_contents(__DIR__.'/'.$file), true);
 		$json['paths'] += $app_json['paths'] ?? [];
+		$json['components']['parameters'] += $app_json['components']['parameters'] ?? [];
 		$json['components']['schemas'] += $app_json['components']['schemas'] ?? [];
 	}
 }

@@ -1,0 +1,769 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "EGroupware Timesheet REST API",
+    "description": "REST API for managing timesheets in EGroupware. Supports CRUD operations, filtering, and synchronization via sync tokens.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EGroupware",
+      "url": "https://www.egroupware.org"
+    },
+    "license": {
+      "name": "GPL",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://example.org/egroupware/groupdav.php",
+      "description": "Production server"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/timesheet/": {
+      "get": {
+        "tags": [
+          "Timesheets"
+        ],
+        "operationId": "listTimesheets",
+        "summary": "List all timesheets for the current user",
+        "description": "Returns all timesheets for the current user. Supports filtering, pagination, and custom property selection. To search use parameter 'filters[search]' set to your search pattern.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of timesheets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimesheetCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Timesheets"
+        ],
+        "operationId": "createTimesheet",
+        "summary": "Create a new timesheet for current user",
+        "description": "Adds a new timesheet to the collection.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json"
+              ]
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            }
+          },
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "return=representation"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Timesheet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Timesheet created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "ETag": {
+                "description": "ETag of the new resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timesheet"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/{username}/timesheet/": {
+      "get": {
+        "tags": [
+          "Timesheets"
+        ],
+        "operationId": "listUserTimesheets",
+        "summary": "List all timesheets for a user",
+        "description": "Returns all timesheets for the specified user. Supports filtering, pagination, and custom property selection. To search use parameter 'filters[search]' set to your search pattern.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of timesheets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimesheetCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Timesheets"
+        ],
+        "operationId": "createUserTimesheet",
+        "summary": "Create a new timesheet",
+        "description": "Adds a new timesheet to the collection.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json"
+              ]
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            }
+          },
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "return=representation"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Timesheet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Timesheet created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "ETag": {
+                "description": "ETag of the new resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timesheet"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/timesheet/{id}": {
+      "get": {
+        "tags": [
+          "Timesheets"
+        ],
+        "operationId": "getTimesheet",
+        "summary": "Get a single timesheet",
+        "description": "Retrieves a single timesheet by ID.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single timesheet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timesheet"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Timesheets"
+        ],
+        "operationId": "replaceTimesheet",
+        "summary": "Replace a timesheet",
+        "description": "Replaces all attributes of a timesheet. Requires all attributes to be specified.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Timesheet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Timesheet updated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Timesheets"
+        ],
+        "operationId": "updateTimesheet",
+        "summary": "Partially update a timesheet",
+        "description": "Updates only the specified attributes of a timesheet.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "PatchObject as per RFC 8984"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Timesheet partially updated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Timesheets"
+        ],
+        "operationId": "deleteTimesheet",
+        "summary": "Delete a timesheet",
+        "description": "Deletes a timesheet by ID.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Timesheet deleted"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Basic authentication with username and password or token"
+      }
+    },
+    "parameters": {
+      "username": {
+        "name": "username",
+        "in": "path",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Username or user identifier, defaults to current user if omitted"
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "ID of entry"
+      },
+      "props": {
+        "name": "props[]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": "List of DAV properties to return (e.g., props[]=getetag, props[]=displayname)",
+        "style": "form",
+        "explode": true
+      },
+      "syncToken": {
+        "name": "sync-token",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sync token to request changes since last sync"
+      },
+      "nresults": {
+        "name": "nresults",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Limit number of responses (only for sync-collection)"
+      },
+      "filters": {
+        "name": "filters",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "description": "Filter timesheets by pattern, custom field, or attribute. Example: filters[search]=pattern or filters[status]=invoiced",
+        "style": "deepObject",
+        "explode": true
+      }
+    },
+    "schemas": {
+      "Timesheet": {
+        "type": "object",
+        "required": [
+          "@type",
+          "id",
+          "title",
+          "start",
+          "duration",
+          "owner",
+          "created",
+          "modified",
+          "modifier",
+          "etag"
+        ],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": [
+              "timesheet"
+            ],
+            "description": "Type of the resource"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the timesheet"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the timesheet"
+          },
+          "description": {
+            "type": "string",
+            "description": "Multi-line description"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start time in UTC (e.g., 2020-02-03T14:35:37Z)"
+          },
+          "duration": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "description": "Duration in minutes"
+              },
+              {
+                "type": "string",
+                "description": "iCal duration format (e.g., \"PT1H30M\")"
+              }
+            ]
+          },
+          "quantity": {
+            "type": "number",
+            "format": "double",
+            "description": "Quantity (e.g., 2.5)"
+          },
+          "paused": {
+            "type": "integer",
+            "description": "Pause time in minutes"
+          },
+          "project": {
+            "type": "string",
+            "description": "Project name or identifier"
+          },
+          "pm_id": {
+            "type": "integer",
+            "description": "ID of the ProjectManager app (read-only)"
+          },
+          "unitprice": {
+            "type": "number",
+            "format": "double",
+            "description": "Unit price"
+          },
+          "category": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "Category object with a single category name (e.g., {\"category name\": true})"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner (email, username, or integer ID)"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation time in UTC"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last modification time in UTC"
+          },
+          "modifier": {
+            "type": "string",
+            "description": "Last modifier (email, username, or integer ID)"
+          },
+          "pricelist": {
+            "type": "integer",
+            "description": "ID of the projectmanager pricelist item"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the timesheet (e.g., \"genehmigt\", \"invoiced\")"
+          },
+          "egroupware.org:customfields": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Custom fields object"
+          },
+          "etag": {
+            "type": "string",
+            "description": "ETag in the format \"<id>:<modified-timestamp>\" (double quotes are part of the etag)"
+          }
+        }
+      },
+      "TimesheetCollection": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Timesheet"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "Map of timesheet paths to timesheet objects or null (for deleted resources)"
+          },
+          "more-results": {
+            "type": "boolean",
+            "description": "Indicates if there are more results available"
+          },
+          "sync-token": {
+            "type": "string",
+            "description": "Sync token for the next request"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Bad request"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

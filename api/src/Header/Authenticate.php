@@ -102,7 +102,8 @@ class Authenticate
 		{
 			unset($password);
 		}
-		elseif (isset($_SERVER['HTTP_AUTHORIZATION']) && preg_match('/^Bearer (.+)$/i', $_SERVER['HTTP_AUTHORIZATION'], $matches) &&
+		elseif ((isset($_SERVER['HTTP_AUTHORIZATION']) && preg_match('/^Bearer (.+)$/i', $_SERVER['HTTP_AUTHORIZATION'], $matches) ||
+			!empty($_COOKIE['oauth_id_token']) && ($matches = [1 => $_COOKIE['oauth_id_token']])) &&
 			class_exists('EGroupware\OpenID\Token') && ($token = (new Token())->validate($matches[1], "PT5M", $client)))
 		{
 			$username = $token->getClaim('sub');
