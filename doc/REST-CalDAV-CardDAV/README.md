@@ -35,6 +35,8 @@ One can use the following URLs relative (!) to https://example.org/egroupware/gr
 - `/timesheet/`   REST API only
 - `/smallpart/`   REST API only
 - `/projectmanager/`   REST API only
+- `/invoices/`   REST API only
+- `/rag/`   REST API only
 
 Shared addressbooks or calendars are only shown in the users home-set, if he subscribed to it via his CalDAV preferences!
 

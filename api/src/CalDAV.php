@@ -1088,6 +1088,14 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			$type = 'application/json';
 		}
+		// some REST API clients send just "Content-Type: application/json" and "Accept: */*" for GET requests
+		if ($_SERVER['REQUEST_METHOD'] === 'GET' && ($_SERVER['HTTP_ACCEPT']??null) === '*/*' &&
+				preg_match('#application/(([^+ ;]+)\+)?json#', $_SERVER['HTTP_CONTENT_TYPE']??'', $matches) ||
+			// some applications are never CalDAV and always only return REST results
+			preg_match('#/groupdav.php/([a-zA-Z0-9_-]+/)?(rag|mail|invoices|timesheet|smallpart|projectmanager)/#', $_SERVER['REQUEST_URI']))
+		{
+			return $matches[2] ?? true;
+		}
 		return preg_match('#application/(([^+ ;]+)\+)?json#', $type, $matches) ?
 			(empty($matches[1]) ? true : $matches[2]) : false;
 	}

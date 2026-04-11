@@ -1,0 +1,287 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "EGroupware RAG REST API",
+    "description": "REST API for searching and retrieving entries from the EGroupware RAG (Retrieval-Augmented Generation) system. Supports full-text and semantic search with filtering and custom property selection.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EGroupware",
+      "url": "https://www.egroupware.org"
+    },
+    "license": {
+      "name": "GPL",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://egw.example.org/egroupware/groupdav.php",
+      "description": "Production server (replace with your EGroupware URL)"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/rag/": {
+      "get": {
+        "tags": ["RAG"],
+        "operationId": "searchRAG",
+        "summary": "Search the RAG",
+        "description": "Searches the RAG for entries matching the provided pattern. Returns results with customizable properties and filtering options.",
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            }
+          },
+          {
+            "name": "filters[search]",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            },
+            "description": "Search pattern (must be at least 3 characters long)"
+          },
+          {
+            "name": "filters[apps][]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": "Limit search to specific app(s), default is to search all apps. Can be specified multiple times e.g. 'filters[apps][]=addressbook&filters[apps][]=calendar'. Do NOT specify 'rag', it will find nothing!",
+            "style": "form",
+            "explode": true
+          },
+          {
+            "name": "filters[type]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["hybrid", "fulltext", "rag"],
+              "default": "hybrid"
+            },
+            "description": "Type of search to use (hybrid (fulltext and rag), fulltext, or rag)"
+          },
+          {
+            "name": "filters[order]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["default ASC", "default DESC", "distance ASC", "distance DESC", "relevance ASC", "relevance DESC", "modified ASC", "modified DESC"],
+              "default": "default ASC"
+            },
+            "description": "Order of results: default gives rag results first and then fulltext results for hybrid search. RAG distance of 0 means a 100% match, 1 means no match at all. Fulltext relevance is higher for more relevant matches. The default order of 'default ASC' returns best matches first, independent of search-type parameter."
+          },
+          {
+            "name": "props[]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": "List of DAV properties to return (e.g., props[]=displayname)",
+            "style": "form",
+            "explode": true
+          },
+          {
+            "name": "sync-token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Sync token to request changes since last sync (not yet supported)"
+          },
+          {
+            "name": "nresults",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Limit number of responses (only for sync-collection)"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            },
+            "description": "REQUIRED Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of RAG entries matching the search criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RAGCollection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (e.g., search pattern too short)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Basic authentication with username and password or token"
+      }
+    },
+    "schemas": {
+      "RAGEntry": {
+        "type": "object",
+        "properties": {
+          "modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last modified timestamp in UTC (e.g., '2025-10-10T08:27:27Z')"
+          },
+          "relevance": {
+            "type": "number",
+            "format": "double",
+            "description": "Full-text search relevance (higher = better match). Only results with at least 5% of the highest match are returned."
+          },
+          "distance": {
+            "type": "number",
+            "format": "double",
+            "description": "Semantic search distance (0.0 = 100% match, 1.0 = no match, -1.0 = opposite). Only results < 0.4 are returned."
+          },
+          "title": {
+            "type": "string",
+            "description": "Link-title of the entry"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Multi-line text field of the entry (e.g., note field of a contact)"
+          },
+          "extra": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of further full-text indexed text fields"
+          },
+          "id": {
+            "type": "string",
+            "description": "Entry ID in the format '<app-name>:<app-id>'"
+          },
+          "app": {
+            "type": "string",
+            "description": "App name of the entry (e.g., 'addressbook', 'calendar')"
+          },
+          "app_id": {
+            "type": "string",
+            "description": "ID of the entry in its app"
+          }
+        }
+      },
+      "RAGCollection": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/RAGEntry"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "Map of RAG entry paths to RAG entry objects, titles, or null (for deleted resources)"
+          },
+          "more-results": {
+            "type": "boolean",
+            "description": "Indicates if there are more results available"
+          },
+          "sync-token": {
+            "type": "string",
+            "description": "Sync token for the next request"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
