@@ -31,7 +31,7 @@
           "Timesheets"
         ],
         "operationId": "listTimesheets",
-        "summary": "List all timesheets for the current user",
+        "summary": "List all timesheets the current user has access too",
         "description": "Returns all timesheets for the current user. Supports filtering, pagination, and custom property selection. To search use parameter 'filters[search]' set to your search pattern.",
         "parameters": [
           {
@@ -176,7 +176,7 @@
           "Timesheets"
         ],
         "operationId": "listUserTimesheets",
-        "summary": "List all timesheets for a user",
+        "summary": "List all timesheets for a given user",
         "description": "Returns all timesheets for the specified user. Supports filtering, pagination, and custom property selection. To search use parameter 'filters[search]' set to your search pattern.",
         "parameters": [
           {

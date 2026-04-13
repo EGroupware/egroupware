@@ -1,20 +1,22 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "EGroupware Calendar API",
+    "title": "EGroupware Calendar REST API",
+    "description": "REST API for managing calendar events in EGroupware. Supports CRUD operations, filtering, synchronization, and recurrence rules. Uses JsCalendar schema for JSON encoding.",
     "version": "1.0.0",
-    "description": "API for managing events in the EGroupware personal calendar."
+    "contact": {
+      "name": "EGroupware",
+      "url": "https://www.egroupware.org"
+    },
+    "license": {
+      "name": "GPL",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+    }
   },
   "servers": [
     {
-      "url": "{base_url}",
-      "description": "EGroupware instance base URL",
-      "variables": {
-        "base_url": {
-          "default": "https://your-egroupware-instance.com",
-          "description": "The base URL of your EGroupware installation"
-        }
-      }
+      "url": "https://example.org/egroupware/groupdav.php",
+      "description": "Production server (replace with your EGroupware URL)"
     }
   ],
   "security": [
@@ -25,219 +27,356 @@
   "paths": {
     "/calendar/": {
       "get": {
-        "summary": "List calendar events",
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "List all events of the user",
+        "description": "Returns all events in the user's calendar. Supports filtering, pagination, and custom property selection.",
         "operationId": "listEvents",
-        "description": "Retrieves and lists events from the user's personal EGroupware calendar within a specified date range.",
         "parameters": [
           {
-            "name": "start_date",
-            "in": "query",
-            "required": true,
-            "description": "Start of the date range filter (ISO 8601 date format: YYYY-MM-DD)",
-            "schema": {
-              "type": "string",
-              "format": "date",
-              "example": "2025-01-01"
-            }
+            "$ref": "#/components/parameters/username"
           },
           {
-            "name": "end_date",
-            "in": "query",
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
             "required": true,
-            "description": "End of the date range filter (ISO 8601 date format: YYYY-MM-DD)",
             "schema": {
               "type": "string",
-              "format": "date",
-              "example": "2025-01-31"
-            }
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of calendar events within the specified date range.",
+            "description": "A list of events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/{username}/calendar/": {
+      "get": {
+        "tags": ["Calendar"],
+        "summary": "List all events in a given users calendar",
+        "description": "Returns all events in the user's calendar. Supports filtering, pagination, and custom property selection.",
+        "operationId": "listUserEvents",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Calendar"],
+        "summary": "Create a new event for the given user",
+        "description": "Adds a new event to the calendar. The Location header in the response gives the URL of the new resource. Use `Prefer: return=representation` to get the full event in the response.",
+        "operationId": "createEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          },
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["return=representation"]
+            },
+            "description": "Request the server to return the full representation of the created event"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Event created",
             "headers": {
-              "Content-Type": {
+              "Location": {
+                "description": "URL of the new resource",
                 "schema": {
                   "type": "string",
-                  "example": "application/json"
+                  "format": "uri"
+                }
+              },
+              "ETag": {
+                "description": "ETag of the new resource",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Schedule-Tag": {
+                "description": "Schedule tag of the new resource",
+                "schema": {
+                  "type": "string"
                 }
               }
             },
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/CalendarEvent"
-                      }
-                    },
-                    {
-                      "$ref": "#/components/schemas/ErrorResponse"
-                    }
-                  ]
-                },
-                "examples": {
-                  "successList": {
-                    "summary": "Successful event list",
-                    "value": [
-                      {
-                        "uid": "abc123@egroupware",
-                        "title": "Team Sync",
-                        "start": "2025-01-15T10:00:00",
-                        "duration": "PT60M",
-                        "description": "Weekly team standup",
-                        "location": "Conference Room A",
-                        "status": "confirmed",
-                        "priority": 5
-                      }
-                    ]
-                  },
-                  "emptyList": {
-                    "summary": "No events found",
-                    "value": []
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized — invalid or missing credentials.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Unexpected server error.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a calendar event",
-        "operationId": "createEvent",
-        "description": "Schedules a new event in the user's personal EGroupware calendar.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateEventRequest"
-              },
-              "examples": {
-                "basicEvent": {
-                  "summary": "Simple event with required fields only",
-                  "value": {
-                    "title": "Project Kickoff",
-                    "start": "2025-01-20T09:00:00",
-                    "duration": "PT60M",
-                    "timeZone": "Europe/Berlin",
-                    "status": "confirmed",
-                    "priority": 5,
-                    "privacy": "public"
-                  }
-                },
-                "fullEvent": {
-                  "summary": "Full event with optional fields",
-                  "value": {
-                    "title": "Client Meeting",
-                    "start": "2025-01-22T14:00:00",
-                    "duration": "PT90M",
-                    "timeZone": "Europe/Berlin",
-                    "status": "confirmed",
-                    "priority": 3,
-                    "privacy": "public",
-                    "description": "Quarterly review with key client",
-                    "locations": {
-                      "loc-1": {
-                        "@type": "Location",
-                        "name": "Main Office, Berlin"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "Prefer",
-            "in": "header",
-            "required": false,
-            "description": "Response preference. Use 'return=representation' to get the created resource back.",
-            "schema": {
-              "type": "string",
-              "enum": ["return=representation", "return=minimal"],
-              "default": "return=representation"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Event created successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SuccessResponse"
-                },
-                "example": {
-                  "status": "success",
-                  "message": "Event 'Project Kickoff' created successfully at 2025-01-20T09:00:00."
-                }
-              }
-            }
-          },
-          "201": {
-            "description": "Event created (alternate success response from some EGroupware versions).",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SuccessResponse"
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request — invalid payload or missing required fields.",
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/calendar/{id}": {
+      "get": {
+        "tags": ["Calendar"],
+        "summary": "Get a single event",
+        "description": "Retrieves a single event by ID.",
+        "operationId": "getEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single event",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
           },
           "401": {
-            "description": "Unauthorized — invalid or missing credentials.",
-            "content": {
-              "application/json": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Calendar"],
+        "summary": "Replace an event",
+        "description": "Replaces all attributes of an event. Requires all attributes to be specified. If the ID is a UID, it will update the existing event or create a new one if it does not exist.",
+        "operationId": "replaceEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Event updated"
+          },
+          "201": {
+            "description": "Event created (if UID did not exist)",
+            "headers": {
+              "Location": {
+                "description": "URL of the new resource",
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "type": "string",
+                  "format": "uri"
                 }
               }
             }
           },
-          "500": {
-            "description": "Unexpected server error.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Calendar"],
+        "summary": "Partially update an event",
+        "description": "Updates only the specified attributes of an event.",
+        "operationId": "updateEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventPatch"
               }
             }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Event partially updated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Calendar"],
+        "summary": "Delete an event",
+        "description": "Deletes an event by ID.",
+        "operationId": "deleteEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            },
+            "description": "Accept header is required to avoid 404 Not Found (URL does not end with .ics)"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event deleted"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
@@ -248,171 +387,419 @@
       "basicAuth": {
         "type": "http",
         "scheme": "basic",
-        "description": "HTTP Basic Authentication using EGroupware username and password (or app password)."
+        "description": "Basic authentication with username and password or token"
+      }
+    },
+    "parameters": {
+      "username": {
+        "name": "username",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Username or user identifier"
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Event ID or UID"
+      },
+      "props": {
+        "name": "props[]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": "List of DAV properties to return (e.g., props[]=getetag)",
+        "style": "form",
+        "explode": true
+      },
+      "syncToken": {
+        "name": "sync-token",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sync token to request changes since last sync"
+      },
+      "nresults": {
+        "name": "nresults",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Limit number of responses (only for sync-collection)"
       }
     },
     "schemas": {
-      "Location": {
+      "Event": {
         "type": "object",
-        "required": ["@type", "name"],
+        "required": ["@type", "prodId", "uid", "title", "start", "duration"],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Location"],
-            "description": "JMAP/JSCalendar type identifier."
+            "enum": ["Event"],
+            "description": "Type of the resource (always 'Event')"
           },
-          "name": {
+          "prodId": {
             "type": "string",
-            "description": "Human-readable name of the location.",
-            "example": "Conference Room A"
-          }
-        }
-      },
-      "CreateEventRequest": {
-        "type": "object",
-        "required": ["title", "start", "duration", "timeZone", "status", "priority", "privacy"],
-        "properties": {
+            "description": "Product identifier (e.g., 'EGroupware Calendar 23.1.002')"
+          },
+          "uid": {
+            "type": "string",
+            "description": "Unique identifier for the event"
+          },
+          "sequence": {
+            "type": "string",
+            "description": "Sequence number for versioning"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp in UTC"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp in UTC"
+          },
           "title": {
             "type": "string",
-            "description": "Title/subject of the event.",
-            "example": "Team Sync"
+            "description": "Title of the event"
           },
           "start": {
             "type": "string",
             "format": "date-time",
-            "description": "Event start date and time in ISO 8601 format.",
-            "example": "2025-01-20T09:00:00"
-          },
-          "duration": {
-            "type": "string",
-            "description": "Event duration in ISO 8601 duration format (e.g. PT60M for 60 minutes).",
-            "pattern": "^PT\\d+M$",
-            "example": "PT60M"
+            "description": "Start time of the event"
           },
           "timeZone": {
             "type": "string",
-            "description": "IANA timezone identifier.",
-            "default": "Europe/Berlin",
-            "example": "Europe/Berlin"
+            "description": "Timezone of the event (e.g., 'Europe/Berlin')"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Duration of the event (e.g., 'PT1H' for 1 hour, 'P1D' for 1 day)"
+          },
+          "showWithoutTime": {
+            "type": "boolean",
+            "description": "Whether to show the event without time (all-day event)"
+          },
+          "recurrenceRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecurrenceRule"
+            },
+            "description": "Recurrence rules for the event"
+          },
+          "recurrenceOverrides": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "excluded": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/components/schemas/Event"
+                }
+              ]
+            },
+            "description": "Overrides for specific instances of a recurring event"
+          },
+          "participants": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Participant"
+            },
+            "description": "Participants of the event"
+          },
+          "alerts": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Alert"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "Alerts for the event"
           },
           "status": {
             "type": "string",
-            "description": "Confirmation status of the event.",
-            "enum": ["confirmed", "tentative", "cancelled"],
-            "default": "confirmed"
+            "enum": ["tentative", "confirmed", "cancelled"],
+            "description": "Status of the event"
           },
           "priority": {
             "type": "integer",
-            "description": "Event priority (1 = highest, 9 = lowest, 5 = normal).",
-            "minimum": 1,
-            "maximum": 9,
-            "default": 5,
-            "example": 5
+            "description": "Priority of the event (1: high, 3: normal, 5: low)"
           },
           "privacy": {
             "type": "string",
-            "description": "Visibility of the event.",
-            "enum": ["public", "private", "secret"],
-            "default": "public"
+            "enum": ["public", "private", "confidential"],
+            "description": "Privacy level of the event"
+          },
+          "freeBusyStatus": {
+            "type": "string",
+            "enum": ["free", "busy", "busy-unavailable", "busy-tentative"],
+            "description": "Free/busy status of the event"
           },
           "description": {
             "type": "string",
-            "description": "Optional detailed description or notes for the event.",
-            "example": "Quarterly review meeting"
+            "description": "Description of the event"
           },
-          "locations": {
+          "categories": {
             "type": "object",
-            "description": "Optional map of location identifiers to Location objects.",
             "additionalProperties": {
-              "$ref": "#/components/schemas/Location"
+              "type": "boolean"
             },
-            "example": {
-              "loc-1": {
-                "@type": "Location",
-                "name": "Conference Room A"
+            "description": "Categories the event belongs to"
+          },
+          "egroupware.org:customfields": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Vendor-specific custom fields"
+          }
+        }
+      },
+      "EventPatch": {
+        "type": "object",
+        "description": "Partial update for an event. All properties are optional.",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["tentative", "confirmed", "cancelled"]
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "privacy": {
+            "type": "string",
+            "enum": ["public", "private", "confidential"]
+          },
+          "alerts": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Alert"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "RecurrenceRule": {
+        "type": "object",
+        "required": ["@type", "frequency"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["RecurrenceRule"]
+          },
+          "frequency": {
+            "type": "string",
+            "enum": ["daily", "weekly", "monthly", "yearly"]
+          },
+          "until": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "byDay": {
+            "$ref": "#/components/schemas/NDay"
+          },
+          "interval": {
+            "type": "integer"
+          }
+        }
+      },
+      "NDay": {
+        "type": "object",
+        "required": ["@type", "day"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["NDay"]
+          },
+          "day": {
+            "type": "string",
+            "description": "Comma-separated list of days (e.g., 'mo,we')"
+          }
+        }
+      },
+      "Participant": {
+        "type": "object",
+        "required": ["@type", "name", "email", "kind", "roles", "participationStatus"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Participant"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["individual", "group"]
+          },
+          "roles": {
+            "type": "object",
+            "properties": {
+              "owner": {
+                "type": "boolean"
+              },
+              "chair": {
+                "type": "boolean"
+              },
+              "attendee": {
+                "type": "boolean"
+              }
+            }
+          },
+          "participationStatus": {
+            "type": "string",
+            "enum": ["needs-action", "accepted", "declined", "tentative", "delegated", "completed", "in-process"]
+          }
+        }
+      },
+      "Alert": {
+        "type": "object",
+        "required": ["@type", "trigger"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Alert"]
+          },
+          "trigger": {
+            "$ref": "#/components/schemas/OffsetTrigger"
+          }
+        }
+      },
+      "OffsetTrigger": {
+        "type": "object",
+        "required": ["@type", "offset"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["OffsetTrigger"]
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Offset in seconds before the event starts"
+          }
+        }
+      },
+      "EventCollection": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Event"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "Map of event paths to event objects or null (for deleted resources)"
+          },
+          "more-results": {
+            "type": "boolean",
+            "description": "Indicates if there are more results available"
+          },
+          "sync-token": {
+            "type": "string",
+            "description": "Sync token for the next request"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
               }
             }
           }
         }
       },
-      "CalendarEvent": {
-        "type": "object",
-        "properties": {
-          "uid": {
-            "type": "string",
-            "description": "Unique identifier of the event.",
-            "example": "abc123@egroupware"
-          },
-          "title": {
-            "type": "string",
-            "description": "Title/subject of the event.",
-            "example": "Team Sync"
-          },
-          "start": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Event start date and time.",
-            "example": "2025-01-15T10:00:00"
-          },
-          "duration": {
-            "type": "string",
-            "description": "Event duration in ISO 8601 duration format.",
-            "example": "PT60M"
-          },
-          "description": {
-            "type": ["string", "null"],
-            "description": "Optional event description.",
-            "example": "Weekly team standup"
-          },
-          "location": {
-            "type": ["string", "null"],
-            "description": "Name of the event location, extracted from the locations map.",
-            "example": "Conference Room A"
-          },
-          "status": {
-            "type": "string",
-            "description": "Confirmation status of the event.",
-            "enum": ["confirmed", "tentative", "cancelled"],
-            "example": "confirmed"
-          },
-          "priority": {
-            "type": ["integer", "null"],
-            "description": "Event priority (1 = highest, 9 = lowest, 5 = normal).",
-            "minimum": 1,
-            "maximum": 9,
-            "example": 5
+      "NotFound": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
+            }
           }
         }
       },
-      "SuccessResponse": {
-        "type": "object",
-        "required": ["status", "message"],
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": ["success"],
-            "example": "success"
-          },
-          "message": {
-            "type": "string",
-            "description": "Human-readable confirmation message.",
-            "example": "Event 'Team Sync' created successfully at 2025-01-15T10:00:00."
-          }
-        }
-      },
-      "ErrorResponse": {
-        "type": "object",
-        "required": ["status", "message"],
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": ["error"],
-            "example": "error"
-          },
-          "message": {
-            "type": "string",
-            "description": "Human-readable error description.",
-            "example": "API Error: 401 - Unauthorized"
+      "BadRequest": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Bad request"
+                }
+              }
+            }
           }
         }
       }
