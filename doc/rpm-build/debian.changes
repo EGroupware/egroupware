@@ -1,3 +1,13 @@
+egroupware-docker (26.4.20260413) hardy; urgency=low
+
+  * AI/Open WebUI: allow to use EGroupware REST-API with OpenAPI description as tools for Open WebUI (Addressbook is disabled as it makes problems with Open WebUI)
+  * Open WebUI: [installations instructions](https://github.com/EGroupware/openwebui/tree/main)
+  * InfoLog/CalDAV/REST: always return sub-entries too
+  * Filemanager: renaming files with something like [#,?] no longer instantly escapes them
+  * Mail: fix tooltip for sub folders was not displayed correctly
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 13 Apr 2026 16:46:00 +0200
+
 egroupware-docker (26.4.20260408) hardy; urgency=low
 
   * Api: improve nextmatch column sizing to reduce hiding of column select button & scrollbar
