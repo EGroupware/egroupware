@@ -44,7 +44,8 @@ class ApiHandler extends Api\CalDAV\Handler
 	function post(&$options,$id,$user=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
-		$path = $options['path'];
+		// remove the optional id-parameter put in literally as "/mail/{id}"
+		$path = str_replace('/{id}', '', $options['path']);
 		if (empty($user))
 		{
 			$user = $GLOBALS['egw_info']['user']['account_id'];
