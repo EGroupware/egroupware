@@ -32,8 +32,6 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
 @customElement("et2-template")
 export class Et2Template extends Et2Widget(LitElement)
 {
-	private _renderTarget : DocumentFragment | null = null;
-
 	static get styles()
 	{
 		return [
@@ -72,6 +70,9 @@ export class Et2Template extends Et2Widget(LitElement)
 	 */
 	public static templateCache : { [name : string] : Element } = {};
 	protected loading : Promise<void>;
+
+	// Used to build template outside the DOM for performance
+	private _renderTarget : DocumentFragment | null = null;
 
 	private __egw : IegwAppLocal = null;
 
