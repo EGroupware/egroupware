@@ -21,16 +21,22 @@
 
 use EGroupware\Api;
 
+// we're included by another endpoint, probably groupdav.php
 if (empty($GLOBALS['egw_info']))
 {
 	$GLOBALS['egw_info'] = [
 		'flags' => [
-			'currentapp' => 'login',
+			'currentapp' => 'groupdav',
+			'noheader' => true,
 		],
 	];
-	require_once('../../header.inc.php');
+	try {
+		require_once('../../header.inc.php');
+	}
+	catch (Api\Exception\NoPermission\App $e) {
+		// ignore app rights, they are only used to limit the returned API's
+	}
 }
-
 $json = [
 	"openapi" => "3.1.0",
 	"info" => [
@@ -75,6 +81,16 @@ foreach(scandir(__DIR__) as $file)
 {
 	if (str_ends_with($file, ".json"))
 	{
+		// if we're authenticated only show API's of apps the user has access too
+		if (isset($GLOBALS['egw_info']['user']['apps']) && !isset($GLOBALS['egw_info']['user']['apps'][basename($file, '.json')]))
+		{
+			continue;
+		}
+		// disable addressbook for now, as Open WebUI chokes on it's nested objects
+		if ($file === 'addressbook.json' && preg_match('#^Python/[0-9.]+ aiohttp/[0-9.]+$#'))
+		{
+			continue;
+		}
 		$app_json = json_decode(file_get_contents(__DIR__.'/'.$file), true);
 		$json['paths'] += $app_json['paths'] ?? [];
 		$json['components']['parameters'] += $app_json['components']['parameters'] ?? [];
