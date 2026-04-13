@@ -22,6 +22,7 @@
 namespace EGroupware\Api\Header;
 
 use EGroupware\Api;
+use EGroupware\OpenID\Token;
 
 /**
  * Class to authenticate via basic or digest auth
@@ -84,6 +85,9 @@ class Authenticate
 		$realm = $GLOBALS['egw_info']['flags']['auth_realm'];
 		if (empty($realm)) $realm = 'EGroupware';
 
+		/** @var Api\Session $session */
+		$session = $GLOBALS['egw']->session;
+
 		$username = $_SERVER['PHP_AUTH_USER']; $password = $_SERVER['PHP_AUTH_PW'];
 		// Support for basic auth when using PHP CGI (what about digest auth?)
 		if (!isset($username) && !empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) && strpos($_SERVER['REDIRECT_HTTP_AUTHORIZATION'],'Basic ') === 0)
@@ -98,6 +102,24 @@ class Authenticate
 		{
 			unset($password);
 		}
+		elseif ((isset($_SERVER['HTTP_AUTHORIZATION']) && preg_match('/^Bearer (.+)$/i', $_SERVER['HTTP_AUTHORIZATION'], $matches) ||
+			!empty($_COOKIE['oauth_id_token']) && ($matches = [1 => $_COOKIE['oauth_id_token']])) &&
+			class_exists('EGroupware\OpenID\Token') && ($token = (new Token())->validate($matches[1], "PT5M", $client)))
+		{
+			$username = $token->getClaim('sub');
+			unset($password);
+			$auth_check = false;    // we just checked the authentication
+			// set session->limits from app-* scopes, thought we need to check the client itself, as the token contains only requested scopes
+			// we always set "api", as setting nothing give full access like for the user itself
+			$session->limits = ['api' => true];
+			foreach($client->getScopes() ?? [] as $scope)
+			{
+				if (str_starts_with($scope, 'app-'))
+				{
+					$session->limits[substr($scope, 4)] = true;
+				}
+			}
+		}
 		// if given password contains non-ascii chars AND we can not authenticate with it
 		if (isset($username) && isset($password) &&
 			(preg_match('/[^\x20-\x7F]/', $password) || strpos($password, '\\x') !== false) &&
@@ -106,7 +128,7 @@ class Authenticate
 			self::decode_password($password);
 		}
 		// create session without session cookie (session->create(..., true), as we use pseudo sessionid from credentials
-		if (!isset($username) || !($sessionid = $GLOBALS['egw']->session->create($username, $password, 'text', true)))
+		if (!isset($username) || !($sessionid = $session->create($username, $password, 'text', true, $auth_check ?? true)))
 		{
 			// if the session class gives a reason why the login failed --> append it to the REALM
 			if ($GLOBALS['egw']->session->reason &&

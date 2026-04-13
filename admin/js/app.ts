@@ -57,6 +57,7 @@ class AdminApp extends EgwApp
 	 */
 	acl_dialog : any = null;
 	tree : any = null;
+	accounts : et2_nextmatch = null;
 	groups : any;
 
 	/**
@@ -85,6 +86,7 @@ class AdminApp extends EgwApp
 		this.tree?.destroy && this.tree.destroy();
 		this.tree?.remove && this.tree.remove();
 		this.tree = null;
+		this.accounts = null;
 
 		this.nm2?.getDOMNode()?.removeEventListener('et2-filter', this.nmFilterChange);
 
@@ -105,10 +107,19 @@ class AdminApp extends EgwApp
 		// call parent
 		super.et2_ready(_et2, _name);
 
+		// Override parent's auto-handling of nextmatches
+		// admin expects this.nm to be accounts and adds this.nm2 for other nextmatches
+		if(this.accounts && this.nm != this.accounts)
+		{
+			this.nm = this.accounts;
+			this.nm.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
+		}
+
 		switch(_name)
 		{
 			case 'admin.index':
 				var iframe = this.iframe = this.et2.getWidgetById('iframe');
+				this.accounts = this.et2.getWidgetById('nm');
 				this.groups = this.et2.getWidgetById('groups');
 				this.groups.set_disabled(true);
 				this.ajax_target = this.et2.getWidgetById('ajax_target');

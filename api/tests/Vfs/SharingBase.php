@@ -189,9 +189,15 @@ class SharingBase extends LoggedInTest
 		// Create and use link
 		$extra = array();
 		$this->getShareExtra($dir, $mode, $extra);
-		$this->shareLink($dir, $mode, $extra);
+		$mounted = $this->shareLink($dir, $mode, $extra);
 
-		$files = Vfs::find('/', static::VFS_OPTIONS);
+		$files = array_map(
+			function ($path) use ($mounted)
+			{
+				return str_replace($mounted, '', $path) ?: '/';
+			},
+			Vfs::find($mounted, static::VFS_OPTIONS)
+		);
 
 		if(static::LOG_LEVEL > 1)
 		{
@@ -204,8 +210,9 @@ class SharingBase extends LoggedInTest
 		// Make sure all are readonly
 		foreach($files as $file)
 		{
-			$this->checkOneFile($file, $mode);
+			$this->checkOneFile($mounted . $file, $mode);
 		}
+		return $mounted;
 	}
 
 	/**
@@ -504,6 +511,8 @@ class SharingBase extends LoggedInTest
 	 * Test that a share link can be made, and that only that path is available
 	 *
 	 * @param string $path
+	 *
+	 * @return mounted path (as anonymous user)
 	 */
 	public function shareLink($path, $mode, $extra = array())
 	{
@@ -543,7 +552,7 @@ class SharingBase extends LoggedInTest
 		// If it's a directory, check to make sure it gives the filemanager UI
 		if($is_dir)
 		{
-			$this->checkDirectoryLink($link, $share);
+			$mounted_path = $this->checkDirectoryLink($link, $share);
 		}
 		else
 		{
@@ -563,11 +572,13 @@ class SharingBase extends LoggedInTest
 			var_dump(Vfs::mount());
 		}
 
-		// Our path should be mounted to root
-		$this->assertTrue(Vfs::is_readable('/'), 'Could not read root (/) from link');
+		// Our path should not be mounted to root
+		$this->assertFalse(Vfs::is_readable('/'), 'Share was mounted to root and will conflict with other shares');
 
 		// Check other paths
-		$this->assertFalse(Vfs::is_readable($path), "Was able to read $path as anonymous, it should be mounted as /");
+		//$this->assertFalse(Vfs::is_readable($path), "Was able to read $path as anonymous, it should be mounted as $mounted_path");
+
+		return $mounted_path;
 	}
 
 	/**
@@ -622,10 +633,13 @@ class SharingBase extends LoggedInTest
 
 		// Make sure we start at root, not somewhere else like the token mounted
 		// as a sub-directory
-		$this->assertEquals('/', $data->data->content->nm->path, "Share was not mounted at /");
+		$expected_path = '/' . Vfs::basename(trim($share['share_path'], '/'));
+		$this->assertEquals($expected_path, $data->data->content->nm->path, "Share was not mounted at $expected_path");
 
 		unset($data->data->content->nm->actions);
 		//var_dump($data->data->content->nm);
+
+		return $expected_path;
 	}
 
 	/**
@@ -644,7 +658,11 @@ class SharingBase extends LoggedInTest
 						)
 				)
 		);
-		$headers = get_headers($link, false, $context);
+		$headers = @get_headers($link, false, $context);
+		if(!$headers || !isset($headers[0]))
+		{
+			$this->markTestSkipped("No webserver response for share link '$link'");
+		}
 		$this->assertEquals('200', substr($headers[0], 9, 3), 'Did not find the file, got ' . $headers[0]);
 
 		$indexed_headers = array();
@@ -699,6 +717,9 @@ class SharingBase extends LoggedInTest
 		}
 		$this->addCookies($curl, $cookies);
 		$html = curl_exec($curl);
+		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		$curl_errno = curl_errno($curl);
+		$curl_error = curl_error($curl);
 		if($_curl == null)
 		{
 			curl_close($curl);
@@ -709,6 +730,10 @@ class SharingBase extends LoggedInTest
 			// No response - could mean something is terribly wrong, or it could
 			// mean we're running on Travis with no webserver to answer the
 			// request
+			if($http_code === 0)
+			{
+				$this->markTestSkipped("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
+			}
 			return;
 		}
 

@@ -1,0 +1,609 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware InfoLog REST API",
+    "description": "REST API for managing tasks, notes, calls, and other infolog entries in EGroupware. Supports CRUD operations, filtering, and synchronization via sync tokens.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EGroupware",
+      "url": "https://www.egroupware.org"
+    },
+    "license": {
+      "name": "GPL",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://example.org/egroupware/groupdav.php",
+      "description": "Production server (replace with your EGroupware URL)"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/infolog/": {
+      "get": {
+        "tags": [
+          "InfoLog"
+        ],
+        "summary": "List all infolog entries",
+        "description": "Returns all infolog entries (tasks, notes, calls, etc.) for the user. Supports filtering, pagination, and custom property selection.",
+        "operationId": "listTasks",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of infolog entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/{username}/infolog/": {
+      "get": {
+        "tags": ["InfoLog"],
+        "summary": "List all infolog entries of a given user",
+        "description": "Returns all infolog entries (tasks, notes, calls, etc.) for the given user. Supports filtering, pagination, and custom property selection.",
+        "operationId": "listUserTasks",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of infolog entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": ["InfoLog"],
+        "summary": "Create a new infolog entry for the given user",
+        "description": "Adds a new infolog entry (task, note, call, etc.) to the collection. The Location header in the response gives the URL of the new resource.",
+        "operationId": "createTask",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Task"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Infolog entry created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/infolog/{id}": {
+      "get": {
+        "tags": ["InfoLog"],
+        "summary": "Get a single infolog entry",
+        "description": "Retrieves a single infolog entry by ID.",
+        "operationId": "getTask",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single infolog entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": ["InfoLog"],
+        "summary": "Replace an infolog entry",
+        "description": "Replaces all attributes of an infolog entry. Requires all attributes to be specified.",
+        "operationId": "replaceTask",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Task"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Infolog entry updated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["InfoLog"],
+        "summary": "Partially update an infolog entry",
+        "description": "Updates only the specified attributes of an infolog entry.",
+        "operationId": "updateTask",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Infolog entry partially updated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["InfoLog"],
+        "summary": "Delete an infolog entry",
+        "description": "Deletes an infolog entry by ID.",
+        "operationId": "deleteTask",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Infolog entry deleted"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Basic authentication with username and password or token"
+      }
+    },
+    "parameters": {
+      "username": {
+        "name": "username",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Username or user identifier"
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Infolog entry ID"
+      },
+      "props": {
+        "name": "props[]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": "List of DAV properties to return (e.g., props[]=getetag)",
+        "style": "form",
+        "explode": true
+      },
+      "syncToken": {
+        "name": "sync-token",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sync token to request changes since last sync"
+      },
+      "nresults": {
+        "name": "nresults",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Limit number of responses (only for sync-collection)"
+      },
+      "filters": {
+        "name": "filters",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "description": "Filter infolog entries by pattern, custom field, or attribute. Example: filters[search]=pattern or filters[linked]=app:123",
+        "style": "deepObject",
+        "explode": true
+      }
+    },
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "required": ["@type", "title", "type"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Task"],
+            "description": "Type of the resource (always 'Task')"
+          },
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the infolog entry"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the infolog entry"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["note", "task", "call", "mail", "file", "message"],
+            "description": "Type of the infolog entry (note, task, call, etc.)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description or content of the infolog entry"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start date/time of the infolog entry (e.g., for tasks or calls)"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End date/time of the infolog entry (e.g., for tasks or calls)"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["open", "completed", "cancelled", "in-progress"],
+            "description": "Status of the infolog entry (e.g., for tasks)"
+          },
+          "priority": {
+            "type": "integer",
+            "description": "Priority of the infolog entry (1: high, 3: normal, 5: low)"
+          },
+          "percent": {
+            "type": "integer",
+            "description": "Completion percentage (0-100) for tasks"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the infolog entry"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Links to related resources (e.g., contacts, projects, etc.)"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp in UTC"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last modification timestamp in UTC"
+          },
+          "creator": {
+            "type": "string",
+            "description": "Creator of the infolog entry (user ID or email)"
+          },
+          "assignee": {
+            "type": "string",
+            "description": "Assignee of the infolog entry (user ID or email, e.g., for tasks)"
+          },
+          "egroupware.org:customfields": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Vendor-specific custom fields"
+          }
+        }
+      },
+      "TaskPatch": {
+        "type": "object",
+        "description": "Partial update for an infolog entry. All properties are optional.",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["open", "completed", "cancelled", "in-progress"]
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "percent": {
+            "type": "integer"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      },
+      "TaskCollection": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Task"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "Map of infolog entry paths to infolog entry objects or null (for deleted resources)"
+          },
+          "more-results": {
+            "type": "boolean",
+            "description": "Indicates if there are more results available"
+          },
+          "sync-token": {
+            "type": "string",
+            "description": "Sync token for the next request"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Bad request"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

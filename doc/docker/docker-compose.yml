@@ -137,7 +137,7 @@ services:
 
   # run an own MariaDB:10.6 (you can use EGroupware's database backup and restore to add your existing database)
   db:
-    image: mariadb:10.6
+    image: mariadb:11.8
     environment:
       #- MYSQL_ROOT=root
       - MYSQL_ROOT_PASSWORD=${EGW_DB_ROOT_PW}

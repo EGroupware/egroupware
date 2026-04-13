@@ -1,0 +1,808 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware Calendar REST API",
+    "description": "REST API for managing calendar events in EGroupware. Supports CRUD operations, filtering, synchronization, and recurrence rules. Uses JsCalendar schema for JSON encoding.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EGroupware",
+      "url": "https://www.egroupware.org"
+    },
+    "license": {
+      "name": "GPL",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://example.org/egroupware/groupdav.php",
+      "description": "Production server (replace with your EGroupware URL)"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/calendar/": {
+      "get": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "List all events of the user",
+        "description": "Returns all events in the user's calendar. Supports filtering, pagination, and custom property selection.",
+        "operationId": "listEvents",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/{username}/calendar/": {
+      "get": {
+        "tags": ["Calendar"],
+        "summary": "List all events in a given users calendar",
+        "description": "Returns all events in the user's calendar. Supports filtering, pagination, and custom property selection.",
+        "operationId": "listUserEvents",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Calendar"],
+        "summary": "Create a new event for the given user",
+        "description": "Adds a new event to the calendar. The Location header in the response gives the URL of the new resource. Use `Prefer: return=representation` to get the full event in the response.",
+        "operationId": "createEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          },
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["return=representation"]
+            },
+            "description": "Request the server to return the full representation of the created event"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Event created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "ETag": {
+                "description": "ETag of the new resource",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Schedule-Tag": {
+                "description": "Schedule tag of the new resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/calendar/{id}": {
+      "get": {
+        "tags": ["Calendar"],
+        "summary": "Get a single event",
+        "description": "Retrieves a single event by ID.",
+        "operationId": "getEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single event",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Calendar"],
+        "summary": "Replace an event",
+        "description": "Replaces all attributes of an event. Requires all attributes to be specified. If the ID is a UID, it will update the existing event or create a new one if it does not exist.",
+        "operationId": "replaceEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Event updated"
+          },
+          "201": {
+            "description": "Event created (if UID did not exist)",
+            "headers": {
+              "Location": {
+                "description": "URL of the new resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Calendar"],
+        "summary": "Partially update an event",
+        "description": "Updates only the specified attributes of an event.",
+        "operationId": "updateEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Event partially updated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Calendar"],
+        "summary": "Delete an event",
+        "description": "Deletes an event by ID.",
+        "operationId": "deleteEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            },
+            "description": "Accept header is required to avoid 404 Not Found (URL does not end with .ics)"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event deleted"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Basic authentication with username and password or token"
+      }
+    },
+    "parameters": {
+      "username": {
+        "name": "username",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Username or user identifier"
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Event ID or UID"
+      },
+      "props": {
+        "name": "props[]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": "List of DAV properties to return (e.g., props[]=getetag)",
+        "style": "form",
+        "explode": true
+      },
+      "syncToken": {
+        "name": "sync-token",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sync token to request changes since last sync"
+      },
+      "nresults": {
+        "name": "nresults",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Limit number of responses (only for sync-collection)"
+      }
+    },
+    "schemas": {
+      "Event": {
+        "type": "object",
+        "required": ["@type", "prodId", "uid", "title", "start", "duration"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Event"],
+            "description": "Type of the resource (always 'Event')"
+          },
+          "prodId": {
+            "type": "string",
+            "description": "Product identifier (e.g., 'EGroupware Calendar 23.1.002')"
+          },
+          "uid": {
+            "type": "string",
+            "description": "Unique identifier for the event"
+          },
+          "sequence": {
+            "type": "string",
+            "description": "Sequence number for versioning"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp in UTC"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp in UTC"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the event"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start time of the event"
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "Timezone of the event (e.g., 'Europe/Berlin')"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Duration of the event (e.g., 'PT1H' for 1 hour, 'P1D' for 1 day)"
+          },
+          "showWithoutTime": {
+            "type": "boolean",
+            "description": "Whether to show the event without time (all-day event)"
+          },
+          "recurrenceRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecurrenceRule"
+            },
+            "description": "Recurrence rules for the event"
+          },
+          "recurrenceOverrides": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "excluded": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/components/schemas/Event"
+                }
+              ]
+            },
+            "description": "Overrides for specific instances of a recurring event"
+          },
+          "participants": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Participant"
+            },
+            "description": "Participants of the event"
+          },
+          "alerts": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Alert"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "Alerts for the event"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["tentative", "confirmed", "cancelled"],
+            "description": "Status of the event"
+          },
+          "priority": {
+            "type": "integer",
+            "description": "Priority of the event (1: high, 3: normal, 5: low)"
+          },
+          "privacy": {
+            "type": "string",
+            "enum": ["public", "private", "confidential"],
+            "description": "Privacy level of the event"
+          },
+          "freeBusyStatus": {
+            "type": "string",
+            "enum": ["free", "busy", "busy-unavailable", "busy-tentative"],
+            "description": "Free/busy status of the event"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the event"
+          },
+          "categories": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "Categories the event belongs to"
+          },
+          "egroupware.org:customfields": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Vendor-specific custom fields"
+          }
+        }
+      },
+      "EventPatch": {
+        "type": "object",
+        "description": "Partial update for an event. All properties are optional.",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["tentative", "confirmed", "cancelled"]
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "privacy": {
+            "type": "string",
+            "enum": ["public", "private", "confidential"]
+          },
+          "alerts": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Alert"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "RecurrenceRule": {
+        "type": "object",
+        "required": ["@type", "frequency"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["RecurrenceRule"]
+          },
+          "frequency": {
+            "type": "string",
+            "enum": ["daily", "weekly", "monthly", "yearly"]
+          },
+          "until": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "byDay": {
+            "$ref": "#/components/schemas/NDay"
+          },
+          "interval": {
+            "type": "integer"
+          }
+        }
+      },
+      "NDay": {
+        "type": "object",
+        "required": ["@type", "day"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["NDay"]
+          },
+          "day": {
+            "type": "string",
+            "description": "Comma-separated list of days (e.g., 'mo,we')"
+          }
+        }
+      },
+      "Participant": {
+        "type": "object",
+        "required": ["@type", "name", "email", "kind", "roles", "participationStatus"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Participant"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["individual", "group"]
+          },
+          "roles": {
+            "type": "object",
+            "properties": {
+              "owner": {
+                "type": "boolean"
+              },
+              "chair": {
+                "type": "boolean"
+              },
+              "attendee": {
+                "type": "boolean"
+              }
+            }
+          },
+          "participationStatus": {
+            "type": "string",
+            "enum": ["needs-action", "accepted", "declined", "tentative", "delegated", "completed", "in-process"]
+          }
+        }
+      },
+      "Alert": {
+        "type": "object",
+        "required": ["@type", "trigger"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Alert"]
+          },
+          "trigger": {
+            "$ref": "#/components/schemas/OffsetTrigger"
+          }
+        }
+      },
+      "OffsetTrigger": {
+        "type": "object",
+        "required": ["@type", "offset"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["OffsetTrigger"]
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Offset in seconds before the event starts"
+          }
+        }
+      },
+      "EventCollection": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Event"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "Map of event paths to event objects or null (for deleted resources)"
+          },
+          "more-results": {
+            "type": "boolean",
+            "description": "Indicates if there are more results available"
+          },
+          "sync-token": {
+            "type": "string",
+            "description": "Sync token for the next request"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Bad request"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

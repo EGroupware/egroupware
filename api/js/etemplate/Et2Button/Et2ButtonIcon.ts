@@ -47,8 +47,10 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 			this.src = this.egw().image(new_image);
 		}
 		this.__image = new_image;
+		this.requestUpdate('image', oldValue);
 
 		// For some reason setting it directly does not show the image
+		/*
 		this.updateComplete.then(() =>
 		{
 			const icon = this.shadowRoot.querySelector('sl-icon');
@@ -63,11 +65,20 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 				icon.name = "";
 			}
 		});
+
+		 */
 	}
 
 	get image()
 	{
 		return this.__image || this.name;
+	}
+
+	protected get _iconNode() : HTMLElement & { src?: string }
+	{
+		// SlIconButton already renders an internal sl-icon; reuse it so ButtonMixin
+		// does not inject a second et2-image into the prefix slot.
+		return this.shadowRoot?.querySelector("sl-icon");
 	}
 }
 

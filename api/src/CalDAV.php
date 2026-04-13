@@ -1088,6 +1088,14 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			$type = 'application/json';
 		}
+		// some REST API clients send just "Content-Type: application/json" and "Accept: */*" for GET requests
+		if ($_SERVER['REQUEST_METHOD'] === 'GET' && ($_SERVER['HTTP_ACCEPT']??null) === '*/*' &&
+				preg_match('#application/(([^+ ;]+)\+)?json#', $_SERVER['HTTP_CONTENT_TYPE']??'', $matches) ||
+			// some applications are never CalDAV and always only return REST results
+			preg_match('#/groupdav.php/([a-zA-Z0-9_-]+/)?(rag|mail|invoices|timesheet|smallpart|projectmanager)/#', $_SERVER['REQUEST_URI']))
+		{
+			return $matches[2] ?? true;
+		}
 		return preg_match('#application/(([^+ ;]+)\+)?json#', $type, $matches) ?
 			(empty($matches[1]) ? true : $matches[2]) : false;
 	}
@@ -1102,8 +1110,14 @@ class CalDAV extends HTTP_WebDAV_Server
 	{
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
+		if ($options['path'] === '/openapi.json')
+		{
+			require_once(EGW_SERVER_ROOT.'/doc/openapi/index.php');
+			exit;
+		}
+
 		$id = $app = $user = null;
-		if (!$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
+		if ($options['path'] === '/openapi.json' || !$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
 		{
 			if (($json = self::isJSON()))
 			{
@@ -2298,6 +2312,11 @@ class CalDAV extends HTTP_WebDAV_Server
 				$account_id = 'r'.$res_id;
 				$app = 'calendar';
 			}
+		}
+		// the AI tools seems not to remove the optional {username}, but send it literally
+		elseif (urldecode($parts[0]) === '{username}')
+		{
+			array_shift($parts);
 		}
 		elseif (($account_id = $this->accounts->name2id($parts[0], 'account_lid')) ||
 			($account_id = $this->accounts->name2id($parts[0]=urldecode($parts[0]))))

@@ -162,7 +162,7 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		this.shadowRoot.querySelector('sl-dropdown')?.updateComplete.then(() =>
 		{
 			this.shadowRoot.querySelector('sl-dropdown')?.shadowRoot.querySelector('sl-popup')?.handleAnchorChange();
-			this._organiseChildren();
+			setTimeout(() => this._organiseChildren());
 		})
 	}
 

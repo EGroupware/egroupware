@@ -21,6 +21,17 @@ const appJS = fs.readdirSync('.')
 
 export default {
 	nodeResolve: true,
+	exclude: ['**/node_modules/**'],
+	filterBrowserLogs(log)
+	{
+		// Silence some warnings we don't care about
+		const text = log && typeof log.args[0] === 'string' ? log.args[0] : '';
+		if (text.includes('Lit is in dev mode.') || text.includes('Multiple versions of Lit loaded.'))
+		{
+			return false;
+		}
+		return true;
+	},
 	coverageConfig: {
 		report: true,
 		reportDir: 'coverage',

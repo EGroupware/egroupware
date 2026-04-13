@@ -1,4 +1,4 @@
-import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
@@ -65,41 +65,7 @@ export class EgwFrameworkApp extends LitElement
 	static get styles()
 	{
 		return [
-			styles,
-
-			// TEMP STUFF
-			css`
-				:host .placeholder {
-					display: none;
-				}
-
-				:host(.placeholder) .placeholder {
-					display: block;
-					--placeholder-background-color: #e97234;
-				}
-				.placeholder {
-					width: 100%;
-					font-size: 200%;
-					text-align: center;
-					background-color: var(--placeholder-background-color);
-				}
-
-				.placeholder:after, .placeholder:before {
-					content: " ⌖ ";
-				}
-
-				:host(.placeholder) [class*="left"] .placeholder {
-					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(.5, .5, 1, .1));
-				}
-
-				:host(.placeholder) [class*="right"] .placeholder {
-					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(.5, 1, .5, .1));
-				}
-
-				:host(.placeholder) [class*="footer"] .placeholder {
-					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(1, 1, 1, .05));
-				}
-			`
+			styles
 		];
 	}
 
@@ -236,7 +202,7 @@ export class EgwFrameworkApp extends LitElement
 		this.handleSearchResults = this.handleSearchResults.bind(this);
 		this.handleShow = this.handleShow.bind(this);
 
-		// Get size preferences
+		// Get size preferences now that this.appName is set
 		// @ts-ignore preference() takes _callback = true
 		this.egw.preference(this.leftPanelInfo.preference, this.appName, true).then((value) =>
 		{
@@ -812,7 +778,7 @@ export class EgwFrameworkApp extends LitElement
 			// Left side has an additional slot above the favourites
 			hasContent = hasContent || this.hasSlotController?.test("left-top") ||
 				// Favourites work through egw_app class, so if it's not there, favourites won't work
-				this.features?.favorites && window.app[this.name];
+				this.features?.favorites && typeof window.app[this.name] !== "undefined";
 		}
 		return hasContent;
 	}
@@ -1088,18 +1054,32 @@ export class EgwFrameworkApp extends LitElement
 		));
 
 		// Fix splitter if it has moved while hidden
-		if(this.rightSplitter && (this.rightSplitter.position !== this.rightPanelInfo.preferenceWidth || this.rightCollapsed && this.rightSplitter.position != this.rightPanelInfo.hiddenWidth))
+		const resetPanel = async(splitter : SlSplitPanel) =>
 		{
-			await this.updateComplete;
-			window.setTimeout(() =>
+			if(!splitter)
 			{
-				if(this.rightSplitter)
+				return;
+			}
+			const panelInfo = this[splitter.dataset.panel] || {};
+			const collapsed = `${panelInfo.side}Collapsed`;
+			if(splitter.position !== panelInfo.preferenceWidth || this[collapsed] && splitter.position != panelInfo.hiddenWidth)
+			{
+				await this.updateComplete;
+				window.setTimeout(() =>
 				{
-					this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
-				}
-				this.ignoreSplitterResize = false;
-			}, 0);
+					if(splitter && panelInfo.side == "right")
+					{
+						splitter.position = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth);
+					}
+					else if(splitter && panelInfo.side == "left")
+					{
+						splitter.positionInPixels = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth);
+					}
+					this.ignoreSplitterResize = false;
+				}, 0);
+			}
 		}
+		[this.rightSplitter, this.leftSplitter].forEach(splitter => void resetPanel(splitter));
 	}
 
 	protected handleAppMenuClick(event)
@@ -1153,14 +1133,14 @@ export class EgwFrameworkApp extends LitElement
 		return html`
             <aside slot="${parentSlot}" part="${side}" class=${asideClassMap} aria-label="${label}">
                 <div class="egw_fw_app__aside_header header">
-                    <slot name="${side}-header"><span class="placeholder">${side}-header</span></slot>
+                    <slot name="${side}-header"></slot>
                 </div>
                 <div class="egw_fw_app__aside_content content">
                     ${side == "left" ? this._leftMenuTemplate() : nothing}
-                    <slot name="${side}"><span class="placeholder">${side}</span></slot>
+                    <slot name="${side}"></slot>
                 </div>
                 <div class="egw_fw_app__aside_footer footer">
-                    <slot name="${side}-footer"><span class="placeholder">${side}-footer</span></slot>
+                    <slot name="${side}-footer"></slot>
                 </div>
             </aside>`;
 	}
@@ -1358,8 +1338,9 @@ export class EgwFrameworkApp extends LitElement
 		}
 
 		// Sub-menus call getComputedStyle() so are expensive, defer them until later
-		const menuPromise = new Promise(resolve =>
+		const menuPromise = new Promise(async resolve =>
 		{
+			await this.loadingPromise;
 			setTimeout(() =>
 			{
 				resolve(
@@ -1481,7 +1462,7 @@ export class EgwFrameworkApp extends LitElement
                     <h2>${this.title || this.egw?.lang(this.name) || this.name}</h2>
                 </div>
                 <header class="egw_fw_app__header" part="header">
-                    <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
+                    <slot name="main-header"></slot>
                 </header>
                 ${until(this.framework?.getEgwComplete().then(() => this._rightHeaderTemplate()), html`
                     <sl-spinner></sl-spinner>`)}
@@ -1524,16 +1505,14 @@ export class EgwFrameworkApp extends LitElement
                             <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>`
                         }
                         <header slot="start" class="egw_fw_app__header header" part="content-header">
-                            <slot name="header"><span class="placeholder">header</span></slot>
+                            <slot name="header"></slot>
                         </header>
                         <div slot="start" class="egw_fw_app__main_content content" part="content"
                              aria-label="${this.name}" tabindex="0">
-                            <slot>
-                                <span class="placeholder">main</span>
-                            </slot>
+                            <slot></slot>
                         </div>
                         <footer slot="start" class="egw_fw_app__footer footer" part="footer">
-                            <slot name="footer"><span class="placeholder">main-footer</span></slot>
+                            <slot name="footer"></slot>
                         </footer>
                         ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
                     </sl-split-panel>

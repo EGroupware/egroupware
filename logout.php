@@ -50,9 +50,10 @@ if ($verified)
 	$GLOBALS['egw']->session->destroy($GLOBALS['sessionid'],$GLOBALS['kp3']);
 }
 
-Api\Session::egw_setcookie('sessionid');
+Api\Session::egw_setcookie(Api\Session::EGW_SESSION_NAME);
 Api\Session::egw_setcookie('kp3');
-Api\Session::egw_setcookie('domain');
+Api\Session::egw_setcookie(Api\Session::EGW_DOMAIN_NAME);
+Api\Session::egw_setcookie('domain');   // also remove old domain cookie
 
 // SSO Logout (does not return for SSO systems)
 if (isset($auth)) $auth->logout();
@@ -112,4 +113,3 @@ function clearAuthenticationCache(page)
 <body onload="clearAuthenticationCache()">
 <a href="<?php echo $redirectTarget ?>">Logout in progress...</a>
 </body>
-

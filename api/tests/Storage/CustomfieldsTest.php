@@ -58,7 +58,11 @@ class CustomfieldsTest extends LoggedInTest
 	{
 		parent::assertPreConditions();
 		$tables = $GLOBALS['egw']->db->table_names(true);
-		$this->assertContains('egw_test', $tables, 'Could not find DB table "egw_test", make sure test app is installed');
+
+		if(!in_array('egw_test', $tables))
+		{
+			$this->markTestSkipped('No test app installed');
+		}
 	}
 
 	/**

@@ -138,7 +138,7 @@ class Nextmatch extends Etemplate\Widget
 		$value['start'] = 0;
 		if(!array_key_exists('num_rows', $value))
 		{
-			$value['num_rows'] = 0; //self::INITIAL_ROWS;
+			$value['num_rows'] = self::INITIAL_ROWS;
 		}
 
 		$value['rows'] = array();

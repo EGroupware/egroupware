@@ -434,7 +434,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
 			{
 				// Required because we explicitly create tags instead of doing it in render()
-				this.select.shadowRoot.querySelectorAll(".select__tags > div > *").forEach((tag : Et2Tag) =>
+				this.select?.shadowRoot?.querySelectorAll(".select__tags > div > *").forEach((tag : Et2Tag) =>
 				{
 					tag.editable = this.editModeEnabled && !this.readonly;
 					tag.removable = !this.readonly;

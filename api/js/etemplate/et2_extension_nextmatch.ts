@@ -2614,6 +2614,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Deferred parse function - template might not be fully loaded
 		const parse = function(template)
 		{
+			if(this.egw().debug_level() >= 4)
+			{
+				window.performance.mark("mark_nextmatch_row_template_parse" + template_name + "_start");
+			}
 			// Keep the name of the template, as we'll free up the widget after parsing
 			this.template = template_name;
 
@@ -2677,6 +2681,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 			// Start auto-refresh
 			this._set_autorefresh(this._get_autorefresh());
+			if(this.egw().debug_level() >= 4)
+			{
+				window.performance.mark("mark_nextmatch_row_template_parse" + template_name + "_end");
+			}
 		};
 
 		// Wait until template (& children) are done
@@ -2684,6 +2692,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		this.template_promise = template.updateComplete.then(() =>
 			{
 				parse.call(this, template);
+
+				if(this.egw().debug_level() >= 4)
+				{
+					window.performance.measure("et2_nm.parse " + template_name, "mark_nextmatch_row_template_parse" + template_name + "_start", "mark_nextmatch_row_template_parse" + template_name + "_end");
+				}
+
 				if(!this.dynheight && !this.options.no_dynheight)
 				{
 					this.dynheight = this._getDynheight();
@@ -2691,6 +2705,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				if(this.dynheight)
 				this.dynheight.initialized = false;
 
+				window.performance.mark("et2_nm.parse wait for children");
 				// Give components a chance to finish.  Their size will affect available space, especially column headers.
 				let waitForWebComponents = [];
 				this.getChildren().forEach((w) =>
@@ -2705,6 +2720,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 				Promise.all(waitForWebComponents).then(() =>
 				{
+					window.performance.mark("et2_nm.parse finished wait for children");
+					window.performance.measure("et2_nm.parse children", "et2_nm.parse wait for children", "et2_nm.parse finished wait for children");
 					this.resize();
 				});
 			}
@@ -2720,9 +2737,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		this.template_promise.widget = this;
 
-		// Explictly add template to DOM since it won't happen otherwise, and webComponents need to be in the DOM
-		// to complete
-		this.div.append(template);
+		// Explictly load template without adding it to the DOM
+		template.load();
 
 		return this.template_promise;
 	}
@@ -2799,20 +2815,30 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this._filterbox["_parent_node"] = this._filterbox.parentElement;
 		}
 		let filterTemplate = null;
-		if(typeof template == "string")
+		// Load first, then append - don't wait
+		// This is not initially visible so we can wait a bit.  Waiting longer doesn't really help more, and will need
+		// more management to track it.
+		setTimeout(() =>
 		{
-			const is_url = template.match(/^(http|\/).*\.xet($|\?)/);
-			filterTemplate = <Et2Template><unknown>loadWebComponent("et2-template", {
-				id: 'filter-template',
-				template: is_url ? null : template,
-				url: is_url ? template : null,
-			}, this._filterbox);
-		}
-		else if(template instanceof HTMLElement)
-		{
-			filterTemplate = template;
-		}
-		this._filterbox.append(filterTemplate);
+			if(typeof template == "string")
+			{
+				const is_url = template.match(/^(http|\/).*\.xet($|\?)/);
+				filterTemplate = <Et2Template><unknown>loadWebComponent("et2-template", {
+					id: 'filter-template',
+					template: is_url ? "" : template,
+					url: is_url ? template : "",
+				}, this._filterbox);
+			}
+			else if(template instanceof HTMLElement)
+			{
+				filterTemplate = template;
+			}
+
+			filterTemplate.load().then(() =>
+			{
+				this._filterbox.append(filterTemplate);
+			});
+		}, 100);
 	}
 
 	set_no_filter(bool, filter_name)

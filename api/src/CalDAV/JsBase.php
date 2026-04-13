@@ -77,7 +77,7 @@ class JsBase
 	 * @param bool $user false: timestamp in server-time, true: timestamp in user-time, does NOT matter for DateTime objects
 	 * @return string|null
 	 */
-	protected static function UTCDateTime($date, bool $user=false)
+	public static function UTCDateTime($date, bool $user=false)
 	{
 		static $utc=null;
 		if (!isset($utc)) $utc = new \DateTimeZone('UTC');

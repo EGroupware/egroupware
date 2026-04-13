@@ -25,7 +25,7 @@ $starttime = microtime(true);
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'noheader'  => True,
-		'currentapp' => 'groupdav',
+		'currentapp' => $_SERVER['REQUEST_METHOD'] === 'GET' && str_ends_with($_SERVER['REQUEST_URI'], '/groupdav.php/openapi.json') ? 'login' : 'groupdav',
 		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
 		'autocreate_session_callback' => 'EGroupware\\Api\\Header\\Authenticate::autocreate_session_callback',
 		'auth_realm' => 'EGroupware CalDAV/CardDAV/GroupDAV server',	// cant use groupdav::REALM as autoloading and include path not yet setup!

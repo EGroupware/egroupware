@@ -21,7 +21,7 @@ import {repeat} from "lit/directives/repeat.js";
 import {classMap} from "lit/directives/class-map.js";
 import {state} from "lit/decorators/state.js";
 import {customElement} from "lit/decorators/custom-element.js";
-import { egw } from "../../jsapi/egw_global";
+import {egw} from "../../jsapi/egw_global";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElement))
@@ -332,6 +332,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	@state()
 	protected _tagsHidden = 0;
 
+	/** Flag to mark if we've loaded the options or not */
+	@state()
+	protected _optionsActivated = false;
+
 	private __value : string | string[] = "";
 
 	// Flag to avoid issues with free entries & fix_bad_value
@@ -386,15 +390,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 			// requestUpdate("value") above means we need to check tags again
 			this.select?.updateComplete.then(() => {this.checkTagOverflow(); });
-
-      //bind tooltips on each of the sl-option elements if there is a title set for the option (via sel_options in php mostly)
-      //in render we set the correct translation as our aria-label so we can use that here
-      this.select?.getAllOptions()?.forEach((option: HTMLElement) => {
-        if (option.ariaLabel && !this.boundTooltips.has(option)) {
-          egw(window).tooltipBind(option, option.ariaLabel, false);
-          this.boundTooltips.add(option);
-        }
-      });
+			this.bindOptionTooltips();
 		});
 	}
 
@@ -662,7 +658,25 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.updated(changedProperties);
 
+		if(changedProperties.has("select_options") || changedProperties.has("_optionsActivated"))
+		{
+			this.bindOptionTooltips();
+		}
+
 		this.checkTagOverflow();
+	}
+
+	protected bindOptionTooltips()
+	{
+		// Option DOM can be mounted after the initial render, so re-bind when the rendered option list changes.
+		this.select?.getAllOptions()?.forEach((option : HTMLElement) =>
+		{
+			if(option.ariaLabel && !this.boundTooltips.has(option))
+			{
+				egw(window).tooltipBind(option, option.ariaLabel, false);
+				this.boundTooltips.add(option);
+			}
+		});
 	}
 
 	protected checkTagOverflow()
@@ -748,6 +762,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		if(this.disabled || this.readonly)
 		{
 			return;
+		}
+		if(!this._optionsActivated)
+		{
+			// Keep closed selects cheap by mounting the full option list only after first interaction.
+			this._optionsActivated = true;
 		}
 		this.select?.focus();
 	}
@@ -946,6 +965,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	/** Shows the listbox. */
 	async show()
 	{
+		if(!this._optionsActivated)
+		{
+			this._optionsActivated = true;
+			await this.updateComplete;
+		}
 		return this.select.show();
 	}
 
@@ -995,7 +1019,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
             <sl-option
                     part="emptyLabel option"
                     value=""
-                    .selected=${this.getValueAsArray().some(v => v == "")}
             >
                 ${this.emptyLabel}
             </sl-option>`;
@@ -1008,10 +1031,73 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	protected _optionsTemplate() : TemplateResult
 	{
-		return html`${repeat(this.select_options
+		return html`${repeat(this.getRenderableOptions()
 			// Filter out empty values if we have empty label to avoid duplicates
 			.filter(o => this.emptyLabel ? o.value !== '' : o), (o : SelectOption) => o.value, this._groupTemplate.bind(this))
 		}`;
+	}
+
+	/**
+	 * Get the options we're going to render, depending on if we have them all or not
+	 *
+	 * @return {SelectOption[]}
+	 * @protected
+	 */
+	protected getRenderableOptions() : SelectOption[]
+	{
+		if(this._optionsActivated)
+		{
+			return this.select_options;
+		}
+
+		// Before first interaction, render only the current selection so the closed label is correct
+		// without constructing the full sl-option tree.
+		const selectedValues = new Set(this.getRenderableValues().map(value => `${value}`));
+		return this.select_options
+			.map(option => this.filterRenderableOption(option, selectedValues))
+			.filter((option) : option is SelectOption => option !== null);
+	}
+
+	protected getRenderableValues() : string[]
+	{
+		const values = this.getValueAsArray().map(value => `${value}`);
+		// getValueAsArray() intentionally collapses some empty values; preserve a real single-select ""
+		// so the current empty option still renders while the rest of the list is deferred.
+		if(!this.multiple && this.__value === "" && values.length === 0)
+		{
+			values.push("");
+		}
+		return values;
+	}
+
+	/**
+	 * While the select is still closed, trim the option tree down to only the selected branch(es)
+	 * so grouped options keep their structure without mounting every child option up front.
+	 */
+	protected filterRenderableOption(option : SelectOption, selectedValues : Set<string>) : SelectOption | null
+	{
+		if(!Array.isArray(option.value) && !Array.isArray(option.children) && !option.hasChildren)
+		{
+			return selectedValues.has(`${option.value}`) ? option : null;
+		}
+
+		const childOptions = Array.isArray(option.value) ?
+		                     <SelectOption[]>option.value :
+		                     <SelectOption[]>(option.children ?? []);
+		const filteredChildren = childOptions
+			.map(child => this.filterRenderableOption(child, selectedValues))
+			.filter((child) : child is SelectOption => child !== null);
+
+		if(filteredChildren.length === 0)
+		{
+			return null;
+		}
+
+		return {
+			...option,
+			value: Array.isArray(option.value) ? filteredChildren : option.value,
+			children: Array.isArray(option.children) ? filteredChildren : option.children
+		};
 	}
 
 	/**
@@ -1036,19 +1122,19 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		const value = (<string>option.value).replaceAll(" ", "___");
 		const classes = option.class ?
       Object.fromEntries((option.class).trim().split(" ").map(k => [k, true])) : {};
+		const title = option.title ? (this.noLang ? option.title : this.egw().lang(option.title)) : nothing;
 		return html`
             <sl-option
                     part="option"
                     exportparts="prefix:tag__prefix, suffix:tag__suffix"
                     value="${value}"
-                    aria-label="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                    aria-label="${title}"
                     class=${classMap({
                         "match": this.searchEnabled && (option.isMatch || false),
                         "no-match": this.searchEnabled && option.isMatch == false,
                         ...classes
                     })}
                     .option=${option}
-                    .selected=${this.getValueAsArray().some(v => v == value)}
                     ?disabled=${option.disabled}
             >
                 ${this._iconTemplate(option)}
@@ -1092,6 +1178,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		const isEditable = this.editModeEnabled && !readonly;
 		const image = this._iconTemplate(option.option ?? option);
 		const tagName = this.tagTag;
+		const title = option.title || nothing;
+		const size = this.size && this.size !== "medium" ? this.size : nothing;
 		return html`
             <${tagName}
                     part="tag"
@@ -1105,8 +1193,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     class=${"search_tag " + option.classList.value}
                     tabindex="-1"
                     ?pill=${this.pill}
-                    size=${this.size || "medium"}
-                    title=${option.title}
+                    size=${size}
+                    title=${title}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     .editable=${isEditable}
@@ -1163,6 +1251,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	public render()
 	{
 		const value = this.shoelaceValue;
+		const placeholder = this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : nothing);
+		const size = this.size && this.size !== "medium" ? this.size : nothing;
+		const placement = this.placement && this.placement !== "bottom" ? this.placement : nothing;
 
 		let icon : TemplateResult | typeof nothing = nothing;
 		if(!this.multiple)
@@ -1182,7 +1273,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     })}
                     exportparts="form-control, form-control-label, prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option, icon"
                     label=${this.label || nothing}
-                    placeholder=${this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : "")}
+                    placeholder=${placeholder}
                     aria-label=${this.ariaLabel || nothing}
                     aria-description=${this.ariaDesciption || nothing}
                     ?multiple=${this.multiple}
@@ -1190,7 +1281,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     ?clearable=${this.clearable}
                     ?required=${this.required}
                     hoist
-                    placement=${this.placement}
+                    placement=${placement}
                     tabindex="0"
                     .getTag=${this._tagTemplate}
                     .maxOptionsVisible=${0}
@@ -1199,7 +1290,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     @mouseenter=${this._handleMouseEnter}
                     @mousewheel=${this._handleMouseWheel}
                     @mouseup=${this.handleOptionClick}
-                    size=${this.size || "medium"}
+                    size=${size}
             >
                 ${icon}
                 ${this._emptyLabelTemplate()}

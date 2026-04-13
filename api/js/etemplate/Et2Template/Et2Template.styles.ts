@@ -6,6 +6,10 @@ export default css`
         position: relative;
     }
 
+	:host([loading]) ::slotted(*) {
+		display: none;
+	}
+
     .template--loading {
         position: absolute;
         width: 100%;

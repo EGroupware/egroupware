@@ -15,7 +15,7 @@ export class Et2LinkAppSelect extends Et2Select
 				display: inline-block;
 				min-width: 64px;
 			}
-			:host([appIcons]) {
+			:host(.app-icons) {
 				max-width: 75px;
 			}
 			.select__menu {
@@ -45,7 +45,7 @@ export class Et2LinkAppSelect extends Et2Select
 			/**
 			 * Show application icons instead of application names
 			 */
-			appIcons: {type: Boolean, reflect: true}
+			appIcons: {type: Boolean}
 		}
 	};
 
@@ -126,6 +126,10 @@ export class Et2LinkAppSelect extends Et2Select
 	willUpdate(changedProperties)
 	{
 		super.willUpdate(changedProperties);
+		if(changedProperties.has("appIcons"))
+		{
+			this.classList.toggle("app-icons", this.appIcons);
+		}
 
 		if(changedProperties.has("onlyApp") || changedProperties.has("applicationList"))
 		{

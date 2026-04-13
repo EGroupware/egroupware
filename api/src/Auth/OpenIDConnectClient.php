@@ -227,6 +227,14 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 			!is_a($oidc, __CLASS__) ||
 			!is_array(($authenticateThenParams = Api\Cache::getSession(__CLASS__, 'authenticateThenParams'))))
 		{
+			// if this is a general authentication call Api\Auth::login() like the login page
+			if (($GLOBALS['egw_info']['server']['auth_type']??null === 'openidconnect' ||
+				!empty($GLOBALS['egw_info']['server']['openidconnect_discovery'])) &&
+				($GLOBALS['sessionid'] = Api\Auth::login()))
+			{
+				Api\Egw::redirect_link('/index.php', 'cd=yes');
+				exit;
+			}
 			throw new OpenIDConnectClientException("Missing OpenIDConnectClient state!");
 		}
 		call_user_func_array([$oidc, 'authenticateThen'], $authenticateThenParams);

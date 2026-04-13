@@ -1,0 +1,808 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware Mail REST API",
+    "description": "REST API for the EGroupware Mail application. Supports sending mail, launching compose windows, viewing EML files, uploading attachments, and managing vacation notices.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EGroupware",
+      "url": "https://www.egroupware.org"
+    },
+    "license": {
+      "name": "GPL",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://example.org/egroupware/groupdav.php",
+      "description": "Production server (replace with your EGroupware URL)"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/mail": {
+      "get": {
+        "tags": ["Mail"],
+        "operationId": "listMailAccounts",
+        "summary": "List available mail accounts",
+        "description": "Returns a list of mail accounts (identities/signatures) available to the authenticated user.",
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of available mail accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailAccounts"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Mail"],
+        "operationId": "sendMail",
+        "summary": "Send mail",
+        "description": "Sends an email using the default or specified mail identity.",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Mail sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Error sending mail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mail/{id}": {
+      "post": {
+        "tags": ["Mail"],
+        "operationId": "sendMailFor",
+        "summary": "Send mail for a specific identity",
+        "description": "Sends an email using the specified mail identity (by ID).",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Mail sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Error sending mail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mail/{id}/compose": {
+      "post": {
+        "tags": ["Mail"],
+        "operationId": "launchMailCompose",
+        "summary": "Launch compose window",
+        "description": "Launches an interactive compose window for the specified mail identity.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Compose window request sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User is not online",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/mail/attachments/{filename}": {
+      "post": {
+        "tags": ["Mail"],
+        "operationId": "uploadMailAttachment",
+        "summary": "Upload mail attachment",
+        "description": "Uploads a file to be used as an attachment for sending or composing mail.",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the file to upload"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Content type of the file being uploaded"
+          },
+          {
+            "name": "X-No-Location",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "If true, suppresses the Location header in the response"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Attachment stored successfully",
+            "headers": {
+              "Location": {
+                "description": "URL of the uploaded attachment",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Attachment stored (no Location header)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/mail/view": {
+      "post": {
+        "tags": ["Mail"],
+        "operationId": "viewMailEml",
+        "summary": "View an EML file",
+        "description": "Uploads an EML file to be viewed in the Drafts folder. The user can then reply, forward, or download attachments.",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["message/rfc822"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "message/rfc822": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "View window request sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User is not online",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/mail/{id}/view": {
+      "post": {
+        "tags": ["Mail"],
+        "operationId": "viewMailEmlFor",
+        "summary": "View an EML file for a specific identity",
+        "description": "Uploads an EML file to be viewed in the Drafts folder of the specified mail identity.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["message/rfc822"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "message/rfc822": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "View window request sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User is not online",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/mail/vacation": {
+      "get": {
+        "tags": ["Mail"],
+        "operationId": "getVacation",
+        "summary": "Get current vacation settings",
+        "description": "Retrieves the current vacation message/handling settings for the default mail identity.",
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current vacation settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationSettings"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Mail"],
+        "operationId": "setVacation",
+        "summary": "Set vacation message/forwarding",
+        "description": "Enables or disables vacation message or forwarding for the default mail identity.",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationSettings"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vacation settings stored successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/mail/{id}/vacation": {
+      "get": {
+        "tags": ["Mail"],
+        "operationId": "getVacationFor",
+        "summary": "Get vacation settings for a specific identity",
+        "description": "Retrieves the current vacation message/handling settings for the specified mail identity.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current vacation settings for the specified identity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacationSettings"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Mail"],
+        "operationId": "setVacationFor",
+        "summary": "Set vacation message/forwarding for a specific identity",
+        "description": "Enables or disables vacation message or forwarding for the specified mail identity.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacationSettings"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vacation settings stored successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Basic authentication with username and password or token"
+      }
+    },
+    "parameters": {
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Mail identity ID"
+      }
+    },
+    "schemas": {
+      "MailAccounts": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Map of mail account paths to their display names (e.g., '/ralf/mail/1': 'Ralf Becker <ralf@example.org>')"
+          }
+        }
+      },
+      "SendMailRequest": {
+        "type": "object",
+        "required": ["to", "subject"],
+        "properties": {
+          "to": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of RFC882 email addresses (e.g., ['info@egroupware.org', 'Ralf Becker <rb@egroupware.org>'])"
+          },
+          "cc": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of RFC882 email addresses (CC)"
+          },
+          "bcc": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of RFC882 email addresses (BCC)"
+          },
+          "replyto": {
+            "type": "string",
+            "description": "RFC822 email address for replies"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the email"
+          },
+          "body": {
+            "type": "string",
+            "description": "Plain text body of the email"
+          },
+          "bodyHtml": {
+            "type": "string",
+            "description": "HTML body of the email"
+          },
+          "replyEml": {
+            "type": "string",
+            "description": "String returned from an uploaded EML file to reply to"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of attachment paths or tokens (e.g., ['/mail/attachments/<token>', '/home/<user>/<filename>'])"
+          },
+          "attachmentType": {
+            "type": "string",
+            "enum": ["attach", "link", "share_ro", "share_rw"],
+            "default": "attach",
+            "description": "How to handle attachments: 'attach', 'link', 'share_ro', or 'share_rw'"
+          },
+          "shareExpiration": {
+            "type": "string",
+            "description": "Expiration date for shares (e.g., 'yyyy-mm-dd' or '+2days'). Default: not accessed in 100 days (EPL only)"
+          },
+          "sharePassword": {
+            "type": "string",
+            "description": "Password required to access the share (EPL only)"
+          },
+          "folder": {
+            "type": "string",
+            "description": "Folder to store the sent mail (default: Sent folder)"
+          },
+          "priority": {
+            "type": "integer",
+            "enum": [1, 3, 5],
+            "default": 3,
+            "description": "Priority of the email (1: high, 3: normal, 5: low)"
+          }
+        }
+      },
+      "VacationSettings": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["on", "off", "by_date"],
+            "default": "on",
+            "description": "Status of vacation handling ('on', 'off', or 'by_date')"
+          },
+          "start": {
+            "type": "string",
+            "description": "Start date of vacation (e.g., 'YYYY-mm-dd' or '+2days')"
+          },
+          "end": {
+            "type": "string",
+            "description": "End date of vacation (last day)"
+          },
+          "text": {
+            "type": "string",
+            "description": "Vacation notice text (can contain $$start$$ and $$end$$ placeholders)"
+          },
+          "modus": {
+            "type": "string",
+            "enum": ["notice+store", "notice", "store"],
+            "default": "notice+store",
+            "description": "Mode of vacation handling ('notice+store', 'notice', or 'store')"
+          },
+          "forwards": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of RFC882 email addresses to forward mail to"
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of RFC882 email addresses to apply vacation settings to (default: primary email only)"
+          },
+          "days": {
+            "type": "integer",
+            "description": "Number of days after which a sender receives the vacation message again"
+          }
+        }
+      },
+      "SuccessResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTP status code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Success message"
+          },
+          "warning": {
+            "type": "string",
+            "description": "Warning message (if applicable)"
+          }
+        }
+      },
+      "AttachmentResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTP status code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          },
+          "location": {
+            "type": "string",
+            "description": "Path to the uploaded attachment (e.g., '/mail/attachments/<token>')"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "description": "HTTP error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        },
+        "headers": {
+          "WWW-Authenticate": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Basic authentication realm"
+          }
+        }
+      }
+    }
+  }
+}
