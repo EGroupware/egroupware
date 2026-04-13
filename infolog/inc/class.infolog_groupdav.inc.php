@@ -316,6 +316,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
 			'start'         => $inital_sync_token_offset,
 			'num_rows'      => $nresults ?: self::CHUNK_SIZE,
+			'subs'          => true,    // also return sub-entries (info_id_parent != 0)
 		);
 		$check_responsible = false;
 		if (substr($task_filter, -8) == '+deleted')
