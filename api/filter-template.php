@@ -136,7 +136,7 @@ EOF;
 			$attrs = parseAttrs($match[2]);
 			$sort_options[$attrs['id']] = "\t\t\t\t".'<option value="'.$attrs['id'].'"'.(!empty($attrs['statustext']) ? ' title="'.$attrs['statustext'].'"':'').'>'.$attrs['label'].'</option>';
 		}
-		// ToDo: add custom-fields
+
 		if ($sort_options)
 		{
 			$sort_options = implode("\n", $sort_options)."\n";
@@ -201,6 +201,8 @@ EOF;
 						$widget = 'customfields-filters';
 						$attrs['label'] = '';
 						$attrs['id'] = 'col_filter';
+						// No field filter - override what's set for nm
+						$attrs['fields'] = '';
 						break;
 					case 'accountfilter':
 					case 'header-account':
