@@ -214,6 +214,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 						this.options.fields[field_name] = default_tab[1] !== '-private';
 					}
 				}
+				else if(this.getType() == "customfields-filters")
+				{
+					this.options.fields[field_name] = true;
+				}
 			}
 		}
 		else
@@ -533,7 +537,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 		for(let key in global_data)
 		{
-			if(typeof global_data[key] != 'undefined' && ! _attrs[key]) _attrs[key] = global_data[key];
+			if(typeof global_data[key] != 'undefined' && _attrs[key] == null)
+			{
+				_attrs[key] = global_data[key];
+			}
 		}
 
 		if (this.id)
