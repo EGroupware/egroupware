@@ -219,8 +219,8 @@ class infolog_ui
 		}
 
 		$info['row_mod'] = $info['info_datemodified'];
-		$timesheet_bo = new timesheet_bo();
-		$config = Api\Config::read('infolog');
+		static $timesheet_bo = new timesheet_bo();
+		static $config = Api\Config::read('infolog');
 
 		if(!$show_links)
 		{
