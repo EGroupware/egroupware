@@ -74,6 +74,7 @@ $json = [
 		],
 		"parameters" => [], // parameters are added from separate app-specific JSON-files below
 		"schemas" => [],    // schemas are added from separate app-specific JSON-files below
+		"responses" => [],  // responses are added from separate app-specific JSON-files below
 	],
 ];
 
@@ -86,15 +87,11 @@ foreach(scandir(__DIR__) as $file)
 		{
 			continue;
 		}
-		// disable addressbook for now, as Open WebUI chokes on it's nested objects
-		if ($file === 'addressbook.json' && preg_match('#^Python/[0-9.]+ aiohttp/[0-9.]+$#', $_SERVER['HTTP_USER_AGENT']))
-		{
-			continue;
-		}
 		$app_json = json_decode(file_get_contents(__DIR__.'/'.$file), true);
 		$json['paths'] += $app_json['paths'] ?? [];
 		$json['components']['parameters'] += $app_json['components']['parameters'] ?? [];
 		$json['components']['schemas'] += $app_json['components']['schemas'] ?? [];
+		$json['components']['responses'] += $app_json['components']['responses'] ?? [];
 	}
 }
 
