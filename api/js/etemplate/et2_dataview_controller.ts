@@ -288,6 +288,8 @@ export class et2_dataview_controller
 	 */
 	loadInitialData( uid_prefix, uid_key, data)
 	{
+		// Hide the grid so it doesn't thrash the layout
+		this._grid.innerTbody.css("visibility", "hidden");
 		var idx = 0;
 		for(var key in data)
 		{
@@ -306,6 +308,12 @@ export class et2_dataview_controller
 			egw.dataStoreUID(entry.uid, data[key])
 
 			// Don't try to insert the rows, grid will do that automatically
+
+			if(idx == 10)
+			{
+				// Show something so we don't look stalled (10 rows for no particular reason)
+				this._grid.innerTbody.css("visibility", "");
+			}
 		}
 		if(idx == 0)
 		{
@@ -313,6 +321,7 @@ export class et2_dataview_controller
 			this._selectionMgr.clear();
 			this._emptyRow(this._grid._total == 0);
 		}
+		this._grid.innerTbody.css("visibility", "");
 	}
 
 	/**
@@ -534,6 +543,9 @@ export class et2_dataview_controller
 
 		var needsData = false;
 
+		// Hide the grid so it doesn't thrash the layout
+		this._grid.innerTbody.css("visibility", "hidden");
+
 		// Iterate over all elements the dataview requested and create a row
 		// which indicates that we are currently loading data
 		for (var i = _idxStart; i <= _idxEnd; i++)
@@ -547,6 +559,9 @@ export class et2_dataview_controller
 				needsData = i;
 			}
 		}
+
+		// Show grid again
+		this._grid.innerTbody.css("visibility", "");
 
 		// Queue fetching that data range
 		if (needsData !== false)
@@ -856,8 +871,13 @@ export class et2_dataview_controller
 				}
 
 				// Register the row in the selection manager
-				this.self._selectionMgr.registerRow(this.entry.uid, this.entry.idx,
-						tr, links);
+				const uid = this.entry.uid;
+				const idx = this.entry.idx;
+				// Later - don't block render for this
+				setTimeout(() =>
+				{
+					this.self._selectionMgr.registerRow(uid, idx, tr, links);
+				}, ET2_DATAVIEW_FETCH_TIMEOUT * 2);
 			}
 			else
 			{

@@ -269,7 +269,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	{
 		return html`
             <div class="search__loading">
-                <sl-spinner></sl-spinner>
+                <sl-skeleton></sl-skeleton>
             </div>
 		`;
 	}

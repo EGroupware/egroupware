@@ -42,7 +42,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 	/**
 	 * Determines the timeout after which the invalidate-request gets processed.
 	 */
-	public static readonly ET2_GRID_INVALIDATE_TIMEOUT = 25;
+	public static readonly ET2_GRID_INVALIDATE_TIMEOUT = 50;
 
 	/**
 	 * Determines how many elements are kept displayed outside of the current view
