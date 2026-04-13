@@ -87,7 +87,7 @@ foreach(scandir(__DIR__) as $file)
 			continue;
 		}
 		// disable addressbook for now, as Open WebUI chokes on it's nested objects
-		if ($file === 'addressbook.json' && preg_match('#^Python/[0-9.]+ aiohttp/[0-9.]+$#'))
+		if ($file === 'addressbook.json' && preg_match('#^Python/[0-9.]+ aiohttp/[0-9.]+$#', $_SERVER['HTTP_USER_AGENT']))
 		{
 			continue;
 		}
