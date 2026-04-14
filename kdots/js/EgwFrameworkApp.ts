@@ -914,6 +914,12 @@ export class EgwFrameworkApp extends LitElement
 		}
 		const split = event.target;
 		let panelInfo = this[split.dataset.panel];
+
+		// Automatically collapse if there's no content
+		if(split.classList.contains("no-content"))
+		{
+			this[`${panelInfo.side}Collapsed`] = true;
+		}
 		if(this[`${panelInfo.side}Collapsed`])
 		{
 			// It's collapsed, it doesn't move
