@@ -14,7 +14,7 @@ import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {et2_loadXMLFromURL} from "../et2_core_xml";
 import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
-import {egw, IegwAppLocal} from "../../jsapi/egw_global";
+import {IegwAppLocal} from "../../jsapi/egw_global";
 import {until} from "lit/directives/until.js";
 import {classMap} from "lit/directives/class-map.js";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
@@ -327,7 +327,7 @@ export class Et2Template extends Et2Widget(LitElement)
 			}
 
 			const templateName = (this.template || this.id);
-			if(egw.debug_level() >= 4)
+			if(this.egw().debug_level() >= 4)
 			{
 				window.performance.mark("mark_et2-template.load " + templateName + " start");
 			}
@@ -394,7 +394,7 @@ export class Et2Template extends Et2Widget(LitElement)
 			// Resolve promise, this.updateComplete now resolved
 			resolve();
 
-			if(egw.debug_level() >= 4)
+			if(this.egw().debug_level() >= 4)
 			{
 				window.performance.mark("mark_et2-template.load " + templateName + " end");
 				window.performance.measure(`et2-template load ${templateName}`, "mark_et2-template.load " + templateName + " start", "mark_et2-template.load " + templateName + " end")
