@@ -20,7 +20,7 @@ import { property } from "lit/decorators/property.js";
 import { customElement } from "lit/decorators/custom-element.js";
 import { until } from "lit/directives/until.js";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
-import DOMPurify from 'dompurify/dist/purify.js';
+import DOMPurify from 'dompurify';
 let Et2Image = Et2Image_1 = class Et2Image extends Et2Widget(LitElement) {
     constructor() {
         super();
