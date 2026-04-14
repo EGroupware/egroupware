@@ -74,6 +74,13 @@ export default {
 		{
 			name: "mock-modules",
 			resolveImport({source})
+				{
+					// map dompurify requests to package ESM build so browser ESM gets default export
+					if (source === 'dompurify' || source.startsWith('dompurify/'))
+					{
+						return '/node_modules/dompurify/dist/purify.es.mjs';
+					}
+
 			{
 				if (source.includes('shortcut-buttons-flatpickr'))
 				{
