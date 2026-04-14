@@ -149,8 +149,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			}
 			$filter['address_data'] = true;
 		}
-		// If "Sync selected addressbooks into one" is set
-		if ($user && $user == $GLOBALS['egw_info']['user']['account_id'] && in_array('O',$this->home_set_pref))
+		// If "Sync selected addressbooks into one" is set and NOT REST-API
+		if (!Api\CalDAV::isJSON() && $user && $user == $GLOBALS['egw_info']['user']['account_id'] && in_array('O',$this->home_set_pref))
 		{
 			$filter['owner'] = array_keys($this->get_shared(true));	// true: ignore all-in-one pref
 			$filter['owner'][] = $user;

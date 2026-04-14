@@ -32,8 +32,7 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 // if you move this file somewhere else, you need to adapt the path to the header!
-$egw_dir = dirname(__FILE__);
-include($egw_dir.'/header.inc.php');
+include(__DIR__.'/header.inc.php');
 
 $GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 
