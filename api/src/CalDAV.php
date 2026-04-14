@@ -1286,8 +1286,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		echo "$nl}\n";
 
-		// exit now, so WebDAV::GET does NOT add Content-Type: application/octet-stream
-		exit;
+		return '200 Ok';    // not returning true
 	}
 
 	/**
