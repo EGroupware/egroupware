@@ -1069,11 +1069,11 @@ export class EgwFrameworkApp extends LitElement
 				{
 					if(splitter && panelInfo.side == "right")
 					{
-						splitter.position = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth) ?? panelInfo.defaultWidth;
+						splitter.position = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth ?? panelInfo.defaultWidth);
 					}
 					else if(splitter && panelInfo.side == "left")
 					{
-						splitter.positionInPixels = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth) ?? panelInfo.defaultWidth;
+						splitter.positionInPixels = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth ?? panelInfo.defaultWidth);
 					}
 					this.ignoreSplitterResize = false;
 				}, 0);
