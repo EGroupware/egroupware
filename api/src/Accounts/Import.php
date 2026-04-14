@@ -433,6 +433,7 @@ class Import
 											$hook_results = Api\Hooks::process($to_update + array(
 												// if there was no email set before, call add account hook, to activate mail-account
 												'location' => $hook,
+												'old_loginid' => $sql_account['account_lid'],
 												'caller_method' => __METHOD__,
 											), False, True);    // called for every app now, not only enabled ones)
 											$this->logger("Called $hook hook for ".json_encode($to_update).': '.

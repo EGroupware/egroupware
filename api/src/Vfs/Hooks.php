@@ -45,7 +45,11 @@ class Hooks
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		// create a user-dir
 		Api\Vfs::$is_root = true;
-		if (Api\Vfs::file_exists($dir='/home/'.$data['account_lid']) || Api\Vfs::mkdir($dir, 0700, 0))
+		if (!empty($data['old_loginid']) && Api\Vfs::file_exists($dir='/home/'.$data['old_loginid']))
+		{
+			self::editAccount($data);
+		}
+		elseif (Api\Vfs::file_exists($dir='/home/'.$data['account_lid']) || Api\Vfs::mkdir($dir, 0700, 0))
 		{
 			Api\Vfs::chown($dir,(int)$data['account_id']);
 			Api\Vfs::chgrp($dir,0);
