@@ -812,20 +812,7 @@ export class etemplate2
 							this.focusOnFirstInput();
 						}
 						// Move top level slotted components out so they can get slotted
-						const slottedWidgets : Et2Widget[] = Array.from(this._widgetContainer.querySelectorAll(":scope > [slot]")) ?? []
-						try
-						{
-							slottedWidgets.forEach(node => {this._DOMContainer.parentNode.appendChild(node);});
-
-							// We just reconnected some widgets so they may need a chance to re-render
-							// @ts-ignore
-							await Promise.all(slottedWidgets.map(node => {return node.updateComplete ?? new Promise.resolve();}));
-						}
-						catch(e)
-						{
-							egw.debug("error", "Error moving slotted widgets: " + e.message);
-							throw e;
-						}
+						await this._moveSlotted();
 
 						// Now etemplate is ready for others to interact with (eg: app.js)
 						this.ready = true;
@@ -1006,6 +993,52 @@ export class etemplate2
 				values[button.id] = true;
 			}
 		}
+	}
+
+	/**
+	 * Move top-level widgets with 'slot' attribute out of the etemplate into the parent so they can be slotted
+	 * into the framework
+	 *
+	 * @private
+	 */
+	private _moveSlotted() : Promise<void>
+	{
+		const slottedWidgets : Et2Widget[] = Array.from(this._widgetContainer.querySelectorAll(":scope > [slot]")) ?? []
+		const slotWidgets = async() =>
+		{
+			try
+			{
+				slottedWidgets.forEach(node => {this._DOMContainer.parentNode.appendChild(node);});
+
+				// We just reconnected some widgets so they may need a chance to re-render
+				// @ts-ignore
+				await Promise.all(slottedWidgets.map(node => {return node.updateComplete ?? new Promise.resolve();}));
+			}
+			catch(e)
+			{
+				egw.debug("error", "Error moving slotted widgets: " + e.message, this._DOMContainer);
+				throw e;
+			}
+		}
+		return new Promise((resolve) =>
+		{
+			// Already in the DOM, we can move them immediately
+			if(slottedWidgets.length == 0 || document.contains(this._DOMContainer) || this._DOMContainer.parentNode)
+			{
+				return resolve(slotWidgets());
+			}
+
+			// DOMContainer is not in the DOM, we won't be able to find its parents
+			const observer = new MutationObserver((mutations, ob) =>
+			{
+				if(document.contains(this._DOMContainer))
+				{
+					ob.disconnect();
+					return resolve(slotWidgets());
+				}
+			});
+			observer.observe(document, {childList: true, subtree: true});
+		});
 	}
 
 	/**
