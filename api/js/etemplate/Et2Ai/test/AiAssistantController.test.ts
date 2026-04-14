@@ -135,7 +135,7 @@ describe("AiAssistantController", () =>
 			error: "Missing API"
 		});
 
-		const controller = new AiAssistantController(host);
+		const controller = new AiAssistantController(host, "");
 		await controller.run("test", "");
 
 		assert.equal(AiAssistantController.API_OK, false);

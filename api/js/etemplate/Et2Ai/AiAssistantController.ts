@@ -31,7 +31,7 @@ export class AiAssistantController implements ReactiveController
 	{
 		this.host = host;
 		host.addController(this);
-		if(_endpoint)
+		if(typeof _endpoint !== "undefined")
 		{
 			this.endpoint = _endpoint;
 		}
