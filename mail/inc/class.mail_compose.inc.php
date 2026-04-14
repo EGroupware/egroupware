@@ -1175,7 +1175,11 @@ class mail_compose
 		// no => means -2
 		// system => means -1
 		// default => fetches the default, which is standard behavior
-		if (!empty($_REQUEST['signature']) && (strtolower($_REQUEST['signature']) == 'no' || strtolower($_REQUEST['signature']) == 'system'))
+		if (!empty($_REQUEST['preset']['identity']) && $_REQUEST['preset']['identity'] == $content['mailidentity'])
+		{
+			// identity set by $_REQUEST['presets']['identity'] e.g. via REST-API compose call
+		}
+		elseif (!empty($_REQUEST['signature']) && (strtolower($_REQUEST['signature']) == 'no' || strtolower($_REQUEST['signature']) == 'system'))
 		{
 			$content['mailidentity'] = $presetSig = (strtolower($_REQUEST['signature']) == 'no' ? -2 : -1);
 		}
