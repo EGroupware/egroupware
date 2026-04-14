@@ -30,13 +30,10 @@
         "tags": [
           "Addressbook"
         ],
-        "summary": "List all contacts",
-        "description": "Returns contacts in all addressbooks the user has access to. Supports filtering, pagination, and custom property selection.",
-        "operationId": "listAllContacts",
+        "summary": "Search all addressbooks",
+        "description": "Search in all addressbooks the user has access to. Supports searching, filtering, pagination, and custom property selection.",
+        "operationId": "searchContacts",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/username"
-          },
           {
             "$ref": "#/components/parameters/props"
           },
@@ -47,7 +44,10 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
-            "$ref": "#/components/parameters/filters"
+            "$ref": "#/components/parameters/filters[search]"
+          },
+          {
+            "$ref": "#/components/parameters/filters[linked]"
           },
           {
             "name": "Accept",
@@ -86,7 +86,7 @@
     "/{username}/addressbook/": {
       "get": {
         "tags": ["Addressbook"],
-        "summary": "List contacts in the given users addressbook",
+        "summary": "List or search contacts in the given users addressbook",
         "description": "Returns all contacts in the user's addressbook. Supports filtering, pagination, and custom property selection.",
         "operationId": "listContacts",
         "parameters": [
@@ -103,7 +103,10 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
-            "$ref": "#/components/parameters/filters"
+            "$ref": "#/components/parameters/filters[search]"
+          },
+          {
+            "$ref": "#/components/parameters/filters[linked]"
           },
           {
             "name": "Accept",
@@ -418,17 +421,23 @@
         },
         "description": "Limit number of responses (only for sync-collection)"
       },
-      "filters": {
-        "name": "filters",
+      "filters[search]": {
+        "name": "filters[search]",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "object",
-          "additionalProperties": true
+          "type": "string"
         },
-        "description": "Filter contacts by pattern, custom field, or attribute. Example: filters[search]=pattern or filters[linked]=infolog:123",
-        "style": "deepObject",
-        "explode": true
+        "description": "Search pattern. Example: filters[search]=something"
+      },
+      "filters[linked]": {
+        "name": "filters[linked]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Search entries from other apps linked to the given one. Example: filters[linked]=<app-name>:<app-id>"
       }
     },
     "schemas": {
