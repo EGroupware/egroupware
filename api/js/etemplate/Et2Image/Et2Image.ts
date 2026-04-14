@@ -16,7 +16,7 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {until} from "lit/directives/until.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {unsafeSVG} from "lit/directives/unsafe-svg.js";
-import DOMPurify from 'dompurify/dist/purify.js'
+import DOMPurify from 'dompurify'
 
 @customElement("et2-image")
 export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
