@@ -35,9 +35,6 @@
         "operationId": "listEvents",
         "parameters": [
           {
-            "$ref": "#/components/parameters/username"
-          },
-          {
             "$ref": "#/components/parameters/props"
           },
           {
@@ -45,6 +42,12 @@
           },
           {
             "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters[search]"
+          },
+          {
+            "$ref": "#/components/parameters/filters[linked]"
           },
           {
             "name": "Accept",
@@ -78,6 +81,82 @@
             "$ref": "#/components/responses/NotFound"
           }
         }
+      },
+      "post": {
+        "tags": ["Calendar"],
+        "summary": "Create a new event for the current user",
+        "description": "Adds a new event to the calendar. The Location header in the response gives the URL of the new resource. Use `Prefer: return=representation` to get the full event in the response.",
+        "operationId": "createEvent",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          },
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["return=representation"]
+            },
+            "description": "Request the server to return the full representation of the created event"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Event created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "ETag": {
+                "description": "ETag of the new resource",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Schedule-Tag": {
+                "description": "Schedule tag of the new resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
       }
     },
     "/{username}/calendar/": {
@@ -98,6 +177,12 @@
           },
           {
             "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters[search]"
+          },
+          {
+            "$ref": "#/components/parameters/filters[linked]"
           },
           {
             "name": "Accept",
@@ -440,6 +525,24 @@
           "type": "integer"
         },
         "description": "Limit number of responses (only for sync-collection)"
+      },
+      "filters[search]": {
+        "name": "filters[search]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Search pattern. Example: filters[search]=something"
+      },
+      "filters[linked]": {
+        "name": "filters[linked]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Search entries from other apps linked to the given one. Example: filters[linked]=<app-name>:<app-id>"
       }
     },
     "schemas": {

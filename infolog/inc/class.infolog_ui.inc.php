@@ -463,7 +463,7 @@ class infolog_ui
 		// How about cf filters when customfield colum is off
 		$query['custom_fields'] = $query['custom_fields'] || (
 			count(array_filter(
-					  $query['col_filter'], function ($value, $key)
+					  $query['col_filter'] ?? [], static function ($value, $key)
 				  {
 					  return $key[0] == '#' && !empty($value);
 				  },  ARRAY_FILTER_USE_BOTH

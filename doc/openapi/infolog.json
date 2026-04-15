@@ -35,9 +35,6 @@
         "operationId": "listTasks",
         "parameters": [
           {
-            "$ref": "#/components/parameters/username"
-          },
-          {
             "$ref": "#/components/parameters/props"
           },
           {
@@ -47,7 +44,10 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
-            "$ref": "#/components/parameters/filters"
+            "$ref": "#/components/parameters/filters[search]"
+          },
+          {
+            "$ref": "#/components/parameters/filters[linked]"
           },
           {
             "name": "Accept",
@@ -81,6 +81,60 @@
             "$ref": "#/components/responses/NotFound"
           }
         }
+      },
+      "post": {
+        "tags": ["InfoLog"],
+        "summary": "Create a new infolog entry for the current user",
+        "description": "Adds a new infolog entry (task, note, call, etc.) to the collection. The Location header in the response gives the URL of the new resource.",
+        "operationId": "createTask",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Task"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Infolog entry created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
       }
     },
     "/{username}/infolog/": {
@@ -103,7 +157,10 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
-            "$ref": "#/components/parameters/filters"
+            "$ref": "#/components/parameters/filters[search]"
+          },
+          {
+            "$ref": "#/components/parameters/filters[linked]"
           },
           {
             "name": "Accept",
@@ -403,17 +460,23 @@
         },
         "description": "Limit number of responses (only for sync-collection)"
       },
-      "filters": {
-        "name": "filters",
+      "filters[search]": {
+        "name": "filters[search]",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "object",
-          "additionalProperties": true
+          "type": "string"
         },
-        "description": "Filter infolog entries by pattern, custom field, or attribute. Example: filters[search]=pattern or filters[linked]=app:123",
-        "style": "deepObject",
-        "explode": true
+        "description": "Search pattern. Example: filters[search]=something"
+      },
+      "filters[linked]": {
+        "name": "filters[linked]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Search entries from other apps linked to the given one. Example: filters[linked]=<app-name>:<app-id>"
       }
     },
     "schemas": {
