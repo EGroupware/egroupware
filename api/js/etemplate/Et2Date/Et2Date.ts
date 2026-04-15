@@ -37,7 +37,8 @@ const getLangPreference = () => egw && egw.preference ? egw.preference('lang', '
 const localizePromise = Promise.resolve().then(async() =>
 {
 	let langValue = await getLangPreference();
-	while(typeof langValue === "undefined")
+	let attempts = 0;
+	while(typeof langValue === "undefined" && attempts++ < 50)
 	{
 		await new Promise((resolve) => setTimeout(resolve, 50));
 		langValue = await getLangPreference();
