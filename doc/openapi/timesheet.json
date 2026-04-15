@@ -44,7 +44,10 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
-            "$ref": "#/components/parameters/filters"
+            "$ref": "#/components/parameters/filters[search]"
+          },
+          {
+            "$ref": "#/components/parameters/filters[linked]"
           },
           {
             "name": "Accept",
@@ -87,9 +90,6 @@
         "summary": "Create a new timesheet for current user",
         "description": "Adds a new timesheet to the collection.",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/username"
-          },
           {
             "name": "Content-Type",
             "in": "header",
@@ -192,7 +192,10 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
-            "$ref": "#/components/parameters/filters"
+            "$ref": "#/components/parameters/filters[search]"
+          },
+          {
+            "$ref": "#/components/parameters/filters[linked]"
           },
           {
             "name": "Accept",
@@ -556,17 +559,23 @@
         },
         "description": "Limit number of responses (only for sync-collection)"
       },
-      "filters": {
-        "name": "filters",
+      "filters[search]": {
+        "name": "filters[search]",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "object",
-          "additionalProperties": true
+          "type": "string"
         },
-        "description": "Filter timesheets by pattern, custom field, or attribute. Example: filters[search]=pattern or filters[status]=invoiced",
-        "style": "deepObject",
-        "explode": true
+        "description": "Search pattern. Example: filters[search]=something"
+      },
+      "filters[linked]": {
+        "name": "filters[linked]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Search entries from other apps linked to the given one. Example: filters[linked]=<app-name>:<app-id>"
       }
     },
     "schemas": {
