@@ -142,6 +142,11 @@ describe('Et2VfsUpload existing file checks', async() =>
 		element.addEventListener("change", completeSpy);
 	});
 
+	afterEach(() =>
+	{
+		sinon.restore();
+	});
+
 	it('Should check for existing file', async() =>
 	{
 		// Ask is the default, but set it anyway
@@ -209,13 +214,15 @@ describe('Et2VfsUpload existing file checks', async() =>
 			message: sinon.stub()
 		};
 		element.egw = () => mockEgw;
+		const promptSpy = sinon.spy(Et2Dialog, "show_prompt");
+		const dialogSpy = sinon.spy(Et2Dialog, "show_dialog");
 
-		element.addFile(fileInfo);
+		await element.addFile(fileInfo);
 		await element.updateComplete;
 		await mockEgw.request.returnValues[0];
 
 		assert(mockEgw.request.calledOnce, 'Request to see if file exists should be sent');
-		assert(Object.keys(element._uploadPending).length == 0, 'User should not be asked about overwriting');
+		assert(!promptSpy.called && !dialogSpy.called, 'User should not be asked about overwriting');
 	});
 
 	it('Should not upload if they cancel conflict dialog', async() =>
