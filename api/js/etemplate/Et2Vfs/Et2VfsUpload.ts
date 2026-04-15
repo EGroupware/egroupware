@@ -108,6 +108,18 @@ export class Et2VfsUpload extends Et2File
 	resumableFileAdded(info : FileInfo, event)
 	{
 		const superAdded = super.resumableFileAdded.bind(this);
+		const reportError = (e : any) =>
+		{
+			info.abort();
+			const item = this.findFileItem(info);
+			if(item)
+			{
+				const message = typeof e?.message === "string"
+				                ? e.message
+				                : (typeof e?.toString === "function" ? e.toString() : String(e));
+				item.error(message);
+			}
+		};
 		// Always overwriting, no need to check
 		if(this.conflict == "overwrite")
 		{
@@ -139,24 +151,11 @@ export class Et2VfsUpload extends Et2File
 					info.fileName = data;
 				}
 				await add;
-			}).catch(e =>
-			{
-				info.abort();
-				let item = this.findFileItem(info);
-				if(item)
-				{
-					item.error(e.message ?? e.toString() ?? e);
-				}
-			});
+			}).catch(reportError);
 		}
 		catch(e)
 		{
-			info.abort();
-			let item = this.findFileItem(info);
-			if(item)
-			{
-				item.error(e.getMessage() ?? e.toString() ?? e);
-			}
+			reportError(e);
 		}
 	}
 

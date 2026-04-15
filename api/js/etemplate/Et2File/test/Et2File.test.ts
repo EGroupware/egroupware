@@ -127,7 +127,7 @@ describe('Et2File Component', async() =>
 	it('should render file items when files are added', async() =>
 	{
 		const file = new File(['content'], 'test.txt', {type: 'text/plain'});
-		element.addFile(file);
+		await element.addFile(file);
 		await element.updateComplete;
 
 		const fileItems = element.shadowRoot.querySelectorAll('et2-file-item');
