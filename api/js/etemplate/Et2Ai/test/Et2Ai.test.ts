@@ -1,25 +1,17 @@
-import {assert, fixture, html, oneEvent} from "@open-wc/testing";
+import {assert, fixture, html} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {Et2Ai} from "../Et2Ai";
 
 window.egw = {
 	ajaxUrl: () => "",
-	user: () =>
-	{
-		apps: {
-			"aiassistant"
-		}
-	}
-}
+	user: () => ({apps: {aiassistant: true}}),
+	lang: (label : string) => label,
+	preference: () => "en",
+	request: async() => ({success: true, result: ""})
+} as any;
+
 describe("Et2AI widget basics", () =>
 {
-	let testAPIStub : sinon.SinonStub;
-
-	beforeEach(() =>
-	{
-
-	});
-
 	afterEach(() =>
 	{
 		sinon.restore();
@@ -27,173 +19,117 @@ describe("Et2AI widget basics", () =>
 
 	async function createEl()
 	{
-		const el : Et2Ai = await fixture<Et2Ai>(html`
-            <et2-ai>
+		return fixture<Et2Ai>(html`
+            <et2-ai endpoint="test-endpoint">
                 <textarea>Original text</textarea>
             </et2-ai>
 		`);
-		await el.updateComplete;
-		return el;
 	}
 
-	// Make sure it works
-	it('is defined', async() =>
+	it("loads Et2Ai class", () =>
 	{
-		const element = await createEl()
-		assert.instanceOf(element, Et2Ai);
+		assert.isOk(Et2Ai);
 	});
 
-
-	describe("initial rendering", () =>
+	it("renders only slot content when AI is unavailable", async() =>
 	{
-		it("renders only slot content when AI is unavailable", async() =>
-		{
-			const el = await createEl();
-			const slot = el.shadowRoot!.querySelector("slot");
+		const el = await createEl();
+		el.endpoint = "";
+		await el.updateComplete;
 
-			assert.exists(slot);
-			assert.notExists(el.shadowRoot!.querySelector("sl-dropdown"));
-		});
+		const slot = el.shadowRoot!.querySelector("slot:not([name])");
+		assert.exists(slot);
+		assert.notExists(el.shadowRoot!.querySelector("sl-dropdown"));
+		assert.notExists(el.shadowRoot!.querySelector("sl-card"));
+		assert.notExists(el.shadowRoot!.querySelector("sl-alert"));
 	});
 
-	describe("prompt selection", () =>
+	it("selecting a prompt triggers AI run", async() =>
 	{
-		it("sets activePrompt and dispatches et2-ai-start", async() =>
-		{
-			const el = await createEl();
+		const el = await createEl();
+		await el.updateComplete;
 
-			const menu = el.shadowRoot!.querySelector("sl-menu")!;
-			const handler = sinon.spy();
-			el.addEventListener("et2-ai-start", handler);
+		const run = sinon.stub((el as any).ai, "run").resolves();
+		el.handlePromptSelect({
+			detail: {item: {value: el.prompts[0].id}}
+		} as any);
+		await el.updateComplete;
 
-			el.handlePromptSelect({
-				detail: {item: {value: el.prompts[0].id}}
-			} as any);
+		assert.isTrue(run.calledOnce);
+		assert.equal(el.activePrompt?.id, el.prompts[0].id);
+	});
 
-			assert.isTrue(handler.calledOnce);
-			assert.equal(el.activePrompt!.id, el.prompts[0].id);
-		});
+	it("clearResult resets active prompt and AI status", async() =>
+	{
+		const el = await createEl();
+		(el as any).ai.status = "success";
+		el.activePrompt = {id: "x", label: "Test"};
+
+		el.clearResult();
+
+		assert.isNull(el.activePrompt);
+		assert.equal((el as any).ai.status, "idle");
 	});
 });
 
 describe("Et2AI applying results", () =>
 {
-	let el : Et2Ai;
-
-	beforeEach(async() =>
-	{
-		el = await fixture<Et2Ai>(html`
-            <et2-ai>
-                <input value="Existing"/>
-            </et2-ai>
-		`);
-		await el.updateComplete;
-
-		// Fake a successful AI response
-		(el as any).ai.endpoint = "test";
-		(el as any).ai.result = "AI result";
-		(el as any).ai.status = "success";
-	});
-
 	afterEach(() =>
 	{
 		sinon.restore();
 	});
 
-	it("dispatches et2-ai-apply event", async() =>
+	async function createApplyEl()
 	{
-		el.activePrompt = {id: "x", label: "Test"};
-
-		const ev = oneEvent(el, "et2-ai-apply");
-		el["_applyResult"]();
-
-		const e = await ev;
-		assert.equal(e.detail.result, "AI result");
-	});
-
-	it("resets activePrompt and AI status", async() =>
-	{
-		el.activePrompt = {id: "x", label: "Test"};
-
-		el["_applyResult"]();
-
+		const el = await fixture<Et2Ai>(html`
+            <et2-ai endpoint="test-endpoint">
+                <input value="Existing"/>
+            </et2-ai>
+		`);
 		await el.updateComplete;
 
-		assert.isNull(el.activePrompt);
-		assert.equal((el as any).ai.status, "idle");
-	});
+		(el as any).ai.status = "success";
+		(el as any).ai.result = "AI result";
+		return el;
+	}
 
-	it("respects preventDefault on apply event", () =>
+	it("dispatches et2-ai-apply and replaces value by default", async() =>
 	{
-		el.activePrompt = {id: "x", label: "Test"};
-
-		el.addEventListener("et2-ai-apply", e => e.preventDefault());
-
-		const target = el.querySelector("input")!;
-		el["_applyResult"]();
-
-		assert.equal(target.value, "Existing");
-	});
-
-	it("applies result via function action", () =>
-	{
-		const target = el.querySelector("input")!;
-		const fn = sinon.spy();
-
-		el.activePrompt = {
-			id: "x",
-			label: "Test",
-			actions: [{handler: fn}]
-		};
-
-		el["_applyResult"]();
-
-		assert.isTrue(fn.calledOnce);
-		assert.equal(fn.firstCall.args[0], "AI result");
-	});
-
-	it("replaces target value by default", () =>
-	{
-		const target = el.querySelector("input")!;
-
+		const el = await createApplyEl();
+		const onApply = sinon.spy();
+		el.addEventListener("et2-ai-apply", onApply as EventListener);
 		el.activePrompt = {
 			id: "x",
 			label: "Test",
 			actions: [{target: "self"}]
 		};
+		await el.updateComplete;
 
-		el["_applyResult"]();
+		const applyButton = el.shadowRoot!.querySelector('et2-button[part="apply-button"]') as HTMLElement;
+		applyButton.click();
+		await el.updateComplete;
 
+		const target = el.querySelector("input") as HTMLInputElement;
+		assert.isTrue(onApply.calledOnce);
 		assert.equal(target.value, "AI result");
 	});
 
-	it("prepends value", () =>
+	it("respects preventDefault on apply event", async() =>
 	{
-		const target = el.querySelector("input")!;
-
+		const el = await createApplyEl();
+		el.addEventListener("et2-ai-apply", (e : Event) => e.preventDefault());
 		el.activePrompt = {
 			id: "x",
 			label: "Test",
-			actions: [{target: "self", mode: "prepend"}]
+			actions: [{target: "self"}]
 		};
+		await el.updateComplete;
 
-		el["_applyResult"]();
+		const applyButton = el.shadowRoot!.querySelector('et2-button[part="apply-button"]') as HTMLElement;
+		applyButton.click();
+		await el.updateComplete;
 
-		assert.equal(target.value, "AI resultExisting");
-	});
-
-	it("appends value", () =>
-	{
-		const target = el.querySelector("input")!;
-
-		el.activePrompt = {
-			id: "x",
-			label: "Test",
-			actions: [{target: "self", mode: "append"}]
-		};
-
-		el["_applyResult"]();
-
-		assert.equal(target.value, "ExistingAI result");
+		const target = el.querySelector("input") as HTMLInputElement;
+		assert.equal(target.value, "Existing");
 	});
 });

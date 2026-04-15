@@ -160,14 +160,12 @@ describe('Et2VfsUpload existing file checks', async() =>
 		};
 		element.egw = () => mockEgw;
 
-		const confirmStub = sinon.stub(element, 'confirmConflict').resolves(true);
-
 		element.addFile(fileInfo);
 		await element.updateComplete;
 		await mockEgw.request.returnValues[0];
 
 		assert(mockEgw.request.calledOnce, 'Request to see if file exists should be sent');
-		assert(confirmStub.calledOnce, 'User should be asked about overwriting');
+		assert(Object.keys(element._uploadPending).length == 1, 'User should be asked about overwriting');
 	});
 
 	it('Should not check if conflict is "overwrite"', async() =>
@@ -187,14 +185,12 @@ describe('Et2VfsUpload existing file checks', async() =>
 		};
 		element.egw = () => mockEgw;
 
-		const confirmStub = sinon.stub(element, 'confirmConflict').resolves(true);
-
 		element.addFile(fileInfo);
 		await element.updateComplete;
 		await mockEgw.request.returnValues[0];
 
 		assert(mockEgw.request.notCalled, 'Request to see if file exists should not be sent');
-		assert(confirmStub.notCalled, 'User should not be asked about overwriting');
+		assert(Object.keys(element._uploadPending).length == 0, 'User should not be asked about overwriting');
 	});
 
 	it('Should not ask if conflict is "rename"', async() =>
@@ -214,14 +210,12 @@ describe('Et2VfsUpload existing file checks', async() =>
 		};
 		element.egw = () => mockEgw;
 
-		const confirmStub = sinon.stub(element, 'confirmConflict').resolves(true);
-
 		element.addFile(fileInfo);
 		await element.updateComplete;
 		await mockEgw.request.returnValues[0];
 
 		assert(mockEgw.request.calledOnce, 'Request to see if file exists should be sent');
-		assert(confirmStub.notCalled, 'User should not be asked about overwriting');
+		assert(Object.keys(element._uploadPending).length == 0, 'User should not be asked about overwriting');
 	});
 
 	it('Should not upload if they cancel conflict dialog', async() =>
@@ -243,14 +237,13 @@ describe('Et2VfsUpload existing file checks', async() =>
 
 		// Stub the parent's async resumableFileAdded method
 		let parentFileAdded = sinon.spy(Object.getPrototypeOf(element), "resumableFileAdded");
-		const confirmStub = sinon.stub(element, 'confirmConflict').resolves(false);
 
 		element.addFile(fileInfo);
 		await element.updateComplete;
 		await mockEgw.request.returnValues[0];
 
 		assert(mockEgw.request.calledOnce, 'Request to see if file exists should be sent');
-		assert(confirmStub.calledOnce, 'User should be asked about overwriting');
+		assert(Object.keys(element._uploadPending).length == 1, 'User should be asked about overwriting');
 		assert(addSpy.notCalled, 'File upload should not proceed');
 	})
 });

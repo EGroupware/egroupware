@@ -569,7 +569,21 @@ export class Et2File extends Et2InputWidget(LitElement)
 				this.resumable.addFile(fileInfo.file)
 			})
 		}
+		// Return a promise that can be waited for
+		return new Promise<void>(resolve =>
+		{
+			function done(event : CustomEvent)
+			{
+				debugger;
+				if(event.target === this && event.detail.uniqueIdentifier == fileInfo.uniqueIdentifier)
+				{
+					this.removeEventListener("et2-add", done);
+					resolve();
+				}
+			}
 
+			this.addEventListener("et2-add", done);
+		});
 	}
 
 	removeFile(file : FileInfo)
@@ -596,15 +610,19 @@ export class Et2File extends Et2InputWidget(LitElement)
 			return;
 		}
 
+		const wait = []
 		Object.values(fileList).forEach(file =>
 		{
 			if(typeof file === "object" && file.name && file.type && file.size)
 			{
-				this.addFile(file)
+				wait.push(this.addFile(file));
 			}
 		});
 
-		this.dispatchEvent(new CustomEvent("change", {bubbles: true, detail: this.files}));
+		Promise.all(wait).then(() =>
+		{
+			this.dispatchEvent(new CustomEvent("change", {bubbles: true, detail: this.files}));
+		});
 	}
 
 	handleBrowseFileClick()

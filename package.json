@@ -9,7 +9,8 @@
     "build:watch": "rollup -cw",
     "docs": "node doc/scripts/build.mjs --dev",
     "docs:serve": "node doc/scripts/build.mjs --dev --serve",
-    "jstest": "tsc &> /dev/null; web-test-runner",
+    "typecheck": "node ./node_modules/typescript/bin/tsc -p tsconfig.json",
+    "jstest": "npm run --silent typecheck &> /dev/null; web-test-runner",
     "jstest:watch": "web-test-runner  --node-resolve --watch"
   },
   "devDependencies": {

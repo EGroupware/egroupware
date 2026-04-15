@@ -15,10 +15,9 @@
         "sourceMap": true
     },
     "include" : [
-        "**/js/*",
-        "api/js/**/*",
-		"node_modules/@types/**/*",
-		"*"
+        "**/js/**/*.ts",
+        "**/js/**/*.tsx",
+        "**/*.d.ts"
     ],
     "exclude": [
         "node_modules"
