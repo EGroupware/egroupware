@@ -4814,8 +4814,8 @@ class Mail
 				case 'text':
 					switch($part->getSubType())
 					{
-						case 'calendar': // inline ics/ical files
-							if($part->getBytes() > 0)
+						case 'calendar': // inline ics/ical files, NOT attached iCal files!
+							if($part->getBytes() > 0 && $part->getDisposition() != 'attachment')
 							{
 								$partCalendar = $part;
 							}
