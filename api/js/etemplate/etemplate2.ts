@@ -1082,8 +1082,8 @@ export class etemplate2
 	 * Submit form via ajax
 	 *
 	 * @param {(et2_button|string)} button button widget or string with id
-	 * @param {boolean|string} async true: do an asynchronious submit, string: spinner message (please wait...)
-	 * default is asynchronoush with message
+	 * @param {boolean|string} async true: do an asynchronous submit, string: spinner message (please wait...)
+	 * default is asynchronous with message
 	 * @param {boolean} no_validation - Do not do individual widget validation, just submit their current values
 	 * @param {et2_widget|undefined} _container container to submit, default whole template
 	 * @return {boolean} true if submit was send, false if eg. validation stoped submit
@@ -1147,7 +1147,7 @@ export class etemplate2
 					clearTimeout(timeout_id);
 					if(warning_message)
 					{
-						warning_message.then((message) => message.close());
+						warning_message.then((message) => message?.close());
 					}
 				});
 			}
