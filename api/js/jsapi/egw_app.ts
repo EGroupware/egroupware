@@ -914,7 +914,7 @@ export abstract class EgwApp
 		viewContainer.append(loadWebComponent('et2-number', {
 			slot: "label", readonly: true, class: "entry_id", precision: "0", align: "right", value: rowID
 		}, this.et2));
-		viewContainer.style.setProperty('--application-color', 'var(--' + this.appname + '-color,var(--primary-color))');
+		viewContainer.style.setProperty('--application-color', 'var(--' + this.appname.split('-')[0] + '-color,var(--primary-color))');
 		(framework?.activeApp ? framework.activeApp : document.body).append(viewContainer);
 		this.viewContainer = jQuery(viewContainer);
 		framework?.pushState('view');
