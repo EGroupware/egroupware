@@ -35,6 +35,19 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 
 	private __image;
 
+	// set name(new_name: string)
+	// {
+	// 	super.name = new_name;
+	// 	if (new_name?.includes("list")) debugger;
+	// }
+
+	render(){
+		//Buttons cannot temper with their name attribute,
+		// since this is used internally by the SlIcon that might be rendered to determine the icon to use
+		// change the name back to the image we want before rendering
+		this.name = this.image;
+		return super.render();
+	}
 	set image(new_image : string)
 	{
 		let oldValue = this.__image;
