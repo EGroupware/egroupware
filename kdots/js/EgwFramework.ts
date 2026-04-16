@@ -383,7 +383,7 @@ export class EgwFramework extends LitElement
 		let appComponent = <EgwFrameworkApp>document.createElement("egw-app");
 		appComponent.setAttribute("id", appname);
 		appComponent.setAttribute("name", app.internalName || appname);
-		const style="var(--"+appname+"-color,var(--default-color))";
+		const style="var(--"+appname.split('-')[0]+"-color,var(--default-color))";
 		appComponent.style.setProperty("--application-color", style);
 		appComponent.url = url ?? app?.url;
 		if(app.slot)
@@ -1391,7 +1391,7 @@ export class EgwFramework extends LitElement
             <et2-image
                     slot=${style == "text" ? "prefix" : nothing}
                     src="${app.icon}" aria-label="${app.title}" noSubmit inline
-                    style="--application-color: var(--${app.name}-color,var(--default-color))"
+                    style="--application-color: var(--${app.name.split('-')[0]}-color,var(--default-color))"
                     data-id="${app.name}"
                     statustext="${app.title}"
                     @click=${(style==="icons")?() =>
@@ -1431,7 +1431,7 @@ export class EgwFramework extends LitElement
             <sl-tab slot="nav" part="tab" panel="${app.name}" closable aria-label="${app.title}"
                     role="tab"
                     ?active=${app.active}
-                    style="--application-color: var(--${app.name}-color,var(--default-color, var(--sl-color-neutral-600))); ${extraStyle}"
+                    style="--application-color: var(--${app.name.split('-')[0]}-color,var(--default-color, var(--sl-color-neutral-600))); ${extraStyle}"
                     class=${extraClass ? extraClass : nothing}
                     @dragenter=${e => { this.setActiveApp(e.currentTarget.panel)}}
                     @click=${(e) =>
