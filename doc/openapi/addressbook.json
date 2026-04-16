@@ -1,8 +1,8 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
     "title": "EGroupware Addressbook REST API",
-    "description": "REST API for managing contacts and contact groups in EGroupware Addressbook. Paths and examples follow the EGroupware GroupDAV/REST addressbook behavior. Request payloads use the flat slash-style field names shown in EGroupware examples.",
+    "description": "REST API for managing contacts and contact groups in EGroupware Addressbook. Supports CRUD operations, filtering, and synchronization via sync tokens. Uses JsContact schema for JSON encoding.",
     "version": "1.0.0",
     "contact": {
       "name": "EGroupware",
@@ -31,7 +31,7 @@
           "Addressbook"
         ],
         "summary": "Search all addressbooks",
-        "description": "Search in all addressbooks the current user has access to. Supports filtering, sync-token based sync, pagination, and selected properties.",
+        "description": "Search in all addressbooks the user has access to. Supports searching, filtering, pagination, and custom property selection.",
         "operationId": "searchContacts",
         "parameters": [
           {
@@ -44,10 +44,23 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
-            "$ref": "#/components/parameters/filters_search"
+            "$ref": "#/components/parameters/filters[search]"
           },
           {
-            "$ref": "#/components/parameters/filters_linked"
+            "$ref": "#/components/parameters/filters[linked]"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
           }
         ],
         "responses": {
@@ -55,64 +68,6 @@
             "description": "A list of contacts",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContactCollection"
-                }
-              },
-              "application/pretty+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContactCollection"
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/{username}/addressbook/": {
-      "get": {
-        "tags": [
-          "Addressbook"
-        ],
-        "summary": "List or search contacts in the given user's addressbook",
-        "description": "Returns all contacts in the given user's addressbook, provided the authenticated user has access. Supports filtering, sync-token based sync, pagination, and selected properties.",
-        "operationId": "listContacts",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/username"
-          },
-          {
-            "$ref": "#/components/parameters/props"
-          },
-          {
-            "$ref": "#/components/parameters/syncToken"
-          },
-          {
-            "$ref": "#/components/parameters/nresults"
-          },
-          {
-            "$ref": "#/components/parameters/filters_search"
-          },
-          {
-            "$ref": "#/components/parameters/filters_linked"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of contacts",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContactCollection"
-                }
-              },
-              "application/pretty+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ContactCollection"
                 }
@@ -128,15 +83,19 @@
         }
       },
       "post": {
-        "tags": [
-          "Addressbook"
-        ],
-        "summary": "Create a new contact in the given user's addressbook",
-        "description": "Adds a new contact to the addressbook. The request body uses the flat slash-style field names shown in EGroupware examples. The Location header in the response gives the URL of the new resource.",
+        "tags": ["Addressbook"],
+        "summary": "Create a new contact in the users default addressbook",
+        "description": "Adds a new contact to the addressbook. The Location header in the response gives the URL of the new resource.",
         "operationId": "createContact",
         "parameters": [
           {
-            "$ref": "#/components/parameters/username"
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
           }
         ],
         "requestBody": {
@@ -144,25 +103,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactWrite"
-              },
-              "examples": {
-                "person": {
-                  "summary": "Example person contact",
-                  "value": {
-                    "fullName": "First Tester",
-                    "name/given": "First",
-                    "name/surname": "Tester",
-                    "org/name": "Test Organization",
-                    "emails/work": "test.user@test-user.org",
-                    "addresses/work/country": "Germany",
-                    "addresses/work/countryCode": "DE",
-                    "phones/tel_work": "+49 123 4567890",
-                    "online/url": "https://www.example.org/",
-                    "notes/note": "This is a note.",
-                    "egroupware.org:customfields/Test": "Content for Test"
-                  }
-                }
+                "$ref": "#/components/schemas/Contact"
               }
             }
           }
@@ -182,12 +123,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactRead"
-                }
-              },
-              "application/pretty+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContactRead"
+                  "$ref": "#/components/schemas/Contact"
                 }
               }
             }
@@ -201,11 +137,122 @@
         }
       }
     },
-    "/{username}/addressbook/{id}": {
+    "/{username}/addressbook/": {
       "get": {
-        "tags": [
-          "Addressbook"
+        "tags": ["Addressbook"],
+        "summary": "List or search contacts in the given users addressbook",
+        "description": "Returns all contacts in the user's addressbook. Supports filtering, pagination, and custom property selection.",
+        "operationId": "listContacts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters[search]"
+          },
+          {
+            "$ref": "#/components/parameters/filters[linked]"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
         ],
+        "responses": {
+          "200": {
+            "description": "A list of contacts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Addressbook"],
+        "summary": "Create a new contact in the given users addressbook",
+        "description": "Adds a new contact to the addressbook. The Location header in the response gives the URL of the new resource.",
+        "operationId": "createContact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Contact created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/addressbook/{id}": {
+      "get": {
+        "tags": ["Addressbook"],
         "summary": "Get a single contact",
         "description": "Retrieves a single contact by ID.",
         "operationId": "getContact",
@@ -215,6 +262,15 @@
           },
           {
             "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
           }
         ],
         "responses": {
@@ -223,12 +279,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContactRead"
-                }
-              },
-              "application/pretty+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContactRead"
+                  "$ref": "#/components/schemas/Contact"
                 }
               }
             }
@@ -242,18 +293,22 @@
         }
       },
       "put": {
-        "tags": [
-          "Addressbook"
-        ],
+        "tags": ["Addressbook"],
         "summary": "Replace a contact",
-        "description": "Replaces a contact by ID. The request body uses flat slash-style field names matching EGroupware examples.",
+        "description": "Replaces all attributes of a contact. Requires all attributes to be specified. If the ID is a UID, it will update the existing contact or create a new one if it does not exist.",
         "operationId": "replaceContact",
         "parameters": [
           {
-            "$ref": "#/components/parameters/username"
+            "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/id"
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
           }
         ],
         "requestBody": {
@@ -261,19 +316,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactWrite"
-              },
-              "examples": {
-                "replace": {
-                  "summary": "Replace contact example",
-                  "value": {
-                    "fullName": "Updated Contact",
-                    "name/given": "Updated",
-                    "name/surname": "Contact",
-                    "emails/work": "updated@example.org",
-                    "phones/tel_work": "+49 555 123456"
-                  }
-                }
+                "$ref": "#/components/schemas/Contact"
               }
             }
           }
@@ -283,7 +326,7 @@
             "description": "Contact updated"
           },
           "201": {
-            "description": "Contact created if the UID did not exist",
+            "description": "Contact created (if UID did not exist)",
             "headers": {
               "Location": {
                 "description": "URL of the new resource",
@@ -306,18 +349,22 @@
         }
       },
       "patch": {
-        "tags": [
-          "Addressbook"
-        ],
+        "tags": ["Addressbook"],
         "summary": "Partially update a contact",
-        "description": "Updates only the specified fields of a contact. The request body uses flat slash-style field names matching EGroupware examples.",
+        "description": "Updates only the specified attributes of a contact. To unset a field, patch its value to `null`.",
         "operationId": "updateContact",
         "parameters": [
           {
-            "$ref": "#/components/parameters/username"
+            "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/id"
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
           }
         ],
         "requestBody": {
@@ -326,16 +373,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ContactPatch"
-              },
-              "examples": {
-                "patch": {
-                  "summary": "Partial update example",
-                  "value": {
-                    "emails/work": "new.mail@example.org",
-                    "phones/tel_work": "+49 999 111111",
-                    "notes/note": "Updated note"
-                  }
-                }
               }
             }
           }
@@ -356,16 +393,11 @@
         }
       },
       "delete": {
-        "tags": [
-          "Addressbook"
-        ],
+        "tags": ["Addressbook"],
         "summary": "Delete a contact",
         "description": "Deletes a contact by ID.",
         "operationId": "deleteContact",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/username"
-          },
           {
             "$ref": "#/components/parameters/id"
           }
@@ -421,7 +453,7 @@
             "type": "string"
           }
         },
-        "description": "List of DAV properties to return, for example props[]=getetag",
+        "description": "List of DAV properties to return (e.g., props[]=getetag)",
         "style": "form",
         "explode": true
       },
@@ -441,250 +473,193 @@
         "schema": {
           "type": "integer"
         },
-        "description": "Limit number of responses"
+        "description": "Limit number of responses (only for sync-collection)"
       },
-      "filters_search": {
+      "filters[search]": {
         "name": "filters[search]",
         "in": "query",
         "required": false,
         "schema": {
           "type": "string"
         },
-        "description": "Search pattern"
+        "description": "Search pattern. Example: filters[search]=something"
       },
-      "filters_linked": {
+      "filters[linked]": {
         "name": "filters[linked]",
         "in": "query",
         "required": false,
         "schema": {
           "type": "string"
         },
-        "description": "Search linked entries from other apps, for example <app-name>:<app-id>"
+        "description": "Search entries from other apps linked to the given one. Example: filters[linked]=<app-name>:<app-id>"
       }
     },
     "schemas": {
-      "ContactWrite": {
+      "Contact": {
         "type": "object",
-        "description": "Request body for creating or replacing a contact. Uses flat slash-style field names as documented by EGroupware examples.",
-        "additionalProperties": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "integer"
-            },
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
+        "required": ["fullName"],
+        "description": "Contact in JsContact format. uid is auto-generated if omitted. @type defaults to 'Card'. prodId is set by the server.",
         "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Card", "CardGroup"],
+            "description": "Type of the resource. Defaults to 'Card' if omitted."
+          },
+          "uid": {
+            "type": "string",
+            "description": "Unique identifier for the contact. Auto-generated by server if omitted."
+          },
+          "prodId": {
+            "type": "string",
+            "description": "Product identifier. Set by the server, do not send in requests."
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp in UTC"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp in UTC"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["individual", "organization"],
+            "description": "Kind of contact (individual or organization)"
+          },
+          "name": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NameComponent"
+            },
+            "description": "Name components (given, surname, etc.)"
+          },
           "fullName": {
             "type": "string",
-            "description": "Full display name"
+            "description": "Full name of the contact (e.g. 'Jane Doe')"
           },
-          "name/given": {
-            "type": "string",
-            "description": "Given name"
+          "organizations": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Organization"
+            },
+            "description": "Organizations associated with the contact"
           },
-          "name/surname": {
-            "type": "string",
-            "description": "Family name"
+          "titles": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Title"
+            },
+            "description": "Titles and roles of the contact"
           },
-          "org/name": {
-            "type": "string",
-            "description": "Organization name"
+          "emails": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/EmailAddress"
+            },
+            "description": "Email addresses of the contact"
           },
-          "organizations/org/name": {
-            "type": "string",
-            "description": "Organization name, as shown in some EGroupware examples"
+          "phones": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Phone"
+            },
+            "description": "Phone numbers of the contact"
           },
-          "emails/work": {
-            "type": "string",
-            "format": "email",
-            "description": "Work email address"
+          "online": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Resource"
+            },
+            "description": "Online resources (e.g., URLs) associated with the contact"
           },
-          "addresses/work/country": {
-            "type": "string",
-            "description": "Work address country"
+          "addresses": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Address"
+            },
+            "description": "Physical addresses of the contact"
           },
-          "addresses/work/countryCode": {
-            "type": "string",
-            "description": "Work address country code"
+          "photos": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/File"
+            },
+            "description": "Photos of the contact"
           },
-          "phones/tel_work": {
-            "type": "string",
-            "description": "Work phone number"
+          "anniversaries": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Anniversary"
+            },
+            "description": "Anniversaries (e.g., birthdays) of the contact"
           },
-          "online/url": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL"
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Notes about the contact"
           },
-          "notes/note": {
+          "categories": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "Categories the contact belongs to"
+          },
+          "members": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "Members of a contact group (only for CardGroup)"
+          },
+          "card": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Card data for a contact group (only for CardGroup). Kept generic to avoid recursive schema expansion in tool consumers."
+          },
+          "egroupware.org:customfields": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Vendor-specific custom fields"
+          },
+          "egroupware.org:assistant": {
             "type": "string",
-            "description": "Contact note"
+            "description": "Assistant information (vendor-specific)"
           }
-        },
-        "example": {
-          "fullName": "First Tester",
-          "name/given": "First",
-          "name/surname": "Tester",
-          "org/name": "Test Organization",
-          "emails/work": "test.user@test-user.org",
-          "addresses/work/country": "Germany",
-          "addresses/work/countryCode": "DE",
-          "phones/tel_work": "+49 123 4567890",
-          "online/url": "https://www.example.org/",
-          "notes/note": "This is a note.",
-          "egroupware.org:customfields/Test": "Content for Test"
         }
       },
       "ContactPatch": {
         "type": "object",
-        "description": "Partial update payload. Uses the same flat slash-style fields as ContactWrite, but only send the fields that should change.",
-        "additionalProperties": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "integer"
-            },
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
+        "description": "Partial update for a contact. All properties are optional. To unset a field, set its value to `null`.",
         "properties": {
-          "fullName": {
-            "type": "string"
-          },
-          "name/given": {
-            "type": "string"
-          },
-          "name/surname": {
-            "type": "string"
-          },
-          "org/name": {
-            "type": "string"
-          },
-          "organizations/org/name": {
-            "type": "string"
-          },
-          "emails/work": {
-            "type": "string",
-            "format": "email"
-          },
-          "addresses/work/country": {
-            "type": "string"
-          },
-          "addresses/work/countryCode": {
-            "type": "string"
-          },
-          "phones/tel_work": {
-            "type": "string"
-          },
-          "online/url": {
-            "type": "string",
-            "format": "uri"
-          },
-          "notes/note": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "emails/work": "new.mail@example.org",
-          "phones/tel_work": "+49 999 111111",
-          "notes/note": "Updated note"
-        }
-      },
-      "ContactRead": {
-        "type": "object",
-        "description": "Contact object returned by EGroupware. Responses may contain JsContact-like fields and vendor-specific keys.",
-        "additionalProperties": true,
-        "properties": {
-          "@type": {
-            "type": "string",
-            "description": "Resource type"
-          },
-          "uid": {
-            "type": "string",
-            "description": "Unique identifier"
-          },
-          "prodId": {
-            "type": "string",
-            "description": "Product identifier"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "fullName": {
-            "type": "string"
-          },
           "name": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/NameComponent"
             }
           },
-          "emails": {
-            "type": "object",
-            "additionalProperties": true
+          "fullName": {
+            "type": "string",
+            "description": "Full name of the contact"
           },
-          "phones": {
-            "type": "object",
-            "additionalProperties": true
+          "organizations/org/name": {
+            "type": "string"
           },
-          "addresses": {
-            "type": "object",
-            "additionalProperties": true
+          "emails/work": {
+            "type": "string"
           },
-          "organizations": {
-            "type": "object",
-            "additionalProperties": true
+          "phones/tel_work": {
+            "type": "string"
           },
-          "notes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "addresses/work/locality": {
+            "type": "string"
+          },
+          "notes/note": {
+            "type": "string"
           },
           "egroupware.org:customfields": {
             "type": "object",
@@ -694,33 +669,217 @@
       },
       "NameComponent": {
         "type": "object",
-        "required": [
-          "@type",
-          "type",
-          "value"
-        ],
+        "required": ["@type", "type", "value"],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": [
-              "NameComponent"
-            ]
+            "enum": ["NameComponent"]
           },
           "type": {
             "type": "string",
-            "enum": [
-              "title",
-              "given",
-              "given2",
-              "surname",
-              "surname2",
-              "credential",
-              "generation",
-              "separator"
-            ]
+            "enum": ["title", "given", "given2", "surname", "surname2", "credential", "generation", "separator"]
           },
           "value": {
             "type": "string"
+          }
+        }
+      },
+      "Organization": {
+        "type": "object",
+        "required": ["@type", "name"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Organization"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "units": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Title": {
+        "type": "object",
+        "required": ["@type", "title"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Title"]
+          },
+          "title": {
+            "type": "string"
+          },
+          "organization": {
+            "type": "string"
+          }
+        }
+      },
+      "EmailAddress": {
+        "type": "object",
+        "required": ["@type", "email"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["EmailAddress"]
+          },
+          "email": {
+            "type": "string"
+          },
+          "contexts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          },
+          "pref": {
+            "type": "integer"
+          }
+        }
+      },
+      "Phone": {
+        "type": "object",
+        "required": ["@type", "phone"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Phone"]
+          },
+          "phone": {
+            "type": "string"
+          },
+          "features": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          },
+          "contexts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          },
+          "pref": {
+            "type": "integer"
+          }
+        }
+      },
+      "Resource": {
+        "type": "object",
+        "required": ["@type", "resource", "type"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Resource"]
+          },
+          "resource": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "contexts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "required": ["@type"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Address"]
+          },
+          "locality": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "street": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StreetComponent"
+            }
+          },
+          "contexts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          },
+          "pref": {
+            "type": "integer"
+          }
+        }
+      },
+      "StreetComponent": {
+        "type": "object",
+        "required": ["@type", "type", "value"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["StreetComponent"]
+          },
+          "type": {
+            "type": "string",
+            "enum": ["name", "separator"]
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "File": {
+        "type": "object",
+        "required": ["@type", "href", "mediaType"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["File"]
+          },
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mediaType": {
+            "type": "string"
+          }
+        }
+      },
+      "Anniversary": {
+        "type": "object",
+        "required": ["@type", "type", "date"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Anniversary"]
+          },
+          "type": {
+            "type": "string",
+            "enum": ["birth"]
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
           }
         }
       },
@@ -730,14 +889,16 @@
           "responses": {
             "type": "object",
             "additionalProperties": {
-              "nullable": true,
-              "allOf": [
+              "oneOf": [
                 {
-                  "$ref": "#/components/schemas/ContactRead"
+                  "$ref": "#/components/schemas/Contact"
+                },
+                {
+                  "type": "null"
                 }
               ]
             },
-            "description": "Map of contact paths to contact objects or null for deleted resources"
+            "description": "Map of contact paths to contact objects or null (for deleted resources)"
           },
           "more-results": {
             "type": "boolean",
