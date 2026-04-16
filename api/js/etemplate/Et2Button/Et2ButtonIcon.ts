@@ -44,7 +44,9 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 		}
 		else
 		{
-			this.src = this.egw().image(new_image);
+			//just set the name of the SlIcon. We registered an icon library that resolves the name to egw.image(name)
+			//this gets rid of timing issues we have, e.g. in the toolbar
+			this.name = new_image;
 		}
 		this.__image = new_image;
 		this.requestUpdate('image', oldValue);
