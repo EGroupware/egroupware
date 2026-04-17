@@ -19,7 +19,7 @@ export default css`
 		gap: var(--sl-spacing-x-small, 0.25rem);
 		align-items: center;
 		color: var(--application-header-text-color);
-		background-color: var(--application-color);
+		background-color: var(--application-color, var(--primary-background-color));
 
 		header {
 			flex: 5 5 auto;
