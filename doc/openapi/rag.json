@@ -38,11 +38,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "application/json",
-                "application/pretty+json"
-              ]
-            }
+              "enum": ["application/json", "application/pretty+json"]
+            },
+            "description": "REQUIRED Accept header for JSON or pretty-printed JSON"
           },
           {
             "name": "filters[search]",
@@ -121,16 +119,6 @@
               "type": "integer"
             },
             "description": "Limit number of responses (only for sync-collection)"
-          },
-          {
-            "name": "Accept",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": ["application/json", "application/pretty+json"]
-            },
-            "description": "REQUIRED Accept header for JSON or pretty-printed JSON"
           }
         ],
         "responses": {

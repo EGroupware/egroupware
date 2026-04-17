@@ -218,7 +218,7 @@
         "tags": ["Calendar"],
         "summary": "Create a new event for the given user",
         "description": "Adds a new event to the calendar. The Location header in the response gives the URL of the new resource. Use `Prefer: return=representation` to get the full event in the response.",
-        "operationId": "createEvent",
+        "operationId": "createUserEvent",
         "parameters": [
           {
             "$ref": "#/components/parameters/username"

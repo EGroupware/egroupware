@@ -27,9 +27,7 @@
   "paths": {
     "/infolog/": {
       "get": {
-        "tags": [
-          "InfoLog"
-        ],
+        "tags": ["InfoLog"],
         "summary": "List all infolog entries",
         "description": "Returns all infolog entries (tasks, notes, calls, etc.) for the user. Supports filtering, pagination, and custom property selection.",
         "operationId": "listTasks",
@@ -196,7 +194,7 @@
         "tags": ["InfoLog"],
         "summary": "Create a new infolog entry for the given user",
         "description": "Adds a new infolog entry (task, note, call, etc.) to the collection. The Location header in the response gives the URL of the new resource.",
-        "operationId": "createTask",
+        "operationId": "createUserTask",
         "parameters": [
           {
             "$ref": "#/components/parameters/username"
@@ -266,8 +264,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json", "application/pretty+json"]
-            }
+              "enum": ["application/json","application/pretty+json"]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
           }
         ],
         "responses": {

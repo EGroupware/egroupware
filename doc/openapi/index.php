@@ -88,6 +88,37 @@ foreach(scandir(__DIR__) as $file)
 			continue;
 		}
 		$app_json = json_decode(file_get_contents(__DIR__.'/'.$file), true);
+		// Open WebUI seems to have a problem with references in parameters --> inline all parameters
+		// ToDo: check other references like schemas
+		$inline_parameters = preg_match('#^Python/[0-9.]+ aiohttp/[0-9.]+$#', $_SERVER['HTTP_USER_AGENT']);
+		//if ($inline_parameters)
+		{
+			$operationIds = [];
+			foreach($app_json['paths'] as $path => &$methods)
+			{
+				foreach($methods as $method => &$data)
+				{
+					if (empty($data['operationId']) || isset($operationIds[$data['operationId']]))
+					{
+						throw new \Exception("$method $path requires an unique operationId".
+							(isset($operationIds[$data['operationId']]) ? "('$data[operationId]' already used by ".$operationIds[$data['operationId']].')' : '').'!');
+					}
+					$operationIds[$data['operationId']] = $method.' '.$path;
+					foreach($data['parameters'] as &$parameter)
+					{
+						if (isset($parameter['$ref']) && str_starts_with($parameter['$ref'], '#/components/parameters/'))
+						{
+							if (!isset($app_json['components']['parameters'][$name = explode('/', $parameter['$ref'])[3] ?? '']))
+							{
+								throw new \Exception("$method $path: Parameter reference {$parameter['$ref']} not found!");
+							}
+							$parameter = $app_json['components']['parameters'][$name];
+						}
+					}
+				}
+			}
+			unset($app_json['parameters']);
+		}
 		$json['paths'] += $app_json['paths'] ?? [];
 		$json['components']['parameters'] += $app_json['components']['parameters'] ?? [];
 		$json['components']['schemas'] += $app_json['components']['schemas'] ?? [];

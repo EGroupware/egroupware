@@ -196,7 +196,7 @@
         "tags": ["Addressbook"],
         "summary": "Create a new contact in the given users addressbook",
         "description": "Adds a new contact to the addressbook. The Location header in the response gives the URL of the new resource.",
-        "operationId": "createContact",
+        "operationId": "createUserContact",
         "parameters": [
           {
             "$ref": "#/components/parameters/username"
