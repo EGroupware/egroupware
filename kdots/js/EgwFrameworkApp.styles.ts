@@ -1,5 +1,5 @@
 import {css} from 'lit';
-import SlSplitPanelStyles from "./EgwFrameworkSplitPanel.styles";
+import SplitPanelStyles from "./EgwFrameworkSplitPanel.styles";
 
 export default css`
 
@@ -131,25 +131,13 @@ export default css`
 		}
     }
 
-	.egw_fw_app__panel.egw_fw_app--panel-collapsed {
+	.egw_fw_app__panel.egw_fw_app--panel-collapsed:not(.no-content) {
 		--min: 0px;
 	}
 
-    /*sl-split-panel style*/
+	/*egw-split-panel style*/
 
-    ${SlSplitPanelStyles}
-    sl-split-panel::part(divider) {
-        grid-row: start / end;
-        font-size: var(--sl-font-size-medium);
-    }
-
-    sl-split-panel.no-content {
-        --divider-width: 0px;
-    }
-
-    sl-split-panel.no-content::part(divider) {
-        display: none;
-    }
+	${SplitPanelStyles}
 
     .egw_fw_app__aside {
         overflow-x: hidden;

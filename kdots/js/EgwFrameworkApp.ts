@@ -138,12 +138,6 @@ export class EgwFrameworkApp extends LitElement
 	rightCollapsed = false;
 
 	/**
-	 * Pay no attention to splitter resizes (does not update preference)
-	 * @type {boolean}
-	 */
-	@state() ignoreSplitterResize = false;
-
-	/**
 	 * Some child has a selection, so we want to enable the context menu button.
 	 * This is for mobile only.
 	 *
@@ -170,10 +164,10 @@ export class EgwFrameworkApp extends LitElement
 	// Left is in pixels
 	private leftPanelInfo : PanelInfo = {
 		side: "left",
-		preference: "jdotssideboxwidth",
-		defaultWidth: 200,
+		preference: "app_left_width",
+		defaultWidth: 20,
 		hiddenWidth: 0,
-		preferenceWidth: 200
+		preferenceWidth: 20
 	};
 	// Right is in percentage
 	private rightPanelInfo : PanelInfo = {
@@ -674,11 +668,9 @@ export class EgwFrameworkApp extends LitElement
 	{
 		const attribute = `${side}Collapsed`;
 		this[attribute] = false;
-		this.ignoreSplitterResize = true;
 		this[`${side}Splitter`].position = this[`${side}PanelInfo`].preferenceWidth || this[`${side}PanelInfo`].defaultWidth;
 		return this.updateComplete.then(() =>
 		{
-			this.ignoreSplitterResize = false;
 			this.dispatchEvent(new CustomEvent("show",
 				{bubbles: true, composed: true, detail: {name: this.name, side: side}}));
 
@@ -696,12 +688,10 @@ export class EgwFrameworkApp extends LitElement
 		const attribute = `${side}Collapsed`;
 		const oldValue = this[attribute];
 		this[attribute] = true;
-		this.ignoreSplitterResize = true;
 		this[`${side}Splitter`].position = this[`${side}PanelInfo`].hiddenWidth;
 		this.requestUpdate(attribute, oldValue);
 		return this.updateComplete.then(() =>
 		{
-			this.ignoreSplitterResize = false
 			this.dispatchEvent(new CustomEvent("hide",
 				{bubbles: true, composed: true, detail: {name: this.name, side: side}}));
 
@@ -908,7 +898,7 @@ export class EgwFrameworkApp extends LitElement
 
 		// Skip if there's no panelInfo - event is from the wrong place
 		// Skip if loading, or not active to avoid keeping changes while user is not interacting
-		if(typeof event.target?.dataset.panel == "undefined" || this.ignoreSplitterResize || this.loading || !this.hasAttribute("active"))
+		if(typeof event.target?.dataset.panel == "undefined" || this.loading || !this.hasAttribute("active"))
 		{
 			return;
 		}
@@ -920,31 +910,18 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this[`${panelInfo.side}Collapsed`] = true;
 		}
-		if(this[`${panelInfo.side}Collapsed`])
+		if(this[`${panelInfo.side}Collapsed`] && !split.isCollapsed)
 		{
 			// It's collapsed, it doesn't move
-			split.position = panelInfo.hiddenWidth;
+			split.isCollapsed = true;
 			return;
 		}
-
-		// Left side is in pixels, round to 2 decimals
-		let newPosition = Math.round(panelInfo.side == "left" ? split.positionInPixels * 100 : Math.min(100, split.position) * 100) / 100;
-		if(isNaN(newPosition))
-		{
-			return;
-		}
-
+		let newPosition = split.position;
 		await split.updateComplete;
-		
-		// Limit to maximum of actual width, splitter handles max
-		if(panelInfo.side == "left")
-		{
-			newPosition = Math.min(newPosition, parseInt(getComputedStyle(split).gridTemplateColumns.split(" ").shift()));
-		}
 
 		// Update collapsed
 		const oldCollapsed = this[`${panelInfo.side}Collapsed`];
-		this[`${panelInfo.side}Collapsed`] = newPosition == panelInfo.hiddenWidth;
+		this[`${panelInfo.side}Collapsed`] = split.isCollapsed;
 		if(oldCollapsed != this[`${panelInfo.side}Collapsed`])
 		{
 			this.dispatchEvent(new CustomEvent(oldCollapsed ? "show" : "hide",
@@ -976,6 +953,7 @@ export class EgwFrameworkApp extends LitElement
 			}
 			panelInfo.resizeTimeout = window.setTimeout(() =>
 			{
+				panelInfo.resizeTimeout = null;
 				console.log(`Panel resize: ${this.name} ${panelInfo.side} ${panelInfo.preferenceWidth} -> ${newPosition}`);
 				panelInfo.preferenceWidth = newPosition;
 				this.egw.set_preference(this.name, preferenceName, newPosition);
@@ -1027,15 +1005,8 @@ export class EgwFrameworkApp extends LitElement
 		}
 
 		// Stop splitter from resizing while app is not active
-		this.ignoreSplitterResize = true;
-		if(!this.rightSplitter)
-		{
-			await this.updateComplete;
-		}
-		if(this.rightSplitter)
-		{
-			this.rightSplitter.position = this.rightCollapsed ? this.rightPanelInfo.hiddenWidth : parseInt(<string>this.rightPanelInfo.preferenceWidth);
-		}
+		this.leftSplitter != null && (this.leftSplitter.disabled = true);
+		this.rightSplitter != null && (this.rightSplitter.disabled = true);
 	}
 
 	/**
@@ -1051,13 +1022,6 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return;
 		}
-		// Say that panels have changed
-		this.dispatchEvent(new CustomEvent(this.leftCollapsed ? "hide" : "show",
-			{bubbles: true, composed: true, detail: {name: this.name, side: this.leftPanelInfo.side}}
-		));
-		this.dispatchEvent(new CustomEvent(this.rightCollapsed ? "hide" : "show",
-			{bubbles: true, composed: true, detail: {name: this.name, side: this.rightPanelInfo.side}}
-		));
 
 		// Fix splitter if it has moved while hidden
 		const resetPanel = async(splitter : SlSplitPanel) =>
@@ -1066,26 +1030,19 @@ export class EgwFrameworkApp extends LitElement
 			{
 				return;
 			}
-			const panelInfo = this[splitter.dataset.panel] || {};
-			const collapsed = `${panelInfo.side}Collapsed`;
-			if(splitter.position !== panelInfo.preferenceWidth || this[collapsed] && splitter.position != panelInfo.hiddenWidth)
-			{
-				await this.updateComplete;
-				window.setTimeout(() =>
-				{
-					if(splitter && panelInfo.side == "right")
-					{
-						splitter.position = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth ?? panelInfo.defaultWidth);
-					}
-					else if(splitter && panelInfo.side == "left")
-					{
-						splitter.positionInPixels = this[collapsed] ? panelInfo.hiddenWidth : parseInt(<string>panelInfo.preferenceWidth ?? panelInfo.defaultWidth);
-					}
-					this.ignoreSplitterResize = false;
-				}, 0);
-			}
+			splitter.detectSize();
+			splitter.disabled = false;
 		}
+		await this.updateComplete;
 		[this.rightSplitter, this.leftSplitter].forEach(splitter => void resetPanel(splitter));
+
+		// Say that panels have changed
+		this.dispatchEvent(new CustomEvent(this.leftCollapsed ? "hide" : "show",
+			{bubbles: true, composed: true, detail: {name: this.name, side: this.leftPanelInfo.side}}
+		));
+		this.dispatchEvent(new CustomEvent(this.rightCollapsed ? "hide" : "show",
+			{bubbles: true, composed: true, detail: {name: this.name, side: this.rightPanelInfo.side}}
+		));
 	}
 
 	protected handleAppMenuClick(event)
@@ -1481,31 +1438,32 @@ export class EgwFrameworkApp extends LitElement
                         --left-min: ${this.leftPanelInfo.hiddenWidth}px
                         --left-max: ${this.leftPanelInfo.hiddenWidth}px
                     </style>`}
-                <sl-split-panel class=${classMap({
+                <egw-split-panel class=${classMap({
                     "egw_fw_app__panel": true,
                     "egw_fw_app__outerSplit": true,
                     "no-content": !hasLeftSlots,
                     "egw_fw_app--panel-collapsed": this.leftCollapsed
                 })}
-                                primary="start" position-in-pixels="${leftWidth}"
-                                snap="0px 20%" snap-threshold="50"
-                                data-panel="leftPanelInfo"
-                                @sl-reposition=${this.handleSlide}
+                                 primary="start" position="${leftWidth}"
+                                 snap="0px 20%" snap-threshold="50"
+                                 data-panel="leftPanelInfo"
+                                 @sl-reposition=${this.handleSlide}
                 >
                     <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideLeft}></sl-icon>
                     ${this._asideTemplate("start", "left", this.egw.lang("Sidebox"))}
-                    <sl-split-panel slot="end"
-                                    class=${classMap({
-                                        "egw_fw_app__panel": true,
-                                        "egw_fw_app__innerSplit": true,
-                                        "no-content": !hasRightSlots,
-                                        "egw_fw_app--panel-collapsed": this.rightCollapsed
-                                    })}
-                                    primary="start"
-                                    position=${rightWidth} snap="50% 80% 100%"
-                                    snap-threshold="50"
-                                    data-panel="rightPanelInfo"
-                                    @sl-reposition=${this.handleSlide}
+                    <egw-split-panel slot="end"
+                                     class=${classMap({
+                                         "egw_fw_app__panel": true,
+                                         "egw_fw_app__innerSplit": true,
+                                         "no-content": !hasRightSlots,
+                                         "egw_fw_app--panel-collapsed": this.rightCollapsed
+                                     })}
+                                     primary="start"
+                                     position=${rightWidth} snap="50% 80% 100%"
+                                     snap-threshold="50"
+                                     data-panel="rightPanelInfo"
+                                     data-default=${this.rightPanelInfo.defaultWidth}
+                                     @sl-reposition=${this.handleSlide}
                     >
                         ${this.rightCollapsed ? nothing : html`
                             <sl-icon slot="divider" name="grip-vertical" @dblclick=${this.hideRight}></sl-icon>`
@@ -1521,8 +1479,8 @@ export class EgwFrameworkApp extends LitElement
                             <slot name="footer"></slot>
                         </footer>
                         ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
-                    </sl-split-panel>
-                </sl-split-panel>
+                    </egw-split-panel>
+                </egw-split-panel>
             </div>
 		`;
 	}
@@ -1530,7 +1488,7 @@ export class EgwFrameworkApp extends LitElement
 
 type PanelInfo = {
 	side : "left" | "right",
-	preference : "jdotssideboxwidth" | "app_right_width",
+	preference : "app_left_width" | "app_right_width",
 	hiddenWidth : number,
 	defaultWidth : number,
 	preferenceWidth : number | string

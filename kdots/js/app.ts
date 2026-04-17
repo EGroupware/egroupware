@@ -5,6 +5,7 @@
 import {EgwFramework} from "./EgwFramework";
 import {EgwFrameworkApp} from "./EgwFrameworkApp";
 import {EgwDarkmodeToggle} from "./EgwDarkmodeToggle";
+import {EgwSplitPanel} from "./EgwSplitPanel";
 
 const framework = <EgwFramework>document.querySelector("egw-framework");
 if(framework)
@@ -24,6 +25,10 @@ if(framework)
 		if(!window.customElements.get("egw-darkmode-toggle"))
 		{
 			window.customElements.define("egw-darkmode-toggle", EgwDarkmodeToggle);
+		}
+		if(!window.customElements.get("egw-split-panel"))
+		{
+			window.customElements.define("egw-split-panel", EgwSplitPanel);
 		}
 		const framework = <EgwFramework>document.querySelector("egw-framework");
 		// Quick add
