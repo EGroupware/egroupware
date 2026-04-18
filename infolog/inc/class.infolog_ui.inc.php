@@ -1128,9 +1128,9 @@ class infolog_ui
 		}
 		if ($values['nm']['filter']=='bydate')
 		{
-			foreach (array_keys($values['nm']['col_filter']) as $colfk)
+			foreach (array_keys($values['nm']['col_filter'] ?? []) as $colfk)
 			{
-				if (is_int($colfk)) unset($values['nm']['col_filter']);
+				if (is_int($colfk)) unset($values['nm']['col_filter'][$colfk]);
 			}
 		}
 		$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
