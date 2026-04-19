@@ -37,8 +37,10 @@ if (empty($GLOBALS['egw_info']))
 		// ignore app rights, they are only used to limit the returned API's
 	}
 }
+// allow unauthenticated access from everywhere, e.g. to use Swagger Editor (https://editor.swagger.io/) to view it
+header('Access-Control-Allow-Origin: '.($GLOBALS['egw_info']['flags']['currentapp'] === 'login' ? '*' : rtrim(Api\Framework::getUrl('/'), '/')));
 $json = [
-	"openapi" => "3.1.0",
+	"openapi" => $_GET['openapi'] ?? "3.1.0",   // allow to set openapi version, as Swagger UI seems to choke on 3.1.x
 	"info" => [
 		"title" => "EGroupware API",
 		"description" => "Index of all EGroupware OpenAPI descriptions",
@@ -69,7 +71,7 @@ $json = [
 			"bearerAuth" => [
 				"type" => "http",
 				"scheme" => "bearer",
-				"description" => "HTTP Bearer Token Authentication for API access with and OpenIDConnect/OAuth access token."
+				"description" => "HTTP Bearer Token Authentication for API access with an OpenIDConnect/OAuth access token."
 			]
 		],
 		"parameters" => [], // parameters are added from separate app-specific JSON-files below
@@ -91,7 +93,7 @@ foreach(scandir(__DIR__) as $file)
 		// Open WebUI seems to have a problem with references in parameters --> inline all parameters
 		// ToDo: check other references like schemas
 		$inline_parameters = preg_match('#^Python/[0-9.]+ aiohttp/[0-9.]+$#', $_SERVER['HTTP_USER_AGENT']);
-		//if ($inline_parameters)
+		if ($inline_parameters)
 		{
 			$operationIds = [];
 			foreach($app_json['paths'] as $path => &$methods)

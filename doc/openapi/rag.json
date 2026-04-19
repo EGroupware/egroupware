@@ -50,6 +50,7 @@
               "type": "string",
               "minLength": 3
             },
+            "example": "search pattern",
             "description": "Search pattern (must be at least 3 characters long)"
           },
           {
@@ -57,10 +58,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string",
+              "example": "addressbook"
             },
             "description": "Limit search to specific app(s), default is to search all apps. Can be specified multiple times e.g. 'filters[apps][]=addressbook&filters[apps][]=calendar'. Do NOT specify 'rag', it will find nothing!",
             "style": "form",
@@ -93,10 +92,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "string",
+              "example": "displayname"
             },
             "description": "List of DAV properties to return (e.g., props[]=displayname)",
             "style": "form",
