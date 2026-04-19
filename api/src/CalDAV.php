@@ -1112,12 +1112,12 @@ class CalDAV extends HTTP_WebDAV_Server
 
 		if ($options['path'] === '/openapi.json')
 		{
-			require_once(EGW_SERVER_ROOT.'/doc/openapi/index.php');
+			require_once(EGW_SERVER_ROOT.'/doc/openapi/openapi-json.php');
 			exit;
 		}
 
 		$id = $app = $user = null;
-		if ($options['path'] === '/openapi.json' || !$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
+		if (!$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
 		{
 			if (($json = self::isJSON()))
 			{

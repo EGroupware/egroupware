@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
     "title": "EGroupware Timesheet REST API",
     "description": "REST API for managing timesheets in EGroupware. Supports CRUD operations, filtering, and synchronization via sync tokens.",
@@ -44,10 +44,10 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
-            "$ref": "#/components/parameters/filters[search]"
+            "$ref": "#/components/parameters/filters_search"
           },
           {
-            "$ref": "#/components/parameters/filters[linked]"
+            "$ref": "#/components/parameters/filters_linked"
           },
           {
             "name": "Accept",
@@ -192,10 +192,10 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
-            "$ref": "#/components/parameters/filters[search]"
+            "$ref": "#/components/parameters/filters_search"
           },
           {
-            "$ref": "#/components/parameters/filters[linked]"
+            "$ref": "#/components/parameters/filters_linked"
           },
           {
             "name": "Accept",
@@ -512,7 +512,7 @@
       "username": {
         "name": "username",
         "in": "path",
-        "required": false,
+        "required": true,
         "schema": {
           "type": "string"
         },
@@ -559,7 +559,7 @@
         },
         "description": "Limit number of responses (only for sync-collection)"
       },
-      "filters[search]": {
+      "filters_search": {
         "name": "filters[search]",
         "in": "query",
         "required": false,
@@ -568,7 +568,7 @@
         },
         "description": "Search pattern. Example: filters[search]=something"
       },
-      "filters[linked]": {
+      "filters_linked": {
         "name": "filters[linked]",
         "in": "query",
         "required": false,
