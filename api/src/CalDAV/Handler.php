@@ -824,11 +824,11 @@ abstract class Handler
 			return $status;
 		}
 		// are we linking with another app's entry
-		if (substr($options['path'], -1) === '/' && $options['content_type'] === 'application/json')
+		if (preg_match('#/[a-z_]+/\d+/links/?$#i', $options['path']) && $options['content_type'] === 'application/json')
 		{
 			$json = $options['content'] ?? stream_get_contents($options['stream']);
 			$data = json_decode($json, true, 2, JSON_THROW_ON_ERROR);
-			if (empty($data['app']) || empty($data['id']) || !($link = Api\Link::link($this->app, $id, $data['app'], $data['id'], $data['remark'] ?? null)))
+			if (empty($data['toApp'] ?? $data['app']) || empty($data['toId'] ?? $data['id']) || !($link = Api\Link::link($this->app, $id, $data['toApp'] ?? $data['app'], $data['toId'] ?? $data['id'], $data['remark'] ?? null)))
 			{
 				return '422 Unprocessable Content';
 			}

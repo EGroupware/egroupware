@@ -27,13 +27,13 @@ Authentication is via Basic Auth with username and a password, or a token valid 
   <summary>Example: Getting all links and attachments of a given application entry</summary>
   
 ```
-curl https://example.org/egroupware/groupdav.php/<username>/<app>/<id>/links/ -H "Accept: application/pretty+json" --user <username>
+curl https://example.org/egroupware/groupdav.php/<app>/<id>/links/ -H "Accept: application/pretty+json" --user <username>
 HTTP/1.1 200 Ok
 Content-Type: application/json
 
 {
     "responses": {
-        "/<username>/<app>/<id>/links/<link-id>": {
+        "/<app>/<id>/links/<link-id>": {
             "@type": "Link",
             "href": "https://example.org/egroupware/groupdav.php/ralf/addressbook/46",
             "contentType": "application/json",
@@ -42,7 +42,7 @@ Content-Type: application/json
             "egroupware.org-id": "46",
             "egroupware.org-remark": "Testing ;)"
         },
-        "/<username>/<app>/<id>/links/<link-id>": {
+        "/<app>/<id>/links/<link-id>": {
             "@type": "Link",
             "href": "https://example.org/egroupware/groupdav.php/ralf/infolog/1161",
             "contentType": "application/json",
@@ -50,7 +50,7 @@ Content-Type: application/json
             "egroupware.org-app": "infolog",
             "egroupware.org-id": "1161"
         },
-        "/<username>/<app>/<id>/links/<attachment-id>": {
+        "/<app>/<id>/links/<attachment-id>": {
             "@type": "Link",
             "href": "https://example.org/egroupware/webdav.php/apps/timesheet/199/image.svg",
             "contentType": "image/svg+xml",
@@ -68,10 +68,10 @@ Content-Type: application/json
    <summary>Example: Adding a PDF as attachment to an application entry</summary>
    
 ```
-curl -i 'https://example.org/egroupware/groupdav.php/<username>/<app>/<id>/links/<filename>' -H "Content-Type: application/pdf" --data-binary @<path-to-pdf> --user <username>
+curl -i 'https://example.org/egroupware/groupdav.php/<app>/<id>/links/<filename>' -H "Content-Type: application/pdf" --data-binary @<path-to-pdf> --user <username>
 
 HTTP/1.1 204 Created
-Location: https://example.org/egroupware/groupdav.php/<username>/<app>/<id>/links/<attachment-id>
+Location: https://example.org/egroupware/groupdav.php/<app>/<id>/links/<attachment-id>
 ```
 </details>
 
@@ -79,25 +79,26 @@ Location: https://example.org/egroupware/groupdav.php/<username>/<app>/<id>/link
    <summary>Example: Creating a link from one application entry to another</summary>
 
 ```
-curl -i 'https://example.org/egroupware/groupdav.php/<username>/<app>/<id>/links/' -H "Content-Type: application/json" --data-binary @- --user <username> <<<EOF
-{"app":"<2nd-app>","id":<2nd-app-id>,"remark":"This is a test ;)"}
+curl -i 'https://example.org/egroupware/groupdav.php/<app>/<id>/links/' -H "Content-Type: application/json" --data-binary @- --user <username> <<<EOF
+{"toApp":"<2nd-app>","toId":<2nd-app-id>,"remark":"This is a test ;)"}
 EOF
 
 HTTP/1.1 204 Created
-Location: https://example.org/egroupware/groupdav.php/<username>/<app>/<id>/links/<link-id>
+Location: https://example.org/egroupware/groupdav.php/<app>/<id>/links/<link-id>
 ```
+> The attributes `app` and `id` in the JSON body have been renamed to `toApp` and `toId`, the old names are deprecated but still supported!
 </details>
 
 <details>
    <summary>Example: Creating the primary link for an InfoLog entry</summary>
 
 ```
-curl -i 'https://example.org/egroupware/groupdav.php/<username>/infolog/<id>/links/' -H "Content-Type: application/json" --data-binary @- --user <username> <<<EOF
-{"app":"<2nd-app>","id":<2nd-app-id>,"rel":"egroupware.org-primary"}
+curl -i 'https://example.org/egroupware/groupdav.php/infolog/<id>/links/' -H "Content-Type: application/json" --data-binary @- --user <username> <<<EOF
+{"toApp":"<2nd-app>","toId":<2nd-app-id>,"rel":"egroupware.org-primary"}
 EOF
 
 HTTP/1.1 204 Created
-Location: https://example.org/egroupware/groupdav.php/<username>/infolog/<id>/links/<link-id>
+Location: https://example.org/egroupware/groupdav.php/infolog/<id>/links/<link-id>
 ```
 </details>
 
