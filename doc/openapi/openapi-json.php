@@ -84,8 +84,9 @@ foreach(scandir(__DIR__) as $file)
 {
 	if (str_ends_with($file, ".json"))
 	{
-		// if we're authenticated only show API's of apps the user has access too
-		if (isset($GLOBALS['egw_info']['user']['apps']) && !isset($GLOBALS['egw_info']['user']['apps'][basename($file, '.json')]))
+		// if we're authenticated only show API's of apps the user has access too or are independent of an app like "links.json"
+		if (isset($GLOBALS['egw_info']['apps'][$app=basename($file, '.json')]) &&
+			isset($GLOBALS['egw_info']['user']['apps']) && !isset($GLOBALS['egw_info']['user']['apps'][$app]))
 		{
 			continue;
 		}

@@ -1,0 +1,367 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware REST/CalDAV/CardDAV API (Links & Attachments)",
+    "description": "This API allows managing links and attachments in EGroupware apps like addressbook, calendar, infolog, timesheet, ... The API follows RFCs for JSCalendar (RFC 8984) and JSContact (RFC 9553) and supports uploading, linking, and deleting attachments and links.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://example.egroupware.org/egroupware/groupdav.php",
+      "description": "EGroupware GroupDAV/REST Server"
+    }
+  ],
+  "paths": {
+    "/{app}/{id}/links/": {
+      "post": {
+        "tags": ["Links & Attachments"],
+        "summary": "Create a link",
+        "operationId": "createLink",
+        "description": "Create a link from the entry specified in the path to an other entry specified in the request body.\n\nBoth entries can be from an arbitrary EGroupware application supporting the REST API.\nLinks have no direction, so a link from A to B is identical to one from B to A!\n\nTo link the addressbook entry 123 with the infolog entry 456, you POST e.g. the JSON {\"toApp\": \"infolog\", \"toId\": 456} as body to the path /addressbook/123/links/.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/app"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkTo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Link successfully created",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "description": "URL of the added link"
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content: invalid JSON, missing attributes or target is identical to source"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Links & Attachments"],
+        "summary": "Retrieve all links/attachments",
+        "operationId": "getLinks",
+        "description": "Returns a list of all links and attachments for the specified entry.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/app"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of links/attachments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Link"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/{app}/{id}/links/{filename}": {
+      "post": {
+        "tags": ["Links & Attachments"],
+        "summary": "Add an attachment",
+        "operationId": "addAttachment",
+        "description": "Adds an attachment to an entry (e.g., calendar event, address book entry). The request body is the attachment itself as binary data!",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/app"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "description": "Filename of the attachment including extension. Slashes ('/') or 4-byte utf8 chars like emojis are NOT allowed!",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "description": "The content-type of the attachment (e.g., image/jpeg or application/octet-stream)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "The binary content of the file to attache, e.g. an image or document. ",
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Attachment successfully added",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "description": "URL of the added attachment"
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content, probably filename contains not allowed characters like '/' or 4-byte utf8 emojis."
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/{app}/{id}/links/{link_id}": {
+      "delete": {
+        "tags": ["Links & Attachments"],
+        "summary": "Deletes a link or attachment.",
+        "operationId": "deleteLink",
+        "description": "Delete a link or attachment. When deleting a link, only the linkage is deleted, not the other entry!",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/app"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/link_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Link/attachment successfully deleted"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "app": {
+        "name": "app",
+        "in": "path",
+        "required": true,
+        "description": "Name of the application (e.g., addressbook, calendar, infolog)",
+        "schema": {
+          "type": "string",
+          "enum": ["addressbook", "calendar", "infolog", "timesheet", "projectmanager", "invoices"]
+        }
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "ID of the entry (e.g., calendar event, address book entry)",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "link_id": {
+        "name": "link_id",
+        "in": "path",
+        "required": true,
+        "description": "ID of the link/attachment",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Bad request"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Link": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "required": true,
+            "type": "string",
+            "enum": "Link"
+          },
+          "href": {
+            "required": true,
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the linked entry or attachment"
+          },
+          "contentType": {
+            "required": true,
+            "type": "string",
+            "description": "Content-Type of attachment or 'application/json' for linked entry."
+          },
+          "title": {
+            "type": "string",
+            "description": "Link-Title of the entry, or filename of the attachment."
+          },
+          "egroupware.org-app": {
+            "type": "string",
+            "description": "Application of linked entry e.g. 'addressbook'"
+          },
+          "egroupware.org-id": {
+            "type": "string",
+            "description": "ID of the linked entry"
+          },
+          "egroupware.org-remark": {
+            "type": "string",
+            "description": "Additional text about the link."
+          },
+          "size": {
+            "type": "integer",
+            "description": "Size of attachment"
+          }
+        }
+      },
+      "LinkTo": {
+        "type": "object",
+        "properties": {
+          "toApp": {
+            "type": "string",
+            "description": "Application of the entry to link to (e.g., 'addressbook')"
+          },
+          "toId": {
+            "type": "string",
+            "description": "ID of the entry to link to. For the same application-name it must NOT be identical to the IP in the path!"
+          },
+          "remark": {
+            "type": "string",
+            "description": "Additional text describing the link"
+          },
+          "rel": {
+            "type": "string",
+            "description": "Relation of the link, used to set the link as primary link of an infolog only, by using value 'egroupware.org-primary'",
+            "enum": ["egroupware.org-primary"]
+          }
+        },
+        "required": ["toApp", "toId"]
+      }
+    }
+  }
+}
