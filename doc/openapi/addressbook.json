@@ -94,13 +94,18 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": ["application/json","application/json-patch+json"]
             }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactPatch"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Contact"
@@ -207,13 +212,18 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": ["application/json","application/json-patch+json"]
             }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactPatch"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Contact"
@@ -363,16 +373,21 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": ["application/json","application/json-patch+json"]
             }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "application/json-patch+json": {
               "schema": {
                 "$ref": "#/components/schemas/ContactPatch"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
               }
             }
           }
@@ -634,28 +649,43 @@
       },
       "ContactPatch": {
         "type": "object",
-        "description": "Partial update for a contact. All properties are optional. To unset a field, set its value to `null`.",
+        "description": "Partial update for a contact (all properties optional) or creating a new contact using a single flat object with json-path of Contact schema as attribute names. To unset a field, set its value to `null`.",
         "properties": {
-          "name": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NameComponent"
-            }
-          },
-          "fullName": {
+          "name/given": {
             "type": "string",
-            "description": "Full name of the contact"
+            "description": "Given or first name"
+          },
+          "name/surname": {
+            "type": "string",
+            "description": "Surname or family name"
           },
           "organizations/org/name": {
-            "type": "string"
+            "type": "string",
+            "description": "Organisation name"
+          },
+          "organizations/org/unit": {
+            "type": "string",
+            "description": "Organisation unit"
           },
           "emails/work": {
             "type": "string"
           },
           "phones/tel_work": {
-            "type": "string"
+            "type": "string",
+            "description": "Phone number"
+          },
+          "phones/tel_cell": {
+            "type": "string",
+            "description": "Mobile/cell-phone number"
           },
           "addresses/work/locality": {
+            "type": "string",
+            "description": "City name"
+          },
+          "addresses/work/postcode": {
+            "type": "string"
+          },
+          "addresses/work/street": {
             "type": "string"
           },
           "notes/note": {
