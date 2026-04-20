@@ -2577,10 +2577,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$uid = $hA['msgUID'];
 				$mailbox = $hA['folder'];
 				$acc_id = $hA['profileID'];
-
+				$onlyOwnHandlers = $attachmentHTML[$key]['mimetype']?'mail':null;
 				$attachmentHTML[$key]['mime_data'] = Link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount', array(
 					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'] ?? false, true
-				));
+				),false,$onlyOwnHandlers);
 				$attachmentHTML[$key]['size']=Vfs::hsize($value['size']);
 				$attachmentHTML[$key]['attachment_number']=$key;
 				$attachmentHTML[$key]['partID']=$value['partID'];
