@@ -34,7 +34,8 @@ attempt to extract values from the container using standard eTemplate2 methods.
 
 ### Custom Prompts
 
-You can provide your own set of prompts. Prompts can define a target (where the result goes) and a mode (replace,
+By default prompts are provided from the server-side configuration. You can provide your own set of prompts for a
+specific Et2Ai instance. Prompts can define a target (where the result goes) and a mode (replace,
 append, or prepend).
 
 ```html:preview
@@ -59,7 +60,7 @@ append, or prepend).
 ```
 
 :::tip
-Prompt IDs must be matched to a predefined prompt on the server.
+Prompt IDs must still be matched to a predefined prompt on the server.
 :::
 
 ### Using Events to Interfere

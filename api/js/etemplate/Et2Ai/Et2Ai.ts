@@ -48,20 +48,6 @@ const defaultActions : AiAction[] = [
 	{label: "Insert after", target: "self", mode: "append"}
 ];
 
-export const simplePrompts : AiPrompt[] = [
-	{id: "aiassist.summarize", label: "Summarize text"},
-	{id: "aiassist.generate_subject", label: "Generate a subject", actions: [{target: "subject"}]},
-	{id: "aiassist.formal", label: "Make more formal"},
-	{id: "aiassist.grammar", label: "Fix grammar & spelling"},
-	{id: "aiassist.concise", label: "Make concise"},
-	{id: "aiassist.translate", label: "Translate", children: []}
-];
-
-export const generatePrompts : AiPrompt[] = [
-	{id: "aiassist.generate_reply", label: "Professional reply"},
-	{id: "aiassist.meeting_followup", label: "Meeting follow-up"},
-	{id: "aiassist.thank_you", label: "Thank you note"}
-];
 
 /**
  * @summary AI Assistant widget to process content of slotted elements
@@ -107,9 +93,14 @@ export class Et2Ai extends Et2Widget(LitElement)
 		];
 	}
 
-	/* Either an array of AiPrompts, or use "#simple", "#generate", "#translate" to specify predefined prompts */
+	/*
+	* An array of AiPrompts
+	*
+	* By default this is the list of prompts allowed for this app, but it can be overridden by providing a specific
+	* list of AiPrompts.
+	*/
 	@property({attribute: false, type: Object})
-	prompts : AiPrompt[] = Object.assign([], simplePrompts);
+	prompts : AiPrompt[] = [];
 
 	/* Specify a custom server endpoint for AI queries */
 	@property({attribute: false, type: String})
@@ -179,36 +170,12 @@ export class Et2Ai extends Et2Widget(LitElement)
 			Object.assign(attrs, global_data, attrs);
 		}
 
-		// Expand prompt shortcuts
-		if(typeof attrs.prompts !== "undefined")
+		// Add all prompts (for this app) available to the user
+		if(this.prompts.length == 0)
 		{
-			["#simple", "#generate", "#translate"].forEach(shortcut =>
-			{
-				let prompt : AiPrompt[] = [];
-				switch(shortcut)
-				{
-					case "#simple":
-						prompt = simplePrompts;
-						break;
-					case "#generate":
-						prompt = generatePrompts;
-						break;
-					case "#translate":
-						prompt = [this._findPrompt("aiassist.translate", simplePrompts)];
-				}
-				if(typeof attrs.prompts === "string" && attrs.prompts == shortcut)
-				{
-					attrs.prompts = [...prompt];
-				}
-				else if(Array.isArray(attrs.prompts) && attrs.prompts.includes(shortcut))
-				{
-					attrs.prompts.splice(attrs.prompts.indexOf(shortcut), 1, ...prompt);
-				}
-			});
+			this.prompts = this.egw().prompts(this.getInstanceManager().app);
 		}
 
-		// Add translation languages
-		this._addTranslations();
 		super.transformAttributes(attrs);
 	}
 
@@ -263,34 +230,6 @@ export class Et2Ai extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Add translation options from preferences
-	 *
-	 * @return {Promise<void>}
-	 * @private
-	 */
-	private async _addTranslations()
-	{
-		const translation = this._findPrompt("aiassist.translate", this.prompts);
-		if(!translation || translation.children.length)
-		{
-			return;
-		}
-
-		const labels = await this._getLanguageLabels();
-
-		if(translation.children.length == 0)
-		{
-			labels.forEach(lang =>
-			{
-				translation.children.push({
-					id: `${translation.id}-${lang.value}`,
-					label: lang.label
-				});
-			});
-		}
-	}
-
-	/**
 	 * Get language labels for AI translation
 	 *
 	 * @protected
@@ -336,7 +275,6 @@ export class Et2Ai extends Et2Widget(LitElement)
 	 */
 	protected async askAi()
 	{
-
 		const originalValue = this.getContent();
 		this.ai.isHTML = this._isHtmlContent(originalValue);
 
@@ -612,11 +550,6 @@ export class Et2Ai extends Et2Widget(LitElement)
 		this._htmlAreaTarget = target;
 		this.classList.add("et2-ai--has-html-target");
 
-		// Add generation prompts
-		if(!this._findPrompt("generate", this.prompts))
-		{
-			this.prompts.push({id: "generate", label: this.egw().lang("Generate"), children: generatePrompts});
-		}
 		// @ts-ignore
 		const originalExtended = target._extendedSettings.bind(target);
 		const setup = (editor) =>
@@ -634,11 +567,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 				icon: "aitools",
 				fetch: (callback) =>
 				{
-					// Make sure we have translations in
-					this._addTranslations().then(() =>
-					{
-						callback(this.prompts.map(p => this._promptToTinyMenu(p)));
-					})
+					callback(this.prompts.map(p => this._promptToTinyMenu(p)));
 				}
 			});
 		};
