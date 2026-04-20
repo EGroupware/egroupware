@@ -302,18 +302,15 @@
         "type": "object",
         "properties": {
           "@type": {
-            "required": true,
             "type": "string",
-            "enum": "Link"
+            "enum": ["Link"]
           },
           "href": {
-            "required": true,
             "type": "string",
             "format": "uri",
             "description": "URL of the linked entry or attachment"
           },
           "contentType": {
-            "required": true,
             "type": "string",
             "description": "Content-Type of attachment or 'application/json' for linked entry."
           },
@@ -337,7 +334,8 @@
             "type": "integer",
             "description": "Size of attachment"
           }
-        }
+        },
+        "required": ["href", "contentType", "title"]
       },
       "LinkTo": {
         "type": "object",
