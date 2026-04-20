@@ -120,6 +120,14 @@ class mail_ui
 		'deleted'	=> 'deleted',	// lang('deleted')
 	);
 
+	/**All mime types in mail-attachments
+	 * that only want to be handled with server-side links if
+	 * mail registers a mime-handler for them
+	 * e.g. do not try to link to records for image attachments, even if records registered a mime-handler for them
+	 * @var string
+	 */
+	static string $mimeTypesHandledOnlyByMail = '/image/i';
+
 	/**
 	 * Constructor
 	 *
@@ -2577,7 +2585,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$uid = $hA['msgUID'];
 				$mailbox = $hA['folder'];
 				$acc_id = $hA['profileID'];
-				$onlyOwnHandlers = $attachmentHTML[$key]['mimetype']?'mail':null;
+				$onlyOwnHandlers = preg_match(self::$mimeTypesHandledOnlyByMail, $value['mimeType']) ? 'mail' : null;
 				$attachmentHTML[$key]['mime_data'] = Link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount', array(
 					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'] ?? false, true
 				),false,$onlyOwnHandlers);
