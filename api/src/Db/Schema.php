@@ -253,15 +253,12 @@ class Schema
 			}
 			foreach((array)$mFields as $k => $col)
 			{
-				// only create indexes on text-columns, if (db-)specifiy options are given or FULLTEXT for mysql
+				// only create indexes on text-columns, if (db-)specific options are given or FULLTEXT for mysql
 				// most DB's cant do them and give errors
 				if (in_array($aTableDef['fd'][$col]['type'], array('text','longtext','vector')))
 				{
-					if (is_array($mFields))	// index over multiple columns including a text column
-					{
-						$mFields[$k] .= '(32)';	// 32=limit of egw_addressbook_extra.extra_value to fix old backups
-					}
-					elseif (!$options)	// index over a single text column and no options given
+					// index over a single text column and no options given, or e.g. egw_rag_fulltext table with fulltext in the name
+					if (!$options || strpos($sTableName, 'fulltext'))
 					{
 						if ($this->sType == 'mysql')
 						{
@@ -271,6 +268,10 @@ class Schema
 						{
 							continue 2;	// ignore that index, 2=not just column but whole index!
 						}
+					}
+					elseif (is_array($mFields))	// index over multiple columns including a text column
+					{
+						$mFields[$k] .= '(32)';	// 32=limit of egw_addressbook_extra.extra_value to fix old backups
 					}
 				}
 			}

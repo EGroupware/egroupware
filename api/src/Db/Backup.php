@@ -53,7 +53,7 @@ class Backup
 		'egw_sessions','egw_app_sessions','phpgw_sessions','phpgw_app_sessions',	// eGW's session-tables
 		'phpgw_anglemail',	// email's cache
 		'egw_felamimail_cache','egw_felamimail_folderstatus','phpgw_felamimail_cache','phpgw_felamimail_folderstatus',	// felamimail's cache
-		'egw_phpfreechat', // as of the fieldnames of the table a restore would fail within egroupware, and chatcontent is of no particular intrest
+		'egw_phpfreechat', // as of the fieldnames of the table a restore would fail within egroupware, and chatcontent is of no particular interest
 	);
 	/**
 	 * regular expression to identify system-tables => ignored for schema+backup
@@ -1163,6 +1163,21 @@ class Backup
 			{
 				// sapdb does not differ between text and blob
 				$this->schemas[$table]['fd']['content']['type'] = 'blob';
+			}
+			// check if indexed column is a text column: add MariaDB/MySQL specific index type (our DB abstraction does NOT report it)
+			foreach($this->schemas[$table]['ix'] as $key => $index)
+			{
+				foreach((array)$index as $k => $col)
+				{
+					if (is_int($k) && in_array($this->schemas[$table]['fd'][$col]['type'], array('text','longtext')) && !isset($index['options']))
+					{
+						if (!is_array($index))
+						{
+							$this->schemas[$table]['ix'][$key] = [$index];
+						}
+						$this->schemas[$table]['ix'][$key]['options'] = ['mysql' => 'FULLTEXT'];
+					}
+				}
 			}
 		}
 		ksort($this->schemas, SORT_STRING);
