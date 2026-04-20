@@ -142,7 +142,7 @@
 		"tinymce/tinymce": "^5.10.8"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^9.6.33"
+		"phpunit/phpunit": "^12.5.22"
 	},
 	"suggest": {
 		"ext-opcache": "Opcode cache to speed up PHP",
