@@ -45,6 +45,13 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 	// Hold in-progress request to avoid making more
 	let request = null;
 
+	/**
+	 * Client-side cached prompts
+	 *
+	 * @var Array<{id: string, label: string, children: array|undefined, apps: array|undefined}>
+	 */
+	let prompts = [];
+
 	return {
 		/**
 		 * Set data of current user
@@ -454,6 +461,29 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 					accountStore = {};
 					break;
 			}
+		},
+
+		/**
+		 * Set prompts
+		 *
+		 * @param Array<{id: string, label: string, children: Array|undefined, apps: Array|undefined> _prompts
+		 */
+		set_prompts: function(_prompts)
+		{
+			prompts = _prompts;
+		},
+
+		/**
+		 * Get prompts for given app
+		 *
+		 * Currently, the id's "aiassist.translate" and "aiassist.generate" have children/sub-menus.
+		 *
+		 * @param string _app
+		 * @return Array<{id: string, label: string, children: Array|undefined, apps: Array|undefined>
+		 */
+		prompts: function(_app)
+		{
+			return prompts.filter((attrs) => !attrs.app || attrs.app.includes(_app));
 		}
 	};
 });

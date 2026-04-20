@@ -11,7 +11,9 @@
  * @version $Id$
  */
 
+use EGroupware\AiTools\Prompts;
 use EGroupware\Api;
+use EGroupware\AiTools;
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -62,6 +64,19 @@ $content = 'egw.set_user('.$user.", egw && egw.window !== window);\n";
 foreach($preferences as $app => $data)
 {
 	$content .= 'egw.set_preferences('.json_encode($data).', '.json_encode($app).", egw && egw.window !== window);\n";
+}
+
+if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\EGroupware\\AiTools\\Prompts'))
+{
+	$prompts = (new AiTools\Bo())->get_predefined_prompts(false);
+	foreach(array_keys($prompts) as $sub)
+	{
+		if (isset($prompts[$sub]['children']))
+		{
+			$prompts[$sub]['children'] = array_values($prompts[$sub]['children']);
+		}
+	}
+	$content .= 'egw.set_prompts('.json_encode(array_values($prompts)).");\n";
 }
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content
