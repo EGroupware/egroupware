@@ -1728,9 +1728,9 @@ class Link extends Link\Storage
 	 * @param boolean $ignore_mime =false true: return id, even if nothing registered for given mime-type
 	 * @return string|null md5 hash of stored data of server-side supported mime-type or null otherwise
 	 */
-	public static function set_data($mime_type, $method, array $params, $ignore_mime=false)
+	public static function set_data($mime_type, $method, array $params, $ignore_mime=false,$_currentAppOnly=null)
 	{
-		if (!$ignore_mime && (!($info = self::get_mime_info($mime_type)) || empty($info['mime_data'])))
+		if (!$ignore_mime && (!($info = self::get_mime_info($mime_type,$_currentAppOnly)) || empty($info['mime_data'])))
 		{
 			return null;
 		}
