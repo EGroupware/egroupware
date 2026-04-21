@@ -486,7 +486,7 @@ class DateTime extends \DateTime
 	 */
 	public static function to($time='now',$type='')
 	{
-		if (!($time instanceof DateTime))
+		if(!($time instanceof \DateTimeInterface))
 		{
 			try
 			{
