@@ -3272,7 +3272,7 @@ class calendar_boupdate extends calendar_bo
     function server2usertime (&$event)
     {
 		// we run all dates through date2usertime, to adjust to user-time
-		foreach(array('start','end','recur_enddate','recurrence') as $ts)
+		foreach(array('start', 'end', 'recur_enddate', 'recurrence', 'modified') as $ts)
 		{
 			// we convert here from server-time to timestamps in user-time!
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2usertime($event[$ts]) : 0;
