@@ -1192,6 +1192,23 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * Etag for api/user.php
+	 *
+	 * @param $user
+	 * @param $prompts
+	 * @return string
+	 */
+	public static function user_etag($user=null, $prompts=null)
+	{
+		$user ??= $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
+		if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\EGroupware\\AiTools\\Prompts'))
+		{
+			$prompts ??= (new AiTools\Bo())->get_predefined_prompts(false);
+		}
+		return $GLOBALS['egw']->preferences->etag($user, $prompts ?? '');
+	}
+
+	/**
 	 * Files imported via script tag in egw.js, because they are no modules
 	 */
 	const legacy_js_imports = '#/dhtmlx|jquery|magicsuggest|resumable#';
