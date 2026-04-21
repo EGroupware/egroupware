@@ -2568,7 +2568,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				{
 					window.performance.mark("mark_nextmatch_row_template_" + template_name + "_end");
 				}
-				return;
+				return Promise.resolve();
 			}
 
 			// Free the grid components - they'll be re-created as the template is processed
@@ -2608,7 +2608,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		if(this.options.disabled)
 		{
-			return;
+			return Promise.resolve();
 		}
 
 		// Deferred parse function - template might not be fully loaded
