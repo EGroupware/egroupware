@@ -927,6 +927,11 @@ class calendar_bo
 		{
 			$this->debug_message('calendar_bo::set_recurrences(%1,%2)',true,$event,$start);
 		}
+		// $event is in USER time
+		if(!$start)
+		{
+			$start = new Api\DateTime($event['start'], Api\DateTime::$user_timezone);
+		}
 		// check if the caller gave us enough information and if not read it from the DB
 		if (!isset($event['participants']) || !isset($event['start']) || !isset($event['end']))
 		{
@@ -937,11 +942,15 @@ class calendar_bo
 			}
 			if (!isset($event['start']) || !isset($event['end']))
 			{
-				$event['start'] = $this->date2usertime($event_read['start']);
-				$event['end'] = $this->date2usertime($event_read['end']);
+				// so->read() gives dates in SERVER TIME
+				$event['start'] = new Api\DateTime($event_read['start'], Api\DateTime::$server_timezone);
+				$event['end'] = new Api\DateTime($event_read['end'], Api\DateTime::$server_timezone);
 			}
 		}
-		if (!$start) $start = $event['start'];
+		if(!$start)
+		{
+			$start = $event['start'];
+		}
 
 		$events = array();
 
@@ -956,10 +965,9 @@ class calendar_bo
 		{
 			// PERIOD
 			$is_exception = in_array(Api\DateTime::to($ev['start'], true), $exceptions);
-			$start = $this->date2ts($ev['start'],true);
+			$start = new Api\DateTime($ev['start'], Api\DateTime::$user_timezone);
 			if ($ev['whole_day'])
 			{
-				$start = new Api\DateTime($ev['start'], Api\DateTime::$server_timezone);
 				$start->setTime(0,0,0);
 				$start = $start->format('ts');
 				$time = $this->so->startOfDay(new Api\DateTime($ev['end'], Api\DateTime::$user_timezone));
@@ -968,6 +976,7 @@ class calendar_bo
 			}
 			else
 			{
+				$start = $start->format('ts');
 				$end = $this->date2ts($ev['end'],true);
 			}
 			//error_log(__METHOD__."() start=".Api\DateTime::to($start).", is_exception=".array2string($is_exception));
