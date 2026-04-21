@@ -667,7 +667,8 @@ export class Et2File extends Et2InputWidget(LitElement)
 		}
 		if(info && typeof info.progress == "function" && typeof info.abort == "function")
 		{
-			info.progress() < 1 ? info.abort() : this.resumable.removeFile(this.resumable.getFromUniqueIdentifier(info.uniqueIdentifier));
+			(info.progress() < 1) && info.abort();
+			this.resumable.removeFile(this.resumable.getFromUniqueIdentifier(info.uniqueIdentifier));
 		}
 
 		this.requestUpdate();
