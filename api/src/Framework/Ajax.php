@@ -83,7 +83,7 @@ abstract class Ajax extends Api\Framework
 	/**
 	 * Reads an returns the width of the sidebox or false if the width is not set
 	 */
-	private static function get_sidebar_width($app)
+	protected function get_sidebar_width($app)
 	{
 		$width = self::DEFAULT_SIDEBAR_WIDTH;
 
@@ -941,7 +941,7 @@ abstract class Ajax extends Api\Framework
 		//Add its sidebox width to each app
 		foreach ($apps as $app => &$data)
 		{
-			$data['sideboxwidth'] = self::get_sidebar_width($app);
+			$data['sideboxwidth'] = $this->get_sidebar_width($app);
 			// overwrite icon with svg, if supported by browser
 			unset($data['icon_hover']);	// not used in jdots
 		}
