@@ -1,4 +1,4 @@
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValueMap, PropertyValues, TemplateResult} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
@@ -200,18 +200,6 @@ export class EgwFrameworkApp extends LitElement
 	{
 		super.connectedCallback();
 
-		// Get size preferences now that this.appName is set
-		// @ts-ignore preference() takes _callback = true
-		this.egw.preference(this.leftPanelInfo.preference, this.appName, true).then((value) =>
-		{
-			this.leftPanelInfo.preferenceWidth = value;
-		});
-		// @ts-ignore preference() takes _callback = true
-		this.egw.preference(this.rightPanelInfo.preference, this.appName, true).then((value) =>
-		{
-			this.rightPanelInfo.preferenceWidth = value;
-		});
-
 		// Left panel starts hidden if we're too small
 		if(this.hasAttribute("active") && this.clientWidth < 600)
 		{
@@ -269,6 +257,24 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	willUpdate(changedProperties : PropertyValueMap<this>)
+	{
+		if(changedProperties.has("name"))
+		{
+			// Get size preferences now that this.name is set
+			// @ts-ignore preference() takes _callback = true
+			this.egw.preference(this.leftPanelInfo.preference, this.name, true).then((value) =>
+			{
+				this.leftPanelInfo.preferenceWidth = typeof value !== "undefined" ? value : this.leftPanelInfo.defaultWidth;
+			});
+
+			// @ts-ignore preference() takes _callback = true
+			this.egw.preference(this.rightPanelInfo.preference, this.name, true).then((value) =>
+			{
+				this.rightPanelInfo.preferenceWidth = typeof value !== "undefined" ? value : this.rightPanelInfo.defaultWidth;
+			});
+		}
+	}
 	firstUpdated()
 	{
 		this.load(this.url);
@@ -520,9 +526,9 @@ export class EgwFrameworkApp extends LitElement
 		this.requestUpdate();
 	}
 
-	public showLeft()
+	public showLeft(size = null)
 	{
-		return this.showSide("left");
+		return this.showSide("left", size);
 	}
 
 	public hideLeft()
@@ -530,9 +536,9 @@ export class EgwFrameworkApp extends LitElement
 		return this.hideSide("left");
 	}
 
-	public showRight()
+	public showRight(size = null)
 	{
-		return this.showSide("right");
+		return this.showSide("right", size);
 	}
 
 	public hideRight()
@@ -664,11 +670,11 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
-	protected showSide(side : "left" | "right")
+	protected showSide(side : "left" | "right", size = null)
 	{
 		const attribute = `${side}Collapsed`;
 		this[attribute] = false;
-		this[`${side}Splitter`].position = this[`${side}PanelInfo`].preferenceWidth || this[`${side}PanelInfo`].defaultWidth;
+		this[`${side}PanelInfo`].preferenceWidth = size ?? (this[`${side}PanelInfo`].preferenceWidth || this[`${side}PanelInfo`].defaultWidth);
 		return this.updateComplete.then(() =>
 		{
 			this.dispatchEvent(new CustomEvent("show",

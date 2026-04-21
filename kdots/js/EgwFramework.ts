@@ -403,6 +403,12 @@ export class EgwFramework extends LitElement
 			...app.features
 		};
 
+		// Set the left side preferred width if we have it
+		if(app.sideboxwidth !== false)
+		{
+			appComponent.showLeft(app.sideboxwidth);
+		}
+
 		this.append(appComponent);
 		// App was not in the tab list
 		if(typeof app.opened == "undefined")
@@ -1608,6 +1614,8 @@ export interface ApplicationInfo
 	opened? : number,
 	/* Is the app currently active */
 	active? : boolean, // = false
+	/* Left side width preference (%).   Starting with this may reduce initial rendering time */
+	sideboxwidth? : number | false,
 	/* Framework features - *automatically handled by framework* */
 	features : FeatureList,
 

@@ -576,4 +576,17 @@ class kdots_framework extends Api\Framework\Ajax
 		}
 		return '';
 	}
+
+	/**
+	 * Reads an returns the width of the sidebox or false if the width is not set
+	 */
+	protected function get_sidebar_width($app)
+	{
+		$width = $GLOBALS['egw_info']['user']['preferences'][$app]['app_left_width'];
+		if($width && is_numeric($width))
+		{
+			return $width;
+		}
+		return false;
+	}
 }
