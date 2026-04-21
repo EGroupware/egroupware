@@ -1059,8 +1059,10 @@ class Preferences
 
 	/**
 	 * Get an etag for user preferences
+	 *
+	 * @param mixed ...$args
 	 */
-	public function etag()
+	public function etag($args=null)
 	{
 		return md5(json_encode(array_filter($GLOBALS['egw_info']['user']['preferences'],
 					   // Just the apps the user has access to
@@ -1070,7 +1072,7 @@ class Preferences
 					   },                   ARRAY_FILTER_USE_BOTH
 							   )
 				   ) .
-				   $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id'])
+				   json_encode(func_get_args())
 		);
 	}
 }

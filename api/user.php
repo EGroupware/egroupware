@@ -45,8 +45,13 @@ foreach($GLOBALS['egw_info']['user']['preferences'] /*['addressbook', 'notificat
 	}
 }
 $user = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
-// use an etag over preferences and user-data
-$etag = '"' . $GLOBALS['egw']->preferences->etag() . '"';
+// add prompts if user has run-rights for AiTools
+if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\EGroupware\\AiTools\\Prompts'))
+{
+	$prompts = (new AiTools\Bo())->get_predefined_prompts(false);
+}
+// use an etag over preferences, user-data and prompts
+$etag = '"' . Api\Framework::user_etag($user, $prompts??'') . '"';
 
 // headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
 Api\Session::cache_control(86400);	// cache for 1 day
@@ -66,16 +71,16 @@ foreach($preferences as $app => $data)
 	$content .= 'egw.set_preferences('.json_encode($data).', '.json_encode($app).", egw && egw.window !== window);\n";
 }
 
-if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\EGroupware\\AiTools\\Prompts'))
+// add prompts if user has run-rights for AiTools
+foreach(array_keys($prompts??[]) as $sub)
 {
-	$prompts = (new AiTools\Bo())->get_predefined_prompts(false);
-	foreach(array_keys($prompts) as $sub)
+	if (isset($prompts[$sub]['children']))
 	{
-		if (isset($prompts[$sub]['children']))
-		{
-			$prompts[$sub]['children'] = array_values($prompts[$sub]['children']);
-		}
+		$prompts[$sub]['children'] = array_values($prompts[$sub]['children']);
 	}
+}
+if (!empty($prompts))
+{
 	$content .= 'egw.set_prompts('.json_encode(array_values($prompts)).");\n";
 }
 
