@@ -409,7 +409,7 @@ class Base
 			}
 			foreach($this->table_def['fd'] as $col => $def)
 			{
-				if ($def['type'] == 'bool' && isset($data[$col]))
+				if ($def['type'] == 'bool' && isset($data[$col=$this->db_cols[$col]]))
 				{
 					$data[$col] = $this->db->from_bool($data[$col]);
 				}
