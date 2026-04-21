@@ -855,13 +855,17 @@ class calendar_rrule implements Iterator
 
 		if ($event['recur_enddate'])
 		{
-			$enddate = is_a($event['recur_enddate'],'DateTime') ? clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'],$timestamp_tz);
+			$enddate = is_a($event['recur_enddate'], 'DateTime') ? clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'], $timestamp_tz);
 
 			// Check to see if switching timezones changes the date, we'll need to adjust for that
 			$enddate_event_timezone = clone $enddate;
 			$enddate->setTimezone($timestamp_tz);
 			$delta = (int)$enddate_event_timezone->format('z') - (int)$enddate->format('z');
-			$enddate->add("$delta days");
+			if($delta)
+			{
+				$enddate->add("$delta days");
+			}
+
 
 			$end = is_a($event['end'],'DateTime') ? clone $event['end'] : new Api\DateTime($event['end'],$timestamp_tz);
 			$end->setTimezone($enddate->getTimezone());
