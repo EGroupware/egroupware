@@ -2550,7 +2550,7 @@ class calendar_ical extends calendar_boupdate
 		if (Api\DateTime::to($event['start'], 'H:i:s') == '00:00:00' && Api\DateTime::to($event['end'], 'H:i:s') == '00:00:00')
 		{
 			// 'All day' event that ends at midnight the next day, avoid that
-			$event['end']--;
+			is_object($event['end']) ? $event->sub('P1s') : $event['end']--;
 		}
 
 		// Remove videoconference link appended to description in calendar_groupdav->iCal()
@@ -2571,7 +2571,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (is_a($valarm, 'Horde_Icalendar_Valarm'))
 			{
-				self::valarm2egw($alarms, $valarm, $event['end'] - $event['start']);
+				self::valarm2egw($alarms, $valarm, Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($event['start'], 'ts'));
 			}
 		}
 		$event['alarm'] = $alarms;
