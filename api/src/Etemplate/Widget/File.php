@@ -474,8 +474,7 @@ class File extends Etemplate\Widget
 				throw new Api\Exception("Missing or unreadable chunk $i: $chunkPath");
 			}
 
-			$chunkSize = filesize($chunkPath);
-
+			//$chunkSize = filesize($chunkPath);
 			//error_log(": Opening chunk $i ($chunkSize bytes): $chunkPath");
 
 			$chunk = fopen($chunkPath, 'rb');
@@ -486,17 +485,12 @@ class File extends Etemplate\Widget
 				throw new Api\Exception("Failed to open chunk $i: $chunkPath");
 			}
 
-			while(!feof($chunk))
+			if(stream_copy_to_stream($chunk, $fp) === false)
 			{
-				$data = fread($chunk, 1024 * 1024);
-				if($data === false)
-				{
-					fclose($chunk);
-					fclose($fp);
-					unlink($tmpFile);
-					throw new Api\Exception("Failed to read chunk $i");
-				}
-				fwrite($fp, $data);
+				fclose($chunk);
+				fclose($fp);
+				unlink($tmpFile);
+				throw new Api\Exception("Failed to read chunk $i");
 			}
 
 			fclose($chunk);
