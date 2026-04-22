@@ -26,8 +26,8 @@ class UrlTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * Test the widget's basic functionality - we put data in, it comes back
 	 * unchanged.
 	 *
-	 * @dataProvider validProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('validProvider')]
 	public function testBasic($content)
 	{
 		// Instanciate the template
@@ -66,8 +66,8 @@ class UrlTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * @param type $content
 	 * @param type $validation_errors
 	 *
-	 * @dataProvider invalidProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('invalidProvider')]
 	public function testValidation($content)
 	{
 		// Instanciate the template
@@ -82,7 +82,7 @@ class UrlTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	/**
 	 * URL samples from https://mathiasbynens.be/demo/url-regex
 	 */
-	public function validProvider()
+	public static function validProvider()
 	{
 		return array(
 			array('http://foo.com/blah_blah'),
@@ -133,7 +133,7 @@ class UrlTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	/**
 	 * URL samples from https://mathiasbynens.be/demo/url-regex
 	 */
-	public function invalidProvider()
+	public static function invalidProvider()
 	{
 		return array(
 			array('http://'),

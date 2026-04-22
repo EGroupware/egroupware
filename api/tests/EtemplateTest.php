@@ -136,8 +136,8 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 	 * In this case, since there's one input widget and we're passing it's value, and
 	 * we're not passing anything extra and no preserve, it should be the same.
 	 *
-	 * @depends testExec
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testExec')]
 	public function testRoundTrip()
 	{
 		// Templates must be in the correct templates directory - use one from API
@@ -156,8 +156,8 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 	 *
 	 * The value is passed in, but does not come back
 	 *
-	 * @depends testExec
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testExec')]
 	public function testSimpleReadonly()
 	{
 		// Templates must be in the correct templates directory - use one from API
@@ -178,8 +178,8 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 	 * The value is passed in, and comes back, even if the widget is readonly,
 	 * or if there is no matching widget.
 	 *
-	 * @depends testExec
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testExec')]
 	public function testArbitraryPreserve()
 	{
 		// Templates must be in the correct templates directory - use one from API

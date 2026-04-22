@@ -45,7 +45,7 @@ class AclCommandTest extends CommandBase {
 			$GLOBALS['egw']->accounts->delete($group_id);
 		}
 		$group_cmd = new admin_cmd_edit_group($group);
-		$group_cmd->comment = 'Needed for unit test ' . $this->getName();
+		$group_cmd->comment = 'Needed for unit test ' . $this->name();
 		$group_cmd->run();
 		$this->group_id = $group_cmd->account;
 		$this->assertNotEmpty($this->group_id, 'Did not create test group account');
@@ -68,7 +68,7 @@ class AclCommandTest extends CommandBase {
 		}
 
 		$command = new admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 		$this->assertNotEmpty($this->account_id, 'Did not create test user account');
@@ -103,7 +103,7 @@ class AclCommandTest extends CommandBase {
 			'app' => static::APP,
 			'location' => $GLOBALS['egw_info']['user']['account_id'],
 			'rights' => Acl::ADD,
-			'comment' => 'Giving add rights as part of unit test ' . $this->getName()
+			'comment' => 'Giving add rights as part of unit test ' . $this->name()
 		);
 		$command = new admin_cmd_acl($data);
 		$command->run();
@@ -132,7 +132,7 @@ class AclCommandTest extends CommandBase {
 			'app' => static::APP,
 			'location' => $GLOBALS['egw_info']['user']['account_id'],
 			'rights' => Acl::ADD,
-			'comment' => 'Removing add rights as part of unit test ' . $this->getName()
+			'comment' => 'Removing add rights as part of unit test ' . $this->name()
 		);
 		$command = new admin_cmd_acl($data);
 		$command->run();
@@ -162,7 +162,7 @@ class AclCommandTest extends CommandBase {
 			'app' => static::APP,
 			'location' => $GLOBALS['egw_info']['user']['account_id'],
 			'rights' => Acl::DELETE,
-			'comment' => 'Giving delete rights as part of unit test ' . $this->getName()
+			'comment' => 'Giving delete rights as part of unit test ' . $this->name()
 		);
 		$command = new admin_cmd_acl($data);
 		$command->run();
@@ -195,7 +195,7 @@ class AclCommandTest extends CommandBase {
 			'app' => static::APP,
 			'location' => $GLOBALS['egw_info']['user']['account_id'],
 			'rights' => Acl::DELETE,
-			'comment' => 'Removing delete rights as part of unit test ' . $this->getName()
+			'comment' => 'Removing delete rights as part of unit test ' . $this->name()
 		);
 		$command = new admin_cmd_acl($data);
 		$command->run();
@@ -223,7 +223,7 @@ class AclCommandTest extends CommandBase {
 			'app' => static::APP,
 			'location' => $GLOBALS['egw_info']['user']['account_id'],
 			'rights' => Acl::ADD,
-			'comment' => 'Giving add rights to a group as part of unit test ' . $this->getName()
+			'comment' => 'Giving add rights to a group as part of unit test ' . $this->name()
 		);
 		$command = new admin_cmd_acl($data);
 		$command->run();
@@ -258,7 +258,7 @@ class AclCommandTest extends CommandBase {
 			'app' => static::APP,
 			'location' => $GLOBALS['egw_info']['user']['account_id'],
 			'rights' => Acl::ADD,
-			'comment' => 'Removing add rights from a group as part of unit test ' . $this->getName()
+			'comment' => 'Removing add rights from a group as part of unit test ' . $this->name()
 		);
 		$command = new admin_cmd_acl($data);
 		$command->run();
@@ -293,7 +293,7 @@ class AclCommandTest extends CommandBase {
 			'app' => static::APP,
 			'location' => 'A' . $GLOBALS['egw_info']['user']['person_id'],
 			'rights' => Acl::EDIT,
-			'comment' => 'Adding edit rights as part of unit test ' . $this->getName()
+			'comment' => 'Adding edit rights as part of unit test ' . $this->name()
 		);
 		$command = new admin_cmd_acl($data);
 		$command->run();
@@ -323,7 +323,7 @@ class AclCommandTest extends CommandBase {
 			'app' => static::APP,
 			'location' => 'A' . $GLOBALS['egw_info']['user']['person_id'],
 			'rights' => Acl::ADD,
-			'comment' => 'Removing add rights as part of unit test ' . $this->getName()
+			'comment' => 'Removing add rights as part of unit test ' . $this->name()
 		);
 		$command = new admin_cmd_acl($data);
 		$command->run();

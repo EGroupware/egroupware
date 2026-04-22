@@ -58,7 +58,7 @@ class ProppatchTest extends LoggedInTest
 	public function testProppatch()
 	{
 		$this->files[] = $test_file = $this->getFilename();
-		$contents = $this->getName() . "\nJust a test ;)\n";
+		$contents = $this->name() . "\nJust a test ;)\n";
 		$this->assertNotFalse(
 				file_put_contents(Vfs::PREFIX . $test_file, $contents),
 			"Could not write test file $test_file"
@@ -92,7 +92,7 @@ class ProppatchTest extends LoggedInTest
 	public function testInvalidProppatch()
 	{
 		$this->files[] = $test_file = $this->getFilename();
-		$contents = $this->getName() . "\nJust a test ;)\n";
+		$contents = $this->name() . "\nJust a test ;)\n";
 		$this->assertNotFalse(
 				file_put_contents(Vfs::PREFIX . $test_file, $contents),
 			"Could not write test file $test_file"
@@ -109,7 +109,7 @@ class ProppatchTest extends LoggedInTest
 	{
 		$this->files[] = $test_file = $this->getFilename();
 		Vfs::remove($test_file);
-		$contents = $this->getName() . "\nJust a test ;)\n";
+		$contents = $this->name() . "\nJust a test ;)\n";
 		$this->assertNotFalse(
 				file_put_contents(Vfs::PREFIX . $test_file, $contents),
 			"Could not write test file $test_file"
@@ -141,7 +141,7 @@ class ProppatchTest extends LoggedInTest
 		if(substr($path,-1,1) !== '/') $path = $path . '/';
 
 		$reflect = new \ReflectionClass($this);
-		return $path . $reflect->getShortName() . '_' . $this->getName(false) . '.txt';
+		return $path . $reflect->getShortName() . '_' . $this->name() . '.txt';
 	}
 
 }

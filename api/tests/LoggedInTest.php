@@ -33,6 +33,23 @@ use EGroupware\Api;
 abstract class LoggedInTest extends TestCase
 {
 	/**
+	 * PHPUnit 12 removed TestCase::getName(), but many legacy tests still call it.
+	 * Keep a compatibility shim until all tests are migrated to name().
+	 *
+	 * @param bool $with_data_set Kept for backward compatibility
+	 * @return string
+	 */
+	public function getName($with_data_set=true)
+	{
+		$name = $this->name();
+		if(!$with_data_set)
+		{
+			return preg_replace('/ with data set .*/', '', $name);
+		}
+		return $name;
+	}
+
+	/**
 	 * Start session once before each test case
 	 */
 	public static function setUpBeforeClass() : void

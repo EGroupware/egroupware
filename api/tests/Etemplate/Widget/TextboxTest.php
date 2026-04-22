@@ -117,8 +117,8 @@ class TextboxTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	/**
 	 * Test regex validation
 	 *
-	 * @dataProvider regexProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('regexProvider')]
 	public function testRegex($value, $error)
 	{
 		// Instanciate the template
@@ -158,7 +158,7 @@ class TextboxTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		return $this->validateTest($content, $error ? array() : array('widget' => $value), $error ? array('widget' => $error) : array());
 	}
 
-	public function regexProvider()
+	public static function regexProvider()
 	{
 		return array(
 			// Value       Errors

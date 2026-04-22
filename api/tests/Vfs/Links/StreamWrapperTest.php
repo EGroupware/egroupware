@@ -101,8 +101,8 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 	{
 		$bo = new \infolog_bo();
 		$element = array(
-				'info_subject' => "Test infolog for #{$this->getName()}",
-				'info_des' => 'Test element for ' . $this->getName() . "\n" . Api\DateTime::to(),
+				'info_subject' => "Test infolog for #{$this->name()}",
+				'info_des' => 'Test element for ' . $this->name() . "\n" . Api\DateTime::to(),
 				'info_status' => 'open'
 		);
 
@@ -122,7 +122,7 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		if(is_null($path)) $path = '/apps/infolog/';
 		if(substr($path,-1,1) !== '/') $path = $path . '/';
 		$reflect = new \ReflectionClass($this);
-		return $path .$info_id .'/'. $reflect->getShortName() . '_' . $this->getName() . '.txt';
+		return $path .$info_id .'/'. $reflect->getShortName() . '_' . $this->name() . '.txt';
 	}
 
 }

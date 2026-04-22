@@ -47,8 +47,8 @@ class PreferencesCommandTest extends CommandBase
 	/**
 	 * Test that adding a preference works
 	 *
-	 * @dataProvider typeDataProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('typeDataProvider')]
 	public function testAddPreference($type)
 	{
 		// Set up
@@ -62,7 +62,7 @@ class PreferencesCommandTest extends CommandBase
 
 		// Execute
 		$command = new admin_cmd_edit_preferences($account, $type, static::APP, $set);
-		$command->comment = 'Needed for unit test ' . $this->getName() . " with type $type";
+		$command->comment = 'Needed for unit test ' . $this->name() . " with type $type";
 		$command->run();
 
 		// Check
@@ -87,8 +87,8 @@ class PreferencesCommandTest extends CommandBase
 	 * We check changing the various combinations with a default set.
 	 * All should give a change.
 	 *
-	 * @dataProvider typeDataProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('typeDataProvider')]
 	public function testChangeWithDefault($type)
 	{
 		// Set up
@@ -110,7 +110,7 @@ class PreferencesCommandTest extends CommandBase
 
 		// Execute
 		$command = new admin_cmd_edit_preferences($account, $type, static::APP, $set, $old);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -137,8 +137,8 @@ class PreferencesCommandTest extends CommandBase
 	 * We check changing the various combinations with a default set.
 	 * Only forced should give a change.
 	 *
-	 * @dataProvider typeDataProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('typeDataProvider')]
 	public function testChangeWithForced($type)
 	{
 		// Set up
@@ -160,7 +160,7 @@ class PreferencesCommandTest extends CommandBase
 
 		// Execute
 		$command = new admin_cmd_edit_preferences($account, $type, static::APP, $set, $old);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -188,8 +188,8 @@ class PreferencesCommandTest extends CommandBase
 	 *
 	 * We check changing the various combinations, some of which should change
 	 *
-	 * @dataProvider typeChangeDataProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('typeChangeDataProvider')]
 	public function testChange($type, $check, $change)
 	{
 		// Set up
@@ -214,7 +214,7 @@ class PreferencesCommandTest extends CommandBase
 
 		// Execute
 		$command = new admin_cmd_edit_preferences($account, $type, static::APP, $set, $old);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -242,8 +242,8 @@ class PreferencesCommandTest extends CommandBase
 	 * We check the various combinations, such as deleting a default when the user
 	 * has a value.
 	 *
-	 * @dataProvider typeChangeDataProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('typeChangeDataProvider')]
 	public function testDeletePreference($type, $check, $override)
 	{
 		// Set up
@@ -260,7 +260,7 @@ class PreferencesCommandTest extends CommandBase
 
 		// Execute
 		$command = new admin_cmd_edit_preferences($account, $type, static::APP, $set, $old);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -284,7 +284,7 @@ class PreferencesCommandTest extends CommandBase
 	 * Give a list of preference levels (types) so we can check them all
 	 * They are in priority order.
 	 */
-	public function typeDataProvider() {
+	public static function typeDataProvider() {
 		return array(
 			Array('default'),
 			Array('user'),
@@ -297,7 +297,7 @@ class PreferencesCommandTest extends CommandBase
 	 * Get a list of preference levels and if they should be allowed to change
 	 * each other
 	 */
-	public function typeChangeDataProvider() {
+	public static function typeChangeDataProvider() {
 		$levels = array(
 			// Change and this should/should not change
 			Array('default', 'user',   false),

@@ -143,7 +143,7 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 	{
 		$response = $this->getMockBuilder('\\EGroupware\\Api\\Json\\Response')
 			->disableOriginalConstructor()
-			->setMethods(['get'/*,'generic'*/])
+			->onlyMethods(['get'/*,'generic'*/])
 			->getMock();
 		// Replace protected self reference with mock object
 		$ref = new \ReflectionProperty('\\EGroupware\\Api\\Json\\Response', 'response');

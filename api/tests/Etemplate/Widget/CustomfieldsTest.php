@@ -68,8 +68,8 @@ class CustomfieldsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * Test the widget's basic functionality - we put data in, it comes back
 	 * unchanged.
 	 *
-	 * @dataProvider validProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('validProvider')]
 	public function testBasic($content)
 	{
 		// Instanciate the template
@@ -89,7 +89,6 @@ class CustomfieldsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	/**
 	 * Test that the widget does not return a value if readonly
 	 *
-	 * @dataProvider validProvider
 	 *
 	 * It's the client that removes them here, so we can't really test without.
 	 *
@@ -111,10 +110,10 @@ class CustomfieldsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 */
 
 	/**
-	 * @dataProvider validProvider
 	 * @return void
 	 * @throws \Exception
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('validProvider')]
 	public function testPrivateFilter($content)
 	{
 		// Instanciate the template
@@ -147,8 +146,8 @@ class CustomfieldsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * @param type $content
 	 * @param type $validation_errors
 	 *
-	 * @dataProvider fieldFilterProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('fieldFilterProvider')]
 	public function testFieldFilter($content, $fields, $expected)
 	{
 		// Instanciate the template
@@ -194,7 +193,7 @@ class CustomfieldsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	/**
 	 * Check filtering each field individually, then filtering to allow all fields
 	 */
-	public function fieldFilterProvider()
+	public static function fieldFilterProvider()
 	{
 		$field_values = CustomfieldsTest::validProvider()[0][0];
 		$field_filters = array();

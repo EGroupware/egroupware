@@ -57,8 +57,8 @@ class SelectTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * Test the widget's basic functionality - we put data in, it comes back
 	 * unchanged.
 	 *
-	 * @dataProvider validProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('validProvider')]
 	public function testBasic($content)
 	{
 		// Instanciate the template
@@ -76,7 +76,7 @@ class SelectTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * These are all valid
 	 *
 	 */
-	public function validProvider()
+	public static function validProvider()
 	{
 		$values = array(array(''));
 		foreach(self::VALUES as $key => $label)
@@ -92,8 +92,8 @@ class SelectTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 *
 	 * @param string $content
 	 *
-	 * @dataProvider validationProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('validationProvider')]
 	public function testValidation($content)
 	{
 		// Instanciate the template
@@ -110,7 +110,7 @@ class SelectTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	/**
 	 * These are all invalid
 	 */
-	public function validationProvider()
+	public static function validationProvider()
 	{
 		// All these are invalid, and should not give a value back
 		return array(
@@ -127,8 +127,8 @@ class SelectTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * @param Array $content
 	 * @param Array $expected
 	 *
-	 * @dataProvider multipleProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('multipleProvider')]
 	public function testMultiple($content, $expected)
 	{
 		// Instanciate the template
@@ -145,7 +145,7 @@ class SelectTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$this->validateTest($result, $expected);
 	}
 
-	public function multipleProvider()
+	public static function multipleProvider()
 	{
 		return array(
 			// Test

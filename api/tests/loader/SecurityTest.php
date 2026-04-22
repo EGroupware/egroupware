@@ -24,10 +24,17 @@ class SecurityTest extends TestCase {
 	protected function setUp() : void
 	{
 		// _check_script_tag uses HtmLawed, which calls GLOBALS['egw']->link()
-		$GLOBALS['egw'] = $this->getMockBuilder('Egw')
-			->disableOriginalConstructor()
-			->setMethods(['link', 'setup'])
-			->getMock();
+		$GLOBALS['egw'] = new class {
+			public function link($url, $extravars = '', $link_app = null)
+			{
+				return $url;
+			}
+
+			public function setup(...$args)
+			{
+				return true;
+			}
+		};
 	}
 
 	protected function tearDown() : void
@@ -44,8 +51,8 @@ class SecurityTest extends TestCase {
 	 * @param String $pattern String to check
 	 * @param boolean $should_fail If we expect this string to fail
 	 *
-	 * @dataProvider patternProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('patternProvider')]
 	public function testPatterns($pattern, $should_fail)
 	{
 		$test = array($pattern);
@@ -54,7 +61,7 @@ class SecurityTest extends TestCase {
 		$this->assertEquals(isset($GLOBALS['egw_unset_vars']), $should_fail);
 	}
 
-	public function patternProvider()
+	public static function patternProvider()
 	{
 		return array(
 			// pattern, true: should fail, false: should not fail
@@ -88,8 +95,8 @@ class SecurityTest extends TestCase {
 	 * @param String $url
 	 * @param Array $vectors
 	 *
-	 * @dataProvider urlProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('urlProvider')]
 	public function testURLs($url, $vectors = FALSE)
 	{
 		// no all xss attack vectors from http://ha.ckers.org/xssAttacks.xml are relevant here! (needs interpretation)
@@ -107,7 +114,7 @@ class SecurityTest extends TestCase {
 		}
 	}
 
-	public function urlProvider()
+	public static function urlProvider()
 	{
 		$urls = array(
 			// we currently fail 76 of 666 test, thought they seem not to apply to our use case, as we check request data
@@ -163,9 +170,9 @@ class SecurityTest extends TestCase {
 	 * @param String $str Serialized string to be checked
 	 * @param boolean $result If we expect the string to fail or not
 	 *
-	 * @dataProvider unserializeProvider
-	 * @requires PHP < 7
 	 */
+	#[\PHPUnit\Framework\Attributes\RequiresPhp('< 7.0')]
+	#[\PHPUnit\Framework\Attributes\DataProvider('unserializeProvider')]
 	public function testObjectsCannotBeUnserializedInPhp5($str, $result)
 	{
 		$r=@php_safe_unserialize($str);
@@ -179,9 +186,9 @@ class SecurityTest extends TestCase {
 	 * @param String $str Serialized string to be checked
 	 * @param boolean $result If we expect the string to fail or not
 	 *
-	 * @dataProvider unserializeProvider
-	 * @requires PHP 7
 	 */
+	#[\PHPUnit\Framework\Attributes\RequiresPhp('>= 7.0')]
+	#[\PHPUnit\Framework\Attributes\DataProvider('unserializeProvider')]
 	public function testObjectsCannotBeUnserializedInPhp7($str, $result)
 	{
 		$r=@php_safe_unserialize($str);
@@ -215,7 +222,7 @@ class SecurityTest extends TestCase {
 	/**
 	 * Data set for unserialize test
 	 */
-	public function unserializeProvider()
+	public static function unserializeProvider()
 	{
 		$tests = array(
 			// Serialized string, expected result

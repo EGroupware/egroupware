@@ -199,8 +199,8 @@ class CustomfieldsTest extends LoggedInTest
 	/**
 	 * Test getting options from a file
 	 *
-	 * @dataProvider fileOptionProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('fileOptionProvider')]
 	public function testGetOptionsFromGoodFile($expected, $file)
 	{
 		// Mount the fixtures
@@ -219,7 +219,7 @@ class CustomfieldsTest extends LoggedInTest
 	 *
 	 * @return array
 	 */
-	public function fileOptionProvider()
+	public static function fileOptionProvider()
 	{
 		// Expected options, file
 		return array(

@@ -196,8 +196,8 @@ abstract class StreamWrapperBase extends LoggedInTest
 	 * Simple delete of a file
 	 * By putting it in the base class, this test gets run for every backend
 	 *
-	 * @depends testSimpleReadWrite
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testSimpleReadWrite')]
 	public function testDelete($file) : void
 	{
 		if(!$this->test_file && !$file)
@@ -236,9 +236,9 @@ abstract class StreamWrapperBase extends LoggedInTest
 	/**
 	 * Check that a user with no permission to a file cannot access the file
 	 *
-	 * @depends testSimpleReadWrite
 	 * @throws Api\Exception\AssertionFailed
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testSimpleReadWrite')]
 	public function testNoReadAccess() : void
 	{
 		if(!$this->test_file)
@@ -284,9 +284,9 @@ abstract class StreamWrapperBase extends LoggedInTest
 	/**
 	 * Check that a user with permission to a file can access the file
 	 *
-	 * @depends testSimpleReadWrite
 	 * @throws Api\Exception\AssertionFailed
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testSimpleReadWrite')]
 	public function testWithAccess() : void
 	{
 		if(!$this->test_file)

@@ -24,8 +24,8 @@ class IntegerTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	 * Test for validation - integers
 	 *
 	 *
-	 * @dataProvider integerProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('integerProvider')]
 	public function testInteger($value, $error)
 	{
 		// Instanciate the template
@@ -47,7 +47,7 @@ class IntegerTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	/**
 	 * Data provider for integer tests
 	 */
-	public function integerProvider()
+	public static function integerProvider()
 	{
 		return array(
 			// User value,    Error
@@ -67,8 +67,8 @@ class IntegerTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	 * @param int $min Minimum allowed value
 	 * @param boolean $error
 	 *
-	 * @dataProvider minProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('minProvider')]
 	public function testMin($value, $min, $error)
 	{
 		// Instanciate the template
@@ -112,7 +112,7 @@ class IntegerTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 	}
 
-	public function minProvider()
+	public static function minProvider()
 	{
 		return Array(
 			// User value, Min,      Error
@@ -133,8 +133,8 @@ class IntegerTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	 * @param int $max Maximum allowed value
 	 * @param boolean $error
 	 *
-	 * @dataProvider maxProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('maxProvider')]
 	public function testMax($value, $max, $error)
 	{
 		// Instanciate the template
@@ -178,7 +178,7 @@ class IntegerTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 	}
 
-	public function maxProvider()
+	public static function maxProvider()
 	{
 		return Array(
 			// User value, Max,      Error

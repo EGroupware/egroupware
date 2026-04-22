@@ -70,12 +70,12 @@ class WidgetTest extends WidgetBaseTest {
 	 * Check to make sure form name building is still working.
 	 * Uses expansion array
 	 *
-	 * @dataProvider formNameProvider
 	 *
 	 * @param string $base Base or container / parent ID
 	 * @param string $element Element ID
 	 * @param string $expected Expected result
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('formNameProvider')]
 	public function testFormName($base, $element, $expected)
 	{
 		$this->assertEquals($expected, Widget::form_name($base, $element, self::$expand));

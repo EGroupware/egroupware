@@ -20,8 +20,8 @@ class MergeTest extends LoggedInTest
 	/**
 	 * Test plain text into a simple text document
 	 *
-	 * @dataProvider textToTextProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('textToTextProvider')]
 	public function testTextToText($testText, $expectedText)
 	{
 		$errors = [];
@@ -32,7 +32,7 @@ class MergeTest extends LoggedInTest
 		$this->assertEquals($expectedText, $result);
 	}
 
-	public function textToTextProvider() : array
+	public static function textToTextProvider() : array
 	{
 		return [
 			["Plain text", "Plain text"],
@@ -46,8 +46,8 @@ class MergeTest extends LoggedInTest
 
 	/**
 	 * With no parsing into an HTML file, we expect the same
-	 * @dataProvider textToHTMLProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('textToHTMLProvider')]
 	public function testTextToHtml($testText, $expectedText)
 	{
 		$this->markTestSkipped("Something goes wrong with GitHub Actions but not locally.  Skipping for now.");
@@ -59,7 +59,7 @@ class MergeTest extends LoggedInTest
 		$this->assertEquals($expectedText, $result);
 	}
 
-	public function textToHtmlProvider() : array
+	public static function textToHtmlProvider() : array
 	{
 		return [
 			["Plain text", "Plain text"],

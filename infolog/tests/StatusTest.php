@@ -157,7 +157,7 @@ class StatusTest extends \EGroupware\Api\AppTest
 	protected function getTestInfolog($from)
 	{
 		$info = array(
-			'info_subject'     =>	'Test Infolog Entry for ' . $this->getName()
+			'info_subject'     =>	'Test Infolog Entry for ' . $this->name()
 		);
 
 		foreach($from as $field => $value)
