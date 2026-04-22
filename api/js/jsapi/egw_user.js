@@ -483,7 +483,23 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 */
 		prompts: function(_app)
 		{
-			return prompts.filter((attrs) => !attrs.app || attrs.app.includes(_app));
+			const ret = [];
+			prompts.forEach((prompt) =>
+			{
+				if (!prompt.apps || prompt.apps.includes(_app))
+				{
+					const children = [];
+					(prompt.children || []).forEach((child) =>
+					{
+						if (!child.apps || child.apps.includes(_app))
+						{
+							children.push(child);
+						}
+					});
+					ret.push(children.length ? {...prompt, children: children} : prompt);
+				}
+			});
+			return ret;
 		}
 	};
 });
