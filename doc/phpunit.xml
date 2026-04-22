@@ -10,14 +10,20 @@
         <var name="EGW_USER" value="demo" />
         <var name="EGW_PASSWORD" value="guest" />
     </php>
-    <testsuites>
-        <testsuite name="Api">
-            <directory>../api/tests</directory>
-        </testsuite>
-        <testsuite name="Etemplate">
-            <file>../api/tests/EtemplateTest.php</file>
-            <directory>../api/tests/Etemplate/</directory>
-        </testsuite>
+	    <testsuites>
+	        <testsuite name="Api">
+	            <directory>../api/tests</directory>
+	            <exclude>../api/tests/Etemplate/</exclude>
+	            <exclude>../api/tests/EtemplateTest.php</exclude>
+	            <exclude>../api/tests/AppTest.php</exclude>
+	            <exclude>../api/tests/CalDAVTest.php</exclude>
+	            <exclude>../api/tests/LoggedInTest.php</exclude>
+	        </testsuite>
+	        <testsuite name="Etemplate">
+	            <file>../api/tests/EtemplateTest.php</file>
+	            <directory>../api/tests/Etemplate/</directory>
+	            <exclude>../api/tests/Etemplate/WidgetBaseTest.php</exclude>
+	        </testsuite>
 		<testsuite name="Apps">
 			<!-- Apps with test directory -->
             <!-- Skip these for now, though they do mostly work locally
