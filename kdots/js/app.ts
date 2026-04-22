@@ -36,7 +36,7 @@ if(framework)
 
 		// Ask about timer before logout
 		const logout = framework.querySelector('#topmenu_logout');
-		logout.addEventListener('click', async(e) =>
+		logout?.addEventListener('click', async(e) =>
 		{
 			e.preventDefault();
 			e.stopImmediatePropagation();
