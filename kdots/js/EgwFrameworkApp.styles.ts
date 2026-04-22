@@ -114,8 +114,8 @@ export default css`
         --min: var(--left-min, 0px);
         --max: var(--left-max, 20%);
 
-		&.no-content {
-			--min: 0px;
+		&.no-content, &.egw_fw_app--panel-collapsed {
+			--left-min: 0px;
 		}
     }
 
@@ -126,14 +126,10 @@ export default css`
         --max: calc(100% - var(--right-min, 0px));
         --min: calc(100% - var(--right-max, 50%));
 
-		&.no-content {
-			--min: 100%;
+		&.no-content, &.egw_fw_app--panel-collapsed {
+			--right-max: 0px;
 		}
     }
-
-	.egw_fw_app__panel.egw_fw_app--panel-collapsed:not(.no-content) {
-		--min: 0px;
-	}
 
 	/*egw-split-panel style*/
 
