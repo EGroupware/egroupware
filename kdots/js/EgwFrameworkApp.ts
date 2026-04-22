@@ -174,9 +174,9 @@ export class EgwFrameworkApp extends LitElement
 	private leftPanelInfo : PanelInfo = {
 		side: "left",
 		preference: "app_left_width",
-		defaultWidth: 20,
+		defaultWidth: 10,
 		hiddenWidth: 0,
-		preferenceWidth: 20
+		preferenceWidth: 10
 	};
 	// Right is in percentage
 	private rightPanelInfo : PanelInfo = {
