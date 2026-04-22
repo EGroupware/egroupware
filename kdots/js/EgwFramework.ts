@@ -203,6 +203,7 @@ export class EgwFramework extends LitElement
 		{
 			const appInfo = this.applicationList.find(a => a.name == app.id);
 			app.features = appInfo?.features ?? {};
+			app.allow = appInfo?.allow ?? '';
 			// Unknown app?
 			if(!appInfo)
 			{
@@ -393,6 +394,10 @@ export class EgwFramework extends LitElement
 		if(app.title)
 		{
 			appComponent.title = app.title;
+		}
+		if (app.allow)
+		{
+			appComponent.allow = app.allow;
 		}
 		if(active)
 		{
@@ -1620,7 +1625,10 @@ export interface ApplicationInfo
 	features : FeatureList,
 
 	/* Function called on logout */
-	callOnLogout? : Function
+	callOnLogout? : Function,
+
+	/* allow property for iframe */
+	allow? : string
 }
 
 // List of features that the framework can handle in a standard way for each app

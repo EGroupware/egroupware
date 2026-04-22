@@ -182,6 +182,17 @@ class kdots_framework extends Api\Framework\Ajax
 				$data['icon'] = Image::find($data['icon_app'] ?? $app, ['kdots-navbar', 'navbar'],'');
 			}
 		}
+		// check if apps need an allow property set for their iframe
+		foreach(Api\Hooks::process('iframe-allow', [], true) as $data)
+		{
+			foreach($data ?: [] as $app => $allow)
+			{
+				if (isset($apps[$app]))
+				{
+					$apps[$app]['allow'] = $allow;
+				}
+			}
+		}
 		return $apps;
 	}
 

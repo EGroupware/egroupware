@@ -78,6 +78,15 @@ export class EgwFrameworkApp extends LitElement
 	@property()
 	url = "";
 
+	private _allow= "";
+	/** allow property of iframe, if an iframe is used */
+	@property()
+	set allow(allow : string)
+	{
+		this._allow = allow;
+		if (this.iframe) this.iframe.allow = allow;
+	}
+
 	@property({attribute: 'open-once'})
 	openOnce = '';
 
@@ -149,7 +158,7 @@ export class EgwFrameworkApp extends LitElement
 
 	get rightSplitter() { return <SlSplitPanel>this.shadowRoot?.querySelector(".egw_fw_app__innerSplit");}
 
-	get iframe() { return <HTMLIFrameElement>this.shadowRoot?.querySelector("iframe");}
+	get iframe() { return <HTMLIFrameElement>this.querySelector("iframe");}
 
 	get filters() { return <Et2Filterbox>this.querySelector("et2-filterbox:not([hidden],[disabled])");}
 
@@ -1088,6 +1097,9 @@ export class EgwFrameworkApp extends LitElement
 		{
 			return null;
 		}
+		this.updateComplete.then(() => {
+			this.iframe.allow = this._allow;
+		})
 		return Object.assign(document.createElement("iframe"), {src: url});
 	}
 
