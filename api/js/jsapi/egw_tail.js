@@ -37,7 +37,7 @@ jQuery(function()
 			if (_data.length) {
 				log_tail_start = _data.next;
 				var log = jQuery("#log").append(_data.content.replace(/</g,"&lt;"));
-				log.animate({ scrollTop: log.prop("scrollHeight") - log.height() + 20 }, 500);
+				log.animate({ scrollTop: log.prop("scrollHeight") - log.height() }, 500);
 			}
 			if (_data.size === false)
 			{
@@ -62,7 +62,7 @@ jQuery(function()
 	}
 	function resize_log()
 	{
-		jQuery("#log").width(egw_getWindowInnerWidth()-20).height(egw_getWindowInnerHeight()-33);
+		jQuery("#log").width(egw_getWindowInnerWidth()-egw_getWindowInnerWidth()*0.02).height(egw_getWindowInnerHeight()*0.92);
 	}
 	jQuery('input[id^="clear_log"]').on('click',function(){
 		button_log(this.getAttribute('id'));
