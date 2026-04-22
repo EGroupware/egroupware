@@ -998,6 +998,11 @@ export class EgwFramework extends LitElement
 				win = result as Window & typeof globalThis;
 			}
 		}
+		else if(!_targetapp)
+		{
+			// Unknown or closed app, pass it up and let fallbacks handle it
+			return win;
+		}
 
 		// if different target-app given, refresh it too
 		if(_targetapp && _app != _targetapp)
