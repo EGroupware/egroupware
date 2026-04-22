@@ -26,8 +26,8 @@ class UrlEmailTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * Test the widget's basic functionality - we put data in, it comes back
 	 * unchanged.
 	 *
-	 * @dataProvider validProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('validProvider')]
 	public function testBasic($content)
 	{
 		// Instanciate the template
@@ -45,7 +45,7 @@ class UrlEmailTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * These are all valid, most from https://blogs.msdn.microsoft.com/testing123/2009/02/06/email-address-test-cases/
 	 *
 	 */
-	public function validProvider()
+	public static function validProvider()
 	{
 		return array(
 			array(''),
@@ -83,8 +83,8 @@ class UrlEmailTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * @param type $content
 	 * @param type $validation_errors
 	 *
-	 * @dataProvider validationProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('validationProvider')]
 	public function testValidation($content)
 	{
 		// Instanciate the template
@@ -99,7 +99,7 @@ class UrlEmailTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	/*
 	 * These are all invalid, most from https://blogs.msdn.microsoft.com/testing123/2009/02/06/email-address-test-cases/
 	 */
-	public function validationProvider()
+	public static function validationProvider()
 	{
 		// All these are invalid, and should not give a value back
 		return array(

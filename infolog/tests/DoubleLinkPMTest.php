@@ -282,7 +282,7 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 	protected function getTestInfolog()
 	{
 		return array(
-			'info_subject' => 'Test Infolog Entry for ' . $this->getName()
+			'info_subject' => 'Test Infolog Entry for ' . $this->name()
 		);
 	}
 
@@ -293,9 +293,9 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 	{
 		$project = array(
 			'pm_number'      => 'TEST' . ($pm_number ? " $pm_number" : ''),
-			'pm_title'       => 'Auto-test for ' . $this->getName(),
+			'pm_title'       => 'Auto-test for ' . $this->name(),
 			'pm_status'      => 'active',
-			'pm_description' => 'Test project for ' . $this->getName()
+			'pm_description' => 'Test project for ' . $this->name()
 		);
 
 		// Save & set modifier, no notifications

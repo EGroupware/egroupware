@@ -48,7 +48,7 @@ class SharingACLTest extends SharingBase
 
 		// Execute
 		$command = new \admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 	}

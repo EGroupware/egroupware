@@ -26,8 +26,8 @@ class HtmlTest extends TestCase {
 	/**
 	 * Test how HTML lists (ol & ul) get converted to a plain text equivalent
 	 *
-	 * @dataProvider listDataProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('listDataProvider')]
 	public function testListToText($html, $expected_text)
 	{
 
@@ -41,7 +41,7 @@ class HtmlTest extends TestCase {
 	 *
 	 * HTML first, then expected text
 	 */
-	public function listDataProvider()
+	public static function listDataProvider()
 	{
 		return array(
 			// HTML

@@ -24,8 +24,8 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	 * Test for validation - floats
 	 *
 	 *
-	 * @dataProvider floatProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('floatProvider')]
 	public function testFloat($value, $expected, $error)
 	{
 		// Instanciate the template
@@ -46,7 +46,7 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	/**
 	 * Data provider for float tests
 	 */
-	public function floatProvider()
+	public static function floatProvider()
 	{
 		return array(
 			// User value,    Expected     Error
@@ -67,8 +67,8 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	 * @param float $min Minimum allowed value
 	 * @param boolean $error
 	 *
-	 * @dataProvider minProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('minProvider')]
 	public function testMin($value, $min, $error)
 	{
 		// Instanciate the template
@@ -111,7 +111,7 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 	}
 
-	public function minProvider()
+	public static function minProvider()
 	{
 		return Array(
 			// User value, Min,        Error
@@ -134,8 +134,8 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	 * @param float $max Maximum allowed value
 	 * @param boolean $error
 	 *
-	 * @dataProvider maxProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('maxProvider')]
 	public function testMax($value, $max, $error)
 	{
 		// Instanciate the template
@@ -178,7 +178,7 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 	}
 
-	public function maxProvider()
+	public static function maxProvider()
 	{
 		return Array(
 			// User value, Max,      Error

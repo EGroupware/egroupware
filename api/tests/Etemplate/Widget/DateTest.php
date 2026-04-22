@@ -54,8 +54,8 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * Test the widget's basic functionality - we put data in, it comes back
 	 * unchanged.
 	 *
-	 * @dataProvider basicProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('basicProvider')]
 	public function testBasic($content, $expected)
 	{
 		// Instanciate the template
@@ -69,7 +69,7 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$this->validateTest($result, $expected ? $expected : $content);
 	}
 
-	public function basicProvider()
+	public static function basicProvider()
 	{
 		// Reset server timezone here, as it tends to go back to php.ini value
 		DateTime::$server_timezone = new \DateTimeZone('UTC');
@@ -103,8 +103,8 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * @param type $content
 	 * @param type $validation_errors
 	 *
-	 * @dataProvider validationProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('validationProvider')]
 	public function testValidation($content)
 	{
 		// Instanciate the template
@@ -114,7 +114,7 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$this->validateRoundTrip($etemplate, Array(), $content, Array(), array_flip(array_keys($content)));
 	}
 
-	public function validationProvider()
+	public static function validationProvider()
 	{
 		// All these are invalid, and should not give a value back
 		return array(
@@ -131,8 +131,8 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * @param float $min Minimum allowed value
 	 * @param boolean $error
 	 *
-	 * @dataProvider minProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('minProvider')]
 	public function testMin($value, $min, $error)
 	{
 		// Instanciate the template
@@ -175,7 +175,7 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		);
 	}
 
-	public function minProvider()
+	public static function minProvider()
 	{
 		return Array(
 			// User value,             Min,         Error
@@ -207,8 +207,8 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * @param float $max Maximum allowed value
 	 * @param boolean $error
 	 *
-	 * @dataProvider maxProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('maxProvider')]
 	public function testMax($value, $max, $error)
 	{
 		// Instanciate the template
@@ -251,7 +251,7 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		);
 	}
 
-	public function maxProvider()
+	public static function maxProvider()
 	{
 		return Array(
 			// User value,              Max,         Error

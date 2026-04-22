@@ -35,9 +35,9 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 	/**
 	 * Check that a user with permission to a file can access the file
 	 *
-	 * @depends testSimpleReadWrite
 	 * @throws Api\Exception\AssertionFailed
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testSimpleReadWrite')]
 	public function testWithAccess() : void
 	{
 		$this->markTestSkipped("Filesystem StreamWrapper does not support giving access to a file by changing group permissions");

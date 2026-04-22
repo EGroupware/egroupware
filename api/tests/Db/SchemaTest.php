@@ -124,8 +124,8 @@ class SchemaTest extends LoggedInTest {
 	/**
 	 * Try to insert some content into the created table(s)
 	 *
-	 * @depends testCreateTable
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testCreateTable')]
 	public function testInsertContent()
 	{
 		self::$adodb->Execute("INSERT INTO schema_proc_test (test_int4,test_varchar,test_char) VALUES (1,'Hallo Ralf','0123456789')");
@@ -155,8 +155,8 @@ class SchemaTest extends LoggedInTest {
 	/**
 	 * Try to update existing content
 	 *
-	 * @depends testInsertContent
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testInsertContent')]
 	public function testUpdateContent()
 	{
 		// updating blob's and other columns
@@ -194,8 +194,8 @@ class SchemaTest extends LoggedInTest {
 	/**
 	 * Drop the test_blob column
 	 *
-	 * @depends testCreateTable
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testCreateTable')]
 	public function testDropColumn()
 	{
 		$new_table_def = $test_tables['schema_proc_test'];
@@ -207,8 +207,8 @@ class SchemaTest extends LoggedInTest {
 	/**
 	 * Alter the test_char column
 	 *
-	 * @depends testCreateTable
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testCreateTable')]
 	public function testAlterColumn()
 	{
 		self::$schema_proc->AlterColumn('schema_proc_test','test_char',array('type' => 'varchar','precision' => 32));
@@ -218,8 +218,8 @@ class SchemaTest extends LoggedInTest {
 	/**
 	 * Add a column
 	 *
-	 * @depends testCreateTable
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testCreateTable')]
 	public function testAddColumn()
 	{
 		self::$schema_proc->AddColumn('schema_proc_test','test_bool',array('type' => 'bool'));
@@ -229,8 +229,8 @@ class SchemaTest extends LoggedInTest {
 	/**
 	 * Rename a column
 	 *
-	 * @depends testCreateTable
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testCreateTable')]
 	public function testRenameColumn()
 	{
 		self::$schema_proc->RenameColumn('schema_proc_test','test_timestamp','test_time');
@@ -241,8 +241,8 @@ class SchemaTest extends LoggedInTest {
 	/**
 	 * Rename a table
 	 *
-	 * @depends testCreateTable
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testCreateTable')]
 	public function testRenameTable()
 	{
 		self::$schema_proc->RenameTable('schema_proc_test','schema_proc_renamed');
@@ -251,9 +251,7 @@ class SchemaTest extends LoggedInTest {
 		$this->check_table('schema_proc_renamed',$tables);
 	}
 
-	/**
-	 * @depends testRenameTable
-	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testRenameTable')]
 	public function testRenameColumnWithIndex()
 	{
 		self::$schema_proc->RenameColumn('schema_proc_renamed','test_varchar','test_varchar_renamed');
@@ -272,9 +270,7 @@ class SchemaTest extends LoggedInTest {
 		}
 	}
 
-	/**
-	 * @depends testRenameColumnWithIndex
-	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testRenameColumnWithIndex')]
 	public function testDropIndex()
 	{
 		self::$schema_proc->DropIndex('schema_proc_renamed',array('test_char','test_varchar_renamed'));
@@ -289,9 +285,7 @@ class SchemaTest extends LoggedInTest {
 		}
 	}
 
-	/**
-	 * @depends testDropIndex
-	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testDropIndex')]
 	public function testInsertMoreContent()
 	{
 		self::$db->query("INSERT INTO schema_proc_renamed (test_int4,test_varchar_renamed,test_char) VALUES (10,'Hallo Hallo Hallo ...','12345678901234567890123456789012')");
@@ -302,9 +296,7 @@ class SchemaTest extends LoggedInTest {
 		));
 	}
 
-	/**
-	 * @depends testInsertMoreContent
-	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testInsertMoreContent')]
 	public function testDropTable()
 	{
 		foreach(self::$adodb->MetaTables() as $table)

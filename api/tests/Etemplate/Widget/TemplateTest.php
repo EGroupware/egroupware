@@ -56,8 +56,8 @@ class TemplateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	 * Test that we can instanciate a sub-template from a file, once the file
 	 * is in the cache
 	 *
-	 * @depends testNestedInstanciation
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testNestedInstanciation')]
 	public function testSubTemplate()
 	{
 		// No file matches this, but it was loaded and cached in the previous test

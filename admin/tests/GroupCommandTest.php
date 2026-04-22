@@ -64,7 +64,7 @@ class GroupCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_group(false, $this->group);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->group_id = $command->account;
 
@@ -90,7 +90,7 @@ class GroupCommandTest extends CommandBase {
 		// Execute
 		$this->account['account_lid'] = 'Default';
 		$command = new admin_cmd_edit_group(false, $this->account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->group_id = $command->account;
 
@@ -113,7 +113,7 @@ class GroupCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_group(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->group_id = $command->account;
 
@@ -136,7 +136,7 @@ class GroupCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_group(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->group_id = $command->account;
 
@@ -148,8 +148,8 @@ class GroupCommandTest extends CommandBase {
 	/**
 	 * Test adding & removing a new member
 	 *
-	 * @depends UserCommandTest::testAddUser
 	 */
+	#[\PHPUnit\Framework\Attributes\DependsExternal('UserCommandTest::testAddUser')]
 	public function testChangeMembers()
 	{
 		// Set up
@@ -169,12 +169,12 @@ class GroupCommandTest extends CommandBase {
 		}
 
 		$command = new admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 
 		$command = new admin_cmd_edit_group(false, $this->group);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->group_id = $command->account;
 
@@ -186,7 +186,7 @@ class GroupCommandTest extends CommandBase {
 		$account = $this->account;
 		$account['account_members'][] = $this->account_id;
 		$command = new admin_cmd_edit_group($this->group_id, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -200,7 +200,7 @@ class GroupCommandTest extends CommandBase {
 
 		$account = $this->account;
 		$command = new admin_cmd_edit_group($this->group_id, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check

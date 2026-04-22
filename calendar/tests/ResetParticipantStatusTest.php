@@ -68,8 +68,8 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	 *
 	 * @param array $participant Participant to test
 	 *
-	 * @dataProvider participantProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('participantProvider')]
 	public function testNoChange($participant)
 	{
 		$this->fix_id($participant);
@@ -96,8 +96,8 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	 *
 	 * @param type $participant
 	 *
-	 * @dataProvider participantProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('participantProvider')]
 	public function testForwardOneHour($participant)
 	{
 		$this->fix_id($participant);
@@ -153,8 +153,8 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	 *
 	 * @param Array $change_preference One of the allowed preference values
 	 *
-	 * @dataProvider statiPreferenceProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('statiPreferenceProvider')]
 	public function testChangeUsesPreference($change_preference)
 	{
 		// Get test event
@@ -249,7 +249,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	protected function get_event()
 	{
 		return array(
-			'title' => 'Test event for ' . $this->getName(),
+			'title' => 'Test event for ' . $this->name(),
 			'owner' => $GLOBALS['egw_info']['user']['account_id'],
 			'start' => 1602324600,
 			'end'   => 1602328200
@@ -264,7 +264,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 			'account_lastname' => 'Test'
 		);
 		$command = new \admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		return $command->account;
 	}
@@ -293,7 +293,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	 * 
 	 * @see calendar_hooks::settings()
 	 */
-	public function statiPreferenceProvider()
+	public static function statiPreferenceProvider()
 	{
 		return array(
 			array('no'), // Never change status
@@ -307,14 +307,14 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	 *
 	 * @see calendar_hooks::settings()
 	 */
-	public function resouceStatusPreferenceProvider()
+	public static function resouceStatusPreferenceProvider()
 	{
 		return array(
 			array('unavailable') // Change status if resouce is unavailable
 		);
 	}
 
-	public function participantProvider()
+	public static function participantProvider()
 	{
 		return array(
 			// Participant ID => status

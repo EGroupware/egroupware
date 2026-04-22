@@ -232,7 +232,7 @@ class ContactTest extends \EGroupware\Api\AppTest
 	protected function getTestInfolog($fields)
 	{
 		$info = array(
-			'info_subject'     =>	'Test Infolog Entry for ' . $this->getName()
+			'info_subject'     =>	'Test Infolog Entry for ' . $this->name()
 		);
 
 		foreach($fields as $field => $value)

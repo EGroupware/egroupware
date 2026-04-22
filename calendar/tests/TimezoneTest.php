@@ -73,8 +73,8 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 * @param Array $timezones Timezone settings for event, client & server
 	 * @param Array $times Start & end hours
 	 *
-	 * @dataProvider eventProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('eventProvider')]
 	public function testTimezones($timezones, $times)
 	{
 		$this->setTimezones($timezones);
@@ -96,8 +96,8 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 * @param Array $timezones Timezone settings for event, client & server
 	 * @param Array $times Start & end hours
 	 *
-	 * @dataProvider eventProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('eventProvider')]
 	public function testTimezonesAllDay($timezones, $times)
 	{
 		$this->setTimezones($timezones);
@@ -118,9 +118,9 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 * @param \EGroupware\calendar\Array $timezones
 	 * @param \EGroupware\calendar\Array $times
 	 *
-	 * @dataProvider eventProvider
 	 */
 
+	#[\PHPUnit\Framework\Attributes\DataProvider('eventProvider')]
 	public function testException($timezones, $times)
 	{
 		$this->setTimezones($timezones);
@@ -235,7 +235,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	/**
 	 * Provide an event for checking, along with a list of timezones
 	 */
-	public function eventProvider()
+	public static function eventProvider()
 	{
 		$tests = array();
 		$tz_combos = $this->makeTZCombos();
@@ -318,7 +318,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	{
 		$event = array(
 			'title' => ($whole_day ? 'Whole day ' : '')."Test for " . $this->tzString($timezones),
-			'description'   => ($whole_day ? 'Whole day ' : '').'Test for test ' . $this->getName() . ' ' . $this->tzString($timezones),
+			'description'   => ($whole_day ? 'Whole day ' : '').'Test for test ' . $this->name() . ' ' . $this->tzString($timezones),
 			'start' => \mktime($whole_day ? 0 : $times['start'], 0, 0, date('m'), date('d')+1, date('Y')),
 			'end'   => $whole_day ? \mktime(23, 59, 59, date('m'), date('d')+1, date('Y')) : \mktime($times['end'], 0, 0, date('m'), date('d')+1, date('Y')),
 			'tzid'	=> $timezones['event'],

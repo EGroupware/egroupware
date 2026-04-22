@@ -53,7 +53,7 @@ class UserCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 
@@ -79,7 +79,7 @@ class UserCommandTest extends CommandBase {
 		// Execute
 		$this->account['account_lid'] = $GLOBALS['egw_info']['user']['account_lid'];
 		$command = new admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 
@@ -102,7 +102,7 @@ class UserCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 
@@ -125,7 +125,7 @@ class UserCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 
@@ -141,7 +141,7 @@ class UserCommandTest extends CommandBase {
 	{
 		// Set up
 		$command = new admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Setup for unit test ' . $this->getName();
+		$command->comment = 'Setup for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 
@@ -154,7 +154,7 @@ class UserCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -170,7 +170,7 @@ class UserCommandTest extends CommandBase {
 	{
 		// Set up
 		$command = new admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Setup for unit test ' . $this->getName();
+		$command->comment = 'Setup for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 
@@ -184,7 +184,7 @@ class UserCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -200,14 +200,14 @@ class UserCommandTest extends CommandBase {
 	{
 		// Set up
 		$command = new admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Setup for unit test ' . $this->getName();
+		$command->comment = 'Setup for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 		$pre_group = $GLOBALS['egw']->accounts->id2name($this->account_id, 'account_primary_group');
 		$pre_groups = $GLOBALS['egw']->accounts->memberships($this->account_id);
 
 		$group = array(
-			'account_lid' => $this->getName(),
+			'account_lid' => $this->name(),
 			'account_members' => array($GLOBALS['egw_info']['user']['account_id'])
 		);
 		if(($account_id = $GLOBALS['egw']->accounts->name2id($group['account_lid'])))
@@ -216,7 +216,7 @@ class UserCommandTest extends CommandBase {
 			$GLOBALS['egw']->accounts->delete($account_id);
 		}
 		$command = new admin_cmd_edit_group(false, $group);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->group_id = $command->account;
 
@@ -225,7 +225,7 @@ class UserCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_user($this->account_id, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -252,14 +252,14 @@ class UserCommandTest extends CommandBase {
 	public function testChangeGroups()
 	{
 		$command = new admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Setup for unit test ' . $this->getName();
+		$command->comment = 'Setup for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 		$pre_group = $GLOBALS['egw']->accounts->id2name($this->account_id, 'account_primary_group');
 		$pre_groups = $GLOBALS['egw']->accounts->memberships($this->account_id);
 
 		$group = array(
-			'account_lid' => $this->getName(),
+			'account_lid' => $this->name(),
 			'account_members' => array($GLOBALS['egw_info']['user']['account_id'])
 		);
 		if(($account_id = $GLOBALS['egw']->accounts->name2id($group['account_lid'])))
@@ -268,7 +268,7 @@ class UserCommandTest extends CommandBase {
 			$GLOBALS['egw']->accounts->delete($account_id);
 		}
 		$command = new admin_cmd_edit_group(false, $group);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->group_id = $command->account;
 
@@ -278,7 +278,7 @@ class UserCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_edit_user($this->account_id, $account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check

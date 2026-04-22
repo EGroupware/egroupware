@@ -45,8 +45,8 @@ class SaveToVfsTest extends \PHPUnit\Framework\TestCase
 	 * % causes problems with VFS UI
 	 *
 	 * @param String $filename
-	 * @dataProvider filenameProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('filenameProvider')]
 	public function testVfsFilename($filename, $replacements)
 	{
 		$cleaned = VfsTestMail::clean_subject_for_filename($filename);
@@ -77,7 +77,7 @@ class SaveToVfsTest extends \PHPUnit\Framework\TestCase
 		}
 	}
 
-	public function filenameProvider()
+	public static function filenameProvider()
 	{
 		return array(
 			array('Normal! All allowed (!@$^&) {\'} []', false),

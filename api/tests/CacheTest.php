@@ -31,8 +31,8 @@ class CacheTest extends TestCase
 	 *
 	 * @param string $class
 	 * @param string $params
-	 * @dataProvider cachingProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('cachingProvider')]
 	public function testCache($class, $params=array())
 	{
 		// set us up as provider for Api\Cache class

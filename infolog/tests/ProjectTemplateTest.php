@@ -27,9 +27,9 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 	{
 		$project = array(
 			'pm_number'         =>	'TEST Template',
-			'pm_title'          =>	'Auto-test for ' . $this->getName(),
+			'pm_title'          =>	'Auto-test for ' . $this->name(),
 			'pm_status'         =>	$status,
-			'pm_description'    =>	'Test project for ' . $this->getName()
+			'pm_description'    =>	'Test project for ' . $this->name()
 		);
 
 		// Save & set modifier, no notifications
@@ -102,7 +102,7 @@ class ProjectTemplateTest extends \EGroupware\Projectmanager\TemplateTest
 		$bo = new \infolog_bo();
 		$element = array(
 			'info_subject' => "Test infolog for #{$this->pm_id}",
-			'info_des'     => 'Test element as part of the project for test ' . $this->getName(),
+			'info_des'     => 'Test element as part of the project for test ' . $this->name(),
 			'info_status'  => 'open',
 			'pm_id'	=> $this->pm_id
 		);

@@ -91,8 +91,8 @@ class BaseTest extends TestCase
 	/**
 	 *
 	 * @param array $data
-	 * @depends testSaveInternalState
 	 */
+	#[\PHPUnit\Framework\Attributes\Depends('testSaveInternalState')]
 	public function testReadFromDb(array $data)
 	{
 		$read = $this->storage->read($data['t_id']);

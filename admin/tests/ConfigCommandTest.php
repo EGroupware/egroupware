@@ -47,7 +47,7 @@ class ConfigCommandTest extends CommandBase
 
 		// Execute
 		$command = new admin_cmd_config(static::APP, $set);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -71,7 +71,7 @@ class ConfigCommandTest extends CommandBase
 
 		// Execute
 		$command = new admin_cmd_config(static::APP, $set, $old);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -97,7 +97,7 @@ class ConfigCommandTest extends CommandBase
 
 		// Execute
 		$command = new admin_cmd_config(static::APP, $set, array($this->config_name => 'Delete me'));
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check

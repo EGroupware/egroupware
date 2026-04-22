@@ -36,7 +36,7 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testHomeReadonly()
 	{
-		$dir = Vfs::get_home_dir().'/'.$this->getName(false).'/';
+		$dir = Vfs::get_home_dir().'/'.$this->name().'/';
 
 		$this->checkDirectory($dir, Sharing::READONLY);
 	}
@@ -47,7 +47,7 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testHomeWritable()
 	{
-		$dir = Vfs::get_home_dir().'/'.$this->getName(false).'/';
+		$dir = Vfs::get_home_dir().'/'.$this->name().'/';
 
 		$this->checkDirectory($dir, Sharing::WRITABLE);
 	}

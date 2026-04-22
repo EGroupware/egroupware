@@ -38,7 +38,7 @@ class DeleteAccountCommandTest extends CommandBase {
 		}
 
 		$command = new admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
 		$this->assertNotEmpty($this->account_id, 'Did not create test user account');
@@ -64,7 +64,7 @@ class DeleteAccountCommandTest extends CommandBase {
 
 		// Execute
 		$command = new admin_cmd_delete_account($this->account_id);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check
@@ -88,7 +88,7 @@ class DeleteAccountCommandTest extends CommandBase {
 
 		// Execute - we tell it it's a group, even though it's a user
 		$command = new admin_cmd_delete_account($this->account_id, null, false);
-		$command->comment = 'Needed for unit test ' . $this->getName();
+		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 
 		// Check

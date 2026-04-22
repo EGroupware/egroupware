@@ -62,8 +62,8 @@ class ImportParticipantsTest extends \EGroupware\Api\AppTest
 	 * @param string $test_string String to be parsed
 	 * @param boolean $warn Expect a warning
 	 *
-	 * @dataProvider participantProvider
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('participantProvider')]
 	public function testUsers($expected, $test_string, $warn)
 	{
 
@@ -95,7 +95,7 @@ class ImportParticipantsTest extends \EGroupware\Api\AppTest
 		}
 	}
 
-	public function participantProvider()
+	public static function participantProvider()
 	{
 		return array(
 			// Expected resource IDs, string to be parsed
