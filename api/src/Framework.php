@@ -17,7 +17,7 @@ use EGroupware\Api\Egw\Applications;
 use EGroupware\Api\Framework\Bundle;
 use EGroupware\Api\Framework\IncludeMgr;
 use EGroupware\Api\Header\ContentSecurityPolicy;
-use function Webmozart\Assert\Tests\StaticAnalysis\inArray;
+use EGroupware\AiTools;
 
 /**
  * Framework: virtual base class for all template sets
@@ -1142,7 +1142,7 @@ abstract class Framework extends Framework\Extra
 				'user' => $GLOBALS['egw_info']['user']['account_lid'],
 				'lang' => $GLOBALS['egw_info']['user']['preferences']['common']['lang'],
 				// add etag on url, so we can set an expires header
-				'etag' => $GLOBALS['egw']->preferences->etag(),
+				'etag' => self::user_etag(),
 			));
 		}
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
@@ -1201,7 +1201,7 @@ abstract class Framework extends Framework\Extra
 	public static function user_etag($user=null, $prompts=null)
 	{
 		$user ??= $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
-		if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\EGroupware\\AiTools\\Prompts'))
+		if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\EGroupware\\AiTools\\Bo'))
 		{
 			$prompts ??= (new AiTools\Bo())->get_predefined_prompts(false);
 		}
