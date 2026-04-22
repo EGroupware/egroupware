@@ -13,6 +13,10 @@ export default css`
 	:host([disabled]) {
 		display: block;
 	}
+	/* Slotted items should always fill the whole widget*/
+    ::slotted(*){
+        flex: 1 1 auto;
+    }
 
 	.et2-ai {
 		width: 99%;
