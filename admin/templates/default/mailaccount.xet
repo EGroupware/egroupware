@@ -2,43 +2,43 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.mailaccount.identity" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
+		<grid width="100%" height="100%">
 			<columns>
 				<column width="113"/>
 				<column width="300"/>
 				<column/>
 			</columns>
 			<rows>
-				<row>
+				<row height="1.5lh">
 					<et2-description for="ident_id" value="Identity"></et2-description>
 					<et2-select id="ident_id" onchange="1" noLang="1"></et2-select>
 					<et2-select id="acc_further_identities" class="emailadmin_no_user" onchange="1"></et2-select>
 				</row>
-				<row>
+				<row height="1.5lh">
 					<et2-description for="ident_name" value="Name"></et2-description>
 					<et2-textbox id="ident_name" maxlength="128" span="all" placeholder="default your name and email"></et2-textbox>
 				</row>
-				<row>
+				<row height="1.5lh">
 					<et2-description for="ident_realname" value="Your name"></et2-description>
 					<et2-hbox span="all">
 						<et2-textbox id="ident_realname" maxlength="128"></et2-textbox>
 						<et2-button label="Placeholders" id="button[placeholders]" image="question-circle" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements&amp;nonavbar=1'),'_blank','dependent=yes,width=860,height=620,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
-				<row>
+				<row height="1.5lh">
 					<et2-description for="ident_org" value="Organisation"></et2-description>
 					<et2-textbox id="ident_org" maxlength="128" span="all"></et2-textbox>
 				</row>
-				<row disabled="@select_ident_mail">
+				<row disabled="@select_ident_mail" height="1.5lh">
 					<et2-description for="ident_email" value="EMail address"></et2-description>
 					<et2-url-email id="ident_email" maxlength="128" span="all"></et2-url-email>
 				</row>
-				<row disabled="!@select_ident_mail">
+				<row disabled="!@select_ident_mail" height="1.5lh">
 					<et2-description for="ident_email_alias" value="EMail address"></et2-description>
 					<et2-select id="ident_email_alias" span="all"></et2-select>
 				</row>
 				<row>
-					<htmlarea expand_toolbar="false" height="237px" id="ident_signature" span="all"/>
+					<htmlarea expand_toolbar="false" id="ident_signature" span="all"/>
 				</row>
 			</rows>
 		</grid>
@@ -367,15 +367,17 @@
 						</tabpanels>
 					</et2-tabbox>
 				</row>
+				<row class="dialogFooterToolbar">
+					<et2-hbox span="all">
+						<et2-button label="Save" id="button[save]"></et2-button>
+						<et2-button label="Apply" id="button[apply]"></et2-button>
+						<et2-button statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magic"></et2-button>
+						<et2-button label="Cancel" id="button[cancel]" onclick="window.close();"></et2-button>
+						<et2-button align="right" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this account','Delete')" hideOnReadonly="true"></et2-button>
+						<et2-button align="right" label="Delete identity" id="button[delete_identity]" onclick="Et2Dialog.confirm(widget,'Delete identity','Delete')" hideOnReadonly="true" image="delete"></et2-button>
+					</et2-hbox>
+				</row>
 			</rows>
 		</grid>
-		<et2-hbox class="dialogFooterToolbar">
-			<et2-button label="Save" id="button[save]"></et2-button>
-			<et2-button label="Apply" id="button[apply]"></et2-button>
-			<et2-button statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magic"></et2-button>
-			<et2-button label="Cancel" id="button[cancel]" onclick="window.close();"></et2-button>
-            <et2-button align="right" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Delete this account','Delete')" hideOnReadonly="true"></et2-button>
-            <et2-button align="right" label="Delete identity" id="button[delete_identity]" onclick="Et2Dialog.confirm(widget,'Delete identity','Delete')" hideOnReadonly="true" image="delete"></et2-button>
-		</et2-hbox>
 	</template>
 </overlay>
