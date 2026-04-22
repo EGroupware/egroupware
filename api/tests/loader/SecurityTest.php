@@ -171,23 +171,7 @@ class SecurityTest extends TestCase {
 	 * @param boolean $result If we expect the string to fail or not
 	 *
 	 */
-	#[\PHPUnit\Framework\Attributes\RequiresPhp('< 7.0')]
-	#[\PHPUnit\Framework\Attributes\DataProvider('unserializeProvider')]
-	public function testObjectsCannotBeUnserializedInPhp5($str, $result)
-	{
-		$r=@php_safe_unserialize($str);
-
-		$this->assertSame($result, (bool)$r, 'Save unserialize failed');
-	}
-
-	/**
-	 * Test safe unserialization
-	 *
-	 * @param String $str Serialized string to be checked
-	 * @param boolean $result If we expect the string to fail or not
-	 *
-	 */
-	#[\PHPUnit\Framework\Attributes\RequiresPhp('>= 7.0')]
+	#[\PHPUnit\Framework\Attributes\RequiresPhp('>= 7.0.0')]
 	#[\PHPUnit\Framework\Attributes\DataProvider('unserializeProvider')]
 	public function testObjectsCannotBeUnserializedInPhp7($str, $result)
 	{
