@@ -206,11 +206,6 @@ export class Et2AppBox extends Et2Widget(LitElement)
 
 	public load(url : string)
 	{
-		if(window.app[this.name]?.linkHandler && this.egw().window.app[this.name].linkHandler(url))
-		{
-			return;
-		}
-
 		Array.from(this.children).forEach(n =>
 		{
 			etemplate2.getById((<HTMLElement>n).id)?.clear();
