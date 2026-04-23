@@ -12,7 +12,7 @@ custom fields	filemanager	tr	Özel Alanlar
 default action on double-click	filemanager	tr	Çift tıklamada varsayılan eylem
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	tr	Varsayılan = Hayır. Bağlantı gösterilmez, ancak yine de bu konuma gidebilir veya bu belirli konumu başlangıç klasörü veya klasör bağlantısı olarak yapılandırabilirsiniz.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	tr	Bir belge dosyası üzerinde çift tıklama eyleminin nasıl işleneceğini tanımlar. Görüntüler her zaman expose-view'da ve e-postalar e-posta uygulamasıyla açılır. Diğer tüm MIME türleri tarayıcının kendisi tarafından ele alınır.
-defines how to open a merge print document	filemanager	tr	Belgeler doldurulduktan sonra ne yapılmalıdır?<br><br><b>Collabora Online kullanılabilir durumdaysa</b>, bu belgeler Collabora Online ile doğrudan tarayıcıda açılabilir (ve daha fazla işlenebilir). <br><br> <b>Collabora Online yoksa</b>, doldurulmuş belge indirilmek üzere sunulur.<br><br>Collabora Online hakkında daha fazla bilgi:<br> <a href="https://www.egroupware.org/online-office" target="_blank">EGroupware'de Collabora Online Office</a>
+defines how to open a merge print document	filemanager	tr	Belgeler doldurulduktan sonra ne yapılmalıdır?\n\n<b>Collabora Online kullanılabilir durumdaysa</b>, bu belgeler Collabora Online ile doğrudan tarayıcıda açılabilir (ve daha fazla işlenebilir). \n\n <b>Collabora Online yoksa</b>, doldurulmuş belge indirilmek üzere sunulur.\n\nCollabora Online hakkında daha fazla bilgi:\n <a href="https://www.egroupware.org/online-office" target="_blank">EGroupware'de Collabora Online Office</a>
 disable	filemanager	tr	Engelle
 download	filemanager	tr	İndir
 download documents	filemanager	tr	Belgeleri indirin
@@ -35,7 +35,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	tr	Örnek {{NELF rolü}} - eğer rol alanı boş değilse, rol alanının değerini içeren yeni bir satır alırsınız
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	tr	Örnek {{nenvlf role}} - alan rolü boş değilse, alanın herhangi bir değeri olmadan bir LF ayarlayın
 excludes selected mime types	filemanager	tr	Seçili MIME türlerini hariç tutar
-excludes selected mime types from being opened by editor	filemanager	tr	Seçili MIME türlerinin Collabora Online tarafından açılmasını engeller.<br>Bu belge türleri ya tarayıcıda açılır ya da indirilir.
+excludes selected mime types from being opened by editor	filemanager	tr	Seçili MIME türlerinin Collabora Online tarafından açılmasını engeller.\nBu belge türleri ya tarayıcıda açılır ya da indirilir.
 executable	filemanager	tr	Yürütülebilir
 expires	filemanager	tr	Sona Eriyor
 export definition to use for nextmatch export	filemanager	tr	Nextmatch dışa aktarımı için kullanılacak dışa aktarım tanımı
@@ -80,6 +80,7 @@ link	filemanager	tr	Link
 list view	filemanager	tr	Liste görünümü
 location	filemanager	tr	Konum
 lock	filemanager	tr	Kilit
+log out as superuser	filemanager	tr	Süper kullanıcı olarak çıkış yapın.
 mail paste	filemanager	tr	Posta yapıştırma
 merge print open handler	filemanager	tr	Baskı açma işleyicisini birleştirme
 modified	filemanager	tr	Değiştirilmiş
@@ -112,14 +113,19 @@ rename, change permissions or ownership	filemanager	tr	Yeniden adlandır, izinle
 renamed %1 to %2	filemanager	tr	%1'in adı %2 olarak değiştirildi
 renamed %1 to %2.	filemanager	tr	%1'in adı %2 olarak değiştirildi
 replacements for inserting entries into documents	filemanager	tr	Belgelere giriş eklemek için değiştirmeler
+root access granted.	filemanager	tr	Süper kullanıcı erişimi verildi.
+root access stopped.	filemanager	tr	Süper kullanıcı erişimi durduruldu.
 save as zip	filemanager	tr	ZIP olarak kaydet
 save job to clear error and restart it	filemanager	tr	Hatayı gidermek için işi kaydedin ve yeniden başlatın
 select custom field	filemanager	tr	Özel alan seçin
 smb, webdavs and vfs require a username!	filemanager	tr	SMB, WebDAV ve VFS bir kullanıcı adı gerektirir!
 smb: mount samba or windows fileserver shares	filemanager	tr	SMB: Samba veya Windows dosya sunucusu paylaşımlarını bağlayın
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	tr	Bazı işlevler süper kullanıcı izinleri gerektirir, lütfen buraya dosya yöneticisi süper kullanıcısı olarak giriş yapın - izin verilen kullanıcılar kurulumda tanımlanmıştır.
+superuser	filemanager	tr	Süper kullanıcı
+superuser (root)	filemanager	tr	Süper kullanıcı (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	tr	Belge, verilerle değiştirilecek {{%3}} gibi yer tutucu içerebilir (%1yer tutucu adlarının tam listesi%2).
 username for webdav and smb, use $user for name of logged in user	filemanager	tr	WebDAV ve SMB için kullanıcı adı, oturum açan kullanıcının adı için $user kullanın
 vfs mounts and versioning	common	tr	VFS bağlama ve sürüm oluşturma
 webdavs: mount egroupware or *cloud shares	filemanager	tr	WebDAV: EGroupware veya *Cloud paylaşımlarını bağlama
 you do not have access to %1	filemanager	tr	%1'e erişiminiz yok
-you need to become root, to enable or disable versioning on a directory!	filemanager	tr	Bir klasörde sürümlemeyi etkinleştirmek veya devre dışı bırakmak için superuser olmanız gerekir!
+you need to become root, to enable or disable versioning on a directory!	filemanager	tr	Bir klasörde sürüm oluşturmayı etkinleştirmek veya devre dışı bırakmak için süper kullanıcı olmanız gerekir!

@@ -127,7 +127,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	bg	Например {{NELF role}} - ако позицията не е празна, ще получите нов ред със стойността ù.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	bg	Например {{nenvlf role}} - ако позицията не е празна, задайте LF без никаква стойност на полето.
 excludes selected mime types	filemanager	bg	Изключва избраните MIME-типове
-excludes selected mime types from being opened by editor	filemanager	bg	Изключва избрани типове MIME от отваряне от Collabora Online.<br>Тези типове документи се отварят в браузъра или се изтеглят.
+excludes selected mime types from being opened by editor	filemanager	bg	Изключва избрани типове MIME от отваряне от Collabora Online.\nТези типове документи се отварят в браузъра или се изтеглят.
 executable	filemanager	bg	Изпълним
 expires	filemanager	bg	Изтича
 export definition to use for nextmatch export	filemanager	bg	Определение за експортиране, което да се използва за nextmatch експорт
@@ -295,7 +295,7 @@ sqlfs statistics	filemanager	bg	sqlFS статистика
 start search	filemanager	bg	Стартиране на търсене
 startfolder	filemanager	bg	Стартиране на папка
 successful mounted %1 on %2.	filemanager	bg	Успешно монтиран %1 на %2.
-superuser	filemanager	bg	Супер потребител
+superuser	filemanager	bg	Суперпотребител
 superuser (root)	filemanager	bg	Суперпотребител (основен)
 symlink to %1 created.	filemanager	bg	Symlink до %1 създаден.
 tag to mark positions for address labels	filemanager	bg	Отбележете маркираните позиции като адресни етикети

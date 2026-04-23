@@ -74,7 +74,7 @@ default action on double-click	filemanager	nl	Standaardactie bij dubbelklikken
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	nl	Standaard gedrag is NEE. De link wordt niet getoond maar u kunt nog steeds naar deze locatie navigeren. Of stel deze locatie in als start folder of folder link.
 default document to insert entries	filemanager	nl	Standaard dokument voor het invoegen van gegevens
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	nl	Definieert hoe te handelen bij dubbelklikken op een documentbestand. Afbeeldingen worden altijd geopend in de expose-weergave en e-mails met de e-mailtoepassing. Alle andere MIME-types worden afgehandeld door de browser zelf.
-defines how to open a merge print document	filemanager	nl	Wat gebeurt er met documenten nadat ze zijn ingevuld?<br><br><b>Als Collabora Online beschikbaar is</b>, kunnen deze documenten rechtstreeks in de browser worden geopend (en verder worden verwerkt) met Collabora Online. <br><br> <b>Zonder Collabora Online</b> wordt het ingevulde document aangeboden om te downloaden.<br><br>Meer informatie over Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
+defines how to open a merge print document	filemanager	nl	Wat gebeurt er met documenten nadat ze zijn ingevuld?\n\n<b>Als Collabora Online beschikbaar is</b>, kunnen deze documenten rechtstreeks in de browser worden geopend (en verder worden verwerkt) met Collabora Online. \n\n <b>Zonder Collabora Online</b> wordt het ingevulde document aangeboden om te downloaden.\n\nMeer informatie over Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
 delete these files or directories?	filemanager	nl	Deze bestanden of mappen, verwijderen ?
 delete this file or directory	filemanager	nl	Verwijder dit bestand of deze directory
 deleted %1	filemanager	nl	%1 verwijderd
@@ -118,7 +118,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	nl	Voorbeeld {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	nl	Voorbeeld {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 excludes selected mime types	filemanager	nl	Sluit geselecteerde MIME-types uit
-excludes selected mime types from being opened by editor	filemanager	nl	Sluit uit dat geselecteerde MIME-types worden geopend door Collabora Online.<br>Deze documenttypes worden of geopend in de browser of gedownload.
+excludes selected mime types from being opened by editor	filemanager	nl	Sluit uit dat geselecteerde MIME-types worden geopend door Collabora Online.\nDeze documenttypes worden of geopend in de browser of gedownload.
 executable	filemanager	nl	Uitvoerbaar bestand
 expires	filemanager	nl	Verloopt
 export definition to use for nextmatch export	filemanager	nl	Export definitie om te gebruiken bij volgende export
@@ -182,7 +182,7 @@ link target %1 not found!	filemanager	nl	Link doel %1 niet gevonden !
 list view	filemanager	nl	Lijst bekijken
 location	filemanager	nl	Locatie
 lock	filemanager	nl	Vergrendel
-log out as superuser	filemanager	nl	Uitloggen als supergebruiker
+log out as superuser	filemanager	nl	Uitloggen als superuser
 mail files	filemanager	nl	Mail bestanden
 mail paste	filemanager	nl	Mail plakken
 max folderlinks	admin	nl	max folderlinks
@@ -245,8 +245,8 @@ replaced %1	filemanager	nl	%1 is vervangen
 replacements for inserting entries into documents	filemanager	nl	Vervanging voor het invoeren van gegevens in documenten
 rights	filemanager	nl	Rechten
 root	filemanager	nl	Root
-root access granted.	filemanager	nl	Root toegang verleend.
-root access stopped.	filemanager	nl	Root toegang ingetrokken.
+root access granted.	filemanager	nl	Superuser-toegang verleend.
+root access stopped.	filemanager	nl	Superuser-toegang stopgezet.
 save %1	filemanager	nl	Bewaar %1
 save %1, and go back to file listing	filemanager	nl	Bewaar %1 en ga terug naar de bestandenlijst
 save as zip	filemanager	nl	Bewaar als ZIP
@@ -273,11 +273,12 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	nl	Too
 size	filemanager	nl	Grootte
 smb, webdavs and vfs require a username!	filemanager	nl	SMB, WebDAV en VFS vereisen een gebruikersnaam!
 smb: mount samba or windows fileserver shares	filemanager	nl	SMB: Samba of Windows fileserver aandelen mounten
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	nl	Voor sommige functies zijn superuser-rechten vereist. Log hier in als filemanager superuser. Toegestane gebruikers worden gedefinieerd in de instellingen.
 sqlfs statistics	filemanager	nl	sqlFS Statistieken
 start search	filemanager	nl	start zoeken
 startfolder	filemanager	nl	Beginmap
 successful mounted %1 on %2.	filemanager	nl	Succesgekoppeld %1 op %2
-superuser	filemanager	nl	Supergebruiker
+superuser	filemanager	nl	Superuser
 superuser (root)	filemanager	nl	Superuser (root)
 symlink to %1 created.	filemanager	nl	Symlink naar %1 gemaakt.
 tag to mark positions for address labels	filemanager	nl	Tag om positie voor adres labels te markeren
@@ -307,7 +308,7 @@ wrong username or password!	filemanager	nl	Onjuiste gebruikersnaam of wachtwoord
 you are not allowed to upload a script!	filemanager	nl	U mag GEEN script uploaden !
 you can only grant additional rights, you can not take rights away!	filemanager	nl	U kunt alleen rechten toevoegen, u kunt NIET rechten afnemen !
 you do not have access to %1	filemanager	nl	U heeft geen toegang tot %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	nl	U moet als superuser zijn aangemeld. om versiebeheer aan of uit te zetten voor mappen !
+you need to become root, to enable or disable versioning on a directory!	filemanager	nl	U moet als superuser zijn aangemeld. om versiebeheer aan of uit te zetten voor mappen!
 you need to select an owner!	filemanager	nl	U moet een eigenaar selecteren
 you need to select some files first!	filemanager	nl	U moet eerst enkele bestanden selecteren
 you will be redirected to your home directory.	filemanager	nl	U wordt omgeleid naar uw Home Directory

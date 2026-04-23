@@ -29,7 +29,7 @@ cut	filemanager	no	Klipp ut
 default action on double-click	filemanager	no	Standardhandling ved dobbeltklikk
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	no	Standard = Nei. Koblingen vises ikke, men du kan fortsatt navigere til denne plasseringen eller konfigurere denne plasseringen som startmappe eller mappekobling.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	no	Definerer hvordan dobbeltklikk på en dokumentfil skal håndteres. Bilder åpnes alltid i eksponeringsvisningen og e-poster med e-postprogrammet. Alle andre MIME-typer håndteres av nettleseren selv.
-defines how to open a merge print document	filemanager	no	Hva skal skje med dokumentene etter at de er fylt ut?<br><br><b>Hvis Collabora Online er tilgjengelig</b>, kan disse dokumentene åpnes (og viderebehandles) direkte i nettleseren med Collabora Online. <br><br> <b>Uten Collabora Online</b> blir utfylte dokumenter tilbudt for nedlasting.<br><br>Mer informasjon om Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office i EGroupware</a>
+defines how to open a merge print document	filemanager	no	Hva skal skje med dokumentene etter at de er fylt ut?\n\n<b>Hvis Collabora Online er tilgjengelig</b>, kan disse dokumentene åpnes (og viderebehandles) direkte i nettleseren med Collabora Online. \n\n <b>Uten Collabora Online</b> blir utfylte dokumenter tilbudt for nedlasting.\n\nMer informasjon om Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office i EGroupware</a>
 deleted %1	filemanager	no	Slettet %1
 directory	filemanager	no	Mappe
 directory %1 already exists	filemanager	no	Mappe %1 finnes allerede
@@ -49,7 +49,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	no	Eksempel {{NELF rolle}} - hvis feltet rolle ikke er tomt, får du en ny linje med verdien for feltet rolle.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	no	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, settes en LF uten noen verdi for feltet
 excludes selected mime types	filemanager	no	Ekskluderer utvalgte MIME-typer
-excludes selected mime types from being opened by editor	filemanager	no	Ekskluderer utvalgte MIME-typer fra å bli åpnet av Collabora Online.<br>Disse dokumenttypene åpnes enten i nettleseren eller lastes ned.
+excludes selected mime types from being opened by editor	filemanager	no	Ekskluderer utvalgte MIME-typer fra å bli åpnet av Collabora Online.\nDisse dokumenttypene åpnes enten i nettleseren eller lastes ned.
 executable	filemanager	no	Kjørbar
 expires	filemanager	no	Går ut
 export definition to use for nextmatch export	filemanager	no	Eksportdefinisjon som skal brukes for nextmatch-eksport
@@ -94,6 +94,7 @@ leave empty to delete the file after attaching	filemanager	no	La feltet være to
 link	filemanager	no	Lenke
 list view	filemanager	no	Listevisning
 location	filemanager	no	Lokasjon
+log out as superuser	filemanager	no	Logg ut som superbruker
 mail paste	filemanager	no	Lim inn e-post
 merge print open handler	filemanager	no	Slå sammen utskriftsåpen håndterer
 mime type	filemanager	no	MIME type
@@ -137,6 +138,8 @@ rename, change permissions or ownership	filemanager	no	Endre navn, endre tillate
 renamed %1 to %2	filemanager	no	Ga %1 nytt navn til %2
 renamed %1 to %2.	filemanager	no	Ga %1 nytt navn til %2
 replaced %1	filemanager	no	Erstattet %1
+root access granted.	filemanager	no	Superbruker-tilgang gitt.
+root access stopped.	filemanager	no	Superbruker-tilgang stoppet.
 save %1	filemanager	no	Lagret %1
 save %1, and go back to file listing	filemanager	no	Lagre %1, og gå tilbake til filliste
 save as zip	filemanager	no	Lagre som ZIP
@@ -148,6 +151,9 @@ show	filemanager	no	Vis
 size	filemanager	no	Størrelse
 smb, webdavs and vfs require a username!	filemanager	no	SMB, WebDAV og VFS krever et brukernavn!
 smb: mount samba or windows fileserver shares	filemanager	no	SMB: Monter Samba- eller Windows-filserver-aksjer
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	no	Noen funksjoner krever superbruker-rettigheter. Logg inn her som filmanager-superbruker – tillatte brukere er definert i oppsettet.
+superuser	filemanager	no	Superbruker
+superuser (root)	filemanager	no	Superbruker (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	no	Dokumentet kan inneholde plassholdere som {{%3}}, som skal erstattes med dataene (%1full liste over plassholdernavn%2).
 total files	filemanager	no	Totalt antall filer
 unused space	filemanager	no	Ubrukt område
@@ -160,4 +166,5 @@ username for webdav and smb, use $user for name of logged in user	filemanager	no
 vfs mounts and versioning	common	no	VFS-montering og versjonering
 webdavs: mount egroupware or *cloud shares	filemanager	no	WebDAV: monter EGroupware- eller *Cloud-deling
 you do not have access to %1	filemanager	no	Du har ikke adgang til %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	no	Du må bli superbruker for å aktivere eller deaktivere versjonering på en mappe!
 your home dir did not exist, egroupware created a new one.	filemanager	no	Din hjemmemappe fantes ikke, EGroupware opprettet en ny.

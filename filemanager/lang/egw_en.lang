@@ -84,7 +84,7 @@ default action on double-click	filemanager	en	Default action on double-click
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default = No. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
 default document to insert entries	filemanager	en	Default document to insert entries
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	en	Defines how to handle double click action on a document file. Images are always opened in the expose-view and emails with mail application. All other MIME-types are handled by the browser itself.
-defines how to open a merge print document	filemanager	en	What should happen to documents after they have been filled?<br><br><b>If Collabora Online is available</b>, these documents can be opened (and further processed) directly in the browser with Collabora Online.<br><br> <b>Without Collabora Online</b>, filled document is offered for download.<br><br>More information about Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
+defines how to open a merge print document	filemanager	en	What should happen to documents after they have been filled?\n\n<b>If Collabora Online is available</b>, these documents can be opened (and further processed) directly in the browser with Collabora Online.\n\n <b>Without Collabora Online</b>, filled document is offered for download.\n\nMore information about Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
 delete all older versions and deleted files older then %s days	filemanager	en	Delete all older versions and deleted files older than %s days
 delete these files or directories?	filemanager	en	Delete these files or directories?
 delete these shares?	filemanager	en	Delete these shares?
@@ -106,6 +106,7 @@ display of content	filemanager	en	Display of content
 do you want more information about epl subscription?	common	en	Do you want more information about EPL subscription?
 do you want to overwrite existing file %1 in directory %2?	filemanager	en	Do you want to overwrite existing file %1 in folder %2?
 do you want to overwrite the existing file %1?	filemanager	en	Do you want to overwrite the existing file %1?
+done	common	en	done
 download	filemanager	en	Download
 download documents	filemanager	en	Download documents
 edit comments	filemanager	en	Edit comments
@@ -133,7 +134,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	en	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 excludes selected mime types	filemanager	en	Excludes selected MIME-types
-excludes selected mime types from being opened by editor	filemanager	en	Excludes selected MIME-types from being opened by Collabora Online.<br>These document types are either opened in the browser or downloaded.
+excludes selected mime types from being opened by editor	filemanager	en	Excludes selected MIME-types from being opened by Collabora Online.\nThese document types are either opened in the browser or downloaded.
 executable	filemanager	en	Executable
 expires	filemanager	en	Expires
 export definition to use for nextmatch export	filemanager	en	Export definition to use for nextmatch export
@@ -178,6 +179,7 @@ go up	filemanager	en	Go up
 group home quota	filemanager	en	Group home quota
 hidden upload	filemanager	en	Hidden upload
 hidden uploads	filemanager	en	Hidden uploads
+high	filemanager	en	high
 hostname/ip for webdav and smb	filemanager	en	Hostname/IP for WebDAV and SMB
 id	filemanager	en	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	en	If you specify a folder (full VFS path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
@@ -199,7 +201,7 @@ link target %1 not found!	filemanager	en	Link target %1 not found!
 list view	filemanager	en	List view
 location	filemanager	en	Location
 lock	filemanager	en	Lock
-log out as superuser	filemanager	en	Log out as super user
+log out as superuser	filemanager	en	Log out as superuser
 mail files	filemanager	en	Mail files
 mail paste	filemanager	en	Mail paste
 max folderlinks	admin	en	Max folder links
@@ -264,8 +266,8 @@ replaced %1	filemanager	en	Replaced %1
 replacements for inserting entries into documents	filemanager	en	Replacements for inserting entries into documents
 rights	filemanager	en	Rights
 root	filemanager	en	Root
-root access granted.	filemanager	en	Root access granted.
-root access stopped.	filemanager	en	Root access stopped.
+root access granted.	filemanager	en	Superuser access granted.
+root access stopped.	filemanager	en	Superuser access stopped.
 save %1	filemanager	en	Save %1
 save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing.
 save as zip	filemanager	en	Save as ZIP
@@ -283,7 +285,7 @@ select file(s) from vfs	common	en	Select file(s) from EGroupware File Manager
 setting for document merge saved.	filemanager	en	Setting for document merge saved.
 share files	filemanager	en	Share files
 share link copied into clipboard	filemanager	en	Share link copied into clipboard
-share mounted at %1.<br/>please close this tab.	filemanager	en	Share mounted at %1.<br>Please close this tab.
+share mounted at %1.<br/>please close this tab.	filemanager	en	Share mounted at %1.\nPlease close this tab.
 shared files	filemanager	en	Shared files
 shared with	filemanager	en	Shared with
 show	filemanager	en	Show
@@ -302,7 +304,7 @@ sqlfs statistics	filemanager	en	VFS statistics
 start search	filemanager	en	Start search
 startfolder	filemanager	en	Start folder
 successful mounted %1 on %2.	filemanager	en	Successful mounted %1 on %2.
-superuser	filemanager	en	Super user
+superuser	filemanager	en	Superuser
 superuser (root)	filemanager	en	Superuser (root)
 symlink to %1 created.	filemanager	en	Symlink to %1 created.
 tag to mark positions for address labels	filemanager	en	Tag to mark positions for address labels

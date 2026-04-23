@@ -11,6 +11,7 @@
 (leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
 (no subject)	mail	fr	Pas de sujet
 (not connected)	mail	fr	(non connecté)
+...	mail	fr	PJ
 account editable by user	mail	fr	compte modifiable par l'utilisateur
 acl rights retrieve failed, seems there are no rights set!	mail	fr	L'extraction des droits ACL a échoué, il semble qu'il n'y ait pas de droits définis !
 acl rights retrieved successfully	mail	fr	Droits ACL récupérés avec succès
@@ -308,7 +309,7 @@ imap - incoming mail	mail	fr	IMAP - mail entrant
 imap administration	mail	fr	Administration IMAP
 imap server	mail	fr	Serveur IMAP
 imap timeout	mail	fr	Timeout IMAP
-import message	mail	fr	Importer le message
+import message	mail	fr	Importer un email
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	fr	L'importation du message %1 a échoué. Impossible d'enregistrer le message dans le dossier %2 en raison de : %3
 import of message %1 failed. destination folder %2 does not exist.	mail	fr	L'importation du message %1 a échoué. Le dossier de destination %2 n'existe pas.
 import of message %1 failed. destination folder not set.	mail	fr	L'importation du message %1 a échoué. Dossier de destination non défini.

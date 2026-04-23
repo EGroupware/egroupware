@@ -33,7 +33,7 @@ cut	filemanager	sv	Klipp ut
 default action on double-click	filemanager	sv	Standardåtgärd vid dubbelklick
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sv	Standard = Nej. Länken visas inte, men du kan fortfarande navigera till denna plats eller konfigurera just denna plats som startmapp eller mapplänk.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	sv	Definierar hur dubbelklick på en dokumentfil ska hanteras. Bilder öppnas alltid i exponeringsvyn och e-postmeddelanden skickas med e-postprogrammet. Alla andra MIME-typer hanteras av webbläsaren själv.
-defines how to open a merge print document	filemanager	sv	Vad ska hända med dokumenten efter att de har fyllts i?<br><br><b>Om Collabora Online är tillgängligt</b> kan dessa dokument öppnas (och bearbetas vidare) direkt i webbläsaren med Collabora Online. <br><br> <b>Utan Collabora Online</b> erbjuds ifyllda dokument för nedladdning.<br><br>Mer information om Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office i EGroupware</a>
+defines how to open a merge print document	filemanager	sv	Vad ska hända med dokumenten efter att de har fyllts i?\n\n<b>Om Collabora Online är tillgängligt</b> kan dessa dokument öppnas (och bearbetas vidare) direkt i webbläsaren med Collabora Online. \n\n <b>Utan Collabora Online</b> erbjuds ifyllda dokument för nedladdning.\n\nMer information om Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office i EGroupware</a>
 deleted %1	filemanager	sv	Raderade %1
 directory	filemanager	sv	Katalog
 directory %1 already exists	filemanager	sv	Katalogen %1 finns redan
@@ -61,7 +61,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	sv	Exempel {{NELF roll}} - om fältet role inte är tomt får du en ny rad med värdet i fältet role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	sv	Exempel {{nenvlf roll}} - om fältet role inte är tomt, skapa en LF utan något värde för fältet
 excludes selected mime types	filemanager	sv	Utesluter utvalda MIME-typer
-excludes selected mime types from being opened by editor	filemanager	sv	Utesluter valda MIME-typer från att öppnas av Collabora Online.<br>Dessa dokumenttyper öppnas antingen i webbläsaren eller laddas ner.
+excludes selected mime types from being opened by editor	filemanager	sv	Utesluter valda MIME-typer från att öppnas av Collabora Online.\nDessa dokumenttyper öppnas antingen i webbläsaren eller laddas ner.
 executable	filemanager	sv	Körbar
 expires	filemanager	sv	Förfaller
 export definition to use for nextmatch export	filemanager	sv	Exportdefinition att använda för nextmatch-export
@@ -109,6 +109,7 @@ link	filemanager	sv	Länk
 list view	filemanager	sv	Visa lista
 location	filemanager	sv	Plats
 lock	filemanager	sv	Lås
+log out as superuser	filemanager	sv	Logga ut som superanvändare
 mail paste	filemanager	sv	Klistra in e-post
 merge print open handler	filemanager	sv	Öppna hanterare för sammanfogad utskrift
 mime type	filemanager	sv	MIME-typ
@@ -153,6 +154,8 @@ renamed %1 to %2	filemanager	sv	Döpte om %1 till %2
 renamed %1 to %2.	filemanager	sv	Döpte om %1 till %2
 replaced %1	filemanager	sv	Ersatte %2
 replacements for inserting entries into documents	filemanager	sv	Ersättare för att infoga poster i dokument
+root access granted.	filemanager	sv	Superanvändaråtkomst beviljad.
+root access stopped.	filemanager	sv	Superanvändaråtkomst avbruten.
 save %1	filemanager	sv	Spara %1
 save %1, and go back to file listing	filemanager	sv	Spara %1 och gå tillbaka till fillistan
 save as zip	filemanager	sv	Spara som ZIP
@@ -165,6 +168,9 @@ show	filemanager	sv	Visa
 size	filemanager	sv	Storlek
 smb, webdavs and vfs require a username!	filemanager	sv	SMB, WebDAV och VFS kräver ett användarnamn!
 smb: mount samba or windows fileserver shares	filemanager	sv	SMB: Montera Samba- eller Windows-filserverandelar
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	sv	Vissa funktioner kräver superanvändarbehörighet. Logga in här som filhanteringssuperanvändare – behöriga användare definieras i inställningarna.
+superuser	filemanager	sv	Superanvändare
+superuser (root)	filemanager	sv	Superanvändare (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	sv	Dokumentet kan innehålla platshållare som {{%3}}, som ska ersättas med data (%1full lista över platshållarnamn%2).
 total files	filemanager	sv	Totalt antal filer
 unused space	filemanager	sv	Ledigt utrymme
@@ -177,5 +183,5 @@ username for webdav and smb, use $user for name of logged in user	filemanager	sv
 vfs mounts and versioning	common	sv	VFS-montage och versionshantering
 webdavs: mount egroupware or *cloud shares	filemanager	sv	WebDAV: montera EGroupware- eller *Cloud-andelar
 you do not have access to %1	filemanager	sv	Du har inte behörighet till %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	sv	Du måste bli superuser för att aktivera eller inaktivera versionshantering för en mapp!
+you need to become root, to enable or disable versioning on a directory!	filemanager	sv	Du måste bli superanvändare för att kunna aktivera eller inaktivera versionshantering för en mapp!
 your home dir did not exist, egroupware created a new one.	filemanager	sv	Det fanns ingen hemkatalog för dig, EGroupware skapade en ny åt dig.

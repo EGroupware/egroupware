@@ -56,7 +56,7 @@ cut to clipboard	filemanager	hu	Kivágás a vágólapra
 default action on double-click	filemanager	hu	Alapértelmezett művelet dupla kattintásra
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	hu	Alapértelmezett beállítás NEM. A link nem lesz megjelenítve, de beléphetsz erre a helyre vagy beállíthatod alapértelmezett kezdeti mappának.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	hu	Meghatározza, hogyan kezelje a dokumentumfájlok dupla kattintási műveletét. A képek mindig az expozíciós nézetben nyílnak meg, és az e-mailek az e-mail alkalmazással. Minden más MIME-típust maga a böngésző kezel.
-defines how to open a merge print document	filemanager	hu	Mi történik a dokumentumokkal, miután kitöltötték őket?<br><br><b>Ha a Collabora Online elérhető</b>, ezeket a dokumentumokat közvetlenül a böngészőben lehet megnyitni (és tovább feldolgozni) a Collabora Online segítségével. <br><br> <b>Collabora Online nélkül</b> a kitöltött dokumentum letöltésre kerül. <br><br>További információk a Collabora Online-ról: <br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office az EGroupware-ben</a>
+defines how to open a merge print document	filemanager	hu	Mi történik a dokumentumokkal, miután kitöltötték őket?\n\n<b>Ha a Collabora Online elérhető</b>, ezeket a dokumentumokat közvetlenül a böngészőben lehet megnyitni (és tovább feldolgozni) a Collabora Online segítségével. \n\n <b>Collabora Online nélkül</b> a kitöltött dokumentum letöltésre kerül. \n\nTovábbi információk a Collabora Online-ról: \n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office az EGroupware-ben</a>
 delete this file or directory	filemanager	hu	Kijelölt file vagy mappa törlése.
 deleted %1	filemanager	hu	%1 törölve
 directories sorted in	filemanager	hu	Mappák tárolva a
@@ -94,7 +94,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	hu	Példa {{NELF role}} - ha a szerep mező nem üres, akkor egy új sort kap a szerep mező értékével.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	hu	Példa {{nenvlf role}} - ha a mező szerep nem üres, akkor a mező értéke nélkül egy LF-t állít be.
 excludes selected mime types	filemanager	hu	Kizárja a kiválasztott MIME-típusokat
-excludes selected mime types from being opened by editor	filemanager	hu	Kizárja a kiválasztott MIME-típusokat a Collabora Online általi megnyitásból.<br>Ezek a dokumentumtípusok vagy a böngészőben kerülnek megnyitásra, vagy letöltésre.
+excludes selected mime types from being opened by editor	filemanager	hu	Kizárja a kiválasztott MIME-típusokat a Collabora Online általi megnyitásból.\nEzek a dokumentumtípusok vagy a böngészőben kerülnek megnyitásra, vagy letöltésre.
 executable	filemanager	hu	Végrehajtható
 expires	filemanager	hu	Lejár
 export definition to use for nextmatch export	filemanager	hu	A nextmatch exportáláshoz használandó export-definíció
@@ -150,7 +150,7 @@ link target %1 not found!	filemanager	hu	Link célpontja nem található (%1)!
 list view	filemanager	hu	Lista nézet
 location	filemanager	hu	Hely
 lock	filemanager	hu	Lock
-log out as superuser	filemanager	hu	Rendszergazda kijelentkezés
+log out as superuser	filemanager	hu	Kijelentkezés szuperfelhasználóként
 mail paste	filemanager	hu	Mail beillesztés
 max folderlinks	admin	hu	Maximális mappalink száma
 merge print open handler	filemanager	hu	Összevonás nyomtatás megnyitása kezelő
@@ -205,8 +205,8 @@ replaced %1	filemanager	hu	%1 cserélve
 replacements for inserting entries into documents	filemanager	hu	A bejegyzések dokumentumba való beillesztésének helyettesítése
 rights	filemanager	hu	Hozzáférés
 root	filemanager	hu	root
-root access granted.	filemanager	hu	Adminisztrátor hozzáférés megadva.
-root access stopped.	filemanager	hu	Adminisztrátor hozzáférés leállítva.
+root access granted.	filemanager	hu	Szuperfelhasználói hozzáférés megadva.
+root access stopped.	filemanager	hu	Szuperfelhasználói hozzáférés leállítva.
 save %1	filemanager	hu	Mentés %1
 save %1, and go back to file listing	filemanager	hu	%1 mentése és visszatérés az állománylistához
 save as zip	filemanager	hu	Mentés ZIP-ként
@@ -225,8 +225,10 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	hu	Az 
 size	filemanager	hu	Méret
 smb, webdavs and vfs require a username!	filemanager	hu	Az SMB, WebDAV és VFS felhasználónevet igényel!
 smb: mount samba or windows fileserver shares	filemanager	hu	SMB: Samba vagy Windows fájlszerver megosztások csatlakoztatása
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	hu	Egyes funkciókhoz szuperfelhasználói jogosultságok szükségesek, kérjük, jelentkezzen be ide fájlkezelő szuperfelhasználóként - a jogosult felhasználókat a beállítások határozzák meg.
 start search	filemanager	hu	keresés
-superuser	filemanager	hu	Operator
+superuser	filemanager	hu	Szuperfelhasználó
+superuser (root)	filemanager	hu	Szuperfelhasználó (root)
 symlink to %1 created.	filemanager	hu	Symlink %1-hez létrehozva.
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	hu	Az alapértelmezett kezdőmappa a saját könyvtárad. Az alapértelmezett mappa lesz beállítva ha ez a mező üres, az elérési út nem létezik vagy nincs hozzáférésed.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	hu	A dokumentum tartalmazhat helyőrzőt, például {{%3}}, amelyet az adatokkal kell helyettesíteni (%1teljes lista a helyőrző nevekről%2).
@@ -247,7 +249,7 @@ wrong username or password!	filemanager	hu	Hibás felhasználónév vagy jelszó
 you are not allowed to upload a script!	filemanager	hu	Végrehajtható file feltöltéséhez nincs hjogosultságod!
 you can only grant additional rights, you can not take rights away!	filemanager	hu	Jogosultságot csak hozzáadhatsz, el nem vehetsz!
 you do not have access to %1	filemanager	hu	Nincs jogosultsága %1 eléréséhez
-you need to become root, to enable or disable versioning on a directory!	filemanager	hu	Superuser kell lenned, hogy engedélyezd vagy letiltsd a verziókezelést egy mappán!
+you need to become root, to enable or disable versioning on a directory!	filemanager	hu	Szuperfelhasználóvá kell válnia, hogy engedélyezze vagy letiltsa a verziókezelést egy mappában!
 you need to select an owner!	filemanager	hu	Választanod kell tulajdonost!
 you need to select some files first!	filemanager	hu	Először válaszd ki a fileokat!
 you will be redirected to your home directory.	filemanager	hu	A saját mappádhoz lépek.
