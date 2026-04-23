@@ -43,7 +43,7 @@ jobs:
             -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
             -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
             -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
-            composer install --no-interaction --ignore-platform-reqs --dev
+            composer install --no-interaction --ignore-platform-reqs
           php "${GITHUB_WORKSPACE}/sources/install-cli.php" --git-apps pull
 
       - name: Prepare compose project layout
