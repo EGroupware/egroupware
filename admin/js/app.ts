@@ -32,7 +32,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
  *
  * @augments AppJS
  */
-class AdminApp extends EgwApp
+export class AdminApp extends EgwApp
 	/**
 	 * @lends app.classes.admin
 	 */
