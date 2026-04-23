@@ -84,7 +84,7 @@ default action on double-click	filemanager	cs	Výchozí akce při dvojitém klik
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	cs	Výchozí chování je NE. Odkaz sice nebude zobrazen, ale do adresáře budete moci vstoupit nebo ho nakonfigurovat jako startovní složku či odkaz na složku.
 default document to insert entries	filemanager	cs	Výchozí dokument pro vložení záznamů
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	cs	Určuje, jak se má zacházet s akcí dvojitého kliknutí na soubor dokumentu. Obrázky se vždy otevírají v exponovaném zobrazení a e-maily pomocí e-mailové aplikace. Všechny ostatní typy MIME zpracovává prohlížeč sám.
-defines how to open a merge print document	filemanager	cs	Co by se mělo stát s dokumenty poté, co byly vyplněny? <br> <br> <b> Pokud je k dispozici Collabora Online </b>, tyto dokumenty lze otevřít (a dále zpracovávat) přímo v prohlížeči s Collabora Online. <br> <b> bez spolupráce online </B> href = "https://www.egroppeware.org/online-offfice" Target = "_ Blank"> Online Office Collabora v EGroupware </a>
+defines how to open a merge print document	filemanager	cs	Co by se mělo stát s dokumenty poté, co byly vyplněny? \n \n <b> Pokud je k dispozici Collabora Online </b>, tyto dokumenty lze otevřít (a dále zpracovávat) přímo v prohlížeči s Collabora Online. \n <b> bez spolupráce online </B> href = "https://www.egroppeware.org/online-offfice" Target = "_ Blank"> Online Office Collabora v EGroupware </a>
 delete all older versions and deleted files older then %s days	filemanager	cs	Odstranit všechny starší verze a odstraněné soubory starší než %s dní
 delete these files or directories?	filemanager	cs	Smazat tyto soubory nebo adresáře?
 delete these shares?	filemanager	cs	Smazat tyto sdílené soubory?
@@ -133,7 +133,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	cs	Příklad {{NELF role}} - Pokud pole role není prázdné, zobrazí se nový řádek s hodnotou pole role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	cs	Příklad {{nenvlf role}} - pokud pole role není prázdné, nastaví se LF bez hodnoty pole
 excludes selected mime types	filemanager	cs	Vyloučí vybrané typy MIME
-excludes selected mime types from being opened by editor	filemanager	cs	Vyloučí vybrané typy MIME z otevírání pomocí Collabora Online.<br>Tyto typy dokumentů jsou buď otevřeny v prohlížeči, nebo staženy.
+excludes selected mime types from being opened by editor	filemanager	cs	Vyloučí vybrané typy MIME z otevírání pomocí Collabora Online.\nTyto typy dokumentů jsou buď otevřeny v prohlížeči, nebo staženy.
 executable	filemanager	cs	Spustitelný
 expires	filemanager	cs	Vyprší
 export definition to use for nextmatch export	filemanager	cs	Definice exportu, která se použije pro export nextmatch
@@ -264,8 +264,8 @@ replaced %1	filemanager	cs	%1nahrazeno
 replacements for inserting entries into documents	filemanager	cs	Náhrady pro vkládání záznamů do dokumentů
 rights	filemanager	cs	Práva
 root	filemanager	cs	Root
-root access granted.	filemanager	cs	Oprávnění roota přiděleno.
-root access stopped.	filemanager	cs	Oprávnění roota pozastaveno.
+root access granted.	filemanager	cs	Přístup superuživatele udělen.
+root access stopped.	filemanager	cs	Přístup superuživatele zastaven.
 save %1	filemanager	cs	Uložit %1
 save %1, and go back to file listing	filemanager	cs	Uložit %1 a vrátit se zpět na seznam souborů
 save as zip	filemanager	cs	Uložit jako ZIP
@@ -283,7 +283,7 @@ select file(s) from vfs	common	cs	Vyberte soubory z File Manager
 setting for document merge saved.	filemanager	cs	Nastavení pro sloučení dokumentů uloženo.
 share files	filemanager	cs	Sdílení souborů
 share link copied into clipboard	filemanager	cs	Odkaz na sdílení zkopírován do schránky
-share mounted at %1.<br/>please close this tab.	filemanager	cs	Sdílení je namontováno na %1.<br/>Prosím, zavřete tuto kartu.
+share mounted at %1.<br/>please close this tab.	filemanager	cs	Sdílení je namontováno na %1.\nProsím, zavřete tuto kartu.
 shared files	filemanager	cs	Sdílené soubory
 shared with	filemanager	cs	Sdílené s
 show	filemanager	cs	Zobrazit
@@ -297,13 +297,13 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	cs	Zob
 size	filemanager	cs	Velikost
 smb, webdavs and vfs require a username!	filemanager	cs	SMB, WebDAV a VFS vyžadují uživatelské jméno!
 smb: mount samba or windows fileserver shares	filemanager	cs	SMB: připojení sdílené složky Samba nebo souborového serveru Windows.
-some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	cs	Některé funkce vyžadují oprávnění superuživatele, přihlaste se zde jako superuživatel aplikace filemanager - povoleni uživatelé jsou definováni v nastavení.
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	cs	Některé funkce vyžadují oprávnění superuživatele. Přihlaste se zde jako superuživatel správce souborů – oprávnění uživatelé jsou definováni v nastavení.
 sqlfs statistics	filemanager	cs	Statistiky VFS
 start search	filemanager	cs	Zahájit hledání
 startfolder	filemanager	cs	Počáteční složka
 successful mounted %1 on %2.	filemanager	cs	Úspěšně připojeno %1 na %2.
 superuser	filemanager	cs	Superuživatel
-superuser (root)	filemanager	cs	Superuser (root)
+superuser (root)	filemanager	cs	Superuživatel (root)
 symlink to %1 created.	filemanager	cs	Symbolický odkaz na %1 byl vytvořen.
 tag to mark positions for address labels	filemanager	cs	Značka pro vyznačení pozic v adresních štítcích
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	cs	Výchozí startovní složka je Vaše osobní. Je použita v případě, kdy položku nevyplníte, zadaná cesta neexistuje nebo pro ní nemáte přístupová oprávnění.

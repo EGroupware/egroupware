@@ -14,7 +14,7 @@ cut	filemanager	et	Lõika
 default action on double-click	filemanager	et	Topeltklõpsu vaikimisi toiming
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	et	Vaikimisi = Ei. Linki ei kuvata, kuid teil on siiski võimalik navigeerida sellesse asukohta või konfigureerida see konkreetne asukoht algkaustaks või kausta lingiks.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	et	Määrab, kuidas käsitleda dokumendi faili topeltklõpsu tegevust. Pildid avatakse alati eksponeerimisvaates ja e-kirjad e-kirjarakendusega. Kõiki teisi MIME-tüüpe käsitleb brauser ise.
-defines how to open a merge print document	filemanager	et	Mis peaks juhtuma dokumentidega pärast nende täitmist?<br><br><b>Kui Collabora Online on saadaval</b>, saab neid dokumente avada (ja edasi töödelda) otse brauseris Collabora Online'i abil. <br><br> <b>Kui Collabora Online pole saadaval</b>, pakutakse täidetud dokument allalaadimiseks.<br><br>Lisateave Collabora Online'i kohta:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office EGroupware'is</a>
+defines how to open a merge print document	filemanager	et	Mis peaks juhtuma dokumentidega pärast nende täitmist?\n\n<b>Kui Collabora Online on saadaval</b>, saab neid dokumente avada (ja edasi töödelda) otse brauseris Collabora Online'i abil. \n\n <b>Kui Collabora Online pole saadaval</b>, pakutakse täidetud dokument allalaadimiseks.\n\nLisateave Collabora Online'i kohta:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office EGroupware'is</a>
 disable	filemanager	et	Keela
 download	filemanager	et	Allalaadimine
 download documents	filemanager	et	Dokumentide allalaadimine
@@ -28,7 +28,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	et	Näide {{NELF roll}} - kui väli roll ei ole tühi, saate uue rea, kus on välja roll väärtus
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	et	Näide {{nenvlf roll}} - kui väli roll ei ole tühi, seatakse LF ilma väljal oleva väärtuseta
 excludes selected mime types	filemanager	et	Välistab valitud MIME-tüübid
-excludes selected mime types from being opened by editor	filemanager	et	Välistab valitud MIME-tüübid, mida Collabora Online ei ava.<br> Need dokumenditüübid avatakse kas brauseris või laaditakse alla.
+excludes selected mime types from being opened by editor	filemanager	et	Välistab valitud MIME-tüübid, mida Collabora Online ei ava.\n Need dokumenditüübid avatakse kas brauseris või laaditakse alla.
 executable	filemanager	et	Käivitatav
 expires	filemanager	et	Aegub
 export definition to use for nextmatch export	filemanager	et	Ekspordimääratlus, mida kasutada nextmatch'i ekspordiks
@@ -68,6 +68,7 @@ link	filemanager	et	Link
 list view	filemanager	et	Nimekirja vaade
 location	filemanager	et	Asukoht
 lock	filemanager	et	Lukusta
+log out as superuser	filemanager	et	Logige superkasutajana välja
 mail paste	filemanager	et	Maili kleepimine
 merge print open handler	filemanager	et	Ühinemise printimise avatud käsitseja
 modified	filemanager	et	Muudetud
@@ -100,6 +101,8 @@ rename of %1 to %2 failed!	filemanager	et	%1 ümbernimetamine %2-ks ebaõnnestus
 rename, change permissions or ownership	filemanager	et	Ümbernimetamine, õiguste või omandiõiguse muutmine
 renamed %1 to %2	filemanager	et	Ümbernimetamine %1 ümber %2-ks
 renamed %1 to %2.	filemanager	et	Ümbernimetamine %1 ümber %2-ks
+root access granted.	filemanager	et	Superkasutaja juurdepääs lubatud.
+root access stopped.	filemanager	et	Superkasutaja juurdepääs peatatud.
 save changes	filemanager	et	Salvesta muudatused
 save job to clear error and restart it	filemanager	et	Salvestage töö, et viga kustutada ja töö uuesti käivitada
 select custom field	filemanager	et	Valige kohandatud väli
@@ -107,9 +110,12 @@ show	filemanager	et	Näita
 size	filemanager	et	suurus
 smb, webdavs and vfs require a username!	filemanager	et	SMB, WebDAV ja VFS nõuavad kasutajanime!
 smb: mount samba or windows fileserver shares	filemanager	et	SMB: Samba või Windowsi failiserverite jagamiste ühendamine
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	et	Mõned funktsioonid nõuavad superkasutaja õigusi, palun logige siin sisse failihalduri superkasutajana – lubatud kasutajad on määratletud seadistuses.
+superuser	filemanager	et	Superkasutaja
+superuser (root)	filemanager	et	Superkasutaja (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	et	Dokument võib sisaldada paigutusi nagu {{%3}}, mis asendatakse andmetega (%1täielik loetelu paigutuste nimedest%2).
 up	filemanager	et	üles
 username for webdav and smb, use $user for name of logged in user	filemanager	et	WebDAV ja SMB puhul kasutajanimi, kasuta $user sisselogitud kasutaja nime
 vfs mounts and versioning	common	et	VFS-ühendused ja versioonimine
 webdavs: mount egroupware or *cloud shares	filemanager	et	WebDAV: EGroupware või *Cloudi jagamiste ühendamine
-you need to become root, to enable or disable versioning on a directory!	filemanager	et	Sa pead saama superuser, et lubada või keelata kausta versioonimine!
+you need to become root, to enable or disable versioning on a directory!	filemanager	et	Te peate saama superkasutajaks, et lubada või keelata versioonide haldamine kaustas!

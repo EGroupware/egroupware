@@ -29,7 +29,7 @@ custom fields	filemanager	lv	Mainīti lauki
 default action on double-click	filemanager	lv	Noklusējuma darbība pēc dubultklikšķa
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	lv	Noklusējuma iestatījums = Nē. Saite netiks parādīta, bet jūs joprojām varēsiet pārvietoties uz šo atrašanās vietu vai konfigurēt šo konkrēto atrašanās vietu kā sākuma mapi vai mapes saiti.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	lv	Nosaka, kā apstrādāt dubultklikšķa darbību uz dokumenta faila. Attēli vienmēr tiek atvērti ekspozīcijas skatā un e-pasta ziņojumos ar e-pasta lietojumprogrammu. Visus pārējos MIME tipus apstrādā pats pārlūks.
-defines how to open a merge print document	filemanager	lv	Kas notiek ar dokumentiem pēc to aizpildīšanas?<br><br><b>Ja ir pieejams Collabora Online</b>, šos dokumentus var atvērt (un turpināt apstrādāt) tieši pārlūkprogrammā ar Collabora Online. <br><br> <b>Ja Collabora Online nav pieejams</b>, aizpildītais dokuments tiek piedāvāts lejupielādei.<br><br>Vairāk informācijas par Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office EGroupware</a>
+defines how to open a merge print document	filemanager	lv	Kas notiek ar dokumentiem pēc to aizpildīšanas?\n\n<b>Ja ir pieejams Collabora Online</b>, šos dokumentus var atvērt (un turpināt apstrādāt) tieši pārlūkprogrammā ar Collabora Online. \n\n <b>Ja Collabora Online nav pieejams</b>, aizpildītais dokuments tiek piedāvāts lejupielādei.\n\nVairāk informācijas par Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office EGroupware</a>
 deleted %1	filemanager	lv	Izdzēsa %1
 directory	filemanager	lv	Direktorija
 directory %1 already exists	filemanager	lv	Direktorija %1 jau pastāv
@@ -49,7 +49,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	lv	Piemērs {{{NELF role}} - ja lauks role nav tukšs, parādīsies jauna rinda ar lauka role vērtību
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	lv	Piemērs {{{nenvlf role}} - ja lauka loma nav tukša, iestatiet LF bez lauka vērtības
 excludes selected mime types	filemanager	lv	Izslēdz atlasītos MIME tipus
-excludes selected mime types from being opened by editor	filemanager	lv	Izslēdz izvēlētos MIME tipus no Collabora Online atvēršanas.<br>Šie dokumentu tipi tiek atvērti pārlūkprogrammā vai lejupielādēti.
+excludes selected mime types from being opened by editor	filemanager	lv	Izslēdz izvēlētos MIME tipus no Collabora Online atvēršanas.\nŠie dokumentu tipi tiek atvērti pārlūkprogrammā vai lejupielādēti.
 executable	filemanager	lv	Izpildāms
 expires	filemanager	lv	Beigas
 export definition to use for nextmatch export	filemanager	lv	Eksporta definīcija, ko izmantot nextmatch eksportam
@@ -97,6 +97,7 @@ link	filemanager	lv	Saite
 list view	filemanager	lv	Saraksta skats
 location	filemanager	lv	Atrašanās vieta
 lock	filemanager	lv	Bloķēt
+log out as superuser	filemanager	lv	Iziet kā superlietotājs
 mail paste	filemanager	lv	Pasta ielīmēšana
 merge print open handler	filemanager	lv	Apvienot drukas atvēršanas apstrādātājs
 mime type	filemanager	lv	MIME tips
@@ -140,6 +141,8 @@ rename, change permissions or ownership	filemanager	lv	Pārdēvēt, mainīt atļ
 renamed %1 to %2	filemanager	lv	Pārdēvēts %1 uz %2
 renamed %1 to %2.	filemanager	lv	Pārdēvēts %1 uz %2
 replaced %1	filemanager	lv	Aizvietots
+root access granted.	filemanager	lv	Piekļuve superlietotājam piešķirta.
+root access stopped.	filemanager	lv	Piekļuve superlietotājam pārtraukta.
 save %1	filemanager	lv	Saglabāt %1
 save %1, and go back to file listing	filemanager	lv	Saglabā %1 un atgriezies datņu apskatē
 save as zip	filemanager	lv	Saglabāt kā ZIP
@@ -151,6 +154,9 @@ show	filemanager	lv	Parādīt
 size	filemanager	lv	Izmērs
 smb, webdavs and vfs require a username!	filemanager	lv	SMB, WebDAV un VFS prasa lietotājvārdu!
 smb: mount samba or windows fileserver shares	filemanager	lv	SMB: Mount Samba vai Windows failu servera kopijas
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	lv	Dažas funkcijas prasa superlietotāja atļaujas, lūdzu, ieietiet šeit kā failu pārvaldnieka superlietotājs - atļautie lietotāji ir definēti iestatījumos.
+superuser	filemanager	lv	Superlietotājs
+superuser (root)	filemanager	lv	Superlietotājs (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	lv	Dokumentā var būt vietvārdi, piemēram, {{%3}}, kas jāaizstāj ar datiem (%1pilns vietvārdu saraksts%2).
 total files	filemanager	lv	Datnes kopā
 unused space	filemanager	lv	Brīva vieta
@@ -163,5 +169,5 @@ username for webdav and smb, use $user for name of logged in user	filemanager	lv
 vfs mounts and versioning	common	lv	VFS pievienošana un versiju veidošana
 webdavs: mount egroupware or *cloud shares	filemanager	lv	WebDAV: pievienojiet EGroupware vai *Cloud kopijas
 you do not have access to %1	filemanager	lv	Tev nav pieeja %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	lv	Jums jākļūst par superuser, lai iespējotu vai atspējotu versiju iestatīšanu mapē!
+you need to become root, to enable or disable versioning on a directory!	filemanager	lv	Lai iespējotu vai atspējotu versiju pārvaldību mapē, jums ir jākļūst par superlietotāju!
 your home dir did not exist, egroupware created a new one.	filemanager	lv	Tava Mājas direktorija neeksistēja, EGroupware izveidoja jaunu!

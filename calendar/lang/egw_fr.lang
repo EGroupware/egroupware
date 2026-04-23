@@ -66,6 +66,7 @@ apply changes to (future) exceptions too?	calendar	fr	Appliquer les changements 
 apply the action on the whole query, not only the shown events	calendar	fr	Appliquer l'action sur la requête entière, PAS SEULEMENT sur les événements affichés.
 apply the changes	calendar	fr	Appliquer les modifications
 appointment settings	calendar	fr	Paramètres des rendez-vous
+arrow-repeat	calendar	fr	cercle fléché
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	fr	Alternativement, vous pouvez %1télécharger un dump MySQL%2 et l'importer manuellement dans la table egw_cal_timezones.
 at start of the event	calendar	fr	au début de l'événement
 attention	calendar	fr	Attention

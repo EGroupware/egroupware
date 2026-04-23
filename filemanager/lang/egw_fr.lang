@@ -83,7 +83,7 @@ default action on double-click	filemanager	fr	Action par défaut au double clic
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	fr	Par défaut = Non. Le lien ne sera pas affiché, mais vous pourrez toujours naviguer vers cet emplacement ou configurer cet emplacement particulier comme dossier de démarrage ou lien de dossier.
 default document to insert entries	filemanager	fr	Document par défaut pour insérer les entrées.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	fr	Définit comment gérer l'action de double-clic sur un fichier de document. Les images sont toujours ouvertes dans la vue exposée et les courriels avec l'application de messagerie. Tous les autres types MIME sont gérés par le navigateur lui-même.
-defines how to open a merge print document	filemanager	fr	Que devrait-il arriver aux documents après avoir été rempli? <br> <br> <b> Si Collabora Online est disponible </b>, ces documents peuvent être ouverts (et traités en outre) directement dans le navigateur avec Collabora Online. <br> <br> <b> Sans plus d'informations sur Collabora Online </b>, <b> <Ab> <A. href = "https://www.egroupware.org/online-office" Target = "_ Blank"> Collabora Online Office dans EGroupware </a>
+defines how to open a merge print document	filemanager	fr	Que devrait-il arriver aux documents après avoir été rempli? \n \n <b> Si Collabora Online est disponible </b>, ces documents peuvent être ouverts (et traités en outre) directement dans le navigateur avec Collabora Online. \n \n <b> Sans plus d'informations sur Collabora Online </b>, <b> <Ab> <A. href = "https://www.egroupware.org/online-office" Target = "_ Blank"> Collabora Online Office dans EGroupware </a>
 delete all older versions and deleted files older then %s days	filemanager	fr	Supprimer toutes les versions plus anciennes et les fichiers supprimés au delà de %s jours
 delete these files or directories?	filemanager	fr	Supprimer ces fichiers ou répertoires ?
 delete these shares?	filemanager	fr	Supprimer ces partages ?
@@ -105,6 +105,7 @@ display of content	filemanager	fr	Affichage de contenu
 do you want more information about epl subscription?	common	fr	Souhaitez-vous plus d'information sur l'abonnement EPL ?
 do you want to overwrite existing file %1 in directory %2?	filemanager	fr	Souhaitez vous écraser le fichier existant %1 dans le répertoire %2 ?
 do you want to overwrite the existing file %1?	filemanager	fr	Voulez-vous écraser le fichier existant %1 ?
+done	common	fr	Opération effectuée
 download	filemanager	fr	Télécharger
 download documents	filemanager	fr	Télécharger les documents
 edit comments	filemanager	fr	Modifier les commentaires
@@ -132,7 +133,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	fr	Exemple {{NELF rôle}} - si le champ role n'est pas vide, vous obtiendrez une nouvelle ligne avec la valeur du champ role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	fr	Exemple {{nenvlf rôle}} - si le champ role n'est pas vide, vous obtiendrez une nouvelle ligne avec la valeur du champ role.
 excludes selected mime types	filemanager	fr	Exclure les types mime sélectionnés
-excludes selected mime types from being opened by editor	filemanager	fr	Exclut les types MIME sélectionnés de l'ouverture par Collabora Online.<br>Ces types de documents sont soit ouverts dans le navigateur, soit téléchargés.
+excludes selected mime types from being opened by editor	filemanager	fr	Exclut les types MIME sélectionnés de l'ouverture par Collabora Online.\nCes types de documents sont soit ouverts dans le navigateur, soit téléchargés.
 executable	filemanager	fr	Exécutable
 expires	filemanager	fr	Expire
 export definition to use for nextmatch export	filemanager	fr	Définition de l'export à utiliser pour l'export "nextmatch"
@@ -177,6 +178,7 @@ go up	filemanager	fr	Remonter
 group home quota	filemanager	fr	Quota de groupe accueil
 hidden upload	filemanager	fr	Upload masqués
 hidden uploads	filemanager	fr	Uploads masqués
+high	filemanager	fr	Remonter
 hostname/ip for webdav and smb	filemanager	fr	Nom d'hôte/IP pour WebDAV et SMB
 id	filemanager	fr	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	fr	Si vous spécifiez un dossier (chemin d'accès VFS complet) ici, %1 affiche une action pour chaque document. Cette action permet de télécharger le document spécifié avec les données %1 insérées.
@@ -198,7 +200,7 @@ link target %1 not found!	filemanager	fr	Cible du lien %1 non trouvé
 list view	filemanager	fr	Vue en liste
 location	filemanager	fr	Emplacement
 lock	filemanager	fr	Verrouiller
-log out as superuser	filemanager	fr	Log out du profil super-utilisateur
+log out as superuser	filemanager	fr	Déconnectez-vous en tant que superutilisateur.
 mail files	filemanager	fr	Envoyer des fichiers par email
 mail paste	filemanager	fr	Coller un mail
 max folderlinks	admin	fr	Nombre de liens de dossiers max
@@ -263,8 +265,8 @@ replaced %1	filemanager	fr	Remplacé %1
 replacements for inserting entries into documents	filemanager	fr	Remplacements pour insertion d'entrées dans des documents
 rights	filemanager	fr	Droits
 root	filemanager	fr	Root
-root access granted.	filemanager	fr	Attribution de l'accès root
-root access stopped.	filemanager	fr	Fin de l'attribution de l'accès root
+root access granted.	filemanager	fr	Accès superutilisateur accordé.
+root access stopped.	filemanager	fr	Accès superutilisateur interrompu.
 save %1	filemanager	fr	Enregistrer %1
 save %1, and go back to file listing	filemanager	fr	Enregistrer %1, et retour au listing
 save as zip	filemanager	fr	Sauvegarder en ZIP
@@ -277,12 +279,12 @@ search for '%1'	filemanager	fr	Recherche de '%1'
 searchstring	filemanager	fr	Chaine de recherche
 select action...	filemanager	fr	Sélectionner une acion...
 select custom field	filemanager	fr	Sélectionner un champ personnalisé
-select file to upload in current directory	filemanager	fr	Choisissez un fichier à télécharger dans le répertoire courant
+select file to upload in current directory	filemanager	fr	Choisissez un fichier à charger dans le répertoire courant
 select file(s) from vfs	common	fr	Sélectionner des fichiers du VFS
 setting for document merge saved.	filemanager	fr	Les paramètres de la fusion de documents ont été sauvegardés.
 share files	filemanager	fr	Partager des fichiers
 share link copied into clipboard	filemanager	fr	Lien de partage copié dans le presse-papiers
-share mounted at %1.<br/>please close this tab.	filemanager	fr	Share mounted at %1.<br/>Please close this tab.
+share mounted at %1.<br/>please close this tab.	filemanager	fr	Share mounted at %1.\nPlease close this tab.
 shared files	filemanager	fr	Fichiers partagés
 shared with	filemanager	fr	Partagés avec
 show	filemanager	fr	Afficher
@@ -296,13 +298,13 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	fr	Aff
 size	filemanager	fr	Taille
 smb, webdavs and vfs require a username!	filemanager	fr	SMB, WebDAVs et VFS nécessitent un code utilisateur !
 smb: mount samba or windows fileserver shares	filemanager	fr	SMB : montage de partages Samba et Windows
-some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	fr	Certaines fonctionnalités requièrent les permissions d'un super-utilisateur, veuillez vous connecter ici en tant que super-utilisateur de filemanager - les utilisateurs autorisés sont définis dans la configuration.
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	fr	Certaines fonctionnalités nécessitent des autorisations superutilisateur. Veuillez vous connecter ici en tant que superutilisateur du gestionnaire de fichiers. Les utilisateurs autorisés sont définis dans la configuration.
 sqlfs statistics	filemanager	fr	Statistiques sqlFS
 start search	filemanager	fr	Début de la recherche
 startfolder	filemanager	fr	Dossier de début
 successful mounted %1 on %2.	filemanager	fr	%1 monté avec succès sur %2.
-superuser	filemanager	fr	Super-utilisateur
-superuser (root)	filemanager	fr	Superuser (root)
+superuser	filemanager	fr	Superutilisateur
+superuser (root)	filemanager	fr	Superutilisateur (root)
 symlink to %1 created.	filemanager	fr	Lien symbolique vers %1 créé
 tag to mark positions for address labels	filemanager	fr	Balise pour marquer les positions des étiquettes d'adresses
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	fr	Le dossier de démarrage par défaut est votre dossier personnel. Si vous laissez ce champ vide, c'est que le chemin n'existe pas ou que vous n'avez pas les autorisations d'accès nécessaires.
@@ -344,7 +346,7 @@ you can either delete some files or get in touch with your administrator to get 
 you can only grant additional rights, you can not take rights away!	filemanager	fr	Vous pouvez seulement attribuer des droits supplémentaires mais pas en retirer !
 you can use regular upload [+] button to upload files.	filemanager	fr	Vous pouvez utiliser le bouton [+] pour uploader des fichiers.
 you do not have access to %1	filemanager	fr	Vous n'avez pas accès à %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	fr	Vous devez vous connecter en superuser, pour activer ou désactiver le versionning sur un répertoire !
+you need to become root, to enable or disable versioning on a directory!	filemanager	fr	Vous devez devenir superutilisateur pour activer ou désactiver le contrôle de version sur un dossier !
 you need to select an owner!	filemanager	fr	Vous devez choisir un propriétaire !
 you need to select some files first!	filemanager	fr	Vous devez d'abord sélectionner des fichiers !
 you will be redirected to your home directory.	filemanager	fr	Vous allez être redigiré vers votre répertoire personnel.

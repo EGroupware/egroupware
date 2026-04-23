@@ -29,7 +29,7 @@ custom fields	filemanager	da	Valgfri Felter
 default action on double-click	filemanager	da	Standardhandling ved dobbeltklik
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	da	Standard = Nej. Linket vil ikke blive vist, men du kan stadig navigere til denne placering eller konfigurere denne placering som startmappe eller mappelink.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	da	Definerer, hvordan dobbeltklik på en dokumentfil skal håndteres. Billeder åbnes altid i expose-view og e-mails med e-mailprogrammet. Alle andre MIME-typer håndteres af browseren selv.
-defines how to open a merge print document	filemanager	da	Hvad skal der ske med dokumenterne, når de er udfyldt?<br><br><b>Hvis Collabora Online er tilgængeligt</b>, kan disse dokumenter åbnes (og viderebehandles) direkte i browseren med Collabora Online. <br><br> <b>Uden Collabora Online</b> tilbydes det udfyldte dokument til download.<br><br>Mere information om Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office i EGroupware</a>
+defines how to open a merge print document	filemanager	da	Hvad skal der ske med dokumenterne, når de er udfyldt?\n\n<b>Hvis Collabora Online er tilgængeligt</b>, kan disse dokumenter åbnes (og viderebehandles) direkte i browseren med Collabora Online. \n\n <b>Uden Collabora Online</b> tilbydes det udfyldte dokument til download.\n\nMere information om Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office i EGroupware</a>
 deleted %1	filemanager	da	Slettede %1
 directory	filemanager	da	Bibliotek
 directory %1 already exists	filemanager	da	Biblioteket %1 findes eksistere allerede
@@ -49,7 +49,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	da	Eksempel {{NELF rolle}} - Hvis feltet role ikke er tomt, får du en ny linje med værdien af feltet role.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	da	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, sættes en LF uden nogen værdi for feltet
 excludes selected mime types	filemanager	da	Ekskluderer udvalgte MIME-typer
-excludes selected mime types from being opened by editor	filemanager	da	Udelukker udvalgte MIME-typer fra at blive åbnet af Collabora Online.<br>Disse dokumenttyper åbnes enten i browseren eller downloades.
+excludes selected mime types from being opened by editor	filemanager	da	Udelukker udvalgte MIME-typer fra at blive åbnet af Collabora Online.\nDisse dokumenttyper åbnes enten i browseren eller downloades.
 executable	filemanager	da	Eksekverbar
 expires	filemanager	da	Udløber
 export definition to use for nextmatch export	filemanager	da	Eksportdefinition, der skal bruges til nextmatch-eksport
@@ -97,6 +97,7 @@ link	filemanager	da	Link
 list view	filemanager	da	Listevisning
 location	filemanager	da	Sti
 lock	filemanager	da	Lås
+log out as superuser	filemanager	da	Log ud som superbruger
 mail paste	filemanager	da	Mail indsæt
 merge print open handler	filemanager	da	Flet udskrivning åben handler
 mime type	filemanager	da	MIME type
@@ -137,6 +138,8 @@ rename, change permissions or ownership	filemanager	da	Omdøb, skift tilladelser
 renamed %1 to %2	filemanager	da	Omdøbte %1 til %2
 renamed %1 to %2.	filemanager	da	Omdøbt %1 til %2
 replaced %1	filemanager	da	%1 erstattet
+root access granted.	filemanager	da	Superbrugeradgang tildelt.
+root access stopped.	filemanager	da	Superbrugeradgang stoppet.
 save %1	filemanager	da	Gem %1
 save %1, and go back to file listing	filemanager	da	Gem %1, og gå tilbage til fil visning
 save changes	filemanager	da	Gem ændringer
@@ -147,6 +150,9 @@ show	filemanager	da	Vis
 size	filemanager	da	Størrelse
 smb, webdavs and vfs require a username!	filemanager	da	SMB, WebDAV og VFS kræver et brugernavn!
 smb: mount samba or windows fileserver shares	filemanager	da	SMB: Monter Samba- eller Windows-filserver-aktier
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	da	Nogle funktioner kræver superbrugerrettigheder. Log ind her som filhåndteringssuperbruger – godkendte brugere er defineret i opsætningen.
+superuser	filemanager	da	Superbruger
+superuser (root)	filemanager	da	Superbruger (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	da	Dokumentet kan indeholde pladsholdere som {{%3}}, der skal erstattes med data (%1fuld liste over pladsholdernavne%2).
 total files	filemanager	da	Antal filer
 ui mode	filemanager	da	Standard værktøjslinje

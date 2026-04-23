@@ -9,7 +9,11 @@ a theme defines the colors and fonts used by the template.	preferences	en	A them
 access token revoked.	preferences	en	Access Token revoked.
 acl grants have been updated	preferences	en	ACL grants have been updated.
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	en	Activate to show more colorful app icons in the open tabs. If unchecked they default to custom color lightened.
+allows to set a default or force the active application tab for new logins.	preferences	en	allows to set a default or force the active application tab for new logins.
+allows to set a default or force the open application tabs.	preferences	en	allows to set a default or force the open application tabs.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in EGroupware will show this number of entries or lines per page. Too many slow down the page display, too less will cost you the overview.
+app chooser icons	preferences	en	app chooser icons
+app chooser icons + text	preferences	en	app chooser icons + text
 applications list scroll area	preferences	en	Scroll button for side menu
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category?
 are you sure?	preferences	en	Are you sure?
@@ -120,6 +124,7 @@ notification settings	preferences	en	Notification settings
 number format	preferences	en	Number format
 numbers	preferences	en	numbers
 old password and new password are the same. this is invalid. you must enter a new password	preferences	en	Old password and new password are the same. You must enter a new password!
+open application tabs	preferences	en	open application tabs
 open popups in	preferences	en	Open pop-ups in
 or other compatible apps	preferences	en	Or other compatible apps
 p: paragraph	preferences	en	p: Paragraph

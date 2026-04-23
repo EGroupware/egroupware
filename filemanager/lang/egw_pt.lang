@@ -35,7 +35,7 @@ default action on double-click	filemanager	pt	Ação predefinida ao fazer duplo 
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	pt	Padrão = Não. O link não será mostrado, mas ainda é possível navegar para este local, ou configurar este local específico como pasta inicial ou link de pasta.
 default document to insert entries	filemanager	pt	Documento padrão para inserir entradas
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	pt	Define como lidar com a ação de duplo clique num ficheiro de documento. As imagens são sempre abertas na vista exposta e as mensagens de correio eletrónico com a aplicação de correio eletrónico. Todos os outros tipos de MIME são geridos pelo próprio browser.
-defines how to open a merge print document	filemanager	pt	O que deve acontecer aos documentos depois de preenchidos?<br><br><b>Se o Collabora Online estiver disponível</b>, estes documentos podem ser abertos (e posteriormente processados) diretamente no navegador com o Collabora Online. <br><br> <b>Sem o Collabora Online</b>, o documento preenchido é disponibilizado para download.<br><br>Mais informações sobre o Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office no EGroupware</a>
+defines how to open a merge print document	filemanager	pt	O que deve acontecer aos documentos depois de preenchidos?\n\n<b>Se o Collabora Online estiver disponível</b>, estes documentos podem ser abertos (e posteriormente processados) diretamente no navegador com o Collabora Online. \n\n <b>Sem o Collabora Online</b>, o documento preenchido é disponibilizado para download.\n\nMais informações sobre o Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office no EGroupware</a>
 delete these files or directories?	filemanager	pt	Eliminar estes ficheiros ou diretórios?
 delete these shares?	filemanager	pt	Eliminar estas partilhas?
 deleted %1	filemanager	pt	%1 eliminado
@@ -65,7 +65,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	pt	Exemplo {{NELF role}} - se o campo função não estiver vazio, obterá uma nova linha com o valor do campo função
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	pt	Exemplo {{nenvlf role}} - se o campo função não estiver vazio, definirá um LF sem qualquer valor do campo
 excludes selected mime types	filemanager	pt	Exclui tipos MIME seleccionados
-excludes selected mime types from being opened by editor	filemanager	pt	Exclui os tipos MIME seleccionados de serem abertos pelo Collabora Online.<br>Estes tipos de documentos são abertos no browser ou descarregados.
+excludes selected mime types from being opened by editor	filemanager	pt	Exclui os tipos MIME seleccionados de serem abertos pelo Collabora Online.\nEstes tipos de documentos são abertos no browser ou descarregados.
 executable	filemanager	pt	Executável
 expires	filemanager	pt	Expira
 export definition to use for nextmatch export	filemanager	pt	Definição Exportar para usar para exportação NextMatch
@@ -116,6 +116,7 @@ link target %1 not found!	filemanager	pt	Destino do link% 1 não encontrado!
 list view	filemanager	pt	Vista de lista
 location	filemanager	pt	Local
 lock	filemanager	pt	Fechadura
+log out as superuser	filemanager	pt	Sair como superutilizador
 mail paste	filemanager	pt	Colar correio
 merge print open handler	filemanager	pt	Manipulador de abertura de impressão de mesclagem
 mime type	filemanager	pt	Tipo MIME
@@ -161,6 +162,8 @@ renamed %1 to %2	filemanager	pt	Renomeado de %1 para %2
 renamed %1 to %2.	filemanager	pt	Renomeado de %1 para %2
 replaced %1	filemanager	pt	Substituído %1
 replacements for inserting entries into documents	filemanager	pt	Substitutos para a inserção de entradas em documentos
+root access granted.	filemanager	pt	Acesso de superutilizador concedido.
+root access stopped.	filemanager	pt	Acesso de superutilizador interrompido.
 save %1	filemanager	pt	Guardar %1
 save %1, and go back to file listing	filemanager	pt	Guardar %1, e voltar à lista de ficheiros
 save as zip	filemanager	pt	Guardar como ZIP
@@ -173,6 +176,9 @@ show	filemanager	pt	Exibir
 size	filemanager	pt	Tamanho
 smb, webdavs and vfs require a username!	filemanager	pt	SMB, WebDAV e VFS requerem um nome de utilizador!
 smb: mount samba or windows fileserver shares	filemanager	pt	SMB: Montar partilhas de servidores de ficheiros Samba ou Windows
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	pt	Algumas funcionalidades requerem permissões de superutilizador. Inicie sessão aqui como superutilizador do gestor de ficheiros. Os utilizadores autorizados são definidos na configuração.
+superuser	filemanager	pt	Superutilizador
+superuser (root)	filemanager	pt	Superutilizador (root)
 tag to mark positions for address labels	filemanager	pt	Tag para marcar posições para etiquetas de endereço
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	pt	O documento pode conter marcadores de posição como {{%3}}, a serem substituídos pelos dados (%1lista completa de nomes de marcadores de posição%2).
 the following document-types are supported:	filemanager	pt	Os seguintes tipos de documentos são suportados:
@@ -188,5 +194,5 @@ vfs mounts and versioning	common	pt	Montagens VFS e controlo de versões
 webdavs: mount egroupware or *cloud shares	filemanager	pt	WebDAV: montagem de partilhas EGroupware ou *Cloud
 you are not allowed to finally delete older versions and deleted files!	filemanager	pt	NÃO é permitido apagar finalmente versões mais antigas e ficheiros apagados!
 you do not have access to %1	filemanager	pt	Não tem acesso a %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	pt	Tem de se tornar superuser, para activar ou desactivar a versão numa pasta!
+you need to become root, to enable or disable versioning on a directory!	filemanager	pt	Tem de se tornar superutilizador para ativar ou desativar o controlo de versões numa pasta!
 your home dir did not exist, egroupware created a new one.	filemanager	pt	A sua directoria principal não existe. O EGroupware criou uma nova.

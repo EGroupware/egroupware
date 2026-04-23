@@ -83,7 +83,7 @@ default action on double-click	filemanager	it	Azione predefinita al doppio click
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	it	Predefinito: No. Il collegamento non verrà mostrato, ma potrai comunque raggiungere questo percorso, oppure configurarlo come cartella di avvio o collegamento a cartella.
 default document to insert entries	filemanager	it	Documento predefinito per l'inserimento
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	it	Definisce come gestire di doppio-click su un file. Le immagini sono sempre aperte in modalità visualizzazione e le email con l'applicazione E-Mail. Tutti gli altri file sono gestiti dal browser come oggetti MIME-type.
-defines how to open a merge print document	filemanager	it	Cosa succede ai documenti dopo che sono stati compilati?<br><br><b>Se Collabora Online è disponibile</b>, questi documenti possono essere aperti (e ulteriormente elaborati) direttamente nel browser con Collabora Online. <br><br> <b>Senza Collabora Online</b>, il documento compilato viene offerto per il download.<br><br>Maggiori informazioni su Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
+defines how to open a merge print document	filemanager	it	Cosa succede ai documenti dopo che sono stati compilati?\n\n<b>Se Collabora Online è disponibile</b>, questi documenti possono essere aperti (e ulteriormente elaborati) direttamente nel browser con Collabora Online. \n\n <b>Senza Collabora Online</b>, il documento compilato viene offerto per il download.\n\nMaggiori informazioni su Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
 delete all older versions and deleted files older then %s days	filemanager	it	Eliminare tutte le versioni passate e le cartelle più vecchie di %s giorni
 delete these files or directories?	filemanager	it	Eliminare i file o le cartelle?
 delete these shares?	filemanager	it	Eliminare queste condivisioni?
@@ -132,7 +132,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, otterrai una nuova riga col valore del campo "Ruolo"
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	it	Example {{nenvlf role}} - se il campo "Ruolo" non è vuoto, imposta un LF senza alcun valore del campo
 excludes selected mime types	filemanager	it	Esclude i tipi MIME selezionati
-excludes selected mime types from being opened by editor	filemanager	it	Esclude i tipi di MIME selezionati dall'apertura di Collabora Online.<br>Questi tipi di documenti vengono aperti nel browser o scaricati.
+excludes selected mime types from being opened by editor	filemanager	it	Esclude i tipi di MIME selezionati dall'apertura di Collabora Online.\nQuesti tipi di documenti vengono aperti nel browser o scaricati.
 executable	filemanager	it	Eseguibile
 expires	filemanager	it	Scade
 export definition to use for nextmatch export	filemanager	it	Definizione da usare per l'esportazione nextmatch (corrispondenza successiva)
@@ -198,7 +198,7 @@ link target %1 not found!	filemanager	it	Destinazione %1 del collegamento non tr
 list view	filemanager	it	Visualizzazione elenco
 location	filemanager	it	Percorso
 lock	filemanager	it	Blocco
-log out as superuser	filemanager	it	Esci come super utente
+log out as superuser	filemanager	it	Esci come superutente
 mail files	filemanager	it	Invia file per email
 mail paste	filemanager	it	Incolla in email
 max folderlinks	admin	it	Numero massimo di collegamenti a cartella
@@ -263,8 +263,8 @@ replaced %1	filemanager	it	Sostituito %1
 replacements for inserting entries into documents	filemanager	it	Sostituzioni per inserimento voci in documenti
 rights	filemanager	it	Diritti
 root	filemanager	it	Root
-root access granted.	filemanager	it	Accesso root conesso
-root access stopped.	filemanager	it	Accesso root fermato.
+root access granted.	filemanager	it	Accesso superutente concesso.
+root access stopped.	filemanager	it	Accesso superutente interrotto.
 save %1	filemanager	it	Salva %1
 save %1, and go back to file listing	filemanager	it	Salva %1 e torna alla lista dei file
 save as zip	filemanager	it	Salva come file compresso (ZIP)
@@ -282,7 +282,7 @@ select file(s) from vfs	common	it	Seleziona file dal sistema virtuale di file (V
 setting for document merge saved.	filemanager	it	Impostazione stampa unione salvata.
 share files	filemanager	it	Condividi file
 share link copied into clipboard	filemanager	it	Condividi il collegamento copiato negli appunti
-share mounted at %1.<br/>please close this tab.	filemanager	it	Condivisione attivata su %1.<br>Si può chiudere il pannello ora
+share mounted at %1.<br/>please close this tab.	filemanager	it	Condivisione attivata su %1.\nSi può chiudere il pannello ora
 shared files	filemanager	it	File condivisi
 shared with	filemanager	it	Condivisi con
 show	filemanager	it	Mostra
@@ -296,13 +296,13 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	it	Mos
 size	filemanager	it	Dimensione
 smb, webdavs and vfs require a username!	filemanager	it	SMB, WebDAV e filesystem virtulale (VFS) richiede un nome utente
 smb: mount samba or windows fileserver shares	filemanager	it	SMB: monta un server Samba o una condivisione Windows
-some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	it	Alcune funzionalità richiedono l'accesso come super utente. Per favore effettuare il login qui come super utente. Gli utenti consentiti sono definiti nel setup.
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	it	Alcune funzionalità richiedono l'accesso come superutente. Per favore effettuare il login qui come super utente. Gli utenti consentiti sono definiti nel setup.
 sqlfs statistics	filemanager	it	Statistiche filesystem (VFS)
 start search	filemanager	it	Avvia ricerca
 startfolder	filemanager	it	Cartella di avvio
 successful mounted %1 on %2.	filemanager	it	Montato con successo %1 su %2
-superuser	filemanager	it	Super utente
-superuser (root)	filemanager	it	Super utente (root)
+superuser	filemanager	it	Superutente
+superuser (root)	filemanager	it	Superutente (root)
 symlink to %1 created.	filemanager	it	Link simbolico a %1 creato.
 tag to mark positions for address labels	filemanager	it	Tagga per marcare le posizioni per le etichette di indirizzo
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	it	La cartella di avvio predefinita è quella personale. Se lasci questa voce vuota, immetti un percorso inesistente oppure non hai i diritti di accesso sufficienti, allora verrà utilizzata quella predefinita.
@@ -344,7 +344,7 @@ you can either delete some files or get in touch with your administrator to get 
 you can only grant additional rights, you can not take rights away!	filemanager	it	Puoi soltanto concedere diritti aggiuntivi, non puoi toglierne!
 you can use regular upload [+] button to upload files.	filemanager	it	E' possibile usare il pulsante regolare [+] per caricare file.
 you do not have access to %1	filemanager	it	Non hai accesso a %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	it	Devi accedere come super utente amministrativo (superuser) per abilitare o disabilitare la registrazione delle versioni in una cartella!
+you need to become root, to enable or disable versioning on a directory!	filemanager	it	Devi accedere come superutente amministrativo (superuser) per abilitare o disabilitare la registrazione delle versioni in una cartella!
 you need to select an owner!	filemanager	it	Devi selezionare un proprietario!
 you need to select some files first!	filemanager	it	Devi selezionare alcuni file prima!
 you will be redirected to your home directory.	filemanager	it	Sarai reindirizzato alla tua cartella personale

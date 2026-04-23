@@ -11,7 +11,7 @@ custom fields	filemanager	ro	Câmpuri personalizate
 default action on double-click	filemanager	ro	Acțiune implicită la dublu clic
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	ro	Implicit = Nu. Legătura nu va fi afișată, dar aveți în continuare posibilitatea de a naviga în această locație sau de a configura această locație specială ca dosar de pornire sau legătură de dosar.
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	ro	Definește modul de gestionare a acțiunii de dublu clic pe un fișier document. Imaginile se deschid întotdeauna în vizualizarea expunere și e-mailurile cu aplicația de e-mail. Toate celelalte tipuri MIME sunt gestionate de browserul propriu-zis.
-defines how to open a merge print document	filemanager	ro	Ce se întâmplă cu documentele după ce au fost completate?<br><br><b>Dacă Collabora Online este disponibil</b>, aceste documente pot fi deschise (și prelucrate în continuare) direct în browser cu Collabora Online. <br><br> <b>Fără Collabora Online</b>, documentul completat este disponibil pentru descărcare.<br><br>Mai multe informații despre Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office în EGroupware</a>
+defines how to open a merge print document	filemanager	ro	Ce se întâmplă cu documentele după ce au fost completate?\n\n<b>Dacă Collabora Online este disponibil</b>, aceste documente pot fi deschise (și prelucrate în continuare) direct în browser cu Collabora Online. \n\n <b>Fără Collabora Online</b>, documentul completat este disponibil pentru descărcare.\n\nMai multe informații despre Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office în EGroupware</a>
 download	filemanager	ro	Descărcați
 download documents	filemanager	ro	Descărcați documente
 edit share	filemanager	ro	Editare partaj
@@ -32,7 +32,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ro	Exemplu {{NELF rol}} - dacă câmpul role nu este gol, se va obține o nouă linie cu valoarea câmpului role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	ro	Exemplu {{nenvlf role}} - dacă câmpul role nu este gol, se va seta un LF fără nicio valoare a câmpului
 excludes selected mime types	filemanager	ro	Exclude tipurile MIME selectate
-excludes selected mime types from being opened by editor	filemanager	ro	Exclude tipurile MIME selectate pentru a nu fi deschise de Collabora Online.<br> Aceste tipuri de documente sunt deschise în browser sau descărcate.
+excludes selected mime types from being opened by editor	filemanager	ro	Exclude tipurile MIME selectate pentru a nu fi deschise de Collabora Online.\n Aceste tipuri de documente sunt deschise în browser sau descărcate.
 executable	filemanager	ro	Executabil
 expires	filemanager	ro	Expiră
 export definition to use for nextmatch export	filemanager	ro	Definiția de export care trebuie utilizată pentru exportul nextmatch
@@ -70,6 +70,7 @@ jobs	filemanager	ro	Sarcini
 leave empty to delete the file after attaching	filemanager	ro	Lăsați câmpul gol pentru a șterge fișierul după atașare
 list view	filemanager	ro	Vizualizare listă
 lock	filemanager	ro	Blocați
+log out as superuser	filemanager	ro	Deconectați-vă ca superutilizator
 mail paste	filemanager	ro	Lipirea corespondenței
 merge print open handler	filemanager	ro	Manipulator de deschidere a imprimării combinate
 modified	filemanager	ro	Modificat
@@ -98,13 +99,18 @@ rename, change permissions or ownership	filemanager	ro	Redenumiți, modificați 
 renamed %1 to %2	filemanager	ro	Redenumit %1 în %2
 renamed %1 to %2.	filemanager	ro	Redenumit %1 în %2
 replacements for inserting entries into documents	filemanager	ro	Înlocuitori pentru inserarea de intrări în documente
+root access granted.	filemanager	ro	Acces superutilizator acordat.
+root access stopped.	filemanager	ro	Acces superutilizator oprit.
 save as zip	filemanager	ro	Salvați ca ZIP
 save job to clear error and restart it	filemanager	ro	Salvați sarcina pentru a șterge eroarea și reporniți-o
 select custom field	filemanager	ro	Selectați câmpul personalizat
 smb, webdavs and vfs require a username!	filemanager	ro	SMB, WebDAV și VFS necesită un nume de utilizator!
 smb: mount samba or windows fileserver shares	filemanager	ro	SMB: Montarea partajelor Samba sau Windows fileserver
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	ro	Unele funcționalități necesită permisiuni de superutilizator. Vă rugăm să vă autentificați aici ca superutilizator filemanager - utilizatorii autorizați sunt definiți în configurare.
+superuser	filemanager	ro	Superutilizator
+superuser (root)	filemanager	ro	Superutilizator (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ro	Documentul poate conține caractere de plasare precum {{%3}}, care vor fi înlocuite cu datele (%1lista completă de nume de caractere de plasare%2).
 username for webdav and smb, use $user for name of logged in user	filemanager	ro	Nume utilizator pentru WebDAV și SMB, utilizați $user pentru numele utilizatorului conectat
 vfs mounts and versioning	common	ro	Montarea și versionarea VFS
 webdavs: mount egroupware or *cloud shares	filemanager	ro	WebDAV: montarea partajelor EGroupware sau *Cloud
-you need to become root, to enable or disable versioning on a directory!	filemanager	ro	Trebuie să deveniți superuser, pentru a activa sau dezactiva versionarea pe un dosar!
+you need to become root, to enable or disable versioning on a directory!	filemanager	ro	Trebuie să deveniți superutilizator pentru a activa sau dezactiva versiunile unui folder!

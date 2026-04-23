@@ -133,7 +133,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	es-es	Ejemplo {{nenvlf role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 excludes selected mime types	filemanager	es-es	Excluye tipos MIME seleccionados
-excludes selected mime types from being opened by editor	filemanager	es-es	Excluye los tipos MIME seleccionados de ser abiertos por Collabora Online.<br>Estos tipos de documentos se abren en el navegador o se descargan.
+excludes selected mime types from being opened by editor	filemanager	es-es	Excluye los tipos MIME seleccionados de ser abiertos por Collabora Online.\nEstos tipos de documentos se abren en el navegador o se descargan.
 executable	filemanager	es-es	Ejecutable
 expires	filemanager	es-es	Expira
 export definition to use for nextmatch export	filemanager	es-es	Exportar la definición a usar para exportar nextmatch
@@ -264,8 +264,8 @@ replaced %1	filemanager	es-es	Se ha sustituido %1
 replacements for inserting entries into documents	filemanager	es-es	Sustituciones para insertar entradas en los documentos
 rights	filemanager	es-es	Derechos
 root	filemanager	es-es	raíz
-root access granted.	filemanager	es-es	Permiso de administrador concedido.
-root access stopped.	filemanager	es-es	Acceso de administrador detenido.
+root access granted.	filemanager	es-es	Acceso de superusuario concedido.
+root access stopped.	filemanager	es-es	Acceso de superusuario detenido.
 save %1	filemanager	es-es	Guardar %1
 save %1, and go back to file listing	filemanager	es-es	Guardar %1, y volver al listado
 save as zip	filemanager	es-es	Guardar como ZIP
@@ -283,7 +283,7 @@ select file(s) from vfs	common	es-es	Seleccionar ficheros desde VFS
 setting for document merge saved.	filemanager	es-es	Se ha guardado la configuración para mezclar documentos.
 share files	filemanager	es-es	Compartir archivos
 share link copied into clipboard	filemanager	es-es	Compartir enlace copiado al portapapeles
-share mounted at %1.<br/>please close this tab.	filemanager	es-es	Compartir montado en %1.<br/>Por favor, cierra esta pestaña.
+share mounted at %1.<br/>please close this tab.	filemanager	es-es	Compartir montado en %1.\nPor favor, cierra esta pestaña.
 shared files	filemanager	es-es	Archivos compartidos
 shared with	filemanager	es-es	Compartido con
 show	filemanager	es-es	Mostrar
@@ -297,13 +297,13 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	es-es	
 size	filemanager	es-es	Tamaño
 smb, webdavs and vfs require a username!	filemanager	es-es	SMB, WebDAV y VFS requieren un nombre de usuario.
 smb: mount samba or windows fileserver shares	filemanager	es-es	SMB: montar recursos compartidos de servidores de archivos Samba o Windows
-some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	es-es	Algunas funcionalidades requieren permisos de superusuario, inicie sesión aquí como superusuario administrador de archivos - los usuarios permitidos se definen en la configuración.
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	es-es	Algunas funciones requieren permisos de superusuario. Inicie sesión aquí como superusuario del gestor de archivos. Los usuarios autorizados se definen en la configuración.
 sqlfs statistics	filemanager	es-es	Estadísticas sqlFS
 start search	filemanager	es-es	comenzar la búsqueda
 startfolder	filemanager	es-es	Carpeta de inicio
 successful mounted %1 on %2.	filemanager	es-es	%1 montado correctamente en %2
 superuser	filemanager	es-es	Superusuario
-superuser (root)	filemanager	es-es	Superusuario (raíz)
+superuser (root)	filemanager	es-es	Superusuario (root)
 symlink to %1 created.	filemanager	es-es	Se ha creado el enlace simbólico a %1.
 tag to mark positions for address labels	filemanager	es-es	Etiqueta para marcar posiciones para etiquetas de dirección
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	es-es	La carpeta predeterminada es su carpeta personal. Si se deja en blanco, no existe la ruta o no tiene los permisos necesarios, se usa la predeterminada.
@@ -346,7 +346,7 @@ you can either delete some files or get in touch with your administrator to get 
 you can only grant additional rights, you can not take rights away!	filemanager	es-es	¡Sólo se pueden conceder permisos adicionales, NO recortar permisos!
 you can use regular upload [+] button to upload files.	filemanager	es-es	Puede usar el botón de carga regular [+] para cargar archivos.
 you do not have access to %1	filemanager	es-es	No tiene acceso a %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	es-es	Necesitas convertirte en superuser para activar o desactivar el versionado de una carpeta.
+you need to become root, to enable or disable versioning on a directory!	filemanager	es-es	¡Debe convertirse en superusuario para habilitar o deshabilitar el control de versiones en una carpeta!
 you need to select an owner!	filemanager	es-es	¡Necesita seleccionar un propietario!
 you need to select some files first!	filemanager	es-es	¡Necesita seleccionar antes algunos ficheros!
 you will be redirected to your home directory.	filemanager	es-es	Se le va a redirigir a su directorio personal

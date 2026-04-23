@@ -31,7 +31,7 @@ creationdate of file	filemanager	id	Tanggal pembuatan file
 current directory	filemanager	id	Direktori saat ini
 custom fields	filemanager	id	Custom fields
 cut	filemanager	id	cut
-defines how to open a merge print document	filemanager	id	Apa yang harus dilakukan dengan dokumen setelah diisi?<br><br><b>Jika Collabora Online tersedia</b>, dokumen-dokumen ini dapat dibuka (dan diproses lebih lanjut) langsung di browser menggunakan Collabora Online. <br><br> <b>Tanpa Collabora Online</b>, dokumen yang telah diisi ditawarkan untuk diunduh.<br><br>Informasi lebih lanjut tentang Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office di EGroupware</a>
+defines how to open a merge print document	filemanager	id	Apa yang harus dilakukan dengan dokumen setelah diisi?\n\n<b>Jika Collabora Online tersedia</b>, dokumen-dokumen ini dapat dibuka (dan diproses lebih lanjut) langsung di browser menggunakan Collabora Online. \n\n <b>Tanpa Collabora Online</b>, dokumen yang telah diisi ditawarkan untuk diunduh.\n\nInformasi lebih lanjut tentang Collabora Online:\n <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office di EGroupware</a>
 deleted %1	filemanager	id	Menghapus %1
 directory	filemanager	id	Direktori
 disable	filemanager	id	Disable
@@ -93,6 +93,7 @@ link	filemanager	id	Tautan
 list view	filemanager	id	Tampilan daftar
 location	filemanager	id	Lokasi
 lock	filemanager	id	Kunci
+log out as superuser	filemanager	id	Keluar sebagai superuser
 mail paste	filemanager	id	Tempel surat
 max folderlinks	admin	id	max folderlinks
 merge print open handler	filemanager	id	Gabungkan penangan terbuka cetak
@@ -138,6 +139,8 @@ renamed %1 to %2.	filemanager	id	Mengganti nama %1 menjadi %2
 replaced %1	filemanager	id	%1 digantikan
 rights	filemanager	id	Hak
 root	filemanager	id	root
+root access granted.	filemanager	id	Akses superuser telah diberikan.
+root access stopped.	filemanager	id	Akses superuser telah dihentikan.
 save %1	filemanager	id	Simpan %1
 save as zip	filemanager	id	Simpan sebagai ZIP
 save changes	filemanager	id	Simpan perubahan
@@ -151,8 +154,10 @@ show	filemanager	id	Tampilkan
 size	filemanager	id	Ukuran
 smb, webdavs and vfs require a username!	filemanager	id	SMB, WebDAV, dan VFS memerlukan nama pengguna!
 smb: mount samba or windows fileserver shares	filemanager	id	SMB: Pasang Samba atau berbagi server berkas Windows
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	id	Beberapa fungsi memerlukan izin superuser, silakan login di sini sebagai superuser filemanager - pengguna yang diizinkan didefinisikan dalam pengaturan.
 start search	filemanager	id	mulai pencarian
 superuser	filemanager	id	Superuser
+superuser (root)	filemanager	id	Superuser (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	id	Dokumen dapat berisi placeholder seperti {{%3}}, yang akan diganti dengan data (%1daftar lengkap nama placeholder%2).
 total files	filemanager	id	Total Berkas
 unused space	filemanager	id	Ruang tidak digunakan
