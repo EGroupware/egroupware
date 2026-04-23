@@ -332,8 +332,8 @@ export class EgwFnct
             this.functionToPerform = _value;
         } else if (typeof _value == "string" && _value.substring(0, 11) === 'javaScript:') {
             this.functionToPerform = function (): any {
-				const manager = this.getManager ? this.getManager() : null;
-                return window.egw.applyFunc(_value.substring(11), arguments, (manager ? manager.data.context : null) || window);
+				const providedContext = this.getManager ? this.getManager()?.data?.context : null;
+				return window.egw.applyFunc(_value.substring(11), arguments, providedContext ? {app: providedContext} : window);
             }
         } else if (this.acceptedTypes.includes(typeof _value)) {
             this.value = _value;
