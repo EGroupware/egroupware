@@ -183,7 +183,7 @@ class kdots_framework extends Api\Framework\Ajax
 			}
 		}
 		// check if apps need an allow property set for their iframe
-		foreach(Api\Hooks::process('iframe-allow', [], true) as $data)
+		foreach(Api\Hooks::process('iframe-allow', [], true) as &$data)
 		{
 			foreach($data ?: [] as $app => $allow)
 			{
