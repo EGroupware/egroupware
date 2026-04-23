@@ -477,7 +477,7 @@ export class EgwFrameworkApp extends LitElement
 				resolve(); // Don't reject — just proceed
 			}, 10000);
 		});
-		const loadPromises = nodes.map((node) =>
+		const loadPromises : Promise<any>[] = nodes.map((node) =>
 		{
 			if(node.localName == "iframe")
 			{
@@ -500,6 +500,9 @@ export class EgwFrameworkApp extends LitElement
 				return waitForEvent(node, "load")
 			}
 		});
+
+		this.leftSplitter && loadPromises.push(this.leftSplitter.updateComplete);
+		this.rightSplitter && loadPromises.push(this.rightSplitter.updateComplete);
 
 		return Promise.race([
 			Promise.allSettled(loadPromises)
@@ -782,8 +785,8 @@ export class EgwFrameworkApp extends LitElement
 		{
 			// Left side has an additional slot above the favourites
 			hasContent = hasContent || this.hasSlotController?.test("left-top") ||
-				// Favourites work through egw_app class, so if it's not there, favourites won't work
-				this.features?.favorites && typeof window.app[this.name] !== "undefined";
+				// Favourites work through preferences asynchronously
+				this.features?.favorites
 		}
 		return hasContent;
 	}
