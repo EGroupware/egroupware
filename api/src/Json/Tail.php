@@ -168,22 +168,17 @@ class Tail
 
 		return '
 <p style="float: left; margin: 5px"><b>'.htmlspecialchars($header).'</b></p>
-<div style="float: right; margin: 2px; margin-right: 5px">
-	'.Api\Html::form(
-		Api\Html::input('clear_log',lang('Clear window'),'button','id="clear_log"')."\n".
-		Api\Html::input('delete_log',lang('Delete file'),'button','id="purge_log"')."\n".
-		Api\Html::input('empty_log',lang('Empty file'),'button','id="empty_log"')."\n".
-		Api\Html::input('download_log',lang('Download'),'submit','id="download_log"'),
-		'','/index.php',array(
-		'menuaction' => 'api.'.__CLASS__.'.download',
-		'filename' => $this->filename,
-	)).'
+<div style="display: flex;float: right; flex-direction: row">
+	<et2-button id="clear_log" label="'.htmlspecialchars(lang('Clear window')).'"></et2-button>
+	<et2-button id="purge_log" label="'.htmlspecialchars(lang('Delete file')).'"></et2-button>
+	<et2-button id="empty_log" label="'.htmlspecialchars(lang('Empty file')).'"></et2-button>
+	<et2-button id="download_log" label="'.htmlspecialchars(lang('Download')).'" variant="primary"></et2-button>
 </div>
 <pre class="tail" id="log" data-filename="'.htmlspecialchars($this->filename).'" style="clear: both; width: 99.5%; border: 2px groove silver; margin-bottom: 0; overflow: auto;"></pre>';
 	}
 
 	/**
-	 * Download a file specified per GET parameter (must be in $this->filesnames!)
+	 * Download a file specified per GET parameter (must be in $this->filenames!)
 	 *
 	 * @throws Api\Exception\WrongParameter
 	 */

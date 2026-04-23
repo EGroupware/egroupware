@@ -47,6 +47,7 @@ jQuery(function()
 			{
 				jQuery("#download_log").show().attr("title", egw(window).lang('Size')+_data.size);
 			}
+			// Hide purge/empty buttons if file is not writable
 			if (_data.writable === false)
 			{
 				jQuery("#purge_log").hide();
@@ -64,24 +65,30 @@ jQuery(function()
 	{
 		jQuery("#log").width(egw_getWindowInnerWidth()-egw_getWindowInnerWidth()*0.02).height(egw_getWindowInnerHeight()*0.92);
 	}
-	jQuery('input[id^="clear_log"]').on('click',function(){
-		button_log(this.getAttribute('id'));
-	});
-	jQuery('input[id^="purge_log"]').on('click',function(){
-		button_log(this.getAttribute('id'));
-	});
-	jQuery('input[id^="empty_log"]').on('click',function(){
-		button_log(this.getAttribute('id'));
-	});
-	//egw_LAB.wait(function() {
-		jQuery(document).ready(function()
+
+	document.querySelector('et2-button[id^="clear_log"]').onclick = function ()
+	{
+		button_log(this.id);
+	};
+	document.querySelector('et2-button[id^="purge_log"]').onclick = function ()
+	{
+		button_log(this.id);
+	};
+	document.querySelector('et2-button[id^="empty_log"]').onclick = function ()
+	{
+		button_log(this.id);
+	};
+	document.querySelector('et2-button[id^="download_log"]').onclick = function ()
+	{	// Download button triggers download by opening download URL
+		egw(window).open_link('/index.php?menuaction=api.EGroupware\\Api\\Json\\Tail.download&filename=' + encodeURIComponent(filename));
+	};
+	jQuery(document).ready(function()
+	{
+		if (typeof filename !='undefined' && filename.length > 0)
 		{
-			if (typeof filename !='undefined' && filename.length > 0)
-			{
-				resize_log();
-				refresh_log();
-			}
-		});
-		jQuery(window).resize(resize_log);
-	//});
+			resize_log();
+			refresh_log();
+		}
+	});
+	jQuery(window).resize(resize_log);
 });
