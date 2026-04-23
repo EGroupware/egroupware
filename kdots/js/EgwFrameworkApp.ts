@@ -204,18 +204,6 @@ export class EgwFrameworkApp extends LitElement
 
 		this.handleSearchResults = this.handleSearchResults.bind(this);
 		this.handleShow = this.handleShow.bind(this);
-
-		// Get size preferences now that this.appName is set
-		// @ts-ignore preference() takes _callback = true
-		this.egw.preference(this.leftPanelInfo.preference, this.appName, true).then((value) =>
-		{
-			this.leftPanelInfo.preferenceWidth = value;
-		});
-		// @ts-ignore preference() takes _callback = true
-		this.egw.preference(this.rightPanelInfo.preference, this.appName, true).then((value) =>
-		{
-			this.rightPanelInfo.preferenceWidth = value;
-		});
 	}
 	connectedCallback()
 	{
