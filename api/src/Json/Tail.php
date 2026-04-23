@@ -172,7 +172,7 @@ class Tail
 	<et2-button id="clear_log" label="'.htmlspecialchars(lang('Clear window')).'"></et2-button>
 	<et2-button id="purge_log" label="'.htmlspecialchars(lang('Delete file')).'"></et2-button>
 	<et2-button id="empty_log" label="'.htmlspecialchars(lang('Empty file')).'"></et2-button>
-	<et2-button id="download_log" label="'.htmlspecialchars(lang('Download')).'" variant="primary"></et2-button>
+	<et2-button id="download_log" label="'.htmlspecialchars(lang('Download')).'"></et2-button>
 </div>
 <pre class="tail" id="log" data-filename="'.htmlspecialchars($this->filename).'" style="clear: both; width: 99.5%; border: 2px groove silver; margin-bottom: 0; overflow: auto;"></pre>';
 	}
