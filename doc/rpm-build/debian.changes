@@ -1,3 +1,26 @@
+egroupware-docker (26.4.20260423) hardy; urgency=low
+
+  * AiTools: allow admins to define user- and app-specific custom prompts
+  * Addressbook/REST-API: fix not logged GET requests and ignore limit from user preference what to sync
+  * Admin: fix DB backup & restore to create fulltext index for egw_rag_fulltext
+  * AD/LDAP/Import: fix not renamed home-directory, if user-name was changed in AD/LDAP
+  * Api: show scrollbar in Log windows
+  * Api: Fix cancelled file upload could not upload the same file again
+  * Api: Always show all applicable customfield filters
+  * Api: client-side performance improvments for loading lists in all apps specially initally or after a reload
+  * Api: Server-side initial load speed improvements
+  * Infolog: Fix add in CRM view lost the contact ID after a reload
+  * Invoices: use Collabora to convert first page(!) of PDFs with just paths (no text or scanned images) to an image to import
+  * Mail: support filtering mime handlers to app-specific only in attachments
+  * Mail: support filtering mime handlers to app-specific only in attachments
+  * Mail: do NOT show meeting request UI for attached ICS files (only for meeting requests)
+  * Mail/REST-API: stick to the identity set in the compose call (ignore the user preference)
+  * OpenID: allow to specify iframe allow values as scopes to allow managed app's access to microphone or clipboard e.g. OpenWebUI
+  * OpenWebUI: planed to be used as AI assistent see [installations instructions](https://github.com/EGroupware/openwebui/tree/main) 
+  * OpenWebUI: allow to use EGroupware REST-API with OpenAPI description as tools for OpenWebUI
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 23 Apr 2026 11:26:52 +0200
+
 egroupware-docker (26.4.20260413) hardy; urgency=low
 
   * AI/Open WebUI: allow to use EGroupware REST-API with OpenAPI description as tools for Open WebUI (Addressbook is disabled as it makes problems with Open WebUI)
