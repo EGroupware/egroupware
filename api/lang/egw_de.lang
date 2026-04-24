@@ -1103,6 +1103,7 @@ print	common	de	Drucken
 print orientation	common	de	Ausrichtung
 priority	common	de	Priorität
 private	common	de	Privat
+processing the file	common	de	Die Datei wird verarbeitet
 programs	common	de	Programme
 project	common	de	Projekt
 properties	common	de	Eigenschaften
