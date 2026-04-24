@@ -195,6 +195,7 @@ export default css`
 		.file-item__label {
 			flex-direction: row;
 			align-items: center;
+			padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
 
 			slot {
 				display: inline-block;
