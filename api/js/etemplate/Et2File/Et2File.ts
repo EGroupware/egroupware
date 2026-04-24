@@ -389,6 +389,12 @@ export class Et2File extends Et2InputWidget(LitElement)
 				this._uploadPending = {};
 				this._uploadDelayTimeout = null;
 				window.setTimeout(this.resumable.upload);
+			}).catch(() =>
+			{
+				// Something failed in the network.  We may want to catch this and give a nice error, but need
+				// the context to properly handle it
+				console.warn(arguments);
+				debugger;
 			});
 		}, 100);
 	}
@@ -399,12 +405,17 @@ export class Et2File extends Et2InputWidget(LitElement)
 		if(fileItem && file.progress())
 		{
 			fileItem.progress = file.progress() * 100;
-			// Show indeterminate while processing
+			// Show indeterminate while processing, so flag it on the second-last chunk
+			if(file.chunks[file.chunks.length - 1].status() != "pending")
+			{
+				fileItem.innerHTML = file.fileName + "<br />" + this.egw().lang("processing the file");
+				fileItem.progress = undefined;
+				fileItem.variant = "primary";
+			}
 			if(fileItem.progress == 100)
 			{
-				delete fileItem.progress;
+				fileItem.textContent = "";
 			}
-			fileItem.requestUpdate("progress");
 		}
 	}
 
@@ -429,7 +440,7 @@ export class Et2File extends Et2InputWidget(LitElement)
 			if(fileItem)
 			{
 				fileItem.variant = "warning";
-				fileItem.innerHTML += "<br />" + file.warning;
+				fileItem.innerHTML = file.fileName + "<br />" + file.warning;
 			}
 		}
 		else
