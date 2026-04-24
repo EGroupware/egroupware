@@ -180,16 +180,16 @@ div.et2_nextmatch {
   }
 
   et2-vfs-upload, et2-file {
-	--sl-color-neutral-0: transparent;
-	--sl-color-neutral-700: var(--application-header-text-color);
-	--sl-input-border-color: transparent;
-
 	.et2_label {
 	  color: var(--application-header-text-color);
 	}
 
 	&::part(button) {
 	  --sl-input-border-color-hover: transparent;
+	}
+
+	&::part(list) {
+	  --sl-input-color-hover: var(--sl-color-primary-700);
 	}
   }
 
