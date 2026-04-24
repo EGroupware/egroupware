@@ -2641,15 +2641,8 @@ class calendar_ical extends calendar_boupdate
 					{
 						$event['whole_day'] = $isDate = true;
 					}
-					if(is_object($attributes['value']))
-					{
-						$vcardData['start'] = $attributes['value'];
-					}
-					else
-					{
-						$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
-						$vcardData['start'] = $dtstart_ts;
-					}
+					$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
+					$vcardData['start']	= $dtstart_ts;
 
 					// set event timezone from dtstart, if specified there
 					if (!empty($attributes['params']['TZID']) && !$isDate)
@@ -2701,25 +2694,12 @@ class calendar_ical extends calendar_boupdate
 					break;
 
 				case 'DTEND':
-					if(is_object($attributes['value']))
+					$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
+					if (date('H:i:s',$dtend_ts) == '00:00:00' || isset($attributes['params']['VALUE']) && $attributes['params']['VALUE'] == 'DATE')
 					{
-						$vcardData['end'] = $attributes['value'];
-						if($vcardData['end']->format('H:i:s') == '00:00:00')
-						{
-							$vcardData['end']->sub(new DateInterval('PT1S'));
-						}
+						$dtend_ts -= 1;
 					}
-					else
-					{
-						$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
-						$vcardData['end'] = $dtend_ts;
-
-						if(date('H:i:s', $dtend_ts) == '00:00:00' || isset($attributes['params']['VALUE']) && $attributes['params']['VALUE'] == 'DATE')
-						{
-							$dtend_ts -= 1;
-						}
-						$vcardData['end'] = $dtend_ts;
-					}
+					$vcardData['end']	= $dtend_ts;
 					break;
 
 				case 'DURATION':	// clients can use DTSTART+DURATION, instead of DTSTART+DTEND
