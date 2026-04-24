@@ -1,3 +1,10 @@
+egroupware-docker (26.4.20260424) hardy; urgency=low
+
+  * Calendar/CalDAV: fix regression causing CalDAV updates of recurrences to fail
+  * AiTools: fix not working new installation
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 24 Apr 2026 10:18:51 +0200
+
 egroupware-docker (26.4.20260423) hardy; urgency=low
 
   * AiTools: allow admins to define user- and app-specific custom prompts
