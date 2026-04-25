@@ -83,8 +83,17 @@ export class EgwFrameworkApp extends LitElement
 	@property()
 	set allow(allow : string)
 	{
+		if (this.iframe && this._allow != allow)
+		{
+			// setting the allow attribute after creating the node seems to NOT grant / allow the requested features :(
+			// therefore we replace the whole iframe with a new one with the features set by createElement
+			this.iframe.replaceWith(this._createIframeNodes(this.url, allow));
+		}
 		this._allow = allow;
-		if (this.iframe) this.iframe.allow = allow;
+	}
+	get allow() : string
+	{
+		return this._allow;
 	}
 
 	@property({attribute: 'open-once'})
@@ -286,7 +295,7 @@ export class EgwFrameworkApp extends LitElement
 	}
 	firstUpdated()
 	{
-		this.load(this.url);
+		this.load(this.url, this.allow);
 		if(this.openOnce && this.openOnce != this.url)
 		{
 			this.framework.openPopup(this.openOnce, false, false, "", this.name, true, false, window);
@@ -1091,16 +1100,13 @@ export class EgwFrameworkApp extends LitElement
 	 *
 	 * @protected
 	 */
-	protected _createIframeNodes(url? : string)
+	protected _createIframeNodes(url? : string, allow? : string)
 	{
 		if(!this.useIframe)
 		{
 			return null;
 		}
-		this.updateComplete.then(() => {
-			this.iframe.allow = this._allow;
-		})
-		return Object.assign(document.createElement("iframe"), {src: url});
+		return Object.assign(document.createElement("iframe"), {src: url}, allow || this.allow ? {allow: allow ?? this.allow} : {});
 	}
 
 	protected _asideTemplate(parentSlot, side : "left" | "right", label?)
