@@ -113,7 +113,10 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 		}
 		hide_timeout = _wnd.setTimeout(() =>
 		{
-			current_elem = null;
+			if (current_elem == this)
+			{
+				current_elem = null;
+			}
 			if (data.options.close.call(this, e, tooltip_div))
 			{
 				return;
