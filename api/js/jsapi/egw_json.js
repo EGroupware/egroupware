@@ -223,6 +223,11 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		let init = {
 			method: method
 		}
+		if (url.includes("api.queue") || url.includes("Rocketchat"))
+		{
+			// Low priority for the queued requests
+			init.priority = "low";
+		}
 		if (method === 'GET')
 		{
 			url += (url.indexOf('?') === -1 ? '?' : '&') + new URLSearchParams({ json_data: request_obj });
