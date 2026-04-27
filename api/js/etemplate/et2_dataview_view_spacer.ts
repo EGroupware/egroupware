@@ -55,8 +55,8 @@ export class et2_dataview_spacer extends et2_dataview_container
 			this._rowHeight = _rowHeight;
 		}
 
-		// Update the element height
-		this._phDiv.height(this._count * this._rowHeight);
+		// Update the element height directly to avoid triggering layout recalculation
+		this._phDiv[0].style.height = (this._count * this._rowHeight) + "px";
 
 		// Call the invalidate function
 		this.invalidate();
