@@ -448,7 +448,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 		// Update the height of the outer container
 		if (this.scrollarea)
 		{
-			this.scrollarea.height(_height);
+			this.scrollarea[0].style.height = _height + "px";
 		}
 
 		// Update the viewing range
@@ -1445,9 +1445,9 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 								this.setViewRange(newRange);
 							}
 						},e.data), et2_dataview_grid.ET2_GRID_SCROLL_TIMEOUT);
-					})
-				.height(this._scrollHeight)
-				.appendTo(this.outerCell);
+					});
+			this.scrollarea[0].style.height = this._scrollHeight + "px";
+			this.scrollarea.appendTo(this.outerCell);
 		}
 
 		// Create the inner table
