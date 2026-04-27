@@ -150,7 +150,9 @@ class Json extends Base
 		// omitting NULL values and every key not matching the column_preg, if set
 		if ($this->json_column && is_array($data) && ($json = array_filter($data, function($value, $key)
 			{
-				return isset($value) && !is_int($key) && !isset($this->db_cols[$key]) && !in_array($key, [self::USER_TIMEZONE_READ]) &&
+				return isset($value) && (!$this->empty_on_write || (string)$value !== '') && !is_int($key) &&
+					!isset($this->db_cols[$key]) && !in_array($key, $this->db_cols) &&
+					!in_array($key, [self::USER_TIMEZONE_READ]) &&
 					(!isset($this->column_preg) || preg_match($this->column_preg, $key));
 			}, ARRAY_FILTER_USE_BOTH)))
 		{
