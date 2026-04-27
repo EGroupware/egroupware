@@ -113,28 +113,6 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 										return jQuery(event.getTooltipElement()).trigger('mouseenter');
 									}
 								}
-								// Hacky to remove egw's tooltip border and let the mouse in
-								window.setTimeout(function ()
-								{
-										jQuery('body .egw_tooltip')
-											.css('border', 'none')
-											.on('mouseenter', function()
-											{
-												if(event.div)
-												{
-													event.div.off('mouseleave.tooltip');
-												}
-												jQuery(this).stop(true).fadeTo(400, 1)
-													.on('mouseleave', function()
-													{
-														jQuery(this).fadeOut('400', function()
-														{
-															event.egw().tooltipCancel();
-														});
-													});
-											});
-
-								}, 105);
 						});
 				this.title = jQuery(document.createElement('div'))
 						.addClass("calendar_calEventHeader")
