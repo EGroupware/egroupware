@@ -332,8 +332,21 @@ export class EgwFnct
             this.functionToPerform = _value;
         } else if (typeof _value == "string" && _value.substring(0, 11) === 'javaScript:') {
             this.functionToPerform = function (): any {
-				const manager = this.getManager ? this.getManager() : null;
-                return window.egw.applyFunc(_value.substring(11), arguments, (manager ? manager.data.context : null) || window);
+				try
+				{
+					let providedContext = this.getManager ? this.getManager()?.data?.context : null;
+					if(providedContext && _value.includes("app."))
+					{
+						providedContext = {app: providedContext}
+					}
+					return window.egw.applyFunc(_value.substring(11), arguments, providedContext ?? window);
+				}
+				catch(e)
+				{
+					// Manager provided context, but we didn't find the function
+					// This happens for globals like nm_action
+					return window.egw.applyFunc(_value.substring(11), arguments, window);
+				}
             }
         } else if (this.acceptedTypes.includes(typeof _value)) {
             this.value = _value;
