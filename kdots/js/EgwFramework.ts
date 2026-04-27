@@ -211,16 +211,19 @@ export class EgwFramework extends LitElement
 			}
 		});
 
-		// Do NOT load hidden (status == 5) apps, but the status app
-		this.applicationList.forEach((app) =>
+		// Do NOT load hidden (status == 5) apps, but the status app for desktop
+		if(!this.getRootNode()?.querySelector('html')?.classList.contains('mobile'))
 		{
-			if(app.status == "5" && app.name === "status" && app.url && !app.url.match(/menuaction\=none/))
+			this.applicationList.forEach((app) =>
 			{
-				this.loadApp(app.name);
-			}
-		});
-		// Load additional tabs
-		Object.values(this._tabApps).filter(app => app.active).forEach(app => this.loadApp(app.name));
+				if(app.status == "5" && app.name === "status" && app.url && !app.url.match(/menuaction\=none/))
+				{
+					this.loadApp(app.name);
+				}
+			});
+			// Load additional tabs
+			Object.values(this._tabApps).filter(app => app.active).forEach(app => this.loadApp(app.name));
+		}
 
 		// Init timer
 		this.egw.add_timer('topmenu_info_timer');
