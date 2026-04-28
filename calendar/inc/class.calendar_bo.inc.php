@@ -969,14 +969,14 @@ class calendar_bo
 			if ($ev['whole_day'])
 			{
 				$start->setTime(0,0,0);
-				$start = $start->format('ts');
+				$start = $start->format('server');
 				$time = $this->so->startOfDay(new Api\DateTime($ev['end'], Api\DateTime::$user_timezone));
 				$time->setTime(23, 59, 59);
 				$end = $this->date2ts($time,true);
 			}
 			else
 			{
-				$start = $start->format('ts');
+				$start = $start->format('server');
 				$end = $this->date2ts($ev['end'],true);
 			}
 			//error_log(__METHOD__."() start=".Api\DateTime::to($start).", is_exception=".array2string($is_exception));
