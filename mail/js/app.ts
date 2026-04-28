@@ -918,26 +918,27 @@ export class MailApp extends EgwApp
 	 * @param _senders - the representation of the elements(s) the action is to be performed on
 	 * @param _mode - you may pass the mode. if not given view is used (tryastext|tryashtml are supported)
 	 */
-	mail_open(_action, _senders, _mode) {
-		if (typeof _senders == 'undefined' || _senders.length==0)
+	mail_open(_action, _senders, _mode)
+	{
+		if(typeof _senders == 'undefined' || _senders.length == 0)
 		{
-			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			if(this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				_senders = [];
-				_senders.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+				_senders.push({id: this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _senders == 'undefined' || _senders.length==0) && this.mail_isMainWindow)
+			if((typeof _senders == 'undefined' || _senders.length == 0) && this.mail_isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if(this.mail_currentlyFocussed)
 				{
 					_senders = [];
-					_senders.push({id:this.mail_currentlyFocussed});
+					_senders.push({id: this.mail_currentlyFocussed});
 				}
 			}
 		}
 		var _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
-		if (!['tryastext', 'tryashtml', 'view', 'print', 'print_images'].includes(_mode))
+		if(!['tryastext', 'tryashtml', 'view', 'print', 'print_images'].includes(_mode))
 		{
 			_mode = 'view';
 		}
@@ -948,16 +949,25 @@ export class MailApp extends EgwApp
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
 		let command = _mode;
-		if (command == 'print_images')
+		if(command == 'print_images')
 		{
 			command = 'print';
 		}
 		//alert('Open Message:'+_id+' '+subject);
 		var h = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
-		egw(h).ready(() =>
+		const setTitle = async(w) =>
 		{
-			h.document.title = subject;
-		});
+			await egw(w).ready;
+			w.document.title = subject;
+		}
+		if(typeof h?.then == "function")
+		{
+			h.then(setTitle);
+		}
+		else
+		{
+			setTitle(h);
+		}
 		// THE FOLLOWING IS PROBABLY NOT NEEDED, AS THE UNEVITABLE PREVIEW IS HANDLING THE COUNTER ISSUE
 		var messages = {};
 		messages['msg'] = [_id];
