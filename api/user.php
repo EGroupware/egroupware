@@ -48,7 +48,13 @@ $user = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id
 // add prompts if user has run-rights for AiTools
 if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\EGroupware\\AiTools\\Prompts'))
 {
-	$prompts = (new AiTools\Bo())->get_predefined_prompts(false);
+	try {
+		$prompts = (new AiTools\Bo())->get_predefined_prompts(false);
+	}
+	catch (\Throwable $e) {
+		// ignore not configured / installed
+		$prompts = '';
+	}
 }
 // use an etag over preferences, user-data and prompts
 $etag = '"' . Api\Framework::user_etag($user, $prompts??'') . '"';
