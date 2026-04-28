@@ -486,7 +486,15 @@ class DateTime extends \DateTime
 	 */
 	public static function to($time='now',$type='')
 	{
-		if(!($time instanceof \DateTimeInterface))
+		if ($time instanceof \DateTimeInterface)
+		{
+			// not all possible $type parameters are available in DateTimeInterface::format()!
+			if (!($time instanceof self))
+			{
+				$time = new self($time);
+			}
+		}
+		else
 		{
 			try
 			{
