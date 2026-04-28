@@ -1203,7 +1203,12 @@ abstract class Framework extends Framework\Extra
 		$user ??= $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
 		if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\EGroupware\\AiTools\\Bo'))
 		{
-			$prompts ??= (new AiTools\Bo())->get_predefined_prompts(false);
+			try {
+				$prompts ??= (new AiTools\Bo())->get_predefined_prompts(false);
+			}
+			catch (\Throwable $e) {
+				// ignore AiTools not configured or installed
+			}
 		}
 		return $GLOBALS['egw']->preferences->etag($user, $prompts ?? '');
 	}
