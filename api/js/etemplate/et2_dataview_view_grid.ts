@@ -25,6 +25,7 @@ import {et2_dataview_spacer} from "./et2_dataview_view_spacer";
 import {et2_dataview_rowProvider} from "./et2_dataview_view_rowProvider";
 import {et2_bounds, et2_range, et2_rangeEqual, et2_rangeIntersect} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
+import {egwIsMobile} from "../egw_action/egw_action_common";
 
 export class et2_dataview_grid extends et2_dataview_container implements et2_dataview_IViewRange
 {
@@ -1460,6 +1461,13 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 
 		// Set the tr as container element
 		this.appendNode(jQuery(this.tr[0]));
+		if (this.scrollarea && egwIsMobile())
+		{
+			const bottomSpacer = document.createElement("div");
+			bottomSpacer.classList.add("bottom-spacer");
+			bottomSpacer.style.height = '15%'
+			this.scrollarea.append(bottomSpacer);
+		}
 	}
 
 }
