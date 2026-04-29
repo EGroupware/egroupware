@@ -1,3 +1,14 @@
+egroupware-docker (26.4.20260429) hardy; urgency=low
+
+  * Admin: fix not opening items in context menu e.g. to edit mail account of a user
+  * Mail: fix double opening of mails through double-click or enter
+  * Api: file-upload shows now different progressbar when processing the file (reassembling the file-chunks)
+  * Calendar: fix wrong timezone in recurrences, if server-timezone is different from event TZ
+  * kDots/OpenIDConnect: fix not working setting to allow microphone or clipboard access e.g. for OpenWebUI
+  * AiTools: make model, reasoning effort, temperature and timeout configurable in general and for each prompt
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 29 Apr 2026 15:23:21 +0200
+
 egroupware-docker (26.4.20260424) hardy; urgency=low
 
   * Calendar/CalDAV: fix regression causing CalDAV updates of recurrences to fail
