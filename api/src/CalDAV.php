@@ -1083,16 +1083,16 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		// createLinks allows attaching arbitrary files, in which case content-type is NOT application/json,
 		// but the request must be detected as REST API request, it is NOT CalDAV/CardDAV!
-		if (in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT']) &&
+		if (!$type && in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT']) &&
 			preg_match('#/groupdav.php/[a-z]+/\d+/links/#', $_SERVER['REQUEST_URI']))
 		{
 			$type = 'application/json';
 		}
 		// some REST API clients send just "Content-Type: application/json" and "Accept: */*" for GET requests
-		if ($_SERVER['REQUEST_METHOD'] === 'GET' && ($_SERVER['HTTP_ACCEPT']??null) === '*/*' &&
+		if (!$type && ($_SERVER['REQUEST_METHOD'] === 'GET' && ($_SERVER['HTTP_ACCEPT']??null) === '*/*' &&
 				preg_match('#application/(([^+ ;]+)\+)?json#', $_SERVER['HTTP_CONTENT_TYPE']??'', $matches) ||
 			// some applications are never CalDAV and always only return REST results
-			preg_match('#/groupdav.php/([a-zA-Z0-9_-]+/)?(rag|mail|invoices|timesheet|smallpart|projectmanager)/#', $_SERVER['REQUEST_URI']))
+			preg_match('#/groupdav.php/([a-zA-Z0-9_-]+/)?(rag|mail|invoices|timesheet|smallpart|projectmanager)/#', $_SERVER['REQUEST_URI'])))
 		{
 			return $matches[2] ?? true;
 		}
