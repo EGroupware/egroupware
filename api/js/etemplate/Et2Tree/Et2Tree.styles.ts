@@ -11,6 +11,15 @@ export const mobileCss = css`
         margin-left: -2.4em;
         margin-right: calc(-2em + 10px);
     }
+	/*sl-tree > sl-tree-item:last-of-type{
+		!*leave space at the bottom so scrolling behaves better*!
+		margin-bottom: 3rem;
+	}*/
+	div[part='bottom-spacer']{
+		/*leave space at the bottom so scrolling behaves better*/
+		height: 30vh;
+		background-color: transparent;
+	}
 `
 
 export default css`
