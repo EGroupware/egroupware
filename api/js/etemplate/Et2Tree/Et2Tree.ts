@@ -1198,6 +1198,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                 <slot></slot>
                 ${repeat(this._selectOptions, (o) => o.value, this._optionTemplate)}
             </sl-tree>
+<!--            this is needed on mobile devices to make sure scrolling can reach all the way to the bottom -->
+            ${egwIsMobile()?html`<div part="bottom-spacer"></div>`:nothing}
 		`;
 	}
 
