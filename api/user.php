@@ -53,7 +53,6 @@ if (!empty($GLOBALS['egw_info']['user']['apps']['aitools']) && class_exists('\\E
 	}
 	catch (\Throwable $e) {
 		// ignore not configured / installed
-		$prompts = '';
 	}
 }
 // use an etag over preferences, user-data and prompts
