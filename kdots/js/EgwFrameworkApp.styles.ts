@@ -168,7 +168,7 @@ export default css`
 		grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(4em) [end];
 	}
 
-    .egw_fw_app__filter_drawer [slot="header-actions"] {
+	.egw_fw_app__filter_drawer [slot="header-actions"]:not(.egw_fw_app--no_mobile) {
         /* Fixes vertical alignment of et2-button-icon buttons in header actions */
         display: flex;
     }
