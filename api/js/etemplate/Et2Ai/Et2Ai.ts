@@ -24,6 +24,8 @@ export interface AiPrompt
 	actions? : AiAction[];
 	/* Nested prompts will be shown as sub-arrays */
 	children? : AiPrompt[];
+	/* This prompt gets this much time to run (seconds) */
+	timeout? : number;
 }
 
 export type AiAction = { label? : string, handler : Function, target? : never, mode? : never } | {
@@ -812,7 +814,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 
 		this._progressValue = 0;
 		const start = performance.now();
-		const duration = 60_000; // 60s, it will timeout after that
+		const duration = (this.activePrompt.timeout ?? 60) * 1000; // 60s, it will timeout after that
 
 		this._progressTimer = window.setInterval(() =>
 		{
