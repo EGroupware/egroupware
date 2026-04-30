@@ -514,7 +514,7 @@ export class EgwFrameworkApp extends LitElement
 		this.rightSplitter && loadPromises.push(this.rightSplitter.updateComplete);
 
 		return Promise.race([
-			Promise.allSettled(loadPromises)
+			Promise.any(loadPromises)
 				.then(() => {/* yay ... */ })
 				.finally(() =>
 				{

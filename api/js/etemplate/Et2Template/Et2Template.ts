@@ -6,7 +6,7 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {html, LitElement, nothing, PropertyValues, render} from "lit";
+import {html, LitElement, nothing, PropertyValues, render, TemplateResult} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2Template.styles";
@@ -24,6 +24,8 @@ import {SelectOption} from "../Et2Select/FindSelectOptions";
  * @summary Load & populate a template (.xet file) into the DOM
  *
  * @slot - The template's contents
+ * @slot loader - Displayed while the template contents are being loaded instead of the built-in loader
+ *
  * @event load - Emitted when all elements are loaded
  *
  * @csspart template - Wrapper around template content
@@ -710,12 +712,85 @@ export class Et2Template extends Et2Widget(LitElement)
 
 	loadingTemplate()
 	{
-		let loading = html`
-            <sl-spinner></sl-spinner>`;
+		let loading : symbol | TemplateResult = nothing;
 
+		// Use a fake list loader for indexes
+		if(this.id.includes(".index"))
+		{
+			loading = html`
+                <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <style>
+                        .header {
+                            fill: var(--sl-color-neutral-100, #e8e8e8);
+                        }
+
+                        .body {
+                            fill: var(--sl-color-neutral-0, #ffffff);
+                        }
+
+                        .line {
+                            stroke: var(--sl-color-neutral-200, rgba(0, 0, 0, 0.08));
+                            stroke-width: 0.15;
+                            vector-effect: non-scaling-stroke;
+                        }
+                    </style>
+
+                    <!-- Wipe animation
+					<defs>
+						<linearGradient id="shimmer" x1="-1" y1="0" x2="0" y2="0">
+							<stop offset="0%" stop-color="transparent"></stop>
+							<stop offset="35%" stop-color="transparent"></stop>
+							<stop offset="50%" stop-color="var(--sl-color-gray-50)"
+								  stop-opacity="0.45"></stop>
+							<stop offset="65%" stop-color="transparent"></stop>
+							<stop offset="100%" stop-color="transparent"></stop>
+
+							<animateTransform attributeName="gradientTransform" type="translate" from="-1 0" to="2 0"
+											  dur="2.2s" repeatCount="indefinite"></animateTransform>
+						</linearGradient>
+					</defs>
+					-->
+
+                    <!-- background -->
+                    <rect class="body" width="100%" height="100%"></rect>
+
+                    <!-- header -->
+                    <rect class="header" width="100%" height="6.5%"></rect>
+
+                    <!-- 15 row separators -->
+                    <g class="line">
+                        <line x1="0%" y1="12.9%" x2="100%" y2="12.9%"></line>
+                        <line x1="0%" y1="19.3%" x2="100%" y2="19.3%"></line>
+                        <line x1="0%" y1="25.7%" x2="100%" y2="25.7%"></line>
+                        <line x1="0%" y1="32.1%" x2="100%" y2="32.1%"></line>
+                        <line x1="0%" y1="38.5%" x2="100%" y2="38.5%"></line>
+                        <line x1="0%" y1="44.9%" x2="100%" y2="44.9%"></line>
+                        <line x1="0%" y1="51.3%" x2="100%" y2="51.3%"></line>
+                        <line x1="0%" y1="57.7%" x2="100%" y2="57.7%"></line>
+                        <line x1="0%" y1="64.1%" x2="100%" y2="64.1%"></line>
+                        <line x1="0%" y1="70.5%" x2="100%" y2="70.5%"></line>
+                        <line x1="0%" y1="76.9%" x2="100%" y2="76.9%"></line>
+                        <line x1="0%" y1="83.3%" x2="100%" y2="83.3%"></line>
+                        <line x1="0%" y1="89.7%" x2="100%" y2="89.7%"></line>
+                        <line x1="0%" y1="96.1%" x2="100%" y2="96.1%"></line>
+                    </g>
+
+                    <!-- shimmer overlay -->
+                    <rect x="0" y="6.5%" width="100%" height="93.5%" fill="url(#shimmer)"></rect>
+                </svg>
+			`;
+		}
+		else
+		{
+			loading = html`
+                <sl-spinner></sl-spinner>`;
+		}
 
 		return html`
-            <div part="loader" class="template--loading">${loading}</div>`;
+            <div part="loader" class="template--loading">
+                <slot name="loader">${loading}</slot>
+            </div>`;
 	}
 
 	errorTemplate(errorMessage = "")
