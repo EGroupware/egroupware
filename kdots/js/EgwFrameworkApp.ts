@@ -511,7 +511,7 @@ export class EgwFrameworkApp extends LitElement
 		});
 
 		return Promise.race([
-			Promise.allSettled(loadPromises)
+			Promise.any(loadPromises)
 				.then(() => {/* yay ... */ })
 				.finally(() =>
 				{
