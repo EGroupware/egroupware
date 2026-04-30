@@ -338,6 +338,14 @@ export class MailApp extends EgwApp
 			case 'mail.compose':
 				this.compose.setEtemplate(this.et2);
 				const composeToolbar = this.et2.getWidgetById('composeToolbar');
+				// set smime values in the toolbar assist to the initial values of the toolbar
+				try{
+				this.et2.getWidgetById('smime_sign').value = composeToolbar.getWidgetById('smime_sign');
+				this.et2.getWidgetById('smime_encrypt').value = composeToolbar.getWidgetById('smime_encrypt');}
+				catch (e)
+				{
+					egw.debug("warn","could not set initial values for compose toolbar helper")
+				}
 				if (composeToolbar?.getWidgetById('pgp')?.value ||
 					this.et2.getArrayMgr('content').data.mail_plaintext &&
 						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
