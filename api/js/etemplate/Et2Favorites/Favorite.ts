@@ -93,7 +93,36 @@ export class Favorite
 		{
 			//@ts-ignore TS doesn't know about window.app
 			window.app[app].setState(egw.deepExtend({},fav));
+
+		/*
+		Probably a framework tab of the window was closed,
+		try to find the correct set state function to call
+		*/
+		}else if (
+			typeof window.app[app] === 'undefined' &&
+			typeof window.app.classes[app] == 'function'
+		)
+		{
+
+			const activeId = window.framework.activeApp.getAttribute('id');
+
+			const searchId =
+				activeId === app
+					? `${activeId}-index`
+					: activeId;
+
+			const selectedTemplate = etemplate2
+				.getByApplication(app)
+				.find(t => t.uniqueId?.endsWith(searchId));
+
+			if (selectedTemplate) {
+				window.app[app] = new window.app.classes[app]();
+				window.app[app].et2_ready(selectedTemplate);
+				window.app[app].setState(egw.deepExtend({}, fav));
+			}
+
 		}
+
 	}
 
 	static async remove(egw, app, favoriteName)
