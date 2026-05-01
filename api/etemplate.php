@@ -401,10 +401,9 @@ function send_template()
 					unset($attrs['ariaLabel'], $attrs['emptyLabel']);
 				}
 				unset($attrs['widget_type'], $attrs['widgetType'], $attrs['class'], $attrs['options']);
-				return '<nextmatch-header '.stringAttrs($attrs).'/>';
+				return '<et2-nextmatch-header ' . stringAttrs($attrs) . '/>';
 			}
-			// nextmatch-(sort)?header is not yet a webcomponent
-			$tag = (in_array($matches[4], ['header', 'sortheader']) ? '' : 'et2-').'nextmatch-' . $matches[4];
+			$tag = 'et2-nextmatch-' . $matches[4];
 			return '<' . $tag . stringAttrs($attrs) . '></' . $tag . '>';
 		}, $str);
 
