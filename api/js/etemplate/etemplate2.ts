@@ -77,6 +77,8 @@ import './Et2Link/Et2LinkSearch';
 import './Et2Link/Et2LinkString';
 import './Et2Link/Et2LinkTo';
 import './Et2Nextmatch/ColumnSelection';
+import './Et2Nextmatch/Headers/Header';
+import './Et2Nextmatch/Headers/SortableHeader';
 import './Et2Nextmatch/Headers/AccountFilterHeader';
 import './Et2Nextmatch/Headers/CustomFilterHeader';
 import './Et2Nextmatch/Headers/EntryHeader';
