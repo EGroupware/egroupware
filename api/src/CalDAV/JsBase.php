@@ -362,7 +362,7 @@ class JsBase
 	{
 		foreach($patches as $path => $value)
 		{
-			$parts = explode('/', $path);
+			$parts = explode('/', $path[0] === '/' ? substr($path, 1) : $path);
 			$target = &$jscard;
 			foreach($parts as $n => $part)
 			{
@@ -377,9 +377,9 @@ class JsBase
 			}
 			if (isset($value))
 			{
-				// objects need to be merged, to not unset all not given attributes
+				// objects need to be merged, to not unset all not given attributes, unless an empty array is used
 				// use array_merge to overwrite existing values, and add (non-existing) values after existing ones
-				if (is_array($value) && !array_key_exists(0, $value) && $target)
+				if (is_array($value) && $value && !array_key_exists(0, $value) && $target)
 				{
 					$target = array_merge($target, $value);
 				}
