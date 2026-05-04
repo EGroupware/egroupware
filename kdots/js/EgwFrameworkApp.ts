@@ -167,7 +167,7 @@ export class EgwFrameworkApp extends LitElement
 
 	get rightSplitter() { return <SlSplitPanel>this.shadowRoot?.querySelector(".egw_fw_app__innerSplit");}
 
-	get iframe() { return <HTMLIFrameElement>this.querySelector("iframe:not([name='egw_iframe_autocomplete_helper'])");}
+	get iframe() { return <HTMLIFrameElement>this.querySelector(":scope > iframe:not([name='egw_iframe_autocomplete_helper'])");}
 
 	get filters() { return <Et2Filterbox>this.querySelector("et2-filterbox:not([hidden],[disabled])");}
 
