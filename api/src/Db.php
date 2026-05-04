@@ -1999,9 +1999,9 @@ class Db
 				case 'mysql':
 				case 'mysqli':
 					// use replace if primary keys or a unique key are included
-					foreach(array_merge([(array)$table_def['pk']], $table_def['uc']) as $uk)
+					foreach(array_merge([$table_def['pk']], $table_def['uc']) as $uk)
 					{
-						if (count(array_intersect(array_keys($where), $uk)) === count($uk))
+						if (count(array_intersect(array_keys($where), (array)$uk)) === count((array)$uk))
 						{
 							$cmd = 'REPLACE';
 							break 2;
