@@ -249,6 +249,11 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 			this.message(_msg, _msg_type);
 
+		   // Message only, no actual refresh
+		   if (_app == "msg-only-push-refresh")
+		   {
+			   return;
+		   }
 			if(typeof _links == "undefined")
 			{
 				_links = [];
