@@ -1998,11 +1998,14 @@ class Db
 					break;
 				case 'mysql':
 				case 'mysqli':
-					// use replace if primary keys are included
-					if (count(array_intersect(array_keys($where),(array)$table_def['pk'])) == count($table_def['pk']))
+					// use replace if primary keys or a unique key are included
+					foreach(array_merge([(array)$table_def['pk']], $table_def['uc']) as $uk)
 					{
-						$cmd = 'REPLACE';
-						break;
+						if (count(array_intersect(array_keys($where), $uk)) === count($uk))
+						{
+							$cmd = 'REPLACE';
+							break 2;
+						}
 					}
 					// fall through !!!
 				default:
