@@ -748,110 +748,9 @@ class Storage extends Storage\Base
 				$order_by = $group_by.$order_by;
 			}
 		}
-		// check if we filter by a custom field
-		if(is_array($filter) && count($filter))
-		{
-			$_cfnames = array_keys($this->customfields);
-			$extra_filter = null;
-			foreach($filter as $name => $val)
-			{
-				// replace ambiguous auto-id with (an exact match of) table_name.autoid
-				if (is_string($name) && $name == $this->autoinc_id)
-				{
-					if ((int)$filter[$this->autoinc_id])
-					{
-						$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
-							$this->autoinc_id => $filter[$this->autoinc_id],
-						));
-					}
-					unset($filter[$this->autoinc_id]);
-				}
-				// replace ambiguous column with (an exact match of) table_name.column
-				elseif (is_string($name) && $val!=null && in_array($name, $this->db_cols))
-				{
-					$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
-					if (!empty($extra_columns['fd'][array_search($name, $this->db_cols)]))
-					{
-						$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
-							array_search($name, $this->db_cols) => $val,
-						));
-						unset($filter[$name]);
-					}
-				}
-				elseif (is_string($name) && $this->is_cf($name))
-				{
-					$cf_name = $this->get_cf_name($name);
-					if (!isset($this->customfields[$cf_name]))
-					{
-						unset($filter[$name]);
-						continue;	// ignore unavailable CF
-					}
-					if (!empty($val))	// empty -> dont filter
-					{
-						if ($val[0] === '!')	// negative filter
-						{
-							$sql_filter = 'extra_filter.'.$this->extra_value.'!='.$this->db->quote(substr($val,1));
-						}
-						else
-						{
-							if($this->customfields[$cf_name]['type'] == 'select')
-							{
-								// Multi-select - any entry with one of the filter values selected matches
-								$sql_filter = $this->cf_multimatch("extra_filter$extra_filter", $cf_name, $val);
-								$join .= str_replace('extra_filter', 'extra_filter' . $extra_filter, $this->extra_join_filter) . ' AND ' . $sql_filter;
-								$extra_filter++;
-								unset($filter[$name]);
-								continue;
-							}
-							elseif ($this->customfields[$cf_name]['type'] == 'text')
-							{
-								$sql_filter = str_replace($this->extra_value,'extra_filter.'.$this->extra_value,
-										$this->db->expression($this->extra_table,array(
-										$this->extra_value.' '.$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($wildcard.$val.$wildcard)
-									))
-								);
-							}
-							else
-							{
-								$sql_filter = str_replace($this->extra_value,'extra_filter.'.
-									$this->extra_value,$this->db->expression($this->extra_table,array($this->extra_value => $val)));
-							}
-						}
-						// need to use a LEFT JOIN for negative search or to allow NULL values
-						$need_left_join = $val[0] === '!' || strpos($sql_filter,'IS NULL') !== false ? ' LEFT ' : '';
-						$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$need_left_join.$this->extra_join_filter.
-							' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($cf_name).
-							' AND '.$sql_filter);
-						++$extra_filter;
-					}
-					unset($filter[$name]);
-				}
-				elseif(is_int($name) && $this->is_cf($val))	// lettersearch: #cfname LIKE 's%'
-				{
-					$_cf = explode(' ',$val);
-					$tcf_name = '';
-					foreach($_cf as $cf_np)
-					{
-						// building cf_name by glueing parts together (, in case someone used whitespace in their custom field names)
-						$tcf_name = ($tcf_name?$tcf_name.' ':'').$cf_np;
-						// reacts on the first one found that matches an existing customfield, should be better then the old behavior of
-						// simply splitting by " " and using the first part
-						if ($this->is_cf($tcf_name) && ($cfn = $this->get_cf_name($tcf_name)) && array_search($cfn,(array)$_cfnames,true)!==false )
-						{
-							$cf = $tcf_name;
-							break;
-						}
-					}
-					unset($filter[$name]);
-					$cf_name = $this->get_cf_name($cf);
-					if (!isset($this->customfields[$cf_name])) continue;	// ignore unavailable CF
-					$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.
-						' AND extra_filter.'.$this->extra_key.'='.$this->db->quote($cf_name).
-						' AND '.str_replace($cf,'extra_filter.'.$this->extra_value,$val));
-					++$extra_filter;
-				}
-			}
-		}
+		// check if we filter by a CF
+		$this->cf_filter($filter, $join, $wildcard);
+
 		// add DISTINCT as by joining custom fields for search a row can be returned multiple times
 		if ($join && strpos($join, $this->extra_join) !== false)
 		{
@@ -911,5 +810,119 @@ class Storage extends Storage\Base
 	{
 		return $this->allow_multiple_values && in_array($this->customfields[$name]['type'],array('select','select-account')) &&
 			$this->customfields[$name]['rows'] > 1;
+	}
+
+	/**
+	 * Check if we filter by a custom field
+	 *
+	 * @param array &$filter filters to process
+	 * @param string &$join on return additional joins
+	 * @param string $wildcard ='' appended before and after each criterion
+	 */
+	protected function cf_filter(array &$filter, string &$join, string $wildcard='')
+	{
+		if (is_array($filter) && count($filter))
+		{
+			$_cfnames = array_keys($this->customfields);
+			$extra_filter = null;
+			foreach ($filter as $name => $val)
+			{
+				// replace ambiguous auto-id with (an exact match of) table_name.autoid
+				if (is_string($name) && $name == $this->autoinc_id)
+				{
+					if ((int)$filter[$this->autoinc_id])
+					{
+						$filter[] = $this->db->expression($this->table_name, $this->table_name . '.', array(
+							$this->autoinc_id => $filter[$this->autoinc_id],
+						));
+					}
+					unset($filter[$this->autoinc_id]);
+				}
+				// replace ambiguous column with (an exact match of) table_name.column
+				elseif (is_string($name) && $val != null && in_array($name, $this->db_cols))
+				{
+					$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
+					if (!empty($extra_columns['fd'][array_search($name, $this->db_cols)]))
+					{
+						$filter[] = $this->db->expression($this->table_name, $this->table_name . '.', array(
+							array_search($name, $this->db_cols) => $val,
+						));
+						unset($filter[$name]);
+					}
+				}
+				elseif (is_string($name) && $this->is_cf($name))
+				{
+					$cf_name = $this->get_cf_name($name);
+					if (!isset($this->customfields[$cf_name]))
+					{
+						unset($filter[$name]);
+						continue;    // ignore unavailable CF
+					}
+					if (!empty($val))    // empty -> dont filter
+					{
+						if ($val[0] === '!')    // negative filter
+						{
+							$sql_filter = 'extra_filter.' . $this->extra_value . '!=' . $this->db->quote(substr($val, 1));
+						}
+						else
+						{
+							if ($this->customfields[$cf_name]['type'] == 'select')
+							{
+								// Multi-select - any entry with one of the filter values selected matches
+								$sql_filter = $this->cf_multimatch("extra_filter$extra_filter", $cf_name, $val);
+								$join .= str_replace('extra_filter', 'extra_filter' . $extra_filter, $this->extra_join_filter) . ' AND ' . $sql_filter;
+								$extra_filter++;
+								unset($filter[$name]);
+								continue;
+							}
+							elseif ($this->customfields[$cf_name]['type'] == 'text')
+							{
+								$sql_filter = str_replace($this->extra_value, 'extra_filter.' . $this->extra_value,
+									$this->db->expression($this->extra_table, array(
+										$this->extra_value . ' ' . $this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE] . ' ' . $this->db->quote($wildcard . $val . $wildcard)
+									))
+								);
+							}
+							else
+							{
+								$sql_filter = str_replace($this->extra_value, 'extra_filter.' .
+									$this->extra_value, $this->db->expression($this->extra_table, array($this->extra_value => $val)));
+							}
+						}
+						// need to use a LEFT JOIN for negative search or to allow NULL values
+						$need_left_join = $val[0] === '!' || strpos($sql_filter, 'IS NULL') !== false ? ' LEFT ' : '';
+						$join .= str_replace('extra_filter', 'extra_filter' . $extra_filter, $need_left_join . $this->extra_join_filter .
+							' AND extra_filter.' . $this->extra_key . '=' . $this->db->quote($cf_name) .
+							' AND ' . $sql_filter);
+						++$extra_filter;
+					}
+					unset($filter[$name]);
+				}
+				elseif (is_int($name) && $this->is_cf($val))    // lettersearch: #cfname LIKE 's%'
+				{
+					$_cf = explode(' ', $val);
+					$tcf_name = '';
+					foreach ($_cf as $cf_np)
+					{
+						// building cf_name by glueing parts together (, in case someone used whitespace in their custom field names)
+						$tcf_name = ($tcf_name ? $tcf_name . ' ' : '') . $cf_np;
+						// reacts on the first one found that matches an existing customfield, should be better then the old behavior of
+						// simply splitting by " " and using the first part
+						if ($this->is_cf($tcf_name) && ($cfn = $this->get_cf_name($tcf_name)) && array_search($cfn, (array)$_cfnames, true) !== false)
+						{
+							$cf = $tcf_name;
+							break;
+						}
+					}
+					unset($filter[$name]);
+					$cf_name = $this->get_cf_name($cf);
+					if (!isset($this->customfields[$cf_name])) continue;    // ignore unavailable CF
+					$join .= str_replace('extra_filter', 'extra_filter' . $extra_filter, $this->extra_join_filter .
+						' AND extra_filter.' . $this->extra_key . '=' . $this->db->quote($cf_name) .
+						' AND ' . str_replace($cf, 'extra_filter.' . $this->extra_value, $val));
+					++$extra_filter;
+				}
+			}
+		}
 	}
 }
