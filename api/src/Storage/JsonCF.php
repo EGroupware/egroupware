@@ -27,7 +27,7 @@ use EGroupware\Api;
  * You have to explicitly declare other object-properties of derived classes, which should NOT
  * be handled by that mechanism!
  */
-class Json extends Base
+class JsonCF extends Api\Storage
 {
 	use JsonTrait;
 
@@ -38,18 +38,22 @@ class Json extends Base
 	 *
 	 * @param string $app should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
+	 * @param string $extra_table name of the custom field table
+	 * @param string $column_prefix ='' column prefix to automatic remove from the column-name, if the column name starts with it
+	 * @param string $extra_key ='_name' column name for cf name column (will be prefixed with colum prefix, if starting with _)
+	 * @param string $extra_value ='_value' column name for cf value column (will be prefixed with colum prefix, if starting with _)
+	 * @param string $extra_id ='_id' column name for cf id column (will be prefixed with colum prefix, if starting with _)
 	 * @param string $json_column ='' name of column to store JSON blob
 	 * @param ?Api\Db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
-	 * @param string $column_prefix ='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 * @param boolean $no_clone =false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
 	 * @param string $timestamp_type =null default null=leave them as is, 'ts'|'integer' use integer unix timestamps,
 	 *    'object' use Api\DateTime objects or 'string' use DB timestamp (Y-m-d H:i:s) string
-	 * @param ?string $column_preg regular expression to identify a column
 	 */
-	function __construct($app='', $table='', $json_column='', ?Api\Db $db=null, $column_prefix='', $no_clone=true, $timestamp_type='object', $column_preg=null)
+	function __construct($app='', $table='', $extra_table, $column_prefix='', $extra_key='_name', $extra_value='_value',
+	                     $extra_id='_id', $json_column='', ?Api\Db $db=null, $no_clone=true, $timestamp_type='object', $column_preg=null)
 	{
-		parent::__construct($app, $table, $db, $column_prefix, $no_clone, $timestamp_type);
+		parent::__construct($app, $table, $extra_table, $column_prefix, $extra_key, $extra_value, $extra_id, $db, $no_clone, false, $timestamp_type);
 
 		$this->json_column = $json_column;
 
