@@ -815,11 +815,11 @@ class Storage extends Storage\Base
 	/**
 	 * Check if we filter by a custom field
 	 *
-	 * @param array &$filter filters to process
-	 * @param string &$join on return additional joins
+	 * @param ?array &$filter filters to process
+	 * @param ?string &$join on return additional joins
 	 * @param string $wildcard ='' appended before and after each criterion
 	 */
-	protected function cf_filter(array &$filter, string &$join, string $wildcard='')
+	protected function cf_filter(?array &$filter, ?string &$join, string $wildcard='')
 	{
 		if (is_array($filter) && count($filter))
 		{
