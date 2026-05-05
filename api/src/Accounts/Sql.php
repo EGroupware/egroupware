@@ -313,7 +313,7 @@ class Sql
 		}
 		if ($account_id > 0 && $contact_id)
 		{
-			if (!isset($this->contacts)) $this->contacts = new Api\Contacts();
+			$this->contacts ??= new Api\Contacts();
 			$this->contacts->delete($contact_id,false, false, true);	// false = allow to delete accounts (!)
 		}
 		return true;
@@ -549,7 +549,12 @@ class Sql
 						$search_cols[$key] = 'contact_email';
 					}
 					$storage = new Api\Storage\Base('api', $this->table, $this->db);
-					$criteria = $storage->search2criteria($query, $wildcard, $op, null, $search_cols);
+					$criteria = $storage->search2criteria($query, $wildcard, $op, null, $search_cols, order_by: $order);
+					if (!$storage->sanitize_order_by)
+					{
+						$this->contacts ??= new Api\Contacts();
+						$this->contacts->disableSanitizeOrderBy();
+					}
 					break;
 				case 'start':
 					$query .= '*';
@@ -583,7 +588,7 @@ class Sql
 					break;
 			}
 		}
-		if (!isset($this->contacts)) $this->contacts = new Api\Contacts();
+		$this->contacts ??= new Api\Contacts();
 
 		$accounts = array();
 		foreach($this->contacts->search($criteria,

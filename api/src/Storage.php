@@ -587,7 +587,7 @@ class Storage extends Storage\Base
 				// legacy search
 				$extra_join_added = true;    // we have NOT added the join, as we use a sub-query and therefore not need it
 
-				$criteria = $this->search2criteria($criteria, $wildcard, $op);
+				$criteria = $this->search2criteria($criteria, $wildcard, $op, order_by: $order_by);
 			}
 			// check if RAG-search changed order
 			elseif ($order_by !== $order_by_was)

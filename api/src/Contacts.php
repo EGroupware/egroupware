@@ -3092,4 +3092,12 @@ class Contacts extends Contacts\Storage
 			array_intersect((array)$GLOBALS['egw_info']['server']['allow_account_name'],
 				Accounts::getInstance()->memberships($GLOBALS['egw_info']['user']['account_id']));
 	}
+
+	/**
+	 * Setting (protected) $this->sanitize_order_by to false
+	 */
+	public function disableSanitizeOrderBy()
+	{
+		$this->somain->disableSanitizeOrderBy();
+	}
 }

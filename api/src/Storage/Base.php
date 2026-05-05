@@ -24,6 +24,8 @@ use EGroupware\Api;
  * Of cause you can derive from the class and call the constructor with params.
  *
  * @todo modify search() to return an iterator instead of an array
+ *
+ * @property-read bool $sanitize_order_by
  */
 class Base
 {
@@ -853,7 +855,7 @@ class Base
 		// if extending class or instanciator set columns to search, convert string criteria to array
 		if ($criteria && !is_array($criteria))
 		{
-			$search = $this->search2criteria($criteria,$wildcard,$op);
+			$search = $this->search2criteria($criteria,$wildcard,$op, order_by: $order_by);
 			$criteria = array($search);
 		}
 		if (!is_array($criteria))
@@ -1302,9 +1304,10 @@ class Base
 	 * @param array $search_cols =[] List of columns to search.  If not provided, all columns in $this->db_cols will be considered
 	 *  allows to specify $search_cfs parameter with key 'search_cfs', which has precedence over $search_cfs parameter
 	 * @param null|bool|string|string[] $search_cfs null: do it only for Api\Storage, false: never do it, or string type(s) of cfs to search, e.g. "url-email"
+	 * @param ?string &$order_by set to relevance / number of matches, if more then one word is searched for
 	 * @return array or column => value pairs
 	 */
-	public function search2criteria($_pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols=[],$search_cfs=null)
+	public function search2criteria($_pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols=[],$search_cfs=null,&$order_by=null)
 	{
 		// This function can get called multiple times.  Make sure it doesn't re-process.
 		if (empty($_pattern) || is_array($_pattern) || strpos($_pattern, 'CAST(COALESCE(') !== false)
@@ -1478,7 +1481,19 @@ class Base
 		}
 		if (!empty($criteria['OR']))
 		{
-			$filter[] = '(' . implode(' OR ', $criteria['OR']) . ') ';
+			// sum the number of matches and filter by at least one
+			$matches = '((' . implode(')+(', $criteria['OR']) . '))';
+			$filter[] = $matches.'>0';
+			// if we have more than one pattern, order result by number of matches
+			if (count($criteria['OR']) > 1)
+			{
+				if ($order_by && $this->sanitize_order_by)
+				{
+					$order_by = static::sanitizeOrderBy($order_by);
+				}
+				$order_by = $matches.' DESC'.($order_by ? ', '.$order_by : '');
+				$this->sanitize_order_by = false;
+			}
 		}
 
 		if(count($filter))
@@ -1778,5 +1793,16 @@ class Base
 			}
 		}
 		return is_null($column) ? $comments : $comments[$column];
+	}
+
+	/**
+	 * Give readonly access to protected class-variables like sanitize_order_by
+	 *
+	 * @param $name
+	 * @return mixed
+	 */
+	public function __get($name)
+	{
+		return $this->$name ?? null;
 	}
 }

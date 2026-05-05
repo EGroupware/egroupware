@@ -968,7 +968,7 @@ class infolog_so
 				$wildcard = '%'; $op = null;
 				$so_sql = new Api\Storage('infolog', $this->info_table, $this->extra_table, '', 'info_extra_name', 'info_extra_value', 'info_id', $this->db);
 				$so_sql->table_name = 'main';
-				$search = $so_sql->search2criteria($query['search'], $wildcard, $op, null, $columns);
+				$search = $so_sql->search2criteria($query['search'], $wildcard, $op, null, $columns, order_by: $order_by);
 				$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 					implode($op, $search) .')';
 			}
@@ -976,11 +976,11 @@ class infolog_so
 			{
 				$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 					current($filter).')';
-				// check if RAG-search changed order
-				if (isset($order_by))
-				{
-					$ordermethod = 'ORDER BY '.$order_by;
-				}
+			}
+			// check if RAG-search changed order
+			if (isset($order_by))
+			{
+				$ordermethod = 'ORDER BY '.$order_by;
 			}
 		}
 		$join .= " LEFT JOIN $this->users_table ON main.info_id=$this->users_table.info_id";

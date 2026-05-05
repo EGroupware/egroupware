@@ -1334,4 +1334,12 @@ class Sql extends Api\Storage
 	{
 		$this->db->delete($this->extra_table,$data,__LINE__,__FILE__);
 	}
+
+	/**
+	 * Setting (protected) $this->sanitize_order_by to false
+	 */
+	public function disableSanitizeOrderBy()
+	{
+		$this->sanitize_order_by = false;
+	}
 }
