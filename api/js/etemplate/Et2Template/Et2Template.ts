@@ -715,7 +715,7 @@ export class Et2Template extends Et2Widget(LitElement)
 		let loading : symbol | TemplateResult = nothing;
 
 		// Use a fake list loader for indexes
-		if(this.id.includes(".index"))
+		if(this.id?.match(/\.(index|list)/))
 		{
 			loading = html`
                 <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none"
