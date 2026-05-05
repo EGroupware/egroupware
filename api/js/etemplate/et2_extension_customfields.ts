@@ -199,7 +199,11 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			for(let field_name in this.options.customfields)
 			{
 				if (exclude.indexOf(field_name) >= 0) continue;
-				if (this.options.customfields[field_name].tab)
+				if(this.getType() == "customfields-filters")
+				{
+					this.options.fields[field_name] = true;
+				}
+				else if(this.options.customfields[field_name].tab)
 				{
 					this.options.fields[field_name] = this.options.customfields[field_name].tab === this.options.tab;
 				}
@@ -213,10 +217,6 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					{
 						this.options.fields[field_name] = default_tab[1] !== '-private';
 					}
-				}
-				else if(this.getType() == "customfields-filters")
-				{
-					this.options.fields[field_name] = true;
 				}
 			}
 		}
