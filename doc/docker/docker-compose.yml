@@ -167,9 +167,9 @@ services:
       - egroupware
 
   # automatic updates of all containers daily at 4am
-  # see https://containrrr.github.io/watchtower for more information
+  # see https://watchtower.nickfedor.com/ for more information
   watchtower:
-    image: containrrr/watchtower
+    image: nickfedor/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     # For automatic EPL Updates (not necessary for CE!) you need to pass docker
