@@ -207,6 +207,9 @@ following GET parameters are supported to customize the returned properties:
 - sync-token=<token> to only request change since last sync-token, like rfc6578 sync-collection REPORT
 - nresults=N limit number of responses (only for sync-collection / given sync-token parameter!)
   this will return a "more-results"=true attribute and a new "sync-token" attribute to query for the next chunk
+- filters[start]=<datetime> start of search
+- filters[end]=<datetime> end of search
+- filters[search]=<pattern> search in calendar title, description and location
 
 Examples: see addressbook
 

@@ -131,7 +131,9 @@ The following GET parameters are supported to customize the returned properties:
   this will return a "more-results"=true attribute and a new "sync-token" attribute to query for the next chunk
 
 The GET parameter `filters` allows to filter or search for a pattern in InfoLog entries:
-- `filters[search]=<pattern>` searches for `<pattern>` in the whole contact like the search in the GUI
+- `filters[start]=<datetime>` start of search
+- `filters[end]=<datetime>` end of search
+- `filters[search]=<pattern>` searches for `<pattern>` in the whole entry like the search in the GUI
 - `filters[search][%23<custom-field-name>]=<custom-field-value>` filters by a custom-field value
 - `filters[<database-column>]=<value>` filters by a DB-column name and value
 - `filters[linked]=<app-name>:<numeric-ID>` returns all entries linked to application `<app-name>` with ID `<nummeric-ID>` e.g. "addressbook:123"

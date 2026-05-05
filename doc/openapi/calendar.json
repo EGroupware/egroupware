@@ -44,6 +44,12 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
+          },
+          {
             "$ref": "#/components/parameters/filters_search"
           },
           {
@@ -177,6 +183,12 @@
           },
           {
             "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
           },
           {
             "$ref": "#/components/parameters/filters_search"
@@ -525,6 +537,24 @@
           "type": "integer"
         },
         "description": "Limit number of responses (only for sync-collection)"
+      },
+      "filters_start": {
+        "name": "filters[start]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "datetime"
+        },
+        "description": "Start date of search. Example: filters[start]=2026-01-01"
+      },
+      "filters_end": {
+        "name": "filters[end]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "datetime"
+        },
+        "description": "End date of search. Example: filters[start]=2026-02-01"
       },
       "filters_search": {
         "name": "filters[search]",

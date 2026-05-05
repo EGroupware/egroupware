@@ -1212,6 +1212,18 @@ class CalDAV extends HTTP_WebDAV_Server
 			$propfind_options['filters'] = array_filter($_GET['filters']??[],
 				static fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
 
+			// start- / end-date filter for calendar and infolog
+			if (isset($propfind_options['filters']['start']) || isset($propfind_options['filters']['end']))
+			{
+				$propfind_options['filters'][] = [
+					'name' => 'time-range',
+					'attrs' => [
+						'start' => $propfind_options['filters']['start'] ?? null,
+						'end' => $propfind_options['filters']['end'] ?? null,
+					]];
+				unset($propfind_options['filters']['start'], $propfind_options['filters']['end']);
+			}
+
 			if (isset($propfind_options['filters']['search']) && is_array($propfind_options['filters']['search']))
 			{
 				$propfind_options['filters']['search'] = array_filter($propfind_options['filters']['search'],
