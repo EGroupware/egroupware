@@ -400,7 +400,7 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->productManufacturer == 'sonyericsson')
 			{
-				$eventDST = Api\DateTime::to($event['start'], 'I');
+				$eventDST = date('I', $event['start']);
 				if ($eventDST)
 				{
 					$attributes['X-SONYERICSSON-DST'] = 4;
@@ -1982,10 +1982,7 @@ class calendar_ical extends calendar_boupdate
 			if (!$found)
 			{
 				$alarm['owner'] = $user;
-				if(!isset($alarm['time']))
-				{
-					$alarm['time'] = Api\DateTime::to($event['start'], 'ts') - $alarm['offset'];
-				}
+				if (!isset($alarm['time'])) $alarm['time'] = $event['start'] - $alarm['offset'];
 				if ($alarm['time'] < time()) calendar_so::shift_alarm($event, $alarm);
 				if ($this->debug) error_log(__METHOD__."() adding new alarm from client ".array2string($alarm));
 				if ($event['id'] || $master) $alarm['id'] = $this->save_alarm($event['id'] ?? $master['id'], $alarm);
@@ -1996,10 +1993,7 @@ class calendar_ical extends calendar_boupdate
 			// existing alarm --> update it
 			else
 			{
-				if(!isset($alarm['time']))
-				{
-					$alarm['time'] = Api\DateTime::to($event['start'], 'ts') - $alarm['offset'];
-				}
+				if (!isset($alarm['time'])) $alarm['time'] = $event['start'] - $alarm['offset'];
 				if ($alarm['time'] < time()) calendar_so::shift_alarm($event, $alarm);
 				$alarm = array_merge($old_alarm, $alarm);
 				if ($this->debug) error_log(__METHOD__."() updating existing alarm from client ".array2string($alarm));
@@ -2711,7 +2705,7 @@ class calendar_ical extends calendar_boupdate
 				case 'DURATION':	// clients can use DTSTART+DURATION, instead of DTSTART+DTEND
 					if (!isset($vcardData['end']))
 					{
-						$vcardData['end'] = Api\DateTime::to($vcardData['start'], 'ts') + $attributes['value'];
+						$vcardData['end'] = $vcardData['start'] + $attributes['value'];
 					}
 					else
 					{
@@ -2787,9 +2781,9 @@ class calendar_ical extends calendar_boupdate
 					if (!empty($vcardData['recur_enddate'])) self::check_fix_endate ($vcardData);
 					break;
 				case 'RDATE':
-					$hour = Api\DateTime::to($vcardData['start'], 'H');
-					$minutes = Api\DateTime::to($vcardData['start'], 'i');
-					$seconds = Api\DateTime::to($vcardData['start'], 's');
+					$hour = date('H', $vcardData['start']);
+					$minutes = date('i', $vcardData['start']);
+					$seconds = date('s', $vcardData['start']);
 					$vcardData['recur_type'] = calendar_rrule::RDATE;
 					$vcardData['recur_rdates'] = [];
 					foreach($attributes['values'] as $date)
@@ -2809,9 +2803,9 @@ class calendar_ical extends calendar_boupdate
 					if ($attributes['values'])
 					{
 						$days = array();
-						$hour = Api\DateTime::to($vcardData['start'], 'H');
-						$minutes = Api\DateTime::to($vcardData['start'], 'i');
-						$seconds = Api\DateTime::to($vcardData['start'], 's');
+						$hour = date('H', $vcardData['start']);
+						$minutes = date('i', $vcardData['start']);
+						$seconds = date('s', $vcardData['start']);
 						foreach ($attributes['values'] as $day)
 						{
 							$days[] = mktime(
@@ -3203,7 +3197,7 @@ class calendar_ical extends calendar_boupdate
 				$event['special'] = '1';
 				$event['non_blocking'] = 1;
 				// make it a whole day event for eGW
-				$vcardData['end'] = Api\DateTime::to($vcardData['start'], 'ts') + 86399;
+				$vcardData['end'] = $vcardData['start'] + 86399;
 			}
 			elseif (strtolower($agendaEntryType) == 'event')
 			{
@@ -3306,7 +3300,7 @@ class calendar_ical extends calendar_boupdate
 		// whole day events get one day in calendar_boupdate::save()
 		if (!isset($event['end']))
 		{
-			$event['end'] = Api\DateTime::to($event['start'], 'ts') + 60 * $this->cal_prefs['defaultlength'];
+			$event['end'] = $event['start'] + 60 * $this->cal_prefs['defaultlength'];
 		}
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
@@ -3443,10 +3437,7 @@ class calendar_ical extends calendar_boupdate
 
 				// hack to fix end-time to be non-inclusive
 				// all-day events end in our data-model at 23:59:59 (of given TZ)
-				if(Api\DateTime::to($event['end'], 'is') == '5959')
-				{
-					$event['end'] = Api\DateTime::to($event['end'], 'ts') + 1;
-				}
+				if (date('is', $event['end']) == '5959') ++$event['end'];
 
 				$fbdata[$fbtype][] = $event;
 			}
@@ -3486,20 +3477,8 @@ class calendar_ical extends calendar_boupdate
 	 */
 	public function aggregate_periods(array $events, $start, $end)
 	{
-		$start = Api\DateTime::to($start, 'ts');
-		$end = Api\DateTime::to($end, 'ts');
-		$normalized_events = array();
-
-		foreach($events as $key => $event)
-		{
-			$normalized_events[$key] = array(
-				'start' => Api\DateTime::to($event['start'], 'ts'),
-				'end'   => Api\DateTime::to($event['end'], 'ts'),
-			);
-		}
-
 		// sort by start datetime
-		uasort($normalized_events, function ($a, $b)
+		uasort($events, function($a, $b)
 		{
 			$diff = $a['start'] - $b['start'];
 
@@ -3507,7 +3486,7 @@ class calendar_ical extends calendar_boupdate
 		});
 
 		$fbdata = array();
-		foreach($normalized_events as $event)
+		foreach($events as $event)
 		{
 			error_log(__METHOD__."(..., $start, $end) event[start]=$event[start], event[end]=$event[end], fbdata=".array2string($fbdata));
 			if ($event['end'] <= $start || $event['start'] >= $end) continue;
