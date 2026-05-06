@@ -7057,15 +7057,6 @@ class Mail
 						}
 
 						if ( $myUrl[0]!='/' && strlen($basedir) > 1 && !str_ends_with($basedir, '/')) { $basedir .= '/'; }
-						if ($needTempFile && empty($attachment) && !str_starts_with($myUrl, "http"))
-						{
-							try {
-								$data = file_get_contents($basedir.urldecode($myUrl));
-							}
-							catch (\Throwable $e) {
-								_egw_log_exception($e);
-							}
-						}
 					}
 					if (str_starts_with($url, 'data:'))
 					{
