@@ -189,6 +189,10 @@ trait JsonTrait
 			case 'id':
 				$property = $this->autoinc_id;
 				break;
+			// fixing a PHP error calling the magic setter for a (unset) declared class-variable
+			case 'data':
+				$this->data = $value;
+				return;
 		}
 		$this->data[$property] = $value;
 	}
