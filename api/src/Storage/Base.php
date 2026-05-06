@@ -24,8 +24,6 @@ use EGroupware\Api;
  * Of cause you can derive from the class and call the constructor with params.
  *
  * @todo modify search() to return an iterator instead of an array
- *
- * @property-read bool $sanitize_order_by
  */
 class Base
 {
@@ -1796,13 +1794,12 @@ class Base
 	}
 
 	/**
-	 * Give readonly access to protected class-variables like sanitize_order_by
+	 * Give readonly access to protected class-variables sanitize_order_by
 	 *
-	 * @param $name
-	 * @return mixed
+	 * @return bool
 	 */
-	public function __get($name)
+	public function sanitizeOrderByEnabled()
 	{
-		return $this->$name ?? null;
+		return $this->sanitize_order_by;
 	}
 }

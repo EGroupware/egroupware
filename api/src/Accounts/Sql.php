@@ -550,7 +550,7 @@ class Sql
 					}
 					$storage = new Api\Storage\Base('api', $this->table, $this->db);
 					$criteria = $storage->search2criteria($query, $wildcard, $op, null, $search_cols, order_by: $order);
-					if (!$storage->sanitize_order_by)
+					if (!$storage->sanitizeOrderByEnabled())
 					{
 						$this->contacts ??= new Api\Contacts();
 						$this->contacts->disableSanitizeOrderBy();
