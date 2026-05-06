@@ -1,3 +1,11 @@
+egroupware-docker (26.5.20260507) hardy; urgency=low
+
+  * SECURITY and maintenance release: everyone is strongly adviced to update to this release
+  * Api: fix customfields on tabs were excluded from filters
+  * Api: Initial application load UI improvements
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 06 May 2026 18:04:34 +0200
+
 egroupware-docker (26.5.20260506) hardy; urgency=low
 
   * Api: change legacy search by multiple words to be ordered by number of matches ("A B" --> returns matches containing A and B first)
