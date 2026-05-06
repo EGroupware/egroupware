@@ -340,8 +340,8 @@ export class MailApp extends EgwApp
 				const composeToolbar = this.et2.getWidgetById('composeToolbar');
 				// set smime values in the toolbar assist to the initial values of the toolbar
 				try{
-				this.et2.getWidgetById('smime_sign').value = composeToolbar.getWidgetById('smime_sign');
-				this.et2.getWidgetById('smime_encrypt').value = composeToolbar.getWidgetById('smime_encrypt');}
+				this.et2.getWidgetById('smime_sign').value = composeToolbar.getWidgetById('smime_sign').value;
+				this.et2.getWidgetById('smime_encrypt').value = composeToolbar.getWidgetById('smime_encrypt').value;}
 				catch (e)
 				{
 					egw.debug("warn","could not set initial values for compose toolbar helper")
