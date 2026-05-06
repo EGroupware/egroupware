@@ -497,7 +497,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	ru	Невозможно удалить
 unable to import into %1, using %2	addressbook	ru	Невозможно импортировать в %1, используется %2
 unique id (uid)	addressbook	ru	Уникальный ID (UID)
-unique id<br />(to update existing records)	addressbook	ru	Уникальный ID<br> для обновления существующих записей
+unique id<br />(to update existing records)	addressbook	ru	Уникальный ID\n для обновления существующих записей
 unknown type %1, imported as %2	addressbook	ru	Неизвестный тип %1, импортированный как %2
 unshare	addressbook	ru	Больше не делиться
 unshared	addressbook	ru	больше не делится

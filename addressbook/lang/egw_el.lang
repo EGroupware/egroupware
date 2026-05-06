@@ -509,7 +509,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	el	αδυναμία διαγραφής
 unable to import into %1, using %2	addressbook	el	Αδυναμία εισαγωγής στο 1% χρησιμοποιώντας το %2
 unique id (uid)	addressbook	el	Μοναδικό (Unique) ID (UID)
-unique id<br />(to update existing records)	addressbook	el	Μοναδικό (Unique) ID (UID)<br>για την ενημέρωση υφιστάμενων εγγραφών
+unique id<br />(to update existing records)	addressbook	el	Μοναδικό (Unique) ID (UID)\nγια την ενημέρωση υφιστάμενων εγγραφών
 unknown type %1, imported as %2	addressbook	el	Άγνωστος τύπος %1, έγινε εισαγωγή ως %2
 unshare	addressbook	el	Δεν μοιράζεται πλέον
 unshared	addressbook	el	δεν μοιράζεται πλέον

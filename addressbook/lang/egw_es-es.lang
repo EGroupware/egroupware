@@ -510,7 +510,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	es-es	No se puede eliminar
 unable to import into %1, using %2	addressbook	es-es	Imposible importar en %1, usando %2
 unique id (uid)	addressbook	es-es	ID único (UID)
-unique id<br />(to update existing records)	addressbook	es-es	ID único<br>(para actualizar los registros existentes)
+unique id<br />(to update existing records)	addressbook	es-es	ID único\n(para actualizar los registros existentes)
 unknown type %1, imported as %2	addressbook	es-es	Tipo desconocido %1, importado como %2
 unshare	addressbook	es-es	No compartir más
 unshared	addressbook	es-es	ya no se comparte

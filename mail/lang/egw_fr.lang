@@ -129,6 +129,7 @@ current folder	mail	fr	Dossier actif
 current subject	mail	fr	Sujet actuel
 currently:	mail	fr	Actuellement :
 deactive	mail	fr	Désactiver
+default signature	mail	fr	Signature par défaut
 default sorting order	mail	fr	Ordre de tri par défaut
 default toolbar actions shown in mail's html editor	mail	fr	Fonctions activées dans la barre d'outils de l'éditeur HTML lors de la composition d'un courriel
 default value for remembering s/mime passphrase in minutes	mail	fr	Valeur par défaut pour la mémorisation de la phrase de passe S/MIME en minutes
@@ -209,6 +210,7 @@ enabled!	mail	fr	autorisé !
 encrypt	mail	fr	Chiffre
 encrypt your message with smime certificate	mail	fr	Chiffre votre message avec le certificat S/MIME
 encryption	mail	fr	Chiffrement
+end	common	fr	Fin
 enter the name for the new folder:	mail	fr	Entrer le nom du nouveau dossier :
 error saving %1!	mail	fr	Erreur durant l'enregistrement de %1 !
 error while setting acl for folder %1!	mail	fr	Erreur au paramétrage des ACL du dossier du dossier %1 !
@@ -329,6 +331,7 @@ junk folder	mail	fr	Dossier des indésirables
 keep a copy	mail	fr	Garder une copie
 keep a copy of the message in your inbox	mail	fr	Garder une copie du message dans votre boite de réception
 kilobytes	mail	fr	kilo-octets
+last used signature	mail	fr	Dernière signature utilisée
 later	mail	fr	Plus tard
 learning as ham (not spam) failed because of %1	mail	fr	L'apprentissage en tant que ham (pas spam) a échoué à cause de %1
 learning as spam failed because of %1	mail	fr	L'apprentissage en tant que spam a échoué à cause de %1
@@ -435,6 +438,7 @@ original message	mail	fr	Message d'origine
 outbox	mail	fr	Boîte d'envoi
 password protect	mail	fr	protection par mot de passe
 permission denied	mail	fr	Permission refusée
+personal signature	mail	fr	Signature personnelle
 please configure access to an existing individual imap account.	mail	fr	Veuillez configurer l'accès à un compte IMAP individuel existant.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	fr	Veuillez configurer votre certificat S/MIME dans l'onglet Encryption situé dans la boîte de dialogue Edit Account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	fr	Veuillez contacter votre administrateur pour savoir si votre serveur prend en charge les règles de filtrage côté serveur et comment les activer dans EGroupware pour votre compte actif (%1) avec ID :%2.
@@ -572,7 +576,6 @@ set / remove labels	mail	fr	Etiquettes
 set flags	mail	fr	Marquer l'e-mail comme
 set it as default:	mail	fr	Définir par défaut :
 set predefined values for compose...	mail	fr	Définir les valeurs prédéfinies pour la composition ...
-settings  mail  fr  Paramètres
 should new messages show up on the home page	mail	fr	Est-ce que les nouveaux messages doivent apparaître sur la page d'accueil
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	fr	La signature doit-elle être insérée après (standard) ou avant une réponse ou un transfert, et doit-elle être visible et modifiable pendant la rédaction.
 show	mail	fr	Afficher
@@ -690,6 +693,7 @@ when saving messages as item of a different app	mail	fr	lors de l'enregistrement
 when sending messages	mail	fr	Quand j'envoie des messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	fr	Quels dossiers (en plus du dossier Envoyés) doivent être affichés en utilisant le Schéma des Éléments Envoyés
 which folders - in general - should not be automatically created, if not existing	mail	fr	Quels dossiers - en général - NE doivent PAS être automatiquement créés, s'il n'existent pas au préalable
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	fr	Choix de l'identité (signature) par défaut à la composition d'un nouveau mail. Si vous choisissez "Signature personnelle", la première signature personnelle créée sera prise par défaut.
 which method to use when forwarding a message	mail	fr	Quelles méthode utiliser pour transférer un message
 whitelisted mails are not marked as spam	mail	fr	Les mails en liste blanche ne sont pas marqué comme spam
 whole message	mail	fr	Message entier

@@ -163,6 +163,7 @@ csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
 custom etemplate for the contactform	addressbook	de	Eigenes eTemplate für das Kontaktformular
 custom fields	addressbook	de	Benutzerdefinierte Felder
+data exchange settings	common	de	Einstellungen Datenaustausch
 default	addressbook	de	Standard
 default action on double-click	addressbook	de	Vorgabe beim Doppel-Klick einer Adresse
 default address format	addressbook	de	Vorgabe für Format der Adresse
@@ -511,7 +512,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	de	Löschen nicht möglich
 unable to import into %1, using %2	addressbook	de	Import nach %1 ist nicht möglich, %2 wird dafür verwendet
 unique id (uid)	addressbook	de	Eindeutige ID (UID)
-unique id<br />(to update existing records)	addressbook	de	Eindeutige ID<br>(um existierende Datensätze zu aktualisieren)
+unique id<br />(to update existing records)	addressbook	de	Eindeutige ID\n(um existierende Datensätze zu aktualisieren)
 unknown type %1, imported as %2	addressbook	de	Unbekannter Typ %1, als %2 importiert
 unshare	addressbook	de	Nicht mehr teilen
 unshared	addressbook	de	nicht mehr geteilt

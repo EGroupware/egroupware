@@ -38,7 +38,7 @@ cancel	setup	id	Batal
 change system-charset	setup	id	Change system-charset
 charset	setup	id	Charset
 check installation	setup	id	Cek instalasi
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	id	Sertakan file (direktori file) dalam pencadangan data.<br>(Dapat menghasilkan data dalam jumlah besar dan membatalkan dengan banyak file, dokumentasi: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	id	Sertakan file (direktori file) dalam pencadangan data.\n(Dapat menghasilkan data dalam jumlah besar dan membatalkan dengan banyak file, dokumentasi: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 checking php.ini	setup	id	Checking php.ini
 click here	setup	id	Klik disini
 completed	setup	id	Tuntas
@@ -97,6 +97,7 @@ file	setup	id	FILE
 filename	setup	id	filename
 filesystem	setup	id	Filesystem
 filesystem (default)	setup	id	Filesystem (default)
+folders: sent,trash,drafts,templates,junk	setup	id	Folder: Terkirim, Sampah, Draf, Template, Spam
 force selectbox	setup	id	Force Selectbox
 go back	setup	id	Go back
 go to	setup	id	Go to
@@ -229,6 +230,7 @@ upgraded	setup	id	upgraded
 upgrading tables	setup	id	Upgrading Tables
 upload backup	setup	id	upload backup
 user	setup	id	user
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	id	Nama pengguna (dipisahkan dengan koma) yang dapat diberikan akses superuser ke sistem file EGroupware
 users choice	setup	id	Pilihan Pengguna
 utf-8 (unicode)	setup	id	UTF-8 (Unicode)
 validation errors	setup	id	Validation errors

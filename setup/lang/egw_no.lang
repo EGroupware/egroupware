@@ -58,7 +58,7 @@ backup '%1' restored	setup	no	Sikkerhetskopi %1 lest inn
 backup and restore	setup	no	Sikkerhetskopiering og tilbakelesing
 backup directory %1 mounted as %2	setup	no	Sikkerhetskopikatalog %1 montert som %2
 backup failed	setup	no	Sikkerhetskopi lyktes ikke
-backup files (needs ziparchive)	setup	no	Sikkerhetskopiering av EGroupware-filene (filkatalogen) <br>(krever PHP ZipArchive)
+backup files (needs ziparchive)	setup	no	Sikkerhetskopiering av EGroupware-filene (filkatalogen) \n(krever PHP ZipArchive)
 backup finished	setup	no	Sikkerhetskopiering ferdig
 backup housekeeping	setup	no	Sikkerhetskopier med et standardnavn kan ryddes opp automatisk. Gi sikkerhetskopifiler nye navn for å ekskludere dem fra oppryddingen.
 backup min count	setup	no	Minimum antall sikkerhetskopier
@@ -68,13 +68,13 @@ backup started, this might take a few minutes ...	setup	no	Backup har påbörjat
 because an application it depends upon was upgraded	setup	no	På grund av att en applikation som den var beroende av uppgraderats
 because it depends upon	setup	no	Eftersom den är beroende av
 because it is not a user application, or access is controlled via acl	setup	no	Eftersom det inte är en användarapplikation, eller för att åtkomst kontrolleras med en ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	no	Eftersom den kräver manuell installation av tabeller,<br>eller att  tabelldefinitionen var inkorrekt
+because it requires manual table installation, <br />or the table definition was incorrect	setup	no	Eftersom den kräver manuell installation av tabeller,\neller att  tabelldefinitionen var inkorrekt
 because it was manually disabled	setup	no	Eftersom den stängts av  manuellt
 because of a failed upgrade or install	setup	no	Eftersom uppgradering eller installation misslyckats
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	no	Eftersom uppgradering misslyckats, eller att databasen är nyare än den installerade versionen av denna applikation
 because the enable flag for this app is set to 0, or is undefined	setup	no	Eftersom påkopplad-flaggan för denna applikation är satt till 0 eller är odefinerad
 bottom	setup	no	Bunn
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	no	Men vi <u> rekommenderar starkt att du backar upp</u> dina tabeller utifall att installationen skulle råka förstöra data. <br><b>Dessa automatiserade skript kan med lätthet förstöra data i dina tabeller!</b>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	no	Men vi <u> rekommenderar starkt att du backar upp</u> dina tabeller utifall att installationen skulle råka förstöra data. \n<b>Dessa automatiserade skript kan med lätthet förstöra data i dina tabeller!</b>
 cancel	setup	no	Avbryt
 change system-charset	setup	no	Ändra system-teckentabell
 charset	setup	no	Tegnsett
@@ -120,10 +120,10 @@ created header.inc.php!	setup	no	Opprettet din header.inc.php!
 creating tables	setup	no	Oppretter tabeller
 current system-charset	setup	no	Nåværende system-karaktersett
 current version	setup	no	Aktuell versjon
-currently installed languages: %1 <br />	setup	no	Installerte språk: %1 <br>
+currently installed languages: %1 <br />	setup	no	Installerte språk: %1 \n
 database successfully converted from '%1' to '%2'	setup	no	Database konvertert fra '%1' till '%2'
 day	setup	no	Dag
-day of week<br />(0-6, 0=sunday)	setup	no	Ukedag<br>(0-6, 0=søndag)
+day of week<br />(0-6, 0=sunday)	setup	no	Ukedag\n(0-6, 0=søndag)
 db backup and restore	setup	no	DB backup och restore
 db host	setup	no	DB tjener
 db name	setup	no	DB navn
@@ -165,12 +165,12 @@ egroupware administration manual	setup	no	EGroupware administrasjonsmanual
 enable for extra debug-messages	setup	no	Visa extra debug-meddelanden
 enable mcrypt	setup	no	Muliggjør MCrypt
 enter some random text for app session encryption	setup	no	Skriv in lite slumpmässig text för kryptering av sessionsinformation
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	no	Skriv in lite slumpmässig text för<br>kryptering av sessionsinformation (kräver MCrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	no	Ange fullständig sökväg för temp-filer<br>T ex: /tmp, c:\temp
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	no	Ange fullständig sökväg för användar- och gruppfiler<br>T ex: /files, e:\files
-enter the full path to the backup directory.<br />if empty: files directory	setup	no	Ange fullständig sökväg för backupkatalog<br>om tomt: samma som användarfiler
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	no	Skriv in lite slumpmässig text för\nkryptering av sessionsinformation (kräver MCrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	no	Ange fullständig sökväg för temp-filer\nT ex: /tmp, c:\temp
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	no	Ange fullständig sökväg för användar- och gruppfiler\nT ex: /files, e:\files
+enter the full path to the backup directory.<br />if empty: files directory	setup	no	Ange fullständig sökväg för backupkatalog\nom tomt: samma som användarfiler
 enter the hostname of the machine on which this server is running	setup	no	Ange hostnamn för maskinen som kör denna server
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	no	Ange EGroupware:s URL.<br>T ex: http://www.doman.com/egroupware  eller  /egroupware<br><b>Ingen avslutande slash</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	no	Ange EGroupware:s URL.\nT ex: http://www.doman.com/egroupware  eller  /egroupware\n<b>Ingen avslutande slash</b>
 enter the site password for peer servers	setup	no	Ange sitelösenord för peer-servers
 enter the site username for peer servers	setup	no	Ange siteanvändarnamn för peer-servers
 enter the title for your site	setup	no	Ange titel för din webbplats
@@ -193,6 +193,7 @@ false	setup	no	Falsk
 file	setup	no	Fil
 file type, size, version, etc.	setup	no	Filtyp, storlek, version, etc.
 filename	setup	no	Filnavn
+folders: sent,trash,drafts,templates,junk	setup	no	Mapper: Sendt, Papirkurv, Utkast, Maler, Søppelpost
 force selectbox	setup	no	Listerute
 go back	setup	no	Tilbake
 go to	setup	no	Gå till
@@ -365,7 +366,7 @@ save	setup	no	Lagre
 save this text as contents of your header.inc.php	setup	no	Spara denna text som innehållet i din header.inc.php
 schedule	setup	no	Planlegg
 scheduled backups	setup	no	Planlagte sikkerhetskopier
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	no	Välj en applikation, ange målversion, tryck sedan verkställ för att processa den versionen<br> om du inte anger version kommer bara grudtabellerna att installeras för denna applikation <br><b>Detta kommer att ta bort applikationens alla tabeller först</b>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	no	Välj en applikation, ange målversion, tryck sedan verkställ för att processa den versionen\n om du inte anger version kommer bara grudtabellerna att installeras för denna applikation \n<b>Detta kommer att ta bort applikationens alla tabeller först</b>
 select one...	setup	no	Velg en ...
 select the default applications to which your users will have access	setup	no	Välj vilka applikationer användare skall ha access till default
 select the desired action(s) from the available choices	setup	no	Välj återgärder från listan nedan
@@ -419,14 +420,14 @@ the mbstring extension is needed to fully support unicode (utf-8) or other multi
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	no	mbstring.func_overload = 7 behövs för att fullt ut kunna stödja Unicode (UTF-8) eller andra multi-byte teckenuppsättningar
 the table definition was correct, and the tables were installed	setup	no	Tabelldefinitionen var korrekt och tabellerna installerades
 the tables	setup	no	Tabellene
-there was a problem trying to connect to your ldap server. <br />	setup	no	Det uppstod problem med att kontakta din LDAP-server. <br>
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	no	Det uppstod problem med att kontakta din LDAP-server.<br>kontrollera din LDAP serverkonfiguration
+there was a problem trying to connect to your ldap server. <br />	setup	no	Det uppstod problem med att kontakta din LDAP-server. \n
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	no	Det uppstod problem med att kontakta din LDAP-server.\nkontrollera din LDAP serverkonfiguration
 this has to be outside the webservers document-root!!!	setup	no	Måste ligga utanför webserverns dokumentrot!
 this might take a while, please wait ...	setup	no	Dette kan ta sin tid, vennligst vent ...
 this program lets you backup your database, schedule a backup or restore it.	setup	no	Detta program låter dig backa upp din databas, schemalägga en backup eller återställa en backup.
 this program will convert your database to a new system-charset.	setup	no	Detta program låter dig konvertera din databas till en ny systemteckentabell
 this program will help you upgrade or install different languages for egroupware	setup	no	Detta program hjälper dig att installera eller uppgradera de språk du vill använda i EGroupware
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	no	Detta bör vara ca 30 bytes i längd. <br>Not: Default är slumpmässigt genererat.
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	no	Detta bör vara ca 30 bytes i längd. \nNot: Default är slumpmässigt genererat.
 this stage is completed<br />	setup	no	Dette stadiet er klart
 to a version it does not know about	setup	no	Til en ukjent versjon
 to setup 1 admin account and 3 demo accounts.	setup	no	För att skapa ett adminkonto och tre demokonton
@@ -451,6 +452,7 @@ use cookies to pass sessionid	setup	no	Använd cookies för att lagra sessionid
 use pure html compliant code (not fully working yet)	setup	no	Använd ren HTML compliant kod (fungerar inte korrekt ännu)
 user account prefix	setup	no	Användarkontoprefix
 user for smtp-authentication (leave it empty if no auth required)	setup	no	Brukes for SMTP autentisering (la det stå tomt dersom aut. ikke er nødvendig)
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	no	Brukernavn (skilt med komma) som kan gis superbruker-tilgang til EGroupware-filsystemet.
 usernames are casesensitive	setup	no	Användarnamn är skiftläges-känsliga
 users choice	setup	no	Brukervalg
 utf-8 (unicode)	setup	no	UTF-8 (Unicode)
@@ -467,26 +469,26 @@ which database type do you want to use with egroupware?	setup	no	Vilken typ av d
 world readable	setup	no	Lesbar av alle (world readable)
 world writable	setup	no	Skrivbar av alle (world writable)
 would you like egroupware to cache the phpgw info array ?	setup	no	Vill du att EGroupware skall cacha phpgw info array?
-would you like egroupware to check for a new version<br />when admins login ?	setup	no	Vill du att EGroupware skall kontrollera om det finns nya versioner<br>när admin loggar in?
+would you like egroupware to check for a new version<br />when admins login ?	setup	no	Vill du att EGroupware skall kontrollera om det finns nya versioner\nnär admin loggar in?
 would you like to show each application's upgrade status ?	setup	no	Vill du visa varje applikations uppgraderingsstatus?
 writable by the webserver	setup	no	Skrivbar av nettstedstjeneren
 write	setup	no	Lagre
 year	setup	no	år
 yes	setup	no	Ja
 yes, with lowercase usernames	setup	no	Ja, med brukernavn i små bokstaver
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	no	Du verkar köra en pre-beta version av EGroupware.<br>Dessa versioner stöds inte längre och det finns ingen uppgraderingsväg via setup.<br>Du måste först uppgradera till 0.9.10(sista versionen som stödde detta)<br> och sedan uppgradera igen med denna version.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	no	Du verkar köra en äldre version av PHP.<br>Det är rekommenderat att du uppgraderar till en nyare version.<br>Äldre versioner av PHP kanske inte kör EGroupware korrekt, om alls.<br><br>Du rekommenderas starkt att uppgradera till åtminstone version %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	no	Du verkar köra en pre-beta version av EGroupware.\nDessa versioner stöds inte längre och det finns ingen uppgraderingsväg via setup.\nDu måste först uppgradera till 0.9.10(sista versionen som stödde detta)\n och sedan uppgradera igen med denna version.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	no	Du verkar köra en äldre version av PHP.\nDet är rekommenderat att du uppgraderar till en nyare version.\nÄldre versioner av PHP kanske inte kör EGroupware korrekt, om alls.\n\nDu rekommenderas starkt att uppgradera till åtminstone version %1
 you appear to be running version %1 of egroupware	setup	no	Du verkar köra version %1 av EGroupware
 you appear to have %1 support.	setup	no	Du synes å ha %1 support
 you appear to have xml support enabled	setup	no	Du synes å ha støtte for XML aktivert
-you are ready for this stage, but this stage is not yet written.<br />	setup	no	Du är redo för detta stadium, men detta stadium är inte skrivet ännu.<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	no	Du är redo för detta stadium, men detta stadium är inte skrivet ännu.\n
 you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	no	Du kan omgå denne begrensningen ved å montere sikkerhetskopikatalogen i EGroupware File Manager og laste opp derfra.
 you didn't enter a config password for domain %1	setup	no	Du angav inget config-lösenord  för domän %1
 you didn't enter a config username for domain %1	setup	no	Du angav inget config-användarnamn  för domän %1
 you didn't enter a header admin password	setup	no	Du angav inget header admin-lösenord
 you didn't enter a header admin username	setup	no	Du angav inget header admin-användarnamn
-you do not have any languages installed. please install one now <br />	setup	no	Du har för närvarande inga språk installerade. Var vänlig installera ett nu<br>
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	no	Du har inte skapat din header.php.inc ännu!<br>Du kan skapa den nu.
+you do not have any languages installed. please install one now <br />	setup	no	Du har för närvarande inga språk installerade. Var vänlig installera ett nu\n
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	no	Du har inte skapat din header.php.inc ännu!\nDu kan skapa den nu.
 you have successfully logged out	setup	no	Du har nu loggat ut.
 you must enter a username for the admin	setup	no	Du måste ange ett lösenord för admin
 you need to select your current charset!	setup	no	Du må velge tegnsett!
@@ -500,7 +502,7 @@ your database is working, but you dont have any applications installed	setup	no	
 your files directory '%1' %2	setup	no	Din filkatalog '%1' %2
 your header admin password is not set. please set it now!	setup	no	Ditt header admin-lösenord är inte satt. Skriv in det nu!
 your header.inc.php needs upgrading.	setup	no	Din header.inc.php må oppgraderes.
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	no	Din header.inc.php behöver uppgraderas<br><b><b class="msg">VARNING!</b><br><b>TA BACKUP!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	no	Din header.inc.php behöver uppgraderas\n<b><b class="msg">VARNING!</b>\n<b>TA BACKUP!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	no	Din PHP-installation saknar korrekt GD-stöd. Du behöver GD-library version 1.8 eller bättre om du vill använda Gantt-diagram i Projekt
 your tables are current	setup	no	Dina tabeller är aktuella
 your tables will be dropped and you will lose data	setup	no	Dina tabeller kommer att tas bort och du förlorar data!!

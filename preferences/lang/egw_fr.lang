@@ -135,7 +135,7 @@ password stored	preferences	fr	Mot de passe stocké.
 permanent time zone selection	preferences	fr	Fuseau horaire permanent
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fr	Sélectionner les fuseaux horaires
 please select your timezone.	preferences	fr	Sélectionnez votre fuseau horaire.
-popup window	preferences	fr	Avec des popups
+popup window	preferences	fr	Avec des pop-up (nouvelle fenêtre)
 popup with search	preferences	fr	Ouvre une fenêtre Popup avec la recherche
 preferences saved.	preferences	fr	Préférences enregistrées.
 preformatted	preferences	fr	Préformaté
@@ -145,7 +145,7 @@ re-enter your password	preferences	fr	Ré-entrez votre mot de passe
 reset qrcode	preferences	fr	Réinitialise le code QR
 revoke	preferences	fr	Révoquer
 revoke this token	preferences	fr	Révoquer ce jeton
-same window	preferences	fr	Avec des popups
+same window	preferences	fr	Avec des pop-in (modales)
 scan qrcode with a time-based one-time password (totp) app:	preferences	fr	Scanne le code QR avec une application TOTP (Time-based one-time password) :
 secret deleted, two factor authentication disabled.	preferences	fr	Clé secrète supprimée, authentification à double facteur désactivée.
 select additional lines in lists by	preferences	fr	Sélectionner des lignes supplémentaires dans les listes en

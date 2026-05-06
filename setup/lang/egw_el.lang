@@ -11,13 +11,13 @@ backup '%1' renamed to '%2'	setup	el	Μετονομασία αντιγράφου
 backup '%1' restored	setup	el	Επαναφορά αντιγράφου ασφαλείας '%1'.
 backup directory %1 mounted as %2	setup	el	Κατάλογος Backup %1 τοποθετημένος ως %2
 backup failed	setup	el	Αποτυχία δημιουργίας αντιγράφου ασφαλείας.
-backup files (needs ziparchive)	setup	el	Δημιουργία αντιγράφου ασφαλείας δεδομένων των αρχείων EGroupware (κατάλογος αρχείων) <br>(απαιτεί PHP ZipArchive)
+backup files (needs ziparchive)	setup	el	Δημιουργία αντιγράφου ασφαλείας δεδομένων των αρχείων EGroupware (κατάλογος αρχείων) \n(απαιτεί PHP ZipArchive)
 backup finished	setup	el	Ολοκλήρωση δημιουργίας αντιγράφου ασφαλείας.
 backup housekeeping	setup	el	Τα αντίγραφα ασφαλείας με τυπικό όνομα μπορούν να καθαριστούν αυτόματα. Μετονομάστε τα αρχεία αντιγράφων ασφαλείας για να τα εξαιρέσετε από τον καθαρισμό.
 backup min count	setup	el	Ελάχιστος αριθμός αντιγράφων ασφαλείας
 backup started, this might take a few minutes ...	setup	el	Έναρξη δημιουργίας αντιγράφου ασφαλείας, η διαδικασία μπορεί να διαρκέσει μερικά λεπτά...
 check ip address of all sessions	setup	el	Ελεγξε τις διευθύνσεις IP από όλα τα sessions
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	el	Συμπεριλάβετε αρχεία (κατάλογος αρχείων) στο αντίγραφο ασφαλείας δεδομένων.<br>(Μπορεί να δημιουργήσει μεγάλο όγκο δεδομένων και να διακόψει με πολλά αρχεία, τεκμηρίωση: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	el	Συμπεριλάβετε αρχεία (κατάλογος αρχείων) στο αντίγραφο ασφαλείας δεδομένων.\n(Μπορεί να δημιουργήσει μεγάλο όγκο δεδομένων και να διακόψει με πολλά αρχεία, τεκμηρίωση: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 completed	setup	el	Ολοκληρώθηκε
 configuration	setup	el	Διαμόρφωση
 country selection	setup	el	Επιλογή χώρας
@@ -48,6 +48,7 @@ failed writing configuration file header.inc.php, check the permissions !!!	setu
 fallback authentication	setup	el	Επαναληπτικός έλεγχος ταυτότητας
 file	setup	el	Αρχείο
 filename	setup	el	Όνομα αρχείου
+folders: sent,trash,drafts,templates,junk	setup	el	Φάκελοι: Αποστολή, Κάδος απορριμμάτων, Πρόχειρα, Πρότυπα, Ανεπιθύμητα
 force selectbox	setup	el	Εξανάγκασε Επιλογή κουτιού
 go to	setup	el	Πηγαινε στο
 host information	setup	el	Πληροφορία
@@ -109,6 +110,7 @@ two weeks	setup	el	δύο εβδομάδες
 use cookies to pass sessionid	setup	el	Χρησημοποίηση cookies για να περάσεις την session ID
 use pure html compliant code (not fully working yet)	setup	el	Χρήση κανονικού συμβατού HTML κώδικα (δέν παίζει σωστά ακόμα)
 user for smtp-authentication (leave it empty if no auth required)	setup	el	Χρήστης για την SMTP-πιστοποίηση (να μείνει κενό αν δεν χρειάζεται πιστοποίηση)
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	el	Ονόματα χρηστών (διαχωρισμένα με κόμματα) στα οποία μπορεί να δοθεί πρόσβαση superuser στο σύστημα αρχείων EGroupware.
 we strongly recommend to run a db backup before running the import!	setup	el	Συνιστούμε ανεπιφύλακτα να εκτελέσετε ένα αντίγραφο ασφαλείας της βάσης δεδομένων ΠΡΙΝ εκτελέσετε την εισαγωγή!
 would you like to show each application's upgrade status ?	setup	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής;
 write	setup	el	Γραφή

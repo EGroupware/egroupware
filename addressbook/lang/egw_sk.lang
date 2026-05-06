@@ -509,7 +509,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	sk	Nedá sa odstrániť
 unable to import into %1, using %2	addressbook	sk	Nedá sa naimportovať do %1, používam %2
 unique id (uid)	addressbook	sk	Jedinečné ID (UID)
-unique id<br />(to update existing records)	addressbook	sk	Jedinečné ID<br>(pre aktualizáciu existujúcich záznamov)
+unique id<br />(to update existing records)	addressbook	sk	Jedinečné ID\n(pre aktualizáciu existujúcich záznamov)
 unknown type %1, imported as %2	addressbook	sk	Neznámy typ %1, naimportvaný ako %2
 unshare	addressbook	sk	Ni več v skupni rabi
 unshared	addressbook	sk	ni več v skupni rabi

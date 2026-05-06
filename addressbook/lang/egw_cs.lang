@@ -510,7 +510,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	cs	Nebylo možné smazat
 unable to import into %1, using %2	addressbook	cs	Nebylo možné importovat do %1 použitím %2
 unique id (uid)	addressbook	cs	Unikátní ID (UID)
-unique id<br />(to update existing records)	addressbook	cs	Unikátní ID<br>(pro aktualizaci stávajících záznamů)
+unique id<br />(to update existing records)	addressbook	cs	Unikátní ID\n(pro aktualizaci stávajících záznamů)
 unknown type %1, imported as %2	addressbook	cs	Neznámý typ %1, bylo importováno jako %2
 unshare	addressbook	cs	Již nesdílet
 unshared	addressbook	cs	již není sdílena

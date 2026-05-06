@@ -23,6 +23,7 @@ buyable	resources	fr	Achetable
 category admin	resources	fr	Administrateur de catégorie
 category saved.	resources	fr	Catégorie sauvegardée.
 category:	resources	fr	Catégorie :
+check all	resources	fr	Tout cocher
 choose category admin	resources	fr	Choisir l'administrateur de la catégorie
 clear selection	resources	fr	Vider la sélection
 configure access permissions	admin	fr	Configurer les droits d'accès
@@ -33,6 +34,7 @@ create new accessory for this resource	resources	fr	Créer de nouveaux accessoir
 create new links	resources	fr	Créer de nouveaux liens
 custom etemplate for the contactform	resources	fr	eTemplate personnalisé pour le formulaire contact
 custom fields	resources	fr	Champs personnalisés
+data exchange settings	common	fr	Réglages des données partagées
 days	resources	fr	Jours
 delete accessories of selected resources too?	resources	fr	Supprimer également les accessoires des ressources sélectionnées ?
 delete selected resources	resources	fr	Supprimer les ressources selectionnées

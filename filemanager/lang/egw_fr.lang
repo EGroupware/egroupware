@@ -47,6 +47,7 @@ can't open directory %1!	filemanager	fr	Ne peut pas ouvrir le répertoire %1 !
 cancel editing %1 without saving	filemanager	fr	Annuler les modifications de "%1"
 cannot create directory because it begins or ends in a space	filemanager	fr	Ne peut créér le répertoire car il commence ou finit sur un espace
 cautiously rejecting to remove folder '%1'!	filemanager	fr	Cautiously rejecting to remove folder '%1'!
+check all	filemanager	fr	Tout cocher
 check virtual filesystem	common	fr	Vérifier le système de fichiers virtuel
 classic	filemanager	fr	Barres de tâche standard
 clear search	filemanager	fr	réinitialiser termes de la recherche
@@ -328,6 +329,7 @@ upload fields	filemanager	fr	Champs d'envoi
 upload files	filemanager	fr	Fichiers à envoyer
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	fr	Utiliser cette balise pour les étiquettes d'adresse. Placer le contenu que vous voulez répéter entre deux balises.
 used space	filemanager	fr	Espace utilisé
+user color indicator	filemanager	fr	Couleur de l'utilisateur
 user home quota	filemanager	fr	Quota de l'accueil utilisateur
 username for webdav and smb, use $user for name of logged in user	filemanager	fr	Nom d'utilisateur pour WebDAV et SMB, utilisez $user pour le nom de l'utilisateur connecté.
 users and groups	filemanager	fr	Utilisateurs et groupes

@@ -509,7 +509,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	bg	Не е възможно да се изтрие
 unable to import into %1, using %2	addressbook	bg	Не е възможно да се импортира в %1, като се използва %2
 unique id (uid)	addressbook	bg	Уникален идентификационен номер - ID (UID)
-unique id<br />(to update existing records)	addressbook	bg	Уникален ID<br> за актуализиране на съществуващи записи
+unique id<br />(to update existing records)	addressbook	bg	Уникален ID\n за актуализиране на съществуващи записи
 unknown type %1, imported as %2	addressbook	bg	Неизвестен вид % 1, импортиран като % 2
 unshare	addressbook	bg	Вече не споделяте
 unshared	addressbook	bg	вече не се споделят

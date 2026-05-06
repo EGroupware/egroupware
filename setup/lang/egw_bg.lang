@@ -23,7 +23,7 @@ backup '%1' renamed to '%2'	setup	bg	Резервно копие „%1“ пре
 backup '%1' restored	setup	bg	Резервно копие „%1“ възстановено.
 backup directory %1 mounted as %2	setup	bg	Архивна директория %1 монтирана като %2
 backup failed	setup	bg	Резервното копиране се провали.
-backup files (needs ziparchive)	setup	bg	Архивиране на данни на файловете на EGroupware (директория с файлове) <br>(изисква PHP ZipArchive)
+backup files (needs ziparchive)	setup	bg	Архивиране на данни на файловете на EGroupware (директория с файлове) \n(изисква PHP ZipArchive)
 backup finished	setup	bg	Резервното копиране приключи.
 backup housekeeping	setup	bg	Архивите със стандартно име могат да бъдат изтривани автоматично. Преименувайте архивите, за да ги изключите от изтриването.
 backup min count	setup	bg	Минимален брой архиви
@@ -36,7 +36,7 @@ bottom	setup	bg	отдолу
 cancel	setup	bg	Отказ
 charset	setup	bg	utf-8
 check installation	setup	bg	Проверка на инсталацията
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	bg	Включете файлове (директория с файлове) в резервното копие на данните.<br>(Може да генерира големи количества данни и да прекъсне с много файлове, документация: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	bg	Включете файлове (директория с файлове) в резервното копие на данните.\n(Може да генерира големи количества данни и да прекъсне с много файлове, документация: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 checking for gd support...	setup	bg	Проверка за поддръжка на GD
 checking php.ini	setup	bg	Проверка на php.ini
 checking the egroupware installation	setup	bg	Проверка на инсталацията на EGroupware
@@ -71,6 +71,7 @@ failed writing configuration file header.inc.php, check the permissions !!!	setu
 fallback authentication	setup	bg	Резервна автентификация
 file	setup	bg	Файл
 filename	setup	bg	Име на файл
+folders: sent,trash,drafts,templates,junk	setup	bg	Папки: Изпратени, Кошче, Чернови, Шаблони, Нежелана поща
 go back	setup	bg	Назад
 go to	setup	bg	промени в текущ
 import has been completed!	setup	bg	Внасянето привърши!
@@ -147,6 +148,7 @@ upgrade	setup	bg	Обновяване
 upgrade all	setup	bg	Обновяване на всички
 upgraded	setup	bg	обновено
 upgrading tables	setup	bg	Обновяване на таблиците
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	bg	Потребителски имена (разделени със запетаи), на които може да бъде разрешен достъп на суперпотребител до файловата система на EGroupware.
 users choice	setup	bg	По избор на потребителя
 utf-8 (unicode)	setup	bg	utf-8 (Уникод)
 version	setup	bg	версия

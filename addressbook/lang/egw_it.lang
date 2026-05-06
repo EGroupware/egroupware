@@ -509,7 +509,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	it	Impossibile eliminare
 unable to import into %1, using %2	addressbook	it	Impossibile importare %1, usando %2
 unique id (uid)	addressbook	it	ID univoco (UID)
-unique id<br />(to update existing records)	addressbook	it	ID univoco<br> per l'aggiornamento di voci esistenti
+unique id<br />(to update existing records)	addressbook	it	ID univoco\n per l'aggiornamento di voci esistenti
 unknown type %1, imported as %2	addressbook	it	Tipo %1 sconosciuto, importato come %2
 unshare	addressbook	it	Non condividere
 unshared	addressbook	it	non condiviso
@@ -537,7 +537,7 @@ vcards require a last name entry.	addressbook	it	Le vCards richiedono un valore 
 verification	addressbook	it	Verifica
 video call	addressbook	it	Videochiamata
 view linked infolog entries	addressbook	it	Visualizzare le schede Attività collegate
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
 warning: all contacts found will be deleted!	addressbook	it	ATTENZIONE: Tutti i contatti trovati saranno cancellati!
 weekday	addressbook	it	Giorno della settimana
 what should be displayed as full name. if there is neither first- nor lastname, the company name is displayed.	addressbook	it	Cosa deve essere visualizzato come nome completo. Se non c'è né nome né cognome, viene visualizzato il nome della società.

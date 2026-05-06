@@ -509,7 +509,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	sl	ni mogoče izbrisati
 unable to import into %1, using %2	addressbook	sl	Ni mogoče uvoziti v %1, z uporabo %2
 unique id (uid)	addressbook	sl	Edinstven ID (UID)
-unique id<br />(to update existing records)	addressbook	sl	Edinstven ID<br>(za posodobitev obstoječih zapisov)
+unique id<br />(to update existing records)	addressbook	sl	Edinstven ID\n(za posodobitev obstoječih zapisov)
 unknown type %1, imported as %2	addressbook	sl	Neznan tip% 1, uvožen kot% 2
 unshare	addressbook	sl	Ni več v skupni rabi
 unshared	addressbook	sl	ni več v skupni rabi

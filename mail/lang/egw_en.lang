@@ -215,6 +215,7 @@ enabled!	mail	en	enabled!
 encrypt	mail	en	Encrypt
 encrypt your message with smime certificate	mail	en	Encrypt your message with S/MIME certificate
 encryption	mail	en	Encryption
+end	common	en	End
 enter the name for the new folder:	mail	en	Name for the new folder:
 error saving %1!	mail	en	Error saving %1!
 error while setting acl for folder %1!	mail	en	Error while setting ACL for folder %1!

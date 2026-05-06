@@ -509,7 +509,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	nl	Niet mogelijk te verwijderen
 unable to import into %1, using %2	addressbook	nl	Kan niet importeren in %1, met %2
 unique id (uid)	addressbook	nl	Uniek ID (UID)
-unique id<br />(to update existing records)	addressbook	nl	Uniek ID <br> voor bijwerken bestaand record
+unique id<br />(to update existing records)	addressbook	nl	Uniek ID \n voor bijwerken bestaand record
 unknown type %1, imported as %2	addressbook	nl	Onbekend type %1, geïmporteerd als %2
 unshare	addressbook	nl	Niet langer delen
 unshared	addressbook	nl	niet langer gedeeld

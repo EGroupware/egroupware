@@ -512,7 +512,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	en	unable to delete
 unable to import into %1, using %2	addressbook	en	Unable to import into %1, using %2
 unique id (uid)	addressbook	en	Unique ID (UID)
-unique id<br />(to update existing records)	addressbook	en	Unique ID<br>to update existing records
+unique id<br />(to update existing records)	addressbook	en	Unique ID\nto update existing records
 unknown type %1, imported as %2	addressbook	en	Unknown type %1, imported as %2
 unshare	addressbook	en	Unshare
 unshared	addressbook	en	unshared

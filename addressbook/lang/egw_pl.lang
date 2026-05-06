@@ -477,7 +477,7 @@ type	addressbook	pl	Typ
 un-delete	addressbook	pl	Przywróć
 unable to import into %1, using %2	addressbook	pl	Nie można zaimportować do %1, używając %2
 unique id (uid)	addressbook	pl	Unikatowy ID (UID)
-unique id<br />(to update existing records)	addressbook	pl	Unikatowy ID<br>Do aktualizacji istniejących wpisów
+unique id<br />(to update existing records)	addressbook	pl	Unikatowy ID\nDo aktualizacji istniejących wpisów
 unknown type %1, imported as %2	addressbook	pl	Nieznany typ %1, zaimportowany jako %2
 unshare	addressbook	pl	Nie dzielimy się już
 unshared	addressbook	pl	nie jest już udostępniany

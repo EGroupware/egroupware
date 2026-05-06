@@ -493,7 +493,7 @@ type	addressbook	fi	Tyyppi
 un-delete	addressbook	fi	Palauta
 unable to import into %1, using %2	addressbook	fi	Tuonti %1:een ei onnistu, käyttäen %2:ta
 unique id (uid)	addressbook	fi	Yksilöllinen ID (UID)
-unique id<br />(to update existing records)	addressbook	fi	Yksillölinen ID<br>päivittää jo olemassaolevat tietueet
+unique id<br />(to update existing records)	addressbook	fi	Yksillölinen ID\npäivittää jo olemassaolevat tietueet
 unknown type %1, imported as %2	addressbook	fi	Tuntematon tyyppi %1, tuotu nimellä %2
 unshare	addressbook	fi	Poista jakaminen
 update a single entry by passing the fields.	addressbook	fi	Päivitä yksittäistä tietuetta antamalla kentät.

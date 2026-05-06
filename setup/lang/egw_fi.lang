@@ -88,7 +88,7 @@ backup '%1' restored	setup	fi	varmuuskopio '%1' palautettu
 backup and restore	setup	fi	varmuuskopiointi ja palautus
 backup directory %1 mounted as %2	setup	fi	Varmuuskopiointihakemisto %1 asennettu nimellä %2
 backup failed	setup	fi	Varmuuskopiointi epäonnistui
-backup files (needs ziparchive)	setup	fi	EGroupwaren tiedostojen (tiedostohakemisto) varmuuskopiointi <br>(vaatii PHP ZipArchive).
+backup files (needs ziparchive)	setup	fi	EGroupwaren tiedostojen (tiedostohakemisto) varmuuskopiointi \n(vaatii PHP ZipArchive).
 backup finished	setup	fi	Varmuuskopiointi päättynyt
 backup housekeeping	setup	fi	Ainoastaan uudelleennimetyt backup tiedostot eivät ole postettavissa automaattisesti.
 backup min count	setup	fi	Varmuuskopioiden minimimäärä
@@ -99,20 +99,20 @@ backup started, this might take a few minutes ...	setup	fi	Varmuuskopiointi aloi
 because an application it depends upon was upgraded	setup	fi	Koska sovellus, josta se riippuu, on päivitetty
 because it depends upon	setup	fi	Koska se riippuu sovelluksesta
 because it is not a user application, or access is controlled via acl	setup	fi	Koska se ei ole käyttäjien sovellus, tai sen käyttöä hallitaan acl:n avulla
-because it requires manual table installation, <br />or the table definition was incorrect	setup	fi	Koska sen taulut täytyy asentaa käsin,<br>tai sen taulumääritykset ovat virheellisiä
+because it requires manual table installation, <br />or the table definition was incorrect	setup	fi	Koska sen taulut täytyy asentaa käsin,\ntai sen taulumääritykset ovat virheellisiä
 because it was manually disabled	setup	fi	Koska se on otettu käsin pois käytöstä
 because its sources are missing	setup	fi	Koska sen lähdetiedostoja (sources) ei löydy
 because of a failed upgrade or install	setup	fi	Epäonnistuneesta päivityksestä tai asennuksesta johtuen
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	fi	Epäonnistuneesta päivityksestä johtuen, tai koska tietokanta on uudenpi kuin sovelluksen asennettu versio
 because the enable flag for this app is set to 0, or is undefined	setup	fi	Koska tämän sovelluksen käyttömääritys on 0 tai määrittelemätön
 bottom	setup	fi	alas
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	fi	Mutta <u>suosittelemme vahvasti varmuuskopion ottamista</u> tauluistasi, siltä varalta että skripti vahingoittaa tietokantaasi.<br><b>Automaattiset skriptit voivat helposti poistaa tietosi.</b>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	fi	Mutta <u>suosittelemme vahvasti varmuuskopion ottamista</u> tauluistasi, siltä varalta että skripti vahingoittaa tietokantaasi.\n<b>Automaattiset skriptit voivat helposti poistaa tietosi.</b>
 ca certificate	setup	fi	CA sertifikaatti
 can not create dn %1!	setup	fi	DN %1 ei voitu luoda!
 cancel	setup	fi	Peruuta
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	fi	header.inc.php tiedostoa ei voida luoda, johtuen käyttöoikeuksista.<br> Sen sijaan voit %1 tai %2 tiedoston.
-cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	fi	CAS palvelimen isäntänimi:<br>Esimerkiksi: sso-cas.univ-rennes1.fr
-cas server port:<br />example: 443	setup	fi	CAS palvelimen portti:<br>Esimerkiksi: 443
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	fi	header.inc.php tiedostoa ei voida luoda, johtuen käyttöoikeuksista.\n Sen sijaan voit %1 tai %2 tiedoston.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	fi	CAS palvelimen isäntänimi:\nEsimerkiksi: sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	fi	CAS palvelimen portti:\nEsimerkiksi: 443
 cas server uri:	setup	fi	CAS palvelimen URI:
 certificate (pem or ca):	setup	fi	Sertifikaatti (PEN tai CA):
 change system-charset	setup	fi	Muuta järjestelmän merkistöä
@@ -122,7 +122,7 @@ charsets used by the different languages	setup	fi	Merkistöt, joita käytetään
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	fi	Tarkistus voidaan suorittaa vain web-palvelimen kautta kutsuttaessa, koska palvelimen käyttäjätunnusta ei tiedetä.
 check installation	setup	fi	Tarkista asennus
 check ip address of all sessions	setup	fi	Tarkista istuntojen ip-osoitteet
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	fi	Sisällytä tiedostot (tiedostohakemisto) varmuuskopiointiin.<br>(Voi tuottaa suuria tietomääriä ja keskeyttää monien tiedostojen kanssa, dokumentaatio.): <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>).
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	fi	Sisällytä tiedostot (tiedostohakemisto) varmuuskopiointiin.\n(Voi tuottaa suuria tietomääriä ja keskeyttää monien tiedostojen kanssa, dokumentaatio.): <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>).
 checking extension %1 is loaded or loadable	setup	fi	Tarkistetaan, että laajennus %1 on ladattu tai ladattavissa
 checking file-permissions of %1 for %2 %3: %4	setup	fi	Tarkistetaan tiedostojen oikeudet %1 %2 %3: %4
 checking for gd support...	setup	fi	Tarkistetaan GD-tuki ...
@@ -172,13 +172,13 @@ creation of %1 in %2 failed !!!	setup	fi	%1 luominen %2:ssa epäonnistui!
 current configuration:	setup	fi	Nykyiset asetukset:
 current system-charset	setup	fi	Nykyinen järjestelmän merkistö
 current version	setup	fi	Nykyinen versio
-currently installed languages: %1 <br />	setup	fi	Asennetut kielet: %1<br>
+currently installed languages: %1 <br />	setup	fi	Asennetut kielet: %1\n
 database	setup	fi	Tietokanta
 database instance (egw domain)	setup	fi	Tietokannan instanssi (EGw domain)
 database is version %1 and up to date.	setup	fi	Tietokanta on versiosta %1 ja se päivitetään.
 database successfully converted from '%1' to '%2'	setup	fi	Tietokanta on konvertoitu versiosta '%1' versioon '%2'
 day	setup	fi	Päivä
-day of week<br />(0-6, 0=sunday)	setup	fi	Viikonpäivä<br>(0-6, 0=sunnuntai)
+day of week<br />(0-6, 0=sunday)	setup	fi	Viikonpäivä\n(0-6, 0=sunnuntai)
 db backup and restore	setup	fi	Tietokannan varmuuskopiointi ja palautus
 db host	setup	fi	Tietokantapalvelin
 db name	setup	fi	Tietokannan nimi
@@ -233,13 +233,13 @@ emailadmin profile updated:	setup	fi	EmailAdmin profiili päivitetty:
 enable for extra debug-messages	setup	fi	Näytä tarkemmat debuggausviestit
 enable mcrypt	setup	fi	Ota MCrypt käyttöön
 enter some random text for app session encryption	setup	fi	Anna hieman satunnaisia merkkejä sovellusistunnon salaukseen
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	fi	Anna hieman satunnaisia merkkejä sovellusistunnon <br>salaukseen (tarvitaan mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fi	Anna väliaikaisten tiedostojen absoluuttinen polku.<br>Esimerkkejä: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fi	Anna väliaikaisten tiedostojen absoluuttinen polku.<br>Esimerkkejä: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.<br>Esimerkkejä: /files, E:\FILES
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.<br>Esimerkkejä: /files, E:\FILES
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	fi	Anna hieman satunnaisia merkkejä sovellusistunnon \nsalaukseen (tarvitaan mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fi	Anna väliaikaisten tiedostojen absoluuttinen polku.\nEsimerkkejä: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fi	Anna väliaikaisten tiedostojen absoluuttinen polku.\nEsimerkkejä: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.\nEsimerkkejä: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.\nEsimerkkejä: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	fi	Enter the hostname of the machine on which this server is running
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fi	Anna EGroupwaren URL.<br>Esimerkki: http://www.yritys.com/egroupware   tai   /egroupware<br>(<b>ei kauttaviivaa loppuun</b>)
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fi	Anna EGroupwaren URL.\nEsimerkki: http://www.yritys.com/egroupware   tai   /egroupware\n(<b>ei kauttaviivaa loppuun</b>)
 enter the site password for peer servers	setup	fi	Anna peer-palvelinten site-salasana
 enter the site username for peer servers	setup	fi	Anna peer-palvelinten site-tunnus
 enter the title for your site	setup	fi	Anna sivustosi otsikko
@@ -262,6 +262,7 @@ false	setup	fi	Ei
 file	setup	fi	TIEDOSTO
 file type, size, version, etc.	setup	fi	Tiedoston tyyppi, koko, versio jne.
 filename	setup	fi	Tiedostonimi
+folders: sent,trash,drafts,templates,junk	setup	fi	Kansiot: Lähetetyt, Roskakori, Luonnokset, Mallit, Roskaposti
 force selectbox	setup	fi	Näytä valintalaatikko
 give admin access to all installed apps	setup	fi	Myönnä ylläpito-oikeudet kaikkiin asennettuihin sovelluksiin.
 gives further options	setup	fi	Anna lisämääritelmiä
@@ -450,7 +451,7 @@ safe_mode is turned on, which is generaly a good thing as it makes your install 
 save	setup	fi	Tallenna
 save this text as contents of your header.inc.php	setup	fi	Tallenna tämä teksti tiedostoon header.inc.php
 schedule	setup	fi	Ajastettu toiminto
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	fi	Valitse sovellus, anna versio ja lähetä tiedot.<br>Jos et anna versionumeroa, vain perustaulut asennetaan.<br><b>KAIKKI SOVELLUKSEN TAULUT POISTETAAN ENSIN!</b>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	fi	Valitse sovellus, anna versio ja lähetä tiedot.\nJos et anna versionumeroa, vain perustaulut asennetaan.\n<b>KAIKKI SOVELLUKSEN TAULUT POISTETAAN ENSIN!</b>
 select one...	setup	fi	Valitse ...
 select the default applications to which your users will have access	setup	fi	Valitse oletussovellukset, joihin käyttäjillä on käyttöoikeus
 select the desired action(s) from the available choices	setup	fi	Valitse haluamasi toimenpide tai toimenpiteet
@@ -511,14 +512,14 @@ the mbstring extension is needed to fully support unicode (utf-8) or other multi
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fi	Asetus mbstring.func_overload = 7 vaaditaan unicode- (UTF-8) tukea varten.
 the table definition was correct, and the tables were installed	setup	fi	Taulumääritykset ovat kunnossa, ja taulut on asennettu
 the tables	setup	fi	Taulut
-there was a problem trying to connect to your ldap server. <br />	setup	fi	LDAP-palvelinyhteydessä ilmeni ongelma.<br>
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	fi	LDAP-palvelinyhteydessä ilmeni ongelma. <br>Tarkista LDAP-palvelimen asetukset
+there was a problem trying to connect to your ldap server. <br />	setup	fi	LDAP-palvelinyhteydessä ilmeni ongelma.\n
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	fi	LDAP-palvelinyhteydessä ilmeni ongelma. \nTarkista LDAP-palvelimen asetukset
 this has to be outside the webservers document-root!!!	setup	fi	Hakemiston on oltava www-palvelimen asiakirjajuuren ulkopuolella!!!
 this might take a while, please wait ...	setup	fi	Voi kestää hetken, odota ...
 this program will convert your database to a new system-charset.	setup	fi	Tämä ohjelma muuntaa tietokantasi uuteen merkistöön.
 this program will help you upgrade or install different languages for egroupware	setup	fi	Päivitä tai asenna EGroupwaren kieliä
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fi	Tämän pitäisi olla noin 30 tavua pitkä.<br>Huom: oletusarvo on luotu satunnaisesti.
-this stage is completed<br />	setup	fi	Tämä vaihe on valmis<br>
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fi	Tämän pitäisi olla noin 30 tavua pitkä.\nHuom: oletusarvo on luotu satunnaisesti.
+this stage is completed<br />	setup	fi	Tämä vaihe on valmis\n
 to a version it does not know about	setup	fi	Versioon jota se ei tunne
 to setup 1 admin account and 3 demo accounts.	setup	fi	Asentaaksesi yhden ylläpitäjän ja 3 demotunnusta.
 top	setup	fi	Ylös
@@ -544,6 +545,7 @@ use pure html compliant code (not fully working yet)	setup	fi	Käytä täysin HT
 user	setup	fi	Käyttäjä
 user account prefix	setup	fi	Käyttäjätunnuksen etuliite
 user for smtp-authentication (leave it empty if no auth required)	setup	fi	SMTP-käyttäjätunnus (tyhjä, jos ei käytetä)
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	fi	Käyttäjätunnukset (erotettu pilkuilla), joille voidaan myöntää superkäyttäjän käyttöoikeudet EGroupware-tiedostojärjestelmään
 usernames are casesensitive	setup	fi	Käyttäjätunnukset ovat merkkikokoherkkiä
 users choice	setup	fi	Käyttäjän valinta
 utf-8 (unicode)	setup	fi	UTF-8 (Unicode)
@@ -568,19 +570,19 @@ wrong credentials to access the header.inc.php file!	setup	fi	Virheellinen tunnu
 year	setup	fi	Vuosi
 yes	setup	fi	Kyllä
 yes, with lowercase usernames	setup	fi	Kyllä, pienellä kirjoitetut käyttäjätunnukset
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fi	Käytät EGroupwaren esibetaversiota.<br>Näitä versioita ei tueta enää, ja niitä ei voi päivittää asennuksessa.<br>Päivitä versioon 0.9.10 (viimeisin versio, joka tukee esibetaversioita) <br>ja päivitä sitten nykyiseen versioon.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fi	Käytät vanhaa PHP-versiota.<br>On suositeltavaa päivittää PHP uudempaan versioon.<br>Vanhat PHP-versiot eivät toimi oikein.<br>Päivitä vähintään versioon %1.
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fi	Käytät EGroupwaren esibetaversiota.\nNäitä versioita ei tueta enää, ja niitä ei voi päivittää asennuksessa.\nPäivitä versioon 0.9.10 (viimeisin versio, joka tukee esibetaversioita) \nja päivitä sitten nykyiseen versioon.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fi	Käytät vanhaa PHP-versiota.\nOn suositeltavaa päivittää PHP uudempaan versioon.\nVanhat PHP-versiot eivät toimi oikein.\nPäivitä vähintään versioon %1.
 you appear to be running version %1 of egroupware	setup	fi	Ajat EGroupwaren versiota %1
 you appear to have xml support enabled	setup	fi	XML on käytettävissä
-you are ready for this stage, but this stage is not yet written.<br />	setup	fi	Olet valmis tätä vaihetta varten, mutta tätä vaihetta ei ole vielä kirjoitettu.<br>
+you are ready for this stage, but this stage is not yet written.<br />	setup	fi	Olet valmis tätä vaihetta varten, mutta tätä vaihetta ei ole vielä kirjoitettu.\n
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	fi	Käytät PHP versiota %1. EGroupware vaatii %2 tai uudemman, suositus on PHP %3.
 you can work around that limit, by mounting the backup directory into egroupware filemanager and upload from there.	setup	fi	Voit kiertää tämän rajoituksen asentamalla varmuuskopiohakemiston EGroupwaren tiedostonhallintaan ja lataamalla sen sieltä.
 you didn't enter a config password for domain %1	setup	fi	Et määritellyt konfiguraatiosalasanaa toimialueelle %1
 you didn't enter a config username for domain %1	setup	fi	Et määritellyt konfiguraatiotunnusta toimialueelle %1
 you didn't enter a header admin password	setup	fi	Et määritellyt header-ylläpidon salasanaa
 you didn't enter a header admin username	setup	fi	Et määritellyt header-ylläpidon käyttäjätunnusta
-you do not have any languages installed. please install one now <br />	setup	fi	Et ole asentanut yhtään kieltä.<br>Asenna yksi nyt.
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	fi	Et ole luonut tiedostoa header.inc.php!<br> Voit luoda sen nyt.
+you do not have any languages installed. please install one now <br />	setup	fi	Et ole asentanut yhtään kieltä.\nAsenna yksi nyt.
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	fi	Et ole luonut tiedostoa header.inc.php!\n Voit luoda sen nyt.
 you have successfully logged out	setup	fi	Olet poistunut järjestelmästä
 you must enter a username for the admin	setup	fi	Anna ylläpidon käyttäjätunnus
 you need to configure egroupware:	setup	fi	Konfiguroi EGroupware:
@@ -595,7 +597,7 @@ your database is not working!	setup	fi	Tietokanta ei toimi!
 your database is working, but you dont have any applications installed	setup	fi	Tietokanta toimii, mutta yhtään sovellusta ei ole asennettu
 your header admin password is not set. please set it now!	setup	fi	Header-ylläpidon salasanaa ei ole määritelty. Määrittele se nyt!
 your header.inc.php needs upgrading.	setup	fi	header.inc.php-tiedosto on päivitettävä.
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	fi	Tiedosto header.inc.php on päivitettävä.<br><b> class="msg">VAROITUS!</b><br><b>TEE VARMUUSKOPIOT!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	fi	Tiedosto header.inc.php on päivitettävä.\n<b> class="msg">VAROITUS!</b>\n<b>TEE VARMUUSKOPIOT!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	fi	Käyttämäsi PHP ei tue GD-kirjastoa. Gantt -karttojen näyttö Projektien hallinnassa tarvitsee GD-kirjaston versio 1.8 tai uudempi.
 your tables are current	setup	fi	Tietokantataulut ovat ajan tasalla
 your tables will be dropped and you will lose data	setup	fi	Tietokantataulut poistetaan, ja menetät tietoja!

@@ -509,7 +509,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	fr	impossible de supprimer
 unable to import into %1, using %2	addressbook	fr	Impossible d'importer dans %1, utilisation de %2
 unique id (uid)	addressbook	fr	ID unique (UID)
-unique id<br />(to update existing records)	addressbook	fr	ID Unique<br>pour mettre à jour des enregistrements existants
+unique id<br />(to update existing records)	addressbook	fr	ID Unique\npour mettre à jour des enregistrements existants
 unknown type %1, imported as %2	addressbook	fr	Type %1 inconnu, importé comme %2
 unshare	addressbook	fr	Ne plus partager
 unshared	addressbook	fr	ne plus partager
