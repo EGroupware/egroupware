@@ -1416,15 +1416,18 @@ class calendar_uiforms extends calendar_ui
 			}
 			elseif ($uid < 0)
 			{
-				foreach($GLOBALS['egw']->accounts->members($uid,true) as $uid)
+				foreach($GLOBALS['egw']->accounts->members($uid,true) as $u)
 				{
-					if (!($email = $GLOBALS['egw']->accounts->id2name($uid,'account_email'))) continue;
+					if (!($email = $GLOBALS['egw']->accounts->id2name($u,'account_email'))) continue;
 
-					$toadd = $GLOBALS['egw']->accounts->id2name($uid, 'account_firstname').' '.
-						$GLOBALS['egw']->accounts->id2name($uid, 'account_lastname').' <'.$email.'>';
+					$toadd = $GLOBALS['egw']->accounts->id2name($u, 'account_firstname').' '.
+						$GLOBALS['egw']->accounts->id2name($u, 'account_lastname').' <'.$email.'>';
 
-					// dont add groupmembers if they already rejected the event, or are the current user
-					if (!in_array($toadd,$to) && ($event['participants'][$uid] !== 'R' && $uid != $this->user)) $to[] = $toadd;
+					// don't add group-members if they already rejected the event, or are the current user
+					if (!in_array($toadd,$to) && ($event['participants'][$u] !== 'R' && $u != $this->user))
+					{
+						$to[] = $toadd;
+					}
 				}
 			}
 			elseif(!empty($status['uid'])&& !is_numeric(substr($status['uid'],0,1)) && ($info = $this->bo->resource_info($status['uid'])))
@@ -3313,7 +3316,7 @@ class calendar_uiforms extends calendar_ui
 			$d = new Api\DateTime($date, Api\DateTime::$user_timezone);
 			if (!empty($event['whole_day']))
 			{
-				$d =& $this->bo->so->startOfDay($d);
+				$d = $this->bo->so->startOfDay($d);
 				$d->setUser();
 			}
 			$event = $this->bo->read($eventId, $d, true);
@@ -3445,7 +3448,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			if (!empty($event['whole_day']))
 			{
-				$d =& $this->bo->so->startOfDay($d);
+				$d = $this->bo->so->startOfDay($d);
 				$d->setUser();
 			}
 			$event = $this->bo->read($eventId, $d, true);
@@ -3536,7 +3539,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			if (!empty($event['whole_day']))
 			{
-				$d =& $this->bo->so->startOfDay($date);
+				$d = $this->bo->so->startOfDay($date);
 				$d->setUser();
 			}
 			$event = $this->bo->read($eventId, $d, true);
