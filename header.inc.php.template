@@ -38,16 +38,14 @@ $GLOBALS['egw_info']['server']['show_domain_selectbox'] = {DOMAIN_SELECTBOX};
 
 $GLOBALS['egw_info']['server']['db_persistent'] = {DB_PERSISTENT};
 
-/* This is used to control mcrypt's use */
+/* Session encryption via the, since PHP 7.2 removed mcrypt extension, is currently not available!
 $GLOBALS['egw_info']['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
-
-/*
-** This is a random string used as the initialization vector for mcrypt
-** feel free to change it when setting up eGrouWare on a clean database,
-** but you must not change it after that point!
-** It should be around 30 bytes in length.
-*/
+// This is a random string used as the initialization vector for mcrypt
+// feel free to change it when setting up eGrouWare on a clean database,
+// but you must not change it after that point!
+// It should be around 30 bytes in length.
 $GLOBALS['egw_info']['server']['mcrypt_iv'] = '{MCRYPT_IV}';
+*/
 
 $GLOBALS['egw_info']['flags']['page_start_time'] = microtime(true);
 

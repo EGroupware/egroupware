@@ -58,6 +58,7 @@ function setDefaultDBPort(selectBox,portField)
 				</td>
 				<td>{lang_persistdescr}</td>
 			</tr>
+			<!-- Session encryption via the, since PHP 7.2 removed mcrypt extension, is currently not available!
 			<tr class="row_off">
 				<td><strong>{lang_enablemcrypt}</strong><br />
 					<select name="setting[mcrypt_enabled]">
@@ -71,6 +72,7 @@ function setDefaultDBPort(selectBox,portField)
 				<td><strong>{lang_mcryptiv}</strong><br /><input type="text" name="setting[mcrypt_iv]" value="{mcrypt_iv}" size="50"/></td>
 				<td>{lang_mcryptivdescr}</td>
 			</tr>
+			-->
 			<tr class="row_off">
 				<td><strong>{lang_domselect}</strong><br />
 					<select name="setting[show_domain_selectbox]">

@@ -37,6 +37,9 @@ use League\OAuth2\Server\Exception\OAuthServerException;
  *		//self::log_session_usage($_SESSION[self::EGW_APPSESSION_VAR],'_SESSION['.self::EGW_APPSESSION_VAR.']',true,5000);
  *
  * @var passwd user-password from session (it's stored encrypted in the session)
+ *
+ * Session encryption via the, since PHP 7.2 removed mcrypt extension, is currently not available!
+ * It could be replaced with OpenSSL's openssl_encrypt(), as we use it in Api\Mail\Credentials.
  */
 class Session
 {
@@ -400,6 +403,7 @@ class Session
 		// switch that on to analyse memory usage in the session
 		//self::log_session_usage($_SESSION[self::EGW_APPSESSION_VAR],'_SESSION['.self::EGW_APPSESSION_VAR.']',true,5000);
 
+		/* disabling session encryption via since PHP 7.2 removed mcrypt extension
 		if (!isset($_SESSION[self::EGW_SESSION_ENCRYPTED]) && self::init_crypt($kp3))
 		{
 			foreach(self::$egw_session_vars as $name)
@@ -415,6 +419,7 @@ class Session
 			mcrypt_generic_deinit(self::$mcrypt);
 			self::$mcrypt = null;
 		}
+		*/
 	}
 
 	/**
@@ -455,6 +460,7 @@ class Session
 	 */
 	static function decrypt()
 	{
+		/* disabling session encryption via since PHP 7.2 removed mcrypt extension
 		if ($_SESSION[self::EGW_SESSION_ENCRYPTED] && self::init_crypt(self::get_request('kp3')))
 		{
 			foreach(self::$egw_session_vars as $name)
@@ -467,6 +473,7 @@ class Session
 			}
 			unset($_SESSION[self::EGW_SESSION_ENCRYPTED]);	// delete encryption flag
 		}
+		*/
 	}
 
 	/**
@@ -480,6 +487,8 @@ class Session
 	 */
 	static private function init_crypt($kp3)
 	{
+		return false;
+		/* disabling session encryption via since PHP 7.2 removed mcrypt extension
 		if(!$GLOBALS['egw_info']['server']['mcrypt_enabled'])
 		{
 			return false;	// session encryption is switched off
@@ -511,6 +520,7 @@ class Session
 			}
 		}
 		return is_resource(self::$mcrypt);
+		*/
 	}
 
 	/**
