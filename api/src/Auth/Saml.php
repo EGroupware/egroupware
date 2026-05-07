@@ -125,6 +125,11 @@ class Saml implements BackendSSO
 	 */
 	function login()
 	{
+		// check if one of the configured IdP's is requested, deny login if not
+		if (!in_array($_REQUEST['idp'], self::splitIdP($GLOBALS['egw_info']['server']['saml_idp'])))
+		{
+			return null;
+		}
 		// login (redirects to IdP)
 		$as = new SimpleSAML\Auth\Simple(self::$auth_source);
 		$as->requireAuth(preg_match('|^https://|', $_REQUEST['idp']) ?
