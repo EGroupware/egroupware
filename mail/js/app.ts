@@ -23,6 +23,8 @@ import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {MailCompose} from "./compose";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
+import type {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
+import type {Et2Image} from "../../api/js/etemplate/Et2Image/Et2Image";
 
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
@@ -2946,16 +2948,14 @@ export class MailApp extends EgwApp
 		/**
 		 * vars
 		 */
-		var folder = '',
-			tree = {},
-			formData = {},
-			data = {
+		let folder = '';
+		let data = {
 				msg: [this.et2.getArrayMgr("content").getEntry('mail_id')] || '',
 				all: _allMessagesChecked || false,
 				popup: typeof this.et2_view!='undefined' || egw(window).is_popup() || false,
 				activeFilters: _action.id == 'readall'? false : this.mail_getActiveFilters(_action)
-			},
-			rowClass = _action.id;
+		}
+		let rowClass = _action.id;
 
 		if (typeof _elems === 'undefined' || _elems.length == 0)
 		{
@@ -2974,9 +2974,10 @@ export class MailApp extends EgwApp
 		{
 			case 'read':
 				rowClass = 'seen';
+				let tree;
 				if (data.popup)
 				{
-					var et_2 = typeof this.et2_view!='undefined'? etemplate2:opener.etemplate2;
+					const et_2 = typeof this.et2_view != 'undefined' ? etemplate2 : opener.etemplate2;
 					tree = et_2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 				}
 				else
@@ -3006,7 +3007,7 @@ export class MailApp extends EgwApp
 			default:
 				break;
 		}
-		jQuery(data).extend({},data, formData);
+		// jQuery(data).extend({},data, formData);
 		if (data['all']=='cancel') return false;
 
 		if (_action.id.substring(0,2)=='un') {
@@ -3033,18 +3034,19 @@ export class MailApp extends EgwApp
 			var msg_set = {msg:[]};
 			var msg_unset = {msg:[]};
 			var dataElem;
-			var flags;
-			var classes = '';
-			for (var i=0; i<data.msg.length; i++)
+			let flags: {};
+			let classes: string[];
+			for (let i = 0; i < data.msg.length; i++)
 			{
+				const currentIndex = i;
 				dataElem = egw.dataGetUIDdata(data.msg[i]);
 				if(typeof dataElem.data.flags == 'undefined')
 				{
 					dataElem.data.flags = {};
 				}
 				flags = dataElem.data.flags;
-				classes = dataElem.data['class'] || "";
-				classes = classes.split(' ');
+				classes = dataElem.data['class']?.split(' ') || [];
+				//classes = classes.split(' ');
 				// since we toggle we need to unset the ones already set, and set the ones not set
 				// flags is data, UI is done by class, so update both
 				// Flags are there or not, class names are flag or 'un'+flag
@@ -3071,7 +3073,45 @@ export class MailApp extends EgwApp
 
 				// Update cache & call callbacks - updates list
 				dataElem.data['class']  = classes.join(' ');
-				egw.dataStoreUID(data.msg[i],dataElem.data);
+				const nmRow = _elems[currentIndex] ||
+					this?.nm?.controller?.getObjectManager()?.selectedChildren?.find((item: EgwActionObject) =>
+					{
+						if (item.id === this.mail_currentlyFocussed) return item
+					});
+				const nmNode: HTMLElement = nmRow.iface.getDOMNode();
+				if (Object.keys(flags).length === 0)
+				{
+					//only the class attribute in data has changed, so
+					//we do not need to trigger the nm callbacks we can just
+					//update local Storage and set the classes und the nm row
+
+					classes.forEach((className) =>
+					{
+						nmNode.classList.add(className)
+					})
+					egw.dataStoreUID(data.msg[i], dataElem.data, true);
+
+
+				} else
+				{
+
+					egw.dataStoreUID(data.msg[i], dataElem.data);
+				}
+				//set or remove the flag in the DOM since it can no longer come from the server because we do not trigger a full reload
+				//this needs to happen after egw.dataStoreUID since that triggers a redrawing of the row
+				if (flags['flagged'] == 'flagged')
+				{
+					if (!nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage'))
+					{
+						const flagElem: Et2Image = document.createElement('et2-image') as Et2Image
+						flagElem.src = "unread_flagged_small"
+						nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]'))?.appendChild(flagElem);
+					}
+				} else
+				{
+					nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage')?.remove();
+				}
+
 
 				//Refresh the nm rows after we told dataComponent about all changes, since the dataComponent doesn't talk to nm, we need to do it manually
 				this.updateFilter_data(data.msg[i], _action.id, data.activeFilters);
@@ -3151,7 +3191,9 @@ export class MailApp extends EgwApp
 	 */
 	mail_flagMessages(_flag, _elems,_isPopup)
 	{
-		egw.jsonq('mail.mail_ui.ajax_flagMessages',[_flag, _elems]);
+		//the "false" means do not send back a request response
+		const needsResponse = false;
+		egw.jsonq('mail.mail_ui.ajax_flagMessages', [_flag, _elems, needsResponse]);
 		//	.sendRequest(true);
 	}
 
@@ -3816,6 +3858,7 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
+			let actions: EgwActionObject[] = this.nm?.controller?.getObjectManager().selectedChildren;
 			for (let i = 0; i < _actionObjects['msg'].length; i++)
 			{
 				const mail_uid = _actionObjects['msg'][i];
@@ -3848,8 +3891,17 @@ export class MailApp extends EgwApp
 							break;
 					}
 
-					// Update record, which updates all listeners (including nextmatch)
-					egw.dataStoreUID(mail_uid,dataElem.data);
+					//only the class attribute has changed, so
+					//we do not need to trigger the nm callbacks we can just
+					//update local Storage and set the classes in the nm row directly
+					// the advantage is, that nm row does not need to be redrawn
+					const action = actions.find(action =>
+					{
+						if (action.id === mail_uid) return action
+					});
+					const nmNode = action.iface.getDOMNode();
+					nmNode.classList.remove(_class)
+					egw.dataStoreUID(mail_uid, dataElem.data, true);
 				}
 			}
 		}

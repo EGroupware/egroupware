@@ -160,8 +160,9 @@ declare interface IegwGlobal
 	 *
 	 * @param _uid is the uid for which the data should be saved.
 	 * @param _data is the data which should be saved.
+	 * @param [_skipCallback=false] do not call any callback functions, just update the local storage
 	 */
-	dataStoreUID(_uid : string, _data : object) : void;
+	dataStoreUID(_uid : string, _data : object,_skipCallback?:boolean) : void;
 	/**
 	 * Deletes the data for a certain uid from the local storage and
 	 * unregisters all callback functions associated to it.

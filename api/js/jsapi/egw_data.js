@@ -788,8 +788,9 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 *
 		 * @param _uid is the uid for which the data should be saved.
 		 * @param _data is the data which should be saved.
+		 * @param _skip_callback do not call any callback functions, just update the local storage
 		 */
-		dataStoreUID: function (_uid, _data) {
+		dataStoreUID: function (_uid, _data,_skip_callback=false) {
 			// Get the current unix timestamp
 			var timestamp = (new Date).getTime();
 
@@ -798,6 +799,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				"timestamp": timestamp,
 				"data": _data
 			};
+			if(_skip_callback) return;
 
 			// Inform all registered callback functions and pass the data to
 			// those.

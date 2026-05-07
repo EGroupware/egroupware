@@ -2153,7 +2153,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$imageflagged ='';
 				if ($header['flagged'])
 				{
-					$imageflagged = "<et2-image src='unread_flagged_small'></et2-image>";
+					$imageflagged = "<et2-image src='unread_flagged_small' id='flaggedImage'></et2-image>";
 				}
 				$data['attachments'] = $image.$attachmentFlag.$imageflagged; // icon for attachments available
 			}
