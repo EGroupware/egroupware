@@ -829,7 +829,7 @@ class calendar_uiforms extends calendar_ui
 				$event['reference'] = $event['id'];
 				$event['recurrence'] = $content['edit_single'];
 				unset($event['id']);
-				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages,$content['no_notifications']);
+				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages,$content['no_notifications']??null);
 				if (!is_array($conflicts) && $conflicts)
 				{
 					// now we need to add the original start as recur-execption to the series

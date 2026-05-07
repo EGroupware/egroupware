@@ -1650,7 +1650,7 @@ ORDER BY cal_user_type, cal_usre_id
 					'cal_id' => $event['cal_reference'],
 					'cal_recur_date' => 0,
 					"cal_status != 'X'",	// deleted need to be replaced with exception marker too
-				), __LINE__, __FILE__, 'calendar') as $row)
+				), __LINE__, __FILE__, false, '', 'calendar') as $row)
 				{
 					$master_participants[] = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
 				}
