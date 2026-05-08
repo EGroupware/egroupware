@@ -1343,7 +1343,7 @@ class timesheet_ui extends timesheet_bo
 
 		if (is_array($content))
 		{
-			$button = @key($content['button']);
+			$button = @key($content['button'] ?? []);
 			unset ($content['button']);
 
 			switch($button)

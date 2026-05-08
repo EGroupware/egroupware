@@ -190,7 +190,7 @@ class timesheet_bo extends Api\Storage
 		if (!is_array($this->status_labels)) $this->status_labels= array($this->status_labels);
 
 		$check_have = [
-			'not_to_invoice' => false,
+			'not to invoice' => false,
 			'invoiced' => false,
 		];
 		foreach ($this->status_labels as $status_id => $label)
