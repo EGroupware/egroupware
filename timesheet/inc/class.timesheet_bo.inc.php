@@ -220,7 +220,7 @@ class timesheet_bo extends Api\Storage
 					'not_to_invoice' => $name == 'not to invoice',
 					'invoiced' => $name == 'invoiced',
 				];
-			Api\Config::save_value('status_labels',$this->status_labels);
+			Api\Config::save_value('status_labels', $this->status_labels, 'timesheet');
 		}
 
 		// Organize into tree structure
