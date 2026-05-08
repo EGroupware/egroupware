@@ -1339,6 +1339,7 @@ class timesheet_ui extends timesheet_bo
 		// this function requires admin rights
 		$GLOBALS['egw_info']['flags']['admin_only'] = true;
 		$GLOBALS['egw']->check_app_rights();
+		Api\Translation::add_app('timesheet');
 
 		if (is_array($content))
 		{
@@ -1351,15 +1352,19 @@ class timesheet_ui extends timesheet_bo
 					break;
 				case 'apply':
 				case 'save':
-					foreach($content['statis'] as &$cat)
+					foreach($content['statis'] as $key => &$cat)
 					{
+						if ($key === 'invoiced') continue;
 						$id = $cat['id'];
 						if (($cat ['name'] !== $this->status_labels_config[$id]) && ($cat ['name'] !== '') || ($cat ['parent'] !== $this->status_labels_config[$id]['parent']) && ($cat ['parent'] !== ''))
 						{
-							$this->status_labels_config[$id] = array(
-							'name'   => trim(str_replace('&nbsp;', '', $cat['name'])),
-							'parent' => $cat['parent'],
-							'admin'  => $cat['admin']);
+							$this->status_labels_config[$id] = [
+								'name'   => trim(str_replace('&nbsp;', '', $cat['name'])),
+								'parent' => $cat['parent'],
+								'admin'  => $cat['admin'],
+								'not_to_invoice' => $cat['not_to_invoice'],
+								'invoiced' => $cat['id']  == $content['statis']['invoiced'],
+							];
 							$need_update = true;
 						}
 					}
@@ -1397,8 +1402,13 @@ class timesheet_ui extends timesheet_bo
 			$content['statis'][$i]['id']= $id;
 			$content['statis'][$i]['parent']= $label['parent'];
 			$content['statis'][$i]['admin']= $label['admin'];
+			$content['statis'][$i]['not_to_invoice']= $label['not_to_invoice'] ?? false;
 			$i++;
 			$max_id = max($id, $max_id);
+			if (!empty($label['invoiced']))
+			{
+				$content['statis']['invoiced'] = $id;
+			}
 		}
 		$content['statis'][$i]['name'] = '';
 		$content['statis'][$i]['admin'] = '';

@@ -1,6 +1,6 @@
+--> enter new name	admin	de	-> neuen Namen eingeben
 %1 timesheets(s) %2	timesheet	de	%1 Stundenzettel %2
 %1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	de	%1 Stundenzettel %2, %3 wurde nicht durchgeführt wegen ungenügenden Rechten!
---> enter new name	admin	de	-> neuen Namen eingeben
 2 month ago	timesheet	de	Vor 2 Monaten
 2 years ago	timesheet	de	Vor 2 Jahren
 3 years ago	timesheet	de	Vor 3 Jahren
@@ -77,13 +77,14 @@ insert	timesheet	de	Einfügen
 invalid field: %1 = %2, it needs to be a number.	timesheet	de	Ungültiges Feld: %1 =%2, es muss eine Zahl sein
 invalid input	common	de	Ungültige Eingabe
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	de	Ungültige Benutzer-ID: %1 könnte eine falsche Feldzuordnung haben. %2 wird stattdessen verwendet.
+invoiced	timesheet	de	abgerechnet
 last modified	timesheet	de	Zuletzt geändert
 last month	timesheet	de	Letzten Monat
 last week	timesheet	de	Letzte Woche
 last year	timesheet	de	Letztes Jahr
 leave it empty for a full week	timesheet	de	Leer lassen für eine ganze Woche
 leaves without saveing	timesheet	de	Beenden ohne speichern
-length<br>rows	timesheet	de	Länge<br>Reihe
+length<br>rows	timesheet	de	Länge\nReihe
 link title	timesheet	de	Titel der Verknüpfung
 links	timesheet	de	Verknüpfungen
 links and attached files	timesheet	de	Verknüpfungen und angehangene Dateien
@@ -102,6 +103,7 @@ no details	timesheet	de	Keine Details
 no project	timesheet	de	Kein Projekt
 no status	timesheet	de	Kein Status
 none: use only free project-names	admin	de	Keine: verwende nur freie Projektnamen
+not to invoice	timesheet	de	nicht abzurechnen
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	de	Anzahl von Reihen für ein mehrzeiliges Textfeld oder einer Mehrfachauswahlbox
 only admin	admin	de	Nur Administratoren
 only admin can edit this status	admin	de	Nur Administratoren dürfen Stundenzettel mit diesen Status bearbeiten

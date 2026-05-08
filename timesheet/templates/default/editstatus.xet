@@ -8,7 +8,7 @@
             </columns>
             <rows>
                 <row>
-                    <groupbox rows="1" cols="1">
+                    <groupbox>
                         <grid width="100%" overflow="auto">
                             <columns>
                                 <column width="100"/>
@@ -21,26 +21,33 @@
                                     <et2-description  value="Status"></et2-description>
                                     <grid width="100%" overflow="auto" id="statis">
                                         <columns>
-                                            <column/>
-                                            <column/>
-                                            <column/>
-                                            <column/>
-                                            <column width="5%"/>
+                                            <column width="50"/>
+                                            <column width="40%"/>
+                                            <column width="40%"/>
+                                            <column width="80"/>
+                                            <column width="80"/>
+                                            <column width="80"/>
+                                            <column width="120"/>
                                         </columns>
                                         <rows>
                                             <row class="th">
-                                                <et2-description  value="ID"></et2-description>
-                                                <et2-description  value="Name"></et2-description>
-                                                <et2-description  value="Parent"></et2-description>
-                                                <et2-description  value="Only Admin"></et2-description>
-                                                <et2-description  value="Actions"></et2-description>
+                                                <et2-description value="ID"></et2-description>
+                                                <et2-description value="Name"></et2-description>
+                                                <et2-description value="Parent"></et2-description>
+                                                <et2-description value="Only Admin" align="center"></et2-description>
+                                                <et2-description value="Not to invoice" align="center"></et2-description>
+                                                <et2-description value="Invoiced" align="center"></et2-description>
+                                                <et2-description value="Actions"></et2-description>
                                             </row>
                                             <row class="row">
-                                                <et2-description  id="${row}[id]"></et2-description>
-                                                <et2-textbox  maxlength="150" id="${row}[name]" placeholder="--&gt; enter new name"></et2-textbox>
-                                                <et2-select  id="${row}[parent]" emptyLabel="Select one ..."></et2-select>
-                                                <et2-checkbox  id="${row}[admin]" statustext="Only admin can edit this status"></et2-checkbox>
-                                                <et2-button image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="Et2Dialog.confirm(widget,'Delete this status','Delete')"></et2-button>
+                                                <et2-description id="${row}[id]"></et2-description>
+                                                <et2-textbox maxlength="150" id="${row}[name]" placeholder="--&gt; enter new name"></et2-textbox>
+                                                <et2-select id="${row}[parent]" emptyLabel="Select one ..."></et2-select>
+                                                <et2-checkbox id="${row}[admin]" statustext="Only admin can edit this status" align="center"></et2-checkbox>
+                                                <et2-checkbox id="${row}[not_to_invoice]" align="center"></et2-checkbox>
+                                                <radio id="invoiced" align="center" set_value="$row_cont[id]"></radio>
+                                                <et2-button image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" disabled="$row_cont[name]=/(invoiced|not to invoice)/"
+                                                    statustext="Delete this status" onclick="Et2Dialog.confirm(widget,'Delete this status','Delete')"></et2-button>
                                             </row>
                                         </rows>
                                     </grid>

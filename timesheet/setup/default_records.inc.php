@@ -11,6 +11,20 @@
 
 foreach(array(
 	'history'     => 'history',
+	'status_labels' => [
+		1 => [
+			'name'  => 'not to invoice',
+			'parent' => '',
+			'not_to_invoiced' => true,
+			'invoiced' => false,
+		],
+		2 => [
+			'name'  => 'invoiced',
+			'parent' => '',
+			'not_to_invoiced' => false,
+			'invoiced' => true,
+		]
+	]
 ) as $name => $value)
 {
 	$GLOBALS['egw_setup']->db->insert(
@@ -25,4 +39,3 @@ foreach(array(
 		),__LINE__,__FILE__
 	);
 }
-

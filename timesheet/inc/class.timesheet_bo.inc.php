@@ -189,20 +189,41 @@ class timesheet_bo extends Api\Storage
 		$this->status_labels =&  $this->config_data['status_labels'];
 		if (!is_array($this->status_labels)) $this->status_labels= array($this->status_labels);
 
+		$check_have = [
+			'not_to_invoice' => false,
+			'invoiced' => false,
+		];
 		foreach ($this->status_labels as $status_id => $label)
 		{
 			if (!is_array($label))
-			{	//old values, before parent status
-				$name = $label;
-				$label=array();
-				$label['name'] = $name;
-				$label['parent'] = '';
+			{
+				$label= [
+					'name' => $label,
+					'parent' => '',
+				];
 			}
 			$label['id'] = $status_id;
+			foreach ($check_have as $name => &$have)
+			{
+				if (!empty($label[$name])) $have = true;
+			}
 			$this->status_labels_config[$status_id] = $label;
 		}
+		// create required not-to-invoice and invoiced stati
+		foreach(array_keys(array_filter($check_have, static fn($have) => !$have)) as $name)
+		{
+			++$status_id;
+			$this->status_labels_config[$status_id] = $this->status_labels[$status_id] =
+				$this->config_data['status_labels'][$status_id] = [
+					'name' => $name,
+					'parent' => '',
+					'not_to_invoice' => $name == 'not to invoice',
+					'invoiced' => $name == 'invoiced',
+				];
+			Api\Config::save_value('status_labels',$this->status_labels);
+		}
 
-		// Organise into tree structure
+		// Organize into tree structure
 		$map = array(
 			'' => array('substatus' => array())
 		);
@@ -230,6 +251,17 @@ class timesheet_bo extends Api\Storage
 			unset($sorted[$status_id]['substatus']);
 		}
 		$this->status_labels_config = $sorted;
+	}
+
+	/**
+	 * Get id's of status with the given flag set
+	 *
+	 * @param string $flag "not_to_invoice" or "invoiced"
+	 * @return int[] of id's
+	 */
+	public function getStatus(string $flag) : array
+	{
+		return array_keys(array_filter($this->status_labels_config, static fn($status) => !empty($status[$flag])));
 	}
 
 	/**
