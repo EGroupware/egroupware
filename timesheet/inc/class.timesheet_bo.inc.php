@@ -195,6 +195,7 @@ class timesheet_bo extends Api\Storage
 		];
 		foreach ($this->status_labels as $status_id => $label)
 		{
+			if (empty($label)) continue;
 			if (!is_array($label))
 			{
 				$label= [
@@ -205,7 +206,7 @@ class timesheet_bo extends Api\Storage
 			$label['id'] = $status_id;
 			foreach ($check_have as $name => &$have)
 			{
-				if (!empty($label[$name])) $have = true;
+				if (!empty($label[str_replace(' ', '_', $name)])) $have = true;
 			}
 			$this->status_labels_config[$status_id] = $label;
 		}
