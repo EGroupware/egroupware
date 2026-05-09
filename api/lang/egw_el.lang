@@ -47,7 +47,7 @@ add	common	el	Προσθήκη
 add %1 category for	common	el	Προσθήκη κατηγορίας %1 για
 add a new contact	common	el	Προσθέστε μία νέα επαφή
 add category	common	el	Προσθήκη κατηγορίας
-add current	common	el	Προβολή ως αγαπημένο
+add current	common	el	Προσθήκη προβολής στα αγαπημένα
 add shortcut	common	el	Προσθήκη Συντόμευσης
 add sub	common	el	Προσθήκη υπo
 add user to responsibles	groupdav	el	Προσθήκη χρήστη στους υπεύθυνους
@@ -367,6 +367,7 @@ first page	common	el	Αρχική σελίδα
 firstname	common	el	Ονομα
 fixme!	common	el	Διόρθωσέ με!
 folder already exists.	common	el	Ο φάκελος υπάρχει ήδη!
+for group	common	el	Για την ομάδα
 for more than one contact in a document use the tag pagerepeat!	preferences	el	Χρησιμοποιήστε την ετικέτα επανάληψη σελίδας για περισσότερες από μία επαφές σε ένα έγγραφο!
 force selectbox	common	el	Εξανάγκασε Επιλογή κουτιού
 formatted business address	common	el	Διαμορφωμένη επαγγελματική διεύθυνση
@@ -484,6 +485,7 @@ jordan	common	el	ΙΟΡΔΑΝΙΑ
 july	common	el	Ιούλιος
 jun	common	el	Ιούν
 june	common	el	Ιούνιος
+just for me	common	el	Μόνο για μένα
 justify center	common	el	Στοίχιση στο κέντρο
 justify full	common	el	Πλήρης στοίχιση
 justify left	common	el	Στοίχιση αριστερά
@@ -622,7 +624,7 @@ no	common	el	Όχι
 no - cancel	common	el	Όχι-Άκυρο
 no default set	common	el	Δεν έχει οριστεί προεπιλογή
 no entries found, try again ...	common	el	δεν βρέθηκαν καταχωρήσεις, ξαναπροσπαθήστε ...
-no filters	common	el	Δεν υπάρχουν φίλτρα
+no filters	common	el	Αφαίρεση φίλτρων
 no history for this record	common	el	Δεν υπάρχει ιστορικό γι' αυτή την εγγραφή
 no matches found	common	el	Δέν βρέθηκαν όμοια.
 no response from server: your data is probably not saved	common	el	Δεν υπάρχει απάντηση από το διακομιστή: τα δεδομένα σας πιθανόν να ΜΗΝ έχουν αποθηκευτεί.
