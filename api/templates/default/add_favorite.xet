@@ -4,7 +4,7 @@
     <template id="nm_print_dialog" template="" lang="" group="0" version="22.1">
         <et2-vbox>
             <et2-textbox  id="name" label="Name" class="et2-label-fixed"/>
-            <et2-select-account  id="group" label="Groups" class="et2-label-fixed" emptyLabel="Just me" accountType="groups"/>
+            <et2-select-account  id="group" label="For group" class="et2-label-fixed" emptyLabel="Just for me" accountType="groups"/>
             <et2-details  summary="Details">
                 <grid id="current_filters">
                     <columns>
