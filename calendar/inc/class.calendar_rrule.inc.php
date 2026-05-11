@@ -842,7 +842,8 @@ class calendar_rrule implements Iterator
 		if (!is_array($event)  || !isset($event['tzid'])) return false;
 		if (!$to_tz) $to_tz = $event['tzid'];
 		$timestamp_tz = $usertime ? Api\DateTime::$user_timezone : Api\DateTime::$server_timezone;
-		$time = is_a($event['start'],'DateTime') ? $event['start'] : new Api\DateTime($event['start'],$timestamp_tz);
+		// Never mutate caller data when building the rule.
+		$time = is_a($event['start'],'DateTime') ? clone $event['start'] : new Api\DateTime($event['start'],$timestamp_tz);
 
 		if (!isset(self::$tz_cache[$to_tz]))
 		{

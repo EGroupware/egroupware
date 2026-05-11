@@ -499,10 +499,18 @@ class calendar_uilist extends calendar_ui
 				$event['app_id'] .= ':'.Api\DateTime::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts');
 			}
 
-			// Format start and end with timezone
+			// Format start/end only if still raw values.  to_client() already emits ET2 strings.
 			foreach(array('start','end') as $time)
 			{
-				$event[$time] = Api\DateTime::to($event[$time],'Y-m-d\TH:i:s\Z');
+				if($event[$time] instanceof Api\DateTime)
+				{
+					$event[$time]->setUser();
+					$event[$time] = $event[$time]->format(Api\DateTime::ET2);
+				}
+				elseif(is_int($event[$time]))
+				{
+					$event[$time] = Api\DateTime::server2user($event[$time], Api\DateTime::ET2);
+				}
 			}
 
 			$rows[] = $event;

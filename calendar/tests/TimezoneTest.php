@@ -184,6 +184,49 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	}
 
 	/**
+	 * Test generating recurrence label does not mutate event start.
+	 */
+	public function testRecure2stringDoesNotMutateStart()
+	{
+		$timezones = array(
+			'client' => 'Europe/Berlin',
+			'server' => 'UTC',
+			'event'  => 'America/Edmonton',
+		);
+		$this->setTimezones($timezones);
+
+		$event = array(
+			'start'           => new Api\DateTime('2026-01-05 08:00:00', Api\DateTime::$user_timezone),
+			'end'             => new Api\DateTime('2026-01-05 09:00:00', Api\DateTime::$user_timezone),
+			'tzid'            => $timezones['event'],
+			'recur_type'      => MCAL_RECUR_DAILY,
+			'recur_interval'  => 1,
+			'recur_enddate'   => new Api\DateTime('2026-01-08 00:00:00', Api\DateTime::$user_timezone),
+			'recur_data'      => 0,
+			'recur_exception' => array(),
+			'recur_rdates'    => array(),
+			'whole_day'       => false,
+		);
+
+		$before_start = clone $event['start'];
+		$before_start_iso = $before_start->format(Api\DateTime::DATABASE);
+		$before_start_tz = $before_start->getTimezone()->getName();
+
+		$this->assertIsString($this->bo->recure2string($event));
+
+		$this->assertEquals(
+			$before_start_iso,
+			$event['start']->format(Api\DateTime::DATABASE),
+			'recure2string() changed start timestamp'
+		);
+		$this->assertSame(
+			$before_start_tz,
+			$event['start']->getTimezone()->getName(),
+			'recure2string() changed start timezone'
+		);
+	}
+
+	/**
 	 * Load the event and check that it matches expectations
 	 *
 	 * @param Array $timezones List of timezones (event, client, server)

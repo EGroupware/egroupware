@@ -994,6 +994,7 @@ class calendar_bo
 				$start = clone $ev['start'];
 				$start->setUser();
 				$end = clone $ev['end'];
+				$end->setUser();
 			}
 			//error_log(__METHOD__."() start=".Api\DateTime::to($start).", is_exception=".array2string($is_exception));
 			$this->so->recurrence($ev['id'], $start, $end, $ev['participants'], $is_exception);
