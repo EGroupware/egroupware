@@ -248,10 +248,6 @@ jobs:
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php \
             --config default,"$EGW_CONFIG_USER","$EGW_CONFIG_PASSWD",hostname=localhost,webserver_url=/egroupware
 
-          # Disable push-server app for PHPUnit to avoid repeated unreachable push backend retries
-          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php \
-            --update default,"$EGW_CONFIG_USER","$EGW_CONFIG_PASSWD",no,swoolepush || true
-
       - name: Debug web access
         run: |
           set -euo pipefail
@@ -314,11 +310,14 @@ jobs:
             -e HTTP_HOST=127.0.0.1:8081 \
             -e HTTP_X_FORWARDED_PROTO=http \
             -e EGW_URL=http://127.0.0.1:8081 \
+            -e EGW_PUSH_SERVER=http:/// \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
             -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
             -w "$EGW_SRC_DIR" egroupware \
             sh -lc '
               set -e
+              echo "EGW_PUSH_SERVER=${EGW_PUSH_SERVER:-<unset>}"
+              php -r '\''echo "PHP sees EGW_PUSH_SERVER=".($_SERVER["EGW_PUSH_SERVER"] ?? "<unset>").PHP_EOL;'\'
               php -S 127.0.0.1:8081 -t "$PWD" > /tmp/egw-phpunit-http.log 2>&1 &
               server_pid=$!
               trap "kill $server_pid 2>/dev/null || true" EXIT
