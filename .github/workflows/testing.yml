@@ -297,7 +297,12 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
           $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e \
-            "UPDATE egw_applications SET app_enabled=0 WHERE app_name='swoolepush';"
+            "UPDATE egw_applications SET app_enabled=-1 WHERE app_name='swoolepush';"
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php -r '
+            require "api/src/loader/common.php";
+            \EGroupware\Api\Cache::unsetInstance(\EGroupware\Api\Egw\Applications::class, "apps");
+            \EGroupware\Api\Cache::unsetInstance(\EGroupware\Api\Hooks::class, "locations");
+          '
 
       - name: Run PHPUnit
         run: |
