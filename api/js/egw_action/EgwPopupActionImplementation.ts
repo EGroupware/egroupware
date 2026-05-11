@@ -124,15 +124,22 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			}
 			if(this.auto_paste && !window.egwIsMobile() && (!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/)))
 			{
-				this._addCopyPaste(_links, _selected);
+				menu = this._buildMenu(_links, _selected, _target);
+				menu.showAt(0, 0);
 			}
 			if(!menu)
 			{
 				menu = this._buildMenu(_links, _selected, _target);
+				menu.showAt(0, 0);
 			}
 			else
 			{
 				menu.applyContext(_links, _selected, _target);
+			}
+			if(_selected[0].parent.manager.data.menu && _selected[0].parent.manager.data.menu !== menu)
+			{
+				_selected[0].parent.manager.data.menu.remove();
+				_selected[0].parent.manager.data.menu = menu;
 			}
 
 			menu.showAt(_context.posx, _context.posy);
@@ -322,11 +329,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 		// Special handling for nextmatch: only build the menu once and just re-use it.
 		if(!_context.menu && _context.actionLinks && _context.parent?.manager?.data?.nextmatch && !_context.parent.manager.data.menu)
 		{
+			const actionLinks = _context.actionLinks;
+			const selectedContext = _context;
 			// Don't block load
 			_context.parent.manager.data.menu = {}; // Set it to something or it will do this for every row
 			window.setTimeout(() =>
 			{
-				_context.parent.manager.data.menu = this._buildMenu(_context.actionLinks, [_context], null);
+				_context.parent.manager.data.menu = this._buildMenu(actionLinks, [selectedContext], null);
 				_context.parent.manager.data.menu.showAt(0, 0);
 				_context.parent.manager.data.menu.hide();
 			}, 0);
