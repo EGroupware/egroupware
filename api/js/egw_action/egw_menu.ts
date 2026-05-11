@@ -218,7 +218,7 @@ export class egwMenu
 		{
 			this.instance = new EgwMenuShoelace(this.children);
 		}
-		this.instance.applyContext(_links, _selected, _target);
+		this.instance.updateComplete.then(() => {this.instance.applyContext(_links, _selected, _target);});
 		let setOnClick = (menuItem) =>
 		{
 			menuItem.set_onClick((elem) =>
