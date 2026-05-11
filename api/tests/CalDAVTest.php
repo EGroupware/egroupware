@@ -259,6 +259,16 @@ abstract class CalDAVTest extends TestCase
 			{
 				include_once(__DIR__ . '/../../header.inc.php');
 			}
+			// Some setup / account code paths (eg. push token generation) require an install_id
+			// in egw_info['server'], which may not yet be populated in CLI test bootstrap.
+			if (empty($GLOBALS['egw_info']['server']['install_id']))
+			{
+				$domain = $_REQUEST['domain'] ?? 'default';
+				$header_install_id = $GLOBALS['egw_domain'][$domain]['server']['install_id']
+					?? $GLOBALS['egw_info']['server']['install_id']
+					?? null;
+				$GLOBALS['egw_info']['server']['install_id'] = $header_install_id ?: md5(microtime(true).__FILE__);
+			}
 			$setup = new \setup();
 		}
 		return $setup;
