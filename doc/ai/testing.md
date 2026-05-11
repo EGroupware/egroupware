@@ -24,7 +24,9 @@ config:
 
 `EGW_URL="http://your-host/egroupware" vendor/bin/phpunit -c doc/phpunit.xml calendar/tests/CalDAV/YourTest.php`
 
-Ask if you don't know the proper host.
+* Tests that extend EGroupware\Api\LoggedInTest will run tests as the logged-in 'demo' user configured in `phpunit.xml`.
+* Ask if you don't know the proper host.
+* Make sure tests clean up after themselves, even if they fail.
 
 Before changing PHP behaviour:
 
