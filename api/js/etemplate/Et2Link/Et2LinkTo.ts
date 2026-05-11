@@ -134,7 +134,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
-		this.getInstanceManager().DOMContainer.removeEventListener("et2-delete", this.handleLinkDeleted);
+		this.getInstanceManager()?.DOMContainer.removeEventListener("et2-delete", this.handleLinkDeleted);
 	}
 
 	_inputGroupBeforeTemplate()
