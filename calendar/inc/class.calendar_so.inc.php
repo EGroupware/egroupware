@@ -374,7 +374,7 @@ class calendar_so
 			$where['cal_uid'] = $ids;
 			if ($read_recurrence)
 			{
-				$where['cal_recurrence'] = $recur_date->format('server');
+				$where['cal_recurrence'] = $recur_date_ts;
 			}
 			else
 			{
