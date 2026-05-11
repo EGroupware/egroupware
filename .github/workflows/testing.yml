@@ -215,6 +215,30 @@ jobs:
           echo "EGW_SRC_DIR=$APP_DIR" >> "$GITHUB_ENV"
           echo "Detected EGW_SRC_DIR=$APP_DIR"
 
+      - name: Detect nginx IP for intra-container HTTP
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+
+          NGINX_CID="$($COMPOSE ps -q nginx)"
+          if [ -z "$NGINX_CID" ]; then
+            echo "::error::Could not determine nginx container id"
+            exit 1
+          fi
+
+          NGINX_IP="$(
+            docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$NGINX_CID"
+          )"
+          if [ -z "$NGINX_IP" ]; then
+            echo "::error::Could not determine nginx container IP"
+            exit 1
+          fi
+
+          echo "EGW_URL=http://$NGINX_IP/egroupware" >> "$GITHUB_ENV"
+          echo "Detected EGW_URL=http://$NGINX_IP/egroupware"
+
       - name: Configure for phpunit test (apps, user)
         run: |
           set -euo pipefail
@@ -246,7 +270,7 @@ jobs:
 
           # Ensure share links resolve locally in CI
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php \
-            --config default,"$EGW_CONFIG_USER","$EGW_CONFIG_PASSWD",hostname=nginx,webserver_url=http://nginx/egroupware
+            --config default,"$EGW_CONFIG_USER","$EGW_CONFIG_PASSWD",hostname=nginx,webserver_url="$EGW_URL"
 
       - name: Debug web access
         run: |
@@ -309,7 +333,7 @@ jobs:
           $COMPOSE exec -T \
             -e HTTP_HOST=test \
             -e HTTP_X_FORWARDED_PROTO=http \
-            -e EGW_URL=http://nginx/egroupware \
+            -e EGW_URL="$EGW_URL" \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
             -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
             -w "$EGW_SRC_DIR" egroupware \
