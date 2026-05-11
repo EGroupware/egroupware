@@ -317,7 +317,7 @@ jobs:
             sh -lc '
               set -e
               echo "EGW_PUSH_SERVER=${EGW_PUSH_SERVER:-<unset>}"
-              php -r '\''echo "PHP sees EGW_PUSH_SERVER=".($_SERVER["EGW_PUSH_SERVER"] ?? "<unset>").PHP_EOL;'\'
+              printenv EGW_PUSH_SERVER || true
               php -S 127.0.0.1:8081 -t "$PWD" > /tmp/egw-phpunit-http.log 2>&1 &
               server_pid=$!
               trap "kill $server_pid 2>/dev/null || true" EXIT
