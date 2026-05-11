@@ -2377,12 +2377,26 @@ ORDER BY cal_user_type, cal_usre_id
 				);
 				foreach($recurrences as $recur_date)
 				{
-					$this->db->insert($this->user_table,$set,array(
+					$keys = array(
 						'cal_id'	      => $cal_id,
 						'cal_recur_date'  => $recur_date,
 						'cal_user_type'   => $type,
 						'cal_user_id' 	  => $id,
-					),__LINE__,__FILE__,'calendar');
+					);
+					try
+					{
+						$this->db->insert($this->user_table, $set, $keys, __LINE__, __FILE__, 'calendar');
+					}
+					catch (\Throwable $e)
+					{
+						// Recurring CalDAV payloads can contain attendee rows for master and overridden instances.
+						// If a participant row already exists for the same recurrence key, treat it as an update.
+						if (strpos($e->getMessage(), 'Duplicate entry') === false)
+						{
+							throw $e;
+						}
+						$this->db->update($this->user_table, $set, $keys, __LINE__, __FILE__, 'calendar');
+					}
 				}
 				// for new or changed group-invitations, remove previously deleted members, so they show up again
 				if ($uid < 0)
@@ -2484,7 +2498,30 @@ ORDER BY cal_user_type, cal_usre_id
 				}
 				unset($where[0]);
 				$set += $where;
-				$ret = $this->db->insert($this->user_table, $set, false, __LINE__, __FILE__, 'calendar');
+				try
+				{
+					$ret = $this->db->insert($this->user_table, $set, false, __LINE__, __FILE__, 'calendar');
+				}
+				catch (\Throwable $e)
+				{
+					if (strpos($e->getMessage(), 'Duplicate entry') === false)
+					{
+						throw $e;
+					}
+					$update_where = [
+						'cal_id' => $set['cal_id'],
+						'cal_recur_date' => $set['cal_recur_date'] ?? 0,
+						'cal_user_type' => $set['cal_user_type'],
+						'cal_user_id' => $set['cal_user_id'],
+					];
+					$update_set = [
+						'cal_status' => $set['cal_status'],
+					];
+					if (isset($set['cal_user_attendee'])) $update_set['cal_user_attendee'] = $set['cal_user_attendee'];
+					if (isset($set['cal_role'])) $update_set['cal_role'] = $set['cal_role'];
+					$this->db->update($this->user_table, $update_set, $update_where, __LINE__, __FILE__, 'calendar');
+					$ret = $this->db->affected_rows();
+				}
 			}
 			// for new or changed group-invitations, remove previously deleted members, so they show up again
 			if ($ret && $user_type == 'u' && $user_id < 0)

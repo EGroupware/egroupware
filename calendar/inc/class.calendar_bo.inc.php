@@ -2267,11 +2267,30 @@ class calendar_bo
 	 */
 	function get_etag($entry, &$schedule_tag=null)
 	{
-		if (!is_array($entry))
-		{
-			list($id,$recur_date) = explode(':',$entry)+[null,null];
-			$entry = $this->read($id, $recur_date, true, 'server');
-		}
+			if (!is_array($entry))
+			{
+				list($id,$recur_date) = explode(':',$entry)+[null,null];
+				if ($recur_date === '' || $recur_date === null)
+				{
+					$recur_date = null;
+				}
+				elseif (is_numeric($recur_date))
+				{
+					$recur_date = (int)$recur_date;
+				}
+				else
+				{
+					try
+					{
+						$recur_date = (int)(new Api\DateTime($recur_date))->format('ts');
+					}
+					catch (\Throwable $e)
+					{
+						$recur_date = null;
+					}
+				}
+				$entry = $this->read($id, $recur_date, true, 'server');
+			}
 		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'];
 		$etag .= ':'.Api\DateTime::user2server($entry['modified'], 'ts');
 
