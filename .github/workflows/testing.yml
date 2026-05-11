@@ -248,6 +248,10 @@ jobs:
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php \
             --config default,"$EGW_CONFIG_USER","$EGW_CONFIG_PASSWD",hostname=localhost,webserver_url=/egroupware
 
+          # Disable push-server app for PHPUnit to avoid repeated unreachable push backend retries
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php \
+            --update default,"$EGW_CONFIG_USER","$EGW_CONFIG_PASSWD",no,swoolepush || true
+
       - name: Debug web access
         run: |
           set -euo pipefail
@@ -307,7 +311,7 @@ jobs:
 
           # Run tests with local HTTP endpoint inside egroupware container
           $COMPOSE exec -T \
-            -e HTTP_HOST=test \
+            -e HTTP_HOST=127.0.0.1:8081 \
             -e HTTP_X_FORWARDED_PROTO=http \
             -e EGW_URL=http://127.0.0.1:8081 \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
