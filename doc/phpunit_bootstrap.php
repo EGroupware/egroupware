@@ -24,6 +24,12 @@ if (!class_exists('\PHPUnit\Framework\TestCase') && class_exists('\PHPUnit_Frame
 // Needed to let Cache work
 $GLOBALS['egw_info']['server']['temp_dir'] = '/tmp';
 $GLOBALS['egw_info']['server']['install_id'] = 'PHPUnit test';
+// Optional CI-only switch to disable custom push backends (eg. swoolepush)
+// during PHPUnit runs to avoid network retries/backoff impacting runtime.
+if ((string)getenv('EGW_DISABLE_PUSH_BACKENDS') === '1')
+{
+	\EGroupware\Api\Hooks::disable('push-backends');
+}
 // setting a working session.save_path
 if (ini_get('session.save_handler') === 'files' && !is_writable(ini_get('session.save_path')) &&
 	is_dir('/tmp') && is_writable('/tmp'))

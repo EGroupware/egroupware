@@ -310,14 +310,13 @@ jobs:
             -e HTTP_HOST=127.0.0.1:8081 \
             -e HTTP_X_FORWARDED_PROTO=http \
             -e EGW_URL=http://127.0.0.1:8081 \
-            -e EGW_PUSH_SERVER=http:/// \
+            -e EGW_DISABLE_PUSH_BACKENDS=1 \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
             -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
             -w "$EGW_SRC_DIR" egroupware \
             sh -lc '
               set -e
-              echo "EGW_PUSH_SERVER=${EGW_PUSH_SERVER:-<unset>}"
-              printenv EGW_PUSH_SERVER || true
+              echo "EGW_DISABLE_PUSH_BACKENDS=${EGW_DISABLE_PUSH_BACKENDS:-<unset>}"
               php -S 127.0.0.1:8081 -t "$PWD" > /tmp/egw-phpunit-http.log 2>&1 &
               server_pid=$!
               trap "kill $server_pid 2>/dev/null || true" EXIT
