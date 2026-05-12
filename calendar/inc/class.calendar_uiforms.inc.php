@@ -225,7 +225,7 @@ class calendar_uiforms extends calendar_ui
 		if(isset($_GET['end']))
 		{
 			$end = $this->parseUserInputDateTime($_GET['end']);
-			$duration = (int)$end->format('ts') - (int)$start->format('ts');
+			$duration = $end->getTimestamp() - $start->getTimestamp();
 		}
 		else
 		{
@@ -470,12 +470,12 @@ class calendar_uiforms extends calendar_ui
 			// convert content => event
 			if ($content['whole_day'])
 			{
-				$event['start'] = Api\DateTime::to($event['start'], 'array');
-				$event['start']['hour'] = $event['start']['minute'] = 0; unset($event['start']['raw']);
-				$event['start'] = Api\DateTime::to($event['start'], 'ts');
-				$event['end'] = Api\DateTime::to($event['end'], 'array');
-				$event['end']['hour'] = 23; $event['end']['minute'] = $event['end']['second'] = 59; unset($event['end']['raw']);
-				$event['end'] = Api\DateTime::to($event['end'], 'ts');
+				$event['start'] = $event['start'] instanceof Api\DateTime ?
+					clone $event['start'] : new Api\DateTime($event['start']);
+				$event['start']->setTime(0, 0, 0);
+				$event['end'] = $event['end'] instanceof Api\DateTime ?
+					clone $event['end'] : new Api\DateTime($event['end']);
+				$event['end']->setTime(23, 59, 59);
 			}
 			// some checks for recurrences, if you give a date, make it a weekly repeating event and visa versa
 			if ($event['recur_type'] == MCAL_RECUR_NONE && $event['recur_data']) $event['recur_type'] = MCAL_RECUR_WEEKLY;
@@ -2698,13 +2698,26 @@ class calendar_uiforms extends calendar_ui
 		$old = array_intersect_key(array_diff($_old, [null, '']), array_flip($keys_to_check));
 		foreach(['start', 'end'] as $name)
 		{
-			if(isset($event[$name]))
+			if(isset($event[$name]) && !($event[$name] instanceof Api\DateTime))
 			{
-				$event[$name] = (int)Api\DateTime::to($event[$name], 'ts');
+				$event[$name] = new Api\DateTime($event[$name]);
 			}
-			if(isset($old[$name]))
+			if(isset($old[$name]) && !($old[$name] instanceof Api\DateTime))
 			{
-				$old[$name] = (int)Api\DateTime::to($old[$name], 'ts');
+				$old[$name] = new Api\DateTime($old[$name]);
+			}
+		}
+		$event_cmp = $event;
+		$old_cmp = $old;
+		foreach(['start', 'end'] as $name)
+		{
+			if(isset($event_cmp[$name]))
+			{
+				$event_cmp[$name] = $event_cmp[$name]->getTimestamp();
+			}
+			if(isset($old_cmp[$name]))
+			{
+				$old_cmp[$name] = $old_cmp[$name]->getTimestamp();
 			}
 		}
 
@@ -2717,7 +2730,7 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 
-		$changes = array_diff_assoc($event, $old);
+		$changes = array_diff_assoc($event_cmp, $old_cmp);
 
 		if (!($changes['recure'] = array_values(array_filter(array_keys($changes), static function($name)
 		{
@@ -2730,16 +2743,16 @@ class calendar_uiforms extends calendar_ui
 		// if start changed, make old start-time available to template
 		if(isset($changes['start']))
 		{
-			$_event['old_start'] = $changes['start'];
+			$_event['old_start'] = isset($old['start']) ? clone $old['start'] : null;
 		}
 		// if we have an explicit exception, always report that as a change from the regular recurrence
 		elseif(!empty($_event['recurrence']) && empty($_event['recur_type']) &&
 			(int)Api\DateTime::to($_event['recurrence'], 'ts') != (int)Api\DateTime::to($_event['start'], 'ts'))
 		{
-			$recurrence_ts = (int)Api\DateTime::to($_event['recurrence'], 'ts');
-			$_event['old_start'] = $changes['start'] = $recurrence_ts;
-			$changes['end'] = $recurrence_ts +
-				((int)Api\DateTime::to($_event['end'], 'ts') - (int)Api\DateTime::to($_event['start'], 'ts'));
+			$changes['start'] = $_event['old_start'] = $_event['recurrence'] instanceof Api\DateTime ?
+				clone $_event['recurrence'] : new Api\DateTime($_event['recurrence'], Api\DateTime::$server_timezone);
+			$changes['end'] = clone $changes['start'];
+			$changes['end']->modify(((int)Api\DateTime::to($_event['end'], 'ts') - (int)Api\DateTime::to($_event['start'], 'ts')) . ' seconds');
 		}
 
 		return $changes;
@@ -2832,31 +2845,29 @@ class calendar_uiforms extends calendar_ui
 		$response = Api\Json\Response::get();
 		//$response->addAlert(__METHOD__.'('.array2string($edit_content).')');
 
-		// convert start/end date-time values to timestamps
 		foreach(array('start', 'end') as $name)
 		{
-			if (!empty($edit_content[$name]))
+			if(!empty($edit_content[$name]) && !($edit_content[$name] instanceof Api\DateTime))
 			{
-				$edit_content[$name] = (int)Api\DateTime::to($edit_content[$name], 'ts');
+				$edit_content[$name] = new Api\DateTime($edit_content[$name]);
 			}
 		}
 
 		if ($edit_content['duration'])
 		{
-			$edit_content['end'] = $edit_content['start'] + $edit_content['duration'];
+			$edit_content['end'] = clone $edit_content['start'];
+			$edit_content['end']->modify(($edit_content['duration'] >= 0 ? '+' : '') . $edit_content['duration'] . ' seconds');
 		}
 		if ($edit_content['whole_day'])
 		{
-			$arr = Api\DateTime::to($edit_content['start'], 'array');
-			$arr['hour'] = $arr['minute'] = $arr['second'] = 0; unset($arr['raw']);
-			$edit_content['start'] = Api\DateTime::to($arr, 'ts');
-			$earr = Api\DateTime::to($edit_content['end'], 'array');
-			$earr['hour'] = 23; $earr['minute'] = $earr['second'] = 59; unset($earr['raw']);
-			$edit_content['end'] = Api\DateTime::to($earr, 'ts');
+			$edit_content['start']->setTime(0, 0, 0);
+			$edit_content['end']->setTime(23, 59, 59);
 		}
+		$start_ts = (int)Api\DateTime::to($edit_content['start'], 'ts');
+		$end_ts = (int)Api\DateTime::to($edit_content['end'], 'ts');
 		$content = array(
 			'start'    => $edit_content['start'],
-			'duration' => $edit_content['end'] - $edit_content['start'],
+			'duration' => $end_ts - $start_ts,
 			'end'      => $edit_content['end'],
 			'cal_id'   => $edit_content['id'],
 			'recur_type'   => $edit_content['recur_type'],
