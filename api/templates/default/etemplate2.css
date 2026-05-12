@@ -154,6 +154,15 @@ div.et2_hbox > div {
 /**
  * History log widget, most comes from the gridview
  */
+.et2_historylog {
+	height: 100%;
+	overflow: hidden;
+}
+
+.et2_historylog .egwGridView_scrollarea {
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
 /* Turn off column button, it does nothing */
 .et2_historylog table.egwGridView_outer thead tr th.optcol:hover {
     cursor: inherit;
