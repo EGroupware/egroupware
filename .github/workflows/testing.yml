@@ -10,6 +10,7 @@ on:
 jobs:
   phpunit:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     env:
       EGW_DB_ROOT_PW: ciroot
       COMPOSE_PROJECT_NAME: egwci
@@ -305,6 +306,7 @@ jobs:
           '
 
       - name: Run PHPUnit
+        timeout-minutes: 30
         run: |
           set -euo pipefail
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \

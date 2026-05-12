@@ -43,6 +43,8 @@ if (!isset($_SERVER['HTTP_HOST']) && $GLOBALS['EGW_DOMAIN'] !== 'default')
 }
 
 // Symlink api/src/fixtures/apps/* to root
+// Fixture app install should not try to control host webserver services in CI/CLI.
+putenv('EGW_START_WEBSERVER=');
 foreach(scandir($path=__DIR__.'/../api/tests/fixtures/apps') as $app)
 {
 	if (is_dir($path.'/'.$app) && @file_exists($path.'/'.$app.'/setup/setup.inc.php')/* &&

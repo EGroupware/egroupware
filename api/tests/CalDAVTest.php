@@ -79,6 +79,9 @@ abstract class CalDAVTest extends TestCase
 	 */
 	protected $client_options = [
 		RequestOptions::HTTP_ERRORS => false,	// return all HTTP status, not throwing exceptions
+		// Prevent CI hangs from indefinite network waits if CalDAV endpoint is unreachable/stalled.
+		RequestOptions::CONNECT_TIMEOUT => 5,
+		RequestOptions::TIMEOUT         => 10,
 		RequestOptions::HEADERS => [
 			'Cookie' => 'XDEBUG_SESSION=PHPSTORM',
 			//'User-Agent' => 'CalDAVSynchronizer',
