@@ -764,7 +764,7 @@ class SharingBase extends LoggedInTest
 			{
 				$this->markTestSkipped("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 			}
-			return;
+			$this->markTestSkipped("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')");
 		}
 
 		// Parse & check for nextmatch
