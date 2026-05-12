@@ -24,6 +24,12 @@ if (!class_exists('\PHPUnit\Framework\TestCase') && class_exists('\PHPUnit_Frame
 // Needed to let Cache work
 $GLOBALS['egw_info']['server']['temp_dir'] = '/tmp';
 $GLOBALS['egw_info']['server']['install_id'] = 'PHPUnit test';
+// In CI/testing, align server webserver_url with EGW_URL when provided.
+if (($egw_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EGW_URL'] ?? null)))
+{
+	$path = parse_url($egw_url, PHP_URL_PATH);
+	$GLOBALS['egw_info']['server']['webserver_url'] = $path ?: $egw_url;
+}
 // Optional CI-only switch to disable custom push backends (eg. swoolepush)
 // during PHPUnit runs to avoid network retries/backoff impacting runtime.
 if ((string)getenv('EGW_DISABLE_PUSH_BACKENDS') === '1')
