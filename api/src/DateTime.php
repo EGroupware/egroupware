@@ -645,8 +645,9 @@ class DateTime extends \DateTime
 			$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
 		}
 		self::setUserPrefs($GLOBALS['egw_info']['user']['preferences']['common']['tz'],
-			$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
-			$GLOBALS['egw_info']['user']['preferences']['common']['timeformat']);
+		                   $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] ?? 'Y-m-d',
+		                   $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] ?? 'H:i'
+		);
 	}
 
 	/**
