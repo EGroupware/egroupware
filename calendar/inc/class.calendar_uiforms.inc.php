@@ -2731,6 +2731,13 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		$changes = array_diff_assoc($event_cmp, $old_cmp);
+		foreach(['start', 'end'] as $name)
+		{
+			if(isset($changes[$name]) && isset($event[$name]) && $event[$name] instanceof Api\DateTime)
+			{
+				$changes[$name] = clone $event[$name];
+			}
+		}
 
 		if (!($changes['recure'] = array_values(array_filter(array_keys($changes), static function($name)
 		{
