@@ -24,7 +24,7 @@ and others. Do not assume changes are isolated to one app without checking share
 ### Repository shape
 
 - Backend code is primarily PHP.
-- Frontend code includes TypeScript, JavaScript, CSS, HTML, and build tooling.
+- Frontend code includes TypeScript, CSS, HTML, and build tooling.
 - Shared backend framework code lives under `api/`.
 - Frontend framework code lives under `kdots/` and `api/js/etemplate`.
 - Database setup and upgrade logic lives under `setup/` and app-specific setup directories.
@@ -55,6 +55,7 @@ Primary expectations:
 - Do not remove legacy compatibility code without explicit approval.
 - Check whether tests, migrations, translations, or documentation need updates.
 - Do not make commits without explicit instructions.
+- Do not modify generated JavaScript files, they're automatically built.
 
 ## Coding standards
 
