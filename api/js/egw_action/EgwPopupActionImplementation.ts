@@ -142,7 +142,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 				_selected[0].parent.manager.data.menu = menu;
 			}
 
-			menu.showAt(_context.posx, _context.posy);
+			menu.showAt(_context.posx, _context.posy, true);
 
 			return true;
         } else {
