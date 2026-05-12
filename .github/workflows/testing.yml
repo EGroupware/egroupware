@@ -339,39 +339,8 @@ jobs:
                 php -r '\''$fp=@fsockopen("127.0.0.1",8081,$errno,$errstr,0.2); if($fp){fclose($fp); exit(0);} exit(1);'\'' && break
                 sleep 1
               done
-              php -d log_errors=1 -d error_log=/tmp/egw-phpunit-error.log \
-                vendor/bin/phpunit --configuration doc/phpunit.xml \
-                --debug --log-junit /tmp/phpunit-junit.xml 2>&1 | tee /tmp/phpunit-console.log
+              php vendor/bin/phpunit --configuration doc/phpunit.xml
             '
-
-      - name: Dump container logs
-        if: always()
-        run: |
-          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          $COMPOSE logs egroupware db || true
-          $COMPOSE exec -T egroupware sh -lc 'test -f /tmp/egw-phpunit-error.log && tail -n 400 /tmp/egw-phpunit-error.log || true'
-          EGROUPWARE_CID="$($COMPOSE ps -q egroupware || true)"
-          if [ -n "${EGROUPWARE_CID:-}" ]; then
-            docker cp "$EGROUPWARE_CID:/tmp/phpunit-junit.xml" "$GITHUB_WORKSPACE/phpunit-junit.xml" || true
-            docker cp "$EGROUPWARE_CID:/tmp/phpunit-console.log" "$GITHUB_WORKSPACE/phpunit-console.log" || true
-            docker cp "$EGROUPWARE_CID:/tmp/egw-phpunit-error.log" "$GITHUB_WORKSPACE/egw-phpunit-error.log" || true
-            docker cp "$EGROUPWARE_CID:/tmp/egw-phpunit-http.log" "$GITHUB_WORKSPACE/egw-phpunit-http.log" || true
-          fi
-
-      - name: Upload PHPUnit diagnostics
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: phpunit-diagnostics
-          if-no-files-found: warn
-          path: |
-            ${{ github.workspace }}/phpunit-junit.xml
-            ${{ github.workspace }}/phpunit-console.log
-            ${{ github.workspace }}/egw-phpunit-error.log
-            ${{ github.workspace }}/egw-phpunit-http.log
-
       - name: Tear down
         if: always()
         run: |

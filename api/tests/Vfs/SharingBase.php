@@ -521,7 +521,21 @@ class SharingBase extends LoggedInTest
 			echo __METHOD__ . "('$path',$mode)\n";
 		}
 		// Setup - create path and share
-		$_SERVER['HTTP_HOST'] = 'localhost';
+		$host = 'localhost';
+		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'] ?? null;
+		if (empty($webserver_url))
+		{
+			$webserver_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EGW_URL'] ?? null);
+		}
+		if (!empty($webserver_url))
+		{
+			$parts = parse_url($webserver_url);
+			if (!empty($parts['host']))
+			{
+				$host = $parts['host'].(!empty($parts['port']) ? ':'.$parts['port'] : '');
+			}
+		}
+		$_SERVER['HTTP_HOST'] = $host;
 		$share = $this->createShare($path, $mode, $extra);
 		$link = Vfs\Sharing::share2link($share);
 
@@ -650,40 +664,33 @@ class SharingBase extends LoggedInTest
 	 */
 	public function checkSharedFile($link, $mimetype, $share)
 	{
-		$context = stream_context_create(
-				array(
-						'http' => array(
-								'method' => 'HEAD',
-				        'header' => "Cookie: XDEBUG_SESSION=PHPSTORM;".Api\Session::EGW_SESSION_NAME.'=' . $share['share_with']
-						)
-				)
-		);
-		$headers = @get_headers($link, false, $context);
-		if(!$headers || !isset($headers[0]))
+		$curl = curl_init($link);
+		curl_setopt($curl, CURLOPT_NOBODY, true);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 3);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 15);
+		curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
+		$cookie = 'XDEBUG_SESSION=PHPSTORM';
+		if(($GLOBALS['egw']->session->sessionid ?? null) || ($share['share_with'] ?? null))
 		{
-			$this->markTestSkipped("No webserver response for share link '$link'");
+			$session_id = ($GLOBALS['egw']->session->sessionid ?? null) ?: $share['share_with'];
+			$cookie .= ';'.Api\Session::EGW_SESSION_NAME.'='.$session_id;
 		}
-		$this->assertEquals('200', substr($headers[0], 9, 3), 'Did not find the file, got ' . $headers[0]);
+		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+		curl_exec($curl);
+		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		$content_type = (string)curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
+		$curl_errno = curl_errno($curl);
+		$curl_error = curl_error($curl);
+		curl_close($curl);
 
-		$indexed_headers = array();
-		foreach($headers as &$header)
+		if($http_code === 0)
 		{
-			list($key, $value) = explode(': ', $header);
-			if(is_string($indexed_headers[$key]))
-			{
-				$indexed_headers[$key] = array($indexed_headers[$key]);
-			}
-			if(is_array($indexed_headers[$key]))
-			{
-				$indexed_headers[$key][] = $value;
-			}
-			else
-			{
-				$indexed_headers[$key] = $value;
-			}
+			$this->markTestSkipped("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 		}
-
-		$this->assertStringContainsString($mimetype, $indexed_headers['Content-Type'], 'Wrong file type');
+		$this->assertEquals(200, $http_code, "Did not find the file, got HTTP status $http_code");
+		$this->assertStringContainsString($mimetype, $content_type, 'Wrong file type');
 	}
 
 	/**
