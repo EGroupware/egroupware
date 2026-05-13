@@ -120,6 +120,41 @@ class RecurrenceExceptionTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
+	 * Create a daily recurring event with explicit participants.
+	 *
+	 * @param array $participants participant map uid => status
+	 * @return int created event id
+	 */
+	protected function createDailyRecurringEventWithParticipants(array $participants) : int
+	{
+		$start = new Api\DateTime('now');
+		$start->modify('+1 day');
+		$start->setTime(9, 0, 0);
+		$end = clone $start;
+		$end->modify('+1 hour');
+		$recur_end = clone $start;
+		$recur_end->modify('+7 days');
+		$recur_end->setTime(0, 0, 0);
+
+		$event = [
+			'title' => 'Recurrence participant create test '.uniqid(),
+			'owner' => $GLOBALS['egw_info']['user']['account_id'],
+			'start' => $start,
+			'end' => $end,
+			'tzid' => 'UTC',
+			'recur_type' => MCAL_RECUR_DAILY,
+			'recur_enddate' => $recur_end,
+			'participants' => $participants,
+		];
+
+		$id = $this->bo->save($event);
+		$this->assertGreaterThan(0, $id, 'Recurring event with participants could not be created');
+		$this->event_ids[] = (int)$id;
+
+		return (int)$id;
+	}
+
+	/**
 	 * Create an exception event for one recurrence, optionally moved by days/hours.
 	 */
 	protected function createExceptionForRecurrence(int $cal_id, int $recur_start_server, int $move_hours = 2, int $move_days = 0) : int
@@ -325,6 +360,30 @@ class RecurrenceExceptionTest extends \EGroupware\Api\AppTest
 		$sorted_after = $after;
 		sort($sorted_after);
 		$this->assertEquals($expected, $sorted_after, 'Other recurrence starts were unexpectedly changed');
+	}
+
+	/**
+	 * Creating a recurring event with participants stores both recurrence and attendees.
+	 */
+	public function testCreateRecurringEventWithParticipants()
+	{
+		$owner = $GLOBALS['egw_info']['user']['account_id'];
+		$participant = $this->createSecondaryUser();
+
+		$cal_id = $this->createDailyRecurringEventWithParticipants([
+			$owner => 'A',
+			$participant => 'U',
+		]);
+		$event = $this->bo->read($cal_id, null, true, 'server');
+		$this->assertIsArray($event, 'Created recurring event could not be read');
+		$this->assertNotEquals(MCAL_RECUR_NONE, $event['recur_type'], 'Event should be recurring');
+		$this->assertArrayHasKey($owner, $event['participants'], 'Owner participant is missing');
+		$this->assertArrayHasKey($participant, $event['participants'], 'Additional participant is missing');
+		$this->assertSame('A', $event['participants'][$owner][0], 'Owner status mismatch');
+		$this->assertSame('U', $event['participants'][$participant][0], 'Additional participant status mismatch');
+
+		$starts = $this->recurrenceStarts($cal_id);
+		$this->assertGreaterThan(0, count($starts), 'Expected generated recurrences for participant series');
 	}
 
 	/**
