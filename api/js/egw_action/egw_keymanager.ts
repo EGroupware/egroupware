@@ -56,24 +56,63 @@ export function egw_keycode_makeValid(_keyCode)
 	return -1;
 }
 
-function _egw_nodeIsInInput(_node)
+/**
+ * Determines whether a given DOM node should be treated as an input field or not
+ *
+ * The check includes:
+ * - Standard HTML form elements (input, select, textarea, button)
+ * - Custom EGroupware et2 widgets (e.g. et2-textbox, et2-select, etc.)
+ * - Any node implementing the "et2_IInput" interface
+ *
+ * The function traverses up the DOM tree from the given node until it
+ * reaches the document root, returning true if any matching element is found.
+ *
+ * Note:
+ * - Nodes with tag names listed in `excludedTags` (e.g. "et2-tabbox")
+ *   are ignored for matching, but traversal continues upward.
+ *   et2-tabbox must be excluded because otherwise the processing stops there and key press, i.e. arrow up and arrow down cannot be processed for the child nodes.
+ *   This would prevent scrolling the nextmatch rows using the keybord if the nextmatch is inside an et2-tabbox.
+ *   Maybe also other "Layout" widgets have to be excluded.
+ *
+ * @param {Node|null|undefined} node - The starting DOM node to evaluate.
+ * @returns {boolean} True if the node is inside or is an input-like element,
+ *                    otherwise false.
+ */
+function _egw_nodeIsInInput(node)
 {
-	if ((_node != null) && (_node != document))
+	const inputTags = new Set([
+		"input",
+		"select",
+		"textarea",
+		"button",
+		"et2-textbox",
+		"et2-number",
+		"et2-searchbox",
+		"et2-select",
+		"et2-textarea",
+		"et2-button"
+	]);
+
+	const excludedTags = new Set(["et2-tabbox"]);
+
+	while (node && node !== document)
 	{
-		const tagName = _node.tagName.toLowerCase();
-		if(typeof _node.implements === "function" && _node.implements("et2_IInput") ||
-			["input", "select", 'textarea', 'button'].indexOf(tagName) != -1 ||
-			['et2-textbox', 'et2-number', 'et2-searchbox', 'et2-select', 'et2-textarea', 'et2-button'].indexOf(tagName) != -1)
+		const tagName = node.tagName?.toLowerCase();
+
+		const isEt2Input =
+			typeof node.implements === "function" &&
+			node.implements("et2_IInput");
+
+		if (!excludedTags.has(tagName) && (isEt2Input || inputTags.has(tagName)))
 		{
 			return true;
-		} else
-		{
-			return _egw_nodeIsInInput(_node.parentNode);
 		}
-	} else
-	{
-		return false;
+
+		node = node.parentNode;
 	}
+
+	return false;
+
 }
 
 /**
