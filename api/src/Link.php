@@ -489,7 +489,7 @@ class Link extends Link\Storage
 	 * returns array of links to $app,$id (reimplemented to deal with not yet created items)
 	 *
 	 * @param string $app appname
-	 * @param string|array $id id(s) in $app
+	 * @param int|string|array $id id(s) in $app
 	 * @param string $only_app ='' if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
 	 * @param string $order ='link_lastmod DESC' defaults to newest links first
 	 * @param boolean $cache_titles =false should all titles be queryed and cached (allows to query each link app only once!)
@@ -502,7 +502,8 @@ class Link extends Link\Storage
 	{
 		if (self::DEBUG) echo "<p>Link::get_links(app='$app',id='$id',only_app='$only_app',order='$order',deleted='$deleted')</p>\n";
 
-		if (is_array($id) || !$id)
+		// $id is an array of not yet created links --> search them instead of the DB
+		if (is_array($id) && is_array($id[0]??null) || !$id)
 		{
 			$ids = array();
 			if (is_array($id))

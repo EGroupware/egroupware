@@ -1014,7 +1014,10 @@ class timesheet_ui extends timesheet_bo
 			'pm_id'     => array(lang('No project')),
 			'cat_id'    => array(array('value' => '', 'label' => lang('all categories')),
 								 array('value' => 0, 'label' => lang('None'))),
-			'ts_status' => $this->status_labels + array(lang('No status')),
+			'ts_status' => $this->status_labels + [
+				self::BILLABLE => lang('Billable').'...',
+				'0' => lang('No status'),
+			],
 		);
 		// Special handling for having access to a LOT of accounts - use a regular account widget
 		if(count(array_filter($this->grants, static function($grant)

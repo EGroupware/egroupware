@@ -34,6 +34,11 @@ class timesheet_bo extends Api\Storage
 	const DELETED_STATUS = -1;
 
 	/**
+	 * Pseudo status/filter for all billable status: status not flagged as "invoiced" or "not_to_invoice"
+	 */
+	const BILLABLE = '**billable**';
+
+	/**
 	 * Timesheets Api\Config data
 	 *
 	 * @var array
@@ -289,11 +294,11 @@ class timesheet_bo extends Api\Storage
 	/**
 	 * Make nice labels with leading spaces depending on depth
 	 *
-	 * @param statuses List of statuses to process, with sub-statuses in a 'substatus' array
-	 * @param labels Array of labels, pass array() and labels will be built in it
-	 * @param depth Current depth
+	 * @param array $statuses List of statuses to process, with sub-statuses in a 'substatus' array
+	 * @param array $labels Array of labels, pass array() and labels will be built in it
+	 * @param int $depth Current depth
 	 *
-	 * @return None, labels are built in labels parameter
+	 * @return void labels are built in labels parameter
 	 */
 	protected function make_status_labels($statuses, &$labels, $depth=0)
 	{
@@ -525,7 +530,14 @@ class timesheet_bo extends Api\Storage
 		}
 		if(isset($filter['ts_status']) && $filter['ts_status'] && $filter['ts_status'] != self::DELETED_STATUS)
 		{
-			if ($filter['ts_status'] !== 'all')
+			if ($filter['ts_status'] == self::BILLABLE)
+			{
+				$filter[] = '(ts_status IS NULL OR ts_status IN ('.
+					implode(',',array_keys(array_filter($this->status_labels_config,
+						static fn($status) => !($status['invoiced'] || $status['not_to_invoice'])))).'))';
+				unset($filter['ts_status']); // no status set
+			}
+			elseif ($filter['ts_status'] !== 'all')
 			{
 				$filter['ts_status'] = $this->get_sub_status($filter['ts_status']);
 			}
@@ -937,12 +949,13 @@ class timesheet_bo extends Api\Storage
 	{
 		$limit = false;
 		$need_count = false;
-		if($options['start'] || $options['num_rows']) {
+		if (!empty($options['start']) || !empty($options['num_rows']))
+		{
 			$limit = array($options['start'], $options['num_rows']);
 			$need_count = true;
 		}
 		$result = array();
-		foreach((array) $this->search($pattern,false,'','','%',false,'OR', $limit, null, '', $need_count) as $ts )
+		foreach((array) $this->search($pattern,false,'ts_start DESC','','%',false,'OR', $limit, null, '', $need_count) as $ts )
 		{
 			if ($ts) $result[$ts['ts_id']] = $this->link_title($ts);
 		}

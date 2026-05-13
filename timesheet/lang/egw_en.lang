@@ -9,6 +9,7 @@ and its members	timesheet	en	And its members
 applies the changes	timesheet	en	Applies the changes
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	en	Apply the action on the whole query, NOT only the shown timesheets!
 ask to start and stop working time with session	timesheet	en	Ask to start and stop working time with session
+billable	timesheet	en	billable
 both: allow to use projectmanager and free project-names	admin	en	Both: allow to use Project Manager and free project names
 by	timesheet	en	by
 category for 'working time'	admin	en	Category for 'Working time'
