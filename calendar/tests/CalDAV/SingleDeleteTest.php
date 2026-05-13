@@ -33,6 +33,10 @@ use EGroupware\Api\Acl;
  */
 class SingleDeleteTest extends CalDAVTest
 {
+	protected const FIXTURE_BOSS_ATTENDEE = __DIR__.'/fixtures/single-delete-boss-attendee.ics';
+	protected const FIXTURE_BOSS_ORGANIZER = __DIR__.'/fixtures/single-delete-boss-organizer.ics';
+	protected const FIXTURE_SECRETARY_ATTENDEE = __DIR__.'/fixtures/single-delete-secretary-attendee.ics';
+
 	/**
 	 * Users and their ACL for the test
 	 *
@@ -71,17 +75,30 @@ class SingleDeleteTest extends CalDAVTest
 		$this->cal_ids = [];
 	}
 
-	protected function addCalendarID($response)
+	protected function addCalendarID($response) : int
 	{
 		$array = explode(":", trim(($response->getHeader('ETag')[0] ?? ""), '[]"') ?? "");
 		if(count($array) && $array[0])
 		{
-			$this->cal_ids[] = (int)$array[0];
+			$cal_id = (int)$array[0];
+			$this->cal_ids[] = $cal_id;
+			return $cal_id;
 		}
+		return 0;
+	}
+
+	protected function fixtureIcal(string $fixture_file) : string
+	{
+		$ical = file_get_contents($fixture_file);
+		$this->assertNotFalse($ical, "Unable to load fixture $fixture_file");
+		return $ical;
 	}
 
 	/**
-	 * Check created users
+	 * Verify test principals are reachable after fixture setup.
+	 *
+	 * Pass criteria:
+	 * - Each configured user principal returns HTTP 207 on PROPFIND.
 	 */
 	public function testPrincipals()
 	{
@@ -98,59 +115,35 @@ class SingleDeleteTest extends CalDAVTest
 
 	const EVENT_BOSS_ATTENDEE_ORGANIZER_URL = '/other/calendar/new-event-boss-attendee-123456789-new.ics';
 	const EVENT_BOSS_ATTENDEE_URL = '/boss/calendar/new-event-boss-attendee-123456789-new.ics';
-	const EVENT_BOSS_ATTENDEE_ICAL = <<<EOICAL
-BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VTIMEZONE
-TZID:Europe/Berlin
-BEGIN:DAYLIGHT
-TZOFFSETFROM:+0100
-TZOFFSETTO:+0200
-TZNAME:CEST
-DTSTART:19700329T020000
-RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
-END:DAYLIGHT
-BEGIN:STANDARD
-TZOFFSETFROM:+0200
-TZOFFSETTO:+0100
-TZNAME:CET
-DTSTART:19701025T030000
-RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
-END:STANDARD
-END:VTIMEZONE
-BEGIN:VEVENT
-DTSTART;TZID=Europe/Berlin:20110406T210000
-DTEND;TZID=Europe/Berlin:20110406T220000
-DTSTAMP:20110406T183747Z
-LAST-MODIFIED:20110406T183747Z
-LOCATION:Somewhere
-SUMMARY:Tonight
-ORGANIZER;CN="Other User":mailto:other@example.org
-ATTENDEE;CN="Other User";CUTYPE=INDIVIDUAL;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:other@example.org
-ATTENDEE;CN="Boss User";CUTYPE=INDIVIDUAL;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;RSVP=TRUE:mailto:boss@example.org
-UID:new-event-boss-attendee-123456789-new
-END:VEVENT
-END:VCALENDAR
-EOICAL;
 
 	/**
 	 * Check secretary deletes in boss's calendar event he is an attendee / invited
+	 *
+	 * Setup:
+	 * - Create event where organizer is "other" and boss is attendee.
+	 *
+	 * Pass criteria:
+	 * - Secretary deleting in boss attendee calendar rejects/declines (204) without removing organizer copy.
+	 * - Secretary cannot delete organizer copy (403).
+	 * - Boss can delete/reject in both attendee and organizer views (204).
+	 * - Organizer can finally delete event and GET then returns 404.
 	 *
 	 * @throws \Horde_Icalendar_Exception
 	 */
 	public function testSecretaryDeletesBossAttendee()
 	{
+		$event_ical = $this->fixtureIcal(self::FIXTURE_BOSS_ATTENDEE);
 		// create invitation by organizer
 		$response = $this->getClient('other')->put($this->url(self::EVENT_BOSS_ATTENDEE_ORGANIZER_URL), [
 			RequestOptions::HEADERS => [
 				'Content-Type' => 'text/calendar',
 				'Prefer' => 'return=representation'
 			],
-			RequestOptions::BODY => self::EVENT_BOSS_ATTENDEE_ICAL,
+			RequestOptions::BODY => $event_ical,
 		]);
 		$this->addCalendarID($response);
 		$this->assertHttpStatus([200,201], $response);
-		$this->assertIcal(self::EVENT_BOSS_ATTENDEE_ICAL, $response->getBody());
+		$this->assertIcal($event_ical, $response->getBody());
 
 		// secretrary deletes event in boss's calendar
 		$response = $this->getClient('secretary')->delete($this->url(self::EVENT_BOSS_ATTENDEE_URL));
@@ -159,7 +152,7 @@ EOICAL;
 		// use organizer to check event still exists and boss rejected
 		$response = $this->getClient('other')->get($this->url(self::EVENT_BOSS_ATTENDEE_ORGANIZER_URL));
 		$this->assertHttpStatus(200, $response, 'Check event still exists after DELETE in attendee calendar');
-		$this->assertIcal(self::EVENT_BOSS_ATTENDEE_ICAL, $response->getBody(),
+		$this->assertIcal($event_ical, $response->getBody(),
 			'Boss should have declined the invitation',
 			['vEvent' => [['ATTENDEE' => ['mailto:boss@example.org' => ['PARTSTAT' => 'DECLINED', 'RSVP' => 'FALSE']]]]]
 		);
@@ -187,59 +180,33 @@ EOICAL;
 
 	const EVENT_BOSS_ORGANIZER_URL = '/boss/calendar/new-event-boss-organizer-123456789-new.ics';
 	const EVENT_BOSS_ORGANIZER_OTHER_URL = '/other/calendar/new-event-boss-organizer-123456789-new.ics';
-	const EVENT_BOSS_ORGANIZER_ICAL = <<<EOICAL
-BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VTIMEZONE
-TZID:Europe/Berlin
-BEGIN:DAYLIGHT
-TZOFFSETFROM:+0100
-TZOFFSETTO:+0200
-TZNAME:CEST
-DTSTART:19700329T020000
-RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
-END:DAYLIGHT
-BEGIN:STANDARD
-TZOFFSETFROM:+0200
-TZOFFSETTO:+0100
-TZNAME:CET
-DTSTART:19701025T030000
-RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
-END:STANDARD
-END:VTIMEZONE
-BEGIN:VEVENT
-DTSTART;TZID=Europe/Berlin:20110406T210000
-DTEND;TZID=Europe/Berlin:20110406T220000
-DTSTAMP:20110406T183747Z
-LAST-MODIFIED:20110406T183747Z
-LOCATION:Somewhere
-SUMMARY:Tonight
-ORGANIZER;CN="Boss User":mailto:boss@example.org
-ATTENDEE;CN="Boss User";CUTYPE=INDIVIDUAL;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:boss@example.org
-ATTENDEE;CN="Other User";CUTYPE=INDIVIDUAL;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;RSVP=TRUE:mailto:other@example.org
-UID:new-event-boss-organizer-123456789-new
-END:VEVENT
-END:VCALENDAR
-EOICAL;
 
 	/**
 	 * Check secretary deletes for boss, which is organizer of event
+	 *
+	 * Setup:
+	 * - Create event where boss is organizer and other is attendee.
+	 *
+	 * Pass criteria:
+	 * - Secretary (with delegated rights) can delete organizer event (204).
+	 * - Organizer copy is gone afterwards (404).
 	 *
 	 * @throws \Horde_Icalendar_Exception
 	 */
 	public function testSecretaryDeletesBossOrganizer()
 	{
+		$event_ical = $this->fixtureIcal(self::FIXTURE_BOSS_ORGANIZER);
 		// create invitation by boss as organizer
 		$response = $this->getClient('boss')->put($this->url(self::EVENT_BOSS_ORGANIZER_URL), [
 			RequestOptions::HEADERS => [
 				'Content-Type' => 'text/calendar',
 				'Prefer' => 'return=representation'
 			],
-			RequestOptions::BODY => self::EVENT_BOSS_ORGANIZER_ICAL,
+			RequestOptions::BODY => $event_ical,
 		]);
 		$this->addCalendarID($response);
 		$this->assertHttpStatus([200,201], $response);
-		$this->assertIcal(self::EVENT_BOSS_ORGANIZER_ICAL, $response->getBody());
+		$this->assertIcal($event_ical, $response->getBody());
 
 		// attendee deletes/rejects event in his calendar
 		$response = $this->getClient('other')->delete($this->url(self::EVENT_BOSS_ORGANIZER_OTHER_URL));
@@ -257,21 +224,29 @@ EOICAL;
 	/**
 	 * Check organizer (boss) can delete event in his calendar
 	 *
+	 * Setup:
+	 * - Create event where boss is organizer and other is attendee.
+	 *
+	 * Pass criteria:
+	 * - Organizer delete returns 204.
+	 * - Event is removed for both organizer and attendee views (404).
+	 *
 	 * @throws \Horde_Icalendar_Exception
 	 */
 	public function testOrganizerDeletes()
 	{
+		$event_ical = $this->fixtureIcal(self::FIXTURE_BOSS_ORGANIZER);
 		// create invitation by boss as organizer
 		$response = $this->getClient('boss')->put($this->url(self::EVENT_BOSS_ORGANIZER_URL), [
 			RequestOptions::HEADERS => [
 				'Content-Type' => 'text/calendar',
 				'Prefer' => 'return=representation'
 			],
-			RequestOptions::BODY => self::EVENT_BOSS_ORGANIZER_ICAL,
+			RequestOptions::BODY => $event_ical,
 		]);
 		$this->addCalendarID($response);
 		$this->assertHttpStatus([200,201], $response);
-		$this->assertIcal(self::EVENT_BOSS_ORGANIZER_ICAL, $response->getBody());
+		$this->assertIcal($event_ical, $response->getBody());
 
 		// organizer deletes event in his calendar
 		$response = $this->getClient('boss')->delete($this->url(self::EVENT_BOSS_ORGANIZER_URL));
@@ -288,59 +263,33 @@ EOICAL;
 
 	const EVENT_SECRETARY_ATTENDEE_URL = '/secretary/calendar/new-event-secreatary-attendee-123456789-new.ics';
 	const EVENT_SECRETARY_ATTENDEE_ORGANIZER_URL = '/boss/calendar/new-event-secreatary-attendee-123456789-new.ics';
-	const EVENT_SECRETARY_ATTENDEE_ICAL = <<<EOICAL
-BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VTIMEZONE
-TZID:Europe/Berlin
-BEGIN:DAYLIGHT
-TZOFFSETFROM:+0100
-TZOFFSETTO:+0200
-TZNAME:CEST
-DTSTART:19700329T020000
-RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
-END:DAYLIGHT
-BEGIN:STANDARD
-TZOFFSETFROM:+0200
-TZOFFSETTO:+0100
-TZNAME:CET
-DTSTART:19701025T030000
-RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
-END:STANDARD
-END:VTIMEZONE
-BEGIN:VEVENT
-DTSTART;TZID=Europe/Berlin:20110406T210000
-DTEND;TZID=Europe/Berlin:20110406T220000
-DTSTAMP:20110406T183747Z
-LAST-MODIFIED:20110406T183747Z
-LOCATION:Somewhere
-SUMMARY:Tonight
-ORGANIZER;CN="Boss User":mailto:boss@example.org
-ATTENDEE;CN="Boss User";CUTYPE=INDIVIDUAL;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:boss@example.org
-ATTENDEE;CN="Secretary User";CUTYPE=INDIVIDUAL;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;RSVP=TRUE:mailto:secretary@example.org
-UID:new-event-secreatary-attendee-123456789-new
-END:VEVENT
-END:VCALENDAR
-EOICAL;
 
 	/**
 	 * Check secretary as attendee deletes event
+	 *
+	 * Setup:
+	 * - Create event where boss is organizer and secretary is attendee.
+	 *
+	 * Pass criteria:
+	 * - Secretary delete in attendee calendar returns 204.
+	 * - Organizer copy is deleted (404).
 	 *
 	 * @throws \Horde_Icalendar_Exception
 	 */
 	public function testSecretaryAttendeeDeletes()
 	{
+		$event_ical = $this->fixtureIcal(self::FIXTURE_SECRETARY_ATTENDEE);
 		// create invitation by boss as organizer
 		$response = $this->getClient('boss')->put($this->url(self::EVENT_SECRETARY_ATTENDEE_ORGANIZER_URL), [
 			RequestOptions::HEADERS => [
 				'Content-Type' => 'text/calendar',
 				'Prefer' => 'return=representation'
 			],
-			RequestOptions::BODY => self::EVENT_SECRETARY_ATTENDEE_ICAL,
+			RequestOptions::BODY => $event_ical,
 		]);
 		$this->addCalendarID($response);
 		$this->assertHttpStatus([200,201], $response);
-		$this->assertIcal(self::EVENT_SECRETARY_ATTENDEE_ICAL, $response->getBody());
+		$this->assertIcal($event_ical, $response->getBody());
 
 		// secretary deletes in her calendar
 		$response = $this->getClient('secretary')->delete($this->url(self::EVENT_SECRETARY_ATTENDEE_URL));
@@ -354,21 +303,30 @@ EOICAL;
 	/**
 	 * Check secretary as attendee deletes event with CalDAVSynchronizer
 	 *
+	 * Setup:
+	 * - Create event where boss is organizer and secretary is attendee.
+	 * - Execute delete with `User-Agent: CalDAVSynchronizer`.
+	 *
+	 * Pass criteria:
+	 * - Attendee delete/reject returns 204 but organizer copy remains (200) with secretary declined.
+	 * - Organizer delete with same user-agent still deletes event (final 404).
+	 *
 	 * @throws \Horde_Icalendar_Exception
 	 */
 	public function testSecretaryAttendeeDeletesCalDAVSynchronizer()
 	{
+		$event_ical = $this->fixtureIcal(self::FIXTURE_SECRETARY_ATTENDEE);
 		// create invitation by boss as organizer
 		$response = $this->getClient('boss')->put($this->url(self::EVENT_SECRETARY_ATTENDEE_ORGANIZER_URL), [
 			RequestOptions::HEADERS => [
 				'Content-Type' => 'text/calendar',
 				'Prefer' => 'return=representation'
 			],
-			RequestOptions::BODY => self::EVENT_SECRETARY_ATTENDEE_ICAL,
+			RequestOptions::BODY => $event_ical,
 		]);
 		$this->addCalendarID($response);
 		$this->assertHttpStatus([200,201], $response);
-		$this->assertIcal(self::EVENT_SECRETARY_ATTENDEE_ICAL, $response->getBody());
+		$this->assertIcal($event_ical, $response->getBody());
 
 		// secretary deletes in her calendar with CalDAVSynchronizer
 		$response = $this->getClient('secretary')->delete($this->url(self::EVENT_SECRETARY_ATTENDEE_URL),
@@ -378,7 +336,7 @@ EOICAL;
 		// use organizer to check it's NOT deleted, as CalDAVSynchronizer / Outlook does not distinguish between reject and delete
 		$response = $this->getClient('boss')->get($this->url(self::EVENT_SECRETARY_ATTENDEE_ORGANIZER_URL));
 		$this->assertHttpStatus(200, $response, "Check event NOT deleted by secretary");
-		$this->assertIcal(self::EVENT_SECRETARY_ATTENDEE_ICAL, $response->getBody(),
+		$this->assertIcal($event_ical, $response->getBody(),
 			'Secretary should have declined the invitation',
 			['vEvent' => [['ATTENDEE' => ['mailto:secretary@example.org' => ['PARTSTAT' => 'DECLINED', 'RSVP' => 'FALSE']]]]]
 		);

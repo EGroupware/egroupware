@@ -11,164 +11,68 @@ namespace EGroupware\calendar;
 require_once __DIR__.'/../../../api/tests/CalDAVTest.php';
 
 use EGroupware\Api\CalDAVTest;
-use GuzzleHttp\RequestOptions;
 
 class RecurrenceExceptionParticipantTest extends CalDAVTest
 {
 	protected const ATTENDEE1_MAIL = 'participant-one@example.org';
 	protected const ATTENDEE2_MAIL = 'participant-two@example.org';
+	protected const FIXTURE_VCALENDAR = __DIR__.'/fixtures/recurrence-participant-vcalendar.ics.tpl';
+	protected const FIXTURE_MASTER = __DIR__.'/fixtures/recurrence-participant-master.ics.tpl';
+	protected const FIXTURE_EXCEPTION = __DIR__.'/fixtures/recurrence-participant-exception.ics.tpl';
 
-	/**
-	 * Created cal_ids to clean up.
-	 *
-	 * @var int[]
-	 */
-	protected static $cal_ids = [];
-
-	/**
-	 * Created UIDs to clean up.
-	 *
-	 * @var string[]
-	 */
-	protected static $uids = [];
-
-	public static function setUpBeforeClass() : void
+	protected function renderVcalendar(array $components) : string
 	{
-		parent::setUpBeforeClass();
-	}
-
-	public static function tearDownAfterClass() : void
-	{
-		if(!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
-		{
-			$so = new \calendar_so();
-			foreach(array_unique(self::$cal_ids) as $cal_id)
-			{
-				if((int)$cal_id > 0)
-				{
-					$so->delete((int)$cal_id);
-				}
-			}
-			foreach(array_unique(self::$uids) as $uid)
-			{
-				foreach(array_keys($so->read($uid) ?: []) as $cal_id)
-				{
-					$so->delete((int)$cal_id);
-				}
-			}
-		}
-		self::$cal_ids = [];
-		self::$uids = [];
-
-		parent::tearDownAfterClass();
-	}
-
-	/**
-	 * Extract numeric cal_id from ETag header.
-	 */
-	protected function addCalendarID($response) : int
-	{
-		$etag = $response->getHeader('ETag')[0] ?? '';
-		$array = explode(':', trim($etag, '[]"'));
-		$cal_id = !empty($array[0]) ? (int)$array[0] : 0;
-		if($cal_id > 0)
-		{
-			self::$cal_ids[] = $cal_id;
-		}
-		return $cal_id;
-	}
-
-	/**
-	 * Organizer account_lid from phpunit config.
-	 */
-	protected function organizerLid() : string
-	{
-		return $GLOBALS['EGW_USER'];
-	}
-
-	/**
-	 * Organizer email used in iCal payload.
-	 */
-	protected function organizerMail() : string
-	{
-		return !empty($GLOBALS['egw_info']['user']['account_email']) ?
-			$GLOBALS['egw_info']['user']['account_email'] :
-			$this->organizerLid().'@example.org';
-	}
-
-	/**
-	 * Build event URL in organizer calendar.
-	 */
-	protected function eventUrl(string $uid) : string
-	{
-		return '/'.$this->organizerLid().'/calendar/'.$uid.'.ics';
-	}
-
-	/**
-	 * Build event URL in a specific user's calendar.
-	 */
-	protected function eventUrlFor(string $user, string $uid) : string
-	{
-		return '/'.$user.'/calendar/'.$uid.'.ics';
-	}
-
-	/**
-	 * Generate unique test UID.
-	 */
-	protected function makeUid(string $prefix) : string
-	{
-		$uid = $prefix.'-'.gmdate('YmdHis').'-'.bin2hex(random_bytes(2));
-		self::$uids[] = $uid;
-		return $uid;
-	}
-
-	/**
-	 * Create recurring master event in organizer calendar via CalDAV PUT.
-	 */
-	protected function putEvent(string $uid, string $ical, ?string $user=null) : int
-	{
-		$user = $user ?: $this->organizerLid();
-		$response = $this->getClient($user)->put($this->url($this->eventUrlFor($user, $uid)), [
-			RequestOptions::HEADERS => [
-				'Content-Type' => 'text/calendar',
-				'Prefer' => 'return=representation',
-			],
-			RequestOptions::BODY => $ical,
+		return $this->renderFixture(self::FIXTURE_VCALENDAR, [
+			'{{VEVENTS}}' => implode('', $components),
 		]);
-		$this->assertHttpStatus([200, 201], $response);
-		return $this->addCalendarID($response);
 	}
 
-	protected function getEventIcal(string $uid, ?string $user=null) : string
+	protected function renderMasterComponent(
+		string $uid,
+		string $dtstamp,
+		string $master_start,
+		string $master_end,
+		bool $include_attendee2=false,
+		string $summary='Recurring participant test'
+	) : string
 	{
-		$user = $user ?: $this->organizerLid();
-		$response = $this->getClient($user)->get($this->url($this->eventUrlFor($user, $uid)));
-		$this->assertHttpStatus(200, $response);
-		return (string)$response->getBody();
+		return $this->renderFixture(self::FIXTURE_MASTER, [
+			'{{UID}}' => $uid,
+			'{{DTSTAMP}}' => $dtstamp,
+			'{{MASTER_START}}' => $master_start,
+			'{{MASTER_END}}' => $master_end,
+			'{{SUMMARY}}' => $summary,
+			'{{ORGANIZER_MAIL}}' => $this->organizerMail(),
+			'{{ATTENDEE1_MAIL}}' => self::ATTENDEE1_MAIL,
+			'{{ATTENDEE2_LINE}}' => $include_attendee2 ?
+				"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE2_MAIL."\r\n" : '',
+		]);
 	}
 
-	protected function unfoldIcal(string $ical) : string
+	protected function renderExceptionComponent(
+		string $uid,
+		string $dtstamp,
+		string $recurrence_id,
+		string $exception_start,
+		string $exception_end,
+		string $attendee1_partstat='NEEDS-ACTION',
+		bool $include_attendee2=false,
+		string $summary='Recurring participant test exception'
+	) : string
 	{
-		return preg_replace("/\r\n[ \t]/", '', $ical);
-	}
-
-	/**
-	 * Return full VEVENT block containing a given RECURRENCE-ID.
-	 *
-	 * EGroupware export order may place RECURRENCE-ID late in the VEVENT, after
-	 * ATTENDEE lines. Assertions must therefore inspect the whole VEVENT block,
-	 * not only the substring after RECURRENCE-ID.
-	 */
-	protected function exceptionBlock(string $ical, string $recurrence_id) : string
-	{
-		$pattern = "/BEGIN:VEVENT\r\n(?:(?!BEGIN:VEVENT).)*RECURRENCE-ID:" .
-			preg_quote($recurrence_id, '/') .
-			"(?:(?!BEGIN:VEVENT).)*END:VEVENT/s";
-		if (preg_match($pattern, $ical, $matches))
-		{
-			return $matches[0];
-		}
-		return '';
+		return $this->renderFixture(self::FIXTURE_EXCEPTION, [
+			'{{UID}}' => $uid,
+			'{{DTSTAMP}}' => $dtstamp,
+			'{{RECURRENCE_ID}}' => $recurrence_id,
+			'{{EXCEPTION_START}}' => $exception_start,
+			'{{EXCEPTION_END}}' => $exception_end,
+			'{{SUMMARY}}' => $summary,
+			'{{ORGANIZER_MAIL}}' => $this->organizerMail(),
+			'{{ATTENDEE1_PARTSTAT}}' => $attendee1_partstat,
+			'{{ATTENDEE1_MAIL}}' => self::ATTENDEE1_MAIL,
+			'{{ATTENDEE2_LINE}}' => $include_attendee2 ?
+				"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE2_MAIL."\r\n" : '',
+		]);
 	}
 
 	/**
@@ -176,23 +80,13 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 	 */
 	protected function recurringIcal(string $uid, string $extra_components='') : string
 	{
-		$attendee1_mail = self::ATTENDEE1_MAIL;
-		return "BEGIN:VCALENDAR\r\n".
-			"VERSION:2.0\r\n".
-			"PRODID:-//EGroupware//CalDAV Test//EN\r\n".
-			"BEGIN:VEVENT\r\n".
-			"UID:$uid\r\n".
-			"DTSTAMP:20260511T100000Z\r\n".
-			"DTSTART:20300101T090000Z\r\n".
-			"DTEND:20300101T100000Z\r\n".
-			"RRULE:FREQ=DAILY;COUNT=6\r\n".
-			"SUMMARY:Recurring participant test\r\n".
-			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:$attendee1_mail\r\n".
-			"END:VEVENT\r\n".
-			$extra_components.
-			"END:VCALENDAR\r\n";
+		$master = $this->renderMasterComponent(
+			$uid,
+			'20260511T100000Z',
+			'20300101T090000Z',
+			'20300101T100000Z'
+		);
+		return $this->renderVcalendar([$master, $extra_components]);
 	}
 
 	/**
@@ -200,21 +94,15 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 	 */
 	protected function exceptionComponent(string $uid, string $attendee_partstat='NEEDS-ACTION', bool $include_attendee2=false) : string
 	{
-		$attendee1_mail = self::ATTENDEE1_MAIL;
-		$attendee2 = $include_attendee2 ?
-			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE2_MAIL."\r\n" : '';
-
-		return "BEGIN:VEVENT\r\n".
-			"UID:$uid\r\n".
-			"RECURRENCE-ID:20300102T090000Z\r\n".
-			"DTSTART:20300103T120000Z\r\n".
-			"DTEND:20300103T130000Z\r\n".
-			"SUMMARY:Recurring participant test exception\r\n".
-			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=$attendee_partstat;ROLE=REQ-PARTICIPANT:mailto:$attendee1_mail\r\n".
-			$attendee2.
-			"END:VEVENT\r\n";
+		return $this->renderExceptionComponent(
+			$uid,
+			'20260511T100000Z',
+			'20300102T090000Z',
+			'20300103T120000Z',
+			'20300103T130000Z',
+			$attendee_partstat,
+			$include_attendee2
+		);
 	}
 
 	/**
@@ -252,44 +140,36 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 		$recurrence2_moved_start_ical = $recurrence2_moved_start->format('Ymd\THis\Z');
 		$recurrence2_moved_end_ical = $recurrence2_moved_end->format('Ymd\THis\Z');
 
-		$master = "BEGIN:VEVENT\r\n".
-			"UID:$uid\r\n".
-			"DTSTAMP:$dtstamp\r\n".
-			"DTSTART:$master_start_ical\r\n".
-			"DTEND:$master_end_ical\r\n".
-			"RRULE:FREQ=DAILY;COUNT=6\r\n".
-			"SUMMARY:Recurring participant test\r\n".
-			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE1_MAIL."\r\n".
-			"END:VEVENT\r\n";
+		$master = $this->renderMasterComponent(
+			$uid,
+			$dtstamp,
+			$master_start_ical,
+			$master_end_ical
+		);
 
 		// Two overridden instances with different attendee status.
-		$overrides =
-			"BEGIN:VEVENT\r\n".
-			"UID:$uid\r\n".
-			"DTSTAMP:$dtstamp\r\n".
-			"RECURRENCE-ID:$recurrence1_ical\r\n".
-			"DTSTART:$recurrence1_moved_start_ical\r\n".
-			"DTEND:$recurrence1_moved_end_ical\r\n".
-			"SUMMARY:Recurring participant test exception accepted\r\n".
-			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE1_MAIL."\r\n".
-			"END:VEVENT\r\n".
-			"BEGIN:VEVENT\r\n".
-			"UID:$uid\r\n".
-			"DTSTAMP:$dtstamp\r\n".
-			"RECURRENCE-ID:$recurrence2_ical\r\n".
-			"DTSTART:$recurrence2_moved_start_ical\r\n".
-			"DTEND:$recurrence2_moved_end_ical\r\n".
-			"SUMMARY:Recurring participant test exception tentative\r\n".
-			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=TENTATIVE;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE1_MAIL."\r\n".
-			"END:VEVENT\r\n";
+		$exception1 = $this->renderExceptionComponent(
+			$uid,
+			$dtstamp,
+			$recurrence1_ical,
+			$recurrence1_moved_start_ical,
+			$recurrence1_moved_end_ical,
+			'ACCEPTED',
+			false,
+			'Recurring participant test exception accepted'
+		);
+		$exception2 = $this->renderExceptionComponent(
+			$uid,
+			$dtstamp,
+			$recurrence2_ical,
+			$recurrence2_moved_start_ical,
+			$recurrence2_moved_end_ical,
+			'TENTATIVE',
+			false,
+			'Recurring participant test exception tentative'
+		);
 
-		$this->putEvent($uid, "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//EGroupware//CalDAV Test//EN\r\n".$master.$overrides."END:VCALENDAR\r\n");
+		$this->putEvent($uid, $this->renderVcalendar([$master, $exception1, $exception2]));
 
 		$ical = $this->unfoldIcal($this->getEventIcal($uid));
 		$this->assertStringContainsString("RECURRENCE-ID:$recurrence1_ical", $ical);
@@ -368,23 +248,15 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 	{
 		$uid = $this->makeUid('caldav-add-participant-not-in-exc');
 		$attendee2_mail = self::ATTENDEE2_MAIL;
-		$ical_master_only = "BEGIN:VCALENDAR\r\n".
-			"VERSION:2.0\r\n".
-			"PRODID:-//EGroupware//CalDAV Test//EN\r\n".
-			"BEGIN:VEVENT\r\n".
-			"UID:$uid\r\n".
-			"DTSTAMP:20260511T100000Z\r\n".
-			"DTSTART:20300101T090000Z\r\n".
-			"DTEND:20300101T100000Z\r\n".
-			"RRULE:FREQ=DAILY;COUNT=6\r\n".
-			"SUMMARY:Recurring participant test\r\n".
-			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE1_MAIL."\r\n".
-			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:$attendee2_mail\r\n".
-			"END:VEVENT\r\n".
-			$this->exceptionComponent($uid, 'NEEDS-ACTION', false).
-			"END:VCALENDAR\r\n";
+		$master = $this->renderMasterComponent(
+			$uid,
+			'20260511T100000Z',
+			'20300101T090000Z',
+			'20300101T100000Z',
+			true
+		);
+		$exception = $this->exceptionComponent($uid, 'NEEDS-ACTION', false);
+		$ical_master_only = $this->renderVcalendar([$master, $exception]);
 		$this->putEvent($uid, $ical_master_only);
 
 		$ical_before = $this->unfoldIcal($this->getEventIcal($uid));
@@ -432,31 +304,23 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 		$exception_start_ical = $exception_start->format('Ymd\THis\Z');
 		$exception_end_ical = $exception_end->format('Ymd\THis\Z');
 
-		$master_with_added = "BEGIN:VEVENT\r\n".
-			"UID:$uid\r\n".
-			"DTSTAMP:$dtstamp\r\n".
-			"DTSTART:$master_start_ical\r\n".
-			"DTEND:$master_end_ical\r\n".
-			"RRULE:FREQ=DAILY;COUNT=6\r\n".
-			"SUMMARY:Recurring participant test\r\n".
-			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE1_MAIL."\r\n".
-			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:$attendee2_mail\r\n".
-			"END:VEVENT\r\n";
-		$exception_with_added = "BEGIN:VEVENT\r\n".
-			"UID:$uid\r\n".
-			"DTSTAMP:$dtstamp\r\n".
-			"RECURRENCE-ID:$exception_original_ical\r\n".
-			"DTSTART:$exception_start_ical\r\n".
-			"DTEND:$exception_end_ical\r\n".
-			"SUMMARY:Recurring participant test exception\r\n".
-			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
-			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE1_MAIL."\r\n".
-			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:$attendee2_mail\r\n".
-			"END:VEVENT\r\n";
-		$this->putEvent($uid, "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//EGroupware//CalDAV Test//EN\r\n".$master_with_added.$exception_with_added."END:VCALENDAR\r\n");
+		$master_with_added = $this->renderMasterComponent(
+			$uid,
+			$dtstamp,
+			$master_start_ical,
+			$master_end_ical,
+			true
+		);
+		$exception_with_added = $this->renderExceptionComponent(
+			$uid,
+			$dtstamp,
+			$exception_original_ical,
+			$exception_start_ical,
+			$exception_end_ical,
+			'NEEDS-ACTION',
+			true
+		);
+		$this->putEvent($uid, $this->renderVcalendar([$master_with_added, $exception_with_added]));
 		$ical_after = $this->unfoldIcal($this->getEventIcal($uid));
 		$this->assertStringContainsString("RECURRENCE-ID:$exception_original_ical", $ical_after);
 		$exception_block = $this->exceptionBlock($ical_after, $exception_original_ical);

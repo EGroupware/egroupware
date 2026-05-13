@@ -89,6 +89,20 @@ abstract class CalDAVTest extends TestCase
 	];
 
 	/**
+	 * Tracked calendar IDs keyed by test class.
+	 *
+	 * @var array<string,int[]>
+	 */
+	private static $tracked_cal_ids = [];
+
+	/**
+	 * Tracked event UIDs keyed by test class.
+	 *
+	 * @var array<string,string[]>
+	 */
+	private static $tracked_uids = [];
+
+	/**
 	 * Get HTTP client for tests
 	 *
 	 * It will use by default the user configured in phpunit.xml: demo/guest (use [] to NOT authenticate).
@@ -106,6 +120,166 @@ abstract class CalDAVTest extends TestCase
 			$user_or_options = $this->auth($user_or_options);
 		}
 		return new Client(array_merge($this->client_options, $user_or_options));
+	}
+
+	/**
+	 * Organizer account_lid from phpunit config.
+	 */
+	protected function organizerLid() : string
+	{
+		return $GLOBALS['EGW_USER'];
+	}
+
+	/**
+	 * Organizer email used in iCal payload.
+	 */
+	protected function organizerMail() : string
+	{
+		return !empty($GLOBALS['egw_info']['user']['account_email']) ?
+			$GLOBALS['egw_info']['user']['account_email'] :
+			$this->organizerLid().'@example.org';
+	}
+
+	/**
+	 * Build event URL in a specific user's calendar.
+	 */
+	protected function eventUrlFor(string $user, string $uid) : string
+	{
+		return '/'.$user.'/calendar/'.$uid.'.ics';
+	}
+
+	/**
+	 * Extract numeric cal_id from ETag header and track it for cleanup.
+	 */
+	protected function addCalendarID($response) : int
+	{
+		$etag = $response->getHeader('ETag')[0] ?? '';
+		$array = explode(':', trim($etag, '[]"'));
+		$cal_id = !empty($array[0]) ? (int)$array[0] : 0;
+		if($cal_id > 0)
+		{
+			self::trackCalId($cal_id);
+		}
+		return $cal_id;
+	}
+
+	/**
+	 * Generate unique test UID and track it for cleanup.
+	 */
+	protected function makeUid(string $prefix) : string
+	{
+		$stamp = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->format('YmdHis');
+		$uid = $prefix.'-'.$stamp.'-'.bin2hex(random_bytes(2));
+		self::trackUid($uid);
+		return $uid;
+	}
+
+	/**
+	 * Create event in organizer calendar via CalDAV PUT.
+	 */
+	protected function putEvent(string $uid, string $ical, ?string $user=null) : int
+	{
+		$user = $user ?: $this->organizerLid();
+		$response = $this->getClient($user)->put($this->url($this->eventUrlFor($user, $uid)), [
+			RequestOptions::HEADERS => [
+				'Content-Type' => 'text/calendar',
+				'Prefer' => 'return=representation',
+			],
+			RequestOptions::BODY => $ical,
+		]);
+		$this->assertHttpStatus([200, 201], $response);
+		return $this->addCalendarID($response);
+	}
+
+	protected function getEventIcal(string $uid, ?string $user=null) : string
+	{
+		$user = $user ?: $this->organizerLid();
+		$response = $this->getClient($user)->get($this->url($this->eventUrlFor($user, $uid)));
+		$this->assertHttpStatus(200, $response);
+		return (string)$response->getBody();
+	}
+
+	protected function unfoldIcal(string $ical) : string
+	{
+		return preg_replace("/\r\n[ \t]/", '', $ical);
+	}
+
+	/**
+	 * Return full VEVENT block containing a given RECURRENCE-ID.
+	 */
+	protected function exceptionBlock(string $ical, string $recurrence_id) : string
+	{
+		$pattern = "/BEGIN:VEVENT\r\n(?:(?!BEGIN:VEVENT).)*RECURRENCE-ID:" .
+			preg_quote($recurrence_id, '/') .
+			"(?:(?!BEGIN:VEVENT).)*END:VEVENT/s";
+		if (preg_match($pattern, $ical, $matches))
+		{
+			return $matches[0];
+		}
+		return '';
+	}
+
+	protected function renderFixture(string $fixture_file, array $tokens) : string
+	{
+		$template = file_get_contents($fixture_file);
+		$this->assertNotFalse($template, "Unable to load fixture $fixture_file");
+		return strtr($template, $tokens);
+	}
+
+	/**
+	 * Track event cal_id for current test class.
+	 */
+	protected static function trackCalId(int $cal_id) : void
+	{
+		$class = static::class;
+		if (!isset(self::$tracked_cal_ids[$class]))
+		{
+			self::$tracked_cal_ids[$class] = [];
+		}
+		self::$tracked_cal_ids[$class][] = $cal_id;
+	}
+
+	/**
+	 * Track event UID for current test class.
+	 */
+	protected static function trackUid(string $uid) : void
+	{
+		$class = static::class;
+		if (!isset(self::$tracked_uids[$class]))
+		{
+			self::$tracked_uids[$class] = [];
+		}
+		self::$tracked_uids[$class][] = $uid;
+	}
+
+	/**
+	 * Cleanup tracked cal_ids and UIDs for current test class.
+	 */
+	protected static function cleanupTrackedEvents() : void
+	{
+		$class = static::class;
+		$cal_ids = self::$tracked_cal_ids[$class] ?? [];
+		$uids = self::$tracked_uids[$class] ?? [];
+
+		if(!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+		{
+			$so = new \calendar_so();
+			foreach(array_unique($cal_ids) as $cal_id)
+			{
+				if((int)$cal_id > 0)
+				{
+					$so->delete((int)$cal_id);
+				}
+			}
+			foreach(array_unique($uids) as $uid)
+			{
+				foreach(array_keys($so->read($uid) ?: []) as $cal_id)
+				{
+					$so->delete((int)$cal_id);
+				}
+			}
+		}
+		unset(self::$tracked_cal_ids[$class], self::$tracked_uids[$class]);
 	}
 
 	/**
@@ -213,6 +387,8 @@ abstract class CalDAVTest extends TestCase
 	 */
 	public static function tearDownAfterClass() : void
 	{
+		static::cleanupTrackedEvents();
+
 		$setup = self::getSetup();
 
 		foreach(self::$created_users as $account_lid => $data)
