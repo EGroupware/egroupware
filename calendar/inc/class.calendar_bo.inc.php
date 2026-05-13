@@ -907,7 +907,7 @@ class calendar_bo
 		{
 			$new_horizont = $min_horizont;
 		}
-		$old_horizont = $this->config['horizont'];
+		$old_horizont = new DateTime($this->config['horizont'], DateTime::$server_timezone);
 		$this->config['horizont'] = (int)$new_horizont->format('ts');
 
 		// create further recurrences for all recurring and not yet (at the old horizont) ended events
