@@ -219,45 +219,102 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 
 	/**
 	 * Change status of participants in different recurrences.
+	 *
+	 * Strategy / pass criteria:
+	 * - Build one recurring master with two explicit overridden recurrences.
+	 * - Each override has a different attendee PARTSTAT for attendee1.
+	 * - Export via CalDAV GET.
+	 * - Pass when both RECURRENCE-ID components are present and each expected
+	 *   status variant is present in the exported iCal.
+	 *
+	 * Uses near-future dynamic UTC timestamps so recurrence expansion stays
+	 * inside typical horizon limits across environments.
 	 */
 	public function testChangeStatusOfParticipantsInDifferentRecurrences()
 	{
-		$this->markTestIncomplete("Not working");
 		$uid = $this->makeUid('caldav-recur-status');
+		$master_start = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+		$master_start = $master_start->setTime(9, 0, 0)->modify('+14 days');
+		$master_end = $master_start->modify('+1 hour');
+		$recurrence1 = $master_start->modify('+1 day');
+		$recurrence2 = $master_start->modify('+2 days');
+		$recurrence1_moved_start = $recurrence1->modify('+10 minutes');
+		$recurrence1_moved_end = $recurrence1_moved_start->modify('+1 hour');
+		$recurrence2_moved_start = $recurrence2->modify('+20 minutes');
+		$recurrence2_moved_end = $recurrence2_moved_start->modify('+1 hour');
+		$dtstamp = $master_start->modify('-1 hour')->format('Ymd\THis\Z');
+		$master_start_ical = $master_start->format('Ymd\THis\Z');
+		$master_end_ical = $master_end->format('Ymd\THis\Z');
+		$recurrence1_ical = $recurrence1->format('Ymd\THis\Z');
+		$recurrence2_ical = $recurrence2->format('Ymd\THis\Z');
+		$recurrence1_moved_start_ical = $recurrence1_moved_start->format('Ymd\THis\Z');
+		$recurrence1_moved_end_ical = $recurrence1_moved_end->format('Ymd\THis\Z');
+		$recurrence2_moved_start_ical = $recurrence2_moved_start->format('Ymd\THis\Z');
+		$recurrence2_moved_end_ical = $recurrence2_moved_end->format('Ymd\THis\Z');
+
+		$master = "BEGIN:VEVENT\r\n".
+			"UID:$uid\r\n".
+			"DTSTAMP:$dtstamp\r\n".
+			"DTSTART:$master_start_ical\r\n".
+			"DTEND:$master_end_ical\r\n".
+			"RRULE:FREQ=DAILY;COUNT=6\r\n".
+			"SUMMARY:Recurring participant test\r\n".
+			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
+			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
+			"ATTENDEE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE1_MAIL."\r\n".
+			"END:VEVENT\r\n";
 
 		// Two overridden instances with different attendee status.
 		$overrides =
 			"BEGIN:VEVENT\r\n".
 			"UID:$uid\r\n".
-			"RECURRENCE-ID:20300102T090000Z\r\n".
-			"DTSTART:20300102T091000Z\r\n".
-			"DTEND:20300102T101000Z\r\n".
+			"DTSTAMP:$dtstamp\r\n".
+			"RECURRENCE-ID:$recurrence1_ical\r\n".
+			"DTSTART:$recurrence1_moved_start_ical\r\n".
+			"DTEND:$recurrence1_moved_end_ical\r\n".
+			"SUMMARY:Recurring participant test exception accepted\r\n".
 			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
 			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
 			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE1_MAIL."\r\n".
 			"END:VEVENT\r\n".
 			"BEGIN:VEVENT\r\n".
 			"UID:$uid\r\n".
-			"RECURRENCE-ID:20300103T090000Z\r\n".
-			"DTSTART:20300103T092000Z\r\n".
-			"DTEND:20300103T102000Z\r\n".
+			"DTSTAMP:$dtstamp\r\n".
+			"RECURRENCE-ID:$recurrence2_ical\r\n".
+			"DTSTART:$recurrence2_moved_start_ical\r\n".
+			"DTEND:$recurrence2_moved_end_ical\r\n".
+			"SUMMARY:Recurring participant test exception tentative\r\n".
 			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
 			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
 			"ATTENDEE;PARTSTAT=TENTATIVE;ROLE=REQ-PARTICIPANT:mailto:".self::ATTENDEE1_MAIL."\r\n".
 			"END:VEVENT\r\n";
 
-		$this->putEvent($uid, $this->recurringIcal($uid, $overrides));
+		$this->putEvent($uid, "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//EGroupware//CalDAV Test//EN\r\n".$master.$overrides."END:VCALENDAR\r\n");
 
 		$ical = $this->unfoldIcal($this->getEventIcal($uid));
-		$this->assertStringContainsString("RECURRENCE-ID:20300102T090000Z", $ical);
-		$this->assertStringContainsString("RECURRENCE-ID:20300103T090000Z", $ical);
-		$this->assertStringContainsString("PARTSTAT=ACCEPTED;ROLE=REQ-PARTICIPANT", $ical);
-		$this->assertStringContainsString("PARTSTAT=TENTATIVE;ROLE=REQ-PARTICIPANT", $ical);
+		$this->assertStringContainsString("RECURRENCE-ID:$recurrence1_ical", $ical);
+		$this->assertStringContainsString("RECURRENCE-ID:$recurrence2_ical", $ical);
+		$exception1 = $this->exceptionBlock($ical, $recurrence1_ical);
+		$exception2 = $this->exceptionBlock($ical, $recurrence2_ical);
+		$this->assertNotEmpty($exception1, 'First exception block missing');
+		$this->assertNotEmpty($exception2, 'Second exception block missing');
+		$this->assertStringContainsString("mailto:".self::ATTENDEE1_MAIL, $exception1);
+		$this->assertStringContainsString("mailto:".self::ATTENDEE1_MAIL, $exception2);
+		$this->assertStringContainsString("PARTSTAT=ACCEPTED", $exception1);
+		$this->assertStringContainsString("PARTSTAT=TENTATIVE", $exception2);
 		$this->assertStringContainsString("PARTSTAT=NEEDS-ACTION;CUTYPE=INDIVIDUAL;RSVP=", $ical);
 	}
 
 	/**
 	 * Create exception with different date and time via CalDAV.
+	 *
+	 * Strategy / pass criteria:
+	 * - Import recurring master plus one exception component linked by
+	 *   RECURRENCE-ID.
+	 * - Exception moves occurrence time to a different day/hour.
+	 * - Export via CalDAV GET.
+	 * - Pass when export contains the RECURRENCE-ID and moved DTSTART, and the
+	 *   expected one-hour duration.
 	 */
 	public function testCreateExceptionsWithDifferentDateAndTime()
 	{
@@ -272,6 +329,13 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 
 	/**
 	 * Change status of participants in exception via CalDAV.
+	 *
+	 * Strategy / pass criteria:
+	 * - Import recurring master plus one exception where attendee1 PARTSTAT is
+	 *   ACCEPTED on the exception only.
+	 * - Export via CalDAV GET.
+	 * - Pass when export contains the exception RECURRENCE-ID and the exception
+	 *   participant status, while master/default status remains NEEDS-ACTION.
 	 */
 	public function testChangeStatusOfParticipantsInException()
 	{
