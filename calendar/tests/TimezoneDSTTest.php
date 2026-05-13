@@ -93,6 +93,13 @@ class TimezoneDSTTest extends \EGroupware\Api\AppTest
         return $event;
     }
 
+    /**
+     * Verify Berlin DST start keeps daily recurrence wall time stable.
+     *
+     * Pass criteria:
+     * - Recurrence rows are generated.
+     * - Every generated occurrence resolves to 09:00:00 in user timezone.
+     */
     public function testBerlinDSTStartKeepsWallTime()
     {
         $this->setTimezones('Europe/Berlin', 'UTC');
@@ -113,6 +120,13 @@ class TimezoneDSTTest extends \EGroupware\Api\AppTest
         }
     }
 
+    /**
+     * Verify Berlin DST end keeps daily recurrence wall time stable.
+     *
+     * Pass criteria:
+     * - Recurrence rows are generated.
+     * - Every generated occurrence resolves to 09:00:00 in user timezone.
+     */
     public function testBerlinDSTEndKeepsWallTime()
     {
         $this->setTimezones('Europe/Berlin', 'UTC');
@@ -133,6 +147,13 @@ class TimezoneDSTTest extends \EGroupware\Api\AppTest
         }
     }
 
+    /**
+     * Verify New York DST start keeps daily recurrence wall time stable.
+     *
+     * Pass criteria:
+     * - Recurrence rows are generated.
+     * - Every generated occurrence resolves to 09:00:00 in user timezone.
+     */
     public function testNYDSTStartKeepsWallTime()
     {
         $this->setTimezones('America/New_York', 'UTC');
@@ -153,6 +174,13 @@ class TimezoneDSTTest extends \EGroupware\Api\AppTest
         }
     }
 
+    /**
+     * Verify New York DST end keeps daily recurrence wall time stable.
+     *
+     * Pass criteria:
+     * - Recurrence rows are generated.
+     * - Every generated occurrence resolves to 09:00:00 in user timezone.
+     */
     public function testNYDSTEndKeepsWallTime()
     {
         $this->setTimezones('America/New_York', 'UTC');
@@ -173,6 +201,13 @@ class TimezoneDSTTest extends \EGroupware\Api\AppTest
         }
     }
 
+    /**
+     * Verify half-hour timezone DST transition keeps wall time stable.
+     *
+     * Pass criteria:
+     * - Recurrence rows are generated.
+     * - Every generated occurrence resolves to 09:00:00 in user timezone.
+     */
     public function testAdelaideHalfHourDSTKeepsWallTime()
     {
         $this->setTimezones('Australia/Adelaide', 'UTC');
@@ -193,6 +228,13 @@ class TimezoneDSTTest extends \EGroupware\Api\AppTest
         }
     }
 
+    /**
+     * Verify whole-day Berlin recurrence keeps calendar date over DST start.
+     *
+     * Pass criteria:
+     * - Recurrence rows are generated and sorted.
+     * - Each recurrence date equals start date + n days (date-only invariant).
+     */
     public function testBerlinWholeDayAcrossDSTStartKeepsDate()
     {
         $this->setTimezones('Europe/Berlin', 'UTC');
@@ -221,6 +263,13 @@ class TimezoneDSTTest extends \EGroupware\Api\AppTest
         }
     }
 
+    /**
+     * Verify whole-day New York recurrence keeps calendar date over DST start.
+     *
+     * Pass criteria:
+     * - Recurrence rows are generated and sorted.
+     * - Each recurrence date equals start date + n days (date-only invariant).
+     */
     public function testNYWholeDayAcrossDSTStartKeepsDate()
     {
         $this->setTimezones('America/New_York', 'UTC');

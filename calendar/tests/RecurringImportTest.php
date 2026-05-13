@@ -47,6 +47,18 @@ class RecurringImportTest extends \EGroupware\Api\AppTest
 		parent::tearDown();
 	}
 
+	/**
+	 * Import recurring ICS fixture and validate recurrence semantics survive round-trip.
+	 *
+	 * Setup:
+	 * - Load anonymized fixture from disk and import through calendar_ical::importVCal().
+	 *
+	 * Pass criteria:
+	 * - Import returns a valid event id and event can be read.
+	 * - Event stays recurring with expected UID/title and recurrence end date.
+	 * - At least one recurrence is materialized (environment-dependent horizon safe).
+	 * - Exported ICS still contains weekly Thursday RRULE details.
+	 */
 	public function testImportRecurringIcalFixture()
 	{
 		$ical = file_get_contents(self::EVENT_FIXTURE);

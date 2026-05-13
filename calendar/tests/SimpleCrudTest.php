@@ -65,6 +65,12 @@ class SimpleCrudTest extends \EGroupware\Api\AppTest
 		];
 	}
 
+	/**
+	 * Create a simple event through calendar BO.
+	 *
+	 * Pass criteria:
+	 * - save() returns a positive numeric event id.
+	 */
 	public function testCreate()
 	{
 		$event = $this->get_event();
@@ -74,6 +80,16 @@ class SimpleCrudTest extends \EGroupware\Api\AppTest
 		return $id;
 	}
 
+	/**
+	 * Read back the event created by testCreate.
+	 *
+	 * Setup:
+	 * - Reuse the ID returned by testCreate.
+	 *
+	 * Pass criteria:
+	 * - read() returns an array.
+	 * - title and start/end timestamps match the values originally saved.
+	 */
 	#[\PHPUnit\Framework\Attributes\Depends('testCreate')]
 	public function testRead($id)
 	{
@@ -92,6 +108,16 @@ class SimpleCrudTest extends \EGroupware\Api\AppTest
 		return $id;
 	}
 
+	/**
+	 * Update event content and verify persisted change.
+	 *
+	 * Setup:
+	 * - Create an isolated event for this scenario.
+	 *
+	 * Pass criteria:
+	 * - Event can be saved.
+	 * - read() reflects the updated title.
+	 */
 	public function testUpdate()
 	{
 		// Create a separate event for update to avoid inter-test state issues
@@ -105,6 +131,16 @@ class SimpleCrudTest extends \EGroupware\Api\AppTest
 		$this->assertEquals($event['title'], $e2['title']);
 	}
 
+	/**
+	 * Delete an event and ensure it is no longer active.
+	 *
+	 * Setup:
+	 * - Create an isolated event for this scenario.
+	 *
+	 * Pass criteria:
+	 * - delete() executes without error.
+	 * - Subsequent read returns false or a deleted-marked record.
+	 */
 	public function testDelete()
 	{
 		// Create a separate event for delete to avoid inter-test state issues
