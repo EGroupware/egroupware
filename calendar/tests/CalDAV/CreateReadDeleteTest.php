@@ -151,4 +151,22 @@ class CreateReadDeleteTest extends CalDAVTest
 
 		$this->assertHttpStatus(404, $response);
 	}
+
+	/**
+	 * Delete of a non-existing event must return not-found.
+	 *
+	 * Setup:
+	 * - Build a unique, never-created event URL in the authenticated user's
+	 *   calendar collection.
+	 *
+	 * Pass criteria:
+	 * - DELETE returns HTTP 404.
+	 */
+	public function testDeleteMissing()
+	{
+		$missing_uid = $this->makeUid('caldav-delete-missing');
+		$response = $this->getClient()->delete($this->url('/'.$this->user().'/calendar/'.$missing_uid.'.ics'));
+
+		$this->assertHttpStatus(404, $response);
+	}
 }
