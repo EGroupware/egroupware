@@ -2301,13 +2301,28 @@ class Mail
 				case 'CC':
 				case 'BCC':
 				case 'SUBJECT':
-					$imapSearchFilter->headerText($criteria, $_criterias['string'], $not=false);
+					$tokenized = self::buildTokenizedSearch($_criterias['string'],
+						function($term, $not) use ($criteria) {
+							$q = new Horde_Imap_Client_Search_Query();
+							$q->charset('UTF-8');
+							$q->headerText($criteria, $term, $not);
+							return $q;
+						});
+					if ($tokenized !== null) $imapSearchFilter->andSearch($tokenized);
 					//$imapSearchFilter->charset('UTF-8');
 					$queryValid = true;
 					break;
 				case 'BODY':
 				case 'TEXT':
-					$imapSearchFilter->text($_criterias['string'],($criteria=='BODY'?true:false), $not=false);
+					$bodyOnly = ($criteria === 'BODY');
+					$tokenized = self::buildTokenizedSearch($_criterias['string'],
+						function($term, $not) use ($bodyOnly) {
+							$q = new Horde_Imap_Client_Search_Query();
+							$q->charset('UTF-8');
+							$q->text($term, $bodyOnly, $not);
+							return $q;
+						});
+					if ($tokenized !== null) $imapSearchFilter->andSearch($tokenized);
 					//$imapSearchFilter->charset('UTF-8');
 					$queryValid = true;
 					break;
@@ -2392,6 +2407,97 @@ class Mail
 		} else {
 			return $imapFilter;
 		}
+	}
+
+	/**
+	 * Tokenize a free-text search string honouring the EGroupware search syntax,
+	 * and combine per-token sub-queries returned by $factory into a single
+	 * Horde_Imap_Client_Search_Query.
+	 *
+	 * Supported syntax (matches Addressbook/Calendar/InfoLog conventions):
+	 *   foo bar       -> contains foo OR contains bar (default)
+	 *   foo or bar    -> contains foo OR contains bar
+	 *   foo and bar   -> contains foo AND contains bar
+	 *   foo +bar      -> contains foo AND contains bar (required)
+	 *   foo -bar      -> contains foo AND NOT contains bar (forbidden)
+	 *   "foo bar"     -> single quoted phrase as one token (preserved verbatim)
+	 *
+	 * Each token is mapped to a Horde sub-query via $factory($term, $not),
+	 * then sub-queries are AND/OR/NOT-combined according to the operator.
+	 * The result is returned as a single composite Horde_Imap_Client_Search_Query
+	 * suitable for passing to andSearch()/orSearch() of an outer query.
+	 *
+	 * @param string $string  Raw user input from the search field
+	 * @param callable $factory  function(string $term, bool $not): Horde_Imap_Client_Search_Query
+	 * @return Horde_Imap_Client_Search_Query|null  null when $string is empty
+	 */
+	protected static function buildTokenizedSearch($string, callable $factory)
+	{
+		$string = trim((string)$string);
+		if ($string === '') return null;
+
+		$tokens = self::parseSearchTokens($string);
+		if (empty($tokens)) return null;
+
+		// Classify tokens into items: ['op'=>'and|or', 'term'=>..., 'not'=>bool]
+		$items = array();
+		$nextOp = 'or';   // EGW default for whitespace-separated tokens
+		foreach ($tokens as $tok)
+		{
+			$lower = strtolower($tok);
+			if ($lower === 'and') { $nextOp = 'and'; continue; }
+			if ($lower === 'or')  { $nextOp = 'or';  continue; }
+
+			$negate = false;
+			$term = $tok;
+			if (strlen($tok) > 1)
+			{
+				if ($tok[0] === '+') { $term = substr($tok, 1); $nextOp = 'and'; }
+				elseif ($tok[0] === '-') { $term = substr($tok, 1); $nextOp = 'and'; $negate = true; }
+			}
+			if ($term === '') continue;
+			$items[] = array('op' => $nextOp, 'term' => $term, 'not' => $negate);
+			$nextOp = 'or';   // reset to default for the next token
+		}
+		if (empty($items)) return null;
+
+		// Single-token shortcut: return the factory output directly
+		if (count($items) === 1)
+		{
+			return $factory($items[0]['term'], $items[0]['not']);
+		}
+
+		// Build composite query left-to-right
+		$combined = $factory($items[0]['term'], $items[0]['not']);
+		for ($i = 1, $n = count($items); $i < $n; $i++)
+		{
+			$sub = $factory($items[$i]['term'], $items[$i]['not']);
+			if ($items[$i]['op'] === 'and') $combined->andSearch($sub);
+			else $combined->orSearch($sub);
+		}
+		return $combined;
+	}
+
+	/**
+	 * Split a search string into tokens, preserving quoted phrases as single tokens.
+	 * Recognised quoting characters: " (double) and ' (single).
+	 *
+	 * @param string $string
+	 * @return array list of token strings (without their surrounding quotes)
+	 */
+	protected static function parseSearchTokens($string)
+	{
+		$tokens = array();
+		if (preg_match_all('/"([^"]*)"|\'([^\']*)\'|(\S+)/u', $string, $m, PREG_SET_ORDER))
+		{
+			foreach ($m as $match)
+			{
+				if (isset($match[1]) && $match[1] !== '') $tokens[] = $match[1];
+				elseif (isset($match[2]) && $match[2] !== '') $tokens[] = $match[2];
+				elseif (isset($match[3]) && $match[3] !== '') $tokens[] = $match[3];
+			}
+		}
+		return $tokens;
 	}
 
 	/**
