@@ -205,7 +205,7 @@ class mail_hooks
 		// modify folderlist, add a none entry, to be able to force the regarding settings, if no folders apply
 		$folderList['none'] = lang('no folders');
 
-		// Build toogled on actions sel options
+		// Build toggled on actions sel options
 		$allActions = mail_compose::getToolbarActions(array(
 			'priority' => true,
 			'mailaccount' => (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']

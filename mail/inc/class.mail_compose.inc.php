@@ -67,6 +67,7 @@ class mail_compose
 	var $displayCharset;
 	var $composeID;
 	var $sessionData;
+	private bool $preventAttachFilemode = false;
 
 	function __construct(?int $_acc_id=null)
 	{
@@ -432,9 +433,35 @@ class mail_compose
 			}
 			unset($_content['selectFromVFSForCompose']);
 		}
+		// check if someone did hit delete on the attachments list
+		if (!empty($_content['attachments']['delete']))
+		{
+			//error_log(__METHOD__.__LINE__.':'.array2string($_content['attachments']));
+			//error_log(__METHOD__.__LINE__.':'.array2string($_content['attachments']['delete']));
+
+			$suppressSigOnTop = true;
+			$toDelete = $_content['attachments']['delete'];
+			unset($_content['attachments']['delete']);
+			$attachments = $_content['attachments'];
+			unset($_content['attachments']);
+			foreach ($attachments as $i => $att)
+			{
+				$remove = false;
+				foreach (array_keys($toDelete) as $k)
+				{
+					if ($att['tmp_name'] == $k) $remove = true;
+				}
+				if (!$remove) $_content['attachments'][] = $att;
+			}
+		}
 		// check everything that was uploaded
 		if (!empty($_content['uploadForCompose']))
 		{
+			$size = 0;
+			foreach($_content['attachments'] as $file){
+				$size+=$file['size'];
+		}
+			$size_limit = Api\Config::read('mail')['attachment_limit_mb'] * 1024 * 1024;
 			$suppressSigOnTop = true;
 			foreach ($_content['uploadForCompose'] as $i => &$upload)
 			{
@@ -453,30 +480,21 @@ class mail_compose
 				{
 					$_content['filemode'] = Vfs\Sharing::READONLY;
 					Framework::message(lang('Directories have to be shared.'), 'info');
+					$this->preventAttachFilemode = true;
 				}
-			}
-		}
-		// check if someone did hit delete on the attachments list
-		if (!empty($_content['attachments']['delete']))
-		{
-			//error_log(__METHOD__.__LINE__.':'.array2string($_content['attachments']));
-			//error_log(__METHOD__.__LINE__.':'.array2string($_content['attachments']['delete']));
-
-			$suppressSigOnTop = true;
-			$toDelete = $_content['attachments']['delete'];
-			unset($_content['attachments']['delete']);
-			$attachments = $_content['attachments'];
-			unset($_content['attachments']);
-			foreach($attachments as $i => $att)
-			{
-				$remove=false;
-				foreach(array_keys($toDelete) as $k)
+				$size += $upload['size'];
+				if ($size > $size_limit)
 				{
-					if ($att['tmp_name']==$k) $remove=true;
+					$this->preventAttachFilemode = true;
+					if (!$_content['filemode'] || $_content['filemode'] == Vfs\Sharing::ATTACH)
+					{
+						Framework::message(lang('The total size of the attachments exceeds the limit of %1 MB. Switched to download link', Api\Config::read('mail')['attachment_limit_mb']), 'warning');
+						$_content['filemode'] = Vfs\Sharing::LINK;
+					}
 				}
-				if (!$remove) $_content['attachments'][] = $att;
 			}
 		}
+
 		// someone clicked something like send, or saveAsDraft
 		// make sure, we are connected to the correct server for sending and storing the send message
 		$activeProfile = $composeProfile = $this->mail_bo->profileID; // active profile may not be the profile uised in/for compose
@@ -1382,6 +1400,10 @@ class mail_compose
 		$sel_options['mimeType'] = self::$mimeTypes;
 		$sel_options['priority'] = self::$priorities;
 		$sel_options['filemode'] = Vfs\Sharing::$modes;
+		if ($this->preventAttachFilemode)
+		{
+			unset($sel_options['filemode'][Vfs\Sharing::ATTACH]);
+		}
 		if (empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new Etemplate('mail.compose');
