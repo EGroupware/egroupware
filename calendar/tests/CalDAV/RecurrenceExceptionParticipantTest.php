@@ -153,6 +153,25 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 	}
 
 	/**
+	 * Return full VEVENT block containing a given RECURRENCE-ID.
+	 *
+	 * EGroupware export order may place RECURRENCE-ID late in the VEVENT, after
+	 * ATTENDEE lines. Assertions must therefore inspect the whole VEVENT block,
+	 * not only the substring after RECURRENCE-ID.
+	 */
+	protected function exceptionBlock(string $ical, string $recurrence_id) : string
+	{
+		$pattern = "/BEGIN:VEVENT\r\n(?:(?!BEGIN:VEVENT).)*RECURRENCE-ID:" .
+			preg_quote($recurrence_id, '/') .
+			"(?:(?!BEGIN:VEVENT).)*END:VEVENT/s";
+		if (preg_match($pattern, $ical, $matches))
+		{
+			return $matches[0];
+		}
+		return '';
+	}
+
+	/**
 	 * Master event with daily recurrence and one attendee.
 	 */
 	protected function recurringIcal(string $uid, string $extra_components='') : string
@@ -269,6 +288,17 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 
 	/**
 	 * Add participants to recurrence without adding them to exception.
+	 *
+	 * Strategy / pass criteria:
+	 * - Import one VCALENDAR containing a recurring master VEVENT and one
+	 *   overridden exception VEVENT for a specific RECURRENCE-ID.
+	 * - Add attendee2 only on the master component.
+	 * - Export the event again via CalDAV GET.
+	 * - Pass when attendee2 exists in the overall export (master side), but is
+	 *   absent from the exception VEVENT block.
+	 *
+	 * This verifies that exception participants are not implicitly inherited from
+	 * later master changes when the exception does not carry that participant.
 	 */
 	public function testAddParticipantsToRecurrenceNotInException()
 	{
@@ -295,28 +325,54 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 
 		$ical_before = $this->unfoldIcal($this->getEventIcal($uid));
 		$this->assertStringContainsString("mailto:$attendee2_mail", $ical_before);
-		$exception_pos = strpos($ical_before, "RECURRENCE-ID:20300102T090000Z");
-		$this->assertNotFalse($exception_pos, 'Exception block missing');
+		$exception_block = $this->exceptionBlock($ical_before, '20300102T090000Z');
+		$this->assertNotEmpty($exception_block, 'Exception block missing');
 		$this->assertFalse(
-			strpos(substr($ical_before, $exception_pos), "mailto:$attendee2_mail"),
+			strpos($exception_block, "mailto:$attendee2_mail"),
 			'Added attendee should not be present in exception block'
 		);
 	}
 
 	/**
 	 * Add participants to recurrence and also add them to exception.
+	 *
+	 * Uses near-future dynamic UTC timestamps so recurrence expansion stays
+	 * inside typical horizon limits across environments.
+	 *
+	 * Strategy / pass criteria:
+	 * - Import one VCALENDAR containing a recurring master VEVENT and one
+	 *   overridden exception VEVENT for a specific RECURRENCE-ID.
+	 * - Add attendee2 on both master and exception components.
+	 * - Export the event again via CalDAV GET.
+	 * - Pass when the export still contains the exception component and attendee2
+	 *   is present inside that exception VEVENT block.
+	 *
+	 * This verifies participant persistence on detached exceptions, independent
+	 * from property serialization order in returned iCalendar data.
 	 */
 	public function testAddParticipantsToRecurrenceAndException()
 	{
-		$this->markTestIncomplete("Not working");
 		$uid = $this->makeUid('caldav-add-participant-in-exc');
 		$attendee2_mail = self::ATTENDEE2_MAIL;
+		// Keep this series close to "now" to avoid horizon-dependent false negatives.
+		$master_start = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+		$master_start = $master_start->setTime(9, 0, 0)->modify('+14 days');
+		$master_end = $master_start->modify('+1 hour');
+		$exception_original = $master_start->modify('+1 day');
+		$exception_start = $master_start->modify('+2 days')->setTime(12, 0, 0);
+		$exception_end = $exception_start->modify('+1 hour');
+		$dtstamp = $master_start->modify('-1 hour')->format('Ymd\THis\Z');
+		$master_start_ical = $master_start->format('Ymd\THis\Z');
+		$master_end_ical = $master_end->format('Ymd\THis\Z');
+		$exception_original_ical = $exception_original->format('Ymd\THis\Z');
+		$exception_start_ical = $exception_start->format('Ymd\THis\Z');
+		$exception_end_ical = $exception_end->format('Ymd\THis\Z');
 
 		$master_with_added = "BEGIN:VEVENT\r\n".
 			"UID:$uid\r\n".
-			"DTSTAMP:20260511T100000Z\r\n".
-			"DTSTART:20300101T090000Z\r\n".
-			"DTEND:20300101T100000Z\r\n".
+			"DTSTAMP:$dtstamp\r\n".
+			"DTSTART:$master_start_ical\r\n".
+			"DTEND:$master_end_ical\r\n".
 			"RRULE:FREQ=DAILY;COUNT=6\r\n".
 			"SUMMARY:Recurring participant test\r\n".
 			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
@@ -326,9 +382,10 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 			"END:VEVENT\r\n";
 		$exception_with_added = "BEGIN:VEVENT\r\n".
 			"UID:$uid\r\n".
-			"RECURRENCE-ID:20300102T090000Z\r\n".
-			"DTSTART:20300103T120000Z\r\n".
-			"DTEND:20300103T130000Z\r\n".
+			"DTSTAMP:$dtstamp\r\n".
+			"RECURRENCE-ID:$exception_original_ical\r\n".
+			"DTSTART:$exception_start_ical\r\n".
+			"DTEND:$exception_end_ical\r\n".
 			"SUMMARY:Recurring participant test exception\r\n".
 			"ORGANIZER:mailto:".$this->organizerMail()."\r\n".
 			"ATTENDEE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:".$this->organizerMail()."\r\n".
@@ -337,11 +394,11 @@ class RecurrenceExceptionParticipantTest extends CalDAVTest
 			"END:VEVENT\r\n";
 		$this->putEvent($uid, "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//EGroupware//CalDAV Test//EN\r\n".$master_with_added.$exception_with_added."END:VCALENDAR\r\n");
 		$ical_after = $this->unfoldIcal($this->getEventIcal($uid));
-		$this->assertStringContainsString("RECURRENCE-ID:20300102T090000Z", $ical_after);
-		$exception_pos = strpos($ical_after, "RECURRENCE-ID:20300102T090000Z");
-		$this->assertNotFalse($exception_pos, 'Exception block missing');
+		$this->assertStringContainsString("RECURRENCE-ID:$exception_original_ical", $ical_after);
+		$exception_block = $this->exceptionBlock($ical_after, $exception_original_ical);
+		$this->assertNotEmpty($exception_block, 'Exception block missing');
 		$this->assertNotFalse(
-			strpos(substr($ical_after, $exception_pos), "mailto:$attendee2_mail"),
+			strpos($exception_block, "mailto:$attendee2_mail"),
 			'Added attendee should be present in exception block'
 		);
 	}
