@@ -7,6 +7,40 @@
 * Do not claim tests passed unless they were actually run.
 * If tests cannot be run, explain why and identify the risk area.
 * Avoid unrelated formatting or snapshot churn.
+* Treat test execution as a completion gate: after code edits, run tests first, then report results.
+* Do not infer test status from other commands (lint, setup checks, or unrelated failures). Determine status from the
+  actual test command(s).
+* When adding or modifying tests, document what the test is proving and how pass/fail is determined.
+
+## Required post-change workflow
+
+After editing code, follow this order:
+
+1. Identify the smallest relevant automated test(s) for the changed behavior.
+2. Run those test command(s).
+3. If blocked (environment, missing service, permissions, etc.), record the exact blocker and command.
+4. If there is no direct automated coverage for the changed area, state that explicitly and run the closest relevant
+   tests available.
+5. Report results in the final response using the format below (`Tests run` / `Not run`).
+
+When no direct tests exist, avoid claiming full verification; call out residual risk and suggest the most relevant
+manual check or follow-up test.
+
+## Test documentation expectations
+
+When writing or changing tests, include concise documentation (usually in test docblocks/comments) covering:
+
+1. The behaviour/contract under test.
+2. The setup strategy (how the scenario is constructed).
+3. The pass criteria (exactly what must be true for success).
+4. Any environment-sensitive constraints (for example, recurrence horizon or timezone assumptions) that could affect
+   reliability.
+
+This should be specific enough that a reviewer can tell whether a failure indicates a product bug, a test bug, or an
+environment issue.
+
+For sync-focused tests (for example CalDAV/iCal), document state transitions explicitly (`new`, `update`, `removal`)
+and define pass criteria for each state.
 
 ## PHP tests
 
