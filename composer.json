@@ -45,7 +45,7 @@
 	],
 	"config": {
 		"platform": {
-			"php": "7.4"
+			"php": "8.2"
 		},
 		"preferred-install": {
 			"egroupware/*": "source",
@@ -62,7 +62,7 @@
 		}
 	},
 	"require": {
-		"php": ">=7.4,<=8.5",
+		"php": ">=8.2,<=8.5",
 		"ext-gd": "*",
 		"ext-json": "*",
 		"ext-mysqli": "*",
@@ -73,6 +73,7 @@
 		"ext-xsl": "*",
 		"adldap2/adldap2": "=4.0.4",
 		"async-aws/s3": "^2.0",
+		"benmorel/openapi-schema-to-json-schema": "^0.1.4",
 		"bigbluebutton/bigbluebutton-api-php": "^2.0",
 		"bower-asset/cropper": "2.3.*",
 		"bower-asset/jquery": "^1.12.4",
@@ -121,6 +122,7 @@
 		"egroupware/url": "^2.3.0",
 		"egroupware/util": "^2.7.0",
 		"egroupware/webdav": "^0.4.0",
+		"egroupware/xml_feed_parser": "^1.0.5",
 		"egroupware/z-push-dev": "2.5.0.1",
 		"giggsey/libphonenumber-for-php": "^9.0.17",
 		"guzzlehttp/guzzle": "^7.4.1",
@@ -133,7 +135,6 @@
 		"pear/auth_sasl": "*",
 		"pear/log": "*",
 		"pear/pear": "*",
-		"egroupware/xml_feed_parser": "^1.0.5",
 		"phpseclib/phpseclib": "^3.0.34",
 		"pragmarx/google2fa-qrcode": "^1.0",
 		"robrichards/xmlseclibs": "^3.1.1",

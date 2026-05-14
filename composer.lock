@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfc0505956f6b574a9a05562b60192d5",
+    "content-hash": "21188c9588957ccd2f7392acc236113d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -242,6 +242,50 @@
                 "source": "https://github.com/Bacon/BaconQrCode/tree/2.0.8"
             },
             "time": "2022-12-07T17:46:57+00:00"
+        },
+        {
+            "name": "benmorel/openapi-schema-to-json-schema",
+            "version": "0.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BenMorel/openapi-schema-to-json-schema.git",
+                "reference": "d94d7f29f2270dbbf0700b44318974b140619ceb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BenMorel/openapi-schema-to-json-schema/zipball/d94d7f29f2270dbbf0700b44318974b140619ceb",
+                "reference": "d94d7f29f2270dbbf0700b44318974b140619ceb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BenMorel\\OpenApiSchemaToJsonSchema\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Convert an OpenAPI schema object to a JSON Schema object",
+            "keywords": [
+                "JSON Schema",
+                "openapi",
+                "swagger"
+            ],
+            "support": {
+                "issues": "https://github.com/BenMorel/openapi-schema-to-json-schema/issues",
+                "source": "https://github.com/BenMorel/openapi-schema-to-json-schema/tree/0.1.4"
+            },
+            "time": "2020-12-10T16:06:59+00:00"
         },
         {
             "name": "bigbluebutton/bigbluebutton-api-php",
@@ -1693,16 +1737,16 @@
         },
         {
             "name": "egroupware/icalendar",
-		  "version": "2.2.4",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Icalendar.git",
-			  "reference": "6f8398721abd671f49f9279180dfc4c590f15db2"
+                "reference": "6f8398721abd671f49f9279180dfc4c590f15db2"
             },
             "dist": {
                 "type": "zip",
-			  "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/6f8398721abd671f49f9279180dfc4c590f15db2",
-			  "reference": "6f8398721abd671f49f9279180dfc4c590f15db2",
+                "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/6f8398721abd671f49f9279180dfc4c590f15db2",
+                "reference": "6f8398721abd671f49f9279180dfc4c590f15db2",
                 "shasum": ""
             },
             "require": {
@@ -1751,7 +1795,7 @@
             "description": "iCalendar and vCard library",
             "homepage": "https://www.horde.org/libraries/Horde_Icalendar",
             "support": {
-			  "source": "https://github.com/EGroupware/Icalendar/tree/2.2.4"
+                "source": "https://github.com/EGroupware/Icalendar/tree/2.2.4"
             },
             "time": "2024-07-02T00:00:00+00:00"
         },
@@ -12812,7 +12856,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4,<=8.5",
+        "php": ">=8.2,<=8.5",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
@@ -12824,7 +12868,7 @@
     },
     "platform-dev": {},
     "platform-overrides": {
-        "php": "7.4"
+        "php": "8.2"
     },
     "plugin-api-version": "2.6.0"
 }

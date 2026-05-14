@@ -115,7 +115,7 @@ class _parse_propfind
      * constructor
      *
      * @access public
-     * @param string $path
+     * @param string|stream $path
      * @param boolean $store_request =false if true whole request data will be made available in $this->request
 	 * @param string $method ='PROPFIND' HTTP method to enable certain checks
      */
@@ -133,7 +133,7 @@ class _parse_propfind
         $had_input = false;
 
         // open input stream
-        $f_in = fopen($path, "r");
+        $f_in = is_resource($path) ? $path : fopen($path, "r");
         if (!$f_in) {
             $this->error = "Can't open $path!";
             return;

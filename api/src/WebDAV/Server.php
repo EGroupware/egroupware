@@ -163,6 +163,11 @@ class HTTP_WebDAV_Server
      */
     var $_SERVER;
 
+	/**
+	 * @var request body as stream e.g. 'php://input'
+	 */
+	protected $_body;
+
     // }}}
 
     // {{{ Constructor
@@ -668,7 +673,7 @@ class HTTP_WebDAV_Server
         }
 
         // analyze request payload
-        $propinfo = new _parse_propfind("php://input", $this->store_request, $handler);
+        $propinfo = new _parse_propfind($this->_body ?? "php://input", $this->store_request, $handler);
         if ($this->store_request) $this->request = $propinfo->request;
         if ($propinfo->error) {
             $this->http_status("400 Bad Request");
@@ -1556,7 +1561,7 @@ class HTTP_WebDAV_Server
 	        $options['content_type'] = 'application/octet-stream';
         }
 
-        $options['stream'] = fopen('php://input', 'r');
+        $options['stream'] = $this->_body ?? fopen('php://input', 'r');
     	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
     	{
     		case 'gzip':
@@ -1736,7 +1741,7 @@ class HTTP_WebDAV_Server
                 $options["content_type"] = "application/octet-stream";
             }
 
-            $options["stream"] = fopen("php://input", "r");
+            $options["stream"] = $this->_body ?? fopen("php://input", "r");
 	    	switch($this->_SERVER['HTTP_CONTENT_ENCODING'])
 	    	{
 	    		case 'gzip':

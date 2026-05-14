@@ -1468,7 +1468,7 @@ class CalDAV extends HTTP_WebDAV_Server
 
 		echo "</body>\n</html>\n";
 
-		exit;
+		return true;
 	}
 
 	/**
@@ -2630,8 +2630,9 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * Does NOT return and get installed in constructor.
 	 *
 	 * @param \Exception|\Error $e
+	 * @param bool $exit true: exit, false: do NOT exist, just return
 	 */
-	public static function exception_handler($e)
+	public static function exception_handler($e, bool $exit=true)
 	{
 		// logging exception as regular egw_execption_hander does
 		$headline = null;
@@ -2677,7 +2678,7 @@ class CalDAV extends HTTP_WebDAV_Server
 				self::$instance->log_request();
 			}
 		}
-		exit;
+		if ($exit) exit(500);
 	}
 
 	/**
@@ -2692,5 +2693,95 @@ class CalDAV extends HTTP_WebDAV_Server
 		if(empty($_appName) || empty($_eventID)) return false;
 
 		return $_appName.'-'.$_eventID.'-'.$GLOBALS['egw_info']['server']['install_id'];
+	}
+
+	/**
+	 * Runs the given request without additional authorization for the current user as a pure function call
+	 *
+	 * @param string $path EGroupware CalDAV/REST API relative path e.g. /addressbook/
+	 * @param string $method default GET, DELETE, POST, PUT, ...
+	 * @param string|array $body request body or for GET url-parameters, if an array is given, it will be JSON encoded
+	 * @param ?array $headers associative array with headers as name => value or simple array with "$name: $value"
+	 * @param string|array|null &$response on return response body, JSON responses are returned decoded as array
+	 * @param ?array &$response_headers on return response headers
+	 * @return int http status
+	 */
+	public static function runRequest(string $path, string $method='GET', string|array $body='', ?array $headers=null,
+	                                  string|array|null &$response=null, ?array &$response_headers=null) : int
+	{
+		$backup_server = $_SERVER;
+		$backup_get = $_GET;
+		$backup_request = $_REQUEST;
+
+		$_SERVER['REQUEST_METHOD'] = $method = strtoupper($method);
+		$_SERVER['SCRIPT_NAME'] = $GLOBALS['egw_info']['server']['webserver_url'].'/groupdav.php';
+		$_SERVER['REQUEST_URI'] = $_SERVER['DOCUMENT_URI'] = $_SERVER['SCRIPT_NAME'].$path;
+		if (in_array($method, ['GET', 'HEAD', 'OPTIONS', 'DELETE']))
+		{
+			$_GET = $_REQUEST = is_array($body) ? $body : [];
+			if (!empty($_GET))
+			{
+				$_SERVER['QUERY_STRING'] = http_build_query($_GET);
+				$_SERVER['REQUEST_URI'].= '?'.$_SERVER['QUERY_STRING'];
+			}
+			else
+			{
+				$_SERVER['QUERY_STRING'] = '';
+			}
+			$body = '';
+		}
+		elseif (is_array($body))
+		{
+			$body = json_encode($body);
+			if (!isset($headers['Content-Type']))
+			{
+				$headers['Content-Type'] = 'application/json';
+			}
+		}
+		// remove all, but HTTP_HOST header and add headers from $headers
+		$_SERVER = array_filter($_SERVER, static fn($key) => $key === 'HTTP_HOST' || !str_starts_with($key, 'HTTP_'), ARRAY_FILTER_USE_KEY);
+		foreach($headers ?? [] as $key => $value)
+		{
+			if (is_int($key)) [$key, $value] = preg_split('/:\s*/', $value, 2);
+			$name = strtoupper(str_replace('-', '_', $key));
+			$_SERVER[str_starts_with($key, 'CONTENT_') ? $name : 'HTTP_'.$name] = $value;
+		}
+		if (!isset($_SERVER['HTTP_USER_AGENT'])) $_SERVER['HTTP_USER_AGENT'] = __METHOD__;
+		if (!isset($_SERVER['HTTP_ACCEPT'])) $_SERVER['HTTP_ACCEPT'] = '*/*';
+		unset($_SERVER['CONTENT_ENCODING'], $_SERVER['CONTENT_LENGTH']);
+
+		// run the request now and capture the response
+		ob_start();
+		$caldav = new self();
+		$caldav->_body = fopen('php://temp', 'r+');
+		if ($body)
+		{
+			$_SERVER['CONTENT_LENGTH'] = fwrite($caldav->_body, $body);
+			fseek($caldav->_body, 0);
+		}
+		try {
+			$caldav->ServeRequest();
+		}
+		catch(\Throwable $e) {
+			$caldav->exception_handler($e, false);
+		}
+		$response = ob_get_clean();
+
+		$response_headers = [];
+		foreach(headers_list() as $header)
+		{
+			[$key, $value] = preg_split('/:\s*/', $header, 2);
+			$response_headers[$key] = $value;
+		}
+		if (preg_match('#^application/([a-z]+\+)?json$#', $response_headers['Content-Type']))
+		{
+			$response = json_decode($response, true);
+		}
+
+		$_SERVER = $backup_server;
+		$_GET = $backup_get;
+		$_REQUEST = $backup_request;
+
+		return isset($e) ? 500 : http_response_code();
 	}
 }
