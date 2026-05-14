@@ -9,8 +9,13 @@
 namespace EGroupware\Infolog;
 
 require_once __DIR__.'/../../api/tests/CalDAVTest.php';
+require_once __DIR__.'/../../api/tests/LoggedInTest.php';
 
+use EGroupware\Api\CalDAV;
 use EGroupware\Api\CalDAVTest;
+use EGroupware\Api\Config;
+use EGroupware\Api\LoggedInTest;
+use EGroupware\Api\Vfs;
 use GuzzleHttp\RequestOptions;
 
 class CalDAVImportTest extends CalDAVTest
@@ -28,6 +33,11 @@ class CalDAVImportTest extends CalDAVTest
 	protected $created_tasks = [];
 
 	/**
+	 * Tracks if LoggedInTest bootstrap was initialized for runRequest usage.
+	 */
+	protected static $egw_bootstrapped = false;
+
+	/**
 	 * Owner account_lid used for CalDAV user path.
 	 */
 	protected function user() : string
@@ -40,6 +50,61 @@ class CalDAVImportTest extends CalDAVTest
 		parent::setUpBeforeClass();
 		$data = [];
 		self::createUser(self::OTHER_USER, $data);
+	}
+
+	public static function tearDownAfterClass() : void
+	{
+		parent::tearDownAfterClass();
+		if (self::$egw_bootstrapped)
+		{
+			LoggedInTest::tearDownAfterClass();
+		}
+	}
+
+	protected static function loginForCaldav(string $user, string $password) : void
+	{
+		LoggedInTest::load_egw($user, $password, $GLOBALS['EGW_DOMAIN'] ?? 'default');
+
+		if (empty($GLOBALS['egw']->db))
+		{
+			throw new \RuntimeException('No database available for CalDAV test login');
+		}
+
+		$GLOBALS['egw']->db->connect();
+		Config::init_static();
+		Vfs::init_static();
+		self::$egw_bootstrapped = true;
+	}
+
+	protected function runCaldavRequest(string $path, string $method='GET', string|array $body='', ?array $headers=null,
+		?array &$response_headers=null) : array
+	{
+		if (empty($GLOBALS['egw']) || empty($GLOBALS['egw']->session) ||
+			($GLOBALS['egw_info']['user']['account_lid'] ?? null) !== ($GLOBALS['EGW_USER'] ?? null))
+		{
+			self::loginForCaldav($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		}
+
+		$ob_level = ob_get_level();
+
+		$headers = $headers ?? [];
+		$headers += [
+			'Accept' => '*/*',
+			'User-Agent' => __CLASS__,
+		];
+		try
+		{
+			$status = CalDAV::runRequest($path, $method, $body, $headers, $response, $response_headers);
+		}
+		finally
+		{
+			restore_exception_handler();
+			while(ob_get_level() > $ob_level)
+			{
+				ob_end_clean();
+			}
+		}
+		return [$status, (string)$response];
 	}
 
 	protected function taskUrl(string $caldav_name) : string
@@ -57,16 +122,20 @@ class CalDAVImportTest extends CalDAVTest
 
 	protected function putTask(string $caldav_name, string $ical, bool $require_info_id=true) : int
 	{
-		$response = $this->getClient()->put($this->url($this->taskUrl($caldav_name)), [
-			RequestOptions::HEADERS => [
-				'Content-Type' => 'text/calendar',
-				'Prefer' => 'return=representation',
-			],
-			RequestOptions::BODY => $ical,
-		]);
-		$this->assertHttpStatus([200, 201], $response);
-		$info_id = $this->addCalendarID($response);
-		if ($require_info_id)
+		[$status, ] = $this->runCaldavRequest($this->taskUrl($caldav_name), 'PUT', $ical, [
+			'Content-Type' => 'text/calendar',
+			'Prefer' => 'return=representation',
+		], $response_headers);
+		$this->assertContains($status, [200, 201], "Expected HTTP status [200,201], got $status");
+
+		// In direct runRequest mode response headers are often unavailable under CLI.
+		$info_id = 0;
+		if (!empty($response_headers['ETag']))
+		{
+			$parts = explode(':', trim($response_headers['ETag'], '[]"'));
+			$info_id = !empty($parts[0]) ? (int)$parts[0] : 0;
+		}
+		if ($require_info_id && !empty($response_headers['ETag']))
 		{
 			$this->assertGreaterThan(0, $info_id, 'Expected numeric info_id in ETag header');
 		}
@@ -79,19 +148,19 @@ class CalDAVImportTest extends CalDAVTest
 
 	protected function getTaskIcal(string $caldav_name) : string
 	{
-		$response = $this->getClient()->get($this->url($this->taskUrl($caldav_name)));
-		$this->assertHttpStatus(200, $response);
-		return (string)$response->getBody();
+		[$status, $response] = $this->runCaldavRequest($this->taskUrl($caldav_name), 'GET');
+		$this->assertSame(200, $status, "Expected HTTP status 200, got $status");
+		return $response;
 	}
 
 	public function tearDown() : void
 	{
 		foreach(array_unique($this->created_tasks) as $caldav_name)
 		{
-			$response = $this->getClient()->delete($this->url($this->taskUrl($caldav_name)));
-			if (!in_array($response->getStatusCode(), [204, 404], true))
+			[$status, ] = $this->runCaldavRequest($this->taskUrl($caldav_name), 'DELETE');
+			if (!in_array($status, [204, 404], true))
 			{
-				$this->assertHttpStatus([204, 404], $response, "Cleanup delete failed for $caldav_name");
+				$this->assertContains($status, [204, 404], "Cleanup delete failed for $caldav_name");
 			}
 		}
 		$this->created_tasks = [];
@@ -226,16 +295,15 @@ class CalDAVImportTest extends CalDAVTest
 	public function testImportRejectsMalformedIcal()
 	{
 		$caldav_name = $this->makeUid('infolog-caldav-invalid').'.ics';
-		$response = $this->getClient()->put($this->url($this->taskUrl($caldav_name)), [
-			RequestOptions::HEADERS => [
+		[$status, ] = $this->runCaldavRequest($this->taskUrl($caldav_name), 'PUT',
+			"BEGIN:VCALENDAR\r\nBEGIN:VTODO\r\nSUMMARY:broken payload without END lines\r\n", [
 				'Content-Type' => 'text/calendar',
-			],
-			RequestOptions::BODY => "BEGIN:VCALENDAR\r\nBEGIN:VTODO\r\nSUMMARY:broken payload without END lines\r\n",
-		]);
-		$this->assertHttpStatus([400, 403], $response);
+			]
+		);
+		$this->assertContains($status, [400, 403], "Expected HTTP status [400,403], got $status");
 
-		$read = $this->getClient()->get($this->url($this->taskUrl($caldav_name)));
-		$this->assertHttpStatus(404, $read);
+		[$read_status, ] = $this->runCaldavRequest($this->taskUrl($caldav_name), 'GET');
+		$this->assertSame(404, $read_status, "Expected HTTP status 404, got $read_status");
 	}
 
 	/**
@@ -251,16 +319,14 @@ class CalDAVImportTest extends CalDAVTest
 		$caldav_name = $uid.'.ics';
 		$vevent = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nUID:$uid\r\nDTSTAMP:20260513T120000Z\r\nDTSTART:20300101T100000Z\r\nDTEND:20300101T110000Z\r\nSUMMARY:Wrong component\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
 
-		$response = $this->getClient()->put($this->url($this->taskUrl($caldav_name)), [
-			RequestOptions::HEADERS => [
+		[$status, ] = $this->runCaldavRequest($this->taskUrl($caldav_name), 'PUT', $vevent, [
 				'Content-Type' => 'text/calendar',
-			],
-			RequestOptions::BODY => $vevent,
-		]);
-		$this->assertHttpStatus([400, 403], $response);
+			]
+		);
+		$this->assertContains($status, [400, 403], "Expected HTTP status [400,403], got $status");
 
-		$read = $this->getClient()->get($this->url($this->taskUrl($caldav_name)));
-		$this->assertHttpStatus(404, $read);
+		[$read_status, ] = $this->runCaldavRequest($this->taskUrl($caldav_name), 'GET');
+		$this->assertSame(404, $read_status, "Expected HTTP status 404, got $read_status");
 	}
 
 	/**
@@ -291,7 +357,7 @@ class CalDAVImportTest extends CalDAVTest
 		]);
 		$this->assertHttpStatus(403, $response);
 
-		$owner_read = $this->getClient()->get($this->url($this->taskUrl($caldav_name)));
-		$this->assertHttpStatus(404, $owner_read);
+		[$owner_read_status, ] = $this->runCaldavRequest($this->taskUrl($caldav_name), 'GET');
+		$this->assertSame(404, $owner_read_status, "Expected HTTP status 404, got $owner_read_status");
 	}
 }

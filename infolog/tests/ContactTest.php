@@ -78,13 +78,11 @@ class ContactTest extends \EGroupware\Api\AppTest
 		// Mock the etemplate call to check the results
 		$this->ui->tmpl->expects($this->once())
 			->method('exec')
-			->will(
-				$this->returnCallback(function($method, $info) {
+			->willReturnCallback(function($method, $info) {
 					$this->assertNotNull($info['info_id']);
 					$this->assertEquals('Free text', $info['info_contact']['title']);
 					return true;
-				})
-			);
+			});
 
 		// Make a call to edit, looks like initial load
 		$_REQUEST['info_id'] = $this->info_id;
@@ -143,14 +141,13 @@ class ContactTest extends \EGroupware\Api\AppTest
 		// Mock the etemplate call to check the results
 		$this->ui->tmpl->expects($this->once())
 			->method('exec')
-			->will(
-				$this->returnCallback(function($method, $info) use($link_title) {
+			->willReturnCallback(function($method, $info) use($link_title) {
 					$this->assertNotNull($info['info_id']);
 					$this->assertEquals('', $info['contact']['search']);
 					$this->assertEquals($GLOBALS['egw_info']['user']['person_id'], $info['info_contact']['id']);
 					$this->assertEquals($link_title, $info['info_contact']['title']);
-				})
-			);
+					return true;
+			});
 
 		// Make a call to edit, looks like initial load
 		$_REQUEST['info_id'] = $this->info_id;
@@ -182,8 +179,7 @@ class ContactTest extends \EGroupware\Api\AppTest
 		$sub = array();
 		$this->ui->tmpl->expects($this->once())
 			->method('exec')
-			->will(
-				$this->returnCallback(function($method, $info) use($parent, &$sub) {
+			->willReturnCallback(function($method, $info) use($parent, &$sub) {
 					$this->assertNull($info['info_id']);
 					$this->assertEquals($parent['info_id'], $info['info_id_parent']);
 					$this->assertEquals($parent['info_contact']['id'], $info['info_contact']['id']);
@@ -191,8 +187,7 @@ class ContactTest extends \EGroupware\Api\AppTest
 					$this->assertEquals($parent['info_from'], $info['info_from']);
 					$sub = $info;
 					return true;
-				})
-			);
+			});
 
 		// Make a sub-entry
 		$_REQUEST['action'] = 'sp';

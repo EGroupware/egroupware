@@ -35,7 +35,6 @@
 
             <!-- Not properly working yet -->
             <exclude>../collabora</exclude>
-            <exclude>../infolog</exclude>
             <exclude>../policy</exclude>
             <exclude>../projectmanager</exclude>
             <exclude>../stylite</exclude>

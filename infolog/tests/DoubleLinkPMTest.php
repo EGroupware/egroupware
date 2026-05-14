@@ -42,8 +42,8 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 
 		$this->ui->tmpl = $this->createPartialMock(Etemplate::class, array('exec'));
 		$this->ui->tmpl->expects($this->any())
-					   ->method('exec')
-					   ->will($this->returnCallback([$this, 'mockExec']));
+			->method('exec')
+			->willReturnCallback([$this, 'mockExec']);
 
 		$this->bo = $this->ui->bo;
 		$this->pm_bo = new \projectmanager_bo();
