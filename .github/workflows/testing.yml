@@ -244,6 +244,8 @@ jobs:
 
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
             --edit-user "$SYSOP_USER,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
+            --allow-app "$SYSOP_USER,$SYSOP_PASS,$EGW_TEST_USER,projectmanager"
 
           # Ensure share links resolve locally in CI
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php \
