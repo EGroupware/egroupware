@@ -552,6 +552,7 @@ class SharingBase extends LoggedInTest
         $_SERVER['SCRIPT_NAME'] = $matches[1];
 		$is_dir = Vfs::is_dir($path);
 		$mimetype = Vfs::mime_content_type($path);
+		$mounted_path = '/'.Vfs::basename(trim($share['share_path'], '/'));
 
 
 		// Re-init, since they look at user, fstab, etc.
@@ -566,7 +567,7 @@ class SharingBase extends LoggedInTest
 		// If it's a directory, check to make sure it gives the filemanager UI
 		if($is_dir)
 		{
-			$mounted_path = $this->checkDirectoryLink($link, $share);
+			$mounted_path = $this->checkDirectoryLink($link, $share) ?: $mounted_path;
 		}
 		else
 		{
