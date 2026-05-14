@@ -37,7 +37,6 @@
             <exclude>../collabora</exclude>
             <exclude>../policy</exclude>
             <exclude>../stylite</exclude>
-            <exclude>../tracker</exclude>
             <exclude>../invoices</exclude>
 		</testsuite>
     </testsuites>
