@@ -351,11 +351,30 @@ jobs:
 
   jstest:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            composer-cache-${{ runner.os }}-
+
+      - name: Install composer dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+          docker run --rm --user "$(id -u):$(id -g)" \
+            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+            -v "${GITHUB_WORKSPACE}":/app -w /app \
+            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+            composer install --no-interaction --ignore-platform-reqs
 
       - name: Setup Node
         uses: actions/setup-node@v4
